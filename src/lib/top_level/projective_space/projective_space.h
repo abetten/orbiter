@@ -69,7 +69,7 @@ public:
 	canonical_form_classifier_description *Descr;
 
 
-	homogeneous_polynomial_domain *Poly_ring;
+	ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
 	action_on_homogeneous_polynomials *AonHPD;
 
@@ -182,7 +182,7 @@ public:
 	~canonical_form_nauty();
 	void quartic_curve(
 			projective_space_with_action *PA,
-			homogeneous_polynomial_domain *Poly4_x123,
+			ring_theory::homogeneous_polynomial_domain *Poly4_x123,
 			action_on_homogeneous_polynomials *AonHPD,
 			int idx, int *eqn, int sz,
 			long int *Pts_on_curve, int sz_curve,
@@ -268,7 +268,7 @@ public:
 			int nb_pts,
 			long int *bitangents,
 			int nb_bitangents,
-			longinteger_object &go_eqn,
+			ring_theory::longinteger_object &go_eqn,
 			int verbose_level);
 	void handle_orbit(
 			int *transporter_to_canonical_form,

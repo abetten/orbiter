@@ -185,7 +185,7 @@ public:
 		void (*encode_function)(void *extra_data,
 			long int *&encoding, int &encoding_sz, void *global_data),
 		void (*get_group_order_or_NULL)(void *extra_data,
-			longinteger_object &go, void *global_data),
+				ring_theory::longinteger_object &go, void *global_data),
 		void *global_data,
 		int verbose_level);
 
@@ -680,7 +680,7 @@ public:
 	int Base_length;
 	long int *Base_lint;
 	int *Transversal_length;
-	longinteger_object *Ago;
+	ring_theory::longinteger_object *Ago;
 
 	int *canonical_labeling; // [N]
 
@@ -1241,8 +1241,8 @@ public:
 	int int_vec_search_first_occurence(int *v, int len, int a, int &idx,
 			int verbose_level);
 		// This function finds the first occurrence of the element a.
-	int longinteger_vec_search(longinteger_object *v, int len,
-		longinteger_object &a, int &idx);
+	int longinteger_vec_search(ring_theory::longinteger_object *v, int len,
+			ring_theory::longinteger_object &a, int &idx);
 	void int_vec_classify_and_print(std::ostream &ost, int *v, int l);
 	void int_vec_values(int *v, int l, int *&w, int &w_len);
 	void int_vec_multiplicities(int *v, int l, int *&w, int &w_len);
@@ -1344,7 +1344,7 @@ public:
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		std::string &fname_base,
 		layered_graph_draw_options *LG_Draw_options,
-		layered_graph *&LG,
+		graph_theory::layered_graph *&LG,
 		int verbose_level);
 	int compare_sets(int *set1, int *set2, int sz1, int sz2);
 	int compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2);

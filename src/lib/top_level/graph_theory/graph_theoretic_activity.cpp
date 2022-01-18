@@ -28,7 +28,7 @@ graph_theoretic_activity::~graph_theoretic_activity()
 
 
 void graph_theoretic_activity::init(graph_theoretic_activity_description *Descr,
-		colored_graph *CG,
+		graph_theory::colored_graph *CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -187,7 +187,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity f_sort_by_colors" << endl;
 		}
-		colored_graph *CG2;
+		graph_theory::colored_graph *CG2;
 		string fname2;
 
 		fname2.assign(CG->label);
@@ -215,7 +215,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "splitting case " << c << " / " << m << ":" << endl;
 			a = Split[2 * c + 0];
 
-			colored_graph *Subgraph;
+			graph_theory::colored_graph *Subgraph;
 			data_structures::fancy_set *color_subset;
 			data_structures::fancy_set *vertex_subset;
 
@@ -257,7 +257,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 			cout << "splitting case " << c << " / " << Reps->nb_sets << ":" << endl;
 
-			colored_graph *Subgraph;
+			graph_theory::colored_graph *Subgraph;
 			data_structures::fancy_set *color_subset;
 			data_structures::fancy_set *vertex_subset;
 
@@ -289,7 +289,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		Orbiter->Lint_vec->scan(Descr->split_by_clique_set, set, sz);
 
-		colored_graph *Subgraph;
+		graph_theory::colored_graph *Subgraph;
 		data_structures::fancy_set *color_subset;
 		data_structures::fancy_set *vertex_subset;
 
@@ -404,7 +404,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 						NULL /* extra_praeamble */);
 
 
-				longinteger_object go;
+				ring_theory::longinteger_object go;
 
 				Aut->Strong_gens->group_order(go);
 

@@ -42,7 +42,7 @@ void orbit_transversal::freeself()
 void orbit_transversal::init_from_schreier(
 		schreier *Sch,
 		action *default_action,
-		longinteger_object &full_group_order,
+		ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -316,7 +316,7 @@ void orbit_transversal::print_table_latex(
 			i = I * nb_rows_per_page + row;
 			if (i < nb_orbits) {
 
-				longinteger_object go;
+				ring_theory::longinteger_object go;
 				Reps[i].Strong_gens->group_order(go);
 
 				f << i << " & ";
@@ -402,7 +402,7 @@ void orbit_transversal::export_data_in_source_code_inside_tex(
 	ost << "const char *" << prefix << "_stab_order[] = {" << endl;
 	for (h = 0; h < nb_orbits; h++) {
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		if (Reps[h].Stab) {
 			Reps[h].Stab->group_order(go);

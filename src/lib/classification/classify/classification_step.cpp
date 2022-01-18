@@ -53,7 +53,7 @@ void classification_step::freeself()
 
 void classification_step::init(action *A, action *A2,
 	int max_orbits, int representation_sz, 
-	longinteger_object &go, int verbose_level)
+	ring_theory::longinteger_object &go, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -158,7 +158,7 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 }
 
 void classification_step::read_file(ifstream &fp,
-		action *A, action *A2, longinteger_object &go,
+		action *A, action *A2, ring_theory::longinteger_object &go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -275,7 +275,7 @@ void classification_step::generate_source_code(std::string &fname_base,
 				orbit_index < nb_orbits;
 				orbit_index++) {
 
-			longinteger_object ago;
+			ring_theory::longinteger_object ago;
 
 			Orbit[orbit_index].gens->group_order(ago);
 
@@ -405,8 +405,8 @@ long int *classification_step::Rep_lint_ith(int i)
 void classification_step::print_group_orders()
 {
 	int i;
-	longinteger_domain D;
-	longinteger_object go1, ol;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go1, ol;
 
 	cout << "i : stab order : orbit length" << endl;
 	for (i = 0; i < nb_orbits; i++) {
@@ -474,8 +474,8 @@ void classification_step::print_latex(ostream &ost,
 	ost << "The group has " << nb_orbits << " orbits: \\\\" << endl;
 
 	int i;
-	longinteger_domain D;
-	longinteger_object go1, ol, Ol;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go1, ol, Ol;
 	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The orbits are:" << endl;

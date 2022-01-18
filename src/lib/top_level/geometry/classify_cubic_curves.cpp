@@ -335,8 +335,8 @@ void classify_cubic_curves::downstep(int verbose_level)
 		}
 
 		set_and_stabilizer *R;
-		longinteger_object ol;
-		longinteger_object go;
+		ring_theory::longinteger_object ol;
+		ring_theory::longinteger_object go;
 		long int dataset[19];
 
 		R = Arc_gen->gen->get_set_and_stabilizer(
@@ -454,7 +454,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 	Curves = NEW_OBJECT(classification_step);
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	A->group_order(go);
 
 	Curves->init(A, A,
@@ -518,7 +518,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 
 		strong_generators *S;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		int eqn[10];
 
 		Orbiter->Lint_vec->copy_to_int(dataset + 9, eqn, 10);
@@ -678,7 +678,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		strong_generators *Aut_gens;
 
 		{
-			longinteger_object ago;
+			ring_theory::longinteger_object ago;
 
 			if (f_v) {
 				cout << "classify_cubic_curves::upstep "
@@ -1344,8 +1344,8 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			<< " orbits: \\\\" << endl;
 
 	int i;
-	longinteger_domain D;
-	longinteger_object go1, ol, Ol;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go1, ol, Ol;
 	Ol.create(0, __FILE__, __LINE__);
 
 	vector<string> References;

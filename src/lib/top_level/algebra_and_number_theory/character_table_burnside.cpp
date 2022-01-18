@@ -34,7 +34,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	action *A;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int goi;
 	int *Elt;
 	int i, j;

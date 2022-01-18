@@ -1805,8 +1805,8 @@ void cryptography_domain::do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
 		}
 	}
 
-	longinteger_domain D;
-	longinteger_object A, M;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, M;
 
 	M.create(RSA_m, __FILE__, __LINE__);
 
@@ -1843,8 +1843,8 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 		cout << endl;
 	}
 
-	longinteger_domain D;
-	longinteger_object A, M;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, M;
 
 	M.create(RSA_m, __FILE__, __LINE__);
 	for (i = 0; i < data_sz; i++) {
@@ -1923,8 +1923,8 @@ void cryptography_domain::NTRU_encrypt(int N, int p, finite_field *Fq,
 
 
 
-	unipoly_domain FX(Fq);
-	unipoly_object H, R, Msg, M, C, D;
+	ring_theory::unipoly_domain FX(Fq);
+	ring_theory::unipoly_object H, R, Msg, M, C, D;
 
 
 	int dh = sz_H - 1;
@@ -2043,8 +2043,8 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, finite_f
 
 
 
-	unipoly_domain FX(F);
-	unipoly_object A;
+	ring_theory::unipoly_domain FX(F);
+	ring_theory::unipoly_object A;
 
 
 	int da = sz_A - 1;
@@ -2112,8 +2112,8 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, finite_
 
 
 
-	unipoly_domain FX(F);
-	unipoly_object A;
+	ring_theory::unipoly_domain FX(F);
+	ring_theory::unipoly_object A;
 
 
 	int da = sz_A - 1;
@@ -2169,9 +2169,9 @@ void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbo
 
 
 	number_theory_domain NT;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
-	longinteger_object A, B;
+	ring_theory::longinteger_object A, B;
 
 	A.create(jacobi_top, __FILE__, __LINE__);
 
@@ -2223,7 +2223,7 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 	number_theory_domain NT;
 	//longinteger_domain D;
 
-	longinteger_object P, A;
+	ring_theory::longinteger_object P, A;
 
 	P.create(p, __FILE__, __LINE__);
 
@@ -2275,7 +2275,7 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 
 	//longinteger_domain D;
 
-	longinteger_object P, A;
+	ring_theory::longinteger_object P, A;
 
 	P.create(p, __FILE__, __LINE__);
 
@@ -2336,7 +2336,7 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 
 
 	//longinteger_domain D;
-	longinteger_object P;
+	ring_theory::longinteger_object P;
 
 
 	P.create(p, __FILE__, __LINE__);
@@ -2389,8 +2389,8 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 				NULL /* extra_praeamble */);
 
 
-		longinteger_domain D;
-		longinteger_object P;
+		ring_theory::longinteger_domain D;
+		ring_theory::longinteger_object P;
 
 
 		int cnt = -1;
@@ -2511,8 +2511,8 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 				NULL /* extra_praeamble */);
 
 
-		longinteger_domain D;
-		longinteger_object P;
+		ring_theory::longinteger_domain D;
+		ring_theory::longinteger_object P;
 
 
 		int cnt = -1;
@@ -2612,7 +2612,7 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 
 
 		//longinteger_domain D;
-		longinteger_object P;
+		ring_theory::longinteger_object P;
 
 
 		f << "\\begin{multicols}{2}" << endl;
@@ -2656,8 +2656,8 @@ void cryptography_domain::quadratic_sieve(int n,
 {
 	int f_v = (verbose_level >= 1);
 	vector<int> small_factors, primes, primes_log2, R1, R2;
-	longinteger_object M, sqrtM;
-	longinteger_domain D;
+	ring_theory::longinteger_object M, sqrtM;
+	ring_theory::longinteger_domain D;
 	number_theory_domain NT;
 	int f_found_small_factor = FALSE;
 	int small_factor;
@@ -2699,7 +2699,7 @@ void cryptography_domain::quadratic_sieve(int n,
 		if (!f_found_small_factor) {
 			break;
 		}
-		longinteger_object P, Q;
+		ring_theory::longinteger_object P, Q;
 
 		cout << "dividing out small factor " << small_factor << endl;
 		small_factors.push_back(small_factor);
@@ -2791,8 +2791,8 @@ void cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint(std::
 void cryptography_domain::square_root(std::string &square_root_number, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object a, b;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b;
 
 	if (f_v) {
 		cout << "square_root" << endl;
@@ -2811,8 +2811,8 @@ void cryptography_domain::square_root_mod(std::string &square_root_number,
 		std::string &mod_number, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object a, m;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, m;
 	int b;
 
 	if (f_v) {
@@ -2831,14 +2831,14 @@ void cryptography_domain::square_root_mod(std::string &square_root_number,
 }
 
 void cryptography_domain::reduce_primes(vector<int> &primes,
-		longinteger_object &M,
+		ring_theory::longinteger_object &M,
 		int &f_found_small_factor, int &small_factor,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l, r, s, p;
-	longinteger_domain D;
-	longinteger_object Q, R, P;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object Q, R, P;
 
 	if (f_v) {
 		cout << "reduce_primes" << endl;
@@ -2986,7 +2986,7 @@ void cryptography_domain::do_primitive_root(long int p, int verbose_level)
 }
 
 
-void cryptography_domain::do_primitive_root_longinteger(longinteger_object &p, int verbose_level)
+void cryptography_domain::do_primitive_root_longinteger(ring_theory::longinteger_object &p, int verbose_level)
 {
 	number_theory_domain NT;
 	long int a;
@@ -3177,9 +3177,9 @@ void cryptography_domain::do_inverse_mod(long int a, long int n, int verbose_lev
 void cryptography_domain::do_extended_gcd(int a, int b, int verbose_level)
 {
 	{
-	longinteger_domain D;
+		ring_theory::longinteger_domain D;
 
-	longinteger_object A, B, G, U, V;
+		ring_theory::longinteger_object A, B, G, U, V;
 
 	A.create(a, __FILE__, __LINE__);
 	B.create(b, __FILE__, __LINE__);
@@ -3194,13 +3194,13 @@ void cryptography_domain::do_extended_gcd(int a, int b, int verbose_level)
 }
 
 
-void cryptography_domain::do_power_mod(longinteger_object &a,
-		longinteger_object &k, longinteger_object &n,
+void cryptography_domain::do_power_mod(ring_theory::longinteger_object &a,
+		ring_theory::longinteger_object &k, ring_theory::longinteger_object &n,
 		int verbose_level)
 {
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	//number_theory_domain NT;
-	longinteger_object b;
+	ring_theory::longinteger_object b;
 	int t0, t1, dt;
 	os_interface Os;
 
@@ -3219,8 +3219,8 @@ void cryptography_domain::do_power_mod(longinteger_object &a,
 
 }
 
-void cryptography_domain::calc_roots(longinteger_object &M,
-	longinteger_object &sqrtM,
+void cryptography_domain::calc_roots(ring_theory::longinteger_object &M,
+		ring_theory::longinteger_object &sqrtM,
 	vector<int> &primes, vector<int> &R1, vector<int> &R2,
 	int verbose_level)
 // computes the root of the polynomial
@@ -3240,8 +3240,8 @@ void cryptography_domain::calc_roots(longinteger_object &M,
 	int f_v = (verbose_level >= 1);
 	int i, l, p, Mmodp, sqrtMmodp, b;
 	int r1, r2, c, c2, s;
-	longinteger_domain D;
-	longinteger_object P, l1, l2, l3;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object P, l1, l2, l3;
 
 	if (f_v) {
 		cout << "cryptography_domain::calc_roots, verbose_level=" << verbose_level << endl;
@@ -3346,7 +3346,7 @@ void cryptography_domain::calc_roots(longinteger_object &M,
 void cryptography_domain::Quadratic_Sieve(
 	int factorbase,
 	int f_mod, int mod_n, int mod_r, int x0,
-	int n, longinteger_object &M, longinteger_object &sqrtM,
+	int n, ring_theory::longinteger_object &M, ring_theory::longinteger_object &sqrtM,
 	std::vector<int> &primes, std::vector<int> &primes_log2,
 	std::vector<int> &R1, std::vector<int> &R2,
 	std::vector<int> &X,
@@ -3416,7 +3416,7 @@ void cryptography_domain::Quadratic_Sieve(
 }
 
 int cryptography_domain::quadratic_sieve(
-	longinteger_object& M, longinteger_object& sqrtM,
+		ring_theory::longinteger_object& M, ring_theory::longinteger_object& sqrtM,
 	std::vector<int> &primes, std::vector<int> &primes_log2,
 	std::vector<int> &R1, std::vector<int> &R2,
 	int from, int to,
@@ -3425,8 +3425,8 @@ int cryptography_domain::quadratic_sieve(
 {
 	int f_v = (verbose_level >= 1);
 	int x, j;
-	longinteger_domain D;
-	longinteger_object Z, zero, a, b, c, d;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object Z, zero, a, b, c, d;
 	int i, l;
 	vector<int> factor_idx, factor_exp;
 
@@ -3504,13 +3504,13 @@ int cryptography_domain::quadratic_sieve(
 	return FALSE;
 }
 
-int cryptography_domain::factor_over_factor_base(longinteger_object &x,
+int cryptography_domain::factor_over_factor_base(ring_theory::longinteger_object &x,
 		std::vector<int> &primes,
 		std::vector<int> &factor_idx, std::vector<int> &factor_exp,
 		int verbose_level)
 {
-	longinteger_domain D;
-	longinteger_object y, z1, residue;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object y, z1, residue;
 	int i, l, n, p;
 
 	x.assign_to(y);
@@ -3539,12 +3539,12 @@ int cryptography_domain::factor_over_factor_base(longinteger_object &x,
 }
 
 int cryptography_domain::factor_over_factor_base2(
-		longinteger_object &x,
+		ring_theory::longinteger_object &x,
 		vector<int> &primes, vector<int> &exponents,
 		int verbose_level)
 {
-	longinteger_domain D;
-	longinteger_object y, z1, residue;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object y, z1, residue;
 	int i, l, n, nn, p;
 
 	x.assign_to(y);
@@ -3574,14 +3574,14 @@ int cryptography_domain::factor_over_factor_base2(
 
 
 void cryptography_domain::find_probable_prime_above(
-	longinteger_object &a,
+		ring_theory::longinteger_object &a,
 	int nb_solovay_strassen_tests, int f_miller_rabin_test,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object b, one;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object b, one;
 	int i = 0;
 
 	if (f_v) {
@@ -3623,7 +3623,7 @@ loop:
 }
 
 int cryptography_domain::solovay_strassen_is_prime(
-	longinteger_object &n, int nb_tests, int verbose_level)
+		ring_theory::longinteger_object &n, int nb_tests, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -3646,12 +3646,12 @@ int cryptography_domain::solovay_strassen_is_prime(
 }
 
 int cryptography_domain::solovay_strassen_is_prime_single_test(
-	longinteger_object &n, int verbose_level)
+		ring_theory::longinteger_object &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object a, one, b, m_one, n_minus_one;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, one, b, m_one, n_minus_one;
 	int r;
 
 	if (f_v) {
@@ -3675,13 +3675,13 @@ int cryptography_domain::solovay_strassen_is_prime_single_test(
 }
 
 int cryptography_domain::fermat_test_iterated_with_latex_key(ostream &ost,
-		longinteger_object &P, int nb_times,
+		ring_theory::longinteger_object &P, int nb_times,
 		int verbose_level)
 // returns TRUE is the test is conclusive, i.e. if the number is not prime.
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object A, B, one, minus_two, n_minus_two;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, B, one, minus_two, n_minus_two;
 	int i, ret;
 
 	if (f_v) {
@@ -3733,13 +3733,13 @@ int cryptography_domain::fermat_test_iterated_with_latex_key(ostream &ost,
 }
 
 int cryptography_domain::fermat_test_with_latex_key(ostream &ost,
-	longinteger_object &n, longinteger_object &a,
+		ring_theory::longinteger_object &n, ring_theory::longinteger_object &a,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object b, one, m_one, n2, n_minus_one;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object b, one, m_one, n2, n_minus_one;
 
 	if (f_v) {
 		cout << "cryptography_domain::fermat_test_with_latex_key" << endl;
@@ -3777,13 +3777,13 @@ int cryptography_domain::fermat_test_with_latex_key(ostream &ost,
 }
 
 int cryptography_domain::solovay_strassen_test(
-	longinteger_object &n, longinteger_object &a,
+		ring_theory::longinteger_object &n, ring_theory::longinteger_object &a,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object b, one, m_one, n2, n_minus_one;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object b, one, m_one, n2, n_minus_one;
 	int x, r;
 
 	if (f_v) {
@@ -3853,13 +3853,13 @@ int cryptography_domain::solovay_strassen_test(
 }
 
 int cryptography_domain::solovay_strassen_test_with_latex_key(ostream &ost,
-	longinteger_object &n, longinteger_object &a,
+		ring_theory::longinteger_object &n, ring_theory::longinteger_object &a,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object b, one, m_one, n2, n_minus_one;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object b, one, m_one, n2, n_minus_one;
 	int x, r;
 
 	if (f_v) {
@@ -3945,14 +3945,14 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(ostream &ost,
 }
 
 int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(ostream &ost,
-		longinteger_object &P, int nb_times,
+		ring_theory::longinteger_object &P, int nb_times,
 		int verbose_level)
 // returns TRUE is the test is conclusive, i.e. if the number is not prime.
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object A, B, one, m_one, m_two, P_minus_one, P_minus_two;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, B, one, m_one, m_two, P_minus_one, P_minus_two;
 	int i, ret;
 
 	if (f_v) {
@@ -4013,12 +4013,12 @@ int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(ostream &
 
 
 int cryptography_domain::miller_rabin_test(
-	longinteger_object &n, int verbose_level)
+		ring_theory::longinteger_object &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object a, b, c, one, m_one, n_minus_one, m, mm;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b, c, one, m_one, n_minus_one, m, mm;
 	int k, i;
 
 	if (f_v) {
@@ -4094,12 +4094,12 @@ int cryptography_domain::miller_rabin_test(
 }
 
 int cryptography_domain::miller_rabin_test_with_latex_key(ostream &ost,
-	longinteger_object &n, int iteration, int verbose_level)
+		ring_theory::longinteger_object &n, int iteration, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object a, b, c, one, m_one, n_minus_one, m, mm;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b, c, one, m_one, n_minus_one, m, mm;
 	int k, i;
 
 	if (f_v) {
@@ -4228,7 +4228,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(ostream &ost,
 }
 
 int cryptography_domain::miller_rabin_test_iterated_with_latex_key(ostream &ost,
-		longinteger_object &P, int nb_times,
+		ring_theory::longinteger_object &P, int nb_times,
 		int verbose_level)
 // returns TRUE if the test is conclusive, i.e. if the number is not prime.
 {
@@ -4272,14 +4272,14 @@ int cryptography_domain::miller_rabin_test_iterated_with_latex_key(ostream &ost,
 }
 
 void cryptography_domain::get_k_bit_random_pseudoprime(
-	longinteger_object &n, int k,
+		ring_theory::longinteger_object &n, int k,
 	int nb_tests_solovay_strassen,
 	int f_miller_rabin_test, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int kk = (k * 3) / 10;
-	longinteger_object a, b;
+	ring_theory::longinteger_object a, b;
 
 	if (f_v) {
 		cout << "cryptography_domain::get_k_bit_random_pseudoprime "
@@ -4304,17 +4304,17 @@ void cryptography_domain::get_k_bit_random_pseudoprime(
 }
 
 void cryptography_domain::RSA_setup(
-	longinteger_object &n,
-	longinteger_object &p, longinteger_object &q,
-	longinteger_object &a, longinteger_object &b,
+		ring_theory::longinteger_object &n,
+		ring_theory::longinteger_object &p, ring_theory::longinteger_object &q,
+		ring_theory::longinteger_object &a, ring_theory::longinteger_object &b,
 	int nb_bits,
 	int nb_tests_solovay_strassen, int f_miller_rabin_test,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object m1, pm1, qm1, phi_n, v, g;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object m1, pm1, qm1, phi_n, v, g;
 	int half_bits = nb_bits >> 1;
 
 	if (f_v) {

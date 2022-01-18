@@ -45,7 +45,7 @@ del_pezzo_surface_of_degree_two_domain::~del_pezzo_surface_of_degree_two_domain(
 
 void del_pezzo_surface_of_degree_two_domain::init(
 		projective_space *P,
-		homogeneous_polynomial_domain *Poly4_3,
+		ring_theory::homogeneous_polynomial_domain *Poly4_3,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

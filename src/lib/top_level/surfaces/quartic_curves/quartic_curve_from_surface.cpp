@@ -577,7 +577,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 
 
 	strong_generators *SG_pt_stab = NULL;
-	longinteger_object pt_stab_order;
+	ring_theory::longinteger_object pt_stab_order;
 	object_with_canonical_form *OiP = NULL;
 
 	int f_compute_canonical_form = FALSE;

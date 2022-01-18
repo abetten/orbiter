@@ -139,8 +139,8 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 
 		//GFp.init(p, 0);
 	
-		unipoly_domain FX(F);
-		unipoly_object m;
+		ring_theory::unipoly_domain FX(F);
+		ring_theory::unipoly_object m;
 	
 		FX.create_object_by_rank_string(m, poly, 0);
 		int *rep = (int *) m;

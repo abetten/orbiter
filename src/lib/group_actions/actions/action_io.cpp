@@ -92,7 +92,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		if (f_v) {
 			cout << "action::report printing group order" << endl;
 		}
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		S->group_order(go);
 		ost << "Group order " << go << "\\\\" << endl;
@@ -523,7 +523,7 @@ void action::read_file_and_print_representatives(
 		G->init_ascii_coding_to_sims(Aut_ascii[i], verbose_level - 2);
 
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		G->S->group_order(go);
 
@@ -615,7 +615,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 	G->S = NULL;
 	G->f_has_sims = FALSE;
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	stab->group_order(go);
 
@@ -712,7 +712,7 @@ void action::print_info()
 	}
 	if (f_has_sims) {
 		cout << "has sims" << endl;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Sims->group_order(go);
 		cout << "Order " << go << " = ";
@@ -908,7 +908,7 @@ void action::latex_point_set(std::ostream &ost, long int *set, int sz, int verbo
 
 void action::print_group_order(ostream &ost)
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go;
 }
@@ -917,7 +917,7 @@ void action::print_group_order_long(ostream &ost)
 {
 	int i;
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go << " =";
 	if (Stabilizer_chain) {
@@ -1014,7 +1014,7 @@ void action::export_to_orbiter(
 	int i, j;
 	long int a;
 	file_io Fio;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "action::export_to_orbiter" << endl;

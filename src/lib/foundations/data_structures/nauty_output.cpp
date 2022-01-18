@@ -79,7 +79,7 @@ void nauty_output::allocate(int N, int verbose_level)
 	Base = NEW_int(N);
 	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
-	Ago = NEW_OBJECT(longinteger_object);
+	Ago = NEW_OBJECT(ring_theory::longinteger_object);
 	canonical_labeling = NEW_int(N);
 
 	int i;

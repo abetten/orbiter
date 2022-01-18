@@ -265,7 +265,7 @@ void representatives::write_representatives_and_stabilizers(
 	
 	for (i = 0; i < count; i++) {
 		sims *Stab;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		vector_ge SG;
 		
 		Stab = stab[i];
@@ -342,7 +342,7 @@ void representatives::read_representatives_and_stabilizers(
 		}
 	for (i = 0; i < count; i++) {
 		sims *Stab;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		vector_ge gens;
 		
 		stab[i] = NEW_OBJECT(sims);

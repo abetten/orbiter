@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
 
 
 layered_graph::layered_graph()
@@ -1558,8 +1559,7 @@ void layered_graph::init_poset_from_file(std::string &fname,
 
 
 
-}
-}
+}}}
 
 
 

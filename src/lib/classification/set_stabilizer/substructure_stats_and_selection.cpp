@@ -129,7 +129,7 @@ void substructure_stats_and_selection::init(
 	}
 
 
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int i, f, l, idx;
 	int j;
 
@@ -137,7 +137,7 @@ void substructure_stats_and_selection::init(
 
 	SoS = T->get_set_partition_and_types(types, nb_types, verbose_level);
 
-	longinteger_object go_min;
+	ring_theory::longinteger_object go_min;
 
 
 	selected_type = -1;
@@ -155,7 +155,7 @@ void substructure_stats_and_selection::init(
 
 			idx = SoS->Sets[i][j];
 
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 
 			SubC->PC->get_stabilizer_order(SubC->substructure_size, idx, go);
 

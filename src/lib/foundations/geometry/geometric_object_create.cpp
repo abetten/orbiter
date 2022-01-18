@@ -353,7 +353,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	else if (Descr->f_projective_variety) {
 
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.create_projective_variety(F,
 				Descr->variety_label_txt,
@@ -368,7 +368,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_intersection_of_zariski_open_sets) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.create_intersection_of_zariski_open_sets(F,
 				Descr->variety_label_txt,
@@ -383,7 +383,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_number_of_conditions_satisfied) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.number_of_conditions_satisfied(F,
 				Descr->variety_label_txt,
@@ -402,7 +402,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	else if (Descr->f_projective_curve) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.create_projective_curve(F,
 				Descr->curve_label_txt,

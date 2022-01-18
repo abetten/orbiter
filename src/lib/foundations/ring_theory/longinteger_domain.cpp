@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 
@@ -2156,5 +2157,5 @@ void longinteger_domain::print_digits(char *rep, int len)
 
 
 
-}}
+}}}
 

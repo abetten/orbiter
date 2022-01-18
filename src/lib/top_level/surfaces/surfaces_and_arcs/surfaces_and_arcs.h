@@ -387,7 +387,7 @@ public:
 
 
 	strong_generators *Flag_stab_gens;
-	longinteger_object Flag_stab_go;
+	ring_theory::longinteger_object Flag_stab_go;
 
 
 	int three_lines_idx[45 * 3];
@@ -551,7 +551,7 @@ public:
 	long int *Flag2_representation;
 		// used only in upstep_group_elements
 
-	longinteger_object A4_go;
+	ring_theory::longinteger_object A4_go;
 
 
 	double progress;
@@ -699,10 +699,10 @@ public:
 
 	strong_generators *stab_gens_trihedral_pair; // stabilizer of trihedral pair
 	strong_generators *gens_subgroup;
-	longinteger_object stabilizer_of_trihedral_pair_go;
+	ring_theory::longinteger_object stabilizer_of_trihedral_pair_go;
 	action *A_on_equations;
 	schreier *Orb;
-	longinteger_object stab_order;
+	ring_theory::longinteger_object stab_order;
 	int trihedral_pair_orbit_index;
 	vector_ge *cosets;
 

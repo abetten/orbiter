@@ -680,7 +680,7 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_list_parameters_of_SRG) {
 
-		graph_theory_domain G;
+		graph_theory::graph_theory_domain G;
 
 		G.list_parameters_of_SRG(list_parameters_of_SRG_v_max, verbose_level);
 	}
@@ -958,8 +958,8 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 
 	int i;
 	int cnt;
-	longinteger_object class_size, S, F, A;
-	longinteger_domain D;
+	ring_theory::longinteger_object class_size, S, F, A;
+	ring_theory::longinteger_domain D;
 	combinatorics::combinatorics_domain C;
 	combinatorics::combinatorics_domain Combi;
 

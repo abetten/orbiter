@@ -132,10 +132,10 @@ public:
 	void init(std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
 			int verbose_level);
-	void get_subtrees(homogeneous_polynomial_domain *Poly,
+	void get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int &nb_monomials,
 			int verbose_level);
-	void evaluate(homogeneous_polynomial_domain *Poly,
+	void evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
 			int verbose_level);
 
@@ -231,7 +231,7 @@ public:
 	syntax_tree_node();
 	~syntax_tree_node();
 	void null();
-	void split_by_monomials(homogeneous_polynomial_domain *Poly,
+	void split_by_monomials(ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, int verbose_level);
 	int is_homogeneous(int &degree, int verbose_level);
 	void print(std::ostream &ost);
@@ -265,7 +265,7 @@ public:
 	void print_monomial(std::ostream &ost, int *monomial);
 	int identify_single_literal(std::string &single_literal);
 	int is_homogeneous(int &degree, int verbose_level);
-	void split_by_monomials(homogeneous_polynomial_domain *Poly,
+	void split_by_monomials(ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int verbose_level);
 
 };

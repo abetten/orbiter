@@ -88,7 +88,7 @@ void permutation_group_create::permutation_group_init(
 
 		A_initial = NEW_OBJECT(action);
 
-		longinteger_object target_go;
+		ring_theory::longinteger_object target_go;
 		long int *given_base;
 		int given_base_length;
 

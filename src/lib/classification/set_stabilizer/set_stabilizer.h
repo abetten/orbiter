@@ -34,7 +34,7 @@ public:
 	sims *Stab; // the stabilizer of the original set
 
 
-	longinteger_object stab_order, new_stab_order;
+	ring_theory::longinteger_object stab_order, new_stab_order;
 	int nb_times_orbit_count_does_not_match_up;
 	int backtrack_nodes_first_time;
 	int backtrack_nodes_total_in_loop;
@@ -49,7 +49,7 @@ public:
 
 	action *A_induced; // the action on Stab_orbits->interesting_points[]
 
-	longinteger_object induced_go, K_go;
+	ring_theory::longinteger_object induced_go, K_go;
 
 	int *transporter_witness;
 	int *transporter1;
@@ -64,9 +64,9 @@ public:
 
 	sims *Aut;
 	sims *Aut_original;
-	longinteger_object ago;
-	longinteger_object ago1;
-	longinteger_object target_go;
+	ring_theory::longinteger_object ago;
+	ring_theory::longinteger_object ago1;
+	ring_theory::longinteger_object target_go;
 
 
 	//union_find_on_k_subsets *U;
@@ -149,7 +149,7 @@ public:
 	int *elt2, *Elt2;
 	int *transporter0; // = elt1 * elt2
 
-	longinteger_object go_G;
+	ring_theory::longinteger_object go_G;
 
 	schreier *Schreier;
 	int nb_orbits;

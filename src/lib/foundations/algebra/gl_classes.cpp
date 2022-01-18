@@ -80,7 +80,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 		cout << "gl_classes::init k = " << k << " q = " << q << endl;
 		}
 
-	Table_of_polynomials = NEW_OBJECT(table_of_irreducible_polynomials);
+	Table_of_polynomials = NEW_OBJECT(ring_theory::table_of_irreducible_polynomials);
 
 	if (f_v) {
 		cout << "gl_classes before Table_of_polynomials->init" << endl;
@@ -345,14 +345,14 @@ void gl_classes::make_matrix_in_rational_normal_form(
 
 void gl_classes::centralizer_order_Kung_basic(int nb_irreds, 
 	int *poly_degree, int *poly_mult, int *partition_idx, 
-	longinteger_object &co, 
+	ring_theory::longinteger_object &co,
 	int verbose_level)
 // Computes the centralizer order of a matrix in GL(k,q) 
 // according to Kung's formula~\cite{Kung81}.
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object e, f, co1;
-	longinteger_domain D;
+	ring_theory::longinteger_object e, f, co1;
+	ring_theory::longinteger_domain D;
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
 	number_theory_domain NT;
@@ -413,13 +413,13 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 
 void gl_classes::centralizer_order_Kung(
 	int *Select_polynomial,
-	int *Select_partition, longinteger_object &co,
+	int *Select_partition, ring_theory::longinteger_object &co,
 	int verbose_level)
 // Computes the centralizer order of a matrix in GL(k,q) 
 // according to Kung's formula~\cite{Kung81}.
 {
-	longinteger_object e, f, co1;
-	longinteger_domain D;
+	ring_theory::longinteger_object e, f, co1;
+	ring_theory::longinteger_domain D;
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
 	number_theory_domain NT;
@@ -477,8 +477,8 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	int cnt;
 	int *Mtx;
 	long int a, b;
-	longinteger_object go, co, f, g, cl, r, sum;
-	longinteger_domain D;
+	ring_theory::longinteger_object go, co, f, g, cl, r, sum;
+	ring_theory::longinteger_domain D;
 	number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
@@ -676,8 +676,8 @@ loop1:
 		}
 
 
-		R[cnt].centralizer_order = NEW_OBJECT(longinteger_object);
-		R[cnt].class_length = NEW_OBJECT(longinteger_object);
+		R[cnt].centralizer_order = NEW_OBJECT(ring_theory::longinteger_object);
+		R[cnt].class_length = NEW_OBJECT(ring_theory::longinteger_object);
 		co.assign_to(*R[cnt].centralizer_order);
 		cl.assign_to(*R[cnt].class_length);
 
@@ -731,8 +731,8 @@ void gl_classes::identify_matrix(int *Mtx,
 	Select_partition = NEW_int(Table_of_polynomials->nb_irred);
 	
 	{
-	unipoly_domain U(F);
-	unipoly_object char_poly;
+		ring_theory::unipoly_domain U(F);
+		ring_theory::unipoly_object char_poly;
 
 
 
@@ -829,7 +829,7 @@ void gl_classes::identify_matrix(int *Mtx,
 		}
 }
 
-void gl_classes::identify2(int *Mtx, unipoly_object &poly,
+void gl_classes::identify2(int *Mtx, ring_theory::unipoly_object &poly,
 	int *Mult, int *Select_partition, int *Basis,
 	int verbose_level)
 {
@@ -945,8 +945,8 @@ void gl_classes::compute_generalized_kernels_for_each_block(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int h, u, d, tt, *poly_coeffs, b0;
-	unipoly_domain U(F);
-	unipoly_object P;
+	ring_theory::unipoly_domain U(F);
+	ring_theory::unipoly_object P;
 	int *M2;
 
 	if (f_v) {
@@ -1368,8 +1368,8 @@ void gl_classes::generators_for_centralizer(
 	Select_partition = NEW_int(Table_of_polynomials->nb_irred);
 	
 	{
-	unipoly_domain U(F);
-	unipoly_object char_poly;
+		ring_theory::unipoly_domain U(F);
+		ring_theory::unipoly_object char_poly;
 
 
 
@@ -1501,7 +1501,7 @@ void gl_classes::generators_for_centralizer(
 
 
 void gl_classes::centralizer_generators(int *Mtx,
-	unipoly_object &poly, int *Mult, int *Select_partition,
+		ring_theory::unipoly_object &poly, int *Mult, int *Select_partition,
 	int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,  
 	int verbose_level)
 {
@@ -1997,8 +1997,8 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 		ostream &ost, gl_class_rep *R)
 {
 	int *Mtx;
-	longinteger_object go, co, cl, r, f, g;
-	longinteger_domain D;
+	ring_theory::longinteger_object go, co, cl, r, f, g;
+	ring_theory::longinteger_domain D;
 	int *Select_polynomial, *Select_Partition;
 	int i, a, m, p, b;
 	int f_elements_exponential = FALSE;

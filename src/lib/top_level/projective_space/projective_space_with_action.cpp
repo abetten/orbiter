@@ -454,7 +454,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	//projective_space *P3;
 	int order;
 
-	longinteger_object full_group_order;
+	ring_theory::longinteger_object full_group_order;
 	order = A->element_order(Elt);
 
 	full_group_order.create(order, __FILE__, __LINE__);
@@ -679,9 +679,9 @@ void projective_space_with_action::map(formula *Formula,
 		exit(1);
 	}
 
-	homogeneous_polynomial_domain *Poly;
+	ring_theory::homogeneous_polynomial_domain *Poly;
 
-	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "projective_space_with_action::map before Poly->init" << endl;
@@ -800,9 +800,9 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		exit(1);
 	}
 
-	homogeneous_polynomial_domain *Poly4_3;
+	ring_theory::homogeneous_polynomial_domain *Poly4_3;
 
-	Poly4_3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface before Poly->init" << endl;

@@ -625,7 +625,7 @@ void compute_stabilizer::setup_stabilizer(sims *Stab0, int verbose_level)
 		cout << "compute_stabilizer::setup_stabilizer automorphism group order after = " << ago1 << endl;
 	}
 
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	D.mult(K_go, ago, target_go);
 	if (f_v) {
@@ -1005,7 +1005,7 @@ void compute_stabilizer::init_U(int verbose_level)
 void compute_stabilizer::update_stabilizer(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int cmp;
 
 	Stab->group_order(new_stab_order);

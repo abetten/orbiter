@@ -522,7 +522,7 @@ int classification_of_objects::process_object(
 
 
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	NO->Ago->assign_to(go);
 
@@ -1097,7 +1097,7 @@ static void print_summary_table_entry(int *Table,
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(str);
 #else
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 			go.create(PC->Ago_transversal[i], __FILE__, __LINE__);
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(str);

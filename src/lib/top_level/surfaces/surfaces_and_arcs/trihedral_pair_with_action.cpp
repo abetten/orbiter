@@ -330,7 +330,7 @@ void trihedral_pair_with_action::init(arc_lifting *AL, int verbose_level)
 
 	// the problem is here:
 	{
-		longinteger_object ago;
+		ring_theory::longinteger_object ago;
 
 		if (f_v) {
 			cout << "trihedral_pair_with_action::init "
@@ -716,7 +716,7 @@ strong_generators *trihedral_pair_with_action::create_stabilizer_of_trihedral_pa
 
 	strong_generators *gens_dual;
 	strong_generators *gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	gens = NEW_OBJECT(strong_generators);
 
@@ -1378,7 +1378,7 @@ void trihedral_pair_with_action::report(ostream &ost, int verbose_level)
 #endif
 
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Aut_gens->group_order(go);
 	ost << "The automorphism group of the surface has order "

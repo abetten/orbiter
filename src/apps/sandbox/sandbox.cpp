@@ -35,7 +35,7 @@ int main()
 	int degree = 48;
 	int target_go_lint = 144;
 	int nb_rows = 24;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	target_go.create(target_go_lint, __FILE__, __LINE__);
 	action *A;

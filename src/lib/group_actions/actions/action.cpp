@@ -1944,7 +1944,7 @@ void action::build_up_automorphism_group_from_aut_data(
 	int f_v = (verbose_level >= 1);
 	int h, i, coset;
 	int *Elt1, *Elt2;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "action::build_up_automorphism_group_from_aut_data "
@@ -2057,8 +2057,8 @@ void action::init_group_from_generators(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object go, cur_go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go, cur_go;
 	sims S;
 	int *Elt;
 	int nb_gens, i;
@@ -2134,8 +2134,8 @@ void action::init_group_from_generators_by_base_images(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object go, cur_go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go, cur_go;
 	sims S;
 	int *Elt;
 	int nb_gens, i;
@@ -2212,7 +2212,7 @@ void action::init_group_from_generators_by_base_images(
 	}
 }
 
-void action::group_order(longinteger_object &go)
+void action::group_order(ring_theory::longinteger_object &go)
 {
 	//longinteger_domain D;
 	
@@ -2228,7 +2228,7 @@ void action::group_order(longinteger_object &go)
 
 long int action::group_order_lint()
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	return go.as_lint();
@@ -2388,7 +2388,7 @@ void action::get_generators_from_ascii_coding(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	group_container *G;
 
 	if (f_v) {
@@ -2669,7 +2669,7 @@ void action::point_stabilizer_any_point(int &pt,
 	}
 	
 	int f; //, len;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point "
@@ -2741,7 +2741,7 @@ void action::point_stabilizer_any_point_with_given_group(
 	}
 	
 	int f; //, len;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point_with_given_group "

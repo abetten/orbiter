@@ -2606,7 +2606,7 @@ void wreath_product::orbits_using_files_and_union_find(
 
 	uint32_t *Orbit;
 	int goi;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
 	SG->group_order(go);
@@ -3040,7 +3040,7 @@ void wreath_product::orbits_restricted_compute(
 	}
 
 	schreier *Sch;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int orbit_idx;
 
 	Sch = NEW_OBJECT(schreier);
@@ -3140,7 +3140,7 @@ void wreath_product::orbits_restricted_compute(
 
 
 		sims *derived_group;
-		longinteger_object d_go;
+		ring_theory::longinteger_object d_go;
 
 		derived_group = NEW_OBJECT(sims);
 

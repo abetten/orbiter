@@ -263,7 +263,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 			Pts, nb_pts, /*canonical_pt,*/ NULL,
 			verbose_level);
 	//GU = P->set_stabilizer(Pts, nb_pts, verbose_level);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	sg->group_order(go);
 	cout << "Group has been computed, group order = " << go << endl;
@@ -526,7 +526,7 @@ void projective_space_init_line_action(projective_space *P,
 	}
 	int f_induce_action = TRUE;
 	sims S;
-	longinteger_object go1;
+	ring_theory::longinteger_object go1;
 
 	S.init(A_points, 0);
 	S.init_generators(*A_points->Strong_gens->gens,

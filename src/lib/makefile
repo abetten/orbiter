@@ -146,7 +146,6 @@ MODULES= \
 		foundations/graph_theory/graph_node.o \
 		foundations/graph_theory/graph_theory_domain.o \
 		foundations/graph_theory/layered_graph.o \
-		foundations/graph_theory/layered_graph_draw_options.o \
 		foundations/graph_theory/rainbow_cliques.o \
 		foundations/graph_theory/Clique/KClique.o\
 		foundations/graph_theory_nauty/naugraph.o \
@@ -163,6 +162,7 @@ MODULES= \
 		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/EasyBMP.o \
 		foundations/graphics/graphical_output.o \
+		foundations/graphics/layered_graph_draw_options.o \
 		foundations/graphics/mp_graphics.o \
 		foundations/graphics/parametric_curve_point.o \
 		foundations/graphics/parametric_curve.o \

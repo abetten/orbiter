@@ -559,7 +559,7 @@ public:
 	int *subspace_basis; // [n * big_n]
 	int *subspace_basis2; // [n * big_n]
 	
-	longinteger_object degree;
+	ring_theory::longinteger_object degree;
 	int max_string_length;
 	
 	int f_has_print_function;
@@ -580,7 +580,7 @@ public:
 	void unrank(long int i, int *v, int verbose_level);
 	long int rank(int *v, int verbose_level);
 	void compute_image_longinteger(action *A, int *Elt, 
-		longinteger_object &i, longinteger_object &j, 
+			ring_theory::longinteger_object &i, ring_theory::longinteger_object &j,
 		int verbose_level);
 	long int compute_image_int(action *A, int *Elt,
 		long int i, int verbose_level);
@@ -604,7 +604,7 @@ public:
 	int n; // the dimension M->n
 	int q;
 	action *A;
-	homogeneous_polynomial_domain *HPD;
+	ring_theory::homogeneous_polynomial_domain *HPD;
 	matrix_group *M;
 	finite_field *F;
 	int low_level_point_size;
@@ -625,7 +625,7 @@ public:
 	~action_on_homogeneous_polynomials();
 	void null();
 	void free();
-	void init(action *A, homogeneous_polynomial_domain *HPD, 
+	void init(action *A, ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	void init_invariant_set_of_equations(int *Equations, 
 		int nb_equations, int verbose_level);

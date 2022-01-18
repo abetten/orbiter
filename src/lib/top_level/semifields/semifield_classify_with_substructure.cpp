@@ -422,7 +422,7 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 
 	Semifields = NEW_OBJECT(classification_step);
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Sub->SC->A->group_order(go);
 

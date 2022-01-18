@@ -115,7 +115,7 @@ void strong_generators::init_from_ascii_coding(action *A,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	group_container *G;
 
 	if (f_v) {
@@ -349,7 +349,7 @@ void strong_generators::init_from_data_with_target_go_ascii(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data_with_target_go_ascii" << endl;
@@ -374,7 +374,7 @@ void strong_generators::init_from_data_with_target_go_ascii(
 void strong_generators::init_from_data_with_target_go(
 	action *A, int *data_gens,
 	int data_gens_size, int nb_gens,
-	longinteger_object &target_go,
+	ring_theory::longinteger_object &target_go,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -503,7 +503,7 @@ void strong_generators::init_from_data_with_go(
 void
 strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 	schreier *Sch,
-	int pt, int &orbit_idx, longinteger_object &full_group_order,
+	int pt, int &orbit_idx, ring_theory::longinteger_object &full_group_order,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -535,7 +535,7 @@ strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 
 void strong_generators::init_point_stabilizer_orbit_rep_schreier(
 	schreier *Sch,
-	int orbit_idx, longinteger_object &full_group_order,
+	int orbit_idx, ring_theory::longinteger_object &full_group_order,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -558,7 +558,7 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 {
 	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	//int i;	
 	
 	if (f_v) {
@@ -613,7 +613,7 @@ void strong_generators::init_generators_for_the_conjugate_group_aGav(
 {
 	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	//int i;	
 	
 	if (f_v) {
@@ -669,7 +669,7 @@ void strong_generators::init_transposed_group(
 {
 	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 	
 	if (f_v) {
@@ -726,8 +726,8 @@ void strong_generators::init_group_extension(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	longinteger_object target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object target_go;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "strong_generators::init_group_extension" << endl;
@@ -798,8 +798,8 @@ void strong_generators::init_group_extension(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	longinteger_object target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object target_go;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "strong_generators::init_group_extension" << endl;
@@ -888,7 +888,7 @@ void strong_generators::switch_to_subgroup(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	if (f_v) {
 		cout << "strong_generators::switch_to_subgroup" << endl;
@@ -968,7 +968,7 @@ void strong_generators::init_subgroup(action *A,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	if (f_v) {
 		cout << "strong_generators::init_subgroup" << endl;
@@ -1037,7 +1037,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	if (f_v) {
 		cout << "strong_generators::init_subgroup_by_generators" << endl;
@@ -1259,17 +1259,17 @@ void strong_generators::add_single_generator(
 	}
 }
 
-void strong_generators::group_order(longinteger_object &go)
+void strong_generators::group_order(ring_theory::longinteger_object &go)
 {
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	D.multiply_up(go, tl, A->base_len(), 0 /* verbose_level */);
 }
 
 long int strong_generators::group_order_as_lint()
 {
-	longinteger_domain D;
-	longinteger_object go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go;
 
 	D.multiply_up(go, tl, A->base_len(), 0 /* verbose_level */);
 	return go.as_lint();
@@ -1277,7 +1277,7 @@ long int strong_generators::group_order_as_lint()
 
 void strong_generators::print_group_order(std::ostream &ost)
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	ost << go;
@@ -1371,7 +1371,7 @@ void strong_generators::print_generators_compact(std::ostream &ost)
 void strong_generators::print_generators(std::ostream &ost)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	cout << "strong_generators::print_generators computing group order" << endl;
 	group_order(go);
@@ -1418,7 +1418,7 @@ void strong_generators::print_generators(std::ostream &ost)
 void strong_generators::print_generators_in_latex_individually(std::ostream &ost)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 
@@ -1467,7 +1467,7 @@ void strong_generators::print_generators_in_latex_individually(std::ostream &ost
 void strong_generators::print_generators_in_source_code()
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	cout << "Strong generators for a group of "
@@ -1487,7 +1487,7 @@ void strong_generators::print_generators_in_source_code_to_file(
 		const char *fname)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	file_io Fio;
 
 	{
@@ -1508,7 +1508,7 @@ void strong_generators::print_generators_in_source_code_to_file(
 void strong_generators::print_generators_even_odd()
 {
 	int i, sgn;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	cout << "Strong generators for a group of order " << go << " tl=";
@@ -1685,7 +1685,7 @@ void strong_generators::print_generators_tex()
 void strong_generators::print_generators_tex(std::ostream &ost)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	ost << "Strong generators for a group of order " << go << ":" << endl;
@@ -1714,7 +1714,7 @@ void strong_generators::print_generators_tex(std::ostream &ost)
 void strong_generators::print_generators_in_different_action_tex(std::ostream &ost, action *A2)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	ost << "Strong generators for a group of order " << go << ":" << endl;
@@ -1748,7 +1748,7 @@ void strong_generators::print_generators_tex_with_print_point_function(
 		void *point_label_data)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	ost << "Strong generators for a group of order " << go << ":" << endl;
@@ -1783,7 +1783,7 @@ void strong_generators::print_generators_tex_with_print_point_function(
 void strong_generators::print_generators_for_make_element(std::ostream &ost)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	ost << "Strong generators for a group of order " << go << ":\\\\" << endl;
@@ -1798,7 +1798,7 @@ void strong_generators::print_generators_for_make_element(std::ostream &ost)
 void strong_generators::print_generators_as_permutations()
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	cout << "Strong generators for a group of order "
@@ -1822,7 +1822,7 @@ void strong_generators::print_generators_as_permutations()
 void strong_generators::print_generators_as_permutations_tex(std::ostream &ost, action *A2)
 {
 	int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	ost << "Strong generators for a group of order " << go << ":" << endl;
@@ -1875,7 +1875,7 @@ void strong_generators::print_with_given_action(
 void strong_generators::print_elements_ost(std::ostream &ost)
 {
 	long int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	sims *S;
 	int *Elt;
 
@@ -1899,7 +1899,7 @@ void strong_generators::print_elements_ost(std::ostream &ost)
 void strong_generators::print_elements_with_special_orthogonal_action_ost(std::ostream &ost)
 {
 	long int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	sims *S;
 	int *Elt;
 
@@ -1934,7 +1934,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(std::o
 void strong_generators::print_elements_with_given_action(std::ostream &ost, action *A2)
 {
 	long int i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	sims *S;
 	int *Elt;
 
@@ -1966,7 +1966,7 @@ void strong_generators::print_elements_with_given_action(std::ostream &ost, acti
 void strong_generators::print_elements_latex_ost(std::ostream &ost)
 {
 	long int i, order, m;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	sims *S;
 	int *Elt;
 
@@ -2001,7 +2001,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		void *point_label_data)
 {
 	long int i, order, m;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	sims *S;
 	int *Elt;
 	int *power_elt;
@@ -2080,7 +2080,7 @@ void strong_generators::list_of_elements_of_subgroup(
 {
 	int f_v = (verbose_level >= 1);
 	long int i, a;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	sims *S;
 	sims *U;
 	int *Elt;
@@ -2236,7 +2236,7 @@ schreier *strong_generators::orbits_on_points_schreier(
 		A_given->print_info();
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	group_order(go);
 
 	if (f_v) {
@@ -3209,7 +3209,7 @@ strong_generators *strong_generators::point_stabilizer(
 	schreier *Sch;
 	sims *Stab;
 	strong_generators *Stab_gens;
-	longinteger_object G_order, stab_go;
+	ring_theory::longinteger_object G_order, stab_go;
 
 	if (f_v) {
 		cout << "computing orbit of point " << pt << ":" << endl;
@@ -3556,7 +3556,7 @@ void strong_generators::export_to_orbiter_as_bsgs(
 	int i, j;
 	long int a;
 	file_io Fio;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "strong_generators::export_to_orbiter_as_bsgs" << endl;

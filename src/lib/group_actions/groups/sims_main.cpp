@@ -606,7 +606,7 @@ void sims::build_up_group_random_process_no_kernel(
 		sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go, go1;
+	ring_theory::longinteger_object go, go1;
 	sims K;
 
 	if (f_v) {
@@ -639,7 +639,7 @@ void sims::build_up_group_random_process_no_kernel(
 }
 
 void sims::extend_group_random_process_no_kernel(
-		sims *extending_by_G, longinteger_object &target_go,
+		sims *extending_by_G, ring_theory::longinteger_object &target_go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -673,7 +673,7 @@ void sims::extend_group_random_process_no_kernel(
 
 void sims::build_up_group_random_process(sims *K,
 	sims *old_G,
-	longinteger_object &target_go,
+	ring_theory::longinteger_object &target_go,
 	int f_override_choose_next_base_point,
 	int (*choose_next_base_point_method)(action *A,
 			int *Elt, int verbose_level),
@@ -686,8 +686,8 @@ void sims::build_up_group_random_process(sims *K,
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 6);
 	int f_v4 = (verbose_level >= 7);
-	longinteger_domain D;
-	longinteger_object go, G_order, K_order, KG_order, quo, rem;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go, G_order, K_order, KG_order, quo, rem;
 	int drop_out_level, image, cnt, b, c, old_base_len;
 	action *GA;
 	action *KA;
@@ -1040,7 +1040,7 @@ void sims::build_up_group_random_process(sims *K,
 
 void sims::build_up_group_from_generators(sims *K,
 	vector_ge *gens,
-	int f_target_go, longinteger_object *target_go,
+	int f_target_go, ring_theory::longinteger_object *target_go,
 	int f_override_choose_next_base_point,
 	int (*choose_next_base_point_method)(action *A,
 			int *Elt, int verbose_level),
@@ -1049,9 +1049,8 @@ void sims::build_up_group_from_generators(sims *K,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	//int f_vvvv = (verbose_level >= 4);
-	longinteger_domain D;
-	longinteger_object G_order, K_order, KG_order;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object G_order, K_order, KG_order;
 	int drop_out_level, image, f_added, j;
 	int level, base_point, b, old_base_len;
 	action *GA;
@@ -1361,7 +1360,7 @@ int sims::closure_group(int nb_times, int verbose_level)
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
-	longinteger_object old_go, go, go1;
+	ring_theory::longinteger_object old_go, go, go1;
 
 	if (f_v) {
 		cout << "sims::closure_group" << endl;

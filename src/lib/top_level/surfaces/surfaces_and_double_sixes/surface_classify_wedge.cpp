@@ -358,7 +358,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 					"orbit " << i << " / " << nb_orbits << endl;
 		}
 		set_and_stabilizer *R;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		long int Lines[27];
 
 		R = Classify_double_sixes->Double_sixes->get_set_and_stabilizer(
@@ -442,7 +442,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 	Surfaces = NEW_OBJECT(classification_step);
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	A->group_order(go);
 
 	Surfaces->init(A, A2,
@@ -496,7 +496,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 
 		strong_generators *S;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 
 		if (f_v) {
@@ -591,7 +591,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		strong_generators *Aut_gens;
 
 		{
-			longinteger_object ago;
+			ring_theory::longinteger_object ago;
 
 			if (f_v) {
 				cout << "surface_classify_wedge::upstep "
@@ -929,7 +929,7 @@ void surface_classify_wedge::read_file(
 
 	Surfaces = NEW_OBJECT(classification_step);
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	A->group_order(go);
 
@@ -2142,7 +2142,7 @@ void surface_classify_wedge::latex_surfaces(
 	ost << "\\subsection*{The Group $\\PGGL(4," << q << ")$}" << endl;
 
 	{
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		A->Strong_gens->group_order(go);
 
 		ost << "The order of the group is ";
@@ -2296,7 +2296,7 @@ void surface_classify_wedge::report_surface(
 	}
 
 
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	SaS->Strong_gens->group_order(ago);
 	ost << "The automorphism group of the surface has order " << ago << "\\\\" << endl;
 	ost << "The automorphism group is the following group\\\\" << endl;
@@ -2478,7 +2478,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				orbit_index < Surfaces->nb_orbits;
 				orbit_index++) {
 
-			longinteger_object ago;
+			ring_theory::longinteger_object ago;
 
 			Surfaces->Orbit[orbit_index].gens->group_order(ago);
 
@@ -3225,7 +3225,7 @@ void surface_classify_wedge::recognition(
 
 	SG0->init_generators_for_the_conjugate_group_aGav(
 			SG, Elt_isomorphism, verbose_level);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	SG0->group_order(go);
 	if (f_v) {

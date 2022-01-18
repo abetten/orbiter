@@ -1093,8 +1093,8 @@ void isomorph::evaluate_statistics(int verbose_level)
 	int graph_size_min;
 	int time_max;
 	int time_min;
-	longinteger_object a, b, c, a1, b1, c1, d, n, q1, q2, q3, r1, r2, r3;
-	longinteger_domain D;
+	ring_theory::longinteger_object a, b, c, a1, b1, c1, d, n, q1, q2, q3, r1, r2, r3;
+	ring_theory::longinteger_domain D;
 	
 	nb_backtrack_max = nb_backtrack_min = stats_nb_backtrack[0];
 	graph_size_max = graph_size_min = stats_graph_size[0];
@@ -1613,7 +1613,7 @@ void isomorph::print_isomorphism_types(int f_select,
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, j, id, first, c;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "isomorph::print_isomorphism_types" << endl;
@@ -1680,7 +1680,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		induced_action_on_set(Stab, data, verbose_level);
 
 		if (f_v) {
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 			
 			AA->group_order(go);
 			cout << "action " << AA->label << " computed, "
@@ -1688,7 +1688,7 @@ void isomorph::print_isomorphism_types(int f_select,
 			}
 
 		schreier Orb;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		
 		AA->compute_all_point_orbits(Orb, Stab->gens, verbose_level - 2);
 		cout << "Computed all orbits on the set, found "
@@ -1723,7 +1723,7 @@ void isomorph::induced_action_on_set_and_kernel(
 	int f_v = (verbose_level >= 1);
 	action *AAA;
 	//sims K;
-	longinteger_object go, ko;
+	ring_theory::longinteger_object go, ko;
 	int i;
 	int *Elt1;
 	

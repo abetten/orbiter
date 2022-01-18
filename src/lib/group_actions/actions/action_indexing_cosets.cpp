@@ -21,9 +21,9 @@ void action::coset_unrank(sims *G, sims *U,
 	long int i, base_idx = 0, base_pt, rank0, nb, len, k, elt_k;
 	int rem_int;
 	int *Elt_gk, *Elt1, *Elt2;
-	longinteger_domain D;
-	longinteger_object G0_order, G_order;
-	longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object G0_order, G_order;
+	ring_theory::longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
 	data_structures::sorting Sorting;
 
@@ -290,8 +290,8 @@ long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	long int i, base_idx = 0, base_pt, rank1, nb, len, k, kk, elt_k, im;
 	int rem_int;
 	int *Elt_gk, *Elt1, *Elt2, *Elt3, *Elt_u;
-	longinteger_domain D;
-	longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
 	data_structures::sorting Sorting;
 

@@ -10,6 +10,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 // #############################################################################
@@ -229,16 +230,6 @@ public:
 
 };
 
-int homogeneous_polynomial_domain_compare_monomial_with(void *data,
-	int i, void *data2, void *extra_data);
-int homogeneous_polynomial_domain_compare_monomial(void *data,
-	int i, int j, void *extra_data);
-void homogeneous_polynomial_domain_swap_monomial(void *data,
-	int i, int j, void *extra_data);
-void HPD_callback_print_function(
-		std::stringstream &ost, void *data, void *callback_data);
-void HPD_callback_print_function2(
-		std::stringstream &ost, void *data, void *callback_data);
 
 // #############################################################################
 // longinteger_domain.cpp:
@@ -819,7 +810,7 @@ public:
 
 };
 
-}}
+}}}
 
 
 #endif /* SRC_LIB_FOUNDATIONS_RING_THEORY_RING_THEORY_H_ */

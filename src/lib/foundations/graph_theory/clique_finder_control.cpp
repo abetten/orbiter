@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
 
 
 clique_finder_control::clique_finder_control()
@@ -210,4 +211,5 @@ void clique_finder_control::print()
 
 
 
-}}
+}}}
+

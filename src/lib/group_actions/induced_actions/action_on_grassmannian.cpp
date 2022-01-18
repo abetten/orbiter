@@ -85,7 +85,7 @@ void action_on_grassmannian::init(action &A,
 		grassmann *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	combinatorics::combinatorics_domain C;
 	
 	if (f_v) {
@@ -208,7 +208,7 @@ long int action_on_grassmannian::rank(int *v, int verbose_level)
 
 void action_on_grassmannian::compute_image_longinteger(
 	action *A, int *Elt,
-	longinteger_object &i, longinteger_object &j,
+	ring_theory::longinteger_object &i, ring_theory::longinteger_object &j,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

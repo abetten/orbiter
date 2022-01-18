@@ -1191,7 +1191,7 @@ void packing_was::create_graph_and_save_to_file(
 		cout << "packing_was::create_graph_and_save_to_file orbit_length = " << orbit_length << endl;
 	}
 
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 	int type_idx;
 
 	if (f_v) {
@@ -1243,7 +1243,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 		cout << endl;
 	}
 
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 	int *Type_idx;
 	string fname;
 

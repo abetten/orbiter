@@ -239,7 +239,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 
 	N = NEW_OBJECT(action);
-	longinteger_object n_go;
+	ring_theory::longinteger_object n_go;
 	int f_no_base = FALSE;
 
 	n_go.create(N_go, __FILE__, __LINE__);
@@ -480,7 +480,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 		sims *O;
 		vector_ge *O_gens;
-		longinteger_object O_go;
+		ring_theory::longinteger_object O_go;
 		schreier *Sch1;
 
 
@@ -713,7 +713,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	int *Zuppos;
 	int nb_zuppos;
 	int goi;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i, j, t;
 
 	if (f_v) {

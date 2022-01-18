@@ -396,9 +396,9 @@ void any_group::normalizer(int verbose_level)
 	sims *G;
 	sims *H;
 	strong_generators *gens_N;
-	longinteger_object N_order;
-	longinteger_object G_order;
-	longinteger_object H_order;
+	ring_theory::longinteger_object N_order;
+	ring_theory::longinteger_object G_order;
+	ring_theory::longinteger_object H_order;
 
 
 	fname_magma_prefix.assign(LG->label);
@@ -683,7 +683,7 @@ void any_group::print_elements(int verbose_level)
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i; //, cnt;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -733,7 +733,7 @@ void any_group::print_elements_tex(
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	H->group_order(go);
@@ -787,7 +787,7 @@ void any_group::order_of_products_of_elements(
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	H->group_order(go);
@@ -1052,7 +1052,7 @@ void any_group::element_rank(std::string &elt_data, int verbose_level)
 		cout << endl;
 	}
 
-	longinteger_object a;
+	ring_theory::longinteger_object a;
 	H->element_rank(a, Elt);
 
 	if (f_v) {
@@ -1100,7 +1100,7 @@ void any_group::element_unrank(std::string &rank_string, int verbose_level)
 	Elt = NEW_int(A1->elt_size_in_int);
 
 
-	longinteger_object a;
+	ring_theory::longinteger_object a;
 
 	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
 
@@ -1149,7 +1149,7 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 
 	Elt = NEW_int(A->elt_size_in_int);
 
-	longinteger_object a, b;
+	ring_theory::longinteger_object a, b;
 
 #if 1
 	cout << "creating element " << elt_data << endl;
@@ -1482,7 +1482,7 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 			verbose_level - 1);
 
 	strong_generators *SG_stab;
-	longinteger_object full_group_order;
+	ring_theory::longinteger_object full_group_order;
 
 	LG->Strong_gens->group_order(full_group_order);
 
@@ -1596,7 +1596,7 @@ void any_group::orbits_on_subsets(poset_classification_control *Control,
 	if (f_v) {
 		cout << "any_group::orbits_on_subsets group order" << endl;
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Subgroup_gens->group_order(go);
 

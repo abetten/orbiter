@@ -146,7 +146,7 @@ void formula::init(std::string &label, std::string &label_tex,
 }
 
 
-void formula::get_subtrees(homogeneous_polynomial_domain *Poly,
+void formula::get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
 		syntax_tree_node **&Subtrees, int &nb_monomials,
 		int verbose_level)
 {
@@ -264,7 +264,7 @@ void formula::get_subtrees(homogeneous_polynomial_domain *Poly,
 	}
 }
 
-void formula::evaluate(homogeneous_polynomial_domain *Poly,
+void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 		syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
 		int verbose_level)
 {

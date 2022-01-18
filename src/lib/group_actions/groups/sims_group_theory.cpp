@@ -121,9 +121,9 @@ int sims::transitive_extension_tolerant(schreier &O,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go, ol, ego, cur_ego, rgo, rem;
+	ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int orbit_len, j;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	os_interface Os;
 
 	orbit_len = O.orbit_len[0];
@@ -239,9 +239,9 @@ void sims::transitive_extension_using_coset_representatives(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go, ol, ego, cur_ego, rgo, rem;
+	ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int orbit_len, j;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	os_interface Os;
 
 	orbit_len = nb_cosets;
@@ -332,9 +332,9 @@ void sims::transitive_extension_using_generators(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go, ol, ego, cur_ego, rgo, rem;
+	ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int j;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	os_interface Os;
 
 	if (f_v) {
@@ -418,9 +418,9 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 // then sifts random schreier generators into S
 {
 	schreier O;
-	longinteger_object go, stab_order, cur_stab_order, rgo, rem;
+	ring_theory::longinteger_object go, stab_order, cur_stab_order, rgo, rem;
 	int orbit_len, r, cnt = 0, image; // d
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int *Elt;
 
 	int f_v = (verbose_level >= 1);
@@ -771,8 +771,8 @@ void sims::conjugate(action *A,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
 	//int f_vvv = (verbose_level >= 3);
-	longinteger_domain D;
-	longinteger_object go, target_go, quo, rem;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go, target_go, quo, rem;
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
 	int cnt, drop_out_level, image, f_added, c;
 
@@ -920,7 +920,7 @@ int sims::test_if_in_set_stabilizer(action *A,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go, a;
+	ring_theory::longinteger_object go, a;
 	long int goi, i, ret;
 	int *Elt1;
 
@@ -962,7 +962,7 @@ int sims::test_if_subgroup(sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go, a, b;
+	ring_theory::longinteger_object go, a, b;
 	int goi, i, ret, drop_out_level, image;
 	int *Elt1, *Elt2;
 
@@ -1008,7 +1008,7 @@ int sims::find_element_with_exactly_n_fixpoints_in_given_action(
 		int *Elt, int nb_fixpoints, action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i, order = 0;
 	long int goi;
 	int *cycle_type;
@@ -1050,7 +1050,7 @@ void sims::table_of_group_elements_in_data_form(
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i;
 
 	if (f_v) {
@@ -1075,7 +1075,7 @@ void sims::regular_representation(int *Elt,
 		int *perm, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int goi, i, j;
 	int *Elt1;
 	int *Elt2;
@@ -1107,7 +1107,7 @@ void sims::element_ranks_subgroup(sims *subgroup,
 		int *element_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int goi;
 	long int i, j;
 	int *Elt1;
@@ -1132,7 +1132,7 @@ void sims::center(vector_ge &gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	vector_ge gens_inv;
 	long int goi, i, j, k, len;
 	int *Elt1;
@@ -1189,7 +1189,7 @@ void sims::all_cosets(int *subset, int size,
 		long int *all_cosets, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int goi, i, j, k, nb_cosets, cnt;
 	int *Elt1;
 	int *Elt2;
@@ -1298,7 +1298,7 @@ long int sims::find_element_of_given_order_int(int ord,
 		int &nb_trials, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int o, d, goi;
 	int *Elt1;
 	long int a;
@@ -1359,7 +1359,7 @@ int sims::find_element_of_given_order_int(int *Elt,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int o, d, goi;
 	int *Elt1;
 
@@ -1431,7 +1431,7 @@ void sims::find_element_of_prime_power_order(int p,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int o;
 
 	nb_trials = 0;
@@ -1488,8 +1488,8 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;
-	longinteger_domain D;
-	longinteger_object go, go1, go_P, go_P1;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go, go1, go_P, go_P1;
 	int i, e, e1, c, nb_trials;
 
 	if (f_v) {
@@ -1623,7 +1623,7 @@ void sims::create_Cayley_graph(vector_ge *gens,
 {
 	int f_v = (verbose_level >= 1);
 	int i, h, j;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int *Elt1;
 	int *Elt2;
 
@@ -1685,7 +1685,7 @@ void sims::create_group_table(int *&Table, long int &n,
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, k;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -1984,7 +1984,7 @@ void sims::zuppo_list(
 {
 	int f_v = (verbose_level >= 1);
 	int goi;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int rk, o, i, j;
 	int *Elt1;
 	int *Elt2;

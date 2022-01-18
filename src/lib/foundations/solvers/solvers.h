@@ -381,7 +381,7 @@ public:
 	int is_of_Steiner_type();
 	void make_clique_graph_adjacency_matrix(data_structures::bitvector *&Adj,
 		int verbose_level);
-	void make_clique_graph(colored_graph *&CG, int verbose_level);
+	void make_clique_graph(graph_theory::colored_graph *&CG, int verbose_level);
 	void make_clique_graph_and_save(std::string &clique_graph_fname,
 		int verbose_level);
 	void test_if_the_last_solution_is_unique();

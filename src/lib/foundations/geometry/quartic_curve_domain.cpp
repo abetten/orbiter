@@ -88,7 +88,7 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 
 
-	Poly1_3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly1_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly1_3->init" << endl;
 	}
@@ -103,7 +103,7 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 
 
 
-	Poly2_3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly2_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly2_3->init" << endl;
 	}
@@ -118,7 +118,7 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 
 
 
-	Poly3_3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly3_3->init" << endl;
 	}
@@ -132,7 +132,7 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 
 
-	Poly4_3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly4_3->init" << endl;
 	}
@@ -145,7 +145,7 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 		cout << "surface_domain::init_polynomial_domains after Poly4_3->init" << endl;
 	}
 
-	Poly3_4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly3_4->init" << endl;
 	}
@@ -158,7 +158,7 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 		cout << "surface_domain::init_polynomial_domains after Poly3_4->init" << endl;
 	}
 
-	Partials = NEW_OBJECTS(partial_derivative, 3);
+	Partials = NEW_OBJECTS(ring_theory::partial_derivative, 3);
 
 	int i;
 

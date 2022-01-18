@@ -33,7 +33,7 @@ coding_theory_domain::~coding_theory_domain()
 
 
 
-void coding_theory_domain::make_mac_williams_equations(longinteger_object *&M,
+void coding_theory_domain::make_mac_williams_equations(ring_theory::longinteger_object *&M,
 		int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -43,7 +43,7 @@ void coding_theory_domain::make_mac_williams_equations(longinteger_object *&M,
 	if (f_v) {
 		cout << "coding_theory_domain::make_mac_williams_equations" << endl;
 	}
-	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+	M = NEW_OBJECTS(ring_theory::longinteger_object, (n + 1) * (n + 1));
 
 	for (i = 0; i <= n; i++) {
 		for (j = 0; j <= n; j++) {
@@ -413,10 +413,10 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 int coding_theory_domain::gilbert_varshamov_lower_bound_for_d(int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	combinatorics::combinatorics_domain Combi;
 	int i, d;
-	longinteger_object qnmk, qm1, qm1_power, S, s, a, b;
+	ring_theory::longinteger_object qnmk, qm1, qm1_power, S, s, a, b;
 
 	if (f_v) {
 		cout << "coding_theory_domain::gilbert_varshamov_lower_bound_for_d" << endl;
@@ -468,8 +468,8 @@ int coding_theory_domain::hamming_bound_for_d(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int e, d, t;
-	longinteger_object qnmk, qm1, qm1_power, B, s, a, b;
-	longinteger_domain D;
+	ring_theory::longinteger_object qnmk, qm1, qm1_power, B, s, a, b;
+	ring_theory::longinteger_domain D;
 	combinatorics::combinatorics_domain Combi;
 
 
@@ -518,8 +518,8 @@ int coding_theory_domain::plotkin_bound_for_d(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int d;
-	longinteger_object qkm1, qk, qm1, a, b, c, Q, R;
-	longinteger_domain D;
+	ring_theory::longinteger_object qkm1, qk, qm1, a, b, c, Q, R;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "coding_theory_domain::plotkin_bound_for_d" << endl;
@@ -589,8 +589,8 @@ int coding_theory_domain::griesmer_bound_for_n(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, n;
-	longinteger_object qq, qi, d1, S, Q, R, one, a, b;
-	longinteger_domain D;
+	ring_theory::longinteger_object qq, qi, d1, S, Q, R, one, a, b;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "coding_theory_domain::griesmer_bound_for_n" << endl;
@@ -633,7 +633,7 @@ void coding_theory_domain::do_make_macwilliams_system(
 {
 	int f_v = (verbose_level >= 1);
 	coding_theory_domain C;
-	longinteger_object *M;
+	ring_theory::longinteger_object *M;
 	int i, j;
 
 	if (f_v) {
@@ -1153,12 +1153,12 @@ void coding_theory_domain::code_projective_weights(finite_field *F,
 	FREE_int(word);
 }
 
-void coding_theory_domain::mac_williams_equations(longinteger_object *&M, int n, int k, int q)
+void coding_theory_domain::mac_williams_equations(ring_theory::longinteger_object *&M, int n, int k, int q)
 {
 	combinatorics::combinatorics_domain D;
 	int i, j;
 
-	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+	M = NEW_OBJECTS(ring_theory::longinteger_object, (n + 1) * (n + 1));
 
 	for (i = 0; i <= n; i++) {
 		for (j = 0; j <= n; j++) {
@@ -1170,8 +1170,8 @@ void coding_theory_domain::mac_williams_equations(longinteger_object *&M, int n,
 void coding_theory_domain::determine_weight_enumerator()
 {
 	int n = 19, k = 7, q = 2;
-	longinteger_domain D;
-	longinteger_object *M, *A1, *A2, qk;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object *M, *A1, *A2, qk;
 	int i;
 
 	qk.create(q, __FILE__, __LINE__);
@@ -1182,8 +1182,8 @@ void coding_theory_domain::determine_weight_enumerator()
 
 	D.matrix_print_tex(cout, M, n + 1, n + 1);
 
-	A1 = NEW_OBJECTS(longinteger_object, n + 1);
-	A2 = NEW_OBJECTS(longinteger_object, n + 1);
+	A1 = NEW_OBJECTS(ring_theory::longinteger_object, n + 1);
+	A2 = NEW_OBJECTS(ring_theory::longinteger_object, n + 1);
 	for (i = 0; i <= n; i++) {
 		A1[i].create(0, __FILE__, __LINE__);
 	}
@@ -1842,7 +1842,7 @@ void coding_theory_domain::do_polynomial(
 
 	long int *poly_monomials;
 	int poly_monomials_sz;
-	homogeneous_polynomial_domain *Poly;
+	ring_theory::homogeneous_polynomial_domain *Poly;
 	finite_field *Fq;
 	int *mon;
 	int *coeff;
@@ -1855,7 +1855,7 @@ void coding_theory_domain::do_polynomial(
 	Orbiter->Lint_vec->print(cout, poly_monomials, poly_monomials_sz);
 	cout << endl;
 
-	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Fq = NEW_OBJECT(finite_field);
 
 	Fq->finite_field_init(2, FALSE /* f_without_tables */, 0 /* verbose_level */);
@@ -3108,7 +3108,8 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 	}
 }
 
-void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_poly,
+void coding_theory_domain::CRC_encode_text(nth_roots *Nth,
+		ring_theory::unipoly_object &CRC_poly,
 	std::string &text, std::string &fname,
 	int verbose_level)
 {
@@ -3301,7 +3302,7 @@ void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_p
 		Fio.int_matrix_write_csv(fname_out, information_and_parity_Fq, 1, IPq);
 		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
 
-		unipoly_object P;
+		ring_theory::unipoly_object P;
 
 		Nth->FX->create_object_of_degree(P, IPq + degree);
 		for (i = 0; i < IPq; i++) {
@@ -3313,8 +3314,8 @@ void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_p
 		Nth->FX->print_object(P, cout);
 		cout << endl;
 
-		unipoly_object Q;
-		unipoly_object R;
+		ring_theory::unipoly_object Q;
+		ring_theory::unipoly_object R;
 
 		Nth->FX->create_object_of_degree(Q, IPq + degree);
 		Nth->FX->create_object_of_degree(R, degree);

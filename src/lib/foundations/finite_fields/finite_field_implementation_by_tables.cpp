@@ -338,8 +338,8 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 	finite_field GFp;
 	GFp.finite_field_init(F->p, FALSE /* f_without_tables */, 0);
 
-	unipoly_domain FX(&GFp);
-	unipoly_object m;
+	ring_theory::unipoly_domain FX(&GFp);
+	ring_theory::unipoly_object m;
 
 	FX.create_object_by_rank_string(m, F->my_poly, 0 /*verbose_level - 2*/);
 	if (f_vv) {
@@ -348,8 +348,8 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 		cout << endl;
 	}
 	{
-		unipoly_domain Fq(&GFp, m, verbose_level - 1);
-		unipoly_object a, c, Alpha;
+		ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
+		ring_theory::unipoly_object a, c, Alpha;
 
 		Fq.create_object_by_rank(Alpha, F->alpha, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
 		Fq.create_object_by_rank(a, 1, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
@@ -729,15 +729,15 @@ void finite_field_implementation_by_tables::print_tables_extension_field(std::st
 	finite_field GFp;
 	GFp.finite_field_init(F->p, FALSE /* f_without_tables */, 0);
 
-	unipoly_domain FX(&GFp);
-	unipoly_object m;
+	ring_theory::unipoly_domain FX(&GFp);
+	ring_theory::unipoly_object m;
 
 
 
 	FX.create_object_by_rank_string(m, poly, verbose_level);
 
-	unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
-	unipoly_object elt;
+	ring_theory::unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
+	ring_theory::unipoly_object elt;
 
 
 

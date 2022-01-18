@@ -4049,7 +4049,7 @@ void diophant::draw_it(
 	int f_bitmatrix = FALSE;
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
-	graph_theory_domain Graph;
+	graph_theory::graph_theory_domain Graph;
 
 
 	Graph.draw_bitmatrix(
@@ -4075,7 +4075,7 @@ void diophant::draw_partitioned(
 	int f_bitmatrix = FALSE;
 	int i, ii, j, jj;
 	combinatorics::combinatorics_domain Combi;
-	graph_theory_domain Graph;
+	graph_theory::graph_theory_domain Graph;
 	
 	
 	if (f_v) {
@@ -4474,7 +4474,7 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 }
 
 
-void diophant::make_clique_graph(colored_graph *&CG, int verbose_level)
+void diophant::make_clique_graph(graph_theory::colored_graph *&CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::bitvector *Adj;
@@ -4485,7 +4485,7 @@ void diophant::make_clique_graph(colored_graph *&CG, int verbose_level)
 	make_clique_graph_adjacency_matrix(Adj, verbose_level - 1);
 
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	string label, label_tex;
 
@@ -4509,7 +4509,7 @@ void diophant::make_clique_graph_and_save(
 		cout << "diophant::make_clique_graph_and_save" << endl;
 	}
 
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 
 	make_clique_graph(CG, verbose_level - 1);
 	CG->save(clique_graph_fname, verbose_level - 1);

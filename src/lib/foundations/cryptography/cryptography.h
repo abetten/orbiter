@@ -118,7 +118,7 @@ public:
 	void square_root_mod(std::string &square_root_number,
 			std::string &mod_number, int verbose_level);
 	void reduce_primes(std::vector<int> &primes,
-			longinteger_object &M,
+			ring_theory::longinteger_object &M,
 			int &f_found_small_factor, int &small_factor,
 			int verbose_level);
 	void do_sift_smooth(int sift_smooth_from,
@@ -126,83 +126,83 @@ public:
 			std::string &sift_smooth_factor_base, int verbose_level);
 	void do_discrete_log(long int y, long int a, long int p, int verbose_level);
 	void do_primitive_root(long int p, int verbose_level);
-	void do_primitive_root_longinteger(longinteger_object &p, int verbose_level);
+	void do_primitive_root_longinteger(ring_theory::longinteger_object &p, int verbose_level);
 	void do_smallest_primitive_root(long int p, int verbose_level);
 	void do_smallest_primitive_root_interval(long int p_min, long int p_max, int verbose_level);
 	void do_number_of_primitive_roots_interval(long int p_min, long int p_max, int verbose_level);
 	void do_inverse_mod(long int a, long int n, int verbose_level);
 	void do_extended_gcd(int a, int b, int verbose_level);
-	void do_power_mod(longinteger_object &a,
-			longinteger_object &k, longinteger_object &n,
+	void do_power_mod(ring_theory::longinteger_object &a,
+			ring_theory::longinteger_object &k, ring_theory::longinteger_object &n,
 			int verbose_level);
 
 
-	void calc_roots(longinteger_object &M,
-		longinteger_object &sqrtM,
+	void calc_roots(ring_theory::longinteger_object &M,
+			ring_theory::longinteger_object &sqrtM,
 		std::vector<int> &primes, std::vector<int> &R1, std::vector<int> &R2,
 		int verbose_level);
 	void Quadratic_Sieve(
 		int factorbase,
 		int f_mod, int mod_n, int mod_r, int x0,
-		int n, longinteger_object &M, longinteger_object &sqrtM,
+		int n, ring_theory::longinteger_object &M, ring_theory::longinteger_object &sqrtM,
 		std::vector<int> &primes, std::vector<int> &primes_log2,
 		std::vector<int> &R1, std::vector<int> &R2,
 		std::vector<int> &X,
 		int verbose_level);
 	int quadratic_sieve(
-		longinteger_object& M, longinteger_object& sqrtM,
+			ring_theory::longinteger_object& M, ring_theory::longinteger_object& sqrtM,
 		std::vector<int> &primes, std::vector<int> &primes_log2,
 		std::vector<int> &R1, std::vector<int> &R2,
 		int from, int to,
 		int ll, std::vector<int> &X, int verbose_level);
-	int factor_over_factor_base(longinteger_object &x,
+	int factor_over_factor_base(ring_theory::longinteger_object &x,
 			std::vector<int> &primes,
 			std::vector<int> &factor_idx, std::vector<int> &factor_exp,
 			int verbose_level);
 	int factor_over_factor_base2(
-			longinteger_object &x,
+			ring_theory::longinteger_object &x,
 			std::vector<int> &primes, std::vector<int> &exponents,
 			int verbose_level);
 
 	void find_probable_prime_above(
-		longinteger_object &a,
+			ring_theory::longinteger_object &a,
 		int nb_solovay_strassen_tests, int f_miller_rabin_test,
 		int verbose_level);
 	int solovay_strassen_is_prime(
-		longinteger_object &n, int nb_tests, int verbose_level);
+			ring_theory::longinteger_object &n, int nb_tests, int verbose_level);
 	int solovay_strassen_is_prime_single_test(
-		longinteger_object &n, int verbose_level);
+			ring_theory::longinteger_object &n, int verbose_level);
 	int fermat_test_iterated_with_latex_key(std::ostream &ost,
-			longinteger_object &P, int nb_times,
+			ring_theory::longinteger_object &P, int nb_times,
 			int verbose_level);
 	int fermat_test_with_latex_key(std::ostream &ost,
-		longinteger_object &n, longinteger_object &a,
+			ring_theory::longinteger_object &n, ring_theory::longinteger_object &a,
 		int verbose_level);
 	int solovay_strassen_test(
-		longinteger_object &n, longinteger_object &a,
+			ring_theory::longinteger_object &n, ring_theory::longinteger_object &a,
 		int verbose_level);
 	int solovay_strassen_test_with_latex_key(std::ostream &ost,
-		longinteger_object &n, longinteger_object &a,
+			ring_theory::longinteger_object &n, ring_theory::longinteger_object &a,
 		int verbose_level);
 	int solovay_strassen_test_iterated_with_latex_key(std::ostream &ost,
-			longinteger_object &P, int nb_times,
+			ring_theory::longinteger_object &P, int nb_times,
 			int verbose_level);
 	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
 	int miller_rabin_test(
-		longinteger_object &n, int verbose_level);
+			ring_theory::longinteger_object &n, int verbose_level);
 	int miller_rabin_test_with_latex_key(std::ostream &ost,
-		longinteger_object &n, int iteration, int verbose_level);
+			ring_theory::longinteger_object &n, int iteration, int verbose_level);
 	int miller_rabin_test_iterated_with_latex_key(std::ostream &ost,
-			longinteger_object &P, int nb_times,
+			ring_theory::longinteger_object &P, int nb_times,
 			int verbose_level);
 	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
 	void get_k_bit_random_pseudoprime(
-		longinteger_object &n, int k,
+			ring_theory::longinteger_object &n, int k,
 		int nb_tests_solovay_strassen,
 		int f_miller_rabin_test, int verbose_level);
-	void RSA_setup(longinteger_object &n,
-		longinteger_object &p, longinteger_object &q,
-		longinteger_object &a, longinteger_object &b,
+	void RSA_setup(ring_theory::longinteger_object &n,
+			ring_theory::longinteger_object &p, ring_theory::longinteger_object &q,
+			ring_theory::longinteger_object &a, ring_theory::longinteger_object &b,
 		int nb_bits,
 		int nb_tests_solovay_strassen, int f_miller_rabin_test,
 		int verbose_level);

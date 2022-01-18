@@ -1807,7 +1807,7 @@ void object_with_canonical_form::klein(int verbose_level)
 	long int *pts_klein;
 	long int i, N;
 	
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;

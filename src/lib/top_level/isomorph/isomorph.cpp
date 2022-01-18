@@ -565,7 +565,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 	int f_vvvv = (verbose_level >= 4);
 	int f_v5 = (verbose_level >= 5);
 	int i, j, f, l, nb_orbits_prev = 0;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer" << endl;
@@ -829,7 +829,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 				"solution_len[the_case] = " << l << endl;
 		}
 
-	longinteger_object S_go;
+	ring_theory::longinteger_object S_go;
 	sims *S;
 	action *AA;
 	schreier *Schreier;
@@ -1008,7 +1008,7 @@ void isomorph::orbit_representative(int i, int &i0,
 	int c, p, i_loc, l; //, hdl;
 	int *Elt1, *Elt2;
 	vector_ge gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "isomorph::orbit_representative" << endl;
@@ -1173,14 +1173,14 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	//int f_vvvv = (verbose_level >= 4);
-	longinteger_object AA_go, K_go;
+	ring_theory::longinteger_object AA_go, K_go;
 	sims *S; //, *K; //, *stab;
 	action *AA;
 	vector_ge *gens;
 	schreier *Schreier;
 	long int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
-	longinteger_object go, so, so1;
+	ring_theory::longinteger_object go, so, so1;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -1635,8 +1635,8 @@ void isomorph::test_hash(int verbose_level)
 }
 
 
-void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
-		longinteger_object *&Ago_induced, int verbose_level)
+void isomorph::compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
+		ring_theory::longinteger_object *&Ago_induced, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1647,8 +1647,8 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
 	if (f_v) {
 		cout << "isomorph::compute_Ago_Ago_induced" << endl;
 		}
-	Ago = NEW_OBJECTS(longinteger_object, Reps->count);
-	Ago_induced = NEW_OBJECTS(longinteger_object, Reps->count);
+	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Reps->count);
+	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Reps->count);
 
 
 	for (h = 0; h < Reps->count; h++) {
@@ -1799,7 +1799,7 @@ void isomorph::get_orbit_transversal(orbit_transversal *&T,
 		cout << "isomorph::get_orbit_transversal" << endl;
 		}
 	int h, rep, first, id;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	T = NEW_OBJECT(orbit_transversal);
 

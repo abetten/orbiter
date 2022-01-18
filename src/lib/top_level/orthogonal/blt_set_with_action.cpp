@@ -123,7 +123,7 @@ void blt_set_with_action::print_automorphism_group(
 	ostream &ost)
 {
 	if (Aut_gens) {
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Aut_gens->group_order(go);
 

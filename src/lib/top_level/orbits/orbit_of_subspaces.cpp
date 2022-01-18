@@ -998,7 +998,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 
 strong_generators
 *orbit_of_subspaces::stabilizer_orbit_rep(
-	longinteger_object &full_group_order,
+		ring_theory::longinteger_object &full_group_order,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1013,7 +1013,7 @@ strong_generators
 	compute_stabilizer(A /* default_action */, full_group_order, 
 		Stab, 0 /*verbose_level*/);
 
-	longinteger_object stab_order;
+	ring_theory::longinteger_object stab_order;
 
 	Stab->group_order(stab_order);
 	if (f_v) {
@@ -1035,7 +1035,7 @@ strong_generators
 }
 
 void orbit_of_subspaces::compute_stabilizer(action *default_action,
-	longinteger_object &go,
+		ring_theory::longinteger_object &go,
 	sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
 {
@@ -1050,8 +1050,8 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action,
 		}
 
 	Stab = NEW_OBJECT(sims);
-	longinteger_object cur_go, target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object cur_go, target_go;
+	ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;
 	int *residue;
 	int *E1;

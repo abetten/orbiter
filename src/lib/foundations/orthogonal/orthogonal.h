@@ -75,7 +75,7 @@ public:
 		long int *Starter_set, int starter_size,
 		long int *candidates, int nb_candidates,
 		int f_eliminate_graphs_if_possible,
-		colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 		int verbose_level);
 };
 
@@ -200,7 +200,7 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
-	homogeneous_polynomial_domain *Poly;
+	ring_theory::homogeneous_polynomial_domain *Poly;
 	int *the_quadratic_form;
 	int *the_monomial;
 

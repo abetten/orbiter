@@ -161,7 +161,7 @@ void semifield_downstep_node::init(
 
 
 	strong_generators *sg;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
 	sg = SL->get_stabilizer_generators(

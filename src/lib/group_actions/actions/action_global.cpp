@@ -669,9 +669,9 @@ void action_global::lift_generators_to_subfield_structure(
 		cout << "Q=" << Q << endl;
 	}
 
-	longinteger_object order_GLmQ;
-	longinteger_object target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object order_GLmQ;
+	ring_theory::longinteger_object target_go;
+	ring_theory::longinteger_domain D;
 	int r;
 
 	AQ->group_order(order_GLmQ);
@@ -729,7 +729,7 @@ void action_global::lift_generators_to_subfield_structure(
 				"creating lifted group done" << endl;
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Sims->group_order(go);
 

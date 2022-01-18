@@ -57,7 +57,7 @@ void poset_orbit_node::get_stabilizer_order(poset_classification *gen, longinteg
 	// ToDo: free Strong_gens
 }
 #else
-void poset_orbit_node::get_stabilizer_order(poset_classification *PC, longinteger_object &go)
+void poset_orbit_node::get_stabilizer_order(poset_classification *PC, ring_theory::longinteger_object &go)
 {
 	if (nb_strong_generators) {
 		go.create_product(PC->get_poset()->A->base_len(), tl);
@@ -73,7 +73,7 @@ void poset_orbit_node::get_stabilizer_order(poset_classification *PC, longintege
 
 long int poset_orbit_node::get_stabilizer_order_lint(poset_classification *PC)
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (nb_strong_generators) {
 		go.create_product(PC->get_poset()->A->base_len(), tl);
@@ -86,7 +86,7 @@ long int poset_orbit_node::get_stabilizer_order_lint(poset_classification *PC)
 
 void poset_orbit_node::get_stabilizer(
 	poset_classification *PC,
-	group_container &G, longinteger_object &go_G,
+	group_container &G, ring_theory::longinteger_object &go_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -183,7 +183,7 @@ void poset_orbit_node::get_stabilizer_generators(
 void poset_orbit_node::init_extension_node_prepare_G(
 	poset_classification *PC,
 	int prev, int prev_ex, int size,
-	group_container &G, longinteger_object &go_G,
+	group_container &G, ring_theory::longinteger_object &go_G,
 	int verbose_level)
 // sets up the group G using the strong generators that are stored
 {
@@ -266,8 +266,8 @@ void poset_orbit_node::init_extension_node_prepare_G(
 void poset_orbit_node::init_extension_node_prepare_H(
 	poset_classification *gen,
 	int prev, int prev_ex, int size,
-	group_container &G, longinteger_object &go_G,
-	group_container &H, longinteger_object &go_H,
+	group_container &G, ring_theory::longinteger_object &go_G,
+	group_container &H, ring_theory::longinteger_object &go_H,
 	long int pt, int pt_orbit_len,
 	int verbose_level)
 // sets up the group H which is the stabilizer of the point pt in G
@@ -378,8 +378,8 @@ void poset_orbit_node::init_extension_node_prepare_H(
 
 
 
-	longinteger_object q, r;
-	longinteger_domain D;
+	ring_theory::longinteger_object q, r;
+	ring_theory::longinteger_domain D;
 
 
 	H.group_order(go_H);
@@ -425,8 +425,8 @@ void poset_orbit_node::init_extension_node_prepare_H(
 void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	poset_classification *gen,
 	int prev, int prev_ex, int size,
-	group_container &G, longinteger_object &go_G,
-	group_container &H, longinteger_object &go_H,
+	group_container &G, ring_theory::longinteger_object &go_G,
+	group_container &H, ring_theory::longinteger_object &go_H,
 	long int pt, int pt_orbit_len,
 	int verbose_level)
 // we are at the new node, and prev is the node from which we came.
@@ -625,7 +625,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 	poset_classification *gen,
 	int prev, int prev_ex, int size,
-	group_container &G, longinteger_object &go_G,
+	group_container &G, ring_theory::longinteger_object &go_G,
 	group_container &H, /*longinteger_object &go_H, */
 	int pt, int pt_orbit_len,
 	int verbose_level)
@@ -634,8 +634,8 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int r;
-	longinteger_object go_H;
-	longinteger_domain D;
+	ring_theory::longinteger_object go_H;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
@@ -712,9 +712,9 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 						<< endl;
 			}
 
-			longinteger_object go_H1;
+			ring_theory::longinteger_object go_H1;
 			H.group_order(go_H1);
-			longinteger_domain D;
+			ring_theory::longinteger_domain D;
 			if (D.compare(go_H, go_H1) != 0) {
 				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 						"go_H is incorrect" << endl;

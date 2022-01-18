@@ -613,7 +613,7 @@ void poset_classification_control::prepare(poset_classification *PC, int verbose
 			exit(1);
 		}
 
-		clique_test_CG = (colored_graph *) Orbiter->get_object(idx);
+		clique_test_CG = (graph_theory::colored_graph *) Orbiter->get_object(idx);
 		if (f_v) {
 			cout << "poset_classification_control::prepare -clique_test "
 					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;

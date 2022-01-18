@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
+
 
 graph_theory_domain::graph_theory_domain() {
 
@@ -1666,4 +1668,5 @@ void graph_theory_domain::all_cliques_of_given_size(int *Adj,
 
 
 
-}}
+}}}
+

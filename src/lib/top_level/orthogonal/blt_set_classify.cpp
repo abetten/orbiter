@@ -423,7 +423,7 @@ void blt_set_classify::create_graphs(
 		}
 
 		
-		colored_graph *CG = NULL;
+		graph_theory::colored_graph *CG = NULL;
 		int nb_vertices = -1;
 
 		int t0 = Os.os_ticks();
@@ -585,7 +585,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 		}
 
 		
-		colored_graph *CG = NULL;
+		graph_theory::colored_graph *CG = NULL;
 		int nb_vertices = -1;
 
 
@@ -655,7 +655,7 @@ int blt_set_classify::create_graph(
 	int orbit_at_level, int level_of_candidates_file, 
 	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
 	int &nb_vertices,
-	colored_graph *&CG,  
+	graph_theory::colored_graph *&CG,
 	int verbose_level)
 // returns TRUE if a graph was written, FALSE otherwise
 {
@@ -1281,12 +1281,12 @@ void blt_set_classify::report2(std::ostream &ost,
 
 
 	int h;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
-	longinteger_object *Ago;
+	ring_theory::longinteger_object *Ago;
 
-	Ago = NEW_OBJECTS(longinteger_object, T->nb_orbits);
+	Ago = NEW_OBJECTS(ring_theory::longinteger_object, T->nb_orbits);
 
 
 

@@ -102,7 +102,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	geometry_global Gg;
 	algebra::algebra_global Algebra;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "boolean_function_domain::init" << endl;
@@ -123,7 +123,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 	bent = 1 << (n2);
 	near_bent = 1 << ((n + 1) >> 1);
 	//NN = 1 << Q;
-	NN = NEW_OBJECT(longinteger_object);
+	NN = NEW_OBJECT(ring_theory::longinteger_object);
 	NN->create(2, __FILE__, __LINE__);
 	D.power_int(*NN, Q - 1);
 	N = Gg.nb_PG_elements(n, 2);
@@ -220,7 +220,7 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 		// So, we are really making homogeneous polynomials
 		// for projective space PG(n,2) with n+1 variables.
 
-	Poly = NEW_OBJECTS(homogeneous_polynomial_domain, n + 1);
+	Poly = NEW_OBJECTS(ring_theory::homogeneous_polynomial_domain, n + 1);
 
 	A_poly = NEW_pint(n + 1);
 	B_poly = NEW_pint(n + 1);

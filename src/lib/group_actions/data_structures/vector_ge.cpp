@@ -375,7 +375,7 @@ void vector_ge::print_tex(ostream &ost)
 
 
 void vector_ge::print_generators_tex(
-		longinteger_object &go, ostream &ost)
+		ring_theory::longinteger_object &go, ostream &ost)
 {
 	int i;
 

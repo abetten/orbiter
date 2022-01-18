@@ -503,7 +503,7 @@ int combinatorics_domain::compare_lexicographically(
 long int combinatorics_domain::int_n_choose_k(int n, int k)
 {
 	long int r;
-	longinteger_object a;
+	ring_theory::longinteger_object a;
 	
 	binomial(a, n, k, FALSE);
 	r = a.as_lint();
@@ -647,7 +647,7 @@ void combinatorics_domain::unrank_subset_recursion(
 int combinatorics_domain::rank_k_subset(int *set, int n, int k)
 {
 	int r = 0, i, j;
-	longinteger_object a, b;
+	ring_theory::longinteger_object a, b;
 	
 	if (k == 0) { // added Aug 25, 2018
 		return 0;
@@ -671,7 +671,7 @@ int combinatorics_domain::rank_k_subset(int *set, int n, int k)
 void combinatorics_domain::unrank_k_subset(int rk, int *set, int n, int k)
 {
 	int r1, i, j;
-	longinteger_object a, b;
+	ring_theory::longinteger_object a, b;
 	
 	if (k == 0) { // added Aug 25, 2018
 		return;
@@ -2260,24 +2260,24 @@ int combinatorics_domain::next_partition(int n, int *part)
 
 #define TABLE_BINOMIALS_MAX 1000
 
-static longinteger_object *tab_binomials = NULL;
+static ring_theory::longinteger_object *tab_binomials = NULL;
 static int tab_binomials_size = 0;
 
 
 long int combinatorics_domain::binomial_lint(int n, int k)
 {
-	longinteger_object a;
+	ring_theory::longinteger_object a;
 
 	binomial(a, n, k, 0 /* verbose_level */);
 	return a.as_lint();
 }
 
 
-void combinatorics_domain::binomial(longinteger_object &a, int n, int k, int verbose_level)
+void combinatorics_domain::binomial(ring_theory::longinteger_object &a, int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object b, c, d;
-	longinteger_domain D;
+	ring_theory::longinteger_object b, c, d;
+	ring_theory::longinteger_domain D;
 	int r;
 
 	if (f_v) {
@@ -2319,10 +2319,10 @@ void combinatorics_domain::binomial(longinteger_object &a, int n, int k, int ver
 	}
 }
 
-void combinatorics_domain::binomial_with_table(longinteger_object &a, int n, int k)
+void combinatorics_domain::binomial_with_table(ring_theory::longinteger_object &a, int n, int k)
 {
 	int i, j;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	if (k < 0 || k > n) {
 		a.create(0, __FILE__, __LINE__);
@@ -2341,8 +2341,8 @@ void combinatorics_domain::binomial_with_table(longinteger_object &a, int n, int
 	if (n >= tab_binomials_size) {
 		//cout << "binomial_with_table
 		// reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_binomials2 =
-			NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+		ring_theory::longinteger_object *tab_binomials2 =
+			NEW_OBJECTS(ring_theory::longinteger_object, (n + 1) * (n + 1));
 		for (i = 0; i < tab_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
 				tab_binomials[i * tab_binomials_size +
@@ -2371,7 +2371,7 @@ void combinatorics_domain::binomial_with_table(longinteger_object &a, int n, int
 #endif
 	}
 	if (tab_binomials[n * tab_binomials_size + k].is_zero()) {
-		longinteger_object b, c, d;
+		ring_theory::longinteger_object b, c, d;
 		int r;
 
 		binomial_with_table(b, n, k - 1);
@@ -2399,10 +2399,10 @@ void combinatorics_domain::binomial_with_table(longinteger_object &a, int n, int
 }
 
 void combinatorics_domain::size_of_conjugacy_class_in_sym_n(
-		longinteger_object &a, int n, int *part)
+		ring_theory::longinteger_object &a, int n, int *part)
 {
-	longinteger_domain D;
-	longinteger_object b, c, d;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object b, c, d;
 	int i, ai, j;
 
 	D.factorial(b, n);
@@ -2425,12 +2425,12 @@ void combinatorics_domain::size_of_conjugacy_class_in_sym_n(
 #define TABLE_Q_BINOMIALS_MAX 200
 
 
-static longinteger_object *tab_q_binomials = NULL;
+static ring_theory::longinteger_object *tab_q_binomials = NULL;
 static int tab_q_binomials_size = 0;
 static int tab_q_binomials_q = 0;
 
 
-void combinatorics_domain::q_binomial_with_table(longinteger_object &a,
+void combinatorics_domain::q_binomial_with_table(ring_theory::longinteger_object &a,
 	int n, int k, int q, int verbose_level)
 {
 	int i, j;
@@ -2470,8 +2470,8 @@ void combinatorics_domain::q_binomial_with_table(longinteger_object &a,
 		}
 		//cout << "binomial_with_table
 		// reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_q_binomials2 =
-			NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+		ring_theory::longinteger_object *tab_q_binomials2 =
+			NEW_OBJECTS(ring_theory::longinteger_object, (n + 1) * (n + 1));
 		for (i = 0; i < tab_q_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
 				tab_q_binomials[i * tab_q_binomials_size +
@@ -2516,11 +2516,11 @@ void combinatorics_domain::q_binomial_with_table(longinteger_object &a,
 
 
 void combinatorics_domain::q_binomial(
-	longinteger_object &a,
+		ring_theory::longinteger_object &a,
 	int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object b, c, top, bottom, r;
+	ring_theory::longinteger_object b, c, top, bottom, r;
 
 	if (f_v) {
 		cout << "combinatorics_domain::q_binomial "
@@ -2554,12 +2554,12 @@ void combinatorics_domain::q_binomial(
 }
 
 void combinatorics_domain::q_binomial_no_table(
-	longinteger_object &a,
+		ring_theory::longinteger_object &a,
 	int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object b, c, top, bottom, r;
-	longinteger_domain D;
+	ring_theory::longinteger_object b, c, top, bottom, r;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "combinatorics_domain::q_binomial_no_table "
@@ -2600,17 +2600,17 @@ void combinatorics_domain::q_binomial_no_table(
 }
 
 
-static longinteger_object *tab_krawtchouk = NULL;
+static ring_theory::longinteger_object *tab_krawtchouk = NULL;
 static int *tab_krawtchouk_entry_computed = NULL;
 static int tab_krawtchouk_size = 0;
 static int tab_krawtchouk_n = 0;
 static int tab_krawtchouk_q = 0;
 
-void combinatorics_domain::krawtchouk_with_table(longinteger_object &a,
+void combinatorics_domain::krawtchouk_with_table(ring_theory::longinteger_object &a,
 	int n, int q, int k, int x)
 {
 	int i, j, kx;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	if (tab_krawtchouk_size) {
 		if (n != tab_krawtchouk_n || q != tab_krawtchouk_q) {
@@ -2627,8 +2627,8 @@ void combinatorics_domain::krawtchouk_with_table(longinteger_object &a,
 		kx++;
 		//cout << "krawtchouk_with_table
 		//reallocating table to size " << kx << endl;
-		longinteger_object *tab_krawtchouk2 =
-				NEW_OBJECTS(longinteger_object, kx * kx);
+		ring_theory::longinteger_object *tab_krawtchouk2 =
+				NEW_OBJECTS(ring_theory::longinteger_object, kx * kx);
 		int *tab_krawtchouk_entry_computed2 = NEW_int(kx * kx);
 		for (i = 0; i < kx; i++) {
 			for (j = 0; j < kx; j++) {
@@ -2668,7 +2668,7 @@ void combinatorics_domain::krawtchouk_with_table(longinteger_object &a,
 #endif
 	}
 	if (!tab_krawtchouk_entry_computed[k * tab_krawtchouk_size + x]) {
-		longinteger_object n_choose_k, b, c, d, e, f;
+		ring_theory::longinteger_object n_choose_k, b, c, d, e, f;
 
 		if (x < 0) {
 			cout << "combinatorics_domain::krawtchouk_with_table x < 0" << endl;
@@ -2728,7 +2728,7 @@ void combinatorics_domain::krawtchouk_with_table(longinteger_object &a,
 	}
 }
 
-void combinatorics_domain::krawtchouk(longinteger_object &a,
+void combinatorics_domain::krawtchouk(ring_theory::longinteger_object &a,
 	int n, int q, int k, int x)
 {
 	//cout << "combinatorics_domain::krawtchouk n=" << n << " q=" << q << " k=" << k << " x=" << x << endl;
@@ -3131,8 +3131,8 @@ void combinatorics_domain::Dedekind_numbers(int n_min, int n_max, int q_min, int
 			//report(ost, verbose_level);
 
 			int n, q;
-			longinteger_domain D;
-			longinteger_object Dnq;
+			ring_theory::longinteger_domain D;
+			ring_theory::longinteger_object Dnq;
 
 			ost << "ROW";
 			for (q = q_min; q <= q_max; q++) {
@@ -3142,7 +3142,7 @@ void combinatorics_domain::Dedekind_numbers(int n_min, int n_max, int q_min, int
 			for (n = n_min; n <= n_max; n++) {
 				ost << n;
 				for (q = q_min; q <= q_max; q++) {
-					longinteger_object Dnk;
+					ring_theory::longinteger_object Dnk;
 
 					cout << "computing n=" << n << " q=" << q << endl;
 					D.Dedekind_number(Dnq, n, q, verbose_level);
@@ -3314,9 +3314,9 @@ void combinatorics_domain::do_read_poset_file(std::string &fname,
 		cout << "interface_combinatorics::do_read_poset_file" << endl;
 	}
 
-	layered_graph *LG;
+	graph_theory::layered_graph *LG;
 
-	LG = NEW_OBJECT(layered_graph);
+	LG = NEW_OBJECT(graph_theory::layered_graph);
 	LG->init_poset_from_file(fname, f_grouping, x_stretch, verbose_level - 1);
 
 

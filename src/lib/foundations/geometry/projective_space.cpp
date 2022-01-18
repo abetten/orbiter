@@ -155,7 +155,7 @@ void projective_space::init(int n, finite_field *F,
 	int f_v = (verbose_level >= 1);
 	int i;
 	combinatorics::combinatorics_domain C;
-	longinteger_object a;
+	ring_theory::longinteger_object a;
 
 	projective_space::n = n;
 	projective_space::F = F;
@@ -875,7 +875,7 @@ void projective_space::incidence_and_stack_for_type_ij(
 long int projective_space::nb_rk_k_subspaces_as_lint(int k)
 {
 	combinatorics::combinatorics_domain C;
-	longinteger_object aa;
+	ring_theory::longinteger_object aa;
 	long int N;
 	int d = n + 1;
 
@@ -1446,7 +1446,7 @@ int projective_space::determine_conic_in_plane(
 
 
 int projective_space::determine_cubic_in_plane(
-		homogeneous_polynomial_domain *Poly_3_3,
+		ring_theory::homogeneous_polynomial_domain *Poly_3_3,
 		int nb_pts, long int *Pts, int *coeff10,
 		int verbose_level)
 {
@@ -3327,15 +3327,15 @@ void projective_space::report(ostream &ost,
 	}
 #endif
 
-	homogeneous_polynomial_domain *Poly1;
-	homogeneous_polynomial_domain *Poly2;
-	homogeneous_polynomial_domain *Poly3;
-	homogeneous_polynomial_domain *Poly4;
+	ring_theory::homogeneous_polynomial_domain *Poly1;
+	ring_theory::homogeneous_polynomial_domain *Poly2;
+	ring_theory::homogeneous_polynomial_domain *Poly3;
+	ring_theory::homogeneous_polynomial_domain *Poly4;
 
-	Poly1 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly1 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	ost << "\\subsection*{The polynomial rings associated "
 			"with ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;

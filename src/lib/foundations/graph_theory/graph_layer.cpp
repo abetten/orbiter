@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
 
 
 graph_layer::graph_layer()
@@ -183,8 +184,7 @@ void graph_layer::read_memory_object(
 		}
 }
 
-}
-}
+}}}
 
 
 

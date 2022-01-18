@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
 
 
 rainbow_cliques::rainbow_cliques()
@@ -480,6 +481,7 @@ int call_back_colored_graph_find_candidates(clique_finder *CF,
 }
 
 
-}}
+}}}
+
 
 

@@ -58,10 +58,10 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 	if (f_v) {
 		cout << "graphical_output::draw_layered_graph_from_file fname=" << fname << endl;
 	}
-	layered_graph *LG;
+	graph_theory::layered_graph *LG;
 	file_io Fio;
 
-	LG = NEW_OBJECT(layered_graph);
+	LG = NEW_OBJECT(graph_theory::layered_graph);
 	if (Fio.file_size(fname) <= 0) {
 		cout << "graphical_output::draw_layered_graph_from_file file " << fname << " does not exist" << endl;
 		exit(1);

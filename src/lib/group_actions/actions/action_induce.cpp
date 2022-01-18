@@ -215,7 +215,7 @@ void action::init_action_on_lines(action *A,
 				"initializing A2" << endl;
 		}
 	sims S;
-	longinteger_object go1;
+	ring_theory::longinteger_object go1;
 
 	S.init(A, verbose_level - 2);
 	S.init_generators(*A->Strong_gens->gens, 0/*verbose_level*/);
@@ -1330,7 +1330,7 @@ void action::induced_action_by_conjugation(sims *old_G,
 {
 	int f_v = (verbose_level >= 1);
 	action_by_conjugation *ABC;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int goi;
 	action *A;
 	
@@ -1407,7 +1407,7 @@ void action::induced_action_by_right_multiplication(
 {
 	int f_v = (verbose_level >= 1);
 	action_by_right_multiplication *ABRM;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int goi;
 	action *A;
 	
@@ -2485,7 +2485,7 @@ void action::setup_product_action(action *A1, action *A2,
 
 void action::induced_action_on_homogeneous_polynomials(
 	action *A_old,
-	homogeneous_polynomial_domain *HPD, 
+	ring_theory::homogeneous_polynomial_domain *HPD,
 	int f_induce_action, sims *old_G, 
 	int verbose_level)
 {
@@ -2572,7 +2572,7 @@ void action::induced_action_on_homogeneous_polynomials(
 
 void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	action *A_old,
-	homogeneous_polynomial_domain *HPD, 
+	ring_theory::homogeneous_polynomial_domain *HPD,
 	int *Equations, int nb_equations, 
 	int f_induce_action, sims *old_G, 
 	int verbose_level)
@@ -2726,9 +2726,9 @@ void action::induce(action *old_action, sims *old_G,
 	sims *G, *K;
 		// will become part of the action object
 		// 'this' by the end of this procedure
-	longinteger_object go, go1, go2, go3;
-	longinteger_object G_order, K_order;
-	longinteger_domain D;
+	ring_theory::longinteger_object go, go1, go2, go3;
+	ring_theory::longinteger_object G_order, K_order;
+	ring_theory::longinteger_domain D;
 	int b, i, old_base_len;
 	action *fallback_action;
 	
@@ -3266,7 +3266,7 @@ void action::base_change(action *old_action,
 
 	
 	if (f_v) {
-		longinteger_object go, K_go;
+		ring_theory::longinteger_object go, K_go;
 		group_order(go);
 		Kernel->group_order(K_go);
 		cout << "action::base_change finished" << endl;
@@ -3366,7 +3366,7 @@ int action::choose_next_base_point_default_method(
 }
 
 void action::generators_to_strong_generators(
-	int f_target_go, longinteger_object &target_go,
+	int f_target_go, ring_theory::longinteger_object &target_go,
 	vector_ge *gens, strong_generators *&Strong_gens,
 	int verbose_level)
 {
@@ -3411,7 +3411,7 @@ void action::generators_to_strong_generators(
 }
 
 void action::orbits_on_equations(
-	homogeneous_polynomial_domain *HPD,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 	int *The_equations, int nb_equations, strong_generators *gens,
 	action *&A_on_equations, schreier *&Orb, int verbose_level)
 {

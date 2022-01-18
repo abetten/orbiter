@@ -130,7 +130,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 				<< Fio.file_size(magma_fname) << endl;
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	AL->Trihedral_pair->Aut_gens->group_order(go);
 
@@ -159,7 +159,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 
 
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	AL->Trihedral_pair->Aut_gens->group_order(ago);
 	cout << "The automorphism group of the surface has order "
 			<< ago << "\\\\" << endl;
@@ -265,7 +265,7 @@ void surface_create_by_arc_lifting::report_summary(std::ostream &ost, int verbos
 
 
 
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	AL->Trihedral_pair->Aut_gens->group_order(ago);
 
 	ost << "The equation of the surface is" << endl;
@@ -318,7 +318,7 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 	}
 
 
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	AL->Trihedral_pair->Aut_gens->group_order(ago);
 
 	ost << "The equation of the surface is" << endl;

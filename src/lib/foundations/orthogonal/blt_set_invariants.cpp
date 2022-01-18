@@ -124,7 +124,7 @@ void blt_set_invariants::compute(int verbose_level)
 		cout << "blt_set_invariants::compute" << endl;
 	}
 
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 
 	Sos = NEW_OBJECT(data_structures::set_of_sets);
 	Sos2 = NEW_OBJECT(data_structures::set_of_sets);

@@ -155,7 +155,7 @@ public:
 
 	//long int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
 
-	longinteger_object go, stab_go;
+	ring_theory::longinteger_object go, stab_go;
 	sims *Stab;
 	strong_generators *stab_gens;
 

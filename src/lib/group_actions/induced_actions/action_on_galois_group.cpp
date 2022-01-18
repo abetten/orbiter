@@ -42,7 +42,7 @@ void action_on_galois_group::init(action *A,
 		int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "action_on_galois_group::init" << endl;

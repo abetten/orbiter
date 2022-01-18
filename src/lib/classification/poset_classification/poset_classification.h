@@ -284,7 +284,7 @@ public:
 
 	int f_clique_test;
 	std::string clique_test_graph;
-	colored_graph *clique_test_CG;
+	graph_theory::colored_graph *clique_test_CG;
 
 	poset_classification_control();
 	~poset_classification_control();
@@ -476,15 +476,15 @@ public:
 	long int count_extension_nodes_at_level(int lvl);
 	double level_progress(int lvl);
 	void count_automorphism_group_orders(int lvl, int &nb_agos, 
-		longinteger_object *&agos, int *&multiplicities, 
+			ring_theory::longinteger_object *&agos, int *&multiplicities,
 		int verbose_level);
 	void compute_and_print_automorphism_group_orders(int lvl, 
 			std::ostream &ost);
-	void stabilizer_order(int node, longinteger_object &go);
+	void stabilizer_order(int node, ring_theory::longinteger_object &go);
 	void orbit_length(int orbit_at_level, int level,
-		longinteger_object &len);
+			ring_theory::longinteger_object &len);
 	void get_orbit_length_and_stabilizer_order(int node, int level, 
-		longinteger_object &stab_order, longinteger_object &len);
+			ring_theory::longinteger_object &stab_order, ring_theory::longinteger_object &len);
 	int orbit_length_as_int(int orbit_at_level, int level);
 	void recreate_schreier_vectors_up_to_level(int lvl, 
 		int verbose_level);
@@ -494,7 +494,7 @@ public:
 			int level, int order, int verbose_level);
 	void get_all_stabilizer_orders_at_level(int level, long int *&Ago, int &nb);
 	void get_stabilizer_order(int level, int orbit_at_level, 
-		longinteger_object &go);
+			ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(int level,
 			int orbit_at_level);
 	void get_stabilizer_group(group_container *&G,
@@ -745,7 +745,7 @@ public:
 			int verbose_level);
 	void make_flag_orbits_on_relations(
 			int depth, const char *fname_prefix, int verbose_level);
-	void make_full_poset_graph(int depth, layered_graph *&LG, 
+	void make_full_poset_graph(int depth, graph_theory::layered_graph *&LG,
 		int data1, double x_stretch, 
 		int verbose_level);
 		// Draws the full poset: each element of each orbit is drawn.
@@ -753,18 +753,18 @@ public:
 		// Uses int_vec_sort_and_test_if_contained to test containment relation.
 		// This is only good for actions on sets, not for actions on subspaces
 	void make_auxiliary_graph(int depth, 
-		layered_graph *&LG, int data1, 
+			graph_theory::layered_graph *&LG, int data1,
 		int verbose_level);
 		// makes a graph of the poset of orbits with 2 * depth + 1 layers.
 		// The middle layers represent the flag orbits.
-	void make_graph(int depth, layered_graph *&LG, 
+	void make_graph(int depth, graph_theory::layered_graph *&LG,
 		int data1, int f_tree, int verbose_level);
 		// makes a graph  of the poset of orbits with depth + 1 layers.
-	void make_level_graph(int depth, layered_graph *&LG, 
+	void make_level_graph(int depth, graph_theory::layered_graph *&LG,
 		int data1, int level, int verbose_level);
 		// makes a graph with 4 levels showing the relation between
 		// orbits at level 'level' and orbits at level 'level' + 1
-	void make_poset_graph_detailed(layered_graph *&LG, 
+	void make_poset_graph_detailed(graph_theory::layered_graph *&LG,
 		int data1, int max_depth, int verbose_level);
 		// creates the poset graph, with two middle layers at each level.
 		// In total, the graph that is created will have 3 * depth + 1 layers.
@@ -1253,10 +1253,10 @@ public:
 	void store_strong_generators(poset_classification *gen,
 		strong_generators *Strong_gens);
 	void get_stabilizer_order(poset_classification *gen,
-		longinteger_object &go);
+			ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(poset_classification *PC);
 	void get_stabilizer(poset_classification *PC,
-			group_container &G, longinteger_object &go_G,
+			group_container &G, ring_theory::longinteger_object &go_G,
 		int verbose_level);
 	int test_if_stabilizer_is_trivial();
 	void get_stabilizer_generators(poset_classification *PC,
@@ -1265,15 +1265,15 @@ public:
 	void init_extension_node_prepare_G(
 		poset_classification *gen,
 		int prev, int prev_ex, int size, group_container &G,
-		longinteger_object &go_G,
+		ring_theory::longinteger_object &go_G,
 		int verbose_level);
 		// sets up the group G using the strong
 		// poset_classifications that are stored
 	void init_extension_node_prepare_H(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group_container &G, longinteger_object &go_G,
-		group_container &H, longinteger_object &go_H,
+		group_container &G, ring_theory::longinteger_object &go_G,
+		group_container &H, ring_theory::longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 		// sets up the group H which is the stabilizer
@@ -1281,14 +1281,14 @@ public:
 	void compute_point_stabilizer_in_subspace_setting(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group_container &G, longinteger_object &go_G,
-		group_container &H, longinteger_object &go_H,
+		group_container &G, ring_theory::longinteger_object &go_G,
+		group_container &H, ring_theory::longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 	void compute_point_stabilizer_in_standard_setting(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group_container &G, longinteger_object &go_G,
+		group_container &G, ring_theory::longinteger_object &go_G,
 		group_container &H, /* longinteger_object &go_H, */
 		int pt, int pt_orbit_len,
 		int verbose_level);
@@ -1614,7 +1614,7 @@ public:
 	action *A2; // the action in which we do the search
 
 	strong_generators *Strong_gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	int f_has_orbit_based_testing;
 	orbit_based_testing *Orbit_based_testing;
@@ -1734,7 +1734,7 @@ public:
 
 	group_container *G;
 	group_container *H;
-	longinteger_object go_G, go_H;
+	ring_theory::longinteger_object go_G, go_H;
 
 	int coset;
 	

@@ -39,7 +39,7 @@ void action_on_sign::free()
 void action_on_sign::init(action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "action_on_sign::init" << endl;

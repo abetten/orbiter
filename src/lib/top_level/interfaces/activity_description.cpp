@@ -1060,9 +1060,9 @@ void activity_description::do_graph_theoretic_activity(int verbose_level)
 	}
 
 	//create_graph *Gr;
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 
-	CG = (colored_graph *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	CG = (graph_theory::colored_graph *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	if (f_v) {
 		cout << "activity_description::do_graph_theoretic_activity CG->label = " << CG->label << endl;
 	}

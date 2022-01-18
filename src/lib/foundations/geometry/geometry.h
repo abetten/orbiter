@@ -395,12 +395,12 @@ public:
 	int nb_monomials;
 
 
-	homogeneous_polynomial_domain *Poly;
+	ring_theory::homogeneous_polynomial_domain *Poly;
 		// cubic polynomials in three variables
-	homogeneous_polynomial_domain *Poly2;
+	ring_theory::homogeneous_polynomial_domain *Poly2;
 		// quadratic polynomials in three variables
 
-	partial_derivative *Partials;
+	ring_theory::partial_derivative *Partials;
 
 	int *gradient; // 3 * Poly2->nb_monomials
 
@@ -835,9 +835,9 @@ public:
 	void AG_element_unrank(int q, int *v, int stride, int len, long int a);
 	int AG_element_next(int q, int *v, int stride, int len);
 	void AG_element_rank_longinteger(int q, int *v, int stride, int len,
-		longinteger_object &a);
+			ring_theory::longinteger_object &a);
 	void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
-		longinteger_object &a);
+			ring_theory::longinteger_object &a);
 	int PG_element_modified_is_in_subspace(int n, int m, int *v);
 	void test_PG(int n, int q);
 	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
@@ -972,7 +972,7 @@ public:
 class grassmann {
 public:
 	int n, k, q;
-	longinteger_object *nCkq; // n choose k q-analog
+	ring_theory::longinteger_object *nCkq; // n choose k q-analog
 	finite_field *F;
 	int *base_cols;
 	int *coset;
@@ -1002,12 +1002,12 @@ public:
 	void unrank_embedded_subspace_lint_here(int *Basis, long int rk, int verbose_level);
 	void unrank_lint(long int rk, int verbose_level);
 	long int rank_lint(int verbose_level);
-	void unrank_longinteger_here(int *Mtx, longinteger_object &rk, 
+	void unrank_longinteger_here(int *Mtx, ring_theory::longinteger_object &rk,
 		int verbose_level);
-	void rank_longinteger_here(int *Mtx, longinteger_object &rk, 
+	void rank_longinteger_here(int *Mtx, ring_theory::longinteger_object &rk,
 		int verbose_level);
-	void unrank_longinteger(longinteger_object &rk, int verbose_level);
-	void rank_longinteger(longinteger_object &r, int verbose_level);
+	void unrank_longinteger(ring_theory::longinteger_object &rk, int verbose_level);
+	void rank_longinteger(ring_theory::longinteger_object &r, int verbose_level);
 	void print();
 	int dimension_of_join(long int rk1, long int rk2, int verbose_level);
 	void unrank_lint_here_and_extend_basis(int *Mtx, long int rk,
@@ -1148,7 +1148,7 @@ class hjelmslev {
 public:
 	int n, k, q;
 	int n_choose_k_p;
-	finite_ring *R; // do not free
+	ring_theory::finite_ring *R; // do not free
 	grassmann *G;
 	int *v;
 	int *Mtx;
@@ -1158,7 +1158,7 @@ public:
 	~hjelmslev();
 	void null();
 	void freeself();
-	void init(finite_ring *R, int n, int k, int verbose_level);
+	void init(ring_theory::finite_ring *R, int n, int k, int verbose_level);
 	long int number_of_submodules();
 	void unrank_lint(int *M, long int rk, int verbose_level);
 	long int rank_lint(int *M, int verbose_level);
@@ -1476,7 +1476,7 @@ public:
 	void freeself();
 	void init(finite_field *F, orthogonal *O, int verbose_level);
 	void plane_intersections(long int *lines_in_PG3, int nb_lines,
-		longinteger_object *&R,
+			ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane,
 		int *&nb_pts_on_plane, 
 		int &nb_planes, 
@@ -1528,7 +1528,7 @@ public:
 	int *Basis2;
 	int *subspace_basis;
 	int *Basis_Pperp;
-	longinteger_object *six_choose_three_q;
+	ring_theory::longinteger_object *six_choose_three_q;
 	int six_choose_three_q_int;
 	int f_show;
 	int dim_intersection;
@@ -1986,7 +1986,7 @@ public:
 	grassmann **Grass_stack; // [n + 1]
 
 	finite_field *F;
-	longinteger_object *Go;
+	ring_theory::longinteger_object *Go;
 
 	int n; // projective dimension
 	int q;
@@ -2087,7 +2087,7 @@ public:
 			// coefficient matrix is not 5.
 			// TRUE otherwise.
 	int determine_cubic_in_plane(
-			homogeneous_polynomial_domain *Poly_3_3,
+			ring_theory::homogeneous_polynomial_domain *Poly_3_3,
 			int nb_pts, long int *Pts, int *coeff10,
 			int verbose_level);
 
@@ -2205,7 +2205,7 @@ public:
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
 	void intersection_of_subspace_with_point_set_rank_is_longinteger(
-		grassmann *G, longinteger_object &rk, long int *set, int set_size,
+		grassmann *G, ring_theory::longinteger_object &rk, long int *set, int set_size,
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
 	void plane_intersection_invariant(grassmann *G, 
@@ -2219,16 +2219,16 @@ public:
 		int verbose_level);
 	void plane_intersections(grassmann *G, 
 		long int *set, int set_size,
-		longinteger_object *&R, data_structures::set_of_sets &SoS,
+		ring_theory::longinteger_object *&R, data_structures::set_of_sets &SoS,
 		int verbose_level);
 	void plane_intersection_type_slow(grassmann *G, 
 		long int *set, int set_size,
-		longinteger_object *&R, long int **&Pts_on_plane,
+		ring_theory::longinteger_object *&R, long int **&Pts_on_plane,
 		int *&nb_pts_on_plane, int &len,
 		int verbose_level);
 	void plane_intersection_type_fast(grassmann *G, 
 		long int *set, int set_size,
-		longinteger_object *&R, long int **&Pts_on_plane,
+		ring_theory::longinteger_object *&R, long int **&Pts_on_plane,
 		int *&nb_pts_on_plane, int &len,
 		int verbose_level);
 	void find_planes_which_intersect_in_at_least_s_points(
@@ -2424,19 +2424,19 @@ public:
 	finite_field *F;
 	projective_space *P;
 
-	homogeneous_polynomial_domain *Poly1_3;
+	ring_theory::homogeneous_polynomial_domain *Poly1_3;
 		// linear polynomials in three variables
-	homogeneous_polynomial_domain *Poly2_3;
+	ring_theory::homogeneous_polynomial_domain *Poly2_3;
 		// quadratic polynomials in three variables
-	homogeneous_polynomial_domain *Poly3_3;
+	ring_theory::homogeneous_polynomial_domain *Poly3_3;
 		// cubic polynomials in three variables
-	homogeneous_polynomial_domain *Poly4_3;
+	ring_theory::homogeneous_polynomial_domain *Poly4_3;
 		// quartic polynomials in three variables
 
-	homogeneous_polynomial_domain *Poly3_4;
+	ring_theory::homogeneous_polynomial_domain *Poly3_4;
 		// cubic polynomials in four variables
 
-	partial_derivative *Partials; // [3]
+	ring_theory::partial_derivative *Partials; // [3]
 
 	schlaefli_labels *Schlaefli;
 

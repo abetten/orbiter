@@ -574,7 +574,7 @@ int group_generators_domain::matrix_group_base_len_general_linear_group(
 
 void group_generators_domain::order_POmega_epsilon(
 		int epsilon, int k, int q,
-		longinteger_object &go, int verbose_level)
+		ring_theory::longinteger_object &go, int verbose_level)
 // k is projective dimension
 {
 	int f_v = (verbose_level >= 1);
@@ -622,7 +622,7 @@ void group_generators_domain::order_POmega_epsilon(
 void group_generators_domain::order_PO_epsilon(
 		int f_semilinear,
 		int epsilon, int k, int q,
-		longinteger_object &go, int verbose_level)
+		ring_theory::longinteger_object &go, int verbose_level)
 // k is projective dimension
 {
 	int f_v = (verbose_level >= 1);
@@ -640,7 +640,7 @@ void group_generators_domain::order_PO_epsilon(
 	order_PO(epsilon, m, q, go, verbose_level);
 	if (f_semilinear) {
 		int p, e;
-		longinteger_domain D;
+		ring_theory::longinteger_domain D;
 
 		NT.factor_prime_power(q, p, e);
 		D.mult_integer_in_place(go, e);
@@ -655,7 +655,7 @@ void group_generators_domain::order_PO_epsilon(
 
 void group_generators_domain::order_PO(
 		int epsilon, int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -681,7 +681,7 @@ void group_generators_domain::order_PO(
 
 void group_generators_domain::order_Pomega(
 		int epsilon, int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 {
 	if (epsilon == 0) {
 		order_Pomega_parabolic(m, q, o, verbose_level);
@@ -701,12 +701,12 @@ void group_generators_domain::order_Pomega(
 
 void group_generators_domain::order_PO_plus(
 		int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object O, Q, R, S, T, Two, minusone;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object O, Q, R, S, T, Two, minusone;
 	int i;
 	geometry_global Gg;
 
@@ -764,12 +764,12 @@ void group_generators_domain::order_PO_plus(
 
 void group_generators_domain::order_PO_minus(
 		int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m+2
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object O, Q, R, S, T, Two, plusone, minusone;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object O, Q, R, S, T, Two, plusone, minusone;
 	int i;
 	geometry_global Gg;
 
@@ -829,12 +829,12 @@ void group_generators_domain::order_PO_minus(
 
 void group_generators_domain::order_PO_parabolic(
 		int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m+1
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object O, Q, R, S, T, minusone;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object O, Q, R, S, T, minusone;
 	int i;
 	geometry_global Gg;
 
@@ -876,12 +876,12 @@ void group_generators_domain::order_PO_parabolic(
 
 void group_generators_domain::order_Pomega_plus(
 		int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object O, Q, R, S, S1, T, minusone;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object O, Q, R, S, S1, T, minusone;
 	int i, r;
 	geometry_global Gg;
 
@@ -939,13 +939,13 @@ void group_generators_domain::order_Pomega_plus(
 
 void group_generators_domain::order_Pomega_minus(
 		int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 // m = half the dimension,
 // the dimension is n = 2m, the Witt index is m - 1
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object O, Q, R, S, S1, T, minusone, plusone;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object O, Q, R, S, S1, T, minusone, plusone;
 	int i, r;
 	geometry_global Gg;
 
@@ -1009,12 +1009,12 @@ void group_generators_domain::order_Pomega_minus(
 
 void group_generators_domain::order_Pomega_parabolic(
 		int m, int q,
-		longinteger_object &o, int verbose_level)
+		ring_theory::longinteger_object &o, int verbose_level)
 // m = Witt index, the dimension is n = 2m + 1
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object O, Q, R, S, T, minusone;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object O, Q, R, S, T, minusone;
 	int i, r;
 	geometry_global Gg;
 

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 static void make_linear_irreducible_polynomials(finite_field *F, int &nb,
 		int *&table, int verbose_level);
@@ -519,7 +520,8 @@ static void make_linear_irreducible_polynomials(finite_field *F, int &nb,
 
 
 
-}}
+}}}
+
 
 
 

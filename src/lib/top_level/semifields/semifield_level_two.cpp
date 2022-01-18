@@ -332,7 +332,7 @@ void semifield_level_two::init(semifield_classify *SC,
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	longinteger_object Go;
+	ring_theory::longinteger_object Go;
 
 	if (f_v) {
 		cout << "semifield_level_two::init" << endl;
@@ -452,8 +452,8 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 	strong_generators *Centralizer_gens;
 	sims *G;
 	sims *U;
-	longinteger_object Go, Co, Cl;
-	longinteger_domain D;
+	ring_theory::longinteger_object Go, Co, Cl;
+	ring_theory::longinteger_domain D;
 	int rk, cl, r;
 
 	if (f_v) {
@@ -886,7 +886,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 		cout << "semifield_level_two::compute_stabilizers_downstep "
 				"We found " << nb_flag_orbits << " down orbits:" << endl;
 		for (i = 0; i < nb_flag_orbits; i++) {
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 
 			Flag_orbit_stabilizer[i].group_order(go);
 			for (j = 0; j < 2; j++) {
@@ -906,7 +906,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 	if (f_vv) {
 		cout << "Stabilizers of middle object:" << endl;
 		for (i = 0; i < nb_flag_orbits; i++) {
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 
 			Flag_orbit_stabilizer[i].group_order(go);
 			cout << "flag orbit " << i << " / " << nb_flag_orbits
@@ -1094,7 +1094,7 @@ void semifield_level_two::upstep(int verbose_level)
 		FREE_OBJECT(coset_reps);
 
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Stabilizer_gens[nb_orbits].group_order(go);
 		if (f_vv) {
@@ -1118,7 +1118,7 @@ void semifield_level_two::upstep(int verbose_level)
 
 
 	for (i = 0; i < nb_orbits; i++) {
-		longinteger_object go, go1;
+		ring_theory::longinteger_object go, go1;
 
 		Stabilizer_gens[i].group_order(go);
 
@@ -1141,7 +1141,7 @@ void semifield_level_two::upstep(int verbose_level)
 	if (f_vv) {
 		cout << "i : defining_flag_orbit[i] : go" << endl;
 		for (i = 0; i < nb_orbits; i++) {
-			longinteger_object go, go1;
+			ring_theory::longinteger_object go, go1;
 			int *Mtx;
 
 			Stabilizer_gens[i].group_order(go);
@@ -1490,7 +1490,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int i;
 	long int a;
 	sims *G;
-	longinteger_object go_PGL;
+	ring_theory::longinteger_object go_PGL;
 	int alloc_length;
 
 
@@ -2223,7 +2223,7 @@ void semifield_level_two::report(
 			//A_PGLk->make_element(Elt, Mtx, 0);
 
 			strong_generators *Centralizer_gens;
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 
 
 			C->make_matrix_from_class_rep(Mtx, R + i, 0 /*verbose_level - 1 */);
@@ -2266,7 +2266,7 @@ void semifield_level_two::report(
 				SC->A->element_print_latex(Fusion_elt[i], ost);
 				ost << "$$" << endl;
 			}
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 			Flag_orbit_stabilizer[i].group_order(go);
 			ost << "Flag orbit stabilizer has order " << go << "\\\\" << endl;
 			Flag_orbit_stabilizer[i].print_generators_tex(ost);
@@ -2286,7 +2286,7 @@ void semifield_level_two::report(
 
 			ost << "\\item" << endl;
 
-			longinteger_object go, go1;
+			ring_theory::longinteger_object go, go1;
 			//int *Elt1;
 
 			Stabilizer_gens[i].group_order(go);

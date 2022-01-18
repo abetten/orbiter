@@ -50,7 +50,7 @@ public:
 	int *Elt2;
 	vector_ge *gens;
 	vector_ge *gens_subgroup;
-	longinteger_object target_go, target_go_subgroup;
+	ring_theory::longinteger_object target_go, target_go_subgroup;
 	strong_generators *Strong_gens;
 	strong_generators *Strong_gens_subgroup;
 
@@ -67,7 +67,7 @@ public:
 	std::string fname_graphs;
 
 	strong_generators *Aut_gens;
-	longinteger_object Aut_order;
+	ring_theory::longinteger_object Aut_order;
 	action *Aut;
 	action *A2;
 	poset_with_group_action *Poset;
@@ -211,7 +211,7 @@ public:
 	create_graph_description *description;
 
 	int f_has_CG;
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 
 	int N;
 	int *Adj;
@@ -444,7 +444,7 @@ public:
 		int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	void apply(colored_graph *&CG, int verbose_level);
+	void apply(graph_theory::colored_graph *&CG, int verbose_level);
 
 };
 
@@ -461,7 +461,7 @@ class graph_theoretic_activity_description {
 public:
 
 	int f_find_cliques;
-	clique_finder_control *Clique_finder_control;
+	graph_theory::clique_finder_control *Clique_finder_control;
 	int f_export_magma;
 	int f_export_maple;
 	int f_export_csv;
@@ -513,13 +513,13 @@ class graph_theoretic_activity {
 public:
 
 	graph_theoretic_activity_description *Descr;
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 
 
 	graph_theoretic_activity();
 	~graph_theoretic_activity();
 	void init(graph_theoretic_activity_description *Descr,
-			colored_graph *CG,
+			graph_theory::colored_graph *CG,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 

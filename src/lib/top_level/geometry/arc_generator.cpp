@@ -986,16 +986,16 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 
 	int i, first, /*c,*/ id;
 	int u, v, h, rep, tt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int data[1000];
 
 
 
-	longinteger_object *Ago, *Ago_induced;
+	ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
-	Ago = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
-	Ago_induced = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
+	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
+	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
 	Ago_int = NEW_int(Iso.Reps->count);
 
 
@@ -1185,7 +1185,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		}
 		Iso.induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
 		
-		longinteger_object go1;
+		ring_theory::longinteger_object go1;
 			
 		Iso.AA->group_order(go1);
 		cout << "action " << Iso.AA->label

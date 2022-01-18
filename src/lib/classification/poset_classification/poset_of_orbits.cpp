@@ -432,7 +432,7 @@ void poset_of_orbits::get_table_of_nodes(long int *&Table,
 		Table[i * nb_cols + 1] = root[i].get_node_in_level(PC);
 		Table[i * nb_cols + 2] = root[i].get_pt();
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		root[i].get_stabilizer_order(PC, go);
 		Table[i * nb_cols + 3] = go.as_int();
@@ -1585,7 +1585,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname, i
 			ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);
 			ost << "," << ago;
 
-			longinteger_object len;
+			ring_theory::longinteger_object len;
 
 			PC->orbit_length(i, lvl, len);
 

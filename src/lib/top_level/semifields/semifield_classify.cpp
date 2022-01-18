@@ -175,7 +175,7 @@ void semifield_classify::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	number_theory_domain NT;
 
 	if (f_v) {
@@ -275,7 +275,7 @@ void semifield_classify::init(
 		cout << "semifield_classify::init after T->init2" << endl;
 	}
 
-	longinteger_object go1, go2;
+	ring_theory::longinteger_object go1, go2;
 	//int f_semilinear = TRUE;
 
 #if 0
@@ -467,7 +467,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 	number_theory_domain NT;
 
@@ -519,7 +519,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 	ost << "\\hline" << endl;
 
 	{
-	longinteger_object go;
+		ring_theory::longinteger_object go;
 	Strong_gens->group_order(go);
 
 	ost << "1 & 1 & " << go << "\\\\" << endl;
@@ -573,7 +573,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 			for (po = 0; po < L3->prev_level_nb_orbits; po++) {
 
 
-				longinteger_object go;
+				ring_theory::longinteger_object go;
 
 				L2->Stabilizer_gens[po].group_order(go);
 
@@ -608,7 +608,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 			Go = NEW_lint(L3->nb_orbits);
 
 			for (i = 0; i < L3->nb_orbits; i++) {
-				longinteger_object go;
+				ring_theory::longinteger_object go;
 				L3->Stabilizer_gens[i].group_order(go);
 				Go[i] = go.as_lint();
 			}
@@ -642,7 +642,7 @@ void semifield_classify::init_poset_classification(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "semifield_classify::init_poset_classification" << endl;
@@ -783,7 +783,7 @@ void semifield_classify::list_points()
 {
 	int *v;
 	int rk;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int goi;
 
 	cout << "semifield_classify::list_points" << endl;

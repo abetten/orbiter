@@ -451,7 +451,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 			for (g = 0; g < Nb_orb[idx]; g++) {
 				orbit_of_subspaces *Orb;
 				strong_generators *gens;
-				longinteger_object go;
+				ring_theory::longinteger_object go;
 
 				Orb = All_Orbits[idx][g];
 				data = Orb->Subspaces_lint[Orb->position_of_original_subspace];
@@ -507,7 +507,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 
 	int po, so;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int f_skip = FALSE;
 	int i;
 
@@ -574,7 +574,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		}
 
 		strong_generators *Aut_gens;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Aut_gens = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
 		coset_reps = NEW_OBJECT(vector_ge);
@@ -651,8 +651,8 @@ void semifield_substructure::do_classify(int verbose_level)
 		FREE_OBJECTS(TR);
 
 		int cl;
-		longinteger_object go1, Cl, ago, ago1;
-		longinteger_domain D;
+		ring_theory::longinteger_object go1, Cl, ago, ago1;
+		ring_theory::longinteger_domain D;
 
 		Aut_gens->group_order(go);
 		cl = coset_reps->len;

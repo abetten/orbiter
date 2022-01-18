@@ -118,7 +118,7 @@ void gl_class_rep::compute_vector_coding(gl_classes *C,
 }
 
 void gl_class_rep::centralizer_order_Kung(gl_classes *C,
-		longinteger_object &co, int verbose_level)
+		ring_theory::longinteger_object &co, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Poly_degree;

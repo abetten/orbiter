@@ -1122,7 +1122,7 @@ void poset_classification::extend_node(
 	nb_ext_cur = 0;
 			
 	if (f_vv) {
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		
 		print_level_info(size, prev);
 		//cout << "Level " << size << " Node " << cur << " : ";

@@ -16,7 +16,7 @@ namespace foundations {
 namespace coding_theory {
 
 void coding_theory_domain::make_BCH_code(int n, finite_field *F, int d,
-		nth_roots *&Nth, unipoly_object &P,
+		nth_roots *&Nth, ring_theory::unipoly_object &P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -62,7 +62,7 @@ void coding_theory_domain::make_BCH_code(int n, finite_field *F, int d,
 		cout << endl;
 	}
 
-	unipoly_object Q;
+	ring_theory::unipoly_object Q;
 
 	Nth->FX->create_object_by_rank(P, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
 	Nth->FX->create_object_by_rank(Q, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
@@ -106,8 +106,8 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int p, e, m, r, i;
-	longinteger_object Qm1, Index;
-	longinteger_domain D;
+	ring_theory::longinteger_object Qm1, Index;
+	ring_theory::longinteger_domain D;
 	number_theory_domain NT;
 	file_io Fio;
 
@@ -230,15 +230,15 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 
 	finite_field Fp;
-	unipoly_object M;
-	unipoly_object beta, beta_i, c;
+	ring_theory::unipoly_object M;
+	ring_theory::unipoly_object beta, beta_i, c;
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_cyclic_code creating the finite field of order " << p << endl;
 	}
 	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
 
-	unipoly_domain FpX(&Fp);
+	ring_theory::unipoly_domain FpX(&Fp);
 	string field_poly;
 	knowledge_base K;
 
@@ -261,7 +261,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	if (f_v) {
 		cout << "coding_theory_domain::make_cyclic_code creating unipoly_domain Fq modulo M" << endl;
 	}
-	unipoly_domain Fq(&Fp, M, verbose_level);  // Fq = Fp[X] modulo factor polynomial M
+	ring_theory::unipoly_domain Fq(&Fp, M, verbose_level);  // Fq = Fp[X] modulo factor polynomial M
 	if (f_vv) {
 		cout << "coding_theory_domain::make_cyclic_code extension field created" << endl;
 	}
@@ -296,10 +296,10 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		cout << "coding_theory_domain::make_cyclic_code before allocating generator etc" << endl;
 	}
 
-	unipoly_object *generator = NEW_OBJECTS(unipoly_object, degree + 2);
-	unipoly_object *tmp = NEW_OBJECTS(unipoly_object, degree + 1);
-	unipoly_object *coeffs = NEW_OBJECTS(unipoly_object, 2);
-	unipoly_object Pc, Pd;
+	ring_theory::unipoly_object *generator = NEW_OBJECTS(ring_theory::unipoly_object, degree + 2);
+	ring_theory::unipoly_object *tmp = NEW_OBJECTS(ring_theory::unipoly_object, degree + 1);
+	ring_theory::unipoly_object *coeffs = NEW_OBJECTS(ring_theory::unipoly_object, 2);
+	ring_theory::unipoly_object Pc, Pd;
 
 
 	// create the polynomial X - a:
@@ -547,8 +547,8 @@ void coding_theory_domain::generator_matrix_cyclic_code(int n,
 	}
 }
 
-void coding_theory_domain::print_polynomial(unipoly_domain &Fq,
-		int degree, unipoly_object *coeffs)
+void coding_theory_domain::print_polynomial(ring_theory::unipoly_domain &Fq,
+		int degree, ring_theory::unipoly_object *coeffs)
 {
 	int i, f_first = TRUE;
 
@@ -569,8 +569,9 @@ void coding_theory_domain::print_polynomial(unipoly_domain &Fq,
 	}
 }
 
-void coding_theory_domain::print_polynomial_tight(std::ostream &ost, unipoly_domain &Fq,
-		int degree, unipoly_object *coeffs)
+void coding_theory_domain::print_polynomial_tight(std::ostream &ost,
+		ring_theory::unipoly_domain &Fq,
+		int degree, ring_theory::unipoly_object *coeffs)
 {
 	int i, f_first = TRUE;
 
@@ -589,16 +590,16 @@ void coding_theory_domain::print_polynomial_tight(std::ostream &ost, unipoly_dom
 
 
 void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
-	finite_field &Fp, unipoly_domain &Fq,
-	int degree, unipoly_object *generator, int *&generator_subfield,
+	finite_field &Fp, ring_theory::unipoly_domain &Fq,
+	int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
 	int f_poly, std::string &poly,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int r;
-	longinteger_object Qm1, Index;
-	longinteger_domain D;
+	ring_theory::longinteger_object Qm1, Index;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "coding_theory_domain::field_reduction" << endl;
@@ -618,12 +619,12 @@ void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
 		cout << "subgroup index = " << Index << endl;
 	}
 
-	unipoly_object c, beta, beta_i;
-	longinteger_object *beta_rk_table, rk;
+	ring_theory::unipoly_object c, beta, beta_i;
+	ring_theory::longinteger_object *beta_rk_table, rk;
 	int i, j;
 
 
-	beta_rk_table = NEW_OBJECTS(longinteger_object, q);
+	beta_rk_table = NEW_OBJECTS(ring_theory::longinteger_object, q);
 
 	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
 	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the element alpha
@@ -738,10 +739,10 @@ the_end:
 
 void coding_theory_domain::BCH_generator_polynomial(
 	finite_field *F,
-	unipoly_object &g, int n,
+	ring_theory::unipoly_object &g, int n,
 	int designed_distance, int &bose_distance,
 	int &transversal_length, int *&transversal,
-	longinteger_object *&rank_of_irreducibles,
+	ring_theory::longinteger_object *&rank_of_irreducibles,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -749,8 +750,8 @@ void coding_theory_domain::BCH_generator_polynomial(
 	int f_vvv = (verbose_level >= 3);
 	int p = F->q;
 	int e, i, j, r;
-	longinteger_object q, b, m1, qm1;
-	longinteger_domain D;
+	ring_theory::longinteger_object q, b, m1, qm1;
+	ring_theory::longinteger_domain D;
 	number_theory_domain NT;
 
 	if (f_v) {
@@ -759,7 +760,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 				<< designed_distance << " p=" << p << endl;
 	}
 
-	unipoly_domain FX(F);
+	ring_theory::unipoly_domain FX(F);
 
 
 	e = NT.order_mod_p(p, n);
@@ -789,7 +790,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	}
 
 	string field_poly;
-	unipoly_object m, M, h1, h2;
+	ring_theory::unipoly_object m, M, h1, h2;
 	knowledge_base K;
 
 	K.get_primitive_polynomial(field_poly, p, e, 0);
@@ -806,8 +807,8 @@ void coding_theory_domain::BCH_generator_polynomial(
 		FX.print_object(m, cout); cout << endl;
 	}
 
-	unipoly_domain Fq(F, M, verbose_level - 1);
-	unipoly_object beta, beta_i, c;
+	ring_theory::unipoly_domain Fq(F, M, verbose_level - 1);
+	ring_theory::unipoly_object beta, beta_i, c;
 	if (f_vvv) {
 		cout << "extension field created" << endl;
 	}
@@ -855,8 +856,8 @@ void coding_theory_domain::BCH_generator_polynomial(
 	}
 #endif
 
-	longinteger_object *beta_rk_table = NEW_OBJECTS(longinteger_object, n);
-	longinteger_object ai, bi;
+	ring_theory::longinteger_object *beta_rk_table = NEW_OBJECTS(ring_theory::longinteger_object, n);
+	ring_theory::longinteger_object ai, bi;
 
 
 	for (i = 0; i < n; i++) {
@@ -966,7 +967,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	}
 	bose_distance = i;
 
-	longinteger_object rk;
+	ring_theory::longinteger_object rk;
 
 	if (f_v) {
 		cout << "taking the minimum polynomials of { ";
@@ -977,7 +978,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	}
 
 	rank_of_irreducibles = NEW_OBJECTS(
-			longinteger_object, transversal_length);
+			ring_theory::longinteger_object, transversal_length);
 
 	for (i = 0; i < transversal_length; i++) {
 
@@ -1013,7 +1014,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 }
 
 void coding_theory_domain::compute_generator_matrix(
-		unipoly_object a, int *&genma, int n, int &k,
+		ring_theory::unipoly_object a, int *&genma, int n, int &k,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -330,7 +330,7 @@ void spread_classify::init(
 
 
 	if (TRUE /*f_v*/) {
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		
 		A->Strong_gens->group_order(go);
 		cout << "spread_classify::init The order of PGGL(n,q) is " << go << endl;
@@ -361,7 +361,7 @@ void spread_classify::init(
 		R->compute_starter(Starter, Starter_size, 
 			Starter_Strong_gens, verbose_level - 10);
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		Starter_Strong_gens->group_order(go);
 		if (TRUE /*f_v*/) {
 			cout << "spread_classify::init The stabilizer of the "
@@ -1033,9 +1033,9 @@ void spread_classify::lifting_prepare_function_new(
 				"after Dio->make_clique_graph_adjacency_matrix" << endl;
 	}
 
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	char str[1000];
 	string label, label_tex;

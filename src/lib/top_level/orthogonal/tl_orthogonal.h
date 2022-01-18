@@ -76,7 +76,7 @@ public:
 		int orbit_at_level, int level_of_candidates_file,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int &nb_vertices,
-		colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 		int verbose_level);
 
 	void lifting_prepare_function_new(exact_cover *E, int starter_case,

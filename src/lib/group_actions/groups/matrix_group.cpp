@@ -2121,7 +2121,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
 	long int goi, rk, i, h;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int *Id;
 	int *Mtx1;
 	int *Mtx2;

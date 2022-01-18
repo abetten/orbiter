@@ -804,7 +804,7 @@ public:
 	int fusion_with;
 	int *fusion_elt;
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	strong_generators *gens;
 
 	semifield_flag_orbit_node();
@@ -814,7 +814,7 @@ public:
 	void init(int downstep_primary_orbit, int downstep_secondary_orbit,
 		int pt_local, long int pt, int downstep_orbit_len, int f_long_orbit,
 		int verbose_level);
-	void group_order(longinteger_object &go);
+	void group_order(ring_theory::longinteger_object &go);
 	int group_order_as_int();
 	void write_to_file_binary(
 			semifield_lifting *SL, std::ofstream &fp,

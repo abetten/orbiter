@@ -78,7 +78,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 {
 	int f_v = (verbose_level >= 1);
 	sims *Stab;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int data[1000];
 	int i, id;
 	combinatorics::combinatorics_domain Combi;
@@ -186,7 +186,7 @@ void isomorph::isomorph_testing(int t0,
 	int f_v = (verbose_level >= 1);
 	int f_v4 = FALSE;// (verbose_level >= 1);
 	sims *Stab;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int f_eof;
 	file_io Fio;
 
@@ -369,7 +369,7 @@ void isomorph::write_classification_graph(int verbose_level)
 	if (f_v) {
 		cout << "isomorph::write_classification_graph" << endl;
 		}
-	layered_graph *LG;
+	graph_theory::layered_graph *LG;
 
 
 	nb_layers = 3;
@@ -389,7 +389,7 @@ void isomorph::write_classification_graph(int verbose_level)
 
 
 
-	LG = NEW_OBJECT(layered_graph);
+	LG = NEW_OBJECT(graph_theory::layered_graph);
 	
 	string dummy;
 
@@ -566,7 +566,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int id;
 	long int data[1000];
 	int f_continue;
@@ -815,7 +815,7 @@ void isomorph::process_rearranged_set(
 	int f_v6 = (verbose_level >= 6);
 	int orbit_no0, id0, hdl, i, j;
 	long int data0[1000];
-	longinteger_object new_go;
+	ring_theory::longinteger_object new_go;
 	int f_found;
 	
 	if (f_v) {
@@ -1155,8 +1155,8 @@ void isomorph::stabilizer_action_add_generator(int *Elt, int verbose_level)
 void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 {
 	//double progress;
-	longinteger_object go; 
-	longinteger_object AA_go;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_object AA_go;
 	int subset_rank;
 	int t1, dt;
 	int nb, N;
@@ -1356,7 +1356,7 @@ void isomorph::induced_action_on_set_basic(sims *S,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go, K_go;
+	ring_theory::longinteger_object go, K_go;
 	
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set_basic" << endl;
@@ -1406,7 +1406,7 @@ void isomorph::induced_action_on_set(
 // using the generators in S.
 // Calls action::induced_action_by_restriction()
 {
-	longinteger_object go, K_go;
+	ring_theory::longinteger_object go, K_go;
 	//sims *K;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1469,7 +1469,7 @@ void isomorph::induced_action_on_set(
 		//AA->Sims->print_generators_as_permutations();
 		//AA->Sims->print_basic_orbits();
 	
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		AA->Sims->group_order(go);
 		cout << "isomorph::induced_action_on_set "
 				"AA->Sims go=" << go << endl;
@@ -1595,7 +1595,7 @@ int isomorph::handle_automorphism(long int *set, sims *Stab,
 	int f_vvv = (verbose_level >= 3);
 	int f_v6 = (verbose_level >= 6);
 	int *Elt1;
-	longinteger_object go, go1;
+	ring_theory::longinteger_object go, go1;
 	int ret;
 	
 	if (f_v) {

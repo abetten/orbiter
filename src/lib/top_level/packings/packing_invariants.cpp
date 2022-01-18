@@ -118,7 +118,7 @@ void packing_invariants::init_klein_invariants(
 		cout << "packing_invariants::init_klein_invariants" << endl;
 	}
 	nb_planes = v.s_ii(0);
-	R = new longinteger_object[nb_planes];
+	R = new ring_theory::longinteger_object[nb_planes];
 	Pts_on_plane = NEW_pint(nb_planes);
 	nb_pts_on_plane = NEW_int(nb_planes);
 	for (i = 0; i < nb_planes; i++) {

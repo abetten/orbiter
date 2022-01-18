@@ -126,7 +126,7 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 		exit(1);
 	}
 
-	Poly_ring = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly_ring = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Poly_ring->init(Descr->PA->F, Descr->PA->n + 1, Descr->degree, FALSE, t_PART, verbose_level);
 
 
@@ -519,7 +519,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 								"before CFS->classify_curve_with_substructure" << endl;
 					}
 
-					longinteger_object go_eqn;
+					ring_theory::longinteger_object go_eqn;
 
 					canonical_form_substructure *CFS;
 
@@ -605,7 +605,7 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 	}
 
 	canonical_form_nauty *C;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	strong_generators *gens_stab_of_canonical_equation;
 
@@ -829,7 +829,7 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 			}
 
 			canonical_form_nauty *C2;
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 
 
 			C2 = NEW_OBJECT(canonical_form_nauty);
@@ -1023,7 +1023,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 				ost << str;
 			}
 			ost << ",";
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 
 			gens->group_order(go);
 			ost << go << endl;
@@ -1147,7 +1147,7 @@ void canonical_form_classifier::generate_source_code(
 				orbit_index < nb_orbits;
 				orbit_index++) {
 
-			longinteger_object ago;
+			ring_theory::longinteger_object ago;
 
 			int idx;
 

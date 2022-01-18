@@ -644,7 +644,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 
 	if (Descr->f_create_graphs) {
-		colored_graph *CG;
+		graph_theory::colored_graph *CG;
 		if (f_v) {
 			cout << "solution file does not exist" << endl;
 			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
@@ -1027,7 +1027,7 @@ void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 }
 
 void packing_long_orbits::create_graph_and_save_to_file(
-	colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int f_has_user_data, long int *user_data, int user_data_size,
 	int verbose_level)
@@ -1117,7 +1117,7 @@ void packing_long_orbits::create_graph_and_save_to_file(
 }
 
 void packing_long_orbits::create_graph_on_long_orbits(
-		colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 		long int *user_data, int user_data_sz,
 		int verbose_level)
 {

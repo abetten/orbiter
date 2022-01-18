@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 finite_ring::finite_ring()
@@ -610,6 +611,5 @@ int finite_ring::nb_PHG_elements(int n)
 	return N1 * N2;
 }
 
-}
-}
+}}}
 

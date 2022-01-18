@@ -59,7 +59,7 @@ void sylow_structure::init(sims *S, int verbose_level)
 		cout << "sylow_structure::init" << endl;
 	}
 
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int i;
 
 	sylow_structure::S = S;

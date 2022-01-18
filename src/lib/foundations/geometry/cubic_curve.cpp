@@ -90,7 +90,7 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 		cout << "cubic_curve::init after P->init" << endl;
 	}
 
-	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	Poly->init(F,
 			3 /* nb_vars */, 3 /* degree */,
@@ -98,7 +98,7 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 			t_PART,
 			verbose_level);
 
-	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	Poly2->init(F,
 			3 /* nb_vars */, 2 /* degree */,
@@ -111,7 +111,7 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 		cout << "cubic_curve::init nb_monomials = " << nb_monomials << endl;
 	}
 
-	Partials = NEW_OBJECTS(partial_derivative, 3);
+	Partials = NEW_OBJECTS(ring_theory::partial_derivative, 3);
 	for (i = 0; i < 3; i++) {
 		Partials[i].init(Poly, Poly2, i, verbose_level);
 	}

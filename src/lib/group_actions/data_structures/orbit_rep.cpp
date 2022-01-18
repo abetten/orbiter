@@ -123,7 +123,7 @@ void orbit_rep::init_from_file(
 		int verbose_level)
 #endif
 
-	stab_go = NEW_OBJECT(longinteger_object);
+	stab_go = NEW_OBJECT(ring_theory::longinteger_object);
 	Stab->group_order(*stab_go);
 
 	if (f_v) {

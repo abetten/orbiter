@@ -675,8 +675,8 @@ void direct_product::lift_generators(
 	int *Elt3;
 	vector_ge *gens;
 	int i, len1, len2, len3;
-	longinteger_domain D;
-	longinteger_object go1, go2, go3;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go1, go2, go3;
 
 	if (f_v) {
 		cout << "direct_product::lift_generators" << endl;

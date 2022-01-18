@@ -418,7 +418,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 		}
 
 	vector_ge gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
 	load_strong_generators(level, case_nb_local /* cur_node */, 

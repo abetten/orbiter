@@ -80,7 +80,7 @@ void grassmann_embedded::init(int big_n, int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, rk, idx;
-	longinteger_object deg;
+	ring_theory::longinteger_object deg;
 	//longinteger_domain D;
 	combinatorics::combinatorics_domain C;
 	data_structures::sorting Sorting;

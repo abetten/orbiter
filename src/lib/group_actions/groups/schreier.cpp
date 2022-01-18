@@ -2145,7 +2145,8 @@ void schreier::get_orbit_in_order(std::vector<int> &Orb,
 
 strong_generators *schreier::stabilizer_any_point_plus_cosets(
 	action *default_action, 
-	longinteger_object &full_group_order, int pt, vector_ge *&cosets, 
+	ring_theory::longinteger_object &full_group_order,
+	int pt, vector_ge *&cosets,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2229,7 +2230,7 @@ strong_generators *schreier::stabilizer_any_point_plus_cosets(
 
 strong_generators *schreier::stabilizer_any_point(
 	action *default_action, 
-	longinteger_object &full_group_order, int pt, 
+	ring_theory::longinteger_object &full_group_order, int pt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2291,7 +2292,7 @@ strong_generators *schreier::stabilizer_any_point(
 
 
 set_and_stabilizer *schreier::get_orbit_rep(action *default_action,
-		longinteger_object &full_group_order,
+		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx, int verbose_level)
 {
 	set_and_stabilizer *SaS;
@@ -2314,7 +2315,7 @@ set_and_stabilizer *schreier::get_orbit_rep(action *default_action,
 }
 
 void schreier::get_orbit_rep_to(action *default_action,
-		longinteger_object &full_group_order,
+		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx,
 		set_and_stabilizer *Rep,
 		int verbose_level)
@@ -2341,7 +2342,7 @@ void schreier::get_orbit_rep_to(action *default_action,
 
 strong_generators *schreier::stabilizer_orbit_rep(
 	action *default_action, 
-	longinteger_object &full_group_order, int orbit_idx, 
+	ring_theory::longinteger_object &full_group_order, int orbit_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2362,7 +2363,7 @@ strong_generators *schreier::stabilizer_orbit_rep(
 	point_stabilizer(default_action, full_group_order, 
 		Stab, orbit_idx, verbose_level);
 
-	longinteger_object stab_order;
+	ring_theory::longinteger_object stab_order;
 
 	Stab->group_order(stab_order);
 	if (f_v) {
@@ -2383,13 +2384,13 @@ strong_generators *schreier::stabilizer_orbit_rep(
 }
 
 void schreier::point_stabilizer(action *default_action, 
-	longinteger_object &go, 
+		ring_theory::longinteger_object &go,
 	sims *&Stab, int orbit_no, 
 	int verbose_level)
 // this function allocates a sims structure into Stab.
 {
-	longinteger_object cur_go, target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object cur_go, target_go;
+	ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;
 	int *residue;
 	int f_v = (verbose_level >= 1);

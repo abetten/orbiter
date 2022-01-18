@@ -65,7 +65,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_write_code_for_division) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.write_code_for_division(F,
 				Descr->write_code_for_division_fname,
@@ -75,7 +75,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_polynomial_division) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.polynomial_division(F,
 				Descr->polynomial_division_A, Descr->polynomial_division_B,
@@ -83,7 +83,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_extended_gcd_for_polynomials) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.extended_gcd_for_polynomials(F,
 				Descr->polynomial_division_A, Descr->polynomial_division_B,
@@ -92,7 +92,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_mult_mod) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.polynomial_mult_mod(F,
 				Descr->polynomial_mult_mod_A, Descr->polynomial_mult_mod_B,
@@ -116,7 +116,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_polynomial_find_roots) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.polynomial_find_roots(F,
 				Descr->polynomial_find_roots_A,
@@ -295,7 +295,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	else if (Descr->f_make_table_of_irreducible_polynomials) {
 
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.do_make_table_of_irreducible_polynomials(F,
 				Descr->make_table_of_irreducible_polynomials_degree,
@@ -439,7 +439,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_sift_polynomials) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.sift_polynomials(F,
 				Descr->sift_polynomials_r0,
@@ -449,7 +449,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_mult_polynomials) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.mult_polynomials(F,
 				Descr->mult_polynomials_r0,
@@ -459,7 +459,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_ranked) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.polynomial_division_with_report(F,
 				Descr->polynomial_division_r0,
@@ -469,7 +469,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_from_file) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.polynomial_division_from_file_with_report(F,
 				Descr->polynomial_division_from_file_fname,
@@ -479,7 +479,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.polynomial_division_from_file_all_k_error_patterns_with_report(F,
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_fname,
@@ -959,7 +959,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		coding_theory::coding_theory_domain Codes;
 		nth_roots *Nth;
-		unipoly_object P;
+		ring_theory::unipoly_object P;
 
 		int n;
 		//int *Genma;

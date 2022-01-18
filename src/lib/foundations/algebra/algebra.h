@@ -131,8 +131,8 @@ class algebra_global {
 public:
 	void count_subprimitive(int Q_max, int H_max);
 	void formula_subprimitive(int d, int q,
-		longinteger_object &Rdq, int &g, int verbose_level);
-	void formula(int d, int q, longinteger_object &Rdq, int verbose_level);
+			ring_theory::longinteger_object &Rdq, int &g, int verbose_level);
+	void formula(int d, int q, ring_theory::longinteger_object &Rdq, int verbose_level);
 	int subprimitive(int q, int h);
 	int period_of_sequence(int *v, int l);
 	void subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c);
@@ -151,14 +151,14 @@ public:
 	void test_longinteger7();
 	void test_longinteger8();
 	void longinteger_collect_setup(int &nb_agos,
-			longinteger_object *&agos, int *&multiplicities);
+			ring_theory::longinteger_object *&agos, int *&multiplicities);
 	void longinteger_collect_free(int &nb_agos,
-			longinteger_object *&agos, int *&multiplicities);
+			ring_theory::longinteger_object *&agos, int *&multiplicities);
 	void longinteger_collect_add(int &nb_agos,
-			longinteger_object *&agos, int *&multiplicities,
-			longinteger_object &ago);
+			ring_theory::longinteger_object *&agos, int *&multiplicities,
+			ring_theory::longinteger_object &ago);
 	void longinteger_collect_print(std::ostream &ost,
-			int &nb_agos, longinteger_object *&agos, int *&multiplicities);
+			int &nb_agos, ring_theory::longinteger_object *&agos, int *&multiplicities);
 	void do_equivalence_class_of_fractions(int N, int verbose_level);
 
 
@@ -260,8 +260,8 @@ public:
 class gl_class_rep {
 public:
 	data_structures::int_matrix *type_coding;
-	longinteger_object *centralizer_order;
-	longinteger_object *class_length;
+	ring_theory::longinteger_object *centralizer_order;
+	ring_theory::longinteger_object *class_length;
 
 	gl_class_rep();
 	~gl_class_rep();
@@ -272,7 +272,8 @@ public:
 	void compute_vector_coding(gl_classes *C, int &nb_irred, 
 		int *&Poly_degree, int *&Poly_mult, int *&Partition_idx, 
 		int verbose_level);
-	void centralizer_order_Kung(gl_classes *C, longinteger_object &co, 
+	void centralizer_order_Kung(gl_classes *C,
+			ring_theory::longinteger_object &co,
 		int verbose_level);
 };
 
@@ -323,31 +324,31 @@ public:
 	int matrix_group_base_len_general_linear_group(int n, int q,
 		int f_semilinear, int verbose_level);
 	void order_POmega_epsilon(int epsilon, int m, int q,
-		longinteger_object &o, int verbose_level);
+			ring_theory::longinteger_object &o, int verbose_level);
 	void order_PO_epsilon(int f_semilinear, int epsilon, int k, int q,
-		longinteger_object &go, int verbose_level);
+			ring_theory::longinteger_object &go, int verbose_level);
 	// k is projective dimension
 	void order_PO(int epsilon, int m, int q,
-		longinteger_object &o,
+			ring_theory::longinteger_object &o,
 		int verbose_level);
 	void order_Pomega(int epsilon, int k, int q,
-		longinteger_object &go,
+			ring_theory::longinteger_object &go,
 		int verbose_level);
 	void order_PO_plus(int m, int q,
-		longinteger_object &o, int verbose_level);
+			ring_theory::longinteger_object &o, int verbose_level);
 	void order_PO_minus(int m, int q,
-		longinteger_object &o, int verbose_level);
+			ring_theory::longinteger_object &o, int verbose_level);
 	// m = Witt index, the dimension is n = 2m+2
 	void order_PO_parabolic(int m, int q,
-		longinteger_object &o, int verbose_level);
+			ring_theory::longinteger_object &o, int verbose_level);
 	void order_Pomega_plus(int m, int q,
-		longinteger_object &o, int verbose_level);
+			ring_theory::longinteger_object &o, int verbose_level);
 	// m = Witt index, the dimension is n = 2m
 	void order_Pomega_minus(int m, int q,
-		longinteger_object &o, int verbose_level);
+			ring_theory::longinteger_object &o, int verbose_level);
 	// m = half the dimension,
 	// the dimension is n = 2m, the Witt index is m - 1
-	void order_Pomega_parabolic(int m, int q, longinteger_object &o,
+	void order_Pomega_parabolic(int m, int q, ring_theory::longinteger_object &o,
 		int verbose_level);
 	// m = Witt index, the dimension is n = 2m + 1
 	int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
@@ -456,7 +457,7 @@ public:
 	int k;
 	int q;
 	finite_field *F;
-	table_of_irreducible_polynomials *Table_of_polynomials;
+	ring_theory::table_of_irreducible_polynomials *Table_of_polynomials;
 	int *Nb_part;
 	int **Partitions;
 	int *v, *w; // [k], used in choose_basis_for_rational_normal_form_block
@@ -479,10 +480,10 @@ public:
 			int verbose_level);
 	void centralizer_order_Kung_basic(int nb_irreds,
 		int *poly_degree, int *poly_mult, int *partition_idx,
-		longinteger_object &co,
+		ring_theory::longinteger_object &co,
 		int verbose_level);
 	void centralizer_order_Kung(int *Select_polynomial,
-		int *Select_partition, longinteger_object &co,
+		int *Select_partition, ring_theory::longinteger_object &co,
 		int verbose_level);
 		// Computes the centralizer order of a matrix in GL(k,q)
 		// according to Kung's formula~\cite{Kung81}.
@@ -490,7 +491,7 @@ public:
 		int f_no_eigenvalue_one, int verbose_level);
 	void identify_matrix(int *Mtx, gl_class_rep *R, int *Basis,
 		int verbose_level);
-	void identify2(int *Mtx, unipoly_object &poly, int *Mult,
+	void identify2(int *Mtx, ring_theory::unipoly_object &poly, int *Mult,
 		int *Select_partition, int *Basis, int verbose_level);
 	void compute_generalized_kernels_for_each_block(
 		int *Mtx, int *Irreds, int nb_irreds,
@@ -510,7 +511,7 @@ public:
 	void generators_for_centralizer(int *Mtx, gl_class_rep *R,
 		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
 		int verbose_level);
-	void centralizer_generators(int *Mtx, unipoly_object &poly,
+	void centralizer_generators(int *Mtx, ring_theory::unipoly_object &poly,
 		int *Mult, int *Select_partition,
 		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
 		int verbose_level);

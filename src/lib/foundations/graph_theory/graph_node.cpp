@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
 
 
 graph_node::graph_node()
@@ -439,8 +440,7 @@ void graph_node::scale_x_coordinate(double x_stretch, int verbose_level)
 
 
 
-}
-}
+}}}
 
 
 

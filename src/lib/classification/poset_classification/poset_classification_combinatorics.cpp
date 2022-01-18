@@ -299,13 +299,13 @@ void poset_classification::Asup_to_Ainf(int t, int k,
 		int *M_sup, int *M_inf, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	longinteger_object quo, rem, aa, bb, cc;
-	longinteger_object go;
-	longinteger_object *go_t;
-	longinteger_object *go_k;
-	longinteger_object *ol_t;
-	longinteger_object *ol_k;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object quo, rem, aa, bb, cc;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_object *go_t;
+	ring_theory::longinteger_object *go_k;
+	ring_theory::longinteger_object *ol_t;
+	ring_theory::longinteger_object *ol_k;
 	int Nt, Nk;
 	int i, j, a, c;
 	
@@ -318,10 +318,10 @@ void poset_classification::Asup_to_Ainf(int t, int k,
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf go=" << go << endl;
 	}
-	go_t = NEW_OBJECTS(longinteger_object, Nt);
-	go_k = NEW_OBJECTS(longinteger_object, Nk);
-	ol_t = NEW_OBJECTS(longinteger_object, Nt);
-	ol_k = NEW_OBJECTS(longinteger_object, Nk);
+	go_t = NEW_OBJECTS(ring_theory::longinteger_object, Nt);
+	go_k = NEW_OBJECTS(ring_theory::longinteger_object, Nk);
+	ol_t = NEW_OBJECTS(ring_theory::longinteger_object, Nt);
+	ol_k = NEW_OBJECTS(ring_theory::longinteger_object, Nk);
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf "
 				"computing orbit lengths t-orbits" << endl;
@@ -631,7 +631,7 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 		/* Mtk := (k - t) atop (k - r) * M_t,k */
 
 
-	longinteger_object S;
+	ring_theory::longinteger_object S;
 
 	if (Poset->f_subset_lattice) {
 		C.binomial(S, k - t, k - r, 0/* verbose_level*/);

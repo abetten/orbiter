@@ -466,7 +466,7 @@ void surface_study::study_group(int verbose_level)
 	int *Group_elts;
 	int group_order;
 	int elt_sz;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 
 	SaS->Stab->table_of_group_elements_in_data_form(
@@ -659,7 +659,7 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
-	graph_theory_domain Graph;
+	graph_theory::graph_theory_domain Graph;
 	file_io Fio;
 
 	if (f_v) {

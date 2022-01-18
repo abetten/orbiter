@@ -251,8 +251,8 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 	ost << "\\subsection*{Classification of 6-arcs not on a conic "
 			"in $\\PG(2," << PA->F->q << ")$}" << endl;
 	
-	longinteger_object go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_domain D;
 	{
 	PA->A->Strong_gens->group_order(go);
 
@@ -263,7 +263,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 	ost << "\\bigskip" << endl << endl;
 	}
 
-	longinteger_object ol, Ol;
+	ring_theory::longinteger_object ol, Ol;
 	Ol.create(0, __FILE__, __LINE__);
 	for (h = 0; h < nb_arcs_not_on_conic; h++) {
 		set_and_stabilizer *R;
@@ -294,7 +294,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_idx)
 {
 	set_and_stabilizer *The_arc;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	The_arc = Gen->gen->get_set_and_stabilizer(
 			6 /* level */,
@@ -325,7 +325,7 @@ void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_id
 void six_arcs_not_on_a_conic::report_specific_arc(ostream &ost, int arc_idx)
 {
 	set_and_stabilizer *The_arc;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	The_arc = Gen->gen->get_set_and_stabilizer(
 			6 /* level */,

@@ -551,7 +551,7 @@ void combinatorics_global::Hill_cap56(
 
 #if 1
 
-	longinteger_object *Rank_lines;
+	ring_theory::longinteger_object *Rank_lines;
 	int nb_lines;
 
 	if (f_v) {
@@ -584,7 +584,7 @@ void combinatorics_global::Hill_cap56(
 
 
 	sims *S;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	//int goi;
 	int *Elt;
 
@@ -1099,7 +1099,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 
 		int f_found;
 		int idx;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		incidence_structure *Inc_out;
 
@@ -1208,7 +1208,7 @@ void combinatorics_global::process_object(
 	incidence_structure *&Inc_out,
 	int nb_objects_to_test,
 	int &f_found, int &idx,
-	longinteger_object &go,
+	ring_theory::longinteger_object &go,
 	int verbose_level)
 // does not store IG
 {

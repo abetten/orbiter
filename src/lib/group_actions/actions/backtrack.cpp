@@ -389,7 +389,7 @@ void action::make_canonical(int size, long int *set,
 		cout << endl;
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	Sims->group_order(go);
 	if (f_v) {
 		cout << "action::make_canonical group order = " << go << endl;
@@ -455,7 +455,7 @@ void action::make_canonical(int size, long int *set,
 		cout << "action::make_canonical succeeds in " << cnt
 				<< " iterations, total_backtrack_nodes="
 				<< total_backtrack_nodes << endl;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		Aut->group_order(go);
 		cout << "the automorphism group has order " << go << endl;
 	}
@@ -704,7 +704,7 @@ finish:
 			}
 		}
 		sims Aut2, K;
-		longinteger_object go, go2;
+		ring_theory::longinteger_object go, go2;
 		
 		if (f_vv) {
 			cout << "action::is_minimal_witness building up automorphism group" << endl;

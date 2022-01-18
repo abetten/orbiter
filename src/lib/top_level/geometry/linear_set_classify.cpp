@@ -647,7 +647,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 	int **Intersection_dimensions;
 	long int ***Sets;
 	int **Set_sz;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i, h, j;
 
 	Nb_nodes = NEW_int(depth + 1);
@@ -787,7 +787,7 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 void linear_set_classify::print_orbits_at_level(int level)
 {
 	int len, orbit_at_level, i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int *set;
 	int *Basis;
 
@@ -1124,7 +1124,7 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 		cout << endl;
 
 		strong_generators *Strong_gens2;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Gen2->get_stabilizer_generators(Strong_gens2,
 			secondary_depth, h, 0 /*verbose_level*/);
@@ -1550,7 +1550,7 @@ void linear_set_classify::do_compute_stabilizer(
 	vector_ge *aut_gens;
 	strong_generators *Strong_gens_previous;
 	int group_index, orbit_len, go_int;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Gen->get_stabilizer_generators(Strong_gens_previous,
 		level, orbit_at_level, verbose_level);
@@ -2114,7 +2114,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 			final_node, 0 /*verbose_level*/);
 		//T->identify(spread_elements_numeric, nb_components, verbose_level);
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		int lvl;
 		int orbit_at_lvl;
 

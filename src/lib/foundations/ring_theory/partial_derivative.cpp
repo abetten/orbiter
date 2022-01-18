@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 partial_derivative::partial_derivative()
@@ -121,4 +122,5 @@ void partial_derivative::apply(int *eqn_in,
 }
 
 
-}}
+}}}
+

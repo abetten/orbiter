@@ -204,7 +204,7 @@ int vector_hashing::rank(int *data)
 	for (i = 0; i < l; i++) {
 		I = f + i;
 		idx = perm_inv[I];
-		if (int_vec_compare(vector_data + idx * data_size,
+		if (Sorting.int_vec_compare(vector_data + idx * data_size,
 				data, data_size) == 0) {
 			return idx;
 			}

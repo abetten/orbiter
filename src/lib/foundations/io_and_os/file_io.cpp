@@ -3821,7 +3821,7 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 
 int file_io::number_of_vertices_in_colored_graph(std::string &fname, int verbose_level)
 {
-	colored_graph CG;
+	graph_theory::colored_graph CG;
 
 	CG.load(fname, verbose_level);
 

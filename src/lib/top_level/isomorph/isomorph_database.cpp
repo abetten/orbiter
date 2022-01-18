@@ -861,7 +861,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 void isomorph::load_strong_generators(int cur_level,
 		int cur_node_local,
-	vector_ge &gens, longinteger_object &go,
+	vector_ge &gens, ring_theory::longinteger_object &go,
 	int verbose_level)
 // Called from compute_stabilizer and from orbit_representative
 {
@@ -895,7 +895,7 @@ void isomorph::load_strong_generators(int cur_level,
 
 void isomorph::load_strong_generators_oracle(int cur_level,
 	int cur_node_local,
-	vector_ge &gens, longinteger_object &go, int verbose_level)
+	vector_ge &gens, ring_theory::longinteger_object &go, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	poset_orbit_node *O;
@@ -956,7 +956,7 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 
 void isomorph::load_strong_generators_database(int cur_level,
 		int cur_node_local,
-	vector_ge &gens, longinteger_object &go, int verbose_level)
+	vector_ge &gens, ring_theory::longinteger_object &go, int verbose_level)
 // Reads node cur_node (global index) from database D through btree 0
 // Reads generators from file fp_ge
 {
@@ -968,7 +968,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 	int i;
 	int set[1000];
 	int *tl;
-	longinteger_domain Dom;
+	ring_theory::longinteger_domain Dom;
 
 
 	if (f_v) {

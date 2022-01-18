@@ -65,7 +65,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	if (f_v) {
 		cout << "nth_roots::init n=" << n << endl;
 	}
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	number_theory_domain NT;
 	coding_theory::coding_theory_domain Codes;
 	int i;
@@ -79,10 +79,10 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	if (f_v) {
 		cout << "nth_roots::init order of q mod n is m=" << m << endl;
 	}
-	Qm = NEW_OBJECT(longinteger_object);
-	Qm1 = NEW_OBJECT(longinteger_object);
-	Index = NEW_OBJECT(longinteger_object);
-	Subfield_Index = NEW_OBJECT(longinteger_object);
+	Qm = NEW_OBJECT(ring_theory::longinteger_object);
+	Qm1 = NEW_OBJECT(ring_theory::longinteger_object);
+	Index = NEW_OBJECT(ring_theory::longinteger_object);
+	Subfield_Index = NEW_OBJECT(ring_theory::longinteger_object);
 	D.create_q_to_the_n(*Qm, F->q, m);
 	D.create_qnm1(*Qm1, F->q, m);
 
@@ -122,14 +122,14 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 	Fp->finite_field_init(F->p, FALSE /* f_without_tables */, verbose_level - 1);
 
-	FX = NEW_OBJECT(unipoly_domain);
+	FX = NEW_OBJECT(ring_theory::unipoly_domain);
 
 	FX->init_basic(F, verbose_level);
 
 
 	//unipoly_domain FpX(Fp);
 
-	FpX = NEW_OBJECT(unipoly_domain);
+	FpX = NEW_OBJECT(ring_theory::unipoly_domain);
 
 	FpX->init_basic(Fp, verbose_level);
 
@@ -146,7 +146,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		cout << "nth_roots::init creating unipoly_domain Fq modulo M" << endl;
 	}
 
-	Fq = NEW_OBJECT(unipoly_domain);
+	Fq = NEW_OBJECT(ring_theory::unipoly_domain);
 
 	Fq->init_factorring(Fp, Min_poly, verbose_level);
 	//unipoly_domain Fq(Fp, Min_poly, verbose_level);
@@ -156,7 +156,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		cout << "nth_roots::init extension field created" << endl;
 	}
 
-	ring_theory_global R;
+	ring_theory::ring_theory_global R;
 
 	if (f_v) {
 		cout << "nth_roots::init before R.compute_nth_roots_as_polynomials" << endl;
@@ -215,7 +215,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 
 
-	generator = (unipoly_object **) NEW_pvoid(Cyc->S->nb_sets);
+	generator = (ring_theory::unipoly_object **) NEW_pvoid(Cyc->S->nb_sets);
 
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 
@@ -327,7 +327,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 
 
-	generator_Fq = (unipoly_object *) NEW_pvoid(Cyc->S->nb_sets);
+	generator_Fq = (ring_theory::unipoly_object *) NEW_pvoid(Cyc->S->nb_sets);
 
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 
@@ -387,7 +387,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	int i, j;
 	geometry_global Gg;
 	number_theory_domain NT;
-	ring_theory_global R;
+	ring_theory::ring_theory_global R;
 
 	p = F->p;
 	e = field_degree;
@@ -409,7 +409,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 			<< subgroup_index << endl;
 	}
 
-	unipoly_object *Beta;
+	ring_theory::unipoly_object *Beta;
 
 	if (f_v) {
 		cout << "nth_roots::compute_subfield before F->compute_powers" << endl;
@@ -531,7 +531,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	a = Gg.AG_element_rank(p, K, 1, subfield_degree + 1);
 
 	if (f_v) {
-		unipoly_object elt;
+		ring_theory::unipoly_object elt;
 
 		FpX->create_object_by_rank(elt, a, __FILE__, __LINE__, verbose_level);
 		cout << "nth_roots::compute_subfield "

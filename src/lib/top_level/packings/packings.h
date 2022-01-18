@@ -27,7 +27,7 @@ public:
 
 
 	packing_invariants *Inv;
-	longinteger_object *Ago, *Ago_induced;
+	ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
 	int *Spread_type_of_packing;
@@ -218,7 +218,7 @@ public:
 		// [P->size_of_packing * P->spread_size]
 
 	int f_has_klein;
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 	int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
@@ -346,12 +346,12 @@ public:
 			int verbose_level);
 	void create_fname_graph_on_remaining_long_orbits();
 	void create_graph_and_save_to_file(
-			colored_graph *&CG,
+			graph_theory::colored_graph *&CG,
 			std::string &fname,
 			int f_has_user_data, long int *user_data, int user_data_size,
 			int verbose_level);
 	void create_graph_on_long_orbits(
-			colored_graph *&CG,
+			graph_theory::colored_graph *&CG,
 			long int *user_data, int user_data_sz,
 			int verbose_level);
 	void report_filtered_orbits(std::ostream &ost);
@@ -524,7 +524,7 @@ public:
 		// reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
 		// reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
 
-	colored_graph *fixpoint_graph;
+	graph_theory::colored_graph *fixpoint_graph;
 	poset_with_group_action *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
 
@@ -596,7 +596,7 @@ public:
 	packing_classify *P;
 
 	strong_generators *H_gens;
-	longinteger_object H_go;
+	ring_theory::longinteger_object H_go;
 	long int H_goi;
 	sims *H_sims;
 
@@ -606,7 +606,7 @@ public:
 	int dim;
 
 	strong_generators *N_gens;
-	longinteger_object N_go;
+	ring_theory::longinteger_object N_go;
 	long int N_goi;
 
 

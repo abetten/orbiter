@@ -870,7 +870,7 @@ void projective_space_global::classify_quartic_curves_nauty(
 	for (idx = 0; idx < Classifier->CB->nb_types; idx++) {
 
 		canonical_form_nauty *C1;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		C1 = (canonical_form_nauty *) Classifier->CB->Type_extra_data[idx];
 

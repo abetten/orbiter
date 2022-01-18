@@ -147,7 +147,7 @@ void generators_symplectic_group::init(finite_field *F,
 		cout << endl;
 		cout << "group order: ";
 
-		ring_theory_global R;
+		ring_theory::ring_theory_global R;
 
 		R.print_longinteger_after_multiplying(cout, transversal_length, n);
 		cout << endl;

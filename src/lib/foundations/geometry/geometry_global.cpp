@@ -141,10 +141,10 @@ int geometry_global::AG_element_next(int q, int *v, int stride, int len)
 
 
 void geometry_global::AG_element_rank_longinteger(int q,
-		int *v, int stride, int len, longinteger_object &a)
+		int *v, int stride, int len, ring_theory::longinteger_object &a)
 {
-	longinteger_domain D;
-	longinteger_object Q, a1;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object Q, a1;
 	int i;
 
 	if (len <= 0) {
@@ -167,11 +167,11 @@ void geometry_global::AG_element_rank_longinteger(int q,
 }
 
 void geometry_global::AG_element_unrank_longinteger(int q,
-		int *v, int stride, int len, longinteger_object &a)
+		int *v, int stride, int len, ring_theory::longinteger_object &a)
 {
 	int i, r;
-	longinteger_domain D;
-	longinteger_object a0, Q, a1;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a0, Q, a1;
 
 	a.assign_to(a0);
 	if (len <= 0) {
@@ -2199,10 +2199,10 @@ void geometry_global::latex_homogeneous_equation(finite_field *F, int degree, in
 	}
 	int *eqn;
 	int sz;
-	homogeneous_polynomial_domain *Poly;
+	ring_theory::homogeneous_polynomial_domain *Poly;
 
 	Orbiter->Int_vec->scan(equation_text, eqn, sz);
-	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "geometry_global::latex_homogeneous_equation before Poly->init" << endl;

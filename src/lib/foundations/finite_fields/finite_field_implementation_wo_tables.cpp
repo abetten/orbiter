@@ -77,7 +77,7 @@ void finite_field_implementation_wo_tables::init(finite_field *F, int verbose_le
 	}
 
 
-	FX = NEW_OBJECT(unipoly_domain);
+	FX = NEW_OBJECT(ring_theory::unipoly_domain);
 
 
 	if (f_v) {
@@ -90,7 +90,7 @@ void finite_field_implementation_wo_tables::init(finite_field *F, int verbose_le
 		cout << endl;
 	}
 
-	Fq = NEW_OBJECT(unipoly_domain);
+	Fq = NEW_OBJECT(ring_theory::unipoly_domain);
 
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::init before Fq->init_factorring" << endl;
@@ -131,7 +131,7 @@ int finite_field_implementation_wo_tables::mult(int i, int j, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::mult" << endl;
 	}
 
-	unipoly_object a, b, c;
+	ring_theory::unipoly_object a, b, c;
 	int k;
 
 	Fq->create_object_by_rank(a, i, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
@@ -182,7 +182,7 @@ int finite_field_implementation_wo_tables::inverse(int i, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::inverse" << endl;
 	}
 
-	unipoly_object a, u, v, g;
+	ring_theory::unipoly_object a, u, v, g;
 	int k;
 
 	Fq->create_object_by_rank(a, i, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
