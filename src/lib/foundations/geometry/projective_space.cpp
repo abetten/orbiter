@@ -2938,7 +2938,7 @@ void projective_space::Baer_subline(long int *pts3,
 	int rk;
 	int len;
 	int i, j;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space::Baer_subline" << endl;

@@ -423,7 +423,7 @@ void ring_theory_global::extended_gcd_for_polynomials(
 	Orbiter->get_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -580,7 +580,7 @@ void ring_theory_global::polynomial_mult_mod(
 	Orbiter->get_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
 	Orbiter->get_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -681,7 +681,7 @@ void ring_theory_global::polynomial_find_roots(
 
 	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -1184,7 +1184,7 @@ void ring_theory_global::number_of_conditions_satisfied(
 
 
 	homogeneous_polynomial_domain *HPD;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int h, i, a;
 	long int rk;
 	int *v;
@@ -1321,7 +1321,7 @@ void ring_theory_global::create_intersection_of_zariski_open_sets(
 		cout << "ring_theory_global::create_intersection_of_zariski_open_sets" << endl;
 	}
 	homogeneous_polynomial_domain *HPD;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int h;
 	long int *Pts1;
 	int sz1;
@@ -1444,7 +1444,7 @@ void ring_theory_global::create_projective_variety(
 	}
 
 	homogeneous_polynomial_domain *HPD;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
@@ -1789,7 +1789,7 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 	int i;
 	longinteger_object Qm1, Index;
 	longinteger_domain D;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	m = NT.order_mod_p(F->q, n1);
 	if (f_v) {
@@ -1972,7 +1972,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	int f_vv = (verbose_level >= 2);
 	int i;
 	int cnt;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
@@ -2149,7 +2149,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 	int f_vv = (verbose_level >= 2);
 	int i;
 	int cnt;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -2529,7 +2529,7 @@ void ring_theory_global::search_for_primitive_polynomials(
 {
 	int f_v = (verbose_level >= 1);
 	int d, q;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	Orbiter->longinteger_f_print_scientific = FALSE;
@@ -2598,7 +2598,7 @@ void ring_theory_global::factor_cyclotomic(int n, int q, int d,
 	int field_degree, subgroup_index;
 	finite_field FQ;
 	finite_field Fq;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	NT.factor_prime_power(q, p, e);
 	if (f_v) {

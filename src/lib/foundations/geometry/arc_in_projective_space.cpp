@@ -839,7 +839,7 @@ void arc_in_projective_space::create_Cherowitzo_hyperoval(
 	int h;
 	int sigma;
 	int exponent, one_half, e1, e2, e3;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Cherowitzo_hyperoval" << endl;

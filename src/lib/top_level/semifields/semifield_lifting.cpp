@@ -2419,7 +2419,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 	int max_l = 0;
 	long int *Tmp1;
 	long int *Tmp2;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	underlying_set_size = NT.i_power_j(SC->q, k2);
 
@@ -2661,7 +2661,7 @@ int semifield_lifting::candidate_testing(
 	int /*window_bottom_new,*/ window_size_new;
 	//int pivot_row;
 	long int last_mtx_numeric;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	data_structures::sorting Sorting;
 

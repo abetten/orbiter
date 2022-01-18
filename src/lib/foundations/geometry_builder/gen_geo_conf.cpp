@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 gen_geo_conf::gen_geo_conf()
@@ -46,6 +47,6 @@ void gen_geo_conf::print(std::ostream &ost)
 			<< " r0=" << r0 << " i0=" << i0 << " j0=" << j0 << endl;
 }
 
-}}
+}}}
 
 

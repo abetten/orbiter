@@ -505,7 +505,7 @@ public:
 	long int nb_calls_to_PG_element_rank_modified;
 	long int nb_calls_to_PG_element_unrank_modified;
 
-	linear_algebra *Linear_algebra;
+	linear_algebra::linear_algebra *Linear_algebra;
 	orthogonal_indexing *Orthogonal_indexing;
 
 
@@ -864,7 +864,7 @@ public:
 		// Index = Qm1 / n
 		// Subfield_Index = Qm1 / (q - 1)
 
-	cyclotomic_sets *Cyc;
+	number_theory::cyclotomic_sets *Cyc;
 	ring_theory::unipoly_object **generator;
 
 	ring_theory::unipoly_object *generator_Fq;

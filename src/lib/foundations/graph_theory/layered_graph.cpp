@@ -1280,7 +1280,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 	int i, k, r, a, b, r0;
 	int *set1;
 	int *set2;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {

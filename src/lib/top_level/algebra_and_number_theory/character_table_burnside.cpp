@@ -755,7 +755,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 	int *Choice;
 	int *Nb;
 	int t, h, i, /*idx,*/ j;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -380,5 +381,6 @@ void test_semicanonical::row_test_continue(int I, int m, int J, int i1)
 }
 
 
-}}
+}}}
+
 

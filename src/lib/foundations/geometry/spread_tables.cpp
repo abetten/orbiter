@@ -96,7 +96,7 @@ void spread_tables::init(projective_space *P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_tables::init" << endl;
@@ -249,7 +249,7 @@ void spread_tables::init_reduced(
 {
 	int f_v = (verbose_level >= 1);
 	int i, a;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_tables::init_reduced, nb_select=" << nb_select << endl;

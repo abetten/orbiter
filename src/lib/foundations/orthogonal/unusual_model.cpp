@@ -141,7 +141,7 @@ void unusual_model::setup2(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 2);
 	int i, j, b, p, h;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	
 	if (f_v) {

@@ -71,7 +71,7 @@ void surface_create::init_with_data(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -122,7 +122,7 @@ void surface_create::init(surface_create_description *Descr,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -810,7 +810,7 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 		b = surface_coeffs[2 * i + 1];
 		if (a < 0) {
 			if (TRUE /*F->e == 1*/) {
-				number_theory_domain NT;
+				number_theory::number_theory_domain NT;
 
 				a = NT.mod(a, F->p);
 			}

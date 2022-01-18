@@ -1256,7 +1256,7 @@ void numerics::substitute_quadric_linear(
 	int h, i, j, a, nb_affine, idx;
 	int A[2];
 	int v[4];
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	data_structures::sorting Sorting;
 
@@ -1399,7 +1399,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 	int h, i, j, a, nb_affine, idx;
 	int A[3];
 	int v[4];
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	data_structures::sorting Sorting;
 
@@ -1605,7 +1605,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 	int h, i, j, a, nb_affine, idx;
 	int A[4];
 	int v[4];
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	data_structures::sorting Sorting;
 

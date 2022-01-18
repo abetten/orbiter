@@ -151,7 +151,7 @@ void spread_classify::init(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 	
 	

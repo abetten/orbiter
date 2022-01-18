@@ -74,7 +74,7 @@ void semifield_classify_with_substructure::init(
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init" << endl;
 	}
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	semifield_classify_with_substructure::Descr = Descr;

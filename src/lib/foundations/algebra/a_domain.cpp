@@ -65,7 +65,7 @@ void a_domain::init_integer_fractions(int verbose_level)
 int a_domain::as_int(int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::as_int" << endl;
@@ -228,7 +228,7 @@ int a_domain::is_one(int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::is_one" << endl;
@@ -353,7 +353,7 @@ void a_domain::swap(int *elt1, int *elt2, int verbose_level)
 void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::add" << endl;
@@ -383,7 +383,7 @@ void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::add_apply" << endl;
@@ -413,7 +413,7 @@ void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
 void a_domain::subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::subtract" << endl;
@@ -477,7 +477,7 @@ void a_domain::negate_vector(int *elt, int len, int verbose_level)
 void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::mult" << endl;
@@ -508,7 +508,7 @@ void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 void a_domain::mult_apply(int *elt_a, int *elt_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::mult_apply" << endl;
@@ -603,7 +603,7 @@ void a_domain::mult_by_integer(int *elt, int n, int verbose_level)
 void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::divide_by_integer" << endl;
@@ -640,7 +640,7 @@ void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "a_domain::divide" << endl;

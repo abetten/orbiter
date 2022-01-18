@@ -43,7 +43,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (f_v) {

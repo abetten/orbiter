@@ -68,7 +68,7 @@ void quartic_curve_create::init_with_data(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (f_v) {
@@ -121,7 +121,7 @@ void quartic_curve_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (f_v) {

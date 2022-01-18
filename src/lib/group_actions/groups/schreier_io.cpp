@@ -746,7 +746,7 @@ void schreier::print_tables(std::ostream &ost,
 {
     int i;
     int w; //  j, k;
-	number_theory_domain NT;
+    number_theory::number_theory_domain NT;
 
 #if 0
 	ost << gens.len << " generators:" << endl;
@@ -796,7 +796,7 @@ void schreier::print_tables_latex(std::ostream &ost,
 {
     int i;
     int w; //  j, k;
-	number_theory_domain NT;
+    number_theory::number_theory_domain NT;
 
 #if 0
 	ost << gens.len << " generators:" << endl;

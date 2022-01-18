@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace linear_algebra {
 
 
 
@@ -914,4 +915,5 @@ int linear_algebra::evaluate_monomial(int *monomial,
 
 
 
-}}
+}}}
+

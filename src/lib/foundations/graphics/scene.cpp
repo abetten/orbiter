@@ -2791,7 +2791,7 @@ void scene::hypercube(int n, double rad_desired)
 	double x[3];
 	double t, dt;
 	numerics Num;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	int first_pt_idx;

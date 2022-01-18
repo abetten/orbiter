@@ -101,7 +101,7 @@ void arc_basic::GlynnI_hyperoval(
 	int i, t, te, a;
 	int sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
 	int *Mtx;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "arc_basic::GlynnI_hyperoval q=" << F->q << endl;
@@ -170,7 +170,7 @@ void arc_basic::GlynnII_hyperoval(
 	int i, t, te, a;
 	int sigma, gamma = 0, Sigma, Gamma, exponent;
 	int *Mtx;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "arc_basic::GlynnII_hyperoval q=" << F->q << endl;

@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
+
 
 cperm::cperm()
 {
@@ -293,5 +295,6 @@ int cp_cmp(CPERM *a, CPERM *b)
 #endif
 
 
-}}
+}}}
+
 

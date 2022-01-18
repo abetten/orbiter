@@ -12,6 +12,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace number_theory {
 
 
 
@@ -248,7 +249,7 @@ public:
 
 
 
-}}
+}}}
 
 
 

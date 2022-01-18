@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -366,4 +367,5 @@ void geometry_builder::set_split(int line, int remainder, int modulo)
 
 
 
-}}
+}}}
+

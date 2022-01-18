@@ -642,7 +642,7 @@ void action_global::lift_generators_to_subfield_structure(
 	finite_field *Fq;
 	//finite_field *FQ;
 	sims *Sims;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "action_global::lift_generators_to_subfield_structure" << endl;

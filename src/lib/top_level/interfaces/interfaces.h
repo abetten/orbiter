@@ -350,7 +350,7 @@ class interface_combinatorics {
 	std::string rank_k_subset_text;
 
 	int f_geometry_builder;
-	geometry_builder_description *Geometry_builder_description;
+	geometry_builder::geometry_builder_description *Geometry_builder_description;
 
 
 public:
@@ -936,7 +936,7 @@ public:
 	data_structures::data_input_stream_description *Data_input_stream_description;
 
 	int f_geometry_builder;
-	geometry_builder_description *Geometry_builder_description;
+	geometry_builder::geometry_builder_description *Geometry_builder_description;
 
 
 	symbol_definition();

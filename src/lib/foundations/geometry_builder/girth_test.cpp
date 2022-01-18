@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -199,5 +200,6 @@ void girth_test::print_Di(int i)
 	Orbiter->Int_vec->matrix_print(D[i], V, V);
 }
 
-}}
+}}}
+
 

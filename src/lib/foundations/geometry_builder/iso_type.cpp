@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -571,5 +572,5 @@ void iso_type::print_geometry(inc_encoding *Encoding, int v, incidence *inc)
 
 
 
-}}
+}}}
 

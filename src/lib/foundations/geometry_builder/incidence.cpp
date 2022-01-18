@@ -8,6 +8,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -575,6 +576,7 @@ void incidence::inc_to_geo(int v, long int *theInc, int *theGEO, int nb_flags)
 }
 
 
-}}
+}}}
+
 
 

@@ -346,7 +346,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 	//int *C_inv;
 	int *H;
 	int *AA;
-	representation_theory_domain Rep;
+	linear_algebra::representation_theory_domain Rep;
 
 	q = f->q;
 

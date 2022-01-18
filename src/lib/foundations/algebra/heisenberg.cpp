@@ -53,7 +53,7 @@ void heisenberg::init(finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "heisenberg::init n=" << n << " q=" << F->q << endl;
@@ -182,7 +182,7 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i, j, cnt, k;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "heisenberg::generating_set" << endl;

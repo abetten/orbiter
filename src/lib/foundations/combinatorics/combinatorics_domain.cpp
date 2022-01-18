@@ -596,7 +596,7 @@ void combinatorics_domain::rank_subset_recursion(
 		int *set, int sz, int n, int a0, int &r)
 {
 	int a;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (sz == 0) {
 		return;
@@ -624,7 +624,7 @@ void combinatorics_domain::unrank_subset_recursion(
 		int *set, int &sz, int n, int a0, int &r)
 {
 	int a, b;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (r == 0) {
 		return;
@@ -1542,7 +1542,7 @@ int combinatorics_domain::perm_order(int *a, long int n)
 {
 	int *have_seen;
 	long int i, l, l1, first, next, len, order = 1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 		
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
@@ -2028,7 +2028,7 @@ int combinatorics_domain::create_roots_H4(
 long int combinatorics_domain::generalized_binomial(int n, int k, int q)
 {
 	long int a, b, c, a1, b1, c1, d, e, g;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (n == k || k == 0) {
 		return 1;

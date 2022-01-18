@@ -239,7 +239,7 @@ void unipoly_domain::create_object_by_rank(
 	const char *file, int line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "unipoly_domain::create_object_by_rank rk=" << rk << endl;
@@ -299,7 +299,7 @@ void unipoly_domain::create_object_from_csv_file(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	file_io Fio;
 	int m, n, len;
 	long int *M;

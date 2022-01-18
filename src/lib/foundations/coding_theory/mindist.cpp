@@ -64,7 +64,7 @@ int coding_theory_domain::mindist(int n, int k, int q, int *G,
 	int p, e;
 	//vector vp, ve;
 	int wt_rows, w;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	NT.factor_prime_power(q, p, e);
 	MD.verbose_level = verbose_level;
@@ -565,7 +565,7 @@ static int weight_of_linear_combinations(MINDIST *MD, int l)
 	int i, j, z, w;
 	int *v,*linc,*lcv;
 	int *sub;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	/* for l = 1 the weight of a multiple of a generating codevector 
 		    is equal to the weight of that codevector (p = prim) */

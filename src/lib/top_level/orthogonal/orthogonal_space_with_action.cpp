@@ -123,7 +123,7 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 		cout << "orthogonal_space_with_action::init_group" << endl;
 	}
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	f_semilinear = TRUE;
 	if (NT.is_prime(Descr->F->q)) {

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -1203,4 +1204,5 @@ int geometric_backtrack_search::TryToPlace(int I, int m, int J, int n, int j,
 
 
 
-}}
+}}}
+

@@ -81,7 +81,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	surface_domain *Surf;
 	finite_field *F;
 	int i, j, arc_idx;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	//int f_semilinear = TRUE;
 

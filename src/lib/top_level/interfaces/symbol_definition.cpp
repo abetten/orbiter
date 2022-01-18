@@ -638,7 +638,7 @@ void symbol_definition::read_definition(
 		f_geometry_builder = TRUE;
 
 
-		Geometry_builder_description = NEW_OBJECT(geometry_builder_description);
+		Geometry_builder_description = NEW_OBJECT(geometry_builder::geometry_builder_description);
 		if (f_v) {
 			cout << "reading -geometry_builder" << endl;
 		}
@@ -1083,7 +1083,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	Projective_space_with_action_description->F = F;
 
 	int f_semilinear;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (NT.is_prime(F->q)) {
@@ -1175,7 +1175,7 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 	Orthogonal_space_with_action_description->F = F;
 
 	int f_semilinear;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (NT.is_prime(F->q)) {
@@ -2232,9 +2232,9 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 		cout << "symbol_definition::do_geometry_builder" << endl;
 	}
 
-	geometry_builder *GB;
+	geometry_builder::geometry_builder *GB;
 
-	GB = NEW_OBJECT(geometry_builder);
+	GB = NEW_OBJECT(geometry_builder::geometry_builder);
 
 	GB->init_description(Geometry_builder_description, verbose_level);
 

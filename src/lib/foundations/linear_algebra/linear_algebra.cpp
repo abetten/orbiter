@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace linear_algebra {
 
 
 linear_algebra::linear_algebra()
@@ -214,7 +215,7 @@ void linear_algebra::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 {
 	int i, j, k, a, b, ab, c, f1, f2, f1inv;
 	int *B2;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	B2 = NEW_int(n * n);
 	f1 = A[n * n];
@@ -250,7 +251,7 @@ void linear_algebra::semilinear_matrix_mult_memory_given(
 	int f_vv = (verbose_level >= 2);
 	int i, j, k, a, b, ab, c, f1, f2, f1inv;
 	int *B2 = tmp_B;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "linear_algebra::semilinear_matrix_mult_memory_given" << endl;
@@ -346,7 +347,7 @@ void linear_algebra::semilinear_matrix_mult_affine(
 	int *b1, *b2, *b3;
 	int *A1, *A2, *A3;
 	int *T;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	T = NEW_int(n * n);
 	A1 = A;
@@ -599,7 +600,7 @@ void linear_algebra::semilinear_matrix_invert(int *A,
 	int f, finv;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "linear_algebra::semilinear_matrix_invert" << endl;
@@ -633,7 +634,7 @@ void linear_algebra::semilinear_matrix_invert_affine(int *A,
 	int *b1, *b2;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "linear_algebra::semilinear_matrix_invert_affine" << endl;
@@ -2767,7 +2768,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	int *tmp;
 	int i, j, h, N, a, sz, Sz;
 	int rk;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	data_structures::sorting Sorting;
 
@@ -3091,6 +3092,6 @@ void linear_algebra::lift_to_Klein_quadric(int *A4, int *A6, int verbose_level)
 
 
 
-}}
+}}}
 
 

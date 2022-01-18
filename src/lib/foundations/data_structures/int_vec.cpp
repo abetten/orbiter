@@ -328,7 +328,7 @@ int int_vec::first_difference(int *p, int *q, int len)
 int int_vec::vec_max_log_of_entries(std::vector<std::vector<int>> &p)
 {
 	int i, j, a, w = 1, w1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	for (i = 0; i < p.size(); i++) {
 		for (j = 0; j < p[i].size(); j++) {
@@ -935,7 +935,7 @@ void int_vec::matrix_delete_column_in_place(int *Mtx,
 int int_vec::matrix_max_log_of_entries(int *p, int m, int n)
 {
 	int i, j, a, w = 1, w1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {

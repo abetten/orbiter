@@ -105,7 +105,7 @@ void spread_classify::print_isomorphism_type2(isomorph *Iso,
 	int f_elements_exponential = FALSE;
 	string symbol_for_print;
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -1312,7 +1312,7 @@ void spread_classify::make_spread(long int *data,
 	int sz = order + 1;
 	int M[8];
 	int h, i, h1, s, t, sq, tq, x, y, w, z, eta, exponent;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int q1 = NT.i_power_j(Mtx->GFq->p, (Mtx->GFq->e >> 1));
 
 	if (f_v) {
@@ -1404,7 +1404,7 @@ void spread_classify::make_spread_from_q_clan(long int *data,
 	int h, h1, i, s, t, t2, t3, t4, t5, t7, t9;
 	int a_t = 0, b_t = 0, c_t = 0, x, y, w, z, r;
 	int three, five, nonsquare = 0, minus_nonsquare = 0, nonsquare_inv = 0;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_classify::make_spread_from_q_clan" << endl;
@@ -2336,7 +2336,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	int *List;
 	grassmann *Gr;
 	ring_theory::longinteger_domain Dom;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	file_io Fio;
 

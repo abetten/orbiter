@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace linear_algebra {
 
 
 void linear_algebra::get_coefficients_in_linear_combination(
@@ -626,7 +627,7 @@ void linear_algebra::random_invertible_matrix(int *M,
 	int f_vv = (verbose_level >= 2);
 	int *N;
 	int i, qk, r, rk;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	os_interface Os;
 
@@ -867,7 +868,7 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 	int *z;
 	int i, j, b;
 	int ret = TRUE;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	data_structures::sorting Sorting;
 
@@ -1617,7 +1618,7 @@ void linear_algebra::cubic_surface_family_G13_generators(
 	int h, i, j, c, m, l;
 	int *v;
 	geometry_global Gg;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	m = Orbiter->Int_vec->maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
@@ -1739,7 +1740,7 @@ void linear_algebra::cubic_surface_family_F13_generators(
 	int h, i, j, c, m, l;
 	int *v;
 	geometry_global Gg;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	m = Orbiter->Int_vec->maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
@@ -1850,5 +1851,5 @@ void linear_algebra::make_Fourier_matrices(
 
 
 
-}}
+}}}
 

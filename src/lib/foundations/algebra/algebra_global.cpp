@@ -26,7 +26,7 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 	int *Q, *Rdq, *G, nb_primes = 0;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object r2, r3, A, B;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	//formula(2, 64, r2, 1);
 
@@ -93,7 +93,7 @@ void algebra_global::formula_subprimitive(int d, int q,
 	int nb_primes, *primes, *exponents;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object Theta, M1, Qm1, A, B, C, R;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "algebra_global::formula_subprimitive d=" << d << " q=" << q << endl;
@@ -179,7 +179,7 @@ void algebra_global::formula(int d, int q, ring_theory::longinteger_object &Rdq,
 	int nb_primes, *primes, *exponents;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object Theta, M1, Qm1, A, B, C, R;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "algebra_global::formula d=" << d << " q=" << q << endl;
@@ -254,7 +254,7 @@ void algebra_global::formula(int d, int q, ring_theory::longinteger_object &Rdq,
 int algebra_global::subprimitive(int q, int h)
 {
 	int Q, f, i, j, k, s, c, l, r = 0;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	Q = NT.i_power_j(q, h);
 	f = (Q - 1) / (q - 1);
@@ -358,7 +358,7 @@ int algebra_global::period_of_sequence(int *v, int l)
 void algebra_global::subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c)
 {
 	int a, g;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	a = j + k * (q - 1);
 	g = NT.gcd_lint(a, f);
@@ -780,7 +780,7 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a, b, ap, bp, g;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	file_io Fio;
 
 	if (f_v) {
@@ -854,7 +854,7 @@ void algebra_global::order_of_q_mod_n(int q, int n_min, int n_max, int verbose_l
 
 		{
 			ofstream ost(fname);
-			number_theory_domain NT;
+			number_theory::number_theory_domain NT;
 
 			if (f_v) {
 				cout << "algebra_global::order_of_q_mod_n writing csv file" << endl;
@@ -929,7 +929,7 @@ void algebra_global::power_function_mod_n(int k, int n, int verbose_level)
 
 		{
 			ofstream ost(fname);
-			number_theory_domain NT;
+			number_theory::number_theory_domain NT;
 
 			if (f_v) {
 				cout << "algebra_global::power_function_mod_n computing powers" << endl;

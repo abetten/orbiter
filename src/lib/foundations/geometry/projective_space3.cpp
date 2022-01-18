@@ -33,7 +33,7 @@ int projective_space::reverse_engineer_semilinear_map(
 	int /*q,*/ h, hh, i, j, l, e, frobenius_inv, lambda, rk, c, cv;
 	int *system;
 	int *base_cols;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (f_v) {

@@ -180,7 +180,7 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 	//Elt = NEW_int(A->elt_size_in_int);
 	//A->make_element(Elt, Singer_matrix, verbose_level);
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1), __FILE__, __LINE__);
 

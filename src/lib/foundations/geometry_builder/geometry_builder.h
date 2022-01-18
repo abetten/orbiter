@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 #define COLOR_RED 2
@@ -717,7 +718,7 @@ public:
 
 
 
-}}
+}}}
 
 
 

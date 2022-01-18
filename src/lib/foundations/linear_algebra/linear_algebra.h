@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace linear_algebra {
 
 
 // #############################################################################
@@ -537,7 +538,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 #endif /* SRC_LIB_FOUNDATIONS_LINEAR_ALGEBRA_LINEAR_ALGEBRA_H_ */

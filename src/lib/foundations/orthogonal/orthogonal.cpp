@@ -1245,7 +1245,7 @@ void orthogonal::init_hyperbolic(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "orthogonal::init_hyperbolic" << endl;

@@ -331,7 +331,7 @@ void orbits_on_polynomials::report(int verbose_level)
 		// compute the group of the surface:
 		projective_space_with_action *PA;
 		int f_semilinear;
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 
 		if (NT.is_prime(F->q)) {
 			f_semilinear = FALSE;

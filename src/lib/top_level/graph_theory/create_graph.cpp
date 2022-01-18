@@ -746,7 +746,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 	int f_vv = (verbose_level >= 2);
 	int i, l, f_special = FALSE;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 

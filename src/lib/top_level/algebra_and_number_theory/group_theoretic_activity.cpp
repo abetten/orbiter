@@ -606,7 +606,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	string stab_order;
 	ring_theory::longinteger_object stab_go;
 	int order_of_plane;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	knowledge_base K;
 
 	if (f_v) {

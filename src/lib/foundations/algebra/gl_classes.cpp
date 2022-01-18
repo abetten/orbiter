@@ -355,7 +355,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 	ring_theory::longinteger_domain D;
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -422,7 +422,7 @@ void gl_classes::centralizer_order_Kung(
 	ring_theory::longinteger_domain D;
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
 	co.create(1, __FILE__, __LINE__);
@@ -479,7 +479,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	long int a, b;
 	ring_theory::longinteger_object go, co, f, g, cl, r, sum;
 	ring_theory::longinteger_domain D;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -2003,7 +2003,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	int i, a, m, p, b;
 	int f_elements_exponential = FALSE;
 	string symbol_for_print;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	Mtx = NEW_int(k * k);
 

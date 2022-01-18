@@ -169,7 +169,7 @@ void finite_field::print_integer_matrix_zech(ostream &ost,
 {
 	int i, j, a, h;
     int w;
-	number_theory_domain NT;
+    number_theory::number_theory_domain NT;
 
 	w = (int) NT.int_log10(q);
 	for (i = 0; i < m; i++) {
@@ -699,7 +699,7 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//const char *symbol_for_print = "\\alpha";
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (f_v) {
@@ -739,7 +739,7 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int h;
 
 	if (f_v) {
@@ -796,7 +796,7 @@ void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int h;
 
 	if (f_v) {

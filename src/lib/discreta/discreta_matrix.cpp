@@ -3061,7 +3061,7 @@ void discreta_matrix::PG_line_rank(int &a, int f_v)
 	domain *d;
 	int q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
 	discreta_base x;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
@@ -3197,7 +3197,7 @@ void discreta_matrix::PG_line_unrank(int a)
 {
 	domain *d;
 	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
@@ -3457,7 +3457,7 @@ void discreta_matrix::AG_point_unrank(int i0, int j0,
 int nb_PG_lines(int n, int q)
 {
 	int l, ql, nb, s, a = 0, m;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	
 	m = n + 1;

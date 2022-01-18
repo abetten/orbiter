@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace linear_algebra {
 
 
 linear_algebra_global::linear_algebra_global()
@@ -50,7 +51,7 @@ void linear_algebra_global::Berlekamp_matrix(
 	Orbiter->get_vector_from_label(Berlekamp_matrix_coeffs, data_A, sz_A, verbose_level);
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -124,7 +125,7 @@ void linear_algebra_global::compute_normal_basis(
 		int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "
@@ -673,5 +674,5 @@ void linear_algebra_global::RREF_with_steps_latex(
 
 
 
-}}
+}}}
 

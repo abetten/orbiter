@@ -962,7 +962,7 @@ void packing_was::reduce_spreads(int verbose_level)
 	}
 
 	string fname_reduced_spread_original_idx;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	fname_reduced_spread_original_idx.assign(P->path_to_spread_tables);
 
@@ -1508,7 +1508,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 
 			latex_interface L;
 			finite_field *Fq3;
-			number_theory_domain NT;
+			number_theory::number_theory_domain NT;
 
 			Fq3 = NEW_OBJECT(finite_field);
 			Fq3->finite_field_init(NT.i_power_j(P->F->q, 3), FALSE /* f_without_tables */, 0);

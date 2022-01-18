@@ -461,7 +461,7 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_eulerfunction_interval) {
 
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 
 		NT.do_eulerfunction_interval(
 				eulerfunction_interval_n_min, eulerfunction_interval_n_max,

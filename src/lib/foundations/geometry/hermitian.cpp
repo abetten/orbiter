@@ -73,7 +73,7 @@ void hermitian::init(finite_field *F, int nb_vars, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	hermitian::F = F;
 	hermitian::Q = F->q;

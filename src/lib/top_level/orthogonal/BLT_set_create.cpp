@@ -64,7 +64,7 @@ void BLT_set_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::string_tools ST;
 	
 	if (f_v) {

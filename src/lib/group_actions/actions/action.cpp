@@ -871,7 +871,7 @@ int action::element_order_and_cycle_type_verbose(
 	int f_vv = (verbose_level >= 2);
 	int *have_seen;
 	long int l, l1, first, next, len, g, n, order = 1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "action::element_order_verbose" << endl;
@@ -940,7 +940,7 @@ int action::element_order_if_divisor_of(void *elt, int o)
 {
 	int *have_seen;
 	long int l, l1, first, next, len, g, n, order = 1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	n = degree;
 	have_seen = NEW_int(n);

@@ -338,7 +338,7 @@ void design_parameter::ancestor(design_parameter& p, Vector & path,
 {
 	design_parameter s, q;
 	int f_special = FALSE;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	path.m_l_n(3);
 	s = *this;
@@ -573,7 +573,7 @@ void design_parameter::supplementary(design_parameter& p)
 	discreta_base lambda_new, a;
 	design_parameter_source S;
 	long int num, denom, n, d, g, i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	num = 1;
 	denom = 1;

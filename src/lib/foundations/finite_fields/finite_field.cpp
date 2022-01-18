@@ -108,7 +108,7 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 	if (Descr->f_override_polynomial) {
 
 
-		Linear_algebra = NEW_OBJECT(linear_algebra);
+		Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 		Linear_algebra->init(this, verbose_level);
 
 		Orthogonal_indexing = NEW_OBJECT(orthogonal_indexing);
@@ -145,14 +145,14 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 {
 	int f_v = (verbose_level >= 1);
 	string poly;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::finite_field_init q=" << q << " verbose_level = " << verbose_level << endl;
 	}
 
 
-	Linear_algebra = NEW_OBJECT(linear_algebra);
+	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
 	Orthogonal_indexing = NEW_OBJECT(orthogonal_indexing);
@@ -208,7 +208,7 @@ void finite_field::init_implementation(int f_without_tables, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string poly;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::init_implementation" << endl;
@@ -290,7 +290,7 @@ void finite_field::init_override_polynomial(int q,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
@@ -416,7 +416,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int p1, e1, q1, i, j, jj, subgroup_index;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::compute_subfield_polynomial "
@@ -594,7 +594,7 @@ void finite_field::compute_subfields(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int e1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_field::compute_subfields" << endl;
@@ -1243,7 +1243,7 @@ int finite_field::log_alpha(int i)
 int finite_field::multiplicative_order(int a)
 {
 	int l, g, order;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (a == 0) {
 		cout << "finite_field::multiplicative_order a == 0" << endl;
@@ -1451,7 +1451,7 @@ void finite_field::retract_int_vec(finite_field &subfield,
 {
 	int f_v = (verbose_level >= 1);
 	int a, b, i, j, idx, m, n, k;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 		
 	if (f_v) {
 		cout << "finite_field::retract_int_vec index=" << index << endl;
@@ -1497,7 +1497,7 @@ int finite_field::embed(finite_field &subfield,
 {
 	int f_v = (verbose_level >= 1);
 	int a, i, j, idx, m, n;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 		
 	if (f_v) {
 		cout << "finite_field::embed index=" << index
@@ -1644,7 +1644,7 @@ void finite_field::compute_nth_roots(int *&Nth_roots, int n, int verbose_level)
 
 int finite_field::primitive_element()
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (e == 1) {
 		return NT.primitive_root(p, FALSE);
