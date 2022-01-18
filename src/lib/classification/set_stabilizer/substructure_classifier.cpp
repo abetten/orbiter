@@ -113,7 +113,7 @@ void substructure_classifier::classify_substructures(
 				Strong_gens,
 				substructure_size, j, 0 /* verbose_level*/);
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Strong_gens->group_order(go);
 
@@ -371,7 +371,7 @@ void substructure_classifier::set_stabilizer_of_set(
 		cout << "substructure_classifier::set_stabilizer after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_original_set->group_order(go);
 		cout << "_{" << go << "}" << endl;
@@ -400,7 +400,7 @@ void substructure_classifier::set_stabilizer_of_set(
 		cout << "substructure_classifier::set_stabilizer after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_canonical_form->group_order(go);
 		cout << "_{" << go << "}" << endl;

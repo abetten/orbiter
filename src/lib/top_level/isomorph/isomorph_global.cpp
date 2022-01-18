@@ -830,7 +830,7 @@ void isomorph_testing(
 		for (i = 0; i < Iso.size; i++) {
 			fp << " " << data1[i];
 			}
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Iso.Reps->stab[orbit]->group_order(go);
 		fp << " ";
@@ -1395,7 +1395,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		cout << endl;
 		}
 		
-	longinteger_object go1;
+	ring_theory::longinteger_object go1;
 			
 	Iso->AA->group_order(go1);
 
@@ -1638,7 +1638,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];

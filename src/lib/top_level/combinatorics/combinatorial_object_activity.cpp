@@ -196,11 +196,11 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 		}
 
 		projective_space *P;
-		homogeneous_polynomial_domain *HPD;
+		ring_theory::homogeneous_polynomial_domain *HPD;
 
 		P = GOC->Descr->P;
 
-		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+		HPD = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_GOC before HPD->init" << endl;
@@ -488,10 +488,10 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		}
 
 		//create_graph *Gr;
-		colored_graph *CG;
+		graph_theory::colored_graph *CG;
 
 		//Gr = (create_graph *) Orbiter->get_object(idx);
-		CG = (colored_graph *) Orbiter->get_object(idx);
+		CG = (graph_theory::colored_graph *) Orbiter->get_object(idx);
 
 #if 0
 		if (!Gr->f_has_CG) {

@@ -631,7 +631,7 @@ void graph_classify::print_score_sequences(
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
 		strong_generators *Strong_gens;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		gen->get_set_by_level(level, h, set);
 		gen->get_stabilizer_generators(Strong_gens,  
@@ -709,7 +709,7 @@ void graph_classify::draw_graphs(int level,
 
 	for (h = 0; h < nb_orbits; h++) {
 		strong_generators *Strong_gens;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		gen->get_set_by_level(level, h, set);
 		gen->get_stabilizer_generators(Strong_gens,  

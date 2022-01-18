@@ -250,7 +250,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 	long int *rep = NULL;
 	char str[1000];
 	poset_orbit_node *O;
-	longinteger_object stab_order, orbit_length;
+	ring_theory::longinteger_object stab_order, orbit_length;
 	schreier_vector *Schreier_vector;
 	latex_interface L;
 
@@ -527,7 +527,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 	int nb_gens;
 	int nb_extensions;
 	poset_orbit_node *O;
-	longinteger_object stab_order, orbit_length;
+	ring_theory::longinteger_object stab_order, orbit_length;
 	char str[1000];
 	char str2[1000];
 	long int *rep = NULL;
@@ -571,7 +571,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 
 
 	if (projectivity_group_gens) {
-		longinteger_object proj_stab_order;
+		ring_theory::longinteger_object proj_stab_order;
 
 		projectivity_group_gens->group_order(proj_stab_order);
 		proj_stab_order.print_to_string(str2);

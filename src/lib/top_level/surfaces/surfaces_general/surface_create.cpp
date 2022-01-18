@@ -1754,9 +1754,9 @@ void surface_create::create_surface_by_equation(
 		exit(1);
 	}
 
-	homogeneous_polynomial_domain *Poly;
+	ring_theory::homogeneous_polynomial_domain *Poly;
 
-	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation before Poly->init" << endl;

@@ -583,15 +583,15 @@ double poset_classification::level_progress(int lvl)
 
 void poset_classification::count_automorphism_group_orders(
 	int lvl, int &nb_agos,
-	longinteger_object *&agos, int *&multiplicities,
+	ring_theory::longinteger_object *&agos, int *&multiplicities,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l, j, c, h, f_added;
-	longinteger_object ago;
-	longinteger_object *tmp_agos;
+	ring_theory::longinteger_object ago;
+	ring_theory::longinteger_object *tmp_agos;
 	int *tmp_multiplicities;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	
 	l = nb_orbits_at_level(lvl);
 	if (f_v) {
@@ -615,7 +615,7 @@ void poset_classification::count_automorphism_group_orders(
 				else {
 					tmp_agos = agos;
 					tmp_multiplicities = multiplicities;
-					agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
+					agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
 					multiplicities = NEW_int(nb_agos + 1);
 					for (h = 0; h < j; h++) {
 						tmp_agos[h].swap_with(agos[h]);
@@ -641,7 +641,7 @@ void poset_classification::count_automorphism_group_orders(
 			// add at the end (including the case that the list is empty)
 			tmp_agos = agos;
 			tmp_multiplicities = multiplicities;
-			agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
+			agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
 			multiplicities = NEW_int(nb_agos + 1);
 			for (h = 0; h < nb_agos; h++) {
 				tmp_agos[h].swap_with(agos[h]);
@@ -663,11 +663,11 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 {
 
 	int j, nb_agos;
-	longinteger_object *agos;
+	ring_theory::longinteger_object *agos;
 	int *multiplicities;
 	int N, r, h;
-	longinteger_object S, S1, Q;
-	longinteger_domain D;
+	ring_theory::longinteger_object S, S1, Q;
+	ring_theory::longinteger_domain D;
 	
 	count_automorphism_group_orders(lvl, nb_agos, agos,
 			multiplicities, FALSE);
@@ -705,7 +705,7 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 	}
 }
 
-void poset_classification::stabilizer_order(int node, longinteger_object &go)
+void poset_classification::stabilizer_order(int node, ring_theory::longinteger_object &go)
 {
 #if 0
 	if (root[node].get_nb_strong_generators()) {
@@ -721,11 +721,11 @@ void poset_classification::stabilizer_order(int node, longinteger_object &go)
 
 
 void poset_classification::orbit_length(int orbit_at_level,
-		int level, longinteger_object &len)
+		int level, ring_theory::longinteger_object &len)
 // uses poset_classification::go for the group order
 {
-	longinteger_domain D;
-	longinteger_object stab_order, quo, rem;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object stab_order, quo, rem;
 
 	get_stabilizer_order(level, orbit_at_level, stab_order);
 	D.integral_division(Poset->go, stab_order, len, rem, 0);
@@ -738,12 +738,12 @@ void poset_classification::orbit_length(int orbit_at_level,
 
 void poset_classification::get_orbit_length_and_stabilizer_order(
 		int node,
-		int level, longinteger_object &stab_order,
-		longinteger_object &len)
+		int level, ring_theory::longinteger_object &stab_order,
+		ring_theory::longinteger_object &len)
 // uses poset_classification::go for the group order
 {
-	longinteger_domain D;
-	longinteger_object quo, rem;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object quo, rem;
 
 	get_stabilizer_order(level, node, stab_order);
 	D.integral_division(Poset->go, stab_order, len, rem, 0);
@@ -758,7 +758,7 @@ void poset_classification::get_orbit_length_and_stabilizer_order(
 int poset_classification::orbit_length_as_int(
 		int orbit_at_level, int level)
 {
-	longinteger_object len;
+	ring_theory::longinteger_object len;
 
 	orbit_length(orbit_at_level, level, len);
 	return len.as_int();
@@ -885,7 +885,7 @@ void poset_classification::find_node_by_stabilizer_order(
 {
 	int f_v = (verbose_level >= 1);
 	int nb_nodes, node, i, j, elt_order;
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	long int set[300];
 	
 	if (f_v) {
@@ -941,7 +941,7 @@ void poset_classification::get_all_stabilizer_orders_at_level(int level, long in
 }
 
 void poset_classification::get_stabilizer_order(int level,
-		int orbit_at_level, longinteger_object &go)
+		int orbit_at_level, ring_theory::longinteger_object &go)
 {
 	poset_orbit_node *O;
 
@@ -1004,7 +1004,7 @@ void poset_classification::get_stabilizer_group(
 			O->hdl_strong_generators, O->tl, FALSE);
 	G->schreier_sims(0);
 #else
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	G = NEW_OBJECT(group_container);
 	O->get_stabilizer(
@@ -1188,7 +1188,7 @@ void poset_classification::coset_unrank(
 	long int *the_set;
 	group_container *G1, *G2;
 	int *Elt_gk;
-	longinteger_object G_order, U_order;
+	ring_theory::longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
 
 	if (f_v) {
@@ -1244,7 +1244,7 @@ long int poset_classification::coset_rank(
 	long int *the_set;
 	group_container *G1, *G2;
 	int *Elt_gk;
-	longinteger_object G_order, U_order;
+	ring_theory::longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
 
 	if (f_v) {
@@ -1471,8 +1471,8 @@ void poset_classification::list_whole_orbit(
 	long int *set;
 	int rank, len;
 	strong_generators *Strong_gens;
-	longinteger_object Len, L, go;
-	longinteger_domain D;
+	ring_theory::longinteger_object Len, L, go;
+	ring_theory::longinteger_domain D;
 	
 	set = NEW_lint(depth);
 
@@ -1580,8 +1580,8 @@ void poset_classification::get_whole_orbit(
 {
 	int f_v = (verbose_level >= 1);
 	long int rank;
-	longinteger_object Len, L, go;
-	longinteger_domain D;
+	ring_theory::longinteger_object Len, L, go;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_classification::get_whole_orbit" << endl;

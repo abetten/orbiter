@@ -123,7 +123,7 @@ void poset_orbit_node::init_root_node(
 	//sv = NULL;
 	Schreier_vector = NULL;
 	
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_root_node "
@@ -422,7 +422,7 @@ void poset_orbit_node::log_current_node_without_group(
 		int s, ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 
 	if (f_v) {
@@ -458,7 +458,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go, rk;
+	ring_theory::longinteger_object go, rk;
 	int i;
 
 	if (f_v) {
@@ -546,7 +546,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 
 	if (f_with_stabilizer_generators) {
 		strong_generators *Strong_gens;
-		longinteger_object go1;
+		ring_theory::longinteger_object go1;
 
 		get_stabilizer_generators(gen, Strong_gens, verbose_level);
 		Strong_gens->group_order(go1);
@@ -602,7 +602,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 	int *S;
 	int *Elt;
@@ -864,8 +864,8 @@ void poset_orbit_node::print_set_verbose(poset_classification *gen)
 void poset_orbit_node::print_set(poset_classification *gen)
 {
 	int depth, size, i;
-	longinteger_object go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_domain D;
 	long int *set;
 	
 	depth = depth_of_node(gen);

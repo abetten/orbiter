@@ -31,7 +31,7 @@ public:
 	action *A2; // do not free
 
 	//int f_lint;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int max_orbits;
 	int nb_orbits;
 	orbit_node *Orbit; // [max_orbits]
@@ -44,12 +44,12 @@ public:
 	void null();
 	void freeself();
 	void init(action *A, action *A2, int max_orbits, int representation_sz,
-			longinteger_object &go, int verbose_level);
+			ring_theory::longinteger_object &go, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp,
-			action *A, action *A2, longinteger_object &go,
+			action *A, action *A2, ring_theory::longinteger_object &go,
 			int verbose_level);
 	void generate_source_code(std::string &fname_base, int verbose_level);
 	long int *Rep_ith(int i);
@@ -135,7 +135,7 @@ public:
 	int fusion_with;
 	int *fusion_elt;
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	strong_generators *gens;
 
 	int nb_received;

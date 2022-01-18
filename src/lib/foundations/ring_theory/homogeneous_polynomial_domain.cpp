@@ -14,6 +14,22 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
+
+
+static int homogeneous_polynomial_domain_compare_monomial_with(void *data,
+	int i, void *data2, void *extra_data);
+static int homogeneous_polynomial_domain_compare_monomial(void *data,
+	int i, int j, void *extra_data);
+static void homogeneous_polynomial_domain_swap_monomial(void *data,
+	int i, int j, void *extra_data);
+#if 0
+static void HPD_callback_print_function(
+		std::stringstream &ost, void *data, void *callback_data);
+static void HPD_callback_print_function2(
+		std::stringstream &ost, void *data, void *callback_data);
+#endif
+
 
 
 homogeneous_polynomial_domain::homogeneous_polynomial_domain()
@@ -2012,7 +2028,7 @@ int *homogeneous_polynomial_domain::read_from_string_coefficient_vector(std::str
 	return coeff;
 }
 
-int homogeneous_polynomial_domain_compare_monomial_with(
+static int homogeneous_polynomial_domain_compare_monomial_with(
 		void *data, int i, void *data2, void *extra_data)
 {
 	homogeneous_polynomial_domain *HPD =
@@ -2026,7 +2042,7 @@ int homogeneous_polynomial_domain_compare_monomial_with(
 	return ret;
 }
 
-int homogeneous_polynomial_domain_compare_monomial(
+static int homogeneous_polynomial_domain_compare_monomial(
 		void *data, int i, int j, void *extra_data)
 {
 	homogeneous_polynomial_domain *HPD =
@@ -2040,7 +2056,7 @@ int homogeneous_polynomial_domain_compare_monomial(
 	return ret;
 }
 
-void homogeneous_polynomial_domain_swap_monomial(
+static void homogeneous_polynomial_domain_swap_monomial(
 		void *data, int i, int j, void *extra_data)
 {
 	homogeneous_polynomial_domain *HPD =
@@ -2059,9 +2075,9 @@ void homogeneous_polynomial_domain_swap_monomial(
 	
 }
 
+#if 0
 
-
-void HPD_callback_print_function(
+static void HPD_callback_print_function(
 		stringstream &ost, void *data, void *callback_data)
 {
 	homogeneous_polynomial_domain *HPD =
@@ -2079,7 +2095,7 @@ void HPD_callback_print_function(
 	FREE_int(coeff);
 }
 
-void HPD_callback_print_function2(
+static void HPD_callback_print_function2(
 		stringstream &ost, void *data, void *callback_data)
 {
 	homogeneous_polynomial_domain *HPD =
@@ -2103,10 +2119,12 @@ void HPD_callback_print_function2(
 	FREE_int(coeff);
 	//FREE_lint(Pts);
 }
+#endif
 
 
 
 
-}}
+}}}
+
 
 

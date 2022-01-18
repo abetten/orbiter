@@ -153,7 +153,7 @@ void poset_classification::identify(long int *data, int sz,
 		cout << "poset_classification::identify after recognize" << endl;
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	orbit_at_level = final_node - Poo->first_node_at_level(sz);
 	get_stabilizer_order(sz, orbit_at_level, go);
@@ -187,7 +187,7 @@ void poset_classification::test_identify(int level, int nb_times,
 	long int *set1;
 	long int *set2;
 	sims *S;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	os_interface Os;
 
 	if (f_v) {

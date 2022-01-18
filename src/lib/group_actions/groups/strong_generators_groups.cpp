@@ -195,7 +195,7 @@ void strong_generators::special_subgroup(int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	action A_on_det;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 		
 	if (f_v) {
 		cout << "strong_generators::special_subgroup "
@@ -237,7 +237,7 @@ void strong_generators::projectivity_subgroup(sims *S, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	action A_on_Galois;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "strong_generators::projectivity_subgroup "
@@ -276,7 +276,7 @@ void strong_generators::even_subgroup(int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	action A_on_sign;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 		
 	if (f_v) {
 		cout << "strong_generators::even_subgroup "
@@ -306,7 +306,7 @@ void strong_generators::Sylow_subgroup(sims *S, int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sims *P;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "strong_generators::Sylow_subgroup " << endl;
@@ -396,8 +396,8 @@ void strong_generators::generators_for_the_monomial_group(
 	int *Elt1;
 	sims *S;
 	finite_field *F;
-	longinteger_domain D;
-	longinteger_object target_go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object target_go;
 	int *go_factored;
 	int n, q, pos_frobenius;
 	vector_ge *my_gens;
@@ -569,7 +569,7 @@ void strong_generators::generators_for_the_monomial_group(
 		int f_do_it_anyway_even_for_big_degree = FALSE;
 		int f_print_cycles_of_length_one = FALSE;
 		
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 	
 		cout << "computing the group order:" << endl;
 		group_order(go);
@@ -598,8 +598,8 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 	int *Elt1;
 	sims *S;
 	finite_field *F;
-	longinteger_domain D;
-	longinteger_object target_go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object target_go;
 	int *go_factored;
 	int n, q;
 	vector_ge *my_gens;
@@ -710,7 +710,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 		int f_do_it_anyway_even_for_big_degree = FALSE;
 		int f_print_cycles_of_length_one = FALSE;
 		
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 	
 		cout << "computing the group order:" << endl;
 		group_order(go);
@@ -742,8 +742,8 @@ void strong_generators::generators_for_the_singer_cycle(
 	int *Elt1;
 	sims *S;
 	finite_field *F;
-	longinteger_domain D;
-	longinteger_object target_go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object target_go;
 	long int *go_factored;
 	int n, q;
 	//vector_ge *my_gens;
@@ -801,10 +801,10 @@ void strong_generators::generators_for_the_singer_cycle(
 #endif
 	
 		Fq.finite_field_init(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
-		unipoly_domain FX(&Fq);
+		ring_theory::unipoly_domain FX(&Fq);
 
-		unipoly_object m;
-		longinteger_object rk;
+		ring_theory::unipoly_object m;
+		ring_theory::longinteger_object rk;
 
 		FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
 
@@ -918,8 +918,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	int *Elt1;
 	sims *S;
 	finite_field *F;
-	longinteger_domain D;
-	longinteger_object target_go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object target_go;
 	long int *go_factored;
 	int n, q;
 	//vector_ge *my_gens;
@@ -978,10 +978,10 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		}
 
 		Fp.finite_field_init(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
-		unipoly_domain FX(&Fp);
+		ring_theory::unipoly_domain FX(&Fp);
 
-		unipoly_object m;
-		longinteger_object rk;
+		ring_theory::unipoly_object m;
+		ring_theory::longinteger_object rk;
 
 		FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
 
@@ -1238,8 +1238,8 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 	//int f_vv = (verbose_level >= 2);
 	sims *S;
 	strong_generators *SG1;
-	longinteger_object go1, Q, go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go1, Q, go;
+	ring_theory::longinteger_domain D;
 	matrix_group *M;
 	vector_ge *new_gens;
 	int *data;
@@ -1375,9 +1375,9 @@ void strong_generators::field_reduction(
 	}
 	FREE_OBJECT(nice_gens);
 
-	longinteger_object order_GLmQ;
-	longinteger_object target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object order_GLmQ;
+	ring_theory::longinteger_object target_go;
+	ring_theory::longinteger_domain D;
 	int r;
 
 	AQ->group_order(order_GLmQ);
@@ -1456,7 +1456,7 @@ void strong_generators::field_reduction(
 				"creating lifted group done" << endl;
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Sims->group_order(go);
 
@@ -1488,7 +1488,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	action *A_PGL_n1_q, action *A_PGL_n_q, 
 	matrix_group *Mtx_n1, matrix_group *Mtx_n, 
 	vector_ge *spread_stab_gens,
-	longinteger_object &spread_stab_go,
+	ring_theory::longinteger_object &spread_stab_go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1624,8 +1624,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		A_PGL_n1_q->make_element(my_gens->ith(h), M1, 0 /* verbose_level */);
 	}
 
-	longinteger_domain D;
-	longinteger_object target_go, aa, b, bb, c, go;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object target_go, aa, b, bb, c, go;
 	
 
 	spread_stab_go.assign_to(aa);
@@ -1728,8 +1728,8 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 				"after make_generators_stabilizer_of_two_components" << endl;
 	}
 
-	longinteger_object go_linear, a, two, target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go_linear, a, two, target_go;
+	ring_theory::longinteger_domain D;
 
 	two.create(1, __FILE__, __LINE__);
 	A_PGL_k_q->group_order(go_linear);
@@ -1773,8 +1773,8 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 	int n, k, q;
 	vector_ge *my_gens;
 	action *A_PGL_k_q;
-	longinteger_object go, a, b, target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go, a, b, target_go;
+	ring_theory::longinteger_domain D;
 	int *P;
 	int len1, len;
 	int h1, h;
@@ -2019,7 +2019,7 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 			A_linear->element_print(my_gens->ith(h), cout);
 		}
 	}
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	int *factors;
 	int nb_factors;
@@ -2144,7 +2144,7 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 			A_linear->element_print(my_gens->ith(h), cout);
 		}
 	}
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	int *factors;
 	int nb_factors;
@@ -2243,7 +2243,7 @@ void strong_generators::generators_for_the_identity_subgroup(
 			A_linear->element_print(my_gens->ith(h), cout);
 		}
 	}
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 	target_go.create(1, __FILE__, __LINE__);
 
@@ -2321,8 +2321,8 @@ void strong_generators::generators_for_parabolic_subgroup(
 				"after generators_for_parabolic_subgroup" << endl;
 	}
 
-	longinteger_object go1, nCk, target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go1, nCk, target_go;
+	ring_theory::longinteger_domain D;
 	combinatorics::combinatorics_domain C;
 
 
@@ -2426,8 +2426,8 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 				"for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
 	}
 
-	longinteger_object target_go, a, b, c, d, e, f;
-	longinteger_domain D;
+	ring_theory::longinteger_object target_go, a, b, c, d, e, f;
+	ring_theory::longinteger_domain D;
 
 
 	target_go.create(1, __FILE__, __LINE__);
@@ -2527,8 +2527,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 				"after generators_for_stabilizer_of_triangle_in_PGL4" << endl;
 	}
 
-	longinteger_object target_go, a, b, c, f;
-	longinteger_domain D;
+	ring_theory::longinteger_object target_go, a, b, c, f;
+	ring_theory::longinteger_domain D;
 
 
 	target_go.create(1, __FILE__, __LINE__);
@@ -2608,7 +2608,7 @@ void strong_generators::generators_for_the_orthogonal_group(
 				"A2->init_orthogonal_group" << endl;
 	}
 
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	strong_generators *Strong_gens2;
 
 	A2->Sims->group_order(target_go);
@@ -2655,7 +2655,7 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	knowledge_base K;
 	
 	if (f_v) {
@@ -2727,7 +2727,7 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	knowledge_base K;
 
 	if (f_v) {
@@ -2806,7 +2806,7 @@ strong_generators::stabilizer_of_Eckardt_surface(
 	int nb_gens;
 	int data_size;
 	int group_order;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	int i;
 	
 	if (f_v) {
@@ -2879,7 +2879,7 @@ void strong_generators::stabilizer_of_G13_surface(
 	int nb_gens;
 	int data_size;
 	int group_order;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	int i;
 
 	if (f_v) {
@@ -2947,7 +2947,7 @@ void strong_generators::stabilizer_of_F13_surface(
 	int nb_gens;
 	int data_size;
 	int group_order;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	int i;
 
 	if (f_v) {
@@ -3015,7 +3015,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	int i;
 	knowledge_base K;
 	
@@ -3093,7 +3093,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	int i;
 	knowledge_base K;
 	
@@ -3168,7 +3168,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 		cout << "q=" << F->q << endl;
 	}
 
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	number_theory_domain NT;
 	int i;
 
@@ -3268,7 +3268,7 @@ void strong_generators::Janko1(
 		cout << "strong_generators::Janko1 dimension != 7" << endl;
 		exit(1);
 	}
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	number_theory_domain NT;
 	int i;
 
@@ -3403,7 +3403,7 @@ void strong_generators::Hall_reflection(
 
 
 
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 
 	target_go.create(2, __FILE__, __LINE__);
@@ -3502,7 +3502,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 
 	int *factors;
 	int nb_factors;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 
 	GG.order_Hall_reflection_normalizer_factorized(nb_pairs,
@@ -3638,7 +3638,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 
 
 
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 
 	SG_hyperplane->group_order(target_go);
@@ -3778,7 +3778,7 @@ void strong_generators::exterior_square(
 	gens->copy(nice_gens, verbose_level);
 
 
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 
 
 	SG_original->group_order(target_go);
@@ -3837,7 +3837,7 @@ void strong_generators::diagonally_repeat(
 	int h, l, i, j, a, n, k;
 	int *M;
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	sims *Sims;
 
 

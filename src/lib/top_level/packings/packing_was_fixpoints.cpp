@@ -251,7 +251,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	//PW->Descr->clique_size = clique_size;
 
 
-	fixpoint_graph = NEW_OBJECT(colored_graph);
+	fixpoint_graph = NEW_OBJECT(graph_theory::colored_graph);
 	fixpoint_graph->load(fname_fixp_graph, verbose_level);
 
 	my_prefix.assign(fname_fixp_graph);
@@ -788,7 +788,7 @@ void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
 {
 	int f_v = (verbose_level >= 1);
 	packing_was_fixpoints *P = (packing_was_fixpoints *) data;
-	colored_graph *CG = P->fixpoint_graph;
+	graph_theory::colored_graph *CG = P->fixpoint_graph;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints_early_test_function_fp_cliques" << endl;

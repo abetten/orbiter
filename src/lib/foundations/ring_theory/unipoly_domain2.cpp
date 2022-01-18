@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 void unipoly_domain::mult_easy(unipoly_object a,
@@ -664,5 +665,6 @@ done:
 }
 
 
-}}
+}}}
+
 

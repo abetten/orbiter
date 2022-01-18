@@ -363,7 +363,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 
 
 	{
-		longinteger_object ago;
+		ring_theory::longinteger_object ago;
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting_upstep::compute_stabilizer "

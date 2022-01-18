@@ -56,7 +56,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	//int f_vvvv = (verbose_level >= 10);
-	longinteger_object go, G_order, quo, rem;
+	ring_theory::longinteger_object go, G_order, quo, rem;
 	int drop_out_level, image, cnt, f_added;
 	action *GA;
 	

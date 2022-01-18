@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 unipoly_domain::unipoly_domain()
@@ -3707,5 +3708,6 @@ void unipoly_domain::reduce_modulo_p(unipoly_object a, int p)
 }
 
 
-}}
+}}}
+
 

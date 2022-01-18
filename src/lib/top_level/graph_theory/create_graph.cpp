@@ -56,7 +56,7 @@ void create_graph::init(
 		}
 
 		f_has_CG = TRUE;
-		CG = NEW_OBJECT(colored_graph);
+		CG = NEW_OBJECT(graph_theory::colored_graph);
 		if (f_v) {
 			cout << "create_graph::init before CG->load, fname=" << description->fname << endl;
 		}
@@ -367,7 +367,7 @@ void create_graph::init(
 
 		char str[1000];
 
-		graph_theory_domain GT;
+		graph_theory::graph_theory_domain GT;
 
 		int n;
 
@@ -392,7 +392,7 @@ void create_graph::init(
 	}
 	else if (description->f_disjoint_sets_graph) {
 
-		graph_theory_domain GT;
+		graph_theory::graph_theory_domain GT;
 
 
 		if (f_v) {
@@ -422,7 +422,7 @@ void create_graph::init(
 	}
 	else if (description->f_orbital_graph) {
 
-		graph_theory_domain GT;
+		graph_theory::graph_theory_domain GT;
 
 		int idx;
 		any_group *AG;
@@ -535,7 +535,7 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init the graph has a subset" << endl;
 		}
-		CG = NEW_OBJECT(colored_graph);
+		CG = NEW_OBJECT(graph_theory::colored_graph);
 		CG->init_adjacency_no_colors(N, Adj,
 				description->subset_label,
 				description->subset_label_tex,
@@ -567,7 +567,7 @@ void create_graph::init(
 
 		if (!f_has_CG) {
 
-			CG = NEW_OBJECT(colored_graph);
+			CG = NEW_OBJECT(graph_theory::colored_graph);
 			if (f_v) {
 				cout << "create_graph::init before CG->init_adjacency_no_colors" << endl;
 			}
@@ -612,7 +612,7 @@ void create_graph::create_cycle(int &N, int *&Adj,
 		cout << "create_graph::create_cycle" << endl;
 	}
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -645,7 +645,7 @@ void create_graph::create_Hamming(int &N, int *&Adj,
 		cout << "create_graph::create_Hamming" << endl;
 	}
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -678,7 +678,7 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 		cout << "create_graph::create_Johnson" << endl;
 	}
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -711,7 +711,7 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	}
 
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1071,7 +1071,7 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 		cout << "create_graph::create_Schlaefli" << endl;
 	}
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1281,7 +1281,7 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 		cout << "create_graph::create_Winnie_Li" << endl;
 	}
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1318,7 +1318,7 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 	}
 
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1353,7 +1353,7 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 		cout << "create_graph::create_coll_orthogonal" << endl;
 	}
 
-	graph_theory_domain GT;
+	graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {

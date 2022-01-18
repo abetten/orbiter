@@ -437,11 +437,11 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 	finite_field GFp;
 	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
-	unipoly_domain FX(&GFp);
-	unipoly_object m;
+	ring_theory::unipoly_domain FX(&GFp);
+	ring_theory::unipoly_object m;
 
 	FX.create_object_by_rank_string(m, my_poly, 0/*verbose_level*/);
-	unipoly_domain Fq(&GFp, m, verbose_level - 1);
+	ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
 
 
 	int *M;
@@ -468,7 +468,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 		jj = alpha_power(j);
 		Gg.AG_element_unrank(p, M + i, e1 + 1, e, jj);
 		{
-			unipoly_object elt;
+			ring_theory::unipoly_object elt;
 		
 			Fq.create_object_by_rank(elt, jj, __FILE__, __LINE__, 0 /*verbose_level*/);
 			if (f_v) {
@@ -572,7 +572,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 	a = Gg.AG_element_rank(p, K, 1, e1 + 1);
 
 	if (f_v) {
-		unipoly_object elt;
+		ring_theory::unipoly_object elt;
 		
 		FX.create_object_by_rank(elt, a, __FILE__, __LINE__, verbose_level);
 		cout << "finite_field::compute_subfield_polynomial "
@@ -604,11 +604,11 @@ void finite_field::compute_subfields(int verbose_level)
 	finite_field GFp;
 	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
-	unipoly_domain FX(&GFp);
-	unipoly_object m;
+	ring_theory::unipoly_domain FX(&GFp);
+	ring_theory::unipoly_object m;
 
 	FX.create_object_by_rank_string(m, my_poly, 0 /*verbose_level*/);
-	unipoly_domain Fq(&GFp, m, verbose_level - 1);
+	ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
 
 	//Fq.print_object(m, cout);
 	
@@ -621,7 +621,7 @@ void finite_field::compute_subfields(int verbose_level)
 					FALSE, cout,
 					verbose_level);
 			{
-				unipoly_object elt;
+				ring_theory::unipoly_object elt;
 				
 				FX.create_object_by_rank(elt,
 						poly, __FILE__, __LINE__, verbose_level);
@@ -680,8 +680,8 @@ int finite_field::compute_order_of_element(int elt, int verbose_level)
 	finite_field GFp;
 	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
-	unipoly_domain FX(&GFp);
-	unipoly_object m;
+	ring_theory::unipoly_domain FX(&GFp);
+	ring_theory::unipoly_object m;
 
 	FX.create_object_by_rank_string(m, my_poly, verbose_level - 2);
 	if (f_vv) {
@@ -690,8 +690,8 @@ int finite_field::compute_order_of_element(int elt, int verbose_level)
 		cout << endl;
 	}
 	{
-		unipoly_domain Fq(&GFp, m, verbose_level - 1);
-		unipoly_object a, c, Alpha;
+		ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
+		ring_theory::unipoly_object a, c, Alpha;
 
 		Fq.create_object_by_rank(Alpha, elt, __FILE__, __LINE__, verbose_level);
 		Fq.create_object_by_rank(a, elt, __FILE__, __LINE__, verbose_level);

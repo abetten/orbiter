@@ -301,8 +301,8 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	int *M1;
 	int *M2;
 	int *Elt1, *Elt2;
-	longinteger_domain D;
-	longinteger_object go1, go2, index, rem, Rank;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go1, go2, index, rem, Rank;
 	poset_orbit_node *O2;
 
 	if (f_v) {
@@ -413,7 +413,7 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 }
 
 void polar::dual_polar_graph(int depth, int orbit_idx, 
-	longinteger_object *&Rank_table, int &nb_maximals,
+		ring_theory::longinteger_object *&Rank_table, int &nb_maximals,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -424,8 +424,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	int *M1;
 	int *M2;
 	int *Elt1, *Elt2;
-	longinteger_domain D;
-	longinteger_object go1, go2, index, rem, Rank;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go1, go2, index, rem, Rank;
 	poset_orbit_node *O2;
 	int *Adj;
 	int **M;
@@ -458,7 +458,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 		}
 
 	nb_maximals = index_int;
-	Rank_table = NEW_OBJECTS(longinteger_object, index_int);
+	Rank_table = NEW_OBJECTS(ring_theory::longinteger_object, index_int);
 	Adj = NEW_int(index_int * index_int);
 	M = NEW_pint(index_int);
 
@@ -689,7 +689,7 @@ void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 	S = A->create_sims_from_generators_with_target_group_order_factorized(
 		Strong_gens->gens, Strong_gens->tl, A->base_len(),
 		verbose_level);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	S->group_order(go);	
 	cout << "polar::show_stabilizer created group of order " << go << endl;
@@ -1115,14 +1115,14 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 
 
 void polar::get_stabilizer(int orbit_idx, group_container &G,
-		longinteger_object &go_G)
+		ring_theory::longinteger_object &go_G)
 {
 	Gen->get_node(first_node + orbit_idx)->get_stabilizer(Gen,
 			G, go_G, 0 /*verbose_level - 2*/);
 }
 
 void polar::get_orbit_length(int orbit_idx,
-		longinteger_object &length)
+		ring_theory::longinteger_object &length)
 {
 	Gen->orbit_length(orbit_idx, depth, length);
 }
@@ -1163,7 +1163,7 @@ void polar::list_whole_orbit(int depth,
 	int ii;
 	long int len, j, h, jj;
 	group_container G;
-	longinteger_object go_G, Rank;
+	ring_theory::longinteger_object go_G, Rank;
 	int *M1;
 	int *base_cols;
 

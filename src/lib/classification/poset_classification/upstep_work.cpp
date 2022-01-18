@@ -633,7 +633,7 @@ int upstep_work::init_extension_node(int verbose_level)
 	
 
 	if (f_v) {
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		
 		gen->stabilizer_order(cur, go);
 		gen->print_level_extension_info(size - 1, prev, prev_ex);

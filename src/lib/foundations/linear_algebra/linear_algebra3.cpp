@@ -508,8 +508,8 @@ void linear_algebra::choose_anisotropic_form(
 		int &c1, int &c2, int &c3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	unipoly_domain FX(F);
-	unipoly_object m;
+	ring_theory::unipoly_domain FX(F);
+	ring_theory::unipoly_object m;
 
 	if (f_v) {
 		cout << "linear_algebra::choose_anisotropic_form "

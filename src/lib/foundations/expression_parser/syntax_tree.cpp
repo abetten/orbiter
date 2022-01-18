@@ -81,7 +81,7 @@ int syntax_tree::is_homogeneous(int &degree, int verbose_level)
 }
 
 
-void syntax_tree::split_by_monomials(homogeneous_polynomial_domain *Poly,
+void syntax_tree::split_by_monomials(ring_theory::homogeneous_polynomial_domain *Poly,
 		syntax_tree_node **&Subtrees, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

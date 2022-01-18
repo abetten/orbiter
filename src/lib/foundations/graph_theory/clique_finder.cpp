@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
 
 
 
@@ -1797,5 +1798,4 @@ void clique_finder::delinearize_adjacency_list(int verbose_level)
 
 
 
-}
-}
+}}}

@@ -191,7 +191,7 @@ public:
 	int f_special;
 
 	action *A;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int *Elt;
 	int *v;
 	schreier *Sch;
@@ -280,7 +280,7 @@ public:
 	
 	long int *representative; // [nb_points_or_lines]
 
-	longinteger_object *stab_order;
+	ring_theory::longinteger_object *stab_order;
 	sims *stab;
 	strong_generators *Stab_Strong_gens;
 
@@ -710,12 +710,12 @@ public:
 			std::string &prefix,
 			int orbit_idx,
 			int f_lexorder_test,
-			colored_graph *&CG,
+			graph_theory::colored_graph *&CG,
 			int verbose_level);
 	void create_graph(orbiter_data_file *ODF,
 		int orbit_idx,
 		long int *candidates, int nb_candidates,
-		colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 		int verbose_level);
 	void compute_coloring(long int *starter, int starter_size,
 			long int *candidates, int nb_points,
@@ -791,7 +791,7 @@ public:
 	void compute_orbits(int t0, int verbose_level);
 	void compute_cosets(int depth, int orbit_idx, int verbose_level);
 	void dual_polar_graph(int depth, int orbit_idx, 
-		longinteger_object *&Rank_table, int &nb_maximals, 
+			ring_theory::longinteger_object *&Rank_table, int &nb_maximals,
 		int verbose_level);
 	void show_stabilizer(int depth, int orbit_idx, int verbose_level);
 	void test_if_in_perp(long int *S, int len,
@@ -802,8 +802,8 @@ public:
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
-	void get_stabilizer(int orbit_idx, group_container &G, longinteger_object &go_G);
-	void get_orbit_length(int orbit_idx, longinteger_object &length);
+	void get_stabilizer(int orbit_idx, group_container &G, ring_theory::longinteger_object &go_G);
+	void get_orbit_length(int orbit_idx, ring_theory::longinteger_object &length);
 	int get_orbit_length_as_int(int orbit_idx);
 	void orbit_element_unrank(int orbit_idx, long int rank,
 		long int *set, int verbose_level);
@@ -897,7 +897,7 @@ public:
 	int *Singer_matrix;
 	vector_ge *nice_gens;
 	strong_generators *SG;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	projective_space *P;
 	int *singer_point_list;
 	int *singer_point_list_inv;
@@ -950,7 +950,7 @@ public:
 
 
 	strong_generators *SG;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	wreath_product *W;
 	algebra::vector_space *VS;
 	poset_classification_control *Control;

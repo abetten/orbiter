@@ -33,7 +33,7 @@ public:
 
 	action_on_homogeneous_polynomials *AonHPD;
 	strong_generators *SG;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	action *A_affine; // restricted action on affine points
 
@@ -258,7 +258,7 @@ public:
 		incidence_structure *&Inc_out,
 		int nb_objects_to_test,
 		int &f_found, int &idx,
-		longinteger_object &go,
+		ring_theory::longinteger_object &go,
 		int verbose_level);
 
 
@@ -400,7 +400,7 @@ public:
 	action *A0;
 
 	strong_generators *SG;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	direct_product *P;
 	poset_with_group_action *Poset_pairs;
 	poset_with_group_action *Poset_search;
@@ -795,7 +795,7 @@ public:
 #endif
 	action *A;
 	strong_generators *Aut_gens;
-	longinteger_object Aut_order;
+	ring_theory::longinteger_object Aut_order;
 
 	int given_base_length; // = nb_gens
 	long int *given_base; // = gens
@@ -808,7 +808,7 @@ public:
 	std::string fname_magma_out;
 	sims *Aut;
 	sims *U;
-	longinteger_object U_go;
+	ring_theory::longinteger_object U_go;
 	vector_ge *U_gens;
 	schreier *Sch;
 
@@ -817,7 +817,7 @@ public:
 	int *N_gens;
 	int N_nb_gens, N_go;
 	action *N;
-	longinteger_object N_order;
+	ring_theory::longinteger_object N_order;
 
 	action *N_on_orbits;
 	int *Paired_with;
@@ -921,7 +921,7 @@ public:
 	int n;
 	int N, N2;
 	data_structures::bitvector *Bitvec;
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 
 	action *A;
 

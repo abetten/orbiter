@@ -973,7 +973,7 @@ void interface_cryptography::worker(int verbose_level)
 		cryptography::cryptography_domain Crypto;
 
 		//longinteger_domain D;
-		longinteger_object p;
+		ring_theory::longinteger_object p;
 
 		p.create_from_base_10_string(primitive_root_p);
 		Crypto.do_primitive_root_longinteger(p, verbose_level);
@@ -1014,9 +1014,9 @@ void interface_cryptography::worker(int verbose_level)
 
 		cryptography::cryptography_domain Crypto;
 
-		longinteger_object a;
-		longinteger_object k;
-		longinteger_object n;
+		ring_theory::longinteger_object a;
+		ring_theory::longinteger_object k;
+		ring_theory::longinteger_object n;
 
 		a.create_from_base_10_string(power_mod_a);
 		k.create_from_base_10_string(power_mod_k);
@@ -1039,7 +1039,7 @@ void interface_cryptography::worker(int verbose_level)
 	}
 	else if (f_RSA_setup) {
 		cryptography::cryptography_domain Crypto;
-		longinteger_object n, p, q, a, b;
+		ring_theory::longinteger_object n, p, q, a, b;
 
 		Crypto.RSA_setup(n, p, q, a, b,
 			RSA_setup_nb_bits,

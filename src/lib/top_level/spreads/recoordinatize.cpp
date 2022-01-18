@@ -313,10 +313,10 @@ void recoordinatize::stabilizer_of_first_three(
 	strong_generators *&Strong_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
-	longinteger_object target_go, six, target_go2, go, go_linear;
-	longinteger_object go_small;
+	ring_theory::longinteger_object target_go, six, target_go2, go, go_linear;
+	ring_theory::longinteger_object go_small;
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three" << endl;
@@ -608,7 +608,7 @@ void recoordinatize::compute_live_points_low_level(
 
 	int cnt, z;
 	int cnt_mod = 1000;
-	longinteger_object go_linear;
+	ring_theory::longinteger_object go_linear;
 	long int gos;
 	long int i, j, h, a;
 	data_structures::sorting Sorting;

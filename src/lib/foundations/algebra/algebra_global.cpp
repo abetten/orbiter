@@ -24,8 +24,8 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 {
 	int q, h, p, e, i, g, phi_g, l, cmp;
 	int *Q, *Rdq, *G, nb_primes = 0;
-	longinteger_domain D;
-	longinteger_object r2, r3, A, B;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object r2, r3, A, B;
 	number_theory_domain NT;
 
 	//formula(2, 64, r2, 1);
@@ -86,13 +86,13 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 
 
 void algebra_global::formula_subprimitive(int d, int q,
-		longinteger_object &Rdq, int &g, int verbose_level)
+		ring_theory::longinteger_object &Rdq, int &g, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int theta_mod_qm1, p, e, i, rem;
 	int nb_primes, *primes, *exponents;
-	longinteger_domain D;
-	longinteger_object Theta, M1, Qm1, A, B, C, R;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object Theta, M1, Qm1, A, B, C, R;
 	number_theory_domain NT;
 
 	if (f_v) {
@@ -172,13 +172,13 @@ void algebra_global::formula_subprimitive(int d, int q,
 	}
 }
 
-void algebra_global::formula(int d, int q, longinteger_object &Rdq, int verbose_level)
+void algebra_global::formula(int d, int q, ring_theory::longinteger_object &Rdq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int theta_mod_qm1, g, p, e, i, rem;
 	int nb_primes, *primes, *exponents;
-	longinteger_domain D;
-	longinteger_object Theta, M1, Qm1, A, B, C, R;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object Theta, M1, Qm1, A, B, C, R;
 	number_theory_domain NT;
 
 	if (f_v) {
@@ -416,7 +416,7 @@ void algebra_global::display_all_PHG_elements(int n, int q)
 	int *v = NEW_int(n + 1);
 	int l;
 	int i, j, a;
-	finite_ring R;
+	ring_theory::finite_ring R;
 
 	if (!R.f_chain_ring) {
 		cout << "algebra_global::display_all_PHG_elements not a chain ring" << endl;
@@ -440,13 +440,13 @@ void algebra_global::test_unipoly()
 {
 	finite_field GFp;
 	int p = 2;
-	unipoly_object m, a, b, c;
-	unipoly_object elts[4];
+	ring_theory::unipoly_object m, a, b, c;
+	ring_theory::unipoly_object elts[4];
 	int i, j;
 	int verbose_level = 0;
 
 	GFp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level);
-	unipoly_domain FX(&GFp);
+	ring_theory::unipoly_domain FX(&GFp);
 
 	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
 	FX.create_object_by_rank(a, 5, __FILE__, __LINE__, 0);
@@ -454,7 +454,7 @@ void algebra_global::test_unipoly()
 	FX.print_object(a, cout); cout << endl;
 	FX.print_object(b, cout); cout << endl;
 
-	unipoly_domain Fq(&GFp, m, verbose_level);
+	ring_theory::unipoly_domain Fq(&GFp, m, verbose_level);
 	Fq.create_object_by_rank(c, 2, __FILE__, __LINE__, 0);
 	for (i = 0; i < 4; i++) {
 		Fq.create_object_by_rank(elts[i], i, __FILE__, __LINE__, 0);
@@ -484,9 +484,9 @@ void algebra_global::test_unipoly2()
 	int verbose_level = 0;
 
 	Fq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
-	unipoly_domain FX(&Fq);
+	ring_theory::unipoly_domain FX(&Fq);
 
-	unipoly_object a;
+	ring_theory::unipoly_object a;
 
 	FX.create_object_by_rank(a, 0, __FILE__, __LINE__, 0);
 	for (i = 1; i < q; i++) {
@@ -521,9 +521,9 @@ int algebra_global::is_diagonal_matrix(int *A, int n)
 
 void algebra_global::test_longinteger()
 {
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int x[] = {15, 14, 12, 8};
-	longinteger_object a, b, q, r;
+	ring_theory::longinteger_object a, b, q, r;
 	int verbose_level = 0;
 
 	D.multiply_up(a, x, 4, verbose_level);
@@ -548,8 +548,8 @@ void algebra_global::test_longinteger()
 
 void algebra_global::test_longinteger2()
 {
-	longinteger_domain D;
-	longinteger_object a, b, c, d, e;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b, c, d, e;
 	int r;
 	int verbose_level = 0;
 
@@ -565,7 +565,7 @@ void algebra_global::test_longinteger3()
 {
 	int i, j;
 	combinatorics::combinatorics_domain D;
-	longinteger_object a, b, c, d, e;
+	ring_theory::longinteger_object a, b, c, d, e;
 
 	for (i = 0; i < 10; i++) {
 		for (j = 0; j < 10; j++) {
@@ -581,7 +581,7 @@ void algebra_global::test_longinteger4()
 {
 	int n = 6, q = 2, k, x, d = 3;
 	combinatorics::combinatorics_domain D;
-	longinteger_object a;
+	ring_theory::longinteger_object a;
 
 	for (k = 0; k <= n; k++) {
 		for (x = 0; x <= n; x++) {
@@ -601,8 +601,8 @@ void algebra_global::test_longinteger4()
 
 void algebra_global::test_longinteger5()
 {
-	longinteger_domain D;
-	longinteger_object a, b, u, v, g;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b, u, v, g;
 	int verbose_level = 2;
 
 	a.create(9548, __FILE__, __LINE__);
@@ -625,8 +625,8 @@ void algebra_global::test_longinteger5()
 void algebra_global::test_longinteger6()
 {
 	int verbose_level = 2;
-	longinteger_domain D;
-	longinteger_object a, b;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b;
 
 	a.create(7411, __FILE__, __LINE__);
 	b.create(9283, __FILE__, __LINE__);
@@ -637,8 +637,8 @@ void algebra_global::test_longinteger6()
 
 void algebra_global::test_longinteger7()
 {
-	longinteger_domain D;
-	longinteger_object a, b;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b;
 	int i, j;
 	int mult[15];
 
@@ -662,7 +662,7 @@ void algebra_global::test_longinteger8()
 {
 	int verbose_level = 2;
 	cryptography::cryptography_domain Crypto;
-	longinteger_object a, b, one;
+	ring_theory::longinteger_object a, b, one;
 	int nb_solovay_strassen_tests = 100;
 	int f_miller_rabin_test = TRUE;
 
@@ -673,7 +673,7 @@ void algebra_global::test_longinteger8()
 }
 
 void algebra_global::longinteger_collect_setup(int &nb_agos,
-		longinteger_object *&agos, int *&multiplicities)
+		ring_theory::longinteger_object *&agos, int *&multiplicities)
 {
 	nb_agos = 0;
 	agos = NULL;
@@ -681,7 +681,7 @@ void algebra_global::longinteger_collect_setup(int &nb_agos,
 }
 
 void algebra_global::longinteger_collect_free(int &nb_agos,
-		longinteger_object *&agos, int *&multiplicities)
+		ring_theory::longinteger_object *&agos, int *&multiplicities)
 {
 	if (nb_agos) {
 		FREE_OBJECTS(agos);
@@ -690,13 +690,13 @@ void algebra_global::longinteger_collect_free(int &nb_agos,
 }
 
 void algebra_global::longinteger_collect_add(int &nb_agos,
-		longinteger_object *&agos, int *&multiplicities,
-		longinteger_object &ago)
+		ring_theory::longinteger_object *&agos, int *&multiplicities,
+		ring_theory::longinteger_object &ago)
 {
 	int j, c, h, f_added;
-	longinteger_object *tmp_agos;
+	ring_theory::longinteger_object *tmp_agos;
 	int *tmp_multiplicities;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	f_added = FALSE;
 	for (j = 0; j < nb_agos; j++) {
@@ -710,7 +710,7 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 			else {
 				tmp_agos = agos;
 				tmp_multiplicities = multiplicities;
-				agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
+				agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
 				multiplicities = NEW_int(nb_agos + 1);
 				for (h = 0; h < j; h++) {
 					tmp_agos[h].swap_with(agos[h]);
@@ -736,7 +736,7 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 		// add at the end (including the case that the list is empty)
 		tmp_agos = agos;
 		tmp_multiplicities = multiplicities;
-		agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
+		agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
 		multiplicities = NEW_int(nb_agos + 1);
 		for (h = 0; h < nb_agos; h++) {
 			tmp_agos[h].swap_with(agos[h]);
@@ -753,7 +753,7 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 }
 
 void algebra_global::longinteger_collect_print(ostream &ost,
-		int &nb_agos, longinteger_object *&agos, int *&multiplicities)
+		int &nb_agos, ring_theory::longinteger_object *&agos, int *&multiplicities)
 {
 	int j;
 
@@ -1208,7 +1208,7 @@ void algebra_global::gl_random_matrix(finite_field *F, int k, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int *M;
 	int *M2;
-	unipoly_object char_poly;
+	ring_theory::unipoly_object char_poly;
 
 	if (f_v) {
 		cout << "algebra_global::gl_random_matrix" << endl;
@@ -1224,7 +1224,7 @@ void algebra_global::gl_random_matrix(finite_field *F, int k, int verbose_level)
 
 
 	{
-		unipoly_domain U(F);
+		ring_theory::unipoly_domain U(F);
 
 
 

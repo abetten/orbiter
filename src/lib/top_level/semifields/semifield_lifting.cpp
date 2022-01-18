@@ -294,7 +294,7 @@ void semifield_lifting::report(ostream &ost, int verbose_level)
 
 
 			ost << "\\item" << endl;
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 			int po;
 
 			Stabilizer_gens[i].group_order(go);
@@ -755,7 +755,7 @@ void semifield_lifting::compute_flag_orbits(
 	int po;
 	int so, f, pt_local, len;
 	long int pt;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int *Mtx1;
 
 	if (f_v) {
@@ -816,7 +816,7 @@ void semifield_lifting::compute_flag_orbits(
 	}
 	for (po = 0, f = 0; po < prev_level_nb_orbits; po++) {
 		schreier *S;
-		longinteger_object go_prev;
+		ring_theory::longinteger_object go_prev;
 		int go_prev_int;
 
 
@@ -892,7 +892,7 @@ void semifield_lifting::compute_flag_orbits(
 
 					FREE_OBJECT(Stab);
 					if ((f % 100) == 0) {
-						longinteger_object go;
+						ring_theory::longinteger_object go;
 
 						Flag_orbits[f].gens->group_order(go);
 						cout << "The flag orbit stabilizer has order " << go << endl;
@@ -1130,7 +1130,7 @@ void semifield_lifting::upstep(
 
 		FREE_OBJECT(coset_reps);
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Stabilizer_gens[nb_orbits].group_order(go);
 		Go[nb_orbits] = go.as_lint();

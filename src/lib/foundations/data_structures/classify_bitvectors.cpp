@@ -303,7 +303,7 @@ void classify_bitvectors::save(
 	void (*encode_function)(void *extra_data,
 			long int *&encoding, int &encoding_sz, void *global_data),
 	void (*get_group_order_or_NULL)(void *extra_data,
-			longinteger_object &go, void *global_data),
+			ring_theory::longinteger_object &go, void *global_data),
 	void *global_data, 
 	int verbose_level)
 {
@@ -361,7 +361,7 @@ void classify_bitvectors::save(
 				fp << " " << encoding[h];
 			}
 			if (get_group_order_or_NULL) {
-				longinteger_object go;
+				ring_theory::longinteger_object go;
 
 				(*get_group_order_or_NULL)(Type_extra_data[j], go, global_data);
 				fp << " ";

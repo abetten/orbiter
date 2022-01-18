@@ -74,16 +74,16 @@ public:
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
 			strong_generators *&gens_stab_of_canonical_equation,
-			longinteger_object &full_group_order,
+			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	strong_generators *stabilizer_orbit_rep(
-		longinteger_object &full_group_order, int verbose_level);
+			ring_theory::longinteger_object &full_group_order, int verbose_level);
 	void stabilizer_orbit_rep_work(action *default_action,
-		longinteger_object &go, 
+			ring_theory::longinteger_object &go,
 		sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 	strong_generators *stabilizer_any_point(
-		longinteger_object &full_group_order, int idx,
+			ring_theory::longinteger_object &full_group_order, int idx,
 		int verbose_level);
 	int search_equation(int *eqn, int &idx, int verbose_level);
 	int search_data(int *data, int &idx, int verbose_level);
@@ -291,8 +291,8 @@ public:
 			long int *subspace_ranks, int &idx, int verbose_level);
 	void get_random_schreier_generator(int *Elt, int verbose_level);
 	strong_generators *stabilizer_orbit_rep(
-		longinteger_object &full_group_order, int verbose_level);
-	void compute_stabilizer(action *default_action, longinteger_object &go, 
+			ring_theory::longinteger_object &full_group_order, int verbose_level);
+	void compute_stabilizer(action *default_action, ring_theory::longinteger_object &go,
 		sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 };

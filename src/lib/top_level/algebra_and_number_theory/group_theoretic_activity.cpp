@@ -604,7 +604,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	int n, k, q;
 
 	string stab_order;
-	longinteger_object stab_go;
+	ring_theory::longinteger_object stab_go;
 	int order_of_plane;
 	number_theory_domain NT;
 	knowledge_base K;

@@ -503,7 +503,7 @@ void orbit_of_equations::get_canonical_form(
 		int *canonical_equation,
 		int *transporter_to_canonical_form,
 		strong_generators *&gens_stab_of_canonical_equation,
-		longinteger_object &full_group_order,
+		ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -540,7 +540,7 @@ void orbit_of_equations::get_canonical_form(
 }
 
 strong_generators *orbit_of_equations::stabilizer_orbit_rep(
-	longinteger_object &full_group_order, int verbose_level)
+		ring_theory::longinteger_object &full_group_order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	strong_generators *gens;
@@ -559,7 +559,7 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 		cout << "orbit_of_equations::stabilizer_orbit_rep after stabilizer_orbit_rep_work" << endl;
 	}
 
-	longinteger_object stab_order;
+	ring_theory::longinteger_object stab_order;
 
 	Stab->group_order(stab_order);
 	if (f_v) {
@@ -580,7 +580,7 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 }
 
 void orbit_of_equations::stabilizer_orbit_rep_work(action *default_action,
-	longinteger_object &go, 
+		ring_theory::longinteger_object &go,
 	sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
 {
@@ -595,8 +595,8 @@ void orbit_of_equations::stabilizer_orbit_rep_work(action *default_action,
 	}
 
 	Stab = NEW_OBJECT(sims);
-	longinteger_object cur_go, target_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object cur_go, target_go;
+	ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;
 	int *residue;
 	int *E1;
@@ -694,7 +694,7 @@ void orbit_of_equations::stabilizer_orbit_rep_work(action *default_action,
 
 
 strong_generators *orbit_of_equations::stabilizer_any_point(
-	longinteger_object &full_group_order, int idx,
+		ring_theory::longinteger_object &full_group_order, int idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

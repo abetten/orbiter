@@ -36,13 +36,13 @@ void finite_field::print_minimum_polynomial(int p, std::string &polynomial)
 
 	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
-	unipoly_domain FX(&GFp);
-	unipoly_object m, n;
+	ring_theory::unipoly_domain FX(&GFp);
+	ring_theory::unipoly_object m, n;
 
 	FX.create_object_by_rank_string(m, my_poly, 0);
 	FX.create_object_by_rank_string(n, polynomial, 0);
 	{
-		unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
+		ring_theory::unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
 
 		Fq.print_object(n, cout);
 	}
@@ -712,8 +712,8 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 		finite_field GFp;
 		GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
-		unipoly_domain FX(&GFp);
-		unipoly_object m;
+		ring_theory::unipoly_domain FX(&GFp);
+		ring_theory::unipoly_object m;
 
 
 		FX.create_object_by_rank_string(m, my_poly, verbose_level - 2);
@@ -767,13 +767,13 @@ void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 				finite_field GFp;
 				GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
-				unipoly_domain FX(&GFp);
-				unipoly_object m;
+				ring_theory::unipoly_domain FX(&GFp);
+				ring_theory::unipoly_object m;
 
 				FX.create_object_by_rank_string(m, my_poly,
 						0/*verbose_level*/);
-				unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
-				unipoly_object elt;
+				ring_theory::unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
+				ring_theory::unipoly_object elt;
 
 				FX.create_object_by_rank(elt, poly, __FILE__, __LINE__, verbose_level);
 				ost << "\\bbF_{" << NT.i_power_j(p, h) << "} & ";

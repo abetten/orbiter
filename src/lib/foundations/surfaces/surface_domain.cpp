@@ -297,9 +297,9 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains" << endl;
 	}
-	Poly1 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly1 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly1->init" << endl;
@@ -335,10 +335,10 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 		cout << "surface_domain::init_polynomial_domains after Poly3->init" << endl;
 	}
 
-	Poly1_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly2_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly3_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly4_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly1_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly2_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly3_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly4_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly1_x123->init" << endl;
 	}
@@ -394,9 +394,9 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	label_variables_x123(Poly3_x123, 0 /* verbose_level */);
 	label_variables_x123(Poly4_x123, 0 /* verbose_level */);
 
-	Poly1_4 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly2_4 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly3_4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly1_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly2_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly3_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly1_4->init" << endl;
 	}
@@ -450,7 +450,7 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 
 
 
-	Partials = NEW_OBJECTS(partial_derivative, 4);
+	Partials = NEW_OBJECTS(ring_theory::partial_derivative, 4);
 
 	int i;
 
@@ -480,10 +480,10 @@ void surface_domain::init_large_polynomial_domains(int verbose_level)
 		cout << "surface_domain::init_large_polynomial_domains" << endl;
 	}
 	f_has_large_polynomial_domains = TRUE;
-	Poly2_27 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly4_27 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly6_27 = NEW_OBJECT(homogeneous_polynomial_domain);
-	Poly3_24 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly2_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly4_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly6_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly3_24 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	Poly2_27->init(F,
 			27 /* nb_vars */, 2 /* degree */,
@@ -539,7 +539,7 @@ void surface_domain::init_large_polynomial_domains(int verbose_level)
 }
 
 void surface_domain::label_variables_3(
-	homogeneous_polynomial_domain *HPD,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -561,7 +561,7 @@ void surface_domain::label_variables_3(
 }
 
 void surface_domain::label_variables_x123(
-	homogeneous_polynomial_domain *HPD,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -585,7 +585,7 @@ void surface_domain::label_variables_x123(
 }
 
 void surface_domain::label_variables_4(
-	homogeneous_polynomial_domain *HPD,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -612,7 +612,7 @@ void surface_domain::label_variables_4(
 }
 
 void surface_domain::label_variables_27(
-	homogeneous_polynomial_domain *HPD,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -660,7 +660,7 @@ void surface_domain::label_variables_27(
 }
 
 void surface_domain::label_variables_24(
-	homogeneous_polynomial_domain *HPD,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

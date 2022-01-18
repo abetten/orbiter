@@ -298,9 +298,9 @@ int &stabilizer_chain_base_data::path_i(int i)
 	return path[i];
 }
 
-void stabilizer_chain_base_data::group_order(longinteger_object &go)
+void stabilizer_chain_base_data::group_order(ring_theory::longinteger_object &go)
 {
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	D.multiply_up(go, transversal_length, base_len, 0 /* verbose_level */);
 }

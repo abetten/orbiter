@@ -621,7 +621,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				cout << endl;
 			}
 
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 			strong_generators *SG; // stabilizer as 3x3 matrices
 
 			if (f_v) {
@@ -629,7 +629,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 						"computing partition stabilizer:" << endl;
 			}
 
-			longinteger_object full_group_order;
+			ring_theory::longinteger_object full_group_order;
 
 			pair_orbit->Strong_gens->group_order(full_group_order);
 			if (f_v) {
@@ -1231,12 +1231,12 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 		}
 		ost << "$\\\\" << endl;
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		strong_generators *SG;
 
 		cout << "computing partition stabilizer:" << endl;
 
-		longinteger_object full_group_order;
+		ring_theory::longinteger_object full_group_order;
 
 		pair_orbit->Strong_gens->group_order(full_group_order);
 		cout << "expecting a group of order "
@@ -1499,8 +1499,8 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 	int f_print_stabilizer_gens = TRUE;
 	latex_interface L;
 	surfaces_arc_lifting_definition_node *D;
-	longinteger_domain Dom;
-	longinteger_object go1, ol;
+	ring_theory::longinteger_domain Dom;
+	ring_theory::longinteger_object go1, ol;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::report_surfaces_in_detail" << endl;

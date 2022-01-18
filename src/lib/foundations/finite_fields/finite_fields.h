@@ -411,17 +411,17 @@ private:
 
 	finite_field *GFp;
 
-	unipoly_domain *FX;
+	ring_theory::unipoly_domain *FX;
 
-	unipoly_object m;
+	ring_theory::unipoly_object m;
 
 	int factor_polynomial_degree;
 	int *factor_polynomial_coefficients_negated;
 
 
-	unipoly_domain *Fq;
+	ring_theory::unipoly_domain *Fq;
 
-	unipoly_object Alpha;
+	ring_theory::unipoly_object Alpha;
 
 
 public:
@@ -843,31 +843,31 @@ public:
 
 	int n;
 	finite_field *F; // F_q where q = p^e
-	unipoly_object *Beta;
-	unipoly_object *Fq_Elements;
+	ring_theory::unipoly_object *Beta;
+	ring_theory::unipoly_object *Fq_Elements;
 
-	unipoly_object Min_poly;
+	ring_theory::unipoly_object Min_poly;
 		// Min_poly = irreducible polynomial over F->p of degree field_degree
 
 	finite_field *Fp; // the prime field F_p
-	unipoly_domain *FpX;
-	unipoly_domain *Fq; // polynomial ring F_p modulo Min_poly
-	unipoly_domain *FX;
+	ring_theory::unipoly_domain *FpX;
+	ring_theory::unipoly_domain *Fq; // polynomial ring F_p modulo Min_poly
+	ring_theory::unipoly_domain *FX;
 
 	int m, r, field_degree;
 		// m is the order of q modulo n
 		// field_degree = e * m
 
-	longinteger_object *Qm, *Qm1, *Index, *Subfield_Index;
+	ring_theory::longinteger_object *Qm, *Qm1, *Index, *Subfield_Index;
 		// Qm = q^m
 		// Qm1 = q^m - 1
 		// Index = Qm1 / n
 		// Subfield_Index = Qm1 / (q - 1)
 
 	cyclotomic_sets *Cyc;
-	unipoly_object **generator;
+	ring_theory::unipoly_object **generator;
 
-	unipoly_object *generator_Fq;
+	ring_theory::unipoly_object *generator_Fq;
 
 	int subfield_degree;
 	int *subfield_basis; // [subfield_degree * field_degree]

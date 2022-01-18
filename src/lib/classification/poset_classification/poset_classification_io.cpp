@@ -1225,7 +1225,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	pchar *Text_stab_order;
 	pchar *Text_orbit_length;
 	pchar *Text_schreier_vector_length;
-	longinteger_object stab_order, orbit_length;
+	ring_theory::longinteger_object stab_order, orbit_length;
 	int schreier_vector_length;
 	long int *rep;
 	char str[1000];
@@ -1346,13 +1346,13 @@ void poset_classification::make_spreadsheet_of_level_info(
 	pchar *Text_orbit_length_sum;
 	pchar *Text_schreier_vector_length_sum;
 	pchar *Text_binomial;
-	longinteger_object stab_order, orbit_length,
+	ring_theory::longinteger_object stab_order, orbit_length,
 		orbit_length_sum, orbit_length_total;
-	longinteger_object a, a_total;
-	longinteger_domain D;
+	ring_theory::longinteger_object a, a_total;
+	ring_theory::longinteger_domain D;
 	combinatorics::combinatorics_domain C;
 	int schreier_vector_length_int;
-	longinteger_object schreier_vector_length,
+	ring_theory::longinteger_object schreier_vector_length,
 		schreier_vector_length_sum, schreier_vector_length_total;
 	int *rep;
 	char str[1000];
@@ -1591,7 +1591,7 @@ void poset_classification::wedge_product_export_magma(
 	long int *the_set;
 	int *v;
 	int a, i, j, h, fst, len, ii, jj;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int *Elt;
 
 	//level = depth_completed + 1;

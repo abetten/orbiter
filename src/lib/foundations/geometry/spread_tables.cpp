@@ -703,13 +703,13 @@ void spread_tables::compute_adjacency_matrix(
 
 
 	{
-		colored_graph *CG;
+		graph_theory::colored_graph *CG;
 		std::string fname;
 		file_io Fio;
 		string label;
 		string label_tex;
 
-		CG = NEW_OBJECT(colored_graph);
+		CG = NEW_OBJECT(graph_theory::colored_graph);
 		int *color;
 
 		label.assign(prefix);

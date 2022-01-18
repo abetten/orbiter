@@ -108,7 +108,7 @@ void linear_group::linear_group_init(
 	if (f_v) {
 		cout << "linear_group::linear_group_init degreee=" << A_linear->degree << endl;
 		cout << "linear_group::linear_group_init go=";
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		A_linear->Strong_gens->group_order(go);
 		cout << go << endl;
 	}
@@ -1249,7 +1249,7 @@ void linear_group::init_subgroup_by_generators(
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
 	f_has_strong_generators = TRUE;
@@ -1366,7 +1366,7 @@ void linear_group::report(std::ostream &ost,
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	H->group_order(go);
@@ -1376,7 +1376,7 @@ void linear_group::report(std::ostream &ost,
 
 		//H->print_all_group_elements_tex(fp);
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		//sims *G;
 		//sims *H;
 

@@ -787,7 +787,7 @@ void action::all_elements(vector_ge *&vec, int verbose_level)
 		exit(1);
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i, goi;
 
 	group_order(go);

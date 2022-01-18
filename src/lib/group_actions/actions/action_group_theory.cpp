@@ -632,7 +632,7 @@ void action::read_centralizer_magma(std::string &fname_output,
 			verbose_level);
 
 	if (f_v) {
-		longinteger_object go1;
+		ring_theory::longinteger_object go1;
 
 		cout << "action::read_centralizer_magma "
 			"after gens->init_from_permutation_representation" << endl;
@@ -822,7 +822,7 @@ void action::read_subgroups_magma(std::string &fname_output,
 					verbose_level);
 
 			if (f_v) {
-				longinteger_object go1;
+				ring_theory::longinteger_object go1;
 
 				cout << "action::read_subgroups_magma "
 					"after gens->init_from_permutation_representation" << endl;
@@ -872,7 +872,7 @@ void action::read_subgroups_magma(std::string &fname_output,
 					verbose_level);
 
 			if (f_v) {
-				longinteger_object go1;
+				ring_theory::longinteger_object go1;
 
 				cout << "action::read_subgroups_magma "
 					"after gens->init_from_permutation_representation" << endl;
@@ -1194,8 +1194,8 @@ void action::read_conjugacy_classes_and_normalizers(
 #endif
 
 
-	longinteger_object go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_domain D;
 
 	override_sims->group_order(go);
 	cout << "The group has order " << go << endl;
@@ -1247,7 +1247,7 @@ void action::read_conjugacy_classes_and_normalizers(
 		for (i = 0; i < nb_classes; i++) {
 
 			strong_generators *gens;
-			longinteger_object go1, Class_size, centralizer_order;
+			ring_theory::longinteger_object go1, Class_size, centralizer_order;
 			long int goi;
 			vector_ge *nice_gens;
 			long int ngo;
@@ -1482,8 +1482,8 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 #endif
 
 
-	longinteger_object go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_domain D;
 
 	group_order(go);
 	cout << "The group has order " << go << endl;
@@ -1509,7 +1509,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 	cout << "The conjugacy classes are:" << endl;
 	for (i = 0; i < nb_classes; i++) {
 		strong_generators *gens;
-		longinteger_object go1, Class_size, centralizer_order;
+		ring_theory::longinteger_object go1, Class_size, centralizer_order;
 		int goi;
 		vector_ge *nice_gens;
 
@@ -1650,7 +1650,7 @@ void action::report_groups_and_normalizers(std::ostream &ost,
 {
 	int f_v = (verbose_level >= 1);
 	int u;
-	longinteger_object go1, go2;
+	ring_theory::longinteger_object go1, go2;
 
 	if (f_v) {
 		cout << "action::report_groups_and_normalizers" << endl;

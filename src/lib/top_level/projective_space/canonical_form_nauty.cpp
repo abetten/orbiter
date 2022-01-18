@@ -49,7 +49,7 @@ canonical_form_nauty::~canonical_form_nauty()
 
 void canonical_form_nauty::quartic_curve(
 		projective_space_with_action *PA,
-		homogeneous_polynomial_domain *Poly4_x123,
+		ring_theory::homogeneous_polynomial_domain *Poly4_x123,
 		action_on_homogeneous_polynomials *AonHPD,
 		int idx, int *eqn, int sz,
 		long int *Pts_on_curve, int sz_curve,
@@ -80,7 +80,7 @@ void canonical_form_nauty::quartic_curve(
 		cout << endl;
 	}
 
-	longinteger_object pt_stab_order;
+	ring_theory::longinteger_object pt_stab_order;
 	object_with_canonical_form *OwCF = NULL;
 
 	int f_compute_canonical_form = TRUE;
@@ -208,7 +208,7 @@ void canonical_form_nauty::quartic_curve(
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
 	if (f_v) {
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Stab_gens_quartic->group_order(go);
 		cout << "The stabilizer is a group of order " << go << endl;

@@ -64,7 +64,7 @@ void spread_lifting::init(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	
 	if (f_v) {

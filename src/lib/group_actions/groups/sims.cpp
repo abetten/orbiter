@@ -947,9 +947,9 @@ int sims::generator_depth(int *elt)
 	return A->base_len();
 }
 
-void sims::group_order(longinteger_object &go)
+void sims::group_order(ring_theory::longinteger_object &go)
 {
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	//cout << "sims::group_order before D.multiply_up" << endl;
 	//cout << "A->base_len=" << A->base_len << endl;
@@ -960,10 +960,10 @@ void sims::group_order(longinteger_object &go)
 	//cout << "sims::group_order after D.multiply_up" << endl;
 }
 
-void sims::group_order_verbose(longinteger_object &go, int verbose_level)
+void sims::group_order_verbose(ring_theory::longinteger_object &go, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	
 	if (f_v) {
 		cout << "sims::group_order_verbose" << endl;
@@ -980,10 +980,10 @@ void sims::group_order_verbose(longinteger_object &go, int verbose_level)
 	}
 }
 
-void sims::subgroup_order_verbose(longinteger_object &go, int level, int verbose_level)
+void sims::subgroup_order_verbose(ring_theory::longinteger_object &go, int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "sims::subgroup_order_verbose" << endl;
@@ -1002,7 +1002,7 @@ void sims::subgroup_order_verbose(longinteger_object &go, int level, int verbose
 
 long int sims::group_order_lint()
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	group_order(go);
 	return go.as_lint();
@@ -1209,7 +1209,7 @@ void sims::element_from_path_inv(int *elt)
 	A->element_move(eltrk1, elt, FALSE);
 }
 
-void sims::element_unrank(longinteger_object &a,
+void sims::element_unrank(ring_theory::longinteger_object &a,
 		int *elt, int verbose_level)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
@@ -1220,8 +1220,8 @@ void sims::element_unrank(longinteger_object &a,
 {
 	int f_v = (verbose_level >= 1);
 	int ii, l, r;
-	longinteger_domain D;
-	longinteger_object q;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object q;
 	
 	if (f_v) {
 		cout << "sims::element_unrank rk=" << a << endl;
@@ -1247,7 +1247,7 @@ void sims::element_unrank(longinteger_object &a,
 	}
 }
 
-void sims::element_unrank(longinteger_object &a, int *elt)
+void sims::element_unrank(ring_theory::longinteger_object &a, int *elt)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
 // are enumerated 0, ... go - 1
@@ -1256,8 +1256,8 @@ void sims::element_unrank(longinteger_object &a, int *elt)
 // The computed group element will be computed into Elt1
 {
 	int ii, l, r;
-	longinteger_domain D;
-	longinteger_object q;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object q;
 	
 	for (ii = A->base_len() - 1; ii >= 0; ii--) {
 		l = orbit_len[ii];
@@ -1272,13 +1272,13 @@ void sims::element_unrank(longinteger_object &a, int *elt)
 	element_from_path(elt, 0);
 }
 
-void sims::element_rank(longinteger_object &a, int *elt)
+void sims::element_rank(ring_theory::longinteger_object &a, int *elt)
 // Computes the rank of the element in elt into a.
 // uses eltrk1, eltrk2
 {
 	long int i, j, bi, jj, l;
-	longinteger_domain D;
-	longinteger_object b, c;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object b, c;
 	
 	A->element_move(elt, eltrk1, FALSE);
 	a.zero();
@@ -1352,7 +1352,7 @@ void sims::element_unrank_lint(long int rk, int *Elt)
 
 long int sims::element_rank_lint(int *Elt)
 {
-	longinteger_object a;
+	ring_theory::longinteger_object a;
 	
 	element_rank(a, Elt);
 	return a.as_lint();
@@ -1386,7 +1386,7 @@ int sims::is_element_of(int *elt)
 
 void sims::test_element_rank_unrank()
 {
-	longinteger_object go, a, b;
+	ring_theory::longinteger_object go, a, b;
 	int i, j, goi;
 	int *elt = NEW_int(A->elt_size_in_int);
 	
@@ -2209,7 +2209,7 @@ void sims::all_elements(vector_ge *&vec, int verbose_level)
 		cout << "sims::all_elements" << endl;
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i, goi;
 
 	group_order(go);

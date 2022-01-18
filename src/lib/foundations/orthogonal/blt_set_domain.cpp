@@ -847,7 +847,7 @@ int blt_set_domain::create_graph(
 	long int *Starter_set, int starter_size,
 	long int *candidates, int nb_candidates,
 	int f_eliminate_graphs_if_possible,
-	colored_graph *&CG,
+	graph_theory::colored_graph *&CG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -991,7 +991,7 @@ int blt_set_domain::create_graph(
 		cout << "blt_set_domain::create_graph creating colored_graph" << endl;
 		}
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	{
 		char str[1000];

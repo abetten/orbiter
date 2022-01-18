@@ -761,8 +761,8 @@ void arc_in_projective_space::create_Payne_hyperoval(
 	int f_v = (verbose_level >= 1);
 	int i;
 	int v[3];
-	longinteger_domain D;
-	longinteger_object a, b, u, u2, g;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b, u, u2, g;
 	int exponent;
 	int one_sixth, one_half, five_sixth;
 

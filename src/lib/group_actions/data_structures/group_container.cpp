@@ -282,9 +282,9 @@ void group_container::require_sims()
 	}
 }
 
-void group_container::group_order(longinteger_object &go)
+void group_container::group_order(ring_theory::longinteger_object &go)
 {
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	
 	if (f_has_sims) {
 		S->group_order(go);
@@ -301,7 +301,7 @@ void group_container::group_order(longinteger_object &go)
 
 void group_container::print_group_order(ostream &ost)
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	group_order(go);
 	ost << go;
 }
@@ -612,9 +612,9 @@ void group_container::induced_action(action &induced_action,
 		int n = 0;
 		{
 			sims HH, KK;
-			longinteger_object go, H_order, K_order, HK_order, quo, rem;
+			ring_theory::longinteger_object go, H_order, K_order, HK_order, quo, rem;
 			int drop_out_level, image;
-			longinteger_domain D;
+			ring_theory::longinteger_domain D;
 
 			require_sims();
 
@@ -756,8 +756,8 @@ void group_container::extension(group_container &N, group_container &H, int verb
 	//int f_vvv = (verbose_level >= 3);
 	action *A = N.A;
 	sims G;
-	longinteger_object go_N, go_H, go_G, cur_go, quo, rem;
-	longinteger_domain D;
+	ring_theory::longinteger_object go_N, go_H, go_G, cur_go, quo, rem;
+	ring_theory::longinteger_domain D;
 	int n = 0, drop_out_level, image;
 	int *p_gen;
 	int *Elt;

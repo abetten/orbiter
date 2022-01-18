@@ -23,7 +23,7 @@ void sims::create_group_tree(const char *fname,
 		int f_full, int verbose_level)
 {
 	long int i, j, h, go, l;
-	longinteger_object Go;
+	ring_theory::longinteger_object Go;
 	int *Elt;
 	int *Elt2;
 	int *Fst;
@@ -355,7 +355,7 @@ void sims::print_generator_depth_and_perm()
 
 void sims::print_group_order(ostream &ost)
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go;
 }
@@ -396,7 +396,7 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int *Elt;
 	//char *elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i;
 	file_io Fio;
 
@@ -425,7 +425,7 @@ void sims::print_all_group_elements_to_file(char *fname,
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i;
 	file_io Fio;
 
@@ -452,7 +452,7 @@ void sims::print_all_group_elements_to_file(char *fname,
 void sims::print_all_group_elements()
 {
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -473,7 +473,7 @@ void sims::print_all_group_elements()
 void sims::print_all_group_elements_tex(ostream &ost)
 {
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i, ord;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -496,7 +496,7 @@ void sims::print_all_group_elements_tex(ostream &ost)
 void sims::print_all_group_elements_with_permutations_tex(ostream &ost)
 {
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i, ord;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -525,7 +525,7 @@ void sims::print_all_group_elements_with_permutations_tex(ostream &ost)
 void sims::print_all_group_elements_as_permutations()
 {
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -547,7 +547,7 @@ void sims::print_all_group_elements_as_permutations_in_special_action(
 		action *A_special)
 {
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -568,7 +568,7 @@ void sims::print_all_group_elements_as_permutations_in_special_action(
 void sims::print_all_transversal_elements()
 {
 	int *Elt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i, j, ii;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -603,7 +603,7 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
 	long int goi, i;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	file_io Fio;
 
 	group_order(go);
@@ -678,7 +678,7 @@ void sims::write_as_magma_permutation_group(std::string &fname_base,
 {
 	int f_v = (verbose_level >= 1);
 	long int i, k, n, l, h;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int *Elt1;
 	int *Elt2;
 	int *Table;
@@ -784,7 +784,7 @@ void sims::report(std::ostream &ost,
 
 
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		subgroup_order_verbose(go, i, FALSE /*verbose_level*/);
 		ost << i << " & " << get_orbit(i, 0) << " & " << get_orbit_length(i) << " & ";
@@ -814,7 +814,7 @@ void sims::report(std::ostream &ost,
 			fname_base.assign(prefix);
 			fname_base.append(str);
 
-			layered_graph *LG;
+			graph_theory::layered_graph *LG;
 			if (f_v) {
 				cout << "sims::report before Sorting.schreier_vector_tree" << endl;
 			}

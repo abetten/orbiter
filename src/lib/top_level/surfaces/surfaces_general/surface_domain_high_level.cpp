@@ -642,7 +642,7 @@ void surface_domain_high_level::do_six_arcs(
 				"testing the arcs" << endl;
 	}
 
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	int *Abcd;
 	int *Nb_E;
 	int *Ago;

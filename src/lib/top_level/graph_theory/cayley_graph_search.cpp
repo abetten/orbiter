@@ -705,7 +705,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 		gens, Strong_gens,
 		verbose_level);
 
-	longinteger_object go1;
+	ring_theory::longinteger_object go1;
 	Strong_gens->group_order(go1);
 	cout << "go1=" << go1 << endl;
 	//exit(1);

@@ -544,7 +544,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 	form_c2 = 0;
 	form_c3 = 0;
 
-	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "orthogonal::init_form_and_Gram_matrix before Poly->init" << endl;

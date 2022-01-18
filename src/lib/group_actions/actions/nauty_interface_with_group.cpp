@@ -30,7 +30,7 @@ nauty_interface_with_group::~nauty_interface_with_group()
 }
 
 action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_object(
-		colored_graph *CG, int verbose_level)
+		graph_theory::colored_graph *CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
@@ -59,7 +59,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_o
 }
 
 action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-		colored_graph *CG, int *labeling, int verbose_level)
+		graph_theory::colored_graph *CG, int *labeling, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
@@ -1387,7 +1387,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 
 	sims *S;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
@@ -1420,7 +1420,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	}
 
 
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	if (D.compare_unsigned(*NO->Ago, go)) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "

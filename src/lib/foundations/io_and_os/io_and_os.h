@@ -376,7 +376,7 @@ public:
 	void print_lint_matrix_tex(std::ostream &ost,
 		long int *p, int m, int n);
 	void print_longinteger_matrix_tex(std::ostream &ost,
-		longinteger_object *p, int m, int n);
+			ring_theory::longinteger_object *p, int m, int n);
 	void print_integer_matrix_with_labels(std::ostream &ost, int *p,
 		int m, int n, int *row_labels, int *col_labels, int f_tex);
 	void print_lint_matrix_with_labels(std::ostream &ost,

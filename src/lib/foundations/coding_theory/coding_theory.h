@@ -32,7 +32,7 @@ public:
 
 
 
-	void make_mac_williams_equations(longinteger_object *&M,
+	void make_mac_williams_equations(ring_theory::longinteger_object *&M,
 			int n, int k, int q, int verbose_level);
 	void make_table_of_bounds(
 			int n_max, int q, int verbose_level);
@@ -79,7 +79,7 @@ public:
 			// will be allocated [N]
 			// where N = theta_{k-1}
 		int verbose_level);
-	void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
+	void mac_williams_equations(ring_theory::longinteger_object *&M, int n, int k, int q);
 	void determine_weight_enumerator();
 	void do_weight_enumerator(finite_field *F,
 			int *M, int m, int n,
@@ -141,7 +141,7 @@ public:
 			std::string &label,
 			int m, int n, std::string &genma_text,
 			int verbose_level);
-	void CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_poly,
+	void CRC_encode_text(nth_roots *Nth, ring_theory::unipoly_object &CRC_poly,
 		std::string &text, std::string &fname,
 		int verbose_level);
 	void encode_text_5bits(std::string &text,
@@ -158,7 +158,7 @@ public:
 
 	// cyclic_codes.cpp:
 	void make_BCH_code(int n, finite_field *F, int d,
-			nth_roots *&Nth, unipoly_object &P,
+			nth_roots *&Nth, ring_theory::unipoly_object &P,
 			int verbose_level);
 	void make_cyclic_code(int n, int q, int t,
 			int *roots, int nb_roots, int f_poly, std::string &poly,
@@ -166,23 +166,23 @@ public:
 			int verbose_level);
 	void generator_matrix_cyclic_code(int n,
 			int degree, int *generator_polynomial, int *&M);
-	void print_polynomial(unipoly_domain &Fq,
-			int degree, unipoly_object *coeffs);
-	void print_polynomial_tight(std::ostream &ost, unipoly_domain &Fq,
-			int degree, unipoly_object *coeffs);
+	void print_polynomial(ring_theory::unipoly_domain &Fq,
+			int degree, ring_theory::unipoly_object *coeffs);
+	void print_polynomial_tight(std::ostream &ost, ring_theory::unipoly_domain &Fq,
+			int degree, ring_theory::unipoly_object *coeffs);
 	void field_reduction(int n, int q, int p, int e, int m,
-		finite_field &Fp, unipoly_domain &Fq,
-		int degree, unipoly_object *generator, int *&generator_subfield,
+		finite_field &Fp, ring_theory::unipoly_domain &Fq,
+		int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
 		int f_poly, std::string &poly,
 		int verbose_level);
 	void BCH_generator_polynomial(
 			finite_field *F,
-			unipoly_object &g, int n,
+			ring_theory::unipoly_object &g, int n,
 			int designed_distance, int &bose_distance,
 			int &transversal_length, int *&transversal,
-			longinteger_object *&rank_of_irreducibles,
+			ring_theory::longinteger_object *&rank_of_irreducibles,
 			int verbose_level);
-	void compute_generator_matrix(unipoly_object a, int *&genma,
+	void compute_generator_matrix(ring_theory::unipoly_object a, int *&genma,
 		int n, int &k, int verbose_level);
 	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
 
@@ -276,7 +276,7 @@ public:
 
 	nth_roots *Nth;
 
-	unipoly_object *P;
+	ring_theory::unipoly_object *P;
 
 	int *Selection; // [Nth->Cyc->S->nb_sets]
 	int *Sel;  // [nb_sel]

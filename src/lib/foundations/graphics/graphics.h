@@ -447,6 +447,82 @@ public:
 };
 
 
+// #############################################################################
+// layered_graph_draw_options.cpp
+// #############################################################################
+
+//! options for drawing an object of type layered_graph
+
+class layered_graph_draw_options {
+public:
+
+	//int f_file;
+	//std::string fname;
+
+	int f_paperheight;
+	int paperheight;
+	int f_paperwidth;
+	int paperwidth;
+
+	int xin;
+	int yin;
+	int xout;
+	int yout;
+
+
+	int f_spanning_tree;
+
+
+	int f_circle;
+	int f_corners;
+	int rad;
+	int f_embedded;
+	int f_sideways;
+	int f_show_level_info;
+	int f_label_edges;
+	int f_x_stretch;
+	double x_stretch;
+	int f_y_stretch;
+	double y_stretch;
+
+	int f_scale;
+	double scale;
+
+	int f_line_width;
+	double line_width;
+
+	int f_rotated;
+
+
+	int f_nodes_empty;
+	int f_select_layers;
+	std::string select_layers;
+	int nb_layer_select;
+	int *layer_select;
+
+
+	int f_has_draw_begining_callback;
+	void (*draw_begining_callback)(graph_theory::layered_graph *LG, mp_graphics *G,
+		int x_max, int y_max, int f_rotated, int dx, int dy);
+	int f_has_draw_ending_callback;
+	void (*draw_ending_callback)(graph_theory::layered_graph *LG, mp_graphics *G,
+		int x_max, int y_max, int f_rotated, int dx, int dy);
+	int f_has_draw_vertex_callback;
+	void (*draw_vertex_callback)(graph_theory::layered_graph *LG, mp_graphics *G,
+		int layer, int node, int x, int y, int dx, int dy);
+
+	int f_paths_in_between;
+	int layer1, node1;
+	int layer2, node2;
+
+	layered_graph_draw_options();
+	~layered_graph_draw_options();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+};
+
 
 // #############################################################################
 // mp_graphics.cpp

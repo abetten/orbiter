@@ -558,7 +558,7 @@ public:
 			int verbose_level);
 	void report_orbits_of_type(std::ostream &ost, int type_idx);
 	void create_graph_on_orbits_of_a_certain_length_after_filtering(
-		colored_graph *&CG,
+			graph_theory::colored_graph *&CG,
 		std::string &fname,
 		long int *filter_by_set,
 		int filter_by_set_size,
@@ -570,7 +570,7 @@ public:
 		void *test_function_data,
 		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length(
-		colored_graph *&CG,
+			graph_theory::colored_graph *&CG,
 		std::string &fname,
 		int orbit_length,
 		int &type_idx,
@@ -592,7 +592,7 @@ public:
 		long int *extracted_set,
 		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
-		colored_graph *&CG,
+			graph_theory::colored_graph *&CG,
 		std::string &fname,
 		int orbit_length,
 		int &type_idx,
@@ -602,7 +602,7 @@ public:
 		data_structures::set_of_sets *my_orbits_classified,
 		int verbose_level);
 	void create_weighted_graph_on_orbits(
-		colored_graph *&CG,
+			graph_theory::colored_graph *&CG,
 		std::string &fname,
 		int *Orbit_lengths,
 		int nb_orbit_lengths,
@@ -987,26 +987,26 @@ public:
 		int orbit_idx, int verbose_level);
 	strong_generators *stabilizer_any_point_plus_cosets(
 		action *default_action, 
-		longinteger_object &full_group_order, 
+		ring_theory::longinteger_object &full_group_order,
 		int pt, vector_ge *&cosets, int verbose_level);
 	strong_generators *stabilizer_any_point(
 		action *default_action, 
-		longinteger_object &full_group_order, int pt, 
+		ring_theory::longinteger_object &full_group_order, int pt,
 		int verbose_level);
 	set_and_stabilizer *get_orbit_rep(action *default_action,
-			longinteger_object &full_group_order,
+			ring_theory::longinteger_object &full_group_order,
 			int orbit_idx, int verbose_level);
 	void get_orbit_rep_to(action *default_action,
-			longinteger_object &full_group_order,
+			ring_theory::longinteger_object &full_group_order,
 			int orbit_idx,
 			set_and_stabilizer *Rep,
 			int verbose_level);
 	strong_generators *stabilizer_orbit_rep(
 		action *default_action, 
-		longinteger_object &full_group_order, 
+		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx, int verbose_level);
 	void point_stabilizer(action *default_action, 
-		longinteger_object &go, 
+			ring_theory::longinteger_object &go,
 		sims *&Stab, int orbit_no, int verbose_level);
 		// this function allocates a sims structure into Stab.
 	void get_orbit(int orbit_idx, long int *set, int &len,
@@ -1075,7 +1075,7 @@ public:
 	void print_and_list_orbits_of_given_length(std::ostream &ost,
 		int len);
 	void print_and_list_orbits_and_stabilizer(std::ostream &ost,
-		action *default_action, longinteger_object &go,
+		action *default_action, ring_theory::longinteger_object &go,
 		void (*print_point)(std::ostream &ost, int pt, void *data),
 			void *data);
 	void print_and_list_orbits_using_labels(std::ostream &ost,
@@ -1093,11 +1093,11 @@ public:
 	void print_orbit_sorted_tex(std::ostream &ost, int orbit_no, int f_truncate, int max_length);
 	void print_and_list_orbit_and_stabilizer_tex(int i,
 		action *default_action,
-		longinteger_object &full_group_order,
+		ring_theory::longinteger_object &full_group_order,
 		std::ostream &ost);
 	void write_orbit_summary(std::string &fname,
 			action *default_action,
-			longinteger_object &full_group_order,
+			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		int i, action *default_action,
@@ -1107,7 +1107,7 @@ public:
 	void print_and_list_orbits_and_stabilizer_sorted_by_length(
 			std::ostream &ost, int f_tex,
 		action *default_action,
-		longinteger_object &full_group_order);
+		ring_theory::longinteger_object &full_group_order);
 	void print_fancy(
 			std::ostream &ost, int f_tex,
 		action *default_action, strong_generators *gens_full_group);
@@ -1188,14 +1188,14 @@ public:
 	action *KA;
 	sims *K;
 
-	longinteger_object G_order, K_order, KG_order;
+	ring_theory::longinteger_object G_order, K_order, KG_order;
 	
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
 
 	int f_has_target_group_order;
-	longinteger_object tgo; // target group order
+	ring_theory::longinteger_object tgo; // target group order
 
 	
 	int f_from_generators;
@@ -1225,7 +1225,7 @@ public:
 	void freeself();
 	void init(action *A, int verbose_level);
 	void interested_in_kernel(action *KA, int verbose_level);
-	void init_target_group_order(longinteger_object &tgo, 
+	void init_target_group_order(ring_theory::longinteger_object &tgo,
 		int verbose_level);
 	void init_generators(vector_ge *gens, int verbose_level);
 	void init_random_process(
@@ -1388,9 +1388,9 @@ public:
 	int generator_depth(int *elt);
 		// returns the index of the first base point 
 		// which is moved by the given element
-	void group_order(longinteger_object &go);
-	void group_order_verbose(longinteger_object &go, int verbose_level);
-	void subgroup_order_verbose(longinteger_object &go, int level, int verbose_level);
+	void group_order(ring_theory::longinteger_object &go);
+	void group_order_verbose(ring_theory::longinteger_object &go, int verbose_level);
+	void subgroup_order_verbose(ring_theory::longinteger_object &go, int level, int verbose_level);
 	long int group_order_lint();
 	int is_trivial_group();
 	int last_moved_base_point();
@@ -1414,16 +1414,16 @@ public:
 		// element is multiplied.
 		// uses eltrk1, eltrk2
 	void element_from_path_inv(int *elt);
-	void element_unrank(longinteger_object &a, int *elt, 
+	void element_unrank(ring_theory::longinteger_object &a, int *elt,
 		int verbose_level);
-	void element_unrank(longinteger_object &a, int *elt);
+	void element_unrank(ring_theory::longinteger_object &a, int *elt);
 		// Returns group element whose rank is a. 
 		// the elements represented by the chain are 
 		// enumerated 0, ... go - 1
 		// with the convention that 0 always stands 
 		// for the identity element.
 		// The computed group element will be computed into Elt1
-	void element_rank(longinteger_object &a, int *elt);
+	void element_rank(ring_theory::longinteger_object &a, int *elt);
 		// Computes the rank of the element in elt into a.
 		// uses eltrk1, eltrk2
 	void element_unrank_lint(long int rk, int *Elt, int verbose_level);
@@ -1496,16 +1496,16 @@ public:
 	void build_up_group_random_process_no_kernel(sims *old_G,
 		int verbose_level);
 	void extend_group_random_process_no_kernel(sims *extending_by_G,
-		longinteger_object &target_go,
+			ring_theory::longinteger_object &target_go,
 		int verbose_level);
 	void build_up_group_random_process(sims *K, sims *old_G,
-		longinteger_object &target_go,
+			ring_theory::longinteger_object &target_go,
 		int f_override_choose_next_base_point,
 		int (*choose_next_base_point_method)(action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
 	void build_up_group_from_generators(sims *K, vector_ge *gens,
-		int f_target_go, longinteger_object *target_go,
+		int f_target_go, ring_theory::longinteger_object *target_go,
 		int f_override_choose_next_base_point,
 		int (*choose_next_base_point_method)(action *A,
 			int *Elt, int verbose_level),
@@ -1734,7 +1734,7 @@ public:
 	void init_from_data_with_target_go(action *A, 
 		int *data_gens, 
 		int data_gens_size, int nb_gens, 
-		longinteger_object &target_go, 
+		ring_theory::longinteger_object &target_go,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_go(
@@ -1744,10 +1744,10 @@ public:
 	void init_point_stabilizer_of_arbitrary_point_through_schreier(
 		schreier *Sch, 
 		int pt, int &orbit_idx, 
-		longinteger_object &full_group_order, 
+		ring_theory::longinteger_object &full_group_order,
 		int verbose_level);
 	void init_point_stabilizer_orbit_rep_schreier(schreier *Sch, 
-		int orbit_idx, longinteger_object &full_group_order, 
+		int orbit_idx, ring_theory::longinteger_object &full_group_order,
 		int verbose_level);
 	void init_generators_for_the_conjugate_group_avGa(
 		strong_generators *SG, int *Elt_a, int verbose_level);
@@ -1783,7 +1783,7 @@ public:
 		int group_index, int verbose_level);
 	void add_single_generator(int *Elt, 
 		int group_index, int verbose_level);
-	void group_order(longinteger_object &go);
+	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_as_lint();
 	void print_group_order(std::ostream &ost);
 	void print_generators_in_source_code();
@@ -1935,7 +1935,7 @@ public:
 		action *A_PGL_n1_q, action *A_PGL_n_q, 
 		matrix_group *Mtx_n1, matrix_group *Mtx_n, 
 		vector_ge *spread_stab_gens, 
-		longinteger_object &spread_stab_go, 
+		ring_theory::longinteger_object &spread_stab_go,
 		int verbose_level);
 	void generators_for_the_stabilizer_of_two_components(
 		action *A_PGL_n_q, 
@@ -2055,7 +2055,7 @@ public:
 
 class sylow_structure {
 public:
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int *primes;
 	int *exponents;
 	int nb_primes;

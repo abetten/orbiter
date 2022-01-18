@@ -162,8 +162,8 @@ long int number_theory_domain::int_negate(long int a, long int p)
 
 long int number_theory_domain::power_mod(long int a, long int n, long int p)
 {
-	longinteger_domain D;
-	longinteger_object A, N, M;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, N, M;
 	
 	A.create(a, __FILE__, __LINE__);
 	N.create(n, __FILE__, __LINE__);
@@ -174,8 +174,8 @@ long int number_theory_domain::power_mod(long int a, long int n, long int p)
 
 long int number_theory_domain::inverse_mod(long int a, long int p)
 {
-	longinteger_domain D;
-	longinteger_object A, B, U, V, G;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, B, U, V, G;
 	long int u;
 	
 	A.create(a, __FILE__, __LINE__);
@@ -197,8 +197,8 @@ long int number_theory_domain::inverse_mod(long int a, long int p)
 
 long int number_theory_domain::mult_mod(long int a, long int b, long int p)
 {
-	longinteger_domain D;
-	longinteger_object A, B, C, P;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, B, C, P;
 	
 	A.create(a, __FILE__, __LINE__);
 	B.create(b, __FILE__, __LINE__);
@@ -209,8 +209,8 @@ long int number_theory_domain::mult_mod(long int a, long int b, long int p)
 
 long int number_theory_domain::add_mod(long int a, long int b, long int p)
 {
-	longinteger_domain D;
-	longinteger_object A, B, C, P, Q;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, B, C, P, Q;
 	long int r;
 	
 	A.create(a, __FILE__, __LINE__);
@@ -223,8 +223,8 @@ long int number_theory_domain::add_mod(long int a, long int b, long int p)
 
 long int number_theory_domain::ab_over_c(long int a, long int b, long int c)
 {
-	longinteger_domain D;
-	longinteger_object A, B, C, AB, Q;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object A, B, C, AB, Q;
 	long int r;
 
 	A.create(a, __FILE__, __LINE__);
@@ -286,8 +286,8 @@ long int number_theory_domain::gcd_lint(long int m, long int n)
 
 void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v)
 {
-	longinteger_domain D;
-	longinteger_object M, N, G, U, V;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object M, N, G, U, V;
 
 
 	M.create(m, __FILE__, __LINE__);
@@ -301,8 +301,8 @@ void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v
 void number_theory_domain::extended_gcd_lint(long int m, long int n,
 		long int &g, long int &u, long int &v)
 {
-	longinteger_domain D;
-	longinteger_object M, N, G, U, V;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object M, N, G, U, V;
 
 
 	M.create(m, __FILE__, __LINE__);
@@ -367,9 +367,9 @@ long int number_theory_domain::gcd_with_key_in_latex(ostream &ost,
 
 int number_theory_domain::i_power_j_safe(int i, int j)
 {
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
-	longinteger_object a, b, c;
+	ring_theory::longinteger_object a, b, c;
 	int res;
 
 	a.create(i, __FILE__, __LINE__);
@@ -391,9 +391,9 @@ int number_theory_domain::i_power_j_safe(int i, int j)
 long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
-	longinteger_object a, b, c;
+	ring_theory::longinteger_object a, b, c;
 	long int res;
 
 	if (f_v) {
@@ -1667,7 +1667,7 @@ void number_theory_domain::print_factorization(int nb_primes, int *primes, int *
 }
 
 void number_theory_domain::print_longfactorization(int nb_primes,
-		longinteger_object *primes, int *exponents)
+		ring_theory::longinteger_object *primes, int *exponents)
 {
 	int i;
 	
@@ -2293,7 +2293,7 @@ void number_theory_domain::elliptic_curve_points(finite_field *F,
 	int x, y, n;
 	int r, l;
 	number_theory_domain NT;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "number_theory_domain::elliptic_curve_points" << endl;
@@ -2491,8 +2491,8 @@ int number_theory_domain::eulers_totient_function(int n, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int nb_primes, *primes, *exponents;
 	int i, p, e;
-	longinteger_domain D;
-	longinteger_object N, R, A, B, C;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object N, R, A, B, C;
 
 	if (f_v) {
 		cout << "number_theory_domain::eulers_totient_function" << endl;

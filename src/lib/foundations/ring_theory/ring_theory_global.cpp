@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 ring_theory_global::ring_theory_global()
@@ -2923,5 +2924,6 @@ void finite_field::do_ideal(int n,
 
 
 
-}}
+}}}
+
 

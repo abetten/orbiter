@@ -83,7 +83,7 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 
 	combinatorics::combinatorics_domain D;
 
-	nCkq = NEW_OBJECT(longinteger_object);
+	nCkq = NEW_OBJECT(ring_theory::longinteger_object);
 
 	D.q_binomial(*nCkq, n, k, q, 0 /* verbose_level */);
 	if (f_v) {
@@ -610,25 +610,25 @@ long int grassmann::rank_lint(int verbose_level)
 }
 
 void grassmann::unrank_longinteger_here(int *Mtx,
-		longinteger_object &rk, int verbose_level)
+		ring_theory::longinteger_object &rk, int verbose_level)
 {
 	unrank_longinteger(rk, verbose_level);
 	Orbiter->Int_vec->copy(M, Mtx, k * n);
 }
 
 void grassmann::rank_longinteger_here(int *Mtx,
-		longinteger_object &rk, int verbose_level)
+		ring_theory::longinteger_object &rk, int verbose_level)
 {
 	Orbiter->Int_vec->copy(Mtx, M, k * n);
 	rank_longinteger(rk, verbose_level);
 }
 
 void grassmann::unrank_longinteger(
-		longinteger_object &rk, int verbose_level)
+		ring_theory::longinteger_object &rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object r, r1, a, A, mA, Q, b, c;
-	longinteger_domain D;
+	ring_theory::longinteger_object r, r1, a, A, mA, Q, b, c;
+	ring_theory::longinteger_domain D;
 	combinatorics::combinatorics_domain C;
 	int i, j, h, nb_free_cols = 0;
 	geometry_global Gg;
@@ -760,12 +760,12 @@ void grassmann::unrank_longinteger(
 	}
 }
 
-void grassmann::rank_longinteger(longinteger_object &r,
+void grassmann::rank_longinteger(ring_theory::longinteger_object &r,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
-	longinteger_domain D;
+	ring_theory::longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
+	ring_theory::longinteger_domain D;
 	combinatorics::combinatorics_domain C;
 	int k1, nb_free_cols, h, i, j;
 	geometry_global Gg;

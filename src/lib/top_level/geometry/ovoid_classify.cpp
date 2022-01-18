@@ -485,7 +485,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 
 
 			strong_generators *SG;
-			longinteger_object go;
+			ring_theory::longinteger_object go;
 
 			SG = NEW_OBJECT(strong_generators);
 			SG->init(A);
@@ -531,7 +531,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 
 
 
-		colored_graph *CG;
+		graph_theory::colored_graph *CG;
 
 		create_graph(ODF,
 				orbit_idx,
@@ -559,7 +559,7 @@ void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 		std::string &prefix,
 	int orbit_idx,
 	int f_lexorder_test,
-	colored_graph *&CG,
+	graph_theory::colored_graph *&CG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -606,7 +606,7 @@ void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 
 
 		strong_generators *SG;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		SG = NEW_OBJECT(strong_generators);
 		SG->init(A);
@@ -674,7 +674,7 @@ void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	int orbit_idx,
 	long int *candidates, int nb_candidates,
-	colored_graph *&CG,
+	graph_theory::colored_graph *&CG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -756,7 +756,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	label.assign(str);
 	label_tex.assign(str);
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	CG->init(nb_points, nb_colors_used, 1,
 		point_color,

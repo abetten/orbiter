@@ -74,7 +74,7 @@ int graph_theoretic_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-find_cliques") == 0) {
 			f_find_cliques = TRUE;
-			Clique_finder_control = NEW_OBJECT(clique_finder_control);
+			Clique_finder_control = NEW_OBJECT(graph_theory::clique_finder_control);
 			i += Clique_finder_control->parse_arguments(argc - i, argv + i);
 		}
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace ring_theory {
 
 
 
@@ -533,5 +534,6 @@ int longinteger_object::compare_with_int(int a)
 	return D.compare(*this, b);
 }
 
-}}
+}}}
+
 

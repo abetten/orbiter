@@ -190,7 +190,7 @@ public:
 	//long int sqrt_mod_simple(long int a, long int p);
 	void print_factorization(int nb_primes, int *primes, int *exponents);
 	void print_longfactorization(int nb_primes,
-		longinteger_object *primes, int *exponents);
+			ring_theory::longinteger_object *primes, int *exponents);
 	void int_add_fractions(int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
 	void int_mult_fractions(int at, int ab, int bt, int bb,

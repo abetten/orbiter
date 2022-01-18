@@ -147,7 +147,7 @@ void schreier_sims::interested_in_kernel(action *KA,
 
 
 void schreier_sims::init_target_group_order(
-		longinteger_object &tgo, int verbose_level)
+		ring_theory::longinteger_object &tgo, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -244,7 +244,7 @@ void schreier_sims::compute_group_orders()
 {
 	G->group_order(G_order);
 	if (f_interested_in_kernel) {
-		longinteger_domain D;
+		ring_theory::longinteger_domain D;
 		K->group_order(K_order);
 		D.mult(G_order, K_order, KG_order);
 		}
@@ -422,8 +422,8 @@ void schreier_sims::closure_group(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
-	longinteger_domain D;
-	longinteger_object quo, rem;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object quo, rem;
 	int cnt = 0;
 
 	if (f_v) {
@@ -471,7 +471,7 @@ void schreier_sims::create_group(int verbose_level)
 	int f_vv = (verbose_level >= 3);
 	int f_vvv = (verbose_level >= 4);
 	int f_vvvv = (verbose_level >= 5);
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	int drop_out_level, image, b, c, f_added, old_base_len;
 	
 	if (f_v) {

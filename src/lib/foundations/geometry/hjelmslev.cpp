@@ -55,7 +55,7 @@ void hjelmslev::freeself()
 	null();
 }
 
-void hjelmslev::init(finite_ring *R,
+void hjelmslev::init(ring_theory::finite_ring *R,
 		int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

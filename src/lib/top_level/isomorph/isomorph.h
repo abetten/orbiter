@@ -232,7 +232,7 @@ public:
 
 	int cnt_minimal;
 	int NCK;
-	longinteger_object stabilizer_group_order;
+	ring_theory::longinteger_object stabilizer_group_order;
 
 	int stabilizer_nb_generators;
 	int **stabilizer_generators;
@@ -350,8 +350,8 @@ public:
 	void print_node_local(int level, int node_local);
 	void print_node_global(int level, int node_global);
 	void test_hash(int verbose_level);
-	void compute_Ago_Ago_induced(longinteger_object *&Ago, 
-		longinteger_object *&Ago_induced, int verbose_level);
+	void compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
+			ring_theory::longinteger_object *&Ago_induced, int verbose_level);
 	void init_high_level(action *A, poset_classification *gen,
 		int size, std::string &prefix_classify, std::string &prefix,
 		int level, int verbose_level);
@@ -459,17 +459,17 @@ public:
 	void create_level_database(int level, int verbose_level);
 	void load_strong_generators(int cur_level, 
 		int cur_node_local, 
-		vector_ge &gens, longinteger_object &go, 
+		vector_ge &gens, ring_theory::longinteger_object &go,
 		int verbose_level);
 		// Called from compute_stabilizer and 
 		// from orbit_representative
 	void load_strong_generators_oracle(int cur_level, 
 		int cur_node_local, 
-		vector_ge &gens, longinteger_object &go, 
+		vector_ge &gens, ring_theory::longinteger_object &go,
 		int verbose_level);
 	void load_strong_generators_database(int cur_level, 
 		int cur_node_local, 
-		vector_ge &gens, longinteger_object &go, 
+		vector_ge &gens, ring_theory::longinteger_object &go,
 		int verbose_level);
 		// Reads node cur_node_local (local index) 
 		// from database D through btree 0

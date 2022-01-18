@@ -69,7 +69,7 @@ void union_find_on_k_subsets::init(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go, K_go;
+	ring_theory::longinteger_object go, K_go;
 	int i, j, h, len;
 	int *data1;
 	int *data2;
@@ -128,7 +128,7 @@ void union_find_on_k_subsets::init(
 		//Ar->Sims->print_generators_as_permutations();
 		//Ar->Sims->print_basic_orbits();
 	
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		Ar->Sims->group_order(go);
 		cout << "union_find_on_k_subsets::init "
 				"Ar->Sims go=" << go << endl;

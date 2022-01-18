@@ -506,7 +506,7 @@ void number_theoretic_transform::init(finite_field *F,
 
 
 
-	homogeneous_polynomial_domain *Hom;
+	ring_theory::homogeneous_polynomial_domain *Hom;
 	int *poly_A;
 	int *poly_B;
 	int *poly_C;
@@ -514,7 +514,7 @@ void number_theoretic_transform::init(finite_field *F,
 	int *poly_Bp;
 	int *poly_Cp;
 
-	Hom = NEW_OBJECT(homogeneous_polynomial_domain);
+	Hom = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	Hom->init(F, 2, N[k] - 1, FALSE, t_LEX, verbose_level);
 	if (Hom->get_nb_monomials() != N[k]) {

@@ -79,7 +79,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	}
 
 	strong_generators *Strong_gens;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	get_stabilizer_generators(gen, Strong_gens, verbose_level);
 	Strong_gens->group_order(go);

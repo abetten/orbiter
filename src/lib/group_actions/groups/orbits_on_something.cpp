@@ -207,7 +207,7 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 	}
 
 	strong_generators *Stab;
-	longinteger_object full_group_order;
+	ring_theory::longinteger_object full_group_order;
 
 	SG->group_order(full_group_order);
 
@@ -227,7 +227,7 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 
 
 	std::string gens_str;
-	longinteger_object stab_go;
+	ring_theory::longinteger_object stab_go;
 
 
 	Stab->get_gens_data_as_string_with_quotes(gens_str, verbose_level);
@@ -795,7 +795,7 @@ void orbits_on_something::report_orbits_of_type(std::ostream &ost, int type_idx)
 }
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering(
-	colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 	std::string &fname,
 	long int *filter_by_set,
 	int filter_by_set_size,
@@ -1022,7 +1022,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	}
 
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	CG->init_with_point_labels(
 			filtered_set_of_orbits_size /* nb_points */,
@@ -1087,7 +1087,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
-	colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int orbit_length,
 	int &type_idx,
@@ -1225,7 +1225,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	}
 
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	CG->init_with_point_labels(nb_points, number_colors, orbit_length,
 		point_color,
@@ -1373,7 +1373,7 @@ void orbits_on_something::extract_orbits_using_classification(
 
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
-	colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int orbit_length,
 	int &type_idx,
@@ -1479,7 +1479,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	CG->init_with_point_labels(nb_points,
 			1 /*nb_colors*/,
@@ -1535,7 +1535,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 
 void orbits_on_something::create_weighted_graph_on_orbits(
-	colored_graph *&CG,
+		graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int *Orbit_lengths,
 	int nb_orbit_lengths,
@@ -1711,7 +1711,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	}
 
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	int nb_colors = nb_orbit_lengths;
 	//int nb_colors = my_orbits_classified->nb_sets;
@@ -1888,7 +1888,7 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	}
 
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
 
@@ -2055,7 +2055,7 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 	}
 
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
 

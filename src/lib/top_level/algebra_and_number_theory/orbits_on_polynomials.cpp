@@ -77,7 +77,7 @@ void orbits_on_polynomials::init(
 		A->Strong_gens->print_generators_tex();
 	}
 
-	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+	HPD = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 
 	monomial_ordering_type Monomial_ordering_type = t_PART;
@@ -239,7 +239,7 @@ void orbits_on_polynomials::compute_points(int verbose_level)
 
 	for (i = 0; i < T->nb_orbits; i++) {
 
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		T->Reps[i].Strong_gens->group_order(go);
 
 		cout << i << " : ";
@@ -390,7 +390,7 @@ void orbits_on_polynomials::report(int verbose_level)
 
 				i = Idx[j];
 
-				longinteger_object go;
+				ring_theory::longinteger_object go;
 				T->Reps[i].Strong_gens->group_order(go);
 
 				ost << i << " : ";
@@ -442,7 +442,7 @@ void orbits_on_polynomials::report(int verbose_level)
 						verbose_level);
 
 				ost << " : go=";
-				longinteger_object go1;
+				ring_theory::longinteger_object go1;
 				Sg->group_order(go1);
 				ost << go1;
 				ost << "\\\\" << endl;
@@ -497,8 +497,8 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 					"detailed listing}" << endl;
 	{
 		int fst, l, a, r;
-		longinteger_object go, go1;
-		longinteger_domain D;
+		ring_theory::longinteger_object go, go1;
+		ring_theory::longinteger_domain D;
 		int *coeff;
 		int *line_type;
 		long int *Pts;

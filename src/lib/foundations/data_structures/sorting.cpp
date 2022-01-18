@@ -1391,12 +1391,12 @@ int sorting::int_vec_search_first_occurence(int *v,
 	return f_found;
 }
 
-int sorting::longinteger_vec_search(longinteger_object *v, int len,
-	longinteger_object &a, int &idx)
+int sorting::longinteger_vec_search(ring_theory::longinteger_object *v, int len,
+		ring_theory::longinteger_object &a, int &idx)
 {
 	int l, r, m, res;
 	int f_found = FALSE;
-	longinteger_domain D;
+	ring_theory::longinteger_domain D;
 	
 	if (len == 0) {
 		idx = 0;
@@ -2429,7 +2429,7 @@ void sorting::schreier_vector_tree(
 	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 	std::string &fname_base,
 	layered_graph_draw_options *LG_Draw_options,
-	layered_graph *&LG,
+	graph_theory::layered_graph *&LG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2505,7 +2505,7 @@ void sorting::schreier_vector_tree(
 		SoS->print_table();
 	}
 
-	LG = NEW_OBJECT(layered_graph);
+	LG = NEW_OBJECT(graph_theory::layered_graph);
 	int *Sz;
 
 	Sz = NEW_int(C.nb_types);

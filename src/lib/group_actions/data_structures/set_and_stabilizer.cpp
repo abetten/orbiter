@@ -59,7 +59,7 @@ void set_and_stabilizer::init(action *A, action *A2, int verbose_level)
 		}
 }
 
-void set_and_stabilizer::group_order(longinteger_object &go)
+void set_and_stabilizer::group_order(ring_theory::longinteger_object &go)
 {
 	if (Strong_gens == NULL) {
 		cout << "set_and_stabilizer::group_order "

@@ -943,7 +943,7 @@ void surface_object_with_action::print_automorphism_group(
 	int f_print_orbits, std::string &fname_mask, layered_graph_draw_options *Opt,
 	int verbose_level)
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	latex_interface L;
 
 	Aut_gens->group_order(go);
@@ -1099,7 +1099,7 @@ void surface_object_with_action::cheat_sheet_basic(ostream &ost, int verbose_lev
 	}
 
 
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	Aut_gens->group_order(ago);
 	ost << "The automorphism group has order "
 			<< ago << "\\\\" << endl;
@@ -1186,7 +1186,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 	}
 
 
-	longinteger_object ago;
+	ring_theory::longinteger_object ago;
 	Aut_gens->group_order(ago);
 	ost << "The automorphism group has order "
 			<< ago << "\\\\" << endl;
@@ -1326,7 +1326,7 @@ void surface_object_with_action::print_automorphism_group_gnerators(std::ostream
 			cout << "surface_object_with_action::cheat_sheet "
 					"projectivity stabilizer" << endl;
 		}
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		projectivity_group_gens->group_order(go);
 		ost << "The projectivity group has order "
 				<< go << "\\\\" << endl;

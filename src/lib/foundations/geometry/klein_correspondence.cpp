@@ -127,7 +127,7 @@ void klein_correspondence::init(finite_field *F,
 	Gr62->init(6, 2, F, 0 /* verbose_level */);
 
 	combinatorics::combinatorics_domain Combi;
-	longinteger_object la;
+	ring_theory::longinteger_object la;
 
 	Combi.q_binomial(la, d, 2, q, 0 /* verbose_level */);
 
@@ -359,7 +359,7 @@ void klein_correspondence::init(finite_field *F,
 
 void klein_correspondence::plane_intersections(
 	long int *lines_in_PG3, int nb_lines,
-	longinteger_object *&R,
+	ring_theory::longinteger_object *&R,
 	long int **&Pts_on_plane,
 	int *&nb_pts_on_plane, 
 	int &nb_planes, 

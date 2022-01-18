@@ -105,7 +105,7 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 	gens_type2->generators_for_stabilizer_of_triangle_in_PGL4(A, 
 		A->G.matrix_grp, verbose_level - 1);
 
-	longinteger_object go1, go2;
+	ring_theory::longinteger_object go1, go2;
 
 	gens_type1->group_order(go1);
 	gens_type2->group_order(go2);
@@ -275,7 +275,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(std::ostream &ost, 
 
 
 	{
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		gens_type1->group_order(go);
 
 		ost << "The order of the group of type 1 is ";
@@ -287,8 +287,8 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(std::ostream &ost, 
 
 
 
-	longinteger_domain D;
-	longinteger_object ol, Ol;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object ol, Ol;
 	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The group of type 1 has " 
@@ -337,7 +337,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(std::ostream &ost, 
 
 
 	{
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		gens_type2->group_order(go);
 
 		ost << "The order of the group of type 2 is ";
@@ -349,8 +349,8 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(std::ostream &ost, 
 
 
 
-	longinteger_domain D;
-	longinteger_object ol, Ol;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object ol, Ol;
 	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The group of type 2 has " 
@@ -859,8 +859,8 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 	}
 	for (i = 0; i < nb_orbits_type1; i++) {
 		set_and_stabilizer *R;
-		longinteger_object ol;
-		longinteger_object go;
+		ring_theory::longinteger_object ol;
+		ring_theory::longinteger_object go;
 
 		R = orbits_on_trihedra_type1->get_set_and_stabilizer(
 				3 /* level */,
@@ -898,8 +898,8 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 	}
 	for (i = 0; i < nb_orbits_type2; i++) {
 		set_and_stabilizer *R;
-		longinteger_object ol;
-		longinteger_object go;
+		ring_theory::longinteger_object ol;
+		ring_theory::longinteger_object go;
 
 		R = orbits_on_trihedra_type2->get_set_and_stabilizer(
 				3 /* level */, i /* orbit_at_level */,
@@ -969,7 +969,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	
 	Trihedral_pairs = NEW_OBJECT(classification_step);
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	A->group_order(go);
 
 	Trihedral_pairs->init(A, A, nb_orbits_ordered_total,
@@ -1038,7 +1038,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 
 
 		strong_generators *S;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
 		

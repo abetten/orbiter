@@ -436,7 +436,7 @@ static void nauty_interface_fill_nauty_output(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//Ago = ago;
-	longinteger_domain Dom;
+	ring_theory::longinteger_domain Dom;
 	int i, j;
 
 	if (f_v) {

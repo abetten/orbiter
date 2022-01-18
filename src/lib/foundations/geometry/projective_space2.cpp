@@ -430,7 +430,7 @@ void projective_space::intersection_of_subspace_with_point_set(
 }
 
 void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteger(
-	grassmann *G, longinteger_object &rk,
+	grassmann *G, ring_theory::longinteger_object &rk,
 	long int *set, int set_size,
 	long int *&intersection_set, int &intersection_set_size,
 	int verbose_level)
@@ -475,7 +475,7 @@ void projective_space::plane_intersection_invariant(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes_total;
@@ -607,7 +607,7 @@ void projective_space::plane_intersection_type(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
@@ -669,7 +669,8 @@ void projective_space::plane_intersection_type(
 void projective_space::plane_intersections(
 	grassmann *G,
 	long int *set, int set_size,
-	longinteger_object *&R, data_structures::set_of_sets &SoS,
+	ring_theory::longinteger_object *&R,
+	data_structures::set_of_sets &SoS,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -714,7 +715,7 @@ void projective_space::plane_intersections(
 void projective_space::plane_intersection_type_slow(
 	grassmann *G,
 	long int *set, int set_size,
-	longinteger_object *&R,
+	ring_theory::longinteger_object *&R,
 	long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
 	int verbose_level)
 {
@@ -746,7 +747,7 @@ void projective_space::plane_intersection_type_slow(
 		cout << "N_planes=" << N_planes << endl;
 	}
 	// allocate data that is returned:
-	R = NEW_OBJECTS(longinteger_object, N_planes);
+	R = NEW_OBJECTS(ring_theory::longinteger_object, N_planes);
 	Pts_on_plane = NEW_plint(N_planes);
 	nb_pts_on_plane = NEW_int(N_planes);
 
@@ -810,7 +811,7 @@ void projective_space::plane_intersection_type_slow(
 void projective_space::plane_intersection_type_fast(
 	grassmann *G,
 	long int *set, int set_size,
-	longinteger_object *&R,
+	ring_theory::longinteger_object *&R,
 	long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
 	int verbose_level)
 {
@@ -828,7 +829,7 @@ void projective_space::plane_intersection_type_fast(
 	int subset[3];
 	int subset2[3];
 	int subset3[3];
-	longinteger_object plane_rk, aa;
+	ring_theory::longinteger_object plane_rk, aa;
 	long int *pts_on_plane;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
@@ -855,7 +856,7 @@ void projective_space::plane_intersection_type_fast(
 	}
 
 	// allocate data that is returned:
-	R = NEW_OBJECTS(longinteger_object, N);
+	R = NEW_OBJECTS(ring_theory::longinteger_object, N);
 	Pts_on_plane = NEW_plint(N);
 	nb_pts_on_plane = NEW_int(N);
 
@@ -2118,7 +2119,7 @@ void projective_space::conic_type_randomized(int nb_times,
 	int vec[3];
 
 	int subset[5];
-	longinteger_object conic_rk, aa;
+	ring_theory::longinteger_object conic_rk, aa;
 	long int *pts_on_conic;
 	int allocation_length;
 	geometry_global Gg;
@@ -2676,7 +2677,7 @@ void projective_space::conic_type(
 	int vec[3];
 
 	int subset[5];
-	longinteger_object conic_rk, aa;
+	ring_theory::longinteger_object conic_rk, aa;
 	int *coords;
 	long int *pts_on_conic;
 	int allocation_length;

@@ -55,8 +55,8 @@ void linear_algebra_global::Berlekamp_matrix(
 
 
 
-	unipoly_domain FX(F);
-	unipoly_object A;
+	ring_theory::unipoly_domain FX(F);
+	ring_theory::unipoly_object A;
 
 
 	int da = sz_A - 1;
@@ -133,7 +133,7 @@ void linear_algebra_global::compute_normal_basis(
 	}
 
 
-	unipoly_domain FX(F);
+	ring_theory::unipoly_domain FX(F);
 
 	string poly;
 	knowledge_base K;
@@ -145,9 +145,9 @@ void linear_algebra_global::compute_normal_basis(
 				"chosen irreducible polynomial is " << poly << endl;
 	}
 
-	unipoly_object m;
-	unipoly_object g;
-	unipoly_object minpol;
+	ring_theory::unipoly_object m;
+	ring_theory::unipoly_object g;
+	ring_theory::unipoly_object minpol;
 	combinatorics::combinatorics_domain Combi;
 
 

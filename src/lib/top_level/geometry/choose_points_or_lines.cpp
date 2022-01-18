@@ -279,7 +279,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	f = gen->first_node_at_level(nb_points_or_lines);
 	nd = f + orbit_no;
 	
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	
 	G = NEW_OBJECT(group_container);
 	representative = NEW_lint(nb_points_or_lines);
@@ -361,12 +361,12 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		cout << "stabilizer of the chosen set has order " << go << endl;
 	}
 	
-	stab_order = NEW_OBJECT(longinteger_object);
+	stab_order = NEW_OBJECT(ring_theory::longinteger_object);
 	Stab_Strong_gens = NEW_OBJECT(strong_generators);
 
 	if (f_changed) {
 		
-		longinteger_object go1;
+		ring_theory::longinteger_object go1;
 		sims *NewStab;
 		
 		if (f_vvv) {

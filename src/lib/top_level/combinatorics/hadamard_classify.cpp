@@ -143,10 +143,10 @@ void hadamard_classify::init(int n, int f_draw,
 
 
 	{
-		colored_graph *CG;
+		graph_theory::colored_graph *CG;
 		string fname;
 
-		CG = NEW_OBJECT(colored_graph);
+		CG = NEW_OBJECT(graph_theory::colored_graph);
 		int *color;
 
 		color = NEW_int(N);
@@ -168,7 +168,7 @@ void hadamard_classify::init(int n, int f_draw,
 
 
 
-	CG = NEW_OBJECT(colored_graph);
+	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	if (f_v) {
 		cout << "initializing colored graph" << endl;
@@ -299,7 +299,7 @@ void hadamard_classify::init(int n, int f_draw,
 		CG->nb_points, Bitvec,
 		verbose_level);
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	A->group_order(go);
 	if (f_v) {
 		cout << "computing automorphism group of "

@@ -34,13 +34,13 @@ public:
 	int bent; // 2^{n/2}
 	int near_bent; // 2^{(n+1)/2}
 	//int NN;
-	longinteger_object *NN; // 2^Q
+	ring_theory::longinteger_object *NN; // 2^Q
 	int N; // size of PG(n,2)
 
 	finite_field *Fq; // the field F2
 	//finite_field *FQ; // the field of order 2^n
 
-	homogeneous_polynomial_domain *Poly;
+	ring_theory::homogeneous_polynomial_domain *Poly;
 		// Poly[i] = polynomial of degree i in n + 1 variables.
 		// i = 1,..,n
 	int **A_poly;
@@ -429,20 +429,20 @@ public:
 	int count_partitions(int n);
 	int next_partition(int n, int *part);
 	long int binomial_lint(int n, int k);
-	void binomial(longinteger_object &a, int n, int k, int verbose_level);
-	void binomial_with_table(longinteger_object &a, int n, int k);
-	void size_of_conjugacy_class_in_sym_n(longinteger_object &a, int n, int *part);
-	void q_binomial_with_table(longinteger_object &a,
+	void binomial(ring_theory::longinteger_object &a, int n, int k, int verbose_level);
+	void binomial_with_table(ring_theory::longinteger_object &a, int n, int k);
+	void size_of_conjugacy_class_in_sym_n(ring_theory::longinteger_object &a, int n, int *part);
+	void q_binomial_with_table(ring_theory::longinteger_object &a,
 		int n, int k, int q, int verbose_level);
 	void q_binomial(
-		longinteger_object &a,
+			ring_theory::longinteger_object &a,
 		int n, int k, int q, int verbose_level);
 	void q_binomial_no_table(
-		longinteger_object &a,
+			ring_theory::longinteger_object &a,
 		int n, int k, int q, int verbose_level);
-	void krawtchouk_with_table(longinteger_object &a,
+	void krawtchouk_with_table(ring_theory::longinteger_object &a,
 		int n, int q, int k, int x);
-	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
+	void krawtchouk(ring_theory::longinteger_object &a, int n, int q, int k, int x);
 	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
 	void do_tdo_print(std::string &fname, int verbose_level);
 	void make_elementary_symmetric_functions(int n, int k_max, int verbose_level);

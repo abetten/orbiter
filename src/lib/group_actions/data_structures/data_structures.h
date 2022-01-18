@@ -65,7 +65,7 @@ public:
 	void require_ascii_coding();
 	void require_strong_generators();
 	void require_sims();
-	void group_order(longinteger_object &go);
+	void group_order(ring_theory::longinteger_object &go);
 	void print_group_order(std::ostream &ost);
 	void print_tl();
 	void code_ascii(int verbose_level);
@@ -158,7 +158,7 @@ public:
 	sims *Stab;
 	strong_generators *Strong_gens;
 
-	longinteger_object *stab_go;
+	ring_theory::longinteger_object *stab_go;
 	long int *candidates;
 	int nb_candidates;
 
@@ -204,7 +204,7 @@ public:
 	void init_from_schreier(
 			schreier *Sch,
 			action *default_action,
-			longinteger_object &full_group_order,
+			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	void read_from_file(action *A, action *A2, 
 			std::string &fname, int verbose_level);
@@ -434,7 +434,7 @@ public:
 	action *A2;
 	long int *data;
 	int sz;
-	longinteger_object target_go;
+	ring_theory::longinteger_object target_go;
 	strong_generators *Strong_gens;
 	sims *Stab;
 
@@ -443,7 +443,7 @@ public:
 	void null();
 	void freeself();
 	void init(action *A, action *A2, int verbose_level);
-	void group_order(longinteger_object &go);
+	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_as_lint();
 	void init_everything(action *A, action *A2, long int *Set, int set_sz,
 		strong_generators *gens, int verbose_level);
@@ -585,7 +585,7 @@ public:
 	void print_quick(std::ostream& ost);
 	void print_tex(std::ostream &ost);
 	void print_generators_tex(
-			foundations::longinteger_object &go,
+			ring_theory::longinteger_object &go,
 			std::ostream &ost);
 	void print_as_permutation(std::ostream& ost);
 	void allocate(int length, int verbose_level);

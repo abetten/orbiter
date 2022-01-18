@@ -324,7 +324,7 @@ public:
 			int f_group_order_target, const char *group_order_target,
 			vector_ge *gens, strong_generators *&Strong_gens_out,
 			int verbose_level);
-	void group_order(longinteger_object &go);
+	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_lint();
 	void element_print_base_images(int *Elt);
 	void element_print_base_images(int *Elt, std::ostream &ost);
@@ -512,7 +512,7 @@ public:
 	void init_permutation_group_from_nauty_output(data_structures::nauty_output *NO,
 		int verbose_level);
 	void init_permutation_group_from_generators(int degree, 
-		int f_target_go, longinteger_object &target_go, 
+		int f_target_go, ring_theory::longinteger_object &target_go,
 		int nb_gens, int *gens, 
 		int given_base_length, long int *given_base,
 		int f_no_base,
@@ -534,7 +534,7 @@ public:
 	void create_sims(int verbose_level);
 	void create_orthogonal_group(action *subaction, 
 		int f_has_target_group_order, 
-		longinteger_object &target_go, 
+		ring_theory::longinteger_object &target_go,
 		void (* callback_choose_random_generator)(int iteration, 
 			int *Elt, void *data, int verbose_level), 
 		int verbose_level);
@@ -592,14 +592,14 @@ public:
 	sims *create_sims_from_generators_with_target_group_order_lint(
 		vector_ge *gens, long int target_go, int verbose_level);
 	sims *create_sims_from_generators_with_target_group_order(
-		vector_ge *gens, longinteger_object &target_go,
+		vector_ge *gens, ring_theory::longinteger_object &target_go,
 		int verbose_level);
 	sims *create_sims_from_generators_without_target_group_order(
 		vector_ge *gens, int verbose_level);
 	sims *create_sims_from_single_generator_without_target_group_order(
 		int *Elt, int verbose_level);
 	sims *create_sims_from_generators_randomized(
-		vector_ge *gens, int f_target_go, longinteger_object &target_go,
+		vector_ge *gens, int f_target_go, ring_theory::longinteger_object &target_go,
 		int verbose_level);
 	sims *create_sims_for_centralizer_of_matrix(
 			int *Mtx, int verbose_level);
@@ -722,12 +722,12 @@ public:
 	void setup_product_action(action *A1, action *A2, 
 		int f_use_projections, int verbose_level);
 	void induced_action_on_homogeneous_polynomials(action *A_old, 
-		homogeneous_polynomial_domain *HPD, 
+			ring_theory::homogeneous_polynomial_domain *HPD,
 		int f_induce_action, sims *old_G, 
 		int verbose_level);
 	void induced_action_on_homogeneous_polynomials_given_by_equations(
 		action *A_old, 
-		homogeneous_polynomial_domain *HPD, 
+		ring_theory::homogeneous_polynomial_domain *HPD,
 		int *Equations, int nb_equations, 
 		int f_induce_action, sims *old_G, 
 		int verbose_level);
@@ -761,11 +761,11 @@ public:
 	int choose_next_base_point_default_method(
 			int *Elt, int verbose_level);
 	void generators_to_strong_generators(
-		int f_target_go, longinteger_object &target_go,
+		int f_target_go, ring_theory::longinteger_object &target_go,
 		vector_ge *gens, strong_generators *&Strong_gens,
 		int verbose_level);
 	void orbits_on_equations(
-		homogeneous_polynomial_domain *HPD,
+			ring_theory::homogeneous_polynomial_domain *HPD,
 		int *The_equations, int nb_equations, strong_generators *gens,
 		action *&A_on_equations, schreier *&Orb, int verbose_level);
 
@@ -1120,9 +1120,9 @@ public:
 	nauty_interface_with_group();
 	~nauty_interface_with_group();
 	action *create_automorphism_group_of_colored_graph_object(
-		colored_graph *CG, int verbose_level);
+			graph_theory::colored_graph *CG, int verbose_level);
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-			colored_graph *CG, int *labeling, int verbose_level);
+			graph_theory::colored_graph *CG, int *labeling, int verbose_level);
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
 		int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
 		int *vertex_colors,
@@ -1219,7 +1219,7 @@ public:
 	long int &orbit_ij(int i, int j);
 	long int &orbit_inv_ij(int i, int j);
 	int &path_i(int i);
-	void group_order(longinteger_object &go);
+	void group_order(ring_theory::longinteger_object &go);
 	void init_projective_matrix_group(
 			finite_field *F, int n, int f_semilinear, int degree,
 			int verbose_level);

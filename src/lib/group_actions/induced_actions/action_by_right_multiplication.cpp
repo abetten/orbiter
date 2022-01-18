@@ -48,7 +48,7 @@ void action_by_right_multiplication::free()
 void action_by_right_multiplication::init(sims *Base_group, int f_ownership, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	action *A;
 	
 	if (f_v) {

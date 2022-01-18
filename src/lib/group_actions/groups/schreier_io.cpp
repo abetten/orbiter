@@ -209,7 +209,7 @@ void schreier::print(std::ostream &ost)
 }
 
 void schreier::print_and_list_orbits_and_stabilizer(std::ostream &ost,
-	action *default_action, longinteger_object &go,
+	action *default_action, ring_theory::longinteger_object &go,
 	void (*print_point)(ostream &ost, int pt, void *data),
 	void *data)
 {
@@ -389,7 +389,7 @@ void schreier::print_and_list_orbit_tex(int i, std::ostream &ost)
 
 void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
 	action *default_action,
-	longinteger_object &full_group_order, std::ostream &ost)
+	ring_theory::longinteger_object &full_group_order, std::ostream &ost)
 {
 	ost << " Orbit " << i << " / " << nb_orbits << " : ";
 	print_orbit_tex(ost, i);
@@ -407,7 +407,7 @@ void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
 
 void schreier::write_orbit_summary(std::string &fname,
 		action *default_action,
-		longinteger_object &full_group_order,
+		ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -467,7 +467,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 {
 	data_structures::sorting Sorting;
 	latex_interface L;
-	longinteger_object full_group_order;
+	ring_theory::longinteger_object full_group_order;
 
 	gens->group_order(full_group_order);
 
@@ -584,7 +584,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	std::ostream &ost, int f_tex,
 	action *default_action,
-	longinteger_object &full_group_order)
+	ring_theory::longinteger_object &full_group_order)
 {
 	int i, h;
 	int *Len;
@@ -648,7 +648,7 @@ void schreier::print_fancy(
 	int *Len;
 	int *Perm;
 	int *Perm_inv;
-	longinteger_object full_group_order;
+	ring_theory::longinteger_object full_group_order;
 	data_structures::sorting Sorting;
 
 	gens_full_group->group_order(full_group_order);
@@ -1315,10 +1315,10 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 		Nb1[l]++;
 	}
 
-	layered_graph *LG;
+	graph_theory::layered_graph *LG;
 	int n1, n2, j2;
 
-	LG = NEW_OBJECT(layered_graph);
+	LG = NEW_OBJECT(graph_theory::layered_graph);
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"before LG->init" << endl;

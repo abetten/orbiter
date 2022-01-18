@@ -1082,10 +1082,10 @@ void schreier_vector::export_tree_as_layered_graph(
 		}
 	}
 
-	layered_graph *LG;
+	graph_theory::layered_graph *LG;
 	int n1, n2, j2;
 
-	LG = NEW_OBJECT(layered_graph);
+	LG = NEW_OBJECT(graph_theory::layered_graph);
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph "
 				"before LG->init" << endl;

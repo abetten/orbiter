@@ -122,9 +122,9 @@ void expression_parser_domain::parse_and_evaluate(
 			cout << "expression_parser_domain::parse_and_evaluate homogeneous of degree " << degree << endl;
 		}
 
-		homogeneous_polynomial_domain *Poly;
+		ring_theory::homogeneous_polynomial_domain *Poly;
 
-		Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+		Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 		if (f_v) {
 			cout << "expression_parser_domain::parse_and_evaluate before Poly->init" << endl;
@@ -436,9 +436,9 @@ int expression_parser_domain::evaluate_formula(
 	if (ret) {
 		cout << "expression_parser_domain::evaluate_formula homogeneous of degree " << degree << endl;
 
-		homogeneous_polynomial_domain *Poly;
+		ring_theory::homogeneous_polynomial_domain *Poly;
 
-		Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+		Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 		if (f_v) {
 			cout << "expression_parser_domain::evaluate_formula before Poly->init" << endl;

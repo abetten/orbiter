@@ -204,7 +204,7 @@ void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
 		ostream &ost,
 		int f_print_stabilizer_gens)
 {
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	ost << "Flag orbit " << flag_orbit_index << " / " << Flag_orbits->nb_flag_orbits
 			<< " down=(" << downstep_primary_orbit

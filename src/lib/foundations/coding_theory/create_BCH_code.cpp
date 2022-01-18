@@ -87,9 +87,9 @@ void create_BCH_code::init(finite_field *F, int n, int d, int verbose_level)
 		cout << endl;
 	}
 
-	unipoly_object Q;
+	ring_theory::unipoly_object Q;
 
-	P = NEW_OBJECT(unipoly_object);
+	P = NEW_OBJECT(ring_theory::unipoly_object);
 	Nth->FX->create_object_by_rank(*P, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
 	Nth->FX->create_object_by_rank(Q, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
 

@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace graph_theory {
 
 
 colored_graph::colored_graph()
@@ -3382,6 +3383,5 @@ void call_back_clique_found_using_file_output(
 
 
 
-}
-}
+}}}
 

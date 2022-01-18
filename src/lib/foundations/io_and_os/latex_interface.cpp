@@ -871,7 +871,7 @@ void latex_interface::print_lint_matrix_tex(std::ostream &ost,
 }
 
 void latex_interface::print_longinteger_matrix_tex(std::ostream &ost,
-	longinteger_object *p, int m, int n)
+		ring_theory::longinteger_object *p, int m, int n)
 {
 	int i, j;
 

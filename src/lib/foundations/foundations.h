@@ -422,17 +422,19 @@ class polynomial_double_domain;
 class polynomial_double;
 
 
-// graph_theory
-class clique_finder_control;
-class clique_finder;
-class colored_graph;
-class graph_layer;
-class graph_node;
-class graph_theory_domain;
-class layered_graph_draw_options;
-class layered_graph;
-class rainbow_cliques;
+namespace graph_theory {
 
+	// graph_theory
+	class clique_finder_control;
+	class clique_finder;
+	class colored_graph;
+	class graph_layer;
+	class graph_node;
+	class graph_theory_domain;
+	class layered_graph;
+	class rainbow_cliques;
+
+}
 
 // graph_theory_nauty
 class nauty_interface;
@@ -446,6 +448,7 @@ class draw_mod_n_description;
 class draw_projective_curve_description;
 class drawable_set_of_objects;
 class graphical_output;
+class layered_graph_draw_options;
 class mp_graphics;
 class parametric_curve_point;
 class parametric_curve;
@@ -493,15 +496,21 @@ class orthogonal_indexing;
 class orthogonal;
 class unusual_model;
 
-// ring_theory:
-class finite_ring;
-class homogeneous_polynomial_domain;
-class longinteger_domain;
-class longinteger_object;
-class partial_derivative;
-class ring_theory_global;
-class table_of_irreducible_polynomials;
-class unipoly_domain;
+namespace ring_theory {
+	// ring_theory:
+	class finite_ring;
+	class homogeneous_polynomial_domain;
+	class longinteger_domain;
+	class longinteger_object;
+	class partial_derivative;
+	class ring_theory_global;
+	class table_of_irreducible_polynomials;
+	class unipoly_domain;
+
+	typedef ring_theory::longinteger_object *plonginteger_object;
+	typedef void *unipoly_object;
+
+}
 
 // solvers
 class diophant_activity_description;
@@ -536,8 +545,6 @@ class web_of_cubic_curves;
 
 
 // pointer types
-typedef longinteger_object *plonginteger_object;
-typedef void *unipoly_object;
 typedef tree_node *ptree_node;
 
 

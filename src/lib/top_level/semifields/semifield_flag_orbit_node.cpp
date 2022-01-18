@@ -64,7 +64,7 @@ void semifield_flag_orbit_node::init(
 
 }
 
-void semifield_flag_orbit_node::group_order(longinteger_object &go)
+void semifield_flag_orbit_node::group_order(ring_theory::longinteger_object &go)
 {
 	if (f_long_orbit) {
 		go.create(1, __FILE__, __LINE__);

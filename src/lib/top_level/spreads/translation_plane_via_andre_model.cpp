@@ -104,7 +104,7 @@ void translation_plane_via_andre_model::freeself()
 void translation_plane_via_andre_model::init(
 	long int *spread_elements_numeric,
 	int k, action *An, action *An1,
-	vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, 
+	vector_ge *spread_stab_gens, ring_theory::longinteger_object &spread_stab_go,
 	std::string &label,
 	int verbose_level)
 {
@@ -416,7 +416,7 @@ void translation_plane_via_andre_model::init(
 	}
 
 
-	longinteger_object stab_go;
+	ring_theory::longinteger_object stab_go;
 
 	strong_gens->group_order(stab_go);
 

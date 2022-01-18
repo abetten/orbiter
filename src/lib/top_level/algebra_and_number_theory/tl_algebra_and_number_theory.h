@@ -663,9 +663,9 @@ public:
 	finite_field *F;
 	action *A;
 	int n;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
-	homogeneous_polynomial_domain *HPD;
+	ring_theory::homogeneous_polynomial_domain *HPD;
 
 	action *A2;
 
@@ -674,7 +674,7 @@ public:
 	int *Elt3;
 
 	schreier *Sch;
-	longinteger_object full_go;
+	ring_theory::longinteger_object full_go;
 
 	std::string fname_base;
 	std::string fname_csv;
@@ -754,7 +754,7 @@ public:
 	int n;
 	action *A;
 	sims *S;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int goi;
 	int *Elt;
 	int *v;

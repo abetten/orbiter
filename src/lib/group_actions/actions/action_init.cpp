@@ -103,7 +103,7 @@ void action::init_linear_group(
 
 
 		action A_on_det;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		A_on_det.induced_action_on_determinant(Sims, verbose_level);
 		if (f_v) {
@@ -521,7 +521,7 @@ void action::init_projective_special_group(
 
 	{
 		action A_on_det;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		strong_generators *gens;
 		sims *Sims2;
 
@@ -770,7 +770,7 @@ void action::init_permutation_group_from_nauty_output(data_structures::nauty_out
 
 
 void action::init_permutation_group_from_generators(int degree, 
-	int f_target_go, longinteger_object &target_go, 
+	int f_target_go, ring_theory::longinteger_object &target_go,
 	int nb_gens, int *gens, 
 	int given_base_length, long int *given_base,
 	int f_no_base,
@@ -950,7 +950,7 @@ void action::init_affine_group(int n, int q,
 	int given_base_length;
 	long int *given_base;
 	finite_field F;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	char str1[1000];
 	char str2[1000];
 	
@@ -997,8 +997,8 @@ void action::init_symmetric_group(int degree, int f_no_base, int verbose_level)
 	int given_base_length;
 	long int *given_base;
 	int i, j;
-	longinteger_object go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_domain D;
 	char str1[1000];
 	char str2[1000];
 	
@@ -1076,7 +1076,7 @@ void action::create_sims(int verbose_level)
 
 
 void action::create_orthogonal_group(action *subaction, 
-	int f_has_target_group_order, longinteger_object &target_go, 
+	int f_has_target_group_order, ring_theory::longinteger_object &target_go,
 	void (* callback_choose_random_generator)(int iteration, 
 		int *Elt, void *data, int verbose_level), 
 	int verbose_level)
@@ -1698,7 +1698,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	label_tex.assign(str2);
 
 	if (f_basis) {
-		longinteger_object target_go;
+		ring_theory::longinteger_object target_go;
 
 		if (f_vv) {
 			cout << "action::init_orthogonal_group_with_O "
@@ -1851,7 +1851,7 @@ void action::init_group_from_strong_generators(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	sims *G;
-	longinteger_object G_order;
+	ring_theory::longinteger_object G_order;
 	int i;
 
 
@@ -1946,8 +1946,8 @@ sims *action::create_sims_from_generators_with_target_group_order_factorized(
 	vector_ge *gens, int *tl, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_domain D;
 	sims *S;
 
 	if (f_v) {
@@ -1972,7 +1972,7 @@ sims *action::create_sims_from_generators_with_target_group_order_factorized(
 sims *action::create_sims_from_generators_with_target_group_order_lint(
 	vector_ge *gens, long int target_go, int verbose_level)
 {
-	longinteger_object tgo;
+	ring_theory::longinteger_object tgo;
 
 	tgo.create(target_go, __FILE__, __LINE__);
 	return create_sims_from_generators_with_target_group_order(
@@ -1980,7 +1980,7 @@ sims *action::create_sims_from_generators_with_target_group_order_lint(
 }
 
 sims *action::create_sims_from_generators_with_target_group_order(
-	vector_ge *gens, longinteger_object &target_go,
+	vector_ge *gens, ring_theory::longinteger_object &target_go,
 	int verbose_level)
 {
 	return create_sims_from_generators_randomized(
@@ -1990,7 +1990,7 @@ sims *action::create_sims_from_generators_with_target_group_order(
 sims *action::create_sims_from_generators_without_target_group_order(
 	vector_ge *gens, int verbose_level)
 {
-	longinteger_object dummy;
+	ring_theory::longinteger_object dummy;
 
 	return create_sims_from_generators_randomized(
 		gens, FALSE /* f_target_go */, dummy, verbose_level - 3);
@@ -2002,7 +2002,7 @@ sims *action::create_sims_from_single_generator_without_target_group_order(
 	int f_v = (verbose_level >= 1);
 	sims *S;
 	vector_ge *gens;
-	longinteger_object dummy;
+	ring_theory::longinteger_object dummy;
 
 	if (f_v) {
 		cout << "action::create_sims_from_single_generator_"
@@ -2023,7 +2023,7 @@ sims *action::create_sims_from_single_generator_without_target_group_order(
 }
 
 sims *action::create_sims_from_generators_randomized(
-	vector_ge *gens, int f_target_go, longinteger_object &target_go,
+	vector_ge *gens, int f_target_go, ring_theory::longinteger_object &target_go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2255,7 +2255,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	vector_ge *gens;
 	vector_ge *SG;
 	int *tl;
-	longinteger_object centralizer_order, cent_go;
+	ring_theory::longinteger_object centralizer_order, cent_go;
 	int *Elt1;
 
 	gens = NEW_OBJECT(vector_ge);
@@ -2327,7 +2327,7 @@ void action::init_automorphism_group_from_group_table(
 	int *N_gens;
 	int N_nb_gens;
 	int N_go;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	//int i;
 	magma_interface Magma;
 
@@ -2397,7 +2397,7 @@ void action::init_automorphism_group_from_group_table(
 		FALSE /* f_no_base */,
 		verbose_level);
 	{
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		action::group_order(go);
 		if (f_v) {
 			cout << "action::init_automorphism_group_from_group_table "
@@ -2405,7 +2405,7 @@ void action::init_automorphism_group_from_group_table(
 		}
 	}
 
-	longinteger_object Aut_order;
+	ring_theory::longinteger_object Aut_order;
 	if (f_v) {
 		cout << "action::init_automorphism_group_from_group_table "
 				"creating automorphism group" << endl;

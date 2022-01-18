@@ -302,7 +302,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	//projective_space *P3;
 	int order;
 
-	longinteger_object full_group_order;
+	ring_theory::longinteger_object full_group_order;
 	order = PA->A->element_order(Elt);
 
 	full_group_order.create(order, __FILE__, __LINE__);

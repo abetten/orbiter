@@ -107,7 +107,7 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 	long int *data, int data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
@@ -411,7 +411,7 @@ void packing_classify::report_isomorphism_type(
 {
 	int f_v = (verbose_level >= 1);
 	int i, id, rep, first; //, c;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "packing_classify::report_isomorphism_type" << endl;
@@ -507,7 +507,7 @@ void packing_classify::report_isomorphism_type(
 	Iso->induced_action_on_set_basic(Stab, the_packing, verbose_level - 2);
 
 	if (f_v) {
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 			
 		Iso->AA->group_order(go);
 		cout << "action " << Iso->AA->label << " computed, "
@@ -713,7 +713,7 @@ void packing_classify::report_stabilizer(isomorph &Iso,
 		ostream &ost, int orbit, int verbose_level)
 {
 	sims *Stab;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 
 	Stab = Iso.Reps->stab[orbit];
@@ -747,7 +747,7 @@ void packing_classify::report_stabilizer_in_action(
 		int verbose_level)
 {
 	sims *Stab;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 
 	Stab = Iso.Reps->stab[orbit];
@@ -788,7 +788,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 		int verbose_level)
 {
 	sims *Stab;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 	char fname[1000];
 

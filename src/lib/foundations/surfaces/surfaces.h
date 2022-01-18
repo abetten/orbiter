@@ -142,14 +142,14 @@ public:
 	grassmann *Gr; // Gr_{4,2}
 	grassmann *Gr3; // Gr_{4,3}
 	long int nb_lines_PG_3;
-	homogeneous_polynomial_domain *Poly4_3;
+	ring_theory::homogeneous_polynomial_domain *Poly4_3;
 		// quartic polynomials in three variables
 
 	del_pezzo_surface_of_degree_two_domain();
 	~del_pezzo_surface_of_degree_two_domain();
 	void init(
 			projective_space *P,
-			homogeneous_polynomial_domain *Poly4_3,
+			ring_theory::homogeneous_polynomial_domain *Poly4_3,
 			int verbose_level);
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
@@ -617,37 +617,37 @@ public:
 	schlaefli *Schlaefli;
 
 
-	homogeneous_polynomial_domain *Poly1;
+	ring_theory::homogeneous_polynomial_domain *Poly1;
 		// linear polynomials in three variables
-	homogeneous_polynomial_domain *Poly2;
+	ring_theory::homogeneous_polynomial_domain *Poly2;
 		// quadratic polynomials in three variables
-	homogeneous_polynomial_domain *Poly3;
+	ring_theory::homogeneous_polynomial_domain *Poly3;
 		// cubic polynomials in three variables
 
-	homogeneous_polynomial_domain *Poly1_x123;
+	ring_theory::homogeneous_polynomial_domain *Poly1_x123;
 		// linear polynomials in three variables
-	homogeneous_polynomial_domain *Poly2_x123;
+	ring_theory::homogeneous_polynomial_domain *Poly2_x123;
 		// quadratic polynomials in three variables
-	homogeneous_polynomial_domain *Poly3_x123;
+	ring_theory::homogeneous_polynomial_domain *Poly3_x123;
 		// cubic polynomials in three variables
-	homogeneous_polynomial_domain *Poly4_x123;
+	ring_theory::homogeneous_polynomial_domain *Poly4_x123;
 		// quartic polynomials in three variables
 
-	homogeneous_polynomial_domain *Poly1_4;
+	ring_theory::homogeneous_polynomial_domain *Poly1_4;
 		// linear polynomials in four variables
-	homogeneous_polynomial_domain *Poly2_4;
+	ring_theory::homogeneous_polynomial_domain *Poly2_4;
 		// quadratic polynomials in four variables
-	homogeneous_polynomial_domain *Poly3_4;
+	ring_theory::homogeneous_polynomial_domain *Poly3_4;
 		// cubic polynomials in four variables
 
-	partial_derivative *Partials; // [4]
+	ring_theory::partial_derivative *Partials; // [4]
 
 
 	int f_has_large_polynomial_domains;
-	homogeneous_polynomial_domain *Poly2_27;
-	homogeneous_polynomial_domain *Poly4_27;
-	homogeneous_polynomial_domain *Poly6_27;
-	homogeneous_polynomial_domain *Poly3_24;
+	ring_theory::homogeneous_polynomial_domain *Poly2_27;
+	ring_theory::homogeneous_polynomial_domain *Poly4_27;
+	ring_theory::homogeneous_polynomial_domain *Poly6_27;
+	ring_theory::homogeneous_polynomial_domain *Poly3_24;
 
 	int nb_monomials2, nb_monomials4, nb_monomials6;
 	int nb_monomials3;
@@ -666,15 +666,15 @@ public:
 	void init(finite_field *F, int verbose_level);
 	void init_polynomial_domains(int verbose_level);
 	void init_large_polynomial_domains(int verbose_level);
-	void label_variables_3(homogeneous_polynomial_domain *HPD,
+	void label_variables_3(ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_x123(homogeneous_polynomial_domain *HPD,
+	void label_variables_x123(ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_4(homogeneous_polynomial_domain *HPD,
+	void label_variables_4(ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_27(homogeneous_polynomial_domain *HPD,
+	void label_variables_27(ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_24(homogeneous_polynomial_domain *HPD,
+	void label_variables_24(ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	int index_of_monomial(int *v);
 	void unrank_point(int *v, long int rk);

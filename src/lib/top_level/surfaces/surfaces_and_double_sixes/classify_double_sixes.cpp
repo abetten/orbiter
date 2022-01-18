@@ -729,8 +729,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	long int *rep;
 	long int *lines;
 	int *data;
-	longinteger_object go;
-	longinteger_object len;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_object len;
 	string fname_csv;
 	char str[1000];
 	
@@ -1043,8 +1043,8 @@ void classify_double_sixes::downstep(int verbose_level)
 		}
 
 		set_and_stabilizer *R;
-		longinteger_object ol;
-		longinteger_object go;
+		ring_theory::longinteger_object ol;
+		ring_theory::longinteger_object go;
 		long int dataset[23];
 
 		R = Five_plus_one->get_set_and_stabilizer(
@@ -1165,7 +1165,7 @@ void classify_double_sixes::upstep(int verbose_level)
 
 	Double_sixes = NEW_OBJECT(classification_step);
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	A->group_order(go);
 
 	Double_sixes->init(A, A2,
@@ -1228,7 +1228,7 @@ void classify_double_sixes::upstep(int verbose_level)
 
 
 		strong_generators *S;
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		long int double_six[12];
 
 		Orbiter->Lint_vec->copy(dataset + 11, double_six, 12);
@@ -1360,7 +1360,7 @@ void classify_double_sixes::upstep(int verbose_level)
 		strong_generators *Aut_gens;
 
 		{
-			longinteger_object ago;
+			ring_theory::longinteger_object ago;
 
 			if (f_v) {
 				cout << "classify_double_sixes::upstep "
@@ -1443,7 +1443,7 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 
 
 	{
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 		A->Strong_gens->group_order(go);
 
 		ost << "The order of the group is ";
@@ -1455,8 +1455,8 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 
 
 
-	longinteger_domain D;
-	longinteger_object ol, Ol;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object ol, Ol;
 	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The group has " 
@@ -1703,7 +1703,7 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	//Double_sixes->A = A;
 	//Double_sixes->A2 = A2;
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	A->group_order(go);
 	//A->group_order(Double_sixes->go);
 

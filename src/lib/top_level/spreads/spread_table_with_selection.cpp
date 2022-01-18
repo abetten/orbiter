@@ -602,8 +602,8 @@ void spread_table_with_selection::predict_spread_table_length(
 {
 	int f_v = (verbose_level >= 1);
 	int f_do_it, idx, no;
-	longinteger_object go, stab_go;
-	longinteger_domain D;
+	ring_theory::longinteger_object go, stab_go;
+	ring_theory::longinteger_domain D;
 	knowledge_base K;
 	data_structures::sorting Sorting;
 

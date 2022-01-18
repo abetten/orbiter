@@ -77,7 +77,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		int nb_pts,
 		long int *bitangents,
 		int nb_bitangents,
-		longinteger_object &go_eqn,
+		ring_theory::longinteger_object &go_eqn,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -171,7 +171,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_original_set->group_order(go);
 		cout << "_{" << go << "}" << endl;
@@ -187,7 +187,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
-		longinteger_object go;
+		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_canonical_form->group_order(go);
 		cout << "_{" << go << "}" << endl;
@@ -198,7 +198,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		//Gens_stabilizer_canonical_form->print_generators_tex();
 	}
 
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 	Gens_stabilizer_canonical_form->group_order(go);
 

@@ -452,7 +452,7 @@ void large_set_was::create_graph_on_orbits_of_length(std::string &fname, int orb
 		cout << "large_set_was::create_graph_on_orbits_of_length" << endl;
 	}
 
-	colored_graph *CG;
+	graph_theory::colored_graph *CG;
 
 	H_orbits->create_graph_on_orbits_of_a_certain_length(
 		CG,
@@ -552,7 +552,7 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(std::stri
 			cout << endl;
 		}
 
-		colored_graph *CG;
+		graph_theory::colored_graph *CG;
 
 
 		H_orbits->create_graph_on_orbits_of_a_certain_length_after_filtering(

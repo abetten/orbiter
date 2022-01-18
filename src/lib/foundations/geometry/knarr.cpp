@@ -181,7 +181,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 	G63->init(6, 3, F, verbose_level - 2);
 
 
-	six_choose_three_q = NEW_OBJECT(longinteger_object);
+	six_choose_three_q = NEW_OBJECT(ring_theory::longinteger_object);
 
 
 	C.q_binomial(*six_choose_three_q, 6, 3, q, 0);

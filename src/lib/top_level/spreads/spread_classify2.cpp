@@ -98,7 +98,7 @@ void spread_classify::print_isomorphism_type2(isomorph *Iso,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	longinteger_object so;
+	ring_theory::longinteger_object so;
 	long int *pt_list;
 	int f, l, j, idx, pt;
 	int p, h;
@@ -256,7 +256,7 @@ void spread_classify::save_klein_invariants(char *prefix,
 	long int *data, int data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
@@ -323,7 +323,7 @@ void spread_classify::klein(ostream &ost,
 // Called from print_isomorphism_type if k == 2
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_object *R;
+	ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
@@ -1841,16 +1841,16 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 
 	int i, first, /*c,*/ id;
 	int u, v, h, rep, tt;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	long int data[1000];
 
 
 
-	longinteger_object *Ago, *Ago_induced;
+	ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
-	Ago = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
-	Ago_induced = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
+	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
+	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
 	Ago_int = NEW_int(Iso.Reps->count);
 
 
@@ -2058,7 +2058,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		}
 		Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
-		longinteger_object go1;
+		ring_theory::longinteger_object go1;
 			
 		Iso.AA->group_order(go1);
 		cout << "action " << Iso.AA->label << " computed, "
@@ -2163,7 +2163,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 			ost << i << " & " << len << " & ";
 			long int *set;
 			action *A1;
-			longinteger_object go1, gok;
+			ring_theory::longinteger_object go1, gok;
 
 			set = NEW_lint(len);
 			//A1 = NEW_OBJECT(action);
@@ -2207,7 +2207,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 			action *A1;
 			vector_ge *gens;
 			int *tl;
-			longinteger_object go1, gok;
+			ring_theory::longinteger_object go1, gok;
 
 			set = NEW_lint(len);
 			//A1 = NEW_OBJECT(action);
@@ -2335,7 +2335,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	int nb_points = 0;
 	int *List;
 	grassmann *Gr;
-	longinteger_domain Dom;
+	ring_theory::longinteger_domain Dom;
 	number_theory_domain NT;
 	data_structures::sorting Sorting;
 	file_io Fio;
@@ -2357,8 +2357,8 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	Stab = Iso.Reps->stab[h];
 
 	schreier Orb;
-	longinteger_object go;
-	longinteger_object stab_order;
+	ring_theory::longinteger_object go;
+	ring_theory::longinteger_object stab_order;
 		
 	Stab->group_order(go);
 
@@ -2535,7 +2535,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 
 	Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
-	longinteger_object go1;
+	ring_theory::longinteger_object go1;
 			
 	Iso.AA->group_order(go1);
 	cout << "action " << Iso.AA->label << " computed, "
@@ -2577,7 +2577,7 @@ void spread_classify::report_stabilizer(isomorph &Iso,
 		ostream &ost, int orbit, int verbose_level)
 {
 	sims *Stab;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 	int i;
 
 	Stab = Iso.Reps->stab[orbit];

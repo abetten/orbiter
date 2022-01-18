@@ -107,7 +107,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 
 
 	strong_generators *SG;
-	longinteger_object go;
+	ring_theory::longinteger_object go;
 
 
 	data_structures::bitvector *Canonical_form;

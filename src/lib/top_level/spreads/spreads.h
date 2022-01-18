@@ -644,7 +644,7 @@ public:
 	void init(long int *spread_elements_numeric,
 		int k, action *An, action *An1,
 		vector_ge *spread_stab_gens,
-		longinteger_object &spread_stab_go,
+		ring_theory::longinteger_object &spread_stab_go,
 		std::string &label,
 		int verbose_level);
 	void classify_arcs(const char *prefix,
