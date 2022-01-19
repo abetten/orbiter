@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, int *coeff, int verbose_level)
@@ -813,4 +814,5 @@ void surface_domain::create_Eckardt_fifteen_lines(long int *fifteen_lines,
 
 
 
-}}
+}}}
+

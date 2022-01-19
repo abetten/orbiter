@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 
@@ -181,7 +182,7 @@ void stabilizer_chain_base_data::reallocate_base(int new_base_point)
 	}
 }
 
-void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
+void stabilizer_chain_base_data::init_base_from_sims(groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -306,7 +307,7 @@ void stabilizer_chain_base_data::group_order(ring_theory::longinteger_object &go
 }
 
 void stabilizer_chain_base_data::init_projective_matrix_group(
-		finite_field *F, int n, int f_semilinear, int degree,
+		field_theory::finite_field *F, int n, int f_semilinear, int degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -336,7 +337,7 @@ void stabilizer_chain_base_data::init_projective_matrix_group(
 }
 
 void stabilizer_chain_base_data::init_affine_matrix_group(
-		finite_field *F, int n, int f_semilinear, int degree,
+		field_theory::finite_field *F, int n, int f_semilinear, int degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -367,7 +368,7 @@ void stabilizer_chain_base_data::init_affine_matrix_group(
 }
 
 void stabilizer_chain_base_data::init_linear_matrix_group(
-		finite_field *F, int n, int f_semilinear, int degree,
+		field_theory::finite_field *F, int n, int f_semilinear, int degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -399,6 +400,6 @@ void stabilizer_chain_base_data::init_linear_matrix_group(
 }
 
 
-}}
+}}}
 
 

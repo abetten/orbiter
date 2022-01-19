@@ -19,7 +19,7 @@ namespace orbiter {
 namespace top_level {
 
 
-void surface_study::init(finite_field *F, int nb, int verbose_level)
+void surface_study::init(field_theory::finite_field *F, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -50,7 +50,7 @@ void surface_study::init(finite_field *F, int nb, int verbose_level)
 
 
 
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 
 	if (f_v) {
 		cout << "surface_study::init initializing surface" << endl;
@@ -75,7 +75,7 @@ void surface_study::init(finite_field *F, int nb, int verbose_level)
 	cout << "creating linear group" << endl;
 	vector_ge *nice_gens;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	A->init_linear_group(
 		F, 4,
@@ -839,8 +839,8 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 	set_and_stabilizer *Triangle;
 	set_and_stabilizer *Eckardt_stab;
-	action *A_triangle;
-	action *A_on_double_pts;
+	actions::action *A_triangle;
+	actions::action *A_on_double_pts;
 	int *Elt;
 	char fname_stab[1000];
 
@@ -954,7 +954,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 			Double_pts, nb_double_pts,
 			0 /* verbose_level */);
 
-	schreier *Orb2;
+	groups::schreier *Orb2;
 
 	cout << "computing orbits on double points off the triangle:" << endl;
 	Orb2 = SaS->Strong_gens->orbits_on_points_schreier(
@@ -1008,7 +1008,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	long int *six_point_orbit;
 	int six_point_orbit_length;
 	int sz;
-	action *A_on_six_point_orbit;
+	actions::action *A_on_six_point_orbit;
 
 	OS->get_table_of_orbits(six_point_orbit,
 			six_point_orbit_length, sz, verbose_level);
@@ -1019,7 +1019,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 			verbose_level);
 	cout << "Creating action on six_point_orbit done" << endl;
 
-	schreier *Orb_six_points;
+	groups::schreier *Orb_six_points;
 
 	cout << "computing orbits on set of six points:" << endl;
 	Orb_six_points = Eckardt_stab->Strong_gens->orbit_of_one_point_schreier(
@@ -1483,7 +1483,7 @@ void compute_decomposition(orthogonal *O,
 }
 #endif
 
-void move_point_set(action *A2,
+void move_point_set(actions::action *A2,
 	set_and_stabilizer *Universe,
 	long int *Pts, int nb_pts,
 	int *Elt,
@@ -1604,8 +1604,8 @@ void matrix_entry_print(long int *p,
 		int m, int n, int i, int j, int val,
 		std::string &output, void *data)
 {
-	surface_domain *Surf;
-	Surf = (surface_domain *) data;
+	algebraic_geometry::surface_domain *Surf;
+	Surf = (algebraic_geometry::surface_domain *) data;
 	char str[1000];
 
 	if (i == -1) {

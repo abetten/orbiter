@@ -597,7 +597,7 @@ void packing_classify::read_spread_table(int verbose_level)
 #endif
 
 void spread_table_with_selection::predict_spread_table_length(
-	action *A, strong_generators *Strong_gens,
+		actions::action *A, groups::strong_generators *Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -696,7 +696,8 @@ void spread_table_with_selection::predict_spread_table_length(
 
 
 void spread_table_with_selection::make_spread_table(
-		action *A, action *A2, strong_generators *Strong_gens,
+		actions::action *A, actions::action *A2,
+		groups::strong_generators *Strong_gens,
 		long int **&Sets, int *&Prev, int *&Label, int *&First, int *&Len,
 		int *&isomorphism_type_of_spread,
 		int verbose_level)

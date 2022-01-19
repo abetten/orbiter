@@ -78,7 +78,7 @@ void large_set_was::init(large_set_was_description *Descr,
 
 
 
-	H_gens = NEW_OBJECT(strong_generators);
+	H_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "design_activity::do_load_table before H_gens->init_from_data_with_go" << endl;
@@ -108,7 +108,7 @@ void large_set_was::init(large_set_was_description *Descr,
 
 
 
-	H_orbits = NEW_OBJECT(orbits_on_something);
+	H_orbits = NEW_OBJECT(groups::orbits_on_something);
 
 	H_orbits->init(LS->A_on_designs,
 			H_gens,
@@ -208,7 +208,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 	}
 
 
-	N_gens = NEW_OBJECT(strong_generators);
+	N_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length before H_gens->init_from_data_with_go" << endl;
@@ -234,7 +234,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 	//action *A_on_orbits;
 	//action *A_on_orbits_restricted;
 
-	A_on_orbits = NEW_OBJECT(action);
+	A_on_orbits = NEW_OBJECT(actions::action);
 	A_on_orbits->induced_action_on_orbits(LS->A_on_designs,
 			H_orbits->Sch /* H_orbits_on_spreads*/,
 			TRUE /*f_play_it_safe*/,
@@ -300,7 +300,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 				"orbit_length=" << orbit_length << endl;
 	}
 
-	schreier *Sch;
+	groups::schreier *Sch;
 
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length before "

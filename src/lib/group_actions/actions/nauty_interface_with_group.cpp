@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 nauty_interface_with_group::nauty_interface_with_group()
@@ -1247,10 +1248,10 @@ void nauty_interface_with_group::automorphism_group_as_permutation_group(
 }
 
 void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group(
-		action *A_linear,
+		actions::action *A_linear,
 		projective_space *P,
-		strong_generators *&SG,
-		action *&A_perm,
+		groups::strong_generators *&SG,
+		actions::action *&A_perm,
 		data_structures::nauty_output *NO,
 		int verbose_level)
 {
@@ -1386,7 +1387,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 
 
-	sims *S;
+	groups::sims *S;
 	ring_theory::longinteger_object go;
 
 	if (f_vv) {
@@ -1463,7 +1464,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 				"before initializing strong generators" << endl;
 	}
 
-	SG = NEW_OBJECT(strong_generators);
+	SG = NEW_OBJECT(groups::strong_generators);
 	SG->init_from_sims(S, 0 /* verbose_level*/);
 	FREE_OBJECT(S);
 
@@ -1480,7 +1481,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 }
 
 
-strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
+groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	object_with_canonical_form *OwCF,
 	action *A_linear,
 	int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
@@ -1532,7 +1533,7 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	}
 
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	action *A_perm;
 
 	if (f_v) {
@@ -1562,5 +1563,5 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 
 
-}}
+}}}
 

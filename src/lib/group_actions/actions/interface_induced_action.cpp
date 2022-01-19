@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 
@@ -2218,7 +2219,8 @@ static long int induced_action_rank_point(action &A, int *v)
 
 
 
-}}
+}}}
+
 
 
 

@@ -37,14 +37,14 @@ public:
 
 	void *user_data;
 
-	action *A_base;
-	action *A_on_blocks;
+	actions::action *A_base;
+	actions::action *A_on_blocks;
 	
 
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens, 
-		diophant *&Dio, long int *&col_label,
+		groups::strong_generators *Strong_gens,
+		solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level);
 
@@ -90,7 +90,7 @@ public:
 	void null();
 	void freeself();
 	void init_basic(void *user_data, 
-		action *A_base, action *A_on_blocks, 
+			actions::action *A_base, actions::action *A_on_blocks,
 		int target_size, int starter_size, 
 		std::string &input_prefix, std::string &output_prefix,
 		std::string &solution_prefix, std::string &base_fname,
@@ -107,8 +107,8 @@ public:
 	void init_prepare_function_new(
 		void (*prepare_function_new)(exact_cover *E, int starter_case, 
 				long int *candidates, int nb_candidates,
-			strong_generators *Strong_gens, 
-			diophant *&Dio, long int *&col_label,
+				groups::strong_generators *Strong_gens,
+			solvers::diophant *&Dio, long int *&col_label,
 			int &f_ruled_out, 
 			int verbose_level),
 		int verbose_level);
@@ -154,8 +154,8 @@ public:
 
 class exact_cover_arguments {
 public:
-	action *A;
-	action *A2;
+	actions::action *A;
+	actions::action *A2;
 	void *user_data;
 	int f_has_base_fname;
 	std::string base_fname;
@@ -182,8 +182,8 @@ public:
 	std::string fname_tree;
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens, 
-		diophant *&Dio, long int *&col_label,
+		groups::strong_generators *Strong_gens,
+		solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level);
 	void (*early_test_function)(long int *S, int len,

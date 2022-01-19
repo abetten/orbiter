@@ -17,6 +17,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
+
 
 permutation_representation::permutation_representation()
 {
@@ -57,7 +60,7 @@ permutation_representation::~permutation_representation()
 	//free();
 }
 
-void permutation_representation::init(action *A_original,
+void permutation_representation::init(actions::action *A_original,
 		int f_stay_in_the_old_action,
 		vector_ge *gens,
 		int *Perms, int degree,
@@ -231,5 +234,5 @@ void permutation_representation::element_print_latex(int *Elt, ostream &ost)
 
 
 
-}}
+}}}
 

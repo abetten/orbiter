@@ -26,7 +26,7 @@ public:
 	expression_parser_domain();
 	~expression_parser_domain();
 	void parse_and_evaluate(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &name_of_formula,
 			std::string &formula_text,
 			std::string &managed_variables,
@@ -34,13 +34,13 @@ public:
 			std::string &parameters,
 			int verbose_level);
 	void evaluate(
-			finite_field *Fq,
+			field_theory::finite_field *Fq,
 			std::string &formula_label,
 			std::string &parameters,
 			int verbose_level);
 	int evaluate_formula(
 			formula *F,
-			finite_field *Fq,
+			field_theory::finite_field *Fq,
 			std::string &parameters,
 			int verbose_level);
 
@@ -194,7 +194,7 @@ public:
 	void print_expression(std::ostream &ost);
 	void print_graphviz(std::ostream &ost);
 	int evaluate(std::map<std::string, std::string> &symbol_table,
-			finite_field *F, int verbose_level);
+			field_theory::finite_field *F, int verbose_level);
 
 };
 
@@ -236,7 +236,7 @@ public:
 	int is_homogeneous(int &degree, int verbose_level);
 	void print(std::ostream &ost);
 	int evaluate(std::map<std::string, std::string> &symbol_table,
-			finite_field *F, int verbose_level);
+			field_theory::finite_field *F, int verbose_level);
 	void print_expression(std::ostream &ost);
 	void push_a_minus_sign();
 	void print_without_recursion(std::ostream &ost);

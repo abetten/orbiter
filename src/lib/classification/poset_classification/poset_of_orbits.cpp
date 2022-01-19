@@ -1306,9 +1306,9 @@ void poset_of_orbits::read_level_file(int level,
 				Aut.print_group_order(cout);
 				cout << endl;
 
-				strong_generators *Strong_gens;
+				groups::strong_generators *Strong_gens;
 
-				Strong_gens = NEW_OBJECT(strong_generators);
+				Strong_gens = NEW_OBJECT(groups::strong_generators);
 				Strong_gens->init_from_sims(Aut.S, 0);
 
 	#if 0

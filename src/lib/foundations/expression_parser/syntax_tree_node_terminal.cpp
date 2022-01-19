@@ -72,7 +72,7 @@ void syntax_tree_node_terminal::print_graphviz(std::ostream &ost)
 
 }
 int syntax_tree_node_terminal::evaluate(std::map<std::string, std::string> &symbol_table,
-		finite_field *F, int verbose_level)
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a;

@@ -36,7 +36,7 @@ cyclotomic_sets::~cyclotomic_sets()
 	}
 }
 
-void cyclotomic_sets::init(finite_field *F, int n, int verbose_level)
+void cyclotomic_sets::init(field_theory::finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

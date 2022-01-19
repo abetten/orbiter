@@ -216,7 +216,7 @@ void spread_classify::init(
 
 
 
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	AG = NEW_OBJECT(action_on_grassmannian);
 
 #if 0
@@ -955,8 +955,8 @@ finish:
 void spread_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -1165,8 +1165,8 @@ void spread_lifting_early_test_function(long int *S, int len,
 void spread_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {

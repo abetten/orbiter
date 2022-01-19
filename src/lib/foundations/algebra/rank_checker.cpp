@@ -43,7 +43,7 @@ rank_checker::~rank_checker()
 	//cout << "~rank_checker() finished" << endl;
 }
 
-void rank_checker::init(finite_field *GFq, int m, int n, int d)
+void rank_checker::init(field_theory::finite_field *GFq, int m, int n, int d)
 {
 	rank_checker::GFq = GFq;
 	rank_checker::m = m;

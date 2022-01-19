@@ -66,9 +66,10 @@ void orbit_of_equations::freeself()
 	null();
 }
 
-void orbit_of_equations::init(action *A, finite_field *F, 
+void orbit_of_equations::init(actions::action *A,
+		field_theory::finite_field *F,
 	action_on_homogeneous_polynomials *AonHPD, 
-	strong_generators *SG, int *coeff_in, 
+	groups::strong_generators *SG, int *coeff_in,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -502,7 +503,7 @@ void orbit_of_equations::get_random_schreier_generator(
 void orbit_of_equations::get_canonical_form(
 		int *canonical_equation,
 		int *transporter_to_canonical_form,
-		strong_generators *&gens_stab_of_canonical_equation,
+		groups::strong_generators *&gens_stab_of_canonical_equation,
 		ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
@@ -539,12 +540,12 @@ void orbit_of_equations::get_canonical_form(
 	}
 }
 
-strong_generators *orbit_of_equations::stabilizer_orbit_rep(
+groups::strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 		ring_theory::longinteger_object &full_group_order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	strong_generators *gens;
-	sims *Stab;
+	groups::strong_generators *gens;
+	groups::sims *Stab;
 
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_orbit_rep" << endl;
@@ -568,7 +569,7 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 				<< stab_order << endl;
 	}
 
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 	gens->init(A);
 	gens->init_from_sims(Stab, verbose_level);
 
@@ -579,9 +580,10 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 	return gens;
 }
 
-void orbit_of_equations::stabilizer_orbit_rep_work(action *default_action,
+void orbit_of_equations::stabilizer_orbit_rep_work(
+		actions::action *default_action,
 		ring_theory::longinteger_object &go,
-	sims *&Stab, int verbose_level)
+		groups::sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
 {
 	int f_v = (verbose_level >= 1);
@@ -594,7 +596,7 @@ void orbit_of_equations::stabilizer_orbit_rep_work(action *default_action,
 		cout << "orbit_of_equations::stabilizer_orbit_rep_work" << endl;
 	}
 
-	Stab = NEW_OBJECT(sims);
+	Stab = NEW_OBJECT(groups::sims);
 	ring_theory::longinteger_object cur_go, target_go;
 	ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;
@@ -693,13 +695,13 @@ void orbit_of_equations::stabilizer_orbit_rep_work(action *default_action,
 }
 
 
-strong_generators *orbit_of_equations::stabilizer_any_point(
+groups::strong_generators *orbit_of_equations::stabilizer_any_point(
 		ring_theory::longinteger_object &full_group_order, int idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	strong_generators *gens0;
-	strong_generators *gens;
+	groups::strong_generators *gens0;
+	groups::strong_generators *gens;
 	int *transporter;
 	int *transporter_inv;
 
@@ -723,7 +725,7 @@ strong_generators *orbit_of_equations::stabilizer_any_point(
 
 
 
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 
 
 	if (f_v) {

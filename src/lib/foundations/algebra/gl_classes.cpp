@@ -64,7 +64,7 @@ void gl_classes::freeself()
 	null();
 }
 
-void gl_classes::init(int k, finite_field *F, int verbose_level)
+void gl_classes::init(int k, field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int d;

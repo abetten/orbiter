@@ -562,7 +562,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 		nb_partition_orbits = T->Table_orbits_on_partition[orbit_on_pairs_idx].nb_orbits_on_partition;
 
 
-		schreier *Sch;
+		groups::schreier *Sch;
 		int part[4];
 		int h;
 
@@ -622,7 +622,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			}
 
 			ring_theory::longinteger_object go;
-			strong_generators *SG; // stabilizer as 3x3 matrices
+			groups::strong_generators *SG; // stabilizer as 3x3 matrices
 
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
@@ -738,9 +738,9 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			}
 
 			// embed the generators into 4x4
-			strong_generators *SG_induced;
+			groups::strong_generators *SG_induced;
 
-			SG_induced = NEW_OBJECT(strong_generators);
+			SG_induced = NEW_OBJECT(groups::strong_generators);
 
 			SG_induced->init(A4);
 			if (f_v) {
@@ -1209,7 +1209,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 					ost, Table_orbits_on_pairs[arc_idx].A_on_arc);
 		}
 
-		schreier *Sch;
+		groups::schreier *Sch;
 		int part[4];
 		int h;
 
@@ -1232,7 +1232,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 		ost << "$\\\\" << endl;
 
 		ring_theory::longinteger_object go;
-		strong_generators *SG;
+		groups::strong_generators *SG;
 
 		cout << "computing partition stabilizer:" << endl;
 

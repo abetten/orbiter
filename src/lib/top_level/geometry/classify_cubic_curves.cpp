@@ -517,7 +517,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		int nb_coset_reps;
 
 
-		strong_generators *S;
+		groups::strong_generators *S;
 		ring_theory::longinteger_object go;
 		int eqn[10];
 
@@ -675,7 +675,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 		coset_reps->reallocate(nb_coset_reps, verbose_level - 2);
 
-		strong_generators *Aut_gens;
+		groups::strong_generators *Aut_gens;
 
 		{
 			ring_theory::longinteger_object ago;
@@ -685,7 +685,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 						"Extending the group by a factor of "
 						<< nb_coset_reps << endl;
 			}
-			Aut_gens = NEW_OBJECT(strong_generators);
+			Aut_gens = NEW_OBJECT(groups::strong_generators);
 			Aut_gens->init_group_extension(S,
 					coset_reps, nb_coset_reps,
 					verbose_level - 2);

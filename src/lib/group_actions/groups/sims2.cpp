@@ -11,6 +11,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
+
 
 void choose_random_generator_derived_group(sims *G,
 		int *Elt, int verbose_level)
@@ -18,7 +21,7 @@ void choose_random_generator_derived_group(sims *G,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6;
-	action *A;
+	actions::action *A;
 	
 	if (f_v) {
 		cout << "choose_random_generator_derived_group" << endl;
@@ -58,7 +61,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 	//int f_vvvv = (verbose_level >= 10);
 	ring_theory::longinteger_object go, G_order, quo, rem;
 	int drop_out_level, image, cnt, f_added;
-	action *GA;
+	actions::action *GA;
 	
 	GA = A;
 	
@@ -165,5 +168,5 @@ void sims::build_up_subgroup_random_process(sims *G,
 		}
 }
 
-}}
+}}}
 

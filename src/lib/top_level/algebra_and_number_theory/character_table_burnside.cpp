@@ -33,14 +33,14 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	D->init_integer_fractions(verbose_level);
 
 
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object go;
 	int goi;
 	int *Elt;
 	int i, j;
 	int f_no_base = FALSE;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_symmetric_group(n, f_no_base, verbose_level);
 	A->group_order(go);
 
@@ -49,7 +49,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	Elt = NEW_int(A->elt_size_in_int);
 
-	sims *S;
+	groups::sims *S;
 
 	S = A->Sims;
 
@@ -60,9 +60,9 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		cout << endl;
 		}
 
-	action *Aconj;
+	actions::action *Aconj;
 
-	Aconj = NEW_OBJECT(action);
+	Aconj = NEW_OBJECT(actions::action);
 
 	cout << "Creating action by conjugation" << endl;
 
@@ -75,15 +75,15 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	ABC = Aconj->G.ABC;
 
-	schreier *Sch;
-	strong_generators *SG;
+	groups::schreier *Sch;
+	groups::strong_generators *SG;
 
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 
 	Sch->init(Aconj, verbose_level - 2);
 
 
-	SG = NEW_OBJECT(strong_generators);
+	SG = NEW_OBJECT(groups::strong_generators);
 
 	SG->init_from_sims(S, 0);
 
@@ -690,9 +690,10 @@ int character_table_burnside::compute_r0(int *N, int nb_classes, int verbose_lev
 	return r0;
 }
 
-void character_table_burnside::compute_multiplication_constants_center_of_group_ring(action *A,
+void character_table_burnside::compute_multiplication_constants_center_of_group_ring(
+		actions::action *A,
 	action_by_conjugation *ABC,
-	schreier *Sch, int nb_classes, int *&N, int verbose_level)
+	groups::schreier *Sch, int nb_classes, int *&N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int r, rl, rf, s, sl, sf, i, a, j, b, c, idx, t, tf; //, tl;
@@ -743,8 +744,9 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 		}
 }
 
-void character_table_burnside::compute_Distribution_table(action *A, action_by_conjugation *ABC,
-	schreier *Sch, int nb_classes,
+void character_table_burnside::compute_Distribution_table(
+		actions::action *A, action_by_conjugation *ABC,
+		groups::schreier *Sch, int nb_classes,
 	int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -827,7 +829,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 }
 
 
-void character_table_burnside::multiply_word(action *A, int **Gens, int *Choice, int t, int *Elt1, int *Elt2, int verbose_level)
+void character_table_burnside::multiply_word(actions::action *A, int **Gens, int *Choice, int t, int *Elt1, int *Elt2, int verbose_level)
 {
 	int i;
 
@@ -838,7 +840,7 @@ void character_table_burnside::multiply_word(action *A, int **Gens, int *Choice,
 		}
 }
 
-void character_table_burnside::create_generators(action *A, int n, int **&Elt, int &nb_gens, int f_special, int verbose_level)
+void character_table_burnside::create_generators(actions::action *A, int n, int **&Elt, int &nb_gens, int f_special, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;

@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 matrix_group::matrix_group()
 {
@@ -96,7 +97,8 @@ matrix_group::~matrix_group()
 }
 
 void matrix_group::init_projective_group(int n,
-		finite_field *F, int f_semilinear, action *A,
+		field_theory::finite_field *F, int f_semilinear,
+		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -200,7 +202,8 @@ void matrix_group::init_projective_group(int n,
 }
 
 void matrix_group::init_affine_group(int n,
-		finite_field *F, int f_semilinear, action *A,
+		field_theory::finite_field *F, int f_semilinear,
+		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -275,7 +278,8 @@ void matrix_group::init_affine_group(int n,
 }
 
 void matrix_group::init_general_linear_group(int n,
-		finite_field *F, int f_semilinear, action *A,
+		field_theory::finite_field *F, int f_semilinear,
+		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -571,7 +575,7 @@ void matrix_group::compute_elt_size(int verbose_level)
 	}
 }
 
-void matrix_group::init_base(action *A, int verbose_level)
+void matrix_group::init_base(actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -623,7 +627,7 @@ void matrix_group::init_base(action *A, int verbose_level)
 }
 
 void matrix_group::init_base_projective(
-		action *A, int verbose_level)
+		actions::action *A, int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
@@ -652,7 +656,7 @@ void matrix_group::init_base_projective(
 				"after GG.matrix_group_base_len_projective_group" << endl;
 	}
 
-	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
 	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
 	//A->Stabilizer_chain->base_len = base_len;
 	//A->allocate_base_data(A->base_len);
@@ -688,7 +692,7 @@ void matrix_group::init_base_projective(
 	}
 }
 
-void matrix_group::init_base_affine(action *A, int verbose_level)
+void matrix_group::init_base_affine(actions::action *A, int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
@@ -713,7 +717,7 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 				<< base_len << endl;
 	}
 
-	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
 	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
 	//A->Stabilizer_chain->base_len = base_len;
 	//A->allocate_base_data(A->base_len);
@@ -744,7 +748,7 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 }
 
 void matrix_group::init_base_general_linear(
-		action *A, int verbose_level)
+		actions::action *A, int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
@@ -770,7 +774,7 @@ void matrix_group::init_base_general_linear(
 				"base_len=" << base_len << endl;
 	}
 
-	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
 	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
 	//A->Stabilizer_chain->base_len = base_len;
 	//A->allocate_base_data(A->base_len);
@@ -1010,7 +1014,7 @@ void matrix_group::general_linear_action_from_the_right(
 }
 
 void matrix_group::substitute_surface_equation(int *Elt,
-		int *coeff_in, int *coeff_out, surface_domain *Surf,
+		int *coeff_in, int *coeff_out, algebraic_geometry::surface_domain *Surf,
 		int verbose_level)
 // used in arc_lifting.cpp, surface_classify_wedge.cpp,
 // surface_create.cpp, create_surface_main.cpp, intersection.cpp
@@ -2055,7 +2059,7 @@ void matrix_group::make_GL_element(int *Elt, int *A, int f)
 }
 
 void matrix_group::orthogonal_group_random_generator(
-	action *A, orthogonal *O,
+		actions::action *A, orthogonal *O,
 	int f_siegel, 
 	int f_reflection, 
 	int f_similarity,
@@ -2438,5 +2442,5 @@ int matrix_group::has_shape_of_singer_cycle(int *Elt)
 	return TRUE;
 }
 
-}}
+}}}
 

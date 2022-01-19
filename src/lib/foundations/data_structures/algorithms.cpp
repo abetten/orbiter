@@ -170,7 +170,7 @@ void algorithms::solve_diophant(int *Inc,
 // allocates Solutions[nb_sol * nb_needed]
 {
 	int f_v = (verbose_level >= 1);
-	diophant *Dio;
+	solvers::diophant *Dio;
 	os_interface Os;
 	int t0 = Os.os_ticks();
 
@@ -181,7 +181,7 @@ void algorithms::solve_diophant(int *Inc,
 		cout << "f_DLX=" << f_DLX << endl;
 		//int_matrix_print(Inc, nb_rows, nb_cols);
 		}
-	Dio = NEW_OBJECT(diophant);
+	Dio = NEW_OBJECT(solvers::diophant);
 
 	if (f_has_Rhs) {
 		Dio->init_problem_of_Steiner_type_with_RHS(nb_rows,

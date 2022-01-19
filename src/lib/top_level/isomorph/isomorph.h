@@ -110,11 +110,11 @@ public:
 		// [nb_starter]
 
 	
-	action *A_base;
+	actions::action *A_base;
 		// A Betten 3/18/2013
 		// the action in which we represent the group
 		// do not free
-	action *A;
+	actions::action *A;
 		// the action in which we act on the set
 		// do not free
 
@@ -215,9 +215,9 @@ public:
 
 	std::ofstream *fp_event_out;
 
-	action *AA;
-	action *AA_perm;
-	action *AA_on_k_subsets;
+	actions::action *AA;
+	actions::action *AA_perm;
+	actions::action *AA_on_k_subsets;
 	union_find *UF;
 	vector_ge *gens_perm;
 	
@@ -293,11 +293,11 @@ public:
 	//FILE *fp_ge;
 	std::ifstream *fp_ge; // either fg_ge1 or fp_ge2
 	
-	sims *stabilizer_recreated;
+	groups::sims *stabilizer_recreated;
 	
 
 	void (*print_set_function)(isomorph *Iso, 
-		int iso_cnt, sims *Stab, schreier &Orb, 
+		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, void *print_set_data, int verbose_level);
 	void *print_set_data;
 	
@@ -314,7 +314,7 @@ public:
 	void allocate_tmp_data();
 	void free_tmp_data();
 	void init(std::string &prefix,
-		action *A_base, action *A, poset_classification *gen,
+			actions::action *A_base, actions::action *A, poset_classification *gen,
 		int size, int level, 
 		int f_use_database_for_starter, 
 		int f_implicit_fusion, int verbose_level);
@@ -331,7 +331,7 @@ public:
 		// slow because it calls load_strong_generators
 	void test_orbit_representative(int verbose_level);
 	void test_identify_solution(int verbose_level);
-	void compute_stabilizer(sims *&Stab, int verbose_level);
+	void compute_stabilizer(groups::sims *&Stab, int verbose_level);
 	void test_compute_stabilizer(int verbose_level);
 	void test_memory();
 	void test_edges(int verbose_level);
@@ -352,7 +352,7 @@ public:
 	void test_hash(int verbose_level);
 	void compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
 			ring_theory::longinteger_object *&Ago_induced, int verbose_level);
-	void init_high_level(action *A, poset_classification *gen,
+	void init_high_level(actions::action *A, poset_classification *gen,
 		int size, std::string &prefix_classify, std::string &prefix,
 		int level, int verbose_level);
 	void get_orbit_transversal(orbit_transversal *&T,
@@ -372,15 +372,15 @@ public:
 	void write_classification_graph(int verbose_level);
 	void decomposition_matrix(int verbose_level);
 	void compute_down_link(int *&down_link, int verbose_level);
-	void do_iso_test(int t0, sims *&Stab, 
+	void do_iso_test(int t0, groups::sims *&Stab,
 		int f_play_back, std::ifstream *play_back_file,
 		int &f_eof, int print_mod, 
 		int f_implicit_fusion, int verbose_level);
 	int next_subset(int t0, 
-		int &f_continue, sims *Stab, long int *data,
+		int &f_continue, groups::sims *Stab, long int *data,
 		int f_play_back, std::ifstream *play_back_file, int &f_eof,
 		int verbose_level);
-	void process_rearranged_set(sims *Stab, long int *data,
+	void process_rearranged_set(groups::sims *Stab, long int *data,
 		int f_implicit_fusion, int verbose_level);
 	int is_minimal(int verbose_level);
 	void stabilizer_action_exit();
@@ -389,14 +389,14 @@ public:
 		// that are induced by the 
 		// generators for the stabilizer in AA
 	void stabilizer_action_add_generator(int *Elt, int verbose_level);
-	void print_statistics_iso_test(int t0, sims *Stab);
+	void print_statistics_iso_test(int t0, groups::sims *Stab);
 	int identify(long int *set, int f_implicit_fusion,
 		int verbose_level);
 	int identify_database_is_open(long int *set,
 		int f_implicit_fusion, int verbose_level);
-	void induced_action_on_set_basic(sims *S, 
+	void induced_action_on_set_basic(groups::sims *S,
 		long int *set, int verbose_level);
-	void induced_action_on_set(sims *S, 
+	void induced_action_on_set(groups::sims *S,
 		long int *set, int verbose_level);
 	// Called by do_iso_test and print_isomorphism_types
 	// Creates the induced action on the set from the given action.
@@ -407,7 +407,7 @@ public:
 	// using the generators in S.
 	// Calls action::induced_action_by_restriction()
 	int handle_automorphism(long int *set,
-		sims *Stab, int *Elt, int verbose_level);
+			groups::sims *Stab, int *Elt, int verbose_level);
 
 	// isomorph_database.cpp
 	void setup_and_open_solution_database(int verbose_level);
@@ -654,7 +654,7 @@ public:
 		int verbose_level);
 		// Calls print_set_function (if available)
 	void induced_action_on_set_and_kernel(std::ostream &file,
-		action *A, sims *Stab, int size, long int *set,
+			actions::action *A, groups::sims *Stab, int size, long int *set,
 		int verbose_level);
 	void handle_event_files(int nb_event_files, 
 		const char **event_file_name, int verbose_level);
@@ -719,8 +719,8 @@ public:
 	int f_prefix_iso;
 	std::string prefix_iso;
 
-	action *A;
-	action *A2;
+	actions::action *A;
+	actions::action *A2;
 	poset_classification *gen;
 	int target_size;
 	poset_classification_control *Control;
@@ -747,7 +747,7 @@ public:
 	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
-	void init(action *A, action *A2, poset_classification *gen,
+	void init(actions::action *A, actions::action *A2, poset_classification *gen,
 		int target_size,
 		poset_classification_control *Control,
 		exact_cover_arguments *ECA, 
@@ -777,17 +777,17 @@ struct isomorph_worker_data {
 // #############################################################################
 
 
-void isomorph_read_statistic_files(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_read_statistic_files(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix, int level,
 	std::string *fname, int nb_files, int verbose_level);
-void isomorph_build_db(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_build_db(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level, int verbose_level);
-void isomorph_read_solution_files(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_read_solution_files(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	std::string *fname, int nb_files,
@@ -796,58 +796,58 @@ void isomorph_read_solution_files(action *A_base,
 		void *final_test_data, int verbose_level),
 	void *final_test_data,
 	int verbose_level);
-void isomorph_init_solutions_from_memory(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_init_solutions_from_memory(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int **Solutions, int *Nb_sol, int verbose_level);
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	std::string *fname, long int *list_of_cases,
 	int nb_files, int verbose_level);
-void isomorph_read_solution_files_from_clique_finder(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_read_solution_files_from_clique_finder(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	std::string *fname, int nb_files, int verbose_level);
-void isomorph_compute_orbits(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_compute_orbits(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level, int verbose_level);
-void isomorph_testing(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_testing(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int f_play_back, std::string &old_event_file,
 	int print_mod, int verbose_level);
-void isomorph_classification_graph(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_classification_graph(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int verbose_level);
-void isomorph_identify(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_identify(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int identify_nb_files, std::string *fname, int *Iso_type,
 	int f_save, int verbose_level);
-void isomorph_identify_table(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_identify_table(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int nb_rows, long int *Table, int *Iso_type,
 	int verbose_level);
 	// Table[nb_rows * size]
-void isomorph_worker(action *A_base, action *A,
+void isomorph_worker(actions::action *A_base, actions::action *A,
 	poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix_iso,
 	void (*work_callback)(isomorph *Iso, void *data, int verbose_level),
 	void *work_data,
 	int level, int verbose_level);
-void isomorph_compute_down_orbits(action *A_base,
-	action *A, poset_classification *gen,
+void isomorph_compute_down_orbits(actions::action *A_base,
+		actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix,
 	void *data,
 	int level, int verbose_level);
@@ -865,6 +865,80 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	isomorph &Iso, const char *prefix, char *label_of_structure_plural,
 	std::ostream &fp, int selection_size, int *selection,
 	int verbose_level);
+
+
+
+// #############################################################################
+// representatives.cpp
+// #############################################################################
+
+//! auxiliary class for class isomorph
+
+
+
+class representatives {
+public:
+	actions::action *A;
+
+	std::string prefix;
+	std::string fname_rep;
+	std::string fname_stabgens;
+	std::string fname_fusion;
+	std::string fname_fusion_ge;
+
+
+
+	// flag orbits:
+	int nb_objects;
+	int *fusion; // [nb_objects]
+		// fusion[i] == -2 means that the flag orbit i
+		// has not yet been processed by the
+		// isomorphism testing procedure.
+		// fusion[i] = i means that flag orbit [i]
+		// in an orbit representative
+		// Otherwise, fusion[i] is an earlier flag_orbit,
+		// and handle[i] is a group element that maps
+		// to it
+	int *handle; // [nb_objects]
+		// handle[i] is only relevant if fusion[i] != i,
+		// i.e., if flag orbit i is not a representative
+		// of an isomorphism type.
+		// In this case, handle[i] is the (handle of a)
+		// group element moving flag orbit i to flag orbit fusion[i].
+
+
+	// classified objects:
+	int count;
+	int *rep; // [count]
+	groups::sims **stab; // [count]
+
+
+
+	//char *elt;
+	int *Elt1;
+	int *tl; // [A->base_len]
+
+	int nb_open;
+	int nb_reps;
+	int nb_fused;
+
+
+	representatives();
+	void null();
+	~representatives();
+	void free();
+	void init(actions::action *A, int nb_objects, std::string &prefix, int verbose_level);
+	void write_fusion(int verbose_level);
+	void read_fusion(int verbose_level);
+	void write_representatives_and_stabilizers(int verbose_level);
+	void read_representatives_and_stabilizers(int verbose_level);
+	void save(int verbose_level);
+	void load(int verbose_level);
+	void calc_fusion_statistics();
+	void print_fusion_statistics();
+};
+
+
 
 
 

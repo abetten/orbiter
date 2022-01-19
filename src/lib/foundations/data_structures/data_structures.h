@@ -69,9 +69,10 @@ public:
 	~bitmatrix();
 	void init(int m, int n, int verbose_level);
 	void unrank_PG_elements_in_columns_consecutively(
-			finite_field *F, long int start_value, int verbose_level);
+			field_theory::finite_field *F, long int start_value, int verbose_level);
 	void rank_PG_elements_in_columns(
-			finite_field *F, int *perms, unsigned int *PG_ranks, int verbose_level);
+			field_theory::finite_field *F,
+			int *perms, unsigned int *PG_ranks, int verbose_level);
 	void print();
 	void zero_out();
 	int s_ij(int i, int j);
@@ -1587,7 +1588,7 @@ public:
 
 	vector_builder_description *Descr;
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	int *v;
 	int len;
@@ -1597,7 +1598,7 @@ public:
 
 	vector_builder();
 	~vector_builder();
-	void init(vector_builder_description *Descr, finite_field *F, int verbose_level);
+	void init(vector_builder_description *Descr, field_theory::finite_field *F, int verbose_level);
 };
 
 

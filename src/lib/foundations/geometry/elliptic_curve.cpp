@@ -46,7 +46,7 @@ void elliptic_curve::freeself()
 }
 
 
-void elliptic_curve::init(finite_field *F, int b, int c,
+void elliptic_curve::init(field_theory::finite_field *F, int b, int c,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

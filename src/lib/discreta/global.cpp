@@ -2029,7 +2029,7 @@ int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 
 
 
-void fine_tune(finite_field *F, int *mtxD, int verbose_level)
+void fine_tune(field_theory::finite_field *F, int *mtxD, int verbose_level)
 // added Dec 28 2009
 // This is here because it uses sqrt_mod_involved
 // used in algebra/create_element.cpp

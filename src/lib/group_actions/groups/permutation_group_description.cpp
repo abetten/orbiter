@@ -17,6 +17,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
+
 
 permutation_group_description::permutation_group_description()
 {
@@ -147,5 +150,5 @@ void permutation_group_description::print()
 
 
 
-}}
+}}}
 

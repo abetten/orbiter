@@ -1140,7 +1140,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 	any_group *G;
 
 	G = The_Orbiter_top_level_session->get_object_of_type_any_group(group_label);
-	linear_group *LG;
+	groups::linear_group *LG;
 
 	LG = G->LG;
 

@@ -54,8 +54,8 @@ void poset_with_group_action::freeself()
 	null();
 }
 
-void poset_with_group_action::init_subset_lattice(action *A, action *A2,
-		strong_generators *Strong_gens,
+void poset_with_group_action::init_subset_lattice(actions::action *A, actions::action *A2,
+		groups::strong_generators *Strong_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -79,8 +79,9 @@ void poset_with_group_action::init_subset_lattice(action *A, action *A2,
 	}
 }
 
-void poset_with_group_action::init_subspace_lattice(action *A, action *A2,
-		strong_generators *Strong_gens,
+void poset_with_group_action::init_subspace_lattice(
+		actions::action *A, actions::action *A2,
+		groups::strong_generators *Strong_gens,
 		algebra::vector_space *VS,
 		int verbose_level)
 {
@@ -105,9 +106,9 @@ void poset_with_group_action::init_subspace_lattice(action *A, action *A2,
 
 void poset_with_group_action::init(
 		poset_description *description,
-		action *A, // the action in which the group is given
-		action *A2, // the action in which we do the search
-		strong_generators *Strong_gens,
+		actions::action *A, // the action in which the group is given
+		actions::action *A2, // the action in which we do the search
+		groups::strong_generators *Strong_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -125,8 +126,8 @@ void poset_with_group_action::init(
 	n = A2->degree;
 	f_subspace_lattice = description->f_subspace_lattice;
 	VS = NEW_OBJECT(algebra::vector_space);
-	matrix_group *mtx;
-	finite_field *F;
+	groups::matrix_group *mtx;
+	field_theory::finite_field *F;
 	mtx = A->get_matrix_group();
 	F = mtx->GFq;
 	if (mtx->n != description->dimension) {
@@ -174,7 +175,7 @@ void poset_with_group_action::add_independence_condition(
 	}
 
 	algebra::rank_checker *rc;
-	matrix_group *mtx;
+	groups::matrix_group *mtx;
 
 	mtx = A->get_matrix_group();
 

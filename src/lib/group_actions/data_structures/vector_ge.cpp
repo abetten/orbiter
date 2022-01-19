@@ -23,7 +23,7 @@ vector_ge::vector_ge()
 	//null();
 }
 
-vector_ge::vector_ge(action *A)
+vector_ge::vector_ge(actions::action *A)
 {
 	null();
 	vector_ge::A = A;
@@ -50,7 +50,7 @@ void vector_ge::freeself()
 	}
 }
 
-void vector_ge::init(action *A, int verbose_level)
+void vector_ge::init(actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -87,7 +87,7 @@ void vector_ge::copy(vector_ge *&vector_copy, int verbose_level)
 	}
 }
 
-void vector_ge::init_by_hdl(action *A, int *gen_hdl, int nb_gen, int verbose_level)
+void vector_ge::init_by_hdl(actions::action *A, int *gen_hdl, int nb_gen, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -105,7 +105,7 @@ void vector_ge::init_by_hdl(action *A, int *gen_hdl, int nb_gen, int verbose_lev
 	}
 }
 
-void vector_ge::init_single(action *A, int *Elt, int verbose_level)
+void vector_ge::init_single(actions::action *A, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -120,7 +120,7 @@ void vector_ge::init_single(action *A, int *Elt, int verbose_level)
 	}
 }
 
-void vector_ge::init_double(action *A, int *Elt1, int *Elt2, int verbose_level)
+void vector_ge::init_double(actions::action *A, int *Elt1, int *Elt2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -137,7 +137,7 @@ void vector_ge::init_double(action *A, int *Elt1, int *Elt2, int verbose_level)
 }
 
 void vector_ge::init_from_permutation_representation(
-	action *A, sims *S, int *data,
+		actions::action *A, groups::sims *S, int *data,
 	int nb_elements, int verbose_level)
 // data[nb_elements * A->degree]
 {
@@ -170,7 +170,7 @@ void vector_ge::init_from_permutation_representation(
 	}
 }
 
-void vector_ge::init_from_data(action *A, int *data, 
+void vector_ge::init_from_data(actions::action *A, int *data,
 	int nb_elements, int elt_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -599,7 +599,7 @@ void vector_ge::conjugate_sasv(int *Elt)
 	FREE_int(Elt3);
 }
 
-void vector_ge::print_with_given_action(ostream &ost, action *A2)
+void vector_ge::print_with_given_action(ostream &ost, actions::action *A2)
 {
 	int i, l;
 
@@ -780,7 +780,7 @@ void vector_ge::save_csv(std::string &fname, int verbose_level)
 	}
 
 }
-void vector_ge::read_column_csv(std::string &fname, action *A, int col_idx, int verbose_level)
+void vector_ge::read_column_csv(std::string &fname, actions::action *A, int col_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -830,7 +830,7 @@ void vector_ge::read_column_csv(std::string &fname, action *A, int col_idx, int 
 }
 
 void vector_ge::extract_subset_of_elements_by_rank_text_vector(
-		const char *rank_vector_text, sims *S, int verbose_level)
+		const char *rank_vector_text, groups::sims *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -857,7 +857,7 @@ void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 }
 
 void vector_ge::extract_subset_of_elements_by_rank(
-		int *rank_vector, int len, sims *S, int verbose_level)
+		int *rank_vector, int len, groups::sims *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, r;
@@ -885,7 +885,7 @@ void vector_ge::extract_subset_of_elements_by_rank(
 	}
 }
 
-int vector_ge::test_if_all_elements_stabilize_a_point(action *A2, int pt)
+int vector_ge::test_if_all_elements_stabilize_a_point(actions::action *A2, int pt)
 {
 	int i;
 	
@@ -897,7 +897,7 @@ int vector_ge::test_if_all_elements_stabilize_a_point(action *A2, int pt)
 	return TRUE;
 }
 
-int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
+int vector_ge::test_if_all_elements_stabilize_a_set(actions::action *A2,
 		long int *set, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -923,11 +923,11 @@ int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
 }
 
 
-schreier *vector_ge::orbits_on_points_schreier(
-		action *A_given, int verbose_level)
+groups::schreier *vector_ge::orbits_on_points_schreier(
+		actions::action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	schreier *Sch;
+	groups::schreier *Sch;
 
 	if (f_v) {
 		cout << "vector_ge::orbits_on_points_schreier "
@@ -940,7 +940,7 @@ schreier *vector_ge::orbits_on_points_schreier(
 		cout << endl;
 	}
 
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
@@ -958,7 +958,7 @@ void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "vector_ge::reverse_isomorphism_exterior_square" << endl;

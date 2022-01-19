@@ -58,7 +58,7 @@ void boolean_function_classify::init_group(combinatorics::boolean_function_domai
 
 	int degree = BF->n + 1;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "boolean_function_classify::init_group "
@@ -82,9 +82,9 @@ void boolean_function_classify::init_group(combinatorics::boolean_function_domai
 	}
 
 
-	SG = NEW_OBJECT(strong_generators);
+	SG = NEW_OBJECT(groups::strong_generators);
 
-	matrix_group *Mtx;
+	groups::matrix_group *Mtx;
 
 	Mtx = A->get_matrix_group();
 
@@ -254,7 +254,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 					0 /*verbose_level*/);
 				cout << "found an orbit of length " << Orb->used_length << endl;
 
-				strong_generators *Stab_gens;
+				groups::strong_generators *Stab_gens;
 
 				cout << "orbit " << nb_orbits << ", computing stabilizer:" << endl;
 				Stab_gens = Orb->stabilizer_orbit_rep(
@@ -309,7 +309,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 					Orbiter->Int_vec->print(cout, coeff, BF->Poly[BF->n].get_nb_monomials());
 					cout << endl;
 
-					strong_generators *Stab_gens_clean;
+					groups::strong_generators *Stab_gens_clean;
 
 
 					Stab_gens_clean = Orb->stabilizer_any_point(

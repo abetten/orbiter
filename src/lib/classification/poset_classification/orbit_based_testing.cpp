@@ -214,7 +214,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 		cout << endl;
 	}
 
-	schreier Schreier;
+	groups::schreier Schreier;
 
 	Schreier.init(PC->get_A2(), verbose_level - 2);
 

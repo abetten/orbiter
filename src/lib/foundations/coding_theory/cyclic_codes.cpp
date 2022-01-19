@@ -15,8 +15,9 @@ namespace orbiter {
 namespace foundations {
 namespace coding_theory {
 
-void coding_theory_domain::make_BCH_code(int n, finite_field *F, int d,
-		nth_roots *&Nth, ring_theory::unipoly_object &P,
+void coding_theory_domain::make_BCH_code(int n,
+		field_theory::finite_field *F, int d,
+		field_theory::nth_roots *&Nth, ring_theory::unipoly_object &P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -27,7 +28,7 @@ void coding_theory_domain::make_BCH_code(int n, finite_field *F, int d,
 	}
 
 
-	Nth = NEW_OBJECT(nth_roots);
+	Nth = NEW_OBJECT(field_theory::nth_roots);
 
 	Nth->init(F, n, verbose_level);
 
@@ -229,7 +230,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		}
 	}
 
-	finite_field Fp;
+	field_theory::finite_field Fp;
 	ring_theory::unipoly_object M;
 	ring_theory::unipoly_object beta, beta_i, c;
 
@@ -590,7 +591,8 @@ void coding_theory_domain::print_polynomial_tight(std::ostream &ost,
 
 
 void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
-	finite_field &Fp, ring_theory::unipoly_domain &Fq,
+		field_theory::finite_field &Fp,
+		ring_theory::unipoly_domain &Fq,
 	int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
 	int f_poly, std::string &poly,
 	int verbose_level)
@@ -699,7 +701,7 @@ void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
 	}
 
 	{
-		finite_field fq;
+		field_theory::finite_field fq;
 
 		fq.init_override_polynomial(q, poly, FALSE /* f_without_tables */, verbose_level);
 		cout << "q = " << q << " override polynomial = " << poly << endl;
@@ -738,7 +740,7 @@ the_end:
 }
 
 void coding_theory_domain::BCH_generator_polynomial(
-	finite_field *F,
+		field_theory::finite_field *F,
 	ring_theory::unipoly_object &g, int n,
 	int designed_distance, int &bose_distance,
 	int &transversal_length, int *&transversal,

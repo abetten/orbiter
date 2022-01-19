@@ -73,7 +73,7 @@ void flag::freeself()
 }
 
 void flag::init(int n,
-		int *type, int type_len, finite_field *F,
+		int *type, int type_len, field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -89,7 +89,7 @@ void flag::init(int n,
 }
 
 void flag::init_recursion(int n,
-		int *type, int type_len, int idx, finite_field *F,
+		int *type, int type_len, int idx, field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

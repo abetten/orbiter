@@ -24,13 +24,16 @@ namespace group_actions {
 
 
 
-// actions
-class action;
-class action_global;
-class action_pointer_table;
-class nauty_interface_with_group;
-class stabilizer_chain_base_data;
+namespace actions {
 
+	// actions
+	class action;
+	class action_global;
+	class action_pointer_table;
+	class nauty_interface_with_group;
+	class stabilizer_chain_base_data;
+
+}
 
 // data_structures
 class group_container;
@@ -44,28 +47,37 @@ class set_and_stabilizer;
 class union_find_on_k_subsets;
 class union_find;
 class vector_ge;
+typedef class vector_ge *p_vector_ge;
 
 
-// groups
-class direct_product;
-class exceptional_isomorphism_O4;
-class linear_group_description;
-class linear_group;
-class matrix_group;
-class orbits_on_something;
-class permutation_group_create;
-class permutation_group_description;
-class permutation_representation_domain;
-class permutation_representation;
-class schreier;
-class schreier_sims;
-class sims;
-class strong_generators;
-class subgroup;
-class sylow_structure;
-class wreath_product;
+namespace groups {
 
 
+	// groups
+	class direct_product;
+	class exceptional_isomorphism_O4;
+	class linear_group_description;
+	class linear_group;
+	class matrix_group;
+	class orbits_on_something;
+	class permutation_group_create;
+	class permutation_group_description;
+	class permutation_representation_domain;
+	class permutation_representation;
+	class schreier;
+	class schreier_sims;
+	class sims;
+	class strong_generators;
+	class subgroup;
+	class sylow_structure;
+	class wreath_product;
+
+	typedef class sims *p_sims;
+	typedef sims *psims;
+	typedef strong_generators *pstrong_generators;
+	typedef class subgroup *psubgroup;
+
+}
 
 // induced_actions
 class action_by_conjugation;
@@ -95,12 +107,6 @@ class action_on_wedge_product;
 class product_action;
 
 
-// pointer types:
-typedef class sims *p_sims;
-typedef sims *psims;
-typedef strong_generators *pstrong_generators;
-typedef class subgroup *psubgroup;
-typedef class vector_ge *p_vector_ge;
 
 
 
@@ -175,11 +181,11 @@ enum permutation_group_type {
 //! interface for the various types of group actions
 
 union symmetry_group {
-	matrix_group *matrix_grp;
-	permutation_representation_domain *perm_grp;
-	wreath_product *wreath_product_group;
-	direct_product *direct_product_group;
-	permutation_representation *Permutation_representation;
+	groups::matrix_group *matrix_grp;
+	groups::permutation_representation_domain *perm_grp;
+	groups::wreath_product *wreath_product_group;
+	groups::direct_product *direct_product_group;
+	groups::permutation_representation *Permutation_representation;
 	action_on_sets *on_sets;
 	action_on_subgroups *on_subgroups;
 	action_on_k_subsets *on_k_subsets;

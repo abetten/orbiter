@@ -149,7 +149,7 @@ void homogeneous_polynomial_domain::null()
 {
 }
 
-void homogeneous_polynomial_domain::init(finite_field *F,
+void homogeneous_polynomial_domain::init(field_theory::finite_field *F,
 		int nb_vars, int degree, int f_init_incidence_structure,
 		monomial_ordering_type Monomial_ordering_type,
 		int verbose_level)
@@ -219,7 +219,7 @@ projective_space *homogeneous_polynomial_domain::get_P()
 	return P;
 }
 
-finite_field *homogeneous_polynomial_domain::get_F()
+field_theory::finite_field *homogeneous_polynomial_domain::get_F()
 {
 	return F;
 }
@@ -315,9 +315,9 @@ void homogeneous_polynomial_domain::make_monomials(
 	
 	nb_monomials = Combi.int_n_choose_k(nb_variables + degree - 1, nb_variables - 1);
 
-	diophant *D;
+	solvers::diophant *D;
 
-	D = NEW_OBJECT(diophant);
+	D = NEW_OBJECT(solvers::diophant);
 
 	D->open(1, nb_variables);
 	D->fill_coefficient_matrix_with(1);

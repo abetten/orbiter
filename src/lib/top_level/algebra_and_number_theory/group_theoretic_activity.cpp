@@ -283,7 +283,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 
-		orbits_on_something *Orb;
+		groups::orbits_on_something *Orb;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity before AG->orbits_on_points" << endl;
@@ -593,12 +593,12 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 {
 	int f_v = (verbose_level >= 1);
 	long int *spread_elements_numeric; // do not free
-	action *An;
-	action *An1;
+	actions::action *An;
+	actions::action *An1;
 	vector_ge *gens;
 	translation_plane_via_andre_model *Andre;
-	matrix_group *M; // do not free
-	finite_field *F;
+	groups::matrix_group *M; // do not free
+	field_theory::finite_field *F;
 
 	int f_semilinear = FALSE;
 	int n, k, q;

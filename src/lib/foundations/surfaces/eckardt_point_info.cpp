@@ -10,6 +10,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
+
 
 static void intersection_matrix_entry_print(int *p,
 	int m, int n, int i, int j, int val,
@@ -489,6 +491,7 @@ static void intersection_matrix_entry_print(int *p,
 
 
 
-}}
+}}}
+
 
 

@@ -51,7 +51,7 @@ void orbiter_symbol_table_entry::init(std::string &str_label)
 }
 
 void orbiter_symbol_table_entry::init_finite_field(std::string &label,
-		finite_field *F, int verbose_level)
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -548,9 +548,9 @@ void orbiter_symbol_table_entry::print()
 	}
 	else if (type == t_object) {
 		if (object_type == t_finite_field) {
-			finite_field *F;
+			field_theory::finite_field *F;
 
-			F = (finite_field *) ptr;
+			F = (field_theory::finite_field *) ptr;
 			F->print();
 		}
 		else if (object_type == t_linear_group) {

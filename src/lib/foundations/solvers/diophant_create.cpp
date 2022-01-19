@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace solvers {
 
 
 diophant_create::diophant_create()
@@ -53,10 +54,10 @@ void diophant_create::init(
 
 	if (Descr->f_maximal_arc) {
 
-		finite_field *F = NULL;
+		field_theory::finite_field *F = NULL;
 
 		if (Descr->f_q) {
-			F = NEW_OBJECT(finite_field);
+			F = NEW_OBJECT(field_theory::finite_field);
 
 			if (Descr->f_override_polynomial) {
 				cout << "creating finite field of order q=" << Descr->input_q
@@ -435,7 +436,7 @@ void diophant_create::init(
 }
 
 
-}}
+}}}
 
 
 

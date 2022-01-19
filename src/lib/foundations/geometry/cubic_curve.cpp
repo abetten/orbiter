@@ -64,7 +64,7 @@ void cubic_curve::freeself()
 	}
 }
 
-void cubic_curve::init(finite_field *F, int verbose_level)
+void cubic_curve::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

@@ -142,7 +142,7 @@ void quartic_curve_activity::do_report(
 		cout << "quartic_curve_activity::do_report" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = QC->QCDA->Dom->F;
 

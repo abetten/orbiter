@@ -284,7 +284,7 @@ void quartic_curve_create::override_group(std::string &group_order_text,
 				"group_order=" << group_order_text
 				<< " nb_gens=" << nb_gens << endl;
 	}
-	Sg = NEW_OBJECT(strong_generators);
+	Sg = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "quartic_curve_create::override_group before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
@@ -375,7 +375,7 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(std::string &coe
 	FREE_int(coeff_list);
 
 
-	QO = NEW_OBJECT(quartic_curve_object);
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficient_vector "
@@ -429,7 +429,7 @@ void quartic_curve_create::create_quartic_curve_by_coefficient_vector(int *eqn15
 
 
 
-	QO = NEW_OBJECT(quartic_curve_object);
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficient_vector "
@@ -499,7 +499,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(quartic_curve_dom
 	Orbiter->Lint_vec->copy(p_bitangents, bitangents28, 28);
 
 
-	QO = NEW_OBJECT(quartic_curve_object);
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue before QO->init_equation_and_bitangents" << endl;
@@ -513,7 +513,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(quartic_curve_dom
 	}
 
 
-	Sg = NEW_OBJECT(strong_generators);
+	Sg = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
@@ -814,7 +814,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 
 
-	QO = NEW_OBJECT(quartic_curve_object);
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
 
 
 	if (f_v) {
@@ -886,7 +886,7 @@ void quartic_curve_create::apply_transformations(
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
-	action *A;
+	actions::action *A;
 	int desired_sz;
 
 	if (f_v) {
@@ -988,9 +988,9 @@ void quartic_curve_create::apply_transformations(
 
 				// apply the transformation to the set of generators:
 
-				strong_generators *SG2;
+				groups::strong_generators *SG2;
 
-				SG2 = NEW_OBJECT(strong_generators);
+				SG2 = NEW_OBJECT(groups::strong_generators);
 				if (f_v) {
 					cout << "quartic_curve_create::apply_transformations "
 							"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
@@ -1094,7 +1094,7 @@ void quartic_curve_create::compute_group(projective_space_with_action *PA,
 	int f_v = (verbose_level >= 1);
 	int i;
 	long int a;
-	action *A;
+	actions::action *A;
 	char str[1000];
 
 	if (f_v) {

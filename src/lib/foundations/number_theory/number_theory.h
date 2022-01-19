@@ -37,7 +37,7 @@ public:
 
 	cyclotomic_sets();
 	~cyclotomic_sets();
-	void init(finite_field *F, int n, int verbose_level);
+	void init(field_theory::finite_field *F, int n, int verbose_level);
 	void print();
 	void print_latex(std::ostream &ost);
 	void print_latex_with_selection(std::ostream &ost, int *Selection, int nb_sel);
@@ -60,7 +60,7 @@ public:
 
 	std::string fname_code;
 
-	finite_field *F; // no ownership, do not destroy
+	field_theory::finite_field *F; // no ownership, do not destroy
 
 	int *N;
 
@@ -96,7 +96,7 @@ public:
 	int *bit_reversal;
 
 	int Q;
-	finite_field *FQ;
+	field_theory::finite_field *FQ;
 	int alphaQ;
 	int psi;
 	int *Psi_powers; // powers of psi
@@ -104,7 +104,7 @@ public:
 
 	number_theoretic_transform();
 	~number_theoretic_transform();
-	void init(finite_field *F,
+	void init(field_theory::finite_field *F,
 			int k, int q, int verbose_level);
 	void write_code(std::string &fname_code,
 			int verbose_level);
@@ -120,7 +120,7 @@ public:
 	void make_D_matrix(int s, int verbose_level);
 	void make_T_matrix(int s, int verbose_level);
 	void make_P_matrix(int s, int verbose_level);
-	void multiply_matrix_stack(finite_field *F, int **S,
+	void multiply_matrix_stack(field_theory::finite_field *F, int **S,
 			int nb, int sz, int *Result, int verbose_level);
 };
 
@@ -213,31 +213,31 @@ public:
 	int nb_primes(int n);
 	void cyclotomic_set(std::vector<int> &cyclotomic_set,
 			int a, int q, int n, int verbose_level);
-	void elliptic_curve_addition(finite_field *F,
+	void elliptic_curve_addition(field_theory::finite_field *F,
 			int b, int c,
 		int x1, int x2, int x3,
 		int y1, int y2, int y3,
 		int &z1, int &z2, int &z3, int verbose_level);
-	void elliptic_curve_point_multiple(finite_field *F,
+	void elliptic_curve_point_multiple(field_theory::finite_field *F,
 			int b, int c, int n,
 		int x1, int y1, int z1,
 		int &x3, int &y3, int &z3,
 		int verbose_level);
-	void elliptic_curve_point_multiple_with_log(finite_field *F,
+	void elliptic_curve_point_multiple_with_log(field_theory::finite_field *F,
 			int b, int c, int n,
 		int x1, int y1, int z1,
 		int &x3, int &y3, int &z3,
 		int verbose_level);
-	int elliptic_curve_evaluate_RHS(finite_field *F,
+	int elliptic_curve_evaluate_RHS(field_theory::finite_field *F,
 			int x, int b, int c);
-	void elliptic_curve_points(finite_field *F,
+	void elliptic_curve_points(field_theory::finite_field *F,
 			int b, int c, int &nb, int *&T, int verbose_level);
-	void elliptic_curve_all_point_multiples(finite_field *F,
+	void elliptic_curve_all_point_multiples(field_theory::finite_field *F,
 			int b, int c, int &order,
 		int x1, int y1, int z1,
 		std::vector<std::vector<int> > &Pts,
 		int verbose_level);
-	int elliptic_curve_discrete_log(finite_field *F,
+	int elliptic_curve_discrete_log(field_theory::finite_field *F,
 			int b, int c,
 		int x1, int y1, int z1,
 		int x3, int y3, int z3,

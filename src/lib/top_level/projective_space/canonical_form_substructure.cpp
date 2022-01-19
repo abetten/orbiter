@@ -290,8 +290,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 void canonical_form_substructure::handle_orbit(
 		int *transporter_to_canonical_form,
-		strong_generators *&Gens_stabilizer_original_set,
-		strong_generators *&Gens_stabilizer_canonical_form,
+		groups::strong_generators *&Gens_stabilizer_original_set,
+		groups::strong_generators *&Gens_stabilizer_canonical_form,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -334,8 +334,8 @@ void canonical_form_substructure::handle_orbit(
 
 	Canonical_form_classifier->SubC->A->element_move(CS->T1, transporter_to_canonical_form, 0);
 
-	Gens_stabilizer_original_set = NEW_OBJECT(strong_generators);
-	Gens_stabilizer_canonical_form = NEW_OBJECT(strong_generators);
+	Gens_stabilizer_original_set = NEW_OBJECT(groups::strong_generators);
+	Gens_stabilizer_canonical_form = NEW_OBJECT(groups::strong_generators);
 
 	Gens_stabilizer_original_set->init_from_sims(CS->Stab, verbose_level);
 

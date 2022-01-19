@@ -495,7 +495,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		coset_reps->allocate(36, 0/*verbose_level - 2*/);
 
 
-		strong_generators *S;
+		groups::strong_generators *S;
 		ring_theory::longinteger_object go;
 
 
@@ -588,7 +588,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 		coset_reps->reallocate(nb_coset_reps, 0/*verbose_level - 2*/);
 
-		strong_generators *Aut_gens;
+		groups::strong_generators *Aut_gens;
 
 		{
 			ring_theory::longinteger_object ago;
@@ -598,7 +598,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 						"Extending the "
 						"group by a factor of " << nb_coset_reps << endl;
 			}
-			Aut_gens = NEW_OBJECT(strong_generators);
+			Aut_gens = NEW_OBJECT(groups::strong_generators);
 			Aut_gens->init_group_extension(S, coset_reps,
 					nb_coset_reps, 0/*verbose_level - 2*/);
 
@@ -1261,7 +1261,7 @@ void surface_classify_wedge::identify_Eckardt(
 				"a = " << a << endl;
 
 
-		surface_object *SO;
+		algebraic_geometry::surface_object *SO;
 		
 		SO = Surf->create_Eckardt_surface(
 				a, b,
@@ -1314,7 +1314,7 @@ void surface_classify_wedge::identify_F13(
 		Nb_lines[a] = -1;
 		//Nb_E[a] = -1;
 
-		surface_object *SO;
+		algebraic_geometry::surface_object *SO;
 
 		SO = Surf->create_surface_F13(a, verbose_level);
 
@@ -1374,7 +1374,7 @@ void surface_classify_wedge::identify_Bes(
 			Nb_lines[a * q + c] = -1;
 			//Nb_E[a * q + c] = -1;
 
-			surface_object *SO;
+			algebraic_geometry::surface_object *SO;
 
 			SO = Surf->create_surface_bes(a, c, verbose_level);
 
@@ -1596,7 +1596,7 @@ void surface_classify_wedge::identify_general_abcd(
 					Nb_lines[a * q3 + b * q2 + c * q + d] = -1;
 					//Nb_E[a * q3 + b * q2 + c * q + d] = -1;
 
-					surface_object *SO;
+					algebraic_geometry::surface_object *SO;
 
 					SO = Surf->create_surface_general_abcd(a, b, c, d, verbose_level);
 
@@ -1676,7 +1676,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 			cout << "an isomorphism from surface1 to surface2 is" << endl;
 			A->element_print(Elt_isomorphism_1to2, cout);
 		}
-		matrix_group *mtx;
+		groups::matrix_group *mtx;
 
 		mtx = A->G.matrix_grp;
 
@@ -2077,7 +2077,7 @@ void surface_classify_wedge::identify_surface(
 	cout << endl;
 
 
-	matrix_group *mtx;
+	groups::matrix_group *mtx;
 
 	mtx = A->G.matrix_grp;
 	
@@ -2246,9 +2246,9 @@ void surface_classify_wedge::report_surface(
 		cout << "surface_classify_wedge::report_surface "
 				"before SO->init_with_27_lines" << endl;
 	}
-	surface_object *SO;
+	algebraic_geometry::surface_object *SO;
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 	SO->init_with_27_lines(Surf, Lines, equation,
 			TRUE /*f_find_double_six_and_rearrange_lines*/,
 			verbose_level);
@@ -3188,8 +3188,8 @@ void surface_classify_wedge::recognition(
 		cout << "surface_classify_wedge::recognition" << endl;
 	}
 	surface_create *SC;
-	strong_generators *SG;
-	strong_generators *SG0;
+	groups::strong_generators *SG;
+	groups::strong_generators *SG0;
 
 	SC = NEW_OBJECT(surface_create);
 
@@ -3213,8 +3213,8 @@ void surface_classify_wedge::recognition(
 		cout << "surface belongs to iso type "
 				<< isomorphic_to << endl;
 	}
-	SG = NEW_OBJECT(strong_generators);
-	SG0 = NEW_OBJECT(strong_generators);
+	SG = NEW_OBJECT(groups::strong_generators);
+	SG0 = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "before SG->stabilizer_of_cubic_surface_from_catalogue" << endl;
 		}

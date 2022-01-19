@@ -29,7 +29,7 @@ linear_algebra::~linear_algebra()
 {
 }
 
-void linear_algebra::init(finite_field *F, int verbose_level)
+void linear_algebra::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

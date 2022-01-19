@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 
@@ -331,5 +332,5 @@ int quartic_curve_object::find_point(long int P, int &idx)
 
 
 
-}}
+}}}
 

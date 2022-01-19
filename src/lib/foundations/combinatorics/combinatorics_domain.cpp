@@ -1887,7 +1887,7 @@ void combinatorics_domain::print_int_matrix(
 }
 
 int combinatorics_domain::create_roots_H4(
-		finite_field *F, int *roots)
+		field_theory::finite_field *F, int *roots)
 {
 	int i, j, k, j1, j2, j3, j4, n;
 	int v[4];

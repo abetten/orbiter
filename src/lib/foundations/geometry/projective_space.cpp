@@ -147,7 +147,7 @@ void projective_space::freeself()
 	}
 }
 
-void projective_space::init(int n, finite_field *F, 
+void projective_space::init(int n, field_theory::finite_field *F,
 	int f_init_incidence_structure, 
 	int verbose_level)
 // n is projective dimension
@@ -1229,9 +1229,9 @@ int projective_space::nonconical_six_arc_get_nb_Eckardt_points(
 	if (f_v) {
 		cout << "projective_space::nonconical_six_arc_get_nb_Eckardt_points" << endl;
 	}
-	eckardt_point_info *E;
+	algebraic_geometry::eckardt_point_info *E;
 	int nb_E;
-	surface_domain *Surf = NULL;
+	algebraic_geometry::surface_domain *Surf = NULL;
 
 	E = compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
 
@@ -1243,7 +1243,7 @@ int projective_space::nonconical_six_arc_get_nb_Eckardt_points(
 	return nb_E;
 }
 
-int projective_space::test_nb_Eckardt_points(surface_domain *Surf,
+int projective_space::test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
 		long int *S, int len, int pt, int nb_E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1260,7 +1260,7 @@ int projective_space::test_nb_Eckardt_points(surface_domain *Surf,
 	Orbiter->Lint_vec->copy(S, Arc6, 5);
 	Arc6[5] = pt;
 
-	eckardt_point_info *E;
+	algebraic_geometry::eckardt_point_info *E;
 
 	E = compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
 
@@ -1962,13 +1962,13 @@ void projective_space::compute_bisecants_and_conics(
 	}
 }
 
-eckardt_point_info *projective_space::compute_eckardt_point_info(
-	surface_domain *Surf, long int *arc6,
+algebraic_geometry::eckardt_point_info *projective_space::compute_eckardt_point_info(
+	algebraic_geometry::surface_domain *Surf, long int *arc6,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	eckardt_point_info *E;
+	algebraic_geometry::eckardt_point_info *E;
 	
 	if (f_v) {
 		cout << "projective_space::compute_eckardt_point_info" << endl;
@@ -1985,7 +1985,7 @@ eckardt_point_info *projective_space::compute_eckardt_point_info(
 		cout << endl;
 	}
 
-	E = NEW_OBJECT(eckardt_point_info);
+	E = NEW_OBJECT(algebraic_geometry::eckardt_point_info);
 	E->init(Surf, this, arc6, verbose_level);
 
 	if (f_v) {

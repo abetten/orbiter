@@ -66,7 +66,7 @@ void vector_space::freeself()
 	}
 }
 
-void vector_space::init(finite_field *F, int dimension,
+void vector_space::init(field_theory::finite_field *F, int dimension,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

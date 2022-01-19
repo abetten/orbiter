@@ -17,7 +17,7 @@ namespace classification {
 
 void poset_orbit_node::store_strong_generators(
 		poset_classification *gen,
-		strong_generators *Strong_gens)
+		groups::strong_generators *Strong_gens)
 {
 	int i;
 
@@ -139,7 +139,7 @@ int poset_orbit_node::test_if_stabilizer_is_trivial()
 
 void poset_orbit_node::get_stabilizer_generators(
 	poset_classification *PC,
-	strong_generators *&Strong_gens,
+	groups::strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -150,7 +150,7 @@ void poset_orbit_node::get_stabilizer_generators(
 		cout << "poset_orbit_node::get_stabilizer_generators "
 				"nb_strong_generators=" << nb_strong_generators << endl;
 	}
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 #if 0
 	Strong_gens->init_by_hdl(PC->get_A(),
@@ -490,7 +490,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	{
 #if 1
 		action_on_factor_space *AF;
-		action A_factor_space;
+		actions::action A_factor_space;
 		poset_orbit_node *Op = gen->get_node(prev);
 
 		AF = NEW_OBJECT(action_on_factor_space);
@@ -675,7 +675,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 					"setting up restricted action from the previous "
 					"schreier vector:" << endl;
 		}
-		action AR;
+		actions::action AR;
 
 
 		if (Op->nb_strong_generators) {
@@ -765,7 +765,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 void poset_orbit_node::create_schreier_vector_wrapper(
 	poset_classification *gen,
 	int f_create_schreier_vector,
-	schreier *Schreier,
+	groups::schreier *Schreier,
 	int verbose_level)
 // calls Schreier.get_schreier_vector
 // called from poset_orbit_node_downstep.cpp and from
@@ -833,8 +833,8 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 	poset_classification *gen,
 	int f_create_schreier_vector,
-	schreier &Schreier,
-	action *A_factor_space, action_on_factor_space *AF,
+	groups::schreier &Schreier,
+	actions::action *A_factor_space, action_on_factor_space *AF,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -22,6 +22,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace solvers {
 
 
 
@@ -1347,5 +1348,6 @@ void dlx_solver::UnCover(dlx_node *ColNode)
 
 
 
-}}
+}}}
+
 

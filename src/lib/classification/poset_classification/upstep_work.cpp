@@ -607,9 +607,9 @@ int upstep_work::init_extension_node(int verbose_level)
 		cout << "}" << endl;
 	}
 
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(H->S, 0);
 
 #if 0
@@ -658,11 +658,11 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	int f_vvv = (verbose_level >= 3);
 	int f_v4 = (verbose_level >= 4);
 	int f_v5 = (verbose_level >= 5);
-	schreier up_orbit;
+	groups::schreier up_orbit;
 	int possible_image;
 	int *aut, idx;
 	trace_result r;
-	action *A_by_restriction;
+	actions::action *A_by_restriction;
 	int final_node, final_ex;
 	union_find UF;
 	

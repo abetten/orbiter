@@ -26,9 +26,9 @@ public:
 	int k;
 	int q;
 	grassmann *Grass;
-	finite_field *F;
-	action *A; // P Gamma L(n,q)
-	action *A2; // action of A on grassmannian of k-subspaces of V(n,q)
+	field_theory::finite_field *F;
+	actions::action *A; // P Gamma L(n,q)
+	actions::action *A2; // action of A on grassmannian of k-subspaces of V(n,q)
 	int f_projective;
 	int f_semilinear;
 	int nCkq; // n choose k in q
@@ -53,8 +53,8 @@ public:
 
 	// initialized in compute_starter():
 	long int starter_j1, starter_j2, starter_j3;
-	action *A0;	// P Gamma L(k,q)
-	action *A0_linear; // PGL(k,q), needed for compute_live_points
+	actions::action *A0;	// P Gamma L(k,q)
+	actions::action *A0_linear; // PGL(k,q), needed for compute_live_points
 	vector_ge *gens2;
 
 	long int *live_points;
@@ -65,8 +65,8 @@ public:
 	~recoordinatize();
 	void null();
 	void freeself();
-	void init(int n, int k, finite_field *F, grassmann *Grass,
-		action *A, action *A2,
+	void init(int n, int k, field_theory::finite_field *F, grassmann *Grass,
+			actions::action *A, actions::action *A2,
 		int f_projective, int f_semilinear,
 		int (*check_function_incremental)(int len, long int *S,
 			void *data, int verbose_level),
@@ -75,8 +75,8 @@ public:
 		int verbose_level);
 	void do_recoordinatize(long int i1, long int i2, long int i3, int verbose_level);
 	void compute_starter(long int *&S, int &size,
-		strong_generators *&Strong_gens, int verbose_level);
-	void stabilizer_of_first_three(strong_generators *&Strong_gens,
+			groups::strong_generators *&Strong_gens, int verbose_level);
+	void stabilizer_of_first_three(groups::strong_generators *&Strong_gens,
 		int verbose_level);
 	void compute_live_points(int verbose_level);
 	void compute_live_points_low_level(long int *&live_points,
@@ -107,7 +107,7 @@ public:
 
 	projective_space_with_action *PA;
 
-	matrix_group *Mtx;
+	groups::matrix_group *Mtx;
 
 
 	int order;
@@ -125,9 +125,9 @@ public:
 	int starter_size;
 
 
-	action *A;
+	actions::action *A;
 		// P Gamma L(n,q)
-	action *A2;
+	actions::action *A2;
 		// action of A on grassmannian of k-subspaces of V(n,q)
 	action_on_grassmannian *AG;
 	grassmann *Grass;
@@ -141,7 +141,7 @@ public:
 	// if f_recoordinatize is TRUE:
 	long int *Starter;
 	int Starter_size;
-	strong_generators *Starter_Strong_gens;
+	groups::strong_generators *Starter_Strong_gens;
 
 	// for check_function_incremental:
 	int *tmp_M1;
@@ -196,8 +196,8 @@ public:
 	int incremental_check_function(int len, long int *S, int verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens,
-		diophant *&Dio, long int *&col_labels,
+		groups::strong_generators *Strong_gens,
+		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	void compute_dual_spread(int *spread, int *dual_spread,
@@ -206,19 +206,19 @@ public:
 
 	// spread_classify2.cpp
 	void print_isomorphism_type(isomorph *Iso,
-		int iso_cnt, sims *Stab, schreier &Orb,
+		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int verbose_level);
 		// called from callback_print_isomorphism_type()
 	void print_isomorphism_type2(isomorph *Iso,
 			std::ostream &ost,
-			int iso_cnt, sims *Stab, schreier &Orb,
+			int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 			long int *data, int verbose_level);
 	void save_klein_invariants(char *prefix,
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
 	void klein(std::ostream &ost,
 		isomorph *Iso,
-		int iso_cnt, sims *Stab, schreier &Orb,
+		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int data_size, int verbose_level);
 	void plane_intersection_type_of_klein_image(
 		projective_space *P3,
@@ -254,8 +254,9 @@ void spread_lifting_early_test_function(long int *S, int len,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void spread_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
 int starter_canonize_callback(long int *Set, int len, int *Elt,
@@ -326,19 +327,19 @@ public:
 	std::string label_tex;
 
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int k;
 
 	int f_semilinear;
 
-	action *A;
+	actions::action *A;
 	int degree;
 
 	long int *set;
 	int sz;
 
 	int f_has_group;
-	strong_generators *Sg;
+	groups::strong_generators *Sg;
 
 
 
@@ -376,7 +377,7 @@ public:
 
 	long int *candidates;
 	int nb_candidates;
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
 	long int *points_covered_by_starter;
 		// [nb_points_covered_by_starter]
@@ -402,15 +403,16 @@ public:
 	void init(spread_classify *S, exact_cover *E,
 		long int *starter, int starter_size,
 		int starter_case_number, int starter_number_of_cases,
-		long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+		long int *candidates, int nb_candidates,
+		groups::strong_generators *Strong_gens,
 		int f_lex,
 		int verbose_level);
 	void compute_points_covered_by_starter(
 		int verbose_level);
 	void prepare_free_points(
 		int verbose_level);
-	diophant *create_system(int verbose_level);
-	void find_coloring(diophant *Dio,
+	solvers::diophant *create_system(int verbose_level);
+	void find_coloring(solvers::diophant *Dio,
 		int *&col_color, int &nb_colors,
 		int verbose_level);
 
@@ -503,7 +505,7 @@ class spread_table_with_selection {
 public:
 
 	spread_classify *T;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int q;
 	int spread_size;
 	int size_of_packing;
@@ -534,7 +536,7 @@ public:
 
 	data_structures::bitvector *Bitvec;
 
-	action *A_on_spreads;
+	actions::action *A_on_spreads;
 
 	spread_table_with_selection();
 	~spread_table_with_selection();
@@ -552,10 +554,12 @@ public:
 			int line1, int line2, int verbose_level);
 	int test_if_packing_is_self_dual(int *packing, int verbose_level);
 	void predict_spread_table_length(
-		action *A, strong_generators *Strong_gens,
+			actions::action *A,
+			groups::strong_generators *Strong_gens,
 		int verbose_level);
 	void make_spread_table(
-			action *A, action *A2, strong_generators *Strong_gens,
+			actions::action *A, actions::action *A2,
+			groups::strong_generators *Strong_gens,
 			long int **&Sets, int *&Prev, int *&Label, int *&first, int *&len,
 			int *&isomorphism_type_of_spread,
 			int verbose_level);
@@ -601,7 +605,7 @@ void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra
 
 class translation_plane_via_andre_model {
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	int q;
 	int k;
 	int n;
@@ -619,12 +623,12 @@ public:
 	int *Line_through_two_points; // [N * N]
 	int *Line_intersection; // [N * N]
 
-	action *An;
-	action *An1;
+	actions::action *An;
+	actions::action *An1;
 
-	action *OnAndre;
+	actions::action *OnAndre;
 
-	strong_generators *strong_gens;
+	groups::strong_generators *strong_gens;
 
 	incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
@@ -642,7 +646,7 @@ public:
 	void null();
 	void freeself();
 	void init(long int *spread_elements_numeric,
-		int k, action *An, action *An1,
+		int k, actions::action *An, actions::action *An1,
 		vector_ge *spread_stab_gens,
 		ring_theory::longinteger_object &spread_stab_go,
 		std::string &label,

@@ -29,10 +29,10 @@ namespace top_level {
 
 class orbit_of_equations {
 public:
-	action *A;
+	actions::action *A;
 	action_on_homogeneous_polynomials *AonHPD;
-	finite_field *F;
-	strong_generators *SG;
+	field_theory::finite_field *F;
+	groups::strong_generators *SG;
 	int nb_monomials;
 	int sz; // = 1 + nb_monomials
 	int sz_for_compare; // = 1 + nb_monomials
@@ -58,9 +58,9 @@ public:
 	~orbit_of_equations();
 	void null();
 	void freeself();
-	void init(action *A, finite_field *F, 
+	void init(actions::action *A, field_theory::finite_field *F,
 		action_on_homogeneous_polynomials *AonHPD, 
-		strong_generators *SG, int *coeff_in, 
+		groups::strong_generators *SG, int *coeff_in,
 		int verbose_level);
 	void map_an_equation(int *object_in, int *object_out, 
 		int *Elt, int verbose_level);
@@ -73,16 +73,16 @@ public:
 	void get_canonical_form(
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
-			strong_generators *&gens_stab_of_canonical_equation,
+			groups::strong_generators *&gens_stab_of_canonical_equation,
 			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
-	strong_generators *stabilizer_orbit_rep(
+	groups::strong_generators *stabilizer_orbit_rep(
 			ring_theory::longinteger_object &full_group_order, int verbose_level);
-	void stabilizer_orbit_rep_work(action *default_action,
+	void stabilizer_orbit_rep_work(actions::action *default_action,
 			ring_theory::longinteger_object &go,
-		sims *&Stab, int verbose_level);
+			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
-	strong_generators *stabilizer_any_point(
+	groups::strong_generators *stabilizer_any_point(
 			ring_theory::longinteger_object &full_group_order, int idx,
 		int verbose_level);
 	int search_equation(int *eqn, int &idx, int verbose_level);
@@ -106,8 +106,8 @@ int orbit_of_equations_compare_func(void *a, void *b, void *data);
 
 class orbit_of_sets {
 public:
-	action *A;
-	action *A2;
+	actions::action *A;
+	actions::action *A2;
 	vector_ge *gens;
 	long int *set; // the set whose orbit we want to compute; it has size 'sz'
 	int sz;
@@ -141,7 +141,7 @@ public:
 	~orbit_of_sets();
 	void null();
 	void freeself();
-	void init(action *A, action *A2,
+	void init(actions::action *A, actions::action *A2,
 			long int *set, int sz,
 			vector_ge *gens, int verbose_level);
 	void compute(int verbose_level);
@@ -174,9 +174,9 @@ public:
 
 class orbit_of_subspaces {
 public:
-	action *A;
-	action *A2;
-	finite_field *F;
+	actions::action *A;
+	actions::action *A2;
+	field_theory::finite_field *F;
 	vector_ge *gens;
 	int f_lint;
 	int k;
@@ -230,7 +230,7 @@ public:
 	~orbit_of_subspaces();
 	void null();
 	void freeself();
-	void init(action *A, action *A2, finite_field *F, 
+	void init(actions::action *A, actions::action *A2, field_theory::finite_field *F,
 		int *subspace, int k, int n, 
 		int f_has_desired_pivots, int *desired_pivots, 
 		int f_has_rank_functions, void *rank_unrank_data, 
@@ -243,7 +243,7 @@ public:
 		void *compute_image_of_vector_callback_data, 
 		vector_ge *gens, int verbose_level);
 	void init_lint(
-		action *A, action *A2, finite_field *F,
+			actions::action *A, actions::action *A2, field_theory::finite_field *F,
 		long int *subspace_by_rank, int k, int n,
 		int f_has_desired_pivots, int *desired_pivots,
 		int f_has_rank_functions, void *rank_unrank_data,
@@ -290,10 +290,10 @@ public:
 	int find_subspace_lint(
 			long int *subspace_ranks, int &idx, int verbose_level);
 	void get_random_schreier_generator(int *Elt, int verbose_level);
-	strong_generators *stabilizer_orbit_rep(
+	groups::strong_generators *stabilizer_orbit_rep(
 			ring_theory::longinteger_object &full_group_order, int verbose_level);
-	void compute_stabilizer(action *default_action, ring_theory::longinteger_object &go,
-		sims *&Stab, int verbose_level);
+	void compute_stabilizer(actions::action *default_action, ring_theory::longinteger_object &go,
+			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 };
 

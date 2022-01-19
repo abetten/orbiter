@@ -36,7 +36,7 @@ vector_builder::~vector_builder()
 }
 
 void vector_builder::init(vector_builder_description *Descr,
-		finite_field *F,
+		field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

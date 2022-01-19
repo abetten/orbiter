@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 direct_product::direct_product()
@@ -664,12 +665,12 @@ void direct_product::make_strong_generators_data(int *&data,
 void direct_product::lift_generators(
 		strong_generators *SG1,
 		strong_generators *SG2,
-		action *A, strong_generators *&SG3,
+		actions::action *A, strong_generators *&SG3,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action *A1;
-	action *A2;
+	actions::action *A1;
+	actions::action *A2;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -730,4 +731,4 @@ void direct_product::lift_generators(
 	}
 }
 
-}}
+}}}

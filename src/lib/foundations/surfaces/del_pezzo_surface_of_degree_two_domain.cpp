@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 del_pezzo_surface_of_degree_two_domain::del_pezzo_surface_of_degree_two_domain()
@@ -182,5 +183,5 @@ long int del_pezzo_surface_of_degree_two_domain::rank_point(int *v)
 
 
 
-}}
+}}}
 

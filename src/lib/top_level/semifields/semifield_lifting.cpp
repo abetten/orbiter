@@ -144,7 +144,7 @@ void semifield_lifting::init_level_three(
 	Matrix2 = NEW_int(k2);
 	window_in = NEW_int(k2);
 
-	action *A;
+	actions::action *A;
 
 	A = SC->A;
 
@@ -815,7 +815,7 @@ void semifield_lifting::compute_flag_orbits(
 				<< " primary orbits" << endl;
 	}
 	for (po = 0, f = 0; po < prev_level_nb_orbits; po++) {
-		schreier *S;
+		groups::schreier *S;
 		ring_theory::longinteger_object go_prev;
 		int go_prev_int;
 
@@ -837,7 +837,7 @@ void semifield_lifting::compute_flag_orbits(
 
 		for (so = 0; so < S->nb_orbits; so++, f++) {
 
-			sims *Stab;
+			groups::sims *Stab;
 			int r;
 			int f_long_orbit;
 
@@ -875,7 +875,7 @@ void semifield_lifting::compute_flag_orbits(
 
 			if (!f_long_orbit) {
 				if (FALSE/*M[j].go.is_one()*/) {
-					Flag_orbits[f].gens = NEW_OBJECT(strong_generators);
+					Flag_orbits[f].gens = NEW_OBJECT(groups::strong_generators);
 					Flag_orbits[f].gens->init_trivial_group(SC->A, 0);
 				}
 				else {
@@ -886,7 +886,7 @@ void semifield_lifting::compute_flag_orbits(
 						//cout << "orbit=" << orbit << " orbit=" << i
 						// << " computing strong generators" << endl;
 						//}
-					Flag_orbits[f].gens = NEW_OBJECT(strong_generators);
+					Flag_orbits[f].gens = NEW_OBJECT(groups::strong_generators);
 					Flag_orbits[f].gens->init_from_sims(Stab, 0 /* verbose_level */);
 
 
@@ -997,7 +997,7 @@ void semifield_lifting::upstep(
 	N = Combi.generalized_binomial(level, level - 1, SC->Mtx->GFq->q);
 
 
-	Stabilizer_gens = NEW_OBJECTS(strong_generators, nb_flag_orbits);
+	Stabilizer_gens = NEW_OBJECTS(groups::strong_generators, nb_flag_orbits);
 	Po = NEW_int(nb_flag_orbits);
 	So = NEW_int(nb_flag_orbits);
 	Mo = NEW_int(nb_flag_orbits);
@@ -1465,7 +1465,7 @@ void semifield_lifting::get_basis(
 
 
 
-strong_generators *semifield_lifting::get_stabilizer_generators(
+groups::strong_generators *semifield_lifting::get_stabilizer_generators(
 	int level, int orbit_idx,
 	int verbose_level)
 {
@@ -1710,8 +1710,8 @@ void semifield_lifting::trace_very_general(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int i, j;
-	action *A;
-	finite_field *F;
+	actions::action *A;
+	field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_very_general" << endl;
@@ -1888,8 +1888,8 @@ void semifield_lifting::trace_to_level_two(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int i, j, idx, d, d0, c0, c1;
-	action *A;
-	finite_field *F;
+	actions::action *A;
+	field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_very_general" << endl;
@@ -3030,7 +3030,7 @@ void semifield_lifting::read_stabilizers(int verbose_level)
 		ifstream fp(fname, ios::binary);
 
 		fp.read((char *) &nb_orbits, sizeof(int));
-		Stabilizer_gens = NEW_OBJECTS(strong_generators, nb_orbits);
+		Stabilizer_gens = NEW_OBJECTS(groups::strong_generators, nb_orbits);
 
 		for (i = 0; i < nb_orbits; i++) {
 			if ((i & ((1 << 15) - 1)) == 0) {

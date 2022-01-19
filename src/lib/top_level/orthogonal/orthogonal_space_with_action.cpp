@@ -131,7 +131,7 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 	}
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group before "

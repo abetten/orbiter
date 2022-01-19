@@ -123,7 +123,7 @@ void arc_lifting::create_web_of_cubic_curves(int verbose_level)
 	the_equation = NEW_int(20);
 	
 
-	Web = NEW_OBJECT(web_of_cubic_curves);
+	Web = NEW_OBJECT(algebraic_geometry::web_of_cubic_curves);
 
 	if (f_v) {
 		cout << "arc_lifting::create_web_of_cubic_curves before Web->init" << endl;

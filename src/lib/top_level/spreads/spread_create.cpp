@@ -74,7 +74,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 		cout << "spread_create::init q = " << q << endl;
 		cout << "spread_create::init k = " << k << endl;
 	}
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	
 
@@ -87,7 +87,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 	}
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 
 	
@@ -125,7 +125,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 		set = NEW_lint(sz);
 		Orbiter->Lint_vec->copy(rep, set, sz);
 
-		Sg = NEW_OBJECT(strong_generators);
+		Sg = NEW_OBJECT(groups::strong_generators);
 
 		if (f_v) {
 			cout << "spread_create::init "

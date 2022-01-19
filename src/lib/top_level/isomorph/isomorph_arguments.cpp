@@ -163,7 +163,8 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 }
 
 
-void isomorph_arguments::init(action *A, action *A2,
+void isomorph_arguments::init(
+		actions::action *A, actions::action *A2,
 	poset_classification *gen,
 	int target_size,
 	poset_classification_control *Control,

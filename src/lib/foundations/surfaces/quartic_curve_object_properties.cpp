@@ -19,6 +19,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 quartic_curve_object_properties::quartic_curve_object_properties()
@@ -522,9 +523,9 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 		ost << "\\\\" << endl;
 
 
-		schlaefli_labels *Labels;
+		algebraic_geometry::schlaefli_labels *Labels;
 
-		Labels = NEW_OBJECT(schlaefli_labels);
+		Labels = NEW_OBJECT(algebraic_geometry::schlaefli_labels);
 		if (FALSE) {
 			cout << "quartic_curve_object_properties::print_all_points before Labels->init" << endl;
 		}
@@ -1156,5 +1157,6 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 	}
 }
 
-}}
+}}}
+
 

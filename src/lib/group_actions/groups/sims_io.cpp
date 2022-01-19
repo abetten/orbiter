@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 void sims::create_group_tree(const char *fname,
@@ -283,7 +284,7 @@ void sims::print_generators_as_permutations()
 }
 
 void sims::print_generators_as_permutations_override_action(
-		action *A)
+		actions::action *A)
 {
 	int i, l;
 
@@ -544,7 +545,7 @@ void sims::print_all_group_elements_as_permutations()
 }
 
 void sims::print_all_group_elements_as_permutations_in_special_action(
-		action *A_special)
+		actions::action *A_special)
 {
 	int *Elt;
 	ring_theory::longinteger_object go;
@@ -634,7 +635,7 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 		}
 }
 
-void sims::read_list_of_elements(action *A, char *fname,
+void sims::read_list_of_elements(actions::action *A, char *fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -877,4 +878,5 @@ void sims::report(std::ostream &ost,
 
 
 
-}}
+}}}
+

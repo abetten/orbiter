@@ -13,8 +13,10 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
-void action::coset_unrank(sims *G, sims *U,
+
+void action::coset_unrank(groups::sims *G, groups::sims *U,
 		long int rank, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -24,7 +26,7 @@ void action::coset_unrank(sims *G, sims *U,
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object G0_order, G_order;
 	ring_theory::longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
-	schreier G_orb, U_orb;
+	groups::schreier G_orb, U_orb;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -213,8 +215,8 @@ void action::coset_unrank(sims *G, sims *U,
 				cout << "image=" << element_image_of(base_pt, Elt_gk, 0) << endl;
 				exit(1);
 				}
-			sims *Gk = NULL;
-			sims *Uk = NULL;
+			groups::sims *Gk = NULL;
+			groups::sims *Uk = NULL;
 
 			G_orb.initialize_tables();
 			G_orb.init_generators(G->gens, verbose_level - 2);
@@ -283,7 +285,7 @@ done:
 	
 }
 
-long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
+long int action::coset_rank(groups::sims *G, groups::sims *U, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rank = 0;
@@ -292,7 +294,7 @@ long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	int *Elt_gk, *Elt1, *Elt2, *Elt3, *Elt_u;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
-	schreier G_orb, U_orb;
+	groups::schreier G_orb, U_orb;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -502,8 +504,8 @@ long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 		exit(1);
 		}
 	{
-	sims *Gk = NULL;
-	sims *Uk = NULL;
+		groups::sims *Gk = NULL;
+		groups::sims *Uk = NULL;
 
 	G_orb.initialize_tables();
 	G_orb.init_generators(G->gens, verbose_level - 2);
@@ -605,5 +607,6 @@ done:
 	return rank;	
 }
 
-}}
+}}}
+
 

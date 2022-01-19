@@ -10,6 +10,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 
@@ -25,7 +26,7 @@ class arc_lifting_with_two_lines {
 public:
 
 	int q;
-	finite_field *F; // do not free
+	field_theory::finite_field *F; // do not free
 
 	surface_domain *Surf; // do not free
 
@@ -76,7 +77,7 @@ class clebsch_map {
 public:
 	surface_domain *Surf;
 	surface_object *SO;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	int hds, ds, ds_row;
 
@@ -136,7 +137,7 @@ public:
 class del_pezzo_surface_of_degree_two_domain {
 
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	projective_space *P;
 	projective_space *P2;
 	grassmann *Gr; // Gr_{4,2}
@@ -272,6 +273,219 @@ public:
 	void unrank(int rk, int &i, int &j, int &k, int &l, int &m, int &n);
 
 };
+
+// #############################################################################
+// quartic_curve_domain.cpp
+// #############################################################################
+
+//! domain for quartic curves in PG(2,q) with 28 bitangents
+
+
+class quartic_curve_domain {
+
+public:
+	field_theory::finite_field *F;
+	projective_space *P;
+
+	ring_theory::homogeneous_polynomial_domain *Poly1_3;
+		// linear polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly2_3;
+		// quadratic polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly3_3;
+		// cubic polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly4_3;
+		// quartic polynomials in three variables
+
+	ring_theory::homogeneous_polynomial_domain *Poly3_4;
+		// cubic polynomials in four variables
+
+	ring_theory::partial_derivative *Partials; // [3]
+
+	algebraic_geometry::schlaefli_labels *Schlaefli;
+
+	quartic_curve_domain();
+	~quartic_curve_domain();
+	void init(field_theory::finite_field *F, int verbose_level);
+	void init_polynomial_domains(int verbose_level);
+	void print_equation_maple(std::stringstream &ost, int *coeffs);
+	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void print_gradient_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
+	void unrank_line_in_dual_coordinates(int *v, long int rk);
+	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
+	void compute_points_on_lines(
+			long int *Pts, int nb_points,
+			long int *Lines, int nb_lines,
+			data_structures::set_of_sets *&pts_on_lines,
+			int *&f_is_on_line,
+			int verbose_level);
+	void multiply_conic_times_conic(int *six_coeff_a,
+		int *six_coeff_b, int *fifteen_coeff,
+		int verbose_level);
+	void multiply_conic_times_line(int *six_coeff,
+		int *three_coeff, int *ten_coeff,
+		int verbose_level);
+	void multiply_line_times_line(int *line1,
+		int *line2, int *six_coeff,
+		int verbose_level);
+	void multiply_three_lines(int *line1, int *line2, int *line3,
+		int *ten_coeff,
+		int verbose_level);
+	void multiply_four_lines(int *line1, int *line2, int *line3, int *line4,
+		int *fifteen_coeff,
+		int verbose_level);
+	void assemble_cubic_surface(int *f1, int *f2, int *f3, int *eqn20,
+		int verbose_level);
+	void create_surface(quartic_curve_object *Q, int *eqn20, int verbose_level);
+	// Given a quartic Q in X1,X2,X3, compute an associated cubic surface
+	// whose projection from (1,0,0,0) gives back the quartic Q.
+	// Pick 4 bitangents L0,L1,L2,L3 so that the 8 points of tangency lie on a conic C.
+	// Then, create the cubic surface with equation
+	// (- lambda * mu) / 4 * X0^2 * L0 (the equation of the first of the four bitangents)
+	// + X0 * lambda * C (the conic equation)
+	// + L1 * L2 * L3 (the product of the equations of the last three bitangents)
+	// Here 1, lambda, mu are the coefficients of a linear dependency between
+	// Q (the quartic), C^2, L0*L1*L2*L3, so
+	// Q + lambda * C^2 + mu * L0*L1*L2*L3 = 0.
+	void compute_gradient(int *equation15, int *&gradient, int verbose_level);
+
+};
+
+
+// #############################################################################
+// quartic_curve_object_properties.cpp
+// #############################################################################
+
+//! properties of a particular quartic curve surface in PG(2,q), as defined by an object of class quartic_curve_object
+
+
+class quartic_curve_object_properties {
+
+public:
+
+	quartic_curve_object *QO;
+
+
+	data_structures::set_of_sets *pts_on_lines;
+		// points are stored as indices into Pts[]
+	int *f_is_on_line; // [QO->nb_pts]
+
+	tally *Bitangent_line_type;
+	int line_type_distribution[3];
+
+	data_structures::set_of_sets *lines_on_point;
+	tally *Point_type;
+
+	int f_fullness_has_been_established;
+	int f_is_full;
+	int nb_Kovalevski;
+	int nb_Kovalevski_on;
+	int nb_Kovalevski_off;
+	int *Kovalevski_point_idx;
+	long int *Kovalevski_points;
+
+	long int *Pts_off;
+	int nb_pts_off;
+
+	data_structures::set_of_sets *pts_off_on_lines;
+	int *f_is_on_line2; // [QO->nb_pts]
+
+	data_structures::set_of_sets *lines_on_points_off;
+	tally *Point_off_type;
+
+
+	int *gradient;
+
+	long int *singular_pts;
+	int nb_singular_pts;
+	int nb_non_singular_pts;
+
+	long int *tangent_line_rank_global; // [QO->nb_pts]
+	long int *tangent_line_rank_dual; // [nb_non_singular_pts]
+
+
+
+	quartic_curve_object_properties();
+	~quartic_curve_object_properties();
+	void init(quartic_curve_object *QO, int verbose_level);
+	void create_summary_file(std::string &fname,
+			std::string &surface_label, std::string &col_postfix, int verbose_level);
+	void report_properties_simple(std::ostream &ost, int verbose_level);
+	void print_equation(std::ostream &ost);
+	void print_gradient(std::ostream &ost);
+	void print_general(std::ostream &ost);
+	void print_points(std::ostream &ost);
+	void print_all_points(std::ostream &ost);
+	void print_bitangents(std::ostream &ost);
+	void print_lines_with_points_on_them(std::ostream &ost,
+			long int *Lines, int nb_lines, data_structures::set_of_sets *SoS);
+	//void print_bitangents_with_points_on_them(std::ostream &ost);
+	void points_on_curve_on_lines(int verbose_level);
+	void report_bitangent_line_type(std::ostream &ost);
+	void compute_gradient(int verbose_level);
+	void compute_singular_points_and_tangent_lines(int verbose_level);
+	// a singular point is a point where all partials vanish
+	// We compute the set of singular points into Pts[nb_pts]
+
+};
+
+
+
+// #############################################################################
+// quartic_curve_object.cpp
+// #############################################################################
+
+//! a particular quartic curve in PG(2,q), given by its equation
+
+
+class quartic_curve_object {
+
+public:
+	int q;
+	field_theory::finite_field *F;
+	quartic_curve_domain *Dom;
+
+	long int *Pts; // in increasing order
+	int nb_pts;
+
+
+	//long int *Lines;
+	//int nb_lines;
+
+	int eqn15[15];
+
+	int f_has_bitangents;
+	long int bitangents28[28];
+
+	quartic_curve_object_properties *QP;
+
+
+
+	quartic_curve_object();
+	~quartic_curve_object();
+	void freeself();
+	void null();
+	void init_equation_but_no_bitangents(quartic_curve_domain *Dom,
+			int *eqn15,
+			int verbose_level);
+	void init_equation_and_bitangents(quartic_curve_domain *Dom,
+			int *eqn15, long int *bitangents28,
+			int verbose_level);
+	void init_equation_and_bitangents_and_compute_properties(quartic_curve_domain *Dom,
+			int *eqn15, long int *bitangents28,
+			int verbose_level);
+	void enumerate_points(int verbose_level);
+	void compute_properties(int verbose_level);
+	void recompute_properties(int verbose_level);
+	void identify_lines(long int *lines, int nb_lines, int *line_idx,
+		int verbose_level);
+	int find_point(long int P, int &idx);
+
+};
+
+
+
 
 // #############################################################################
 // schlaefli_labels.cpp
@@ -591,7 +805,7 @@ public:
 	int q;
 	int n; // = 4
 	int n2; // = 2 * n
-	finite_field *F;
+	field_theory::finite_field *F;
 	projective_space *P; // PG(3,q)
 	projective_space *P2; // PG(2,q)
 	grassmann *Gr; // Gr_{4,2}
@@ -663,7 +877,7 @@ public:
 	~surface_domain();
 	void freeself();
 	void null();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 	void init_polynomial_domains(int verbose_level);
 	void init_large_polynomial_domains(int verbose_level);
 	void label_variables_3(ring_theory::homogeneous_polynomial_domain *HPD,
@@ -1087,7 +1301,7 @@ class surface_object {
 
 public:
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	surface_domain *Surf;
 
 	long int *Pts; // in increasing order
@@ -1205,7 +1419,7 @@ public:
 
 
 
-}}
+}}}
 
 
 

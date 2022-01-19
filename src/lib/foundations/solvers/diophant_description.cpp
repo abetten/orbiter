@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace solvers {
 
 
 
@@ -283,5 +284,5 @@ void diophant_description::print()
 }
 
 
-}}
+}}}
 

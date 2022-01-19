@@ -1008,7 +1008,7 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	discreta_matrix M;
 	int i, j, k, a, p, h;
-	finite_field Fq;
+	field_theory::finite_field Fq;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
 	number_theory::number_theory_domain NT;

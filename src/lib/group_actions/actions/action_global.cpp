@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
+
 
 void action_global::action_print_symmetry_group_type(ostream &ost,
 		symmetry_group_type a)
@@ -139,10 +141,10 @@ void action_global::make_generators_stabilizer_of_two_components(
 	int *minusId;
 	int n, i, len;
 	int *P;
-	matrix_group *Mtx;
-	finite_field *Fq;
+	groups::matrix_group *Mtx;
+	field_theory::finite_field *Fq;
 	int minus_one, alpha;
-	strong_generators *gens_PGL_k;
+	groups::strong_generators *gens_PGL_k;
 	//vector_ge *gens_PGL_k;
 
 
@@ -291,10 +293,10 @@ void action_global::make_generators_stabilizer_of_three_components(
 	int *minusId;
 	int n, i, len;
 	int *P;
-	matrix_group *Mtx;
-	finite_field *Fq;
+	groups::matrix_group *Mtx;
+	field_theory::finite_field *Fq;
 	int minus_one;
-	strong_generators *gens_PGL_k;
+	groups::strong_generators *gens_PGL_k;
 
 	if (f_v) {
 		cout << "action_global::make_generators_stabilizer_of_three_components" << endl;
@@ -406,7 +408,8 @@ void action_global::make_generators_stabilizer_of_three_components(
 }
 
 void action_global::compute_generators_GL_n_q(int *&Gens,
-		int &nb_gens, int &elt_size, int n, finite_field *F,
+		int &nb_gens, int &elt_size, int n,
+		field_theory::finite_field *F,
 		vector_ge *&nice_gens,
 		int verbose_level)
 {
@@ -512,7 +515,7 @@ void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 #endif
 
 void action_global::lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
-	action *Aq, subfield_structure *S, int n, 
+	action *Aq, field_theory::subfield_structure *S, int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -571,7 +574,7 @@ void action_global::lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 
 void action_global::retract_generators(vector_ge *gens_in,
 	vector_ge *&gens_out,
-	action *AQ, subfield_structure *S, int n, 
+	action *AQ, field_theory::subfield_structure *S, int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -631,17 +634,17 @@ void action_global::retract_generators(vector_ge *gens_in,
 
 void action_global::lift_generators_to_subfield_structure(
 	int n, int s, 
-	subfield_structure *S, 
+	field_theory::subfield_structure *S,
 	action *Aq, action *AQ, 
-	strong_generators *&Strong_gens, 
+	groups::strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int q, Q, m;
-	finite_field *Fq;
+	field_theory::finite_field *Fq;
 	//finite_field *FQ;
-	sims *Sims;
+	groups::sims *Sims;
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
@@ -738,7 +741,7 @@ void action_global::lift_generators_to_subfield_structure(
 	}
 
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	Strong_gens->init_from_sims(Sims, 0 /* verbose_level */);
 	if (f_vv) {
@@ -798,7 +801,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
 		Gens.print(cout);
 	}
 	
-	schreier S;
+	groups::schreier S;
 	
 	S.init(A, verbose_level - 2);
 	S.init_generators(Gens, verbose_level - 2);
@@ -910,12 +913,12 @@ void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
 
 
 action *action_global::init_direct_product_group_and_restrict(
-		matrix_group *M1, matrix_group *M2, int verbose_level)
+		groups::matrix_group *M1, groups::matrix_group *M2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A_direct_product;
 	action *Adp;
-	direct_product *P;
+	groups::direct_product *P;
 	long int *points;
 	int nb_points;
 	int i;
@@ -956,11 +959,11 @@ action *action_global::init_direct_product_group_and_restrict(
 }
 
 action *action_global::init_direct_product_group(
-		matrix_group *M1, matrix_group *M2,
+		groups::matrix_group *M1, groups::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product *P;
+	groups::direct_product *P;
 	action *A;
 
 	if (f_v) {
@@ -970,7 +973,7 @@ action *action_global::init_direct_product_group(
 	}
 
 	A = NEW_OBJECT(action);
-	P = NEW_OBJECT(direct_product);
+	P = NEW_OBJECT(groups::direct_product);
 
 
 
@@ -1053,7 +1056,7 @@ action *action_global::init_direct_product_group(
 		cout << "action_global::init_direct_product_group "
 				"after W->make_strong_generators_data" << endl;
 	}
-	A->Strong_gens = NEW_OBJECT(strong_generators);
+	A->Strong_gens = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "action_global::init_direct_product_group "
 				"before A->Strong_gens->init_from_data" << endl;
@@ -1074,9 +1077,9 @@ action *action_global::init_direct_product_group(
 	A->f_has_strong_generators = TRUE;
 	FREE_int(gens_data);
 
-	sims *S;
+	groups::sims *S;
 
-	S = NEW_OBJECT(sims);
+	S = NEW_OBJECT(groups::sims);
 
 	S->init(A, verbose_level - 2);
 	if (f_v) {
@@ -1130,7 +1133,7 @@ action *action_global::init_direct_product_group(
 
 
 void action_global::compute_decomposition_based_on_orbits(projective_space *P,
-		schreier *Sch1, schreier *Sch2,
+		groups::schreier *Sch1, groups::schreier *Sch2,
 		incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1187,7 +1190,7 @@ void action_global::compute_decomposition_based_on_orbits(projective_space *P,
 
 
 void action_global::compute_decomposition_based_on_orbit_length(projective_space *P,
-		schreier *Sch1, schreier *Sch2,
+		groups::schreier *Sch1, groups::schreier *Sch2,
 		incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1239,10 +1242,10 @@ void callback_choose_random_generator_orthogonal(int iteration,
 				"iteration=" << iteration << endl;
 		}
 
-	schreier_sims *ss = (schreier_sims *) data;
+	groups::schreier_sims *ss = (groups::schreier_sims *) data;
 	action *A = ss->GA;
 	action *subaction = ss->KA;
-	matrix_group *M;
+	groups::matrix_group *M;
 #if 0
 	int f_siegel = TRUE;
 	int f_reflection = TRUE;
@@ -1284,4 +1287,5 @@ void callback_choose_random_generator_orthogonal(int iteration,
 }
 
 
-}}
+}}}
+

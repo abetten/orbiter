@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 schlaefli::schlaefli()
@@ -2685,4 +2686,5 @@ int schlaefli::identify_Eckardt_point(int line1, int line2, int line3, int verbo
 }
 
 
-}}
+}}}
+

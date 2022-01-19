@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 
@@ -1014,5 +1015,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 
 
-}}
+}}}
+
 

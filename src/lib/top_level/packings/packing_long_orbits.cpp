@@ -854,7 +854,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		}
 
 		//action *Ar;
-		action *Ar_On_Packings;
+		actions::action *Ar_On_Packings;
 
 		//Ar = PWF->PW->restricted_action(Descr->orbit_length, verbose_level);
 
@@ -870,9 +870,9 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				PWF->PW->P->size_of_packing, Packings_table,
 				verbose_level);
 
-		schreier *Orbits;
+		groups::schreier *Orbits;
 
-		Orbits = NEW_OBJECT(schreier);
+		Orbits = NEW_OBJECT(groups::schreier);
 
 		if (f_v) {
 			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "

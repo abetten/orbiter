@@ -44,7 +44,7 @@ public:
 
 	int f_test_nb_Eckardt_points;
 	int nb_E;
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 
 	int f_affine;
 
@@ -91,7 +91,7 @@ public:
 	int *f_is_forbidden;
 
 	//action *A;
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	
 	poset_with_group_action *Poset;
 
@@ -114,12 +114,12 @@ public:
 	void init(
 		arc_generator_description *Descr,
 		projective_space_with_action *PA,
-		strong_generators *SG,
+		groups::strong_generators *SG,
 		int verbose_level);
 	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
 
-	int test_nb_Eckardt_points(surface_domain *Surf,
+	int test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
 			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
 	void early_test_func(long int *S, int len,
@@ -134,8 +134,8 @@ public:
 	void lifting_prepare_function_new(exact_cover *E, 
 		int starter_case, 
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens, 
-		diophant *&Dio, long int *&col_labels,
+		groups::strong_generators *Strong_gens,
+		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out, 
 		int verbose_level);
 		// compute the incidence matrix of tangent lines 
@@ -157,8 +157,8 @@ void arc_generator_early_test_function(long int *S, int len,
 	void *data, int verbose_level);
 void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case, 
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level);
 void arc_generator_print_arc(std::ostream &ost, int len, long int *S, void *data);
@@ -183,24 +183,24 @@ public:
 	int d; // largest number of points per line
 	int n; // projective dimension
 	int k; // size of the arc
-	finite_field *F;
+	field_theory::finite_field *F;
 	int f_projective;
 	int f_general;
 	int f_affine;
 	int f_semilinear;
 	int f_special;
 
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object go;
 	int *Elt;
 	int *v;
-	schreier *Sch;
+	groups::schreier *Sch;
 	poset_with_group_action *Poset;
 	poset_classification *Gen;
 	projective_space *P;
 
-	action *A2; // action on the lines
-	action *A3; // action on lines restricted to filtered_lines
+	actions::action *A2; // action on the lines
+	actions::action *A3; // action on lines restricted to filtered_lines
 
 
 	arc_lifting_simeon();
@@ -237,9 +237,9 @@ public:
 	
 	void *data;
 
-	action *A;
-	action *A_lines;
-	action *A2;
+	actions::action *A;
+	actions::action *A_lines;
+	actions::action *A2;
 		// = A if f_choose_lines is FALSE
 		// = A_lines if f_choose_lines is TRUE
 	
@@ -281,8 +281,8 @@ public:
 	long int *representative; // [nb_points_or_lines]
 
 	ring_theory::longinteger_object *stab_order;
-	sims *stab;
-	strong_generators *Stab_Strong_gens;
+	groups::sims *stab;
+	groups::strong_generators *Stab_Strong_gens;
 
 
 	choose_points_or_lines();
@@ -292,15 +292,15 @@ public:
 	void null_representative();
 	void free_representative();
 	void init(const char *label, void *data, 
-		action *A, action *A_lines, 
+			actions::action *A, actions::action *A_lines,
 		int f_choose_lines, 
 		int nb_points_or_lines, 
 		int (*check_function)(int len, long int *S, void *data,
 				int verbose_level),
 		int t0, 
 		int verbose_level);
-	void compute_orbits_from_sims(sims *G, int verbose_level);
-	void compute_orbits(strong_generators *Strong_gens, int verbose_level);
+	void compute_orbits_from_sims(groups::sims *G, int verbose_level);
+	void compute_orbits(groups::strong_generators *Strong_gens, int verbose_level);
 	void choose_orbit(int orbit_no, int &f_hit_favorite, int verbose_level);
 	int favorite_orbit_representative(int *transporter, 
 		int *transporter_inv, 
@@ -325,8 +325,8 @@ class classify_cubic_curves {
 public:
 
 	int q;
-	finite_field *F; // do not free
-	action *A; // do not free
+	field_theory::finite_field *F; // do not free
+	actions::action *A; // do not free
 
 	cubic_curve_with_action *CCA; // do not free
 	cubic_curve *CC; // do not free
@@ -392,12 +392,12 @@ class cubic_curve_with_action {
 public:
 
 	int q;
-	finite_field *F; // do not free
+	field_theory::finite_field *F; // do not free
 
 	cubic_curve *CC; // do not free
 
-	action *A; // linear group PGGL(3,q)
-	action *A2; // linear group PGGL(3,q) acting on lines
+	actions::action *A; // linear group PGGL(3,q)
+	actions::action *A2; // linear group PGGL(3,q) acting on lines
 
 	int *Elt1;
 
@@ -409,7 +409,7 @@ public:
 	~cubic_curve_with_action();
 	void null();
 	void freeself();
-	void init(cubic_curve *CC, action *A, int verbose_level);
+	void init(cubic_curve *CC, actions::action *A, int verbose_level);
 
 };
 
@@ -425,7 +425,7 @@ public:
 	int n;
 	int Q;
 	int len; // = n + 1
-	finite_field *F;
+	field_theory::finite_field *F;
 	hermitian *H;
 
 	long int *Pts;
@@ -433,16 +433,16 @@ public:
 	int *v;
 	int *line_type;
 	projective_space *P;
-	strong_generators *sg;
+	groups::strong_generators *sg;
 	long int **Intersection_sets;
 	int sz;
 	long int *secants;
 	int nb_secants;
 	int *Adj;
 
-	action *A;
-	action *A2;
-	action *A2r;
+	actions::action *A;
+	actions::action *A2;
+	actions::action *A2r;
 
 	poset_classification_control *Control;
 	poset_with_group_action *Poset;
@@ -469,7 +469,7 @@ void HS_early_test_func_callback(long int *S, int len,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void projective_space_init_line_action(projective_space *P,
-		action *A_points, action *&A_on_lines, int verbose_level);
+		actions::action *A_points, actions::action *&A_on_lines, int verbose_level);
 
 
 
@@ -506,19 +506,19 @@ public:
 	int *Basis; // [depth * vector_space_dimension]
 	int *base_cols;
 
-	finite_field *Fq;
-	finite_field *FQ;
-	subfield_structure *SubS;
+	field_theory::finite_field *Fq;
+	field_theory::finite_field *FQ;
+	field_theory::subfield_structure *SubS;
 	projective_space *P;
 
 
 	// the groups we need:
 
-	action *Aq; // GL(n,q)
+	actions::action *Aq; // GL(n,q)
 
-	action *AQ; // GL(m, Q)
+	actions::action *AQ; // GL(m, Q)
 
-	action *A_PGLQ; // PGL(m,Q)
+	actions::action *A_PGLQ; // PGL(m,Q)
 
 	algebra::vector_space *VS;
 	poset_classification_control *Control1;
@@ -528,7 +528,7 @@ public:
 
 	// the generators:
 
-	strong_generators *Strong_gens; // generators for GL(m,Q) field reduced into GL(n,q)
+	groups::strong_generators *Strong_gens; // generators for GL(m,Q) field reduced into GL(n,q)
 
 	desarguesian_spread *D; // n, m, s
 
@@ -580,27 +580,27 @@ public:
 	void print_orbits_at_level(int level);
 	void classify_secondary(int argc, const char **argv,
 		int level, int orbit_at_level,
-		strong_generators *strong_gens,
+		groups::strong_generators *strong_gens,
 		int verbose_level);
 	void init_secondary(int argc, const char **argv,
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens_previous,
+		groups::strong_generators *Strong_gens_previous,
 		int verbose_level);
 	void do_classify_secondary(int verbose_level);
 	int test_set_secondary(int len, long int *S, int verbose_level);
 	void compute_stabilizer_of_linear_set(int argc, const char **argv,
 		int level, int orbit_at_level,
-		strong_generators *&strong_gens,
+		groups::strong_generators *&strong_gens,
 		int verbose_level);
 	void init_compute_stabilizer(int argc, const char **argv,
 		int level, int orbit_at_level,
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens_previous,
-		strong_generators *&strong_gens,
+		groups::strong_generators *Strong_gens_previous,
+		groups::strong_generators *&strong_gens,
 		int verbose_level);
 	void do_compute_stabilizer(int level, int orbit_at_level,
 		long int *candidates, int nb_candidates,
-		strong_generators *&strong_gens,
+		groups::strong_generators *&strong_gens,
 		int verbose_level);
 	void construct_semifield(int orbit_for_W, int verbose_level);
 
@@ -661,7 +661,7 @@ class ovoid_classify {
 public:
 
 	ovoid_classify_description *Descr;
-	linear_group *LG;
+	groups::linear_group *LG;
 
 	int m; // Witt index
 
@@ -669,7 +669,7 @@ public:
 	poset_classification *gen;
 
 
-	action *A;
+	actions::action *A;
 
 
 	orthogonal *O;
@@ -693,7 +693,7 @@ public:
 	ovoid_classify();
 	~ovoid_classify();
 	void init(ovoid_classify_description *Descr,
-			linear_group *LG,
+			groups::linear_group *LG,
 			int &verbose_level);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -749,13 +749,13 @@ public:
 
 	int f_print_generators;
 
-	action *A; // the orthogonal action
+	actions::action *A; // the orthogonal action
 
 
 	
-	matrix_group *Mtx; // only a copy of a pointer, not to be freed
+	groups::matrix_group *Mtx; // only a copy of a pointer, not to be freed
 	orthogonal *O; // only a copy of a pointer, not to be freed
-	finite_field *F; // only a copy of a pointer, not to be freed
+	field_theory::finite_field *F; // only a copy of a pointer, not to be freed
 
 	int *tmp_M; // [n * n]
 	int *base_cols; // [n]
@@ -771,7 +771,7 @@ public:
 
 	int f_has_strong_generators;
 	int f_has_strong_generators_allocated;
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
 	int first_node, nb_orbits, nb_elements;
 	
@@ -784,8 +784,8 @@ public:
 	void init_group(int *group_generator_data, int group_generator_size, 
 		int f_group_order_target, const char *group_order_target, 
 		int verbose_level);
-	void init(action *A, orthogonal *O,
-		int epsilon, int n, int k, finite_field *F, int depth, 
+	void init(actions::action *A, orthogonal *O,
+		int epsilon, int n, int k, field_theory::finite_field *F, int depth,
 		int verbose_level);
 	void init2(int depth, int verbose_level);
 	void compute_orbits(int t0, int verbose_level);
@@ -834,7 +834,7 @@ void polar_callback_early_test_func(long int *S, int len,
 class search_blocking_set {
 public:
 	incidence_structure *Inc; // do not free
-	action *A; // do not free
+	actions::action *A; // do not free
 	poset_classification_control *Control;
 	poset_with_group_action *Poset;
 	poset_classification *gen;
@@ -864,7 +864,7 @@ public:
 	~search_blocking_set();
 	void null();
 	void freeself();
-	void init(incidence_structure *Inc, action *A, int verbose_level);
+	void init(incidence_structure *Inc, actions::action *A, int verbose_level);
 	void find_partial_blocking_sets(int depth, int verbose_level);
 	int test_level(int depth, int verbose_level);
 	int test_blocking_set(int len, long int *S, int verbose_level);
@@ -888,20 +888,20 @@ public:
 
 class singer_cycle {
 public:	
-	finite_field *F;
-	action *A;
-	action *A2;
+	field_theory::finite_field *F;
+	actions::action *A;
+	actions::action *A2;
 	int n;
 	int q;
 	int *poly_coeffs; // of degree n
 	int *Singer_matrix;
 	vector_ge *nice_gens;
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	ring_theory::longinteger_object target_go;
 	projective_space *P;
 	int *singer_point_list;
 	int *singer_point_list_inv;
-	schreier *Sch;
+	groups::schreier *Sch;
 	int nb_line_orbits;
 	int *line_orbit_reps;
 	int *line_orbit_len;
@@ -917,8 +917,8 @@ public:
 	~singer_cycle();
 	void null();
 	void freeself();
-	void init(int n, finite_field *F, action *A, 
-		action *A2, int verbose_level);
+	void init(int n, field_theory::finite_field *F, actions::action *A,
+			actions::action *A2, int verbose_level);
 	void init_lines(int verbose_level);
 };
 
@@ -940,18 +940,18 @@ public:
 	int n;
 	int q;
 
-	finite_field *F;
-	action *A;
-	action *A0;
+	field_theory::finite_field *F;
+	actions::action *A;
+	actions::action *A0;
 
-	action *Ar;
+	actions::action *Ar;
 	int nb_points;
 	long int *points;
 
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
-	wreath_product *W;
+	groups::wreath_product *W;
 	algebra::vector_space *VS;
 	poset_classification_control *Control;
 	poset_with_group_action *Poset;
@@ -962,7 +962,7 @@ public:
 	tensor_classify();
 	~tensor_classify();
 	void init(
-			finite_field *F, linear_group *LG,
+			field_theory::finite_field *F, groups::linear_group *LG,
 			int verbose_level);
 	void classify_poset(int depth,
 			poset_classification_control *Control,
@@ -1016,7 +1016,7 @@ public:
 			int verbose_level);
 	void report_decomposition_by_group(
 			projective_space_with_action *PA,
-			strong_generators *SG, std::ostream &ost, std::string &fname_base,
+			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 			int verbose_level);
 	void report_decomposition_by_single_automorphism(
 			projective_space_with_action *PA,

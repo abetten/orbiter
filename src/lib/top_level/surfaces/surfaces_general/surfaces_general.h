@@ -89,7 +89,7 @@ public:
 	int orbit_idx;
 	int f, l, hds;
 
-	clebsch_map *Clebsch_map;
+	algebraic_geometry::clebsch_map *Clebsch_map;
 
 
 	surface_clebsch_map();
@@ -120,18 +120,18 @@ public:
 	int f_ownership;
 
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	int f_semilinear;
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 
 	surface_with_action *Surf_A;
 
-	surface_object *SO;
+	algebraic_geometry::surface_object *SO;
 
 	int f_has_group;
-	strong_generators *Sg;
+	groups::strong_generators *Sg;
 	int f_has_nice_gens;
 	vector_ge *nice_gens;
 
@@ -352,13 +352,13 @@ public:
 			surface_classify_wedge *&SCW,
 			int verbose_level);
 	void prepare_surface_classify_wedge(
-			finite_field *F,
+			field_theory::finite_field *F,
 			projective_space_with_action *PA,
 			poset_classification_control *Control,
-			surface_domain *&Surf, surface_with_action *&Surf_A,
+			algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 			surface_classify_wedge *&SCW,
 			int verbose_level);
-	void do_study_surface(finite_field *F, int nb, int verbose_level);
+	void do_study_surface(field_theory::finite_field *F, int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_space_with_action *PA,
 			poset_classification_control *Control_six_arcs,
@@ -417,41 +417,41 @@ class surface_object_with_action {
 public:
 
 	int q;
-	finite_field *F; // do not free
+	field_theory::finite_field *F; // do not free
 
-	surface_domain *Surf; // do not free
+	algebraic_geometry::surface_domain *Surf; // do not free
 	surface_with_action *Surf_A; // do not free
 
-	surface_object *SO; // do not free
-	strong_generators *Aut_gens;
+	algebraic_geometry::surface_object *SO; // do not free
+	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
 
 	int f_has_nice_gens;
 	vector_ge *nice_gens;
 
-	strong_generators *projectivity_group_gens;
-	sylow_structure *Syl;
+	groups::strong_generators *projectivity_group_gens;
+	groups::sylow_structure *Syl;
 
-	action *A_on_points;
-	action *A_on_Eckardt_points;
-	action *A_on_Double_points;
-	action *A_on_the_lines;
-	action *A_single_sixes;
-	action *A_on_tritangent_planes;
-	action *A_on_Hesse_planes;
-	action *A_on_trihedral_pairs;
-	action *A_on_pts_not_on_lines;
+	actions::action *A_on_points;
+	actions::action *A_on_Eckardt_points;
+	actions::action *A_on_Double_points;
+	actions::action *A_on_the_lines;
+	actions::action *A_single_sixes;
+	actions::action *A_on_tritangent_planes;
+	actions::action *A_on_Hesse_planes;
+	actions::action *A_on_trihedral_pairs;
+	actions::action *A_on_pts_not_on_lines;
 
 
-	schreier *Orbits_on_points;
-	schreier *Orbits_on_Eckardt_points;
-	schreier *Orbits_on_Double_points;
-	schreier *Orbits_on_lines;
-	schreier *Orbits_on_single_sixes;
-	schreier *Orbits_on_tritangent_planes;
-	schreier *Orbits_on_Hesse_planes;
-	schreier *Orbits_on_trihedral_pairs;
-	schreier *Orbits_on_points_not_on_lines;
+	groups::schreier *Orbits_on_points;
+	groups::schreier *Orbits_on_Eckardt_points;
+	groups::schreier *Orbits_on_Double_points;
+	groups::schreier *Orbits_on_lines;
+	groups::schreier *Orbits_on_single_sixes;
+	groups::schreier *Orbits_on_tritangent_planes;
+	groups::schreier *Orbits_on_Hesse_planes;
+	groups::schreier *Orbits_on_trihedral_pairs;
+	groups::schreier *Orbits_on_points_not_on_lines;
 
 
 
@@ -460,21 +460,21 @@ public:
 	void null();
 	void freeself();
 	void init_equation(surface_with_action *Surf_A, int *eqn,
-		strong_generators *Aut_gens, int verbose_level);
+			groups::strong_generators *Aut_gens, int verbose_level);
 	void init_with_group(surface_with_action *Surf_A,
 		long int *Lines, int nb_lines, int *eqn,
-		strong_generators *Aut_gens,
+		groups::strong_generators *Aut_gens,
 		int f_find_double_six_and_rearrange_lines,
 		int f_has_nice_gens, vector_ge *nice_gens,
 		int verbose_level);
 	void init_with_surface_object(surface_with_action *Surf_A,
-			surface_object *SO,
-			strong_generators *Aut_gens,
+			algebraic_geometry::surface_object *SO,
+			groups::strong_generators *Aut_gens,
 			int f_has_nice_gens, vector_ge *nice_gens,
 			int verbose_level);
 	void init_surface_object(surface_with_action *Surf_A,
-		surface_object *SO,
-		strong_generators *Aut_gens, int verbose_level);
+			algebraic_geometry::surface_object *SO,
+			groups::strong_generators *Aut_gens, int verbose_level);
 	void compute_projectivity_group(int verbose_level);
 	void compute_orbits_of_automorphism_group(int verbose_level);
 	void init_orbits_on_points(int verbose_level);
@@ -488,11 +488,11 @@ public:
 	void init_orbits_on_points_not_on_lines(int verbose_level);
 	void print_generators_on_lines(
 			std::ostream &ost,
-			strong_generators *Aut_gens,
+			groups::strong_generators *Aut_gens,
 			int verbose_level);
 	void print_elements_on_lines(
 			std::ostream &ost,
-			strong_generators *Aut_gens,
+			groups::strong_generators *Aut_gens,
 			int verbose_level);
 	void print_automorphism_group(std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
@@ -508,14 +508,14 @@ public:
 	void print_automorphism_group_gnerators(std::ostream &ost, int verbose_level);
 	void investigate_surface_and_write_report(
 			layered_graph_draw_options *Opt,
-			action *A,
+			actions::action *A,
 			surface_create *SC,
 			six_arcs_not_on_a_conic *Six_arcs,
 			int verbose_level);
 	void investigate_surface_and_write_report2(
 			std::ostream &ost,
 			layered_graph_draw_options *Opt,
-			action *A,
+			actions::action *A,
 			surface_create *SC,
 			six_arcs_not_on_a_conic *Six_arcs,
 			std::string &fname_mask,
@@ -546,8 +546,8 @@ public:
 	int nb;
 	int *rep;
 	std::string prefix;
-	finite_field *F;
-	surface_domain *Surf;
+	field_theory::finite_field *F;
+	algebraic_geometry::surface_domain *Surf;
 
 	int nb_lines_PG_3;
 
@@ -556,9 +556,9 @@ public:
 	int data_size;
 	std::string stab_order;
 
-	action *A;
-	action *A2;
-	sims *S;
+	actions::action *A;
+	actions::action *A2;
+	groups::sims *S;
 	long int *Lines;
 	int *coeff;
 
@@ -575,8 +575,8 @@ public:
 
 
 	// orbit_on_lines:
-	action *A_on_lines;
-	schreier *Orb;
+	actions::action *A_on_lines;
+	groups::schreier *Orb;
 	int shortest_line_orbit_idx;
 
 	// for study_find_eckardt_points:
@@ -589,7 +589,7 @@ public:
 	int nb_Eckardt_pts;
 
 
-	void init(finite_field *F, int nb, int verbose_level);
+	void init(field_theory::finite_field *F, int nb, int verbose_level);
 	void study_intersection_points(int verbose_level);
 	void study_line_orbits(int verbose_level);
 	void study_group(int verbose_level);
@@ -599,7 +599,7 @@ public:
 };
 
 
-void move_point_set(action *A2,
+void move_point_set(actions::action *A2,
 	set_and_stabilizer *Universe, long int *Pts, int nb_pts,
 	int *Elt, set_and_stabilizer *&new_stab,
 	int verbose_level);
@@ -626,15 +626,15 @@ public:
 
 	int f_semilinear;
 
-	surface_domain *Surf; // do not free
+	algebraic_geometry::surface_domain *Surf; // do not free
 
-	action *A; // linear group PGGL(4,q)
+	actions::action *A; // linear group PGGL(4,q)
 
-	action *A_wedge; // linear group PGGL(4,q)
+	actions::action *A_wedge; // linear group PGGL(4,q)
 
 
-	action *A2; // linear group PGGL(4,q) acting on lines
-	action *A_on_planes; // linear group PGGL(4,q) acting on planes
+	actions::action *A2; // linear group PGGL(4,q) acting on lines
+	actions::action *A_on_planes; // linear group PGGL(4,q) acting on planes
 
 	int *Elt1;
 
@@ -652,7 +652,7 @@ public:
 	~surface_with_action();
 	void null();
 	void freeself();
-	void init(surface_domain *Surf,
+	void init(algebraic_geometry::surface_domain *Surf,
 			projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);

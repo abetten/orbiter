@@ -275,7 +275,7 @@ void isomorph::free_tmp_data()
 }
 
 void isomorph::init(std::string &prefix,
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, int level, 
 	int f_use_database_for_starter, 
 	int f_implicit_fusion, int verbose_level)
@@ -830,17 +830,17 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		}
 
 	ring_theory::longinteger_object S_go;
-	sims *S;
-	action *AA;
-	schreier *Schreier;
+	groups::sims *S;
+	actions::action *AA;
+	groups::schreier *Schreier;
 	long int *sets;
 	int h, p, prev, b, hdl;
 	data_structures::sorting Sorting;
 			
 	sets = NEW_lint(l * size);
-	S = NEW_OBJECT(sims);
-	AA = NEW_OBJECT(action);
-	Schreier = NEW_OBJECT(schreier);
+	S = NEW_OBJECT(groups::sims);
+	AA = NEW_OBJECT(actions::action);
+	Schreier = NEW_OBJECT(groups::schreier);
 			
 		
 	if (f_vv) {
@@ -1165,7 +1165,7 @@ void isomorph::test_identify_solution(int verbose_level)
 	FREE_int(transporter);
 }
 
-void isomorph::compute_stabilizer(sims *&Stab,
+void isomorph::compute_stabilizer(groups::sims *&Stab,
 		int verbose_level)
 // Called from do_iso_test
 {
@@ -1174,10 +1174,10 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	//int f_vvv = (verbose_level >= 3);
 	//int f_vvvv = (verbose_level >= 4);
 	ring_theory::longinteger_object AA_go, K_go;
-	sims *S; //, *K; //, *stab;
-	action *AA;
+	groups::sims *S; //, *K; //, *stab;
+	actions::action *AA;
 	vector_ge *gens;
-	schreier *Schreier;
+	groups::schreier *Schreier;
 	long int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
 	ring_theory::longinteger_object go, so, so1;
@@ -1208,10 +1208,10 @@ void isomorph::compute_stabilizer(sims *&Stab,
 				"f=" << f << " l=" << l << endl;
 		}
 
-	S = NEW_OBJECT(sims);
-	AA = NEW_OBJECT(action);
+	S = NEW_OBJECT(groups::sims);
+	AA = NEW_OBJECT(actions::action);
 	gens = NEW_OBJECT(vector_ge);
-	Schreier = NEW_OBJECT(schreier);
+	Schreier = NEW_OBJECT(groups::schreier);
 	sets = NEW_lint(l * size);
 
 	prepare_database_access(level, verbose_level);
@@ -1337,7 +1337,7 @@ void isomorph::test_compute_stabilizer(int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int orbit_no;
-	sims *Stab;
+	groups::sims *Stab;
 	int k;
 	os_interface Os;
 
@@ -1365,7 +1365,7 @@ void isomorph::test_memory()
 	int verbose_level = 0;
 	int id;
 	//action *AA;
-	sims *Stab;
+	groups::sims *Stab;
 	long int data[1000];
 	
 	
@@ -1662,7 +1662,7 @@ void isomorph::compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
 		id = orbit_perm[first];		
 		load_solution(id, data);
 
-		sims *Stab;
+		groups::sims *Stab;
 		
 		Stab = Reps->stab[h];
 
@@ -1685,7 +1685,7 @@ void isomorph::compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
 
 }
 
-void isomorph::init_high_level(action *A, poset_classification *gen,
+void isomorph::init_high_level(actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix, int level,
 	int verbose_level)
 {
@@ -1819,14 +1819,14 @@ void isomorph::get_orbit_transversal(orbit_transversal *&T,
 
 		load_solution(id, data);
 
-		sims *Stab;
+		groups::sims *Stab;
 
 		Stab = Reps->stab[h];
 		//T->Reps[h].init_data(data, size, 0 /* verbose_level */);
 
-		strong_generators *SG;
+		groups::strong_generators *SG;
 
-		SG = NEW_OBJECT(strong_generators);
+		SG = NEW_OBJECT(groups::strong_generators);
 
 		SG->init_from_sims(Stab, 0 /* verbose_level */);
 		T->Reps[h].init_everything(A_base, A, data, size,

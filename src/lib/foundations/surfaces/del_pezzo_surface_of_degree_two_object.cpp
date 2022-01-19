@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 del_pezzo_surface_of_degree_two_object::del_pezzo_surface_of_degree_two_object()
@@ -279,6 +280,6 @@ void del_pezzo_surface_of_degree_two_object::print_points(std::ostream &ost)
 
 
 
-}}
+}}}
 
 

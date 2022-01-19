@@ -362,8 +362,8 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		fname.append(".colored_graph");
 
 
-		nauty_interface_with_group Nauty;
-		action *Aut;
+		actions::nauty_interface_with_group Nauty;
+		actions::action *Aut;
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity before Nauty.create_automorphism_group_of_colored_graph_object" << endl;

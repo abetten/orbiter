@@ -17,7 +17,7 @@ namespace classification {
 
 void poset_orbit_node::read_memory_object(
 		poset_classification *PC,
-		action *A, memory_object *m, int &nb_group_elements,
+		actions::action *A, memory_object *m, int &nb_group_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -138,7 +138,7 @@ void poset_orbit_node::read_memory_object(
 
 void poset_orbit_node::write_memory_object(
 		poset_classification *PC,
-		action *A, memory_object *m, int &nb_group_elements,
+		actions::action *A, memory_object *m, int &nb_group_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -226,7 +226,7 @@ void poset_orbit_node::write_memory_object(
 	}
 }
 
-long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
+long int poset_orbit_node::calc_size_on_file(actions::action *A, int verbose_level)
 {
 	int i;
 	long int s = 0;
@@ -320,7 +320,7 @@ void poset_orbit_node::sv_write_file(poset_classification *PC,
 	}
 }
 
-void poset_orbit_node::read_file(action *A,
+void poset_orbit_node::read_file(actions::action *A,
 		ifstream &fp, int &nb_group_elements,
 		int verbose_level)
 {
@@ -460,7 +460,7 @@ void poset_orbit_node::read_file(action *A,
 	}
 }
 
-void poset_orbit_node::write_file(action *A,
+void poset_orbit_node::write_file(actions::action *A,
 		ofstream &fp, int &nb_group_elements,
 		int verbose_level)
 {
@@ -555,7 +555,7 @@ void poset_orbit_node::write_file(action *A,
 
 void poset_orbit_node::save_schreier_forest(
 	poset_classification *PC,
-	schreier *Schreier,
+	groups::schreier *Schreier,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -653,8 +653,8 @@ void poset_orbit_node::save_shallow_schreier_forest(
 
 void poset_orbit_node::draw_schreier_forest(
 	poset_classification *PC,
-	schreier *Schreier,
-	int f_using_invariant_subset, action *AR,
+	groups::schreier *Schreier,
+	int f_using_invariant_subset, actions::action *AR,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

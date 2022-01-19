@@ -203,7 +203,7 @@ int geometry_global::PG_element_modified_is_in_subspace(int n, int m, int *v)
 
 void geometry_global::test_PG(int n, int q)
 {
-	finite_field F;
+	field_theory::finite_field F;
 	int m;
 	int verbose_level = 1;
 
@@ -221,7 +221,7 @@ void geometry_global::test_PG(int n, int q)
 }
 
 void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
-		finite_field *FQ, finite_field *Fq, int verbose_level)
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -239,7 +239,7 @@ void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
 }
 
 void geometry_global::create_Linear_BLT_set(long int *BLT, int *ABC,
-		finite_field *FQ, finite_field *Fq, int verbose_level)
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -257,7 +257,7 @@ void geometry_global::create_Linear_BLT_set(long int *BLT, int *ABC,
 }
 
 void geometry_global::create_Mondello_BLT_set(long int *BLT, int *ABC,
-		finite_field *FQ, finite_field *Fq, int verbose_level)
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -286,7 +286,7 @@ void geometry_global::print_quadratic_form_list_coded(int form_nb_terms,
 }
 
 void geometry_global::make_Gram_matrix_from_list_coded_quadratic_form(
-	int n, finite_field &F,
+	int n, field_theory::finite_field &F,
 	int nb_terms, int *form_i, int *form_j, int *form_coeff, int *Gram)
 {
 	int k, i, j, c;
@@ -304,7 +304,8 @@ void geometry_global::make_Gram_matrix_from_list_coded_quadratic_form(
 	}
 }
 
-void geometry_global::add_term(int n, finite_field &F,
+void geometry_global::add_term(int n,
+		field_theory::finite_field &F,
 	int &nb_terms, int *form_i, int *form_j, int *form_coeff,
 	int *Gram,
 	int i, int j, int coeff)
@@ -328,7 +329,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	finite_field F;
+	field_theory::finite_field F;
 	projective_space *P;
 	int v[3];
 	int len = 3;
@@ -384,7 +385,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 }
 
 
-int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
+int geometry_global::test_if_arc(field_theory::finite_field *Fq, int *pt_coords,
 		int *set, int set_sz, int k, int verbose_level)
 // Used by Hill_cap56()
 {
@@ -450,7 +451,7 @@ done:
 }
 
 void geometry_global::create_Buekenhout_Metz(
-	finite_field *Fq, finite_field *FQ,
+		field_theory::finite_field *Fq, field_theory::finite_field *FQ,
 	int f_classical, int f_Uab, int parameter_a, int parameter_b,
 	std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
@@ -796,7 +797,7 @@ long int geometry_global::nb_pts_Nbar(int n, int q)
 void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 // only works for epsilon = 0
 {
-	finite_field GFq;
+	field_theory::finite_field GFq;
 	int *v;
 	int stride = 1, /*n,*/ len; //, h, wt;
 	long int i, j, a, nb;
@@ -858,7 +859,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 void geometry_global::test_orthogonal(int n, int q)
 {
 	int *v;
-	finite_field GFq;
+	field_theory::finite_field GFq;
 	long int i, j, a;
 	int stride = 1;
 	long int nb;
@@ -1422,7 +1423,8 @@ int geometry_global::packing_number_via_maxfit(int n, int k)
 
 
 
-void geometry_global::do_inverse_isomorphism_klein_quadric(finite_field *F,
+void geometry_global::do_inverse_isomorphism_klein_quadric(
+		field_theory::finite_field *F,
 		std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 		int verbose_level)
 {
@@ -1471,7 +1473,8 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(finite_field *F,
 	}
 }
 
-void geometry_global::do_rank_point_in_PG(finite_field *F, int n,
+void geometry_global::do_rank_point_in_PG(
+		field_theory::finite_field *F, int n,
 		std::string &coeff_text,
 		int verbose_level)
 {
@@ -1510,7 +1513,8 @@ void geometry_global::do_rank_point_in_PG(finite_field *F, int n,
 
 }
 
-void geometry_global::do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
+void geometry_global::do_rank_point_in_PG_given_as_pairs(
+		field_theory::finite_field *F, int n,
 		std::string &coeff_text,
 		int verbose_level)
 {
@@ -1578,7 +1582,8 @@ void geometry_global::do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
 
 
 
-void geometry_global::do_intersection_of_two_lines(finite_field *F,
+void geometry_global::do_intersection_of_two_lines(
+		field_theory::finite_field *F,
 		std::string &line_1_basis,
 		std::string &line_2_basis,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
@@ -1679,7 +1684,8 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 
 }
 
-void geometry_global::do_transversal(finite_field *F,
+void geometry_global::do_transversal(
+		field_theory::finite_field *F,
 		std::string &line_1_basis,
 		std::string &line_2_basis,
 		std::string &point,
@@ -1788,7 +1794,7 @@ void geometry_global::do_transversal(finite_field *F,
 
 
 void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
-		finite_field *F,
+		field_theory::finite_field *F,
 		long int line1_from, long int line2_from,
 		long int line1_to, long int line2_to, int verbose_level)
 {
@@ -1820,7 +1826,7 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
 }
 
 void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string line1_from_text, std::string line2_from_text,
 		std::string line1_to_text, std::string line2_to_text,
 		int verbose_level)
@@ -1892,7 +1898,7 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 }
 
 
-void geometry_global::do_cheat_sheet_PG(finite_field *F,
+void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
 		layered_graph_draw_options *O,
 		int n,
 		int verbose_level)
@@ -1938,7 +1944,7 @@ void geometry_global::do_cheat_sheet_PG(finite_field *F,
 
 }
 
-void geometry_global::do_cheat_sheet_Gr(finite_field *F,
+void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 		int n, int k,
 		int verbose_level)
 {
@@ -1984,7 +1990,7 @@ void geometry_global::do_cheat_sheet_Gr(finite_field *F,
 }
 
 
-void geometry_global::do_cheat_sheet_hermitian(finite_field *F,
+void geometry_global::do_cheat_sheet_hermitian(field_theory::finite_field *F,
 		int projective_dimension,
 		int verbose_level)
 {
@@ -2026,7 +2032,8 @@ void geometry_global::do_cheat_sheet_hermitian(finite_field *F,
 
 }
 
-void geometry_global::do_create_desarguesian_spread(finite_field *FQ, finite_field *Fq,
+void geometry_global::do_create_desarguesian_spread(
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int m,
 		int verbose_level)
 {
@@ -2052,10 +2059,10 @@ void geometry_global::do_create_desarguesian_spread(finite_field *FQ, finite_fie
 	}
 
 	n = m * s;
-	subfield_structure *SubS;
+	field_theory::subfield_structure *SubS;
 	desarguesian_spread *D;
 
-	SubS = NEW_OBJECT(subfield_structure);
+	SubS = NEW_OBJECT(field_theory::subfield_structure);
 	if (f_v) {
 		cout << "geometry_global::do_create_desarguesian_spread before SubS->init" << endl;
 	}
@@ -2186,7 +2193,8 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 
 
 
-void geometry_global::latex_homogeneous_equation(finite_field *F, int degree, int nb_vars,
+void geometry_global::latex_homogeneous_equation(
+		field_theory::finite_field *F, int degree, int nb_vars,
 		std::string &equation_text,
 		std::string &symbol_txt,
 		std::string &symbol_tex,
@@ -2232,7 +2240,7 @@ void geometry_global::latex_homogeneous_equation(finite_field *F, int degree, in
 
 }
 
-void geometry_global::create_BLT_point(finite_field *F,
+void geometry_global::create_BLT_point(field_theory::finite_field *F,
 		int *v5, int a, int b, int c, int verbose_level)
 // creates the point (-b/2,-c,a,-(b^2/4-ac),1)
 // check if it satisfies x_0^2 + x_1x_2 + x_3x_4:

@@ -122,7 +122,7 @@ void arc_generator::main(int verbose_level)
 void arc_generator::init(
 	arc_generator_description *Descr,
 	projective_space_with_action *PA,
-	strong_generators *SG,
+	groups::strong_generators *SG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -455,7 +455,7 @@ void arc_generator::compute_starter(int verbose_level)
 
 }
 
-int arc_generator::test_nb_Eckardt_points(surface_domain *Surf,
+int arc_generator::test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
 		long int *S, int len, int pt, int nb_E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -697,8 +697,9 @@ void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
 
 void arc_generator::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 // compute the incidence matrix of tangent lines versus candidate points
@@ -858,7 +859,7 @@ void arc_generator::lifting_prepare_function_new(
 	nb_rows = nb_tangent_lines + nb_external_lines;
 	nb_cols = nb_candidates;
 
-	Dio = NEW_OBJECT(diophant);
+	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->sum = nb_needed;
 
@@ -1006,7 +1007,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
-		sims *Stab;
+		groups::sims *Stab;
 		
 		Stab = Iso.Reps->stab[h];
 
@@ -1175,7 +1176,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 			//cout << endl;
 		}
 
-		sims *Stab;
+		groups::sims *Stab;
 		
 		Stab = Iso.Reps->stab[h];
 
@@ -1197,7 +1198,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		ost << "$.\\\\" << endl;
 		
 
-		schreier Orb;
+		groups::schreier Orb;
 		//longinteger_object go2;
 		
 		Iso.AA->compute_all_point_orbits(Orb,
@@ -1280,10 +1281,10 @@ void arc_generator::report_decompositions(
 	if (f_v) {
 		cout << "arc_generator::report_decompositions" << endl;
 		}
-	sims *Stab;
-	strong_generators *gens;
+	groups::sims *Stab;
+	groups::strong_generators *gens;
 
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 
 	Stab = Iso.Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
@@ -1302,12 +1303,12 @@ void arc_generator::report_decompositions(
 void arc_generator::report_stabilizer(isomorph &Iso,
 		ostream &ost, int orbit, int verbose_level)
 {
-	sims *Stab;
+	groups::sims *Stab;
 
 	Stab = Iso.Reps->stab[orbit];
-	strong_generators *SG;
+	groups::strong_generators *SG;
 
-	SG = NEW_OBJECT(strong_generators);
+	SG = NEW_OBJECT(groups::strong_generators);
 	SG->init_from_sims(Stab, verbose_level);
 
 	SG->print_generators_in_latex_individually(ost);
@@ -1352,8 +1353,9 @@ void arc_generator_early_test_function(long int *S, int len,
 
 void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {

@@ -545,7 +545,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 
 
 	if (f_with_stabilizer_generators) {
-		strong_generators *Strong_gens;
+		groups::strong_generators *Strong_gens;
 		ring_theory::longinteger_object go1;
 
 		get_stabilizer_generators(gen, Strong_gens, verbose_level);

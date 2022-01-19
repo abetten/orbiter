@@ -62,7 +62,7 @@ void top_level_geometry_global::set_stabilizer_projective_space(
 
 void top_level_geometry_global::report_decomposition_by_group(
 		projective_space_with_action *PA,
-		strong_generators *SG, std::ostream &ost, std::string &fname_base,
+		groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -87,11 +87,11 @@ void top_level_geometry_global::report_decomposition_by_group(
 	ost << "Orbits on points:\\\\" << endl;
 #endif
 
-	schreier *Sch1;
-	schreier *Sch2;
+	groups::schreier *Sch1;
+	groups::schreier *Sch2;
 
-	Sch1 = NEW_OBJECT(schreier);
-	Sch2 = NEW_OBJECT(schreier);
+	Sch1 = NEW_OBJECT(groups::schreier);
+	Sch2 = NEW_OBJECT(groups::schreier);
 
 	PA->A->all_point_orbits_from_generators(*Sch1,
 			SG,
@@ -100,7 +100,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 	//ost << "Orbits on lines:\\\\" << endl;
 
-	Sch2 = NEW_OBJECT(schreier);
+	Sch2 = NEW_OBJECT(groups::schreier);
 	PA->A_on_lines->all_point_orbits_from_generators(*Sch2,
 			SG,
 			0 /* verbose_level */);
@@ -150,8 +150,8 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 	if (PA->f_has_action_on_planes) {
-		schreier *Sch3;
-		Sch3 = NEW_OBJECT(schreier);
+		groups::schreier *Sch3;
+		Sch3 = NEW_OBJECT(groups::schreier);
 		PA->A_on_planes->all_point_orbits_from_generators(*Sch3,
 				SG,
 				0 /*verbose_level*/);
@@ -168,7 +168,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
-		action_global AG;
+		actions::action_global AG;
 
 		if (f_v) {
 			cout << "projective_space_with_action::report_decomposition_by_group before AG.compute_decomposition_based_on_orbit_length" << endl;
@@ -240,7 +240,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
-		action_global AG;
+		actions::action_global AG;
 
 		if (f_v) {
 			cout << "projective_space_with_action::report_decomposition_by_group before AG.compute_decomposition_based_on_orbits" << endl;
@@ -322,15 +322,15 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	ost << "Orbits on points:\\\\" << endl;
 #endif
 
-	schreier *Sch1;
-	schreier *Sch2;
+	groups::schreier *Sch1;
+	groups::schreier *Sch2;
 	incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 	data_structures::partitionstack S1;
 	data_structures::partitionstack S2;
 
-	Sch1 = NEW_OBJECT(schreier);
-	Sch2 = NEW_OBJECT(schreier);
+	Sch1 = NEW_OBJECT(groups::schreier);
+	Sch2 = NEW_OBJECT(groups::schreier);
 
 	PA->A->all_point_orbits_from_single_generator(*Sch1,
 			Elt,
@@ -338,7 +338,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 	//ost << "Orbits on lines:\\\\" << endl;
 
-	Sch2 = NEW_OBJECT(schreier);
+	Sch2 = NEW_OBJECT(groups::schreier);
 	PA->A_on_lines->all_point_orbits_from_single_generator(*Sch2,
 			Elt,
 			0 /*verbose_level*/);
@@ -499,8 +499,8 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 
 	if (PA->f_has_action_on_planes) {
-		schreier *Sch3;
-		Sch3 = NEW_OBJECT(schreier);
+		groups::schreier *Sch3;
+		Sch3 = NEW_OBJECT(groups::schreier);
 		PA->A_on_planes->all_point_orbits_from_single_generator(*Sch3,
 				Elt,
 				0 /*verbose_level*/);

@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 
@@ -1075,5 +1076,6 @@ void finite_field_implementation_by_tables::multiplication_table_reordered_save_
 
 
 
-}}
+}}}
+
 

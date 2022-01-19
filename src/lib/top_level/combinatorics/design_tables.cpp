@@ -39,10 +39,10 @@ design_tables::~design_tables()
 }
 
 
-void design_tables::init(action *A, action *A2,
+void design_tables::init(actions::action *A, actions::action *A2,
 		long int *initial_set, int design_size,
 		std::string &label,
-		strong_generators *Strong_generators, int verbose_level)
+		groups::strong_generators *Strong_generators, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -90,7 +90,7 @@ void design_tables::init(action *A, action *A2,
 			cout << "design_tables::init after save" << endl;
 		}
 
-		action *A_on_designs;
+		actions::action *A_on_designs;
 
 		if (f_v) {
 			cout << "design_tables::init before create_action" << endl;
@@ -195,7 +195,7 @@ void design_tables::create_table(int verbose_level)
 	}
 }
 
-void design_tables::create_action(action *&A_on_designs, int verbose_level)
+void design_tables::create_action(actions::action *&A_on_designs, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -203,7 +203,7 @@ void design_tables::create_action(action *&A_on_designs, int verbose_level)
 		cout << "design_tables::create_action" << endl;
 	}
 
-	A_on_designs = NEW_OBJECT(action);
+	A_on_designs = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "design_tables::create_action "
@@ -324,10 +324,10 @@ void design_tables::make_reduced_design_table(
 	}
 }
 
-void design_tables::init_from_file(action *A, action *A2,
+void design_tables::init_from_file(actions::action *A, actions::action *A2,
 		long int *initial_set, int design_size,
 		std::string &label,
-		strong_generators *Strong_generators, int verbose_level)
+		groups::strong_generators *Strong_generators, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

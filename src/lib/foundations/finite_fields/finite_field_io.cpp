@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
+
 
 void finite_field::report(std::ostream &ost, int verbose_level)
 {
@@ -1513,6 +1515,7 @@ void finite_field::print_matrix_numerical_latex(std::ostream &ost, int *A, int m
 
 
 
-}}
+}}}
+
 
 

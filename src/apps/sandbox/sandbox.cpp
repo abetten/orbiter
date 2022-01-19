@@ -38,10 +38,10 @@ int main()
 	ring_theory::longinteger_object target_go;
 
 	target_go.create(target_go_lint, __FILE__, __LINE__);
-	action *A;
+	actions::action *A;
 	int f_no_base = FALSE;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	A->init_permutation_group_from_generators(degree,
 			TRUE /*  f_target_go */, target_go,
@@ -55,9 +55,9 @@ int main()
 	A->print_base();
 	A->print_info();
 
-	action *A2;
+	actions::action *A2;
 
-	schreier *Sch;
+	groups::schreier *Sch;
 
 
 	A2 = A->induced_action_on_interior_direct_product(nb_rows, verbose_level);

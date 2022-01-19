@@ -59,8 +59,9 @@ void action_on_subgroups::free()
 	null();
 }
 
-void action_on_subgroups::init(action *A, sims *S, int nb_subgroups, 
-	int subgroup_order, subgroup **Subgroups, int verbose_level)
+void action_on_subgroups::init(actions::action *A,
+		groups::sims *S, int nb_subgroups,
+	int subgroup_order, groups::subgroup **Subgroups, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);

@@ -23,7 +23,7 @@ namespace foundations {
 class blt_set_domain {
 
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	int f_semilinear; // from the command line
 	int epsilon; // the type of the quadric (0, 1 or -1)
 	int n; // algebraic dimension
@@ -134,10 +134,10 @@ public:
 class orthogonal_indexing {
 
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	orthogonal_indexing();
 	~orthogonal_indexing();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 	void Q_epsilon_unrank(
 		int *v, int stride, int epsilon, int k,
 		int c1, int c2, int c3, long int a, int verbose_level);
@@ -269,7 +269,7 @@ public:
 	int *v_neighbor5;
 
 	int *find_root_x, *find_root_y, *find_root_z;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	// stuff for rank_point
 	int *rk_pt_v;
@@ -296,7 +296,7 @@ public:
 
 	orthogonal();
 	~orthogonal();
-	void init(int epsilon, int n, finite_field *F,
+	void init(int epsilon, int n, field_theory::finite_field *F,
 		int verbose_level);
 	void allocate();
 	void init_form_and_Gram_matrix(int verbose_level);
@@ -674,8 +674,8 @@ public:
 
 class unusual_model {
 public:
-	finite_field *FQ;
-	finite_field *Fq;
+	field_theory::finite_field *FQ;
+	field_theory::finite_field *Fq;
 	int q;
 	int Q;
 	int alpha;
@@ -713,10 +713,10 @@ public:
 
 	unusual_model();
 	~unusual_model();
-	void setup(finite_field *FQ, finite_field *Fq,
+	void setup(field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 			int verbose_level);
 	void setup2(
-			finite_field *FQ, finite_field *Fq,
+			field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 			int f_sum_of_squares, int verbose_level);
 	void convert_to_ranks(int n, int *unusual_coordinates,
 		long int *ranks, int verbose_level);

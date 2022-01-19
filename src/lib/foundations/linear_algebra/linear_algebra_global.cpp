@@ -34,7 +34,7 @@ linear_algebra_global::~linear_algebra_global()
 
 
 void linear_algebra_global::Berlekamp_matrix(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &Berlekamp_matrix_coeffs,
 		int verbose_level)
 {
@@ -121,7 +121,7 @@ void linear_algebra_global::Berlekamp_matrix(
 
 
 void linear_algebra_global::compute_normal_basis(
-		finite_field *F,
+		field_theory::finite_field *F,
 		int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -203,7 +203,7 @@ void linear_algebra_global::compute_normal_basis(
 
 
 void linear_algebra_global::do_nullspace(
-		finite_field *F,
+		field_theory::finite_field *F,
 		int *M, int m, int n,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
@@ -388,7 +388,7 @@ void linear_algebra_global::do_nullspace(
 }
 
 void linear_algebra_global::do_RREF(
-		finite_field *F,
+		field_theory::finite_field *F,
 		int *M, int m, int n,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
@@ -483,7 +483,7 @@ void linear_algebra_global::do_RREF(
 }
 
 void linear_algebra_global::RREF_demo(
-		finite_field *F,
+		field_theory::finite_field *F,
 		int *A, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -547,7 +547,7 @@ void linear_algebra_global::RREF_demo(
 }
 
 void linear_algebra_global::RREF_with_steps_latex(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::ostream &ost, int *A, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

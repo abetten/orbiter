@@ -171,11 +171,11 @@ public:
 	int canonical_labeling_len;
 
 
-	strong_generators *SG_pt_stab;
+	groups::strong_generators *SG_pt_stab;
 
 	orbit_of_equations *Orb;
 
-	strong_generators *Stab_gens_quartic;
+	groups::strong_generators *Stab_gens_quartic;
 
 
 	canonical_form_nauty();
@@ -189,7 +189,7 @@ public:
 			long int *bitangents, int nb_bitangents,
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
-			strong_generators *&gens_stab_of_canonical_equation,
+			groups::strong_generators *&gens_stab_of_canonical_equation,
 			int verbose_level);
 
 };
@@ -235,13 +235,13 @@ public:
 
 	compute_stabilizer *CS;
 
-	strong_generators *Gens_stabilizer_original_set;
-	strong_generators *Gens_stabilizer_canonical_form;
+	groups::strong_generators *Gens_stabilizer_original_set;
+	groups::strong_generators *Gens_stabilizer_canonical_form;
 
 
 	orbit_of_equations *Orb;
 
-	strong_generators *gens_stab_of_canonical_equation;
+	groups::strong_generators *gens_stab_of_canonical_equation;
 
 	int *trans1;
 	int *trans2;
@@ -272,8 +272,8 @@ public:
 			int verbose_level);
 	void handle_orbit(
 			int *transporter_to_canonical_form,
-			strong_generators *&Gens_stabilizer_original_set,
-			strong_generators *&Gens_stabilizer_canonical_form,
+			groups::strong_generators *&Gens_stabilizer_original_set,
+			groups::strong_generators *&Gens_stabilizer_canonical_form,
 			int verbose_level);
 
 
@@ -296,7 +296,7 @@ public:
 
 	object_with_canonical_form *OwCF;
 		// do not free
-	strong_generators *Aut_gens;
+	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
 	long int ago;
 	int nb_rows, nb_cols;
@@ -309,7 +309,7 @@ public:
 	void freeself();
 	void init(object_with_canonical_form *OwCF,
 			long int ago,
-			strong_generators *Aut_gens,
+			groups::strong_generators *Aut_gens,
 			//int nb_rows, int nb_cols,
 			int *canonical_labeling,
 			int verbose_level);
@@ -363,7 +363,7 @@ public:
 
 	int f_decomposition_by_subgroup;
 	std::string decomposition_by_subgroup_label;
-	linear_group_description * decomposition_by_subgroup_Descr;
+	groups::linear_group_description * decomposition_by_subgroup_Descr;
 
 
 	int f_define_object;
@@ -629,7 +629,7 @@ public:
 
 	int n;
 	std::string input_q;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	int f_use_projectivity_subgroup;
 
@@ -662,7 +662,7 @@ public:
 	int n; // projective dimension
 	int d; // n + 1
 	int q;
-	finite_field *F; // do not free
+	field_theory::finite_field *F; // do not free
 	int f_semilinear;
 	int f_init_incidence_structure;
 
@@ -673,15 +673,15 @@ public:
 
 
 	// if n == 2:
-	quartic_curve_domain *Dom;
+	algebraic_geometry::quartic_curve_domain *Dom;
 	quartic_curve_domain_with_action *QCDA;
 
 
-	action *A; // linear group PGGL(d,q) in the action on points
-	action *A_on_lines; // linear group PGGL(d,q) acting on lines
+	actions::action *A; // linear group PGGL(d,q) in the action on points
+	actions::action *A_on_lines; // linear group PGGL(d,q) acting on lines
 
 	int f_has_action_on_planes;
-	action *A_on_planes; // linear group PGGL(d,q) acting on planes
+	actions::action *A_on_planes; // linear group PGGL(d,q) acting on planes
 
 
 	int *Elt1;
@@ -691,7 +691,7 @@ public:
 	~projective_space_with_action();
 	void null();
 	void freeself();
-	void init(finite_field *F, int n, int f_semilinear,
+	void init(field_theory::finite_field *F, int n, int f_semilinear,
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	void canonical_labeling(
@@ -712,11 +712,11 @@ public:
 		object_with_canonical_form *OiP,
 		int f_save_incma_in_and_out, std::string &prefix,
 		int nb_objects_to_test,
-		strong_generators *&SG,
+		groups::strong_generators *&SG,
 		long int *canonical_labeling,
 		int verbose_level);
 	void compute_group_of_set(long int *set, int set_sz,
-			strong_generators *&Sg,
+			groups::strong_generators *&Sg,
 			int verbose_level);
 	void map(formula *Formula,
 			std::string &evaluate_text,
@@ -729,7 +729,7 @@ public:
 			std::string &decomposition_by_element_data, std::string &fname_base,
 			int verbose_level);
 	void do_cheat_sheet_for_decomposition_by_subgroup(std::string &label,
-			linear_group_description * subgroup_Descr, int verbose_level);
+			groups::linear_group_description * subgroup_Descr, int verbose_level);
 	void report(
 		std::ostream &ost,
 		layered_graph_draw_options *O,
@@ -758,27 +758,11 @@ public:
 			surface_with_action *&Surf_A,
 			int verbose_level);
 	void report_decomposition_by_group(
-		strong_generators *SG, std::ostream &ost, std::string &fname_base,
+			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 		int verbose_level);
 
 };
 
-//globals:
-#if 0
-void OiPA_encode(void *extra_data,
-	long int *&encoding, int &encoding_sz, void *global_data);
-void OiPA_group_order(void *extra_data,
-	longinteger_object &go, void *global_data);
-void compute_ago_distribution(
-	classify_bitvectors *CB, tally *&C_ago, int verbose_level);
-void compute_ago_distribution_permuted(
-	classify_bitvectors *CB, tally *&C_ago, int verbose_level);
-void compute_and_print_ago_distribution(std::ostream &ost,
-	classify_bitvectors *CB, int verbose_level);
-void compute_and_print_ago_distribution_with_classes(
-		std::ostream &ost,
-	classify_bitvectors *CB, int verbose_level);
-#endif
 int table_of_sets_compare_func(void *data, int i,
 		void *search_object,
 		void *extra_data);

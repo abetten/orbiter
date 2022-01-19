@@ -75,7 +75,7 @@ void null_polarity_generator::freeself()
 	null();
 }
 
-void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
+void null_polarity_generator::init(field_theory::finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

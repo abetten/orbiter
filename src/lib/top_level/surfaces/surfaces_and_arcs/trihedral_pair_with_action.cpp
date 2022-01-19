@@ -336,7 +336,7 @@ void trihedral_pair_with_action::init(arc_lifting *AL, int verbose_level)
 			cout << "trihedral_pair_with_action::init "
 					"Extending the group:" << endl;
 		}
-		Aut_gens = NEW_OBJECT(strong_generators);
+		Aut_gens = NEW_OBJECT(groups::strong_generators);
 		Aut_gens->init_group_extension(gens_subgroup,
 			coset_reps, coset_reps->len, verbose_level - 3);
 
@@ -539,7 +539,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 
 
-			matrix_group *M;
+			groups::matrix_group *M;
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
@@ -708,17 +708,17 @@ void trihedral_pair_with_action::create_surface_from_trihedral_pair_and_arc(
 	}
 }
 
-strong_generators *trihedral_pair_with_action::create_stabilizer_of_trihedral_pair(
+groups::strong_generators *trihedral_pair_with_action::create_stabilizer_of_trihedral_pair(
 	int &trihedral_pair_orbit_index,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	strong_generators *gens_dual;
-	strong_generators *gens;
+	groups::strong_generators *gens_dual;
+	groups::strong_generators *gens;
 	ring_theory::longinteger_object go;
 
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 
 
 	if (f_v) {
@@ -782,8 +782,8 @@ strong_generators *trihedral_pair_with_action::create_stabilizer_of_trihedral_pa
 
 void trihedral_pair_with_action::create_action_on_equations_and_compute_orbits(
 	int *The_surface_equations,
-	strong_generators *gens_for_stabilizer_of_trihedral_pair,
-	action *&A_on_equations, schreier *&Orb,
+	groups::strong_generators *gens_for_stabilizer_of_trihedral_pair,
+	actions::action *&A_on_equations, groups::schreier *&Orb,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

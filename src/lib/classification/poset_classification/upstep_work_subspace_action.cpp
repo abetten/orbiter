@@ -32,20 +32,20 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	int f_vvv = (verbose_level >= 6);
 	//int f_v4 = (verbose_level >= 7);
 	int f_v5 = (verbose_level >= 8);
-	schreier up_orbit;
+	groups::schreier up_orbit;
 	union_find UF;
 	int *aut;
 	trace_result r;
 	int final_node, final_ex;
 	
 	//wreath_product *W;
-	matrix_group *M;
-	finite_field *F;
+	groups::matrix_group *M;
+	field_theory::finite_field *F;
 	{
 	grassmann G;
 	action_on_grassmannian *AG;
 	{
-	action A_on_hyperplanes;
+		actions::action A_on_hyperplanes;
 	int big_n, n, k, rk, degree, idx;
 	int *ambient_space; // [n * big_n]
 	int *base_change_matrix; // [n * n]

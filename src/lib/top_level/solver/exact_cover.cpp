@@ -53,7 +53,7 @@ void exact_cover::freeself()
 }
 
 void exact_cover::init_basic(void *user_data, 
-	action *A_base, action *A_on_blocks, 
+		actions::action *A_base, actions::action *A_on_blocks,
 	int target_size, int starter_size, 
 	std::string &input_prefix, std::string &output_prefix,
 	std::string &solution_prefix, std::string &base_fname,
@@ -157,8 +157,8 @@ void exact_cover::init_early_test_func(
 
 void exact_cover::init_prepare_function_new(
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
-			long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-		diophant *&Dio, long int *&col_label,
+			long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+			solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level),
 	int verbose_level)
@@ -664,7 +664,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 				<< " calling prepare function" << endl;
 		}
 
-	diophant *Dio = NULL;
+	solvers::diophant *Dio = NULL;
 	long int *col_labels;
 	int f_ruled_out = FALSE;
 

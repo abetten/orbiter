@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 
@@ -464,7 +465,7 @@ void linear_group::linear_group_init(
 		}
 
 
-		A2 = NEW_OBJECT(action);
+		A2 = NEW_OBJECT(actions::action);
 
 		if (f_v) {
 			cout << "linear_group::linear_group_init before A2->induced_action_on_grassmannian" << endl;
@@ -514,7 +515,7 @@ void linear_group::linear_group_init(
 		}
 		long int *points;
 		int nb_points;
-		action *A3;
+		actions::action *A3;
 
 		//Orbiter->Lint_vec.scan(description->restricted_action_text, points, nb_points);
 		Orbiter->get_lint_vector_from_label(description->restricted_action_text, points, nb_points, verbose_level);
@@ -588,7 +589,7 @@ void linear_group::init_PGL2q_OnConic(int verbose_level)
 		//A_linear->create_sims(verbose_level);
 		exit(1);
 	}
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_by_representation_on_conic(A_linear, 
 		FALSE /* f_induce_action */, NULL, 
 		verbose_level);
@@ -640,7 +641,7 @@ void linear_group::init_wedge_action(int verbose_level)
 				"A_linear does not have strong generators" << endl;
 		exit(1);
 	}
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	//action_on_wedge_product *AW;
 
 	
@@ -701,7 +702,7 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 				"A_linear does not have strong generators" << endl;
 		exit(1);
 	}
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "linear_group::init_wedge_action_detached initializing projective group" << endl;
@@ -1349,7 +1350,7 @@ void linear_group::report(std::ostream &ost,
 {
 	int f_v = (verbose_level >= 1);
 	sims *H;
-	action *A;
+	actions::action *A;
 
 	A = A2;
 	if (f_v) {
@@ -1679,6 +1680,6 @@ void linear_group::create_latex_report(
 	}
 }
 
-}}
+}}}
 
 

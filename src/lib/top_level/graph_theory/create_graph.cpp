@@ -346,11 +346,11 @@ void create_graph::init(
 	}
 	else if (description->f_trihedral_pair_disjointness_graph) {
 
-		surface_domain *Surf;
-		finite_field *F;
+		algebraic_geometry::surface_domain *Surf;
+		field_theory::finite_field *F;
 
-		F = NEW_OBJECT(finite_field);
-		Surf = NEW_OBJECT(surface_domain);
+		F = NEW_OBJECT(field_theory::finite_field);
+		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 
 		F->finite_field_init(5, FALSE /* f_without_tables */, 0);
 		Surf->init(F, verbose_level);
@@ -756,16 +756,16 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	}
 
 
-	finite_field *F;
-	action *A;
+	field_theory::finite_field *F;
+	actions::action *A;
 	int f_semilinear = FALSE;
 	int f_basis = TRUE;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	//F->init_override_polynomial(q, override_poly, verbose_level);
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	if (l == 1) {
 		f_special = TRUE;
@@ -796,7 +796,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 
 
-	sims *Sims;
+	groups::sims *Sims;
 
 	Sims = A->Sims;
 
@@ -1103,7 +1103,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 		cout << "create_graph::create_Shrikhande" << endl;
 	}
 
-	action *A;
+	actions::action *A;
 	vector_ge *gens_G;
 	vector_ge *gens_S;
 	int *v;
@@ -1113,7 +1113,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	long int goi;
 	int f_no_base = FALSE;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_symmetric_group(n, f_no_base, verbose_level);
 	goi = A->group_order_lint();
 
@@ -1227,7 +1227,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 		}
 	}
 
-	sims *G;
+	groups::sims *G;
 
 
 	G = A->create_sims_from_generators_with_target_group_order_lint(

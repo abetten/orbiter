@@ -72,7 +72,7 @@ public:
 
 	projective_space_with_action *PA;
 	//linear_group *LG;
-	matrix_group *Mtx;
+	groups::matrix_group *Mtx;
 	poset_classification_control *Control;
 
 
@@ -151,7 +151,7 @@ public:
 	int k;
 	int k2; // = k * k
 	//linear_group *LG;
-	matrix_group *Mtx;
+	groups::matrix_group *Mtx;
 
 	int q;
 	int order; // q^k
@@ -164,18 +164,18 @@ public:
 
 	spread_classify *T;
 
-	action *A; // = T->A = PGL_n_q
+	actions::action *A; // = T->A = PGL_n_q
 	int *Elt1;
-	sims *G; // = T->R->A0_linear->Sims
+	groups::sims *G; // = T->R->A0_linear->Sims
 
-	action *A0;
-	action *A0_linear;
+	actions::action *A0;
+	actions::action *A0_linear;
 
 
 	action_on_spread_set *A_on_S;
-	action *AS;
+	actions::action *AS;
 
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 		// the stabilizer of two components in a spread:
 		// infinity and zero
 
@@ -184,7 +184,7 @@ public:
 	poset_classification_control *Control;
 
 	poset_classification *Gen;
-	sims *Symmetry_group;
+	groups::sims *Symmetry_group;
 
 
 	int vector_space_dimension; // = k * k
@@ -268,7 +268,7 @@ public:
 			std::string &fname, int orbit, int h);
 	void compute_orbit_of_subspaces(
 		long int *input_data,
-		strong_generators *stabilizer_gens,
+		groups::strong_generators *stabilizer_gens,
 		orbit_of_subspaces *&Orb,
 		int verbose_level);
 	// allocates an orbit_of_subspaces data structure in Orb
@@ -309,10 +309,10 @@ public:
 	int k2;
 	int q;
 
-	action *A; // PGL(n,q)
-	action *A_PGLk; // PGL(k,q)
-	matrix_group *M;
-	finite_field *F;
+	actions::action *A; // PGL(n,q)
+	actions::action *A_PGLk; // PGL(k,q)
+	groups::matrix_group *M;
+	field_theory::finite_field *F;
 	algebra::gl_classes *C;
 	int *desired_pivots; // [k]
 
@@ -343,7 +343,7 @@ public:
 
 
 	int nb_flag_orbits; // the number of flag orbits
-	strong_generators *Flag_orbit_stabilizer; // [nb_flag_orbits]
+	groups::strong_generators *Flag_orbit_stabilizer; // [nb_flag_orbits]
 	int *flag_orbit_classes;  // [nb_flag_orbits * 2]
 		// for each flag orbit i,
 		// the conjugacy class associated to R_i and R_i + I, respectively
@@ -393,7 +393,7 @@ public:
 	//Go[i] = go.as_lint();
 
 
-	strong_generators *Stabilizer_gens;
+	groups::strong_generators *Stabilizer_gens;
 		// stabilizer generators for the
 		// chosen orbit representatives at level two
 
@@ -491,7 +491,7 @@ public:
 	int f_prefix;
 	std::string prefix;
 
-	strong_generators *Prev_stabilizer_gens;
+	groups::strong_generators *Prev_stabilizer_gens;
 	long int **Candidates;
 		// candidates for the generator matrix,
 		// [nb_orbits]
@@ -521,7 +521,7 @@ public:
 	int *Mo; // [nb_orbits]
 	long int *Go; // [nb_orbits]
 	long int *Pt; // [nb_orbits]
-	strong_generators *Stabilizer_gens; // [nb_orbits]
+	groups::strong_generators *Stabilizer_gens; // [nb_orbits]
 
 	// deep_search:
 	int *Matrix0, *Matrix1, *Matrix2;
@@ -577,7 +577,7 @@ public:
 	void get_basis(
 		int po3, int *basis,
 		int verbose_level);
-	strong_generators *get_stabilizer_generators(
+	groups::strong_generators *get_stabilizer_generators(
 		int level, int orbit_idx,
 		int verbose_level);
 	int trace_to_level_three(
@@ -749,7 +749,7 @@ class semifield_downstep_node {
 public:
 	semifield_classify *SC;
 	semifield_lifting *SL;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int k;
 	int k2;
 
@@ -762,9 +762,9 @@ public:
 	int *subspace_basis;
 
 	action_on_cosets *on_cosets;
-	action *A_on_cosets;
+	actions::action *A_on_cosets;
 
-	schreier *Sch;
+	groups::schreier *Sch;
 
 	int first_flag_orbit;
 
@@ -805,7 +805,7 @@ public:
 	int *fusion_elt;
 
 	ring_theory::longinteger_object go;
-	strong_generators *gens;
+	groups::strong_generators *gens;
 
 	semifield_flag_orbit_node();
 	~semifield_flag_orbit_node();
@@ -837,8 +837,8 @@ public:
 	semifield_classify *SC;
 	semifield_lifting *SL;
 	semifield_level_two *L2;
-	action *A;
-	finite_field *F;
+	actions::action *A;
+	field_theory::finite_field *F;
 	int n;
 	int k;
 	int k2;

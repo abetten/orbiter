@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 quartic_curve_domain::quartic_curve_domain()
@@ -39,7 +40,7 @@ quartic_curve_domain::~quartic_curve_domain()
 }
 
 
-void quartic_curve_domain::init(finite_field *F, int verbose_level)
+void quartic_curve_domain::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -71,7 +72,7 @@ void quartic_curve_domain::init(finite_field *F, int verbose_level)
 	}
 
 
-	Schlaefli = NEW_OBJECT(schlaefli_labels);
+	Schlaefli = NEW_OBJECT(algebraic_geometry::schlaefli_labels);
 	Schlaefli->init(verbose_level);
 
 	if (f_v) {
@@ -587,7 +588,8 @@ void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int
 	}
 }
 
-void quartic_curve_domain::create_surface(quartic_curve_object *Q, int *eqn20, int verbose_level)
+void quartic_curve_domain::create_surface(quartic_curve_object *Q,
+		int *eqn20, int verbose_level)
 // Given a quartic Q in X1,X2,X3, compute an associated cubic surface
 // whose projection from (1,0,0,0) gives back the quartic Q.
 // Pick 4 bitangents L0,L1,L2,L3 so that the 8 points of tangency lie on a conic C.
@@ -862,5 +864,6 @@ void quartic_curve_domain::compute_gradient(int *equation15, int *&gradient, int
 
 
 
-}}
+}}}
+
 

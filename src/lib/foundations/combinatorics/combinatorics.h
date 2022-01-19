@@ -37,7 +37,7 @@ public:
 	ring_theory::longinteger_object *NN; // 2^Q
 	int N; // size of PG(n,2)
 
-	finite_field *Fq; // the field F2
+	field_theory::finite_field *Fq; // the field F2
 	//finite_field *FQ; // the field of order 2^n
 
 	ring_theory::homogeneous_polynomial_domain *Poly;
@@ -91,7 +91,7 @@ public:
 class brick_domain {
 
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	int q;
 	int nb_bricks;
 
@@ -99,7 +99,7 @@ public:
 	~brick_domain();
 	void null();
 	void freeself();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 	void unrank(int rk, int &f_vertical, 
 		int &x0, int &y0, int verbose_level);
 	int rank(int f_vertical, int x0, int y0, int verbose_level);
@@ -414,7 +414,7 @@ public:
 	int philip_hall_test_dual(int *A, int n, int k, int *memo, int verbose_level);
 	void print_01_matrix_with_stars(std::ostream &ost, int *A, int m, int n);
 	void print_int_matrix(std::ostream &ost, int *A, int m, int n);
-	int create_roots_H4(finite_field *F, int *roots);
+	int create_roots_H4(field_theory::finite_field *F, int *roots);
 	long int generalized_binomial(int n, int k, int q);
 	void print_tableau(int *Tableau, int l1, int l2,
 		int *row_parts, int *col_parts);
@@ -686,7 +686,7 @@ class pentomino_puzzle {
 	void setup_pieces();
 	void setup_rotate();
 	void setup_var_start();
-	void make_coefficient_matrix(diophant *D);
+	void make_coefficient_matrix(solvers::diophant *D);
 
 };
 
@@ -710,8 +710,8 @@ public:
 	int *multiple_types;
 	int nb_multiple_types;
 	int *types_first2;
-	diophant *D1;
-	diophant *D2;
+	solvers::diophant *D1;
+	solvers::diophant *D2;
 
 	tdo_data();
 	~tdo_data();

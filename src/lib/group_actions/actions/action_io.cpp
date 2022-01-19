@@ -16,10 +16,11 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
-void action::report(ostream &ost, int f_sims, sims *S,
-		int f_strong_gens, strong_generators *SG,
+void action::report(ostream &ost, int f_sims, groups::sims *S,
+		int f_strong_gens, groups::strong_generators *SG,
 		layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
@@ -41,8 +42,8 @@ void action::report(ostream &ost, int f_sims, sims *S,
 
 	if (is_matrix_group()) {
 		ost << "The group is a matrix group.\\\\" << endl;
-		finite_field *F;
-		matrix_group *M;
+		field_theory::finite_field *F;
+		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		F = M->GFq;
@@ -74,7 +75,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	}
 
 	if (type_G == wreath_product_t) {
-		wreath_product *W;
+		groups::wreath_product *W;
 
 		W = G.wreath_product_group;
 		if (f_v) {
@@ -171,8 +172,8 @@ void action::report_what_we_act_on(ostream &ost,
 	}
 	if (is_matrix_group()) {
 
-		finite_field *F;
-		matrix_group *M;
+		field_theory::finite_field *F;
+		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		F = M->GFq;
@@ -209,8 +210,8 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 	void *early_test_func_callback_data,
 	long int *&starter,
 	int &starter_sz,
-	sims *&Stab,
-	strong_generators *&Strong_gens,
+	groups::sims *&Stab,
+	groups::strong_generators *&Strong_gens,
 	long int *&candidates,
 	int &nb_candidates,
 	int &nb_cases,
@@ -289,8 +290,8 @@ void action::read_orbit_rep_and_candidates_from_files(
 	int level, int orbit_at_level, int level_of_candidates_file,
 	long int *&starter,
 	int &starter_sz,
-	sims *&Stab,
-	strong_generators *&Strong_gens,
+	groups::sims *&Stab,
+	groups::strong_generators *&Strong_gens,
 	long int *&candidates,
 	int &nb_candidates,
 	int &nb_cases,
@@ -553,8 +554,8 @@ void action::read_file_and_print_representatives(
 }
 
 void action::read_set_and_stabilizer(std::string &fname,
-	int no, long int *&set, int &set_sz, sims *&stab,
-	strong_generators *&Strong_gens,
+	int no, long int *&set, int &set_sz, groups::sims *&stab,
+	groups::strong_generators *&Strong_gens,
 	int &nb_cases,
 	int verbose_level)
 {
@@ -620,7 +621,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 	stab->group_order(go);
 
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(stab, 0);
 	f_has_strong_generators = TRUE;
 
@@ -1008,7 +1009,8 @@ void action::write_set_of_elements_latex_file(std::string &fname, std::string &t
 }
 
 void action::export_to_orbiter(
-		std::string &fname, std::string &label, strong_generators *SG, int verbose_level)
+		std::string &fname, std::string &label,
+		groups::strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1074,7 +1076,7 @@ void action::export_to_orbiter(
 
 void action::export_to_orbiter_as_bsgs(
 		std::string &fname, std::string &label, std::string &label_tex,
-		strong_generators *SG, int verbose_level)
+		groups::strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 #if 0
@@ -1159,4 +1161,5 @@ void action::export_to_orbiter_as_bsgs(
 
 
 
-}}
+}}}
+

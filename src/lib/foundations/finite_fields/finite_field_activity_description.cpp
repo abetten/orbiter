@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 finite_field_activity_description::finite_field_activity_description()
@@ -1303,7 +1304,8 @@ void finite_field_activity_description::print()
 }
 
 
-}}
+}}}
+
 
 
 

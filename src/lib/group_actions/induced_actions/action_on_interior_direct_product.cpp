@@ -29,7 +29,7 @@ action_on_interior_direct_product::~action_on_interior_direct_product()
 {
 }
 
-void action_on_interior_direct_product::init(action *A, int nb_rows, int verbose_level)
+void action_on_interior_direct_product::init(actions::action *A, int nb_rows, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

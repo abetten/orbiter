@@ -66,7 +66,7 @@ grassmann::~grassmann()
 	}
 }
 
-void grassmann::init(int n, int k, finite_field *F, int verbose_level)
+void grassmann::init(int n, int k, field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	

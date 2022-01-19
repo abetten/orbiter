@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 schlaefli_labels::schlaefli_labels()
@@ -173,4 +174,5 @@ void schlaefli_labels::init(int verbose_level)
 }
 
 
-}}
+}}}
+

@@ -51,7 +51,7 @@ void action_on_orthogonal::free()
 	null();
 }
 
-void action_on_orthogonal::init(action *original_action,
+void action_on_orthogonal::init(actions::action *original_action,
 		orthogonal *O,
 		int f_on_points,
 		int f_on_lines,
@@ -124,7 +124,7 @@ long int action_on_orthogonal::map_a_point(
 {
 	int f_v = (verbose_level >= 1);
 	long int j;
-	action *A;
+	actions::action *A;
 	
 	if (f_v) {
 		cout << "action_on_orthogonal::map_a_point" << endl;
@@ -145,7 +145,7 @@ long int action_on_orthogonal::map_a_line(int *Elt, long int i, int verbose_leve
 	int f_vv = (verbose_level >= 2);
 	long int j;
 	long int p1, p2, q1, q2;
-	action *A;
+	actions::action *A;
 	
 	if (f_v) {
 		cout << "action_on_orthogonal::map_a_line" << endl;

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 norm_tables::norm_tables()
@@ -110,6 +111,5 @@ int norm_tables::choose_an_element_of_given_norm(
 	return gamma;
 }
 
-}
-}
+}}}
 

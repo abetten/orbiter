@@ -45,9 +45,9 @@ void pentomino_puzzle::main(int verbose_level)
 	cout << "nb_eqn2=" << nb_eqn2 << endl;
 	cout << "nb_eqns=" << nb_eqns << endl;
 
-	diophant *D;
+	solvers::diophant *D;
 
-	D = NEW_OBJECT(diophant);
+	D = NEW_OBJECT(solvers::diophant);
 
 	D->open(nb_eqns, nb_vars);
 	D->fill_coefficient_matrix_with(0);
@@ -1099,7 +1099,7 @@ void pentomino_puzzle::setup_var_start()
 }
 
 
-void pentomino_puzzle::make_coefficient_matrix(diophant *D)
+void pentomino_puzzle::make_coefficient_matrix(solvers::diophant *D)
 {
 	int i, h, j0, r, t, rr, tt, s, x, y, z;
 

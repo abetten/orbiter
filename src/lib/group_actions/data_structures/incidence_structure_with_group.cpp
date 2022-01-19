@@ -229,7 +229,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	//FREE_OBJECT(Inc_out);
 
 
-	A_perm = NEW_OBJECT(action);
+	A_perm = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "

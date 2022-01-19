@@ -348,16 +348,19 @@ class syntax_tree_node;
 class syntax_tree;
 
 
-// finite_fields:
-class finite_field_activity_description;
-class finite_field_activity;
-class finite_field_description;
-class finite_field;
-class finite_field_implementation_by_tables;
-class finite_field_implementation_wo_tables;
-class norm_tables;
-class nth_roots;
-class subfield_structure;
+namespace field_theory {
+
+	// finite_fields:
+	class finite_field_activity_description;
+	class finite_field_activity;
+	class finite_field_description;
+	class finite_field;
+	class finite_field_implementation_by_tables;
+	class finite_field_implementation_wo_tables;
+	class norm_tables;
+	class nth_roots;
+	class subfield_structure;
+}
 
 // geometry:
 class andre_construction_line_element;
@@ -387,9 +390,6 @@ class points_and_lines;
 class polarity;
 class projective_space_implementation;
 class projective_space;
-class quartic_curve_domain;
-class quartic_curve_object_properties;
-class quartic_curve_object;
 class spread_tables;
 class W3q;
 
@@ -522,37 +522,44 @@ namespace ring_theory {
 
 }
 
-// solvers
-class diophant_activity_description;
-class diophant_activity;
-class diophant_create;
-class diophant_description;
-class diophant;
-class dlx_problem_description;
-class dlx_solver;
-struct dlx_node;
-typedef struct dlx_node *pdlx_node;
+namespace solvers {
+	// solvers
+	class diophant_activity_description;
+	class diophant_activity;
+	class diophant_create;
+	class diophant_description;
+	class diophant;
+	class dlx_problem_description;
+	class dlx_solver;
+	struct dlx_node;
+	typedef struct dlx_node *pdlx_node;
+}
 
 // statistics:
 class tally_vector_data;
 class tally;
 
-// surfaces:
-class arc_lifting_with_two_lines;
-class clebsch_map;
-class del_pezzo_surface_of_degree_two_domain;
-class del_pezzo_surface_of_degree_two_object;
-class eckardt_point_info;
-class eckardt_point;
-class schlaefli_labels;
-class schlaefli;
-class seventytwo_cases;
-class surface_domain;
-class surface_object_properties;
-class surface_object;
-class web_of_cubic_curves;
+namespace algebraic_geometry {
 
+	// surfaces:
+	class arc_lifting_with_two_lines;
+	class clebsch_map;
+	class del_pezzo_surface_of_degree_two_domain;
+	class del_pezzo_surface_of_degree_two_object;
+	class eckardt_point_info;
+	class eckardt_point;
+	class quartic_curve_domain;
+	class quartic_curve_object_properties;
+	class quartic_curve_object;
+	class schlaefli_labels;
+	class schlaefli;
+	class seventytwo_cases;
+	class surface_domain;
+	class surface_object_properties;
+	class surface_object;
+	class web_of_cubic_curves;
 
+}
 
 // pointer types
 typedef tree_node *ptree_node;

@@ -11,6 +11,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
+
 
 subgroup::subgroup()
 {
@@ -128,5 +131,6 @@ void subgroup::report(ostream &ost)
 	SG->print_generators_tex(ost);
 }
 
-}}
+}}}
+
 

@@ -43,27 +43,27 @@ void group_container::freeself()
 	delete_sims();
 }
 
-group_container::group_container(action *A, int verbose_level)
+group_container::group_container(actions::action *A, int verbose_level)
 {
 	null();
 	init(A, verbose_level);
 };
 
-group_container::group_container(action *A, const char *ascii_coding, int verbose_level)
+group_container::group_container(actions::action *A, const char *ascii_coding, int verbose_level)
 {
 	null();
 	init(A, verbose_level);
 	init_ascii_coding(ascii_coding, verbose_level);
 };
 
-group_container::group_container(action *A, vector_ge &SG, int *tl, int verbose_level)
+group_container::group_container(actions::action *A, vector_ge &SG, int *tl, int verbose_level)
 {
 	null();
 	init(A, verbose_level);
 	init_strong_generators(SG, tl, verbose_level - 1);
 };
 
-void group_container::init(action *A, int verbose_level)
+void group_container::init(actions::action *A, int verbose_level)
 {
 	null();
 	group_container::A = A;
@@ -446,7 +446,7 @@ void group_container::schreier_sims(int verbose_level)
 	if (f_v) {
 		cout << "group_container::schreier_sims after delete_sims" << endl;
 	}
-	S = NEW_OBJECT(sims);
+	S = NEW_OBJECT(groups::sims);
 	if (FALSE) {
 		cout << "group_container::schreier_sims calling S->init(A)" << endl;
 	}
@@ -535,7 +535,7 @@ void group_container::point_stabilizer(group_container &stab, int pt, int verbos
 	}
 }
 
-void group_container::point_stabilizer_with_action(action *A2,
+void group_container::point_stabilizer_with_action(actions::action *A2,
 		group_container &stab, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -597,7 +597,7 @@ void group_container::point_stabilizer_with_action(action *A2,
 	}
 }
 
-void group_container::induced_action(action &induced_action,
+void group_container::induced_action(actions::action &induced_action,
 		group_container &H, group_container &K, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -611,7 +611,7 @@ void group_container::induced_action(action &induced_action,
 		int *H_tl, *K_tl;
 		int n = 0;
 		{
-			sims HH, KK;
+			groups::sims HH, KK;
 			ring_theory::longinteger_object go, H_order, K_order, HK_order, quo, rem;
 			int drop_out_level, image;
 			ring_theory::longinteger_domain D;
@@ -754,8 +754,8 @@ void group_container::extension(group_container &N, group_container &H, int verb
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	action *A = N.A;
-	sims G;
+	actions::action *A = N.A;
+	groups::sims G;
 	ring_theory::longinteger_object go_N, go_H, go_G, cur_go, quo, rem;
 	ring_theory::longinteger_domain D;
 	int n = 0, drop_out_level, image;
@@ -876,14 +876,14 @@ void group_container::print_strong_generators(ostream &ost,
 }
 
 void group_container::print_strong_generators_with_different_action(
-		ostream &ost, action *A2)
+		ostream &ost, actions::action *A2)
 {
 	print_strong_generators_with_different_action_verbose(
 			ost, A2, 0);
 }
 
 void group_container::print_strong_generators_with_different_action_verbose(
-		ostream &ost, action *A2, int verbose_level)
+		ostream &ost, actions::action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

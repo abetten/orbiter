@@ -33,7 +33,7 @@ void action_on_bricks::free()
 	null();
 }
 
-void action_on_bricks::init(action *A, combinatorics::brick_domain *B,
+void action_on_bricks::init(actions::action *A, combinatorics::brick_domain *B,
 	int f_linear_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

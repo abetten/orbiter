@@ -78,7 +78,7 @@ void arc_orbits_on_pairs::freeself()
 
 void arc_orbits_on_pairs::init(
 	surfaces_arc_lifting *SAL, int arc_idx,
-	action *A,
+	actions::action *A,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

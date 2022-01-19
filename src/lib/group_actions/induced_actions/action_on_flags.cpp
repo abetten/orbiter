@@ -35,7 +35,7 @@ void action_on_flags::free()
 	null();
 }
 
-void action_on_flags::init(action *A, int *type,
+void action_on_flags::init(actions::action *A, int *type,
 		int type_len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -56,7 +56,7 @@ void action_on_flags::init(action *A, int *type,
 		M = A->G.matrix_grp;
 		}
 	else {
-		action *sub = A->subaction;
+		actions::action *sub = A->subaction;
 		M = sub->G.matrix_grp;
 		}
 	F = M->GFq;

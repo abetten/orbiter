@@ -10,6 +10,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 int action::image_of(
@@ -758,7 +759,7 @@ void action::element_read_from_file_binary(int *Elt,
 		}
 }
 
-void action::random_element(sims *S, int *Elt, int verbose_level)
+void action::random_element(groups::sims *S, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -860,5 +861,6 @@ void action::all_elements_save_csv(std::string &fname, int verbose_level)
 
 
 
-}}
+}}}
+
 

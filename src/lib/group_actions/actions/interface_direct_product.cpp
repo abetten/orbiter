@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 // #############################################################################
 // interface functions: direct product group
@@ -122,7 +123,7 @@ static long int direct_product_group_element_image_of(action &A,
 		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	long int b;
 
@@ -168,7 +169,7 @@ static void direct_product_group_element_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	if (f_v) {
@@ -182,7 +183,7 @@ static int direct_product_group_element_is_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	int ret;
 
@@ -208,7 +209,7 @@ static void direct_product_group_element_unpack(action &A,
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -222,7 +223,7 @@ static void direct_product_group_element_pack(action &A,
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -236,7 +237,7 @@ static void direct_product_group_element_retrieve(action &A,
 		int hdl, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	uchar *p_elt;
 
@@ -258,7 +259,7 @@ static int direct_product_group_element_store(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	int hdl;
 
@@ -279,7 +280,7 @@ static void direct_product_group_element_mult(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
@@ -308,7 +309,7 @@ static void direct_product_group_element_invert(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *AA = (int *) a;
 	int *AAv = (int *) av;
 
@@ -341,7 +342,7 @@ static void direct_product_group_element_move(action &A,
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 
@@ -355,7 +356,7 @@ static void direct_product_group_element_dispose(action &A,
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 
 	if (f_v) {
 		cout << "direct_product_group_element_dispose "
@@ -367,7 +368,7 @@ static void direct_product_group_element_dispose(action &A,
 static void direct_product_group_element_print(action &A,
 		void *elt, ostream &ost)
 {
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 
@@ -386,7 +387,7 @@ static void direct_product_group_element_code_for_make_element(action &A,
 static void direct_product_group_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
-	direct_product *P = A.G.direct_product_group;
+	groups::direct_product *P = A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
@@ -400,7 +401,7 @@ static void direct_product_group_element_print_for_make_element(action &A,
 static void direct_product_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
-	direct_product *P = A.G.direct_product_group;
+	groups::direct_product *P = A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
@@ -414,7 +415,7 @@ static void direct_product_group_element_print_for_make_element_no_commas(
 static void direct_product_group_element_print_quick(
 		action &A, void *elt, ostream &ost)
 {
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	P.element_print_easy(Elt, ost);
@@ -475,7 +476,7 @@ static void direct_product_group_element_print_as_permutation(
 static void direct_product_group_element_print_verbose(
 		action &A, void *elt, ostream &ost)
 {
-	direct_product &P = *A.G.direct_product_group;
+	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	P.element_print_easy(Elt, ost);
@@ -488,7 +489,8 @@ static void direct_product_group_print_point(action &A, long int a, ostream &ost
 	exit(1);
 }
 
-}}
+}}}
+
 
 
 

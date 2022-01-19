@@ -28,7 +28,7 @@ namespace group_actions {
 
 class action_by_conjugation {
 public:
-	sims *Base_group;
+	groups::sims *Base_group;
 	int f_ownership;
 	long int goi;
 	
@@ -40,10 +40,10 @@ public:
 	~action_by_conjugation();
 	void null();
 	void free();
-	void init(sims *Base_group, int f_ownership, int verbose_level);
-	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
+	void init(groups::sims *Base_group, int f_ownership, int verbose_level);
+	long int compute_image(actions::action *A, int *Elt, long int i, int verbose_level);
 	long int rank(int *Elt);
-	long int multiply(action *A, long int i, long int j, int verbose_level);
+	long int multiply(actions::action *A, long int i, long int j, int verbose_level);
 };
 
 // #############################################################################
@@ -59,8 +59,8 @@ public:
 	enum representation_type type;
 	int n;
 	int q;
-	matrix_group *M;
-	finite_field *F;
+	groups::matrix_group *M;
+	field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
 	
@@ -73,11 +73,11 @@ public:
 	~action_by_representation();
 	void null();
 	void free();
-	void init_action_on_conic(action &A, int verbose_level);
+	void init_action_on_conic(actions::action &A, int verbose_level);
 	long int compute_image_int(
-		action &A, int *Elt, long int a, int verbose_level);
+			actions::action &A, int *Elt, long int a, int verbose_level);
 	void compute_image_int_low_level(
-		action &A, int *Elt, int *input, int *output, 
+			actions::action &A, int *Elt, int *input, int *output,
 		int verbose_level);
 	void unrank_point(long int a, int *v, int verbose_level);
 	long int rank_point(int *v, int verbose_level);
@@ -114,7 +114,7 @@ public:
 		// the array points must be ordered
 	long int original_point(long int pt);
 	long int restricted_point_idx(long int pt);
-	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
+	long int compute_image(actions::action *A, int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -127,7 +127,7 @@ public:
 
 class action_by_right_multiplication {
 public:
-	sims *Base_group;
+	groups::sims *Base_group;
 	int f_ownership;
 	int goi;
 	
@@ -138,8 +138,8 @@ public:
 	~action_by_right_multiplication();
 	void null();
 	void free();
-	void init(sims *Base_group, int f_ownership, int verbose_level);
-	long int compute_image(action *A, int *Elt, long int i,
+	void init(groups::sims *Base_group, int f_ownership, int verbose_level);
+	long int compute_image(actions::action *A, int *Elt, long int i,
 		int verbose_level);
 };
 
@@ -162,15 +162,15 @@ public:
 	int *v2; // [m]
 	int *v3; // [m]
 	
-	action *AQ;
-	action *Aq;
+	actions::action *AQ;
+	actions::action *Aq;
 
-	matrix_group *MQ;
-	finite_field *FQ;
-	matrix_group *Mq;
-	finite_field *Fq;
+	groups::matrix_group *MQ;
+	field_theory::finite_field *FQ;
+	groups::matrix_group *Mq;
+	field_theory::finite_field *Fq;
 
-	subfield_structure *S;
+	field_theory::subfield_structure *S;
 
 	int *Eltq;
 	int *Mtx; // [m * m]
@@ -182,11 +182,11 @@ public:
 	~action_by_subfield_structure();
 	void null();
 	void free();
-	void init(action &A, finite_field *Fq, int verbose_level);
+	void init(actions::action &A, field_theory::finite_field *Fq, int verbose_level);
 	long int compute_image_int(
-		action &A, int *Elt, long int a, int verbose_level);
+			actions::action &A, int *Elt, long int a, int verbose_level);
 	void compute_image_int_low_level(
-		action &A, int *Elt, int *input, int *output, 
+			actions::action &A, int *Elt, int *input, int *output,
 		int verbose_level);
 };
 
@@ -200,8 +200,8 @@ public:
 class action_on_andre {
 public:
 
-	action *An;
-	action *An1;
+	actions::action *An;
+	actions::action *An1;
 	andre_construction *Andre;
 	int k, n, q;
 	int k1, n1;
@@ -215,7 +215,7 @@ public:
 	~action_on_andre();
 	void null();
 	void free();
-	void init(action *An, action *An1, 
+	void init(actions::action *An, actions::action *An1,
 		andre_construction *Andre, int verbose_level);
 	long int compute_image(int *Elt, long int i,
 		int verbose_level);
@@ -235,7 +235,7 @@ public:
 class action_on_bricks {
 public:
 
-	action *A;
+	actions::action *A;
 	combinatorics::brick_domain *B;
 	int degree;
 	int f_linear_action;
@@ -244,7 +244,7 @@ public:
 	~action_on_bricks();
 	void null();
 	void free();
-	void init(action *A, combinatorics::brick_domain *B, int f_linear_action,
+	void init(actions::action *A, combinatorics::brick_domain *B, int f_linear_action,
 		int verbose_level);
 	long int compute_image(int *Elt, long int i,
 		int verbose_level);
@@ -263,8 +263,8 @@ public:
 
 class action_on_cosets {
 public:
-	action *A_linear;
-	finite_field *F;
+	actions::action *A_linear;
+	field_theory::finite_field *F;
 	int dimension_of_subspace;
 	int n;
 	int *subspace_basis; // [dimension_of_subspace * n]
@@ -292,8 +292,8 @@ public:
 	void null();
 	void freeself();
 	void init(int nb_points, int *Points, 
-		action *A_linear, 
-		finite_field *F, 
+			actions::action *A_linear,
+		field_theory::finite_field *F,
 		int dimension_of_subspace, 
 		int n, 
 		int *subspace_basis, 
@@ -303,8 +303,8 @@ public:
 		void *rank_unrank_data, 
 		int verbose_level);
 	void init_lint(int nb_points, long int *Points,
-		action *A_linear,
-		finite_field *F,
+			actions::action *A_linear,
+		field_theory::finite_field *F,
 		int dimension_of_subspace,
 		int n,
 		int *subspace_basis,
@@ -327,7 +327,7 @@ public:
 
 class action_on_determinant {
 public:
-	matrix_group *M;
+	groups::matrix_group *M;
 	int f_projective;
 	int m;
 	int q;
@@ -339,8 +339,8 @@ public:
 	~action_on_determinant();
 	void null();
 	void free();
-	void init(action &A, int f_projective, int m, int verbose_level);
-	long int compute_image(action *A, int *Elt, long int i,
+	void init(actions::action &A, int f_projective, int m, int verbose_level);
+	long int compute_image(actions::action *A, int *Elt, long int i,
 		int verbose_level);
 };
 
@@ -419,12 +419,12 @@ public:
 	void free();
 	void init_light(
 		algebra::vector_space *VS,
-		action &A_base, action &A,
+		actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int verbose_level);
 	void init_by_rank_table_mode(
 			algebra::vector_space *VS,
-		action &A_base, action &A,
+			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		long int *point_list, int nb_points,
 		int verbose_level);
@@ -436,15 +436,15 @@ public:
 			int verbose_level);
 	void init_by_rank(
 			algebra::vector_space *VS,
-		action &A_base, action &A,
+			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int f_compute_tables, int verbose_level);
 	void init_from_coordinate_vectors(
 			algebra::vector_space *VS,
-		action &A_base, action &A,
+			actions::action &A_base, actions::action &A,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
-	void init2(action &A_base, action &A, 
+	void init2(actions::action &A_base, actions::action &A,
 		int f_compute_tables, int verbose_level);
 	void compute_projection_table(int verbose_level);
 	long int compute_degree();
@@ -475,7 +475,7 @@ public:
 	long int rank_in_large_space(int *v);
 	void unrank_in_small_space(int *v, long int rk);
 	long int rank_in_small_space(int *v);
-	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
+	long int compute_image(actions::action *A, int *Elt, long int i, int verbose_level);
 };
 
 // #############################################################################
@@ -488,13 +488,13 @@ public:
 
 class action_on_flags {
 public:
-	action *A;
+	actions::action *A;
 	int n;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int *type;
 	int type_len;
 	flag *Flag;
-	matrix_group *M;
+	groups::matrix_group *M;
 	int degree;
 	int *M1;
 	int *M2;
@@ -503,7 +503,7 @@ public:
 	~action_on_flags();
 	void null();
 	void free();
-	void init(action *A, int *type, int type_len, 
+	void init(actions::action *A, int *type, int type_len,
 		int verbose_level);
 	long int compute_image(int *Elt, long int i, int verbose_level);
 };
@@ -517,8 +517,8 @@ public:
 
 class action_on_galois_group {
 public:
-	action *A;
-	matrix_group *M;
+	actions::action *A;
+	groups::matrix_group *M;
 	int m;
 	int q;
 	int degree;
@@ -527,7 +527,7 @@ public:
 	~action_on_galois_group();
 	void null();
 	void free();
-	void init(action *A, int m, int verbose_level);
+	void init(actions::action *A, int m, int verbose_level);
 	long int compute_image(int *Elt, long int i,
 		int verbose_level);
 };
@@ -545,10 +545,10 @@ public:
 	int n;
 	int k;
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int low_level_point_size;
 	
-	action *A;
+	actions::action *A;
 	grassmann *G;
 	int *M1;
 	int *M2;
@@ -570,7 +570,7 @@ public:
 	~action_on_grassmannian();
 	void null();
 	void free();
-	void init(action &A, grassmann *G, int verbose_level);
+	void init(actions::action &A, grassmann *G, int verbose_level);
 	void add_print_function(
 			void (*print_function)(std::ostream &ost, long int a, void *data),
 			void *print_function_data,
@@ -579,14 +579,14 @@ public:
 		int verbose_level);
 	void unrank(long int i, int *v, int verbose_level);
 	long int rank(int *v, int verbose_level);
-	void compute_image_longinteger(action *A, int *Elt, 
+	void compute_image_longinteger(actions::action *A, int *Elt,
 			ring_theory::longinteger_object &i, ring_theory::longinteger_object &j,
 		int verbose_level);
-	long int compute_image_int(action *A, int *Elt,
+	long int compute_image_int(actions::action *A, int *Elt,
 		long int i, int verbose_level);
-	long int compute_image_int_ordinary(action *A, int *Elt,
+	long int compute_image_int_ordinary(actions::action *A, int *Elt,
 		long int i, int verbose_level);
-	long int compute_image_int_embedded(action *A, int *Elt,
+	long int compute_image_int_embedded(actions::action *A, int *Elt,
 		long int i, int verbose_level);
 	void print_point(long int a, std::ostream &ost);
 };
@@ -603,10 +603,10 @@ class action_on_homogeneous_polynomials {
 public:
 	int n; // the dimension M->n
 	int q;
-	action *A;
+	actions::action *A;
 	ring_theory::homogeneous_polynomial_domain *HPD;
-	matrix_group *M;
-	finite_field *F;
+	groups::matrix_group *M;
+	field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
 
@@ -625,7 +625,7 @@ public:
 	~action_on_homogeneous_polynomials();
 	void null();
 	void free();
-	void init(action *A, ring_theory::homogeneous_polynomial_domain *HPD,
+	void init(actions::action *A, ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	void init_invariant_set_of_equations(int *Equations, 
 		int nb_equations, int verbose_level);
@@ -648,7 +648,7 @@ public:
 
 class action_on_interior_direct_product {
 public:
-	action *A;
+	actions::action *A;
 	int nb_rows;
 	int nb_cols;
 	int degree;
@@ -656,7 +656,7 @@ public:
 
 	action_on_interior_direct_product();
 	~action_on_interior_direct_product();
-	void init(action *A, int nb_rows, int verbose_level);
+	void init(actions::action *A, int nb_rows, int verbose_level);
 	long int compute_image(int *Elt, long int a, int verbose_level);
 };
 
@@ -671,7 +671,7 @@ public:
 
 class action_on_k_subsets {
 public:
-	action *A;
+	actions::action *A;
 	int k;
 	int degree;
 	int *set1; // [k]
@@ -681,7 +681,7 @@ public:
 	~action_on_k_subsets();
 	void null();
 	void free();
-	void init(action *A, int k, int verbose_level);
+	void init(actions::action *A, int k, int verbose_level);
 	long int compute_image(int *Elt, long int i, int verbose_level);
 };
 
@@ -695,8 +695,8 @@ public:
 
 class action_on_orbits {
 public:
-	action *A;
-	schreier *Sch;
+	actions::action *A;
+	groups::schreier *Sch;
 	int f_play_it_safe;
 	int degree;
 	
@@ -704,7 +704,7 @@ public:
 	~action_on_orbits();
 	void null();
 	void free();
-	void init(action *A, schreier *Sch, int f_play_it_safe, 
+	void init(actions::action *A, groups::schreier *Sch, int f_play_it_safe,
 		int verbose_level);
 	long int compute_image(int *Elt, long int i, int verbose_level);
 };
@@ -719,7 +719,7 @@ public:
 
 class action_on_orthogonal {
 public:
-	action *original_action;
+	actions::action *original_action;
 	orthogonal *O;
 	int *v1;
 	int *v2;
@@ -735,7 +735,7 @@ public:
 	~action_on_orthogonal();
 	void null();
 	void free();
-	void init(action *original_action, orthogonal *O, 
+	void init(actions::action *original_action, orthogonal *O,
 		int f_on_points, int f_on_lines, int f_on_points_and_lines, 
 		int verbose_level);
 	void unrank_point(int *v, int rk);
@@ -760,7 +760,7 @@ public:
 	int universal_set_size;
 	int partition_class_size;
 	int nb_parts;
-	action *A;
+	actions::action *A;
 	int *v1;
 	int *v2;
 
@@ -769,7 +769,7 @@ public:
 	void null();
 	void free();
 	void init(int partition_size,
-		action *A,
+			actions::action *A,
 		int verbose_level);
 	long int compute_image(
 		int *Elt,
@@ -801,7 +801,7 @@ public:
 	void init(int nb_sets, int set_size, 
 		long int *input_sets, int verbose_level);
 	int find_set(long int *set, int verbose_level);
-	long int compute_image(action *A, int *Elt,
+	long int compute_image(actions::action *A, int *Elt,
 		long int i, int verbose_level);
 	void print_sets_sorted();
 	void print_sets_in_original_ordering();
@@ -820,7 +820,7 @@ int action_on_sets_compare_inverted(void *a, void *b, void *data);
 
 class action_on_sign {
 public:
-	action *A;
+	actions::action *A;
 	int perm_degree;
 	int *perm; // [perm_degree]
 	int degree; // 2
@@ -829,7 +829,7 @@ public:
 	~action_on_sign();
 	void null();
 	void free();
-	void init(action *A, int verbose_level);
+	void init(actions::action *A, int verbose_level);
 	long int compute_image(int *Elt, long int i, int verbose_level);
 };
 
@@ -848,13 +848,13 @@ public:
 	int n; // = 2 * k
 	int k2; // = k^2
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int low_level_point_size; // = k * k
 	int degree;
 	
-	action *A_PGL_n_q;
-	action *A_PGL_k_q;
-	sims *G_PGL_k_q;
+	actions::action *A_PGL_n_q;
+	actions::action *A_PGL_k_q;
+	groups::sims *G_PGL_k_q;
 
 	int *Elt1;
 	int *Elt2;
@@ -868,8 +868,9 @@ public:
 	~action_on_spread_set();
 	void null();
 	void free();
-	void init(action *A_PGL_n_q, action *A_PGL_k_q, sims *G_PGL_k_q, 
-		int k, finite_field *F, int verbose_level);
+	void init(actions::action *A_PGL_n_q, actions::action *A_PGL_k_q,
+			groups::sims *G_PGL_k_q,
+		int k, field_theory::finite_field *F, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	long int compute_image_int(int *Elt, long int rk, int verbose_level);
 	void matrix_to_subspace(int *mtx, int *subspace, int verbose_level);
@@ -890,11 +891,11 @@ public:
 class action_on_subgroups {
 public:
 	
-	action *A;
-	sims *S;
+	actions::action *A;
+	groups::sims *S;
 	int nb_subgroups;
 	int subgroup_order;
-	subgroup **Subgroups;
+	groups::subgroup **Subgroups;
 	int **sets;
 	int *image_set; // [subgroup_order]
 	int *perm;
@@ -905,8 +906,8 @@ public:
 	~action_on_subgroups();
 	void null();
 	void free();
-	void init(action *A, sims *S, int nb_subgroups, 
-		int subgroup_order, subgroup **Subgroups, 
+	void init(actions::action *A, groups::sims *S, int nb_subgroups,
+		int subgroup_order, groups::subgroup **Subgroups,
 		int verbose_level);
 	long int compute_image(int *Elt, long int a, int verbose_level);
 
@@ -928,8 +929,8 @@ public:
 
 	int n;
 	int q;
-	matrix_group *M;
-	finite_field *F;
+	groups::matrix_group *M;
+	field_theory::finite_field *F;
 	int low_level_point_size;
 	long int degree;
 
@@ -943,19 +944,19 @@ public:
 	~action_on_wedge_product();
 	void null();
 	void free();
-	void init(action &A, int verbose_level);
+	void init(actions::action &A, int verbose_level);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	long int compute_image_int(
-		action &A, int *Elt, long int a, int verbose_level);
-	int element_entry_frobenius(action &A, int *Elt, 
+			actions::action &A, int *Elt, long int a, int verbose_level);
+	int element_entry_frobenius(actions::action &A, int *Elt,
 		int verbose_level);
-	int element_entry_ij(action &A, int *Elt, int I, int J, 
+	int element_entry_ij(actions::action &A, int *Elt, int I, int J,
 		int verbose_level);
-	int element_entry_ijkl(action &A, int *Elt, 
+	int element_entry_ijkl(actions::action &A, int *Elt,
 		int i, int j, int k, int l, int verbose_level);
 	void compute_image_int_low_level(
-		action &A, int *Elt, int *input, int *output, 
+			actions::action &A, int *Elt, int *input, int *output,
 		int verbose_level);
 };
 
@@ -969,8 +970,8 @@ public:
 
 class product_action {
 public:
-	action *A1;
-	action *A2;
+	actions::action *A1;
+	actions::action *A2;
 	int f_use_projections;
 	int offset;
 	int degree;
@@ -988,16 +989,16 @@ public:
 	~product_action();
 	void null();
 	void free();
-	void init(action *A1, action *A2, int f_use_projections, 
+	void init(actions::action *A1, actions::action *A2, int f_use_projections,
 		int verbose_level);
-	long int compute_image(action *A, int *Elt, long int i, int verbose_level);
-	void element_one(action *A, int *Elt, int verbose_level);
-	int element_is_one(action *A, int *Elt, int verbose_level);
+	long int compute_image(actions::action *A, int *Elt, long int i, int verbose_level);
+	void element_one(actions::action *A, int *Elt, int verbose_level);
+	int element_is_one(actions::action *A, int *Elt, int verbose_level);
 	void element_unpack(uchar *elt, int *Elt, int verbose_level);
 	void element_pack(int *Elt, uchar *elt, int verbose_level);
-	void element_retrieve(action *A, int hdl, int *Elt, 
+	void element_retrieve(actions::action *A, int hdl, int *Elt,
 		int verbose_level);
-	int element_store(action *A, int *Elt, int verbose_level);
+	int element_store(actions::action *A, int *Elt, int verbose_level);
 	void element_mult(int *A, int *B, int *AB, int verbose_level);
 	void element_invert(int *A, int *Av, int verbose_level);
 	void element_transpose(int *A, int *At, int verbose_level);

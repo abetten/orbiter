@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 arc_lifting_with_two_lines::arc_lifting_with_two_lines()
@@ -500,5 +501,6 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 }
 
-}}
+}}}
+
 

@@ -19,6 +19,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 orbits_on_something::orbits_on_something()
 {
@@ -78,7 +79,7 @@ void orbits_on_something::freeself()
 }
 
 void orbits_on_something::init(
-		action *A,
+		actions::action *A,
 		strong_generators *SG,
 		int f_load_save,
 		std::string &prefix,
@@ -2096,4 +2097,5 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 
 
 
-}}
+}}}
+

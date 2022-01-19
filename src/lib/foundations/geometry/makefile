@@ -35,9 +35,6 @@ MODULES = \
 	projective_space.o \
 	projective_space2.o \
 	projective_space3.o \
-	quartic_curve_domain.o \
-	quartic_curve_object_properties.o \
-	quartic_curve_object.o \
 	spread_tables.o \
 	w3q.o 
 

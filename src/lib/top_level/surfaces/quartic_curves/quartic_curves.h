@@ -155,7 +155,7 @@ public:
 	int f_ownership;
 
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	int f_semilinear;
 
@@ -164,12 +164,12 @@ public:
 
 	quartic_curve_domain_with_action *QCDA;
 
-	quartic_curve_object *QO;
+	algebraic_geometry::quartic_curve_object *QO;
 
 	quartic_curve_object_with_action *QOA;
 
 	int f_has_group;
-	strong_generators *Sg;
+	groups::strong_generators *Sg;
 	int f_has_nice_gens;
 	vector_ge *nice_gens;
 
@@ -235,12 +235,12 @@ public:
 
 	int f_semilinear;
 
-	quartic_curve_domain *Dom; // do not free
+	algebraic_geometry::quartic_curve_domain *Dom; // do not free
 
-	action *A; // linear group PGGL(3,q)
+	actions::action *A; // linear group PGGL(3,q)
 
 
-	action *A_on_lines; // linear group PGGL(3,q) acting on lines
+	actions::action *A_on_lines; // linear group PGGL(3,q) acting on lines
 
 	int *Elt1;
 
@@ -249,7 +249,7 @@ public:
 
 	quartic_curve_domain_with_action();
 	~quartic_curve_domain_with_action();
-	void init(quartic_curve_domain *Dom,
+	void init(algebraic_geometry::quartic_curve_domain *Dom,
 			projective_space_with_action *PA,
 			int verbose_level);
 
@@ -321,7 +321,7 @@ public:
 	strong_generators *stab_gens_P0;
 #endif
 
-	strong_generators *Stab_gens_quartic;
+	groups::strong_generators *Stab_gens_quartic;
 
 
 
@@ -357,29 +357,29 @@ class quartic_curve_object_with_action {
 
 public:
 
-	finite_field *F; // do not free
+	field_theory::finite_field *F; // do not free
 
 	quartic_curve_domain_with_action *DomA;
 
-	quartic_curve_object *QO; // do not free
-	strong_generators *Aut_gens;
+	algebraic_geometry::quartic_curve_object *QO; // do not free
+	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
 
 	int f_has_nice_gens;
 	vector_ge *nice_gens;
 
-	strong_generators *projectivity_group_gens;
-	sylow_structure *Syl;
+	groups::strong_generators *projectivity_group_gens;
+	groups::sylow_structure *Syl;
 
-	action *A_on_points;
+	actions::action *A_on_points;
 
-	schreier *Orbits_on_points;
+	groups::schreier *Orbits_on_points;
 
 	quartic_curve_object_with_action();
 	~quartic_curve_object_with_action();
 	void init(quartic_curve_domain_with_action *DomA,
-			quartic_curve_object *QO,
-			strong_generators *Aut_gens,
+			algebraic_geometry::quartic_curve_object *QO,
+			groups::strong_generators *Aut_gens,
 			int verbose_level);
 
 };

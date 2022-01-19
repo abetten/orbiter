@@ -34,7 +34,7 @@ void action_on_determinant::free()
 }
 
 
-void action_on_determinant::init(action &A,
+void action_on_determinant::init(actions::action &A,
 		int f_projective, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -70,7 +70,7 @@ void action_on_determinant::init(action &A,
 		}
 }
 
-long int action_on_determinant::compute_image(action *A,
+long int action_on_determinant::compute_image(actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 1;

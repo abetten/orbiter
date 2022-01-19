@@ -10,6 +10,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 
@@ -953,7 +954,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 #endif /* SRC_LIB_FOUNDATIONS_FINITE_FIELDS_FINITE_FIELDS_H_ */

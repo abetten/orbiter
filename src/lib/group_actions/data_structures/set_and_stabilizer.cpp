@@ -45,7 +45,7 @@ void set_and_stabilizer::freeself()
 	null();
 };
 
-void set_and_stabilizer::init(action *A, action *A2, int verbose_level)
+void set_and_stabilizer::init(actions::action *A, actions::action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -80,8 +80,8 @@ long int set_and_stabilizer::group_order_as_lint()
 }
 
 void set_and_stabilizer::init_everything(
-	action *A, action *A2, long int *Set, int set_sz,
-	strong_generators *gens, int verbose_level)
+		actions::action *A, actions::action *A2, long int *Set, int set_sz,
+		groups::strong_generators *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -117,7 +117,7 @@ set_and_stabilizer *set_and_stabilizer::create_copy(int verbose_level)
 	SaS->sz = sz;
 	target_go.assign_to(SaS->target_go);
 
-	SaS->Strong_gens = NEW_OBJECT(strong_generators);
+	SaS->Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_copy(SaS->Strong_gens, 0 /* verbose_level*/);
 	SaS->Stab = SaS->Strong_gens->create_sims(verbose_level);
 	
@@ -298,7 +298,7 @@ void set_and_stabilizer::apply_to_self(int *Elt, int verbose_level)
 	long int *data2;
 	int i;
 	vector_ge *gens;
-	strong_generators *sg;
+	groups::strong_generators *sg;
 
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self" << endl;
@@ -424,7 +424,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 		cout << "set_and_stabilizer::rearrange_by_orbits" << endl;
 		}
 	
-	action *A_on_set;
+	actions::action *A_on_set;
 
 			
 	if (f_v) {
@@ -439,7 +439,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 				"lines done" << endl;
 		}
 
-	schreier *Orb;
+	groups::schreier *Orb;
 	long int *data2;
 	int f, l, h, cur, j, a, b;
 			
@@ -502,7 +502,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 		}
 }
 
-action *set_and_stabilizer::create_restricted_action_on_the_set(
+actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -512,7 +512,7 @@ action *set_and_stabilizer::create_restricted_action_on_the_set(
 				"action_on_the_set" << endl;
 		}
 	
-	action *A_on_set;
+	actions::action *A_on_set;
 
 			
 	if (f_v) {
@@ -543,7 +543,7 @@ void set_and_stabilizer::print_restricted_action_on_the_set(
 				"action_on_the_set" << endl;
 		}
 	
-	action *A_on_set;
+	actions::action *A_on_set;
 
 			
 	if (f_v) {

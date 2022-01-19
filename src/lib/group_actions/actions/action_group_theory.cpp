@@ -13,12 +13,13 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 
 void action::normalizer_using_MAGMA(
 		std::string &fname_magma_prefix,
-		sims *G, sims *H, strong_generators *&gens_N,
+		groups::sims *G, groups::sims *H, groups::strong_generators *&gens_N,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -37,13 +38,13 @@ void action::normalizer_using_MAGMA(
 
 	int n;
 
-	strong_generators *G_gen;
-	strong_generators *H_gen;
+	groups::strong_generators *G_gen;
+	groups::strong_generators *H_gen;
 
-	G_gen = NEW_OBJECT(strong_generators);
+	G_gen = NEW_OBJECT(groups::strong_generators);
 	G_gen->init_from_sims(G, 0 /* verbose_level */);
 
-	H_gen = NEW_OBJECT(strong_generators);
+	H_gen = NEW_OBJECT(groups::strong_generators);
 	H_gen->init_from_sims(H, 0 /* verbose_level */);
 
 	n = degree;
@@ -124,7 +125,7 @@ void action::normalizer_using_MAGMA(
 	//longinteger_object go1;
 
 
-	gens_N = NEW_OBJECT(strong_generators);
+	gens_N = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA "
 			"before gens->init_from_permutation_"
@@ -157,7 +158,7 @@ void action::normalizer_using_MAGMA(
 }
 
 void action::conjugacy_classes_using_MAGMA(std::string &prefix,
-		sims *G, int verbose_level)
+		groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname_magma;
@@ -174,9 +175,9 @@ void action::conjugacy_classes_using_MAGMA(std::string &prefix,
 
 	int n;
 
-	strong_generators *G_gen;
+	groups::strong_generators *G_gen;
 
-	G_gen = NEW_OBJECT(strong_generators);
+	G_gen = NEW_OBJECT(groups::strong_generators);
 	G_gen->init_from_sims(G, 0 /* verbose_level */);
 
 	n = degree;
@@ -302,7 +303,7 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
 
 void action::conjugacy_classes_and_normalizers_using_MAGMA(
 		std::string &prefix,
-		sims *G, int verbose_level)
+		groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname_magma;
@@ -319,9 +320,9 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 
 	int n;
 
-	strong_generators *G_gen;
+	groups::strong_generators *G_gen;
 
-	G_gen = NEW_OBJECT(strong_generators);
+	G_gen = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA before G_gen->init_from_sims" << endl;
 	}
@@ -513,7 +514,7 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 
 
 void action::normalizer_of_cyclic_group_using_MAGMA(std::string &fname_magma_prefix,
-		sims *G, int *Elt, strong_generators *&gens_N,
+		groups::sims *G, int *Elt, groups::strong_generators *&gens_N,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -521,9 +522,9 @@ void action::normalizer_of_cyclic_group_using_MAGMA(std::string &fname_magma_pre
 	if (f_v) {
 		cout << "action::normalizer_of_cyclic_group_using_MAGMA" << endl;
 	}
-	sims *H;
+	groups::sims *H;
 
-	H = NEW_OBJECT(sims);
+	H = NEW_OBJECT(groups::sims);
 	if (f_v) {
 		cout << "action::normalizer_of_cyclic_group_using_MAGMA "
 				"before H->init_cyclic_group_from_generator" << endl;
@@ -553,7 +554,7 @@ void action::normalizer_of_cyclic_group_using_MAGMA(std::string &fname_magma_pre
 }
 
 void action::centralizer_using_MAGMA(std::string &prefix,
-		sims *override_Sims, int *Elt, strong_generators *&gens,
+		groups::sims *override_Sims, int *Elt, groups::strong_generators *&gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -593,7 +594,7 @@ void action::centralizer_using_MAGMA(std::string &prefix,
 }
 
 void action::read_centralizer_magma(std::string &fname_output,
-		sims *override_Sims, strong_generators *&gens,
+		groups::sims *override_Sims, groups::strong_generators *&gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -623,7 +624,7 @@ void action::read_centralizer_magma(std::string &fname_output,
 	vector_ge *nice_gens;
 
 
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 
 	gens->init_from_permutation_representation(this,
 			override_Sims,
@@ -657,7 +658,7 @@ void action::read_centralizer_magma(std::string &fname_output,
 void action::centralizer_using_magma2(std::string &prefix,
 		std::string &fname_magma,
 		std::string &fname_output,
-		sims *override_Sims, int *Elt, int verbose_level)
+		groups::sims *override_Sims, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int n;
@@ -666,9 +667,9 @@ void action::centralizer_using_magma2(std::string &prefix,
 		cout << "action::centralizer_using_magma2" << endl;
 	}
 	file_io Fio;
-	strong_generators *G_gen;
+	groups::strong_generators *G_gen;
 
-	G_gen = NEW_OBJECT(strong_generators);
+	G_gen = NEW_OBJECT(groups::strong_generators);
 	G_gen->init_from_sims(override_Sims, 0 /* verbose_level */);
 
 	n = degree;
@@ -725,9 +726,10 @@ void action::centralizer_using_magma2(std::string &prefix,
 
 
 void action::find_subgroups_using_MAGMA(std::string &prefix,
-		sims *override_Sims,
+		groups::sims *override_Sims,
 		int subgroup_order,
-		int &nb_subgroups, strong_generators *&H_gens, strong_generators *&N_gens,
+		int &nb_subgroups,
+		groups::strong_generators *&H_gens, groups::strong_generators *&N_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -772,8 +774,9 @@ void action::find_subgroups_using_MAGMA(std::string &prefix,
 
 
 void action::read_subgroups_magma(std::string &fname_output,
-		sims *override_Sims, int subgroup_order,
-		int &nb_subgroups, strong_generators *&H_gens, strong_generators *&N_gens,
+		groups::sims *override_Sims, int subgroup_order,
+		int &nb_subgroups,
+		groups::strong_generators *&H_gens, groups::strong_generators *&N_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -789,8 +792,8 @@ void action::read_subgroups_magma(std::string &fname_output,
 
 		fp >> nb_subgroups;
 
-		H_gens = NEW_OBJECTS(strong_generators, nb_subgroups);
-		N_gens = NEW_OBJECTS(strong_generators, nb_subgroups);
+		H_gens = NEW_OBJECTS(groups::strong_generators, nb_subgroups);
+		N_gens = NEW_OBJECTS(groups::strong_generators, nb_subgroups);
 
 
 		// read generators for H[]:
@@ -902,7 +905,7 @@ void action::read_subgroups_magma(std::string &fname_output,
 
 void action::find_subgroups_using_MAGMA2(std::string &prefix,
 		std::string &fname_magma, std::string &fname_output,
-		sims *override_Sims, int subgroup_order,
+		groups::sims *override_Sims, int subgroup_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -915,9 +918,9 @@ void action::find_subgroups_using_MAGMA2(std::string &prefix,
 
 
 	string cmd;
-	strong_generators *G_gen;
+	groups::strong_generators *G_gen;
 
-	G_gen = NEW_OBJECT(strong_generators);
+	G_gen = NEW_OBJECT(groups::strong_generators);
 	G_gen->init_from_sims(override_Sims, 0 /* verbose_level */);
 
 	n = degree;
@@ -1020,7 +1023,7 @@ void action::find_subgroups_using_MAGMA2(std::string &prefix,
 	}
 }
 
-void action::conjugacy_classes_and_normalizers(sims *override_Sims,
+void action::conjugacy_classes_and_normalizers(groups::sims *override_Sims,
 		std::string &label,
 		std::string &label_tex,
 		int verbose_level)
@@ -1083,7 +1086,7 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 
 
 void action::report_conjugacy_classes_and_normalizers(ostream &ost,
-		sims *override_Sims, int verbose_level)
+		groups::sims *override_Sims, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string prefix;
@@ -1133,7 +1136,7 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 
 
 void action::read_conjugacy_classes_and_normalizers(
-		std::string &fname, sims *override_sims,
+		std::string &fname, groups::sims *override_sims,
 		std::string &label_latex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1246,13 +1249,13 @@ void action::read_conjugacy_classes_and_normalizers(
 		cout << "The conjugacy classes are:" << endl;
 		for (i = 0; i < nb_classes; i++) {
 
-			strong_generators *gens;
+			groups::strong_generators *gens;
 			ring_theory::longinteger_object go1, Class_size, centralizer_order;
 			long int goi;
 			vector_ge *nice_gens;
 			long int ngo;
 			int nb_perms;
-			strong_generators *N_gens;
+			groups::strong_generators *N_gens;
 			vector_ge *nice_gens_N;
 
 
@@ -1267,7 +1270,7 @@ void action::read_conjugacy_classes_and_normalizers(
 			cout << "ngo=" << ngo << endl;
 
 
-			gens = NEW_OBJECT(strong_generators);
+			gens = NEW_OBJECT(groups::strong_generators);
 
 
 			if (f_v) {
@@ -1302,7 +1305,7 @@ void action::read_conjugacy_classes_and_normalizers(
 				cout << "action::read_conjugacy_classes_and_normalizers computing N, "
 					"before gens->init_from_permutation_representation" << endl;
 			}
-			N_gens = NEW_OBJECT(strong_generators);
+			N_gens = NEW_OBJECT(groups::strong_generators);
 			N_gens->init_from_permutation_representation(this, override_sims,
 					normalizer_generators_perms[i],
 					nb_perms, ngo, nice_gens_N,
@@ -1427,7 +1430,7 @@ void action::read_conjugacy_classes_and_normalizers(
 }
 
 void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
-		std::string &fname, sims *override_Sims, int verbose_level)
+		std::string &fname, groups::sims *override_Sims, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1508,14 +1511,14 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 
 	cout << "The conjugacy classes are:" << endl;
 	for (i = 0; i < nb_classes; i++) {
-		strong_generators *gens;
+		groups::strong_generators *gens;
 		ring_theory::longinteger_object go1, Class_size, centralizer_order;
 		int goi;
 		vector_ge *nice_gens;
 
 
 		goi = class_order_of_element[i];
-		gens = NEW_OBJECT(strong_generators);
+		gens = NEW_OBJECT(groups::strong_generators);
 
 		gens->init_from_permutation_representation(this, override_Sims,
 			perms + i * degree,
@@ -1536,7 +1539,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 
 		long int ngo;
 		int nb_perms;
-		strong_generators *N_gens;
+		groups::strong_generators *N_gens;
 		vector_ge *nice_gens_N;
 
 		ngo = class_normalizer_order[i];
@@ -1546,7 +1549,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 		//int *class_normalizer_number_of_generators;
 		//int **normalizer_generators_perms;
 
-		N_gens = NEW_OBJECT(strong_generators);
+		N_gens = NEW_OBJECT(groups::strong_generators);
 		N_gens->init_from_permutation_representation(this, override_Sims,
 				normalizer_generators_perms[i],
 				nb_perms, ngo, nice_gens_N,
@@ -1645,7 +1648,8 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 
 
 void action::report_groups_and_normalizers(std::ostream &ost,
-		int nb_subgroups, strong_generators *H_gens, strong_generators *N_gens,
+		int nb_subgroups,
+		groups::strong_generators *H_gens, groups::strong_generators *N_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1905,8 +1909,9 @@ void action::element_commutator_abavbv(int *Elt_A,
 	FREE_int(Elt4);
 }
 
-void action::compute_projectivity_subgroup(strong_generators *&projectivity_gens,
-		strong_generators *Aut_gens, int verbose_level)
+void action::compute_projectivity_subgroup(
+		groups::strong_generators *&projectivity_gens,
+		groups::strong_generators *Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1920,9 +1925,9 @@ void action::compute_projectivity_subgroup(strong_generators *&projectivity_gens
 					"computing projectivity subgroup" << endl;
 		}
 
-		projectivity_gens = NEW_OBJECT(strong_generators);
+		projectivity_gens = NEW_OBJECT(groups::strong_generators);
 		{
-			sims *S;
+			groups::sims *S;
 
 			if (f_v) {
 				cout << "action::compute_projectivity_subgroup "
@@ -1961,5 +1966,5 @@ void action::compute_projectivity_subgroup(strong_generators *&projectivity_gens
 
 
 
-}}
+}}}
 

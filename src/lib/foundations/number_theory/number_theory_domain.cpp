@@ -2081,7 +2081,7 @@ void number_theory_domain::cyclotomic_set(std::vector<int> &cyclotomic_set,
 }
 
 
-void number_theory_domain::elliptic_curve_addition(finite_field *F,
+void number_theory_domain::elliptic_curve_addition(field_theory::finite_field *F,
 		int b, int c,
 	int x1, int x2, int x3,
 	int y1, int y2, int y3,
@@ -2156,7 +2156,7 @@ done:
 	}
 }
 
-void number_theory_domain::elliptic_curve_point_multiple(finite_field *F,
+void number_theory_domain::elliptic_curve_point_multiple(field_theory::finite_field *F,
 		int b, int c, int n,
 	int x1, int y1, int z1,
 	int &x3, int &y3, int &z3,
@@ -2211,7 +2211,8 @@ void number_theory_domain::elliptic_curve_point_multiple(finite_field *F,
 	}
 }
 
-void number_theory_domain::elliptic_curve_point_multiple_with_log(finite_field *F,
+void number_theory_domain::elliptic_curve_point_multiple_with_log(
+		field_theory::finite_field *F,
 		int b, int c, int n,
 	int x1, int y1, int z1,
 	int &x3, int &y3, int &z3,
@@ -2274,7 +2275,8 @@ void number_theory_domain::elliptic_curve_point_multiple_with_log(finite_field *
 	}
 }
 
-int number_theory_domain::elliptic_curve_evaluate_RHS(finite_field *F,
+int number_theory_domain::elliptic_curve_evaluate_RHS(
+		field_theory::finite_field *F,
 		int x, int b, int c)
 {
 	int x2, x3, e;
@@ -2286,7 +2288,7 @@ int number_theory_domain::elliptic_curve_evaluate_RHS(finite_field *F,
 	return e;
 }
 
-void number_theory_domain::elliptic_curve_points(finite_field *F,
+void number_theory_domain::elliptic_curve_points(field_theory::finite_field *F,
 		int b, int c, int &nb, int *&T, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2396,7 +2398,7 @@ void number_theory_domain::elliptic_curve_points(finite_field *F,
 	}
 }
 
-void number_theory_domain::elliptic_curve_all_point_multiples(finite_field *F,
+void number_theory_domain::elliptic_curve_all_point_multiples(field_theory::finite_field *F,
 		int b, int c, int &order,
 	int x1, int y1, int z1,
 	std::vector<std::vector<int> > &Pts,
@@ -2445,7 +2447,7 @@ void number_theory_domain::elliptic_curve_all_point_multiples(finite_field *F,
 	}
 }
 
-int number_theory_domain::elliptic_curve_discrete_log(finite_field *F,
+int number_theory_domain::elliptic_curve_discrete_log(field_theory::finite_field *F,
 		int b, int c,
 	int x1, int y1, int z1,
 	int x3, int y3, int z3,

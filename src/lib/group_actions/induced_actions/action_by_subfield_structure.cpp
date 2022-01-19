@@ -64,8 +64,8 @@ void action_by_subfield_structure::free()
 	null();
 }
 
-void action_by_subfield_structure::init(action &A,
-		finite_field *Fq, int verbose_level)
+void action_by_subfield_structure::init(actions::action &A,
+		field_theory::finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int p1, h1;
@@ -122,7 +122,7 @@ void action_by_subfield_structure::init(action &A,
 	v3 = NEW_int(m);
 
 
-	Aq = NEW_OBJECT(action);
+	Aq = NEW_OBJECT(actions::action);
 
 	int f_basis = TRUE;
 	int f_semilinear = FALSE;
@@ -149,7 +149,7 @@ void action_by_subfield_structure::init(action &A,
 	cout << "action_by_subfield_structure::init "
 			"creating subfield structure" << endl;
 
-	S = NEW_OBJECT(subfield_structure);
+	S = NEW_OBJECT(field_theory::subfield_structure);
 
 	S->init(FQ, Fq, verbose_level);
 	cout << "action_by_subfield_structure::init "
@@ -161,7 +161,7 @@ void action_by_subfield_structure::init(action &A,
 }
 
 long int action_by_subfield_structure::compute_image_int(
-	action &A, int *Elt, long int a, int verbose_level)
+		actions::action &A, int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -194,7 +194,7 @@ long int action_by_subfield_structure::compute_image_int(
 }
 
 void action_by_subfield_structure::compute_image_int_low_level(
-	action &A, int *Elt, int *input, int *output,
+		actions::action &A, int *Elt, int *input, int *output,
 	int verbose_level)
 {
 	int *x = input;

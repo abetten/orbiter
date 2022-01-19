@@ -955,7 +955,7 @@ void arc_in_projective_space::create_OKeefe_Penttila_hyperoval_32(
 void arc_in_projective_space::arc_lifting_diophant(
 	long int *arc, int arc_sz,
 	int target_sz, int target_d,
-	diophant *&D,
+	solvers::diophant *&D,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1003,7 +1003,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 	}
 
 
-	D = NEW_OBJECT(diophant);
+	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->N_lines + 1, nb_free_points);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < nb_free_points; j++) {
@@ -1082,7 +1082,7 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 	long int *s_lines, int nb_s_lines,
 	int target_sz, int arc_d, int arc_d_low, int arc_s,
 	int f_dualize,
-	diophant *&D,
+	solvers::diophant *&D,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1111,7 +1111,7 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 	}
 
 
-	D = NEW_OBJECT(diophant);
+	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->N_lines + 1, P->N_points);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < P->N_points; j++) {
@@ -1210,7 +1210,7 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 		long int *t_lines, int nb_t_lines, int arc_t,
 		int target_sz, int arc_d, int arc_d_low,
 		int f_dualize,
-		diophant *&D,
+		solvers::diophant *&D,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1244,7 +1244,7 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 	}
 
 
-	D = NEW_OBJECT(diophant);
+	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->N_lines + 1, P->N_points);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < P->N_points; j++) {
@@ -1366,7 +1366,7 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 		long int *u_lines, int nb_u_lines, int arc_u,
 		int target_sz, int arc_d, int arc_d_low,
 		int f_dualize,
-		diophant *&D,
+		solvers::diophant *&D,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1401,7 +1401,7 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 	}
 
 
-	D = NEW_OBJECT(diophant);
+	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->N_lines + 1, P->N_points);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < P->N_points; j++) {
@@ -1540,7 +1540,7 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 		int arc_sz, int arc_d,
 		std::string &secant_lines_text,
 		std::string &external_lines_as_subset_of_secants_text,
-		diophant *&D,
+		solvers::diophant *&D,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1657,7 +1657,7 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 	nb_eqns = P->N_lines + 1 + nb_pencil_conditions;
 	nb_vars = P->N_points + nb_slack1;
 
-	D = NEW_OBJECT(diophant);
+	D = NEW_OBJECT(solvers::diophant);
 	D->open(nb_eqns, nb_vars);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < nb_vars; j++) {
@@ -1779,7 +1779,7 @@ void arc_in_projective_space::arc_lifting1(
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting1" << endl;
 	}
-	diophant *D = NULL;
+	solvers::diophant *D = NULL;
 	int f_save_system = TRUE;
 
 	long int *the_set_in;
@@ -1890,7 +1890,7 @@ void arc_in_projective_space::arc_lifting2(
 	Orbiter->Lint_vec->scan(arc_input_set, the_set_in, set_size_in);
 
 
-	diophant *D = NULL;
+	solvers::diophant *D = NULL;
 	int f_save_system = TRUE;
 
 	arc_with_two_given_line_sets_diophant(
@@ -1986,7 +1986,7 @@ void arc_in_projective_space::arc_lifting3(
 	}
 	//int arc_size;
 	//int arc_d;
-	diophant *D = NULL;
+	solvers::diophant *D = NULL;
 	int f_save_system = TRUE;
 
 	long int *t_lines;

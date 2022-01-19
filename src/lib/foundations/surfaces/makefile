@@ -12,6 +12,9 @@ MODULES = \
 	del_pezzo_surface_of_degree_two_object.o \
 	eckardt_point_info.o \
 	eckardt_point.o \
+	quartic_curve_domain.o \
+	quartic_curve_object_properties.o \
+	quartic_curve_object.o \
 	schlaefli_labels.o \
 	schlaefli.o \
 	seventytwo_cases.o \

@@ -48,7 +48,7 @@ void object_in_projective_space_with_action::freeself()
 void object_in_projective_space_with_action::init(
 	object_with_canonical_form *OwCF,
 	long int ago,
-	strong_generators *Aut_gens,
+	groups::strong_generators *Aut_gens,
 	//int nb_rows, int nb_cols,
 	int *canonical_labeling,
 	int verbose_level)
@@ -106,7 +106,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 
 
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
 
 
@@ -123,7 +123,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 		cout << "projective_space_object_classifier::latex_report before Nau.set_stabilizer_of_object" << endl;
 	}
 
-	nauty_interface_with_group Nau;
+	actions::nauty_interface_with_group Nau;
 	data_structures::nauty_output *NO;
 
 	NO = NEW_OBJECT(data_structures::nauty_output);
@@ -157,8 +157,8 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 		long int *Sets;
 		int nb_sets;
 		int set_size;
-		action *A_on_spreads;
-		schreier *Sch;
+		actions::action *A_on_spreads;
+		groups::schreier *Sch;
 
 		OwCF->get_packing_as_set_system(Sets, nb_sets, set_size, verbose_level);
 

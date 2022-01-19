@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 subfield_structure::subfield_structure()
@@ -637,7 +638,8 @@ void subfield_structure::field_reduction(int *input, int sz, int *output,
 }
 
 
-}}
+}}}
+
 
 
 

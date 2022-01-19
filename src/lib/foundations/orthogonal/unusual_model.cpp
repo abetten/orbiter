@@ -127,14 +127,15 @@ void unusual_model::setup_sum_of_squares(int q,
 }
 #endif
 
-void unusual_model::setup(finite_field *FQ, finite_field *Fq,
+void unusual_model::setup(
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int verbose_level)
 {
 	setup2(FQ, Fq, FALSE, verbose_level);
 }
 
 void unusual_model::setup2(
-		finite_field *FQ, finite_field *Fq,
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int f_sum_of_squares, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

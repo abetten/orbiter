@@ -54,10 +54,10 @@ void blt_set_with_action::freeself()
 }
 
 void blt_set_with_action::init_set(
-		action *A,
+		actions::action *A,
 		blt_set_domain *Blt_set_domain,
 		long int *set,
-		strong_generators *Aut_gens, int verbose_level)
+		groups::strong_generators *Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

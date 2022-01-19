@@ -21,7 +21,7 @@ namespace coding_theory {
 
 void coding_theory_domain::twisted_tensor_product_codes(
 	int *&H_subfield, int &m, int &n,
-	finite_field *F, finite_field *f,
+	field_theory::finite_field *F, field_theory::finite_field *f,
 	int f_construction_A, int f_hyperoval,
 	int f_construction_B, int verbose_level)
 {
@@ -169,7 +169,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 
 void coding_theory_domain::create_matrix_M(
 	int *&M,
-	finite_field *F, finite_field *f,
+	field_theory::finite_field *F, field_theory::finite_field *f,
 	int &m, int &n, int &beta, int &r, int *exponents,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
 	int f_elements_exponential, std::string &symbol_for_print,
@@ -330,7 +330,7 @@ void coding_theory_domain::create_matrix_M(
 
 
 void coding_theory_domain::create_matrix_H_subfield(
-	finite_field *F, finite_field*f,
+		field_theory::finite_field *F, field_theory::finite_field*f,
 	int *H_subfield, int *C, int *C_inv, int *M,
 	int m, int n, int beta, int beta_q,
 	int f_elements_exponential, std::string &symbol_for_print,
@@ -481,7 +481,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 
 void coding_theory_domain::tt_field_reduction(
-		finite_field &F, finite_field &f,
+		field_theory::finite_field &F, field_theory::finite_field &f,
 		int m, int n, int *M, int *MM, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -549,7 +549,7 @@ void coding_theory_domain::tt_field_reduction(
 //############################################### old stuff:
 
 void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
-	finite_field *F,
+		field_theory::finite_field *F,
 	int *&the_set, int &length,
 	int verbose_level)
 {
@@ -628,8 +628,8 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	int *&code, int &length,
 	int verbose_level)
 {
-	finite_field F;
-	finite_field f;
+	field_theory::finite_field F;
+	field_theory::finite_field f;
 	algebra::rank_checker rc;
 	int exponents[9];
 	int *M;

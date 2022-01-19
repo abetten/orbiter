@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace solvers {
 
 
 
@@ -1077,6 +1078,5 @@ void mckay::tMCKAY::log_12l(long int current_node, int level)
 }
 
 
-}
-}
+}}}
 

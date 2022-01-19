@@ -165,7 +165,7 @@ void regular_ls_classify::init_group(int verbose_level)
 		cout << "regular_ls_classify::init_group "
 				"creating symmetric group of degree " << Descr->m << endl;
 	}
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	int f_no_base = FALSE;
 
 	A->init_symmetric_group(Descr->m /* degree */, f_no_base, 0 /* verbose_level - 2*/);
@@ -191,7 +191,7 @@ void regular_ls_classify::init_action_on_k_subsets(
 		cout << "regular_ls_classify::init_action_on_k_subsets "
 				"creating action on k-subsets for k=" << k << endl;
 	}
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_on_k_subsets(*A, k, verbose_level - 2);
 
 	Aonk = A2->G.on_k_subsets;
@@ -209,7 +209,7 @@ void regular_ls_classify::init_action_on_k_subsets(
 
 void regular_ls_classify::init_generator(
 		poset_classification_control *Control,
-		strong_generators *Strong_gens,
+		groups::strong_generators *Strong_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -361,8 +361,9 @@ void regular_ls_classify::print(ostream &ost, long int *S, int len)
 
 void regular_ls_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -455,7 +456,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	nb_rows = nb_open_rows + nb_open_pairs;
 	nb_cols = nb_candidates;
 
-	Dio = NEW_OBJECT(diophant);
+	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;
@@ -554,8 +555,9 @@ void regular_ls_classify_early_test_function(long int *S, int len,
 
 void regular_ls_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {

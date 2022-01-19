@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace solvers {
 
 
 dlx_problem_description::dlx_problem_description()
@@ -140,6 +141,7 @@ void dlx_problem_description::print()
 
 
 
-}}
+}}}
+
 
 

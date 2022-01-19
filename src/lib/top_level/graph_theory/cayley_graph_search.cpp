@@ -244,7 +244,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 	sprintf(str, "%d_%d", level, group);
 	fname_base.append("Ferdinand");
 
-	Aut = NEW_OBJECT(action);
+	Aut = NEW_OBJECT(actions::action);
 
 	Aut->init_automorphism_group_from_group_table(fname_base,
 		Table, go, generators, nb_generators,
@@ -258,7 +258,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 
 #if 1
 
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_by_right_multiplication(
 		FALSE /* f_basis */, S,
 		S /* Base_group */, FALSE /* f_ownership */,
@@ -285,7 +285,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 	data_size = degree;
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	int f_no_base = FALSE;
 
@@ -343,7 +343,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 	int i, j;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 
 	if (group == 2) {
@@ -372,7 +372,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		int q = 2;
 		vector_ge *nice_gens;
 
-		F = NEW_OBJECT(finite_field);
+		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 		A->init_affine_group(4, F,
 			FALSE /* f_semilinear */,
@@ -618,7 +618,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 	int i;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 
 	if (group == 1) {
@@ -634,7 +634,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 		int q = 2;
 		vector_ge *nice_gens;
 
-		F = NEW_OBJECT(finite_field);
+		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 		A->init_affine_group(5, F,
 			FALSE /* f_semilinear */,

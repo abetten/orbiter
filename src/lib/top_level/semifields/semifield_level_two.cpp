@@ -449,9 +449,9 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	strong_generators *Centralizer_gens;
-	sims *G;
-	sims *U;
+	groups::strong_generators *Centralizer_gens;
+	groups::sims *G;
+	groups::sims *U;
 	ring_theory::longinteger_object Go, Co, Cl;
 	ring_theory::longinteger_domain D;
 	int rk, cl, r;
@@ -461,7 +461,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 				"c=" << c << endl;
 	}
 
-	Centralizer_gens = NEW_OBJECT(strong_generators);
+	Centralizer_gens = NEW_OBJECT(groups::strong_generators);
 
 	C->make_matrix_from_class_rep(Mtx, R + c, 0 /*verbose_level - 1 */);
 
@@ -817,7 +817,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	Flag_orbit_stabilizer = NEW_OBJECTS(strong_generators, nb_flag_orbits);
+	Flag_orbit_stabilizer = NEW_OBJECTS(groups::strong_generators, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
 
 		if (f_vv) {
@@ -940,7 +940,7 @@ void semifield_level_two::upstep(int verbose_level)
 	f_Fusion = NEW_int(nb_flag_orbits);
 	Fusion_idx = NEW_int(nb_flag_orbits);
 	Fusion_elt = NEW_pint(nb_flag_orbits);
-	Stabilizer_gens = NEW_OBJECTS(strong_generators, nb_flag_orbits);
+	Stabilizer_gens = NEW_OBJECTS(groups::strong_generators, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
 		f_Fusion[i] = FALSE;
 		Fusion_idx[i] = -1;
@@ -1489,7 +1489,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int **Mtx_stack;
 	int i;
 	long int a;
-	sims *G;
+	groups::sims *G;
 	ring_theory::longinteger_object go_PGL;
 	int alloc_length;
 
@@ -2222,13 +2222,13 @@ void semifield_level_two::report(
 
 			//A_PGLk->make_element(Elt, Mtx, 0);
 
-			strong_generators *Centralizer_gens;
+			groups::strong_generators *Centralizer_gens;
 			ring_theory::longinteger_object go;
 
 
 			C->make_matrix_from_class_rep(Mtx, R + i, 0 /*verbose_level - 1 */);
 
-			Centralizer_gens = NEW_OBJECT(strong_generators);
+			Centralizer_gens = NEW_OBJECT(groups::strong_generators);
 			Centralizer_gens->init_centralizer_of_matrix(
 					A_PGLk, Mtx, verbose_level - 3);
 			Centralizer_gens->group_order(go);

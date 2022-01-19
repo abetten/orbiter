@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 
@@ -663,4 +664,5 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 
 
 
-}}
+}}}
+

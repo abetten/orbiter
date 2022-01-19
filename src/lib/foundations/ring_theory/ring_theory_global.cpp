@@ -30,7 +30,7 @@ ring_theory_global::~ring_theory_global()
 }
 
 void ring_theory_global::write_code_for_division(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &fname_code,
 		std::string &A_coeffs, std::string &B_coeffs,
 		int verbose_level)
@@ -306,7 +306,7 @@ void ring_theory_global::write_code_for_division(
 
 
 void ring_theory_global::polynomial_division(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &A_coeffs, std::string &B_coeffs,
 		int verbose_level)
 {
@@ -403,7 +403,7 @@ void ring_theory_global::polynomial_division(
 }
 
 void ring_theory_global::extended_gcd_for_polynomials(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &A_coeffs, std::string &B_coeffs, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -560,7 +560,7 @@ void ring_theory_global::extended_gcd_for_polynomials(
 
 
 void ring_theory_global::polynomial_mult_mod(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
 		int verbose_level)
 {
@@ -666,7 +666,7 @@ void ring_theory_global::polynomial_mult_mod(
 }
 
 void ring_theory_global::polynomial_find_roots(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &A_coeffs,
 		int verbose_level)
 {
@@ -738,7 +738,7 @@ void ring_theory_global::polynomial_find_roots(
 }
 
 void ring_theory_global::sift_polynomials(
-		finite_field *F,
+		field_theory::finite_field *F,
 		long int rk0, long int rk1, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -840,7 +840,7 @@ void ring_theory_global::sift_polynomials(
 }
 
 void ring_theory_global::mult_polynomials(
-		finite_field *F,
+		field_theory::finite_field *F,
 		long int rk0, long int rk1, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -911,7 +911,7 @@ void ring_theory_global::mult_polynomials(
 
 
 void ring_theory_global::polynomial_division_with_report(
-		finite_field *F,
+		field_theory::finite_field *F,
 		long int rk0, long int rk1, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -981,7 +981,7 @@ void ring_theory_global::polynomial_division_with_report(
 }
 
 void ring_theory_global::polynomial_division_from_file_with_report(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &input_file, long int rk1, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1057,7 +1057,7 @@ void ring_theory_global::polynomial_division_from_file_with_report(
 }
 
 void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with_report(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &input_file, long int rk1, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1150,7 +1150,7 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 }
 
 void ring_theory_global::number_of_conditions_satisfied(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &variety_label_txt,
 		std::string &variety_label_tex,
 		int variety_nb_vars, int variety_degree,
@@ -1303,7 +1303,7 @@ void ring_theory_global::number_of_conditions_satisfied(
 
 
 void ring_theory_global::create_intersection_of_zariski_open_sets(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &variety_label_txt,
 		std::string &variety_label_tex,
 		int variety_nb_vars, int variety_degree,
@@ -1425,7 +1425,7 @@ void ring_theory_global::create_intersection_of_zariski_open_sets(
 
 
 void ring_theory_global::create_projective_variety(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &variety_label,
 		std::string &variety_label_tex,
 		int variety_nb_vars, int variety_degree,
@@ -1509,7 +1509,7 @@ void ring_theory_global::create_projective_variety(
 }
 
 void ring_theory_global::create_projective_curve(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &variety_label_txt,
 		std::string &variety_label_tex,
 		int curve_nb_vars, int curve_degree,
@@ -1594,7 +1594,7 @@ void ring_theory_global::create_projective_curve(
 
 
 void ring_theory_global::create_irreducible_polynomial(
-		finite_field *F,
+		field_theory::finite_field *F,
 		unipoly_domain *Fq,
 		unipoly_object *&Beta, int n,
 		long int *cyclotomic_set, int cylotomic_set_size,
@@ -1763,7 +1763,7 @@ void ring_theory_global::create_irreducible_polynomial(
 }
 
 void ring_theory_global::compute_nth_roots_as_polynomials(
-		finite_field *F,
+		field_theory::finite_field *F,
 		unipoly_domain *FpX,
 		unipoly_domain *Fq, unipoly_object *&Beta, int n1, int n2, int verbose_level)
 {
@@ -1893,7 +1893,7 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 }
 
 void ring_theory_global::compute_powers(
-		finite_field *F,
+		field_theory::finite_field *F,
 		unipoly_domain *Fq,
 		int n, int start_idx,
 		unipoly_object *&Beta, int verbose_level)
@@ -1964,7 +1964,7 @@ void ring_theory_global::compute_powers(
 
 
 void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
-		finite_field *F,
+		field_theory::finite_field *F,
 		int d, std::vector<std::vector<int> > &Table,
 		int verbose_level)
 {
@@ -2143,7 +2143,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 }
 
 int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
-		finite_field *F, int d, int verbose_level)
+		field_theory::finite_field *F, int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2315,7 +2315,8 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 	return cnt;
 }
 
-void ring_theory_global::do_make_table_of_irreducible_polynomials(finite_field *F,
+void ring_theory_global::do_make_table_of_irreducible_polynomials(
+		field_theory::finite_field *F,
 		int deg, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2480,7 +2481,7 @@ char *ring_theory_global::search_for_primitive_polynomial_of_given_degree(
 		int p, int degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field Fp;
+	field_theory::finite_field Fp;
 
 	if (f_v) {
 		cout << "ring_theory_global::search_for_primitive_polynomial_of_given_degree" << endl;
@@ -2553,7 +2554,7 @@ void ring_theory_global::search_for_primitive_polynomials(
 		}
 
 		{
-			finite_field Fq;
+			field_theory::finite_field Fq;
 			Fq.finite_field_init(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
 			unipoly_domain FX(&Fq);
 
@@ -2596,8 +2597,8 @@ void ring_theory_global::factor_cyclotomic(int n, int q, int d,
 	int f_v = (verbose_level >= 1);
 	int p, e, m, i, j, Q, a, b, c, cv, ccv, t, r1, r2, len;
 	int field_degree, subgroup_index;
-	finite_field FQ;
-	finite_field Fq;
+	field_theory::finite_field FQ;
+	field_theory::finite_field Fq;
 	number_theory::number_theory_domain NT;
 
 	NT.factor_prime_power(q, p, e);
@@ -2747,7 +2748,7 @@ void ring_theory_global::factor_cyclotomic(int n, int q, int d,
 }
 
 void ring_theory_global::oval_polynomial(
-		finite_field *F,
+		field_theory::finite_field *F,
 	int *S, unipoly_domain &D, unipoly_object &poly,
 	int verbose_level)
 {

@@ -168,37 +168,37 @@ public:
 	void order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level);
 	void power_function_mod_n(int k, int n, int verbose_level);
 
-	void do_trace(finite_field *F, int verbose_level);
-	void do_norm(finite_field *F, int verbose_level);
-	void do_cheat_sheet_GF(finite_field *F, int verbose_level);
-	void gl_random_matrix(finite_field *F, int k, int verbose_level);
+	void do_trace(field_theory::finite_field *F, int verbose_level);
+	void do_norm(field_theory::finite_field *F, int verbose_level);
+	void do_cheat_sheet_GF(field_theory::finite_field *F, int verbose_level);
+	void gl_random_matrix(field_theory::finite_field *F, int k, int verbose_level);
 
 	// functions with file based input:
-	void apply_Walsh_Hadamard_transform(finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
-	void algebraic_normal_form(finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
-	void apply_trace_function(finite_field *F, std::string &fname_csv_in, int verbose_level);
-	void apply_power_function(finite_field *F, std::string &fname_csv_in, long int d, int verbose_level);
-	void identity_function(finite_field *F, std::string &fname_csv_out, int verbose_level);
-	void Walsh_matrix(finite_field *F, int n, int *&W, int verbose_level);
-	void Vandermonde_matrix(finite_field *F, int *&W, int *&W_inv, int verbose_level);
-	void search_APN(finite_field *F, int verbose_level);
-	void search_APN_recursion(finite_field *F,
+	void apply_Walsh_Hadamard_transform(field_theory::finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
+	void algebraic_normal_form(field_theory::finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
+	void apply_trace_function(field_theory::finite_field *F, std::string &fname_csv_in, int verbose_level);
+	void apply_power_function(field_theory::finite_field *F, std::string &fname_csv_in, long int d, int verbose_level);
+	void identity_function(field_theory::finite_field *F, std::string &fname_csv_out, int verbose_level);
+	void Walsh_matrix(field_theory::finite_field *F, int n, int *&W, int verbose_level);
+	void Vandermonde_matrix(field_theory::finite_field *F, int *&W, int *&W_inv, int verbose_level);
+	void search_APN(field_theory::finite_field *F, int verbose_level);
+	void search_APN_recursion(field_theory::finite_field *F,
 			int *f, int depth, int &delta_min, int &nb_times,
 			std::vector<std::vector<int> > &Solutions, int verbose_level);
-	int non_linearity(finite_field *F, int *f, int verbose_level);
+	int non_linearity(field_theory::finite_field *F, int *f, int verbose_level);
 
-	void O4_isomorphism_4to2(finite_field *F,
+	void O4_isomorphism_4to2(field_theory::finite_field *F,
 		int *At, int *As, int &f_switch, int *B,
 		int verbose_level);
-	void O4_isomorphism_2to4(finite_field *F,
+	void O4_isomorphism_2to4(field_theory::finite_field *F,
 		int *At, int *As, int f_switch, int *B);
-	void O4_grid_coordinates_rank(finite_field *F,
+	void O4_grid_coordinates_rank(field_theory::finite_field *F,
 		int x1, int x2, int x3, int x4,
 		int &grid_x, int &grid_y, int verbose_level);
-	void O4_grid_coordinates_unrank(finite_field *F,
+	void O4_grid_coordinates_unrank(field_theory::finite_field *F,
 		int &x1, int &x2, int &x3, int &x4, int grid_x,
 		int grid_y, int verbose_level);
-	void O4_find_tangent_plane(finite_field *F,
+	void O4_find_tangent_plane(field_theory::finite_field *F,
 		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
 		int *tangent_plane, int verbose_level);
 
@@ -217,7 +217,7 @@ public:
 class generators_symplectic_group {
 public:
 
-	finite_field *F; // no ownership, do not destroy
+	field_theory::finite_field *F; // no ownership, do not destroy
 	int n; // must be even
 	int n_half; // n / 2
 	int q;
@@ -241,7 +241,7 @@ public:
 	~generators_symplectic_group();
 	void null();
 	void freeself();
-	void init(finite_field *F, int n, int verbose_level);
+	void init(field_theory::finite_field *F, int n, int verbose_level);
 	int count_strong_generators(int &nb, int *transversal_length, 
 		int &first_moved, int depth, int verbose_level);
 	int get_strong_generators(int *Data, int &nb, int &first_moved, 
@@ -354,63 +354,63 @@ public:
 	int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
 
 
-	void diagonal_orbit_perm(int n, finite_field *F,
+	void diagonal_orbit_perm(int n, field_theory::finite_field *F,
 			long int *orbit, long int *orbit_inv, int verbose_level);
-	void frobenius_orbit_perm(int n, finite_field *F,
+	void frobenius_orbit_perm(int n, field_theory::finite_field *F,
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
-	void projective_matrix_group_base_and_orbits(int n, finite_field *F,
+	void projective_matrix_group_base_and_orbits(int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
 		long int **orbit, long int **orbit_inv,
 		int verbose_level);
-	void projective_matrix_group_base_and_transversal_length(int n, finite_field *F,
+	void projective_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
 		int verbose_level);
-	void affine_matrix_group_base_and_transversal_length(int n, finite_field *F,
+	void affine_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
 		int verbose_level);
-	void general_linear_matrix_group_base_and_transversal_length(int n, finite_field *F,
+	void general_linear_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
 		int verbose_level);
 	void strong_generators_for_projective_linear_group(
-		int n, finite_field *F,
+		int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
 	void strong_generators_for_affine_linear_group(
-		int n, finite_field *F,
+		int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
 	void strong_generators_for_general_linear_group(
-		int n, finite_field *F,
+		int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
 	void generators_for_parabolic_subgroup(
-		int n, finite_field *F,
+		int n, field_theory::finite_field *F,
 		int f_semilinear, int k,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
 	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
-		int f_semilinear, finite_field *F,
+		int f_semilinear, field_theory::finite_field *F,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
 	void generators_for_stabilizer_of_triangle_in_PGL4(
-		int f_semilinear, finite_field *F,
+		int f_semilinear, field_theory::finite_field *F,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
-	void builtin_transversal_rep_GLnq(int *A, int n, finite_field *F,
+	void builtin_transversal_rep_GLnq(int *A, int n, field_theory::finite_field *F,
 		int f_semilinear, int i, int j, int verbose_level);
-	void affine_translation(int n, finite_field *F,
+	void affine_translation(int n, field_theory::finite_field *F,
 			int coordinate_idx,
 			int field_base_idx, int *perm, int verbose_level);
 		// perm points to q^n int's
@@ -418,26 +418,26 @@ public:
 		// translation we compute, 0 \le field_base_idx < e
 		// coordinate_idx is the coordinate in which we shift,
 		// 0 \le coordinate_idx < n
-	void affine_multiplication(int n, finite_field *F,
+	void affine_multiplication(int n, field_theory::finite_field *F,
 		int multiplication_order, int *perm, int verbose_level);
 		// perm points to q^n int's
 		// compute the diagonal multiplication by alpha, i.e.
 		// the multiplication by alpha of each component
-	void affine_frobenius(int n, finite_field *F,
+	void affine_frobenius(int n, field_theory::finite_field *F,
 			int k, int *perm, int verbose_level);
 		// perm points to q^n int's
 		// compute the diagonal action of the Frobenius
 		// automorphism to the power k, i.e.,
 		// raises each component to the p^k-th power
-	int all_affine_translations_nb_gens(int n, finite_field *F);
-	void all_affine_translations(int n, finite_field *F, int *gens);
-	void affine_generators(int n, finite_field *F,
+	int all_affine_translations_nb_gens(int n, field_theory::finite_field *F);
+	void all_affine_translations(int n, field_theory::finite_field *F, int *gens);
+	void affine_generators(int n, field_theory::finite_field *F,
 			int f_translations,
 			int f_semilinear, int frobenius_power,
 			int f_multiplication, int multiplication_order,
 			int &nb_gens, int &degree, int *&gens,
 			int &base_len, long int *&the_base, int verbose_level);
-	void PG_element_modified_not_in_subspace_perm(finite_field *F,
+	void PG_element_modified_not_in_subspace_perm(field_theory::finite_field *F,
 			int n, int m,
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
@@ -456,7 +456,7 @@ class gl_classes {
 public:
 	int k;
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	ring_theory::table_of_irreducible_polynomials *Table_of_polynomials;
 	int *Nb_part;
 	int **Partitions;
@@ -466,7 +466,7 @@ public:
 	~gl_classes();
 	void null();
 	void freeself();
-	void init(int k, finite_field *F, int verbose_level);
+	void init(int k, field_theory::finite_field *F, int verbose_level);
 	int select_partition_first(int *Select, int *Select_partition,
 		int verbose_level);
 	int select_partition_next(int *Select, int *Select_partition,
@@ -543,7 +543,7 @@ class heisenberg {
 
 public:
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int n;
 	int len; // 2 * n + 1
 	int group_order; // q^len
@@ -557,7 +557,7 @@ public:
 	~heisenberg();
 	void null();
 	void freeself();
-	void init(finite_field *F, int n, int verbose_level);
+	void init(field_theory::finite_field *F, int n, int verbose_level);
 	void unrank_element(int *Elt, long int rk);
 	long int rank_element(int *Elt);
 	void element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level);
@@ -611,7 +611,7 @@ public:
 class null_polarity_generator {
 public:
 
-	finite_field *F; // no ownership, do not destroy
+	field_theory::finite_field *F; // no ownership, do not destroy
 	int n, q;
 	int qn; // = q^n
 
@@ -632,7 +632,7 @@ public:
 	~null_polarity_generator();
 	void null();
 	void freeself();
-	void init(finite_field *F, int n, int verbose_level);
+	void init(field_theory::finite_field *F, int n, int verbose_level);
 	int count_strong_generators(int &nb, int *transversal_length, 
 		int &first_moved, int depth, int verbose_level);
 	int get_strong_generators(int *Data, int &nb, int &first_moved, 
@@ -655,7 +655,7 @@ public:
 class rank_checker {
 
 public:
-	finite_field *GFq;
+	field_theory::finite_field *GFq;
 	int m, n, d;
 	
 	int *M1; // [m * n]
@@ -665,7 +665,7 @@ public:
 
 	rank_checker();
 	~rank_checker();
-	void init(finite_field *GFq, int m, int n, int d);
+	void init(field_theory::finite_field *GFq, int m, int n, int d);
 	int check_rank(int len, long int *S, int verbose_level);
 	int check_rank_matrix_input(int len, long int *S, int dim_S,
 		int verbose_level);
@@ -689,7 +689,7 @@ class vector_space {
 public:
 
 	int dimension;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	long int (*rank_point_func)(int *v, void *data);
 	void (*unrank_point_func)(int *v, long int rk, void *data);
@@ -705,7 +705,7 @@ public:
 	~vector_space();
 	void null();
 	void freeself();
-	void init(finite_field *F, int dimension,
+	void init(field_theory::finite_field *F, int dimension,
 			int verbose_level);
 	void init_rank_functions(
 		long int (*rank_point_func)(int *v, void *data),

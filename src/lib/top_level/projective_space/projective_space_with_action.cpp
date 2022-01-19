@@ -75,7 +75,7 @@ void projective_space_with_action::freeself()
 }
 
 void projective_space_with_action::init(
-	finite_field *F, int n, int f_semilinear,
+		field_theory::finite_field *F, int n, int f_semilinear,
 	int f_init_incidence_structure,
 	int verbose_level)
 {
@@ -99,7 +99,7 @@ void projective_space_with_action::init(
 	init_group(f_semilinear, verbose_level);
 
 	if (n == 2) {
-		Dom = NEW_OBJECT(quartic_curve_domain);
+		Dom = NEW_OBJECT(algebraic_geometry::quartic_curve_domain);
 
 		if (f_v) {
 			cout << "projective_space_with_action::init before Dom->init" << endl;
@@ -159,7 +159,7 @@ void projective_space_with_action::init_group(
 
 	vector_ge *nice_gens;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_linear_group(
 		F, d, 
 		TRUE /*f_projective*/,
@@ -375,7 +375,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	ost << "Fixed Lines:\\\\" << endl;
 
 	{
-		action *A2;
+		actions::action *A2;
 
 		A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 	
@@ -405,7 +405,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	ost << "Fixed Planes:\\\\" << endl;
 
 	{
-		action *A2;
+		actions::action *A2;
 
 		A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 	
@@ -474,9 +474,9 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	ost << "Orbits on points:\\\\" << endl;
 
 
-	schreier *Sch;
+	groups::schreier *Sch;
 
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 	A->all_point_orbits_from_single_generator(*Sch,
 			Elt,
 			0 /*verbose_level*/);
@@ -488,12 +488,12 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	ost << "Orbits on lines:\\\\" << endl;
 
 	{
-		action *A2;
-		schreier *Sch;
+		actions::action *A2;
+		groups::schreier *Sch;
 
 		A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 
-		Sch = NEW_OBJECT(schreier);
+		Sch = NEW_OBJECT(groups::schreier);
 		A2->all_point_orbits_from_single_generator(*Sch,
 				Elt,
 				0 /*verbose_level*/);
@@ -507,13 +507,13 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	ost << "Orbits on planes:\\\\" << endl;
 
 	{
-		action *A2;
-		schreier *Sch;
+		actions::action *A2;
+		groups::schreier *Sch;
 
 
 		A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 
-		Sch = NEW_OBJECT(schreier);
+		Sch = NEW_OBJECT(groups::schreier);
 		A2->all_point_orbits_from_single_generator(*Sch,
 				Elt,
 				0 /*verbose_level*/);
@@ -569,7 +569,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 
 
 void projective_space_with_action::compute_group_of_set(long int *set, int set_sz,
-		strong_generators *&Sg,
+		groups::strong_generators *&Sg,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -858,15 +858,15 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		cout << endl;
 	}
 
-	del_pezzo_surface_of_degree_two_domain *del_Pezzo;
+	algebraic_geometry::del_pezzo_surface_of_degree_two_domain *del_Pezzo;
 
-	del_Pezzo = NEW_OBJECT(del_pezzo_surface_of_degree_two_domain);
+	del_Pezzo = NEW_OBJECT(algebraic_geometry::del_pezzo_surface_of_degree_two_domain);
 
 	del_Pezzo->init(P, Poly4_3, verbose_level);
 
-	del_pezzo_surface_of_degree_two_object *del_Pezzo_surface;
+	algebraic_geometry::del_pezzo_surface_of_degree_two_object *del_Pezzo_surface;
 
-	del_Pezzo_surface = NEW_OBJECT(del_pezzo_surface_of_degree_two_object);
+	del_Pezzo_surface = NEW_OBJECT(algebraic_geometry::del_pezzo_surface_of_degree_two_object);
 
 	del_Pezzo_surface->init(del_Pezzo,
 			Formula, Subtrees, Coefficient_vector,
@@ -904,7 +904,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 	}
 
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = P->F;
 
@@ -980,7 +980,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 }
 
 void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(std::string &label,
-		linear_group_description * subgroup_Descr, int verbose_level)
+		groups::linear_group_description * subgroup_Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -989,9 +989,9 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 	}
 
 
-	linear_group *H_LG;
+	groups::linear_group *H_LG;
 
-	H_LG = NEW_OBJECT(linear_group);
+	H_LG = NEW_OBJECT(groups::linear_group);
 
 	subgroup_Descr->F = P->F;
 
@@ -1007,7 +1007,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 	}
 
 
-	action *A;
+	actions::action *A;
 
 	A = H_LG->A2;
 
@@ -1782,13 +1782,13 @@ void projective_space_with_action::setup_surface_with_action(
 	}
 
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 
 
 	if (f_v) {
 		cout << "projective_space_with_action::setup_surface_with_action before Surf->init" << endl;
 	}
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_with_action::setup_surface_with_action after Surf->init" << endl;
@@ -1808,7 +1808,7 @@ void projective_space_with_action::setup_surface_with_action(
 
 
 void projective_space_with_action::report_decomposition_by_group(
-	strong_generators *SG, std::ostream &ost, std::string &fname_base,
+		groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -49,8 +49,8 @@ void action_on_cosets::freeself()
 }
 
 void action_on_cosets::init(int nb_points, int *Points, 
-	action *A_linear, 
-	finite_field *F, 
+		actions::action *A_linear,
+	field_theory::finite_field *F,
 	int dimension_of_subspace, 
 	int n, 
 	int *subspace_basis, 
@@ -95,8 +95,8 @@ void action_on_cosets::init(int nb_points, int *Points,
 }
 
 void action_on_cosets::init_lint(int nb_points, long int *Points,
-	action *A_linear,
-	finite_field *F,
+		actions::action *A_linear,
+	field_theory::finite_field *F,
 	int dimension_of_subspace,
 	int n,
 	int *subspace_basis,

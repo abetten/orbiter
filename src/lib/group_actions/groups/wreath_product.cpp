@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
 
 static void dimensions(int n, int &nb_rows, int &nb_cols);
 static void place_binary(long int h, int &i, int &j);
@@ -187,7 +189,7 @@ void wreath_product::freeself()
 }
 
 void wreath_product::init_tensor_wreath_product(matrix_group *M,
-		action *A_mtx, int nb_factors,
+		actions::action *A_mtx, int nb_factors,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1974,7 +1976,7 @@ void wreath_product::report(ostream &ost, int verbose_level)
 
 void wreath_product::compute_permutations_and_write_to_file(
 		strong_generators* SG,
-		action* A,
+		actions::action *A,
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
@@ -2407,7 +2409,7 @@ int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
 
 void wreath_product::orbits_using_files_and_union_find(
 		strong_generators* SG,
-		action* A,
+		actions::action *A,
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
@@ -2679,7 +2681,7 @@ void wreath_product::orbits_using_files_and_union_find(
 
 void wreath_product::orbits_restricted(
 		strong_generators* SG,
-		action* A,
+		actions::action *A,
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
@@ -2915,7 +2917,7 @@ void wreath_product::orbits_restricted(
 
 void wreath_product::orbits_restricted_compute(
 		strong_generators* SG,
-		action* A,
+		actions::action *A,
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
@@ -2998,10 +3000,10 @@ void wreath_product::orbits_restricted_compute(
 
 
 
-	action *A_perm;
-	action *A_perm_matrix;
+	actions::action *A_perm;
+	actions::action *A_perm_matrix;
 
-	A_perm = NEW_OBJECT(action);
+	A_perm = NEW_OBJECT(actions::action);
 	A_perm->init_permutation_representation(A,
 			FALSE /* f_stay_in_the_old_action */,
 			SG->gens,
@@ -3011,7 +3013,7 @@ void wreath_product::orbits_restricted_compute(
 		cout << "created A_perm = " << A_perm->label << endl;
 	}
 
-	A_perm_matrix = NEW_OBJECT(action);
+	A_perm_matrix = NEW_OBJECT(actions::action);
 	A_perm_matrix->init_permutation_representation(A,
 			TRUE /* f_stay_in_the_old_action */,
 			SG->gens,
@@ -3125,7 +3127,7 @@ void wreath_product::orbits_restricted_compute(
 		}
 
 #if 1
-		action *A_on_orbit;
+		actions::action *A_on_orbit;
 
 		if (f_v) {
 			cout << "computing restricted action on the orbit:" << endl;
@@ -3200,6 +3202,5 @@ void wreath_product::orbits_restricted_compute(
 
 
 
+}}}
 
-
-}}

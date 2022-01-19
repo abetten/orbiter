@@ -12,6 +12,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
+
 
 schreier_sims::schreier_sims()
 {
@@ -89,7 +92,7 @@ void schreier_sims::freeself()
 	}
 }
 
-void schreier_sims::init(action *A, int verbose_level)
+void schreier_sims::init(actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -128,7 +131,7 @@ void schreier_sims::init(action *A, int verbose_level)
 		}
 }
 
-void schreier_sims::interested_in_kernel(action *KA,
+void schreier_sims::interested_in_kernel(actions::action *KA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -226,7 +229,7 @@ void schreier_sims::init_base_of_choice(
 }
 
 void schreier_sims::init_choose_next_base_point_method(
-	int (*choose_next_base_point_method)(action *A,
+	int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 	int verbose_level)
 {
@@ -753,5 +756,6 @@ void schreier_sims::create_group(int verbose_level)
 	}
 }
 
-}}
+}}}
+
 

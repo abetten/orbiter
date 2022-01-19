@@ -836,7 +836,7 @@ void cryptography_domain::do_random(int random_nb, std::string &fname_csv, int v
 
 }
 
-void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
+void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
 		int EC_b, int EC_c, int EC_s,
 		std::string &pt_text, std::string &EC_message,
 		int verbose_level)
@@ -1075,7 +1075,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 	}
 }
 
-void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
+void cryptography_domain::do_EC_points(field_theory::finite_field *F, std::string &label,
 		int EC_b, int EC_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1299,7 +1299,7 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 	}
 }
 
-int cryptography_domain::EC_evaluate_RHS(finite_field *F,
+int cryptography_domain::EC_evaluate_RHS(field_theory::finite_field *F,
 		int EC_b, int EC_c, int x)
 // evaluates x^3 + bx + c
 {
@@ -1313,7 +1313,7 @@ int cryptography_domain::EC_evaluate_RHS(finite_field *F,
 }
 
 
-void cryptography_domain::do_EC_add(finite_field *F,
+void cryptography_domain::do_EC_add(field_theory::finite_field *F,
 		int EC_b, int EC_c,
 		std::string &pt1_text, std::string &pt2_text,
 		int verbose_level)
@@ -1374,7 +1374,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 	}
 }
 
-void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
+void cryptography_domain::do_EC_cyclic_subgroup(field_theory::finite_field *F,
 		int EC_b, int EC_c, std::string &pt_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1434,7 +1434,7 @@ void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 	}
 }
 
-void cryptography_domain::do_EC_multiple_of(finite_field *F,
+void cryptography_domain::do_EC_multiple_of(field_theory::finite_field *F,
 		int EC_b, int EC_c, std::string &pt_text, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1483,7 +1483,7 @@ void cryptography_domain::do_EC_multiple_of(finite_field *F,
 	}
 }
 
-void cryptography_domain::do_EC_discrete_log(finite_field *F,
+void cryptography_domain::do_EC_discrete_log(field_theory::finite_field *F,
 		int EC_b, int EC_c,
 		std::string &base_pt_text, std::string &pt_text, int verbose_level)
 {
@@ -1544,7 +1544,7 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 	}
 }
 
-void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, int EC_c,
+void cryptography_domain::do_EC_baby_step_giant_step(field_theory::finite_field *F, int EC_b, int EC_c,
 		std::string &EC_bsgs_G, int EC_bsgs_N,
 		std::string &EC_bsgs_cipher_text,
 		int verbose_level)
@@ -1656,7 +1656,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 }
 
 void cryptography_domain::do_EC_baby_step_giant_step_decode(
-		finite_field *F, int EC_b, int EC_c,
+		field_theory::finite_field *F, int EC_b, int EC_c,
 		std::string &EC_bsgs_A, int EC_bsgs_N,
 		std::string &EC_bsgs_cipher_text, std::string &EC_bsgs_keys,
 		int verbose_level)
@@ -1899,7 +1899,7 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 }
 
 
-void cryptography_domain::NTRU_encrypt(int N, int p, finite_field *Fq,
+void cryptography_domain::NTRU_encrypt(int N, int p, field_theory::finite_field *Fq,
 		std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
 		int verbose_level)
 {
@@ -2024,7 +2024,8 @@ void cryptography_domain::NTRU_encrypt(int N, int p, finite_field *Fq,
 }
 
 
-void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, finite_field *F,
+void cryptography_domain::polynomial_center_lift(std::string &A_coeffs,
+		field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2093,7 +2094,8 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, finite_f
 }
 
 
-void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, finite_field *F,
+void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs,
+		field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

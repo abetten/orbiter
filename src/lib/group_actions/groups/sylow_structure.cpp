@@ -16,6 +16,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
+
 
 sylow_structure::sylow_structure()
 {
@@ -120,5 +123,5 @@ void sylow_structure::report(ostream &ost)
 
 
 
-}}
+}}}
 

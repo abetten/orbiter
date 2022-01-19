@@ -86,8 +86,8 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 
 	graph_classify::Descr = Descr;
 
-	A_base = NEW_OBJECT(action);
-	A_on_edges = NEW_OBJECT(action);
+	A_base = NEW_OBJECT(actions::action);
+	A_on_edges = NEW_OBJECT(actions::action);
 	gen = NEW_OBJECT(poset_classification);
 
 
@@ -630,7 +630,7 @@ void graph_classify::print_score_sequences(
 	score = NEW_lint(Descr->n);
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
-		strong_generators *Strong_gens;
+		groups::strong_generators *Strong_gens;
 		ring_theory::longinteger_object go;
 
 		gen->get_set_by_level(level, h, set);
@@ -708,7 +708,7 @@ void graph_classify::draw_graphs(int level,
 	}
 
 	for (h = 0; h < nb_orbits; h++) {
-		strong_generators *Strong_gens;
+		groups::strong_generators *Strong_gens;
 		ring_theory::longinteger_object go;
 
 		gen->get_set_by_level(level, h, set);

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 clebsch_map::clebsch_map()
@@ -739,5 +740,5 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 
 
 
-}}
+}}}
 

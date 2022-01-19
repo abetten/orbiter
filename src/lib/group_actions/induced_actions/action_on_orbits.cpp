@@ -34,8 +34,8 @@ void action_on_orbits::free()
 	null();
 }
 
-void action_on_orbits::init(action *A,
-		schreier *Sch, int f_play_it_safe, int verbose_level)
+void action_on_orbits::init(actions::action *A,
+		groups::schreier *Sch, int f_play_it_safe, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	

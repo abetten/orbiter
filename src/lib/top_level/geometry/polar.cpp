@@ -127,8 +127,8 @@ void polar::init_group(
 }
 
 void polar::init(
-	action *A, orthogonal *O,
-	int epsilon, int n, int k, finite_field *F, 
+		actions::action *A, orthogonal *O,
+	int epsilon, int n, int k, field_theory::finite_field *F,
 	int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -173,7 +173,7 @@ void polar::init2(int depth, int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	//vector_ge *gens;
 	//int *transversal_lengths;
-	strong_generators *gens;
+	groups::strong_generators *gens;
 	
 	if (f_v) {
 		cout << "polar::init2" << endl;
@@ -677,7 +677,7 @@ void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 {
 	int *Elt;
 	long int goi, i, order;
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
 	Elt = NEW_int(A->elt_size_in_int);	
 
@@ -685,7 +685,7 @@ void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
 		depth, orbit_idx, 0 /* verbose_level*/);
 	//Gen->get_stabilizer(gens, tl, depth, orbit_idx, verbose_level);
 
-	sims *S;
+	groups::sims *S;
 	S = A->create_sims_from_generators_with_target_group_order_factorized(
 		Strong_gens->gens, Strong_gens->tl, A->base_len(),
 		verbose_level);

@@ -19,7 +19,7 @@ namespace orbiter {
 namespace top_level {
 
 void spread_classify::print_isomorphism_type(isomorph *Iso,
-	int iso_cnt, sims *Stab, schreier &Orb, 
+	int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 	long int *data, int verbose_level)
 // called from callback_print_isomorphism_type()
 {
@@ -93,7 +93,7 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 
 void spread_classify::print_isomorphism_type2(isomorph *Iso,
 		ostream &ost,
-		int iso_cnt, sims *Stab, schreier &Orb,
+		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -318,7 +318,7 @@ void spread_classify::save_klein_invariants(char *prefix,
 
 void spread_classify::klein(ostream &ost,
 	isomorph *Iso, 
-	int iso_cnt, sims *Stab, schreier &Orb, 
+	int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 	long int *data, int data_size, int verbose_level)
 // Called from print_isomorphism_type if k == 2
 {
@@ -1602,12 +1602,12 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 
 
 	int q2;
-	finite_field *Fq2;
-	subfield_structure *Sub;
+	field_theory::finite_field *Fq2;
+	field_theory::subfield_structure *Sub;
 
 	q2 = q * q;
-	Fq2 = NEW_OBJECT(finite_field);
-	Sub = NEW_OBJECT(subfield_structure);
+	Fq2 = NEW_OBJECT(field_theory::finite_field);
+	Sub = NEW_OBJECT(field_theory::subfield_structure);
 	Fq2->finite_field_init(q2, FALSE /* f_without_tables */, verbose_level);
 	Sub->init(Fq2, Mtx->GFq, verbose_level);
 	for (i = 0; i < q * q; i++) {
@@ -1861,7 +1861,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
-		sims *Stab;
+		groups::sims *Stab;
 		
 		Stab = Iso.Reps->stab[h];
 
@@ -2048,7 +2048,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		}
 #endif
 
-		sims *Stab;
+		groups::sims *Stab;
 		
 		Stab = Iso.Reps->stab[h];
 
@@ -2071,7 +2071,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		ost << "$\\\\" << endl;
 		
 
-		schreier Orb;
+		groups::schreier Orb;
 		//longinteger_object go2;
 		
 		Iso.AA->compute_all_point_orbits(Orb,
@@ -2162,7 +2162,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 					<< " of length " << len << endl;
 			ost << i << " & " << len << " & ";
 			long int *set;
-			action *A1;
+			actions::action *A1;
 			ring_theory::longinteger_object go1, gok;
 
 			set = NEW_lint(len);
@@ -2204,7 +2204,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 			ost << "Generators for the kernel in the action "
 					"on orbit " << i << " are:";
 			long int *set;
-			action *A1;
+			actions::action *A1;
 			vector_ge *gens;
 			int *tl;
 			ring_theory::longinteger_object go1, gok;
@@ -2323,7 +2323,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int rep, first, /*c,*/ id;
-	sims *Stab;
+	groups::sims *Stab;
 	long int data[1000];
 	long int data2[1000];
 	int u, fst, orbit_length, i, idx, i0, j, the_point, pivot, rem;
@@ -2356,7 +2356,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 
 	Stab = Iso.Reps->stab[h];
 
-	schreier Orb;
+	groups::schreier Orb;
 	ring_theory::longinteger_object go;
 	ring_theory::longinteger_object stab_order;
 		
@@ -2520,7 +2520,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 {
 	int rep, first, /*c,*/ id;
 
-	sims *Stab;
+	groups::sims *Stab;
 		
 	long int data[1000];
 
@@ -2550,7 +2550,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 	f << "$\\\\" << endl;
 #endif	
 
-	schreier Orb;
+	groups::schreier Orb;
 	//longinteger_object go2;
 		
 	Iso.AA->compute_all_point_orbits(Orb, Stab->gens, 0 /*verbose_level - 2*/);
@@ -2576,7 +2576,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 void spread_classify::report_stabilizer(isomorph &Iso,
 		ostream &ost, int orbit, int verbose_level)
 {
-	sims *Stab;
+	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int i;
 

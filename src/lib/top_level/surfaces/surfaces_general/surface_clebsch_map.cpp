@@ -75,7 +75,7 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 
 
 
-	Clebsch_map = NEW_OBJECT(clebsch_map);
+	Clebsch_map = NEW_OBJECT(algebraic_geometry::clebsch_map);
 
 
 	if (f_v) {

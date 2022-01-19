@@ -186,7 +186,7 @@ void compute_stabilizer::init(
 	}
 
 
-	Stab = NEW_OBJECT(sims);
+	Stab = NEW_OBJECT(groups::sims);
 	Stab->init(SubSt->SubC->A, 0 /* verbose_level */);
 	Stab->init_trivial_group(0 /* verbose_level - 1*/);
 
@@ -376,7 +376,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(int cnt2, int ve
 	}
 
 
-	sims *Stab0 = NULL;
+	groups::sims *Stab0 = NULL;
 
 	if (cnt2 == 0) {
 
@@ -489,7 +489,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(int cnt2, int ve
 	}
 }
 
-void compute_stabilizer::setup_stabilizer(sims *Stab0, int verbose_level)
+void compute_stabilizer::setup_stabilizer(groups::sims *Stab0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -504,8 +504,8 @@ void compute_stabilizer::setup_stabilizer(sims *Stab0, int verbose_level)
 	T1v = NEW_int(SubSt->SubC->A->elt_size_in_int);
 	T2 = NEW_int(SubSt->SubC->A->elt_size_in_int);
 
-	K = NEW_OBJECT(sims);
-	Kernel_original = NEW_OBJECT(sims);
+	K = NEW_OBJECT(groups::sims);
+	Kernel_original = NEW_OBJECT(groups::sims);
 
 	K->init(SubSt->SubC->A, 0 /* verbose_level */);
 	K->init_trivial_group(0 /*verbose_level - 1*/);
@@ -564,8 +564,8 @@ void compute_stabilizer::setup_stabilizer(sims *Stab0, int verbose_level)
 	// and the kernel of the action has to go into Stab first.
 
 
-	Aut = NEW_OBJECT(sims);
-	Aut_original = NEW_OBJECT(sims);
+	Aut = NEW_OBJECT(groups::sims);
+	Aut_original = NEW_OBJECT(groups::sims);
 
 
 	// computes the stabilizer of reduced_set[] in the stabilizer
@@ -866,7 +866,7 @@ void compute_stabilizer::compute_canonical_form_handle_case(int cnt, int verbose
 				"after Stab_orbits->map_subset_and_compute_local_labels" << endl;
 	}
 
-	sims *stab;
+	groups::sims *stab;
 
 	if (f_vv) {
 		cout << "compute_stabilizer::compute_canonical_form_handle_case before compute_canonical_set" << endl;
@@ -925,9 +925,9 @@ void compute_stabilizer::compute_canonical_set(long int *set_in, long int *set_o
 		cout << "compute_stabilizer::compute_canonical_set before A_induced->make_canonical" << endl;
 	}
 
-	sims *my_Aut;
+	groups::sims *my_Aut;
 
-	my_Aut = NEW_OBJECT(sims);
+	my_Aut = NEW_OBJECT(groups::sims);
 
 	A_induced->make_canonical(
 		sz, set_in,
@@ -947,7 +947,7 @@ void compute_stabilizer::compute_canonical_set(long int *set_in, long int *set_o
 
 void compute_stabilizer::compute_canonical_set_and_group(
 		long int *set_in, long int *set_out, int sz,
-		int *transporter, sims *&stab, int verbose_level)
+		int *transporter, groups::sims *&stab, int verbose_level)
 // calls A_induced->make_canonical and computes a transporter and the set stabilizer
 {
 	int f_v = (verbose_level >= 1);
@@ -961,7 +961,7 @@ void compute_stabilizer::compute_canonical_set_and_group(
 	}
 
 
-	stab = NEW_OBJECT(sims);
+	stab = NEW_OBJECT(groups::sims);
 
 	A_induced->make_canonical(
 		sz, set_in,
@@ -1018,9 +1018,9 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 		new_stab_order.assign_to(stab_order);
 
 
-		strong_generators *Strong_gens;
+		groups::strong_generators *Strong_gens;
 
-		Strong_gens = NEW_OBJECT(strong_generators);
+		Strong_gens = NEW_OBJECT(groups::strong_generators);
 		Strong_gens->init_from_sims(Stab, 0);
 
 		if (f_v) {

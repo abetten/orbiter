@@ -78,7 +78,7 @@ void klein_correspondence::freeself()
 #endif
 }
 
-void klein_correspondence::init(finite_field *F,
+void klein_correspondence::init(field_theory::finite_field *F,
 		orthogonal *O, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

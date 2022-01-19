@@ -30,7 +30,7 @@ domain::domain(int p)
 
 
 
-domain::domain(finite_field *F)
+domain::domain(field_theory::finite_field *F)
 {
 	cout << "domain::domain orbiter finite_field of order " << F->q << endl;
 	domain::F = F;
@@ -69,7 +69,7 @@ domain_type domain::type()
 	return the_type;
 }
 
-finite_field *domain::get_F()
+field_theory::finite_field *domain::get_F()
 {
 	return F;
 }

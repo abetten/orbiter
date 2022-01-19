@@ -19,8 +19,8 @@ namespace foundations {
 namespace number_theory {
 
 
-static void ntt4_forward(int *input, int *output, finite_field *F);
-static void ntt4_backward(int *input, int *output, finite_field *F);
+static void ntt4_forward(int *input, int *output, field_theory::finite_field *F);
+static void ntt4_backward(int *input, int *output, field_theory::finite_field *F);
 
 
 number_theoretic_transform::number_theoretic_transform()
@@ -65,7 +65,7 @@ number_theoretic_transform::~number_theoretic_transform()
 {
 }
 
-void number_theoretic_transform::init(finite_field *F,
+void number_theoretic_transform::init(field_theory::finite_field *F,
 		int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -144,7 +144,7 @@ void number_theoretic_transform::init(finite_field *F,
 
 		Psi_powers = NEW_int(N[k]);
 		Q = q * q;
-		FQ = NEW_OBJECT(finite_field);
+		FQ = NEW_OBJECT(field_theory::finite_field);
 		FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0);
 		alphaQ = FQ->primitive_element();
 
@@ -1328,7 +1328,7 @@ void number_theoretic_transform::make_P_matrix(int s, int verbose_level)
 	}
 }
 
-void number_theoretic_transform::multiply_matrix_stack(finite_field *F,
+void number_theoretic_transform::multiply_matrix_stack(field_theory::finite_field *F,
 		int **S,
 		int nb, int sz, int *Result, int verbose_level)
 {
@@ -1355,7 +1355,7 @@ void number_theoretic_transform::multiply_matrix_stack(finite_field *F,
 }
 
 
-static void ntt4_forward(int *input, int *output, finite_field *F)
+static void ntt4_forward(int *input, int *output, field_theory::finite_field *F)
 {
 	int t0[16];
 	int t1[16];
@@ -1481,7 +1481,7 @@ static void ntt4_forward(int *input, int *output, finite_field *F)
 // nb_negate = 32
 // nb_mult = 17
 
-static void ntt4_backward(int *input, int *output, finite_field *F)
+static void ntt4_backward(int *input, int *output, field_theory::finite_field *F)
 {
 	int t0[16];
 	int t1[16];
