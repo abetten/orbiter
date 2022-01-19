@@ -489,7 +489,7 @@ void packing_classify::report_isomorphism_type(
 	ost << "\\bigskip" << endl << endl;
 #endif
 
-	sims *Stab;
+	groups::sims *Stab;
 		
 	Stab = Iso->Reps->stab[orbit];
 
@@ -520,7 +520,7 @@ void packing_classify::report_isomorphism_type(
 		report_stabilizer_in_action_gap(*Iso, orbit, verbose_level);
 		}
 
-	schreier Orb;
+	groups::schreier Orb;
 	//longinteger_object go;
 		
 	Iso->AA->compute_all_point_orbits(Orb,
@@ -712,7 +712,7 @@ void packing_classify::report_klein_invariants(
 void packing_classify::report_stabilizer(isomorph &Iso,
 		ostream &ost, int orbit, int verbose_level)
 {
-	sims *Stab;
+	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int i;
 
@@ -746,7 +746,7 @@ void packing_classify::report_stabilizer_in_action(
 		isomorph &Iso, ostream &ost, int orbit,
 		int verbose_level)
 {
-	sims *Stab;
+	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int i;
 
@@ -787,7 +787,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 		isomorph &Iso, int orbit,
 		int verbose_level)
 {
-	sims *Stab;
+	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int i;
 	char fname[1000];

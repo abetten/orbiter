@@ -94,7 +94,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 			cout << "design_create::init q = " << q << endl;
 			//cout << "design_create::init k = " << k << endl;
 		}
-		F = NEW_OBJECT(finite_field);
+		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	}
 
@@ -160,7 +160,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		sprintf(str, "blocks\\_v%d\\_k%d", degree, k);
 		label_tex.assign(str);
 
-		A = NEW_OBJECT(action);
+		A = NEW_OBJECT(actions::action);
 
 		int f_no_base = FALSE;
 
@@ -169,7 +169,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		}
 		A->init_symmetric_group(degree, f_no_base, verbose_level);
 
-		A2 = NEW_OBJECT(action);
+		A2 = NEW_OBJECT(actions::action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
 
 		Aut = NULL;
@@ -214,7 +214,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		sprintf(str, "blocks\\_v%d\\_k%d", degree, k);
 		label_tex.assign(str);
 
-		A = NEW_OBJECT(action);
+		A = NEW_OBJECT(actions::action);
 
 		int f_no_base = FALSE;
 
@@ -224,7 +224,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 
 		A->init_symmetric_group(degree, f_no_base, verbose_level);
 
-		A2 = NEW_OBJECT(action);
+		A2 = NEW_OBJECT(actions::action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
 
 		Aut = NULL;
@@ -262,7 +262,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 	}
 }
 
-void design_create::create_design_PG_2_q(finite_field *F,
+void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 		long int *&set, int &sz, int &k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -317,13 +317,13 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	if (f_v) {
 		cout << "design_create::create_design_PG_2_q creating actions" << endl;
 	}
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	int f_no_base = FALSE;
 
 	A->init_symmetric_group(degree, f_no_base, verbose_level);
 
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_on_k_subsets(*A, k, verbose_level);
 
 	Aut = PA->A;

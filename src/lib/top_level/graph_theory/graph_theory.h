@@ -42,8 +42,8 @@ public:
 	int *list_of_elements; // [go]
 	int *list_of_elements_inverse; // [go]
 
-	action *A;
-	finite_field *F;
+	actions::action *A;
+	field_theory::finite_field *F;
 	int target_depth;
 
 	int *Elt1;
@@ -51,11 +51,11 @@ public:
 	vector_ge *gens;
 	vector_ge *gens_subgroup;
 	ring_theory::longinteger_object target_go, target_go_subgroup;
-	strong_generators *Strong_gens;
-	strong_generators *Strong_gens_subgroup;
+	groups::strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens_subgroup;
 
-	sims *S;
-	sims *S_subgroup;
+	groups::sims *S;
+	groups::sims *S_subgroup;
 
 	int *Table;
 	int *generators;
@@ -66,10 +66,10 @@ public:
 	std::string fname;
 	std::string fname_graphs;
 
-	strong_generators *Aut_gens;
+	groups::strong_generators *Aut_gens;
 	ring_theory::longinteger_object Aut_order;
-	action *Aut;
-	action *A2;
+	actions::action *Aut;
+	actions::action *A2;
 	poset_with_group_action *Poset;
 	poset_classification_control *Control;
 	poset_classification *gen;
@@ -369,8 +369,8 @@ public:
 	poset_with_group_action *Poset;
 	poset_classification *gen;
 
-	action *A_base; // symmetric group on n vertices
-	action *A_on_edges; // action on pairs
+	actions::action *A_base; // symmetric group on n vertices
+	actions::action *A_on_edges; // action on pairs
 
 	int n2; // n choose 2
 

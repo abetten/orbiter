@@ -56,7 +56,7 @@ void canonical_form_nauty::quartic_curve(
 		long int *bitangents, int nb_bitangents,
 		int *canonical_equation,
 		int *transporter_to_canonical_form,
-		strong_generators *&gens_stab_of_canonical_equation,
+		groups::strong_generators *&gens_stab_of_canonical_equation,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -110,7 +110,7 @@ void canonical_form_nauty::quartic_curve(
 	}
 
 
-	nauty_interface_with_group Nau;
+	actions::nauty_interface_with_group Nau;
 	data_structures::nauty_output *NO;
 
 	NO = NEW_OBJECT(data_structures::nauty_output);

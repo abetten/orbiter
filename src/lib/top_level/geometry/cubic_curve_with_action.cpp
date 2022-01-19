@@ -55,7 +55,8 @@ void cubic_curve_with_action::freeself()
 	null();
 }
 
-void cubic_curve_with_action::init(cubic_curve *CC, action *A,
+void cubic_curve_with_action::init(
+		cubic_curve *CC, actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

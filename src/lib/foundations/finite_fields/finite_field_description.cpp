@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 finite_field_description::finite_field_description()
@@ -100,4 +101,5 @@ void finite_field_description::print()
 	}
 }
 
-}}
+}}}
+

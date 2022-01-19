@@ -40,7 +40,7 @@ void action_on_k_subsets::free()
 	null();
 }
 
-void action_on_k_subsets::init(action *A,
+void action_on_k_subsets::init(actions::action *A,
 		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -209,7 +209,7 @@ void projective_space_global::do_create_surface(
 	}
 
 	int q;
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 
 	if (f_v) {
 		cout << "projective_space_global::do_create_surface before Surface_Descr->get_q" << endl;
@@ -232,7 +232,7 @@ void projective_space_global::do_create_surface(
 	if (f_v) {
 		cout << "projective_space_global::do_create_surface before Surf->init" << endl;
 	}
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_create_surface after Surf->init" << endl;
@@ -336,7 +336,7 @@ void projective_space_global::do_lift_skew_hexagon(
 		Orbiter->Int_vec->matrix_print(Pluecker_coords, nb_pts, 6);
 	}
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
@@ -348,7 +348,7 @@ void projective_space_global::do_lift_skew_hexagon(
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon before Surf->init" << endl;
 	}
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon after Surf->init" << endl;
@@ -445,7 +445,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	}
 
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
@@ -457,7 +457,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity before Surf->init" << endl;
 	}
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity after Surf->init" << endl;
@@ -612,7 +612,7 @@ void projective_space_global::do_classify_arcs(
 #endif
 
 
-	strong_generators *gens;
+	groups::strong_generators *gens;
 
 	if (Arc_generator_description->f_override_group) {
 		if (f_v) {

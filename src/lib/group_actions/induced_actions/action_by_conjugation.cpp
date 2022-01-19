@@ -50,12 +50,12 @@ void action_by_conjugation::free()
 }
 
 
-void action_by_conjugation::init(sims *Base_group,
+void action_by_conjugation::init(groups::sims *Base_group,
 		int f_ownership, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
-	action *A;
+	actions::action *A;
 	
 	if (f_v) {
 		cout << "action_by_conjugation::init" << endl;
@@ -77,7 +77,7 @@ void action_by_conjugation::init(sims *Base_group,
 		}
 }
 
-long int action_by_conjugation::compute_image(action *A,
+long int action_by_conjugation::compute_image(actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -113,7 +113,7 @@ long int action_by_conjugation::rank(int *Elt)
 	return j;
 }
 
-long int action_by_conjugation::multiply(action *A,
+long int action_by_conjugation::multiply(actions::action *A,
 		long int i, long int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

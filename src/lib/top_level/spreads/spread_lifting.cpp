@@ -58,7 +58,7 @@ void spread_lifting::init(
 	long int *starter, int starter_size,
 	int starter_case_number, int starter_number_of_cases, 
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
+	groups::strong_generators *Strong_gens,
 	int f_lex, 
 	int verbose_level)
 {
@@ -263,12 +263,12 @@ void spread_lifting::prepare_free_points(
 	}
 }
 
-diophant *spread_lifting::create_system(int verbose_level)
+solvers::diophant *spread_lifting::create_system(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v5 = (verbose_level >= 5);
-	diophant *Dio;
+	solvers::diophant *Dio;
 	int nb_rows = nb_free_points;
 	int i, j, a, b, h;
 
@@ -276,7 +276,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 		cout << "spread_lifting::create_system" << endl;
 	}
 
-	Dio = NEW_OBJECT(diophant);
+	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;
@@ -361,7 +361,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 	return Dio;
 }
 
-void spread_lifting::find_coloring(diophant *Dio, 
+void spread_lifting::find_coloring(solvers::diophant *Dio,
 	int *&col_color, int &nb_colors, 
 	int verbose_level)
 {

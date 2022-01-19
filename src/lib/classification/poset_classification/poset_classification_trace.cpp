@@ -186,7 +186,7 @@ void poset_classification::test_identify(int level, int nb_times,
 	int nb_orbits, cnt, r, r2;
 	long int *set1;
 	long int *set2;
-	sims *S;
+	groups::sims *S;
 	ring_theory::longinteger_object go;
 	os_interface Os;
 

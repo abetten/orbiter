@@ -55,9 +55,10 @@ void action_on_spread_set::free()
 	null();
 }
 
-void action_on_spread_set::init(action *A_PGL_n_q,
-	action *A_PGL_k_q, sims *G_PGL_k_q,
-	int k, finite_field *F, int verbose_level)
+void action_on_spread_set::init(
+		actions::action *A_PGL_n_q,
+		actions::action *A_PGL_k_q, groups::sims *G_PGL_k_q,
+	int k, field_theory::finite_field *F, int verbose_level)
 // we are acting on the elements of G_PGL_k_q, so the degree of the action 
 // is the order of this group.
 // A_PGL_k_q in only needed for make_element

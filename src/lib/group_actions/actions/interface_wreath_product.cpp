@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
+
 
 // #############################################################################
 // interface functions: wreath product group
@@ -119,7 +121,7 @@ static long int wreath_product_group_element_image_of(action &A,
 		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 	long int b;
 
@@ -141,7 +143,7 @@ static void wreath_product_group_element_image_of_low_level(action &A,
 		int *input, int *output, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 
@@ -191,7 +193,7 @@ static void wreath_product_group_element_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 	if (f_v) {
@@ -205,7 +207,7 @@ static int wreath_product_group_element_is_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 	int ret;
 
@@ -231,7 +233,7 @@ static void wreath_product_group_element_unpack(action &A,
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -245,7 +247,7 @@ static void wreath_product_group_element_pack(action &A,
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -259,7 +261,7 @@ static void wreath_product_group_element_retrieve(action &A,
 		int hdl, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 	uchar *p_elt;
 
@@ -281,7 +283,7 @@ static int wreath_product_group_element_store(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 	int hdl;
 
@@ -302,7 +304,7 @@ static void wreath_product_group_element_mult(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
@@ -331,7 +333,7 @@ static void wreath_product_group_element_invert(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *AA = (int *) a;
 	int *AAv = (int *) av;
 
@@ -370,7 +372,7 @@ static void wreath_product_group_element_move(action &A,
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 
@@ -384,7 +386,7 @@ static void wreath_product_group_element_dispose(action &A,
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_dispose "
@@ -396,7 +398,7 @@ static void wreath_product_group_element_dispose(action &A,
 static void wreath_product_group_element_print(action &A,
 		void *elt, ostream &ost)
 {
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 
@@ -425,7 +427,7 @@ static void wreath_product_group_element_code_for_make_element(action &A,
 static void wreath_product_group_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 	W.element_print_for_make_element(Elt, ost);
@@ -434,7 +436,7 @@ static void wreath_product_group_element_print_for_make_element(action &A,
 static void wreath_product_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 	W.element_print_for_make_element(Elt, ost);
@@ -443,7 +445,7 @@ static void wreath_product_group_element_print_for_make_element_no_commas(
 static void wreath_product_group_element_print_quick(
 		action &A, void *elt, ostream &ost)
 {
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 
@@ -453,7 +455,7 @@ static void wreath_product_group_element_print_quick(
 static void wreath_product_group_element_print_latex(
 		action &A, void *elt, ostream &ost)
 {
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 	W.element_print_latex(Elt, ost);
@@ -473,7 +475,7 @@ static void wreath_product_group_element_print_latex_with_print_point_function(
 static void wreath_product_group_element_print_verbose(
 		action &A, void *elt, ostream &ost)
 {
-	wreath_product &W = *A.G.wreath_product_group;
+	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
 
 	W.element_print_easy(Elt, ost);
@@ -496,7 +498,7 @@ static void wreath_product_group_unrank_point(action &A, long int rk, int *v)
 	//cout << "wreath_product_group_unrank_point" << endl;
 
 	if (A.type_G == wreath_product_t) {
-		wreath_product *W;
+		groups::wreath_product *W;
 		W = A.G.wreath_product_group;
 
 		W->unrank_point(rk, v, 0 /* verbose_level*/);
@@ -519,7 +521,7 @@ static long int wreath_product_group_rank_point(action &A, int *v)
 	long int rk = -1;
 
 	if (A.type_G == wreath_product_t) {
-		wreath_product *W;
+		groups::wreath_product *W;
 		W = A.G.wreath_product_group;
 
 		rk = W->rank_point(v, 0 /* verbose_level */);
@@ -536,6 +538,6 @@ static long int wreath_product_group_rank_point(action &A, int *v)
 
 
 
-}}
+}}}
 
 

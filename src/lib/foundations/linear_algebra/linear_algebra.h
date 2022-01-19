@@ -25,27 +25,27 @@ public:
 	linear_algebra_global();
 	~linear_algebra_global();
 	void Berlekamp_matrix(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &Berlekamp_matrix_coeffs,
 			int verbose_level);
 	void compute_normal_basis(
-			finite_field *F,
+			field_theory::finite_field *F,
 			int d, int verbose_level);
 	void do_nullspace(
-			finite_field *F,
+			field_theory::finite_field *F,
 			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
 	void do_RREF(
-			finite_field *F,
+			field_theory::finite_field *F,
 			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
 	void RREF_demo(
-			finite_field *F,
+			field_theory::finite_field *F,
 			int *A, int m, int n, int verbose_level);
 	void RREF_with_steps_latex(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::ostream &ost, int *A, int m, int n, int verbose_level);
 
 };
@@ -60,7 +60,7 @@ public:
 
 class linear_algebra {
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	// #########################################################################
 	// linear_algebra.cpp
@@ -68,7 +68,7 @@ public:
 
 	linear_algebra();
 	~linear_algebra();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 
 
 	void copy_matrix(int *A, int *B, int ma, int na);
@@ -487,11 +487,11 @@ public:
 class representation_theory_domain {
 public:
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	representation_theory_domain();
 	~representation_theory_domain();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 	void representing_matrix8_R(int *A,
 		int q, int a, int b, int c, int d);
 	void representing_matrix9_R(int *A,

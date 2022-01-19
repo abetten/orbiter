@@ -86,7 +86,8 @@ void recoordinatize::freeself()
 }
 
 void recoordinatize::init(int n, int k,
-	finite_field *F, grassmann *Grass, action *A, action *A2,
+		field_theory::finite_field *F, grassmann *Grass,
+		actions::action *A, actions::action *A2,
 	int f_projective, int f_semilinear, 
 	int (*check_function_incremental)(int len,
 			long int *S, void *data, int verbose_level),
@@ -249,7 +250,7 @@ void recoordinatize::do_recoordinatize(
 }
 
 void recoordinatize::compute_starter(long int *&S, int &size,
-	strong_generators *&Strong_gens, int verbose_level)
+		groups::strong_generators *&Strong_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -310,7 +311,7 @@ void recoordinatize::compute_starter(long int *&S, int &size,
 }
 
 void recoordinatize::stabilizer_of_first_three(
-	strong_generators *&Strong_gens, int verbose_level)
+		groups::strong_generators *&Strong_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -322,8 +323,8 @@ void recoordinatize::stabilizer_of_first_three(
 		cout << "recoordinatize::stabilizer_of_first_three" << endl;
 	}
 
-	A0 = NEW_OBJECT(action);
-	A0_linear = NEW_OBJECT(action);
+	A0 = NEW_OBJECT(actions::action);
+	A0_linear = NEW_OBJECT(actions::action);
 	gens2 = NEW_OBJECT(vector_ge);
 
 	vector_ge *nice_gens;
@@ -386,7 +387,7 @@ void recoordinatize::stabilizer_of_first_three(
 				"before make_generators_stabilizer_of_three_components" << endl;
 	}
 
-	action_global AG;
+	actions::action_global AG;
 
 	AG.make_generators_stabilizer_of_three_components(
 		A /* A_PGL_n_q */,
@@ -601,8 +602,8 @@ void recoordinatize::compute_live_points_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	matrix_group *Mtx;
-	finite_field *Fq;
+	groups::matrix_group *Mtx;
+	field_theory::finite_field *Fq;
 	long int SS[4];
 	int *Elt1;
 

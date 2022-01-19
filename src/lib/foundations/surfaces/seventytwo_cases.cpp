@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 seventytwo_cases::seventytwo_cases()
@@ -491,7 +492,8 @@ void seventytwo_cases::report_Clebsch_map_aut_coset(ostream &ost, int coset, int
 
 
 
-}}
+}}}
+
 
 
 

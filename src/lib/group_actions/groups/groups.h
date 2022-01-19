@@ -12,8 +12,8 @@
 
 
 namespace orbiter {
-
 namespace group_actions {
+namespace groups {
 
 
 
@@ -28,8 +28,8 @@ class direct_product {
 public:
 	matrix_group *M1;
 	matrix_group *M2;
-	finite_field *F1;
-	finite_field *F2;
+	field_theory::finite_field *F1;
+	field_theory::finite_field *F2;
 	int q1;
 	int q2;
 
@@ -97,7 +97,7 @@ public:
 	void lift_generators(
 			strong_generators *SG1,
 			strong_generators *SG2,
-			action *A, strong_generators *&SG3,
+			actions::action *A, strong_generators *&SG3,
 			int verbose_level);
 };
 
@@ -110,10 +110,10 @@ public:
 
 class exceptional_isomorphism_O4 {
 public:
-	finite_field *Fq;
-	action *A2;
-	action *A4;
-	action *A5;
+	field_theory::finite_field *Fq;
+	actions::action *A2;
+	actions::action *A4;
+	actions::action *A5;
 
 	int *E5a;
 	int *E4a;
@@ -124,8 +124,10 @@ public:
 	~exceptional_isomorphism_O4();
 	void null();
 	void freeself();
-	void init(finite_field *Fq,
-			action *A2, action *A4, action *A5,
+	void init(field_theory::finite_field *Fq,
+			actions::action *A2,
+			actions::action *A4,
+			actions::action *A5,
 			int verbose_level);
 	void apply_2to4_embedded(
 		int f_switch, int *mtx2x2_T, int *mtx2x2_S, int *Elt,
@@ -174,7 +176,7 @@ public:
 
 	int f_override_polynomial;
 	std::string override_polynomial;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int f_semilinear;
 	int f_special;
 
@@ -244,19 +246,19 @@ public:
 	linear_group_description *description;
 	int n;
 	int input_q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int f_semilinear;
 
 	std::string label;
 	std::string label_tex;
 
 	strong_generators *initial_strong_gens;
-	action *A_linear;
+	actions::action *A_linear;
 	matrix_group *Mtx;
 
 	int f_has_strong_generators;
 	strong_generators *Strong_gens;
-	action *A2;
+	actions::action *A2;
 	int vector_space_dimension;
 	int q;
 
@@ -359,7 +361,7 @@ public:
 		// if FALSE, it is the responsibility
 		// of someone else to destroy GFq
 	
-	finite_field *GFq;
+	field_theory::finite_field *GFq;
 	void *data;
 
 	algebra::gl_classes *C; // added Dec 2, 2013
@@ -388,22 +390,22 @@ public:
 	matrix_group();
 	~matrix_group();
 	
-	void init_projective_group(int n, finite_field *F, 
-		int f_semilinear, action *A, int verbose_level);
-	void init_affine_group(int n, finite_field *F, 
-		int f_semilinear, action *A, int verbose_level);
-	void init_general_linear_group(int n, finite_field *F, 
-		int f_semilinear, action *A, int verbose_level);
+	void init_projective_group(int n, field_theory::finite_field *F,
+		int f_semilinear, actions::action *A, int verbose_level);
+	void init_affine_group(int n, field_theory::finite_field *F,
+		int f_semilinear, actions::action *A, int verbose_level);
+	void init_general_linear_group(int n, field_theory::finite_field *F,
+		int f_semilinear, actions::action *A, int verbose_level);
 	void allocate_data(int verbose_level);
 	void free_data(int verbose_level);
 	void setup_page_storage(int page_length_log, int verbose_level);
 	void compute_elt_size(int verbose_level);
-	void init_base(action *A, int verbose_level);
-	void init_base_projective(action *A, int verbose_level);
+	void init_base(actions::action *A, int verbose_level);
+	void init_base_projective(actions::action *A, int verbose_level);
 		// initializes base, base_len, degree,
 		// transversal_length, orbit, orbit_inv
-	void init_base_affine(action *A, int verbose_level);
-	void init_base_general_linear(action *A, int verbose_level);
+	void init_base_affine(actions::action *A, int verbose_level);
+	void init_base_general_linear(actions::action *A, int verbose_level);
 	void init_gl_classes(int verbose_level);
 
 	int GL_element_entry_ij(int *Elt, int i, int j);
@@ -418,7 +420,7 @@ public:
 	void general_linear_action_from_the_right(
 		int *v, int *A, int *vA, int verbose_level);
 	void substitute_surface_equation(int *Elt,
-			int *coeff_in, int *coeff_out, surface_domain *Surf,
+			int *coeff_in, int *coeff_out, algebraic_geometry::surface_domain *Surf,
 			int verbose_level);
 	void GL_one(int *Elt);
 	void GL_one_internal(int *Elt);
@@ -455,7 +457,7 @@ public:
 	void make_element(int *Elt, int *data, int verbose_level);
 	void make_GL_element(int *Elt, int *A, int f);
 	void orthogonal_group_random_generator(
-		action *A, orthogonal *O,
+			actions::action *A, orthogonal *O,
 		int f_siegel, 
 		int f_reflection, 
 		int f_similarity,
@@ -490,7 +492,7 @@ class orbits_on_something {
 
 public:
 
-	action *A;
+	actions::action *A;
 	strong_generators *SG;
 	schreier *Sch;
 
@@ -510,7 +512,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-			action *A,
+			actions::action *A,
 			strong_generators *SG,
 			int f_load_save,
 			std::string &prefix,
@@ -639,11 +641,11 @@ public:
 	std::string label_tex;
 
 	//strong_generators *initial_strong_gens;
-	action *A_initial;
+	actions::action *A_initial;
 
 	int f_has_strong_generators;
 	strong_generators *Strong_gens;
-	action *A2;
+	actions::action *A2;
 
 	int f_has_nice_gens;
 	vector_ge *nice_gens;
@@ -745,7 +747,7 @@ public:
 	void init_data(int page_length_log, int verbose_level);
 	void init_with_base(int degree, 
 		int base_length, int *base, int page_length_log, 
-		action &A, int verbose_level);
+		actions::action &A, int verbose_level);
 	void transversal_rep(int i, int j, int *Elt, int verbose_level);
 	void one(int *Elt);
 	int is_one(int *Elt);
@@ -762,7 +764,7 @@ public:
 	void code_for_make_element(int *Elt, int *data);
 	void print_for_make_element(int *Elt, std::ostream &ost);
 	void print_for_make_element_no_commas(int *Elt, std::ostream &ost);
-	void print_with_action(action *A, int *Elt, std::ostream &ost);
+	void print_with_action(actions::action *A, int *Elt, std::ostream &ost);
 	void make_element(int *Elt, int *data, int verbose_level);
 
 };
@@ -777,7 +779,7 @@ public:
 class permutation_representation {
 
 public:
-	action *A_original;
+	actions::action *A_original;
 	int f_stay_in_the_old_action;
 	int nb_gens;
 	vector_ge *gens; // the original generators in action A_original
@@ -806,7 +808,7 @@ public:
 
 	permutation_representation();
 	~permutation_representation();
-	void init(action *A_original,
+	void init(actions::action *A_original,
 			int f_stay_in_the_old_action,
 			vector_ge *gens,
 			int *Perms, int degree,
@@ -836,7 +838,7 @@ public:
 class schreier {
 
 public:
-	action *A;
+	actions::action *A;
 	int f_images_only;
 	long int degree;
 	vector_ge gens;
@@ -882,7 +884,7 @@ public:
 	int preferred_choice_function_data2;
 
 	schreier();
-	schreier(action *A, int verbose_level);
+	schreier(actions::action *A, int verbose_level);
 	~schreier();
 	void freeself();
 	void delete_images();
@@ -895,7 +897,7 @@ public:
 	void init_images_only(int nb_images,
 			long int degree, int *images, int verbose_level);
 	void images_append(int verbose_level);
-	void init(action *A, int verbose_level);
+	void init(actions::action *A, int verbose_level);
 	void allocate_tables();
 	void init2();
 	void initialize_tables();
@@ -959,7 +961,7 @@ public:
 	void compute_point_orbit_with_limited_depth(
 			int pt, int max_depth, int verbose_level);
 	int sum_up_orbit_lengths();
-	void non_trivial_random_schreier_generator(action *A_original, 
+	void non_trivial_random_schreier_generator(actions::action *A_original,
 			int *Elt, int verbose_level);
 		// computes non trivial random Schreier 
 		// generator into schreier_gen
@@ -986,28 +988,28 @@ public:
 	void get_orbit_in_order(std::vector<int> &Orb,
 		int orbit_idx, int verbose_level);
 	strong_generators *stabilizer_any_point_plus_cosets(
-		action *default_action, 
+			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int pt, vector_ge *&cosets, int verbose_level);
 	strong_generators *stabilizer_any_point(
-		action *default_action, 
+			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order, int pt,
 		int verbose_level);
-	set_and_stabilizer *get_orbit_rep(action *default_action,
+	set_and_stabilizer *get_orbit_rep(actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int orbit_idx, int verbose_level);
-	void get_orbit_rep_to(action *default_action,
+	void get_orbit_rep_to(actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int orbit_idx,
 			set_and_stabilizer *Rep,
 			int verbose_level);
 	strong_generators *stabilizer_orbit_rep(
-		action *default_action, 
+			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx, int verbose_level);
-	void point_stabilizer(action *default_action, 
+	void point_stabilizer(actions::action *default_action,
 			ring_theory::longinteger_object &go,
-		sims *&Stab, int orbit_no, int verbose_level);
+			groups::sims *&Stab, int orbit_no, int verbose_level);
 		// this function allocates a sims structure into Stab.
 	void get_orbit(int orbit_idx, long int *set, int &len,
 		int verbose_level);
@@ -1066,7 +1068,7 @@ public:
 	void print_and_list_orbits_with_original_labels(std::ostream &ost);
 	void print_and_list_orbits_tex(std::ostream &ost);
 	void print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
-			std::ostream &ost, action *default_action, strong_generators *gens,
+			std::ostream &ost, actions::action *default_action, strong_generators *gens,
 			int verbose_level);
 	void make_orbit_trees(std::ostream &ost,
 			std::string &fname_mask, layered_graph_draw_options *Opt,
@@ -1075,7 +1077,7 @@ public:
 	void print_and_list_orbits_of_given_length(std::ostream &ost,
 		int len);
 	void print_and_list_orbits_and_stabilizer(std::ostream &ost,
-		action *default_action, ring_theory::longinteger_object &go,
+			actions::action *default_action, ring_theory::longinteger_object &go,
 		void (*print_point)(std::ostream &ost, int pt, void *data),
 			void *data);
 	void print_and_list_orbits_using_labels(std::ostream &ost,
@@ -1092,25 +1094,25 @@ public:
 	void print_orbit_tex(std::ostream &ost, int orbit_no);
 	void print_orbit_sorted_tex(std::ostream &ost, int orbit_no, int f_truncate, int max_length);
 	void print_and_list_orbit_and_stabilizer_tex(int i,
-		action *default_action,
+			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		std::ostream &ost);
 	void write_orbit_summary(std::string &fname,
-			action *default_action,
+			actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
-		int i, action *default_action,
+		int i, actions::action *default_action,
 		strong_generators *gens, std::ostream &ost);
 	void print_and_list_orbit_tex(int i, std::ostream &ost);
 	void print_and_list_orbits_sorted_by_length_tex(std::ostream &ost);
 	void print_and_list_orbits_and_stabilizer_sorted_by_length(
 			std::ostream &ost, int f_tex,
-		action *default_action,
+			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order);
 	void print_fancy(
 			std::ostream &ost, int f_tex,
-		action *default_action, strong_generators *gens_full_group);
+			actions::action *default_action, strong_generators *gens_full_group);
 	void print_and_list_orbits_sorted_by_length(std::ostream &ost);
 	void print_and_list_orbits_sorted_by_length(std::ostream &ost, int f_tex);
 	void print_orbit_sorted_with_original_labels_tex(std::ostream &ost,
@@ -1181,11 +1183,11 @@ public:
 class schreier_sims {
 
 public:
-	action *GA;
+	actions::action *GA;
 	sims *G;
 
 	int f_interested_in_kernel;
-	action *KA;
+	actions::action *KA;
 	sims *K;
 
 	ring_theory::longinteger_object G_order, K_order, KG_order;
@@ -1214,7 +1216,7 @@ public:
 	int *base_of_choice;
 
 	int f_override_choose_next_base_point_method;
-	int (*choose_next_base_point_method)(action *A, 
+	int (*choose_next_base_point_method)(actions::action *A,
 		int *Elt, int verbose_level); 
 
 	int iteration;
@@ -1223,8 +1225,8 @@ public:
 	~schreier_sims();
 	void null();
 	void freeself();
-	void init(action *A, int verbose_level);
-	void interested_in_kernel(action *KA, int verbose_level);
+	void init(actions::action *A, int verbose_level);
+	void interested_in_kernel(actions::action *KA, int verbose_level);
 	void init_target_group_order(ring_theory::longinteger_object &tgo,
 		int verbose_level);
 	void init_generators(vector_ge *gens, int verbose_level);
@@ -1239,7 +1241,7 @@ public:
 		int base_of_choice_len, int *base_of_choice, 
 		int verbose_level);
 	void init_choose_next_base_point_method(
-		int (*choose_next_base_point_method)(action *A, 
+		int (*choose_next_base_point_method)(actions::action *A,
 		int *Elt, int verbose_level), 
 		int verbose_level);
 	void compute_group_orders();
@@ -1266,7 +1268,7 @@ public:
 class sims {
 
 public:
-	action *A;
+	actions::action *A;
 
 	int my_base_len;
 
@@ -1351,19 +1353,19 @@ public:
 	// sims.cpp:
 	sims();
 	void null();
-	sims(action *A, int verbose_level);
+	sims(actions::action *A, int verbose_level);
 	~sims();
 	void freeself();
 
 	void delete_images();
 	void init_images(int nb_images);
 	void images_append();
-	void init(action *A, int verbose_level);
+	void init(actions::action *A, int verbose_level);
 		// initializes the trivial group 
 		// with the base as given in A
-	void init_cyclic_group_from_generator(action *A, int *Elt, int verbose_level);
+	void init_cyclic_group_from_generator(actions::action *A, int *Elt, int verbose_level);
 	// initializes the cyclic group generated by Elt with the base as given in A
-	void init_without_base(action *A, int verbose_level);
+	void init_without_base(actions::action *A, int verbose_level);
 	void reallocate_base(int old_base_len, int verbose_level);
 	void initialize_table(int i, int verbose_level);
 	void init_trivial_group(int verbose_level);
@@ -1453,7 +1455,7 @@ public:
 		int *tl, int verbose_level);
 	void random_schreier_generator(int *Elt, int verbose_level);
 		// computes random Schreier generator
-	void element_as_permutation(action *A_special, 
+	void element_as_permutation(actions::action *A_special,
 		long int elt_rk, int *perm, int verbose_level);
 	int least_moved_point_at_level(int lvl, int verbose_level);
 	int get_orbit(int i, int j);
@@ -1501,13 +1503,13 @@ public:
 	void build_up_group_random_process(sims *K, sims *old_G,
 			ring_theory::longinteger_object &target_go,
 		int f_override_choose_next_base_point,
-		int (*choose_next_base_point_method)(action *A,
+		int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
 	void build_up_group_from_generators(sims *K, vector_ge *gens,
 		int f_target_go, ring_theory::longinteger_object *target_go,
 		int f_override_choose_next_base_point,
-		int (*choose_next_base_point_method)(action *A,
+		int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
 	int closure_group(int nb_times, int verbose_level);
@@ -1557,7 +1559,7 @@ public:
 		int *Elt_gens, int nb_gens, int subgroup_index,
 		vector_ge &SG, int *tl,
 		int verbose_level);
-	void point_stabilizer_stabchain_with_action(action *A2,
+	void point_stabilizer_stabchain_with_action(actions::action *A2,
 		sims &S, int pt, int verbose_level);
 		// first computes the orbit of the point pt
 		// in action A2 under the generators
@@ -1568,18 +1570,18 @@ public:
 		int pt, int verbose_level);
 		// computes strong generating set
 		// for the stabilizer of point pt
-	void point_stabilizer_with_action(action *A2,
+	void point_stabilizer_with_action(actions::action *A2,
 		vector_ge &SG, int *tl, int pt, int verbose_level);
 		// computes strong generating set for
 		// the stabilizer of point pt in action A2
-	void conjugate(action *A, sims *old_G, int *Elt,
+	void conjugate(actions::action *A, sims *old_G, int *Elt,
 		int f_overshooting_OK, int verbose_level);
 		// Elt * g * Elt^{-1} where g is in old_G
-	int test_if_in_set_stabilizer(action *A,
+	int test_if_in_set_stabilizer(actions::action *A,
 		long int *set, int size, int verbose_level);
 	int test_if_subgroup(sims *old_G, int verbose_level);
 	int find_element_with_exactly_n_fixpoints_in_given_action(
-			int *Elt, int nb_fixpoints, action *A_given, int verbose_level);
+			int *Elt, int nb_fixpoints, actions::action *A_given, int verbose_level);
 	void table_of_group_elements_in_data_form(int *&Table,
 		int &len, int &sz, int verbose_level);
 	void regular_representation(int *Elt, int *perm,
@@ -1608,7 +1610,7 @@ public:
 		int verbose_level);
 	void create_group_table(int *&Table, long int &n, int verbose_level);
 	void compute_conjugacy_classes(
-		action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
+			actions::action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
 		strong_generators *&SG, int &nb_classes,
 		int *&class_size, int *&class_rep,
 		int verbose_level);
@@ -1645,7 +1647,7 @@ public:
 	void print_generators_tex(std::ostream &ost);
 	void print_generators_as_permutations();
 	void print_generators_as_permutations_override_action(
-		action *A);
+			actions::action *A);
 	void print_basic_orbits();
 	void print_basic_orbit(int i);
 	void print_generator_depth_and_perm();
@@ -1660,11 +1662,11 @@ public:
 	void print_all_group_elements_with_permutations_tex(std::ostream &ost);
 	void print_all_group_elements_as_permutations();
 	void print_all_group_elements_as_permutations_in_special_action(
-		action *A_special);
+			actions::action *A_special);
 	void print_all_transversal_elements();
 	void save_list_of_elements(char *fname,
 		int verbose_level);
-	void read_list_of_elements(action *A,
+	void read_list_of_elements(actions::action *A,
 		char *fname, int verbose_level);
 	void write_as_magma_permutation_group(std::string &fname_base,
 		vector_ge *gens, int verbose_level);
@@ -1693,7 +1695,7 @@ void choose_random_generator_derived_group(sims *G, int *Elt,
 class strong_generators {
 public:
 
-	action *A;
+	actions::action *A;
 	int *tl;
 	vector_ge *gens;
 
@@ -1702,43 +1704,43 @@ public:
 	void null();
 	void freeself();
 	void swap_with(strong_generators *SG);
-	void init(action *A);
-	void init(action *A, int verbose_level);
-	void init_from_sims(sims *S, int verbose_level);
-	void init_from_ascii_coding(action *A, 
+	void init(actions::action *A);
+	void init(actions::action *A, int verbose_level);
+	void init_from_sims(groups::sims *S, int verbose_level);
+	void init_from_ascii_coding(actions::action *A,
 		char *ascii_coding, int verbose_level);
 	strong_generators *create_copy();
 	void init_copy(strong_generators *S, 
 		int verbose_level);
-	void init_by_hdl_and_with_tl(action *A,
+	void init_by_hdl_and_with_tl(actions::action *A,
 			std::vector<int> &gen_handle,
 			std::vector<int> &tl,
 			int verbose_level);
-	void init_by_hdl(action *A, int *gen_hdl, 
+	void init_by_hdl(actions::action *A, int *gen_hdl,
 		int nb_gen, int verbose_level);
-	void init_from_permutation_representation(action *A, 
+	void init_from_permutation_representation(actions::action *A,
 			sims *parent_group_S, int *data,
 			int nb_elements, long int group_order, vector_ge *&nice_gens,
 			int verbose_level);
-	void init_from_data(action *A, int *data, 
+	void init_from_data(actions::action *A, int *data,
 		int nb_elements, int elt_size, 
 		int *transversal_length, 
 		vector_ge *&nice_gens,
 		int verbose_level);
-	void init_from_data_with_target_go_ascii(action *A, 
+	void init_from_data_with_target_go_ascii(actions::action *A,
 		int *data, 
 		int nb_elements, int elt_size, 
 		const char *ascii_target_go,
 		vector_ge *&nice_gens,
 		int verbose_level);
-	void init_from_data_with_target_go(action *A, 
+	void init_from_data_with_target_go(actions::action *A,
 		int *data_gens, 
 		int data_gens_size, int nb_gens, 
 		ring_theory::longinteger_object &target_go,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_go(
-		action *A, std::string &generators_data,
+			actions::action *A, std::string &generators_data,
 		std::string &go_text,
 		int verbose_level);
 	void init_point_stabilizer_of_arbitrary_point_through_schreier(
@@ -1765,19 +1767,19 @@ public:
 		const char *subgroup_order_text, sims *S, 
 		int *&subgroup_gens_idx, int &nb_subgroup_gens, 
 		int verbose_level);
-	void init_subgroup(action *A, int *subgroup_gens_idx, 
+	void init_subgroup(actions::action *A, int *subgroup_gens_idx,
 		int nb_subgroup_gens, 
 		const char *subgroup_order_text, 
 		sims *S, 
 		int verbose_level);
-	void init_subgroup_by_generators(action *A,
+	void init_subgroup_by_generators(actions::action *A,
 		int nb_subgroup_gens,
 		int *subgroup_gens,
 		std::string &subgroup_order_text,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	sims *create_sims(int verbose_level);
-	sims *create_sims_in_different_action(action *A_given, 
+	sims *create_sims_in_different_action(actions::action *A_given,
 		int verbose_level);
 	void add_generators(vector_ge *coset_reps, 
 		int group_index, int verbose_level);
@@ -1790,32 +1792,32 @@ public:
 	void print_generators_in_source_code_to_file(
 	const char *fname);
 	void print_generators_even_odd();
-	void print_generators_MAGMA(action *A, std::ostream &ost);
-	void export_magma(action *A, std::ostream &ost, int verbose_level);
+	void print_generators_MAGMA(actions::action *A, std::ostream &ost);
+	void export_magma(actions::action *A, std::ostream &ost, int verbose_level);
 	void canonical_image_GAP(std::string &input_set_text, std::ostream &ost);
 	void print_generators_gap(std::ostream &ost);
-	void print_generators_gap_in_different_action(std::ostream &ost, action *A2);
+	void print_generators_gap_in_different_action(std::ostream &ost, actions::action *A2);
 	void print_generators_compact(std::ostream &ost);
 	void print_generators(std::ostream &ost);
 	void print_generators_in_latex_individually(std::ostream &ost);
 	void print_generators_tex();
 	void print_generators_tex(std::ostream &ost);
-	void print_generators_in_different_action_tex(std::ostream &ost, action *A2);
+	void print_generators_in_different_action_tex(std::ostream &ost, actions::action *A2);
 	void print_generators_tex_with_print_point_function(
-			action *A,
+			actions::action *A,
 			std::ostream &ost,
 			void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 			void *point_label_data);
 	void print_generators_for_make_element(std::ostream &ost);
 	void print_generators_as_permutations();
-	void print_generators_as_permutations_tex(std::ostream &ost, action *A2);
-	void print_with_given_action(std::ostream &ost, action *A2);
+	void print_generators_as_permutations_tex(std::ostream &ost, actions::action *A2);
+	void print_with_given_action(std::ostream &ost, actions::action *A2);
 	void print_elements_ost(std::ostream &ost);
 	void print_elements_with_special_orthogonal_action_ost(std::ostream &ost);
-	void print_elements_with_given_action(std::ostream &ost, action *A2);
+	void print_elements_with_given_action(std::ostream &ost, actions::action *A2);
 	void print_elements_latex_ost(std::ostream &ost);
 	void print_elements_latex_ost_with_print_point_function(
-			action *A,
+			actions::action *A,
 			std::ostream &ost,
 			void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 			void *point_label_data);
@@ -1825,60 +1827,60 @@ public:
 		strong_generators *gens_subgroup, 
 		long int *&Subgroup_elements_by_index,
 		long int &sz_subgroup, int verbose_level);
-	void compute_schreier_with_given_action(action *A_given, 
+	void compute_schreier_with_given_action(actions::action *A_given,
 		schreier *&Sch, int verbose_level);
 	void compute_schreier_with_given_action_on_a_given_set(
-		action *A_given, 
+			actions::action *A_given,
 		schreier *&Sch, long int *set, int len, int verbose_level);
 	void orbits_on_points(int &nb_orbits, int *&orbit_reps, 
 		int verbose_level);
-	void orbits_on_points_with_given_action(action *A_given, 
+	void orbits_on_points_with_given_action(actions::action *A_given,
 		int &nb_orbits, int *&orbit_reps, int verbose_level);
-	schreier *orbits_on_points_schreier(action *A_given, 
+	schreier *orbits_on_points_schreier(actions::action *A_given,
 		int verbose_level);
-	schreier *orbit_of_one_point_schreier(action *A_given, 
+	schreier *orbit_of_one_point_schreier(actions::action *A_given,
 		int pt, int verbose_level);
-	void orbits_light(action *A_given, 
+	void orbits_light(actions::action *A_given,
 		int *&Orbit_reps, int *&Orbit_lengths, int &nb_orbits, 
 		int **&Pts_per_generator, int *&Nb_per_generator, 
 		int verbose_level);
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
-	void read_from_file_binary(action *A, std::ifstream &fp,
+	void read_from_file_binary(actions::action *A, std::ifstream &fp,
 		int verbose_level);
 	void write_file(std::string &fname, int verbose_level);
-	void read_file(action *A, std::string &fname, int verbose_level);
+	void read_file(actions::action *A, std::string &fname, int verbose_level);
 	void compute_ascii_coding(char *&ascii_coding, int verbose_level);
 	void decode_ascii_coding(char *ascii_coding, int verbose_level);
 	void export_permutation_group_to_magma(std::string &fname,
-			action *A2, int verbose_level);
+			actions::action *A2, int verbose_level);
 	void export_permutation_group_to_GAP(std::string &fname,
-			action *A2, int verbose_level);
-	void compute_and_print_orbits_on_a_given_set(action *A_given,
+			actions::action *A2, int verbose_level);
+	void compute_and_print_orbits_on_a_given_set(actions::action *A_given,
 		long int *set, int len, int verbose_level);
-	void compute_and_print_orbits(action *A_given, 
+	void compute_and_print_orbits(actions::action *A_given,
 		int verbose_level);
 	int test_if_normalizing(sims *S, int verbose_level);
-	void test_if_set_is_invariant_under_given_action(action *A_given, 
+	void test_if_set_is_invariant_under_given_action(actions::action *A_given,
 		long int *set, int set_sz, int verbose_level);
 	strong_generators *point_stabilizer(int pt, int verbose_level);
 	strong_generators *find_cyclic_subgroup_with_exactly_n_fixpoints(
-			int nb_fixpoints, action *A_given, int verbose_level);
-	void make_element_which_moves_a_point_from_A_to_B(action *A_given, 
+			int nb_fixpoints, actions::action *A_given, int verbose_level);
+	void make_element_which_moves_a_point_from_A_to_B(actions::action *A_given,
 		int pt_A, int pt_B, int *Elt, int verbose_level);
 	void export_group_to_magma_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
-			action *A2,
+			actions::action *A2,
 			int verbose_level);
 	void export_group_to_GAP_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
-			action *A2,
+			actions::action *A2,
 			int verbose_level);
 	void export_group_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
-			action *A2,
+			actions::action *A2,
 			int verbose_level);
 	void report_fixed_objects_in_P3(
 			std::ostream &ost,
@@ -1888,14 +1890,14 @@ public:
 	void get_gens_data(int *&data, int &sz, int verbose_level);
 	void get_gens_data_as_string_with_quotes(std::string &str, int verbose_level);
 	void export_to_orbiter_as_bsgs(
-			action *A2,
+			actions::action *A2,
 			std::string &fname, std::string &label, std::string &label_tex,
 			int verbose_level);
 
 
 	// strong_generators_groups.cpp
-	void init_linear_group_from_scratch(action *&A, 
-		finite_field *F, int n, 
+	void init_linear_group_from_scratch(actions::action *&A,
+			field_theory::finite_field *F, int n,
 		linear_group_description *Descr,
 		vector_ge *&nice_gens,
 		int verbose_level);
@@ -1903,100 +1905,100 @@ public:
 	void projectivity_subgroup(sims *S, int verbose_level);
 	void even_subgroup(int verbose_level);
 	void Sylow_subgroup(sims *S, int p, int verbose_level);
-	void init_single(action *A, int *Elt, int verbose_level);
-	void init_single_with_target_go(action *A,
+	void init_single(actions::action *A, int *Elt, int verbose_level);
+	void init_single_with_target_go(actions::action *A,
 			int *Elt, int target_go, int verbose_level);
-	void init_trivial_group(action *A, int verbose_level);
-	void generators_for_the_monomial_group(action *A, 
+	void init_trivial_group(actions::action *A, int verbose_level);
+	void generators_for_the_monomial_group(actions::action *A,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_the_diagonal_group(action *A, 
+	void generators_for_the_diagonal_group(actions::action *A,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_the_singer_cycle(action *A, 
+	void generators_for_the_singer_cycle(actions::action *A,
 		matrix_group *Mtx, int power_of_singer,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void generators_for_the_singer_cycle_and_the_Frobenius(
-		action *A,
+			actions::action *A,
 		matrix_group *Mtx, int power_of_singer,
 		vector_ge *&nice_gens,
 		int verbose_level);
-	void generators_for_the_null_polarity_group(action *A, 
+	void generators_for_the_null_polarity_group(actions::action *A,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_symplectic_group(action *A, 
+	void generators_for_symplectic_group(actions::action *A,
 		matrix_group *Mtx, int verbose_level);
-	void init_centralizer_of_matrix(action *A, int *Mtx, 
+	void init_centralizer_of_matrix(actions::action *A, int *Mtx,
 		int verbose_level);
-	void init_centralizer_of_matrix_general_linear(action *A_projective, 
-		action *A_general_linear, int *Mtx, 
+	void init_centralizer_of_matrix_general_linear(actions::action *A_projective,
+			actions::action *A_general_linear, int *Mtx,
 		int verbose_level);
-	void field_reduction(action *Aq, int n, int s, 
-		finite_field *Fq, int verbose_level);
+	void field_reduction(actions::action *Aq, int n, int s,
+			field_theory::finite_field *Fq, int verbose_level);
 	void generators_for_translation_plane_in_andre_model(
-		action *A_PGL_n1_q, action *A_PGL_n_q, 
+			actions::action *A_PGL_n1_q, actions::action *A_PGL_n_q,
 		matrix_group *Mtx_n1, matrix_group *Mtx_n, 
 		vector_ge *spread_stab_gens, 
 		ring_theory::longinteger_object &spread_stab_go,
 		int verbose_level);
 	void generators_for_the_stabilizer_of_two_components(
-		action *A_PGL_n_q, 
+			actions::action *A_PGL_n_q,
 		matrix_group *Mtx, int verbose_level);
-	void regulus_stabilizer(action *A_PGL_n_q, 
+	void regulus_stabilizer(actions::action *A_PGL_n_q,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_the_borel_subgroup_upper(action *A_linear, 
+	void generators_for_the_borel_subgroup_upper(actions::action *A_linear,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_the_borel_subgroup_lower(action *A_linear, 
+	void generators_for_the_borel_subgroup_lower(actions::action *A_linear,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_the_identity_subgroup(action *A_linear, 
+	void generators_for_the_identity_subgroup(actions::action *A_linear,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_parabolic_subgroup(action *A_PGL_n_q, 
+	void generators_for_parabolic_subgroup(actions::action *A_PGL_n_q,
 		matrix_group *Mtx, int k, int verbose_level);
 	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
-		action *A_PGL_4_q, 
+			actions::action *A_PGL_4_q,
 		matrix_group *Mtx, int verbose_level);
 	void generators_for_stabilizer_of_triangle_in_PGL4(
-		action *A_PGL_4_q, 
+			actions::action *A_PGL_4_q,
 		matrix_group *Mtx, int verbose_level);
-	void generators_for_the_orthogonal_group(action *A, 
-		finite_field *F, int n, 
+	void generators_for_the_orthogonal_group(actions::action *A,
+			field_theory::finite_field *F, int n,
 		int epsilon, 
 		int f_semilinear, 
 		int verbose_level);
 	void stabilizer_of_cubic_surface_from_catalogue(
-		action *A, 
-		finite_field *F, int iso, 
+			actions::action *A,
+		field_theory::finite_field *F, int iso,
 		int verbose_level);
 	void stabilizer_of_quartic_curve_from_catalogue(
-		action *A,
-		finite_field *F, int iso,
+			actions::action *A,
+		field_theory::finite_field *F, int iso,
 		int verbose_level);
 	void stabilizer_of_Eckardt_surface(
-		action *A, 
-		finite_field *F, int f_with_normalizer, int f_semilinear, 
+			actions::action *A,
+		field_theory::finite_field *F, int f_with_normalizer, int f_semilinear,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void stabilizer_of_G13_surface(
-		action *A,
-		finite_field *F, int a,
+			actions::action *A,
+		field_theory::finite_field *F, int a,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void stabilizer_of_F13_surface(
-		action *A,
-		finite_field *F, int a,
+			actions::action *A,
+		field_theory::finite_field *F, int a,
 		vector_ge *&nice_gens,
 		int verbose_level);
-	void BLT_set_from_catalogue_stabilizer(action *A, 
-		finite_field *F, int iso, 
+	void BLT_set_from_catalogue_stabilizer(actions::action *A,
+			field_theory::finite_field *F, int iso,
 		int verbose_level);
-	void stabilizer_of_spread_from_catalogue(action *A, 
+	void stabilizer_of_spread_from_catalogue(actions::action *A,
 		int q, int k, int iso, 
 		int verbose_level);
 	void stabilizer_of_pencil_of_conics(
-		action *A,
-		finite_field *F,
+			actions::action *A,
+		field_theory::finite_field *F,
 		int verbose_level);
 	void Janko1(
-		action *A,
-		finite_field *F,
+			actions::action *A,
+		field_theory::finite_field *F,
 		int verbose_level);
 	void Hall_reflection(
 		int nb_pairs, int &degree, int verbose_level);
@@ -2007,12 +2009,12 @@ public:
 		projective_space *P, int line1, int line2,
 		int verbose_level);
 	void exterior_square(
-			action *A_detached,
+			actions::action *A_detached,
 			strong_generators *SG_original,
 			vector_ge *&nice_gens,
 			int verbose_level);
 	void diagonally_repeat(
-			action *An,
+			actions::action *An,
 			strong_generators *Sn,
 			int verbose_level);
 
@@ -2026,7 +2028,7 @@ public:
 
 class subgroup {
 public:
-	action *A;
+	actions::action *A;
 	int *Elements;
 	long int group_order;
 	int *gens;
@@ -2082,8 +2084,8 @@ class wreath_product {
 
 public:
 	matrix_group *M;
-	action *A_mtx;
-	finite_field *F;
+	actions::action *A_mtx;
+	field_theory::finite_field *F;
 	int q;
 	int nb_factors;
 
@@ -2157,7 +2159,7 @@ public:
 	void null();
 	void freeself();
 	void init_tensor_wreath_product(matrix_group *M,
-			action *A_mtx, int nb_factors,
+			actions::action *A_mtx, int nb_factors,
 			int verbose_level);
 	void compute_tensor_ranks(int verbose_level);
 	void unrank_point(long int a, int *v, int verbose_level);
@@ -2207,7 +2209,7 @@ public:
 	void report(std::ostream &ost, int verbose_level);
 	void compute_permutations_and_write_to_file(
 			strong_generators* SG,
-			action* A,
+			actions::action* A,
 			int*& result,
 			int &nb_gens, int &degree,
 			int nb_factors,
@@ -2216,14 +2218,14 @@ public:
 	int test_if_file_exists(int nb_factors, int h, int b);
 	void orbits_using_files_and_union_find(
 			strong_generators* SG,
-			action* A,
+			actions::action* A,
 			int*& result,
 			int &nb_gens, int &degree,
 			int nb_factors,
 			int verbosity);
 	void orbits_restricted(
 			strong_generators* SG,
-			action* A,
+			actions::action* A,
 			int*& result,
 			int &nb_gens, int &degree,
 			int nb_factors,
@@ -2231,7 +2233,7 @@ public:
 			int verbose_level);
 	void orbits_restricted_compute(
 			strong_generators* SG,
-			action* A,
+			actions::action* A,
 			int*& result,
 			int &nb_gens, int &degree,
 			int nb_factors,
@@ -2239,7 +2241,7 @@ public:
 			int verbose_level);
 };
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_GROUPS_GROUPS_H_ */

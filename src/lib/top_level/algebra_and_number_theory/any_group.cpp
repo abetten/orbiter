@@ -43,7 +43,7 @@ any_group::~any_group()
 }
 
 
-void any_group::init_linear_group(linear_group *LG, int verbose_level)
+void any_group::init_linear_group(groups::linear_group *LG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -79,7 +79,7 @@ void any_group::init_linear_group(linear_group *LG, int verbose_level)
 	}
 }
 
-void any_group::init_permutation_group(permutation_group_create *PGC, int verbose_level)
+void any_group::init_permutation_group(groups::permutation_group_create *PGC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -190,7 +190,7 @@ void any_group::create_latex_report(
 	}
 }
 
-void any_group::do_export_orbiter(action *A2, int verbose_level)
+void any_group::do_export_orbiter(actions::action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -294,7 +294,7 @@ void any_group::do_export_magma(int verbose_level)
 	fname.append("_generators.magma");
 	{
 		ofstream fp(fname);
-		strong_generators *SG;
+		groups::strong_generators *SG;
 
 		SG = get_strong_generators();
 		SG->export_magma(LG->A_linear, fp, verbose_level);
@@ -324,7 +324,7 @@ void any_group::do_canonical_image_GAP(std::string &input_set_text, int verbose_
 	fname.append("_canonical_image.gap");
 	{
 		ofstream ost(fname);
-		strong_generators *SG;
+		groups::strong_generators *SG;
 
 		SG = get_strong_generators();
 		SG->canonical_image_GAP(input_set_text, ost);
@@ -393,9 +393,9 @@ void any_group::normalizer(int verbose_level)
 		cout << "any_group::normalizer" << endl;
 	}
 	string fname_magma_prefix;
-	sims *G;
-	sims *H;
-	strong_generators *gens_N;
+	groups::sims *G;
+	groups::sims *H;
+	groups::strong_generators *gens_N;
 	ring_theory::longinteger_object N_order;
 	ring_theory::longinteger_object G_order;
 	ring_theory::longinteger_object H_order;
@@ -508,8 +508,8 @@ void any_group::centralizer(
 	}
 
 	algebra_global_with_action Algebra;
-	sims *S;
-	strong_generators *SG;
+	groups::sims *S;
+	groups::strong_generators *SG;
 
 	SG = get_strong_generators();
 
@@ -547,8 +547,8 @@ void any_group::normalizer_of_cyclic_subgroup(
 	}
 
 	algebra_global_with_action Algebra;
-	sims *S;
-	strong_generators *SG;
+	groups::sims *S;
+	groups::strong_generators *SG;
 
 	SG = get_strong_generators();
 	S = SG->create_sims(verbose_level);
@@ -585,14 +585,14 @@ void any_group::do_find_subgroups(
 	}
 
 	algebra_global_with_action Algebra;
-	sims *S;
-	strong_generators *SG;
+	groups::sims *S;
+	groups::strong_generators *SG;
 
 	SG = get_strong_generators();
 
 	int nb_subgroups;
-	strong_generators *H_gens;
-	strong_generators *N_gens;
+	groups::strong_generators *H_gens;
+	groups::strong_generators *N_gens;
 
 
 	S = SG->create_sims(verbose_level);
@@ -669,12 +669,12 @@ void any_group::print_elements(int verbose_level)
 		cout << "any_group::print_elements" << endl;
 	}
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 
 	SG = get_strong_generators();
 
 
-	sims *H;
+	groups::sims *H;
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = SG->create_sims(verbose_level);
@@ -719,12 +719,12 @@ void any_group::print_elements_tex(
 		cout << "any_group::print_elements_tex" << endl;
 	}
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 
 
 	SG = get_strong_generators();
 
-	sims *H;
+	groups::sims *H;
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = SG->create_sims(verbose_level);
@@ -774,12 +774,12 @@ void any_group::order_of_products_of_elements(
 		cout << "any_group::order_of_products_of_elements" << endl;
 	}
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 
 
 	SG = get_strong_generators();
 
-	sims *H;
+	groups::sims *H;
 
 	H = SG->create_sims(verbose_level);
 
@@ -1021,14 +1021,14 @@ void any_group::element_rank(std::string &elt_data, int verbose_level)
 		cout << "any_group::element_rank" << endl;
 	}
 
-	action *A1;
+	actions::action *A1;
 
 	A1 = A;
 
-	sims *H;
+	groups::sims *H;
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	strong_generators *SG;
+	groups::strong_generators *SG;
 
 	SG = get_strong_generators();
 	H = SG->create_sims(verbose_level);
@@ -1078,12 +1078,12 @@ void any_group::element_unrank(std::string &rank_string, int verbose_level)
 		cout << "any_group::element_unrank" << endl;
 	}
 
-	action *A1;
+	actions::action *A1;
 
 	A1 = A;
 
-	sims *H;
-	strong_generators *SG;
+	groups::sims *H;
+	groups::strong_generators *SG;
 
 	SG = get_strong_generators();
 
@@ -1179,7 +1179,7 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 	cout << endl;
 
 
-	action *A_conj;
+	actions::action *A_conj;
 
 	A_conj = A->create_induced_action_by_conjugation(
 			Subgroup_sims /*Base_group*/, FALSE /* f_ownership */,
@@ -1324,7 +1324,7 @@ void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
 					M[i * n + first_column + j];
 		}
 	}
-	action *A_on_sets;
+	actions::action *A_on_sets;
 	int set_size;
 
 	set_size = number_of_columns;
@@ -1336,7 +1336,7 @@ void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
 			set_size, Table,
 			verbose_level);
 
-	schreier *Sch;
+	groups::schreier *Sch;
 	int first, a;
 
 	if (f_v) {
@@ -1450,8 +1450,8 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 	if (f_v) {
 		cout << "any_group::orbit_of" << endl;
 	}
-	schreier *Sch;
-	Sch = NEW_OBJECT(schreier);
+	groups::schreier *Sch;
+	Sch = NEW_OBJECT(groups::schreier);
 
 	cout << "computing orbit of point " << point_idx << ":" << endl;
 
@@ -1481,7 +1481,7 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 			fname_tree_mask,
 			verbose_level - 1);
 
-	strong_generators *SG_stab;
+	groups::strong_generators *SG_stab;
 	ring_theory::longinteger_object full_group_order;
 
 	LG->Strong_gens->group_order(full_group_order);
@@ -1496,7 +1496,7 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 	SG_stab->print_generators_tex();
 
 
-	schreier *shallow_tree;
+	groups::schreier *shallow_tree;
 
 	cout << "computing shallow Schreier tree:" << endl;
 
@@ -1528,7 +1528,7 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 	}
 }
 
-void any_group::orbits_on_points(orbits_on_something *&Orb, int verbose_level)
+void any_group::orbits_on_points(groups::orbits_on_something *&Orb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1807,7 +1807,7 @@ void any_group::do_conjugacy_class_of_element(
 		//exit(1);
 
 		{
-			sims *S;
+			groups::sims *S;
 
 			S = LG->Strong_gens->create_sims(verbose_level);
 
@@ -1821,7 +1821,7 @@ void any_group::do_conjugacy_class_of_element(
 		}
 
 	}
-	sims *S;
+	groups::sims *S;
 
 	S = A->Sims;
 
@@ -1839,7 +1839,7 @@ void any_group::do_conjugacy_class_of_element(
 	}
 
 
-	action A_conj;
+	actions::action A_conj;
 	if (f_v) {
 		cout << "any_group::do_conjugacy_class_of_element "
 				"before A_conj.induced_action_by_conjugation" << endl;
@@ -1976,7 +1976,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 
 
-	sims *S;
+	groups::sims *S;
 
 	S = A->Sims;
 
@@ -2282,10 +2282,10 @@ void any_group::create_latex_report_for_modified_group(
 	}
 }
 
-strong_generators *any_group::get_strong_generators()
+groups::strong_generators *any_group::get_strong_generators()
 {
 	int f_v = FALSE;
-	strong_generators *SG;
+	groups::strong_generators *SG;
 
 	if (Subgroup_gens) {
 		if (f_v) {

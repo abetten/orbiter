@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 permutation_group_create::permutation_group_create()
 {
@@ -66,7 +67,7 @@ void permutation_group_create::permutation_group_init(
 			cout << "permutation_group_create::permutation_group_init initializing symmetric_group_t" << endl;
 		}
 
-		A_initial = NEW_OBJECT(action);
+		A_initial = NEW_OBJECT(actions::action);
 		int f_no_base = FALSE;
 
 		A_initial->init_symmetric_group(Descr->degree, f_no_base, verbose_level);
@@ -86,7 +87,7 @@ void permutation_group_create::permutation_group_init(
 
 	else if (Descr->type == bsgs_t) {
 
-		A_initial = NEW_OBJECT(action);
+		A_initial = NEW_OBJECT(actions::action);
 
 		ring_theory::longinteger_object target_go;
 		long int *given_base;
@@ -270,6 +271,6 @@ void permutation_group_create::init_subgroup_by_generators(
 
 
 
-}}
+}}}
 
 

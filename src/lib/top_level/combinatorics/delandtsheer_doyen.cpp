@@ -237,11 +237,11 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	Orbiter->Int_vec->zero(col_sum, Ysize);
 
 
-	M1 = NEW_OBJECT(matrix_group);
-	M2 = NEW_OBJECT(matrix_group);
+	M1 = NEW_OBJECT(groups::matrix_group);
+	M2 = NEW_OBJECT(groups::matrix_group);
 
-	F1 = NEW_OBJECT(finite_field);
-	F2 = NEW_OBJECT(finite_field);
+	F1 = NEW_OBJECT(field_theory::finite_field);
+	F2 = NEW_OBJECT(field_theory::finite_field);
 
 
 
@@ -296,7 +296,7 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	}
 
 
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
 	if (Descr->f_subgroup) {
 
@@ -800,7 +800,8 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 }
 
 
-void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens, int verbose_level)
+void delandtsheer_doyen::compute_orbits_on_pairs(
+		groups::strong_generators *Strong_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -915,15 +916,15 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 	}
 }
 
-strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verbose_level)
+groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::scan_subgroup_generators" << endl;
 	}
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	int *data;
 	int sz;
 	int nb_gens;
@@ -960,12 +961,12 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_monomial_group" << endl;
 	}
-	strong_generators *SG1;
-	strong_generators *SG2;
-	strong_generators *SG3;
+	groups::strong_generators *SG1;
+	groups::strong_generators *SG2;
+	groups::strong_generators *SG3;
 
-	SG1 = NEW_OBJECT(strong_generators);
-	SG2 = NEW_OBJECT(strong_generators);
+	SG1 = NEW_OBJECT(groups::strong_generators);
+	SG2 = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "before generators_for_the_monomial_group "
@@ -1009,7 +1010,7 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 
 	cout << "The group has order " << go << endl;
 
-	action *Ar;
+	actions::action *Ar;
 	long int *points;
 	int nb_points;
 	int h;
@@ -1042,8 +1043,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_action" << endl;
 	}
-	A1 = NEW_OBJECT(action);
-	A2 = NEW_OBJECT(action);
+	A1 = NEW_OBJECT(actions::action);
+	A2 = NEW_OBJECT(actions::action);
 
 	if (Descr->q1 == 1) {
 
@@ -1109,7 +1110,7 @@ void delandtsheer_doyen::create_action(int verbose_level)
 				"AG.init_direct_product_group_and_restrict" << endl;
 	}
 
-	action_global AG;
+	actions::action_global AG;
 
 	A = AG.init_direct_product_group_and_restrict(M1, M2,
 			verbose_level);

@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
 
 void schreier::latex(std::string &fname)
 {
@@ -209,7 +211,7 @@ void schreier::print(std::ostream &ost)
 }
 
 void schreier::print_and_list_orbits_and_stabilizer(std::ostream &ost,
-	action *default_action, ring_theory::longinteger_object &go,
+		actions::action *default_action, ring_theory::longinteger_object &go,
 	void (*print_point)(ostream &ost, int pt, void *data),
 	void *data)
 {
@@ -297,7 +299,7 @@ void schreier::print_and_list_orbits_tex(std::ostream &ost)
 }
 
 void schreier::print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
-		std::ostream &ost, action *default_action, strong_generators *gens,
+		std::ostream &ost, actions::action *default_action, strong_generators *gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -388,7 +390,7 @@ void schreier::print_and_list_orbit_tex(int i, std::ostream &ost)
 }
 
 void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
-	action *default_action,
+		actions::action *default_action,
 	ring_theory::longinteger_object &full_group_order, std::ostream &ost)
 {
 	ost << " Orbit " << i << " / " << nb_orbits << " : ";
@@ -406,7 +408,7 @@ void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
 }
 
 void schreier::write_orbit_summary(std::string &fname,
-		action *default_action,
+		actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
@@ -462,7 +464,7 @@ void schreier::write_orbit_summary(std::string &fname,
 }
 
 void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
-	int i, action *default_action,
+	int i, actions::action *default_action,
 	strong_generators *gens, std::ostream &ost)
 {
 	data_structures::sorting Sorting;
@@ -583,7 +585,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 
 void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	std::ostream &ost, int f_tex,
-	action *default_action,
+	actions::action *default_action,
 	ring_theory::longinteger_object &full_group_order)
 {
 	int i, h;
@@ -641,7 +643,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 
 void schreier::print_fancy(
 	std::ostream &ost, int f_tex,
-	action *default_action,
+	actions::action *default_action,
 	strong_generators *gens_full_group)
 {
 	int i, h;
@@ -2030,4 +2032,5 @@ void schreier::list_elements_as_permutations_vertically(std::ostream &ost)
 }
 
 
-}}
+}}}
+

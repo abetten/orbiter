@@ -30,7 +30,7 @@ representation_theory_domain::~representation_theory_domain()
 
 }
 
-void representation_theory_domain::init(finite_field *F, int verbose_level)
+void representation_theory_domain::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

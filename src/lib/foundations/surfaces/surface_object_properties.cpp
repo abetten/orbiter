@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 #define MAX_NUMBER_OF_PLANES_FOR_PLANE_TYPE 100000
@@ -3449,4 +3450,5 @@ void surface_object_properties::create_summary_file(std::string &fname,
 }
 
 
-}}
+}}}
+

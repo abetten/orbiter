@@ -994,11 +994,11 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_Paley_graph q must be congruent to 1 modulo 4" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	int *f_is_square;
 	int i, j, a;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 	f_is_square = NEW_int(q);
@@ -1040,13 +1040,13 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_Schlaefli_graph" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	grassmann *Gr;
 	int n = 4;
 	int k = 2;
 
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 	Gr = NEW_OBJECT(grassmann);
@@ -1071,13 +1071,13 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_Winnie_Li_graph" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	int i, j, h, u, p, k, co_index, q1, relative_norm;
 	int *N1;
 	number_theory::number_theory_domain NT;
 
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 	p = F->p;
 
@@ -1168,7 +1168,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	}
 
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	grassmann *Gr;
 	int i, j, rr;
 	int *M1; // [k * n]
@@ -1176,7 +1176,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	int *M; // [2 * k * n]
 	combinatorics::combinatorics_domain Combi;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 
@@ -1234,7 +1234,7 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	int i, j;
 	int n, a, nb_e, nb_inc;
 	int c1 = 0, c2 = 0, c3 = 0;
@@ -1261,7 +1261,7 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 				"number of points = " << N << endl;
 	}
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 	F->print();

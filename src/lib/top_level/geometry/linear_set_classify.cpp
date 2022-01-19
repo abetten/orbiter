@@ -237,19 +237,19 @@ void linear_set_classify::init(
 		f_semilinear = TRUE;
 	}
 
-	Fq = NEW_OBJECT(finite_field);
+	Fq = NEW_OBJECT(field_theory::finite_field);
 	if (f_v) {
 		cout << "linear_set_classify::init before Fq->init" << endl;
 	}
 	Fq->init_override_polynomial(q, poly_q, FALSE /* f_without_tables */, 0);
 
-	FQ = NEW_OBJECT(finite_field);
+	FQ = NEW_OBJECT(field_theory::finite_field);
 	if (f_v) {
 		cout << "linear_set_classify::init before FQ->init" << endl;
 	}
 	FQ->init_override_polynomial(Q, poly_Q, FALSE /* f_without_tables */, 0);
 
-	SubS = NEW_OBJECT(subfield_structure);
+	SubS = NEW_OBJECT(field_theory::subfield_structure);
 	if (f_v) {
 		cout << "linear_set_classify::init before SubS->init" << endl;
 	}
@@ -282,7 +282,7 @@ void linear_set_classify::init(
 
 	vector_ge *nice_gens;
 
-	Aq = NEW_OBJECT(action);
+	Aq = NEW_OBJECT(actions::action);
 	Aq->init_general_linear_group(n, Fq,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -296,7 +296,7 @@ void linear_set_classify::init(
 	}
 
 
-	AQ = NEW_OBJECT(action);
+	AQ = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "linear_set_classify::init before init_general_linear_group "
@@ -320,7 +320,7 @@ void linear_set_classify::init(
 	}
 
 
-	A_PGLQ = NEW_OBJECT(action);
+	A_PGLQ = NEW_OBJECT(actions::action);
 	if (f_v) {
 		cout << "linear_set_classify::init before init_projective_group "
 				"PGL(" << m << "," << FQ->q << ")" << endl;
@@ -342,7 +342,7 @@ void linear_set_classify::init(
 				"to_subfield_structure" << endl;
 	}
 
-	action_global AG;
+	actions::action_global AG;
 
 	AG.lift_generators_to_subfield_structure(n, s,
 		SubS, Aq, AQ, Strong_gens,
@@ -817,7 +817,7 @@ void linear_set_classify::print_orbits_at_level(int level)
 
 void linear_set_classify::classify_secondary(int argc, const char **argv,
 	int level, int orbit_at_level,
-	strong_generators *strong_gens,
+	groups::strong_generators *strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -942,7 +942,7 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 
 void linear_set_classify::init_secondary(int argc, const char **argv,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens_previous,
+	groups::strong_generators *Strong_gens_previous,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1123,7 +1123,7 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 		Orbiter->Int_vec->print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
-		strong_generators *Strong_gens2;
+		groups::strong_generators *Strong_gens2;
 		ring_theory::longinteger_object go;
 
 		Gen2->get_stabilizer_generators(Strong_gens2,
@@ -1233,7 +1233,7 @@ int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_le
 void linear_set_classify::compute_stabilizer_of_linear_set(
 	int argc, const char **argv,
 	int level, int orbit_at_level,
-	strong_generators *&strong_gens,
+	groups::strong_generators *&strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1294,7 +1294,7 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 	cout << endl;
 
 
-	strong_generators *Strong_gens_previous;
+	groups::strong_generators *Strong_gens_previous;
 
 	Gen->get_stabilizer_generators(Strong_gens_previous,
 		level, orbit_at_level, verbose_level);
@@ -1318,8 +1318,8 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	int level, int orbit_at_level,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens_previous,
-	strong_generators *&strong_gens,
+	groups::strong_generators *Strong_gens_previous,
+	groups::strong_generators *&strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1445,7 +1445,7 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 void linear_set_classify::do_compute_stabilizer(
 	int level, int orbit_at_level,
 	long int *candidates, int nb_candidates,
-	strong_generators *&strong_gens,
+	groups::strong_generators *&strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1548,7 +1548,7 @@ void linear_set_classify::do_compute_stabilizer(
 	int *Intersection_dimensions;
 	int *Elt1;
 	vector_ge *aut_gens;
-	strong_generators *Strong_gens_previous;
+	groups::strong_generators *Strong_gens_previous;
 	int group_index, orbit_len, go_int;
 	ring_theory::longinteger_object go;
 
@@ -1617,7 +1617,7 @@ void linear_set_classify::do_compute_stabilizer(
 				}
 			}
 			aut_gens->append(Elt1, verbose_level - 2);
-			strong_generators *Strong_gens_next;
+			groups::strong_generators *Strong_gens_next;
 
 			Gen_stab->get_stabilizer_generators(Strong_gens_next,
 				level, h, verbose_level);
@@ -1634,7 +1634,7 @@ void linear_set_classify::do_compute_stabilizer(
 	cout << "old stabilizer order = " << go_int << endl;
 	cout << "group_index = " << group_index << endl;
 
-	sims *Aut;
+	groups::sims *Aut;
 	int target_go;
 
 	target_go = go_int * group_index;
@@ -1648,7 +1648,7 @@ void linear_set_classify::do_compute_stabilizer(
 
 	//Aut_gens = NEW_OBJECT(strong_generators);
 
-	strong_gens = NEW_OBJECT(strong_generators);
+	strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	strong_gens->init_from_sims(Aut, 0);
 	cout << "Generators for the stabilizer of order "
@@ -1658,7 +1658,7 @@ void linear_set_classify::do_compute_stabilizer(
 	vector_ge *gensQ;
 
 
-	action_global AG;
+	actions::action_global AG;
 	AG.retract_generators(strong_gens->gens, gensQ,
 			AQ, SubS, n, verbose_level);
 

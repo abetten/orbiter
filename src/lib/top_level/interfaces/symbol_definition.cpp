@@ -143,7 +143,7 @@ void symbol_definition::read_definition(
 	}
 	if (ST.stringcmp(argv[i], "-finite_field") == 0) {
 		f_finite_field = TRUE;
-		Finite_field_description = NEW_OBJECT(finite_field_description);
+		Finite_field_description = NEW_OBJECT(field_theory::finite_field_description);
 		if (f_v) {
 			cout << "reading -finite_field" << endl;
 		}
@@ -203,7 +203,7 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-linear_group") == 0) {
 		f_linear_group = TRUE;
-		Linear_group_description = NEW_OBJECT(linear_group_description);
+		Linear_group_description = NEW_OBJECT(groups::linear_group_description);
 		if (f_v) {
 			cout << "reading -linear_group" << endl;
 		}
@@ -224,7 +224,7 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-permutation_group") == 0) {
 		f_permutation_group = TRUE;
-		Permutation_group_description = NEW_OBJECT(permutation_group_description);
+		Permutation_group_description = NEW_OBJECT(groups::permutation_group_description);
 		if (f_v) {
 			cout << "reading -permutation_group" << endl;
 		}
@@ -475,7 +475,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		f_diophant = TRUE;
 
-		Diophant_description = NEW_OBJECT(diophant_description);
+		Diophant_description = NEW_OBJECT(solvers::diophant_description);
 		if (f_v) {
 			cout << "reading -diophant_description" << endl;
 		}
@@ -1019,9 +1019,9 @@ void symbol_definition::definition_of_finite_field(int verbose_level)
 		cout << "symbol_definition::definition_of_finite_field" << endl;
 	}
 	Finite_field_description->print();
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_finite_field before F->init" << endl;
 	}
@@ -1052,7 +1052,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space" << endl;
 	}
-	finite_field *F;
+	field_theory::finite_field *F;
 	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(Projective_space_with_action_description->input_q)) {
@@ -1063,7 +1063,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 			cout << "symbol_definition::definition_of_projective_space "
 					"creating the finite field of order " << q << endl;
 		}
-		F = NEW_OBJECT(finite_field);
+		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_projective_space "
@@ -1077,7 +1077,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 		}
 		int idx;
 		idx = Sym->Orbiter_top_level_session->find_symbol(Projective_space_with_action_description->input_q);
-		F = (finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
 	}
 
 	Projective_space_with_action_description->F = F;
@@ -1144,7 +1144,7 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_orthogonal_space" << endl;
 	}
-	finite_field *F;
+	field_theory::finite_field *F;
 	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(Orthogonal_space_with_action_description->input_q)) {
@@ -1155,7 +1155,7 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 			cout << "symbol_definition::definition_of_orthogonal_space "
 					"creating finite field of order " << q << endl;
 		}
-		F = NEW_OBJECT(finite_field);
+		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_orthogonal_space "
@@ -1169,7 +1169,7 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		}
 		int idx;
 		idx = Sym->Orbiter_top_level_session->find_symbol(Orthogonal_space_with_action_description->input_q);
-		F = (finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
 	}
 
 	Orthogonal_space_with_action_description->F = F;
@@ -1221,7 +1221,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 		cout << "symbol_definition::definition_of_linear_group" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(Linear_group_description->input_q)) {
@@ -1232,7 +1232,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 			cout << "symbol_definition::definition "
 					"creating finite field of order " << q << endl;
 		}
-		F = NEW_OBJECT(finite_field);
+		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::definition "
@@ -1246,7 +1246,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 		}
 		int idx;
 		idx = Sym->Orbiter_top_level_session->find_symbol(Linear_group_description->input_q);
-		F = (finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
 	}
 
 
@@ -1254,9 +1254,9 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	Linear_group_description->F = F;
 	//q = Descr->input_q;
 
-	linear_group *LG;
+	groups::linear_group *LG;
 
-	LG = NEW_OBJECT(linear_group);
+	LG = NEW_OBJECT(groups::linear_group);
 	if (f_v) {
 		cout << "symbol_definition::definition before LG->linear_group_init, "
 				"creating the group" << endl;
@@ -1299,9 +1299,9 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 	}
 
 
-	permutation_group_create *PGC;
+	groups::permutation_group_create *PGC;
 
-	PGC = NEW_OBJECT(permutation_group_create);
+	PGC = NEW_OBJECT(groups::permutation_group_create);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_permutation_group before PGC->permutation_group_init, "
 				"before PGC->permutation_group_init" << endl;
@@ -1853,10 +1853,10 @@ void symbol_definition::definition_of_diophant(int verbose_level)
 	}
 
 
-	diophant_create *Dio;
+	solvers::diophant_create *Dio;
 
 
-	Dio = NEW_OBJECT(diophant_create);
+	Dio = NEW_OBJECT(solvers::diophant_create);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_diophant before Dio->init" << endl;
@@ -2130,14 +2130,14 @@ void symbol_definition::definition_of_vector(int verbose_level)
 	}
 
 
-	finite_field *F = NULL;
+	field_theory::finite_field *F = NULL;
 
 	if (Vector_builder_description->f_field) {
 
 		int idx;
 
 		idx = Sym->Orbiter_top_level_session->find_symbol(Vector_builder_description->field_label);
-		F = (finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_vector over a field" << endl;
 		}

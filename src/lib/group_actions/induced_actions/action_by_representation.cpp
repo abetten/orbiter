@@ -47,7 +47,7 @@ void action_by_representation::free()
 }
 
 void action_by_representation::init_action_on_conic(
-		action &A, int verbose_level)
+		actions::action &A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry_global Gg;
@@ -79,7 +79,7 @@ void action_by_representation::init_action_on_conic(
 }
 
 long int action_by_representation::compute_image_int(
-	action &A, int *Elt, long int a, int verbose_level)
+		actions::action &A, int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -112,7 +112,7 @@ long int action_by_representation::compute_image_int(
 }
 
 void action_by_representation::compute_image_int_low_level(
-	action &A, int *Elt, int *input, int *output, int verbose_level)
+		actions::action &A, int *Elt, int *input, int *output, int verbose_level)
 {
 	int *x = input;
 	int *xA = output;

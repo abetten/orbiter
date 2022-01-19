@@ -927,7 +927,7 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(l
 
 }
 
-void spread_tables::make_exact_cover_problem(diophant *&Dio,
+void spread_tables::make_exact_cover_problem(solvers::diophant *&Dio,
 		long int *live_point_index, int nb_live_points,
 		long int *live_blocks, int nb_live_blocks,
 		int nb_needed,
@@ -944,7 +944,7 @@ void spread_tables::make_exact_cover_problem(diophant *&Dio,
 	int nb_rows = nb_live_points;
 	int nb_cols = nb_live_blocks;
 
-	Dio = NEW_OBJECT(diophant);
+	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;

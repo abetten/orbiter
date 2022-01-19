@@ -150,7 +150,7 @@ long int action_by_restriction::restricted_point_idx(long int pt)
 
 
 long int action_by_restriction::compute_image(
-		action *A, int *Elt, long int i, int verbose_level)
+		actions::action *A, int *Elt, long int i, int verbose_level)
 {
 	int idx;
 	long int b, c, h;

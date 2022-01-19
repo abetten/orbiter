@@ -39,9 +39,9 @@ substructure_classifier::~substructure_classifier()
 
 void substructure_classifier::classify_substructures(
 		std::string &fname_base_out,
-		action *A,
-		action *A2,
-		strong_generators *gens,
+		actions::action *A,
+		actions::action *A2,
+		groups::strong_generators *gens,
 		int substructure_size,
 		int verbose_level)
 {
@@ -107,7 +107,7 @@ void substructure_classifier::classify_substructures(
 	for (j = 0; j < nb_orbits; j++) {
 
 
-		strong_generators *Strong_gens;
+		groups::strong_generators *Strong_gens;
 
 		PC->get_stabilizer_generators(
 				Strong_gens,
@@ -135,7 +135,8 @@ void substructure_classifier::classify_substructures(
 
 
 void substructure_classifier::set_stabilizer_in_any_space(
-		action *A, action *A2, strong_generators *Strong_gens,
+		actions::action *A, actions::action *A2,
+		groups::strong_generators *Strong_gens,
 		int intermediate_subset_size,
 		std::string &fname_mask, int nb, std::string &column_label,
 		std::string &fname_out,
@@ -352,7 +353,7 @@ void substructure_classifier::set_stabilizer_of_set(
 
 
 	int *transporter_to_canonical_form;
-	strong_generators *Gens_stabilizer_original_set;
+	groups::strong_generators *Gens_stabilizer_original_set;
 
 	if (f_v) {
 		cout << "substructure_classifier::set_stabilizer before handle_orbit" << endl;
@@ -382,9 +383,9 @@ void substructure_classifier::set_stabilizer_of_set(
 		Gens_stabilizer_original_set->print_generators_tex();
 	}
 
-	strong_generators *Gens_stabilizer_canonical_form;
+	groups::strong_generators *Gens_stabilizer_canonical_form;
 
-	Gens_stabilizer_canonical_form = NEW_OBJECT(strong_generators);
+	Gens_stabilizer_canonical_form = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "substructure_classifier::set_stabilizer before init_generators_for_the_conjugate_group_avGa" << endl;
@@ -428,7 +429,7 @@ void substructure_classifier::handle_orbit(
 		substructure_stats_and_selection *SubSt,
 		long int *canonical_pts,
 		int *transporter_to_canonical_form,
-		strong_generators *&Gens_stabilizer_original_set,
+		groups::strong_generators *&Gens_stabilizer_original_set,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -460,7 +461,7 @@ void substructure_classifier::handle_orbit(
 
 	SubSt->SubC->A->element_move(CS->T1, transporter_to_canonical_form, 0);
 
-	Gens_stabilizer_original_set = NEW_OBJECT(strong_generators);
+	Gens_stabilizer_original_set = NEW_OBJECT(groups::strong_generators);
 
 	Gens_stabilizer_original_set->init_from_sims(CS->Stab, verbose_level);
 

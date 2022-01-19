@@ -284,8 +284,8 @@ void semifield_classify::init(
 	}
 #endif
 
-	A0 = NEW_OBJECT(action);
-	A0_linear = NEW_OBJECT(action);
+	A0 = NEW_OBJECT(actions::action);
+	A0_linear = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
@@ -382,7 +382,7 @@ void semifield_classify::init(
 
 
 
-	AS = NEW_OBJECT(action);
+	AS = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
@@ -418,7 +418,7 @@ void semifield_classify::init(
 				"before Strong_gens->generators_for_"
 				"the_stabilizer_of_two_components" << endl;
 	}
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_stabilizer_of_two_components(
 		T->A /* A_PGL_n_q */,
 		T->A->G.matrix_grp /* Mtx*/,
@@ -1454,7 +1454,7 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
 
 void semifield_classify::compute_orbit_of_subspaces(
 	long int *input_data,
-	strong_generators *stabilizer_gens,
+	groups::strong_generators *stabilizer_gens,
 	orbit_of_subspaces *&Orb,
 	int verbose_level)
 // allocates an orbit_of_subspaces data structure in Orb

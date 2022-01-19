@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 //int nb_calls_to_finite_field_init = 0;
@@ -1653,6 +1654,5 @@ int finite_field::primitive_element()
 }
 
 
-}
-}
+}}}
 

@@ -111,18 +111,18 @@ class classify_double_sixes {
 public:
 
 	int q;
-	finite_field *F;
-	action *A;
+	field_theory::finite_field *F;
+	actions::action *A;
 
 	//linear_group *LG;
 
 	surface_with_action *Surf_A;
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 
 
 	// pulled from surface_classify_wedge:
 
-	action *A2; // the action on the wedge product
+	actions::action *A2; // the action on the wedge product
 	action_on_wedge_product *AW;
 		// internal data structure for the wedge action
 
@@ -132,7 +132,7 @@ public:
 	int *Elt3; // used in upstep
 	int *Elt4; // used in upstep
 
-	strong_generators *SG_line_stab;
+	groups::strong_generators *SG_line_stab;
 		// stabilizer of the special line in PGL(4,q)
 		// this group acts on the set Neighbors[] in the wedge action
 
@@ -156,8 +156,8 @@ public:
 	//long int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
 
 	ring_theory::longinteger_object go, stab_go;
-	sims *Stab;
-	strong_generators *stab_gens;
+	groups::sims *Stab;
+	groups::strong_generators *stab_gens;
 
 	int *orbit;
 	int orbit_len;
@@ -179,7 +179,7 @@ public:
 	long int *Pts_wedge_to_line; // [nb_pts]
 	long int *line_to_pts_wedge; // [nb_lines_PG_3]
 
-	action *A_on_neighbors;
+	actions::action *A_on_neighbors;
 		// restricted action A2 on the set Neighbors[]
 
 	poset_classification_control *Control;
@@ -263,15 +263,15 @@ void callback_partial_ovoid_test_early(long int *S, int len,
 
 class surface_classify_wedge {
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	int q;
 
 	std::string fname_base;
 
-	action *A; // the action of PGL(4,q) on points
-	action *A2; // the action on the wedge product
+	actions::action *A; // the action of PGL(4,q) on points
+	actions::action *A2; // the action on the wedge product
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	int *Elt0;

@@ -53,27 +53,27 @@ public:
 	void make_Hamming_graph_and_write_file(int n, int q,
 			int f_projective, int verbose_level);
 	void compute_and_print_projective_weights(
-			std::ostream &ost, finite_field *F, int *M, int n, int k);
-	int code_minimum_distance(finite_field *F, int n, int k,
+			std::ostream &ost, field_theory::finite_field *F, int *M, int n, int k);
+	int code_minimum_distance(field_theory::finite_field *F, int n, int k,
 		int *code, int verbose_level);
 		// code[k * n]
-	void codewords_affine(finite_field *F, int n, int k,
+	void codewords_affine(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
 		int *codewords, // q^k
 		int verbose_level);
-	void code_projective_weight_enumerator(finite_field *F, int n, int k,
+	void code_projective_weight_enumerator(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
 		int *weight_enumerator, // [n + 1]
 		int verbose_level);
-	void code_weight_enumerator(finite_field *F, int n, int k,
+	void code_weight_enumerator(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
 		int *weight_enumerator, // [n + 1]
 		int verbose_level);
-	void code_weight_enumerator_fast(finite_field *F, int n, int k,
+	void code_weight_enumerator_fast(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
 		int *weight_enumerator, // [n + 1]
 		int verbose_level);
-	void code_projective_weights(finite_field *F, int n, int k,
+	void code_projective_weights(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
 		int *&weights,
 			// will be allocated [N]
@@ -81,7 +81,7 @@ public:
 		int verbose_level);
 	void mac_williams_equations(ring_theory::longinteger_object *&M, int n, int k, int q);
 	void determine_weight_enumerator();
-	void do_weight_enumerator(finite_field *F,
+	void do_weight_enumerator(field_theory::finite_field *F,
 			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
@@ -91,7 +91,8 @@ public:
 			long int *basis_set, int k,
 			int f_embellish,
 			int verbose_level);
-	void matrix_from_projective_set(finite_field *F,
+	void matrix_from_projective_set(
+			field_theory::finite_field *F,
 			int n, int k, long int *columns_set_of_size_n,
 			int *genma,
 			int verbose_level);
@@ -137,11 +138,11 @@ public:
 	int distance(int n, int a, int b);
 	void place_binary(long int h, int &i, int &j);
 	void place_binary(int *v, int n, int &i, int &j);
-	void field_reduction(finite_field *FQ, finite_field *Fq,
+	void field_reduction(field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 			std::string &label,
 			int m, int n, std::string &genma_text,
 			int verbose_level);
-	void CRC_encode_text(nth_roots *Nth, ring_theory::unipoly_object &CRC_poly,
+	void CRC_encode_text(field_theory::nth_roots *Nth, ring_theory::unipoly_object &CRC_poly,
 		std::string &text, std::string &fname,
 		int verbose_level);
 	void encode_text_5bits(std::string &text,
@@ -150,15 +151,15 @@ public:
 			std::string &fname_out, int nb_bits, int verbose_level);
 	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
-	void generator_matrix_cyclic_code(finite_field *F,
+	void generator_matrix_cyclic_code(field_theory::finite_field *F,
 			int n,
 			std::string &poly_coeffs,
 			int verbose_level);
 
 
 	// cyclic_codes.cpp:
-	void make_BCH_code(int n, finite_field *F, int d,
-			nth_roots *&Nth, ring_theory::unipoly_object &P,
+	void make_BCH_code(int n, field_theory::finite_field *F, int d,
+			field_theory::nth_roots *&Nth, ring_theory::unipoly_object &P,
 			int verbose_level);
 	void make_cyclic_code(int n, int q, int t,
 			int *roots, int nb_roots, int f_poly, std::string &poly,
@@ -171,12 +172,12 @@ public:
 	void print_polynomial_tight(std::ostream &ost, ring_theory::unipoly_domain &Fq,
 			int degree, ring_theory::unipoly_object *coeffs);
 	void field_reduction(int n, int q, int p, int e, int m,
-		finite_field &Fp, ring_theory::unipoly_domain &Fq,
+			field_theory::finite_field &Fp, ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
 		int f_poly, std::string &poly,
 		int verbose_level);
 	void BCH_generator_polynomial(
-			finite_field *F,
+			field_theory::finite_field *F,
 			ring_theory::unipoly_object &g, int n,
 			int designed_distance, int &bose_distance,
 			int &transversal_length, int *&transversal,
@@ -201,29 +202,29 @@ public:
 
 	void twisted_tensor_product_codes(
 		int *&H_subfield, int &m, int &n,
-		finite_field *F, finite_field *f,
+		field_theory::finite_field *F, field_theory::finite_field *f,
 		int f_construction_A, int f_hyperoval,
 		int f_construction_B, int verbose_level);
 	void create_matrix_M(
 		int *&M,
-		finite_field *F, finite_field *f,
+		field_theory::finite_field *F, field_theory::finite_field *f,
 		int &m, int &n, int &beta, int &r, int *exponents,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		int f_elements_exponential, std::string &symbol_for_print,
 		int verbose_level);
 		// int exponents[9]
-	void create_matrix_H_subfield(finite_field *F, finite_field*f,
+	void create_matrix_H_subfield(field_theory::finite_field *F, field_theory::finite_field*f,
 		int *H_subfield, int *C, int *C_inv, int *M, int m, int n,
 		int beta, int beta_q,
 		int f_elements_exponential, std::string &symbol_for_print,
 		std::string &symbol_for_print_subfield,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		int verbose_level);
-	void tt_field_reduction(finite_field &F, finite_field &f,
+	void tt_field_reduction(field_theory::finite_field &F, field_theory::finite_field &f,
 		int m, int n, int *M, int *MM, int verbose_level);
 
 
-	void make_tensor_code_9dimensional_as_point_set(finite_field *F,
+	void make_tensor_code_9dimensional_as_point_set(field_theory::finite_field *F,
 		int *&the_set, int &length,
 		int verbose_level);
 	void make_tensor_code_9_dimensional(int q,
@@ -234,11 +235,11 @@ public:
 
 
 
-	void find_CRC_polynomials(finite_field *F,
+	void find_CRC_polynomials(field_theory::finite_field *F,
 			int t, int da, int dc,
 			int verbose_level);
 	void search_for_CRC_polynomials(int t,
-			int da, int *A, int dc, int *C, int i, finite_field *F,
+			int da, int *A, int dc, int *C, int i, field_theory::finite_field *F,
 			long int &nb_sol, std::vector<std::vector<int> > &Solutions,
 			int verbose_level);
 	void search_for_CRC_polynomials_binary(int t,
@@ -246,14 +247,14 @@ public:
 			long int &nb_sol, std::vector<std::vector<int> > &Solutions,
 			int verbose_level);
 	int test_all_two_bit_patterns(int da, int *A, int dc, int *C,
-			finite_field *F, int verbose_level);
+			field_theory::finite_field *F, int verbose_level);
 	int test_all_three_bit_patterns(int da, int *A, int dc, int *C,
-			finite_field *F, int verbose_level);
+			field_theory::finite_field *F, int verbose_level);
 	int test_all_two_bit_patterns_binary(int da, int *A, int dc, int *C,
 			int verbose_level);
 	int test_all_three_bit_patterns_binary(int da, int *A, int dc, int *C,
 			int verbose_level);
-	int remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F);
+	int remainder_is_nonzero(int da, int *A, int db, int *B, field_theory::finite_field *F);
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
 
@@ -272,9 +273,9 @@ public:
 
 	int n;
 	int d;
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	nth_roots *Nth;
+	field_theory::nth_roots *Nth;
 
 	ring_theory::unipoly_object *P;
 
@@ -291,7 +292,7 @@ public:
 
 	create_BCH_code();
 	~create_BCH_code();
-	void init(finite_field *F, int n, int d, int verbose_level);
+	void init(field_theory::finite_field *F, int n, int d, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 
 

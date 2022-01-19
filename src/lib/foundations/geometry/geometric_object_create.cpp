@@ -52,7 +52,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	Descr->P = P;
 	geometric_object_create::Descr = Descr;
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = P->F;
 

@@ -511,13 +511,13 @@ void interface_algebra::worker(int verbose_level)
 
 		algebra_global_with_action Algebra;
 
-		finite_field *F;
+		field_theory::finite_field *F;
 		int idx;
 
 
 		idx = The_Orbiter_top_level_session->find_symbol(all_rational_normal_forms_finite_field_label);
 
-		F = (finite_field *) The_Orbiter_top_level_session->get_object(idx);
+		F = (field_theory::finite_field *) The_Orbiter_top_level_session->get_object(idx);
 
 		Algebra.classes_GL(F, all_rational_normal_forms_d,
 				FALSE /* f_no_eigenvalue_one */, verbose_level);
@@ -532,13 +532,13 @@ void interface_algebra::worker(int verbose_level)
 		algebra_global_with_action Algebra;
 		int *data;
 		int sz;
-		finite_field *F;
+		field_theory::finite_field *F;
 		int idx;
 
 
 		idx = The_Orbiter_top_level_session->find_symbol(eigenstuff_finite_field_label);
 
-		F = (finite_field *) The_Orbiter_top_level_session->get_object(idx);
+		F = (field_theory::finite_field *) The_Orbiter_top_level_session->get_object(idx);
 
 		Orbiter->Int_vec->scan(eigenstuff_coeffs, data, sz);
 

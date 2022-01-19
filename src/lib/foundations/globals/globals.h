@@ -454,7 +454,7 @@ public:
 	void freeself();
 	void init(std::string &str_label);
 	void init_finite_field(std::string &label,
-			finite_field *F, int verbose_level);
+			field_theory::finite_field *F, int verbose_level);
 	void init_any_group(std::string &label,
 			void *p, int verbose_level);
 	void init_linear_group(std::string &label,

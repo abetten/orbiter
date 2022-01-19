@@ -28,14 +28,14 @@ public:
 	combinatorics::boolean_function_domain *BF;
 
 	// group stuff:
-	action *A;
+	actions::action *A;
 	vector_ge *nice_gens;
 
 	action_on_homogeneous_polynomials *AonHPD;
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
 
-	action *A_affine; // restricted action on affine points
+	actions::action *A_affine; // restricted action on affine points
 
 	boolean_function_classify();
 	~boolean_function_classify();
@@ -229,18 +229,18 @@ public:
 	void create_design_table(design_create *DC,
 			std::string &problem_label,
 			design_tables *&T,
-			strong_generators *Gens,
+			groups::strong_generators *Gens,
 			int verbose_level);
 	void load_design_table(design_create *DC,
 			std::string &problem_label,
 			design_tables *&T,
-			strong_generators *Gens,
+			groups::strong_generators *Gens,
 			int verbose_level);
 
 	void Hill_cap56(
 		char *fname, int &nb_Pts, long int *&Pts,
 		int verbose_level);
-	void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
+	void append_orbit_and_adjust_size(groups::schreier *Orb, int idx, int *set, int &sz);
 	void classify_objects_using_nauty(
 			data_structures::data_input_stream_description *Data,
 			data_structures::classify_bitvectors *CB,
@@ -378,8 +378,8 @@ public:
 
 	delandtsheer_doyen_description *Descr;
 
-	finite_field *F1;
-	finite_field *F2;
+	field_theory::finite_field *F1;
+	field_theory::finite_field *F2;
 
 	int Xsize; // = D = q1 = # of rows
 	int Ysize; // = C = q2 = # of cols
@@ -391,17 +391,17 @@ public:
 	int *col_sum; // [Ysize]
 
 
-	matrix_group *M1;
-	matrix_group *M2;
-	action *A1;
-	action *A2;
+	groups::matrix_group *M1;
+	groups::matrix_group *M2;
+	actions::action *A1;
+	actions::action *A2;
 
-	action *A;
-	action *A0;
+	actions::action *A;
+	actions::action *A0;
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
-	direct_product *P;
+	groups::direct_product *P;
 	poset_with_group_action *Poset_pairs;
 	poset_with_group_action *Poset_search;
 	poset_classification *Pairs;
@@ -454,8 +454,8 @@ public:
 	void show_generators(int verbose_level);
 	void search_singletons(int verbose_level);
 	void search_starter(int verbose_level);
-	void compute_orbits_on_pairs(strong_generators *Strong_gens, int verbose_level);
-	strong_generators *scan_subgroup_generators(int verbose_level);
+	void compute_orbits_on_pairs(groups::strong_generators *Strong_gens, int verbose_level);
+	groups::strong_generators *scan_subgroup_generators(int verbose_level);
 	void create_monomial_group(int verbose_level);
 	void create_action(int verbose_level);
 	void create_graph(long int *line0, int len, int verbose_level);
@@ -661,19 +661,19 @@ public:
 	std::string label_tex;
 
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int k;
 
 	//int f_semilinear;
 
-	action *A; // Sym(degree)
-	action *A2; // Sym(degree), in the action on k-subsets
+	actions::action *A; // Sym(degree)
+	actions::action *A2; // Sym(degree), in the action on k-subsets
 
 
-	action *Aut;
+	actions::action *Aut;
 	// PGGL(3,q) in case of PG_2_q with q not prime
 	// PGL(3,q) in case of PG_2_q with q prime
-	action *Aut_on_lines; // Aut induced on lines
+	actions::action *Aut_on_lines; // Aut induced on lines
 
 	int degree;
 
@@ -681,7 +681,7 @@ public:
 	int sz; // = b, the number of blocks
 
 	int f_has_group;
-	strong_generators *Sg;
+	groups::strong_generators *Sg;
 
 
 	projective_space_with_action *PA;
@@ -695,7 +695,7 @@ public:
 	void null();
 	void freeself();
 	void init(design_create_description *Descr, int verbose_level);
-	void create_design_PG_2_q(finite_field *F,
+	void create_design_PG_2_q(field_theory::finite_field *F,
 			long int *&set, int &sz, int &k, int verbose_level);
 	void unrank_block_in_PG_2_q(int *block,
 			int rk, int verbose_level);
@@ -717,13 +717,13 @@ class design_tables {
 
 public:
 
-	action *A;
-	action *A2;
+	actions::action *A;
+	actions::action *A2;
 	long int *initial_set;
 	int design_size;
 	std::string label;
 	std::string fname_design_table;
-	strong_generators *Strong_generators;
+	groups::strong_generators *Strong_generators;
 
 	int nb_designs;
 	long int *the_table; // [nb_designs * design_size]
@@ -731,11 +731,11 @@ public:
 
 	design_tables();
 	~design_tables();
-	void init(action *A, action *A2, long int *initial_set, int design_size,
+	void init(actions::action *A, actions::action *A2, long int *initial_set, int design_size,
 			std::string &label,
-			strong_generators *Strong_generators, int verbose_level);
+			groups::strong_generators *Strong_generators, int verbose_level);
 	void create_table(int verbose_level);
-	void create_action(action *&A_on_designs, int verbose_level);
+	void create_action(actions::action *&A_on_designs, int verbose_level);
 	void extract_solutions_by_index(
 			int nb_sol, int Index_width, int *Index,
 			std::string &ouput_fname_csv,
@@ -744,10 +744,10 @@ public:
 			long int *set, int set_sz,
 			long int *&reduced_table, long int *&reduced_table_idx, int &nb_reduced_designs,
 			int verbose_level);
-	void init_from_file(action *A, action *A2,
+	void init_from_file(actions::action *A, actions::action *A2,
 			long int *initial_set, int design_size,
 			std::string &label,
-			strong_generators *Strong_generators, int verbose_level);
+			groups::strong_generators *Strong_generators, int verbose_level);
 	int test_if_table_exists(
 			std::string &label,
 			int verbose_level);
@@ -781,7 +781,7 @@ public:
 
 	int n;
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	algebra::heisenberg *H;
 	int *Table;
 	int *Table_abv;
@@ -793,8 +793,8 @@ public:
 	int N_nb_gens;
 	int N_go;
 #endif
-	action *A;
-	strong_generators *Aut_gens;
+	actions::action *A;
+	groups::strong_generators *Aut_gens;
 	ring_theory::longinteger_object Aut_order;
 
 	int given_base_length; // = nb_gens
@@ -806,20 +806,20 @@ public:
 
 	std::string prefix;
 	std::string fname_magma_out;
-	sims *Aut;
-	sims *U;
+	groups::sims *Aut;
+	groups::sims *U;
 	ring_theory::longinteger_object U_go;
 	vector_ge *U_gens;
-	schreier *Sch;
+	groups::schreier *Sch;
 
 
 	// N = normalizer of U in Aut
 	int *N_gens;
 	int N_nb_gens, N_go;
-	action *N;
+	actions::action *N;
 	ring_theory::longinteger_object N_order;
 
-	action *N_on_orbits;
+	actions::action *N_on_orbits;
 	int *Paired_with;
 	int nb_paired_orbits;
 	long int *Pairs;
@@ -840,7 +840,7 @@ public:
 	int *f_orbit_select;
 	int *Short_orbit_inverse;
 
-	action *A_on_short_orbits;
+	actions::action *A_on_short_orbits;
 	int nb_short_orbits;
 	int nb_long_orbits;
 
@@ -849,7 +849,7 @@ public:
 
 
 
-	void init(int n, finite_field *F, int verbose_level);
+	void init(int n, field_theory::finite_field *F, int verbose_level);
 	void do_n2q3(int verbose_level);
 	void check_overgroups_of_order_nine(int verbose_level);
 	void create_minimal_overgroups(int verbose_level);
@@ -889,15 +889,15 @@ public:
 	int *Flags; // [nb_flags]
 	long int *Flag_table; // [nb_flags * 2]
 
-	action *A_on_flags;
+	actions::action *A_on_flags;
 
-	orbits_on_something *Orb;
+	groups::orbits_on_something *Orb;
 
 	flag_orbits_incidence_structure();
 	~flag_orbits_incidence_structure();
 	void init(object_with_properties *OwP,
-			int f_anti_flags, action *A_perm,
-			strong_generators *SG, int verbose_level);
+			int f_anti_flags, actions::action *A_perm,
+			groups::strong_generators *SG, int verbose_level);
 	int find_flag(int i, int j);
 	void report(std::ostream &ost, int verbose_level);
 
@@ -923,7 +923,7 @@ public:
 	data_structures::bitvector *Bitvec;
 	graph_theory::colored_graph *CG;
 
-	action *A;
+	actions::action *A;
 
 	int *v;
 
@@ -998,23 +998,23 @@ public:
 		// we can induce the group action on to them.
 
 
-	action *A;
+	actions::action *A;
 		// The symmetric group on nm1 points.
-	action *A_on_triples;
+	actions::action *A_on_triples;
 		// the induced action on unordered triples as stored in triples[].
-	strong_generators *Strong_gens_Hall_reflection;
+	groups::strong_generators *Strong_gens_Hall_reflection;
 		// the involution which switches the
 		// points on every line through the center (other than the center).
-	strong_generators *Strong_gens_normalizer;
+	groups::strong_generators *Strong_gens_normalizer;
 		// Strong generators for the normalizer of the involution.
-	sims *S;
+	groups::sims *S;
 		// The normalizer of the involution
 
 	std::string prefix;
 	std::string fname_orbits_on_triples;
-	schreier *Orbits_on_triples;
+	groups::schreier *Orbits_on_triples;
 		// Orbits of the reflection group on triples.
-	action *A_on_orbits;
+	actions::action *A_on_orbits;
 		// Induced action of A_on_triples
 		// on the orbit of the reflection group.
 	int f_play_it_safe;
@@ -1125,7 +1125,7 @@ public:
 	int nb_colors; // = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
 	int *design_color_table; // [nb_designs]
 
-	action *A_on_designs; // action on designs in Design_table
+	actions::action *A_on_designs; // action on designs in Design_table
 		//DC->A2->create_induced_action_on_sets(
 		//		Design_table->nb_designs, Design_table->design_size,
 		//		Design_table->the_table,
@@ -1290,9 +1290,9 @@ public:
 
 	large_set_classify *LS;
 
-	strong_generators *H_gens;
+	groups::strong_generators *H_gens;
 
-	orbits_on_something *H_orbits;
+	groups::orbits_on_something *H_orbits;
 
 		//H_orbits->init(LS->A_on_designs,
 		//		H_gens,
@@ -1300,9 +1300,9 @@ public:
 		//			Descr->prefix,
 		//			verbose_level);
 
-	strong_generators *N_gens;
+	groups::strong_generators *N_gens;
 
-	orbits_on_something *N_orbits;
+	groups::orbits_on_something *N_orbits;
 
 
 	// used in do_normalizer_on_orbits_of_a_given_length:
@@ -1312,9 +1312,9 @@ public:
 	long int *Orbit1;
 	long int *Orbit2;
 
-	action *A_on_orbits;
+	actions::action *A_on_orbits;
 		// action on H_orbits->Sch
-	action *A_on_orbits_restricted;
+	actions::action *A_on_orbits_restricted;
 		// action A_on_orbits restricted to H_orbits->Orbits_classified->Sets[type_idx]
 
 
@@ -1416,9 +1416,9 @@ public:
 
 	int f_projective_space;
 	projective_space_with_action *PA;
-	strong_generators *SG; // only used if f_projective_space
+	groups::strong_generators *SG; // only used if f_projective_space
 
-	action *A_perm;
+	actions::action *A_perm;
 
 	combinatorics::tdo_scheme_compute *TDO;
 
@@ -1448,10 +1448,10 @@ public:
 	void print_TDO(std::ostream &ost,
 			combinatorics::classification_of_objects_report_options *Report_options);
 	void export_TDA_with_flag_orbits(std::ostream &ost,
-			schreier *Sch,
+			groups::schreier *Sch,
 			int verbose_level);
 	void export_INP_with_flag_orbits(std::ostream &ost,
-			schreier *Sch,
+			groups::schreier *Sch,
 			int verbose_level);
 
 };
@@ -1524,8 +1524,8 @@ public:
 
 	poset_with_group_action *Poset;
 	poset_classification *gen;
-	action *A;
-	action *A2;
+	actions::action *A;
+	actions::action *A2;
 	action_on_k_subsets *Aonk; // only a pointer, do not free
 
 	int *row_sum; // [m]
@@ -1546,7 +1546,7 @@ public:
 	void init_action_on_k_subsets(int onk, int verbose_level);
 	void init_generator(
 			poset_classification_control *Control,
-			strong_generators *Strong_gens,
+			groups::strong_generators *Strong_gens,
 			int verbose_level);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -1554,8 +1554,8 @@ public:
 		int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case,
-		long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-		diophant *&Dio, long int *&col_labels,
+		long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 };
@@ -1572,8 +1572,8 @@ int regular_ls_classify_check_function_incremental_callback(int len, int *S,
 		void *data, int verbose_level);
 void regular_ls_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
 
@@ -1594,24 +1594,24 @@ public:
 	int nb_blocks;
 	incidence_structure *Inc;
 	int f_combined_action;
-	action *A;
-	action *A_on_points;
-	action *A_on_lines;
-	strong_generators * gens;
+	actions::action *A;
+	actions::action *A_on_points;
+	actions::action *A_on_lines;
+	groups::strong_generators * gens;
 	data_structures::partitionstack *Stack;
-	schreier *Sch;
-	schreier *Sch_points;
-	schreier *Sch_lines;
+	groups::schreier *Sch;
+	groups::schreier *Sch_points;
+	groups::schreier *Sch_lines;
 
 	tactical_decomposition();
 	~tactical_decomposition();
 	void init(int nb_rows, int nb_cols,
 			incidence_structure *Inc,
 			int f_combined_action,
-			action *Aut,
-			action *A_on_points,
-			action *A_on_lines,
-			strong_generators * gens,
+			actions::action *Aut,
+			actions::action *A_on_points,
+			actions::action *A_on_lines,
+			groups::strong_generators * gens,
 			int verbose_level);
 	void report(int f_enter_math, std::ostream &ost);
 

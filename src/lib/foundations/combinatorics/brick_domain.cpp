@@ -36,7 +36,7 @@ void brick_domain::freeself()
 	null();
 }
 
-void brick_domain::init(finite_field *F, int verbose_level)
+void brick_domain::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i;

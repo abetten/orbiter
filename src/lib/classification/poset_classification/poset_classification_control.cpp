@@ -681,7 +681,7 @@ void poset_classification_control::early_test_func_for_clique_search(
 
 
 void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
-		schreier *Sch, void *data, int data2,
+		groups::schreier *Sch, void *data, int data2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

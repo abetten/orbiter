@@ -65,7 +65,7 @@ void desarguesian_spread::freeself()
 }
 
 void desarguesian_spread::init(int n, int m, int s, 
-	subfield_structure *SubS, 
+		field_theory::subfield_structure *SubS,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

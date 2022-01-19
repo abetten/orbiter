@@ -35,7 +35,7 @@ public:
 
 	
 	grassmann *Grass;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	long int *spread_elements_numeric; // [spread_size]
 	long int *spread_elements_numeric_sorted; // [spread_size]
@@ -52,7 +52,7 @@ public:
 	~andre_construction();
 	void null();
 	void freeself();
-	void init(finite_field *F, int k, long int *spread_elements_numeric,
+	void init(field_theory::finite_field *F, int k, long int *spread_elements_numeric,
 		int verbose_level);
 	void points_on_line(andre_construction_line_element *Line, 
 		int *pts_on_line, int verbose_level);
@@ -75,7 +75,7 @@ class andre_construction_point_element {
 public:
 	andre_construction *Andre;
 	int k, n, q, spread_size;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int point_rank;
 	int f_is_at_infinity;
 	int at_infinity_idx;
@@ -104,7 +104,7 @@ class andre_construction_line_element {
 public:
 	andre_construction *Andre;
 	int k, n, q, spread_size;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int line_rank;
 	int f_is_at_infinity;
 	int affine_numeric;
@@ -137,11 +137,11 @@ public:
 class arc_basic {
 public:
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	arc_basic();
 	~arc_basic();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 
 	void Segre_hyperoval(
 			long int *&Pts, int &nb_pts, int verbose_level);
@@ -213,20 +213,20 @@ public:
 	void arc_lifting_diophant(
 		long int *arc, int arc_sz,
 		int target_sz, int target_d,
-		diophant *&D,
+		solvers::diophant *&D,
 		int verbose_level);
 	void arc_with_given_set_of_s_lines_diophant(
 			long int *s_lines, int nb_s_lines,
 			int target_sz, int arc_d, int arc_d_low, int arc_s,
 			int f_dualize,
-			diophant *&D,
+			solvers::diophant *&D,
 			int verbose_level);
 	void arc_with_two_given_line_sets_diophant(
 			long int *s_lines, int nb_s_lines, int arc_s,
 			long int *t_lines, int nb_t_lines, int arc_t,
 			int target_sz, int arc_d, int arc_d_low,
 			int f_dualize,
-			diophant *&D,
+			solvers::diophant *&D,
 			int verbose_level);
 	void arc_with_three_given_line_sets_diophant(
 			long int *s_lines, int nb_s_lines, int arc_s,
@@ -234,13 +234,13 @@ public:
 			long int *u_lines, int nb_u_lines, int arc_u,
 			int target_sz, int arc_d, int arc_d_low,
 			int f_dualize,
-			diophant *&D,
+			solvers::diophant *&D,
 			int verbose_level);
 	void maximal_arc_by_diophant(
 			int arc_sz, int arc_d,
 			std::string &secant_lines_text,
 			std::string &external_lines_as_subset_of_secants_text,
-			diophant *&D,
+			solvers::diophant *&D,
 			int verbose_level);
 	void arc_lifting1(
 			int arc_size,
@@ -304,7 +304,7 @@ public:
 
 class buekenhout_metz {
 public:
-	finite_field *FQ, *Fq;
+	field_theory::finite_field *FQ, *Fq;
 	int q;
 	int Q;
 
@@ -360,7 +360,7 @@ public:
 	~buekenhout_metz();
 	void null();
 	void freeself();
-	void init(finite_field *Fq, finite_field *FQ, 
+	void init(field_theory::finite_field *Fq, field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level);
 	void init_ovoid(int verbose_level);
@@ -388,7 +388,7 @@ class cubic_curve {
 
 public:
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	projective_space *P; // PG(2,q)
 
 
@@ -408,7 +408,7 @@ public:
 	cubic_curve();
 	~cubic_curve();
 	void freeself();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 	int compute_system_in_RREF(
 			int nb_pts, long int *pt_list, int verbose_level);
 	void compute_gradient(
@@ -500,9 +500,9 @@ public:
 	int s;
 	int q;
 	int Q;
-	finite_field *Fq;
-	finite_field *FQ;
-	subfield_structure *SubS;
+	field_theory::finite_field *Fq;
+	field_theory::finite_field *FQ;
+	field_theory::subfield_structure *SubS;
 	grassmann *Gr;
 	
 	int N;
@@ -531,7 +531,7 @@ public:
 	void null();
 	void freeself();
 	void init(int n, int m, int s, 
-		subfield_structure *SubS, 
+			field_theory::subfield_structure *SubS,
 		int verbose_level);
 	void calculate_spread_elements(int verbose_level);
 	void compute_intersection_type(int k, int *subspace, 
@@ -572,14 +572,14 @@ public:
 	int *T; // [nb * 3] point coordinates
 		// the point at infinity is last
 	int *A; // [nb * nb] addition table
-	finite_field *F;
+	field_theory::finite_field *F;
 
 
 	elliptic_curve();
 	~elliptic_curve();
 	void null();
 	void freeself();
-	void init(finite_field *F, int b, int c, int verbose_level);
+	void init(field_theory::finite_field *F, int b, int c, int verbose_level);
 	void compute_points(int verbose_level);
 	void add_point_to_table(int x, int y, int z);
 	int evaluate_RHS(int x);
@@ -625,7 +625,7 @@ public:
 
 class flag {
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	grassmann *Gr;
 	int n;
 	int s0, s1, s2;
@@ -649,10 +649,10 @@ public:
 	~flag();
 	void null();
 	void freeself();
-	void init(int n, int *type, int type_len, finite_field *F, 
+	void init(int n, int *type, int type_len, field_theory::finite_field *F,
 		int verbose_level);
 	void init_recursion(int n, int *type, int type_len, int idx, 
-		finite_field *F, int verbose_level);
+			field_theory::finite_field *F, int verbose_level);
 	void unrank(long int rk, int *subspace, int verbose_level);
 	void unrank_recursion(long int rk, int *subspace, int verbose_level);
 	long int rank(int *subspace, int verbose_level);
@@ -841,26 +841,26 @@ public:
 	int PG_element_modified_is_in_subspace(int n, int m, int *v);
 	void test_PG(int n, int q);
 	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
-			finite_field *FQ, finite_field *Fq, int verbose_level);
+			field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level);
 	void create_Linear_BLT_set(long int *BLT, int *ABC,
-			finite_field *FQ, finite_field *Fq, int verbose_level);
+			field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level);
 	void create_Mondello_BLT_set(long int *BLT, int *ABC,
-			finite_field *FQ, finite_field *Fq, int verbose_level);
+			field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level);
 	void print_quadratic_form_list_coded(int form_nb_terms,
 		int *form_i, int *form_j, int *form_coeff);
 	void make_Gram_matrix_from_list_coded_quadratic_form(
-		int n, finite_field &F,
+		int n, field_theory::finite_field &F,
 		int nb_terms, int *form_i, int *form_j,
 		int *form_coeff, int *Gram);
-	void add_term(int n, finite_field &F, int &nb_terms,
+	void add_term(int n, field_theory::finite_field &F, int &nb_terms,
 		int *form_i, int *form_j, int *form_coeff, int *Gram,
 		int i, int j, int coeff);
 	void determine_conic(int q, std::string &override_poly, long int *input_pts,
 		int nb_pts, int verbose_level);
-	int test_if_arc(finite_field *Fq, int *pt_coords, int *set,
+	int test_if_arc(field_theory::finite_field *Fq, int *pt_coords, int *set,
 		int set_sz, int k, int verbose_level);
 	void create_Buekenhout_Metz(
-		finite_field *Fq, finite_field *FQ,
+			field_theory::finite_field *Fq, field_theory::finite_field *FQ,
 		int f_classical, int f_Uab, int parameter_a, int parameter_b,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
@@ -900,46 +900,47 @@ public:
 	void maxfit_table_reallocate(int v_max);
 	void maxfit_table_compute();
 	int packing_number_via_maxfit(int n, int k);
-	void do_inverse_isomorphism_klein_quadric(finite_field *F,
+	void do_inverse_isomorphism_klein_quadric(field_theory::finite_field *F,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 			int verbose_level);
-	void do_rank_point_in_PG(finite_field *F, int n,
+	void do_rank_point_in_PG(field_theory::finite_field *F, int n,
 			std::string &coeff_text,
 			int verbose_level);
-	void do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
+	void do_rank_point_in_PG_given_as_pairs(field_theory::finite_field *F, int n,
 			std::string &coeff_text,
 			int verbose_level);
-	void do_intersection_of_two_lines(finite_field *F,
+	void do_intersection_of_two_lines(field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
-	void do_transversal(finite_field *F,
+	void do_transversal(field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
 			std::string &point,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
 	void do_move_two_lines_in_hyperplane_stabilizer(
-			finite_field *F,
+			field_theory::finite_field *F,
 			long int line1_from, long int line2_from,
 			long int line1_to, long int line2_to, int verbose_level);
 	void do_move_two_lines_in_hyperplane_stabilizer_text(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string line1_from_text, std::string line2_from_text,
 			std::string line1_to_text, std::string line2_to_text,
 			int verbose_level);
-	void do_cheat_sheet_PG(finite_field *F,
+	void do_cheat_sheet_PG(field_theory::finite_field *F,
 			layered_graph_draw_options *O,
 			int n,
 			int verbose_level);
-	void do_cheat_sheet_Gr(finite_field *F,
+	void do_cheat_sheet_Gr(field_theory::finite_field *F,
 			int n, int k,
 			int verbose_level);
-	void do_cheat_sheet_hermitian(finite_field *F,
+	void do_cheat_sheet_hermitian(field_theory::finite_field *F,
 			int projective_dimension,
 			int verbose_level);
-	void do_create_desarguesian_spread(finite_field *FQ, finite_field *Fq,
+	void do_create_desarguesian_spread(
+			field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 			int m,
 			int verbose_level);
 	void create_decomposition_of_projective_plane(std::string &fname_base,
@@ -947,12 +948,12 @@ public:
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			int verbose_level);
-	void latex_homogeneous_equation(finite_field *F, int degree, int nb_vars,
+	void latex_homogeneous_equation(field_theory::finite_field *F, int degree, int nb_vars,
 			std::string &equation_text,
 			std::string &symbol_txt,
 			std::string &symbol_tex,
 			int verbose_level);
-	void create_BLT_point(finite_field *F,
+	void create_BLT_point(field_theory::finite_field *F,
 			int *v5, int a, int b, int c, int verbose_level);
 		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
 		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
@@ -973,7 +974,7 @@ class grassmann {
 public:
 	int n, k, q;
 	ring_theory::longinteger_object *nCkq; // n choose k q-analog
-	finite_field *F;
+	field_theory::finite_field *F;
 	int *base_cols;
 	int *coset;
 	int *M; // [n * n], this used to be [k * n] 
@@ -985,7 +986,7 @@ public:
 
 	grassmann();
 	~grassmann();
-	void init(int n, int k, finite_field *F, int verbose_level);
+	void init(int n, int k, field_theory::finite_field *F, int verbose_level);
 	long int nb_of_subspaces(int verbose_level);
 	void print_single_generator_matrix_tex(std::ostream &ost, long int a);
 	void print_single_generator_matrix_tex_numerical(
@@ -1044,7 +1045,7 @@ public:
 class grassmann_embedded {
 public:
 	int big_n, n, k, q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	grassmann *G; // only a reference, not freed
 	int *M; // [n * big_n] the original matrix
 	int *M_Gauss; // [n * big_n] the echeolon form (RREF)
@@ -1090,7 +1091,7 @@ public:
 
 	// The hermitian form is \sum_{i=0}^{k-1} X_i^{q+1}
 
-	finite_field *F; // only a reference, not to be freed
+	field_theory::finite_field *F; // only a reference, not to be freed
 	int Q;
 	int q;
 	int k; // nb_vars
@@ -1112,7 +1113,7 @@ public:
 	hermitian();
 	~hermitian();
 	void null();
-	void init(finite_field *F, int nb_vars, int verbose_level);
+	void init(field_theory::finite_field *F, int nb_vars, int verbose_level);
 	int nb_points();
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
@@ -1448,7 +1449,7 @@ public:
 	projective_space *P3;
 	projective_space *P5;
 	orthogonal *O;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int q;
 	long int nb_Pts; // number of points on the klein quadric
 	long int nb_pts_PG; // number of points in PG(5,q)
@@ -1474,7 +1475,7 @@ public:
 	~klein_correspondence();
 	void null();
 	void freeself();
-	void init(finite_field *F, orthogonal *O, int verbose_level);
+	void init(field_theory::finite_field *F, orthogonal *O, int verbose_level);
 	void plane_intersections(long int *lines_in_PG3, int nb_lines,
 			ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane,
@@ -1521,7 +1522,7 @@ public:
 	W3q *W;
 	projective_space *P5;
 	grassmann *G63;
-	finite_field *F;
+	field_theory::finite_field *F;
 	long int *BLT;
 	int *BLT_line_idx;
 	int *Basis;
@@ -1544,7 +1545,7 @@ public:
 	knarr();
 	~knarr();
 	void freeself();
-	void init(finite_field *F, int BLT_no, int verbose_level);
+	void init(field_theory::finite_field *F, int BLT_no, int verbose_level);
 	void points_and_lines(int verbose_level);
 	void incidence_matrix(int *&Inc, int &nb_points, 
 		int &nb_lines, int verbose_level);
@@ -1985,7 +1986,7 @@ public:
 
 	grassmann **Grass_stack; // [n + 1]
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	ring_theory::longinteger_object *Go;
 
 	int n; // projective dimension
@@ -2015,7 +2016,7 @@ public:
 	projective_space();
 	~projective_space();
 	void freeself();
-	void init(int n, finite_field *F, 
+	void init(int n, field_theory::finite_field *F,
 		int f_init_incidence_structure, 
 		int verbose_level);
 	void init_incidence_structure(int verbose_level);
@@ -2075,7 +2076,7 @@ public:
 		int *three_coeffs, 
 		int verbose_level);
 	int nonconical_six_arc_get_nb_Eckardt_points(long int *Arc6, int verbose_level);
-	int test_nb_Eckardt_points(surface_domain *Surf,
+	int test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
 			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
 	int test_if_conic_contains_point(int *six_coeffs, int pt);
@@ -2106,8 +2107,8 @@ public:
 			int *&bisecants, int *&conics, int verbose_level);
 		// bisecants[15 * 3]
 		// conics[6 * 6]
-	eckardt_point_info *compute_eckardt_point_info(
-			surface_domain *Surf, long int *arc6,
+	algebraic_geometry::eckardt_point_info *compute_eckardt_point_info(
+			algebraic_geometry::surface_domain *Surf, long int *arc6,
 			int verbose_level);
 
 
@@ -2411,217 +2412,6 @@ public:
 
 };
 
-// #############################################################################
-// quartic_curve_domain.cpp
-// #############################################################################
-
-//! domain for quartic curves in PG(2,q) with 28 bitangents
-
-
-class quartic_curve_domain {
-
-public:
-	finite_field *F;
-	projective_space *P;
-
-	ring_theory::homogeneous_polynomial_domain *Poly1_3;
-		// linear polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly2_3;
-		// quadratic polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly3_3;
-		// cubic polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly4_3;
-		// quartic polynomials in three variables
-
-	ring_theory::homogeneous_polynomial_domain *Poly3_4;
-		// cubic polynomials in four variables
-
-	ring_theory::partial_derivative *Partials; // [3]
-
-	schlaefli_labels *Schlaefli;
-
-	quartic_curve_domain();
-	~quartic_curve_domain();
-	void init(finite_field *F, int verbose_level);
-	void init_polynomial_domains(int verbose_level);
-	void print_equation_maple(std::stringstream &ost, int *coeffs);
-	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
-	void print_gradient_with_line_breaks_tex(std::ostream &ost, int *coeffs);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
-	void unrank_line_in_dual_coordinates(int *v, long int rk);
-	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
-	void compute_points_on_lines(
-			long int *Pts, int nb_points,
-			long int *Lines, int nb_lines,
-			data_structures::set_of_sets *&pts_on_lines,
-			int *&f_is_on_line,
-			int verbose_level);
-	void multiply_conic_times_conic(int *six_coeff_a,
-		int *six_coeff_b, int *fifteen_coeff,
-		int verbose_level);
-	void multiply_conic_times_line(int *six_coeff,
-		int *three_coeff, int *ten_coeff,
-		int verbose_level);
-	void multiply_line_times_line(int *line1,
-		int *line2, int *six_coeff,
-		int verbose_level);
-	void multiply_three_lines(int *line1, int *line2, int *line3,
-		int *ten_coeff,
-		int verbose_level);
-	void multiply_four_lines(int *line1, int *line2, int *line3, int *line4,
-		int *fifteen_coeff,
-		int verbose_level);
-	void assemble_cubic_surface(int *f1, int *f2, int *f3, int *eqn20,
-		int verbose_level);
-	void create_surface(quartic_curve_object *Q, int *eqn20, int verbose_level);
-	// Given a quartic Q in X1,X2,X3, compute an associated cubic surface
-	// whose projection from (1,0,0,0) gives back the quartic Q.
-	// Pick 4 bitangents L0,L1,L2,L3 so that the 8 points of tangency lie on a conic C.
-	// Then, create the cubic surface with equation
-	// (- lambda * mu) / 4 * X0^2 * L0 (the equation of the first of the four bitangents)
-	// + X0 * lambda * C (the conic equation)
-	// + L1 * L2 * L3 (the product of the equations of the last three bitangents)
-	// Here 1, lambda, mu are the coefficients of a linear dependency between
-	// Q (the quartic), C^2, L0*L1*L2*L3, so
-	// Q + lambda * C^2 + mu * L0*L1*L2*L3 = 0.
-	void compute_gradient(int *equation15, int *&gradient, int verbose_level);
-
-};
-
-
-// #############################################################################
-// quartic_curve_object_properties.cpp
-// #############################################################################
-
-//! properties of a particular quartic curve surface in PG(2,q), as defined by an object of class quartic_curve_object
-
-
-class quartic_curve_object_properties {
-
-public:
-
-	quartic_curve_object *QO;
-
-
-	data_structures::set_of_sets *pts_on_lines;
-		// points are stored as indices into Pts[]
-	int *f_is_on_line; // [QO->nb_pts]
-
-	tally *Bitangent_line_type;
-	int line_type_distribution[3];
-
-	data_structures::set_of_sets *lines_on_point;
-	tally *Point_type;
-
-	int f_fullness_has_been_established;
-	int f_is_full;
-	int nb_Kovalevski;
-	int nb_Kovalevski_on;
-	int nb_Kovalevski_off;
-	int *Kovalevski_point_idx;
-	long int *Kovalevski_points;
-
-	long int *Pts_off;
-	int nb_pts_off;
-
-	data_structures::set_of_sets *pts_off_on_lines;
-	int *f_is_on_line2; // [QO->nb_pts]
-
-	data_structures::set_of_sets *lines_on_points_off;
-	tally *Point_off_type;
-
-
-	int *gradient;
-
-	long int *singular_pts;
-	int nb_singular_pts;
-	int nb_non_singular_pts;
-
-	long int *tangent_line_rank_global; // [QO->nb_pts]
-	long int *tangent_line_rank_dual; // [nb_non_singular_pts]
-
-
-
-	quartic_curve_object_properties();
-	~quartic_curve_object_properties();
-	void init(quartic_curve_object *QO, int verbose_level);
-	void create_summary_file(std::string &fname,
-			std::string &surface_label, std::string &col_postfix, int verbose_level);
-	void report_properties_simple(std::ostream &ost, int verbose_level);
-	void print_equation(std::ostream &ost);
-	void print_gradient(std::ostream &ost);
-	void print_general(std::ostream &ost);
-	void print_points(std::ostream &ost);
-	void print_all_points(std::ostream &ost);
-	void print_bitangents(std::ostream &ost);
-	void print_lines_with_points_on_them(std::ostream &ost,
-			long int *Lines, int nb_lines, data_structures::set_of_sets *SoS);
-	//void print_bitangents_with_points_on_them(std::ostream &ost);
-	void points_on_curve_on_lines(int verbose_level);
-	void report_bitangent_line_type(std::ostream &ost);
-	void compute_gradient(int verbose_level);
-	void compute_singular_points_and_tangent_lines(int verbose_level);
-	// a singular point is a point where all partials vanish
-	// We compute the set of singular points into Pts[nb_pts]
-
-};
-
-
-
-// #############################################################################
-// quartic_curve_object.cpp
-// #############################################################################
-
-//! a particular quartic curve in PG(2,q), given by its equation
-
-
-class quartic_curve_object {
-
-public:
-	int q;
-	finite_field *F;
-	quartic_curve_domain *Dom;
-
-	long int *Pts; // in increasing order
-	int nb_pts;
-
-
-	//long int *Lines;
-	//int nb_lines;
-
-	int eqn15[15];
-
-	int f_has_bitangents;
-	long int bitangents28[28];
-
-	quartic_curve_object_properties *QP;
-
-
-
-	quartic_curve_object();
-	~quartic_curve_object();
-	void freeself();
-	void null();
-	void init_equation_but_no_bitangents(quartic_curve_domain *Dom,
-			int *eqn15,
-			int verbose_level);
-	void init_equation_and_bitangents(quartic_curve_domain *Dom,
-			int *eqn15, long int *bitangents28,
-			int verbose_level);
-	void init_equation_and_bitangents_and_compute_properties(quartic_curve_domain *Dom,
-			int *eqn15, long int *bitangents28,
-			int verbose_level);
-	void enumerate_points(int verbose_level);
-	void compute_properties(int verbose_level);
-	void recompute_properties(int verbose_level);
-	void identify_lines(long int *lines, int nb_lines, int *line_idx,
-		int verbose_level);
-	int find_point(long int P, int &idx);
-
-};
-
-
 
 // #############################################################################
 // spread_tables.cpp
@@ -2635,7 +2425,7 @@ class spread_tables {
 public:
 	int q;
 	int d; // = 4
-	finite_field *F;
+	field_theory::finite_field *F;
 	projective_space *P; // PG(3,q)
 	grassmann *Gr; // Gr_{4,2}
 	long int nb_lines;
@@ -2713,7 +2503,7 @@ public:
 			int verbose_level);
 	int test_if_set_of_spreads_is_line_disjoint(long int *set, int len);
 	int test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(long int *set, int len);
-	void make_exact_cover_problem(diophant *&Dio,
+	void make_exact_cover_problem(solvers::diophant *&Dio,
 			long int *live_point_index, int nb_live_points,
 			long int *live_blocks, int nb_live_blocks,
 			int nb_needed,
@@ -2746,7 +2536,7 @@ public:
 
 	projective_space *P3;
 	orthogonal *Q4;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int *Basis; // [2 * 4]
 
 	int nb_lines;
@@ -2768,7 +2558,7 @@ public:
 	~W3q();
 	void null();
 	void freeself();
-	void init(finite_field *F, int verbose_level);
+	void init(field_theory::finite_field *F, int verbose_level);
 	void find_lines(int verbose_level);
 	void print_lines();
 	int evaluate_symplectic_form(int *x4, int *y4);

@@ -102,12 +102,12 @@ poset_classification_control *poset_classification::get_control()
 	return Control;
 }
 
-action *poset_classification::get_A()
+actions::action *poset_classification::get_A()
 {
 	return Poset->A;
 }
 
-action *poset_classification::get_A2()
+actions::action *poset_classification::get_A2()
 {
 	return Poset->A2;
 }
@@ -907,7 +907,7 @@ void poset_classification::find_node_by_stabilizer_order(
 			Orbiter->Lint_vec->print(cout, set, level);
 			cout << endl;
 			
-			strong_generators *Strong_gens;
+			groups::strong_generators *Strong_gens;
 			
 			get_stabilizer_generators(Strong_gens,
 				level, i, 0  /* verbose_level */);
@@ -1021,7 +1021,7 @@ void poset_classification::get_stabilizer_group(
 }
 
 void poset_classification::get_stabilizer_generators_cleaned_up(
-	strong_generators *&gens,
+		groups::strong_generators *&gens,
 	int level, int orbit_at_level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1036,7 +1036,7 @@ void poset_classification::get_stabilizer_generators_cleaned_up(
 	get_stabilizer_group(G,
 			level, orbit_at_level, verbose_level - 1);
 
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 
 	gens->init_from_sims(G->S, 0 /* verbose_level */);
 	FREE_OBJECT(G);
@@ -1050,7 +1050,7 @@ void poset_classification::get_stabilizer_generators_cleaned_up(
 }
 
 void poset_classification::get_stabilizer_generators(
-	strong_generators *&gens,
+		groups::strong_generators *&gens,
 	int level, int orbit_at_level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1470,7 +1470,7 @@ void poset_classification::list_whole_orbit(
 {
 	long int *set;
 	int rank, len;
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 	ring_theory::longinteger_object Len, L, go;
 	ring_theory::longinteger_domain D;
 	
@@ -1737,7 +1737,7 @@ void poset_classification::map_to_canonical_k_subset(
 
 void poset_classification::get_representative_of_subset_orbit(
 	long int *set, int size, int local_orbit_no,
-	strong_generators *&Strong_gens, 
+	groups::strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

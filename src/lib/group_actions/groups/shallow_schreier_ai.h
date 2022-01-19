@@ -33,13 +33,13 @@ public:
 		nb_nodes = 0;
 	};
 
-	void generate_shallow_tree ( schreier& sch, int vl );
-	void get_degree_sequence (schreier& sch, int vl);
+	void generate_shallow_tree ( groups::schreier& sch, int vl );
+	void get_degree_sequence (groups::schreier& sch, int vl);
 	void print_degree_sequence();
 
 	~shallow_schreier_ai();
 
-	schreier* s;
+	groups::schreier* s;
 	size_t nb_revert_backs;
 	int* deg_seq;
 	int nb_nodes;

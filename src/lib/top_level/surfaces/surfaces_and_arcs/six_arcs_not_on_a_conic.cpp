@@ -49,7 +49,7 @@ void six_arcs_not_on_a_conic::freeself()
 void six_arcs_not_on_a_conic::init(
 	arc_generator_description *Descr,
 	projective_space_with_action *PA,
-	int f_test_nb_Eckardt_points, int nb_E, surface_domain *Surf,
+	int f_test_nb_Eckardt_points, int nb_E, algebraic_geometry::surface_domain *Surf,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

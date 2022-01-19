@@ -35,7 +35,7 @@ public:
 
 	int size;
 	long int *orbit_rep; // [size]
-	strong_generators *Stab_gens;
+	groups::strong_generators *Stab_gens;
 	long int *live_points;
 	int nb_live_points;
 	void *recognition_function_data;
@@ -48,7 +48,7 @@ public:
 	void init(poset_with_group_action *Poset,
 			int size, long int *orbit_rep,
 			long int *live_points, int nb_live_points,
-			strong_generators *Stab_gens,
+			groups::strong_generators *Stab_gens,
 			void *recognition_function_data,
 			int (*recognition_function)(long int *Set, int len,
 					int *Elt, void *data, int verbose_level),
@@ -303,7 +303,7 @@ public:
 
 
 void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
-		schreier *Sch, void *data, int data2, int verbose_level);
+		groups::schreier *Sch, void *data, int data2, int verbose_level);
 void poset_classification_control_early_test_function_cliques(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
@@ -434,8 +434,8 @@ public:
 	int do_group_extension_in_upstep();
 	poset_with_group_action *get_poset();
 	poset_classification_control *get_control();
-	action *get_A();
-	action *get_A2();
+	actions::action *get_A();
+	actions::action *get_A2();
 	algebra::vector_space *get_VS();
 	schreier_vector_handler *get_schreier_vector_handler();
 	int has_base_case();
@@ -499,9 +499,9 @@ public:
 			int orbit_at_level);
 	void get_stabilizer_group(group_container *&G,
 		int level, int orbit_at_level, int verbose_level);
-	void get_stabilizer_generators_cleaned_up(strong_generators *&gens,
+	void get_stabilizer_generators_cleaned_up(groups::strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
-	void get_stabilizer_generators(strong_generators *&gens,
+	void get_stabilizer_generators(groups::strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
 	void orbit_element_unrank(int depth, int orbit_idx, 
 		long int rank, long int *set, int verbose_level);
@@ -555,7 +555,7 @@ public:
 		// (in the list of orbit of subsets of size subset_size)
 	void get_representative_of_subset_orbit(long int *set, int size,
 		int local_orbit_no, 
-		strong_generators *&Strong_gens, 
+		groups::strong_generators *&Strong_gens,
 		int verbose_level);
 	void find_interesting_k_subsets(long int *the_set, int n, int k,
 		int *&interesting_sets, int &nb_interesting_sets, 
@@ -1175,7 +1175,7 @@ private:
 	
 	schreier_vector *Schreier_vector;
 	
-	action *A_on_upset;
+	actions::action *A_on_upset;
 	// only used for actions on subspace lattices
 	// it records the action on the factor space modulo the current subspace
 	// used in poset_orbit_node_downstep_subspace_action.cpp
@@ -1251,7 +1251,7 @@ public:
 
 	// in poset_orbit_node_group_theory.cpp:
 	void store_strong_generators(poset_classification *gen,
-		strong_generators *Strong_gens);
+			groups::strong_generators *Strong_gens);
 	void get_stabilizer_order(poset_classification *gen,
 			ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(poset_classification *PC);
@@ -1260,7 +1260,7 @@ public:
 		int verbose_level);
 	int test_if_stabilizer_is_trivial();
 	void get_stabilizer_generators(poset_classification *PC,
-		strong_generators *&Strong_gens,
+			groups::strong_generators *&Strong_gens,
 		int verbose_level);
 	void init_extension_node_prepare_G(
 		poset_classification *gen,
@@ -1295,28 +1295,28 @@ public:
 	void create_schreier_vector_wrapper(
 		poset_classification *gen,
 		int f_create_schreier_vector,
-		schreier *Schreier, int verbose_level);
+		groups::schreier *Schreier, int verbose_level);
 		// called from downstep_orbit_test_and_schreier_vector
 		// calls Schreier.get_schreier_vector
 	void create_schreier_vector_wrapper_subspace_action(
 		poset_classification *gen,
 		int f_create_schreier_vector,
-		schreier &Schreier,
-		action *A_factor_space, action_on_factor_space *AF,
+		groups::schreier &Schreier,
+		actions::action *A_factor_space, action_on_factor_space *AF,
 		int verbose_level);
 
 
 	// in poset_orbit_node_io.cpp:
 	void read_memory_object(
 		poset_classification *PC,
-		action *A, memory_object *m,
+		actions::action *A, memory_object *m,
 		int &nb_group_elements, int verbose_level);
 	void write_memory_object(
 		poset_classification *PC,
-		action *A, memory_object *m,
+		actions::action *A, memory_object *m,
 		int &nb_group_elements, int verbose_level);
 	long int calc_size_on_file(
-		action *A, int verbose_level);
+			actions::action *A, int verbose_level);
 	void sv_read_file(
 		poset_classification *PC,
 		std::ifstream &fp, int verbose_level);
@@ -1324,22 +1324,22 @@ public:
 		poset_classification *PC,
 		std::ofstream &fp, int verbose_level);
 	void read_file(
-		action *A, std::ifstream &fp, int &nb_group_elements,
+			actions::action *A, std::ifstream &fp, int &nb_group_elements,
 		int verbose_level);
 	void write_file(
-		action *A, std::ofstream &fp, int &nb_group_elements,
+			actions::action *A, std::ofstream &fp, int &nb_group_elements,
 		int verbose_level);
 	void save_schreier_forest(
 		poset_classification *PC,
-		schreier *Schreier,
+		groups::schreier *Schreier,
 		int verbose_level);
 	void save_shallow_schreier_forest(
 		poset_classification *PC,
 		int verbose_level);
 	void draw_schreier_forest(
 		poset_classification *PC,
-		schreier *Schreier,
-		int f_using_invariant_subset, action *AR,
+		groups::schreier *Schreier,
+		int f_using_invariant_subset, actions::action *AR,
 		int verbose_level);
 
 
@@ -1433,7 +1433,8 @@ public:
 
 		// 1st level under downstep:
 	void schreier_forest(
-		poset_classification *gen, schreier &Schreier, action *&AR,
+		poset_classification *gen,
+		groups::schreier &Schreier, actions::action *&AR,
 		int lvl, 
 		int f_use_invariant_subset_if_available, 
 		int &f_using_invariant_subset, 
@@ -1451,7 +1452,8 @@ public:
 		// Schreier.compute_all_point_orbits
 		// and possibly printed using downstep_orbits_print
 	void downstep_orbit_test_and_schreier_vector(
-		poset_classification *gen, schreier *Schreier, action *AR,
+		poset_classification *gen,
+		groups::schreier *Schreier, actions::action *AR,
 		int lvl, 
 		int f_use_invariant_subset_if_available, 
 		int f_using_invariant_subset,
@@ -1463,7 +1465,8 @@ public:
 		// create_schreier_vector_wrapper
 		// The order in which these two functions are called matters.
 	void downstep_implicit_fusion(
-		poset_classification *gen, schreier &Schreier, action *AR,
+		poset_classification *gen,
+		groups::schreier &Schreier, actions::action *AR,
 		int f_using_invariant_subset,
 		int lvl, 
 		int f_implicit_fusion, 
@@ -1473,7 +1476,7 @@ public:
 		// once downstep_orbit_test_and_schreier_vector is done
 		// calls test_orbits_for_implicit_fusion
 	void find_extensions(poset_classification *gen, 
-		schreier &O, action *AR, int f_using_invariant_subset,
+			groups::schreier &O, actions::action *AR, int f_using_invariant_subset,
 		int lvl, 
 		int verbose_level);
 		// called by downstep
@@ -1501,7 +1504,7 @@ public:
 		// and calls test_point_using_check_functions otherwise
 
 	void check_orbits_wrapper(poset_classification *gen, 
-		schreier *Schreier, action *AR,
+			groups::schreier *Schreier, actions::action *AR,
 		int lvl, 
 		int &nb_good_orbits1, int &nb_points1, 
 		//int f_use_incremental_test_func_if_available,
@@ -1513,14 +1516,14 @@ public:
 		// Calls check_orbits
 
 	void test_orbits_for_implicit_fusion(poset_classification *gen, 
-		schreier &Schreier, action *AR,
+			groups::schreier &Schreier, actions::action *AR,
 		int f_using_invariant_subset, 
 		int lvl, int verbose_level);
 		// called from downstep_implicit_fusion
 		// eliminates implicit fusion orbits from the 
 		// Schreier data structure, 
 	void check_orbits(poset_classification *gen, 
-		schreier *Schreier, action *AR,
+			groups::schreier *Schreier, actions::action *AR,
 		//int f_using_invariant_subset,
 		int lvl, 
 		//int f_use_incremental_test_func_if_available,
@@ -1540,11 +1543,11 @@ public:
 		// Otherwise, calls gen->check_the_set 
 		// (if gen->f_candidate_check_func).
 		// Otherwise accepts any point.
-	void relabel_schreier_vector(action *AR, int verbose_level);
+	void relabel_schreier_vector(actions::action *AR, int verbose_level);
 		// called from compute_schreier_vector, 
 		// downstep_orbit_test_and_schreier_vector
 	void downstep_orbits_print(poset_classification *gen, 
-		schreier *Schreier, action *AR,
+			groups::schreier *Schreier, actions::action *AR,
 		int lvl, 
 		int f_print_orbits,
 		int max_orbits, int max_points_per_orbit);
@@ -1568,27 +1571,27 @@ public:
 		int lvl, int verbose_level);
 	void setup_factor_space_action_with_early_test(
 		poset_classification *gen,
-		action_on_factor_space &AF, action &A_factor_space, 
+		action_on_factor_space &AF, actions::action &A_factor_space,
 		int lvl, int verbose_level);
 	void setup_factor_space_action(
 		poset_classification *gen,
-		action_on_factor_space &AF, action &A_factor_space, 
+		action_on_factor_space &AF, actions::action &A_factor_space,
 		int lvl, int f_compute_tables, 
 		int verbose_level);
 	void downstep_subspace_action_print_orbits(
-		poset_classification *gen, schreier &Schreier, 
+		poset_classification *gen, groups::schreier &Schreier,
 		int lvl, 
 		int f_print_orbits, 
 		int verbose_level);
 	void downstep_orbits_subspace_action(
-		poset_classification *gen, schreier &Schreier, 
+		poset_classification *gen, groups::schreier &Schreier,
 		int lvl, 
 		int f_use_invariant_subset_if_available, 
 		int &f_using_invariant_subset, 
 		int verbose_level);
 	void find_extensions_subspace_action(
-		poset_classification *gen, schreier &O,
-		action *A_factor_space, action_on_factor_space *AF, 
+		poset_classification *gen, groups::schreier &O,
+		actions::action *A_factor_space, action_on_factor_space *AF,
 		int lvl, int f_implicit_fusion, int verbose_level);
 };
 
@@ -1610,10 +1613,10 @@ public:
 	int f_subspace_lattice;
 	algebra::vector_space *VS;
 
-	action *A; // the action in which the group is given
-	action *A2; // the action in which we do the search
+	actions::action *A; // the action in which the group is given
+	actions::action *A2; // the action in which we do the search
 
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 	ring_theory::longinteger_object go;
 
 	int f_has_orbit_based_testing;
@@ -1627,17 +1630,17 @@ public:
 	~poset_with_group_action();
 	void null();
 	void freeself();
-	void init_subset_lattice(action *A, action *A2,
-			strong_generators *Strong_gens,
+	void init_subset_lattice(actions::action *A, actions::action *A2,
+			groups::strong_generators *Strong_gens,
 			int verbose_level);
-	void init_subspace_lattice(action *A, action *A2,
-			strong_generators *Strong_gens,
+	void init_subspace_lattice(actions::action *A, actions::action *A2,
+			groups::strong_generators *Strong_gens,
 			algebra::vector_space *VS,
 			int verbose_level);
 	void init(poset_description *description,
-		action *A, // the action in which the group is given
-		action *A2, // the action in which we do the search
-		strong_generators *Strong_gens,
+			actions::action *A, // the action in which the group is given
+			actions::action *A2, // the action in which we do the search
+			groups::strong_generators *Strong_gens,
 		int verbose_level);
 	void add_independence_condition(
 			int independence_value,

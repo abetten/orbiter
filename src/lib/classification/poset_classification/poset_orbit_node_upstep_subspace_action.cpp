@@ -26,7 +26,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	int projected_pt, projected_pt0;
 
 	action_on_factor_space *AF;
-	action *A_factor_space;
+	actions::action *A_factor_space;
 
 	//int f_check_image = FALSE;
 

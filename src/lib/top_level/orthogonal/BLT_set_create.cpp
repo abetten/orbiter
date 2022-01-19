@@ -97,10 +97,10 @@ void BLT_set_create::init(
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
 			geometry_global GG;
-			finite_field *FQ;
+			field_theory::finite_field *FQ;
 			int q, Q;
 
-			FQ = NEW_OBJECT(finite_field);
+			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
 			FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
@@ -121,10 +121,10 @@ void BLT_set_create::init(
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
 			geometry_global GG;
-			finite_field *FQ;
+			field_theory::finite_field *FQ;
 			int q, Q;
 
-			FQ = NEW_OBJECT(finite_field);
+			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
 			FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
@@ -145,10 +145,10 @@ void BLT_set_create::init(
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
 			geometry_global GG;
-			finite_field *FQ;
+			field_theory::finite_field *FQ;
 			int q, Q;
 
-			FQ = NEW_OBJECT(finite_field);
+			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
 			FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
@@ -274,7 +274,7 @@ void BLT_set_create::init(
 		set = NEW_lint(OA->Descr->F->q + 1);
 		Orbiter->Lint_vec->copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
 
-		Sg = NEW_OBJECT(strong_generators);
+		Sg = NEW_OBJECT(groups::strong_generators);
 
 		if (f_v) {
 			cout << "BLT_set_create::init before "

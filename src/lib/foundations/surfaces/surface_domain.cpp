@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 surface_domain::surface_domain()
@@ -181,7 +182,7 @@ void surface_domain::null()
 {
 }
 
-void surface_domain::init(finite_field *F, int verbose_level)
+void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1048,6 +1049,5 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 }
 
 
-}
-}
+}}}
 

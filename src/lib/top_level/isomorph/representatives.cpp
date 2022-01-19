@@ -77,7 +77,7 @@ void representatives::free()
 		}
 }
 
-void representatives::init(action *A,
+void representatives::init(actions::action *A,
 		int nb_objects, std::string &prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -93,7 +93,7 @@ void representatives::init(action *A,
 
 	
 	rep = NEW_int(nb_objects);
-	stab = new psims[nb_objects];
+	stab = new groups::psims[nb_objects];
 	fusion = NEW_int(nb_objects);
 	handle = NEW_int(nb_objects);
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -264,7 +264,7 @@ void representatives::write_representatives_and_stabilizers(
 	f1 << endl;
 	
 	for (i = 0; i < count; i++) {
-		sims *Stab;
+		groups::sims *Stab;
 		ring_theory::longinteger_object go;
 		vector_ge SG;
 		
@@ -341,11 +341,11 @@ void representatives::read_representatives_and_stabilizers(
 			}
 		}
 	for (i = 0; i < count; i++) {
-		sims *Stab;
+		groups::sims *Stab;
 		ring_theory::longinteger_object go;
 		vector_ge gens;
 		
-		stab[i] = NEW_OBJECT(sims);
+		stab[i] = NEW_OBJECT(groups::sims);
 		Stab = stab[i];
 		f1 >> a >> b >> c >> d >> e;
 		if (a != i) {

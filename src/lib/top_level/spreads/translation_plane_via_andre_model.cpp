@@ -103,7 +103,7 @@ void translation_plane_via_andre_model::freeself()
 
 void translation_plane_via_andre_model::init(
 	long int *spread_elements_numeric,
-	int k, action *An, action *An1,
+	int k, actions::action *An, actions::action *An1,
 	vector_ge *spread_stab_gens, ring_theory::longinteger_object &spread_stab_go,
 	std::string &label,
 	int verbose_level)
@@ -392,11 +392,11 @@ void translation_plane_via_andre_model::init(
 	}
 
 
-	OnAndre = NEW_OBJECT(action);
+	OnAndre = NEW_OBJECT(actions::action);
 	OnAndre->induced_action_on_andre(An, An1, Andre, verbose_level);
 
 
-	strong_gens = NEW_OBJECT(strong_generators);
+	strong_gens = NEW_OBJECT(groups::strong_generators);
 
 
 	if (f_v) {

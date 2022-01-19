@@ -28,7 +28,7 @@ orthogonal_indexing::~orthogonal_indexing()
 {
 }
 
-void orthogonal_indexing::init(finite_field *F, int verbose_level)
+void orthogonal_indexing::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

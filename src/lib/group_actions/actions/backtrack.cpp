@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 typedef struct action_is_minimal_data action_is_minimal_data;
@@ -346,7 +347,7 @@ int action::is_minimal(int size, long int *set,
 	int *transporter_witness;
 	int ret, backtrack_nodes;
 	int f_get_automorphism_group = FALSE;
-	sims Aut;
+	groups::sims Aut;
 	
 	witness = NEW_lint(size);
 	transporter_witness = NEW_int(elt_size_in_int);
@@ -364,7 +365,7 @@ int action::is_minimal(int size, long int *set,
 void action::make_canonical(int size, long int *set,
 	long int *canonical_set, int *transporter,
 	int &total_backtrack_nodes, 
-	int f_get_automorphism_group, sims *Aut,
+	int f_get_automorphism_group, groups::sims *Aut,
 	int verbose_level)
 {
 	//verbose_level += 10;
@@ -476,7 +477,7 @@ void action::make_canonical(int size, long int *set,
 int action::is_minimal_witness(int size, long int *set,
 	int &backtrack_level, long int *witness, int *transporter_witness,
 	int &backtrack_nodes, 
-	int f_get_automorphism_group, sims &Aut,
+	int f_get_automorphism_group, groups::sims &Aut,
 	int verbose_level)
 {
 	action A;
@@ -703,7 +704,7 @@ finish:
 				//int_vec_print(cout, D.aut_data + i * base_len, base_len);
 			}
 		}
-		sims Aut2, K;
+		groups::sims Aut2, K;
 		ring_theory::longinteger_object go, go2;
 		
 		if (f_vv) {
@@ -767,7 +768,8 @@ finish:
 	return ret;
 }
 
-}}
+}}}
+
 
 
 

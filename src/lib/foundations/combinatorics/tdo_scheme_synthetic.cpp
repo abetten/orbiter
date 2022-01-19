@@ -1692,7 +1692,7 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	nb_vars = l2 + 1; // 1 slack variable
 	nb_eqns = 1;
 	
-	diophant D;
+	solvers::diophant D;
 	
 	D.open(nb_eqns, nb_vars);
 		
@@ -1770,7 +1770,7 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	Nb_eqns = l2 + nb_eqns_joining + nb_eqns_upper_bound;
 	Nb_vars = nb_sol;
 	
-	diophant D2;
+	solvers::diophant D2;
 	
 	D2.open(Nb_eqns, Nb_vars);
 	point_types = NEW_int(nb_point_types * point_type_len);

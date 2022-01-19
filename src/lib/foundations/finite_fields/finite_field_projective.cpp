@@ -16,6 +16,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
+
 
 void finite_field::PG_element_apply_frobenius(int n,
 		int *v, int f)
@@ -2400,5 +2402,6 @@ int finite_field::evaluate_Fermat_cubic(int *v)
 
 
 
-}}
+}}}
+
 

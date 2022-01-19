@@ -559,12 +559,12 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 
 
 
-	strong_generators *gens;
+	groups::strong_generators *gens;
 
 	get_stabilizer_generators(gens,
 			level, orbit_at_level, Control->verbose_level);
 
-	strong_generators *projectivity_group_gens;
+	groups::strong_generators *projectivity_group_gens;
 
 	Poset->A->compute_projectivity_subgroup(projectivity_group_gens,
 			gens, 0 /*verbose_level*/);

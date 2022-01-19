@@ -21,8 +21,8 @@ namespace top_level {
 
 
 void algebra_global_with_action::orbits_under_conjugation(
-		long int *the_set, int set_size, sims *S,
-		strong_generators *SG,
+		long int *the_set, int set_size, groups::sims *S,
+		groups::strong_generators *SG,
 		vector_ge *Transporter,
 		int verbose_level)
 // this is related to Betten, Topalova, Zhelezova 2021,
@@ -33,7 +33,7 @@ void algebra_global_with_action::orbits_under_conjugation(
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation" << endl;
 	}
-	action A_conj;
+	actions::action A_conj;
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
 				"before A_conj.induced_action_by_conjugation" << endl;
@@ -46,7 +46,7 @@ void algebra_global_with_action::orbits_under_conjugation(
 				"created action by conjugation" << endl;
 	}
 
-	action *A_conj_restricted;
+	actions::action *A_conj_restricted;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
@@ -63,7 +63,7 @@ void algebra_global_with_action::orbits_under_conjugation(
 
 
 
-	schreier Classes;
+	groups::schreier Classes;
 	Classes.init(A_conj_restricted, verbose_level - 2);
 	Classes.init_generators(*SG->gens, verbose_level - 2);
 	if (f_v) {
@@ -98,9 +98,9 @@ void algebra_global_with_action::orbits_under_conjugation(
 }
 
 void algebra_global_with_action::create_subgroups(
-		strong_generators *SG,
-		long int *the_set, int set_size, sims *S, action *A_conj,
-		schreier *Classes,
+		groups::strong_generators *SG,
+		long int *the_set, int set_size, groups::sims *S, actions::action *A_conj,
+		groups::schreier *Classes,
 		vector_ge *Transporter,
 		int verbose_level)
 // this is related to Betten, Topalova, Zhelezova 2021,
@@ -154,7 +154,7 @@ void algebra_global_with_action::create_subgroups(
 	int *Elt2;
 	int nb_flag_orbits;
 	long int *Flags;
-	strong_generators **Flag_stab;
+	groups::strong_generators **Flag_stab;
 	int *SO;
 	int *SOL;
 	int nb_reject;
@@ -176,7 +176,7 @@ void algebra_global_with_action::create_subgroups(
 
 	nb_flag_orbits = 0;
 	Flags = NEW_lint(Classes->nb_orbits * 3);
-	Flag_stab = new pstrong_generators [Classes->nb_orbits];
+	Flag_stab = new groups::pstrong_generators [Classes->nb_orbits];
 	SO = NEW_int(Classes->nb_orbits);
 	SOL = NEW_int(Classes->nb_orbits);
 
@@ -262,7 +262,7 @@ void algebra_global_with_action::create_subgroups(
 	int *f_is_definition;
 	int *flag_orbit_of_iso_type;
 	int *f_fused;
-	strong_generators **Aut;
+	groups::strong_generators **Aut;
 	long int cur_flag[3];
 	long int cur_flag_mapped1[3];
 	int h, pt;
@@ -275,7 +275,7 @@ void algebra_global_with_action::create_subgroups(
 	Orbiter->Int_vec->zero(f_is_definition, nb_flag_orbits);
 	Orbiter->Int_vec->zero(f_fused, nb_flag_orbits);
 
-	Aut = new pstrong_generators [nb_flag_orbits];
+	Aut = new groups::pstrong_generators [nb_flag_orbits];
 
 
 	nb_iso = 0;
@@ -393,9 +393,9 @@ void algebra_global_with_action::create_subgroups(
 
 		}
 
-		strong_generators *aut;
+		groups::strong_generators *aut;
 
-		aut = NEW_OBJECT(strong_generators);
+		aut = NEW_OBJECT(groups::strong_generators);
 
 		if (f_v) {
 			cout << "flag " << flag << " stab order = " << Flag_stab[flag]->group_order_as_lint()
@@ -575,7 +575,7 @@ void algebra_global_with_action::create_subgroups(
 
 void algebra_global_with_action::orbits_on_set_from_file(
 		long int *the_set, int set_size,
-		action *A1, action *A2,
+		actions::action *A1, actions::action *A2,
 		vector_ge *gens,
 		std::string &label_set,
 		std::string &label_group,
@@ -732,8 +732,9 @@ void algebra_global_with_action::orbits_on_set_from_file(
 }
 
 
-void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action *A,
-		sims *override_Sims,
+void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
+		actions::action *A,
+		groups::sims *override_Sims,
 		std::string &label,
 		std::string &label_tex,
 		int verbose_level)
@@ -743,7 +744,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action 
 	string fname_output;
 	file_io Fio;
 	int d;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 
 	if (f_v) {
@@ -949,7 +950,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action 
 
 
 
-void algebra_global_with_action::classes_GL(finite_field *F, int d,
+void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d,
 		int f_no_eigenvalue_one, int verbose_level)
 {
 	algebra::gl_classes C;
@@ -962,7 +963,7 @@ void algebra_global_with_action::classes_GL(finite_field *F, int d,
 
 	C.make_classes(R, nb_classes, f_no_eigenvalue_one, verbose_level);
 
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object Go;
 	vector_ge *nice_gens;
 	int a;
@@ -971,7 +972,7 @@ void algebra_global_with_action::classes_GL(finite_field *F, int d,
 
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1031,12 +1032,12 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_normal_form" << endl;
 		}
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	if (f_v) {
@@ -1058,12 +1059,12 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 
 
 
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object Go;
 	vector_ge *nice_gens;
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -1124,9 +1125,9 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	C.init(d, F, verbose_level);
@@ -1135,12 +1136,12 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 
 
 
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object Go;
 	vector_ge *nice_gens;
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1195,9 +1196,9 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	C.init(d, F, verbose_level);
@@ -1206,13 +1207,13 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 
 
 
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object Go;
 	int *Class_count;
 	vector_ge *nice_gens;
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1280,9 +1281,9 @@ void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	C.init(d, F, verbose_level);
 
@@ -1328,9 +1329,9 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 	int *Class_rep;
 	int *List;
 	int list_sz, a, b, j, h;
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	if (f_poly) {
 		F->init_override_polynomial(q, poly, FALSE /* f_without_tables */, 0);
 	}
@@ -1343,12 +1344,12 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one, verbose_level);
 
 
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object Go;
 	vector_ge *nice_gens;
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_projective_group(d /* n */,
 			F,
 			FALSE /* f_semilinear */,
@@ -1520,15 +1521,15 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 // problem elt_idx does not describe the group element uniquely.
 // Reason: the sims chain is not canonical.
 {
-	action *A;
+	actions::action *A;
 	ring_theory::longinteger_object Go;
-	finite_field *F;
+	field_theory::finite_field *F;
 	vector_ge *nice_gens;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1614,7 +1615,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 		A->element_move(Elt1, gens->ith(i), 0);
 		}
 
-	sims *Cent;
+	groups::sims *Cent;
 
 	Cent = A->create_sims_from_generators_with_target_group_order_lint(
 			gens, sz, 0 /* verbose_level */);
@@ -1648,16 +1649,16 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 void algebra_global_with_action::centralizer(int q, int d,
 		int elt_idx, int verbose_level)
 {
-	finite_field *F;
-	action *A_PGL;
-	action *A_GL;
+	field_theory::finite_field *F;
+	actions::action *A_PGL;
+	actions::action *A_GL;
 	ring_theory::longinteger_object Go;
 	vector_ge *nice_gens;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
-	A_PGL = NEW_OBJECT(action);
+	A_PGL = NEW_OBJECT(actions::action);
 	A_PGL->init_projective_group(d /* n */, F,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1667,7 +1668,7 @@ void algebra_global_with_action::centralizer(int q, int d,
 	A_PGL->print_base();
 	A_PGL->group_order(Go);
 
-	A_GL = NEW_OBJECT(action);
+	A_GL = NEW_OBJECT(actions::action);
 	A_GL->init_general_linear_group(d /* n */, F,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1689,12 +1690,12 @@ void algebra_global_with_action::centralizer(int q, int d,
 	A_PGL->Sims->element_unrank_lint(elt_idx, Elt);
 	Orbiter->Int_vec->matrix_print(Elt, d, d);
 
-	strong_generators *Cent;
-	strong_generators *Cent_GL;
+	groups::strong_generators *Cent;
+	groups::strong_generators *Cent_GL;
 	ring_theory::longinteger_object go, go1;
 
-	Cent = NEW_OBJECT(strong_generators);
-	Cent_GL = NEW_OBJECT(strong_generators);
+	Cent = NEW_OBJECT(groups::strong_generators);
+	Cent_GL = NEW_OBJECT(groups::strong_generators);
 
 	cout << "before Cent->init_centralizer_of_matrix" << endl;
 	Cent->init_centralizer_of_matrix(A_PGL, Elt, verbose_level);
@@ -1722,15 +1723,15 @@ void algebra_global_with_action::centralizer(int q, int d,
 
 void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 {
-	action *A;
-	finite_field *F;
+	actions::action *A;
+	field_theory::finite_field *F;
 	ring_theory::longinteger_object Go;
 	vector_ge *nice_gens;
 	int go, i;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1753,7 +1754,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 		A->Sims->element_unrank_lint(i, Elt);
 		Orbiter->Int_vec->matrix_print(Elt, d, d);
 
-		sims *Cent;
+		groups::sims *Cent;
 		ring_theory::longinteger_object cent_go;
 
 		Cent = A->create_sims_for_centralizer_of_matrix(
@@ -1778,7 +1779,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 
 
 void algebra_global_with_action::compute_regular_representation(
-		action *A, sims *S,
+		actions::action *A, groups::sims *S,
 		vector_ge *SG, int *&perm, int verbose_level)
 {
 	ring_theory::longinteger_object go;
@@ -1808,7 +1809,7 @@ void algebra_global_with_action::compute_regular_representation(
 }
 
 void algebra_global_with_action::presentation(
-		action *A, sims *S, int goi,
+		actions::action *A, groups::sims *S, int goi,
 		vector_ge *gens, int *primes,
 		int verbose_level)
 {
@@ -1945,7 +1946,7 @@ void algebra_global_with_action::presentation(
 }
 
 
-void algebra_global_with_action::do_eigenstuff(finite_field *F,
+void algebra_global_with_action::do_eigenstuff(field_theory::finite_field *F,
 		int size, int *Data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2986,8 +2987,8 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 
 void algebra_global_with_action::report_tactical_decomposition_by_automorphism_group(
 		ostream &ost, projective_space *P,
-		action *A_on_points, action *A_on_lines,
-		strong_generators *gens, int size_limit_for_printing,
+		actions::action *A_on_points, actions::action *A_on_lines,
+		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3060,9 +3061,9 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 
 
 	{
-		schreier *Sch_points;
-		schreier *Sch_lines;
-		Sch_points = NEW_OBJECT(schreier);
+		groups::schreier *Sch_points;
+		groups::schreier *Sch_lines;
+		Sch_points = NEW_OBJECT(groups::schreier);
 		Sch_points->init(A_on_points, verbose_level - 2);
 		Sch_points->initialize_tables();
 		Sch_points->init_generators(*gens->gens /* *generators */, verbose_level - 2);
@@ -3072,7 +3073,7 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 			cout << "found " << Sch_points->nb_orbits
 					<< " orbits on points" << endl;
 		}
-		Sch_lines = NEW_OBJECT(schreier);
+		Sch_lines = NEW_OBJECT(groups::schreier);
 		Sch_lines->init(A_on_lines, verbose_level - 2);
 		Sch_lines->initialize_tables();
 		Sch_lines->init_generators(*gens->gens /* *generators */, verbose_level - 2);
@@ -3116,7 +3117,7 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 
 void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 		poset_classification_control *Control,
-		linear_group *LG,
+		groups::linear_group *LG,
 		int d, int target_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3187,7 +3188,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 }
 
 void algebra_global_with_action::centralizer_of_element(
-		action *A, sims *S,
+		actions::action *A, groups::sims *S,
 		std::string &element_description,
 		std::string &label, int verbose_level)
 {
@@ -3250,7 +3251,7 @@ void algebra_global_with_action::centralizer_of_element(
 				"before centralizer_using_MAGMA" << endl;
 	}
 
-	strong_generators *gens;
+	groups::strong_generators *gens;
 
 	A->centralizer_using_MAGMA(prefix,
 			S, Elt, gens, verbose_level);
@@ -3331,7 +3332,7 @@ void algebra_global_with_action::centralizer_of_element(
 }
 
 void algebra_global_with_action::normalizer_of_cyclic_subgroup(
-		action *A, sims *S,
+		actions::action *A, groups::sims *S,
 		std::string &element_description,
 		std::string &label, int verbose_level)
 {
@@ -3401,7 +3402,7 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 				"before normalizer_of_cyclic_group_using_MAGMA" << endl;
 	}
 
-	strong_generators *gens;
+	groups::strong_generators *gens;
 
 	A->normalizer_of_cyclic_group_using_MAGMA(prefix,
 			S, Elt, gens, verbose_level);
@@ -3493,12 +3494,12 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 }
 
 void algebra_global_with_action::find_subgroups(
-		action *A, sims *S,
+		actions::action *A, groups::sims *S,
 		int subgroup_order,
 		std::string &label,
 		int &nb_subgroups,
-		strong_generators *&H_gens,
-		strong_generators *&N_gens,
+		groups::strong_generators *&H_gens,
+		groups::strong_generators *&N_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3543,14 +3544,14 @@ void algebra_global_with_action::find_subgroups(
 
 
 void algebra_global_with_action::relative_order_vector_of_cosets(
-		action *A, strong_generators *SG,
+		actions::action *A, groups::strong_generators *SG,
 		vector_ge *cosets, int *&relative_order_table, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
 	int *Elt2;
 	//int *Elt3;
-	sims *S;
+	groups::sims *S;
 	int i, drop_out_level, image, order;
 
 	if (f_v) {
@@ -3588,7 +3589,7 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 }
 
 void algebra_global_with_action::do_orbits_on_polynomials(
-		linear_group *LG,
+		groups::linear_group *LG,
 		int degree_of_poly,
 		int f_recognize, std::string &recognize_text,
 		int f_draw_tree, int draw_tree_idx, layered_graph_draw_options *Opt,
@@ -3639,7 +3640,7 @@ void algebra_global_with_action::do_orbits_on_polynomials(
 }
 
 void algebra_global_with_action::representation_on_polynomials(
-		linear_group *LG,
+		groups::linear_group *LG,
 		int degree_of_poly,
 		int verbose_level)
 {
@@ -3653,8 +3654,8 @@ void algebra_global_with_action::representation_on_polynomials(
 	}
 
 
-	finite_field *F;
-	action *A;
+	field_theory::finite_field *F;
+	actions::action *A;
 	//matrix_group *M;
 	int n;
 	//int degree;
@@ -3689,9 +3690,9 @@ void algebra_global_with_action::representation_on_polynomials(
 			Monomial_ordering_type,
 			verbose_level);
 
-	action *A2;
+	actions::action *A2;
 
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_on_homogeneous_polynomials(A,
 		HPD,
 		FALSE /* f_induce_action */, NULL,
@@ -3749,7 +3750,7 @@ void algebra_global_with_action::representation_on_polynomials(
 
 
 void algebra_global_with_action::do_eigenstuff_with_coefficients(
-		finite_field *F, int n, std::string &coeffs_text, int verbose_level)
+		field_theory::finite_field *F, int n, std::string &coeffs_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3776,7 +3777,7 @@ void algebra_global_with_action::do_eigenstuff_with_coefficients(
 }
 
 void algebra_global_with_action::do_eigenstuff_from_file(
-		finite_field *F, int n, std::string &fname, int verbose_level)
+		field_theory::finite_field *F, int n, std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3815,11 +3816,11 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 
 
 void algebra_global_with_action::orbits_on_points(
-		action *A2,
-		strong_generators *Strong_gens,
+		actions::action *A2,
+		groups::strong_generators *Strong_gens,
 		int f_load_save,
 		std::string &prefix,
-		orbits_on_something *&Orb,
+		groups::orbits_on_something *&Orb,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3832,7 +3833,7 @@ void algebra_global_with_action::orbits_on_points(
 
 	//orbits_on_something *Orb;
 
-	Orb = NEW_OBJECT(orbits_on_something);
+	Orb = NEW_OBJECT(groups::orbits_on_something);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_on_points before Orb->init" << endl;
@@ -3856,7 +3857,7 @@ void algebra_global_with_action::orbits_on_points(
 }
 
 void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
-		action *A1, action *A2,
+		actions::action *A1, actions::action *A2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3864,8 +3865,8 @@ void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
 	if (f_v) {
 		cout << "algebra_global_with_action::find_singer_cycle" << endl;
 	}
-	sims *H;
-	strong_generators *SG;
+	groups::sims *H;
+	groups::strong_generators *SG;
 
 	SG = Any_group->get_strong_generators();
 
@@ -3886,7 +3887,7 @@ void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
 		cout << "group_theoretic_activity::find_singer_cycle needs matrix group" << endl;
 		exit(1);
 	}
-	matrix_group *M;
+	groups::matrix_group *M;
 
 	M = A1->get_matrix_group();
 	q = M->GFq->q;
@@ -3949,7 +3950,7 @@ void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
 }
 
 void algebra_global_with_action::search_element_of_order(any_group *Any_group,
-		action *A1, action *A2,
+		actions::action *A1, actions::action *A2,
 		int order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3957,8 +3958,8 @@ void algebra_global_with_action::search_element_of_order(any_group *Any_group,
 	if (f_v) {
 		cout << "algebra_global_with_action::search_element_of_order" << endl;
 	}
-	sims *H;
-	strong_generators *SG;
+	groups::sims *H;
+	groups::strong_generators *SG;
 
 	SG = Any_group->get_strong_generators();
 
@@ -4015,7 +4016,7 @@ void algebra_global_with_action::search_element_of_order(any_group *Any_group,
 }
 
 void algebra_global_with_action::find_standard_generators(any_group *Any_group,
-		action *A1, action *A2,
+		actions::action *A1, actions::action *A2,
 		int order_a, int order_b, int order_ab, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4023,8 +4024,8 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 	if (f_v) {
 		cout << "algebra_global_with_action::find_standard_generators" << endl;
 	}
-	sims *H;
-	strong_generators *SG;
+	groups::sims *H;
+	groups::strong_generators *SG;
 
 	SG = Any_group->get_strong_generators();
 

@@ -91,7 +91,7 @@ ovoid_classify::~ovoid_classify()
 }
 
 void ovoid_classify::init(ovoid_classify_description *Descr,
-		linear_group *LG,
+		groups::linear_group *LG,
 		int &verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -484,10 +484,10 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 			int max_starter;
 
 
-			strong_generators *SG;
+			groups::strong_generators *SG;
 			ring_theory::longinteger_object go;
 
-			SG = NEW_OBJECT(strong_generators);
+			SG = NEW_OBJECT(groups::strong_generators);
 			SG->init(A);
 			SG->decode_ascii_coding(
 					ODF->Aut_ascii[orbit_idx], 0 /* verbose_level */);
@@ -605,10 +605,10 @@ void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
 		int max_starter;
 
 
-		strong_generators *SG;
+		groups::strong_generators *SG;
 		ring_theory::longinteger_object go;
 
-		SG = NEW_OBJECT(strong_generators);
+		SG = NEW_OBJECT(groups::strong_generators);
 		SG->init(A);
 		SG->decode_ascii_coding(ODF->Aut_ascii[orbit_idx],
 				0 /* verbose_level */);

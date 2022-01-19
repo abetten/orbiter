@@ -142,7 +142,7 @@ void knarr::freeself()
 		}
 }
 
-void knarr::init(finite_field *F, int BLT_no, int verbose_level)
+void knarr::init(field_theory::finite_field *F, int BLT_no, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

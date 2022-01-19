@@ -63,7 +63,7 @@ void arc_partition::freeself()
 
 void arc_partition::init(
 	arc_orbits_on_pairs *OP, int pair_orbit_idx,
-	action *A, action *A_on_arc,
+	actions::action *A, actions::action *A_on_arc,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -119,7 +119,7 @@ void arc_partition::init(
 			2,
 			verbose_level);
 
-	Orbits_on_partition = NEW_OBJECT(schreier);
+	Orbits_on_partition = NEW_OBJECT(groups::schreier);
 
 	if (f_v) {
 		cout << "arc_partition::init "

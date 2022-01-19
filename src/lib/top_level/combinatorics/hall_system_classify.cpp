@@ -177,7 +177,7 @@ void hall_system_classify::init(
 		cout << "hall_system_classify::init "
 				"before A->init_permutation_group" << endl;
 		}
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	int f_no_base = FALSE;
 
 	A->init_symmetric_group(nm1 /* degree */, f_no_base, verbose_level - 1);
@@ -195,7 +195,7 @@ void hall_system_classify::init(
 
 	int degree; // nb_pairs * 2
 
-	Strong_gens_Hall_reflection = NEW_OBJECT(strong_generators);
+	Strong_gens_Hall_reflection = NEW_OBJECT(groups::strong_generators);
 	Strong_gens_Hall_reflection->init(A);
 	Strong_gens_Hall_reflection->Hall_reflection(
 		nb_pairs, degree, verbose_level);
@@ -206,7 +206,7 @@ void hall_system_classify::init(
 				"creating Strong_gens_normalizer" << endl;
 	}
 
-	Strong_gens_normalizer = NEW_OBJECT(strong_generators);
+	Strong_gens_normalizer = NEW_OBJECT(groups::strong_generators);
 	Strong_gens_normalizer->init(A);
 	Strong_gens_normalizer->normalizer_of_a_Hall_reflection(
 		nb_pairs, degree, verbose_level);
@@ -221,7 +221,7 @@ void hall_system_classify::init(
 				"after Strong_gens->create_sims" << endl;
 	}
 
-	A_on_triples = NEW_OBJECT(action);
+	A_on_triples = NEW_OBJECT(actions::action);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before A_on_triples->induced_action_on_sets" << endl;
@@ -329,7 +329,7 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 					<< fname_orbits_on_triples << endl;
 		}
 
-		Orbits_on_triples = NEW_OBJECT(schreier);
+		Orbits_on_triples = NEW_OBJECT(groups::schreier);
 
 		Orbits_on_triples->init(A_on_triples, verbose_level - 2);
 		Orbits_on_triples->initialize_tables();
@@ -376,7 +376,7 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 		cout << "Orbits_on_triples:" << endl;
 		Orbits_on_triples->print(cout);
 	}
-	A_on_orbits = NEW_OBJECT(action);
+	A_on_orbits = NEW_OBJECT(actions::action);
 	A_on_orbits->induced_action_on_orbits(A_on_triples,
 			Orbits_on_triples, f_play_it_safe, verbose_level);
 

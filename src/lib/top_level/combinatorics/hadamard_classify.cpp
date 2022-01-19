@@ -292,7 +292,7 @@ void hadamard_classify::init(int n, int f_draw,
 				"uncolored graph:" << endl;
 		}
 
-	nauty_interface_with_group Nauty;
+	actions::nauty_interface_with_group Nauty;
 
 
 	A = Nauty.create_automorphism_group_of_graph_bitvec(

@@ -16,7 +16,8 @@ namespace orbiter {
 namespace top_level {
 
 
-void difference_set_in_heisenberg_group::init(int n, finite_field *F, int verbose_level)
+void difference_set_in_heisenberg_group::init(int n,
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i; //, j, a, b, ord;
@@ -135,7 +136,7 @@ void difference_set_in_heisenberg_group::init(int n, finite_field *F, int verbos
 	cout << "The automorphism group has order " << Aut_order << endl;
 #endif
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	A->init_automorphism_group_from_group_table(fname_base,
 		Table, H->group_order, gens, nb_gens,
@@ -199,7 +200,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	U_gens->init_single(A, E1, verbose_level - 2);
 
 	Aut = Aut_gens->create_sims(verbose_level);
-	U = NEW_OBJECT(sims);
+	U = NEW_OBJECT(groups::sims);
 
 	cout << "The group U" << endl;
 	U = A->create_sims_from_generators_without_target_group_order(
@@ -209,7 +210,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 
 
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 	Sch->init(A, verbose_level - 2);
 	Sch->init_generators(*U_gens, verbose_level - 2);
 	Sch->compute_all_point_orbits(0 /*verbose_level*/);
@@ -224,7 +225,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	cout << "computing normalizer of U in G:" << endl;
 
-	strong_generators *gens_N;
+	groups::strong_generators *gens_N;
 
 	A->normalizer_using_MAGMA(prefix, Aut, U, gens_N, verbose_level);
 		// added gens_N, Oct 12, 2018
@@ -238,7 +239,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 
 
-	N = NEW_OBJECT(action);
+	N = NEW_OBJECT(actions::action);
 	ring_theory::longinteger_object n_go;
 	int f_no_base = FALSE;
 
@@ -257,7 +258,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	rk_E1 = N->Sims->element_rank_lint(E1);
 	cout << "rk_E1 = " << rk_E1 << endl;
 
-	N_on_orbits = NEW_OBJECT(action);
+	N_on_orbits = NEW_OBJECT(actions::action);
 
 	cout << "creating action on orbits:" << endl;
 	N_on_orbits->induced_action_on_orbits(N, Sch,
@@ -478,10 +479,10 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		cout << "overgroup " << h << " / "
 				<< nb_overgroups << ":" << endl;
 
-		sims *O;
+		groups::sims *O;
 		vector_ge *O_gens;
 		ring_theory::longinteger_object O_go;
-		schreier *Sch1;
+		groups::schreier *Sch1;
 
 
 		cout << "making element" << endl;
@@ -494,7 +495,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		O_gens = NEW_OBJECT(vector_ge);
 		O_gens->init_double(A, Elt1, Elt2, verbose_level - 2);
 
-		O = NEW_OBJECT(sims);
+		O = NEW_OBJECT(groups::sims);
 
 		cout << "The group O" << endl;
 		O = A->create_sims_from_generators_without_target_group_order(
@@ -508,7 +509,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 
 
-		Sch1 = NEW_OBJECT(schreier);
+		Sch1 = NEW_OBJECT(groups::schreier);
 		Sch1->init(N_on_orbits, verbose_level - 2);
 		Sch1->init_generators(*O_gens, verbose_level - 2);
 		Sch1->compute_all_point_orbits(0 /*verbose_level*/);
@@ -746,11 +747,11 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	gens = NEW_int(goi);
 	cosets = NEW_int(goi);
 	group = NEW_int(goi);
-	subgroup **Subs;
+	groups::subgroup **Subs;
 	int *Group_order;
 	int z;
 
-	Subs = new psubgroup[nb_zuppos];
+	Subs = new groups::psubgroup[nb_zuppos];
 
 	Group_order = NEW_int(nb_zuppos);
 
@@ -774,7 +775,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 		Group_order[z] = group_sz;
 
-		Subs[z] = new subgroup;
+		Subs[z] = new groups::subgroup;
 		Subs[z]->init(group, group_sz, gens, nb_gens);
 
 		}
@@ -789,7 +790,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	cout << endl;
 
 
-	subgroup **Subgroups_of_order;
+	groups::subgroup **Subgroups_of_order;
 
 	for (i = 0; i < Group_orders.nb_types; i++) {
 		o = Group_orders.data_sorted[Group_orders.type_first[i]];
@@ -799,7 +800,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 		cout << "We have " << nb_subgroups
 				<< " subgroups of order " << o << endl;
 
-		Subgroups_of_order = new psubgroup[nb_subgroups];
+		Subgroups_of_order = new groups::psubgroup[nb_subgroups];
 		for (j = 0; j < nb_subgroups; j++) {
 			Subgroups_of_order[j] = Subs[Idx_subgroup[j]];
 			Subs[Idx_subgroup[j]] = NULL;
@@ -828,7 +829,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				<< " has index " << idx_E1 << ":" << endl;
 			Subgroups_of_order[j]->print();
 
-			action *A_on_subgroups;
+			actions::action *A_on_subgroups;
 
 			cout << "creating action on the subgroups:" << endl;
 			A_on_subgroups = N->create_induced_action_on_subgroups(
@@ -839,7 +840,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 			A_on_subgroups->print_info();
 
 
-			schreier *Sch_subgroups;
+			groups::schreier *Sch_subgroups;
 
 			cout << "computing orbit of conjugated subgroups:" << endl;
 			Sch_subgroups = N->Strong_gens->orbit_of_one_point_schreier(
@@ -849,10 +850,10 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 					<< Sch_subgroups->orbit_len[0] << endl;
 
 			// compute minimal overgroups:
-			subgroup **Overgroups;
+			groups::subgroup **Overgroups;
 			int *Overgroup_order;
 
-			Overgroups = new psubgroup[nb_zuppos];
+			Overgroups = new groups::psubgroup[nb_zuppos];
 
 			Overgroup_order = NEW_int(nb_zuppos);
 
@@ -879,7 +880,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 				Overgroup_order[z] = group_sz;
 
-				Overgroups[z] = new subgroup;
+				Overgroups[z] = new groups::subgroup;
 				Overgroups[z]->init(group, group_sz, gens, nb_gens);
 
 				}
@@ -894,7 +895,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 			int nb_overgroups;
 			int ii, oo, f, a;
 
-			subgroup **Overgroups_of_order;
+			groups::subgroup **Overgroups_of_order;
 
 			for (ii = 0; ii < Overgroup_orders.nb_types; ii++) {
 				oo = Overgroup_orders.data_sorted[
@@ -909,7 +910,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				cout << "We have " << nb_overgroups
 						<< " overgroups of order " << oo << endl;
 
-				Overgroups_of_order = new psubgroup[nb_overgroups];
+				Overgroups_of_order = new groups::psubgroup[nb_overgroups];
 				for (j = 0; j < nb_overgroups; j++) {
 					Overgroups_of_order[j] = Overgroups[Idx_overgroup[j]];
 					Overgroups[Idx_overgroup[j]] = NULL;
@@ -923,7 +924,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 					Overgroups_of_order[j]->print();
 					}
 #endif
-				action *A_on_overgroups;
+				actions::action *A_on_overgroups;
 
 				cout << "creating action on the overgroups of order "
 						<< oo << ":" << endl;
@@ -936,7 +937,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				A_on_overgroups->print_info();
 
 
-				schreier *Sch_overgroups;
+				groups::schreier *Sch_overgroups;
 
 				cout << "computing the orbits of conjugated "
 						"overgroups of order " << oo << ":" << endl;

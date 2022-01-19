@@ -24,9 +24,9 @@ class arc_lifting {
 public:
 
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 
 	surface_with_action *Surf_A;
 
@@ -39,7 +39,7 @@ public:
 
 	int *the_equation; // [20]
 
-	web_of_cubic_curves *Web;
+	algebraic_geometry::web_of_cubic_curves *Web;
 
 
 	trihedral_pair_with_action *Trihedral_pair;
@@ -68,10 +68,10 @@ public:
 
 	surfaces_arc_lifting *SAL;
 
-	action *A; // this is the 3x3 group
+	actions::action *A; // this is the 3x3 group
 
 	set_and_stabilizer *The_arc;
-	action *A_on_arc;
+	actions::action *A_on_arc;
 
 	int arc_idx;
 	poset_with_group_action *Poset;
@@ -94,7 +94,7 @@ public:
 	void freeself();
 	void init(
 		surfaces_arc_lifting *SAL, int arc_idx,
-		action *A,
+		actions::action *A,
 		int verbose_level);
 	void print();
 	void recognize(long int *pair, int *transporter,
@@ -115,18 +115,18 @@ public:
 
 	arc_orbits_on_pairs *OP;
 
-	action *A;
-	action *A_on_arc;
+	actions::action *A;
+	actions::action *A_on_arc;
 
 	int pair_orbit_idx;
 	set_and_stabilizer *The_pair;
 
 	long int arc_remainder[4];
 
-	action *A_on_rest;
-	action *A_on_partition;
+	actions::action *A_on_rest;
+	actions::action *A_on_partition;
 
-	schreier *Orbits_on_partition;
+	groups::schreier *Orbits_on_partition;
 
 	int nb_orbits_on_partition;
 
@@ -137,7 +137,7 @@ public:
 	void freeself();
 	void init(
 		arc_orbits_on_pairs *OP, int pair_orbit_idx,
-		action *A, action *A_on_arc,
+		actions::action *A, actions::action *A_on_arc,
 		int verbose_level);
 	void recognize(int *partition, int *transporter,
 			int &orbit_idx, int verbose_level);
@@ -158,14 +158,14 @@ class classify_trihedral_pairs {
 public:
 
 	int q;
-	finite_field *F; // do not free
-	action *A; // do not free
+	field_theory::finite_field *F; // do not free
+	actions::action *A; // do not free
 
 	surface_with_action *Surf_A; // do not free
-	surface_domain *Surf; // do not free
+	algebraic_geometry::surface_domain *Surf; // do not free
 
-	strong_generators *gens_type1;
-	strong_generators *gens_type2;
+	groups::strong_generators *gens_type1;
+	groups::strong_generators *gens_type2;
 
 	poset_with_group_action *Poset1;
 	poset_with_group_action *Poset2;
@@ -217,7 +217,7 @@ public:
 	void print_trihedral_pairs_summary(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost,
 		int f_with_stabilizers);
-	strong_generators *identify_trihedral_pair_and_get_stabilizer(
+	groups::strong_generators *identify_trihedral_pair_and_get_stabilizer(
 		long int *planes6, int *transporter, int &orbit_index,
 		int verbose_level);
 	void identify_trihedral_pair(long int *planes6,
@@ -265,7 +265,7 @@ public:
 	void init(
 		arc_generator_description *Descr,
 		projective_space_with_action *PA,
-		int f_test_nb_Eckardt_points, int nb_E, surface_domain *Surf,
+		int f_test_nb_Eckardt_points, int nb_E, algebraic_geometry::surface_domain *Surf,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
@@ -381,12 +381,12 @@ public:
 	int f;
 	int orbit_idx;
 
-	surface_object *SO;
+	algebraic_geometry::surface_object *SO;
 	surface_object_with_action *SOA;
 
 
 
-	strong_generators *Flag_stab_gens;
+	groups::strong_generators *Flag_stab_gens;
 	ring_theory::longinteger_object Flag_stab_go;
 
 
@@ -401,7 +401,7 @@ public:
 
 
 
-	seventytwo_cases Seventytwo[45 * 72];
+	algebraic_geometry::seventytwo_cases Seventytwo[45 * 72];
 		// for each of the 45 tritangent planes,
 		// there are 72 Clebsch maps
 
@@ -503,7 +503,7 @@ public:
 
 	int seventytwo_case_idx;
 
-	seventytwo_cases The_case;
+	algebraic_geometry::seventytwo_cases The_case;
 
 
 	surfaces_arc_lifting_trace();
@@ -516,7 +516,7 @@ public:
 	void make_arc_canonical(
 			long int *P6_local, long int *P6_local_canonical,
 			int &orbit_not_on_conic_idx, int verbose_level);
-	void compute_beta1(seventytwo_cases *The_case, int verbose_level);
+	void compute_beta1(algebraic_geometry::seventytwo_cases *The_case, int verbose_level);
 	void compute_beta2(int orbit_not_on_conic_idx,
 			int pair_orbit_idx, int &partition_orbit_idx,
 			int *the_partition4, int verbose_level);
@@ -585,7 +585,7 @@ public:
 
 
 
-	seventytwo_cases Seventytwo[72];
+	algebraic_geometry::seventytwo_cases Seventytwo[72];
 
 	int seventytwo_case_idx;
 
@@ -595,7 +595,7 @@ public:
 	void init(surfaces_arc_lifting *Lift, int verbose_level);
 	void process_flag_orbit(int verbose_level);
 	void compute_stabilizer(surfaces_arc_lifting_definition_node *D,
-			strong_generators *&Aut_gens, int verbose_level);
+			groups::strong_generators *&Aut_gens, int verbose_level);
 	void process_tritangent_plane(surfaces_arc_lifting_definition_node *D,
 			int verbose_level);
 	void make_seventytwo_cases(int verbose_level);
@@ -615,18 +615,18 @@ public:
 
 class surfaces_arc_lifting {
 public:
-	finite_field *F;
+	field_theory::finite_field *F;
 	int q;
-	linear_group *LG4; // PGL(4,q)
+	groups::linear_group *LG4; // PGL(4,q)
 
 	int f_semilinear;
 
 	std::string fname_base;
 
-	action *A4; // the action of PGL(4,q) on points
-	action *A3; // the action of PGL(3,q) on points
+	actions::action *A4; // the action of PGL(4,q) on points
+	actions::action *A3; // the action of PGL(3,q) on points
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	six_arcs_not_on_a_conic *Six_arcs;
@@ -697,11 +697,11 @@ public:
 	int lambda, lambda_rk;
 	int t_idx;
 
-	strong_generators *stab_gens_trihedral_pair; // stabilizer of trihedral pair
-	strong_generators *gens_subgroup;
+	groups::strong_generators *stab_gens_trihedral_pair; // stabilizer of trihedral pair
+	groups::strong_generators *gens_subgroup;
 	ring_theory::longinteger_object stabilizer_of_trihedral_pair_go;
-	action *A_on_equations;
-	schreier *Orb;
+	actions::action *A_on_equations;
+	groups::schreier *Orb;
 	ring_theory::longinteger_object stab_order;
 	int trihedral_pair_orbit_index;
 	vector_ge *cosets;
@@ -710,7 +710,7 @@ public:
 	long int nine_lines[9];
 	int *aut_T_index;
 	int *aut_coset_index;
-	strong_generators *Aut_gens;
+	groups::strong_generators *Aut_gens;
 
 
 	int F_plane[3 * 4];
@@ -747,12 +747,12 @@ public:
 		// plane6[6]
 		// The_six_plane_equations[6 * 4]
 		// The_surface_equations[(q + 1) * 20]
-	strong_generators *create_stabilizer_of_trihedral_pair(
+	groups::strong_generators *create_stabilizer_of_trihedral_pair(
 			int &trihedral_pair_orbit_index, int verbose_level);
 	void create_action_on_equations_and_compute_orbits(
 		int *The_surface_equations,
-		strong_generators *gens_for_stabilizer_of_trihedral_pair,
-		action *&A_on_equations, schreier *&Orb,
+		groups::strong_generators *gens_for_stabilizer_of_trihedral_pair,
+		actions::action *&A_on_equations, groups::schreier *&Orb,
 		int verbose_level);
 	void create_clebsch_system(int verbose_level);
 	void compute_iso_types_as_double_triplets(int verbose_level);

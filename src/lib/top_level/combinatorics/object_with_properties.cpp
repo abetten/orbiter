@@ -72,7 +72,7 @@ void object_with_properties::init(object_with_canonical_form *OwCF,
 	object_with_properties::PA = PA;
 	object_with_properties::label.assign(label);
 
-	nauty_interface_with_group Nau;
+	actions::nauty_interface_with_group Nau;
 
 	if (f_v) {
 		cout << "object_with_properties::init before Nau.automorphism_group_as_permutation_group" << endl;
@@ -178,9 +178,9 @@ void object_with_properties::lift_generators_to_matrix_group(int verbose_level)
 		cout << "object_with_properties::lift_generators_to_matrix_group" << endl;
 	}
 	//strong_generators *SG;
-	action *A_perm;
+	actions::action *A_perm;
 
-	nauty_interface_with_group Naug;
+	actions::nauty_interface_with_group Naug;
 
 	if (f_v) {
 		cout << "object_with_properties::lift_generators_to_matrix_group "
@@ -226,8 +226,8 @@ void object_with_properties::init_object_in_projective_space(
 	object_with_properties::label.assign(label);
 
 
-	nauty_interface_with_group Nau;
-	action *A_linear;
+	actions::nauty_interface_with_group Nau;
+	actions::action *A_linear;
 
 	A_linear = PA->A;
 
@@ -302,7 +302,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 
 
-	schreier *Sch;
+	groups::schreier *Sch;
 
 
 	if (f_v) {
@@ -537,7 +537,7 @@ void object_with_properties::print_TDO(std::ostream &ost,
 }
 
 void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
-		schreier *Sch,
+		groups::schreier *Sch,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -616,7 +616,7 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 }
 
 void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
-		schreier *Sch,
+		groups::schreier *Sch,
 		int verbose_level)
 // INP = input geometry
 {

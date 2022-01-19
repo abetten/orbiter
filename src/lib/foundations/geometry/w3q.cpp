@@ -63,7 +63,7 @@ void W3q::freeself()
 	null();
 }
 
-void W3q::init(finite_field *F, int verbose_level)
+void W3q::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);

@@ -18,7 +18,7 @@ namespace orbiter {
 namespace foundations {
 namespace ring_theory {
 
-static void make_linear_irreducible_polynomials(finite_field *F, int &nb,
+static void make_linear_irreducible_polynomials(field_theory::finite_field *F, int &nb,
 		int *&table, int verbose_level);
 
 table_of_irreducible_polynomials::table_of_irreducible_polynomials()
@@ -54,7 +54,7 @@ table_of_irreducible_polynomials::~table_of_irreducible_polynomials()
 }
 
 void table_of_irreducible_polynomials::init(int k,
-		finite_field *F, int verbose_level)
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d;
@@ -491,7 +491,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 // global functions:
 //##############################################################################
 
-static void make_linear_irreducible_polynomials(finite_field *F, int &nb,
+static void make_linear_irreducible_polynomials(field_theory::finite_field *F, int &nb,
 		int *&table, int verbose_level)
 {
 	int i;

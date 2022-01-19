@@ -40,7 +40,7 @@ classification_base_case::~classification_base_case()
 void classification_base_case::init(poset_with_group_action *Poset,
 		int size, long int *orbit_rep,
 		long int *live_points, int nb_live_points,
-		strong_generators *Stab_gens,
+		groups::strong_generators *Stab_gens,
 		void *recognition_function_data,
 		int (*recognition_function)(long int *Set, int len,
 				int *Elt, void *data, int verbose_level),

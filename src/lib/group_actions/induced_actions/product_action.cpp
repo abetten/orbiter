@@ -59,7 +59,7 @@ void product_action::free()
 }
 
 
-void product_action::init(action *A1, action *A2,
+void product_action::init(actions::action *A1, actions::action *A2,
 		int f_use_projections, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -98,7 +98,7 @@ void product_action::init(action *A1, action *A2,
 	//Elts->add_elt_print_function(elt_print, (void *) this);
 }
 
-long int product_action::compute_image(action *A,
+long int product_action::compute_image(actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 1;
@@ -144,13 +144,13 @@ long int product_action::compute_image(action *A,
 	return j;
 }
 
-void product_action::element_one(action *A, int *Elt, int verbose_level)
+void product_action::element_one(actions::action *A, int *Elt, int verbose_level)
 {
 	A1->element_one(Elt, verbose_level);
 	A2->element_one(Elt + A1->elt_size_in_int, verbose_level);
 }
 
-int product_action::element_is_one(action *A, int *Elt, int verbose_level)
+int product_action::element_is_one(actions::action *A, int *Elt, int verbose_level)
 {
 	if (!A1->element_is_one(Elt, verbose_level)) {
 		return FALSE;
@@ -175,7 +175,7 @@ void product_action::element_pack(int *Elt, uchar *elt, int verbose_level)
 			elt + A1->coded_elt_size_in_char, verbose_level);
 }
 
-void product_action::element_retrieve(action *A,
+void product_action::element_retrieve(actions::action *A,
 		int hdl, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -190,7 +190,7 @@ void product_action::element_retrieve(action *A,
 			Elt + A1->elt_size_in_int, verbose_level);
 }
 
-int product_action::element_store(action *A, int *Elt, int verbose_level)
+int product_action::element_store(actions::action *A, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int hdl;

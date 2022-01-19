@@ -4697,8 +4697,8 @@ void projective_space::andre_preimage(projective_space *P4,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	finite_field *FQ;
-	finite_field *Fq;
+	field_theory::finite_field *FQ;
+	field_theory::finite_field *Fq;
 	int /*Q,*/ q;
 	int *v, *w1, *w2, *w3, *v2;
 	int *components;

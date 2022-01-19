@@ -134,7 +134,7 @@ void action_on_factor_space::free()
 
 void action_on_factor_space::init_light(
 		algebra::vector_space *VS,
-	action &A_base, action &A,
+		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int verbose_level)
 {
@@ -165,7 +165,7 @@ void action_on_factor_space::init_light(
 
 void action_on_factor_space::init_by_rank_table_mode(
 		algebra::vector_space *VS,
-	action &A_base, action &A,
+		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	long int *point_list, int nb_points,
 	int verbose_level)
@@ -379,7 +379,7 @@ void action_on_factor_space::init_coset_table(
 
 void action_on_factor_space::init_by_rank(
 		algebra::vector_space *VS,
-	action &A_base, action &A,
+		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int f_compute_tables,
 	int verbose_level)
@@ -406,7 +406,7 @@ void action_on_factor_space::init_by_rank(
 
 void action_on_factor_space::init_from_coordinate_vectors(
 		algebra::vector_space *VS,
-	action &A_base, action &A,
+		actions::action &A_base, actions::action &A,
 	int *subspace_basis, int subspace_basis_size,
 	int f_compute_tables, int verbose_level)
 {
@@ -435,8 +435,8 @@ void action_on_factor_space::init_from_coordinate_vectors(
 }
 
 
-void action_on_factor_space::init2(action &A_base,
-		action &A, int f_compute_tables, int verbose_level)
+void action_on_factor_space::init2(actions::action &A_base,
+		actions::action &A, int f_compute_tables, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
@@ -1006,7 +1006,7 @@ long int action_on_factor_space::rank_in_small_space(int *v)
 	return rk;
 }
 
-long int action_on_factor_space::compute_image(action *A,
+long int action_on_factor_space::compute_image(actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 2;

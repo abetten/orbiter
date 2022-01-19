@@ -40,8 +40,8 @@ void orbit_transversal::freeself()
 }
 
 void orbit_transversal::init_from_schreier(
-		schreier *Sch,
-		action *default_action,
+		groups::schreier *Sch,
+		actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
@@ -76,7 +76,7 @@ void orbit_transversal::init_from_schreier(
 }
 
 void orbit_transversal::read_from_file(
-		action *A, action *A2, std::string &fname, int verbose_level)
+		actions::action *A, actions::action *A2, std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -129,10 +129,10 @@ void orbit_transversal::read_from_file(
 					<< 100. * (double) i / (double) nb_cases
 					<< "%" << endl;
 		}
-		strong_generators *gens;
+		groups::strong_generators *gens;
 		long int *set;
 
-		gens = NEW_OBJECT(strong_generators);
+		gens = NEW_OBJECT(groups::strong_generators);
 		gens->init_from_ascii_coding(A,
 				Aut_ascii[i], 0 /* verbose_level */);
 		
@@ -159,7 +159,7 @@ void orbit_transversal::read_from_file(
 }
 
 void orbit_transversal::read_from_file_one_case_only(
-		action *A, action *A2, std::string &fname,
+		actions::action *A, actions::action *A2, std::string &fname,
 		int case_nr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -208,10 +208,10 @@ void orbit_transversal::read_from_file_one_case_only(
 
 	i = case_nr;
 
-	strong_generators *gens;
+	groups::strong_generators *gens;
 	long int *set;
 
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 	gens->init_from_ascii_coding(A,
 			Aut_ascii[i], 0 /* verbose_level */);
 

@@ -30,7 +30,7 @@ unipoly_domain::unipoly_domain()
 	//std::string variable_name;
 }
 
-unipoly_domain::unipoly_domain(finite_field *F)
+unipoly_domain::unipoly_domain(field_theory::finite_field *F)
 {
 	unipoly_domain::F = F;
 	variable_name.assign("X");
@@ -43,7 +43,7 @@ unipoly_domain::unipoly_domain(finite_field *F)
 	//std::string variable_name;
 }
 
-void unipoly_domain::init_basic(finite_field *F, int verbose_level)
+void unipoly_domain::init_basic(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -64,7 +64,7 @@ void unipoly_domain::init_basic(finite_field *F, int verbose_level)
 	}
 }
 
-unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_level)
+unipoly_domain::unipoly_domain(field_theory::finite_field *F, unipoly_object m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i, a, b;
@@ -136,7 +136,7 @@ void unipoly_domain::init_variable_name(std::string &label)
 	variable_name.assign(label);
 }
 
-void unipoly_domain::init_factorring(finite_field *F, unipoly_object m, int verbose_level)
+void unipoly_domain::init_factorring(field_theory::finite_field *F, unipoly_object m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b;
@@ -184,7 +184,7 @@ void unipoly_domain::init_factorring(finite_field *F, unipoly_object m, int verb
 
 
 
-finite_field *unipoly_domain::get_F()
+field_theory::finite_field *unipoly_domain::get_F()
 {
 	return F;
 }

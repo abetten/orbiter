@@ -72,7 +72,7 @@ void orbit_of_sets::freeself()
 	null();
 }
 
-void orbit_of_sets::init(action *A, action *A2,
+void orbit_of_sets::init(actions::action *A, actions::action *A2,
 		long int *set, int sz, vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

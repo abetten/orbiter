@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace solvers {
 
 
 
@@ -4655,7 +4656,7 @@ static void diophant_callback_solution_found(int *sol, int len,
 }
 
 
-}}
+}}}
 
 
 

@@ -136,7 +136,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	}
 	hermitian_spreads_classify::n = n;
 	hermitian_spreads_classify::Q = Q;
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(Q, FALSE /* f_without_tables */, 0);
 
 	len = n + 1;
@@ -174,7 +174,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	vector_ge *nice_gens;
 
 	cout << "Creating linear group" << endl;
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_general_linear_group(n + 1, F,
 			TRUE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -500,7 +500,7 @@ void HS_early_test_func_callback(long int *S, int len,
 
 
 void projective_space_init_line_action(projective_space *P,
-		action *A_points, action *&A_on_lines, int verbose_level)
+		actions::action *A_points, actions::action *&A_on_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action_on_grassmannian *AoL;
@@ -508,7 +508,7 @@ void projective_space_init_line_action(projective_space *P,
 	if (f_v) {
 		cout << "projective_space_init_line_action" << endl;
 	}
-	A_on_lines = NEW_OBJECT(action);
+	A_on_lines = NEW_OBJECT(actions::action);
 
 	AoL = NEW_OBJECT(action_on_grassmannian);
 
@@ -525,7 +525,7 @@ void projective_space_init_line_action(projective_space *P,
 				"initializing A_on_lines" << endl;
 	}
 	int f_induce_action = TRUE;
-	sims S;
+	groups::sims S;
 	ring_theory::longinteger_object go1;
 
 	S.init(A_points, 0);

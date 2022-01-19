@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 
@@ -675,7 +676,7 @@ void sims::build_up_group_random_process(sims *K,
 	sims *old_G,
 	ring_theory::longinteger_object &target_go,
 	int f_override_choose_next_base_point,
-	int (*choose_next_base_point_method)(action *A,
+	int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 	int verbose_level)
 {
@@ -689,8 +690,8 @@ void sims::build_up_group_random_process(sims *K,
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go, G_order, K_order, KG_order, quo, rem;
 	int drop_out_level, image, cnt, b, c, old_base_len;
-	action *GA;
-	action *KA;
+	actions::action *GA;
+	actions::action *KA;
 	int *Elt;
 
 	if (f_v) {
@@ -1042,7 +1043,7 @@ void sims::build_up_group_from_generators(sims *K,
 	vector_ge *gens,
 	int f_target_go, ring_theory::longinteger_object *target_go,
 	int f_override_choose_next_base_point,
-	int (*choose_next_base_point_method)(action *A,
+	int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 	int verbose_level)
 {
@@ -1053,8 +1054,8 @@ void sims::build_up_group_from_generators(sims *K,
 	ring_theory::longinteger_object G_order, K_order, KG_order;
 	int drop_out_level, image, f_added, j;
 	int level, base_point, b, old_base_len;
-	action *GA;
-	action *KA;
+	actions::action *GA;
+	actions::action *KA;
 	vector_ge subset_of_gens;
 
 	GA = A;
@@ -1445,5 +1446,5 @@ int sims::closure_group(int nb_times, int verbose_level)
 
 
 
-}}
+}}}
 

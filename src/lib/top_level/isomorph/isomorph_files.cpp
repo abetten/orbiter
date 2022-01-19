@@ -1669,7 +1669,7 @@ void isomorph::print_isomorphism_types(int f_select,
 			cout << endl;
 			}
 #endif
-		sims *Stab;
+		groups::sims *Stab;
 		
 		Stab = Reps->stab[i];
 
@@ -1687,7 +1687,7 @@ void isomorph::print_isomorphism_types(int f_select,
 					"group order is " << go << endl;
 			}
 
-		schreier Orb;
+		groups::schreier Orb;
 		ring_theory::longinteger_object go;
 		
 		AA->compute_all_point_orbits(Orb, Stab->gens, verbose_level - 2);
@@ -1716,12 +1716,12 @@ void isomorph::print_isomorphism_types(int f_select,
 }
 
 void isomorph::induced_action_on_set_and_kernel(
-	ostream &file, action *A,
-	sims *Stab, int size, long int *set, int verbose_level)
+	ostream &file, actions::action *A,
+	groups::sims *Stab, int size, long int *set, int verbose_level)
 // Used in isomorph_BLT
 {
 	int f_v = (verbose_level >= 1);
-	action *AAA;
+	actions::action *AAA;
 	//sims K;
 	ring_theory::longinteger_object go, ko;
 	int i;
@@ -1821,7 +1821,7 @@ void isomorph::induced_action_on_set_and_kernel(
 		}
 	
 	if (!ko.is_one()) {
-		schreier Orb;
+		groups::schreier Orb;
 		isomorph::A->compute_all_point_orbits(Orb,
 				AAA->Kernel->gens, verbose_level - 2);
 		int *val, *mult, len;

@@ -51,7 +51,7 @@ void classification_step::freeself()
 	null();
 }
 
-void classification_step::init(action *A, action *A2,
+void classification_step::init(actions::action *A, actions::action *A2,
 	int max_orbits, int representation_sz, 
 	ring_theory::longinteger_object &go, int verbose_level)
 {
@@ -82,7 +82,7 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 	int f_v = (verbose_level >= 1);
 	set_and_stabilizer *SaS;
 	long int *data;
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
 	if (f_v) {
 		cout << "classification_step::get_set_and_stabilizer" << endl;
@@ -158,7 +158,7 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 }
 
 void classification_step::read_file(ifstream &fp,
-		action *A, action *A2, ring_theory::longinteger_object &go,
+		actions::action *A, actions::action *A2, ring_theory::longinteger_object &go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

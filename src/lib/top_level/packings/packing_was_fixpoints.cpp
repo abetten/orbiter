@@ -511,7 +511,7 @@ long int *packing_was_fixpoints::clique_by_index(int idx)
 	return Cliques + idx * fixpoint_clique_size;
 }
 
-strong_generators *packing_was_fixpoints::get_stabilizer(int idx)
+groups::strong_generators *packing_was_fixpoints::get_stabilizer(int idx)
 {
 	if (Fixp_cliques == NULL) {
 		cout << "packing_was_fixpoints::get_stabilizer Fixp_cliques == NULL" << endl;
@@ -699,7 +699,7 @@ void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ in
 	for (idx = 0; idx < nb_cliques; idx++) {
 
 		long int *Orbit_numbers;
-		strong_generators *Stab_gens;
+		groups::strong_generators *Stab_gens;
 
 		Orbit_numbers = clique_by_index(idx);
 

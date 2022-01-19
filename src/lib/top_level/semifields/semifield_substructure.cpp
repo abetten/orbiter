@@ -450,7 +450,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 			}
 			for (g = 0; g < Nb_orb[idx]; g++) {
 				orbit_of_subspaces *Orb;
-				strong_generators *gens;
+				groups::strong_generators *gens;
 				ring_theory::longinteger_object go;
 
 				Orb = All_Orbits[idx][g];
@@ -573,7 +573,7 @@ void semifield_substructure::do_classify(int verbose_level)
 			cout << endl;
 		}
 
-		strong_generators *Aut_gens;
+		groups::strong_generators *Aut_gens;
 		ring_theory::longinteger_object go;
 
 		Aut_gens = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -668,9 +668,9 @@ void semifield_substructure::do_classify(int verbose_level)
 				<< progress << "%" << endl;
 		}
 
-		strong_generators *Stab;
+		groups::strong_generators *Stab;
 
-		Stab = NEW_OBJECT(strong_generators);
+		Stab = NEW_OBJECT(groups::strong_generators);
 		if (f_v) {
 			cout << "flag orbit " << f << " / " << nb_flag_orbits
 				<< ", semifield isotopy class "
@@ -728,7 +728,7 @@ void semifield_substructure::loop_over_all_subspaces(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	finite_field *F;
+	field_theory::finite_field *F;
 	int rk, i, f2;
 	int k, k2;
 	int f_skip;
@@ -1151,7 +1151,7 @@ void semifield_substructure::all_two_dimensional_subspaces(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	finite_field *F;
+	field_theory::finite_field *F;
 	int rk, i;
 	int k, k2;
 	int trace_po;
@@ -1244,7 +1244,7 @@ int semifield_substructure::identify(long int *data,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	finite_field *F;
+	field_theory::finite_field *F;
 	int i, f2;
 	int k, k2;
 	int f_skip;

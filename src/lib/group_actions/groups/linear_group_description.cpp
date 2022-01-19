@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 linear_group_description::linear_group_description()
@@ -686,6 +687,6 @@ void linear_group_description::print()
 }
 
 
-}}
+}}}
 
 

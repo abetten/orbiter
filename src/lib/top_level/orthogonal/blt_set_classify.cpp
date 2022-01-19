@@ -83,8 +83,8 @@ void blt_set_classify::freeself()
 
 
 
-void blt_set_classify::init_basic(action *A,
-		strong_generators *Strong_gens,
+void blt_set_classify::init_basic(actions::action *A,
+		groups::strong_generators *Strong_gens,
 		int starter_size,
 		int verbose_level)
 {
@@ -797,8 +797,8 @@ int blt_set_classify::create_graph(
 void blt_set_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level)
 {
@@ -906,7 +906,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 
 
-	Dio = NEW_OBJECT(diophant);
+	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->sum = nb_needed;
 
@@ -1506,8 +1506,8 @@ void blt_set_classify_print(ostream &ost, int len, long int *S, void *data)
 void blt_set_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level)
 {

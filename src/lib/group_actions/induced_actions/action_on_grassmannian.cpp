@@ -81,7 +81,7 @@ void action_on_grassmannian::free()
 	null();
 }
 
-void action_on_grassmannian::init(action &A,
+void action_on_grassmannian::init(actions::action &A,
 		grassmann *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -207,7 +207,7 @@ long int action_on_grassmannian::rank(int *v, int verbose_level)
 
 
 void action_on_grassmannian::compute_image_longinteger(
-	action *A, int *Elt,
+		actions::action *A, int *Elt,
 	ring_theory::longinteger_object &i, ring_theory::longinteger_object &j,
 	int verbose_level)
 {
@@ -253,7 +253,7 @@ void action_on_grassmannian::compute_image_longinteger(
 }
 
 long int action_on_grassmannian::compute_image_int(
-	action *A, int *Elt,
+		actions::action *A, int *Elt,
 	long int i, int verbose_level)
 {
 	if (f_embedding) {
@@ -265,7 +265,7 @@ long int action_on_grassmannian::compute_image_int(
 }
 
 long int action_on_grassmannian::compute_image_int_ordinary(
-	action *A, int *Elt,
+		actions::action *A, int *Elt,
 	long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -309,7 +309,7 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 }
 
 long int action_on_grassmannian::compute_image_int_embedded(
-	action *A, int *Elt,
+		actions::action *A, int *Elt,
 	long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

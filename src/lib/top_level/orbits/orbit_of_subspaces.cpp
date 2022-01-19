@@ -106,7 +106,9 @@ void orbit_of_subspaces::freeself()
 }
 
 void orbit_of_subspaces::init(
-	action *A, action *A2, finite_field *F,
+		actions::action *A,
+	actions::action *A2,
+	field_theory::finite_field *F,
 	int *subspace_by_rank, int k, int n, 
 	int f_has_desired_pivots, int *desired_pivots, 
 	int f_has_rank_functions, void *rank_unrank_data, 
@@ -171,7 +173,9 @@ void orbit_of_subspaces::init(
 }
 
 void orbit_of_subspaces::init_lint(
-	action *A, action *A2, finite_field *F,
+		actions::action *A,
+	actions::action *A2,
+	field_theory::finite_field *F,
 	long int *subspace_by_rank, int k, int n,
 	int f_has_desired_pivots, int *desired_pivots,
 	int f_has_rank_functions, void *rank_unrank_data,
@@ -996,14 +1000,14 @@ void orbit_of_subspaces::get_random_schreier_generator(
 		}
 }
 
-strong_generators
+groups::strong_generators
 *orbit_of_subspaces::stabilizer_orbit_rep(
 		ring_theory::longinteger_object &full_group_order,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	strong_generators *gens;
-	sims *Stab;
+	groups::strong_generators *gens;
+	groups::sims *Stab;
 
 	if (f_v) {
 		cout << "orbit_of_subspaces::generators_for_stabilizer_"
@@ -1022,7 +1026,7 @@ strong_generators
 				<< stab_order << endl;
 		}
 	
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 	gens->init(A);
 	gens->init_from_sims(Stab, verbose_level);
 
@@ -1034,9 +1038,10 @@ strong_generators
 	return gens;
 }
 
-void orbit_of_subspaces::compute_stabilizer(action *default_action,
+void orbit_of_subspaces::compute_stabilizer(
+		actions::action *default_action,
 		ring_theory::longinteger_object &go,
-	sims *&Stab, int verbose_level)
+		groups::sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
 {
 	int f_v = (verbose_level >= 1);
@@ -1049,7 +1054,7 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action,
 		cout << "orbit_of_subspaces::compute_stabilizer" << endl;
 		}
 
-	Stab = NEW_OBJECT(sims);
+	Stab = NEW_OBJECT(groups::sims);
 	ring_theory::longinteger_object cur_go, target_go;
 	ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;

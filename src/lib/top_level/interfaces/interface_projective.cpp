@@ -353,7 +353,7 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_make_table_of_surfaces) {
 
-		surface_domain Surf;
+		algebraic_geometry::surface_domain Surf;
 
 		Surf.make_table_of_surfaces(verbose_level);
 	}
@@ -426,7 +426,7 @@ void interface_projective::do_create_spread(spread_create_description *Descr, in
 	}
 
 
-	action *A;
+	actions::action *A;
 	//int *Elt1;
 	int *Elt2;
 

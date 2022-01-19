@@ -86,8 +86,8 @@ void tdo_data::allocate(int R)
 	only_one_type = NEW_int(R);
 	multiple_types = NEW_int(R);
 	types_first2 = NEW_int(R);
-	D1 = NEW_OBJECT(diophant);
-	D2 = NEW_OBJECT(diophant);
+	D1 = NEW_OBJECT(solvers::diophant);
+	D2 = NEW_OBJECT(solvers::diophant);
 }
 
 int tdo_data::solve_first_system(int verbose_level, 
@@ -170,7 +170,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		l += types_len[r];
 		s += classes_len[r];
 	}
-	diophant D;
+	solvers::diophant D;
 	int nb_eqns_replaced;
 	int *eqns_replaced;
 	int *eqn_number;
@@ -243,7 +243,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			}
 		}
 
-		diophant DD;
+		solvers::diophant DD;
 		int nb_eqns_replaced2;
 		int *eqns_replaced2;
 		int *eqn_number2;

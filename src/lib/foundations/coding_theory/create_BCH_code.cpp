@@ -41,7 +41,7 @@ create_BCH_code::~create_BCH_code()
 {
 }
 
-void create_BCH_code::init(finite_field *F, int n, int d, int verbose_level)
+void create_BCH_code::init(field_theory::finite_field *F, int n, int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -55,7 +55,7 @@ void create_BCH_code::init(finite_field *F, int n, int d, int verbose_level)
 	create_BCH_code::d = d;
 	create_BCH_code::F = F;
 
-	Nth = NEW_OBJECT(nth_roots);
+	Nth = NEW_OBJECT(field_theory::nth_roots);
 
 	Nth->init(F, n, verbose_level);
 

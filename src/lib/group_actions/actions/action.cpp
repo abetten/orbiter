@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 
@@ -705,7 +706,7 @@ void action::map_a_set_and_reorder(long int *set,
 
 
 
-void action::init_sims_only(sims *G, int verbose_level)
+void action::init_sims_only(groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i, k;
@@ -762,7 +763,7 @@ void action::compute_strong_generators_from_sims(int verbose_level)
 		Strong_gens = NULL;
 		f_has_strong_generators = FALSE;
 	}
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(Sims, verbose_level - 2);
 	f_has_strong_generators = TRUE;
 	if (f_v) {
@@ -991,7 +992,7 @@ int action::element_order_if_divisor_of(void *elt, int o)
 	return order;
 }
 
-void action::compute_all_point_orbits(schreier &S,
+void action::compute_all_point_orbits(groups::schreier &S,
 		vector_ge &gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1043,7 +1044,7 @@ void action::strong_generators_at_depth(int depth,
 }
 
 void action::compute_point_stabilizer_chain(vector_ge &gen, 
-	sims *S, int *sequence, int len, int verbose_level)
+		groups::sims *S, int *sequence, int len, int verbose_level)
 // S points to len + 1 many sims objects
 {
 	int f_v = (verbose_level >= 1);
@@ -1113,7 +1114,7 @@ int action::compute_orbit_of_point(vector_ge &strong_generators,
 		int pt, int *orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	schreier Schreier;
+	groups::schreier Schreier;
 	int len, i, f;
 	
 	if (f_v) {
@@ -1151,7 +1152,7 @@ int action::least_image_of_point(vector_ge &strong_generators,
 	int pt, int *transporter, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	schreier Schreier;
+	groups::schreier Schreier;
 	int len, image, pos, i;
 	
 	if (f_v) {
@@ -1222,7 +1223,7 @@ int action::least_image_of_point_generators_by_handle(
 	return least_image_of_point(gens, pt, transporter, verbose_level);
 }
 
-void action::all_point_orbits(schreier &Schreier, int verbose_level)
+void action::all_point_orbits(groups::schreier &Schreier, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1247,8 +1248,8 @@ void action::all_point_orbits(schreier &Schreier, int verbose_level)
 	}
 }
 
-void action::all_point_orbits_from_generators(schreier &Schreier,
-		strong_generators *SG,
+void action::all_point_orbits_from_generators(groups::schreier &Schreier,
+		groups::strong_generators *SG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1261,7 +1262,7 @@ void action::all_point_orbits_from_generators(schreier &Schreier,
 	Schreier.compute_all_point_orbits(verbose_level);
 }
 
-void action::all_point_orbits_from_single_generator(schreier &Schreier,
+void action::all_point_orbits_from_single_generator(groups::schreier &Schreier,
 		int *Elt,
 		int verbose_level)
 {
@@ -1323,7 +1324,7 @@ void action::compute_stabilizer_orbits(data_structures::partitionstack *&Staborb
 		}
 
 		data_structures::partitionstack *S;
-		schreier Schreier;
+		groups::schreier Schreier;
 
 
 		S = &Staborbits[i];
@@ -1656,7 +1657,7 @@ void action::find_strong_generators_at_level(
 
 
 void action::make_element_from_permutation_representation(
-		int *Elt, sims *S, int *data, int verbose_level)
+		int *Elt, groups::sims *S, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *base_image;
@@ -1686,7 +1687,7 @@ void action::make_element_from_permutation_representation(
 	}
 }
 
-void action::make_element_from_base_image(int *Elt, sims *S,
+void action::make_element_from_base_image(int *Elt, groups::sims *S,
 		int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1939,7 +1940,7 @@ void action::make_element(int *Elt, int *data, int verbose_level)
 
 void action::build_up_automorphism_group_from_aut_data(
 	int nb_auts, int *aut_data,
-	sims &S, int verbose_level)
+	groups::sims &S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, coset;
@@ -2053,13 +2054,13 @@ void action::word_in_ab(int *Elt1, int *Elt2, int *Elt3,
 void action::init_group_from_generators(
 	int *group_generator_data, int group_generator_size,
 	int f_group_order_target, const char *group_order_target, 
-	vector_ge *gens, strong_generators *&Strong_gens, 
+	vector_ge *gens, groups::strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go, cur_go;
-	sims S;
+	groups::sims S;
 	int *Elt;
 	int nb_gens, i;
 	int nb_times = 200;
@@ -2120,23 +2121,23 @@ void action::init_group_from_generators(
 		cout << "did not reach target group order, continuing" << endl;
 	}
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
 
 	FREE_int(Elt);
 }
 
 void action::init_group_from_generators_by_base_images(
-	sims *parent_group_S,
+		groups::sims *parent_group_S,
 	int *group_generator_data, int group_generator_size, 
 	int f_group_order_target, const char *group_order_target, 
-	vector_ge *gens, strong_generators *&Strong_gens_out, 
+	vector_ge *gens, groups::strong_generators *&Strong_gens_out,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go, cur_go;
-	sims S;
+	groups::sims S;
 	int *Elt;
 	int nb_gens, i;
 	int nb_times = 200;
@@ -2202,7 +2203,7 @@ void action::init_group_from_generators_by_base_images(
 		cout << "did not reach target group order, continuing" << endl;
 	}
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
 	f_has_strong_generators = TRUE;
 
@@ -2293,7 +2294,7 @@ void action::element_base_images_verbose(
 }
 
 void action::minimize_base_images(int level,
-		sims *S, int *Elt, int verbose_level)
+		groups::sims *S, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2433,14 +2434,14 @@ void action::lexorder_test(long int *set, int set_sz,
 {
 	int f_v = (verbose_level  >= 1);
 	int f_v5 = FALSE; //(verbose_level  >= 1);
-	schreier *Sch;
+	groups::schreier *Sch;
 	int i, orb, first, a, a0;
 
 	if (f_v) {
 		cout << "action::lexorder_test" << endl;
 	}
 
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 
 	if (f_v) {
 		cout << "action::lexorder_test computing orbits in action "
@@ -2507,7 +2508,7 @@ void action::lexorder_test(long int *set, int set_sz,
 	
 }
 
-void action::compute_orbits_on_points(schreier *&Sch,
+void action::compute_orbits_on_points(groups::schreier *&Sch,
 		vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2515,7 +2516,7 @@ void action::compute_orbits_on_points(schreier *&Sch,
 	if (f_v) {
 		cout << "action::compute_orbits_on_points" << endl;
 	}
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 	if (f_v) {
 		cout << "action::compute_orbits_on_points in action ";
 		print_info();
@@ -2659,7 +2660,7 @@ void action::stabilizer_of_quartic_curve_representative(
 }
 
 void action::point_stabilizer_any_point(int &pt, 
-	schreier *&Sch, sims *&Stab, strong_generators *&stab_gens, 
+		groups::schreier *&Sch, groups::sims *&Stab, groups::strong_generators *&stab_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2716,7 +2717,7 @@ void action::point_stabilizer_any_point(int &pt,
 		cout << "action::point_stabilizer_any_point computing "
 				"strong generators for the point stabilizer:" << endl;
 	}
-	stab_gens = NEW_OBJECT(strong_generators);
+	stab_gens = NEW_OBJECT(groups::strong_generators);
 	stab_gens->init_from_sims(Stab, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point strong generators "
@@ -2729,9 +2730,9 @@ void action::point_stabilizer_any_point(int &pt,
 }
 
 void action::point_stabilizer_any_point_with_given_group(
-	strong_generators *input_gens, 
+		groups::strong_generators *input_gens,
 	int &pt, 
-	schreier *&Sch, sims *&Stab, strong_generators *&stab_gens, 
+	groups::schreier *&Sch, groups::sims *&Stab, groups::strong_generators *&stab_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2784,7 +2785,7 @@ void action::point_stabilizer_any_point_with_given_group(
 				"computing strong generators for the point stabilizer:"
 				<< endl;
 	}
-	stab_gens = NEW_OBJECT(strong_generators);
+	stab_gens = NEW_OBJECT(groups::strong_generators);
 	stab_gens->init_from_sims(Stab, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point_with_given_group "
@@ -2870,14 +2871,14 @@ int action::matrix_group_dimension()
 #endif
 }
 
-finite_field *action::matrix_group_finite_field()
+field_theory::finite_field *action::matrix_group_finite_field()
 {
 	if (!is_matrix_group()) {
 			cout << "action::matrix_group_finite_field is not a matrix group" << endl;
 			exit(1);
 	}
 	else {
-		matrix_group *M;
+		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		return M->GFq;
@@ -2891,7 +2892,7 @@ int action::is_semilinear_matrix_group()
 			exit(1);
 	}
 	else {
-		matrix_group *M;
+		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_semilinear) {
@@ -2910,7 +2911,7 @@ int action::is_projective()
 			exit(1);
 	}
 	else {
-		matrix_group *M;
+		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_projective) {
@@ -2929,7 +2930,7 @@ int action::is_affine()
 			exit(1);
 	}
 	else {
-		matrix_group *M;
+		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_affine) {
@@ -2948,7 +2949,7 @@ int action::is_general_linear()
 			exit(1);
 	}
 	else {
-		matrix_group *M;
+		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_general_linear) {
@@ -2973,7 +2974,7 @@ int action::is_matrix_group()
 	}
 }
 
-matrix_group *action::get_matrix_group()
+groups::matrix_group *action::get_matrix_group()
 {
 	if (type_G == unknown_symmetry_group_t) {
 		cout << "action::get_matrix_group type_G == unknown_symmetry_group_t" << endl;
@@ -3076,7 +3077,7 @@ matrix_group *action::get_matrix_group()
 	}
 }
 
-void action::perform_tests(strong_generators *SG, int verbose_level)
+void action::perform_tests(groups::strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3673,6 +3674,6 @@ void action::raise_to_the_power_based_on_text(std::string &data_A,
 }
 
 
-}}
+}}}
 
 

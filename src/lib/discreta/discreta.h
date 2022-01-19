@@ -337,7 +337,7 @@ void int_vector_realloc(int *&p, int old_length, int new_length);
 void int_vector_shorten(int *&p, int new_length);
 void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n);
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M);
-void fine_tune(foundations::finite_field *F, int *mtxD, int verbose_level);
+void fine_tune(foundations::field_theory::finite_field *F, int *mtxD, int verbose_level);
 
 
 /************************************* base ********************************/
@@ -1369,16 +1369,16 @@ class domain {
 		//pc_presentation *the_pres;
 		unipoly *the_factor_poly;
 		domain *the_sub_domain;
-		foundations::finite_field *F;
+		foundations::field_theory::finite_field *F;
 	
 	public:
 		domain(int p);
-		domain(foundations::finite_field *F);
+		domain(foundations::field_theory::finite_field *F);
 	domain(unipoly *factor_poly, domain *sub_domain);
 	//domain(pc_presentation *pres);
 	
 	domain_type type();
-	foundations::finite_field *get_F();
+	foundations::field_theory::finite_field *get_F();
 	int order_int();
 	int order_subfield_int();
 	int characteristic();

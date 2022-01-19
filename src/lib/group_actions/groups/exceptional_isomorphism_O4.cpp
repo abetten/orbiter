@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 exceptional_isomorphism_O4::exceptional_isomorphism_O4()
@@ -59,8 +60,8 @@ void exceptional_isomorphism_O4::freeself()
 		}
 }
 
-void exceptional_isomorphism_O4::init(finite_field *Fq,
-		action *A2, action *A4, action *A5,
+void exceptional_isomorphism_O4::init(field_theory::finite_field *Fq,
+		actions::action *A2, actions::action *A4, actions::action *A5,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -457,5 +458,5 @@ static void print_from_to(int d, int i, int j, int *v1, int *v2)
 #endif
 
 
-}}
+}}}
 

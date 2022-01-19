@@ -74,7 +74,7 @@ void surface_with_action::freeself()
 	null();
 }
 
-void surface_with_action::init(surface_domain *Surf,
+void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
 		projective_space_with_action *PA,
 		int f_recoordinatize,
 		int verbose_level)
@@ -372,7 +372,7 @@ void surface_with_action::complete_skew_hexagon(
 	int Mtx[16];
 	int forbidden_points[6];
 	int Forbidden_points[6 * 4];
-	finite_field *F;
+	field_theory::finite_field *F;
 	long int a1, a2, a3;
 	long int b1, b2, b3;
 	long int a4, a5, a6;
@@ -657,7 +657,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 	int Mtx[16];
 	int forbidden_points[6];
 	int Forbidden_points[6 * 4];
-	finite_field *F;
+	field_theory::finite_field *F;
 	long int a1, a2, a3;
 	long int b1, b2, b3;
 	long int a4, a5, a6;
@@ -998,7 +998,7 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 				"Recoordinatize == NULL" << endl;
 		exit(1);
 	}
-	finite_field *F;
+	field_theory::finite_field *F;
 	int i, sz;
 
 
@@ -1089,7 +1089,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	int pt_coord[4 * 4];
 	int nb_pts;
 	combinatorics::combinatorics_domain Combi;
-	finite_field *F;
+	field_theory::finite_field *F;
 	
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal, "
@@ -1502,7 +1502,7 @@ void surface_with_action::create_surface_and_do_report(
 		cout << "surface_with_action::create_surface_and_do_report after create_surface" << endl;
 	}
 
-	action *A;
+	actions::action *A;
 	//int *Elt1;
 	int *Elt2;
 
@@ -1630,7 +1630,7 @@ void surface_with_action::test_group(
 
 
 
-		matrix_group *M;
+		groups::matrix_group *M;
 
 		M = A->G.matrix_grp;
 		M->substitute_surface_equation(Elt2,
@@ -1679,7 +1679,7 @@ void surface_with_action::report_with_group(
 				"surface_object_with_action object" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -1861,7 +1861,7 @@ void surface_with_action::do_report(
 		cout << "surface_with_action::do_report" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -1999,7 +1999,7 @@ void surface_with_action::sweep_4(
 		cout << "surface_with_action::sweep_4" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -2314,7 +2314,7 @@ void surface_with_action::sweep_4_27(
 		cout << "surface_with_action::sweep_4_27" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -2556,7 +2556,7 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 	}
 
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = PA->F;
 

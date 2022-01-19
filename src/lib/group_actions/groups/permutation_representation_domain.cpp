@@ -16,6 +16,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
 
 permutation_representation_domain::permutation_representation_domain()
 {
@@ -199,7 +201,7 @@ void permutation_representation_domain::init_data(int page_length_log, int verbo
 
 void permutation_representation_domain::init_with_base(int degree,
 	int base_length, int *base, int page_length_log, 
-	action &A, int verbose_level)
+	actions::action &A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -261,7 +263,7 @@ void permutation_representation_domain::init_with_base(int degree,
 	A.type_G = perm_group_t;
 	A.G.perm_grp = this;
 	
-	A.Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A.Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
 	A.Stabilizer_chain->allocate_base_data(&A, base_length, verbose_level);
 	//A.Stabilizer_chain->base_len = base_length;
 	//A.allocate_base_data(A.base_len);
@@ -281,7 +283,7 @@ void permutation_representation_domain::init_with_base(int degree,
 		//cout << endl;
 	}
 
-	A.ptr = NEW_OBJECT(action_pointer_table);
+	A.ptr = NEW_OBJECT(actions::action_pointer_table);
 	A.ptr->init_function_pointers_permutation_group();
 	
 	A.elt_size_in_int = elt_size_int;
@@ -440,7 +442,7 @@ void permutation_representation_domain::print_for_make_element_no_commas(
 	}
 }
 
-void permutation_representation_domain::print_with_action(action *A, int *Elt, ostream &ost)
+void permutation_representation_domain::print_with_action(actions::action *A, int *Elt, ostream &ost)
 {
 	//perm_print(ost, Elt, degree);
 	//ost << endl;
@@ -533,5 +535,5 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 }
 
 
-}}
+}}}
 

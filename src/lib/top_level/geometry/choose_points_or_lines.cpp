@@ -118,7 +118,7 @@ void poset::add_testing_without_group(
 #endif
 
 void choose_points_or_lines::init(const char *label, void *data, 
-	action *A, action *A_lines, 
+		actions::action *A, actions::action *A_lines,
 	int f_choose_lines, 
 	int nb_points_or_lines, 
 	int (*check_function)(int len, long int *S, void *data, int verbose_level),
@@ -150,24 +150,24 @@ void choose_points_or_lines::init(const char *label, void *data,
 	transporter_inv = NEW_int(A->elt_size_in_int);
 }
 
-void choose_points_or_lines::compute_orbits_from_sims(sims *G, int verbose_level)
+void choose_points_or_lines::compute_orbits_from_sims(groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//vector_ge *gens;
 	//int *tl;
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 	
 	if (f_v) {
 		cout << "choose_points_or_lines::compute_orbits_from_sims " << label << endl;
 	}
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(G, verbose_level - 2);
 	compute_orbits(Strong_gens, verbose_level);
 	FREE_OBJECT(Strong_gens);
 }
 
-void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
+void choose_points_or_lines::compute_orbits(groups::strong_generators *Strong_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -362,17 +362,17 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	}
 	
 	stab_order = NEW_OBJECT(ring_theory::longinteger_object);
-	Stab_Strong_gens = NEW_OBJECT(strong_generators);
+	Stab_Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_changed) {
 		
 		ring_theory::longinteger_object go1;
-		sims *NewStab;
+		groups::sims *NewStab;
 		
 		if (f_vvv) {
 			cout << "computing NewStab (because we changed)" << endl;
 		}
-		NewStab = NEW_OBJECT(sims);
+		NewStab = NEW_OBJECT(groups::sims);
 		NewStab->init(A, verbose_level - 2);
 		NewStab->init_trivial_group(0/*verbose_level - 1*/);
 		//NewStab->group_order(stab_order);

@@ -61,7 +61,7 @@ void union_find_on_k_subsets::null()
 }
 
 void union_find_on_k_subsets::init(
-	action *A_original, sims *S,
+		actions::action *A_original, groups::sims *S,
 	long int *set, int set_sz, int k,
 	long int *interesting_k_subsets,
 	int nb_interesting_k_subsets,
@@ -88,10 +88,10 @@ void union_find_on_k_subsets::init(
 	union_find_on_k_subsets::nb_interesting_k_subsets
 		= nb_interesting_k_subsets;
 
-	Ar = NEW_OBJECT(action);
-	Ar_perm = NEW_OBJECT(action);
-	Ark = NEW_OBJECT(action);
-	Arkr = NEW_OBJECT(action);
+	Ar = NEW_OBJECT(actions::action);
+	Ar_perm = NEW_OBJECT(actions::action);
+	Ark = NEW_OBJECT(actions::action);
+	Arkr = NEW_OBJECT(actions::action);
 	
 	
 	if (f_v) {

@@ -140,7 +140,7 @@ void semifield_flag_orbit_node::read_from_file_binary(
 		fp.read((char *) &upstep_orbit, sizeof(int));
 		}
 	if (!f_long_orbit) {
-		gens = NEW_OBJECT(strong_generators);
+		gens = NEW_OBJECT(groups::strong_generators);
 		gens->read_from_file_binary(SL->SC->A, fp, verbose_level - 1);
 		}
 	if (f_v) {

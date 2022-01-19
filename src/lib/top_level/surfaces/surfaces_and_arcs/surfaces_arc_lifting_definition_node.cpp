@@ -64,7 +64,7 @@ void surfaces_arc_lifting_definition_node::init_with_27_lines(surfaces_arc_lifti
 	surfaces_arc_lifting_definition_node::orbit_idx = orbit_idx;
 
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines before SO->init_with_27_lines" << endl;

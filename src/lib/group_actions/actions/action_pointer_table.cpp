@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 action_pointer_table::action_pointer_table()
@@ -66,4 +67,5 @@ void action_pointer_table::null_function_pointers()
 
 
 
-}}
+}}}
+

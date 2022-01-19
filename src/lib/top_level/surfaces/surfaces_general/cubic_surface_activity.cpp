@@ -254,8 +254,8 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
-		surface_object *SO;
-		surface_object_properties *SOP;
+		algebraic_geometry::surface_object *SO;
+		algebraic_geometry::surface_object_properties *SOP;
 
 		SO = SC->SO;
 		SOP = SO->SOP;

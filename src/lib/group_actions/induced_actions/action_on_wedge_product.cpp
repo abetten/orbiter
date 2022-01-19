@@ -46,7 +46,7 @@ void action_on_wedge_product::free()
 	null();
 }
 
-void action_on_wedge_product::init(action &A, int verbose_level)
+void action_on_wedge_product::init(actions::action &A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry_global Gg;
@@ -87,7 +87,7 @@ long int action_on_wedge_product::rank_point(int *v)
 }
 
 long int action_on_wedge_product::compute_image_int(
-	action &A, int *Elt, long int a, int verbose_level)
+		actions::action &A, int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -122,7 +122,7 @@ long int action_on_wedge_product::compute_image_int(
 }
 
 int action_on_wedge_product::element_entry_frobenius(
-		action &A, int *Elt, int verbose_level)
+		actions::action &A, int *Elt, int verbose_level)
 {
 	int f;
 
@@ -131,7 +131,7 @@ int action_on_wedge_product::element_entry_frobenius(
 }
 
 int action_on_wedge_product::element_entry_ij(
-		action &A, int *Elt, int I, int J, int verbose_level)
+		actions::action &A, int *Elt, int I, int J, int verbose_level)
 {
 	int i, j, k, l, w;
 	combinatorics::combinatorics_domain Combi;
@@ -142,7 +142,8 @@ int action_on_wedge_product::element_entry_ij(
 	return w;
 }
 
-int action_on_wedge_product::element_entry_ijkl(action &A,
+int action_on_wedge_product::element_entry_ijkl(
+		actions::action &A,
 		int *Elt, int i, int j, int k, int l, int verbose_level)
 {
 	int aki, alj, akj, ali, u, v, w;
@@ -158,7 +159,7 @@ int action_on_wedge_product::element_entry_ijkl(action &A,
 }
 
 void action_on_wedge_product::compute_image_int_low_level(
-	action &A, int *Elt, int *input, int *output, int verbose_level)
+		actions::action &A, int *Elt, int *input, int *output, int verbose_level)
 // \sum_{i < j}  x_{i,j} e_i \wedge e_j * A =
 // \sum_{k < l} \sum_{i < j} x_{i,j} (a_{i,k}a_{j,l} - a_{i,l}a_{j,k}) e_k \wedge e_l
 // or (after a change of indices)

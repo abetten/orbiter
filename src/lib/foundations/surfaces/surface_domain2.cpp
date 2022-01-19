@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 void surface_domain::multiply_conic_times_linear(int *six_coeff,
@@ -1368,4 +1369,5 @@ long int surface_domain::compute_tangent_plane(int *pt_coords, int *equation20, 
 
 
 
-}}
+}}}
+

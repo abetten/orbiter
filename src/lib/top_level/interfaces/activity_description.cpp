@@ -90,7 +90,7 @@ void activity_description::read_arguments(
 	if (ST.stringcmp(argv[i], "-finite_field_activity") == 0) {
 		f_finite_field_activity = TRUE;
 		Finite_field_activity_description =
-				NEW_OBJECT(finite_field_activity_description);
+				NEW_OBJECT(field_theory::finite_field_activity_description);
 		if (f_v) {
 			cout << "reading -finite_field_activity" << endl;
 		}
@@ -363,7 +363,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		f_diophant_activity = TRUE;
 		Diophant_activity_description =
-				NEW_OBJECT(diophant_activity_description);
+				NEW_OBJECT(solvers::diophant_activity_description);
 		if (f_v) {
 			cout << "reading -diophant_activity" << endl;
 		}
@@ -673,11 +673,11 @@ void activity_description::do_finite_field_activity(int verbose_level)
 		cout << "-finite_field_activity requires at least one input" << endl;
 		exit(1);
 	}
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = (finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
-	finite_field_activity FA;
+	field_theory::finite_field_activity FA;
 	FA.init(Finite_field_activity_description, F, verbose_level);
 #if 0
 	Finite_field_activity_description->f_q = TRUE;
@@ -688,7 +688,7 @@ void activity_description::do_finite_field_activity(int verbose_level)
 
 	if (Sym->with_labels.size() == 2) {
 		cout << "-finite_field_activity has two inputs" << endl;
-		FA.F_secondary = (finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+		FA.F_secondary = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
 	}
 
 
@@ -1361,11 +1361,11 @@ void activity_description::do_diophant_activity(int verbose_level)
 		exit(1);
 	}
 
-	diophant_create *Dio;
+	solvers::diophant_create *Dio;
 
-	Dio = (diophant_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	Dio = (solvers::diophant_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		diophant_activity Activity;
+		solvers::diophant_activity Activity;
 
 
 		if (f_v) {

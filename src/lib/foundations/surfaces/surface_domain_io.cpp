@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 void surface_domain::print_equation(std::ostream &ost, int *coeffs)
@@ -1141,4 +1142,5 @@ void callback_surface_domain_sstr_line_label(std::stringstream &sstr, long int p
 
 
 
-}}
+}}}
+

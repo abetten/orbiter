@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 
@@ -1940,7 +1941,6 @@ void surface_domain::read_string_of_schlaefli_labels(std::string &str, int *&v, 
 	}
 }
 
-}
-}
+}}}
 
 

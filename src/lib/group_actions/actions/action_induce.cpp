@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
 
 action *action::induced_action_on_interior_direct_product(
@@ -176,7 +177,7 @@ action *action::induced_action_on_set_partitions(
 
 
 void action::init_action_on_lines(action *A,
-		finite_field *F, int n, int verbose_level)
+		field_theory::finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -214,7 +215,7 @@ void action::init_action_on_lines(action *A,
 		cout << "action::init_action_on_lines "
 				"initializing A2" << endl;
 		}
-	sims S;
+	groups::sims S;
 	ring_theory::longinteger_object go1;
 
 	S.init(A, verbose_level - 2);
@@ -249,7 +250,7 @@ void action::init_action_on_lines(action *A,
 
 void action::induced_action_by_representation_on_conic(
 	action *A_old,
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -330,7 +331,7 @@ void action::induced_action_by_representation_on_conic(
 
 void action::induced_action_on_cosets(
 	action_on_cosets *A_on_cosets,
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -410,7 +411,7 @@ void action::induced_action_on_cosets(
 
 void action::induced_action_on_factor_space(action *A_old, 
 	action_on_factor_space *AF, 
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -485,7 +486,7 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	action_on_grassmannian *AG;
 	action *A;
-	matrix_group *M;
+	groups::matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian" << endl;
@@ -567,7 +568,7 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 
 void action::induced_action_on_grassmannian(action *A_old, 
 	action_on_grassmannian *AG, 
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -680,7 +681,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 
 void action::induced_action_on_spread_set(action *A_old, 
 	action_on_spread_set *AS, 
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -757,7 +758,7 @@ void action::induced_action_on_spread_set(action *A_old,
 
 void action::induced_action_on_orthogonal(action *A_old, 
 	action_on_orthogonal *AO, 
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -845,7 +846,7 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	matrix_group *M;
+	groups::matrix_group *M;
 
 	if (f_v) {
 		cout << "action::induced_action_on_wedge_product" << endl;
@@ -1016,7 +1017,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 
 void action::induced_action_by_subfield_structure(action *A_old, 
 	action_by_subfield_structure *SubfieldStructure, 
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1092,12 +1093,12 @@ void action::induced_action_by_subfield_structure(action *A_old,
 
 
 void action::induced_action_on_Galois_group(
-		sims *old_G, int verbose_level)
+		groups::sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action_on_galois_group *AG;
 	action *A;
-	matrix_group *M;
+	groups::matrix_group *M;
 
 	if (f_v) {
 		cout << "action::induced_action_on_Galois_group" << endl;
@@ -1164,12 +1165,12 @@ void action::induced_action_on_Galois_group(
 }
 
 void action::induced_action_on_determinant(
-		sims *old_G, int verbose_level)
+		groups::sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action_on_determinant *AD;
 	action *A;
-	matrix_group *M;
+	groups::matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_determinant" << endl;
@@ -1234,7 +1235,7 @@ void action::induced_action_on_determinant(
 }
 
 void action::induced_action_on_sign(
-		sims *old_G, int verbose_level)
+		groups::sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action_on_sign *OnSign;
@@ -1297,7 +1298,7 @@ void action::induced_action_on_sign(
 }
 
 action *action::create_induced_action_by_conjugation(
-		sims *Base_group, int f_ownership,
+		groups::sims *Base_group, int f_ownership,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1324,8 +1325,8 @@ action *action::create_induced_action_by_conjugation(
 	return A;
 }
 
-void action::induced_action_by_conjugation(sims *old_G, 
-	sims *Base_group, int f_ownership,
+void action::induced_action_by_conjugation(groups::sims *old_G,
+		groups::sims *Base_group, int f_ownership,
 	int f_basis, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1402,8 +1403,8 @@ void action::induced_action_by_conjugation(sims *old_G,
 }
 
 void action::induced_action_by_right_multiplication(
-	int f_basis, sims *old_G,
-	sims *Base_group, int f_ownership, int verbose_level)
+	int f_basis, groups::sims *old_G,
+	groups::sims *Base_group, int f_ownership, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action_by_right_multiplication *ABRM;
@@ -1502,7 +1503,7 @@ action *action::create_induced_action_on_sets(
 
 
 void action::induced_action_on_sets(
-	action &old_action, sims *old_G,
+	action &old_action, groups::sims *old_G,
 	int nb_sets, int set_size, long int *sets,
 	int f_induce_action, int verbose_level)
 {
@@ -1595,8 +1596,8 @@ void action::induced_action_on_sets(
 	}
 }
 
-action *action::create_induced_action_on_subgroups(sims *S, 
-	int nb_subgroups, int group_order, subgroup **Subgroups,
+action *action::create_induced_action_on_subgroups(groups::sims *S,
+	int nb_subgroups, int group_order, groups::subgroup **Subgroups,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1617,8 +1618,8 @@ action *action::create_induced_action_on_subgroups(sims *S,
 
 
 void action::induced_action_on_subgroups(
-	action *old_action, sims *S,
-	int nb_subgroups, int group_order, subgroup **Subgroups, 
+	action *old_action, groups::sims *S,
+	int nb_subgroups, int group_order, groups::subgroup **Subgroups,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1694,7 +1695,7 @@ void action::induced_action_on_subgroups(
 
 void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	action &old_action,
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	schreier_vector *Schreier_vector,
 	int pt, int verbose_level)
 {
@@ -1875,7 +1876,7 @@ action *action::restricted_action(
 }
 
 action *action::create_induced_action_by_restriction(
-		sims *S, int size, long int *set, int f_induce,
+		groups::sims *S, int size, long int *set, int f_induce,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1895,7 +1896,7 @@ action *action::create_induced_action_by_restriction(
 
 void action::induced_action_by_restriction_internal_function(
 	action &old_action,
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int nb_points, long int *points, int verbose_level)
 // uses action_by_restriction data type
 {
@@ -1971,7 +1972,7 @@ void action::induced_action_by_restriction_internal_function(
 }
 
 void action::induced_action_on_pairs(
-	action &old_action, sims *old_G,
+	action &old_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2044,7 +2045,7 @@ action *action::create_induced_action_on_ordered_pairs(int verbose_level)
 
 
 void action::induced_action_on_ordered_pairs(
-	action &old_action, sims *old_G,
+	action &old_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2157,7 +2158,7 @@ void action::induced_action_on_k_subsets(
 }
 
 void action::induced_action_on_orbits(action *old_action,
-	schreier *Sch, int f_play_it_safe,
+		groups::schreier *Sch, int f_play_it_safe,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2486,7 +2487,7 @@ void action::setup_product_action(action *A1, action *A2,
 void action::induced_action_on_homogeneous_polynomials(
 	action *A_old,
 	ring_theory::homogeneous_polynomial_domain *HPD,
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2574,7 +2575,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	action *A_old,
 	ring_theory::homogeneous_polynomial_domain *HPD,
 	int *Equations, int nb_equations, 
-	int f_induce_action, sims *old_G, 
+	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2683,7 +2684,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 void action::induced_action_recycle_sims(action &old_action, 
 	int verbose_level)
 {
-	sims *old_G;
+	groups::sims *old_G;
 	
 	if (!old_action.f_has_sims) {
 		cout << "action::induced_action_recycle_sims: "
@@ -2697,7 +2698,7 @@ void action::induced_action_recycle_sims(action &old_action,
 }
 
 void action::induced_action_override_sims(
-	action &old_action, sims *old_G,
+	action &old_action, groups::sims *old_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2713,7 +2714,7 @@ void action::induced_action_override_sims(
 	}
 }
 
-void action::induce(action *old_action, sims *old_G, 
+void action::induce(action *old_action, groups::sims *old_G,
 	int base_of_choice_len, long int *base_of_choice,
 	int verbose_level)
 // after this procedure, action will have
@@ -2723,7 +2724,7 @@ void action::induce(action *old_action, sims *old_G,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	action *subaction;
-	sims *G, *K;
+	groups::sims *G, *K;
 		// will become part of the action object
 		// 'this' by the end of this procedure
 	ring_theory::longinteger_object go, go1, go2, go3;
@@ -2782,8 +2783,8 @@ void action::induce(action *old_action, sims *old_G,
 		}
 	}
 	
-	G = NEW_OBJECT(sims);
-	K = NEW_OBJECT(sims);
+	G = NEW_OBJECT(groups::sims);
+	K = NEW_OBJECT(groups::sims);
 	if (f_v) {
 		cout << "action::induce: before G->init_without_base(this);" << endl;
 	}
@@ -3285,7 +3286,7 @@ void action::base_change(action *old_action,
 
 void action::create_orbits_on_subset_using_restricted_action(
 		action *&A_by_restriction,
-		schreier *&Orbits, sims *S,
+		groups::schreier *&Orbits, groups::sims *S,
 		int size, long int *set,
 		int verbose_level)
 {
@@ -3300,7 +3301,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 			size, set,
 			f_induce,
 			verbose_level - 1);
-	Orbits = NEW_OBJECT(schreier);
+	Orbits = NEW_OBJECT(groups::schreier);
 
 	A_by_restriction->compute_all_point_orbits(*Orbits,
 			S->gens, verbose_level - 2);
@@ -3312,7 +3313,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 
 void action::create_orbits_on_sets_using_action_on_sets(
 		action *&A_on_sets,
-		schreier *&Orbits, sims *S,
+		groups::schreier *&Orbits, groups::sims *S,
 		int nb_sets, int set_size, long int *sets,
 		int verbose_level)
 {
@@ -3327,7 +3328,7 @@ void action::create_orbits_on_sets_using_action_on_sets(
 			nb_sets, set_size, sets,
 			verbose_level);
 
-	Orbits = NEW_OBJECT(schreier);
+	Orbits = NEW_OBJECT(groups::schreier);
 
 	A_on_sets->compute_all_point_orbits(*Orbits, S->gens, verbose_level - 2);
 	if (f_v) {
@@ -3367,7 +3368,7 @@ int action::choose_next_base_point_default_method(
 
 void action::generators_to_strong_generators(
 	int f_target_go, ring_theory::longinteger_object &target_go,
-	vector_ge *gens, strong_generators *&Strong_gens,
+	vector_ge *gens, groups::strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3380,7 +3381,7 @@ void action::generators_to_strong_generators(
 		}
 	}
 
-	sims *S;
+	groups::sims *S;
 
 	if (f_v) {
 		cout << "action::generators_to_strong_generators "
@@ -3396,7 +3397,7 @@ void action::generators_to_strong_generators(
 				"after create_sims_from_generators_randomized" << endl;
 	}
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "action::generators_to_strong_generators "
 				"before Strong_gens->init_from_sims" << endl;
@@ -3412,8 +3413,8 @@ void action::generators_to_strong_generators(
 
 void action::orbits_on_equations(
 		ring_theory::homogeneous_polynomial_domain *HPD,
-	int *The_equations, int nb_equations, strong_generators *gens,
-	action *&A_on_equations, schreier *&Orb, int verbose_level)
+	int *The_equations, int nb_equations, groups::strong_generators *gens,
+	action *&A_on_equations, groups::schreier *&Orb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3460,5 +3461,5 @@ void action::orbits_on_equations(
 
 
 
-}}
+}}}
 

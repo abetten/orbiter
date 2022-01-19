@@ -576,7 +576,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	// compute stabilizer of the set of points:
 
 
-	strong_generators *SG_pt_stab = NULL;
+	groups::strong_generators *SG_pt_stab = NULL;
 	ring_theory::longinteger_object pt_stab_order;
 	object_with_canonical_form *OiP = NULL;
 
@@ -615,7 +615,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 				"before Nau.set_stabilizer_of_object" << endl;
 	}
 
-	nauty_interface_with_group Nau;
+	actions::nauty_interface_with_group Nau;
 	data_structures::nauty_output *NO;
 
 	NO = NEW_OBJECT(data_structures::nauty_output);

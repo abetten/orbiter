@@ -137,7 +137,7 @@ void semifield_downstep_node::init(
 		}
 
 
-	A_on_cosets = NEW_OBJECT(action);
+	A_on_cosets = NEW_OBJECT(actions::action);
 
 	if (f_vv) {
 		cout << "semifield_downstep_node::init "
@@ -160,7 +160,7 @@ void semifield_downstep_node::init(
 		}
 
 
-	strong_generators *sg;
+	groups::strong_generators *sg;
 	ring_theory::longinteger_object go;
 
 
@@ -198,7 +198,7 @@ void semifield_downstep_node::init(
 		SL->make_file_name_schreier(fname, level, orbit_number);
 
 		if (File_io.file_size(fname) > 0) {
-			Sch = NEW_OBJECT(schreier);
+			Sch = NEW_OBJECT(groups::schreier);
 			Sch->A = A_on_cosets;
 			cout << "semifield_downstep_node::init "
 					"Reading schreier data structure from "

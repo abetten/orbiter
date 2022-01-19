@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 void sims::random_element(int *elt, int verbose_level)
@@ -410,7 +411,7 @@ void sims::transitive_extension_using_generators(
 }
 
 
-void sims::point_stabilizer_stabchain_with_action(action *A2,
+void sims::point_stabilizer_stabchain_with_action(actions::action *A2,
 		sims &S, int pt, int verbose_level)
 // first computes the orbit of the point pt in action A2
 // under the generators
@@ -724,7 +725,7 @@ void sims::point_stabilizer(vector_ge &SG,
 	}
 }
 
-void sims::point_stabilizer_with_action(action *A2,
+void sims::point_stabilizer_with_action(actions::action *A2,
 		vector_ge &SG, int *tl, int pt, int verbose_level)
 // computes strong generating set for
 // the stabilizer of point pt in action A2
@@ -762,7 +763,7 @@ void sims::point_stabilizer_with_action(action *A2,
 	}
 }
 
-void sims::conjugate(action *A,
+void sims::conjugate(actions::action *A,
 	sims *old_G, int *Elt,
 	int f_overshooting_OK,
 	int verbose_level)
@@ -915,7 +916,7 @@ void sims::conjugate(action *A,
 	}
 }
 
-int sims::test_if_in_set_stabilizer(action *A,
+int sims::test_if_in_set_stabilizer(actions::action *A,
 		long int *set, int size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1005,7 +1006,7 @@ int sims::test_if_subgroup(sims *old_G, int verbose_level)
 }
 
 int sims::find_element_with_exactly_n_fixpoints_in_given_action(
-		int *Elt, int nb_fixpoints, action *A_given, int verbose_level)
+		int *Elt, int nb_fixpoints, actions::action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -1735,7 +1736,7 @@ void sims::create_group_table(int *&Table, long int &n,
 }
 
 void sims::compute_conjugacy_classes(
-	action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
+		actions::action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
 	strong_generators *&SG, int &nb_classes,
 	int *&class_size, int *&class_rep,
 	int verbose_level)
@@ -1746,7 +1747,7 @@ void sims::compute_conjugacy_classes(
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes" << endl;
 	}
-	Aconj = NEW_OBJECT(action);
+	Aconj = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes "
@@ -2169,5 +2170,6 @@ void sims::Cayley_graph(int *&Adj, int &sz, vector_ge *gens_S,
 }
 
 
-}}
+}}}
+
 

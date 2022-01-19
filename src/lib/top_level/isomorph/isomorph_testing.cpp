@@ -77,7 +77,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 		int f_implicit_fusion, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sims *Stab;
+	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	long int data[1000];
 	int i, id;
@@ -185,7 +185,7 @@ void isomorph::isomorph_testing(int t0,
 {
 	int f_v = (verbose_level >= 1);
 	int f_v4 = FALSE;// (verbose_level >= 1);
-	sims *Stab;
+	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int f_eof;
 	file_io Fio;
@@ -558,7 +558,7 @@ void isomorph::compute_down_link(int *&down_link,
 		}
 }
 
-void isomorph::do_iso_test(int t0, sims *&Stab, 
+void isomorph::do_iso_test(int t0, groups::sims *&Stab,
 	int f_play_back, ifstream *play_back_file, 
 	int &f_eof, int print_mod, 
 	int f_implicit_fusion, int verbose_level)
@@ -719,7 +719,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 
 
 int isomorph::next_subset(int t0, 
-	int &f_continue, sims *Stab, long int *data,
+	int &f_continue, groups::sims *Stab, long int *data,
 	int f_play_back, ifstream *play_back_file, int &f_eof, 
 	int verbose_level)
 {
@@ -806,7 +806,7 @@ int isomorph::next_subset(int t0,
 }
 
 void isomorph::process_rearranged_set(
-	sims *Stab, long int *data,
+		groups::sims *Stab, long int *data,
 	int f_implicit_fusion, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1152,7 +1152,7 @@ void isomorph::stabilizer_action_add_generator(int *Elt, int verbose_level)
 	FREE_int(Elt1);
 }
 
-void isomorph::print_statistics_iso_test(int t0, sims *Stab)
+void isomorph::print_statistics_iso_test(int t0, groups::sims *Stab)
 {
 	//double progress;
 	ring_theory::longinteger_object go;
@@ -1351,7 +1351,7 @@ int isomorph::identify_database_is_open(long int *set,
 }
 
 
-void isomorph::induced_action_on_set_basic(sims *S,
+void isomorph::induced_action_on_set_basic(groups::sims *S,
 		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1396,7 +1396,7 @@ void isomorph::induced_action_on_set_basic(sims *S,
 }
 
 void isomorph::induced_action_on_set(
-		sims *S, long int *set, int verbose_level)
+		groups::sims *S, long int *set, int verbose_level)
 // Called by do_iso_test and print_isomorphism_types
 // Creates the induced action on the set from the given action.
 // The given action is gen->A2
@@ -1435,8 +1435,8 @@ void isomorph::induced_action_on_set(
 		UF = NULL;
 		}
 	//AA = NEW_OBJECT(action);
-	AA_perm = NEW_OBJECT(action);
-	AA_on_k_subsets = NEW_OBJECT(action);
+	AA_perm = NEW_OBJECT(actions::action);
+	AA_on_k_subsets = NEW_OBJECT(actions::action);
 	
 	
 	if (f_v) {
@@ -1587,7 +1587,7 @@ void isomorph::induced_action_on_set(
 	FREE_int(Elt1);
 }
 
-int isomorph::handle_automorphism(long int *set, sims *Stab,
+int isomorph::handle_automorphism(long int *set, groups::sims *Stab,
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

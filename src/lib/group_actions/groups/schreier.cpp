@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
 
 
 schreier::schreier()
@@ -48,7 +49,7 @@ schreier::schreier()
 
 }
 
-schreier::schreier(action *A, int verbose_level)
+schreier::schreier(actions::action *A, int verbose_level)
 {
 	init(A, verbose_level);
 }
@@ -304,7 +305,7 @@ void schreier::images_append(int verbose_level)
 	nb_images++;
 }
 
-void schreier::init(action *A, int verbose_level)
+void schreier::init(actions::action *A, int verbose_level)
 {
 	schreier::A = A;
 	degree = A->degree;
@@ -1513,7 +1514,7 @@ int schreier::sum_up_orbit_lengths()
 }
 
 void schreier::non_trivial_random_schreier_generator(
-	action *A_original, int *Elt, int verbose_level)
+		actions::action *A_original, int *Elt, int verbose_level)
 // computes non trivial random Schreier generator into schreier_gen
 // non-trivial is with respect to A_original
 {
@@ -2144,7 +2145,7 @@ void schreier::get_orbit_in_order(std::vector<int> &Orb,
 }
 
 strong_generators *schreier::stabilizer_any_point_plus_cosets(
-	action *default_action, 
+		actions::action *default_action,
 	ring_theory::longinteger_object &full_group_order,
 	int pt, vector_ge *&cosets,
 	int verbose_level)
@@ -2229,7 +2230,7 @@ strong_generators *schreier::stabilizer_any_point_plus_cosets(
 }
 
 strong_generators *schreier::stabilizer_any_point(
-	action *default_action, 
+		actions::action *default_action,
 	ring_theory::longinteger_object &full_group_order, int pt,
 	int verbose_level)
 {
@@ -2291,7 +2292,7 @@ strong_generators *schreier::stabilizer_any_point(
 }
 
 
-set_and_stabilizer *schreier::get_orbit_rep(action *default_action,
+set_and_stabilizer *schreier::get_orbit_rep(actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx, int verbose_level)
 {
@@ -2314,7 +2315,7 @@ set_and_stabilizer *schreier::get_orbit_rep(action *default_action,
 	return SaS;
 }
 
-void schreier::get_orbit_rep_to(action *default_action,
+void schreier::get_orbit_rep_to(actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx,
 		set_and_stabilizer *Rep,
@@ -2341,7 +2342,7 @@ void schreier::get_orbit_rep_to(action *default_action,
 
 
 strong_generators *schreier::stabilizer_orbit_rep(
-	action *default_action, 
+		actions::action *default_action,
 	ring_theory::longinteger_object &full_group_order, int orbit_idx,
 	int verbose_level)
 {
@@ -2383,9 +2384,9 @@ strong_generators *schreier::stabilizer_orbit_rep(
 	return gens;
 }
 
-void schreier::point_stabilizer(action *default_action, 
+void schreier::point_stabilizer(actions::action *default_action,
 		ring_theory::longinteger_object &go,
-	sims *&Stab, int orbit_no, 
+		groups::sims *&Stab, int orbit_no,
 	int verbose_level)
 // this function allocates a sims structure into Stab.
 {
@@ -3393,4 +3394,5 @@ void schreier::latex_TDA(std::ostream &ost, combinatorics::encoded_combinatorial
 }
 
 
-}}
+}}}
+

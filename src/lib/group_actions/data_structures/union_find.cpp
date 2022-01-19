@@ -37,7 +37,7 @@ void union_find::null()
 	prev = NULL;
 }
 
-void union_find::init(action *A, int verbose_level)
+void union_find::init(actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

@@ -132,7 +132,7 @@ void surface_object_with_action::freeself()
 
 void surface_object_with_action::init_equation(
 	surface_with_action *Surf_A, int *eqn,
-	strong_generators *Aut_gens, int verbose_level)
+	groups::strong_generators *Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -146,7 +146,7 @@ void surface_object_with_action::init_equation(
 	F = Surf->F;
 	q = F->q;
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 	if (f_v) {
 		cout << "surface_object_with_action::init_equation "
 				"before SO->init_equation" << endl;
@@ -187,7 +187,7 @@ void surface_object_with_action::init_equation(
 
 void surface_object_with_action::init_with_group(surface_with_action *Surf_A,
 	long int *Lines, int nb_lines, int *eqn,
-	strong_generators *Aut_gens,
+	groups::strong_generators *Aut_gens,
 	int f_find_double_six_and_rearrange_lines,
 	int f_has_nice_gens, vector_ge *nice_gens,
 	int verbose_level)
@@ -198,8 +198,8 @@ void surface_object_with_action::init_with_group(surface_with_action *Surf_A,
 		cout << "surface_object_with_action::init_with_group" << endl;
 	}
 
-	surface_object *SO;
-	SO = NEW_OBJECT(surface_object);
+	algebraic_geometry::surface_object *SO;
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 	if (nb_lines == 27) {
 		if (f_v) {
 			cout << "surface_object_with_action::init_with_group "
@@ -249,8 +249,8 @@ void surface_object_with_action::init_with_group(surface_with_action *Surf_A,
 
 
 void surface_object_with_action::init_with_surface_object(surface_with_action *Surf_A,
-		surface_object *SO,
-		strong_generators *Aut_gens,
+		algebraic_geometry::surface_object *SO,
+		groups::strong_generators *Aut_gens,
 		int f_has_nice_gens, vector_ge *nice_gens,
 		int verbose_level)
 {
@@ -308,8 +308,8 @@ void surface_object_with_action::init_with_surface_object(surface_with_action *S
 
 
 void surface_object_with_action::init_surface_object(
-	surface_with_action *Surf_A, surface_object *SO,
-	strong_generators *Aut_gens, int verbose_level)
+	surface_with_action *Surf_A, algebraic_geometry::surface_object *SO,
+	groups::strong_generators *Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -379,7 +379,7 @@ void surface_object_with_action::compute_projectivity_group(
 				"computing Sylow structure" << endl;
 	}
 	// compute the Sylow structure:
-	sims *S = NULL;
+	groups::sims *S = NULL;
 
 	if (projectivity_group_gens) {
 		S = projectivity_group_gens->create_sims(0 /*verbose_level */);
@@ -395,7 +395,7 @@ void surface_object_with_action::compute_projectivity_group(
 			cout << "surface_object_with_action::compute_projectivity_group "
 					"before Syl->init" << endl;
 		}
-		Syl = NEW_OBJECT(sylow_structure);
+		Syl = NEW_OBJECT(groups::sylow_structure);
 		Syl->init(S, verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_action::compute_projectivity_group "
@@ -902,7 +902,7 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 
 void surface_object_with_action::print_generators_on_lines(
 		ostream &ost,
-		strong_generators *Aut_gens,
+		groups::strong_generators *Aut_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -914,14 +914,14 @@ void surface_object_with_action::print_generators_on_lines(
 	Aut_gens->print_generators_tex_with_print_point_function(
 			A_on_the_lines,
 			ost,
-			callback_surface_domain_sstr_line_label,
+			algebraic_geometry::callback_surface_domain_sstr_line_label,
 			Surf);
 
 }
 
 void surface_object_with_action::print_elements_on_lines(
 		ostream &ost,
-		strong_generators *Aut_gens,
+		groups::strong_generators *Aut_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -933,7 +933,7 @@ void surface_object_with_action::print_elements_on_lines(
 	Aut_gens->print_elements_latex_ost_with_print_point_function(
 			A_on_the_lines,
 			ost,
-			callback_surface_domain_sstr_line_label,
+			algebraic_geometry::callback_surface_domain_sstr_line_label,
 			Surf);
 
 }
@@ -1452,7 +1452,7 @@ void surface_object_with_action::print_automorphism_group_gnerators(std::ostream
 
 void surface_object_with_action::investigate_surface_and_write_report(
 		layered_graph_draw_options *Opt,
-		action *A,
+		actions::action *A,
 		surface_create *SC,
 		six_arcs_not_on_a_conic *Six_arcs,
 		int verbose_level)
@@ -1519,7 +1519,7 @@ void surface_object_with_action::investigate_surface_and_write_report(
 void surface_object_with_action::investigate_surface_and_write_report2(
 		std::ostream &ost,
 		layered_graph_draw_options *Opt,
-		action *A,
+		actions::action *A,
 		surface_create *SC,
 		six_arcs_not_on_a_conic *Six_arcs,
 		std::string &fname_mask,

@@ -49,7 +49,7 @@ void action_on_set_partitions::free()
 
 void action_on_set_partitions::init(
 		int partition_class_size,
-		action *A,
+		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -160,7 +160,7 @@ void young::init(int n, int verbose_level)
 	int f_no_base = FALSE;
 
 	young::n = n;
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 	A->init_symmetric_group(n, f_no_base, verbose_level);
 	A->group_order(go);
 
@@ -952,7 +952,8 @@ void young::Maschke(int *Rep,
 		}
 }
 
-long int young::group_ring_element_size(action *A, sims *S)
+long int young::group_ring_element_size(actions::action *A,
+		groups::sims *S)
 {
 	long int goi;
 
@@ -960,7 +961,8 @@ long int young::group_ring_element_size(action *A, sims *S)
 	return goi;
 }
 
-void young::group_ring_element_create(action *A, sims *S, int *&elt)
+void young::group_ring_element_create(actions::action *A,
+		groups::sims *S, int *&elt)
 {
 	long int goi;
 
@@ -969,12 +971,14 @@ void young::group_ring_element_create(action *A, sims *S, int *&elt)
 	group_ring_element_zero(A, S, elt);
 }
 
-void young::group_ring_element_free(action *A, sims *S, int *elt)
+void young::group_ring_element_free(actions::action *A,
+		groups::sims *S, int *elt)
 {
 	FREE_int(elt);
 }
 
-void young::group_ring_element_print(action *A, sims *S, int *elt)
+void young::group_ring_element_print(actions::action *A,
+		groups::sims *S, int *elt)
 {
 	long int goi;
 
@@ -982,7 +986,8 @@ void young::group_ring_element_print(action *A, sims *S, int *elt)
 	Orbiter->Int_vec->print(cout, elt, goi);
 }
 
-void young::group_ring_element_copy(action *A, sims *S,
+void young::group_ring_element_copy(actions::action *A,
+		groups::sims *S,
 		int *elt_from, int *elt_to)
 {
 	long int goi;
@@ -991,7 +996,8 @@ void young::group_ring_element_copy(action *A, sims *S,
 	Orbiter->Int_vec->copy(elt_from, elt_to, goi);
 }
 
-void young::group_ring_element_zero(action *A, sims *S, int *elt)
+void young::group_ring_element_zero(actions::action *A,
+		groups::sims *S, int *elt)
 {
 	long int goi;
 
@@ -999,8 +1005,8 @@ void young::group_ring_element_zero(action *A, sims *S, int *elt)
 	Orbiter->Int_vec->zero(elt, goi);
 }
 
-void young::group_ring_element_mult(action *A,
-		sims *S, int *elt1, int *elt2, int *elt3)
+void young::group_ring_element_mult(actions::action *A,
+		groups::sims *S, int *elt1, int *elt2, int *elt3)
 {
 	long int goi;
 	int i, j, k;

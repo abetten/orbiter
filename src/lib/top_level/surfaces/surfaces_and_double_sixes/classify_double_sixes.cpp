@@ -171,7 +171,7 @@ void classify_double_sixes::init(
 	}
 
 
-	SG_line_stab = NEW_OBJECT(strong_generators);
+	SG_line_stab = NEW_OBJECT(groups::strong_generators);
 	SG_line_stab->generators_for_parabolic_subgroup(A, 
 		A->G.matrix_grp, 2, verbose_level - 1);
 
@@ -222,7 +222,7 @@ void classify_double_sixes::init(
 				"computing restricted action on neighbors" << endl;
 	}
 
-	A_on_neighbors = NEW_OBJECT(action);
+	A_on_neighbors = NEW_OBJECT(actions::action);
 	A_on_neighbors = A2->create_induced_action_by_restriction(
 		NULL,
 		nb_neighbors, Neighbors, 
@@ -1227,7 +1227,7 @@ void classify_double_sixes::upstep(int verbose_level)
 		coset_reps->allocate(12, verbose_level - 2);
 
 
-		strong_generators *S;
+		groups::strong_generators *S;
 		ring_theory::longinteger_object go;
 		long int double_six[12];
 
@@ -1357,7 +1357,7 @@ void classify_double_sixes::upstep(int verbose_level)
 
 		coset_reps->reallocate(nb_coset_reps, verbose_level - 2);
 
-		strong_generators *Aut_gens;
+		groups::strong_generators *Aut_gens;
 
 		{
 			ring_theory::longinteger_object ago;
@@ -1367,7 +1367,7 @@ void classify_double_sixes::upstep(int verbose_level)
 						"Extending the group by a factor of "
 						<< nb_coset_reps << endl;
 			}
-			Aut_gens = NEW_OBJECT(strong_generators);
+			Aut_gens = NEW_OBJECT(groups::strong_generators);
 			Aut_gens->init_group_extension(S,
 					coset_reps, nb_coset_reps,
 					verbose_level - 2);

@@ -71,7 +71,7 @@ public:
 	std::string path_to_spread_tables;
 
 	spread_classify *T;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int spread_size;
 	int nb_lines;
 
@@ -129,18 +129,18 @@ public:
 	void lifting_prepare_function_new(
 		exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens,
-		diophant *&Dio, long int *&col_labels,
+		groups::strong_generators *Strong_gens,
+		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	void report_fixed_objects(
 			int *Elt, char *fname_latex,
 			int verbose_level);
 	int test_if_orbit_is_partial_packing(
-		schreier *Orbits, int orbit_idx,
+			groups::schreier *Orbits, int orbit_idx,
 		long int *orbit1, int verbose_level);
 	int test_if_pair_of_orbits_are_adjacent(
-		schreier *Orbits, int a, int b,
+			groups::schreier *Orbits, int a, int b,
 		long int *orbit1, long int *orbit2, int verbose_level);
 	// tests if every spread from orbit a
 	// is line-disjoint from every spread from orbit b
@@ -184,8 +184,8 @@ void callback_packing_report(isomorph *Iso,
 void packing_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
 void packing_early_test_function(long int *S, int len,
@@ -318,7 +318,7 @@ public:
 
 	int fixpoints_clique_case_number;
 	long int *fixpoint_clique_orbit_numbers;
-	strong_generators *fixpoint_clique_stabilizer_gens;
+	groups::strong_generators *fixpoint_clique_stabilizer_gens;
 	long int *fixpoint_clique;
 	data_structures::set_of_sets *Filtered_orbits;
 
@@ -438,11 +438,11 @@ public:
 
 	int f_H;
 	std::string H_label;
-	linear_group_description *H_Descr;
+	groups::linear_group_description *H_Descr;
 
 	int f_N;
 	std::string N_label;
-	linear_group_description *N_Descr;
+	groups::linear_group_description *N_Descr;
 
 	int f_report;
 
@@ -519,7 +519,7 @@ public:
 	std::string fname_fixp_graph_cliques;
 	int fixpoints_idx;
 		// index of orbits of length 1 in reduced_spread_orbits_under_H
-	action *A_on_fixpoints;
+	actions::action *A_on_fixpoints;
 		// A_on_reduced_spread_orbits->create_induced_action_by_restriction(
 		// reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
 		// reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
@@ -560,7 +560,7 @@ public:
 	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 	void process_long_orbits(int verbose_level);
 	long int *clique_by_index(int idx);
-	strong_generators *get_stabilizer(int idx);
+	groups::strong_generators *get_stabilizer(int idx);
 	void print_packing(long int *packing, int sz, int verbose_level);
 	void process_long_orbits(
 			int clique_index,
@@ -589,55 +589,55 @@ class packing_was {
 public:
 	packing_was_description *Descr;
 
-	linear_group *H_LG;
+	groups::linear_group *H_LG;
 
-	linear_group *N_LG;
+	groups::linear_group *N_LG;
 
 	packing_classify *P;
 
-	strong_generators *H_gens;
+	groups::strong_generators *H_gens;
 	ring_theory::longinteger_object H_go;
 	long int H_goi;
-	sims *H_sims;
+	groups::sims *H_sims;
 
-	action *A;
+	actions::action *A;
 	int f_semilinear;
-	matrix_group *M;
+	groups::matrix_group *M;
 	int dim;
 
-	strong_generators *N_gens;
+	groups::strong_generators *N_gens;
 	ring_theory::longinteger_object N_go;
 	long int N_goi;
 
 
 	std::string prefix_point_orbits_under_H;
-	orbits_on_something *Point_orbits_under_H;
+	groups::orbits_on_something *Point_orbits_under_H;
 		// using H_gens in action P->T->A
 
 
 	std::string prefix_point_orbits_under_N;
-	orbits_on_something *Point_orbits_under_N;
+	groups::orbits_on_something *Point_orbits_under_N;
 		// using N_gens in action P->T->A
 
 
 	std::string prefix_line_orbits_under_H;
-	orbits_on_something *Line_orbits_under_H;
+	groups::orbits_on_something *Line_orbits_under_H;
 		// using H_gens in action P->T->A2
 
 	std::string prefix_line_orbits_under_N;
-	orbits_on_something *Line_orbits_under_N;
+	groups::orbits_on_something *Line_orbits_under_N;
 		// using H_gens in action P->T->A2
 
 	std::string prefix_spread_types;
 	orbit_type_repository *Spread_type;
 
 	std::string prefix_spread_orbits;
-	orbits_on_something *Spread_orbits_under_H;
+	groups::orbits_on_something *Spread_orbits_under_H;
 		// using H_gens in action
 		// P->Spread_table_with_selection->A_on_spreads
 
 
-	action *A_on_spread_orbits;
+	actions::action *A_on_spread_orbits;
 		// derived from P->Spread_table_with_selection->A_on_spreads
 		// restricted action on Spread_orbits_under_H:
 		// = induced_action_on_orbits(P->A_on_spreads, Spread_orbits_under_H)
@@ -662,14 +662,14 @@ public:
 	std::string prefix_spread_types_reduced;
 	orbit_type_repository *Spread_type_reduced;
 
-	action *A_on_reduced_spreads;
+	actions::action *A_on_reduced_spreads;
 		// induced action on Spread_tables_reduced
 
 	std::string prefix_reduced_spread_orbits;
-	orbits_on_something *reduced_spread_orbits_under_H;
+	groups::orbits_on_something *reduced_spread_orbits_under_H;
 		// = reduced_spread_orbits_under_H->init(A_on_reduced_spreads, H_gens)
 
-	action *A_on_reduced_spread_orbits;
+	actions::action *A_on_reduced_spread_orbits;
 		// induced_action_on_orbits(A_on_reduced_spreads,
 		// reduced_spread_orbits_under_H)
 
@@ -722,7 +722,7 @@ public:
 	void compute_reduced_spread_types_wrt_H(int verbose_level);
 		// Spread_types[P->nb_spreads * (group_order + 1)]
 	void compute_H_orbits_on_reduced_spreads(int verbose_level);
-	action *restricted_action(int orbit_length, int verbose_level);
+	actions::action *restricted_action(int orbit_length, int verbose_level);
 	int test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 		long int *orbit1, int len1, long int *orbit2, int len2,
 		int verbose_level);

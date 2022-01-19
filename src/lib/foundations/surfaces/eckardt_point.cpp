@@ -10,6 +10,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 eckardt_point::eckardt_point()
@@ -272,6 +273,5 @@ void eckardt_point::unrank(int rk,
 }
 
 
-}
-}
+}}}
 

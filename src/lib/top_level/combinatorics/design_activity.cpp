@@ -399,8 +399,8 @@ void design_activity::do_load_table(
 
 
 
-	strong_generators *H_gens;
-	H_gens = NEW_OBJECT(strong_generators);
+	groups::strong_generators *H_gens;
+	H_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "design_activity::do_load_table before H_gens->init_from_data_with_go" << endl;

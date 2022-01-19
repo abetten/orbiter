@@ -448,7 +448,7 @@ void surfaces_arc_lifting_trace::make_arc_canonical(
 	}
 }
 
-void surfaces_arc_lifting_trace::compute_beta1(seventytwo_cases *The_case, int verbose_level)
+void surfaces_arc_lifting_trace::compute_beta1(algebraic_geometry::seventytwo_cases *The_case, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

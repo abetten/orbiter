@@ -14,6 +14,8 @@
 
 namespace orbiter {
 namespace foundations {
+namespace solvers {
+
 
 // #############################################################################
 // diophant_activity_description.cpp
@@ -685,7 +687,8 @@ namespace mckay {
 }
 
 
-}}
+}}}
+
 
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_SOLVERS_SOLVERS_H_ */

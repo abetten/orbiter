@@ -282,7 +282,7 @@ void interface_combinatorics::read_arguments(int argc,
 		if (f_v) {
 			cout << "-diophant " << endl;
 		}
-		Diophant_description = NEW_OBJECT(diophant_description);
+		Diophant_description = NEW_OBJECT(solvers::diophant_description);
 		i += Diophant_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -301,7 +301,7 @@ void interface_combinatorics::read_arguments(int argc,
 		if (f_v) {
 			cout << "-diophant_activity " << endl;
 		}
-		Diophant_activity_description = NEW_OBJECT(diophant_activity_description);
+		Diophant_activity_description = NEW_OBJECT(solvers::diophant_activity_description);
 		i += Diophant_activity_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -855,7 +855,7 @@ void interface_combinatorics::worker(int verbose_level)
 }
 
 
-void interface_combinatorics::do_diophant(diophant_description *Descr, int verbose_level)
+void interface_combinatorics::do_diophant(solvers::diophant_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -863,9 +863,9 @@ void interface_combinatorics::do_diophant(diophant_description *Descr, int verbo
 		cout << "interface_combinatorics::do_diophant" << endl;
 	}
 
-	diophant_create *DC;
+	solvers::diophant_create *DC;
 
-	DC = NEW_OBJECT(diophant_create);
+	DC = NEW_OBJECT(solvers::diophant_create);
 
 	DC->init(Descr, verbose_level);
 
@@ -876,7 +876,7 @@ void interface_combinatorics::do_diophant(diophant_description *Descr, int verbo
 }
 
 void interface_combinatorics::do_diophant_activity(
-		diophant_activity_description *Descr, int verbose_level)
+		solvers::diophant_activity_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -884,9 +884,9 @@ void interface_combinatorics::do_diophant_activity(
 		cout << "interface_combinatorics::do_diophant_activity" << endl;
 	}
 
-	diophant_activity *DA;
+	solvers::diophant_activity *DA;
 
-	DA = NEW_OBJECT(diophant_activity);
+	DA = NEW_OBJECT(solvers::diophant_activity);
 
 	DA->init_from_file(Descr, verbose_level);
 

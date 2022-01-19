@@ -607,7 +607,7 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 	canonical_form_nauty *C;
 	ring_theory::longinteger_object go;
 
-	strong_generators *gens_stab_of_canonical_equation;
+	groups::strong_generators *gens_stab_of_canonical_equation;
 
 
 
@@ -894,8 +894,8 @@ void canonical_form_classifier::write_canonical_forms_csv(
 	int nb_orbits;
 	int nb_monomials;
 
-	action *A;
-	action *A_on_lines;
+	actions::action *A;
+	actions::action *A_on_lines;
 
 	if (f_v) {
 		cout << "canonical_form_classifier::write_canonical_forms_csv" << endl;
@@ -1005,7 +1005,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			}
 			ost << ",";
 
-			strong_generators *gens;
+			groups::strong_generators *gens;
 
 			gens = CFS_table[i]->gens_stab_of_canonical_equation;
 
@@ -1059,8 +1059,8 @@ void canonical_form_classifier::generate_source_code(
 	int nb_orbits;
 	int nb_monomials;
 
-	action *A;
-	action *A_on_lines;
+	actions::action *A;
+	actions::action *A_on_lines;
 
 	if (f_v) {
 		cout << "canonical_form_classifier::generate_source_code" << endl;
@@ -1244,7 +1244,7 @@ void canonical_form_classifier::generate_source_code(
 					orbit_index++) {
 
 
-				strong_generators *gens;
+				groups::strong_generators *gens;
 
 				int idx;
 
@@ -1325,7 +1325,7 @@ void canonical_form_classifier::generate_source_code(
 					}
 					f << "\t";
 
-					strong_generators *gens;
+					groups::strong_generators *gens;
 
 					int idx;
 

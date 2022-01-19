@@ -27,11 +27,11 @@ public:
 
 	substructure_stats_and_selection *SubSt;
 
-	action *A_on_the_set;
+	actions::action *A_on_the_set;
 		// only used to print the induced action on the set
 		// of the set stabilizer
 
-	sims *Stab; // the stabilizer of the original set
+	groups::sims *Stab; // the stabilizer of the original set
 
 
 	ring_theory::longinteger_object stab_order, new_stab_order;
@@ -47,7 +47,7 @@ public:
 
 
 
-	action *A_induced; // the action on Stab_orbits->interesting_points[]
+	actions::action *A_induced; // the action on Stab_orbits->interesting_points[]
 
 	ring_theory::longinteger_object induced_go, K_go;
 
@@ -57,13 +57,13 @@ public:
 	int *T1, *T1v;
 	int *T2;
 
-	sims *Kernel_original;
-	sims *K; // kernel for building up Stab
+	groups::sims *Kernel_original;
+	groups::sims *K; // kernel for building up Stab
 
 
 
-	sims *Aut;
-	sims *Aut_original;
+	groups::sims *Aut;
+	groups::sims *Aut_original;
 	ring_theory::longinteger_object ago;
 	ring_theory::longinteger_object ago1;
 	ring_theory::longinteger_object target_go;
@@ -91,14 +91,14 @@ public:
 			int verbose_level);
 	void compute_automorphism_group(int verbose_level);
 	void compute_automorphism_group_handle_case(int cnt2, int verbose_level);
-	void setup_stabilizer(sims *Stab0, int verbose_level);
+	void setup_stabilizer(groups::sims *Stab0, int verbose_level);
 	void restricted_action_on_interesting_points(int verbose_level);
 	void compute_canonical_form(int verbose_level);
 	void compute_canonical_form_handle_case(int cnt, int verbose_level);
 	void compute_canonical_set(long int *set_in, long int *set_out, int sz,
 			int *transporter, int verbose_level);
 	void compute_canonical_set_and_group(long int *set_in, long int *set_out, int sz,
-			int *transporter, sims *&stab, int verbose_level);
+			int *transporter, groups::sims *&stab, int verbose_level);
 	void update_stabilizer(int verbose_level);
 	void add_automorphism(int verbose_level);
 	void retrieve_automorphism(int verbose_level);
@@ -129,8 +129,8 @@ class stabilizer_orbits_and_types {
 public:
 	compute_stabilizer *CS;
 
-	strong_generators *selected_set_stab_gens;
-	sims *selected_set_stab;
+	groups::strong_generators *selected_set_stab_gens;
+	groups::sims *selected_set_stab;
 
 
 	int reduced_set_size; // = set_size - level
@@ -151,7 +151,7 @@ public:
 
 	ring_theory::longinteger_object go_G;
 
-	schreier *Schreier;
+	groups::schreier *Schreier;
 	int nb_orbits;
 	int *orbit_count1; // [nb_orbits]
 	int *orbit_count2; // [nb_orbits]
@@ -222,8 +222,8 @@ public:
 
 	poset_classification *PC;
 	poset_classification_control *Control;
-	action *A;
-	action *A2;
+	actions::action *A;
+	actions::action *A2;
 	poset_with_group_action *Poset;
 	int nb_orbits;
 
@@ -232,13 +232,14 @@ public:
 	~substructure_classifier();
 	void classify_substructures(
 			std::string &fname_base_out,
-			action *A,
-			action *A2,
-			strong_generators *gens,
+			actions::action *A,
+			actions::action *A2,
+			groups::strong_generators *gens,
 			int substructure_size,
 			int verbose_level);
 	void set_stabilizer_in_any_space(
-			action *A, action *A2, strong_generators *Strong_gens,
+			actions::action *A, actions::action *A2,
+			groups::strong_generators *Strong_gens,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
 			std::string &fname_out,
@@ -254,7 +255,7 @@ public:
 			substructure_stats_and_selection *SubSt,
 			long int *canonical_pts,
 			int *transporter_to_canonical_form,
-			strong_generators *&Gens_stabilizer_original_set,
+			groups::strong_generators *&Gens_stabilizer_original_set,
 			int verbose_level);
 
 
@@ -307,7 +308,7 @@ public:
 		// which are of the chosen type.
 		// There is nb_interesting_subsets of them.
 
-	strong_generators *gens; // generators for the selected canonical subset
+	groups::strong_generators *gens; // generators for the selected canonical subset
 	//int *transporter_to_canonical_form;
 	//strong_generators *Gens_stabilizer_original_set;
 

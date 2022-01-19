@@ -38,7 +38,7 @@ void action_on_galois_group::free()
 }
 
 
-void action_on_galois_group::init(action *A,
+void action_on_galois_group::init(actions::action *A,
 		int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -137,7 +137,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 		cout << "boolean_function_domain::init N=" << N << endl;
 	}
 
-	Fq = NEW_OBJECT(finite_field);
+	Fq = NEW_OBJECT(field_theory::finite_field);
 	Fq->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	//FQ = NEW_OBJECT(finite_field);

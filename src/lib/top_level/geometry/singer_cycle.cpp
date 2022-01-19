@@ -112,7 +112,10 @@ void singer_cycle::freeself()
 	null();
 }
 
-void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbose_level)
+void singer_cycle::init(int n,
+		field_theory::finite_field *F,
+		actions::action *A,
+		actions::action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string poly;
@@ -184,7 +187,7 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 
 	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1), __FILE__, __LINE__);
 
-	SG = NEW_OBJECT(strong_generators);
+	SG = NEW_OBJECT(groups::strong_generators);
 	SG->init_from_data_with_target_go(A,
 			Singer_matrix,
 			n * n, 1 /* nb_gens*/,
@@ -276,7 +279,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 
 
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 	Sch->init(A2, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->init_single_generator(nice_gens->ith(0), verbose_level - 2);

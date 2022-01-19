@@ -45,7 +45,7 @@ orbits_on_polynomials::~orbits_on_polynomials()
 }
 
 void orbits_on_polynomials::init(
-		linear_group *LG,
+		groups::linear_group *LG,
 		int degree_of_poly,
 		int f_recognize, std::string &recognize_text,
 		int verbose_level)
@@ -88,7 +88,7 @@ void orbits_on_polynomials::init(
 			Monomial_ordering_type,
 			verbose_level - 2);
 
-	A2 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_on_homogeneous_polynomials(A,
 		HPD,
 		FALSE /* f_induce_action */, NULL,
@@ -423,7 +423,7 @@ void orbits_on_polynomials::report(int verbose_level)
 
 				int u;
 				long int *set;
-				strong_generators *Sg;
+				groups::strong_generators *Sg;
 
 				set = NEW_lint(nb_pts);
 				for (u = 0; u < nb_pts; u++) {

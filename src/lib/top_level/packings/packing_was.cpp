@@ -393,9 +393,9 @@ void packing_was::init_N(int verbose_level)
 	}
 	if (Descr->f_N) {
 		// set up the group N:
-		action *N_A;
+		actions::action *N_A;
 
-		N_LG = NEW_OBJECT(linear_group);
+		N_LG = NEW_OBJECT(groups::linear_group);
 
 
 		if (f_v) {
@@ -470,7 +470,7 @@ void packing_was::init_H(int verbose_level)
 	if (f_v) {
 		cout << "packing_was::init_H" << endl;
 	}
-	H_LG = NEW_OBJECT(linear_group);
+	H_LG = NEW_OBJECT(groups::linear_group);
 
 	Descr->H_Descr->F = P->F;
 
@@ -576,7 +576,7 @@ void packing_was::compute_H_orbits_on_points(int verbose_level)
 	}
 
 
-	Point_orbits_under_H = NEW_OBJECT(orbits_on_something);
+	Point_orbits_under_H = NEW_OBJECT(groups::orbits_on_something);
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_points "
@@ -611,7 +611,7 @@ void packing_was::compute_N_orbits_on_points(int verbose_level)
 	}
 
 
-	Point_orbits_under_N = NEW_OBJECT(orbits_on_something);
+	Point_orbits_under_N = NEW_OBJECT(groups::orbits_on_something);
 
 	if (f_v) {
 		cout << "packing_was::compute_N_orbits_on_points "
@@ -648,7 +648,7 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 	}
 
 
-	Line_orbits_under_H = NEW_OBJECT(orbits_on_something);
+	Line_orbits_under_H = NEW_OBJECT(groups::orbits_on_something);
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_lines "
@@ -683,7 +683,7 @@ void packing_was::compute_N_orbits_on_lines(int verbose_level)
 	}
 
 
-	Line_orbits_under_N = NEW_OBJECT(orbits_on_something);
+	Line_orbits_under_N = NEW_OBJECT(groups::orbits_on_something);
 
 	if (f_v) {
 		cout << "packing_was::compute_N_orbits_on_lines "
@@ -751,7 +751,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	}
 
 
-	Spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
+	Spread_orbits_under_H = NEW_OBJECT(groups::orbits_on_something);
 
 
 
@@ -784,7 +784,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	}
 
 
-	A_on_spread_orbits = NEW_OBJECT(action);
+	A_on_spread_orbits = NEW_OBJECT(actions::action);
 	A_on_spread_orbits->induced_action_on_orbits(
 			P->Spread_table_with_selection->A_on_spreads,
 			Spread_orbits_under_H->Sch /* H_orbits_on_spreads*/,
@@ -1063,7 +1063,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 #endif
 
 
-	reduced_spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
+	reduced_spread_orbits_under_H = NEW_OBJECT(groups::orbits_on_something);
 
 
 
@@ -1110,7 +1110,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	}
 
 
-	A_on_reduced_spread_orbits = NEW_OBJECT(action);
+	A_on_reduced_spread_orbits = NEW_OBJECT(actions::action);
 	A_on_reduced_spread_orbits->induced_action_on_orbits(A_on_reduced_spreads,
 			reduced_spread_orbits_under_H->Sch /* H_orbits_on_spreads*/,
 			TRUE /*f_play_it_safe*/, 0 /* verbose_level */);
@@ -1127,11 +1127,11 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	}
 }
 
-action *packing_was::restricted_action(int orbit_length, int verbose_level)
+actions::action *packing_was::restricted_action(int orbit_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_idx;
-	action *Ar;
+	actions::action *Ar;
 
 	if (f_v) {
 		cout << "packing_was::restricted_action" << endl;
@@ -1290,7 +1290,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 					"i=" << i << endl;
 		}
 
-		action *Ari;
+		actions::action *Ari;
 		char str[1000];
 		string fname1;
 		string label;
@@ -1507,10 +1507,10 @@ void packing_was::report_orbit_invariant(ostream &ost)
 			//P->F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
 
 			latex_interface L;
-			finite_field *Fq3;
+			field_theory::finite_field *Fq3;
 			number_theory::number_theory_domain NT;
 
-			Fq3 = NEW_OBJECT(finite_field);
+			Fq3 = NEW_OBJECT(field_theory::finite_field);
 			Fq3->finite_field_init(NT.i_power_j(P->F->q, 3), FALSE /* f_without_tables */, 0);
 
 			ost << "Orbits of length one:\\\\" << endl;

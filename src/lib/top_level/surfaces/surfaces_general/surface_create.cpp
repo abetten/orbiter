@@ -383,7 +383,7 @@ void surface_create::override_group(std::string &group_order_text,
 				"group_order=" << group_order_text
 				<< " nb_gens=" << nb_gens << endl;
 	}
-	Sg = NEW_OBJECT(strong_generators);
+	Sg = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "surface_create::override_group before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
@@ -439,7 +439,7 @@ void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 
 
 
-	Sg = NEW_OBJECT(strong_generators);
+	Sg = NEW_OBJECT(groups::strong_generators);
 
 
 
@@ -519,7 +519,7 @@ void surface_create::create_surface_G13(int a, int verbose_level)
 		cout << "surface_create::create_surface_G13 after Surf->create_surface_G13" << endl;
 	}
 
-	Sg = NEW_OBJECT(strong_generators);
+	Sg = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_G13 before Sg->stabilizer_of_G13_surface" << endl;
@@ -588,7 +588,7 @@ void surface_create::create_surface_F13(int a, int verbose_level)
 	}
 
 
-	Sg = NEW_OBJECT(strong_generators);
+	Sg = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "surface_create::create_surface_F13 before Sg->stabilizer_of_F13_surface" << endl;
 	}
@@ -982,7 +982,7 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 
 
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_coefficient_vector "
@@ -1125,7 +1125,7 @@ void surface_create::create_surface_by_rank(std::string &rank_text, int defining
 	}
 
 	{
-		finite_field F0;
+		field_theory::finite_field F0;
 
 		F0.finite_field_init(defining_q, FALSE /* f_without_tables */, 0);
 
@@ -1246,7 +1246,7 @@ void surface_create::create_surface_from_catalogue(int iso,
 		cout << "surface_create::create_surface_from_catalogue after Surf->build_cubic_surface_from_lines" << endl;
 	}
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue before SO->init_with_27_lines" << endl;
@@ -1260,7 +1260,7 @@ void surface_create::create_surface_from_catalogue(int iso,
 	}
 
 
-	Sg = NEW_OBJECT(strong_generators);
+	Sg = NEW_OBJECT(groups::strong_generators);
 	//Sg->init(Surf_A->A, verbose_level);
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
@@ -1371,7 +1371,7 @@ void surface_create::create_surface_by_arc_lifting(
 
 	Orbiter->Lint_vec->copy(AL->Web->Lines27, Lines27, 27);
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_arc_lifting before SO->init_with_27_lines" << endl;
@@ -1474,11 +1474,11 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 		cout << endl;
 	}
 
-	arc_lifting_with_two_lines *AL;
+	algebraic_geometry::arc_lifting_with_two_lines *AL;
 	int coeffs20[20];
 	long int Lines27[27];
 
-	AL = NEW_OBJECT(arc_lifting_with_two_lines);
+	AL = NEW_OBJECT(algebraic_geometry::arc_lifting_with_two_lines);
 
 
 	if (f_v) {
@@ -1494,7 +1494,7 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	Orbiter->Int_vec->copy(AL->coeff, coeffs20, 20);
 	Orbiter->Lint_vec->copy(AL->lines27, Lines27, 27);
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 
 	if (f_v) {
@@ -1594,7 +1594,7 @@ void surface_create::create_surface_Cayley_form(
 	Surf->create_equation_Cayley_klmn(k, l, m, n, coeffs20, verbose_level);
 
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 
 	if (f_v) {
@@ -1900,7 +1900,7 @@ void surface_create::create_surface_by_equation(
 
 
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 
 	if (f_v) {
@@ -2039,7 +2039,7 @@ void surface_create::create_surface_by_double_six(
 
 
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 #if 0
 	if (f_v) {
@@ -2193,7 +2193,7 @@ void surface_create::create_surface_by_skew_hexagon(
 
 
 
-	SO = NEW_OBJECT(surface_object);
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_skew_hexagon before SO->init_with_27_lines" << endl;
@@ -2250,7 +2250,7 @@ void surface_create::apply_transformations(
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
-	action *A;
+	actions::action *A;
 	int desired_sz;
 	
 	if (f_v) {
@@ -2326,7 +2326,7 @@ void surface_create::apply_transformations(
 
 			// apply the transformation to the equation of the surface:
 
-			matrix_group *M;
+			groups::matrix_group *M;
 	
 			M = A->G.matrix_grp;
 			M->substitute_surface_equation(Elt3,
@@ -2350,9 +2350,9 @@ void surface_create::apply_transformations(
 
 				// apply the transformation to the set of generators:
 
-				strong_generators *SG2;
+				groups::strong_generators *SG2;
 
-				SG2 = NEW_OBJECT(strong_generators);
+				SG2 = NEW_OBJECT(groups::strong_generators);
 				if (f_v) {
 					cout << "surface_create::apply_transformations "
 							"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
@@ -2454,7 +2454,7 @@ void surface_create::compute_group(projective_space_with_action *PA,
 	int f_v = (verbose_level >= 1);
 	int i;
 	long int a;
-	action *A;
+	actions::action *A;
 	char str[1000];
 
 	if (f_v) {

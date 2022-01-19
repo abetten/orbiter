@@ -26,7 +26,7 @@ void any_group::classes_based_on_normal_form(int verbose_level)
 		cout << "any_group::classes_based_on_normal_form !f_linear_group" << endl;
 		exit(1);
 	}
-	sims *G;
+	groups::sims *G;
 	algebra_global_with_action Algebra;
 
 	G = LG->Strong_gens->create_sims(verbose_level);
@@ -58,7 +58,7 @@ void any_group::classes(int verbose_level)
 		exit(1);
 	}
 
-	sims *G;
+	groups::sims *G;
 
 	G = LG->Strong_gens->create_sims(verbose_level);
 
@@ -164,8 +164,8 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 		exit(1);
 	}
 
-	finite_field *F;
-	sims *H;
+	field_theory::finite_field *F;
+	groups::sims *H;
 	file_io Fio;
 
 	F = LG->F;
@@ -436,7 +436,7 @@ void any_group::do_tensor_classify(poset_classification_control *Control, int de
 		exit(1);
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = LG->F;
 
@@ -487,7 +487,7 @@ void any_group::do_tensor_permutations(int verbose_level)
 		cout << "any_group::do_tensor_permutations !f_linear_group" << endl;
 		exit(1);
 	}
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = LG->F;
 
@@ -597,7 +597,7 @@ int any_group::subspace_orbits_test_set(
 	int ret = TRUE;
 	int rk;
 	int n;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int *orbits_on_subspaces_M;
 	int *orbits_on_subspaces_base_cols;
 

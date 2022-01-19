@@ -2841,7 +2841,7 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 	}
 
 
-	diophant D;
+	solvers::diophant D;
 	long int nb_backtrack_nodes;
 	int nb_sol;
 	int *Sol_weights;

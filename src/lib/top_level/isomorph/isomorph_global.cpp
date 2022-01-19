@@ -15,7 +15,7 @@ namespace orbiter {
 namespace top_level {
 
 void isomorph_read_statistic_files(
-	action *A_base, action *A,
+		actions::action *A_base, actions::action *A,
 	poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix, int level,
@@ -223,7 +223,7 @@ void isomorph_read_statistic_files(
 }
 
 void isomorph_build_db(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int verbose_level)
@@ -276,7 +276,7 @@ void isomorph_build_db(
 }
 
 void isomorph_read_solution_files(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	std::string *fname, int nb_files,
@@ -356,7 +356,7 @@ void isomorph_read_solution_files(
 }
 
 void isomorph_init_solutions_from_memory(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int **Solutions, int *Nb_sol, int verbose_level)
@@ -434,7 +434,7 @@ void isomorph_init_solutions_from_memory(
 }
 
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
-		action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
 	std::string *fname, long int *list_of_cases, int nb_files, int verbose_level)
 {
@@ -529,7 +529,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 }
 
 void isomorph_read_solution_files_from_clique_finder(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
 	std::string *fname, int nb_files, int verbose_level)
 {
@@ -617,7 +617,7 @@ void isomorph_read_solution_files_from_clique_finder(
 }
 
 void isomorph_compute_orbits(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level, int verbose_level)
 {
@@ -693,7 +693,7 @@ void isomorph_compute_orbits(
 
 
 void isomorph_testing(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int f_play_back, std::string &old_event_file,
@@ -861,7 +861,7 @@ void isomorph_testing(
 }
 
 void isomorph_classification_graph(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int verbose_level)
@@ -920,7 +920,7 @@ void isomorph_classification_graph(
 
 
 void isomorph_identify(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int identify_nb_files, std::string *fname, int *Iso_type,
@@ -1031,7 +1031,7 @@ void isomorph_identify(
 }
 
 void isomorph_identify_table(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int nb_rows, long int *Table, int *Iso_type,
@@ -1132,7 +1132,7 @@ void isomorph_identify_table(
 }
 
 void isomorph_worker(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix_iso,
 	void (*work_callback)(isomorph *Iso, void *data, int verbose_level), 
 	void *work_data, 
@@ -1225,7 +1225,7 @@ void isomorph_worker(
 }
 
 void isomorph_compute_down_orbits(
-	action *A_base, action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix,
 	void *data, 
 	int level, int verbose_level)
@@ -1372,8 +1372,8 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 
 	
 
-	sims *Stab;
-	strong_generators *Strong_gens;
+	groups::sims *Stab;
+	groups::strong_generators *Strong_gens;
 
 	Stab = Iso->Reps->stab[orbit];
 
@@ -1383,7 +1383,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		}
 
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(Stab, verbose_level - 2);
 	
 

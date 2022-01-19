@@ -28,7 +28,7 @@ combinatorics_global::~combinatorics_global()
 void combinatorics_global::create_design_table(design_create *DC,
 		std::string &problem_label,
 		design_tables *&T,
-		strong_generators *Gens,
+		groups::strong_generators *Gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -79,7 +79,7 @@ void combinatorics_global::create_design_table(design_create *DC,
 void combinatorics_global::load_design_table(design_create *DC,
 		std::string &problem_label,
 		design_tables *&T,
-		strong_generators *Gens,
+		groups::strong_generators *Gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -88,7 +88,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 		cout << "combinatorics_global::load_design_table" << endl;
 	}
 	latex_interface L;
-	action *A;
+	actions::action *A;
 	//int *Elt1;
 	int *Elt2;
 
@@ -453,9 +453,9 @@ void combinatorics_global::Hill_cap56(
 	int f_vv = (verbose_level >= 2);
 	int epsilon, n, q, w, i;
 	polar *P;
-	action *A;
-	action *An;
-	finite_field *F;
+	actions::action *A;
+	actions::action *An;
+	field_theory::finite_field *F;
 	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	os_interface Os;
@@ -469,9 +469,9 @@ void combinatorics_global::Hill_cap56(
 	w = Gg.Witt_index(epsilon, n - 1);
 
 	P = NEW_OBJECT(polar);
-	A = NEW_OBJECT(action);
-	An = NEW_OBJECT(action);
-	F = NEW_OBJECT(finite_field);
+	A = NEW_OBJECT(actions::action);
+	An = NEW_OBJECT(actions::action);
+	F = NEW_OBJECT(field_theory::finite_field);
 
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	if (f_v) {
@@ -583,7 +583,7 @@ void combinatorics_global::Hill_cap56(
 
 
 
-	sims *S;
+	groups::sims *S;
 	ring_theory::longinteger_object go;
 	//int goi;
 	int *Elt;
@@ -603,13 +603,13 @@ void combinatorics_global::Hill_cap56(
 
 
 
-	schreier *Orb;
+	groups::schreier *Orb;
 	int N;
 
 	if (f_v) {
 		cout << "Hill_cap computing orbits on points" << endl;
 		}
-	Orb = NEW_OBJECT(schreier);
+	Orb = NEW_OBJECT(groups::schreier);
 	Orb->init(P->A, verbose_level - 2);
 	Orb->init_single_generator(Elt, verbose_level - 2);
 	Orb->compute_all_point_orbits(verbose_level - 2);
@@ -775,7 +775,7 @@ void combinatorics_global::Hill_cap56(
 
 }
 
-void combinatorics_global::append_orbit_and_adjust_size(schreier *Orb,
+void combinatorics_global::append_orbit_and_adjust_size(groups::schreier *Orb,
 		int idx, int *set, int &sz)
 // Used by Hill_cap56()
 {

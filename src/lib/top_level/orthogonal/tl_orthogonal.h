@@ -29,13 +29,13 @@ public:
 	blt_set_domain *Blt_set_domain;
 
 	//linear_group *LG;
-	action *A; // orthogonal group
+	actions::action *A; // orthogonal group
 
 
 
 	int starter_size;
 
-	strong_generators *Strong_gens;
+	groups::strong_generators *Strong_gens;
 
 	int f_semilinear;
 
@@ -54,8 +54,8 @@ public:
 	~blt_set_classify();
 	void null();
 	void freeself();
-	void init_basic(action *A,
-			strong_generators *Strong_gens,
+	void init_basic(actions::action *A,
+			groups::strong_generators *Strong_gens,
 			int starter_size,
 			int verbose_level);
 	void compute_starter(
@@ -81,8 +81,8 @@ public:
 
 	void lifting_prepare_function_new(exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens,
-		diophant *&Dio, long int *&col_labels,
+		groups::strong_generators *Strong_gens,
+		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	void report_from_iso(isomorph &Iso, int verbose_level);
@@ -94,8 +94,8 @@ public:
 // global functions:
 void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data);
 void blt_set_classify_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level);
 void blt_set_classify_early_test_func_callback(long int *S, int len,
@@ -163,7 +163,7 @@ public:
 
 
 	int f_has_group;
-	strong_generators *Sg;
+	groups::strong_generators *Sg;
 
 	blt_set_domain *Blt_set_domain;
 	blt_set_with_action *BA;
@@ -200,26 +200,26 @@ class blt_set_with_action {
 
 public:
 
-	action *A;
+	actions::action *A;
 	blt_set_domain *Blt_set_domain;
 
 	long int *set;
 
-	strong_generators *Aut_gens;
+	groups::strong_generators *Aut_gens;
 	blt_set_invariants *Inv;
 
-	action *A_on_points;
-	schreier *Orbits_on_points;
+	actions::action *A_on_points;
+	groups::schreier *Orbits_on_points;
 
 	blt_set_with_action();
 	~blt_set_with_action();
 	void null();
 	void freeself();
 	void init_set(
-			action *A,
+			actions::action *A,
 			blt_set_domain *Blt_set_domain,
 			long int *set,
-			strong_generators *Aut_gens, int verbose_level);
+			groups::strong_generators *Aut_gens, int verbose_level);
 	void init_orbits_on_points(
 			int verbose_level);
 	void print_automorphism_group(
@@ -338,7 +338,7 @@ public:
 	int epsilon;
 	int n;
 	std::string input_q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int f_label_txt;
 	std::string label_txt;
 	int f_label_tex;
@@ -375,7 +375,7 @@ public:
 
 	int f_semilinear;
 
-	action *A;
+	actions::action *A;
 	action_on_orthogonal *AO;
 
 

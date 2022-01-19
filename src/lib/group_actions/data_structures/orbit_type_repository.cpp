@@ -89,7 +89,7 @@ void orbit_type_repository::freeself()
 }
 
 void orbit_type_repository::init(
-		orbits_on_something *Oos,
+		groups::orbits_on_something *Oos,
 		int nb_sets,
 		int set_size,
 		long int *Sets,

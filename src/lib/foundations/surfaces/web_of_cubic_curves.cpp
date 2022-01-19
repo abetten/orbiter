@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 static void Web_of_cubic_curves_entry_print(int *p,
@@ -1302,4 +1303,5 @@ static void Web_of_cubic_curves_entry_print(int *p,
 
 
 
-}}
+}}}
+

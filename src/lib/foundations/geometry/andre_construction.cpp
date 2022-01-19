@@ -69,7 +69,7 @@ void andre_construction::freeself()
 	null();
 }
 
-void andre_construction::init(finite_field *F,
+void andre_construction::init(field_theory::finite_field *F,
 	int k, long int *spread_elements_numeric,
 	int verbose_level)
 {

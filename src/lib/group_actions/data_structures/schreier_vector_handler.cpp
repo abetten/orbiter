@@ -49,7 +49,8 @@ void schreier_vector_handler::freeself()
 	null();
 }
 
-void schreier_vector_handler::init(action *A, action *A2,
+void schreier_vector_handler::init(
+		actions::action *A, actions::action *A2,
 		int f_allow_failure,
 		int verbose_level)
 {

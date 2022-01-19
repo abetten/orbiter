@@ -70,7 +70,7 @@ void flag_orbits::freeself()
 	null();
 }
 
-void flag_orbits::init(action *A, action *A2, 
+void flag_orbits::init(actions::action *A, actions::action *A2,
 	int nb_primary_orbits_lower, 
 	int pt_representation_sz, int nb_flag_orbits, 
 	int upper_bound_for_number_of_traces,
@@ -213,7 +213,7 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 }
 
 void flag_orbits::read_file(ifstream &fp,
-		action *A, action *A2,
+		actions::action *A, actions::action *A2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -30,7 +30,7 @@ arc_basic::~arc_basic()
 
 }
 
-void arc_basic::init(finite_field *F, int verbose_level)
+void arc_basic::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

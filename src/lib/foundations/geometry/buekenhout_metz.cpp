@@ -135,7 +135,7 @@ void buekenhout_metz::freeself()
 }
 
 void buekenhout_metz::init(
-		finite_field *Fq, finite_field *FQ, 
+		field_theory::finite_field *Fq, field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level)
 // creates P2 over FQ and P3 over Fq, calls FQ->subfield_embedding_2dimensional

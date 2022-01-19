@@ -219,7 +219,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 
 
-	strong_generators *Aut_gens;
+	groups::strong_generators *Aut_gens;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before compute_stabilizer" << endl;
@@ -283,7 +283,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 }
 
 void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_definition_node *D,
-		strong_generators *&Aut_gens, int verbose_level)
+		groups::strong_generators *&Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
@@ -370,7 +370,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 					"Extending the group by a factor of "
 					<< D->nb_coset_reps << endl;
 		}
-		Aut_gens = NEW_OBJECT(strong_generators);
+		Aut_gens = NEW_OBJECT(groups::strong_generators);
 		Aut_gens->init_group_extension(D->Flag_stab_gens, D->coset_reps,
 				D->nb_coset_reps, verbose_level - 2);
 

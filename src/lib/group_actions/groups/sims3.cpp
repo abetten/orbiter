@@ -11,6 +11,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace groups {
+
+
 
 void sims::subgroup_make_characteristic_vector(
 		sims *Sub, int *C, int verbose_level)
@@ -130,4 +133,5 @@ void sims::order_structure_relative_to_subgroup(int *C_sub,
 		}
 }
 
-}}
+}}}
+

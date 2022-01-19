@@ -15,8 +15,9 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace actions {
 
-strong_generators *action::set_stabilizer_in_projective_space(
+groups::strong_generators *action::set_stabilizer_in_projective_space(
 	projective_space *P,
 	long int *set, int set_size, //int &canonical_pt,
 	int *canonical_set_or_NULL,
@@ -52,7 +53,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 
 
-	strong_generators *SG;
+	groups::strong_generators *SG;
 	data_structures::nauty_output *NO;
 
 
@@ -121,7 +122,7 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 	int f_v = (verbose_level >= 1);
 	int i, j, cnt;
 	int v[4];
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "action::report_fixed_objects_in_P3" << endl;
@@ -229,5 +230,6 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 }
 
 
-}}
+}}}
+
 

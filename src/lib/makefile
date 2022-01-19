@@ -112,9 +112,6 @@ MODULES= \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
 		foundations/geometry/projective_space3.o \
-		foundations/geometry/quartic_curve_domain.o \
-		foundations/geometry/quartic_curve_object_properties.o \
-		foundations/geometry/quartic_curve_object.o \
 		foundations/geometry/spread_tables.o \
 		foundations/geometry/w3q.o \
 		foundations/geometry_builder/cperm.o \
@@ -233,6 +230,9 @@ MODULES= \
 		foundations/surfaces/del_pezzo_surface_of_degree_two_object.o \
 		foundations/surfaces/eckardt_point_info.o \
 		foundations/surfaces/eckardt_point.o \
+		foundations/surfaces/quartic_curve_domain.o \
+		foundations/surfaces/quartic_curve_object_properties.o \
+		foundations/surfaces/quartic_curve_object.o \
 		foundations/surfaces/schlaefli_labels.o \
 		foundations/surfaces/schlaefli.o \
 		foundations/surfaces/seventytwo_cases.o \

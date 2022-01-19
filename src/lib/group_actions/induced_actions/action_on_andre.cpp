@@ -46,7 +46,7 @@ void action_on_andre::free()
 	null();
 }
 
-void action_on_andre::init(action *An, action *An1,
+void action_on_andre::init(actions::action *An, actions::action *An1,
 		andre_construction *Andre, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

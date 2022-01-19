@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace field_theory {
 
 
 
@@ -284,7 +285,8 @@ int finite_field_implementation_wo_tables::add(int i, int j, int verbose_level)
 
 
 
-}}
+}}}
+
 
 
 

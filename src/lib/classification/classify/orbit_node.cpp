@@ -37,7 +37,8 @@ void orbit_node::freeself()
 }
 
 void orbit_node::init(classification_step *C, int orbit_index,
-	strong_generators *gens, long int *Rep, void *extra_data, int verbose_level)
+		groups::strong_generators *gens,
+		long int *Rep, void *extra_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -78,7 +79,7 @@ void orbit_node::read_file(ifstream &fp, int verbose_level)
 	if (f_v) {
 		cout << "orbit_node::read_file" << endl;
 	}
-	gens = NEW_OBJECT(strong_generators);
+	gens = NEW_OBJECT(groups::strong_generators);
 	gens->read_from_file_binary(C->A, fp, verbose_level);
 
 	if (f_v) {

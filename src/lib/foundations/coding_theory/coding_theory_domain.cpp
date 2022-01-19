@@ -688,7 +688,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 	int *w;
 	int *Table;
 	geometry_global Gg;
-	finite_field *F = NULL;
+	field_theory::finite_field *F = NULL;
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_Hamming_graph_and_write_file" << endl;
@@ -699,7 +699,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 
 	if (f_projective) {
 		width = height = Gg.nb_PG_elements(n - 1, q);
-		F = NEW_OBJECT(finite_field);
+		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, 0 /* verbose_level */);
 	}
 	else {
@@ -777,7 +777,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 
 
 void coding_theory_domain::compute_and_print_projective_weights(
-		ostream &ost, finite_field *F, int *M, int n, int k)
+		ostream &ost, field_theory::finite_field *F, int *M, int n, int k)
 {
 	int i;
 	int *weights;
@@ -799,7 +799,7 @@ void coding_theory_domain::compute_and_print_projective_weights(
 	FREE_int(weights);
 }
 
-int coding_theory_domain::code_minimum_distance(finite_field *F, int n, int k,
+int coding_theory_domain::code_minimum_distance(field_theory::finite_field *F, int n, int k,
 		int *code, int verbose_level)
 	// code[k * n]
 {
@@ -831,7 +831,7 @@ int coding_theory_domain::code_minimum_distance(finite_field *F, int n, int k,
 	return i;
 }
 
-void coding_theory_domain::codewords_affine(finite_field *F, int n, int k,
+void coding_theory_domain::codewords_affine(field_theory::finite_field *F, int n, int k,
 	int *code, // [k * n]
 	int *codewords, // q^k
 	int verbose_level)
@@ -865,7 +865,7 @@ void coding_theory_domain::codewords_affine(finite_field *F, int n, int k,
 	}
 }
 
-void coding_theory_domain::code_projective_weight_enumerator(finite_field *F,
+void coding_theory_domain::code_projective_weight_enumerator(field_theory::finite_field *F,
 	int n, int k,
 	int *code, // [k * n]
 	int *weight_enumerator, // [n + 1]
@@ -937,7 +937,7 @@ void coding_theory_domain::code_projective_weight_enumerator(finite_field *F,
 	FREE_int(word);
 }
 
-void coding_theory_domain::code_weight_enumerator(finite_field *F,
+void coding_theory_domain::code_weight_enumerator(field_theory::finite_field *F,
 	int n, int k,
 	int *code, // [k * n]
 	int *weight_enumerator, // [n + 1]
@@ -1011,7 +1011,7 @@ void coding_theory_domain::code_weight_enumerator(finite_field *F,
 }
 
 
-void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
+void coding_theory_domain::code_weight_enumerator_fast(field_theory::finite_field *F,
 		int n, int k,
 	int *code, // [k * n]
 	int *weight_enumerator, // [n + 1]
@@ -1097,7 +1097,8 @@ void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
 	FREE_int(word);
 }
 
-void coding_theory_domain::code_projective_weights(finite_field *F,
+void coding_theory_domain::code_projective_weights(
+		field_theory::finite_field *F,
 	int n, int k,
 	int *code, // [k * n]
 	int *&weights, // will be allocated [N]
@@ -1206,7 +1207,7 @@ void coding_theory_domain::determine_weight_enumerator()
 }
 
 
-void coding_theory_domain::do_weight_enumerator(finite_field *F,
+void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 		int *M, int m, int n,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
@@ -1448,9 +1449,9 @@ void coding_theory_domain::do_linear_code_through_basis(
 	sz = 1 << k;
 	set = NEW_lint(sz);
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	for (i = 0; i < sz; i++) {
@@ -1528,7 +1529,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 
 }
 
-void coding_theory_domain::matrix_from_projective_set(finite_field *F,
+void coding_theory_domain::matrix_from_projective_set(field_theory::finite_field *F,
 		int n, int k, long int *columns_set_of_size_n,
 		int *genma,
 		int verbose_level)
@@ -1567,7 +1568,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check_projectively" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	int i, j;
 	int *v;
 	int *genma;
@@ -1575,7 +1576,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 	int *code_word;
 	geometry_global Gg;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
@@ -1701,7 +1702,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 	int i, j;
 	int *v;
 	int *genma;
@@ -1709,7 +1710,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	int *code_word;
 	geometry_global Gg;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
@@ -1843,7 +1844,7 @@ void coding_theory_domain::do_polynomial(
 	long int *poly_monomials;
 	int poly_monomials_sz;
 	ring_theory::homogeneous_polynomial_domain *Poly;
-	finite_field *Fq;
+	field_theory::finite_field *Fq;
 	int *mon;
 	int *coeff;
 	long int a;
@@ -1856,7 +1857,7 @@ void coding_theory_domain::do_polynomial(
 	cout << endl;
 
 	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Fq = NEW_OBJECT(finite_field);
+	Fq = NEW_OBJECT(field_theory::finite_field);
 
 	Fq->finite_field_init(2, FALSE /* f_without_tables */, 0 /* verbose_level */);
 
@@ -1960,9 +1961,9 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 
 	M1 = NEW_int(2 * n * n);
 	M2 = NEW_int(2 * n * n);
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(3, FALSE /* f_without_tables */, 0);
 	Orbiter->Int_vec->copy(H2, M1, 4);
 	sz = 2;
@@ -2577,9 +2578,9 @@ void coding_theory_domain::do_long_code(
 	code_word = NEW_int(n);
 	M = NEW_int(nb_rows * nb_cols);
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
-	F = NEW_OBJECT(finite_field);
+	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	Wt = NEW_int(sz);
@@ -3001,7 +3002,8 @@ void coding_theory_domain::place_binary(int *v, int n, int &i, int &j)
 
 
 
-void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
+void coding_theory_domain::field_reduction(
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		std::string &label,
 		int m, int n, std::string &genma_text,
 		int verbose_level)
@@ -3016,9 +3018,9 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 		cout << "coding_theory_domain::field_reduction" << endl;
 	}
 
-	subfield_structure *Sub;
+	field_theory::subfield_structure *Sub;
 
-	Sub = NEW_OBJECT(subfield_structure);
+	Sub = NEW_OBJECT(field_theory::subfield_structure);
 
 	Sub->init(FQ, Fq, verbose_level);
 
@@ -3108,7 +3110,7 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 	}
 }
 
-void coding_theory_domain::CRC_encode_text(nth_roots *Nth,
+void coding_theory_domain::CRC_encode_text(field_theory::nth_roots *Nth,
 		ring_theory::unipoly_object &CRC_poly,
 	std::string &text, std::string &fname,
 	int verbose_level)
@@ -3460,7 +3462,8 @@ int coding_theory_domain::Hamming_distance_binary(int a, int b, int n)
 }
 
 
-void coding_theory_domain::generator_matrix_cyclic_code(finite_field *F,
+void coding_theory_domain::generator_matrix_cyclic_code(
+		field_theory::finite_field *F,
 		int n,
 		std::string &poly_coeffs,
 		int verbose_level)
@@ -3532,7 +3535,8 @@ void coding_theory_domain::generator_matrix_cyclic_code(finite_field *F,
  *
  */
 
-void coding_theory_domain::find_CRC_polynomials(finite_field *F,
+void coding_theory_domain::find_CRC_polynomials(
+		field_theory::finite_field *F,
 		int t, int da, int dc,
 		int verbose_level)
 {
@@ -3593,7 +3597,7 @@ void coding_theory_domain::find_CRC_polynomials(finite_field *F,
 
 void coding_theory_domain::search_for_CRC_polynomials(int t,
 		int da, int *A, int dc, int *C,
-		int i, finite_field *F,
+		int i, field_theory::finite_field *F,
 		long int &nb_sol,
 		std::vector<std::vector<int> > &Solutions,
 		int verbose_level)
@@ -3722,7 +3726,7 @@ void coding_theory_domain::search_for_CRC_polynomials_binary(int t,
 
 int coding_theory_domain::test_all_two_bit_patterns(int da, int *A,
 		int dc, int *C,
-		finite_field *F,
+		field_theory::finite_field *F,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
@@ -3804,7 +3808,7 @@ int coding_theory_domain::test_all_two_bit_patterns(int da, int *A,
 
 int coding_theory_domain::test_all_three_bit_patterns(int da, int *A,
 		int dc, int *C,
-		finite_field *F,
+		field_theory::finite_field *F,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
@@ -4050,7 +4054,7 @@ int coding_theory_domain::test_all_three_bit_patterns_binary(int da, int *A,
 
 
 int coding_theory_domain::remainder_is_nonzero(int da, int *A,
-		int db, int *B, finite_field *F)
+		int db, int *B, field_theory::finite_field *F)
 // returns true if the remainder of A after division by B is nonzero
 {
 

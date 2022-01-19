@@ -27,7 +27,7 @@ expression_parser_domain::~expression_parser_domain()
 }
 
 void expression_parser_domain::parse_and_evaluate(
-		finite_field *F,
+		field_theory::finite_field *F,
 		std::string &name_of_formula,
 		std::string &formula_text,
 		std::string &managed_variables,
@@ -325,7 +325,7 @@ void expression_parser_domain::parse_and_evaluate(
 }
 
 void expression_parser_domain::evaluate(
-		finite_field *Fq,
+		field_theory::finite_field *Fq,
 		std::string &formula_label,
 		std::string &parameters,
 		int verbose_level)
@@ -416,7 +416,7 @@ void expression_parser_domain::evaluate(
 
 int expression_parser_domain::evaluate_formula(
 		formula *F,
-		finite_field *Fq,
+		field_theory::finite_field *Fq,
 		std::string &parameters,
 		int verbose_level)
 {

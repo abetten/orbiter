@@ -34,7 +34,7 @@ class finite_ring {
 	// only defined if we are a chain ring:
 	int p;
 	int e;
-	finite_field *Fp;
+	field_theory::finite_field *Fp;
 
 public:
 	int q;
@@ -50,7 +50,7 @@ public:
 	void init(int q, int verbose_level);
 	int get_e();
 	int get_p();
-	finite_field *get_Fp();
+	field_theory::finite_field *get_Fp();
 	int zero();
 	int one();
 	int is_zero(int i);
@@ -89,7 +89,7 @@ class homogeneous_polynomial_domain {
 
 private:
 	enum monomial_ordering_type Monomial_ordering_type;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int nb_monomials;
 	int *Monomials; // [nb_monomials * nb_variables]
 
@@ -134,13 +134,13 @@ public:
 	~homogeneous_polynomial_domain();
 	void freeself();
 	void null();
-	void init(finite_field *F, int nb_vars, int degree,
+	void init(field_theory::finite_field *F, int nb_vars, int degree,
 		int f_init_incidence_structure,
 		monomial_ordering_type Monomial_ordering_type,
 		int verbose_level);
 	int get_nb_monomials();
 	projective_space *get_P();
-	finite_field *get_F();
+	field_theory::finite_field *get_F();
 	int get_monomial(int i, int j);
 	char *get_monomial_symbol_easy(int i);
 	int *get_monomial_pointer(int i);
@@ -466,41 +466,41 @@ public:
 	ring_theory_global();
 	~ring_theory_global();
 	void write_code_for_division(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &fname_code,
 			std::string &A_coeffs, std::string &B_coeffs,
 			int verbose_level);
 	void polynomial_division(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
 	void extended_gcd_for_polynomials(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
 	void polynomial_mult_mod(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
 			int verbose_level);
 	void polynomial_find_roots(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &A_coeffs,
 			int verbose_level);
 	void sift_polynomials(
-			finite_field *F,
+			field_theory::finite_field *F,
 			long int rk0, long int rk1, int verbose_level);
 	void mult_polynomials(
-			finite_field *F,
+			field_theory::finite_field *F,
 			long int rk0, long int rk1, int verbose_level);
 	void polynomial_division_with_report(
-			finite_field *F,
+			field_theory::finite_field *F,
 			long int rk0, long int rk1, int verbose_level);
 	void polynomial_division_from_file_with_report(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &input_file, long int rk1, int verbose_level);
 	void polynomial_division_from_file_all_k_error_patterns_with_report(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &input_file, long int rk1, int k, int verbose_level);
 	void number_of_conditions_satisfied(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &variety_label_txt,
 			std::string &variety_label_tex,
 			int variety_nb_vars, int variety_degree,
@@ -513,7 +513,7 @@ public:
 			int verbose_level);
 	// creates homogeneous_polynomial_domain
 	void create_intersection_of_zariski_open_sets(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &variety_label_txt,
 			std::string &variety_label_tex,
 			int variety_nb_vars, int variety_degree,
@@ -525,7 +525,7 @@ public:
 			int verbose_level);
 	// creates homogeneous_polynomial_domain
 	void create_projective_variety(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &variety_label,
 			std::string &variety_label_tex,
 			int variety_nb_vars, int variety_degree,
@@ -537,7 +537,7 @@ public:
 			int verbose_level);
 	// creates homogeneous_polynomial_domain
 	void create_projective_curve(
-			finite_field *F,
+			field_theory::finite_field *F,
 			std::string &variety_label_txt,
 			std::string &variety_label_tex,
 			int curve_nb_vars, int curve_degree,
@@ -549,27 +549,27 @@ public:
 			int verbose_level);
 	// creates homogeneous_polynomial_domain
 	void create_irreducible_polynomial(
-			finite_field *F,
+			field_theory::finite_field *F,
 			unipoly_domain *Fq,
 			unipoly_object *&Beta, int n,
 			long int *cyclotomic_set, int cylotomic_set_size,
 			unipoly_object *&generator,
 			int verbose_level);
 	void compute_nth_roots_as_polynomials(
-			finite_field *F,
+			field_theory::finite_field *F,
 			unipoly_domain *FpX,
 			unipoly_domain *Fq, unipoly_object *&Beta, int n1, int n2, int verbose_level);
 	void compute_powers(
-			finite_field *F,
+			field_theory::finite_field *F,
 			unipoly_domain *Fq,
 			int n, int start_idx,
 			unipoly_object *&Beta, int verbose_level);
-	void make_all_irreducible_polynomials_of_degree_d(finite_field *F,
+	void make_all_irreducible_polynomials_of_degree_d(field_theory::finite_field *F,
 			int d, std::vector<std::vector<int> > &Table,
 			int verbose_level);
-	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
+	int count_all_irreducible_polynomials_of_degree_d(field_theory::finite_field *F,
 			int d, int verbose_level);
-	void do_make_table_of_irreducible_polynomials(finite_field *F,
+	void do_make_table_of_irreducible_polynomials(field_theory::finite_field *F,
 			int deg, int verbose_level);
 	void do_search_for_primitive_polynomial_in_range(
 			int p_min, int p_max,
@@ -582,7 +582,7 @@ public:
 	void factor_cyclotomic(int n, int q, int d,
 		int *coeffs, int f_poly, std::string &poly, int verbose_level);
 	void oval_polynomial(
-			finite_field *F,
+			field_theory::finite_field *F,
 		int *S, unipoly_domain &D, unipoly_object &poly,
 		int verbose_level);
 	void print_longinteger_after_multiplying(std::ostream &ost,
@@ -601,7 +601,7 @@ class table_of_irreducible_polynomials {
 public:
 	int k;
 	int q;
-	finite_field *F;
+	field_theory::finite_field *F;
 	int nb_irred;
 	int *Nb_irred;
 	int *First_irred;
@@ -610,7 +610,7 @@ public:
 
 	table_of_irreducible_polynomials();
 	~table_of_irreducible_polynomials();
-	void init(int k, finite_field *F, int verbose_level);
+	void init(int k, field_theory::finite_field *F, int verbose_level);
 	void print(std::ostream &ost);
 	void print_polynomials(std::ostream &ost);
 	int select_polynomial_first(
@@ -632,7 +632,7 @@ public:
 class unipoly_domain {
 
 private:
-	finite_field *F;
+	field_theory::finite_field *F;
 	int f_factorring;
 	int factor_degree;
 	int *factor_coeffs; // [factor_degree + 1]
@@ -647,13 +647,13 @@ private:
 public:
 
 	unipoly_domain();
-	unipoly_domain(finite_field *GFq);
-	void init_basic(finite_field *F, int verbose_level);
-	unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_level);
+	unipoly_domain(field_theory::finite_field *GFq);
+	void init_basic(field_theory::finite_field *F, int verbose_level);
+	unipoly_domain(field_theory::finite_field *GFq, unipoly_object m, int verbose_level);
 	~unipoly_domain();
 	void init_variable_name(std::string &label);
-	void init_factorring(finite_field *F, unipoly_object m, int verbose_level);
-	finite_field *get_F();
+	void init_factorring(field_theory::finite_field *F, unipoly_object m, int verbose_level);
+	field_theory::finite_field *get_F();
 	int &s_i(unipoly_object p, int i)
 		{ int *rep = (int *) p; return rep[i + 1]; };
 	void create_object_of_degree(unipoly_object &p, int d);

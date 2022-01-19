@@ -92,7 +92,7 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 		cout << "classify_trihedral_pairs::init computing stabilizer "
 				"of three collinear points" << endl;
 	}
-	gens_type1 = NEW_OBJECT(strong_generators);
+	gens_type1 = NEW_OBJECT(groups::strong_generators);
 	gens_type1->generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		A,
 		A->G.matrix_grp, verbose_level - 1);
@@ -101,7 +101,7 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 		cout << "classify_trihedral_pairs::init computing stabilizer "
 				"of a triangle of points" << endl;
 	}
-	gens_type2 = NEW_OBJECT(strong_generators);
+	gens_type2 = NEW_OBJECT(groups::strong_generators);
 	gens_type2->generators_for_stabilizer_of_triangle_in_PGL4(A, 
 		A->G.matrix_grp, verbose_level - 1);
 
@@ -1037,7 +1037,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 		A->element_mult(Elt1, Elt2, Elt3, 0);
 
 
-		strong_generators *S;
+		groups::strong_generators *S;
 		ring_theory::longinteger_object go;
 
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -1139,7 +1139,7 @@ void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost,
 		FALSE, NULL, NULL);
 }
 
-strong_generators
+groups::strong_generators
 *classify_trihedral_pairs::identify_trihedral_pair_and_get_stabilizer(
 	long int *planes6, int *transporter, int &orbit_index,
 	int verbose_level)
@@ -1172,8 +1172,8 @@ strong_generators
 		cout << "orbit_index=" << orbit_index << endl;
 	}
 
-	strong_generators *gens;
-	gens = NEW_OBJECT(strong_generators);
+	groups::strong_generators *gens;
+	gens = NEW_OBJECT(groups::strong_generators);
 
 	
 	if (f_v) {

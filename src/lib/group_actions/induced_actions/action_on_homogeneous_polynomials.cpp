@@ -58,7 +58,7 @@ void action_on_homogeneous_polynomials::free()
 	null();
 }
 
-void action_on_homogeneous_polynomials::init(action *A,
+void action_on_homogeneous_polynomials::init(actions::action *A,
 		ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -214,7 +214,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_semilinear;
-	matrix_group *mtx;
+	groups::matrix_group *mtx;
 	int n;
 	
 	if (f_v) {

@@ -28,7 +28,7 @@ class activity_description {
 
 
 	int f_finite_field_activity;
-	finite_field_activity_description *Finite_field_activity_description;
+	field_theory::finite_field_activity_description *Finite_field_activity_description;
 
 	int f_projective_space_activity;
 	projective_space_activity_description *Projective_space_activity_description;
@@ -67,7 +67,7 @@ class activity_description {
 	graph_classification_activity_description *Graph_classification_activity_description;
 
 	int f_diophant_activity;
-	diophant_activity_description *Diophant_activity_description;
+	solvers::diophant_activity_description *Diophant_activity_description;
 
 	int f_design_activity;
 	design_activity_description *Design_activity_description;
@@ -275,10 +275,10 @@ public:
 class interface_combinatorics {
 
 	int f_diophant;
-	diophant_description *Diophant_description;
+	solvers::diophant_description *Diophant_description;
 
 	int f_diophant_activity;
-	diophant_activity_description *Diophant_activity_description;
+	solvers::diophant_activity_description *Diophant_activity_description;
 
 	int f_bent;
 	int bent_n;
@@ -361,8 +361,8 @@ public:
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	void do_diophant(diophant_description *Descr, int verbose_level);
-	void do_diophant_activity(diophant_activity_description *Descr, int verbose_level);
+	void do_diophant(solvers::diophant_description *Descr, int verbose_level);
+	void do_diophant_activity(solvers::diophant_activity_description *Descr, int verbose_level);
 	void do_bent(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
@@ -853,7 +853,7 @@ public:
 	std::string define_label;
 
 	int f_finite_field;
-	finite_field_description *Finite_field_description;
+	field_theory::finite_field_description *Finite_field_description;
 
 	int f_projective_space;
 	projective_space_with_action_description *Projective_space_with_action_description;
@@ -862,10 +862,10 @@ public:
 	orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
 
 	int f_linear_group;
-	linear_group_description *Linear_group_description;
+	groups::linear_group_description *Linear_group_description;
 
 	int f_permutation_group;
-	permutation_group_description *Permutation_group_description;
+	groups::permutation_group_description *Permutation_group_description;
 
 	int f_group_modification;
 	group_modification_description *Group_modification_description;
@@ -911,7 +911,7 @@ public:
 	graph_classify_description * Graph_classify_description;
 
 	int f_diophant;
-	diophant_description *Diophant_description;
+	solvers::diophant_description *Diophant_description;
 
 	int f_design;
 	design_create_description *Design_create_description;

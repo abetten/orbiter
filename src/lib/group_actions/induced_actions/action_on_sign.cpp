@@ -36,7 +36,7 @@ void action_on_sign::free()
 }
 
 
-void action_on_sign::init(action *A, int verbose_level)
+void action_on_sign::init(actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;

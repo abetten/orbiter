@@ -111,7 +111,7 @@ void packing_classify::spread_table_init(
 				"dimension_of_spread_elements=" << dimension_of_spread_elements << endl;
 	}
 	int n, q;
-	matrix_group *Mtx;
+	groups::matrix_group *Mtx;
 	spread_classify *T;
 
 
@@ -450,8 +450,8 @@ void packing_classify::compute(int search_depth, int verbose_level)
 void packing_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -716,7 +716,7 @@ void packing_classify::report_fixed_objects(int *Elt,
 
 
 int packing_classify::test_if_orbit_is_partial_packing(
-	schreier *Orbits, int orbit_idx,
+		groups::schreier *Orbits, int orbit_idx,
 	long int *orbit1, int verbose_level)
 {
 	int f_v = FALSE; // (verbose_level >= 1);
@@ -731,7 +731,7 @@ int packing_classify::test_if_orbit_is_partial_packing(
 }
 
 int packing_classify::test_if_pair_of_orbits_are_adjacent(
-	schreier *Orbits, int a, int b,
+		groups::schreier *Orbits, int a, int b,
 	long int *orbit1, long int *orbit2,
 	int verbose_level)
 // tests if every spread from orbit a
@@ -800,8 +800,8 @@ void callback_packing_report(isomorph *Iso,
 void packing_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
-	strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {

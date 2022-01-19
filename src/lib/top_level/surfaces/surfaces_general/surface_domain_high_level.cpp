@@ -160,7 +160,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes" << endl;
 	}
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 
@@ -221,10 +221,10 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 
 
 void surface_domain_high_level::prepare_surface_classify_wedge(
-		finite_field *F,
+		field_theory::finite_field *F,
 		projective_space_with_action *PA,
 		poset_classification_control *Control,
-		surface_domain *&Surf, surface_with_action *&Surf_A,
+		algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 		surface_classify_wedge *&SCW,
 		int verbose_level)
 {
@@ -281,7 +281,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 
 }
 
-void surface_domain_high_level::do_study_surface(finite_field *F, int nb, int verbose_level)
+void surface_domain_high_level::do_study_surface(field_theory::finite_field *F, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -346,12 +346,12 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 	}
 
 	surface_with_action *Surf_A;
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	number_theory::number_theory_domain NT;
 
 
 
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf_A = NEW_OBJECT(surface_with_action);
 
 
@@ -442,12 +442,12 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 	}
 
 	surface_with_action *Surf_A;
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	number_theory::number_theory_domain NT;
 
 
 
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf_A = NEW_OBJECT(surface_with_action);
 
 
@@ -555,17 +555,17 @@ void surface_domain_high_level::do_six_arcs(
 		cout << "surface_domain_high_level::do_six_arcs" << endl;
 	}
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	F = PA->F;
 
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 
 	if (f_v) {
 			cout << "surface_domain_high_level::do_six_arcs before Surf->init" << endl;
 	}
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(F, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_six_arcs after Surf->init" << endl;
@@ -699,7 +699,7 @@ void surface_domain_high_level::do_six_arcs(
 		Abcd[h * 4 + 2] = c;
 		Abcd[h * 4 + 3] = d;
 
-		eckardt_point_info *E;
+		algebraic_geometry::eckardt_point_info *E;
 
 		E = Surf->P2->compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
 
@@ -806,9 +806,9 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	}
 
 	int i;
-	finite_field *F0;
-	finite_field *F;
-	surface_domain *Surf;
+	field_theory::finite_field *F0;
+	field_theory::finite_field *F;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
@@ -817,13 +817,13 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 
 
-	F0 = NEW_OBJECT(finite_field);
+	F0 = NEW_OBJECT(field_theory::finite_field);
 	F0->finite_field_init(defining_q, FALSE /* f_without_tables */, 0);
 
 	F = PA->P->F;
 
 
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties "
@@ -1092,9 +1092,9 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze" << endl;
 	}
 
-	finite_field *F0;
-	finite_field *F;
-	surface_domain *Surf;
+	field_theory::finite_field *F0;
+	field_theory::finite_field *F;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
@@ -1102,13 +1102,13 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 
 
-	F0 = NEW_OBJECT(finite_field);
+	F0 = NEW_OBJECT(field_theory::finite_field);
 	F0->finite_field_init(defining_q, FALSE /* f_without_tables */, 0);
 
 	F = PA->P->F;
 
 
-	Surf = NEW_OBJECT(surface_domain);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(F, 0 /* verbose_level - 1 */);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
@@ -1468,11 +1468,11 @@ struct table_surfaces_field_order {
 	int p;
 	int h;
 
-	finite_field *F;
+	field_theory::finite_field *F;
 
 	projective_space_with_action *PA;
 
-	surface_domain *Surf;
+	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	int nb_total;
@@ -1673,7 +1673,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 		T[cur].Descr->f_special = FALSE;
 #endif
 
-		T[cur].F = NEW_OBJECT(finite_field);
+		T[cur].F = NEW_OBJECT(field_theory::finite_field);
 		T[cur].F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 		//T[cur].Descr->F = T[cur].F;
@@ -1700,7 +1700,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 			cout << "surface_domain_high_level::do_create_surface_atlas before Surf->init" << endl;
 		}
 
-		T[cur].Surf = NEW_OBJECT(surface_domain);
+		T[cur].Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 		T[cur].Surf->init(T[cur].F, 0 /*verbose_level - 1*/);
 		if (f_v) {
 			cout << "do_create_surface_atlas after Surf->init" << endl;

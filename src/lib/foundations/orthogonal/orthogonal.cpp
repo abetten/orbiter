@@ -309,7 +309,7 @@ orthogonal::~orthogonal()
 
 
 void orthogonal::init(int epsilon, int n,
-		finite_field *F, int verbose_level)
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;

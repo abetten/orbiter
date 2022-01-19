@@ -27,8 +27,8 @@ namespace classification {
 
 class classification_step {
 public:
-	action *A; // do not free
-	action *A2; // do not free
+	actions::action *A; // do not free
+	actions::action *A2; // do not free
 
 	//int f_lint;
 	ring_theory::longinteger_object go;
@@ -43,13 +43,13 @@ public:
 	~classification_step();
 	void null();
 	void freeself();
-	void init(action *A, action *A2, int max_orbits, int representation_sz,
+	void init(actions::action *A, actions::action *A2, int max_orbits, int representation_sz,
 			ring_theory::longinteger_object &go, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp,
-			action *A, action *A2, ring_theory::longinteger_object &go,
+			actions::action *A, actions::action *A2, ring_theory::longinteger_object &go,
 			int verbose_level);
 	void generate_source_code(std::string &fname_base, int verbose_level);
 	long int *Rep_ith(int i);
@@ -73,8 +73,8 @@ public:
 
 class flag_orbits {
 public:
-	action *A; // do not free
-	action *A2; // do not free
+	actions::action *A; // do not free
+	actions::action *A2; // do not free
 
 	int nb_primary_orbits_lower;
 	int nb_primary_orbits_upper;
@@ -94,7 +94,7 @@ public:
 	~flag_orbits();
 	void null();
 	void freeself();
-	void init(action *A, action *A2, int nb_primary_orbits_lower,
+	void init(actions::action *A, actions::action *A2, int nb_primary_orbits_lower,
 			int pt_representation_sz, int nb_flag_orbits,
 			int upper_bound_for_number_of_traces,
 			void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level),
@@ -105,7 +105,7 @@ public:
 		int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp,
-			action *A, action *A2,
+			actions::action *A, actions::action *A2,
 			int verbose_level);
 	void print_latex(std::ostream &ost,
 		const char *title, int f_print_stabilizer_gens);
@@ -136,7 +136,7 @@ public:
 	int *fusion_elt;
 
 	ring_theory::longinteger_object go;
-	strong_generators *gens;
+	groups::strong_generators *gens;
 
 	int nb_received;
 	void **Receptacle; // [upper_bound_for_number_of_traces]
@@ -148,7 +148,7 @@ public:
 	void init(flag_orbits *Flag_orbits, int flag_orbit_index,
 			int downstep_primary_orbit, int downstep_secondary_orbit,
 			int downstep_orbit_len, int f_long_orbit, long int *pt_representation,
-			strong_generators *Strong_gens, int verbose_level);
+			groups::strong_generators *Strong_gens, int verbose_level);
 	void receive_trace_result(void *trace_result, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
@@ -168,7 +168,7 @@ class orbit_node {
 public:
 	classification_step *C;
 	int orbit_index;
-	strong_generators *gens;
+	groups::strong_generators *gens;
 	void *extra_data;
 
 	orbit_node();
@@ -176,7 +176,7 @@ public:
 	void null();
 	void freeself();
 	void init(classification_step *C,
-			int orbit_index, strong_generators *gens,
+			int orbit_index, groups::strong_generators *gens,
 			long int *Rep, void *extra_data, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
