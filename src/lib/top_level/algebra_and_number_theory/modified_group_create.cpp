@@ -14,6 +14,8 @@ using namespace orbiter::foundations;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
+
 
 modified_group_create::modified_group_create()
 {
@@ -148,7 +150,8 @@ void modified_group_create::modified_group_init(
 
 
 
-}}
+}}}
+
 
 
 

@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
+
 
 set_and_stabilizer::set_and_stabilizer()
 {
@@ -591,6 +593,7 @@ int set_and_stabilizer::find(long int pt)
 }
 
 
-}}
+}}}
+
 
 

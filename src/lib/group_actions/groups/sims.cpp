@@ -657,7 +657,7 @@ void sims::init_trivial_orbit(int i, int verbose_level)
 	}
 }
 
-void sims::init_generators(vector_ge &generators,
+void sims::init_generators(data_structures_groups::vector_ge &generators,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1701,7 +1701,8 @@ void sims::coset_rep_inv(int *Elt, int i, int j, int verbose_level)
 	}
 }
 
-void sims::extract_strong_generators_in_order(vector_ge &SG,
+void sims::extract_strong_generators_in_order(
+		data_structures_groups::vector_ge &SG,
 		int *tl, int verbose_level)
 {
 	int i, nbg, nbg1, j, k = 0, gen_idx;
@@ -2201,7 +2202,8 @@ void sims::get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level)
 	}
 }
 
-void sims::all_elements(vector_ge *&vec, int verbose_level)
+void sims::all_elements(
+		data_structures_groups::vector_ge *&vec, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
@@ -2216,7 +2218,7 @@ void sims::all_elements(vector_ge *&vec, int verbose_level)
 	group_order(go);
 	goi = go.as_int();
 
-	vec = NEW_OBJECT(vector_ge);
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
 	vec->init(A, 0 /*verbose_level*/);
 	vec->allocate(goi, verbose_level);
 
@@ -2241,7 +2243,7 @@ void sims::all_elements_save_csv(std::string &fname, int verbose_level)
 		cout << "sims::all_elements_save_csv" << endl;
 	}
 
-	vector_ge *vec;
+	data_structures_groups::vector_ge *vec;
 
 	all_elements(vec, verbose_level);
 

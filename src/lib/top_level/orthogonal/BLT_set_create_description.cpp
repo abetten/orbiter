@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
 
 BLT_set_create_description::BLT_set_create_description()
@@ -89,5 +90,5 @@ void BLT_set_create_description::print()
 	}
 }
 
-}}
+}}}
 

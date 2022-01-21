@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 surface_create_by_arc_lifting::surface_create_by_arc_lifting()
@@ -453,4 +454,5 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 }
 
 
-}}
+}}}
+

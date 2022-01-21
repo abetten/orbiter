@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
 
 
 spread_table_activity::spread_table_activity()
@@ -28,8 +29,8 @@ spread_table_activity::~spread_table_activity()
 
 
 
-void spread_table_activity::init(spread_table_activity_description *Descr,
-		packing_classify *P,
+void spread_table_activity::init(spreads::spread_table_activity_description *Descr,
+		packings::packing_classify *P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -365,6 +366,6 @@ void spread_table_activity::report_spread2(std::ostream &ost, int spread_idx, in
 
 
 
-}}
+}}}
 
 

@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_by_restriction::action_by_restriction()
 {
@@ -42,7 +44,7 @@ void action_by_restriction::free()
 }
 
 void action_by_restriction::init_single_orbit_from_schreier_vector(
-		schreier_vector *Schreier_vector,
+		data_structures_groups::schreier_vector *Schreier_vector,
 		int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -224,6 +226,7 @@ long int action_by_restriction::compute_image(
 	return c;
 }
 
-}}
+}}}
+
 
 

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 
@@ -163,16 +164,16 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		cout << "find_partial_blocking_sets !A->f_has_strong_generators" << endl;
 		exit(1);
 		}
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Control->f_depth = TRUE;
 	Control->depth = Inc->nb_rows;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
 
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	gen->initialize_and_allocate_root_node(Control, Poset,
 			Inc->nb_rows, verbose_level);
@@ -713,5 +714,5 @@ int callback_check_partial_blocking_set(int len, int *S,
 }
 #endif
 
-}}
+}}}
 

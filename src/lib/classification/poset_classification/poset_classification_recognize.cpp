@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 void poset_classification::recognize_start_over(
 	int size, int f_implicit_fusion, 
@@ -470,5 +472,5 @@ void poset_classification::recognize(
 }
 
 
-}}
+}}}
 

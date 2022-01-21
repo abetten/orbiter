@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 
 classification_of_cubic_surfaces_with_double_sixes_activity_description::classification_of_cubic_surfaces_with_double_sixes_activity_description()
@@ -63,7 +65,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
-			report_options = NEW_OBJECT(poset_classification_report_options);
+			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 			if (f_v) {
 				cout << "-report " << endl;
 			}
@@ -219,5 +221,6 @@ void classification_of_cubic_surfaces_with_double_sixes_activity_description::pr
 
 
 
-}}
+}}}
+
 

@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 void poset_classification::print_set_verbose(int node)
 {
@@ -1819,6 +1821,6 @@ void poset_classification::write_reps_csv(int lvl, int verbose_level)
 
 
 
-}}
+}}}
 
 

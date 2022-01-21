@@ -16,6 +16,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
+
 
 spread_create_description::spread_create_description()
 {
@@ -99,4 +101,4 @@ void spread_create_description::print()
 }
 
 
-}}
+}}}

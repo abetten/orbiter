@@ -89,7 +89,8 @@ void sims::random_element_of_order(int *elt,
 		}
 }
 
-void sims::random_elements_of_order(vector_ge *elts,
+void sims::random_elements_of_order(
+		data_structures_groups::vector_ge *elts,
 		int *orders, int nb, int verbose_level)
 {
 	int i;
@@ -111,13 +112,15 @@ void sims::random_elements_of_order(vector_ge *elts,
 }
 
 void sims::transitive_extension(schreier &O,
-		vector_ge &SG, int *tl, int verbose_level)
+		data_structures_groups::vector_ge &SG,
+		int *tl, int verbose_level)
 {
 	transitive_extension_tolerant(O, SG, tl, FALSE, verbose_level);
 }
 
 int sims::transitive_extension_tolerant(schreier &O,
-	vector_ge &SG, int *tl,
+		data_structures_groups::vector_ge &SG,
+		int *tl,
 	int f_tolerant, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -214,7 +217,8 @@ int sims::transitive_extension_tolerant(schreier &O,
 
 void sims::transitive_extension_using_coset_representatives_extract_generators(
 	int *coset_reps, int nb_cosets,
-	vector_ge &SG, int *tl,
+	data_structures_groups::vector_ge &SG,
+	int *tl,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -328,7 +332,8 @@ void sims::transitive_extension_using_coset_representatives(
 
 void sims::transitive_extension_using_generators(
 	int *Elt_gens, int nb_gens, int subgroup_index,
-	vector_ge &SG, int *tl,
+	data_structures_groups::vector_ge &SG,
+	int *tl,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -514,7 +519,7 @@ void sims::point_stabilizer_stabchain_with_action(actions::action *A2,
 	}
 
 
-	vector_ge stab_gens(A);
+	data_structures_groups::vector_ge stab_gens(A);
 
 	//stab_gens.append(O.schreier_gen);
 
@@ -706,7 +711,7 @@ void sims::point_stabilizer_stabchain_with_action(actions::action *A2,
 	}
 }
 
-void sims::point_stabilizer(vector_ge &SG,
+void sims::point_stabilizer(data_structures_groups::vector_ge &SG,
 		int *tl, int pt, int verbose_level)
 // computes strong generating set for the stabilizer of point pt
 {
@@ -726,7 +731,8 @@ void sims::point_stabilizer(vector_ge &SG,
 }
 
 void sims::point_stabilizer_with_action(actions::action *A2,
-		vector_ge &SG, int *tl, int pt, int verbose_level)
+		data_structures_groups::vector_ge &SG,
+		int *tl, int pt, int verbose_level)
 // computes strong generating set for
 // the stabilizer of point pt in action A2
 {
@@ -1128,13 +1134,13 @@ void sims::element_ranks_subgroup(sims *subgroup,
 	FREE_int(Elt1);
 }
 
-void sims::center(vector_ge &gens,
+void sims::center(data_structures_groups::vector_ge &gens,
 		int *center_element_ranks, int &nb_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
-	vector_ge gens_inv;
+	data_structures_groups::vector_ge gens_inv;
 	long int goi, i, j, k, len;
 	int *Elt1;
 	int *Elt2;
@@ -1619,7 +1625,8 @@ int sims::is_normalizing(int *Elt, int verbose_level)
 	return ret;
 }
 
-void sims::create_Cayley_graph(vector_ge *gens,
+void sims::create_Cayley_graph(
+		data_structures_groups::vector_ge *gens,
 		int *&Adj, long int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1736,7 +1743,7 @@ void sims::create_group_table(int *&Table, long int &n,
 }
 
 void sims::compute_conjugacy_classes(
-		actions::action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
+		actions::action *&Aconj, induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
 	strong_generators *&SG, int &nb_classes,
 	int *&class_size, int *&class_rep,
 	int verbose_level)
@@ -2114,7 +2121,8 @@ void sims::dimino(
 		}
 }
 
-void sims::Cayley_graph(int *&Adj, int &sz, vector_ge *gens_S,
+void sims::Cayley_graph(int *&Adj, int &sz,
+		data_structures_groups::vector_ge *gens_S,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

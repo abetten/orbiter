@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 poset_classification_control::poset_classification_control()
@@ -740,5 +741,5 @@ void poset_classification_control_early_test_function_cliques(long int *S, int l
 
 
 
-}}
+}}}
 

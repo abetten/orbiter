@@ -111,7 +111,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-projective_space_activity") == 0) {
 		f_projective_space_activity = TRUE;
 		Projective_space_activity_description =
-				NEW_OBJECT(projective_space_activity_description);
+				NEW_OBJECT(projective_geometry::projective_space_activity_description);
 		if (f_v) {
 			cout << "reading -projective_space_activity" << endl;
 		}
@@ -132,7 +132,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
 		f_orthogonal_space_activity = TRUE;
 		Orthogonal_space_activity_description =
-				NEW_OBJECT(orthogonal_space_activity_description);
+				NEW_OBJECT(orthogonal_geometry::orthogonal_space_activity_description);
 		if (f_v) {
 			cout << "reading -orthogonal_space_activity" << endl;
 		}
@@ -153,7 +153,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		f_group_theoretic_activity = TRUE;
 		Group_theoretic_activity_description =
-				NEW_OBJECT(group_theoretic_activity_description);
+				NEW_OBJECT(apps_algebra::group_theoretic_activity_description);
 		if (f_v) {
 			cout << "reading -group_theoretic_activities" << endl;
 		}
@@ -174,7 +174,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-cubic_surface_activity") == 0) {
 		f_cubic_surface_activity = TRUE;
 		Cubic_surface_activity_description =
-				NEW_OBJECT(cubic_surface_activity_description);
+				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surface_activity_description);
 		if (f_v) {
 			cout << "reading -cubic_surface_activity" << endl;
 		}
@@ -195,7 +195,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-quartic_curve_activity") == 0) {
 		f_quartic_curve_activity = TRUE;
 		Quartic_curve_activity_description =
-				NEW_OBJECT(quartic_curve_activity_description);
+				NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_activity_description);
 		if (f_v) {
 			cout << "reading -quartic_curve_activity" << endl;
 		}
@@ -216,7 +216,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
 		f_combinatorial_object_activity = TRUE;
 		Combinatorial_object_activity_description =
-				NEW_OBJECT(combinatorial_object_activity_description);
+				NEW_OBJECT(apps_combinatorics::combinatorial_object_activity_description);
 		if (f_v) {
 			cout << "reading -combinatorial_object_activity" << endl;
 		}
@@ -237,7 +237,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
 		f_graph_theoretic_activity = TRUE;
 		Graph_theoretic_activity_description =
-				NEW_OBJECT(graph_theoretic_activity_description);
+				NEW_OBJECT(apps_graph_theory::graph_theoretic_activity_description);
 		if (f_v) {
 			cout << "reading -graph_theoretic_activity" << endl;
 		}
@@ -258,7 +258,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-classification_of_cubic_surfaces_with_double_sixes_activity") == 0) {
 		f_classification_of_cubic_surfaces_with_double_sixes_activity = TRUE;
 		Classification_of_cubic_surfaces_with_double_sixes_activity_description =
-				NEW_OBJECT(classification_of_cubic_surfaces_with_double_sixes_activity_description);
+				NEW_OBJECT(applications_in_algebraic_geometry::classification_of_cubic_surfaces_with_double_sixes_activity_description);
 		if (f_v) {
 			cout << "reading -classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
 		}
@@ -279,7 +279,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-spread_table_activity") == 0) {
 		f_spread_table_activity = TRUE;
 		Spread_table_activity_description =
-				NEW_OBJECT(spread_table_activity_description);
+				NEW_OBJECT(spreads::spread_table_activity_description);
 		if (f_v) {
 			cout << "reading -classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
 		}
@@ -300,7 +300,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-packing_with_symmetry_assumption_activity") == 0) {
 		f_packing_with_symmetry_assumption_activity = TRUE;
 		Packing_was_activity_description =
-				NEW_OBJECT(packing_was_activity_description);
+				NEW_OBJECT(packings::packing_was_activity_description);
 		if (f_v) {
 			cout << "reading -packing_with_symmetry_assumption_activity" << endl;
 		}
@@ -321,7 +321,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-packing_fixed_points_activity") == 0) {
 		f_packing_fixed_points_activity = TRUE;
 		Packing_was_fixpoints_activity_description =
-				NEW_OBJECT(packing_was_fixpoints_activity_description);
+				NEW_OBJECT(packings::packing_was_fixpoints_activity_description);
 		if (f_v) {
 			cout << "reading -packing_fixed_points_activity" << endl;
 		}
@@ -342,7 +342,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-graph_classification_activity") == 0) {
 		f_graph_classification_activity = TRUE;
 		Graph_classification_activity_description =
-				NEW_OBJECT(graph_classification_activity_description);
+				NEW_OBJECT(apps_graph_theory::graph_classification_activity_description);
 		if (f_v) {
 			cout << "reading -graph_classification_activity" << endl;
 		}
@@ -384,7 +384,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-design_activity") == 0) {
 		f_design_activity = TRUE;
 		Design_activity_description =
-				NEW_OBJECT(design_activity_description);
+				NEW_OBJECT(apps_combinatorics::design_activity_description);
 		if (f_v) {
 			cout << "reading -design_activity" << endl;
 		}
@@ -405,7 +405,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-large_set_with_symmetry_assumption_activity") == 0) {
 		f_large_set_was_activity = TRUE;
 		Large_set_was_activity_description =
-				NEW_OBJECT(large_set_was_activity_description);
+				NEW_OBJECT(apps_combinatorics::large_set_was_activity_description);
 		if (f_v) {
 			cout << "reading -large_set_with_symmetry_assumption_activity" << endl;
 		}
@@ -727,11 +727,11 @@ void activity_description::do_projective_space_activity(int verbose_level)
 		cout << "-finite_field_activity requires at least one input" << endl;
 		exit(1);
 	}
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
-	PA = (projective_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	PA = (projective_geometry::projective_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
-	projective_space_activity Activity;
+	projective_geometry::projective_space_activity Activity;
 	Activity.Descr = Projective_space_activity_description;
 	Activity.PA = PA;
 
@@ -776,11 +776,11 @@ void activity_description::do_orthogonal_space_activity(int verbose_level)
 		cout << "-finite_field_activity requires at least one input" << endl;
 		exit(1);
 	}
-	orthogonal_space_with_action *OA;
+	orthogonal_geometry::orthogonal_space_with_action *OA;
 
-	OA = (orthogonal_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	OA = (orthogonal_geometry::orthogonal_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
-	orthogonal_space_activity Activity;
+	orthogonal_geometry::orthogonal_space_activity Activity;
 	Activity.Descr = Orthogonal_space_activity_description;
 	Activity.OA = OA;
 
@@ -835,11 +835,11 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 		exit(1);
 	}
 
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
-	AG = (any_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	AG = (apps_algebra::any_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		group_theoretic_activity Activity;
+		apps_algebra::group_theoretic_activity Activity;
 
 		Activity.init_group(Group_theoretic_activity_description, AG, verbose_level);
 
@@ -884,11 +884,11 @@ void activity_description::do_cubic_surface_activity(int verbose_level)
 		exit(1);
 	}
 
-	surface_create *SC;
+	applications_in_algebraic_geometry::surface_create *SC;
 
-	SC = (surface_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SC = (applications_in_algebraic_geometry::surface_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		cubic_surface_activity Activity;
+		applications_in_algebraic_geometry::cubic_surface_activity Activity;
 
 		Activity.init(Cubic_surface_activity_description, SC, verbose_level);
 
@@ -934,11 +934,11 @@ void activity_description::do_quartic_curve_activity(int verbose_level)
 		exit(1);
 	}
 
-	quartic_curve_create *QC;
+	applications_in_algebraic_geometry::quartic_curve_create *QC;
 
-	QC = (quartic_curve_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	QC = (applications_in_algebraic_geometry::quartic_curve_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		quartic_curve_activity Activity;
+		applications_in_algebraic_geometry::quartic_curve_activity Activity;
 
 		Activity.init(Quartic_curve_activity_description, QC, verbose_level);
 
@@ -992,7 +992,7 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 
 		GOC = (geometric_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
-			combinatorial_object_activity Activity;
+			apps_combinatorics::combinatorial_object_activity Activity;
 
 			Activity.init(Combinatorial_object_activity_description, GOC, verbose_level);
 
@@ -1013,7 +1013,7 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 
 		IS = (data_structures::data_input_stream *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
-			combinatorial_object_activity Activity;
+			apps_combinatorics::combinatorial_object_activity Activity;
 
 			Activity.init_input_stream(Combinatorial_object_activity_description, IS, verbose_level);
 
@@ -1068,7 +1068,7 @@ void activity_description::do_graph_theoretic_activity(int verbose_level)
 	}
 
 	{
-		graph_theoretic_activity Activity;
+		apps_graph_theory::graph_theoretic_activity Activity;
 
 		Activity.init(Graph_theoretic_activity_description, CG, verbose_level);
 
@@ -1113,11 +1113,11 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 		exit(1);
 	}
 
-	surface_classify_wedge *SCW;
+	applications_in_algebraic_geometry::surface_classify_wedge *SCW;
 
-	SCW = (surface_classify_wedge *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SCW = (applications_in_algebraic_geometry::surface_classify_wedge *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		classification_of_cubic_surfaces_with_double_sixes_activity Activity;
+		applications_in_algebraic_geometry::classification_of_cubic_surfaces_with_double_sixes_activity Activity;
 
 		Activity.init(Classification_of_cubic_surfaces_with_double_sixes_activity_description, SCW, verbose_level);
 
@@ -1162,11 +1162,11 @@ void activity_description::do_spread_table_activity(int verbose_level)
 		exit(1);
 	}
 
-	packing_classify *P;
+	packings::packing_classify *P;
 
-	P = (packing_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	P = (packings::packing_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		spread_table_activity Activity;
+		spreads::spread_table_activity Activity;
 
 		Activity.init(Spread_table_activity_description, P, verbose_level);
 
@@ -1211,11 +1211,11 @@ void activity_description::do_packing_was_activity(int verbose_level)
 		exit(1);
 	}
 
-	packing_was *PW;
+	packings::packing_was *PW;
 
-	PW = (packing_was *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	PW = (packings::packing_was *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		packing_was_activity Activity;
+		packings::packing_was_activity Activity;
 
 		Activity.init(Packing_was_activity_description, PW, verbose_level);
 
@@ -1262,11 +1262,11 @@ void activity_description::do_packing_fixed_points_activity(int verbose_level)
 		exit(1);
 	}
 
-	packing_was_fixpoints *PWF;
+	packings::packing_was_fixpoints *PWF;
 
-	PWF = (packing_was_fixpoints *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	PWF = (packings::packing_was_fixpoints *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		packing_was_fixpoints_activity Activity;
+		packings::packing_was_fixpoints_activity Activity;
 
 		Activity.init(Packing_was_fixpoints_activity_description, PWF, verbose_level);
 
@@ -1312,11 +1312,11 @@ void activity_description::do_graph_classification_activity(int verbose_level)
 		exit(1);
 	}
 
-	graph_classify *GC;
+	apps_graph_theory::graph_classify *GC;
 
-	GC = (graph_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	GC = (apps_graph_theory::graph_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		graph_classification_activity Activity;
+		apps_graph_theory::graph_classification_activity Activity;
 
 		Activity.init(Graph_classification_activity_description, GC, verbose_level);
 
@@ -1409,11 +1409,11 @@ void activity_description::do_design_activity(int verbose_level)
 		exit(1);
 	}
 
-	design_create *DC;
+	apps_combinatorics::design_create *DC;
 
-	DC = (design_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	DC = (apps_combinatorics::design_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		design_activity Activity;
+		apps_combinatorics::design_activity Activity;
 
 
 		if (f_v) {
@@ -1457,11 +1457,11 @@ void activity_description::do_large_set_was_activity(int verbose_level)
 		exit(1);
 	}
 
-	large_set_was *LSW;
+	apps_combinatorics::large_set_was *LSW;
 
-	LSW = (large_set_was *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	LSW = (apps_combinatorics::large_set_was *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		large_set_was_activity Activity;
+		apps_combinatorics::large_set_was_activity Activity;
 
 		if (f_v) {
 			cout << "activity_description::do_large_set_was_activity "

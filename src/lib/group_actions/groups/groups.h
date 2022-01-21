@@ -263,7 +263,7 @@ public:
 	int q;
 
 	int f_has_nice_gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	linear_group();
 	~linear_group();
@@ -648,7 +648,7 @@ public:
 	actions::action *A2;
 
 	int f_has_nice_gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 	permutation_group_create();
@@ -782,7 +782,7 @@ public:
 	actions::action *A_original;
 	int f_stay_in_the_old_action;
 	int nb_gens;
-	vector_ge *gens; // the original generators in action A_original
+	data_structures_groups::vector_ge *gens; // the original generators in action A_original
 	int *Perms; // [nb_gens * degree]
 	int degree;
 	//longinteger_object target_go;
@@ -810,7 +810,7 @@ public:
 	~permutation_representation();
 	void init(actions::action *A_original,
 			int f_stay_in_the_old_action,
-			vector_ge *gens,
+			data_structures_groups::vector_ge *gens,
 			int *Perms, int degree,
 			int verbose_level);
 		// Perms is degree x nb_gens
@@ -841,8 +841,8 @@ public:
 	actions::action *A;
 	int f_images_only;
 	long int degree;
-	vector_ge gens;
-	vector_ge gens_inv;
+	data_structures_groups::vector_ge gens;
+	data_structures_groups::vector_ge gens_inv;
 	int nb_images;
 	int **images;
 		// [nb_gens][2 * A->degree], 
@@ -902,7 +902,7 @@ public:
 	void init2();
 	void initialize_tables();
 	void init_single_generator(int *elt, int verbose_level);
-	void init_generators(vector_ge &generators, int verbose_level);
+	void init_generators(data_structures_groups::vector_ge &generators, int verbose_level);
 	void init_images_recycle(int nb_images,
 			int **old_images,
 			int idx_deleted_generator,
@@ -911,10 +911,10 @@ public:
 			int **old_images, int verbose_level);
 	void init_generators(int nb, int *elt, int verbose_level);
 	void init_generators_recycle_images(
-			vector_ge &generators, int **old_images,
+			data_structures_groups::vector_ge &generators, int **old_images,
 			int idx_generator_to_delete, int verbose_level);
 	void init_generators_recycle_images(
-			vector_ge &generators, int **old_images, int verbose_level);
+			data_structures_groups::vector_ge &generators, int **old_images, int verbose_level);
 
 
 		// elt must point to nb * A->elt_size_in_int 
@@ -990,18 +990,18 @@ public:
 	strong_generators *stabilizer_any_point_plus_cosets(
 			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
-		int pt, vector_ge *&cosets, int verbose_level);
+		int pt, data_structures_groups::vector_ge *&cosets, int verbose_level);
 	strong_generators *stabilizer_any_point(
 			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order, int pt,
 		int verbose_level);
-	set_and_stabilizer *get_orbit_rep(actions::action *default_action,
+	data_structures_groups::set_and_stabilizer *get_orbit_rep(actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int orbit_idx, int verbose_level);
 	void get_orbit_rep_to(actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int orbit_idx,
-			set_and_stabilizer *Rep,
+			data_structures_groups::set_and_stabilizer *Rep,
 			int verbose_level);
 	strong_generators *stabilizer_orbit_rep(
 			actions::action *default_action,
@@ -1035,7 +1035,7 @@ public:
 			int f_randomized,
 			schreier *&shallow_tree,
 			int verbose_level);
-	schreier_vector *get_schreier_vector(
+	data_structures_groups::schreier_vector *get_schreier_vector(
 			int gen_hdl_first, int nb_gen,
 			enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy,
 			int verbose_level);
@@ -1201,7 +1201,7 @@ public:
 
 	
 	int f_from_generators;
-	vector_ge *external_gens;
+	data_structures_groups::vector_ge *external_gens;
 
 	int f_from_random_process;
 	void (*callback_choose_random_generator)(int iteration, 
@@ -1229,7 +1229,7 @@ public:
 	void interested_in_kernel(actions::action *KA, int verbose_level);
 	void init_target_group_order(ring_theory::longinteger_object &tgo,
 		int verbose_level);
-	void init_generators(vector_ge *gens, int verbose_level);
+	void init_generators(data_structures_groups::vector_ge *gens, int verbose_level);
 	void init_random_process(
 		void (*callback_choose_random_generator)(
 		int iteration, int *Elt, void *data, 
@@ -1272,8 +1272,8 @@ public:
 
 	int my_base_len;
 
-	vector_ge gens;
-	vector_ge gens_inv;
+	data_structures_groups::vector_ge gens;
+	data_structures_groups::vector_ge gens_inv;
 	
 	int *gen_depth; // [nb_gen]
 	int *gen_perm; // [nb_gen]
@@ -1373,7 +1373,7 @@ public:
 		// and sets the i-th transversal to contain
 		// only the i-th base point (for all i).
 	void init_trivial_orbit(int i, int verbose_level);
-	void init_generators(vector_ge &generators, int verbose_level);
+	void init_generators(data_structures_groups::vector_ge &generators, int verbose_level);
 	void init_generators(int nb, int *elt, int verbose_level);
 		// copies the given elements into the generator array, 
 		// then computes depth and perm
@@ -1451,7 +1451,7 @@ public:
 		// i-th base point.
 		// j is a coset, not a point
 		// result is in cosetrep
-	void extract_strong_generators_in_order(vector_ge &SG, 
+	void extract_strong_generators_in_order(data_structures_groups::vector_ge &SG,
 		int *tl, int verbose_level);
 	void random_schreier_generator(int *Elt, int verbose_level);
 		// computes random Schreier generator
@@ -1462,7 +1462,7 @@ public:
 	int get_orbit_inv(int i, int j);
 	int get_orbit_length(int i);
 	void get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level);
-	void all_elements(vector_ge *&vec, int verbose_level);
+	void all_elements(data_structures_groups::vector_ge *&vec, int verbose_level);
 	void all_elements_save_csv(std::string &fname, int verbose_level);
 
 
@@ -1506,7 +1506,8 @@ public:
 		int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
-	void build_up_group_from_generators(sims *K, vector_ge *gens,
+	void build_up_group_from_generators(sims *K,
+			data_structures_groups::vector_ge *gens,
 		int f_target_go, ring_theory::longinteger_object *target_go,
 		int f_override_choose_next_base_point,
 		int (*choose_next_base_point_method)(actions::action *A,
@@ -1541,23 +1542,23 @@ public:
 		// (chooses random cosets along the stabilizer chain)
 	void random_element_of_order(int *elt, int order,
 		int verbose_level);
-	void random_elements_of_order(vector_ge *elts,
+	void random_elements_of_order(data_structures_groups::vector_ge *elts,
 		int *orders, int nb, int verbose_level);
-	void transitive_extension(schreier &O, vector_ge &SG,
+	void transitive_extension(schreier &O, data_structures_groups::vector_ge &SG,
 		int *tl, int verbose_level);
 	int transitive_extension_tolerant(schreier &O,
-		vector_ge &SG, int *tl, int f_tolerant,
+			data_structures_groups::vector_ge &SG, int *tl, int f_tolerant,
 		int verbose_level);
 	void transitive_extension_using_coset_representatives_extract_generators(
 		int *coset_reps, int nb_cosets,
-		vector_ge &SG, int *tl,
+		data_structures_groups::vector_ge &SG, int *tl,
 		int verbose_level);
 	void transitive_extension_using_coset_representatives(
 		int *coset_reps, int nb_cosets,
 		int verbose_level);
 	void transitive_extension_using_generators(
 		int *Elt_gens, int nb_gens, int subgroup_index,
-		vector_ge &SG, int *tl,
+		data_structures_groups::vector_ge &SG, int *tl,
 		int verbose_level);
 	void point_stabilizer_stabchain_with_action(actions::action *A2,
 		sims &S, int pt, int verbose_level);
@@ -1566,12 +1567,12 @@ public:
 		// that are stored at present
 		// (using a temporary schreier object),
 		// then sifts random schreier generators into S
-	void point_stabilizer(vector_ge &SG, int *tl,
+	void point_stabilizer(data_structures_groups::vector_ge &SG, int *tl,
 		int pt, int verbose_level);
 		// computes strong generating set
 		// for the stabilizer of point pt
 	void point_stabilizer_with_action(actions::action *A2,
-		vector_ge &SG, int *tl, int pt, int verbose_level);
+			data_structures_groups::vector_ge &SG, int *tl, int pt, int verbose_level);
 		// computes strong generating set for
 		// the stabilizer of point pt in action A2
 	void conjugate(actions::action *A, sims *old_G, int *Elt,
@@ -1586,7 +1587,7 @@ public:
 		int &len, int &sz, int verbose_level);
 	void regular_representation(int *Elt, int *perm,
 		int verbose_level);
-	void center(vector_ge &gens, int *center_element_ranks,
+	void center(data_structures_groups::vector_ge &gens, int *center_element_ranks,
 		int &nb_elements, int verbose_level);
 	void all_cosets(int *subset, int size,
 		long int *all_cosets, int verbose_level);
@@ -1606,11 +1607,12 @@ public:
 		int *word, int *Elt, int verbose_level);
 	void sylow_subgroup(int p, sims *P, int verbose_level);
 	int is_normalizing(int *Elt, int verbose_level);
-	void create_Cayley_graph(vector_ge *gens, int *&Adj, long int &n,
+	void create_Cayley_graph(data_structures_groups::vector_ge *gens,
+			int *&Adj, long int &n,
 		int verbose_level);
 	void create_group_table(int *&Table, long int &n, int verbose_level);
 	void compute_conjugacy_classes(
-			actions::action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
+			actions::action *&Aconj, induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
 		strong_generators *&SG, int &nb_classes,
 		int *&class_size, int *&class_rep,
 		int verbose_level);
@@ -1631,7 +1633,8 @@ public:
 		int new_gen,
 		int *group, int &group_sz,
 		int verbose_level);
-	void Cayley_graph(int *&Adj, int &sz, vector_ge *gens_S,
+	void Cayley_graph(int *&Adj, int &sz,
+			data_structures_groups::vector_ge *gens_S,
 		int verbose_level);
 
 
@@ -1669,7 +1672,7 @@ public:
 	void read_list_of_elements(actions::action *A,
 		char *fname, int verbose_level);
 	void write_as_magma_permutation_group(std::string &fname_base,
-		vector_ge *gens, int verbose_level);
+			data_structures_groups::vector_ge *gens, int verbose_level);
 	void report(std::ostream &ost,
 			std::string &prefix,
 			layered_graph_draw_options *LG_Draw_options,
@@ -1697,7 +1700,7 @@ public:
 
 	actions::action *A;
 	int *tl;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 
 	strong_generators();
 	~strong_generators();
@@ -1720,24 +1723,25 @@ public:
 		int nb_gen, int verbose_level);
 	void init_from_permutation_representation(actions::action *A,
 			sims *parent_group_S, int *data,
-			int nb_elements, long int group_order, vector_ge *&nice_gens,
+			int nb_elements, long int group_order,
+			data_structures_groups::vector_ge *&nice_gens,
 			int verbose_level);
 	void init_from_data(actions::action *A, int *data,
 		int nb_elements, int elt_size, 
 		int *transversal_length, 
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_target_go_ascii(actions::action *A,
 		int *data, 
 		int nb_elements, int elt_size, 
 		const char *ascii_target_go,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_target_go(actions::action *A,
 		int *data_gens, 
 		int data_gens_size, int nb_gens, 
 		ring_theory::longinteger_object &target_go,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_go(
 			actions::action *A, std::string &generators_data,
@@ -1761,7 +1765,7 @@ public:
 		int *data, int index, 
 		int verbose_level);
 	void init_group_extension(strong_generators *subgroup, 
-		vector_ge *new_gens, int index, 
+			data_structures_groups::vector_ge *new_gens, int index,
 		int verbose_level);
 	void switch_to_subgroup(const char *rank_vector_text, 
 		const char *subgroup_order_text, sims *S, 
@@ -1776,12 +1780,12 @@ public:
 		int nb_subgroup_gens,
 		int *subgroup_gens,
 		std::string &subgroup_order_text,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	sims *create_sims(int verbose_level);
 	sims *create_sims_in_different_action(actions::action *A_given,
 		int verbose_level);
-	void add_generators(vector_ge *coset_reps, 
+	void add_generators(data_structures_groups::vector_ge *coset_reps,
 		int group_index, int verbose_level);
 	void add_single_generator(int *Elt, 
 		int group_index, int verbose_level);
@@ -1899,7 +1903,7 @@ public:
 	void init_linear_group_from_scratch(actions::action *&A,
 			field_theory::finite_field *F, int n,
 		linear_group_description *Descr,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void special_subgroup(int verbose_level);
 	void projectivity_subgroup(sims *S, int verbose_level);
@@ -1915,12 +1919,12 @@ public:
 		matrix_group *Mtx, int verbose_level);
 	void generators_for_the_singer_cycle(actions::action *A,
 		matrix_group *Mtx, int power_of_singer,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void generators_for_the_singer_cycle_and_the_Frobenius(
 			actions::action *A,
 		matrix_group *Mtx, int power_of_singer,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void generators_for_the_null_polarity_group(actions::action *A,
 		matrix_group *Mtx, int verbose_level);
@@ -1936,7 +1940,7 @@ public:
 	void generators_for_translation_plane_in_andre_model(
 			actions::action *A_PGL_n1_q, actions::action *A_PGL_n_q,
 		matrix_group *Mtx_n1, matrix_group *Mtx_n, 
-		vector_ge *spread_stab_gens, 
+		data_structures_groups::vector_ge *spread_stab_gens,
 		ring_theory::longinteger_object &spread_stab_go,
 		int verbose_level);
 	void generators_for_the_stabilizer_of_two_components(
@@ -1974,17 +1978,17 @@ public:
 	void stabilizer_of_Eckardt_surface(
 			actions::action *A,
 		field_theory::finite_field *F, int f_with_normalizer, int f_semilinear,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void stabilizer_of_G13_surface(
 			actions::action *A,
 		field_theory::finite_field *F, int a,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void stabilizer_of_F13_surface(
 			actions::action *A,
 		field_theory::finite_field *F, int a,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void BLT_set_from_catalogue_stabilizer(actions::action *A,
 			field_theory::finite_field *F, int iso,
@@ -2011,7 +2015,7 @@ public:
 	void exterior_square(
 			actions::action *A_detached,
 			strong_generators *SG_original,
-			vector_ge *&nice_gens,
+			data_structures_groups::vector_ge *&nice_gens,
 			int verbose_level);
 	void diagonally_repeat(
 			actions::action *An,

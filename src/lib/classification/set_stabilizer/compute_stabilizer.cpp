@@ -1196,7 +1196,7 @@ void compute_stabilizer::report(std::ostream &ost)
 
 	ost << "Classification of small sets: ";
 
-	poset_classification_report_options Opt;
+	poset_classification::poset_classification_report_options Opt;
 
 	SubSt->SubC->PC->report(ost, &Opt, 0 /* verbose_level */);
 

@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebraic_geometry {
 
 
 cubic_curve::cubic_curve()
@@ -406,5 +407,5 @@ void cubic_curve::compute_inflexion_points(
 
 
 
-}}
+}}}
 

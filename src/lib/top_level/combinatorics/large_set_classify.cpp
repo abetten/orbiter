@@ -13,8 +13,13 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
+static void large_set_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 large_set_classify::large_set_classify()
@@ -199,7 +204,7 @@ void large_set_classify::create_action_and_poset(int verbose_level)
 				"A_on_designs->degree=" << A_on_designs->degree << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(DC->A, A_on_designs,
 			DC->A->Strong_gens,
 			verbose_level);
@@ -214,8 +219,8 @@ void large_set_classify::create_action_and_poset(int verbose_level)
 				verbose_level);
 
 
-	Control = NEW_OBJECT(poset_classification_control);
-	gen = NEW_OBJECT(poset_classification);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	Control->f_T = TRUE;
 	Control->f_W = TRUE;
@@ -281,7 +286,8 @@ void large_set_classify::compute(int verbose_level)
 }
 
 
-void large_set_classify::read_classification(orbit_transversal *&T,
+void large_set_classify::read_classification(
+		data_structures_groups::orbit_transversal *&T,
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -299,7 +305,7 @@ void large_set_classify::read_classification(orbit_transversal *&T,
 				"file " << fname_classification_at_level << endl;
 		}
 
-	T = NEW_OBJECT(orbit_transversal);
+	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
 	T->read_from_file(gen->get_A(), gen->get_A2(),
 			fname_classification_at_level, verbose_level - 1);
@@ -311,7 +317,8 @@ void large_set_classify::read_classification(orbit_transversal *&T,
 		}
 }
 
-void large_set_classify::read_classification_single_case(set_and_stabilizer *&Rep,
+void large_set_classify::read_classification_single_case(
+		data_structures_groups::set_and_stabilizer *&Rep,
 		int level, int case_nr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -329,10 +336,10 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 				"file " << fname_classification_at_level << endl;
 		}
 
-	Rep = NEW_OBJECT(set_and_stabilizer);
+	Rep = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 
-	orbit_transversal *T;
-	T = NEW_OBJECT(orbit_transversal);
+	data_structures_groups::orbit_transversal *T;
+	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
 	T->read_from_file_one_case_only(gen->get_A(), gen->get_A2(),
 			fname_classification_at_level, case_nr, verbose_level - 1);
@@ -806,7 +813,7 @@ int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
 #endif
 
 
-void large_set_early_test_function(long int *S, int len,
+static void large_set_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -858,5 +865,5 @@ void large_set_early_test_function(long int *S, int len,
 
 
 
-}}
+}}}
 

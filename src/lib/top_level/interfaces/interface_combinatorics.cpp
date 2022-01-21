@@ -372,7 +372,7 @@ void interface_combinatorics::read_arguments(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 		f_Delandtsheer_Doyen = TRUE;
-		Delandtsheer_Doyen_description = NEW_OBJECT(delandtsheer_doyen_description);
+		Delandtsheer_Doyen_description = NEW_OBJECT(apps_combinatorics::delandtsheer_doyen_description);
 		i += Delandtsheer_Doyen_description->read_arguments(argc - (i - 1),
 				argv + i, verbose_level);
 
@@ -446,7 +446,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-regular_linear_space_classify " << endl;
 		}
 
-		Rls_descr = NEW_OBJECT(regular_linear_space_description);
+		Rls_descr = NEW_OBJECT(apps_combinatorics::regular_linear_space_description);
 		i += Rls_descr->read_arguments(argc - i - 1,
 			argv + i + 1, verbose_level);
 		if (f_v) {
@@ -744,9 +744,9 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_regular_linear_space_classify) {
 
-		regular_ls_classify *Rls;
+		apps_combinatorics::regular_ls_classify *Rls;
 
-		Rls = NEW_OBJECT(regular_ls_classify);
+		Rls = NEW_OBJECT(apps_combinatorics::regular_ls_classify);
 
 		if (f_v) {
 			cout << "interface_combinatorics::worker before Rls->init_and_run" << endl;
@@ -918,9 +918,9 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 			cout << "interface_combinatorics::do_bent after BF->init" << endl;
 		}
 
-		boolean_function_classify *BFC;
+		apps_combinatorics::boolean_function_classify *BFC;
 
-		BFC = NEW_OBJECT(boolean_function_classify);
+		BFC = NEW_OBJECT(apps_combinatorics::boolean_function_classify);
 
 		if (f_v) {
 			cout << "interface_combinatorics::do_bent before BFC->init_group" << endl;
@@ -1000,7 +1000,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 }
 
 
-void interface_combinatorics::do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level)
+void interface_combinatorics::do_Delandtsheer_Doyen(apps_combinatorics::delandtsheer_doyen_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1008,9 +1008,9 @@ void interface_combinatorics::do_Delandtsheer_Doyen(delandtsheer_doyen_descripti
 		cout << "interface_combinatorics::do_Delandtsheer_Doyen" << endl;
 	}
 
-	delandtsheer_doyen *DD;
+	apps_combinatorics::delandtsheer_doyen *DD;
 
-	DD = NEW_OBJECT(delandtsheer_doyen);
+	DD = NEW_OBJECT(apps_combinatorics::delandtsheer_doyen);
 
 	DD->init(Descr, verbose_level);
 

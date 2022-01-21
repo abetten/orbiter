@@ -18,6 +18,8 @@ using namespace orbiter::foundations;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
+
 
 void character_table_burnside::do_it(int n, int verbose_level)
 {
@@ -71,7 +73,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	cout << "Creating action by conjugation done" << endl;
 
-	action_by_conjugation *ABC;
+	induced_actions::action_by_conjugation *ABC;
 
 	ABC = Aconj->G.ABC;
 
@@ -692,7 +694,7 @@ int character_table_burnside::compute_r0(int *N, int nb_classes, int verbose_lev
 
 void character_table_burnside::compute_multiplication_constants_center_of_group_ring(
 		actions::action *A,
-	action_by_conjugation *ABC,
+		induced_actions::action_by_conjugation *ABC,
 	groups::schreier *Sch, int nb_classes, int *&N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -745,7 +747,7 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 }
 
 void character_table_burnside::compute_Distribution_table(
-		actions::action *A, action_by_conjugation *ABC,
+		actions::action *A, induced_actions::action_by_conjugation *ABC,
 		groups::schreier *Sch, int nb_classes,
 	int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level)
 {
@@ -1367,5 +1369,5 @@ int character_table_burnside::double_as_int(double x)
 
 
 
-}}
+}}}
 

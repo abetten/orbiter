@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	int lvl, int current_node, 
@@ -777,6 +779,7 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 	return TRUE;
 }
 
-}}
+}}}
+
 
 

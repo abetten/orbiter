@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_sign::action_on_sign()
 {
@@ -92,5 +94,5 @@ long int action_on_sign::compute_image(int *Elt,
 	return j;
 }
 
-}}
+}}}
 

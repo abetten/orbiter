@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 packing_was_activity::packing_was_activity()
@@ -120,6 +121,6 @@ void packing_was_activity::perform_activity(int verbose_level)
 
 }
 
-}}
+}}}
 
 

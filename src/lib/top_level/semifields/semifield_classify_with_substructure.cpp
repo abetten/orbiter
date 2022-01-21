@@ -14,7 +14,10 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
+static void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
+		invariant_relations::classification_step *Step, void *print_function_data);
 
 
 semifield_classify_with_substructure::semifield_classify_with_substructure()
@@ -65,8 +68,8 @@ semifield_classify_with_substructure::~semifield_classify_with_substructure()
 
 void semifield_classify_with_substructure::init(
 		semifield_classify_description *Descr,
-		projective_space_with_action *PA,
-		poset_classification_control *Control,
+		projective_geometry::projective_space_with_action *PA,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -380,7 +383,7 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 		cout << "semifield_classify_with_substructure::classify_semifields" << endl;
 	}
 
-	Semifields = NEW_OBJECT(classification_step);
+	Semifields = NEW_OBJECT(invariant_relations::classification_step);
 
 	Sub->do_classify(verbose_level);
 
@@ -420,7 +423,7 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 		cout << "semifield_classify_with_substructure::load_classification" << endl;
 	}
 
-	Semifields = NEW_OBJECT(classification_step);
+	Semifields = NEW_OBJECT(invariant_relations::classification_step);
 
 	ring_theory::longinteger_object go;
 
@@ -849,7 +852,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 		cout << "semifield_classify_with_substructure::decomposition" << endl;
 	}
 	semifield_flag_orbit_node *F1;
-	flag_orbits *F2;
+	invariant_relations::flag_orbits *F2;
 	//int N1, N2, N3;
 	int i1, i2, i3;
 	int h1, h2;
@@ -983,8 +986,8 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 //##############################################################################
 
 
-void semifield_print_function_callback(ostream &ost, int orbit_idx,
-		classification_step *Step, void *print_function_data)
+static void semifield_print_function_callback(ostream &ost, int orbit_idx,
+		invariant_relations::classification_step *Step, void *print_function_data)
 {
 	semifield_substructure *Sub = (semifield_substructure *) print_function_data;
 	semifield_classify *SC;
@@ -1038,6 +1041,6 @@ void semifield_print_function_callback(ostream &ost, int orbit_idx,
 
 
 
-}}
+}}}
 
 

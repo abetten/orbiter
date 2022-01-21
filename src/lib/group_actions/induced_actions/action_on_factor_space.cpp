@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_factor_space::action_on_factor_space()
 {
@@ -1058,5 +1060,6 @@ long int action_on_factor_space::compute_image(actions::action *A,
 	return j;
 }
 
-}}
+}}}
+
 

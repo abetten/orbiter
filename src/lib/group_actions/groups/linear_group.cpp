@@ -427,7 +427,7 @@ void linear_group::linear_group_init(
 	}
 
 	if (description->f_on_k_subspaces) {
-		action_on_grassmannian *AG;
+		induced_actions::action_on_grassmannian *AG;
 		grassmann *Grass;
 		//action *A3;
 		
@@ -436,7 +436,7 @@ void linear_group::linear_group_init(
 					"on k-subspaces for k="
 					<< description->on_k_subspaces_k << endl;
 		}
-		AG = NEW_OBJECT(action_on_grassmannian);
+		AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 		
 		Grass = NEW_OBJECT(grassmann);
 
@@ -711,7 +711,7 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 
 	strong_generators *secondary_strong_gens;
 	//strong_generators *exterior_square_strong_gens;
-	vector_ge *secondary_nice_gens;
+	data_structures_groups::vector_ge *secondary_nice_gens;
 	int n2;
 
 	combinatorics::combinatorics_domain Combi;

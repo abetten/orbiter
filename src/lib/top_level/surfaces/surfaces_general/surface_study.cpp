@@ -17,6 +17,20 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
+
+
+static void move_point_set(actions::action *A2,
+		data_structures_groups::set_and_stabilizer *Universe,
+		long int *Pts, int nb_pts,
+	int *Elt,
+	data_structures_groups::set_and_stabilizer *&new_stab,
+	int verbose_level);
+static void matrix_entry_print(long int *p,
+		int m, int n, int i, int j, int val,
+		std::string &output, void *data);
+
 
 
 void surface_study::init(field_theory::finite_field *F, int nb, int verbose_level)
@@ -73,7 +87,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 		}
 
 	cout << "creating linear group" << endl;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	A = NEW_OBJECT(actions::action);
 
@@ -123,7 +137,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 		cout << endl;
 		}
 
-	SaS = NEW_OBJECT(set_and_stabilizer);
+	SaS = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 
 
 	SaS->init(A, A2, verbose_level);
@@ -837,8 +851,8 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	cout << endl;
 
 
-	set_and_stabilizer *Triangle;
-	set_and_stabilizer *Eckardt_stab;
+	data_structures_groups::set_and_stabilizer *Triangle;
+	data_structures_groups::set_and_stabilizer *Eckardt_stab;
 	actions::action *A_triangle;
 	actions::action *A_on_double_pts;
 	int *Elt;
@@ -846,7 +860,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 	A_triangle = A->restricted_action(
 			triangle, nb_pts_triangle, 0 /* verbose_level */);
-	Triangle = NEW_OBJECT(set_and_stabilizer);
+	Triangle = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 	Triangle->init(A, A, 0 /* verbose_level */);
 	Triangle->init_data(triangle, nb_pts_triangle,
 			0 /* verbose_level */);
@@ -1046,7 +1060,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
 		A->element_move(Orb_six_points->cosetrep, Elt, 0);
 
-		set_and_stabilizer *SaS2;
+		data_structures_groups::set_and_stabilizer *SaS2;
 
 
 		SaS2 = SaS->create_copy(0 /* verbose_level */);
@@ -1118,7 +1132,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
 		A->element_move(Orb_six_points->cosetrep, Elt, 0);
 
-		set_and_stabilizer *SaS2;
+		data_structures_groups::set_and_stabilizer *SaS2;
 
 		SaS2 = SaS->create_copy(0 /* verbose_level */);
 
@@ -1483,11 +1497,11 @@ void compute_decomposition(orthogonal *O,
 }
 #endif
 
-void move_point_set(actions::action *A2,
-	set_and_stabilizer *Universe,
+static void move_point_set(actions::action *A2,
+		data_structures_groups::set_and_stabilizer *Universe,
 	long int *Pts, int nb_pts,
 	int *Elt,
-	set_and_stabilizer *&new_stab,
+	data_structures_groups::set_and_stabilizer *&new_stab,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1495,9 +1509,9 @@ void move_point_set(actions::action *A2,
 	if (f_v) {
 		cout << "move_point_set" << endl;
 		}
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 	//char prefix[1000];
 	//int f_W = FALSE;
 	//int f_w = FALSE;
@@ -1515,8 +1529,8 @@ void move_point_set(actions::action *A2,
 				"on subsets of size " << nb_pts << endl;
 		}
 
-	Control = NEW_OBJECT(poset_classification_control);
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(
 			Universe->A, A2,
 			Universe->Strong_gens,
@@ -1524,7 +1538,7 @@ void move_point_set(actions::action *A2,
 
 
 
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	gen->compute_orbits_on_subsets(
 		nb_pts,
@@ -1600,7 +1614,7 @@ void move_point_set(actions::action *A2,
 		}
 }
 
-void matrix_entry_print(long int *p,
+static void matrix_entry_print(long int *p,
 		int m, int n, int i, int j, int val,
 		std::string &output, void *data)
 {
@@ -1629,5 +1643,6 @@ void matrix_entry_print(long int *p,
 
 
 
-}}
+}}}
+
 

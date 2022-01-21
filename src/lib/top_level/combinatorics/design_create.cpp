@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 design_create::design_create()
@@ -76,7 +77,7 @@ void design_create::freeself()
 	null();
 }
 
-void design_create::init(design_create_description *Descr, int verbose_level)
+void design_create::init(apps_combinatorics::design_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -283,7 +284,7 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 	else {
 		f_semilinear = FALSE;
 	}
-	PA = NEW_OBJECT(projective_space_with_action);
+	PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
 	PA->init(F, 2 /* n */, f_semilinear,
 			TRUE /*f_init_incidence_structure*/, verbose_level);
 
@@ -430,6 +431,7 @@ int design_create::get_color_as_two_design_assume_sorted(long int *design, int v
 	return c;
 }
 
-}}
+}}}
+
 
 

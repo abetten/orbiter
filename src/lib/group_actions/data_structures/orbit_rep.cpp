@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
 
 orbit_rep::orbit_rep()
 {
@@ -134,7 +135,7 @@ void orbit_rep::init_from_file(
 
 }
 
-}}
+}}}
 
 
 

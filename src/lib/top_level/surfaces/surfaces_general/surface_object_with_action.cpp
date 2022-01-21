@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 
 surface_object_with_action::surface_object_with_action()
@@ -185,11 +187,13 @@ void surface_object_with_action::init_equation(
 
 
 
-void surface_object_with_action::init_with_group(surface_with_action *Surf_A,
+void surface_object_with_action::init_with_group(
+		surface_with_action *Surf_A,
 	long int *Lines, int nb_lines, int *eqn,
 	groups::strong_generators *Aut_gens,
 	int f_find_double_six_and_rearrange_lines,
-	int f_has_nice_gens, vector_ge *nice_gens,
+	int f_has_nice_gens,
+	data_structures_groups::vector_ge *nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -248,10 +252,12 @@ void surface_object_with_action::init_with_group(surface_with_action *Surf_A,
 }
 
 
-void surface_object_with_action::init_with_surface_object(surface_with_action *Surf_A,
+void surface_object_with_action::init_with_surface_object(
+		surface_with_action *Surf_A,
 		algebraic_geometry::surface_object *SO,
 		groups::strong_generators *Aut_gens,
-		int f_has_nice_gens, vector_ge *nice_gens,
+		int f_has_nice_gens,
+		data_structures_groups::vector_ge *nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1976,4 +1982,5 @@ void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int ver
 
 
 
-}}
+}}}
+

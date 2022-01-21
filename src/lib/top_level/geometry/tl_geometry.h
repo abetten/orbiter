@@ -13,6 +13,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 
@@ -28,7 +29,7 @@ class arc_generator_description {
 public:
 
 	int f_poset_classification_control;
-	poset_classification_control *Control;
+	poset_classification::poset_classification_control *Control;
 
 	int f_d;
 	int d;
@@ -77,7 +78,7 @@ public:
 
 
 	arc_generator_description *Descr;
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	int nb_points_total;
 	int nb_affine_lines;
@@ -93,14 +94,14 @@ public:
 	//action *A;
 	groups::strong_generators *SG;
 	
-	poset_with_group_action *Poset;
+	poset_classification::poset_with_group_action *Poset;
 
 
 
 	int *line_type; // [PA->P->N_lines]
 
 		
-	poset_classification *gen;
+	poset_classification::poset_classification *gen;
 
 
 	
@@ -113,7 +114,7 @@ public:
 	void main(int verbose_level);
 	void init(
 		arc_generator_description *Descr,
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		groups::strong_generators *SG,
 		int verbose_level);
 	void prepare_generator(int verbose_level);
@@ -151,19 +152,6 @@ public:
 
 
 
-void arc_generator_early_test_function(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void arc_generator_lifting_prepare_function_new(
-	exact_cover *EC, int starter_case, 
-	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out, 
-	int verbose_level);
-void arc_generator_print_arc(std::ostream &ost, int len, long int *S, void *data);
-void arc_generator_print_point(long int pt, void *data);
-void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
 
 
 // #############################################################################
@@ -195,8 +183,8 @@ public:
 	int *Elt;
 	int *v;
 	groups::schreier *Sch;
-	poset_with_group_action *Poset;
-	poset_classification *Gen;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *Gen;
 	projective_space *P;
 
 	actions::action *A2; // action on the lines
@@ -211,7 +199,7 @@ public:
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void do_covering_problem(set_and_stabilizer *SaS);
+	void do_covering_problem(data_structures_groups::set_and_stabilizer *SaS);
 
 
 };
@@ -260,9 +248,9 @@ public:
 
 	int (*check_function)(int len, long int *S, void *data, int verbose_level);
 
-	poset_classification *gen;
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
 
 	int nb_orbits;
 	int current_orbit;
@@ -329,7 +317,7 @@ public:
 	actions::action *A; // do not free
 
 	cubic_curve_with_action *CCA; // do not free
-	cubic_curve *CC; // do not free
+	algebraic_geometry::cubic_curve *CC; // do not free
 
 	arc_generator *Arc_gen;
 
@@ -339,13 +327,13 @@ public:
 
 
 
-	flag_orbits *Flag_orbits;
+	invariant_relations::flag_orbits *Flag_orbits;
 
 	int *Po;
 
 	int nb_orbits_on_curves;
 
-	classification_step *Curves;
+	invariant_relations::classification_step *Curves;
 
 
 
@@ -354,7 +342,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			cubic_curve_with_action *CCA,
 			arc_generator_description *Descr,
 			int verbose_level);
@@ -394,14 +382,14 @@ public:
 	int q;
 	field_theory::finite_field *F; // do not free
 
-	cubic_curve *CC; // do not free
+	algebraic_geometry::cubic_curve *CC; // do not free
 
 	actions::action *A; // linear group PGGL(3,q)
 	actions::action *A2; // linear group PGGL(3,q) acting on lines
 
 	int *Elt1;
 
-	action_on_homogeneous_polynomials *AonHPD_3_3;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD_3_3;
 
 
 
@@ -409,7 +397,7 @@ public:
 	~cubic_curve_with_action();
 	void null();
 	void freeself();
-	void init(cubic_curve *CC, actions::action *A, int verbose_level);
+	void init(algebraic_geometry::cubic_curve *CC, actions::action *A, int verbose_level);
 
 };
 
@@ -444,9 +432,9 @@ public:
 	actions::action *A2;
 	actions::action *A2r;
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 
 
 	hermitian_spreads_classify();
@@ -464,12 +452,6 @@ public:
 };
 
 
-void HS_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void projective_space_init_line_action(projective_space *P,
-		actions::action *A_points, actions::action *&A_on_lines, int verbose_level);
 
 
 
@@ -521,9 +503,9 @@ public:
 	actions::action *A_PGLQ; // PGL(m,Q)
 
 	algebra::vector_space *VS;
-	poset_classification_control *Control1;
-	poset_with_group_action *Poset1;
-	poset_classification *Gen;
+	poset_classification::poset_classification_control *Control1;
+	poset_classification::poset_with_group_action *Poset1;
+	poset_classification::poset_classification *Gen;
 	int vector_space_dimension; // = n
 
 	// the generators:
@@ -542,7 +524,7 @@ public:
 	int f_identify;
 	int k;
 	int order;
-	spread_classify *T;
+	spreads::spread_classify *T;
 
 
 
@@ -553,13 +535,13 @@ public:
 	int secondary_nb_candidates;
 	int secondary_schreier_depth;
 
-	poset_classification_control *Control_stab;
-	poset_with_group_action *Poset_stab;
-	poset_classification *Gen_stab;
+	poset_classification::poset_classification_control *Control_stab;
+	poset_classification::poset_with_group_action *Poset_stab;
+	poset_classification::poset_classification *Gen_stab;
 
-	poset_classification_control *Control2;
-	poset_with_group_action *Poset2;
-	poset_classification *Gen2;
+	poset_classification::poset_classification_control *Control2;
+	poset_classification::poset_with_group_action *Poset2;
+	poset_classification::poset_classification *Gen2;
 	int *is_allowed;
 
 	linear_set_classify();
@@ -607,16 +589,6 @@ public:
 };
 
 
-long int linear_set_classify_rank_point_func(int *v, void *data);
-void linear_set_classify_unrank_point_func(int *v, long int rk, void *data);
-void linear_set_classify_early_test_func(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void linear_set_classify_secondary_early_test_func(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 // #############################################################################
@@ -632,7 +604,7 @@ class ovoid_classify_description {
 public:
 
 
-	poset_classification_control *Control;
+	poset_classification::poset_classification_control *Control;
 
 	int f_epsilon;
 	int epsilon; // the type of the quadric (0, 1 or -1)
@@ -665,8 +637,8 @@ public:
 
 	int m; // Witt index
 
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 
 
 	actions::action *A;
@@ -723,11 +695,6 @@ public:
 
 };
 
-void ovoid_classify_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void callback_ovoid_print_set(std::ostream &ost, int len, long int *S, void *data);
 
 
 
@@ -761,9 +728,9 @@ public:
 	int *base_cols; // [n]
 
 	algebra::vector_space *VS;
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *Gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *Gen;
 
 	int schreier_depth;
 	int f_use_invariant_subset_if_available;
@@ -802,7 +769,9 @@ public:
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
-	void get_stabilizer(int orbit_idx, group_container &G, ring_theory::longinteger_object &go_G);
+	void get_stabilizer(int orbit_idx,
+			data_structures_groups::group_container &G,
+			ring_theory::longinteger_object &go_G);
 	void get_orbit_length(int orbit_idx, ring_theory::longinteger_object &length);
 	int get_orbit_length_as_int(int orbit_idx);
 	void orbit_element_unrank(int orbit_idx, long int rank,
@@ -815,12 +784,6 @@ public:
 };
 
 
-long int polar_callback_rank_point_func(int *v, void *data);
-void polar_callback_unrank_point_func(int *v, long int rk, void *data);
-void polar_callback_early_test_func(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 // #############################################################################
@@ -835,9 +798,9 @@ class search_blocking_set {
 public:
 	incidence_structure *Inc; // do not free
 	actions::action *A; // do not free
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 
 	data_structures::fancy_set *Line_intersections; // [Inc->nb_cols]
 	long int *blocking_set;
@@ -895,7 +858,7 @@ public:
 	int q;
 	int *poly_coeffs; // of degree n
 	int *Singer_matrix;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object target_go;
 	projective_space *P;
@@ -911,7 +874,7 @@ public:
 	int *line_orbit;
 	int *line_orbit_inv;
 	incidence_structure *Inc;
-	tactical_decomposition *T;
+	apps_combinatorics::tactical_decomposition *T;
 
 	singer_cycle();
 	~singer_cycle();
@@ -953,9 +916,9 @@ public:
 	ring_theory::longinteger_object go;
 	groups::wreath_product *W;
 	algebra::vector_space *VS;
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *Gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *Gen;
 	int vector_space_dimension;
 	int *v; // [vector_space_dimension]
 
@@ -965,7 +928,7 @@ public:
 			field_theory::finite_field *F, groups::linear_group *LG,
 			int verbose_level);
 	void classify_poset(int depth,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void create_restricted_action_on_rank_one_tensors(
 			int verbose_level);
@@ -978,13 +941,6 @@ public:
 			int verbose_level);
 };
 
-int wreath_rank_point_func(int *v, void *data);
-void wreath_unrank_point_func(int *v, int rk, void *data);
-void wreath_product_print_set(std::ostream &ost, int len, long int *S, void *data);
-void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 
@@ -1009,17 +965,17 @@ public:
 	top_level_geometry_global();
 	~top_level_geometry_global();
 	void set_stabilizer_projective_space(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
 			std::string &fname_out,
 			int verbose_level);
 	void report_decomposition_by_group(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 			int verbose_level);
 	void report_decomposition_by_single_automorphism(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			int *Elt, std::ostream &ost, std::string &fname_base,
 			int verbose_level);
 
@@ -1027,7 +983,7 @@ public:
 
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_TOP_LEVEL_GEOMETRY_TL_GEOMETRY_H_ */

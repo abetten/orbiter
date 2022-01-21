@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_graph_theory {
 
 
 void cayley_graph_search::init(int level,
@@ -296,7 +297,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 	Elt2 = NEW_int(A->elt_size_in_int);
 
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 
 	if (group == 1) {
@@ -370,7 +371,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		}
 	else if (group == 4) {
 		int q = 2;
-		vector_ge *nice_gens;
+		data_structures_groups::vector_ge *nice_gens;
 
 		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
@@ -392,8 +393,8 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
-	gens = NEW_OBJECT(vector_ge);
-	gens_subgroup = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	gens_subgroup = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens_subgroup->init(A, verbose_level - 2);
 
@@ -632,7 +633,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 	if (group == 1) {
 		int q = 2;
-		vector_ge *nice_gens;
+		data_structures_groups::vector_ge *nice_gens;
 
 		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
@@ -654,8 +655,8 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
-	gens = NEW_OBJECT(vector_ge);
-	gens_subgroup = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	gens_subgroup = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens_subgroup->init(A, verbose_level - 2);
 
@@ -777,19 +778,19 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 	cout << "classifying subsets:" << endl;
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Control->f_W = TRUE;
 	Control->f_w = TRUE;
 
 	Control->problem_label = prefix;
 	Control->f_problem_label = TRUE;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(Aut, Aut,
 			Aut_gens,
 			verbose_level);
 
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	gen->compute_orbits_on_subsets(
 		target_depth,
@@ -899,7 +900,7 @@ void cayley_graph_search::write_file(int verbose_level)
 #endif
 		for (n = 0; n < nb_orbits; n++) {
 
-			set_and_stabilizer *SaS;
+			data_structures_groups::set_and_stabilizer *SaS;
 
 			SaS = gen->get_set_and_stabilizer(sz, n, 0 /*verbose_level*/);
 
@@ -1080,5 +1081,6 @@ void cayley_graph_search::create_additional_edges(
 
 
 
-}}
+}}}
+
 

@@ -12,7 +12,22 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
+
+static void semifield_classify_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+static long int semifield_classify_rank_point_func(int *v, void *data);
+static void semifield_classify_unrank_point_func(int *v, long int rk, void *data);
+static long int canonial_form_rank_vector_callback(int *v,
+		int n, void *data, int verbose_level);
+static void canonial_form_unrank_vector_callback(long int rk,
+		int *v, int n, void *data, int verbose_level);
+static void canonial_form_compute_image_of_vector_callback(
+		int *v, int *w, int *Elt, void *data,
+		int verbose_level);
 
 
 semifield_classify::semifield_classify()
@@ -167,9 +182,9 @@ void semifield_classify::freeself()
 }
 
 void semifield_classify::init(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int k,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		std::string &level_two_prefix,
 		std::string &level_three_prefix,
 		int verbose_level)
@@ -247,7 +262,7 @@ void semifield_classify::init(
 	Basis2 = NEW_int(k * k2);
 
 
-	T = NEW_OBJECT(spread_classify);
+	T = NEW_OBJECT(spreads::spread_classify);
 
 	//T->read_arguments(argc, argv);
 
@@ -292,7 +307,7 @@ void semifield_classify::init(
 				"before A0->init_projective_group" << endl;
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	A0->init_projective_group(
 		k, Mtx->GFq, Mtx->f_semilinear,
@@ -363,7 +378,7 @@ void semifield_classify::init(
 
 
 
-	A_on_S = NEW_OBJECT(action_on_spread_set);
+	A_on_S = NEW_OBJECT(induced_actions::action_on_spread_set);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
@@ -638,7 +653,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 
 void semifield_classify::init_poset_classification(
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -648,7 +663,7 @@ void semifield_classify::init_poset_classification(
 		cout << "semifield_classify::init_poset_classification" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 	algebra::vector_space *VS;
 	VS = NEW_OBJECT(algebra::vector_space);
@@ -681,7 +696,7 @@ void semifield_classify::init_poset_classification(
 
 
 
-	Gen = NEW_OBJECT(poset_classification);
+	Gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	//Gen->read_arguments(argc, argv, 0);
 
@@ -1563,7 +1578,7 @@ void semifield_classify::knuth_operation(int t,
 // global function:
 //##############################################################################
 
-void semifield_classify_early_test_func(long int *S, int len,
+static void semifield_classify_early_test_func(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1592,7 +1607,7 @@ void semifield_classify_early_test_func(long int *S, int len,
 
 
 
-long int semifield_classify_rank_point_func(int *v, void *data)
+static long int semifield_classify_rank_point_func(int *v, void *data)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -1610,7 +1625,7 @@ long int semifield_classify_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void semifield_classify_unrank_point_func(int *v, long int rk, void *data)
+static void semifield_classify_unrank_point_func(int *v, long int rk, void *data)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -1629,7 +1644,7 @@ void semifield_classify_unrank_point_func(int *v, long int rk, void *data)
 }
 
 
-long int canonial_form_rank_vector_callback(int *v,
+static long int canonial_form_rank_vector_callback(int *v,
 		int n, void *data, int verbose_level)
 {
 	semifield_classify *SC = (semifield_classify *) data;
@@ -1639,7 +1654,7 @@ long int canonial_form_rank_vector_callback(int *v,
 	return r;
 }
 
-void canonial_form_unrank_vector_callback(long int rk,
+static void canonial_form_unrank_vector_callback(long int rk,
 		int *v, int n, void *data, int verbose_level)
 {
 	semifield_classify *SC = (semifield_classify *) data;
@@ -1647,7 +1662,7 @@ void canonial_form_unrank_vector_callback(long int rk,
 	SC->matrix_unrank(rk, v);
 }
 
-void canonial_form_compute_image_of_vector_callback(
+static void canonial_form_compute_image_of_vector_callback(
 		int *v, int *w, int *Elt, void *data,
 		int verbose_level)
 {
@@ -1664,6 +1679,6 @@ void canonial_form_compute_image_of_vector_callback(
 
 
 
-}}
+}}}
 
 

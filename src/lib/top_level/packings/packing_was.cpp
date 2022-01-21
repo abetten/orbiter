@@ -16,7 +16,14 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
+
+static int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *orbit1, int len1,
+		long int *orbit2, int len2, void *data);
+static int packing_was_evaluate_orbit_invariant_function(
+		int a, int i, int j, void *evaluate_data, int verbose_level);
+static void packing_was_print_function(std::ostream &ost, long int a, void *data);
 
 
 
@@ -234,7 +241,7 @@ void packing_was::compute_H_orbits_and_reduce(int verbose_level)
 
 
 
-	action_on_grassmannian *AG = P->T->A2->G.AG;
+	induced_actions::action_on_grassmannian *AG = P->T->A2->G.AG;
 
 
 	AG->add_print_function(
@@ -716,7 +723,7 @@ void packing_was::compute_spread_types_wrt_H(int verbose_level)
 	if (f_v) {
 		cout << "packing_was::compute_spread_types_wrt_H" << endl;
 	}
-	Spread_type = NEW_OBJECT(orbit_type_repository);
+	Spread_type = NEW_OBJECT(data_structures_groups::orbit_type_repository);
 	Spread_type->init(
 			Line_orbits_under_H,
 			P->Spread_table_with_selection->Spread_tables->nb_spreads,
@@ -1002,7 +1009,7 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 	if (f_v) {
 		cout << "packing_was::compute_reduced_spread_types_wrt_H" << endl;
 	}
-	Spread_type_reduced = NEW_OBJECT(orbit_type_repository);
+	Spread_type_reduced = NEW_OBJECT(data_structures_groups::orbit_type_repository);
 	Spread_type_reduced->init(
 			Line_orbits_under_H,
 			Spread_tables_reduced->nb_spreads,
@@ -2114,7 +2121,7 @@ void packing_was::report_good_spreads(std::ostream &ost)
 // #############################################################################
 
 
-int packing_was_set_of_reduced_spreads_adjacency_test_function(
+static int packing_was_set_of_reduced_spreads_adjacency_test_function(
 		long int *set1, int len1,
 		long int *set2, int len2, void *data)
 {
@@ -2127,7 +2134,7 @@ int packing_was_set_of_reduced_spreads_adjacency_test_function(
 
 
 
-int packing_was_evaluate_orbit_invariant_function(int a, int i, int j,
+static int packing_was_evaluate_orbit_invariant_function(int a, int i, int j,
 		void *evaluate_data, int verbose_level)
 {
 	int f_v = FALSE; //(verbose_level >= 1);
@@ -2152,10 +2159,10 @@ int packing_was_evaluate_orbit_invariant_function(int a, int i, int j,
 }
 
 
-void packing_was_print_function(std::ostream &ost, long int a, void *data)
+static void packing_was_print_function(std::ostream &ost, long int a, void *data)
 {
 	packing_was *P = (packing_was *) data;
-	action_on_grassmannian *AG = P->P->T->A2->G.AG;
+	induced_actions::action_on_grassmannian *AG = P->P->T->A2->G.AG;
 
 	int verbose_level = 0;
 	int orbit_idx1, orbit_pos1;
@@ -2177,6 +2184,6 @@ void packing_was_print_function(std::ostream &ost, long int a, void *data)
 	ost << "=(" << orbit_idx2 << "," << orbit_pos2 << ")" << endl;
 }
 
-}}
+}}}
 
 

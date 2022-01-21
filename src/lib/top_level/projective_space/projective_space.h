@@ -12,6 +12,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -71,7 +72,7 @@ public:
 
 	ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
-	action_on_homogeneous_polynomials *AonHPD;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
 	int nb_objects_to_test;
 
@@ -183,7 +184,7 @@ public:
 	void quartic_curve(
 			projective_space_with_action *PA,
 			ring_theory::homogeneous_polynomial_domain *Poly4_x123,
-			action_on_homogeneous_polynomials *AonHPD,
+			induced_actions::action_on_homogeneous_polynomials *AonHPD,
 			int idx, int *eqn, int sz,
 			long int *Pts_on_curve, int sz_curve,
 			long int *bitangents, int nb_bitangents,
@@ -373,7 +374,7 @@ public:
 
 	int f_define_surface;
 	std::string define_surface_label;
-	surface_create_description *Surface_Descr;
+	applications_in_algebraic_geometry::surface_create_description *Surface_Descr;
 
 	int f_table_of_quartic_curves;
 		// based on knowledge_base
@@ -383,12 +384,12 @@ public:
 
 	int f_define_quartic_curve;
 	std::string define_quartic_curve_label;
-	quartic_curve_create_description *Quartic_curve_descr;
+	applications_in_algebraic_geometry::quartic_curve_create_description *Quartic_curve_descr;
 
 
 	int f_classify_surfaces_with_double_sixes;
 	std::string classify_surfaces_with_double_sixes_label;
-	poset_classification_control *classify_surfaces_with_double_sixes_control;
+	poset_classification::poset_classification_control *classify_surfaces_with_double_sixes_control;
 
 
 	int f_classify_surfaces_through_arcs_and_two_lines;
@@ -396,22 +397,22 @@ public:
 	int nb_E;
 	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
 		int f_trihedra1_control;
-		poset_classification_control *Trihedra1_control;
+		poset_classification::poset_classification_control *Trihedra1_control;
 		int f_trihedra2_control;
-		poset_classification_control *Trihedra2_control;
+		poset_classification::poset_classification_control *Trihedra2_control;
 		int f_control_six_arcs;
-		poset_classification_control *Control_six_arcs;
+		poset_classification::poset_classification_control *Control_six_arcs;
 
 	int f_sweep;
 	std::string sweep_fname;
 
 	int f_sweep_4;
 	std::string sweep_4_fname;
-	surface_create_description *sweep_4_surface_description;
+	applications_in_algebraic_geometry::surface_create_description *sweep_4_surface_description;
 
 	int f_sweep_4_27;
 	std::string sweep_4_27_fname;
-	surface_create_description *sweep_4_27_surface_description;
+	applications_in_algebraic_geometry::surface_create_description *sweep_4_27_surface_description;
 
 	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;
@@ -427,11 +428,11 @@ public:
 
 	int f_spread_classify;
 	int spread_classify_k;
-	poset_classification_control *spread_classify_Control;
+	poset_classification::poset_classification_control *spread_classify_Control;
 
 	int f_classify_semifields;
-	semifield_classify_description *Semifield_classify_description;
-	poset_classification_control *Semifield_classify_Control;
+	semifields::semifield_classify_description *Semifield_classify_description;
+	poset_classification::poset_classification_control *Semifield_classify_Control;
 
 	int f_cheat_sheet;
 
@@ -488,7 +489,7 @@ public:
 	int dualize_rank_k_subspaces_k;
 
 	int f_classify_arcs;
-	arc_generator_description *Arc_generator_description;
+	apps_geometry::arc_generator_description *Arc_generator_description;
 
 	int f_classify_cubic_curves;
 
@@ -560,9 +561,9 @@ public:
 			int verbose_level);
 	void do_create_surface(
 			projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			surface_with_action *&Surf_A,
-			surface_create *&SC,
+			applications_in_algebraic_geometry::surface_create_description *Surface_Descr,
+			applications_in_algebraic_geometry::surface_with_action *&Surf_A,
+			applications_in_algebraic_geometry::surface_create *&SC,
 			int verbose_level);
 	void conic_type(
 			projective_space_with_action *PA,
@@ -579,11 +580,11 @@ public:
 			int verbose_level);
 	void do_classify_arcs(
 			projective_space_with_action *PA,
-			arc_generator_description *Arc_generator_description,
+			apps_geometry::arc_generator_description *Arc_generator_description,
 			int verbose_level);
 	void do_classify_cubic_curves(
 			projective_space_with_action *PA,
-			arc_generator_description *Arc_generator_description,
+			apps_geometry::arc_generator_description *Arc_generator_description,
 			int verbose_level);
 	void classify_quartic_curves_nauty(
 			projective_space_with_action *PA,
@@ -674,7 +675,7 @@ public:
 
 	// if n == 2:
 	algebraic_geometry::quartic_curve_domain *Dom;
-	quartic_curve_domain_with_action *QCDA;
+	applications_in_algebraic_geometry::quartic_curve_domain_with_action *QCDA;
 
 
 	actions::action *A; // linear group PGGL(d,q) in the action on points
@@ -735,8 +736,8 @@ public:
 		layered_graph_draw_options *O,
 		int verbose_level);
 	void create_quartic_curve(
-			quartic_curve_create_description *Quartic_curve_descr,
-			quartic_curve_create *&QC,
+			applications_in_algebraic_geometry::quartic_curve_create_description *Quartic_curve_descr,
+			applications_in_algebraic_geometry::quartic_curve_create *&QC,
 			int verbose_level);
 	void canonical_form_of_code(
 			std::string &label,
@@ -752,10 +753,10 @@ public:
 			layered_graph_draw_options *O,
 			int verbose_level);
 	void do_spread_classify(int k,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void setup_surface_with_action(
-			surface_with_action *&Surf_A,
+			applications_in_algebraic_geometry::surface_with_action *&Surf_A,
 			int verbose_level);
 	void report_decomposition_by_group(
 			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
@@ -763,13 +764,10 @@ public:
 
 };
 
-int table_of_sets_compare_func(void *data, int i,
-		void *search_object,
-		void *extra_data);
 
 
+}}}
 
-}}
 
 
 

@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 cubic_surface_activity_description::cubic_surface_activity_description()
 {
@@ -156,5 +158,6 @@ void cubic_surface_activity_description::print()
 
 
 
-}}
+}}}
+
 

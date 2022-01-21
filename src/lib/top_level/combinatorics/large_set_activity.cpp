@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 large_set_activity::large_set_activity()
@@ -55,4 +56,4 @@ void large_set_activity::perform_activity(large_set_activity_description *Descr,
 
 
 
-}}
+}}}

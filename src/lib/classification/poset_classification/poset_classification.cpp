@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 poset_of_orbits *poset_classification::get_Poo()
 {
@@ -37,7 +38,7 @@ poset_orbit_node *poset_classification::get_node(int node_idx)
 	return Poo->get_node(node_idx);
 }
 
-vector_ge *poset_classification::get_transporter()
+data_structures_groups::vector_ge *poset_classification::get_transporter()
 {
 	return transporter;
 }
@@ -117,7 +118,7 @@ algebra::vector_space *poset_classification::get_VS()
 	return Poset->VS;
 }
 
-schreier_vector_handler *poset_classification::get_schreier_vector_handler()
+data_structures_groups::schreier_vector_handler *poset_classification::get_schreier_vector_handler()
 {
 	return Schreier_vector_handler;
 }
@@ -276,17 +277,17 @@ int poset_classification::poset_structure_is_contained(
 	return f_contained;
 }
 
-orbit_transversal *poset_classification::get_orbit_transversal(
+data_structures_groups::orbit_transversal *poset_classification::get_orbit_transversal(
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbit_transversal *T;
+	data_structures_groups::orbit_transversal *T;
 	int orbit_at_level;
 
 	if (f_v) {
 		cout << "poset_classification::get_orbit_transversal" << endl;
 	}
-	T = NEW_OBJECT(orbit_transversal);
+	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 	T->A = Poset->A;
 	T->A2 = Poset->A2;
 
@@ -301,13 +302,13 @@ orbit_transversal *poset_classification::get_orbit_transversal(
 	}
 
 
-	T->Reps = NEW_OBJECTS(set_and_stabilizer, T->nb_orbits);
+	T->Reps = NEW_OBJECTS(data_structures_groups::set_and_stabilizer, T->nb_orbits);
 
 	for (orbit_at_level = 0;
 			orbit_at_level < T->nb_orbits;
 			orbit_at_level++) {
 
-		set_and_stabilizer *SaS;
+		data_structures_groups::set_and_stabilizer *SaS;
 
 		SaS = get_set_and_stabilizer(level,
 				orbit_at_level, verbose_level);
@@ -342,16 +343,16 @@ int poset_classification::test_if_stabilizer_is_trivial(
 	return O->test_if_stabilizer_is_trivial();
 }
 
-set_and_stabilizer *poset_classification::get_set_and_stabilizer(
+data_structures_groups::set_and_stabilizer *poset_classification::get_set_and_stabilizer(
 		int level, int orbit_at_level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS;
 
 	if (f_v) {
 		cout << "poset_classification::get_set_and_stabilizer" << endl;
 	}
-	SaS = NEW_OBJECT(set_and_stabilizer);
+	SaS = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 	SaS->init(Poset->A, Poset->A2, 0 /*verbose_level */);
 	SaS->allocate_data(level, 0 /* verbose_level */);
 	get_set_by_level(level, orbit_at_level, SaS->data);
@@ -972,7 +973,7 @@ long int poset_classification::get_stabilizer_order_lint(int level,
 }
 
 void poset_classification::get_stabilizer_group(
-		group_container *&G,
+		data_structures_groups::group_container *&G,
 	int level, int orbit_at_level,
 	int verbose_level)
 {
@@ -1006,7 +1007,7 @@ void poset_classification::get_stabilizer_group(
 #else
 	ring_theory::longinteger_object go;
 
-	G = NEW_OBJECT(group_container);
+	G = NEW_OBJECT(data_structures_groups::group_container);
 	O->get_stabilizer(
 		this,
 		*G, go,
@@ -1031,7 +1032,7 @@ void poset_classification::get_stabilizer_generators_cleaned_up(
 				"get_stabilizer_generators_cleaned_up level=" << level
 				<< " orbit_at_level=" << orbit_at_level << endl;
 	}
-	group_container *G;
+	data_structures_groups::group_container *G;
 
 	get_stabilizer_group(G,
 			level, orbit_at_level, verbose_level - 1);
@@ -1186,7 +1187,7 @@ void poset_classification::coset_unrank(
 {
 	int f_v = (verbose_level >= 1);
 	long int *the_set;
-	group_container *G1, *G2;
+	data_structures_groups::group_container *G1, *G2;
 	int *Elt_gk;
 	ring_theory::longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
@@ -1208,8 +1209,8 @@ void poset_classification::coset_unrank(
 
 
 	
-	G1 = NEW_OBJECT(group_container);
-	G2 = NEW_OBJECT(group_container);
+	G1 = NEW_OBJECT(data_structures_groups::group_container);
+	G2 = NEW_OBJECT(data_structures_groups::group_container);
 	the_set = NEW_lint(depth);
 	Elt_gk = NEW_int(Poset->A->elt_size_in_int);
 	
@@ -1242,7 +1243,7 @@ long int poset_classification::coset_rank(
 	int f_v = (verbose_level >= 1);
 	long int rank;
 	long int *the_set;
-	group_container *G1, *G2;
+	data_structures_groups::group_container *G1, *G2;
 	int *Elt_gk;
 	ring_theory::longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
@@ -1264,8 +1265,8 @@ long int poset_classification::coset_rank(
 
 
 	
-	G1 = NEW_OBJECT(group_container);
-	G2 = NEW_OBJECT(group_container);
+	G1 = NEW_OBJECT(data_structures_groups::group_container);
+	G2 = NEW_OBJECT(data_structures_groups::group_container);
 	the_set = NEW_lint(depth);
 	Elt_gk = NEW_int(Poset->A->elt_size_in_int);
 	
@@ -2059,7 +2060,8 @@ void poset_classification::rank_basis(int *Basis, long int *S, int len)
 	}
 }
 
-}}
+}}}
+
 
 
 

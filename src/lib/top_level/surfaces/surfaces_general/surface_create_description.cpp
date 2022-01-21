@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 surface_create_description::surface_create_description()
@@ -433,7 +434,8 @@ int surface_create_description::get_q()
 	return q;
 }
 
-}}
+}}}
+
 
 
 

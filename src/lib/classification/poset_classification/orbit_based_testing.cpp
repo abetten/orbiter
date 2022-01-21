@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 orbit_based_testing::orbit_based_testing()
@@ -308,7 +309,8 @@ void orbit_based_testing::early_test_func_by_using_group(
 	}
 }
 
-}}
+}}}
+
 
 
 

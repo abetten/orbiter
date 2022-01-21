@@ -441,6 +441,14 @@ void surface_domain::perp_of_three_lines(long int *three_lines,
 	}
 }
 
+//! Given four general lines in four_lines[4], complete the two transversal lines.
+/*!
+ * Given four general lines in four_lines[4], complete the two transversal lines.
+ * The function uses the perp on the Klein quadric.
+ * Conversion to and from the Klein quadric is done automatically.
+ */
+
+
 int surface_domain::perp_of_four_lines(
 		long int *four_lines, long int *trans12,
 		int &perp_sz, int verbose_level)
@@ -515,6 +523,12 @@ int surface_domain::rank_of_four_lines_on_Klein_quadric(
 	}
 	return rk;
 }
+
+//! Given a five-plus-one five_pts[5], complete the double-six.
+/*!
+ * Given a five-plus-one five_pts[5], complete the double-six. We assume that the
+ * transversal line of the five lines is the line whose rank is 0.
+ */
 
 int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 	long int *five_pts, long int *double_six,
@@ -736,6 +750,12 @@ finish:
 	return ret;
 }
 
+//! Given a single six in single_six[6], compute the other 6 lines in a double-six.
+/*!
+ * Given a single six in single_six[6], compute the other 6 lines in a double-six.
+ * The function uses the perp function on the Klein quadric.
+ */
+
 
 int surface_domain::create_double_six_from_six_disjoint_lines(
 		long int *single_six,
@@ -950,6 +970,13 @@ free_it:
 	return ret;
 }
 
+//! Given a double six in double_six[12], compute the 15 remaining lines cij.
+/*!
+ * Given a double six in double_six[12], compute the 15 remaining lines cij.
+ * The function uses Linear Algebra.
+ */
+
+
 void surface_domain::create_the_fifteen_other_lines(
 	long int *double_six,
 	long int *fifteen_other_lines, int verbose_level)
@@ -1032,6 +1059,13 @@ void surface_domain::create_the_fifteen_other_lines(
 
 }
 
+
+//! Given a set of lines in S12[12], test the double six property.
+/*!
+ * Given a set of lines in S12[12], test the double six property.
+ * The function first computes the adjacency matrix of the line intersection graph.
+ */
+
 int surface_domain::test_double_six_property(long int *S12, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1086,6 +1120,14 @@ int surface_domain::test_double_six_property(long int *S12, int verbose_level)
 	}
 }
 
+//! Given a set of lines in S[n], compute the associated line intersection graph
+/*!
+ * Given a set of lines in S[n], compute the associated intersection graph.
+ * The function uses the Klein quadric and the associated bilinear form.
+ * The lines are first converted to points on the Klein quadric using Klein.
+ * Then, the bilinear form is evaluated for all pairs.
+ */
+
 void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 	int *&Adj, long int *S, int n, int verbose_level)
 {
@@ -1126,6 +1168,13 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 	}
 }
 
+//! Given a set of lines in S[n], compute the associated disjointness graph
+/*!
+ * Given a set of lines in S[n], compute the associated disjointness graph.
+ * The function uses the Klein quadric and the associated bilinear form.
+ * The lines are first converted to points on the Klein quadric using Klein.
+ * Then, the bilinear form is evaluated for all pairs.
+ */
 void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 	int *&Adj, long int *S, int n, int verbose_level)
 {
@@ -1311,7 +1360,11 @@ void surface_domain::rearrange_lines_according_to_a_given_double_six(long int *L
 	}
 }
 
-
+//! Picks a double six and rearranges the lines accordingly
+/*!
+ * Given 27 lines in Lines[27], compute any double six and rearrange
+ * the lines accordingly.
+ */
 void surface_domain::rearrange_lines_according_to_double_six(long int *Lines,
 	int verbose_level)
 {
@@ -1400,8 +1453,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 
 
 	if (f_v) {
-		cout << "surface_domain::rearrange_lines_according_"
-				"to_starter_configuration" << endl;
+		cout << "surface_domain::rearrange_lines_according_to_starter_configuration" << endl;
 	}
 
 	create_starter_configuration(line_idx, subset_idx,
@@ -1493,8 +1545,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 	}
 
 	if (f_v) {
-		cout << "surface_domain::rearrange_lines_according_"
-				"to_starter_configuration done" << endl;
+		cout << "surface_domain::rearrange_lines_according_to_starter_configuration done" << endl;
 	}
 }
 
@@ -1505,8 +1556,7 @@ int surface_domain::intersection_of_four_lines_but_not_b6(int *Adj,
 	int a, i, j;
 
 	if (f_v) {
-		cout << "surface_domain::intersection_of_four_given_"
-				"line_intersections_but_not_b6" << endl;
+		cout << "surface_domain::intersection_of_four_lines_but_not_b6" << endl;
 	}
 	for (i = 0; i < 27; i++) {
 		if (i == b6) {
@@ -1523,14 +1573,12 @@ int surface_domain::intersection_of_four_lines_but_not_b6(int *Adj,
 		}
 	}
 	if (i == 27) {
-		cout << "surface_domain::intersection_of_four_lines_but_"
-				"not_b6 could not find the line" << endl;
+		cout << "surface_domain::intersection_of_four_lines_but_not_b6 could not find the line" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "surface_domain::intersection_of_four_given_"
-				"line_intersections_but_not_b6 done" << endl;
+		cout << "surface_domain::intersection_of_four_lines_but_not_b6 done" << endl;
 	}
 	return a;
 }
@@ -1654,6 +1702,11 @@ void surface_domain::create_remaining_fifteen_lines(
 	}
 }
 
+//! Computes cij, given a double six
+/*!
+ * Given a double six in double_six[12], and i,j,
+ * compute c_ij = a_ib_j intersect a_jb_i
+ */
 long int surface_domain::compute_cij(long int *double_six,
 		int i, int j, int verbose_level)
 {

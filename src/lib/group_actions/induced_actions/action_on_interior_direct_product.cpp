@@ -16,6 +16,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_interior_direct_product::action_on_interior_direct_product()
 {
@@ -89,6 +91,7 @@ long int action_on_interior_direct_product::compute_image(
 	return b;
 }
 
-}}
+}}}
+
 
 

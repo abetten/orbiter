@@ -13,6 +13,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
 
 // #############################################################################
 // algebra_global_with_action.cpp
@@ -26,19 +27,19 @@ public:
 	void orbits_under_conjugation(
 			long int *the_set, int set_size, groups::sims *S,
 			groups::strong_generators *SG,
-			vector_ge *Transporter,
+			data_structures_groups::vector_ge *Transporter,
 			int verbose_level);
 	void create_subgroups(
 			groups::strong_generators *SG,
 			long int *the_set, int set_size, groups::sims *S,
 			actions::action *A_conj,
 			groups::schreier *Classes,
-			vector_ge *Transporter,
+			data_structures_groups::vector_ge *Transporter,
 			int verbose_level);
 	void orbits_on_set_from_file(
 			long int *the_set, int set_size,
 			actions::action *A1, actions::action *A2,
-			vector_ge *gens,
+			data_structures_groups::vector_ge *gens,
 			std::string &label_set,
 			std::string &label_group,
 			long int *&Table,
@@ -67,8 +68,11 @@ public:
 			int elt_idx, int verbose_level);
 	void centralizer(int q, int d, int verbose_level);
 	void compute_regular_representation(actions::action *A, groups::sims *S,
-		vector_ge *SG, int *&perm, int verbose_level);
-	void presentation(actions::action *A, groups::sims *S, int goi, vector_ge *gens,
+			data_structures_groups::vector_ge *SG,
+			int *&perm, int verbose_level);
+	void presentation(actions::action *A,
+			groups::sims *S, int goi,
+			data_structures_groups::vector_ge *gens,
 		int *primes, int verbose_level);
 
 	void do_eigenstuff(field_theory::finite_field *F, int size, int *Data, int verbose_level);
@@ -94,7 +98,8 @@ public:
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void linear_codes_with_bounded_minimum_distance(
-			poset_classification_control *Control, groups::linear_group *LG,
+			poset_classification::poset_classification_control *Control,
+			groups::linear_group *LG,
 			int d, int target_depth, int verbose_level);
 	void centralizer_of_element(
 			actions::action *A, groups::sims *S,
@@ -114,7 +119,8 @@ public:
 			int verbose_level);
 	void relative_order_vector_of_cosets(
 			actions::action *A, groups::strong_generators *SG,
-			vector_ge *cosets, int *&relative_order_table, int verbose_level);
+			data_structures_groups::vector_ge *cosets,
+			int *&relative_order_table, int verbose_level);
 	void do_orbits_on_polynomials(
 			groups::linear_group *LG,
 			int degree_of_poly,
@@ -226,12 +232,13 @@ public:
 	void orbits_on_set_from_file(std::string &fname_csv, int verbose_level);
 	void orbit_of(int point_idx, int verbose_level);
 	void orbits_on_points(groups::orbits_on_something *&Orb, int verbose_level);
-	void orbits_on_subsets(poset_classification_control *Control,
-			poset_classification *&PC,
+	void orbits_on_subsets(
+			poset_classification::poset_classification_control *Control,
+			poset_classification::poset_classification *&PC,
 			int subset_size,
 			int verbose_level);
 	void orbits_on_poset_post_processing(
-			poset_classification *PC,
+			poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);
 	void do_conjugacy_class_of_element(
@@ -259,15 +266,17 @@ public:
 			int verbose_level);
 	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
 	void do_orbits_on_subspaces(group_theoretic_activity *GTA,
-			poset_classification_control *Control, int depth, int verbose_level);
-	void do_tensor_classify(poset_classification_control *Control, int depth, int verbose_level);
+			poset_classification::poset_classification_control *Control, int depth, int verbose_level);
+	void do_tensor_classify(
+			poset_classification::poset_classification_control *Control, int depth, int verbose_level);
 	void do_tensor_permutations(int verbose_level);
-	void do_linear_codes(poset_classification_control *Control,
+	void do_linear_codes(
+			poset_classification::poset_classification_control *Control,
 			int minimum_distance,
 			int target_size, int verbose_level);
 	void do_classify_ovoids(
-			poset_classification_control *Control,
-			ovoid_classify_description *Ovoid_classify_description,
+			poset_classification::poset_classification_control *Control,
+			apps_geometry::ovoid_classify_description *Ovoid_classify_description,
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
@@ -302,9 +311,9 @@ public:
 	int compute_r0(int *N, int nb_classes, int verbose_level);
 	void compute_multiplication_constants_center_of_group_ring(
 			actions::action *A,
-		action_by_conjugation *ABC,
+			induced_actions::action_by_conjugation *ABC,
 		groups::schreier *Sch, int nb_classes, int *&N, int verbose_level);
-	void compute_Distribution_table(actions::action *A, action_by_conjugation *ABC,
+	void compute_Distribution_table(actions::action *A, induced_actions::action_by_conjugation *ABC,
 			groups::schreier *Sch, int nb_classes,
 		int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level);
 	void multiply_word(actions::action *A, int **Gens,
@@ -409,7 +418,7 @@ public:
 
 	// options for poset classification:
 	int f_poset_classification_control;
-	poset_classification_control *Control;
+	poset_classification::poset_classification_control *Control;
 
 
 	// orbits on points using Schreier trees:
@@ -541,7 +550,7 @@ public:
 	int f_tensor_permutations;
 
 	int f_classify_ovoids;
-	ovoid_classify_description *Ovoid_classify_description;
+	apps_geometry::ovoid_classify_description *Ovoid_classify_description;
 
 	int f_classify_cubic_curves;
 
@@ -682,7 +691,7 @@ public:
 	std::string fname_csv;
 	std::string fname_report;
 
-	orbit_transversal *T;
+	data_structures_groups::orbit_transversal *T;
 	int *Nb_pts; // [T->nb_orbits]
 	std::vector<std::vector<long int> > Points;
 
@@ -716,8 +725,8 @@ public:
 	group_theoretic_activity *GTA;
 
 	// local data for orbits on subspaces:
-	poset_with_group_action *orbits_on_subspaces_Poset;
-	poset_classification *orbits_on_subspaces_PC;
+	poset_classification::poset_with_group_action *orbits_on_subspaces_Poset;
+	poset_classification::poset_classification *orbits_on_subspaces_PC;
 	algebra::vector_space *orbits_on_subspaces_VS;
 	int *orbits_on_subspaces_M;
 	int *orbits_on_subspaces_base_cols;
@@ -726,19 +735,14 @@ public:
 	orbits_on_subspaces();
 	~orbits_on_subspaces();
 	void init(group_theoretic_activity *GTA,
-			poset_classification_control *Control, int depth,
+			poset_classification::poset_classification_control *Control,
+			int depth,
 			int verbose_level);
 
 
 };
 
 
-long int orbits_on_subspaces_rank_point_func(int *v, void *data);
-void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data);
-void orbits_on_subspaces_early_test_func(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 
@@ -762,7 +766,7 @@ public:
 	int *v;
 
 	actions::action *Aconj;
-	action_by_conjugation *ABC;
+	induced_actions::action_by_conjugation *ABC;
 	groups::schreier *Sch;
 	groups::strong_generators *SG;
 	int nb_classes;
@@ -778,7 +782,7 @@ public:
 	data_structures::set_of_sets *Row_partition;
 	data_structures::set_of_sets *Col_partition;
 
-	vector_ge *gens1, *gens2;
+	data_structures_groups::vector_ge *gens1, *gens2;
 	groups::sims *S1, *S2;
 
 
@@ -817,7 +821,7 @@ public:
 };
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_TOP_LEVEL_ALGEBRA_AND_NUMBER_THEORY_TL_ALGEBRA_AND_NUMBER_THEORY_H_ */

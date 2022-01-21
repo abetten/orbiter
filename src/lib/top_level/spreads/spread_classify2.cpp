@@ -17,6 +17,19 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
+
+
+
+// spread_classify2.cpp
+#if 0
+static int spread_check_function_callback(int len, long int *S,
+	void *data, int verbose_level);
+static void spread_callback_report(isomorph *Iso, void *data, int verbose_level);
+static void spread_callback_make_quotients(isomorph *Iso, void *data,
+	int verbose_level);
+static void callback_spread_print(std::ostream &ost, int len, long int *S, void *data);
+#endif
 
 void spread_classify::print_isomorphism_type(isomorph *Iso,
 	int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
@@ -2205,13 +2218,13 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 					"on orbit " << i << " are:";
 			long int *set;
 			actions::action *A1;
-			vector_ge *gens;
+			data_structures_groups::vector_ge *gens;
 			int *tl;
 			ring_theory::longinteger_object go1, gok;
 
 			set = NEW_lint(len);
 			//A1 = NEW_OBJECT(action);
-			gens = NEW_OBJECT(vector_ge);
+			gens = NEW_OBJECT(data_structures_groups::vector_ge);
 			tl = NEW_int(Iso.A_base->base_len());
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
@@ -2257,7 +2270,13 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 
 	sprintf(prefix, "Spreads_%d_%d", q, k);
 	sprintf(label_of_structure_plural, "Spreads");
-	isomorph_report_data_in_source_code_inside_tex(Iso, 
+
+
+	isomorph_global IG;
+
+	IG.init(Iso.A_base, Iso.A, Iso.gen, verbose_level);
+
+	IG.report_data_in_source_code_inside_tex(Iso,
 		prefix, label_of_structure_plural, ost, verbose_level);
 
 
@@ -2610,29 +2629,9 @@ void spread_classify::report_stabilizer(isomorph &Iso,
 
 
 
-void spread_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level)
-{
-	spread_classify *T = (spread_classify *) data;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "spread_early_test_func_callback for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
-		cout << endl;
-	}
-	T->early_test_func(S, len, 
-		candidates, nb_candidates, 
-		good_candidates, nb_good_candidates, 
-		verbose_level - 2);
-	if (f_v) {
-		cout << "spread_early_test_func_callback done" << endl;
-	}
-}
 
-int spread_check_function_callback(int len,
+#if 0
+static int spread_check_function_callback(int len,
 		long int *S, void *data, int verbose_level)
 {
 	spread_classify *Spread = (spread_classify *) data;
@@ -2642,14 +2641,14 @@ int spread_check_function_callback(int len,
 	return f_OK;
 }
 
-void spread_callback_report(isomorph *Iso, void *data, int verbose_level)
+static void spread_callback_report(isomorph *Iso, void *data, int verbose_level)
 {
 	spread_classify *Spread = (spread_classify *) data;
 	
 	Spread->report2(*Iso, verbose_level);
 }
 
-void spread_callback_make_quotients(isomorph *Iso,
+static void spread_callback_make_quotients(isomorph *Iso,
 		void *data, int verbose_level)
 {
 	spread_classify *Spread = (spread_classify *) data;
@@ -2657,12 +2656,14 @@ void spread_callback_make_quotients(isomorph *Iso,
 	Spread->all_cooperstein_thas_quotients(*Iso, verbose_level);
 }
 
-void callback_spread_print(ostream &ost, int len, long int *S, void *data)
+static void callback_spread_print(ostream &ost, int len, long int *S, void *data)
 {
 	spread_classify *Spread = (spread_classify *) data;
 
 	Spread->print_spread(ost, S, len);
 }
+#endif
 
-}}
+}}}
+
 

@@ -20,25 +20,38 @@ namespace orbiter {
 
 namespace classification {
 
-// classify
-class classification_step;
-class flag_orbit_node;
-class flag_orbits;
-class orbit_node;
 
-// poset_classification
-class classification_base_case;
-class extension;
-class orbit_based_testing;
-class poset_classification;
-class poset_classification_control;
-class poset_classification_report_options;
-class poset_of_orbits;
-class poset_description;
-class poset_orbit_node;
-class poset_with_group_action;
-class upstep_work;
+//! classification by using an invariant relation
 
+namespace invariant_relations {
+
+	// classify
+	class classification_step;
+	class flag_orbit_node;
+	class flag_orbits;
+	class orbit_node;
+
+}
+
+
+//! To compute orbits on sets and subspaces using poset classification
+
+namespace poset_classification {
+
+	// poset_classification
+	class classification_base_case;
+	class extension;
+	class orbit_based_testing;
+	class poset_classification;
+	class poset_classification_control;
+	class poset_classification_report_options;
+	class poset_of_orbits;
+	class poset_description;
+	class poset_orbit_node;
+	class poset_with_group_action;
+	class upstep_work;
+
+}
 
 // set_stabilizer
 class compute_stabilizer;

@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 choose_points_or_lines::choose_points_or_lines()
@@ -184,7 +185,7 @@ void choose_points_or_lines::compute_orbits(groups::strong_generators *Strong_ge
 		FREE_OBJECT(Poset);
 	}
 	
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	//sprintf(gen->fname_base, "%s", label);
 	
@@ -196,11 +197,11 @@ void choose_points_or_lines::compute_orbits(groups::strong_generators *Strong_ge
 				<< label << " calling gen->init" << endl;
 	}
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Control->f_depth = TRUE;
 	Control->depth = nb_points_or_lines;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A2, Strong_gens, verbose_level);
 
 	gen->initialize_and_allocate_root_node(Control, Poset,
@@ -263,8 +264,8 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	int f, nd, i;
 	int f_changed;
 	long int *the_favorite_representative;
-	group_container *G;
-	poset_orbit_node *O;
+	data_structures_groups::group_container *G;
+	poset_classification::poset_orbit_node *O;
 	
 	f_hit_favorite = FALSE;
 	if (f_v) {
@@ -281,7 +282,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	
 	ring_theory::longinteger_object go;
 	
-	G = NEW_OBJECT(group_container);
+	G = NEW_OBJECT(data_structures_groups::group_container);
 	representative = NEW_lint(nb_points_or_lines);
 	the_favorite_representative = NEW_lint(nb_points_or_lines);
 	
@@ -553,5 +554,5 @@ int choose_points_or_lines::is_in_rep(int a)
 	return FALSE;
 }
 
-}}
+}}}
 

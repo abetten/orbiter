@@ -60,9 +60,10 @@ permutation_representation::~permutation_representation()
 	//free();
 }
 
-void permutation_representation::init(actions::action *A_original,
+void permutation_representation::init(
+		actions::action *A_original,
 		int f_stay_in_the_old_action,
-		vector_ge *gens,
+		data_structures_groups::vector_ge *gens,
 		int *Perms, int degree,
 		int verbose_level)
 // Perms is degree x nb_gens

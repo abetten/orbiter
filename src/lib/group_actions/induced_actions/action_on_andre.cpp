@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_andre::action_on_andre()
 {
@@ -236,6 +238,6 @@ long int action_on_andre::compute_image_of_line(int *Elt,
 	return image;
 }
 
-}}
+}}}
 
 

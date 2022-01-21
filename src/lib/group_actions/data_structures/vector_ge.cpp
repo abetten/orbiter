@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
+
 
 vector_ge::vector_ge()
 {
@@ -998,7 +1000,7 @@ void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
 }
 
 void vector_ge::matrix_representation(
-		action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
+		induced_actions::action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1029,6 +1031,7 @@ void vector_ge::matrix_representation(
 
 
 
-}}
+}}}
+
 
 

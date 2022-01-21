@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
 
 blt_set_with_action::blt_set_with_action()
@@ -161,5 +162,5 @@ void blt_set_with_action::report(std::ostream &ost, int verbose_level)
 
 
 
-}}
+}}}
 

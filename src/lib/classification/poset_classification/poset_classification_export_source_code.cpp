@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 
@@ -72,7 +73,7 @@ void poset_classification::generate_source_code(
 		for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 			//rep = The_surface[iso_type]->coeff;
 
-			set_and_stabilizer *SaS;
+			data_structures_groups::set_and_stabilizer *SaS;
 
 			SaS = get_set_and_stabilizer(level, iso_type,
 					0 /* verbose_level */);
@@ -101,7 +102,7 @@ void poset_classification::generate_source_code(
 		for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 
-			set_and_stabilizer *SaS;
+			data_structures_groups::set_and_stabilizer *SaS;
 
 
 			SaS = get_set_and_stabilizer(level,
@@ -256,7 +257,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 				}
 				else {
-					set_and_stabilizer *SaS;
+					data_structures_groups::set_and_stabilizer *SaS;
 
 					SaS = get_set_and_stabilizer(lvl, iso_type,
 							0 /* verbose_level */);
@@ -305,7 +306,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 					}
 					else {
-						set_and_stabilizer *SaS;
+						data_structures_groups::set_and_stabilizer *SaS;
 
 
 						SaS = get_set_and_stabilizer(lvl,
@@ -648,5 +649,5 @@ void poset_classification::generate_history(int level, int verbose_level)
 }
 
 
-}}
+}}}
 

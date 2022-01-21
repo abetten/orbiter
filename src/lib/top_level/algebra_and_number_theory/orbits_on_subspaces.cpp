@@ -14,6 +14,16 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
+
+
+static long int orbits_on_subspaces_rank_point_func(int *v, void *data);
+static void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data);
+static void orbits_on_subspaces_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 
 orbits_on_subspaces::orbits_on_subspaces()
@@ -35,7 +45,8 @@ orbits_on_subspaces::~orbits_on_subspaces()
 }
 
 void orbits_on_subspaces::init(group_theoretic_activity *GTA,
-		poset_classification_control *Control, int depth,
+		poset_classification::poset_classification_control *Control,
+		int depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -58,8 +69,8 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 	}
 
 
-	orbits_on_subspaces_PC = NEW_OBJECT(poset_classification);
-	orbits_on_subspaces_Poset = NEW_OBJECT(poset_with_group_action);
+	orbits_on_subspaces_PC = NEW_OBJECT(poset_classification::poset_classification);
+	orbits_on_subspaces_Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 
 
@@ -94,7 +105,7 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 	}
 #endif
 
-	orbits_on_subspaces_Poset = NEW_OBJECT(poset_with_group_action);
+	orbits_on_subspaces_Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	orbits_on_subspaces_Poset->init_subspace_lattice(GTA->AG->A_base /*LG->A_linear*/,
 			GTA->AG->A /* LG->A2 */, GTA->AG->Subgroup_gens /* ->LG->Strong_gens */,
 			orbits_on_subspaces_VS,
@@ -172,11 +183,11 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 // #############################################################################
 
 
-long int orbits_on_subspaces_rank_point_func(int *v, void *data)
+static long int orbits_on_subspaces_rank_point_func(int *v, void *data)
 {
 	orbits_on_subspaces *OoS;
 	group_theoretic_activity *G;
-	poset_classification *gen;
+	poset_classification::poset_classification *gen;
 	long int rk;
 
 	//cout << "orbits_on_subspaces_rank_point_func temporarily disabled" << endl;
@@ -191,11 +202,11 @@ long int orbits_on_subspaces_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data)
+static void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data)
 {
 	orbits_on_subspaces *OoS;
 	group_theoretic_activity *G;
-	poset_classification *gen;
+	poset_classification::poset_classification *gen;
 
 	//cout << "orbits_on_subspaces_unrank_point_func temporarily disabled" << endl;
 	//exit(1);
@@ -207,7 +218,7 @@ void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data)
 			gen->get_VS()->dimension, rk);
 }
 
-void orbits_on_subspaces_early_test_func(long int *S, int len,
+static void orbits_on_subspaces_early_test_func(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -246,5 +257,6 @@ void orbits_on_subspaces_early_test_func(long int *S, int len,
 
 
 
-}}
+}}}
+
 

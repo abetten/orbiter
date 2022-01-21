@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 ovoid_classify_description::ovoid_classify_description()
@@ -88,7 +89,7 @@ void ovoid_classify_description::print()
 
 
 
-}}
+}}}
 
 
 

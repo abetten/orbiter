@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
 
 
 spread_create::spread_create()
@@ -186,5 +187,5 @@ void spread_create::apply_transformations(
 	}
 }
 
-}}
+}}}
 

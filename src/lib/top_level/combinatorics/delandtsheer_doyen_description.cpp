@@ -16,6 +16,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
+
 
 delandtsheer_doyen_description::delandtsheer_doyen_description()
 {
@@ -248,7 +250,7 @@ int delandtsheer_doyen_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-pair_search_control") == 0) {
 			f_pair_search_control = TRUE;
-			Pair_search_control = NEW_OBJECT(poset_classification_control);
+			Pair_search_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Pair_search_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -261,7 +263,7 @@ int delandtsheer_doyen_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-search_control") == 0) {
 			f_search_control = TRUE;
-			Search_control = NEW_OBJECT(poset_classification_control);
+			Search_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Search_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -288,11 +290,11 @@ int delandtsheer_doyen_description::read_arguments(
 	} // next i
 
 	if (!f_pair_search_control) {
-		Pair_search_control = NEW_OBJECT(poset_classification_control);
+		Pair_search_control = NEW_OBJECT(poset_classification::poset_classification_control);
 	}
 
 	if (!f_search_control) {
-		Search_control = NEW_OBJECT(poset_classification_control);
+		Search_control = NEW_OBJECT(poset_classification::poset_classification_control);
 	}
 	if (!f_group_label) {
 		cout << "please use -group_label <label> to specify a label for the group used";
@@ -383,5 +385,6 @@ void delandtsheer_doyen_description::print()
 
 
 
-}}
+}}}
+
 

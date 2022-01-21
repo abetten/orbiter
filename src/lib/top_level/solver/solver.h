@@ -136,7 +136,7 @@ public:
 		int f_write_tree, std::string &fname_tree,
 		int verbose_level);
 	void lexorder_test(long int *live_blocks2, int &nb_live_blocks2,
-		vector_ge *stab_gens, 
+			data_structures_groups::vector_ge *stab_gens,
 		int verbose_level);
 };
 

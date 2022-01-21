@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 static void print_table1_top(ofstream &fp);
 static void print_table1_bottom(ofstream &fp);
@@ -2816,6 +2818,6 @@ static void print_set_special(ofstream &fp, long int *set, int sz)
 }
 
 
-}}
+}}}
 
 

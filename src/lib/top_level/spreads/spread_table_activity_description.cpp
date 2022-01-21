@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
 
 
 
@@ -157,7 +158,7 @@ void spread_table_activity_description::print()
 
 
 
-}}
+}}}
 
 
 

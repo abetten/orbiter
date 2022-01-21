@@ -15,6 +15,14 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
+
+static void callback_partial_ovoid_test_early(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 classify_double_sixes::classify_double_sixes()
 {
@@ -116,7 +124,7 @@ void classify_double_sixes::freeself()
 
 void classify_double_sixes::init(
 	surface_with_action *Surf_A,
-	poset_classification_control *Control,
+	poset_classification::poset_classification_control *Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -236,7 +244,7 @@ void classify_double_sixes::init(
 	}
 
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A_on_neighbors,
 			SG_line_stab,
 			verbose_level);
@@ -259,7 +267,7 @@ void classify_double_sixes::init(
 		cout << "classify_double_sixes::init "
 				"before Five_plus_one->init" << endl;
 	}
-	Five_plus_one = NEW_OBJECT(poset_classification);
+	Five_plus_one = NEW_OBJECT(poset_classification::poset_classification);
 
 	Five_plus_one->initialize_and_allocate_root_node(Control, Poset,
 		5 /* sz */, 
@@ -512,7 +520,7 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 
 void classify_double_sixes::report(std::ostream &ost,
 		layered_graph_draw_options *draw_options,
-		poset_classification_report_options *Opt,
+		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1001,7 +1009,7 @@ void classify_double_sixes::downstep(int verbose_level)
 
 	nb_orbits = Five_plus_one->nb_orbits_at_level(5);
 	
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->init(A, A2,
 		nb_orbits /* nb_primary_orbits_lower */,
 		5 + 6 + 12 /* pt_representation_sz */,
@@ -1042,7 +1050,7 @@ void classify_double_sixes::downstep(int verbose_level)
 			}
 		}
 
-		set_and_stabilizer *R;
+		data_structures_groups::set_and_stabilizer *R;
 		ring_theory::longinteger_object ol;
 		ring_theory::longinteger_object go;
 		long int dataset[23];
@@ -1163,7 +1171,7 @@ void classify_double_sixes::upstep(int verbose_level)
 	Orbiter->Int_vec->zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
-	Double_sixes = NEW_OBJECT(classification_step);
+	Double_sixes = NEW_OBJECT(invariant_relations::classification_step);
 
 	ring_theory::longinteger_object go;
 	A->group_order(go);
@@ -1219,10 +1227,10 @@ void classify_double_sixes::upstep(int verbose_level)
 
 
 
-		vector_ge *coset_reps;
+		data_structures_groups::vector_ge *coset_reps;
 		int nb_coset_reps;
 		
-		coset_reps = NEW_OBJECT(vector_ge);
+		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(Surf_A->A, verbose_level - 2);
 		coset_reps->allocate(12, verbose_level - 2);
 
@@ -1478,7 +1486,7 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 		i = Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
 
 
-		set_and_stabilizer *R;
+		data_structures_groups::set_and_stabilizer *R;
 
 		R = Five_plus_one->get_set_and_stabilizer(
 				5 /* level */,
@@ -1688,7 +1696,7 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	}
 
 
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	//Flag_orbits->A = A;
 	//Flag_orbits->A2 = A;
 	if (f_v) {
@@ -1699,7 +1707,7 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 		cout << "classify_double_sixes::read_file after Flag_orbits->read_file" << endl;
 	}
 
-	Double_sixes = NEW_OBJECT(classification_step);
+	Double_sixes = NEW_OBJECT(invariant_relations::classification_step);
 	//Double_sixes->A = A;
 	//Double_sixes->A2 = A2;
 
@@ -1744,7 +1752,7 @@ int classify_double_sixes::line_to_neighbor(long int line_rk, int verbose_level)
 
 
 
-void callback_partial_ovoid_test_early(long int *S, int len,
+static void callback_partial_ovoid_test_early(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1766,7 +1774,8 @@ void callback_partial_ovoid_test_early(long int *S, int len,
 	}
 }
 
-}}
+}}}
+
 
 
 

@@ -127,7 +127,8 @@ void action_global::action_print_symmetry_group_type(ostream &ost,
 
 void action_global::make_generators_stabilizer_of_two_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
-	int k, vector_ge *gens, int verbose_level)
+	int k,
+	data_structures_groups::vector_ge *gens, int verbose_level)
 // used in semifield.cpp
 // does not include the swap
 {
@@ -282,7 +283,8 @@ void action_global::make_generators_stabilizer_of_two_components(
 
 void action_global::make_generators_stabilizer_of_three_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
-	int k, vector_ge *gens, int verbose_level)
+	int k,
+	data_structures_groups::vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -410,13 +412,13 @@ void action_global::make_generators_stabilizer_of_three_components(
 void action_global::compute_generators_GL_n_q(int *&Gens,
 		int &nb_gens, int &elt_size, int n,
 		field_theory::finite_field *F,
-		vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	action *A;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	int *Elt;
 	int h, i, l, alpha;
 
@@ -514,7 +516,9 @@ void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 }
 #endif
 
-void action_global::lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
+void action_global::lift_generators(
+		data_structures_groups::vector_ge *gens_in,
+		data_structures_groups::vector_ge *&gens_out,
 	action *Aq, field_theory::subfield_structure *S, int n,
 	int verbose_level)
 {
@@ -534,7 +538,7 @@ void action_global::lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 
 	m = n / S->s;
 
-	gens_out = NEW_OBJECT(vector_ge);
+	gens_out = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	Eltq = NEW_int(Aq->elt_size_in_int);
 	Mtx = NEW_int(n * n);
@@ -572,8 +576,9 @@ void action_global::lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 	}
 }
 
-void action_global::retract_generators(vector_ge *gens_in,
-	vector_ge *&gens_out,
+void action_global::retract_generators(
+		data_structures_groups::vector_ge *gens_in,
+		data_structures_groups::vector_ge *&gens_out,
 	action *AQ, field_theory::subfield_structure *S, int n,
 	int verbose_level)
 {
@@ -593,7 +598,7 @@ void action_global::retract_generators(vector_ge *gens_in,
 
 	m = n / S->s;
 
-	gens_out = NEW_OBJECT(vector_ge);
+	gens_out = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	EltQ = NEW_int(AQ->elt_size_in_int);
 	Mtx = NEW_int(m * m);
@@ -693,8 +698,8 @@ void action_global::lift_generators_to_subfield_structure(
 
 
 
-	vector_ge *gens;
-	vector_ge *gens1;
+	data_structures_groups::vector_ge *gens;
+	data_structures_groups::vector_ge *gens1;
 
 
 	gens = AQ->Strong_gens->gens;
@@ -773,7 +778,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
 {
 	int nb_gens = 1;
 	int i;
-	vector_ge Gens;
+	data_structures_groups::vector_ge Gens;
 	action *A;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1062,7 +1067,7 @@ action *action_global::init_direct_product_group(
 				"before A->Strong_gens->init_from_data" << endl;
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	A->Strong_gens->init_from_data(A,
 			gens_data, gens_nb, gens_size,
@@ -1253,7 +1258,7 @@ void callback_choose_random_generator_orthogonal(int iteration,
 	int f_semisimilarity = TRUE;
 #endif
 
-	action_on_orthogonal *AO;
+	induced_actions::action_on_orthogonal *AO;
 	orthogonal *O;
 
 	AO = A->G.AO;

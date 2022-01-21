@@ -14,6 +14,14 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
+
+
+static void hall_system_print_set(std::ostream &ost, int len, long int *S, void *data);
+static void hall_system_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 hall_system_classify::hall_system_classify()
@@ -245,7 +253,7 @@ void hall_system_classify::init(
 	}
 
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before Poset->init_subset_lattice" << endl;
@@ -267,8 +275,8 @@ void hall_system_classify::init(
 	Poset->print_function_data = (void *) this;
 
 
-	Control = NEW_OBJECT(poset_classification_control);
-	PC = NEW_OBJECT(poset_classification);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
+	PC = NEW_OBJECT(poset_classification::poset_classification);
 	//PC->read_arguments(argc, argv, 0);
 	if (f_v) {
 		cout << "hall_system_classify::init before PC->initialize_and_allocate_root_node" << endl;
@@ -615,7 +623,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 
 
 
-void hall_system_print_set(ostream &ost, int len, long int *S, void *data)
+static void hall_system_print_set(ostream &ost, int len, long int *S, void *data)
 {
 	hall_system_classify *H = (hall_system_classify *) data;
 
@@ -624,7 +632,7 @@ void hall_system_print_set(ostream &ost, int len, long int *S, void *data)
 }
 
 
-void hall_system_early_test_function(long int *S, int len,
+static void hall_system_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -648,5 +656,5 @@ void hall_system_early_test_function(long int *S, int len,
 
 
 
-}}
+}}}
 

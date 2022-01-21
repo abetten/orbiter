@@ -13,8 +13,8 @@
 
 
 namespace orbiter {
-
 namespace group_actions {
+namespace induced_actions {
 
 
 // #############################################################################
@@ -108,7 +108,7 @@ public:
 	~action_by_restriction();
 	void free();
 	void init_single_orbit_from_schreier_vector(
-			schreier_vector *Schreier_vector,
+			data_structures_groups::schreier_vector *Schreier_vector,
 			int pt, int verbose_level);
 	void init(int nb_points, long int *points, int verbose_level);
 		// the array points must be ordered
@@ -1009,7 +1009,7 @@ public:
 };
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_INDUCED_ACTIONS_INDUCED_ACTIONS_H_ */

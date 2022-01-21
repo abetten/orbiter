@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -50,7 +51,7 @@ canonical_form_nauty::~canonical_form_nauty()
 void canonical_form_nauty::quartic_curve(
 		projective_space_with_action *PA,
 		ring_theory::homogeneous_polynomial_domain *Poly4_x123,
-		action_on_homogeneous_polynomials *AonHPD,
+		induced_actions::action_on_homogeneous_polynomials *AonHPD,
 		int idx, int *eqn, int sz,
 		long int *Pts_on_curve, int sz_curve,
 		long int *bitangents, int nb_bitangents,
@@ -228,5 +229,6 @@ void canonical_form_nauty::quartic_curve(
 
 
 
-}}
+}}}
+
 

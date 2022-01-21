@@ -674,7 +674,7 @@ void direct_product::lift_generators(
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	int i, len1, len2, len3;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go1, go2, go3;
@@ -688,7 +688,7 @@ void direct_product::lift_generators(
 	len2 = SG2->gens->len;
 	len3 = len1 + len2;
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(len3, verbose_level - 2);
 	Elt1 = NEW_int(A1->elt_size_in_int);

@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
+
 
 orbit_transversal::orbit_transversal()
 {
@@ -478,6 +480,7 @@ void orbit_transversal::export_data_in_source_code_inside_tex(
 
 
 
-}}
+}}}
+
 
 

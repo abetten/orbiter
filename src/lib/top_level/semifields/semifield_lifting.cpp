@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 
 
@@ -1096,9 +1097,9 @@ void semifield_lifting::upstep(
 			Stabilizer_gens[nb_orbits].init_copy(Flag_orbits[f].gens, 0);
 		}
 
-		vector_ge *coset_reps;
+		data_structures_groups::vector_ge *coset_reps;
 
-		coset_reps = NEW_OBJECT(vector_ge);
+		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(SC->A, verbose_level - 2);
 		coset_reps->allocate(nb_aut_gens, verbose_level - 2);
 		i = 0;
@@ -3144,4 +3145,4 @@ void semifield_lifting::make_fname_deep_search_slice_success(std::string &fname,
 
 
 
-}}
+}}}

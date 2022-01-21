@@ -611,8 +611,8 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	prefix.append(base_fname);
 	//snprintf(str, 2000, "%s%s", input_prefix, base_fname);
 
-	orbit_rep *R;
-	R = NEW_OBJECT(orbit_rep);
+	data_structures_groups::orbit_rep *R;
+	R = NEW_OBJECT(data_structures_groups::orbit_rep);
 
 
 	if (f_vv) {
@@ -904,7 +904,8 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 }
 
 void exact_cover::lexorder_test(long int *live_blocks2,
-		int &nb_live_blocks2, vector_ge *stab_gens,
+		int &nb_live_blocks2,
+		data_structures_groups::vector_ge *stab_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

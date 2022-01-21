@@ -66,10 +66,10 @@ void substructure_classifier::classify_substructures(
 	substructure_classifier::A2 = A2;
 	substructure_classifier::substructure_size = substructure_size;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
 	Control->f_depth = TRUE;
 	Control->depth = substructure_size;

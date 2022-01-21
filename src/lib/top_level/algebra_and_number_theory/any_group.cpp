@@ -14,6 +14,7 @@ using namespace orbiter::foundations;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
 
 
 any_group::any_group()
@@ -887,7 +888,7 @@ void any_group::multiply_elements_csv(std::string &fname1,
 		cout << "any_group::multiply_elements_csv" << endl;
 	}
 
-	vector_ge V1, V2, V3;
+	data_structures_groups::vector_ge V1, V2, V3;
 	int n1, n2, n3;
 	int i, j, k;
 
@@ -943,7 +944,7 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 		cout << "any_group::apply_elements_to_set_csv" << endl;
 	}
 
-	vector_ge V1;
+	data_structures_groups::vector_ge V1;
 	int n1;
 	int i, j;
 	long int *set;
@@ -1563,8 +1564,9 @@ void any_group::orbits_on_points(groups::orbits_on_something *&Orb, int verbose_
 	}
 }
 
-void any_group::orbits_on_subsets(poset_classification_control *Control,
-		poset_classification *&PC,
+void any_group::orbits_on_subsets(
+		poset_classification::poset_classification_control *Control,
+		poset_classification::poset_classification *&PC,
 		int subset_size,
 		int verbose_level)
 {
@@ -1574,9 +1576,9 @@ void any_group::orbits_on_subsets(poset_classification_control *Control,
 		cout << "any_group::orbits_on_subsets subset_size=" << subset_size << endl;
 	}
 	//poset_classification *PC;
-	poset_with_group_action *Poset;
+	poset_classification::poset_with_group_action *Poset;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 	if (f_v) {
 		cout << "any_group::orbits_on_subsets control=" << endl;
@@ -1645,7 +1647,7 @@ void any_group::orbits_on_subsets(poset_classification_control *Control,
 
 
 void any_group::orbits_on_poset_post_processing(
-		poset_classification *PC,
+		poset_classification::poset_classification *PC,
 		int depth,
 		int verbose_level)
 {
@@ -1993,7 +1995,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 	file_io Fio;
 	long int *the_ranks;
-	vector_ge *Transporter;
+	data_structures_groups::vector_ge *Transporter;
 	int m, n;
 	int i;
 
@@ -2028,7 +2030,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 		FREE_int(M);
 	}
 
-	Transporter = NEW_OBJECT(vector_ge);
+	Transporter = NEW_OBJECT(data_structures_groups::vector_ge);
 	Transporter->init(S->A, 0);
 	{
 		int *M;
@@ -2311,5 +2313,5 @@ groups::strong_generators *any_group::get_strong_generators()
 
 
 
-}}
+}}}
 

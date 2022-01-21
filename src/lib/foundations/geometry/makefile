@@ -12,7 +12,6 @@ MODULES = \
 	arc_basic.o \
 	arc_in_projective_space.o \
 	buekenhout_metz.o \
-	cubic_curve.o \
 	decomposition.o \
 	desarguesian_spread.o \
 	elliptic_curve.o \

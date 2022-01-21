@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
 {
@@ -100,7 +102,7 @@ void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_l
 	Flag_representation = NEW_lint(pt_representation_sz);
 	Flag2_representation = NEW_lint(pt_representation_sz);
 
-	Lift->Surfaces = NEW_OBJECT(classification_step);
+	Lift->Surfaces = NEW_OBJECT(invariant_relations::classification_step);
 
 	Lift->A4->group_order(A4_go);
 
@@ -294,7 +296,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 		cout << "verbose_level = " << verbose_level << endl;
 	}
 
-	D->coset_reps = NEW_OBJECT(vector_ge);
+	D->coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 	D->coset_reps->init(Lift->Surf_A->A, verbose_level - 2);
 	D->coset_reps->allocate(3240, verbose_level - 2); // 3240 = 45 * 3 * (8 * 6) / 2
 	D->T = (surfaces_arc_lifting_trace **) NEW_pvoid(3240);
@@ -385,7 +387,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 			Aut_gens->print_generators_tex(cout);
 		}
 
-		algebra_global_with_action Algebra;
+		apps_algebra::algebra_global_with_action Algebra;
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
@@ -687,5 +689,6 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 }
 
 
-}}
+}}}
+
 

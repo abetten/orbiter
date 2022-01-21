@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace invariant_relations {
 
 classification_step::classification_step()
 {
@@ -76,11 +77,11 @@ void classification_step::init(actions::action *A, actions::action *A2,
 	}
 }
 
-set_and_stabilizer *classification_step::get_set_and_stabilizer(
+data_structures_groups::set_and_stabilizer *classification_step::get_set_and_stabilizer(
 		int orbit_index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS;
 	long int *data;
 	groups::strong_generators *Strong_gens;
 
@@ -88,7 +89,7 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 		cout << "classification_step::get_set_and_stabilizer" << endl;
 	}
 
-	SaS = NEW_OBJECT(set_and_stabilizer);
+	SaS = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 
 	data = NEW_lint(representation_sz);
 	Orbiter->Lint_vec->copy(
@@ -543,6 +544,6 @@ void classification_step::print_latex(ostream &ost,
 
 
 
-}}
+}}}
 
 

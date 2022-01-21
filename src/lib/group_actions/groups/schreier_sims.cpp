@@ -162,7 +162,7 @@ void schreier_sims::init_target_group_order(
 }
 
 void schreier_sims::init_generators(
-		vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

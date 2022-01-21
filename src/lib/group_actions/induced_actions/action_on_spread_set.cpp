@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_spread_set::action_on_spread_set()
 {
@@ -299,5 +301,5 @@ void action_on_spread_set::compute_image_low_level(
 		}
 }
 
-}}
+}}}
 

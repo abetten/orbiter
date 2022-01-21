@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 upstep_work::upstep_work()
 {
@@ -453,8 +455,8 @@ int upstep_work::init_extension_node(int verbose_level)
 				"H is already allocated" << endl;
 		exit(1);
 	}
-	G = NEW_OBJECT(group_container);
-	H = NEW_OBJECT(group_container);
+	G = NEW_OBJECT(data_structures_groups::group_container);
+	H = NEW_OBJECT(data_structures_groups::group_container);
 	
 
 	if (f_v) {
@@ -664,7 +666,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	trace_result r;
 	actions::action *A_by_restriction;
 	int final_node, final_ex;
-	union_find UF;
+	data_structures_groups::union_find UF;
 	
 	O_cur->store_set(gen, size - 1); // stores a set of size 'size'
 	if (f_v) {
@@ -911,7 +913,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				<< ":" << endl;
 		print_coset_table(coset_table, nb_cosets_processed);
 	}
-	vector_ge SG_extension;
+	data_structures_groups::vector_ge SG_extension;
 	int *tl_extension = NEW_int(gen->get_A()->base_len());
 	int f_tolerant = TRUE;
 	
@@ -979,6 +981,7 @@ void print_coset_table(coset_table_entry *coset_table, int len)
 }
 
 
-}}
+}}}
+
 
 

@@ -14,7 +14,14 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
+
+static void ovoid_classify_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+static void callback_ovoid_print_set(std::ostream &ost, int len, long int *S, void *data);
 
 
 
@@ -107,7 +114,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	ovoid_classify::LG = LG;
 
 	A = LG->A2;
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	
 	u = NEW_int(Descr->d);
@@ -166,7 +173,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	
 #endif
 
-	action_on_orthogonal *AO;
+	induced_actions::action_on_orthogonal *AO;
 	
 	AO = A->G.AO;
 	O = AO->O;
@@ -221,7 +228,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 		}
 #endif
 	
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
@@ -849,7 +856,7 @@ void ovoid_classify::compute_coloring(
 }
 
 
-void ovoid_classify_early_test_func_callback(long int *S, int len,
+static void ovoid_classify_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -871,7 +878,7 @@ void ovoid_classify_early_test_func_callback(long int *S, int len,
 		}
 }
 
-void callback_ovoid_print_set(ostream &ost, int len, long int *S, void *data)
+static void callback_ovoid_print_set(ostream &ost, int len, long int *S, void *data)
 {
 	ovoid_classify *Gen = (ovoid_classify *) data;
 
@@ -882,4 +889,5 @@ void callback_ovoid_print_set(ostream &ost, int len, long int *S, void *data)
 
 
 
-}}
+}}}
+

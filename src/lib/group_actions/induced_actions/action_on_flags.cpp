@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_flags::action_on_flags()
 {
@@ -128,5 +130,5 @@ long int action_on_flags::compute_image(int *Elt, long int i, int verbose_level)
 }
 
 
-}}
+}}}
 

@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_graph_theory {
 
 
 graph_classify_description::graph_classify_description()
@@ -63,7 +64,7 @@ int graph_classify_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_control = TRUE;
-			Control = NEW_OBJECT(poset_classification_control);
+			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -171,5 +172,5 @@ void graph_classify_description::print()
 }
 
 
-}}
+}}}
 

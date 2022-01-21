@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
 
 
 group_theoretic_activity_description::group_theoretic_activity_description()
@@ -326,7 +327,7 @@ int group_theoretic_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
-			Control = NEW_OBJECT(poset_classification_control);
+			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			if (f_v) {
 				cout << "-poset_classification_control " << endl;
 			}
@@ -701,7 +702,7 @@ int group_theoretic_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-classify_ovoids") == 0) {
 			f_classify_ovoids = TRUE;
-			Ovoid_classify_description = NEW_OBJECT(ovoid_classify_description);
+			Ovoid_classify_description = NEW_OBJECT(apps_geometry::ovoid_classify_description);
 			if (f_v) {
 				cout << "-classify_ovoids" << endl;
 			}
@@ -1053,4 +1054,5 @@ void group_theoretic_activity_description::print()
 
 
 
-}}
+}}}
+

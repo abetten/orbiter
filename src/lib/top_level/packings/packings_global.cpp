@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 packings_global::packings_global()
@@ -1440,5 +1441,6 @@ void packings_global::select_packings_self_dual(
 
 
 
-}}
+}}}
+
 

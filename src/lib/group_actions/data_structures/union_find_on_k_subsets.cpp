@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
+
 
 union_find_on_k_subsets::union_find_on_k_subsets()
 {
@@ -279,4 +281,5 @@ int union_find_on_k_subsets::is_minimal(int rk, int verbose_level)
 }
 
 
-}}
+}}}
+

@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
 
 
 // #############################################################################
@@ -55,7 +56,7 @@ public:
 	long int starter_j1, starter_j2, starter_j3;
 	actions::action *A0;	// P Gamma L(k,q)
 	actions::action *A0_linear; // PGL(k,q), needed for compute_live_points
-	vector_ge *gens2;
+	data_structures_groups::vector_ge *gens2;
 
 	long int *live_points;
 	int nb_live_points;
@@ -105,7 +106,7 @@ public:
 class spread_classify {
 public:
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	groups::matrix_group *Mtx;
 
@@ -129,14 +130,14 @@ public:
 		// P Gamma L(n,q)
 	actions::action *A2;
 		// action of A on grassmannian of k-subspaces of V(n,q)
-	action_on_grassmannian *AG;
+	induced_actions::action_on_grassmannian *AG;
 	grassmann *Grass;
 		// {n choose k}_q
 
 
 	int f_recoordinatize;
 	recoordinatize *R;
-	classification_base_case *Base_case;
+	poset_classification::classification_base_case *Base_case;
 
 	// if f_recoordinatize is TRUE:
 	long int *Starter;
@@ -149,11 +150,11 @@ public:
 	int *tmp_M3;
 	int *tmp_M4;
 
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 
 
-	singer_cycle *Sing;
+	apps_geometry::singer_cycle *Sing;
 
 
 	// only if n = 2 * k:
@@ -174,11 +175,13 @@ public:
 	void null();
 	void freeself();
 	void init(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			int k,
 			int f_recoordinatize,
 			int verbose_level);
-	void init2(poset_classification_control *Control, int verbose_level);
+	void init2(
+			poset_classification::poset_classification_control *Control,
+			int verbose_level);
 	void unrank_point(int *v, long int a);
 	long int rank_point(int *v);
 	void unrank_subspace(int *M, long int a);
@@ -249,34 +252,7 @@ public:
 };
 
 
-void spread_lifting_early_test_function(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void spread_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates,
-	groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
-int starter_canonize_callback(long int *Set, int len, int *Elt,
-	void *data, int verbose_level);
-int callback_incremental_check_function(
-	int len, long int *S,
-	void *data, int verbose_level);
 
-
-// spread_classify2.cpp
-void spread_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-int spread_check_function_callback(int len, long int *S,
-	void *data, int verbose_level);
-void spread_callback_report(isomorph *Iso, void *data, int verbose_level);
-void spread_callback_make_quotients(isomorph *Iso, void *data,
-	int verbose_level);
-void callback_spread_print(std::ostream &ost, int len, long int *S, void *data);
 
 
 // #############################################################################
@@ -477,14 +453,14 @@ class spread_table_activity {
 public:
 
 	spread_table_activity_description *Descr;
-	packing_classify *P;
+	packings::packing_classify *P;
 
 
 
 	spread_table_activity();
 	~spread_table_activity();
-	void init(spread_table_activity_description *Descr,
-			packing_classify *P,
+	void init(spreads::spread_table_activity_description *Descr,
+			packings::packing_classify *P,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void export_spreads_to_csv(std::string &fname, int *spread_idx, int nb, int verbose_level);
@@ -590,9 +566,6 @@ public:
 
 };
 
-// globals:
-int spread_table_with_selection_compare_func(void *data, int i, int j, void *extra_data);
-void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra_data);
 
 
 // #############################################################################
@@ -633,11 +606,11 @@ public:
 	incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *arcs;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *arcs;
 
-	tactical_decomposition *T;
+	apps_combinatorics::tactical_decomposition *T;
 
 	std::string label;
 
@@ -647,7 +620,7 @@ public:
 	void freeself();
 	void init(long int *spread_elements_numeric,
 		int k, actions::action *An, actions::action *An1,
-		vector_ge *spread_stab_gens,
+		data_structures_groups::vector_ge *spread_stab_gens,
 		ring_theory::longinteger_object &spread_stab_go,
 		std::string &label,
 		int verbose_level);
@@ -666,16 +639,12 @@ public:
 };
 
 
-int translation_plane_via_andre_model_check_arc(int len, long int *S,
-	void *data, int verbose_level);
-int translation_plane_via_andre_model_check_subplane(int len, long int *S,
-	void *data, int verbose_level);
 
 
 
 
 
-}}
+}}}
 
 
 

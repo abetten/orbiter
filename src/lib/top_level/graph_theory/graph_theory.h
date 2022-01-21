@@ -13,6 +13,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace apps_graph_theory {
 
 
 // #############################################################################
@@ -48,8 +49,8 @@ public:
 
 	int *Elt1;
 	int *Elt2;
-	vector_ge *gens;
-	vector_ge *gens_subgroup;
+	data_structures_groups::vector_ge *gens;
+	data_structures_groups::vector_ge *gens_subgroup;
 	ring_theory::longinteger_object target_go, target_go_subgroup;
 	groups::strong_generators *Strong_gens;
 	groups::strong_generators *Strong_gens_subgroup;
@@ -70,9 +71,9 @@ public:
 	ring_theory::longinteger_object Aut_order;
 	actions::action *Aut;
 	actions::action *A2;
-	poset_with_group_action *Poset;
-	poset_classification_control *Control;
-	poset_classification *gen;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_classification *gen;
 
 
 	void init(int level, int group, int subgroup, int verbose_level);
@@ -239,7 +240,7 @@ public:
 	void create_coll_orthogonal(int &N, int *&Adj,
 			int epsilon, int d, int q, int verbose_level);
 	void make_orbital_graph(int &N, int *&Adj,
-			any_group *AG, int orbit_idx, int verbose_level);
+			apps_algebra::any_group *AG, int orbit_idx, int verbose_level);
 	void make_collinearity_graph(int &N, int *&Adj,
 			int *Inc, int nb_rows, int nb_cols, int verbose_level);
 	void make_chain_graph(int &N, int *&Adj,
@@ -323,7 +324,7 @@ public:
 	int f_regular;
 
 	int f_control;
-	poset_classification_control *Control;
+	poset_classification::poset_classification_control *Control;
 
 	int regularity;
 
@@ -366,8 +367,8 @@ public:
 
 	graph_classify_description *Descr;
 
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 
 	actions::action *A_base; // symmetric group on n vertices
 	actions::action *A_on_edges; // action on pairs
@@ -411,12 +412,6 @@ public:
 
 };
 
-void graph_classify_test_function(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		void *data, int verbose_level);
-void graph_classify_print_set(std::ostream &ost,
-		int len, long int *S, void *data);
 
 
 // #############################################################################
@@ -529,7 +524,7 @@ public:
 
 
 
-}}
+}}}
 
 
 #endif /* SRC_LIB_TOP_LEVEL_GRAPH_THEORY_GRAPH_THEORY_H_ */

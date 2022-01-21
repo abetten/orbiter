@@ -15,6 +15,16 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
+
+
+static void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
+
+
 
 delandtsheer_doyen::delandtsheer_doyen()
 {
@@ -641,7 +651,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 		cout << "delandtsheer_doyen::search_starter" << endl;
 	}
 
-	Gen = NEW_OBJECT(poset_classification);
+	Gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
 	if (!Descr->f_problem_label) {
@@ -670,7 +680,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	Descr->Search_control->f_problem_label = TRUE;
 	//Gen->depth = Descr->depth;
 	//Control_search = NEW_OBJECT(poset_classification_control);
-	Poset_search = NEW_OBJECT(poset_with_group_action);
+	Poset_search = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset_search->init_subset_lattice(A0, A, SG,
 			verbose_level);
 
@@ -811,13 +821,13 @@ void delandtsheer_doyen::compute_orbits_on_pairs(
 	if (f_v) {
 		cout << "delandtsheer_doyen::compute_orbits_on_pairs" << endl;
 	}
-	Pairs = NEW_OBJECT(poset_classification);
+	Pairs = NEW_OBJECT(poset_classification::poset_classification);
 
 
 	Descr->Pair_search_control->f_depth = TRUE;
 	Descr->Pair_search_control->depth = 2;
 
-	Poset_pairs = NEW_OBJECT(poset_with_group_action);
+	Poset_pairs = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset_pairs->init_subset_lattice(A0, A, Strong_gens,
 			verbose_level);
 
@@ -928,7 +938,7 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verb
 	int *data;
 	int sz;
 	int nb_gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	Orbiter->Int_vec->scan(Descr->subgroup_gens.c_str(), data, sz);
 	nb_gens = sz / A->make_element_size;
@@ -1048,7 +1058,7 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 	if (Descr->q1 == 1) {
 
-		vector_ge *nice_gens;
+		data_structures_groups::vector_ge *nice_gens;
 
 		F1->finite_field_init(2, FALSE /* f_without_tables */, 0);
 		F2->finite_field_init(2, FALSE /* f_without_tables */, 0);
@@ -1824,7 +1834,7 @@ void delandtsheer_doyen::get_mask_core_and_singletons(
 // #############################################################################
 
 
-void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
+static void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1851,6 +1861,6 @@ void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
 
 
 
-}}
+}}}
 
 

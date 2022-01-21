@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 arc_lifting::arc_lifting()
@@ -192,7 +193,8 @@ void arc_lifting::report_equation(ostream &ost)
 
 
 
-}}
+}}}
+
 
 
 

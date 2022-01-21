@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 
@@ -92,7 +93,7 @@ void packing_was_fixpoints_activity_description::print()
 
 
 
-}}
+}}}
 
 
 

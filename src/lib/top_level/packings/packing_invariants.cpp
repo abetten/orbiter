@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 
@@ -356,5 +357,5 @@ void packing_invariants::compute_decomposition(int verbose_level)
 	}
 }
 
-}}
+}}}
 

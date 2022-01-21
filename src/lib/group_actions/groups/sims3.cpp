@@ -51,14 +51,14 @@ void sims::normalizer_based_on_characteristic_vector(int *C_sub,
 	int f_v = (verbose_level >= 1);
 	long int go;
 	long int i, j, a;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 
 
 	if (f_v) {
 		cout << "sims::normalizer_based_on_characteristic_vector" << endl;
 		}
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (j = 0; j < nb_gens; j++) {

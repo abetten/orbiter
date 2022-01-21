@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
 
 
 incidence_structure_with_group::incidence_structure_with_group()
@@ -269,5 +270,5 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	}
 }
 
-}}
+}}}
 

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 large_set_activity_description::large_set_activity_description()
@@ -76,6 +77,6 @@ int large_set_activity_description::read_arguments(int argc, std::string *argv,
 
 
 
-}}
+}}}
 
 

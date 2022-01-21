@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_galois_group::action_on_galois_group()
 {
@@ -101,6 +103,6 @@ long int action_on_galois_group::compute_image(
 	return j;
 }
 
-}}
+}}}
 
 

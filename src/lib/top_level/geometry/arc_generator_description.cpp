@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 arc_generator_description::arc_generator_description()
@@ -61,7 +62,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 
 		if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
-			Control = NEW_OBJECT(poset_classification_control);
+			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			if (f_v) {
 				cout << "-poset_classification_control " << endl;
 			}
@@ -183,7 +184,7 @@ void arc_generator_description::print()
 }
 
 
-}}
+}}}
 
 
 

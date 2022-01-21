@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -97,4 +98,5 @@ void projective_space_with_action_description::print()
 	cout << endl;
 }
 
-}}
+}}}
+

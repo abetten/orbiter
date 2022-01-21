@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 
@@ -25,7 +26,7 @@ class classification_of_cubic_surfaces_with_double_sixes_activity_description {
 public:
 
 	int f_report;
-	poset_classification_report_options *report_options;
+	poset_classification::poset_classification_report_options *report_options;
 
 	int f_identify_Eckardt;
 
@@ -78,7 +79,7 @@ public:
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void report(
-			poset_classification_report_options *report_options,
+			poset_classification::poset_classification_report_options *report_options,
 			int verbose_level);
 	void do_surface_identify_Eckardt(int verbose_level);
 	void do_surface_identify_F13(int verbose_level);
@@ -123,7 +124,7 @@ public:
 	// pulled from surface_classify_wedge:
 
 	actions::action *A2; // the action on the wedge product
-	action_on_wedge_product *AW;
+	induced_actions::action_on_wedge_product *AW;
 		// internal data structure for the wedge action
 
 	int *Elt0; // used in identify_five_plus_one
@@ -182,9 +183,9 @@ public:
 	actions::action *A_on_neighbors;
 		// restricted action A2 on the set Neighbors[]
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *Five_plus_one;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
 
 
@@ -205,9 +206,9 @@ public:
 	int *Pts_for_partial_ovoid_test; // [5*6]
 
 
-	flag_orbits *Flag_orbits;
+	invariant_relations::flag_orbits *Flag_orbits;
 
-	classification_step *Double_sixes;
+	invariant_relations::classification_step *Double_sixes;
 
 
 	classify_double_sixes();
@@ -215,7 +216,7 @@ public:
 	void null();
 	void freeself();
 	void init(surface_with_action *Surf_A,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void compute_neighbors(int verbose_level);
 	void make_spreadsheet_of_neighbors(data_structures::spreadsheet *&Sp,
@@ -224,7 +225,7 @@ public:
 		int verbose_level);
 	void report(std::ostream &ost,
 			layered_graph_draw_options *draw_options,
-			poset_classification_report_options *Opt,
+			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
 	void partial_ovoid_test_early(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -248,10 +249,6 @@ public:
 	int line_to_neighbor(long int line_rk, int verbose_level);
 };
 
-void callback_partial_ovoid_test_early(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 // #############################################################################
@@ -282,9 +279,9 @@ public:
 	classify_double_sixes *Classify_double_sixes;
 
 	// classification of surfaces:
-	flag_orbits *Flag_orbits;
+	invariant_relations::flag_orbits *Flag_orbits;
 
-	classification_step *Surfaces;
+	invariant_relations::classification_step *Surfaces;
 
 
 
@@ -294,7 +291,7 @@ public:
 	void freeself();
 	void init(
 		surface_with_action *Surf_A,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level);
 	void do_classify_double_sixes(int verbose_level);
 	void do_classify_surfaces(int verbose_level);
@@ -339,11 +336,11 @@ public:
 	void read_double_sixes(int verbose_level);
 	void create_report(int f_with_stabilizers,
 			layered_graph_draw_options *draw_options,
-			poset_classification_report_options *Opt,
+			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
 	void report(std::ostream &ost, int f_with_stabilizers,
 			layered_graph_draw_options *draw_options,
-			poset_classification_report_options *Opt,
+			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
 	void create_report_double_sixes(int verbose_level);
 	void test_isomorphism(
@@ -358,7 +355,8 @@ public:
 };
 
 
-}}
+}}}
+
 
 
 

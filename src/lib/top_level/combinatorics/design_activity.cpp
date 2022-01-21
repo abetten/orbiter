@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 design_activity::design_activity()
@@ -167,7 +168,7 @@ void design_activity::do_extract_solutions_by_index(
 	design_tables *T;
 
 	int idx;
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
 	idx = Orbiter->find_symbol(group_label);
 
@@ -181,7 +182,7 @@ void design_activity::do_extract_solutions_by_index(
 		cout << endl;
 		exit(1);
 	}
-	AG = (any_group *) Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
 
 
 	Combi.load_design_table(DC,
@@ -294,7 +295,7 @@ void design_activity::do_create_table(
 
 
 	int idx;
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
 	idx = Orbiter->find_symbol(group_label);
 
@@ -308,7 +309,7 @@ void design_activity::do_create_table(
 		cout << endl;
 		exit(1);
 	}
-	AG = (any_group *) Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table before Combi.create_design_table" << endl;
@@ -349,7 +350,7 @@ void design_activity::do_load_table(
 
 
 	int idx;
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
 	idx = Orbiter->find_symbol(group_label);
 
@@ -363,7 +364,7 @@ void design_activity::do_load_table(
 		cout << endl;
 		exit(1);
 	}
-	AG = (any_group *) Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table before Combi.load_design_table" << endl;
@@ -770,7 +771,8 @@ void design_activity::do_tactical_decomposition(
 
 }
 
-}}
+}}}
+
 
 
 

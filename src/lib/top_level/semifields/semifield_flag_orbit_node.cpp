@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 
 
@@ -152,5 +153,5 @@ void semifield_flag_orbit_node::read_from_file_binary(
 
 
 
-}}
+}}}
 

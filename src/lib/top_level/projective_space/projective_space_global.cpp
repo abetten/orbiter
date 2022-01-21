@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -196,9 +197,9 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 
 void projective_space_global::do_create_surface(
 		projective_space_with_action *PA,
-		surface_create_description *Surface_Descr,
-		surface_with_action *&Surf_A,
-		surface_create *&SC,
+		applications_in_algebraic_geometry::surface_create_description *Surface_Descr,
+		applications_in_algebraic_geometry::surface_with_action *&Surf_A,
+		applications_in_algebraic_geometry::surface_create *&SC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -238,7 +239,7 @@ void projective_space_global::do_create_surface(
 		cout << "projective_space_global::do_create_surface after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_create_surface before Surf_A->init" << endl;
@@ -337,7 +338,7 @@ void projective_space_global::do_lift_skew_hexagon(
 	}
 
 	algebraic_geometry::surface_domain *Surf;
-	surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
 		cout << "projective_space_global::do_lift_skew_hexagon we need a three-dimensional projective space" << endl;
@@ -354,7 +355,7 @@ void projective_space_global::do_lift_skew_hexagon(
 		cout << "projective_space_global::do_lift_skew_hexagon after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon before Surf_A->init" << endl;
@@ -446,7 +447,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 
 	algebraic_geometry::surface_domain *Surf;
-	surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity we need a three-dimensional projective space" << endl;
@@ -463,7 +464,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity before Surf_A->init" << endl;
@@ -591,7 +592,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 void projective_space_global::do_classify_arcs(
 		projective_space_with_action *PA,
-		arc_generator_description *Arc_generator_description,
+		apps_geometry::arc_generator_description *Arc_generator_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -620,7 +621,7 @@ void projective_space_global::do_classify_arcs(
 					"f_override_group label = " << Arc_generator_description->override_group_label << endl;
 		}
 		int idx;
-		any_group *AG;
+		apps_algebra::any_group *AG;
 		//linear_group *LG;
 
 		idx = Orbiter->find_symbol(Arc_generator_description->override_group_label);
@@ -628,7 +629,7 @@ void projective_space_global::do_classify_arcs(
 			cout << "projective_space_global::do_classify_arcs The object given must be a group" << endl;
 			exit(1);
 		}
-		AG = (any_group *) Orbiter->get_object(idx);
+		AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
 
 #if 0
 		if (!LG->f_has_strong_generators) {
@@ -646,9 +647,9 @@ void projective_space_global::do_classify_arcs(
 	}
 
 	{
-		arc_generator *Gen;
+		apps_geometry::arc_generator *Gen;
 
-		Gen = NEW_OBJECT(arc_generator);
+		Gen = NEW_OBJECT(apps_geometry::arc_generator);
 
 
 
@@ -688,7 +689,7 @@ void projective_space_global::do_classify_arcs(
 
 void projective_space_global::do_classify_cubic_curves(
 		projective_space_with_action *PA,
-		arc_generator_description *Arc_generator_description,
+		apps_geometry::arc_generator_description *Arc_generator_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -699,9 +700,9 @@ void projective_space_global::do_classify_cubic_curves(
 
 
 
-	cubic_curve *CC;
+	algebraic_geometry::cubic_curve *CC;
 
-	CC = NEW_OBJECT(cubic_curve);
+	CC = NEW_OBJECT(algebraic_geometry::cubic_curve);
 
 	if (f_v) {
 		cout << "projective_space_global::do_classify_cubic_curves before CC->init" << endl;
@@ -712,9 +713,9 @@ void projective_space_global::do_classify_cubic_curves(
 	}
 
 
-	cubic_curve_with_action *CCA;
+	apps_geometry::cubic_curve_with_action *CCA;
 
-	CCA = NEW_OBJECT(cubic_curve_with_action);
+	CCA = NEW_OBJECT(apps_geometry::cubic_curve_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_classify_cubic_curves before CCA->init" << endl;
@@ -725,9 +726,9 @@ void projective_space_global::do_classify_cubic_curves(
 	}
 
 
-	classify_cubic_curves *CCC;
+	apps_geometry::classify_cubic_curves *CCC;
 
-	CCC = NEW_OBJECT(classify_cubic_curves);
+	CCC = NEW_OBJECT(apps_geometry::classify_cubic_curves);
 
 
 	if (f_v) {
@@ -1519,7 +1520,8 @@ void projective_space_global::set_stabilizer(
 
 
 
-}}
+}}}
+
 
 
 

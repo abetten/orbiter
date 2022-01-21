@@ -18,12 +18,13 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
 
 
 void algebra_global_with_action::orbits_under_conjugation(
 		long int *the_set, int set_size, groups::sims *S,
 		groups::strong_generators *SG,
-		vector_ge *Transporter,
+		data_structures_groups::vector_ge *Transporter,
 		int verbose_level)
 // this is related to Betten, Topalova, Zhelezova 2021,
 // packings in PG(3,4) invariant under an elementary group of order 4
@@ -101,7 +102,7 @@ void algebra_global_with_action::create_subgroups(
 		groups::strong_generators *SG,
 		long int *the_set, int set_size, groups::sims *S, actions::action *A_conj,
 		groups::schreier *Classes,
-		vector_ge *Transporter,
+		data_structures_groups::vector_ge *Transporter,
 		int verbose_level)
 // this is related to Betten, Topalova, Zhelezova 2021,
 // packings in PG(3,4) invariant under an elementary abelian group of order 4
@@ -297,9 +298,9 @@ void algebra_global_with_action::create_subgroups(
 		flag_orbit_of_iso_type[nb_iso] = flag;
 		upstep_transversal_size[nb_iso] = 1;
 
-		vector_ge *transversal;
+		data_structures_groups::vector_ge *transversal;
 
-		transversal = NEW_OBJECT(vector_ge);
+		transversal = NEW_OBJECT(data_structures_groups::vector_ge);
 		transversal->init(S->A, 0);
 		transversal->allocate(6, 0);
 		for (h = 0; h < 6; h++) {
@@ -576,7 +577,7 @@ void algebra_global_with_action::create_subgroups(
 void algebra_global_with_action::orbits_on_set_from_file(
 		long int *the_set, int set_size,
 		actions::action *A1, actions::action *A2,
-		vector_ge *gens,
+		data_structures_groups::vector_ge *gens,
 		std::string &label_set,
 		std::string &label_group,
 		long int *&Table,
@@ -630,7 +631,7 @@ void algebra_global_with_action::orbits_on_set_from_file(
 
 	string fname;
 
-	vector_ge *Coset_reps;
+	data_structures_groups::vector_ge *Coset_reps;
 
 	if (f_v) {
 		cout << "before OS->make_table_of_coset_reps" << endl;
@@ -965,7 +966,7 @@ void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d
 
 	actions::action *A;
 	ring_theory::longinteger_object Go;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 	int a;
 	int *Mtx;
 	int *Elt;
@@ -1061,7 +1062,7 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 
 	actions::action *A;
 	ring_theory::longinteger_object Go;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 	A = NEW_OBJECT(actions::action);
@@ -1138,7 +1139,7 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 
 	actions::action *A;
 	ring_theory::longinteger_object Go;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 	A = NEW_OBJECT(actions::action);
@@ -1210,7 +1211,7 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 	actions::action *A;
 	ring_theory::longinteger_object Go;
 	int *Class_count;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 	A = NEW_OBJECT(actions::action);
@@ -1346,7 +1347,7 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 
 	actions::action *A;
 	ring_theory::longinteger_object Go;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 	A = NEW_OBJECT(actions::action);
@@ -1524,7 +1525,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 	actions::action *A;
 	ring_theory::longinteger_object Go;
 	field_theory::finite_field *F;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
@@ -1593,12 +1594,12 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 	cout << "The centralizer has order " << sz << endl;
 
 	int a;
-	vector_ge *gens;
-	vector_ge *SG;
+	data_structures_groups::vector_ge *gens;
+	data_structures_groups::vector_ge *SG;
 	int *tl;
 
-	gens = NEW_OBJECT(vector_ge);
-	SG = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	SG = NEW_OBJECT(data_structures_groups::vector_ge);
 	tl = NEW_int(A->base_len());
 	gens->init(A, verbose_level - 2);
 	gens->allocate(sz, verbose_level - 2);
@@ -1653,7 +1654,7 @@ void algebra_global_with_action::centralizer(int q, int d,
 	actions::action *A_PGL;
 	actions::action *A_GL;
 	ring_theory::longinteger_object Go;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
@@ -1726,7 +1727,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 	actions::action *A;
 	field_theory::finite_field *F;
 	ring_theory::longinteger_object Go;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 	int go, i;
 
 	F = NEW_OBJECT(field_theory::finite_field);
@@ -1780,7 +1781,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 
 void algebra_global_with_action::compute_regular_representation(
 		actions::action *A, groups::sims *S,
-		vector_ge *SG, int *&perm, int verbose_level)
+		data_structures_groups::vector_ge *SG, int *&perm, int verbose_level)
 {
 	ring_theory::longinteger_object go;
 	int goi, i;
@@ -1810,7 +1811,7 @@ void algebra_global_with_action::compute_regular_representation(
 
 void algebra_global_with_action::presentation(
 		actions::action *A, groups::sims *S, int goi,
-		vector_ge *gens, int *primes,
+		data_structures_groups::vector_ge *gens, int *primes,
 		int verbose_level)
 {
 	int *Elt1, *Elt2, *Elt3, *Elt4;
@@ -3116,7 +3117,7 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 }
 
 void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		groups::linear_group *LG,
 		int d, int target_depth, int verbose_level)
 {
@@ -3126,8 +3127,8 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance" << endl;
 	}
 
-	poset_with_group_action *Poset;
-	poset_classification *PC;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *PC;
 
 
 	Control->f_depth = TRUE;
@@ -3141,7 +3142,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 				<< LG->A2->f_has_strong_generators << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 	Poset->init_subset_lattice(LG->A_linear, LG->A_linear,
 			LG->Strong_gens,
@@ -3160,7 +3161,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	Poset->print_function_data = this;
 #endif
 
-	PC = NEW_OBJECT(poset_classification);
+	PC = NEW_OBJECT(poset_classification::poset_classification);
 	PC->initialize_and_allocate_root_node(Control, Poset,
 			target_depth, verbose_level);
 
@@ -3545,7 +3546,8 @@ void algebra_global_with_action::find_subgroups(
 
 void algebra_global_with_action::relative_order_vector_of_cosets(
 		actions::action *A, groups::strong_generators *SG,
-		vector_ge *cosets, int *&relative_order_table, int verbose_level)
+		data_structures_groups::vector_ge *cosets,
+		int *&relative_order_table, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
@@ -3704,7 +3706,7 @@ void algebra_global_with_action::representation_on_polynomials(
 	}
 
 
-	action_on_homogeneous_polynomials *A_on_HPD;
+	induced_actions::action_on_homogeneous_polynomials *A_on_HPD;
 	int *M;
 	int nb_gens;
 	int i;
@@ -4120,4 +4122,5 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 
 
 
-}}
+}}}
+

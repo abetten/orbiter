@@ -12,7 +12,12 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
+static void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 
@@ -41,7 +46,8 @@ packing_was_fixpoints::~packing_was_fixpoints()
 }
 
 void packing_was_fixpoints::init(packing_was *PW,
-		int fixpoint_clique_size, poset_classification_control *Control,
+		int fixpoint_clique_size,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -223,7 +229,7 @@ void packing_was_fixpoints::action_on_fixpoints(int verbose_level)
 
 void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 		int clique_size,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 // initializes the orbit transversal Fixp_cliques
 // initializes Cliques[nb_cliques * clique_size]
@@ -294,7 +300,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 		}
 	}
 
-	Fixp_cliques = NEW_OBJECT(orbit_transversal);
+	Fixp_cliques = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
@@ -377,7 +383,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 		int clique_size,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 // compute cliques on fixpoint graph using A_on_fixpoints
 // orbit representatives will be stored in Cliques[nb_cliques * clique_size]
@@ -397,7 +403,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 				"before compute_orbits_on_subsets" << endl;
 	}
 
-	Poset_fixpoint_cliques = NEW_OBJECT(poset_with_group_action);
+	Poset_fixpoint_cliques = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset_fixpoint_cliques->init_subset_lattice(
 			PW->P->T->A, A_on_fixpoints,
 			PW->N_gens,
@@ -413,7 +419,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 				this /* void *data */,
 				verbose_level);
 
-	fixpoint_clique_gen = NEW_OBJECT(poset_classification);
+	fixpoint_clique_gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
 	fixpoint_clique_gen->compute_orbits_on_subsets(
@@ -781,7 +787,7 @@ long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a, int verbose_le
 // global functions:
 // #############################################################################
 
-void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
+static void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -807,5 +813,5 @@ void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
 
 
 
-}}
+}}}
 

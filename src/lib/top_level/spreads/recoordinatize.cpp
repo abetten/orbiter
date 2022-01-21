@@ -16,6 +16,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
+
 
 recoordinatize::recoordinatize()
 {
@@ -325,9 +327,9 @@ void recoordinatize::stabilizer_of_first_three(
 
 	A0 = NEW_OBJECT(actions::action);
 	A0_linear = NEW_OBJECT(actions::action);
-	gens2 = NEW_OBJECT(vector_ge);
+	gens2 = NEW_OBJECT(data_structures_groups::vector_ge);
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	
 	if (f_v) {
@@ -756,4 +758,5 @@ void recoordinatize::make_first_three(
 	}
 }
 
-}}
+}}}
+

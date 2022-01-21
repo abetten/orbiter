@@ -13,6 +13,17 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
+
+static void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
+		invariant_relations::classification_step *Step, void *print_function_data);
+static void callback_surfaces_arc_lifting_free_trace_result(void *ptr,
+		void *data, int verbose_level);
+static void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost,
+		void *trace_result, void *data, int verbose_level);
+
+
 
 surfaces_arc_lifting::surfaces_arc_lifting()
 {
@@ -115,12 +126,12 @@ void surfaces_arc_lifting::freeself()
 
 void surfaces_arc_lifting::init(
 	surface_with_action *Surf_A,
-	poset_classification_control *Control_six_arcs,
+	poset_classification::poset_classification_control *Control_six_arcs,
 	int f_test_nb_Eckardt_points, int nb_E,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	arc_generator_description *Descr;
+	apps_geometry::arc_generator_description *Descr;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init" << endl;
@@ -176,7 +187,7 @@ void surfaces_arc_lifting::init(
 
 
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
-	Descr = NEW_OBJECT(arc_generator_description);
+	Descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
@@ -184,14 +195,6 @@ void surfaces_arc_lifting::init(
 	}
 
 	Descr->Control = Control_six_arcs;
-	//Descr->LG = LG3; // not needed if we are not using init_from_description
-#if 0
-	Descr->F = F;
-	Descr->f_q = TRUE;
-	Descr->q = F->q;
-	Descr->f_n = TRUE;
-	Descr->n = 3;
-#endif
 	Descr->f_target_size = TRUE;
 	Descr->target_size = 6;
 
@@ -323,7 +326,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 
 	//nb_orbits = Six_arcs->nb_arcs_not_on_conic;
 
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->init(
 			A4,
 			A4,
@@ -496,7 +499,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 	if (f_v) {
 		cout << "surfaces_arc_lifting::downstep_one_arc" << endl;
 		}
-	set_and_stabilizer *The_arc;
+	data_structures_groups::set_and_stabilizer *The_arc;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::downstep_one_arc "
@@ -541,7 +544,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 		}
 
 
-		set_and_stabilizer *pair_orbit;
+		data_structures_groups::set_and_stabilizer *pair_orbit;
 		pair_orbit = T->Orbits_on_pairs->get_set_and_stabilizer(
 				2 /* level */,
 				orbit_on_pairs_idx,
@@ -934,7 +937,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 			arc_idx < Six_arcs->nb_arcs_not_on_conic;
 			arc_idx++) {
 		{
-			set_and_stabilizer *The_arc;
+			data_structures_groups::set_and_stabilizer *The_arc;
 
 		The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
 				6 /* level */,
@@ -986,7 +989,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 
 	ost << "\\section{Six-Arcs in Detail}" << endl << endl;
 
-	poset_classification_report_options Opt;
+	poset_classification::poset_classification_report_options Opt;
 
 	Six_arcs->Gen->gen->report(ost, &Opt, verbose_level);
 
@@ -1190,7 +1193,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 
 
 
-		set_and_stabilizer *pair_orbit;
+		data_structures_groups::set_and_stabilizer *pair_orbit;
 		pair_orbit = Table_orbits_on_pairs[arc_idx].
 				Orbits_on_pairs->get_set_and_stabilizer(
 				2 /* level */,
@@ -1599,8 +1602,8 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 }
 
 
-void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
-				classification_step *Step, void *print_function_data)
+static void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
+		invariant_relations::classification_step *Step, void *print_function_data)
 {
 	int verbose_level = 0;
 	void *data;
@@ -1615,7 +1618,7 @@ void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
 	D->report_tally_F2(ost, verbose_level);
 }
 
-void callback_surfaces_arc_lifting_free_trace_result(void *ptr, void *data, int verbose_level)
+static void callback_surfaces_arc_lifting_free_trace_result(void *ptr, void *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1634,7 +1637,7 @@ void callback_surfaces_arc_lifting_free_trace_result(void *ptr, void *data, int 
 	}
 }
 
-void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost, void *trace_result, void *data, int verbose_level)
+static void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost, void *trace_result, void *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1676,5 +1679,6 @@ void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost, void *t
 }
 
 
-}}
+}}}
+
 

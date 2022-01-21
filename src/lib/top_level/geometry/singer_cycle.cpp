@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 singer_cycle::singer_cycle()
@@ -359,7 +360,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 	Inc->init_by_matrix_as_bitmatrix(P->N_points, P->N_lines, P->Implementation->Bitmatrix, 0);
 
-	T = NEW_OBJECT(tactical_decomposition);
+	T = NEW_OBJECT(apps_combinatorics::tactical_decomposition);
 	T->init(P->N_points, P->N_lines,
 			Inc,
 			f_combined_action,
@@ -434,6 +435,6 @@ void singer_cycle::init_lines(int verbose_level)
 	}
 }
 
-}}
+}}}
 
 

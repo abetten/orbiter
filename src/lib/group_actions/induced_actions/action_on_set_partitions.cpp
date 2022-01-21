@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_set_partitions::action_on_set_partitions()
 {
@@ -146,6 +148,7 @@ long int action_on_set_partitions::compute_image(
 	return b;
 }
 
-}}
+}}}
+
 
 

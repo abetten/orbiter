@@ -30,7 +30,7 @@ namespace top_level {
 class orbit_of_equations {
 public:
 	actions::action *A;
-	action_on_homogeneous_polynomials *AonHPD;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 	field_theory::finite_field *F;
 	groups::strong_generators *SG;
 	int nb_monomials;
@@ -59,7 +59,7 @@ public:
 	void null();
 	void freeself();
 	void init(actions::action *A, field_theory::finite_field *F,
-		action_on_homogeneous_polynomials *AonHPD, 
+			induced_actions::action_on_homogeneous_polynomials *AonHPD,
 		groups::strong_generators *SG, int *coeff_in,
 		int verbose_level);
 	void map_an_equation(int *object_in, int *object_out, 
@@ -90,7 +90,6 @@ public:
 	void save_csv(std::string &fname, int verbose_level);
 };
 
-int orbit_of_equations_compare_func(void *a, void *b, void *data);
 
 // #############################################################################
 // orbit_of_sets.cpp
@@ -108,7 +107,7 @@ class orbit_of_sets {
 public:
 	actions::action *A;
 	actions::action *A2;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	long int *set; // the set whose orbit we want to compute; it has size 'sz'
 	int sz;
 
@@ -143,14 +142,15 @@ public:
 	void freeself();
 	void init(actions::action *A, actions::action *A2,
 			long int *set, int sz,
-			vector_ge *gens, int verbose_level);
+			data_structures_groups::vector_ge *gens, int verbose_level);
 	void compute(int verbose_level);
 	void dump_tables_of_hash_values();
 	void get_table_of_orbits(long int *&Table, int &orbit_length,
 		int &set_size, int verbose_level);
 	void get_table_of_orbits_and_hash_values(long int *&Table,
 			int &orbit_length, int &set_size, int verbose_level);
-	void make_table_of_coset_reps(vector_ge *&Coset_reps, int verbose_level);
+	void make_table_of_coset_reps(
+			data_structures_groups::vector_ge *&Coset_reps, int verbose_level);
 	void coset_rep(int j);
 		// result is in cosetrep
 		// determines an element in the group
@@ -177,7 +177,7 @@ public:
 	actions::action *A;
 	actions::action *A2;
 	field_theory::finite_field *F;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	int f_lint;
 	int k;
 	int n;
@@ -241,7 +241,8 @@ public:
 		void (*compute_image_of_vector_callback)(int *v, 
 			int *w, int *Elt, void *data, int verbose_level), 
 		void *compute_image_of_vector_callback_data, 
-		vector_ge *gens, int verbose_level);
+		data_structures_groups::vector_ge *gens,
+		int verbose_level);
 	void init_lint(
 			actions::action *A, actions::action *A2, field_theory::finite_field *F,
 		long int *subspace_by_rank, int k, int n,
@@ -254,7 +255,8 @@ public:
 		void (*compute_image_of_vector_callback)(int *v, int *w,
 				int *Elt, void *data, int verbose_level),
 		void *compute_image_of_vector_callback_data,
-		vector_ge *gens, int verbose_level);
+		data_structures_groups::vector_ge *gens,
+		int verbose_level);
 	int rank_vector(int *v, int verbose_level);
 	long int rank_vector_lint(int *v, int verbose_level);
 	void unrank_vector(int rk, int *v, int verbose_level);

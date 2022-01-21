@@ -27,82 +27,99 @@ namespace top_level {
 
 
 
+//! Applications in algebra
 
 
+namespace apps_algebra {
 
-// algbra_and_number_theory
-class algebra_global_with_action;
-class any_group;
-class character_table_burnside;
-class group_modification_description;
-class group_theoretic_activity_description;
-class group_theoretic_activity;
-class modified_group_create;
-class orbits_on_polynomials;
-class orbits_on_subspaces;
-class young;
+	// algebra_and_number_theory
+	class algebra_global_with_action;
+	class any_group;
+	class character_table_burnside;
+	class group_modification_description;
+	class group_theoretic_activity_description;
+	class group_theoretic_activity;
+	class modified_group_create;
+	class orbits_on_polynomials;
+	class orbits_on_subspaces;
+	class young;
 
+}
 
-// combinatorics
-class boolean_function_classify;
-class combinatorial_object_activity_description;
-class combinatorial_object_activity;
-class combinatorics_global;
-class delandtsheer_doyen_description;
-class delandtsheer_doyen;
-class design_activity_description;
-class design_activity;
-class design_create_description;
-class design_create;
-class design_tables;
-class difference_set_in_heisenberg_group;
-class flag_orbits_incidence_structure;
-class hadamard_classify;
-class hall_system_classify;
-class large_set_activity_description;
-class large_set_activity;
-class large_set_classify;
-class large_set_was_activity_description;
-class large_set_was_activity;
-class large_set_was_description;
-class large_set_was;
-class object_with_properties;
-class regular_linear_space_description;
-class regular_ls_classify;
-class tactical_decomposition;
+//! Classification problems in combinatorics, including design theory
 
+namespace apps_combinatorics {
 
-// geometry
-class arc_generator_description;
-class arc_generator;
-class arc_lifting_simeon;
-class choose_points_or_lines;
-class classify_cubic_curves;
-class cubic_curve_with_action;
-class hermitian_spread_classify;
-class linear_set_classify;
-class ovoid_classify_description;
-class ovoid_classify;
-class polar;
-class search_blocking_set;
-class singer_cycle;
-class tensor_classify;
-class top_level_geometry_global;
+	// combinatorics
+	class boolean_function_classify;
+	class combinatorial_object_activity_description;
+	class combinatorial_object_activity;
+	class combinatorics_global;
+	class delandtsheer_doyen_description;
+	class delandtsheer_doyen;
+	class design_activity_description;
+	class design_activity;
+	class design_create_description;
+	class design_create;
+	class design_tables;
+	class difference_set_in_heisenberg_group;
+	class flag_orbits_incidence_structure;
+	class hadamard_classify;
+	class hall_system_classify;
+	class large_set_activity_description;
+	class large_set_activity;
+	class large_set_classify;
+	class large_set_was_activity_description;
+	class large_set_was_activity;
+	class large_set_was_description;
+	class large_set_was;
+	class object_with_properties;
+	class regular_linear_space_description;
+	class regular_ls_classify;
+	class tactical_decomposition;
 
+}
 
+//! Geometry
 
-// graph_theory.h:
-class cayley_graph_search;
-class create_graph_description;
-class create_graph;
-class graph_classification_activity_description;
-class graph_classification_activity;
-class graph_classify_description;
-class graph_classify;
-class graph_modification_description;
-class graph_theoretic_activity_description;
-class graph_theoretic_activity;
+namespace apps_geometry {
 
+	// geometry
+	class arc_generator_description;
+	class arc_generator;
+	class arc_lifting_simeon;
+	class choose_points_or_lines;
+	class classify_cubic_curves;
+	class cubic_curve_with_action;
+	class hermitian_spread_classify;
+	class linear_set_classify;
+	class ovoid_classify_description;
+	class ovoid_classify;
+	class polar;
+	class search_blocking_set;
+	class singer_cycle;
+	class tensor_classify;
+	class top_level_geometry_global;
+
+}
+
+//! Graph theory
+
+namespace apps_graph_theory {
+
+	// graph_theory.h:
+	class cayley_graph_search;
+	class create_graph_description;
+	class create_graph;
+	class graph_classification_activity_description;
+	class graph_classification_activity;
+	class graph_classify_description;
+	class graph_classify;
+	class graph_modification_description;
+	class graph_theoretic_activity_description;
+	class graph_theoretic_activity;
+
+}
 
 // interfaces
 class activity_description;
@@ -132,61 +149,83 @@ class orbit_of_sets;
 class orbit_of_subspaces;
 
 
-// orthogonal
-class blt_set_classify;
-class BLT_set_create_description;
-class BLT_set_create;
-class blt_set_with_action;
-class orthogonal_space_activity_description;
-class orthogonal_space_activity;
-class orthogonal_space_with_action_description;
-class orthogonal_space_with_action;
+//! Applications in orthogonal geometry
+
+namespace orthogonal_geometry {
 
 
-// packings:
-class invariants_packing;
-class packing_classify;
-class packing_invariants;
-class packing_long_orbits_description;
-class packing_long_orbits;
-class packing_was_activity_description;
-class packing_was_activity;
-class packing_was_description;
-class packing_was_fixpoints_activity_description;
-class packing_was_fixpoints_activity;
-class packing_was_fixpoints;
-class packing_was;
-class packings_global;
-class regular_packing;
+	// orthogonal
+	class blt_set_classify;
+	class BLT_set_create_description;
+	class BLT_set_create;
+	class blt_set_with_action;
+	class orthogonal_space_activity_description;
+	class orthogonal_space_activity;
+	class orthogonal_space_with_action_description;
+	class orthogonal_space_with_action;
+
+}
+
+//! packings in projective space
+
+namespace packings {
+
+	// packings:
+	class invariants_packing;
+	class packing_classify;
+	class packing_invariants;
+	class packing_long_orbits_description;
+	class packing_long_orbits;
+	class packing_was_activity_description;
+	class packing_was_activity;
+	class packing_was_description;
+	class packing_was_fixpoints_activity_description;
+	class packing_was_fixpoints_activity;
+	class packing_was_fixpoints;
+	class packing_was;
+	class packings_global;
+	class regular_packing;
+
+}
 
 
+//! Applications in projective space
+
+namespace projective_geometry {
+
+	// projective_space.h:
+	class canonical_form_classifier_description;
+	class canonical_form_classifier;
+	class canonical_form_nauty;
+	class canonical_form_substructure;
+	class object_in_projective_space_with_action;
+	class projective_space_activity_description;
+	class projective_space_activity;
+	class projective_space_globals;
+	class projective_space_with_action_description;
+	class projective_space_with_action;
+
+}
+
+//! Classification of finite semifields
 
 
-// projective_space.h:
-class canonical_form_classifier_description;
-class canonical_form_classifier;
-class canonical_form_nauty;
-class canonical_form_substructure;
-class object_in_projective_space_with_action;
-class projective_space_activity_description;
-class projective_space_activity;
-class projective_space_globals;
-class projective_space_with_action_description;
-class projective_space_with_action;
+namespace semifields {
 
 
+	// semifield
+	class semifield_classify_description;
+	class semifield_classify_with_substructure;
+	class semifield_classify;
+	class semifield_downstep_node;
+	class semifield_flag_orbit_node;
+	class semifield_level_two;
+	class semifield_lifting;
+	class semifield_substructure;
+	class semifield_trace;
+	class trace_record;
 
-// semifield
-class semifield_classify_description;
-class semifield_classify_with_substructure;
-class semifield_classify;
-class semifield_downstep_node;
-class semifield_flag_orbit_node;
-class semifield_level_two;
-class semifield_lifting;
-class semifield_substructure;
-class semifield_trace;
-class trace_record;
+}
 
 
 // solver:
@@ -194,62 +233,76 @@ class exact_cover_arguments;
 class exact_cover;
 
 
-// spreads:
-class recoordinatize;
-class spread_classify;
-class spread_create_description;
-class spread_create;
-class spread_lifting;
-class spread_table_activity_description;
-class spread_table_activity;
-class spread_table_with_selection;
-class translation_plane_via_andre_model;
+//! Spreads in projective space
 
-// surfaces/quartic curves
-class quartic_curve_activity_description;
-class quartic_curve_activity;
-class quartic_curve_create_description;
-class quartic_curve_create;
-class quartic_curve_domain_with_action;
-class quartic_curve_from_surface;
-class quartic_curve_object_with_action;
+namespace spreads {
 
-// surfaces/surfaces_and_arcs:
-class arc_lifting;
-class arc_orbits_on_pairs;
-class arc_partition;
-class classify_trihedral_pairs;
-class six_arcs_not_on_a_conic;
-class surface_classify_using_arc;
-class surface_create_by_arc_lifting;
-class surfaces_arc_lifting_definition_node;
-class surfaces_arc_lifting_trace;
-class surfaces_arc_lifting_upstep;
-class surfaces_arc_lifting;
-class trihedral_pair_with_action;
+	// spreads:
+	class recoordinatize;
+	class spread_classify;
+	class spread_create_description;
+	class spread_create;
+	class spread_lifting;
+	class spread_table_activity_description;
+	class spread_table_activity;
+	class spread_table_with_selection;
+	class translation_plane_via_andre_model;
 
-// surfaces/surfaces_and_double_sixes:
-class classification_of_cubic_surfaces_with_double_sixes_activity_description;
-class classification_of_cubic_surfaces_with_double_sixes_activity;
-class classify_double_sixes;
-class surface_classify_wedge;
+}
 
 
-// surfaces/surfaces_general:
-class cubic_surface_activity_description;
-class cubic_surface_activity;
-class surface_clebsch_map;
-class surface_create_description;
-class surface_create;
-class surface_domain_high_level;
-class surface_object_with_action;
-class surface_study;
-class surface_with_action;
+//! cubic surfaces, quartic curves, etc.
+
+namespace applications_in_algebraic_geometry {
 
 
+	// surfaces/quartic curves
+	class quartic_curve_activity_description;
+	class quartic_curve_activity;
+	class quartic_curve_create_description;
+	class quartic_curve_create;
+	class quartic_curve_domain_with_action;
+	class quartic_curve_from_surface;
+	class quartic_curve_object_with_action;
 
-// pointer types:
-typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
+	// surfaces/surfaces_and_arcs:
+	class arc_lifting;
+	class arc_orbits_on_pairs;
+	class arc_partition;
+	class classify_trihedral_pairs;
+	class six_arcs_not_on_a_conic;
+	class surface_classify_using_arc;
+	class surface_create_by_arc_lifting;
+	class surfaces_arc_lifting_definition_node;
+	class surfaces_arc_lifting_trace;
+	class surfaces_arc_lifting_upstep;
+	class surfaces_arc_lifting;
+	class trihedral_pair_with_action;
+	// pointer types:
+	typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
+
+
+	// surfaces/surfaces_and_double_sixes:
+	class classification_of_cubic_surfaces_with_double_sixes_activity_description;
+	class classification_of_cubic_surfaces_with_double_sixes_activity;
+	class classify_double_sixes;
+	class surface_classify_wedge;
+
+
+	// surfaces/surfaces_general:
+	class cubic_surface_activity_description;
+	class cubic_surface_activity;
+	class surface_clebsch_map;
+	class surface_create_description;
+	class surface_create;
+	class surface_domain_high_level;
+	class surface_object_with_action;
+	class surface_study;
+	class surface_with_action;
+
+
+}
+
 
 
 // #############################################################################

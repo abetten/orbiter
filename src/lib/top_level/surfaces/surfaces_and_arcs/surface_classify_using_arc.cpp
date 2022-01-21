@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 
 surface_classify_using_arc::surface_classify_using_arc()
@@ -72,7 +74,7 @@ surface_classify_using_arc::~surface_classify_using_arc()
 
 
 void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs(
-		poset_classification_control *Control_six_arcs,
+		poset_classification::poset_classification_control *Control_six_arcs,
 		surface_with_action *Surf_A,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
@@ -83,7 +85,6 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	int i, j, arc_idx;
 	number_theory::number_theory_domain NT;
 
-	//int f_semilinear = TRUE;
 
 	surface_classify_using_arc::Surf_A = Surf_A;
 
@@ -95,39 +96,9 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	F = Surf_A->PA->F;
 	Surf = Surf_A->Surf;
 
-#if 0
-	A = NEW_OBJECT(action);
 
 
-	if (NT.is_prime(F->q)) {
-		f_semilinear = FALSE;
-	}
-
-
-	if (f_v) {
-		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "
-				"before A->init_projective_group" << endl;
-	}
-	A->init_projective_group(3, F,
-			f_semilinear,
-			TRUE /*f_basis*/, TRUE /* f_init_sims */,
-			nice_gens,
-			0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "
-				"after A->init_projective_group" << endl;
-	}
-#endif
-
-
-	Descr = NEW_OBJECT(arc_generator_description);
-#if 0
-	Descr->F = F;
-	Descr->f_q = TRUE;
-	Descr->q = F->q;
-	Descr->f_n = TRUE;
-	Descr->n = 3;
-#endif
+	Descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Descr->f_d = TRUE;
 	Descr->d = 2;
 	Descr->f_target_size = TRUE;
@@ -547,5 +518,6 @@ void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int v
 
 }
 
-}}
+}}}
+
 

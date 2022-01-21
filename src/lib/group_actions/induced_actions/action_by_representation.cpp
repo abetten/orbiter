@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_by_representation::action_by_representation()
 {
@@ -196,5 +198,6 @@ long int action_by_representation::rank_point(
 	return a;
 }
 
-}}
+}}}
+
 

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
 
 orthogonal_space_with_action::orthogonal_space_with_action()
@@ -267,4 +268,5 @@ void orthogonal_space_with_action::report2(std::ostream &ost,
 	}
 }
 
-}}
+}}}
+

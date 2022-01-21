@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 surface_with_action::surface_with_action()
@@ -75,7 +76,7 @@ void surface_with_action::freeself()
 }
 
 void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int f_recoordinatize,
 		int verbose_level)
 {
@@ -149,7 +150,7 @@ void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 
-	AonHPD_3_4 = NEW_OBJECT(action_on_homogeneous_polynomials);
+	AonHPD_3_4 = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"before AonHPD_3_4->init" << endl;
@@ -172,7 +173,7 @@ void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
 		//sprintf(str, "live_points_q%d", PA->F->q);
 		//fname_live_points.assign(str);
 
-		Recoordinatize = NEW_OBJECT(recoordinatize);
+		Recoordinatize = NEW_OBJECT(spreads::recoordinatize);
 
 		if (f_v) {
 			cout << "surface_with_action::init "
@@ -1475,7 +1476,8 @@ void surface_with_action::create_surface(
 
 void surface_with_action::create_surface_and_do_report(
 		surface_create_description *Surface_Descr,
-		int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
+		int f_has_control_six_arcs,
+		poset_classification::poset_classification_control *Control_six_arcs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1665,7 +1667,8 @@ void surface_with_action::test_group(
 
 void surface_with_action::report_with_group(
 		surface_create *SC,
-		int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
+		int f_has_control_six_arcs,
+		poset_classification::poset_classification_control *Control_six_arcs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1705,20 +1708,13 @@ void surface_with_action::report_with_group(
 	}
 
 	six_arcs_not_on_a_conic *Six_arcs;
-	arc_generator_description *Six_arc_descr;
+	apps_geometry::arc_generator_description *Six_arc_descr;
 
 	int *transporter;
 
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
 
-	Six_arc_descr = NEW_OBJECT(arc_generator_description);
-#if 0
-	Six_arc_descr->F = F;
-	Six_arc_descr->f_q = TRUE;
-	Six_arc_descr->q = F->q;
-	Six_arc_descr->f_n = TRUE;
-	Six_arc_descr->n = 3;
-#endif
+	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Six_arc_descr->f_target_size = TRUE;
 	Six_arc_descr->target_size = 6;
 
@@ -1726,7 +1722,7 @@ void surface_with_action::report_with_group(
 		Six_arc_descr->Control = Control_six_arcs;
 	}
 	else {
-		Six_arc_descr->Control = NEW_OBJECT(poset_classification_control);
+		Six_arc_descr->Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	}
 
 
@@ -2574,7 +2570,7 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 	int nb_cols = 19;
 
 
-	poset_classification_control Control_six_arcs;
+	poset_classification::poset_classification_control Control_six_arcs;
 
 
 	nb_cubic_surfaces = K.cubic_surface_nb_reps(q);
@@ -2995,6 +2991,7 @@ void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
 //UPDATE `cubicvt`.`surface` SET `CollStabOrder` = '12', `ProjStabOrder` = '12', `nbPts` = '691', `nbLines` = '27', `nbE` = '4', `nbDouble` = '123', `nbSingle` = '390', `nbPtsNotOn` = '174',`nbHesse` = '0', `nbAxes` = '1', `nbOrbE` = '2', `nbOrbDouble` = '16', `nbOrbPtsNotOn` = '16', `nbOrbLines` = '5', `nbOrbSingleSix` = '10', `nbOrbTriPlanes` = '10', `nbOrbHesse` = '0', `nbOrbTrihedralPairs` = '19', `nbOrbTritangentPlanes` = '10',`Eqn20` = '0,0,0,0,0,0,8,0,10,0,0,18,0,2,0,0,18,10,2,1', `Equation` = '$8X_0^2*X_3+10X_1^2*X_2+18X_1*X_2^2+2X_0*X_3^2+18X_0*X_1*X_2+10X_0*X_1*X_3+2X_0*X_2*X_3+X_1*X_2*X_3$', `Lines` = '529,292560,1083,4965,290982,88471,169033,6600,8548,576,293089,0,3824,9119,1698,242212,12168,59424,229610,292854,242075,120504,179157,279048,30397,181283,12150' WHERE `Q` = '23' AND `OCN` = '1';
 
 
-}}
+}}}
+
 
 

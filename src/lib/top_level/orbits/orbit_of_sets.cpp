@@ -73,7 +73,8 @@ void orbit_of_sets::freeself()
 }
 
 void orbit_of_sets::init(actions::action *A, actions::action *A2,
-		long int *set, int sz, vector_ge *gens, int verbose_level)
+		long int *set, int sz,
+		data_structures_groups::vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -374,7 +375,8 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 	}
 }
 
-void orbit_of_sets::make_table_of_coset_reps(vector_ge *&Coset_reps, int verbose_level)
+void orbit_of_sets::make_table_of_coset_reps(
+		data_structures_groups::vector_ge *&Coset_reps, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -383,7 +385,7 @@ void orbit_of_sets::make_table_of_coset_reps(vector_ge *&Coset_reps, int verbose
 	}
 	int j, prev, label;
 
-	Coset_reps = NEW_OBJECT(vector_ge);
+	Coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 	Coset_reps->init(A, 0);
 	Coset_reps->allocate(used_length, 0);
 	for (j = 0; j < used_length; j++) {

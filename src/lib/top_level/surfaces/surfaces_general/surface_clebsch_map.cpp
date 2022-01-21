@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 
 surface_clebsch_map::surface_clebsch_map()
@@ -145,4 +147,5 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 
 }
 
-}}
+}}}
+

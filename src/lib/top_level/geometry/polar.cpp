@@ -14,6 +14,15 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
+
+
+static long int polar_callback_rank_point_func(int *v, void *data);
+static void polar_callback_unrank_point_func(int *v, long int rk, void *data);
+static void polar_callback_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 polar::polar()
@@ -89,7 +98,7 @@ void polar::init_group_by_base_images(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 
 	if (f_v) {
 		cout << "polar::init_group, calling "
@@ -111,7 +120,7 @@ void polar::init_group(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 
 	if (f_v) {
 		cout << "polar::init_group, calling "
@@ -218,7 +227,7 @@ void polar::init2(int depth, int verbose_level)
 			this,
 			verbose_level - 1);
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Control->f_depth = TRUE;
 	Control->depth = depth;
 
@@ -229,7 +238,7 @@ void polar::init2(int depth, int verbose_level)
 
 
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subspace_lattice(A, A,
 			gens,
 			VS,
@@ -240,7 +249,7 @@ void polar::init2(int depth, int verbose_level)
 				this /* void *data */,
 				verbose_level);
 
-	Gen = NEW_OBJECT(poset_classification);
+	Gen = NEW_OBJECT(poset_classification::poset_classification);
 	Gen->initialize_and_allocate_root_node(Control, Poset,
 			depth /* sz */, verbose_level);
 
@@ -303,7 +312,7 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	int *Elt1, *Elt2;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go1, go2, index, rem, Rank;
-	poset_orbit_node *O2;
+	poset_classification::poset_orbit_node *O2;
 
 	if (f_v) {
 		cout << "polar::compute_cosets" << endl;
@@ -426,7 +435,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	int *Elt1, *Elt2;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go1, go2, index, rem, Rank;
-	poset_orbit_node *O2;
+	poset_classification::poset_orbit_node *O2;
 	int *Adj;
 	int **M;
 	int witt;
@@ -1114,7 +1123,8 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 }
 
 
-void polar::get_stabilizer(int orbit_idx, group_container &G,
+void polar::get_stabilizer(int orbit_idx,
+		data_structures_groups::group_container &G,
 		ring_theory::longinteger_object &go_G)
 {
 	Gen->get_node(first_node + orbit_idx)->get_stabilizer(Gen,
@@ -1162,7 +1172,7 @@ void polar::list_whole_orbit(int depth,
 	long int *set;
 	int ii;
 	long int len, j, h, jj;
-	group_container G;
+	data_structures_groups::group_container G;
 	ring_theory::longinteger_object go_G, Rank;
 	int *M1;
 	int *base_cols;
@@ -1235,7 +1245,7 @@ void polar::list_whole_orbit(int depth,
 // global functions:
 // #############################################################################
 
-long int polar_callback_rank_point_func(int *v, void *data)
+long int static polar_callback_rank_point_func(int *v, void *data)
 {
 	polar *P = (polar *) data;
 	//generator *gen = P->Gen;
@@ -1245,7 +1255,7 @@ long int polar_callback_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void polar_callback_unrank_point_func(int *v, long int rk, void *data)
+void static polar_callback_unrank_point_func(int *v, long int rk, void *data)
 {
 	polar *P = (polar *) data;
 	//generator *gen = P->Gen;
@@ -1280,7 +1290,7 @@ int polar_callback_test_func(int len, int *S,
 }
 #endif
 
-void polar_callback_early_test_func(long int *S, int len,
+void static polar_callback_early_test_func(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1302,6 +1312,6 @@ void polar_callback_early_test_func(long int *S, int len,
 		}
 }
 
-}}
+}}}
 
 

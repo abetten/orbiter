@@ -15,7 +15,14 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
+
+#if 0
+static int table_of_sets_compare_func(void *data, int i,
+		void *search_object,
+		void *extra_data);
+#endif
 
 
 projective_space_with_action::projective_space_with_action()
@@ -108,7 +115,7 @@ void projective_space_with_action::init(
 		if (f_v) {
 			cout << "projective_space_with_action::init after Dom->init" << endl;
 		}
-		QCDA = NEW_OBJECT(quartic_curve_domain_with_action);
+		QCDA = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_domain_with_action);
 		if (f_v) {
 			cout << "projective_space_with_action::init before QCDA->init" << endl;
 		}
@@ -157,7 +164,7 @@ void projective_space_with_action::init_group(
 				"creating linear group" << endl;
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	A = NEW_OBJECT(actions::action);
 	A->init_linear_group(
@@ -539,7 +546,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism" << endl;
 	}
 
-	top_level_geometry_global Geo;
+	apps_geometry::top_level_geometry_global Geo;
 
 
 	if (f_v) {
@@ -1091,8 +1098,8 @@ void projective_space_with_action::report(
 
 
 void projective_space_with_action::create_quartic_curve(
-		quartic_curve_create_description *Quartic_curve_descr,
-		quartic_curve_create *&QC,
+		applications_in_algebraic_geometry::quartic_curve_create_description *Quartic_curve_descr,
+		applications_in_algebraic_geometry::quartic_curve_create *&QC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1110,7 +1117,7 @@ void projective_space_with_action::create_quartic_curve(
 		exit(1);
 	}
 
-	QC = NEW_OBJECT(quartic_curve_create);
+	QC = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_create);
 
 	if (f_v) {
 		cout << "projective_space_with_action::create_quartic_curve before SC->init" << endl;
@@ -1207,7 +1214,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 
 
-	combinatorial_object_activity_description COAD;
+	apps_combinatorics::combinatorial_object_activity_description COAD;
 
 #if 0
 	int f_save;
@@ -1261,7 +1268,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 
 
-	combinatorial_object_activity COA;
+	apps_combinatorics::combinatorial_object_activity COA;
 
 	COA.init_input_stream(&COAD,
 			&IS,
@@ -1303,14 +1310,14 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 
 	int nb_quartic_curves;
 	int h;
-	quartic_curve_create **QC;
+	applications_in_algebraic_geometry::quartic_curve_create **QC;
 	int *nb_K;
 	long int *Table;
 	int nb_cols = 6;
 
 	nb_quartic_curves = K.quartic_curves_nb_reps(q);
 
-	QC = (quartic_curve_create **) NEW_pvoid(nb_quartic_curves);
+	QC = (applications_in_algebraic_geometry::quartic_curve_create **) NEW_pvoid(nb_quartic_curves);
 
 	nb_K = NEW_int(nb_quartic_curves);
 
@@ -1322,7 +1329,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 			cout << "projective_space_with_action::table_of_quartic_curves "
 					<< h << " / " << nb_quartic_curves << endl;
 		}
-		quartic_curve_create_description Quartic_curve_descr;
+		applications_in_algebraic_geometry::quartic_curve_create_description Quartic_curve_descr;
 
 		Quartic_curve_descr.f_q = TRUE;
 		Quartic_curve_descr.q = q;
@@ -1482,7 +1489,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 		exit(1);
 	}
 
-	surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::surface_with_action *Surf_A;
 
 	setup_surface_with_action(
 			Surf_A,
@@ -1718,7 +1725,7 @@ void projective_space_with_action::cheat_sheet(
 
 
 void projective_space_with_action::do_spread_classify(int k,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1726,9 +1733,9 @@ void projective_space_with_action::do_spread_classify(int k,
 	if (f_v) {
 		cout << "projective_space_with_action::do_spread_classify" << endl;
 	}
-	spread_classify *SC;
+	spreads::spread_classify *SC;
 
-	SC = NEW_OBJECT(spread_classify);
+	SC = NEW_OBJECT(spreads::spread_classify);
 
 	if (f_v) {
 		cout << "projective_space_with_action::do_spread_classify before SC->init" << endl;
@@ -1771,7 +1778,7 @@ void projective_space_with_action::do_spread_classify(int k,
 }
 
 void projective_space_with_action::setup_surface_with_action(
-		surface_with_action *&Surf_A,
+		applications_in_algebraic_geometry::surface_with_action *&Surf_A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1794,7 +1801,7 @@ void projective_space_with_action::setup_surface_with_action(
 		cout << "projective_space_with_action::setup_surface_with_action after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_with_action::setup_surface_with_action before Surf_A->init" << endl;
@@ -1818,7 +1825,7 @@ void projective_space_with_action::report_decomposition_by_group(
 	}
 
 
-	top_level_geometry_global Geo;
+	apps_geometry::top_level_geometry_global Geo;
 
 
 	if (f_v) {
@@ -2002,8 +2009,8 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 }
 #endif
 
-
-int table_of_sets_compare_func(void *data, int i,
+#if 0
+static int table_of_sets_compare_func(void *data, int i,
 		void *search_object,
 		void *extra_data)
 {
@@ -2016,7 +2023,9 @@ int table_of_sets_compare_func(void *data, int i,
 	ret = Sorting.lint_vec_compare(Data + i * len, (long int *) search_object, len);
 	return ret;
 }
+#endif
 
 
 
-}}
+}}}
+

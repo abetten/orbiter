@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 poset_classification_report_options::poset_classification_report_options()
@@ -128,5 +129,5 @@ int poset_classification_report_options::is_selected_by_group_order(long int so)
 
 
 
-}}
+}}}
 

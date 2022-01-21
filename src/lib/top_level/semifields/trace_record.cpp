@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 
 
@@ -92,6 +93,6 @@ void save_trace_record(
 }
 
 
-}}
+}}}
 
 

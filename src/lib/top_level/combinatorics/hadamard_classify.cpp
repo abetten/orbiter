@@ -12,9 +12,14 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 
+static void hadamard_classify_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 
@@ -325,10 +330,10 @@ void hadamard_classify::init(int n, int f_draw,
 				"target_depth = " << n << " prefix=" << prefix << endl;
 		}
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
@@ -337,8 +342,8 @@ void hadamard_classify::init(int n, int f_draw,
 			this /* void *data */,
 			verbose_level);
 
-	gen = NEW_OBJECT(poset_classification);
-	Control = NEW_OBJECT(poset_classification_control);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Control->f_W = TRUE;
 	Control->problem_label = prefix;
 	Control->f_problem_label = TRUE;
@@ -517,7 +522,7 @@ void hadamard_classify_early_test_function(long int *S, int len,
 
 
 
-}}
+}}}
 
 
 

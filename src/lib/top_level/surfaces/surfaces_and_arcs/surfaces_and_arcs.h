@@ -10,6 +10,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 // #############################################################################
@@ -70,13 +71,13 @@ public:
 
 	actions::action *A; // this is the 3x3 group
 
-	set_and_stabilizer *The_arc;
+	data_structures_groups::set_and_stabilizer *The_arc;
 	actions::action *A_on_arc;
 
 	int arc_idx;
-	poset_with_group_action *Poset;
-	poset_classification_control *Control;
-	poset_classification *Orbits_on_pairs;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_classification *Orbits_on_pairs;
 
 	int nb_orbits_on_pairs;
 
@@ -119,7 +120,7 @@ public:
 	actions::action *A_on_arc;
 
 	int pair_orbit_idx;
-	set_and_stabilizer *The_pair;
+	data_structures_groups::set_and_stabilizer *The_pair;
 
 	long int arc_remainder[4];
 
@@ -167,20 +168,20 @@ public:
 	groups::strong_generators *gens_type1;
 	groups::strong_generators *gens_type2;
 
-	poset_with_group_action *Poset1;
-	poset_with_group_action *Poset2;
-	poset_classification *orbits_on_trihedra_type1;
-	poset_classification *orbits_on_trihedra_type2;
+	poset_classification::poset_with_group_action *Poset1;
+	poset_classification::poset_with_group_action *Poset2;
+	poset_classification::poset_classification *orbits_on_trihedra_type1;
+	poset_classification::poset_classification *orbits_on_trihedra_type2;
 
 	int nb_orbits_type1;
 	int nb_orbits_type2;
 	int nb_orbits_ordered_total;
 
-	flag_orbits *Flag_orbits;
+	invariant_relations::flag_orbits *Flag_orbits;
 
 	int nb_orbits_trihedral_pairs;
 
-	classification_step *Trihedral_pairs;
+	invariant_relations::classification_step *Trihedral_pairs;
 
 
 
@@ -191,8 +192,8 @@ public:
 	void init(surface_with_action *Surf_A, int verbose_level);
 
 	void classify_orbits_on_trihedra(
-			poset_classification_control *Control1,
-			poset_classification_control *Control2,
+			poset_classification::poset_classification_control *Control1,
+			poset_classification::poset_classification_control *Control2,
 			int verbose_level);
 	void report_summary(std::ostream &ost);
 	void report(std::ostream &ost);
@@ -209,8 +210,8 @@ public:
 	void identify_three_planes(int p1, int p2, int p3,
 		int &type, int *transporter, int verbose_level);
 	void classify(
-			poset_classification_control *Control1,
-			poset_classification_control *Control2,
+			poset_classification::poset_classification_control *Control1,
+			poset_classification::poset_classification_control *Control2,
 			int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
@@ -225,14 +226,6 @@ public:
 
 };
 
-void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 
@@ -248,10 +241,10 @@ class six_arcs_not_on_a_conic {
 public:
 
 	//projective_space *P2; // do not free
-	arc_generator_description *Descr;
-	projective_space_with_action *PA;
+	apps_geometry::arc_generator_description *Descr;
+	projective_geometry::projective_space_with_action *PA;
 
-	arc_generator *Gen;
+	apps_geometry::arc_generator *Gen;
 
 	int nb_orbits;
 
@@ -263,8 +256,8 @@ public:
 	void null();
 	void freeself();
 	void init(
-		arc_generator_description *Descr,
-		projective_space_with_action *PA,
+			apps_geometry::arc_generator_description *Descr,
+			projective_geometry::projective_space_with_action *PA,
 		int f_test_nb_Eckardt_points, int nb_E, algebraic_geometry::surface_domain *Surf,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
@@ -291,7 +284,7 @@ public:
 
 
 	six_arcs_not_on_a_conic *Six_arcs;
-	arc_generator_description *Descr;
+	apps_geometry::arc_generator_description *Descr;
 
 	int *transporter;
 
@@ -310,7 +303,7 @@ public:
 	surface_classify_using_arc();
 	~surface_classify_using_arc();
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
-			poset_classification_control *Control_six_arcs,
+			poset_classification::poset_classification_control *Control_six_arcs,
 			surface_with_action *Surf_A,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
@@ -408,7 +401,7 @@ public:
 
 	int nb_coset_reps;
 	surfaces_arc_lifting_trace **T; // [nb_coset_reps]
-	vector_ge *coset_reps;
+	data_structures_groups::vector_ge *coset_reps;
 
 	int *relative_order_table; // [nb_coset_reps]
 
@@ -637,7 +630,7 @@ public:
 	int nb_flag_orbits;
 
 	// classification of surfaces:
-	flag_orbits *Flag_orbits;
+	invariant_relations::flag_orbits *Flag_orbits;
 
 	int *flag_orbit_fst; // [Six_arcs->nb_arcs_not_on_conic]
 	int *flag_orbit_len; // [Six_arcs->nb_arcs_not_on_conic]
@@ -646,7 +639,7 @@ public:
 	int *flag_orbit_on_pairs_idx; // [Flag_orbits->nb_flag_orbits]
 	int *flag_orbit_on_partition_idx; // [Flag_orbits->nb_flag_orbits]
 
-	classification_step *Surfaces;
+	invariant_relations::classification_step *Surfaces;
 
 	surfaces_arc_lifting();
 	~surfaces_arc_lifting();
@@ -654,7 +647,7 @@ public:
 	void freeself();
 	void init(
 		surface_with_action *Surf_A,
-		poset_classification_control *Control_six_arcs,
+		poset_classification::poset_classification_control *Control_six_arcs,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level);
 	void downstep(int verbose_level);
@@ -671,12 +664,6 @@ public:
 };
 
 
-void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
-				classification_step *Step, void *print_function_data);
-void callback_surfaces_arc_lifting_free_trace_result(void *ptr,
-		void *data, int verbose_level);
-void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost,
-		void *trace_result, void *data, int verbose_level);
 
 // #############################################################################
 // trihedral_pair_with_action.cpp
@@ -704,9 +691,9 @@ public:
 	groups::schreier *Orb;
 	ring_theory::longinteger_object stab_order;
 	int trihedral_pair_orbit_index;
-	vector_ge *cosets;
+	data_structures_groups::vector_ge *cosets;
 
-	vector_ge *coset_reps;
+	data_structures_groups::vector_ge *coset_reps;
 	long int nine_lines[9];
 	int *aut_T_index;
 	int *aut_coset_index;
@@ -736,8 +723,9 @@ public:
 	trihedral_pair_with_action();
 	~trihedral_pair_with_action();
 	void init(arc_lifting *AL, int verbose_level);
-	void loop_over_trihedral_pairs(vector_ge *cosets,
-		vector_ge *&coset_reps,
+	void loop_over_trihedral_pairs(
+			data_structures_groups::vector_ge *cosets,
+			data_structures_groups::vector_ge *&coset_reps,
 		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
 	void create_the_six_plane_equations(int t_idx,
 		int verbose_level);
@@ -766,7 +754,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 

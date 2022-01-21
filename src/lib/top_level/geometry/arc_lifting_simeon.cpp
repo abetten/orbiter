@@ -12,8 +12,9 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
-void early_test_func_for_arc_callback(long int *S, int len,
+static void early_test_func_for_arc_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -79,7 +80,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	A = NEW_OBJECT(actions::action);
 	A->init_linear_group(//S,
@@ -127,11 +128,11 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 
 	P->init_incidence_structure(0 /*verbose_level*/);
 
-	poset_with_group_action *Poset;
-	poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification_control *Control;
 
-	Control = NEW_OBJECT(poset_classification_control);
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
@@ -146,7 +147,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 			verbose_level);
 
 
-	Gen = NEW_OBJECT(poset_classification);
+	Gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	Gen->compute_orbits_on_subsets(
 		k /* target_depth */,
@@ -238,7 +239,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 }
 
 
-void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
+void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_stabilizer *SaS)
 {
 	int *type;
 	long int *original_arc;
@@ -357,17 +358,17 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 
 
 	int target_depth = 6;
-	poset_with_group_action *Poset2;
-	poset_classification_control *Control2;
-	poset_classification *Gen2;
+	poset_classification::poset_with_group_action *Poset2;
+	poset_classification::poset_classification_control *Control2;
+	poset_classification::poset_classification *Gen2;
 
-	Poset2 = NEW_OBJECT(poset_with_group_action);
-	Control2 = NEW_OBJECT(poset_classification_control);
+	Poset2 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Control2 = NEW_OBJECT(poset_classification::poset_classification_control);
 	Poset2->init_subset_lattice(A, A3,
 			SaS->Strong_gens,
 			verbose_level);
 
-	Gen2 = NEW_OBJECT(poset_classification);
+	Gen2 = NEW_OBJECT(poset_classification::poset_classification);
 
 	Gen2->compute_orbits_on_subsets(
 		target_depth,
@@ -407,7 +408,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 
 	for (i = 0; i < nb_orbits; i++) {
 
-		set_and_stabilizer *SaS;
+		data_structures_groups::set_and_stabilizer *SaS;
 
 		SaS = Gen2->get_set_and_stabilizer(target_depth,
 				i /* orbit_at_level */, 0 /* verbose_level */);
@@ -500,7 +501,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 // #############################################################################
 
 
-void early_test_func_for_arc_callback(long int *S, int len,
+static void early_test_func_for_arc_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -523,4 +524,4 @@ void early_test_func_for_arc_callback(long int *S, int len,
 		}
 }
 
-}}
+}}}

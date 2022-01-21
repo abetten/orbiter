@@ -266,7 +266,7 @@ void representatives::write_representatives_and_stabilizers(
 	for (i = 0; i < count; i++) {
 		groups::sims *Stab;
 		ring_theory::longinteger_object go;
-		vector_ge SG;
+		data_structures_groups::vector_ge SG;
 		
 		Stab = stab[i];
 		Stab->group_order(go);
@@ -343,7 +343,7 @@ void representatives::read_representatives_and_stabilizers(
 	for (i = 0; i < count; i++) {
 		groups::sims *Stab;
 		ring_theory::longinteger_object go;
-		vector_ge gens;
+		data_structures_groups::vector_ge gens;
 		
 		stab[i] = NEW_OBJECT(groups::sims);
 		Stab = stab[i];

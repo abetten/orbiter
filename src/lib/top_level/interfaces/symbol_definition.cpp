@@ -163,7 +163,7 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-projective_space") == 0) {
 		f_projective_space = TRUE;
-		Projective_space_with_action_description = NEW_OBJECT(projective_space_with_action_description);
+		Projective_space_with_action_description = NEW_OBJECT(projective_geometry::projective_space_with_action_description);
 		if (f_v) {
 			cout << "reading -projective_space" << endl;
 		}
@@ -183,7 +183,7 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-orthogonal_space") == 0) {
 		f_orthogonal_space = TRUE;
-		Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_space_with_action_description);
+		Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_geometry::orthogonal_space_with_action_description);
 		if (f_v) {
 			cout << "reading -orthogonal_space" << endl;
 		}
@@ -245,7 +245,7 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-modified_group") == 0) {
 		f_group_modification = TRUE;
-		Group_modification_description = NEW_OBJECT(group_modification_description);
+		Group_modification_description = NEW_OBJECT(apps_algebra::group_modification_description);
 		if (f_v) {
 			cout << "reading -modified_group" << endl;
 		}
@@ -322,7 +322,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-graph") == 0) {
 
 		f_graph = TRUE;
-		Create_graph_description = NEW_OBJECT(create_graph_description);
+		Create_graph_description = NEW_OBJECT(apps_graph_theory::create_graph_description);
 		if (f_v) {
 			cout << "reading -graph" << endl;
 		}
@@ -374,7 +374,7 @@ void symbol_definition::read_definition(
 
 		packing_was_label_spread_table.assign(argv[++i]);
 
-		packing_was_descr = NEW_OBJECT(packing_was_description);
+		packing_was_descr = NEW_OBJECT(packings::packing_was_description);
 		if (f_v) {
 			cout << "reading -packing_with_symmetry_assumption" << endl;
 		}
@@ -400,7 +400,7 @@ void symbol_definition::read_definition(
 		packing_with_assumed_symmetry_label.assign(argv[++i]);
 		packing_with_assumed_symmetry_choose_fixed_points_clique_size = ST.strtoi(argv[++i]);
 
-		packing_with_assumed_symmetry_choose_fixed_points_control = NEW_OBJECT(poset_classification_control);
+		packing_with_assumed_symmetry_choose_fixed_points_control = NEW_OBJECT(poset_classification::poset_classification_control);
 		if (f_v) {
 			cout << "reading -packing_with_symmetry_assumption_choose_fixed_points" << endl;
 		}
@@ -428,7 +428,7 @@ void symbol_definition::read_definition(
 
 		packing_long_orbits_choose_fixed_points_label.assign(argv[++i]);
 
-		Packing_long_orbits_description = NEW_OBJECT(packing_long_orbits_description);
+		Packing_long_orbits_description = NEW_OBJECT(packings::packing_long_orbits_description);
 		if (f_v) {
 			cout << "reading -packing_long_orbits" << endl;
 		}
@@ -452,7 +452,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-graph_classification") == 0) {
 		f_graph_classification = TRUE;
 
-		Graph_classify_description = NEW_OBJECT(graph_classify_description);
+		Graph_classify_description = NEW_OBJECT(apps_graph_theory::graph_classify_description);
 		if (f_v) {
 			cout << "reading -graph_classification" << endl;
 		}
@@ -498,7 +498,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-design") == 0) {
 
 		f_design = TRUE;
-		Design_create_description = NEW_OBJECT(design_create_description);
+		Design_create_description = NEW_OBJECT(apps_combinatorics::design_create_description);
 		if (f_v) {
 			cout << "reading -design" << endl;
 		}
@@ -542,7 +542,7 @@ void symbol_definition::read_definition(
 
 		large_set_was_label_design_table.assign(argv[++i]);
 
-		large_set_was_descr = NEW_OBJECT(large_set_was_description);
+		large_set_was_descr = NEW_OBJECT(apps_combinatorics::large_set_was_description);
 		if (f_v) {
 			cout << "reading -large_set_with_symmetry_assumption" << endl;
 		}
@@ -1097,9 +1097,9 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 		f_semilinear = FALSE;
 	}
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
-	PA = NEW_OBJECT(projective_space_with_action);
+	PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space before PA->init" << endl;
@@ -1185,9 +1185,9 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		f_semilinear = TRUE;
 	}
 
-	orthogonal_space_with_action *OA;
+	orthogonal_geometry::orthogonal_space_with_action *OA;
 
-	OA = NEW_OBJECT(orthogonal_space_with_action);
+	OA = NEW_OBJECT(orthogonal_geometry::orthogonal_space_with_action);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_orthogonal_space before OA->init" << endl;
@@ -1268,9 +1268,9 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	// create any_group object from linear_group:
 
 
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
-	AG = NEW_OBJECT(any_group);
+	AG = NEW_OBJECT(apps_algebra::any_group);
 	AG->init_linear_group(LG, verbose_level);
 
 
@@ -1317,9 +1317,9 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 	// create any_group object from permutation_group_create:
 
 
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
-	AG = NEW_OBJECT(any_group);
+	AG = NEW_OBJECT(apps_algebra::any_group);
 	AG->init_permutation_group(PGC, verbose_level);
 
 
@@ -1348,9 +1348,9 @@ void symbol_definition::definition_of_modified_group(int verbose_level)
 	}
 
 
-	modified_group_create *MGC;
+	apps_algebra::modified_group_create *MGC;
 
-	MGC = NEW_OBJECT(modified_group_create);
+	MGC = NEW_OBJECT(apps_algebra::modified_group_create);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_modified_group before PGC->permutation_group_init, "
 				"before PGC->permutation_group_init" << endl;
@@ -1362,9 +1362,9 @@ void symbol_definition::definition_of_modified_group(int verbose_level)
 				"after PGC->permutation_group_init" << endl;
 	}
 
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
-	AG = NEW_OBJECT(any_group);
+	AG = NEW_OBJECT(apps_algebra::any_group);
 	AG->init_modified_group(MGC, verbose_level);
 
 	orbiter_symbol_table_entry *Symb;
@@ -1396,7 +1396,7 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 	GOC = NEW_OBJECT(geometric_object_create);
 
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(geometric_object_projective_space_label);
 
@@ -1489,9 +1489,9 @@ void symbol_definition::definition_of_graph(int verbose_level)
 		cout << "symbol_definition::definition_of_graph" << endl;
 	}
 
-	create_graph *Gr;
+	apps_graph_theory::create_graph *Gr;
 
-	Gr = NEW_OBJECT(create_graph);
+	Gr = NEW_OBJECT(apps_graph_theory::create_graph);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_graph before Gr->init" << endl;
@@ -1557,21 +1557,21 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 				"using existing PA " << spread_table_label_PA << endl;
 	}
 	int idx;
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(spread_table_label_PA);
-	PA = (projective_space_with_action *) Sym->Orbiter_top_level_session->get_object(idx);
+	PA = (projective_geometry::projective_space_with_action *) Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
 
-	packing_classify *P;
+	packings::packing_classify *P;
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_spread_table before P->spread_table_init" << endl;
 	}
 
-	P = NEW_OBJECT(packing_classify);
+	P = NEW_OBJECT(packings::packing_classify);
 
 	P->spread_table_init(
 			PA,
@@ -1619,19 +1619,19 @@ void symbol_definition::definition_of_packing_was(int verbose_level)
 				"using existing spread table " << packing_was_label_spread_table << endl;
 	}
 	int idx;
-	packing_classify *P;
+	packings::packing_classify *P;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(packing_was_label_spread_table);
-	P = (packing_classify *) Sym->Orbiter_top_level_session->get_object(idx);
+	P = (packings::packing_classify *) Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
 
 
 
-	packing_was *PW;
+	packings::packing_was *PW;
 
-	PW = NEW_OBJECT(packing_was);
+	PW = NEW_OBJECT(packings::packing_was);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_was before PW->init" << endl;
@@ -1678,15 +1678,15 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(int verbos
 				"using existing object " << packing_with_assumed_symmetry_label << endl;
 	}
 	int idx;
-	packing_was *PW;
+	packings::packing_was *PW;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(packing_with_assumed_symmetry_label);
-	PW = (packing_was *) Sym->Orbiter_top_level_session->get_object(idx);
+	PW = (packings::packing_was *) Sym->Orbiter_top_level_session->get_object(idx);
 
 
-	packing_was_fixpoints *PWF;
+	packings::packing_was_fixpoints *PWF;
 
-	PWF = NEW_OBJECT(packing_was_fixpoints);
+	PWF = NEW_OBJECT(packings::packing_was_fixpoints);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points before PWF->init" << endl;
@@ -1749,15 +1749,15 @@ void symbol_definition::definition_of_packing_long_orbits(int verbose_level)
 	}
 	int idx;
 
-	packing_was_fixpoints *PWF;
+	packings::packing_was_fixpoints *PWF;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(packing_long_orbits_choose_fixed_points_label);
-	PWF = (packing_was_fixpoints *) Sym->Orbiter_top_level_session->get_object(idx);
+	PWF = (packings::packing_was_fixpoints *) Sym->Orbiter_top_level_session->get_object(idx);
 
 
-	packing_long_orbits *PL;
+	packings::packing_long_orbits *PL;
 
-	PL = NEW_OBJECT(packing_long_orbits);
+	PL = NEW_OBJECT(packings::packing_long_orbits);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_long_orbits before PL->init" << endl;
@@ -1804,10 +1804,10 @@ void symbol_definition::definition_of_graph_classification(int verbose_level)
 	}
 
 
-	graph_classify *GC;
+	apps_graph_theory::graph_classify *GC;
 
 
-	GC = NEW_OBJECT(graph_classify);
+	GC = NEW_OBJECT(apps_graph_theory::graph_classify);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_graph_classification before GC->init" << endl;
@@ -1900,10 +1900,10 @@ void symbol_definition::definition_of_design(int verbose_level)
 	}
 
 
-	design_create *DC;
+	apps_combinatorics::design_create *DC;
 
 
-	DC = NEW_OBJECT(design_create);
+	DC = NEW_OBJECT(apps_combinatorics::design_create);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_design before DC->init" << endl;
@@ -1949,15 +1949,15 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 				"using existing design " << design_table_label_design << endl;
 	}
 	int idx;
-	design_create *DC;
+	apps_combinatorics::design_create *DC;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(design_table_label_design);
-	DC = (design_create *) Sym->Orbiter_top_level_session->get_object(idx);
+	DC = (apps_combinatorics::design_create *) Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
 
-	any_group *AG;
+	apps_algebra::any_group *AG;
 
 	idx = Orbiter->find_symbol(design_table_group);
 
@@ -1971,12 +1971,12 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 		cout << endl;
 		exit(1);
 	}
-	AG = (any_group *) Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
 
 
 
-	combinatorics_global Combi;
-	design_tables *T;
+	apps_combinatorics::combinatorics_global Combi;
+	apps_combinatorics::design_tables *T;
 
 
 	if (f_v) {
@@ -1995,9 +1995,9 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 
 
 
-	large_set_classify *LS;
+	apps_combinatorics::large_set_classify *LS;
 
-	LS = NEW_OBJECT(large_set_classify);
+	LS = NEW_OBJECT(apps_combinatorics::large_set_classify);
 
 	LS->init(DC,
 			T,
@@ -2036,19 +2036,19 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 				"using existing spread table " << packing_was_label_spread_table << endl;
 	}
 	int idx;
-	large_set_classify *LS;
+	apps_combinatorics::large_set_classify *LS;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(large_set_was_label_design_table);
-	LS = (large_set_classify *) Sym->Orbiter_top_level_session->get_object(idx);
+	LS = (apps_combinatorics::large_set_classify *) Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
 
 
 
-	large_set_was *LSW;
+	apps_combinatorics::large_set_was *LSW;
 
-	LSW = NEW_OBJECT(large_set_was);
+	LSW = NEW_OBJECT(apps_combinatorics::large_set_was);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_large_set_was before LSW->init" << endl;

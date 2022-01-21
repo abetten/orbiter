@@ -14,9 +14,31 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
-
+#if 0
+static void callback_packing_compute_klein_invariants(
+		isomorph *Iso, void *data, int verbose_level);
+static void callback_packing_report(isomorph *Iso,
+		void *data, int verbose_level);
+static void packing_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
+	long int *candidates, int nb_candidates,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+#endif
+static void packing_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+#if 0
+static int count(int *Inc, int n, int m, int *set, int t);
+static int count_and_record(int *Inc, int n, int m,
+		int *set, int t, int *occurances);
+#endif
 
 packing_classify::packing_classify()
 {
@@ -98,7 +120,7 @@ void packing_classify::freeself()
 }
 
 void packing_classify::spread_table_init(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int dimension_of_spread_elements,
 		int f_select_spread, std::string &select_spread_text,
 		std::string &path_to_spread_tables,
@@ -112,7 +134,7 @@ void packing_classify::spread_table_init(
 	}
 	int n, q;
 	groups::matrix_group *Mtx;
-	spread_classify *T;
+	spreads::spread_classify *T;
 
 
 	packing_classify::PA = PA;
@@ -128,7 +150,7 @@ void packing_classify::spread_table_init(
 	}
 
 
-	T = NEW_OBJECT(spread_classify);
+	T = NEW_OBJECT(spreads::spread_classify);
 
 
 	if (f_v) {
@@ -157,9 +179,9 @@ void packing_classify::spread_table_init(
 
 
 
-	spread_table_with_selection *Spread_table_with_selection;
+	spreads::spread_table_with_selection *Spread_table_with_selection;
 
-	Spread_table_with_selection = NEW_OBJECT(spread_table_with_selection);
+	Spread_table_with_selection = NEW_OBJECT(spreads::spread_table_with_selection);
 
 	if (f_v) {
 		cout << "packing_classify::spread_table_init "
@@ -219,8 +241,8 @@ void packing_classify::spread_table_init(
 
 
 void packing_classify::init(
-		projective_space_with_action *PA,
-		spread_table_with_selection *Spread_table_with_selection,
+		projective_geometry::projective_space_with_action *PA,
+		spreads::spread_table_with_selection *Spread_table_with_selection,
 		int f_lexorder_test,
 		int verbose_level)
 {
@@ -268,7 +290,8 @@ void packing_classify::init(
 	}
 }
 
-void packing_classify::init2(poset_classification_control *Control,
+void packing_classify::init2(
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -359,7 +382,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 
 
 void packing_classify::prepare_generator(
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -368,7 +391,7 @@ void packing_classify::prepare_generator(
 	if (f_v) {
 		cout << "packing_classify::prepare_generator" << endl;
 	}
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(T->A, Spread_table_with_selection->A_on_spreads,
 			T->A->Strong_gens,
 			verbose_level);
@@ -397,7 +420,7 @@ void packing_classify::prepare_generator(
 				"calling gen->initialize" << endl;
 	}
 
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	gen->initialize_and_allocate_root_node(Control, Poset,
 			size_of_packing,
@@ -775,7 +798,8 @@ int packing_classify::find_spread(long int *set, int verbose_level)
 // global functions:
 // #############################################################################
 
-void callback_packing_compute_klein_invariants(
+#if 0
+static void callback_packing_compute_klein_invariants(
 		isomorph *Iso, void *data, int verbose_level)
 {
 	packing_classify *P = (packing_classify *) data;
@@ -787,8 +811,7 @@ void callback_packing_compute_klein_invariants(
 			verbose_level);
 }
 
-
-void callback_packing_report(isomorph *Iso,
+static void callback_packing_report(isomorph *Iso,
 		void *data, int verbose_level)
 {
 	packing_classify *P = (packing_classify *) data;
@@ -797,7 +820,7 @@ void callback_packing_report(isomorph *Iso,
 }
 
 
-void packing_lifting_prepare_function_new(
+static void packing_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
@@ -835,10 +858,11 @@ void packing_lifting_prepare_function_new(
 		cout << "packing_lifting_prepare_function_new done" << endl;
 	}
 }
+#endif
 
 
 
-void packing_early_test_function(long int *S, int len,
+static void packing_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -887,7 +911,8 @@ void packing_early_test_function(long int *S, int len,
 
 
 
-int count(int *Inc, int n, int m, int *set, int t)
+#if 0
+static int count(int *Inc, int n, int m, int *set, int t)
 {
 	int i, j;
 	int nb, h;
@@ -907,7 +932,7 @@ int count(int *Inc, int n, int m, int *set, int t)
 	return nb;
 }
 
-int count_and_record(int *Inc,
+static int count_and_record(int *Inc,
 		int n, int m, int *set, int t, int *occurances)
 {
 	int i, j;
@@ -927,7 +952,8 @@ int count_and_record(int *Inc,
 	}
 	return nb;
 }
+#endif
 
 
-}}
+}}}
 

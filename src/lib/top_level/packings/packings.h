@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 // #############################################################################
@@ -21,7 +22,7 @@ namespace top_level {
 
 class invariants_packing {
 public:
-	spread_classify *T;
+	spreads::spread_classify *T;
 	packing_classify *P;
 	isomorph *Iso; // the classification of packings
 
@@ -55,7 +56,6 @@ public:
 		int verbose_level);
 };
 
-int packing_types_compare_function(void *a, void *b, void *data);
 
 // #############################################################################
 // packing_classify.cpp
@@ -66,11 +66,11 @@ int packing_types_compare_function(void *a, void *b, void *data);
 class packing_classify {
 public:
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	std::string path_to_spread_tables;
 
-	spread_classify *T;
+	spreads::spread_classify *T;
 	field_theory::finite_field *F;
 	int spread_size;
 	int nb_lines;
@@ -82,7 +82,7 @@ public:
 		// the number of spreads in a packing,
 		// which is q^2 + q + 1
 
-	spread_table_with_selection *Spread_table_with_selection;
+	spreads::spread_table_with_selection *Spread_table_with_selection;
 
 	projective_space *P3;
 	projective_space *P5;
@@ -97,9 +97,9 @@ public:
 
 	int *degree;
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 
 	int nb_needed;
 
@@ -109,21 +109,21 @@ public:
 	void null();
 	void freeself();
 	void spread_table_init(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			int dimension_of_spread_elements,
 			int f_select_spread, std::string &select_spread_text,
 			std::string &path_to_spread_tables,
 			int verbose_level);
 	void init(
-			projective_space_with_action *PA,
-			spread_table_with_selection *Spread_table_with_selection,
+			projective_geometry::projective_space_with_action *PA,
+			spreads::spread_table_with_selection *Spread_table_with_selection,
 			int f_lexorder_test,
 			int verbose_level);
-	void init2(poset_classification_control *Control, int verbose_level);
+	void init2(poset_classification::poset_classification_control *Control, int verbose_level);
 	void init_P3_and_P5_and_Gr(int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void compute(int search_depth, int verbose_level);
 	void lifting_prepare_function_new(
@@ -177,24 +177,6 @@ public:
 			int verbose_level);
 };
 
-void callback_packing_compute_klein_invariants(
-		isomorph *Iso, void *data, int verbose_level);
-void callback_packing_report(isomorph *Iso,
-		void *data, int verbose_level);
-void packing_lifting_prepare_function_new(
-	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates,
-	groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
-void packing_early_test_function(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-int count(int *Inc, int n, int m, int *set, int t);
-int count_and_record(int *Inc, int n, int m,
-		int *set, int t, int *occurances);
 
 
 // #############################################################################
@@ -358,9 +340,6 @@ public:
 
 };
 
-// globals:
-int packing_long_orbit_test_function(long int *orbit1, int len1,
-		long int *orbit2, int len2, void *data);
 
 
 // #############################################################################
@@ -525,14 +504,14 @@ public:
 		// reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
 
 	graph_theory::colored_graph *fixpoint_graph;
-	poset_with_group_action *Poset_fixpoint_cliques;
-	poset_classification *fixpoint_clique_gen;
+	poset_classification::poset_with_group_action *Poset_fixpoint_cliques;
+	poset_classification::poset_classification *fixpoint_clique_gen;
 
 	int fixpoint_clique_size;
 	long int *Cliques; // [nb_cliques * fixpoint_clique_size]
 	int nb_cliques;
 	std::string fname_fixpoint_cliques_orbiter;
-	orbit_transversal *Fixp_cliques;
+	data_structures_groups::orbit_transversal *Fixp_cliques;
 
 
 
@@ -540,21 +519,21 @@ public:
 	packing_was_fixpoints();
 	~packing_was_fixpoints();
 	void init(packing_was *PW,
-			int fixpoint_clique_size, poset_classification_control *Control,
+			int fixpoint_clique_size, poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void setup_file_names(int clique_size, int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	void action_on_fixpoints(int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
 			int clique_size,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	// initializes the orbit transversal Fixp_cliques
 	// initializes Cliques[nb_cliques * clique_size]
 	// (either by computing it or reading it from file)
 	void compute_cliques_on_fixpoint_graph_from_scratch(
 			int clique_size,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	// compute cliques on fixpoint graph using A_on_fixpoints
 	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
@@ -574,10 +553,6 @@ public:
 
 };
 
-void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 // #############################################################################
 // packing_was.cpp
@@ -629,7 +604,7 @@ public:
 		// using H_gens in action P->T->A2
 
 	std::string prefix_spread_types;
-	orbit_type_repository *Spread_type;
+	data_structures_groups::orbit_type_repository *Spread_type;
 
 	std::string prefix_spread_orbits;
 	groups::orbits_on_something *Spread_orbits_under_H;
@@ -660,7 +635,7 @@ public:
 
 
 	std::string prefix_spread_types_reduced;
-	orbit_type_repository *Spread_type_reduced;
+	data_structures_groups::orbit_type_repository *Spread_type_reduced;
 
 	actions::action *A_on_reduced_spreads;
 		// induced action on Spread_tables_reduced
@@ -760,13 +735,6 @@ public:
 
 };
 
-// globals:
-
-int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *orbit1, int len1,
-		long int *orbit2, int len2, void *data);
-int packing_was_evaluate_orbit_invariant_function(
-		int a, int i, int j, void *evaluate_data, int verbose_level);
-void packing_was_print_function(std::ostream &ost, long int a, void *data);
 
 
 // #############################################################################
@@ -836,7 +804,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 

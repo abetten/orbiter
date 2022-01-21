@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 packing_long_orbits_description::packing_long_orbits_description()
@@ -171,5 +172,5 @@ void packing_long_orbits_description::print()
 
 
 
-}}
+}}}
 

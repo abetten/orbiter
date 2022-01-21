@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 
@@ -70,4 +71,5 @@ void regular_packing::init(packing_was *PW, int verbose_level)
 
 
 
-}}
+}}}
+

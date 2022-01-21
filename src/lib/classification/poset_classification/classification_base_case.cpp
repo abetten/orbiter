@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 classification_base_case::classification_base_case()
 {
@@ -79,6 +81,7 @@ int classification_base_case::invoke_recognition(long int *Set, int len,
 }
 
 
-}}
+}}}
+
 
 

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
 
 orthogonal_space_activity::orthogonal_space_activity()
@@ -403,4 +404,5 @@ void orthogonal_space_activity::set_stabilizer(
 
 
 
-}}
+}}}
+

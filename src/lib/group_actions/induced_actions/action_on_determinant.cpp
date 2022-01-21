@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_determinant::action_on_determinant()
 {
@@ -115,5 +117,5 @@ long int action_on_determinant::compute_image(actions::action *A,
 	return j;
 }
 
-}}
+}}}
 

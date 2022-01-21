@@ -16,6 +16,10 @@ namespace orbiter {
 namespace top_level {
 
 
+static int orbit_of_equations_compare_func(void *a, void *b, void *data);
+
+
+
 orbit_of_equations::orbit_of_equations()
 {
 	A = NULL;
@@ -68,7 +72,7 @@ void orbit_of_equations::freeself()
 
 void orbit_of_equations::init(actions::action *A,
 		field_theory::finite_field *F,
-	action_on_homogeneous_polynomials *AonHPD, 
+		induced_actions::action_on_homogeneous_polynomials *AonHPD,
 	groups::strong_generators *SG, int *coeff_in,
 	int verbose_level)
 {
@@ -846,7 +850,7 @@ void orbit_of_equations::save_csv(std::string &fname, int verbose_level)
 }
 
 
-int orbit_of_equations_compare_func(void *a, void *b, void *data)
+static int orbit_of_equations_compare_func(void *a, void *b, void *data)
 {
 	int *A = (int *)a;
 	int *B = (int *)b;

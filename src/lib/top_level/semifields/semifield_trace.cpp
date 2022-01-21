@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 
 
@@ -918,6 +919,6 @@ void semifield_trace::trace_step_down(
 
 
 
-}}
+}}}
 
 

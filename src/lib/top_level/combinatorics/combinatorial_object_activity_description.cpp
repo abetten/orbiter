@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 
@@ -286,4 +287,5 @@ void combinatorial_object_activity_description::print()
 
 
 
-}}
+}}}
+

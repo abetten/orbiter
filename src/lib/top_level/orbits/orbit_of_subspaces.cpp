@@ -119,7 +119,8 @@ void orbit_of_subspaces::init(
 	void (*compute_image_of_vector_callback)(int *v, int *w,
 			int *Elt, void *data, int verbose_level),
 	void *compute_image_of_vector_callback_data, 
-	vector_ge *gens, int verbose_level)
+	data_structures_groups::vector_ge *gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -186,7 +187,8 @@ void orbit_of_subspaces::init_lint(
 	void (*compute_image_of_vector_callback)(int *v, int *w,
 			int *Elt, void *data, int verbose_level),
 	void *compute_image_of_vector_callback_data,
-	vector_ge *gens, int verbose_level)
+	data_structures_groups::vector_ge *gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

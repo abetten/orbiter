@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 void poset_orbit_node::compute_flag_orbits_subspace_action(
 	poset_classification *gen,
@@ -37,7 +39,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	groups::schreier *Schreier;
 
 
-	action_on_factor_space *AF;
+	induced_actions::action_on_factor_space *AF;
 	actions::action *A_factor_space;
 
 
@@ -48,7 +50,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	
 
 	Schreier = NEW_OBJECT(groups::schreier);
-	AF = NEW_OBJECT(action_on_factor_space);
+	AF = NEW_OBJECT(induced_actions::action_on_factor_space);
 	A_factor_space = NEW_OBJECT(actions::action);
 	
 	if (f_v) {
@@ -265,7 +267,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 
 void poset_orbit_node::setup_factor_space_action_light(
 	poset_classification *gen,
-	action_on_factor_space &AF,
+	induced_actions::action_on_factor_space &AF,
 	int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -292,7 +294,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 
 void poset_orbit_node::setup_factor_space_action_with_early_test(
 	poset_classification *gen,
-	action_on_factor_space &AF, actions::action &A_factor_space,
+	induced_actions::action_on_factor_space &AF, actions::action &A_factor_space,
 	int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -439,7 +441,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 
 void poset_orbit_node::setup_factor_space_action(
 	poset_classification *gen,
-	action_on_factor_space &AF, actions::action &A_factor_space,
+	induced_actions::action_on_factor_space &AF, actions::action &A_factor_space,
 	int lvl, int f_compute_tables, int verbose_level)
 // called from poset_orbit_node::init_extension_node,
 // poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action
@@ -526,7 +528,7 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 	int verbose_level)
 {
 	int h, first, len, rep;
-	action_on_factor_space *AF;
+	induced_actions::action_on_factor_space *AF;
 	
 	cout << "poset_orbit_node::downstep_subspace_action_"
 			"print_orbits" << endl;
@@ -585,7 +587,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	//int f_v10 = (verbose_level >= 10);
-	action_on_factor_space *AF;
+	induced_actions::action_on_factor_space *AF;
 
 	if (f_v) {
 		cout << "poset_orbit_node::downstep_orbits_subspace_action" << endl;
@@ -742,7 +744,8 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 
 void poset_orbit_node::find_extensions_subspace_action(
 	poset_classification *gen, groups::schreier &O,
-	actions::action *A_factor_space, action_on_factor_space *AF,
+	actions::action *A_factor_space,
+	induced_actions::action_on_factor_space *AF,
 	int lvl, int f_implicit_fusion, int verbose_level)
 // prepares all extension nodes and marks them as unprocessed.
 // we are at depth lvl, i.e., currently, we have a set of size lvl.
@@ -866,5 +869,6 @@ void poset_orbit_node::find_extensions_subspace_action(
 }
 
 
-}}
+}}}
+
 
