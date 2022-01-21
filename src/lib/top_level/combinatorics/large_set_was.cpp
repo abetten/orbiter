@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 
@@ -179,7 +180,7 @@ void large_set_was::init(large_set_was_description *Descr,
 void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 		int orbit_length,
 		int nb_of_orbits_to_choose,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -358,7 +359,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 		int orbit_length,
 		int nb_of_orbits_to_choose,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -376,7 +377,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 	}
 
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 #if 0
 	Control = NEW_OBJECT(poset_classification_control);
@@ -444,7 +445,9 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 
 
 
-void large_set_was::create_graph_on_orbits_of_length(std::string &fname, int orbit_length, int verbose_level)
+void large_set_was::create_graph_on_orbits_of_length(
+		std::string &fname, int orbit_length,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -483,7 +486,9 @@ void large_set_was::create_graph_on_orbits_of_length(std::string &fname, int orb
 	}
 }
 
-void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(std::string &fname_mask, int orbit_length2, int verbose_level)
+void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
+		std::string &fname_mask, int orbit_length2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -879,4 +884,4 @@ int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_lengt
 
 
 
-}}
+}}}

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -413,5 +414,6 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 
 }
 
-}}
+}}}
+
 

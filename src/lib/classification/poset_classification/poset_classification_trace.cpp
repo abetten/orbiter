@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 int poset_classification::find_isomorphism(
 		long int *set1, long int *set2, int sz,
@@ -69,14 +71,14 @@ int poset_classification::find_isomorphism(
 	return ret;
 }
 
-set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
+data_structures_groups::set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 		long int *set, int sz, int *transporter,
 		int &orbit_at_level,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//set_and_stabilizer *SaS0;
-	set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS;
 	int *Elt;
 	data_structures::sorting Sorting;
 
@@ -812,5 +814,6 @@ int trace_result_is_no_result(trace_result r)
 
 
 
-}}
+}}}
+
 

@@ -675,7 +675,7 @@ void sims::read_list_of_elements(actions::action *A, char *fname,
 
 
 void sims::write_as_magma_permutation_group(std::string &fname_base,
-		vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, k, n, l, h;

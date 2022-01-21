@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 regular_linear_space_description::regular_linear_space_description()
@@ -88,7 +89,7 @@ int regular_linear_space_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-control") == 0) {
 			f_has_control = TRUE;
-			Control = NEW_OBJECT(poset_classification_control);
+			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -112,4 +113,5 @@ int regular_linear_space_description::read_arguments(
 	return i + 1;
 }
 
-}}
+}}}
+

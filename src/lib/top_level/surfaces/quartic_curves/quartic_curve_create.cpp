@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 
@@ -63,7 +64,7 @@ void quartic_curve_create::freeself()
 
 void quartic_curve_create::init_with_data(
 		quartic_curve_create_description *Descr,
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		quartic_curve_domain_with_action *QCDA,
 		int verbose_level)
 {
@@ -116,7 +117,7 @@ void quartic_curve_create::init_with_data(
 
 void quartic_curve_create::init(
 		quartic_curve_create_description *Descr,
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		quartic_curve_domain_with_action *QCDA,
 		int verbose_level)
 {
@@ -296,7 +297,7 @@ void quartic_curve_create::override_group(std::string &group_order_text,
 		exit(1);
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	Sg->init_from_data_with_target_go_ascii(PA->A, data,
 			nb_gens, PA->A->make_element_size, group_order_text.c_str(),
@@ -1088,7 +1089,8 @@ void quartic_curve_create::apply_transformations(
 }
 
 
-void quartic_curve_create::compute_group(projective_space_with_action *PA,
+void quartic_curve_create::compute_group(
+		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1211,6 +1213,7 @@ void quartic_curve_create::compute_group(projective_space_with_action *PA,
 
 
 
-}}
+}}}
+
 
 

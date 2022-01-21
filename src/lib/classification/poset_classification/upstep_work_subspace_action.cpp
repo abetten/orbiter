@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 int upstep_work::upstep_subspace_action(int verbose_level)
 // This routine is called from upstep_work::init_extension_node
@@ -33,7 +35,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	//int f_v4 = (verbose_level >= 7);
 	int f_v5 = (verbose_level >= 8);
 	groups::schreier up_orbit;
-	union_find UF;
+	data_structures_groups::union_find UF;
 	int *aut;
 	trace_result r;
 	int final_node, final_ex;
@@ -43,7 +45,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	field_theory::finite_field *F;
 	{
 	grassmann G;
-	action_on_grassmannian *AG;
+	induced_actions::action_on_grassmannian *AG;
 	{
 		actions::action A_on_hyperplanes;
 	int big_n, n, k, rk, degree, idx;
@@ -53,7 +55,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	int *embedding; // [n]
 	int *changed_space; // [n * big_n]
 	
-	AG = NEW_OBJECT(action_on_grassmannian);
+	AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 	
 
 	O_cur->store_set(gen, size - 1);
@@ -533,7 +535,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 
 	if (gen->do_group_extension_in_upstep()) {
-		vector_ge SG_extension;
+		data_structures_groups::vector_ge SG_extension;
 		int *tl_extension = NEW_int(gen->get_A()->base_len());
 		int f_OK;
 		int f_tolerant = FALSE;
@@ -595,6 +597,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	return TRUE;
 }
 
-}}
+}}}
+
 
 

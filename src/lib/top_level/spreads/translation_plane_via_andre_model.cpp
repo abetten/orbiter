@@ -15,6 +15,16 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
+
+
+#if 0
+static int translation_plane_via_andre_model_check_arc(int len, long int *S,
+	void *data, int verbose_level);
+static int translation_plane_via_andre_model_check_subplane(int len, long int *S,
+	void *data, int verbose_level);
+#endif
+
 
 translation_plane_via_andre_model::translation_plane_via_andre_model()
 {
@@ -104,7 +114,8 @@ void translation_plane_via_andre_model::freeself()
 void translation_plane_via_andre_model::init(
 	long int *spread_elements_numeric,
 	int k, actions::action *An, actions::action *An1,
-	vector_ge *spread_stab_gens, ring_theory::longinteger_object &spread_stab_go,
+	data_structures_groups::vector_ge *spread_stab_gens,
+	ring_theory::longinteger_object &spread_stab_go,
 	std::string &label,
 	int verbose_level)
 {
@@ -430,7 +441,7 @@ void translation_plane_via_andre_model::init(
 
 
 
-	T = NEW_OBJECT(tactical_decomposition);
+	T = NEW_OBJECT(apps_combinatorics::tactical_decomposition);
 	T->init(nb_rows, nb_cols,
 			Inc,
 			f_combined_action,
@@ -501,7 +512,7 @@ void translation_plane_via_andre_model::classify_arcs(
 		cout << "translation_plane_via_andre_model::classify_arcs" << endl;
 	}
 
-	arcs = NEW_OBJECT(poset_classification);
+	arcs = NEW_OBJECT(poset_classification::poset_classification);
 
 	//gen->read_arguments(argc, argv, 0);
 
@@ -515,13 +526,13 @@ void translation_plane_via_andre_model::classify_arcs(
 				"before gen->initialize" << endl;
 	}
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
 	Control->f_w = TRUE;
 	Control->f_depth = TRUE;
 	Control->depth = depth;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(An1, OnAndre,
 			strong_gens,
 			verbose_level);
@@ -620,18 +631,18 @@ void translation_plane_via_andre_model::classify_subplanes(
 				"before gen->initialize" << endl;
 	}
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
 	Control->f_w = TRUE;
 	Control->f_depth = TRUE;
 	Control->depth = depth;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(An1, OnAndre,
 			strong_gens,
 			verbose_level);
 
-	arcs = NEW_OBJECT(poset_classification);
+	arcs = NEW_OBJECT(poset_classification::poset_classification);
 
 	arcs->initialize_and_allocate_root_node(Control, Poset,
 		depth, 
@@ -1021,7 +1032,8 @@ void translation_plane_via_andre_model::report(std::ostream &ost, int verbose_le
 //
 //
 
-int translation_plane_via_andre_model_check_arc(
+#if 0
+static int translation_plane_via_andre_model_check_arc(
 		int len, long int *S, void *data, int verbose_level)
 {
 	translation_plane_via_andre_model *TP =
@@ -1050,7 +1062,7 @@ int translation_plane_via_andre_model_check_arc(
 	}
 }
 
-int translation_plane_via_andre_model_check_subplane(
+static int translation_plane_via_andre_model_check_subplane(
 		int len, long int *S, void *data,
 		int verbose_level)
 {
@@ -1078,7 +1090,8 @@ int translation_plane_via_andre_model_check_subplane(
 		return FALSE;
 	}
 }
+#endif
 
-}}
+}}}
 
 

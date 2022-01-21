@@ -5,8 +5,8 @@
  *      Author: betten
  */
 
-#ifndef SRC_LIB_FOUNDATIONS_SURFACES_SURFACES_H_
-#define SRC_LIB_FOUNDATIONS_SURFACES_SURFACES_H_
+#ifndef SRC_LIB_FOUNDATIONS_ALGEBRAIC_GEOMETRY_ALGEBRAIC_GEOMETRY_H_
+#define SRC_LIB_FOUNDATIONS_ALGEBRAIC_GEOMETRY_ALGEBRAIC_GEOMETRY_H_
 
 namespace orbiter {
 namespace foundations {
@@ -125,6 +125,58 @@ public:
 	void report(std::ostream &ost, int verbose_level);
 
 };
+
+
+// #############################################################################
+// cubic_curve.cpp
+// #############################################################################
+
+//! cubic curves in PG(2,q)
+
+
+class cubic_curve {
+
+public:
+	int q;
+	field_theory::finite_field *F;
+	projective_space *P; // PG(2,q)
+
+
+	int nb_monomials;
+
+
+	ring_theory::homogeneous_polynomial_domain *Poly;
+		// cubic polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly2;
+		// quadratic polynomials in three variables
+
+	ring_theory::partial_derivative *Partials;
+
+	int *gradient; // 3 * Poly2->nb_monomials
+
+
+	cubic_curve();
+	~cubic_curve();
+	void freeself();
+	void init(field_theory::finite_field *F, int verbose_level);
+	int compute_system_in_RREF(
+			int nb_pts, long int *pt_list, int verbose_level);
+	void compute_gradient(
+			int *eqn_in, int verbose_level);
+	void compute_singular_points(
+			int *eqn_in,
+			long int *Pts_on_curve, int nb_pts_on_curve,
+			long int *Pts, int &nb_pts,
+			int verbose_level);
+	void compute_inflexion_points(
+			int *eqn_in,
+			long int *Pts_on_curve, int nb_pts_on_curve,
+			long int *Pts, int &nb_pts,
+			int verbose_level);
+
+};
+
+
 
 
 // #############################################################################
@@ -1425,4 +1477,4 @@ public:
 
 
 
-#endif /* SRC_LIB_FOUNDATIONS_SURFACES_SURFACES_H_ */
+#endif /* SRC_LIB_FOUNDATIONS_ALGEBRAIC_GEOMETRY_ALGEBRAIC_GEOMETRY_H_ */

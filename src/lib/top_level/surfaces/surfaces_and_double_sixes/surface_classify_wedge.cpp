@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 surface_classify_wedge::surface_classify_wedge()
@@ -110,7 +111,7 @@ void surface_classify_wedge::freeself()
 
 void surface_classify_wedge::init(
 	surface_with_action *Surf_A,
-	poset_classification_control *Control,
+	poset_classification::poset_classification_control *Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -332,7 +333,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 		cout << "verbose_level = " << verbose_level << endl;
 	}
 	nb_orbits = Classify_double_sixes->Double_sixes->nb_orbits;
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->init(
 			A,
 			A2,
@@ -357,7 +358,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 			cout << "surface_classify_wedge::downstep "
 					"orbit " << i << " / " << nb_orbits << endl;
 		}
-		set_and_stabilizer *R;
+		data_structures_groups::set_and_stabilizer *R;
 		ring_theory::longinteger_object go;
 		long int Lines[27];
 
@@ -440,7 +441,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 	Orbiter->Int_vec->zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
-	Surfaces = NEW_OBJECT(classification_step);
+	Surfaces = NEW_OBJECT(invariant_relations::classification_step);
 
 	ring_theory::longinteger_object go;
 	A->group_order(go);
@@ -487,10 +488,10 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 
 
-		vector_ge *coset_reps;
+		data_structures_groups::vector_ge *coset_reps;
 		int nb_coset_reps;
 		
-		coset_reps = NEW_OBJECT(vector_ge);
+		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(Surf_A->A, 0/*verbose_level - 2*/);
 		coset_reps->allocate(36, 0/*verbose_level - 2*/);
 
@@ -924,10 +925,10 @@ void surface_classify_wedge::read_file(
 		exit(1);
 	}
 
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->read_file(fp, A, A2, verbose_level);
 
-	Surfaces = NEW_OBJECT(classification_step);
+	Surfaces = NEW_OBJECT(invariant_relations::classification_step);
 
 	ring_theory::longinteger_object go;
 
@@ -2198,7 +2199,7 @@ void surface_classify_wedge::report_surface(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS;
 	long int Lines[27];
 	int equation[20];
 
@@ -2437,7 +2438,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				orbit_index++) {
 
 
-			set_and_stabilizer *SaS;
+			data_structures_groups::set_and_stabilizer *SaS;
 			long int Lines[27];
 			int equation[20];
 
@@ -2500,7 +2501,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		for (orbit_index = 0;
 				orbit_index < Surfaces->nb_orbits;
 				orbit_index++) {
-			set_and_stabilizer *SaS;
+			data_structures_groups::set_and_stabilizer *SaS;
 			long int Lines[27];
 			int equation[27];
 			long int *Pts;
@@ -2597,7 +2598,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				orbit_index++) {
 
 
-			set_and_stabilizer *SaS;
+			data_structures_groups::set_and_stabilizer *SaS;
 			long int Lines[27];
 
 			if (f_v) {
@@ -2897,7 +2898,7 @@ void surface_classify_wedge::read_double_sixes(int verbose_level)
 
 void surface_classify_wedge::create_report(int f_with_stabilizers,
 		layered_graph_draw_options *draw_options,
-		poset_classification_report_options *Opt,
+		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2948,7 +2949,7 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 
 void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 		layered_graph_draw_options *draw_options,
-		poset_classification_report_options *Opt,
+		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3384,6 +3385,7 @@ void surface_classify_wedge::sweep_Cayley(
 
 
 
-}}
+}}}
+
 
 

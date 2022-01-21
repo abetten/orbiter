@@ -417,7 +417,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 				<< case_nb_local << " n = " << n << endl;
 		}
 
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 	ring_theory::longinteger_object go;
 
 
@@ -717,7 +717,7 @@ int isomorph::trace_next_point(int cur_level,
 			cout << "cur_level <= depth_completed" << endl;
 			}
 		
-		poset_orbit_node *O = gen->get_node(cur_node_global);
+		poset_classification::poset_orbit_node *O = gen->get_node(cur_node_global);
 		ret = O->trace_next_point_in_place(gen, 
 			cur_level, cur_node_global, size, 
 			canonical_set, trace_set_recursion_tmp_set1,
@@ -860,7 +860,7 @@ int isomorph::trace_next_point_database(
 		}
 
 	{
-	vector_ge gens;
+		data_structures_groups::vector_ge gens;
 
 	gens.init(gen->get_A(), verbose_level - 2);
 	gens.allocate(nb_strong_generators, verbose_level - 2);
@@ -1204,7 +1204,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	poset_orbit_node *O = gen->get_node(cur_node_global);
+	poset_classification::poset_orbit_node *O = gen->get_node(cur_node_global);
 	int pt0, current_extension, t, d, next_node_global;
 	data_structures::sorting Sorting;
 	
@@ -1431,7 +1431,7 @@ void isomorph::apply_isomorphism_oracle(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	poset_orbit_node *O = gen->get_node(cur_node_global);
+	poset_classification::poset_orbit_node *O = gen->get_node(cur_node_global);
 	data_structures::sorting Sorting;
 
 	if (f_v) {

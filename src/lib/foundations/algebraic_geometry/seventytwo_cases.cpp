@@ -109,14 +109,18 @@ void seventytwo_cases::init(surface_domain *Surf, int f, int tritangent_plane_id
 	seventytwo_cases::l2 = l2;
 }
 
+//! Computes the six base points in a tritangent plane associated with the Clebsch map defined by two skew lines.
+/*!
+ * We have chosen a tritangent plane and we know the three lines m1, m2, m3 in it.
+ * The lines l1 and l2 intersect m1 in the first two points.
+ * Computes the 5 transversals to the two lines l1 and l2.
+ * One of these lines must be m1, so we remove that to have 4 lines.
+ * These 4 lines intersect the two other lines m2 and m3 in the other 4 points.
+ * This makes up the arc of 6 points.
+ * They will be stored in P6[6].
+ */
+
 void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
-// We have chosen a tritangent planes and we know the three lines m1, m2, m3 in it.
-// The lines l1 and l2 intersect m1 in the first two points.
-// Computes the 5 transversals to the two lines l1 and l2.
-// One of these lines must be m1, so we remove that to have 4 lines.
-// These 4 lines intersect the two other lines m2 and m3 in the other 4 points.
-// This makes up the arc of 6 points.
-// They will be stored in P6[6].
 {
 	int f_v = (verbose_level >= 1);
 

@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 surfaces_arc_lifting_trace::surfaces_arc_lifting_trace()
 {
@@ -874,4 +876,5 @@ void surfaces_arc_lifting_trace::report_product(ostream &ost, int *Elt, int verb
 }
 
 
-}}
+}}}
+

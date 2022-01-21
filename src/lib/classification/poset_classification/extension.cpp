@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 extension::extension()
 {
@@ -111,5 +113,6 @@ void print_extension_type(ostream &ost, int t)
 }
 
 
-}}
+}}}
+
 

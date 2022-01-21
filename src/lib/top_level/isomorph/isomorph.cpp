@@ -275,7 +275,8 @@ void isomorph::free_tmp_data()
 }
 
 void isomorph::init(std::string &prefix,
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+		actions::action *A_base, actions::action *A,
+		poset_classification::poset_classification *gen,
 	int size, int level, 
 	int f_use_database_for_starter, 
 	int f_implicit_fusion, int verbose_level)
@@ -634,7 +635,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 		flag_orbit_fst[i] = nb_orbits;
 		flag_orbit_len[i] = 0;
 
-		vector_ge gens;
+		data_structures_groups::vector_ge gens;
 		
 		
 		
@@ -807,7 +808,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 }
 
 void isomorph::orbits_of_stabilizer_case(int the_case,
-		vector_ge &gens, int verbose_level)
+		data_structures_groups::vector_ge &gens, int verbose_level)
 {
 	Vector v;
 	int f_v = (verbose_level >= 1);
@@ -1007,7 +1008,7 @@ void isomorph::orbit_representative(int i, int &i0,
 	int f_vv = (verbose_level >= 2);
 	int c, p, i_loc, l; //, hdl;
 	int *Elt1, *Elt2;
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 	ring_theory::longinteger_object go;
 	
 	if (f_v) {
@@ -1176,7 +1177,7 @@ void isomorph::compute_stabilizer(groups::sims *&Stab,
 	ring_theory::longinteger_object AA_go, K_go;
 	groups::sims *S; //, *K; //, *stab;
 	actions::action *AA;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	groups::schreier *Schreier;
 	long int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
@@ -1210,7 +1211,7 @@ void isomorph::compute_stabilizer(groups::sims *&Stab,
 
 	S = NEW_OBJECT(groups::sims);
 	AA = NEW_OBJECT(actions::action);
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	Schreier = NEW_OBJECT(groups::schreier);
 	sets = NEW_lint(l * size);
 
@@ -1685,7 +1686,8 @@ void isomorph::compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
 
 }
 
-void isomorph::init_high_level(actions::action *A, poset_classification *gen,
+void isomorph::init_high_level(actions::action *A,
+		poset_classification::poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix, int level,
 	int verbose_level)
 {
@@ -1790,7 +1792,8 @@ void isomorph::init_high_level(actions::action *A, poset_classification *gen,
 }
 
 
-void isomorph::get_orbit_transversal(orbit_transversal *&T,
+void isomorph::get_orbit_transversal(
+		data_structures_groups::orbit_transversal *&T,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1801,12 +1804,12 @@ void isomorph::get_orbit_transversal(orbit_transversal *&T,
 	int h, rep, first, id;
 	ring_theory::longinteger_object go;
 
-	T = NEW_OBJECT(orbit_transversal);
+	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
 	T->A = A_base;
 	T->A2 = A;
 	T->nb_orbits = Reps->count;
-	T->Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
+	T->Reps = NEW_OBJECTS(data_structures_groups::set_and_stabilizer, nb_orbits);
 
 
 	for (h = 0; h < Reps->count; h++) {

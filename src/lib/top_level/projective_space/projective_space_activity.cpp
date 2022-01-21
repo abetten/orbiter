@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 projective_space_activity::projective_space_activity()
@@ -52,7 +53,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_table_of_cubic_surfaces_compute_properties) {
 
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_cubic_surface_properties(
 				PA,
@@ -64,7 +65,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_cubic_surface_properties_analyze) {
 
 
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_cubic_surface_properties_analyze(
 				PA,
@@ -166,8 +167,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		cout << "f_define_surface label = " << Descr->define_surface_label << endl;
 
-		surface_with_action *Surf_A;
-		surface_create *SC;
+		applications_in_algebraic_geometry::surface_with_action *Surf_A;
+		applications_in_algebraic_geometry::surface_create *SC;
 
 		projective_space_global G;
 
@@ -230,7 +231,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		cout << "f_define_quartic_curve label = " << Descr->f_define_quartic_curve << endl;
 
-		quartic_curve_create *QC;
+		applications_in_algebraic_geometry::quartic_curve_create *QC;
 
 #if 0
 		projective_space_global G;
@@ -273,8 +274,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_classify_surfaces_with_double_sixes) {
 
-		surface_domain_high_level SH;
-		surface_classify_wedge *SCW;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_classify_wedge *SCW;
 
 
 		SH.classify_surfaces_with_double_sixes(
@@ -302,7 +303,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
 		}
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_classify_surfaces_through_arcs_and_two_lines(
 				PA,
@@ -324,7 +325,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
 		}
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_classify_surfaces_through_arcs_and_trihedral_pairs(
 				PA,
@@ -335,7 +336,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_sweep_4) {
 
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 
 		SH.do_sweep_4(
@@ -346,7 +347,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_sweep_4_27) {
 
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 
 		SH.do_sweep_4_27(
@@ -376,7 +377,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
 		}
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_six_arcs(
 				PA,
@@ -422,9 +423,9 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->Semifield_classify_Control,
 				verbose_level);
 #endif
-		semifield_classify_with_substructure *S;
+		semifields::semifield_classify_with_substructure *S;
 
-		S = NEW_OBJECT(semifield_classify_with_substructure);
+		S = NEW_OBJECT(semifields::semifield_classify_with_substructure);
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity before S->init" << endl;
@@ -744,4 +745,5 @@ void projective_space_activity::perform_activity(int verbose_level)
 }
 
 
-}}
+}}}
+

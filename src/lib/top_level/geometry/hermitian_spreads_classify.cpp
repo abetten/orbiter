@@ -13,7 +13,14 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
+static void HS_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+static void projective_space_init_line_action(projective_space *P,
+		actions::action *A_points, actions::action *&A_on_lines, int verbose_level);
 
 hermitian_spreads_classify::hermitian_spreads_classify()
 {
@@ -171,7 +178,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		0 /* verbose_level */);
 	cout << "Creating projective_space done" << endl;
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	cout << "Creating linear group" << endl;
 	A = NEW_OBJECT(actions::action);
@@ -296,9 +303,9 @@ void hermitian_spreads_classify::read_arguments(int argc, std::string *argv)
 	int i;
 	data_structures::string_tools ST;
 
-	Control = NEW_OBJECT(poset_classification_control);
-	Poset = NEW_OBJECT(poset_with_group_action);
-	gen = NEW_OBJECT(poset_classification);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 #if 0
 	for (i = 1; i < argc; i++) {
@@ -310,7 +317,7 @@ void hermitian_spreads_classify::read_arguments(int argc, std::string *argv)
 
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-			Control = NEW_OBJECT(poset_classification_control);
+			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, 0 /*verbose_level*/);
 
@@ -476,7 +483,7 @@ void hermitian_spreads_classify::early_test_func(long int *S, int len,
 }
 
 
-void HS_early_test_func_callback(long int *S, int len,
+static void HS_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -499,18 +506,18 @@ void HS_early_test_func_callback(long int *S, int len,
 }
 
 
-void projective_space_init_line_action(projective_space *P,
+static void projective_space_init_line_action(projective_space *P,
 		actions::action *A_points, actions::action *&A_on_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_grassmannian *AoL;
+	induced_actions::action_on_grassmannian *AoL;
 
 	if (f_v) {
 		cout << "projective_space_init_line_action" << endl;
 	}
 	A_on_lines = NEW_OBJECT(actions::action);
 
-	AoL = NEW_OBJECT(action_on_grassmannian);
+	AoL = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
 	AoL->init(*A_points, P->Grass_lines, verbose_level - 5);
 
@@ -567,6 +574,6 @@ void projective_space_init_line_action(projective_space *P,
 
 
 
-}}
+}}}
 
 

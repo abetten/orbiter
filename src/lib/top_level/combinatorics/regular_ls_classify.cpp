@@ -9,6 +9,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 regular_ls_classify::regular_ls_classify()
@@ -208,7 +209,7 @@ void regular_ls_classify::init_action_on_k_subsets(
 }
 
 void regular_ls_classify::init_generator(
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		groups::strong_generators *Strong_gens,
 		int verbose_level)
 {
@@ -222,7 +223,7 @@ void regular_ls_classify::init_generator(
 
 
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A2,
 			Strong_gens,
 			verbose_level);
@@ -236,7 +237,7 @@ void regular_ls_classify::init_generator(
 	Poset->print_function_data = (void *) this;
 
 	
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	gen->initialize_and_allocate_root_node(
 			Control, Poset,
@@ -586,6 +587,6 @@ void regular_ls_classify_lifting_prepare_function_new(
 	}
 }
 
-}}
+}}}
 
 

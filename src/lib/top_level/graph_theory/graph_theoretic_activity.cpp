@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_graph_theory {
 
 
 graph_theoretic_activity::graph_theoretic_activity()
@@ -570,7 +571,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 	}
 }
 
-}}
+}}}
 
 
 

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 projective_space_activity_description::projective_space_activity_description()
@@ -415,7 +416,7 @@ int projective_space_activity_description::read_arguments(
 			}
 
 			define_surface_label.assign(argv[++i]);
-			Surface_Descr = NEW_OBJECT(surface_create_description);
+			Surface_Descr = NEW_OBJECT(applications_in_algebraic_geometry::surface_create_description);
 
 			i += Surface_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -450,7 +451,7 @@ int projective_space_activity_description::read_arguments(
 			}
 
 			define_quartic_curve_label.assign(argv[++i]);
-			Quartic_curve_descr = NEW_OBJECT(quartic_curve_create_description);
+			Quartic_curve_descr = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_create_description);
 
 			i += Quartic_curve_descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -469,7 +470,7 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_with_double_sixes") == 0) {
 			f_classify_surfaces_with_double_sixes = TRUE;
 			classify_surfaces_with_double_sixes_label.assign(argv[++i]);
-			classify_surfaces_with_double_sixes_control = NEW_OBJECT(poset_classification_control);
+			classify_surfaces_with_double_sixes_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			if (f_v) {
 				cout << "-classify_surfaces_with_double_sixes " << endl;
 			}
@@ -537,7 +538,7 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-sweep_4") == 0) {
 			f_sweep_4 = TRUE;
 			sweep_4_fname.assign(argv[++i]);
-			sweep_4_surface_description = NEW_OBJECT(surface_create_description);
+			sweep_4_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::surface_create_description);
 			if (f_v) {
 				cout << "-sweep_4" << endl;
 			}
@@ -558,7 +559,7 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-sweep_4_27") == 0) {
 			f_sweep_4_27 = TRUE;
 			sweep_4_27_fname.assign(argv[++i]);
-			sweep_4_27_surface_description = NEW_OBJECT(surface_create_description);
+			sweep_4_27_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::surface_create_description);
 			if (f_v) {
 				cout << "-sweep_4_27" << endl;
 			}
@@ -614,7 +615,7 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-trihedra1_control") == 0) {
 			f_trihedra1_control = TRUE;
-			Trihedra1_control = NEW_OBJECT(poset_classification_control);
+			Trihedra1_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Trihedra1_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -630,7 +631,7 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-trihedra2_control") == 0) {
 			f_trihedra2_control = TRUE;
-			Trihedra2_control = NEW_OBJECT(poset_classification_control);
+			Trihedra2_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Trihedra2_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -646,7 +647,7 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-control_six_arcs") == 0) {
 			f_control_six_arcs = TRUE;
-			Control_six_arcs = NEW_OBJECT(poset_classification_control);
+			Control_six_arcs = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Control_six_arcs->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -673,7 +674,7 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-spread_classify") == 0) {
 			f_spread_classify = TRUE;
 			spread_classify_k = ST.strtoi(argv[++i]);
-			spread_classify_Control = NEW_OBJECT(poset_classification_control);
+			spread_classify_Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			if (f_v) {
 				cout << "-spread_classify " << endl;
 			}
@@ -695,7 +696,7 @@ int projective_space_activity_description::read_arguments(
 		// semifields
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
 			f_classify_semifields = TRUE;
-			Semifield_classify_description = NEW_OBJECT(semifield_classify_description);
+			Semifield_classify_description = NEW_OBJECT(semifields::semifield_classify_description);
 			if (f_v) {
 				cout << "-classify_semifields" << endl;
 			}
@@ -710,7 +711,7 @@ int projective_space_activity_description::read_arguments(
 					cout << "next argument is " << argv[i] << endl;
 				}
 			}
-			Semifield_classify_Control = NEW_OBJECT(poset_classification_control);
+			Semifield_classify_Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			if (f_v) {
 				cout << "reading control " << endl;
 			}
@@ -886,7 +887,7 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = TRUE;
-			Arc_generator_description = NEW_OBJECT(arc_generator_description);
+			Arc_generator_description = NEW_OBJECT(apps_geometry::arc_generator_description);
 			if (f_v) {
 				cout << "-classify_arcs" << endl;
 			}
@@ -905,7 +906,7 @@ int projective_space_activity_description::read_arguments(
 		// cubic curves
 		else if (ST.stringcmp(argv[i], "-classify_cubic_curves") == 0) {
 			f_classify_cubic_curves = TRUE;
-			Arc_generator_description = NEW_OBJECT(arc_generator_description);
+			Arc_generator_description = NEW_OBJECT(apps_geometry::arc_generator_description);
 			if (f_v) {
 				cout << "-classify_cubic_curves" << endl;
 			}
@@ -1205,4 +1206,5 @@ void projective_space_activity_description::print()
 
 
 
-}}
+}}}
+

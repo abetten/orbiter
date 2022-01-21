@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_cosets::action_on_cosets()
 {
@@ -237,5 +239,5 @@ long int action_on_cosets::compute_image(int *Elt, long int i, int verbose_level
 
 
 
-}}
+}}}
 

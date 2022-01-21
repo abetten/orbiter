@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
+
 
 schreier_vector_handler::schreier_vector_handler()
 {
@@ -507,5 +509,5 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 	return SoS;
 }
 
-}}
+}}}
 

@@ -14,6 +14,15 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_graph_theory {
+
+
+static void graph_classify_test_function(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		void *data, int verbose_level);
+static void graph_classify_print_set(std::ostream &ost,
+		int len, long int *S, void *data);
 
 
 
@@ -88,7 +97,7 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 
 	A_base = NEW_OBJECT(actions::action);
 	A_on_edges = NEW_OBJECT(actions::action);
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
 	if (Descr->f_tournament) {
@@ -225,7 +234,7 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 		cout << "please use -poset_classification_control ... -end" << endl;
 		exit(1);
 	}
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A_base, A_on_edges,
 			A_base->Strong_gens,
 			verbose_level);
@@ -806,7 +815,7 @@ void graph_classify::draw_graphs(int level,
 // #############################################################################
 
 
-void graph_classify_test_function(long int *S, int len,
+static void graph_classify_test_function(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level)
@@ -831,7 +840,7 @@ void graph_classify_test_function(long int *S, int len,
 	}
 }
 
-void graph_classify_print_set(ostream &ost,
+static void graph_classify_print_set(ostream &ost,
 		int len, long int *S, void *data)
 {
 	graph_classify *Gen = (graph_classify *) data;
@@ -841,5 +850,5 @@ void graph_classify_print_set(ostream &ost,
 }
 
 
-}}
+}}}
 

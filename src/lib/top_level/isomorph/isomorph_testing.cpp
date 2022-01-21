@@ -1518,7 +1518,7 @@ void isomorph::induced_action_on_set(
 		exit(1);
 		}
 
-	vector_ge *gens = AA->Strong_gens->gens;
+	data_structures_groups::vector_ge *gens = AA->Strong_gens->gens;
 	//vector_ge *gens = AA->strong_generators;
 	int len, h, i, j;
 	int *data1;
@@ -1526,7 +1526,7 @@ void isomorph::induced_action_on_set(
 	int *Elt1;
 
 	len = gens->len;
-	gens_perm = NEW_OBJECT(vector_ge);
+	gens_perm = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	gens_perm->init(AA_perm, verbose_level - 2);
 	gens_perm->allocate(len, verbose_level - 2);
@@ -1558,7 +1558,7 @@ void isomorph::induced_action_on_set(
 				"created gens_perm" << endl;
 		}
 
-	UF = NEW_OBJECT(union_find);
+	UF = NEW_OBJECT(data_structures_groups::union_find);
 	UF->init(AA_on_k_subsets, verbose_level);
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set "

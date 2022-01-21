@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 
@@ -172,5 +173,5 @@ void flag_orbits_incidence_structure::report(std::ostream &ost, int verbose_leve
 }
 
 
-}}
+}}}
 

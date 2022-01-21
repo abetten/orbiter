@@ -17,7 +17,23 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
+
+// global functions:
+static void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data);
+#if 0
+static void blt_set_classify_lifting_prepare_function_new(exact_cover *EC, int starter_case,
+	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+#endif
+static void blt_set_classify_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+//static void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level);
 
 blt_set_classify::blt_set_classify()
 {
@@ -96,7 +112,7 @@ void blt_set_classify::init_basic(actions::action *A,
 				"verbose_level = " << verbose_level << endl;
 	}
 
-	action_on_orthogonal *AO;
+	induced_actions::action_on_orthogonal *AO;
 	orthogonal *O;
 	int f_semilinear;
 
@@ -162,7 +178,7 @@ void blt_set_classify::init_basic(actions::action *A,
 
 
 void blt_set_classify::compute_starter(
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -174,7 +190,7 @@ void blt_set_classify::compute_starter(
 	}
 
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			Strong_gens,
 			verbose_level);
@@ -196,7 +212,7 @@ void blt_set_classify::compute_starter(
 	Poset->print_function = blt_set_classify_print;
 	Poset->print_function_data = (void *) this;
 
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
 	if (f_v) {
@@ -679,7 +695,7 @@ int blt_set_classify::create_graph(
 	
 	int ret;
 
-	orbit_rep *R;
+	data_structures_groups::orbit_rep *R;
 
 
 
@@ -689,7 +705,7 @@ int blt_set_classify::create_graph(
 	nb_vertices = 0;
 
 
-	R = NEW_OBJECT(orbit_rep);
+	R = NEW_OBJECT(data_structures_groups::orbit_rep);
 	if (f_v) {
 		cout << "blt_set_classify::create_graph before R->init_from_file" << endl;
 	}
@@ -959,7 +975,7 @@ void blt_set_classify::report_from_iso(isomorph &Iso, int verbose_level)
 		cout << "blt_set_classify::report_from_iso" << endl;
 	}
 
-	orbit_transversal *T;
+	data_structures_groups::orbit_transversal *T;
 
 	if (f_v) {
 		cout << "blt_set_classify::report_from_iso "
@@ -983,7 +999,8 @@ void blt_set_classify::report_from_iso(isomorph &Iso, int verbose_level)
 }
 
 
-void blt_set_classify::report(orbit_transversal *T, int verbose_level)
+void blt_set_classify::report(data_structures_groups::orbit_transversal *T,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
@@ -1247,7 +1264,7 @@ void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
 #endif
 
 void blt_set_classify::report2(std::ostream &ost,
-		orbit_transversal *T, int verbose_level)
+		data_structures_groups::orbit_transversal *T, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1495,7 +1512,7 @@ void blt_set_classify::report2(std::ostream &ost,
 
 
 
-void blt_set_classify_print(ostream &ost, int len, long int *S, void *data)
+static void blt_set_classify_print(ostream &ost, int len, long int *S, void *data)
 {
 	blt_set_classify *Gen = (blt_set_classify *) data;
 
@@ -1503,7 +1520,8 @@ void blt_set_classify_print(ostream &ost, int len, long int *S, void *data)
 	Gen->Blt_set_domain->print(ost, S, len);
 }
 
-void blt_set_classify_lifting_prepare_function_new(
+#if 0
+static void blt_set_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
@@ -1540,10 +1558,10 @@ void blt_set_classify_lifting_prepare_function_new(
 				"done" << endl;
 	}
 }
+#endif
 
 
-
-void blt_set_classify_early_test_func_callback(long int *S, int len,
+static void blt_set_classify_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1565,15 +1583,18 @@ void blt_set_classify_early_test_func_callback(long int *S, int len,
 	}
 }
 
-void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level)
+#if 0
+static void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level)
 {
 	blt_set_classify *Gen = (blt_set_classify *) data;
 
 	Gen->report_from_iso(*Iso, verbose_level);
 }
+#endif
 
 
-}}
+}}}
+
 
 
 

@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 poset_of_orbits::poset_of_orbits()
 {
@@ -1289,7 +1291,7 @@ void poset_of_orbits::read_level_file(int level,
 #endif
 
 		{
-			group_container Aut;
+			data_structures_groups::group_container Aut;
 
 			Aut.init(PC->get_poset()->A, verbose_level - 2);
 
@@ -1615,6 +1617,6 @@ void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname, i
 
 
 
-}}
+}}}
 
 

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_graph_theory {
 
 
 
@@ -135,11 +136,5 @@ void graph_modification_description::apply(graph_theory::colored_graph *&CG, int
 
 
 
-
-
-
-
-
-
-}}
+}}}
 

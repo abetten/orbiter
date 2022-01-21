@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
 
 
 static int orbit_type_repository_compare_types(void *data,
@@ -521,4 +522,4 @@ static void orbit_type_repository_swap_types(void *data,
 
 
 
-}}
+}}}

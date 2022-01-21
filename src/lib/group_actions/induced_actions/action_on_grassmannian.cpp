@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_grassmannian::action_on_grassmannian()
 {
@@ -397,5 +399,5 @@ void action_on_grassmannian::print_point(long int a, std::ostream &ost)
 
 }
 
-}}
+}}}
 

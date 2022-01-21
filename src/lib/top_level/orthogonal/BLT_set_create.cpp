@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
+
 
 BLT_set_create::BLT_set_create()
 {
@@ -518,4 +520,5 @@ void BLT_set_create::print_set_of_points_with_ABC(std::ostream &ost, long int *P
 
 
 
-}}
+}}}
+

@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 
@@ -289,6 +290,7 @@ else {
 	FREE_OBJECT(CG);
 }
 #endif
-}}
+
+}}}
 
 

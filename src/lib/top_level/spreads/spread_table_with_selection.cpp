@@ -12,8 +12,11 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
 
 
+static int spread_table_with_selection_compare_func(void *data, int i, int j, void *extra_data);
+static void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra_data);
 
 
 spread_table_with_selection::spread_table_with_selection()
@@ -634,7 +637,7 @@ void spread_table_with_selection::predict_spread_table_length(
 
 	for (no = 0; no < nb_iso_types_of_spreads; no++) {
 
-		vector_ge *gens;
+		data_structures_groups::vector_ge *gens;
 		string stab_order;
 
 		A->stabilizer_of_spread_representative(q,
@@ -993,7 +996,7 @@ int spread_table_with_selection::is_adjacent(int i, int j)
 // #############################################################################
 
 
-int spread_table_with_selection_compare_func(void *data, int i, int j, void *extra_data)
+static int spread_table_with_selection_compare_func(void *data, int i, int j, void *extra_data)
 {
 	spread_table_with_selection *S = (spread_table_with_selection *) extra_data;
 	long int **Sets = (long int **) data;
@@ -1004,7 +1007,7 @@ int spread_table_with_selection_compare_func(void *data, int i, int j, void *ext
 	return ret;
 }
 
-void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra_data)
+static void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra_data)
 {
 	spread_table_with_selection *S = (spread_table_with_selection *) extra_data;
 	int *d = S->tmp_isomorphism_type_of_spread;
@@ -1024,4 +1027,5 @@ void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra
 
 
 
-}}
+}}}
+

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -373,5 +374,6 @@ void canonical_form_substructure::handle_orbit(
 	}
 }
 
-}}
+}}}
+
 

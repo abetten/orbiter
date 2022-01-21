@@ -31,49 +31,49 @@ class activity_description {
 	field_theory::finite_field_activity_description *Finite_field_activity_description;
 
 	int f_projective_space_activity;
-	projective_space_activity_description *Projective_space_activity_description;
+	projective_geometry::projective_space_activity_description *Projective_space_activity_description;
 
 	int f_orthogonal_space_activity;
-	orthogonal_space_activity_description *Orthogonal_space_activity_description;
+	orthogonal_geometry::orthogonal_space_activity_description *Orthogonal_space_activity_description;
 
 	int f_group_theoretic_activity;
-	group_theoretic_activity_description *Group_theoretic_activity_description;
+	apps_algebra::group_theoretic_activity_description *Group_theoretic_activity_description;
 
 	int f_cubic_surface_activity;
-	cubic_surface_activity_description *Cubic_surface_activity_description;
+	applications_in_algebraic_geometry::cubic_surface_activity_description *Cubic_surface_activity_description;
 
 	int f_quartic_curve_activity;
-	quartic_curve_activity_description *Quartic_curve_activity_description;
+	applications_in_algebraic_geometry::quartic_curve_activity_description *Quartic_curve_activity_description;
 
 	int f_combinatorial_object_activity;
-	combinatorial_object_activity_description *Combinatorial_object_activity_description;
+	apps_combinatorics::combinatorial_object_activity_description *Combinatorial_object_activity_description;
 
 	int f_graph_theoretic_activity;
-	graph_theoretic_activity_description * Graph_theoretic_activity_description;
+	apps_graph_theory::graph_theoretic_activity_description * Graph_theoretic_activity_description;
 
 	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
-	classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
+	applications_in_algebraic_geometry::classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
 
 	int f_spread_table_activity;
-	spread_table_activity_description * Spread_table_activity_description;
+	spreads::spread_table_activity_description * Spread_table_activity_description;
 
 	int f_packing_with_symmetry_assumption_activity;
-	packing_was_activity_description *Packing_was_activity_description;
+	packings::packing_was_activity_description *Packing_was_activity_description;
 
 	int f_packing_fixed_points_activity;
-	packing_was_fixpoints_activity_description *Packing_was_fixpoints_activity_description;
+	packings::packing_was_fixpoints_activity_description *Packing_was_fixpoints_activity_description;
 
 	int f_graph_classification_activity;
-	graph_classification_activity_description *Graph_classification_activity_description;
+	apps_graph_theory::graph_classification_activity_description *Graph_classification_activity_description;
 
 	int f_diophant_activity;
 	solvers::diophant_activity_description *Diophant_activity_description;
 
 	int f_design_activity;
-	design_activity_description *Design_activity_description;
+	apps_combinatorics::design_activity_description *Design_activity_description;
 
 	int f_large_set_was_activity;
-	large_set_was_activity_description *Large_set_was_activity_description;
+	apps_combinatorics::large_set_was_activity_description *Large_set_was_activity_description;
 
 public:
 	activity_description();
@@ -304,7 +304,7 @@ class interface_combinatorics {
 	int tree_of_all_k_subsets_k;
 
 	int f_Delandtsheer_Doyen;
-	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
+	apps_combinatorics::delandtsheer_doyen_description *Delandtsheer_Doyen_description;
 
 	int f_tdo_refinement;
 	combinatorics::tdo_refinement_description *Tdo_refinement_descr;
@@ -324,7 +324,7 @@ class interface_combinatorics {
 	int f_pentomino_puzzle;
 
 	int f_regular_linear_space_classify;
-	regular_linear_space_description *Rls_descr;
+	apps_combinatorics::regular_linear_space_description *Rls_descr;
 
 	int f_draw_layered_graph;
 	std::string draw_layered_graph_fname;
@@ -365,7 +365,7 @@ public:
 	void do_diophant_activity(solvers::diophant_activity_description *Descr, int verbose_level);
 	void do_bent(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
-	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
+	void do_Delandtsheer_Doyen(apps_combinatorics::delandtsheer_doyen_description *Descr, int verbose_level);
 
 };
 
@@ -571,7 +571,7 @@ class interface_projective {
 
 
 	int f_create_spread;
-	spread_create_description *Spread_create_description;
+	spreads::spread_create_description *Spread_create_description;
 
 	int f_make_table_of_surfaces;
 
@@ -597,7 +597,7 @@ public:
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	void do_create_spread(spread_create_description *Descr, int verbose_level);
+	void do_create_spread(spreads::spread_create_description *Descr, int verbose_level);
 
 };
 
@@ -830,8 +830,8 @@ public:
 	void print_symbol_table();
 	void add_symbol_table_entry(std::string &label,
 			orbiter_symbol_table_entry *Symb, int verbose_level);
-	any_group *get_object_of_type_any_group(std::string &label);
-	projective_space_with_action *get_object_of_type_projective_space(std::string &label);
+	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
+	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
 
 };
 
@@ -856,10 +856,11 @@ public:
 	field_theory::finite_field_description *Finite_field_description;
 
 	int f_projective_space;
-	projective_space_with_action_description *Projective_space_with_action_description;
+	projective_geometry::projective_space_with_action_description *Projective_space_with_action_description;
 
 	int f_orthogonal_space;
-	orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
+	orthogonal_geometry::orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
+
 
 	int f_linear_group;
 	groups::linear_group_description *Linear_group_description;
@@ -868,7 +869,7 @@ public:
 	groups::permutation_group_description *Permutation_group_description;
 
 	int f_group_modification;
-	group_modification_description *Group_modification_description;
+	apps_algebra::group_modification_description *Group_modification_description;
 
 	int f_formula;
 	formula *F;
@@ -885,7 +886,7 @@ public:
 	geometric_object_description *Geometric_object_description;
 
 	int f_graph;
-	create_graph_description *Create_graph_description;
+	apps_graph_theory::create_graph_description *Create_graph_description;
 
 	int f_spread_table;
 	std::string spread_table_label_PA;
@@ -895,26 +896,26 @@ public:
 
 	int f_packing_was;
 	std::string packing_was_label_spread_table;
-	packing_was_description * packing_was_descr;
+	packings::packing_was_description * packing_was_descr;
 
 	int f_packing_was_choose_fixed_points;
 	std::string packing_with_assumed_symmetry_label;
 	int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
-	poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
+	poset_classification::poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
 
 
 	int f_packing_long_orbits;
 	std::string packing_long_orbits_choose_fixed_points_label;
-	packing_long_orbits_description * Packing_long_orbits_description;
+	packings::packing_long_orbits_description * Packing_long_orbits_description;
 
 	int f_graph_classification;
-	graph_classify_description * Graph_classify_description;
+	apps_graph_theory::graph_classify_description * Graph_classify_description;
 
 	int f_diophant;
 	solvers::diophant_description *Diophant_description;
 
 	int f_design;
-	design_create_description *Design_create_description;
+	apps_combinatorics::design_create_description *Design_create_description;
 
 	int f_design_table;
 	std::string design_table_label_design;
@@ -924,7 +925,7 @@ public:
 
 	int f_large_set_was;
 	std::string  large_set_was_label_design_table;
-	large_set_was_description *large_set_was_descr;
+	apps_combinatorics::large_set_was_description *large_set_was_descr;
 
 	int f_set;
 	data_structures::set_builder_description *Set_builder_description;

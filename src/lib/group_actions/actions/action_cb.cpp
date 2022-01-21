@@ -774,7 +774,7 @@ void action::random_element(groups::sims *S, int *Elt, int verbose_level)
 	}
 }
 
-void action::all_elements(vector_ge *&vec, int verbose_level)
+void action::all_elements(data_structures_groups::vector_ge *&vec, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
@@ -794,7 +794,7 @@ void action::all_elements(vector_ge *&vec, int verbose_level)
 	group_order(go);
 	goi = go.as_int();
 
-	vec = NEW_OBJECT(vector_ge);
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
 	vec->init(this, 0 /*verbose_level*/);
 	vec->allocate(goi, verbose_level);
 
@@ -823,7 +823,7 @@ void action::all_elements_save_csv(std::string &fname, int verbose_level)
 		cout << "action::all_elements_save_csv !f_has_sims" << endl;
 		exit(1);
 	}
-	vector_ge *vec;
+	data_structures_groups::vector_ge *vec;
 	int i;
 	int *data;
 	int *Elt;

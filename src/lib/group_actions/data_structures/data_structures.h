@@ -13,6 +13,7 @@
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
 
 
 
@@ -394,7 +395,7 @@ public:
 		int n, int *pts, int *prev,
 		int *depth, int *ancestor, int pos);
 	void relabel_points(
-		action_on_factor_space *AF,
+			induced_actions::action_on_factor_space *AF,
 		int verbose_level);
 	void orbit_stats(
 			int &nb_orbits, int *&orbit_reps, int *&orbit_length, int *&total_depth,
@@ -629,14 +630,14 @@ public:
 			actions::action *A_given, int verbose_level);
 	void reverse_isomorphism_exterior_square(int verbose_level);
 	void matrix_representation(
-			action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
+			induced_actions::action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
 			int verbose_level);
 
 };
 
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_DATA_STRUCTURES_DATA_STRUCTURES_H_ */

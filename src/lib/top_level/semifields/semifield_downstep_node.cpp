@@ -14,7 +14,11 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
+
+static void coset_action_unrank_point(int *v, long int a, void *data);
+static long int coset_action_rank_point(int *v, void *data);
 
 
 semifield_downstep_node::semifield_downstep_node()
@@ -112,7 +116,7 @@ void semifield_downstep_node::init(
 		}
 #endif
 
-	on_cosets = NEW_OBJECT(action_on_cosets);
+	on_cosets = NEW_OBJECT(induced_actions::action_on_cosets);
 
 
 	if (f_v) {
@@ -258,7 +262,7 @@ int semifield_downstep_node::find_point(long int a)
 // #############################################################################
 
 
-void coset_action_unrank_point(int *v, long int a, void *data)
+static void coset_action_unrank_point(int *v, long int a, void *data)
 {
 	semifield_downstep_node *DN = (semifield_downstep_node *) data;
 	semifield_classify *SC = DN->SC;
@@ -266,7 +270,7 @@ void coset_action_unrank_point(int *v, long int a, void *data)
 	SC->matrix_unrank(a, v);
 }
 
-long int coset_action_rank_point(int *v, void *data)
+static long int coset_action_rank_point(int *v, void *data)
 {
 	semifield_downstep_node *DN = (semifield_downstep_node *) data;
 	semifield_classify *SC = DN->SC;
@@ -276,5 +280,5 @@ long int coset_action_rank_point(int *v, void *data)
 
 
 
-}}
+}}}
 

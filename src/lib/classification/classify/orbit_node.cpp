@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace invariant_relations {
 
 orbit_node::orbit_node()
 {
@@ -89,5 +90,6 @@ void orbit_node::read_file(ifstream &fp, int verbose_level)
 
 
 
-}}
+}}}
+
 

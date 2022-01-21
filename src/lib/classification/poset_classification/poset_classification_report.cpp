@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 
@@ -251,7 +252,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 	char str[1000];
 	poset_orbit_node *O;
 	ring_theory::longinteger_object stab_order, orbit_length;
-	schreier_vector *Schreier_vector;
+	data_structures_groups::schreier_vector *Schreier_vector;
 	latex_interface L;
 
 
@@ -531,7 +532,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 	char str[1000];
 	char str2[1000];
 	long int *rep = NULL;
-	schreier_vector *Schreier_vector;
+	data_structures_groups::schreier_vector *Schreier_vector;
 	latex_interface L;
 	long int so;
 
@@ -813,4 +814,5 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 }
 
 
-}}
+}}}
+

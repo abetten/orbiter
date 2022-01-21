@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
+
 
 group_container::group_container()
 {
@@ -935,5 +937,5 @@ void group_container::print_strong_generators_with_different_action_verbose(
 	}
 }
 
-}}
+}}}
 

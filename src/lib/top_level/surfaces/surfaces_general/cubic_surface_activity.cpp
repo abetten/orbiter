@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 
 cubic_surface_activity::cubic_surface_activity()
@@ -68,7 +70,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		}
 
 		int f_has_control_six_arcs = FALSE;
-		poset_classification_control *Control_six_arcs = NULL;
+		poset_classification::poset_classification_control *Control_six_arcs = NULL;
 
 		SC->Surf_A->report_with_group(
 				SC,
@@ -281,7 +283,8 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 
 
-}}
+}}}
+
 
 
 

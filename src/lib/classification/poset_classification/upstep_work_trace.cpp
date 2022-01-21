@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 trace_result upstep_work::recognize(
 	int &final_node, int &final_ex, int f_tolerant,
@@ -739,6 +741,6 @@ trace_result upstep_work::start_over(
 	return r;
 }
 
-}}
+}}}
 
 

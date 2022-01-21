@@ -418,7 +418,7 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_make_A5_in_PSL_2_q) {
 
-		algebra_global_with_action A;
+		apps_algebra::algebra_global_with_action A;
 
 		A.A5_in_PSL_(make_A5_in_PSL_2_q_q, verbose_level);
 
@@ -471,13 +471,13 @@ void interface_algebra::worker(int verbose_level)
 
 
 	else if (f_young_symmetrizer) {
-		algebra_global_with_action Algebra;
+		apps_algebra::algebra_global_with_action Algebra;
 
 		Algebra.young_symmetrizer(young_symmetrizer_n, verbose_level);
 	}
 
 	else if (f_young_symmetrizer_sym_4) {
-		algebra_global_with_action Algebra;
+		apps_algebra::algebra_global_with_action Algebra;
 
 		Algebra.young_symmetrizer_sym_4(verbose_level);
 	}
@@ -509,7 +509,7 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_all_rational_normal_forms) {
 
-		algebra_global_with_action Algebra;
+		apps_algebra::algebra_global_with_action Algebra;
 
 		field_theory::finite_field *F;
 		int idx;
@@ -529,7 +529,7 @@ void interface_algebra::worker(int verbose_level)
 	else if (f_eigenstuff) {
 
 
-		algebra_global_with_action Algebra;
+		apps_algebra::algebra_global_with_action Algebra;
 		int *data;
 		int sz;
 		field_theory::finite_field *F;
@@ -585,9 +585,9 @@ void interface_algebra::do_character_table_symmetric_group(int deg, int verbose_
 		cout << "deg=" << deg << endl;
 	}
 
-	character_table_burnside *CTB;
+	apps_algebra::character_table_burnside *CTB;
 
-	CTB = NEW_OBJECT(character_table_burnside);
+	CTB = NEW_OBJECT(apps_algebra::character_table_burnside);
 
 	CTB->do_it(deg, verbose_level);
 

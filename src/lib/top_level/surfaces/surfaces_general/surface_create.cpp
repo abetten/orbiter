@@ -16,6 +16,9 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
+
 
 surface_create::surface_create()
 {
@@ -395,7 +398,7 @@ void surface_create::override_group(std::string &group_order_text,
 		exit(1);
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	Sg->init_from_data_with_target_go_ascii(Surf_A->A, data,
 			nb_gens, Surf_A->A->make_element_size, group_order_text.c_str(),
@@ -1327,11 +1330,11 @@ void surface_create::create_surface_by_arc_lifting(
 		cout << endl;
 	}
 
-	poset_classification_control *Control1;
-	poset_classification_control *Control2;
+	poset_classification::poset_classification_control *Control1;
+	poset_classification::poset_classification_control *Control2;
 
-	Control1 = NEW_OBJECT(poset_classification_control);
-	Control2 = NEW_OBJECT(poset_classification_control);
+	Control1 = NEW_OBJECT(poset_classification::poset_classification_control);
+	Control2 = NEW_OBJECT(poset_classification::poset_classification_control);
 
 #if 1
 	// classifying the trihedral pairs is expensive:
@@ -2448,7 +2451,8 @@ void surface_create::apply_transformations(
 }
 
 
-void surface_create::compute_group(projective_space_with_action *PA,
+void surface_create::compute_group(
+		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2565,6 +2569,7 @@ void surface_create::compute_group(projective_space_with_action *PA,
 }
 
 
-}}
+}}}
+
 
 

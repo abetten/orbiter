@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 poset_description::poset_description()
@@ -119,5 +120,6 @@ int poset_description::read_arguments(
 	return i;
 }
 
-}}
+}}}
+
 

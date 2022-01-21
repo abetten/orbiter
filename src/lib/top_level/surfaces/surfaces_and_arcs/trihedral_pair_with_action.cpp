@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 trihedral_pair_with_action::trihedral_pair_with_action()
 {
@@ -356,7 +358,8 @@ void trihedral_pair_with_action::init(arc_lifting *AL, int verbose_level)
 
 
 void trihedral_pair_with_action::loop_over_trihedral_pairs(
-	vector_ge *cosets, vector_ge *&coset_reps,
+		data_structures_groups::vector_ge *cosets,
+	data_structures_groups::vector_ge *&coset_reps,
 	int *&aut_T_index, int *&aut_coset_index,
 	int verbose_level)
 {
@@ -415,7 +418,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 	}
 #endif
 
-	coset_reps = NEW_OBJECT(vector_ge);
+	coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 	coset_reps->init(AL->Surf_A->A, verbose_level - 2);
 	coset_reps->allocate(AL->Web->nb_T * cosets->len, verbose_level - 2);
 
@@ -1427,4 +1430,5 @@ void trihedral_pair_with_action::report_iso_type_as_double_triplets(ostream &ost
 
 }
 
-}}
+}}}
+

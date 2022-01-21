@@ -18,7 +18,7 @@ void action::init_linear_group(
 		field_theory::finite_field *F, int m,
 	int f_projective, int f_general, int f_affine,
 	int f_semilinear, int f_special,
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -173,7 +173,7 @@ void action::init_linear_group(
 
 void action::init_projective_group(int n, field_theory::finite_field *F,
 	int f_semilinear, int f_basis, int f_init_sims,
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -262,7 +262,7 @@ void action::init_projective_group(int n, field_theory::finite_field *F,
 void action::init_affine_group(int n, field_theory::finite_field *F,
 	int f_semilinear, 
 	int f_basis, int f_init_sims,
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -330,7 +330,7 @@ void action::init_affine_group(int n, field_theory::finite_field *F,
 void action::init_general_linear_group(int n, field_theory::finite_field *F,
 	int f_semilinear, 
 	int f_basis, int f_init_sims,
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -401,7 +401,7 @@ void action::init_general_linear_group(int n, field_theory::finite_field *F,
 
 void action::setup_linear_group_from_strong_generators(
 		groups::matrix_group *M,
-	vector_ge *&nice_gens, int f_init_sims,
+		data_structures_groups::vector_ge *&nice_gens, int f_init_sims,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -508,7 +508,7 @@ void action::init_projective_special_group(
 				"before init_projective_group" << endl;
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 	int f_init_sims = TRUE;
 
 	init_projective_group(n, F,
@@ -560,7 +560,7 @@ void action::init_projective_special_group(
 
 void action::init_matrix_group_strong_generators_builtin(
 		groups::matrix_group *M,
-	vector_ge *&nice_gens,
+		data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -864,10 +864,10 @@ void action::init_permutation_group_from_generators(int degree,
 					<< endl;
 		}
 
-		vector_ge *generators;
+		data_structures_groups::vector_ge *generators;
 		groups::strong_generators *Strong_gens;
 
-		generators = NEW_OBJECT(vector_ge);
+		generators = NEW_OBJECT(data_structures_groups::vector_ge);
 		generators->init(this, verbose_level - 2);
 		generators->allocate(nb_gens, verbose_level - 2);
 		for (i = 0; i < nb_gens; i++) {
@@ -1188,7 +1188,8 @@ void action::create_orthogonal_group(action *subaction,
 
 void action::init_wreath_product_group_and_restrict(
 		int nb_factors, int n,
-		field_theory::finite_field *F, vector_ge *&nice_gens,
+		field_theory::finite_field *F,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1242,7 +1243,8 @@ void action::init_wreath_product_group_and_restrict(
 
 
 void action::init_wreath_product_group(int nb_factors, int n,
-		field_theory::finite_field *F, vector_ge *&nice_gens,
+		field_theory::finite_field *F,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1437,7 +1439,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 void action::init_permutation_representation(action *A_original,
 		int f_stay_in_the_old_action,
-		vector_ge *gens,
+		data_structures_groups::vector_ge *gens,
 		int *Perms, int degree,
 		int verbose_level)
 {
@@ -1612,7 +1614,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	action *A;
-	action_on_orthogonal *AO;
+	induced_actions::action_on_orthogonal *AO;
 	int q = O->F->q;
 	algebra::group_generators_domain GG;
 
@@ -1625,7 +1627,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 		cout << "action::init_orthogonal_group_with_O "
 				"before A->init_projective_group" << endl;
 	}
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 	A->init_projective_group(O->n, O->F, f_semilinear,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -1636,7 +1638,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	}
 	FREE_OBJECT(nice_gens);
 
-	AO = NEW_OBJECT(action_on_orthogonal);
+	AO = NEW_OBJECT(induced_actions::action_on_orthogonal);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group_with_O before AO->init" << endl;
 	}
@@ -1845,7 +1847,8 @@ void action::init_BLT(field_theory::finite_field *F, int f_basis,
 }
 
 void action::init_group_from_strong_generators(
-	vector_ge *gens, groups::sims *K,
+		data_structures_groups::vector_ge *gens,
+		groups::sims *K,
 	int given_base_length, int *given_base,
 	int verbose_level)
 {
@@ -1945,7 +1948,8 @@ void action::init_group_from_strong_generators(
 
 
 groups::sims *action::create_sims_from_generators_with_target_group_order_factorized(
-	vector_ge *gens, int *tl, int len, int verbose_level)
+		data_structures_groups::vector_ge *gens,
+		int *tl, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -1972,7 +1976,8 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_factor
 }
 
 groups::sims *action::create_sims_from_generators_with_target_group_order_lint(
-	vector_ge *gens, long int target_go, int verbose_level)
+		data_structures_groups::vector_ge *gens,
+		long int target_go, int verbose_level)
 {
 	ring_theory::longinteger_object tgo;
 
@@ -1982,7 +1987,8 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_lint(
 }
 
 groups::sims *action::create_sims_from_generators_with_target_group_order(
-	vector_ge *gens, ring_theory::longinteger_object &target_go,
+		data_structures_groups::vector_ge *gens,
+	ring_theory::longinteger_object &target_go,
 	int verbose_level)
 {
 	return create_sims_from_generators_randomized(
@@ -1990,7 +1996,7 @@ groups::sims *action::create_sims_from_generators_with_target_group_order(
 }
 
 groups::sims *action::create_sims_from_generators_without_target_group_order(
-	vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens, int verbose_level)
 {
 	ring_theory::longinteger_object dummy;
 
@@ -2003,14 +2009,14 @@ groups::sims *action::create_sims_from_single_generator_without_target_group_ord
 {
 	int f_v = (verbose_level >= 1);
 	groups::sims *S;
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	ring_theory::longinteger_object dummy;
 
 	if (f_v) {
 		cout << "action::create_sims_from_single_generator_"
 				"without_target_group_order" << endl;
 	}
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init_single(this, Elt, verbose_level - 2);
 
 	S = create_sims_from_generators_randomized(
@@ -2025,7 +2031,8 @@ groups::sims *action::create_sims_from_single_generator_without_target_group_ord
 }
 
 groups::sims *action::create_sims_from_generators_randomized(
-	vector_ge *gens, int f_target_go, ring_theory::longinteger_object &target_go,
+		data_structures_groups::vector_ge *gens,
+		int f_target_go, ring_theory::longinteger_object &target_go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2254,14 +2261,14 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 #endif
 
 
-	vector_ge *gens;
-	vector_ge *SG;
+	data_structures_groups::vector_ge *gens;
+	data_structures_groups::vector_ge *SG;
 	int *tl;
 	ring_theory::longinteger_object centralizer_order, cent_go;
 	int *Elt1;
 
-	gens = NEW_OBJECT(vector_ge);
-	SG = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	SG = NEW_OBJECT(data_structures_groups::vector_ge);
 	tl = NEW_int(base_len());
 	gens->init(this, verbose_level - 2);
 	gens->allocate(nb_gens, verbose_level - 2);

@@ -15,6 +15,8 @@ using namespace orbiter::foundations;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
+
 
 group_modification_description::group_modification_description()
 {
@@ -92,5 +94,5 @@ void group_modification_description::print()
 
 
 
-}}
+}}}
 

@@ -14,6 +14,15 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
+
+#if 0
+static void difference_set_in_heisenberg_group_early_test_func(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		void *data, int verbose_level);
+#endif
 
 
 void difference_set_in_heisenberg_group::init(int n,
@@ -196,7 +205,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	cout << endl;
 
 
-	U_gens = NEW_OBJECT(vector_ge);
+	U_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	U_gens->init_single(A, E1, verbose_level - 2);
 
 	Aut = Aut_gens->create_sims(verbose_level);
@@ -480,7 +489,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 				<< nb_overgroups << ":" << endl;
 
 		groups::sims *O;
-		vector_ge *O_gens;
+		data_structures_groups::vector_ge *O_gens;
 		ring_theory::longinteger_object O_go;
 		groups::schreier *Sch1;
 
@@ -492,7 +501,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		cout << endl;
 
 
-		O_gens = NEW_OBJECT(vector_ge);
+		O_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 		O_gens->init_double(A, Elt1, Elt2, verbose_level - 2);
 
 		O = NEW_OBJECT(groups::sims);
@@ -1109,8 +1118,8 @@ void difference_set_in_heisenberg_group::early_test_func(long int *S, int len,
 }
 
 
-
-void difference_set_in_heisenberg_group_early_test_func(
+#if 0
+static void difference_set_in_heisenberg_group_early_test_func(
 		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
@@ -1124,10 +1133,9 @@ void difference_set_in_heisenberg_group_early_test_func(
 		good_candidates, nb_good_candidates,
 		verbose_level);
 }
+#endif
 
 
 
-
-
-}}
+}}}
 

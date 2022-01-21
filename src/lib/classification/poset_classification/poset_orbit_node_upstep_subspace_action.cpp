@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
@@ -25,7 +26,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	int f_v = (verbose_level >= 1);
 	int projected_pt, projected_pt0;
 
-	action_on_factor_space *AF;
+	induced_actions::action_on_factor_space *AF;
 	actions::action *A_factor_space;
 
 	//int f_check_image = FALSE;
@@ -193,7 +194,8 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	}
 }
 
-}}
+}}}
+
 
 
 

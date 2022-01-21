@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_orthogonal::action_on_orthogonal()
 {
@@ -222,6 +224,7 @@ long int action_on_orthogonal::compute_image_int(
 	return j;
 }
 
-}}
+}}}
+
 
 

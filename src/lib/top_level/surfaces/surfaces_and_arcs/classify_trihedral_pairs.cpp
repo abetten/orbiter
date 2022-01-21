@@ -15,6 +15,18 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
+
+static void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+static void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 
 classify_trihedral_pairs::classify_trihedral_pairs()
@@ -137,8 +149,8 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 
 
 void classify_trihedral_pairs::classify_orbits_on_trihedra(
-		poset_classification_control *Control1,
-		poset_classification_control *Control2,
+		poset_classification::poset_classification_control *Control1,
+		poset_classification::poset_classification_control *Control2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -152,7 +164,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				"computing orbits on 3-subsets of points (type 1):" << endl;
 	}
 
-	Poset1 = NEW_OBJECT(poset_with_group_action);
+	Poset1 = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset1->init_subset_lattice(A, A, gens_type1,
 			verbose_level);
 
@@ -162,7 +174,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				verbose_level);
 
 
-	orbits_on_trihedra_type1 = NEW_OBJECT(poset_classification);
+	orbits_on_trihedra_type1 = NEW_OBJECT(poset_classification::poset_classification);
 
 	orbits_on_trihedra_type1->compute_orbits_on_subsets(
 		3, /* target_depth */
@@ -183,7 +195,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				"computing orbits on 3-subsets of points (type 2):" << endl;
 	}
 	
-	Poset2 = NEW_OBJECT(poset_with_group_action);
+	Poset2 = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset2->init_subset_lattice(A, A, gens_type2,
 			verbose_level);
 
@@ -192,7 +204,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				this /* void *data */,
 				verbose_level);
 
-	orbits_on_trihedra_type2 = NEW_OBJECT(poset_classification);
+	orbits_on_trihedra_type2 = NEW_OBJECT(poset_classification::poset_classification);
 
 	orbits_on_trihedra_type2->compute_orbits_on_subsets(
 		3, /* target_depth */
@@ -298,7 +310,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(std::ostream &ost, 
 
 	if (f_detailed) {
 		for (i = 0; i < l; i++) {
-			set_and_stabilizer *R;
+			data_structures_groups::set_and_stabilizer *R;
 
 			R = orbits_on_trihedra_type1->get_set_and_stabilizer(
 					3 /* level */,
@@ -361,7 +373,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(std::ostream &ost, 
 
 	if (f_detailed) {
 		for (i = 0; i < l; i++) {
-			set_and_stabilizer *R;
+			data_structures_groups::set_and_stabilizer *R;
 
 			R = orbits_on_trihedra_type2->get_set_and_stabilizer(
 					3 /* level */,
@@ -770,8 +782,8 @@ void classify_trihedral_pairs::identify_three_planes(
 
 
 void classify_trihedral_pairs::classify(
-		poset_classification_control *Control1,
-		poset_classification_control *Control2,
+		poset_classification::poset_classification_control *Control1,
+		poset_classification::poset_classification_control *Control2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -843,7 +855,7 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 	if (f_v) {
 		cout << "classify_trihedral_pairs::downstep" << endl;
 	}
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->init(A, A, 2 /* nb_primary_orbits_lower */, 
 		3 /* pt_representation_sz */,
 		nb_orbits_ordered_total /* nb_flag_orbits */,
@@ -858,7 +870,7 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 				"initializing flag orbits type 1" << endl;
 	}
 	for (i = 0; i < nb_orbits_type1; i++) {
-		set_and_stabilizer *R;
+		data_structures_groups::set_and_stabilizer *R;
 		ring_theory::longinteger_object ol;
 		ring_theory::longinteger_object go;
 
@@ -897,7 +909,7 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 				"initializing flag orbits type 2" << endl;
 	}
 	for (i = 0; i < nb_orbits_type2; i++) {
-		set_and_stabilizer *R;
+		data_structures_groups::set_and_stabilizer *R;
 		ring_theory::longinteger_object ol;
 		ring_theory::longinteger_object go;
 
@@ -967,7 +979,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 	
-	Trihedral_pairs = NEW_OBJECT(classification_step);
+	Trihedral_pairs = NEW_OBJECT(invariant_relations::classification_step);
 
 	ring_theory::longinteger_object go;
 	A->group_order(go);
@@ -1297,7 +1309,7 @@ void classify_trihedral_pairs::identify_trihedral_pair(long int *planes6,
 // global functions:
 // #############################################################################
 
-void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
+static void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1321,7 +1333,7 @@ void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
 	}
 }
 
-void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
+static void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1345,5 +1357,5 @@ void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
 	}
 }
 
-}}
+}}}
 

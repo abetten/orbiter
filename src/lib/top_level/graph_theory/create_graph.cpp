@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_graph_theory {
 
 
 create_graph::create_graph()
@@ -425,7 +426,7 @@ void create_graph::init(
 		graph_theory::graph_theory_domain GT;
 
 		int idx;
-		any_group *AG;
+		apps_algebra::any_group *AG;
 
 		idx = Orbiter->find_symbol(description->orbital_graph_group);
 
@@ -439,7 +440,7 @@ void create_graph::init(
 			cout << endl;
 			exit(1);
 		}
-		AG = (any_group *) Orbiter->get_object(idx);
+		AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
 
 
 
@@ -780,7 +781,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 			verbose_level - 2);
 	}
 	else {
-		vector_ge *nice_gens;
+		data_structures_groups::vector_ge *nice_gens;
 
 		if (f_v) {
 			cout << "create_graph::create_Sarnak "
@@ -913,7 +914,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		Orbiter->Int_vec->matrix_print(A4, nb_A4, 4);
 	}
 
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -924,7 +925,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(nb_A4, verbose_level - 2);
 
@@ -1104,8 +1105,8 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	}
 
 	actions::action *A;
-	vector_ge *gens_G;
-	vector_ge *gens_S;
+	data_structures_groups::vector_ge *gens_G;
+	data_structures_groups::vector_ge *gens_S;
 	int *v;
 	int n = 8;
 	int i, j;
@@ -1125,12 +1126,12 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	nb_G = 2;
 	nb_S = 6;
 
-	gens_G = NEW_OBJECT(vector_ge);
+	gens_G = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens_G->init(A, verbose_level - 2);
 	gens_G->allocate(nb_G, verbose_level - 2);
 
 
-	gens_S = NEW_OBJECT(vector_ge);
+	gens_S = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens_S->init(A, verbose_level - 2);
 	gens_S->allocate(nb_S, verbose_level - 2);
 
@@ -1380,7 +1381,7 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 }
 
 void create_graph::make_orbital_graph(int &N, int *&Adj,
-		any_group *AG, int orbit_idx, int verbose_level)
+		apps_algebra::any_group *AG, int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1388,11 +1389,11 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 		cout << "create_graph::make_orbital_graph" << endl;
 	}
 
-	poset_classification_control *Control;
+	poset_classification::poset_classification_control *Control;
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
-	poset_classification *PC;
+	poset_classification::poset_classification *PC;
 
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph "
@@ -1569,4 +1570,4 @@ void create_graph::make_chain_graph(int &N, int *&Adj,
 }
 
 
-}}
+}}}

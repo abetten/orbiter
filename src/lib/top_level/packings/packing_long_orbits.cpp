@@ -14,6 +14,13 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
+
+
+// globals:
+static int packing_long_orbit_test_function(long int *orbit1, int len1,
+		long int *orbit2, int len2, void *data);
+
 
 
 packing_long_orbits::packing_long_orbits()
@@ -1157,7 +1164,7 @@ void packing_long_orbits::report_filtered_orbits(ostream &ost)
 // #############################################################################
 
 
-int packing_long_orbit_test_function(long int *orbit1, int len1,
+static int packing_long_orbit_test_function(long int *orbit1, int len1,
 		long int *orbit2, int len2, void *data)
 {
 	packing_long_orbits *L = (packing_long_orbits *) data;
@@ -1167,5 +1174,5 @@ int packing_long_orbit_test_function(long int *orbit1, int len1,
 }
 
 
-}}
+}}}
 

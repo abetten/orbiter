@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 void poset_classification::compute_orbits_on_subsets(
@@ -730,7 +731,7 @@ void poset_classification::recognize(std::string &set_to_recognize,
 	Elt_transporter_inv = NEW_int(get_A()->elt_size_in_int);
 
 
-	set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS;
 	int orbit_at_level;
 
 
@@ -1270,7 +1271,7 @@ void poset_classification::extend_node(
 	}
 }
 
-}}
+}}}
 
 
 

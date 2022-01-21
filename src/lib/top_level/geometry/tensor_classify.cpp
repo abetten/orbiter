@@ -14,6 +14,16 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
+
+
+//static int wreath_rank_point_func(int *v, void *data);
+//static void wreath_unrank_point_func(int *v, int rk, void *data);
+static void wreath_product_print_set(std::ostream &ost, int len, long int *S, void *data);
+static void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 tensor_classify::tensor_classify()
@@ -157,7 +167,7 @@ void tensor_classify::init(
 
 
 void tensor_classify::classify_poset(int depth,
-		poset_classification_control *Control,
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -177,7 +187,7 @@ void tensor_classify::classify_poset(int depth,
 				"after create_restricted_action_on_rank_one_tensors" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, Ar,
 			SG,
 			verbose_level);
@@ -202,7 +212,7 @@ void tensor_classify::classify_poset(int depth,
 		cout << "tensor_classify::classify_poset before "
 				"Gen->initialize_and_allocate_root_node" << endl;
 		}
-	Gen = NEW_OBJECT(poset_classification);
+	Gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	Gen->initialize_and_allocate_root_node(
 			Control, Poset,
@@ -459,7 +469,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 			fp << "\\section{Poset Classification}" << endl;
 			fp << endl;
 
-			poset_classification_report_options Opt;
+			poset_classification::poset_classification_report_options Opt;
 
 			Gen->report(fp, &Opt, verbose_level);
 			fp << "\\subsection*{Orbits at level " << poset_classify_depth << "}" << endl;
@@ -544,8 +554,8 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 
 
-
-int wreath_rank_point_func(int *v, void *data)
+#if 0
+static int wreath_rank_point_func(int *v, void *data)
 {
 	tensor_classify *T;
 	int rk;
@@ -557,7 +567,7 @@ int wreath_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void wreath_unrank_point_func(int *v, int rk, void *data)
+static void wreath_unrank_point_func(int *v, int rk, void *data)
 {
 	tensor_classify *T;
 
@@ -566,9 +576,10 @@ void wreath_unrank_point_func(int *v, int rk, void *data)
 	T->W->tensor_PG_unrank(v, rk);
 
 }
+#endif
 
 
-void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
+static void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
 {
 	tensor_classify *T;
 	int i;
@@ -589,7 +600,7 @@ void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
 
 
 
-void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
+static void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -612,6 +623,6 @@ void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
 }
 
 
-}}
+}}}
 
 

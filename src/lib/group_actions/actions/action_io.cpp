@@ -515,11 +515,11 @@ void action::read_file_and_print_representatives(
 		Orbiter->Lint_vec->print(cout, Sets[i], Set_sizes[i]);
 		cout << endl;
 
-		group_container *G;
-		vector_ge *gens;
+		data_structures_groups::group_container *G;
+		data_structures_groups::vector_ge *gens;
 		int *tl;
 
-		G = NEW_OBJECT(group_container);
+		G = NEW_OBJECT(data_structures_groups::group_container);
 		G->init(this, verbose_level - 2);
 		G->init_ascii_coding_to_sims(Aut_ascii[i], verbose_level - 2);
 
@@ -528,7 +528,7 @@ void action::read_file_and_print_representatives(
 
 		G->S->group_order(go);
 
-		gens = NEW_OBJECT(vector_ge);
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
 		tl = NEW_int(base_len());
 		G->S->extract_strong_generators_in_order(*gens, tl,
 				0 /* verbose_level */);
@@ -568,7 +568,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
-	group_container *G;
+	data_structures_groups::group_container *G;
 	int i;
 	file_io Fio;
 
@@ -600,7 +600,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 		}
 
 
-	G = NEW_OBJECT(group_container);
+	G = NEW_OBJECT(data_structures_groups::group_container);
 	G->init(this, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
@@ -647,7 +647,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 
 
 void action::list_elements_as_permutations_vertically(
-		vector_ge *gens,
+		data_structures_groups::vector_ge *gens,
 		ostream &ost)
 {
 	int i, j, a, len;
@@ -932,7 +932,7 @@ void action::print_group_order_long(ostream &ost)
 
 }
 
-void action::print_vector(vector_ge &v)
+void action::print_vector(data_structures_groups::vector_ge &v)
 {
 	int i, l;
 
@@ -945,7 +945,7 @@ void action::print_vector(vector_ge &v)
 		}
 }
 
-void action::print_vector_as_permutation(vector_ge &v)
+void action::print_vector_as_permutation(data_structures_groups::vector_ge &v)
 {
 	int i, l;
 

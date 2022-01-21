@@ -14,6 +14,9 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
+
 
 surface_domain_high_level::surface_domain_high_level()
 {
@@ -24,7 +27,7 @@ surface_domain_high_level::~surface_domain_high_level()
 }
 
 void surface_domain_high_level::do_sweep_4(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		surface_create_description *Surface_Descr,
 		std::string &sweep_fname,
 		int verbose_level)
@@ -64,7 +67,7 @@ void surface_domain_high_level::do_sweep_4(
 }
 
 void surface_domain_high_level::do_sweep_4_27(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		surface_create_description *Surface_Descr,
 		std::string &sweep_fname,
 		int verbose_level)
@@ -149,8 +152,8 @@ void surface_domain_high_level::do_sweep_4_27(
 
 
 void surface_domain_high_level::classify_surfaces_with_double_sixes(
-		projective_space_with_action *PA,
-		poset_classification_control *Control,
+		projective_geometry::projective_space_with_action *PA,
+		poset_classification::poset_classification_control *Control,
 		surface_classify_wedge *&SCW,
 		int verbose_level)
 {
@@ -222,8 +225,8 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 
 void surface_domain_high_level::prepare_surface_classify_wedge(
 		field_theory::finite_field *F,
-		projective_space_with_action *PA,
-		poset_classification_control *Control,
+		projective_geometry::projective_space_with_action *PA,
+		poset_classification::poset_classification_control *Control,
 		algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 		surface_classify_wedge *&SCW,
 		int verbose_level)
@@ -334,8 +337,8 @@ void surface_domain_high_level::do_study_surface(field_theory::finite_field *F, 
 
 
 void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
-		projective_space_with_action *PA,
-		poset_classification_control *Control_six_arcs,
+		projective_geometry::projective_space_with_action *PA,
+		poset_classification::poset_classification_control *Control_six_arcs,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
@@ -428,10 +431,10 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 }
 
 void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs(
-		projective_space_with_action *PA,
-		poset_classification_control *Control1,
-		poset_classification_control *Control2,
-		poset_classification_control *Control_six_arcs,
+		projective_geometry::projective_space_with_action *PA,
+		poset_classification::poset_classification_control *Control1,
+		poset_classification::poset_classification_control *Control2,
+		poset_classification::poset_classification_control *Control_six_arcs,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
@@ -544,8 +547,8 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 }
 
 void surface_domain_high_level::do_six_arcs(
-		projective_space_with_action *PA,
-		poset_classification_control *Control_six_arcs,
+		projective_geometry::projective_space_with_action *PA,
+		poset_classification::poset_classification_control *Control_six_arcs,
 		int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
 		int verbose_level)
 {
@@ -574,20 +577,13 @@ void surface_domain_high_level::do_six_arcs(
 
 
 	six_arcs_not_on_a_conic *Six_arcs;
-	arc_generator_description *Six_arc_descr;
+	apps_geometry::arc_generator_description *Six_arc_descr;
 
 	int *transporter;
 
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
 
-	Six_arc_descr = NEW_OBJECT(arc_generator_description);
-#if 0
-	Six_arc_descr->F = F;
-	Six_arc_descr->f_q = TRUE;
-	Six_arc_descr->q = F->q;
-	Six_arc_descr->f_n = TRUE;
-	Six_arc_descr->n = 3;
-#endif
+	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Six_arc_descr->f_target_size = TRUE;
 	Six_arc_descr->target_size = 6;
 	Six_arc_descr->Control = Control_six_arcs;
@@ -612,7 +608,6 @@ void surface_domain_high_level::do_six_arcs(
 	Six_arcs->init(
 			Six_arc_descr,
 			PA,
-			//Surf->P2,
 			FALSE, 0, NULL,
 			verbose_level);
 
@@ -794,7 +789,7 @@ void surface_domain_high_level::do_six_arcs(
 
 
 void surface_domain_high_level::do_cubic_surface_properties(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		std::string &fname_csv, int defining_q,
 		int column_offset,
 		int verbose_level)
@@ -1082,7 +1077,7 @@ struct cubic_surface_data_set {
 };
 
 void surface_domain_high_level::do_cubic_surface_properties_analyze(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		std::string &fname_csv, int defining_q,
 		int verbose_level)
 {
@@ -1470,7 +1465,7 @@ struct table_surfaces_field_order {
 
 	field_theory::finite_field *F;
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
@@ -1679,7 +1674,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 		//T[cur].Descr->F = T[cur].F;
 
 
-		T[cur].PA = NEW_OBJECT(projective_space_with_action);
+		T[cur].PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
 		T[cur].PA->init(T[cur].F, 3, f_semilinear,
 				TRUE /* f_init_incidence_structure */,
 				verbose_level);
@@ -2182,5 +2177,6 @@ void surface_domain_high_level::make_fname_surface_report_pdf(std::string &fname
 
 
 
-}}
+}}}
+
 

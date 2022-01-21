@@ -220,11 +220,11 @@ public:
 	std::string fname_base_out;
 	int substructure_size;
 
-	poset_classification *PC;
-	poset_classification_control *Control;
+	poset_classification::poset_classification *PC;
+	poset_classification::poset_classification_control *Control;
 	actions::action *A;
 	actions::action *A2;
-	poset_with_group_action *Poset;
+	poset_classification::poset_with_group_action *Poset;
 	int nb_orbits;
 
 

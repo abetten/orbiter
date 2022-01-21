@@ -993,7 +993,7 @@ int action::element_order_if_divisor_of(void *elt, int o)
 }
 
 void action::compute_all_point_orbits(groups::schreier &S,
-		vector_ge &gens, int verbose_level)
+		data_structures_groups::vector_ge &gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1024,7 +1024,7 @@ int action::depth_in_stab_chain(int *Elt)
 }
 
 void action::strong_generators_at_depth(int depth,
-		vector_ge &gen, int verbose_level)
+		data_structures_groups::vector_ge &gen, int verbose_level)
 // all strong generators that leave base points 0,..., depth - 1 fix
 {
 	int i, j, l, n;
@@ -1043,7 +1043,8 @@ void action::strong_generators_at_depth(int depth,
 	gen.len = n;
 }
 
-void action::compute_point_stabilizer_chain(vector_ge &gen, 
+void action::compute_point_stabilizer_chain(
+		data_structures_groups::vector_ge &gen,
 		groups::sims *S, int *sequence, int len, int verbose_level)
 // S points to len + 1 many sims objects
 {
@@ -1110,7 +1111,8 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 	}
 }
 
-int action::compute_orbit_of_point(vector_ge &strong_generators,
+int action::compute_orbit_of_point(
+		data_structures_groups::vector_ge &strong_generators,
 		int pt, int *orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1136,7 +1138,7 @@ int action::compute_orbit_of_point_generators_by_handle(int nb_gen,
 	int *gen_handle, int pt, int *orbit, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 	int i;
 	
 	gens.init(this, verbose_level - 2);
@@ -1148,7 +1150,8 @@ int action::compute_orbit_of_point_generators_by_handle(int nb_gen,
 }
 
 
-int action::least_image_of_point(vector_ge &strong_generators,
+int action::least_image_of_point(
+		data_structures_groups::vector_ge &strong_generators,
 	int pt, int *transporter, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1185,7 +1188,7 @@ int action::least_image_of_point_generators_by_handle(
 	int pt, int *transporter, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 	int i;
 	int nb_gen;
 
@@ -1208,7 +1211,7 @@ int action::least_image_of_point_generators_by_handle(
 	int pt, int *transporter, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 	int i;
 	
 	if (nb_gen == 0) {
@@ -1271,7 +1274,7 @@ void action::all_point_orbits_from_single_generator(groups::schreier &Schreier,
 	if (f_v) {
 		cout << "action::all_point_orbits_from_single_generator" << endl;
 	}
-	vector_ge gens;
+	data_structures_groups::vector_ge gens;
 
 	gens.init(this, verbose_level - 2);
 	gens.allocate(1, verbose_level - 2);
@@ -1298,7 +1301,7 @@ void action::compute_stabilizer_orbits(data_structures::partitionstack *&Staborb
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int i;
-	vector_ge gen;
+	data_structures_groups::vector_ge gen;
 	
 	if (f_v) {
 		cout << "action::compute_stabilizer_orbits" << endl;
@@ -1459,7 +1462,8 @@ int action::check_if_transporter_for_set(int *Elt,
 	
 }
 
-void action::compute_set_orbit(vector_ge &gens,
+void action::compute_set_orbit(
+		data_structures_groups::vector_ge &gens,
 	int size, long int *set,
 	int &nb_sets, long int **&Sets, int **&Transporter,
 	int verbose_level)
@@ -1574,7 +1578,7 @@ void action::delete_set_orbit(int nb_sets, long int **Sets, int **Transporter)
 	FREE_pint(Transporter);
 }
 
-void action::compute_minimal_set(vector_ge &gens, int size, long int *set,
+void action::compute_minimal_set(data_structures_groups::vector_ge &gens, int size, long int *set,
 	long int *minimal_set, int *transporter, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1607,7 +1611,8 @@ void action::compute_minimal_set(vector_ge &gens, int size, long int *set,
 
 void action::find_strong_generators_at_level(
 	int base_len, long int *the_base, int level,
-	vector_ge &gens, vector_ge &subset_of_gens,
+	data_structures_groups::vector_ge &gens,
+	data_structures_groups::vector_ge &subset_of_gens,
 	int verbose_level)
 {
 	int nb_generators_found;
@@ -1880,7 +1885,7 @@ void action::make_element(int *Elt, int *data, int verbose_level)
 			cout << "action::make_element product_action_t" << endl;
 		}
 
-		product_action *PA;
+		induced_actions::product_action *PA;
 		
 		PA = G.product_action_data;
 		PA->make_element(Elt, data, verbose_level);
@@ -2054,7 +2059,8 @@ void action::word_in_ab(int *Elt1, int *Elt2, int *Elt3,
 void action::init_group_from_generators(
 	int *group_generator_data, int group_generator_size,
 	int f_group_order_target, const char *group_order_target, 
-	vector_ge *gens, groups::strong_generators *&Strong_gens,
+	data_structures_groups::vector_ge *gens,
+	groups::strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2131,7 +2137,8 @@ void action::init_group_from_generators_by_base_images(
 		groups::sims *parent_group_S,
 	int *group_generator_data, int group_generator_size, 
 	int f_group_order_target, const char *group_order_target, 
-	vector_ge *gens, groups::strong_generators *&Strong_gens_out,
+	data_structures_groups::vector_ge *gens,
+	groups::strong_generators *&Strong_gens_out,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2385,17 +2392,18 @@ void action::minimize_base_images(int level,
 
 
 void action::get_generators_from_ascii_coding(
-		char *ascii_coding, vector_ge *&gens, int *&tl, int verbose_level)
+		char *ascii_coding,
+		data_structures_groups::vector_ge *&gens, int *&tl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	ring_theory::longinteger_object go;
-	group_container *G;
+	data_structures_groups::group_container *G;
 
 	if (f_v) {
 		cout << "action::get_generators_from_ascii_coding" << endl;
 	}
-	G = NEW_OBJECT(group_container);
+	G = NEW_OBJECT(data_structures_groups::group_container);
 	G->init(this, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::get_generators_from_ascii_coding "
@@ -2410,7 +2418,7 @@ void action::get_generators_from_ascii_coding(
 
 	G->S->group_order(go);
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	tl = NEW_int(base_len());
 	G->S->extract_strong_generators_in_order(*gens, tl,
 			0 /* verbose_level */);
@@ -2429,7 +2437,7 @@ void action::get_generators_from_ascii_coding(
 
 void action::lexorder_test(long int *set, int set_sz,
 	int &set_sz_after_test,
-	vector_ge *gens, int max_starter,
+	data_structures_groups::vector_ge *gens, int max_starter,
 	int verbose_level)
 {
 	int f_v = (verbose_level  >= 1);
@@ -2509,7 +2517,7 @@ void action::lexorder_test(long int *set, int set_sz,
 }
 
 void action::compute_orbits_on_points(groups::schreier *&Sch,
-		vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2546,7 +2554,7 @@ void action::compute_orbits_on_points(groups::schreier *&Sch,
 
 void action::stabilizer_of_dual_hyperoval_representative(
 		int k, int n, int no,
-		vector_ge *&gens, std::string &stab_order,
+		data_structures_groups::vector_ge *&gens, std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2560,7 +2568,7 @@ void action::stabilizer_of_dual_hyperoval_representative(
 	}
 	K.DH_stab_gens(k, n, no, data, nb_gens, data_size, stab_order);
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(this, verbose_level - 2);
 	gens->allocate(nb_gens, verbose_level - 2);
 	if (f_vv) {
@@ -2579,7 +2587,7 @@ void action::stabilizer_of_dual_hyperoval_representative(
 
 void action::stabilizer_of_spread_representative(
 		int q, int k, int no,
-		vector_ge *&gens, std::string &stab_order,
+		data_structures_groups::vector_ge *&gens, std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2594,7 +2602,7 @@ void action::stabilizer_of_spread_representative(
 	}
 	K.Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(this, verbose_level - 2);
 	gens->allocate(nb_gens, verbose_level - 2);
 	if (f_vv) {
@@ -2614,7 +2622,8 @@ void action::stabilizer_of_spread_representative(
 
 void action::stabilizer_of_quartic_curve_representative(
 		int q, int no,
-		vector_ge *&gens, std::string &stab_order,
+		data_structures_groups::vector_ge *&gens,
+		std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2628,7 +2637,7 @@ void action::stabilizer_of_quartic_curve_representative(
 	}
 	K.quartic_curves_stab_gens(q, no, data, nb_gens, data_size, stab_order);
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 #if 0
 	if (f_v) {
 		cout << "action::stabilizer_of_quartic_curve_representative "

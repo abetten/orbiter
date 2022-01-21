@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_subgroups::action_on_subgroups()
 {
@@ -289,5 +291,5 @@ int action_on_subgroups_compare_inverted(void *a, void *b, void *data)
 }
 
 
-}}
+}}}
 

@@ -370,7 +370,8 @@ void schreier::init_single_generator(int *elt, int verbose_level)
 	}
 }
 
-void schreier::init_generators(vector_ge &generators, int verbose_level)
+void schreier::init_generators(
+		data_structures_groups::vector_ge &generators, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -390,7 +391,7 @@ void schreier::init_generators(vector_ge &generators, int verbose_level)
 }
 
 void schreier::init_generators_recycle_images(
-		vector_ge &generators,
+		data_structures_groups::vector_ge &generators,
 		int **old_images,
 		int idx_generator_to_delete, int verbose_level)
 {
@@ -413,7 +414,7 @@ void schreier::init_generators_recycle_images(
 }
 
 void schreier::init_generators_recycle_images(
-		vector_ge &generators, int **old_images, int verbose_level)
+		data_structures_groups::vector_ge &generators, int **old_images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2147,7 +2148,7 @@ void schreier::get_orbit_in_order(std::vector<int> &Orb,
 strong_generators *schreier::stabilizer_any_point_plus_cosets(
 		actions::action *default_action,
 	ring_theory::longinteger_object &full_group_order,
-	int pt, vector_ge *&cosets,
+	int pt, data_structures_groups::vector_ge *&cosets,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2168,7 +2169,7 @@ strong_generators *schreier::stabilizer_any_point_plus_cosets(
 		exit(1);
 	}
 	
-	cosets = NEW_OBJECT(vector_ge);
+	cosets = NEW_OBJECT(data_structures_groups::vector_ge);
 	cosets->init(A, verbose_level - 2);
 	transporter = NEW_int(A->elt_size_in_int);
 	transporter1 = NEW_int(A->elt_size_in_int);
@@ -2292,11 +2293,11 @@ strong_generators *schreier::stabilizer_any_point(
 }
 
 
-set_and_stabilizer *schreier::get_orbit_rep(actions::action *default_action,
+data_structures_groups::set_and_stabilizer *schreier::get_orbit_rep(actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx, int verbose_level)
 {
-	set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS;
 	strong_generators *SG;
 	long int *Set;
 
@@ -2305,7 +2306,7 @@ set_and_stabilizer *schreier::get_orbit_rep(actions::action *default_action,
 				"allowed if f_images_only is TRUE" << endl;
 		exit(1);
 	}
-	SaS = NEW_OBJECT(set_and_stabilizer);
+	SaS = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 	SG = stabilizer_orbit_rep(default_action,
 			full_group_order, orbit_idx, verbose_level);
 	Set = NEW_lint(1);
@@ -2318,7 +2319,7 @@ set_and_stabilizer *schreier::get_orbit_rep(actions::action *default_action,
 void schreier::get_orbit_rep_to(actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx,
-		set_and_stabilizer *Rep,
+		data_structures_groups::set_and_stabilizer *Rep,
 		int verbose_level)
 {
 	//set_and_stabilizer *SaS;
@@ -2980,14 +2981,14 @@ void schreier::shallow_tree_generators(int orbit_idx,
 	len = orbit_len[orbit_idx];
 	root = orbit[fst];
 
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 
 	candidates = NEW_int(len);
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	gens->init(A, verbose_level - 2);
 	cnt = 0;
@@ -3142,7 +3143,7 @@ schreier_vector *schreier::get_schreier_vector(
 	return Schreier_vector;
 }
 #else
-schreier_vector *schreier::get_schreier_vector(
+data_structures_groups::schreier_vector *schreier::get_schreier_vector(
 		int gen_hdl_first, int nb_gen,
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy,
 		int verbose_level)
@@ -3153,14 +3154,14 @@ schreier_vector *schreier::get_schreier_vector(
 		cout << "schreier::get_schreier_vector" << endl;
 	}
 //int *sv;
-	schreier_vector * Schreier_vector;
+	data_structures_groups::schreier_vector * Schreier_vector;
 	int f_trivial_group = FALSE;
 
 	if (nb_gen == 0) {
 		f_trivial_group = TRUE;
 	}
 
-	Schreier_vector = NEW_OBJECT(schreier_vector);
+	Schreier_vector = NEW_OBJECT(data_structures_groups::schreier_vector);
 	//get_schreier_vector_compact(sv, f_trivial_group);
 	Schreier_vector->init(gen_hdl_first, nb_gen, NULL, verbose_level - 1);
 

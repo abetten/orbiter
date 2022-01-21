@@ -27,7 +27,7 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 
 	// Make a copy of the current generators
-	vector_ge* gens2 = NEW_OBJECT(vector_ge);
+	data_structures_groups::vector_ge* gens2 = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens2->init(sch.A, verbose_level - 2);
 	for (int el = 0; el < sch.gens.len; el++)
 		gens2->append(sch.gens.ith(el), verbose_level - 2);
@@ -70,7 +70,7 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 
 		// Create a new generating set with the new element
-		vector_ge* new_gens = NEW_OBJECT(vector_ge);
+		data_structures_groups::vector_ge* new_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 		new_gens->init(sch.A, verbose_level - 2);
 		for (int el = 0; el < gens2->len; el++) {
 			(el != random_generator_idx) ?  new_gens->append(gens2->ith(el), verbose_level - 2) :

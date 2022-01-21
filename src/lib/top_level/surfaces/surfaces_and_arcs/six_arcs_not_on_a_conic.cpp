@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 {
@@ -47,8 +49,8 @@ void six_arcs_not_on_a_conic::freeself()
 }
 
 void six_arcs_not_on_a_conic::init(
-	arc_generator_description *Descr,
-	projective_space_with_action *PA,
+		apps_geometry::arc_generator_description *Descr,
+		projective_geometry::projective_space_with_action *PA,
 	int f_test_nb_Eckardt_points, int nb_E, algebraic_geometry::surface_domain *Surf,
 	int verbose_level)
 {
@@ -91,7 +93,7 @@ void six_arcs_not_on_a_conic::init(
 				"before Gen->init" << endl;
 	}
 
-	Gen = NEW_OBJECT(arc_generator);
+	Gen = NEW_OBJECT(apps_geometry::arc_generator);
 
 
 	Gen->init(
@@ -266,7 +268,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 	ring_theory::longinteger_object ol, Ol;
 	Ol.create(0, __FILE__, __LINE__);
 	for (h = 0; h < nb_arcs_not_on_conic; h++) {
-		set_and_stabilizer *R;
+		data_structures_groups::set_and_stabilizer *R;
 
 		R = Gen->gen->get_set_and_stabilizer(
 				6 /* level */,
@@ -293,7 +295,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 
 void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_idx)
 {
-	set_and_stabilizer *The_arc;
+	data_structures_groups::set_and_stabilizer *The_arc;
 	ring_theory::longinteger_object go;
 
 	The_arc = Gen->gen->get_set_and_stabilizer(
@@ -324,7 +326,7 @@ void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_id
 
 void six_arcs_not_on_a_conic::report_specific_arc(ostream &ost, int arc_idx)
 {
-	set_and_stabilizer *The_arc;
+	data_structures_groups::set_and_stabilizer *The_arc;
 	ring_theory::longinteger_object go;
 
 	The_arc = Gen->gen->get_set_and_stabilizer(
@@ -354,7 +356,8 @@ void six_arcs_not_on_a_conic::report_specific_arc(ostream &ost, int arc_idx)
 }
 
 
-}}
+}}}
+
 
 
 

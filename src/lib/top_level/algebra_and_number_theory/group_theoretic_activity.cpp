@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
 
 
 group_theoretic_activity::group_theoretic_activity()
@@ -255,7 +256,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_orbits_on_subsets) {
 
-		poset_classification_control *Control;
+		poset_classification::poset_classification_control *Control;
 
 		if (Descr->f_poset_classification_control) {
 			Control = Descr->Control;
@@ -266,7 +267,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			//Control = NEW_OBJECT(poset_classification_control);
 		}
 
-		poset_classification *PC;
+		poset_classification::poset_classification *PC;
 
 		AG->orbits_on_subsets(Control, PC,
 				Descr->orbits_on_subsets_size, verbose_level);
@@ -595,8 +596,8 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	long int *spread_elements_numeric; // do not free
 	actions::action *An;
 	actions::action *An1;
-	vector_ge *gens;
-	translation_plane_via_andre_model *Andre;
+	data_structures_groups::vector_ge *gens;
+	spreads::translation_plane_via_andre_model *Andre;
 	groups::matrix_group *M; // do not free
 	field_theory::finite_field *F;
 
@@ -652,7 +653,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 		cout << "Spread stabilizer has order " << stab_go << endl;
 	}
 
-	Andre = NEW_OBJECT(translation_plane_via_andre_model);
+	Andre = NEW_OBJECT(spreads::translation_plane_via_andre_model);
 
 	Andre->init(spread_elements_numeric, k, An, An1,
 		gens /*spread_stab_gens*/, stab_go, label, verbose_level);
@@ -721,7 +722,6 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 
 
 
+}}}
 
-
-}}
 

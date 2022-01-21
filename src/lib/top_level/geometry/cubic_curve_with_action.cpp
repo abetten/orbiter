@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 cubic_curve_with_action::cubic_curve_with_action()
@@ -56,7 +57,7 @@ void cubic_curve_with_action::freeself()
 }
 
 void cubic_curve_with_action::init(
-		cubic_curve *CC, actions::action *A,
+		algebraic_geometry::cubic_curve *CC, actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -87,7 +88,7 @@ void cubic_curve_with_action::init(
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 
-	AonHPD_3_3 = NEW_OBJECT(action_on_homogeneous_polynomials);
+	AonHPD_3_3 = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {
 		cout << "cubic_curve_with_action::init "
 				"before AonHPD_3_3->init" << endl;
@@ -154,5 +155,5 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 }
 #endif
 
-}}
+}}}
 

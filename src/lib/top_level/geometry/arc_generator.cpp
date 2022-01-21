@@ -18,6 +18,26 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
+
+
+static void arc_generator_early_test_function(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+#if 0
+static void arc_generator_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
+	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+#endif
+static void arc_generator_print_arc(std::ostream &ost, int len, long int *S, void *data);
+//static void arc_generator_print_point(long int pt, void *data);
+//static void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
+
+
 
 arc_generator::arc_generator()
 {
@@ -121,7 +141,7 @@ void arc_generator::main(int verbose_level)
 
 void arc_generator::init(
 	arc_generator_description *Descr,
-	projective_space_with_action *PA,
+	projective_geometry::projective_space_with_action *PA,
 	groups::strong_generators *SG,
 	int verbose_level)
 {
@@ -219,7 +239,7 @@ void arc_generator::prepare_generator(int verbose_level)
 
 
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(PA->A, PA->A, SG /* A->Strong_gens*/, verbose_level);
 
 	Poset->f_print_function = FALSE;
@@ -238,7 +258,7 @@ void arc_generator::prepare_generator(int verbose_level)
 					verbose_level);
 	}
 
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
 
@@ -1256,7 +1276,12 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 
 	sprintf(prefix, "arcs_%d_%d", PA->q, Descr->target_size);
 	sprintf(label_of_structure_plural, "Arcs");
-	isomorph_report_data_in_source_code_inside_tex(Iso, 
+
+	isomorph_global IG;
+
+	IG.init(Iso.A_base, Iso.A, Iso.gen, verbose_level);
+
+	IG.report_data_in_source_code_inside_tex(Iso,
 		prefix, label_of_structure_plural, ost,
 		verbose_level);
 
@@ -1289,7 +1314,7 @@ void arc_generator::report_decompositions(
 	Stab = Iso.Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
 
-	algebra_global_with_action Algebra;
+	apps_algebra::algebra_global_with_action Algebra;
 	
 	Algebra.report_tactical_decomposition_by_automorphism_group(
 			ost, PA->P,
@@ -1323,7 +1348,7 @@ void arc_generator::report_stabilizer(isomorph &Iso,
 // #############################################################################
 
 
-void arc_generator_early_test_function(long int *S, int len,
+static void arc_generator_early_test_function(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1350,8 +1375,8 @@ void arc_generator_early_test_function(long int *S, int len,
 	}
 }
 
-
-void arc_generator_lifting_prepare_function_new(
+#if 0
+static void arc_generator_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
@@ -1382,10 +1407,10 @@ void arc_generator_lifting_prepare_function_new(
 		cout << "arc_generator_lifting_prepare_function_new done" << endl;
 	}
 }
+#endif
 
 
-
-void arc_generator_print_arc(ostream &ost, int len, long int *S, void *data)
+static void arc_generator_print_arc(ostream &ost, int len, long int *S, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	
@@ -1393,7 +1418,8 @@ void arc_generator_print_arc(ostream &ost, int len, long int *S, void *data)
 	Gen->print_set_in_affine_plane(len, S);
 }
 
-void arc_generator_print_point(long int pt, void *data)
+#if 0
+static void arc_generator_print_point(long int pt, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	int v[3];
@@ -1403,16 +1429,17 @@ void arc_generator_print_point(long int pt, void *data)
 	cout << "(" << v[0] << "," << v[1] << "," << v[2] << ")" << endl;
 }
 
-void arc_generator_report(
+static void arc_generator_report(
 		isomorph *Iso, void *data, int verbose_level)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	
 	Gen->report(*Iso, verbose_level);
 }
+#endif
 
 
-}}
+}}}
 
 
 

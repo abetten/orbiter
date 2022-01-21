@@ -19,7 +19,7 @@ action *action::induced_action_on_interior_direct_product(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_interior_direct_product *IDP;
+	induced_actions::action_on_interior_direct_product *IDP;
 	action *A;
 
 	if (f_v) {
@@ -49,7 +49,7 @@ action *action::induced_action_on_interior_direct_product(
 	}
 	A->f_has_subaction = TRUE;
 	A->subaction = this;
-	IDP = NEW_OBJECT(action_on_interior_direct_product);
+	IDP = NEW_OBJECT(induced_actions::action_on_interior_direct_product);
 
 	IDP->init(this, nb_rows, verbose_level);
 
@@ -99,7 +99,7 @@ action *action::induced_action_on_set_partitions(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_set_partitions *OSP;
+	induced_actions::action_on_set_partitions *OSP;
 	action *A;
 
 	if (f_v) {
@@ -131,7 +131,7 @@ action *action::induced_action_on_set_partitions(
 		}
 	A->f_has_subaction = TRUE;
 	A->subaction = this;
-	OSP = NEW_OBJECT(action_on_set_partitions);
+	OSP = NEW_OBJECT(induced_actions::action_on_set_partitions);
 
 	OSP->init(partition_class_size,
 			this, verbose_level);
@@ -181,14 +181,14 @@ void action::init_action_on_lines(action *A,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	action_on_grassmannian *A_lines;
+	induced_actions::action_on_grassmannian *A_lines;
 	grassmann *Grass_lines;
 
 	if (f_v) {
 		cout << "action::init_action_on_lines" << endl;
 		}
 
-	A_lines = NEW_OBJECT(action_on_grassmannian);
+	A_lines = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
 	Grass_lines = NEW_OBJECT(grassmann);
 
@@ -255,7 +255,7 @@ void action::induced_action_by_representation_on_conic(
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	action_by_representation *Rep; // do not free
+	induced_actions::action_by_representation *Rep; // do not free
 	
 	if (f_v) {
 		cout << "action::induced_action_by_representation_on_conic "
@@ -291,7 +291,7 @@ void action::induced_action_by_representation_on_conic(
 		}
 	//M = A->G.matrix_grp;
 
-	Rep = NEW_OBJECT(action_by_representation);
+	Rep = NEW_OBJECT(induced_actions::action_by_representation);
 	Rep->init_action_on_conic(*A_old, verbose_level);
 
 	type_G = action_by_representation_t;
@@ -330,7 +330,7 @@ void action::induced_action_by_representation_on_conic(
 
 
 void action::induced_action_on_cosets(
-	action_on_cosets *A_on_cosets,
+		induced_actions::action_on_cosets *A_on_cosets,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -410,7 +410,7 @@ void action::induced_action_on_cosets(
 
 
 void action::induced_action_on_factor_space(action *A_old, 
-	action_on_factor_space *AF, 
+		induced_actions::action_on_factor_space *AF,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -484,7 +484,7 @@ void action::induced_action_on_factor_space(action *A_old,
 action *action::induced_action_on_grassmannian(int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_grassmannian *AG;
+	induced_actions::action_on_grassmannian *AG;
 	action *A;
 	groups::matrix_group *M;
 	
@@ -518,7 +518,7 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 		exit(1);
 		}
 	M = G.matrix_grp;
-	AG = NEW_OBJECT(action_on_grassmannian);
+	AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
 	grassmann *Gr;
 
@@ -567,7 +567,7 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 
 
 void action::induced_action_on_grassmannian(action *A_old, 
-	action_on_grassmannian *AG, 
+		induced_actions::action_on_grassmannian *AG,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -680,7 +680,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 }
 
 void action::induced_action_on_spread_set(action *A_old, 
-	action_on_spread_set *AS, 
+		induced_actions::action_on_spread_set *AS,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -757,7 +757,7 @@ void action::induced_action_on_spread_set(action *A_old,
 }
 
 void action::induced_action_on_orthogonal(action *A_old, 
-	action_on_orthogonal *AO, 
+		induced_actions::action_on_orthogonal *AO,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -879,9 +879,9 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 	}
 	M = G.matrix_grp;
 
-	action_on_wedge_product *AW;
+	induced_actions::action_on_wedge_product *AW;
 
-	AW = NEW_OBJECT(action_on_wedge_product);
+	AW = NEW_OBJECT(induced_actions::action_on_wedge_product);
 
 
 
@@ -1016,7 +1016,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 #endif
 
 void action::induced_action_by_subfield_structure(action *A_old, 
-	action_by_subfield_structure *SubfieldStructure, 
+		induced_actions::action_by_subfield_structure *SubfieldStructure,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -1096,7 +1096,7 @@ void action::induced_action_on_Galois_group(
 		groups::sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_galois_group *AG;
+	induced_actions::action_on_galois_group *AG;
 	action *A;
 	groups::matrix_group *M;
 
@@ -1129,7 +1129,7 @@ void action::induced_action_on_Galois_group(
 		exit(1);
 		}
 	M = A->G.matrix_grp;
-	AG = NEW_OBJECT(action_on_galois_group);
+	AG = NEW_OBJECT(induced_actions::action_on_galois_group);
 	AG->init(A, M->n, verbose_level);
 	type_G = action_on_galois_group_t;
 	G.on_Galois_group = AG;
@@ -1168,7 +1168,7 @@ void action::induced_action_on_determinant(
 		groups::sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_determinant *AD;
+	induced_actions::action_on_determinant *AD;
 	action *A;
 	groups::matrix_group *M;
 	
@@ -1202,7 +1202,7 @@ void action::induced_action_on_determinant(
 		exit(1);
 		}
 	M = A->G.matrix_grp;
-	AD = NEW_OBJECT(action_on_determinant);
+	AD = NEW_OBJECT(induced_actions::action_on_determinant);
 	AD->init(*A, M->f_projective, M->n, verbose_level);
 	type_G = action_on_determinant_t;
 	G.AD = AD;
@@ -1238,7 +1238,7 @@ void action::induced_action_on_sign(
 		groups::sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_sign *OnSign;
+	induced_actions::action_on_sign *OnSign;
 	action *A;
 	
 	if (f_v) {
@@ -1265,7 +1265,7 @@ void action::induced_action_on_sign(
 		}
 	f_has_subaction = TRUE;
 	subaction = A;
-	OnSign = NEW_OBJECT(action_on_sign);
+	OnSign = NEW_OBJECT(induced_actions::action_on_sign);
 	OnSign->init(A, verbose_level);
 	type_G = action_on_sign_t;
 	G.OnSign = OnSign;
@@ -1330,7 +1330,7 @@ void action::induced_action_by_conjugation(groups::sims *old_G,
 	int f_basis, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_by_conjugation *ABC;
+	induced_actions::action_by_conjugation *ABC;
 	ring_theory::longinteger_object go;
 	long int goi;
 	action *A;
@@ -1364,7 +1364,7 @@ void action::induced_action_by_conjugation(groups::sims *old_G,
 
 	f_has_subaction = TRUE;
 	subaction = A;
-	ABC = NEW_OBJECT(action_by_conjugation);
+	ABC = NEW_OBJECT(induced_actions::action_by_conjugation);
 	ABC->init(Base_group, f_ownership, verbose_level);
 	type_G = action_by_conjugation_t;
 	G.ABC = ABC;
@@ -1407,7 +1407,7 @@ void action::induced_action_by_right_multiplication(
 	groups::sims *Base_group, int f_ownership, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_by_right_multiplication *ABRM;
+	induced_actions::action_by_right_multiplication *ABRM;
 	ring_theory::longinteger_object go;
 	int goi;
 	action *A;
@@ -1439,7 +1439,7 @@ void action::induced_action_by_right_multiplication(
 	}
 	f_has_subaction = TRUE;
 	subaction = A;
-	ABRM = NEW_OBJECT(action_by_right_multiplication);
+	ABRM = NEW_OBJECT(induced_actions::action_by_right_multiplication);
 	ABRM->init(Base_group, f_ownership, verbose_level);
 	type_G = action_by_right_multiplication_t;
 	G.ABRM = ABRM;
@@ -1508,7 +1508,7 @@ void action::induced_action_on_sets(
 	int f_induce_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_sets *AOS;
+	induced_actions::action_on_sets *AOS;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_sets" << endl;
@@ -1541,7 +1541,7 @@ void action::induced_action_on_sets(
 		cout << "action::induced_action_on_sets "
 				"allocating action_on_sets" << endl;
 	}
-	AOS = NEW_OBJECT(action_on_sets);
+	AOS = NEW_OBJECT(induced_actions::action_on_sets);
 	if (f_v) {
 		cout << "action::induced_action_on_sets before AOS->init" << endl;
 	}
@@ -1623,7 +1623,7 @@ void action::induced_action_on_subgroups(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_subgroups *AOS;
+	induced_actions::action_on_subgroups *AOS;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_subgroups" << endl;
@@ -1651,7 +1651,7 @@ void action::induced_action_on_subgroups(
 		cout << "action::induced_action_on_subgroups "
 				"allocating action_on_subgroups" << endl;
 	}
-	AOS = NEW_OBJECT(action_on_subgroups);
+	AOS = NEW_OBJECT(induced_actions::action_on_subgroups);
 	AOS->init(old_action, S, nb_subgroups,
 			group_order, Subgroups, verbose_level - 1);
 	if (f_v) {
@@ -1696,11 +1696,11 @@ void action::induced_action_on_subgroups(
 void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	action &old_action,
 	int f_induce_action, groups::sims *old_G,
-	schreier_vector *Schreier_vector,
+	data_structures_groups::schreier_vector *Schreier_vector,
 	int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_by_restriction *ABR;
+	induced_actions::action_by_restriction *ABR;
 	
 	if (f_v) {
 		cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector" << endl;
@@ -1724,7 +1724,7 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 
 	f_has_subaction = TRUE;
 	subaction = &old_action;
-	ABR = NEW_OBJECT(action_by_restriction);
+	ABR = NEW_OBJECT(induced_actions::action_by_restriction);
 	
 	if (f_v) {
 		cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector "
@@ -1787,7 +1787,7 @@ void action::original_point_labels(long int *points, int nb_points,
 		cout << "action::original_point_labels" << endl;
 	}
 	if (type_G == action_by_restriction_t) {
-		action_by_restriction *ABR;
+		induced_actions::action_by_restriction *ABR;
 
 		original_points = NEW_lint(nb_points);
 
@@ -1815,7 +1815,7 @@ action *action::restricted_action(
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	action_by_restriction *ABR;
+	induced_actions::action_by_restriction *ABR;
 	
 	if (f_v) {
 		cout << "action::restricted_action" << endl;
@@ -1839,7 +1839,7 @@ action *action::restricted_action(
 
 	A->f_has_subaction = TRUE;
 	A->subaction = this;
-	ABR = NEW_OBJECT(action_by_restriction);
+	ABR = NEW_OBJECT(induced_actions::action_by_restriction);
 	ABR->init(nb_points, points, verbose_level);
 	A->type_G = action_by_restriction_t;
 	A->G.ABR = ABR;
@@ -1901,7 +1901,7 @@ void action::induced_action_by_restriction_internal_function(
 // uses action_by_restriction data type
 {
 	int f_v = (verbose_level >= 1);
-	action_by_restriction *ABR;
+	induced_actions::action_by_restriction *ABR;
 	
 	if (f_v) {
 		cout << "action::induced_action_by_restriction_internal_function" << endl;
@@ -1926,7 +1926,7 @@ void action::induced_action_by_restriction_internal_function(
 
 	f_has_subaction = TRUE;
 	subaction = &old_action;
-	ABR = NEW_OBJECT(action_by_restriction);
+	ABR = NEW_OBJECT(induced_actions::action_by_restriction);
 	ABR->init(nb_points, points, verbose_level);
 	type_G = action_by_restriction_t;
 	G.ABR = ABR;
@@ -2105,7 +2105,7 @@ void action::induced_action_on_k_subsets(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_k_subsets *On_k_subsets;
+	induced_actions::action_on_k_subsets *On_k_subsets;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_k_subsets" << endl;
@@ -2123,7 +2123,7 @@ void action::induced_action_on_k_subsets(
 	label.append(str1);
 	label_tex.append(str2);
 
-	On_k_subsets = NEW_OBJECT(action_on_k_subsets);
+	On_k_subsets = NEW_OBJECT(induced_actions::action_on_k_subsets);
 	On_k_subsets->init(&old_action, k, verbose_level);
 
 
@@ -2162,7 +2162,7 @@ void action::induced_action_on_orbits(action *old_action,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_orbits *On_orbits;
+	induced_actions::action_on_orbits *On_orbits;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_orbits" << endl;
@@ -2183,7 +2183,7 @@ void action::induced_action_on_orbits(action *old_action,
 	label_tex.append(str2);
 
 
-	On_orbits = NEW_OBJECT(action_on_orbits);
+	On_orbits = NEW_OBJECT(induced_actions::action_on_orbits);
 	On_orbits->init(old_action, Sch, f_play_it_safe, verbose_level);
 
 
@@ -2222,7 +2222,7 @@ void action::induced_action_on_flags(action *old_action,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_flags *On_flags;
+	induced_actions::action_on_flags *On_flags;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_flags" << endl;
@@ -2243,7 +2243,7 @@ void action::induced_action_on_flags(action *old_action,
 	label_tex.append(str2);
 
 
-	On_flags = NEW_OBJECT(action_on_flags);
+	On_flags = NEW_OBJECT(induced_actions::action_on_flags);
 	On_flags->init(old_action, type,
 			type_len, verbose_level);
 
@@ -2283,7 +2283,7 @@ void action::induced_action_on_bricks(action &old_action,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_bricks *On_bricks;
+	induced_actions::action_on_bricks *On_bricks;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_bricks" << endl;
@@ -2303,7 +2303,7 @@ void action::induced_action_on_bricks(action &old_action,
 	label_tex.append(str2);
 
 
-	On_bricks = NEW_OBJECT(action_on_bricks);
+	On_bricks = NEW_OBJECT(induced_actions::action_on_bricks);
 	On_bricks->init(&old_action, B, f_linear_action, verbose_level);
 
 
@@ -2343,7 +2343,7 @@ void action::induced_action_on_andre(action *An,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action_on_andre *On_andre;
+	induced_actions::action_on_andre *On_andre;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_andre" << endl;
@@ -2363,7 +2363,7 @@ void action::induced_action_on_andre(action *An,
 	label.append(str1);
 	label_tex.append(str2);
 
-	On_andre = NEW_OBJECT(action_on_andre);
+	On_andre = NEW_OBJECT(induced_actions::action_on_andre);
 	On_andre->init(An, An1, Andre, verbose_level);
 
 
@@ -2402,7 +2402,7 @@ void action::setup_product_action(action *A1, action *A2,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	product_action *PA;
+	induced_actions::product_action *PA;
 	int i;
 	
 	if (f_v) {
@@ -2424,7 +2424,7 @@ void action::setup_product_action(action *A1, action *A2,
 	label_tex.append(str2);
 
 
-	PA = NEW_OBJECT(product_action);
+	PA = NEW_OBJECT(induced_actions::product_action);
 	PA->init(A1, A2, f_use_projections, verbose_level);
 	f_has_subaction = TRUE;
 	subaction = NULL;
@@ -2492,14 +2492,14 @@ void action::induced_action_on_homogeneous_polynomials(
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	action_on_homogeneous_polynomials *OnHP;
+	induced_actions::action_on_homogeneous_polynomials *OnHP;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
 				"f_induce_action=" << f_induce_action << endl;
 	}
 	A = A_old;
-	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
+	OnHP = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 
 	char str1[1000];
 	char str2[1000];
@@ -2580,7 +2580,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	action_on_homogeneous_polynomials *OnHP;
+	induced_actions::action_on_homogeneous_polynomials *OnHP;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
@@ -2588,7 +2588,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 				"f_induce_action=" << f_induce_action << endl;
 	}
 	A = A_old;
-	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
+	OnHP = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 
 	char str1[1000];
 	char str2[1000];
@@ -3368,7 +3368,8 @@ int action::choose_next_base_point_default_method(
 
 void action::generators_to_strong_generators(
 	int f_target_go, ring_theory::longinteger_object &target_go,
-	vector_ge *gens, groups::strong_generators *&Strong_gens,
+	data_structures_groups::vector_ge *gens,
+	groups::strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

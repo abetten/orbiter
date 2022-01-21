@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
 
 orthogonal_space_with_action_description::orthogonal_space_with_action_description()
@@ -117,4 +118,5 @@ void orthogonal_space_with_action_description::print()
 }
 
 
-}}
+}}}
+

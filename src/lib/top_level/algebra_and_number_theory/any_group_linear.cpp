@@ -13,6 +13,7 @@ using namespace orbiter::foundations;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
 
 void any_group::classes_based_on_normal_form(int verbose_level)
 {
@@ -385,7 +386,8 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 }
 
 void any_group::do_orbits_on_subspaces(group_theoretic_activity *GTA,
-		poset_classification_control *Control, int depth, int verbose_level)
+		poset_classification::poset_classification_control *Control,
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -423,7 +425,8 @@ void any_group::do_orbits_on_subspaces(group_theoretic_activity *GTA,
 	}
 }
 
-void any_group::do_tensor_classify(poset_classification_control *Control, int depth, int verbose_level)
+void any_group::do_tensor_classify(
+		poset_classification::poset_classification_control *Control, int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -443,9 +446,9 @@ void any_group::do_tensor_classify(poset_classification_control *Control, int de
 
 
 
-	tensor_classify *T;
+	apps_geometry::tensor_classify *T;
 
-	T = NEW_OBJECT(tensor_classify);
+	T = NEW_OBJECT(apps_geometry::tensor_classify);
 
 	if (f_v) {
 		cout << "any_group::do_tensor_classify before T->init" << endl;
@@ -492,9 +495,9 @@ void any_group::do_tensor_permutations(int verbose_level)
 	F = LG->F;
 
 
-	tensor_classify *T;
+	apps_geometry::tensor_classify *T;
 
-	T = NEW_OBJECT(tensor_classify);
+	T = NEW_OBJECT(apps_geometry::tensor_classify);
 
 	T->init(F, LG, verbose_level - 1);
 
@@ -507,7 +510,8 @@ void any_group::do_tensor_permutations(int verbose_level)
 }
 
 
-void any_group::do_linear_codes(poset_classification_control *Control,
+void any_group::do_linear_codes(
+		poset_classification::poset_classification_control *Control,
 		int minimum_distance,
 		int target_size, int verbose_level)
 {
@@ -546,8 +550,8 @@ void any_group::do_linear_codes(poset_classification_control *Control,
 }
 
 void any_group::do_classify_ovoids(
-		poset_classification_control *Control,
-		ovoid_classify_description *Ovoid_classify_description,
+		poset_classification::poset_classification_control *Control,
+		apps_geometry::ovoid_classify_description *Ovoid_classify_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -561,10 +565,10 @@ void any_group::do_classify_ovoids(
 		exit(1);
 	}
 
-	ovoid_classify *Ovoid_classify;
+	apps_geometry::ovoid_classify *Ovoid_classify;
 
 
-	Ovoid_classify = NEW_OBJECT(ovoid_classify);
+	Ovoid_classify = NEW_OBJECT(apps_geometry::ovoid_classify);
 
 	Ovoid_classify_description->Control = Control;
 
@@ -578,9 +582,6 @@ void any_group::do_classify_ovoids(
 		cout << "any_group::do_classify_ovoids done" << endl;
 	}
 }
-
-
-
 
 
 
@@ -672,7 +673,7 @@ int any_group::subspace_orbits_test_set(
 }
 
 
-}}
+}}}
 
 
 

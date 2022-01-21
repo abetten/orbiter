@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_k_subsets::action_on_k_subsets()
 {
@@ -105,5 +107,6 @@ long int action_on_k_subsets::compute_image(
 }
 
 
-}}
+}}}
+
 

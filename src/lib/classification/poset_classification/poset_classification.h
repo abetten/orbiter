@@ -16,6 +16,7 @@
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 // #############################################################################
@@ -338,7 +339,7 @@ private:
 	classification_base_case *Base_case;
 
 
-	schreier_vector_handler *Schreier_vector_handler;
+	data_structures_groups::schreier_vector_handler *Schreier_vector_handler;
 
 
 	int depth;
@@ -378,7 +379,7 @@ private:
 	//int nb_times_trace_was_saved;
 	
 	// data for recognize:
-	vector_ge *transporter; // [sz + 1]
+	data_structures_groups::vector_ge *transporter; // [sz + 1]
 	long int **set; // [sz + 1][max_set_size]
 		// used in poset_classification_recognize.cpp
 
@@ -421,7 +422,7 @@ public:
 	std::string &get_problem_label();
 	int first_node_at_level(int i);
 	poset_orbit_node *get_node(int node_idx);
-	vector_ge *get_transporter();
+	data_structures_groups::vector_ge *get_transporter();
 	long int *get_S();
 	long int *get_set_i(int i);
 	long int *get_set0();
@@ -437,7 +438,7 @@ public:
 	actions::action *get_A();
 	actions::action *get_A2();
 	algebra::vector_space *get_VS();
-	schreier_vector_handler *get_schreier_vector_handler();
+	data_structures_groups::schreier_vector_handler *get_schreier_vector_handler();
 	int has_base_case();
 	int has_invariant_subset_for_root_node();
 	int size_of_invariant_subset_for_root_node();
@@ -458,11 +459,11 @@ public:
 	poset_orbit_node *get_node_ij(int level, int node);
 	int poset_structure_is_contained(long int *set1, int sz1,
 		long int *set2, int sz2, int verbose_level);
-	orbit_transversal *get_orbit_transversal(
+	data_structures_groups::orbit_transversal *get_orbit_transversal(
 			int level, int verbose_level);
 	int test_if_stabilizer_is_trivial(
 			int level, int orbit_at_level, int verbose_level);
-	set_and_stabilizer *get_set_and_stabilizer(int level, 
+	data_structures_groups::set_and_stabilizer *get_set_and_stabilizer(int level,
 		int orbit_at_level, int verbose_level);
 	void get_set_by_level(int level, int node, long int *set);
 	void get_set(int node, long int *set, int &size);
@@ -497,7 +498,7 @@ public:
 			ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(int level,
 			int orbit_at_level);
-	void get_stabilizer_group(group_container *&G,
+	void get_stabilizer_group(data_structures_groups::group_container *&G,
 		int level, int orbit_at_level, int verbose_level);
 	void get_stabilizer_generators_cleaned_up(groups::strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
@@ -896,7 +897,7 @@ public:
 	// poset_classification_trace.cpp:
 	int find_isomorphism(long int *set1, long int *set2, int sz,
 		int *transporter, int &orbit_idx, int verbose_level);
-	set_and_stabilizer *identify_and_get_stabilizer(
+	data_structures_groups::set_and_stabilizer *identify_and_get_stabilizer(
 		long int *set, int sz, int *transporter,
 		int &orbit_at_level,
 		int verbose_level);
@@ -1173,7 +1174,7 @@ private:
 	int nb_extensions;
 	extension *E;
 	
-	schreier_vector *Schreier_vector;
+	data_structures_groups::schreier_vector *Schreier_vector;
 	
 	actions::action *A_on_upset;
 	// only used for actions on subspace lattices
@@ -1202,7 +1203,7 @@ public:
 	void get_tl(std::vector<int> &tl, poset_classification *PC, int verbose_level);
 	int get_tl(int i);
 	int has_Schreier_vector();
-	schreier_vector *get_Schreier_vector();
+	data_structures_groups::schreier_vector *get_Schreier_vector();
 	int get_nb_strong_generators();
 	int *live_points();
 	int get_nb_of_live_points();
@@ -1256,7 +1257,8 @@ public:
 			ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(poset_classification *PC);
 	void get_stabilizer(poset_classification *PC,
-			group_container &G, ring_theory::longinteger_object &go_G,
+			data_structures_groups::group_container &G,
+			ring_theory::longinteger_object &go_G,
 		int verbose_level);
 	int test_if_stabilizer_is_trivial();
 	void get_stabilizer_generators(poset_classification *PC,
@@ -1264,7 +1266,8 @@ public:
 		int verbose_level);
 	void init_extension_node_prepare_G(
 		poset_classification *gen,
-		int prev, int prev_ex, int size, group_container &G,
+		int prev, int prev_ex, int size,
+		data_structures_groups::group_container &G,
 		ring_theory::longinteger_object &go_G,
 		int verbose_level);
 		// sets up the group G using the strong
@@ -1272,8 +1275,10 @@ public:
 	void init_extension_node_prepare_H(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group_container &G, ring_theory::longinteger_object &go_G,
-		group_container &H, ring_theory::longinteger_object &go_H,
+		data_structures_groups::group_container &G,
+		ring_theory::longinteger_object &go_G,
+		data_structures_groups::group_container &H,
+		ring_theory::longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 		// sets up the group H which is the stabilizer
@@ -1281,15 +1286,18 @@ public:
 	void compute_point_stabilizer_in_subspace_setting(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group_container &G, ring_theory::longinteger_object &go_G,
-		group_container &H, ring_theory::longinteger_object &go_H,
+		data_structures_groups::group_container &G,
+		ring_theory::longinteger_object &go_G,
+		data_structures_groups::group_container &H,
+		ring_theory::longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 	void compute_point_stabilizer_in_standard_setting(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group_container &G, ring_theory::longinteger_object &go_G,
-		group_container &H, /* longinteger_object &go_H, */
+		data_structures_groups::group_container &G,
+		ring_theory::longinteger_object &go_G,
+		data_structures_groups::group_container &H, /* longinteger_object &go_H, */
 		int pt, int pt_orbit_len,
 		int verbose_level);
 	void create_schreier_vector_wrapper(
@@ -1302,7 +1310,7 @@ public:
 		poset_classification *gen,
 		int f_create_schreier_vector,
 		groups::schreier &Schreier,
-		actions::action *A_factor_space, action_on_factor_space *AF,
+		actions::action *A_factor_space, induced_actions::action_on_factor_space *AF,
 		int verbose_level);
 
 
@@ -1567,15 +1575,16 @@ public:
 		// and disposes them at the end.
 	void setup_factor_space_action_light(
 		poset_classification *gen,
-		action_on_factor_space &AF, 
+		induced_actions::action_on_factor_space &AF,
 		int lvl, int verbose_level);
 	void setup_factor_space_action_with_early_test(
 		poset_classification *gen,
-		action_on_factor_space &AF, actions::action &A_factor_space,
+		induced_actions::action_on_factor_space &AF, actions::action &A_factor_space,
 		int lvl, int verbose_level);
 	void setup_factor_space_action(
 		poset_classification *gen,
-		action_on_factor_space &AF, actions::action &A_factor_space,
+		induced_actions::action_on_factor_space &AF,
+		actions::action &A_factor_space,
 		int lvl, int f_compute_tables, 
 		int verbose_level);
 	void downstep_subspace_action_print_orbits(
@@ -1591,7 +1600,8 @@ public:
 		int verbose_level);
 	void find_extensions_subspace_action(
 		poset_classification *gen, groups::schreier &O,
-		actions::action *A_factor_space, action_on_factor_space *AF,
+		actions::action *A_factor_space,
+		induced_actions::action_on_factor_space *AF,
 		int lvl, int f_implicit_fusion, int verbose_level);
 };
 
@@ -1735,8 +1745,8 @@ public:
 	poset_orbit_node *O_prev;
 	poset_orbit_node *O_cur;
 
-	group_container *G;
-	group_container *H;
+	data_structures_groups::group_container *G;
+	data_structures_groups::group_container *H;
 	ring_theory::longinteger_object go_G, go_H;
 
 	int coset;
@@ -1837,7 +1847,8 @@ public:
 // in upstep_work.cpp:
 void print_coset_table(coset_table_entry *coset_table, int len);
 
-}}
+}}}
+
 
 #endif /* ORBITER_SRC_LIB_CLASSIFICATION_POSET_CLASSIFICATION_POSET_CLASSIFICATION_H_ */
 

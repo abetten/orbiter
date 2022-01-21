@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_wedge_product::action_on_wedge_product()
 {
@@ -251,6 +253,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 		}
 }
 
-}}
+}}}
+
 
 

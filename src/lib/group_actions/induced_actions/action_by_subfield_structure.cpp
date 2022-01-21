@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_by_subfield_structure::action_by_subfield_structure()
 {
@@ -133,7 +135,7 @@ void action_by_subfield_structure::init(actions::action &A,
 				"before Aq->init_matrix_group" << endl;
 		}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	Aq->init_projective_group(m, Fq,
 			f_semilinear, f_basis, FALSE /* f_init_sims */,
@@ -260,6 +262,7 @@ void action_by_subfield_structure::compute_image_int_low_level(
 		}
 }
 
-}}
+}}}
+
 
 

@@ -132,7 +132,7 @@ void action::normalizer_using_MAGMA(
 			"representation" << endl;
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	gens_N->init_from_permutation_representation(this, G,
 		perms,
@@ -621,7 +621,7 @@ void action::read_centralizer_magma(std::string &fname_output,
 		}
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 	gens = NEW_OBJECT(groups::strong_generators);
@@ -814,7 +814,7 @@ void action::read_subgroups_magma(std::string &fname_output,
 				generator_perms[h]--;
 			}
 
-			vector_ge *nice_gens;
+			data_structures_groups::vector_ge *nice_gens;
 
 
 
@@ -864,7 +864,7 @@ void action::read_subgroups_magma(std::string &fname_output,
 				generator_perms[h]--;
 			}
 
-			vector_ge *nice_gens;
+			data_structures_groups::vector_ge *nice_gens;
 
 
 
@@ -1252,11 +1252,11 @@ void action::read_conjugacy_classes_and_normalizers(
 			groups::strong_generators *gens;
 			ring_theory::longinteger_object go1, Class_size, centralizer_order;
 			long int goi;
-			vector_ge *nice_gens;
+			data_structures_groups::vector_ge *nice_gens;
 			long int ngo;
 			int nb_perms;
 			groups::strong_generators *N_gens;
-			vector_ge *nice_gens_N;
+			data_structures_groups::vector_ge *nice_gens_N;
 
 
 			cout << "The conjugacy class " << i << " / " << nb_classes << " is:" << endl;
@@ -1514,7 +1514,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 		groups::strong_generators *gens;
 		ring_theory::longinteger_object go1, Class_size, centralizer_order;
 		int goi;
-		vector_ge *nice_gens;
+		data_structures_groups::vector_ge *nice_gens;
 
 
 		goi = class_order_of_element[i];
@@ -1540,7 +1540,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 		long int ngo;
 		int nb_perms;
 		groups::strong_generators *N_gens;
-		vector_ge *nice_gens_N;
+		data_structures_groups::vector_ge *nice_gens_N;
 
 		ngo = class_normalizer_order[i];
 		nb_perms = class_normalizer_number_of_generators[i];

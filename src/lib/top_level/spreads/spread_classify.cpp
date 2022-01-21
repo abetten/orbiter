@@ -14,6 +14,32 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
+
+
+#if 0
+static void spread_lifting_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+static void spread_lifting_prepare_function_new(exact_cover *EC, int starter_case,
+	long int *candidates, int nb_candidates,
+	groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+#endif
+static int starter_canonize_callback(long int *Set, int len, int *Elt,
+	void *data, int verbose_level);
+static int callback_incremental_check_function(
+	int len, long int *S,
+	void *data, int verbose_level);
+static void spread_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
+
 
 
 spread_classify::spread_classify()
@@ -144,7 +170,7 @@ void spread_classify::freeself()
 }
 
 void spread_classify::init(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int k,
 		int f_recoordinatize,
 		int verbose_level)
@@ -212,12 +238,12 @@ void spread_classify::init(
 	tmp_M3 = NEW_int(n * n);
 	tmp_M4 = NEW_int(n * n);
 	
-	gen = NEW_OBJECT(poset_classification);
+	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
 
 	A2 = NEW_OBJECT(actions::action);
-	AG = NEW_OBJECT(action_on_grassmannian);
+	AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
 #if 0
 	longinteger_object go;
@@ -440,7 +466,8 @@ void spread_classify::init(
 	}
 }
 
-void spread_classify::init2(poset_classification_control *Control,
+void spread_classify::init2(
+		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -449,7 +476,7 @@ void spread_classify::init2(poset_classification_control *Control,
 		cout << "spread_classify::init2" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A2,
 			A->Strong_gens,
 			verbose_level);
@@ -465,7 +492,7 @@ void spread_classify::init2(poset_classification_control *Control,
 					"before gen->initialize_with_starter" << endl;
 		}
 
-		Base_case = NEW_OBJECT(classification_base_case);
+		Base_case = NEW_OBJECT(poset_classification::classification_base_case);
 
 		Base_case->init(Poset,
 				Starter_size,
@@ -1139,8 +1166,8 @@ void spread_classify::print(ostream &ost, int len, long int *S)
 // global functions:
 // #############################################################################
 
-
-void spread_lifting_early_test_function(long int *S, int len,
+#if 0
+static void spread_lifting_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1162,7 +1189,7 @@ void spread_lifting_early_test_function(long int *S, int len,
 	}
 }
 
-void spread_lifting_prepare_function_new(
+static void spread_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
@@ -1200,11 +1227,12 @@ void spread_lifting_prepare_function_new(
 				"done" << endl;
 	}
 }
+#endif
 
 
 
 
-int starter_canonize_callback(long int *Set, int len,
+static int starter_canonize_callback(long int *Set, int len,
 		int *Elt, void *data, int verbose_level)
 // for starter, interface to recoordinatize,
 // which uses callback_incremental_check_function
@@ -1228,7 +1256,7 @@ int starter_canonize_callback(long int *Set, int len,
 	return TRUE;
 }
 
-int callback_incremental_check_function(
+static int callback_incremental_check_function(
 		int len, long int *S, void *data, int verbose_level)
 // for recoordinatize
 {
@@ -1239,7 +1267,30 @@ int callback_incremental_check_function(
 	return ret;
 }
 
-}}
+static void spread_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	spread_classify *T = (spread_classify *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spread_early_test_func_callback for set ";
+		Orbiter->Lint_vec->print(cout, S, len);
+		cout << endl;
+	}
+	T->early_test_func(S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "spread_early_test_func_callback done" << endl;
+	}
+}
+
+}}}
+
 
 
 

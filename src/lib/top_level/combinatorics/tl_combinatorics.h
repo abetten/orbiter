@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 // #############################################################################
@@ -29,9 +30,9 @@ public:
 
 	// group stuff:
 	actions::action *A;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
-	action_on_homogeneous_polynomials *AonHPD;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
 
@@ -47,8 +48,6 @@ public:
 
 
 
-void boolean_function_classify_print_function(int *poly, int sz, void *data);
-void boolean_function_classify_reduction_function(int *poly, void *data);
 
 
 
@@ -93,7 +92,7 @@ public:
 	int f_canonical_form_PG;
 	std::string canonical_form_PG_PG_label;
 	int f_canonical_form_PG_has_PA;
-	projective_space_with_action *Canonical_form_PG_PA;
+	projective_geometry::projective_space_with_action *Canonical_form_PG_PA;
 	combinatorics::classification_of_objects_description *Canonical_form_PG_Descr;
 
 	int f_canonical_form;
@@ -162,7 +161,8 @@ public:
 	void post_process_classification(
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *&OwP,
-			int f_projective_space, projective_space_with_action *PA,
+			int f_projective_space,
+			projective_geometry::projective_space_with_action *PA,
 			std::string &prefix,
 			int verbose_level);
 	void classification_report(combinatorics::classification_of_objects *CO,
@@ -246,7 +246,8 @@ public:
 			data_structures::classify_bitvectors *CB,
 		std::string &output_fname,
 		int verbose_level);
-	void handle_input_file(data_structures::classify_bitvectors *CB,
+	void handle_input_file(
+			data_structures::classify_bitvectors *CB,
 			int nb_objects_to_test, int t0,
 			std::string &fname, int input_file_idx, int nb_input_files,
 			int N_points, int design_b, int design_k, int partition_class_size,
@@ -254,7 +255,7 @@ public:
 			int verbose_level);
 	void process_object(
 			data_structures::classify_bitvectors *CB,
-		incidence_structure_with_group *IG,
+			data_structures_groups::incidence_structure_with_group *IG,
 		incidence_structure *&Inc_out,
 		int nb_objects_to_test,
 		int &f_found, int &idx,
@@ -310,10 +311,10 @@ public:
 	int K;
 
 	int f_pair_search_control;
-	poset_classification_control *Pair_search_control;
+	poset_classification::poset_classification_control *Pair_search_control;
 
 	int f_search_control;
-	poset_classification_control *Search_control;
+	poset_classification::poset_classification_control *Search_control;
 
 	// row intersection type
 	int f_R;
@@ -402,10 +403,10 @@ public:
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
 	groups::direct_product *P;
-	poset_with_group_action *Poset_pairs;
-	poset_with_group_action *Poset_search;
-	poset_classification *Pairs;
-	poset_classification *Gen;
+	poset_classification::poset_with_group_action *Poset_pairs;
+	poset_classification::poset_with_group_action *Poset_search;
+	poset_classification::poset_classification *Pairs;
+	poset_classification::poset_classification *Gen;
 
 	// orbits on pairs:
 	int *pair_orbit; // [V * V]
@@ -479,11 +480,6 @@ public:
 		int &nb_singletons, int verbose_level);
 };
 
-
-void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 
@@ -684,7 +680,7 @@ public:
 	groups::strong_generators *Sg;
 
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 	projective_space *P;
 
 	int *block; // [k]
@@ -694,7 +690,7 @@ public:
 	~design_create();
 	void null();
 	void freeself();
-	void init(design_create_description *Descr, int verbose_level);
+	void init(apps_combinatorics::design_create_description *Descr, int verbose_level);
 	void create_design_PG_2_q(field_theory::finite_field *F,
 			long int *&set, int &sz, int &k, int verbose_level);
 	void unrank_block_in_PG_2_q(int *block,
@@ -761,8 +757,6 @@ public:
 
 };
 
-int design_tables_compare_func(void *data, int i, int j, void *extra_data);
-void design_tables_swap_func(void *data, int i, int j, void *extra_data);
 
 
 
@@ -809,7 +803,7 @@ public:
 	groups::sims *Aut;
 	groups::sims *U;
 	ring_theory::longinteger_object U_go;
-	vector_ge *U_gens;
+	data_structures_groups::vector_ge *U_gens;
 	groups::schreier *Sch;
 
 
@@ -844,7 +838,7 @@ public:
 	int nb_short_orbits;
 	int nb_long_orbits;
 
-	poset_classification *gen;
+	poset_classification::poset_classification *gen;
 
 
 
@@ -860,11 +854,6 @@ public:
 
 };
 
-void difference_set_in_heisenberg_group_early_test_func(
-		long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		void *data, int verbose_level);
 
 
 // #############################################################################
@@ -927,7 +916,7 @@ public:
 
 	int *v;
 
-	poset_classification *gen;
+	poset_classification::poset_classification *gen;
 	int nb_orbits;
 
 	void init(int n, int f_draw, int verbose_level, int verbose_level_clique);
@@ -940,10 +929,6 @@ public:
 };
 
 
-void hadamard_classify_early_test_function(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 
@@ -1019,10 +1004,10 @@ public:
 		// on the orbit of the reflection group.
 	int f_play_it_safe;
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
 		// subset lattice for action A_on_orbits
-	poset_classification *PC;
+	poset_classification::poset_classification *PC;
 		// Classification of subsets in the action A_on_orbits
 
 
@@ -1044,12 +1029,6 @@ public:
 };
 
 
-// in hall_system.cpp:
-void hall_system_print_set(std::ostream &ost, int len, long int *S, void *data);
-void hall_system_early_test_function(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 
@@ -1135,9 +1114,9 @@ public:
 	data_structures::bitvector *Bitvec;
 	int *degree;
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 
 	int nb_needed;
 
@@ -1153,9 +1132,11 @@ public:
 			int verbose_level);
 	void create_action_and_poset(int verbose_level);
 	void compute(int verbose_level);
-	void read_classification(orbit_transversal *&T,
+	void read_classification(
+			data_structures_groups::orbit_transversal *&T,
 			int level, int verbose_level);
-	void read_classification_single_case(set_and_stabilizer *&Rep,
+	void read_classification_single_case(
+			data_structures_groups::set_and_stabilizer *&Rep,
 			int level, int case_nr, int verbose_level);
 	void compute_colors(
 			design_tables *Design_table, int *&design_color_table,
@@ -1166,10 +1147,6 @@ public:
 
 
 
-void large_set_early_test_function(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 
@@ -1188,7 +1165,7 @@ public:
 	int f_normalizer_on_orbits_of_a_given_length;
 	int normalizer_on_orbits_of_a_given_length_length;
 	int normalizer_on_orbits_of_a_given_length_nb_orbits;
-	poset_classification_control *normalizer_on_orbits_of_a_given_length_control;
+	poset_classification::poset_classification_control *normalizer_on_orbits_of_a_given_length_control;
 
 	int f_create_graph_on_orbits_of_length;
 	std::string create_graph_on_orbits_of_length_fname;
@@ -1319,9 +1296,9 @@ public:
 
 
 	// used in do_normalizer_on_orbits_of_a_given_length_multiple_orbits::
-	poset_classification *PC;
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
+	poset_classification::poset_classification *PC;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
 
 
 	int orbit_length2;
@@ -1361,7 +1338,7 @@ public:
 	void do_normalizer_on_orbits_of_a_given_length(
 			int orbit_length,
 			int nb_of_orbits_to_choose,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void do_normalizer_on_orbits_of_a_given_length_single_orbit(
 			int orbit_length,
@@ -1369,10 +1346,14 @@ public:
 	void do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 			int orbit_length,
 			int nb_of_orbits_to_choose,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
-	void create_graph_on_orbits_of_length(std::string &fname, int orbit_length, int verbose_level);
-	void create_graph_on_orbits_of_length_based_on_N_orbits(std::string &fname_mask, int orbit_length2, int verbose_level);
+	void create_graph_on_orbits_of_length(
+			std::string &fname, int orbit_length,
+			int verbose_level);
+	void create_graph_on_orbits_of_length_based_on_N_orbits(
+			std::string &fname_mask, int orbit_length2,
+			int verbose_level);
 	void read_solution_file(
 			std::string &solution_file_name,
 			long int *starter_set,
@@ -1415,7 +1396,7 @@ public:
 	data_structures::nauty_output *NO;
 
 	int f_projective_space;
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 	groups::strong_generators *SG; // only used if f_projective_space
 
 	actions::action *A_perm;
@@ -1429,7 +1410,7 @@ public:
 	~object_with_properties();
 	void init(object_with_canonical_form *OwCF,
 			data_structures::nauty_output *NO,
-			int f_projective_space, projective_space_with_action *PA,
+			int f_projective_space, projective_geometry::projective_space_with_action *PA,
 			int max_TDO_depth,
 			std::string &label,
 			int verbose_level);
@@ -1438,7 +1419,7 @@ public:
 	void init_object_in_projective_space(
 			object_with_canonical_form *OwCF,
 			data_structures::nauty_output *NO,
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);
 	void latex_report(std::ostream &ost,
@@ -1486,7 +1467,7 @@ public:
 	int *initial_pair_covering;
 
 	int f_has_control;
-	poset_classification_control *Control;
+	poset_classification::poset_classification_control *Control;
 
 
 
@@ -1522,11 +1503,11 @@ public:
 	int m2;
 	int *v1; // [k]
 
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 	actions::action *A;
 	actions::action *A2;
-	action_on_k_subsets *Aonk; // only a pointer, do not free
+	induced_actions::action_on_k_subsets *Aonk; // only a pointer, do not free
 
 	int *row_sum; // [m]
 	int *pairs; // [m2]
@@ -1545,7 +1526,7 @@ public:
 	void init_group(int verbose_level);
 	void init_action_on_k_subsets(int onk, int verbose_level);
 	void init_generator(
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			groups::strong_generators *Strong_gens,
 			int verbose_level);
 	void early_test_func(long int *S, int len,
@@ -1621,7 +1602,7 @@ public:
 
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_TOP_LEVEL_COMBINATORICS_TL_COMBINATORICS_H_ */

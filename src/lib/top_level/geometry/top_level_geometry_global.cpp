@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 top_level_geometry_global::top_level_geometry_global()
@@ -27,7 +28,7 @@ top_level_geometry_global::~top_level_geometry_global()
 
 
 void top_level_geometry_global::set_stabilizer_projective_space(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int intermediate_subset_size,
 		std::string &fname_mask, int nb, std::string &column_label,
 		std::string &fname_out,
@@ -61,7 +62,7 @@ void top_level_geometry_global::set_stabilizer_projective_space(
 
 
 void top_level_geometry_global::report_decomposition_by_group(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 		int verbose_level)
 {
@@ -283,7 +284,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 }
 
 void top_level_geometry_global::report_decomposition_by_single_automorphism(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int *Elt, std::ostream &ost, std::string &fname_base,
 		int verbose_level)
 {
@@ -534,7 +535,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 }
 
 
-}}
+}}}
 
 
 

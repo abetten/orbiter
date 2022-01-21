@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
 
 
 orbits_on_polynomials::orbits_on_polynomials()
@@ -148,7 +149,7 @@ void orbits_on_polynomials::init(
 
 
 	A->group_order(full_go);
-	T = NEW_OBJECT(orbit_transversal);
+	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
 	if (f_v) {
 		cout << "orbits_on_polynomials::init before T->init_from_schreier" << endl;
@@ -329,7 +330,7 @@ void orbits_on_polynomials::report(int verbose_level)
 
 
 		// compute the group of the surface:
-		projective_space_with_action *PA;
+		projective_geometry::projective_space_with_action *PA;
 		int f_semilinear;
 		number_theory::number_theory_domain NT;
 
@@ -340,7 +341,7 @@ void orbits_on_polynomials::report(int verbose_level)
 			f_semilinear = TRUE;
 		}
 
-		PA = NEW_OBJECT(projective_space_with_action);
+		PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::do_cubic_surface_properties before PA->init" << endl;
@@ -586,4 +587,5 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 	}
 }
 
-}}
+}}}
+

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
 
 packing_was_description::packing_was_description()
@@ -231,4 +232,5 @@ void packing_was_description::print()
 
 
 
-}}
+}}}
+

@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 poset_classification::poset_classification()
 {
@@ -245,7 +247,7 @@ void poset_classification::init_internal(
 		cout << Poset->go << endl;
 	}
 	
-	Schreier_vector_handler = NEW_OBJECT(schreier_vector_handler);
+	Schreier_vector_handler = NEW_OBJECT(data_structures_groups::schreier_vector_handler);
 	Schreier_vector_handler->init(Poset->A, Poset->A2,
 			TRUE /* f_allow_failure */,
 			verbose_level);
@@ -284,7 +286,7 @@ void poset_classification::init_internal(
 		cout << "poset_classification::init_internal sz == 0" << endl;
 		exit(1);
 	}
-	transporter = NEW_OBJECT(vector_ge);
+	transporter = NEW_OBJECT(data_structures_groups::vector_ge);
 	transporter->init(Poset->A, verbose_level - 2);
 	transporter->allocate(sz + 1, verbose_level - 2);
 	Poset->A->element_one(transporter->ith(0), FALSE);
@@ -467,6 +469,6 @@ void poset_classification::init_base_case(classification_base_case *Base_case,
 }
 
 
-}}
+}}}
 
 

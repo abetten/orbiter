@@ -48,7 +48,7 @@ void strong_generators::swap_with(strong_generators *SG)
 {
 	actions::action *my_A;
 	int *my_tl;
-	vector_ge *my_gens;
+	data_structures_groups::vector_ge *my_gens;
 
 	my_A = A;
 	A = SG->A;
@@ -94,7 +94,7 @@ void strong_generators::init_from_sims(groups::sims *S, int verbose_level)
 	}
 	A = S->A;
 	tl = NEW_int(A->base_len());
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	if (f_v) {
 		cout << "strong_generators::init_from_sims before "
 				"S->extract_strong_generators_in_order" << endl;
@@ -119,12 +119,12 @@ void strong_generators::init_from_ascii_coding(actions::action *A,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	ring_theory::longinteger_object go;
-	group_container *G;
+	data_structures_groups::group_container *G;
 
 	if (f_v) {
 		cout << "strong_generators::init_from_ascii_coding" << endl;
 	}
-	G = NEW_OBJECT(group_container);
+	G = NEW_OBJECT(data_structures_groups::group_container);
 	G->init(A, verbose_level - 2);
 	if (f_vv) {
 		cout << "strong_generators::init_from_ascii_coding "
@@ -177,7 +177,7 @@ void strong_generators::init_copy(strong_generators *S,
 	tl = NEW_int(A->base_len());
 	//cout << "strong_generators::init_copy before int_vec_copy" << endl;
 	Orbiter->Int_vec->copy(S->tl, tl, A->base_len());
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(S->gens->len, verbose_level - 2);
 	for (i = 0; i < S->gens->len; i++) {
@@ -208,7 +208,7 @@ void strong_generators::init_by_hdl_and_with_tl(actions::action *A,
 	for (i = 0; i < A->base_len(); i++) {
 		strong_generators::tl[i] = tl[i];
 	}
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(gen_handle.size(), verbose_level - 2);
 	for (i = 0; i < gen_handle.size(); i++) {
@@ -236,7 +236,7 @@ void strong_generators::init_by_hdl(actions::action *A,
 	for (i = 0; i < A->base_len(); i++) {
 		tl[i] = 1;
 	}
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(nb_gen, verbose_level - 2);
 	for (i = 0; i < nb_gen; i++) {
@@ -249,7 +249,7 @@ void strong_generators::init_by_hdl(actions::action *A,
 
 void strong_generators::init_from_permutation_representation(
 		actions::action *A, sims *parent_group_S, int *data,
-	int nb_elements, long int group_order, vector_ge *&nice_gens,
+	int nb_elements, long int group_order, data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -271,7 +271,7 @@ void strong_generators::init_from_permutation_representation(
 	init(A, verbose_level - 2);
 
 	//vector_ge *nice_gens;
-	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	if (f_v) {
 		cout << "strong_generators::init_from_permutation_representation "
@@ -319,7 +319,7 @@ void strong_generators::init_from_permutation_representation(
 
 void strong_generators::init_from_data(actions::action *A, int *data,
 	int nb_elements, int elt_size, int *transversal_length, 
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -328,8 +328,8 @@ void strong_generators::init_from_data(actions::action *A, int *data,
 		cout << "strong_generators::init_from_data" << endl;
 	}
 	init(A, verbose_level - 2);
-	gens = NEW_OBJECT(vector_ge);
-	nice_gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	gens->init_from_data(A, data, 
 		nb_elements, elt_size, verbose_level);
@@ -348,7 +348,7 @@ void strong_generators::init_from_data(actions::action *A, int *data,
 void strong_generators::init_from_data_with_target_go_ascii(
 		actions::action *A, int *data,
 	int nb_elements, int elt_size, const char *ascii_target_go,
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -378,7 +378,7 @@ void strong_generators::init_from_data_with_target_go(
 		actions::action *A, int *data_gens,
 	int data_gens_size, int nb_gens,
 	ring_theory::longinteger_object &target_go,
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -392,7 +392,7 @@ void strong_generators::init_from_data_with_target_go(
 
 	//vector_ge *my_gens;
 
-	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	nice_gens->init(A, verbose_level - 2);
 	nice_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
@@ -482,7 +482,7 @@ void strong_generators::init_from_data_with_go(
 	nb_elements = gens_data_sz / A->make_element_size;
 
 	//strong_generators *Gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 	//int orbit_length;
 
 	//Gens = NEW_OBJECT(strong_generators);
@@ -560,7 +560,7 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 		strong_generators *SG, int *Elt_a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	ring_theory::longinteger_object go;
 	//int i;	
 	
@@ -572,7 +572,7 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 	if (f_v) {
 		cout << "strong_generators::init_generators_for_the_conjugate_group_avGa go=" << go << endl;
 	}
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 #if 0
 	gens->init(SG->A);
@@ -615,7 +615,7 @@ void strong_generators::init_generators_for_the_conjugate_group_aGav(
 		strong_generators *SG, int *Elt_a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	ring_theory::longinteger_object go;
 	//int i;	
 	
@@ -627,7 +627,7 @@ void strong_generators::init_generators_for_the_conjugate_group_aGav(
 	if (f_v) {
 		cout << "strong_generators::init_generators_for_the_conjugate_group_aGav go=" << go << endl;
 	}
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 #if 0
 	gens->init(SG->A);
@@ -671,7 +671,7 @@ void strong_generators::init_transposed_group(
 		strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	vector_ge *gens;
+	data_structures_groups::vector_ge *gens;
 	ring_theory::longinteger_object go;
 	int i;
 	
@@ -680,7 +680,7 @@ void strong_generators::init_transposed_group(
 	}
 
 	SG->group_order(go);
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	gens->init(A, verbose_level - 2);
 	gens->allocate(SG->gens->len, verbose_level - 2);
@@ -738,10 +738,10 @@ void strong_generators::init_group_extension(
 
 	A = subgroup->A;
 
-	vector_ge *my_gens;
+	data_structures_groups::vector_ge *my_gens;
 	int nb_gens;
 
-	my_gens = NEW_OBJECT(vector_ge);
+	my_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	my_gens->init(A, verbose_level - 2);
 	nb_gens = subgroup->gens->len;
 	my_gens->allocate(nb_gens + 1, verbose_level - 2);
@@ -796,7 +796,7 @@ void strong_generators::init_group_extension(
 
 void strong_generators::init_group_extension(
 	strong_generators *subgroup,
-	vector_ge *new_gens, int index,
+	data_structures_groups::vector_ge *new_gens, int index,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -810,10 +810,10 @@ void strong_generators::init_group_extension(
 
 	A = subgroup->A;
 
-	vector_ge *my_gens;
+	data_structures_groups::vector_ge *my_gens;
 	int nb_gens, nb_new_gens;
 
-	my_gens = NEW_OBJECT(vector_ge);
+	my_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	my_gens->init(A, verbose_level - 2);
 	nb_gens = subgroup->gens->len;
 	nb_new_gens = new_gens->len;
@@ -912,9 +912,9 @@ void strong_generators::switch_to_subgroup(
 	}
 
 
-	vector_ge *my_gens;
+	data_structures_groups::vector_ge *my_gens;
 
-	my_gens = NEW_OBJECT(vector_ge);
+	my_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	my_gens->init(A, verbose_level - 2);
 	my_gens->extract_subset_of_elements_by_rank_text_vector(
 			rank_vector_text, S, verbose_level);
@@ -980,9 +980,9 @@ void strong_generators::init_subgroup(actions::action *A,
 
 	strong_generators::A = A;
 	
-	vector_ge *my_gens;
+	data_structures_groups::vector_ge *my_gens;
 
-	my_gens = NEW_OBJECT(vector_ge);
+	my_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	my_gens->init(A, verbose_level - 2);
 	my_gens->extract_subset_of_elements_by_rank(
 		subgroup_gens_idx, nb_subgroup_gens, S, verbose_level);
@@ -1037,7 +1037,7 @@ void strong_generators::init_subgroup_by_generators(
 	int nb_subgroup_gens,
 	int *subgroup_gens,
 	std::string &subgroup_order_text,
-	vector_ge *&nice_gens,
+	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1052,7 +1052,7 @@ void strong_generators::init_subgroup_by_generators(
 
 	//vector_ge *my_gens;
 
-	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	nice_gens->init(A, verbose_level - 2);
 	nice_gens->allocate(nb_subgroup_gens, verbose_level - 2);
 	for (int h = 0; h < nb_subgroup_gens; h++) {
@@ -1170,13 +1170,13 @@ sims *strong_generators::create_sims_in_different_action(
 }
 
 void strong_generators::add_generators(
-		vector_ge *coset_reps, int group_index,
+		data_structures_groups::vector_ge *coset_reps, int group_index,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	sims *S;
-	vector_ge *gens1; 
+	data_structures_groups::vector_ge *gens1;
 	int *tl1;
 	int *coset_reps_vec;
 	int i;
@@ -1196,7 +1196,7 @@ void strong_generators::add_generators(
 				coset_reps_vec + i * A->elt_size_in_int, 0);
 	}
 
-	gens1 = NEW_OBJECT(vector_ge);
+	gens1 = NEW_OBJECT(data_structures_groups::vector_ge);
 	tl1 = NEW_int(A->base_len());
 	
 	S = create_sims(verbose_level - 1);
@@ -1228,7 +1228,7 @@ void strong_generators::add_single_generator(
 {
 	int f_v = (verbose_level >= 1);
 	sims *S;
-	vector_ge *gens1; 
+	data_structures_groups::vector_ge *gens1;
 	int *tl1;
 
 	if (f_v) {
@@ -1237,7 +1237,7 @@ void strong_generators::add_single_generator(
 		A->print_info();
 	}
 
-	gens1 = NEW_OBJECT(vector_ge);
+	gens1 = NEW_OBJECT(data_structures_groups::vector_ge);
 	tl1 = NEW_int(A->base_len());
 	
 	S = create_sims(verbose_level - 1);
@@ -2625,7 +2625,7 @@ void strong_generators::read_from_file_binary(
 	for (i = 0; i < A->base_len(); i++) {
 		fp.read((char *) &tl[i], sizeof(int));
 	}
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::read_from_file_binary "
@@ -2916,7 +2916,7 @@ void strong_generators::decode_ascii_coding(
 		cout << "action A is " << A->label << endl;
 		exit(1);
 	}
-	gens = NEW_OBJECT(vector_ge);
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(nbsg, verbose_level - 2);
 	base1 = NEW_int(A->base_len());

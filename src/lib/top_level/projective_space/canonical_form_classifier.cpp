@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -130,7 +131,7 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 	Poly_ring->init(Descr->PA->F, Descr->PA->n + 1, Descr->degree, FALSE, t_PART, verbose_level);
 
 
-	AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
+	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {
 		cout << "canonical_form_classifier::classify "
 				"before AonHPD->init" << endl;
@@ -1568,5 +1569,6 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 }
 
 
-}}
+}}}
+
 

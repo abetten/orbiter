@@ -14,7 +14,10 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
 
+
+//static int packing_types_compare_function(void *a, void *b, void *data);
 
 
 
@@ -439,8 +442,8 @@ void invariants_packing::make_table(
 	}
 }
 
-
-int packing_types_compare_function(void *a, void *b, void *data)
+#if 0
+static int packing_types_compare_function(void *a, void *b, void *data)
 {
 	invariants_packing *inv = (invariants_packing *) data;
 	int *A = (int *) a;
@@ -457,7 +460,8 @@ int packing_types_compare_function(void *a, void *b, void *data)
 	}
 	return 0;
 }
+#endif
 
 
-}}
+}}}
 

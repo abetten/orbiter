@@ -14,6 +14,12 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
+
+
+static void boolean_function_classify_print_function(int *poly, int sz, void *data);
+static void boolean_function_classify_reduction_function(int *poly, void *data);
+
 
 boolean_function_classify::boolean_function_classify()
 {
@@ -70,7 +76,7 @@ void boolean_function_classify::init_group(combinatorics::boolean_function_domai
 			nice_gens,
 			verbose_level);
 
-	AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
+	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {
 		cout << "boolean_function_classify::init_group "
 				"before AonHPD->init" << endl;
@@ -403,7 +409,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 
 
 
-void boolean_function_classify_print_function(int *poly, int sz, void *data)
+static void boolean_function_classify_print_function(int *poly, int sz, void *data)
 {
 	boolean_function_classify *BFC = (boolean_function_classify *) data;
 	geometry_global Gg;
@@ -419,7 +425,7 @@ void boolean_function_classify_print_function(int *poly, int sz, void *data)
 
 }
 
-void boolean_function_classify_reduction_function(int *poly, void *data)
+static void boolean_function_classify_reduction_function(int *poly, void *data)
 {
 	boolean_function_classify *BFC = (boolean_function_classify *) data;
 
@@ -462,5 +468,6 @@ void boolean_function_classify_reduction_function(int *poly, void *data)
 
 
 
-}}
+}}}
+
 

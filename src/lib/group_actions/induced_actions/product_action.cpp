@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 product_action::product_action()
 {
@@ -258,7 +260,8 @@ void product_action::make_element(int *Elt, int *data, int verbose_level)
 		data + A1->make_element_size, verbose_level);
 }
 
-}}
+}}}
+
 
 
 

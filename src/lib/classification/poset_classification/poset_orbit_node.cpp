@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 poset_orbit_node::poset_orbit_node()
 {
@@ -262,7 +264,7 @@ int poset_orbit_node::has_Schreier_vector()
 }
 
 
-schreier_vector *poset_orbit_node::get_Schreier_vector()
+data_structures_groups::schreier_vector *poset_orbit_node::get_Schreier_vector()
 {
 	return Schreier_vector;
 }
@@ -496,7 +498,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 				"node=" << node << " creating group" << endl;
 	}
 
-	group_container G;
+	data_structures_groups::group_container G;
 
 	G.init(gen->get_poset()->A, verbose_level - 2);
 
@@ -633,7 +635,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 	for (i = 0; i < s; i++) {
 		f << S[i] << " ";
 		}
-	group_container G;
+	data_structures_groups::group_container G;
 
 	G.init(gen->get_poset()->A, verbose_level - 2);
 
@@ -1155,6 +1157,6 @@ int poset_orbit_node::nb_extension_points()
 }
 
 
-}}
+}}}
 
 

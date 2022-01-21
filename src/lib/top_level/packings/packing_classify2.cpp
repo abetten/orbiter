@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace packings {
+
 
 void packing_classify::compute_klein_invariants(
 		isomorph *Iso, int f_split, int split_r, int split_m,
@@ -921,5 +923,5 @@ void packing_classify::report_extra_stuff(
 	}
 }
 
-}}
+}}}
 

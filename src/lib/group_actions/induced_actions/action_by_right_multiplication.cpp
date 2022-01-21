@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_by_right_multiplication::action_by_right_multiplication()
 {
@@ -88,5 +90,6 @@ long int action_by_right_multiplication::compute_image(
 	return j;
 }
 
-}}
+}}}
+
 

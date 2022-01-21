@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
 
 orthogonal_space_activity_description::orthogonal_space_activity_description()
@@ -119,7 +120,7 @@ int orthogonal_space_activity_description::read_arguments(
 			f_BLT_set_starter = TRUE;
 			BLT_set_starter_size = ST.strtoi(argv[++i]);
 
-			BLT_set_starter_control = NEW_OBJECT(poset_classification_control);
+			BLT_set_starter_control = NEW_OBJECT(poset_classification::poset_classification_control);
 
 			i += BLT_set_starter_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
@@ -279,4 +280,5 @@ void orthogonal_space_activity_description::print()
 
 
 
-}}
+}}}
+

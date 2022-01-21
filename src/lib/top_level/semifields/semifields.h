@@ -12,6 +12,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 // #############################################################################
 // semifield_classify_description.cpp
@@ -70,10 +71,10 @@ public:
 
 	semifield_classify_description *Descr;
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 	//linear_group *LG;
 	groups::matrix_group *Mtx;
-	poset_classification_control *Control;
+	poset_classification::poset_classification_control *Control;
 
 
 	int *identify_semifields_from_file_Po;
@@ -106,15 +107,15 @@ public:
 	long int *Non_unique_cases_go;
 
 
-	classification_step *Semifields;
+	invariant_relations::classification_step *Semifields;
 
 
 	semifield_classify_with_substructure();
 	~semifield_classify_with_substructure();
 	void init(
 			semifield_classify_description *Descr,
-			projective_space_with_action *PA,
-			poset_classification_control *Control,
+			projective_geometry::projective_space_with_action *PA,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void read_data(int verbose_level);
 	void create_fname_for_classification(char *fname);
@@ -130,8 +131,6 @@ public:
 };
 
 
-void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
-		classification_step *Step, void *print_function_data);
 
 
 
@@ -145,7 +144,7 @@ void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
 class semifield_classify {
 public:
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	int n;
 	int k;
@@ -162,7 +161,7 @@ public:
 	std::string level_three_prefix;
 
 
-	spread_classify *T;
+	spreads::spread_classify *T;
 
 	actions::action *A; // = T->A = PGL_n_q
 	int *Elt1;
@@ -172,7 +171,7 @@ public:
 	actions::action *A0_linear;
 
 
-	action_on_spread_set *A_on_S;
+	induced_actions::action_on_spread_set *A_on_S;
 	actions::action *AS;
 
 	groups::strong_generators *Strong_gens;
@@ -180,10 +179,10 @@ public:
 		// infinity and zero
 
 
-	poset_with_group_action *Poset;
-	poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification_control *Control;
 
-	poset_classification *Gen;
+	poset_classification::poset_classification *Gen;
 	groups::sims *Symmetry_group;
 
 
@@ -208,9 +207,9 @@ public:
 	void null();
 	void freeself();
 	void init(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			int k,
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			std::string &level_two_prefix,
 			std::string &level_three_prefix,
 			int verbose_level);
@@ -220,7 +219,7 @@ public:
 			layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void init_poset_classification(
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void compute_orbits(int depth, int verbose_level);
 	void list_points();
@@ -278,19 +277,6 @@ public:
 			int verbose_level);
 };
 
-void semifield_classify_early_test_func(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-long int semifield_classify_rank_point_func(int *v, void *data);
-void semifield_classify_unrank_point_func(int *v, long int rk, void *data);
-long int canonial_form_rank_vector_callback(int *v,
-		int n, void *data, int verbose_level);
-void canonial_form_unrank_vector_callback(long int rk,
-		int *v, int n, void *data, int verbose_level);
-void canonial_form_compute_image_of_vector_callback(
-		int *v, int *w, int *Elt, void *data,
-		int verbose_level);
 
 
 // #############################################################################
@@ -693,7 +679,7 @@ public:
 		// where Orbit_idx[i][j] = b
 	int *Fo_first; // [nb_orbits_at_level_3]
 	int nb_flag_orbits;
-	flag_orbits *Flag_orbits; // [nb_flag_orbits]
+	invariant_relations::flag_orbits *Flag_orbits; // [nb_flag_orbits]
 	long int *data1;
 	long int *data2;
 	int *Basis1;
@@ -707,7 +693,7 @@ public:
 	int *transporter2;
 	int *transporter3;
 	int *Elt1;
-	vector_ge *coset_reps;
+	data_structures_groups::vector_ge *coset_reps;
 
 	semifield_substructure();
 	~semifield_substructure();
@@ -761,7 +747,7 @@ public:
 
 	int *subspace_basis;
 
-	action_on_cosets *on_cosets;
+	induced_actions::action_on_cosets *on_cosets;
 	actions::action *A_on_cosets;
 
 	groups::schreier *Sch;
@@ -779,9 +765,6 @@ public:
 
 };
 
-// semifield_downstep_node.cpp:
-void coset_action_unrank_point(int *v, long int a, void *data);
-long int coset_action_rank_point(int *v, void *data);
 
 
 // #############################################################################
@@ -893,6 +876,6 @@ void save_trace_record(
 		int iso, int f, int po, int so, int N);
 
 
-}}
+}}}
 
 #endif /* SRC_LIB_TOP_LEVEL_SEMIFIELDS_SEMIFIELDS_H_ */

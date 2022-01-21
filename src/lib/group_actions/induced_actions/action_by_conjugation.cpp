@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_by_conjugation::action_by_conjugation()
 {
@@ -143,4 +145,5 @@ long int action_by_conjugation::multiply(actions::action *A,
 	return k;
 }
 
-}}
+}}}
+

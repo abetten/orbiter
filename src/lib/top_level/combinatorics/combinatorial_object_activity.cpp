@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 
@@ -325,7 +326,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_IS f_canonical_form_PG" << endl;
 		}
 
-		projective_space_with_action *PA;
+		projective_geometry::projective_space_with_action *PA;
 
 		if (Descr->f_canonical_form_PG_has_PA) {
 			PA = Descr->Canonical_form_PG_PA;
@@ -346,7 +347,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 			}
 
 
-			PA = (projective_space_with_action *) Orbiter->get_object(idx);
+			PA = (projective_geometry::projective_space_with_action *) Orbiter->get_object(idx);
 		}
 
 		combinatorics::classification_of_objects *CO;
@@ -717,7 +718,8 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 void combinatorial_object_activity::post_process_classification(
 		combinatorics::classification_of_objects *CO,
 		object_with_properties *&OwP,
-		int f_projective_space, projective_space_with_action *PA,
+		int f_projective_space,
+		projective_geometry::projective_space_with_action *PA,
 		std::string &prefix,
 		int verbose_level)
 {
@@ -1137,7 +1139,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 	}
 
 
-	any_group *G;
+	apps_algebra::any_group *G;
 
 	G = The_Orbiter_top_level_session->get_object_of_type_any_group(group_label);
 	groups::linear_group *LG;
@@ -1154,7 +1156,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 		cout << "combinatorial_object_activity::unpack_from_restricted_action must be a restricted action" << endl;
 		exit(1);
 	}
-	action_by_restriction *ABR;
+	induced_actions::action_by_restriction *ABR;
 	ABR = LG->A2->G.ABR;
 
 
@@ -1246,7 +1248,7 @@ void combinatorial_object_activity::line_covering_type(
 		cout << "combinatorial_object_activity::line_covering_type" << endl;
 	}
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
 
@@ -1326,7 +1328,7 @@ void combinatorial_object_activity::line_covering_type(
 
 
 
-}}
+}}}
 
 
 

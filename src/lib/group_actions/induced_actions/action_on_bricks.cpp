@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_bricks::action_on_bricks()
 {
@@ -205,4 +207,5 @@ long int action_on_bricks::compute_image_permutation_action(
 }
 
 
-}}
+}}}
+

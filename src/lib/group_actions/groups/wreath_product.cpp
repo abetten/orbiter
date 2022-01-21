@@ -3027,9 +3027,9 @@ void wreath_product::orbits_restricted_compute(
 
 	Permutation_representation = A_perm->G.Permutation_representation;
 
-	vector_ge *Gens;
+	data_structures_groups::vector_ge *Gens;
 
-	Gens = NEW_OBJECT(vector_ge);
+	Gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	Gens->init(A_perm, verbose_level - 2);
 	Gens->allocate(SG->gens->len, verbose_level - 2);

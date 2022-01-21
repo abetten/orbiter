@@ -165,9 +165,9 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 
 void isomorph_arguments::init(
 		actions::action *A, actions::action *A2,
-	poset_classification *gen,
+		poset_classification::poset_classification *gen,
 	int target_size,
-	poset_classification_control *Control,
+	poset_classification::poset_classification_control *Control,
 	exact_cover_arguments *ECA,
 	void (*callback_report)(isomorph *Iso, void *data, int verbose_level), 
 	void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level), 
@@ -208,7 +208,8 @@ void isomorph_arguments::init(
 		cout << "isomorph_arguments::init done" << endl;
 		}
 }
-	
+
+#if 0
 void isomorph_arguments::execute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -537,6 +538,7 @@ void isomorph_arguments::execute(int verbose_level)
 		cout << "isomorph_arguments::execute done" << endl;
 	}
 }
+#endif
 
 }}
 

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace invariant_relations {
 
 flag_orbits::flag_orbits()
 {
@@ -292,5 +293,6 @@ void flag_orbits::print_latex(ostream &ost,
 }
 
 
-}}
+}}}
+
 

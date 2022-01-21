@@ -22,7 +22,7 @@ namespace orbiter {
 namespace group_actions {
 
 
-
+//! a specific group action
 
 namespace actions {
 
@@ -35,20 +35,27 @@ namespace actions {
 
 }
 
-// data_structures
-class group_container;
-class incidence_structure_with_group;
-class orbit_rep;
-class orbit_transversal;
-class orbit_type_repository;
-class schreier_vector_handler;
-class schreier_vector;
-class set_and_stabilizer;
-class union_find_on_k_subsets;
-class union_find;
-class vector_ge;
-typedef class vector_ge *p_vector_ge;
+//! data structures for groups and group actions.
 
+namespace data_structures_groups {
+
+	// data_structures
+	class group_container;
+	class incidence_structure_with_group;
+	class orbit_rep;
+	class orbit_transversal;
+	class orbit_type_repository;
+	class schreier_vector_handler;
+	class schreier_vector;
+	class set_and_stabilizer;
+	class union_find_on_k_subsets;
+	class union_find;
+	class vector_ge;
+	typedef class vector_ge *p_vector_ge;
+
+}
+
+//! an implementation of various types of permutation groups using stabilizer chains
 
 namespace groups {
 
@@ -79,34 +86,39 @@ namespace groups {
 
 }
 
-// induced_actions
-class action_by_conjugation;
-class action_by_representation;
-class action_by_restriction;
-class action_by_right_multiplication;
-class action_by_subfield_structure;
-class action_on_andre;
-class action_on_bricks;
-class action_on_cosets;
-class action_on_determinant;
-class action_on_factor_space;
-class action_on_flags;
-class action_on_galois_group;
-class action_on_grassmannian;
-class action_on_homogeneous_polynomials;
-class action_on_interior_direct_product;
-class action_on_k_subsets;
-class action_on_orbits;
-class action_on_orthogonal;
-class action_on_set_partitions;
-class action_on_sets;
-class action_on_sign;
-class action_on_spread_set;
-class action_on_subgroups;
-class action_on_wedge_product;
-class product_action;
+//! offers various kinds of induced group actions
+
+namespace induced_actions {
 
 
+	// induced_actions
+	class action_by_conjugation;
+	class action_by_representation;
+	class action_by_restriction;
+	class action_by_right_multiplication;
+	class action_by_subfield_structure;
+	class action_on_andre;
+	class action_on_bricks;
+	class action_on_cosets;
+	class action_on_determinant;
+	class action_on_factor_space;
+	class action_on_flags;
+	class action_on_galois_group;
+	class action_on_grassmannian;
+	class action_on_homogeneous_polynomials;
+	class action_on_interior_direct_product;
+	class action_on_k_subsets;
+	class action_on_orbits;
+	class action_on_orthogonal;
+	class action_on_set_partitions;
+	class action_on_sets;
+	class action_on_sign;
+	class action_on_spread_set;
+	class action_on_subgroups;
+	class action_on_wedge_product;
+	class product_action;
+
+}
 
 
 
@@ -186,31 +198,31 @@ union symmetry_group {
 	groups::wreath_product *wreath_product_group;
 	groups::direct_product *direct_product_group;
 	groups::permutation_representation *Permutation_representation;
-	action_on_sets *on_sets;
-	action_on_subgroups *on_subgroups;
-	action_on_k_subsets *on_k_subsets;
-	product_action *product_action_data;
-	action_by_right_multiplication *ABRM;
-	action_by_restriction *ABR;
-	action_by_conjugation *ABC;
-	action_on_determinant *AD;
-	action_on_galois_group *on_Galois_group;
-	action_on_sign *OnSign;
-	action_on_grassmannian *AG;
-	action_on_spread_set *AS;
-	action_on_orthogonal *AO;
-	action_on_cosets *OnCosets;
-	action_on_factor_space *AF;
-	action_on_wedge_product *AW;
-	action_by_representation *Rep;
-	action_by_subfield_structure *SubfieldStructure;
-	action_on_bricks *OnBricks;
-	action_on_andre *OnAndre;
-	action_on_orbits *OnOrbits;
-	action_on_flags *OnFlags;
-	action_on_homogeneous_polynomials *OnHP;
-	action_on_set_partitions *OnSetPartitions;
-	action_on_interior_direct_product *OnInteriorDirectProduct;
+	induced_actions::action_on_sets *on_sets;
+	induced_actions::action_on_subgroups *on_subgroups;
+	induced_actions::action_on_k_subsets *on_k_subsets;
+	induced_actions::product_action *product_action_data;
+	induced_actions::action_by_right_multiplication *ABRM;
+	induced_actions::action_by_restriction *ABR;
+	induced_actions::action_by_conjugation *ABC;
+	induced_actions::action_on_determinant *AD;
+	induced_actions::action_on_galois_group *on_Galois_group;
+	induced_actions::action_on_sign *OnSign;
+	induced_actions::action_on_grassmannian *AG;
+	induced_actions::action_on_spread_set *AS;
+	induced_actions::action_on_orthogonal *AO;
+	induced_actions::action_on_cosets *OnCosets;
+	induced_actions::action_on_factor_space *AF;
+	induced_actions::action_on_wedge_product *AW;
+	induced_actions::action_by_representation *Rep;
+	induced_actions::action_by_subfield_structure *SubfieldStructure;
+	induced_actions::action_on_bricks *OnBricks;
+	induced_actions::action_on_andre *OnAndre;
+	induced_actions::action_on_orbits *OnOrbits;
+	induced_actions::action_on_flags *OnFlags;
+	induced_actions::action_on_homogeneous_polynomials *OnHP;
+	induced_actions::action_on_set_partitions *OnSetPartitions;
+	induced_actions::action_on_interior_direct_product *OnInteriorDirectProduct;
 };
 
 

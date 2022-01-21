@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 quartic_curve_from_surface::quartic_curve_from_surface()
@@ -649,9 +650,9 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 
 	FREE_OBJECT(OiP);
 
-	action_on_homogeneous_polynomials *AonHPD;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
-	AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
+	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"before AonHPD->init" << endl;
@@ -944,4 +945,5 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 }
 
 
-}}
+}}}
+

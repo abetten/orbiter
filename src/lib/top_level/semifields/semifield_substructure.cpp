@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 
 
@@ -381,7 +382,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 
 	Fo_first = NEW_int(nb_orbits_at_level_3);
 
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->init(
 		SC->A, SC->AS,
 		nb_orbits_at_level_3 /* nb_primary_orbits_lower */,
@@ -577,7 +578,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		ring_theory::longinteger_object go;
 
 		Aut_gens = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
-		coset_reps = NEW_OBJECT(vector_ge);
+		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(SC->A, verbose_level - 2);
 
 
@@ -1616,6 +1617,6 @@ int semifield_substructure::find_semifield_in_table(
 
 
 
-}}
+}}}
 
 

@@ -14,9 +14,45 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
-void isomorph_read_statistic_files(
-		actions::action *A_base, actions::action *A,
-	poset_classification *gen,
+
+static void callback_compute_down_orbits_worker(
+		isomorph *Iso, void *data, int verbose_level);
+
+
+isomorph_global::isomorph_global()
+{
+	A_base = NULL;
+	A = NULL;
+	gen = NULL;
+}
+
+isomorph_global::~isomorph_global()
+{
+
+}
+
+void isomorph_global::init(actions::action *A_base,
+		actions::action *A,
+		poset_classification::poset_classification *gen,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph_global::init" << endl;
+	}
+	isomorph_global::A_base = A_base;
+	isomorph_global::A = A;
+	isomorph_global::gen = gen;
+
+
+	if (f_v) {
+		cout << "isomorph_global::init done" << endl;
+	}
+}
+
+
+void isomorph_global::read_statistic_files(
 	int size, std::string &prefix_classify,
 	std::string &prefix, int level,
 	std::string *fname, int nb_files,
@@ -27,7 +63,7 @@ void isomorph_read_statistic_files(
 	
 
 	if (f_v) {
-		cout << "isomorph_read_statistic_files" << endl;
+		cout << "isomorph_global::read_statistic_files" << endl;
 		cout << "nb_files = " << nb_files << endl;
 		cout << "prefix_classify = " << prefix_classify << endl;
 		cout << "prefix = " << prefix << endl;
@@ -47,7 +83,7 @@ void isomorph_read_statistic_files(
 			}
 
 		if (f_v) {
-			cout << "isomorph_read_statistic_files "
+			cout << "isomorph_global::read_statistic_files "
 					"before Iso.init" << endl;
 			}
 		Iso.init(prefix, A_base, A, gen, size, level,
@@ -58,7 +94,7 @@ void isomorph_read_statistic_files(
 
 
 		if (f_v) {
-			cout << "isomorph_read_statistic_files "
+			cout << "isomorph_global::read_statistic_files "
 					"before Iso.read_data_files_for_starter" << endl;
 			}
 		Iso.read_data_files_for_starter(level,
@@ -217,13 +253,12 @@ void isomorph_read_statistic_files(
 #endif
 
 	}
-	cout << "isomorph_read_statistic_files done" << endl;
+	cout << "isomorph_global::read_statistic_files done" << endl;
 
 	//discreta_exit();
 }
 
-void isomorph_build_db(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::build_db(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int verbose_level)
@@ -233,7 +268,7 @@ void isomorph_build_db(
 	int i;
 	
 	if (f_v) {
-		cout << "isomorph_build_db" << endl;
+		cout << "isomorph_global::build_db" << endl;
 		cout << "size = " << size << endl;
 		cout << "level = " << level << endl;
 		cout << "prefix_classify = " << prefix_classify << endl;
@@ -248,7 +283,7 @@ void isomorph_build_db(
 		int f_use_database_for_starter = TRUE;
 
 		if (f_v) {
-			cout << "isomorph_build_db before Iso.init" << endl;
+			cout << "isomorph_global::build_db before Iso.init" << endl;
 		}
 		Iso.init(prefix_iso, A_base, A, gen, size, level,
 			f_use_database_for_starter,
@@ -261,7 +296,7 @@ void isomorph_build_db(
 
 		for (i = 0; i <= level; i++) {
 			if (f_v) {
-				cout << "isomorph_build_db creating level database for "
+				cout << "isomorph_global::build_db creating level database for "
 						"level " << i << " / " << level << endl;
 			}
 			Iso.create_level_database(i, verbose_level);
@@ -269,14 +304,13 @@ void isomorph_build_db(
 
 	}
 	if (f_v) {
-		cout << "isomorph_build_db done" << endl;
+		cout << "isomorph_global::build_db done" << endl;
 		}
 
 	//discreta_exit();
 }
 
-void isomorph_read_solution_files(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::read_solution_files(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	std::string *fname, int nb_files,
@@ -291,7 +325,7 @@ void isomorph_read_solution_files(
 	
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files" << endl;
+		cout << "isomorph_global::read_solution_files" << endl;
 		cout << "nb_files = " << nb_files << endl;
 		cout << "prefix_classify = " << prefix_classify << endl;
 		cout << "prefix_iso = " << prefix_iso << endl;
@@ -310,7 +344,7 @@ void isomorph_read_solution_files(
 			}
 
 		if (f_v) {
-			cout << "isomorph_read_solution_files "
+			cout << "isomorph_global::read_solution_files "
 					"before Iso.init" << endl;
 			}
 		Iso.init(prefix_iso, A_base, A, gen, size, level,
@@ -320,7 +354,7 @@ void isomorph_read_solution_files(
 
 	
 		if (f_v) {
-			cout << "isomorph_read_solution_files "
+			cout << "isomorph_global::read_solution_files "
 					"before Iso.read_data_files_for_starter" << endl;
 			}
 		Iso.read_data_files_for_starter(level,
@@ -329,7 +363,7 @@ void isomorph_read_solution_files(
 	
 	
 		if (f_v) {
-			cout << "isomorph_read_solution_files "
+			cout << "isomorph_global::read_solution_files "
 					"before Iso.count_solutions" << endl;
 			}
 		int f_get_statistics = FALSE;
@@ -350,13 +384,12 @@ void isomorph_read_solution_files(
 		
 
 	}
-	cout << "isomorph_read_solution_files done" << endl;
+	cout << "isomorph_global::read_solution_files done" << endl;
 
 	//discreta_exit();
 }
 
-void isomorph_init_solutions_from_memory(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::init_solutions_from_memory(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int **Solutions, int *Nb_sol, int verbose_level)
@@ -365,7 +398,7 @@ void isomorph_init_solutions_from_memory(
 	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory" << endl;
+		cout << "isomorph_global::init_solutions_from_memory" << endl;
 		cout << "prefix_classify = " << prefix_classify << endl;
 		cout << "prefix_iso = " << prefix_iso << endl;
 		}
@@ -383,35 +416,35 @@ void isomorph_init_solutions_from_memory(
 			}
 
 		if (f_v) {
-			cout << "isomorph_init_solutions_from_memory "
+			cout << "isomorph_global::init_solutions_from_memory "
 					"before Iso.init" << endl;
 			}
 		Iso.init(prefix_iso, A_base, A, gen, size,
 			level, f_use_database_for_starter,
 			f_implicit_fusion, 0/*verbose_level - 2*/);
 		if (f_v) {
-			cout << "isomorph_init_solutions_from_memory "
+			cout << "isomorph_global::init_solutions_from_memory "
 					"after Iso.init" << endl;
 			}
 	
 
 	
 		if (f_v) {
-			cout << "isomorph_init_solutions_from_memory "
+			cout << "isomorph_global::init_solutions_from_memory "
 					"before Iso.read_data_files_for_starter" << endl;
 			}
 		Iso.read_data_files_for_starter(level,
 				prefix_classify, 0/*verbose_level - 4*/);
 	
 		if (f_v) {
-			cout << "isomorph_init_solutions_from_memory "
+			cout << "isomorph_global::init_solutions_from_memory "
 					"after Iso.read_data_files_for_starter" << endl;
 			}
 		
 	
 
 		if (f_v) {
-			cout << "isomorph_init_solutions_from_memory "
+			cout << "isomorph_global::init_solutions_from_memory "
 					"before Iso.init_solutions" << endl;
 			}
 		//int f_get_statistics = FALSE;
@@ -421,20 +454,19 @@ void isomorph_init_solutions_from_memory(
 				// from the clique finder
 
 		if (f_v) {
-			cout << "isomorph_init_solutions_from_memory "
+			cout << "isomorph_global::init_solutions_from_memory "
 					"after Iso.init_solutions" << endl;
 			}
 
 	}
 	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory done" << endl;
+		cout << "isomorph_global::init_solutions_from_memory done" << endl;
 		}
 
 	//discreta_exit();
 }
 
-void isomorph_read_solution_files_from_clique_finder_case_by_case(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::read_solution_files_from_clique_finder_case_by_case(
 	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
 	std::string *fname, long int *list_of_cases, int nb_files, int verbose_level)
 {
@@ -442,8 +474,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_"
-				"finder_case_by_case" << endl;
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case" << endl;
 		cout << "nb_files = " << nb_files << endl;
 		cout << "prefix_iso = " << prefix_iso << endl;
 		}
@@ -461,37 +492,32 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		}
 	
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_"
-				"finder_case_by_case before Iso.init" << endl;
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, A_base, A, gen, size, level,
 			f_use_database_for_starter,
 		f_implicit_fusion, 0/*verbose_level - 2*/);
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_"
-				"finder_case_by_case after Iso.init" << endl;
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case after Iso.init" << endl;
 		}
 	
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_"
-				"finder_case_by_case before Iso.read_data_files_"
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case before Iso.read_data_files_"
 				"for_starter" << endl;
 		}
 	Iso.read_data_files_for_starter(level, prefix_classify,
 			0/*verbose_level - 4*/);
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_"
-				"finder_case_by_case after Iso.read_data_files_"
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case after Iso.read_data_files_"
 				"for_starter" << endl;
 		}
 	
 
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder_"
-				"case_by_case before Iso.count_solutions_"
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case before Iso.count_solutions_"
 				"from_clique_finder" << endl;
 		}
 	//int f_get_statistics = FALSE;
@@ -505,31 +531,27 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 	//registry_dump_sorted_by_size();
 		
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder_"
-				"case_by_case before Iso.read_solutions_from_clique_"
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case before Iso.read_solutions_from_clique_"
 				"finder_case_by_case" << endl;
 		}
 	Iso.read_solutions_from_clique_finder_case_by_case(nb_files,
 			list_of_cases, fname, verbose_level - 1);
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder_"
-				"case_by_case after Iso.read_solutions_from_clique_"
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case after Iso.read_solutions_from_clique_"
 				"finder_case_by_case" << endl;
 		}
 	
 
 	}
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder_"
-				"case_by_case done" << endl;
+		cout << "isomorph_global::read_solution_files_from_clique_finder_case_by_case done" << endl;
 		}
 
 	//discreta_exit();
 }
 
-void isomorph_read_solution_files_from_clique_finder(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::read_solution_files_from_clique_finder(
 	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
 	std::string *fname, int nb_files, int verbose_level)
 {
@@ -537,8 +559,7 @@ void isomorph_read_solution_files_from_clique_finder(
 	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_"
-				"clique_finder" << endl;
+		cout << "isomorph_global::read_solution_files_from_clique_finder" << endl;
 		cout << "nb_files = " << nb_files << endl;
 		cout << "prefix_iso = " << prefix_iso << endl;
 		}
@@ -556,34 +577,34 @@ void isomorph_read_solution_files_from_clique_finder(
 		}
 	
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, A_base, A, gen,
 		size, level, f_use_database_for_starter,
 		f_implicit_fusion, 0/*verbose_level - 2*/);
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"after Iso.init" << endl;
 		}
 	
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"before Iso.read_data_files_for_starter" << endl;
 		}
 	Iso.read_data_files_for_starter(level, prefix_classify,
 			0/*verbose_level - 4*/);
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"after Iso.read_data_files_for_starter" << endl;
 		}
 	
 
 
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"before Iso.count_solutions_from_clique_finder" << endl;
 		}
 	//int f_get_statistics = FALSE;
@@ -596,28 +617,27 @@ void isomorph_read_solution_files_from_clique_finder(
 	//registry_dump_sorted_by_size();
 		
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"before Iso.read_solutions_from_clique_finder" << endl;
 		}
 	Iso.read_solutions_from_clique_finder(nb_files,
 			fname, verbose_level - 1);
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"after Iso.read_solutions_from_clique_finder" << endl;
 		}
 	
 
 	}
 	if (f_v) {
-		cout << "isomorph_read_solution_files_from_clique_finder "
+		cout << "isomorph_global::read_solution_files_from_clique_finder "
 				"done" << endl;
 		}
 
 	//discreta_exit();
 }
 
-void isomorph_compute_orbits(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::compute_orbits(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level, int verbose_level)
 {
@@ -625,7 +645,7 @@ void isomorph_compute_orbits(
 	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
-		cout << "isomorph_compute_orbits" << endl;
+		cout << "isomorph_global::compute_orbits" << endl;
 		}
 
 	
@@ -637,63 +657,62 @@ void isomorph_compute_orbits(
 
 	
 	if (f_v) {
-		cout << "isomorph_compute_orbits before Iso.init" << endl;
+		cout << "isomorph_global::compute_orbits before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, A_base, A, gen, size, level,
 		f_use_database_for_starter,
 		f_implicit_fusion, verbose_level);
 		// sets q, level and initializes file names
 	if (f_v) {
-		cout << "isomorph_compute_orbits after Iso.init" << endl;
+		cout << "isomorph_global::compute_orbits after Iso.init" << endl;
 		}
 
 	
 
 	if (f_v) {
-		cout << "isomorph_compute_orbits before Iso.read_data_files_for_starter" << endl;
+		cout << "isomorph_global::compute_orbits before Iso.read_data_files_for_starter" << endl;
 		}
 	Iso.read_data_files_for_starter(level,
 			prefix_classify, verbose_level);
 	if (f_v) {
-		cout << "isomorph_compute_orbits after Iso.read_data_files_for_starter" << endl;
+		cout << "isomorph_global::compute_orbits after Iso.read_data_files_for_starter" << endl;
 		}
 	
 	if (f_v) {
-		cout << "isomorph_compute_orbits before Iso.init_solution" << endl;
+		cout << "isomorph_global::compute_orbits before Iso.init_solution" << endl;
 		}
 	Iso.init_solution(verbose_level);
 	if (f_v) {
-		cout << "isomorph_compute_orbits after Iso.init_solution" << endl;
+		cout << "isomorph_global::compute_orbits after Iso.init_solution" << endl;
 		}
 	
 	if (f_v) {
-		cout << "isomorph_compute_orbits before Iso.orbits_of_stabilizer" << endl;
+		cout << "isomorph_global::compute_orbits before Iso.orbits_of_stabilizer" << endl;
 		}
 	Iso.orbits_of_stabilizer(verbose_level);
 	if (f_v) {
-		cout << "isomorph_compute_orbits after Iso.orbits_of_stabilizer" << endl;
+		cout << "isomorph_global::compute_orbits after Iso.orbits_of_stabilizer" << endl;
 		}
 
 	if (f_v) {
-		cout << "isomorph_compute_orbits before Iso.write_orbit_data" << endl;
+		cout << "isomorph_global::compute_orbits before Iso.write_orbit_data" << endl;
 		}
 	Iso.write_orbit_data(verbose_level);
 	if (f_v) {
-		cout << "isomorph_compute_orbits after Iso.write_orbit_data" << endl;
+		cout << "isomorph_global::compute_orbits after Iso.write_orbit_data" << endl;
 		}
 
 
 	
 
 	}
-	cout << "isomorph_compute_orbits done" << endl;
+	cout << "isomorph_global::compute_orbits done" << endl;
 
 	//discreta_exit();
 }
 
 
-void isomorph_testing(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::isomorph_testing(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int f_play_back, std::string &old_event_file,
@@ -709,7 +728,7 @@ void isomorph_testing(
 
 
 	if (f_v) {
-		cout << "isomorph_testing" << endl;
+		cout << "isomorph_global::isomorph_testing" << endl;
 		}
 
 	
@@ -722,7 +741,7 @@ void isomorph_testing(
 
 	
 	if (f_v) {
-		cout << "isomorph_testing before Iso.init" << endl;
+		cout << "isomorph_global::isomorph_testing before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, 
 		A_base, A, gen,
@@ -746,7 +765,7 @@ void isomorph_testing(
 	Iso.depth_completed = level /*- 2*/;
 
 	if (f_v) {
-		cout << "isomorph_testing before Iso.gen->recreate_schreier_"
+		cout << "isomorph_global::isomorph_testing before Iso.gen->recreate_schreier_"
 				"vectors_up_to_level" << endl;
 		}
 	Iso.gen->recreate_schreier_vectors_up_to_level(level - 1,
@@ -777,20 +796,20 @@ void isomorph_testing(
 
 
 	if (f_v) {
-		cout << "isomorph_testing before Iso.isomorph_testing" << endl;
+		cout << "isomorph_global::isomorph_testing before Iso.isomorph_testing" << endl;
 		}
 	Iso.isomorph_testing(t0, f_play_back, old_event_file,
 			f_implicit_fusion, print_mod, verbose_level);
 	if (f_v) {
-		cout << "isomorph_testing after Iso.isomorph_testing" << endl;
+		cout << "isomorph_global::isomorph_testing after Iso.isomorph_testing" << endl;
 		}
 	
 	if (f_v) {
-		cout << "isomorph_testing before Iso.Reps->save" << endl;
+		cout << "isomorph_global::isomorph_testing before Iso.Reps->save" << endl;
 		}
 	Iso.Reps->save(verbose_level - 1);
 	if (f_v) {
-		cout << "isomorph_testing after Iso.Reps->save" << endl;
+		cout << "isomorph_global::isomorph_testing after Iso.Reps->save" << endl;
 		}
 
 
@@ -855,13 +874,12 @@ void isomorph_testing(
 
 
 	}
-	cout << "isomorph_testing done" << endl;
+	cout << "isomorph_global::isomorph_testing done" << endl;
 
 	//discreta_exit();
 }
 
-void isomorph_classification_graph(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::classification_graph(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int verbose_level)
@@ -875,7 +893,7 @@ void isomorph_classification_graph(
 
 
 	if (f_v) {
-		cout << "isomorph_classification_graph" << endl;
+		cout << "isomorph_global::classification_graph" << endl;
 		}
 
 	
@@ -887,7 +905,7 @@ void isomorph_classification_graph(
 
 	
 	if (f_v) {
-		cout << "isomorph_classification_graph "
+		cout << "isomorph_global::classification_graph "
 				"before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, 
@@ -913,14 +931,13 @@ void isomorph_classification_graph(
 
 
 	}
-	cout << "isomorph_classification_graph done" << endl;
+	cout << "isomorph_global::classification_graph done" << endl;
 
 	//discreta_exit();
 }
 
 
-void isomorph_identify(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::identify(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int identify_nb_files, std::string *fname, int *Iso_type,
@@ -936,7 +953,7 @@ void isomorph_identify(
 
 
 	if (f_v) {
-		cout << "isomorph_identify" << endl;
+		cout << "isomorph_global::identify" << endl;
 		}
 	
 	
@@ -949,7 +966,7 @@ void isomorph_identify(
 
 	
 	if (f_v) {
-		cout << "isomorph_identify before Iso.init" << endl;
+		cout << "isomorph_global::identify before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, A_base, A, gen, 
 		size, level, 
@@ -969,7 +986,7 @@ void isomorph_identify(
 	
 		Fio.read_set_from_file(fname[i], the_set, set_size, verbose_level);
 		if (f_v) {
-			cout << "isomorph_identify read file " << fname[i] << endl;
+			cout << "isomorph_global::identify read file " << fname[i] << endl;
 			cout << "the_set = ";
 			Orbiter->Lint_vec->print(cout, the_set, set_size);
 			cout << endl;
@@ -1009,7 +1026,7 @@ void isomorph_identify(
 
 
 		if (f_v) {
-			cout << "isomorph_identify The set in " << fname[i]
+			cout << "isomorph_global::identify The set in " << fname[i]
 				<< " belongs to isomorphism type " << Iso_type[i] << endl;
 			}
 
@@ -1018,7 +1035,7 @@ void isomorph_identify(
 
 
 	if (f_v) {
-		cout << "isomorph_identify Summary:" << endl;
+		cout << "isomorph_global::identify Summary:" << endl;
 		for (i = 0; i < identify_nb_files; i++) {
 			cout << i << " : " << fname[i] << " : " << Iso_type[i] << endl;
 			}
@@ -1026,12 +1043,11 @@ void isomorph_identify(
 
 
 	}
-	cout << "isomorph_identify done" << endl;
+	cout << "isomorph_global::identify done" << endl;
 	//discreta_exit();
 }
 
-void isomorph_identify_table(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::identify_table(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
 	int nb_rows, long int *Table, int *Iso_type,
@@ -1047,7 +1063,7 @@ void isomorph_identify_table(
 
 
 	if (f_v) {
-		cout << "isomorph_identify_table" << endl;
+		cout << "isomorph_global::identify_table" << endl;
 		}
 	
 	
@@ -1059,7 +1075,7 @@ void isomorph_identify_table(
 
 	
 	if (f_v) {
-		cout << "isomorph_identify_table before Iso.init" << endl;
+		cout << "isomorph_global::identify_table before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, A_base, A, gen, 
 		size, level, 
@@ -1086,7 +1102,7 @@ void isomorph_identify_table(
 		Orbiter->Lint_vec->copy(Table + i * set_size, the_set, set_size);
 		
 		if (f_v) {
-			cout << "isomorph_identify_table "
+			cout << "isomorph_global::identify_table "
 					"Identifying set no " << i << endl;
 			cout << "the_set = ";
 			Orbiter->Lint_vec->print(cout, the_set, set_size);
@@ -1096,20 +1112,20 @@ void isomorph_identify_table(
 
 
 		if (f_v) {
-			cout << "isomorph_identify_table "
+			cout << "isomorph_global::identify_table "
 					"before Iso.identify" << endl;
 			}
 		Iso_type[i] = Iso.identify(the_set,
 				f_implicit_fusion, verbose_level - 2);
 		if (f_v) {
-			cout << "isomorph_identify_table "
+			cout << "isomorph_global::identify_table "
 					"after Iso.identify" << endl;
 			}
 	
 
 
 		if (f_v) {
-			cout << "isomorph_identify_table The set no " << i
+			cout << "isomorph_global::identify_table The set no " << i
 					<< " belongs to isomorphism type "
 					<< Iso_type[i] << endl;
 			}
@@ -1119,7 +1135,7 @@ void isomorph_identify_table(
 
 
 	if (f_v) {
-		cout << "isomorph_identify_table Summary:" << endl;
+		cout << "isomorph_global::identify_table Summary:" << endl;
 		for (i = 0; i < nb_rows; i++) {
 			cout << i << " : " << Iso_type[i] << endl;
 			}
@@ -1127,12 +1143,11 @@ void isomorph_identify_table(
 
 
 	}
-	cout << "isomorph_identify_table done" << endl;
+	cout << "isomorph_global::identify_table done" << endl;
 	//discreta_exit();
 }
 
-void isomorph_worker(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::worker(
 	int size, std::string &prefix_classify, std::string &prefix_iso,
 	void (*work_callback)(isomorph *Iso, void *data, int verbose_level), 
 	void *work_data, 
@@ -1141,9 +1156,9 @@ void isomorph_worker(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph_worker" << endl;
-		cout << "isomorph_worker size=" << size << endl;
-		cout << "isomorph_worker level=" << level << endl;
+		cout << "isomorph_global::worker" << endl;
+		cout << "isomorph_global::worker size=" << size << endl;
+		cout << "isomorph_global::worker level=" << level << endl;
 		}
 
 	
@@ -1155,7 +1170,7 @@ void isomorph_worker(
 	int f_implicit_fusion = FALSE;
 	
 	if (f_v) {
-		cout << "isomorph_worker before Iso.init" << endl;
+		cout << "isomorph_global::worker before Iso.init" << endl;
 		}
 	Iso.init(prefix_iso, 
 		A_base, A, gen,
@@ -1165,34 +1180,34 @@ void isomorph_worker(
 		verbose_level);
 		// sets level and initializes file names
 	if (f_v) {
-		cout << "isomorph_worker after Iso.init" << endl;
+		cout << "isomorph_global::worker after Iso.init" << endl;
 		}
 
 	if (f_v) {
-		cout << "isomorph_worker before Iso.read_everything_including_classification" << endl;
+		cout << "isomorph_global::worker before Iso.read_everything_including_classification" << endl;
 		}
 	Iso.read_everything_including_classification(
 			prefix_classify, verbose_level);
 	if (f_v) {
-		cout << "isomorph_worker after Iso.read_everything_including_classification" << endl;
+		cout << "isomorph_global::worker after Iso.read_everything_including_classification" << endl;
 		}
 
 
 	
 
 	if (f_v) {
-		cout << "isomorph_worker before Iso.setup_and_open_solution_database" << endl;
+		cout << "isomorph_global::worker before Iso.setup_and_open_solution_database" << endl;
 		}
 	Iso.setup_and_open_solution_database(verbose_level - 1);
 	if (f_v) {
-		cout << "isomorph_worker after Iso.setup_and_open_solution_database" << endl;
+		cout << "isomorph_global::worker after Iso.setup_and_open_solution_database" << endl;
 		}
 	if (f_v) {
-		cout << "isomorph_worker before Iso.setup_and_open_level_database" << endl;
+		cout << "isomorph_global::worker before Iso.setup_and_open_level_database" << endl;
 		}
 	Iso.setup_and_open_level_database(verbose_level - 1);
 	if (f_v) {
-		cout << "isomorph_worker after Iso.setup_and_open_level_database" << endl;
+		cout << "isomorph_global::worker after Iso.setup_and_open_level_database" << endl;
 		}
 
 #if 0
@@ -1204,11 +1219,11 @@ void isomorph_worker(
 
 
 	if (f_v) {
-		cout << "isomorph_worker before work_callback" << endl;
+		cout << "isomorph_global::worker before work_callback" << endl;
 		}
 	(*work_callback)(&Iso, work_data, verbose_level);
 	if (f_v) {
-		cout << "isomorph_worker after work_callback" << endl;
+		cout << "isomorph_global::worker after work_callback" << endl;
 		}
 
 
@@ -1220,130 +1235,33 @@ void isomorph_worker(
 	
 
 	}
-	cout << "isomorph_worker done" << endl;
+	cout << "isomorph_global::worker done" << endl;
 
 }
 
-void isomorph_compute_down_orbits(
-		actions::action *A_base, actions::action *A, poset_classification *gen,
+void isomorph_global::compute_down_orbits(
 	int size, std::string &prefix_classify, std::string &prefix,
-	void *data, 
 	int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph_compute_down_orbits "
+		cout << "isomorph_global::compute_down_orbits "
 				"level = " << level << endl;
 		cout << "isomorph_compute_down_orbits "
 				"verbose_level = " << verbose_level << endl;
 		}
-	isomorph_worker(A_base, A, gen, 
+	worker(
 		size, prefix_classify, prefix, 
-		isomorph_compute_down_orbits_worker, 
-		data, 
+		callback_compute_down_orbits_worker,
+		this,
 		level, verbose_level);
 	if (f_v) {
-		cout << "isomorph_compute_down_orbits done" << endl;
+		cout << "isomorph_global::compute_down_orbits done" << endl;
 		}
 }
 
-void isomorph_compute_down_orbits_worker(
-		isomorph *Iso, void *data, int verbose_level)
-// data is not needed
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int orbit;
-	int *Nb_orbits;
-	int nb_orbits = 0;
-	int nb_special_orbits = 0;
-	int **Down_orbit_identify;
-	int *Down_identify;
-	int h, i, idx;
-	file_io Fio;
-
-	if (f_v) {
-		cout << "isomorph_compute_down_orbits_worker" << endl;
-		}
-
-	//f_memory_debug = TRUE;
-	Nb_orbits = NEW_int(Iso->Reps->count * 2);
-	Down_orbit_identify = NEW_pint(Iso->Reps->count);
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
-
-		int cnt_orbits, cnt_special_orbits;
-		int *special_orbit_identify;
-
-		isomorph_compute_down_orbits_for_isomorphism_type(
-				Iso, orbit, cnt_orbits, cnt_special_orbits,
-				special_orbit_identify, verbose_level - 1);
-
-		if (f_vv) {
-			cout << "isomorph_compute_down_orbits_worker orbit "
-					<< orbit << " / " << Iso->Reps->count
-					<< " cnt_orbits=" << cnt_orbits
-					<< " cnt_special_orbits=" << cnt_special_orbits << endl;
-			}
-		Nb_orbits[orbit * 2 + 0] = cnt_orbits;
-		Nb_orbits[orbit * 2 + 1] = cnt_special_orbits;
-		Down_orbit_identify[orbit] = special_orbit_identify;
-		
-		nb_orbits += cnt_orbits;
-		nb_special_orbits += cnt_special_orbits;
-
-#if 0
-		if (orbit && ((orbit % 100) == 0)) {
-			registry_dump_sorted();
-			}
-#endif
-
-		}
-
-	{
-		string fname;
-
-		fname.assign("Nb_down_orbits.csv");
-		Fio.int_matrix_write_csv(fname, Nb_orbits, Iso->Reps->count, 2);
-	}
-	
-	if (f_v) {
-		cout << "isomorph_compute_down_orbits_worker" << endl;
-		cout << "nb_orbits=" << nb_orbits << endl;
-		cout << "nb_special_orbits=" << nb_special_orbits << endl;
-		}
-
-	Down_identify = NEW_int(nb_special_orbits * 3);
-	h = 0;
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
-		for (i = 0; i < Nb_orbits[orbit * 2 + 1]; i++) {
-			idx = Down_orbit_identify[orbit][i];
-			Down_identify[h * 3 + 0] = orbit;
-			Down_identify[h * 3 + 1] = i;
-			Down_identify[h * 3 + 2] = idx;
-			h++;
-			}
-		}
-	
-	{
-		string fname;
-
-		fname.assign("Down_identify.csv");
-		Fio.int_matrix_write_csv(fname, Down_identify, nb_special_orbits, 3);
-	}
-
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
-		FREE_int(Down_orbit_identify[orbit]);
-		}
-	FREE_pint(Down_orbit_identify);
-	FREE_int(Down_identify);
-	FREE_int(Nb_orbits);
-	if (f_v) {
-		cout << "isomorph_compute_down_orbits_worker done" << endl;
-		}
-}
-
-void isomorph_compute_down_orbits_for_isomorphism_type(
+void isomorph_global::compute_down_orbits_for_isomorphism_type(
 	isomorph *Iso, int orbit,
 	int &cnt_orbits, int &cnt_special_orbits,
 	int *&special_orbit_identify, int verbose_level)
@@ -1357,7 +1275,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	data_structures::sorting Sorting;
 
 	if (f_v) {
-		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
+		cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
 				"orbit=" << orbit << endl;
 		}
 
@@ -1378,7 +1296,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	Stab = Iso->Reps->stab[orbit];
 
 	if (f_vv) {
-		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
+		cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
 				"computing induced action on the set (in data)" << endl;
 		}
 
@@ -1418,14 +1336,14 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		int nb_orbits;
 
 		if (f_vv) {
-			cout << "isomorph_compute_down_orbits_for_isomorphism_type "
+			cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
 					"orbit=" << orbit << " / " << Iso->Reps->count
 					<< " computing orbits on subsets" << endl;
 			}
-		poset_classification_control *Control;
-		poset_with_group_action *Poset;
-		Control = NEW_OBJECT(poset_classification_control);
-		Poset = NEW_OBJECT(poset_with_group_action);
+		poset_classification::poset_classification_control *Control;
+		poset_classification::poset_with_group_action *Poset;
+		Control = NEW_OBJECT(poset_classification::poset_classification_control);
+		Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 		Poset->init_subset_lattice(
 				Iso->A_base, Iso->AA, Strong_gens,
 				verbose_level);
@@ -1434,7 +1352,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		FREE_OBJECT(Poset);
 		FREE_OBJECT(Control);
 		if (f_vv) {
-			cout << "isomorph_compute_down_orbits_for_isomorphism_type "
+			cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
 					"orbit=" << orbit << " / " << Iso->Reps->count
 					<< " computing orbits on subsets done" << endl;
 			}
@@ -1492,7 +1410,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 			// << f_failure_to_find_point << endl;
 			//cout << "case_nb=" << case_nb << endl;
 			if (f_failure_to_find_point) {
-				cout << "isomorph_compute_down_orbits_for_isomorphism_type "
+				cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
 						"f_failure_to_find_point" << endl;
 				exit(1);
 				}	
@@ -1508,8 +1426,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 			//cout << "f_found=" << f_found << endl;
 			if (!f_found) {
 				if (f_vv) {
-					cout << "isomorph_compute_down_orbits_for_"
-							"isomorphism_type not found" << endl;
+					cout << "isomorph_global::compute_down_orbits_for_isomorphism_type not found" << endl;
 					}
 				continue;
 				}
@@ -1547,14 +1464,14 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	FREE_OBJECT(Strong_gens);
 
 	if (f_v) {
-		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
+		cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
 				"done" << endl;
 		}
 }
 
-void isomorph_report_data_in_source_code_inside_tex(
+void isomorph_global::report_data_in_source_code_inside_tex(
 		isomorph &Iso, const char *prefix,
-		char *label_of_structure_plural, ostream &f,
+		char *label_of_structure_plural, std::ostream &f,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1565,14 +1482,14 @@ void isomorph_report_data_in_source_code_inside_tex(
 	int i;
 
 	if (f_v) {
-		cout << "isomorph_report_data_in_source_code" << endl;
+		cout << "isomorph_global::report_data_in_source_code_inside_tex" << endl;
 		}
 	selection_size = Iso.Reps->count;
 	selection = NEW_int(selection_size);
 	for (i = 0; i < selection_size; i++) {
 		selection[i] = i;
 		}
-	isomorph_report_data_in_source_code_inside_tex_with_selection(
+	report_data_in_source_code_inside_tex_with_selection(
 		Iso, prefix,
 		label_of_structure_plural, f, 
 		selection_size, selection, verbose_level);
@@ -1580,9 +1497,9 @@ void isomorph_report_data_in_source_code_inside_tex(
 }
 
 
-void isomorph_report_data_in_source_code_inside_tex_with_selection(
+void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		isomorph &Iso, const char *prefix,
-		char *label_of_structure_plural, ostream &fp,
+		char *label_of_structure_plural, std::ostream &fp,
 		int selection_size, int *selection,
 		int verbose_level)
 {
@@ -1593,7 +1510,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	long int data[1000];
 
 	if (f_v) {
-		cout << "isomorph_report_data_in_source_code" << endl;
+		cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection" << endl;
 		}
 
 	fp << "\\section{The " << label_of_structure_plural
@@ -1670,16 +1587,15 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	fp << "int " << prefix << "_stab_gens[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
-		vector_ge *gens;
+		data_structures_groups::vector_ge *gens;
 		int *tl;
 		int j;
 
-		gens = NEW_OBJECT(vector_ge);
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
 		tl = NEW_int(Iso.A_base->base_len());
 		
 		if (f_vv) {
-			cout << "isomorph_report_data_in_source_code_inside_"
-					"tex_with_selection before extract_strong_"
+			cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection before extract_strong_"
 					"generators_in_order" << endl;
 			}
 		Iso.Reps->stab[h]->extract_strong_generators_in_order(
@@ -1691,8 +1607,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 		
 		for (j = 0; j < gens->len; j++) {
 			if (f_vv) {
-				cout << "isomorph_report_data_in_source_code_inside_"
-						"tex_with_selection before extract_strong_"
+				cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection before extract_strong_"
 						"generators_in_order generator " << j
 						<< " / " << gens->len << endl;
 				}
@@ -1725,6 +1640,101 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 			<< Iso.A_base->make_element_size << ";" << endl;
 	}
 	fp << "\\end{verbatim}" << endl << endl;
+}
+
+static void callback_compute_down_orbits_worker(
+		isomorph *Iso, void *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int orbit;
+	int *Nb_orbits;
+	int nb_orbits = 0;
+	int nb_special_orbits = 0;
+	int **Down_orbit_identify;
+	int *Down_identify;
+	int h, i, idx;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "callback_compute_down_orbits_worker" << endl;
+		}
+	isomorph_global *IG = (isomorph_global *) data;
+
+	//f_memory_debug = TRUE;
+	Nb_orbits = NEW_int(Iso->Reps->count * 2);
+	Down_orbit_identify = NEW_pint(Iso->Reps->count);
+	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+
+		int cnt_orbits, cnt_special_orbits;
+		int *special_orbit_identify;
+
+		IG->compute_down_orbits_for_isomorphism_type(
+				Iso, orbit, cnt_orbits, cnt_special_orbits,
+				special_orbit_identify, verbose_level - 1);
+
+		if (f_vv) {
+			cout << "callback_compute_down_orbits_worker orbit "
+					<< orbit << " / " << Iso->Reps->count
+					<< " cnt_orbits=" << cnt_orbits
+					<< " cnt_special_orbits=" << cnt_special_orbits << endl;
+			}
+		Nb_orbits[orbit * 2 + 0] = cnt_orbits;
+		Nb_orbits[orbit * 2 + 1] = cnt_special_orbits;
+		Down_orbit_identify[orbit] = special_orbit_identify;
+
+		nb_orbits += cnt_orbits;
+		nb_special_orbits += cnt_special_orbits;
+
+#if 0
+		if (orbit && ((orbit % 100) == 0)) {
+			registry_dump_sorted();
+			}
+#endif
+
+		}
+
+	{
+		string fname;
+
+		fname.assign("Nb_down_orbits.csv");
+		Fio.int_matrix_write_csv(fname, Nb_orbits, Iso->Reps->count, 2);
+	}
+
+	if (f_v) {
+		cout << "callback_compute_down_orbits_worker" << endl;
+		cout << "nb_orbits=" << nb_orbits << endl;
+		cout << "nb_special_orbits=" << nb_special_orbits << endl;
+		}
+
+	Down_identify = NEW_int(nb_special_orbits * 3);
+	h = 0;
+	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+		for (i = 0; i < Nb_orbits[orbit * 2 + 1]; i++) {
+			idx = Down_orbit_identify[orbit][i];
+			Down_identify[h * 3 + 0] = orbit;
+			Down_identify[h * 3 + 1] = i;
+			Down_identify[h * 3 + 2] = idx;
+			h++;
+			}
+		}
+
+	{
+		string fname;
+
+		fname.assign("Down_identify.csv");
+		Fio.int_matrix_write_csv(fname, Down_identify, nb_special_orbits, 3);
+	}
+
+	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+		FREE_int(Down_orbit_identify[orbit]);
+		}
+	FREE_pint(Down_orbit_identify);
+	FREE_int(Down_identify);
+	FREE_int(Nb_orbits);
+	if (f_v) {
+		cout << "callback_compute_down_orbits_worker done" << endl;
+		}
 }
 
 

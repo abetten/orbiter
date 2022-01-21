@@ -317,7 +317,7 @@ void orbiter_top_level_session::add_symbol_table_entry(std::string &label,
 	Orbiter_session->add_symbol_table_entry(label, Symb, verbose_level);
 }
 
-any_group *orbiter_top_level_session::get_object_of_type_any_group(std::string &label)
+apps_algebra::any_group *orbiter_top_level_session::get_object_of_type_any_group(std::string &label)
 {
 	int idx;
 
@@ -330,10 +330,10 @@ any_group *orbiter_top_level_session::get_object_of_type_any_group(std::string &
 		cout << "orbiter_top_level_session::get_object_of_type_any_group object type != t_any_group" << endl;
 		exit(1);
 	}
-	return (any_group *) get_object(idx);
+	return (apps_algebra::any_group *) get_object(idx);
 }
 
-projective_space_with_action *orbiter_top_level_session::get_object_of_type_projective_space(std::string &label)
+projective_geometry::projective_space_with_action *orbiter_top_level_session::get_object_of_type_projective_space(std::string &label)
 {
 	int idx;
 
@@ -346,7 +346,7 @@ projective_space_with_action *orbiter_top_level_session::get_object_of_type_proj
 		cout << "orbiter_top_level_session::get_object_of_type_projective_space object type != t_projective_space" << endl;
 		exit(1);
 	}
-	return (projective_space_with_action *) get_object(idx);
+	return (projective_geometry::projective_space_with_action *) get_object(idx);
 }
 
 

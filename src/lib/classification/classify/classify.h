@@ -15,6 +15,7 @@
 
 namespace orbiter {
 namespace classification {
+namespace invariant_relations {
 
 
 
@@ -45,7 +46,7 @@ public:
 	void freeself();
 	void init(actions::action *A, actions::action *A2, int max_orbits, int representation_sz,
 			ring_theory::longinteger_object &go, int verbose_level);
-	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
+	data_structures_groups::set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp,
@@ -182,7 +183,7 @@ public:
 	void read_file(std::ifstream &fp, int verbose_level);
 };
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_CLASSIFICATION_CLASSIFY_CLASSIFY_H_ */

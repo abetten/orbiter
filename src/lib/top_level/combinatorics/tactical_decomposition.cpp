@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 tactical_decomposition::tactical_decomposition()
 {
@@ -200,4 +201,4 @@ void tactical_decomposition::report(int f_enter_math, ostream &ost)
 
 
 
-}}
+}}}

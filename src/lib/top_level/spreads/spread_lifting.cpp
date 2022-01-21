@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace spreads {
 
 
 spread_lifting::spread_lifting()
@@ -432,5 +433,5 @@ void spread_lifting::find_coloring(solvers::diophant *Dio,
 	}
 }
 
-}}
+}}}
 

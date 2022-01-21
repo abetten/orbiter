@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 combinatorics_global::combinatorics_global()
@@ -452,7 +453,7 @@ void combinatorics_global::Hill_cap56(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int epsilon, n, q, w, i;
-	polar *P;
+	apps_geometry::polar *P;
 	actions::action *A;
 	actions::action *An;
 	field_theory::finite_field *F;
@@ -468,7 +469,7 @@ void combinatorics_global::Hill_cap56(
 	q = 3;
 	w = Gg.Witt_index(epsilon, n - 1);
 
-	P = NEW_OBJECT(polar);
+	P = NEW_OBJECT(apps_geometry::polar);
 	A = NEW_OBJECT(actions::action);
 	An = NEW_OBJECT(actions::action);
 	F = NEW_OBJECT(field_theory::finite_field);
@@ -507,7 +508,7 @@ void combinatorics_global::Hill_cap56(
 		}
 
 
-	action_on_orthogonal *AO = A->G.AO;
+	induced_actions::action_on_orthogonal *AO = A->G.AO;
 	orthogonal *O;
 
 	O = AO->O;
@@ -515,7 +516,7 @@ void combinatorics_global::Hill_cap56(
 	if (f_v) {
 		cout << "after init_orthogonal" << endl;
 		}
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	An->init_projective_group(n, F, TRUE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1090,9 +1091,9 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 #endif
 
 
-		incidence_structure_with_group *IG;
+		data_structures_groups::incidence_structure_with_group *IG;
 
-		IG = NEW_OBJECT(incidence_structure_with_group);
+		IG = NEW_OBJECT(data_structures_groups::incidence_structure_with_group);
 		IG->init(Inc,
 				partition,
 				0/*verbose_level - 2*/);
@@ -1204,7 +1205,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 
 void combinatorics_global::process_object(
 		data_structures::classify_bitvectors *CB,
-	incidence_structure_with_group *IG,
+		data_structures_groups::incidence_structure_with_group *IG,
 	incidence_structure *&Inc_out,
 	int nb_objects_to_test,
 	int &f_found, int &idx,
@@ -1273,4 +1274,5 @@ void combinatorics_global::process_object(
 
 
 
-}}
+}}}
+

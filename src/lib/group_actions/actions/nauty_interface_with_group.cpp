@@ -1295,15 +1295,15 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		exit(1);
 	}
 
-	vector_ge *gens; // permutations from nauty
-	vector_ge *gens1; // matrices
+	data_structures_groups::vector_ge *gens; // permutations from nauty
+	data_structures_groups::vector_ge *gens1; // matrices
 	int g, frobenius, pos;
 	int *Mtx;
 	int *Elt1;
 
 	gens = A_perm->Strong_gens->gens;
 
-	gens1 = NEW_OBJECT(vector_ge);
+	gens1 = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens1->init(A_linear, verbose_level - 2);
 	gens1->allocate(gens->len, verbose_level - 2);
 	Elt1 = NEW_int(A_linear->elt_size_in_int);

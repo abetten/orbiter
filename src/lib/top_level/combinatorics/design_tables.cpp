@@ -14,6 +14,12 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
+
+
+static int design_tables_compare_func(void *data, int i, int j, void *extra_data);
+static void design_tables_swap_func(void *data, int i, int j, void *extra_data);
+
 
 
 design_tables::design_tables()
@@ -526,7 +532,7 @@ int design_tables::test_between_two_sets(
 // global functions:
 
 
-int design_tables_compare_func(void *data, int i, int j, void *extra_data)
+static int design_tables_compare_func(void *data, int i, int j, void *extra_data)
 {
 	design_tables *D = (design_tables *) extra_data;
 	int **Sets = (int **) data;
@@ -537,7 +543,7 @@ int design_tables_compare_func(void *data, int i, int j, void *extra_data)
 	return ret;
 }
 
-void design_tables_swap_func(void *data, int i, int j, void *extra_data)
+static void design_tables_swap_func(void *data, int i, int j, void *extra_data)
 {
 	//design_tables *D = (design_tables *) extra_data;
 	int **Sets = (int **) data;
@@ -551,4 +557,5 @@ void design_tables_swap_func(void *data, int i, int j, void *extra_data)
 
 
 
-}}
+}}}
+

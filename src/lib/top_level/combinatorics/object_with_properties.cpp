@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 object_with_properties::object_with_properties()
@@ -55,7 +56,8 @@ object_with_properties::~object_with_properties()
 
 void object_with_properties::init(object_with_canonical_form *OwCF,
 		data_structures::nauty_output *NO,
-		int f_projective_space, projective_space_with_action *PA,
+		int f_projective_space,
+		projective_geometry::projective_space_with_action *PA,
 		int max_TDO_depth,
 		std::string &label,
 		int verbose_level)
@@ -211,7 +213,7 @@ void object_with_properties::lift_generators_to_matrix_group(int verbose_level)
 void object_with_properties::init_object_in_projective_space(
 		object_with_canonical_form *OwCF,
 		data_structures::nauty_output *NO,
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		std::string &label,
 		int verbose_level)
 {
@@ -696,4 +698,4 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 }
 
 
-}}
+}}}

@@ -13,6 +13,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 
@@ -160,7 +161,7 @@ public:
 	int f_semilinear;
 
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	quartic_curve_domain_with_action *QCDA;
 
@@ -171,7 +172,7 @@ public:
 	int f_has_group;
 	groups::strong_generators *Sg;
 	int f_has_nice_gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 
@@ -182,12 +183,12 @@ public:
 	void freeself();
 	void init_with_data(
 			quartic_curve_create_description *Descr,
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			quartic_curve_domain_with_action *QCDA,
 			int verbose_level);
 	void init(
 			quartic_curve_create_description *Descr,
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			quartic_curve_domain_with_action *QCDA,
 			int verbose_level);
 	void create_quartic_curve_from_description(quartic_curve_domain_with_action *DomA, int verbose_level);
@@ -212,7 +213,8 @@ public:
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
-	void compute_group(projective_space_with_action *PA,
+	void compute_group(
+			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 
 };
@@ -231,7 +233,7 @@ class quartic_curve_domain_with_action {
 public:
 
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	int f_semilinear;
 
@@ -244,13 +246,13 @@ public:
 
 	int *Elt1;
 
-	action_on_homogeneous_polynomials *AonHPD_4_3;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD_4_3;
 
 
 	quartic_curve_domain_with_action();
 	~quartic_curve_domain_with_action();
 	void init(algebraic_geometry::quartic_curve_domain *Dom,
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 
 };
@@ -366,7 +368,7 @@ public:
 		// generators for the automorphism group
 
 	int f_has_nice_gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	groups::strong_generators *projectivity_group_gens;
 	groups::sylow_structure *Syl;
@@ -388,8 +390,7 @@ public:
 
 
 
-}}
-
+}}}
 
 
 

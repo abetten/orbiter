@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 
 poset_with_group_action::poset_with_group_action()
@@ -510,5 +511,6 @@ int callback_test_independence_condition(orbit_based_testing *Obt,
 
 }
 
-}}
+}}}
+
 

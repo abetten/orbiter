@@ -244,12 +244,13 @@ namespace orbiter {
 
 
 
-//! algebra, combinatorics and graph theory, geometry, data structures, solvers; no group theory
+//! algebra, combinatorics and graph theory, geometry, linear algebra, number theory, data structures, solvers, graphics; no group actions
 
 namespace foundations {
 
 
 
+//! catch-all class for algebraic algorithms, generators for certain classes of groups, conjugacy classes in the general linear group
 
 namespace algebra {
 
@@ -269,6 +270,33 @@ namespace algebra {
 }
 
 
+//! Cubic surfaces, quartic curves, Schlaefli labelings, Del Pezzo surfaces, Clebsch maps
+
+namespace algebraic_geometry {
+
+	// surfaces:
+	class arc_lifting_with_two_lines;
+	class clebsch_map;
+	class cubic_curve;
+	class del_pezzo_surface_of_degree_two_domain;
+	class del_pezzo_surface_of_degree_two_object;
+	class eckardt_point_info;
+	class eckardt_point;
+	class quartic_curve_domain;
+	class quartic_curve_object_properties;
+	class quartic_curve_object;
+	class schlaefli_labels;
+	class schlaefli;
+	class seventytwo_cases;
+	class surface_domain;
+	class surface_object_properties;
+	class surface_object;
+	class web_of_cubic_curves;
+
+}
+
+//! Coding theory, MacWilliams, weight enumerators, cyclic codes etc.
+
 namespace coding_theory {
 
 	// coding_theory:
@@ -276,6 +304,8 @@ namespace coding_theory {
 	class create_BCH_code;
 
 }
+
+//! Basic classes related to the field of combinatorics
 
 namespace combinatorics {
 
@@ -298,6 +328,9 @@ namespace combinatorics {
 
 }
 
+
+//! A basic class for everything related to cryptography
+
 namespace cryptography {
 
 	// cryptography
@@ -305,6 +338,7 @@ namespace cryptography {
 
 }
 
+//! Basic data structures used throughout the project
 
 namespace data_structures {
 
@@ -348,6 +382,8 @@ class syntax_tree_node;
 class syntax_tree;
 
 
+//! finite fields, n-th roots, subfields, trace and norm.
+
 namespace field_theory {
 
 	// finite_fields:
@@ -369,7 +405,6 @@ class andre_construction;
 class arc_basic;
 class arc_in_projective_space;
 class buekenhout_metz;
-class cubic_curve;
 class decomposition;
 class desarguesian_spread;
 class elliptic_curve;
@@ -393,6 +428,8 @@ class projective_space;
 class spread_tables;
 class W3q;
 
+
+//! exhaustive construction and classification of configurations, linear spaces, and designs
 
 namespace geometry_builder {
 
@@ -424,6 +461,8 @@ class orbiter_symbol_table;
 class polynomial_double_domain;
 class polynomial_double;
 
+
+//! graph theory: constructions, clique finding, drawing
 
 namespace graph_theory {
 
@@ -463,6 +502,9 @@ class tree_draw_options;
 class tree;
 class tree_node;
 class video_draw_options;
+// pointer types
+typedef tree_node *ptree_node;
+
 
 // io_and_os:
 class create_file_description;
@@ -482,6 +524,8 @@ class prepare_frames;
 class knowledge_base;
 
 
+//! Basic functions for linear algebra.
+
 namespace linear_algebra {
 
 	// linear_algebra:
@@ -489,6 +533,8 @@ namespace linear_algebra {
 	class representation_theory_domain;
 
 }
+
+//! Basic functions for number theory.
 
 namespace number_theory {
 
@@ -506,6 +552,8 @@ class orthogonal_indexing;
 class orthogonal;
 class unusual_model;
 
+//! Basic classes and functions for ring theory, including polynomial rings and longinteger arithmetic.
+
 namespace ring_theory {
 	// ring_theory:
 	class finite_ring;
@@ -521,6 +569,8 @@ namespace ring_theory {
 	typedef void *unipoly_object;
 
 }
+
+//! Solvers of diophantine systems of equations: Possolve and Dancing Links.
 
 namespace solvers {
 	// solvers
@@ -539,30 +589,6 @@ namespace solvers {
 class tally_vector_data;
 class tally;
 
-namespace algebraic_geometry {
-
-	// surfaces:
-	class arc_lifting_with_two_lines;
-	class clebsch_map;
-	class del_pezzo_surface_of_degree_two_domain;
-	class del_pezzo_surface_of_degree_two_object;
-	class eckardt_point_info;
-	class eckardt_point;
-	class quartic_curve_domain;
-	class quartic_curve_object_properties;
-	class quartic_curve_object;
-	class schlaefli_labels;
-	class schlaefli;
-	class seventytwo_cases;
-	class surface_domain;
-	class surface_object_properties;
-	class surface_object;
-	class web_of_cubic_curves;
-
-}
-
-// pointer types
-typedef tree_node *ptree_node;
 
 
 
@@ -759,28 +785,28 @@ enum data_input_stream_type {
 }}
 
 
-#include "./algebra/algebra.h"
-#include "./coding_theory/coding_theory.h"
-#include "./combinatorics/combinatorics.h"
-#include "./cryptography/cryptography.h"
-#include "./data_structures/data_structures.h"
-#include "./expression_parser/expression_parser.h"
-#include "./finite_fields/finite_fields.h"
-#include "./geometry/geometry.h"
-#include "./geometry_builder/geometry_builder.h"
-#include "./globals/globals.h"
-#include "./graph_theory/graph_theory.h"
-#include "./graph_theory_nauty/graph_theory_nauty.h"
-#include "./graphics/graphics.h"
-#include "./io_and_os/io_and_os.h"
-#include "./knowledge_base/knowledge_base.h"
-#include "./linear_algebra/linear_algebra.h"
-#include "./number_theory/number_theory.h"
-#include "./orthogonal/orthogonal.h"
-#include "./ring_theory/ring_theory.h"
-#include "./solvers/solvers.h"
-#include "./statistics/statistics.h"
-#include "./surfaces/surfaces.h"
+#include "algebra/algebra.h"
+#include "algebraic_geometry/algebraic_geometry.h"
+#include "coding_theory/coding_theory.h"
+#include "combinatorics/combinatorics.h"
+#include "cryptography/cryptography.h"
+#include "data_structures/data_structures.h"
+#include "expression_parser/expression_parser.h"
+#include "finite_fields/finite_fields.h"
+#include "geometry/geometry.h"
+#include "geometry_builder/geometry_builder.h"
+#include "globals/globals.h"
+#include "graph_theory/graph_theory.h"
+#include "graph_theory_nauty/graph_theory_nauty.h"
+#include "graphics/graphics.h"
+#include "io_and_os/io_and_os.h"
+#include "knowledge_base/knowledge_base.h"
+#include "linear_algebra/linear_algebra.h"
+#include "number_theory/number_theory.h"
+#include "orthogonal/orthogonal.h"
+#include "ring_theory/ring_theory.h"
+#include "solvers/solvers.h"
+#include "statistics/statistics.h"
 
 
 // Eigen_interface:

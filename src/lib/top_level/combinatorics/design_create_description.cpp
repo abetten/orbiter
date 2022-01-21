@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 design_create_description::design_create_description()
@@ -159,7 +160,7 @@ void design_create_description::print()
 }
 
 
-}}
+}}}
 
 
 

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 large_set_was_description::large_set_was_description()
@@ -125,4 +126,4 @@ void large_set_was_description::print()
 
 
 
-}}
+}}}

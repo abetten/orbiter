@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
 
 void poset_orbit_node::compute_flag_orbits(
 	poset_classification *gen,
@@ -926,7 +927,7 @@ void poset_orbit_node::find_extensions(poset_classification *gen,
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int f_vvv = FALSE; //(verbose_level >= 3);
 	int h, k, fst, /*len,*/ rep;
-	action_by_restriction *ABR = NULL;
+	induced_actions::action_by_restriction *ABR = NULL;
 
 	if (f_using_invariant_subset) {
 		ABR = AR->G.ABR;
@@ -1345,7 +1346,7 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 	int f_vvv = (verbose_level >= 3);
 	int k, u = 0, L;
 	int fst, len, rep;
-	action_by_restriction *ABR = NULL;
+	induced_actions::action_by_restriction *ABR = NULL;
 
 	if (f_using_invariant_subset) {
 		ABR = AR->G.ABR;
@@ -1428,7 +1429,7 @@ void poset_orbit_node::check_orbits(
 	//int f_vvv = (verbose_level >= 3);
 	int k, j, u = 0, L;
 	int fst, len, rep, f_accept;
-	action_by_restriction *ABR = NULL;
+	induced_actions::action_by_restriction *ABR = NULL;
 
 	ABR = AR->G.ABR;
 	
@@ -1588,7 +1589,7 @@ void poset_orbit_node::relabel_schreier_vector(
 {
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
-	action_by_restriction *ABR;
+	induced_actions::action_by_restriction *ABR;
 	int n, i;
 	int *pts;
 	int *prev;
@@ -1642,7 +1643,7 @@ void poset_orbit_node::downstep_orbits_print(
 	gen->print_level_info(lvl, node);
 	cout << "The " << Schreier->nb_orbits << " orbits are:" << endl;
 	int h, rep;
-	action_by_restriction *ABR = NULL;
+	induced_actions::action_by_restriction *ABR = NULL;
 	
 	cout << "h : orbit_len[h] : points[rep[h]] : "
 			"orbit (if size is less than "
@@ -1694,6 +1695,6 @@ void poset_orbit_node::downstep_orbits_print(
 
 
 
-}}
+}}}
 
 

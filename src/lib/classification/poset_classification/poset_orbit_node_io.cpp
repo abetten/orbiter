@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace classification {
+namespace poset_classification {
+
 
 void poset_orbit_node::read_memory_object(
 		poset_classification *PC,
@@ -733,7 +735,8 @@ void poset_orbit_node::draw_schreier_forest(
 	}
 }
 
-}}
+}}}
+
 
 
 

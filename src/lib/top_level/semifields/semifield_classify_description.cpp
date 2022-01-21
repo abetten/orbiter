@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 
 
@@ -144,4 +145,4 @@ int semifield_classify_description::read_arguments(
 }
 
 
-}}
+}}}

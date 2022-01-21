@@ -16,6 +16,27 @@ MODULES= \
 		foundations/algebra/null_polarity_generator.o \
 		foundations/algebra/rank_checker.o \
 		foundations/algebra/vector_space.o \
+		foundations/algebraic_geometry/arc_lifting_with_two_lines.o \
+		foundations/algebraic_geometry/clebsch_map.o \
+		foundations/algebraic_geometry/cubic_curve.o \
+		foundations/algebraic_geometry/del_pezzo_surface_of_degree_two_domain.o \
+		foundations/algebraic_geometry/del_pezzo_surface_of_degree_two_object.o \
+		foundations/algebraic_geometry/eckardt_point_info.o \
+		foundations/algebraic_geometry/eckardt_point.o \
+		foundations/algebraic_geometry/quartic_curve_domain.o \
+		foundations/algebraic_geometry/quartic_curve_object_properties.o \
+		foundations/algebraic_geometry/quartic_curve_object.o \
+		foundations/algebraic_geometry/schlaefli_labels.o \
+		foundations/algebraic_geometry/schlaefli.o \
+		foundations/algebraic_geometry/seventytwo_cases.o \
+		foundations/algebraic_geometry/surface_domain_families.o \
+		foundations/algebraic_geometry/surface_domain_io.o \
+		foundations/algebraic_geometry/surface_domain_lines.o \
+		foundations/algebraic_geometry/surface_domain.o \
+		foundations/algebraic_geometry/surface_domain2.o \
+		foundations/algebraic_geometry/surface_object_properties.o \
+		foundations/algebraic_geometry/surface_object.o \
+		foundations/algebraic_geometry/web_of_cubic_curves.o \
 		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/create_BCH_code.o \
 		foundations/coding_theory/cyclic_codes.o \
@@ -89,7 +110,6 @@ MODULES= \
 		foundations/geometry/arc_basic.o \
 		foundations/geometry/arc_in_projective_space.o \
 		foundations/geometry/buekenhout_metz.o \
-		foundations/geometry/cubic_curve.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \
 		foundations/geometry/elliptic_curve.o \
@@ -224,26 +244,6 @@ MODULES= \
 		foundations/solvers/mckay.o \
 		foundations/statistics/tally_vector_data.o \
 		foundations/statistics/tally.o \
-		foundations/surfaces/arc_lifting_with_two_lines.o \
-		foundations/surfaces/clebsch_map.o \
-		foundations/surfaces/del_pezzo_surface_of_degree_two_domain.o \
-		foundations/surfaces/del_pezzo_surface_of_degree_two_object.o \
-		foundations/surfaces/eckardt_point_info.o \
-		foundations/surfaces/eckardt_point.o \
-		foundations/surfaces/quartic_curve_domain.o \
-		foundations/surfaces/quartic_curve_object_properties.o \
-		foundations/surfaces/quartic_curve_object.o \
-		foundations/surfaces/schlaefli_labels.o \
-		foundations/surfaces/schlaefli.o \
-		foundations/surfaces/seventytwo_cases.o \
-		foundations/surfaces/surface_domain_families.o \
-		foundations/surfaces/surface_domain_io.o \
-		foundations/surfaces/surface_domain_lines.o \
-		foundations/surfaces/surface_domain.o \
-		foundations/surfaces/surface_domain2.o \
-		foundations/surfaces/surface_object_properties.o \
-		foundations/surfaces/surface_object.o \
-		foundations/surfaces/web_of_cubic_curves.o \
 		foundations/BitSet/bitset.o	\
 		group_actions/actions/action.o \
 		group_actions/actions/action_cb.o \

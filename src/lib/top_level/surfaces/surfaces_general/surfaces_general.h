@@ -12,6 +12,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 
@@ -133,7 +134,7 @@ public:
 	int f_has_group;
 	groups::strong_generators *Sg;
 	int f_has_nice_gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 
 
@@ -200,7 +201,8 @@ public:
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
-	void compute_group(projective_space_with_action *PA,
+	void compute_group(
+			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 
 };
@@ -330,12 +332,12 @@ public:
 	~surface_domain_high_level();
 
 	void do_sweep_4(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
 	void do_sweep_4_27(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
@@ -347,42 +349,42 @@ public:
 			int verbose_level);
 #endif
 	void classify_surfaces_with_double_sixes(
-			projective_space_with_action *PA,
-			poset_classification_control *Control,
+			projective_geometry::projective_space_with_action *PA,
+			poset_classification::poset_classification_control *Control,
 			surface_classify_wedge *&SCW,
 			int verbose_level);
 	void prepare_surface_classify_wedge(
 			field_theory::finite_field *F,
-			projective_space_with_action *PA,
-			poset_classification_control *Control,
+			projective_geometry::projective_space_with_action *PA,
+			poset_classification::poset_classification_control *Control,
 			algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 			surface_classify_wedge *&SCW,
 			int verbose_level);
 	void do_study_surface(field_theory::finite_field *F, int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
-			projective_space_with_action *PA,
-			poset_classification_control *Control_six_arcs,
+			projective_geometry::projective_space_with_action *PA,
+			poset_classification::poset_classification_control *Control_six_arcs,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
-			projective_space_with_action *PA,
-			poset_classification_control *Control1,
-			poset_classification_control *Control2,
-			poset_classification_control *Control_six_arcs,
+			projective_geometry::projective_space_with_action *PA,
+			poset_classification::poset_classification_control *Control1,
+			poset_classification::poset_classification_control *Control2,
+			poset_classification::poset_classification_control *Control_six_arcs,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void do_six_arcs(
-			projective_space_with_action *PA,
-			poset_classification_control *Control_six_arcs,
+			projective_geometry::projective_space_with_action *PA,
+			poset_classification::poset_classification_control *Control_six_arcs,
 			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
 			int verbose_level);
 	void do_cubic_surface_properties(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			std::string &fname_csv, int defining_q,
 			int column_offset,
 			int verbose_level);
 	void do_cubic_surface_properties_analyze(
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			std::string &fname_csv, int defining_q,
 			int verbose_level);
 	void report_singular_surfaces(std::ostream &ost,
@@ -427,7 +429,7 @@ public:
 		// generators for the automorphism group
 
 	int f_has_nice_gens;
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	groups::strong_generators *projectivity_group_gens;
 	groups::sylow_structure *Syl;
@@ -465,12 +467,14 @@ public:
 		long int *Lines, int nb_lines, int *eqn,
 		groups::strong_generators *Aut_gens,
 		int f_find_double_six_and_rearrange_lines,
-		int f_has_nice_gens, vector_ge *nice_gens,
+		int f_has_nice_gens,
+		data_structures_groups::vector_ge *nice_gens,
 		int verbose_level);
 	void init_with_surface_object(surface_with_action *Surf_A,
 			algebraic_geometry::surface_object *SO,
 			groups::strong_generators *Aut_gens,
-			int f_has_nice_gens, vector_ge *nice_gens,
+			int f_has_nice_gens,
+			data_structures_groups::vector_ge *nice_gens,
 			int verbose_level);
 	void init_surface_object(surface_with_action *Surf_A,
 			algebraic_geometry::surface_object *SO,
@@ -564,7 +568,7 @@ public:
 
 	int f_semilinear;
 
-	set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS;
 
 
 	// line orbits:
@@ -599,13 +603,6 @@ public:
 };
 
 
-void move_point_set(actions::action *A2,
-	set_and_stabilizer *Universe, long int *Pts, int nb_pts,
-	int *Elt, set_and_stabilizer *&new_stab,
-	int verbose_level);
-void matrix_entry_print(long int *p,
-		int m, int n, int i, int j, int val,
-		std::string &output, void *data);
 
 
 
@@ -622,7 +619,7 @@ class surface_with_action {
 public:
 
 
-	projective_space_with_action *PA;
+	projective_geometry::projective_space_with_action *PA;
 
 	int f_semilinear;
 
@@ -638,12 +635,12 @@ public:
 
 	int *Elt1;
 
-	action_on_homogeneous_polynomials *AonHPD_3_4;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD_3_4;
 
 
 	classify_trihedral_pairs *Classify_trihedral_pairs;
 
-	recoordinatize *Recoordinatize;
+	spreads::recoordinatize *Recoordinatize;
 	long int *regulus; // [regulus_size]
 	int regulus_size; // q + 1
 
@@ -653,7 +650,7 @@ public:
 	void null();
 	void freeself();
 	void init(algebraic_geometry::surface_domain *Surf,
-			projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);
 	long int apply_null_polarity(
@@ -688,14 +685,16 @@ public:
 			int verbose_level);
 	void create_surface_and_do_report(
 			surface_create_description *Surface_Descr,
-			int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
+			int f_has_control_six_arcs,
+			poset_classification::poset_classification_control *Control_six_arcs,
 			int verbose_level);
 	void test_group(
 			surface_create *SC,
 			int verbose_level);
 	void report_with_group(
 			surface_create *SC,
-			int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
+			int f_has_control_six_arcs,
+			poset_classification::poset_classification_control *Control_six_arcs,
 			int verbose_level);
 	void create_surface_object_with_action(
 			surface_create *SC,
@@ -731,7 +730,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 

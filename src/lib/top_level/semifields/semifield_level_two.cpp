@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace semifields {
 
 
 
@@ -1067,13 +1068,13 @@ void semifield_level_two::upstep(int verbose_level)
 					<< " automorphisms" << endl;
 		}
 
-		vector_ge *coset_reps;
+		data_structures_groups::vector_ge *coset_reps;
 
 		if (f_vv) {
 			cout << "semifield_level_two::upstep After tracing, "
 					"creating coset reps" << endl;
 		}
-		coset_reps = NEW_OBJECT(vector_ge);
+		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(A, verbose_level - 2);
 		coset_reps->allocate(nb_aut_gens + 1, verbose_level - 2);
 		A->element_one(coset_reps->ith(0), 0);
@@ -2475,5 +2476,5 @@ void semifield_level_two::read_level_info_file(int verbose_level)
 
 
 
-}}
+}}}
 

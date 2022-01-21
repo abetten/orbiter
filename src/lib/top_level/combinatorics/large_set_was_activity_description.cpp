@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_combinatorics {
 
 
 large_set_was_activity_description::large_set_was_activity_description()
@@ -59,7 +60,7 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 
 			cout << "-normalizer_on_orbits_of_a_given_length reading poset_classification_control options" << endl;
 
-			normalizer_on_orbits_of_a_given_length_control = NEW_OBJECT(poset_classification_control);
+			normalizer_on_orbits_of_a_given_length_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += normalizer_on_orbits_of_a_given_length_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -139,7 +140,7 @@ void large_set_was_activity_description::print()
 
 
 
-}}
+}}}
 
 
 

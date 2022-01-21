@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace induced_actions {
+
 
 action_on_homogeneous_polynomials::action_on_homogeneous_polynomials()
 {
@@ -289,5 +291,6 @@ void action_on_homogeneous_polynomials::compute_representation(
 }
 
 
-}}
+}}}
+
 

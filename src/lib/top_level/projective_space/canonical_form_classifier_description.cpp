@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace projective_geometry {
 
 
 
@@ -47,4 +48,5 @@ canonical_form_classifier_description::~canonical_form_classifier_description()
 }
 
 
-}}
+}}}
+

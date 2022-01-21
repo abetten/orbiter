@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
+
 
 arc_orbits_on_pairs::arc_orbits_on_pairs()
 {
@@ -116,11 +118,11 @@ void arc_orbits_on_pairs::init(
 				"creating poset" << endl;
 		}
 
-	Control = NEW_OBJECT(poset_classification_control);
+	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Control->f_depth = TRUE;
 	Control->depth = 2;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A_on_arc,
 			The_arc->Strong_gens,
 			verbose_level);
@@ -130,7 +132,7 @@ void arc_orbits_on_pairs::init(
 	Poset->print_function_data = (void *) this;
 
 
-	Orbits_on_pairs = NEW_OBJECT(poset_classification);
+	Orbits_on_pairs = NEW_OBJECT(poset_classification::poset_classification);
 	Orbits_on_pairs->initialize_and_allocate_root_node(Control, Poset,
 		2 /* sz */, verbose_level);
 
@@ -258,5 +260,6 @@ void arc_orbits_on_pairs::recognize(long int *pair, int *transporter,
 
 
 
-}}
+}}}
+
 

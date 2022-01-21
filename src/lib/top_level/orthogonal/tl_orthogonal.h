@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace top_level {
+namespace orthogonal_geometry {
 
 
 
@@ -41,9 +42,9 @@ public:
 
 	int q;
 
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *gen;
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *gen;
 	int degree;
 
 
@@ -59,7 +60,7 @@ public:
 			int starter_size,
 			int verbose_level);
 	void compute_starter(
-			poset_classification_control *Control,
+			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void create_graphs(
 		int orbit_at_level_r, int orbit_at_level_m,
@@ -86,23 +87,13 @@ public:
 		int &f_ruled_out,
 		int verbose_level);
 	void report_from_iso(isomorph &Iso, int verbose_level);
-	void report(orbit_transversal *T, int verbose_level);
+	void report(data_structures_groups::orbit_transversal *T,
+			int verbose_level);
 	void report2(std::ostream &ost,
-			orbit_transversal *T, int verbose_level);
+			data_structures_groups::orbit_transversal *T,
+			int verbose_level);
 };
 
-// global functions:
-void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data);
-void blt_set_classify_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
-void blt_set_classify_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level);
 
 
 // #############################################################################
@@ -249,7 +240,7 @@ public:
 
 	int f_BLT_set_starter;
 	int BLT_set_starter_size;
-	poset_classification_control *BLT_set_starter_control;
+	poset_classification::poset_classification_control *BLT_set_starter_control;
 
 	int f_BLT_set_graphs;
 	int BLT_set_graphs_starter_size;
@@ -376,7 +367,7 @@ public:
 	int f_semilinear;
 
 	actions::action *A;
-	action_on_orthogonal *AO;
+	induced_actions::action_on_orthogonal *AO;
 
 
 	orthogonal_space_with_action();
@@ -397,7 +388,7 @@ public:
 
 
 
-}}
+}}}
 
 
 

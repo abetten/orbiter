@@ -1040,7 +1040,7 @@ void sims::build_up_group_random_process(sims *K,
 }
 
 void sims::build_up_group_from_generators(sims *K,
-	vector_ge *gens,
+		data_structures_groups::vector_ge *gens,
 	int f_target_go, ring_theory::longinteger_object *target_go,
 	int f_override_choose_next_base_point,
 	int (*choose_next_base_point_method)(actions::action *A,
@@ -1056,7 +1056,7 @@ void sims::build_up_group_from_generators(sims *K,
 	int level, base_point, b, old_base_len;
 	actions::action *GA;
 	actions::action *KA;
-	vector_ge subset_of_gens;
+	data_structures_groups::vector_ge subset_of_gens;
 
 	GA = A;
 	KA = K->A;

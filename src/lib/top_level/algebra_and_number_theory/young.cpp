@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_algebra {
+
 
 young::young()
 {
@@ -728,8 +730,8 @@ void young::compute_generators(int &go1, int &go2, int verbose_level)
 		cout << "nb_gens2 = " << nb_gens2 << endl;
 		}
 
-	gens1 = NEW_OBJECT(vector_ge);
-	gens2 = NEW_OBJECT(vector_ge);
+	gens1 = NEW_OBJECT(data_structures_groups::vector_ge);
+	gens2 = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	int u, s, t;
 
@@ -1026,8 +1028,7 @@ void young::group_ring_element_mult(actions::action *A,
 }
 
 
+}}}
 
-
-}}
 
 

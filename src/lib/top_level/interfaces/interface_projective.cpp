@@ -193,7 +193,7 @@ void interface_projective::read_arguments(int argc,
 		if (f_v) {
 			cout << "-create_spread" << endl;
 		}
-		Spread_create_description = NEW_OBJECT(spread_create_description);
+		Spread_create_description = NEW_OBJECT(spreads::spread_create_description);
 		i += Spread_create_description->read_arguments(
 				argc - (i - 1),
 				argv + i + 1, verbose_level);
@@ -360,7 +360,7 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_create_surface_reports) {
 
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_create_surface_reports(create_surface_reports_field_orders_text, verbose_level);
 
@@ -368,7 +368,7 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_create_surface_atlas) {
 
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_create_surface_atlas(create_surface_atlas_q_max, verbose_level);
 
@@ -376,7 +376,7 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_create_dickson_atlas) {
 
-		surface_domain_high_level SH;
+		applications_in_algebraic_geometry::surface_domain_high_level SH;
 
 		SH.do_create_dickson_atlas(verbose_level);
 
@@ -394,7 +394,7 @@ void interface_projective::worker(int verbose_level)
 
 
 
-void interface_projective::do_create_spread(spread_create_description *Descr, int verbose_level)
+void interface_projective::do_create_spread(spreads::spread_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -403,9 +403,9 @@ void interface_projective::do_create_spread(spread_create_description *Descr, in
 	}
 
 
-	spread_create *SC;
+	spreads::spread_create *SC;
 
-	SC = NEW_OBJECT(spread_create);
+	SC = NEW_OBJECT(spreads::spread_create);
 
 	if (f_v) {
 		cout << "before SC->init" << endl;

@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace group_actions {
+namespace data_structures_groups {
 
 
 schreier_vector::schreier_vector()
@@ -282,7 +283,7 @@ int schreier_vector::determine_depth_recursion(
 
 
 void schreier_vector::relabel_points(
-	action_on_factor_space *AF,
+		induced_actions::action_on_factor_space *AF,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1254,5 +1255,5 @@ void schreier_vector::print()
 
 
 
-}}
+}}}
 

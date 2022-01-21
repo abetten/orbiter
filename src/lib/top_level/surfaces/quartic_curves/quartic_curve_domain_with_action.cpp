@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace applications_in_algebraic_geometry {
 
 
 
@@ -35,7 +36,7 @@ quartic_curve_domain_with_action::~quartic_curve_domain_with_action()
 }
 
 void quartic_curve_domain_with_action::init(algebraic_geometry::quartic_curve_domain *Dom,
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -70,7 +71,7 @@ void quartic_curve_domain_with_action::init(algebraic_geometry::quartic_curve_do
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 
-	AonHPD_4_3 = NEW_OBJECT(action_on_homogeneous_polynomials);
+	AonHPD_4_3 = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {
 		cout << "quartic_curve_domain_with_action::init "
 				"before AonHPD_4_3->init" << endl;
@@ -83,4 +84,5 @@ void quartic_curve_domain_with_action::init(algebraic_geometry::quartic_curve_do
 }
 
 
-}}
+}}}
+

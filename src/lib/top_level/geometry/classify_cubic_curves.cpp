@@ -13,6 +13,7 @@ using namespace orbiter::foundations;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
 classify_cubic_curves::classify_cubic_curves()
@@ -71,7 +72,7 @@ void classify_cubic_curves::freeself()
 }
 
 void classify_cubic_curves::init(
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		cubic_curve_with_action *CCA,
 		arc_generator_description *Descr,
 		int verbose_level)
@@ -305,7 +306,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 
 
 
-	Flag_orbits = NEW_OBJECT(flag_orbits);
+	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->init(A, A,
 		nb_orbits_on_sets /* nb_primary_orbits_lower */,
 		9 + 10 /* pt_representation_sz */,
@@ -334,7 +335,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 			}
 		}
 
-		set_and_stabilizer *R;
+		data_structures_groups::set_and_stabilizer *R;
 		ring_theory::longinteger_object ol;
 		ring_theory::longinteger_object go;
 		long int dataset[19];
@@ -452,7 +453,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 	Orbiter->Int_vec->zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
-	Curves = NEW_OBJECT(classification_step);
+	Curves = NEW_OBJECT(invariant_relations::classification_step);
 
 	ring_theory::longinteger_object go;
 	A->group_order(go);
@@ -513,7 +514,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 
 
-		vector_ge *coset_reps;
+		data_structures_groups::vector_ge *coset_reps;
 		int nb_coset_reps;
 
 
@@ -562,7 +563,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 		N = Combi.int_n_choose_k(nb_pts, 9);
 
-		coset_reps = NEW_OBJECT(vector_ge);
+		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(CCA->A, verbose_level - 2);
 		coset_reps->allocate(N, verbose_level - 2);
 
@@ -1788,6 +1789,6 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 }
 
 
-}}
+}}}
 
 

@@ -14,8 +14,21 @@ using namespace std;
 
 namespace orbiter {
 namespace top_level {
+namespace apps_geometry {
 
 
+static long int linear_set_classify_rank_point_func(int *v, void *data);
+static void linear_set_classify_unrank_point_func(int *v, long int rk, void *data);
+#if 0
+static void linear_set_classify_early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+static void linear_set_classify_secondary_early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+#endif
 
 
 linear_set_classify::linear_set_classify()
@@ -280,7 +293,7 @@ void linear_set_classify::init(
 				"GL(" << n << "," << Fq->q << ")" << endl;
 	}
 
-	vector_ge *nice_gens;
+	data_structures_groups::vector_ge *nice_gens;
 
 	Aq = NEW_OBJECT(actions::action);
 	Aq->init_general_linear_group(n, Fq,
@@ -419,9 +432,9 @@ void linear_set_classify::init(
 			verbose_level - 1);
 
 
-	Control1 = NEW_OBJECT(poset_classification_control);
-	Poset1 = NEW_OBJECT(poset_with_group_action);
-	Gen = NEW_OBJECT(poset_classification);
+	Control1 = NEW_OBJECT(poset_classification::poset_classification_control);
+	Poset1 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
 
@@ -447,7 +460,7 @@ void linear_set_classify::init(
 
 
 	if (f_identify) {
-		T = NEW_OBJECT(spread_classify);
+		T = NEW_OBJECT(spreads::spread_classify);
 
 		//int f_recoordinatize = TRUE;
 
@@ -459,11 +472,11 @@ void linear_set_classify::init(
 		}
 
 		//int max_depth = order + 1;
-		poset_classification_control *Control;
-		projective_space_with_action *PA;
+		poset_classification::poset_classification_control *Control;
+		projective_geometry::projective_space_with_action *PA;
 
-		Control = NEW_OBJECT(poset_classification_control);
-		PA = NEW_OBJECT(projective_space_with_action); // hack !!! ToDo
+		Control = NEW_OBJECT(poset_classification::poset_classification_control);
+		PA = NEW_OBJECT(projective_geometry::projective_space_with_action); // hack !!! ToDo
 
 		T->init(PA, k,
 				TRUE /* f_recoordinatize */,
@@ -954,9 +967,9 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	secondary_candidates = candidates;
 	secondary_nb_candidates = nb_candidates;
 
-	Control2 = NEW_OBJECT(poset_classification_control);
-	Poset2 = NEW_OBJECT(poset_with_group_action);
-	Gen2 = NEW_OBJECT(poset_classification);
+	Control2 = NEW_OBJECT(poset_classification::poset_classification_control);
+	Poset2 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Gen2 = NEW_OBJECT(poset_classification::poset_classification);
 
 	secondary_depth = n - secondary_level;
 
@@ -1328,8 +1341,8 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 		cout << "linear_set_classify::init_compute_stabilizer" << endl;
 	}
 
-	Control_stab = NEW_OBJECT(poset_classification_control);
-	Poset_stab = NEW_OBJECT(poset_with_group_action);
+	Control_stab = NEW_OBJECT(poset_classification::poset_classification_control);
+	Poset_stab = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 
 	Control_stab->f_depth = TRUE;
@@ -1362,7 +1375,7 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 			Strong_gens_previous, VS,
 			verbose_level);
 
-	Gen_stab = NEW_OBJECT(poset_classification);
+	Gen_stab = NEW_OBJECT(poset_classification::poset_classification);
 
 	Gen_stab->initialize_and_allocate_root_node(Control_stab,
 			Poset_stab,
@@ -1547,7 +1560,7 @@ void linear_set_classify::do_compute_stabilizer(
 
 	int *Intersection_dimensions;
 	int *Elt1;
-	vector_ge *aut_gens;
+	data_structures_groups::vector_ge *aut_gens;
 	groups::strong_generators *Strong_gens_previous;
 	int group_index, orbit_len, go_int;
 	ring_theory::longinteger_object go;
@@ -1561,7 +1574,7 @@ void linear_set_classify::do_compute_stabilizer(
 
 	Elt1 = NEW_int(Aq->elt_size_in_int);
 	Intersection_dimensions = NEW_int(D->N);
-	aut_gens = NEW_OBJECT(vector_ge);
+	aut_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	aut_gens->init(Aq, verbose_level - 2);
 	aut_gens->allocate(Strong_gens_previous->gens->len, verbose_level - 2);
@@ -1655,7 +1668,7 @@ void linear_set_classify::do_compute_stabilizer(
 			<< target_go << " are:" << endl;
 	strong_gens->print_generators(cout);
 
-	vector_ge *gensQ;
+	data_structures_groups::vector_ge *gensQ;
 
 
 	actions::action_global AG;
@@ -2164,7 +2177,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 // #############################################################################
 
 
-long int linear_set_classify_rank_point_func(int *v, void *data)
+static long int linear_set_classify_rank_point_func(int *v, void *data)
 {
 	linear_set_classify *LS;
 	long int rk;
@@ -2177,7 +2190,7 @@ long int linear_set_classify_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void linear_set_classify_unrank_point_func(int *v, long int rk, void *data)
+static void linear_set_classify_unrank_point_func(int *v, long int rk, void *data)
 {
 	linear_set_classify *LS;
 	geometry_global Gg;
@@ -2188,7 +2201,8 @@ void linear_set_classify_unrank_point_func(int *v, long int rk, void *data)
 	//LS->vector_space_dimension, rk);
 }
 
-void linear_set_classify_early_test_func(long int *S, int len,
+#if 0
+static void linear_set_classify_early_test_func(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -2236,7 +2250,7 @@ void linear_set_classify_early_test_func(long int *S, int len,
 	}
 }
 
-void linear_set_classify_secondary_early_test_func(long int *S, int len,
+static void linear_set_classify_secondary_early_test_func(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -2268,8 +2282,9 @@ void linear_set_classify_secondary_early_test_func(long int *S, int len,
 				<< nb_good_candidates << " survive" << endl;
 	}
 }
+#endif
 
 
 
-}}
+}}}
 
