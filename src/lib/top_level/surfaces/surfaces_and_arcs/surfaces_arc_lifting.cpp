@@ -12,8 +12,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 static void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
@@ -125,7 +126,7 @@ void surfaces_arc_lifting::freeself()
 }
 
 void surfaces_arc_lifting::init(
-	surface_with_action *Surf_A,
+		cubic_surfaces_in_general::surface_with_action *Surf_A,
 	poset_classification::poset_classification_control *Control_six_arcs,
 	int f_test_nb_Eckardt_points, int nb_E,
 	int verbose_level)
@@ -1679,6 +1680,6 @@ static void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost, 
 }
 
 
-}}}
+}}}}
 
 

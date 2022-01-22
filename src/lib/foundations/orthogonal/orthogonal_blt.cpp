@@ -14,7 +14,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 #if 0
 void orthogonal::create_Linear_BLT_set(long int *set, int *ABC, int verbose_level)

@@ -22,14 +22,14 @@
 #include <string.h>
 
 using namespace orbiter;
-using namespace orbiter::foundations;
+using namespace orbiter::layer1_foundations;
 
 
 namespace orbiter {
 
-//! legacy project discreta provides typed objects
+//! typed objects
 
-namespace discreta {
+namespace layer2_discreta {
 
 
 
@@ -233,7 +233,7 @@ class matrix_access;
 
 
 
-//
+
 
 
 class domain;
@@ -337,7 +337,7 @@ void int_vector_realloc(int *&p, int old_length, int new_length);
 void int_vector_shorten(int *&p, int new_length);
 void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n);
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M);
-void fine_tune(foundations::field_theory::finite_field *F, int *mtxD, int verbose_level);
+void fine_tune(layer1_foundations::field_theory::finite_field *F, int *mtxD, int verbose_level);
 
 
 /************************************* base ********************************/
@@ -1369,16 +1369,16 @@ class domain {
 		//pc_presentation *the_pres;
 		unipoly *the_factor_poly;
 		domain *the_sub_domain;
-		foundations::field_theory::finite_field *F;
+		layer1_foundations::field_theory::finite_field *F;
 	
 	public:
 		domain(int p);
-		domain(foundations::field_theory::finite_field *F);
+		domain(layer1_foundations::field_theory::finite_field *F);
 	domain(unipoly *factor_poly, domain *sub_domain);
 	//domain(pc_presentation *pres);
 	
 	domain_type type();
-	foundations::field_theory::finite_field *get_F();
+	layer1_foundations::field_theory::finite_field *get_F();
 	int order_int();
 	int order_subfield_int();
 	int characteristic();
@@ -1851,7 +1851,7 @@ typedef page_table *ppage_table;
 
 class page_table {
 public:
-	foundations::data_structures::page_storage *btree_pages;
+	layer1_foundations::data_structures::page_storage *btree_pages;
 	int btree_page_registry_length;
 	int btree_page_registry_allocated_length;
 	btree_page_registry_key_pair *btree_table;

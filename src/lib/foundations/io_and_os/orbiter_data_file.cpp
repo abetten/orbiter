@@ -15,7 +15,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 orbiter_data_file::orbiter_data_file()

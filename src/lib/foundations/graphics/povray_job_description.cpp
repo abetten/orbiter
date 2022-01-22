@@ -15,7 +15,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 povray_job_description::povray_job_description()
 {

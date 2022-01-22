@@ -13,7 +13,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 long int orthogonal::find_root(long int rk2, int verbose_level)

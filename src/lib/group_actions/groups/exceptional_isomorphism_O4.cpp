@@ -13,7 +13,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace group_actions {
+namespace layer3_group_actions {
 namespace groups {
 
 

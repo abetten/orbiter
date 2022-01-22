@@ -13,9 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
-
+namespace quartic_curves {
 
 quartic_curve_create_description::quartic_curve_create_description()
 {
@@ -247,6 +247,6 @@ int quartic_curve_create_description::get_q()
 
 
 
-}}}
+}}}}
 
 

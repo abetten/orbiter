@@ -13,7 +13,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 povray_interface::povray_interface()
 {

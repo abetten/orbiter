@@ -14,7 +14,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace projective_geometry {
 
 
@@ -416,7 +416,7 @@ int projective_space_activity_description::read_arguments(
 			}
 
 			define_surface_label.assign(argv[++i]);
-			Surface_Descr = NEW_OBJECT(applications_in_algebraic_geometry::surface_create_description);
+			Surface_Descr = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
 
 			i += Surface_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -451,7 +451,7 @@ int projective_space_activity_description::read_arguments(
 			}
 
 			define_quartic_curve_label.assign(argv[++i]);
-			Quartic_curve_descr = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_create_description);
+			Quartic_curve_descr = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description);
 
 			i += Quartic_curve_descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -538,7 +538,7 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-sweep_4") == 0) {
 			f_sweep_4 = TRUE;
 			sweep_4_fname.assign(argv[++i]);
-			sweep_4_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::surface_create_description);
+			sweep_4_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
 			if (f_v) {
 				cout << "-sweep_4" << endl;
 			}
@@ -559,7 +559,7 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-sweep_4_27") == 0) {
 			f_sweep_4_27 = TRUE;
 			sweep_4_27_fname.assign(argv[++i]);
-			sweep_4_27_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::surface_create_description);
+			sweep_4_27_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
 			if (f_v) {
 				cout << "-sweep_4_27" << endl;
 			}

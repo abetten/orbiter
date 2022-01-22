@@ -10,13 +10,16 @@
 //
 //
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta/discreta.h"
+#include "group_actions/group_actions.h"
+#include "classification/classification.h"
 
 using namespace std;
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer4_classification {
 
 #define MY_BUFSIZE 1000000
 
@@ -1168,7 +1171,7 @@ void isomorph::count_solutions2(int nb_files, std::string *fname,
 	char buf[MY_BUFSIZE];
 	long int data[1000];
 	int *nb_sol_per_file;
-	Vector v;
+	layer2_discreta::Vector v;
 	char str[1000];
 	int nb_fail = 0;
 	file_io Fio;

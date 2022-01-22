@@ -15,7 +15,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 draw_mod_n_description::draw_mod_n_description()

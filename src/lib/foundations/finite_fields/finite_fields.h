@@ -9,7 +9,7 @@
 #define SRC_LIB_FOUNDATIONS_FINITE_FIELDS_FINITE_FIELDS_H_
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace field_theory {
 
 

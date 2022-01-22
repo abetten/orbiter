@@ -12,7 +12,7 @@
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 
 
 // #############################################################################
@@ -40,10 +40,10 @@ class activity_description {
 	apps_algebra::group_theoretic_activity_description *Group_theoretic_activity_description;
 
 	int f_cubic_surface_activity;
-	applications_in_algebraic_geometry::cubic_surface_activity_description *Cubic_surface_activity_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity_description *Cubic_surface_activity_description;
 
 	int f_quartic_curve_activity;
-	applications_in_algebraic_geometry::quartic_curve_activity_description *Quartic_curve_activity_description;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity_description *Quartic_curve_activity_description;
 
 	int f_combinatorial_object_activity;
 	apps_combinatorics::combinatorial_object_activity_description *Combinatorial_object_activity_description;
@@ -52,7 +52,7 @@ class activity_description {
 	apps_graph_theory::graph_theoretic_activity_description * Graph_theoretic_activity_description;
 
 	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
-	applications_in_algebraic_geometry::classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
+	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
 
 	int f_spread_table_activity;
 	spreads::spread_table_activity_description * Spread_table_activity_description;

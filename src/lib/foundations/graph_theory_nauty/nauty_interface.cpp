@@ -37,7 +37,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 #define HAS_NAUTY 1

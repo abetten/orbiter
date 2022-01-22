@@ -11,7 +11,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 
 
 activity_description::activity_description()
@@ -174,7 +174,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-cubic_surface_activity") == 0) {
 		f_cubic_surface_activity = TRUE;
 		Cubic_surface_activity_description =
-				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surface_activity_description);
+				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity_description);
 		if (f_v) {
 			cout << "reading -cubic_surface_activity" << endl;
 		}
@@ -195,7 +195,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-quartic_curve_activity") == 0) {
 		f_quartic_curve_activity = TRUE;
 		Quartic_curve_activity_description =
-				NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_activity_description);
+				NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity_description);
 		if (f_v) {
 			cout << "reading -quartic_curve_activity" << endl;
 		}
@@ -258,7 +258,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-classification_of_cubic_surfaces_with_double_sixes_activity") == 0) {
 		f_classification_of_cubic_surfaces_with_double_sixes_activity = TRUE;
 		Classification_of_cubic_surfaces_with_double_sixes_activity_description =
-				NEW_OBJECT(applications_in_algebraic_geometry::classification_of_cubic_surfaces_with_double_sixes_activity_description);
+				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity_description);
 		if (f_v) {
 			cout << "reading -classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
 		}
@@ -884,11 +884,11 @@ void activity_description::do_cubic_surface_activity(int verbose_level)
 		exit(1);
 	}
 
-	applications_in_algebraic_geometry::surface_create *SC;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC;
 
-	SC = (applications_in_algebraic_geometry::surface_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SC = (applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		applications_in_algebraic_geometry::cubic_surface_activity Activity;
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity Activity;
 
 		Activity.init(Cubic_surface_activity_description, SC, verbose_level);
 
@@ -934,11 +934,11 @@ void activity_description::do_quartic_curve_activity(int verbose_level)
 		exit(1);
 	}
 
-	applications_in_algebraic_geometry::quartic_curve_create *QC;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *QC;
 
-	QC = (applications_in_algebraic_geometry::quartic_curve_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	QC = (applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		applications_in_algebraic_geometry::quartic_curve_activity Activity;
+		applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity Activity;
 
 		Activity.init(Quartic_curve_activity_description, QC, verbose_level);
 
@@ -1113,11 +1113,11 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 		exit(1);
 	}
 
-	applications_in_algebraic_geometry::surface_classify_wedge *SCW;
+	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
 
-	SCW = (applications_in_algebraic_geometry::surface_classify_wedge *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SCW = (applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		applications_in_algebraic_geometry::classification_of_cubic_surfaces_with_double_sixes_activity Activity;
+		applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity Activity;
 
 		Activity.init(Classification_of_cubic_surfaces_with_double_sixes_activity_description, SCW, verbose_level);
 

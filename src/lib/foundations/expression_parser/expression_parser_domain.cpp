@@ -13,7 +13,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 expression_parser_domain::expression_parser_domain()

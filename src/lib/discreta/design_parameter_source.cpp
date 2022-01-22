@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 
 design_parameter_source::design_parameter_source() : Vector()

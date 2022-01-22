@@ -13,7 +13,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace semifields {
 
 static void semifield_print_function_callback(std::ostream &ost, int orbit_idx,

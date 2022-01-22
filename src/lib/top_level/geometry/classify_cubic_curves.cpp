@@ -9,10 +9,10 @@
 #include "orbiter.h"
 
 using namespace std;
-using namespace orbiter::foundations;
+using namespace orbiter::layer1_foundations;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace apps_geometry {
 
 

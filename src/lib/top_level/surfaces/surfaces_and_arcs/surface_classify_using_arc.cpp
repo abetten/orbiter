@@ -13,8 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 
@@ -75,7 +76,7 @@ surface_classify_using_arc::~surface_classify_using_arc()
 
 void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs(
 		poset_classification::poset_classification_control *Control_six_arcs,
-		surface_with_action *Surf_A,
+		cubic_surfaces_in_general::surface_with_action *Surf_A,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
@@ -518,6 +519,6 @@ void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int v
 
 }
 
-}}}
+}}}}
 
 

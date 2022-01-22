@@ -14,7 +14,7 @@
 
 
 namespace orbiter {
-namespace classification {
+namespace layer4_classification {
 namespace invariant_relations {
 
 

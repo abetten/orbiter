@@ -7,12 +7,15 @@
 //
 //
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta/discreta.h"
+#include "group_actions/group_actions.h"
+#include "classification/classification.h"
 
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer4_classification {
 
 
 static void callback_compute_down_orbits_worker(
@@ -70,7 +73,7 @@ void isomorph_global::read_statistic_files(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 		isomorph Iso;
@@ -276,7 +279,7 @@ void isomorph_global::build_db(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 		isomorph Iso;
@@ -332,7 +335,7 @@ void isomorph_global::read_solution_files(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 		isomorph Iso;
@@ -404,7 +407,7 @@ void isomorph_global::init_solutions_from_memory(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 		isomorph Iso;
@@ -480,7 +483,7 @@ void isomorph_global::read_solution_files_from_clique_finder_case_by_case(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;
@@ -565,7 +568,7 @@ void isomorph_global::read_solution_files_from_clique_finder(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;
@@ -649,7 +652,7 @@ void isomorph_global::compute_orbits(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;
@@ -732,7 +735,7 @@ void isomorph_global::isomorph_testing(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;
@@ -897,7 +900,7 @@ void isomorph_global::classification_graph(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;
@@ -957,7 +960,7 @@ void isomorph_global::identify(
 		}
 	
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;
@@ -1067,7 +1070,7 @@ void isomorph_global::identify_table(
 		}
 	
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;
@@ -1162,7 +1165,7 @@ void isomorph_global::worker(
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	{
 	isomorph Iso;

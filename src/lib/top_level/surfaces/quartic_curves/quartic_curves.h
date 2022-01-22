@@ -12,9 +12,9 @@
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
-
+namespace quartic_curves {
 
 
 // #############################################################################
@@ -270,7 +270,7 @@ class quartic_curve_from_surface {
 
 public:
 
-	surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_action *SOA;
 
 	int pt_orbit;
 	int equation_nice[20]; // equation after transformation
@@ -329,7 +329,7 @@ public:
 
 	quartic_curve_from_surface();
 	~quartic_curve_from_surface();
-	void init(surface_object_with_action *SOA, int verbose_level);
+	void init(cubic_surfaces_in_general::surface_object_with_action *SOA, int verbose_level);
 	void quartic(std::string &surface_prefix, int pt_orbit, int f_TDO, int verbose_level);
 	void compute_quartic(int pt_orbit,
 		int *equation, long int *Lines, int nb_lines,
@@ -390,7 +390,7 @@ public:
 
 
 
-}}}
+}}}}
 
 
 

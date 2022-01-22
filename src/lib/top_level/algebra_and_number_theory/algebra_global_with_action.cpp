@@ -17,7 +17,7 @@ using namespace std;
 //using namespace orbiter::foundations;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace apps_algebra {
 
 
@@ -2221,7 +2221,9 @@ void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
 }
 
 void algebra_global_with_action::A5_in_PSL_2_q(int q,
-		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
+		layer2_discreta::discreta_matrix & A,
+		layer2_discreta::discreta_matrix & B,
+		layer2_discreta::domain *dom_GFq, int verbose_level)
 {
 	if (((q - 1) % 5) == 0) {
 		A5_in_PSL_2_q_easy(q, A, B, dom_GFq, verbose_level);
@@ -2236,7 +2238,10 @@ void algebra_global_with_action::A5_in_PSL_2_q(int q,
 }
 
 void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
-		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
+		layer2_discreta::discreta_matrix & A,
+		layer2_discreta::discreta_matrix & B,
+		layer2_discreta::domain *dom_GFq,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, r;
@@ -2300,7 +2305,10 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 
 
 void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
-		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
+		layer2_discreta::discreta_matrix & A,
+		layer2_discreta::discreta_matrix & B,
+		layer2_discreta::domain *dom_GFq,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	with w(dom_GFq);
@@ -2510,7 +2518,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	}
 }
 
-int algebra_global_with_action::proj_order(discreta_matrix &A)
+int algebra_global_with_action::proj_order(layer2_discreta::discreta_matrix &A)
 {
 	discreta_matrix B;
 	int m, n;
@@ -2536,7 +2544,9 @@ int algebra_global_with_action::proj_order(discreta_matrix &A)
 	}
 	return ord;
 }
-void algebra_global_with_action::trace(discreta_matrix &A, discreta_base &tr)
+void algebra_global_with_action::trace(
+		layer2_discreta::discreta_matrix &A,
+		layer2_discreta::discreta_base &tr)
 {
 	int i, m, n;
 
@@ -2552,7 +2562,8 @@ void algebra_global_with_action::trace(discreta_matrix &A, discreta_base &tr)
 	}
 }
 
-void algebra_global_with_action::elementwise_power_int(discreta_matrix &A, int k)
+void algebra_global_with_action::elementwise_power_int(
+		layer2_discreta::discreta_matrix &A, int k)
 {
 	int i, j, m, n;
 
@@ -2566,7 +2577,8 @@ void algebra_global_with_action::elementwise_power_int(discreta_matrix &A, int k
 	}
 }
 
-int algebra_global_with_action::is_in_center(discreta_matrix &B)
+int algebra_global_with_action::is_in_center(
+		layer2_discreta::discreta_matrix &B)
 {
 	int m, n, i, j;
 	discreta_matrix A;
@@ -2593,7 +2605,8 @@ int algebra_global_with_action::is_in_center(discreta_matrix &B)
 }
 
 
-void algebra_global_with_action::matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q)
+void algebra_global_with_action::matrix_convert_to_numerical(
+		layer2_discreta::discreta_matrix &A, int *AA, int q)
 {
 	int m, n, i, j, /*h, l,*/ val;
 

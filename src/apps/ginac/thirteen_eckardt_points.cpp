@@ -15,7 +15,7 @@
 
 using namespace std;
 using namespace orbiter;
-using namespace orbiter::top_level;
+using namespace orbiter::layer5_applications;
 // use orbiter's namespaces
 
 

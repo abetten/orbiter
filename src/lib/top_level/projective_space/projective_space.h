@@ -11,7 +11,7 @@
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace projective_geometry {
 
 
@@ -374,7 +374,7 @@ public:
 
 	int f_define_surface;
 	std::string define_surface_label;
-	applications_in_algebraic_geometry::surface_create_description *Surface_Descr;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr;
 
 	int f_table_of_quartic_curves;
 		// based on knowledge_base
@@ -384,8 +384,7 @@ public:
 
 	int f_define_quartic_curve;
 	std::string define_quartic_curve_label;
-	applications_in_algebraic_geometry::quartic_curve_create_description *Quartic_curve_descr;
-
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr;
 
 	int f_classify_surfaces_with_double_sixes;
 	std::string classify_surfaces_with_double_sixes_label;
@@ -408,11 +407,11 @@ public:
 
 	int f_sweep_4;
 	std::string sweep_4_fname;
-	applications_in_algebraic_geometry::surface_create_description *sweep_4_surface_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_surface_description;
 
 	int f_sweep_4_27;
 	std::string sweep_4_27_fname;
-	applications_in_algebraic_geometry::surface_create_description *sweep_4_27_surface_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_27_surface_description;
 
 	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;
@@ -561,9 +560,9 @@ public:
 			int verbose_level);
 	void do_create_surface(
 			projective_space_with_action *PA,
-			applications_in_algebraic_geometry::surface_create_description *Surface_Descr,
-			applications_in_algebraic_geometry::surface_with_action *&Surf_A,
-			applications_in_algebraic_geometry::surface_create *&SC,
+			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr,
+			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
+			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *&SC,
 			int verbose_level);
 	void conic_type(
 			projective_space_with_action *PA,
@@ -675,7 +674,7 @@ public:
 
 	// if n == 2:
 	algebraic_geometry::quartic_curve_domain *Dom;
-	applications_in_algebraic_geometry::quartic_curve_domain_with_action *QCDA;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action *QCDA;
 
 
 	actions::action *A; // linear group PGGL(d,q) in the action on points
@@ -736,8 +735,8 @@ public:
 		layered_graph_draw_options *O,
 		int verbose_level);
 	void create_quartic_curve(
-			applications_in_algebraic_geometry::quartic_curve_create_description *Quartic_curve_descr,
-			applications_in_algebraic_geometry::quartic_curve_create *&QC,
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr,
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *&QC,
 			int verbose_level);
 	void canonical_form_of_code(
 			std::string &label,
@@ -756,7 +755,7 @@ public:
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void setup_surface_with_action(
-			applications_in_algebraic_geometry::surface_with_action *&Surf_A,
+			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
 			int verbose_level);
 	void report_decomposition_by_group(
 			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,

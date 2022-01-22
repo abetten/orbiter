@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 #define MAX_DOMAIN_STACK 100
 

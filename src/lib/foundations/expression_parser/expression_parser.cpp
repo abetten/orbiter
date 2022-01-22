@@ -141,7 +141,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 typedef double (*OneArgFunction)  (double arg);
 typedef const double (*TwoArgFunction)  (const double arg1, const double arg2);

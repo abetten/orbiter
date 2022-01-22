@@ -18,7 +18,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 static int registry_key_pair_compare_by_size(void *K1v, void *K2v);

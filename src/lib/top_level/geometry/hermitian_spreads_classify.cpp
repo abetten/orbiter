@@ -12,7 +12,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace apps_geometry {
 
 static void HS_early_test_func_callback(long int *S, int len,

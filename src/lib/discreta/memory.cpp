@@ -12,7 +12,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 #undef MEMORY_COPY_VERBOSE
 #undef DEBUG_MEM

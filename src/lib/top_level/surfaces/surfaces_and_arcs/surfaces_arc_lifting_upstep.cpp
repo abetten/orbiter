@@ -13,8 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
@@ -244,7 +245,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after init Aut_gens" << endl;
 	}
 
-	D->SOA = NEW_OBJECT(surface_object_with_action);
+	D->SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_action);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before D->SOA->init_with_group" << endl;
@@ -689,6 +690,6 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 }
 
 
-}}}
+}}}}
 
 

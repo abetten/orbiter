@@ -13,9 +13,9 @@
 #define _ORBITER_
 
 #include "foundations/foundations.h"
+#include "discreta/discreta.h"
 #include "group_actions/group_actions.h"
 #include "classification/classification.h"
-#include "discreta/discreta.h"
 #include "top_level/top_level.h"
 
 #endif

@@ -16,8 +16,8 @@
 using std::cout;
 using std::endl;
 
-using namespace orbiter::foundations;
-using namespace orbiter::group_actions;
+using namespace orbiter::layer1_foundations;
+using namespace orbiter::layer3_group_actions;
 
 
 

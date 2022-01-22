@@ -16,7 +16,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace graph_theory {
 
 

@@ -13,9 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
-
+namespace quartic_curves {
 
 
 
@@ -1213,7 +1213,7 @@ void quartic_curve_create::compute_group(
 
 
 
-}}}
+}}}}
 
 
 
