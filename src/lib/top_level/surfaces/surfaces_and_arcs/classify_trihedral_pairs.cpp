@@ -14,8 +14,10 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
+
 
 
 static void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
@@ -85,7 +87,8 @@ void classify_trihedral_pairs::freeself()
 	null();
 }
 
-void classify_trihedral_pairs::init(surface_with_action *Surf_A,
+void classify_trihedral_pairs::init(
+		cubic_surfaces_in_general::surface_with_action *Surf_A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1357,5 +1360,5 @@ static void classify_trihedral_pairs_early_test_function_type2(long int *S, int 
 	}
 }
 
-}}}
+}}}}
 

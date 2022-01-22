@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace data_structures {
 
 static int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);

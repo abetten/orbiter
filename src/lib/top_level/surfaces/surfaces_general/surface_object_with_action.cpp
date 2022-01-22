@@ -14,8 +14,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_in_general {
 
 
 
@@ -1460,7 +1461,7 @@ void surface_object_with_action::investigate_surface_and_write_report(
 		layered_graph_draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
-		six_arcs_not_on_a_conic *Six_arcs,
+		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1527,7 +1528,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 		layered_graph_draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
-		six_arcs_not_on_a_conic *Six_arcs,
+		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 		std::string &fname_mask,
 		std::string &label,
 		std::string &label_tex,
@@ -1762,9 +1763,9 @@ void surface_object_with_action::all_quartic_curves(
 				<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 
 
-		quartic_curve_from_surface *QC;
+		quartic_curves::quartic_curve_from_surface *QC;
 
-		QC = NEW_OBJECT(quartic_curve_from_surface);
+		QC = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
 
 		QC->init(this, verbose_level);
 
@@ -1825,9 +1826,9 @@ void surface_object_with_action::export_all_quartic_curves(
 				<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 
 
-		quartic_curve_from_surface *QC;
+		quartic_curves::quartic_curve_from_surface *QC;
 
-		QC = NEW_OBJECT(quartic_curve_from_surface);
+		QC = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
 
 		QC->init(this, verbose_level);
 
@@ -1982,5 +1983,5 @@ void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int ver
 
 
 
-}}}
+}}}}
 

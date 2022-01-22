@@ -14,10 +14,10 @@
 
 
 using namespace std;
-using namespace orbiter::foundations::data_structures;
+using namespace orbiter::layer1_foundations::data_structures;
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 orbiter_session *Orbiter = NULL;

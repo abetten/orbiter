@@ -12,8 +12,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_double_sixes {
 
 
 surface_classify_wedge::surface_classify_wedge()
@@ -110,7 +111,7 @@ void surface_classify_wedge::freeself()
 }
 
 void surface_classify_wedge::init(
-	surface_with_action *Surf_A,
+		cubic_surfaces_in_general::surface_with_action *Surf_A,
 	poset_classification::poset_classification_control *Control,
 	int verbose_level)
 {
@@ -1629,7 +1630,8 @@ void surface_classify_wedge::identify_general_abcd(
 
 
 int surface_classify_wedge::isomorphism_test_pairwise(
-	surface_create *SC1, surface_create *SC2,
+		cubic_surfaces_in_general::surface_create *SC1,
+		cubic_surfaces_in_general::surface_create *SC2,
 	int &isomorphic_to1, int &isomorphic_to2,
 	int *Elt_isomorphism_1to2,
 	int verbose_level)
@@ -2281,9 +2283,9 @@ void surface_classify_wedge::report_surface(
 	SO->SOP->print_equation(ost);
 
 
-	surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_action *SOA;
 
-	SOA = NEW_OBJECT(surface_object_with_action);
+	SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_action);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
@@ -3112,8 +3114,8 @@ void surface_classify_wedge::create_report_double_sixes(int verbose_level)
 }
 
 void surface_classify_wedge::test_isomorphism(
-		surface_create_description *Descr1,
-		surface_create_description *Descr2,
+		cubic_surfaces_in_general::surface_create_description *Descr1,
+		cubic_surfaces_in_general::surface_create_description *Descr2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3122,10 +3124,10 @@ void surface_classify_wedge::test_isomorphism(
 		cout << "surface_classify_wedge::test_isomorphism" << endl;
 	}
 
-	surface_create *SC1;
-	surface_create *SC2;
-	SC1 = NEW_OBJECT(surface_create);
-	SC2 = NEW_OBJECT(surface_create);
+	cubic_surfaces_in_general::surface_create *SC1;
+	cubic_surfaces_in_general::surface_create *SC2;
+	SC1 = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
+	SC2 = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
 
 	if (f_v) {
 		cout << "before SC1->init" << endl;
@@ -3180,7 +3182,7 @@ void surface_classify_wedge::test_isomorphism(
 
 
 void surface_classify_wedge::recognition(
-		surface_create_description *Descr,
+		cubic_surfaces_in_general::surface_create_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3188,11 +3190,11 @@ void surface_classify_wedge::recognition(
 	if (f_v) {
 		cout << "surface_classify_wedge::recognition" << endl;
 	}
-	surface_create *SC;
+	cubic_surfaces_in_general::surface_create *SC;
 	groups::strong_generators *SG;
 	groups::strong_generators *SG0;
 
-	SC = NEW_OBJECT(surface_create);
+	SC = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
 
 	if (f_v) {
 		cout << "before SC->init" << endl;
@@ -3286,10 +3288,10 @@ void surface_classify_wedge::sweep_Cayley(
 				for (n = 1; n < q; n++) {
 
 
-					surface_create_description Descr;
-					surface_create *SC;
+					cubic_surfaces_in_general::surface_create_description Descr;
+					cubic_surfaces_in_general::surface_create *SC;
 
-					SC = NEW_OBJECT(surface_create);
+					SC = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
 
 					Descr.f_Cayley_form = TRUE;
 					Descr.Cayley_form_k = k;
@@ -3385,7 +3387,7 @@ void surface_classify_wedge::sweep_Cayley(
 
 
 
-}}}
+}}}}
 
 
 

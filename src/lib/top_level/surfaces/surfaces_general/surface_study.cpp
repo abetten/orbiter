@@ -16,8 +16,9 @@ using namespace std;
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_in_general {
 
 
 
@@ -1643,6 +1644,6 @@ static void matrix_entry_print(long int *p,
 
 
 
-}}}
+}}}}
 
 

@@ -14,7 +14,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 	// The Knarr construction of a GQ(q^2,q) from a BLT set of lines in W(3,q):

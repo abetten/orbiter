@@ -14,7 +14,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace projective_geometry {
 
 
@@ -115,7 +115,7 @@ void projective_space_with_action::init(
 		if (f_v) {
 			cout << "projective_space_with_action::init after Dom->init" << endl;
 		}
-		QCDA = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_domain_with_action);
+		QCDA = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action);
 		if (f_v) {
 			cout << "projective_space_with_action::init before QCDA->init" << endl;
 		}
@@ -1098,8 +1098,8 @@ void projective_space_with_action::report(
 
 
 void projective_space_with_action::create_quartic_curve(
-		applications_in_algebraic_geometry::quartic_curve_create_description *Quartic_curve_descr,
-		applications_in_algebraic_geometry::quartic_curve_create *&QC,
+		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr,
+		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *&QC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1117,7 +1117,7 @@ void projective_space_with_action::create_quartic_curve(
 		exit(1);
 	}
 
-	QC = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curve_create);
+	QC = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create);
 
 	if (f_v) {
 		cout << "projective_space_with_action::create_quartic_curve before SC->init" << endl;
@@ -1310,14 +1310,14 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 
 	int nb_quartic_curves;
 	int h;
-	applications_in_algebraic_geometry::quartic_curve_create **QC;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **QC;
 	int *nb_K;
 	long int *Table;
 	int nb_cols = 6;
 
 	nb_quartic_curves = K.quartic_curves_nb_reps(q);
 
-	QC = (applications_in_algebraic_geometry::quartic_curve_create **) NEW_pvoid(nb_quartic_curves);
+	QC = (applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **) NEW_pvoid(nb_quartic_curves);
 
 	nb_K = NEW_int(nb_quartic_curves);
 
@@ -1329,7 +1329,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 			cout << "projective_space_with_action::table_of_quartic_curves "
 					<< h << " / " << nb_quartic_curves << endl;
 		}
-		applications_in_algebraic_geometry::quartic_curve_create_description Quartic_curve_descr;
+		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description Quartic_curve_descr;
 
 		Quartic_curve_descr.f_q = TRUE;
 		Quartic_curve_descr.q = q;
@@ -1489,7 +1489,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 		exit(1);
 	}
 
-	applications_in_algebraic_geometry::surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	setup_surface_with_action(
 			Surf_A,
@@ -1778,7 +1778,7 @@ void projective_space_with_action::do_spread_classify(int k,
 }
 
 void projective_space_with_action::setup_surface_with_action(
-		applications_in_algebraic_geometry::surface_with_action *&Surf_A,
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1801,7 +1801,7 @@ void projective_space_with_action::setup_surface_with_action(
 		cout << "projective_space_with_action::setup_surface_with_action after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_with_action::setup_surface_with_action before Surf_A->init" << endl;

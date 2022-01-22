@@ -13,8 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace quartic_curves {
 
 
 quartic_curve_from_surface::quartic_curve_from_surface()
@@ -130,7 +131,7 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	}
 }
 
-void quartic_curve_from_surface::init(surface_object_with_action *SOA, int verbose_level)
+void quartic_curve_from_surface::init(cubic_surfaces_in_general::surface_object_with_action *SOA, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -571,7 +572,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer" << endl;
 	}
-	surface_with_action *Surf_A;
+	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	Surf_A = SOA->Surf_A;
 	// compute stabilizer of the set of points:
@@ -945,5 +946,5 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 }
 
 
-}}}
+}}}}
 

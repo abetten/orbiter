@@ -14,7 +14,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace coding_theory {
 
 create_BCH_code::create_BCH_code()

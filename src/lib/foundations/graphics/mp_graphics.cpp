@@ -10,7 +10,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 static void projective_plane_make_affine_point(int q, int x1, int x2, int x3,

@@ -18,7 +18,7 @@ using namespace std;
 #define EPSILON 0.01
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 void scene::create_regulus(int idx, int nb_lines, int verbose_level)

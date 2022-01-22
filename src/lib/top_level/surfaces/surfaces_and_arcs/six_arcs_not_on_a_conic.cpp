@@ -11,8 +11,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
@@ -356,7 +357,7 @@ void six_arcs_not_on_a_conic::report_specific_arc(ostream &ost, int arc_idx)
 }
 
 
-}}}
+}}}}
 
 
 

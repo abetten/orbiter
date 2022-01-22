@@ -13,7 +13,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace combinatorics {
 
 static void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,

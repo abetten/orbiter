@@ -10,7 +10,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 void free_global_data()
 {

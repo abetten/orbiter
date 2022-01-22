@@ -11,9 +11,9 @@
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
-
+namespace cubic_surfaces_in_general {
 
 
 // #############################################################################
@@ -67,7 +67,8 @@ public:
 
 	cubic_surface_activity();
 	~cubic_surface_activity();
-	void init(cubic_surface_activity_description *Cubic_surface_activity_description,
+	void init(
+			cubic_surfaces_in_general::cubic_surface_activity_description *Cubic_surface_activity_description,
 			surface_create *SC, int verbose_level);
 	void perform_activity(int verbose_level);
 };
@@ -348,17 +349,19 @@ public:
 			poset_classification_control *Control_six_arcs,
 			int verbose_level);
 #endif
+
+
 	void classify_surfaces_with_double_sixes(
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control,
-			surface_classify_wedge *&SCW,
+			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
 	void prepare_surface_classify_wedge(
 			field_theory::finite_field *F,
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control,
 			algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
-			surface_classify_wedge *&SCW,
+			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
 	void do_study_surface(field_theory::finite_field *F, int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
@@ -514,14 +517,14 @@ public:
 			layered_graph_draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
-			six_arcs_not_on_a_conic *Six_arcs,
+			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 			int verbose_level);
 	void investigate_surface_and_write_report2(
 			std::ostream &ost,
 			layered_graph_draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
-			six_arcs_not_on_a_conic *Six_arcs,
+			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 			std::string &fname_mask,
 			std::string &label,
 			std::string &label_tex,
@@ -638,7 +641,7 @@ public:
 	induced_actions::action_on_homogeneous_polynomials *AonHPD_3_4;
 
 
-	classify_trihedral_pairs *Classify_trihedral_pairs;
+	cubic_surfaces_and_arcs::classify_trihedral_pairs *Classify_trihedral_pairs;
 
 	spreads::recoordinatize *Recoordinatize;
 	long int *regulus; // [regulus_size]
@@ -730,7 +733,7 @@ public:
 
 
 
-}}}
+}}}}
 
 
 

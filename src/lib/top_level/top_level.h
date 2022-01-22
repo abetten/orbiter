@@ -13,17 +13,17 @@
 
 
 
-using namespace orbiter::foundations;
-using namespace orbiter::group_actions;
-using namespace orbiter::classification;
-using namespace orbiter::discreta;
+using namespace orbiter::layer1_foundations;
+using namespace orbiter::layer2_discreta;
+using namespace orbiter::layer3_group_actions;
+using namespace orbiter::layer4_classification;
 
 
 namespace orbiter {
 
 //! classes for combinatorial objects and their classification
 
-namespace top_level {
+namespace layer5_applications {
 
 
 
@@ -136,18 +136,6 @@ class orbiter_top_level_session;
 class symbol_definition;
 
 
-// isomorph
-class isomorph_arguments;
-class isomorph;
-struct isomorph_worker_data;
-class representatives;
-
-
-// orbits
-class orbit_of_equations;
-class orbit_of_sets;
-class orbit_of_subspaces;
-
 
 //! Applications in orthogonal geometry
 
@@ -228,11 +216,6 @@ namespace semifields {
 }
 
 
-// solver:
-class exact_cover_arguments;
-class exact_cover;
-
-
 //! Spreads in projective space
 
 namespace spreads {
@@ -256,50 +239,71 @@ namespace spreads {
 namespace applications_in_algebraic_geometry {
 
 
-	// surfaces/quartic curves
-	class quartic_curve_activity_description;
-	class quartic_curve_activity;
-	class quartic_curve_create_description;
-	class quartic_curve_create;
-	class quartic_curve_domain_with_action;
-	class quartic_curve_from_surface;
-	class quartic_curve_object_with_action;
+	//! classes related to plane quartic curves with 28 bitangents
 
-	// surfaces/surfaces_and_arcs:
-	class arc_lifting;
-	class arc_orbits_on_pairs;
-	class arc_partition;
-	class classify_trihedral_pairs;
-	class six_arcs_not_on_a_conic;
-	class surface_classify_using_arc;
-	class surface_create_by_arc_lifting;
-	class surfaces_arc_lifting_definition_node;
-	class surfaces_arc_lifting_trace;
-	class surfaces_arc_lifting_upstep;
-	class surfaces_arc_lifting;
-	class trihedral_pair_with_action;
-	// pointer types:
-	typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
+	namespace quartic_curves {
 
+		// surfaces/quartic curves
+		class quartic_curve_activity_description;
+		class quartic_curve_activity;
+		class quartic_curve_create_description;
+		class quartic_curve_create;
+		class quartic_curve_domain_with_action;
+		class quartic_curve_from_surface;
+		class quartic_curve_object_with_action;
 
-	// surfaces/surfaces_and_double_sixes:
-	class classification_of_cubic_surfaces_with_double_sixes_activity_description;
-	class classification_of_cubic_surfaces_with_double_sixes_activity;
-	class classify_double_sixes;
-	class surface_classify_wedge;
+	}
 
+	//! cubic surfaces and related six-arcs and trihedral pairs
 
-	// surfaces/surfaces_general:
-	class cubic_surface_activity_description;
-	class cubic_surface_activity;
-	class surface_clebsch_map;
-	class surface_create_description;
-	class surface_create;
-	class surface_domain_high_level;
-	class surface_object_with_action;
-	class surface_study;
-	class surface_with_action;
+	namespace cubic_surfaces_and_arcs {
 
+		// surfaces/surfaces_and_arcs:
+		class arc_lifting;
+		class arc_orbits_on_pairs;
+		class arc_partition;
+		class classify_trihedral_pairs;
+		class six_arcs_not_on_a_conic;
+		class surface_classify_using_arc;
+		class surface_create_by_arc_lifting;
+		class surfaces_arc_lifting_definition_node;
+		class surfaces_arc_lifting_trace;
+		class surfaces_arc_lifting_upstep;
+		class surfaces_arc_lifting;
+		class trihedral_pair_with_action;
+		// pointer types:
+		typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
+
+	}
+
+	//! cubic surfaces and related Schlaefli double-sixes
+
+	namespace cubic_surfaces_and_double_sixes {
+
+		// surfaces/surfaces_and_double_sixes:
+		class classification_of_cubic_surfaces_with_double_sixes_activity_description;
+		class classification_of_cubic_surfaces_with_double_sixes_activity;
+		class classify_double_sixes;
+		class surface_classify_wedge;
+
+	}
+
+	//! cubic surfaces in general
+
+	namespace cubic_surfaces_in_general {
+
+		// surfaces/surfaces_general:
+		class cubic_surface_activity_description;
+		class cubic_surface_activity;
+		class surface_clebsch_map;
+		class surface_create_description;
+		class surface_create;
+		class surface_domain_high_level;
+		class surface_object_with_action;
+		class surface_study;
+		class surface_with_action;
+
+	}
 
 }
 
@@ -323,12 +327,9 @@ extern orbiter_top_level_session *The_Orbiter_top_level_session; // global top l
 #include "./geometry/tl_geometry.h"
 #include "./graph_theory/graph_theory.h"
 #include "./interfaces/interfaces.h"
-#include "./isomorph/isomorph.h"
-#include "./orbits/orbits.h"
 #include "./orthogonal/tl_orthogonal.h"
 #include "./projective_space/projective_space.h"
 #include "./semifields/semifields.h"
-#include "./solver/solver.h"
 #include "./spreads/spreads.h"
 #include "./packings/packings.h"
 #include "./surfaces/quartic_curves/quartic_curves.h"

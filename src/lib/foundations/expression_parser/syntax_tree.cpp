@@ -14,7 +14,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 syntax_tree::syntax_tree()

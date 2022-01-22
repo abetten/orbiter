@@ -11,7 +11,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace packings {
 
 static void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,

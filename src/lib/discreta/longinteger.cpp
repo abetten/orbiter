@@ -14,7 +14,7 @@ using namespace std;
 #undef DEBUG_LONGINTEGER_COMPARE
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 
 static void subtract_signless(longinteger &x, longinteger &y, longinteger &z);

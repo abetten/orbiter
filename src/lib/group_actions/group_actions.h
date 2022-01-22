@@ -11,7 +11,7 @@
 
 
 
-using namespace orbiter::foundations;
+using namespace orbiter::layer1_foundations;
 
 
 namespace orbiter {
@@ -19,7 +19,7 @@ namespace orbiter {
 
 //! groups and group actions, induced group actions
 
-namespace group_actions {
+namespace layer3_group_actions {
 
 
 //! a specific group action

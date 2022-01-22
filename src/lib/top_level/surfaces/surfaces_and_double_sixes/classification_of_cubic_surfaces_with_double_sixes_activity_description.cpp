@@ -13,8 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_double_sixes {
 
 
 
@@ -115,7 +116,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 				cout << "-isomorphism_testing" << endl;
 				cout << "-isomorphism_testing reading description of first surface" << endl;
 			}
-			isomorphism_testing_surface1 = NEW_OBJECT(surface_create_description);
+			isomorphism_testing_surface1 = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
 			i += isomorphism_testing_surface1->
 					read_arguments(argc - (i - 1), argv + i,
 					verbose_level);
@@ -124,7 +125,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 				cout << "the current argument is " << argv[i] << endl;
 				cout << "-isomorphism_testing reading description of second surface" << endl;
 			}
-			isomorphism_testing_surface2 = NEW_OBJECT(surface_create_description);
+			isomorphism_testing_surface2 = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
 			i += isomorphism_testing_surface2->
 					read_arguments(argc - (i - 1), argv + i,
 					verbose_level);
@@ -143,7 +144,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			if (f_v) {
 				cout << "-recognize reading description of surface" << endl;
 			}
-			recognize_surface = NEW_OBJECT(surface_create_description);
+			recognize_surface = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
 			i += recognize_surface->
 					read_arguments(argc - (i - 1), argv + i,
 					verbose_level);
@@ -221,6 +222,6 @@ void classification_of_cubic_surfaces_with_double_sixes_activity_description::pr
 
 
 
-}}}
+}}}}
 
 

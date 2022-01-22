@@ -12,7 +12,7 @@
 
 
 namespace orbiter {
-namespace group_actions {
+namespace layer3_group_actions {
 namespace data_structures_groups {
 
 
@@ -606,10 +606,10 @@ public:
 		int f_print_cycles_of_length_one);
 	void print_for_make_element(std::ostream &ost);
 	void write_to_memory_object(
-		foundations::memory_object *m,
+		layer1_foundations::memory_object *m,
 		int verbose_level);
 	void read_from_memory_object(
-		foundations::memory_object *m,
+		layer1_foundations::memory_object *m,
 		int verbose_level);
 	void write_to_file_binary(std::ofstream &fp,
 		int verbose_level);

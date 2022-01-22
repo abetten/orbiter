@@ -18,7 +18,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace group_actions {
+namespace layer3_group_actions {
 namespace groups {
 
 orbits_on_something::orbits_on_something()

@@ -13,8 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 surface_create_by_arc_lifting::surface_create_by_arc_lifting()
@@ -139,7 +140,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 
 
-	SOA = NEW_OBJECT(surface_object_with_action);
+	SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_action);
 
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::init "
@@ -198,7 +199,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 				"performing isomorph rejection" << endl;
 	}
 
-	Clebsch = NEW_OBJECTS(surface_clebsch_map, SOA->Orbits_on_single_sixes->nb_orbits);
+	Clebsch = NEW_OBJECTS(cubic_surfaces_in_general::surface_clebsch_map, SOA->Orbits_on_single_sixes->nb_orbits);
 	Other_arc_idx = NEW_int(SOA->Orbits_on_single_sixes->nb_orbits);
 
 	for (orbit_idx = 0; orbit_idx < SOA->Orbits_on_single_sixes->nb_orbits; orbit_idx++) {
@@ -454,5 +455,5 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 }
 
 
-}}}
+}}}}
 

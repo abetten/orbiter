@@ -14,8 +14,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_double_sixes {
 
 
 static void callback_partial_ovoid_test_early(long int *S, int len,
@@ -123,7 +124,7 @@ void classify_double_sixes::freeself()
 }
 
 void classify_double_sixes::init(
-	surface_with_action *Surf_A,
+		cubic_surfaces_in_general::surface_with_action *Surf_A,
 	poset_classification::poset_classification_control *Control,
 	int verbose_level)
 {
@@ -1774,7 +1775,7 @@ static void callback_partial_ovoid_test_early(long int *S, int len,
 	}
 }
 
-}}}
+}}}}
 
 
 

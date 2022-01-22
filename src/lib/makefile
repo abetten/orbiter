@@ -245,6 +245,26 @@ MODULES= \
 		foundations/statistics/tally_vector_data.o \
 		foundations/statistics/tally.o \
 		foundations/BitSet/bitset.o	\
+		discreta/base.o \
+		discreta/bt_key.o \
+		discreta/btree.o \
+		discreta/database.o \
+		discreta/design.o \
+		discreta/design_parameter.o \
+		discreta/design_parameter_source.o \
+		discreta/discreta_global.o \
+		discreta/discreta_matrix.o \
+		discreta/domain.o \
+		discreta/global.o \
+		discreta/hollerith.o \
+		discreta/integer.o \
+		discreta/longinteger.o \
+		discreta/memory.o \
+		discreta/number_partition.o \
+		discreta/page_table.o \
+		discreta/permutation.o \
+		discreta/unipoly.o \
+		discreta/vector.o \
 		group_actions/actions/action.o \
 		group_actions/actions/action_cb.o \
 		group_actions/actions/action_global.o \
@@ -329,6 +349,17 @@ MODULES= \
 		classification/classify/flag_orbit_node.o \
 		classification/classify/flag_orbits.o \
 		classification/classify/orbit_node.o \
+		classification/isomorph/isomorph.o \
+		classification/isomorph/isomorph_arguments.o \
+		classification/isomorph/isomorph_database.o \
+		classification/isomorph/isomorph_files.o \
+		classification/isomorph/isomorph_global.o \
+		classification/isomorph/isomorph_testing.o \
+		classification/isomorph/isomorph_trace.o \
+		classification/isomorph/representatives.o \
+		classification/orbits/orbit_of_equations.o \
+		classification/orbits/orbit_of_sets.o \
+		classification/orbits/orbit_of_subspaces.o \
 		classification/poset_classification/classification_base_case.o \
 		classification/poset_classification/extension.o \
 		classification/poset_classification/orbit_based_testing.o \
@@ -361,26 +392,8 @@ MODULES= \
 		classification/set_stabilizer/stabilizer_orbits_and_types.o \
 		classification/set_stabilizer/substructure_classifier.o \
 		classification/set_stabilizer/substructure_stats_and_selection.o \
-		discreta/base.o \
-		discreta/bt_key.o \
-		discreta/btree.o \
-		discreta/database.o \
-		discreta/design.o \
-		discreta/design_parameter.o \
-		discreta/design_parameter_source.o \
-		discreta/discreta_global.o \
-		discreta/discreta_matrix.o \
-		discreta/domain.o \
-		discreta/global.o \
-		discreta/hollerith.o \
-		discreta/integer.o \
-		discreta/longinteger.o \
-		discreta/memory.o \
-		discreta/number_partition.o \
-		discreta/page_table.o \
-		discreta/permutation.o \
-		discreta/unipoly.o \
-		discreta/vector.o \
+		classification/solver/exact_cover.o \
+		classification/solver/exact_cover_arguments.o \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		top_level/algebra_and_number_theory/any_group_linear.o \
 		top_level/algebra_and_number_theory/any_group.o \
@@ -455,17 +468,6 @@ MODULES= \
 		top_level/interfaces/orbiter_command.o \
 		top_level/interfaces/orbiter_top_level_session.o \
 		top_level/interfaces/symbol_definition.o \
-		top_level/isomorph/isomorph.o \
-		top_level/isomorph/isomorph_arguments.o \
-		top_level/isomorph/isomorph_database.o \
-		top_level/isomorph/isomorph_files.o \
-		top_level/isomorph/isomorph_global.o \
-		top_level/isomorph/isomorph_testing.o \
-		top_level/isomorph/isomorph_trace.o \
-		top_level/isomorph/representatives.o \
-		top_level/orbits/orbit_of_equations.o \
-		top_level/orbits/orbit_of_sets.o \
-		top_level/orbits/orbit_of_subspaces.o \
 		top_level/orthogonal/blt_set_classify.o \
 		top_level/orthogonal/BLT_set_create_description.o \
 		top_level/orthogonal/BLT_set_create.o \
@@ -509,8 +511,6 @@ MODULES= \
 		top_level/semifields/semifield_substructure.o \
 		top_level/semifields/semifield_trace.o \
 		top_level/semifields/trace_record.o \
-		top_level/solver/exact_cover.o \
-		top_level/solver/exact_cover_arguments.o \
 		top_level/spreads/recoordinatize.o \
 		top_level/spreads/spread_classify.o \
 		top_level/spreads/spread_classify2.o \

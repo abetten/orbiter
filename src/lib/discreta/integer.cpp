@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 #undef INTEGER_M_I_VERBOSE
 

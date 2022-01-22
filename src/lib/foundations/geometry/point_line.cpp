@@ -12,7 +12,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 int point_line::is_desarguesian_plane(int verbose_level)

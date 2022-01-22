@@ -15,7 +15,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 static int classify_int_vec_compare_function(void *a, void *b, void *data);

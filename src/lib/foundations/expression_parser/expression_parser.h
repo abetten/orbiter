@@ -11,7 +11,7 @@
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 // #############################################################################
 // expression_parser_domain.cpp

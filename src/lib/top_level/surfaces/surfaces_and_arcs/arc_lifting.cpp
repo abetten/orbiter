@@ -14,8 +14,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 arc_lifting::arc_lifting()
@@ -60,7 +61,8 @@ void arc_lifting::freeself()
 }
 
 
-void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
+void arc_lifting::create_surface_and_group(
+		cubic_surfaces_in_general::surface_with_action *Surf_A,
 	long int *Arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -193,7 +195,7 @@ void arc_lifting::report_equation(ostream &ost)
 
 
 
-}}}
+}}}}
 
 
 

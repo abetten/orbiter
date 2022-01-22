@@ -15,7 +15,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 
 
 orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session

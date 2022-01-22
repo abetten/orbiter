@@ -10,15 +10,16 @@
 
 
 
-using namespace orbiter::foundations;
-using namespace orbiter::group_actions;
+using namespace orbiter::layer1_foundations;
+using namespace orbiter::layer2_discreta;
+using namespace orbiter::layer3_group_actions;
 
 
 namespace orbiter {
 
 //! classification of combinatorial objects
 
-namespace classification {
+namespace layer4_classification {
 
 
 //! classification by using an invariant relation
@@ -32,6 +33,21 @@ namespace invariant_relations {
 	class orbit_node;
 
 }
+
+// isomorph
+class isomorph_arguments;
+class isomorph;
+struct isomorph_worker_data;
+class representatives;
+
+
+// orbits
+class orbit_of_equations;
+class orbit_of_sets;
+class orbit_of_subspaces;
+
+
+
 
 
 //! To compute orbits on sets and subspaces using poset classification
@@ -59,6 +75,10 @@ class stabilizer_orbits_and_types;
 class substructure_classifier;
 class substructure_stats_and_selection;
 
+// solver:
+class exact_cover_arguments;
+class exact_cover;
+
 
 
 enum trace_result { 
@@ -77,9 +97,12 @@ enum find_isomorphism_result {
 
 }}
 
-#include "./classify/classify.h"
+#include "classify/classify.h"
+#include "isomorph/isomorph.h"
+#include "orbits/orbits.h"
 #include "poset_classification/poset_classification.h"
-#include "./set_stabilizer/set_stabilizer.h"
+#include "set_stabilizer/set_stabilizer.h"
+#include "solver/solver.h"
 
 
 

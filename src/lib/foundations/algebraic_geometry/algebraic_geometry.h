@@ -9,7 +9,7 @@
 #define SRC_LIB_FOUNDATIONS_ALGEBRAIC_GEOMETRY_ALGEBRAIC_GEOMETRY_H_
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace algebraic_geometry {
 
 

@@ -9,8 +9,9 @@
 #define SRC_LIB_TOP_LEVEL_SURFACES_SURFACES_AND_ARCS_SURFACES_AND_ARCS_H_
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 // #############################################################################
@@ -29,7 +30,7 @@ public:
 
 	algebraic_geometry::surface_domain *Surf;
 
-	surface_with_action *Surf_A;
+	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	long int *arc;
 	int arc_size;
@@ -49,7 +50,8 @@ public:
 	~arc_lifting();
 	void null();
 	void freeself();
-	void create_surface_and_group(surface_with_action *Surf_A, long int *Arc6,
+	void create_surface_and_group(
+			cubic_surfaces_in_general::surface_with_action *Surf_A, long int *Arc6,
 		int verbose_level);
 	void create_web_of_cubic_curves(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
@@ -162,7 +164,7 @@ public:
 	field_theory::finite_field *F; // do not free
 	actions::action *A; // do not free
 
-	surface_with_action *Surf_A; // do not free
+	cubic_surfaces_in_general::surface_with_action *Surf_A; // do not free
 	algebraic_geometry::surface_domain *Surf; // do not free
 
 	groups::strong_generators *gens_type1;
@@ -189,7 +191,8 @@ public:
 	~classify_trihedral_pairs();
 	void null();
 	void freeself();
-	void init(surface_with_action *Surf_A, int verbose_level);
+	void init(cubic_surfaces_in_general::surface_with_action *Surf_A,
+			int verbose_level);
 
 	void classify_orbits_on_trihedra(
 			poset_classification::poset_classification_control *Control1,
@@ -279,7 +282,7 @@ public:
 class surface_classify_using_arc {
 public:
 
-	surface_with_action *Surf_A;
+	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 
 
@@ -304,7 +307,7 @@ public:
 	~surface_classify_using_arc();
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
 			poset_classification::poset_classification_control *Control_six_arcs,
-			surface_with_action *Surf_A,
+			cubic_surfaces_in_general::surface_with_action *Surf_A,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void report(
@@ -335,14 +338,14 @@ public:
 
 	arc_lifting *AL;
 
-	surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_action *SOA;
 
 
 	int nine_lines_idx[9];
 	std::string arc_label;
 	std::string arc_label_short;
 
-	surface_clebsch_map *Clebsch; // [SOA->Orbits_on_single_sixes->nb_orbits]
+	cubic_surfaces_in_general::surface_clebsch_map *Clebsch; // [SOA->Orbits_on_single_sixes->nb_orbits]
 	int *Other_arc_idx; // [SOA->Orbits_on_single_sixes->nb_orbits]
 
 	surface_create_by_arc_lifting();
@@ -375,7 +378,7 @@ public:
 	int orbit_idx;
 
 	algebraic_geometry::surface_object *SO;
-	surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_action *SOA;
 
 
 
@@ -620,7 +623,7 @@ public:
 	actions::action *A3; // the action of PGL(3,q) on points
 
 	algebraic_geometry::surface_domain *Surf;
-	surface_with_action *Surf_A;
+	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	six_arcs_not_on_a_conic *Six_arcs;
 
@@ -646,7 +649,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-		surface_with_action *Surf_A,
+			cubic_surfaces_in_general::surface_with_action *Surf_A,
 		poset_classification::poset_classification_control *Control_six_arcs,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level);
@@ -754,7 +757,8 @@ public:
 
 
 
-}}}
+}}}}
+
 
 
 

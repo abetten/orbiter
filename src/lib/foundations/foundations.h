@@ -246,7 +246,7 @@ namespace orbiter {
 
 //! algebra, combinatorics and graph theory, geometry, linear algebra, number theory, data structures, solvers, graphics; no group actions
 
-namespace foundations {
+namespace layer1_foundations {
 
 
 

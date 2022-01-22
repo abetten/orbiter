@@ -13,8 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_in_general {
 
 
 
@@ -147,5 +148,5 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 
 }
 
-}}}
+}}}}
 

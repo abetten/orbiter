@@ -12,8 +12,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 
@@ -174,5 +175,5 @@ void arc_partition::recognize(int *partition, int *transporter,
 
 
 
-}}}
+}}}}
 

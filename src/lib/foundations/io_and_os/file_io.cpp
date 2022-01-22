@@ -20,7 +20,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 #define MY_OWN_BUFSIZE 1000000
 

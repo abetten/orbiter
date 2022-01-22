@@ -12,8 +12,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_in_general {
 
 
 
@@ -28,7 +29,8 @@ cubic_surface_activity::~cubic_surface_activity()
 
 }
 
-void cubic_surface_activity::init(cubic_surface_activity_description *Cubic_surface_activity_description,
+void cubic_surface_activity::init(
+		cubic_surfaces_in_general::cubic_surface_activity_description *Cubic_surface_activity_description,
 		surface_create *SC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -283,7 +285,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 
 
-}}}
+}}}}
 
 
 

@@ -15,8 +15,9 @@ using namespace std;
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_in_general {
 
 
 
@@ -1350,11 +1351,11 @@ void surface_create::create_surface_by_arc_lifting(
 #endif
 
 
-	arc_lifting *AL;
+	cubic_surfaces_and_arcs::arc_lifting *AL;
 	int coeffs20[20];
 	long int Lines27[27];
 
-	AL = NEW_OBJECT(arc_lifting);
+	AL = NEW_OBJECT(cubic_surfaces_and_arcs::arc_lifting);
 
 
 	if (f_v) {
@@ -2569,7 +2570,7 @@ void surface_create::compute_group(
 }
 
 
-}}}
+}}}}
 
 
 

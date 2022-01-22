@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 plot_tools::plot_tools()
 {

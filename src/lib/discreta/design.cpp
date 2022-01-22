@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 
 static void prepare_entry(Vector &entry, int i, int j,

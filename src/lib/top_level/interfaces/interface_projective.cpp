@@ -15,7 +15,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 
 
 
@@ -360,7 +360,7 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_create_surface_reports) {
 
-		applications_in_algebraic_geometry::surface_domain_high_level SH;
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
 		SH.do_create_surface_reports(create_surface_reports_field_orders_text, verbose_level);
 
@@ -368,7 +368,7 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_create_surface_atlas) {
 
-		applications_in_algebraic_geometry::surface_domain_high_level SH;
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
 		SH.do_create_surface_atlas(create_surface_atlas_q_max, verbose_level);
 
@@ -376,7 +376,7 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_create_dickson_atlas) {
 
-		applications_in_algebraic_geometry::surface_domain_high_level SH;
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
 		SH.do_create_dickson_atlas(verbose_level);
 

@@ -12,7 +12,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 
 database::database() : Vector()

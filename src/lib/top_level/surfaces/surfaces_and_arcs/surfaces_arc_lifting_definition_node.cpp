@@ -14,8 +14,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 surfaces_arc_lifting_definition_node::surfaces_arc_lifting_definition_node()
@@ -437,7 +438,7 @@ void surfaces_arc_lifting_definition_node::report_Clebsch_maps_for_one_tritangen
 
 
 
-}}}
+}}}}
 
 
 

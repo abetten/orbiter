@@ -9,7 +9,7 @@
 #define SRC_LIB_FOUNDATIONS_ORTHOGONAL_ORTHOGONA_H_
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 // #############################################################################

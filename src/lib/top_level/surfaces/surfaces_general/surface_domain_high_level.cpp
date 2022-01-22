@@ -13,8 +13,9 @@ using namespace std;
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_in_general {
 
 
 
@@ -154,7 +155,7 @@ void surface_domain_high_level::do_sweep_4_27(
 void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control,
-		surface_classify_wedge *&SCW,
+		cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -228,7 +229,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control,
 		algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
-		surface_classify_wedge *&SCW,
+		cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -247,7 +248,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 
 
 
-	SCW = NEW_OBJECT(surface_classify_wedge);
+	SCW = NEW_OBJECT(cubic_surfaces_and_double_sixes::surface_classify_wedge);
 
 	if (f_v) {
 		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->init" << endl;
@@ -391,9 +392,9 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 	}
 
 
-	surfaces_arc_lifting *SAL;
+	cubic_surfaces_and_arcs::surfaces_arc_lifting *SAL;
 
-	SAL = NEW_OBJECT(surfaces_arc_lifting);
+	SAL = NEW_OBJECT(cubic_surfaces_and_arcs::surfaces_arc_lifting);
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
@@ -503,9 +504,9 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 				"before Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 
-	surface_classify_using_arc *Surf_arc;
+	cubic_surfaces_and_arcs::surface_classify_using_arc *Surf_arc;
 
-	Surf_arc = NEW_OBJECT(surface_classify_using_arc);
+	Surf_arc = NEW_OBJECT(cubic_surfaces_and_arcs::surface_classify_using_arc);
 
 
 	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
@@ -576,12 +577,12 @@ void surface_domain_high_level::do_six_arcs(
 
 
 
-	six_arcs_not_on_a_conic *Six_arcs;
+	cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs;
 	apps_geometry::arc_generator_description *Six_arc_descr;
 
 	int *transporter;
 
-	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+	Six_arcs = NEW_OBJECT(cubic_surfaces_and_arcs::six_arcs_not_on_a_conic);
 
 	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Six_arc_descr->f_target_size = TRUE;
@@ -2177,6 +2178,6 @@ void surface_domain_high_level::make_fname_surface_report_pdf(std::string &fname
 
 
 
-}}}
+}}}}
 
 

@@ -8,13 +8,16 @@
 //
 //
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta/discreta.h"
+#include "group_actions/group_actions.h"
+#include "classification/classification.h"
 
 
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer4_classification {
 
 void isomorph::setup_and_open_solution_database(int verbose_level)
 {
@@ -24,10 +27,10 @@ void isomorph::setup_and_open_solution_database(int verbose_level)
 		cout << "isomorph::setup_and_open_solution_database" << endl;
 		}
 	if (DB_sol) {
-		freeobject(DB_sol);
+		layer2_discreta::freeobject(DB_sol);
 		DB_sol = NULL;
 		}
-	DB_sol = (database *)callocobject(DATABASE);
+	DB_sol = (layer2_discreta::database *) layer2_discreta::callocobject(layer2_discreta::DATABASE);
 	DB_sol->change_to_database();
 	
 	init_DB_sol(0 /*verbose_level - 1*/);
@@ -43,10 +46,10 @@ void isomorph::setup_and_create_solution_database(int verbose_level)
 		cout << "isomorph::setup_and_create_solution_database" << endl;
 		}
 	if (DB_sol) {
-		freeobject(DB_sol);
+		layer2_discreta::freeobject(DB_sol);
 		DB_sol = NULL;
 		}
-	DB_sol = (database *)callocobject(DATABASE);
+	DB_sol = (layer2_discreta::database *) layer2_discreta::callocobject(layer2_discreta::DATABASE);
 	DB_sol->change_to_database();
 	
 	init_DB_sol(0 /*verbose_level - 1*/);
@@ -79,9 +82,9 @@ void isomorph::setup_and_open_level_database(int verbose_level)
 		freeobject(D2);
 		D2 = NULL;
 		}
-	D1 = (database *)callocobject(DATABASE);
+	D1 = (layer2_discreta::database *) callocobject(layer2_discreta::DATABASE);
 	D1->change_to_database();
-	D2 = (database *)callocobject(DATABASE);
+	D2 = (layer2_discreta::database *) callocobject(layer2_discreta::DATABASE);
 	D2->change_to_database();
 	
 	init_DB_level(*D1, level - 1, verbose_level - 1);
@@ -156,8 +159,8 @@ void isomorph::init_DB_sol(int verbose_level)
 // fields 4,..., 4+level-1 are the starter values
 {
 	int f_v = (verbose_level >= 1);
-	database &D = *DB_sol;
-	btree B1, B2, B3, B4;
+	layer2_discreta::database &D = *DB_sol;
+	layer2_discreta::btree B1, B2, B3, B4;
 	int f_compress = TRUE;
 	int f_duplicatekeys = TRUE;
 	int i;
@@ -166,7 +169,7 @@ void isomorph::init_DB_sol(int verbose_level)
 		cout << "isomorph::init_DB_sol" << endl;
 		}
 	//cout << "isomorph::init_DB_sol before D.init" << endl;
-	D.init(fname_db1.c_str(), VECTOR, f_compress);
+	D.init(fname_db1.c_str(), layer2_discreta::VECTOR, f_compress);
 
 
 	//cout << "isomorph::init_DB_sol before B1.init" << endl;
@@ -217,7 +220,7 @@ void isomorph::add_solution_to_database(long int *data,
 	int print_mod, int verbose_level)
 {
 	int f_vvv = (verbose_level >= 3);
-	Vector v;
+	layer2_discreta::Vector v;
 	int j;
 	
 	//h = int_vec_hash_after_sorting(data + 1, size);
@@ -244,7 +247,7 @@ void isomorph::add_solution_to_database(long int *data,
 void isomorph::load_solution(int id, long int *data)
 {
 	int i, j, datref;
-	Vector v;
+	layer2_discreta::Vector v;
 	//int verbose_level = 0;
 	
 	if (f_use_table_of_solutions) {
@@ -267,7 +270,7 @@ void isomorph::load_solution_by_btree(
 		int btree_idx, int idx, int &id, long int *data)
 {
 	//int i;
-	Vector v;
+	layer2_discreta::Vector v;
 
 	cout << "isomorph::load_solution_by_btree" << endl;
 	exit(1);
@@ -557,10 +560,11 @@ int isomorph::open_database_and_identify_object(long int *set,
 
 
 
-void isomorph::init_DB_level(database &D, int level, int verbose_level)
+void isomorph::init_DB_level(layer2_discreta::database &D,
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	btree B1, B2;
+	layer2_discreta::btree B1, B2;
 	int f_compress = TRUE;
 	int f_duplicatekeys = TRUE;
 	int i;
@@ -596,7 +600,7 @@ void isomorph::init_DB_level(database &D, int level, int verbose_level)
 
 	//sprintf(fname_db_level_ge, "%sstarter_lvl_%d_ge.bin", prefix, level);
 
-	D.init(fname_db_level.c_str(), VECTOR, f_compress);
+	D.init(fname_db_level.c_str(), layer2_discreta::VECTOR, f_compress);
 	
 	B1.init(fname_db_level_idx1.c_str(), f_duplicatekeys, 0 /* btree_idx */);
 	B1.add_key_int4(0, 0); 
@@ -636,7 +640,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 		cout << "nb_nodes=" << nb_nodes << endl;
 		}
 	
-	database D;
+	layer2_discreta::database D;
 	//FILE *fp;
 	int cnt = 0;
 	
@@ -665,7 +669,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				}
 
 			int len, nb_fusion;
-			Vector v;
+			layer2_discreta::Vector v;
 
 
 				// # ints   description
@@ -969,7 +973,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int *tmp_ELT;
-	Vector v;
+	layer2_discreta::Vector v;
 	int i;
 	int set[1000];
 	int *tl;

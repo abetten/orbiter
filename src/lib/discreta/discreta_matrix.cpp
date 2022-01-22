@@ -21,7 +21,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 #undef MATRIX_COPY_VERBOSE
 #undef DEBUG_S_IJ
@@ -1834,7 +1834,7 @@ void discreta_matrix::binomial(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::discreta::Binomial(n_min + i, k_min + j, s_ij(i, j));
+			orbiter::layer2_discreta::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			}
 		}
 }
@@ -1850,7 +1850,7 @@ void discreta_matrix::stirling_second(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::discreta::stirling_second(n_min + i,
+			orbiter::layer2_discreta::stirling_second(n_min + i,
 					k_min + j, f_ordered, s_ij(i, j), f_v);
 			}
 		}
@@ -1867,7 +1867,7 @@ void discreta_matrix::stirling_first(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::discreta::stirling_first(n_min + i, k_min + j,
+			orbiter::layer2_discreta::stirling_first(n_min + i, k_min + j,
 					f_signless, s_ij(i, j), f_v);
 			}
 		}
@@ -1883,7 +1883,7 @@ void discreta_matrix::binomial(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			orbiter::discreta::Binomial(n_min + i, k_min + j, s_ij(i, j));
+			orbiter::layer2_discreta::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			if (f_inverse && ODD(n_min + i + k_min + j))
 				s_ij(i, j).negate();			
 			}

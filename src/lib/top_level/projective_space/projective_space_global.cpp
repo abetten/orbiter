@@ -10,7 +10,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace projective_geometry {
 
 
@@ -197,9 +197,9 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 
 void projective_space_global::do_create_surface(
 		projective_space_with_action *PA,
-		applications_in_algebraic_geometry::surface_create_description *Surface_Descr,
-		applications_in_algebraic_geometry::surface_with_action *&Surf_A,
-		applications_in_algebraic_geometry::surface_create *&SC,
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr,
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *&SC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -239,7 +239,7 @@ void projective_space_global::do_create_surface(
 		cout << "projective_space_global::do_create_surface after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_create_surface before Surf_A->init" << endl;
@@ -338,7 +338,7 @@ void projective_space_global::do_lift_skew_hexagon(
 	}
 
 	algebraic_geometry::surface_domain *Surf;
-	applications_in_algebraic_geometry::surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
 		cout << "projective_space_global::do_lift_skew_hexagon we need a three-dimensional projective space" << endl;
@@ -355,7 +355,7 @@ void projective_space_global::do_lift_skew_hexagon(
 		cout << "projective_space_global::do_lift_skew_hexagon after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon before Surf_A->init" << endl;
@@ -447,7 +447,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 
 	algebraic_geometry::surface_domain *Surf;
-	applications_in_algebraic_geometry::surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity we need a three-dimensional projective space" << endl;
@@ -464,7 +464,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity after Surf->init" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::surface_with_action);
+	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity before Surf_A->init" << endl;

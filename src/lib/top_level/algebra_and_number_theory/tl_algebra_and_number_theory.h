@@ -12,7 +12,7 @@
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace apps_algebra {
 
 // #############################################################################
@@ -78,16 +78,24 @@ public:
 	void do_eigenstuff(field_theory::finite_field *F, int size, int *Data, int verbose_level);
 	void A5_in_PSL_(int q, int verbose_level);
 	void A5_in_PSL_2_q(int q,
-			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+			layer2_discreta::discreta_matrix & A,
+			layer2_discreta::discreta_matrix & B,
+			layer2_discreta::domain *dom_GFq, int verbose_level);
 	void A5_in_PSL_2_q_easy(int q,
-			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+			layer2_discreta::discreta_matrix & A,
+			layer2_discreta::discreta_matrix & B,
+			layer2_discreta::domain *dom_GFq,
+			int verbose_level);
 	void A5_in_PSL_2_q_hard(int q,
-			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
-	int proj_order(discreta_matrix &A);
-	void trace(discreta_matrix &A, discreta_base &tr);
-	void elementwise_power_int(discreta_matrix &A, int k);
-	int is_in_center(discreta_matrix &B);
-	void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
+			layer2_discreta::discreta_matrix & A,
+			layer2_discreta::discreta_matrix & B,
+			layer2_discreta::domain *dom_GFq,
+			int verbose_level);
+	int proj_order(layer2_discreta::discreta_matrix &A);
+	void trace(layer2_discreta::discreta_matrix &A, layer2_discreta::discreta_base &tr);
+	void elementwise_power_int(layer2_discreta::discreta_matrix &A, int k);
+	int is_in_center(layer2_discreta::discreta_matrix &B);
+	void matrix_convert_to_numerical(layer2_discreta::discreta_matrix &A, int *AA, int q);
 
 
 	void young_symmetrizer(int n, int verbose_level);

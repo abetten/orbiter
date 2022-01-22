@@ -13,8 +13,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_arcs {
 
 
 arc_orbits_on_pairs::arc_orbits_on_pairs()
@@ -260,6 +261,6 @@ void arc_orbits_on_pairs::recognize(long int *pair, int *transporter,
 
 
 
-}}}
+}}}}
 
 

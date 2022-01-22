@@ -9,12 +9,15 @@
 //
 //
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta/discreta.h"
+#include "group_actions/group_actions.h"
+#include "classification/classification.h"
 
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer4_classification {
 
 
 isomorph::isomorph()
@@ -237,7 +240,7 @@ void isomorph::allocate_tmp_data()
 
 	handle_automorphism_Elt1 = NEW_int(A->elt_size_in_int);
 	
-	v = new Vector[1];
+	v = new layer2_discreta::Vector[1];
 
 }
 
@@ -810,7 +813,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 void isomorph::orbits_of_stabilizer_case(int the_case,
 		data_structures_groups::vector_ge &gens, int verbose_level)
 {
-	Vector v;
+	layer2_discreta::Vector v;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
@@ -1698,7 +1701,7 @@ void isomorph::init_high_level(actions::action *A,
 		}
 
 	
-	discreta_init();
+	layer2_discreta::discreta_init();
 
 	int f_use_database_for_starter = FALSE;
 	int f_implicit_fusion = FALSE;

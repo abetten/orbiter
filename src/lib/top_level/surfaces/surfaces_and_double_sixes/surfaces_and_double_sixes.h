@@ -10,8 +10,9 @@
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_double_sixes {
 
 
 
@@ -37,11 +38,11 @@ public:
 	int f_identify_general_abcd;
 
 	int f_isomorphism_testing;
-		surface_create_description *isomorphism_testing_surface1;
-		surface_create_description *isomorphism_testing_surface2;
+	cubic_surfaces_in_general::surface_create_description *isomorphism_testing_surface1;
+	cubic_surfaces_in_general::surface_create_description *isomorphism_testing_surface2;
 
 	int f_recognize;
-		surface_create_description *recognize_surface;
+	cubic_surfaces_in_general::surface_create_description *recognize_surface;
 
 	int f_create_source_code;
 
@@ -86,11 +87,11 @@ public:
 	void do_surface_identify_Bes(int verbose_level);
 	void do_surface_identify_general_abcd(int verbose_level);
 	void do_surface_isomorphism_testing(
-			surface_create_description *surface_descr_isomorph1,
-			surface_create_description *surface_descr_isomorph2,
+			cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph1,
+			cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph2,
 			int verbose_level);
 	void do_recognize(
-			surface_create_description *surface_descr,
+			cubic_surfaces_in_general::surface_create_description *surface_descr,
 			int verbose_level);
 	void do_write_source_code(int verbose_level);
 	void do_sweep(
@@ -117,7 +118,7 @@ public:
 
 	//linear_group *LG;
 
-	surface_with_action *Surf_A;
+	cubic_surfaces_in_general::surface_with_action *Surf_A;
 	algebraic_geometry::surface_domain *Surf;
 
 
@@ -215,7 +216,7 @@ public:
 	~classify_double_sixes();
 	void null();
 	void freeself();
-	void init(surface_with_action *Surf_A,
+	void init(cubic_surfaces_in_general::surface_with_action *Surf_A,
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void compute_neighbors(int verbose_level);
@@ -269,7 +270,7 @@ public:
 	actions::action *A2; // the action on the wedge product
 
 	algebraic_geometry::surface_domain *Surf;
-	surface_with_action *Surf_A;
+	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	int *Elt0;
 	int *Elt1;
@@ -290,7 +291,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-		surface_with_action *Surf_A,
+			cubic_surfaces_in_general::surface_with_action *Surf_A,
 		poset_classification::poset_classification_control *Control,
 		int verbose_level);
 	void do_classify_double_sixes(int verbose_level);
@@ -316,7 +317,8 @@ public:
 	void identify_general_abcd(
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	int isomorphism_test_pairwise(
-		surface_create *SC1, surface_create *SC2,
+			cubic_surfaces_in_general::surface_create *SC1,
+			cubic_surfaces_in_general::surface_create *SC2,
 		int &isomorphic_to1, int &isomorphic_to2,
 		int *Elt_isomorphism_1to2,
 		int verbose_level);
@@ -344,18 +346,18 @@ public:
 			int verbose_level);
 	void create_report_double_sixes(int verbose_level);
 	void test_isomorphism(
-			surface_create_description *Descr1,
-			surface_create_description *Descr2,
+			cubic_surfaces_in_general::surface_create_description *Descr1,
+			cubic_surfaces_in_general::surface_create_description *Descr2,
 			int verbose_level);
 	void recognition(
-			surface_create_description *Descr,
+			cubic_surfaces_in_general::surface_create_description *Descr,
 			int verbose_level);
 	void sweep_Cayley(int verbose_level);
 
 };
 
 
-}}}
+}}}}
 
 
 

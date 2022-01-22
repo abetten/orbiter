@@ -15,7 +15,7 @@ using namespace std;
 #define DONT_DRAW_ROOT_NODE 0
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 

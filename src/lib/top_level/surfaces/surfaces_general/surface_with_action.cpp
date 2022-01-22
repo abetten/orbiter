@@ -15,8 +15,9 @@ using namespace std;
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_in_general {
 
 
 surface_with_action::surface_with_action()
@@ -158,7 +159,7 @@ void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
 	AonHPD_3_4->init(A, Surf->Poly3_4, verbose_level);
 	
 #if 1
-	Classify_trihedral_pairs = NEW_OBJECT(classify_trihedral_pairs);
+	Classify_trihedral_pairs = NEW_OBJECT(cubic_surfaces_and_arcs::classify_trihedral_pairs);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"before Classify_trihedral_pairs->init" << endl;
@@ -1707,12 +1708,12 @@ void surface_with_action::report_with_group(
 				"Classifying non-conical six-arcs." << endl;
 	}
 
-	six_arcs_not_on_a_conic *Six_arcs;
+	cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs;
 	apps_geometry::arc_generator_description *Six_arc_descr;
 
 	int *transporter;
 
-	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+	Six_arcs = NEW_OBJECT(cubic_surfaces_and_arcs::six_arcs_not_on_a_conic);
 
 	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Six_arc_descr->f_target_size = TRUE;
@@ -2991,7 +2992,7 @@ void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
 //UPDATE `cubicvt`.`surface` SET `CollStabOrder` = '12', `ProjStabOrder` = '12', `nbPts` = '691', `nbLines` = '27', `nbE` = '4', `nbDouble` = '123', `nbSingle` = '390', `nbPtsNotOn` = '174',`nbHesse` = '0', `nbAxes` = '1', `nbOrbE` = '2', `nbOrbDouble` = '16', `nbOrbPtsNotOn` = '16', `nbOrbLines` = '5', `nbOrbSingleSix` = '10', `nbOrbTriPlanes` = '10', `nbOrbHesse` = '0', `nbOrbTrihedralPairs` = '19', `nbOrbTritangentPlanes` = '10',`Eqn20` = '0,0,0,0,0,0,8,0,10,0,0,18,0,2,0,0,18,10,2,1', `Equation` = '$8X_0^2*X_3+10X_1^2*X_2+18X_1*X_2^2+2X_0*X_3^2+18X_0*X_1*X_2+10X_0*X_1*X_3+2X_0*X_2*X_3+X_1*X_2*X_3$', `Lines` = '529,292560,1083,4965,290982,88471,169033,6600,8548,576,293089,0,3824,9119,1698,242212,12168,59424,229610,292854,242075,120504,179157,279048,30397,181283,12150' WHERE `Q` = '23' AND `OCN` = '1';
 
 
-}}}
+}}}}
 
 
 

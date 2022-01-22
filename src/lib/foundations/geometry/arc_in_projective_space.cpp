@@ -16,7 +16,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 arc_in_projective_space::arc_in_projective_space()

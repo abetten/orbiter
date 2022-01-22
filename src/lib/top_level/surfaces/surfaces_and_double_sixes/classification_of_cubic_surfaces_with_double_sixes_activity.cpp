@@ -12,8 +12,9 @@
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 namespace applications_in_algebraic_geometry {
+namespace cubic_surfaces_and_double_sixes {
 
 
 classification_of_cubic_surfaces_with_double_sixes_activity::classification_of_cubic_surfaces_with_double_sixes_activity()
@@ -217,8 +218,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_ide
 }
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_isomorphism_testing(
-		surface_create_description *surface_descr_isomorph1,
-		surface_create_description *surface_descr_isomorph2,
+		cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph1,
+		cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -247,7 +248,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_iso
 }
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize(
-		surface_create_description *surface_descr,
+		cubic_surfaces_in_general::surface_create_description *surface_descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -324,7 +325,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep(
 
 
 
-}}}
+}}}}
 
 
 

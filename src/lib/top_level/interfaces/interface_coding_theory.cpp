@@ -14,7 +14,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer5_applications {
 
 
 interface_coding_theory::interface_coding_theory()

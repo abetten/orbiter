@@ -12,7 +12,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace coding_theory {
 
 void coding_theory_domain::make_BCH_code(int n,

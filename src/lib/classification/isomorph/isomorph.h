@@ -13,7 +13,7 @@
 
 
 namespace orbiter {
-namespace top_level {
+namespace layer4_classification {
 
 
 // #############################################################################
@@ -456,22 +456,25 @@ public:
 	int open_database_and_identify_object(long int *set,
 		int *transporter, 
 		int f_implicit_fusion, int verbose_level);
-	void init_DB_level(database &D, int level, 
+	void init_DB_level(layer2_discreta::database &D, int level,
 		int verbose_level);
 	void create_level_database(int level, int verbose_level);
 	void load_strong_generators(int cur_level, 
 		int cur_node_local, 
-		data_structures_groups::vector_ge &gens, ring_theory::longinteger_object &go,
+		data_structures_groups::vector_ge &gens,
+		ring_theory::longinteger_object &go,
 		int verbose_level);
 		// Called from compute_stabilizer and 
 		// from orbit_representative
 	void load_strong_generators_oracle(int cur_level, 
 		int cur_node_local, 
-		data_structures_groups::vector_ge &gens, ring_theory::longinteger_object &go,
+		data_structures_groups::vector_ge &gens,
+		ring_theory::longinteger_object &go,
 		int verbose_level);
 	void load_strong_generators_database(int cur_level, 
 		int cur_node_local, 
-		data_structures_groups::vector_ge &gens, ring_theory::longinteger_object &go,
+		data_structures_groups::vector_ge &gens,
+		ring_theory::longinteger_object &go,
 		int verbose_level);
 		// Reads node cur_node_local (local index) 
 		// from database D through btree 0

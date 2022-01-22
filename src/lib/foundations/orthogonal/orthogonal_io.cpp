@@ -12,7 +12,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 
 void orthogonal::list_points_by_type(int verbose_level)

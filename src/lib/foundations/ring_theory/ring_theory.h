@@ -9,7 +9,7 @@
 #define SRC_LIB_FOUNDATIONS_RING_THEORY_RING_THEORY_H_
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 namespace ring_theory {
 
 

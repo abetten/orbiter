@@ -4,13 +4,14 @@
 // November 19, 2018
 
 #include "foundations/foundations.h"
+#include "discreta/discreta.h"
 #include "group_actions/group_actions.h"
 #include "classification/classification.h"
 
 using namespace std;
 
 namespace orbiter {
-namespace classification {
+namespace layer4_classification {
 namespace poset_classification {
 
 

@@ -16,7 +16,7 @@ using namespace std;
 #define EPSILON 0.01
 
 namespace orbiter {
-namespace foundations {
+namespace layer1_foundations {
 
 numerics::numerics()
 {

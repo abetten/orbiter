@@ -13,7 +13,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 
 discreta_base::discreta_base()
@@ -245,7 +245,7 @@ void discreta_base::print_to_hollerith(hollerith& h)
 
 ostream& discreta_base::printobjectkind(ostream& ost)
 {
-	orbiter::discreta::printobjectkind(ost, s_kind());
+	orbiter::layer2_discreta::printobjectkind(ost, s_kind());
 	return ost;
 }
 
@@ -1489,7 +1489,7 @@ void discreta_base::load_ascii(istream & f)
 	int a;
 	unsigned int a1, a2;
 	char cc;
-	foundations::data_structures::string_tools ST;
+	layer1_foundations::data_structures::string_tools ST;
 		
 	f.getline(buf, sizeof(buf));
 	p = buf;

@@ -13,7 +13,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 bt_key::bt_key() : Vector()
 {

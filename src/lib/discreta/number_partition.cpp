@@ -16,7 +16,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 number_partition::number_partition() : Vector()
 {

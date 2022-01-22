@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace discreta {
+namespace layer2_discreta {
 
 
 #define MAX_BTREE_PAGE_TABLE 100
