@@ -56,14 +56,16 @@ int main(int argc, const char **argv)
 	std::string *Argv;
 	data_structures::string_tools ST;
 
-	cout << "argc=" << argc << endl;
+	cout << "before ST.convert_arguments, argc=" << argc << endl;
 
 	ST.convert_arguments(argc, argv, Argv);
 		// argc has changed!
 
-	cout << "argc=" << argc << endl;
+	cout << "after ST.convert_arguments, argc=" << argc << endl;
 
+	cout << "before Top_level_session.startup_and_read_arguments" << endl;
 	i = Top_level_session.startup_and_read_arguments(argc, Argv, 1);
+	cout << "after Top_level_session.startup_and_read_arguments" << endl;
 
 
 

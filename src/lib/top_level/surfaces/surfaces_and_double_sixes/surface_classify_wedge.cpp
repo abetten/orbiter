@@ -1115,132 +1115,6 @@ void surface_classify_wedge::identify_Bes_and_print_table(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int a, b, c, d;
-	int q4, q3, q2;
-
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table" << endl;
-	}
-
-	q2 = q * q;
-	q3 = q2 * q;
-	q4 = q3 * q;
-
-	int *Iso_type;
-	int *Nb_lines;
-	//int *Nb_E;
-
-	Iso_type = NEW_int(q4);
-	Nb_lines = NEW_int(q4);
-	//Nb_E = NEW_int(q4);
-
-	for (a = 0; a < q4; a++) {
-		Iso_type[a] = -1;
-		Nb_lines[a] = -1;
-		//Nb_E[a] = -1;
-	}
-
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table before identify_general_abcd" << endl;
-	}
-	identify_general_abcd(Iso_type, Nb_lines, verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table after identify_general_abcd" << endl;
-	}
-
-
-	//cout << "\\begin{array}{|c|c|c|}" << endl;
-	//cout << "\\hline" << endl;
-	cout << "(a,c); \\# lines & \\mbox{OCN} \\\\" << endl;
-	//cout << "\\hline" << endl;
-	for (a = 1; a < q; a++) {
-		for (b = 1; b < q; b++) {
-			for (c = 1; c < q; c++) {
-				for (d = 1; d < q; d++) {
-					cout << "$(" << a << "," << b << "," << c << "," << d << ")$; ";
-#if 0
-					cout << "$(";
-						F->print_element(cout, a);
-						cout << ", ";
-						F->print_element(cout, b);
-						cout << ", ";
-						F->print_element(cout, c);
-						cout << ", ";
-						F->print_element(cout, d);
-						cout << ")$; ";
-#endif
-					cout << Nb_lines[a * q3 + b * q2 + c * q + d] << "; ";
-					//cout << Nb_E[a * q3 + b * q2 + c * q + d] << "; ";
-					cout << Iso_type[a * q3 + b * q2 + c * q + d];
-					cout << "\\\\" << endl;
-				}
-			}
-		}
-	}
-	//cout << "\\hline" << endl;
-	//cout << "\\end{array}" << endl;
-
-	int *Table;
-	int h = 0;
-	int nb_lines, iso, nb_e;
-	knowledge_base K;
-	file_io Fio;
-
-	Table = NEW_int(q4 * 7);
-
-
-	for (a = 1; a < q; a++) {
-		for (b = 1; b < q; b++) {
-			for (c = 1; c < q; c++) {
-				for (d = 1; d < q; d++) {
-					nb_lines = Nb_lines[a * q3 + b * q2 + c * q + d];
-					iso = Iso_type[a * q3 + b * q2 + c * q + d];
-
-					if (iso == -1) {
-						continue;
-					}
-
-					if (iso >= 0) {
-						nb_e = K.cubic_surface_nb_Eckardt_points(q, iso);
-					}
-					else {
-						nb_e = -1;
-					}
-
-					Table[h * 7 + 0] = a;
-					Table[h * 7 + 1] = b;
-					Table[h * 7 + 2] = c;
-					Table[h * 7 + 3] = d;
-					Table[h * 7 + 4] = nb_lines;
-					Table[h * 7 + 5] = iso;
-					Table[h * 7 + 6] = nb_e;
-					h++;
-				}
-			}
-		}
-	}
-
-	char str[1000];
-	string fname;
-
-	sprintf(str, "surface_recognize_abcd_q%d.csv", q);
-	fname.assign(str);
-
-	Fio.int_matrix_write_csv(fname, Table, h, 7);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-
-	FREE_int(Iso_type);
-	FREE_int(Nb_lines);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table done" << endl;
-	}
-}
 
 void surface_classify_wedge::identify_Eckardt(
 	int *Iso_type, int *Nb_lines, int verbose_level)
@@ -1402,228 +1276,6 @@ void surface_classify_wedge::identify_Bes(
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_Bes done" << endl;
-	}
-}
-
-void surface_classify_wedge::identify_general_abcd(
-	int *Iso_type, int *Nb_lines, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, a, b, c, d;
-	int a0, b0; //, c0, d0;
-	int iso_type;
-	int *Elt;
-	int q2, q3, q4;
-
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd" << endl;
-	}
-
-
-	q2 = q * q;
-	q3 = q2 * q;
-	q4 = q3 * q;
-
-	Elt = NEW_int(A->elt_size_in_int);
-	cout << "surface_classify_wedge::identify_general_abcd "
-			"looping over all a:" << endl;
-
-	for (i = 0; i < q4; i++) {
-		Iso_type[i] = -1;
-		Nb_lines[i] = -1;
-		//Nb_E[i] = -1;
-	}
-	for (a = 1; a < q; a++) {
-		cout << "surface_classify_wedge::identify_general_abcd "
-				"a = " << a << endl;
-
-		if (a == 0 || a == 1) {
-			continue;
-		}
-
-		for (b = 1; b < q; b++) {
-			cout << "surface_classify_wedge::identify_general_abcd "
-					" b = " << b << endl;
-
-			if (b == 0 || b == 1) {
-				continue;
-			}
-
-			if (b == a) {
-				continue;
-			}
-
-			if (EVEN(q)) {
-				F->minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(a, b,
-						a0, b0, verbose_level);
-
-				cout << "a=" << a << " b=" << b << " a0=" << a0 << " b0=" << b0 << endl;
-
-				if (a0 < a) {
-					cout << "skipping" << endl;
-					continue;
-				}
-				if (a0 == a && b0 < b) {
-					cout << "skipping" << endl;
-					continue;
-				}
-			}
-
-			for (c = 1; c < q; c++) {
-				cout << "surface_classify_wedge::identify_general_abcd "
-						"a = " << a << " b = " << b << " c = " << c << endl;
-
-
-				if (c == 0 || c == 1) {
-					continue;
-				}
-
-				if (c == a) {
-					continue;
-				}
-
-
-
-				for (d = 1; d < q; d++) {
-
-					if (d == 0 || d == 1) {
-						continue;
-					}
-
-					if (d == b) {
-						continue;
-					}
-
-					if (d == c) {
-						continue;
-					}
-
-#if 1
-					// ToDo
-					// warning: special case
-
-					if (d != a) {
-						continue;
-					}
-#endif
-
-					cout << "surface_classify_wedge::identify_general_abcd "
-							"a = " << a << " b = " << b << " c = " << c << " d = " << d << endl;
-
-					int m1;
-
-
-					m1 = F->negate(1);
-
-
-#if 0
-					// this is a test for having 6 Eckardt points:
-					int b2, b2v, x1, x2;
-
-					b2 = F->mult(b, b);
-					//cout << "b2=" << b2 << endl;
-					b2v = F->inverse(b2);
-					//cout << "b2v=" << b2v << endl;
-
-					x1 = F->add(F->mult(2, b), m1);
-					x2 = F->mult(x1, b2v);
-
-					if (c != x2) {
-						cout << "skipping" << endl;
-						continue;
-					}
-#endif
-
-
-
-#if 0
-					F->minimal_orbit_rep_under_stabilizer_of_frame(c, d,
-							c0, d0, verbose_level);
-
-					cout << "c=" << c << " d=" << d << " c0=" << c0 << " d0=" << d0 << endl;
-
-
-					if (c0 < c) {
-						cout << "skipping" << endl;
-						continue;
-					}
-					if (c0 == c && d0 < d) {
-						cout << "skipping" << endl;
-						continue;
-					}
-#endif
-
-
-					cout << "nonconical test" << endl;
-
-					int admbc;
-					//int m1;
-					int a1, b1, c1, d1;
-					int a1d1, b1c1;
-					int ad, bc;
-					int adb1c1, bca1d1;
-
-
-					//m1 = F->negate(1);
-
-					a1 = F->add(a, m1);
-					b1 = F->add(b, m1);
-					c1 = F->add(c, m1);
-					d1 = F->add(d, m1);
-
-					ad = F->mult(a, d);
-					bc = F->mult(b, c);
-
-					adb1c1 = F->mult3(ad, b1, c1);
-					bca1d1 = F->mult3(bc, a1, d1);
-
-					a1d1 = F->mult(a1, d1);
-					b1c1 = F->mult(b1, c1);
-					if (a1d1 == b1c1) {
-						continue;
-					}
-					if (adb1c1 == bca1d1) {
-						continue;
-					}
-
-
-
-					admbc = F->add(F->mult(a, d), F->negate(F->mult(b, c)));
-
-					if (admbc == 0) {
-						continue;
-					}
-
-					Iso_type[a * q3 + b * q2 + c * q + d] = -2;
-					Nb_lines[a * q3 + b * q2 + c * q + d] = -1;
-					//Nb_E[a * q3 + b * q2 + c * q + d] = -1;
-
-					algebraic_geometry::surface_object *SO;
-
-					SO = Surf->create_surface_general_abcd(a, b, c, d, verbose_level);
-
-
-					identify_surface(SO->eqn,
-						iso_type, Elt,
-						verbose_level);
-
-					cout << "surface_classify_wedge::identify_general_abcd "
-							"a = " << a << " b = " << b << " c = " << c << " d = " << d
-							<< " is isomorphic to iso_type "
-						<< iso_type << ", an isomorphism is:" << endl;
-					A->element_print_quick(Elt, cout);
-
-					Iso_type[a * q3 + b * q2 + c * q + d] = iso_type;
-					Nb_lines[a * q3 + b * q2 + c * q + d] = SO->nb_lines;
-					//Nb_E[a * q3 + b * q2 + c * q + d] = nb_E;
-				}
-			}
-		}
-	}
-
-	FREE_int(Elt);
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd done" << endl;
 	}
 }
 
@@ -2176,19 +1828,23 @@ void surface_classify_wedge::latex_surfaces(
 	int orbit_index;
 	
 	if (f_v) {
-		cout << "surface_classify_wedge::latex_surfaces before loop over all surfaces" << endl;
+		cout << "surface_classify_wedge::latex_surfaces "
+				"before loop over all surfaces" << endl;
 	}
 	for (orbit_index = 0; orbit_index < Surfaces->nb_orbits; orbit_index++) {
 		if (f_v) {
-			cout << "surface_classify_wedge::latex_surfaces before report_surface, orbit_index = " << orbit_index << endl;
+			cout << "surface_classify_wedge::latex_surfaces "
+					"before report_surface, orbit_index = " << orbit_index << endl;
 		}
 		report_surface(ost, orbit_index, verbose_level);
 		if (f_v) {
-			cout << "surface_classify_wedge::latex_surfaces after report_surface" << endl;
+			cout << "surface_classify_wedge::latex_surfaces "
+					"after report_surface" << endl;
 		}
 	}
 	if (f_v) {
-		cout << "surface_classify_wedge::latex_surfaces after loop over all surfaces" << endl;
+		cout << "surface_classify_wedge::latex_surfaces "
+				"after loop over all surfaces" << endl;
 	}
 #endif
 	if (f_v) {
@@ -2979,24 +2635,29 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::report before Classify_double_sixes->print_five_plus_ones" << endl;
+		cout << "surface_classify_wedge::report "
+				"before Classify_double_sixes->print_five_plus_ones" << endl;
 	}
 	Classify_double_sixes->print_five_plus_ones(ost);
 	if (f_v) {
-		cout << "surface_classify_wedge::report after Classify_double_sixes->print_five_plus_ones" << endl;
+		cout << "surface_classify_wedge::report "
+				"after Classify_double_sixes->print_five_plus_ones" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_classify_wedge::report before Classify_double_sixes->Flag_orbits->print_latex" << endl;
+		cout << "surface_classify_wedge::report "
+				"before Classify_double_sixes->Flag_orbits->print_latex" << endl;
 	}
 	Classify_double_sixes->Flag_orbits->print_latex(ost, "Flag orbits for double sixes", TRUE);
 	if (f_v) {
-		cout << "surface_classify_wedge::report after Classify_double_sixes->Flag_orbits->print_latex" << endl;
+		cout << "surface_classify_wedge::report "
+				"after Classify_double_sixes->Flag_orbits->print_latex" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::report before Classify_double_sixes->Double_sixes->print_latex" << endl;
+		cout << "surface_classify_wedge::report "
+				"before Classify_double_sixes->Double_sixes->print_latex" << endl;
 	}
 	{
 		string title;
@@ -3006,7 +2667,8 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 				FALSE, NULL, NULL);
 	}
 	if (f_v) {
-		cout << "surface_classify_wedge::report after Classify_double_sixes->Double_sixes->print_latex" << endl;
+		cout << "surface_classify_wedge::report "
+				"after Classify_double_sixes->Double_sixes->print_latex" << endl;
 	}
 
 	if (f_v) {
@@ -3078,11 +2740,13 @@ void surface_classify_wedge::create_report_double_sixes(int verbose_level)
 
 
 		if (f_v) {
-			cout << "surface_classify_wedge::create_report_double_sixes before Classify_double_sixes->print_five_plus_ones" << endl;
+			cout << "surface_classify_wedge::create_report_double_sixes "
+					"before Classify_double_sixes->print_five_plus_ones" << endl;
 		}
 		Classify_double_sixes->print_five_plus_ones(fp);
 		if (f_v) {
-			cout << "surface_classify_wedge::create_report_double_sixes after Classify_double_sixes->print_five_plus_ones" << endl;
+			cout << "surface_classify_wedge::create_report_double_sixes "
+					"after Classify_double_sixes->print_five_plus_ones" << endl;
 		}
 
 		{
@@ -3090,13 +2754,15 @@ void surface_classify_wedge::create_report_double_sixes(int verbose_level)
 
 			title.assign("Double Sixes");
 			if (f_v) {
-				cout << "surface_classify_wedge::create_report_double_sixes before Classify_double_sixes->Double_sixes->print_latex" << endl;
+				cout << "surface_classify_wedge::create_report_double_sixes "
+						"before Classify_double_sixes->Double_sixes->print_latex" << endl;
 			}
 			Classify_double_sixes->Double_sixes->print_latex(fp,
 				title, FALSE /* f_with_stabilizers*/,
 				FALSE, NULL, NULL);
 			if (f_v) {
-				cout << "surface_classify_wedge::create_report_double_sixes after Classify_double_sixes->Double_sixes->print_latex" << endl;
+				cout << "surface_classify_wedge::create_report_double_sixes "
+						"after Classify_double_sixes->Double_sixes->print_latex" << endl;
 			}
 		}
 
@@ -3384,6 +3050,354 @@ void surface_classify_wedge::sweep_Cayley(
 	}
 }
 
+void surface_classify_wedge::identify_general_abcd(
+	int *Iso_type, int *Nb_lines, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a, b, c, d;
+	int a0, b0; //, c0, d0;
+	int iso_type;
+	int *Elt;
+	int q2, q3, q4;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd" << endl;
+	}
+
+
+	q2 = q * q;
+	q3 = q2 * q;
+	q4 = q3 * q;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	cout << "surface_classify_wedge::identify_general_abcd "
+			"looping over all a:" << endl;
+
+	for (i = 0; i < q4; i++) {
+		Iso_type[i] = -1;
+		Nb_lines[i] = -1;
+		//Nb_E[i] = -1;
+	}
+	for (a = 1; a < q; a++) {
+		cout << "surface_classify_wedge::identify_general_abcd "
+				"a = " << a << endl;
+
+		if (a == 0 || a == 1) {
+			continue;
+		}
+
+		for (b = 1; b < q; b++) {
+			cout << "surface_classify_wedge::identify_general_abcd "
+					" b = " << b << endl;
+
+			if (b == 0 || b == 1) {
+				continue;
+			}
+
+			if (b == a) {
+				continue;
+			}
+
+			if (EVEN(q)) {
+				F->minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(a, b,
+						a0, b0, verbose_level);
+
+				cout << "a=" << a << " b=" << b << " a0=" << a0 << " b0=" << b0 << endl;
+
+				if (a0 < a) {
+					cout << "skipping" << endl;
+					continue;
+				}
+				if (a0 == a && b0 < b) {
+					cout << "skipping" << endl;
+					continue;
+				}
+			}
+
+			for (c = 1; c < q; c++) {
+				cout << "surface_classify_wedge::identify_general_abcd "
+						"a = " << a << " b = " << b << " c = " << c << endl;
+
+
+				if (c == 0 || c == 1) {
+					continue;
+				}
+
+				if (c == a) {
+					continue;
+				}
+
+
+
+				for (d = 1; d < q; d++) {
+
+					if (d == 0 || d == 1) {
+						continue;
+					}
+
+					if (d == b) {
+						continue;
+					}
+
+					if (d == c) {
+						continue;
+					}
+
+#if 1
+					// ToDo
+					// warning: special case
+
+					if (d != a) {
+						continue;
+					}
+#endif
+
+					cout << "surface_classify_wedge::identify_general_abcd "
+							"a = " << a << " b = " << b << " c = " << c << " d = " << d << endl;
+
+					int m1;
+
+
+					m1 = F->negate(1);
+
+
+#if 0
+					// this is a test for having 6 Eckardt points:
+					int b2, b2v, x1, x2;
+
+					b2 = F->mult(b, b);
+					//cout << "b2=" << b2 << endl;
+					b2v = F->inverse(b2);
+					//cout << "b2v=" << b2v << endl;
+
+					x1 = F->add(F->mult(2, b), m1);
+					x2 = F->mult(x1, b2v);
+
+					if (c != x2) {
+						cout << "skipping" << endl;
+						continue;
+					}
+#endif
+
+
+
+#if 0
+					F->minimal_orbit_rep_under_stabilizer_of_frame(c, d,
+							c0, d0, verbose_level);
+
+					cout << "c=" << c << " d=" << d << " c0=" << c0 << " d0=" << d0 << endl;
+
+
+					if (c0 < c) {
+						cout << "skipping" << endl;
+						continue;
+					}
+					if (c0 == c && d0 < d) {
+						cout << "skipping" << endl;
+						continue;
+					}
+#endif
+
+
+					cout << "nonconical test" << endl;
+
+					int admbc;
+					//int m1;
+					int a1, b1, c1, d1;
+					int a1d1, b1c1;
+					int ad, bc;
+					int adb1c1, bca1d1;
+
+
+					//m1 = F->negate(1);
+
+					a1 = F->add(a, m1);
+					b1 = F->add(b, m1);
+					c1 = F->add(c, m1);
+					d1 = F->add(d, m1);
+
+					ad = F->mult(a, d);
+					bc = F->mult(b, c);
+
+					adb1c1 = F->mult3(ad, b1, c1);
+					bca1d1 = F->mult3(bc, a1, d1);
+
+					a1d1 = F->mult(a1, d1);
+					b1c1 = F->mult(b1, c1);
+					if (a1d1 == b1c1) {
+						continue;
+					}
+					if (adb1c1 == bca1d1) {
+						continue;
+					}
+
+
+
+					admbc = F->add(F->mult(a, d), F->negate(F->mult(b, c)));
+
+					if (admbc == 0) {
+						continue;
+					}
+
+					Iso_type[a * q3 + b * q2 + c * q + d] = -2;
+					Nb_lines[a * q3 + b * q2 + c * q + d] = -1;
+					//Nb_E[a * q3 + b * q2 + c * q + d] = -1;
+
+					algebraic_geometry::surface_object *SO;
+
+					SO = Surf->create_surface_general_abcd(a, b, c, d, verbose_level);
+
+
+					identify_surface(SO->eqn,
+						iso_type, Elt,
+						verbose_level);
+
+					cout << "surface_classify_wedge::identify_general_abcd "
+							"a = " << a << " b = " << b << " c = " << c << " d = " << d
+							<< " is isomorphic to iso_type "
+						<< iso_type << ", an isomorphism is:" << endl;
+					A->element_print_quick(Elt, cout);
+
+					Iso_type[a * q3 + b * q2 + c * q + d] = iso_type;
+					Nb_lines[a * q3 + b * q2 + c * q + d] = SO->nb_lines;
+					//Nb_E[a * q3 + b * q2 + c * q + d] = nb_E;
+				}
+			}
+		}
+	}
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd done" << endl;
+	}
+}
+
+void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, c, d;
+	int q4, q3, q2;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table" << endl;
+	}
+
+	q2 = q * q;
+	q3 = q2 * q;
+	q4 = q3 * q;
+
+	int *Iso_type;
+	int *Nb_lines;
+	//int *Nb_E;
+
+	Iso_type = NEW_int(q4);
+	Nb_lines = NEW_int(q4);
+	//Nb_E = NEW_int(q4);
+
+	for (a = 0; a < q4; a++) {
+		Iso_type[a] = -1;
+		Nb_lines[a] = -1;
+		//Nb_E[a] = -1;
+	}
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table before identify_general_abcd" << endl;
+	}
+	identify_general_abcd(Iso_type, Nb_lines, verbose_level);
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table after identify_general_abcd" << endl;
+	}
+
+
+	//cout << "\\begin{array}{|c|c|c|}" << endl;
+	//cout << "\\hline" << endl;
+	cout << "(a,c); \\# lines & \\mbox{OCN} \\\\" << endl;
+	//cout << "\\hline" << endl;
+	for (a = 1; a < q; a++) {
+		for (b = 1; b < q; b++) {
+			for (c = 1; c < q; c++) {
+				for (d = 1; d < q; d++) {
+					cout << "$(" << a << "," << b << "," << c << "," << d << ")$; ";
+#if 0
+					cout << "$(";
+						F->print_element(cout, a);
+						cout << ", ";
+						F->print_element(cout, b);
+						cout << ", ";
+						F->print_element(cout, c);
+						cout << ", ";
+						F->print_element(cout, d);
+						cout << ")$; ";
+#endif
+					cout << Nb_lines[a * q3 + b * q2 + c * q + d] << "; ";
+					//cout << Nb_E[a * q3 + b * q2 + c * q + d] << "; ";
+					cout << Iso_type[a * q3 + b * q2 + c * q + d];
+					cout << "\\\\" << endl;
+				}
+			}
+		}
+	}
+	//cout << "\\hline" << endl;
+	//cout << "\\end{array}" << endl;
+
+	int *Table;
+	int h = 0;
+	int nb_lines, iso, nb_e;
+	knowledge_base K;
+	file_io Fio;
+
+	Table = NEW_int(q4 * 7);
+
+
+	for (a = 1; a < q; a++) {
+		for (b = 1; b < q; b++) {
+			for (c = 1; c < q; c++) {
+				for (d = 1; d < q; d++) {
+					nb_lines = Nb_lines[a * q3 + b * q2 + c * q + d];
+					iso = Iso_type[a * q3 + b * q2 + c * q + d];
+
+					if (iso == -1) {
+						continue;
+					}
+
+					if (iso >= 0) {
+						nb_e = K.cubic_surface_nb_Eckardt_points(q, iso);
+					}
+					else {
+						nb_e = -1;
+					}
+
+					Table[h * 7 + 0] = a;
+					Table[h * 7 + 1] = b;
+					Table[h * 7 + 2] = c;
+					Table[h * 7 + 3] = d;
+					Table[h * 7 + 4] = nb_lines;
+					Table[h * 7 + 5] = iso;
+					Table[h * 7 + 6] = nb_e;
+					h++;
+				}
+			}
+		}
+	}
+
+	char str[1000];
+	string fname;
+
+	sprintf(str, "surface_recognize_abcd_q%d.csv", q);
+	fname.assign(str);
+
+	Fio.int_matrix_write_csv(fname, Table, h, 7);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
+	FREE_int(Iso_type);
+	FREE_int(Nb_lines);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table done" << endl;
+	}
+}
 
 
 

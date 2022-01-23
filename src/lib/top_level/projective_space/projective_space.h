@@ -405,9 +405,17 @@ public:
 	int f_sweep;
 	std::string sweep_fname;
 
-	int f_sweep_4;
-	std::string sweep_4_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_surface_description;
+	int f_sweep_4_15_lines;
+	std::string sweep_4_15_lines_fname;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_15_lines_surface_description;
+
+	int f_sweep_F_beta_9_lines;
+	std::string sweep_F_beta_9_lines_fname;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_F_beta_9_lines_surface_description;
+
+	int f_sweep_6_9_lines;
+	std::string sweep_6_9_lines_fname;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_6_9_lines_surface_description;
 
 	int f_sweep_4_27;
 	std::string sweep_4_27_fname;

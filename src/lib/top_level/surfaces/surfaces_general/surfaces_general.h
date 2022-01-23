@@ -332,7 +332,17 @@ public:
 	surface_domain_high_level();
 	~surface_domain_high_level();
 
-	void do_sweep_4(
+	void do_sweep_4_15_lines(
+			projective_geometry::projective_space_with_action *PA,
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void do_sweep_F_beta_9_lines(
+			projective_geometry::projective_space_with_action *PA,
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void do_sweep_6_9_lines(
 			projective_geometry::projective_space_with_action *PA,
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
@@ -342,13 +352,6 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
-#if 0
-	void do_create_surface(
-			projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			poset_classification_control *Control_six_arcs,
-			int verbose_level);
-#endif
 
 
 	void classify_surfaces_with_double_sixes(
@@ -709,7 +712,15 @@ public:
 	void do_report(
 			surface_create *SC,
 			int verbose_level);
-	void sweep_4(
+	void sweep_4_15_lines(
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void sweep_F_beta_9_lines(
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void sweep_6_9_lines(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);

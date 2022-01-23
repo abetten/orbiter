@@ -54,15 +54,18 @@ int orbiter_top_level_session::startup_and_read_arguments(int argc,
 {
 	int i;
 
-	//cout << "orbiter_top_level_session::startup_and_read_arguments" << endl;
+	cout << "orbiter_top_level_session::startup_and_read_arguments before new orbiter_session" << endl;
 
 	Orbiter_session = new orbiter_session;
+
+	cout << "orbiter_top_level_session::startup_and_read_arguments after new orbiter_session" << endl;
+	cout << "orbiter_top_level_session::startup_and_read_arguments before Orbiter_session->read_arguments" << endl;
 
 	i = Orbiter_session->read_arguments(argc, argv, i0);
 
 
 
-	//cout << "orbiter_top_level_session::startup_and_read_arguments done" << endl;
+	cout << "orbiter_top_level_session::startup_and_read_arguments done" << endl;
 	return i;
 }
 

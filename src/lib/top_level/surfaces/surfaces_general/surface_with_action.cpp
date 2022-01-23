@@ -1984,7 +1984,7 @@ void surface_with_action::do_report(
 
 }
 
-void surface_with_action::sweep_4(
+void surface_with_action::sweep_4_15_lines(
 		surface_create_description *Surface_Descr,
 		std::string &sweep_fname,
 		int verbose_level)
@@ -1993,7 +1993,7 @@ void surface_with_action::sweep_4(
 	int alpha, beta, gamma, delta;
 
 	if (f_v) {
-		cout << "surface_with_action::sweep_4" << endl;
+		cout << "surface_with_action::sweep_4_15_lines" << endl;
 	}
 
 	field_theory::finite_field *F;
@@ -2119,18 +2119,18 @@ void surface_with_action::sweep_4(
 						SC = NEW_OBJECT(surface_create);
 
 						if (f_v) {
-							cout << "surface_with_action::create_surface_sweep before SC->init" << endl;
+							cout << "surface_with_action::sweep_4_15_lines before SC->init" << endl;
 						}
 						SC->init(Surface_Descr, this /*Surf_A*/, verbose_level);
 						if (f_v) {
-							cout << "surface_with_action::create_surface_sweep after SC->init" << endl;
+							cout << "surface_with_action::sweep_4_15_lines after SC->init" << endl;
 						}
 
 
 
 #if 0
 						if (f_v) {
-							cout << "surface_with_action::create_surface_sweep "
+							cout << "surface_with_action::sweep_4_15_lines "
 									"before SC->apply_transformations" << endl;
 						}
 						SC->apply_transformations(Surface_Descr->transform_coeffs,
@@ -2138,7 +2138,7 @@ void surface_with_action::sweep_4(
 									verbose_level - 2);
 
 						if (f_v) {
-							cout << "surface_with_action::create_surface_sweep "
+							cout << "surface_with_action::sweep_4_15_lines "
 									"after SC->apply_transformations" << endl;
 						}
 #endif
@@ -2293,7 +2293,581 @@ void surface_with_action::sweep_4(
 	FREE_lint(T);
 
 	if (f_v) {
-		cout << "surface_with_action::sweep_4 done" << endl;
+		cout << "surface_with_action::sweep_4_15_lines done" << endl;
+	}
+}
+
+
+void surface_with_action::sweep_F_beta_9_lines(
+		surface_create_description *Surface_Descr,
+		std::string &sweep_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int b;
+
+	if (f_v) {
+		cout << "surface_with_action::sweep_F_beta_9_lines" << endl;
+	}
+
+	field_theory::finite_field *F;
+
+	F = PA->F;
+
+	vector<vector<long int>> Properties;
+	vector<vector<long int>> Points;
+
+	string sweep_fname_csv;
+
+	sweep_fname_csv.assign(sweep_fname);
+	char str[1000];
+
+	sprintf(str, "_q%d", F->q);
+	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
+	sweep_fname_csv.append(str);
+	sweep_fname_csv.append("_sweep_F_beta_9_lines_data.csv");
+
+
+	{
+		ofstream ost_csv(sweep_fname_csv);
+
+		ost_csv << "orbit,equation,pts,parameters,nb_lines,nb_sing_pts,go" << endl;
+
+		for (b = 0; b < F->q; b++) {
+
+			int t1, t2, t3, t4, three;
+
+			three = F->add3(1, 1, 1);
+
+			t1 = F->add3(F->mult(b, b), b, 1);
+			t2 = F->add3(F->mult(b, b), F->negate(b), F->negate(1));
+			t3 = F->add3(F->mult(b, b), b, F->negate(1));
+			t4 = F->add3(F->mult(b, b), F->mult(three, b), 1);
+
+			cout << "b=" << b << ",t1=" << t1 << ",t2=" << t2 << ",t3=" << t3 << ",t4=" << t4 << endl;
+
+			if (t1 == 0 || t2 == 0 || t3 == 0 || t4 == 0) {
+				continue;
+			}
+
+			cout << "b=" << b << endl;
+
+
+
+			int a, c, d;
+
+			a = F->mult(b, b);
+			c = b;
+			d = F->mult(b, b);
+
+
+
+
+			char str[1000];
+
+			sprintf(str, "a=%d,b=%d,c=%d,d=%d", a, b, c, d);
+
+
+			Surface_Descr->equation_parameters.assign(str);
+
+
+			surface_create *SC;
+			SC = NEW_OBJECT(surface_create);
+
+			if (f_v) {
+				cout << "surface_with_action::sweep_F_beta_9_lines before SC->init" << endl;
+			}
+			SC->init(Surface_Descr, this /*Surf_A*/, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "surface_with_action::sweep_F_beta_9_lines after SC->init" << endl;
+			}
+
+
+
+
+			cout << "the number of lines is " << SC->SO->nb_lines << endl;
+
+			//SC->SO->SOP->print_everything(cout, verbose_level);
+
+#if 1
+			if (SC->SO->nb_lines != 9) {
+				cout << "the number of lines is " << SC->SO->nb_lines << " skipping" << endl;
+				continue;
+			}
+			if (SC->SO->SOP->nb_singular_pts) {
+				cout << "the number of singular points is " << SC->SO->SOP->nb_singular_pts << " skipping" << endl;
+				continue;
+			}
+#endif
+
+
+			vector<long int> Props;
+			vector<long int> Pts;
+
+			Props.push_back(a);
+			Props.push_back(b);
+			Props.push_back(c);
+			Props.push_back(d);
+			Props.push_back(SC->SO->nb_lines);
+			Props.push_back(SC->SO->nb_pts);
+			Props.push_back(SC->SO->SOP->nb_singular_pts);
+			Props.push_back(SC->SO->SOP->nb_Eckardt_points);
+			Props.push_back(SC->SO->SOP->nb_Double_points);
+			Props.push_back(SC->SO->SOP->nb_Single_points);
+			Props.push_back(SC->SO->SOP->nb_pts_not_on_lines);
+			Props.push_back(SC->SO->SOP->nb_Hesse_planes);
+			Props.push_back(SC->SO->SOP->nb_axes);
+			Properties.push_back(Props);
+
+			int i;
+			for (i = 0; i < SC->SO->nb_pts; i++) {
+				Pts.push_back(SC->SO->Pts[i]);
+			}
+			Points.push_back(Pts);
+
+
+			ost_csv << Properties.size() - 1;
+			ost_csv << ",";
+
+			{
+				string str;
+				Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
+				ost_csv << str;
+			}
+
+			ost_csv << ",";
+
+			{
+				string str;
+				Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+				ost_csv << str;
+			}
+
+			ost_csv << ",";
+
+			{
+				int params[4];
+
+				params[0] = a;
+				params[1] = b;
+				params[2] = c;
+				params[3] = d;
+				string str;
+				Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
+				ost_csv << str;
+			}
+
+			ost_csv << ",";
+
+			ost_csv << SC->SO->nb_lines;
+			ost_csv << ",";
+
+			ost_csv << SC->SO->SOP->nb_singular_pts;
+			ost_csv << ",";
+
+			ost_csv << -1;
+			ost_csv << endl;
+
+
+
+			FREE_OBJECT(SC);
+
+
+		} // b
+		ost_csv << "END" << endl;
+	}
+	file_io Fio;
+	cout << "Written file " << sweep_fname_csv << " of size " << Fio.file_size(sweep_fname_csv) << endl;
+
+	long int *T;
+	int i, j, N, nb_cols = 13;
+
+	N = Properties.size();
+
+	cout << "The number of valid parameter sets found is " << N << endl;
+
+
+	T = NEW_lint(N * nb_cols);
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			T[i * nb_cols + j] = Properties[i][j];
+		}
+	}
+	std::string fname;
+
+	sprintf(str, "_q%d", F->q);
+	fname.assign(Surface_Descr->equation_name_of_formula);
+	fname.append(str);
+	fname.append("_sweep_F_beta_9_lines.csv");
+
+	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	fname.assign(Surface_Descr->equation_name_of_formula);
+	fname.append(str);
+	fname.append("_points.txt");
+
+
+	{
+		ofstream ost(fname);
+
+		for (i = 0; i < N; i++) {
+			long int sz = Points[i].size();
+			ost << sz;
+			for (j = 0; j < sz; j++) {
+				ost << " " << Points[i][j];
+			}
+			ost << endl;
+		}
+		ost << "-1" << endl;
+
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
+
+	FREE_lint(T);
+
+	if (f_v) {
+		cout << "surface_with_action::sweep_F_beta_9_lines done" << endl;
+	}
+}
+
+
+
+void surface_with_action::sweep_6_9_lines(
+		surface_create_description *Surface_Descr,
+		std::string &sweep_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, c, d, f, g;
+
+	if (f_v) {
+		cout << "surface_with_action::sweep_6_9_lines" << endl;
+	}
+
+	field_theory::finite_field *F;
+
+	F = PA->F;
+
+	vector<vector<long int>> Properties;
+	vector<vector<long int>> Points;
+
+	string sweep_fname_csv;
+
+	sweep_fname_csv.assign(sweep_fname);
+	char str[1000];
+
+	sprintf(str, "_q%d", F->q);
+	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
+	sweep_fname_csv.append(str);
+	sweep_fname_csv.append("_sweep_6_9_lines_data.csv");
+
+
+	{
+		ofstream ost_csv(sweep_fname_csv);
+
+		ost_csv << "orbit,equation,pts,parameters,nb_lines,nb_sing_pts,go" << endl;
+
+		for (a = 0; a < F->q; a++) {
+
+			if (a == 0) {
+				continue;
+			}
+
+			if (a == 1) {
+				continue;
+			}
+
+			cout << "a=" << a << endl;
+
+			for (c = 0; c < F->q; c++) {
+
+				if (c == 0) {
+					continue;
+				}
+
+				if (c == 1) {
+					continue;
+				}
+
+				cout << "a=" << a << " c=" << c << endl;
+
+				for (d = 0; d < F->q; d++) {
+
+					if (d == 0) {
+						continue;
+					}
+
+					if (d == F->negate(1)) {
+						continue;
+					}
+
+					cout << "a=" << a << " c=" << c << " d=" << d << endl;
+
+
+					for (f = 0; f < F->q; f++) {
+
+						if (f == 0) {
+							continue;
+						}
+
+						cout << "a=" << a << " c=" << c << " d=" << d << " f=" << f << endl;
+
+						for (g = 0; g < F->q; g++) {
+
+
+							if (g == 0) {
+								continue;
+							}
+							if (g == f) {
+								continue;
+							}
+
+							int top, bottom, t;
+
+							top = F->add4(F->mult(c, f), F->mult(d, f), f, F->negate(c));
+							bottom = F->add(d, 1);
+							t = F->mult(top, F->inverse(bottom));
+
+							if (g == t) {
+								continue;
+							}
+
+							cout << "a=" << a << " c=" << c << " d=" << d << " f=" << f << " g=" << g << endl;
+
+
+							for (b = 0; b < F->q; b++) {
+
+
+								if (b == 0) {
+									continue;
+								}
+								if (b == F->negate(1)) {
+									continue;
+								}
+								if (b == d) {
+									continue;
+								}
+
+								top = F->add(F->mult(a, g), F->negate(a));
+								bottom = F->add(f, F->negate(g));
+								t = F->mult(top, F->inverse(bottom));
+
+								if (b == t) {
+									continue;
+								}
+
+
+								top = F->mult(F->negate(a), F->add3(c, d, 1));
+								bottom = c;
+								t = F->mult(top, F->inverse(bottom));
+
+								if (b == t) {
+									continue;
+								}
+
+
+								top = F->mult(F->negate(a), F->add3(F->mult(d, g), c, g));
+								bottom = F->mult(c, f);
+								t = F->mult(top, F->inverse(bottom));
+
+								if (b == t) {
+									continue;
+								}
+
+
+
+								cout << "a=" << a << " c=" << c << " d=" << d << " f=" << f << " g=" << g << " b=" << b << endl;
+
+
+
+
+
+
+								char str[1000];
+
+								sprintf(str, "a=%d,b=%d,c=%d,d=%d,f=%d,g=%d", a, b, c, d, f, g);
+
+
+								Surface_Descr->equation_parameters.assign(str);
+
+
+								surface_create *SC;
+								SC = NEW_OBJECT(surface_create);
+
+								if (f_v) {
+									cout << "surface_with_action::sweep_6_9_lines before SC->init" << endl;
+								}
+								SC->init(Surface_Descr, this /*Surf_A*/, verbose_level);
+								if (f_v) {
+									cout << "surface_with_action::sweep_6_9_lines after SC->init" << endl;
+								}
+
+
+
+
+								cout << "the number of lines is " << SC->SO->nb_lines << endl;
+
+								SC->SO->SOP->print_everything(cout, verbose_level);
+
+#if 1
+								if (SC->SO->nb_lines != 9) {
+									cout << "the number of lines is " << SC->SO->nb_lines << " skipping" << endl;
+									continue;
+								}
+								if (SC->SO->SOP->nb_singular_pts) {
+									cout << "the number of singular points is " << SC->SO->SOP->nb_singular_pts << " skipping" << endl;
+									continue;
+								}
+#endif
+
+
+								vector<long int> Props;
+								vector<long int> Pts;
+
+								Props.push_back(a);
+								Props.push_back(b);
+								Props.push_back(c);
+								Props.push_back(d);
+								Props.push_back(f);
+								Props.push_back(g);
+								Props.push_back(SC->SO->nb_lines);
+								Props.push_back(SC->SO->nb_pts);
+								Props.push_back(SC->SO->SOP->nb_singular_pts);
+								Props.push_back(SC->SO->SOP->nb_Eckardt_points);
+								Props.push_back(SC->SO->SOP->nb_Double_points);
+								Props.push_back(SC->SO->SOP->nb_Single_points);
+								Props.push_back(SC->SO->SOP->nb_pts_not_on_lines);
+								Props.push_back(SC->SO->SOP->nb_Hesse_planes);
+								Props.push_back(SC->SO->SOP->nb_axes);
+								Properties.push_back(Props);
+
+								int i;
+								for (i = 0; i < SC->SO->nb_pts; i++) {
+									Pts.push_back(SC->SO->Pts[i]);
+								}
+								Points.push_back(Pts);
+
+
+								ost_csv << Properties.size() - 1;
+								ost_csv << ",";
+
+								{
+									string str;
+									Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
+									ost_csv << str;
+								}
+
+								ost_csv << ",";
+
+								{
+									string str;
+									Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+									ost_csv << str;
+								}
+
+								ost_csv << ",";
+
+								{
+									int params[6];
+
+									params[0] = a;
+									params[1] = b;
+									params[2] = c;
+									params[3] = d;
+									params[4] = f;
+									params[5] = g;
+									string str;
+									Orbiter->Int_vec->create_string_with_quotes(str, params, 6);
+									ost_csv << str;
+								}
+
+								ost_csv << ",";
+
+								ost_csv << SC->SO->nb_lines;
+								ost_csv << ",";
+
+								ost_csv << SC->SO->SOP->nb_singular_pts;
+								ost_csv << ",";
+
+								ost_csv << -1;
+								ost_csv << endl;
+
+
+
+								FREE_OBJECT(SC);
+
+							} // b
+						} // g
+					} // f
+
+				} // d
+
+			} // c
+
+		} // a
+		ost_csv << "END" << endl;
+	}
+	file_io Fio;
+	cout << "Written file " << sweep_fname_csv << " of size " << Fio.file_size(sweep_fname_csv) << endl;
+
+	long int *T;
+	int i, j, N, nb_cols = 15;
+
+	N = Properties.size();
+
+	cout << "The number of valid parameter sets found is " << N << endl;
+
+
+	T = NEW_lint(N * nb_cols);
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			T[i * nb_cols + j] = Properties[i][j];
+		}
+	}
+	std::string fname;
+
+	sprintf(str, "_q%d", F->q);
+	fname.assign(Surface_Descr->equation_name_of_formula);
+	fname.append(str);
+	fname.append("_sweep_6_9_lines.csv");
+
+	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	fname.assign(Surface_Descr->equation_name_of_formula);
+	fname.append(str);
+	fname.append("_points.txt");
+
+
+	{
+		ofstream ost(fname);
+
+		for (i = 0; i < N; i++) {
+			long int sz = Points[i].size();
+			ost << sz;
+			for (j = 0; j < sz; j++) {
+				ost << " " << Points[i][j];
+			}
+			ost << endl;
+		}
+		ost << "-1" << endl;
+
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
+
+	FREE_lint(T);
+
+	if (f_v) {
+		cout << "surface_with_action::sweep_6_9_lines done" << endl;
 	}
 }
 

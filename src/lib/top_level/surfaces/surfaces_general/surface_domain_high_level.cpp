@@ -27,7 +27,7 @@ surface_domain_high_level::~surface_domain_high_level()
 {
 }
 
-void surface_domain_high_level::do_sweep_4(
+void surface_domain_high_level::do_sweep_4_15_lines(
 		projective_geometry::projective_space_with_action *PA,
 		surface_create_description *Surface_Descr,
 		std::string &sweep_fname,
@@ -36,8 +36,8 @@ void surface_domain_high_level::do_sweep_4(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4" << endl;
-		cout << "surface_domain_high_level::do_sweep_4 verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_sweep_4_15_lines" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_15_lines verbose_level=" << verbose_level << endl;
 	}
 
 
@@ -47,23 +47,101 @@ void surface_domain_high_level::do_sweep_4(
 			Surf_A,
 			verbose_level);
 
-
-
-
 	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface before Surf_A->sweep_4" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_15_lines "
+				"before Surf_A->sweep_4_15_lines" << endl;
 	}
-	Surf_A->sweep_4(
+	Surf_A->sweep_4_15_lines(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
 	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface after Surf_A->sweep_4" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_15_lines "
+				"after Surf_A->sweep_4_15_lines" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4 done" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_15_lines done" << endl;
+	}
+}
+
+void surface_domain_high_level::do_sweep_F_beta_9_lines(
+		projective_geometry::projective_space_with_action *PA,
+		surface_create_description *Surface_Descr,
+		std::string &sweep_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines" << endl;
+		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines verbose_level=" << verbose_level << endl;
+	}
+
+
+	surface_with_action *Surf_A;
+
+	PA->setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines "
+				"before Surf_A->sweep_F_beta_9_lines" << endl;
+	}
+	Surf_A->sweep_F_beta_9_lines(
+				Surface_Descr,
+				sweep_fname,
+				verbose_level);
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines "
+				"after Surf_A->sweep_F_beta_9_lines" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines done" << endl;
+	}
+}
+
+
+void surface_domain_high_level::do_sweep_6_9_lines(
+		projective_geometry::projective_space_with_action *PA,
+		surface_create_description *Surface_Descr,
+		std::string &sweep_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_6_9_lines" << endl;
+		cout << "surface_domain_high_level::do_sweep_6_9_lines verbose_level=" << verbose_level << endl;
+	}
+
+
+	surface_with_action *Surf_A;
+
+	PA->setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_6_9_lines "
+				"before Surf_A->sweep_6_9_lines" << endl;
+	}
+	Surf_A->sweep_6_9_lines(
+				Surface_Descr,
+				sweep_fname,
+				verbose_level);
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_6_9_lines "
+				"after Surf_A->sweep_6_9_lines" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_6_9_lines done" << endl;
 	}
 }
 
@@ -80,58 +158,11 @@ void surface_domain_high_level::do_sweep_4_27(
 		cout << "surface_domain_high_level::do_sweep_4_27 verbose_level=" << verbose_level << endl;
 	}
 
-#if 0
-	int q;
-	finite_field *F;
-	surface_domain *Surf;
-	surface_with_action *Surf_A;
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 before Surface_Descr->get_q" << endl;
-	}
-	q = Surface_Descr->get_q();
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 q = " << q << endl;
-	}
-
-
-	F = PA->F;
-	if (F->q != q) {
-		cout << "F->q != q" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 after Surf_A->init" << endl;
-	}
-#else
-
 	surface_with_action *Surf_A;
 
 	PA->setup_surface_with_action(
 			Surf_A,
 			verbose_level);
-
-	//Surf = Surf_A->Surf;
-
-#endif
-
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_27 before Surf_A->sweep_4" << endl;
@@ -143,7 +174,6 @@ void surface_domain_high_level::do_sweep_4_27(
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_27 after Surf_A->sweep_4" << endl;
 	}
-
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_27 done" << endl;
