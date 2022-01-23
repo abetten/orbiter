@@ -25,11 +25,21 @@ orbiter_session *Orbiter = NULL;
 
 orbiter_session::orbiter_session()
 {
+
+	cout << "orbiter_session::orbiter_session" << endl;
+
 	if (Orbiter) {
 		cout << "orbiter_session::orbiter_session The_Orbiter_session is non NULL" << endl;
 		exit(1);
 	}
 	Orbiter = this;
+
+
+	// this needs to come first, because NEW_OBJECT requires it:
+
+	global_mem_object_registry = new mem_object_registry;
+
+
 
 	verbose_level = 0;
 
@@ -77,11 +87,11 @@ orbiter_session::orbiter_session()
 	Int_vec = NEW_OBJECT(int_vec);
 	Lint_vec = NEW_OBJECT(lint_vec);
 
-	global_mem_object_registry = NEW_OBJECT(mem_object_registry);
 
 	longinteger_f_print_scientific = FALSE;
 	syntax_tree_node_index = 0;
 
+	cout << "orbiter_session::orbiter_session done" << endl;
 
 }
 
@@ -193,9 +203,10 @@ int orbiter_session::read_arguments(int argc,
 		std::string *argv, int i0)
 {
 	int i;
+	int f_v = FALSE;
 	string_tools ST;
 
-	//cout << "orbiter_session::read_arguments" << endl;
+	cout << "orbiter_session::read_arguments" << endl;
 
 	os_interface Os;
 
@@ -206,6 +217,7 @@ int orbiter_session::read_arguments(int argc,
 	for (i = i0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-v") == 0) {
 			verbose_level = ST.strtoi(argv[++i]);
+			f_v = (verbose_level >= 1);
 			//cout << "-v " << verbose_level << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
@@ -216,15 +228,15 @@ int orbiter_session::read_arguments(int argc,
 			i += draw_options->read_arguments(argc - (i + 1),
 				argv + i + 1, 0 /*verbose_level*/);
 
-#if 0
-			cout << "done reading -draw_options " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -draw_options " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-f_draw_options " << endl;
 			}
-			cout << "-f_draw_options " << endl;
-#endif
 		}
 		else if (ST.stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {
 			f_draw_incidence_structure_description = TRUE;
@@ -234,46 +246,58 @@ int orbiter_session::read_arguments(int argc,
 			i += Draw_incidence_structure_description->read_arguments(argc - (i + 1),
 				argv + i + 1, 0 /*verbose_level*/);
 
-#if 0
-			cout << "done reading -draw_incidence_structure_description " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -draw_incidence_structure_description " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-draw_incidence_structure_description " << endl;
 			}
-			cout << "-draw_incidence_structure_description " << endl;
-#endif
 		}
 
 
 		else if (ST.stringcmp(argv[i], "-list_arguments") == 0) {
 			f_list_arguments = TRUE;
-			//cout << "-list_arguments " << endl;
+			if (f_v) {
+				cout << "-list_arguments " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-seed") == 0) {
 			f_seed = TRUE;
 			the_seed = ST.strtoi(argv[++i]);
-			//cout << "-seed " << the_seed << endl;
+			if (f_v) {
+				cout << "-seed " << the_seed << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-memory_debug") == 0) {
 			f_memory_debug = TRUE;
 			memory_debug_verbose_level = ST.strtoi(argv[++i]);
-			//cout << "-memory_debug " << memory_debug_verbose_level << endl;
+			if (f_v) {
+				cout << "-memory_debug " << memory_debug_verbose_level << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
-			//cout << "-override_polynomial " << override_polynomial << endl;
+			if (f_v) {
+				cout << "-override_polynomial " << override_polynomial << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-orbiter_path") == 0) {
 			f_orbiter_path = TRUE;
 			orbiter_path.assign(argv[++i]);
-			//cout << "-orbiter_path " << orbiter_path << endl;
+			if (f_v) {
+				cout << "-orbiter_path " << orbiter_path << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-magma_path") == 0) {
 			f_magma_path = TRUE;
 			magma_path.assign(argv[++i]);
-			cout << "-magma_path " << magma_path << endl;
+			if (f_v) {
+				cout << "-magma_path " << magma_path << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-fork") == 0) {
 			f_fork = TRUE;
@@ -283,14 +307,23 @@ int orbiter_session::read_arguments(int argc,
 			fork_from = ST.strtoi(argv[++i]);
 			fork_to = ST.strtoi(argv[++i]);
 			fork_step = ST.strtoi(argv[++i]);
-			//cout << "-fork " << fork_variable << " " << fork_logfile_mask << " " << fork_from << " " << fork_to << " " << fork_step << endl;
+			if (f_v) {
+				cout << "-fork " << fork_variable
+						<< " " << fork_logfile_mask
+						<< " " << fork_from
+						<< " " << fork_to
+						<< " " << fork_step
+						<< endl;
+			}
 		}
 		else {
 			break;
 		}
 	}
 
-	//cout << "orbiter_session::read_arguments done" << endl;
+	if (f_v) {
+		cout << "orbiter_session::read_arguments done" << endl;
+	}
 	return i;
 }
 
@@ -377,7 +410,8 @@ int orbiter_session::find_symbol(std::string &label)
 	return Orbiter_symbol_table->find_symbol(label);
 }
 
-void orbiter_session::get_vector_from_label(std::string &label, int *&v, int &sz, int verbose_level)
+void orbiter_session::get_vector_from_label(std::string &label,
+		int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -424,7 +458,8 @@ void orbiter_session::get_vector_from_label(std::string &label, int *&v, int &sz
 	}
 }
 
-void orbiter_session::get_int_vector_from_label(std::string &label, int *&v, int &sz, int verbose_level)
+void orbiter_session::get_int_vector_from_label(std::string &label,
+		int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -472,7 +507,8 @@ void orbiter_session::get_int_vector_from_label(std::string &label, int *&v, int
 }
 
 
-void orbiter_session::get_lint_vector_from_label(std::string &label, long int *&v, int &sz, int verbose_level)
+void orbiter_session::get_lint_vector_from_label(std::string &label,
+		long int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

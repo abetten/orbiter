@@ -334,15 +334,37 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
 				verbose_level);
 	}
-	else if (Descr->f_sweep_4) {
+	else if (Descr->f_sweep_4_15_lines) {
 
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
 
-		SH.do_sweep_4(
+		SH.do_sweep_4_15_lines(
 				PA,
-				Descr->sweep_4_surface_description,
-				Descr->sweep_4_fname,
+				Descr->sweep_4_15_lines_surface_description,
+				Descr->sweep_4_15_lines_fname,
+				verbose_level);
+	}
+	else if (Descr->f_sweep_F_beta_9_lines) {
+
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+
+		SH.do_sweep_F_beta_9_lines(
+				PA,
+				Descr->sweep_F_beta_9_lines_surface_description,
+				Descr->sweep_F_beta_9_lines_fname,
+				verbose_level);
+	}
+	else if (Descr->f_sweep_6_9_lines) {
+
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+
+		SH.do_sweep_6_9_lines(
+				PA,
+				Descr->sweep_6_9_lines_surface_description,
+				Descr->sweep_6_9_lines_fname,
 				verbose_level);
 	}
 	else if (Descr->f_sweep_4_27) {

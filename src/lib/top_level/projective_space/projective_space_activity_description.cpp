@@ -105,9 +105,17 @@ projective_space_activity_description::projective_space_activity_description()
 	f_sweep = FALSE;
 	//std::string sweep_fname;
 
-	f_sweep_4 = FALSE;
-	//std::string sweep_4_fname;
-	sweep_4_surface_description = NULL;
+	f_sweep_4_15_lines = FALSE;
+	//std::string sweep_4_15_lines_fname;
+	sweep_4_15_lines_surface_description = NULL;
+
+	f_sweep_F_beta_9_lines = FALSE;
+	//std::string sweep_F_beta_9_lines_fname;
+	sweep_F_beta_9_lines_surface_description = NULL;
+
+	f_sweep_6_9_lines = FALSE;
+	//std::string sweep_6_9_lines_fname;
+	sweep_6_9_lines_surface_description = NULL;
 
 	f_sweep_4_27 = FALSE;
 	//std::string sweep_4_27_fname;
@@ -535,24 +543,70 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-sweep_4") == 0) {
-			f_sweep_4 = TRUE;
-			sweep_4_fname.assign(argv[++i]);
-			sweep_4_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
+		else if (ST.stringcmp(argv[i], "-sweep_4_15_lines") == 0) {
+			f_sweep_4_15_lines = TRUE;
+			sweep_4_15_lines_fname.assign(argv[++i]);
+			sweep_4_15_lines_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
 			if (f_v) {
-				cout << "-sweep_4" << endl;
+				cout << "-sweep_4_15_lines" << endl;
 			}
-			i += sweep_4_surface_description->read_arguments(
+			i += sweep_4_15_lines_surface_description->read_arguments(
 					argc - (i + 1), argv + i + 1,
 					verbose_level);
 			if (f_v) {
-				cout << "done with -sweep_4" << endl;
+				cout << "done with -sweep_4_15_lines" << endl;
 				cout << "i = " << i << endl;
 				cout << "argc = " << argc << endl;
 				if (i < argc) {
 					cout << "next argument is " << argv[i] << endl;
 				}
-				cout << "-sweep_4 " << sweep_4_fname << endl;
+				cout << "-sweep_4_15_lines " << sweep_4_15_lines_fname << endl;
+				sweep_4_15_lines_surface_description->print();
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-sweep_F_beta_9_lines") == 0) {
+			f_sweep_F_beta_9_lines = TRUE;
+			sweep_F_beta_9_lines_fname.assign(argv[++i]);
+			sweep_F_beta_9_lines_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
+			if (f_v) {
+				cout << "-sweep_F_beta_9_lines" << endl;
+			}
+			i += sweep_F_beta_9_lines_surface_description->read_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+			if (f_v) {
+				cout << "done with -sweep_F_beta_9_lines" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-sweep_F_beta_9_lines " << sweep_F_beta_9_lines_fname << endl;
+				sweep_F_beta_9_lines_surface_description->print();
+			}
+		}
+
+
+		else if (ST.stringcmp(argv[i], "-sweep_6_9_lines") == 0) {
+			f_sweep_6_9_lines = TRUE;
+			sweep_6_9_lines_fname.assign(argv[++i]);
+			sweep_6_9_lines_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
+			if (f_v) {
+				cout << "-sweep_6_9_lines" << endl;
+			}
+			i += sweep_6_9_lines_surface_description->read_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+			if (f_v) {
+				cout << "done with -sweep_6_9_lines" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-sweep_6_9_lines " << sweep_6_9_lines_fname << endl;
+				sweep_6_9_lines_surface_description->print();
 			}
 		}
 
@@ -1063,8 +1117,19 @@ void projective_space_activity_description::print()
 		cout << "-sweep " << sweep_fname << endl;
 	}
 
-	if (f_sweep_4) {
-		cout << "-sweep_4 " << sweep_4_fname << endl;
+	if (f_sweep_4_15_lines) {
+		cout << "-sweep_4_15_lines " << sweep_4_15_lines_fname << endl;
+		sweep_4_15_lines_surface_description->print();
+	}
+
+	if (f_sweep_F_beta_9_lines) {
+		cout << "-sweep_F_beta_9_lines " << sweep_F_beta_9_lines_fname << endl;
+		sweep_F_beta_9_lines_surface_description->print();
+	}
+
+	if (f_sweep_6_9_lines) {
+		cout << "-sweep_6_9_lines " << sweep_6_9_lines_fname << endl;
+		sweep_6_9_lines_surface_description->print();
 	}
 
 	if (f_sweep_4_27) {

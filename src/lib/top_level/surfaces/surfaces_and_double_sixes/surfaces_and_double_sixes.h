@@ -308,13 +308,10 @@ public:
 	void identify_Eckardt_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
 	void identify_Bes_and_print_table(int verbose_level);
-	void identify_general_abcd_and_print_table(int verbose_level);
 	void identify_Eckardt(int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_F13(
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_Bes(
-		int *Iso_type, int *Nb_lines, int verbose_level);
-	void identify_general_abcd(
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	int isomorphism_test_pairwise(
 			cubic_surfaces_in_general::surface_create *SC1,
@@ -353,6 +350,9 @@ public:
 			cubic_surfaces_in_general::surface_create_description *Descr,
 			int verbose_level);
 	void sweep_Cayley(int verbose_level);
+	void identify_general_abcd(
+		int *Iso_type, int *Nb_lines, int verbose_level);
+	void identify_general_abcd_and_print_table(int verbose_level);
 
 };
 
