@@ -571,11 +571,12 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		geometry_global GG;
 
-		GG.do_rank_point_in_PG(F,
-				Descr->rank_point_in_PG_n,
-				Descr->rank_point_in_PG_text,
+		GG.do_rank_points_in_PG(F,
+				Descr->rank_point_in_PG_label,
 				verbose_level);
 	}
+
+#if 0
 	else if (Descr->f_rank_point_in_PG_given_as_pairs) {
 
 		geometry_global GG;
@@ -585,6 +586,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->rank_point_in_PG_given_as_pairs_text,
 				verbose_level);
 	}
+#endif
+
 	else if (Descr->f_field_reduction) {
 
 		coding_theory::coding_theory_domain Coding;

@@ -482,8 +482,8 @@ void linear_group::linear_group_init(
 
 		A2->f_is_linear = TRUE;
 
-		//f_has_strong_generators = TRUE;
-		//Strong_gens = initial_strong_gens;
+		f_has_strong_generators = TRUE;
+		Strong_gens = initial_strong_gens;
 	
 		if (f_v) {
 			cout << "linear_group::linear_group_init action A2 created: ";

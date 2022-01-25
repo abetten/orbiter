@@ -1849,6 +1849,99 @@ void projective_space_with_action::report_decomposition_by_group(
 }
 
 
+void projective_space_with_action::do_rank_lines_in_PG(
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_rank_lines_in_PG" << endl;
+	}
+
+	int *v;
+	int m, n;
+
+	Orbiter->get_matrix_from_label(label, v, m, n);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_rank_lines_in_PG v: ";
+		Orbiter->Int_vec->matrix_print(v, m, n);
+		cout << endl;
+	}
+
+	if (n != 2 * (P->n + 1)) {
+		cout << "projective_space_with_action::do_rank_lines_in_PG n != 2 * (P->n + 1)" << endl;
+		exit(1);
+	}
+
+	long int a;
+	int i;
+
+	for (i = 0; i < m; i++) {
+
+
+		a = P->rank_line(v + i * n);
+
+		Orbiter->Int_vec->matrix_print(v + i * n, 2, P->n + 1);
+		cout << "has rank " << a << endl;
+
+	}
+
+
+	FREE_int(v);
+
+}
+
+void projective_space_with_action::do_unrank_lines_in_PG(
+		std::string &text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_unrank_lines_in_PG" << endl;
+	}
+
+	long int *v;
+	int sz;
+	int len;
+	int *basis;
+
+	Orbiter->Lint_vec->scan(text, v, sz);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_unrank_lines_in_PG v: ";
+		Orbiter->Lint_vec->print(cout, v, sz);
+		cout << endl;
+	}
+
+	len = 2 * (P->n + 1);
+
+	basis = NEW_int(len);
+
+	int i;
+
+	for (i = 0; i < sz; i++) {
+
+
+		P->unrank_line(basis, v[i]);
+
+
+		cout << v[i] << " = " << endl;
+		Orbiter->Int_vec->matrix_print(basis, 2, P->n + 1);
+		cout << endl;
+
+	}
+
+
+	FREE_lint(v);
+	FREE_int(basis);
+
+}
+
+
+
 
 
 
@@ -2024,6 +2117,8 @@ static int table_of_sets_compare_func(void *data, int i,
 	return ret;
 }
 #endif
+
+
 
 
 

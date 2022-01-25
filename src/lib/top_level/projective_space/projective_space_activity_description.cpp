@@ -213,6 +213,13 @@ projective_space_activity_description::projective_space_activity_description()
 	lines_on_point_but_within_a_plane_point_rk = 0;
 	lines_on_point_but_within_a_plane_plane_rk = 0;
 
+	f_rank_lines_in_PG = FALSE;
+	//rank_lines_in_PG_label;
+
+	f_unrank_lines_in_PG = FALSE;
+	//std::string unrank_lines_in_PG_text;
+
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -1002,6 +1009,21 @@ int projective_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-rank_lines_in_PG") == 0) {
+			f_rank_lines_in_PG = TRUE;
+			rank_lines_in_PG_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-rank_lines_in_PG " << rank_lines_in_PG_label << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-unrank_lines_in_PG") == 0) {
+			f_unrank_lines_in_PG = TRUE;
+			unrank_lines_in_PG_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-unrank_lines_in_PG " << unrank_lines_in_PG_text << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -1265,6 +1287,13 @@ void projective_space_activity_description::print()
 				<< " " << lines_on_point_but_within_a_plane_point_rk
 				<< " " << lines_on_point_but_within_a_plane_plane_rk
 				<< endl;
+	}
+	if (f_rank_lines_in_PG) {
+		cout << "-rank_lines_in_PG " << rank_lines_in_PG_label << endl;
+	}
+
+	if (f_unrank_lines_in_PG) {
+		cout << "-unrank_lines_in_PG " << unrank_lines_in_PG_text << endl;
 	}
 
 }

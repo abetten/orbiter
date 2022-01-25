@@ -215,7 +215,7 @@ int poset_classification::poset_structure_is_contained(
 	data_structures::sorting Sorting;
 
 	if (f_v) {
-		cout << "poset_structure_is_contained" << endl;
+		cout << "poset_classification::poset_structure_is_contained" << endl;
 	}
 	if (f_vv) {
 		cout << "set1: ";
@@ -245,14 +245,14 @@ int poset_classification::poset_structure_is_contained(
 
 			rk1 = Poset->VS->F->Linear_algebra->Gauss_easy(B1, sz1, dim);
 			if (rk1 != sz1) {
-				cout << "poset_structure_is_contained "
+				cout << "poset_classification::poset_structure_is_contained "
 						"rk1 != sz1" << endl;
 				exit(1);
 			}
 			
 			rk2 = Poset->VS->F->Linear_algebra->Gauss_easy(B2, sz2, dim);
 			if (rk2 != sz2) {
-				cout << "poset_structure_is_contained "
+				cout << "poset_classification::poset_structure_is_contained "
 						"rk2 != sz2" << endl;
 				exit(1);
 			}
@@ -353,13 +353,20 @@ data_structures_groups::set_and_stabilizer *poset_classification::get_set_and_st
 	if (f_v) {
 		cout << "poset_classification::get_set_and_stabilizer" << endl;
 	}
+
 	SaS = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
+
 	SaS->init(Poset->A, Poset->A2, 0 /*verbose_level */);
+
 	SaS->allocate_data(level, 0 /* verbose_level */);
+
 	get_set_by_level(level, orbit_at_level, SaS->data);
+
 	get_stabilizer_generators(SaS->Strong_gens,
 		level, orbit_at_level, 0 /* verbose_level */);
+
 	SaS->Strong_gens->group_order(SaS->target_go);
+
 	SaS->Stab = SaS->Strong_gens->create_sims(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "poset_classification::get_set_and_stabilizer done" << endl;

@@ -1554,7 +1554,8 @@ void poset_of_orbits::log_nodes_for_treefile(
 	}
 }
 
-void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname, int lvl, int verbose_level)
+void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname,
+		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l;

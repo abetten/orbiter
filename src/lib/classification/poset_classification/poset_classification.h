@@ -302,13 +302,9 @@ public:
 
 };
 
-
 void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
 		groups::schreier *Sch, void *data, int data2, int verbose_level);
-void poset_classification_control_early_test_function_cliques(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
+
 
 
 
@@ -485,7 +481,8 @@ public:
 	void orbit_length(int orbit_at_level, int level,
 			ring_theory::longinteger_object &len);
 	void get_orbit_length_and_stabilizer_order(int node, int level, 
-			ring_theory::longinteger_object &stab_order, ring_theory::longinteger_object &len);
+			ring_theory::longinteger_object &stab_order,
+			ring_theory::longinteger_object &len);
 	int orbit_length_as_int(int orbit_at_level, int level);
 	void recreate_schreier_vectors_up_to_level(int lvl, 
 		int verbose_level);
@@ -881,7 +878,8 @@ public:
 
 
 	// in poset_classification_report.cpp:
-	void report(std::ostream &ost, poset_classification_report_options *Opt, int verbose_level);
+	void report(std::ostream &ost,
+			poset_classification_report_options *Opt, int verbose_level);
 	void report_orbits_in_detail(std::ostream &ost,
 			poset_classification_report_options *Opt,
 			int verbose_level);
@@ -1109,7 +1107,8 @@ public:
 	void log_nodes_for_treefile(
 			int cur, int depth,
 			std::ostream &f, int f_recurse, int verbose_level);
-	void save_representatives_at_level_to_csv(std::string &fname, int lvl, int verbose_level);
+	void save_representatives_at_level_to_csv(std::string &fname,
+			int lvl, int verbose_level);
 
 };
 
@@ -1684,9 +1683,6 @@ public:
 	void invoke_print_function(std::ostream &ost, int sz, long int *set);
 };
 
-int callback_test_independence_condition(orbit_based_testing *Obt,
-					long int *S, int len, void *data, int verbose_level);
-
 
 
 
@@ -1715,7 +1711,7 @@ struct coset_table_entry {
 };
 
 
-//! a helper class for the poset classification algorithm to deal with flag orbits
+//! auxiliary class for the poset classification algorithm to deal with flag orbits
 
 
 class upstep_work {
@@ -1779,7 +1775,7 @@ public:
 		// We are extending a set of size 'size' 
 		// to a set of size 'size' + 1. 
 		// Calls poset_orbit_node::init_extension_node for the 
-		// n e w node that ƒis (possibly) created
+		// n e w node that is (possibly) created
 	void handle_extension_fusion_type(int verbose_level);
 		// called from upstep_work::handle_extension
 		// Handles the extension 'cur_ex' in node 'prev'.
@@ -1844,8 +1840,6 @@ public:
 		int f_tolerant, int verbose_level);
 };
 
-// in upstep_work.cpp:
-void print_coset_table(coset_table_entry *coset_table, int len);
 
 }}}
 

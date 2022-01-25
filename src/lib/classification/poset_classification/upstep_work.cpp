@@ -15,6 +15,8 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
+static void print_coset_table(coset_table_entry *coset_table, int len);
+
 upstep_work::upstep_work()
 {
 	gen = NULL;
@@ -961,7 +963,9 @@ void upstep_work::print_level_extension_coset_info()
 			prev, prev_ex, coset, nb_cosets);
 }
 
-void print_coset_table(coset_table_entry *coset_table, int len)
+
+
+static void print_coset_table(coset_table_entry *coset_table, int len)
 {
 	int i;
 	

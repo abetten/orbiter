@@ -1473,46 +1473,47 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 	}
 }
 
-void geometry_global::do_rank_point_in_PG(
-		field_theory::finite_field *F, int n,
-		std::string &coeff_text,
+void geometry_global::do_rank_points_in_PG(
+		field_theory::finite_field *F,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "geometry_global::do_rank_point_in_PG" << endl;
+		cout << "geometry_global::do_rank_points_in_PG" << endl;
 	}
 
-	int *coeff;
-	int sz;
+	int *v;
+	int m, n;
 
-	Orbiter->Int_vec->scan(coeff_text, coeff, sz);
-	if (sz != n + 1) {
-		cout << "geometry_global::do_rank_point_in_PG sz != n + 1" << endl;
-		exit(1);
-	}
+	Orbiter->get_matrix_from_label(label, v, m, n);
+
 	if (f_v) {
-		cout << "geometry_global::do_rank_point_in_PG coeff: ";
-		Orbiter->Int_vec->print(cout, coeff, sz);
+		cout << "geometry_global::do_rank_points_in_PG coeff: ";
+		Orbiter->Int_vec->matrix_print(v, m, n);
 		cout << endl;
 	}
 
 	long int a;
+	int i;
 
-	F->PG_element_rank_modified_lint(coeff, 1, n + 1, a);
+	for (i = 0; i < m; i++) {
+		F->PG_element_rank_modified_lint(v + i * n, 1, n, a);
 
+		Orbiter->Int_vec->print(cout, v + i * n, n);
+		cout << " : " << a << endl;
 
-	if (f_v) {
-		cout << "geometry_global::do_rank_point_in_PG coeff: ";
-		Orbiter->Int_vec->print(cout, coeff, sz);
-		cout << " has rank " << a << endl;
 	}
 
-	FREE_int(coeff);
+
+	FREE_int(v);
 
 }
 
+
+
+#if 0
 void geometry_global::do_rank_point_in_PG_given_as_pairs(
 		field_theory::finite_field *F, int n,
 		std::string &coeff_text,
@@ -1579,6 +1580,7 @@ void geometry_global::do_rank_point_in_PG_given_as_pairs(
 
 	FREE_int(coeff);
 }
+#endif
 
 
 

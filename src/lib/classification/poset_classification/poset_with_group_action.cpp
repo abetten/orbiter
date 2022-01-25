@@ -15,6 +15,11 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
+static int callback_test_independence_condition(
+		orbit_based_testing *Obt,
+		long int *S, int len, void *data, int verbose_level);
+
+
 poset_with_group_action::poset_with_group_action()
 {
 	description = NULL;
@@ -491,7 +496,8 @@ void poset_with_group_action::invoke_print_function(ostream &ost, int sz, long i
 //##############################################################################
 
 
-int callback_test_independence_condition(orbit_based_testing *Obt,
+static int callback_test_independence_condition(
+		orbit_based_testing *Obt,
 		long int *S, int len, void *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 0);

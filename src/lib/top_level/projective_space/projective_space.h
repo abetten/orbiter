@@ -510,6 +510,12 @@ public:
 	long int lines_on_point_but_within_a_plane_point_rk;
 	long int lines_on_point_but_within_a_plane_plane_rk;
 
+	int f_rank_lines_in_PG;
+	std::string rank_lines_in_PG_label;
+
+	int f_unrank_lines_in_PG;
+	std::string unrank_lines_in_PG_text;
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
@@ -539,6 +545,9 @@ public:
 	projective_space_activity();
 	~projective_space_activity();
 	void perform_activity(int verbose_level);
+	void do_rank_lines_in_PG(
+			std::string &label,
+			int verbose_level);
 
 };
 
@@ -768,6 +777,13 @@ public:
 	void report_decomposition_by_group(
 			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 		int verbose_level);
+	void do_rank_lines_in_PG(
+			std::string &label,
+			int verbose_level);
+	void do_unrank_lines_in_PG(
+			std::string &text,
+			int verbose_level);
+
 
 };
 

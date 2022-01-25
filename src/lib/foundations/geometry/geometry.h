@@ -850,12 +850,15 @@ public:
 	void do_inverse_isomorphism_klein_quadric(field_theory::finite_field *F,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 			int verbose_level);
-	void do_rank_point_in_PG(field_theory::finite_field *F, int n,
-			std::string &coeff_text,
+	void do_rank_points_in_PG(
+			field_theory::finite_field *F,
+			std::string &label,
 			int verbose_level);
+#if 0
 	void do_rank_point_in_PG_given_as_pairs(field_theory::finite_field *F, int n,
 			std::string &coeff_text,
 			int verbose_level);
+#endif
 	void do_intersection_of_two_lines(field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
