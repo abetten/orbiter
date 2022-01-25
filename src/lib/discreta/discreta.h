@@ -965,8 +965,6 @@ void merge_with_fellows(Vector &v1, Vector &v1_fellow,
 	Vector &v3, Vector &v3_fellow);
 void merge_with_value(Vector &idx1, Vector &idx2, Vector &idx3, 
 	Vector &val1, Vector &val2, Vector &val3);
-//int nb_PG_elements(int n, int q);
-//int nb_AG_elements(int n, int q);
 void intersection_of_vectors(Vector& V, Vector& v);
 
 
@@ -1025,12 +1023,9 @@ class permutation: public Vector
 	void Add3Cycle(int i0, int i1, int i2);
 	void Add4Cycle(int i0, int i1, int i2, int i3);
 	void Add5Cycle(int i0, int i1, int i2, int i3, int i4);
-	// void Add6Cycle(int i0, int i1, int i2, int i3, int i4, int i5);
-	// void Add7Cycle(int i0, int i1, int i2, int i3, int i4, int i5, int i6);
-	// void Add8Cycle(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7);
 	void AddNCycle(int first, int len);
 
-	// influence the behaviour of printing of permutations:
+	// influence the behavior of printing of permutations:
 	void set_print_type_integer_from_zero();
 	void set_print_type_integer_from_one();
 	void set_print_type_PG_1_q_element(domain *dom);
