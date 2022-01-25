@@ -20,6 +20,14 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
+
+static void poset_classification_control_early_test_function_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
+
+
 poset_classification_control::poset_classification_control()
 {
 
@@ -715,7 +723,7 @@ void poset_classification_control_preferred_choice_function(int pt, int &pt_pref
 }
 
 
-void poset_classification_control_early_test_function_cliques(long int *S, int len,
+static void poset_classification_control_early_test_function_cliques(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

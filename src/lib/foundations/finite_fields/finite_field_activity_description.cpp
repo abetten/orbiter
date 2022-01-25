@@ -235,13 +235,16 @@ finite_field_activity_description::finite_field_activity_description()
 	// std::string inverse_isomorphism_klein_quadric_matrix_A6;
 
 	f_rank_point_in_PG = FALSE;
-	rank_point_in_PG_n = 0;
-	//rank_point_in_PG_text;
+	//rank_point_in_PG_label;
 
+	f_unrank_point_in_PG = FALSE;
+	//std::string unrank_point_in_PG_text;
+
+#if 0
 	f_rank_point_in_PG_given_as_pairs = FALSE;
 	rank_point_in_PG_given_as_pairs_n = 0;
 	//std::string f_rank_point_in_PG_given_as_pairs_text;
-
+#endif
 
 	f_generator_matrix_cyclic_code = FALSE;
 	generator_matrix_cyclic_code_n = 0;
@@ -794,12 +797,21 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-rank_point_in_PG") == 0) {
 			f_rank_point_in_PG = TRUE;
-			rank_point_in_PG_n = ST.strtoi(argv[++i]);
-			rank_point_in_PG_text.assign(argv[++i]);
+			rank_point_in_PG_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-rank_point_in_PG " << rank_point_in_PG_n << " " << rank_point_in_PG_text << endl;
+				cout << "-rank_point_in_PG " << rank_point_in_PG_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-unrank_point_in_PG") == 0) {
+			f_unrank_point_in_PG = TRUE;
+			unrank_point_in_PG_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-unrank_point_in_PG " << unrank_point_in_PG_text << endl;
+			}
+		}
+
+
+#if 0
 		else if (ST.stringcmp(argv[i], "-rank_point_in_PG_given_as_pairs") == 0) {
 			f_rank_point_in_PG_given_as_pairs = TRUE;
 			rank_point_in_PG_given_as_pairs_n = ST.strtoi(argv[++i]);
@@ -808,6 +820,8 @@ int finite_field_activity_description::read_arguments(
 				cout << "-rank_point_in_PG " << rank_point_in_PG_given_as_pairs_n << " " << rank_point_in_PG_given_as_pairs_text << endl;
 			}
 		}
+#endif
+
 		else if (ST.stringcmp(argv[i], "-field_reduction") == 0) {
 			f_field_reduction = TRUE;
 			field_reduction_label.assign(argv[++i]);
@@ -1226,11 +1240,16 @@ void finite_field_activity_description::print()
 				<< inverse_isomorphism_klein_quadric_matrix_A6 << endl;
 	}
 	if (f_rank_point_in_PG) {
-		cout << "-rank_point_in_PG " << rank_point_in_PG_n << " " << rank_point_in_PG_text << endl;
+		cout << "-rank_point_in_PG " << rank_point_in_PG_label << endl;
 	}
+	if (f_unrank_point_in_PG) {
+		cout << "-unrank_point_in_PG " << unrank_point_in_PG_text << endl;
+	}
+#if 0
 	if (f_rank_point_in_PG_given_as_pairs) {
 		cout << "-rank_point_in_PG " << rank_point_in_PG_given_as_pairs_n << " " << rank_point_in_PG_given_as_pairs_text << endl;
 	}
+#endif
 	if (f_field_reduction) {
 		cout << "-field_reduction "
 				<< " " << field_reduction_label

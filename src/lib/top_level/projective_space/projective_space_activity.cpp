@@ -757,6 +757,20 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity f_lines_on_point_but_within_a_plane done" << endl;
 		}
 	}
+	else if (Descr->f_rank_lines_in_PG) {
+
+
+		PA->do_rank_lines_in_PG(
+				Descr->rank_lines_in_PG_label,
+				verbose_level);
+	}
+	else if (Descr->f_unrank_lines_in_PG) {
+
+
+		PA->do_unrank_lines_in_PG(
+				Descr->unrank_lines_in_PG_text,
+				verbose_level);
+	}
 
 
 
@@ -765,6 +779,10 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 
 }
+
+
+
+
 
 
 }}}

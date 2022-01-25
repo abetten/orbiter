@@ -519,8 +519,9 @@ void poset_orbit_node::write_file(actions::action *A,
 		b = E[i].get_type();
 		fp.write((char *) &b, sizeof(int));
 		if (f_vv) {
-			cout << i << " : " << E[i].get_pt() << " : "
-					<< E[i].get_orbit_len() << " : " << E[i].get_type() << endl;
+			cout << i << " : " << E[i].get_pt()
+					<< " : " << E[i].get_orbit_len()
+					<< " : " << E[i].get_type() << endl;
 		}
 		if (E[i].get_type() == EXTENSION_TYPE_EXTENSION) {
 			// extension node
@@ -696,11 +697,6 @@ void poset_orbit_node::draw_schreier_forest(
 			label.assign(str);
 
 
-			//snprintf(str, 2000, "%sschreier_tree_node_%d_%d",
-			//		PC->get_control()->schreier_tree_prefix, node, orbit_no);
-
-
-
 
 
 			if (f_using_invariant_subset) {
@@ -723,10 +719,6 @@ void poset_orbit_node::draw_schreier_forest(
 					verbose_level - 1);
 			}
 
-		//char label_data[2000];
-
-		//snprintf(label_data, 2000, "%sschreier_data_node_%d.tex",
-		//		PC->get_control()->schreier_tree_prefix, node);
 		Schreier->latex(label_tex);
 		}
 

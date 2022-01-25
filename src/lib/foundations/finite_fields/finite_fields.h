@@ -218,14 +218,21 @@ public:
 	int f_inverse_isomorphism_klein_quadric;
 	std::string inverse_isomorphism_klein_quadric_matrix_A6;
 
-	int f_rank_point_in_PG;
-	int rank_point_in_PG_n;
-	std::string rank_point_in_PG_text;
+	// ranking and unranking points in PG:
 
+	int f_rank_point_in_PG;
+	std::string rank_point_in_PG_label;
+
+	int f_unrank_point_in_PG;
+	std::string unrank_point_in_PG_text;
+
+
+
+#if 0
 	int f_rank_point_in_PG_given_as_pairs;
 	int rank_point_in_PG_given_as_pairs_n;
 	std::string rank_point_in_PG_given_as_pairs_text;
-
+#endif
 
 	int f_field_reduction;
 	std::string field_reduction_label;

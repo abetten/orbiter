@@ -1264,6 +1264,10 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 
 	LG->linear_group_init(Linear_group_description, verbose_level - 2);
 
+	if (f_v) {
+		cout << "symbol_definition::definition after LG->linear_group_init" << endl;
+	}
+
 
 	// create any_group object from linear_group:
 
@@ -1271,7 +1275,13 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	apps_algebra::any_group *AG;
 
 	AG = NEW_OBJECT(apps_algebra::any_group);
+	if (f_v) {
+		cout << "symbol_definition::definition before AG->init_linear_group" << endl;
+	}
 	AG->init_linear_group(LG, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition after AG->init_linear_group" << endl;
+	}
 
 
 
