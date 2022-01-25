@@ -12,6 +12,19 @@ ORBITER_PATH=$(MY_PATH)/src/apps/orbiter/
 
 
 ###############################################################################
+# additional configurations for when you want to 
+# compile automatically generated code
+###############################################################################
+
+SRC=$(MY_PATH)/src
+MY_CPP = g++
+MY_CC = gcc
+CPPFLAGS = -Wall -I../../DEV.22/orbiter/src/lib -std=c++14
+LIB = $(SRC)/lib/liborbiter.a -lpthread
+LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
+
+
+###############################################################################
 # End of configuration part
 ###############################################################################
 
@@ -273,6 +286,7 @@ D46="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,16,1,17,1,18,1,19"
 D47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19 "
 
 
+# Normal form for 15 lines:
 
 F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 \
 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 \
@@ -287,6 +301,8 @@ F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 \
 + alpha*beta*(gamma + 1)*x1*x3*x3"
 
 
+# general normal form for surfaces with 27 lines:
+
 F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 \
@@ -300,6 +316,20 @@ F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 - b*b*c*c*d - a*a*b*c + a*a*c*d + a*a*d*d + a*b*b*c + a*b*c*c \
 - (1+1+1+1)*a*b*c*d - a*c*c*d + a*c*d*d + b*b*c*c)*X1*X2*X3 \
 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
+
+
+# proposed normal form for smooth cubic surfaces with 9 lines:
+
+F_a_b_c_d_f_g="g*b*(c*f + d*f - d*g - c + f - g)*x0*x0*x2 \
++ (a*d*g*g- b*c*f*f - b*d*f*f + b*d*g*g \
+- a*c*f + a*c*g - a*d*f + a*g*g + b*c*g - b*f*f + b*g*g - a*f)*x0*x1*x2 \
++ (1 + c + d)*f*(a*g - b*f + b*g - a)*x0*x1*x3 \
++ g*(c*f + d*f - d*g - c + f - g)*a*x0*x2*x2 \
+- b*a*g*(c*f + d*f - d*g - c + f - g)*x0*x2*x3 \
+- (1 + d)*f*(a*g - b*f + b*g - a)*x1*x1*x2 - (1 + d)*f*(a*g - b*f + b*g - a)*x1*x1*x3 \
+- c*f*(a*g - b*f + b*g - a)*x1*x2*x2 \
++ (d - 1)*c*f*(a*g - b*f + b*g - a)*x1*x2*x3 \
++ c*d*f*(a*g - b*f + b*g - a)*x1*x3*x3"
 
 
 
@@ -1302,6 +1332,16 @@ SECTION_INPUT_STREAMS:
 
 SECTION_BASIC_NUMBER_THEORY:
 
+
+order_of_2_mod_n:
+	$(ORBITER_PATH)orbiter.out -v 3 -order_of_q_mod_n 2 3 151
+	$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex 1 \
+		order_of_q_mod_n_q2_3_151.csv
+	pdflatex order_of_q_mod_n_q2_3_151.tex
+	open order_of_q_mod_n_q2_3_151.pdf
+
+
+
 PR7:
 		$(ORBITER_PATH)orbiter.out -v 1 -smallest_primitive_root 7
 
@@ -1332,20 +1372,36 @@ PR37:
 PR_100:
 		$(ORBITER_PATH)orbiter.out -v 1 -smallest_primitive_root_interval 2 100
 
+Eulerfunction_150:
+		$(ORBITER_PATH)orbiter.out -v 1 -eulerfunction_interval 1 150
+		$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex 1 \
+			table_eulerfunction_1_150.csv
+		pdflatex table_eulerfunction_1_150.tex
+		open table_eulerfunction_1_150.pdf
+
 PR_1000:
 		$(ORBITER_PATH)orbiter.out -v 1 -smallest_primitive_root_interval 2 1000
-		$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex primitive_element_table_2_1000.csv
+		$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex 1 \
+			primitive_element_table_2_1000.csv
 		pdflatex primitive_element_table_2_1000.tex
 		open primitive_element_table_2_1000.pdf
 
 PE_number_1000:
 		$(ORBITER_PATH)orbiter.out -v 1 -number_of_primitive_roots_interval 2 1000
-		$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex table_number_of_pe_2_1000.csv
+		$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex 1 table_number_of_pe_2_1000.csv
 		pdflatex table_number_of_pe_2_1000.tex
 		open table_number_of_pe_2_1000.pdf
 
 Eulerfunction_10000:
 		$(ORBITER_PATH)orbiter.out -v 1 -number_of_primitive_roots_interval 10000 10001
+
+
+power_function_2_mod_11:
+		$(ORBITER_PATH)orbiter.out -v 5 -power_function_mod_n 2 11
+		$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex 1 power_function_k2_n11.csv
+		pdflatex power_function_k2_n11.tex
+		open power_function_k2_n11.pdf
+
 
 # randomized algo:
 
@@ -1358,7 +1414,7 @@ PM2:
 		$(ORBITER_PATH)orbiter.out -v 5 -power_mod 43085 49842 915839
 
 #the power of 43085 to the 49842 mod 915839 is 487320
-	
+
 DL2:
 		$(ORBITER_PATH)orbiter.out -v 5 -discrete_log 487320 43085 915839
 
@@ -1469,6 +1525,10 @@ sqrt_mod_20_31:
 		$(ORBITER_PATH)orbiter.out -v 2 -square_root_mod 20 31
 
 
+
+
+
+
 ###############################################################################
 # Section 3.2: Prime Fields
 
@@ -1522,56 +1582,6 @@ F_17:
 	open GF_17.pdf
 
 
-SRC=$(MY_PATH)/src
-DISCRETA_CPP = g++
-DISCRETA_CC = gcc
-CPPFLAGS = -Wall -I../../DEV.22/orbiter/src/lib -std=c++14
-LIB = $(SRC)/lib/liborbiter.a -lpthread
-LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
-
-F_17_NTT:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 17 -end \
-		-with F -do -finite_field_activity -NTT 4 17 -end
-
-F_17_NTT_compile:
-	$(DISCRETA_CPP)  NTT_k4_q17.cpp $(CPPFLAGS) $(LIB) $(LFLAGS) -o NTT_k4_q17.out
-	./NTT_k4_q17.out
-
-# problem:
-
-FGDTP:
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_F_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Fv_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_AAv_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_G_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_D_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_T_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Tv_k4.csv 20 8
-	
-no:
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_P_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_F_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Gr_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Dr_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Tr_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Pr_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_G_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_D_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_T_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_P_k3.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_G_k2.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_D_k2.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_T_k2.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_P_k2.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_the_P_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_L_k4.csv 20 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N16.csv 40 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N8.csv 40 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N4.csv 40 8
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N2.csv 40 8
-	
-
 
 
 
@@ -1623,7 +1633,7 @@ SECTION_POLYNOMIALS:
 
 # check which polynomials are irreducible and which are primitive:
 
-sift_polynomials_3:
+sift_polynomials_deg3_q2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-with F -do \
@@ -1631,7 +1641,7 @@ sift_polynomials_3:
 
 
 
-sift_polynomials_4:
+sift_polynomials_deg4_q2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-with F -do \
@@ -1678,268 +1688,6 @@ poly_mult_mod2:
 		-finite_field_activity \
 		-polynomial_mult_mod "3,1,2" "5,3,4" "6,0,0,1" -end
 
-Berlekamp_matrix_2_3:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-Berlekamp_matrix "1,1,0,1" -end
-
-# the polynomial X^3+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 2.
-
-Berlekamp_matrix_2_4:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-Berlekamp_matrix "1,1,0,0,1" -end
-
-# the polynomial X^4+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 3.
-
-
-Berlekamp_matrix_4_3a:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 4 -end \
-		-with F -do \
-		-finite_field_activity \
-		-Berlekamp_matrix "1,3,0,1" -end
-
-Berlekamp_matrix_4_3b:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 4 -end \
-		-with F -do \
-		-finite_field_activity \
-		-Berlekamp_matrix "1,3,1,1" -end
-
-
-
-
-find_roots_a:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 19 -end \
-		-with F -do \
-		-finite_field_activity \
-		-polynomial_find_roots "18,1,1" -end
-
-find_roots_b:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 19 -end \
-		-with F -do \
-		-finite_field_activity \
-		-polynomial_find_roots "1,3,1" -end
-
-find_roots_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 19 -end \
-		-with F -do \
-		-finite_field_activity \
-		-polynomial_find_roots "1,16,1" -end
-
-find_roots_d:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 19 -end \
-		-with F -do \
-		-finite_field_activity \
-		-polynomial_find_roots "1,18,1" -end
-
-find_roots_e:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 19 -end \
-		-with F -do \
-		-finite_field_activity \
-		-polynomial_find_roots "1,16,3" -end
-
-
-roots_over_F2:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2  -end \
-		-with F -do \
-		-finite_field_activity \
-		-polynomial_find_roots "0,1,0,1,1,1" -end
-
-
-
-roots_over_F8:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do \
-		-finite_field_activity \
-		-polynomial_find_roots "0,1,0,1,1,1" -end
-
-
-
-
-# degree and then order of the field of coefficients:
-
-irred_3_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 3 -end
-	pdflatex Irred_q2_d3.tex
-	open Irred_q2_d3.pdf
-
-
-irred_4_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 4 -end
-	pdflatex Irred_q2_d4.tex
-	open Irred_q2_d4.pdf
-
-# 3 polys
-
-irred_5_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 5 -end
-	pdflatex Irred_q2_d5.tex
-	open Irred_q2_d5.pdf
-
-# 6 polys
-
-irred_6_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 6 -end
-	pdflatex Irred_q2_d6.tex
-	open Irred_q2_d6.pdf
-
-# 9 polys
-
-irred_7_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 7 -end
-	pdflatex Irred_q2_d7.tex
-	open Irred_q2_d7.pdf
-
-# 18 polys
-
-irred_8_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 8 -end
-	pdflatex Irred_q2_d8.tex
-	open Irred_q2_d8.pdf
-
-# 30 polys
-
-irred_9_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 9 -end
-	pdflatex Irred_q2_d9.tex
-	open Irred_q2_d9.pdf
-
-# 56 polys
-
-irred_10_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 10 -end
-	pdflatex Irred_q2_d10.tex
-	open Irred_q2_d10.pdf
-
-# 99 polys
-
-irred_2_4:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 4 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 2 -end
-	pdflatex Irred_q4_d2.tex
-	open Irred_q4_d2.pdf
-
-# 6 polys
-
-
-irred_3_4:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-define F -finite_field -q 4 -end \
-		-with F -do \
-		-finite_field_activity \
-		-make_table_of_irreducible_polynomials 3 -end
-	pdflatex Irred_q4_d3.tex
-	open Irred_q4_d3.pdf
-
-# 20 polys
-
-
-
-
-order_of_2_mod_n:
-	$(ORBITER_PATH)orbiter.out -v 3 -order_of_q_mod_n 2 3 300
-	$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex order_of_q_mod_n_q2_3_300.csv
-	pdflatex order_of_q_mod_n_q2_3_300.tex
-	open order_of_q_mod_n_q2_3_300.pdf
-
-
-search_primitive_poly_2:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-search_for_primitive_polynomial_in_range 2 2 2 10 #| grep //
-
-# stuck in factoring 2^61-1 (which is prime)
-
-search_primitive_poly_3:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 3 3 2 60
-	
-
-search_primitive_poly_4:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 4 4 2 30
-	
-search_primitive_poly_5:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 5 5 2 30
-	
-
-search_primitive_poly_7:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 7 7 2 20
-	
-
-search_primitive_poly_8:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 8 8 2 20
-	
-search_primitive_poly_9:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 9 9 2 15
-	
-search_primitive_poly_11:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 11 11 2 15
-	
-search_primitive_poly_13:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 13 13 2 15
-	
-search_primitive_poly_degree_16:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 2 2 16 16
-	
-search_primitive_poly_32:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-search_for_primitive_polynomial_in_range 32 32 2 10
-	
 
 
 poly_mult_mod_F4:
@@ -2220,7 +1968,8 @@ bent_4:
 
 bent_4a:
 	$(ORBITER_PATH)orbiter.out -v 3 \
-		-reformat bent_function_n4.csv bent_function_n4_16x1.csv 1
+		-reformat bent_function_n4.csv \
+		bent_function_n4_16x1.csv 1
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity \
@@ -2234,29 +1983,7 @@ bent_4a:
 #X0*X3*X4^2 + X1*X2*X4^2
 
 
-F8_over_F2_field_reduction:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 8 -end \
-		-loop L 0 8 1 \
-			-with F -do \
-			-finite_field_activity \
-				-field_reduction "F8_red_%L" 2 1 1 "%L" \
-			-end \
-		-end_loop
-	$(ORBITER_PATH)orbiter.out -v 2 -loop L 0 8 1 \
-			-draw_matrix -input_csv_file F8_red_%L.csv \
-			-box_width 40 -bit_depth 24 -partition 4 3 3 -end \
-		-end_loop
-	#pdflatex field_reduction_Q8_q2_5_7.tex
 
-
-
-F_8_Nth_roots_21:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -finite_field_activity -nth_roots 21 -end
-	pdflatex Nth_roots_q8_n21.tex
-	open Nth_roots_q8_n21.pdf
 
 
 
@@ -2515,54 +2242,6 @@ trace_64_poly_2:
 		-box_width 40 -bit_depth 24 -partition 3 8 8 -end
 
 
-F_64_over_F8_field_reduction:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 64 -end \
-		-define elts -vector -field F -loop 0 64 1 -end \
-		-with F -do \
-		-finite_field_activity -field_reduction "F64_over_F8" 8 8 8 \
-			elts -end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file F64_over_F8.csv \
-		-box_width 40 -bit_depth 24 \
-		-partition 4 "2,2,2,2,2,2,2,2" "2,2,2,2,2,2,2,2" -end
-	open F64_over_F8_draw.bmp
-	#pdflatex field_reduction_Q64_q8_8_8.tex
-	#open field_reduction_Q64_q8_8_8.pdf
-
-
-F_64_over_F4_field_reduction:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 64 -end \
-		-define elts -vector -field F -loop 0 64 1 -end \
-		-with F -do \
-		-finite_field_activity \
-			-field_reduction "F64_over_F4" 4 8 8 elts -end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file F64_over_F4.csv \
-		-box_width 40 -bit_depth 24 \
-		-partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3" -end
-	open F64_over_F4_draw.bmp
-	#pdflatex field_reduction_Q64_q4_8_8.tex
-	#open field_reduction_Q64_q4_8_8.pdf
-
-
-F64_over_F2_field_reduction:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 64 -end \
-		-define elts -vector -field F -loop 0 64 1 -end \
-		-with F -do \
-		-finite_field_activity \
-			-field_reduction "F64_over_F2" 2 8 8 elts -end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file F64_over_F2.csv \
-		-box_width 40 -bit_depth 24 \
-		-partition 4 "6,6,6,6,6,6,6,6" "6,6,6,6,6,6,6,6" -end
-	open F64_over_F2_draw.bmp
-	#pdflatex field_reduction_Q64_q2_8_8.tex
-	#open field_reduction_Q64_q2_8_8.pdf
-
-
 
 trace_81:
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -2624,21 +2303,6 @@ F_289:
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	pdflatex GF_289.tex
 	open GF_289.pdf
-
-
-
-normal_basis_2_3:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do -finite_field_activity \
-		-normal_basis 3 -end
-
-
-normal_basis_2_6:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do -finite_field_activity \
-		-normal_basis 6 -end
 
 
 F_512:
@@ -2717,26 +2381,6 @@ F_8388608:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 8388608 -end
 
-
-F_8_vandermonde:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 8 -end \
-		-with F -do -finite_field_activity \
-			-Vandermonde_matrix \
-		-end
-
-
-
-F_1024_vandermonde:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 1024 -end \
-		-with F -do -finite_field_activity \
-			-Vandermonde_matrix \
-		-end
-	rm Vandermonde_1024.csv
-	rm Vandermonde_inv_1024.csv
-
-#User time: 0:46
 
 
 ###############################################################################
@@ -2865,6 +2509,441 @@ RREF_RS_6_4_7:
 		-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
 		-r240 -oRREF_example_q7_4_6_page%02d.png \
 		RREF_example_q7_4_6.pdf
+
+
+
+###############################################################################
+# Section 3.6: Advanced Topics in finite fields
+
+
+
+SECTION_ADVANCED_TOPICS_IN_FINITE_FIELDS:
+
+
+
+
+normal_basis_2_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+		-normal_basis 3 -end
+
+
+normal_basis_2_6:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+		-normal_basis 6 -end
+
+
+
+F8_over_F2_field_reduction:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 8 -end \
+		-loop L 0 8 1 \
+			-with F -do \
+			-finite_field_activity \
+				-field_reduction "F8_red_%L" 2 1 1 "%L" \
+			-end \
+		-end_loop
+	$(ORBITER_PATH)orbiter.out -v 2 -loop L 0 8 1 \
+			-draw_matrix -input_csv_file F8_red_%L.csv \
+			-box_width 40 -bit_depth 24 -partition 4 3 3 -end \
+		-end_loop
+	#pdflatex field_reduction_Q8_q2_5_7.tex
+
+
+
+
+F_64_over_F8_field_reduction:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 64 -end \
+		-define elts -vector -field F -loop 0 64 1 -end \
+		-with F -do \
+		-finite_field_activity -field_reduction "F64_over_F8" 8 8 8 \
+			elts -end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file F64_over_F8.csv \
+		-box_width 40 -bit_depth 24 \
+		-partition 4 "2,2,2,2,2,2,2,2" "2,2,2,2,2,2,2,2" -end
+	open F64_over_F8_draw.bmp
+	#pdflatex field_reduction_Q64_q8_8_8.tex
+	#open field_reduction_Q64_q8_8_8.pdf
+
+
+F_64_over_F4_field_reduction:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 64 -end \
+		-define elts -vector -field F -loop 0 64 1 -end \
+		-with F -do \
+		-finite_field_activity \
+			-field_reduction "F64_over_F4" 4 8 8 elts -end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file F64_over_F4.csv \
+		-box_width 40 -bit_depth 24 \
+		-partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3" -end
+	open F64_over_F4_draw.bmp
+	#pdflatex field_reduction_Q64_q4_8_8.tex
+	#open field_reduction_Q64_q4_8_8.pdf
+
+
+F64_over_F2_field_reduction:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 64 -end \
+		-define elts -vector -field F -loop 0 64 1 -end \
+		-with F -do \
+		-finite_field_activity \
+			-field_reduction "F64_over_F2" 2 8 8 elts -end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file F64_over_F2.csv \
+		-box_width 40 -bit_depth 24 \
+		-partition 4 "6,6,6,6,6,6,6,6" "6,6,6,6,6,6,6,6" -end
+	open F64_over_F2_draw.bmp
+	#pdflatex field_reduction_Q64_q2_8_8.tex
+	#open field_reduction_Q64_q2_8_8.pdf
+
+
+
+
+
+F_8_Nth_roots_21:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-with F -do -finite_field_activity -nth_roots 21 -end
+	pdflatex Nth_roots_q8_n21.tex
+	open Nth_roots_q8_n21.pdf
+
+
+
+
+F_8_vandermonde:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 8 -end \
+		-with F -do -finite_field_activity \
+			-Vandermonde_matrix \
+		-end
+
+
+
+F_1024_vandermonde:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 1024 -end \
+		-with F -do -finite_field_activity \
+			-Vandermonde_matrix \
+		-end
+	rm Vandermonde_1024.csv
+	rm Vandermonde_inv_1024.csv
+
+#User time: 0:46
+
+
+
+
+
+Berlekamp_matrix_2_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-Berlekamp_matrix "1,1,0,1" -end
+
+# the polynomial X^3+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 2.
+
+Berlekamp_matrix_2_4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-Berlekamp_matrix "1,1,0,0,1" -end
+
+# the polynomial X^4+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 3.
+
+
+Berlekamp_matrix_4_3a:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-Berlekamp_matrix "1,3,0,1" -end
+
+Berlekamp_matrix_4_3b:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-Berlekamp_matrix "1,3,1,1" -end
+
+
+
+
+find_roots_a:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 19 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_find_roots "18,1,1" -end
+
+find_roots_b:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 19 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_find_roots "1,3,1" -end
+
+find_roots_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 19 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_find_roots "1,16,1" -end
+
+find_roots_d:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 19 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_find_roots "1,18,1" -end
+
+find_roots_e:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 19 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_find_roots "1,16,3" -end
+
+
+roots_over_F2:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2  -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_find_roots "0,1,0,1,1,1" -end
+
+
+
+roots_over_F8:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_find_roots "0,1,0,1,1,1" -end
+
+
+
+
+# degree and then order of the field of coefficients:
+
+irred_3_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 3 -end
+	pdflatex Irred_q2_d3.tex
+	open Irred_q2_d3.pdf
+
+
+irred_4_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 4 -end
+	pdflatex Irred_q2_d4.tex
+	open Irred_q2_d4.pdf
+
+# 3 polys
+
+irred_5_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 5 -end
+	pdflatex Irred_q2_d5.tex
+	open Irred_q2_d5.pdf
+
+# 6 polys
+
+irred_6_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 6 -end
+	pdflatex Irred_q2_d6.tex
+	open Irred_q2_d6.pdf
+
+# 9 polys
+
+irred_7_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 7 -end
+	pdflatex Irred_q2_d7.tex
+	open Irred_q2_d7.pdf
+
+# 18 polys
+
+irred_8_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 8 -end
+	pdflatex Irred_q2_d8.tex
+	open Irred_q2_d8.pdf
+
+# 30 polys
+
+irred_9_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 9 -end
+	pdflatex Irred_q2_d9.tex
+	open Irred_q2_d9.pdf
+
+# 56 polys
+
+irred_10_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 10 -end
+	pdflatex Irred_q2_d10.tex
+	open Irred_q2_d10.pdf
+
+# 99 polys
+
+irred_2_4:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 2 -end
+	pdflatex Irred_q4_d2.tex
+	open Irred_q4_d2.pdf
+
+# 6 polys
+
+
+irred_3_4:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-make_table_of_irreducible_polynomials 3 -end
+	pdflatex Irred_q4_d3.tex
+	open Irred_q4_d3.pdf
+
+# 20 polys
+
+
+
+
+
+
+search_primitive_poly_2:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-search_for_primitive_polynomial_in_range 2 2 2 10 #| grep //
+
+# stuck in factoring 2^61-1 (which is prime)
+
+search_primitive_poly_3:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 3 3 2 60
+	
+
+search_primitive_poly_4:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 4 4 2 30
+	
+search_primitive_poly_5:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 5 5 2 30
+	
+
+search_primitive_poly_7:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 7 7 2 20
+	
+
+search_primitive_poly_8:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 8 8 2 20
+	
+search_primitive_poly_9:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 9 9 2 15
+	
+search_primitive_poly_11:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 11 11 2 15
+	
+search_primitive_poly_13:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 13 13 2 15
+	
+search_primitive_poly_degree_16:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 2 2 16 16
+	
+search_primitive_poly_32:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-search_for_primitive_polynomial_in_range 32 32 2 10
+	
+
+
+
+
+NTT_k4_q17.cpp:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 17 -end \
+		-with F -do -finite_field_activity -NTT 4 17 -end
+
+F_17_NTT_compile: NTT_k4_q17.cpp
+	$(MY_CPP)  NTT_k4_q17.cpp $(CPPFLAGS) \
+		$(LIB) $(LFLAGS) -o NTT_k4_q17.out
+	./NTT_k4_q17.out
+
+# ToDo:
+
+FGDTP:
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_F_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Fv_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_AAv_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_G_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_D_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_T_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Tv_k4.csv 20 8
+	
+no:
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_P_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_F_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Gr_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Dr_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Tr_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_Pr_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_G_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_D_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_T_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_P_k3.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_G_k2.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_D_k2.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_T_k2.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_P_k2.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_the_P_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix ntt_L_k4.csv 20 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N16.csv 40 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N8.csv 40 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N4.csv 40 8
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix Fourier_q17_N2.csv 40 8
+	
 
 
 
@@ -3152,7 +3231,6 @@ PG_2_8_incidence_matrix:
 
 
 
-
 ###############################################################################
 # Section 4.3: Finite Desarguesian Projective Planes
 
@@ -3248,6 +3326,25 @@ GR_3_2_2:
 			-cheat_sheet_Gr 3 2 -end
 	pdflatex Gr_3_2_2.tex 
 	open Gr_3_2_2.pdf
+
+
+
+rank_lines:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define v1 -vector -format 3 -dense "1,0,2,2,0,1,1,2, 1,0,2,0,0,1,1,2, 1,0,2,2,0,1,2,1" -end \
+		-define v2 -vector -format 3 -dense "1,0,0,0,0,1,0,0, 1,0,0,0,0,0,0,1, 0,1,0,0,0,0,2,1" -end \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v1 \
+		-end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v2 \
+		-end
+
+
 
 
 ###############################################################################
@@ -6831,7 +6928,7 @@ F_alpha_beta_gamma_delta_sweep_4_q3:
 		-define P -projective_space 3 F -end \
 		-with P -do \
 		-projective_space_activity \
-		-sweep_4 sweep_4_q3 -q 3 \
+		-sweep_4_15_lines sweep_4_15_lines_q3 -q 3 \
 			-by_equation "F_alpha_beta_gamma_delta" \
 			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
 			$(F_ALPHA_BETA_GAMMA_DELTA) \
@@ -6846,13 +6943,13 @@ F_alpha_beta_gamma_delta_sweep_4_q3:
 
 
 
-F_alpha_beta_gamma_delta_sweep_4_q7:
+F_alpha_beta_gamma_delta_sweep_4_15_lines_q7:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space 3 F -end \
 		-with P -do \
 		-projective_space_activity \
-		-sweep_4 sweep_4_q7 -q 7 \
+		-sweep_4_15_lines sweep_4_q7 -q 7 \
 			-by_equation \
 			"F_alpha_beta_gamma_delta" \
 			"\DF_{\alpha,\beta,\gamma,\delta}\D" \
@@ -6865,7 +6962,9 @@ F_alpha_beta_gamma_delta_sweep_4_q7:
 
 #User time: 0:30
 # 348 parameter sets
-
+#F_alpha_beta_gamma_delta_q7_points.txt
+#F_alpha_beta_gamma_delta_q7_sweep.csv
+#F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv
 
 
 
@@ -8083,8 +8182,27 @@ surface_sweep_Cayley_13:
 
 
 
+F_sweep_15_q7:
+	$(ORBITER_PATH)/orbiter.out -v 20 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-sweep_4_15_lines sweep_4_15_lines_q7 -q 7 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+				"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+				$(F_ALPHA_BETA_GAMMA_DELTA) \
+				"alpha=2,beta=1,gamma=2,delta=3" \
+				"\D\alpha=2,\beta=1,\gamma=2,\delta=3\D" \
+			-end \
+		-end
 
 
+
+#0:29
+#F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv
+#F_alpha_beta_gamma_delta_q7_sweep.csv
+#F_alpha_beta_gamma_delta_q7_points.txt
 
 
 
@@ -14236,7 +14354,7 @@ hyperoval_16_c:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
-				-end \
+			-end \
 			-report \
 				-prefix hyperoval_q16 \
 				-export_flag_orbits \
@@ -14285,8 +14403,8 @@ cubic_curves_PG_2_8_canon:
 	open cc_8_classification.pdf
 
 
-F_alpha_beta_gamma_delta_classify_q7_nauty:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
+F_alpha_beta_gamma_delta_classify_q7_nauty: F_alpha_beta_gamma_delta_q7_points.txt
+	$(ORBITER_PATH)/orbiter.out -v 6 \
 		-define C -combinatorial_objects \
 			-file_of_points \
 			F_alpha_beta_gamma_delta_q7_points.txt \
@@ -14296,11 +14414,15 @@ F_alpha_beta_gamma_delta_classify_q7_nauty:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
-			-classification_prefix surface_15_lines_q7 \
-			-save_ago \
+				-classification_prefix surface_15_lines_q7 \
+				-save_ago \
+				-save_transversal \
+			-end \
 		-end
 	#pdflatex surface_15_lines_q7_classification.tex
 	#open surface_15_lines_q7_classification.pdf
+
+#4:38
 
 
 #User time: 4:12 on Mac

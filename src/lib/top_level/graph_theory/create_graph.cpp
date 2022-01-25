@@ -1551,7 +1551,7 @@ void create_graph::make_chain_graph(int &N, int *&Adj,
 	for (I = 0; I < sz1; I++) {
 		for (i = 0; i < part1[I]; i++) {
 			ii = first1[I] + i;
-			for (J = I; J < sz2 - I; J++) {
+			for (J = 0; J < sz2 - I; J++) {
 				for (j = 0; j < part2[J]; j++) {
 					jj = first2[J] + j;
 					Adj[ii * N + jj] = 1;

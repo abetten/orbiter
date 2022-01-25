@@ -12,6 +12,29 @@
 #ifndef _ORBITER_
 #define _ORBITER_
 
+
+/*! \mainpage Orbiter - Classification of Combinatorial Objects
+ *
+ * \section users_guide_sec User's Guide
+ *
+ * <A HREF="http://www.math.colostate.edu/~betten/orbiter/users_guide.pdf"> Orbiter User's Guide </A>
+ *
+ * \section programmers_guide_sec Programmer's Guide
+ *
+ * <A HREF="https://www.math.colostate.edu/~betten/orbiter/orbiter_programmers_guide.pdf"> Orbiter Programmer's Guide </A>
+ *
+ * \section github_sec Sources on GitHub
+ *
+ * <A HREF="https://github.com/abetten/orbiter"> Orbiter Sources on GitHub </A>
+ *
+ * \section team_sec Orbiter Team members
+ *
+ * Anton Betten, Abdullah AlAzemi, Fatma Karaoglu, Sajeeb Chowdhury, and many more.
+ *
+ *
+ */
+
+
 #include "foundations/foundations.h"
 #include "discreta/discreta.h"
 #include "group_actions/group_actions.h"
