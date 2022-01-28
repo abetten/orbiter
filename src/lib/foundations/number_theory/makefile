@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	cyclotomic_sets.o \
+	elliptic_curve.o \
 	number_theoretic_transform.o \
 	number_theory_domain.o 
 

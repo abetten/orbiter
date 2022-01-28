@@ -797,13 +797,13 @@ int incidence_structure::compute_TDO_safe_next(
 		if (EVEN(step)) {
 			int f_list_incidences = FALSE;
 			get_and_print_col_decomposition_scheme(PStack,
-					f_list_incidences, FALSE);
+					f_list_incidences, FALSE, verbose_level);
 			PStack.print_classes_points_and_lines(cout);
 		}
 		else {
 			int f_list_incidences = FALSE;
 			get_and_print_row_decomposition_scheme(PStack,
-					f_list_incidences, FALSE);
+					f_list_incidences, FALSE, verbose_level);
 			PStack.print_classes_points_and_lines(cout);
 		}
 	}
@@ -839,7 +839,7 @@ void incidence_structure::compute_TDO_safe(data_structures::partitionstack &PSta
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe before refine_column_partition_safe" << endl;
 			}
-			f_refine = refine_column_partition_safe(PStack, verbose_level);
+			f_refine = refine_column_partition_safe(PStack, verbose_level - 2);
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe after refine_column_partition_safe" << endl;
 			}
@@ -848,7 +848,7 @@ void incidence_structure::compute_TDO_safe(data_structures::partitionstack &PSta
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe before refine_row_partition_safe" << endl;
 			}
-			f_refine = refine_row_partition_safe(PStack, verbose_level);
+			f_refine = refine_row_partition_safe(PStack, verbose_level - 2);
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe after refine_row_partition_safe" << endl;
 			}
@@ -860,13 +860,13 @@ void incidence_structure::compute_TDO_safe(data_structures::partitionstack &PSta
 			if (EVEN(i)) {
 				int f_list_incidences = FALSE;
 				get_and_print_col_decomposition_scheme(PStack,
-						f_list_incidences, FALSE);
+						f_list_incidences, FALSE, verbose_level);
 				PStack.print_classes_points_and_lines(cout);
 			}
 			else {
 				int f_list_incidences = FALSE;
 				get_and_print_row_decomposition_scheme(PStack,
-						f_list_incidences, FALSE);
+						f_list_incidences, FALSE, verbose_level);
 				PStack.print_classes_points_and_lines(cout);
 			}
 		}
@@ -973,7 +973,7 @@ int incidence_structure::compute_TDO_step(
 		if (f_vv) {
 			int f_list_incidences = FALSE;
 			get_and_print_col_decomposition_scheme(PStack,
-					f_list_incidences, FALSE);
+					f_list_incidences, FALSE, verbose_level);
 		}
 		if (f_vvv) {
 			PStack.print_classes_points_and_lines(cout);
@@ -996,7 +996,7 @@ int incidence_structure::compute_TDO_step(
 		if (f_vv) {
 			int f_list_incidences = FALSE;
 			get_and_print_row_decomposition_scheme(
-					PStack, f_list_incidences, FALSE);
+					PStack, f_list_incidences, FALSE, verbose_level);
 		}
 		if (f_vvv) {
 			PStack.print_classes_points_and_lines(cout);
@@ -1078,7 +1078,7 @@ int incidence_structure::refine_column_partition_safe(
 	neighbors = NEW_int(max_k);
 
 	for (j = 0; j < nb_lines(); j++) {
-		get_points_on_line(neighbors, j, verbose_level - 2);
+		get_points_on_line(neighbors, j, 0 /*verbose_level - 2*/);
 		for (h = 0; h < nb_points_on_line[j]; h++) {
 			i = neighbors[h];
 			c = PStack.cellNumber[PStack.invPointList[i]];
@@ -1180,7 +1180,7 @@ int incidence_structure::refine_row_partition_safe(
 	neighbors = NEW_int(max_r);
 
 	for (i = 0; i < nb_points(); i++) {
-		get_lines_on_point(neighbors, i, verbose_level - 2);
+		get_lines_on_point(neighbors, i, 0 /*verbose_level - 2*/);
 		for (h = 0; h < nb_lines_on_point[i]; h++) {
 			j = neighbors[h] + nb_points();
 			c = PStack.cellNumber[PStack.invPointList[j]];
@@ -2015,14 +2015,17 @@ void incidence_structure::row_scheme_to_col_scheme(
 
 void incidence_structure::get_and_print_row_decomposition_scheme(
 		data_structures::partitionstack &PStack,
-	int f_list_incidences, int f_local_coordinates)
+	int f_list_incidences, int f_local_coordinates, int verbose_level)
 {
 	int *row_classes, *row_class_inv, nb_row_classes;
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *row_scheme;
+	int f_v = (verbose_level >= 1);
 
-	cout << "incidence_structure::get_and_print_row_"
-			"decomposition_scheme computing row scheme" << endl;
+	if (f_v) {
+		cout << "incidence_structure::get_and_print_row_decomposition_scheme "
+				"computing col scheme" << endl;
+	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
@@ -2037,11 +2040,13 @@ void incidence_structure::get_and_print_row_decomposition_scheme(
 
 	//cout << *this << endl;
 	
-	cout << "row_scheme:" << endl;
-	PStack.print_decomposition_scheme(cout, 
-		row_classes, nb_row_classes,
-		col_classes, nb_col_classes, 
-		row_scheme, -1, -1);
+	if (f_v) {
+		cout << "row_scheme:" << endl;
+		PStack.print_decomposition_scheme(cout,
+			row_classes, nb_row_classes,
+			col_classes, nb_col_classes,
+			row_scheme, -1, -1);
+	}
 
 	if (f_list_incidences) {
 		cout << "incidences by row-scheme:" << endl;
@@ -2062,12 +2067,11 @@ void incidence_structure::get_and_print_row_decomposition_scheme(
 
 void incidence_structure::get_and_print_col_decomposition_scheme(
 		data_structures::partitionstack &PStack,
-	int f_list_incidences, int f_local_coordinates)
+	int f_list_incidences, int f_local_coordinates, int verbose_level)
 {
 	int *row_classes, *row_class_inv, nb_row_classes;
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *col_scheme;
-	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -2084,7 +2088,7 @@ void incidence_structure::get_and_print_col_decomposition_scheme(
 	get_col_decomposition_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		col_scheme, verbose_level);
+		col_scheme, 0 /*verbose_level*/);
 
 	//cout << *this << endl;
 	
@@ -2999,11 +3003,11 @@ void incidence_structure::compute_tdo(
 		if (TDO_depth < N) {
 			if (EVEN(TDO_depth)) {
 				get_and_print_row_decomposition_scheme(
-						S, f_list_incidences, FALSE);
+						S, f_list_incidences, FALSE, verbose_level);
 			}
 			else {
 				get_and_print_col_decomposition_scheme(
-						S, f_list_incidences, FALSE);
+						S, f_list_incidences, FALSE, verbose_level);
 			}
 		}
 		else {
@@ -3097,7 +3101,7 @@ void incidence_structure::compute_tdo_stepwise(
 			else if (EVEN(step - 1)) {
 
 				get_and_print_col_decomposition_scheme(
-						S, f_list_incidences, FALSE);
+						S, f_list_incidences, FALSE, verbose_level);
 				get_and_print_column_tactical_decomposition_scheme_tex(
 					cout, TRUE /* f_enter_math */,
 					FALSE /* f_print_subscripts */, S);
@@ -3105,7 +3109,7 @@ void incidence_structure::compute_tdo_stepwise(
 			else {
 
 				get_and_print_row_decomposition_scheme(
-						S, f_list_incidences, FALSE);
+						S, f_list_incidences, FALSE, verbose_level);
 				get_and_print_row_tactical_decomposition_scheme_tex(
 					cout, TRUE /* f_enter_math */,
 					FALSE /* f_print_subscripts */, S);
@@ -3227,11 +3231,11 @@ void incidence_structure::compute_tdo_stepwise(
 		if (TDO_depth < nb_points() + nb_lines()) {
 			if (EVEN(TDO_depth)) {
 				get_and_print_row_decomposition_scheme(S,
-						f_list_incidences, FALSE);
+						f_list_incidences, FALSE, verbose_level);
 			}
 			else {
 				get_and_print_col_decomposition_scheme(S,
-						f_list_incidences, FALSE);
+						f_list_incidences, FALSE, verbose_level);
 			}
 		}
 		else {

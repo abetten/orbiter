@@ -206,24 +206,24 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 	
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
-		cout << "surface::init before P->init" << endl;
+		cout << "surface::init before P->projective_space_init" << endl;
 	}
-	P->init(3, F, 
+	P->projective_space_init(3, F,
 		TRUE /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after P->init" << endl;
+		cout << "surface::init after P->projective_space_init" << endl;
 	}
 
 	P2 = NEW_OBJECT(projective_space);
 	if (f_v) {
-		cout << "surface::init before P2->init" << endl;
+		cout << "surface::init before P2->projective_space_init" << endl;
 	}
-	P2->init(2, F, 
+	P2->projective_space_init(2, F,
 		TRUE /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after P2->init" << endl;
+		cout << "surface::init after P2->projective_space_init" << endl;
 	}
 
 	Gr = NEW_OBJECT(grassmann);
@@ -1047,6 +1047,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 	return nb_E;
 
 }
+
 
 
 }}}

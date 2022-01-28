@@ -236,6 +236,7 @@ int orbiter_session::read_arguments(int argc,
 					cout << "next argument is " << argv[i] << endl;
 				}
 				cout << "-f_draw_options " << endl;
+				draw_options->print();
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {

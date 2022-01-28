@@ -1143,6 +1143,7 @@ void surface_domain::do_arc_lifting_with_two_lines(
 	int f_v = (verbose_level >= 1);
 	long int arc[6];
 	long int P1, P2;
+	geometry_global Gg;
 
 
 	if (f_v) {
@@ -1160,15 +1161,15 @@ void surface_domain::do_arc_lifting_with_two_lines(
 
 	if (f_v) {
 		cout << "surface_domain::do_arc_lifting_with_two_lines before "
-				"P->rearrange_arc_for_lifting" << endl;
+				"Gg.rearrange_arc_for_lifting" << endl;
 	}
-	P->rearrange_arc_for_lifting(Arc6,
+	Gg.rearrange_arc_for_lifting(Arc6,
 				P1, P2, partition_rk, arc,
 				verbose_level);
 
 	if (f_v) {
 		cout << "surface_domain::do_arc_lifting_with_two_lines after "
-				"P->rearrange_arc_for_lifting" << endl;
+				"Gg.rearrange_arc_for_lifting" << endl;
 		cout << "arc: ";
 		Orbiter->Lint_vec->print(cout, arc, 6);
 		cout << endl;

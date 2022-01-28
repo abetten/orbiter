@@ -853,7 +853,7 @@ class Vector: public discreta_base
 	void get_first_and_remove(discreta_base & x);
 	bool insert_sorted(discreta_base& x);
 		// inserts x into the sorted vector x.
-		// ifthere are already occurences of x, the new x is added 
+		// if there are already occurences of x, the new x is added
 		// behind the x already there.
 		// returns true if the element was already in the vector.
 	bool search(discreta_base& x, int *idx);
@@ -1228,7 +1228,7 @@ int nb_PG_lines(int n, int q);
 
 
 
-//! DISCRETA class for poynomials in one variable
+//! DISCRETA class for polynomials in one variable
 
 
 
@@ -1738,7 +1738,8 @@ class btree: public Vector
 	int search_unique_int4(int i, int verbose_level);
 	int search_unique_int4_int4_int4_int4(int i0, 
 		int i1, int i2, int i3, int verbose_level);
-		// returns -1 if an element whose key starts with [i0,i1,i2,i3] could not be found or is not unique.
+		// returns -1 if an element whose key starts
+		// with [i0,i1,i2,i3] could not be found or is not unique.
 		// otherwise, the idx of that element is returned
 	int search_datref_of_unique_int4(int i, 
 		int verbose_level);

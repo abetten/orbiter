@@ -1466,6 +1466,9 @@ void strong_generators::print_generators_in_latex_individually(std::ostream &ost
 
 		}
 	ost << endl << "\\bigskip" << endl;
+
+	print_for_make_element(ost);
+
 }
 
 void strong_generators::print_generators_in_source_code()
@@ -1707,6 +1710,13 @@ void strong_generators::print_generators_tex(std::ostream &ost)
 		}
 	}
 	ost << "$$" << endl;
+	print_for_make_element(ost);
+}
+
+void strong_generators::print_for_make_element(std::ostream &ost)
+{
+	int i;
+
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
@@ -2254,7 +2264,7 @@ schreier *strong_generators::orbits_on_points_schreier(
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
 				"generators:" << endl;
-		print_generators_tex();
+		//print_generators_tex();
 	}
 	Sch = NEW_OBJECT(schreier);
 

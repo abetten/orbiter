@@ -99,7 +99,7 @@ void projective_space_with_action::init(
 	q = F->q;
 	
 	P = NEW_OBJECT(projective_space);
-	P->init(n, F, 
+	P->projective_space_init(n, F,
 		f_init_incidence_structure, 
 		verbose_level);
 	

@@ -771,6 +771,21 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->unrank_lines_in_PG_text,
 				verbose_level);
 	}
+	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer) {
+
+
+		PA->P->do_move_two_lines_in_hyperplane_stabilizer(
+				Descr->line1_from, Descr->line2_from,
+				Descr->line1_to, Descr->line2_to, verbose_level);
+	}
+	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer_text) {
+
+
+		PA->P->do_move_two_lines_in_hyperplane_stabilizer_text(
+				Descr->line1_from_text, Descr->line2_from_text,
+				Descr->line1_to_text, Descr->line2_to_text,
+				verbose_level);
+	}
 
 
 

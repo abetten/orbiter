@@ -101,22 +101,22 @@ void klein_correspondence::init(field_theory::finite_field *F,
 	P3 = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
-		cout << "klein_correspondence::init before P3->init" << endl;
+		cout << "klein_correspondence::init before P3->projective_space_init" << endl;
 	}
-	P3->init(3, F, 
+	P3->projective_space_init(3, F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level - 2);
 
 	P5 = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
-		cout << "klein_correspondence::init before P5->init" << endl;
+		cout << "klein_correspondence::init before P5->projective_space_init" << endl;
 	}
-	P5->init(5, F, 
+	P5->projective_space_init(5, F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "klein_correspondence::after before P5->init" << endl;
+		cout << "klein_correspondence::after after P5->projective_space_init" << endl;
 	}
 
 	

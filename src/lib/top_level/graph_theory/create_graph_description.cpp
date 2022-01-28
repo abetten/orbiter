@@ -22,6 +22,10 @@ create_graph_description::create_graph_description()
 	f_load = FALSE;
 	//fname = NULL;
 
+	f_Cayley_graph = FALSE;
+	//std::string Cayley_graph_group;
+	//std::string Cayley_graph_gens;
+
 	f_load_csv_no_border = FALSE;
 	f_load_dimacs = FALSE;
 
@@ -118,6 +122,15 @@ int create_graph_description::read_arguments(
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-load " << fname << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-Cayley_graph") == 0) {
+			f_Cayley_graph = TRUE;
+			Cayley_graph_group.assign(argv[++i]);
+			Cayley_graph_gens.assign(argv[++i]);
+			if (f_v) {
+				cout << "-Cayley_graph " << Cayley_graph_group << " " << Cayley_graph_gens << endl;
 			}
 		}
 
@@ -319,6 +332,9 @@ void create_graph_description::print()
 {
 	if (f_load) {
 		cout << "-load " << fname << endl;
+	}
+	if (f_Cayley_graph) {
+		cout << "-Cayley_graph " << Cayley_graph_group << " " << Cayley_graph_gens << endl;
 	}
 	if (f_load_csv_no_border) {
 		cout << "-load_csv_no_border " << fname << endl;

@@ -14,7 +14,6 @@ MODULES = \
 	buekenhout_metz.o \
 	decomposition.o \
 	desarguesian_spread.o \
-	elliptic_curve.o \
 	flag.o \
 	geometric_object_create.o \
 	geometric_object_description.o \

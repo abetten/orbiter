@@ -260,9 +260,6 @@ void arc_generator::prepare_generator(int verbose_level)
 
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
-
-
-
 	
 	gen->initialize_and_allocate_root_node(Descr->Control, Poset,
 		Descr->target_size,
@@ -475,16 +472,17 @@ void arc_generator::compute_starter(int verbose_level)
 
 }
 
-int arc_generator::test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
+int arc_generator::test_nb_Eckardt_points(
 		long int *S, int len, int pt, int nb_E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_generator::test_nb_Eckardt_points" << endl;
 	}
-	ret = PA->P->test_nb_Eckardt_points(Surf, S, len, pt, nb_E, verbose_level);
+	ret = Gg.test_nb_Eckardt_points(PA->PA2->P, S, len, pt, nb_E, verbose_level);
 	if (f_v) {
 		cout << "arc_generator::test_nb_Eckardt_points done" << endl;
 	}
@@ -563,7 +561,7 @@ void arc_generator::early_test_func(long int *S, int len,
 		}
 
 		if (f_survive && Descr->f_test_nb_Eckardt_points) {
-			if (test_nb_Eckardt_points(Descr->Surf, S, len, a,
+			if (test_nb_Eckardt_points(S, len, a,
 					Descr->nb_E, verbose_level) == FALSE) {
 				f_survive = FALSE;
 			}

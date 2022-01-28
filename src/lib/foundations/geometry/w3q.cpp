@@ -80,7 +80,7 @@ void W3q::init(field_theory::finite_field *F, int verbose_level)
 	Q4 = NEW_OBJECT(orthogonal);
 	Basis = NEW_int(2 * 4);
 	
-	P3->init(3, F, 
+	P3->projective_space_init(3, F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level - 1  /*MINIMUM(verbose_level - 1, 3)*/);
 	F = P3->F;

@@ -976,13 +976,20 @@ void colored_graph::draw_on_circle(
 
 	{
 	mp_graphics G;
+	int factor_1000 = 1000;
 
 	G.init(fname, Draw_options, verbose_level - 1);
 	
+	G.header();
+
+	G.begin_figure(factor_1000);
+
 	draw_on_circle_2(G, Draw_options);
 
+	G.end_figure();
+	G.footer();
 
-	G.finish(cout, TRUE);
+	//G.finish(cout, TRUE);
 	}
 	if (f_v) {
 		cout << "colored_graph::draw_on_circle done" << endl;

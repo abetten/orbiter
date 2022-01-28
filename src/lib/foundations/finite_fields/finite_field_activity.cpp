@@ -538,27 +538,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->f_normalize_from_the_right,
 				verbose_level);
 	}
-	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer) {
-
-		geometry_global GG;
-
-
-		GG.do_move_two_lines_in_hyperplane_stabilizer(
-				F,
-				Descr->line1_from, Descr->line2_from,
-				Descr->line1_to, Descr->line2_to, verbose_level);
-	}
-	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer_text) {
-
-		geometry_global GG;
-
-
-		GG.do_move_two_lines_in_hyperplane_stabilizer_text(
-				F,
-				Descr->line1_from_text, Descr->line2_from_text,
-				Descr->line1_to_text, Descr->line2_to_text,
-				verbose_level);
-	}
 	else if (Descr->f_inverse_isomorphism_klein_quadric) {
 
 		geometry_global GG;
@@ -575,18 +554,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->rank_point_in_PG_label,
 				verbose_level);
 	}
-
-#if 0
-	else if (Descr->f_rank_point_in_PG_given_as_pairs) {
-
-		geometry_global GG;
-
-		GG.do_rank_point_in_PG_given_as_pairs(F,
-				Descr->rank_point_in_PG_given_as_pairs_n,
-				Descr->rank_point_in_PG_given_as_pairs_text,
-				verbose_level);
-	}
-#endif
 
 	else if (Descr->f_field_reduction) {
 

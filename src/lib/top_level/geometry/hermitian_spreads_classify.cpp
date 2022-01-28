@@ -173,7 +173,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	P = NEW_OBJECT(projective_space);
 
 	cout << "Creating projective_space" << endl;
-	P->init(n, F,
+	P->projective_space_init(n, F,
 		TRUE /* f_init_incidence_structure */,
 		0 /* verbose_level */);
 	cout << "Creating projective_space done" << endl;

@@ -82,13 +82,13 @@ void cubic_curve::init(field_theory::finite_field *F, int verbose_level)
 
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
-		cout << "cubic_curve::init before P->init" << endl;
+		cout << "cubic_curve::init before P->projective_space_init" << endl;
 	}
-	P->init(2, F,
+	P->projective_space_init(2, F,
 		TRUE /*f_init_incidence_structure */,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "cubic_curve::init after P->init" << endl;
+		cout << "cubic_curve::init after P->projective_space_init" << endl;
 	}
 
 	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);

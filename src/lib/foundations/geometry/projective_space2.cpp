@@ -3145,8 +3145,7 @@ void projective_space::elliptic_curve_addition_table(
 			pk = elliptic_curve_addition(A6, pi, pj,
 					0 /* verbose_level */);
 			if (!Sorting.int_vec_search(Pts, nb_pts, pk, k)) {
-				cout << "projective_space::elliptic_curve_"
-						"addition_table cannot find point pk" << endl;
+				cout << "projective_space::elliptic_curve_addition_table cannot find point pk" << endl;
 				cout << "i=" << i << " pi=" << pi << " j=" << j
 						<< " pj=" << pj << " pk=" << pk << endl;
 				cout << "Pts: ";
@@ -3366,74 +3365,6 @@ int projective_space::elliptic_curve_addition(
 	return p3_rk;
 }
 
-void projective_space::draw_point_set_in_plane(
-	std::string &fname,
-	layered_graph_draw_options *O,
-	long int *Pts, int nb_pts,
-	int f_point_labels,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int q, i;
-	int *Table;
-	plot_tools Pt;
-
-	if (f_v) {
-		cout << "projective_space::draw_point_set_in_plane" << endl;
-	}
-	if (n != 2) {
-		cout << "projective_space::draw_point_set_in_plane n != 2" << endl;
-		exit(1);
-	}
-	q = F->q;
-	Table = NEW_int(nb_pts * 3);
-	for (i = 0; i < nb_pts; i++) {
-		unrank_point(Table + i * 3, Pts[i]);
-	}
-	if (f_point_labels) {
-		char str[1000];
-		char **Labels;
-
-		Labels = NEW_pchar(nb_pts);
-		for (i = 0; i < nb_pts; i++) {
-			snprintf(str, 1000, "%ld", Pts[i]);
-			Labels[i] = NEW_char(strlen(str) + 1);
-			strcpy(Labels[i], str);
-		}
-		if (f_v) {
-			cout << "projective_space::draw_point_set_in_plane "
-					"before projective_plane_draw_grid" << endl;
-		}
-		Pt.projective_plane_draw_grid(fname, O,
-			q, Table, nb_pts, TRUE, Labels,
-			verbose_level - 1);
-		if (f_v) {
-			cout << "projective_space::draw_point_set_in_plane "
-					"after projective_plane_draw_grid" << endl;
-		}
-		for (i = 0; i < nb_pts; i++) {
-			FREE_char(Labels[i]);
-		}
-		FREE_pchar(Labels);
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::draw_point_set_in_plane "
-					"before projective_plane_draw_grid" << endl;
-		}
-		Pt.projective_plane_draw_grid(fname, O,
-			q, Table, nb_pts, FALSE, NULL,
-			verbose_level - 1);
-		if (f_v) {
-			cout << "projective_space::draw_point_set_in_plane "
-					"after projective_plane_draw_grid" << endl;
-		}
-	}
-	FREE_int(Table);
-	if (f_v) {
-		cout << "projective_space::draw_point_set_in_plane done" << endl;
-	}
-}
 
 void projective_space::line_plane_incidence_matrix_restricted(
 	long int *Lines, int nb_lines, int *&M, int &nb_planes,
@@ -4002,886 +3933,6 @@ void projective_space::decomposition_from_set_partition(
 }
 
 
-void projective_space::rearrange_arc_for_lifting(long int *Arc6,
-		long int P1, long int P2, int partition_rk, long int *arc,
-		int verbose_level)
-// P1 and P2 are points on the arc.
-// Find them and remove them
-// so we can find the remaining four point of the arc:
-{
-	int f_v = (verbose_level >= 1);
-	long int i, a, h;
-	int part[4];
-	long int pts[4];
-	combinatorics::combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "projective_space::rearrange_arc_for_lifting" << endl;
-	}
-	arc[0] = P1;
-	arc[1] = P2;
-	h = 2;
-	for (i = 0; i < 6; i++) {
-		a = Arc6[i];
-		if (a == P1 || a == P2) {
-			continue;
-		}
-		arc[h++] = a;
-	}
-	if (h != 6) {
-		cout << "projective_space::rearrange_arc_for_lifting "
-				"h != 6" << endl;
-		exit(1);
-	}
-	// now arc[2], arc[3], arc[4], arc[5] are the remaining four points
-	// of the arc.
-
-	Combi.set_partition_4_into_2_unrank(partition_rk, part);
-
-	Orbiter->Lint_vec->copy(arc + 2, pts, 4);
-
-	for (i = 0; i < 4; i++) {
-		a = part[i];
-		arc[2 + i] = pts[a];
-	}
-
-	if (f_v) {
-		cout << "projective_space::rearrange_arc_for_lifting done" << endl;
-	}
-}
-
-void projective_space::find_two_lines_for_arc_lifting(
-		long int P1, long int P2, long int &line1, long int &line2,
-		int verbose_level)
-// P1 and P2 are points on the arc and in the plane W=0.
-// Note the points are points in PG(3,q), not in local coordinates in W=0.
-// We find two skew lines in space through P1 and P2, respectively.
-{
-	int f_v = (verbose_level >= 1);
-	int Basis[16];
-	int Basis2[16];
-	int Basis_search[16];
-	int Basis_search_copy[16];
-	int base_cols[4];
-	int i, N, rk;
-	geometry_global Gg;
-
-	if (f_v) {
-		cout << "projective_space::find_two_lines_for_arc_lifting" << endl;
-	}
-	if (n != 3) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"n != 3" << endl;
-		exit(1);
-	}
-	// unrank points P1 and P2 in the plane W=3:
-	// Note the points are points in PG(3,q), not in local coordinates.
-	unrank_point(Basis, P1);
-	unrank_point(Basis + 4, P2);
-	if (Basis[3]) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"Basis[3] != 0, the point P1 does not lie "
-				"in the hyperplane W = 0" << endl;
-		exit(1);
-	}
-	if (Basis[7]) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"Basis[7] != 0, the point P2 does not lie "
-				"in the hyperplane W = 0" << endl;
-		exit(1);
-	}
-	Orbiter->Int_vec->zero(Basis + 8, 8);
-
-	N = Gg.nb_PG_elements(3, q);
-	// N = the number of points in PG(3,q)
-
-	// Find the first line.
-	// Loop over all points P.
-	// Make sure the point does not belong to the hyperplane,
-	// i.e. the last coordinate is nonzero.
-	// Make sure the rank of the subspace spanned by P1, P2 and P is three.
-
-	for (i = 0; i < N; i++) {
-		Orbiter->Int_vec->copy(Basis, Basis_search, 4);
-		Orbiter->Int_vec->copy(Basis + 4, Basis_search + 4, 4);
-		F->PG_element_unrank_modified(Basis_search + 8, 1, 4, i);
-		if (Basis_search[11] == 0) {
-			continue;
-		}
-		Orbiter->Int_vec->copy(Basis_search, Basis_search_copy, 12);
-		rk = F->Linear_algebra->Gauss_easy_memory_given(Basis_search_copy, 3, 4, base_cols);
-		if (rk == 3) {
-			break;
-		}
-	}
-	if (i == N) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"i == N, could not find line1" << endl;
-		exit(1);
-	}
-	int p0, p1;
-
-	p0 = i;
-
-	// Find the second line.
-	// Loop over all points Q after the first P.
-	// Make sure the point does not belong to the hyperplane,
-	// i.e. the last coordinate is nonzero.
-	// Make sure the rank of the subspace spanned by P1, P2 and P and Q is four.
-
-	for (i = p0 + 1; i < N; i++) {
-		Orbiter->Int_vec->copy(Basis, Basis_search, 4);
-		Orbiter->Int_vec->copy(Basis + 4, Basis_search + 4, 4);
-		F->PG_element_unrank_modified(Basis_search + 8, 1, 4, p0);
-		F->PG_element_unrank_modified(Basis_search + 12, 1, 4, i);
-		if (Basis_search[15] == 0) {
-			continue;
-		}
-		Orbiter->Int_vec->copy(Basis_search, Basis_search_copy, 16);
-		rk = F->Linear_algebra->Gauss_easy_memory_given(Basis_search_copy, 4, 4, base_cols);
-		if (rk == 4) {
-			break;
-		}
-	}
-	if (i == N) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"i == N, could not find line2" << endl;
-		exit(1);
-	}
-	p1 = i;
-
-	if (f_v) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"p0=" << p0 << " p1=" << p1 << endl;
-	}
-	F->PG_element_unrank_modified(Basis + 8, 1, 4, p0);
-	F->PG_element_unrank_modified(Basis + 12, 1, 4, p1);
-	if (f_v) {
-		cout << "projective_space::find_two_lines_for_arc_lifting " << endl;
-		cout << "Basis:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis, 4, 4);
-	}
-	Orbiter->Int_vec->copy(Basis, Basis2, 4);
-	Orbiter->Int_vec->copy(Basis + 8, Basis2 + 4, 4);
-	Orbiter->Int_vec->copy(Basis + 4, Basis2 + 8, 4);
-	Orbiter->Int_vec->copy(Basis + 12, Basis2 + 12, 4);
-	if (f_v) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"Basis2:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis2, 4, 4);
-	}
-	line1 = rank_line(Basis2);
-	line2 = rank_line(Basis2 + 8);
-	if (f_v) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"line1=" << line1 << " line2=" << line2 << endl;
-	}
-	if (f_v) {
-		cout << "projective_space::find_two_lines_for_arc_lifting "
-				"done" << endl;
-	}
-}
-
-void projective_space::hyperplane_lifting_with_two_lines_fixed(
-		int *A3, int f_semilinear, int frobenius,
-		long int line1, long int line2,
-		int *A4,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int Line1[8];
-	int Line2[8];
-	int P1A[3];
-	int P2A[3];
-	int A3t[9];
-	int x[3];
-	int y[3];
-	int xmy[4];
-	int Mt[16];
-	int M[16];
-	int Mv[16];
-	int v[4];
-	int w[4];
-	int lmei[4];
-	int m1;
-	int M_tmp[16];
-	int tmp_basecols[4];
-	int lambda, mu; //, epsilon, iota;
-	int abgd[4];
-	int i, j;
-	int f_swap; // does A3 swap P1 and P2?
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed" << endl;
-	}
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"A3:" << endl;
-		Orbiter->Int_vec->matrix_print(A3, 3, 3);
-		cout << "f_semilinear = " << f_semilinear
-				<< " frobenius=" << frobenius << endl;
-	}
-	m1 = F->negate(1);
-	unrank_line(Line1, line1);
-	unrank_line(Line2, line2);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"input Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1, 2, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"input Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2, 2, 4);
-	}
-	F->Linear_algebra->Gauss_step_make_pivot_one(Line1 + 4, Line1,
-		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
-		// afterwards:  v1,v2 span the same space as before
-		// v2[idx] = 0, v1[idx] = 1,
-		// So, now Line1[3] = 0 and Line1[7] = 1
-	F->Linear_algebra->Gauss_step_make_pivot_one(Line2 + 4, Line2,
-		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
-		// afterwards:  v1,v2 span the same space as before
-		// v2[idx] = 0, v1[idx] = 1,
-		// So, now Line2[3] = 0 and Line2[7] = 1
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"modified Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1, 2, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"modified Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2, 2, 4);
-	}
-
-	F->PG_element_normalize(Line1, 1, 4);
-	F->PG_element_normalize(Line2, 1, 4);
-	F->PG_element_normalize(Line1 + 4, 1, 4);
-	F->PG_element_normalize(Line2 + 4, 1, 4);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"P1 = first point on Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"P2 = first point on Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"x = second point on Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1 + 4, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"y = second point on Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2 + 4, 1, 4);
-	}
-	// compute P1 * A3 to figure out if A switches P1 and P2 or not:
-	F->Linear_algebra->mult_vector_from_the_left(Line1, A3, P1A, 3, 3);
-	F->Linear_algebra->mult_vector_from_the_left(Line2, A3, P2A, 3, 3);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"P1 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P1A, 1, 3);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"P2 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P2A, 1, 3);
-	}
-	if (f_semilinear) {
-		if (f_v) {
-			cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-					"applying frobenius" << endl;
-		}
-		F->Linear_algebra->vector_frobenius_power_in_place(P1A, 3, frobenius);
-		F->Linear_algebra->vector_frobenius_power_in_place(P2A, 3, frobenius);
-	}
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"P1 * A ^Phi^frobenius = " << endl;
-		Orbiter->Int_vec->matrix_print(P1A, 1, 3);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"P2 * A ^Phi^frobenius = " << endl;
-		Orbiter->Int_vec->matrix_print(P2A, 1, 3);
-	}
-	F->PG_element_normalize(P1A, 1, 3);
-	F->PG_element_normalize(P2A, 1, 3);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"normalized P1 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P1A, 1, 3);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"normalized P2 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P2A, 1, 3);
-	}
-	if (Sorting.int_vec_compare(P1A, Line1, 3) == 0) {
-		f_swap = FALSE;
-		if (Sorting.int_vec_compare(P2A, Line2, 3)) {
-			cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"We don't have a swap but A3 does not stabilize P2" << endl;
-			exit(1);
-		}
-	}
-	else if (Sorting.int_vec_compare(P1A, Line2, 3) == 0) {
-		f_swap = TRUE;
-		if (Sorting.int_vec_compare(P2A, Line1, 3)) {
-			cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"We have a swap but A3 does not map P2 to P1" << endl;
-			exit(1);
-		}
-	}
-	else {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"unable to determine if we have a swap or not." << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"f_swap=" << f_swap << endl;
-	}
-
-	Orbiter->Int_vec->copy(Line1 + 4, x, 3);
-	Orbiter->Int_vec->copy(Line2 + 4, y, 3);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"x:" << endl;
-		Orbiter->Int_vec->matrix_print(x, 1, 3);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"y:" << endl;
-		Orbiter->Int_vec->matrix_print(y, 1, 3);
-	}
-
-	F->Linear_algebra->linear_combination_of_vectors(1, x, m1, y, xmy, 3);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"xmy:" << endl;
-		Orbiter->Int_vec->matrix_print(xmy, 1, 3);
-	}
-
-	F->Linear_algebra->transpose_matrix(A3, A3t, 3, 3);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"A3t:" << endl;
-		Orbiter->Int_vec->matrix_print(A3t, 3, 3);
-	}
-
-
-	F->Linear_algebra->mult_vector_from_the_right(A3t, xmy, v, 3, 3);
-	if (f_semilinear) {
-		F->Linear_algebra->vector_frobenius_power_in_place(v, 3, frobenius);
-	}
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"v:" << endl;
-		Orbiter->Int_vec->matrix_print(v, 1, 3);
-	}
-	F->Linear_algebra->mult_vector_from_the_right(A3t, x, w, 3, 3);
-	if (f_semilinear) {
-		F->Linear_algebra->vector_frobenius_power_in_place(w, 3, frobenius);
-	}
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"w:" << endl;
-		Orbiter->Int_vec->matrix_print(w, 1, 3);
-	}
-
-	if (f_swap) {
-		Orbiter->Int_vec->copy(Line2 + 4, Mt + 0, 4);
-		Orbiter->Int_vec->copy(Line2 + 0, Mt + 4, 4);
-		Orbiter->Int_vec->copy(Line1 + 4, Mt + 8, 4);
-		Orbiter->Int_vec->copy(Line1 + 0, Mt + 12, 4);
-	}
-	else {
-		Orbiter->Int_vec->copy(Line1 + 4, Mt + 0, 4);
-		Orbiter->Int_vec->copy(Line1 + 0, Mt + 4, 4);
-		Orbiter->Int_vec->copy(Line2 + 4, Mt + 8, 4);
-		Orbiter->Int_vec->copy(Line2 + 0, Mt + 12, 4);
-	}
-
-	F->Linear_algebra->negate_vector_in_place(Mt + 8, 8);
-	F->Linear_algebra->transpose_matrix(Mt, M, 4, 4);
-	//int_vec_copy(Mt, M, 16);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"M:" << endl;
-		Orbiter->Int_vec->matrix_print(M, 4, 4);
-	}
-
-	F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"Mv:" << endl;
-		Orbiter->Int_vec->matrix_print(Mv, 4, 4);
-	}
-
-	v[3] = 0;
-	w[3] = 0;
-	F->Linear_algebra->mult_vector_from_the_right(Mv, v, lmei, 4, 4);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"lmei:" << endl;
-		Orbiter->Int_vec->matrix_print(lmei, 1, 4);
-	}
-	lambda = lmei[0];
-	mu = lmei[1];
-	//epsilon = lmei[2];
-	//iota = lmei[3];
-
-	if (f_swap) {
-		F->Linear_algebra->linear_combination_of_three_vectors(
-				lambda, y, mu, Line2, m1, w, abgd, 3);
-	}
-	else {
-		F->Linear_algebra->linear_combination_of_three_vectors(
-				lambda, x, mu, Line1, m1, w, abgd, 3);
-	}
-	abgd[3] = lambda;
-	if (f_semilinear) {
-		F->Linear_algebra->vector_frobenius_power_in_place(abgd, 4, F->e - frobenius);
-	}
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"abgd:" << endl;
-		Orbiter->Int_vec->matrix_print(abgd, 1, 4);
-	}
-	// make an identity matrix:
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 3; j++) {
-			A4[i * 4 + j] = A3[i * 3 + j];
-		}
-		A4[i * 4 + 3] = 0;
-	}
-	// fill in the last row:
-	Orbiter->Int_vec->copy(abgd, A4 + 4 * 3, 4);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
-				"A4:" << endl;
-		Orbiter->Int_vec->matrix_print(A4, 4, 4);
-	}
-
-	if (f_semilinear) {
-		A4[16] = frobenius;
-	}
-
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed done" << endl;
-	}
-}
-
-void projective_space::hyperplane_lifting_with_two_lines_moved(
-		long int line1_from, long int line1_to,
-		long int line2_from, long int line2_to,
-		int *A4,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int Line1_from[8];
-	int Line2_from[8];
-	int Line1_to[8];
-	int Line2_to[8];
-	int P1[4];
-	int P2[4];
-	int x[4];
-	int y[4];
-	int u[4];
-	int v[4];
-	int umv[4];
-	int M[16];
-	int Mv[16];
-	int lmei[4];
-	int m1;
-	int M_tmp[16];
-	int tmp_basecols[4];
-	int lambda, mu; //, epsilon, iota;
-	int abgd[4];
-	int i, j;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved" << endl;
-	}
-	m1 = F->negate(1);
-
-	unrank_line(Line1_from, line1_from);
-	unrank_line(Line2_from, line2_from);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"input Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from, 2, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"input Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from, 2, 4);
-	}
-	F->Linear_algebra->Gauss_step_make_pivot_one(Line1_from + 4, Line1_from,
-		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
-		// afterwards:  v1,v2 span the same space as before
-		// v2[idx] = 0, v1[idx] = 1,
-		// So, now Line1[3] = 0 and Line1[7] = 1
-	F->Linear_algebra->Gauss_step_make_pivot_one(Line2_from + 4, Line2_from,
-		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
-		// afterwards:  v1,v2 span the same space as before
-		// v2[idx] = 0, v1[idx] = 1,
-		// So, now Line2[3] = 0 and Line2[7] = 1
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"modified Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from, 2, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"modified Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from, 2, 4);
-	}
-
-	F->PG_element_normalize(Line1_from, 1, 4);
-	F->PG_element_normalize(Line2_from, 1, 4);
-	F->PG_element_normalize(Line1_from + 4, 1, 4);
-	F->PG_element_normalize(Line2_from + 4, 1, 4);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"P1 = first point on Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"P2 = first point on Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"u = second point on Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from + 4, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"v = second point on Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from + 4, 1, 4);
-	}
-	Orbiter->Int_vec->copy(Line1_from + 4, u, 4);
-	Orbiter->Int_vec->copy(Line1_from, P1, 4);
-	Orbiter->Int_vec->copy(Line2_from + 4, v, 4);
-	Orbiter->Int_vec->copy(Line2_from, P2, 4);
-
-
-	unrank_line(Line1_to, line1_to);
-	unrank_line(Line2_to, line2_to);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"input Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to, 2, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"input Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to, 2, 4);
-	}
-	F->Linear_algebra->Gauss_step_make_pivot_one(Line1_to + 4, Line1_to,
-		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
-		// afterwards:  v1,v2 span the same space as before
-		// v2[idx] = 0, v1[idx] = 1,
-		// So, now Line1[3] = 0 and Line1[7] = 1
-	F->Linear_algebra->Gauss_step_make_pivot_one(Line2_to + 4, Line2_to,
-		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
-		// afterwards:  v1,v2 span the same space as before
-		// v2[idx] = 0, v1[idx] = 1,
-		// So, now Line2[3] = 0 and Line2[7] = 1
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"modified Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to, 2, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"modified Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to, 2, 4);
-	}
-
-	F->PG_element_normalize(Line1_to, 1, 4);
-	F->PG_element_normalize(Line2_to, 1, 4);
-	F->PG_element_normalize(Line1_to + 4, 1, 4);
-	F->PG_element_normalize(Line2_to + 4, 1, 4);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"P1 = first point on Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"P2 = first point on Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"x = second point on Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to + 4, 1, 4);
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"y = second point on Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to + 4, 1, 4);
-	}
-
-
-	Orbiter->Int_vec->copy(Line1_to + 4, x, 4);
-	//int_vec_copy(Line1_to, P1, 4);
-	if (Sorting.int_vec_compare(P1, Line1_to, 4)) {
-		cout << "Line1_from and Line1_to must intersect in W=0" << endl;
-		exit(1);
-	}
-	Orbiter->Int_vec->copy(Line2_to + 4, y, 4);
-	//int_vec_copy(Line2_to, P2, 4);
-	if (Sorting.int_vec_compare(P2, Line2_to, 4)) {
-		cout << "Line2_from and Line2_to must intersect in W=0" << endl;
-		exit(1);
-	}
-
-
-	F->Linear_algebra->linear_combination_of_vectors(1, u, m1, v, umv, 3);
-	umv[3] = 0;
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"umv:" << endl;
-		Orbiter->Int_vec->matrix_print(umv, 1, 4);
-	}
-
-	Orbiter->Int_vec->copy(x, M + 0, 4);
-	Orbiter->Int_vec->copy(P1, M + 4, 4);
-	Orbiter->Int_vec->copy(y, M + 8, 4);
-	Orbiter->Int_vec->copy(P2, M + 12, 4);
-
-	F->Linear_algebra->negate_vector_in_place(M + 8, 8);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"M:" << endl;
-		Orbiter->Int_vec->matrix_print(M, 4, 4);
-	}
-
-	F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"Mv:" << endl;
-		Orbiter->Int_vec->matrix_print(Mv, 4, 4);
-	}
-
-	F->Linear_algebra->mult_vector_from_the_left(umv, Mv, lmei, 4, 4);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"lmei=" << endl;
-		Orbiter->Int_vec->matrix_print(lmei, 1, 4);
-	}
-	lambda = lmei[0];
-	mu = lmei[1];
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"lambda=" << lambda << " mu=" << mu << endl;
-	}
-
-	F->Linear_algebra->linear_combination_of_three_vectors(lambda, x, mu, P1, m1, u, abgd, 3);
-	// abgd = lambda * x + mu * P1 - u, with a lambda in the 4th coordinate.
-
-	abgd[3] = lambda;
-
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"abgd:" << endl;
-		Orbiter->Int_vec->matrix_print(abgd, 1, 4);
-	}
-
-	// make an identity matrix:
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 4; j++) {
-			if (i == j) {
-				A4[i * 4 + j] = 1;
-			}
-			else {
-				A4[i * 4 + j] = 0;
-			}
-		}
-	}
-	// fill in the last row:
-	Orbiter->Int_vec->copy(abgd, A4 + 3 * 4, 4);
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
-				"A4:" << endl;
-		Orbiter->Int_vec->matrix_print(A4, 4, 4);
-
-		F->print_matrix_latex(cout, A4, 4, 4);
-
-	}
-
-	if (f_v) {
-		cout << "projective_space::hyperplane_lifting_with_two_lines_moved done" << endl;
-	}
-
-}
-
-void projective_space::andre_preimage(projective_space *P4,
-	long int *set2, int sz2, long int *set4, int &sz4, int verbose_level)
-// we must be a projective plane
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	field_theory::finite_field *FQ;
-	field_theory::finite_field *Fq;
-	int /*Q,*/ q;
-	int *v, *w1, *w2, *w3, *v2;
-	int *components;
-	int *embedding;
-	int *pair_embedding;
-	int i, h, k, a, a0, a1, b, b0, b1, e, alpha;
-
-	if (f_v) {
-		cout << "projective_space::andre_preimage" << endl;
-	}
-	FQ = F;
-	//Q = FQ->q;
-	alpha = FQ->p;
-	if (f_vv) {
-		cout << "alpha=" << alpha << endl;
-		//FQ->print(TRUE /* f_add_mult_table */);
-	}
-
-
-	Fq = P4->F;
-	q = Fq->q;
-
-	v = NEW_int(3);
-	w1 = NEW_int(5);
-	w2 = NEW_int(5);
-	w3 = NEW_int(5);
-	v2 = NEW_int(2);
-	e = F->e >> 1;
-	if (f_vv) {
-		cout << "projective_space::andre_preimage e=" << e << endl;
-	}
-
-	FQ->subfield_embedding_2dimensional(*Fq,
-		components, embedding, pair_embedding, verbose_level - 3);
-
-		// we think of FQ as two dimensional vector space
-		// over Fq with basis (1,alpha)
-		// for i,j \in Fq, with x = i + j * alpha \in FQ, we have
-		// pair_embedding[i * q + j] = x;
-		// also,
-		// components[x * 2 + 0] = i;
-		// components[x * 2 + 1] = j;
-		// also, for i \in Fq, embedding[i] is the element
-		// in FQ that corresponds to i
-
-		// components[Q * 2]
-		// embedding[q]
-		// pair_embedding[q * q]
-
-	if (f_vv) {
-		FQ->print_embedding(*Fq,
-			components, embedding, pair_embedding);
-	}
-
-
-	sz4 = 0;
-	for (i = 0; i < sz2; i++) {
-		if (f_vv) {
-			cout << "projective_space::andre_preimage "
-					"input point " << i << " : ";
-		}
-		unrank_point(v, set2[i]);
-		FQ->PG_element_normalize(v, 1, 3);
-		if (f_vv) {
-			Orbiter->Int_vec->print(cout, v, 3);
-			cout << " becomes ";
-		}
-
-		if (v[2] == 0) {
-
-			// we are dealing with a point on the
-			// line at infinity.
-			// Such a point corresponds to a line of the spread.
-			// We create the line and then create all
-			// q + 1 points on that line.
-
-			if (f_vv) {
-				cout << endl;
-			}
-			// w1[4] is the GF(q)-vector corresponding
-			// to the GF(q^2)-vector v[2]
-			// w2[4] is the GF(q)-vector corresponding
-			// to the GF(q^2)-vector v[2] * alpha
-			// where v[2] runs through the points of PG(1,q^2).
-			// That way, w1[4] and w2[4] are a GF(q)-basis for the
-			// 2-dimensional subspace v[2] (when viewed over GF(q)),
-			// which is an element of the regular spread.
-
-			for (h = 0; h < 2; h++) {
-				a = v[h];
-				a0 = components[a * 2 + 0];
-				a1 = components[a * 2 + 1];
-				b = FQ->mult(a, alpha);
-				b0 = components[b * 2 + 0];
-				b1 = components[b * 2 + 1];
-				w1[2 * h + 0] = a0;
-				w1[2 * h + 1] = a1;
-				w2[2 * h + 0] = b0;
-				w2[2 * h + 1] = b1;
-			}
-			if (FALSE) {
-				cout << "w1=";
-				Orbiter->Int_vec->print(cout, w1, 4);
-				cout << "w2=";
-				Orbiter->Int_vec->print(cout, w2, 4);
-				cout << endl;
-			}
-
-			// now we create all points on the line
-			// spanned by w1[4] and w2[4]:
-			// There are q + 1 of these points.
-			// We make sure that the coordinate vectors
-			// have a zero in the last spot.
-
-			for (h = 0; h < q + 1; h++) {
-				Fq->PG_element_unrank_modified(v2, 1, 2, h);
-				if (FALSE) {
-					cout << "v2=";
-					Orbiter->Int_vec->print(cout, v2, 2);
-					cout << " : ";
-				}
-				for (k = 0; k < 4; k++) {
-					w3[k] = Fq->add(Fq->mult(v2[0], w1[k]),
-							Fq->mult(v2[1], w2[k]));
-				}
-				w3[4] = 0;
-				if (f_vv) {
-					cout << " ";
-					Orbiter->Int_vec->print(cout, w3, 5);
-				}
-				a = P4->rank_point(w3);
-				if (f_vv) {
-					cout << " rank " << a << endl;
-				}
-				set4[sz4++] = a;
-			}
-		}
-		else {
-
-			// we are dealing with an affine point:
-			// We make sure that the coordinate vector
-			// has a zero in the last spot.
-
-
-			for (h = 0; h < 2; h++) {
-				a = v[h];
-				a0 = components[a * 2 + 0];
-				a1 = components[a * 2 + 1];
-				w1[2 * h + 0] = a0;
-				w1[2 * h + 1] = a1;
-			}
-			w1[4] = 1;
-			if (f_vv) {
-				//cout << "w1=";
-				Orbiter->Int_vec->print(cout, w1, 5);
-			}
-			a = P4->rank_point(w1);
-			if (f_vv) {
-				cout << " rank " << a << endl;
-			}
-			set4[sz4++] = a;
-		}
-	}
-	if (f_v) {
-		cout << "projective_space::andre_preimage "
-				"we found " << sz4 << " points:" << endl;
-		Orbiter->Lint_vec->print(cout, set4, sz4);
-		cout << endl;
-		P4->print_set(set4, sz4);
-		for (i = 0; i < sz4; i++) {
-			cout << set4[i] << " ";
-		}
-		cout << endl;
-	}
-
-
-	FREE_int(components);
-	FREE_int(embedding);
-	FREE_int(pair_embedding);
-	if (f_v) {
-		cout << "projective_space::andre_preimage done" << endl;
-	}
-}
 
 void projective_space::planes_through_a_line(
 	long int line_rk, std::vector<long int> &plane_ranks,
@@ -4941,11 +3992,17 @@ void projective_space::planes_through_a_line(
 			Orbiter->Int_vec->matrix_print(M2, 3, d);
 		}
 		if (F->Linear_algebra->rank_of_rectangular_matrix(M2, 3, d, 0 /*verbose_level*/) == 3) {
+
+			// here, rank means the rank in the sense of linear algebra
+
 			if (f_v) {
 				cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
 				Orbiter->Int_vec->matrix_print(M2, 3, d);
 			}
 			rk = Grass_planes->rank_lint_here(M2, 0 /* verbose_level */);
+
+			// here rank is in the sense of indexing
+
 			if (f_v) {
 				cout << "projective_space::planes_through_a_line h = " << h << " rk=" << rk << endl;
 			}
@@ -4963,6 +4020,109 @@ void projective_space::planes_through_a_line(
 	}
 }
 
+
+void projective_space::do_move_two_lines_in_hyperplane_stabilizer(
+		long int line1_from, long int line2_from,
+		long int line1_to, long int line2_to, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer" << endl;
+	}
+
+	if (n != 3) {
+		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer n != 3" << endl;
+		exit(1);
+	}
+	geometry_global Gg;
+	int A4[16];
+
+
+	Gg.hyperplane_lifting_with_two_lines_moved(this,
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
+	Orbiter->Int_vec->matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
+	}
+}
+
+void projective_space::do_move_two_lines_in_hyperplane_stabilizer_text(
+		std::string line1_from_text, std::string line2_from_text,
+		std::string line1_to_text, std::string line2_to_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
+	}
+	if (n != 3) {
+		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer n != 3" << endl;
+		exit(1);
+	}
+
+	geometry_global Gg;
+	int A4[16];
+
+
+	int *line1_from_data;
+	int *line2_from_data;
+	int *line1_to_data;
+	int *line2_to_data;
+	int sz;
+
+	Orbiter->Int_vec->scan(line1_from_text.c_str(), line1_from_data, sz);
+	if (sz != 8) {
+		cout << "line1_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	Orbiter->Int_vec->scan(line2_from_text.c_str(), line2_from_data, sz);
+	if (sz != 8) {
+		cout << "line2_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	Orbiter->Int_vec->scan(line1_to_text.c_str(), line1_to_data, sz);
+	if (sz != 8) {
+		cout << "line1_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	Orbiter->Int_vec->scan(line2_to_text.c_str(), line2_to_data, sz);
+	if (sz != 8) {
+		cout << "line2_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
+	line1_from = rank_line(line1_from_data);
+	line2_from = rank_line(line2_from_data);
+	line1_to = rank_line(line1_to_data);
+	line2_to = rank_line(line2_to_data);
+
+
+	Gg.hyperplane_lifting_with_two_lines_moved(this,
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
+	Orbiter->Int_vec->matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
+	}
+}
 
 
 

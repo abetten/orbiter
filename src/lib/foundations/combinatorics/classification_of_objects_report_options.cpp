@@ -126,25 +126,25 @@ int classification_of_objects_report_options::read_arguments(
 void classification_of_objects_report_options::print()
 {
 	if (f_prefix) {
-		cout << "-prefix" << prefix << endl;
+		cout << "-prefix " << prefix << endl;
 	}
 	if (f_export_flag_orbits) {
-		cout << "-export_flag_orbits" << endl;
+		cout << "-export_flag_orbits " << endl;
 	}
 	if (f_show_incidence_matrices) {
-		cout << "-show_incidence_matrices" << endl;
+		cout << "-show_incidence_matrices " << endl;
 	}
 	if (f_show_TDO) {
-		cout << "-show_TDO" << endl;
+		cout << "-show_TDO " << endl;
 	}
 	if (f_show_TDA) {
-		cout << "-show_TDA" << endl;
+		cout << "-show_TDA " << endl;
 	}
 	if (f_export_group) {
-		cout << "-export_group" << endl;
+		cout << "-export_group " << endl;
 	}
 	if (f_lex_least) {
-		cout << "-lex_least" << lex_least_geometry_builder << endl;
+		cout << "-lex_least " << lex_least_geometry_builder << endl;
 	}
 
 }

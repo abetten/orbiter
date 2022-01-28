@@ -101,13 +101,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
-
-	//int *Aut, Aut_counter;
-	//int *Base, Base_length;
-	//long int *Base_lint;
-	//int *Transversal_length;
-	//longinteger_object Ago;
 	int i;
 
 
@@ -122,7 +115,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		Orbiter->Int_vec->matrix_print_tight(Inc->M, Inc->nb_rows, Inc->nb_cols);
 	}
 
-	//canonical_labeling = NEW_int(nb_rows + nb_cols);
 	for (i = 0; i < Inc->nb_rows + Inc->nb_cols; i++) {
 		canonical_labeling[i] = i;
 	}
@@ -136,12 +128,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				"initializing Aut, Base, "
 				"Transversal_length" << endl;
 	}
-#if 0
-	Aut = NEW_int(N * N);
-	Base = NEW_int(N);
-	Base_lint = NEW_lint(N);
-	Transversal_length = NEW_int(N);
-#endif
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
@@ -149,26 +135,17 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	}
 
 
-	//int *can_labeling;
 	nauty_interface Nau;
 	int N;
 
 	N = Inc->nb_rows + Inc->nb_cols;
 
-	//can_labeling = NEW_int(N);
 
 	combinatorics::encoded_combinatorial_object Enc;
-#if 0
-		int *Incma;
-		int nb_rows;
-		int nb_cols;
-		int *partition;
-		int canonical_labeling_len;
-#endif
-	Enc.Incma = Inc->M;
-	Enc.nb_rows = Inc->nb_rows;
-	Enc.nb_cols = Inc->nb_cols;
-	Enc.partition = partition;
+
+	Enc.init_everything(Inc->nb_rows, Inc->nb_cols,
+			Inc->M, partition,
+			verbose_level);
 
 	data_structures::nauty_output *NO;
 
@@ -177,18 +154,18 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	Nau.nauty_interface_matrix_int(
 		&Enc,
-		//can_labeling,
 		NO,
 		verbose_level - 3);
 
-	Enc.Incma = NULL;
-	Enc.partition = NULL;
 
+	// set to NULL so that we don't call free on it later:
+	Enc.init_everything(Inc->nb_rows, Inc->nb_cols,
+			NULL, NULL,
+			verbose_level);
 
 	for (i = 0; i < N; i++) {
 		canonical_labeling[i] = NO->canonical_labeling[i];
 	}
-	//FREE_int(can_labeling);
 
 	Orbiter->Int_vec->copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
@@ -227,7 +204,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 
 
-	//FREE_OBJECT(Inc_out);
 
 
 	A_perm = NEW_OBJECT(actions::action);
@@ -237,19 +213,8 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				"before init_permutation_group_from_generators" << endl;
 	}
 
-#if 1
 	A_perm->init_permutation_group_from_nauty_output(NO,
 		verbose_level);
-
-#else
-	int f_no_base = FALSE;
-	A_perm->init_permutation_group_from_generators(N,
-		TRUE, *NO->Ago,
-		NO->Aut_counter, NO->Aut,
-		NO->Base_length, NO->Base_lint,
-		f_no_base,
-		verbose_level);
-#endif
 
 	if (f_vv) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form created action ";
@@ -257,13 +222,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		cout << endl;
 	}
 	FREE_OBJECT(NO);
-#if 0
-	FREE_int(Aut);
-	FREE_int(Base);
-	FREE_lint(Base_lint);
-	FREE_int(Transversal_length);
-#endif
-
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form done" << endl;

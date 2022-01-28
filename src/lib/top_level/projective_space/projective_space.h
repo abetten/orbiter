@@ -311,7 +311,6 @@ public:
 	void init(object_with_canonical_form *OwCF,
 			long int ago,
 			groups::strong_generators *Aut_gens,
-			//int nb_rows, int nb_cols,
 			int *canonical_labeling,
 			int verbose_level);
 	void print();
@@ -515,6 +514,19 @@ public:
 
 	int f_unrank_lines_in_PG;
 	std::string unrank_lines_in_PG_text;
+
+	int f_move_two_lines_in_hyperplane_stabilizer;
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
+	int f_move_two_lines_in_hyperplane_stabilizer_text;
+	std::string line1_from_text;
+	std::string line2_from_text;
+	std::string line1_to_text;
+	std::string line2_to_text;
+
 
 	projective_space_activity_description();
 	~projective_space_activity_description();

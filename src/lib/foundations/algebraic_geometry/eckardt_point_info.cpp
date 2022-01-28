@@ -19,16 +19,8 @@ static void intersection_matrix_entry_print(int *p,
 
 eckardt_point_info::eckardt_point_info()
 {
-	null();
-}
-
-eckardt_point_info::~eckardt_point_info()
-{
-	freeself();
-}
-
-void eckardt_point_info::null()
-{
+	P2 = NULL;
+	//long int arc6[6];
 	bisecants = NULL;
 	Intersections = NULL;
 	B_pts = NULL;
@@ -39,6 +31,16 @@ void eckardt_point_info::null()
 	conic_coefficients = NULL;
 	E = NULL;
 	nb_E = 0;
+}
+
+
+eckardt_point_info::~eckardt_point_info()
+{
+	freeself();
+}
+
+void eckardt_point_info::null()
+{
 }
 
 void eckardt_point_info::freeself()
@@ -68,7 +70,7 @@ void eckardt_point_info::freeself()
 	null();
 }
 
-void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
+void eckardt_point_info::init(projective_space *P2,
 		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -86,11 +88,11 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 	if (f_v) {
 		cout << "eckardt_point_info::init" << endl;
 		}
-	eckardt_point_info::Surf = Surf;
-	eckardt_point_info::P = P;
+	//eckardt_point_info::Surf = Surf;
+	eckardt_point_info::P2 = P2;
 	Orbiter->Lint_vec->copy(arc6, eckardt_point_info::arc6, 6);
 
-	if (P->n != 2) {
+	if (P2->n != 2) {
 		cout << "eckardt_point_info::init "
 				"P->n != 2" << endl;
 		exit(1);
@@ -116,7 +118,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 		pi = arc6[i];
 		for (j = i + 1; j < 6; j++, h++) {
 			pj = arc6[j];
-			bisecants[h] = P->line_through_two_points(pi, pj);
+			bisecants[h] = P2->line_through_two_points(pi, pj);
 		}
 	}
 	if (f_v) {
@@ -133,7 +135,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 				p = -1;
 			}
 			else {
-				p = P->intersection_of_two_lines(bi, bj);
+				p = P2->intersection_of_two_lines(bi, bj);
 			}
 			Intersections[i * 15 + j] = p;
 		}
@@ -261,9 +263,9 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 		cout << endl;
 #endif
 
-		P->determine_conic_in_plane(arc5, 5,
+		P2->determine_conic_in_plane(arc5, 5,
 			six_coeffs, 0 /* verbose_level */);
-		P->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
+		P2->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
 
 #if 0
 		cout << "coefficients of the conic: ";
@@ -271,20 +273,20 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 		cout << endl;
 #endif
 
-		P->find_tangent_lines_to_conic(six_coeffs,
+		P2->find_tangent_lines_to_conic(six_coeffs,
 			arc5, 5,
 			tangents, 0 /* verbose_level */);
 
 		for (i = 0; i < 5; i++) {
-			P->unrank_line(Basis, tangents[i]);
+			P2->unrank_line(Basis, tangents[i]);
 
 #if 0
 			cout << "The tangent line at " << arc5[i] << " is:" << endl;
 			int_matrix_print(Basis, 2, 3);
 #endif
 
-			P->unrank_point(Basis + 6, deleted_point);
-			rk = P->F->Linear_algebra->Gauss_easy(Basis, 3, 3);
+			P2->unrank_point(Basis + 6, deleted_point);
+			rk = P2->F->Linear_algebra->Gauss_easy(Basis, 3, 3);
 			if (rk == 2) {
 				if (i >= j) {
 					i1 = i + 1;
@@ -342,6 +344,26 @@ void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
 	if (f_v) {
 		cout << "eckardt_point_info::print_bisecants" << endl;
 	}
+
+
+	ring_theory::homogeneous_polynomial_domain *Poly1;
+
+
+	Poly1 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "eckardt_point_info::print_bisecants before Poly1->init" << endl;
+	}
+	Poly1->init(P2->F,
+			3 /* nb_vars */, 1 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "eckardt_point_info::print_bisecants after Poly1->init" << endl;
+	}
+
+
 	ost << "The 15 bisecants are:\\\\" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|r|r|r|r|r|}" << endl;
@@ -356,20 +378,23 @@ void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
 		ost << h << " & P_{" << i + 1 << "}P_{" << j + 1
 				<< "} & " << a << " & " << endl;
 		//ost << "\\left[ " << endl;
-		Surf->P2->Grass_lines->print_single_generator_matrix_tex(ost, a);
+		P2->Grass_lines->print_single_generator_matrix_tex(ost, a);
 		//ost << "\\right] ";
 
-		Surf->P2->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
+		P2->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
 			0 /*verbose_level */);
-		Surf->F->PG_element_normalize(Mtx + 6, 1, 3);
+		P2->F->PG_element_normalize(Mtx + 6, 1, 3);
 
 		ost << " & ";
-		Surf->Poly1->print_equation(ost, Mtx + 6);
+		Poly1->print_equation(ost, Mtx + 6); // ToDo
 		ost << "\\\\" << endl;
 	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
+
+	FREE_OBJECT(Poly1);
+
 	if (f_v) {
 		cout << "eckardt_point_info::print_bisecants done" << endl;
 	}
@@ -412,10 +437,29 @@ void eckardt_point_info::print_conics(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h;
+	ring_theory::homogeneous_polynomial_domain *Poly2;
 
 	if (f_v) {
 		cout << "eckardt_point_info::print_conics" << endl;
 	}
+
+
+	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "eckardt_point_info::print_conics before Poly2->init" << endl;
+	}
+	Poly2->init(P2->F,
+			3 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "eckardt_point_info::print_conics after Poly2->init" << endl;
+	}
+
+
+
 	ost << "The 6 conics are:\\\\" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|r|r|r|}" << endl;
@@ -425,13 +469,19 @@ void eckardt_point_info::print_conics(ostream &ost, int verbose_level)
 	ost << "\\hline" << endl;
 	for (h = 0; h < 6; h++) {
 		ost << h + 1 << " & C_" << h + 1 << " & " << endl;
-		Surf->Poly2->print_equation(ost,
+
+		Poly2->print_equation(ost,
 				conic_coefficients + h * 6);
+
 		ost << "\\\\" << endl;
 	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
+
+
+	FREE_OBJECT(Poly2);
+
 	if (f_v) {
 		cout << "eckardt_point_info::print_conics done" << endl;
 	}

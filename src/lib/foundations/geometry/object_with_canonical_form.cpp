@@ -875,12 +875,21 @@ void object_with_canonical_form::encoding_size_point_set(
 		cout << "C->second_nb_types = " << C->second_nb_types << endl;
 	}
 
-	nb_rows = P->N_points + 1;
+	int nb_rows0, nb_cols0;
+
+	nb_rows0 = P->N_points;
+	nb_cols0 = P->N_lines;
+
+	nb_rows0 += P->N_lines;
+	nb_cols0 += P->Nb_subspaces[2];
+
+
+	nb_rows = nb_rows0 + 1;
 	if (f_v) {
 		cout << "object_with_canonical_form::encoding_size_point_set "
 				"nb_rows=" << nb_rows << endl;
 	}
-	nb_cols = P->N_lines + C->second_nb_types;
+	nb_cols = nb_cols0 + C->second_nb_types;
 	if (f_v) {
 		cout << "object_with_canonical_form::encoding_size_point_set "
 				"nb_cols=" << nb_cols << endl;
@@ -1074,7 +1083,7 @@ void object_with_canonical_form::encode_point_set(
 		cout << "object_with_canonical_form::encode_point_set" << endl;
 	}
 	int i, j;
-	int f_vvv = (verbose_level >= 3);
+	int f_vvv = FALSE; // (verbose_level >= 3);
 	
 
 	C = NEW_OBJECT(tally);
@@ -1099,30 +1108,31 @@ void object_with_canonical_form::encode_point_set(
 	}
 
 
+	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
 
-	nb_rows = P->N_points + 1;
-	nb_cols = P->N_lines + C->second_nb_types;
+	nb_rows0 = P->N_points;
+	nb_cols0 = P->N_lines;
+
+	nb_rows0 += P->N_lines;
+	nb_cols0 += P->Nb_subspaces[2];
+
+	nb_rows = nb_rows0 + 1;
+	nb_cols = nb_cols0 + C->second_nb_types;
 
 	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
-	int N;
-	
-	N = nb_rows + nb_cols;
 
 
+	//Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
 
-
-	long int cnt;
-
-	cnt = 0;
-
-	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
+	Enc->extended_incidence_matrix_projective_space_top_left(P, verbose_level);
 
 
 	// last columns:
 	for (j = 0; j < C->second_nb_types; j++) {
+
 		int h, f2, l2, m, idx, f, l;
 
 		f2 = C->second_type_first[j];
@@ -1149,7 +1159,7 @@ void object_with_canonical_form::encode_point_set(
 						<< " l=" << l << " i=" << i << endl;
 				exit(1);
 			}
-			Enc->Incma[i * nb_cols + P->N_lines + j] = 1;
+			Enc->set_incidence_ij(i, Enc->nb_cols0 + j);
 		}
 	}
 
@@ -1158,17 +1168,23 @@ void object_with_canonical_form::encode_point_set(
 	}
 	// bottom right entries:
 	for (j = 0; j < C->second_nb_types; j++) {
-		Enc->Incma[P->N_points * nb_cols + P->N_lines + j] = 1;
+		Enc->set_incidence_ij(Enc->nb_rows0, Enc->nb_cols0 + j);
 	}
 
 	if (f_v) {
 		cout << "object_with_canonical_form::encode_point_set partition" << endl;
 	}
+
+
 	Enc->partition[P->N_points - 1] = 0;
-	Enc->partition[P->N_points] = 0;
+	Enc->partition[nb_rows0 - 1] = 0;
+	Enc->partition[nb_rows - 1] = 0;
+
 	Enc->partition[nb_rows + P->N_lines - 1] = 0;
+	Enc->partition[nb_rows + Enc->nb_cols0 - 1] = 0;
+
 	for (j = 0; j < C->second_nb_types; j++) {
-		Enc->partition[nb_rows + P->N_lines + j] = 0;
+		Enc->partition[nb_rows + Enc->nb_cols0 + j] = 0;
 	}
 	if (f_vvv) {
 		cout << "object_with_canonical_form::encode_point_set "
@@ -1193,9 +1209,14 @@ void object_with_canonical_form::encode_line_set(
 	int i, j;
 	int f_vvv = (verbose_level >= 3);
 	
+	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
-	nb_rows = P->N_points + 1;
-	nb_cols = P->N_lines + 1;
+
+	nb_rows0 = P->N_points;
+	nb_cols0 = P->N_lines;
+
+	nb_rows = nb_rows0 + 1;
+	nb_cols = nb_cols0 + 1;
 
 	int N;
 	
@@ -1212,18 +1233,18 @@ void object_with_canonical_form::encode_line_set(
 
 		for (h = 0; h < sz; h++) {
 			j = set[h];
-			Enc->Incma[(P->N_points + i) * nb_cols + j] = 1;
+			Enc->set_incidence_ij(nb_rows0 + i, j);
 		}
 	}
-	// bottom right entries:
-	for (i = 0; i < 1; i++) {
-		Enc->Incma[(P->N_points + i) * nb_cols + P->N_lines] = 1;
-	}
 
-	Enc->partition[P->N_points - 1] = 0;
+	// bottom right entry:
+	Enc->set_incidence_ij(nb_rows0, nb_cols0);
+
+	Enc->partition[nb_rows0 - 1] = 0;
 	Enc->partition[nb_rows - 1] = 0;
-	Enc->partition[nb_rows + P->N_lines - 1] = 0;
-	Enc->partition[nb_rows + P->N_lines + 1 - 1] = 0;
+	Enc->partition[nb_rows + nb_cols0 - 1] = 0;
+	Enc->partition[nb_rows + nb_cols0 + 1 - 1] = 0;
+
 	if (f_vvv) {
 		cout << "object_with_canonical_form::encode_line_set "
 				"partition:" << endl;
@@ -1247,9 +1268,14 @@ void object_with_canonical_form::encode_points_and_lines(
 	int i, j;
 	int f_vvv = (verbose_level >= 3);
 
+	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
-	nb_rows = P->N_points + 1;
-	nb_cols = P->N_lines + 1;
+
+	nb_rows0 = P->N_points;
+	nb_cols0 = P->N_lines;
+
+	nb_rows = nb_rows0 + 1;
+	nb_cols = nb_cols0 + 1;
 
 	int N;
 
@@ -1266,7 +1292,7 @@ void object_with_canonical_form::encode_points_and_lines(
 
 		for (h = 0; h < sz2; h++) {
 			j = set2[h];
-			Enc->Incma[(P->N_points + i) * nb_cols + j] = 1;
+			Enc->set_incidence_ij(nb_rows0 + i, j);
 		}
 	}
 
@@ -1275,18 +1301,16 @@ void object_with_canonical_form::encode_points_and_lines(
 
 	for (h = 0; h < sz; h++) {
 		i = set[h];
-		Enc->Incma[i * nb_cols + P->N_lines] = 1;
+		Enc->set_incidence_ij(i, nb_cols0);
 	}
 
 	// bottom right entry:
-	for (i = 0; i < 1; i++) {
-		Enc->Incma[(P->N_points + i) * nb_cols + P->N_lines] = 1;
-	}
+	Enc->set_incidence_ij(nb_rows0, nb_cols0);
 
-	Enc->partition[P->N_points - 1] = 0;
+	Enc->partition[nb_rows0 - 1] = 0;
 	Enc->partition[nb_rows - 1] = 0;
-	Enc->partition[nb_rows + P->N_lines - 1] = 0;
-	Enc->partition[nb_rows + P->N_lines + 1 - 1] = 0;
+	Enc->partition[nb_rows + nb_cols0 - 1] = 0;
+	Enc->partition[nb_rows + nb_cols0 + 1 - 1] = 0;
 	if (f_vvv) {
 		cout << "object_with_canonical_form::encode_points_and_lines "
 				"partition:" << endl;
@@ -1312,13 +1336,14 @@ void object_with_canonical_form::encode_packing(
 	int f_vvv = (verbose_level >= 3);
 	
 
+	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
-	nb_rows = P->N_points + SoS->nb_sets;
-	nb_cols = P->N_lines + 1;
 
-	int N;
-	
-	N = nb_rows + nb_cols;
+	nb_rows0 = P->N_points;
+	nb_cols0 = P->N_lines;
+
+	nb_rows = nb_rows0 + SoS->nb_sets;
+	nb_cols = nb_cols0 + 1;
 
 	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
@@ -1331,18 +1356,18 @@ void object_with_canonical_form::encode_packing(
 
 		for (h = 0; h < SoS->Set_size[i]; h++) {
 			j = SoS->Sets[i][h];
-			Enc->Incma[(P->N_points + i) * nb_cols + j] = 1;
+			Enc->set_incidence_ij(nb_rows0 + i, j);
 		}
 	}
 	// bottom right entries:
 	for (i = 0; i < SoS->nb_sets; i++) {
-		Enc->Incma[(P->N_points + i) * nb_cols + P->N_lines] = 1;
+		Enc->set_incidence_ij(nb_rows0 + i, nb_cols0);
 	}
 
-	Enc->partition[P->N_points - 1] = 0;
+	Enc->partition[nb_rows0 - 1] = 0;
 	Enc->partition[nb_rows - 1] = 0;
-	Enc->partition[nb_rows + P->N_lines - 1] = 0;
-	Enc->partition[nb_rows + P->N_lines + 1 - 1] = 0;
+	Enc->partition[nb_rows + nb_cols0 - 1] = 0;
+	Enc->partition[nb_rows + nb_cols0 + 1 - 1] = 0;
 	if (f_vvv) {
 		cout << "object_with_canonical_form::encode_packing "
 				"partition:" << endl;
@@ -1395,7 +1420,7 @@ void object_with_canonical_form::encode_large_set(
 		Combi.unrank_k_subset(a, block, v, design_k);
 		for (h = 0; h < design_k; h++) {
 			i = block[h];
-			Enc->Incma[i * nb_cols + j] = 1;
+			Enc->set_incidence_ij(i, j);
 		}
 	}
 
@@ -1403,12 +1428,12 @@ void object_with_canonical_form::encode_large_set(
 	for (i = 0; i < nb_designs; i++) {
 
 		for (h = 0; h < design_sz; h++) {
-			Enc->Incma[(v + i) * nb_cols + i * design_sz + h] = 1;
+			Enc->set_incidence_ij(v + i, i * design_sz + h);
 		}
 	}
 	// bottom right entries:
 	for (i = 0; i < nb_designs; i++) {
-		Enc->Incma[(v + i) * nb_cols + b] = 1;
+		Enc->set_incidence_ij(v + i, b);
 	}
 
 	Enc->partition[v - 1] = 0;
@@ -1462,7 +1487,7 @@ void object_with_canonical_form::encode_incidence_geometry(
 			cout << "a = " << a << endl;
 			exit(1);
 		}
-		Enc->Incma[a] = 1;
+		Enc->set_incidence(a);
 	}
 
 
@@ -1532,7 +1557,8 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	}
 
 	Inc = NEW_OBJECT(incidence_structure);
-	Inc->init_by_matrix(Enc->nb_rows, Enc->nb_cols, Enc->Incma, verbose_level - 2);
+	Inc->init_by_matrix(Enc->nb_rows, Enc->nb_cols,
+			Enc->get_Incma(), verbose_level - 2);
 
 
 
@@ -1704,7 +1730,8 @@ void object_with_canonical_form::encode_object_points(
 }
 
 void object_with_canonical_form::encode_object_lines(
-		long int *&encoding, int &encoding_sz, int verbose_level)
+		long int *&encoding, int &encoding_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1717,7 +1744,8 @@ void object_with_canonical_form::encode_object_lines(
 }
 
 void object_with_canonical_form::encode_object_points_and_lines(
-		long int *&encoding, int &encoding_sz, int verbose_level)
+		long int *&encoding, int &encoding_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1730,7 +1758,8 @@ void object_with_canonical_form::encode_object_points_and_lines(
 }
 
 void object_with_canonical_form::encode_object_packing(
-		long int *&encoding, int &encoding_sz, int verbose_level)
+		long int *&encoding, int &encoding_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1779,6 +1808,7 @@ void object_with_canonical_form::encode_object_large_set(
 	Orbiter->Lint_vec->copy(set, encoding, sz);
 }
 
+#if 0
 void object_with_canonical_form::klein(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1898,9 +1928,11 @@ void object_with_canonical_form::klein(int verbose_level)
 		cout << "object_with_canonical_form::klein done" << endl;
 	}
 }
+#endif
 
 void object_with_canonical_form::run_nauty(
-		int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+		int f_compute_canonical_form,
+		data_structures::bitvector *&Canonical_form,
 		data_structures::nauty_output *&NO,
 		int verbose_level)
 {
@@ -1935,17 +1967,6 @@ void object_with_canonical_form::run_nauty(
 		//int_matrix_print_tight(Incma, nb_rows, nb_cols);
 	}
 
-
-#if 0
-	if (f_save_incma_in_and_out) {
-		save_Levi_graph(save_incma_in_and_out_prefix,
-				"Incma_in_%d_%d",
-				Incma, nb_rows, nb_cols,
-				canonical_labeling, canonical_labeling_len,
-				verbose_level);
-
-	}
-#endif
 
 
 	NO = NEW_OBJECT(data_structures::nauty_output);
@@ -2002,40 +2023,6 @@ void object_with_canonical_form::run_nauty(
 
 
 
-#if 0
-	int ii, jj;
-	if (verbose_level > 5) {
-		cout << "object_with_canonical_form::run_nauty "
-				"labeling:" << endl;
-		//lint_vec_print(cout, canonical_labeling, canonical_labeling_len);
-		cout << endl;
-	}
-
-	Incma_out = NEW_int(L);
-	for (i = 0; i < Enc->nb_rows; i++) {
-		ii = canonical_labeling[i];
-		for (j = 0; j < Enc->nb_cols; j++) {
-			jj = canonical_labeling[Enc->nb_rows + j] - Enc->nb_rows;
-			//cout << "i=" << i << " j=" << j << " ii=" << ii
-			//<< " jj=" << jj << endl;
-			Incma_out[i * Enc->nb_cols + j] = Enc->Incma[ii * Enc->nb_cols + jj];
-		}
-	}
-	if (verbose_level > 5) {
-		cout << "object_with_canonical_form::run_nauty "
-				"Incma Out:" << endl;
-		if (Enc->nb_rows < 20) {
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
-					Incma_out, Enc->nb_rows, Enc->nb_cols, Enc->nb_cols, 1);
-		}
-		else {
-			cout << "object_with_canonical_form::run_nauty "
-					"too large to print" << endl;
-		}
-	}
-#endif
-
-
 
 	if (f_compute_canonical_form) {
 
@@ -2045,16 +2032,6 @@ void object_with_canonical_form::run_nauty(
 
 	}
 
-#if 0
-	if (f_save_incma_in_and_out) {
-		save_Levi_graph(save_incma_in_and_out_prefix,
-				"Incma_out_%d_%d",
-				Incma_out, nb_rows, nb_cols,
-				canonical_labeling, N,
-				verbose_level);
-
-	}
-#endif
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty before FREE_OBJECT(Enc)" << endl;
@@ -2152,7 +2129,8 @@ void object_with_canonical_form::canonical_labeling(
 }
 
 void object_with_canonical_form::run_nauty_basic(
-		data_structures::nauty_output *&NO, int verbose_level)
+		data_structures::nauty_output *&NO,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

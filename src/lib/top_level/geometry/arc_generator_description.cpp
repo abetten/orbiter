@@ -31,7 +31,7 @@ arc_generator_description::arc_generator_description()
 
 	f_test_nb_Eckardt_points = FALSE;
 	nb_E = 0;
-	Surf = NULL;
+	//Surf = NULL;
 	f_affine = FALSE;
 	f_no_arc_testing = FALSE;
 

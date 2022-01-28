@@ -1806,6 +1806,7 @@ public:
 	void print_generators_in_latex_individually(std::ostream &ost);
 	void print_generators_tex();
 	void print_generators_tex(std::ostream &ost);
+	void print_for_make_element(std::ostream &ost);
 	void print_generators_in_different_action_tex(std::ostream &ost, actions::action *A2);
 	void print_generators_tex_with_print_point_function(
 			actions::action *A,

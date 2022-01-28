@@ -185,18 +185,6 @@ finite_field_activity_description::finite_field_activity_description()
 	//line_1_basis = NULL;
 	//line_2_basis = NULL;
 
-	f_move_two_lines_in_hyperplane_stabilizer = FALSE;
-	line1_from = 0;
-	line2_from = 0;
-	line1_to = 0;
-	line2_to = 0;
-
-	f_move_two_lines_in_hyperplane_stabilizer_text = FALSE;
-	//std:string line1_from_text;
-	//std:string line2_from_text;
-	//std:string line1_to_text;
-	//std:string line2_to_text;
-
 	f_field_reduction = FALSE;
 	//field_reduction_label
 	field_reduction_q = 0;
@@ -757,36 +745,6 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
-			f_move_two_lines_in_hyperplane_stabilizer = TRUE;
-			line1_from = ST.strtoi(argv[++i]);
-			line2_from = ST.strtoi(argv[++i]);
-			line1_to = ST.strtoi(argv[++i]);
-			line2_to = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-move_two_lines_in_hyperplane_stabilizer"
-					<< " " << line1_from
-					<< " " << line1_from
-					<< " " << line1_to
-					<< " " << line2_to
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
-			f_move_two_lines_in_hyperplane_stabilizer_text = TRUE;
-			line1_from_text.assign(argv[++i]);
-			line2_from_text.assign(argv[++i]);
-			line1_to_text.assign(argv[++i]);
-			line2_to_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-move_two_lines_in_hyperplane_stabilizer_text"
-					<< " " << line1_from_text
-					<< " " << line2_from_text
-					<< " " << line1_to_text
-					<< " " << line2_to_text
-					<< endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
 			f_inverse_isomorphism_klein_quadric = TRUE;
 			inverse_isomorphism_klein_quadric_matrix_A6.assign(argv[++i]);
@@ -1217,22 +1175,6 @@ void finite_field_activity_description::print()
 		cout << "-intersection_of_two_lines "
 				<< " " << line_1_basis
 				<< " " << line_2_basis
-				<< endl;
-	}
-	if (f_move_two_lines_in_hyperplane_stabilizer) {
-		cout << "-move_two_lines_in_hyperplane_stabilizer"
-				<< " " << line1_from
-				<< " " << line1_from
-				<< " " << line1_to
-				<< " " << line2_to
-				<< endl;
-	}
-	if (f_move_two_lines_in_hyperplane_stabilizer_text) {
-		cout << "-move_two_lines_in_hyperplane_stabilizer_text"
-				<< " " << line1_from_text
-				<< " " << line2_from_text
-				<< " " << line1_to_text
-				<< " " << line2_to_text
 				<< endl;
 	}
 	if (f_inverse_isomorphism_klein_quadric) {

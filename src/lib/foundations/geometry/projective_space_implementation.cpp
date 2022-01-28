@@ -107,8 +107,6 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 	}
 
 
-
-
 	if (N_lines < MAX_NUMBER_OF_LINES_FOR_LINE_TABLE) {
 		if (f_v) {
 			cout << "projective_space_implementation::init "

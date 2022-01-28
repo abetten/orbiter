@@ -25,6 +25,7 @@ flag_orbits_incidence_structure::flag_orbits_incidence_structure()
 	OwP = NULL;
 	nb_rows = 0;
 	nb_cols = 0;
+	f_flag_orbits_have_been_computed = FALSE;
 	nb_flags = 0;
 	Flags = NULL;
 	Flag_table = NULL;
@@ -74,6 +75,11 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 	nb_rows = Enc->nb_rows;
 	nb_cols = Enc->nb_cols;
 
+	if (Enc->nb_flags > 1000) {
+		cout << "flag_orbits_incidence_structure::init too many flags" << endl;
+		return;
+	}
+
 	Flags = NEW_int(nb_rows * nb_cols);
 	nb_flags = 0;
 
@@ -87,7 +93,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 	}
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
-			if (Enc->Incma[i * nb_cols + j] == a) {
+			if (Enc->get_incidence_ij(i, j) == a) {
 				Flags[nb_flags++] = i * nb_cols + j;
 			}
 		}
@@ -100,7 +106,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 		Flag_table[h * 2 + 0] = i;
 		Flag_table[h * 2 + 1] = nb_rows + j;
 	}
-	if (f_v) {
+	if (FALSE) {
 		cout << "flag_orbits_incidence_structure::init "
 				"Flag_table:" << endl;
 		Orbiter->Lint_vec->matrix_print(Flag_table, nb_flags, 2);
@@ -137,7 +143,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 				"after Orb->init" << endl;
 	}
 
-
+	f_flag_orbits_have_been_computed = TRUE;
 
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init done" << endl;
@@ -162,6 +168,11 @@ void flag_orbits_incidence_structure::report(std::ostream &ost, int verbose_leve
 
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::report" << endl;
+	}
+
+	if (!f_flag_orbits_have_been_computed) {
+		ost << "Flag orbits are not available.\\\\" << endl;
+		return;
 	}
 
 	//Orb->report(ost, verbose_level);

@@ -48,7 +48,7 @@ void tdo_scheme_compute::init(encoded_combinatorial_object *Enc,
 	}
 
 	Decomp->init_incidence_matrix(
-			Enc->nb_rows, Enc->nb_cols, Enc->Incma,
+			Enc->nb_rows, Enc->nb_cols, Enc->get_Incma(),
 			verbose_level);
 
 	if (f_v) {

@@ -2307,8 +2307,158 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 
 }
 
+void arc_in_projective_space::create_Maruta_Hamada_arc(
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int N;
 
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Maruta_Hamada_arc" << endl;
+	}
+	if (P->n != 2) {
+		cout << "arc_in_projective_space::create_Maruta_Hamada_arc P->n != 2" << endl;
+		exit(1);
+	}
 
+	N = P->N_points;
+	Pts = NEW_lint(N);
+
+	create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
+
+	char str[1000];
+	char str2[1000];
+	sprintf(str, "Maruta_Hamada_arc2_q%d", P->q);
+	sprintf(str2, "Maruta\\_Hamada\\_arc2\\_q%d", P->q);
+	label_txt.assign(str);
+	label_tex.assign(str);
+
+	//FREE_int(Pts);
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Maruta_Hamada_arc done" << endl;
+	}
+}
+
+int arc_in_projective_space::arc_test(long int *input_pts, int nb_pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Pts;
+	int *Mtx;
+	int set[3];
+	int ret = TRUE;
+	int h, i, N;
+	combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "arc_in_projective_space::arc_test" << endl;
+	}
+	if (P->n != 2) {
+		cout << "arc_in_projective_space::arc_test P->n != 2" << endl;
+		exit(1);
+	}
+	Pts = NEW_int(nb_pts * 3);
+	Mtx = NEW_int(3 * 3);
+	for (i = 0; i < nb_pts; i++) {
+		P->unrank_point(Pts + i * 3, input_pts[i]);
+	}
+	if (f_v) {
+		cout << "arc_in_projective_space::arc_test Pts=" << endl;
+		Orbiter->Int_vec->matrix_print(Pts, nb_pts, 3);
+	}
+	N = Combi.int_n_choose_k(nb_pts, 3);
+	for (h = 0; h < N; h++) {
+		Combi.unrank_k_subset(h, set, nb_pts, 3);
+		Orbiter->Int_vec->copy(Pts + set[0] * 3, Mtx, 3);
+		Orbiter->Int_vec->copy(Pts + set[1] * 3, Mtx + 3, 3);
+		Orbiter->Int_vec->copy(Pts + set[2] * 3, Mtx + 6, 3);
+		if (P->F->Linear_algebra->rank_of_matrix(Mtx, 3, 0 /* verbose_level */) < 3) {
+			if (f_v) {
+				cout << "Points P_" << set[0] << ", P_" << set[1]
+					<< " and P_" << set[2] << " are collinear" << endl;
+			}
+			ret = FALSE;
+		}
+	}
+
+	FREE_int(Pts);
+	FREE_int(Mtx);
+	if (f_v) {
+		cout << "arc_in_projective_space::arc_test done" << endl;
+	}
+	return ret;
+}
+
+void arc_in_projective_space::compute_bisecants_and_conics(
+	long int *arc6,
+	int *&bisecants, int *&conics, int verbose_level)
+// bisecants[15 * 3]
+// conics[6 * 6]
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j, h, pi, pj, Line[2];
+	long int arc5[5];
+	int six_coeffs[6];
+
+	if (f_v) {
+		cout << "arc_in_projective_space::compute_bisecants_and_conics" << endl;
+	}
+	bisecants = NEW_int(15 * 3);
+	conics = NEW_int(6 * 6);
+
+	h = 0;
+	for (i = 0; i < 6; i++) {
+		pi = arc6[i];
+		for (j = i + 1; j < 6; j++, h++) {
+			pj = arc6[j];
+			Line[0] = pi;
+			Line[1] = pj;
+			P->determine_line_in_plane(Line,
+				bisecants + h * 3,
+				0 /* verbose_level */);
+			P->F->PG_element_normalize_from_front(
+				bisecants + h * 3, 1, 3);
+		}
+	}
+	if (f_v) {
+		cout << "arc_in_projective_space::compute_bisecants_and_conics "
+				"bisecants:" << endl;
+		Orbiter->Int_vec->matrix_print(bisecants, 15, 3);
+	}
+
+	for (j = 0; j < 6; j++) {
+		//int deleted_point;
+
+		//deleted_point = arc6[j];
+		Orbiter->Lint_vec->copy(arc6, arc5, j);
+		Orbiter->Lint_vec->copy(arc6 + j + 1, arc5 + j, 5 - j);
+
+#if 0
+		cout << "deleting point " << j << " / 6:";
+		int_vec_print(cout, arc5, 5);
+		cout << endl;
+#endif
+
+		P->determine_conic_in_plane(arc5, 5,
+				six_coeffs, 0 /* verbose_level */);
+		P->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
+		Orbiter->Int_vec->copy(six_coeffs, conics + j * 6, 6);
+	}
+
+	if (f_v) {
+		cout << "arc_in_projective_space::compute_bisecants_and_conics "
+				"conics:" << endl;
+		Orbiter->Int_vec->matrix_print(conics, 6, 6);
+	}
+
+	if (f_v) {
+		cout << "arc_in_projective_space::compute_bisecants_and_conics "
+				"done" << endl;
+	}
+}
 
 }}
 

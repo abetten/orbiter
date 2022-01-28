@@ -203,18 +203,6 @@ public:
 	std::string line_1_basis;
 	std::string line_2_basis;
 
-	int f_move_two_lines_in_hyperplane_stabilizer;
-	long int line1_from;
-	long int line2_from;
-	long int line1_to;
-	long int line2_to;
-
-	int f_move_two_lines_in_hyperplane_stabilizer_text;
-	std::string line1_from_text;
-	std::string line2_from_text;
-	std::string line1_to_text;
-	std::string line2_to_text;
-
 	int f_inverse_isomorphism_klein_quadric;
 	std::string inverse_isomorphism_klein_quadric_matrix_A6;
 
@@ -227,12 +215,6 @@ public:
 	std::string unrank_point_in_PG_text;
 
 
-
-#if 0
-	int f_rank_point_in_PG_given_as_pairs;
-	int rank_point_in_PG_given_as_pairs_n;
-	std::string rank_point_in_PG_given_as_pairs_text;
-#endif
 
 	int f_field_reduction;
 	std::string field_reduction_label;

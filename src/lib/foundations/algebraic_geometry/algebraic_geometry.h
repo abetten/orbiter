@@ -262,8 +262,8 @@ class eckardt_point_info {
 
 public:
 
-	surface_domain *Surf;
-	projective_space *P;
+	//surface_domain *Surf;
+	projective_space *P2;
 	long int arc6[6];
 
 	int *bisecants; // [15]
@@ -281,7 +281,7 @@ public:
 	~eckardt_point_info();
 	void null();
 	void freeself();
-	void init(surface_domain *Surf, projective_space *P,
+	void init(projective_space *P2,
 			long int *arc6, int verbose_level);
 	void print_bisecants(std::ostream &ost, int verbose_level);
 	void print_intersections(std::ostream &ost, int verbose_level);

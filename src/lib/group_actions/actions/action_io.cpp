@@ -50,19 +50,19 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 
 
 		{
-		projective_space *P;
+			projective_space *P;
 
-		P = NEW_OBJECT(projective_space);
+			P = NEW_OBJECT(projective_space);
 
-		P->init(M->n - 1, F, TRUE, verbose_level);
+			P->projective_space_init(M->n - 1, F, TRUE, verbose_level);
 
-		ost << "The base action is on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
+			ost << "The base action is on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
 
-		P->report_summary(ost);
+			P->report_summary(ost);
 
 
 
-		FREE_OBJECT(P);
+			FREE_OBJECT(P);
 		}
 
 		ost << "\\subsection*{The finite field ${\\mathbb F}_{" << F->q << "}$}" << endl;
@@ -179,19 +179,19 @@ void action::report_what_we_act_on(ostream &ost,
 		F = M->GFq;
 
 		{
-		projective_space *P;
+			projective_space *P;
 
-		P = NEW_OBJECT(projective_space);
+			P = NEW_OBJECT(projective_space);
 
-		P->init(M->n - 1, F, TRUE, verbose_level);
+			P->projective_space_init(M->n - 1, F, TRUE, verbose_level);
 
-		ost << "\\section*{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
+			ost << "\\section*{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
 
-		P->report(ost, O, verbose_level);
+			P->report(ost, O, verbose_level);
 
 
 
-		FREE_OBJECT(P);
+			FREE_OBJECT(P);
 		}
 
 	}

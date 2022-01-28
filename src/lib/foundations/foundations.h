@@ -407,7 +407,6 @@ class arc_in_projective_space;
 class buekenhout_metz;
 class decomposition;
 class desarguesian_spread;
-class elliptic_curve;
 class flag;
 class geometric_object_create;
 class geometric_object_description;
@@ -540,6 +539,7 @@ namespace number_theory {
 
 	// number_theory:
 	class cyclotomic_sets;
+	class elliptic_curve;
 	class number_theoretic_transform;
 	class number_theory_domain;
 

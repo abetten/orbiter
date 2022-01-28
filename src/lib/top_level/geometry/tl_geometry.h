@@ -45,7 +45,7 @@ public:
 
 	int f_test_nb_Eckardt_points;
 	int nb_E;
-	algebraic_geometry::surface_domain *Surf;
+	//algebraic_geometry::surface_domain *Surf;
 
 	int f_affine;
 
@@ -120,7 +120,7 @@ public:
 	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
 
-	int test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
+	int test_nb_Eckardt_points(
 			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
 	void early_test_func(long int *S, int len,

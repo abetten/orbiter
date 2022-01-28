@@ -64,6 +64,7 @@ void arc_lifting_with_two_lines::create_surface(
 	int Basis[16];
 	int Transversals[4 * 8];
 	int rk;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface" << endl;
@@ -113,7 +114,7 @@ void arc_lifting_with_two_lines::create_surface(
 		if (f_v) {
 			cout << "arc_lifting_with_two_lines::create_surface before Surf->P->find_two_lines_for_arc_lifting" << endl;
 		}
-		Surf->P->find_two_lines_for_arc_lifting(
+		Gg.find_two_lines_for_arc_lifting(Surf->P,
 				Arc6[0] /* P1 */, Arc6[1] /* P2 */, line1, line2,
 				verbose_level - 2);
 		if (f_v) {

@@ -266,20 +266,28 @@ void object_with_properties::latex_report(std::ostream &ost,
 		cout << "object_with_properties::latex_report" << endl;
 	}
 
-	//action *A_perm;
-
-
-	//A_perm = OwP[object_idx].A_perm;
-	//A_perm = (action *) CB->Type_extra_data[object_idx];
-
-
 	ost << "Generators for the automorphism group: \\\\" << endl;
-	A_perm->Strong_gens->print_generators_in_latex_individually(ost);
+	if (A_perm->degree < 100) {
+		A_perm->Strong_gens->print_generators_in_latex_individually(ost);
+	}
+	else {
+		ost << "permutation degree is too large to print. \\\\" << endl;
+
+	}
 
 	if (f_projective_space) {
+
 		ost << "Generators for the automorphism group as matrix group: \\\\" << endl;
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report before SG->print_generators_in_latex_individually" << endl;
+		}
 		SG->print_generators_in_latex_individually(ost);
+		if (f_v) {
+			cout << "object_with_properties::latex_report after SG->print_generators_in_latex_individually" << endl;
+		}
 	}
+
 
 	if (Report_options->f_export_group) {
 
@@ -295,10 +303,16 @@ void object_with_properties::latex_report(std::ostream &ost,
 		label_tex.assign(label);
 		label_tex.append("\\_aut");
 
+		if (f_v) {
+			cout << "object_with_properties::latex_report before A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
+		}
 		A_perm->Strong_gens->export_to_orbiter_as_bsgs(
 				A_perm,
 				fname, label, label_tex,
 				verbose_level);
+		if (f_v) {
+			cout << "object_with_properties::latex_report after A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
+		}
 	}
 
 
@@ -318,12 +332,25 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 
 	if (Report_options->f_export_flag_orbits) {
+		if (f_v) {
+			cout << "object_with_properties::latex_report before export_INP_with_flag_orbits" << endl;
+		}
 		export_INP_with_flag_orbits(ost,
 				Sch,
 				verbose_level);
+		if (f_v) {
+			cout << "object_with_properties::latex_report after export_INP_with_flag_orbits" << endl;
+		}
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report before export_TDA_with_flag_orbits" << endl;
+		}
 		export_TDA_with_flag_orbits(ost,
 				Sch,
 				verbose_level);
+		if (f_v) {
+			cout << "object_with_properties::latex_report after export_TDA_with_flag_orbits" << endl;
+		}
 	}
 
 	if (Report_options->f_show_TDO) {
@@ -356,7 +383,13 @@ void object_with_properties::latex_report(std::ostream &ost,
 	combinatorics::encoded_combinatorial_object *Enc;
 	combinatorics::encoded_combinatorial_object *Enc2;
 
+	if (f_v) {
+		cout << "object_with_properties::latex_report before OwCF->encode_incma" << endl;
+	}
 	OwCF->encode_incma(Enc, verbose_level);
+	if (f_v) {
+		cout << "object_with_properties::latex_report after OwCF->encode_incma" << endl;
+	}
 
 
 	Enc2 = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
@@ -513,6 +546,11 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 void object_with_properties::compute_TDO(int max_TDO_depth, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_properties::compute_TDO" << endl;
+	}
 	combinatorics::encoded_combinatorial_object *Enc;
 
 	OwCF->encode_incma(Enc, verbose_level);
@@ -527,6 +565,9 @@ void object_with_properties::compute_TDO(int max_TDO_depth, int verbose_level)
 	//latex_TDA(ost, Enc, verbose_level);
 
 	FREE_OBJECT(Enc);
+	if (f_v) {
+		cout << "object_with_properties::compute_TDO done" << endl;
+	}
 
 }
 
@@ -552,21 +593,56 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 
 	OwCF->encode_incma(Enc, verbose_level);
 
+	file_io Fio;
+	string fname;
+
 
 	int *Inc2;
-	int *Inc_flag_orbits;
 	int i0, j0;
 	int i, j;
-	int idx;
-	int nb_orbits_on_flags;
-	int orbit_idx;
 
 	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
-	Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
 	Orbiter->Int_vec->zero(Inc2, Enc->nb_rows * Enc->nb_cols);
 
-	nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
+	if (Flags->f_flag_orbits_have_been_computed) {
+		int *Inc_flag_orbits;
+		int nb_orbits_on_flags;
+		int idx;
+		int orbit_idx;
 
+		Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
+		nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
+		for (i = 0; i < Enc->nb_rows; i++) {
+			i0 = Sch->orbit[i];
+			for (j = 0; j < Enc->nb_cols; j++) {
+				j0 = Sch->orbit[Enc->nb_rows + j] - Enc->nb_rows;
+				if (Enc->get_incidence_ij(i0, j0)) {
+					idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
+					orbit_idx = Flags->Orb->Sch->orbit_number(idx);
+					Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
+				}
+				else {
+					idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
+					orbit_idx = Anti_Flags->Orb->Sch->orbit_number(idx);
+					Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
+				}
+			}
+		}
+
+		fname.assign(label);
+		fname.append("_TDA.csv");
+
+		fname.assign(label);
+		fname.append("_TDA_flag_orbits.csv");
+
+		Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+		FREE_int(Inc_flag_orbits);
+
+	}
 
 	// +1 avoids the color white
 
@@ -574,42 +650,28 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 		i0 = Sch->orbit[i];
 		for (j = 0; j < Enc->nb_cols; j++) {
 			j0 = Sch->orbit[Enc->nb_rows + j] - Enc->nb_rows;
-			if (Enc->Incma[i0 * Enc->nb_cols + j0]) {
-				idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
-				orbit_idx = Flags->Orb->Sch->orbit_number(idx);
+			if (Enc->get_incidence_ij(i0, j0)) {
 				Inc2[i * Enc->nb_cols + j] = 1;
-				Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
 			}
 			else {
-				idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
-				orbit_idx = Anti_Flags->Orb->Sch->orbit_number(idx);
 				Inc2[i * Enc->nb_cols + j] = 0;
-				Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
 			}
 		}
+
 	}
 
-	file_io Fio;
-	string fname;
 
 	fname.assign(label);
-	fname.append("_TDA.csv");
+	fname.append("_INP.csv");
 
 	Fio.int_matrix_write_csv(fname, Inc2, Enc->nb_rows, Enc->nb_cols);
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
-	fname.assign(label);
-	fname.append("_TDA_flag_orbits.csv");
 
-	Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
 
 	FREE_int(Inc2);
-	FREE_int(Inc_flag_orbits);
 	FREE_OBJECT(Enc);
 
 	if (f_v) {
@@ -630,23 +692,66 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 
 	combinatorics::encoded_combinatorial_object *Enc;
 
+	if (f_v) {
+		cout << "object_with_properties::export_INP_with_flag_orbits before OwCF->encode_incma" << endl;
+	}
 	OwCF->encode_incma(Enc, verbose_level);
+	if (f_v) {
+		cout << "object_with_properties::export_INP_with_flag_orbits after OwCF->encode_incma" << endl;
+		cout << "object_with_properties::export_INP_with_flag_orbits Enc->nb_rows = " << Enc->nb_rows << endl;
+		cout << "object_with_properties::export_INP_with_flag_orbits Enc->nb_cols = " << Enc->nb_cols << endl;
+	}
+
+	file_io Fio;
+	string fname;
 
 
 	int *Inc2;
-	int *Inc_flag_orbits;
 	int i0, j0;
 	int i, j;
-	int idx;
-	int nb_orbits_on_flags;
-	int orbit_idx;
 
 	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
-	Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
 	Orbiter->Int_vec->zero(Inc2, Enc->nb_rows * Enc->nb_cols);
 
-	nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
+	if (Flags->f_flag_orbits_have_been_computed) {
+		int *Inc_flag_orbits;
+		int nb_orbits_on_flags;
+		int idx;
+		int orbit_idx;
 
+		Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
+		nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
+		for (i = 0; i < Enc->nb_rows; i++) {
+			i0 = i;
+			for (j = 0; j < Enc->nb_cols; j++) {
+				j0 = j;
+				if (Enc->get_incidence_ij(i0, j0)) {
+					idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
+					orbit_idx = Flags->Orb->Sch->orbit_number(idx);
+					Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
+				}
+				else {
+					idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
+					orbit_idx = Anti_Flags->Orb->Sch->orbit_number(idx);
+					Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
+				}
+			}
+		}
+
+		fname.assign(label);
+		fname.append("_INP.csv");
+
+		fname.assign(label);
+		fname.append("_INP_flag_orbits.csv");
+
+		Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+		FREE_int(Inc_flag_orbits);
+
+	}
 
 	// +1 avoids the color white
 
@@ -654,23 +759,16 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 		i0 = i;
 		for (j = 0; j < Enc->nb_cols; j++) {
 			j0 = j;
-			if (Enc->Incma[i0 * Enc->nb_cols + j0]) {
-				idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
-				orbit_idx = Flags->Orb->Sch->orbit_number(idx);
+			if (Enc->get_incidence_ij(i0, j0)) {
 				Inc2[i * Enc->nb_cols + j] = 1;
-				Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
 			}
 			else {
-				idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
-				orbit_idx = Anti_Flags->Orb->Sch->orbit_number(idx);
 				Inc2[i * Enc->nb_cols + j] = 0;
-				Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
 			}
 		}
+
 	}
 
-	file_io Fio;
-	string fname;
 
 	fname.assign(label);
 	fname.append("_INP.csv");
@@ -680,16 +778,9 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
-	fname.assign(label);
-	fname.append("_INP_flag_orbits.csv");
 
-	Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
 
 	FREE_int(Inc2);
-	FREE_int(Inc_flag_orbits);
 	FREE_OBJECT(Enc);
 
 	if (f_v) {

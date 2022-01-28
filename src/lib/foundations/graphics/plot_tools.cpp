@@ -844,6 +844,76 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 
 }
 
+void plot_tools::draw_point_set_in_plane(
+	std::string &fname,
+	layered_graph_draw_options *O,
+	projective_space *P,
+	long int *Pts, int nb_pts,
+	int f_point_labels,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int q, i;
+	int *Table;
+
+	if (f_v) {
+		cout << "plot_tools::draw_point_set_in_plane" << endl;
+	}
+	if (P->n != 2) {
+		cout << "plot_tools::draw_point_set_in_plane n != 2" << endl;
+		exit(1);
+	}
+	q = P->F->q;
+	Table = NEW_int(nb_pts * 3);
+	for (i = 0; i < nb_pts; i++) {
+		P->unrank_point(Table + i * 3, Pts[i]);
+	}
+	if (f_point_labels) {
+		char str[1000];
+		char **Labels;
+
+		Labels = NEW_pchar(nb_pts);
+		for (i = 0; i < nb_pts; i++) {
+			snprintf(str, 1000, "%ld", Pts[i]);
+			Labels[i] = NEW_char(strlen(str) + 1);
+			strcpy(Labels[i], str);
+		}
+		if (f_v) {
+			cout << "plot_tools::draw_point_set_in_plane "
+					"before projective_plane_draw_grid" << endl;
+		}
+		projective_plane_draw_grid(fname, O,
+			q, Table, nb_pts, TRUE, Labels,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "plot_tools::draw_point_set_in_plane "
+					"after projective_plane_draw_grid" << endl;
+		}
+		for (i = 0; i < nb_pts; i++) {
+			FREE_char(Labels[i]);
+		}
+		FREE_pchar(Labels);
+	}
+	else {
+		if (f_v) {
+			cout << "plot_tools::draw_point_set_in_plane "
+					"before projective_plane_draw_grid" << endl;
+		}
+		projective_plane_draw_grid(fname, O,
+			q, Table, nb_pts, FALSE, NULL,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "plot_tools::draw_point_set_in_plane "
+					"after projective_plane_draw_grid" << endl;
+		}
+	}
+	FREE_int(Table);
+	if (f_v) {
+		cout << "plot_tools::draw_point_set_in_plane done" << endl;
+	}
+}
+
+
 }}
 
 

@@ -246,7 +246,7 @@ public:
 
 	classification_of_objects();
 	~classification_of_objects();
-	void do_the_work(classification_of_objects_description *Descr,
+	void perform_classification(classification_of_objects_description *Descr,
 			int f_projective_space,
 			projective_space *P,
 			data_structures::data_input_stream *IS,
@@ -486,9 +486,14 @@ public:
 
 class encoded_combinatorial_object {
 
-public:
-
+private:
 	int *Incma;
+
+public:
+	int nb_rows0;
+	int nb_cols0;
+
+	int nb_flags;
 	int nb_rows;
 	int nb_cols;
 	int *partition;
@@ -496,7 +501,14 @@ public:
 
 	encoded_combinatorial_object();
 	~encoded_combinatorial_object();
+	void init_everything(int nb_rows, int nb_cols,
+			int *Incma, int *partition,
+			int verbose_level);
 	void init(int nb_rows, int nb_cols, int verbose_level);
+	int *get_Incma();
+	void set_incidence_ij(int i, int j);
+	int get_incidence_ij(int i, int j);
+	void set_incidence(int a);
 	void init_canonical_form(encoded_combinatorial_object *Enc,
 			data_structures::nauty_output *NO, int verbose_level);
 	void print_incma();
@@ -506,6 +518,7 @@ public:
 	void compute_canonical_form(data_structures::bitvector *&Canonical_form,
 			int *canonical_labeling, int verbose_level);
 	void incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
+	void extended_incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
 	void canonical_form_given_canonical_labeling(int *canonical_labeling,
 			data_structures::bitvector *&B,
 			int verbose_level);
@@ -523,10 +536,10 @@ public:
 	void latex_canonical_form(std::ostream &ost,
 			data_structures::nauty_output *NO,
 			int verbose_level);
-	void apply_canonical_labling(int *&Inc2,
+	void apply_canonical_labeling(int *&Inc2,
 			data_structures::nauty_output *NO);
-	void apply_canonical_labling_and_get_flags(int *&Inc2,
-			int *&Flags, int &nb_flags,
+	void apply_canonical_labeling_and_get_flags(int *&Inc2,
+			int *&Flags, int &nb_flags_counted,
 			data_structures::nauty_output *NO);
 	void latex_canonical_form_with_labels(std::ostream &ost,
 			data_structures::nauty_output *NO,

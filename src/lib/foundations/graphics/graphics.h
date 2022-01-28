@@ -985,7 +985,6 @@ public:
 		int f_circle, int circle_at, int circle_rad,
 		int f_mu, int f_sigma, int nb_standard_deviations,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
-		//int xmax, int ymax,
 		int offset_x,
 		int f_switch_x, int no, int f_embedded,
 		int verbose_level);
@@ -996,7 +995,6 @@ public:
 		int f_title, const char *title, int out_of,
 		const char *label_x,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
-		//int xmax, int ymax,
 		int offset_x, int f_switch_x,
 		int f_v_logarithmic, double log_base, int no, int f_embedded,
 		int verbose_level);
@@ -1019,6 +1017,13 @@ public:
 			layered_graph_draw_options *O,
 			draw_mod_n_description *Descr,
 			int verbose_level);
+	void draw_point_set_in_plane(
+		std::string &fname,
+		layered_graph_draw_options *O,
+		projective_space *P,
+		long int *Pts, int nb_pts,
+		int f_point_labels,
+		int verbose_level);
 
 };
 

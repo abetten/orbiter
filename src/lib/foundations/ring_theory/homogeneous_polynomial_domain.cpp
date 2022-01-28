@@ -193,13 +193,13 @@ void homogeneous_polynomial_domain::init(field_theory::finite_field *F,
 
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::init before P->init" << endl;
+		cout << "homogeneous_polynomial_domain::init before P->projective_space_init" << endl;
 	}
-	P->init(nb_variables - 1, F,
+	P->projective_space_init(nb_variables - 1, F,
 		f_init_incidence_structure, 
 		verbose_level);
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::init after P->init" << endl;
+		cout << "homogeneous_polynomial_domain::init after P->projective_space_init" << endl;
 	}
 	base_cols = NEW_int(nb_monomials);
 	

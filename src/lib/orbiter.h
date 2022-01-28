@@ -29,7 +29,8 @@
  *
  * \section team_sec Orbiter Team members
  *
- * Anton Betten, Abdullah AlAzemi, Fatma Karaoglu, Sajeeb Chowdhury, and many more.
+ * Anton Betten, Abdullah AlAzemi, Fatma Karaoglu, Sajeeb Chowdhury. Many contributors not listed here.
+ *
  *
  *
  */

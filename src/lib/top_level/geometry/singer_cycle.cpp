@@ -228,7 +228,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 	P = NEW_OBJECT(projective_space);
 
-	P->init(n - 1, F, 
+	P->projective_space_init(n - 1, F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level);
 

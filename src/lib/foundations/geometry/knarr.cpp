@@ -168,7 +168,7 @@ void knarr::init(field_theory::finite_field *F, int BLT_no, int verbose_level)
 	P5 = NEW_OBJECT(projective_space);
 
 	W->init(F, verbose_level - 1);
-	P5->init(5, F, 
+	P5->projective_space_init(5, F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 

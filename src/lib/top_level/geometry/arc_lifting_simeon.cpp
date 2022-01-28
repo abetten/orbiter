@@ -121,7 +121,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 
 	P = NEW_OBJECT(projective_space);
 
-	P->init(n /* n */,
+	P->projective_space_init(n /* n */,
 		F /* finite_field *F*/,
 		TRUE /* f_init_incidence_structure */,
 		0 /* verbose_level */);
