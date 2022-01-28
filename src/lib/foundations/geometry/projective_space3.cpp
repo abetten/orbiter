@@ -376,6 +376,105 @@ void projective_space::create_ovoid(
 	}
 }
 
+void projective_space::create_ovoid_ST(
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
+	int verbose_level)
+// Suzuki Tits ovoid in PG(3,2^(2r+1)),
+// following Heinz Lueneburg: Translation planes, 1980, Chapter IV
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::create_ovoid_ST" << endl;
+	}
+	int i, d, x, y, z, r, sigma, sigma_plus_two;
+	long int a;
+	int v[4];
+	number_theory::number_theory_domain NT;
+
+	if (EVEN(F->e)) {
+		cout << "projective_space::create_ovoid_ST need odd field degree" << endl;
+		exit(1);
+	}
+	if (F->p != 2) {
+		cout << "projective_space::create_ovoid_ST F->p != 2" << endl;
+		exit(1);
+	}
+	if (n != 3) {
+		cout << "projective_space::create_ovoid_ST need n == 3" << endl;
+		exit(1);
+	}
+
+	r = (F->e - 1) >> 1;
+
+	sigma = NT.i_power_j(2, r + 1);
+	sigma_plus_two = sigma + 2;
+
+
+	if (f_v) {
+		cout << "projective_space::create_ovoid_ST r = " << r << endl;
+		cout << "projective_space::create_ovoid_ST sigma = " << sigma << endl;
+		cout << "projective_space::create_ovoid_ST sigma_plus_two = " << sigma_plus_two << endl;
+	}
+
+	d = n + 1;
+
+	nb_pts = F->q * F->q + 1;
+
+	Pts = NEW_lint(nb_pts);
+
+	if (f_v) {
+		cout << "i : point : projective rank" << endl;
+	}
+	i = 0;
+	Pts[i++] = 1; // (0,1,0,0)
+	for (x = 0; x < F->q; x++) {
+		for (y = 0; y < F->q; y++) {
+
+			z = F->add3(F->mult(x, y), F->power(x, sigma_plus_two), F->power(y, sigma));
+
+			v[0] = 1;
+			v[1] = z;
+			v[2] = x;
+			v[3] = y;
+
+			a = rank_point(v);
+			Pts[i++] = a;
+		}
+	}
+
+	if (i != nb_pts) {
+		cout << "projective_space::create_ovoid_ST i != nb_pts" << endl;
+	}
+	if (f_v) {
+		for (i = 0; i < nb_pts; i++) {
+			cout << setw(4) << i << " : ";
+			a = Pts[i];
+			unrank_point(v, a);
+			Orbiter->Int_vec->print(cout, v, d);
+			cout << " : " << setw(5) << a << endl;
+		}
+	}
+
+	char str[1000];
+	char str2[1000];
+
+	sprintf(str, "_q%d", q);
+	sprintf(str2, "\\_q%d", q);
+
+
+	label_txt.assign("ovoid_ST");
+	label_txt.append(str);
+	label_tex.assign("ovoid\\_ST");
+	label_tex.append(str2);
+
+	if (f_v) {
+		cout << "projective_space::create_ovoid_ST done" << endl;
+	}
+}
+
 void projective_space::create_cuspidal_cubic(
 		std::string &label_txt,
 		std::string &label_tex,
@@ -583,7 +682,7 @@ void projective_space::create_elliptic_curve(
 	//int n = 2;
 	long int i, a, d;
 	int *v;
-	elliptic_curve *E;
+	number_theory::elliptic_curve *E;
 
 	if (n != 2) {
 		cout << "projective_space::create_elliptic_curve n != 2" << endl;
@@ -593,7 +692,7 @@ void projective_space::create_elliptic_curve(
 
 	nb_pts = q + 1;
 
-	E = NEW_OBJECT(elliptic_curve);
+	E = NEW_OBJECT(number_theory::elliptic_curve);
 	v = NEW_int(n + 1);
 	Pts = NEW_lint(N_points);
 
@@ -779,40 +878,6 @@ void projective_space::create_hyperplane(
 	}
 }
 
-void projective_space::create_Maruta_Hamada_arc(
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int N;
-
-	if (f_v) {
-		cout << "projective_space::create_Maruta_Hamada_arc" << endl;
-	}
-	if (n != 2) {
-		cout << "projective_space::create_Maruta_Hamada_arc n != 2" << endl;
-		exit(1);
-	}
-
-	N = N_points;
-	Pts = NEW_lint(N);
-
-	Arc_in_projective_space->create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
-
-	char str[1000];
-	char str2[1000];
-	sprintf(str, "Maruta_Hamada_arc2_q%d", q);
-	sprintf(str2, "Maruta\\_Hamada\\_arc2\\_q%d", q);
-	label_txt.assign(str);
-	label_tex.assign(str);
-
-	//FREE_int(Pts);
-	if (f_v) {
-		cout << "projective_space::create_Maruta_Hamada_arc done" << endl;
-	}
-}
 
 
 

@@ -3442,6 +3442,30 @@ octic_prepare:
 
 
 
+ovoid_q8:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space 3 F -end \
+		-define O -geometric_object P \
+			-ovoid \
+		-end \
+		-with O -do -combinatorial_object_activity -save \
+		-end
+
+#ovoid_q8.txt
+# 65 points
+
+ovoid_ST_q8:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space 3 F -end \
+		-define O -geometric_object P \
+			-ovoid_ST \
+		-end \
+		-with O -do -combinatorial_object_activity -save \
+		-end
+
+#ovoid_ST_q8.txt
 
 ###############################################################################
 # Section 4.6: The Klein Quadric and Pluecker coordinates
@@ -13683,6 +13707,22 @@ HJ_d2_graph:
 			-distance_2 \
 		-end
 
+
+
+Cayley_Z11_1mod3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define S -vector -dense "1,1, 1,4, 1,7, 1,10" -end \
+		-define G -linear_group -AGL 1 F \
+			-subgroup_by_generators "Z11" 11 1 "1,1" \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end 
+
+
+
+
 ###############################################################################
 # Section 12.2: Graphs Theoretic Activities
 
@@ -13752,6 +13792,29 @@ Paley_13_eigenvalues:
 		-graph_theoretic_activity -eigenvalues -end
 	pdflatex Paley_13_eigenvalues.tex
 	open Paley_13_eigenvalues.pdf
+
+
+
+Cayley_Z11_1mod3_eigenvalues_and_draw:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-define F -finite_field -q 11 -end \
+		-define S -vector -dense "1,1, 1,4, 1,7, 1,10" -end \
+		-define G -linear_group -AGL 1 F \
+			-subgroup_by_generators "Z11" 11 1 "1,1" \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -draw -end
+	pdflatex Cayley_graph_AGL_1_11_eigenvalues.tex
+	open Cayley_graph_AGL_1_11_eigenvalues.pdf
+	pdflatex Cayley_graph_AGL_1_11_draw.tex
+	open Cayley_graph_AGL_1_11_draw.pdf
+
 
 
 small_graph_draw:
@@ -14239,7 +14302,7 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 
 
 Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
-	$(ORBITER_PATH)orbiter.out -v 40 \
+	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define C -combinatorial_objects \
 			-file_of_points Hirschfeld_surface_q4.txt \
 		-end \
@@ -14253,7 +14316,12 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 				-max_TDO_depth 10 \
 			-end \
 			-report \
+				-prefix Hirschfeld_surface_q4 \
+				-export_flag_orbits \
 				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
 			-end \
 		-end
 	pdflatex Hirschfeld_surface_q4_classification.tex
@@ -14430,8 +14498,90 @@ F_alpha_beta_gamma_delta_classify_q7_nauty: F_alpha_beta_gamma_delta_q7_points.t
 
 
 
+ovoid_q8_canon: ovoid_q8.txt
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define C -combinatorial_objects \
+			-file_of_points ovoid_q8.txt \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix ovoid \
+				-label ovoid \
+				-save_ago \
+				-max_TDO_depth 4 \
+			-end \
+			-report \
+				-prefix ovoid \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex ovoid_classification.tex
+	open ovoid_classification.pdf
 
 
+#			-report \
+#				-prefix ovoid \
+#				-export_flag_orbits \
+#				-show_TDO \
+#				-show_TDA \
+#				-dont_show_incidence_matrices \
+#				-export_group \
+#			-end \
+
+
+ovoid_ST_q8_canon: ovoid_ST_q8.txt
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define C -combinatorial_objects \
+			-file_of_points ovoid_ST_q8.txt \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix ovoid_ST \
+				-label ovoid_ST \
+				-save_ago \
+				-max_TDO_depth 4 \
+			-end \
+			-report \
+				-prefix ovoid_ST \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex ovoid_ST_classification.tex
+	open ovoid_ST_classification.pdf
+
+# group order 87360 = 3 * 29120
+SUZUKI_8_GENERATORS="\
+1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, \
+1,0,0,0,0,6,0,0,0,0,2,0,0,0,0,3,0, \
+1,0,0,0,1,1,1,0,0,0,1,0,1,0,0,1,0, \
+1,0,0,0,3,6,2,2,5,0,2,0,3,0,6,3,2, \
+0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,2"
+
+Suzuki_8:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define F -finite_field -q 8 -end \
+		-define gens -vector -field F -compact $(SUZUKI_8_GENERATORS) -end \
+		-define G -linear_group -PGGL 4 8 \
+		-subgroup_by_generators "Sz8" "87360" 5 gens \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGGL_4_8_Subgroup_Sz8_87360_report.tex
+	open PGGL_4_8_Subgroup_Sz8_87360_report.pdf
 
 
 ###############################################################################

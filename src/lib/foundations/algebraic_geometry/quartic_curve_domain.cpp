@@ -52,13 +52,13 @@ void quartic_curve_domain::init(field_theory::finite_field *F, int verbose_level
 
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
-		cout << "quartic_curve_domain::init before P->init" << endl;
+		cout << "quartic_curve_domain::init before P->projective_space_init" << endl;
 	}
-	P->init(2, F,
+	P->projective_space_init(2, F,
 		TRUE /*f_init_incidence_structure */,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "quartic_curve_domain::init after P->init" << endl;
+		cout << "quartic_curve_domain::init after P->projective_space_init" << endl;
 	}
 
 

@@ -355,15 +355,15 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		CO = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS before CO->do_the_work" << endl;
+			cout << "combinatorial_object_activity::perform_activity_IS before CO->perform_classification" << endl;
 		}
-		CO->do_the_work(
+		CO->perform_classification(
 				Descr->Canonical_form_PG_Descr,
 				TRUE /* f_projective_space */, PA->P,
 				IS,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS after CO->do_the_work" << endl;
+			cout << "combinatorial_object_activity::perform_activity_IS after CO->perform_classification" << endl;
 		}
 
 
@@ -414,15 +414,15 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		CO = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS before CO->do_the_work" << endl;
+			cout << "combinatorial_object_activity::perform_activity_IS before CO->perform_classification" << endl;
 		}
-		CO->do_the_work(
+		CO->perform_classification(
 				Descr->Canonical_form_Descr,
 				FALSE /* f_projective_space */, NULL /* P */,
 				IS,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS after CO->do_the_work" << endl;
+			cout << "combinatorial_object_activity::perform_activity_IS after CO->perform_classification" << endl;
 		}
 
 
@@ -986,15 +986,19 @@ void combinatorial_object_activity::report_isomorphism_type(
 	}
 
 
-	//OwCF = CO->OWCF_transversal[i];
 
-
+	if (f_v) {
+		cout << "combinatorial_object_activity::report_isomorphism_type i=" << i << " before report_object" << endl;
+	}
 	report_object(fp,
 			Report_options,
 			CO,
 			OwP,
 			i /* object_idx */,
 			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_activity::report_isomorphism_type i=" << i << " after report_object" << endl;
+	}
 
 
 

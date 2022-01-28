@@ -45,6 +45,69 @@ public:
 };
 
 
+// #############################################################################
+// elliptic_curve.cpp
+// #############################################################################
+
+
+
+//! a fixed elliptic curve in Weierstrass form
+
+
+
+class elliptic_curve {
+
+public:
+	int q;
+	int p;
+	int e;
+	int b, c; // the equation of the curve is Y^2 = X^3 + bX + c mod p
+	int nb; // number of points
+	int *T; // [nb * 3] point coordinates
+		// the point at infinity is last
+	int *A; // [nb * nb] addition table
+	field_theory::finite_field *F;
+
+
+	elliptic_curve();
+	~elliptic_curve();
+	void null();
+	void freeself();
+	void init(field_theory::finite_field *F, int b, int c, int verbose_level);
+	void compute_points(int verbose_level);
+	void add_point_to_table(int x, int y, int z);
+	int evaluate_RHS(int x);
+		// evaluates x^3 + bx + c
+	void print_points();
+	void print_points_affine();
+	void addition(
+		int x1, int y1, int z1,
+		int x2, int y2, int z2,
+		int &x3, int &y3, int &z3, int verbose_level);
+	void save_incidence_matrix(std::string &fname, int verbose_level);
+	void draw_grid(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			int f_with_grid, int f_with_points, int point_density,
+			int f_path, int start_idx, int nb_steps,
+			int verbose_level);
+	void draw_grid2(mp_graphics &G,
+			int f_with_grid, int f_with_points, int point_density,
+			int f_path, int start_idx, int nb_steps,
+			int verbose_level);
+	void make_affine_point(int x1, int x2, int x3,
+		int &a, int &b, int verbose_level);
+	void compute_addition_table(int verbose_level);
+	void print_addition_table();
+	int index_of_point(int x1, int x2, int x3);
+	void latex_points_with_order(std::ostream &ost);
+	void latex_order_of_all_points(std::ostream &ost);
+	void order_of_all_points(std::vector<int> &Ord);
+	int order_of_point(int i);
+	void print_all_powers(int i);
+};
+
+
 
 // #############################################################################
 // number_theoretic_transform.cpp:

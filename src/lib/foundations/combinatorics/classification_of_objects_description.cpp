@@ -128,10 +128,10 @@ void classification_of_objects_description::print()
 {
 
 	if (f_label) {
-		cout << "-label" << label << endl;
+		cout << "-label " << label << endl;
 	}
 	if (f_save_classification) {
-		cout << "-save_classification" << save_prefix << endl;
+		cout << "-save_classification " << save_prefix << endl;
 	}
 
 	if (f_max_TDO_depth) {

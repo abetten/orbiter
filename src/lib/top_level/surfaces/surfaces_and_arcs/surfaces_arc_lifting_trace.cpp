@@ -767,11 +767,14 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 		}
 	}
 
+
+	geometry_global Gg;
+
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
 				"before hyperplane_lifting_with_two_lines_moved" << endl;
 	}
-	Up->Lift->Surf_A->Surf->P->hyperplane_lifting_with_two_lines_moved(
+	Gg.hyperplane_lifting_with_two_lines_moved(Up->Lift->Surf_A->Surf->P,
 			The_case.L1 /* line1_from */, line1_to,
 			The_case.L2 /* line2_from */, line2_to,
 			beta3,

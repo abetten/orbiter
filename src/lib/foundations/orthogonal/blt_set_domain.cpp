@@ -144,16 +144,16 @@ void blt_set_domain::init(orthogonal *O,
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
-		cout << "blt_set_domain::init before P->init" << endl;
+		cout << "blt_set_domain::init before P->projective_space_init" << endl;
 	}
 
 
-	P->init(4, F,
+	P->projective_space_init(4, F,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
 
 	if (f_v) {
-		cout << "blt_set_domain::init after P->init" << endl;
+		cout << "blt_set_domain::init after P->projective_space_init" << endl;
 	}
 
 

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace number_theory {
 
 
 
@@ -962,8 +963,7 @@ void elliptic_curve::print_all_powers(int i)
 	}
 }
 
-}
-}
+}}}
 
 
 

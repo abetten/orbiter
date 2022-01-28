@@ -1057,7 +1057,7 @@ void finite_field::do_blocking_set_family_3(int n,
 	}
 	P = NEW_OBJECT(projective_space);
 
-	P->init(n, this,
+	P->projective_space_init(n, this,
 		FALSE /* f_init_incidence_structure */,
 		0 /* verbose_level - 2 */);
 
@@ -1273,7 +1273,7 @@ void finite_field::create_Baer_substructure(int n,
 	//Q = q * q;
 	P2 = NEW_OBJECT(projective_space);
 
-	P2->init(n, this,
+	P2->projective_space_init(n, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
 
@@ -1594,7 +1594,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	P = NEW_OBJECT(projective_space);
 
 
-	P->init(d - 1, Fq,
+	P->projective_space_init(d - 1, Fq,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 	nb_pts = n;
@@ -1694,13 +1694,13 @@ void finite_field::create_segre_variety(int a, int b,
 	v2 = NEW_int(b + 1);
 	v3 = NEW_int(d);
 
-	P1->init(a, this,
+	P1->projective_space_init(a, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	P2->init(b, this,
+	P2->projective_space_init(b, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	P3->init(d - 1, this,
+	P3->projective_space_init(d - 1, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
@@ -1767,11 +1767,11 @@ void finite_field::do_andre(finite_field *Fq,
 	P4 = NEW_OBJECT(projective_space);
 
 
-	P2->init(2, this,
+	P2->projective_space_init(2, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
-	P4->init(4, Fq,
+	P4->projective_space_init(4, Fq,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 

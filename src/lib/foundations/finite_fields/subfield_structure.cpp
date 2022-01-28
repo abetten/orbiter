@@ -543,7 +543,7 @@ void subfield_structure::create_adelaide_hyperoval(
 		P = NEW_OBJECT(projective_space);
 
 
-		P->init(n, F,
+		P->projective_space_init(n, F,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 		cout << "i : point : projective rank" << endl;

@@ -338,7 +338,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 	}
 	P3 = NEW_OBJECT(projective_space);
 	
-	P3->init(3, F,
+	P3->projective_space_init(3, F,
 		TRUE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
@@ -349,7 +349,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 
 	P5 = NEW_OBJECT(projective_space);
 
-	P5->init(5, F,
+	P5->projective_space_init(5, F,
 		TRUE /* f_init_incidence_structure */,
 		0 /* verbose_level - 2 */);
 

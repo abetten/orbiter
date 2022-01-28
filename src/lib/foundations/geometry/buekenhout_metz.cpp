@@ -173,8 +173,8 @@ void buekenhout_metz::init(
 	P3 = NEW_OBJECT(projective_space);
 	
 
-	P2->init(2, FQ, TRUE, verbose_level);
-	P3->init(3, Fq, TRUE, verbose_level);
+	P2->projective_space_init(2, FQ, TRUE, verbose_level);
+	P3->projective_space_init(3, Fq, TRUE, verbose_level);
 
 
 	

@@ -112,7 +112,6 @@ MODULES= \
 		foundations/geometry/buekenhout_metz.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \
-		foundations/geometry/elliptic_curve.o \
 		foundations/geometry/flag.o \
 		foundations/geometry/geometric_object_create.o \
 		foundations/geometry/geometric_object_description.o \
@@ -212,6 +211,7 @@ MODULES= \
 		foundations/knowledge_base/finite_field_tables.o \
 		foundations/knowledge_base/knowledge_base.o \
 		foundations/number_theory/cyclotomic_sets.o \
+		foundations/number_theory/elliptic_curve.o \
 		foundations/number_theory/number_theoretic_transform.o \
 		foundations/number_theory/number_theory_domain.o \
 		foundations/orthogonal/blt_set_domain.o \
@@ -575,3 +575,14 @@ clean:
 
 cleana:
 	- rm *.a 
+
+	
+#Abdullah
+MY_LIB = $(SRC)/lib
+refresh:
+	cd $(MY_LIB); $(MAKE) cleana
+	cd $(MY_LIB); $(MAKE) all
+	$(MAKE) clean
+	$(MAKE) all
+
+

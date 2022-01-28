@@ -113,6 +113,10 @@ public:
 	int f_load;
 	std::string fname;
 
+	int f_Cayley_graph;
+	std::string Cayley_graph_group;
+	std::string Cayley_graph_gens;
+
 	int f_load_csv_no_border;
 	int f_load_dimacs;
 
@@ -481,6 +485,7 @@ public:
 
 	int f_properties;
 	int f_eigenvalues;
+	int f_draw;
 
 
 	graph_theoretic_activity_description();

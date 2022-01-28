@@ -147,7 +147,7 @@ void projective_space::freeself()
 	}
 }
 
-void projective_space::init(int n, field_theory::finite_field *F,
+void projective_space::projective_space_init(int n, field_theory::finite_field *F,
 	int f_init_incidence_structure, 
 	int verbose_level)
 // n is projective dimension
@@ -162,7 +162,7 @@ void projective_space::init(int n, field_theory::finite_field *F,
 	projective_space::q = F->q;
 	
 	if (f_v) {
-		cout << "projective_space::init PG(" << n << "," << q << ")" << endl;
+		cout << "projective_space::projective_space_init PG(" << n << "," << q << ")" << endl;
 		cout << "f_init_incidence_structure="
 				<< f_init_incidence_structure << endl;
 	}
@@ -188,20 +188,20 @@ void projective_space::init(int n, field_theory::finite_field *F,
 	for (i = 1; i < n + 1; i++) {
 		Grass_stack[i] = NEW_OBJECT(grassmann);
 		if (f_v) {
-			cout << "projective_space::init before Grass_stack[i]->init i=" << i << endl;
+			cout << "projective_space::projective_space_init before Grass_stack[i]->init i=" << i << endl;
 		}
 		Grass_stack[i]->init(n + 1, i, F, verbose_level - 2);
 	}
 
 	if (f_v) {
-		cout << "projective_space::init computing number of "
+		cout << "projective_space::projective_space_init computing number of "
 				"subspaces of each dimension:" << endl;
 	}
 	Nb_subspaces = NEW_lint(n + 1);
 	if (n < 10) {
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
-				cout << "projective_space::init computing number of "
+				cout << "projective_space::projective_space_init computing number of "
 						"subspaces of dimension " << i + 1 << endl;
 			}
 			C.q_binomial_no_table(
@@ -220,7 +220,7 @@ void projective_space::init(int n, field_theory::finite_field *F,
 	else {
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
-				cout << "projective_space::init computing number of "
+				cout << "projective_space::projective_space_init computing number of "
 						"subspaces of dimension " << i + 1 << endl;
 				}
 			Nb_subspaces[i] = 0;
@@ -229,18 +229,18 @@ void projective_space::init(int n, field_theory::finite_field *F,
 	}
 	N_points = Nb_subspaces[0]; // generalized_binomial(n + 1, 1, q);
 	if (f_v) {
-		cout << "projective_space::init N_points=" << N_points << endl;
+		cout << "projective_space::projective_space_init N_points=" << N_points << endl;
 	}
 	N_lines = Nb_subspaces[1]; // generalized_binomial(n + 1, 2, q);
 	if (f_v) {
-		cout << "projective_space::init N_lines=" << N_lines << endl;
+		cout << "projective_space::projective_space_init N_lines=" << N_lines << endl;
 	}
 	if (f_v) {
-		cout << "projective_space::init r=" << r << endl;
+		cout << "projective_space::projective_space_init r=" << r << endl;
 	}
 	k = q + 1; // number of points on a line
 	if (f_v) {
-		cout << "projective_space::init k=" << k << endl;
+		cout << "projective_space::projective_space_init k=" << k << endl;
 	}
 
 	Arc_in_projective_space = NEW_OBJECT(arc_in_projective_space);
@@ -248,24 +248,24 @@ void projective_space::init(int n, field_theory::finite_field *F,
 
 	if (f_init_incidence_structure) {
 		if (f_v) {
-			cout << "projective_space::init calling "
+			cout << "projective_space::projective_space_init calling "
 					"init_incidence_structure" << endl;
 		}
 		init_incidence_structure(verbose_level);
 		if (f_v) {
-			cout << "projective_space::init "
+			cout << "projective_space::projective_space_init "
 					"init_incidence_structure done" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "projective_space::init we don't initialize "
+			cout << "projective_space::projective_space_init we don't initialize "
 					"the incidence structure data" << endl;
 		}
 	}
 	if (f_v) {
 		
-		cout << "projective_space::init n=" << n
+		cout << "projective_space::projective_space_init n=" << n
 				<< " q=" << q << " done" << endl;
 	}
 }
@@ -619,11 +619,6 @@ int projective_space::is_incident(int pt, int line)
 	long int rk;
 
 	if (TRUE /*incidence_bitvec == NULL*/) {
-#if 0
-		cout << "projective_space::is_incident "
-				"incidence_bitvec == 0" << endl;
-		exit(1);
-#endif
 		Grass_lines->unrank_lint(line, 0/*verbose_level - 4*/);
 
 		if (f_v) {
@@ -1093,55 +1088,6 @@ int projective_space::intersection_of_two_lines(long int l1, long int l2)
 	return b;
 }
 
-int projective_space::arc_test(long int *input_pts, int nb_pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *Pts;
-	int *Mtx;
-	int set[3];
-	int ret = TRUE;
-	int h, i, N;
-	combinatorics::combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "projective_space::arc_test" << endl;
-	}
-	if (n != 2) {
-		cout << "projective_space::arc_test n != 2" << endl;
-		exit(1);
-	}
-	Pts = NEW_int(nb_pts * 3);
-	Mtx = NEW_int(3 * 3);
-	for (i = 0; i < nb_pts; i++) {
-		unrank_point(Pts + i * 3, input_pts[i]);
-	}
-	if (f_v) {
-		cout << "projective_space::arc_test Pts=" << endl;
-		Orbiter->Int_vec->matrix_print(Pts, nb_pts, 3);
-	}
-	N = Combi.int_n_choose_k(nb_pts, 3);
-	for (h = 0; h < N; h++) {
-		Combi.unrank_k_subset(h, set, nb_pts, 3);
-		Orbiter->Int_vec->copy(Pts + set[0] * 3, Mtx, 3);
-		Orbiter->Int_vec->copy(Pts + set[1] * 3, Mtx + 3, 3);
-		Orbiter->Int_vec->copy(Pts + set[2] * 3, Mtx + 6, 3);
-		if (F->Linear_algebra->rank_of_matrix(Mtx, 3, 0 /* verbose_level */) < 3) {
-			if (f_v) {
-				cout << "Points P_" << set[0] << ", P_" << set[1]
-					<< " and P_" << set[2] << " are collinear" << endl;
-			}
-			ret = FALSE;
-		}
-	}
-
-	FREE_int(Pts);
-	FREE_int(Mtx);
-	if (f_v) {
-		cout << "projective_space::arc_test done" << endl;
-	}
-	return ret;
-}
 
 int projective_space::determine_line_in_plane(
 	long int *two_input_pts,
@@ -1221,6 +1167,7 @@ int projective_space::determine_line_in_plane(
 	return TRUE;
 }
 
+
 int projective_space::nonconical_six_arc_get_nb_Eckardt_points(
 		long int *Arc6, int verbose_level)
 {
@@ -1229,13 +1176,12 @@ int projective_space::nonconical_six_arc_get_nb_Eckardt_points(
 	if (f_v) {
 		cout << "projective_space::nonconical_six_arc_get_nb_Eckardt_points" << endl;
 	}
+
+	geometry_global Gg;
 	algebraic_geometry::eckardt_point_info *E;
 	int nb_E;
-	algebraic_geometry::surface_domain *Surf = NULL;
 
-	E = compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
-
-
+	E = Gg.compute_eckardt_point_info(this, Arc6, 0/*verbose_level*/);
 
 	nb_E = E->nb_E;
 
@@ -1243,39 +1189,6 @@ int projective_space::nonconical_six_arc_get_nb_Eckardt_points(
 	return nb_E;
 }
 
-int projective_space::test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
-		long int *S, int len, int pt, int nb_E, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
-	long int Arc6[6];
-
-	if (f_v) {
-		cout << "projective_space::test_nb_Eckardt_points" << endl;
-	}
-	if (len != 5) {
-		return TRUE;
-	}
-
-	Orbiter->Lint_vec->copy(S, Arc6, 5);
-	Arc6[5] = pt;
-
-	algebraic_geometry::eckardt_point_info *E;
-
-	E = compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
-
-
-	if (E->nb_E != nb_E) {
-		ret = FALSE;
-	}
-
-	FREE_OBJECT(E);
-
-	if (f_v) {
-		cout << "projective_space::test_nb_Eckardt_points done" << endl;
-	}
-	return ret;
-}
 
 
 int projective_space::conic_test(long int *S, int len, int pt, int verbose_level)
@@ -1376,7 +1289,7 @@ int projective_space::determine_conic_in_plane(
 		exit(1);
 	}
 
-	if (!arc_test(input_pts, nb_pts, verbose_level)) {
+	if (!Arc_in_projective_space->arc_test(input_pts, nb_pts, verbose_level)) {
 		if (f_v) {
 			cout << "projective_space::determine_conic_in_plane "
 					"some 3 of the points are collinear" << endl;
@@ -1894,105 +1807,7 @@ void projective_space::find_tangent_lines_to_conic(
 	}
 }
 
-void projective_space::compute_bisecants_and_conics(
-	long int *arc6,
-	int *&bisecants, int *&conics, int verbose_level)
-// bisecants[15 * 3]
-// conics[6 * 6]
-{
-	int f_v = (verbose_level >= 1);
-	long int i, j, h, pi, pj, Line[2];
-	long int arc5[5];
-	int six_coeffs[6];
 
-	if (f_v) {
-		cout << "projective_space::compute_bisecants_and_conics" << endl;
-	}
-	bisecants = NEW_int(15 * 3);
-	conics = NEW_int(6 * 6);
-	
-	h = 0;
-	for (i = 0; i < 6; i++) {
-		pi = arc6[i];
-		for (j = i + 1; j < 6; j++, h++) {
-			pj = arc6[j];
-			Line[0] = pi;
-			Line[1] = pj;
-			determine_line_in_plane(Line, 
-				bisecants + h * 3, 
-				0 /* verbose_level */);
-			F->PG_element_normalize_from_front(
-				bisecants + h * 3, 1, 3);
-		}
-	}
-	if (f_v) {
-		cout << "projective_space::compute_bisecants_and_conics "
-				"bisecants:" << endl;
-		Orbiter->Int_vec->matrix_print(bisecants, 15, 3);
-	}
-
-	for (j = 0; j < 6; j++) {
-		//int deleted_point;
-		
-		//deleted_point = arc6[j];
-		Orbiter->Lint_vec->copy(arc6, arc5, j);
-		Orbiter->Lint_vec->copy(arc6 + j + 1, arc5 + j, 5 - j);
-
-#if 0
-		cout << "deleting point " << j << " / 6:";
-		int_vec_print(cout, arc5, 5);
-		cout << endl;
-#endif
-
-		determine_conic_in_plane(arc5, 5,
-				six_coeffs, 0 /* verbose_level */);
-		F->PG_element_normalize_from_front(six_coeffs, 1, 6);
-		Orbiter->Int_vec->copy(six_coeffs, conics + j * 6, 6);
-	}
-
-	if (f_v) {
-		cout << "projective_space::compute_bisecants_and_conics "
-				"conics:" << endl;
-		Orbiter->Int_vec->matrix_print(conics, 6, 6);
-	}
-
-	if (f_v) {
-		cout << "projective_space::compute_bisecants_and_conics "
-				"done" << endl;
-	}
-}
-
-algebraic_geometry::eckardt_point_info *projective_space::compute_eckardt_point_info(
-	algebraic_geometry::surface_domain *Surf, long int *arc6,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	algebraic_geometry::eckardt_point_info *E;
-	
-	if (f_v) {
-		cout << "projective_space::compute_eckardt_point_info" << endl;
-	}
-	if (n != 2) {
-		cout << "projective_space::compute_eckardt_point_info "
-				"n != 2" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "arc: ";
-		Orbiter->Lint_vec->print(cout, arc6, 6);
-		cout << endl;
-	}
-
-	E = NEW_OBJECT(algebraic_geometry::eckardt_point_info);
-	E->init(Surf, this, arc6, verbose_level);
-
-	if (f_v) {
-		cout << "projective_space::compute_eckardt_point_info done" << endl;
-	}
-	return E;
-}
 
 
 
@@ -3247,7 +3062,6 @@ void projective_space::report(ostream &ost,
 		char str[1000];
 		long int *set;
 		int i;
-		//int rad = 17000;
 
 		set = NEW_lint(N_points);
 		for (i = 0; i < N_points; i++) {
@@ -3256,13 +3070,13 @@ void projective_space::report(ostream &ost,
 		sprintf(str, "plane_of_order_%d", q);
 		fname_base.assign(str);
 
-		draw_point_set_in_plane(fname_base,
+		plot_tools Pt;
+
+		Pt.draw_point_set_in_plane(fname_base,
 				O,
+				this,
 				set, N_points,
 				TRUE /*f_point_labels*/,
-				//FALSE /*f_embedded*/,
-				//FALSE /*f_sideways*/,
-				//rad,
 				verbose_level);
 		FREE_lint(set);
 		ost << "{\\scriptsize" << endl;

@@ -80,7 +80,7 @@ classification_of_objects::~classification_of_objects()
 	}
 }
 
-void classification_of_objects::do_the_work(
+void classification_of_objects::perform_classification(
 		classification_of_objects_description *Descr,
 		int f_projective_space,
 		projective_space *P,
@@ -91,7 +91,7 @@ void classification_of_objects::do_the_work(
 
 
 	if (f_v) {
-		cout << "classification_of_objects::do_the_work f_projective_space=" << f_projective_space << endl;
+		cout << "classification_of_objects::perform_classification f_projective_space=" << f_projective_space << endl;
 	}
 
 	classification_of_objects::f_projective_space = f_projective_space;
@@ -108,19 +108,19 @@ void classification_of_objects::do_the_work(
 
 
 	if (f_v) {
-		cout << "classification_of_objects::do_the_work "
+		cout << "classification_of_objects::perform_classification "
 				"before classify_objects_using_nauty" << endl;
 	}
 
 	classify_objects_using_nauty(verbose_level - 1);
 
 	if (f_v) {
-		cout << "classification_of_objects::do_the_work "
+		cout << "classification_of_objects::perform_classification "
 			"after classify_objects_using_nauty" << endl;
 	}
 
 
-	cout << "classification_of_objects::do_the_work We found "
+	cout << "classification_of_objects::perform_classification We found "
 			<< CB->nb_types << " types" << endl;
 
 
@@ -129,7 +129,7 @@ void classification_of_objects::do_the_work(
 
 
 	if (f_v) {
-		cout << "classification_of_objects::do_the_work done" << endl;
+		cout << "classification_of_objects::perform_classification done" << endl;
 	}
 
 
@@ -389,8 +389,6 @@ void classification_of_objects::process_any_object(object_with_canonical_form *O
 		cout << "classification_of_objects::process_any_object "
 				"input_idx=" << input_idx << " / " << IS->nb_objects_to_test << endl;
 	}
-	//strong_generators *SG; // if f_projective
-	//action *A_perm;  // otherwise
 
 	if (f_v) {
 		cout << "classification_of_objects::process_any_object "
@@ -400,7 +398,6 @@ void classification_of_objects::process_any_object(object_with_canonical_form *O
 
 	f_reject = process_object(
 			OwCF,
-			//SG, A_perm,
 			ago,
 			iso_idx_if_found,
 			NO,
@@ -478,7 +475,6 @@ void classification_of_objects::process_any_object(object_with_canonical_form *O
 
 int classification_of_objects::process_object(
 	object_with_canonical_form *OwCF,
-	//strong_generators *&SG, action *&A_perm,
 	long int &ago,
 	int &iso_idx_if_found,
 	data_structures::nauty_output *&NO,

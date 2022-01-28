@@ -202,9 +202,7 @@ void surfaces_arc_lifting::init(
 	Six_arcs->init(
 		Descr,
 		Surf_A->PA->PA2,
-		//A3,
-		//Surf->P2,
-		f_test_nb_Eckardt_points, nb_E, Surf,
+		f_test_nb_Eckardt_points, nb_E, //Surf,
 		verbose_level - 2);
 
 
@@ -495,6 +493,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	combinatorics::combinatorics_domain Combi;
+	geometry_global Gg;
 
 
 	if (f_v) {
@@ -677,9 +676,10 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				cout << endl;
 			}
 
+
 			P0 = Arc6[p0];
 			P1 = Arc6[p1];
-			Surf->P->rearrange_arc_for_lifting(Arc6,
+			Gg.rearrange_arc_for_lifting(Arc6,
 					P0, P1, partition_rk, Arc6_rearranged,
 					verbose_level - 2);
 			if (f_v) {
@@ -689,7 +689,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				cout << endl;
 			}
 
-			Surf->P->find_two_lines_for_arc_lifting(
+			Gg.find_two_lines_for_arc_lifting(Surf->P,
 					P0, P1, line1, line2,
 					verbose_level - 2);
 			if (f_v) {

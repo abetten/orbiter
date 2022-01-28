@@ -82,6 +82,125 @@ void create_graph::init(
 		label_tex.append(label);
 
 	}
+
+	else if (description->f_Cayley_graph) {
+		if (f_v) {
+			cout << "create_graph::init f_Cayley_graph" << endl;
+		}
+
+		if (f_v) {
+			cout << "create_graph::init group=" << description->Cayley_graph_group << endl;
+			cout << "create_graph::init generators=" << description->Cayley_graph_gens << endl;
+		}
+
+		apps_algebra::any_group *G;
+
+		G = The_Orbiter_top_level_session->get_object_of_type_any_group(description->Cayley_graph_group);
+
+
+		groups::strong_generators *SG;
+
+		SG = G->get_strong_generators();
+
+
+		groups::sims *Sims;
+
+		//G = LG->initial_strong_gens->create_sims(verbose_level);
+		Sims = SG->create_sims(verbose_level);
+
+		cout << "group order G = " << Sims->group_order_lint() << endl;
+		cout << "group order coded element size = " << G->A_base->elt_size_in_int << endl;
+
+
+		int *v;
+		int sz;
+		int nb_gens;
+
+		Orbiter->get_int_vector_from_label(description->Cayley_graph_gens,
+				v, sz, verbose_level);
+
+		nb_gens = sz / G->A_base->elt_size_in_int;
+
+		cout << "number of generators = " << nb_gens << endl;
+
+		cout << "generators: ";
+		Orbiter->Int_vec->print(cout, v, sz);
+		cout << endl;
+
+		data_structures_groups::vector_ge *gens;
+
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		gens->init_from_data(G->A, v, nb_gens, G->A_base->elt_size_in_int, verbose_level);
+
+		cout << "generators:" << endl;
+		gens->print(cout);
+
+
+
+		int *Elt1;
+		int *Elt2;
+		ring_theory::longinteger_object go;
+		int i, h, j;
+
+		Elt1 = NEW_int(G->A_base->elt_size_in_int);
+		Elt2 = NEW_int(G->A_base->elt_size_in_int);
+		Sims->group_order(go);
+
+
+		N = go.as_lint();
+
+		Adj = NEW_int(N * N);
+		Orbiter->Int_vec->zero(Adj, N * N);
+
+		for (i = 0; i < go.as_lint(); i++) {
+
+
+			Sims->element_unrank_lint(i, Elt1);
+
+			if (f_v) {
+				cout << "Element " << setw(5) << i << " / "
+						<< go.as_int() << ":" << endl;
+				G->A->element_print(Elt1, cout);
+				cout << endl;
+				G->A->element_print_as_permutation(Elt1, cout);
+				cout << endl;
+			}
+			for (h = 0; h < nb_gens; h++) {
+
+				G->A->element_mult(Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
+
+				j = Sims->element_rank_lint(Elt2);
+
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+
+			}
+
+
+		}
+		FREE_int(Elt1);
+		FREE_int(Elt2);
+
+
+		f_has_CG = FALSE;
+		if (f_v) {
+			cout << "create_graph::init number of vertices = " << N << endl;
+		}
+		label.assign("Cayley_graph_");
+		label.append(G->A->label);
+		if (f_v) {
+			cout << "create_graph::init label = " << label << endl;
+		}
+
+		data_structures::string_tools String;
+		String.chop_off_extension(label);
+
+		label_tex.assign("Cayley\\_graph\\_");
+		label_tex.append(G->A->label_tex);
+
+	}
+
 	else if (description->f_load_csv_no_border) {
 		if (f_v) {
 			cout << "create_graph::init f_load_from_file_csv_no_border" << endl;

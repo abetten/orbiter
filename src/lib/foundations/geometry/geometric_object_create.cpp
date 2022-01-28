@@ -184,9 +184,16 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				label_tex,
 			nb_pts, Pts,
 			verbose_level);
-
-
 	}
+	else if (Descr->f_ovoid_ST) {
+		P->create_ovoid_ST(
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
+			verbose_level);
+	}
+
+
 #if 0
 	else if (Descr->f_Baer) {
 		if (!Descr->f_n) {
@@ -344,7 +351,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			verbose_level);
 	}
 	else if (Descr->f_Maruta_Hamada_arc) {
-		P->create_Maruta_Hamada_arc(
+		P->Arc_in_projective_space->create_Maruta_Hamada_arc(
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -365,6 +372,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				label_tex,
 				nb_pts, Pts,
 				verbose_level);
+
 	}
 	else if (Descr->f_intersection_of_zariski_open_sets) {
 

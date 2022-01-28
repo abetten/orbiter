@@ -3577,6 +3577,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	int i;
 	int f_semilinear = FALSE;
 	int frobenius = 0;
+	geometry_global Gg;
 
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {
@@ -3605,9 +3606,9 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len
-					<< " before P->hyperplane_lifting_with_two_lines_fixed" << endl;
+					<< " before Gg.hyperplane_lifting_with_two_lines_fixed" << endl;
 			}
-		P->hyperplane_lifting_with_two_lines_fixed(
+		Gg.hyperplane_lifting_with_two_lines_fixed(P,
 				SG_hyperplane->gens->ith(i),
 				f_semilinear, frobenius,
 				line1, line2,
@@ -3620,7 +3621,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len
-					<< " after P->hyperplane_lifting_with_two_lines_fixed" << endl;
+					<< " after Gg.hyperplane_lifting_with_two_lines_fixed" << endl;
 			}
 		A->make_element(gens->ith(i), A4, 0);
 		if (f_v) {

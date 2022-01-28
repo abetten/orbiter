@@ -562,6 +562,22 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		delete [] E;
 
 	}
+	else if (Descr->f_draw) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity f_draw" << endl;
+		}
+
+		string fname;
+
+		fname.assign(CG->label);
+		fname.append("_draw.mp");
+
+		CG->draw_on_circle(
+				fname,
+				Orbiter->draw_options,
+				verbose_level);
+	}
 
 
 

@@ -347,7 +347,7 @@ void nauty_interface::nauty_interface_matrix_int(
 
 	for (i = 0; i < Enc->nb_rows; i++) {
 		for (j = 0; j < Enc->nb_cols; j++) {
-			if (Enc->Incma[i * Enc->nb_cols + j] == 0) {
+			if (Enc->get_incidence_ij(i, j) == 0) {
 				continue;
 			}
 			p1 = i;

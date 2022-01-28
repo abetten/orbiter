@@ -290,6 +290,17 @@ public:
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
 			int verbose_level);
+	void create_Maruta_Hamada_arc(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	int arc_test(long int *input_pts, int nb_pts,
+		int verbose_level);
+	void compute_bisecants_and_conics(long int *arc6,
+			int *&bisecants, int *&conics, int verbose_level);
+		// bisecants[15 * 3]
+		// conics[6 * 6]
 
 
 };
@@ -501,69 +512,6 @@ public:
 };
 
 // #############################################################################
-// elliptic_curve.cpp
-// #############################################################################
-
-
-
-//! a fixed elliptic curve in Weierstrass form
-
-
-
-class elliptic_curve {
-
-public:
-	int q;
-	int p;
-	int e;
-	int b, c; // the equation of the curve is Y^2 = X^3 + bX + c mod p
-	int nb; // number of points
-	int *T; // [nb * 3] point coordinates
-		// the point at infinity is last
-	int *A; // [nb * nb] addition table
-	field_theory::finite_field *F;
-
-
-	elliptic_curve();
-	~elliptic_curve();
-	void null();
-	void freeself();
-	void init(field_theory::finite_field *F, int b, int c, int verbose_level);
-	void compute_points(int verbose_level);
-	void add_point_to_table(int x, int y, int z);
-	int evaluate_RHS(int x);
-		// evaluates x^3 + bx + c
-	void print_points();
-	void print_points_affine();
-	void addition(
-		int x1, int y1, int z1,
-		int x2, int y2, int z2,
-		int &x3, int &y3, int &z3, int verbose_level);
-	void save_incidence_matrix(std::string &fname, int verbose_level);
-	void draw_grid(
-			std::string &fname,
-			layered_graph_draw_options *Draw_options,
-			int f_with_grid, int f_with_points, int point_density,
-			int f_path, int start_idx, int nb_steps,
-			int verbose_level);
-	void draw_grid2(mp_graphics &G,
-			int f_with_grid, int f_with_points, int point_density,
-			int f_path, int start_idx, int nb_steps,
-			int verbose_level);
-	void make_affine_point(int x1, int x2, int x3,
-		int &a, int &b, int verbose_level);
-	void compute_addition_table(int verbose_level);
-	void print_addition_table();
-	int index_of_point(int x1, int x2, int x3);
-	void latex_points_with_order(std::ostream &ost);
-	void latex_order_of_all_points(std::ostream &ost);
-	void order_of_all_points(std::vector<int> &Ord);
-	int order_of_point(int i);
-	void print_all_powers(int i);
-};
-
-
-// #############################################################################
 // flag.cpp
 // #############################################################################
 
@@ -677,6 +625,7 @@ public:
 #endif
 
 	int f_ovoid;
+	int f_ovoid_ST;
 
 	int f_Baer;
 
@@ -788,11 +737,14 @@ public:
 	int PG_element_modified_is_in_subspace(int n, int m, int *v);
 	void test_PG(int n, int q);
 	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
-			field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level);
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq, int verbose_level);
 	void create_Linear_BLT_set(long int *BLT, int *ABC,
-			field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level);
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq, int verbose_level);
 	void create_Mondello_BLT_set(long int *BLT, int *ABC,
-			field_theory::finite_field *FQ, field_theory::finite_field *Fq, int verbose_level);
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq, int verbose_level);
 	void print_quadratic_form_list_coded(int form_nb_terms,
 		int *form_i, int *form_j, int *form_coeff);
 	void make_Gram_matrix_from_list_coded_quadratic_form(
@@ -802,12 +754,12 @@ public:
 	void add_term(int n, field_theory::finite_field &F, int &nb_terms,
 		int *form_i, int *form_j, int *form_coeff, int *Gram,
 		int i, int j, int coeff);
-	void determine_conic(int q, std::string &override_poly, long int *input_pts,
-		int nb_pts, int verbose_level);
-	int test_if_arc(field_theory::finite_field *Fq, int *pt_coords, int *set,
-		int set_sz, int k, int verbose_level);
+	int test_if_arc(field_theory::finite_field *Fq,
+			int *pt_coords, int *set,
+			int set_sz, int k, int verbose_level);
 	void create_Buekenhout_Metz(
-			field_theory::finite_field *Fq, field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
+			field_theory::finite_field *FQ,
 		int f_classical, int f_Uab, int parameter_a, int parameter_b,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
@@ -854,11 +806,6 @@ public:
 			field_theory::finite_field *F,
 			std::string &label,
 			int verbose_level);
-#if 0
-	void do_rank_point_in_PG_given_as_pairs(field_theory::finite_field *F, int n,
-			std::string &coeff_text,
-			int verbose_level);
-#endif
 	void do_intersection_of_two_lines(field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
@@ -869,15 +816,6 @@ public:
 			std::string &line_2_basis,
 			std::string &point,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_move_two_lines_in_hyperplane_stabilizer(
-			field_theory::finite_field *F,
-			long int line1_from, long int line2_from,
-			long int line1_to, long int line2_to, int verbose_level);
-	void do_move_two_lines_in_hyperplane_stabilizer_text(
-			field_theory::finite_field *F,
-			std::string line1_from_text, std::string line2_from_text,
-			std::string line1_to_text, std::string line2_to_text,
 			int verbose_level);
 	void do_cheat_sheet_PG(field_theory::finite_field *F,
 			layered_graph_draw_options *O,
@@ -909,6 +847,36 @@ public:
 		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 		// b^2/4 + (-c)*a + -(b^2/4-ac)
 		// = b^2/4 -ac -b^2/4 + ac = 0
+	algebraic_geometry::eckardt_point_info *compute_eckardt_point_info(
+			projective_space *P2,
+		long int *arc6,
+		int verbose_level);
+	int test_nb_Eckardt_points(
+			projective_space *P2,
+			long int *S, int len, int pt, int nb_E, int verbose_level);
+	void rearrange_arc_for_lifting(
+			long int *Arc6,
+			long int P1, long int P2, int partition_rk, long int *arc,
+			int verbose_level);
+	void find_two_lines_for_arc_lifting(
+			projective_space *P,
+			long int P1, long int P2, long int &line1, long int &line2,
+			int verbose_level);
+	void hyperplane_lifting_with_two_lines_fixed(
+			projective_space *P,
+			int *A3, int f_semilinear, int frobenius,
+			long int line1, long int line2,
+			int *A4,
+			int verbose_level);
+	void hyperplane_lifting_with_two_lines_moved(
+			projective_space *P,
+			long int line1_from, long int line1_to,
+			long int line2_from, long int line2_to,
+			int *A4,
+			int verbose_level);
+	void andre_preimage(
+			projective_space *P2, projective_space *P4,
+		long int *set2, int sz2, long int *set4, int &sz4, int verbose_level);
 
 };
 
@@ -998,7 +966,7 @@ public:
 	field_theory::finite_field *F;
 	grassmann *G; // only a reference, not freed
 	int *M; // [n * big_n] the original matrix
-	int *M_Gauss; // [n * big_n] the echeolon form (RREF)
+	int *M_Gauss; // [n * big_n] the echelon form (RREF)
 	int *transform; // [n * n] the transformation matrix
 	int *base_cols; // [n] base_cols for the matrix M_Gauss
 	int *embedding;
@@ -1253,10 +1221,10 @@ class incidence_structure {
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int *row_scheme, int *col_scheme, int verbose_level);
 	void get_and_print_row_decomposition_scheme(data_structures::partitionstack &PStack,
-		int f_list_incidences, int f_local_coordinates);
+		int f_list_incidences, int f_local_coordinates, int verbose_level);
 	void get_and_print_col_decomposition_scheme(
 			data_structures::partitionstack &PStack,
-		int f_list_incidences, int f_local_coordinates);
+		int f_list_incidences, int f_local_coordinates, int verbose_level);
 	void get_and_print_decomposition_schemes(data_structures::partitionstack &PStack);
 	void get_and_print_decomposition_schemes_tex(data_structures::partitionstack &PStack);
 	void get_and_print_tactical_decomposition_scheme_tex(
@@ -1401,7 +1369,7 @@ public:
 	orthogonal *O;
 	field_theory::finite_field *F;
 	int q;
-	long int nb_Pts; // number of points on the klein quadric
+	long int nb_Pts; // number of points on the Klein quadric
 	long int nb_pts_PG; // number of points in PG(5,q)
 
 	grassmann *Gr63;
@@ -1562,7 +1530,8 @@ public:
 	void print(std::ostream &ost);
 	void print_rows(std::ostream &ost,
 			int f_show_incma, int verbose_level);
-	void print_tex_detailed(std::ostream &ost, int f_show_incma, int verbose_level);
+	void print_tex_detailed(std::ostream &ost,
+			int f_show_incma, int verbose_level);
 	void print_tex(std::ostream &ost);
 	void get_packing_as_set_system(long int *&Sets,
 			int &nb_sets, int &set_size, int verbose_level);
@@ -1645,22 +1614,32 @@ public:
 			int *canonical_labeling,
 			data_structures::bitvector *&B,
 			int verbose_level);
-	void encode_incma(combinatorics::encoded_combinatorial_object *&Enc, int verbose_level);
-	void encode_point_set(combinatorics::encoded_combinatorial_object *&Enc, int verbose_level);
-	void encode_line_set(combinatorics::encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_incma(
+			combinatorics::encoded_combinatorial_object *&Enc,
+			int verbose_level);
+	void encode_point_set(
+			combinatorics::encoded_combinatorial_object *&Enc,
+			int verbose_level);
+	void encode_line_set(
+			combinatorics::encoded_combinatorial_object *&Enc,
+			int verbose_level);
 	void encode_points_and_lines(
 			combinatorics::encoded_combinatorial_object *&Enc,
 			int verbose_level);
-	void encode_packing(combinatorics::encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_packing(
+			combinatorics::encoded_combinatorial_object *&Enc,
+			int verbose_level);
 	void encode_large_set(
 			combinatorics::encoded_combinatorial_object *&Enc,
 			int verbose_level);
-	void encode_incidence_geometry(combinatorics::encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_incidence_geometry(
+			combinatorics::encoded_combinatorial_object *&Enc,
+			int verbose_level);
 	void encode_incma_and_make_decomposition(
 			combinatorics::encoded_combinatorial_object *&Enc,
-		incidence_structure *&Inc, 
-		data_structures::partitionstack *&Stack,
-		int verbose_level);
+			incidence_structure *&Inc,
+			data_structures::partitionstack *&Stack,
+			int verbose_level);
 	void encode_object(long int *&encoding, int &encoding_sz,
 		int verbose_level);
 	void encode_object_points(long int *&encoding, int &encoding_sz,
@@ -1668,23 +1647,27 @@ public:
 	void encode_object_lines(long int *&encoding, int &encoding_sz,
 		int verbose_level);
 	void encode_object_points_and_lines(
-			long int *&encoding, int &encoding_sz, int verbose_level);
-	void encode_object_packing(long int *&encoding, int &encoding_sz,
+			long int *&encoding, int &encoding_sz,
+			int verbose_level);
+	void encode_object_packing(
+			long int *&encoding, int &encoding_sz,
 		int verbose_level);
 	void encode_object_incidence_geometry(
 			long int *&encoding, int &encoding_sz, int verbose_level);
 	void encode_object_large_set(
 			long int *&encoding, int &encoding_sz, int verbose_level);
-	void klein(int verbose_level);
+	//void klein(int verbose_level);
 	void run_nauty(
-			int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+			int f_compute_canonical_form,
+			data_structures::bitvector *&Canonical_form,
 			data_structures::nauty_output *&NO,
 			int verbose_level);
 	void canonical_labeling(
 			data_structures::nauty_output *NO,
 			int verbose_level);
 	void run_nauty_basic(
-			data_structures::nauty_output *&NO, int verbose_level);
+			data_structures::nauty_output *&NO,
+			int verbose_level);
 
 };
 
@@ -1966,7 +1949,7 @@ public:
 	projective_space();
 	~projective_space();
 	void freeself();
-	void init(int n, field_theory::finite_field *F,
+	void projective_space_init(int n, field_theory::finite_field *F,
 		int f_init_incidence_structure, 
 		int verbose_level);
 	void init_incidence_structure(int verbose_level);
@@ -2021,13 +2004,10 @@ public:
 	int test_if_lines_are_disjoint_from_scratch(long int l1, long int l2);
 	int intersection_of_two_lines(long int l1, long int l2);
 	
-	int arc_test(long int *input_pts, int nb_pts, int verbose_level);
 	int determine_line_in_plane(long int *two_input_pts,
 		int *three_coeffs, 
 		int verbose_level);
 	int nonconical_six_arc_get_nb_Eckardt_points(long int *Arc6, int verbose_level);
-	int test_nb_Eckardt_points(algebraic_geometry::surface_domain *Surf,
-			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
 	int test_if_conic_contains_point(int *six_coeffs, int pt);
 	int determine_conic_in_plane(
@@ -2053,14 +2033,6 @@ public:
 	void find_tangent_lines_to_conic(int *six_coeffs, 
 		long int *points, int nb_points,
 		long int *tangents, int verbose_level);
-	void compute_bisecants_and_conics(long int *arc6,
-			int *&bisecants, int *&conics, int verbose_level);
-		// bisecants[15 * 3]
-		// conics[6 * 6]
-	algebraic_geometry::eckardt_point_info *compute_eckardt_point_info(
-			algebraic_geometry::surface_domain *Surf, long int *arc6,
-			int verbose_level);
-
 
 
 	void line_intersection_type(long int *set, int set_size, int *type,
@@ -2099,7 +2071,6 @@ public:
 		// type[set_size + 1]
 	void point_types_of_line_set(long int *set_of_lines, int set_size,
 		int *type, int verbose_level);
-	// used to be called point_types
 	void point_types_of_line_set_int(
 		int *set_of_lines, int set_size,
 		int *type, int verbose_level);
@@ -2246,12 +2217,6 @@ public:
 		int *&Table, int verbose_level);
 	int elliptic_curve_addition(int *A6, int p1_rk, int p2_rk, 
 		int verbose_level);
-	void draw_point_set_in_plane(
-		std::string &fname,
-		layered_graph_draw_options *O,
-		long int *Pts, int nb_pts,
-		int f_point_labels,
-		int verbose_level);
 	void line_plane_incidence_matrix_restricted(long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);
 	int test_if_lines_are_skew(int line1, int line2, int verbose_level);
@@ -2283,40 +2248,36 @@ public:
 	void plane_equation_from_three_lines_in_three_space(
 		long int *three_lines,
 		int *plane_eqn4, int verbose_level);
-	void decomposition_from_set_partition(int nb_subsets, int *sz, int **subsets,
+	void decomposition_from_set_partition(
+			int nb_subsets, int *sz, int **subsets,
 		incidence_structure *&Inc, 
 		data_structures::partitionstack *&Stack,
 		int verbose_level);
 
 
-	void rearrange_arc_for_lifting(long int *Arc6,
-			long int P1, long int P2, int partition_rk, long int *arc,
-			int verbose_level);
-	void find_two_lines_for_arc_lifting(
-			long int P1, long int P2, long int &line1, long int &line2,
-			int verbose_level);
-	void hyperplane_lifting_with_two_lines_fixed(
-			int *A3, int f_semilinear, int frobenius,
-			long int line1, long int line2,
-			int *A4,
-			int verbose_level);
-	void hyperplane_lifting_with_two_lines_moved(
-			long int line1_from, long int line1_to,
-			long int line2_from, long int line2_to,
-			int *A4,
-			int verbose_level);
-	void andre_preimage(projective_space *P4,
-		long int *set2, int sz2, long int *set4, int &sz4, int verbose_level);
-	// we must be a projective plane
 	void planes_through_a_line(
 		long int line_rk, std::vector<long int> &plane_ranks,
 		int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer(
+			long int line1_from, long int line2_from,
+			long int line1_to, long int line2_to, int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer_text(
+			std::string line1_from_text, std::string line2_from_text,
+			std::string line1_to_text, std::string line2_to_text,
+			int verbose_level);
+
+
 
 	// projective_space3.cpp:
 	int reverse_engineer_semilinear_map(
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
 	void create_ovoid(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_ovoid_ST(
 			std::string &label_txt,
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
@@ -2352,11 +2313,6 @@ public:
 		std::string &label_txt,
 		std::string &label_tex,
 		int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_Maruta_Hamada_arc(
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
 		int verbose_level);
 
 

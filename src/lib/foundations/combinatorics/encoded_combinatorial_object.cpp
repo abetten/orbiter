@@ -21,6 +21,9 @@ namespace combinatorics {
 encoded_combinatorial_object::encoded_combinatorial_object()
 {
 	Incma = NULL;
+	nb_rows0 = 0;
+	nb_cols0 = 0;
+	nb_flags = 0;
 	nb_rows = 0;
 	nb_cols = 0;
 	partition = NULL;
@@ -37,8 +40,28 @@ encoded_combinatorial_object::~encoded_combinatorial_object()
 	}
 }
 
+void encoded_combinatorial_object::init_everything(int nb_rows, int nb_cols,
+		int *Incma, int *partition,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
-void encoded_combinatorial_object::init(int nb_rows, int nb_cols, int verbose_level)
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_everything" << endl;
+	}
+	encoded_combinatorial_object::nb_rows = nb_rows;
+	encoded_combinatorial_object::nb_cols = nb_cols;
+	encoded_combinatorial_object::Incma = Incma;
+	encoded_combinatorial_object::partition = partition;
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_everything done" << endl;
+	}
+
+}
+
+
+void encoded_combinatorial_object::init(int nb_rows, int nb_cols,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -55,7 +78,11 @@ void encoded_combinatorial_object::init(int nb_rows, int nb_cols, int verbose_le
 	canonical_labeling_len = nb_rows + nb_cols;
 
 	Incma = NEW_int(L);
+	Orbiter->Int_vec->zero(Incma, L);
+
 	partition = NEW_int(canonical_labeling_len);
+
+	nb_flags = 0;
 
 	Orbiter->Int_vec->zero(Incma, L);
 	for (i = 0; i < canonical_labeling_len; i++) {
@@ -67,12 +94,37 @@ void encoded_combinatorial_object::init(int nb_rows, int nb_cols, int verbose_le
 	}
 }
 
+int *encoded_combinatorial_object::get_Incma()
+{
+	return Incma;
+}
 
-void encoded_combinatorial_object::init_canonical_form(encoded_combinatorial_object *Enc,
+void encoded_combinatorial_object::set_incidence_ij(int i, int j)
+{
+	if (Incma[i * nb_cols + j] == 0) {
+		Incma[i * nb_cols + j] = 1;
+		nb_flags++;
+	}
+}
+
+int encoded_combinatorial_object::get_incidence_ij(int i, int j)
+{
+	return Incma[i * nb_cols + j];
+}
+
+void encoded_combinatorial_object::set_incidence(int a)
+{
+	if (Incma[a] == 0) {
+		Incma[a] = 1;
+		nb_flags++;
+	}
+}
+
+void encoded_combinatorial_object::init_canonical_form(
+		encoded_combinatorial_object *Enc,
 		data_structures::nauty_output *NO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int L;
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::init_canonical_form" << endl;
@@ -80,9 +132,8 @@ void encoded_combinatorial_object::init_canonical_form(encoded_combinatorial_obj
 
 	encoded_combinatorial_object::nb_rows = Enc->nb_rows;
 	encoded_combinatorial_object::nb_cols = Enc->nb_cols;
-	//L = Enc->nb_rows * Enc->nb_cols;
 
-	Enc->apply_canonical_labling(Incma, NO);
+	Enc->apply_canonical_labeling(Incma, NO);
 
 	canonical_labeling_len = nb_rows + nb_cols;
 	partition = NEW_int(canonical_labeling_len);
@@ -181,15 +232,101 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(pr
 	}
 	int i, j;
 
+	nb_rows0 = P->N_points;
+	nb_cols0 = P->N_lines;
+
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
-			Incma[i * nb_cols + j] = P->is_incident(i, j);
+			if (P->is_incident(i, j)) {
+				set_incidence_ij(i, j);
+			}
 		}
 	}
 	if (f_v) {
 		cout << "encoded_combinatorial_object::incidence_matrix_projective_space_top_left done" << endl;
 	}
 }
+
+
+void encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left" << endl;
+	}
+
+	int i, j, h, k, l;
+
+	nb_rows0 = P->N_points + P->N_lines;
+	nb_cols0 = P->N_lines + P->Nb_subspaces[2]; // number of lines and planes
+
+	for (i = 0; i < P->N_points; i++) {
+		for (j = 0; j < P->N_lines; j++) {
+			if (P->is_incident(i, j)) {
+				set_incidence_ij(i, j);
+			}
+		}
+	}
+	for (j = 0; j < P->N_lines; j++) {
+		set_incidence_ij(P->N_points + j, j);
+	}
+
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left computing points on lines" << endl;
+	}
+
+	long int *Pts_on_line;
+
+	Pts_on_line = NEW_lint(P->N_lines * P->k);
+
+	for (j = 0; j < P->N_lines; j++) {
+		P->create_points_on_line(
+				j /* line_rk */, Pts_on_line + j * P->k,
+				0 /* verbose_level*/);
+	}
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left computing planes through lines" << endl;
+	}
+
+	std::vector<std::vector<long int>> Plane_ranks;
+
+	for (j = 0; j < P->N_lines; j++) {
+
+		std::vector<long int> plane_ranks;
+
+		P->planes_through_a_line(
+				j /* line_rk */, plane_ranks, 0 /*verbose_level*/);
+
+		Plane_ranks.push_back(plane_ranks);
+
+		for (h = 0; h < plane_ranks.size(); h++) {
+
+			k = plane_ranks[h];
+
+			set_incidence_ij(P->N_points + j, P->N_lines + k);
+
+			for (l = 0; l < P->k; l++) {
+
+				i = Pts_on_line[j * P->k + l];
+
+				set_incidence_ij(i, P->N_lines + k);
+
+			}
+		}
+	}
+
+	FREE_lint(Pts_on_line);
+
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left done" << endl;
+	}
+}
+
+
 
 void encoded_combinatorial_object::canonical_form_given_canonical_labeling(int *canonical_labeling,
 		data_structures::bitvector *&B,
@@ -235,6 +372,10 @@ void encoded_combinatorial_object::latex_set_system_by_columns(std::ostream &ost
 		cout << "encoded_combinatorial_object::latex_set_system_by_columns" << endl;
 	}
 
+	if (nb_rows >= 30) {
+		return;
+	}
+
 	latex_interface L;
 	int i, j;
 	int *B;
@@ -266,6 +407,9 @@ void encoded_combinatorial_object::latex_set_system_by_rows(std::ostream &ost,
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_set_system_by_rows" << endl;
 	}
+	if (nb_cols >= 30) {
+		return;
+	}
 
 	latex_interface L;
 	int i, j;
@@ -284,9 +428,9 @@ void encoded_combinatorial_object::latex_set_system_by_rows(std::ostream &ost,
 				B[sz++] = j;
 			}
 		}
-		rk = Combi.rank_k_subset(B, nb_cols, sz);
-		L.int_set_print_tex(ost, B, sz);
-		ost << " = " << rk;
+			rk = Combi.rank_k_subset(B, nb_cols, sz);
+			L.int_set_print_tex(ost, B, sz);
+			ost << " = " << rk;
 		ost << "\\\\" << endl;
 	}
 
@@ -771,7 +915,7 @@ void encoded_combinatorial_object::latex_canonical_form(std::ostream &ost,
 	}
 }
 
-void encoded_combinatorial_object::apply_canonical_labling(int *&Inc2,
+void encoded_combinatorial_object::apply_canonical_labeling(int *&Inc2,
 		data_structures::nauty_output *NO)
 {
 	int i, j, i0, j0;
@@ -791,22 +935,26 @@ void encoded_combinatorial_object::apply_canonical_labling(int *&Inc2,
 
 }
 
-void encoded_combinatorial_object::apply_canonical_labling_and_get_flags(int *&Inc2,
-		int *&Flags, int &nb_flags,
+void encoded_combinatorial_object::apply_canonical_labeling_and_get_flags(int *&Inc2,
+		int *&Flags, int &nb_flags_counted,
 		data_structures::nauty_output *NO)
 {
 	int i, j;
 
-	apply_canonical_labling(Inc2, NO);
+	apply_canonical_labeling(Inc2, NO);
 
 	Flags = NEW_int(nb_rows * nb_cols);
-	nb_flags = 0;
+	nb_flags_counted = 0;
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			if (Inc2[i * nb_cols + j]) {
-				Flags[nb_flags++] = i * nb_cols + j;
+				Flags[nb_flags_counted++] = i * nb_cols + j;
 			}
 		}
+	}
+	if (nb_flags_counted != nb_flags) {
+		cout << "encoded_combinatorial_object::apply_canonical_labeling_and_get_flags nb_flags_counted != nb_flags" << endl;
+		exit(1);
 	}
 }
 

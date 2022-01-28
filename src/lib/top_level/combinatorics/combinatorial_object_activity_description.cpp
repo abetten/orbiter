@@ -250,7 +250,7 @@ void combinatorial_object_activity_description::print()
 		cout << "-conic_type " << conic_type_threshold << endl;
 	}
 	if (f_non_conical_type) {
-		cout << "-f_non_conical_type" << endl;
+		cout << "-f_non_conical_type " << endl;
 	}
 	if (f_ideal) {
 		cout << "-ideal " << ideal_degree << endl;

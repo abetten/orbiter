@@ -219,6 +219,18 @@ projective_space_activity_description::projective_space_activity_description()
 	f_unrank_lines_in_PG = FALSE;
 	//std::string unrank_lines_in_PG_text;
 
+	f_move_two_lines_in_hyperplane_stabilizer = FALSE;
+	line1_from = 0;
+	line2_from = 0;
+	line1_to = 0;
+	line2_to = 0;
+
+	f_move_two_lines_in_hyperplane_stabilizer_text = FALSE;
+	//std:string line1_from_text;
+	//std:string line2_from_text;
+	//std:string line1_to_text;
+	//std:string line2_to_text;
+
 
 }
 
@@ -1024,6 +1036,36 @@ int projective_space_activity_description::read_arguments(
 				cout << "-unrank_lines_in_PG " << unrank_lines_in_PG_text << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
+			f_move_two_lines_in_hyperplane_stabilizer = TRUE;
+			line1_from = ST.strtoi(argv[++i]);
+			line2_from = ST.strtoi(argv[++i]);
+			line1_to = ST.strtoi(argv[++i]);
+			line2_to = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-move_two_lines_in_hyperplane_stabilizer"
+					<< " " << line1_from
+					<< " " << line1_from
+					<< " " << line1_to
+					<< " " << line2_to
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
+			f_move_two_lines_in_hyperplane_stabilizer_text = TRUE;
+			line1_from_text.assign(argv[++i]);
+			line2_from_text.assign(argv[++i]);
+			line1_to_text.assign(argv[++i]);
+			line2_to_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-move_two_lines_in_hyperplane_stabilizer_text"
+					<< " " << line1_from_text
+					<< " " << line2_from_text
+					<< " " << line1_to_text
+					<< " " << line2_to_text
+					<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -1294,6 +1336,22 @@ void projective_space_activity_description::print()
 
 	if (f_unrank_lines_in_PG) {
 		cout << "-unrank_lines_in_PG " << unrank_lines_in_PG_text << endl;
+	}
+	if (f_move_two_lines_in_hyperplane_stabilizer) {
+		cout << "-move_two_lines_in_hyperplane_stabilizer"
+				<< " " << line1_from
+				<< " " << line1_from
+				<< " " << line1_to
+				<< " " << line2_to
+				<< endl;
+	}
+	if (f_move_two_lines_in_hyperplane_stabilizer_text) {
+		cout << "-move_two_lines_in_hyperplane_stabilizer_text"
+				<< " " << line1_from_text
+				<< " " << line2_from_text
+				<< " " << line1_to_text
+				<< " " << line2_to_text
+				<< endl;
 	}
 
 }

@@ -1739,7 +1739,7 @@ void surface_with_action::report_with_group(
 	Six_arcs->init(
 			Six_arc_descr,
 			PA->PA2,
-			FALSE, 0, NULL,
+			FALSE, 0, //NULL,
 			verbose_level);
 
 	transporter = NEW_int(Six_arcs->Gen->PA->A->elt_size_in_int);

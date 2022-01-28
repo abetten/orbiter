@@ -325,7 +325,7 @@ void web_of_cubic_curves::compute_web_of_cubic_curves(long int *arc6, int verbos
 	if (f_v) {
 		cout << "web_of_cubic_curves::compute_web_of_cubic_curves" << endl;
 	}
-	Surf->P2->compute_bisecants_and_conics(arc6,
+	Surf->P2->Arc_in_projective_space->compute_bisecants_and_conics(arc6,
 		bisecants, conics, verbose_level);
 
 	Web_of_cubic_curves = NEW_int(45 * 10);
@@ -534,12 +534,13 @@ void web_of_cubic_curves::find_Eckardt_points(int verbose_level)
 		cout << "web_of_cubic_curves::find_Eckardt_points" << endl;
 	}
 	int s;
+	geometry_global Gg;
 
 	if (f_v) {
 		cout << "web_of_cubic_curves::find_Eckardt_points "
 				"before Surf->P2->compute_eckardt_point_info" << endl;
 	}
-	E = Surf->P2->compute_eckardt_point_info(Surf, arc6, verbose_level);
+	E = Gg.compute_eckardt_point_info(Surf->P2, arc6, verbose_level);
 	if (f_v) {
 		cout << "web_of_cubic_curves::find_Eckardt_points "
 				"after Surf->P2->compute_eckardt_point_info" << endl;
@@ -1175,7 +1176,7 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, ostream &ost
 	char str[1000];
 	int i, j, k, l, m, n, h, ij, kl, mn;
 
-	Surf->P2->compute_bisecants_and_conics(arc6,
+	Surf->P2->Arc_in_projective_space->compute_bisecants_and_conics(arc6,
 			bisecants, conics, 0 /*verbose_level*/);
 
 	for (h = 0; h < 45; h++) {

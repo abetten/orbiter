@@ -22,12 +22,16 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 {
 	f_find_cliques = FALSE;
 	Clique_finder_control = NULL;
+
 	f_export_magma = FALSE;
 	f_export_maple = FALSE;
 	f_export_csv = FALSE;
 	f_export_graphviz = FALSE;
+
 	f_print = FALSE;
+
 	f_sort_by_colors = FALSE;
+
 	f_split = FALSE;
 	//std::string split_input_fname;
 	//std::string split_by_file = NULL;
@@ -41,9 +45,14 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	//std::string split_by_clique_set;
 
 	f_save = FALSE;
+
 	f_automorphism_group = FALSE;
+
 	f_properties = FALSE;
+
 	f_eigenvalues = FALSE;
+
+	f_draw = FALSE;
 
 }
 
@@ -162,6 +171,12 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-eigenvalues " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-draw") == 0) {
+			f_draw = TRUE;
+			if (f_v) {
+				cout << "-draw " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -224,6 +239,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_eigenvalues) {
 		cout << "-eigenvalues " << endl;
+	}
+	if (f_draw) {
+		cout << "-draw " << endl;
 	}
 }
 

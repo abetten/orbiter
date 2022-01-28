@@ -118,7 +118,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	Six_arcs->init(
 			Descr,
 			Surf_A->PA,
-			f_test_nb_Eckardt_points, nb_E, Surf,
+			f_test_nb_Eckardt_points, nb_E, //Surf,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "

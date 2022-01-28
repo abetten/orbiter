@@ -59,7 +59,7 @@ void del_pezzo_surface_of_degree_two_domain::init(
 	F = P->F;
 
 	P2 = NEW_OBJECT(projective_space);
-	P2->init(2, F,
+	P2->projective_space_init(2, F,
 		FALSE /*f_init_incidence_structure*/,
 		verbose_level);
 

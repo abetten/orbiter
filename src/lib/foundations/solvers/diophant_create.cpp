@@ -79,7 +79,7 @@ void diophant_create::init(
 
 		P = NEW_OBJECT(projective_space);
 
-		P->init(2, F,
+		P->projective_space_init(2, F,
 				TRUE /* f_init_incidence_structure */,
 				verbose_level);
 

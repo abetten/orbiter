@@ -50,7 +50,6 @@ void object_in_projective_space_with_action::init(
 	object_with_canonical_form *OwCF,
 	long int ago,
 	groups::strong_generators *Aut_gens,
-	//int nb_rows, int nb_cols,
 	int *canonical_labeling,
 	int verbose_level)
 {
@@ -374,7 +373,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 
 
 
-	OwCF->klein(verbose_level);
+	//OwCF->klein(verbose_level);
 
 #if 0
 	sims *Stab;

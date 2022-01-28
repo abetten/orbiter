@@ -277,15 +277,14 @@ void linear_set_classify::init(
 
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
-		cout << "linear_set_classify::init before P->init" << endl;
+		cout << "linear_set_classify::init before P->projective_space_init" << endl;
 	}
-	P->init(n - 1, Fq,
+	P->projective_space_init(n - 1, Fq,
 		FALSE /* f_init_incidence_structure */,
 		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "linear_set_classify::init after P->init" << endl;
+		cout << "linear_set_classify::init after P->projective_space_init" << endl;
 	}
-
 
 
 	if (f_v) {

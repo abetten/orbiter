@@ -874,6 +874,7 @@ public:
 	int nb_rows;
 	int nb_cols;
 
+	int f_flag_orbits_have_been_computed;
 	int nb_flags;
 	int *Flags; // [nb_flags]
 	long int *Flag_table; // [nb_flags * 2]

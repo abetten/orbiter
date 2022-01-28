@@ -50,6 +50,7 @@ geometric_object_description::geometric_object_description()
 #endif
 
 	f_ovoid = FALSE;
+	f_ovoid_ST = FALSE;
 
 	f_Baer = FALSE;
 
@@ -207,6 +208,10 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 		else if (ST.stringcmp(argv[i], "-ovoid") == 0) {
 			f_ovoid = TRUE;
 			cout << "-ovoid " << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-ovoid_ST") == 0) {
+			f_ovoid_ST = TRUE;
+			cout << "-ovoid_ST " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-Baer") == 0) {
 			f_Baer = TRUE;
@@ -479,6 +484,9 @@ void geometric_object_description::print()
 
 	if (f_ovoid) {
 		cout << "-ovoid " << endl;
+	}
+	if (f_ovoid_ST) {
+		cout << "-ovoid_ST " << endl;
 	}
 	if (f_Baer) {
 		cout << "-Baer " << endl;
