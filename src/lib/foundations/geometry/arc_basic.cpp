@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 arc_basic::arc_basic()
@@ -648,7 +649,7 @@ int arc_basic::LunelliSce_evaluate_cubic2(int *v)
 	return e;
 }
 
-}}
+}}}
 
 
 

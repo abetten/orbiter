@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 draw_bitmap_control::draw_bitmap_control()
 {
@@ -148,5 +149,6 @@ void draw_bitmap_control::print()
 
 
 
-}}
+}}}
+
 

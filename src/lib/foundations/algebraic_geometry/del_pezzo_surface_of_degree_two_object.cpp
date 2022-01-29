@@ -81,7 +81,7 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verb
 	}
 
 
-	pal = NEW_OBJECT(points_and_lines);
+	pal = NEW_OBJECT(geometry::points_and_lines);
 
 	pal->init(Dom->P, Points, verbose_level);
 

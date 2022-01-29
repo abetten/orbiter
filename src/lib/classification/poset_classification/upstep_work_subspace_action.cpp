@@ -45,7 +45,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	groups::matrix_group *M;
 	field_theory::finite_field *F;
 	{
-	grassmann G;
+		geometry::grassmann G;
 	induced_actions::action_on_grassmannian *AG;
 	{
 		actions::action A_on_hyperplanes;

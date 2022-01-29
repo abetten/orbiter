@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -4029,6 +4030,7 @@ void incidence_structure::init_large_set(
 
 
 
-}}
+}}}
+
 
 

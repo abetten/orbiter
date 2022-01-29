@@ -81,8 +81,8 @@ void semifield_substructure::init()
 	Basis2 = NEW_int(SC->k * SC->k2);
 	//Basis3 = NEW_int(SC->k * SC->k2);
 	B = NEW_int(SC->k2);
-	Gr3 = NEW_OBJECT(grassmann);
-	Gr2 = NEW_OBJECT(grassmann);
+	Gr3 = NEW_OBJECT(geometry::grassmann);
+	Gr2 = NEW_OBJECT(geometry::grassmann);
 	transporter1 = NEW_int(SC->A->elt_size_in_int);
 	transporter2 = NEW_int(SC->A->elt_size_in_int);
 	transporter3 = NEW_int(SC->A->elt_size_in_int);

@@ -384,7 +384,8 @@ public:
 		groups::schreier *&Sch, groups::sims *&Stab,
 		groups::strong_generators *&stab_gens,
 		int verbose_level);
-	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
+	void make_element_which_moves_a_line_in_PG3q(
+			geometry::grassmann *Gr,
 		long int line_rk, int *Elt, int verbose_level);
 	int matrix_group_dimension();
 	field_theory::finite_field *matrix_group_finite_field();
@@ -744,7 +745,7 @@ public:
 		combinatorics::brick_domain *B, int f_linear_action,
 		int verbose_level);
 	void induced_action_on_andre(action *An, 
-		action *An1, andre_construction *Andre, 
+		action *An1, geometry::andre_construction *Andre,
 		int verbose_level);
 	void setup_product_action(action *A1, action *A2, 
 		int f_use_projections, int verbose_level);
@@ -800,10 +801,10 @@ public:
 	// action_io.cpp:
 	void report(std::ostream &ost, int f_sims, groups::sims *S,
 			int f_strong_gens, groups::strong_generators *SG,
-			layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_what_we_act_on(std::ostream &ost,
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void read_orbit_rep_and_candidates_from_files_and_process(
 			std::string &prefix,
@@ -971,17 +972,17 @@ public:
 
 	// in action_projective.cpp:
 	groups::strong_generators *set_stabilizer_in_projective_space(
-		projective_space *P,
+			geometry::projective_space *P,
 		long int *set, int set_size, //int &canonical_pt,
 		int *canonical_set_or_NULL,
 		int verbose_level);
 	int reverse_engineer_semilinear_map(
-		projective_space *P,
+			geometry::projective_space *P,
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
 	// uses the function A->element_image_of
 	void report_fixed_objects_in_P3(std::ostream &ost,
-		projective_space *P3,
+			geometry::projective_space *P3,
 		int *Elt,
 		int verbose_level);
 
@@ -1052,12 +1053,16 @@ public:
 	action *init_direct_product_group(
 			groups::matrix_group *M1, groups::matrix_group *M2,
 			int verbose_level);
-	void compute_decomposition_based_on_orbits(projective_space *P,
+	void compute_decomposition_based_on_orbits(
+			geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
-			incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level);
-	void compute_decomposition_based_on_orbit_length(projective_space *P,
+			geometry::incidence_structure *&Inc,
+			data_structures::partitionstack *&Stack, int verbose_level);
+	void compute_decomposition_based_on_orbit_length(
+			geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
-			incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level);
+			geometry::incidence_structure *&Inc,
+			data_structures::partitionstack *&Stack, int verbose_level);
 
 };
 
@@ -1180,13 +1185,13 @@ public:
 			int verbose_level);
 	void reverse_engineer_linear_group_from_permutation_group(
 			actions::action *A_linear,
-			projective_space *P,
+			geometry::projective_space *P,
 			groups::strong_generators *&SG,
 			actions::action *&A_perm,
 			data_structures::nauty_output *NO,
 			int verbose_level);
 	groups::strong_generators *set_stabilizer_of_object(
-		object_with_canonical_form *OwCF,
+			geometry::object_with_canonical_form *OwCF,
 		action *A_linear,
 		int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
 		data_structures::nauty_output *&NO,

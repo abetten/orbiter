@@ -15,6 +15,7 @@
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 // #############################################################################
@@ -455,9 +456,6 @@ public:
 
 class layered_graph_draw_options {
 public:
-
-	//int f_file;
-	//std::string fname;
 
 	int f_paperheight;
 	int paperheight;
@@ -1020,7 +1018,7 @@ public:
 	void draw_point_set_in_plane(
 		std::string &fname,
 		layered_graph_draw_options *O,
-		projective_space *P,
+		geometry::projective_space *P,
 		long int *Pts, int nb_pts,
 		int f_point_labels,
 		int verbose_level);
@@ -1486,14 +1484,14 @@ public:
 
 	tree();
 	~tree();
-	void init(tree_draw_options *Tree_draw_options,
+	void init(graphics::tree_draw_options *Tree_draw_options,
 			int xmax, int ymax, int verbose_level);
 	void draw(std::string &fname,
-			tree_draw_options *Tree_draw_options,
+			graphics::tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
 	void draw_preprocess(std::string &fname,
-			tree_draw_options *Tree_draw_options,
+			graphics::tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
 	void circle_center_and_radii(int xmax, int ymax, int max_depth, 
@@ -1744,7 +1742,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_GRAPHICS_GRAPHICS_H_ */

@@ -3340,7 +3340,7 @@ void schreier::compute_orbit_invariant(int *&orbit_invariant,
 }
 
 void schreier::print_TDA(std::ostream &ost,
-		object_with_canonical_form *OwCF,
+		geometry::object_with_canonical_form *OwCF,
 		combinatorics::classification_of_objects_report_options *Report_options,
 		int verbose_level)
 {
@@ -3368,7 +3368,8 @@ void schreier::print_TDA(std::ostream &ost,
 	}
 }
 
-void schreier::latex_TDA(std::ostream &ost, combinatorics::encoded_combinatorial_object *Enc,
+void schreier::latex_TDA(std::ostream &ost,
+		combinatorics::encoded_combinatorial_object *Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

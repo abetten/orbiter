@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 grassmann_embedded::grassmann_embedded()
@@ -361,5 +362,4 @@ long int grassmann_embedded::rank_lint(
 	return rk;
 }
 
-}
-}
+}}}

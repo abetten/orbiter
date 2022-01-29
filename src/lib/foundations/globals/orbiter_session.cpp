@@ -46,10 +46,10 @@ orbiter_session::orbiter_session()
 	t0 = 0;
 
 	f_draw_options = TRUE;
-	draw_options = NEW_OBJECT(layered_graph_draw_options);
+	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
 	f_draw_incidence_structure_description = TRUE;
-	Draw_incidence_structure_description = NEW_OBJECT(draw_incidence_structure_description);
+	Draw_incidence_structure_description = NEW_OBJECT(graphics::draw_incidence_structure_description);
 
 	f_list_arguments = FALSE;
 
@@ -223,7 +223,7 @@ int orbiter_session::read_arguments(int argc,
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
-			draw_options = NEW_OBJECT(layered_graph_draw_options);
+			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 			//cout << "-draw_options " << endl;
 			i += draw_options->read_arguments(argc - (i + 1),
 				argv + i + 1, 0 /*verbose_level*/);
@@ -242,7 +242,7 @@ int orbiter_session::read_arguments(int argc,
 		else if (ST.stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {
 			f_draw_incidence_structure_description = TRUE;
 
-			Draw_incidence_structure_description = NEW_OBJECT(draw_incidence_structure_description);
+			Draw_incidence_structure_description = NEW_OBJECT(graphics::draw_incidence_structure_description);
 			//cout << "-draw_incidence_structure_description " << endl;
 			i += Draw_incidence_structure_description->read_arguments(argc - (i + 1),
 				argv + i + 1, 0 /*verbose_level*/);

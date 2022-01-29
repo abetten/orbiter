@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 draw_incidence_structure_description::draw_incidence_structure_description()
@@ -190,6 +191,6 @@ void draw_incidence_structure_description::print()
 
 
 
-}}
+}}}
 
 

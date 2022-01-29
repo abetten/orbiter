@@ -16,13 +16,12 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 
 layered_graph_draw_options::layered_graph_draw_options()
 {
-	//f_file = FALSE;
-	//fname = NULL;
 
 	f_paperheight = FALSE;
 	paperheight = 0;
@@ -92,15 +91,6 @@ int layered_graph_draw_options::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (stringcmp(argv[i], "-file") == 0) {
-			f_file = TRUE;
-			fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-file " << fname << endl;
-			}
-		}
-#endif
 		if (ST.stringcmp(argv[i], "-paperheight") == 0) {
 			f_paperheight = TRUE;
 			paperheight = ST.strtoi(argv[++i]);
@@ -271,11 +261,6 @@ void layered_graph_draw_options::print()
 {
 	//cout << "layered_graph_draw_options::print:" << endl;
 
-#if 0
-	if (f_file) {
-		cout << "file name: " << fname << endl;
-	}
-#endif
 
 	if (f_paperheight) {
 		cout << "-paperheight " << paperheight << endl;
@@ -348,6 +333,5 @@ void layered_graph_draw_options::print()
 
 
 
-}
-}
+}}}
 

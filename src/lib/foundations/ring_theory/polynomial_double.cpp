@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace ring_theory {
 
 
 
@@ -180,4 +181,5 @@ double polynomial_double::evaluate_at(double t)
 	return a;
 }
 
-}}
+}}}
+

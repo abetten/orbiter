@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 parametric_curve::parametric_curve()
@@ -389,5 +390,6 @@ void parametric_curve::init(int nb_dimensions,
 }
 
 
-}}
+}}}
+
 

@@ -1257,7 +1257,7 @@ void numerics::substitute_quadric_linear(
 	int A[2];
 	int v[4];
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -1400,7 +1400,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 	int A[3];
 	int v[4];
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -1606,7 +1606,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 	int A[4];
 	int v[4];
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -2005,12 +2005,12 @@ void numerics::eigenvalues(double *A, int n, double *lambda, int verbose_level)
 	if (f_v) {
 		cout << "eigenvalues" << endl;
 	}
-	polynomial_double_domain Poly;
-	polynomial_double *P;
-	polynomial_double *det;
+	ring_theory::polynomial_double_domain Poly;
+	ring_theory::polynomial_double *P;
+	ring_theory::polynomial_double *det;
 
 	Poly.init(n);
-	P = NEW_OBJECTS(polynomial_double, n * n);
+	P = NEW_OBJECTS(ring_theory::polynomial_double, n * n);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			P[i * n + j].init(n + 1);
@@ -2034,7 +2034,7 @@ void numerics::eigenvalues(double *A, int n, double *lambda, int verbose_level)
 	}
 
 
-	det = NEW_OBJECT(polynomial_double);
+	det = NEW_OBJECT(ring_theory::polynomial_double);
 	det->init(n + 1);
 	Poly.determinant_over_polynomial_ring(
 			P,

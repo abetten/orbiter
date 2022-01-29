@@ -273,7 +273,7 @@ void interface_algebra::read_arguments(int argc,
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		f_draw_mod_n = TRUE;
 		cout << "-draw_mod_n " << endl;
-		Draw_mod_n_description = NEW_OBJECT(draw_mod_n_description);
+		Draw_mod_n_description = NEW_OBJECT(graphics::draw_mod_n_description);
 		i += Draw_mod_n_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -483,8 +483,8 @@ void interface_algebra::worker(int verbose_level)
 	}
 
 	else if (f_draw_mod_n) {
-		plot_tools PT;
-		layered_graph_draw_options *O;
+		graphics::plot_tools PT;
+		graphics::layered_graph_draw_options *O;
 
 
 		if (!Orbiter->f_draw_options) {

@@ -230,7 +230,7 @@ int finite_field_implementation_wo_tables::negate(int i, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::negate" << endl;
 	}
 
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
 		cout << "finite_field_implementation_wo_tables::negate out of range, i = " << i << endl;
@@ -258,7 +258,7 @@ int finite_field_implementation_wo_tables::add(int i, int j, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::add" << endl;
 	}
 
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
 		cout << "finite_field_implementation_wo_tables::add out of range, i = " << i << endl;

@@ -281,7 +281,7 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 }
 
 void orbiter_symbol_table_entry::init_geometric_object(std::string &label,
-		geometric_object_create *COC, int verbose_level)
+		geometry::geometric_object_create *COC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

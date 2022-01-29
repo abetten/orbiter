@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
+
 
 povray_interface::povray_interface()
 {
@@ -520,6 +522,6 @@ void povray_interface::ini(ostream &ost, const char *fname_pov,
 	ost << "Pause_when_Done=off" << endl;
 }
 
-}}
+}}}
 
 

@@ -96,7 +96,7 @@ void poset_classification::draw_poset_fname_poset_detailed(
 
 void poset_classification::write_treefile(
 		std::string &fname_base, int lvl,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -187,8 +187,8 @@ int poset_classification::write_treefile(std::string &fname_base,
 
 void poset_classification::draw_tree(
 		std::string &fname_base, int lvl,
-		tree_draw_options *Tree_draw_options,
-		layered_graph_draw_options *Draw_options,
+		graphics::tree_draw_options *Tree_draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 	int xmax, int ymax, int rad, int f_embedded,
 	int f_sideways, int verbose_level)
 {
@@ -197,7 +197,7 @@ void poset_classification::draw_tree(
 	string fname;
 	string fname1;
 	char str[1000];
-	tree T;
+	graphics::tree T;
 	//int xmax = 1000;
 	//int ymax = 1000;
 	int idx = 0;
@@ -321,8 +321,8 @@ void poset_classification::draw_tree(
 
 void poset_classification::draw_tree_low_level(
 		std::string &fname,
-		tree_draw_options *Tree_draw_options,
-		layered_graph_draw_options *Draw_options,
+		graphics::tree_draw_options *Tree_draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 		int nb_nodes,
 	int *coord_xyw, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
@@ -367,7 +367,7 @@ void poset_classification::draw_tree_low_level(
 		G.out_ymax() = ymax;
 		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 #endif
-		mp_graphics G;
+		graphics::mp_graphics G;
 
 		G.init(fname, Draw_options, verbose_level - 1);
 #if 0
@@ -401,7 +401,8 @@ void poset_classification::draw_tree_low_level(
 	
 }
 
-void poset_classification::draw_tree_low_level1(mp_graphics &G,
+void poset_classification::draw_tree_low_level1(
+		graphics::mp_graphics &G,
 	int nb_nodes,
 	int *coords, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
@@ -718,7 +719,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 
 void poset_classification::draw_poset_full(std::string &fname_base,
 		int depth, int data,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		double x_stretch,
 		int verbose_level)
 {
@@ -772,7 +773,7 @@ void poset_classification::draw_poset_full(std::string &fname_base,
 void poset_classification::draw_poset(
 		std::string &fname_base,
 		int depth, int data,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -891,7 +892,7 @@ void poset_classification::draw_poset(
 void poset_classification::draw_level_graph(
 		std::string &fname_base,
 		int depth, int data, int level,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

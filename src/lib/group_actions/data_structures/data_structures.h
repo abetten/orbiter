@@ -106,7 +106,7 @@ class incidence_structure_with_group {
 
 public:
 
-	incidence_structure *Inc;
+	geometry::incidence_structure *Inc;
 	int N; // Inc->nb_rows + Inc->nb_cols;
 
 	int *partition;
@@ -123,12 +123,12 @@ public:
 	~incidence_structure_with_group();
 	void null();
 	void freeself();
-	void init(incidence_structure *Inc,
+	void init(geometry::incidence_structure *Inc,
 		int *partition,
 		int verbose_level);
 	void set_stabilizer_and_canonical_form(
 			int f_compute_canonical_form,
-			incidence_structure *&Inc_out,
+			geometry::incidence_structure *&Inc_out,
 			int verbose_level);
 };
 

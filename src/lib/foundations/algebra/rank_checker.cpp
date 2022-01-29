@@ -308,7 +308,7 @@ int rank_checker::compute_rank_row_vectors(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int j, rk;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	if (f_vv) {
 		cout << "rank_checker::compute_rank_row_vectors set ";

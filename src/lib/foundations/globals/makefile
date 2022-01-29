@@ -13,9 +13,7 @@ MODULES = \
 	numerics.o \
 	orbiter_session.o \
 	orbiter_symbol_table_entry.o \
-	orbiter_symbol_table.o \
-	polynomial_double_domain.o \
-	polynomial_double.o 
+	orbiter_symbol_table.o 
 
 
 all : $(MODULES)

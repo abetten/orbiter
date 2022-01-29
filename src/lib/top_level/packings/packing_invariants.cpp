@@ -248,10 +248,10 @@ void packing_invariants::compute_decomposition(int verbose_level)
 
 		cout << "we will draw an incidence picture" << endl;
 		
-		incidence_structure *I;
+		geometry::incidence_structure *I;
 		data_structures::partitionstack *Stack;
 		
-		I = NEW_OBJECT(incidence_structure);
+		I = NEW_OBJECT(geometry::incidence_structure);
 		I->init_by_matrix(total_nb_points,
 				total_nb_blocks, Inc,
 				0 /* verbose_level */);
@@ -297,7 +297,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 	{
 		int depth = INT_MAX;
 		
-		I = NEW_OBJECT(incidence_structure);
+		I = NEW_OBJECT(geometry::incidence_structure);
 		I->init_by_matrix(total_nb_points,
 				total_nb_blocks, Inc,
 				0 /* verbose_level */);

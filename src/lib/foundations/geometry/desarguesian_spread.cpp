@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -555,6 +556,6 @@ void desarguesian_spread::report(std::ostream &ost, int verbose_level)
 
 
 
-}
-}
+}}}
+
 

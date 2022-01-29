@@ -47,7 +47,7 @@ void object_in_projective_space_with_action::freeself()
 }
 
 void object_in_projective_space_with_action::init(
-	object_with_canonical_form *OwCF,
+		geometry::object_with_canonical_form *OwCF,
 	long int ago,
 	groups::strong_generators *Aut_gens,
 	int *canonical_labeling,
@@ -259,7 +259,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 
 
 	combinatorics::encoded_combinatorial_object *Enc;
-	incidence_structure *Inc;
+	geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 
 

@@ -2555,7 +2555,7 @@ void surface_classify_wedge::read_double_sixes(int verbose_level)
 
 
 void surface_classify_wedge::create_report(int f_with_stabilizers,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
@@ -2606,7 +2606,7 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 }
 
 void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {

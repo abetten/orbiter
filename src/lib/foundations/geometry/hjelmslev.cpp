@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 hjelmslev::hjelmslev()
@@ -192,6 +193,5 @@ long int hjelmslev::rank_lint(int *M, int verbose_level)
 	return rk;
 }
 
-}
-}
+}}}
 

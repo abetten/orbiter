@@ -1147,7 +1147,7 @@ void permutation::induce_on_lines_of_PG_k_q(int k, int q,
 	domain *dom;
 	int nb_pts, nb_lines;
 	int i, j, p1, p2, q1, q2;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	if (f_v) {
 		cout << "permutation::induce_on_lines_of_PG_k_q" << endl;
@@ -1211,7 +1211,7 @@ void permutation::singer_cycle_on_points_of_projective_plane(int p,
 	discreta_matrix M;
 	int l;
 	int f_action_from_right = TRUE;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	a.Singer(p, 3, verbose_level - 2);
 	cout << "permutation::singer_cycle_on_points_of_projective_plane(): primitive polynomial: " << a << endl;

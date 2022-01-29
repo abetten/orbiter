@@ -696,7 +696,7 @@ void graph_classify::score_sequence(int n,
 
 
 void graph_classify::draw_graphs(int level,
-	layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -762,7 +762,7 @@ void graph_classify::draw_graphs(int level,
 
 		{
 
-			mp_graphics G;
+			graphics::mp_graphics G;
 
 			G.init(fname_full, draw_options, verbose_level - 1);
 

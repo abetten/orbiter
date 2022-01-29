@@ -146,9 +146,9 @@ void projective_space_activity::perform_activity(int verbose_level)
 		cout << "-define_object " << Descr->define_object_label << endl;
 		Descr->Object_Descr->print();
 
-		geometric_object_create *GeoObj;
+		geometry::geometric_object_create *GeoObj;
 
-		GeoObj = NEW_OBJECT(geometric_object_create);
+		GeoObj = NEW_OBJECT(geometry::geometric_object_create);
 
 		GeoObj->init(Descr->Object_Descr, PA->P, verbose_level);
 
@@ -464,7 +464,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_cheat_sheet) {
 
-		layered_graph_draw_options *O;
+		graphics::layered_graph_draw_options *O;
 
 		if (Orbiter->f_draw_options) {
 			O = Orbiter->draw_options;
@@ -718,7 +718,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_latex_homogeneous_equation) {
 
-		geometry_global G;
+		geometry::geometry_global G;
 		int degree = Descr->latex_homogeneous_equation_degree;
 		int nb_vars = PA->d;
 

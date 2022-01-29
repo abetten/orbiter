@@ -64,7 +64,7 @@ void arc_lifting_with_two_lines::create_surface(
 	int Basis[16];
 	int Transversals[4 * 8];
 	int rk;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface" << endl;

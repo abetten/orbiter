@@ -204,7 +204,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 	v2 = NEW_int(6);
 	w2 = NEW_int(6);
 	
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
 		cout << "surface::init before P->projective_space_init" << endl;
 	}
@@ -215,7 +215,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 		cout << "surface::init after P->projective_space_init" << endl;
 	}
 
-	P2 = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
 		cout << "surface::init before P2->projective_space_init" << endl;
 	}
@@ -226,7 +226,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 		cout << "surface::init after P2->projective_space_init" << endl;
 	}
 
-	Gr = NEW_OBJECT(grassmann);
+	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, 2, F, 0 /* verbose_level */);
 	nb_lines_PG_3 = Gr->nCkq->as_lint();
 	if (f_v) {
@@ -234,7 +234,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 				<< nb_lines_PG_3 << endl;
 	}
 
-	Gr3 = NEW_OBJECT(grassmann);
+	Gr3 = NEW_OBJECT(geometry::grassmann);
 	Gr3->init(4, 3, F, 0 /* verbose_level*/);
 
 
@@ -249,7 +249,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 				"initializing orthogonal done" << endl;
 	}
 
-	Klein = NEW_OBJECT(klein_correspondence);
+	Klein = NEW_OBJECT(geometry::klein_correspondence);
 
 	if (f_v) {
 		cout << "surface::init before Klein->init" << endl;

@@ -83,7 +83,7 @@ classification_of_objects::~classification_of_objects()
 void classification_of_objects::perform_classification(
 		classification_of_objects_description *Descr,
 		int f_projective_space,
-		projective_space *P,
+		geometry::projective_space *P,
 		data_structures::data_input_stream *IS,
 		int verbose_level)
 {
@@ -162,7 +162,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 	F_reject = NEW_int(IS->Objects.size());
 
-	OWCF_transversal = (object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
+	OWCF_transversal = (geometry::object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
 
 	NO_transversal = (data_structures::nauty_output **) NEW_pvoid(IS->Objects.size());
 
@@ -175,9 +175,9 @@ void classification_of_objects::classify_objects_using_nauty(
 					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
 		}
 
-		object_with_canonical_form *OwCF;
+		geometry::object_with_canonical_form *OwCF;
 
-		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
 		if (FALSE) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"OwCF:" << endl;
@@ -208,7 +208,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		}
 
 		if (!F_reject[input_idx]) {
-			OWCF_transversal[nb_orbits] = (object_with_canonical_form *) IS->Objects[input_idx];
+			OWCF_transversal[nb_orbits] = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
 			NO_transversal[nb_orbits] = NO;
 			nb_orbits++;
 		}
@@ -376,7 +376,8 @@ void classification_of_objects::save_transversal(int verbose_level)
 	}
 }
 
-void classification_of_objects::process_any_object(object_with_canonical_form *OwCF,
+void classification_of_objects::process_any_object(
+		geometry::object_with_canonical_form *OwCF,
 		int input_idx, long int &ago, int &f_reject, data_structures::nauty_output *&NO,
 		int verbose_level)
 {
@@ -474,7 +475,7 @@ void classification_of_objects::process_any_object(object_with_canonical_form *O
 
 
 int classification_of_objects::process_object(
-	object_with_canonical_form *OwCF,
+		geometry::object_with_canonical_form *OwCF,
 	long int &ago,
 	int &iso_idx_if_found,
 	data_structures::nauty_output *&NO,
@@ -981,7 +982,7 @@ void classification_of_objects::report_isomorphism_type(
 		FREE_int(Input_objects);
 	}
 
-	object_with_canonical_form *OwCF;
+	geometry::object_with_canonical_form *OwCF;
 
 	OwCF = OWCF_transversal[i];
 
@@ -1003,7 +1004,7 @@ void classification_of_objects::report_isomorphism_type(
 
 
 void classification_of_objects::report_object(std::ostream &fp,
-		object_with_canonical_form *OwCF,
+		geometry::object_with_canonical_form *OwCF,
 		int object_idx,
 		int max_TDO_depth,
 		int f_show_incma,
@@ -1022,7 +1023,8 @@ void classification_of_objects::report_object(std::ostream &fp,
 
 
 static void print_summary_table_entry(int *Table,
-		int m, int n, int i, int j, int val, std::string &output, void *data)
+		int m, int n, int i, int j, int val,
+		std::string &output, void *data)
 {
 	int f_v = TRUE;
 	data_structures::classify_bitvectors *CB;

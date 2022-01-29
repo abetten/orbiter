@@ -419,10 +419,10 @@ void spread_classify::klein(ostream &ost,
 		
 		string fname_pic;
 		char str[1000];
-		incidence_structure *I;
+		geometry::incidence_structure *I;
 		data_structures::partitionstack *Stack;
 		
-		I = NEW_OBJECT(incidence_structure);
+		I = NEW_OBJECT(geometry::incidence_structure);
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
@@ -447,11 +447,11 @@ void spread_classify::klein(ostream &ost,
 
 	// compute TDO:
 	{
-		incidence_structure *I;
+		geometry::incidence_structure *I;
 		data_structures::partitionstack *Stack;
 		int depth = INT_MAX;
 		
-		I = NEW_OBJECT(incidence_structure);
+		I = NEW_OBJECT(geometry::incidence_structure);
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
@@ -538,9 +538,9 @@ void spread_classify::klein(ostream &ost,
 }
 
 void spread_classify::plane_intersection_type_of_klein_image(
-	projective_space *P3, 
-	projective_space *P5, 
-	grassmann *Gr, 
+		geometry::projective_space *P3,
+		geometry::projective_space *P5,
+		geometry::grassmann *Gr,
 	long int *data, int size,
 	int *&intersection_type, int &highest_intersection_number, 
 	int verbose_level)
@@ -1656,11 +1656,11 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 	cout << "HH:" << endl;
 	Orbiter->Int_vec->matrix_print(HH, q2, q2);
 
-	grassmann *Gq2;
+	geometry::grassmann *Gq2;
 	long int *Data2;
 	int Sz;
 
-	Gq2 = NEW_OBJECT(grassmann);
+	Gq2 = NEW_OBJECT(geometry::grassmann);
 	Gq2->init(n, k, Fq2, verbose_level);
 
 	Sz = q2 * q2 + 1;
@@ -2353,7 +2353,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	long int **Pts;
 	int nb_points = 0;
 	int *List;
-	grassmann *Gr;
+	geometry::grassmann *Gr;
 	ring_theory::longinteger_domain Dom;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
@@ -2407,7 +2407,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	vec2 = NEW_int(n);
 	Pts = NEW_plint(order + 1);
 	List = NEW_int(order);
-	Gr = NEW_OBJECT(grassmann);
+	Gr = NEW_OBJECT(geometry::grassmann);
 
 	Gr->init(n - 1, k, Mtx->GFq, 0 /* verbose_level */);
 	for (i = 0; i < order + 1; i++) {

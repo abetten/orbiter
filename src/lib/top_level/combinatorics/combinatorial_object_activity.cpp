@@ -35,8 +35,9 @@ combinatorial_object_activity::~combinatorial_object_activity()
 }
 
 
-void combinatorial_object_activity::init(combinatorial_object_activity_description *Descr,
-		geometric_object_create *GOC,
+void combinatorial_object_activity::init(
+		combinatorial_object_activity_description *Descr,
+		geometry::geometric_object_create *GOC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -110,7 +111,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_GOC f_line_type" << endl;
 		}
 
-		projective_space *P;
+		geometry::projective_space *P;
 
 		P = GOC->Descr->P;
 
@@ -143,7 +144,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_GOC f_conic_type" << endl;
 		}
 
-		projective_space *P;
+		geometry::projective_space *P;
 
 		P = GOC->Descr->P;
 
@@ -174,7 +175,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_GOC f_conic_type" << endl;
 		}
 
-		projective_space *P;
+		geometry::projective_space *P;
 
 		P = GOC->Descr->P;
 
@@ -196,7 +197,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_GOC f_ideal" << endl;
 		}
 
-		projective_space *P;
+		geometry::projective_space *P;
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 		P = GOC->Descr->P;
@@ -508,9 +509,9 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+			OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
 
 			F_distinguishing[input_idx] = CG->test_distinguishing_property(OwCF->set, OwCF->sz, verbose_level);
 		}
@@ -536,9 +537,9 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 				continue;
 			}
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+			OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
 
 			OwCF->print(cout);
 
@@ -636,9 +637,9 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 
 	N = IS->Objects.size();
 
-	object_with_canonical_form *OwCF;
+	geometry::object_with_canonical_form *OwCF;
 
-	OwCF = (object_with_canonical_form *) IS->Objects[0];
+	OwCF = (geometry::object_with_canonical_form *) IS->Objects[0];
 
 	//OwCF->set;
 	sz = OwCF->sz;
@@ -650,9 +651,9 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
 		}
 
-		object_with_canonical_form *OwCF;
+		geometry::object_with_canonical_form *OwCF;
 
-		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
 
 		//OwCF->set;
 		if (OwCF->sz != sz) {
@@ -668,9 +669,9 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 	Sets = NEW_lint(N * sz);
 
 	for (input_idx = 0; input_idx < N; input_idx++) {
-		object_with_canonical_form *OwCF;
+		geometry::object_with_canonical_form *OwCF;
 
-		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
 
 		Orbiter->Lint_vec->copy(OwCF->set, Sets + input_idx * sz, sz);
 	}
@@ -1022,7 +1023,7 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 	}
 
 
-	object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
+	geometry::object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
 
 	OwCF->print_tex_detailed(fp, Report_options->f_show_incidence_matrices, verbose_level);
 
@@ -1094,9 +1095,9 @@ void combinatorial_object_activity::draw_incidence_matrices(
 
 		for (i = 0; i < N; i++) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) IS->Objects[i];
+			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
 
 
 			combinatorics::encoded_combinatorial_object *Enc;
@@ -1194,9 +1195,9 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 
 		for (i = 0; i < N; i++) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) IS->Objects[i];
+			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
 
 
 			//encoded_combinatorial_object *Enc;
@@ -1256,7 +1257,7 @@ void combinatorial_object_activity::line_covering_type(
 
 	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
 
-	projective_space *P;
+	geometry::projective_space *P;
 
 	P = PA->P;
 
@@ -1298,9 +1299,9 @@ void combinatorial_object_activity::line_covering_type(
 
 		for (i = 0; i < N; i++) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) IS->Objects[i];
+			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
 
 
 			P->line_intersection_type_basic_given_a_set_of_lines(

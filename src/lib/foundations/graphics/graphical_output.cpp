@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 
@@ -808,7 +809,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 	int width, height;
 	//int *Table;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	width = C->n;
 	height = C->m;
@@ -2129,5 +2130,6 @@ static void interface_povray_draw_frame(
 
 
 
-}}
+}}}
+
 

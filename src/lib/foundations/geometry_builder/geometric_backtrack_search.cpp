@@ -694,10 +694,10 @@ void geometric_backtrack_search::place_row(int I, int m, int idx, int verbose_le
 	iso_type *It;
 	It = Row_stabilizer_orbits[i1];
 
-	object_with_canonical_form *OwCF;
+	geometry::object_with_canonical_form *OwCF;
 	int J, r, j, n, j0;
 
-	OwCF = (object_with_canonical_form *) It->Canonical_forms->Objects[idx];
+	OwCF = (geometry::object_with_canonical_form *) It->Canonical_forms->Objects[idx];
 
 
 	r = 0;

@@ -295,7 +295,7 @@ class object_in_projective_space_with_action {
 
 public:
 
-	object_with_canonical_form *OwCF;
+	geometry::object_with_canonical_form *OwCF;
 		// do not free
 	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
@@ -308,7 +308,8 @@ public:
 	~object_in_projective_space_with_action();
 	void null();
 	void freeself();
-	void init(object_with_canonical_form *OwCF,
+	void init(
+			geometry::object_with_canonical_form *OwCF,
 			long int ago,
 			groups::strong_generators *Aut_gens,
 			int *canonical_labeling,
@@ -368,7 +369,7 @@ public:
 
 	int f_define_object;
 	std::string define_object_label;
-	geometric_object_description *Object_Descr;
+	geometry::geometric_object_description *Object_Descr;
 
 
 	int f_define_surface;
@@ -695,7 +696,7 @@ public:
 	int f_semilinear;
 	int f_init_incidence_structure;
 
-	projective_space *P;
+	geometry::projective_space *P;
 
 	// if n >= 3:
 	projective_space_with_action *PA2;
@@ -724,7 +725,7 @@ public:
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	void canonical_labeling(
-		object_with_canonical_form *OiP,
+			geometry::object_with_canonical_form *OiP,
 		int *canonical_labeling,
 		int verbose_level);
 	void report_fixed_points_lines_and_planes(
@@ -738,7 +739,7 @@ public:
 		int verbose_level);
 	int process_object(
 		data_structures::classify_bitvectors *CB,
-		object_with_canonical_form *OiP,
+		geometry::object_with_canonical_form *OiP,
 		int f_save_incma_in_and_out, std::string &prefix,
 		int nb_objects_to_test,
 		groups::strong_generators *&SG,
@@ -761,7 +762,7 @@ public:
 			groups::linear_group_description * subgroup_Descr, int verbose_level);
 	void report(
 		std::ostream &ost,
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int verbose_level);
 	void create_quartic_curve(
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr,
@@ -778,7 +779,7 @@ public:
 			long int *Pts, int nb_pts, int threshold,
 			int verbose_level);
 	void cheat_sheet(
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void do_spread_classify(int k,
 			poset_classification::poset_classification_control *Control,

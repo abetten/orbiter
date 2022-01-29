@@ -579,7 +579,7 @@ void group_generators_domain::order_POmega_epsilon(
 {
 	int f_v = (verbose_level >= 1);
 	int w, m;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::order_POmega_epsilon" << endl;
@@ -628,7 +628,7 @@ void group_generators_domain::order_PO_epsilon(
 	int f_v = (verbose_level >= 1);
 	int m;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::order_PO_epsilon" << endl;
@@ -708,7 +708,7 @@ void group_generators_domain::order_PO_plus(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object O, Q, R, S, T, Two, minusone;
 	int i;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	Two.create(2, __FILE__, __LINE__);
@@ -771,7 +771,7 @@ void group_generators_domain::order_PO_minus(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object O, Q, R, S, T, Two, plusone, minusone;
 	int i;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	Two.create(2, __FILE__, __LINE__);
@@ -836,7 +836,7 @@ void group_generators_domain::order_PO_parabolic(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object O, Q, R, S, T, minusone;
 	int i;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	minusone.create(-1, __FILE__, __LINE__);
@@ -883,7 +883,7 @@ void group_generators_domain::order_Pomega_plus(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object O, Q, R, S, S1, T, minusone;
 	int i, r;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -947,7 +947,7 @@ void group_generators_domain::order_Pomega_minus(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object O, Q, R, S, S1, T, minusone, plusone;
 	int i, r;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::order_Pomega_minus m=" << m << " q=" << q << endl;
@@ -1016,7 +1016,7 @@ void group_generators_domain::order_Pomega_parabolic(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object O, Q, R, S, T, minusone;
 	int i, r;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	minusone.create(-1, __FILE__, __LINE__);
@@ -1116,7 +1116,7 @@ void group_generators_domain::diagonal_orbit_perm(int n, field_theory::finite_fi
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 1);
 	int *v = NEW_int(n + 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	long int l, ll;
 	long int a, b, c;
 	long int i, j;
@@ -1168,7 +1168,7 @@ void group_generators_domain::frobenius_orbit_perm(int n, field_theory::finite_f
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;// (verbose_level >= 1);
 	int *v = NEW_int(n);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	long int l;
 	long int ll;
 	long int a, b, c;
@@ -1236,7 +1236,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fie
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int i;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -1373,7 +1373,7 @@ void group_generators_domain::projective_matrix_group_base_and_transversal_lengt
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -2345,7 +2345,7 @@ void group_generators_domain::builtin_transversal_rep_GLnq(int *A,
 
 	int transversal_length;
 	int ii, jj, i0, a;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::builtin_transversal_rep_GLnq  "
@@ -2434,7 +2434,7 @@ void group_generators_domain::affine_translation(int n, field_theory::finite_fie
 	long int i, j, l, a;
 	int *v;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::affine_translation "
@@ -2463,7 +2463,7 @@ void group_generators_domain::affine_multiplication(int n, field_theory::finite_
 	long int i, j, l, k;
 	int alpha_power, a;
 	int *v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::affine_multiplication" << endl;
@@ -2498,7 +2498,7 @@ void group_generators_domain::affine_frobenius(int n, field_theory::finite_field
 	int f_v = (verbose_level >= 1);
 	long int i, j, l, u;
 	int *v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::affine_frobenius" << endl;
@@ -2529,7 +2529,7 @@ void group_generators_domain::all_affine_translations(int n, field_theory::finit
 {
 	int i, j, k = 0;
 	int degree;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	degree = Gg.nb_AG_elements(n, F->q);
 
@@ -2549,7 +2549,7 @@ void group_generators_domain::affine_generators(int n, field_theory::finite_fiel
 {
 	int f_v = (verbose_level >= 1);
 	int k, h;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "group_generators_domain::affine_generators" << endl;
@@ -2602,7 +2602,7 @@ void group_generators_domain::PG_element_modified_not_in_subspace_perm(field_the
 {
 	int f_v = (verbose_level >= 1);
 	int *v = NEW_int(n + 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	long int l = Gg.nb_PG_elements(n, F->q);
 	long int ll = Gg.nb_PG_elements_not_in_subspace(n, m, F->q);
 	long int i, j1 = 0, j2 = ll, f_in, j;

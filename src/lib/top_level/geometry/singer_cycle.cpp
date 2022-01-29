@@ -226,7 +226,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 	v = NEW_int(n);
 
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 
 	P->projective_space_init(n - 1, F,
 		FALSE /* f_init_incidence_structure */, 
@@ -356,7 +356,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 	int f_combined_action = FALSE;
 
-	Inc = NEW_OBJECT(incidence_structure);
+	Inc = NEW_OBJECT(geometry::incidence_structure);
 
 	Inc->init_by_matrix_as_bitmatrix(P->N_points, P->N_lines, P->Implementation->Bitmatrix, 0);
 

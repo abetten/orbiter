@@ -396,10 +396,10 @@ void data_input_stream::read_objects(int verbose_level)
 					<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 			OwCF->init_point_set_from_string(
 					Descr->Input[input_idx].input_string /*set_text*/,
@@ -413,11 +413,11 @@ void data_input_stream::read_objects(int verbose_level)
 			file_io Fio;
 			long int *the_set;
 			int set_size;
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
 			Fio.read_set_from_file(Descr->Input[input_idx].input_string, the_set, set_size, verbose_level);
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 			OwCF->init_point_set(the_set, set_size, verbose_level);
 
@@ -428,9 +428,9 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_lines) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 			OwCF->init_line_set_from_string(
 					Descr->Input[input_idx].input_string /*set_text*/,
@@ -441,10 +441,10 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_points_and_lines) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 			OwCF->init_points_and_lines_from_string(
 					Descr->Input[input_idx].input_string /*set_text*/,
@@ -456,13 +456,13 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_packing) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 			int q;
 
 			q = Descr->Input[input_idx].input_data1;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 			OwCF->init_packing_from_string(
 					Descr->Input[input_idx].input_string /*packing_text*/,
@@ -474,10 +474,10 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 			OwCF->init_incidence_geometry_from_string(
 					Descr->Input[input_idx].input_string,
@@ -491,10 +491,10 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry_by_row_ranks) {
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 			OwCF->init_incidence_geometry_from_string_of_row_ranks(
 					Descr->Input[input_idx].input_string,
@@ -537,10 +537,10 @@ void data_input_stream::read_objects(int verbose_level)
 			}
 
 			for (h = 0; h < Geos.size(); h++) {
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 				OwCF->init_incidence_geometry_from_vector(
 						Geos[h],
@@ -584,10 +584,10 @@ void data_input_stream::read_objects(int verbose_level)
 			}
 
 			for (h = 0; h < Geos.size(); h++) {
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 				OwCF->init_incidence_geometry_from_vector(
 						Geos[h],
@@ -634,10 +634,10 @@ void data_input_stream::read_objects(int verbose_level)
 					cout << "data_input_stream::read_objects " << h << " / " << SoS->nb_sets << endl;
 				}
 
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 				OwCF->init_large_set(
 						SoS->Sets[h], SoS->Set_size[h], v, b, k, design_sz,
@@ -700,10 +700,10 @@ void data_input_stream::read_objects(int verbose_level)
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 				OwCF->init_packing_from_spread_table(
 						SoS->Sets[h],
@@ -745,10 +745,10 @@ void data_input_stream::read_objects(int verbose_level)
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 				OwCF->init_packing_from_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);
@@ -787,10 +787,10 @@ void data_input_stream::read_objects(int verbose_level)
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 				OwCF->init_line_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);
@@ -829,10 +829,10 @@ void data_input_stream::read_objects(int verbose_level)
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 				OwCF->init_point_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);
@@ -929,13 +929,13 @@ void data_input_stream::read_objects(int verbose_level)
 					}
 
 					for (i = 0; i < nb_sol; i++) {
-						object_with_canonical_form *OwCF;
+						geometry::object_with_canonical_form *OwCF;
 
 
 						Orbiter->Lint_vec->copy(Reps->Sets[c], set, prefix_sz);
 						Orbiter->Lint_vec->copy(Sol_idx + i * sol_width, set + prefix_sz, sol_width);
 
-						OwCF = NEW_OBJECT(object_with_canonical_form);
+						OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 						OwCF->init_point_set(
 								set, prefix_sz + sol_width,

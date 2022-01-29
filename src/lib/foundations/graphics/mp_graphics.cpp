@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 static void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
@@ -4644,7 +4645,6 @@ void mp_graphics::domino_draw_assignment(int *A, int *matching, int *B,
 		}
 }
 
-}
-}
+}}}
 
 

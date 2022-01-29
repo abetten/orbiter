@@ -428,7 +428,7 @@ void linear_group::linear_group_init(
 
 	if (description->f_on_k_subspaces) {
 		induced_actions::action_on_grassmannian *AG;
-		grassmann *Grass;
+		geometry::grassmann *Grass;
 		//action *A3;
 		
 		if (f_v) {
@@ -438,7 +438,7 @@ void linear_group::linear_group_init(
 		}
 		AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 		
-		Grass = NEW_OBJECT(grassmann);
+		Grass = NEW_OBJECT(geometry::grassmann);
 
 
 		if (f_v) {
@@ -1345,7 +1345,7 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 void linear_group::report(std::ostream &ost,
 		int f_sylow, int f_group_table,
 		int f_conjugacy_classes_and_normalizers,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1524,7 +1524,7 @@ void linear_group::report(std::ostream &ost,
 				fname2.append(str);
 
 				{
-					mp_graphics G;
+					graphics::mp_graphics G;
 
 					G.init(fname2, LG_Draw_options, verbose_level);
 
@@ -1610,7 +1610,7 @@ void linear_group::report(std::ostream &ost,
 
 
 void linear_group::create_latex_report(
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int f_sylow, int f_group_table, int f_classes,
 		int verbose_level)
 {

@@ -2369,7 +2369,7 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 		{
 			ofstream ost(fname);
 			latex_interface L;
-			geometry_global GG;
+			geometry::geometry_global GG;
 			long int rk;
 
 			L.head(ost,

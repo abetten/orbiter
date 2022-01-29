@@ -261,7 +261,7 @@ void spread_classify::init(
 
 
 
-	Grass = NEW_OBJECT(grassmann);
+	Grass = NEW_OBJECT(geometry::grassmann);
 	Grass->init(n, k, Mtx->GFq, 0 /*MINIMUM(verbose_level - 1, 1)*/);
 	
 	nCkq = Combi.generalized_binomial(n, k, q);
@@ -436,7 +436,7 @@ void spread_classify::init(
 			cout << "spread_classify::init k == 2 and n == 4, "
 					"initializing klein correspondence" << endl;
 		}
-		Klein = NEW_OBJECT(klein_correspondence);
+		Klein = NEW_OBJECT(geometry::klein_correspondence);
 		O = NEW_OBJECT(orthogonal);
 		
 		O->init(1 /* epsilon */, 6, Mtx->GFq, 0 /* verbose_level*/);

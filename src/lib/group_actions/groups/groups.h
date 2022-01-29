@@ -297,10 +297,10 @@ public:
 	void init_subgroup_Janko1(int verbose_level);
 	void report(std::ostream &fp, int f_sylow, int f_group_table,
 			int f_conjugacy_classes_and_normalizers,
-			layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void create_latex_report(
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, int f_classes,
 			int verbose_level);
 
@@ -1050,10 +1050,11 @@ public:
 					int orbit_idx, void *data, int verbose_level),
 			void *compute_orbit_invariant_data,
 			int verbose_level);
-	void print_TDA(std::ostream &ost, object_with_canonical_form *OwCF,
+	void print_TDA(std::ostream &ost, geometry::object_with_canonical_form *OwCF,
 			combinatorics::classification_of_objects_report_options *Report_options,
 			int verbose_level);
-	void latex_TDA(std::ostream &ost, combinatorics::encoded_combinatorial_object *Enc,
+	void latex_TDA(std::ostream &ost,
+			combinatorics::encoded_combinatorial_object *Enc,
 			int verbose_level);
 
 	// schreier_io.cpp:
@@ -1071,7 +1072,8 @@ public:
 			std::ostream &ost, actions::action *default_action, strong_generators *gens,
 			int verbose_level);
 	void make_orbit_trees(std::ostream &ost,
-			std::string &fname_mask, layered_graph_draw_options *Opt,
+			std::string &fname_mask,
+			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 	void print_and_list_orbits_with_original_labels_tex(std::ostream &ost);
 	void print_and_list_orbits_of_given_length(std::ostream &ost,
@@ -1132,28 +1134,30 @@ public:
 			std::string &fname_mask,
 			int verbose_level);
 	void draw_forest(std::string &fname_mask,
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
 	void draw_tree(std::string &fname,
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			int orbit_no,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
 	void draw_tree2(std::string &fname,
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			int *weight, int *placement_x, int max_depth,
 			int i, int last,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
-	void subtree_draw_lines(mp_graphics &G,
-			layered_graph_draw_options *Opt,
+	void subtree_draw_lines(
+			graphics::mp_graphics &G,
+			graphics::layered_graph_draw_options *Opt,
 			int parent_x, int parent_y, int *weight,
 			int *placement_x, int max_depth, int i, int last,
 			int y_max,
 			int verbose_level);
-	void subtree_draw_vertices(mp_graphics &G,
-			layered_graph_draw_options *Opt,
+	void subtree_draw_vertices(
+			graphics::mp_graphics &G,
+			graphics::layered_graph_draw_options *Opt,
 			int parent_x, int parent_y, int *weight,
 			int *placement_x, int max_depth, int i, int last,
 			int f_has_point_labels, long int *point_labels,
@@ -1675,7 +1679,7 @@ public:
 			data_structures_groups::vector_ge *gens, int verbose_level);
 	void report(std::ostream &ost,
 			std::string &prefix,
-			layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 
 
@@ -1889,7 +1893,7 @@ public:
 			int verbose_level);
 	void report_fixed_objects_in_P3(
 			std::ostream &ost,
-			projective_space *P3,
+			geometry::projective_space *P3,
 			int verbose_level);
 	void reverse_isomorphism_exterior_square(int verbose_level);
 	void get_gens_data(int *&data, int &sz, int verbose_level);
@@ -2011,7 +2015,7 @@ public:
 		int nb_pairs, int &degree, int verbose_level);
 	void hyperplane_lifting_with_two_lines_fixed(
 		strong_generators *SG_hyperplane,
-		projective_space *P, int line1, int line2,
+		geometry::projective_space *P, int line1, int line2,
 		int verbose_level);
 	void exterior_square(
 			actions::action *A_detached,

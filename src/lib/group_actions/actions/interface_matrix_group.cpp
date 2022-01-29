@@ -626,7 +626,7 @@ static void matrix_group_element_print_verbose(action &A,
 static void matrix_group_print_point(action &A, long int a, ostream &ost)
 {
 	groups::matrix_group *G = A.G.matrix_grp;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	cout << "matrix_group_print_point" << endl;
 	if (G->f_projective) {
@@ -648,7 +648,7 @@ static void matrix_group_print_point(action &A, long int a, ostream &ost)
 static void matrix_group_unrank_point(action &A, long int rk, int *v)
 {
 	groups::matrix_group *G = A.G.matrix_grp;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (G->f_projective) {
 		G->GFq->PG_element_unrank_modified(v, 1 /* stride */, G->n, rk);
@@ -669,7 +669,7 @@ static long int matrix_group_rank_point(action &A, int *v)
 {
 	groups::matrix_group *G = A.G.matrix_grp;
 	long int rk;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (G->f_projective) {
 		G->GFq->PG_element_rank_modified_lint(v, 1 /* stride */, G->n, rk);

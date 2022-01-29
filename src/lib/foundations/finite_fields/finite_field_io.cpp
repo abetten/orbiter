@@ -931,7 +931,7 @@ void finite_field::cheat_sheet_power_table(std::ostream &ost, int f_with_polynom
 	int i, j, t;
 	int len = q;
 	int *v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	t = primitive_root();
 
@@ -1018,7 +1018,7 @@ void finite_field::cheat_sheet_table_of_elements(std::ostream &ost, int verbose_
 	ost << "\\begin{array}{|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
 
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	for (i = 0; i < q; i++) {
 		Gg.AG_element_unrank(p, v, 1, e, i);
@@ -1107,7 +1107,7 @@ void finite_field::cheat_sheet_main_table(std::ostream &f, int verbose_level)
 
 	cheat_sheet_main_table_top(f, nb_cols);
 
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	for (i = 0; i < q; i++) {
 		Gg.AG_element_unrank(p, v, 1, e, i);

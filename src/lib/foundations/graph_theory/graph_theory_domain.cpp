@@ -24,10 +24,7 @@ graph_theory_domain::~graph_theory_domain() {
 
 void graph_theory_domain::colored_graph_draw(
 		std::string &fname_graph,
-		layered_graph_draw_options *Draw_options,
-		//int xmax_in,
-		//int ymax_in, int xmax_out, int ymax_out, double scale,
-		//double line_width,
+		graphics::layered_graph_draw_options *Draw_options,
 		int f_labels,
 		int verbose_level)
 {
@@ -699,7 +696,7 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 
 void graph_theory_domain::draw_bitmatrix(
 		std::string &fname_base,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 		int f_dots,
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
@@ -723,7 +720,7 @@ void graph_theory_domain::draw_bitmatrix(
 	//fname.assign(fname_base2);
 	//fname.append(".mp");
 	{
-		mp_graphics G;
+		graphics::mp_graphics G;
 
 		G.init(fname_base, Draw_options, verbose_level - 1);
 
@@ -887,7 +884,7 @@ void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
 	if (f_v) {
 		cout << "graph_theory_domain::make_Hamming_graph" << endl;
 	}
-	geometry_global GG;
+	geometry::geometry_global GG;
 	number_theory::number_theory_domain NT;
 	coding_theory::coding_theory_domain Coding;
 	int *v1;
@@ -1041,7 +1038,7 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 	}
 
 	field_theory::finite_field *F;
-	grassmann *Gr;
+	geometry::grassmann *Gr;
 	int n = 4;
 	int k = 2;
 
@@ -1049,7 +1046,7 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
-	Gr = NEW_OBJECT(grassmann);
+	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
 
 	Gr->create_Schlaefli_graph(Adj, N, verbose_level);
@@ -1169,7 +1166,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 
 
 	field_theory::finite_field *F;
-	grassmann *Gr;
+	geometry::grassmann *Gr;
 	int i, j, rr;
 	int *M1; // [k * n]
 	int *M2; // [k * n]
@@ -1180,7 +1177,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 
-	Gr = NEW_OBJECT(grassmann);
+	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
 
 	N = Combi.generalized_binomial(n, k, q);
@@ -1240,7 +1237,7 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	int c1 = 0, c2 = 0, c3 = 0;
 	int *v, *v2;
 	int *Gram; // Gram matrix
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	n = d - 1; // projective dimension

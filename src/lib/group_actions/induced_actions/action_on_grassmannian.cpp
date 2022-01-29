@@ -84,7 +84,7 @@ void action_on_grassmannian::free()
 }
 
 void action_on_grassmannian::init(actions::action &A,
-		grassmann *G, int verbose_level)
+		geometry::grassmann *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -172,7 +172,7 @@ void action_on_grassmannian::init_embedding(int big_n,
 		}
 	action_on_grassmannian::big_n = big_n;
 	f_embedding = TRUE;
-	GE = NEW_OBJECT(grassmann_embedded);
+	GE = NEW_OBJECT(geometry::grassmann_embedded);
 	GE->init(big_n, n, G, ambient_space, verbose_level);
 	subspace_basis = NEW_int(n * big_n);
 	subspace_basis2 = NEW_int(n * big_n);

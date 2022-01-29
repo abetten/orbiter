@@ -183,7 +183,8 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 	}
 }
 
-void orthogonal_space_with_action::report(layered_graph_draw_options *LG_Draw_options,
+void orthogonal_space_with_action::report(
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -223,7 +224,7 @@ void orthogonal_space_with_action::report(layered_graph_draw_options *LG_Draw_op
 }
 
 void orthogonal_space_with_action::report2(std::ostream &ost,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

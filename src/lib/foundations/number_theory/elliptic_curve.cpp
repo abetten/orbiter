@@ -362,7 +362,7 @@ void elliptic_curve::save_incidence_matrix(std::string &fname,
 
 void elliptic_curve::draw_grid(
 		std::string &fname,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 		int f_with_grid, int f_with_points, int point_density,
 		int f_path, int start_idx, int nb_steps,
 		int verbose_level)
@@ -379,7 +379,7 @@ void elliptic_curve::draw_grid(
 
 	{
 
-		mp_graphics G;
+		graphics::mp_graphics G;
 
 		G.init(fname_full, Draw_options, verbose_level - 1);
 
@@ -405,7 +405,7 @@ void elliptic_curve::draw_grid(
 }
 
 
-void elliptic_curve::draw_grid2(mp_graphics &G,
+void elliptic_curve::draw_grid2(graphics::mp_graphics &G,
 		int f_with_grid, int f_with_points, int point_density,
 		int f_path, int start_idx, int nb_steps,
 		int verbose_level)

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 parametric_curve_point::parametric_curve_point()
@@ -59,5 +60,6 @@ void parametric_curve_point::init(double t, int f_is_valid,
 
 
 
-}}
+}}}
+
 

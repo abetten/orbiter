@@ -947,7 +947,8 @@ void surface_object_with_action::print_elements_on_lines(
 
 void surface_object_with_action::print_automorphism_group(
 	std::ostream &ost,
-	int f_print_orbits, std::string &fname_mask, layered_graph_draw_options *Opt,
+	int f_print_orbits, std::string &fname_mask,
+	graphics::layered_graph_draw_options *Opt,
 	int verbose_level)
 {
 	ring_theory::longinteger_object go;
@@ -1171,7 +1172,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 		std::string &label_txt,
 		std::string &label_tex,
 		int f_print_orbits, std::string &fname_mask,
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1458,7 +1459,7 @@ void surface_object_with_action::print_automorphism_group_gnerators(std::ostream
 
 
 void surface_object_with_action::investigate_surface_and_write_report(
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
 		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
@@ -1525,7 +1526,7 @@ void surface_object_with_action::investigate_surface_and_write_report(
 
 void surface_object_with_action::investigate_surface_and_write_report2(
 		std::ostream &ost,
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
 		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,

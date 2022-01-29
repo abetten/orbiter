@@ -386,9 +386,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_cheat_sheet_PG) {
 
-		geometry_global Geo;
+		geometry::geometry_global Geo;
 
-		layered_graph_draw_options *O;
+		graphics::layered_graph_draw_options *O;
 
 
 		if (!Orbiter->f_draw_options) {
@@ -402,14 +402,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_cheat_sheet_Gr) {
 
-		geometry_global Geo;
+		geometry::geometry_global Geo;
 
 		Geo.do_cheat_sheet_Gr(F, Descr->cheat_sheet_Gr_n, Descr->cheat_sheet_Gr_k,
 				verbose_level);
 	}
 	else if (Descr->f_cheat_sheet_hermitian) {
 
-		geometry_global Geo;
+		geometry::geometry_global Geo;
 
 		Geo.do_cheat_sheet_hermitian(F,
 				Descr->cheat_sheet_hermitian_projective_dimension,
@@ -417,7 +417,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_cheat_sheet_desarguesian_spread) {
 
-		geometry_global Geo;
+		geometry::geometry_global Geo;
 
 		if (F_secondary == NULL) {
 			cout << "F_secondary == NULL" << endl;
@@ -517,7 +517,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_transversal) {
 
-		geometry_global GG;
+		geometry::geometry_global GG;
 
 		GG.do_transversal(F,
 				Descr->transversal_line_1_basis,
@@ -529,7 +529,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_intersection_of_two_lines) {
 
-		geometry_global GG;
+		geometry::geometry_global GG;
 
 		GG.do_intersection_of_two_lines(F,
 				Descr->line_1_basis,
@@ -540,7 +540,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_inverse_isomorphism_klein_quadric) {
 
-		geometry_global GG;
+		geometry::geometry_global GG;
 
 		GG.do_inverse_isomorphism_klein_quadric(F,
 				Descr->inverse_isomorphism_klein_quadric_matrix_A6,
@@ -548,7 +548,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_rank_point_in_PG) {
 
-		geometry_global GG;
+		geometry::geometry_global GG;
 
 		GG.do_rank_points_in_PG(F,
 				Descr->rank_point_in_PG_label,

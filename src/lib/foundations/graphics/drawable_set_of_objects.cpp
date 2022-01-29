@@ -20,6 +20,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 
@@ -400,5 +401,5 @@ void drawable_set_of_objects::draw(animate *Anim, ostream &ost,
 	}
 }
 
-}}
+}}}
 

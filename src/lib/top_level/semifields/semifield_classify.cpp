@@ -478,7 +478,7 @@ void semifield_classify::init(
 void semifield_classify::report(std::ostream &ost, int level,
 		semifield_level_two *L2,
 		semifield_lifting *L3,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -885,7 +885,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 	int *v, *w;
 	int i, j, N, r;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::early_test_func" << endl;
@@ -986,7 +986,7 @@ int semifield_classify::test_candidate(
 	int *base_cols;
 	int N, h, i, j, a, b, c, r;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::test_candidate" << endl;
@@ -1080,7 +1080,7 @@ int semifield_classify::test_partial_semifield(
 	int *v;
 	int *w;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::test_partial_semifield" << endl;
@@ -1337,7 +1337,7 @@ void semifield_classify::candidates_classify_by_first_column(
 	int h, u, i, t, w;
 	long int a;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	if (f_v) {

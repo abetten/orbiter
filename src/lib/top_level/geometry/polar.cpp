@@ -353,7 +353,7 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 		}
 
-	grassmann Grass;
+	geometry::grassmann Grass;
 	
 	Grass.init(n, k, F, 0 /*verbose_level*/);
 	for (i = 0; i < k * n; i++) {
@@ -439,7 +439,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	int *Adj;
 	int **M;
 	int witt;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "polar::dual_polar_graph" << endl;
@@ -496,7 +496,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 		}
 
-	grassmann Grass;
+	geometry::grassmann Grass;
 	
 	Grass.init(n, k, F, verbose_level - 2);
 	for (i = 0; i < k * n; i++) {
@@ -921,7 +921,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	int nb_candidates_expanded;
 	int *tmp_candidates;
 	int nb_tmp_candidates;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -1213,7 +1213,7 @@ void polar::list_whole_orbit(int depth,
 		
 
 
-		grassmann Grass;
+		geometry::grassmann Grass;
 	
 		Grass.init(n, k, F, 0/*verbose_level*/);
 		for (h = 0; h < k * n; h++) {

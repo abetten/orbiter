@@ -64,7 +64,7 @@ void action_on_homogeneous_polynomials::init(actions::action *A,
 		ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::init" << endl;

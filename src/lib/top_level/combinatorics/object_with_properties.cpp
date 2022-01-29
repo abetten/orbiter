@@ -54,7 +54,8 @@ object_with_properties::~object_with_properties()
 }
 
 
-void object_with_properties::init(object_with_canonical_form *OwCF,
+void object_with_properties::init(
+		geometry::object_with_canonical_form *OwCF,
 		data_structures::nauty_output *NO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
@@ -211,7 +212,7 @@ void object_with_properties::lift_generators_to_matrix_group(int verbose_level)
 }
 
 void object_with_properties::init_object_in_projective_space(
-		object_with_canonical_form *OwCF,
+		geometry::object_with_canonical_form *OwCF,
 		data_structures::nauty_output *NO,
 		projective_geometry::projective_space_with_action *PA,
 		std::string &label,
@@ -514,7 +515,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 			exit(1);
 		}
 
-		object_with_canonical_form *OwCF2 = (object_with_canonical_form *)
+		geometry::object_with_canonical_form *OwCF2 = (geometry::object_with_canonical_form *)
 				GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->Objects[idx];
 
 		if (f_v) {

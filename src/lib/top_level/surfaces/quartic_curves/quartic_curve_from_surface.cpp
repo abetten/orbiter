@@ -380,7 +380,7 @@ void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orb
 
 
 	if (f_TDO) {
-		geometry_global GG;
+		geometry::geometry_global GG;
 		string fname_base;
 		char str[1000];
 
@@ -580,13 +580,13 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 
 	groups::strong_generators *SG_pt_stab = NULL;
 	ring_theory::longinteger_object pt_stab_order;
-	object_with_canonical_form *OiP = NULL;
+	geometry::object_with_canonical_form *OiP = NULL;
 
 	int f_compute_canonical_form = FALSE;
 	data_structures::bitvector *Canonical_form;
 
 
-	OiP = NEW_OBJECT(object_with_canonical_form);
+	OiP = NEW_OBJECT(geometry::object_with_canonical_form);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "

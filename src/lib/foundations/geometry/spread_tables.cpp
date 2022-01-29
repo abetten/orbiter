@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 static int spread_table_compare_func(void *a, void *b, void *data);
@@ -1073,5 +1074,6 @@ static int spread_table_compare_func(void *a, void *b, void *data)
 
 
 
-}}
+}}}
+
 

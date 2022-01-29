@@ -144,7 +144,7 @@ class interface_algebra {
 	int f_young_symmetrizer_sym_4;
 
 	int f_draw_mod_n;
-	draw_mod_n_description *Draw_mod_n_description;
+	graphics::draw_mod_n_description *Draw_mod_n_description;
 
 	int f_power_function_mod_n;
 	int power_function_mod_n_k;
@@ -328,7 +328,7 @@ class interface_combinatorics {
 
 	int f_draw_layered_graph;
 	std::string draw_layered_graph_fname;
-	layered_graph_draw_options *Layered_graph_draw_options;
+	graphics::layered_graph_draw_options *Layered_graph_draw_options;
 
 	int f_read_solutions_and_tally;
 	std::string read_solutions_and_tally_fname;
@@ -524,7 +524,7 @@ public:
 class interface_povray {
 
 	int f_povray;
-	povray_job_description *Povray_job_description;
+	graphics::povray_job_description *Povray_job_description;
 
 	int f_prepare_frames;
 	prepare_frames *Prepare_frames;
@@ -699,7 +699,7 @@ class interface_toolkit {
 	std::string csv_file_latex_fname;
 
 	int f_draw_matrix;
-	draw_bitmap_control *Draw_bitmap_control;
+	graphics::draw_bitmap_control *Draw_bitmap_control;
 
 	int f_reformat;
 	std::string reformat_fname_in;
@@ -733,10 +733,10 @@ class interface_toolkit {
 	std::string plot_function_fname;
 
 	int f_draw_projective_curve;
-	draw_projective_curve_description *Draw_projective_curve_description;
+	graphics::draw_projective_curve_description *Draw_projective_curve_description;
 
 	int f_tree_draw;
-	tree_draw_options *Tree_draw_options;
+	graphics::tree_draw_options *Tree_draw_options;
 
 public:
 
@@ -883,7 +883,7 @@ public:
 
 	int f_geometric_object;
 	std::string geometric_object_projective_space_label;
-	geometric_object_description *Geometric_object_description;
+	geometry::geometric_object_description *Geometric_object_description;
 
 	int f_graph;
 	apps_graph_theory::create_graph_description *Create_graph_description;

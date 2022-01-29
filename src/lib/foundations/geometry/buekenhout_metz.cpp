@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -1390,7 +1391,7 @@ int buekenhout_metz_check_good_points(int len,
 }
 #endif
 
-}
-}
+}}}
+
 
 

@@ -185,7 +185,7 @@ public:
 	groups::schreier *Sch;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
-	projective_space *P;
+	geometry::projective_space *P;
 
 	actions::action *A2; // action on the lines
 	actions::action *A3; // action on lines restricted to filtered_lines
@@ -414,13 +414,13 @@ public:
 	int Q;
 	int len; // = n + 1
 	field_theory::finite_field *F;
-	hermitian *H;
+	geometry::hermitian *H;
 
 	long int *Pts;
 	int nb_pts;
 	int *v;
 	int *line_type;
-	projective_space *P;
+	geometry::projective_space *P;
 	groups::strong_generators *sg;
 	long int **Intersection_sets;
 	int sz;
@@ -491,7 +491,7 @@ public:
 	field_theory::finite_field *Fq;
 	field_theory::finite_field *FQ;
 	field_theory::subfield_structure *SubS;
-	projective_space *P;
+	geometry::projective_space *P;
 
 
 	// the groups we need:
@@ -512,12 +512,12 @@ public:
 
 	groups::strong_generators *Strong_gens; // generators for GL(m,Q) field reduced into GL(n,q)
 
-	desarguesian_spread *D; // n, m, s
+	geometry::desarguesian_spread *D; // n, m, s
 
 	int n1; // = s * m1;
 	int m1; // = m + 1
 
-	desarguesian_spread *D1; // n1, m1, s
+	geometry::desarguesian_spread *D1; // n1, m1, s
 
 	int *spread_embedding; // [D->N]
 
@@ -654,7 +654,7 @@ public:
 	int nb_sol; // number of solutions so far
 
 
-	klein_correspondence *K;
+	geometry::klein_correspondence *K;
 	int *color_table;
 	int nb_colors;
 
@@ -796,7 +796,7 @@ public:
 
 class search_blocking_set {
 public:
-	incidence_structure *Inc; // do not free
+	geometry::incidence_structure *Inc; // do not free
 	actions::action *A; // do not free
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
@@ -827,7 +827,7 @@ public:
 	~search_blocking_set();
 	void null();
 	void freeself();
-	void init(incidence_structure *Inc, actions::action *A, int verbose_level);
+	void init(geometry::incidence_structure *Inc, actions::action *A, int verbose_level);
 	void find_partial_blocking_sets(int depth, int verbose_level);
 	int test_level(int depth, int verbose_level);
 	int test_blocking_set(int len, long int *S, int verbose_level);
@@ -861,7 +861,7 @@ public:
 	data_structures_groups::vector_ge *nice_gens;
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object target_go;
-	projective_space *P;
+	geometry::projective_space *P;
 	int *singer_point_list;
 	int *singer_point_list_inv;
 	groups::schreier *Sch;
@@ -873,7 +873,7 @@ public:
 	std::string *line_orbit_label_tex;
 	int *line_orbit;
 	int *line_orbit_inv;
-	incidence_structure *Inc;
+	geometry::incidence_structure *Inc;
 	apps_combinatorics::tactical_decomposition *T;
 
 	singer_cycle();
@@ -937,7 +937,7 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void report(int f_poset_classify, int poset_classify_depth,
-			layered_graph_draw_options *draw_options,
+			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 };
 

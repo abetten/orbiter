@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 int projective_space::reverse_engineer_semilinear_map(
@@ -882,4 +883,5 @@ void projective_space::create_hyperplane(
 
 
 
-}}
+}}}
+

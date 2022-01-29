@@ -137,7 +137,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 
 
-	Spread_tables = NEW_OBJECT(spread_tables);
+	Spread_tables = NEW_OBJECT(geometry::spread_tables);
 
 
 

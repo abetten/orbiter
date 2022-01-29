@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 geometric_object_create::geometric_object_create()
@@ -453,6 +454,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 
 
-}}
+}}}
+
 
 

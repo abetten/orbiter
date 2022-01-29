@@ -768,7 +768,7 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 	}
 
 
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "

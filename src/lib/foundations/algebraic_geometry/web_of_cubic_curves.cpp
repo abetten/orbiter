@@ -534,7 +534,7 @@ void web_of_cubic_curves::find_Eckardt_points(int verbose_level)
 		cout << "web_of_cubic_curves::find_Eckardt_points" << endl;
 	}
 	int s;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "web_of_cubic_curves::find_Eckardt_points "

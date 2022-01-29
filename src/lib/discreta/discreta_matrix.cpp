@@ -2732,7 +2732,7 @@ void discreta_matrix::PG_rep(permutation &p, int f_action_from_right, int f_modi
 	domain *d;
 	int m, q, l, i, j;
 	Vector v, w;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	m = s_m();
 	if (!is_finite_field_domain(d)) {
@@ -2771,7 +2771,7 @@ void discreta_matrix::AG_rep(permutation &p, int f_action_from_right)
 	domain *d;
 	int m, q, l, i, j;
 	Vector v, w;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	m = s_m();
 	if (!is_finite_field_domain(d)) {
@@ -2813,7 +2813,7 @@ void discreta_matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
 {
 	with ww(dom);
 	domain *dom1 = NULL;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	int q = finite_field_domain_order_int(dom1);
 	int k, n, i, j, h;
@@ -2841,7 +2841,7 @@ void discreta_matrix::Simplex_code_generator_matrix(domain *dom, int k, int f_v)
 	domain *dom1 = NULL;
 	Vector w;
 	int i, j;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	int q = finite_field_domain_order_int(dom1);
 	int n = Gg.nb_PG_elements(k - 1, q);
@@ -2863,7 +2863,7 @@ void discreta_matrix::PG_design_point_vs_hyperplane(domain *dom, int k, int f_v)
 {
 	with ww(dom);
 	int i, j, l;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	int q = dom->order_int();
 	l = Gg.nb_PG_elements(k, q);
@@ -2894,7 +2894,7 @@ void discreta_matrix::PG_k_q_design(domain *dom, int k, int f_v, int f_vv)
 	int ii, i, j, nb_pts, nb_lines, r;
 	discreta_matrix v, w, z;
 	discreta_base a;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 		
 	int q = dom->order_int();
 	nb_pts = Gg.nb_PG_elements(k, q);
@@ -3062,7 +3062,7 @@ void discreta_matrix::PG_line_rank(int &a, int f_v)
 	int q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
 	discreta_base x;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "discreta_matrix::PG_line_rank() no finite field domain" << endl;
@@ -3198,7 +3198,7 @@ void discreta_matrix::PG_line_unrank(int a)
 	domain *d;
 	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "discreta_matrix::PG_line_unrank no finite field domain" << endl;
@@ -3458,7 +3458,7 @@ int nb_PG_lines(int n, int q)
 {
 	int l, ql, nb, s, a = 0, m;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	m = n + 1;
 	for (l = 0; l < m; l++) {

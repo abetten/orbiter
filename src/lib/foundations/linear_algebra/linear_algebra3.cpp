@@ -27,7 +27,7 @@ void linear_algebra::Gram_matrix(int epsilon, int k,
 	int f_v = (verbose_level >= 1);
 	int d = k + 1;
 	int n, i, j, u, offset = 0;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "linear_algebra::Gram_matrix" << endl;
@@ -83,7 +83,7 @@ int linear_algebra::evaluate_quadratic_form(int *v, int stride,
 	int epsilon, int k, int form_c1, int form_c2, int form_c3)
 {
 	int n, a, b, c = 0, d, x, x1, x2;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	n = Gg.Witt_index(epsilon, k);
 	if (epsilon == 0) {

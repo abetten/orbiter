@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 arc_in_projective_space::arc_in_projective_space()
@@ -2460,5 +2461,5 @@ void arc_in_projective_space::compute_bisecants_and_conics(
 	}
 }
 
-}}
+}}}
 

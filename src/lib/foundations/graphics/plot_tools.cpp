@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 plot_tools::plot_tools()
 {
@@ -847,7 +848,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 void plot_tools::draw_point_set_in_plane(
 	std::string &fname,
 	layered_graph_draw_options *O,
-	projective_space *P,
+	geometry::projective_space *P,
 	long int *Pts, int nb_pts,
 	int f_point_labels,
 	int verbose_level)
@@ -914,7 +915,8 @@ void plot_tools::draw_point_set_in_plane(
 }
 
 
-}}
+}}}
+
 
 
 

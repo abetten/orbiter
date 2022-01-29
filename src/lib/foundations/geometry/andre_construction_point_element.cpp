@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -114,7 +115,6 @@ int andre_construction_point_element::rank(int verbose_level)
 }
 
 
-}
-}
+}}}
 
 

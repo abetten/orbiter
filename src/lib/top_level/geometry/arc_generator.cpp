@@ -147,7 +147,7 @@ void arc_generator::init(
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_generator::init" << endl;
@@ -477,7 +477,7 @@ int arc_generator::test_nb_Eckardt_points(
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_generator::test_nb_Eckardt_points" << endl;

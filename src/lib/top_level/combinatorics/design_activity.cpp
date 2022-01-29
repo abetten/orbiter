@@ -680,11 +680,11 @@ void design_activity::do_tactical_decomposition(
 			M, verbose_level);
 
 	{
-		incidence_structure *Inc;
+		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
 
-		Inc = NEW_OBJECT(incidence_structure);
+		Inc = NEW_OBJECT(geometry::incidence_structure);
 
 		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
 

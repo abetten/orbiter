@@ -312,10 +312,10 @@ public:
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void report(
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 	void report2(std::ostream &ost,
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 	void report_decomposition_matrix(std::ostream &ost, int verbose_level);
 };
@@ -355,7 +355,7 @@ public:
 			surface_classify_using_arc *SCA, int verbose_level);
 	void report_summary(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost,
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 
 };
@@ -657,10 +657,11 @@ public:
 	void downstep(int verbose_level);
 	void downstep_one_arc(int arc_idx,
 			int &cur_flag_orbit, long int *Flag, int verbose_level);
-	void report(layered_graph_draw_options *draw_options,
+	void report(
+			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void report2(std::ostream &ost,
-			layered_graph_draw_options *draw_options,
+			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void report_flag_orbits(std::ostream &ost, int verbose_level);
 	void report_flag_orbits_in_detail(std::ostream &ost, int verbose_level);

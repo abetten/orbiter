@@ -101,7 +101,7 @@ public:
 	void young_symmetrizer(int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
 	void report_tactical_decomposition_by_automorphism_group(
-			std::ostream &ost, projective_space *P,
+			std::ostream &ost, geometry::projective_space *P,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
@@ -133,7 +133,8 @@ public:
 			groups::linear_group *LG,
 			int degree_of_poly,
 			int f_recognize, std::string &recognize_text,
-			int f_draw_tree, int draw_tree_idx, layered_graph_draw_options *Opt,
+			int f_draw_tree, int draw_tree_idx,
+			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 	void representation_on_polynomials(
 			groups::linear_group *LG,
@@ -200,7 +201,7 @@ public:
 	void init_permutation_group(groups::permutation_group_create *PGC, int verbose_level);
 	void init_modified_group(modified_group_create *MGC, int verbose_level);
 	void create_latex_report(
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, int f_classes,
 			int verbose_level);
 	void do_export_orbiter(actions::action *A2, int verbose_level);
@@ -256,10 +257,10 @@ public:
 			std::string &fname_transporter,
 			int verbose_level);
 	void create_latex_report_for_permutation_group(
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void create_latex_report_for_modified_group(
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	groups::strong_generators *get_strong_generators();
 

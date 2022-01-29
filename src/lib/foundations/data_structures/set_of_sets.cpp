@@ -982,7 +982,7 @@ void set_of_sets::compute_and_print_tdo_row_scheme(
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
-	incidence_structure *I;
+	geometry::incidence_structure *I;
 	partitionstack *Stack;
 	int depth = INT_MAX;
 	//int i, j, a;
@@ -1011,7 +1011,7 @@ void set_of_sets::compute_and_print_tdo_row_scheme(
 	int set_size = underlying_set_size;
 	int nb_blocks = nb_sets;
 
-	I = NEW_OBJECT(incidence_structure);
+	I = NEW_OBJECT(geometry::incidence_structure);
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
@@ -1039,7 +1039,7 @@ void set_of_sets::compute_and_print_tdo_col_scheme(
 	int f_v = (verbose_level >= 1);
 	int *Inc;
 	int m, n;
-	incidence_structure *I;
+	geometry::incidence_structure *I;
 	partitionstack *Stack;
 	int depth = INT_MAX;
 	//int i, j, a;
@@ -1067,7 +1067,7 @@ void set_of_sets::compute_and_print_tdo_col_scheme(
 	int set_size = underlying_set_size;
 	int nb_blocks = nb_sets;
 
-	I = NEW_OBJECT(incidence_structure);
+	I = NEW_OBJECT(geometry::incidence_structure);
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
@@ -1090,7 +1090,7 @@ void set_of_sets::compute_and_print_tdo_col_scheme(
 }
 
 void set_of_sets::init_decomposition(
-		decomposition *&D, int verbose_level)
+		geometry::decomposition *&D, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
@@ -1101,7 +1101,7 @@ void set_of_sets::init_decomposition(
 		}
 	compute_incidence_matrix(Inc, m, n, verbose_level - 2);
 
-	D = NEW_OBJECT(decomposition);
+	D = NEW_OBJECT(geometry::decomposition);
 
 	D->init_incidence_matrix(underlying_set_size,
 			nb_sets, Inc, verbose_level - 1);
@@ -1114,7 +1114,7 @@ void set_of_sets::init_decomposition(
 }
 
 void set_of_sets::compute_tdo_decomposition(
-		decomposition &D, int verbose_level)
+		geometry::decomposition &D, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
@@ -1541,10 +1541,10 @@ void set_of_sets::get_eckardt_points(
 		cout << "set_of_sets::get_eckardt_points" << endl;
 		}
 
-	incidence_structure *IS;
+	geometry::incidence_structure *IS;
 	partitionstack *PStack;
 
-	IS = NEW_OBJECT(incidence_structure);
+	IS = NEW_OBJECT(geometry::incidence_structure);
 
 	IS->init_by_set_of_sets(this, FALSE);
 

@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 object_with_canonical_form::object_with_canonical_form()
@@ -2178,6 +2179,7 @@ void object_with_canonical_form::run_nauty_basic(
 
 
 
-}}
+}}}
+
 
 

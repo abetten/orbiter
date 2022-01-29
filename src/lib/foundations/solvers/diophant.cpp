@@ -4009,8 +4009,8 @@ void diophant::draw_as_bitmap(std::string &fname,
 	}
 
 
-	graphical_output GO;
-	draw_bitmap_control Draw_bitmap_control;
+	graphics::graphical_output GO;
+	graphics::draw_bitmap_control Draw_bitmap_control;
 
 	Draw_bitmap_control.M = M;
 	Draw_bitmap_control.m = m1;
@@ -4042,7 +4042,7 @@ void diophant::draw_as_bitmap(std::string &fname,
 
 void diophant::draw_it(
 		std::string &fname_base,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_dots = FALSE;
@@ -4067,7 +4067,7 @@ void diophant::draw_it(
 
 void diophant::draw_partitioned(
 		std::string &fname_base,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 	int f_solution, int *solution, int solution_sz, 
 	int verbose_level)
 {

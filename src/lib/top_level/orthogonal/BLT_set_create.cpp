@@ -98,7 +98,7 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			geometry_global GG;
+			geometry::geometry_global GG;
 			field_theory::finite_field *FQ;
 			int q, Q;
 
@@ -122,7 +122,7 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			geometry_global GG;
+			geometry::geometry_global GG;
 			field_theory::finite_field *FQ;
 			int q, Q;
 
@@ -146,7 +146,7 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			geometry_global GG;
+			geometry::geometry_global GG;
 			field_theory::finite_field *FQ;
 			int q, Q;
 

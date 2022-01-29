@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 klein_correspondence::klein_correspondence()
@@ -1119,7 +1120,8 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 }
 
 
-}}
+}}}
+
 
 
 

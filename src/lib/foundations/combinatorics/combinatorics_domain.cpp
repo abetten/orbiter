@@ -248,7 +248,7 @@ int combinatorics_domain::int_vec_is_regular_word(int *v, int len, int q)
 
 int combinatorics_domain::int_vec_first_regular_word(int *v, int len, int q)
 {
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 #if 0
 	int a;
@@ -278,7 +278,7 @@ int combinatorics_domain::int_vec_first_regular_word(int *v, int len, int q)
 int combinatorics_domain::int_vec_next_regular_word(int *v, int len, int q)
 {
 	//long int a;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 #if 0
 	a = Gg.AG_element_rank(q, v, 1, len);
@@ -3482,11 +3482,11 @@ void combinatorics_domain::refine_the_partition(
 			M, verbose_level);
 
 	{
-		incidence_structure *Inc;
+		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
 
-		Inc = NEW_OBJECT(incidence_structure);
+		Inc = NEW_OBJECT(geometry::incidence_structure);
 
 		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
 

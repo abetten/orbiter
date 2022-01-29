@@ -216,7 +216,7 @@ public:
 
 	int f_projective_space;
 	//projective_space_with_action *PA;
-	projective_space *P;
+	geometry::projective_space *P;
 
 	data_structures::data_input_stream *IS;
 
@@ -235,7 +235,7 @@ public:
 
 	long int *Ago_transversal; // [nb_orbits]
 
-	object_with_canonical_form **OWCF_transversal; // [nb_orbits]
+	geometry::object_with_canonical_form **OWCF_transversal; // [nb_orbits]
 
 	data_structures::nauty_output **NO_transversal; // [nb_orbits]
 
@@ -248,18 +248,19 @@ public:
 	~classification_of_objects();
 	void perform_classification(classification_of_objects_description *Descr,
 			int f_projective_space,
-			projective_space *P,
+			geometry::projective_space *P,
 			data_structures::data_input_stream *IS,
 			int verbose_level);
 	void classify_objects_using_nauty(
 		int verbose_level);
 	void save_automorphism_group_order(int verbose_level);
 	void save_transversal(int verbose_level);
-	void process_any_object(object_with_canonical_form *OwCF,
+	void process_any_object(
+			geometry::object_with_canonical_form *OwCF,
 			int input_idx, long int &ago, int &f_reject, data_structures::nauty_output *&NO,
 			int verbose_level);
 	int process_object(
-		object_with_canonical_form *OwCF,
+			geometry::object_with_canonical_form *OwCF,
 		long int &ago,
 		int &iso_idx_if_found,
 		data_structures::nauty_output *&NO,
@@ -276,7 +277,7 @@ public:
 			int f_show_incma,
 			int verbose_level);
 	void report_object(std::ostream &fp,
-			object_with_canonical_form *OwCF,
+			geometry::object_with_canonical_form *OwCF,
 			int object_idx,
 			int max_TDO_depth,
 			int f_show_incma,
@@ -517,8 +518,10 @@ public:
 			int *&Incma_out, int verbose_level);
 	void compute_canonical_form(data_structures::bitvector *&Canonical_form,
 			int *canonical_labeling, int verbose_level);
-	void incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
-	void extended_incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
+	void incidence_matrix_projective_space_top_left(
+			geometry::projective_space *P, int verbose_level);
+	void extended_incidence_matrix_projective_space_top_left(
+			geometry::projective_space *P, int verbose_level);
 	void canonical_form_given_canonical_labeling(int *canonical_labeling,
 			data_structures::bitvector *&B,
 			int verbose_level);
@@ -882,7 +885,7 @@ class tdo_scheme_compute {
 public:
 
 	encoded_combinatorial_object *Enc;
-	decomposition *Decomp;
+	geometry::decomposition *Decomp;
 
 
 

@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 decomposition::decomposition()
@@ -251,6 +252,6 @@ void decomposition::print_column_decomposition_tex(
 }
 
 
-}}
+}}}
 
 

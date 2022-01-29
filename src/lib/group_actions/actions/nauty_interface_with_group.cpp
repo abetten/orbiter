@@ -1249,7 +1249,7 @@ void nauty_interface_with_group::automorphism_group_as_permutation_group(
 
 void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group(
 		actions::action *A_linear,
-		projective_space *P,
+		geometry::projective_space *P,
 		groups::strong_generators *&SG,
 		actions::action *&A_perm,
 		data_structures::nauty_output *NO,
@@ -1482,7 +1482,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 
 groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
-	object_with_canonical_form *OwCF,
+		geometry::object_with_canonical_form *OwCF,
 	action *A_linear,
 	int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
 	data_structures::nauty_output *&NO,

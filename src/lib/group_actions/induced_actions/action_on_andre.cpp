@@ -49,7 +49,7 @@ void action_on_andre::free()
 }
 
 void action_on_andre::init(actions::action *An, actions::action *An1,
-		andre_construction *Andre, int verbose_level)
+		geometry::andre_construction *Andre, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -103,7 +103,7 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 		long int pt_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	andre_construction_point_element Pt;
+	geometry::andre_construction_point_element Pt;
 	long int i, image, rk, parallel_class_idx;
 	int idx;
 	data_structures::sorting Sorting;
@@ -185,7 +185,7 @@ long int action_on_andre::compute_image_of_line(int *Elt,
 		long int line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	andre_construction_line_element Line;
+	geometry::andre_construction_line_element Line;
 	int i, j, image;
 	
 	if (f_v) {

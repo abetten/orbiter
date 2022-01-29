@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -262,4 +263,5 @@ int W3q::find_line(int line)
 	return idx;
 }
 
-}}
+}}}
+

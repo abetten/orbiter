@@ -74,7 +74,7 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 		if (f_v) {
 			cout << "-povray " << endl;
 		}
-		Povray_job_description = NEW_OBJECT(povray_job_description);
+		Povray_job_description = NEW_OBJECT(graphics::povray_job_description);
 		i += Povray_job_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -128,7 +128,7 @@ void interface_povray::worker(int verbose_level)
 
 	if (f_povray) {
 
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 
 		GO.animate_povray(

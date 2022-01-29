@@ -288,7 +288,7 @@ void symbol_definition::read_definition(
 		f_geometric_object = TRUE;
 
 		geometric_object_projective_space_label.assign(argv[++i]);
-		Geometric_object_description = NEW_OBJECT(geometric_object_description);
+		Geometric_object_description = NEW_OBJECT(geometry::geometric_object_description);
 		if (f_v) {
 			cout << "reading -geometric_object" << endl;
 		}
@@ -1401,18 +1401,18 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 	}
 
 
-	geometric_object_create *GOC;
+	geometry::geometric_object_create *GOC;
 
-	GOC = NEW_OBJECT(geometric_object_create);
+	GOC = NEW_OBJECT(geometry::geometric_object_create);
 
 
 	projective_geometry::projective_space_with_action *PA;
 
 	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(geometric_object_projective_space_label);
 
-	geometric_object_create *GeoObj;
+	geometry::geometric_object_create *GeoObj;
 
-	GeoObj = NEW_OBJECT(geometric_object_create);
+	GeoObj = NEW_OBJECT(geometry::geometric_object_create);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_geometric_object before GeoObj->init" << endl;

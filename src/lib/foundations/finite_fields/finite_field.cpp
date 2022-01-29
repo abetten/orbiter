@@ -450,7 +450,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 	int *base_cols;
 	int rk, kernel_m, kernel_n;
 	long int a;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	M = NEW_int(e * (e1 + 1));
 	Orbiter->Int_vec->zero(M, e * (e1 + 1));
@@ -958,7 +958,7 @@ int finite_field::Z_embedding(int k)
 
 int finite_field::add(int i, int j)
 {
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int c;

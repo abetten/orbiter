@@ -376,10 +376,10 @@ public:
 			orthogonal_space_with_action_description *Descr,
 			int verbose_level);
 	void init_group(int verbose_level);
-	void report(layered_graph_draw_options *LG_Draw_options,
+	void report(graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report2(std::ostream &ost,
-			layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 
 };

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -247,5 +248,6 @@ void points_and_lines::write_points_to_txt_file(std::string &label, int verbose_
 }
 
 
-}}
+}}}
+
 

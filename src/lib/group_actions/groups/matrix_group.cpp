@@ -104,7 +104,7 @@ void matrix_group::init_projective_group(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int page_length_log = PAGE_LENGTH_LOG;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "matrix_group::init_projective_group" << endl;
@@ -209,7 +209,7 @@ void matrix_group::init_affine_group(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int page_length_log = PAGE_LENGTH_LOG;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_vv) {
 		cout << "matrix_group::init_affine_group" << endl;
@@ -285,7 +285,7 @@ void matrix_group::init_general_linear_group(int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int page_length_log = PAGE_LENGTH_LOG;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_vv) {
 		cout << "matrix_group::init_general_linear_group" << endl;
@@ -929,7 +929,7 @@ long int matrix_group::GL_image_of_AG_element(
 {
 	int f_v = (verbose_level >= 1);
 	long int b;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_AG_element" << endl;

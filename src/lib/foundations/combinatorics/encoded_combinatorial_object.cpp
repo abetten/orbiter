@@ -223,7 +223,8 @@ void encoded_combinatorial_object::compute_canonical_form(data_structures::bitve
 	}
 }
 
-void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level)
+void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
+		geometry::projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -248,7 +249,8 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(pr
 }
 
 
-void encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level)
+void encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left(
+		geometry::projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -752,7 +754,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(std::ostream &ost,
 		block_labels[j].assign(str);
 	}
 
-	draw_incidence_structure_description *Descr;
+	graphics::draw_incidence_structure_description *Descr;
 
 	Descr = Orbiter->Draw_incidence_structure_description;
 
@@ -1051,7 +1053,7 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream
 	ost << "\\\\" << endl;
 
 
-	draw_incidence_structure_description *Descr;
+	graphics::draw_incidence_structure_description *Descr;
 
 	Descr = Orbiter->Draw_incidence_structure_description;
 

@@ -1675,7 +1675,7 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	int f_vv = (verbose_level >= 2);
 	char label[100];
 	combinatorics_domain Combi;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "tdo_scheme_synthetic::refine_rows_easy" << endl;
@@ -2808,7 +2808,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing(
 	int rr, p, u, a, len, f_used, L1, L2;
 	char label[1000];
 	//int nb_vars = T.D1->n;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	if (f_v) {
 		cout << "tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing" << endl;
@@ -3872,7 +3872,7 @@ int tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_upper_bound(
 	int /*l2,*/ L1, L2, i, r, f, l, j, c, J, I;
 	int k, h, rr, p, u, a, len, f_used;
 	char label[1000];
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_upper_bound" << endl;

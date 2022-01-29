@@ -467,7 +467,7 @@ void interface_combinatorics::read_arguments(int argc,
 		if (f_v) {
 			cout << "-draw_layered_graph " << endl;
 		}
-		Layered_graph_draw_options = NEW_OBJECT(layered_graph_draw_options);
+		Layered_graph_draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 		i += Layered_graph_draw_options->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
 		if (f_v) {
@@ -759,7 +759,7 @@ void interface_combinatorics::worker(int verbose_level)
 
 	}
 	else if (f_draw_layered_graph) {
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 		GO.draw_layered_graph_from_file(draw_layered_graph_fname,
 				Layered_graph_draw_options,

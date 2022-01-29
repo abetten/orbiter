@@ -316,7 +316,8 @@ void schreier::print_and_list_all_orbits_and_stabilizers_with_list_of_elements_t
 }
 
 void schreier::make_orbit_trees(std::ostream &ost,
-		std::string &fname_mask, layered_graph_draw_options *Opt,
+		std::string &fname_mask,
+		graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1219,7 +1220,7 @@ void schreier::print_tree(int orbit_no)
 }
 
 void schreier::draw_forest(std::string &fname_mask,
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		int f_has_point_labels, long int *point_labels,
 		int verbose_level)
 {
@@ -1404,7 +1405,7 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 }
 
 void schreier::draw_tree(std::string &fname,
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		int orbit_no,
 		int f_has_point_labels, long int *point_labels,
 		int verbose_level)
@@ -1486,7 +1487,7 @@ static void calc_y_coordinate(int &y, int l, int max_depth, int y_max)
 }
 
 void schreier::draw_tree2(std::string &fname,
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		int *weight, int *placement_x,
 		int max_depth,
 		int i,
@@ -1511,7 +1512,7 @@ void schreier::draw_tree2(std::string &fname,
 		cout << "schreier::draw_tree2 before creating G" << endl;
 	}
 
-	mp_graphics G;
+	graphics::mp_graphics G;
 
 	G.init(fname_full, Opt, verbose_level - 1);
 
@@ -1613,8 +1614,9 @@ void schreier::draw_tree2(std::string &fname,
 	}
 }
 
-void schreier::subtree_draw_lines(mp_graphics &G,
-		layered_graph_draw_options *Opt,
+void schreier::subtree_draw_lines(
+		graphics::mp_graphics &G,
+		graphics::layered_graph_draw_options *Opt,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
 		int y_max,
@@ -1683,8 +1685,9 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 	}
 }
 
-void schreier::subtree_draw_vertices(mp_graphics &G,
-		layered_graph_draw_options *Opt,
+void schreier::subtree_draw_vertices(
+		graphics::mp_graphics &G,
+		graphics::layered_graph_draw_options *Opt,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
 		int f_has_point_labels, long int *point_labels,

@@ -75,9 +75,9 @@ void diophant_create::init(
 		}
 
 
-		projective_space *P;
+		geometry::projective_space *P;
 
-		P = NEW_OBJECT(projective_space);
+		P = NEW_OBJECT(geometry::projective_space);
 
 		P->projective_space_init(2, F,
 				TRUE /* f_init_incidence_structure */,

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 	// The Knarr construction of a GQ(q^2,q) from a BLT set of lines in W(3,q):
@@ -673,5 +674,6 @@ void knarr::incidence_matrix(int *&Inc,
 	FREE_int(Basis_V);
 }
 
-}}
+}}}
+
 

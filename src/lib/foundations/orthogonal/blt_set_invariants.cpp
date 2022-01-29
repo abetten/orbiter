@@ -129,8 +129,8 @@ void blt_set_invariants::compute(int verbose_level)
 	Sos = NEW_OBJECT(data_structures::set_of_sets);
 	Sos2 = NEW_OBJECT(data_structures::set_of_sets);
 	Sos3 = NEW_OBJECT(data_structures::set_of_sets);
-	D2 = NEW_OBJECT(decomposition);
-	D3 = NEW_OBJECT(decomposition);
+	D2 = NEW_OBJECT(geometry::decomposition);
+	D3 = NEW_OBJECT(geometry::decomposition);
 
 
 	if (f_v) {

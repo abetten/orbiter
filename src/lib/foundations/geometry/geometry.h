@@ -15,6 +15,7 @@
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 // #############################################################################
@@ -818,7 +819,7 @@ public:
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
 	void do_cheat_sheet_PG(field_theory::finite_field *F,
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int n,
 			int verbose_level);
 	void do_cheat_sheet_Gr(field_theory::finite_field *F,
@@ -2093,12 +2094,12 @@ public:
 		int verbose_level);
 	void report_summary(std::ostream &ost);
 	void report(std::ostream &ost,
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void export_incidence_matrix_to_csv(int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
 	void create_latex_report(
-			layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void create_latex_report_for_Grassmannian(int k, int verbose_level);
 	void compute_decomposition(data_structures::partitionstack *S1,
@@ -2476,7 +2477,7 @@ public:
 
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_GEOMETRY_GEOMETRY_H_ */

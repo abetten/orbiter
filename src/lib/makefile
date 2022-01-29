@@ -153,8 +153,6 @@ MODULES= \
 		foundations/globals/orbiter_session.o \
 		foundations/globals/orbiter_symbol_table_entry.o \
 		foundations/globals/orbiter_symbol_table.o \
-		foundations/globals/polynomial_double_domain.o \
-		foundations/globals/polynomial_double.o \
 		foundations/graph_theory/clique_finder.o \
 		foundations/graph_theory/clique_finder_control.o \
 		foundations/graph_theory/colored_graph.o \
@@ -230,6 +228,8 @@ MODULES= \
 		foundations/ring_theory/longinteger_domain.o \
 		foundations/ring_theory/longinteger_object.o \
 		foundations/ring_theory/partial_derivative.o \
+		foundations/ring_theory/polynomial_double_domain.o \
+		foundations/ring_theory/polynomial_double.o \
 		foundations/ring_theory/ring_theory_global.o \
 		foundations/ring_theory/table_of_irreducible_polynomials.o \
 		foundations/ring_theory/unipoly_domain.o \

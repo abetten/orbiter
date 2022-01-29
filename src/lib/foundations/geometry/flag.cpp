@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 flag::flag()
@@ -413,6 +414,6 @@ long int flag::rank_recursion(int *input_subspace,
 	return rk;
 }
 
-}
-}
+}}}
+
 

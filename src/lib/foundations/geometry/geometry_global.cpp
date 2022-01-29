@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -1734,7 +1735,7 @@ void geometry_global::do_transversal(
 
 
 void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int n,
 		int verbose_level)
 {
@@ -3074,5 +3075,5 @@ void geometry_global::andre_preimage(
 
 
 
-}}
+}}}
 

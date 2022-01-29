@@ -19,7 +19,8 @@ static void HS_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-static void projective_space_init_line_action(projective_space *P,
+static void projective_space_init_line_action(
+		geometry::projective_space *P,
 		actions::action *A_points, actions::action *&A_on_lines, int verbose_level);
 
 hermitian_spreads_classify::hermitian_spreads_classify()
@@ -148,7 +149,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 	len = n + 1;
 
-	H = NEW_OBJECT(hermitian);
+	H = NEW_OBJECT(geometry::hermitian);
 	H->init(F, len, verbose_level - 2);
 
 
@@ -170,7 +171,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	}
 
 
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 
 	cout << "Creating projective_space" << endl;
 	P->projective_space_init(n, F,
@@ -506,7 +507,8 @@ static void HS_early_test_func_callback(long int *S, int len,
 }
 
 
-static void projective_space_init_line_action(projective_space *P,
+static void projective_space_init_line_action(
+		geometry::projective_space *P,
 		actions::action *A_points, actions::action *&A_on_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

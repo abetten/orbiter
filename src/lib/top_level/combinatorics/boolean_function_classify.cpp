@@ -159,7 +159,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 	int nb_sol = 0;
 	int nb_orbits = 0;
 	uint32_t h;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	ring_theory::longinteger_domain D;
 	data_structures::data_structures_global Data;
 	vector<int> orbit_first;
@@ -412,7 +412,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 static void boolean_function_classify_print_function(int *poly, int sz, void *data)
 {
 	boolean_function_classify *BFC = (boolean_function_classify *) data;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	ring_theory::longinteger_object a;
 
 	BFC->BF->evaluate(poly + 1, BFC->BF->f_proj);
