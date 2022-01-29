@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace expression_parser {
 
 
 formula::formula()
@@ -344,7 +345,7 @@ void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 		cout << endl;
 	}
 	cout << "coefficient vector: ";
-	Orbiter->Int_vec->print(cout, Values, Poly->get_nb_monomials());
+	Int_vec_print(cout, Values, Poly->get_nb_monomials());
 	cout << endl;
 
 
@@ -354,4 +355,5 @@ void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 }
 
 
-}}
+}}}
+

@@ -98,7 +98,7 @@ void semifield_downstep_node::init(
 
 	if (f_v) {
 		cout << "subspace_basis:" << endl;
-		Orbiter->Int_vec->matrix_print(subspace_basis, level, k2);
+		Int_matrix_print(subspace_basis, level, k2);
 		//cout << "base_cols:" << endl;
 		//int_vec_print(cout, subspace_base_cols, level);
 		//cout << endl;
@@ -196,7 +196,7 @@ void semifield_downstep_node::init(
 		}
 	else {
 #endif
-		file_io File_io;
+		orbiter_kernel_system::file_io File_io;
 		string fname;
 
 		SL->make_file_name_schreier(fname, level, orbit_number);

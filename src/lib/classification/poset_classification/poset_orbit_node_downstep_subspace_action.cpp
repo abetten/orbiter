@@ -70,7 +70,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 			cout << " with " << nb << " live points";
 			if (f_vvv) {
 				cout << " : ";
-				Orbiter->Int_vec->print(cout, gen->get_node(prev)->live_points(),
+				Int_vec_print(cout, gen->get_node(prev)->live_points(),
 						gen->get_node(prev)->get_nb_of_live_points());
 				cout << endl;
 			}
@@ -470,7 +470,7 @@ void poset_orbit_node::setup_factor_space_action(
 
 	if (f_v) {
 		cout << "the set: ";
-		Orbiter->Lint_vec->print(cout, the_set, lvl);
+		Lint_vec_print(cout, the_set, lvl);
 		cout << endl;
 	}
 	gen->unrank_basis(coordinates, the_set, lvl);
@@ -557,7 +557,7 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 		gen->unrank_point(gen->get_VS()->v1, rep);
 
 		cout << " = ";
-		Orbiter->Int_vec->print(cout,
+		Int_vec_print(cout,
 				gen->get_VS()->v1,
 				gen->get_VS()->dimension);
 		cout << " : " << setw(5) << len;
@@ -635,7 +635,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 			gen->unrank_point(gen->get_VS()->v1, rep);
 
 			cout << rep << " = ";
-			Orbiter->Int_vec->print(cout,
+			Int_vec_print(cout,
 					gen->get_VS()->v1, gen->get_VS()->dimension);
 
 			cout << " : " << setw(5) << Schreier.orbit_len[h];
@@ -671,7 +671,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 
 					cout << setw(3) << j << " / " << setw(3) << len
 							<< " : " << rep << " = ";
-					Orbiter->Int_vec->print(cout,
+					Int_vec_print(cout,
 							gen->get_VS()->v1, gen->get_VS()->dimension);
 					cout << " : ";
 					cout << Schreier.prev[first + j];

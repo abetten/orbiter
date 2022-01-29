@@ -176,14 +176,14 @@ long int action_by_subfield_structure::compute_image_int(
 	if (f_vv) {
 		cout << "action_by_subfield_structure::compute_image_int "
 				"a = " << a << " v1 = ";
-		Orbiter->Int_vec->print(cout, v1, m);
+		Int_vec_print(cout, v1, m);
 		cout << endl;
 		}
 	
 	compute_image_int_low_level(A, Elt, v1, v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
-		Orbiter->Int_vec->print(cout, v2, m);
+		Int_vec_print(cout, v2, m);
 		cout << endl;
 		}
 
@@ -211,7 +211,7 @@ void action_by_subfield_structure::compute_image_int_low_level(
 		}
 	if (f_vv) {
 		cout << "subfield structure action: x=";
-		Orbiter->Int_vec->print(cout, x, m);
+		Int_vec_print(cout, x, m);
 		cout << endl;
 		}
 
@@ -236,7 +236,7 @@ void action_by_subfield_structure::compute_image_int_low_level(
 
 	if (f_vv) {
 		cout << "xA=";
-		Orbiter->Int_vec->print(cout, xA, m);
+		Int_vec_print(cout, xA, m);
 		cout << endl;
 		}
 	if (MQ->f_semilinear) {

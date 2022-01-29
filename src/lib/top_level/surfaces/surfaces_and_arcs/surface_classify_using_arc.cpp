@@ -140,8 +140,8 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 			Six_arcs->nb_arcs_not_on_conic);
 	Arc_identify_nb = NEW_int(Six_arcs->nb_arcs_not_on_conic);
 
-	Orbiter->Int_vec->zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
-	Orbiter->Int_vec->zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
+	Int_vec_zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
+	Int_vec_zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
 
 	transporter = NEW_int(Surf_A->A->elt_size_in_int);
 
@@ -199,7 +199,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	int a;
 
 	Decomp = NEW_int(Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
-	Orbiter->Int_vec->zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+	Int_vec_zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
 	for (i = 0; i < nb_surfaces; i++) {
 		for (j = 0; j < Arc_identify_nb[i]; j++) {
 			a = Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
@@ -249,7 +249,7 @@ void surface_classify_using_arc::report(
 
 
 		ofstream fp(fname_arc_lifting);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 
 		L.head(fp,
@@ -271,7 +271,7 @@ void surface_classify_using_arc::report(
 
 	} // fp
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_arc_lifting << " of size "
 			<< Fio.file_size(fname_arc_lifting) << endl;
@@ -317,7 +317,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 
 
 		ost << "Surface $" << surface_idx << "$ is associated with the following arcs: $";
-		Orbiter->Int_vec->print(ost,
+		Int_vec_print(ost,
 			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
 			Arc_identify_nb[surface_idx]);
 		ost << "$\\\\" << endl;
@@ -399,7 +399,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 
 		ost << "The following " << Arc_identify_nb[surface_idx]
 			<< " arcs are involved with surface " <<   nb_surfaces << ": $";
-		Orbiter->Int_vec->print(ost,
+		Int_vec_print(ost,
 			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
 			Arc_identify_nb[surface_idx]);
 		ost << "$\\\\" << endl;
@@ -435,7 +435,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 
 		ost << "The following " << Arc_identify_nb[surface_idx]
 			<< " arcs are involved with surface " <<   nb_surfaces << ": $";
-		Orbiter->Int_vec->print(ost,
+		Int_vec_print(ost,
 			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
 			Arc_identify_nb[surface_idx]);
 		ost << "$\\\\" << endl;
@@ -475,7 +475,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_classify_using_arc::report_decomposition_matrix" << endl;
@@ -501,7 +501,7 @@ void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int v
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
 	//fp << "$$" << endl;
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 	string fname_decomposition;
 

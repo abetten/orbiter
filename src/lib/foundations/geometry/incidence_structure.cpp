@@ -85,7 +85,7 @@ void incidence_structure::check_point_pairs(int verbose_level)
 		}
 	}
 	cout << "nb of lines through two points:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, nb_rows, nb_rows, nb_rows, 1);
+	Int_vec_print_integer_matrix_width(cout, Mtx, nb_rows, nb_rows, nb_rows, 1);
 	
 	FREE_int(Lines);
 }
@@ -184,12 +184,12 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 			cout << "i=" << i << " j=" << j << endl;
 			H->R->PHG_element_unrank(Mtx, 1, n, i);
 			H->unrank_lint(Mtx + n, j, 0);
-			Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
+			Int_vec_print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
 			mtx_rk = H->R->Gauss_int(
 				Mtx, TRUE, FALSE, base_cols, FALSE, NULL,
 				k + 1, n, n, 2);
 			cout << "after Gauss:" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
+			Int_vec_print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
 			cout << "the rank is " << mtx_rk << endl;
 
 			for (h = 0; h < n; h++) {
@@ -224,7 +224,7 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 	}
 	if (f_v) {
 		cout << "incidence matrix" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				Inc_Mtx, nb_rows, nb_cols, nb_cols, 1);
 	}
 
@@ -241,7 +241,7 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 }
 
 void incidence_structure::init_orthogonal(
-		orthogonal *O, int verbose_level)
+		orthogonal_geometry::orthogonal *O, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -326,7 +326,7 @@ void incidence_structure::init_by_set_of_sets(
 	m = SoS->nb_sets;
 	n = SoS->underlying_set_size;
 	M = NEW_int(m * n);
-	Orbiter->Int_vec->zero(M, m * n);
+	Int_vec_zero(M, m * n);
 	for (i = 0; i < m; i++) {
 		for (h = 0; h < SoS->Set_size[i]; h++) {
 			j = SoS->Sets[i][h];
@@ -605,7 +605,7 @@ int incidence_structure::get_lines_on_point(int *data, int i, int verbose_level)
 	}
 	if (f_v) {
 		cout << "incidence_structure::get_lines_on_point pt = " << i << " : ";
-		Orbiter->Int_vec->print(cout, data, r);
+		Int_vec_print(cout, data, r);
 		cout << endl;
 		cout << "incidence_structure::get_lines_on_point done" << endl;
 	}
@@ -662,7 +662,7 @@ int incidence_structure::get_points_on_line(int *data, int j, int verbose_level)
 	if (f_v) {
 		cout << "incidence_structure::get_points_on_line "
 				"line = " << j << " : ";
-		Orbiter->Int_vec->print(cout, data, k);
+		Int_vec_print(cout, data, k);
 		cout << endl;
 		cout << "incidence_structure::get_points_on_line done" << endl;
 	}
@@ -1074,7 +1074,7 @@ int incidence_structure::refine_column_partition_safe(
 		cout << "incidence_structure::refine_column_partition_safe nb_row_classes= " << nb_row_classes << endl;
 	}
 	data = NEW_int(N * nb_row_classes);
-	Orbiter->Int_vec->zero(data, N * nb_row_classes);
+	Int_vec_zero(data, N * nb_row_classes);
 	
 	neighbors = NEW_int(max_k);
 
@@ -1095,7 +1095,7 @@ int incidence_structure::refine_column_partition_safe(
 	if (f_vv) {
 		cout << "incidence_structure::refine_column_partition_safe "
 				"data:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 			data + nb_points() * nb_row_classes,
 			nb_lines(), nb_row_classes, nb_row_classes, 3);
 	}
@@ -1175,7 +1175,7 @@ int incidence_structure::refine_row_partition_safe(
 	}
 	
 	data = NEW_int(nb_points() * nb_col_classes);
-	Orbiter->Int_vec->zero(data, nb_points() * nb_col_classes);
+	Int_vec_zero(data, nb_points() * nb_col_classes);
 
 	
 	neighbors = NEW_int(max_r);
@@ -1195,7 +1195,7 @@ int incidence_structure::refine_row_partition_safe(
 	}
 	if (f_vv) {
 		cout << "incidence_structure::refine_row_partition_safe data:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, data, nb_points(),
+		Int_vec_print_integer_matrix_width(cout, data, nb_points(),
 				nb_col_classes, nb_col_classes, 3);
 	}
 
@@ -1259,7 +1259,7 @@ int incidence_structure::refine_column_partition(
 		cout << "max_r=" << max_r << endl;		
 	}
 	data = NEW_int(N * depth);
-	Orbiter->Int_vec->zero(data, N * depth);
+	Int_vec_zero(data, N * depth);
 	
 	neighbors = NEW_int(max_r);
 	for (y = 0; y < nb_lines(); y++) {
@@ -1380,7 +1380,7 @@ int incidence_structure::refine_row_partition(
 				<< " depth=" << depth << endl;
 	}
 	data = NEW_int(N * depth);
-	Orbiter->Int_vec->zero(data, N * depth);
+	Int_vec_zero(data, N * depth);
 	
 	nb_neighbors = max_k;
 	neighbors = NEW_int(nb_neighbors);
@@ -1809,15 +1809,15 @@ void incidence_structure::get_row_decomposition_scheme(
 	neighbors = NEW_int(max_r);
 	data0 = NEW_int(nb_col_classes);
 	data1 = NEW_int(nb_col_classes);
-	Orbiter->Int_vec->zero(row_scheme, nb_row_classes * nb_col_classes);
+	Int_vec_zero(row_scheme, nb_row_classes * nb_col_classes);
 	for (I = 0; I < nb_row_classes; I++) {
 		c1 = row_classes[I];
 		f1 = PStack.startCell[c1];
 		l1 = PStack.cellSize[c1];
-		Orbiter->Int_vec->zero(data0, nb_col_classes);
+		Int_vec_zero(data0, nb_col_classes);
 		for (i = 0; i < l1; i++) {
 			x = PStack.pointList[f1 + i];
-			Orbiter->Int_vec->zero(data1, nb_col_classes);
+			Int_vec_zero(data1, nb_col_classes);
 			nb = get_lines_on_point(neighbors, x, verbose_level - 2);
 			for (u = 0; u < nb; u++) {
 				y = neighbors[u];
@@ -1827,7 +1827,7 @@ void incidence_structure::get_row_decomposition_scheme(
 				data1[J]++;
 			}
 			if (i == 0) {
-				Orbiter->Int_vec->copy(data1, data0, nb_col_classes);
+				Int_vec_copy(data1, data0, nb_col_classes);
 			}
 			else {
 				for (J = 0; J < nb_col_classes; J++) {
@@ -1841,7 +1841,7 @@ void incidence_structure::get_row_decomposition_scheme(
 			}
 		} // next i
 
-		Orbiter->Int_vec->copy(data0,
+		Int_vec_copy(data0,
 				row_scheme + I * nb_col_classes,
 				nb_col_classes);
 	}
@@ -2634,7 +2634,7 @@ void incidence_structure::point_collinearity_graph(
 	if (f_v) {
 		cout << "incidence_structure::point_collinearity_graph "
 				"the graph is:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Adj,
+		Int_vec_print_integer_matrix_width(cout, Adj,
 				nb_points(), nb_points(), nb_points(), 1);
 	}
 }
@@ -2670,7 +2670,7 @@ void incidence_structure::line_intersection_graph(
 	if (f_v) {
 		cout << "incidence_structure::line_intersection_graph "
 				"the graph is:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Adj,
+		Int_vec_print_integer_matrix_width(cout, Adj,
 				nb_lines(), nb_lines(), nb_lines(), 1);
 	}
 }
@@ -2973,7 +2973,7 @@ void incidence_structure::compute_tdo(
 	int f_vv = (verbose_level >= 2);
 	string fname;
 	int f_list_incidences = FALSE;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "incidence_structure_compute_tdo" << endl;
@@ -3078,7 +3078,7 @@ void incidence_structure::compute_tdo_stepwise(
 	int step, f_refine, f_refine_prev, f_done;
 	int f_local_coordinates = FALSE;
 	int f_list_incidences = FALSE;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "incidence_structure::compute_tdo_stepwise" << endl;
@@ -3369,7 +3369,7 @@ void incidence_structure::init_partitionstack(
 		if (f_v3) {
 			cout << "which is the following set of size "
 					<< distinguished_point_set_size[j] << ":" << endl;
-			Orbiter->Int_vec->print(cout, distinguished_point_sets[j],
+			Int_vec_print(cout, distinguished_point_sets[j],
 					distinguished_point_set_size[j]);
 			cout << endl;
 		}
@@ -3393,7 +3393,7 @@ void incidence_structure::init_partitionstack(
 		if (f_v3) {
 			cout << "which is the following set of size "
 					<< distinguished_line_set_size[j] << ":" << endl;
-			Orbiter->Int_vec->print(cout, distinguished_line_sets[j],
+			Int_vec_print(cout, distinguished_line_sets[j],
 					distinguished_line_set_size[j]);
 			cout << endl;
 		}
@@ -3411,7 +3411,7 @@ void incidence_structure::init_partitionstack(
 		if (f_vv) {
 			cout << "incidence_structure::init_partitionstack "
 					"After adding Inc->nb_points():" << endl;
-			Orbiter->Int_vec->print(cout, set, set_sz);
+			Int_vec_print(cout, set, set_sz);
 			cout << endl;
 		}
 
@@ -3700,7 +3700,7 @@ void incidence_structure::compute_extended_collinearity_graph(
 	if (f_vv) {
 		cout << "incidence_structure::compute_extended_collinearity_graph "
 				"Adj=" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Adj, v, v, v, 1);
+		Int_vec_print_integer_matrix_width(cout, Adj, v, v, v, 1);
 	}
 	
 
@@ -3768,7 +3768,7 @@ void incidence_structure::compute_extended_matrix(
 	for (j = 0; j < nb_distinguished_point_sets; j++) {
 		if (f_v) {
 			cout << "The " << j << "-th distinguished point set is:" << endl;
-			Orbiter->Int_vec->print(cout, distinguished_point_sets[j],
+			Int_vec_print(cout, distinguished_point_sets[j],
 					distinguished_point_set_size[j]);
 			cout << endl;
 		}
@@ -3782,7 +3782,7 @@ void incidence_structure::compute_extended_matrix(
 	for (j = 0; j < nb_distinguished_line_sets; j++) {
 		if (f_v) {
 			cout << "The " << j << "-th distinguished line set is:" << endl;
-			Orbiter->Int_vec->print(cout, distinguished_line_sets[j],
+			Int_vec_print(cout, distinguished_line_sets[j],
 					distinguished_line_set_size[j]);
 			cout << endl;
 		}
@@ -3796,7 +3796,7 @@ void incidence_structure::compute_extended_matrix(
 	if (f_v4) {
 		cout << "incidence_structure::compute_extended_matrix "
 				"The extended incidence matrix is:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M, nb_rows, nb_cols, nb_cols, 1);
+		Int_vec_print_integer_matrix_width(cout, M, nb_rows, nb_cols, nb_cols, 1);
 	}
 
 
@@ -3846,7 +3846,7 @@ void incidence_structure::compute_extended_matrix(
 	if (f_v4) {
 		cout << "incidence_structure::compute_extended_matrix "
 				"The partition is:" << endl;
-		Orbiter->Int_vec->print(cout, partition, total);
+		Int_vec_print(cout, partition, total);
 		cout << endl;
 	}
 
@@ -3892,7 +3892,7 @@ incidence_structure *incidence_structure::apply_canonical_labeling(
 
 	if (f_vv) {
 		cout << "incidence_structure::apply_canonical_labeling labeling:" << endl;
-		Orbiter->Lint_vec->print(cout, canonical_labeling, nb_rows + nb_cols);
+		Lint_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
 		cout << endl;
 	}
 
@@ -3924,7 +3924,7 @@ incidence_structure *incidence_structure::apply_canonical_labeling(
 
 void incidence_structure::save_as_csv(std::string &fname_csv, int verbose_level)
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.int_matrix_write_csv(fname_csv, M, nb_rows, nb_cols);
 }
@@ -3980,7 +3980,7 @@ void incidence_structure::init_large_set(
 	}
 
 	Incma = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec->zero(Incma, nb_rows * nb_cols);
+	Int_vec_zero(Incma, nb_rows * nb_cols);
 	block = NEW_int(design_k);
 
 	for (u = 0; u < nb_classes; u++) {
@@ -3998,7 +3998,7 @@ void incidence_structure::init_large_set(
 
 	init_by_matrix(nb_rows, nb_cols, Incma, verbose_level);
 	if (f_v) {
-		Orbiter->Int_vec->matrix_print(Incma, nb_rows, nb_cols);
+		Int_matrix_print(Incma, nb_rows, nb_cols);
 	}
 
 
@@ -4013,7 +4013,7 @@ void incidence_structure::init_large_set(
 
 
 	if (f_v) {
-		tally T;
+		data_structures::tally T;
 
 		T.init(partition, N, FALSE, 0);
 		T.print_array_tex(cout, TRUE);

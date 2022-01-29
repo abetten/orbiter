@@ -340,7 +340,7 @@ void spreadsheet::add_token(const char *label)
 void spreadsheet::save(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	{
@@ -359,7 +359,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet reading file "
@@ -896,7 +896,7 @@ void spreadsheet::tokenize(std::string &fname,
 	char *str;
 	int sz;
 	int i; //, r;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spreadsheet::tokenize file=" << fname << endl;

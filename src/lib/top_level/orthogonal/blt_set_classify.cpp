@@ -17,7 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 // global functions:
@@ -113,7 +113,7 @@ void blt_set_classify::init_basic(actions::action *A,
 	}
 
 	induced_actions::action_on_orthogonal *AO;
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 	int f_semilinear;
 
 
@@ -159,7 +159,7 @@ void blt_set_classify::init_basic(actions::action *A,
 #endif
 	
 
-	Blt_set_domain = NEW_OBJECT(blt_set_domain);
+	Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 	Blt_set_domain->init(O, verbose_level);
 
 	degree = Blt_set_domain->degree;
@@ -353,7 +353,7 @@ void blt_set_classify::create_graphs(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -380,7 +380,7 @@ void blt_set_classify::create_graphs(
 
 	long int *Time;
 	int time_idx;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 
@@ -423,7 +423,7 @@ void blt_set_classify::create_graphs(
 
 
 	Time = NEW_lint(nb_orbits * 2);
-	Orbiter->Lint_vec->zero(Time, nb_orbits * 2);
+	orbiter_kernel_system::Orbiter->Lint_vec->zero(Time, nb_orbits * 2);
 	time_idx = 0;
 
 	nb_of_cases = 0;
@@ -545,7 +545,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	int nb_of_cases;
 
 
-	Orbiter->Int_vec->scan(list_of_cases_text, list_of_cases, nb_of_cases);
+	Int_vec_scan(list_of_cases_text, list_of_cases, nb_of_cases);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs_list_of_cases "
 				"nb_of_cases = " << nb_of_cases << endl;
@@ -563,7 +563,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	long int *list_of_cases_created;
 	int nb_of_cases_created;
 	int c;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	sprintf(str, "_lvl_%d", starter_size);
@@ -725,7 +725,7 @@ int blt_set_classify::create_graph(
 		cout << "blt_set_classify::create_graph Case "
 				<< orbit_at_level << " / " << R->nb_cases
 				<< " Read starter : ";
-		Orbiter->Lint_vec->print(cout, R->rep, starter_size);
+		Lint_vec_print(cout, R->rep, starter_size);
 		cout << endl;
 	}
 
@@ -867,7 +867,7 @@ void blt_set_classify::lifting_prepare_function_new(
 	col_labels = NEW_lint(nb_candidates);
 
 
-	Orbiter->Lint_vec->copy(candidates, col_labels, nb_candidates);
+	Lint_vec_copy(candidates, col_labels, nb_candidates);
 
 
 	int nb_rows = nb_free_points;
@@ -876,7 +876,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 	if (f_vv) {
 		cout << "blt_set_classify::lifting_prepare_function_new candidates: ";
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << " (nb_candidates=" << nb_candidates << ")" << endl;
 	}
 
@@ -1018,7 +1018,7 @@ void blt_set_classify::report(data_structures_groups::orbit_transversal *T,
 		report2(ost, T, verbose_level);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
@@ -1281,7 +1281,7 @@ void blt_set_classify::report2(std::ostream &ost,
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	sprintf(title, "BLT-sets of ${\\cal Q}(4,%d)$", q);
 	cout << "number of BLT-sets is " << T->nb_orbits << endl;
@@ -1323,9 +1323,9 @@ void blt_set_classify::report2(std::ostream &ost,
 	cout << "Computing intersection and plane invariants" << endl;
 
 
-	blt_set_invariants *Inv;
+	orthogonal_geometry::blt_set_invariants *Inv;
 
-	Inv = NEW_OBJECTS(blt_set_invariants, T->nb_orbits);
+	Inv = NEW_OBJECTS(orthogonal_geometry::blt_set_invariants, T->nb_orbits);
 
 	for (h = 0; h < T->nb_orbits; h++) {
 
@@ -1571,7 +1571,7 @@ static void blt_set_classify_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "blt_set_early_test_func for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	BLT->Blt_set_domain->early_test_func(S, len,

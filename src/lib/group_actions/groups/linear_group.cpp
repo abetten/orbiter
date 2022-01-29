@@ -312,12 +312,12 @@ void linear_group::linear_group_init(
 		int *gens;
 		int sz;
 
-		Orbiter->get_vector_from_label(description->subgroup_generators_label, gens, sz, verbose_level);
+		orbiter_kernel_system::Orbiter->get_vector_from_label(description->subgroup_generators_label, gens, sz, verbose_level);
 
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
 					"gens of size " << sz << ":" << endl;
-			Orbiter->Int_vec->print(cout, gens, sz);
+			Int_vec_print(cout, gens, sz);
 			cout << endl;
 		}
 
@@ -518,11 +518,11 @@ void linear_group::linear_group_init(
 		actions::action *A3;
 
 		//Orbiter->Lint_vec.scan(description->restricted_action_text, points, nb_points);
-		Orbiter->get_lint_vector_from_label(description->restricted_action_text, points, nb_points, verbose_level);
+		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(description->restricted_action_text, points, nb_points, verbose_level);
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
 					"computing restricted action on set of size " << nb_points << endl;
-			Orbiter->Lint_vec->print(cout, points, nb_points);
+			Lint_vec_print(cout, points, nb_points);
 			cout << endl;
 		}
 
@@ -1266,7 +1266,7 @@ void linear_group::init_subgroup_by_generators(
 	A2 = A_linear;
 
 	stringstream str;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int max_len = 80;
 	int line_skip = 0;
 
@@ -1464,12 +1464,12 @@ void linear_group::report(std::ostream &ost,
 
 			int *Table;
 			long int n;
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			string fname_group_table;
 			H->create_group_table(Table, n, verbose_level);
 
 			cout << "linear_group::report The group table is:" << endl;
-			Orbiter->Int_vec->matrix_print(Table, n, n, 2);
+			Int_matrix_print(Table, n, n);
 
 			fname_group_table.assign(label);
 			fname_group_table.append("_group_table.csv");
@@ -1477,7 +1477,7 @@ void linear_group::report(std::ostream &ost,
 			cout << "Written file " << fname_group_table << " of size " << Fio.file_size(fname_group_table) << endl;
 
 			{
-				latex_interface L;
+				orbiter_kernel_system::latex_interface L;
 
 				ost << "\\begin{sidewaystable}" << endl;
 				ost << "$$" << endl;
@@ -1637,7 +1637,7 @@ void linear_group::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -1666,7 +1666,7 @@ void linear_group::create_latex_report(
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

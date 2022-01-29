@@ -117,14 +117,14 @@ void permutation_group_create::permutation_group_init(
 		int *gens;
 		int sz;
 
-		Orbiter->get_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
+		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
 #endif
 
 		int f_no_base = FALSE;
 
 		target_go.create_from_base_10_string(Descr->bsgs_order_text);
 
-		Orbiter->Lint_vec->scan(Descr->bsgs_base, given_base, given_base_length);
+		Lint_vec_scan(Descr->bsgs_base, given_base, given_base_length);
 
 
 		A_initial->init_permutation_group_from_generators(Descr->degree,
@@ -209,7 +209,7 @@ void permutation_group_create::init_subgroup_by_generators(
 	int *gens;
 	int sz;
 
-	Orbiter->get_vector_from_label(subgroup_generators_label, gens, sz, verbose_level);
+	orbiter_kernel_system::Orbiter->get_vector_from_label(subgroup_generators_label, gens, sz, verbose_level);
 
 	if (sz != nb_subgroup_generators * A_initial->degree) {
 		cout << "permutation_group_create::init_subgroup_by_generators "
@@ -242,7 +242,7 @@ void permutation_group_create::init_subgroup_by_generators(
 	A2 = A_initial;
 
 	stringstream str;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int max_len = 80;
 	int line_skip = 0;
 

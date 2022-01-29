@@ -33,7 +33,7 @@ void linear_algebra::Gram_matrix(int epsilon, int k,
 		cout << "linear_algebra::Gram_matrix" << endl;
 	}
 	Gram = NEW_int(d * d);
-	Orbiter->Int_vec->zero(Gram, d * d);
+	Int_vec_zero(Gram, d * d);
 	n = Gg.Witt_index(epsilon, k);
 	if (epsilon == 0) {
 		Gram[0 * d + 0] = F->add(form_c1, form_c1);
@@ -171,13 +171,13 @@ void linear_algebra::Siegel_map_between_singular_points(int *T,
 			form_c1, form_c2, form_c3, rk_to, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "    root=";
-		Orbiter->Int_vec->print(cout, B, d);
+		Int_vec_print(cout, B, d);
 		cout << endl;
 		cout << " rk_from=";
-		Orbiter->Int_vec->print(cout, B + d, d);
+		Int_vec_print(cout, B + d, d);
 		cout << endl;
 		cout << "   rk_to=";
-		Orbiter->Int_vec->print(cout, w, d);
+		Int_vec_print(cout, w, d);
 		cout << endl;
 	}
 
@@ -192,10 +192,10 @@ void linear_algebra::Siegel_map_between_singular_points(int *T,
 	if (f_vv) {
 		cout << "after scaling:" << endl;
 		cout << " rk_from=";
-		Orbiter->Int_vec->print(cout, B + d, d);
+		Int_vec_print(cout, B + d, d);
 		cout << endl;
 		cout << "   rk_to=";
-		Orbiter->Int_vec->print(cout, w, d);
+		Int_vec_print(cout, w, d);
 		cout << endl;
 	}
 	for (i = 2; i < d; i++) {
@@ -206,35 +206,35 @@ void linear_algebra::Siegel_map_between_singular_points(int *T,
 
 	if (f_vv) {
 		cout << "before perp, the matrix B is:" << endl;
-		Orbiter->Int_vec->print_integer_matrix(cout, B, d, d);
+		Int_vec_print_integer_matrix(cout, B, d, d);
 	}
 	perp(d, 2, B, Gram_matrix, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "after perp, the matrix B is:" << endl;
-		Orbiter->Int_vec->print_integer_matrix(cout, B, d, d);
+		Int_vec_print_integer_matrix(cout, B, d, d);
 	}
 	invert_matrix(B, Bv, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv = B^{-1} is:" << endl;
-		Orbiter->Int_vec->print_integer_matrix(cout, B, d, d);
+		Int_vec_print_integer_matrix(cout, B, d, d);
 	}
 	mult_matrix_matrix(w, Bv, z, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z = w * Bv is:" << endl;
-		Orbiter->Int_vec->print(cout, z, d);
+		Int_vec_print(cout, z, d);
 		cout << endl;
 	}
 	z[0] = 0;
 	z[1] = 0;
 	if (f_vv) {
 		cout << "we zero out the first two coordinates:" << endl;
-		Orbiter->Int_vec->print(cout, z, d);
+		Int_vec_print(cout, z, d);
 		cout << endl;
 	}
 	mult_matrix_matrix(z, B, x, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x = z * B is:" << endl;
-		Orbiter->Int_vec->print(cout, x, d);
+		Int_vec_print(cout, x, d);
 		cout << endl;
 	}
 	minus_one = F->negate(1);
@@ -243,7 +243,7 @@ void linear_algebra::Siegel_map_between_singular_points(int *T,
 	}
 	if (f_vv) {
 		cout << "the vector -x is:" << endl;
-		Orbiter->Int_vec->print(cout, x, d);
+		Int_vec_print(cout, x, d);
 		cout << endl;
 	}
 	Siegel_Transformation(epsilon, d - 1,
@@ -252,7 +252,7 @@ void linear_algebra::Siegel_map_between_singular_points(int *T,
 	if (f_v) {
 		cout << "linear_algebra::Siegel_map_between_singular_points "
 				"the Siegel transformation is:" << endl;
-		Orbiter->Int_vec->print_integer_matrix(cout, T, d, d);
+		Int_vec_print_integer_matrix(cout, T, d, d);
 	}
 	FREE_int(B);
 	FREE_int(Bv);
@@ -283,9 +283,9 @@ void linear_algebra::Siegel_Transformation(
 	if (f_v) {
 		cout << "linear_algebra::Siegel_Transformation "
 				"v=";
-		Orbiter->Int_vec->print(cout, v, d);
+		Int_vec_print(cout, v, d);
 		cout << " u=";
-		Orbiter->Int_vec->print(cout, u, d);
+		Int_vec_print(cout, u, d);
 		cout << endl;
 	}
 	Gram_matrix(epsilon, k,
@@ -361,7 +361,7 @@ void linear_algebra::Siegel_Transformation(
 	if (f_v) {
 		cout << "linear_algebra::Siegel_Transformation "
 				"Siegel matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M, d, d, d, 2);
+		Int_vec_print_integer_matrix_width(cout, M, d, d, d, 2);
 		//GFq.transform_form_matrix(M, Gram, new_Gram, N1, N2, d);
 		//cout << "transformed Gram matrix:" << endl;
 		//print_integer_matrix_width(cout, new_Gram, d, d, d, 2);
@@ -844,7 +844,7 @@ void linear_algebra::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4
 				solve_y2py(acbv2, Y2, nb_sol);
 				if (f_v) {
 					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 after solve_y2py nb_sol= " << nb_sol << endl;
-					Orbiter->Int_vec->print(cout, Y2, nb_sol);
+					Int_vec_print(cout, Y2, nb_sol);
 					cout << endl;
 				}
 				if (nb_sol + nb_pts > 2) {

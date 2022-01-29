@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 BLT_set_create_description::BLT_set_create_description()

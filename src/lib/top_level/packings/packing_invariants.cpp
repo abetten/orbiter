@@ -86,7 +86,7 @@ void packing_invariants::init(packing_classify *P,
 			verbose_level - 2);
 	if (f_vv) {
 		cout << "list_of_lines:" << endl;
-		Orbiter->Lint_vec->matrix_print(list_of_lines,
+		Lint_matrix_print(list_of_lines,
 				P->size_of_packing, P->spread_size);
 	}
 	f_has_klein = FALSE;
@@ -153,7 +153,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 
 	int f_second = FALSE;
 
-	C = NEW_OBJECT(tally);
+	C = NEW_OBJECT(data_structures::tally);
 	C->init(nb_pts_on_plane, nb_planes, f_second, 0);
 	if (f_v) {
 		cout << "packing_invariants::compute_decomposition: "

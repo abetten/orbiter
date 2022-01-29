@@ -161,7 +161,7 @@ void compute_stabilizer::init(
 	SubSt->SubC->PC->get_set(SubSt->SubC->substructure_size, SubSt->selected_orbit, canonical_pts, size);
 	if (f_v) {
 		cout << "compute_stabilizer::init canonical substructure: ";
-		Orbiter->Lint_vec->print(cout, canonical_pts, size);
+		Lint_vec_print(cout, canonical_pts, size);
 		cout << endl;
 	}
 
@@ -266,10 +266,10 @@ void compute_stabilizer::init(
 
 	if (f_v) {
 		cout << "compute_stabilizer::init input    : ";
-		Orbiter->Lint_vec->print(cout, SubSt->Pts, SubSt->nb_pts);
+		Lint_vec_print(cout, SubSt->Pts, SubSt->nb_pts);
 		cout << endl;
 		cout << "compute_stabilizer::init canonical: ";
-		Orbiter->Lint_vec->print(cout, canonical_pts, SubSt->nb_pts);
+		Lint_vec_print(cout, canonical_pts, SubSt->nb_pts);
 		cout << endl;
 	}
 
@@ -347,7 +347,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(int cnt2, int ve
 	}
 
 	if (f_v) {
-		Orbiter->Lint_vec->print(cout, Stab_orbits->reduced_set1, Stab_orbits->reduced_set_size);
+		Lint_vec_print(cout, Stab_orbits->reduced_set1, Stab_orbits->reduced_set_size);
 		cout << endl;
 	}
 
@@ -372,7 +372,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(int cnt2, int ve
 	}
 	if (f_v) {
 		cout << "local labels:" << endl;
-		Orbiter->Lint_vec->print(cout, Stab_orbits->reduced_set1_new_labels, Stab_orbits->reduced_set_size);
+		Lint_vec_print(cout, Stab_orbits->reduced_set1_new_labels, Stab_orbits->reduced_set_size);
 		cout << endl;
 	}
 
@@ -421,7 +421,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(int cnt2, int ve
 	}
 	if (f_v) {
 		cout << "canonical form:" << endl;
-		Orbiter->Lint_vec->print(cout, Stab_orbits->canonical_set1, Stab_orbits->reduced_set_size);
+		Lint_vec_print(cout, Stab_orbits->canonical_set1, Stab_orbits->reduced_set_size);
 		cout << endl;
 	}
 
@@ -575,7 +575,7 @@ void compute_stabilizer::setup_stabilizer(groups::sims *Stab0, int verbose_level
 		cout << "compute_stabilizer::setup_stabilizer before A_induced.make_canonical" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "before make_canonical: ";
-		Orbiter->Lint_vec->print(cout, Stab_orbits->reduced_set1_new_labels, Stab_orbits->reduced_set_size);
+		Lint_vec_print(cout, Stab_orbits->reduced_set1_new_labels, Stab_orbits->reduced_set_size);
 		cout << endl;
 	}
 
@@ -685,7 +685,7 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
 				"interesting_points=" << endl;
-		Orbiter->Lint_vec->print(cout,
+		Lint_vec_print(cout,
 				Stab_orbits->interesting_points,
 				Stab_orbits->nb_interesting_points);
 		cout << endl;
@@ -796,7 +796,7 @@ void compute_stabilizer::compute_canonical_form(int verbose_level)
 
 	if (f_v) {
 		cout << "Canonical forms:" << endl;
-		Orbiter->Lint_vec->matrix_print(Canonical_forms,
+		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(Canonical_forms,
 				Stab_orbits->nb_interesting_subsets_reduced,
 				Stab_orbits->reduced_set_size, 2);
 		cout << endl;
@@ -806,7 +806,7 @@ void compute_stabilizer::compute_canonical_form(int verbose_level)
 
 	for (cnt = 0; cnt < Stab_orbits->nb_interesting_subsets_reduced; cnt++) {
 		if (cnt == 0) {
-			Orbiter->Lint_vec->copy(Canonical_forms + cnt * Stab_orbits->reduced_set_size,
+			Lint_vec_copy(Canonical_forms + cnt * Stab_orbits->reduced_set_size,
 					Stab_orbits->canonical_set2, Stab_orbits->reduced_set_size);
 			nb_interesting_subsets_rr = 0;
 			interesting_subsets_rr[nb_interesting_subsets_rr++] = cnt;
@@ -818,7 +818,7 @@ void compute_stabilizer::compute_canonical_form(int verbose_level)
 					Stab_orbits->canonical_set2, Stab_orbits->reduced_set_size);
 
 			if (cmp > 0) {
-				Orbiter->Lint_vec->copy(Canonical_forms + cnt * Stab_orbits->reduced_set_size,
+				Lint_vec_copy(Canonical_forms + cnt * Stab_orbits->reduced_set_size,
 						Stab_orbits->canonical_set2, Stab_orbits->reduced_set_size);
 				nb_interesting_subsets_rr = 0;
 				interesting_subsets_rr[nb_interesting_subsets_rr++] = cnt;
@@ -833,10 +833,10 @@ void compute_stabilizer::compute_canonical_form(int verbose_level)
 #if 1
 	if (f_v) {
 		cout << "canonical form : " << endl;
-		Orbiter->Lint_vec->matrix_print(Stab_orbits->canonical_set2, 1, Stab_orbits->reduced_set_size, 2);
+		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(Stab_orbits->canonical_set2, 1, Stab_orbits->reduced_set_size, 2);
 		cout << "nb_interesting_subsets_rr = " << nb_interesting_subsets_rr << endl;
 		cout << "interesting_subsets_rr:" << endl;
-		Orbiter->Lint_vec->print(cout, interesting_subsets_rr, nb_interesting_subsets_rr);
+		Lint_vec_print(cout, interesting_subsets_rr, nb_interesting_subsets_rr);
 		cout << endl;
 	}
 #endif
@@ -884,19 +884,19 @@ void compute_stabilizer::compute_canonical_form_handle_case(int cnt, int verbose
 	}
 	if (FALSE) {
 		cout << "canonical form:" << endl;
-		Orbiter->Lint_vec->print(cout, Stab_orbits->canonical_set1, Stab_orbits->reduced_set_size);
+		Lint_vec_print(cout, Stab_orbits->canonical_set1, Stab_orbits->reduced_set_size);
 		cout << endl;
 	}
 
-	Orbiter->Lint_vec->copy(Stab_orbits->reduced_set1_new_labels,
+	Lint_vec_copy(Stab_orbits->reduced_set1_new_labels,
 			Canonical_form_input + cnt * Stab_orbits->reduced_set_size,
 			Stab_orbits->reduced_set_size);
 
-	Orbiter->Lint_vec->copy(Stab_orbits->canonical_set1,
+	Lint_vec_copy(Stab_orbits->canonical_set1,
 			Canonical_forms + cnt * Stab_orbits->reduced_set_size,
 			Stab_orbits->reduced_set_size);
 
-	Orbiter->Int_vec->copy(Stab_orbits->elt2,
+	Int_vec_copy(Stab_orbits->elt2,
 			Canonical_form_transporter + cnt * A_induced->elt_size_in_int,
 			A_induced->elt_size_in_int);
 
@@ -1150,7 +1150,7 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 	}
 	if (f_v4) {
 		cout << "compute_stabilizer::make_canonical_second_set canonical set2: ";
-		Orbiter->Lint_vec->print(cout, Stab_orbits->canonical_set2, Stab_orbits->reduced_set_size);
+		Lint_vec_print(cout, Stab_orbits->canonical_set2, Stab_orbits->reduced_set_size);
 		cout << endl;
 	}
 	if (FALSE) {
@@ -1181,7 +1181,7 @@ void compute_stabilizer::report(std::ostream &ost)
 {
 	ost << "Input set of size " << SubSt->nb_pts << " : ";
 	ost << "$";
-	Orbiter->Lint_vec->print_fully(ost, SubSt->Pts, SubSt->nb_pts);
+	Lint_vec_print_fully(ost, SubSt->Pts, SubSt->nb_pts);
 	ost << "$";
 	ost << "\\\\" << endl;
 
@@ -1191,7 +1191,7 @@ void compute_stabilizer::report(std::ostream &ost)
 
 	ost << "interesting_subsets: ";
 	//ost << "$";
-	Orbiter->Lint_vec->print_fully(ost, SubSt->interesting_subsets, SubSt->nb_interesting_subsets);
+	Lint_vec_print_fully(ost, SubSt->interesting_subsets, SubSt->nb_interesting_subsets);
 	//ost << "$";
 	ost << "\\\\" << endl;
 
@@ -1211,17 +1211,17 @@ void compute_stabilizer::print_canonical_sets()
 		cout << "STABILIZER loop " << i << " / " << Stab_orbits->nb_interesting_subsets_reduced
 				<< " subset_idx=" << Stab_orbits->interesting_subsets_reduced[i] << endl;
 		cout << "input set: ";
-		Orbiter->Lint_vec->print(cout,
+		Lint_vec_print(cout,
 					Canonical_form_input + i * Stab_orbits->reduced_set_size,
 					Stab_orbits->reduced_set_size);
 		cout << endl;
 		cout << "output set: ";
-		Orbiter->Lint_vec->print(cout,
+		Lint_vec_print(cout,
 				Canonical_forms + i * Stab_orbits->reduced_set_size,
 					Stab_orbits->reduced_set_size);
 		cout << endl;
 		cout << "transporter: ";
-		Orbiter->Int_vec->print(cout,
+		Int_vec_print(cout,
 				Canonical_form_transporter + i * A_induced->elt_size_in_int,
 				A_induced->elt_size_in_int);
 		cout << endl;

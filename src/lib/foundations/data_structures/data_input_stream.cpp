@@ -68,7 +68,7 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int input_idx, nb_obj;
 	int nb_objects_to_test;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "data_input_stream::count_number_of_objects_to_test" << endl;
@@ -244,7 +244,7 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input incidence geometries from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			int m, n, nb_flags;
 
 			std::vector<std::vector<int> > Geos;
@@ -273,7 +273,7 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input incidence geometries by row ranks from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			int m, n, r;
 
 			std::vector<std::vector<int> > Geos;
@@ -329,7 +329,7 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input from parallel search, cases_fname=" << cases_fname << endl;
 			}
 
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			int i;
 
 
@@ -410,7 +410,7 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_point_set) {
 
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			long int *the_set;
 			int set_size;
 			geometry::object_with_canonical_form *OwCF;
@@ -511,7 +511,7 @@ void data_input_stream::read_objects(int verbose_level)
 				cout << "input incidence geometries from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			int m, n, nb_flags;
 
 			std::vector<std::vector<int> > Geos;
@@ -558,7 +558,7 @@ void data_input_stream::read_objects(int verbose_level)
 				cout << "input incidence geometries from file "
 						<< Descr->Input[input_idx].input_string << " by row ranks:" << endl;
 			}
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			int m, n, r;
 
 			std::vector<std::vector<int> > Geos;
@@ -655,7 +655,7 @@ void data_input_stream::read_objects(int verbose_level)
 
 			q = Descr->Input[input_idx].input_data1;
 
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			long int *Spread_table;
 			int nb_spreads;
 			int spread_size;
@@ -863,7 +863,7 @@ void data_input_stream::read_objects(int verbose_level)
 				cout << "input from parallel search, cases_fname=" << cases_fname << endl;
 			}
 
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 			int c;
 
 			set_of_sets *Reps;
@@ -887,7 +887,7 @@ void data_input_stream::read_objects(int verbose_level)
 
 				if (f_v) {
 					cout << "case " << c << " / " << nb_cases << " prefix=";
-					Orbiter->Lint_vec->print(cout, Reps->Sets[c], prefix_sz);
+					Lint_vec_print(cout, Reps->Sets[c], prefix_sz);
 				}
 
 				char str[1000];
@@ -932,8 +932,8 @@ void data_input_stream::read_objects(int verbose_level)
 						geometry::object_with_canonical_form *OwCF;
 
 
-						Orbiter->Lint_vec->copy(Reps->Sets[c], set, prefix_sz);
-						Orbiter->Lint_vec->copy(Sol_idx + i * sol_width, set + prefix_sz, sol_width);
+						Lint_vec_copy(Reps->Sets[c], set, prefix_sz);
+						Lint_vec_copy(Sol_idx + i * sol_width, set + prefix_sz, sol_width);
 
 						OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 

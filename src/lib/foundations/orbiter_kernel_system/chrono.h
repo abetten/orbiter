@@ -16,6 +16,9 @@
 #include <cmath>
 #include <chrono>
 
+
+//! measure elapsed time
+
 class chrono_ {
 public:
     chrono_() { start(); }

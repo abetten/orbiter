@@ -38,7 +38,7 @@ void projective_space_global::map(
 	}
 	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
 
-	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != t_object) {
+	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
@@ -58,8 +58,8 @@ void projective_space_global::map(
 				cout << "could not find symbol " << (*List)[i] << endl;
 				exit(1);
 			}
-			formula *Formula;
-			Formula = (formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
+			expression_parser::formula *Formula;
+			Formula = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
 
 			PA->map(Formula,
 					evaluate_text,
@@ -69,8 +69,8 @@ void projective_space_global::map(
 	else if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
 		cout << "symbol table entry is a formula" << endl;
 
-		formula *Formula;
-		Formula = (formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+		expression_parser::formula *Formula;
+		Formula = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 
 		PA->map(Formula,
 				evaluate_text,
@@ -111,7 +111,7 @@ void projective_space_global::analyze_del_Pezzo_surface(
 	}
 	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
 
-	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != t_object) {
+	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
@@ -131,8 +131,8 @@ void projective_space_global::analyze_del_Pezzo_surface(
 				cout << "could not find symbol " << (*List)[i] << endl;
 				exit(1);
 			}
-			formula *F;
-			F = (formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
+			expression_parser::formula *F;
+			F = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
 
 			analyze_del_Pezzo_surface_formula_given(
 					PA,
@@ -144,8 +144,8 @@ void projective_space_global::analyze_del_Pezzo_surface(
 	else if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
 		cout << "symbol table entry is a formula" << endl;
 
-		formula *F;
-		F = (formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+		expression_parser::formula *F;
+		F = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 
 		analyze_del_Pezzo_surface_formula_given(
 				PA,
@@ -166,7 +166,7 @@ void projective_space_global::analyze_del_Pezzo_surface(
 
 void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 		projective_space_with_action *PA,
-		formula *F,
+		expression_parser::formula *F,
 		std::string &evaluate_text,
 		int verbose_level)
 {
@@ -287,7 +287,7 @@ void projective_space_global::conic_type(
 	long int *Pts;
 	int nb_pts;
 
-	Orbiter->Lint_vec->scan(set_text, Pts, nb_pts);
+	Lint_vec_scan(set_text, Pts, nb_pts);
 
 
 	if (f_v) {
@@ -320,7 +320,7 @@ void projective_space_global::do_lift_skew_hexagon(
 	int *Pluecker_coords;
 	int sz;
 
-	Orbiter->Int_vec->scan(text, Pluecker_coords, sz);
+	Int_vec_scan(text, Pluecker_coords, sz);
 
 	long int *Pts;
 	int nb_pts;
@@ -334,7 +334,7 @@ void projective_space_global::do_lift_skew_hexagon(
 
 	if (f_v) {
 		cout << "Pluecker coordinates of lines:" << endl;
-		Orbiter->Int_vec->matrix_print(Pluecker_coords, nb_pts, 6);
+		Int_matrix_print(Pluecker_coords, nb_pts, 6);
 	}
 
 	algebraic_geometry::surface_domain *Surf;
@@ -383,7 +383,7 @@ void projective_space_global::do_lift_skew_hexagon(
 
 	if (f_v) {
 		cout << "lines:" << endl;
-		Orbiter->Lint_vec->print(cout, Pts, 6);
+		Lint_vec_print(cout, Pts, 6);
 		cout << endl;
 	}
 
@@ -438,7 +438,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	int *Polarity36;
 	int sz1;
 
-	Orbiter->Int_vec->scan(polarity_36, Polarity36, sz1);
+	Int_vec_scan(polarity_36, Polarity36, sz1);
 
 	if (sz1 != 36) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity I need exactly 36 coefficients for the polarity" << endl;
@@ -483,7 +483,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	int alpha, beta;
 	int i, j;
 
-	Orbiter->Int_vec->zero(Pluecker_coords, 36);
+	Int_vec_zero(Pluecker_coords, 36);
 	// a1 = 1,0,0,0,0,0
 	Pluecker_coords[0] = 1;
 
@@ -516,7 +516,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 			if (f_v) {
 				cout << "Pluecker coordinates of lines:" << endl;
-				Orbiter->Int_vec->matrix_print(Pluecker_coords, nb_pts, 6);
+				Int_matrix_print(Pluecker_coords, nb_pts, 6);
 			}
 
 
@@ -536,7 +536,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 			if (f_v) {
 				cout << "lines:" << endl;
-				Orbiter->Lint_vec->print(cout, Pts, 6);
+				Lint_vec_print(cout, Pts, 6);
 				cout << endl;
 			}
 
@@ -624,12 +624,12 @@ void projective_space_global::do_classify_arcs(
 		apps_algebra::any_group *AG;
 		//linear_group *LG;
 
-		idx = Orbiter->find_symbol(Arc_generator_description->override_group_label);
-		if (Orbiter->get_object_type(idx) != t_any_group) {
+		idx = orbiter_kernel_system::Orbiter->find_symbol(Arc_generator_description->override_group_label);
+		if (orbiter_kernel_system::Orbiter->get_object_type(idx) != t_any_group) {
 			cout << "projective_space_global::do_classify_arcs The object given must be a group" << endl;
 			exit(1);
 		}
-		AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
+		AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 #if 0
 		if (!LG->f_has_strong_generators) {
@@ -782,7 +782,7 @@ void projective_space_global::do_classify_cubic_curves(
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
@@ -809,7 +809,7 @@ void projective_space_global::do_classify_cubic_curves(
 		L.foot(fp);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size "
 		<< Fio.file_size(fname) << endl;

@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 magma_interface::magma_interface()
@@ -354,5 +355,5 @@ void magma_interface::run_magma_file(std::string &fname, int verbose_level)
 }
 
 
-}}
+}}}
 

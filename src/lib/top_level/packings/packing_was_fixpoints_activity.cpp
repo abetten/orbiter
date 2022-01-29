@@ -77,7 +77,7 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 		long int *packing;
 		int sz;
 
-		Orbiter->Lint_vec->scan(Descr->print_packing_text, packing, sz);
+		Lint_vec_scan(Descr->print_packing_text, packing, sz);
 
 		PWF->print_packing(packing, sz, verbose_level);
 
@@ -97,7 +97,7 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
 		}
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int *M1;
 		int *M2;
 		int m1, n1;
@@ -129,7 +129,7 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		cout << "The intersection has size " << len3 << ":" << endl;
-		Orbiter->Int_vec->print(cout, v3, len3);
+		Int_vec_print(cout, v3, len3);
 		cout << endl;
 
 

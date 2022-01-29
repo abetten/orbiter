@@ -48,7 +48,7 @@ void geometric_backtrack_search::init(gen_geo *gg, int verbose_level)
 		Row_stabilizer_orbits[i] = NULL;
 	}
 	Row_stabilizer_orbit_idx = NEW_int(gg->GB->V);
-	Orbiter->Int_vec->zero(Row_stabilizer_orbit_idx, gg->GB->V);
+	Int_vec_zero(Row_stabilizer_orbit_idx, gg->GB->V);
 
 
 	if (f_v) {

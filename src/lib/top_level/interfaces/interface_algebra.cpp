@@ -487,11 +487,11 @@ void interface_algebra::worker(int verbose_level)
 		graphics::layered_graph_draw_options *O;
 
 
-		if (!Orbiter->f_draw_options) {
+		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
 			cout << "please use option -draw_options .. -end" << endl;
 			exit(1);
 		}
-		O = Orbiter->draw_options;
+		O = orbiter_kernel_system::Orbiter->draw_options;
 		PT.draw_mod_n(Draw_mod_n_description,
 				O,
 				verbose_level);
@@ -540,7 +540,7 @@ void interface_algebra::worker(int verbose_level)
 
 		F = (field_theory::finite_field *) The_Orbiter_top_level_session->get_object(idx);
 
-		Orbiter->Int_vec->scan(eigenstuff_coeffs, data, sz);
+		Int_vec_scan(eigenstuff_coeffs, data, sz);
 
 		if (sz != eigenstuff_n * eigenstuff_n) {
 			cout << "sz != eigenstuff_n * eigenstuff_n" << endl;

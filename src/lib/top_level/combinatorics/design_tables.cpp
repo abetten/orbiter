@@ -149,7 +149,7 @@ void design_tables::create_table(int verbose_level)
 	for (i = 0; i < nb_designs; i++) {
 
 		Sets[i] = NEW_lint(design_size);
-		Orbiter->Lint_vec->copy(SetOrb->Sets[i], Sets[i], design_size);
+		Lint_vec_copy(SetOrb->Sets[i], Sets[i], design_size);
 	}
 
 	if (f_v) {
@@ -169,7 +169,7 @@ void design_tables::create_table(int verbose_level)
 
 	the_table = NEW_lint(nb_designs * design_size);
 	for (i = 0; i < nb_designs; i++) {
-		Orbiter->Lint_vec->copy(Sets[i], the_table + i * design_size, design_size);
+		Lint_vec_copy(Sets[i], the_table + i * design_size, design_size);
 	}
 
 	if (f_v) {
@@ -179,7 +179,7 @@ void design_tables::create_table(int verbose_level)
 	if (nb_designs < 100) {
 		for (i = 0; i < nb_designs; i++) {
 			cout << i << " : ";
-			Orbiter->Lint_vec->print(cout, the_table + i * design_size, design_size);
+			Lint_vec_print(cout, the_table + i * design_size, design_size);
 			cout << endl;
 		}
 	}
@@ -263,7 +263,7 @@ void design_tables::extract_solutions_by_index(
 	int f_v = (verbose_level >= 1);
 	long int i, j, k, idx, N;
 	long int *Sol;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "design_tables::extract_solutions_by_index" << endl;
@@ -275,7 +275,7 @@ void design_tables::extract_solutions_by_index(
 		k = 0;
 		for (j = 0; j < Index_width; j++, k += design_size) {
 			idx = Index[i * Index_width + j];
-			Orbiter->Lint_vec->copy(the_table + idx * design_size,
+			Lint_vec_copy(the_table + idx * design_size,
 					Sol + i * N + j * design_size,
 					design_size);
 		}
@@ -319,7 +319,7 @@ void design_tables::make_reduced_design_table(
 			}
 		}
 		if (j == set_sz) {
-			Orbiter->Lint_vec->copy(the_table + i * design_size,
+			Lint_vec_copy(the_table + i * design_size,
 					reduced_table + nb_reduced_designs * design_size, design_size);
 			reduced_table_idx[nb_reduced_designs] = i;
 			nb_reduced_designs++;
@@ -385,7 +385,7 @@ int design_tables::test_if_table_exists(
 	fname_design_table.assign(label);
 	fname_design_table.append("_design_table.csv");
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (Fio.file_size(fname_design_table) > 0) {
 		if (f_v) {
@@ -406,7 +406,7 @@ int design_tables::test_if_table_exists(
 void design_tables::save(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "design_tables::save" << endl;
@@ -434,7 +434,7 @@ void design_tables::load(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int b;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "design_tables::load" << endl;

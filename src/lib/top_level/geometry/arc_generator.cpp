@@ -184,10 +184,10 @@ void arc_generator::init(
 	if (Descr->f_has_forbidden_point_set) {
 		int i, a;
 
-		Orbiter->Int_vec->scan(Descr->forbidden_point_set_string, forbidden_points, nb_forbidden_points);
+		Int_vec_scan(Descr->forbidden_point_set_string, forbidden_points, nb_forbidden_points);
 
 		f_is_forbidden = NEW_int(PA->P->N_points);
-		Orbiter->Int_vec->zero(f_is_forbidden, PA->P->N_points);
+		Int_vec_zero(f_is_forbidden, PA->P->N_points);
 		for (i = 0; i < nb_forbidden_points; i++) {
 			a = forbidden_points[i];
 			f_is_forbidden[a] = TRUE;
@@ -307,7 +307,7 @@ void arc_generator::prepare_generator(int verbose_level)
 void arc_generator::compute_starter(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 	
 
@@ -515,10 +515,10 @@ void arc_generator::early_test_func(long int *S, int len,
 		
 	if (f_v) {
 		cout << "arc_generator::early_test_func checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
@@ -585,10 +585,10 @@ void arc_generator::print(int len, long int *S)
 	compute_line_type(S, len, 0 /* verbose_level */);
 
 	cout << "set ";
-	Orbiter->Lint_vec->print(cout, S, len);
+	Lint_vec_print(cout, S, len);
 	cout << " has line type ";
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(line_type, PA->P->N_lines, FALSE, 0);
 	C.print_naked(TRUE);
@@ -604,7 +604,7 @@ void arc_generator::print(int len, long int *S)
 	}
 	for (i = 0; i < len; i++) {
 		cout << S[i] << " : ";
-		Orbiter->Int_vec->print(cout, Coord + i * (PA->n + 1), PA->n + 1);
+		Int_vec_print(cout, Coord + i * (PA->n + 1), PA->n + 1);
 		cout << endl;
 	}
 
@@ -702,7 +702,7 @@ void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
 				"P->Lines_on_point == 0" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->zero(line_type, PA->P->N_lines);
+	Int_vec_zero(line_type, PA->P->N_lines);
 	for (i = 0; i < len; i++) {
 		a = set[i];
 		for (j = 0; j < PA->P->r; j++) {
@@ -759,7 +759,7 @@ void arc_generator::lifting_prepare_function_new(
 
 
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(line_type, PA->P->N_lines, FALSE, 0);
 	if (f_v) {
@@ -844,7 +844,7 @@ void arc_generator::lifting_prepare_function_new(
 	col_labels = NEW_lint(nb_candidates);
 
 
-	Orbiter->Lint_vec->copy(candidates, col_labels, nb_candidates);
+	Lint_vec_copy(candidates, col_labels, nb_candidates);
 
 	if (E->f_lex) {
 		if (f_vv) {
@@ -931,7 +931,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "arc_generator::report" << endl;
@@ -954,7 +954,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		int f_12pt = FALSE;
 		int f_enlarged_page = TRUE;
 		int f_pagenumbers = TRUE;
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		if (Descr->target_size == PA->q + 2) {
 			sprintf(title, "Hyperovals over ${\\mathbb F}_{%d}$", PA->q);
@@ -1042,7 +1042,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 	}
 
 
-	tally C_ago;
+	data_structures::tally C_ago;
 
 	C_ago.init(Ago_int, Iso.Reps->count, FALSE, 0);
 	cout << "Classification by ago:" << endl;
@@ -1224,7 +1224,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the set.\\\\" << endl;
 
-		tally C_ol;
+		data_structures::tally C_ol;
 
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 
@@ -1250,7 +1250,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 
 					point_unrank(vec, data[v]);
 					ost << "$" << v << "$ & $" << data[v] << "$ & $";
-					Orbiter->Int_vec->print(ost, vec, 3);
+					Int_vec_print(ost, vec, 3);
 					ost << "$\\\\" << endl;
 				}
 			}
@@ -1357,7 +1357,7 @@ static void arc_generator_early_test_function(long int *S, int len,
 	
 	if (f_v) {
 		cout << "arc_generator_early_test_function for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	Gen->early_test_func(S, len, 

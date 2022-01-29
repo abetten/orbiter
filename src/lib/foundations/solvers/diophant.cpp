@@ -187,17 +187,17 @@ void diophant::open(int m, int n)
 	int i;
 	
 	A = NEW_int(m * n);
-	Orbiter->Int_vec->zero(A, m * n);
+	Int_vec_zero(A, m * n);
 	G = NEW_int(m * n);
-	Orbiter->Int_vec->zero(G, m * n);
+	Int_vec_zero(G, m * n);
 	x = NEW_int(n);
-	Orbiter->Int_vec->zero(x, n);
+	Int_vec_zero(x, n);
 	x_max = NEW_int(n);
-	Orbiter->Int_vec->zero(x_max, n);
+	Int_vec_zero(x_max, n);
 	x_min = NEW_int(n);
-	Orbiter->Int_vec->zero(x_min, n);
+	Int_vec_zero(x_min, n);
 	RHS = NEW_int(m);
-	Orbiter->Int_vec->zero(RHS, m);
+	Int_vec_zero(RHS, m);
 	RHS_low = NEW_int(m);
 	RHS1 = NEW_int(m);
 	type = NEW_OBJECTS(diophant_equation_type, m);
@@ -230,7 +230,7 @@ void diophant::init_var_labels(long int *labels, int verbose_level)
 	}
 	var_labels = NEW_int(n);
 	f_has_var_labels = TRUE;
-	Orbiter->Lint_vec->copy_to_int(labels, var_labels, n);
+	Lint_vec_copy_to_int(labels, var_labels, n);
 	if (f_v) {
 		cout << "diophant::init_var_labels done" << endl;
 	}
@@ -960,7 +960,7 @@ void diophant::write_solutions(std::string &fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
 	vector<int> res;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "diophant::write_solutions" << endl;
@@ -1013,7 +1013,7 @@ void diophant::read_solutions_from_file(std::string &fname_sol,
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	vector<int> res;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "diophant::read_solutions_from_file" << endl;
@@ -1512,7 +1512,7 @@ int diophant::solve_all_betten_with_conditions(int verbose_level,
 	int f_v = (verbose_level >= 1);
 	int j;
 	vector<int> lo;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 
 	//int maxresults = 10000000;
@@ -1571,7 +1571,7 @@ int diophant::solve_first_betten(int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int k, total_max;
 	number_theory::number_theory_domain NT;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (!f_has_sum) {
 		cout << "diophant::solve_first_betten !f_has_sum" << endl;
@@ -1772,7 +1772,7 @@ int diophant::solve_next_mckay(int verbose_level)
 int diophant::solve_next_betten(int verbose_level)
 {
 	int j;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (!f_has_sum) {
 		cout << "diophant::solve_next_betten !f_has_sum" << endl;
@@ -2270,10 +2270,10 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 		cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
 				"f_x_max=true" << endl;
 		cout << "x_max=";
-		Orbiter->Int_vec->print(cout, x_max, n);
+		Int_vec_print(cout, x_max, n);
 		cout << endl;
 		cout << "x_min=";
-		Orbiter->Int_vec->print(cout, x_min, n);
+		Int_vec_print(cout, x_min, n);
 		cout << endl;
 	}
 	for (j = 0; j < n; j++) {
@@ -2477,8 +2477,8 @@ diophant *diophant::trivial_column_reductions(int verbose_level)
 	}
 	f_deleted = NEW_int(n);
 	col_idx = NEW_int(n);
-	Orbiter->Int_vec->zero(f_deleted, n);
-	Orbiter->Int_vec->zero(col_idx, n);
+	Int_vec_zero(f_deleted, n);
+	Int_vec_zero(col_idx, n);
 	for (j = 0; j < n; j++) {
 		col_idx[j] = -1;
 	}
@@ -2511,7 +2511,7 @@ diophant *diophant::trivial_column_reductions(int verbose_level)
 	if (f_v) {
 		cout << "diophant::trivial_column_reductions nb_deleted = " << nb_deleted << endl;
 		cout << "col_idx=";
-		Orbiter->Int_vec->print(cout, col_idx, n);
+		Int_vec_print(cout, col_idx, n);
 		cout << endl;
 	}
 
@@ -2881,7 +2881,7 @@ void diophant::save_in_general_format(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, d, h, val;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 	
 	if (f_v) {
@@ -3576,7 +3576,7 @@ void diophant::project_to_single_equation_and_solve(
 		cout << setw(3) << eqn_idx[i] << " : " << setw(4) << nb_sol_in_eqn[i] << endl;
 	}
 
-	tally C;
+	data_structures::tally C;
 
 	C.init_lint(nb_sol_in_eqn, h, FALSE, 0);
 	cout << "number of solutions of individual equations classified:" << endl;
@@ -3904,7 +3904,7 @@ void diophant::append_equation()
 	eqn_label = L;
 	Y = Y1;
 
-	Orbiter->Int_vec->zero(A + m * n, n);
+	Int_vec_zero(A + m * n, n);
 	RHS_low[m] = 0;
 	RHS[m] = 0;
 	RHS1[m] = 0;
@@ -3939,7 +3939,7 @@ void diophant::delete_equation(int I)
 void diophant::write_gurobi_binary_variables(const char *fname)
 {
 	int i, j, a;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	{
 		ofstream f(fname);
@@ -4089,7 +4089,7 @@ void diophant::draw_partitioned(
 
 	T = NEW_int(m);
 	A2 = NEW_int(m * n);
-	Orbiter->Int_vec->zero(A2, m * n);
+	Int_vec_zero(A2, m * n);
 
 	for (i = 0; i < m; i++) {
 		if (type[i] == t_EQ) {
@@ -4106,7 +4106,7 @@ void diophant::draw_partitioned(
 		}
 	}
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(T, m, FALSE, 0);
 	if (f_v) {
@@ -4137,7 +4137,7 @@ void diophant::draw_partitioned(
 		part_col[1] = n - solution_sz;
 		part_col[2] = n;
 
-		Orbiter->Int_vec->copy(solution, col_perm + n - solution_sz, solution_sz);
+		Int_vec_copy(solution, col_perm + n - solution_sz, solution_sz);
 		Combi.set_complement(solution, solution_sz, col_perm, size_complement, n);
 		
 		if (size_complement != n - solution_sz) {
@@ -4182,7 +4182,7 @@ void diophant::draw_partitioned(
 	}
 	if (FALSE) {
 		cout << "diophant::draw_partitioned A2=" << endl;
-		Orbiter->Int_vec->matrix_print(A2, m, n);
+		Int_matrix_print(A2, m, n);
 	}
 
 	int f_row_grid = FALSE;
@@ -4219,7 +4219,7 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 		cout << "diophant::test_solution" << endl;
 	}
 	if (FALSE) {
-		Orbiter->Int_vec->print(cout, sol, len);
+		Int_vec_print(cout, sol, len);
 		cout << endl;
 		data_structures::set_of_sets *S;
 
@@ -4228,8 +4228,8 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 
 		FREE_OBJECT(S);
 	}
-	Orbiter->Int_vec->zero(Y, m);
-	Orbiter->Int_vec->zero(X, n);
+	Int_vec_zero(Y, m);
+	Int_vec_zero(X, n);
 	for (j = 0; j < len; j++) {
 		X[sol[j]] = 1;
 	}
@@ -4243,7 +4243,7 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 	}
 	if (FALSE) {
 		cout << "Y=";
-		Orbiter->Int_vec->print_fully(cout, Y, m);
+		Int_vec_print_fully(cout, Y, m);
 		cout << endl;
 	}
 	ret = TRUE;
@@ -4337,7 +4337,7 @@ void diophant::test_solution_file(std::string &solution_file,
 	int *Sol;
 	int nb_sol, sol_length;
 	int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "diophant::test_solution_file" << endl;
@@ -4356,10 +4356,10 @@ void diophant::test_solution_file(std::string &solution_file,
 			cout << "solution " << i << " / " << nb_sol << " is OK" << endl;
 		}
 		cout << "Y=";
-		Orbiter->Int_vec->print(cout, Y, m);
+		Int_vec_print(cout, Y, m);
 		cout << endl;
 
-		tally C;
+		data_structures::tally C;
 
 		C.init(Y, m, FALSE, 0);
 		cout << "classification: ";
@@ -4612,7 +4612,7 @@ static void diophant_callback_solution_found(int *sol, int len,
 	if (f_v) {
 		cout << "diophant_callback_solution_found recording solution "
 				<< nb_sol << " len = " << len << " : ";
-		Orbiter->Int_vec->print(cout, sol, len);
+		Int_vec_print(cout, sol, len);
 		cout << endl;
 		cout << "D->_resultanz=" << D->_resultanz << endl;
 

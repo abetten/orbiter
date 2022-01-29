@@ -1,6 +1,7 @@
 // mckay.cpp
 //
 // solver due to Brendan McKay
+// Commented by Alfred Wassermann
 // C++ translation by Volker Widor 2003
 // adapted by Anton Betten
 // 1/16/2009
@@ -40,7 +41,7 @@ mckay::tMCKAY::tMCKAY() {
 void mckay::tMCKAY::Init(diophant *lgs,
 		const char *label, int aEqnAnz, int aVarAnz)
 {
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	_varanz=aVarAnz;
 	_eqnanz=aEqnAnz;
@@ -468,7 +469,7 @@ void mckay::tMCKAY::solve(int level,
 		    	cout << j << " : " << alo[j] << " : " << ahi[j] << endl;
 		    	}
 #ifdef MCKAY_DEBUG
-			os_interface Os;
+		    orbiter_kernel_system::os_interface Os;
 	        if (((Os.os_ticks() - ticks0) / Os.os_ticks_per_second())
 	        		> INTERVAL_IN_SECONDS) {
 			ticks0 = Os.os_ticks();

@@ -191,7 +191,7 @@ void orbits_on_polynomials::init(
 
 
 		cout << "orbits_on_polynomials::init recognition:" << endl;
-		Orbiter->Lint_vec->scan(recognize_text, Rank, len);
+		Lint_vec_scan(recognize_text, Rank, len);
 
 		Idx = NEW_int(len);
 
@@ -203,7 +203,7 @@ void orbits_on_polynomials::init(
 			cout << "recognizing object " << i << " / " << len << ", point "
 					<< Rank[i] << " lies in orbit " << orbit_idx << endl;
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		std::string fname;
 
 		fname.assign(fname_base);
@@ -244,7 +244,7 @@ void orbits_on_polynomials::compute_points(int verbose_level)
 		T->Reps[i].Strong_gens->group_order(go);
 
 		cout << i << " : ";
-		Orbiter->Lint_vec->print(cout, T->Reps[i].data, T->Reps[i].sz);
+		Lint_vec_print(cout, T->Reps[i].data, T->Reps[i].sz);
 		cout << " : ";
 		cout << go;
 
@@ -283,7 +283,7 @@ void orbits_on_polynomials::report(int verbose_level)
 	sprintf(author, "Orbiter");
 	{
 		ofstream ost(fname_report);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		L.head(ost,
 				FALSE /* f_book*/,
@@ -359,7 +359,7 @@ void orbits_on_polynomials::report(int verbose_level)
 
 
 
-		tally T_nb_pts;
+		data_structures::tally T_nb_pts;
 		int h, j, f, l, a;
 
 		T_nb_pts.init(Nb_pts, T->nb_orbits, FALSE, 0);
@@ -395,7 +395,7 @@ void orbits_on_polynomials::report(int verbose_level)
 				T->Reps[i].Strong_gens->group_order(go);
 
 				ost << i << " : ";
-				Orbiter->Lint_vec->print(ost, T->Reps[i].data, T->Reps[i].sz);
+				Lint_vec_print(ost, T->Reps[i].data, T->Reps[i].sz);
 				ost << " : ";
 				ost << go;
 
@@ -465,7 +465,7 @@ void orbits_on_polynomials::report(int verbose_level)
 		L.foot(ost);
 
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_report << " of size " << Fio.file_size(fname_report) << endl;
 	if (f_v) {
@@ -486,7 +486,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 
 
 
-	tally T1;
+	data_structures::tally T1;
 
 	T1.init(Nb_pts, T->nb_orbits, FALSE, 0);
 	ost << "Distribution of the number of points: $";
@@ -543,7 +543,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			ost << "number of points = " << nb_pts << "\\\\" << endl;
 
 			ost << "$";
-			Orbiter->Int_vec->print(ost, coeff, HPD->get_nb_monomials());
+			Int_vec_print(ost, coeff, HPD->get_nb_monomials());
 			ost << " = ";
 			HPD->print_equation(ost, coeff);
 			ost << "$\\\\" << endl;
@@ -551,7 +551,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 
 			cout << "We found " << nb_pts << " points in the variety" << endl;
 			cout << "They are : ";
-			Orbiter->Lint_vec->print(cout, Pts, nb_pts);
+			Lint_vec_print(cout, Pts, nb_pts);
 			cout << endl;
 			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
 
@@ -564,7 +564,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			ost << "The line type is: ";
 
 			stringstream sstr;
-			Orbiter->Int_vec->print_classified_str(sstr,
+			orbiter_kernel_system::Orbiter->Int_vec->print_classified_str(sstr,
 					line_type, HPD->get_P()->N_lines, TRUE /* f_backwards*/);
 			string s = sstr.str();
 			ost << "$" << s << "$\\\\" << endl;

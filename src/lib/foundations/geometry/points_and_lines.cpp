@@ -94,7 +94,7 @@ void points_and_lines::init(projective_space *P,
 	if (f_v) {
 		cout << "points_and_lines::init nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
 		cout << "Lines:";
-		Orbiter->Lint_vec->print(cout, Lines, nb_lines);
+		Lint_vec_print(cout, Lines, nb_lines);
 		cout << endl;
 	}
 
@@ -143,11 +143,11 @@ void points_and_lines::print_all_points(std::ostream &ost)
 		for (i = 0; i < nb_pts; i++) {
 			unrank_point(v, Pts[i]);
 			ost << i << " : $P_{" << Pts[i] << "}=";
-			Orbiter->Int_vec->print_fully(ost, v, 4);
+			Int_vec_print_fully(ost, v, 4);
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
-		Orbiter->Lint_vec->print_fully(ost, Pts, nb_pts);
+		Lint_vec_print_fully(ost, Pts, nb_pts);
 		ost << "\\\\" << endl;
 	}
 	else {
@@ -164,7 +164,7 @@ void points_and_lines::print_all_lines(std::ostream &ost)
 void points_and_lines::print_lines_tex(std::ostream &ost)
 {
 	int i;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	long int *Rk;
 
 	Rk = NEW_lint(nb_lines);
@@ -207,10 +207,10 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 		ost << "$$" << endl;
 	}
 	ost << "Rank of lines: ";
-	Orbiter->Lint_vec->print(ost, Lines, nb_lines);
+	Lint_vec_print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;
 	ost << "Rank of points on Klein quadric: ";
-	Orbiter->Lint_vec->print(ost, Rk, nb_lines);
+	Lint_vec_print(ost, Rk, nb_lines);
 	ost << "\\\\" << endl;
 
 	FREE_lint(Rk);
@@ -228,7 +228,7 @@ void points_and_lines::write_points_to_txt_file(std::string &label, int verbose_
 	fname.assign(label);
 	fname.append("_points.txt");
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	{
 		ofstream ost(fname);

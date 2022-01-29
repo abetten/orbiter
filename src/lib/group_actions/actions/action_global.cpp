@@ -167,10 +167,10 @@ void action_global::make_generators_stabilizer_of_two_components(
 	minus_one = Fq->negate(1);
 	alpha = Fq->primitive_root();
 
-	Orbiter->Int_vec->zero(Zero, k * k);
-	Orbiter->Int_vec->zero(Id, k * k);
-	Orbiter->Int_vec->zero(Center, k * k);
-	Orbiter->Int_vec->zero(minusId, k * k);
+	Int_vec_zero(Zero, k * k);
+	Int_vec_zero(Id, k * k);
+	Int_vec_zero(Center, k * k);
+	Int_vec_zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
 	}
@@ -206,16 +206,16 @@ void action_global::make_generators_stabilizer_of_two_components(
 
 		if (EVEN(h)) {
 			// Q := diag(P,Id)
-			Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, Id);
+			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, Id);
 		}
 		else {
 			// Q := diag(Id,P)
-			Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, P);
+			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, P);
 		}
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
 		}
-		Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
+		Int_vec_copy(Q, Data + idx * sz, sz);
 		idx++;
 	}
 
@@ -230,19 +230,19 @@ void action_global::make_generators_stabilizer_of_two_components(
 #endif
 
 	// Q := matrix(Center,0,0,I):
-	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Center, Zero, Zero, Id);
+	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Center, Zero, Zero, Id);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
+	Int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
 	// Q := matrix(I,0,0,Center):
-	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, Center);
+	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, Center);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
+	Int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
 
@@ -317,9 +317,9 @@ void action_global::make_generators_stabilizer_of_three_components(
 	minus_one = Fq->negate(1);
 
 
-	Orbiter->Int_vec->zero(Zero, k * k);
-	Orbiter->Int_vec->zero(Id, k * k);
-	Orbiter->Int_vec->zero(minusId, k * k);
+	Int_vec_zero(Zero, k * k);
+	Int_vec_zero(Id, k * k);
+	Int_vec_zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
 	}
@@ -351,28 +351,28 @@ void action_global::make_generators_stabilizer_of_three_components(
 		//P = gens_PGL_k->ith(h);
 
 		// Q := diag(P,P)
-		Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, P);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, P);
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
 			}
-		Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
+		Int_vec_copy(Q, Data + idx * sz, sz);
 		idx++;
 	}
 
 	// Q := matrix(0,I,I,0):
-	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, Id, Zero);
+	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, Id, Zero);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
+	Int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
 	// Q := matrix(0,I,-I,-I):
-	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, minusId, minusId);
+	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, minusId, minusId);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
+	Int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
 
@@ -459,7 +459,7 @@ void action_global::compute_generators_GL_n_q(int *&Gens,
 	if (f_vv) {
 		for (h = 0; h < nb_gens; h++) {
 			cout << "Generator " << h << ":" << endl;
-			Orbiter->Int_vec->matrix_print(Gens + h * elt_size, n, n);
+			Int_matrix_print(Gens + h * elt_size, n, n);
 		}
 		
 	}
@@ -556,7 +556,7 @@ void action_global::lift_generators(
 		S->lift_matrix(EltQ, m, Mtx, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "action_global::lift_generators lifted matrix:" << endl;
-			Orbiter->Int_vec->matrix_print(Mtx, n, n);
+			Int_matrix_print(Mtx, n, n);
 			}
 		Aq->make_element(Eltq, Mtx, 0 /*verbose_level - 4 */);
 		if (f_vv) {
@@ -617,7 +617,7 @@ void action_global::retract_generators(
 		S->retract_matrix(Eltq, n, Mtx, m, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "action_global::retract_generators retracted matrix:" << endl;
-			Orbiter->Int_vec->matrix_print(Mtx, m, m);
+			Int_matrix_print(Mtx, m, m);
 		}
 		AQ->make_element(EltQ, Mtx, 0 /*verbose_level - 4*/);
 		if (f_vv) {
@@ -1043,8 +1043,8 @@ action *action_global::init_direct_product_group(
 	}
 
 
-	Orbiter->Lint_vec->copy(P->the_base, A->get_base(), A->base_len());
-	Orbiter->Int_vec->copy(P->the_transversal_length,
+	Lint_vec_copy(P->the_base, A->get_base(), A->base_len());
+	Int_vec_copy(P->the_transversal_length,
 			A->get_transversal_length(), A->base_len());
 
 	int *gens_data;
@@ -1213,7 +1213,7 @@ void action_global::compute_decomposition_based_on_orbit_length(
 	Sch1->get_orbit_length(L1, 0 /* verbose_level */);
 	Sch2->get_orbit_length(L2, 0 /* verbose_level */);
 
-	tally T1, T2;
+	data_structures::tally T1, T2;
 
 	T1.init(L1, Sch1->A->degree, FALSE, 0);
 
@@ -1263,7 +1263,7 @@ void callback_choose_random_generator_orthogonal(int iteration,
 #endif
 
 	induced_actions::action_on_orthogonal *AO;
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 
 	AO = A->G.AO;
 	O = AO->O;

@@ -188,7 +188,7 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost,
 
 		ost << i << " & " << N[i] << " & ";
 
-		tally T;
+		data_structures::tally T;
 
 		T.init_lint(Ago, nb, FALSE, 0);
 		T.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
@@ -254,7 +254,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 	poset_orbit_node *O;
 	ring_theory::longinteger_object stab_order, orbit_length;
 	data_structures_groups::schreier_vector *Schreier_vector;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 
 	rep = NEW_lint(depth + 1);
@@ -286,7 +286,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 
 			get_set_by_level(level, i, rep);
 
-			Orbiter->Lint_vec->print_to_str_naked(str, rep, level);
+			orbiter_kernel_system::Orbiter->Lint_vec->print_to_str_naked(str, rep, level);
 
 			if (f_vv) {
 				cout << "poset_classification::report_orbits_summary set: '" << str << "'" << endl;
@@ -457,9 +457,9 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost, int verbose
 	string cmd;
 
 
-	if (Orbiter->f_orbiter_path) {
+	if (orbiter_kernel_system::Orbiter->f_orbiter_path) {
 
-		cmd.assign(Orbiter->orbiter_path);
+		cmd.assign(orbiter_kernel_system::Orbiter->orbiter_path);
 
 	}
 	else {
@@ -534,7 +534,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 	char str2[1000];
 	long int *rep = NULL;
 	data_structures_groups::schreier_vector *Schreier_vector;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	long int so;
 
 	str2[0] = 0;
@@ -653,7 +653,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 			exit(1);
 		}
 
-		tally T;
+		data_structures::tally T;
 
 		T.init(orbit_length, nb_o, FALSE, 0);
 		ost << "Orbit type of flag orbits: \\\\" << endl;

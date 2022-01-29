@@ -96,7 +96,7 @@ void orbit_transversal::read_from_file(
 	int *Casenumbers;
 	int nb_cases, nb_cases_mod;
 	int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file "
@@ -139,7 +139,7 @@ void orbit_transversal::read_from_file(
 				Aut_ascii[i], 0 /* verbose_level */);
 		
 		set = NEW_lint(Set_sizes[i]);
-		Orbiter->Lint_vec->copy(Sets[i], set, Set_sizes[i]);
+		Lint_vec_copy(Sets[i], set, Set_sizes[i]);
 		Reps[i].init_everything(A, A2, set, Set_sizes[i], 
 			gens, 0 /* verbose_level */);
 
@@ -181,7 +181,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	int *Casenumbers;
 	int nb_cases; //, nb_cases_mod;
 	int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file_one_case_only "
@@ -218,7 +218,7 @@ void orbit_transversal::read_from_file_one_case_only(
 			Aut_ascii[i], 0 /* verbose_level */);
 
 	set = NEW_lint(Set_sizes[i]);
-	Orbiter->Lint_vec->copy(Sets[i], set, Set_sizes[i]);
+	Lint_vec_copy(Sets[i], set, Set_sizes[i]);
 	Reps[i].init_everything(A, A2, set, Set_sizes[i],
 		gens, 0 /* verbose_level */);
 
@@ -238,7 +238,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	}
 }
 
-tally *orbit_transversal::get_ago_distribution(long int *&ago,
+data_structures::tally *orbit_transversal::get_ago_distribution(long int *&ago,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -255,8 +255,8 @@ tally *orbit_transversal::get_ago_distribution(long int *&ago,
 	for (i = 0; i < nb_orbits; i++) {
 		ago[i] = Reps[i].group_order_as_lint();
 	}
-	tally *C;
-	C = NEW_OBJECT(tally);
+	data_structures::tally *C;
+	C = NEW_OBJECT(data_structures::tally);
 	C->init_lint(ago, nb_orbits, FALSE, 0);
 	if (f_v) {
 		cout << "orbit_transversal::get_ago_distribution done" << endl;
@@ -266,7 +266,7 @@ tally *orbit_transversal::get_ago_distribution(long int *&ago,
 
 void orbit_transversal::report_ago_distribution(ostream &ost)
 {
-	tally *C;
+	data_structures::tally *C;
 	long int *Ago;
 	int i, f, l, a;
 
@@ -322,7 +322,7 @@ void orbit_transversal::print_table_latex(
 				Reps[i].Strong_gens->group_order(go);
 
 				f << i << " & ";
-				Orbiter->Lint_vec->print(f, Reps[i].data, Reps[i].sz);
+				Lint_vec_print(f, Reps[i].data, Reps[i].sz);
 				f << " & " << go;
 				if (f_has_callback) {
 					f << " & ";

@@ -237,7 +237,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 {
 	int f_v = (verbose_level >= 1);
 	string my_prefix;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
 	if (f_v) {
@@ -316,7 +316,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	}
 
 
-	tally *T;
+	data_structures::tally *T;
 	long int *Ago;
 
 
@@ -357,7 +357,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 				Iso_type_invariant,
 				verbose_level);
 
-	tally_vector_data C;
+	data_structures::tally_vector_data C;
 
 
 	C.init(Iso_type_invariant, nb_cliques,
@@ -389,7 +389,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 // orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
@@ -445,7 +445,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 			cout << "too big to print" << endl;
 		}
 		else {
-			Orbiter->Lint_vec->matrix_print(Cliques, nb_cliques, clique_size);
+			Lint_matrix_print(Cliques, nb_cliques, clique_size);
 
 			fixpoint_clique_gen->print_representatives_at_level(clique_size);
 		}
@@ -540,7 +540,7 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 	}
 
 	cout << "packing: ";
-	Orbiter->Lint_vec->print(cout, packing, sz);
+	Lint_vec_print(cout, packing, sz);
 	cout << endl;
 
 	long int a;
@@ -561,7 +561,7 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 	}
 
 	cout << "Lines in the packing:" << endl;
-	Orbiter->Int_vec->matrix_print(Lines, sz, PW->P->spread_size);
+	Int_matrix_print(Lines, sz, PW->P->spread_size);
 
 
 	combinatorics::combinatorics_domain Combi;
@@ -587,11 +587,11 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 	}
 
 	cout << "Orbit_number in the packing:" << endl;
-	Orbiter->Int_vec->matrix_print(Orbit_number, sz, PW->P->spread_size);
+	Int_matrix_print(Orbit_number, sz, PW->P->spread_size);
 
 
 	for (i = 0; i < sz; i++) {
-		tally T;
+		data_structures::tally T;
 
 		T.init(Orbit_number + i * PW->P->spread_size, PW->P->spread_size, TRUE, 0);
 		cout << i << " : ";
@@ -606,7 +606,7 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 
 void packing_was_fixpoints::report(int verbose_level)
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	{
 	char fname[1000];
@@ -620,7 +620,7 @@ void packing_was_fixpoints::report(int verbose_level)
 
 		{
 		ofstream fp(fname);
-		latex_interface Li;
+		orbiter_kernel_system::latex_interface Li;
 
 		//latex_head_easy(fp);
 		Li.head(fp,
@@ -715,7 +715,7 @@ void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ in
 
 
 		ost << "Orbit numbers: ";
-		Orbiter->Lint_vec->print(ost, Orbit_numbers, fixpoint_clique_size);
+		Lint_vec_print(ost, Orbit_numbers, fixpoint_clique_size);
 		ost << "\\\\" << endl;
 
 		ost << "Stabilizer:\\\\" << endl;

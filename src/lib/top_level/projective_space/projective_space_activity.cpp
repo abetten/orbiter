@@ -80,7 +80,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		int *genma;
 		int k, n;
 
-		Orbiter->get_matrix_from_label(Descr->canonical_form_of_code_generator_matrix, genma, k, n);
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->canonical_form_of_code_generator_matrix, genma, k, n);
 
 #if 0
 		G.canonical_form_of_code(
@@ -152,15 +152,15 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		GeoObj->init(Descr->Object_Descr, PA->P, verbose_level);
 
-		orbiter_symbol_table_entry *Symb;
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
+		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
 		Symb->init_geometric_object(Descr->define_object_label, GeoObj, verbose_level);
 		if (f_v) {
 			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_object_label << endl;
 		}
-		Orbiter->add_symbol_table_entry(Descr->define_object_label, Symb, verbose_level);
+		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_object_label, Symb, verbose_level);
 
 	}
 	else if (Descr->f_define_surface) {
@@ -179,15 +179,15 @@ void projective_space_activity::perform_activity(int verbose_level)
 			SC,
 			verbose_level);
 
-		orbiter_symbol_table_entry *Symb;
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
+		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
 		Symb->init_cubic_surface(Descr->define_surface_label, SC, verbose_level);
 		if (f_v) {
 			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_surface_label << endl;
 		}
-		Orbiter->add_symbol_table_entry(Descr->define_surface_label, Symb, verbose_level);
+		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_surface_label, Symb, verbose_level);
 
 
 		//FREE_OBJECT(SC);
@@ -254,16 +254,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity after PA->create_quartic_curve" << endl;
 		}
 
-		orbiter_symbol_table_entry *Symb;
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
+		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
 		Symb->init_quartic_curve(Descr->define_quartic_curve_label, QC, verbose_level);
 		if (f_v) {
 			cout << "before Orbiter->add_symbol_table_entry "
 					<< Descr->define_surface_label << endl;
 		}
-		Orbiter->add_symbol_table_entry(Descr->define_quartic_curve_label, Symb, verbose_level);
+		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_quartic_curve_label, Symb, verbose_level);
 
 
 		//FREE_OBJECT(SC);
@@ -284,16 +284,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 				SCW,
 				verbose_level);
 
-		orbiter_symbol_table_entry *Symb;
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
+		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
 		Symb->init_classification_of_cubic_surfaces_with_double_sixes(Descr->classify_surfaces_with_double_sixes_label, SCW, verbose_level);
 		if (f_v) {
 			cout << "before Orbiter->add_symbol_table_entry "
 					<< Descr->classify_surfaces_with_double_sixes_label << endl;
 		}
-		Orbiter->add_symbol_table_entry(Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
+		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
 
 	}
 
@@ -466,8 +466,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		graphics::layered_graph_draw_options *O;
 
-		if (Orbiter->f_draw_options) {
-			O = Orbiter->draw_options;
+		if (orbiter_kernel_system::Orbiter->f_draw_options) {
+			O = orbiter_kernel_system::Orbiter->draw_options;
 		}
 		else {
 			cout << "please use -draw_options .. -end" << endl;
@@ -615,7 +615,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_out;
 		int set_size_out;
 
-		Orbiter->Lint_vec->scan(Descr->dualize_input_set, the_set_in, set_size_in);
+		Lint_vec_scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
@@ -628,7 +628,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		cout << "output set:" << endl;
-		Orbiter->Lint_vec->print(cout, the_set_out, set_size_in);
+		Lint_vec_print(cout, the_set_out, set_size_in);
 		cout << endl;
 
 		// only if n = 2:
@@ -648,7 +648,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_out;
 		int set_size_out;
 
-		Orbiter->Lint_vec->scan(Descr->dualize_input_set, the_set_in, set_size_in);
+		Lint_vec_scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
@@ -661,7 +661,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		cout << "output set:" << endl;
-		Orbiter->Lint_vec->print(cout, the_set_out, set_size_in);
+		Lint_vec_print(cout, the_set_out, set_size_in);
 		cout << endl;
 
 		FREE_lint(the_set_in);
@@ -677,7 +677,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_out;
 		int set_size_out;
 
-		Orbiter->Lint_vec->scan(Descr->dualize_input_set, the_set_in, set_size_in);
+		Lint_vec_scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
@@ -693,7 +693,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		cout << "output set:" << endl;
-		Orbiter->Lint_vec->print(cout, the_set_out, set_size_in);
+		Lint_vec_print(cout, the_set_out, set_size_in);
 		cout << endl;
 
 		FREE_lint(the_set_in);
@@ -750,7 +750,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			// assumes that line_pencil[q + 1] has been allocated
 
 		cout << "line_pencil: ";
-		Orbiter->Lint_vec->print(cout, line_pencil, q + 1);
+		Lint_vec_print(cout, line_pencil, q + 1);
 		cout << endl;
 
 		if (f_v) {

@@ -229,7 +229,7 @@ int surface_with_action::create_double_six_safely(
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_safely" << endl;
 		cout << "five_lines=";
-		Orbiter->Lint_vec->print(cout, five_lines, 5);
+		Lint_vec_print(cout, five_lines, 5);
 		cout << " transversal_line=" << transversal_line << endl;
 	}
 
@@ -275,14 +275,14 @@ int surface_with_action::create_double_six_safely(
 		cout << "surface_with_action::create_double_six_safely "
 				"the double sixes differ" << endl;
 		cout << "double six 1: ";
-		Orbiter->Lint_vec->print(cout, double_six1, 12);
+		Lint_vec_print(cout, double_six1, 12);
 		cout << endl;
 		cout << "double six 2: ";
-		Orbiter->Lint_vec->print(cout, double_six2, 12);
+		Lint_vec_print(cout, double_six2, 12);
 		cout << endl;
 		exit(1);
 	}
-	Orbiter->Lint_vec->copy(double_six1, double_six, 12);
+	Lint_vec_copy(double_six1, double_six, 12);
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_safely done" << endl;
 	}
@@ -406,12 +406,12 @@ void surface_with_action::complete_skew_hexagon(
 	forbidden_points[2] = 2;
 	forbidden_points[3] = 3;
 
-	Orbiter->Int_vec->zero(Basis, 4);
+	Int_vec_zero(Basis, 4);
 	Basis[0] = 1;
 	Basis[3] = 1;
 	forbidden_points[4] = PA->P->rank_point(Basis);
 
-	Orbiter->Int_vec->zero(Basis, 4);
+	Int_vec_zero(Basis, 4);
 	Basis[1] = 1;
 	Basis[2] = 1;
 	forbidden_points[5] = PA->P->rank_point(Basis);
@@ -421,7 +421,7 @@ void surface_with_action::complete_skew_hexagon(
 	}
 	if (f_v) {
 		cout << "surface_with_action::complete_skew_hexagon Forbidden_points:" << endl;
-		Orbiter->Int_vec->matrix_print(Forbidden_points, 6, 4);
+		Int_matrix_print(Forbidden_points, 6, 4);
 	}
 
 	create_regulus_and_opposite_regulus(
@@ -441,8 +441,8 @@ void surface_with_action::complete_skew_hexagon(
 		}
 		Surf->Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
 		for (j = 0; j < 6; j++) {
-			Orbiter->Int_vec->copy(Basis, Mtx, 8);
-			Orbiter->Int_vec->copy(Forbidden_points + j * 4, Mtx + 8, 4);
+			Int_vec_copy(Basis, Mtx, 8);
+			Int_vec_copy(Forbidden_points + j * 4, Mtx + 8, 4);
 			r = F->Linear_algebra->rank_of_rectangular_matrix(Mtx,
 					3, 4, 0 /* verbose_level*/);
 			if (r == 2) {
@@ -490,7 +490,7 @@ void surface_with_action::complete_skew_hexagon(
 
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon basis=" << endl;
-			Orbiter->Int_vec->matrix_print(Basis, 2, 4);
+			Int_matrix_print(Basis, 2, 4);
 		}
 
 		three_skew_lines[0] = b1;
@@ -507,7 +507,7 @@ void surface_with_action::complete_skew_hexagon(
 
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon basis=" << endl;
-			Orbiter->Int_vec->matrix_print(Basis, 2, 4);
+			Int_matrix_print(Basis, 2, 4);
 		}
 
 
@@ -524,7 +524,7 @@ void surface_with_action::complete_skew_hexagon(
 			cout << "surface_with_action::complete_skew_hexagon "
 					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
 			cout << "surface_with_action::complete_skew_hexagon Pts4=" << endl;
-			Orbiter->Int_vec->matrix_print(Pts4, 2, 2);
+			Int_matrix_print(Pts4, 2, 2);
 		}
 
 		if (nb_pts != 2) {
@@ -539,7 +539,7 @@ void surface_with_action::complete_skew_hexagon(
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon after multiplying" << endl;
 			cout << "surface_with_action::complete_skew_hexagon w=" << endl;
-			Orbiter->Int_vec->matrix_print(w, 2, 4);
+			Int_matrix_print(w, 2, 4);
 		}
 
 		// test if the intersection points lie on the quadric:
@@ -558,10 +558,10 @@ void surface_with_action::complete_skew_hexagon(
 
 			if (f_v) {
 				cout << "the " << j << "-th secant points is: ";
-				Orbiter->Int_vec->print(cout, w + j * 4, 4);
+				Int_vec_print(cout, w + j * 4, 4);
 				cout << endl;
 			}
-			Orbiter->Int_vec->copy(w + j * 4, z, 4);
+			Int_vec_copy(w + j * 4, z, 4);
 			if (z[0] == 0 && z[2] == 0) {
 				idx[j] = 0;
 			}
@@ -713,12 +713,12 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 	forbidden_points[2] = 2;
 	forbidden_points[3] = 3;
 
-	Orbiter->Int_vec->zero(Basis, 4);
+	Int_vec_zero(Basis, 4);
 	Basis[0] = 1;
 	Basis[3] = 1;
 	forbidden_points[4] = PA->P->rank_point(Basis);
 
-	Orbiter->Int_vec->zero(Basis, 4);
+	Int_vec_zero(Basis, 4);
 	Basis[1] = 1;
 	Basis[2] = 1;
 	forbidden_points[5] = PA->P->rank_point(Basis);
@@ -728,7 +728,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 	}
 	if (f_v) {
 		cout << "surface_with_action::complete_skew_hexagon_with_polarity Forbidden_points:" << endl;
-		Orbiter->Int_vec->matrix_print(Forbidden_points, 6, 4);
+		Int_matrix_print(Forbidden_points, 6, 4);
 	}
 
 	create_regulus_and_opposite_regulus(
@@ -747,8 +747,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		}
 		Surf->Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
 		for (j = 0; j < 6; j++) {
-			Orbiter->Int_vec->copy(Basis, Mtx, 8);
-			Orbiter->Int_vec->copy(Forbidden_points + j * 4, Mtx + 8, 4);
+			Int_vec_copy(Basis, Mtx, 8);
+			Int_vec_copy(Forbidden_points + j * 4, Mtx + 8, 4);
 			r = F->Linear_algebra->rank_of_rectangular_matrix(Mtx,
 					3, 4, 0 /* verbose_level*/);
 			if (r == 2) {
@@ -799,7 +799,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity basis=" << endl;
-			Orbiter->Int_vec->matrix_print(Basis, 2, 4);
+			Int_matrix_print(Basis, 2, 4);
 		}
 
 		three_skew_lines[0] = b1;
@@ -816,7 +816,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity basis=" << endl;
-			Orbiter->Int_vec->matrix_print(Basis, 2, 4);
+			Int_matrix_print(Basis, 2, 4);
 		}
 
 
@@ -833,7 +833,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
 					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity Pts4=" << endl;
-			Orbiter->Int_vec->matrix_print(Pts4, 2, 2);
+			Int_matrix_print(Pts4, 2, 2);
 		}
 
 		if (nb_pts != 2) {
@@ -848,7 +848,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity after multiplying" << endl;
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity w=" << endl;
-			Orbiter->Int_vec->matrix_print(w, 2, 4);
+			Int_matrix_print(w, 2, 4);
 		}
 
 		// test if the intersection points lie on the quadric:
@@ -867,10 +867,10 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 			if (f_v) {
 				cout << "the " << j << "-th secant points is: ";
-				Orbiter->Int_vec->print(cout, w + j * 4, 4);
+				Int_vec_print(cout, w + j * 4, 4);
 				cout << endl;
 			}
-			Orbiter->Int_vec->copy(w + j * 4, z, 4);
+			Int_vec_copy(w + j * 4, z, 4);
 			if (z[0] == 0 && z[2] == 0) {
 				idx[j] = 0;
 			}
@@ -924,7 +924,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 
 		cout << "The candidate for " << label_for_printing << " and i=" << i << " is: ";
-		Orbiter->Lint_vec->print(cout, double_six, 12);
+		Lint_vec_print(cout, double_six, 12);
 		cout << endl;
 		Surf->latex_double_six(cout, double_six);
 
@@ -942,7 +942,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 
 			cout << "A double-six for " << label_for_printing << " and i=" << i << " is: ";
-			Orbiter->Lint_vec->print(cout, double_six, 12);
+			Lint_vec_print(cout, double_six, 12);
 			cout << "  nb_E = " << nb_E;
 			cout << endl;
 			Surf->latex_double_six(cout, double_six);
@@ -1110,13 +1110,13 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "The five lines are ";
-		Orbiter->Lint_vec->print(cout, five_lines, 5);
+		Lint_vec_print(cout, five_lines, 5);
 		cout << endl;
 	}
 
 	ell0 = Surf->rank_line(L0);
 
-	Orbiter->Lint_vec->copy(five_lines, double_six, 5); // fill in a_1,\ldots,a_5
+	Lint_vec_copy(five_lines, double_six, 5); // fill in a_1,\ldots,a_5
 	double_six[11] = transversal_line; // fill in b_6
 	
 	for (i = 0; i < 5; i++) {
@@ -1129,7 +1129,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	}
 	if (f_vv) {
 		cout << "The five intersection points are:";
-		Orbiter->Lint_vec->print(cout, P, 5);
+		Lint_vec_print(cout, P, 5);
 		cout << endl;
 	}
 
@@ -1154,7 +1154,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		P4 = P[subset[3]];
 		if (f_vv) {
 			cout << "subset " << rk << " / " << nb_subsets << " : ";
-			Orbiter->Lint_vec->print(cout, four_lines, 5);
+			Lint_vec_print(cout, four_lines, 5);
 			cout << " P4=" << P4 << endl;
 		}
 
@@ -1195,9 +1195,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		if (f_vv) {
 			cout << "before F->adjust_basis" << endl;
 			cout << "L=" << endl;
-			Orbiter->Int_vec->matrix_print(L, 2, 4);
+			Int_matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
-			Orbiter->Int_vec->matrix_print(Q4, 1, 4);
+			Int_matrix_print(Q4, 1, 4);
 		}
 
 		// Adjust the basis L of the line ai4image so that Q4 is first:
@@ -1205,9 +1205,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		if (f_vv) {
 			cout << "after F->adjust_basis" << endl;
 			cout << "L=" << endl;
-			Orbiter->Int_vec->matrix_print(L, 2, 4);
+			Int_matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
-			Orbiter->Int_vec->matrix_print(Q4, 1, 4);
+			Int_matrix_print(Q4, 1, 4);
 		}
 
 		// Determine the point w which is the second point where 
@@ -1226,9 +1226,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (f_vv) {
 				cout << "a=" << a << " v=";
-				Orbiter->Int_vec->print(cout, v, 2);
+				Int_vec_print(cout, v, 2);
 				cout << " w=";
-				Orbiter->Int_vec->print(cout, w, 4);
+				Int_vec_print(cout, w, 4);
 				cout << " b=" << b << endl;
 			}
 			if (b == 0) {
@@ -1281,12 +1281,12 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 
 		// Let pi1 be the plane spanned by line1 and w:
-		Orbiter->Int_vec->copy(line1, pi1, 8);
-		Orbiter->Int_vec->copy(w, pi1 + 8, 4);
+		Int_vec_copy(line1, pi1, 8);
+		Int_vec_copy(w, pi1 + 8, 4);
 
 		// Let pi2 be the plane spanned by line2 and w:
-		Orbiter->Int_vec->copy(line2, pi2, 8);
-		Orbiter->Int_vec->copy(w, pi2 + 8, 4);
+		Int_vec_copy(line2, pi2, 8);
+		Int_vec_copy(w, pi2 + 8, 4);
 		
 		// Let line3 be the intersection of pi1 and pi2:
 		F->Linear_algebra->intersect_subspaces(4, 3, pi1, 3, pi2,
@@ -1336,7 +1336,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			// to see if w lies on it:
 			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (b == 0) {
-				Orbiter->Int_vec->copy(w, pt_coord + nb_pts * 4, 4);
+				Int_vec_copy(w, pt_coord + nb_pts * 4, 4);
 				nb_pts++;
 				if (nb_pts == 5) {
 					cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
@@ -1354,7 +1354,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 	if (f_vv) {
 		cout << "four points have been computed:" << endl;
-		Orbiter->Int_vec->matrix_print(pt_coord, 4, 4);
+		Int_matrix_print(pt_coord, 4, 4);
 	}
 	line3 = -1;
 	for (h = 0; h < 2; h++) {
@@ -1366,8 +1366,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 					cout << "h=" << h << " k=" << k
 							<< " define a singular line" << endl;
 				}
-				Orbiter->Int_vec->copy(pt_coord + h * 4, L, 4);
-				Orbiter->Int_vec->copy(pt_coord + (2 + k) * 4, L + 4, 4);
+				Int_vec_copy(pt_coord + h * 4, L, 4);
+				Int_vec_copy(pt_coord + (2 + k) * 4, L + 4, 4);
 				line3 = Surf->rank_line(L);
 
 				if (!Surf->P->test_if_lines_are_skew(ell0,
@@ -1528,7 +1528,7 @@ void surface_with_action::create_surface_and_do_report(
 	cout << "$$" << endl;
 
 	cout << "$$" << endl;
-	Orbiter->Int_vec->print(cout, SC->SO->eqn, 20);
+	Int_vec_print(cout, SC->SO->eqn, 20);
 	cout << endl;
 	cout << "$$" << endl;
 
@@ -1646,10 +1646,10 @@ void surface_with_action::test_group(
 					"the transformation does not preserve "
 					"the equation of the surface" << endl;
 			cout << "SC->SO->eqn:" << endl;
-			Orbiter->Int_vec->print(cout, SC->SO->eqn, 20);
+			Int_vec_print(cout, SC->SO->eqn, 20);
 			cout << endl;
 			cout << "coeffs_out" << endl;
-			Orbiter->Int_vec->print(cout, coeffs_out, 20);
+			Int_vec_print(cout, coeffs_out, 20);
 			cout << endl;
 
 			exit(1);
@@ -1750,9 +1750,9 @@ void surface_with_action::report_with_group(
 				"before SoA->investigate_surface_and_write_report:" << endl;
 	}
 
-	if (Orbiter->f_draw_options) {
+	if (orbiter_kernel_system::Orbiter->f_draw_options) {
 		SoA->investigate_surface_and_write_report(
-				Orbiter->draw_options,
+				orbiter_kernel_system::Orbiter->draw_options,
 				A,
 				SC,
 				Six_arcs,
@@ -1832,7 +1832,7 @@ void surface_with_action::export_points(
 	}
 
 	string fname_points;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname_points.assign("surface_");
 	fname_points.append(SC->label_txt);
@@ -1886,7 +1886,7 @@ void surface_with_action::do_report(
 			snprintf(title, 1000, "%s over GF(%d)", SC->label_tex.c_str(), F->q);
 			strcpy(author, "");
 
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -1971,7 +1971,7 @@ void surface_with_action::do_report(
 
 			L.foot(ost);
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;
@@ -2189,7 +2189,7 @@ void surface_with_action::sweep_4_15_lines(
 
 						{
 							string str;
-							Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
+							orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 							ost_csv << str;
 						}
 
@@ -2197,7 +2197,7 @@ void surface_with_action::sweep_4_15_lines(
 
 						{
 							string str;
-							Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+							orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 							ost_csv << str;
 						}
 
@@ -2211,7 +2211,7 @@ void surface_with_action::sweep_4_15_lines(
 							params[2] = gamma;
 							params[3] = delta;
 							string str;
-							Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
+							orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
 							ost_csv << str;
 						}
 
@@ -2239,7 +2239,7 @@ void surface_with_action::sweep_4_15_lines(
 		} // alpha
 		ost_csv << "END" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	cout << "Written file " << sweep_fname_csv << " of size " << Fio.file_size(sweep_fname_csv) << endl;
 
 
@@ -2431,7 +2431,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 			{
 				string str;
-				Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
+				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 				ost_csv << str;
 			}
 
@@ -2439,7 +2439,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 			{
 				string str;
-				Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+				orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 				ost_csv << str;
 			}
 
@@ -2453,7 +2453,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 				params[2] = c;
 				params[3] = d;
 				string str;
-				Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
+				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
 				ost_csv << str;
 			}
 
@@ -2476,7 +2476,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 		} // b
 		ost_csv << "END" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	cout << "Written file " << sweep_fname_csv << " of size " << Fio.file_size(sweep_fname_csv) << endl;
 
 	long int *T;
@@ -2758,7 +2758,7 @@ void surface_with_action::sweep_6_9_lines(
 
 								{
 									string str;
-									Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
+									orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 									ost_csv << str;
 								}
 
@@ -2766,7 +2766,7 @@ void surface_with_action::sweep_6_9_lines(
 
 								{
 									string str;
-									Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+									orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 									ost_csv << str;
 								}
 
@@ -2782,7 +2782,7 @@ void surface_with_action::sweep_6_9_lines(
 									params[4] = f;
 									params[5] = g;
 									string str;
-									Orbiter->Int_vec->create_string_with_quotes(str, params, 6);
+									orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 6);
 									ost_csv << str;
 								}
 
@@ -2812,7 +2812,7 @@ void surface_with_action::sweep_6_9_lines(
 		} // a
 		ost_csv << "END" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	cout << "Written file " << sweep_fname_csv << " of size " << Fio.file_size(sweep_fname_csv) << endl;
 
 	long int *T;
@@ -3074,7 +3074,7 @@ void surface_with_action::sweep_4_27(
 			T[i * 16 + j] = Properties[i][j];
 		}
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	std::string fname;
 	char str[1000];
 
@@ -3409,7 +3409,7 @@ void surface_with_action::table_of_cubic_surfaces_export_csv(long int *Table,
 		cout << "surface_with_action::table_of_cubic_surfaces_export_csv" << endl;
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
 	sprintf(str, "_q%d", q);
@@ -3441,7 +3441,7 @@ void surface_with_action::table_of_cubic_surfaces_export_csv(long int *Table,
 			{
 				string str;
 				f << ",";
-				Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
+				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
 				f << str;
 			}
 
@@ -3459,7 +3459,7 @@ void surface_with_action::table_of_cubic_surfaces_export_csv(long int *Table,
 			{
 				string str;
 				f << ",";
-				Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
+				orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
 				f << str;
 			}
 #endif
@@ -3489,7 +3489,7 @@ void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
 		cout << "surface_with_action::table_of_cubic_surfaces_export_sql" << endl;
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
 	sprintf(str, "_q%d", q);
@@ -3528,7 +3528,7 @@ void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
 			f << "`nbOrbTrihedralPairs` = '" << Table[i * nb_cols + 18] << "', ";
 			{
 				string str;
-				Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
+				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
 				f << "`Eqn20` = '" << str << "', ";
 			}
 			{
@@ -3544,7 +3544,7 @@ void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
 			}
 			{
 				string str;
-				Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
+				orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
 				f << "`Lines` = '" << str << "' ";
 			}
 			f << "WHERE `Q` = '" << q << "' AND `OCN` = '" << Table[i * nb_cols + 0] << "';" << endl;

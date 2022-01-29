@@ -170,7 +170,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 		for (i = 0; i < Q; i++) {
 			Gg.AG_element_unrank(2, v1, 1, n, i);
 			cout << i << " : " << affine_points[i] << " : ";
-			Orbiter->Int_vec->print(cout, v1, n);
+			Int_vec_print(cout, v1, n);
 			cout << endl;
 		}
 	}
@@ -250,7 +250,7 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 
 	if (FALSE) {
 		cout << "Kernel of evaluation map:" << endl;
-		Orbiter->Int_vec->matrix_print(Kernel, dim_kernel, 2);
+		Int_matrix_print(Kernel, dim_kernel, 2);
 	}
 
 	if (f_v) {
@@ -283,7 +283,7 @@ void boolean_function_domain::compute_polynomial_representation(
 	}
 	vec = NEW_int(n);
 	mon = NEW_int(degree);
-	Orbiter->Int_vec->zero(coeff, Poly[n].get_nb_monomials());
+	Int_vec_zero(coeff, Poly[n].get_nb_monomials());
 	if (f_v) {
 		cout << "boolean_function_domain::compute_polynomial_representation "
 				"looping over all values, N=" << N << endl;
@@ -329,7 +329,7 @@ void boolean_function_domain::compute_polynomial_representation(
 			// create the polynomial (x_i+(vec[i]+1)*x_n)
 			// note that x_n stands for the constants
 			// because we are in affine space
-			Orbiter->Int_vec->zero(A_poly[1], Poly[1].get_nb_monomials());
+			Int_vec_zero(A_poly[1], Poly[1].get_nb_monomials());
 			A_poly[1][n] = Fq->add(1, vec[i]);
 			A_poly[1][i] = 1;
 
@@ -341,11 +341,11 @@ void boolean_function_domain::compute_polynomial_representation(
 
 
 			if (i == 0) {
-				Orbiter->Int_vec->copy(A_poly[1], B_poly[1], Poly[1].get_nb_monomials());
+				Int_vec_copy(A_poly[1], B_poly[1], Poly[1].get_nb_monomials());
 			}
 			else {
 				// B_poly[i + 1] = A_poly[1] * B_poly[i]
-				Orbiter->Int_vec->zero(B_poly[i + 1], Poly[i + 1].get_nb_monomials());
+				Int_vec_zero(B_poly[i + 1], Poly[i + 1].get_nb_monomials());
 				for (u = 0; u < Poly[1].get_nb_monomials(); u++) {
 					a = A_poly[1][u];
 					if (a == 0) {
@@ -357,7 +357,7 @@ void boolean_function_domain::compute_polynomial_representation(
 							continue;
 						}
 						c = Fq->mult(a, b);
-						Orbiter->Int_vec->zero(mon, n + 1);
+						Int_vec_zero(mon, n + 1);
 						for (h = 0; h <= n + 1; h++) {
 							mon[h] = Poly[1].get_monomial(u, h) +
 									Poly[i].get_monomial(v, h);
@@ -410,7 +410,7 @@ void boolean_function_domain::compute_polynomial_representation(
 		FREE_int(f);
 	}
 
-	Orbiter->Int_vec->zero(mon, n + 1);
+	Int_vec_zero(mon, n + 1);
 	mon[n] = n;
 	idx = Poly[n].index_of_monomial(mon);
 	coeff[idx] = Fq->add(coeff[idx], 1);
@@ -493,7 +493,7 @@ void boolean_function_domain::apply_Walsh_transform(int *in, int *out)
 {
 	int i, j;
 
-	Orbiter->Int_vec->zero(out, Q);
+	Int_vec_zero(out, Q);
 	for (i = 0; i < Q; i++) {
 		for (j = 0; j < Q; j++) {
 			out[i] += W[i * Q + j] * in[j];

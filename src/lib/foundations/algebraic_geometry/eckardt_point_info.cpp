@@ -90,7 +90,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		}
 	//eckardt_point_info::Surf = Surf;
 	eckardt_point_info::P2 = P2;
-	Orbiter->Lint_vec->copy(arc6, eckardt_point_info::arc6, 6);
+	Lint_vec_copy(arc6, eckardt_point_info::arc6, 6);
 
 	if (P2->n != 2) {
 		cout << "eckardt_point_info::init "
@@ -100,7 +100,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 
 	if (f_v) {
 		cout << "arc: ";
-		Orbiter->Lint_vec->print(cout, arc6, 6);
+		Lint_vec_print(cout, arc6, 6);
 		cout << endl;
 	}
 
@@ -123,7 +123,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 	}
 	if (f_v) {
 		cout << "bisecants: ";
-		Orbiter->Int_vec->print(cout, bisecants, 15);
+		Int_vec_print(cout, bisecants, 15);
 		cout << endl;
 	}
 	Intersections = NEW_int(15 * 15);
@@ -143,14 +143,14 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 	//int_matrix_print(Intersections, 15, 15);
 
 
-	tally C;
+	data_structures::tally C;
 	C.init(Intersections, 15 * 15, FALSE, 0);
 	C.get_data_by_multiplicity(B_pts, nb_B_pts,
 		multiplicity, 0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "We found " << nb_B_pts << " B-pts: ";
-		Orbiter->Int_vec->print(cout, B_pts, nb_B_pts);
+		Int_vec_print(cout, B_pts, nb_B_pts);
 		cout << endl;
 	}
 
@@ -175,7 +175,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 
 			if (f_vv) {
 				cout << "H1=";
-				Orbiter->Int_vec->print(cout, H1, 6);
+				Int_vec_print(cout, H1, 6);
 				cout << endl;
 			}
 			for (u = 0; u < 6; u++) {
@@ -185,11 +185,11 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 				}
 			if (f_vv) {
 				cout << "H=";
-				Orbiter->Int_vec->print(cout, H, 12);
+				Int_vec_print(cout, H, 12);
 				cout << endl;
 			}
 
-			tally C2;
+			data_structures::tally C2;
 			int *Labels;
 			int nb_labels;
 
@@ -202,7 +202,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 			if (f_vv) {
 				cout << "eckardt_point_info::init "
 					"We found " << nb_labels << " labels: ";
-				Orbiter->Int_vec->print(cout, Labels, nb_labels);
+				Int_vec_print(cout, Labels, nb_labels);
 				cout << endl;
 			}
 
@@ -210,7 +210,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 				cout << "nb_labels != 3" << endl;
 				exit(1);
 				}
-			Orbiter->Int_vec->copy(Labels, B_pts_label + 3 * s, 3);
+			Int_vec_copy(Labels, B_pts_label + 3 * s, 3);
 
 			FREE_int(Labels);
 			s++;
@@ -254,8 +254,8 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		six_coeffs = conic_coefficients + j * 6;
 
 		deleted_point = arc6[j];
-		Orbiter->Lint_vec->copy(arc6, arc5, j);
-		Orbiter->Lint_vec->copy(arc6 + j + 1, arc5 + j, 5 - j);
+		Lint_vec_copy(arc6, arc5, j);
+		Lint_vec_copy(arc6 + j + 1, arc5 + j, 5 - j);
 
 #if 0
 		cout << "deleting point " << j << " / 6:";
@@ -315,7 +315,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 	for (i = 0; i < nb_B_pts; i++) {
 		E[i].len = 3;
 		E[i].pt = B_pts[i];
-		Orbiter->Int_vec->copy(B_pts_label + i * 3, E[i].index, 3);
+		Int_vec_copy(B_pts_label + i * 3, E[i].index, 3);
 		}
 	for (i = 0; i < nb_E2; i++) {
 		E[nb_B_pts + i].len = 2;
@@ -403,7 +403,7 @@ void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
 void eckardt_point_info::print_intersections(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int labels[15];
 	int fst[1];
 	int len[1];

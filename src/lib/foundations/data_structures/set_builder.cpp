@@ -126,7 +126,7 @@ void set_builder::init(set_builder_description *Descr,
 		long int *Index_set;
 		int Index_set_sz;
 
-		Orbiter->Lint_vec->scan(Descr->here_text, Index_set, Index_set_sz);
+		Lint_vec_scan(Descr->here_text, Index_set, Index_set_sz);
 
 		int i, cnt;
 		long int x, y;
@@ -157,7 +157,7 @@ void set_builder::init(set_builder_description *Descr,
 		if (f_v) {
 			cout << "set_builder::init -file " << Descr->file_name << endl;
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
 		Fio.lint_matrix_read_csv(Descr->file_name, set, m, n, verbose_level);
@@ -173,7 +173,7 @@ void set_builder::init(set_builder_description *Descr,
 	}
 	if (f_v) {
 		cout << "set_builder::init created set of size " << sz << endl;
-		Orbiter->Lint_vec->print(cout, set, sz);
+		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 

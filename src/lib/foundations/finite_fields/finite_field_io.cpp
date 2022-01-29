@@ -475,7 +475,7 @@ void finite_field::addition_table_save_csv(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, k;
 	int *M;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	M = NEW_int(q * q);
 	for (i = 0; i < q; i++) {
@@ -499,7 +499,7 @@ void finite_field::multiplication_table_save_csv(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, k;
 	int *M;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	M = NEW_int((q - 1) * (q - 1));
 	for (i = 0; i < q - 1; i++) {
@@ -1275,7 +1275,7 @@ void finite_field::display_table_of_projective_points2(
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
 		ost << i << " & " << Pts[i] << " & ";
-		Orbiter->Int_vec->print(ost, coords, len);
+		Int_vec_print(ost, coords, len);
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;
@@ -1308,7 +1308,7 @@ void finite_field::display_table_of_projective_points_easy(
 	ost << "\\hline" << endl;
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
-		Orbiter->Int_vec->print(ost, coords, len);
+		Int_vec_print(ost, coords, len);
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;
@@ -1374,7 +1374,7 @@ void finite_field::export_magma(int d, long int *Pts, int nb_pts, std::string &f
 		fp << "Size(Stab);" << endl;
 		fp << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname2 << " of size "
 			<< Fio.file_size(fname2) << endl;
@@ -1433,7 +1433,7 @@ void finite_field::export_gap(int d, long int *Pts, int nb_pts, std::string &fna
 		fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
 		fp << "Size(stab);" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname2 << " of size "
 			<< Fio.file_size(fname2) << endl;

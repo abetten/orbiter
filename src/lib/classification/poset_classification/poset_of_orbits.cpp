@@ -621,7 +621,7 @@ void poset_of_orbits::make_tabe_of_nodes(int verbose_level)
 	long int *Table;
 	int nb_rows, nb_cols;
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	get_table_of_nodes(Table,
 		nb_rows, nb_cols, 0 /*verbose_level*/);
@@ -682,7 +682,7 @@ void poset_of_orbits::poset_orbit_node_depth_breadth_perm_and_inverse(
 
 void poset_of_orbits::read_memory_object(
 		int &depth_completed,
-		memory_object *m, int &nb_group_elements,
+		orbiter_kernel_system::memory_object *m, int &nb_group_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -750,7 +750,7 @@ void poset_of_orbits::read_memory_object(
 		if (nb_nodes > 1000) {
 			if ((i % one_percent) == 0) {
 				int t1, dt;
-				os_interface Os;
+				orbiter_kernel_system::os_interface Os;
 
 				t1 = Os.os_ticks();
 				dt = t1 - t0;
@@ -790,7 +790,7 @@ void poset_of_orbits::read_memory_object(
 
 void poset_of_orbits::write_memory_object(
 		int depth_completed,
-		memory_object *m, int &nb_group_elements,
+		orbiter_kernel_system::memory_object *m, int &nb_group_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -828,7 +828,7 @@ void poset_of_orbits::write_memory_object(
 		if (nb_nodes > 1000) {
 			if ((i % one_percent) == 0) {
 				int t1, dt;
-				os_interface Os;
+				orbiter_kernel_system::os_interface Os;
 
 				t1 = Os.os_ticks();
 				dt = t1 - t0;
@@ -901,7 +901,7 @@ void poset_of_orbits::read_sv_level_file_binary2(
 	int f, i, nb_nodes;
 	int f_v = (verbose_level >= 1);
 	int I;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	f = first_node_at_level(level);
 	nb_nodes = nb_orbits_at_level(level);
@@ -976,7 +976,7 @@ void poset_of_orbits::write_sv_level_file_binary2(
 {
 	int f, i, nb_nodes, tmp;
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	f = first_node_at_level(level);
 	nb_nodes = nb_orbits_at_level(level);
@@ -1018,7 +1018,7 @@ void poset_of_orbits::read_level_file_binary2(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int_4 I;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_of_orbits::read_level_file_binary2" << endl;
@@ -1090,7 +1090,7 @@ void poset_of_orbits::write_level_file_binary2(
 {
 	int f, i, nb_nodes, tmp;
 	int f_v = FALSE;//(verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	f = first_node_at_level(level);
 	nb_nodes = nb_orbits_at_level(level);
@@ -1139,7 +1139,7 @@ void poset_of_orbits::write_candidates_binary_using_sv(
 	int *subset;
 	//int *Cand;
 	int i, j, node, nb, pos;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fst = first_node_at_level(lvl);
 	len = nb_orbits_at_level(lvl);
@@ -1242,7 +1242,7 @@ void poset_of_orbits::read_level_file(int level,
 	int nb_nodes, first_at_level;
 	int i, I, J;
 	poset_orbit_node *O;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_of_orbits::read_level_file "
@@ -1269,7 +1269,7 @@ void poset_of_orbits::read_level_file(int level,
 		O = &root[I];
 
 		cout << setw(10) << i << " : ";
-		Orbiter->Lint_vec->print(cout, sets[i], level);
+		Lint_vec_print(cout, sets[i], level);
 		cout << endl;
 
 		J = PC->find_poset_orbit_node_for_set(level - 1,
@@ -1348,8 +1348,8 @@ void poset_of_orbits::write_lvl_file_with_candidates(
 	int f_v = (verbose_level >= 1);
 	string fname1;
 	char str[1000];
-	file_io Fio;
-	os_interface Os;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::os_interface Os;
 
 	fname1.assign(fname_base);
 	sprintf(str, "_lvl_%d_candidates.txt", lvl);
@@ -1408,7 +1408,7 @@ void poset_of_orbits::write_orbit_reps_at_level(
 {
 	int f_v = (verbose_level >= 1);
 	string fname1;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_of_orbits::write_orbit_reps_at_level" << endl;
@@ -1433,7 +1433,7 @@ void poset_of_orbits::write_orbit_reps_at_level(
 
 			string S;
 
-			Orbiter->Lint_vec->create_string_with_quotes(S, Data + i * lvl, lvl);
+			orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(S, Data + i * lvl, lvl);
 			f << "," << S << endl;
 		}
 		f << "END" << endl;
@@ -1459,8 +1459,8 @@ void poset_of_orbits::write_lvl_file(
 {
 	int f_v = (verbose_level >= 1);
 	string fname1;
-	file_io Fio;
-	os_interface Os;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::os_interface Os;
 
 	//sprintf(fname1, "%s_lvl_%d", fname_base, lvl);
 
@@ -1500,7 +1500,7 @@ void poset_of_orbits::write_lvl(
 	//int f_v = (verbose_level >= 1);
 	int i;
 	int fst, len;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 
 	fst = first_node_at_level(lvl);
@@ -1582,7 +1582,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname,
 			{
 				string str;
 				ost << ",";
-				Orbiter->Lint_vec->create_string_with_quotes(str, set, lvl);
+				orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, set, lvl);
 				ost << str;
 			}
 
@@ -1605,7 +1605,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname,
 
 		FREE_lint(set);
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

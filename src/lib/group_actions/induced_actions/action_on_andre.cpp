@@ -120,13 +120,13 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 					<< Pt.at_infinity_idx << endl;
 			}
 		for (i = 0; i < k; i++) {
-			Orbiter->Int_vec->copy(Andre->spread_elements_genma +
+			Int_vec_copy(Andre->spread_elements_genma +
 					Pt.at_infinity_idx * k * n + i * n, coords1 + i * n1, n);
 			coords1[i * n1 + n] = 0;
 			}
 		if (f_v) {
 			cout << "Spread element embedded:" << endl;
-			Orbiter->Int_vec->matrix_print(coords1, k, n1);
+			Int_matrix_print(coords1, k, n1);
 			}
 		for (i = 0; i < k; i++) {
 			An1->element_image_of_low_level(coords1 + i * n1,
@@ -134,14 +134,14 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 			}
 		if (f_v) {
 			cout << "Image of spread element:" << endl;
-			Orbiter->Int_vec->matrix_print(coords2, k, n1);
+			Int_matrix_print(coords2, k, n1);
 			}
 		for (i = 0; i < k; i++) {
-			Orbiter->Int_vec->copy(coords2 + i * n1, coords3 + i * n, n);
+			Int_vec_copy(coords2 + i * n1, coords3 + i * n, n);
 			}
 		if (f_v) {
 			cout << "Reduced:" << endl;
-			Orbiter->Int_vec->matrix_print(coords3, k, n);
+			Int_matrix_print(coords3, k, n);
 			}
 		rk = Andre->Grass->rank_lint_here(coords3, 0 /* verbose_level*/);
 		if (f_v) {
@@ -164,14 +164,14 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 		image = parallel_class_idx;
 		}
 	else {
-		Orbiter->Int_vec->copy(Pt.coordinates, coords1, n);
+		Int_vec_copy(Pt.coordinates, coords1, n);
 		coords1[n] = 1;
 
 		An1->element_image_of_low_level(coords1, coords2,
 				Elt, verbose_level - 1);
 
 		Andre->F->PG_element_normalize(coords2, 1, n1);
-		Orbiter->Int_vec->copy(coords2, Pt.coordinates, n);
+		Int_vec_copy(coords2, Pt.coordinates, n);
 		image = Pt.rank(0 /* verbose_level*/);
 		}
 	

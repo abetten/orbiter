@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orthogonal_geometry {
 
 
 void orthogonal::list_points_by_type(int verbose_level)
@@ -42,7 +43,7 @@ void orthogonal::list_points_of_given_type(int t, int verbose_level)
 		rk = type_and_index_to_point_rk(t, i, verbose_level);
 		cout << i << " : " << rk << " : ";
 		unrank_point(v1, 1, rk, verbose_level - 1);
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		point_rk_to_type_and_index(rk, u, j, verbose_level);
 		cout << " : " << u << " : " << j << endl;
 		if (u != t) {
@@ -66,7 +67,7 @@ void orthogonal::report_points_of_given_type(std::ostream &ost, int t, int verbo
 		rk = type_and_index_to_point_rk(t, i, verbose_level);
 		ost << i << " : " << rk << " : ";
 		unrank_point(v1, 1, rk, verbose_level - 1);
-		Orbiter->Int_vec->print(ost, v1, n);
+		Int_vec_print(ost, v1, n);
 		ost << "\\\\" << endl;
 		point_rk_to_type_and_index(rk, u, j, verbose_level);
 		//ost << " : " << u << " : " << j << endl;
@@ -92,7 +93,7 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 		for (rk = 0; rk < nb_points; rk++) {
 			unrank_point(v1, 1, rk, 0 /*verbose_level*/);
 			ost << "$P_{" << rk << "} = ";
-			Orbiter->Int_vec->print(ost, v1, n);
+			Int_vec_print(ost, v1, n);
 			ost << "$\\\\" << endl;
 		}
 	}
@@ -107,7 +108,7 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 	int len;
 	int i, a, d = n + 1;
 	long int p1, p2;
-	latex_interface Li;
+	orbiter_kernel_system::latex_interface Li;
 	data_structures::sorting Sorting;
 
 	ost << "The number of lines is " << nb_lines << "\\\\" << endl;
@@ -131,8 +132,8 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 			unrank_point(v1, 1, p1, 0);
 			unrank_point(v2, 1, p2, 0);
 
-			Orbiter->Int_vec->copy(v1, L, d);
-			Orbiter->Int_vec->copy(v2, L + d, d);
+			Int_vec_copy(v1, L, d);
+			Int_vec_copy(v2, L + d, d);
 
 			ost << "\\left[" << endl;
 			Li.print_integer_matrix_tex(ost, L, 2, d);
@@ -210,7 +211,7 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 		rk1 = type_and_index_to_point_rk(t1, i, verbose_level);
 		cout << i << " : " << rk1 << " : ";
 		unrank_point(v1, 1, rk1, verbose_level - 1);
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 		cout << "is incident with:" << endl;
 
@@ -229,7 +230,7 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 				//cout << "yes" << endl;
 				if (test_if_minimal_on_line(v2, v1, v3)) {
 					cout << cnt << " : " << j << " : " << rk2 << " : ";
-					Orbiter->Int_vec->print(cout, v2, n);
+					Int_vec_print(cout, v2, n);
 					cout << endl;
 					cnt++;
 				}
@@ -526,7 +527,7 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 
 void orthogonal::report_schemes_easy(std::ostream &ost)
 {
-	latex_interface Li;
+	orbiter_kernel_system::latex_interface Li;
 
 	Li.print_row_tactical_decomposition_scheme_tex(
 			ost, TRUE /* f_enter_math_mode */,
@@ -566,7 +567,7 @@ void orthogonal::create_latex_report(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -592,7 +593,7 @@ void orthogonal::create_latex_report(int verbose_level)
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -619,11 +620,11 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 
 	long int i, line_rk, h;
 	int *T;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	line = NEW_lint(q + 1);
 	T = NEW_int(N_points * N_lines);
-	Orbiter->Int_vec->zero(T, N_points * N_lines);
+	Int_vec_zero(T, N_points * N_lines);
 
 	for (line_rk = 0; line_rk < N_lines; line_rk++) {
 
@@ -662,7 +663,7 @@ void orthogonal::make_fname_incidence_matrix_csv(std::string &fname)
 
 
 
-}}
+}}}
 
 
 

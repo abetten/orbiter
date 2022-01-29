@@ -616,14 +616,14 @@ void poset_classification_control::prepare(poset_classification *PC, int verbose
 
 		int idx;
 
-		idx = Orbiter->find_symbol(clique_test_graph);
+		idx = orbiter_kernel_system::Orbiter->find_symbol(clique_test_graph);
 
 		if (idx == -1) {
 			cout << "poset_classification_control::prepare -clique_test cannot find symbol " << clique_test_graph << endl;
 			exit(1);
 		}
 
-		clique_test_CG = (graph_theory::colored_graph *) Orbiter->get_object(idx);
+		clique_test_CG = (graph_theory::colored_graph *) orbiter_kernel_system::Orbiter->get_object(idx);
 		if (f_v) {
 			cout << "poset_classification_control::prepare -clique_test "
 					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;
@@ -733,7 +733,7 @@ static void poset_classification_control_early_test_function_cliques(long int *S
 
 	if (f_v) {
 		cout << "poset_classification_control_early_test_function_cliques for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 

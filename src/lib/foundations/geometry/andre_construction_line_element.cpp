@@ -99,7 +99,7 @@ void andre_construction_line_element::unrank(
 		coset_idx = line_rank % Andre->order;
 		parallel_class_idx = line_rank / Andre->order;
 		Gg.AG_element_unrank(q, coset, 1, n - k, coset_idx);
-		Orbiter->Int_vec->copy(
+		Int_vec_copy(
 			Andre->spread_elements_genma + parallel_class_idx * k * n,
 			coordinates, k * n);
 		for (i = 0; i < n - k; i++) {

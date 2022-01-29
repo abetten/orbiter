@@ -1119,7 +1119,7 @@ void sims::element_from_path(int *elt, int verbose_level)
 		}
 	if (f_vv) {
 		cout << "path=";
-		Orbiter->Int_vec->print(cout, path, A->base_len());
+		Int_vec_print(cout, path, A->base_len());
 		cout << endl;
 		cout << "A->degree=" << A->degree << endl;
 		}
@@ -1239,7 +1239,7 @@ void sims::element_unrank(ring_theory::longinteger_object &a,
 	//cout << endl;
 	if (f_v) {
 		cout << "sims::element_unrank path=";
-		Orbiter->Int_vec->print(cout, path, A->base_len());
+		Int_vec_print(cout, path, A->base_len());
 		cout << endl;
 	}
 	element_from_path(elt, 0);
@@ -1303,10 +1303,10 @@ void sims::element_rank(ring_theory::longinteger_object &a, int *elt)
 			cout << "jj=bi^elt=" << jj << endl;
 			cout << "j=orbit_inv[i][jj]=" << j << endl;
 			cout << "base=";
-			Orbiter->Lint_vec->print(cout, A->get_base(), A->base_len());
+			Lint_vec_print(cout, A->get_base(), A->base_len());
 			cout << endl;
 			cout << "orbit_len=";
-			Orbiter->Int_vec->print(cout, orbit_len, A->base_len());
+			Int_vec_print(cout, orbit_len, A->base_len());
 			cout << endl;
 			cout << "elt=" << endl;
 			A->element_print(eltrk1, cout);
@@ -1336,7 +1336,7 @@ void sims::element_unrank_lint(long int rk, int *Elt, int verbose_level)
 	path_unrank_lint(rk);
 	if (f_v) {
 		cout << "sims::element_unrank_lint path=";
-		Orbiter->Int_vec->print(cout, path, A->base_len());
+		Int_vec_print(cout, path, A->base_len());
 		cout << endl;
 	}
 	element_from_path(Elt, 0);
@@ -1449,10 +1449,10 @@ void sims::coset_rep(int *Elt, int i, int j, int verbose_level)
 				"after compute_coset_rep_path" << endl;
 		cout << "sims::coset_rep depth=" << depth << endl;
 		cout << "sims::coset_rep Path=";
-		Orbiter->Int_vec->print(cout, Path, depth);
+		Int_vec_print(cout, Path, depth);
 		cout << endl;
 		cout << "sims::coset_rep Label=";
-		Orbiter->Int_vec->print(cout, Label, depth);
+		Int_vec_print(cout, Label, depth);
 		cout << endl;
 	}
 
@@ -1612,10 +1612,10 @@ void sims::compute_coset_rep_path(int i, int j, int &depth,
 	}
 	if (f_vv) {
 		cout << "sims::compute_coset_rep_path path = ";
-		Orbiter->Int_vec->print(cout, Path, depth + 1);
+		Int_vec_print(cout, Path, depth + 1);
 		cout << endl;
 		cout << "sims::compute_coset_rep_path label = ";
-		Orbiter->Int_vec->print(cout, Label, depth);
+		Int_vec_print(cout, Label, depth);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1715,10 +1715,10 @@ void sims::extract_strong_generators_in_order(
 		cout << "A->base_len=" << A->base_len() << endl;
 		cout << "gens.len=" << gens.len << endl;
 		cout << "extract_strong_generators_in_order nb_gen=" << endl;
-		Orbiter->Int_vec->print(cout, nb_gen, A->base_len() + 1);
+		Int_vec_print(cout, nb_gen, A->base_len() + 1);
 		cout << endl;
 		cout << "extract_strong_generators_in_order gen_perm=" << endl;
-		Orbiter->Int_vec->print(cout, gen_perm, gens.len);
+		Int_vec_print(cout, gen_perm, gens.len);
 		cout << endl;
 		print_generator_depth_and_perm();
 		//if (f_vv) {
@@ -1808,13 +1808,13 @@ void sims::random_schreier_generator(int *Elt, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "sims:random_schreier_generator" << endl;
 		cout << "sims:random_schreier_generator my_base_len=" << my_base_len << endl;
 		cout << "sims:random_schreier_generator orbit_len=";
-		Orbiter->Int_vec->print(cout, orbit_len, my_base_len);
+		Int_vec_print(cout, orbit_len, my_base_len);
 		cout << endl;
 		cout << "sims:random_schreier_generator base:" << endl;
 		for (i = 0; i < my_base_len; i++) {
@@ -1834,7 +1834,7 @@ void sims::random_schreier_generator(int *Elt, int verbose_level)
 			cout << "sims::random_schreier_generator "
 					"iteration" << endl;
 			cout << "sims:random_schreier_generator orbit_len=";
-			Orbiter->Int_vec->print(cout, orbit_len, my_base_len);
+			Int_vec_print(cout, orbit_len, my_base_len);
 			cout << endl;
 		}
 		// get a random level:
@@ -2237,7 +2237,7 @@ void sims::all_elements_save_csv(std::string &fname, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "sims::all_elements_save_csv" << endl;

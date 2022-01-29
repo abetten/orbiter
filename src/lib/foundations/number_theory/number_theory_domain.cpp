@@ -468,8 +468,8 @@ void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_
 	long int a, n, i;
 	long int *T;
 	int t0, t1, dt;
-	os_interface Os;
-	file_io Fio;
+	orbiter_kernel_system::os_interface Os;
+	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
 	t0 = Os.os_ticks();
@@ -942,7 +942,7 @@ long int number_theory_domain::primitive_root_randomized(long int p, int verbose
 	long int i, pm1, a, n, b;
 	vector<long int> primes;
 	vector<int> exponents;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int cnt = 0;
 
 	if (f_v) {
@@ -1776,7 +1776,7 @@ int number_theory_domain::choose_a_prime_greater_than(int lower_bound)
 {
 	int p, r;
 	int nb_primes = sizeof(the_first_thousand_primes) / sizeof(int);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	while (TRUE) {
 		r = Os.random_integer(nb_primes);
@@ -1791,7 +1791,7 @@ int number_theory_domain::choose_a_prime_in_interval(int lower_bound, int upper_
 {
 	int p, r;
 	int nb_primes = sizeof(the_first_thousand_primes) / sizeof(int);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	while (TRUE) {
 		r = Os.random_integer(nb_primes);
@@ -1805,7 +1805,7 @@ int number_theory_domain::choose_a_prime_in_interval(int lower_bound, int upper_
 int number_theory_domain::random_integer_greater_than(int n, int lower_bound)
 {
 	int r;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	while (TRUE) {
 		r = Os.random_integer(n);
@@ -1817,7 +1817,7 @@ int number_theory_domain::random_integer_greater_than(int n, int lower_bound)
 
 int number_theory_domain::random_integer_in_interval(int lower_bound, int upper_bound)
 {
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int r, n;
 
 	if (upper_bound <= lower_bound) {
@@ -1907,8 +1907,8 @@ void number_theory_domain::do_babystep_giantstep(
 		Table1[i] = NT.mult_mod(Table1[i - 1], g, p);
 		Table2[i] = NT.mult_mod(Table2[i - 1], gmn, p);
 	}
-	Orbiter->Lint_vec->copy(Table1, data, n);
-	Orbiter->Lint_vec->copy(Table2, data + n, n);
+	Lint_vec_copy(Table1, data, n);
+	Lint_vec_copy(Table2, data + n, n);
 	Sorting.lint_vec_heapsort(data, 2 * n);
 	if (f_v) {
 		cout << "duplicates:" << endl;

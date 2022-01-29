@@ -14,6 +14,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace expression_parser {
+
 
 syntax_tree_node_terminal::syntax_tree_node_terminal()
 {
@@ -114,5 +116,6 @@ int syntax_tree_node_terminal::evaluate(std::map<std::string, std::string> &symb
 
 
 
-}}
+}}}
+
 

@@ -751,7 +751,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 // and writes to file fname_orbits
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads" << endl;
@@ -812,7 +812,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 void packing_was::test_orbits_on_spreads(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::test_orbits_on_spreads "
@@ -914,7 +914,7 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 void packing_was::reduce_spreads(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::reduce_spreads " << endl;
@@ -1034,7 +1034,7 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads" << endl;
@@ -1243,10 +1243,10 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 	int *Orbit_lengths;
 	int nb_orbit_lengths;
 
-	Orbiter->Int_vec->scan(orbit_lengths_text, Orbit_lengths, nb_orbit_lengths);
+	Int_vec_scan(orbit_lengths_text, Orbit_lengths, nb_orbit_lengths);
 	if (f_v) {
 		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file orbit_lengths: ";
-		Orbiter->Int_vec->print(cout, Orbit_lengths, nb_orbit_lengths);
+		Int_vec_print(cout, Orbit_lengths, nb_orbit_lengths);
 		cout << endl;
 	}
 
@@ -1282,7 +1282,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 
 	if (f_v) {
 		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file Type_idx: ";
-		Orbiter->Int_vec->print(cout, Type_idx, nb_orbit_lengths);
+		Int_vec_print(cout, Type_idx, nb_orbit_lengths);
 		cout << endl;
 	}
 
@@ -1452,7 +1452,7 @@ void packing_was::classify_orbit_invariant(int verbose_level)
 				"Classify_spread_invariant_by_orbit_length[i].init" << endl;
 	}
 	nb_sets = Orbit_invariant->nb_sets;
-	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(tally, nb_sets);
+	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(data_structures::tally, nb_sets);
 
 	for (i = 0; i < nb_sets; i++) {
 		Classify_spread_invariant_by_orbit_length[i].init_lint(
@@ -1513,7 +1513,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 
 			//P->F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
 
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 			field_theory::finite_field *Fq3;
 			number_theory::number_theory_domain NT;
 
@@ -1640,7 +1640,7 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 
 void packing_was::report(int verbose_level)
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	{
 	char fname[1000];
@@ -1654,7 +1654,7 @@ void packing_was::report(int verbose_level)
 
 		{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
@@ -1710,7 +1710,7 @@ void packing_was::report_line_orbits_under_H(std::ostream &ost, int verbose_leve
 	//Line_orbits_under_H->report_classified_orbits_by_lengths(ost);
 	int i, j, h;
 	long int a, b;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 
 
@@ -1801,7 +1801,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 	cout << "Type " << type_idx << " has " << nb_spreads << " spreads:\\\\" << endl;
 
 	spreads_in_reduced_orbits_by_type = NEW_lint(nb_spreads);
-	Orbiter->Lint_vec->zero(spreads_in_reduced_orbits_by_type, nb_spreads);
+	orbiter_kernel_system::Orbiter->Lint_vec->zero(spreads_in_reduced_orbits_by_type, nb_spreads);
 
 
 
@@ -1844,7 +1844,7 @@ void packing_was::export_reduced_spread_orbits_csv(std::string &fname_base, int 
 		cout << "packing_was::export_reduced_spread_orbits_csv" << endl;
 	}
 	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int type_idx;
 	string fname;
 
@@ -1852,7 +1852,7 @@ void packing_was::export_reduced_spread_orbits_csv(std::string &fname_base, int 
 	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; type_idx++) {
 
 		char str[1000];
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 
 		int nb_orbits;
@@ -1890,7 +1890,7 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original
 	//ost << "\\noindent" << endl;
 
 	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int type_idx;
 
 
@@ -2180,7 +2180,7 @@ static void packing_was_print_function(std::ostream &ost, long int a, void *data
 	P->Line_orbits_under_H->get_orbit_number_and_position(b, orbit_idx2, orbit_pos2, verbose_level);
 	ost << "=(" << orbit_idx1 << "," << orbit_pos1 << ")" << endl;
 	ost << "dual=";
-	Orbiter->Int_vec->print(ost, Mtx + 8, 8);
+	Int_vec_print(ost, Mtx + 8, 8);
 	ost << "=(" << orbit_idx2 << "," << orbit_pos2 << ")" << endl;
 }
 

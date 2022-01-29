@@ -114,7 +114,7 @@ void mp_graphics::init(
 void mp_graphics::exit(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "mp_graphics::exit" << endl;
@@ -1746,7 +1746,7 @@ void mp_graphics::header()
 	f_min_max_set = FALSE;
 	//system("rm a");
 
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	string str;
 
 	Os.get_date(str);
@@ -2838,7 +2838,7 @@ void mp_graphics::draw_graph(int x, int y,
 	if (f_v) {
 		cout << "mp_graphics::draw_graph edges=";
 		//Orbiter->Int_vec.print(cout, Edges, nb_E);
-		Orbiter->Lint_vec->print(cout, Edges, nb_E);
+		Lint_vec_print(cout, Edges, nb_E);
 		cout << endl;
 	}
 

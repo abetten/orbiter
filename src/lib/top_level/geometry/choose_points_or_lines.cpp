@@ -304,7 +304,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		}
 		cout << " representing orbit " << orbit_no << " / "
 				<< nb_orbits << " are ";
-		Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
 		cout << endl;
 	}
 
@@ -340,7 +340,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 			cout << "choose_points_or_lines::choose_orbit " << label
 				<< " / " << nb_orbits << " after changing, the "
 				"representative set for orbit " << orbit_no << " are ";
-			Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
+			orbiter_kernel_system::Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
 			cout << endl;
 		}
 	}
@@ -398,7 +398,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		cout << "choose_points_or_lines::choose_orbit " << label
 			<< " orbit_no " << orbit_no << " / " << nb_orbits
 			<< " done, chosen the set ";
-		Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
 		cout << "_" << *stab_order;
 		cout << endl;
 	}
@@ -516,7 +516,7 @@ int choose_points_or_lines::favorite_orbit_representative(
 
 void choose_points_or_lines::print_rep()
 {
-	Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
+	orbiter_kernel_system::Orbiter->Lint_vec->set_print(representative, nb_points_or_lines);
 	cout << "_" << *stab_order;
 }
 

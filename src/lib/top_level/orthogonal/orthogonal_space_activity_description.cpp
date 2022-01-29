@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 orthogonal_space_activity_description::orthogonal_space_activity_description()

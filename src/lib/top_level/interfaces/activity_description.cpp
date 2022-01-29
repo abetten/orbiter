@@ -132,7 +132,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
 		f_orthogonal_space_activity = TRUE;
 		Orthogonal_space_activity_description =
-				NEW_OBJECT(orthogonal_geometry::orthogonal_space_activity_description);
+				NEW_OBJECT(orthogonal_geometry_applications::orthogonal_space_activity_description);
 		if (f_v) {
 			cout << "reading -orthogonal_space_activity" << endl;
 		}
@@ -776,11 +776,11 @@ void activity_description::do_orthogonal_space_activity(int verbose_level)
 		cout << "-finite_field_activity requires at least one input" << endl;
 		exit(1);
 	}
-	orthogonal_geometry::orthogonal_space_with_action *OA;
+	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
 
-	OA = (orthogonal_geometry::orthogonal_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	OA = (orthogonal_geometry_applications::orthogonal_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
-	orthogonal_geometry::orthogonal_space_activity Activity;
+	orthogonal_geometry_applications::orthogonal_space_activity Activity;
 	Activity.Descr = Orthogonal_space_activity_description;
 	Activity.OA = OA;
 

@@ -16,6 +16,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace data_structures {
+
 
 
 static int classify_int_vec_compare_function(void *a, void *b, void *data);
@@ -106,7 +108,7 @@ void tally_vector_data::init(int *data, int data_length, int data_set_sz,
 		if (!hash_and_find(data + i * data_set_sz,
 				idx, h, verbose_level)) {
 			Hashing.insert(pair<uint32_t, int>(h, nb_types));
-			Orbiter->Int_vec->copy(data + i * data_set_sz,
+			Int_vec_copy(data + i * data_set_sz,
 					Reps + nb_types * data_set_sz,
 					data_set_sz);
 			Frequency[nb_types] = 1;
@@ -137,8 +139,8 @@ void tally_vector_data::init(int *data, int data_length, int data_set_sz,
 	sorting_perm_inv = NEW_int(data_length);
 
 	Frequency2 = NEW_int(nb_types);
-	Orbiter->Int_vec->zero(Frequency2, nb_types);
-	Orbiter->Int_vec->zero(sorting_perm_inv, data_length);
+	Int_vec_zero(Frequency2, nb_types);
+	Int_vec_zero(sorting_perm_inv, data_length);
 	for (i = 0; i < data_length; i++) {
 		a = rep_idx[i];
 		sorting_perm_inv[type_first[a] + Frequency2[a]++] = i;
@@ -175,7 +177,7 @@ void tally_vector_data::init(int *data, int data_length, int data_set_sz,
 			}
 			Reps_in_lex_order[idx] = NEW_int(data_set_sz);
 			Frequency_in_lex_order[idx] = Frequency[i];
-			Orbiter->Int_vec->copy(Reps + i * data_set_sz, Reps_in_lex_order[idx],
+			Int_vec_copy(Reps + i * data_set_sz, Reps_in_lex_order[idx],
 					data_set_sz);
 			nb_types2++;
 		}
@@ -226,7 +228,7 @@ void tally_vector_data::print()
 		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
 		cout << Frequency[i] << " x ";
-		Orbiter->Int_vec->print(cout, Reps + i * data_set_sz, data_set_sz);
+		Int_vec_print(cout, Reps + i * data_set_sz, data_set_sz);
 		cout << endl;
 #if 0
 		cout << "for elements ";
@@ -241,7 +243,7 @@ void tally_vector_data::save_classes_individually(std::string &fname, int verbos
 	int f_v = (verbose_level >= 1);
 	//uint32_t h;
 	int i, j;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "tally_vector_data::save_classes_individually fname = " << fname << endl;
@@ -358,5 +360,6 @@ static int classify_int_vec_compare_function(void *a, void *b, void *data)
 
 }
 
-}}
+}}}
+
 

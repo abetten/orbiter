@@ -221,13 +221,13 @@ void quartic_curve_domain::unrank_line_in_dual_coordinates(int *v, long int rk)
 	P->unrank_line(basis, rk);
 	r = F->Linear_algebra->RREF_and_kernel(3, 2, basis,
 			0 /* verbose_level */);
-	Orbiter->Int_vec->copy(basis + 6, v, 3);
+	Int_vec_copy(basis + 6, v, 3);
 }
 
 void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
 {
 	int i;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	ost << "The lines are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
@@ -264,7 +264,7 @@ void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, i
 	}
 	ost << "\\end{multicols}" << endl;
 	ost << "Rank of lines: ";
-	Orbiter->Lint_vec->print(ost, Lines, nb_lines);
+	Lint_vec_print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;
 
 }
@@ -288,7 +288,7 @@ void quartic_curve_domain::compute_points_on_lines(
 		cout << "quartic_curve_domain::compute_points_on_lines" << endl;
 	}
 	f_is_on_line = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(f_is_on_line, nb_points);
+	Int_vec_zero(f_is_on_line, nb_points);
 
 	pts_on_lines = NEW_OBJECT(data_structures::set_of_sets);
 	pts_on_lines->init_basic_constant_size(nb_points,
@@ -298,13 +298,13 @@ void quartic_curve_domain::compute_points_on_lines(
 		P->unrank_point(pt_coords + i * 3, Pts[i]);
 	}
 
-	Orbiter->Lint_vec->zero(pts_on_lines->Set_size, nb_lines);
+	orbiter_kernel_system::Orbiter->Lint_vec->zero(pts_on_lines->Set_size, nb_lines);
 	for (i = 0; i < nb_lines; i++) {
 		l = Lines[i];
 		P->unrank_line(Basis, l);
 		for (j = 0; j < nb_points; j++) {
-			Orbiter->Int_vec->copy(Basis, Mtx, 6);
-			Orbiter->Int_vec->copy(pt_coords + j * 3, Mtx + 6, 3);
+			Int_vec_copy(Basis, Mtx, 6);
+			Int_vec_copy(pt_coords + j * 3, Mtx + 6, 3);
 			r = F->Linear_algebra->Gauss_easy(Mtx, 3, 3);
 			if (r == 2) {
 				pts_on_lines->add_element(i, j);
@@ -335,7 +335,7 @@ void quartic_curve_domain::multiply_conic_times_conic(int *six_coeff_a,
 	}
 
 
-	Orbiter->Int_vec->zero(fifteen_coeff, 15);
+	Int_vec_zero(fifteen_coeff, 15);
 	for (i = 0; i < 6; i++) {
 		a = six_coeff_a[i];
 		if (a == 0) {
@@ -380,7 +380,7 @@ void quartic_curve_domain::multiply_conic_times_line(int *six_coeff,
 	}
 
 
-	Orbiter->Int_vec->zero(ten_coeff, 10);
+	Int_vec_zero(ten_coeff, 10);
 	for (i = 0; i < 6; i++) {
 		a = six_coeff[i];
 		if (a == 0) {
@@ -425,7 +425,7 @@ void quartic_curve_domain::multiply_line_times_line(int *line1,
 	}
 
 
-	Orbiter->Int_vec->zero(six_coeff, 6);
+	Int_vec_zero(six_coeff, 6);
 	for (i = 0; i < 3; i++) {
 		a = line1[i];
 		if (a == 0) {
@@ -514,7 +514,7 @@ void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int
 		cout << "quartic_curve_domain::assemble_cubic_surface" << endl;
 	}
 
-	Orbiter->Int_vec->zero(eqn20, 20);
+	Int_vec_zero(eqn20, 20);
 
 	int i, a, idx;
 	int mon[4];
@@ -529,7 +529,7 @@ void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int
 			cout << "f1[" << i << "] = " << a << endl;
 		}
 		mon[0] = 2;
-		Orbiter->Int_vec->copy(Poly1_3->get_monomial_pointer(i), mon + 1, 3);
+		Int_vec_copy(Poly1_3->get_monomial_pointer(i), mon + 1, 3);
 
 		idx = Poly3_4->index_of_monomial(mon);
 		if (idx >= 20) {
@@ -549,7 +549,7 @@ void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int
 			cout << "f2[" << i << "] = " << a << endl;
 		}
 		mon[0] = 1;
-		Orbiter->Int_vec->copy(Poly2_3->get_monomial_pointer(i), mon + 1, 3);
+		Int_vec_copy(Poly2_3->get_monomial_pointer(i), mon + 1, 3);
 
 		idx = Poly3_4->index_of_monomial(mon);
 		if (idx >= 20) {
@@ -569,7 +569,7 @@ void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int
 			cout << "f3[" << i << "] = " << a << endl;
 		}
 		mon[0] = 0;
-		Orbiter->Int_vec->copy(Poly3_3->get_monomial_pointer(i), mon + 1, 3);
+		Int_vec_copy(Poly3_3->get_monomial_pointer(i), mon + 1, 3);
 
 		idx = Poly3_4->index_of_monomial(mon);
 		if (idx >= 20) {
@@ -641,7 +641,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface we found " << nb_bitangents << " bitangents" << endl;
-		Orbiter->Int_vec->print(cout, Bitangents, nb_bitangents);
+		Int_vec_print(cout, Bitangents, nb_bitangents);
 		cout << endl;
 	}
 
@@ -650,7 +650,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 		Combi.unrank_k_subset(h, set, nb_bitangents, 4);
 		if (f_v) {
 			cout << "quartic_curve_domain::create_surface trying subset " << h << " / " << nCk << " which is ";
-			Orbiter->Int_vec->print(cout, set, 4);
+			Int_vec_print(cout, set, 4);
 			cout << endl;
 		}
 		for (i = 0; i < 4; i++) {
@@ -673,7 +673,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 		}
 		if (f_v) {
 			cout << "quartic_curve_domain::create_surface trying subset " << h << " / " << nCk << " Points = ";
-			Orbiter->Lint_vec->print(cout, Points, 8);
+			Lint_vec_print(cout, Points, 8);
 			cout << endl;
 		}
 
@@ -691,7 +691,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 	}
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface trying subset " << h << " / " << nCk << " Bitangents4 = ";
-		Orbiter->Lint_vec->print(cout, Bitangents4, 4);
+		Lint_vec_print(cout, Bitangents4, 4);
 		cout << endl;
 	}
 
@@ -701,7 +701,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface conic squared = ";
-		Orbiter->Int_vec->print(cout, conic_squared_15, 15);
+		Int_vec_print(cout, conic_squared_15, 15);
 		cout << endl;
 	}
 
@@ -711,7 +711,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface chosen bitangents in dual coordinates = ";
-		Orbiter->Int_vec->matrix_print(Bitangents_coeffs, 4, 3);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Bitangents_coeffs, 4, 3);
 	}
 
 
@@ -724,15 +724,15 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface product of 4 bitangents = ";
-		Orbiter->Int_vec->print(cout, four_lines_15, 15);
+		Int_vec_print(cout, four_lines_15, 15);
 		cout << endl;
 	}
 
-	Orbiter->Int_vec->copy(Q->eqn15, M1, 15);
-	Orbiter->Int_vec->copy(conic_squared_15, M1 + 15, 15);
-	Orbiter->Int_vec->copy(four_lines_15, M1 + 30, 15);
+	Int_vec_copy(Q->eqn15, M1, 15);
+	Int_vec_copy(conic_squared_15, M1 + 15, 15);
+	Int_vec_copy(four_lines_15, M1 + 30, 15);
 
-	Orbiter->Int_vec->transpose(M1, 3, 15, M2);
+	orbiter_kernel_system::Orbiter->Int_vec->transpose(M1, 3, 15, M2);
 
 	r = F->Linear_algebra->RREF_and_kernel(3, 15, M2, 0 /* verbose_level*/);
 
@@ -744,7 +744,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 	F->PG_element_normalize_from_front(M2 + 6, 1, 3);
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface kernel = ";
-		Orbiter->Int_vec->print(cout, M2 + 6, 3);
+		Int_vec_print(cout, M2 + 6, 3);
 		cout << endl;
 	}
 	int lambda, mu;
@@ -803,7 +803,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface eqn20 = ";
-		Orbiter->Int_vec->print(cout, eqn20, 20);
+		Int_vec_print(cout, eqn20, 20);
 		cout << endl;
 	}
 
@@ -836,7 +836,7 @@ void quartic_curve_domain::compute_gradient(int *equation15, int *&gradient, int
 		}
 		if (f_v) {
 			cout << "quartic_curve_domain::compute_gradient eqn_in=";
-			Orbiter->Int_vec->print(cout, equation15, 15);
+			Int_vec_print(cout, equation15, 15);
 			cout << " = " << endl;
 			Poly4_3->print_equation(cout, equation15);
 			cout << endl;
@@ -847,7 +847,7 @@ void quartic_curve_domain::compute_gradient(int *equation15, int *&gradient, int
 		if (f_v) {
 			cout << "quartic_curve_domain::compute_gradient "
 					"partial=";
-			Orbiter->Int_vec->print(cout, gradient + i * Poly3_3->get_nb_monomials(),
+			Int_vec_print(cout, gradient + i * Poly3_3->get_nb_monomials(),
 					Poly3_3->get_nb_monomials());
 			cout << " = ";
 			Poly3_3->print_equation(cout,

@@ -65,7 +65,7 @@ void exact_cover::init_basic(void *user_data,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "exact_cover::init_basic" << endl;
@@ -242,7 +242,7 @@ void exact_cover::randomize(std::string &random_permutation_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "exact_cover::randomize" << endl;
@@ -317,8 +317,8 @@ void exact_cover::compute_liftings_new(int f_solve,
 	int nb_deleted_solutions = 0;
 	int starter_case;
 	int the_starter_case;
-	file_io Fio;
-	os_interface Os;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::os_interface Os;
 
 
 
@@ -463,7 +463,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 							"solution " << i << " / " << nb_sol << endl;
 					}
 
-				Orbiter->Lint_vec->copy(starter, the_solution, starter_size);
+				Lint_vec_copy(starter, the_solution, starter_size);
 				for (j = 0; j < sol_length; j++) {
 					the_solution[starter_size + j] =
 							Solutions[i * sol_length + j];
@@ -581,8 +581,8 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
 	string prefix;
-	file_io Fio;
-	os_interface Os;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -651,13 +651,13 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 		// R has: int *candidates; int nb_candidates;
 	
-	Orbiter->Lint_vec->copy(R->rep, starter, starter_size);
+	Lint_vec_copy(R->rep, starter, starter_size);
 
 	if (f_v) {
 		cout << "exact_cover::compute_liftings_single_case "
 				"case " << starter_case << " / " << starter_nb_cases
 				<< " stab_go = " << *R->stab_go << " starter = ";
-		Orbiter->Lint_vec->print(cout, starter, starter_size);
+		Lint_vec_print(cout, starter, starter_size);
 		cout << endl;
 		}
 
@@ -715,8 +715,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 						"drawing the system" << endl;
 				}
 			Dio->draw_it(fname_system,
-					Orbiter->draw_options,
-					//xmax_in, ymax_in, xmax_out, ymax_out,
+					orbiter_kernel_system::Orbiter->draw_options,
 					verbose_level - 1);
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new "

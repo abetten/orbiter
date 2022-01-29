@@ -593,7 +593,7 @@ void action::element_write_file_fp(int *Elt,
 	elt = element_rw_memory_object;
 	if (f_v) {
 		element_print(Elt, cout);
-		Orbiter->Int_vec->print(cout, Elt, elt_size_in_int);
+		Int_vec_print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 	element_pack(Elt, elt, FALSE);
@@ -613,7 +613,7 @@ void action::element_read_file_fp(int *Elt,
 	element_unpack(elt, Elt, FALSE);
 	if (f_v) {
 		element_print(Elt, cout);
-		Orbiter->Int_vec->print(cout, Elt, elt_size_in_int);
+		Int_vec_print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 }
@@ -622,7 +622,7 @@ void action::element_write_file(int *Elt,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 #if 0
 	FILE *f2;
@@ -647,7 +647,7 @@ void action::element_read_file(int *Elt,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	if (f_v) {
 		cout << "element_read_file: "
@@ -671,7 +671,7 @@ void action::element_read_file(int *Elt,
 }
 
 void action::element_write_to_memory_object(int *Elt,
-		memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
@@ -687,7 +687,7 @@ void action::element_write_to_memory_object(int *Elt,
 
 
 void action::element_read_from_memory_object(int *Elt,
-		memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
@@ -813,7 +813,7 @@ void action::all_elements_save_csv(std::string &fname, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action::all_elements_save_csv" << endl;
@@ -842,7 +842,7 @@ void action::all_elements_save_csv(std::string &fname, int verbose_level)
 			element_code_for_make_element(Elt, data);
 
 			stringstream ss;
-			Orbiter->Int_vec->print_str_naked(ss, data, make_element_size);
+			Int_vec_print_str_naked(ss, data, make_element_size);
 			ost << i << ",\"" << ss.str() << "\"" << endl;
 		}
 		ost << "END" << endl;

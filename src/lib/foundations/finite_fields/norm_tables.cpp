@@ -62,7 +62,7 @@ norm_tables::~norm_tables()
 		}
 }
 
-void norm_tables::init(unusual_model &U, int verbose_level)
+void norm_tables::init(orthogonal_geometry::unusual_model &U, int verbose_level)
 {
 	int qq = U.FQ->q;
 	int i, f, l, j, a, b, c, jj;

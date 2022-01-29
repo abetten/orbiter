@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orthogonal_geometry {
 
 
 void orthogonal::unrank_point(
@@ -287,6 +288,7 @@ long int orthogonal::rank_Nbar(int *v, int stride, int m)
 
 
 
-}}
+}}}
+
 
 

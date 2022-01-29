@@ -99,7 +99,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::report" << endl;
 	}
 
-	if (!Orbiter->f_draw_options) {
+	if (!orbiter_kernel_system::Orbiter->f_draw_options) {
 		cout << "for a report of the surfaces, please use -draw_options ... -end" << endl;
 		exit(1);
 	}
@@ -111,7 +111,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 				"before SCW->create_report" << endl;
 		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
 	}
-	SCW->create_report(f_with_stabilizers, Orbiter->draw_options, report_options, verbose_level - 1);
+	SCW->create_report(f_with_stabilizers, orbiter_kernel_system::Orbiter->draw_options, report_options, verbose_level - 1);
 	if (f_v) {
 		cout << "surface_domain_high_level::report "
 				"after SCW->create_report" << endl;

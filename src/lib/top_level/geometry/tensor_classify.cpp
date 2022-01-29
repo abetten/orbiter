@@ -58,7 +58,7 @@ void tensor_classify::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "tensor_classify::init" << endl;
@@ -312,17 +312,17 @@ void tensor_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "tensor_classify::early_test_func checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
 
 	if (len == 0) {
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -380,8 +380,8 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 
 
-	file_io Fio;
-	latex_interface L;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::latex_interface L;
 
 	char fname[1000];
 	char title[1000];
@@ -394,7 +394,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
@@ -531,7 +531,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 				L.print_lint_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
 				fp << "$$" << endl;
 
-				tally C;
+				data_structures::tally C;
 
 				C.init_lint(data, orbit_length, TRUE, 0);
 				fp << "$$";
@@ -586,13 +586,13 @@ static void wreath_product_print_set(ostream &ost, int len, long int *S, void *d
 
 	T = (tensor_classify *) data;
 	cout << "set: ";
-	Orbiter->Lint_vec->print(cout, S, len);
+	Lint_vec_print(cout, S, len);
 	cout << endl;
 	for (i = 0; i < len; i++) {
 		T->F->PG_element_unrank_modified(T->v,
 				1, T->vector_space_dimension, S[i]);
 		cout << S[i] << " : ";
-		Orbiter->Int_vec->print(cout, T->v, T->vector_space_dimension);
+		Int_vec_print(cout, T->v, T->vector_space_dimension);
 		cout << endl;
 	}
 }
@@ -610,7 +610,7 @@ static void wreath_product_rank_one_early_test_func_callback(long int *S, int le
 
 	if (f_v) {
 		cout << "wreath_product_rank_one_early_test_func_callback for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	T->early_test_func(S, len,

@@ -132,7 +132,7 @@ void nauty_interface::nauty_interface_graph_bitvec(int v,
 	//&stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 
-	Orbiter->nb_calls_to_densenauty++;
+	orbiter_kernel_system::Orbiter->nb_calls_to_densenauty++;
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_bitvec after nauty" << endl;
@@ -243,7 +243,7 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 //	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 
-	Orbiter->nb_calls_to_densenauty++;
+	orbiter_kernel_system::Orbiter->nb_calls_to_densenauty++;
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_int after nauty" << endl;
@@ -374,7 +374,7 @@ void nauty_interface::nauty_interface_matrix_int(
 	//&options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 
-	Orbiter->nb_calls_to_densenauty++;
+	orbiter_kernel_system::Orbiter->nb_calls_to_densenauty++;
 
 	if (f_vv) {
 		cout << "nauty_interface::nauty_interface_matrix_int, after densenauty" << endl;

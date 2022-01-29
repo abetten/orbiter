@@ -331,7 +331,7 @@ void schreier_sims::get_generator_external_from_generators(
 {
 	int f_v = (verbose_level >= 1);
 	int r;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "schreier_sims::get_generator_external_"
@@ -386,7 +386,7 @@ void schreier_sims::get_generator_external_old_G(
 	if (f_v) {
 		cout << "schreier_sims::get_generator_external_old_G "
 				"random element chosen, path = ";
-		Orbiter->Int_vec->print(cout, old_G->path, old_G->A->base_len());
+		Int_vec_print(cout, old_G->path, old_G->A->base_len());
 		cout << endl;
 		}
 }
@@ -751,7 +751,7 @@ void schreier_sims::create_group(int verbose_level)
 		print_group_orders();
 
 		cout << "the n e w action has base ";
-		Orbiter->Lint_vec->print(cout, GA->get_base(), GA->base_len());
+		Lint_vec_print(cout, GA->get_base(), GA->base_len());
 		cout << " of length " << GA->base_len()  << endl;
 	}
 }

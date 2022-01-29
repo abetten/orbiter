@@ -173,7 +173,7 @@ void database::put_file_size()
 {
 	int_4 l, l1;
 	int f_v = FALSE;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "database::put_file_size" << endl;
@@ -188,7 +188,7 @@ void database::get_file_size()
 {
 	int_4 l;
 	int f_v = FALSE;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "database::get_file_size" << endl;
@@ -393,7 +393,7 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int size, total = 0, pad, i;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "database::get_object" << endl;
@@ -801,7 +801,7 @@ int database::get_size_from_datref(uint_4 datref, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int size;
 	int_4 *header = NULL;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "database::get_size_from_datref" << endl;
@@ -883,7 +883,7 @@ void database::add_data_DB_standard(void *d,
 		 *    one unused full 16 char block guaranteed.
 		 */
 	int old_file_size;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "database::add_data_DB_standard()" << endl;
@@ -967,7 +967,7 @@ void database::add_data_DB_compact(void *d,
 		// 0: SYNC
 		// 1: size of user data are
 	int old_file_size;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "database::add_data_DB_compact()" << endl;
@@ -1023,7 +1023,7 @@ void database::free_data_DB(uint_4 datref, int size, int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	int total;
 	int_4 header[8];
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "database::free_data_DB()" << endl;

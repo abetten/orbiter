@@ -157,7 +157,7 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 		F->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
-			Orbiter->Int_vec->print(ost, v, 4);
+			Int_vec_print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
 		}

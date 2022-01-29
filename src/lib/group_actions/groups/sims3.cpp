@@ -28,7 +28,7 @@ void sims::subgroup_make_characteristic_vector(
 		}
 
 	go = group_order_lint();
-	Orbiter->Int_vec->zero(C, go);
+	Int_vec_zero(C, go);
 	go_sub = Sub->group_order_lint();
 	for (i = 0; i < go_sub; i++) {
 		Sub->element_unrank_lint(i, Elt1);
@@ -38,7 +38,7 @@ void sims::subgroup_make_characteristic_vector(
 	if (f_v) {
 		cout << "The characteristic vector of the "
 				"subgroup of order " << go_sub << " is:" << endl;
-		Orbiter->Int_vec->print_as_table(cout, C, go, 25);
+		orbiter_kernel_system::Orbiter->Int_vec->print_as_table(cout, C, go, 25);
 		}
 	if (f_v) {
 		cout << "sims::subgroup_make_characteristic_vector done" << endl;
@@ -67,7 +67,7 @@ void sims::normalizer_based_on_characteristic_vector(int *C_sub,
 		}
 
 	go = group_order_lint();
-	Orbiter->Int_vec->zero(N, go);
+	Int_vec_zero(N, go);
 
 	N_go = 0;
 	for (i = 0; i < go; i++) {

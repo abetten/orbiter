@@ -136,7 +136,7 @@ void representatives::write_fusion(int verbose_level)
 // (i.e., if fusion[i] == i) then the identity element is written.
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "representatives::write_fusion" << endl;
@@ -186,7 +186,7 @@ void representatives::read_fusion(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b, i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "representatives::read_fusion nb_objects="
@@ -245,7 +245,7 @@ void representatives::write_representatives_and_stabilizers(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "representatives::write_representatives_"
@@ -376,7 +376,7 @@ void representatives::read_representatives_and_stabilizers(
 				cout << endl;
 				}
 			cout << "transversal lengths:" << endl;
-			Orbiter->Int_vec->print(cout, tl, A->base_len());
+			Int_vec_print(cout, tl, A->base_len());
 			cout << endl;
 			}
 		Stab->init(A, verbose_level - 2);

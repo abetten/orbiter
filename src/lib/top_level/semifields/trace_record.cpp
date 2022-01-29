@@ -59,7 +59,7 @@ void save_trace_record(
 		"f2"
 		};
 	int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	M = NEW_lint(N * w);
 	for (i = 0; i < N; i++) {

@@ -90,7 +90,7 @@ poset_classification::poset_classification()
 
 
 
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 }
@@ -228,7 +228,7 @@ void poset_classification::init_internal(
 		Poset->Orbit_based_testing->PC = this;
 	}
 
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 

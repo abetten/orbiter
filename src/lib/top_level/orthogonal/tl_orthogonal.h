@@ -11,7 +11,7 @@
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 
@@ -27,7 +27,7 @@ class blt_set_classify {
 
 public:
 
-	blt_set_domain *Blt_set_domain;
+	layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
 	//linear_group *LG;
 	actions::action *A; // orthogonal group
@@ -156,7 +156,7 @@ public:
 	int f_has_group;
 	groups::strong_generators *Sg;
 
-	blt_set_domain *Blt_set_domain;
+	layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 	blt_set_with_action *BA;
 
 
@@ -165,7 +165,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-			blt_set_domain *Blt_set_domain,
+			layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain,
 			BLT_set_create_description *Descr,
 			orthogonal_space_with_action *OA,
 			int verbose_level);
@@ -192,12 +192,12 @@ class blt_set_with_action {
 public:
 
 	actions::action *A;
-	blt_set_domain *Blt_set_domain;
+	orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
 	long int *set;
 
 	groups::strong_generators *Aut_gens;
-	blt_set_invariants *Inv;
+	orthogonal_geometry::blt_set_invariants *Inv;
 
 	actions::action *A_on_points;
 	groups::schreier *Orbits_on_points;
@@ -208,7 +208,7 @@ public:
 	void freeself();
 	void init_set(
 			actions::action *A,
-			blt_set_domain *Blt_set_domain,
+			orthogonal_geometry::blt_set_domain *Blt_set_domain,
 			long int *set,
 			groups::strong_generators *Aut_gens, int verbose_level);
 	void init_orbits_on_points(
@@ -297,7 +297,7 @@ public:
 
 	orthogonal_space_with_action *OA;
 
-	blt_set_domain *Blt_set_domain;
+	layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
 	orthogonal_space_activity();
 	~orthogonal_space_activity();
@@ -362,7 +362,7 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
-	orthogonal *O;
+	layer1_foundations::orthogonal_geometry::orthogonal *O;
 
 	int f_semilinear;
 

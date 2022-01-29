@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace expression_parser {
 
 
 syntax_tree::syntax_tree()
@@ -125,5 +126,6 @@ void syntax_tree::split_by_monomials(ring_theory::homogeneous_polynomial_domain 
 
 
 
-}}
+}}}
+
 

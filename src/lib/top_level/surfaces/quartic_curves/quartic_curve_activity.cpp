@@ -109,7 +109,7 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "quartic_curve_activity::perform_activity eqn20 = ";
-			Orbiter->Int_vec->print(cout, eqn20, 20);
+			Int_vec_print(cout, eqn20, 20);
 			cout << endl;
 
 			int i;
@@ -171,7 +171,7 @@ void quartic_curve_activity::do_report(
 			snprintf(title, 1000, "%s over GF(%d)", QC->label_tex.c_str(), F->q);
 			strcpy(author, "");
 
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -256,7 +256,7 @@ void quartic_curve_activity::do_report(
 
 			L.foot(ost);
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;

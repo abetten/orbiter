@@ -289,7 +289,7 @@ void spread_tables::init_reduced(
 	spread_iso_type = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
 		a = select[i];
-		Orbiter->Lint_vec->copy(old_spread_table->spread_table + a * spread_size,
+		Lint_vec_copy(old_spread_table->spread_table + a * spread_size,
 				spread_table + i * spread_size, spread_size);
 		spread_iso_type[i] = old_spread_table->spread_iso_type[a];
 	}
@@ -300,7 +300,7 @@ void spread_tables::init_reduced(
 
 	select_sorted = NEW_int(nb_select);
 	select_original_idx = NEW_int(nb_select);
-	Orbiter->Int_vec->copy(select, select_sorted, nb_select);
+	Int_vec_copy(select, select_sorted, nb_select);
 
 	if (f_v) {
 		cout << "spread_tables::init_reduced "
@@ -418,7 +418,7 @@ void spread_tables::classify_self_dual_spreads(int *&type,
 		cout << "spread_tables::classify_self_dual_spreads" << endl;
 	}
 	type = NEW_int(nb_iso_types_of_spreads);
-	Orbiter->Int_vec->zero(type, nb_iso_types_of_spreads);
+	Int_vec_zero(type, nb_iso_types_of_spreads);
 	for (i = 0; i < nb_self_dual_spreads; i++) {
 		a = spread_iso_type[i];
 		type[a]++;
@@ -444,7 +444,7 @@ void spread_tables::classify_self_dual_spreads(int *&type,
 int spread_tables::files_exist(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::files_exist testing whether file exists: " << fname_spreads << endl;
@@ -460,7 +460,7 @@ int spread_tables::files_exist(int verbose_level)
 void spread_tables::save(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::save" << endl;
@@ -552,7 +552,7 @@ void spread_tables::load(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::load" << endl;
@@ -706,7 +706,7 @@ void spread_tables::compute_adjacency_matrix(
 	{
 		graph_theory::colored_graph *CG;
 		std::string fname;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		string label;
 		string label_tex;
 
@@ -717,7 +717,7 @@ void spread_tables::compute_adjacency_matrix(
 		label_tex.assign(prefix);
 
 		color = NEW_int(nb_spreads);
-		Orbiter->Int_vec->zero(color, nb_spreads);
+		Int_vec_zero(color, nb_spreads);
 
 		CG->init(nb_spreads, 1, 1,
 				color, Bitvec,
@@ -789,16 +789,16 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		if (FALSE) {
 			cout << "spread_tables::compute_dual_spreads spread "
 					<< i << " / " << nb_spreads << endl;
-			Orbiter->Lint_vec->print(cout,
+			Lint_vec_print(cout,
 					spread_table + i * spread_size, spread_size);
 			cout << endl;
-			Orbiter->Lint_vec->print(cout, dual_spread, spread_size);
+			Lint_vec_print(cout, dual_spread, spread_size);
 			cout << endl;
 		}
 		Sorting.lint_vec_heapsort(dual_spread, spread_size);
 		//dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
 		if (FALSE) {
-			Orbiter->Lint_vec->print(cout, dual_spread, spread_size);
+			Lint_vec_print(cout, dual_spread, spread_size);
 			cout << endl;
 		}
 
@@ -823,7 +823,7 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		else {
 			cout << "The dual spread is not in the list, error!" << endl;
 			cout << "dual_spread: ";
-			Orbiter->Lint_vec->print(cout, dual_spread, spread_size);
+			Lint_vec_print(cout, dual_spread, spread_size);
 			cout << endl;
 			exit(1);
 		}
@@ -834,7 +834,7 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		cout << "spread_tables::compute_dual_spreads we found "
 				<< nb_self_dual_spreads << " self dual spreads" << endl;
 		cout << "They are: ";
-		Orbiter->Lint_vec->print(cout, self_dual_spread_idx, nb_self_dual_spreads);
+		Lint_vec_print(cout, self_dual_spread_idx, nb_self_dual_spreads);
 		cout << endl;
 	}
 
@@ -996,7 +996,7 @@ void spread_tables::compute_list_of_lines_from_packing(
 	}
 	for (i = 0; i < sz_of_packing; i++) {
 		a = packing[i];
-		Orbiter->Lint_vec->copy(spread_table + a * spread_size,
+		Lint_vec_copy(spread_table + a * spread_size,
 				list_of_lines + i * spread_size, spread_size);
 	}
 	if (f_v) {
@@ -1017,7 +1017,7 @@ void spread_tables::compute_iso_type_invariant(
 	}
 
 	Iso_type_invariant = NEW_int(nb_pp * nb_iso_types_of_spreads);
-	Orbiter->Int_vec->zero(Iso_type_invariant, nb_pp * nb_iso_types_of_spreads);
+	Int_vec_zero(Iso_type_invariant, nb_pp * nb_iso_types_of_spreads);
 	for (i = 0; i < nb_pp; i++) {
 		for (j = 0; j < sz; j++) {
 			a = Partial_packings[i * sz + j];

@@ -25,7 +25,7 @@ void action::normalizer_using_MAGMA(
 	int f_v = (verbose_level >= 1);
 	string fname_magma;
 	string fname_output;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA" << endl;
@@ -76,7 +76,7 @@ void action::normalizer_using_MAGMA(
 
 	if (Fio.file_size(fname_output) <= 0) {
 
-		magma_interface Magma;
+		orbiter_kernel_system::magma_interface Magma;
 
 		Magma.run_magma_file(fname_magma, verbose_level);
 		cout << "please run magma on the file " << fname_magma << endl;
@@ -205,8 +205,8 @@ void action::conjugacy_classes_using_MAGMA(std::string &prefix,
 
 
 
-	magma_interface Magma;
-	file_io Fio;
+	orbiter_kernel_system::magma_interface Magma;
+	orbiter_kernel_system::file_io Fio;
 
 	Magma.run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) == 0) {
@@ -376,8 +376,8 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 	}
 
 
-	magma_interface Magma;
-	file_io Fio;
+	orbiter_kernel_system::magma_interface Magma;
+	orbiter_kernel_system::file_io Fio;
 
 	Magma.run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) <= 0) {
@@ -457,7 +457,7 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 		}
 		if (f_v) {
 			cout << "perms:" << endl;
-			Orbiter->Int_vec->matrix_print(perms, nb_classes, degree);
+			Int_matrix_print(perms, nb_classes, degree);
 		}
 		for (i = 0; i < nb_classes * degree; i++) {
 			perms[i]--;
@@ -560,7 +560,7 @@ void action::centralizer_using_MAGMA(std::string &prefix,
 	int f_v = (verbose_level >= 1);
 	string fname_magma;
 	string fname_output;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action::centralizer_using_MAGMA" << endl;
@@ -666,7 +666,7 @@ void action::centralizer_using_magma2(std::string &prefix,
 	if (f_v) {
 		cout << "action::centralizer_using_magma2" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	groups::strong_generators *G_gen;
 
 	G_gen = NEW_OBJECT(groups::strong_generators);
@@ -704,7 +704,7 @@ void action::centralizer_using_magma2(std::string &prefix,
 
 
 
-	magma_interface Magma;
+	orbiter_kernel_system::magma_interface Magma;
 
 	Magma.run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) == 0) {
@@ -735,7 +735,7 @@ void action::find_subgroups_using_MAGMA(std::string &prefix,
 	int f_v = (verbose_level >= 1);
 	string fname_magma;
 	string fname_output;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action::find_subgroups_using_MAGMA" << endl;
@@ -780,7 +780,7 @@ void action::read_subgroups_magma(std::string &fname_output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int u, h, j;
 
 	if (f_v) {
@@ -909,7 +909,7 @@ void action::find_subgroups_using_MAGMA2(std::string &prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int n;
 
 	if (f_v) {
@@ -1000,7 +1000,7 @@ void action::find_subgroups_using_MAGMA2(std::string &prefix,
 	cout << "Written file " << fname_magma
 			<< " of size " << Fio.file_size(fname_magma) << endl;
 
-	magma_interface Magma;
+	orbiter_kernel_system::magma_interface Magma;
 
 	Magma.run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) == 0) {
@@ -1032,7 +1032,7 @@ void action::conjugacy_classes_and_normalizers(groups::sims *override_Sims,
 	string prefix;
 	string fname_magma;
 	string fname_output;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -1070,7 +1070,7 @@ void action::conjugacy_classes_and_normalizers(groups::sims *override_Sims,
 		}
 	}
 	else {
-		magma_interface Magma;
+		orbiter_kernel_system::magma_interface Magma;
 
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
@@ -1092,7 +1092,7 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 	string prefix;
 	string fname1;
 	string fname2;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -1148,7 +1148,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	long int *class_normalizer_order;
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action::read_conjugacy_classes_and_normalizers" << endl;
@@ -1213,7 +1213,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	{
 		ofstream fp(fname_latex);
 		string title;
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		title.assign("Conjugacy classes of ");
 		title.append("$");
@@ -1696,7 +1696,7 @@ void action::report_fixed_objects(int *Elt,
 	int f_v = (verbose_level >= 1);
 	//int i, j, cnt;
 	//int v[4];
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action::report_fixed_objects" << endl;
@@ -1704,117 +1704,117 @@ void action::report_fixed_objects(int *Elt,
 
 
 	{
-	ofstream fp(fname_latex);
-	char title[2000];
-	latex_interface L;
+		ofstream fp(fname_latex);
+		char title[2000];
+		orbiter_kernel_system::latex_interface L;
 
-	snprintf(title, 2000, "Fixed Objects");
+		snprintf(title, 2000, "Fixed Objects");
 
-	L.head(fp,
-		FALSE /* f_book */, TRUE /* f_title */,
-		title, "" /* const char *author */,
-		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-		TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-		NULL /* extra_praeamble */);
-	//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title, "" /* const char *author */,
+			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			NULL /* extra_praeamble */);
+		//latex_head_easy(fp);
 
-	fp << "\\section{Fixed Objects}" << endl;
-
-
-
-	fp << "The element" << endl;
-	fp << "$$" << endl;
-	element_print_latex(Elt, fp);
-	fp << "$$" << endl;
-	fp << "has the following fixed objects:\\\\" << endl;
+		fp << "\\section{Fixed Objects}" << endl;
 
 
-#if 0
-	fp << "\\subsection{Fixed Points}" << endl;
 
-	cnt = 0;
-	for (i = 0; i < P3->N_points; i++) {
-		j = element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		fp << "The element" << endl;
+		fp << "$$" << endl;
+		element_print_latex(Elt, fp);
+		fp << "$$" << endl;
+		fp << "has the following fixed objects:\\\\" << endl;
+
+
+	#if 0
+		fp << "\\subsection{Fixed Points}" << endl;
+
+		cnt = 0;
+		for (i = 0; i < P3->N_points; i++) {
+			j = element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
+				}
 			}
+
+		fp << "There are " << cnt << " fixed points, they are: \\\\" << endl;
+		for (i = 0; i < P3->N_points; i++) {
+			j = element_image_of(i, Elt, 0 /* verbose_level */);
+			F->PG_element_unrank_modified(v, 1, 4, i);
+			if (j == i) {
+				fp << i << " : ";
+				int_vec_print(fp, v, 4);
+				fp << "\\\\" << endl;
+				cnt++;
+				}
+			}
+
+		fp << "\\subsection{Fixed Lines}" << endl;
+
+		{
+		action *A2;
+
+		A2 = induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
+				}
+			}
+
+		fp << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				fp << i << " : $\\left[";
+				A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
+				fp << "\\right]$\\\\" << endl;
+				cnt++;
+				}
+			}
+
+		FREE_OBJECT(A2);
 		}
 
-	fp << "There are " << cnt << " fixed points, they are: \\\\" << endl;
-	for (i = 0; i < P3->N_points; i++) {
-		j = element_image_of(i, Elt, 0 /* verbose_level */);
-		F->PG_element_unrank_modified(v, 1, 4, i);
-		if (j == i) {
-			fp << i << " : ";
-			int_vec_print(fp, v, 4);
-			fp << "\\\\" << endl;
-			cnt++;
+		fp << "\\subsection{Fixed Planes}" << endl;
+
+		{
+		action *A2;
+
+		A2 = induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
+				}
 			}
-		}
 
-	fp << "\\subsection{Fixed Lines}" << endl;
-
-	{
-	action *A2;
-
-	A2 = induced_action_on_grassmannian(2, 0 /* verbose_level*/);
-
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		fp << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				fp << i << " : $\\left[";
+				A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
+				fp << "\\right]$\\\\" << endl;
+				cnt++;
+				}
 			}
+
+		FREE_OBJECT(A2);
 		}
-
-	fp << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			fp << i << " : $\\left[";
-			A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
-			fp << "\\right]$\\\\" << endl;
-			cnt++;
-			}
-		}
-
-	FREE_OBJECT(A2);
-	}
-
-	fp << "\\subsection{Fixed Planes}" << endl;
-
-	{
-	action *A2;
-
-	A2 = induced_action_on_grassmannian(3, 0 /* verbose_level*/);
-
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
-			}
-		}
-
-	fp << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			fp << i << " : $\\left[";
-			A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
-			fp << "\\right]$\\\\" << endl;
-			cnt++;
-			}
-		}
-
-	FREE_OBJECT(A2);
-	}
-#endif
+	#endif
 
 
-	L.foot(fp);
+		L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;

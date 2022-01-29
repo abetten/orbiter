@@ -64,7 +64,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 	
 	if (f_v) {
 		cout << "rank_checker::check_rank: checking the set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	// M1 will be used as a m x len matrix
@@ -75,7 +75,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 	if (f_vv) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
-		Orbiter->Int_vec->print_integer_matrix(cout, M1, m, len);
+		Int_vec_print_integer_matrix(cout, M1, m, len);
 	}
 	if (len <= 1) {
 		return TRUE;
@@ -97,7 +97,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			Orbiter->Int_vec->print(cout, set, d1);
+			Int_vec_print(cout, set, d1);
 			cout << endl;
 		}
 		
@@ -111,7 +111,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 			M2[i * (d1 + 1) + d1] = M1[i * len + len - 1];
 		}
 		if (FALSE) {
-			Orbiter->Int_vec->print_integer_matrix(cout, M2, m, d1 + 1);
+			Int_vec_print_integer_matrix(cout, M2, m, d1 + 1);
 		}
 		
 		rk = GFq->Linear_algebra->Gauss_int(M2,
@@ -125,7 +125,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				Orbiter->Int_vec->print(cout, set, d1);
+				Int_vec_print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
 			}
 			break;
@@ -169,7 +169,7 @@ int rank_checker::check_rank_matrix_input(
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			Orbiter->Int_vec->print(cout, set, d1);
+			Int_vec_print(cout, set, d1);
 			cout << endl;
 		}
 		
@@ -194,7 +194,7 @@ int rank_checker::check_rank_matrix_input(
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				Orbiter->Int_vec->print(cout, set, d1);
+				Int_vec_print(cout, set, d1);
 				cout << " leads to a rk " << rk
 						<< " submatrix, but we want rank "
 						<< d1 + 1 << endl;
@@ -222,7 +222,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 	if (f_v) {
 		cout << "rank_checker::check_rank_last_two_are_fixed: "
 				"checking the set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	// M1 will be used as a m x len matrix
@@ -233,7 +233,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 	if (f_vv) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
-		Orbiter->Int_vec->print_integer_matrix(cout, M1, m, len);
+		Int_vec_print_integer_matrix(cout, M1, m, len);
 	}
 	if (len <= 1) {
 		return TRUE;
@@ -255,7 +255,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			Orbiter->Int_vec->print(cout, set, d1);
+			Int_vec_print(cout, set, d1);
 			cout << endl;
 		}
 		
@@ -270,7 +270,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 			M2[i * (d1 + 2) + d1 + 1] = M1[i * len + len - 1];
 		}
 		if (FALSE) {
-			Orbiter->Int_vec->print_integer_matrix(cout, M2, m, d1 + 2);
+			Int_vec_print_integer_matrix(cout, M2, m, d1 + 2);
 		}
 		
 		rk = GFq->Linear_algebra->Gauss_int(M2,
@@ -284,7 +284,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				Orbiter->Int_vec->print(cout, set, d1);
+				Int_vec_print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
 			}
 			break;
@@ -312,7 +312,7 @@ int rank_checker::compute_rank_row_vectors(
 	
 	if (f_vv) {
 		cout << "rank_checker::compute_rank_row_vectors set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	// M1 will be used as a len x n matrix
@@ -328,7 +328,7 @@ int rank_checker::compute_rank_row_vectors(
 	if (f_v) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
-		Orbiter->Int_vec->print_integer_matrix(cout, M1, len, n);
+		Int_vec_print_integer_matrix(cout, M1, len, n);
 	}
 
 		

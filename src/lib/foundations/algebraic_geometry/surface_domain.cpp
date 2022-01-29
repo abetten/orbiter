@@ -242,7 +242,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 		cout << "surface::init "
 				"initializing orthogonal" << endl;
 	}
-	O = NEW_OBJECT(orthogonal);
+	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
 	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init "
@@ -997,7 +997,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 	if (f_v) {
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
 				"coeffs20:" << endl;
-		Orbiter->Int_vec->print(cout, coeffs20, 20);
+		Int_vec_print(cout, coeffs20, 20);
 		cout << endl;
 
 		Poly3_4->print_equation(cout, coeffs20);
@@ -1005,7 +1005,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 	}
 
 
-	Orbiter->Lint_vec->copy(double_six, Lines27, 12);
+	Lint_vec_copy(double_six, Lines27, 12);
 
 
 	if (f_v) {

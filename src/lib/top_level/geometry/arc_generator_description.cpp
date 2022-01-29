@@ -119,7 +119,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-forbidden_point_set") == 0) {
 			f_has_forbidden_point_set = TRUE;
-			os_interface Os;
+			orbiter_kernel_system::os_interface Os;
 
 			i++;
 

@@ -102,7 +102,7 @@ void isomorph::init_solutions(int **Solutions, int *Nb_sol,
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		tally C;
+		data_structures::tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::init_solutions "
@@ -132,7 +132,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::count_solutions_from_clique_finder_case_by_case "
@@ -141,7 +141,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 	solution_first = NEW_int(nb_starter + 1);
 	solution_len = NEW_int(nb_starter);
 
-	Orbiter->Int_vec->zero(solution_len, nb_starter);
+	Int_vec_zero(solution_len, nb_starter);
 	N = 0;
 	for (i = 0; i < nb_files; i++) {
 		int nb_solutions;
@@ -203,7 +203,7 @@ void isomorph::count_solutions_from_clique_finder(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h, c, n;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::count_solutions_from_clique_finder "
@@ -285,7 +285,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	int i, no = 0;
 	int print_mod = 1000;
@@ -349,7 +349,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		tally C;
+		data_structures::tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::read_solutions_from_clique_finder_case_by_case "
@@ -387,7 +387,7 @@ void isomorph::read_solutions_from_clique_finder(
 	//int *data;
 	int print_mod = 1000;
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	
 	if (f_v) {
@@ -484,7 +484,7 @@ void isomorph::read_solutions_from_clique_finder(
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		tally C;
+		data_structures::tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::read_solutions_from_clique_finder "
@@ -585,7 +585,7 @@ void isomorph::build_up_database(int nb_files,
 	uint_4 datref;
 	int nb_fail = 0;
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::data_structures_global Data;
 	data_structures::string_tools ST;
 	
@@ -682,7 +682,7 @@ void isomorph::build_up_database(int nb_files,
 					}
 				else {
 					cout << nb_total << " : " << data[0] << " : ";
-					Orbiter->Lint_vec->print(cout, data + 1, size);
+					Lint_vec_print(cout, data + 1, size);
 					cout << endl;
 					}
 				}
@@ -727,7 +727,7 @@ void isomorph::build_up_database(int nb_files,
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		tally C;
+		data_structures::tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::build_up_database "
@@ -954,7 +954,7 @@ void isomorph::count_solutions(int nb_files, std::string *fname,
 		cout << "isomorph::count_solutions "
 				"after count_solutions2" << endl;
 		cout << "case_len: ";
-		Orbiter->Int_vec->print(cout, solution_len, nb_starter);
+		Int_vec_print(cout, solution_len, nb_starter);
 		cout << endl;
 		}
 	cout << "total computing time for the search : ";
@@ -1003,7 +1003,7 @@ void isomorph::get_statistics(int nb_files,
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	string fname_summary;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "get_statistics: reading "
@@ -1066,7 +1066,7 @@ void isomorph::get_statistics(int nb_files,
 
 void isomorph::write_statistics()
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	{
 	ofstream f(fname_statistics);
@@ -1174,7 +1174,7 @@ void isomorph::count_solutions2(int nb_files, std::string *fname,
 	layer2_discreta::Vector v;
 	char str[1000];
 	int nb_fail = 0;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
 	if (f_v) {
@@ -1313,7 +1313,7 @@ void isomorph::write_solution_first_and_len()
 void isomorph::read_solution_first_and_len()
 {
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "isomorph::read_solution_first_and_len "
 			"reading from file "
@@ -1348,7 +1348,7 @@ void isomorph::read_solution_first_and_len()
 void isomorph::write_starter_nb_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -1370,7 +1370,7 @@ void isomorph::write_starter_nb_orbits(int verbose_level)
 void isomorph::read_starter_nb_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -1419,7 +1419,7 @@ void isomorph::write_hash_and_datref_file(int verbose_level)
 // containing id_to_hash[] and id_to_datref[]
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::write_hash_and_datref_file" << endl;
@@ -1519,7 +1519,7 @@ void isomorph::write_orbit_data(int verbose_level)
 // Writes the file 'fname_staborbits'
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "write_orbit_data" << endl;
@@ -1660,7 +1660,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		load_solution(id, data);
 		cout << "isomorphism type " << i << " : " << j << " : "
 				<< id << " : ";
-		Orbiter->Lint_vec->print(cout, data, size);
+		Lint_vec_print(cout, data, size);
 		cout << endl;
 #if 0
 		for (j = 0; j < size; j++) {
@@ -1697,7 +1697,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		cout << "Computed all orbits on the set, found "
 				<< Orb.nb_orbits << " orbits" << endl;
 		cout << "orbit lengths: ";
-		Orbiter->Int_vec->print(cout, Orb.orbit_len, Orb.nb_orbits);
+		Int_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
 		cout << endl;
 	
 		if (print_set_function) {
@@ -1736,7 +1736,7 @@ void isomorph::induced_action_on_set_and_kernel(
 		cout << "isomorph::induced_action_on_set_and_kernel "
 				"calling induced_action_by_restriction" << endl;
 		cout << "set: ";
-		Orbiter->Lint_vec->print(cout, set, size);
+		Lint_vec_print(cout, set, size);
 		cout << endl;
 		}
 
@@ -1831,7 +1831,7 @@ void isomorph::induced_action_on_set_and_kernel(
 	
 		file << "The kernel has $" << Orb.nb_orbits
 				<< "$ orbits on the quadric.\\\\" << endl;
-		Orbiter->Int_vec->distribution(Orb.orbit_len, Orb.nb_orbits,
+		orbiter_kernel_system::Orbiter->Int_vec->distribution(Orb.orbit_len, Orb.nb_orbits,
 				val, mult, len);
 		file << "The orbit length are $[";
 		for (i = len - 1; i >= 0; i--) {
@@ -1906,7 +1906,7 @@ void isomorph::read_event_file(const char *event_file_name,
 			nb_completed_cases, completed_cases, verbose_level);
 	cout << "file " << event_file_name << " holds "
 			<< nb_completed_cases << " completed cases: ";
-	Orbiter->Int_vec->print(cout, completed_cases, nb_completed_cases);
+	Int_vec_print(cout, completed_cases, nb_completed_cases);
 	cout << endl;
 	for (i = 0; i < nb_completed_cases; i++) {
 		event_file_read_case(event_file_name,

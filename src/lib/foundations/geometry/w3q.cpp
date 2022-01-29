@@ -78,7 +78,7 @@ void W3q::init(field_theory::finite_field *F, int verbose_level)
 		cout << "W3q::init" << endl;
 	}
 	P3 = NEW_OBJECT(projective_space);
-	Q4 = NEW_OBJECT(orthogonal);
+	Q4 = NEW_OBJECT(orthogonal_geometry::orthogonal);
 	Basis = NEW_int(2 * 4);
 	
 	P3->projective_space_init(3, F,
@@ -119,7 +119,7 @@ void W3q::init(field_theory::finite_field *F, int verbose_level)
 		P3->unrank_line(Basis, Lines[h]);
 		if (f_vv) {
 			cout << "Line " << h << " is " << Lines[h] << ":" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(cout,
 					Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
 		}
@@ -128,7 +128,7 @@ void W3q::init(field_theory::finite_field *F, int verbose_level)
 
 		if (f_vvv) {
 			cout << "v5=";
-			Orbiter->Int_vec->print(cout, v5, 5);
+			Int_vec_print(cout, v5, 5);
 			cout << endl;
 		}
 		
@@ -179,7 +179,7 @@ void W3q::print_lines()
 		cout << setw(4) << h << " : ";
 		cout << setw(4) << Lines[h] << " : " << endl;
 		P3->unrank_line(Basis, Lines[h]);
-		Orbiter->Int_vec->matrix_print(Basis, 2, 4);
+		Int_matrix_print(Basis, 2, 4);
 		cout << endl;
 	}
 }
@@ -219,12 +219,12 @@ void W3q::print_by_lines()
 		cout << setw(4) << Q4_rk[h] << " : ";
 		cout << setw(4) << Line_idx[h] << " : ";
 		P3->unrank_line(Basis, Lines[h]);
-		Orbiter->Int_vec->print(cout, Basis, 4);
+		Int_vec_print(cout, Basis, 4);
 		cout << " : ";
-		Orbiter->Int_vec->print(cout, Basis + 4, 4);
+		Int_vec_print(cout, Basis + 4, 4);
 		Q4->unrank_point(v5, 1, Q4_rk[h], 0);
 		cout << " : ";
-		Orbiter->Int_vec->print(cout, v5, 5);
+		Int_vec_print(cout, v5, 5);
 		cout << endl;
 	}
 }
@@ -241,12 +241,12 @@ void W3q::print_by_points()
 		cout << setw(4) << Line_idx[h] << " : ";
 		cout << setw(4) << Lines[Line_idx[h]] << " : ";
 		P3->unrank_line(Basis, Lines[Line_idx[h]]);
-		Orbiter->Int_vec->print(cout, Basis, 4);
+		Int_vec_print(cout, Basis, 4);
 		cout << " : ";
-		Orbiter->Int_vec->print(cout, Basis + 4, 4);
+		Int_vec_print(cout, Basis + 4, 4);
 		Q4->unrank_point(v5, 1, h, 0);
 		cout << " : ";
-		Orbiter->Int_vec->print(cout, v5, 5);
+		Int_vec_print(cout, v5, 5);
 		cout << endl;
 	}
 }

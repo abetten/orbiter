@@ -48,7 +48,7 @@ void linear_algebra_global::Berlekamp_matrix(
 	int sz_A;
 
 
-	Orbiter->get_vector_from_label(Berlekamp_matrix_coeffs, data_A, sz_A, verbose_level);
+	orbiter_kernel_system::Orbiter->get_vector_from_label(Berlekamp_matrix_coeffs, data_A, sz_A, verbose_level);
 
 
 	number_theory::number_theory_domain NT;
@@ -100,7 +100,7 @@ void linear_algebra_global::Berlekamp_matrix(
 
 	if (f_v) {
 		cout << "B=" << endl;
-		Orbiter->Int_vec->matrix_print(B, da, da);
+		Int_matrix_print(B, da, da);
 		cout << endl;
 	}
 
@@ -178,7 +178,7 @@ void linear_algebra_global::compute_normal_basis(
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "
 				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec->matrix_print(Frobenius, d, d);
+		Int_matrix_print(Frobenius, d, d);
 		cout << endl;
 	}
 
@@ -192,7 +192,7 @@ void linear_algebra_global::compute_normal_basis(
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "
 				"Normal_basis = " << endl;
-		Orbiter->Int_vec->matrix_print(Normal_basis, d, d);
+		Int_matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
 
@@ -213,7 +213,7 @@ void linear_algebra_global::do_nullspace(
 	int *base_cols;
 	int rk, i, rk1;
 
-	latex_interface Li;
+	orbiter_kernel_system::latex_interface Li;
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace" << endl;
@@ -222,7 +222,7 @@ void linear_algebra_global::do_nullspace(
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	Orbiter->Int_vec->copy(M, A, m * n);
+	Int_vec_copy(M, A, m * n);
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace before Linear_algebra->perp_standard" << endl;
@@ -237,7 +237,7 @@ void linear_algebra_global::do_nullspace(
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace after perp_standard:" << endl;
-		Orbiter->Int_vec->matrix_print(A, n, n);
+		Int_matrix_print(A, n, n);
 		cout << "rk=" << rk << endl;
 	}
 
@@ -249,11 +249,11 @@ void linear_algebra_global::do_nullspace(
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace after RREF" << endl;
-		Orbiter->Int_vec->matrix_print(A + rk * n, rk1, n);
+		Int_matrix_print(A + rk * n, rk1, n);
 		cout << "rank of nullspace = " << rk1 << endl;
 
 		cout << "linear_algebra_global::do_nullspace coefficients:" << endl;
-		Orbiter->Int_vec->print_fully(cout, A + rk * n, rk1 * n);
+		Int_vec_print_fully(cout, A + rk * n, rk1 * n);
 		cout << endl;
 
 		cout << "$$" << endl;
@@ -273,7 +273,7 @@ void linear_algebra_global::do_nullspace(
 
 		if (f_v) {
 			cout << "linear_algebra_global::do_nullspace after normalize from the left:" << endl;
-			Orbiter->Int_vec->matrix_print(A, n, n);
+			Int_matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
 			cout << "$$" << endl;
@@ -294,7 +294,7 @@ void linear_algebra_global::do_nullspace(
 
 		if (f_v) {
 			cout << "linear_algebra_global::do_nullspace after normalize from the right:" << endl;
-			Orbiter->Int_vec->matrix_print(A, n, n);
+			Int_matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
 			cout << "$$" << endl;
@@ -321,7 +321,7 @@ void linear_algebra_global::do_nullspace(
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -370,7 +370,7 @@ void linear_algebra_global::do_nullspace(
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "linear_algebra_global::do_nullspace written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -397,7 +397,7 @@ void linear_algebra_global::do_RREF(
 	int *A;
 	int *base_cols;
 	int rk, i;
-	latex_interface Li;
+	orbiter_kernel_system::latex_interface Li;
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_RREF" << endl;
@@ -407,10 +407,10 @@ void linear_algebra_global::do_RREF(
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	Orbiter->Int_vec->copy(M, A, m * n);
+	Int_vec_copy(M, A, m * n);
 	if (f_v) {
 		cout << "linear_algebra_global::do_RREF input matrix A:" << endl;
-		Orbiter->Int_vec->matrix_print(A, m, n);
+		Int_matrix_print(A, m, n);
 	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
@@ -421,11 +421,11 @@ void linear_algebra_global::do_RREF(
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_RREF after RREF:" << endl;
-		Orbiter->Int_vec->matrix_print(A, rk, n);
+		Int_matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
 		cout << "coefficients:" << endl;
-		Orbiter->Int_vec->print(cout, A, rk * n);
+		Int_vec_print(cout, A, rk * n);
 		cout << endl;
 
 		cout << "$$" << endl;
@@ -447,7 +447,7 @@ void linear_algebra_global::do_RREF(
 
 		if (f_v) {
 			cout << "after normalize from the left:" << endl;
-			Orbiter->Int_vec->matrix_print(A, rk, n);
+			Int_matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
@@ -462,13 +462,13 @@ void linear_algebra_global::do_RREF(
 
 		if (f_v) {
 			cout << "after normalize from the right:" << endl;
-			Orbiter->Int_vec->matrix_print(A, rk, n);
+			Int_matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
 
 
-	Orbiter->Int_vec->copy(M, A, m * n);
+	Int_vec_copy(M, A, m * n);
 
 	RREF_demo(F, A, m, n, verbose_level);
 
@@ -508,7 +508,7 @@ void linear_algebra_global::RREF_demo(
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -534,7 +534,7 @@ void linear_algebra_global::RREF_demo(
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -553,7 +553,7 @@ void linear_algebra_global::RREF_with_steps_latex(
 	int f_v = (verbose_level >= 1);
 	int *base_cols;
 	int i, j, rk;
-	latex_interface Li;
+	orbiter_kernel_system::latex_interface Li;
 	int cnt = 0;
 
 	if (f_v) {
@@ -658,7 +658,7 @@ void linear_algebra_global::RREF_with_steps_latex(
 		}
 	}
 
-	Orbiter->Int_vec->print_fully(ost, A, m * n);
+	Int_vec_print_fully(ost, A, m * n);
 	ost << "\\\\" << endl;
 
 

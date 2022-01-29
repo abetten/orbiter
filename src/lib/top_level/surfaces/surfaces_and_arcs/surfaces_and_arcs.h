@@ -411,7 +411,7 @@ public:
 
 	int f_has_F2;
 	int *F2; // F2[i] = Seventytwo[i].f2;
-	tally *tally_F2;
+	data_structures::tally *tally_F2;
 
 
 	surfaces_arc_lifting_definition_node();
@@ -711,7 +711,7 @@ public:
 	//int nine_lines[9];
 
 	int Iso_type_as_double_triplet[120];
-	tally *Double_triplet_type_distribution;
+	data_structures::tally *Double_triplet_type_distribution;
 	data_structures::set_of_sets *Double_triplet_types;
 	int *Double_triplet_type_values;
 	int nb_double_triplet_types;

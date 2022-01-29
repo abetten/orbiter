@@ -103,7 +103,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 				"and_canonical_labeling_of_colored_graph" << endl;
 	}
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(vertex_colors, n, FALSE, 0);
 
@@ -310,7 +310,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 					"partition_and_labeling: "
 					"The group order is = " << *NO->Ago << " = ";
 			//cout << "transversal length: ";
-			Orbiter->Int_vec->print(cout, NO->Transversal_length, NO->Base_length);
+			Int_vec_print(cout, NO->Transversal_length, NO->Base_length);
 			cout << endl;
 			NO->print_stats();
 		}
@@ -336,7 +336,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: "
 				"Base:" << endl;
-		Orbiter->Int_vec->print(cout, NO->Base, NO->Base_length);
+		Int_vec_print(cout, NO->Base, NO->Base_length);
 		cout << endl;
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: "

@@ -120,14 +120,14 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 	for (i = 0; i < nb_lines; i++) {
 		a = Wedge_rk[i];
 		F->PG_element_unrank_modified_lint(w, 1, 6 /*wedge_dimension*/, a);
-		Orbiter->Int_vec->print_to_str(str, w, 6);
+		Int_vec_print_to_str(str, w, 6);
 		Text_wedge[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_wedge[i], str);
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Line_rk[i];
 		Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
-		Orbiter->Int_vec->print_to_str(str, Basis, 8);
+		Int_vec_print_to_str(str, Basis, 8);
 		Text_line[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_line[i], str);
 		}
@@ -136,7 +136,7 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 		O->unrank_point(w, 1, a, 0 /* verbose_level*/);
 			// error corrected: w was v which was v[4], so too short.
 			// Aug 25, 2018
-		Orbiter->Int_vec->print_to_str(str, w, 6);
+		Int_vec_print_to_str(str, w, 6);
 			// w was v, error corrected
 		Text_klein[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_klein[i], str);
@@ -235,7 +235,7 @@ void surface_domain::print_equation_wrapped(std::ostream &ost, int *the_equation
 void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
 {
 	int i;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	long int *Rk;
 	int vv[6];
 
@@ -268,7 +268,7 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
-		Orbiter->Int_vec->copy(v6, vv, 6); // mistake found by Alice Hui
+		Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
 
 		Rk[i] = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
 
@@ -279,10 +279,10 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 		ost << "$$" << endl;
 	}
 	ost << "Rank of lines: ";
-	Orbiter->Lint_vec->print(ost, Lines, nb_lines);
+	Lint_vec_print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;
 	ost << "Rank of points on Klein quadric: ";
-	Orbiter->Lint_vec->print(ost, Rk, nb_lines);
+	Lint_vec_print(ost, Rk, nb_lines);
 	ost << "\\\\" << endl;
 
 	//alice(ost, Lines, nb_lines);
@@ -307,10 +307,10 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 	P->Pluecker_coordinates(Lines[11], Pb6, 0 /* verbose_level */);
 	P->Pluecker_coordinates(Lines[1], Pa2, 0 /* verbose_level */);
 
-	Orbiter->Int_vec->copy(Pa6, tmp, 6);
+	Int_vec_copy(Pa6, tmp, 6);
 	rk_a6 = F->Orthogonal_indexing->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
 
-	Orbiter->Int_vec->copy(Pb6, tmp, 6);
+	Int_vec_copy(Pb6, tmp, 6);
 	rk_b6 = F->Orthogonal_indexing->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
 
 	if (rk_a6 != 1) {
@@ -319,7 +319,7 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 	if (rk_b6 != 0) {
 		return;
 	}
-	Orbiter->Int_vec->copy(Pa2, tmp, 6);
+	Int_vec_copy(Pa2, tmp, 6);
 	if (Pa2[2] || Pa2[3] || Pa2[4]) {
 		return;
 	}
@@ -334,14 +334,14 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 		}
 
 		P->Pluecker_coordinates(Lines[h], P_line, 0 /* verbose_level */);
-		Orbiter->Int_vec->copy(P_line + 2, v, 3);
+		Int_vec_copy(P_line + 2, v, 3);
 
 		rk = P2->rank_point(v);
 
 
 		ost << "$" << Schlaefli->Labels->Line_label_tex[h];
 		ost << " = ";
-		Orbiter->Int_vec->print(ost, v, 3);
+		Int_vec_print(ost, v, 3);
 		ost << "_{";
 		ost << rk;
 		ost << "}$\\\\" << endl;
@@ -353,7 +353,7 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 			continue;
 		}
 		P->Pluecker_coordinates(Lines[h], P_line, 0 /* verbose_level */);
-		Orbiter->Int_vec->copy(P_line + 2, v, 3);
+		Int_vec_copy(P_line + 2, v, 3);
 
 		rk = P2->rank_point(v);
 		ost << rk << ",";
@@ -534,11 +534,11 @@ void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 		}
 	cout << "[";
 	for (i = 0; i < 3; i++) {
-		Orbiter->Int_vec->print_GAP(cout, F_planes + i * 4, 4);
+		Int_vec_print_GAP(cout, F_planes + i * 4, 4);
 		cout << ", ";
 		}
 	for (i = 0; i < 3; i++) {
-		Orbiter->Int_vec->print_GAP(cout, G_planes + i * 4, 4);
+		Int_vec_print_GAP(cout, G_planes + i * 4, 4);
 		if (i < 3 - 1) {
 			cout << ", ";
 			}
@@ -619,7 +619,7 @@ void surface_domain::make_table_of_surfaces(int verbose_level)
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
@@ -695,7 +695,7 @@ void surface_domain::make_table_of_surfaces_detailed(
 	int *Nb_reps;
 	knowledge_base K;
 	long int *Big_table;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Nb_reps = NEW_int(Q_table_len);
 
@@ -767,7 +767,7 @@ void surface_domain::make_table_of_surfaces2(std::ostream &ost,
 	int nb_gens;
 	int data_size;
 	knowledge_base K;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	for (i = 0; i < Q_table_len; i++) {
@@ -955,7 +955,7 @@ void surface_domain::make_table_of_surfaces2(std::ostream &ost,
 					cout << "u != nb_reps" << endl;
 					exit(1);
 				}
-				tally C;
+				data_structures::tally C;
 
 				C.init(Ago, nb_reps, FALSE, 0);
 				ost << q << " & " << nb_reps << " & ";
@@ -1065,7 +1065,7 @@ void surface_domain::compute_table_E(
 
 	nb_Q = nb_fields;
 	Q = NEW_int(nb_Q);
-	Orbiter->Int_vec->copy(field_orders, Q, nb_Q);
+	Int_vec_copy(field_orders, Q, nb_Q);
 
 	nb_E_max = 0;
 	for (i = 0; i < nb_fields; i++) {
@@ -1079,7 +1079,7 @@ void surface_domain::compute_table_E(
 	cout << "nb_E_max=" << nb_E_max << endl;
 	int *E_freq;
 	E_freq = NEW_int(nb_E_max + 1);
-	Orbiter->Int_vec->zero(E_freq, nb_E_max + 1);
+	Int_vec_zero(E_freq, nb_E_max + 1);
 	for (i = 0; i < nb_fields; i++) {
 		q = field_orders[i];
 		nb_reps = K.cubic_surface_nb_reps(q);
@@ -1092,7 +1092,7 @@ void surface_domain::compute_table_E(
 
 
 	cout << "E_freq=";
-	Orbiter->Int_vec->print(cout, E_freq, nb_E_max + 1);
+	Int_vec_print(cout, E_freq, nb_E_max + 1);
 	cout << endl;
 
 
@@ -1113,7 +1113,7 @@ void surface_domain::compute_table_E(
 
 
 	Table = NEW_lint(nb_Q * nb_E_types);
-	Orbiter->Lint_vec->zero(Table, nb_Q * nb_E_types);
+	orbiter_kernel_system::Orbiter->Lint_vec->zero(Table, nb_Q * nb_E_types);
 	for (i = 0; i < nb_fields; i++) {
 		q = Q[i];
 		nb_reps = K.cubic_surface_nb_reps(q);
@@ -1124,7 +1124,7 @@ void surface_domain::compute_table_E(
 			}
 		}
 	cout << "Table:" << endl;
-	Orbiter->Lint_vec->matrix_print(Table, nb_Q, nb_E_types);
+	orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(Table, nb_Q, nb_E_types);
 
 	FREE_int(Table_idx);
 }

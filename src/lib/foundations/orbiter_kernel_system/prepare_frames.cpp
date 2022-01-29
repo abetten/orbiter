@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 prepare_frames::prepare_frames()
@@ -166,4 +167,6 @@ void prepare_frames::do_the_work(int verbose_level)
 	}
 }
 
-}}
+}}}
+
+

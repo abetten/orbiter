@@ -109,7 +109,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 	if (FALSE) {
 		cout << "flag_orbits_incidence_structure::init "
 				"Flag_table:" << endl;
-		Orbiter->Lint_vec->matrix_print(Flag_table, nb_flags, 2);
+		Lint_matrix_print(Flag_table, nb_flags, 2);
 	}
 
 	if (f_v) {

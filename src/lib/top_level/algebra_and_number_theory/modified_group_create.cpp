@@ -71,23 +71,23 @@ void modified_group_create::modified_group_init(
 		int idx;
 
 
-		idx = Orbiter->find_symbol(Descr->from[0]);
+		idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->from[0]);
 
 
-		symbol_table_object_type t = Orbiter->get_object_type(idx);
+		symbol_table_object_type t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 
 
 
 		if (t != t_any_group) {
 			cout << "-from must give object of type t_any_group" << endl;
 			cout << "type given: ";
-			Orbiter->print_type(t);
+			orbiter_kernel_system::Orbiter->print_type(t);
 			exit(1);
 		}
 
 		any_group *AG;
 
-		AG = (any_group *) Orbiter->get_object(idx);
+		AG = (any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 		A_base = AG->A_base;
 		A_previous = AG->A;
@@ -96,7 +96,7 @@ void modified_group_create::modified_group_init(
 		int nb_points;
 
 
-		Orbiter->get_lint_vector_from_label(Descr->restricted_action_set_text,
+		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(Descr->restricted_action_set_text,
 				points, nb_points, verbose_level);
 
 		//Orbiter->Lint_vec.scan(Descr->restricted_action_set_text, points, nb_points);

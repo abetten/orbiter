@@ -56,7 +56,7 @@ int orbiter_top_level_session::startup_and_read_arguments(int argc,
 
 	cout << "orbiter_top_level_session::startup_and_read_arguments before new orbiter_session" << endl;
 
-	Orbiter_session = new orbiter_session;
+	Orbiter_session = new orbiter_kernel_system::orbiter_session;
 
 	cout << "orbiter_top_level_session::startup_and_read_arguments after new orbiter_session" << endl;
 	cout << "orbiter_top_level_session::startup_and_read_arguments before Orbiter_session->read_arguments" << endl;
@@ -111,7 +111,7 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 	}
 	else {
 		if (Orbiter_session->f_seed) {
-			os_interface Os;
+			orbiter_kernel_system::os_interface Os;
 
 			if (f_v) {
 				cout << "seeding random number generator with " << Orbiter_session->the_seed << endl;
@@ -120,7 +120,7 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 			Os.random_integer(1000);
 		}
 		if (Orbiter_session->f_memory_debug) {
-			Orbiter->f_memory_debug = TRUE;
+			orbiter_kernel_system::Orbiter->f_memory_debug = TRUE;
 		}
 
 		// main dispatch:
@@ -135,9 +135,9 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 				cout << "orbiter_top_level_session::handle_everything memory_debug "
 						"before global_mem_object_registry.dump" << endl;
 			}
-			Orbiter->global_mem_object_registry->dump();
-			Orbiter->global_mem_object_registry->dump_to_csv_file("orbiter_memory_dump.cvs");
-			Orbiter->global_mem_object_registry->sort_by_location_and_get_frequency(verbose_level);
+			orbiter_kernel_system::Orbiter->global_mem_object_registry->dump();
+			orbiter_kernel_system::Orbiter->global_mem_object_registry->dump_to_csv_file("orbiter_memory_dump.cvs");
+			orbiter_kernel_system::Orbiter->global_mem_object_registry->sort_by_location_and_get_frequency(verbose_level);
 			if (f_v) {
 				cout << "orbiter_top_level_session::handle_everything memory_debug "
 						"after global_mem_object_registry.dump" << endl;
@@ -315,7 +315,7 @@ void orbiter_top_level_session::print_symbol_table()
 }
 
 void orbiter_top_level_session::add_symbol_table_entry(std::string &label,
-		orbiter_symbol_table_entry *Symb, int verbose_level)
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level)
 {
 	Orbiter_session->add_symbol_table_entry(label, Symb, verbose_level);
 }

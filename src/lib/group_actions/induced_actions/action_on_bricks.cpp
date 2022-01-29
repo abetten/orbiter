@@ -94,10 +94,10 @@ long int action_on_bricks::compute_image_linear_action(int *Elt,
 	w[2] = 1;
 	if (f_v) {
 		cout << "action_on_bricks::compute_image v=";
-		Orbiter->Int_vec->print(cout, v, 3);
+		Int_vec_print(cout, v, 3);
 		cout << endl;
 		cout << "action_on_bricks::compute_image w=";
-		Orbiter->Int_vec->print(cout, w, 3);
+		Int_vec_print(cout, w, 3);
 		cout << endl;
 		}
 	
@@ -119,10 +119,10 @@ long int action_on_bricks::compute_image_linear_action(int *Elt,
 	B->F->PG_element_unrank_modified(ww, 1, 3, rk_ww);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image vv=";
-		Orbiter->Int_vec->print(cout, vv, 3);
+		Int_vec_print(cout, vv, 3);
 		cout << endl;
 		cout << "action_on_bricks::compute_image ww=";
-		Orbiter->Int_vec->print(cout, ww, 3);
+		Int_vec_print(cout, ww, 3);
 		cout << endl;
 		}
 	if (vv[2] == 0) {
@@ -137,10 +137,10 @@ long int action_on_bricks::compute_image_linear_action(int *Elt,
 	B->F->PG_element_normalize(ww, 1, 3);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image after normalize vv=";
-		Orbiter->Int_vec->print(cout, vv, 3);
+		Int_vec_print(cout, vv, 3);
 		cout << endl;
 		cout << "action_on_bricks::compute_image after normalize ww=";
-		Orbiter->Int_vec->print(cout, ww, 3);
+		Int_vec_print(cout, ww, 3);
 		cout << endl;
 		}
 	j = B->rank_coordinates(vv[0], vv[1], ww[0], ww[1], 0);

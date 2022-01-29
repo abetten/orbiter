@@ -664,7 +664,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				cout << "isomorph::create_level_database level "
 						<< level << " i=" << i << " / " << nb_nodes
 						<< " set=";
-				Orbiter->Lint_vec->print(cout, set1, level);
+				Lint_vec_print(cout, set1, level);
 				cout << endl;
 				}
 
@@ -746,9 +746,9 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {
 						cout << "mapping ";
-						Orbiter->Lint_vec->print(cout, set1, level + 1);
+						Lint_vec_print(cout, set1, level + 1);
 						cout << " to ";
-						Orbiter->Lint_vec->print(cout, set2, level + 1);
+						Lint_vec_print(cout, set2, level + 1);
 						cout << endl;
 					}
 		
@@ -850,7 +850,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 	D.close(0/*verbose_level - 1*/);
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	if (f_v) {
 		cout << "number of group elements in " << fname_db_level_ge
 				<< " is " << cnt << endl;
@@ -1007,7 +1007,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 		}
 	if (f_vv) {
 		cout << "isomorph::load_strong_generators_database set: ";
-		Orbiter->Int_vec->print(cout, set, cur_level);
+		Int_vec_print(cout, set, cur_level);
 		cout << endl;
 		}
 	int nb_strong_generators;

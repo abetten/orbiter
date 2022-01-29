@@ -500,8 +500,8 @@ int sorting::test_if_sets_are_equal(int *set1, int *set2, int set_size)
 
 	S1 = NEW_int(set_size);
 	S2 = NEW_int(set_size);
-	Orbiter->Int_vec->copy(set1, S1, set_size);
-	Orbiter->Int_vec->copy(set2, S2, set_size);
+	Int_vec_copy(set1, S1, set_size);
+	Int_vec_copy(set2, S2, set_size);
 	int_vec_heapsort(S1, set_size);
 	int_vec_heapsort(S2, set_size);
 	for (i = 0; i < set_size; i++) {
@@ -524,8 +524,8 @@ int sorting::test_if_sets_are_disjoint(long int *set1, int sz1, long int *set2, 
 
 	S1 = NEW_lint(sz1);
 	S2 = NEW_lint(sz2);
-	Orbiter->Lint_vec->copy(set1, S1, sz1);
-	Orbiter->Lint_vec->copy(set2, S2, sz2);
+	Lint_vec_copy(set1, S1, sz1);
+	Lint_vec_copy(set2, S2, sz2);
 	lint_vec_heapsort(S1, sz1);
 	lint_vec_heapsort(S2, sz2);
 	for (i = 0; i < sz1; i++) {
@@ -623,7 +623,7 @@ void sorting::rearrange_subset(int n, int k,
 		}
 	if (f_v) {
 		cout << "rearrange_subset ";
-		Orbiter->Int_vec->print(cout, rearranged_set, n);
+		Int_vec_print(cout, rearranged_set, n);
 		cout << endl;
 #if 0
 		cout << "rearrange_subset subset=";
@@ -655,7 +655,7 @@ void sorting::rearrange_subset_lint(int n, int k,
 		}
 	if (f_v) {
 		cout << "rearrange_subset ";
-		Orbiter->Lint_vec->print(cout, rearranged_set, n);
+		Lint_vec_print(cout, rearranged_set, n);
 		cout << endl;
 		}
 }
@@ -678,7 +678,7 @@ void sorting::rearrange_subset_lint_all(int n, int k,
 		}
 	if (f_v) {
 		cout << "rearrange_subset ";
-		Orbiter->Lint_vec->print(cout, rearranged_set, n);
+		Lint_vec_print(cout, rearranged_set, n);
 		cout << endl;
 		}
 }
@@ -2395,7 +2395,7 @@ int sorting::schreier_vector_determine_depth_recursion(
 					"fatal: did not find pt" << endl;
 			cout << "pt = " << pt << endl;
 			cout << "vector of length " << n << endl;
-			Orbiter->Int_vec->print(cout, pts, n);
+			Int_vec_print(cout, pts, n);
 			cout << endl;
 			cout << "i : pts[i] : prev[i] : depth[i] : ancestor[i]" << endl;
 			for (i = 0; i < n; i++) {
@@ -2621,8 +2621,8 @@ int sorting::compare_sets(int *set1, int *set2, int sz1, int sz2)
 
 	S1 = NEW_int(sz1);
 	S2 = NEW_int(sz2);
-	Orbiter->Int_vec->copy(set1, S1, sz1);
-	Orbiter->Int_vec->copy(set2, S2, sz2);
+	Int_vec_copy(set1, S1, sz1);
+	Int_vec_copy(set2, S2, sz2);
 	int_vec_heapsort(S1, sz1);
 	int_vec_heapsort(S2, sz2);
 	for ( u = 0; u < sz1 + sz2; u++) {
@@ -2664,8 +2664,8 @@ int sorting::compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2)
 
 	S1 = NEW_lint(sz1);
 	S2 = NEW_lint(sz2);
-	Orbiter->Lint_vec->copy(set1, S1, sz1);
-	Orbiter->Lint_vec->copy(set2, S2, sz2);
+	Lint_vec_copy(set1, S1, sz1);
+	Lint_vec_copy(set2, S2, sz2);
 	lint_vec_heapsort(S1, sz1);
 	lint_vec_heapsort(S2, sz2);
 	for (u = 0; u < sz1 + sz2; u++) {

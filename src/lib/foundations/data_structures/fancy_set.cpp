@@ -69,7 +69,7 @@ void fancy_set::init_with_set(int n, int k, int *subset, int verbose_level)
 	if (f_v) {
 		cout << "fancy_set::init_with_set n=" << n << " k=" << k << endl;
 		cout << "set=";
-		Orbiter->Int_vec->set_print(cout, subset, k);
+		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, subset, k);
 		cout << endl;
 		}
 	init(n, verbose_level - 1);
@@ -310,7 +310,7 @@ void fancy_set::save(std::string &fname, int verbose_level)
 	if (f_v) {
 		cout << "fancy_set::save" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.write_set_to_file_lint(fname,
 			set, k, verbose_level);

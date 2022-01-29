@@ -142,7 +142,7 @@ void classification_of_objects::classify_objects_using_nauty(
 	int f_v = (verbose_level >= 1);
 	int input_idx;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "classification_of_objects::classify_objects_using_nauty" << endl;
@@ -271,7 +271,7 @@ void classification_of_objects::classify_objects_using_nauty(
 	CB->finalize(verbose_level); // computes C_type_of and perm
 
 
-	T_Ago = NEW_OBJECT(tally);
+	T_Ago = NEW_OBJECT(data_structures::tally);
 	T_Ago->init_lint(Ago_transversal, nb_orbits, FALSE, 0);
 
 	if (f_v) {
@@ -326,7 +326,7 @@ void classification_of_objects::save_automorphism_group_order(int verbose_level)
 		cout << "classification_of_objects::save_automorphism_group_order " << endl;
 	}
 	string ago_fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
 	if (Descr->f_label) {
@@ -355,7 +355,7 @@ void classification_of_objects::save_transversal(int verbose_level)
 		cout << "classification_of_objects::save_transversal " << endl;
 	}
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
 	if (Descr->f_label) {
@@ -785,7 +785,7 @@ void classification_of_objects::report_summary_of_orbits(
 	if (f_v) {
 		cout << "classification_of_objects::report_summary_of_orbits" << endl;
 	}
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int i, j;
 
 
@@ -809,7 +809,7 @@ void classification_of_objects::report_summary_of_orbits(
 	col_part_len[0] = width;
 
 	Table = NEW_int(CB->nb_types * width);
-	Orbiter->Int_vec->zero(Table, CB->nb_types * width);
+	Int_vec_zero(Table, CB->nb_types * width);
 
 	row_labels = NEW_int(CB->nb_types);
 	col_labels = NEW_int(width);
@@ -878,7 +878,7 @@ void classification_of_objects::report_all_isomorphism_types(
 	}
 	int i;
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	for (i = 0; i < CB->nb_types; i++) {
 
@@ -946,7 +946,7 @@ void classification_of_objects::report_isomorphism_type(
 		cout << "classification_of_objects::report_isomorphism_type i=" << i << endl;
 	}
 	int j;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];

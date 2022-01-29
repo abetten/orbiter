@@ -202,7 +202,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_split) {
 		cout << "splitting by file " << Descr->split_by_file << endl;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		long int *Split;
 		int m, n;
 		int a, c;
@@ -241,7 +241,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_split_by_starters) {
 		cout << "splitting by file " << Descr->split_by_starters_fname_reps
 				<< " column " << Descr->split_by_starters_col_label << endl;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		data_structures::set_of_sets *Reps;
 		//string_tools ST;
 		int c;
@@ -288,7 +288,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		long int *set;
 		int sz;
 
-		Orbiter->Lint_vec->scan(Descr->split_by_clique_set, set, sz);
+		Lint_vec_scan(Descr->split_by_clique_set, set, sz);
 
 		graph_theory::colored_graph *Subgraph;
 		data_structures::fancy_set *color_subset;
@@ -326,7 +326,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_save) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname.assign(CG->label);
@@ -356,7 +356,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "graph_theoretic_activity::perform_activity f_automorphism_group" << endl;
 		}
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname.assign(CG->label);
@@ -391,7 +391,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 			{
 				ofstream ost(fname_report);
-				latex_interface L;
+				orbiter_kernel_system::latex_interface L;
 
 				L.head(ost,
 						FALSE /* f_book*/,
@@ -422,7 +422,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 				L.foot(ost);
 
 			}
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 
 			cout << "written file " << fname_report << " of size "
 					<< Fio.file_size(fname_report) << endl;
@@ -502,7 +502,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 			{
 				ofstream ost(fname);
-				latex_interface Li;
+				orbiter_kernel_system::latex_interface Li;
 
 				Li.head(ost,
 						FALSE /* f_book*/,
@@ -551,7 +551,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 				Li.foot(ost);
 
 			}
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 
 			cout << "graph_theoretic_activity::perform_activity written file " << fname << " of size "
 					<< Fio.file_size(fname) << endl;
@@ -575,7 +575,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		CG->draw_on_circle(
 				fname,
-				Orbiter->draw_options,
+				orbiter_kernel_system::Orbiter->draw_options,
 				verbose_level);
 	}
 

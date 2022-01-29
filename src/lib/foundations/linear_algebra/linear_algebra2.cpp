@@ -52,7 +52,7 @@ void linear_algebra::get_coefficients_in_linear_combination(
 
 	if (f_v) {
 		cout << "linear_algebra::get_coefficients_in_linear_combination before Gauss_int" << endl;
-		Orbiter->Int_vec->matrix_print(M, n, k + 1);
+		Int_matrix_print(M, n, k + 1);
 	}
 
 	Gauss_int(M, FALSE /* f_special */,
@@ -63,7 +63,7 @@ void linear_algebra::get_coefficients_in_linear_combination(
 
 	if (f_v) {
 		cout << "linear_algebra::get_coefficients_in_linear_combination after Gauss_int" << endl;
-		Orbiter->Int_vec->matrix_print(M, n, k + 1);
+		Int_matrix_print(M, n, k + 1);
 	}
 
 	for (i = 0; i < k; i++) {
@@ -95,13 +95,13 @@ void linear_algebra::reduce_mod_subspace_and_get_coefficient_vector(
 	}
 	if (f_vv) {
 		cout << "linear_algebra::reduce_mod_subspace_and_get_coefficient_vector: v=";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	if (f_vv) {
 		cout << "linear_algebra::reduce_mod_subspace_and_get_coefficient_vector "
 				"subspace basis:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, basis, k, len, len, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(cout, basis, k, len, len, F->log10_of_q);
 	}
 	for (i = 0; i < k; i++) {
 		idx = base_cols[i];
@@ -110,7 +110,7 @@ void linear_algebra::reduce_mod_subspace_and_get_coefficient_vector(
 					"pivot entry is not one" << endl;
 			cout << "i=" << i << endl;
 			cout << "idx=" << idx << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout, basis,
+			Int_vec_print_integer_matrix_width(cout, basis,
 					k, len, len, F->log10_of_q);
 			exit(1);
 		}
@@ -127,10 +127,10 @@ void linear_algebra::reduce_mod_subspace_and_get_coefficient_vector(
 	if (f_vv) {
 		cout << "linear_algebra::reduce_mod_subspace_and_get_coefficient_vector "
 				"after: v=";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 		cout << "coefficients=";
-		Orbiter->Int_vec->print(cout, coefficients, k);
+		Int_vec_print(cout, coefficients, k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -151,12 +151,12 @@ void linear_algebra::reduce_mod_subspace(int k,
 	}
 	if (f_vv) {
 		cout << "linear_algebra::reduce_mod_subspace before: v=";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	if (f_vv) {
 		cout << "linear_algebra::reduce_mod_subspace subspace basis:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, basis, k,
+		Int_vec_print_integer_matrix_width(cout, basis, k,
 				len, len, F->log10_of_q);
 	}
 	for (i = 0; i < k; i++) {
@@ -172,7 +172,7 @@ void linear_algebra::reduce_mod_subspace(int k,
 	}
 	if (f_vv) {
 		cout << "linear_algebra::reduce_mod_subspace after: v=";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -193,7 +193,7 @@ int linear_algebra::is_contained_in_subspace(int k,
 	}
 	if (f_vv) {
 		cout << "linear_algebra::is_contained_in_subspace testing v=";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	reduce_mod_subspace(k, len, basis,
@@ -231,8 +231,8 @@ int linear_algebra::is_subspace(int d, int dim_U,
 	Basis = NEW_int((dim_V + 1) * d);
 	for (h = 0; h < dim_U; h++) {
 
-		Orbiter->Int_vec->copy(Basis_V, Basis, dim_V * d);
-		Orbiter->Int_vec->copy(Basis_U + h * d, Basis + dim_V * d, d);
+		Int_vec_copy(Basis_V, Basis, dim_V * d);
+		Int_vec_copy(Basis_U + h * d, Basis + dim_V * d, d);
 		rk = Gauss_easy(Basis, dim_V + 1, d);
 		if (rk > dim_V) {
 			ret = FALSE;
@@ -326,9 +326,9 @@ int linear_algebra::dependency(int d,
 	}
 	if (f_vv) {
 		cout << "linear_algebra::dependency A=" << endl;
-		Orbiter->Int_vec->matrix_print(A, m, d);
+		Int_matrix_print(A, m, d);
 		cout << "v = ";
-		Orbiter->Int_vec->print(cout, v, d);
+		Int_vec_print(cout, v, d);
 		cout << endl;
 	}
 	// fill the m-th row of matrix A with v^rho:
@@ -338,9 +338,9 @@ int linear_algebra::dependency(int d,
 	if (f_vv) {
 		cout << "linear_algebra::dependency "
 				"after putting in row " << m << " A=" << endl;
-		Orbiter->Int_vec->matrix_print(A, m + 1, d);
+		Int_matrix_print(A, m + 1, d);
 		cout << "rho = ";
-		Orbiter->Int_vec->print(cout, rho, d);
+		Int_vec_print(cout, rho, d);
 		cout << endl;
 	}
 	for (k = 0; k < m; k++) {
@@ -349,7 +349,7 @@ int linear_algebra::dependency(int d,
 			cout << "linear_algebra::dependency "
 					"k=" << k << " / m=" << m << endl;
 			cout << "finite_field::dependency A=" << endl;
-			Orbiter->Int_vec->matrix_print(A, m + 1, d);
+			Int_matrix_print(A, m + 1, d);
 		}
 
 		for (j = k + 1; j < d; j++) {
@@ -384,7 +384,7 @@ int linear_algebra::dependency(int d,
 						"k=" << k << " / m=" << m
 						<< ", j=" << j << " / " << d << " done" << endl;
 				cout << "linear_algebra::dependency A=" << endl;
-				Orbiter->Int_vec->matrix_print(A, m + 1, d);
+				Int_matrix_print(A, m + 1, d);
 			}
 
 		} // next j
@@ -393,7 +393,7 @@ int linear_algebra::dependency(int d,
 			cout << "linear_algebra::dependency "
 					"k=" << k << " / m=" << m << " done" << endl;
 			cout << "finite_field::dependency A=" << endl;
-			Orbiter->Int_vec->matrix_print(A, m + 1, d);
+			Int_matrix_print(A, m + 1, d);
 		}
 
 	} // next k
@@ -401,9 +401,9 @@ int linear_algebra::dependency(int d,
 	if (f_vv) {
 		cout << "linear_algebra::dependency "
 				"m=" << m << " after reapply, A=" << endl;
-		Orbiter->Int_vec->matrix_print(A, m + 1, d);
+		Int_matrix_print(A, m + 1, d);
 		cout << "rho = ";
-		Orbiter->Int_vec->print(cout, rho, d);
+		Int_vec_print(cout, rho, d);
 		cout << endl;
 	}
 
@@ -452,9 +452,9 @@ int linear_algebra::dependency(int d,
 	if (f_vv) {
 		cout << "linear_algebra::dependency m=" << m
 				<< " after pivoting, A=" << endl;
-		Orbiter->Int_vec->matrix_print(A, m + 1, d);
+		Int_matrix_print(A, m + 1, d);
 		cout << "rho = ";
-		Orbiter->Int_vec->print(cout, rho, d);
+		Int_vec_print(cout, rho, d);
 		cout << endl;
 	}
 
@@ -490,7 +490,7 @@ void linear_algebra::order_ideal_generator(int d,
 	rho = NEW_int(deg);
 
 	// make v the idx-th unit vector:
-	Orbiter->Int_vec->zero(v, deg);
+	Int_vec_zero(v, deg);
 	v[idx] = 1;
 
 	// make rho the identity permutation:
@@ -516,16 +516,16 @@ void linear_algebra::order_ideal_generator(int d,
 
 		if (f_v) {
 			cout << "linear_algebra::order_ideal_generator v=";
-			Orbiter->Int_vec->print(cout, v, deg);
+			Int_vec_print(cout, v, deg);
 			cout << endl;
 		}
 		mult_vector_from_the_right(Frobenius, v, v1, deg, deg);
 		if (f_v) {
 			cout << "linear_algebra::order_ideal_generator v1=";
-			Orbiter->Int_vec->print(cout, v1, deg);
+			Int_vec_print(cout, v1, deg);
 			cout << endl;
 		}
-		Orbiter->Int_vec->copy(v1, v, deg);
+		Int_vec_copy(v1, v, deg);
 
 		m++;
 		if (f_v) {
@@ -578,7 +578,7 @@ void linear_algebra::order_ideal_generator(int d,
 				"after preparing mue:" << endl;
 		cout << "mue_deg = " << mue_deg << endl;
 		cout << "mue = ";
-		Orbiter->Int_vec->print(cout, mue, mue_deg + 1);
+		Int_vec_print(cout, mue, mue_deg + 1);
 		cout << endl;
 	}
 
@@ -602,7 +602,7 @@ void linear_algebra::span_cyclic_module(int *A,
 	}
 	w1 = NEW_int(n);
 	w2 = NEW_int(n);
-	Orbiter->Int_vec->copy(v, w1, n);
+	Int_vec_copy(v, w1, n);
 	for (j = 0; j < n; j++) {
 
 		// put w1 in the j-th column of A:
@@ -610,7 +610,7 @@ void linear_algebra::span_cyclic_module(int *A,
 			A[i * n + j] = w1[i];
 		}
 		mult_vector_from_the_right(Mtx, w1, w2, n, n);
-		Orbiter->Int_vec->copy(w2, w1, n);
+		Int_vec_copy(w2, w1, n);
 	}
 
 	FREE_int(w1);
@@ -629,7 +629,7 @@ void linear_algebra::random_invertible_matrix(int *M,
 	int i, qk, r, rk;
 	number_theory::number_theory_domain NT;
 	geometry::geometry_global Gg;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "linear_algebra::random_invertible_matrix" << endl;
@@ -647,10 +647,10 @@ void linear_algebra::random_invertible_matrix(int *M,
 			}
 			Gg.AG_element_unrank(F->q, M + i * k, 1, k, r);
 			if (f_vv) {
-				Orbiter->Int_vec->matrix_print(M, i + 1, k);
+				Int_matrix_print(M, i + 1, k);
 			}
 
-			Orbiter->Int_vec->copy(M, N, (i + 1) * k);
+			Int_vec_copy(M, N, (i + 1) * k);
 			rk = Gauss_easy(N, i + 1, k);
 			if (f_vv) {
 				cout << "rk=" << rk << endl;
@@ -666,7 +666,7 @@ void linear_algebra::random_invertible_matrix(int *M,
 	if (f_v) {
 		cout << "linear_algebra::random_invertible_matrix "
 				"Random invertible matrix:" << endl;
-		Orbiter->Int_vec->matrix_print(M, k, k);
+		Int_matrix_print(M, k, k);
 	}
 	FREE_int(N);
 }
@@ -687,10 +687,10 @@ void linear_algebra::adjust_basis(int *V, int *U,
 	base_cols = NEW_int(n);
 	M = NEW_int((k + d) * n);
 
-	Orbiter->Int_vec->copy(U, M, d * n);
+	Int_vec_copy(U, M, d * n);
 	if (f_v) {
 		cout << "linear_algebra::adjust_basis before Gauss step, U=" << endl;
-		Orbiter->Int_vec->matrix_print(M, d, n);
+		Int_matrix_print(M, d, n);
 	}
 
 	if (Gauss_simple(M, d, n, base_cols,
@@ -701,14 +701,14 @@ void linear_algebra::adjust_basis(int *V, int *U,
 	}
 	if (f_v) {
 		cout << "linear_algebra::adjust_basis after Gauss step, M=" << endl;
-		Orbiter->Int_vec->matrix_print(M, d, n);
+		Int_matrix_print(M, d, n);
 	}
 
 	ii = 0;
 	for (i = 0; i < k; i++) {
 
 		// take the i-th vector of V:
-		Orbiter->Int_vec->copy(V + i * n, M + (d + ii) * n, n);
+		Int_vec_copy(V + i * n, M + (d + ii) * n, n);
 
 
 		// and reduce it modulo the basis of the d-dimensional subspace U:
@@ -717,7 +717,7 @@ void linear_algebra::adjust_basis(int *V, int *U,
 			b = base_cols[j];
 			if (f_v) {
 				cout << "linear_algebra::adjust_basis before Gauss step:" << endl;
-				Orbiter->Int_vec->matrix_print(M, d + ii + 1, n);
+				Int_matrix_print(M, d + ii + 1, n);
 			}
 			Gauss_step(M + j * n, M + (d + ii) * n,
 					n, b, 0 /* verbose_level */);
@@ -726,7 +726,7 @@ void linear_algebra::adjust_basis(int *V, int *U,
 			// the first argument was M + b * n but should be M + j * n
 			if (f_v) {
 				cout << "linear_algebra::adjust_basis after Gauss step:" << endl;
-				Orbiter->Int_vec->matrix_print(M, d + ii + 1, n);
+				Int_matrix_print(M, d + ii + 1, n);
 			}
 		}
 		if (Sorting.int_vec_is_zero(M + (d + ii) * n, n)) {
@@ -751,14 +751,14 @@ void linear_algebra::adjust_basis(int *V, int *U,
 		cout << "linear_algebra::adjust_basis ii = " << ii << endl;
 		cout << "linear_algebra::adjust_basis k = " << k << endl;
 		cout << "V=" << endl;
-		Orbiter->Int_vec->matrix_print(V, k, n);
+		Int_matrix_print(V, k, n);
 		cout << endl;
 		cout << "U=" << endl;
-		Orbiter->Int_vec->matrix_print(V, d, n);
+		Int_matrix_print(V, d, n);
 		cout << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->copy(M, V, k * n);
+	Int_vec_copy(M, V, k * n);
 
 
 	FREE_int(M);
@@ -829,7 +829,7 @@ void linear_algebra::choose_vector_in_here_but_not_in_here_column_spaces(
 				"column_spaces d + ii != k" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->copy(Gen + d * n, v, n);
+	Int_vec_copy(Gen + d * n, v, n);
 
 
 	FREE_int(Gen);
@@ -939,7 +939,7 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 
 		if (f_vv) {
 			cout << "coset=" << coset << " w=";
-			Orbiter->Int_vec->print(cout, w, k);
+			Int_vec_print(cout, w, k);
 			cout << endl;
 		}
 
@@ -953,10 +953,10 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 				Gen[rk * n + j] = F->add(Gen[rk * n + j], F->mult(a, V->s_ij(j, i)));
 			}
 		}
-		Orbiter->Int_vec->copy(Gen + rk * n, z, n);
+		Int_vec_copy(Gen + rk * n, z, n);
 		if (f_vv) {
 			cout << "before reduce=";
-			Orbiter->Int_vec->print(cout, Gen + rk * n, n);
+			Int_vec_print(cout, Gen + rk * n, n);
 			cout << endl;
 		}
 
@@ -968,7 +968,7 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 
 		if (f_vv) {
 			cout << "after reduce=";
-			Orbiter->Int_vec->print(cout, Gen + rk * n, n);
+			Int_vec_print(cout, Gen + rk * n, n);
 			cout << endl;
 		}
 
@@ -981,7 +981,7 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 
 	} // while
 
-	Orbiter->Int_vec->copy(z, v, n);
+	Int_vec_copy(z, v, n);
 
 
 	FREE_int(Gen);
@@ -1084,7 +1084,7 @@ void linear_algebra::Borel_decomposition(int n, int *M,
 	if (f_v) {
 		cout << "linear_algebra::Borel_decomposition input matrix:" << endl;
 		cout << "M:" << endl;
-		Orbiter->Int_vec->matrix_print(M, n, n);
+		Int_matrix_print(M, n, n);
 	}
 
 	identity_matrix(B1, n);
@@ -1144,7 +1144,7 @@ void linear_algebra::Borel_decomposition(int n, int *M,
 					cout << "linear_algebra::Borel_decomposition after going "
 							"down in column " << j << endl;
 					cout << "M:" << endl;
-					Orbiter->Int_vec->matrix_print(M, n, n);
+					Int_matrix_print(M, n, n);
 				}
 
 				// now we go to the left from the pivot:
@@ -1174,7 +1174,7 @@ void linear_algebra::Borel_decomposition(int n, int *M,
 					cout << "linear_algebra::Borel_decomposition after going "
 							"across to the left:" << endl;
 					cout << "M:" << endl;
-					Orbiter->Int_vec->matrix_print(M, n, n);
+					Int_matrix_print(M, n, n);
 				}
 				break;
 			}
@@ -1205,7 +1205,7 @@ void linear_algebra::map_to_standard_frame(int d, int *A,
 
 	if (f_v) {
 		cout << "A=" << endl;
-		Orbiter->Int_vec->matrix_print(A, d + 1, d);
+		Int_matrix_print(A, d + 1, d);
 	}
 
 	n = d + 1;
@@ -1218,12 +1218,12 @@ void linear_algebra::map_to_standard_frame(int d, int *A,
 	}
 	if (f_v) {
 		cout << "B before=" << endl;
-		Orbiter->Int_vec->matrix_print(B, d, n);
+		Int_matrix_print(B, d, n);
 	}
 	RREF_and_kernel(n, d, B, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "B after=" << endl;
-		Orbiter->Int_vec->matrix_print(B, n, n);
+		Int_matrix_print(B, n, n);
 	}
 	xd = B[d * n + d - 1];
 	x = F->negate(F->inverse(xd));
@@ -1232,7 +1232,7 @@ void linear_algebra::map_to_standard_frame(int d, int *A,
 	}
 	if (f_v) {
 		cout << "last row of B after scaling : " << endl;
-		Orbiter->Int_vec->matrix_print(B + d * n, 1, n);
+		Int_matrix_print(B + d * n, 1, n);
 	}
 	for (i = 0; i < d; i++) {
 		for (j = 0; j < d; j++) {
@@ -1241,7 +1241,7 @@ void linear_algebra::map_to_standard_frame(int d, int *A,
 	}
 	if (f_v) {
 		cout << "A2=" << endl;
-		Orbiter->Int_vec->matrix_print(A2, d, d);
+		Int_matrix_print(A2, d, d);
 	}
 	matrix_inverse(A2, Transform, d, 0 /* verbose_level */);
 
@@ -1273,26 +1273,26 @@ void linear_algebra::map_frame_to_frame_with_permutation(int d,
 
 	if (f_v) {
 		cout << "permutation: ";
-		Orbiter->Int_vec->print(cout, perm, d + 1);
+		Int_vec_print(cout, perm, d + 1);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "A=" << endl;
-		Orbiter->Int_vec->matrix_print(A, d + 1, d);
+		Int_matrix_print(A, d + 1, d);
 	}
 	if (f_v) {
 		cout << "B=" << endl;
-		Orbiter->Int_vec->matrix_print(B, d + 1, d);
+		Int_matrix_print(B, d + 1, d);
 	}
 
 	for (i = 0; i < d + 1; i++) {
 		j = perm[i];
-		Orbiter->Int_vec->copy(A + j * d, A1 + i * d, d);
+		Int_vec_copy(A + j * d, A1 + i * d, d);
 	}
 
 	if (f_v) {
 		cout << "A1=" << endl;
-		Orbiter->Int_vec->matrix_print(A1, d + 1, d);
+		Int_matrix_print(A1, d + 1, d);
 	}
 
 
@@ -1302,7 +1302,7 @@ void linear_algebra::map_frame_to_frame_with_permutation(int d,
 	map_to_standard_frame(d, A1, T1, verbose_level);
 	if (f_v) {
 		cout << "T1=" << endl;
-		Orbiter->Int_vec->matrix_print(T1, d, d);
+		Int_matrix_print(T1, d, d);
 	}
 	if (f_v) {
 		cout << "mapping B to standard frame:" << endl;
@@ -1310,17 +1310,17 @@ void linear_algebra::map_frame_to_frame_with_permutation(int d,
 	map_to_standard_frame(d, B, T2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "T2=" << endl;
-		Orbiter->Int_vec->matrix_print(T2, d, d);
+		Int_matrix_print(T2, d, d);
 	}
 	matrix_inverse(T2, T3, d, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "T3=" << endl;
-		Orbiter->Int_vec->matrix_print(T3, d, d);
+		Int_matrix_print(T3, d, d);
 	}
 	mult_matrix_matrix(T1, T3, Transform, d, d, d, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Transform=" << endl;
-		Orbiter->Int_vec->matrix_print(Transform, d, d);
+		Int_matrix_print(Transform, d, d);
 	}
 
 	FREE_int(T1);
@@ -1368,7 +1368,7 @@ void linear_algebra::map_points_to_points_projectively(int d, int k,
 	subset = NEW_int(d + k + 1);
 	v = NEW_int(d);
 
-	Orbiter->Int_vec->copy(B, B1, (d + k + 1) * d);
+	Int_vec_copy(B, B1, (d + k + 1) * d);
 	for (i = 0; i < d + k + 1; i++) {
 		//PG_element_normalize(*this, B1 + i * d, 1, d);
 		F->PG_element_rank_modified(B1 + i * d, 1, d, a);
@@ -1377,7 +1377,7 @@ void linear_algebra::map_points_to_points_projectively(int d, int k,
 	Sorting.int_vec_heapsort(B_set, d + k + 1);
 	if (f_v) {
 		cout << "B_set = ";
-		Orbiter->Int_vec->print(cout, B_set, d + k + 1);
+		Int_vec_print(cout, B_set, d + k + 1);
 		cout << endl;
 	}
 
@@ -1390,20 +1390,20 @@ void linear_algebra::map_points_to_points_projectively(int d, int k,
 
 		if (f_v) {
 			cout << "subset " << h << " / " << nCk << " is ";
-			Orbiter->Int_vec->print(cout, subset, d + 1);
+			Int_vec_print(cout, subset, d + 1);
 			cout << ", the complement is ";
-			Orbiter->Int_vec->print(cout, subset + d + 1, k);
+			Int_vec_print(cout, subset + d + 1, k);
 			cout << endl;
 		}
 
 
 		for (i = 0; i < d + k + 1; i++) {
 			j = subset[i];
-			Orbiter->Int_vec->copy(A + j * d, A1 + i * d, d);
+			Int_vec_copy(A + j * d, A1 + i * d, d);
 		}
 		if (f_v) {
 			cout << "A1=" << endl;
-			Orbiter->Int_vec->matrix_print(A1, d + k + 1, d);
+			Int_matrix_print(A1, d + k + 1, d);
 		}
 
 		cnt = 0;
@@ -1411,13 +1411,13 @@ void linear_algebra::map_points_to_points_projectively(int d, int k,
 		while (TRUE) {
 			if (f_v) {
 				cout << "lehmercode: ";
-				Orbiter->Int_vec->print(cout, lehmercode, d + 1);
+				Int_vec_print(cout, lehmercode, d + 1);
 				cout << endl;
 			}
 			Combi.lehmercode_to_permutation(d + 1, lehmercode, perm);
 			if (f_v) {
 				cout << "permutation: ";
-				Orbiter->Int_vec->print(cout, perm, d + 1);
+				Int_vec_print(cout, perm, d + 1);
 				cout << endl;
 			}
 			map_frame_to_frame_with_permutation(d, A1, perm,
@@ -1430,13 +1430,13 @@ void linear_algebra::map_points_to_points_projectively(int d, int k,
 			}
 			if (f_v) {
 				cout << "image_set before sorting: ";
-				Orbiter->Int_vec->print(cout, image_set, d + k + 1);
+				Int_vec_print(cout, image_set, d + k + 1);
 				cout << endl;
 			}
 			Sorting.int_vec_heapsort(image_set, d + k + 1);
 			if (f_v) {
 				cout << "image_set after sorting: ";
-				Orbiter->Int_vec->print(cout, image_set, d + k + 1);
+				Int_vec_print(cout, image_set, d + k + 1);
 				cout << endl;
 			}
 
@@ -1485,14 +1485,14 @@ int linear_algebra::BallChowdhury_matrix_entry(int *Coord,
 	d = 1;
 	for (u = 0; u < sz_U; u++) {
 		a = U[u];
-		Orbiter->Int_vec->copy(Coord + a * k, T + (k - 1) * k, k);
+		Int_vec_copy(Coord + a * k, T + (k - 1) * k, k);
 		for (i = 0; i < k - 1; i++) {
 			a = C[i];
-			Orbiter->Int_vec->copy(Coord + a * k, T + i * k, k);
+			Int_vec_copy(Coord + a * k, T + i * k, k);
 		}
 		if (f_vv) {
 			cout << "u=" << u << " / " << sz_U << " the matrix is:" << endl;
-			Orbiter->Int_vec->matrix_print(T, k, k);
+			Int_matrix_print(T, k, k);
 		}
 		d1 = matrix_determinant(T, k, 0 /* verbose_level */);
 		if (f_vv) {
@@ -1535,7 +1535,7 @@ void linear_algebra::cubic_surface_family_24_generators(
 		group_order *= F->q - 1;
 	}
 	gens = NEW_int(nb_gens * data_size);
-	Orbiter->Int_vec->zero(gens, nb_gens * data_size);
+	Int_vec_zero(gens, nb_gens * data_size);
 		// this sets the field automorphism index
 		// to zero if we are semilinear
 
@@ -1613,14 +1613,14 @@ void linear_algebra::cubic_surface_family_G13_generators(
 	group_order = 192;
 
 	gens = NEW_int(nb_gens * data_size);
-	Orbiter->Int_vec->zero(gens, nb_gens * data_size);
+	Int_vec_zero(gens, nb_gens * data_size);
 
 	int h, i, j, c, m, l;
 	int *v;
 	geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
-	m = Orbiter->Int_vec->maximum(data, nb_gens * data_size);
+	m = orbiter_kernel_system::Orbiter->Int_vec->maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
 
 	v = NEW_int(l);
@@ -1628,7 +1628,7 @@ void linear_algebra::cubic_surface_family_G13_generators(
 
 	for (h = 0; h < nb_gens; h++) {
 		for (i = 0; i < 16; i++) {
-			Orbiter->Int_vec->zero(v, l);
+			Int_vec_zero(v, l);
 			Gg.AG_element_unrank(F->p, v, 1, l, data[h * 16 + i]);
 			c = 0;
 			for (j = 0; j < l; j++) {
@@ -1647,7 +1647,7 @@ void linear_algebra::cubic_surface_family_G13_generators(
 		cout << "linear_algebra::cubic_surface_family_G13_generators" << endl;
 		for (h = 0; h < nb_gens; h++) {
 			cout << "generator " << h << ":" << endl;
-			Orbiter->Int_vec->matrix_print(gens + h * data_size, 4, 4);
+			Int_matrix_print(gens + h * data_size, 4, 4);
 		}
 	}
 	if (f_v) {
@@ -1735,14 +1735,14 @@ void linear_algebra::cubic_surface_family_F13_generators(
 	group_order = 192;
 
 	gens = NEW_int(nb_gens * data_size);
-	Orbiter->Int_vec->zero(gens, nb_gens * data_size);
+	Int_vec_zero(gens, nb_gens * data_size);
 
 	int h, i, j, c, m, l;
 	int *v;
 	geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
-	m = Orbiter->Int_vec->maximum(data, nb_gens * data_size);
+	m = orbiter_kernel_system::Orbiter->Int_vec->maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
 
 	v = NEW_int(l);
@@ -1750,7 +1750,7 @@ void linear_algebra::cubic_surface_family_F13_generators(
 
 	for (h = 0; h < nb_gens; h++) {
 		for (i = 0; i < 16; i++) {
-			Orbiter->Int_vec->zero(v, l);
+			Int_vec_zero(v, l);
 			Gg.AG_element_unrank(F->p, v, 1, l, data[h * 16 + i]);
 			c = 0;
 			for (j = 0; j < l; j++) {
@@ -1769,7 +1769,7 @@ void linear_algebra::cubic_surface_family_F13_generators(
 		cout << "linear_algebra::cubic_surface_family_F13_generators" << endl;
 		for (h = 0; h < nb_gens; h++) {
 			cout << "generator " << h << ":" << endl;
-			Orbiter->Int_vec->matrix_print(gens + h * data_size, 4, 4);
+			Int_matrix_print(gens + h * data_size, 4, 4);
 		}
 	}
 	if (f_v) {
@@ -1836,12 +1836,12 @@ void linear_algebra::make_Fourier_matrices(
 	if (f_v) {
 		for (h = k; h >= 0; h--) {
 			cout << "A_" << N[h] << ":" << endl;
-			Orbiter->Int_vec->matrix_print(A[h], N[h], N[h]);
+			Int_matrix_print(A[h], N[h], N[h]);
 		}
 
 		for (h = k; h >= 0; h--) {
 			cout << "Av_" << N[h] << ":" << endl;
-			Orbiter->Int_vec->matrix_print(Av[h], N[h], N[h]);
+			Int_matrix_print(Av[h], N[h], N[h]);
 		}
 	}
 	if (f_v) {

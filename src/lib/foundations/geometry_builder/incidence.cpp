@@ -179,7 +179,7 @@ void incidence::print_pairs(int v)
 			M[i1 * v + i2] = a;
 		}
 	}
-	Orbiter->Int_vec->matrix_print(M, v, v);
+	Int_matrix_print(M, v, v);
 	FREE_int(M);
 }
 

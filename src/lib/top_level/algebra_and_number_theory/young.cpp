@@ -256,7 +256,7 @@ void young::create_module(int *h_alpha,
 
 	if (FALSE) {
 		cout << "M1=" << endl;
-		Orbiter->Int_vec->matrix_print(M1, goi, sz);
+		Int_matrix_print(M1, goi, sz);
 		}
 
 	for (i = 0; i < goi * sz; i++) {
@@ -289,7 +289,7 @@ void young::create_module(int *h_alpha,
 
 	if (f_v) {
 		cout << "base_cols=" << endl;
-		Orbiter->Int_vec->print(cout, base_cols, rk);
+		Int_vec_print(cout, base_cols, rk);
 		cout << endl;
 		}
 
@@ -550,10 +550,10 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 
 	if (f_v) {
 		cout << "row_part: ";
-		Orbiter->Int_vec->print(cout, row_parts, l1);
+		Int_vec_print(cout, row_parts, l1);
 		cout << endl;
 		cout << "col_part: ";
-		Orbiter->Int_vec->print(cout, col_parts, l2);
+		Int_vec_print(cout, col_parts, l2);
 		cout << endl;
 		}
 
@@ -641,8 +641,8 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 		}
 
 
-	Orbiter->Int_vec->zero(elt1, goi);
-	Orbiter->Int_vec->zero(elt2, goi);
+	Int_vec_zero(elt1, goi);
+	Int_vec_zero(elt2, goi);
 
 
 	// Unrank the element in the row-stabilizer subgroup,
@@ -985,7 +985,7 @@ void young::group_ring_element_print(actions::action *A,
 	long int goi;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec->print(cout, elt, goi);
+	Int_vec_print(cout, elt, goi);
 }
 
 void young::group_ring_element_copy(actions::action *A,
@@ -995,7 +995,7 @@ void young::group_ring_element_copy(actions::action *A,
 	long int goi;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec->copy(elt_from, elt_to, goi);
+	Int_vec_copy(elt_from, elt_to, goi);
 }
 
 void young::group_ring_element_zero(actions::action *A,
@@ -1004,7 +1004,7 @@ void young::group_ring_element_zero(actions::action *A,
 	long int goi;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec->zero(elt, goi);
+	Int_vec_zero(elt, goi);
 }
 
 void young::group_ring_element_mult(actions::action *A,
@@ -1015,7 +1015,7 @@ void young::group_ring_element_mult(actions::action *A,
 	int a, b, c;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec->zero(elt3, goi);
+	Int_vec_zero(elt3, goi);
 	for (i = 0; i < goi; i++) {
 		a = elt1[i];
 		for (j = 0; j < goi; j++) {

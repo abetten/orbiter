@@ -151,7 +151,7 @@ static void matrix_group_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "matrix_group_element_image_of_low_level "
 				"computing image of ";
-		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
+		Int_vec_print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 		}
 	G.action_from_the_right_all_types(input,
@@ -160,9 +160,9 @@ static void matrix_group_element_image_of_low_level(action &A,
 
 	if (f_v) {
 		cout << "matrix_group_element_image_of_low_level ";
-		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
+		Int_vec_print(cout, input, A.low_level_point_size);
 		cout << " -> ";
-		Orbiter->Int_vec->print(cout, output, A.low_level_point_size);
+		Int_vec_print(cout, output, A.low_level_point_size);
 		cout << endl;
 		}
 }
@@ -642,7 +642,7 @@ static void matrix_group_print_point(action &A, long int a, ostream &ost)
 		cout << "matrix_group_print_point unknown group type" << endl;
 		exit(1);
 		}
-	Orbiter->Int_vec->print(ost, G->v1, G->n);
+	Int_vec_print(ost, G->v1, G->n);
 }
 
 static void matrix_group_unrank_point(action &A, long int rk, int *v)

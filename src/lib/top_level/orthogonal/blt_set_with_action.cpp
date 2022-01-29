@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 blt_set_with_action::blt_set_with_action()
@@ -56,7 +56,7 @@ void blt_set_with_action::freeself()
 
 void blt_set_with_action::init_set(
 		actions::action *A,
-		blt_set_domain *Blt_set_domain,
+		orthogonal_geometry::blt_set_domain *Blt_set_domain,
 		long int *set,
 		groups::strong_generators *Aut_gens, int verbose_level)
 {
@@ -69,7 +69,7 @@ void blt_set_with_action::init_set(
 	blt_set_with_action::Blt_set_domain = Blt_set_domain;
 	blt_set_with_action::set = set;
 	blt_set_with_action::Aut_gens = Aut_gens;
-	Inv = NEW_OBJECT(blt_set_invariants);
+	Inv = NEW_OBJECT(orthogonal_geometry::blt_set_invariants);
 	Inv->init(Blt_set_domain, set, verbose_level);
 
 	if (Aut_gens) {

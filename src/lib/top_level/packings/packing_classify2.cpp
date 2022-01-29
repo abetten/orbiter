@@ -25,7 +25,7 @@ void packing_classify::compute_klein_invariants(
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
 	int orbit, id;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_classify::compute_klein_invariants" << endl;
@@ -58,7 +58,7 @@ void packing_classify::compute_klein_invariants(
 		if (f_vv) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			Orbiter->Lint_vec->print(cout, the_packing, Iso->size);
+			Lint_vec_print(cout, the_packing, Iso->size);
 			cout << endl;
 		}
 		Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
@@ -66,7 +66,7 @@ void packing_classify::compute_klein_invariants(
 		if (f_v3) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ") list of lines:" << endl;
-			Orbiter->Lint_vec->matrix_print(list_of_lines,
+			Lint_matrix_print(list_of_lines,
 					size_of_packing, spread_size);
 			cout << endl;
 		}
@@ -154,7 +154,7 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 		for (i = 0; i < nb_planes; i++) {
 			cout << setw(3) << i << " : " << R[i]
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			Orbiter->Lint_vec->print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			Lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl;
 		}
 #endif
@@ -203,7 +203,7 @@ void packing_classify::report(isomorph *Iso, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	char fname[1000];
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_classify::report" << endl;
@@ -267,7 +267,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	}
 
 	
-	tally C_ago;
+	data_structures::tally C_ago;
 
 	
 	C_ago.init(inv->Ago_int, Iso->Reps->count, FALSE, 0);
@@ -299,7 +299,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	report_extra_stuff(Iso, ost, verbose_level);
 	
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	L.foot(ost);
 	if (inv) {
 		FREE_OBJECT(inv);
@@ -318,7 +318,7 @@ void packing_classify::report_title_page(
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	sprintf(title, "The Packings of PG$(%d,%d)$", (int)3, (int)q);
 	L.head(ost, f_book, f_title,
@@ -333,7 +333,8 @@ void packing_classify::report_title_page(
 
 void packing_classify::report_packings_by_ago(
 	isomorph *Iso, ostream &ost,
-	invariants_packing *inv, tally &C_ago, int verbose_level)
+	invariants_packing *inv,
+	data_structures::tally &C_ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -455,7 +456,7 @@ void packing_classify::report_isomorphism_type(
 	//ost << "\\\\" << endl;
 	ost << "\\bigskip" << endl;
 
-	tally C_iso;
+	data_structures::tally C_iso;
 
 	C_iso.init_lint(spread_iso_type, Iso->size, FALSE, 0);
 	ost << "Classification by isomorphism type of spreads: ";
@@ -533,7 +534,7 @@ void packing_classify::report_isomorphism_type(
 	//int_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
 	//cout << endl;
 
-	tally C;
+	data_structures::tally C;
 
 
 	C.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
@@ -567,7 +568,7 @@ void packing_classify::report_packing_as_table(
 	int orbit, invariants_packing *inv, long int *list_of_lines,
 	int verbose_level)
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 #if 1
 	{
@@ -664,7 +665,7 @@ void packing_classify::report_klein_invariants(
 {
 	//int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	// klein invariants:
 	{
@@ -871,7 +872,7 @@ void packing_classify::report_extra_stuff(
 		for (i = 0; i < nb_points; i++) {
 			P3->unrank_point(v, i);
 			ost << "$P_{" << i << "}=";
-			Orbiter->Int_vec->print_fully(ost, v, 4);
+			Int_vec_print_fully(ost, v, 4);
 			ost << "$\\\\" << endl;
 		}
 		ost << endl;
@@ -912,7 +913,7 @@ void packing_classify::report_extra_stuff(
 
 		for (u = 0; u < Spread_table_with_selection->Spread_tables->nb_spreads; u++) {
 			ost << "Spread " << u << " is $";
-			Orbiter->Lint_vec->print_fully(ost,
+			Lint_vec_print_fully(ost,
 					Spread_table_with_selection->Spread_tables->spread_table + u * spread_size, spread_size);
 			ost << "$ isomorphism type "
 					<< Spread_table_with_selection->Spread_tables->spread_iso_type[u] << "\\\\" << endl;

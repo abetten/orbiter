@@ -373,7 +373,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		F->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
-			Orbiter->Int_vec->print(ost, v, 4);
+			Int_vec_print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
 		}
@@ -657,7 +657,8 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 }
 
 
-void projective_space_with_action::map(formula *Formula,
+void projective_space_with_action::map(
+		expression_parser::formula *Formula,
 		std::string &evaluate_text,
 		int verbose_level)
 {
@@ -703,7 +704,7 @@ void projective_space_with_action::map(formula *Formula,
 	}
 
 
-	syntax_tree_node **Subtrees;
+	expression_parser::syntax_tree_node **Subtrees;
 	int nb_monomials;
 
 	if (f_v) {
@@ -740,7 +741,7 @@ void projective_space_with_action::map(formula *Formula,
 
 	if (f_v) {
 		cout << "projective_space_with_action::map coefficient vector:" << endl;
-		Orbiter->Int_vec->print(cout, Coefficient_vector, nb_monomials);
+		Int_vec_print(cout, Coefficient_vector, nb_monomials);
 		cout << endl;
 	}
 
@@ -778,7 +779,8 @@ void projective_space_with_action::map(formula *Formula,
 }
 
 
-void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
+void projective_space_with_action::analyze_del_Pezzo_surface(
+		expression_parser::formula *Formula,
 		std::string &evaluate_text,
 		int verbose_level)
 {
@@ -824,7 +826,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 	}
 
 
-	syntax_tree_node **Subtrees;
+	expression_parser::syntax_tree_node **Subtrees;
 	int nb_monomials;
 
 	if (f_v) {
@@ -861,7 +863,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface coefficient vector:" << endl;
-		Orbiter->Int_vec->print(cout, Coefficient_vector, nb_monomials);
+		Int_vec_print(cout, Coefficient_vector, nb_monomials);
 		cout << endl;
 	}
 
@@ -932,7 +934,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 		{
 			ofstream ost(fname_tex);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -972,7 +974,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname_tex << " of size "
@@ -1036,7 +1038,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -1064,7 +1066,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -1165,7 +1167,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 	if (f_v) {
 		cout << "Generator matrix: " << endl;
-		Orbiter->Int_vec->matrix_print(genma, m, n);
+		Int_matrix_print(genma, m, n);
 		cout << endl;
 	}
 	v = NEW_int(m);
@@ -1177,7 +1179,7 @@ void projective_space_with_action::canonical_form_of_code(
 		if (f_v) {
 			cout << "projective_space_with_action::canonical_form_of_code "
 					"before PA->P->rank_point" << endl;
-			Orbiter->Int_vec->print(cout, v, m);
+			Int_vec_print(cout, v, m);
 			cout << endl;
 		}
 		if (P == NULL) {
@@ -1188,7 +1190,7 @@ void projective_space_with_action::canonical_form_of_code(
 	}
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code set=";
-		Orbiter->Lint_vec->print(cout, set, n);
+		Lint_vec_print(cout, set, n);
 		cout << endl;
 	}
 
@@ -1390,7 +1392,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
 	sprintf(str, "_q%d", q);
@@ -1427,13 +1429,13 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 				{
 					string str;
 					f << ",";
-					Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
+					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
 					f << str;
 				}
 				{
 					string str;
 					f << ",";
-					Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
+					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
 					f << str;
 				}
 
@@ -1451,13 +1453,13 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 				{
 					string str;
 					f << ",";
-					Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
+					orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
 					f << str;
 				}
 				{
 					string str;
 					f << ",";
-					Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
+					orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
 					f << str;
 				}
 			}
@@ -1545,9 +1547,9 @@ void projective_space_with_action::conic_type(
 	cout << "We found the following conics:" << endl;
 	for (h = 0; h < len; h++) {
 		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Orbiter->Int_vec->print(cout, Conic_eqn[h], 6);
+		Int_vec_print(cout, Conic_eqn[h], 6);
 		cout << " : ";
-		Orbiter->Lint_vec->print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		Lint_vec_print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
 		cout << endl;
 	}
 
@@ -1590,7 +1592,7 @@ void projective_space_with_action::conic_type(
 	}
 
 	Conic_line_intersection_sz = NEW_int(len * 55);
-	Orbiter->Int_vec->zero(Conic_line_intersection_sz, len * 55);
+	Int_vec_zero(Conic_line_intersection_sz, len * 55);
 
 	for (h = 0; h < len; h++) {
 		for (u = 0; u < 55; u++) {
@@ -1609,11 +1611,11 @@ void projective_space_with_action::conic_type(
 	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
 	for (h = 0; h < len; h++) {
 		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Orbiter->Int_vec->print(cout, Conic_eqn[h], 6);
+		Int_vec_print(cout, Conic_eqn[h], 6);
 		cout << " : ";
-		Orbiter->Int_vec->print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
+		Int_vec_print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
 		cout << " : ";
-		Orbiter->Lint_vec->print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		Lint_vec_print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
 		cout << " : ";
 		cout << endl;
 	}
@@ -1622,14 +1624,14 @@ void projective_space_with_action::conic_type(
 		cout << "line " << u << " : ";
 		int str[55];
 
-		Orbiter->Int_vec->zero(str, 55);
+		Int_vec_zero(str, 55);
 		for (v = 0; v < nb_pts; v++) {
 			pt = Pts[v];
 			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
 				str[v] = 1;
 			}
 		}
-		Orbiter->Int_vec->print_fully(cout, str, 55);
+		Int_vec_print_fully(cout, str, 55);
 		cout << endl;
 	}
 
@@ -1664,7 +1666,7 @@ void projective_space_with_action::cheat_sheet(
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -1707,7 +1709,7 @@ void projective_space_with_action::cheat_sheet(
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -1862,11 +1864,11 @@ void projective_space_with_action::do_rank_lines_in_PG(
 	int *v;
 	int m, n;
 
-	Orbiter->get_matrix_from_label(label, v, m, n);
+	orbiter_kernel_system::Orbiter->get_matrix_from_label(label, v, m, n);
 
 	if (f_v) {
 		cout << "projective_space_with_action::do_rank_lines_in_PG v: ";
-		Orbiter->Int_vec->matrix_print(v, m, n);
+		Int_matrix_print(v, m, n);
 		cout << endl;
 	}
 
@@ -1883,7 +1885,7 @@ void projective_space_with_action::do_rank_lines_in_PG(
 
 		a = P->rank_line(v + i * n);
 
-		Orbiter->Int_vec->matrix_print(v + i * n, 2, P->n + 1);
+		Int_matrix_print(v + i * n, 2, P->n + 1);
 		cout << "has rank " << a << endl;
 
 	}
@@ -1908,11 +1910,11 @@ void projective_space_with_action::do_unrank_lines_in_PG(
 	int len;
 	int *basis;
 
-	Orbiter->Lint_vec->scan(text, v, sz);
+	Lint_vec_scan(text, v, sz);
 
 	if (f_v) {
 		cout << "projective_space_with_action::do_unrank_lines_in_PG v: ";
-		Orbiter->Lint_vec->print(cout, v, sz);
+		Lint_vec_print(cout, v, sz);
 		cout << endl;
 	}
 
@@ -1929,7 +1931,7 @@ void projective_space_with_action::do_unrank_lines_in_PG(
 
 
 		cout << v[i] << " = " << endl;
-		Orbiter->Int_vec->matrix_print(basis, 2, P->n + 1);
+		Int_matrix_print(basis, 2, P->n + 1);
 		cout << endl;
 
 	}

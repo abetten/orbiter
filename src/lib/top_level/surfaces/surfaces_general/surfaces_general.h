@@ -398,7 +398,7 @@ public:
 	void report_non_singular_surfaces(std::ostream &ost,
 			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
 	void report_surfaces_by_lines(std::ostream &ost,
-			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
+			struct cubic_surface_data_set *Data, data_structures::tally &T, int verbose_level);
 	void do_create_surface_reports(std::string &field_orders_text, int verbose_level);
 	void do_create_surface_atlas(int q_max, int verbose_level);
 	void do_create_surface_atlas_q_e(int q_max,

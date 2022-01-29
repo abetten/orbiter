@@ -21,14 +21,13 @@ all: algebra \
 	graph_theory \
 	graph_theory_nauty \
 	graphics \
-	io_and_os \
 	knowledge_base \
 	linear_algebra \
 	number_theory \
+	orbiter_kernel_system \
 	orthogonal \
 	ring_theory \
 	solvers \
-	statistics \
 	BitSet
 
 
@@ -49,14 +48,13 @@ globals : globals2
 graph_theory : graph_theory2 
 graph_theory_nauty : graph_theory_nauty2 
 graphics : graphics2 
-io_and_os : io_and_os2  
 knowledge_base : knowledge_base2  
 linear_algebra : linear_algebra2  
 number_theory : number_theory2  
+orbiter_kernel_system : orbiter_kernel_system2  
 orthogonal : orthogonal2  
 ring_theory : ring_theory2  
 solvers : solvers2 
-statistics : statistics2
 BitSet	:	BitSet2
 
 algebra2 : ; cd algebra; $(MAKE)
@@ -74,14 +72,13 @@ globals2 : ; cd globals; $(MAKE)
 graph_theory2 : ; cd graph_theory; $(MAKE)
 graph_theory_nauty2 : ; cd graph_theory_nauty; $(MAKE)
 graphics2 : ; cd graphics; $(MAKE)
-io_and_os2 : ; cd io_and_os; $(MAKE)
 knowledge_base2 : ; cd knowledge_base; $(MAKE)
 linear_algebra2 : ; cd linear_algebra; $(MAKE)
 number_theory2 : ; cd number_theory; $(MAKE)
+orbiter_kernel_system2 : ; cd orbiter_kernel_system; $(MAKE)
 orthogonal2 : ; cd orthogonal; $(MAKE)
 ring_theory2 : ; cd ring_theory; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
-statistics2 : ; cd statistics; $(MAKE)
 BitSet2: ; cd BitSet; $(MAKE)
 
 clean:
@@ -100,14 +97,13 @@ clean:
 	cd graph_theory; $(MAKE) clean
 	cd graph_theory_nauty; $(MAKE) clean
 	cd graphics; $(MAKE) clean
-	cd io_and_os; $(MAKE) clean
 	cd knowledge_base; $(MAKE) clean
 	cd linear_algebra; $(MAKE) clean
 	cd number_theory; $(MAKE) clean
+	cd orbiter_kernel_system; $(MAKE) clean
 	cd orthogonal; $(MAKE) clean
 	cd ring_theory; $(MAKE) clean
 	cd solvers; $(MAKE) clean
-	cd statistics; $(MAKE) clean
 	cd BitSet; $(MAKE) clean
 	- rm *.o *.a 
 

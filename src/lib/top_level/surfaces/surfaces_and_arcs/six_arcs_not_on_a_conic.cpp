@@ -170,7 +170,7 @@ void six_arcs_not_on_a_conic::init(
 		if (f_v && (h % 10000) == 0) {
 			cout << "six_arcs_not_on_a_conic::init "
 					"testing arc " << h << " / " << nb_orbits << " : ";
-			Orbiter->Lint_vec->print(cout, Arc6, 6);
+			Lint_vec_print(cout, Arc6, 6);
 			cout << endl;
 		}
 

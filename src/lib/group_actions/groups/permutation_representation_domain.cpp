@@ -276,7 +276,7 @@ void permutation_representation_domain::init_with_base(int degree,
 
 	if (f_v) {
 		cout << "base: ";
-		Orbiter->Lint_vec->print(cout, A.get_base(), A.base_len());
+		Lint_vec_print(cout, A.get_base(), A.base_len());
 		cout << endl;
 		//cout << "transversal_length: ";
 		//print_set(cout, A.base_len, A.transversal_length);
@@ -420,7 +420,7 @@ void permutation_representation_domain::print_with_print_point_function(int *Elt
 
 void permutation_representation_domain::code_for_make_element(int *Elt, int *data)
 {
-	Orbiter->Int_vec->copy(Elt, data, degree);
+	Int_vec_copy(Elt, data, degree);
 }
 
 void permutation_representation_domain::print_for_make_element(int *Elt, ostream &ost)
@@ -509,7 +509,7 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 	}
 	if (f_vv) {
 		cout << "data: ";
-		Orbiter->Int_vec->print(cout, data, elt_size_int);
+		Int_vec_print(cout, data, elt_size_int);
 		cout << endl;
 	}
 

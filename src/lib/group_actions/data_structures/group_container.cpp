@@ -185,11 +185,11 @@ void group_container::init_strong_generators_by_hdl(int nb_gen,
 		}
 	if (f_v) {
 		cout << "gen_hdl=";
-		Orbiter->Int_vec->print(cout, gen_hdl, nb_gen);
+		Int_vec_print(cout, gen_hdl, nb_gen);
 		cout << endl;
 		if (nb_gen) {
 			cout << "tl=";
-			Orbiter->Int_vec->print(cout, tl, A->base_len());
+			Int_vec_print(cout, tl, A->base_len());
 			cout << endl;
 		}
 	}
@@ -325,7 +325,7 @@ void group_container::code_ascii(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int sz, i, j;
 	char *p;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "group_container::code_ascii action " << A->label
@@ -373,7 +373,7 @@ void group_container::decode_ascii(int verbose_level)
 	int *base1;
 	char *p, *p0;
 	int str_len;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	require_ascii_coding();
 	//cout << "group_container::decode_ascii ascii_coding=" << ascii_coding << endl;
@@ -464,7 +464,7 @@ void group_container::schreier_sims(int verbose_level)
 	if (f_v) {
 		cout << "group_container::schreier_sims after S->init_generators" << endl;
 		cout << "tl: ";
-		Orbiter->Int_vec->print(cout, tl, A->base_len());
+		Int_vec_print(cout, tl, A->base_len());
 		cout << endl;
 	}
 	if (f_v) {
@@ -529,7 +529,7 @@ void group_container::point_stabilizer(group_container &stab, int pt, int verbos
 		cout << "stabilizer of point " << pt << " has order ";
 		stab.print_group_order(cout);
 		cout << " ";
-		Orbiter->Int_vec->print(cout, stab.tl, A->base_len());
+		Int_vec_print(cout, stab.tl, A->base_len());
 		cout << " with " << stab_gens.len << " strong generators" << endl;
 		if (f_vv) {
 			stab_gens.print(cout);
@@ -591,7 +591,7 @@ void group_container::point_stabilizer_with_action(actions::action *A2,
 		cout << "stabilizer of point " << pt << " has order ";
 		stab.print_group_order(cout);
 		cout << " ";
-		Orbiter->Int_vec->print(cout, stab.tl, A->base_len());
+		Int_vec_print(cout, stab.tl, A->base_len());
 		cout << " with " << stab_gens.len << " strong generators" << endl;
 		if (f_vv) {
 			stab_gens.print(cout);
@@ -863,7 +863,7 @@ void group_container::print_strong_generators(ostream &ost,
 		exit(1);
 	}
 	ost << "group::print_strong_generators a group with tl=";
-	Orbiter->Int_vec->print(ost, tl, A->base_len());
+	Int_vec_print(ost, tl, A->base_len());
 	l = SG->len;
 	ost << " and with " << l << " strong generators" << endl;
 	for (i = 0; i < l; i++) {
@@ -903,7 +903,7 @@ void group_container::print_strong_generators_with_different_action_verbose(
 	}
 	ost << "group_container::print_strong_generators_with_different_"
 			"action_verbose a group with tl=";
-	Orbiter->Int_vec->print(ost, tl, A->base_len());
+	Int_vec_print(ost, tl, A->base_len());
 	l = SG->len;
 	ost << " and with " << l << " strong generators" << endl;
 	for (i = 0; i < l; i++) {

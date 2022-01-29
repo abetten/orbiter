@@ -150,7 +150,7 @@ static void wreath_product_group_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "wreath_product_group_element_image_of_low_level "
 				"computing image of ";
-		Orbiter->Int_vec->print(cout, input, W.dimension_of_tensor_action);
+		Int_vec_print(cout, input, W.dimension_of_tensor_action);
 		cout << endl;
 		}
 	W.element_image_of_low_level(Elt, input, output, verbose_level - 1);
@@ -158,7 +158,7 @@ static void wreath_product_group_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "wreath_product_group_element_image_of_low_level "
 				"image of is ";
-		Orbiter->Int_vec->print(cout, output, W.dimension_of_tensor_action);
+		Int_vec_print(cout, output, W.dimension_of_tensor_action);
 		cout << endl;
 		}
 }

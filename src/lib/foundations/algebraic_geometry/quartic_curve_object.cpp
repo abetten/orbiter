@@ -88,7 +88,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain 
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents" << endl;
-		Orbiter->Int_vec->print(cout, eqn15, 15);
+		Int_vec_print(cout, eqn15, 15);
 		cout << endl;
 	}
 
@@ -97,7 +97,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain 
 	q = F->q;
 
 	f_has_bitangents = FALSE;
-	Orbiter->Int_vec->copy(eqn15, quartic_curve_object::eqn15, 15);
+	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
 
 
 
@@ -136,10 +136,10 @@ void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Do
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents" << endl;
 		cout << "eqn15:";
-		Orbiter->Int_vec->print(cout, eqn15, 15);
+		Int_vec_print(cout, eqn15, 15);
 		cout << endl;
 		cout << "bitangents28:";
-		Orbiter->Lint_vec->print(cout, bitangents28, 28);
+		Lint_vec_print(cout, bitangents28, 28);
 		cout << endl;
 	}
 
@@ -148,8 +148,8 @@ void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Do
 	q = F->q;
 
 	f_has_bitangents = TRUE;
-	Orbiter->Int_vec->copy(eqn15, quartic_curve_object::eqn15, 15);
-	Orbiter->Lint_vec->copy(bitangents28, quartic_curve_object::bitangents28, 28);
+	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
+	Lint_vec_copy(bitangents28, quartic_curve_object::bitangents28, 28);
 
 
 

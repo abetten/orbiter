@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 latex_interface::latex_interface()
@@ -1196,7 +1197,7 @@ void latex_interface::int_vec_print_as_matrix(std::ostream &ost,
 	int i;
 
 	w = NEW_int(len + width - 1);
-	Orbiter->Int_vec->copy(v, w, len);
+	Int_vec_copy(v, w, len);
 	for (i = 0; i < width - 1; i++) {
 		w[len + i] = 0;
 		}
@@ -1214,7 +1215,7 @@ void latex_interface::lint_vec_print_as_matrix(std::ostream &ost,
 	int i;
 
 	w = NEW_lint(len + width - 1);
-	Orbiter->Lint_vec->copy(v, w, len);
+	Lint_vec_copy(v, w, len);
 	for (i = 0; i < width - 1; i++) {
 		w[len + i] = 0;
 		}
@@ -1770,5 +1771,6 @@ void latex_interface::print_column_tactical_decomposition_scheme_tex(
 }
 
 
-}}
+}}}
+
 

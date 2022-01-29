@@ -617,7 +617,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec->scan(general_code_binary_text, set, sz);
+			Lint_vec_scan(general_code_binary_text, set, sz);
 
 			Codes.investigate_code(set, sz, general_code_binary_n, f_embellish, verbose_level);
 
@@ -632,7 +632,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec->scan(code_diagram_codewords_text, codewords, nb_words);
+			Lint_vec_scan(code_diagram_codewords_text, codewords, nb_words);
 
 
 
@@ -647,7 +647,7 @@ void interface_coding_theory::worker(int verbose_level)
 	else if (f_code_diagram_from_file) {
 			long int *codewords;
 			int m, nb_words;
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 
 			coding_theory::coding_theory_domain Codes;
 
@@ -671,7 +671,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec->scan(code_diagram_codewords_text, codewords, nb_words);
+			Lint_vec_scan(code_diagram_codewords_text, codewords, nb_words);
 
 
 
@@ -692,7 +692,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 
 			//Orbiter->Lint_vec.scan(linear_code_through_basis_text, set, sz);
-			Orbiter->get_lint_vector_from_label(linear_code_through_basis_text, set, sz, verbose_level);
+			orbiter_kernel_system::Orbiter->get_lint_vector_from_label(linear_code_through_basis_text, set, sz, verbose_level);
 
 			Codes.do_linear_code_through_basis(
 					linear_code_through_basis_n,
@@ -712,7 +712,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 
 			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
-			Orbiter->get_lint_vector_from_label(linear_code_through_columns_of_parity_check_text, set, n, verbose_level);
+			orbiter_kernel_system::Orbiter->get_lint_vector_from_label(linear_code_through_columns_of_parity_check_text, set, n, verbose_level);
 
 			Codes.do_linear_code_through_columns_of_parity_check_projectively(
 					n,
@@ -732,7 +732,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 
 			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
-			Orbiter->get_lint_vector_from_label(linear_code_through_columns_of_parity_check_text, set, n, verbose_level);
+			orbiter_kernel_system::Orbiter->get_lint_vector_from_label(linear_code_through_columns_of_parity_check_text, set, n, verbose_level);
 
 			Codes.do_linear_code_through_columns_of_parity_check(
 					n,

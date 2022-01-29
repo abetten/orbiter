@@ -60,7 +60,7 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 		cout << "graphical_output::draw_layered_graph_from_file fname=" << fname << endl;
 	}
 	graph_theory::layered_graph *LG;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	LG = NEW_OBJECT(graph_theory::layered_graph);
 	if (Fio.file_size(fname) <= 0) {
@@ -273,7 +273,7 @@ void graphical_output::do_create_points_on_quartic(double desired_distance, int 
 			Pts[nb * 2 + 1] = -1 * C2.Pts[i].coords[1];
 			nb++;
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		string fname;
 
@@ -351,7 +351,7 @@ void graphical_output::do_create_points_on_parabola(
 			Pts[nb * 2 + 1] = C.Pts[i].coords[1];
 			nb++;
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		char str[1000];
 		string fname;
 
@@ -382,7 +382,7 @@ void graphical_output::do_create_points_on_parabola(
 			Pts[nb * 6 + 5] = 1.;
 			nb++;
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		char str[1000];
 		string fname;
 		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_center.csv", N, a, b, c);
@@ -420,7 +420,7 @@ void graphical_output::do_create_points_on_parabola(
 			Pts[nb * 6 + 5] = 1. - f;
 			nb++;
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		char str[1000];
 		string fname;
@@ -457,7 +457,7 @@ void graphical_output::do_create_points_on_parabola(
 			Pts[nb * 3 + 2] = 1. - f;
 			nb++;
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		char str[1000];
 		string fname;
@@ -548,7 +548,7 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 				nb++;
 			}
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		char str[1000];
 		string fname;
@@ -591,7 +591,7 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 				nb++;
 			}
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		char str[1000];
 		string fname;
@@ -709,7 +709,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	if (f_v) {
 		cout << "graphical_output::draw_bitmap" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (C->f_input_csv_file) {
@@ -754,21 +754,21 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 	if (C->f_partition) {
 
-		Orbiter->get_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
-		Orbiter->get_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
+		orbiter_kernel_system::Orbiter->get_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
+		orbiter_kernel_system::Orbiter->get_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
 
 		cout << "row_part: ";
-		Orbiter->Int_vec->print(cout, Row_parts, nb_row_parts);
+		Int_vec_print(cout, Row_parts, nb_row_parts);
 		cout << endl;
 		cout << "col_part: ";
-		Orbiter->Int_vec->print(cout, Col_parts, nb_col_parts);
+		Int_vec_print(cout, Col_parts, nb_col_parts);
 		cout << endl;
 	}
 	int i;
 	int max_value;
 	data_structures::string_tools ST;
 
-	max_value = Orbiter->Int_vec->maximum(C->M, C->m * C->n);
+	max_value = orbiter_kernel_system::Orbiter->Int_vec->maximum(C->M, C->m * C->n);
 	cout << "max_value=" << max_value << endl;
 
 	//max_value += 5;
@@ -956,7 +956,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 	  std::cout << "Written file " << fname_out << std::endl;
 	  {
-		  file_io Fio;
+		  orbiter_kernel_system::file_io Fio;
 		  cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
 	  }
 
@@ -979,7 +979,7 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 		cout << "graphical_output::draw_projective_curve" << endl;
 	}
 
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 	//int xmax = Opt->xin; //1500;
 	//int ymax = Opt->yin; //1500;
@@ -1892,7 +1892,7 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 		exit(1);
 	}
 	tree T;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	std::string fname2;
 
 	cout << "Trying to read file " << Tree_draw_options->file_name << " of size "
@@ -1908,7 +1908,8 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 		cout << "graphical_output::tree_draw reading input file " << Tree_draw_options->file_name << endl;
 	}
 	T.init(Tree_draw_options,
-			Orbiter->draw_options->xin, Orbiter->draw_options->yin,
+			orbiter_kernel_system::Orbiter->draw_options->xin,
+			orbiter_kernel_system::Orbiter->draw_options->yin,
 			verbose_level);
 	if (f_v) {
 		cout << "graphical_output::tree_draw reading input file " << Tree_draw_options->file_name << " finished" << endl;
@@ -1938,7 +1939,7 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 	}
 	T.draw(fname2,
 			Tree_draw_options,
-			Orbiter->draw_options,
+			orbiter_kernel_system::Orbiter->draw_options,
 			verbose_level);
 	if (f_v) {
 		cout << "graphical_output::tree_draw after T.draw" << endl;
@@ -2021,10 +2022,10 @@ void graphical_output::animate_povray(
 			int *rounds;
 			int nb_rounds;
 
-			Orbiter->Int_vec->scan(Povray_job_description->rounds_as_string, rounds, nb_rounds);
+			Int_vec_scan(Povray_job_description->rounds_as_string, rounds, nb_rounds);
 
 			cout << "Doing the following " << nb_rounds << " rounds: ";
-			Orbiter->Int_vec->print(cout, rounds, nb_rounds);
+			Int_vec_print(cout, rounds, nb_rounds);
 			cout << endl;
 
 			int r, this_round;
@@ -2057,7 +2058,7 @@ void graphical_output::animate_povray(
 
 		fpm << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << A->fname_makefile << " of size "
 			<< Fio.file_size(A->fname_makefile) << endl;

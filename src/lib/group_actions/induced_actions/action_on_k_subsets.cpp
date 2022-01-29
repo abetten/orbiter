@@ -93,9 +93,9 @@ long int action_on_k_subsets::compute_image(
 	j = Combi.rank_k_subset(set2, A->degree, k);
 	if (f_vv) {
 		cout << "set " << i << " = ";
-		Orbiter->Int_vec->print(cout, set1, k);
+		Int_vec_print(cout, set1, k);
 		cout << " maps to ";
-		Orbiter->Int_vec->print(cout, set2, k);
+		Int_vec_print(cout, set2, k);
 		cout << " = " << j << endl;
 		}
 	if (j < 0 || j >= degree) {

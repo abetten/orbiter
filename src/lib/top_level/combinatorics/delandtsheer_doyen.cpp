@@ -200,13 +200,13 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 
 	if (Descr->f_R) {
 		row_type_cur = NEW_int(Descr->nb_row_types + 1);
-		Orbiter->Int_vec->zero(row_type_cur, Descr->nb_row_types + 1);
+		Int_vec_zero(row_type_cur, Descr->nb_row_types + 1);
 		row_type_this_or_bigger = NEW_int(Descr->nb_row_types + 1);
 	}
 
 	if (Descr->f_C) {
 		col_type_cur = NEW_int(Descr->nb_col_types + 1);
-		Orbiter->Int_vec->zero(col_type_cur, Descr->nb_col_types + 1);
+		Int_vec_zero(col_type_cur, Descr->nb_col_types + 1);
 		col_type_this_or_bigger = NEW_int(Descr->nb_col_types + 1);
 	}
 
@@ -243,8 +243,8 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 		cout << "DELANDTSHEER_DOYEN_Y=" << Descr->DELANDTSHEER_DOYEN_Y << endl;
 	}
 
-	Orbiter->Int_vec->zero(row_sum, Xsize);
-	Orbiter->Int_vec->zero(col_sum, Ysize);
+	Int_vec_zero(row_sum, Xsize);
+	Int_vec_zero(col_sum, Ysize);
 
 
 	M1 = NEW_OBJECT(groups::matrix_group);
@@ -460,7 +460,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 	target_depth = Descr->K - Descr->depth;
 	cout << "target_depth=" << target_depth << endl;
 
-	orbiter_data_file *ODF;
+	orbiter_kernel_system::orbiter_data_file *ODF;
 	char str[1000];
 	string fname;
 	int level = Descr->depth;
@@ -473,7 +473,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 			Descr->q1, Descr->q2, level);
 	fname.append(str);
 
-	ODF = NEW_OBJECT(orbiter_data_file);
+	ODF = NEW_OBJECT(orbiter_kernel_system::orbiter_data_file);
 	ODF->load(fname, verbose_level);
 	cout << "found " << ODF->nb_cases << " orbits at level " << level << endl;
 
@@ -505,7 +505,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 		}
 		if (f_vv) {
 			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-			Orbiter->Lint_vec->print(cout, ODF->sets[orbit_idx],
+			Lint_vec_print(cout, ODF->sets[orbit_idx],
 					ODF->set_sizes[orbit_idx]);
 			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
 					<< ODF->Aut_ascii[orbit_idx] << endl;
@@ -584,8 +584,8 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 					<< " live points" << endl;
 		}
 		if (nb_live_points == target_depth) {
-			Orbiter->Lint_vec->copy(line0, line, level);
-			Orbiter->Lint_vec->copy(live_points, line + level, target_depth);
+			Lint_vec_copy(line0, line, level);
+			Lint_vec_copy(live_points, line + level, target_depth);
 			if (check_orbit_covering(line, Descr->K, 0 /* verbose_level */)) {
 				cout << "found a solution in orbit " << orbit_idx << endl;
 				nb_sol++;
@@ -612,9 +612,9 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 
 				Combi.unrank_k_subset(l, subset, nb_live_points, target_depth);
 
-				Orbiter->Lint_vec->copy(line0, line, level);
+				Lint_vec_copy(line0, line, level);
 
-				Orbiter->Int_vec->apply_lint(subset, live_points, line + level, target_depth);
+				orbiter_kernel_system::Orbiter->Int_vec->apply_lint(subset, live_points, line + level, target_depth);
 
 				if (check_orbit_covering(line, Descr->K, 0 /* verbose_level */)) {
 					cout << "found a solution, subset " << l
@@ -641,7 +641,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 void delandtsheer_doyen::search_starter(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	string label;
@@ -758,7 +758,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 
 		if (FALSE) {
 			cout << h << " : ";
-			Orbiter->Lint_vec->print(cout, line, sz);
+			Lint_vec_print(cout, line, sz);
 		}
 
 		l = 0;
@@ -777,12 +777,12 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 		}
 		if (FALSE) {
 			cout << " : ";
-			Orbiter->Int_vec->print(cout, Covered_orbits + h * k2, k2);
+			Int_vec_print(cout, Covered_orbits + h * k2, k2);
 			cout << endl;
 		}
 
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname.assign(Descr->problem_label);
@@ -815,7 +815,7 @@ void delandtsheer_doyen::compute_orbits_on_pairs(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	if (f_v) {
@@ -896,7 +896,7 @@ void delandtsheer_doyen::compute_orbits_on_pairs(
 	orbit_covered_max = NEW_int(nb_orbits);
 	orbits_covered = NEW_int(Descr->K * Descr->K);
 
-	Orbiter->Int_vec->zero(orbit_covered, nb_orbits);
+	Int_vec_zero(orbit_covered, nb_orbits);
 
 
 
@@ -940,7 +940,7 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verb
 	int nb_gens;
 	data_structures_groups::vector_ge *nice_gens;
 
-	Orbiter->Int_vec->scan(Descr->subgroup_gens.c_str(), data, sz);
+	Int_vec_scan(Descr->subgroup_gens.c_str(), data, sz);
 	nb_gens = sz / A->make_element_size;
 	if (f_v) {
 		cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;
@@ -1149,8 +1149,8 @@ void delandtsheer_doyen::create_graph(long int *line0, int len, int verbose_leve
 		cout << "delandtsheer_doyen::create_graph" << endl;
 	}
 
-	Orbiter->Int_vec->zero(row_sum, Xsize);
-	Orbiter->Int_vec->zero(col_sum, Ysize);
+	Int_vec_zero(row_sum, Xsize);
+	Int_vec_zero(col_sum, Ysize);
 
 	for (i = 0; i < len; i++) {
 		a = line0[i];
@@ -1266,7 +1266,7 @@ void delandtsheer_doyen::compute_pair_orbit_table(int verbose_level)
 		cout << "delandtsheer_doyen::compute_pair_orbit_table" << endl;
 	}
 	pair_orbit = NEW_int(V * V);
-	Orbiter->Int_vec->zero(pair_orbit, V * V);
+	Int_vec_zero(pair_orbit, V * V);
 	for (i = 0; i < V; i++) {
 		for (j = i + 1; j < V; j++) {
 			k = find_pair_orbit_by_tracing(i, j, 0 /*verbose_level - 2*/);
@@ -1323,7 +1323,7 @@ void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
 			}
 		}
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -1377,17 +1377,17 @@ void delandtsheer_doyen::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::early_test_func checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
 
 	if (len == 0) {
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -1430,7 +1430,7 @@ int delandtsheer_doyen::check_conditions(long int *S, int len, int verbose_level
 	if (f_v) {
 		cout << "delandtsheer_doyen::check_conditions "
 				"checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		//cout << "offset=" << offset << endl;
 	}
@@ -1496,7 +1496,7 @@ int delandtsheer_doyen::check_orbit_covering(long int *line,
 	//int f_vv = (verbose_level >= 2);
 	int i, pi, j, pj, o, f_OK = TRUE;
 
-	Orbiter->Int_vec->zero(orbit_covered, nb_orbits);
+	Int_vec_zero(orbit_covered, nb_orbits);
 
 	for (i = 0; i < len; i++) {
 		pi = line[i];
@@ -1544,7 +1544,7 @@ int delandtsheer_doyen::check_row_sums(long int *line,
 	int f_DD_problem = FALSE;
 
 	inner_pairs_in_rows = 0;
-	Orbiter->Int_vec->zero(row_sum, Xsize);
+	Int_vec_zero(row_sum, Xsize);
 	if (Descr->f_R) {
 		for (i = 1; i <= Descr->nb_row_types; i++) {
 			row_type_cur[i] = 0;
@@ -1619,7 +1619,7 @@ int delandtsheer_doyen::check_col_sums(long int *line,
 	int f_DD_problem = FALSE;
 
 	inner_pairs_in_cols = 0;
-	Orbiter->Int_vec->zero(col_sum, Ysize);
+	Int_vec_zero(col_sum, Ysize);
 	if (Descr->f_C) {
 		for (i = 1; i <= Descr->nb_col_types; i++) {
 			col_type_cur[i] = 0;
@@ -1784,8 +1784,8 @@ void delandtsheer_doyen::get_mask_core_and_singletons(
 	int m = Xsize;
 	int n = Ysize;
 
-	Orbiter->Int_vec->zero(f_row_used, m);
-	Orbiter->Int_vec->zero(f_col_used, n);
+	Int_vec_zero(f_row_used, m);
+	Int_vec_zero(f_col_used, n);
 	for (h = 0; h < len; h++) {
 		a = line[h];
 		i = a / Ysize;
@@ -1844,7 +1844,7 @@ static void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "delandtsheer_doyen_early_test_func_callback for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	DD->early_test_func(S, len,

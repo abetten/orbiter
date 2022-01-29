@@ -160,19 +160,19 @@ void recoordinatize::do_recoordinatize(
 	Grass->unrank_lint_here(M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
 	if (f_vv) {
 		cout << "M:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M, 3 * k, n, n, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, M, 3 * k, n, n, F->log10_of_q + 1);
 	}
-	Orbiter->Int_vec->copy(M, AA, n * n);
+	Int_vec_copy(M, AA, n * n);
 	F->Linear_algebra->matrix_inverse(AA, AAv, n, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "AAv:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, AAv, n, n, n, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, AAv, n, n, n, F->log10_of_q + 1);
 	}
 	F->Linear_algebra->mult_matrix_matrix(M, AAv, N, 3 * k, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "N:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, N, 3 * k, n, n, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, N, 3 * k, n, n, F->log10_of_q + 1);
 	}
 
 	for (i = 0; i < k; i++) {
@@ -182,15 +182,15 @@ void recoordinatize::do_recoordinatize(
 	}
 	if (f_vv) {
 		cout << "TT:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
 	}
 	F->Linear_algebra->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
 	}
 
-	Orbiter->Int_vec->zero(B, n * n);
+	Int_vec_zero(B, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			B[i * n + j] = TTv[i * k + j];
@@ -203,12 +203,12 @@ void recoordinatize::do_recoordinatize(
 	}
 	if (f_vv) {
 		cout << "TT:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
 	}
 	F->Linear_algebra->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
 	}
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
@@ -217,7 +217,7 @@ void recoordinatize::do_recoordinatize(
 	}
 	if (f_vv) {
 		cout << "B:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				B, n, n, n, F->log10_of_q + 1);
 	}
 
@@ -225,13 +225,13 @@ void recoordinatize::do_recoordinatize(
 	F->Linear_algebra->mult_matrix_matrix(AAv, B, C, n, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "C:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, C, n, n, n, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(cout, C, n, n, n, F->log10_of_q + 1);
 	}
 	
 	F->Linear_algebra->mult_matrix_matrix(M, C, M1, 3 * k, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "M1:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				M1, 3 * k, n, n, F->log10_of_q + 1);
 	}
 	j1 = Grass->rank_lint_here(M1, 0 /*verbose_level - 4*/);
@@ -668,12 +668,12 @@ void recoordinatize::compute_live_points_low_level(
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << cnt << " = " << h
 						<< ", multiplied by z=" << z << ":" << endl;
-				Orbiter->Int_vec->print_integer_matrix_width(cout,
+				Int_vec_print_integer_matrix_width(cout,
 						Elt1, k, k, k, F->log10_of_q + 1);
 			}
 	
 			// make the k x n matrix ( I_k | Elt1 )
-			Orbiter->Int_vec->zero(Grass->M, k * n);
+			Int_vec_zero(Grass->M, k * n);
 			for (i = 0; i < k; i++) {
 				Grass->M[i * n + i] = 1;
 			}
@@ -685,12 +685,12 @@ void recoordinatize::compute_live_points_low_level(
 			if (f_vv && (cnt % cnt_mod) == 0) {
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << h << ":" << endl;
-				Orbiter->Int_vec->print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
+				Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
 			}
 			if (FALSE || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
 				cout << h << " / " << gos
 						<< " nb_live_points=" << nb_live_points << endl;
-				Orbiter->Int_vec->print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
+				Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
 			}
 			a = Grass->rank_lint(0);
 			SS[3] = a;

@@ -125,7 +125,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			// type[N_lines]
 
 
-		tally T;
+		data_structures::tally T;
 
 		T.init(type, P->N_lines, FALSE, 0);
 
@@ -248,7 +248,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 		cout << "looping over all generators of the ideal:" << endl;
 		for (h = 0; h < ns; h++) {
 			cout << "generator " << h << " / " << ns << " is ";
-			Orbiter->Int_vec->print(cout, Kernel + h * HPD->get_nb_monomials(), HPD->get_nb_monomials());
+			Int_vec_print(cout, Kernel + h * HPD->get_nb_monomials(), HPD->get_nb_monomials());
 			cout << " : " << endl;
 
 			vector<long int> Points;
@@ -266,7 +266,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 
 			cout << "We found " << nb_pts << " points on the generator of the ideal" << endl;
 			cout << "They are : ";
-			Orbiter->Lint_vec->print(cout, Pts, nb_pts);
+			Lint_vec_print(cout, Pts, nb_pts);
 			cout << endl;
 			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
 
@@ -291,7 +291,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 
 	if (Descr->f_save) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname.assign(GOC->label_txt);
@@ -336,11 +336,11 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 			int idx;
 
-			idx = Orbiter->find_symbol(Descr->canonical_form_PG_PG_label);
+			idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->canonical_form_PG_PG_label);
 
 			symbol_table_object_type t;
 
-			t = Orbiter->get_object_type(idx);
+			t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 			if (t != t_projective_space) {
 				cout << "combinatorial_object_activity::perform_activity_IS "
 					<< Descr->canonical_form_PG_PG_label << " is not of type projective_space" << endl;
@@ -348,7 +348,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 			}
 
 
-			PA = (projective_geometry::projective_space_with_action *) Orbiter->get_object(idx);
+			PA = (projective_geometry::projective_space_with_action *) orbiter_kernel_system::Orbiter->get_object(idx);
 		}
 
 		combinatorics::classification_of_objects *CO;
@@ -478,11 +478,11 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 		int idx;
 
-		idx = Orbiter->find_symbol(Descr->test_distinguishing_property_graph);
+		idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->test_distinguishing_property_graph);
 
 		symbol_table_object_type t;
 
-		t = Orbiter->get_object_type(idx);
+		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 		if (t != t_graph) {
 			cout << "combinatorial_object_activity::perform_activity_IS "
 				<< Descr->test_distinguishing_property_graph << " is not of type graph" << endl;
@@ -493,7 +493,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		graph_theory::colored_graph *CG;
 
 		//Gr = (create_graph *) Orbiter->get_object(idx);
-		CG = (graph_theory::colored_graph *) Orbiter->get_object(idx);
+		CG = (graph_theory::colored_graph *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 #if 0
 		if (!Gr->f_has_CG) {
@@ -516,7 +516,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 			F_distinguishing[input_idx] = CG->test_distinguishing_property(OwCF->set, OwCF->sz, verbose_level);
 		}
 
-		tally T;
+		data_structures::tally T;
 
 		T.init(F_distinguishing, IS->Objects.size(), FALSE, 0);
 		cout << "classification : ";
@@ -572,7 +572,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		long int *extract_idx_set;
 		int extract_size;
 
-		Orbiter->get_lint_vector_from_label(Descr->extract_subset_set,
+		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(Descr->extract_subset_set,
 				extract_idx_set, extract_size, 0 /* verbose_level */);
 		do_save(Descr->extract_subset_fname,
 				TRUE /* f_extract */, extract_idx_set, extract_size,
@@ -673,7 +673,7 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 
 		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
 
-		Orbiter->Lint_vec->copy(OwCF->set, Sets + input_idx * sz, sz);
+		Lint_vec_copy(OwCF->set, Sets + input_idx * sz, sz);
 	}
 
 	cout << "The combined number of objects is " << N << endl;
@@ -689,7 +689,7 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 		Sets2 = NEW_lint(extract_size * sz);
 		for (h = 0; h < extract_size; h++) {
 			i = extract_idx_set[h];
-			Orbiter->Lint_vec->copy(Sets + i * sz, Sets2 + h * sz, sz);
+			Lint_vec_copy(Sets + i * sz, Sets2 + h * sz, sz);
 		}
 		FREE_lint(Sets);
 		Sets = Sets2;
@@ -701,7 +701,7 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 	else {
 
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	string fname_out;
 
@@ -807,8 +807,8 @@ void combinatorial_object_activity::latex_report(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
-	latex_interface L;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::latex_report" << endl;
@@ -832,7 +832,7 @@ void combinatorial_object_activity::latex_report(
 	}
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -880,7 +880,7 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 	}
 	int i;
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	for (i = 0; i < CO->CB->nb_types; i++) {
 
@@ -950,7 +950,7 @@ void combinatorial_object_activity::report_isomorphism_type(
 		cout << "combinatorial_object_activity::report_isomorphism_type i=" << i << endl;
 	}
 	int j;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];
@@ -1053,8 +1053,8 @@ void combinatorial_object_activity::draw_incidence_matrices(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
-	latex_interface L;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::draw_incidence_matrices" << endl;
@@ -1074,7 +1074,7 @@ void combinatorial_object_activity::draw_incidence_matrices(
 
 	{
 		ofstream ost(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		L.head_easy(ost);
 
@@ -1136,8 +1136,8 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
-	latex_interface L;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::unpack_from_restricted_action" << endl;
@@ -1246,8 +1246,8 @@ void combinatorial_object_activity::line_covering_type(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
-	latex_interface L;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::line_covering_type" << endl;
@@ -1264,7 +1264,7 @@ void combinatorial_object_activity::line_covering_type(
 	long int *the_lines;
 	int nb_lines;
 
-	Orbiter->get_lint_vector_from_label(lines, the_lines, nb_lines, verbose_level);
+	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(lines, the_lines, nb_lines, verbose_level);
 
 	string fname;
 

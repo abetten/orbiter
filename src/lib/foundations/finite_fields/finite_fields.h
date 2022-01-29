@@ -496,7 +496,7 @@ public:
 	long int nb_calls_to_PG_element_unrank_modified;
 
 	linear_algebra::linear_algebra *Linear_algebra;
-	orthogonal_indexing *Orthogonal_indexing;
+	orthogonal_geometry::orthogonal_indexing *Orthogonal_indexing;
 
 
 	finite_field();
@@ -816,7 +816,7 @@ public:
 
 	norm_tables();
 	~norm_tables();
-	void init(unusual_model &U, int verbose_level);
+	void init(orthogonal_geometry::unusual_model &U, int verbose_level);
 	int choose_an_element_of_given_norm(int norm, int verbose_level);
 
 };

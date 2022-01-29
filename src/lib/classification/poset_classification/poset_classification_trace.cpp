@@ -89,7 +89,7 @@ data_structures_groups::set_and_stabilizer *poset_classification::identify_and_g
 	if (f_v) {
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"identifying the set ";
-		Orbiter->Lint_vec->print(cout, set, sz);
+		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 	Elt = NEW_int(Poset->A->elt_size_in_int);
@@ -105,11 +105,11 @@ data_structures_groups::set_and_stabilizer *poset_classification::identify_and_g
 	if (f_v) {
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"input set=";
-		Orbiter->Lint_vec->print(cout, set, sz);
+		Lint_vec_print(cout, set, sz);
 		cout << endl;
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"SaS->set=";
-		Orbiter->Lint_vec->print(cout, SaS->data, SaS->sz);
+		Lint_vec_print(cout, SaS->data, SaS->sz);
 		cout << endl;
 	}
 	if (Sorting.compare_sets_lint(set, SaS->data, sz, SaS->sz)) {
@@ -139,7 +139,7 @@ void poset_classification::identify(long int *data, int sz,
 	}
 	if (f_v) {
 		cout << "poset_classification::identify identifying the set ";
-		Orbiter->Lint_vec->print(cout, data, sz);
+		Lint_vec_print(cout, data, sz);
 		cout << endl;
 	}
 
@@ -191,7 +191,7 @@ void poset_classification::test_identify(int level, int nb_times,
 	long int *set2;
 	groups::sims *S;
 	ring_theory::longinteger_object go;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "poset_classification::test_identify, "
@@ -225,7 +225,7 @@ void poset_classification::test_identify(int level, int nb_times,
 		if (f_v) {
 			cout << "random orbit " << r << " / "
 					<< nb_orbits << " is represented by ";
-			Orbiter->Lint_vec->print(cout, set1, level);
+			Lint_vec_print(cout, set1, level);
 			cout << endl;
 		}
 		Poset->A->random_element(S, Elt, 0 /* verbose_level */);
@@ -233,7 +233,7 @@ void poset_classification::test_identify(int level, int nb_times,
 				0 /* verbose_level */);
 		if (f_v) {
 			cout << "mapped set is ";
-			Orbiter->Lint_vec->print(cout, set2, level);
+			Lint_vec_print(cout, set2, level);
 			cout << endl;
 		}
 
@@ -328,7 +328,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 				<< " current_extension=" << current_extension << endl;
 		cout << "level=" << level << endl;		
 		cout << "applying fusion element to the set ";
-		Orbiter->Lint_vec->set_print(cout, set_in, size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, set_in, size);
 		cout << endl;
 	}
 
@@ -342,7 +342,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 		cout << "in action " << Poset->A2->label << ":" << endl;
 		Poset->A2->element_print_as_permutation(Elt1, cout);
 		cout << "to the set ";
-		Orbiter->Lint_vec->print(cout, set_in, size);
+		Lint_vec_print(cout, set_in, size);
 		cout << endl;
 	}
 	Poset->A2->map_a_set(set_in, set_tmp, size, Elt1, 0);
@@ -350,13 +350,13 @@ int poset_classification::poset_classification_apply_isomorphism(
 		cout << "poset_classification::poset_"
 				"classification_apply_isomorphism "
 				"the set becomes: ";
-		Orbiter->Lint_vec->print(cout, set_tmp, size);
+		Lint_vec_print(cout, set_tmp, size);
 		cout << endl;
 	}
 
 	Poset->A2->element_mult(transporter_in, Elt1, Elt2, 0);
 	if (f_v) {
-		Orbiter->Lint_vec->print(cout, set_in, size);
+		Lint_vec_print(cout, set_in, size);
 		cout << endl;
 	}
 	Poset->A2->move(Elt2, transporter_out);
@@ -364,11 +364,11 @@ int poset_classification::poset_classification_apply_isomorphism(
 	if (Poset->f_subspace_lattice) {
 		next_node = find_node_for_subspace_by_rank(set_tmp,
 				level + 1, verbose_level - 1);
-		Orbiter->Lint_vec->copy(set_tmp, set_out, size);
+		Lint_vec_copy(set_tmp, set_out, size);
 	}
 	else {
 		Sorting.lint_vec_heapsort(set_tmp, level + 1);
-		Orbiter->Lint_vec->copy(set_tmp, set_out, size);
+		Lint_vec_copy(set_tmp, set_out, size);
 		if (f_v) {
 			cout << "poset_classification::poset_"
 					"classification_apply_isomorphism "
@@ -378,7 +378,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 			cout << "poset_classification::poset_"
 					"classification_apply_isomorphism "
 					"calling find_poset_orbit_node_for_set: ";
-			Orbiter->Lint_vec->print(cout, set_out, size);
+			Lint_vec_print(cout, set_out, size);
 			cout << endl;
 		}
 
@@ -390,9 +390,9 @@ int poset_classification::poset_classification_apply_isomorphism(
 	if (f_v) {
 		cout << "poset_classification::poset_"
 				"classification_apply_isomorphism from ";
-		Orbiter->Lint_vec->print(cout, set_in, size);
+		Lint_vec_print(cout, set_in, size);
 		cout << " to ";
-		Orbiter->Lint_vec->print(cout, set_out, size);
+		Lint_vec_print(cout, set_out, size);
 		cout << ", which is node " << next_node << endl;
 		cout << "we are done" << endl;
 	}
@@ -423,7 +423,7 @@ int poset_classification::trace_set_recursion(
 		cout << "poset_classification::trace_set_recursion "
 				"cur_level = " << cur_level
 				<< " cur_node = " << cur_node << " : ";
-		Orbiter->Lint_vec->print(cout, canonical_set, size);
+		Lint_vec_print(cout, canonical_set, size);
 		cout << endl;
 	}
 	pt = canonical_set[cur_level];
@@ -484,7 +484,7 @@ int poset_classification::trace_set_recursion(
 		cout << "poset_classification::trace_set_recursion "
 				"cur_level = " << cur_level
 				<< " cur_node = " << cur_node << " : ";
-		Orbiter->Lint_vec->print(cout, canonical_set, size);
+		Lint_vec_print(cout, canonical_set, size);
 		cout << " point " << pt
 				<< " has been mapped to " << pt0 << endl;
 	}
@@ -517,7 +517,7 @@ int poset_classification::trace_set_recursion(
 			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
-			Orbiter->Lint_vec->print(cout, canonical_set, size);
+			Lint_vec_print(cout, canonical_set, size);
 			cout << " point " << pt << " has been mapped to "
 					<< pt0 << " next node is node " << next_node << endl;
 		}
@@ -574,9 +574,9 @@ int poset_classification::trace_set_recursion(
 				<< " cur_node = " << cur_node << " : " 
 				<< " current_extension = " << current_extension 
 				<< " : fusion from ";
-			Orbiter->Lint_vec->print(cout, canonical_set, size);
+			Lint_vec_print(cout, canonical_set, size);
 			cout << " to ";
-			Orbiter->Lint_vec->print(cout, tmp_set1, size);
+			Lint_vec_print(cout, tmp_set1, size);
 			cout << " : we continue with node " << next_node << endl; 
 			cout << endl;
 		}
@@ -588,9 +588,9 @@ int poset_classification::trace_set_recursion(
 					<< " cur_node = " << cur_node << " : " 
 					<< " current_extension = " << current_extension 
 					<< " : fusion from ";
-				Orbiter->Lint_vec->print(cout, canonical_set, size);
+				Lint_vec_print(cout, canonical_set, size);
 				cout << " to ";
-				Orbiter->Lint_vec->print(cout, tmp_set1, size);
+				Lint_vec_print(cout, tmp_set1, size);
 				cout << "we stop tracing" << endl;
 			}
 			return -1;
@@ -657,14 +657,14 @@ int poset_classification::trace_set(
 	if (f_v) {
 		cout << "poset_classification::trace_set" << endl;
 		cout << "tracing set ";
-		Orbiter->Lint_vec->print(cout, set, size);
+		Lint_vec_print(cout, set, size);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "level=" << level << endl;
 		cout << "f_lex=" << Control->f_lex << endl;
 	}
 	
-	Orbiter->Lint_vec->copy(set, canonical_set, size);
+	Lint_vec_copy(set, canonical_set, size);
 
 	Poset->A->element_one(Elt_transporter, 0);
 
@@ -713,7 +713,7 @@ long int poset_classification::find_node_for_subspace_by_rank(
 
 	if (f_v) {
 		cout << "poset_classification::find_node_for_subspace_by_rank for set ";
-		Orbiter->Lint_vec->print(cout, set, len);
+		Lint_vec_print(cout, set, len);
 		cout << endl;
 	}
 	v = tmp_find_node_for_subspace_by_rank1;
@@ -763,7 +763,7 @@ long int poset_classification::find_node_for_subspace_by_rank(
 	if (f_v) {
 		cout << "poset_classification::find_node_for_subspace_by_rank "
 				"the canonical set is ";
-		Orbiter->Lint_vec->print(cout, set, len);
+		Lint_vec_print(cout, set, len);
 		cout << " at node " << node << endl;
 	}
 	

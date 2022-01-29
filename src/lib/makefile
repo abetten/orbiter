@@ -82,6 +82,8 @@ MODULES= \
 		foundations/data_structures/sorting.o \
 		foundations/data_structures/spreadsheet.o \
 		foundations/data_structures/string_tools.o \
+		foundations/data_structures/tally_vector_data.o \
+		foundations/data_structures/tally.o \
 		foundations/data_structures/vector_builder_description.o \
 		foundations/data_structures/vector_builder.o \
 		foundations/data_structures/vector_hashing.o \
@@ -148,11 +150,7 @@ MODULES= \
 		foundations/globals/function_command.o \
 		foundations/globals/function_polish_description.o \
 		foundations/globals/function_polish.o \
-		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
-		foundations/globals/orbiter_session.o \
-		foundations/globals/orbiter_symbol_table_entry.o \
-		foundations/globals/orbiter_symbol_table.o \
 		foundations/graph_theory/clique_finder.o \
 		foundations/graph_theory/clique_finder_control.o \
 		foundations/graph_theory/colored_graph.o \
@@ -189,17 +187,6 @@ MODULES= \
 		foundations/graphics/tree_node.o \
 		foundations/graphics/tree.o \
 		foundations/graphics/video_draw_options.o \
-		foundations/io_and_os/create_file_description.o \
-		foundations/io_and_os/file_io.o \
-		foundations/io_and_os/file_output.o \
-		foundations/io_and_os/latex_interface.o \
-		foundations/io_and_os/mem_object_registry_entry.o \
-		foundations/io_and_os/mem_object_registry.o \
-		foundations/io_and_os/memory_object.o \
-		foundations/io_and_os/orbiter_data_file.o \
-		foundations/io_and_os/os_interface.o \
-		foundations/io_and_os/override_double.o \
-		foundations/io_and_os/prepare_frames.o \
 		foundations/linear_algebra/linear_algebra_global.o \
 		foundations/linear_algebra/linear_algebra_RREF.o \
 		foundations/linear_algebra/linear_algebra.o \
@@ -212,6 +199,21 @@ MODULES= \
 		foundations/number_theory/elliptic_curve.o \
 		foundations/number_theory/number_theoretic_transform.o \
 		foundations/number_theory/number_theory_domain.o \
+		foundations/orbiter_kernel_system/create_file_description.o \
+		foundations/orbiter_kernel_system/file_io.o \
+		foundations/orbiter_kernel_system/file_output.o \
+		foundations/orbiter_kernel_system/latex_interface.o \
+		foundations/orbiter_kernel_system/magma_interface.o \
+		foundations/orbiter_kernel_system/mem_object_registry_entry.o \
+		foundations/orbiter_kernel_system/mem_object_registry.o \
+		foundations/orbiter_kernel_system/memory_object.o \
+		foundations/orbiter_kernel_system/orbiter_data_file.o \
+		foundations/orbiter_kernel_system/orbiter_session.o \
+		foundations/orbiter_kernel_system/orbiter_symbol_table_entry.o \
+		foundations/orbiter_kernel_system/orbiter_symbol_table.o \
+		foundations/orbiter_kernel_system/os_interface.o \
+		foundations/orbiter_kernel_system/override_double.o \
+		foundations/orbiter_kernel_system/prepare_frames.o \
 		foundations/orthogonal/blt_set_domain.o \
 		foundations/orthogonal/blt_set_invariants.o \
 		foundations/orthogonal/orthogonal_blt.o \
@@ -242,8 +244,6 @@ MODULES= \
 		foundations/solvers/dlx_problem_description.o \
 		foundations/solvers/dlx_solver.o \
 		foundations/solvers/mckay.o \
-		foundations/statistics/tally_vector_data.o \
-		foundations/statistics/tally.o \
 		foundations/BitSet/bitset.o	\
 		discreta/base.o \
 		discreta/bt_key.o \

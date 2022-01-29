@@ -131,7 +131,7 @@ void cyclotomic_sets::init(field_theory::finite_field *F, int n, int verbose_lev
 		cout << "cyclotomic_sets::init cyclotomic sets are:" << endl;
 		S->print_table();
 		cout << "cyclotomic_sets::init Index:" << endl;
-		Orbiter->Int_vec->print(cout, Index, n);
+		Int_vec_print(cout, Index, n);
 		cout << endl;
 	}
 

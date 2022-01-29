@@ -348,7 +348,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		cout << "There are " << nb_sol << " monomials." << endl;
 
 		if (nb_sol < 100) {
-			Orbiter->Int_vec->matrix_print(Monomials, nb_sol, nb_variables);
+			Int_matrix_print(Monomials, nb_sol, nb_variables);
 		}
 		else {
 			cout << "too many to print" << endl;
@@ -377,7 +377,7 @@ void homogeneous_polynomial_domain::make_monomials(
 	if (f_v) {
 		cout << "After rearranging by type:" << endl;
 		if (nb_monomials < 100) {
-			Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, nb_variables);
+			Int_matrix_print(Monomials, nb_monomials, nb_variables);
 		}
 		else {
 			cout << "too many to print" << endl;
@@ -506,7 +506,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		if (nb_monomials < 100) {
 			for (i = 0; i < nb_monomials; i++) {
 				cout << i << " : " << monomial_symbols[i] << " : ";
-				Orbiter->Int_vec->print(cout, Variables + i * degree, degree);
+				Int_vec_print(cout, Variables + i * degree, degree);
 				cout << endl;
 			}
 		}
@@ -532,7 +532,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		if (FALSE) {
 			cout << "homogeneous_polynomial_domain::make_monomials  "
 					"Affine" << endl;
-			Orbiter->Int_vec->matrix_print(Affine, nb_affine, degree);
+			Int_matrix_print(Affine, nb_affine, degree);
 		}
 		Affine_to_monomial = NEW_int(nb_affine);
 		for (i = 0; i < nb_affine; i++) {
@@ -540,7 +540,7 @@ void homogeneous_polynomial_domain::make_monomials(
 				cout << "homogeneous_polynomial_domain::make_monomials "
 						"i = " << i << " / " << nb_affine << endl;
 			}
-			Orbiter->Int_vec->zero(v, nb_variables);
+			Int_vec_zero(v, nb_variables);
 			for (j = 0; j < degree; j++) {
 				a = Affine[i * degree + j];
 				v[a]++;
@@ -561,7 +561,7 @@ void homogeneous_polynomial_domain::make_monomials(
 				"Affine : idx:" << endl;
 		for (i = 0; i < nb_affine; i++) {
 			cout << i << " : ";
-			Orbiter->Int_vec->print(cout, Affine + i * degree, degree);
+			Int_vec_print(cout, Affine + i * degree, degree);
 			cout << " : " << Affine_to_monomial[i] << endl;
 		}
 	}
@@ -619,19 +619,19 @@ int homogeneous_polynomial_domain::index_of_monomial(int *v)
 
 		cout << "homogeneous_polynomial_domain::index_of_monomial "
 				"Did not find the monomial v=";
-		Orbiter->Int_vec->print(cout, v, nb_variables);
+		Int_vec_print(cout, v, nb_variables);
 		cout << endl;
 		cout << "Monomials:" << endl;
 		//int_matrix_print(Monomials, nb_monomials, n);
 		int i;
 		for (i = 0; i < nb_monomials; i++) {
 			cout << setw(3) << i << " : ";
-			Orbiter->Int_vec->print(cout, Monomials + i * nb_variables, nb_variables);
+			Int_vec_print(cout, Monomials + i * nb_variables, nb_variables);
 			cout << endl;
 		}
 		cout << "homogeneous_polynomial_domain::index_of_monomial "
 				"Did not find the monomial v=";
-		Orbiter->Int_vec->print(cout, v, nb_variables);
+		Int_vec_print(cout, v, nb_variables);
 		cout << endl;
 		Sorting.search_general(Monomials, nb_monomials, v, idx,
 				homogeneous_polynomial_domain_compare_monomial_with,
@@ -654,7 +654,7 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 	dim_kernel = 0;
 	mon = NEW_int(nb_variables);
 	for (i = 0; i < nb_monomials; i++) {
-		Orbiter->Int_vec->copy(Monomials + i * nb_variables, mon, nb_variables);
+		Int_vec_copy(Monomials + i * nb_variables, mon, nb_variables);
 		f_kernel = FALSE;
 		for (j = 0; j < nb_variables - 1; j++) {
 			a = mon[j];
@@ -672,9 +672,9 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 		if (f_kernel) {
 			if (f_v) {
 				cout << "homogeneous_polynomial_domain::affine_evaluation_kernel monomial ";
-				Orbiter->Int_vec->print(cout, Monomials + i * nb_variables, nb_variables);
+				Int_vec_print(cout, Monomials + i * nb_variables, nb_variables);
 				cout << " = ";
-				Orbiter->Int_vec->print(cout, mon, nb_variables);
+				Int_vec_print(cout, mon, nb_variables);
 				cout << endl;
 			}
 			dim_kernel++;
@@ -686,7 +686,7 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 	Kernel = NEW_int(dim_kernel * 2);
 	h = 0;
 	for (i = 0; i < nb_monomials; i++) {
-		Orbiter->Int_vec->copy(Monomials + i * nb_variables, mon, nb_variables);
+		Int_vec_copy(Monomials + i * nb_variables, mon, nb_variables);
 		f_kernel = FALSE;
 		for (j = 0; j < nb_variables - 1; j++) {
 			a = mon[j];
@@ -704,9 +704,9 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 		if (f_kernel) {
 			if (f_v) {
 				cout << "homogeneous_polynomial_domain::affine_evaluation_kernel monomial ";
-				Orbiter->Int_vec->print(cout, Monomials + i * nb_variables, nb_variables);
+				Int_vec_print(cout, Monomials + i * nb_variables, nb_variables);
 				cout << " = ";
-				Orbiter->Int_vec->print(cout, mon, nb_variables);
+				Int_vec_print(cout, mon, nb_variables);
 				cout << endl;
 			}
 			idx = index_of_monomial(mon);
@@ -892,7 +892,7 @@ void homogeneous_polynomial_domain::print_equation(std::ostream &ost, int *coeff
 void homogeneous_polynomial_domain::print_equation_simple(std::ostream &ost, int *coeffs)
 {
 
-	Orbiter->Int_vec->print_fully(cout, coeffs, nb_monomials);
+	Int_vec_print_fully(cout, coeffs, nb_monomials);
 }
 
 
@@ -1150,7 +1150,7 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::enumerate_points P->N_points=" << P->N_points << endl;
 		cout << "homogeneous_polynomial_domain::enumerate_points coeff=" << endl;
-		Orbiter->Int_vec->print(cout, coeff, nb_monomials);
+		Int_vec_print(cout, coeff, nb_monomials);
 		cout << endl;
 #if 0
 		print_equation_with_line_breaks_tex(cout,
@@ -1165,7 +1165,7 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 		a = evaluate_at_a_point(coeff, v);
 		if (f_vv) {
 			cout << "homogeneous_polynomial_domain::enumerate_points point " << rk << " / " << P->N_points << " :";
-			Orbiter->Int_vec->print(cout, v, nb_variables);
+			Int_vec_print(cout, v, nb_variables);
 			cout << " evaluates to " << a << endl;
 		}
 		if (a == 0) {
@@ -1320,11 +1320,11 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 		F->frobenius_power_vec_to_vec(coeff_in, coeff4, nb_monomials, frob_power);
 	}
 	else {
-		Orbiter->Int_vec->copy(coeff_in, coeff4, nb_monomials);
+		Int_vec_copy(coeff_in, coeff4, nb_monomials);
 	}
 
 
-	Orbiter->Int_vec->zero(coeff3, nb_monomials);
+	Int_vec_zero(coeff3, nb_monomials);
 	for (i = 0; i < nb_monomials; i++) {
 		c = coeff4[i];
 		if (c == 0) {
@@ -1352,7 +1352,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 		int_matrix_print(Mtx_inv, n, n);
 #endif
 
-		Orbiter->Int_vec->zero(coeff2, nb_monomials);
+		Int_vec_zero(coeff2, nb_monomials);
 		for (a = 0; a < nb_affine; a++) {
 			if (Affine) {
 				A = Affine + a * degree;
@@ -1372,7 +1372,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 				idx = Affine_to_monomial[a];
 			}
 			else {
-				Orbiter->Int_vec->zero(v, nb_variables);
+				Int_vec_zero(v, nb_variables);
 				for (j = 0; j < degree; j++) {
 					a = Affine[i * degree + j];
 					v[a]++;
@@ -1421,7 +1421,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 
 
 
-	Orbiter->Int_vec->copy(coeff3, coeff_out, nb_monomials);
+	Int_vec_copy(coeff3, coeff_out, nb_monomials);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_semilinear "
 				"done" << endl;
@@ -1457,10 +1457,10 @@ void homogeneous_polynomial_domain::substitute_line(
 		Mtx[i * 2 + 1] = Pt2_coeff[i];
 	}
 
-	Orbiter->Int_vec->copy(coeff_in, coeff4, nb_monomials);
+	Int_vec_copy(coeff_in, coeff4, nb_monomials);
 
 
-	Orbiter->Int_vec->zero(coeff3, degree + 1);
+	Int_vec_zero(coeff3, degree + 1);
 
 	for (i = 0; i < nb_monomials; i++) {
 		c = coeff4[i];
@@ -1489,7 +1489,7 @@ void homogeneous_polynomial_domain::substitute_line(
 		int_matrix_print(Mtx, n, 2);
 #endif
 
-		Orbiter->Int_vec->zero(coeff2, degree + 1);
+		Int_vec_zero(coeff2, degree + 1);
 		for (rk = 0; rk < my_nb_affine; rk++) {
 
 			A = my_affine;
@@ -1566,7 +1566,7 @@ void homogeneous_polynomial_domain::substitute_line(
 
 
 
-	Orbiter->Int_vec->copy(coeff3, coeff_out, degree + 1);
+	Int_vec_copy(coeff3, coeff_out, degree + 1);
 
 	FREE_int(Mtx);
 
@@ -1587,7 +1587,7 @@ void homogeneous_polynomial_domain::multiply_by_scalar(
 		cout << "homogeneous_polynomial_domain::multiply_by_scalar" << endl;
 	}
 
-	Orbiter->Int_vec->zero(coeff_out, nb_monomials);
+	Int_vec_zero(coeff_out, nb_monomials);
 	for (i = 0; i < nb_monomials; i++) {
 		a = coeff_in[i];
 		if (a == 0) {
@@ -1617,7 +1617,7 @@ void homogeneous_polynomial_domain::multiply_mod(
 		cout << "homogeneous_polynomial_domain::multiply_mod" << endl;
 	}
 
-	Orbiter->Int_vec->zero(coeff3, nb_monomials);
+	Int_vec_zero(coeff3, nb_monomials);
 	for (i = 0; i < nb_monomials; i++) {
 		a = coeff1[i];
 		if (a == 0) {
@@ -1659,7 +1659,7 @@ void homogeneous_polynomial_domain::multiply_mod_negatively_wrapped(
 		cout << "homogeneous_polynomial_domain::multiply_mod_negatively_wrapped" << endl;
 	}
 
-	Orbiter->Int_vec->zero(coeff3, nb_monomials);
+	Int_vec_zero(coeff3, nb_monomials);
 	for (i = 0; i < nb_monomials; i++) {
 		a = coeff1[i];
 		if (a == 0) {
@@ -1797,7 +1797,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system:" << endl;
-		Orbiter->Int_vec->matrix_print(System, nb_pts, nb_monomials);
+		Int_matrix_print(System, nb_pts, nb_monomials);
 	}
 
 	if (f_v) {
@@ -1813,13 +1813,13 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system in RREF:" << endl;
-		Orbiter->Int_vec->matrix_print(System, r, nb_monomials);
+		Int_matrix_print(System, r, nb_monomials);
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The kernel:" << endl;
-		Orbiter->Int_vec->matrix_print(System + r * nb_monomials,
+		Int_matrix_print(System + r * nb_monomials,
 				nb_monomials - r, nb_monomials);
 	}
-	Orbiter->Int_vec->copy(System + r * nb_monomials, Kernel,
+	Int_vec_copy(System + r * nb_monomials, Kernel,
 			(nb_monomials - r) * nb_monomials);
 	FREE_int(System);
 	if (f_v) {
@@ -1849,8 +1849,8 @@ int homogeneous_polynomial_domain::compare_monomials_PART(int *M1, int *M2)
 	int h, a;
 	int ret = 0;
 	
-	Orbiter->Int_vec->zero(type1, degree + 1);
-	Orbiter->Int_vec->zero(type2, degree + 1);
+	Int_vec_zero(type1, degree + 1);
+	Int_vec_zero(type2, degree + 1);
 
 	for (h = 0; h < nb_variables; h++) {
 		a = M1[h];
@@ -1916,7 +1916,7 @@ void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 			ost << i * 25 + h << " & ";
 			print_monomial_latex(ost, i * 25 + h);
 			ost << " & ";
-			Orbiter->Int_vec->print(ost, Monomials + (i * 25 + h) * nb_variables, nb_variables);
+			Int_vec_print(ost, Monomials + (i * 25 + h) * nb_variables, nb_variables);
 			ost << "\\\\" << endl;
 		}
 		ost << "\\hline" << endl;
@@ -1940,14 +1940,14 @@ int *homogeneous_polynomial_domain::read_from_string_coefficient_pairs(std::stri
 
 	coeff = NEW_int(get_nb_monomials());
 
-	Orbiter->Int_vec->zero(coeff, get_nb_monomials());
+	Int_vec_zero(coeff, get_nb_monomials());
 
 	{
 		int *coeff_pairs;
 		int len;
 		int a, b, i;
 
-		Orbiter->Int_vec->scan(str, coeff_pairs, len);
+		Int_vec_scan(str, coeff_pairs, len);
 		for (i = 0; i < len / 2; i++) {
 			a = coeff_pairs[2 * i];
 			b = coeff_pairs[2 * i + 1];
@@ -1993,14 +1993,14 @@ int *homogeneous_polynomial_domain::read_from_string_coefficient_vector(std::str
 
 	coeff = NEW_int(get_nb_monomials());
 
-	Orbiter->Int_vec->zero(coeff, get_nb_monomials());
+	Int_vec_zero(coeff, get_nb_monomials());
 
 	{
 		int *coeffs;
 		int len;
 		int a, i;
 
-		Orbiter->Int_vec->scan(str, coeffs, len);
+		Int_vec_scan(str, coeffs, len);
 		if (len != get_nb_monomials()) {
 			cout << "homogeneous_polynomial_domain::read_from_string_coefficient_vector "
 					"len >= get_nb_monomials()" << endl;

@@ -75,7 +75,7 @@ void data_file::read(std::string &fname,
 		int f_casenumbers, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "data_file::read trying to read file "
@@ -100,7 +100,7 @@ void data_file::read_candidates(std::string &candidates_fname,
 {
 	int f_v = (verbose_level >= 1);
 	int i, cnt, a, b;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "data_file::read_candidates trying to read "

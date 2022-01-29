@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 file_output::file_output()
@@ -90,6 +91,5 @@ void file_output::write_EOF(int nb_sol, int verbose_level)
 }
 
 
-}
-}
+}}}
 

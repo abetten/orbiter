@@ -212,7 +212,7 @@ public:
 	void read_from_file_one_case_only(
 			actions::action *A, actions::action *A2, std::string &fname,
 			int case_nr, int verbose_level);
-	tally *get_ago_distribution(long int *&ago,
+	data_structures::tally *get_ago_distribution(long int *&ago,
 			int verbose_level);
 	void report_ago_distribution(std::ostream &ost);
 	void print_table_latex(
@@ -606,10 +606,10 @@ public:
 		int f_print_cycles_of_length_one);
 	void print_for_make_element(std::ostream &ost);
 	void write_to_memory_object(
-		layer1_foundations::memory_object *m,
+			orbiter_kernel_system::memory_object *m,
 		int verbose_level);
 	void read_from_memory_object(
-		layer1_foundations::memory_object *m,
+			orbiter_kernel_system::memory_object *m,
 		int verbose_level);
 	void write_to_file_binary(std::ofstream &fp,
 		int verbose_level);

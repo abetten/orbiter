@@ -136,7 +136,7 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 	int f_debug = FALSE;
 	int nb_orbits;
 
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	if (f_v) {

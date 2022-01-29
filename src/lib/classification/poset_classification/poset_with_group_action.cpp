@@ -348,7 +348,7 @@ void poset_with_group_action::early_test_func(
 		}
 	}
 	else {
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	if (f_v) {
@@ -463,7 +463,7 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 #endif
 
 
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int schreier_depth = k;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;

@@ -468,8 +468,8 @@ public:
 	void place_with_grouping(int *group_size, int nb_groups, 
 		double x_stretch, int verbose_level);
 	void scale_x_coordinates(double x_stretch, int verbose_level);
-	void write_memory_object(memory_object *m, int verbose_level);
-	void read_memory_object(memory_object *m, int verbose_level);
+	void write_memory_object(orbiter_kernel_system::memory_object *m, int verbose_level);
+	void read_memory_object(orbiter_kernel_system::memory_object *m, int verbose_level);
 };
 
 // #############################################################################
@@ -528,8 +528,8 @@ public:
 	void add_data1(int data);
 	void add_data2(int data);
 	void add_data3(int data);
-	void write_memory_object(memory_object *m, int verbose_level);
-	void read_memory_object(memory_object *m, int verbose_level);
+	void write_memory_object(orbiter_kernel_system::memory_object *m, int verbose_level);
+	void read_memory_object(orbiter_kernel_system::memory_object *m, int verbose_level);
 	void allocate_tree_structure(int verbose_level);
 	int remove_neighbor(layered_graph *G, int id, int verbose_level);
 	void find_all_parents(layered_graph *G, std::vector<int> &All_Parents, int verbose_level);
@@ -694,8 +694,8 @@ public:
 	void find_node_by_id(int id, int &l, int &n);
 	void write_file(std::string &fname, int verbose_level);
 	void read_file(std::string &fname, int verbose_level);
-	void write_memory_object(memory_object *m, int verbose_level);
-	void read_memory_object(memory_object *m, int verbose_level);
+	void write_memory_object(orbiter_kernel_system::memory_object *m, int verbose_level);
+	void read_memory_object(orbiter_kernel_system::memory_object *m, int verbose_level);
 	void remove_edges(int layer1, int node1, int layer2, int node2,
 			std::vector<std::vector<int> > &All_Paths,
 			int verbose_level);

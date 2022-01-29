@@ -54,7 +54,7 @@ void action_on_orthogonal::free()
 }
 
 void action_on_orthogonal::init(actions::action *original_action,
-		orthogonal *O,
+		orthogonal_geometry::orthogonal *O,
 		int f_on_points,
 		int f_on_lines,
 		int f_on_points_and_lines,

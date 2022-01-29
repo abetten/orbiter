@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace data_structures {
 
 
 
@@ -732,7 +733,7 @@ data_structures::set_of_sets *tally::get_set_partition_and_types(
 void tally::save_classes_individually(std::string &fname)
 {
 	int i, f, l, t;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	for (i = 0; i < nb_types; i++) {
 
@@ -758,5 +759,5 @@ void tally::save_classes_individually(std::string &fname)
 
 
 
-}
-}
+}}}
+

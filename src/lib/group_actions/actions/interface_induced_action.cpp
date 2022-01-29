@@ -574,7 +574,7 @@ static void induced_action_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level "
 				"computing image of ";
-		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
+		Int_vec_print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 	}
 	if (A.type_G == action_by_right_multiplication_t) {
@@ -917,9 +917,9 @@ static void induced_action_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level  done" << endl;
 		cout << "image of ";
-		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
+		Int_vec_print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << " is ";
-		Orbiter->Int_vec->print(cout, output, A.low_level_point_size);
+		Int_vec_print(cout, output, A.low_level_point_size);
 		cout << endl;
 	}
 }
@@ -1524,7 +1524,7 @@ static void induced_action_print_point(action &A,
 			exit(1);
 		}
 		ost << a << "=";
-		Orbiter->Lint_vec->print(ost, AOS->sets[AOS->perm[a]], AOS->set_size);
+		Lint_vec_print(ost, AOS->sets[AOS->perm[a]], AOS->set_size);
 		ost << endl;
 		for (i = 0; i < AOS->set_size; i++) {
 			ost << "$$" << endl;

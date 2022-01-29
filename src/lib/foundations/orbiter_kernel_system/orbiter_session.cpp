@@ -18,9 +18,11 @@ using namespace orbiter::layer1_foundations::data_structures;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
+//! global Orbiter session
 
-orbiter_session *Orbiter = NULL;
+orbiter_kernel_system::orbiter_session *Orbiter;
 
 
 orbiter_session::orbiter_session()
@@ -436,7 +438,7 @@ void orbiter_session::get_vector_from_label(std::string &label,
 
 			sz = VB->len;
 			v = NEW_int(sz);
-			Orbiter->Int_vec->copy(VB->v, v, sz);
+			Int_vec_copy(VB->v, v, sz);
 		}
 		else if (Orbiter->get_object_type(idx) == t_set) {
 
@@ -446,12 +448,12 @@ void orbiter_session::get_vector_from_label(std::string &label,
 
 			sz = SB->sz;
 			v = NEW_int(sz);
-			Orbiter->Lint_vec->copy_to_int(SB->set, v, sz);
+			Lint_vec_copy_to_int(SB->set, v, sz);
 		}
 	}
 	else {
 
-		Orbiter->Int_vec->scan(label, v, sz);
+		Int_vec_scan(label, v, sz);
 	}
 
 	if (f_v) {
@@ -484,7 +486,7 @@ void orbiter_session::get_int_vector_from_label(std::string &label,
 
 			sz = VB->len;
 			v = NEW_int(sz);
-			Orbiter->Int_vec->copy(VB->v, v, sz);
+			Int_vec_copy(VB->v, v, sz);
 		}
 		else if (Orbiter->get_object_type(idx) == t_set) {
 
@@ -494,12 +496,12 @@ void orbiter_session::get_int_vector_from_label(std::string &label,
 
 			sz = SB->sz;
 			v = NEW_int(sz);
-			Orbiter->Lint_vec->copy_to_int(SB->set, v, sz);
+			Lint_vec_copy_to_int(SB->set, v, sz);
 		}
 	}
 	else {
 
-		Orbiter->Int_vec->scan(label, v, sz);
+		Int_vec_scan(label, v, sz);
 	}
 
 	if (f_v) {
@@ -533,7 +535,7 @@ void orbiter_session::get_lint_vector_from_label(std::string &label,
 
 			sz = VB->len;
 			v = NEW_lint(sz);
-			Orbiter->Int_vec->copy_to_lint(VB->v, v, sz);
+			Int_vec_copy_to_lint(VB->v, v, sz);
 		}
 		else if (Orbiter->get_object_type(idx) == t_set) {
 
@@ -543,12 +545,12 @@ void orbiter_session::get_lint_vector_from_label(std::string &label,
 
 			sz = SB->sz;
 			v = NEW_lint(sz);
-			Orbiter->Lint_vec->copy(SB->set, v, sz);
+			Lint_vec_copy(SB->set, v, sz);
 		}
 	}
 	else {
 
-		Orbiter->Lint_vec->scan(label, v, sz);
+		Lint_vec_scan(label, v, sz);
 	}
 
 	if (f_v) {
@@ -584,7 +586,7 @@ void orbiter_session::get_matrix_from_label(std::string &label,
 
 			sz = VB->len;
 			v = NEW_int(sz);
-			Orbiter->Int_vec->copy(VB->v, v, sz);
+			Int_vec_copy(VB->v, v, sz);
 
 			if (!VB->f_has_k) {
 				cout << "orbiter_session::get_matrix_from_label "
@@ -676,18 +678,18 @@ void orbiter_session::get_lint_vec(std::string &label,
 
 		set_size = SB->sz;
 		the_set = NEW_lint(SB->sz);
-		Orbiter->Lint_vec->copy(SB->set, the_set, set_size);
+		Lint_vec_copy(SB->set, the_set, set_size);
 
 		if (f_v) {
 			cout << "orbiter_session::get_lint_vec" << endl;
 			cout << "set : ";
-			Orbiter->Lint_vec->print(cout, the_set, set_size);
+			Lint_vec_print(cout, the_set, set_size);
 			cout << endl;
 		}
 
 	}
 	else {
-		Orbiter->Lint_vec->scan(label.c_str(), the_set, set_size);
+		Lint_vec_scan(label.c_str(), the_set, set_size);
 	}
 	if (f_v) {
 		cout << "orbiter_session::get_lint_vec done" << endl;
@@ -731,5 +733,6 @@ void orbiter_session::stop_memory_debug()
 }
 
 
-}}
+}}}
+
 

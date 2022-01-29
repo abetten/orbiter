@@ -493,7 +493,7 @@ void animate::animate_one_round(
 			}
 			}
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_pov << " of size "
 				<< Fio.file_size(fname_pov) << endl;
@@ -668,7 +668,7 @@ void animate::animate_one_round(
 						cout << "end latex source" << endl;
 						{
 							ofstream fp(fname_tex);
-							latex_interface L;
+							orbiter_kernel_system::latex_interface L;
 							//latex_head_easy(fp);
 							L.head_easy_with_extras_in_the_praeamble(fp,
 									Opt->latex_extras_for_praeamble[i].c_str());
@@ -825,7 +825,7 @@ void animate::draw_Hilbert_cube_extended_edges(ostream &fp)
 {
 	int s[] = {30,31,32,33,34,35,36,37,38,39,40,41};
 
-	override_double line_radius(&S->line_radius, S->line_radius * 0.5);
+	orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.5);
 
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
@@ -840,7 +840,7 @@ void animate::draw_Hilbert_cube_boxed(ostream &fp)
 {
 	int s[] = {0,1,2,3,4,5,6,7,8,9,10,11};
 
-	override_double line_radius(&S->line_radius, S->line_radius * 0.5);
+	orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.5);
 
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
@@ -849,7 +849,7 @@ void animate::draw_Hilbert_tetrahedron_boxed(ostream &fp)
 {
 	int s[] = {24,25,26,27,28,29};
 
-	override_double line_radius(&S->line_radius, S->line_radius * 0.5);
+	orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.5);
 
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
@@ -1832,7 +1832,7 @@ void animate::draw_frame_Hilbert(
 			faces[1 + i] = 10 + rk;
 		}
 		cout << "faces=";
-		Orbiter->Int_vec->print(cout, faces, 4);
+		Int_vec_print(cout, faces, 4);
 		cout << endl;
 		S->draw_faces_with_selection(faces, 4,
 				0.01, Pov->color_pink, fp);
@@ -2691,7 +2691,7 @@ void animate::draw_frame_triangulation_of_cube(
 		{
 		int s[] = {12,13,14,15,16,17};
 
-		override_double line_radius(&S->line_radius, S->line_radius * 0.5);
+		orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.5);
 
 		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 		}
@@ -2740,7 +2740,7 @@ void animate::draw_frame_twisted_cubic(
 
 		{
 			int s[] = {0,1,2,3,4,5,6,7,8,9,10,11};
-			override_double line_radius(&S->line_radius, S->line_radius * 0.4);
+			orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.4);
 
 			S->draw_edges_with_selection(s, 12, Pov->color_black, fp);
 		}
@@ -2751,7 +2751,7 @@ void animate::draw_frame_twisted_cubic(
 		for (i = 1; i < h; i++) {
 			s[i - 1] = 12 + i - 1;
 		}
-		override_double line_radius(&S->line_radius, S->line_radius * 0.75);
+		orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.75);
 
 		S->draw_edges_with_selection(s, h - 1, Pov->color_red, fp);
 		FREE_int(s);
@@ -2767,7 +2767,7 @@ void animate::draw_frame_twisted_cubic(
 
 		{
 			int s[] = {0,1,2,3,4,5,6,7,8,9,10,11};
-			override_double line_radius(&S->line_radius, S->line_radius * 0.4);
+			orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.4);
 
 			S->draw_edges_with_selection(s, 12, Pov->color_black, fp);
 		}
@@ -2778,7 +2778,7 @@ void animate::draw_frame_twisted_cubic(
 		for (i = 1; i < nb_frames; i++) {
 			s[i - 1] = 12 + i - 1;
 		}
-		override_double line_radius(&S->line_radius, S->line_radius * 0.75);
+		orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.75);
 
 		S->draw_edges_with_selection(s, nb_frames - 1, Pov->color_red, fp);
 		FREE_int(s);

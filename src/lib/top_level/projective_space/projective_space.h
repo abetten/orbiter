@@ -103,7 +103,7 @@ public:
 	int *Canonical_forms; // [nb_objects_to_test * Poly_ring->get_nb_monomials()]
 	long int *Goi; // [nb_objects_to_test]
 
-	tally_vector_data *Classification_of_quartic_curves;
+	data_structures::tally_vector_data *Classification_of_quartic_curves;
 		// based on Canonical_forms, nb_objects_to_test
 
 	// transversal of the isomorphism types:
@@ -135,7 +135,7 @@ public:
 			int verbose_level);
 	void generate_source_code(
 			std::string &fname_base,
-			tally_vector_data *Classification_of_quartic_curves,
+			data_structures::tally_vector_data *Classification_of_quartic_curves,
 			int verbose_level);
 	void report(std::string &fname, int verbose_level);
 	void report2(std::ostream &ost, std::string &fname_base, int verbose_level);
@@ -585,7 +585,7 @@ public:
 			int verbose_level);
 	void analyze_del_Pezzo_surface_formula_given(
 			projective_space_with_action *PA,
-			formula *F,
+			expression_parser::formula *F,
 			std::string &evaluate_text,
 			int verbose_level);
 	void do_create_surface(
@@ -748,10 +748,12 @@ public:
 	void compute_group_of_set(long int *set, int set_sz,
 			groups::strong_generators *&Sg,
 			int verbose_level);
-	void map(formula *Formula,
+	void map(
+			expression_parser::formula *Formula,
 			std::string &evaluate_text,
 			int verbose_level);
-	void analyze_del_Pezzo_surface(formula *Formula,
+	void analyze_del_Pezzo_surface(
+			expression_parser::formula *Formula,
 			std::string &evaluate_text,
 			int verbose_level);
 	void do_cheat_sheet_for_decomposition_by_element_PG(

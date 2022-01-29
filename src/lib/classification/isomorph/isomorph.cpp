@@ -477,7 +477,7 @@ void isomorph::init_starter_number(int verbose_level)
 		}
 	if (f_v) {
 		cout << "starter_number:" << endl;
-		Orbiter->Int_vec->print(cout, starter_number, N);
+		Int_vec_print(cout, starter_number, N);
 		cout << endl;
 		}
 }
@@ -515,9 +515,9 @@ void isomorph::list_solutions_by_starter()
 				Sorting.lint_vec_heapsort(data2, size);
 				cout << i << " : " << j << " : "
 						<< idx << " : " << id << endl;
-				Orbiter->Lint_vec->print(cout, data, size);
+				Lint_vec_print(cout, data, size);
 				cout << endl;
-				Orbiter->Lint_vec->print(cout, data2, size);
+				Lint_vec_print(cout, data2, size);
 				cout << endl;
 				}
 			pos += len;
@@ -552,9 +552,9 @@ void isomorph::list_solutions_by_orbit()
 				}
 			Sorting.lint_vec_heapsort(data2, size);
 			cout << j << " : " << idx << " : " << id << endl;
-			Orbiter->Lint_vec->print(cout, data, size);
+			Lint_vec_print(cout, data, size);
 			cout << endl;
-			Orbiter->Lint_vec->print(cout, data2, size);
+			Lint_vec_print(cout, data2, size);
 			cout << endl;
 			}
 		}
@@ -713,7 +713,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 					<< " / " << nb_starter << " finished, we found "
 					<< nb_orbits - nb_orbits_prev << " orbits : ";
 			if (nb_orbits - nb_orbits_prev) {
-				tally C;
+				data_structures::tally C;
 
 				C.init(orbit_len + nb_orbits_prev,
 						nb_orbits - nb_orbits_prev, FALSE, 0);
@@ -768,7 +768,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 		cout << "isomorph::orbits_of_stabilizer Case " << i << " / "
 				<< nb_starter << " finished, we found " << nb_orbits
 				<< " orbits : ";
-		tally C;
+		data_structures::tally C;
 
 		C.init(orbit_len, nb_orbits, FALSE, 0);
 		C.print_naked(TRUE /* f_backwards */);
@@ -888,13 +888,13 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		load_solution(f + j, sets + j * size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << "        : ";
-			Orbiter->Lint_vec->print(cout, sets + j * size, size);
+			Lint_vec_print(cout, sets + j * size, size);
 			cout << endl;
 			}
 		Sorting.lint_vec_heapsort(sets + j * size, size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << " sorted : ";
-			Orbiter->Lint_vec->print(cout, sets + j * size, size);
+			Lint_vec_print(cout, sets + j * size, size);
 			cout << endl;
 			}
 		}
@@ -1121,7 +1121,7 @@ void isomorph::test_identify_solution(int verbose_level)
 	int i, k;
 	int *transporter;
 	combinatorics::combinatorics_domain Combi;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	transporter = NEW_int(A->elt_size_in_int);
 
@@ -1255,12 +1255,12 @@ void isomorph::compute_stabilizer(groups::sims *&Stab,
 		cout << "isomorph::compute_stabilizer "
 				"The " << l << " solutions are:" << endl;
 		if (l < 20) {
-			Orbiter->Lint_vec->matrix_print(sets, l, size);
+			Lint_matrix_print(sets, l, size);
 			}
 		else {
 			cout << "isomorph::compute_stabilizer "
 					"Too big to print, we print only 20" << endl;
-			Orbiter->Lint_vec->matrix_print(sets, 20, size);
+			Lint_matrix_print(sets, 20, size);
 			}
 		}
 
@@ -1343,7 +1343,7 @@ void isomorph::test_compute_stabilizer(int verbose_level)
 	int orbit_no;
 	groups::sims *Stab;
 	int k;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "isomorph::test_compute_stabilizer" << endl;
@@ -1447,7 +1447,7 @@ void isomorph::test_edges(int verbose_level)
 			}
 		}
 	cout << "subset: ";
-	Orbiter->Int_vec->print(cout, subset, level);
+	Int_vec_print(cout, subset, level);
 	cout << endl;
 
 	FREE_int(transporter1);
@@ -1628,9 +1628,9 @@ void isomorph::test_hash(int verbose_level)
 			H[i] = Data.lint_vec_hash(data, size);
 			}
 		{
-		tally C;
-		C.init(H, l, TRUE, 0);
-		C.print(FALSE /*f_backwards*/);
+			data_structures::tally C;
+			C.init(H, l, TRUE, 0);
+			C.print(FALSE /*f_backwards*/);
 		}
 		FREE_int(H);
 		}

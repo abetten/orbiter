@@ -439,7 +439,7 @@ void packing_classify::compute(int search_depth, int verbose_level)
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -544,12 +544,12 @@ void packing_classify::lifting_prepare_function_new(
 	col_labels = NEW_lint(nb_cols);
 
 
-	Orbiter->Lint_vec->copy(live_blocks2, col_labels, nb_cols);
+	Lint_vec_copy(live_blocks2, col_labels, nb_cols);
 
 
 	if (f_vv) {
 		cout << "packing_classify::lifting_prepare_function_new candidates: ";
-		Orbiter->Lint_vec->print(cout, col_labels, nb_cols);
+		Lint_vec_print(cout, col_labels, nb_cols);
 		cout << " (nb_candidates=" << nb_cols << ")" << endl;
 	}
 
@@ -610,7 +610,7 @@ void packing_classify::report_fixed_objects(int *Elt,
 	{
 		ofstream fp(fname_latex);
 		char title[1000];
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		sprintf(title, "Fixed Objects");
 
@@ -726,7 +726,7 @@ void packing_classify::report_fixed_objects(int *Elt,
 
 		L.foot(fp);
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
@@ -874,7 +874,7 @@ static void packing_early_test_function(long int *S, int len,
 
 	if (f_v) {
 		cout << "packing_early_test_function for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	a = S[len - 1];

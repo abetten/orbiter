@@ -292,7 +292,7 @@ public:
 	int *isotype; // [nCk]
 	int *orbit_frequencies; // [nb_orbits]
 	int nb_orbits;
-	tally *T;
+	data_structures::tally *T;
 
 
 	data_structures::set_of_sets *SoS;

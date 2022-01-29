@@ -143,7 +143,7 @@ void upstep_work::init(poset_classification *gen,
 		}
 	if (f_v) {
 		cout << "upstep_work::init path: ";
-		Orbiter->Int_vec->print(cout, path, size + 1);
+		Int_vec_print(cout, path, size + 1);
 		cout << endl;
 		}
 	if (f_v) {
@@ -242,7 +242,7 @@ void upstep_work::handle_extension_fusion_type(int verbose_level)
 
 		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << " point " << pt << " ";
-		Orbiter->Lint_vec->set_print(cout, set /*gen->S1*/, size + 1);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, set /*gen->S1*/, size + 1);
 		cout << " is a fusion node, skipping" << endl;
 		FREE_lint(set);
 #if 0
@@ -434,7 +434,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep_work::init_extension_node "
 				"initializing Node " << cur << " ";
-		Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+		Lint_vec_print(cout, gen->get_S(), size);
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals;
 		cout << " verbose_level=" << verbose_level;
@@ -464,7 +464,7 @@ int upstep_work::init_extension_node(int verbose_level)
 
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"before O_cur->init_extension_node_prepare_G" << endl;
 	}
@@ -473,7 +473,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		verbose_level - 4);
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"after O_cur->init_extension_node_prepare_G" << endl;
 	}
@@ -482,7 +482,7 @@ int upstep_work::init_extension_node(int verbose_level)
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << endl;
 	}
 	if (f_vvv) {
@@ -504,7 +504,7 @@ int upstep_work::init_extension_node(int verbose_level)
 
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"before O_cur->init_extension_node_prepare_H" << endl;
 	}
@@ -527,7 +527,7 @@ int upstep_work::init_extension_node(int verbose_level)
 	
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"after O_cur->init_extension_node_prepare_H" << endl;
 	}
@@ -535,14 +535,14 @@ int upstep_work::init_extension_node(int verbose_level)
 	
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+		Lint_vec_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node calling upstep" << endl;
 	}
 
 	if (gen->get_poset()->f_subspace_lattice) {
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+			Lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node "
 					"calling upstep_subspace_action" << endl;
 		}
@@ -561,7 +561,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		}
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+			Lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node "
 					"after upstep_subspace_action" << endl;
 		}
@@ -569,7 +569,7 @@ int upstep_work::init_extension_node(int verbose_level)
 	else {
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+			Lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node calling "
 					"upstep_for_sets, verbose_level = "
 					<< verbose_level - 2 << endl;
@@ -587,14 +587,14 @@ int upstep_work::init_extension_node(int verbose_level)
 		}
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+			Lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node after "
 					"upstep_for_sets" << endl;
 		}
 	}
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+		Lint_vec_print(cout, gen->get_S(), size);
 		cout << "extension with point " << pt << " : " << endl;
 		cout << "after upstep_for_sets/upstep_subspace_action" << endl;
 		//print_coset_table(coset_table, nb_cosets_processed);
@@ -606,7 +606,7 @@ int upstep_work::init_extension_node(int verbose_level)
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+		Lint_vec_print(cout, gen->get_S(), size);
 		cout << "_{";
 		H->print_group_order(cout);
 		cout << "}" << endl;
@@ -642,7 +642,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		
 		gen->stabilizer_order(cur, go);
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		Orbiter->Lint_vec->print(cout, gen->get_S(), size);
+		Lint_vec_print(cout, gen->get_S(), size);
 		cout << "_{";
 		cout << go;
 		cout << "} (double check)" << endl;
@@ -675,7 +675,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep for set ";
-		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << " verbose_level=" << verbose_level;
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals << endl;
@@ -784,7 +784,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 
 
 		// initialize set[0] and transporter[0] for the tracing
-		Orbiter->Lint_vec->copy(gen->get_S(), gen->get_set_i(0), size);
+		Lint_vec_copy(gen->get_S(), gen->get_set_i(0), size);
 #if 0
 		for (h = 0; h < size; h++) {
 			gen->set[0][h] = gen->S[h];
@@ -798,7 +798,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		if (f_v4) {
 			print_level_extension_coset_info();
 			cout << "exchanged set: ";
-			Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), size);
+			orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), size);
 			cout << endl;
 			cout << "upstep_work::upstep_for_sets "
 					"calling recognize, verbose_level="
@@ -909,7 +909,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_for_sets upstep orbit "
 				"length for set ";
-		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
 
 		cout << "coset_table of length " << nb_cosets_processed

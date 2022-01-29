@@ -126,7 +126,7 @@ void semifield_substructure::compute_cases(
 			<< " cases with more than one solution and with a "
 				"non-trivial group" << endl;
 		cout << "They are:" << endl;
-		Orbiter->Int_vec->matrix_print(Non_unique_cases_with_non_trivial_group,
+		Int_matrix_print(Non_unique_cases_with_non_trivial_group,
 			nb_non_unique_cases_with_non_trivial_group / 10 + 1, 10);
 		}
 
@@ -145,16 +145,16 @@ void semifield_substructure::compute_cases(
 		sum += Need_orbits_len[i];
 		}
 	{
-	tally C;
+		data_structures::tally C;
 
-	C.init(Need_orbits_len,
-			nb_non_unique_cases_with_non_trivial_group, FALSE,
-			0);
-	if (f_v) {
-		cout << "classification of Len amongst the need orbits cases:" << endl;
-		C.print_naked(TRUE);
-		cout << endl;
-		}
+		C.init(Need_orbits_len,
+				nb_non_unique_cases_with_non_trivial_group, FALSE,
+				0);
+		if (f_v) {
+			cout << "classification of Len amongst the need orbits cases:" << endl;
+			C.print_naked(TRUE);
+			cout << endl;
+			}
 	}
 	if (f_v) {
 		cout << "For a total of " << sum << " semifields" << endl;
@@ -212,8 +212,8 @@ void semifield_substructure::compute_orbits(
 		position = NEW_int(len);
 		orbit_idx = NEW_int(len);
 
-		Orbiter->Int_vec->zero(f_reached, len);
-		Orbiter->Int_vec->mone(position, len);
+		Int_vec_zero(f_reached, len);
+		orbiter_kernel_system::Orbiter->Int_vec->mone(position, len);
 
 		int cnt, f;
 
@@ -238,7 +238,7 @@ void semifield_substructure::compute_orbits(
 					"semifield " << f << " / " << len << endl;
 				cout << "Orbit rep "
 					<< f << ":" << endl;
-				Orbiter->Lint_vec->print(cout, input_data, SC->k);
+				Lint_vec_print(cout, input_data, SC->k);
 				cout << endl;
 				}
 			if (FALSE) {
@@ -492,7 +492,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 void semifield_substructure::do_classify(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "semifield_substructure::do_classify" << endl;
@@ -519,7 +519,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 
 	f_processed = NEW_int(nb_flag_orbits);
-	Orbiter->Int_vec->zero(f_processed, nb_flag_orbits);
+	Int_vec_zero(f_processed, nb_flag_orbits);
 	nb_processed = 0;
 
 
@@ -565,12 +565,12 @@ void semifield_substructure::do_classify(int verbose_level)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 		}
-		Orbiter->Lint_vec->copy(
+		Lint_vec_copy(
 				Flag_orbits->Pt + f * Flag_orbits->pt_representation_sz,
 				data1, SC->k);
 		if (f_v) {
 			cout << "data1=";
-			Orbiter->Lint_vec->print(cout, data1, SC->k);
+			Lint_vec_print(cout, data1, SC->k);
 			cout << endl;
 		}
 
@@ -587,7 +587,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		}
 		if (f_v) {
 			cout << "Basis1=" << endl;
-			Orbiter->Int_vec->matrix_print(Basis1, SC->k, SC->k2);
+			Int_matrix_print(Basis1, SC->k, SC->k2);
 			SC->basis_print(Basis1, SC->k);
 		}
 		f_skip = FALSE;
@@ -598,7 +598,7 @@ void semifield_substructure::do_classify(int verbose_level)
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
-			Orbiter->Int_vec->print(cout, v3, SC->k);
+			Int_vec_print(cout, v3, SC->k);
 			cout << " which is not the (k-1)-th unit vector, "
 					"so we skip" << endl;
 			f_skip = TRUE;
@@ -792,10 +792,10 @@ void semifield_substructure::loop_over_all_subspaces(
 
 		if (f_vvv) {
 			cout << "base change matrix B=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(B, k, k);
+			Int_matrix_print_bitwise(B, k, k);
 
 			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+			Int_matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -827,7 +827,7 @@ void semifield_substructure::loop_over_all_subspaces(
 			cout << "After trace, trace_po = "
 					<< trace_po << endl;
 			cout << "Basis2 (after trace)=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+			Int_matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -869,7 +869,7 @@ void semifield_substructure::loop_over_all_subspaces(
 				0 /*verbose_level - 2*/);
 			if (f_vvv) {
 				cout << "Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+				Int_matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 			}
 
@@ -878,7 +878,7 @@ void semifield_substructure::loop_over_all_subspaces(
 			}
 			if (f_vvv) {
 				cout << "data2=";
-				Orbiter->Lint_vec->print(cout, data2, k);
+				Lint_vec_print(cout, data2, k);
 				cout << endl;
 			}
 
@@ -901,11 +901,11 @@ void semifield_substructure::loop_over_all_subspaces(
 
 				cout << "trace_po=" << trace_po << endl;
 				cout << "data2=";
-				Orbiter->Lint_vec->print(cout, data2, k);
+				Lint_vec_print(cout, data2, k);
 				cout << endl;
 
 				cout << "Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+				Int_matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 
 				exit(1);
@@ -1200,10 +1200,10 @@ void semifield_substructure::all_two_dimensional_subspaces(
 
 		if (f_vvv) {
 			cout << "base change matrix B=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(B, k, k);
+			Int_matrix_print_bitwise(B, k, k);
 
 			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+			Int_matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -1290,11 +1290,11 @@ int semifield_substructure::identify(long int *data,
 		if (f_vvv) {
 			cout << "semifield_substructure::identify "
 					"base change matrix B=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(B, k, k);
+			Int_matrix_print_bitwise(B, k, k);
 
 			cout << "semifield_substructure::identify "
 					"Basis2 = B * Basis1 (before trace)=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+			Int_matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -1326,7 +1326,7 @@ int semifield_substructure::identify(long int *data,
 					<< trace_po << endl;
 			cout << "semifield_substructure::identify "
 					"Basis2 (after trace)=" << endl;
-			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+			Int_matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -1369,7 +1369,7 @@ int semifield_substructure::identify(long int *data,
 			if (f_vvv) {
 				cout << "semifield_substructure::identify "
 						"Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+				Int_matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 			}
 
@@ -1378,7 +1378,7 @@ int semifield_substructure::identify(long int *data,
 			}
 			if (f_vvv) {
 				cout << "semifield_substructure::identify data2=";
-				Orbiter->Lint_vec->print(cout, data2, k);
+				Lint_vec_print(cout, data2, k);
 				cout << endl;
 			}
 
@@ -1398,12 +1398,12 @@ int semifield_substructure::identify(long int *data,
 				cout << "semifield_substructure::identify "
 						"trace_po=" << trace_po << endl;
 				cout << "semifield_substructure::identify data2=";
-				Orbiter->Lint_vec->print(cout, data2, k);
+				Lint_vec_print(cout, data2, k);
 				cout << endl;
 
 				cout << "semifield_substructure::identify "
 						"Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
+				Int_matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 
 				return FALSE;
@@ -1548,7 +1548,7 @@ int semifield_substructure::find_semifield_in_table(
 
 	if (f_v) {
 		cout << "searching for: ";
-		Orbiter->Lint_vec->print(cout, given_data, SC->k);
+		Lint_vec_print(cout, given_data, SC->k);
 		cout << endl;
 		}
 	fst = FstLen[2 * po + 0];
@@ -1596,7 +1596,7 @@ int semifield_substructure::find_semifield_in_table(
 					"semifield in the table" << endl;
 			for (g = 0; g < len; g++) {
 				cout << g << " : " << fst + g << " : ";
-				Orbiter->Lint_vec->print(cout,
+				Lint_vec_print(cout,
 						Data + (fst + g) * data_size + start_column,
 						SC->k);
 				cout << " : ";

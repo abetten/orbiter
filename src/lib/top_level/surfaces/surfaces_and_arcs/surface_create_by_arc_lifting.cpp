@@ -97,7 +97,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 		cout << "surface_create_by_arc_lifting::init extending arc "
 				<< arc_idx << " / "
 				<< SCA->Six_arcs->nb_arcs_not_on_conic << " : Arc6 = ";
-		Orbiter->Lint_vec->print(cout, Arc6, 6);
+		Lint_vec_print(cout, Arc6, 6);
 		cout << endl;
 	}
 
@@ -115,7 +115,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	}
 
 	string magma_fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	magma_fname.assign("surface_q");
 	sprintf(str, "%d", SCA->Surf_A->PA->F->q);

@@ -139,7 +139,7 @@ class symbol_definition;
 
 //! Applications in orthogonal geometry
 
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 	// orthogonal

@@ -153,7 +153,7 @@ void invariants_packing::init(isomorph *Iso,
 
 
 	Spread_type_of_packing = NEW_int(Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
-	Orbiter->Int_vec->zero(Spread_type_of_packing, Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
+	Int_vec_zero(Spread_type_of_packing, Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
 	
 	// compute Spread_type_of_packing:
 
@@ -173,7 +173,7 @@ void invariants_packing::init(isomorph *Iso,
 		}
 	}
 
-	Classify = NEW_OBJECT(tally_vector_data);
+	Classify = NEW_OBJECT(data_structures::tally_vector_data);
 
 	Classify->init(Spread_type_of_packing, Iso->size /* data_length */,
 			P->Spread_table_with_selection->nb_iso_types_of_spreads /* data_set_sz */,
@@ -227,7 +227,7 @@ void invariants_packing::init(isomorph *Iso,
 				"We found " << Classify->nb_types
 				<< " types of packings" << endl;
 		for (i = 0; i < Classify->nb_types; i++) {
-			Orbiter->Int_vec->print(cout,
+			Int_vec_print(cout,
 					Classify->Reps_in_lex_order[i],
 					P->Spread_table_with_selection->nb_iso_types_of_spreads);
 			cout << " : " << Classify->Frequency_in_lex_order[i] << endl;
@@ -317,7 +317,7 @@ void invariants_packing::compute_dual_packings(
 			f_implicit_fusion, verbose_level - 3);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname.assign("Dual_idx.csv");
@@ -342,7 +342,7 @@ void invariants_packing::make_table(
 	//int f_vv = (verbose_level >= 2);
 	int i;
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	if (f_v) {
 		cout << "invariants_packing::make_table" << endl;
@@ -384,7 +384,7 @@ void invariants_packing::make_table(
 			sprintf(str, "ids_of_all_type_%d.csv", i);
 		}
 		fname.assign(str);
-		Orbiter->Int_vec->print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
+		Int_vec_print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
 				P->Spread_table_with_selection->nb_iso_types_of_spreads);
 		ost << " & ";
 		// ost << Frequency[i] << " & ";
@@ -422,7 +422,7 @@ void invariants_packing::make_table(
 
 		Fio.int_vecs_write_csv(set, ago, nb, fname, "ID", "ago");
 
-		tally C;
+		data_structures::tally C;
 
 		C.init(ago, nb, FALSE, 0);
 		

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 orbiter_data_file::orbiter_data_file()
@@ -99,6 +100,5 @@ void orbiter_data_file::load(std::string &fname, int verbose_level)
 }
 
 
-}
-}
+}}}
 

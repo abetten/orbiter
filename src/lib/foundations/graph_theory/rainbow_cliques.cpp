@@ -54,7 +54,7 @@ void rainbow_cliques::search(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "rainbow_cliques::search" << endl;
@@ -203,7 +203,7 @@ int rainbow_cliques::find_candidates(
 	// color_frequency[i] is the frequency of points with color i 
 	// in the list pt_list[]:
 
-	Orbiter->Int_vec->zero(color_frequency, graph->nb_colors);
+	Int_vec_zero(color_frequency, graph->nb_colors);
 	for (i = 0; i < nb_pts; i++) {
 		pt = pt_list[i];
 		if (pt >= graph->nb_points) {
@@ -221,7 +221,7 @@ int rainbow_cliques::find_candidates(
 	}
 	if (f_v) {
 		cout << "rainbow_cliques::find_candidates color_frequency: ";
-		Orbiter->Int_vec->print(cout, color_frequency, graph->nb_colors);
+		Int_vec_print(cout, color_frequency, graph->nb_colors);
 		cout << endl;
 	}
 
@@ -237,7 +237,7 @@ int rainbow_cliques::find_candidates(
 						"satisfied color appears with positive "
 						"frequency" << endl;
 				cout << "current clique:";
-				Orbiter->Int_vec->print(cout, current_clique, current_clique_size);
+				Int_vec_print(cout, current_clique, current_clique_size);
 				cout << endl;
 				exit(1);
 			}
@@ -293,13 +293,13 @@ int rainbow_cliques::find_candidates(
 		cout << "nb_colors_per_vertex=" << graph->nb_colors_per_vertex << endl;
 		cout << "current_clique_size=" << current_clique_size << endl;
 		cout << "color_frequency=";
-		Orbiter->Int_vec->print(cout, color_frequency, graph->nb_colors);
+		Int_vec_print(cout, color_frequency, graph->nb_colors);
 		cout << endl;
 		cout << "f_color_satisfied=";
-		Orbiter->Int_vec->print(cout, f_color_satisfied, graph->nb_colors);
+		Int_vec_print(cout, f_color_satisfied, graph->nb_colors);
 		cout << endl;
 		cout << "current clique:";
-		Orbiter->Int_vec->print(cout, current_clique, current_clique_size);
+		Int_vec_print(cout, current_clique, current_clique_size);
 		cout << endl;
 		cout << "c : f_color_satisfied[c] : color_frequency[c]" << endl;
 		for (c = 0; c < graph->nb_colors; c++) {
@@ -355,7 +355,7 @@ void call_back_colored_graph_clique_found(
 		int i, j, pt, c;
 		
 		cout << "call_back_colored_graph_clique_found clique";
-		Orbiter->Int_vec->set_print(cout, CF->current_clique, CF->Control->target_size);
+		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, CF->current_clique, CF->Control->target_size);
 		cout << endl;
 		for (i = 0; i < CF->Control->target_size; i++) {
 			pt = CF->current_clique[i];

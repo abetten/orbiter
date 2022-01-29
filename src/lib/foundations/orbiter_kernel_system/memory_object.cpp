@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 
@@ -596,7 +597,6 @@ void memory_object::decompress(int verbose_level)
 #endif
 
 
-}
-}
+}}}
 
 

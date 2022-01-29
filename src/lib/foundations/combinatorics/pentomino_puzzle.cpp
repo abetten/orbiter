@@ -75,7 +75,7 @@ void pentomino_puzzle::main(int verbose_level)
 		nb_sol, sol_length, 0 /* verbose_level */);
 
 	for (l = 0; l < nb_sol; l++) {
-		Orbiter->Lint_vec->copy(Sol + l * sol_length, L->Sets[l], sol_length);
+		Lint_vec_copy(Sol + l * sol_length, L->Sets[l], sol_length);
 		}
 
 	L->sort_all(0);
@@ -116,35 +116,35 @@ void pentomino_puzzle::main(int verbose_level)
 
 
 	{
-	const char *fname = "pentomino_all.tex";
-	ofstream fp(fname);
-	latex_interface La;
+		const char *fname = "pentomino_all.tex";
+		ofstream fp(fname);
+		orbiter_kernel_system::latex_interface La;
 
-	La.head_easy(fp);
+		La.head_easy(fp);
 
-	fp << "\\noindent" << endl;
-	for (l = 0; l < nb_sol; l++) {
+		fp << "\\noindent" << endl;
+		for (l = 0; l < nb_sol; l++) {
 
 
-		cout << "Solution " << l << " : ";
-#if 1
-		Orbiter->Lint_vec->print(cout, L->Sets[l], sol_length);
-		cout << "\\\\" << endl;
-#endif
+			cout << "Solution " << l << " : ";
+	#if 1
+			Lint_vec_print(cout, L->Sets[l], sol_length);
+			cout << "\\\\" << endl;
+	#endif
 
-		draw_it(fp, L->Sets[l]);
-		cout << "\\\\" << endl;
+			draw_it(fp, L->Sets[l]);
+			cout << "\\\\" << endl;
 
-#if 0
-		for (u = 0; u < sol_length; u++) {
-			j = Sol[l * sol_length + u];
-			decode_piece(j, h, r, t);
-			cout << "j=" << j << " h=" << h << " r=" << r << " t=" << t << endl;
+	#if 0
+			for (u = 0; u < sol_length; u++) {
+				j = Sol[l * sol_length + u];
+				decode_piece(j, h, r, t);
+				cout << "j=" << j << " h=" << h << " r=" << r << " t=" << t << endl;
+				}
+	#endif
+
 			}
-#endif
-
-		}
-	La.foot(fp);
+		La.foot(fp);
 	}
 
 	int i;
@@ -165,31 +165,31 @@ void pentomino_puzzle::main(int verbose_level)
 	int o, f, p;
 
 	{
-	const char *fname = "pentomino_orbits.tex";
-	ofstream fp(fname);
-	latex_interface La;
+		const char *fname = "pentomino_orbits.tex";
+		ofstream fp(fname);
+		orbiter_kernel_system::latex_interface La;
 
-	La.head_easy(fp);
+		La.head_easy(fp);
 
-	fp << "\\noindent" << endl;
-	for (o = 0; o < nb_orbits; o++) {
-		f = orbit_first[o];
-		i = orbit[f];
-#if 1
-		cout << "Representative of orbit " << o << " is solution " << i << " : ";
-		Orbiter->Lint_vec->print(cout, L->Sets[i], sol_length);
-		cout << "\\\\" << endl;
-#endif
+		fp << "\\noindent" << endl;
+		for (o = 0; o < nb_orbits; o++) {
+			f = orbit_first[o];
+			i = orbit[f];
+	#if 1
+			cout << "Representative of orbit " << o << " is solution " << i << " : ";
+			Lint_vec_print(cout, L->Sets[i], sol_length);
+			cout << "\\\\" << endl;
+	#endif
 
-		draw_it(fp, L->Sets[i]);
-		cout << "\\\\" << endl;
+			draw_it(fp, L->Sets[i]);
+			cout << "\\\\" << endl;
 
-		if (((o + 1) % 35) == 0) {
-			cout << endl << "\\clearpage" << endl << endl << "\\noindent" << endl;
+			if (((o + 1) % 35) == 0) {
+				cout << endl << "\\clearpage" << endl << endl << "\\noindent" << endl;
+				}
+
 			}
-
-		}
-	La.foot(fp);
+		La.foot(fp);
 	}
 
 	int nb_orbits_without_I;
@@ -225,7 +225,7 @@ void pentomino_puzzle::main(int verbose_level)
 	{
 	const char *fname = "pentomino_orbits_reduced.tex";
 	ofstream fp(fname);
-	latex_interface La;
+	orbiter_kernel_system::latex_interface La;
 
 
 	La.head_easy(fp);
@@ -238,7 +238,7 @@ void pentomino_puzzle::main(int verbose_level)
 
 #if 1
 		cout << p << " / " << nb_orbits_without_I << " Representative of orbit " << o << " is solution " << i << " : ";
-		Orbiter->Lint_vec->print(cout, L->Sets[i], sol_length);
+		Lint_vec_print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -472,7 +472,7 @@ void pentomino_puzzle::decode_assembly(long int *set)
 	int i, h = 0, r = 0, t = 0, tt, x, y, rr;
 
 	cout << "Set ";
-	Orbiter->Lint_vec->print(cout, set, 5);
+	Lint_vec_print(cout, set, 5);
 	cout << endl;
 
 	for (i = 0; i < 5; i++) {
@@ -583,7 +583,7 @@ void pentomino_puzzle::compute_image_function(data_structures::set_of_sets *S,
 	if (f_v) {
 		cout << "compute_image_function "
 				"computing image of solution " << elt_idx << " = ";
-		Orbiter->Lint_vec->print(cout, set1, sz);
+		Lint_vec_print(cout, set1, sz);
 		cout << " under generator " << gen_idx << endl;
 		}
 
@@ -616,14 +616,14 @@ void pentomino_puzzle::compute_image_function(data_structures::set_of_sets *S,
 			this /* void *data_for_compare */,
 		S->nb_sets, set2, idx, 0 /*verbose_level*/)) {
 		cout << "compute_image_function cannot find image" << endl;
-		Orbiter->Lint_vec->print(cout, set2, sz);
+		Lint_vec_print(cout, set2, sz);
 		cout << endl;
 		exit(1);
 		}
 	idx_of_image = idx;
 	if (f_v) {
 		cout << "compute_image_function image is ";
-		Orbiter->Lint_vec->print(cout, set2, sz);
+		Lint_vec_print(cout, set2, sz);
 		cout << " which is solution " << idx_of_image << endl;
 		}
 	FREE_lint(set2);

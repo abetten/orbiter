@@ -124,7 +124,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 
 		rep = K.Spread_representative(q, k, Descr->iso, sz);
 		set = NEW_lint(sz);
-		Orbiter->Lint_vec->copy(rep, set, sz);
+		Lint_vec_copy(rep, set, sz);
 
 		Sg = NEW_OBJECT(groups::strong_generators);
 
@@ -160,7 +160,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 
 	if (f_v) {
 		cout << "spread_create::init set = ";
-		Orbiter->Lint_vec->print(cout, set, sz);
+		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 

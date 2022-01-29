@@ -1124,7 +1124,7 @@ class incidence_structure {
 		// INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL
 
 	int *M;
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 	hjelmslev *H;
 	projective_space *P;
 	
@@ -1138,7 +1138,7 @@ class incidence_structure {
 		int verbose_level);
 	void init_projective_space(projective_space *P, int verbose_level);
 	void init_hjelmslev(hjelmslev *H, int verbose_level);
-	void init_orthogonal(orthogonal *O, int verbose_level);
+	void init_orthogonal(orthogonal_geometry::orthogonal *O, int verbose_level);
 	void init_by_incidences(int m, int n, int nb_inc, int *X, 
 		int verbose_level);
 	void init_by_R_and_X(int m, int n, int *R, int *X, int max_r, 
@@ -1367,7 +1367,7 @@ public:
 
 	projective_space *P3;
 	projective_space *P5;
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 	field_theory::finite_field *F;
 	int q;
 	long int nb_Pts; // number of points on the Klein quadric
@@ -1394,7 +1394,10 @@ public:
 	~klein_correspondence();
 	void null();
 	void freeself();
-	void init(field_theory::finite_field *F, orthogonal *O, int verbose_level);
+	void init(
+			field_theory::finite_field *F,
+			orthogonal_geometry::orthogonal *O,
+			int verbose_level);
 	void plane_intersections(long int *lines_in_PG3, int nb_lines,
 			ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane,
@@ -1523,7 +1526,7 @@ public:
 		data_structures::set_of_sets *SoS;
 		// SoS is used by t_PAC
 
-	tally *C;
+	data_structures::tally *C;
 		// used to determine multiplicities in the set of points
 
 	object_with_canonical_form();
@@ -2106,7 +2109,9 @@ public:
 			data_structures::partitionstack *S2,
 			incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack, int verbose_level);
-	void compute_decomposition_based_on_tally(tally *T1, tally *T2,
+	void compute_decomposition_based_on_tally(
+			data_structures::tally *T1,
+			data_structures::tally *T2,
 			incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack,
 			int verbose_level);
@@ -2442,7 +2447,7 @@ public:
 	int q;
 
 	projective_space *P3;
-	orthogonal *Q4;
+	orthogonal_geometry::orthogonal *Q4;
 	field_theory::finite_field *F;
 	int *Basis; // [2 * 4]
 

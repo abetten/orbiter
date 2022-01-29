@@ -70,7 +70,7 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << "arc_lifting_with_two_lines::create_surface" << endl;
 		cout << "line1=" << line1 << " line2=" << line2 << endl;
 		cout << "Arc6: ";
-		Orbiter->Lint_vec->print(cout, Arc6, 6);
+		Lint_vec_print(cout, Arc6, 6);
 		cout << endl;
 	}
 
@@ -133,9 +133,9 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface" << endl;
 		cout << "line1=" << line1 << ":" << endl;
-		Orbiter->Int_vec->matrix_print(Basis, 2, 4);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, 2, 4);
 		cout << "line2=" << line2 << ":" << endl;
-		Orbiter->Int_vec->matrix_print(Basis + 8, 2, 4);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis + 8, 2, 4);
 	}
 	rk = F->Linear_algebra->Gauss_simple(
 			Basis, 4, 4 /*dimension*/,
@@ -185,7 +185,7 @@ void arc_lifting_with_two_lines::create_surface(
 
 	if (f_vv) {
 		cout << "P[]: ";
-		Orbiter->Lint_vec->print(cout, P, 6);
+		Lint_vec_print(cout, P, 6);
 		cout << endl;
 	}
 
@@ -218,9 +218,9 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"rearranged arc:" << endl;
-		Orbiter->Lint_vec->print(cout, P, 6);
+		Lint_vec_print(cout, P, 6);
 		cout << endl;
-		Orbiter->Int_vec->matrix_print(Arc_coords, 6, 4);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Arc_coords, 6, 4);
 	}
 
 	for (i = 0; i < 4; i++) {
@@ -233,10 +233,10 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"transversal:" << endl;
-		Orbiter->Lint_vec->print(cout, transversal, 4);
+		Lint_vec_print(cout, transversal, 4);
 		cout << endl;
 		cout << "Transversals:" << endl;
-		Orbiter->Int_vec->matrix_print(Transversals, 8, 4);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Transversals, 8, 4);
 	}
 
 	input_Lines[0] = line1;
@@ -257,7 +257,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"coeff:" << endl;
-		Orbiter->Int_vec->print(cout, coeff, 20);
+		Int_vec_print(cout, coeff, 20);
 		cout << endl;
 
 		Surf->Poly3_4->print_equation(cout, coeff);
@@ -410,7 +410,7 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"a2=" << a2 << endl;
 		cout << "basis_a2:" << endl;
-		Orbiter->Int_vec->matrix_print(basis_a2, 2, 4);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(basis_a2, 2, 4);
 	}
 
 
@@ -445,7 +445,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"five_pts=";
-		Orbiter->Lint_vec->print(cout, five_pts, 5);
+		Lint_vec_print(cout, five_pts, 5);
 		cout << endl;
 	}
 	if (f_vv) {
@@ -470,7 +470,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"double_six_special=";
-		Orbiter->Lint_vec->print(cout, double_six_special, 12);
+		Lint_vec_print(cout, double_six_special, 12);
 		cout << endl;
 	}
 	double_six[0] = double_six_special[5];
@@ -489,10 +489,10 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"double_six=";
-		Orbiter->Lint_vec->print(cout, double_six, 12);
+		Lint_vec_print(cout, double_six, 12);
 		cout << endl;
 	}
-	Orbiter->Lint_vec->copy(double_six, lines27, 12);
+	Lint_vec_copy(double_six, lines27, 12);
 	Surf->create_the_fifteen_other_lines(double_six,
 			lines27 + 12, verbose_level - 10);
 

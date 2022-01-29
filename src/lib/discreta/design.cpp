@@ -677,7 +677,7 @@ void design_parameter_database_export_tex(char *path_db)
 
 
 	ofstream f("designs.tex", ios::trunc);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	L.head(f, TRUE /* f_book */, TRUE /* f_title */,
 		"$t$-Designs", "DISCRETA", TRUE /* f_toc */, 

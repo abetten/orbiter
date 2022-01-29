@@ -112,7 +112,7 @@ void spread_lifting::init(
 
 
 	col_labels = NEW_lint(nb_candidates);
-	Orbiter->Lint_vec->copy(candidates, col_labels, nb_candidates);
+	Lint_vec_copy(candidates, col_labels, nb_candidates);
 	nb_cols = nb_candidates;
 
 
@@ -172,17 +172,17 @@ void spread_lifting::compute_points_covered_by_starter(
 			exit(1);
 		}
 
-		Orbiter->Lint_vec->copy(point_list,
+		Lint_vec_copy(point_list,
 				points_covered_by_starter + i * S->block_size,
 				S->block_size);
 
 		if (f_v3) {
 			cout << "starter element " << i << " / "
 					<< starter_size << " is " << a << ":" << endl;
-			Orbiter->Int_vec->matrix_print(S->Grass->M, S->k, S->n);
+			Int_matrix_print(S->Grass->M, S->k, S->n);
 			//cout << endl;
 			cout << "points_covered_by_starter: " << endl;
-			Orbiter->Lint_vec->print(cout,
+			Lint_vec_print(cout,
 					points_covered_by_starter +
 						i * S->block_size, S->block_size);
 			cout << endl;
@@ -198,7 +198,7 @@ void spread_lifting::compute_points_covered_by_starter(
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter nb_points_covered_by_starter="
 				<< nb_points_covered_by_starter << endl;
-		Orbiter->Lint_vec->print(cout, points_covered_by_starter,
+		Lint_vec_print(cout, points_covered_by_starter,
 				nb_points_covered_by_starter);
 		cout << endl;
 	}
@@ -254,7 +254,7 @@ void spread_lifting::prepare_free_points(
 	if (f_v3) {
 		cout << "spread_lifting::prepare_free_points "
 				"The " << nb_free_points << " free points:" << endl;
-		Orbiter->Lint_vec->print(cout,
+		Lint_vec_print(cout,
 				free_point_list, nb_free_points);
 		cout << endl;
 		S->print_points(free_point_list, nb_free_points);
@@ -308,7 +308,7 @@ solvers::diophant *spread_lifting::create_system(int verbose_level)
 
 		if (f_v5) {
 			cout << "Which is " << endl;
-			Orbiter->Int_vec->matrix_print(S->Grass->M, S->k, S->n);
+			Int_matrix_print(S->Grass->M, S->k, S->n);
 		}
 		S->Mtx->GFq->all_PG_elements_in_subspace(
 				S->Grass->M, S->k, S->n, point_list, nb_points,
@@ -320,7 +320,7 @@ solvers::diophant *spread_lifting::create_system(int verbose_level)
 		}
 		if (FALSE /*f_vv*/) {
 			cout << "List of points: ";
-			Orbiter->Lint_vec->print(cout, point_list, nb_points);
+			Lint_vec_print(cout, point_list, nb_points);
 			cout << endl;
 		}
 
@@ -396,7 +396,7 @@ void spread_lifting::find_coloring(solvers::diophant *Dio,
 		if (f_v) {
 			cout << "found color " << nb_colors
 					<< " : " << i << " = " << a << " = ";
-			Orbiter->Int_vec->print(cout, v, S->n);
+			Int_vec_print(cout, v, S->n);
 			cout << endl;
 		}
 		colors[nb_colors++] = i;

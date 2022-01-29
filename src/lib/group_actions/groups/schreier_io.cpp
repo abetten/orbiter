@@ -22,7 +22,7 @@ void schreier::latex(std::string &fname)
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -164,8 +164,8 @@ void schreier::print_orbit_length_distribution(std::ostream &ost)
 {
 	int *val, *mult, len;
 
-	Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
-	Orbiter->Int_vec->distribution_print(ost, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution_print(ost, val, mult, len);
 	ost << endl;
 
 	FREE_int(val);
@@ -321,7 +321,7 @@ void schreier::make_orbit_trees(std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "schreier::make_orbit_trees" << endl;
@@ -440,7 +440,7 @@ void schreier::write_orbit_summary(std::string &fname,
 
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	long int *Vec[3];
 	const char *column_label[] = {"Rep", "StabOrder", "OrbitLength"};
 
@@ -469,7 +469,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	strong_generators *gens, std::ostream &ost)
 {
 	data_structures::sorting Sorting;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	ring_theory::longinteger_object full_group_order;
 
 	gens->group_order(full_group_order);
@@ -540,7 +540,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
-	Orbiter->Int_vec->copy(orbit_len, Len, nb_orbits);
+	Int_vec_copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
@@ -554,7 +554,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 		ost << endl;
 	}
 	ost << "Orbit lengths: ";
-	Orbiter->Int_vec->print(ost, orbit_len, nb_orbits);
+	Int_vec_print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -598,7 +598,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
-	Orbiter->Int_vec->copy(orbit_len, Len, nb_orbits);
+	Int_vec_copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
@@ -611,7 +611,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 		ost << endl;
 	}
 	ost << "Orbit lengths: ";
-	Orbiter->Int_vec->print(ost, orbit_len, nb_orbits);
+	Int_vec_print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -658,7 +658,7 @@ void schreier::print_fancy(
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
-	Orbiter->Int_vec->copy(orbit_len, Len, nb_orbits);
+	Int_vec_copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
@@ -671,7 +671,7 @@ void schreier::print_fancy(
 		ost << endl;
 	}
 	ost << "Orbit lengths: ";
-	Orbiter->Int_vec->print(ost, orbit_len, nb_orbits);
+	Int_vec_print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -950,7 +950,7 @@ void schreier::print_orbit(std::ostream &ost, int orbit_no)
 	}
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
-	Orbiter->Lint_vec->print_fully(ost, v, len);
+	Lint_vec_print_fully(ost, v, len);
 
 	FREE_lint(v);
 }
@@ -973,7 +973,7 @@ void schreier::print_orbit_with_original_labels(std::ostream &ost, int orbit_no)
 
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
-	Orbiter->Lint_vec->print_fully(ost, w, len);
+	Lint_vec_print_fully(ost, w, len);
 
 	FREE_lint(v);
 	FREE_lint(w);
@@ -981,7 +981,7 @@ void schreier::print_orbit_with_original_labels(std::ostream &ost, int orbit_no)
 
 void schreier::print_orbit_tex(std::ostream &ost, int orbit_no)
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int i, first, len;
 	int *v;
 	data_structures::sorting Sorting;
@@ -1003,7 +1003,7 @@ void schreier::print_orbit_tex(std::ostream &ost, int orbit_no)
 void schreier::print_orbit_sorted_tex(std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int i, first, len;
 	int *v;
 	data_structures::sorting Sorting;
@@ -1031,7 +1031,7 @@ void schreier::print_orbit_sorted_tex(std::ostream &ost,
 void schreier::print_orbit_sorted_with_original_labels_tex(std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int i, first, len;
 	long int *v;
 	long int *w;
@@ -1078,7 +1078,7 @@ void schreier::print_orbit_using_labels(std::ostream &ost,
 	}
 	//int_vec_print(ost, v, len);
 	Sorting.int_vec_heapsort(v, len);
-	Orbiter->Int_vec->print_fully(ost, v, len);
+	Int_vec_print_fully(ost, v, len);
 
 	FREE_int(v);
 }
@@ -1100,7 +1100,7 @@ void schreier::print_orbit_using_callback(std::ostream &ost,
 
 void schreier::print_orbit_type(int f_backwards)
 {
-	tally C;
+	data_structures::tally C;
 
 	C.init(orbit_len, nb_orbits, FALSE, 0);
 	C.print_naked(f_backwards);
@@ -1142,7 +1142,7 @@ void schreier::print_orbit_through_labels(std::ostream &ost,
 		v[i] = point_labels[orbit[first + i]];
 	}
 	Sorting.lint_vec_heapsort(v, len);
-	Orbiter->Lint_vec->print_fully(ost, v, len);
+	Lint_vec_print_fully(ost, v, len);
 	FREE_lint(v);
 }
 
@@ -1292,8 +1292,8 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 	//C.init(depth, len, FALSE, 0);
 	Nb = NEW_int(nb_layers);
 	Nb1 = NEW_int(nb_layers);
-	Orbiter->Int_vec->zero(Nb, nb_layers);
-	Orbiter->Int_vec->zero(Nb1, nb_layers);
+	Int_vec_zero(Nb, nb_layers);
+	Int_vec_zero(Nb1, nb_layers);
 	for (j = 0; j < len; j++) {
 		trace_back(NULL, orbit[fst + j], l);
 		l--;
@@ -1870,22 +1870,22 @@ void schreier::write_to_file_csv(std::string &fname_csv, int verbose_level)
 
 		string str;
 
-		Orbiter->Int_vec->create_string_with_quotes(str, orbit + orbit_first[i], len);
+		orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, orbit + orbit_first[i], len);
 		S.fill_entry_with_text(1 + i, 3, str);
 
 
 		str.assign("");
-		Orbiter->Int_vec->create_string_with_quotes(str, prev + orbit_first[i], len);
+		orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, prev + orbit_first[i], len);
 		S.fill_entry_with_text(1 + i, 4, str);
 
 
 		str.assign("");
-		Orbiter->Int_vec->create_string_with_quotes(str, label + orbit_first[i], len);
+		orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, label + orbit_first[i], len);
 		S.fill_entry_with_text(1 + i, 5, str);
 
 	}
 	S.save(fname_csv, 0/* verbose_level*/);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
@@ -1986,7 +1986,7 @@ void schreier::read_from_file_binary(std::ifstream &fp, int verbose_level)
 void schreier::write_file_binary(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier::write_file_binary" << endl;
@@ -2006,7 +2006,7 @@ void schreier::write_file_binary(std::string &fname, int verbose_level)
 void schreier::read_file_binary(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier::read_file_binary reading file "

@@ -15,6 +15,9 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orthogonal_geometry {
+
+
 
 #if 0
 void orthogonal::create_Linear_BLT_set(long int *set, int *ABC, int verbose_level)
@@ -94,7 +97,7 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 		cout << "orthogonal::create_FTWKB_BLT_set q mod 3 must be 2" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->zero(ABC, 3 * (q + 1));
+	Int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
 		a = i;
 		b = F->mult(3, F->power(i, 2));
@@ -109,7 +112,7 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 		Gg.create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec->print(cout, v, 5);
+			Int_vec_print(cout, v, 5);
 			cout << endl;
 		}
 		set[i] = rank_point(v, 1, 0);
@@ -117,10 +120,10 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 			cout << "rank " << set[i] << endl;
 		}
 	}
-	Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
+	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
 	if (f_vv) {
 		cout << "point : ";
-		Orbiter->Int_vec->print(cout, v, 5);
+		Int_vec_print(cout, v, 5);
 		cout << endl;
 	}
 	set[q] = rank_point(v, 1, 0);
@@ -129,7 +132,7 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 	}
 	if (f_v) {
 		cout << "orthogonal::create_FTWKB_BLT_set the BLT set FTWKB is ";
-		Orbiter->Lint_vec->print(cout, set, q + 1);
+		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 	}
 }
@@ -155,7 +158,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 		cout << "exponent=" << exponent << endl;
 		cout << "minus_one=" << minus_one << endl;
 		}
-	Orbiter->Int_vec->zero(ABC, 3 * (q + 1));
+	Int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
 		a = i;
 		b = 0;
@@ -170,7 +173,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 		ABC[i * 3 + 2] = c;
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec->print(cout, v, 5);
+			Int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = rank_point(v, 1, 0);
@@ -178,10 +181,10 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 			cout << "rank " << set[i] << endl;
 			}
 		}
-	Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
+	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
 	if (f_vv) {
 		cout << "point : ";
-		Orbiter->Int_vec->print(cout, v, 5);
+		Int_vec_print(cout, v, 5);
 		cout << endl;
 		}
 	set[q] = rank_point(v, 1, 0);
@@ -190,7 +193,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 		}
 	if (f_v) {
 		cout << "orthogonal::create_K1_BLT_set the BLT set K1 is ";
-		Orbiter->Lint_vec->print(cout, set, q + 1);
+		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -219,7 +222,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 		return;
 		}
 	five = 5 % F->p;
-	Orbiter->Int_vec->zero(ABC, 3 * (q + 1));
+	Int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
 		a = i;
 		b = F->mult(five, F->power(i, 3));
@@ -234,7 +237,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 		ABC[i * 3 + 2] = c;
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec->print(cout, v, 5);
+			Int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = rank_point(v, 1, 0);
@@ -242,10 +245,10 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 			cout << "rank " << set[i] << endl;
 			}
 		}
-	Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
+	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
 	if (f_vv) {
 		cout << "point : ";
-		Orbiter->Int_vec->print(cout, v, 5);
+		Int_vec_print(cout, v, 5);
 		cout << endl;
 		}
 	set[q] = rank_point(v, 1, 0);
@@ -255,7 +258,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_K2_BLT_set "
 				"the BLT set K2 is ";
-		Orbiter->Lint_vec->print(cout, set, q + 1);
+		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -320,10 +323,10 @@ void orthogonal::create_LP_37_72_BLT_set(
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
+		orbiter_kernel_system::Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec->print(cout, v, 5);
+			Int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = rank_point(v, 1, 0);
@@ -334,7 +337,7 @@ void orthogonal::create_LP_37_72_BLT_set(
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_72_BLT_set "
 				"the BLT set LP_37_72 is ";
-		Orbiter->Lint_vec->print(cout, set, q + 1);
+		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -398,10 +401,10 @@ void orthogonal::create_LP_37_4a_BLT_set(long int *set, int verbose_level)
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
+		orbiter_kernel_system::Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec->print(cout, v, 5);
+			Int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = rank_point(v, 1, 0);
@@ -412,7 +415,7 @@ void orthogonal::create_LP_37_4a_BLT_set(long int *set, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_4a_BLT_set "
 				"the BLT set LP_37_4a is ";
-		Orbiter->Lint_vec->print(cout, set, q + 1);
+		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -476,10 +479,10 @@ void orthogonal::create_LP_37_4b_BLT_set(long int *set, int verbose_level)
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
+		orbiter_kernel_system::Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec->print(cout, v, 5);
+			Int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = rank_point(v, 1, 0);
@@ -490,7 +493,7 @@ void orthogonal::create_LP_37_4b_BLT_set(long int *set, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_4b_BLT_set "
 				"the BLT set LP_37_4b is ";
-		Orbiter->Lint_vec->print(cout, set, q + 1);
+		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -565,10 +568,10 @@ void orthogonal::create_Law_71_BLT_set(
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
+		orbiter_kernel_system::Orbiter->Int_vec->init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec->print(cout, v, 5);
+			Int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = rank_point(v, 1, 0);
@@ -579,7 +582,7 @@ void orthogonal::create_Law_71_BLT_set(
 	if (f_v) {
 		cout << "orthogonal::create_Law_71_BLT_set "
 				"the BLT set LP_71 is ";
-		Orbiter->Lint_vec->print(cout, set, q + 1);
+		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -610,12 +613,12 @@ int orthogonal::BLT_test(int size, long int *set, int verbose_level)
 		return TRUE;
 	if (f_v) {
 		cout << "BLT_test for" << endl;
-		Orbiter->Lint_vec->print(cout, set, size);
+		Lint_vec_print(cout, set, size);
 		if (f_vv) {
 			for (i = 0; i < size; i++) {
 				unrank_point(v1, 1, set[i], verbose_level - 1);
 				cout << i << " : " << set[i] << " : ";
-				Orbiter->Int_vec->print(cout, v1, n);
+				Int_vec_print(cout, v1, n);
 				cout << endl;
 				}
 			}
@@ -702,11 +705,11 @@ int orthogonal::BLT_test(int size, long int *set, int verbose_level)
 				cout << "not OK; i=" << i << endl;
 				cout << "{x,y,z}={" << x << "," << y
 						<< "," << z << "}" << endl;
-				Orbiter->Int_vec->print(cout, v1, n);
+				Int_vec_print(cout, v1, n);
 				cout << endl;
-				Orbiter->Int_vec->print(cout, v2, n);
+				Int_vec_print(cout, v2, n);
 				cout << endl;
-				Orbiter->Int_vec->print(cout, v3, n);
+				Int_vec_print(cout, v3, n);
 				cout << endl;
 				cout << "fxz=" << fxz << " ";
 				if (EVEN(l1))
@@ -758,7 +761,7 @@ int orthogonal::collinearity_test(int size, long int *set, int verbose_level)
 			unrank_point(v1, 1, set[i], verbose_level - 1);
 			//Q_epsilon_unrank(*M->GFq, u, 1, epsilon, k,
 				//form_c1, form_c2, form_c3, line[i]);
-			Orbiter->Int_vec->print(cout, v1, 5);
+			Int_vec_print(cout, v1, 5);
 			cout << endl;
 			}
 		}
@@ -782,9 +785,9 @@ int orthogonal::collinearity_test(int size, long int *set, int verbose_level)
 				cout << "not OK; ";
 				cout << "{x,y}={" << x << "," << y
 						<< "} are collinear" << endl;
-				Orbiter->Int_vec->print(cout, v1, 5);
+				Int_vec_print(cout, v1, 5);
 				cout << endl;
-				Orbiter->Int_vec->print(cout, v2, 5);
+				Int_vec_print(cout, v2, 5);
 				cout << endl;
 				cout << "fxy=" << fxy << endl;
 				}
@@ -923,7 +926,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			}
 		if (f_vvv) {
 			cout << "subset " << setw(5) << cnt << " : ";
-			Orbiter->Int_vec->print(cout, subset, level);
+			Int_vec_print(cout, subset, level);
 			cout << " : "; // << endl;
 			}
 		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
@@ -931,7 +934,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				base_col, FALSE, NULL, level, n, n, 0);
 		if (f_vvv) {
 			cout << "after Gauss, rank = " << rk << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, level, n, n, 3);
+			Int_vec_print_integer_matrix_width(cout, Mtx, level, n, n, 3);
 			}
 		H = 0;
 		for (i = 0; i < level * n; i++) {
@@ -1014,7 +1017,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				cnt = sorting_perm_inv[ff + u];
 				Combi.unrank_k_subset(cnt, subset, size, level);
 				cout << "subset " << setw(5) << cnt << " : ";
-				Orbiter->Int_vec->print(cout, subset, level);
+				Int_vec_print(cout, subset, level);
 				cout << " : " << endl;
 				}
 			}
@@ -1046,7 +1049,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			Combi.unrank_k_subset(cnt, subset, size, level);
 			if (f_vvv) {
 				cout << "subset " << setw(5) << cnt << " : ";
-				Orbiter->Int_vec->print(cout, subset, level);
+				Int_vec_print(cout, subset, level);
 				cout << " : " << endl;
 				}
 			for (ii = 0; ii < level; ii++) {
@@ -1065,7 +1068,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 					f_complete, base_col, FALSE, NULL, level, n, n, 0);
 			if (f_vvv)  {
 				cout << "after Gauss, rank = " << rk << endl;
-				Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, level, n, n, 3);
+				Int_vec_print_integer_matrix_width(cout, Mtx, level, n, n, 3);
 				}
 
 			H = 0;
@@ -1078,7 +1081,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			}
 		if (f_vv) {
 			cout << "found Block ";
-			Orbiter->Int_vec->print(cout, Block, Block_size);
+			Int_vec_print(cout, Block, Block_size);
 			cout << endl;
 			}
 		for (u = 0; u < Block_size; u++) {
@@ -1089,7 +1092,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		cout << "Incidence structure between points "
 				"and high frequency planes:" << endl;
 		if (nb_planes < 30) {
-			Orbiter->Int_vec->print_integer_matrix_width(cout, Blocks,
+			Int_vec_print_integer_matrix_width(cout, Blocks,
 					nb_planes, Block_size, Block_size, 3);
 			}
 		}
@@ -1114,7 +1117,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		}
 	if (f_vv) {
 		cout << "Incidence matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Incma,
+		Int_vec_print_integer_matrix_width(cout, Incma,
 				size, nb_planes, nb_planes, 1);
 		}
 	for (i = 0; i < size; i++) {
@@ -1133,7 +1136,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		}
 	if (f_vv) {
 		cout << "I * I^\\top = " << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, IIt, size, size, size, 2);
+		Int_vec_print_integer_matrix_width(cout, IIt, size, size, size, 2);
 		}
 	for (i = 0; i < nb_planes; i++) {
 		for (j = 0; j < nb_planes; j++) {
@@ -1146,7 +1149,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		}
 	if (f_v) {
 		cout << "I^\\top * I = " << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, ItI,
+		Int_vec_print_integer_matrix_width(cout, ItI,
 				nb_planes, nb_planes, nb_planes, 3);
 		}
 
@@ -1213,4 +1216,5 @@ void orthogonal::plane_invariant(unusual_model *U,
 
 
 
-}}
+}}}
+

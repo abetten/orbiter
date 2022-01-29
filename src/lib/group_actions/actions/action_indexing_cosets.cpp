@@ -133,7 +133,7 @@ void action::coset_unrank(groups::sims *G, groups::sims *U,
 
 	if (f_v) {
 		cout << "orbit of length " << orbit_len << ":";
-		Orbiter->Int_vec->print(cout, orbit, orbit_len);
+		Int_vec_print(cout, orbit, orbit_len);
 		cout << endl;
 		}
 
@@ -397,7 +397,7 @@ long int action::coset_rank(groups::sims *G, groups::sims *U, int *Elt, int verb
 
 	if (f_v) {
 		cout << "G-orbit of length " << orbit_len << ":";
-		Orbiter->Int_vec->print(cout, orbit, orbit_len);
+		Int_vec_print(cout, orbit, orbit_len);
 		cout << endl;
 		}
 

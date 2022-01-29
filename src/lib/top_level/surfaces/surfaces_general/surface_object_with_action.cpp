@@ -952,7 +952,7 @@ void surface_object_with_action::print_automorphism_group(
 	int verbose_level)
 {
 	ring_theory::longinteger_object go;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	Aut_gens->group_order(go);
 	
@@ -1099,8 +1099,8 @@ void surface_object_with_action::print_automorphism_group(
 void surface_object_with_action::cheat_sheet_basic(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
-	latex_interface L;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet_basic" << endl;
@@ -1176,7 +1176,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet" << endl;
@@ -1252,7 +1252,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 
 	go = Aut_gens->group_order_as_lint();
 	if (go < 50) {
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 		int *Table;
 		Aut_gens->create_group_table(Table, go, verbose_level - 1);
 		L.print_integer_matrix_tex_block_by_block(ost,
@@ -1294,7 +1294,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 void surface_object_with_action::print_automorphism_group_gnerators(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_automorphism_group_gnerators" << endl;
@@ -1495,7 +1495,7 @@ void surface_object_with_action::investigate_surface_and_write_report(
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -1513,7 +1513,7 @@ void surface_object_with_action::investigate_surface_and_write_report(
 
 		L.foot(fp);
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
