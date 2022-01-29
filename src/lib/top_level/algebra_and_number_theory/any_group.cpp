@@ -200,7 +200,7 @@ void any_group::do_export_orbiter(actions::action *A2, int verbose_level)
 	}
 
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "any_group::do_export_orbiter label=" << label << endl;
@@ -247,7 +247,7 @@ void any_group::do_export_gap(int verbose_level)
 	}
 
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(label);
 	fname.append("_generators.gap");
@@ -289,7 +289,7 @@ void any_group::do_export_magma(int verbose_level)
 	}
 
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(label);
 	fname.append("_generators.magma");
@@ -319,7 +319,7 @@ void any_group::do_canonical_image_GAP(std::string &input_set_text, int verbose_
 	}
 
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(label);
 	fname.append("_canonical_image.gap");
@@ -361,7 +361,7 @@ void any_group::create_group_table(int verbose_level)
 	string fname;
 	int *Table;
 	long int n;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Subgroup_sims->create_group_table(Table, n, verbose_level);
 
@@ -374,7 +374,7 @@ void any_group::create_group_table(int verbose_level)
 	fname.append("_group_table.csv");
 
 	cout << "The group table is:" << endl;
-	Orbiter->Int_vec->matrix_print(Table, n, n, 2);
+	Int_matrix_print(Table, n, n);
 
 	Fio.int_matrix_write_csv(fname, Table, n, n);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -450,7 +450,7 @@ void any_group::normalizer(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -484,7 +484,7 @@ void any_group::normalizer(int verbose_level)
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -616,7 +616,7 @@ void any_group::do_find_subgroups(
 	const char *author = "Orbiter";
 	const char *extras_for_preamble = "";
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(LG->A2->label);
 	fname.append("_report.tex");
@@ -632,7 +632,7 @@ void any_group::do_find_subgroups(
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
@@ -747,7 +747,7 @@ void any_group::print_elements_tex(
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 		L.head_easy(fp);
 
 		H->print_all_group_elements_tex(fp);
@@ -796,7 +796,7 @@ void any_group::order_of_products_of_elements(
 	int *elements;
 	int nb_elements;
 
-	Orbiter->Int_vec->scan(Elements_text, elements, nb_elements);
+	Int_vec_scan(Elements_text, elements, nb_elements);
 
 
 	string fname;
@@ -807,7 +807,7 @@ void any_group::order_of_products_of_elements(
 
 	{
 		ofstream fp(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 		L.head_easy(fp);
 
 		H->print_all_group_elements_tex(fp);
@@ -955,7 +955,7 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 	combinatorics::combinatorics_domain Combi;
 
 
-	Orbiter->Lint_vec->scan(set_text, set, sz);
+	Lint_vec_scan(set_text, set, sz);
 
 	V1.read_column_csv(fname1, A, 1 /* col_idx */, verbose_level);
 	n1 = V1.len;
@@ -979,7 +979,7 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 		Rk[i] = Combi.rank_k_subset(set_image_int, A->degree, sz);
 
 		cout << i << " : ";
-		Orbiter->Lint_vec->print(cout, set_image, sz);
+		Lint_vec_print(cout, set_image, sz);
 		cout << i << " : ";
 		cout << Rk[i];
 		cout << endl;
@@ -988,7 +988,7 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 
 
 	cout << "Image sets by rank: ";
-	Orbiter->Int_vec->print_fully(cout, Rk, n1);
+	Int_vec_print_fully(cout, Rk, n1);
 	cout << endl;
 
 
@@ -1205,7 +1205,7 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 
 	orbit_of_sets Orb;
 	long int set[1];
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	set[0] = b.as_lint();
 
@@ -1301,7 +1301,7 @@ void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
 		cout << "computing orbits on set system from file "
 			<< fname_csv << ":" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, n;
 	long int *Table;
@@ -1362,7 +1362,7 @@ void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
 			first = Sch->orbit_first[i];
 			a = Sch->orbit[first + 0];
 			cout << a << " : ";
-			Orbiter->Lint_vec->print(cout, Table + a * set_size, set_size);
+			Lint_vec_print(cout, Table + a * set_size, set_size);
 			cout << endl;
 			//Sch->print_and_list_orbit_tex(i, ost);
 		}
@@ -1406,7 +1406,7 @@ void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_leve
 		cout << "computing orbit of set from file "
 			<< fname_csv << ":" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	long int *the_set;
 	int set_sz;
 
@@ -1787,11 +1787,11 @@ void any_group::do_conjugacy_class_of_element(
 
 	int *data, sz;
 
-	Orbiter->Int_vec->scan(elt_text, data, sz);
+	Int_vec_scan(elt_text, data, sz);
 
 	if (f_v) {
 		cout << "computing conjugacy class of ";
-		Orbiter->Int_vec->print(cout, data, sz);
+		Int_vec_print(cout, data, sz);
 		cout << endl;
 	}
 
@@ -1836,7 +1836,7 @@ void any_group::do_conjugacy_class_of_element(
 		cout << "computing conjugacy class of " << endl;
 		A->element_print_latex(Elt, cout);
 		cout << "which is the set ";
-		Orbiter->Lint_vec->print(cout, the_set, set_size);
+		Lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
 
@@ -1885,7 +1885,7 @@ void any_group::do_conjugacy_class_of_element(
 	// write as txt file:
 
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(elt_label);
 	fname.append("_orbit_under_");
@@ -1993,7 +1993,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 		cout << "computing the element ranks:" << endl;
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	long int *the_ranks;
 	data_structures_groups::vector_ge *Transporter;
 	int m, n;
@@ -2011,7 +2011,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 			if (FALSE) {
 				cout << i << " : ";
-				Orbiter->Int_vec->print(cout, M + i * n, n);
+				Int_vec_print(cout, M + i * n, n);
 				cout << endl;
 			}
 
@@ -2044,7 +2044,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 			if (FALSE) {
 				cout << i << " : ";
-				Orbiter->Int_vec->print(cout, M + i * n, n);
+				Int_vec_print(cout, M + i * n, n);
 				cout << endl;
 			}
 
@@ -2064,7 +2064,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 	if (f_v) {
 		cout << "computing conjugacy classes on the set " << endl;
-		Orbiter->Lint_vec->print(cout, the_ranks, m);
+		Lint_vec_print(cout, the_ranks, m);
 		cout << endl;
 	}
 
@@ -2121,7 +2121,7 @@ void any_group::create_latex_report_for_permutation_group(
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -2175,7 +2175,7 @@ void any_group::create_latex_report_for_permutation_group(
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -2216,7 +2216,7 @@ void any_group::create_latex_report_for_modified_group(
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -2270,7 +2270,7 @@ void any_group::create_latex_report_for_modified_group(
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

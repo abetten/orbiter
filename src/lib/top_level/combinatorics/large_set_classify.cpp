@@ -262,7 +262,7 @@ void large_set_classify::compute(int verbose_level)
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -825,11 +825,11 @@ static void large_set_early_test_function(long int *S, int len,
 
 	if (f_v) {
 		cout << "large_set_early_test_function for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	if (len == 0) {
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {

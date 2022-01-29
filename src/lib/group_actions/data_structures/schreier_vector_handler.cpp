@@ -208,7 +208,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 					"did not find pt" << endl;
 			cout << "pt = " << pt << endl;
 			cout << "vector of length " << n << endl;
-			Orbiter->Int_vec->print(cout, S->sv + 1, n);
+			Int_vec_print(cout, S->sv + 1, n);
 			cout << endl;
 			exit(1);
 			}
@@ -318,7 +318,7 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 	int I, n;
 	int f_v = (verbose_level >= 1);
 	int f_trivial_group;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_read_file" << endl;
@@ -370,7 +370,7 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 	int i, len, tmp;
 	int f_v = (verbose_level >= 1);
 	int f_trivial_group;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_write_file" << endl;
@@ -483,7 +483,7 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 	}
 #endif
 
-	tally C;
+	data_structures::tally C;
 	int f, a;
 
 	C.init(ancestor, n, FALSE, 0);

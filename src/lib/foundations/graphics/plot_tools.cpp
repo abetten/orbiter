@@ -137,7 +137,7 @@ void plot_tools::draw_density(
 		G.end_figure();
 		G.footer();
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "plot_tools::draw_density written file " << fname_full
@@ -267,7 +267,7 @@ void plot_tools::draw_density_multiple_curves(
 		G.end_figure();
 		G.footer();
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "plot_tools::draw_density written file " << fname_full
@@ -410,7 +410,7 @@ void plot_tools::projective_plane_draw_grid(std::string &fname,
 		G.end_figure();
 		G.footer();
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname_full << " of size "
 			<< Fio.file_size(fname_full) << endl;
@@ -493,7 +493,7 @@ void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 		G.end_figure();
 		G.footer();
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname_full << " of size "
 			<< Fio.file_size(fname_full) << endl;
@@ -744,10 +744,10 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		int *reps;
 		int nb_reps;
 
-		Orbiter->Int_vec->scan(Descr->cyclotomic_sets_reps, reps, nb_reps);
+		Int_vec_scan(Descr->cyclotomic_sets_reps, reps, nb_reps);
 
 		cout << "cyclotomic sets of ";
-		Orbiter->Int_vec->print(cout, reps, nb_reps);
+		Int_vec_print(cout, reps, nb_reps);
 		cout << " modulo " << Descr->cyclotomic_sets_q << endl;
 
 		if (Descr->f_cyclotomic_sets_thickness) {

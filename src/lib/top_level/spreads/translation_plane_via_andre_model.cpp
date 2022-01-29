@@ -158,7 +158,7 @@ void translation_plane_via_andre_model::init(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"spread_elements_numeric:" << endl;
-		Orbiter->Lint_vec->print(cout, spread_elements_numeric,
+		Lint_vec_print(cout, spread_elements_numeric,
 				NT.i_power_j(q, k) + 1);
 		cout << endl;
 	}
@@ -202,7 +202,7 @@ void translation_plane_via_andre_model::init(
 		if (f_v10) {
 			cout << "translation_plane_via_andre_model::init "
 					"Line_" << j << "=";
-			Orbiter->Int_vec->print(cout, pts_on_line, Andre->order + 1);
+			Int_vec_print(cout, pts_on_line, Andre->order + 1);
 			cout << endl;
 		}
 		for (h = 0; h < Andre->order + 1; h++) {
@@ -226,7 +226,7 @@ void translation_plane_via_andre_model::init(
 	
 
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(label);
 	fname.append("_incma.csv");
@@ -504,7 +504,7 @@ void translation_plane_via_andre_model::classify_arcs(
 		const char *prefix, int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 	//char fname_base[1000];
 
@@ -616,7 +616,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 		const char *prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 	int depth = 7;
 	//char fname_base[1000];
@@ -737,7 +737,7 @@ int translation_plane_via_andre_model::check_arc(
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
 				"check_arc the set is";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	for (i = 0; i < len; i++) {
@@ -792,7 +792,7 @@ int translation_plane_via_andre_model::check_subplane(
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
 				"check_subplane the set is";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 
@@ -851,7 +851,7 @@ int translation_plane_via_andre_model::check_subplane(
 					"check_subplane h != len2" << endl;
 			exit(1);
 		}
-		tally C;
+		data_structures::tally C;
 
 		C.init(L, len2, FALSE, 0);
 
@@ -898,7 +898,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 	}
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane the set is";
-		Orbiter->Lint_vec->print(cout, S, 4);
+		Lint_vec_print(cout, S, 4);
 		cout << endl;
 	}
 	h = 0;
@@ -964,7 +964,7 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -990,7 +990,7 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -1044,7 +1044,7 @@ static int translation_plane_via_andre_model_check_arc(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model_check_arc "
 				"checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	f_OK = TP->check_arc(S, len, 0 /*verbose_level - 1*/);
@@ -1073,7 +1073,7 @@ static int translation_plane_via_andre_model_check_subplane(
 	
 	if (f_v) {
 		cout << "translation_plane_via_andre_model_check_subplane checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	f_OK = TP->check_subplane(S, len, verbose_level - 1);

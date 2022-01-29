@@ -155,7 +155,7 @@ void hadamard_classify::init(int n, int f_draw,
 		int *color;
 
 		color = NEW_int(N);
-		Orbiter->Int_vec->zero(color, N);
+		Int_vec_zero(color, N);
 
 
 		CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
@@ -182,7 +182,7 @@ void hadamard_classify::init(int n, int f_draw,
 	int *color;
 
 	color = NEW_int(N);
-	Orbiter->Int_vec->zero(color, N);
+	Int_vec_zero(color, N);
 
 	CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
 
@@ -202,7 +202,7 @@ void hadamard_classify::init(int n, int f_draw,
 	int *color_graph;
 
 	color_graph = NEW_int(N * N);
-	Orbiter->Int_vec->zero(color_graph, N * N);
+	Int_vec_zero(color_graph, N * N);
 	k = 0;
 	cnt1 = 0;
 	for (i = 0; i < N; i++) {
@@ -230,7 +230,7 @@ void hadamard_classify::init(int n, int f_draw,
 
 	cout << "color graph:" << endl;
 	if (N < 30) {
-		Orbiter->Int_vec->matrix_print(color_graph, N, N);
+		Int_matrix_print(color_graph, N, N);
 		}
 	else {
 		cout << "Too big to print" << endl;
@@ -266,24 +266,14 @@ void hadamard_classify::init(int n, int f_draw,
 			}
 
 		char str[1000];
-		//int xmax_in = ONE_MILLION;
-		//int ymax_in = ONE_MILLION;
-		//int xmax_out = 500000;
-		//int ymax_out = 500000;
-		//double scale = 0.4;
-		//double line_width = 0.5;
 		string fname_base;
 
 		sprintf(str, "Hadamard_graph_%d", n);
 		fname_base.assign(str);
 
 
-		//CG->draw_partitioned(fname_base,
-		//xmax_in, ymax_in, xmax_out, ymax_out, verbose_level);
 		CG->draw(fname_base,
-				Orbiter->draw_options,
-				//xmax_in, ymax_in, xmax_out, ymax_out,
-				//scale, line_width,
+				orbiter_kernel_system::Orbiter->draw_options,
 				verbose_level);
 
 		if (f_v) {
@@ -372,7 +362,7 @@ void hadamard_classify::init(int n, int f_draw,
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_set_by_level(n, h, set);
 		cout << "Orbit " << h << " is the set ";
-		Orbiter->Lint_vec->print(cout, set, n);
+		Lint_vec_print(cout, set, n);
 		cout << endl;
 
 
@@ -397,7 +387,7 @@ void hadamard_classify::init(int n, int f_draw,
 				}
 			}
 		cout << "The Hadamard matrix " << h << " is:" << endl;
-		Orbiter->Int_vec->matrix_print(H, n, n);
+		Int_matrix_print(H, n, n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				a = H[i * n + j];
@@ -415,7 +405,7 @@ void hadamard_classify::init(int n, int f_draw,
 				}
 			}
 		cout << "The matrix H * H^t is:" << endl;
-		Orbiter->Int_vec->matrix_print(M, n, n);
+		Int_matrix_print(M, n, n);
 		}
 }
 
@@ -452,15 +442,15 @@ void hadamard_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "hadamard_classify::early_test_func checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -508,7 +498,7 @@ void hadamard_classify_early_test_function(long int *S, int len,
 
 	if (f_v) {
 		cout << "early_test_function for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	H->early_test_func(S, len,

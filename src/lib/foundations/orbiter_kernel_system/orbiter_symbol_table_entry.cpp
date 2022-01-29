@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 
@@ -543,7 +544,7 @@ void orbiter_symbol_table_entry::init_geometry_builder_object(std::string &label
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
-		Orbiter->Int_vec->print(cout, vec, vec_len);
+		Int_vec_print(cout, vec, vec_len);
 		cout << endl;
 	}
 	else if (type == t_object) {
@@ -567,9 +568,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_formula) {
 			cout << "formula" << endl;
-			formula *F;
+			expression_parser::formula *F;
 
-			F = (formula *) ptr;
+			F = (expression_parser::formula *) ptr;
 			F->print();
 		}
 		else if (object_type == t_cubic_surface) {
@@ -664,4 +665,5 @@ void orbiter_symbol_table_entry::print()
 }
 
 
-}}
+}}}
+

@@ -184,7 +184,7 @@ void schreier::init_images_only(int nb_images,
 			cout << "schreier::init_images_only allocating images[i], i=" << i << endl;
 		}
 		schreier::images[i] = NEW_int(2 * degree);
-		Orbiter->Int_vec->copy(images + i * degree, schreier::images[i], degree);
+		Int_vec_copy(images + i * degree, schreier::images[i], degree);
 		Combi.perm_inverse(schreier::images[i], schreier::images[i] + degree, degree);
 	}
 	allocate_tables();
@@ -225,7 +225,7 @@ void schreier::init_images_recycle(int nb_images,
 		}
 		else {
 			if (old_images[i]) {
-				Orbiter->Int_vec->copy(old_images[i], images[i], 2 * degree);
+				Int_vec_copy(old_images[i], images[i], 2 * degree);
 			}
 			else {
 				for (j = 0; j < 2 * degree; j++) {
@@ -266,7 +266,7 @@ void schreier::init_images_recycle(int nb_images,
 		}
 		images[i] = NEW_int(2 * degree);
 		if (old_images[i]) {
-			Orbiter->Int_vec->copy(old_images[i], images[i], 2 * degree);
+			Int_vec_copy(old_images[i], images[i], 2 * degree);
 		}
 		else {
 			for (j = 0; j < 2 * degree; j++) {
@@ -1059,7 +1059,7 @@ void schreier::compute_all_point_orbits(int verbose_level)
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
 				<< nb_orbits << " orbits" << endl;
-		tally Cl;
+		data_structures::tally Cl;
 
 		Cl.init(orbit_len, nb_orbits, FALSE, 0);
 		cout << "The distribution of orbit lengths is: ";
@@ -1408,7 +1408,7 @@ void schreier::compute_point_orbit_with_limited_depth(
 				<< " in action " << A->label << endl;
 	}
 	depth = NEW_int(A->degree);
-	Orbiter->Int_vec->zero(depth, A->degree);
+	Int_vec_zero(depth, A->degree);
 	pt_loc = orbit_inv[pt];
 	cur = orbit_first[nb_orbits];
 	if (pt_loc < cur) {
@@ -1581,7 +1581,7 @@ void schreier::random_schreier_generator_ith_orbit(
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int f_vvv = FALSE; //(verbose_level >= 3);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "schreier::random_schreier_generator_ith_orbit, "
@@ -1714,7 +1714,7 @@ void schreier::random_schreier_generator(int *Elt, int verbose_level)
 	int r1, r2, pt, pt2, pt2b, pt2_coset;
 	int *gen;
 	int pt1, pt1b;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "schreier::random_schreier_generator orbit_len = " 
@@ -2617,7 +2617,7 @@ void schreier::compute_orbit_statistic(int *set, int set_size,
 	if (f_v) {
 		cout << "schreier::compute_orbit_statistic" << endl;
 	}
-	Orbiter->Int_vec->zero(orbit_count, nb_orbits);
+	Int_vec_zero(orbit_count, nb_orbits);
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
 		o = orbit_number(a);
@@ -2638,7 +2638,7 @@ void schreier::compute_orbit_statistic_lint(long int *set, int set_size,
 	if (f_v) {
 		cout << "schreier::compute_orbit_statistic_lint" << endl;
 	}
-	Orbiter->Int_vec->zero(orbit_count, nb_orbits);
+	Int_vec_zero(orbit_count, nb_orbits);
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
 		o = orbit_number(a);
@@ -2742,7 +2742,7 @@ void schreier::elements_in_orbit_of(int pt,
 	idx = orbit_number(pt);
 	f = orbit_first[idx];
 	nb = orbit_len[idx];
-	Orbiter->Int_vec->copy(orbit + f, orb, nb);
+	Int_vec_copy(orbit + f, orb, nb);
 	if (f_v) {
 		cout << "schreier::elements_in_orbit_of done" << endl;
 	}
@@ -2775,7 +2775,7 @@ void schreier::get_orbit_lengths_once_each(
 {
 	int *val, *mult, len;	
 	
-	Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
 	//int_distribution_print(ost, val, mult, len);
 	//ost << endl;
 	
@@ -2783,7 +2783,7 @@ void schreier::get_orbit_lengths_once_each(
 
 	orbit_lengths = NEW_int(nb_orbit_lengths);
 
-	Orbiter->Int_vec->copy(val, orbit_lengths, nb_orbit_lengths);
+	Int_vec_copy(val, orbit_lengths, nb_orbit_lengths);
 
 	FREE_int(val);
 	FREE_int(mult);
@@ -2870,7 +2870,7 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 				"scheme_of_graph" << endl;
 	}
 	Decomp_scheme = NEW_int(nb_orbits * nb_orbits);
-	Orbiter->Int_vec->zero(Decomp_scheme, nb_orbits * nb_orbits);
+	Int_vec_zero(Decomp_scheme, nb_orbits * nb_orbits);
 	for (I = 0; I < nb_orbits; I++) {
 		f1 = orbit_first[I];
 		l1 = orbit_len[I];
@@ -2918,7 +2918,7 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 	}
 	if (f_v) {
 		cout << "Decomp_scheme = " << endl;
-		Orbiter->Int_vec->matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
+		Int_matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
 	}
 	if (f_v) {
 		cout << "schreier::get_orbit_decomposition_"
@@ -2970,7 +2970,7 @@ void schreier::shallow_tree_generators(int orbit_idx,
 	int *Elt1, *Elt2;
 	int *candidates;
 	int nb_candidates;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "schreier::shallow_tree_generators " << endl;

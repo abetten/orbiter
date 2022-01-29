@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace expression_parser {
 
 
 expression_parser_domain::expression_parser_domain()
@@ -241,7 +242,7 @@ void expression_parser_domain::parse_and_evaluate(
 					cout << endl;
 				}
 				cout << "expression_parser_domain::parse_and_evaluate coefficient vector: ";
-				Orbiter->Int_vec->print(cout, Values, nb_monomials);
+				Int_vec_print(cout, Values, nb_monomials);
 				cout << endl;
 			}
 
@@ -339,14 +340,14 @@ void expression_parser_domain::evaluate(
 
 
 	int idx;
-	idx = Orbiter->find_symbol(formula_label);
+	idx = orbiter_kernel_system::Orbiter->find_symbol(formula_label);
 
 	if (idx < 0) {
 		cout << "could not find symbol " << formula_label << endl;
 		exit(1);
 	}
 
-	if (Orbiter->Orbiter_symbol_table->Table[idx].type != t_object) {
+	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
@@ -354,12 +355,12 @@ void expression_parser_domain::evaluate(
 
 
 
-	if (Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
+	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
 		cout << "symbol table entry is a collection" << endl;
 
 		vector<string> *List;
 
-		List = (vector<string> *) Orbiter->Orbiter_symbol_table->Table[idx].ptr;
+		List = (vector<string> *) orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].ptr;
 		int i;
 		int *Values;
 
@@ -368,13 +369,13 @@ void expression_parser_domain::evaluate(
 		for (i = 0; i < List->size(); i++) {
 			int idx1;
 
-			idx1 = Orbiter->Orbiter_symbol_table->find_symbol((*List)[i]);
+			idx1 = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol((*List)[i]);
 			if (idx1 < 0) {
 				cout << "could not find symbol " << (*List)[i] << endl;
 				exit(1);
 			}
 			formula *F;
-			F = (formula *) Orbiter->Orbiter_symbol_table->Table[idx1].ptr;
+			F = (formula *) orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx1].ptr;
 
 			Values[i] = evaluate_formula(
 					F,
@@ -388,11 +389,11 @@ void expression_parser_domain::evaluate(
 		}
 
 	}
-	else if (Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
+	else if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
 		cout << "symbol table entry is a formula" << endl;
 
 		formula *F;
-		F = (formula *) Orbiter->Orbiter_symbol_table->Table[idx].ptr;
+		F = (formula *) orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].ptr;
 
 		int a;
 
@@ -545,7 +546,7 @@ int expression_parser_domain::evaluate_formula(
 			cout << endl;
 		}
 		cout << "expression_parser_domain::evaluate_formula coefficient vector: ";
-		Orbiter->Int_vec->print(cout, Values, nb_monomials);
+		Int_vec_print(cout, Values, nb_monomials);
 		cout << endl;
 
 
@@ -620,7 +621,7 @@ int expression_parser_domain::evaluate_formula(
 
 
 
-}}
+}}}
 
 
 

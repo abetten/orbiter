@@ -93,7 +93,7 @@ data_structures_groups::set_and_stabilizer *classification_step::get_set_and_sta
 	SaS = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 
 	data = NEW_lint(representation_sz);
-	Orbiter->Lint_vec->copy(
+	Lint_vec_copy(
 			Rep_ith(orbit_index),
 			data, representation_sz);
 	
@@ -140,7 +140,7 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 
 	if (f_vv) {
 		cout << "classification_step::write_file Rep matrix:" << endl;
-		Orbiter->Lint_vec->matrix_print(Rep, nb_orbits, representation_sz);
+		Lint_matrix_print(Rep, nb_orbits, representation_sz);
 	}
 
 	for (i = 0; i < nb_orbits * representation_sz; i++) {
@@ -188,7 +188,7 @@ void classification_step::read_file(ifstream &fp,
 	
 	if (f_vv) {
 		cout << "classification_step::read_file Rep matrix:" << endl;
-		Orbiter->Lint_vec->matrix_print(Rep, nb_orbits, representation_sz);
+		Lint_matrix_print(Rep, nb_orbits, representation_sz);
 	}
 
 	max_orbits = nb_orbits;
@@ -381,7 +381,7 @@ void classification_step::generate_source_code(std::string &fname_base,
 		}
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -426,7 +426,7 @@ void classification_step::print_summary(ostream &ost)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "classification_step::print_summary" << endl;
@@ -453,7 +453,7 @@ void classification_step::print_latex(ostream &ost,
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "classification_step::print_latex" << endl;

@@ -145,7 +145,7 @@ void arc_orbits_on_pairs::init(
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init after init_root_node" << endl;
 	}
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	int t0 = Os.os_ticks();
 

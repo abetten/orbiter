@@ -250,7 +250,7 @@ namespace layer1_foundations {
 
 
 
-//! catch-all class for algebraic algorithms, generators for certain classes of groups, conjugacy classes in the general linear group
+//! Algebraic algorithms, generators for certain classes of groups, conjugacy classes in the general linear group
 
 namespace algebra {
 
@@ -270,7 +270,7 @@ namespace algebra {
 }
 
 
-//! Cubic surfaces, quartic curves, Schlaefli labelings, Del Pezzo surfaces, Clebsch maps
+//! Cubic surfaces, quartic curves, Schlaefli labelings, Eckardt points,  Del Pezzo surfaces, Clebsch maps
 
 namespace algebraic_geometry {
 
@@ -295,7 +295,7 @@ namespace algebraic_geometry {
 
 }
 
-//! Coding theory, MacWilliams, weight enumerators, cyclic codes etc.
+//! Coding theory, MacWilliams, weight enumerators, cyclic codes, BCH codes, Reed-Muller codes, etc.
 
 namespace coding_theory {
 
@@ -305,7 +305,7 @@ namespace coding_theory {
 
 }
 
-//! Basic classes related to the field of combinatorics
+//! Combinatorics: boolean functions, combinatorial objects, classification, tactical decompositions, various puzzles
 
 namespace combinatorics {
 
@@ -329,7 +329,7 @@ namespace combinatorics {
 }
 
 
-//! A basic class for everything related to cryptography
+//! Cryptography: Vigenere, Ceasar, RSA, primality tests, elliptic curve, NTRU, square roots modulo n.
 
 namespace cryptography {
 
@@ -367,22 +367,30 @@ namespace data_structures {
 	class sorting;
 	class spreadsheet;
 	class string_tools;
+	class tally_vector_data;
+	class tally;
 	class vector_hashing;
 
 }
 
 
-// expression_parser:
-class expression_parser_domain;
-class expression_parser;
-class formula;
-class lexer;
-class syntax_tree_node_terminal;
-class syntax_tree_node;
-class syntax_tree;
+//! Expression parser, used to create an abstract syntax tree (AST) of a well-formed algebraic expression
+
+namespace expression_parser {
+
+	// expression_parser:
+	class expression_parser_domain;
+	class expression_parser;
+	class formula;
+	class lexer;
+	class syntax_tree_node_terminal;
+	class syntax_tree_node;
+	class syntax_tree;
+
+}
 
 
-//! finite fields, n-th roots, subfields, trace and norm.
+//! Finite fields, n-th roots, subfields, trace and norm.
 
 namespace field_theory {
 
@@ -399,7 +407,7 @@ namespace field_theory {
 }
 
 
-//! projective geometry over a finite field and related topics
+//! Projective geometry over a finite field and related topics
 
 namespace geometry {
 
@@ -435,7 +443,7 @@ namespace geometry {
 
 }
 
-//! exhaustive construction and classification of configurations, linear spaces, and designs
+//! Construction and classification of configurations, linear spaces, and designs
 
 namespace geometry_builder {
 
@@ -459,11 +467,7 @@ namespace geometry_builder {
 class function_command;
 class function_polish_description;
 class function_polish;
-class magma_interface;
 class numerics;
-class orbiter_session;
-class orbiter_symbol_table_entry;
-class orbiter_symbol_table;
 
 
 //! graph theory: constructions, clique finding, drawing
@@ -516,25 +520,11 @@ namespace graphics {
 }
 
 
-// io_and_os:
-class create_file_description;
-class file_io;
-class file_output;
-class latex_interface;
-class mem_object_registry_entry;
-class mem_object_registry;
-class memory_object;
-class orbiter_data_file;
-class os_interface;
-class override_double;
-class prepare_frames;
-
-
 // knowledge_base:
 class knowledge_base;
 
 
-//! Basic functions for linear algebra.
+//! Linear algebra and representation theory
 
 namespace linear_algebra {
 
@@ -544,7 +534,7 @@ namespace linear_algebra {
 
 }
 
-//! Basic functions for number theory.
+//! Number theory, cyclotomic sets, elliptic curves, number theoretic transform (NTT)
 
 namespace number_theory {
 
@@ -556,14 +546,43 @@ namespace number_theory {
 
 }
 
-// orthogonal:
-class blt_set_domain;
-class blt_set_invariants;
-class orthogonal_indexing;
-class orthogonal;
-class unusual_model;
+//! The Orbiter kernel. It contains functions related to memory management, os-interface, file-io etc.
 
-//! Basic classes and functions for ring theory, including polynomial rings and longinteger arithmetic.
+namespace orbiter_kernel_system {
+
+	class create_file_description;
+	class file_io;
+	class file_output;
+	class latex_interface;
+	class magma_interface;
+	class mem_object_registry_entry;
+	class mem_object_registry;
+	class memory_object;
+	class orbiter_data_file;
+	class orbiter_session;
+	class orbiter_symbol_table_entry;
+	class orbiter_symbol_table;
+	class os_interface;
+	class override_double;
+	class prepare_frames;
+
+}
+
+
+//! orthogonal geometry: quadrics, BLT sets
+
+namespace orthogonal_geometry {
+
+	// orthogonal:
+	class blt_set_domain;
+	class blt_set_invariants;
+	class orthogonal_indexing;
+	class orthogonal;
+	class unusual_model;
+
+}
+
+//! Ring theory, including polynomial rings and longinteger arithmetic.
 
 namespace ring_theory {
 	// ring_theory:
@@ -583,7 +602,7 @@ namespace ring_theory {
 
 }
 
-//! Solvers of diophantine systems of equations: Possolve and Dancing Links.
+//! Diophantine systems of equations. Solvers Possolve and Dancing Links.
 
 namespace solvers {
 	// solvers
@@ -598,42 +617,39 @@ namespace solvers {
 	typedef struct dlx_node *pdlx_node;
 }
 
-// statistics:
-class tally_vector_data;
-class tally;
 
 
 
 
 #ifdef MEMORY_DEBUG
-#define NEW_int(n) Orbiter->global_mem_object_registry->allocate_int(n, __FILE__, __LINE__)
-#define NEW_int_with_tracking(n, file, line) Orbiter->global_mem_object_registry->allocate_int(n, file, line)
-#define NEW_pint(n) Orbiter->global_mem_object_registry->allocate_pint(n, __FILE__, __LINE__)
-#define NEW_lint(n) Orbiter->global_mem_object_registry->allocate_lint(n, __FILE__, __LINE__)
-#define NEW_plint(n) Orbiter->global_mem_object_registry->allocate_plint(n, __FILE__, __LINE__)
-#define NEW_ppint(n) Orbiter->global_mem_object_registry->allocate_ppint(n, __FILE__, __LINE__)
-#define NEW_pplint(n) Orbiter->global_mem_object_registry->allocate_pplint(n, __FILE__, __LINE__)
-#define NEW_char(n) Orbiter->global_mem_object_registry->allocate_char(n, __FILE__, __LINE__)
-#define NEW_char_with_tracking(n, file, line) Orbiter->global_mem_object_registry->allocate_char(n, file, line)
-#define NEW_uchar(n) Orbiter->global_mem_object_registry->allocate_uchar(n, __FILE__, __LINE__)
-#define NEW_pchar(n) Orbiter->global_mem_object_registry->allocate_pchar(n, __FILE__, __LINE__)
-#define NEW_puchar(n) Orbiter->global_mem_object_registry->allocate_puchar(n, __FILE__, __LINE__)
-#define NEW_pvoid(n) Orbiter->global_mem_object_registry->allocate_pvoid(n, __FILE__, __LINE__)
-#define NEW_OBJECT(type) (type *)Orbiter->global_mem_object_registry->allocate_OBJECT(new type, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
-#define NEW_OBJECTS(type, n) (type *)Orbiter->global_mem_object_registry->allocate_OBJECTS(new type[n], n, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
-#define FREE_int(p) Orbiter->global_mem_object_registry->free_int(p, __FILE__, __LINE__)
-#define FREE_pint(p) Orbiter->global_mem_object_registry->free_pint(p, __FILE__, __LINE__)
-#define FREE_lint(p) Orbiter->global_mem_object_registry->free_lint(p, __FILE__, __LINE__)
-#define FREE_plint(p) Orbiter->global_mem_object_registry->free_plint(p, __FILE__, __LINE__)
-#define FREE_ppint(p) Orbiter->global_mem_object_registry->free_ppint(p, __FILE__, __LINE__)
-#define FREE_pplint(p) Orbiter->global_mem_object_registry->free_pplint(p, __FILE__, __LINE__)
-#define FREE_char(p) Orbiter->global_mem_object_registry->free_char(p, __FILE__, __LINE__)
-#define FREE_uchar(p) Orbiter->global_mem_object_registry->free_uchar(p, __FILE__, __LINE__)
-#define FREE_pchar(p) Orbiter->global_mem_object_registry->free_pchar(p, __FILE__, __LINE__)
-#define FREE_puchar(p) Orbiter->global_mem_object_registry->free_puchar(p, __FILE__, __LINE__)
-#define FREE_pvoid(p) Orbiter->global_mem_object_registry->free_pvoid(p, __FILE__, __LINE__)
-#define FREE_OBJECT(p) {Orbiter->global_mem_object_registry->free_OBJECT(p, __FILE__, __LINE__); delete p;}
-#define FREE_OBJECTS(p) {Orbiter->global_mem_object_registry->free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
+#define NEW_int(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_int(n, __FILE__, __LINE__)
+#define NEW_int_with_tracking(n, file, line) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_int(n, file, line)
+#define NEW_pint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pint(n, __FILE__, __LINE__)
+#define NEW_lint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_lint(n, __FILE__, __LINE__)
+#define NEW_plint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_plint(n, __FILE__, __LINE__)
+#define NEW_ppint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_ppint(n, __FILE__, __LINE__)
+#define NEW_pplint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pplint(n, __FILE__, __LINE__)
+#define NEW_char(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_char(n, __FILE__, __LINE__)
+#define NEW_char_with_tracking(n, file, line) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_char(n, file, line)
+#define NEW_uchar(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_uchar(n, __FILE__, __LINE__)
+#define NEW_pchar(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pchar(n, __FILE__, __LINE__)
+#define NEW_puchar(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_puchar(n, __FILE__, __LINE__)
+#define NEW_pvoid(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pvoid(n, __FILE__, __LINE__)
+#define NEW_OBJECT(type) (type *)orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_OBJECT(new type, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
+#define NEW_OBJECTS(type, n) (type *)orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_OBJECTS(new type[n], n, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
+#define FREE_int(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_int(p, __FILE__, __LINE__)
+#define FREE_pint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pint(p, __FILE__, __LINE__)
+#define FREE_lint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_lint(p, __FILE__, __LINE__)
+#define FREE_plint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_plint(p, __FILE__, __LINE__)
+#define FREE_ppint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_ppint(p, __FILE__, __LINE__)
+#define FREE_pplint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pplint(p, __FILE__, __LINE__)
+#define FREE_char(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_char(p, __FILE__, __LINE__)
+#define FREE_uchar(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_uchar(p, __FILE__, __LINE__)
+#define FREE_pchar(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pchar(p, __FILE__, __LINE__)
+#define FREE_puchar(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_puchar(p, __FILE__, __LINE__)
+#define FREE_pvoid(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pvoid(p, __FILE__, __LINE__)
+#define FREE_OBJECT(p) {orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECT(p, __FILE__, __LINE__); delete p;}
+#define FREE_OBJECTS(p) {orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
 #else
 #define NEW_int(n) new int[n]
 #define NEW_int_with_tracking(n, file, line) new int[n]
@@ -665,6 +681,49 @@ class tally;
 #define FREE_OBJECTS(p) delete [] p
 #endif
 
+
+#define Int_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print(A, B, C)
+#define Lint_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)
+#define Int_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully(A, B, C)
+#define Lint_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_fully(A, B, C)
+
+#define Int_vec_print_integer_matrix(A,B,C,D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
+#define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
+
+#define Int_vec_copy(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->copy(A, B, C)
+#define Lint_vec_copy(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->copy(A, B, C)
+
+#define Int_vec_print_to_str(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_to_str(A, B, C)
+#define Lint_vec_print_to_str(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_to_str(A, B, C)
+
+
+#define Int_vec_print_str_naked(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_str_naked(A, B, C)
+
+
+#define Int_vec_print_GAP(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_GAP(A, B, C)
+#define Lint_vec_print_GAP(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_GAP(A, B, C)
+
+
+#define Int_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print(A, B, C)
+#define Lint_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(A, B, C)
+
+#define Int_matrix_print_bitwise(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_bitwise(A, B, C)
+
+
+#define Int_vec_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->zero(A, B);
+#define Lint_vec_zero(A, B) orbiter_kernel_system::Orbiter->Lint_vec->zero(A, B);
+
+#define Int_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->scan(A, B, C)
+#define Lint_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->scan(A, B, C)
+
+#define Get_int_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)
+#define Get_lint_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_lint_vector_from_label(A, B, C, D)
+
+#define Int_vec_copy_to_lint(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->copy_to_lint(A, B, C)
+#define Lint_vec_copy_to_int(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->copy_to_int(A, B, C)
+
+
+#define Int_vec_print_integer_matrix_in_C_source(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_in_C_source(A, B, C, D)
 
 enum monomial_ordering_type {
 	t_LEX, // lexicographical
@@ -812,14 +871,13 @@ enum data_input_stream_type {
 #include "graph_theory/graph_theory.h"
 #include "graph_theory_nauty/graph_theory_nauty.h"
 #include "graphics/graphics.h"
-#include "io_and_os/io_and_os.h"
 #include "knowledge_base/knowledge_base.h"
 #include "linear_algebra/linear_algebra.h"
 #include "number_theory/number_theory.h"
+#include "orbiter_kernel_system/orbiter_kernel_system.h"
 #include "orthogonal/orthogonal.h"
 #include "ring_theory/ring_theory.h"
 #include "solvers/solvers.h"
-#include "statistics/statistics.h"
 
 
 // Eigen_interface:

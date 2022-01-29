@@ -315,7 +315,7 @@ int algebra_global::subprimitive(int q, int h)
 #endif
 	cout << f << "^" << SM[f] << endl;
 	cout << "multiplicities CM:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, CM, 1, q - 1, q - 1, 2);
+	Int_vec_print_integer_matrix_width(cout, CM, 1, q - 1, q - 1, 2);
 	l = period_of_sequence(CM, q - 1);
 	cout << "period " << l << endl;
 	for (i = 0; i < q - 1; i++) {
@@ -781,7 +781,7 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a, b, ap, bp, g;
 	number_theory::number_theory_domain NT;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "algebra_global::do_equivalence_class_of_fractions" << endl;
@@ -897,7 +897,7 @@ void algebra_global::order_of_q_mod_n(int q, int n_min, int n_max, int verbose_l
 
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "algebra_global::order_of_q_mod_n written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -961,7 +961,7 @@ void algebra_global::power_function_mod_n(int k, int n, int verbose_level)
 
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "algebra_global::power_function_mod_n written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -1028,16 +1028,16 @@ void algebra_global::do_trace(field_theory::finite_field *F, int verbose_level)
 
 
 	cout << "Trace 0:" << endl;
-	Orbiter->Int_vec->print_fully(cout, T0, nb_T0);
+	Int_vec_print_fully(cout, T0, nb_T0);
 	cout << endl;
 
 	cout << "Trace 1:" << endl;
-	Orbiter->Int_vec->print_fully(cout, T1, nb_T1);
+	Int_vec_print_fully(cout, T1, nb_T1);
 	cout << endl;
 
 	char str[1000];
 	string fname_csv;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	snprintf(str, 1000, "F_q%d_trace.csv", F->q);
 	fname_csv.assign(str);
@@ -1096,17 +1096,17 @@ void algebra_global::do_norm(field_theory::finite_field *F, int verbose_level)
 	}
 
 	cout << "Norm 0:" << endl;
-	Orbiter->Int_vec->print_fully(cout, T0, nb_T0);
+	Int_vec_print_fully(cout, T0, nb_T0);
 	cout << endl;
 
 	cout << "Norm 1:" << endl;
-	Orbiter->Int_vec->print_fully(cout, T1, nb_T1);
+	Int_vec_print_fully(cout, T1, nb_T1);
 	cout << endl;
 
 
 	char str[1000];
 	string fname_csv;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	snprintf(str, 1000, "F_q%d_norm_0.csv", F->q);
 	fname_csv.assign(str);
@@ -1158,7 +1158,7 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 		ofstream ost(fname);
 
 
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 
 		L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
@@ -1188,7 +1188,7 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 		L.foot(ost);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -1220,7 +1220,7 @@ void algebra_global::gl_random_matrix(field_theory::finite_field *F, int k, int 
 	F->Linear_algebra->random_invertible_matrix(M, k, verbose_level - 2);
 
 	cout << "Random invertible matrix:" << endl;
-	Orbiter->Int_vec->matrix_print(M, k, k);
+	orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M, k, k);
 
 
 	{
@@ -1238,7 +1238,7 @@ void algebra_global::gl_random_matrix(field_theory::finite_field *F, int k, int 
 
 		U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
 		cout << "After substitution, the matrix is " << endl;
-		Orbiter->Int_vec->matrix_print(M2, k, k);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M2, k, k);
 
 		U.delete_object(char_poly);
 
@@ -1268,7 +1268,7 @@ void algebra_global::apply_Walsh_Hadamard_transform(field_theory::finite_field *
 	BF->init(n, verbose_level);
 
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, nb_cols;
 	int len;
@@ -1290,7 +1290,7 @@ void algebra_global::apply_Walsh_Hadamard_transform(field_theory::finite_field *
 	BF->apply_Walsh_transform(BF->F, BF->T);
 
 	cout << " : ";
-	Orbiter->Int_vec->print(cout, BF->T, BF->Q);
+	Int_vec_print(cout, BF->T, BF->Q);
 	cout << endl;
 
 	if (EVEN(n)) {
@@ -1345,7 +1345,7 @@ void algebra_global::algebraic_normal_form(field_theory::finite_field *F,
 	}
 
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, nb_cols;
 	int len;
@@ -1414,7 +1414,7 @@ void algebra_global::apply_trace_function(field_theory::finite_field *F,
 	}
 
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, nb_cols;
 	int len, i;
@@ -1449,7 +1449,7 @@ void algebra_global::apply_power_function(field_theory::finite_field *F,
 	}
 
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, nb_cols;
 	int len, i;
@@ -1490,7 +1490,7 @@ void algebra_global::identity_function(field_theory::finite_field *F,
 	}
 
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int *M;
 	int i;
 
@@ -1545,7 +1545,7 @@ void algebra_global::Walsh_matrix(field_theory::finite_field *F, int n, int *&W,
 	}
 	char str[1000];
 	string fname_csv;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	snprintf(str, 1000, "Walsh_pm_%d.csv", n);
 	fname_csv.assign(str);
@@ -1601,7 +1601,7 @@ void algebra_global::Vandermonde_matrix(field_theory::finite_field *F, int *&W, 
 
 	char str[1000];
 	string fname_csv;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	snprintf(str, 1000, "Vandermonde_%d.csv", q);
 	fname_csv.assign(str);
@@ -1649,7 +1649,7 @@ void algebra_global::search_APN(field_theory::finite_field *F, int verbose_level
 
 	string fname;
 	char str[1000];
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	sprintf(str, "APN_functions_q%d.csv", F->q);
 
@@ -1685,7 +1685,7 @@ void algebra_global::search_APN_recursion(field_theory::finite_field *F,
 			}
 			Solutions.push_back(S);
 
-			Orbiter->Int_vec->print(cout, f, F->q);
+			Int_vec_print(cout, f, F->q);
 			cout << " delta = " << delta << " nb_times=" << nb_times << endl;
 		}
 		else if (delta == delta_min) {
@@ -1713,7 +1713,7 @@ void algebra_global::search_APN_recursion(field_theory::finite_field *F,
 			Solutions.push_back(S);
 
 			if (f_do_it) {
-				Orbiter->Int_vec->print(cout, f, F->q);
+				Int_vec_print(cout, f, F->q);
 				cout << " delta = " << delta << " nb_times=" << nb_times << endl;
 			}
 		}
@@ -1742,7 +1742,7 @@ int algebra_global::non_linearity(field_theory::finite_field *F, int *f, int ver
 	}
 	q = F->q;
 	nb_times_ab = NEW_int(q * q);
-	Orbiter->Int_vec->zero(nb_times_ab, q * q);
+	Int_vec_zero(nb_times_ab, q * q);
 	for (x = 0; x < q; x++) {
 		fx = f[x];
 		mfx = F->negate(fx);
@@ -1802,14 +1802,14 @@ void algebra_global::O4_isomorphism_4to2(field_theory::finite_field *F,
 			0, 0, verbose_level);
 	if (f_vv) {
 		cout << "grid point (0,0) = ";
-		Orbiter->Int_vec->print(cout, P, 4);
+		Int_vec_print(cout, P, 4);
 		cout << endl;
 	}
 	O4_grid_coordinates_unrank(F, Q[0], Q[1], Q[2], Q[3],
 			1, 0, verbose_level);
 	if (f_vv) {
 		cout << "grid point (1,0) = ";
-		Orbiter->Int_vec->print(cout, Q, 4);
+		Int_vec_print(cout, Q, 4);
 		cout << endl;
 	}
 	F->Linear_algebra->mult_vector_from_the_left(P, B, R, 4, 4);
@@ -1924,9 +1924,9 @@ void algebra_global::O4_isomorphism_4to2(field_theory::finite_field *F,
 	As[3] = e;
 	if (f_v) {
 		cout << "At:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, At, 2, 2, 2, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(cout, At, 2, 2, 2, F->log10_of_q);
 		cout << "As:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, As, 2, 2, 2, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(cout, As, 2, 2, 2, F->log10_of_q);
 	}
 
 }
@@ -2032,8 +2032,8 @@ void algebra_global::O4_grid_coordinates_rank(field_theory::finite_field *F,
 	F->PG_element_normalize_from_front(v, 1, 2);
 	F->PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
-		Orbiter->Int_vec->print(cout, v, 2);
-		Orbiter->Int_vec->print(cout, w, 2);
+		Int_vec_print(cout, v, 2);
+		Int_vec_print(cout, w, 2);
 		cout << endl;
 	}
 
@@ -2055,8 +2055,8 @@ void algebra_global::O4_grid_coordinates_unrank(field_theory::finite_field *F,
 	F->PG_element_normalize_from_front(v, 1, 2);
 	F->PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
-		Orbiter->Int_vec->print(cout, v, 2);
-		Orbiter->Int_vec->print(cout, w, 2);
+		Int_vec_print(cout, v, 2);
+		Int_vec_print(cout, w, 2);
 		cout << endl;
 	}
 
@@ -2208,9 +2208,9 @@ void algebra_global::O4_find_tangent_plane(field_theory::finite_field *F,
 	}
 	if (f_v) {
 		cout << "nb_secants=" << nb_secants << endl;
-		Orbiter->Int_vec->print(cout, secants1, nb_secants);
+		Int_vec_print(cout, secants1, nb_secants);
 		cout << endl;
-		Orbiter->Int_vec->print(cout, secants2, nb_secants);
+		Int_vec_print(cout, secants2, nb_secants);
 		cout << endl;
 	}
 	h = 0;
@@ -2224,7 +2224,7 @@ void algebra_global::O4_find_tangent_plane(field_theory::finite_field *F,
 	}
 	if (f_v) {
 		cout << "complement = tangents:" << endl;
-		Orbiter->Int_vec->print(cout, complement, nb_complement);
+		Int_vec_print(cout, complement, nb_complement);
 		cout << endl;
 	}
 
@@ -2257,7 +2257,7 @@ void algebra_global::O4_find_tangent_plane(field_theory::finite_field *F,
 	if (f_v) {
 		cout << "the rank of the tangent space is " << rk << endl;
 		cout << "basis:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, T, rk, 4, 4, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(cout, T, rk, 4, 4, F->log10_of_q);
 	}
 
 	if (rk != 3) {

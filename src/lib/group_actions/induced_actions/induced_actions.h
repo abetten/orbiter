@@ -721,7 +721,7 @@ public:
 class action_on_orthogonal {
 public:
 	actions::action *original_action;
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 	int *v1;
 	int *v2;
 	int *w1;
@@ -736,7 +736,8 @@ public:
 	~action_on_orthogonal();
 	void null();
 	void free();
-	void init(actions::action *original_action, orthogonal *O,
+	void init(actions::action *original_action,
+			orthogonal_geometry::orthogonal *O,
 		int f_on_points, int f_on_lines, int f_on_points_and_lines, 
 		int verbose_level);
 	void unrank_point(int *v, int rk);

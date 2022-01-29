@@ -240,7 +240,7 @@ public:
 	data_structures::nauty_output **NO_transversal; // [nb_orbits]
 
 
-	tally *T_Ago;
+	data_structures::tally *T_Ago;
 
 
 

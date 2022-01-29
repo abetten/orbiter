@@ -161,7 +161,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 			ofstream ost(fname_tex);
 			ofstream ost_quartics(fname_quartics);
 
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head_easy(ost);
 
@@ -177,7 +177,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 			L.foot(ost);
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_tex << " of size "
 				<< Fio.file_size(fname_tex) << endl;
@@ -240,7 +240,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 			ost_curves << -1 << endl;
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_curves << " of size "
 				<< Fio.file_size(fname_curves) << endl;
@@ -264,7 +264,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		SO = SC->SO;
 		SOP = SO->SOP;
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname.assign(SC->label_txt);

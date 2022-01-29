@@ -113,7 +113,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	if (verbose_level > 5) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form Incma:" << endl;
-		Orbiter->Int_vec->matrix_print_tight(Inc->M, Inc->nb_rows, Inc->nb_cols);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print_tight(Inc->M, Inc->nb_rows, Inc->nb_cols);
 	}
 
 	for (i = 0; i < Inc->nb_rows + Inc->nb_cols; i++) {
@@ -168,7 +168,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		canonical_labeling[i] = NO->canonical_labeling[i];
 	}
 
-	Orbiter->Int_vec->copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
+	Int_vec_copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "

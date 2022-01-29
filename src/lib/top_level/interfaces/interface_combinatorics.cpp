@@ -768,7 +768,7 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_read_solutions_and_tally) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.read_solutions_and_tally(read_solutions_and_tally_fname,
 				read_solutions_and_tally_sz, verbose_level);
@@ -802,7 +802,7 @@ void interface_combinatorics::worker(int verbose_level)
 		int i, j, r, N;
 		int *Rk;
 
-		Orbiter->Int_vec->scan(rank_k_subset_text, set, sz);
+		Int_vec_scan(rank_k_subset_text, set, sz);
 
 		N = (sz + rank_k_subset_k - 1) / rank_k_subset_k;
 		Rk = NEW_int(N);
@@ -814,7 +814,7 @@ void interface_combinatorics::worker(int verbose_level)
 			r = Combi.rank_k_subset(set + i, rank_k_subset_n, rank_k_subset_k);
 
 			cout << "The rank of ";
-			Orbiter->Int_vec->print(cout, set + i, rank_k_subset_k);
+			Int_vec_print(cout, set + i, rank_k_subset_k);
 			cout << " is " << r << endl;
 			Rk[j] = r;
 
@@ -823,7 +823,7 @@ void interface_combinatorics::worker(int verbose_level)
 		}
 
 		cout << "the ranks of all subsets are: ";
-		Orbiter->Int_vec->print(cout, Rk, N);
+		Int_vec_print(cout, Rk, N);
 		cout << endl;
 
 		data_structures::sorting Sorting;
@@ -831,7 +831,7 @@ void interface_combinatorics::worker(int verbose_level)
 		Sorting.int_vec_heapsort(Rk, N);
 
 		cout << "the sorted ranks of all subsets are: ";
-		Orbiter->Int_vec->print(cout, Rk, N);
+		Int_vec_print(cout, Rk, N);
 		cout << endl;
 
 	}
@@ -976,7 +976,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	cout << "The conjugacy classes in Sym_" << n << " are:" << endl;
 	for (i = 0; i < cnt; i++) {
 		cout << i << " : ";
-		Orbiter->Int_vec->print(cout, Parts + i * n, n);
+		Int_vec_print(cout, Parts + i * n, n);
 		cout << " : ";
 
 		C.size_of_conjugacy_class_in_sym_n(class_size, n, Parts + i * n);

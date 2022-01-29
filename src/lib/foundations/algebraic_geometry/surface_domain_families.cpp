@@ -88,7 +88,7 @@ void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, in
 
 	int E = F->add(E_plus, F->negate(E_minus));
 
-	Orbiter->Int_vec->zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, nb_monomials);
 
 	coeff[5] = F->mult3(m1, A, bmd);
 	coeff[16] = F->mult(A, F->add4(a, b, F->negate(c), F->negate(d)));
@@ -115,7 +115,7 @@ void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n, int
 	if (f_v) {
 		cout << "surface_domain::create_equation_Cayley_klmn" << endl;
 	}
-	Orbiter->Int_vec->zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, nb_monomials);
 
 	coeff[6] = coeff[9] = coeff[12] = coeff[3] = 1;
 
@@ -172,7 +172,7 @@ void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_l
 	delta = w2;
 	epsilon = F->mult(ap1c, F->mult(a, c));
 
-	Orbiter->Int_vec->zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, nb_monomials);
 
 	coeff[4] = coeff[7] = coeff[8] = coeff[11] = coeff[12] = alpha;
 	coeff[17] = beta;
@@ -199,7 +199,7 @@ void surface_domain::create_equation_F13(int a, int *coeff, int verbose_level)
 
 	b = F->power(F->add(a, 1), 5);
 	c = F->add(F->power(a, 3), 1);
-	Orbiter->Int_vec->zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, nb_monomials);
 
 	coeff[6] = b;
 	coeff[13] = b;
@@ -222,7 +222,7 @@ void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
 
 	b = F->mult(a, F->add(a, 1));
 	c = F->add(F->mult(a, a), F->add(a, 1));
-	Orbiter->Int_vec->zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, nb_monomials);
 
 	coeff[5] = coeff[8] = coeff[9] = coeff[10] = coeff[11] = coeff[12] = 1;
 	coeff[14] = coeff[15] = b;
@@ -445,7 +445,7 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 	}
 
 
-	Orbiter->Lint_vec->copy(Oab, Lines27, 12);
+	Lint_vec_copy(Oab, Lines27, 12);
 	FREE_lint(Oab);
 
 
@@ -454,7 +454,7 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 	if (f_v) {
 		cout << "surface_domain::create_Eckardt_surface We have a set of "
 				"lines of size " << nb << ":";
-		Orbiter->Lint_vec->print(cout, Lines27, nb);
+		Lint_vec_print(cout, Lines27, nb);
 		cout << endl;
 	}
 
@@ -463,7 +463,7 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 
 	if (f_v) {
 		cout << "surface_domain::create_Eckardt_surface The remaining 15 lines are:";
-		Orbiter->Lint_vec->print(cout, Lines27 + 12, 15);
+		Lint_vec_print(cout, Lines27 + 12, 15);
 		cout << endl;
 		Gr->print_set(Lines27 + 12, 15);
 	}
@@ -560,7 +560,7 @@ void surface_domain::create_equation_Eckardt_surface(int a, int b,
 	alpha = F->negate(F->mult(b, b));
 	beta = F->mult(F->mult(F->power(b, 3),
 		F->add(1, F->mult(a, a))), F->inverse(a));
-	Orbiter->Int_vec->zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, nb_monomials);
 
 	coeff[3] = 1;
 	coeff[6] = alpha;
@@ -586,7 +586,7 @@ int surface_domain::test_Eckardt_form_alpha_beta(int *coeff,
 	if (f_v) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta" << endl;
 	}
-	if (!Orbiter->Int_vec->is_constant_on_subset(coeff,
+	if (!orbiter_kernel_system::Orbiter->Int_vec->is_constant_on_subset(coeff,
 		zeroes, sizeof(zeroes) / sizeof(int), a)) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on zero set" << endl;
@@ -602,14 +602,14 @@ int surface_domain::test_Eckardt_form_alpha_beta(int *coeff,
 				"not normalized" << endl;
 		exit(1);
 	}
-	if (!Orbiter->Int_vec->is_constant_on_subset(coeff,
+	if (!orbiter_kernel_system::Orbiter->Int_vec->is_constant_on_subset(coeff,
 		alphas, sizeof(alphas) / sizeof(int), a)) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on alpha set" << endl;
 		return FALSE;
 	}
 	alpha = a;
-	if (!Orbiter->Int_vec->is_constant_on_subset(coeff,
+	if (!orbiter_kernel_system::Orbiter->Int_vec->is_constant_on_subset(coeff,
 		betas, sizeof(betas) / sizeof(int), a)) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on beta set" << endl;

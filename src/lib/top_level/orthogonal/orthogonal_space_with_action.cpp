@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 orthogonal_space_with_action::orthogonal_space_with_action()
@@ -49,7 +49,7 @@ void orthogonal_space_with_action::init(
 	}
 	orthogonal_space_with_action::Descr = Descr;
 
-	O = NEW_OBJECT(orthogonal);
+	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
 
 	if (Descr->f_label_txt) {
 		label_txt.assign(Descr->label_txt);
@@ -168,7 +168,7 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 		cout << "orthogonal_space_with_action::init_group computing "
 				"lex-least base done" << endl;
 		cout << "orthogonal_space_with_action::init_group base: ";
-		Orbiter->Lint_vec->print(cout, A->get_base(), A->base_len());
+		Lint_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;
 	}
 
@@ -197,8 +197,8 @@ void orthogonal_space_with_action::report(
 		string fname_report;
 		fname_report.assign(label_txt);
 		fname_report.append("_report.tex");
-		latex_interface L;
-		file_io Fio;
+		orbiter_kernel_system::latex_interface L;
+		orbiter_kernel_system::file_io Fio;
 
 		{
 			ofstream ost(fname_report);

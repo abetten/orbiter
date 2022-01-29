@@ -899,13 +899,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 		cout << "found " << nb_classes << " classes in the "
 				"previous row decomposition" << endl;
 		cout << "class_first: ";
-		Orbiter->Int_vec->print(cout, class_first, nb_classes);
+		Int_vec_print(cout, class_first, nb_classes);
 		cout << endl;
 		cout << "class_len: ";
-		Orbiter->Int_vec->print(cout, class_len, nb_classes);
+		Int_vec_print(cout, class_len, nb_classes);
 		cout << endl;
 		cout << "block_length: ";
-		Orbiter->Int_vec->print(cout, block_length, nb_classes);
+		Int_vec_print(cout, block_length, nb_classes);
 		cout << endl;
 	}
 	
@@ -935,7 +935,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	} // next j
 	if (f_v) {
 		cout << "the previous col scheme is" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 			prev_scheme, nb_classes, nb_B, nb_B, 4);
 	}
 	//part.clear();
@@ -964,13 +964,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	prev_level = nb_parts;
 	if (f_v) {
 		cout << "the previous decomposition is " << endl;
-		Orbiter->Int_vec->print(cout, part, nb_parts);
+		Int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		Orbiter->Int_vec->print(cout, class_relabel, nb_V + nb_B);
+		Int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 	}
 	nb_entries = 0;
@@ -1010,13 +1010,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	}
 	if (f_v) {
 		cout << "the extended decomposition is " << endl;
-		Orbiter->Int_vec->print(cout, part, nb_parts);
+		Int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		Orbiter->Int_vec->print(cout, class_relabel, nb_V + nb_B);
+		Int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 	}
 	row_level = nb_parts;
@@ -1098,13 +1098,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		cout << "found " << nb_classes << " classes in the previous "
 				"column decomposition" << endl;
 		cout << "class_first: ";
-		Orbiter->Int_vec->print(cout, class_first, nb_classes);
+		Int_vec_print(cout, class_first, nb_classes);
 		cout << endl;
 		cout << "class_len: ";
-		Orbiter->Int_vec->print(cout, class_len, nb_classes);
+		Int_vec_print(cout, class_len, nb_classes);
 		cout << endl;
 		cout << "block_length: ";
-		Orbiter->Int_vec->print(cout, block_length, nb_classes);
+		Int_vec_print(cout, block_length, nb_classes);
 		cout << endl;
 	}
 	
@@ -1132,7 +1132,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	} // next j
 	if (f_v) {
 		cout << "the previous row scheme is" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				prev_scheme, nb_V, nb_classes, nb_classes, 4);
 	}
 	nb_parts = 0;
@@ -1160,13 +1160,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	prev_level = nb_parts;
 	if (f_v) {
 		cout << "the previous decomposition is " << endl;
-		Orbiter->Int_vec->print(cout, part, nb_parts);
+		Int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		Orbiter->Int_vec->print(cout, class_relabel, nb_V + nb_B);
+		Int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 	}
 	nb_entries = 0;
@@ -1211,13 +1211,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	}
 	if (f_v) {
 		cout << "the extended decomposition is " << endl;
-		Orbiter->Int_vec->print(cout, part, nb_parts);
+		Int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		Orbiter->Int_vec->print(cout, class_relabel, nb_V + nb_B);
+		Int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 	}
 	col_level = nb_parts;
@@ -1285,10 +1285,10 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		cout << "fuse_block_first[1]=" << fuse_block_first[1] << endl;
 		cout << "fuse_block_len[1]  =" << fuse_block_len[1] << endl;
 		cout << "the_fuse[0] : ";
-		Orbiter->Int_vec->print(cout, the_fuse[0], nb_V);
+		Int_vec_print(cout, the_fuse[0], nb_V);
 		cout << endl;
 		cout << "the_fuse[1] : ";
-		Orbiter->Int_vec->print(cout, the_fuse[1], nb_V);
+		Int_vec_print(cout, the_fuse[1], nb_V);
 		cout << endl;
 	}
 	init_tdo_scheme(G, 0 /*verbose_level*/);
@@ -1325,13 +1325,13 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 			cout << "row decomposition " << d << " found "
 					<< nb_classes[d] << " classes" << endl;
 			cout << "class_first: ";
-			Orbiter->Int_vec->print(cout, class_first[d], nb_classes[d]);
+			Int_vec_print(cout, class_first[d], nb_classes[d]);
 			cout << endl;
 			cout << "class_len: ";
-			Orbiter->Int_vec->print(cout, class_len[d], nb_classes[d]);
+			Int_vec_print(cout, class_len[d], nb_classes[d]);
 			cout << endl;
 			cout << "block_length: ";
-			Orbiter->Int_vec->print(cout, block_length[d], nb_classes[d]);
+			Int_vec_print(cout, block_length[d], nb_classes[d]);
 			cout << endl;
 		}
 		
@@ -1384,7 +1384,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		if (f_v) {
 			cout << "depth " << d << ", the previous "
 					"col scheme is" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(cout,
 					prev_scheme[d], nb_classes[d],
 					fuse_block_len[d], fuse_block_len[d], 4);
 		}
@@ -1429,7 +1429,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	prev_level[d] = nb_parts;
 	if (f_v) {
 		cout << "class_idx[0]=";
-		Orbiter->Int_vec->print(cout, class_idx[0], nb_classes[0]);
+		Int_vec_print(cout, class_idx[0], nb_classes[0]);
 		cout << endl;
 	}
 	
@@ -1459,7 +1459,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	prev_level[d] = nb_parts;
 	if (f_v) {
 		cout << "class_idx[1]=";
-		Orbiter->Int_vec->print(cout, class_idx[1], nb_classes[1]);
+		Int_vec_print(cout, class_idx[1], nb_classes[1]);
 		cout << endl;
 	}
 	
@@ -1468,13 +1468,13 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		cout << "prev_level[0]" << prev_level[0] << endl;
 		cout << "prev_level[1]" << prev_level[1] << endl;
 		cout << "the previous decomposition is " << endl;
-		Orbiter->Int_vec->print(cout, part, nb_parts);
+		Int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 		//	}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		Orbiter->Int_vec->print(cout, class_relabel, nb_V + nb_B);
+		Int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 	}
 	
@@ -1541,16 +1541,16 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	}
 	if (f_v) {
 		cout << "the extended decomposition is " << endl;
-		Orbiter->Int_vec->print(cout, part, nb_parts);
+		Int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		Orbiter->Int_vec->print(cout, class_relabel, nb_V + nb_B);
+		Int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 		cout << "class_idx[2]=";
-		Orbiter->Int_vec->print(cout, class_idx[2], nb_V);
+		Int_vec_print(cout, class_idx[2], nb_V);
 		cout << endl;
 	}
 	row_level = nb_parts;

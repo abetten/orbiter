@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orthogonal_geometry {
 
 
 
@@ -339,7 +340,7 @@ void unusual_model::setup2(
 	form_coeff = NEW_int(4 * 4);
 	Gram = NEW_int(4 * 4);
 
-	Orbiter->Int_vec->zero(Gram, 4 * 4);
+	Int_vec_zero(Gram, 4 * 4);
 
 	if (f_sum_of_squares) {
 		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
@@ -357,7 +358,7 @@ void unusual_model::setup2(
 	}
 	if (f_vv) {
 		cout << "unusual_model::setup2 Gram matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
+		Int_vec_print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
 		cout << "quadratic form:" << endl;
 		Gg.print_quadratic_form_list_coded(nb_terms, form_i, form_j, form_coeff);
 	}
@@ -371,7 +372,7 @@ void unusual_model::setup2(
 	Fq->Linear_algebra->perp(4, 2, basis, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "basis:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, basis, 4, 4, 4, 2);
+		Int_vec_print_integer_matrix_width(cout, basis, 4, 4, 4, 2);
 	}
 	
 	for (i = 0; i < 2 * 4; i++) {
@@ -403,7 +404,7 @@ void unusual_model::setup2(
 		r_nb_terms, r_form_i, r_form_j, r_form_coeff, r_Gram);
 	if (f_vv) {
 		cout << "unusual_model::setup2 restricted Gram matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, r_Gram, 2, 2, 2, 2);
+		Int_vec_print_integer_matrix_width(cout, r_Gram, 2, 2, 2, 2);
 	}
 
 	Fq->Linear_algebra->find_hyperbolic_pair(2, r_nb_terms,
@@ -411,7 +412,7 @@ void unusual_model::setup2(
 		basis_subspace, basis_subspace + 2, verbose_level - 2);
 	if (f_vv) {
 		cout << "unusual_model::setup2 basis_subspace:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, basis_subspace, 2, 2, 2, 2);
+		Int_vec_print_integer_matrix_width(cout, basis_subspace, 2, 2, 2, 2);
 	}
 	Fq->Linear_algebra->mult_matrix_matrix(basis_subspace,
 			basis + 8, hyperbolic_basis + 8, 2, 2, 4,
@@ -419,7 +420,7 @@ void unusual_model::setup2(
 
 	if (f_vv) {
 		cout << "unusual_model::setup2 hyperbolic basis:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, hyperbolic_basis, 4, 4, 4, 2);
+		Int_vec_print_integer_matrix_width(cout, hyperbolic_basis, 4, 4, 4, 2);
 		for (i = 0; i < 4; i++) {
 			b = Fq->Linear_algebra->evaluate_quadratic_form(4,
 				nb_terms, form_i, form_j, form_coeff,
@@ -439,7 +440,7 @@ void unusual_model::setup2(
 	
 	if (f_vvv) {
 		cout << "unusual_model::setup2 bilinear form on the hyperbolic basis:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M, 4, 4, 4, 2);
+		Int_vec_print_integer_matrix_width(cout, M, 4, 4, 4, 2);
 	}
 
 	Fq->Linear_algebra->restrict_quadratic_form_list_coding(4, 4,
@@ -457,7 +458,7 @@ void unusual_model::setup2(
 			hyperbolic_basis_inverse, 4, verbose_level - 2);
 	if (f_vv) {
 		cout << "unusual_model::setup2 inverse hyperbolic basis:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				hyperbolic_basis_inverse, 4, 4, 4, 2);
 	}
 	if (f_v) {
@@ -479,7 +480,7 @@ void unusual_model::convert_to_ranks(int n,
 	}
 	if (f_v) {
 		cout << "unusual_model::convert_to_ranks unusual_coordinates:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				unusual_coordinates, n, 3, 3, 2);
 	}
 
@@ -497,7 +498,7 @@ void unusual_model::convert_to_ranks(int n,
 	
 	if (f_v) {
 		cout << "unusual_model::convert_to_ranks ranks:" << endl;
-		Orbiter->Lint_vec->print(cout, ranks, n);
+		Lint_vec_print(cout, ranks, n);
 		cout << endl;
 	}
 
@@ -516,7 +517,7 @@ void unusual_model::convert_from_ranks(int n,
 	}
 	if (f_v) {
 		cout << "unusual_model::convert_from_ranks ranks:" << endl;
-		Orbiter->Lint_vec->print(cout, ranks, n);
+		Lint_vec_print(cout, ranks, n);
 		cout << endl;
 	}
 	
@@ -531,7 +532,7 @@ void unusual_model::convert_from_ranks(int n,
 
 	if (f_v) {
 		cout << "unusual_model::convert_from_ranks unusual_coordinates:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				unusual_coordinates, n, 3, 3, 2);
 	}
 
@@ -571,7 +572,7 @@ void unusual_model::convert_to_usual(int n,
 	tmp = NEW_int(n * 4);
 	if (f_v) {
 		cout << "convert_to_usual:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 			unusual_coordinates, n, 3, 3, 2);
 	}
 	for (i = 0; i < n; i++) {
@@ -587,7 +588,7 @@ void unusual_model::convert_to_usual(int n,
 	}
 	if (f_v) {
 		cout << "tmp:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
+		Int_vec_print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
 	}
 	for (i = 0; i < n; i++) {
 		Fq->Linear_algebra->mult_matrix_matrix(tmp + i * 4,
@@ -598,7 +599,7 @@ void unusual_model::convert_to_usual(int n,
 	}
 	if (f_v) {
 		cout << "usual_coordinates:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, usual_coordinates, n, 5, 5, 2);
+		Int_vec_print_integer_matrix_width(cout, usual_coordinates, n, 5, 5, 2);
 	}
 	FREE_int(tmp);
 }
@@ -615,7 +616,7 @@ void unusual_model::convert_from_usual(int n,
 	tmp = NEW_int(n * 4);
 	if (f_v) {
 		cout << "convert_from_usual:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				usual_coordinates, n, 5, 5, 2);
 	}
 	if (q == 0) {
@@ -629,7 +630,7 @@ void unusual_model::convert_from_usual(int n,
 	}
 	if (f_v) {
 		cout << "tmp:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
+		Int_vec_print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
 	}
 	
 	for (i = 0; i < n; i++) {
@@ -663,7 +664,7 @@ void unusual_model::convert_from_usual(int n,
 	}
 	if (f_v) {
 		cout << "unusual_coordinates:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, unusual_coordinates, n, 3, 3, 2);
+		Int_vec_print_integer_matrix_width(cout, unusual_coordinates, n, 3, 3, 2);
 	}
 	FREE_int(tmp);
 }
@@ -709,7 +710,7 @@ void unusual_model::create_Fisher_BLT_set(
 	}
 	if (f_v) {
 		cout << nb_norm_one << " norm one elements reduced:" << endl;
-		Orbiter->Int_vec->print(cout, norm_one_table, nb_norm_one);
+		Int_vec_print(cout, norm_one_table, nb_norm_one);
 		cout << endl;
 	}
 	if (nb_norm_one != (q + 1) / 2) {
@@ -732,14 +733,14 @@ void unusual_model::create_Fisher_BLT_set(
 	}
 	if (FALSE) {
 		cout << "Table:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
+		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
 	
 	convert_to_ranks(q + 1, ABC, Fisher_BLT, verbose_level);
 	
 	if (f_v) {
 		cout << "Fisher BLT set:" << endl;
-		Orbiter->Lint_vec->print(cout, Fisher_BLT, q + 1);
+		Lint_vec_print(cout, Fisher_BLT, q + 1);
 		cout << endl;
 	}
 	FREE_int(norm_one_table);
@@ -768,7 +769,7 @@ void unusual_model::create_Linear_BLT_set(
 	}
 	if (f_v) {
 		cout << nb << " norm -1 elements reduced:" << endl;
-		Orbiter->Int_vec->print(cout, norm_table, nb);
+		Int_vec_print(cout, norm_table, nb);
 		cout << endl;
 	}
 	if (nb != q + 1) {
@@ -784,14 +785,14 @@ void unusual_model::create_Linear_BLT_set(
 	}
 	if (FALSE) {
 		cout << "ABC:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
+		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
 	
 	convert_to_ranks(q + 1, ABC, BLT, verbose_level);
 	
 	if (f_v) {
 		cout << "Linear BLT set:" << endl;
-		Orbiter->Lint_vec->print(cout, BLT, q + 1);
+		Lint_vec_print(cout, BLT, q + 1);
 		cout << endl;
 	}
 	FREE_int(norm_table);
@@ -854,7 +855,7 @@ void unusual_model::create_Mondello_BLT_set(
 	}
 	if (f_v) {
 		cout << nb_norm_one << " norm one elements:" << endl;
-		Orbiter->Int_vec->print(cout, norm_one_table, nb_norm_one);
+		Int_vec_print(cout, norm_one_table, nb_norm_one);
 		cout << endl;
 	}
 	if (nb_norm_one != q + 1) {
@@ -869,14 +870,14 @@ void unusual_model::create_Mondello_BLT_set(
 	}
 	if (FALSE) {
 		cout << "ABC:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
+		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
 	
 	convert_to_ranks(q + 1, ABC, BLT, verbose_level);
 	
 	if (f_v) {
 		cout << "Mondello BLT set:" << endl;
-		Orbiter->Lint_vec->print(cout, BLT, q + 1);
+		Lint_vec_print(cout, BLT, q + 1);
 		cout << endl;
 	}
 	FREE_int(norm_one_table);
@@ -999,9 +1000,9 @@ void unusual_model::print_coordinates_detailed(long int pt, int cnt)
 			<< b << ", " << c << " : " << setw(3) << a1
 			<< ", " << setw(4) << a2 << ", " << setw(3)
 			<< b1 << ", " << setw(4) << b2 << ", 1) : ";
-	Orbiter->Int_vec->print(cout, unusual, 3);
+	Int_vec_print(cout, unusual, 3);
 	cout << " : " << unusual_point_rank << " : ";
-	Orbiter->Int_vec->print(cout, usual, 5);
+	Int_vec_print(cout, usual, 5);
 	cout << " : ";
 	x = N2(a);
 	y = N2(b);
@@ -1061,7 +1062,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 
 	if (f_vvv) {
 		cout << "created the following 1st half:" << endl;
-		Orbiter->Lint_vec->print(cout, Set, Len);
+		Lint_vec_print(cout, Set, Len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, Len);
 		}
@@ -1110,14 +1111,14 @@ int unusual_model::build_candidate_set_with_or_without_test(
 		}
 	if (FALSE) {
 		cout << "Table:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Table, Len, 3, 3, 2);
+		Int_vec_print_integer_matrix_width(cout, Table, Len, 3, 3, 2);
 		}
 	
 	convert_to_ranks(Len, Table, Set, verbose_level - 2);
 	
 	if (f_vvv) {
 		cout << "created the following set:" << endl;
-		Orbiter->Lint_vec->print(cout, Set, Len);
+		Lint_vec_print(cout, Set, Len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, Len);
 		}
@@ -1180,7 +1181,7 @@ int unusual_model::create_orbit_of_psi(orthogonal &O, int q,
 
 	if (f_vvv) {
 		cout << "created the following psi-orbit:" << endl;
-		Orbiter->Lint_vec->print(cout, Set, len);
+		Lint_vec_print(cout, Set, len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, len);
 		}
@@ -1227,7 +1228,7 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		}
 	if (f_vv) {
 		cout << "transformation matrix in unusual model" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
+		Int_vec_print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
 		}
 
 	Fq->Linear_algebra->mult_matrix_matrix(hyperbolic_basis,
@@ -1239,7 +1240,7 @@ void unusual_model::transform_matrix_unusual_to_usual(
 	if (f_vvv) {
 		cout << "transformation matrix in "
 				"standard coordinates:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M4_tmp2, 4, 4, 4, 3);
+		Int_vec_print_integer_matrix_width(cout, M4_tmp2, 4, 4, 4, 3);
 		}
 	for (i = 0; i < 25; i++) {
 		M5[i] = 0;
@@ -1253,17 +1254,17 @@ void unusual_model::transform_matrix_unusual_to_usual(
 	M5[0 * 5 + 0] = 1;
 	if (f_vvv) {
 		cout << "embedded (M5):" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M5, 5, 5, 5, 3);
+		Int_vec_print_integer_matrix_width(cout, M5, 5, 5, 5, 3);
 		}
 	
 	Fq->Linear_algebra->transpose_matrix(M5, M5t, 5, 5);
 	
 	if (f_vvv) {
 		cout << "transposed (M5t):" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				M5t, 5, 5, 5, 3);
 		cout << "Gram matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				O->Gram_matrix, 5, 5, 5, 3);
 		}
 		
@@ -1275,7 +1276,7 @@ void unusual_model::transform_matrix_unusual_to_usual(
 	
 	if (f_vvv) {
 		cout << "Gram matrix transformed:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M5_tmp2, 5, 5, 5, 3);
+		Int_vec_print_integer_matrix_width(cout, M5_tmp2, 5, 5, 5, 3);
 		}
 
 	for (i = 0; i < 25; i++) {
@@ -1349,7 +1350,7 @@ void unusual_model::transform_matrix_usual_to_unusual(
 
 	if (f_vv) {
 		cout << "transformation matrix in unusual model" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
+		Int_vec_print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
 		}
 	FREE_int(M4_tmp1);
 	FREE_int(M4_tmp2);
@@ -1501,7 +1502,7 @@ void unusual_model::print_M5(orthogonal *O, int *M5)
 	print_2x2(v, f_semi);
 }
 
-}
-}
+}}}
+
 
 

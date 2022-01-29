@@ -329,13 +329,13 @@ void elliptic_curve::save_incidence_matrix(std::string &fname,
 	int f_v = (verbose_level >= 1);
 	int *M;
 	int i, x, y, z;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "elliptic_curve::save_incidence_matrix" << endl;
 	}
 	M = NEW_int(q * q);
-	Orbiter->Int_vec->zero(M, q * q);
+	Int_vec_zero(M, q * q);
 	for (i = 0; i < nb; i++) {
 		x = T[i * 3 + 0];
 		y = T[i * 3 + 1];
@@ -394,7 +394,7 @@ void elliptic_curve::draw_grid(
 		G.end_figure();
 		G.footer();
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname_full << " of size "
 			<< Fio.file_size(fname_full) << endl;
@@ -737,9 +737,9 @@ void elliptic_curve::compute_addition_table(int verbose_level)
 
 void elliptic_curve::print_addition_table()
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
-	Orbiter->Int_vec->matrix_print(A, nb, nb);
+	Int_matrix_print(A, nb, nb);
 	L.int_matrix_print_tex(cout, A, nb, nb);
 }
 
@@ -876,7 +876,7 @@ void elliptic_curve::latex_points_with_order(ostream &ost)
 	vector<int> Ord;
 	int *p;
 	int i;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	order_of_all_points(Ord);
 	p = NEW_int(Ord.size());
@@ -909,7 +909,7 @@ void elliptic_curve::latex_order_of_all_points(ostream &ost)
 	vector<int> Ord;
 	int *p;
 	int i;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	order_of_all_points(Ord);
 	p = NEW_int(Ord.size());

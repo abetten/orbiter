@@ -57,7 +57,7 @@ tdo_refinement::~tdo_refinement()
 void tdo_refinement::init(tdo_refinement_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "tdo_refinement::init" << endl;
@@ -803,7 +803,7 @@ int tdo_refinement::do_column_refinement(
 				cout << "s=" << s << endl;
 				cout << "l=" << l << endl;
 				cout << "a=" << a << endl;
-				Orbiter->Int_vec->print(cout, distributions + t * nb_line_types, nb_line_types);
+				Int_vec_print(cout, distributions + t * nb_line_types, nb_line_types);
 				cout << endl;
 				exit(1);
 			}

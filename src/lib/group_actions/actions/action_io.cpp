@@ -114,7 +114,7 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 	if (Stabilizer_chain) {
 		if (base_len()) {
 			ost << "Base: $";
-			Orbiter->Lint_vec->print(ost, get_base(), base_len());
+			Lint_vec_print(ost, get_base(), base_len());
 			ost << "$\\\\" << endl;
 		}
 		if (f_strong_gens) {
@@ -270,7 +270,7 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 
-		Orbiter->Lint_vec->copy(candidates2, candidates1, nb_candidates2);
+		Lint_vec_copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
 		FREE_lint(candidates2);
@@ -300,7 +300,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_at_candidate_level = -1;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -337,7 +337,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 			cout << "action::read_orbit_rep_and_candidates_from_files "
 					"Read starter " << orbit_at_level << " / "
 					<< nb_cases << " : ";
-			Orbiter->Lint_vec->print(cout, starter, starter_sz);
+			Lint_vec_print(cout, starter, starter_sz);
 			cout << endl;
 			//cout << "read_orbit_rep_and_candidates_from_files "
 			//"Group order=" << stab_go << endl;
@@ -421,7 +421,7 @@ void action::read_representatives(std::string &fname,
 	char **Aut_ascii;
 	int *Casenumbers;
 	int i, j;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "action::read_file_and_print_representatives "
 			"reading file " << fname << endl;
@@ -458,7 +458,7 @@ void action::read_representatives_and_strong_generators(
 	//char **Aut_ascii;
 	int *Casenumbers;
 	int i, j;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	cout << "action::read_file_and_print_representatives "
@@ -496,7 +496,7 @@ void action::read_file_and_print_representatives(
 	char **Aut_ascii;
 	int *Casenumbers;
 	int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action::read_file_and_print_representatives "
@@ -512,7 +512,7 @@ void action::read_file_and_print_representatives(
 		0/*verbose_level*/);
 	for (i = 0; i < nb_cases; i++) {
 		cout << "Orbit " << i << " representative ";
-		Orbiter->Lint_vec->print(cout, Sets[i], Set_sizes[i]);
+		Lint_vec_print(cout, Sets[i], Set_sizes[i]);
 		cout << endl;
 
 		data_structures_groups::group_container *G;
@@ -533,7 +533,7 @@ void action::read_file_and_print_representatives(
 		G->S->extract_strong_generators_in_order(*gens, tl,
 				0 /* verbose_level */);
 		cout << "Stabilizer has order " << go << " tl=";
-		Orbiter->Int_vec->print(cout, tl, base_len());
+		Int_vec_print(cout, tl, base_len());
 		cout << endl;
 
 		if (f_print_stabilizer_generators) {
@@ -570,7 +570,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 	int *Casenumbers;
 	data_structures_groups::group_container *G;
 	int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -704,7 +704,7 @@ void action::print_info()
 	if (Stabilizer_chain) {
 		if (base_len()) {
 			cout << "base: ";
-			Orbiter->Lint_vec->print(cout, get_base(), base_len());
+			Lint_vec_print(cout, get_base(), base_len());
 			cout << endl;
 		}
 	}
@@ -751,7 +751,7 @@ void action::print_base()
 {
 	if (Stabilizer_chain) {
 		cout << "action " << label << " has base ";
-		Orbiter->Lint_vec->print(cout, get_base(), base_len());
+		Lint_vec_print(cout, get_base(), base_len());
 		cout << endl;
 	}
 	else {
@@ -762,7 +762,7 @@ void action::print_base()
 void action::print_bare_base(std::ofstream &ost)
 {
 	if (Stabilizer_chain) {
-		Orbiter->Lint_vec->print_bare_fully(ost, get_base(), base_len());
+		orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(ost, get_base(), base_len());
 	}
 	else {
 		cout << "action " << label << " does not have a base" << endl;
@@ -825,7 +825,7 @@ void action::latex_all_points(std::ostream &ost)
 	for (i = 0; i < degree; i++) {
 		unrank_point(i, v);
 		ost << i << " = ";
-		Orbiter->Int_vec->print(ost, v, low_level_point_size);
+		Int_vec_print(ost, v, low_level_point_size);
 		ost << "\\\\" << endl;
 	}
 	if (low_level_point_size < 10) {
@@ -892,7 +892,7 @@ void action::latex_point_set(std::ostream &ost, long int *set, int sz, int verbo
 		unrank_point(set[i], v);
 		ost << i << " : ";
 		ost << set[i] << " = ";
-		Orbiter->Int_vec->print(ost, v, low_level_point_size);
+		Int_vec_print(ost, v, low_level_point_size);
 		ost << "\\\\" << endl;
 	}
 	if (low_level_point_size < 10) {
@@ -973,7 +973,7 @@ void action::write_set_of_elements_latex_file(std::string &fname, std::string &t
 		author[0] = 0;
 
 
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		L.head(ost,
 				FALSE /* f_book*/,
@@ -1002,7 +1002,7 @@ void action::write_set_of_elements_latex_file(std::string &fname, std::string &t
 
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -1015,7 +1015,7 @@ void action::export_to_orbiter(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	long int a;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	ring_theory::longinteger_object go;
 
 	if (f_v) {

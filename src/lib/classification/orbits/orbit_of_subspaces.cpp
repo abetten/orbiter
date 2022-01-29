@@ -136,7 +136,7 @@ void orbit_of_subspaces::init(
 	orbit_of_subspaces::F = F;
 	orbit_of_subspaces::gens = gens;
 	orbit_of_subspaces::subspace_by_rank = NEW_int(n);
-	Orbiter->Int_vec->copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank, n);
+	Int_vec_copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank, n);
 	orbit_of_subspaces::k = k;
 	orbit_of_subspaces::n = n;
 	orbit_of_subspaces::f_has_desired_pivots = f_has_desired_pivots;
@@ -204,7 +204,7 @@ void orbit_of_subspaces::init_lint(
 	orbit_of_subspaces::F = F;
 	orbit_of_subspaces::gens = gens;
 	orbit_of_subspaces::subspace_by_rank_lint = NEW_lint(n);
-	Orbiter->Lint_vec->copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank_lint, n);
+	Lint_vec_copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank_lint, n);
 	orbit_of_subspaces::k = k;
 	orbit_of_subspaces::n = n;
 	orbit_of_subspaces::f_has_desired_pivots = f_has_desired_pivots;
@@ -425,9 +425,9 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 	if (f_has_desired_pivots) {
 		if (f_vv) {
 			cout << "orbit_of_subspaces::rref before:" << endl;
-			Orbiter->Int_vec->matrix_print(subspace, k, n);
+			Int_matrix_print(subspace, k, n);
 			cout << "desired_pivots:";
-			Orbiter->Int_vec->print(cout, desired_pivots, k);
+			Int_vec_print(cout, desired_pivots, k);
 			cout << endl;
 			}
 		F->Linear_algebra->Gauss_int_with_given_pivots(
@@ -440,7 +440,7 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 			0 /*verbose_level - 2*/);
 		if (f_vv) {
 			cout << "orbit_of_subspaces::rref after:" << endl;
-			Orbiter->Int_vec->matrix_print(subspace, k, n);
+			Int_matrix_print(subspace, k, n);
 			}
 		}
 	else {
@@ -535,10 +535,10 @@ void orbit_of_subspaces::print_orbit()
 	for (i = 0; i < used_length; i++) {
 		cout << i << " : ";
 		if (f_lint) {
-			Orbiter->Lint_vec->print(cout, Subspaces_lint[i], k);
+			Lint_vec_print(cout, Subspaces_lint[i], k);
 		}
 		else {
-			Orbiter->Int_vec->print(cout, Subspaces[i], k);
+			Int_vec_print(cout, Subspaces[i], k);
 		}
 #if 0
 		cout << " : ";
@@ -636,7 +636,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 	}
 	if (f_v) {
 		cout << "which equals" << endl;
-		Orbiter->Int_vec->matrix_print(Mtx1, k, n);
+		Int_matrix_print(Mtx1, k, n);
 		}
 
 	rref(Mtx1, verbose_level - 1);
@@ -652,17 +652,17 @@ void orbit_of_subspaces::compute(int verbose_level)
 	}
 	if (f_v) {
 		cout << "after RREF:" << endl;
-		Orbiter->Int_vec->matrix_print(Mtx1, k, n);
+		Int_matrix_print(Mtx1, k, n);
 		}
 
 
 	if (f_lint) {
 		Subspaces_lint[0] = NEW_lint(sz);
-		Orbiter->Lint_vec->copy(subspace_by_rank_lint, Subspaces_lint[0], sz);
+		Lint_vec_copy(subspace_by_rank_lint, Subspaces_lint[0], sz);
 	}
 	else {
 		Subspaces[0] = NEW_int(sz);
-		Orbiter->Int_vec->copy(subspace_by_rank, Subspaces[0], sz);
+		Int_vec_copy(subspace_by_rank, Subspaces[0], sz);
 	}
 	prev[0] = -1;
 	label[0] = -1;
@@ -683,7 +683,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 			cout << "Q_len = " << Q_len
 					<< " : used_length="
 					<< used_length << " : ";
-			Orbiter->Int_vec->print(cout, Q, Q_len);
+			Int_vec_print(cout, Q, Q_len);
 			cout << endl;
 			}
 		cur = Q[0];
@@ -740,21 +740,21 @@ void orbit_of_subspaces::compute(int verbose_level)
 					// reallocate prev:
 					int *prev2;
 					prev2 = NEW_int(al2);
-					Orbiter->Int_vec->copy(prev, prev2, al2);
+					Int_vec_copy(prev, prev2, al2);
 					FREE_int(prev);
 					prev = prev2;
 
 					// reallocate label:
 					int *label2;
 					label2 = NEW_int(al2);
-					Orbiter->Int_vec->copy(label, label2, al2);
+					Int_vec_copy(label, label2, al2);
 					FREE_int(label);
 					label = label2;
 
 					// reallocate Q2:
 					int *Q2;
 					Q2 = NEW_int(al2);
-					Orbiter->Int_vec->copy(Q, Q2, Q_len);
+					Int_vec_copy(Q, Q2, Q_len);
 					FREE_int(Q);
 					Q = Q2;
 
@@ -764,11 +764,11 @@ void orbit_of_subspaces::compute(int verbose_level)
 
 				if (f_lint) {
 					Subspaces_lint[used_length] = NEW_lint(sz);
-					Orbiter->Lint_vec->copy(subspace_by_rank_lint, Subspaces_lint[used_length], sz);
+					Lint_vec_copy(subspace_by_rank_lint, Subspaces_lint[used_length], sz);
 				}
 				else {
 					Subspaces[used_length] = NEW_int(sz);
-					Orbiter->Int_vec->copy(subspace_by_rank, Subspaces[used_length], sz);
+					Int_vec_copy(subspace_by_rank, Subspaces[used_length], sz);
 				}
 				prev[used_length] = cur;
 				label[used_length] = j;
@@ -912,7 +912,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 	uint32_t h;
 	//int *cur_basis;
 	//int *new_basis;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "orbit_of_subspaces::get_random_schreier_generator" << endl;

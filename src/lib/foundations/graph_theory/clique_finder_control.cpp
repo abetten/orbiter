@@ -148,7 +148,7 @@ int clique_finder_control::parse_arguments(
 				}
 			}
 			cout << "-restrictions ";
-			Orbiter->Int_vec->print(cout, restrictions, 3 * nb_restrictions);
+			Int_vec_print(cout, restrictions, 3 * nb_restrictions);
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -204,7 +204,7 @@ void clique_finder_control::print()
 	}
 	else if (f_restrictions) {
 		cout << "-restrictions ";
-		Orbiter->Int_vec->print(cout, restrictions, 3 * nb_restrictions);
+		Int_vec_print(cout, restrictions, 3 * nb_restrictions);
 		cout << endl;
 	}
 }

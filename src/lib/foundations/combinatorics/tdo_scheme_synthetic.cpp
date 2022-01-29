@@ -287,7 +287,7 @@ void tdo_scheme_synthetic::init_partition_stack(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "init_partition_stack: m=" << m << " n=" << n << endl;
-		Orbiter->Int_vec->print(cout, part, part_length + 1);
+		Int_vec_print(cout, part, part_length + 1);
 		cout << endl;
 	}
 	
@@ -768,7 +768,7 @@ void tdo_scheme_synthetic::get_column_split_partition(int verbose_level,
 		}
 		if (FALSE) {
 			cout << "non descendants of " << i << "/" << ci << " : ";
-			Orbiter->Int_vec->set_print(cout, P.subset, P.subset_size);
+			orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, P.subset, P.subset_size);
 			cout << endl;
 		}
 		if (P.subset_size > 0) {
@@ -840,7 +840,7 @@ void tdo_scheme_synthetic::get_row_split_partition(int verbose_level,
 		}
 		if (FALSE) {
 			cout << "non descendants of " << i << "/" << ci << " : ";
-			Orbiter->Int_vec->set_print(cout, P.subset, P.subset_size);
+			orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, P.subset, P.subset_size);
 			cout << endl;
 		}
 		if (P.subset_size > 0) {
@@ -1233,7 +1233,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(data_structures::partiti
 		if (f_vvvv) {
 			cout << "geometric_test_for_row_scheme: testing distribution " 
 				<< cnt << " / " << nb_distributions << " : ";
-			Orbiter->Int_vec->print(cout,
+			Int_vec_print(cout,
 				distributions + cnt * nb_point_types,
 				nb_point_types);
 			cout << endl;
@@ -1243,7 +1243,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(data_structures::partiti
 					d = distributions[cnt *
 						nb_point_types + non_zero_blocks[i]];
 					cout << setw(3) << i << " : " << setw(3) << d << " x ";
-					Orbiter->Int_vec->print(cout,
+					Int_vec_print(cout,
 						point_types + non_zero_blocks[i] * point_type_len,
 						point_type_len);
 					cout << endl;
@@ -1271,7 +1271,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(data_structures::partiti
 										  non_zero_blocks[i]];
 						cout << setw(3) << i << " : "
 							<< setw(3) << d << " x ";
-						Orbiter->Int_vec->print(cout,
+						Int_vec_print(cout,
 							point_types + non_zero_blocks[i] * point_type_len,
 							point_type_len);
 						cout << endl;						
@@ -1303,7 +1303,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(data_structures::partiti
 			<< new_nb_distributions << ", i.e. Eliminated " 
 			<< nb_distributions - new_nb_distributions << " cases" << endl;
 		cout << "# of ruled out by test of order ";
-		Orbiter->Int_vec->print(cout, ruled_out_by, nb_point_types + 1);
+		Int_vec_print(cout, ruled_out_by, nb_point_types + 1);
 		cout << endl;
 		//cout << "nb ruled out by first order test  = "
 		//<< nb_ruled_out_by_order1 << endl;
@@ -1532,7 +1532,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 				if (f_v) {
 					cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme_"
 						"level_s s=" << s << " failure in point type ";
-					Orbiter->Int_vec->print(cout, set, s);
+					Int_vec_print(cout, set, s);
 					cout << endl;
 					cout << "max=" << max << endl;
 					cout << "J=" << J << endl;
@@ -2038,7 +2038,7 @@ int tdo_scheme_synthetic::refine_rows_hard(
 		if (f_vv) {
 			cout << "tdo_scheme_synthetic::refine_rows_hard r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
 				nb_sol, point_type_len, point_type_len, 3);
 		}
@@ -2065,7 +2065,7 @@ int tdo_scheme_synthetic::refine_rows_hard(
 		if (f_vv) {
 			cout << "tdo_scheme_synthetic::refine_rows_hard r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
 				nb_sol, point_type_len, point_type_len, 3);
 		}
@@ -2122,7 +2122,7 @@ int tdo_scheme_synthetic::refine_rows_hard(
 	if (f_vv) {
 		cout << "tdo_scheme_synthetic::refine_rows_hard altogether, we found " << nb_point_types
 				<< " refined point types:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, point_types,
+		Int_vec_print_integer_matrix_width(cout, point_types,
 			nb_point_types, point_type_len, point_type_len, 3);
 	}
 	
@@ -3113,7 +3113,7 @@ int tdo_scheme_synthetic::refine_cols_hard(
 						<< " refined line types" << endl;
 			}
 			if (f_vv) {
-				Orbiter->Int_vec->print_integer_matrix_width(cout,
+				Int_vec_print_integer_matrix_width(cout,
 					line_types + T.types_first[r] * L2, nb_sol, L2, L2, 2);
 			}
 			nb_sol1 = 0;
@@ -3167,7 +3167,7 @@ int tdo_scheme_synthetic::refine_cols_hard(
 			}
 
 			if (f_vv) {
-				Orbiter->Int_vec->print_integer_matrix_width(cout,
+				Int_vec_print_integer_matrix_width(cout,
 					line_types + T.types_first[r] * L2, nb_sol, L2, L2, 2);
 			}
 			if (nb_sol == 0) {
@@ -3205,7 +3205,7 @@ int tdo_scheme_synthetic::refine_cols_hard(
 			}
 		}
 		if (f_vv) {
-			Orbiter->Int_vec->print_integer_matrix_width(cout, line_types,
+			Int_vec_print_integer_matrix_width(cout, line_types,
 					nb_line_types, line_type_len, line_type_len, 3);
 		}
 
@@ -3320,7 +3320,7 @@ int tdo_scheme_synthetic::refine_cols_hard(
 		if (f_v) {
 			cout << "tdo_scheme_synthetic::refine_cols_hard "
 					"The distributions are:" << endl;
-			Orbiter->Int_vec->matrix_print(distributions, nb_distributions, nb_line_types);
+			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(distributions, nb_distributions, nb_line_types);
 		}
 
 #if 0

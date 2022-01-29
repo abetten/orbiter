@@ -317,7 +317,7 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 			variety_degree = ST.strtoi(argv[++i]);
 
 
-			os_interface Os;
+			orbiter_kernel_system::os_interface Os;
 
 			i++;
 			Os.get_string_from_command_line(variety_coeffs, argc, argv, i, verbose_level);
@@ -339,7 +339,7 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 			int j;
 
 
-			os_interface Os;
+			orbiter_kernel_system::os_interface Os;
 
 			i++;
 
@@ -378,7 +378,7 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 			int j;
 
-			os_interface Os;
+			orbiter_kernel_system::os_interface Os;
 
 			i++;
 

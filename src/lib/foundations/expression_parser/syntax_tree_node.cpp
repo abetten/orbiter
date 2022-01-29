@@ -15,13 +15,14 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace expression_parser {
 
 
 syntax_tree_node::syntax_tree_node()
 {
 	Tree = NULL;
-	idx = Orbiter->syntax_tree_node_index;
-	Orbiter->syntax_tree_node_index++;
+	idx = orbiter_kernel_system::Orbiter->syntax_tree_node_index;
+	orbiter_kernel_system::Orbiter->syntax_tree_node_index++;
 
 	f_terminal = false;
 	T = NULL;
@@ -395,5 +396,7 @@ void syntax_tree_node::export_graphviz_recursion(std::ostream &ost)
 
 
 
-}}
+}}}
+
+
 

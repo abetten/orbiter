@@ -261,14 +261,14 @@ void substructure_classifier::set_stabilizer_in_any_space(
 			ST.remove_specific_character(pts_txt, '\"');
 
 
-			Orbiter->Lint_vec->scan(pts_txt, pts, nb_pts);
+			Lint_vec_scan(pts_txt, pts, nb_pts);
 
 			canonical_pts = NEW_lint(nb_pts);
 
 			if (f_v) {
 				cout << "row = " << row;
 				cout << " pts=";
-				Orbiter->Lint_vec->print(cout, pts, nb_pts);
+				Lint_vec_print(cout, pts, nb_pts);
 				cout << endl;
 			}
 
@@ -372,7 +372,7 @@ void substructure_classifier::set_stabilizer_of_set(
 	if (f_v) {
 		cout << "substructure_classifier::set_stabilizer after handle_orbit" << endl;
 		cout << "canonical point set: ";
-		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
+		Lint_vec_print(cout, canonical_pts, nb_pts);
 		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_original_set->group_order(go);
@@ -401,7 +401,7 @@ void substructure_classifier::set_stabilizer_of_set(
 	if (f_v) {
 		cout << "substructure_classifier::set_stabilizer after handle_orbit" << endl;
 		cout << "canonical point set: ";
-		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
+		Lint_vec_print(cout, canonical_pts, nb_pts);
 		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_canonical_form->group_order(go);

@@ -207,7 +207,7 @@ void gen_geo::main2(int verbose_level)
 		fname.append(".inc");
 		it->write_inc_file(fname, verbose_level);
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -222,7 +222,7 @@ void gen_geo::main2(int verbose_level)
 			fname.append(".blocks_long");
 			it->write_blocks_file_long(fname, verbose_level);
 
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -239,7 +239,7 @@ void gen_geo::main2(int verbose_level)
 			fname.append(".blocks");
 			it->write_blocks_file(fname, verbose_level);
 
-			file_io Fio;
+			orbiter_kernel_system::file_io Fio;
 
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}

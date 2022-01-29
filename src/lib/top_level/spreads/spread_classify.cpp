@@ -437,7 +437,7 @@ void spread_classify::init(
 					"initializing klein correspondence" << endl;
 		}
 		Klein = NEW_OBJECT(geometry::klein_correspondence);
-		O = NEW_OBJECT(orthogonal);
+		O = NEW_OBJECT(layer1_foundations::orthogonal_geometry::orthogonal);
 		
 		O->init(1 /* epsilon */, 6, Mtx->GFq, 0 /* verbose_level*/);
 		Klein->init(Mtx->GFq, O, 0 /* verbose_level */);
@@ -579,7 +579,7 @@ void spread_classify::print_points()
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
 		cout << "point " << i << " : ";
-		Orbiter->Int_vec->print(cout, v, n);
+		Int_vec_print(cout, v, n);
 		cout << endl;
 	}
 	FREE_int(v);
@@ -597,7 +597,7 @@ void spread_classify::print_points(long int *pts, int len)
 		a = pts[h];
 		unrank_point(v, a);
 		cout << "point " << h << " : " << a << " : ";
-		Orbiter->Int_vec->print(cout, v, n);
+		Int_vec_print(cout, v, n);
 		cout << endl;
 	}
 	FREE_int(v);
@@ -615,7 +615,7 @@ void spread_classify::print_elements()
 		}
 		unrank_subspace(M, i);
 		if (FALSE) {
-			Orbiter->Int_vec->print_integer_matrix_width(cout, M,
+			Int_vec_print_integer_matrix_width(cout, M,
 					k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 		j = rank_subspace(M);
@@ -651,10 +651,10 @@ void spread_classify::print_elements_and_points()
 			Line[a] = b;
 		}
 		cout << "line " << i << ":" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M,
+		Int_vec_print_integer_matrix_width(cout, M,
 				k, n, n, Mtx->GFq->log10_of_q + 1);
 		cout << "points on subspace " << i << " : ";
-		Orbiter->Int_vec->print(cout, Line, r);
+		Int_vec_print(cout, Line, r);
 		cout << endl;
 	}
 	FREE_int(M);
@@ -672,7 +672,7 @@ void spread_classify::compute(int verbose_level)
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -731,10 +731,10 @@ void spread_classify::early_test_func(long int *S, int len,
 		
 	if (f_v) {
 		cout << "spread_classify::early_test_func checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			if (nb_candidates < 100) {
@@ -742,7 +742,7 @@ void spread_classify::early_test_func(long int *S, int len,
 					Grass->unrank_lint(candidates[i], 0/*verbose_level - 4*/);
 					cout << "candidate " << i << "="
 							<< candidates[i] << ":" << endl;
-					Orbiter->Int_vec->print_integer_matrix_width(cout,
+					Int_vec_print_integer_matrix_width(cout,
 							Grass->M, k, n, n, Mtx->GFq->log10_of_q + 1);
 				}
 			}
@@ -770,7 +770,7 @@ void spread_classify::early_test_func(long int *S, int len,
 	if (f_v) {
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(cout,
 					MM + i * k * n, k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 	}
@@ -785,13 +785,13 @@ void spread_classify::early_test_func(long int *S, int len,
 			i0 = len - 1;
 		}
 		for (i = i0; i < len; i++) {
-			Orbiter->Int_vec->copy(MM + i * kn, M, k * n);
-			Orbiter->Int_vec->copy(Grass->M, M + kn, k * n);
+			Int_vec_copy(MM + i * kn, M, k * n);
+			Int_vec_copy(Grass->M, M + kn, k * n);
 
 			if (f_vv) {
 				cout << "testing (p_" << i << ",candidates[" << j << "])="
 						"(" << S[i] <<  "," << candidates[j] << ")" << endl;
-				Orbiter->Int_vec->print_integer_matrix_width(cout, M,
+				Int_vec_print_integer_matrix_width(cout, M,
 						2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 			}
 			rk = Mtx->GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(
@@ -836,7 +836,7 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 		
 	if (f_v) {
 		cout << "spread_classify::check_function checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	M1 = tmp_M1; // [kn]
@@ -848,7 +848,7 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
 			Grass->unrank_lint(S[i], 0/*verbose_level - 4*/);
-			Orbiter->Int_vec->print_integer_matrix_width(cout, Grass->M,
+			Int_vec_print_integer_matrix_width(cout, Grass->M,
 					k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 	}
@@ -856,13 +856,13 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 	for (i = 0; i < len; i++) {
 		unrank_subspace(M1, S[i]);
 		for (j = i + 1; j < len; j++) {
-			Orbiter->Int_vec->copy(M1, M, kn);
+			Int_vec_copy(M1, M, kn);
 			unrank_subspace(M + kn, S[j]);
 
 			if (f_vv) {
 				cout << "testing (p_" << i << ",p_" << j << ")"
 						"=(" << S[i] << "," << S[j] << ")" << endl;
-				Orbiter->Int_vec->print_integer_matrix_width(cout, M,
+				Int_vec_print_integer_matrix_width(cout, M,
 						2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 			}
 			rk = Mtx->GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(
@@ -913,7 +913,7 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 		
 	if (f_v) {
 		cout << "spread_classify::incremental_check_function checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	if (len <= 1) {
@@ -929,7 +929,7 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
 			Grass->unrank_lint(S[i], 0/*verbose_level - 4*/);
-			Orbiter->Int_vec->print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(cout,
 					Grass->M, k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 	}
@@ -939,12 +939,12 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 	unrank_subspace(M1, S[j]);
 	for (i = 0; i < len - 1; i++) {
 		unrank_subspace(M, S[i]);
-		Orbiter->Int_vec->copy(M1, M + kn, kn);
+		Int_vec_copy(M1, M + kn, kn);
 		
 		if (f_vv) {
 			cout << "testing (p_" << i << ",p_" << j << ")"
 					"=(" << S[i] <<  "," << S[j] << ")" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout, M,
+			Int_vec_print_integer_matrix_width(cout, M,
 					2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 		rk = Mtx->GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(
@@ -1044,7 +1044,7 @@ void spread_classify::lifting_prepare_function_new(
 
 	if (f_v3) {
 		cout << "col_color=";
-		Orbiter->Int_vec->print(cout, col_color, Dio->n);
+		Int_vec_print(cout, col_color, Dio->n);
 		cout << endl;
 	}
 
@@ -1086,7 +1086,7 @@ void spread_classify::lifting_prepare_function_new(
 	}
 	
 	string fname_clique_graph;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname_clique_graph.assign(E->output_prefix);
 	fname_clique_graph.append(str);
@@ -1177,7 +1177,7 @@ static void spread_lifting_early_test_function(long int *S, int len,
 	
 	if (f_v) {
 		cout << "spread_lifting_early_test_function for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	Spread->early_test_func(S, len,
@@ -1277,7 +1277,7 @@ static void spread_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "spread_early_test_func_callback for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	T->early_test_func(S, len,

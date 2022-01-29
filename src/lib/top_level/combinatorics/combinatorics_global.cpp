@@ -37,7 +37,7 @@ void combinatorics_global::create_design_table(design_create *DC,
 	if (f_v) {
 		cout << "combinatorics_global::create_design_table" << endl;
 	}
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorics_global::create_design_table design:" << endl;
@@ -88,7 +88,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 	if (f_v) {
 		cout << "combinatorics_global::load_design_table" << endl;
 	}
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	actions::action *A;
 	//int *Elt1;
 	int *Elt2;
@@ -459,7 +459,7 @@ void combinatorics_global::Hill_cap56(
 	field_theory::finite_field *F;
 	number_theory::number_theory_domain NT;
 	geometry::geometry_global Gg;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "combinatorics_global::Hill_cap" << endl;
@@ -509,7 +509,7 @@ void combinatorics_global::Hill_cap56(
 
 
 	induced_actions::action_on_orthogonal *AO = A->G.AO;
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 
 	O = AO->O;
 
@@ -577,7 +577,7 @@ void combinatorics_global::Hill_cap56(
 	for (i = 0; i < nb_lines; i++) {
 		Grass.unrank_longinteger(Rank_lines[i], 0/*verbose_level - 3*/);
 		cout << setw(5) << i << " : " << Rank_lines[i] << ":" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Grass.M, w, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, Grass.M, w, n, n, 2);
 		}
 
 #endif
@@ -641,7 +641,7 @@ void combinatorics_global::Hill_cap56(
 		O->unrank_point(pt_coords + i * n, 1, i, 0);
 		}
 	cout << "point coordinates:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, pt_coords, nb_pts, n, n, 2);
+	Int_vec_print_integer_matrix_width(cout, pt_coords, nb_pts, n, n, 2);
 
 	cout << "evaluating quadratic form:" << endl;
 	for (i = 0; i < nb_pts; i++) {
@@ -725,7 +725,7 @@ void combinatorics_global::Hill_cap56(
 									nb_sol++;
 									cout << "solution " << nb_sol << ", a set of size " << sz[8] << " : ";
 									cout << i1 << "," << i2 << "," << i3 << "," << i4 << "," << i5 << "," << i6 << "," << i7 << "," << i8 << endl;
-									Orbiter->Int_vec->print(cout, set, sz[8]);
+									Int_vec_print(cout, set, sz[8]);
 									cout << endl;
 
 
@@ -800,8 +800,8 @@ void combinatorics_global::classify_objects_using_nauty(
 	int f_v = (verbose_level >= 1);
 	int input_idx;
 	int t0;
-	file_io Fio;
-	os_interface Os;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::os_interface Os;
 	int nb_objects_to_test;
 	long int *Ago;
 	vector<vector<long int>> Reps;
@@ -981,7 +981,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	int nck;
 	int nb_classes = design_b / partition_class_size;
@@ -1047,7 +1047,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 		}
 
 		if (FALSE) {
-			Orbiter->Lint_vec->matrix_print(the_set_in, nb_classes, partition_class_size);
+			orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(the_set_in, nb_classes, partition_class_size);
 		}
 		if (f_vv || ((h % 1024) == 0)) {
 			cout << "combinatorics_global::handle_input_file "
@@ -1059,7 +1059,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 		if (f_vvv) {
 			cout << "combinatorics_global::handle_input_file "
 					"The input set is:" << endl;
-			Orbiter->Lint_vec->print(cout, the_set_in, set_size_in);
+			Lint_vec_print(cout, the_set_in, set_size_in);
 			cout << endl;
 		}
 
@@ -1147,7 +1147,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 		else {
 			if (f_v) {
 				cout << "combinatorics_global::handle_input_file new isomorphism type: ";
-				Orbiter->Lint_vec->print(cout, the_set_in, set_size_in);
+				Lint_vec_print(cout, the_set_in, set_size_in);
 				cout << endl;
 			}
 			vector<long int> rep;

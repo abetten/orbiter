@@ -34,7 +34,7 @@ class activity_description {
 	projective_geometry::projective_space_activity_description *Projective_space_activity_description;
 
 	int f_orthogonal_space_activity;
-	orthogonal_geometry::orthogonal_space_activity_description *Orthogonal_space_activity_description;
+	orthogonal_geometry_applications::orthogonal_space_activity_description *Orthogonal_space_activity_description;
 
 	int f_group_theoretic_activity;
 	apps_algebra::group_theoretic_activity_description *Group_theoretic_activity_description;
@@ -527,7 +527,7 @@ class interface_povray {
 	graphics::povray_job_description *Povray_job_description;
 
 	int f_prepare_frames;
-	prepare_frames *Prepare_frames;
+	orbiter_kernel_system::prepare_frames *Prepare_frames;
 
 public:
 	interface_povray();
@@ -658,7 +658,7 @@ public:
 class interface_toolkit {
 
 	int f_create_files;
-	create_file_description *Create_file_description;
+	orbiter_kernel_system::create_file_description *Create_file_description;
 
 	int f_csv_file_select_rows;
 	std::string csv_file_select_rows_fname;
@@ -814,7 +814,7 @@ class orbiter_top_level_session {
 
 public:
 
-	orbiter_session *Orbiter_session;
+	orbiter_kernel_system::orbiter_session *Orbiter_session;
 
 	orbiter_top_level_session();
 	~orbiter_top_level_session();
@@ -829,7 +829,7 @@ public:
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
 	void add_symbol_table_entry(std::string &label,
-			orbiter_symbol_table_entry *Symb, int verbose_level);
+			orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
 	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
 	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
 
@@ -859,7 +859,7 @@ public:
 	projective_geometry::projective_space_with_action_description *Projective_space_with_action_description;
 
 	int f_orthogonal_space;
-	orthogonal_geometry::orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
+	orthogonal_geometry_applications::orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
 
 
 	int f_linear_group;
@@ -872,7 +872,7 @@ public:
 	apps_algebra::group_modification_description *Group_modification_description;
 
 	int f_formula;
-	formula *F;
+	expression_parser::formula *F;
 	std::string label;
 	std::string label_tex;
 	std::string managed_variables;
@@ -955,7 +955,8 @@ public:
 	void definition_of_permutation_group(int verbose_level);
 	void definition_of_modified_group(int verbose_level);
 	void definition_of_geometric_object(int verbose_level);
-	void definition_of_formula(formula *F,
+	void definition_of_formula(
+			expression_parser::formula *F,
 			int verbose_level);
 	void definition_of_collection(std::string &list_of_objects,
 			int verbose_level);

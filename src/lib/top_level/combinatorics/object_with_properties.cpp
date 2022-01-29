@@ -470,11 +470,11 @@ void object_with_properties::latex_report(std::ostream &ost,
 		}
 		int idx;
 
-		idx = Orbiter->find_symbol(Report_options->lex_least_geometry_builder);
+		idx = orbiter_kernel_system::Orbiter->find_symbol(Report_options->lex_least_geometry_builder);
 
 		symbol_table_object_type t;
 
-		t = Orbiter->get_object_type(idx);
+		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 		if (t != t_geometry_builder) {
 			cout << "object_with_properties::latex_report "
 				<< Report_options->lex_least_geometry_builder
@@ -487,7 +487,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 		data_structures::nauty_output *NO;
 		data_structures::bitvector *Canonical_form;
 
-		GB = (geometry_builder::geometry_builder *) Orbiter->get_object(idx);
+		GB = (geometry_builder::geometry_builder *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 
 		if (f_v) {
@@ -594,7 +594,7 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 
 	OwCF->encode_incma(Enc, verbose_level);
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	string fname;
 
 
@@ -603,7 +603,7 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 	int i, j;
 
 	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
-	Orbiter->Int_vec->zero(Inc2, Enc->nb_rows * Enc->nb_cols);
+	Int_vec_zero(Inc2, Enc->nb_rows * Enc->nb_cols);
 
 	if (Flags->f_flag_orbits_have_been_computed) {
 		int *Inc_flag_orbits;
@@ -703,7 +703,7 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 		cout << "object_with_properties::export_INP_with_flag_orbits Enc->nb_cols = " << Enc->nb_cols << endl;
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	string fname;
 
 
@@ -712,7 +712,7 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 	int i, j;
 
 	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
-	Orbiter->Int_vec->zero(Inc2, Enc->nb_rows * Enc->nb_cols);
+	Int_vec_zero(Inc2, Enc->nb_rows * Enc->nb_cols);
 
 	if (Flags->f_flag_orbits_have_been_computed) {
 		int *Inc_flag_orbits;

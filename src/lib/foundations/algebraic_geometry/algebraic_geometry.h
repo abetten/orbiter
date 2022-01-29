@@ -226,8 +226,8 @@ class del_pezzo_surface_of_degree_two_object {
 public:
 	del_pezzo_surface_of_degree_two_domain *Dom;
 
-	formula *RHS;
-	syntax_tree_node **Subtrees;
+	expression_parser::formula *RHS;
+	expression_parser::syntax_tree_node **Subtrees;
 	int *Coefficient_vector;
 
 	geometry::points_and_lines *pal;
@@ -237,7 +237,9 @@ public:
 	~del_pezzo_surface_of_degree_two_object();
 	void init(
 			del_pezzo_surface_of_degree_two_domain *Dom,
-			formula *RHS, syntax_tree_node **Subtrees, int *Coefficient_vector,
+			expression_parser::formula *RHS,
+			expression_parser::syntax_tree_node **Subtrees,
+			int *Coefficient_vector,
 			int verbose_level);
 	void enumerate_points_and_lines(int verbose_level);
 	void create_latex_report(std::string &label, std::string &label_tex, int verbose_level);
@@ -423,11 +425,11 @@ public:
 		// points are stored as indices into Pts[]
 	int *f_is_on_line; // [QO->nb_pts]
 
-	tally *Bitangent_line_type;
+	data_structures::tally *Bitangent_line_type;
 	int line_type_distribution[3];
 
 	data_structures::set_of_sets *lines_on_point;
-	tally *Point_type;
+	data_structures::tally *Point_type;
 
 	int f_fullness_has_been_established;
 	int f_is_full;
@@ -444,7 +446,7 @@ public:
 	int *f_is_on_line2; // [QO->nb_pts]
 
 	data_structures::set_of_sets *lines_on_points_off;
-	tally *Point_off_type;
+	data_structures::tally *Point_off_type;
 
 
 	int *gradient;
@@ -600,8 +602,8 @@ public:
 	int *Triads;
 	int nb_triads; // = 40
 
-	tally *Classify_trihedral_pairs_row_values;
-	tally *Classify_trihedral_pairs_col_values;
+	data_structures::tally *Classify_trihedral_pairs_row_values;
+	data_structures::tally *Classify_trihedral_pairs_col_values;
 
 	int nb_Eckardt_points; // = 45
 	eckardt_point *Eckardt_points;
@@ -622,7 +624,7 @@ public:
 	int *collinear_Eckardt_triples_rank;
 		// as three subsets of 45 = nb_Eckardt_points
 
-	tally *Classify_collinear_Eckardt_triples;
+	data_structures::tally *Classify_collinear_Eckardt_triples;
 
 
 	// Schlaefli stuff, part2:
@@ -865,7 +867,7 @@ public:
 	long int nb_lines_PG_3;
 	int nb_pts_on_surface_with_27_lines; // q^2 + 7q + 1
 
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 	geometry::klein_correspondence *Klein;
 
 
@@ -1190,8 +1192,8 @@ public:
 
 
 	data_structures::set_of_sets *lines_on_point;
-	tally *Type_pts_on_lines;
-	tally *Type_lines_on_point;
+	data_structures::tally *Type_pts_on_lines;
+	data_structures::tally *Type_lines_on_point;
 
 	long int *Eckardt_points; // the orbiter rank of the Eckardt points
 	int *Eckardt_points_index; // index into SO->Pts
@@ -1228,7 +1230,7 @@ public:
 	int nb_planes;
 	int *plane_type_by_points;
 	int *plane_type_by_lines;
-	tally *C_plane_type_by_points;
+	data_structures::tally *C_plane_type_by_points;
 
 	long int *Tritangent_plane_rk; // [45]
 		// list of tritangent planes in Schlaefli labeling

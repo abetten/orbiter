@@ -270,7 +270,7 @@ void linear_set_classify::init(
 
 	if (f_v) {
 		cout << "Field-basis: ";
-		Orbiter->Int_vec->print(cout, SubS->Basis, s);
+		Int_vec_print(cout, SubS->Basis, s);
 		cout << endl;
 	}
 
@@ -572,7 +572,7 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 	if (f_v) {
 		cout << "linear_set_classify::test_set" << endl;
 		cout << "Testing set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	for (i = 0; i < len; i++) {
@@ -582,7 +582,7 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 	}
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, Basis,
+		Int_vec_print_integer_matrix_width(cout, Basis,
 			len, vector_space_dimension, vector_space_dimension,
 			Fq->log10_of_q);
 	}
@@ -680,11 +680,11 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 				<< depth << " with " << Nb_nodes[level] << " orbits:" << endl;
 		for (i = 0; i < Nb_nodes[level]; i++) {
 			cout << setw(3) << i << " : ";
-			Orbiter->Int_vec->print(cout,
+			Int_vec_print(cout,
 					Intersection_dimensions[level] + i * D->N, D->N);
 			cout << " : ";
 			{
-				tally C;
+				data_structures::tally C;
 
 				C.init(Intersection_dimensions[level] + i * D->N, D->N, FALSE, 0);
 				C.print_naked(TRUE);
@@ -719,7 +719,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 				}
 			}
 			cout << h << " : ";
-			Orbiter->Lint_vec->print(cout, Sets[level][h], Set_sz[level][h]);
+			Lint_vec_print(cout, Sets[level][h], Set_sz[level][h]);
 			cout << endl;
 		}
 	}
@@ -816,10 +816,10 @@ void linear_set_classify::print_orbits_at_level(int level)
 		cout << "orbit " << orbit_at_level << " / " << len
 				<< " stabilizer order " << go << ":" << endl;
 		cout << "set: ";
-		Orbiter->Lint_vec->print(cout, set, level);
+		Lint_vec_print(cout, set, level);
 		cout << endl;
 		cout << "Basis:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis, level, n);
+		Int_matrix_print(Basis, level, n);
 	}
 
 	FREE_lint(set);
@@ -851,10 +851,10 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
 	}
 	cout << "set: ";
-	Orbiter->Lint_vec->print(cout, set, level);
+	Lint_vec_print(cout, set, level);
 	cout << endl;
 	cout << "Basis:" << endl;
-	Orbiter->Int_vec->matrix_print(Basis, level, n);
+	Int_matrix_print(Basis, level, n);
 
 
 
@@ -927,7 +927,7 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 		}
 	}
 	cout << "candidates:" << nb_candidates << endl;
-	Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+	Lint_vec_print(cout, candidates, nb_candidates);
 	cout << endl;
 
 
@@ -1054,7 +1054,7 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 void linear_set_classify::do_classify_secondary(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary" << endl;
@@ -1105,10 +1105,10 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
 	}
 	cout << "set1: ";
-	Orbiter->Lint_vec->print(cout, set1, secondary_level);
+	Lint_vec_print(cout, set1, secondary_level);
 	cout << endl;
 	cout << "Basis1:" << endl;
-	Orbiter->Int_vec->matrix_print(Basis1, secondary_level, n);
+	Int_matrix_print(Basis1, secondary_level, n);
 
 
 	int *Intersection_dimensions;
@@ -1122,17 +1122,17 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
 		}
 		cout << "set2: ";
-		Orbiter->Lint_vec->print(cout, set2, secondary_depth);
+		Lint_vec_print(cout, set2, secondary_depth);
 		cout << endl;
 		cout << "Basis2:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis2, secondary_depth, n);
+		Int_matrix_print(Basis2, secondary_depth, n);
 
 
 		D->compute_intersection_type(secondary_depth, Basis2,
 			Intersection_dimensions, 0 /*verbose_level - 1*/);
 
 		cout << "Intersection_dimensions:";
-		Orbiter->Int_vec->print(cout, Intersection_dimensions, D->N);
+		Int_vec_print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
 		groups::strong_generators *Strong_gens2;
@@ -1171,7 +1171,7 @@ int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_le
 	if (f_v) {
 		cout << "linear_set_classify::test_set_secondary" << endl;
 		cout << "Testing set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	for (i = 0; i < len; i++) {
@@ -1182,7 +1182,7 @@ int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_le
 
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				Basis, len, vector_space_dimension,
 				vector_space_dimension, Fq->log10_of_q);
 	}
@@ -1264,10 +1264,10 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
 	}
 	cout << "set: ";
-	Orbiter->Lint_vec->print(cout, set, level);
+	Lint_vec_print(cout, set, level);
 	cout << endl;
 	cout << "Basis:" << endl;
-	Orbiter->Int_vec->matrix_print(Basis, level, n);
+	Int_matrix_print(Basis, level, n);
 
 
 
@@ -1302,7 +1302,7 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 		}
 	}
 	cout << "candidates:" << nb_candidates << endl;
-	Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+	Lint_vec_print(cout, candidates, nb_candidates);
 	cout << endl;
 
 
@@ -1461,7 +1461,7 @@ void linear_set_classify::do_compute_stabilizer(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer" << endl;
@@ -1515,10 +1515,10 @@ void linear_set_classify::do_compute_stabilizer(
 		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
 	}
 	cout << "set1: ";
-	Orbiter->Lint_vec->print(cout, set1, level);
+	Lint_vec_print(cout, set1, level);
 	cout << endl;
 	cout << "Basis1:" << endl;
-	Orbiter->Int_vec->matrix_print(Basis1, level, n);
+	Int_matrix_print(Basis1, level, n);
 
 
 	long int *linear_set;
@@ -1593,16 +1593,16 @@ void linear_set_classify::do_compute_stabilizer(
 			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
 		}
 		cout << "set2: ";
-		Orbiter->Lint_vec->print(cout, set2, level);
+		Lint_vec_print(cout, set2, level);
 		cout << endl;
 		cout << "Basis2:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis2, level, n);
+		Int_matrix_print(Basis2, level, n);
 
 		D->compute_intersection_type(level, Basis2,
 			Intersection_dimensions, 0 /*verbose_level - 1*/);
 
 		cout << "Intersection_dimensions:";
-		Orbiter->Int_vec->print(cout, Intersection_dimensions, D->N);
+		Int_vec_print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
 		//int f_lex = TRUE;
@@ -1744,8 +1744,8 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	BasisU = NEW_int(dimU * n1);
 	BasisW = NEW_int(dimW * n1);
 
-	Orbiter->Int_vec->zero(BasisU, dimU * n1);
-	Orbiter->Int_vec->zero(BasisW, dimW * n1);
+	Int_vec_zero(BasisU, dimU * n1);
+	Int_vec_zero(BasisW, dimW * n1);
 
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
@@ -1757,12 +1757,12 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	BasisU[secondary_level * n1 + n] = 1; // the vector v
 	if (f_vv) {
 		cout << "set1: ";
-		Orbiter->Lint_vec->print(cout, set1, secondary_level);
+		Lint_vec_print(cout, set1, secondary_level);
 		cout << endl;
 		cout << "Basis1:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis1, secondary_level, n);
+		Int_matrix_print(Basis1, secondary_level, n);
 		cout << "BasisU:" << endl;
-		Orbiter->Int_vec->matrix_print(BasisU, dimU, n1);
+		Int_matrix_print(BasisU, dimU, n1);
 	}
 
 
@@ -1776,12 +1776,12 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 	if (f_vv) {
 		cout << "set2: ";
-		Orbiter->Lint_vec->print(cout, set2, secondary_depth);
+		Lint_vec_print(cout, set2, secondary_depth);
 		cout << endl;
 		cout << "Basis2:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis2, secondary_depth, n);
+		Int_matrix_print(Basis2, secondary_depth, n);
 		cout << "BasisW:" << endl;
-		Orbiter->Int_vec->matrix_print(BasisW, dimW, n1);
+		Int_matrix_print(BasisW, dimW, n1);
 	}
 
 
@@ -1799,7 +1799,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	if (f_vv) {
 		cout << "The large linear set of size "
 				<< large_linear_set_sz << " is ";
-		Orbiter->Lint_vec->print(cout, large_linear_set, large_linear_set_sz);
+		Lint_vec_print(cout, large_linear_set, large_linear_set_sz);
 		cout << endl;
 		D1->print_linear_set_tex(large_linear_set, large_linear_set_sz);
 		cout << endl;
@@ -1811,7 +1811,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	if (f_vv) {
 		cout << "The small linear set of size "
 				<< small_linear_set_sz << " is ";
-		Orbiter->Lint_vec->print(cout, small_linear_set, small_linear_set_sz);
+		Lint_vec_print(cout, small_linear_set, small_linear_set_sz);
 		cout << endl;
 		D->print_linear_set_tex(small_linear_set, small_linear_set_sz);
 		cout << endl;
@@ -1824,7 +1824,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	if (f_vv) {
 		cout << "The small linear set for W of size "
 				<< small_linear_set_W_sz << " is ";
-		Orbiter->Lint_vec->print(cout, small_linear_set_W, small_linear_set_W_sz);
+		Lint_vec_print(cout, small_linear_set_W, small_linear_set_W_sz);
 		cout << endl;
 		D->print_linear_set_tex(small_linear_set_W, small_linear_set_W_sz);
 		cout << endl;
@@ -1841,7 +1841,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	if (f_vv) {
 		cout << "After embedding, the small linear set of size "
 				<< small_linear_set_sz << " is ";
-		Orbiter->Lint_vec->print(cout, small_linear_set, small_linear_set_sz);
+		Lint_vec_print(cout, small_linear_set, small_linear_set_sz);
 		cout << endl;
 		D1->print_linear_set_tex(small_linear_set, small_linear_set_sz);
 		cout << endl;
@@ -1883,7 +1883,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	}
 	if (f_vv) {
 		cout << "The linear set of size " << linear_set_sz << " is ";
-		Orbiter->Lint_vec->print(cout, linear_set, linear_set_sz);
+		Lint_vec_print(cout, linear_set, linear_set_sz);
 		cout << endl;
 		D1->print_linear_set_tex(linear_set, linear_set_sz);
 		cout << endl;
@@ -1912,29 +1912,29 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	}
 	if (f_vv) {
 		cout << "BasisW:" << endl;
-		Orbiter->Int_vec->matrix_print(BasisW, dimW, n1);
+		Int_matrix_print(BasisW, dimW, n1);
 		cout << "base_cols:";
-		Orbiter->Int_vec->print(cout, base_cols, dimW);
+		Int_vec_print(cout, base_cols, dimW);
 		cout << endl;
 	}
 
 	Fq->Linear_algebra->kernel_columns(n1, dimW, base_cols, kernel_cols);
 	if (f_vv) {
 		cout << "kernel_cols:";
-		Orbiter->Int_vec->print(cout, kernel_cols, n2);
+		Int_vec_print(cout, kernel_cols, n2);
 		cout << endl;
 	}
 
 
 
-	Orbiter->Int_vec->zero(Basis_infinity, s * n2);
+	Int_vec_zero(Basis_infinity, s * n2);
 	for (i = 0; i < s; i++) {
 		//a = kernel_cols[i] - s;
 		Basis_infinity[i * n2 + i] = 1;
 	}
 	if (f_vv) {
 		cout << "Basis element infinity:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis_infinity, s, n2);
+		Int_matrix_print(Basis_infinity, s, n2);
 	}
 
 
@@ -1948,7 +1948,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 
 	Components[0] = NEW_int(s * n2);
-	Orbiter->Int_vec->copy(Basis_infinity, Components[0], s * n2);
+	Int_vec_copy(Basis_infinity, Components[0], s * n2);
 
 	for (h = 0; h < linear_set_sz; h++) {
 		if (f_v3) {
@@ -1956,12 +1956,12 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 					<< linear_set_sz << ":" << endl;
 		}
 		a = linear_set[h];
-		Orbiter->Int_vec->copy(
+		Int_vec_copy(
 				D1->Spread_elements + a * D1->spread_element_size,
 				Spread_element_basis, D1->spread_element_size);
 		if (f_v3) {
 			cout << "Spread element " << a << " is:" << endl;
-			Orbiter->Int_vec->matrix_print(Spread_element_basis, s, n1);
+			Int_matrix_print(Spread_element_basis, s, n1);
 		}
 
 		for (i = 0; i < dimW; i++) {
@@ -1976,7 +1976,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		}
 		if (f_v3) {
 			cout << "Basis after reduction mod W:" << endl;
-			Orbiter->Int_vec->matrix_print(Spread_element_basis, s, n1);
+			Int_matrix_print(Spread_element_basis, s, n1);
 		}
 
 		for (i = 0; i < dimW; i++) {
@@ -1988,14 +1988,14 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 		if (f_v3) {
 			cout << "Basis element:" << endl;
-			Orbiter->Int_vec->matrix_print(Basis_elt, s, n2);
+			Int_matrix_print(Basis_elt, s, n2);
 		}
 
 		Fq->Linear_algebra->Gauss_easy(Basis_elt, s, n2);
 
 		if (f_v3) {
 			cout << "Basis element after RREF:" << endl;
-			Orbiter->Int_vec->matrix_print(Basis_elt, s, n2);
+			Int_matrix_print(Basis_elt, s, n2);
 		}
 
 		for (i = 0; i < s; i++) {
@@ -2006,7 +2006,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		}
 
 		Components[h + 1] = NEW_int(s * n2);
-		Orbiter->Int_vec->copy(Basis_elt, Components[h + 1], s * n2);
+		Int_vec_copy(Basis_elt, Components[h + 1], s * n2);
 	}
 
 	if (f_v3) {
@@ -2014,7 +2014,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		for (h = 0; h < linear_set_sz + 1; h++) {
 			cout << "Component " << h << " / "
 					<< linear_set_sz << ":" << endl;
-			Orbiter->Int_vec->matrix_print(Components[h], s, n2);
+			Int_matrix_print(Components[h], s, n2);
 		}
 	}
 
@@ -2049,10 +2049,10 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 						<< h2 << " intersect non-trivially!" << endl;
 				cout << "Component " << h1 << " / "
 						<< nb_components << ":" << endl;
-				Orbiter->Int_vec->matrix_print(Components[h1], s, n2);
+				Int_matrix_print(Components[h1], s, n2);
 				cout << "Component " << h2 << " / "
 						<< nb_components << ":" << endl;
-				Orbiter->Int_vec->matrix_print(Components[h2], s, n2);
+				Int_matrix_print(Components[h2], s, n2);
 			}
 		}
 	}
@@ -2065,7 +2065,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 	if (f_v3) {
 		cout << "The spread_set is:" << endl;
-		Orbiter->Int_vec->matrix_print(Spread_set, linear_set_sz, s * s);
+		Int_matrix_print(Spread_set, linear_set_sz, s * s);
 	}
 	rk = Fq->Linear_algebra->Gauss_easy(Spread_set, linear_set_sz, s * s);
 	if (f_v) {
@@ -2073,10 +2073,10 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	}
 	if (f_v3) {
 		cout << "The spread_set basis is:" << endl;
-		Orbiter->Int_vec->matrix_print(Spread_set, rk, s * s);
+		Int_matrix_print(Spread_set, rk, s * s);
 		for (h = 0; h < rk; h++) {
 			cout << "basis elt " << h << " / " << rk << ":" << endl;
-			Orbiter->Int_vec->matrix_print(Spread_set + h * s * s, s, s);
+			Int_matrix_print(Spread_set + h * s * s, s, s);
 		}
 	}
 

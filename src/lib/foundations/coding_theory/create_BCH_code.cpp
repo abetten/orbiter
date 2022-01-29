@@ -83,7 +83,7 @@ void create_BCH_code::init(field_theory::finite_field *F, int n, int d, int verb
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_BCH_code Sel=";
-		Orbiter->Int_vec->print(cout, Sel, nb_sel);
+		Int_vec_print(cout, Sel, nb_sel);
 		cout << endl;
 	}
 
@@ -139,7 +139,7 @@ void create_BCH_code::report(std::ostream &ost, int verbose_level)
 	int i;
 	string label;
 	coding_theory_domain Codes;
-	latex_interface Li;
+	orbiter_kernel_system::latex_interface Li;
 
 	if (f_v) {
 		cout << "create_BCH_code::report" << endl;

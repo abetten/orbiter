@@ -83,7 +83,7 @@ void surface_object::init_equation_points_and_lines_only(surface_domain *Surf, i
 
 	if (f_v) {
 		cout << "surface_object::init_equation_points_and_lines_only" << endl;
-		Orbiter->Int_vec->print(cout, eqn, 20);
+		Int_vec_print(cout, eqn, 20);
 		cout << endl;
 	}
 
@@ -92,7 +92,7 @@ void surface_object::init_equation_points_and_lines_only(surface_domain *Surf, i
 	q = F->q;
 
 	//int_vec_copy(Lines, surface_object::Lines, 27);
-	Orbiter->Int_vec->copy(eqn, surface_object::eqn, 20);
+	Int_vec_copy(eqn, surface_object::eqn, 20);
 
 
 	//long int *Points;
@@ -156,7 +156,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 			cout << "surface_object::init_equation after "
 					"find_double_six_and_rearrange_lines" << endl;
 			cout << "surface_object::init_equation Lines:";
-			Orbiter->Lint_vec->print(cout, Lines, 27);
+			Lint_vec_print(cout, Lines, 27);
 			cout << endl;
 		}
 	}
@@ -310,7 +310,7 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 	if (f_v) {
 		cout << "surface_object::enumerate_points_and_lines nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
 		cout << "Lines:";
-		Orbiter->Lint_vec->print(cout, Lines, nb_lines);
+		Lint_vec_print(cout, Lines, nb_lines);
 		cout << endl;
 	}
 
@@ -338,7 +338,7 @@ void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbo
 		Surf->P->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "surface_object::find_real_lines testing line" << endl;
-			Orbiter->Int_vec->matrix_print(M, 2, 4);
+			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M, 2, 4);
 		}
 
 		Surf->Poly3_4->substitute_line(
@@ -349,10 +349,10 @@ void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbo
 
 		if (f_v) {
 			cout << "surface_object::find_real_lines coeff_out=";
-			Orbiter->Int_vec->print(cout, coeff_out, 4);
+			Int_vec_print(cout, coeff_out, 4);
 			cout << endl;
 		}
-		if (!Orbiter->Int_vec->is_zero(coeff_out, 4)) {
+		if (!orbiter_kernel_system::Orbiter->Int_vec->is_zero(coeff_out, 4)) {
 			if (f_v) {
 				cout << "surface_object::find_real_lines not a real line" << endl;
 			}
@@ -386,11 +386,11 @@ void surface_object::init_with_27_lines(surface_domain *Surf,
 
 	nb_lines = 27;
 	surface_object::Lines = NEW_lint(27);
-	Orbiter->Lint_vec->copy(Lines27, surface_object::Lines, 27);
+	Lint_vec_copy(Lines27, surface_object::Lines, 27);
 
 	if (f_v) {
 		cout << "surface_object::init_with_27_lines Lines:";
-		Orbiter->Lint_vec->print(cout, surface_object::Lines, 27);
+		Lint_vec_print(cout, surface_object::Lines, 27);
 		cout << endl;
 	}
 
@@ -409,12 +409,12 @@ void surface_object::init_with_27_lines(surface_domain *Surf,
 
 	if (f_v) {
 		cout << "surface_object::init_with_27_lines Lines:";
-		Orbiter->Lint_vec->print(cout, surface_object::Lines, 27);
+		Lint_vec_print(cout, surface_object::Lines, 27);
 		cout << endl;
 	}
 
 
-	Orbiter->Int_vec->copy(eqn, surface_object::eqn, 20);
+	Int_vec_copy(eqn, surface_object::eqn, 20);
 	
 
 	if (f_v) {
@@ -500,7 +500,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines" << endl;
 	}
-	Orbiter->Lint_vec->copy(Lines, Lines0, 27);
+	Lint_vec_copy(Lines, Lines0, 27);
 
 	Surf->compute_adjacency_matrix_of_line_intersection_graph(
 			Adj, Lines0, 27, 0 /* verbose_level */);
@@ -546,7 +546,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 	}
 
 
-	Orbiter->Lint_vec->copy(double_six, Lines1, 12);
+	Lint_vec_copy(double_six, Lines1, 12);
 	
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines "
@@ -559,7 +559,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 				"after Surf->create_remaining_fifteen_lines" << endl;
 	}
 
-	Orbiter->Lint_vec->copy(Lines1, Lines, 27);
+	Lint_vec_copy(Lines1, Lines, 27);
 	Sorting.lint_vec_heapsort(Lines0, 27);
 	Sorting.lint_vec_heapsort(Lines1, 27);
 
@@ -1813,7 +1813,7 @@ void surface_object::identify_lines(long int *lines, int nb_lines,
 void surface_object::print_nine_lines_latex(ostream &ost,
 	long int *nine_lines, int *nine_lines_idx)
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int i, j, idx;
 
 	ost << "$$";

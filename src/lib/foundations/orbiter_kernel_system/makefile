@@ -10,10 +10,14 @@ MODULES = \
 	file_io.o \
 	file_output.o \
 	latex_interface.o \
+	magma_interface.o \
 	mem_object_registry_entry.o \
 	mem_object_registry.o \
 	memory_object.o \
 	orbiter_data_file.o \
+	orbiter_session.o \
+	orbiter_symbol_table_entry.o \
+	orbiter_symbol_table.o \
 	os_interface.o \
 	override_double.o \
 	prepare_frames.o 

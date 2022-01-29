@@ -1871,7 +1871,7 @@ void longinteger_domain::random_number_less_than_n(
 	int i, l, rr;
 	//char *n_rep;
 	char *r_rep;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	
 	l = n.len();
 	n.assign_to(r);
@@ -1895,7 +1895,7 @@ void longinteger_domain::random_number_with_n_decimals(
 	int f_v = (verbose_level >= 1);
 	char *str;
 	int i;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "longinteger_domain::random_number_with_n_decimals" << endl;

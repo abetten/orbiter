@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orthogonal_geometry {
 
 
 
@@ -362,7 +363,7 @@ void orthogonal::unrank_line_L1(
 	unrank_N1(v1 + 2, 1, m - 2, P4_line_index);
 	if (f_vvv) {
 		cout << "orthogonal::unrank_line_L1 after unrank_N1" << endl;
-		Orbiter->Int_vec->print(cout, v1, n - 2);
+		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
 	for (i = 1; i < m - 1; i++) {
@@ -370,7 +371,7 @@ void orthogonal::unrank_line_L1(
 		}
 	if (f_vvv) {
 		cout << "orthogonal::unrank_line_L1 after scaling" << endl;
-		Orbiter->Int_vec->print(cout, v1, n - 2);
+		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
 
@@ -399,7 +400,7 @@ void orthogonal::unrank_line_L1(
 	v2[n - 1] = 1;
 	if (f_vv) {
 		cout << "orthogonal::unrank_line_L1 before rank_Sbar" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	p2 = rank_Sbar(v2, 1, m);
@@ -435,7 +436,7 @@ long int orthogonal::rank_line_L1(long int p1, long int p2, int verbose_level)
 	unrank_Sbar(v2, 1, m, p2);
 	if (f_vvv) {
 		cout << "p2 = " << p2 << " v2=" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
 	if (v2[n - 1] != 1) {
@@ -465,7 +466,7 @@ long int orthogonal::rank_line_L1(long int p1, long int p2, int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L1 mapped back to v1=" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 	}
 	unrank_Sbar(v3, 1, m, 0);
@@ -478,7 +479,7 @@ long int orthogonal::rank_line_L1(long int p1, long int p2, int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L1 after Gauss reduction v1=" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 	}
 	P4_field_element = F->negate(v2[n - 2]);
@@ -493,7 +494,7 @@ long int orthogonal::rank_line_L1(long int p1, long int p2, int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L1 after scaling" << endl;
-		Orbiter->Int_vec->print(cout, v1, n - 2);
+		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 	}
 	if (v1[0] != 0 || v1[1] != 0) {
@@ -558,7 +559,7 @@ void orthogonal::unrank_line_L2(
 	v3[n - 1] = 0;
 	if (f_vv) {
 		cout << "orthogonal::unrank_line_L2 before rank_Sbar  v3=" << endl;
-		Orbiter->Int_vec->print(cout, v3, n);
+		Int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	p1 = rank_Sbar(v3, 1, m);
@@ -610,7 +611,7 @@ void orthogonal::unrank_line_L2(
 		}
 	if (f_vvv) {
 		cout << "orthogonal::unrank_line_L2 partner of 10...10 created:" << endl;
-		Orbiter->Int_vec->print(cout, v1, n - 2);
+		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
 	if (P3_point) {
@@ -628,7 +629,7 @@ void orthogonal::unrank_line_L2(
 			}
 		if (f_vvv) {
 			cout << "orthogonal::unrank_line_L2 the Siegel map is" << endl;
-			Orbiter->Int_vec->print_integer_matrix(cout, T1, n - 2, n - 2);
+			Int_vec_print_integer_matrix(cout, T1, n - 2, n - 2);
 			}
 		F->Linear_algebra->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);
@@ -640,7 +641,7 @@ void orthogonal::unrank_line_L2(
 		}
 	if (f_vvv) {
 		cout << "orthogonal::unrank_line_L2 maps to v2=" << endl;
-		Orbiter->Int_vec->print(cout, v2, n - 2);
+		Int_vec_print(cout, v2, n - 2);
 		cout << endl;
 		}
 	c = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
@@ -651,7 +652,7 @@ void orthogonal::unrank_line_L2(
 	v2[n - 1] = F->mult(F->negate(c),F->inverse(v3[n - 2]));
 	if (f_vv) {
 		cout << "orthogonal::unrank_line_L2 before rank_Sbar v2=" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
@@ -686,7 +687,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 	unrank_Sbar(v3, 1, m, p1);
 	if (f_vvv) {
 		cout << "p1 = " << p1 << " : v3=:" << endl;
-		Orbiter->Int_vec->print(cout, v3, n);
+		Int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	if (v3[n - 1]) {
@@ -711,7 +712,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 		}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L2 after scaling, v3=:" << endl;
-		Orbiter->Int_vec->print(cout, v3, n);
+		Int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	P3_field_element = v3[n - 2] - 1;
@@ -724,7 +725,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 		}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L2 p2 = " << p2 << " : v2=:" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	c = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
@@ -753,7 +754,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 		}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L2 maps back to v1=:" << endl;
-		Orbiter->Int_vec->print(cout, v1, n - 2);
+		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
 	for (i = 2; i < n - 2; i++)
@@ -781,7 +782,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 			}
 		if (f_vvv) {
 			cout << "orthogonal::rank_line_L2 after scaling v1=:" << endl;
-			Orbiter->Int_vec->print(cout, v1, n);
+			Int_vec_print(cout, v1, n);
 			cout << endl;
 			}
 		P3_sub_index = 0;
@@ -812,7 +813,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 				}
 			if (f_vvv) {
 				cout << "orthogonal::rank_line_L2 after scaling v1=:" << endl;
-				Orbiter->Int_vec->print(cout, v1, n);
+				Int_vec_print(cout, v1, n);
 				cout << endl;
 				}
 
@@ -832,7 +833,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 			b--;
 			if (f_vvv) {
 				cout << "orthogonal::rank_line_L2 before rank_Sbar:" << endl;
-				Orbiter->Int_vec->print(cout, v1, n);
+				Int_vec_print(cout, v1, n);
 				cout << endl;
 				}
 			a = rank_Sbar(v1 + 2, 1, m - 2);
@@ -861,7 +862,7 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 				}
 			if (f_vvv) {
 				cout << "orthogonal::rank_line_L2 after scaling v1=:" << endl;
-				Orbiter->Int_vec->print(cout, v1, n);
+				Int_vec_print(cout, v1, n);
 				cout << endl;
 				}
 			if (v1[0] == 0) {
@@ -928,7 +929,7 @@ void orthogonal::unrank_line_L3(
 	unrank_Sbar(v3, 1, m, P4_index);
 	if (f_vv) {
 		cout << "p1=" << p1 << " v3=" << endl;
-		Orbiter->Int_vec->print(cout, v3, n);
+		Int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	v1[0] = 0;
@@ -936,7 +937,7 @@ void orthogonal::unrank_line_L3(
 	unrank_Sbar(v1 + 2, 1, m - 2, P4_line_index);
 	if (f_vvv) {
 		cout << "orthogonal::unrank_line_L3 after unrank_Sbar" << endl;
-		Orbiter->Int_vec->print(cout, v1, n - 2);
+		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
 
@@ -964,7 +965,7 @@ void orthogonal::unrank_line_L3(
 	v2[n - 1] = P4_field_element;
 	if (f_vv) {
 		cout << "orthogonal::unrank_line_L3 before rank_Sbar" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
@@ -999,12 +1000,12 @@ long int orthogonal::rank_line_L3(long int p1, long int p2, int verbose_level)
 	unrank_Sbar(v2, 1, m, p2);
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L3 p1=" << p1 << " v3=" << endl;
-		Orbiter->Int_vec->print(cout, v3, n);
+		Int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L3 p2=" << p2 << " v2=" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	P4_index = p1;
@@ -1036,13 +1037,13 @@ long int orthogonal::rank_line_L3(long int p1, long int p2, int verbose_level)
 		}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L3 maps back to" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	v1[0] = 0;
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L3 after setting v1[0] = 0, v1=" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	if (v1[0] || v1[1]) {
@@ -1071,7 +1072,7 @@ long int orthogonal::rank_line_L3(long int p1, long int p2, int verbose_level)
 		}
 	if (f_vvv) {
 		cout << "orthogonal::rank_line_L3 after scaling, v1=:" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	if (v1[n - 2]) {
@@ -1138,7 +1139,7 @@ void orthogonal::unrank_line_L4(
 	unrank_Sbar(v1 + 2, 1, m - 2, P4_line_index);
 	if (f_vvv) {
 		cout << "after unrank_Sbar" << endl;
-		Orbiter->Int_vec->print(cout, v1, n - 2);
+		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 		}
 
@@ -1166,7 +1167,7 @@ void orthogonal::unrank_line_L4(
 	v2[n - 1] = 0;
 	if (f_vv) {
 		cout << "before rank_Sbar" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
@@ -1201,12 +1202,12 @@ long int orthogonal::rank_line_L4(long int p1, long int p2, int verbose_level)
 	unrank_Sbar(v2, 1, m, p2);
 	if (f_vvv) {
 		cout << "p1=" << p1 << " v3=" << endl;
-		Orbiter->Int_vec->print(cout, v3, n);
+		Int_vec_print(cout, v3, n);
 		cout << endl;
 		}
 	if (f_vvv) {
 		cout << "p2=" << p2 << " v2=" << endl;
-		Orbiter->Int_vec->print(cout, v2, n);
+		Int_vec_print(cout, v2, n);
 		cout << endl;
 		}
 	P3_index = p1;
@@ -1235,13 +1236,13 @@ long int orthogonal::rank_line_L4(long int p1, long int p2, int verbose_level)
 		}
 	if (f_vvv) {
 		cout << "maps back to" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	v1[0] = 0;
 	if (f_vvv) {
 		cout << "after setting v1[0] = 0, v1=" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	if (v1[0] || v1[1]) {
@@ -1270,7 +1271,7 @@ long int orthogonal::rank_line_L4(long int p1, long int p2, int verbose_level)
 		}
 	if (f_vvv) {
 		cout << "after scaling, v1=:" << endl;
-		Orbiter->Int_vec->print(cout, v1, n);
+		Int_vec_print(cout, v1, n);
 		cout << endl;
 		}
 	if (v1[n - 2] == 0) {
@@ -1811,7 +1812,7 @@ int orthogonal::find_root_hyperbolic(
 			verbose_level);
 	if (f_v) {
 		cout << "orthogonal::find_root_hyperbolic root=" << endl;
-		Orbiter->Int_vec->print(cout, find_root_z, 2 * m);
+		Int_vec_print(cout, find_root_z, 2 * m);
 		cout << endl;
 	}
 
@@ -1858,7 +1859,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 	unrank_Sbar(y, 1, m, rk2);
 	if (f_vv) {
 		cout << "orthogonal::find_root_hyperbolic_xyz y=" << endl;
-		Orbiter->Int_vec->print(cout, y, 2 * m);
+		Int_vec_print(cout, y, 2 * m);
 		cout << endl;
 	}
 	if (y[0]) {
@@ -1868,7 +1869,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 		z[1] = 1;
 		if (f_v) {
 			cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-			Orbiter->Int_vec->print(cout, z, 2 * m);
+			Int_vec_print(cout, z, 2 * m);
 			cout << endl;
 		}
 		return;
@@ -1890,7 +1891,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 					z[i + 1] = 1;
 					if (f_v) {
 						cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-						Orbiter->Int_vec->print(cout, z, 2 * m);
+						Int_vec_print(cout, z, 2 * m);
 						cout << endl;
 					}
 					return;
@@ -1900,7 +1901,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 					z[i - 1] = 1;
 					if (f_v) {
 						cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-						Orbiter->Int_vec->print(cout, z, 2 * m);
+						Int_vec_print(cout, z, 2 * m);
 						cout << endl;
 					}
 					return;
@@ -1933,7 +1934,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 		// which is not the case
 		if (f_v) {
 			cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-			Orbiter->Int_vec->print(cout, z, 2 * m);
+			Int_vec_print(cout, z, 2 * m);
 			cout << endl;
 		}
 		return;
@@ -1957,7 +1958,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 		// which is not the case
 		if (f_v) {
 			cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-			Orbiter->Int_vec->print(cout, z, 2 * m);
+			Int_vec_print(cout, z, 2 * m);
 			cout << endl;
 		}
 		return;
@@ -1987,7 +1988,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 			// <y,z> = y[0] + y[3] = 0 + 1 = 1
 			if (f_v) {
 				cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-				Orbiter->Int_vec->print(cout, z, 2 * m);
+				Int_vec_print(cout, z, 2 * m);
 				cout << endl;
 			}
 			return;
@@ -2004,7 +2005,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 			// <y,z> = y[0] + y[2] = 0 + 1 = 1
 			if (f_v) {
 				cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-				Orbiter->Int_vec->print(cout, z, 2 * m);
+				Int_vec_print(cout, z, 2 * m);
 				cout << endl;
 			}
 			return;
@@ -2033,7 +2034,7 @@ void orthogonal::find_root_hyperbolic_xyz(
 	// which is nonzero
 	if (f_v) {
 		cout << "orthogonal::find_root_hyperbolic_xyz z=" << endl;
-		Orbiter->Int_vec->print(cout, z, 2 * m);
+		Int_vec_print(cout, z, 2 * m);
 		cout << endl;
 	}
 	if (f_v) {
@@ -2069,4 +2070,6 @@ int orthogonal::evaluate_hyperbolic_bilinear_form(
 
 
 
-}}
+}}}
+
+

@@ -559,7 +559,7 @@ public:
 			int *Elt, void *data, int verbose_level), 
 		int verbose_level);
 
-	void init_orthogonal_group_with_O(orthogonal *O,
+	void init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
 		int f_on_points, int f_on_lines, int f_on_points_and_lines,
 		int f_semilinear,
 		int f_basis, int verbose_level);
@@ -957,9 +957,9 @@ public:
 	void element_read_file(int *Elt, 
 			std::string &fname, int verbose_level);
 	void element_write_to_memory_object(int *Elt, 
-		memory_object *m, int verbose_level);
+			orbiter_kernel_system::memory_object *m, int verbose_level);
 	void element_read_from_memory_object(int *Elt, 
-		memory_object *m, int verbose_level);
+			orbiter_kernel_system::memory_object *m, int verbose_level);
 	void element_write_to_file_binary(int *Elt, 
 			std::ofstream &fp, int verbose_level);
 	void element_read_from_file_binary(int *Elt, 

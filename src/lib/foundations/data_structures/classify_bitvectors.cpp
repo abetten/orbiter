@@ -230,7 +230,7 @@ void classify_bitvectors::finalize(int verbose_level)
 
 	if (f_v) {
 		cout << "classify_bitvectors::finalize type_of=";
-		Orbiter->Int_vec->print(cout, type_of, N);
+		Int_vec_print(cout, type_of, N);
 		cout << endl;
 	}
 	C_type_of->init(type_of, N, FALSE, 0);
@@ -371,20 +371,20 @@ void classify_bitvectors::save(
 			if (i == 0) {
 				sz = encoding_sz;
 				Reps = NEW_lint(nb_types * sz);
-				Orbiter->Lint_vec->copy(encoding, Reps, sz);
+				Lint_vec_copy(encoding, Reps, sz);
 			}
 			else {
 				if (encoding_sz != sz) {
 					cout << "encoding_sz != sz" << endl;
 					exit(1);
 				}
-				Orbiter->Lint_vec->copy(encoding, Reps + i * sz, sz);
+				Lint_vec_copy(encoding, Reps + i * sz, sz);
 			}
 			FREE_lint(encoding);
 		}
 		fp << "-1 " << nb_types << " " << N << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "classify_bitvectors::save Written "

@@ -36,7 +36,9 @@ del_pezzo_surface_of_degree_two_object::~del_pezzo_surface_of_degree_two_object(
 }
 
 void del_pezzo_surface_of_degree_two_object::init(del_pezzo_surface_of_degree_two_domain *Dom,
-		formula *RHS, syntax_tree_node **Subtrees, int *Coefficient_vector,
+		expression_parser::formula *RHS,
+		expression_parser::syntax_tree_node **Subtrees,
+		int *Coefficient_vector,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -115,7 +117,7 @@ void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &la
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -141,7 +143,7 @@ void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &la
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -225,7 +227,7 @@ void del_pezzo_surface_of_degree_two_object::print_equation(std::ostream &ost)
 
 	Dom->print_equation_with_line_breaks_tex(ost, Coefficient_vector);
 
-	Orbiter->Int_vec->print(ost, Coefficient_vector, 15);
+	Int_vec_print(ost, Coefficient_vector, 15);
 	ost << "\\\\" << endl;
 
 	long int rk;

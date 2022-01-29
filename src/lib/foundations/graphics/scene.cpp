@@ -433,7 +433,7 @@ void scene::print()
 	cout << "nb_edges=" << nb_edges << endl;
 	for (k = 0; k < nb_edges; k++) {
 		cout << k << " / " << nb_edges << " : ";
-		Orbiter->Int_vec->print(cout, Edge_points + k * 2, 2);
+		Int_vec_print(cout, Edge_points + k * 2, 2);
 		cout << endl;
 	}
 }
@@ -1410,7 +1410,7 @@ int scene::face(int *pts, int nb_pts)
 {
 	Face_points[nb_faces] = NEW_int(nb_pts);
 	Nb_face_points[nb_faces] = nb_pts;
-	Orbiter->Int_vec->copy(pts, Face_points[nb_faces], nb_pts);
+	Int_vec_copy(pts, Face_points[nb_faces], nb_pts);
 	nb_faces++;
 	if (nb_faces >= SCENE_MAX_FACES) {
 		cout << "too many faces" << endl;
@@ -2218,7 +2218,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	double a, av;
 	double v[3];
 	numerics N;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "scene::intersect_line_and_plane" << endl;
@@ -4245,7 +4245,7 @@ void scene::create_cube_and_tetrahedra(int verbose_level)
 		face3(set[0], set[1], set[2]);
 		if (f_v) {
 			cout << "rk=" << rk << " set=";
-			Orbiter->Int_vec->print(cout, set, 3);
+			Int_vec_print(cout, set, 3);
 			cout << endl;
 		}
 	}
@@ -4747,7 +4747,7 @@ void scene::print_a_plane(int plane_idx)
 void scene::print_a_face(int face_idx)
 {
 	cout << "face " << face_idx << " has " << Nb_face_points[face_idx] << " points: ";
-	Orbiter->Int_vec->print(cout, Face_points[face_idx], Nb_face_points[face_idx]);
+	Int_vec_print(cout, Face_points[face_idx], Nb_face_points[face_idx]);
 	cout << endl;
 
 }
@@ -4885,7 +4885,7 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 				idx = face(w, l);
 				if (FALSE && idx == 2920) {
 					cout << "added face " << idx << ": ";
-					Orbiter->Int_vec->print(cout, w, l);
+					Int_vec_print(cout, w, l);
 					cout << endl;
 					for (h = 0; h < l; h++) {
 						pt_idx = w[h];

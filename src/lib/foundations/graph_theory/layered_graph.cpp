@@ -320,7 +320,7 @@ void layered_graph::draw_with_options(std::string &fname,
 	string fname_full;
 	double move_out = 0.01;
 	int edge_label = 1;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	fname_full.assign(fname);
 	fname_full.append(".mp");
@@ -898,7 +898,7 @@ void layered_graph::write_file(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	memory_object M;
+	orbiter_kernel_system::memory_object M;
 	
 	if (f_v) {
 		cout << "layered_graph::write_file" << endl;
@@ -917,8 +917,8 @@ void layered_graph::read_file(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	memory_object M;
-	file_io Fio;
+	orbiter_kernel_system::memory_object M;
+	orbiter_kernel_system::file_io Fio;
 	
 	if (f_v) {
 		cout << "layered_graph::read_file "
@@ -938,7 +938,7 @@ void layered_graph::read_file(std::string &fname,
 }
 
 void layered_graph::write_memory_object(
-		memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -977,7 +977,7 @@ void layered_graph::write_memory_object(
 }
 
 void layered_graph::read_memory_object(
-		memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1124,7 +1124,7 @@ void layered_graph::find_all_paths_between(int layer1, int node1, int layer2, in
 	for (i = 0; i < All_Paths.size(); i++) {
 		cout << "path " << i << " is: ";
 
-		Orbiter->Int_vec->print(cout, All_Paths[i]);
+		orbiter_kernel_system::Orbiter->Int_vec->print(cout, All_Paths[i]);
 
 		cout << "\\\\" << endl;
 
@@ -1160,7 +1160,7 @@ void layered_graph::find_all_paths_between_recursion(
 	N->find_all_parents(this, All_Parents, verbose_level);
 	if (f_v) {
 		cout << "layered_graph::find_all_paths_between_recursion All_Parents=";
-		Orbiter->Int_vec->print(cout, All_Parents);
+		orbiter_kernel_system::Orbiter->Int_vec->print(cout, All_Parents);
 		cout << endl;
 	}
 
@@ -1319,7 +1319,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 			int a, j, j0;
 			if (f_depth_first) {
 				cout << "k=" << k << " r=" << r << " set=";
-				Orbiter->Int_vec->print(cout, set1, k);
+				Int_vec_print(cout, set1, k);
 				cout << endl;
 				a = 0;
 				for (i = k - 1; i >= 0; i--) {
@@ -1366,7 +1366,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 
 			if (f_tree) {
 				for (a = k - 1; a >= k - 1; a--) {
-					Orbiter->Int_vec->copy(set1, set2, k);
+					Int_vec_copy(set1, set2, k);
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}
@@ -1376,7 +1376,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 				}
 			else {
 				for (a = k - 1; a >= 0; a--) {
-					Orbiter->Int_vec->copy(set1, set2, k);
+					Int_vec_copy(set1, set2, k);
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}

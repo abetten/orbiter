@@ -93,15 +93,15 @@ void arc_partition::init(
 			0 /* verbose_level */);
 
 
-	Orbiter->Lint_vec->complement(The_pair->data, arc_remainder, 6, 2);
+	orbiter_kernel_system::Orbiter->Lint_vec->complement(The_pair->data, arc_remainder, 6, 2);
 	if (f_v) {
 		cout << "arc_partition::init "
 				"the pair is :";
-		Orbiter->Lint_vec->print(cout, The_pair->data, 2);
+		Lint_vec_print(cout, The_pair->data, 2);
 		cout << endl;
 		cout << "arc_partition::init "
 				"the remainder is :";
-		Orbiter->Lint_vec->print(cout, arc_remainder, 4);
+		Lint_vec_print(cout, arc_remainder, 4);
 		cout << endl;
 	}
 

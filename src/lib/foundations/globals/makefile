@@ -9,11 +9,7 @@ MODULES = \
 	function_command.o \
 	function_polish_description.o \
 	function_polish.o \
-	magma_interface.o \
-	numerics.o \
-	orbiter_session.o \
-	orbiter_symbol_table_entry.o \
-	orbiter_symbol_table.o 
+	numerics.o
 
 
 all : $(MODULES)

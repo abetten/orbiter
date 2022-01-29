@@ -258,7 +258,7 @@ void interface_toolkit::read_arguments(int argc,
 			cout << "-create_files " << endl;
 		}
 
-		Create_file_description = NEW_OBJECT(create_file_description);
+		Create_file_description = NEW_OBJECT(orbiter_kernel_system::create_file_description);
 		i += Create_file_description->read_arguments(argc - i - 1,
 			argv + i + 1, verbose_level);
 		if (f_v) {
@@ -624,34 +624,34 @@ void interface_toolkit::worker(int verbose_level)
 	}
 
 	if (f_create_files) {
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.create_file(Create_file_description, verbose_level);
 	}
 	else if (f_csv_file_select_rows) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_select_rows(csv_file_select_rows_fname,
 				csv_file_select_rows_text, verbose_level);
 	}
 	else if (f_csv_file_split_rows_modulo) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_split_rows_modulo(csv_file_split_rows_modulo_fname,
 				csv_file_split_rows_modulo_n, verbose_level);
 	}
 	else if (f_csv_file_select_cols) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_select_cols(csv_file_select_cols_fname,
 				csv_file_select_cols_text, verbose_level);
 	}
 	else if (f_csv_file_select_rows_and_cols) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_select_rows_and_cols(
 				csv_file_select_rows_and_cols_fname,
@@ -659,35 +659,35 @@ void interface_toolkit::worker(int verbose_level)
 				verbose_level);
 	}
 	else if (f_csv_file_sort_each_row) {
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_sort_each_row(csv_file_sort_each_row_fname, verbose_level);
 
 	}
 	else if (f_csv_file_join) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_join(csv_file_join_fname,
 				csv_file_join_identifier, verbose_level);
 	}
 	else if (f_csv_file_concatenate) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_concatenate(csv_file_concatenate_fname_in,
 				csv_file_concatenate_fname_out, verbose_level);
 	}
 	else if (f_csv_file_extract_column_to_txt) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_extract_column_to_txt(csv_file_extract_column_to_txt_fname, csv_file_extract_column_to_txt_col_label, verbose_level);
 
 	}
 	else if (f_csv_file_latex) {
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int nb_lines_per_table = 25;
 
 		Fio.do_csv_file_latex(csv_file_latex_fname,
@@ -703,7 +703,7 @@ void interface_toolkit::worker(int verbose_level)
 		FREE_int(Draw_bitmap_control->M);
 	}
 	else if (f_reformat) {
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int *M;
 		int *M2;
 		int m, n;
@@ -714,20 +714,20 @@ void interface_toolkit::worker(int verbose_level)
 		len = m * n;
 		m2 = (len + reformat_nb_cols - 1) / reformat_nb_cols;
 		M2 = NEW_int(m2 * reformat_nb_cols);
-		Orbiter->Int_vec->zero(M2, m2 * reformat_nb_cols);
-		Orbiter->Int_vec->copy(M, M2, len);
+		Int_vec_zero(M2, m2 * reformat_nb_cols);
+		Int_vec_copy(M, M2, len);
 		Fio.int_matrix_write_csv(reformat_fname_out, M2, m2, reformat_nb_cols);
 		cout << "Written file " << reformat_fname_out << " of size " << Fio.file_size(reformat_fname_out) << endl;
 	}
 	else if (f_split_by_values) {
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int *M;
 		int *M2;
 		int m, n, len, t, h, a;
 
 		Fio.int_matrix_read_csv(split_by_values_fname_in, M, m, n, verbose_level);
 		len = m * n;
-		tally T;
+		data_structures::tally T;
 
 		T.init(M, m * n, FALSE, 0);
 		cout << "values in the file : ";
@@ -736,7 +736,7 @@ void interface_toolkit::worker(int verbose_level)
 
 		M2 = NEW_int(len);
 		for (t = 0; t < T.nb_types; t++) {
-			Orbiter->Int_vec->zero(M2, len);
+			Int_vec_zero(M2, len);
 			a = T.data_sorted[T.type_first[t]];
 			string fname;
 			char str[1000];
@@ -763,7 +763,7 @@ void interface_toolkit::worker(int verbose_level)
 		cout << "f_store_as_csv_file" << endl;
 		cout << "data=" << store_as_csv_file_data << endl;
 
-		Orbiter->Lint_vec->scan(store_as_csv_file_data, D, sz);
+		Lint_vec_scan(store_as_csv_file_data, D, sz);
 		if (sz != store_as_csv_file_m * store_as_csv_file_n) {
 			cout << "sz != store_as_csv_file_m * store_as_csv_file_n" << endl;
 			cout << "sz = " << sz << endl;
@@ -771,7 +771,7 @@ void interface_toolkit::worker(int verbose_level)
 			cout << "store_as_csv_file_n = " << store_as_csv_file_n << endl;
 			exit(1);
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		Fio.lint_matrix_write_csv(store_as_csv_file_fname, D, store_as_csv_file_m, store_as_csv_file_n);
 		cout << "Written file " << store_as_csv_file_fname << " of size " << Fio.file_size(store_as_csv_file_fname) << endl;
@@ -831,7 +831,7 @@ void interface_toolkit::worker(int verbose_level)
 
 	}
 	else if (f_plot_function) {
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		data_structures::string_tools ST;
 		int *T;
 		int *M;
@@ -843,7 +843,7 @@ void interface_toolkit::worker(int verbose_level)
 		n = m1 * n1;
 
 		M = NEW_int(n * n);
-		Orbiter->Int_vec->zero(M, n * n);
+		Int_vec_zero(M, n * n);
 
 
 		for (x = 0; x < n; x++) {
@@ -864,7 +864,7 @@ void interface_toolkit::worker(int verbose_level)
 		graphics::graphical_output GO;
 
 		GO.draw_projective_curve(Draw_projective_curve_description,
-				Orbiter->draw_options, verbose_level);
+				orbiter_kernel_system::Orbiter->draw_options, verbose_level);
 
 	}
 	else if (f_tree_draw) {

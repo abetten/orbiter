@@ -49,7 +49,7 @@ void sims::compute_base_orbits(int verbose_level)
 	}
 	if (f_v) {
 		cout << "sims::compute_base_orbits done, orbit_len=";
-		Orbiter->Int_vec->print(cout, orbit_len, A->base_len());
+		Int_vec_print(cout, orbit_len, A->base_len());
 		cout << endl;
 	}
 }
@@ -63,7 +63,7 @@ void sims::compute_base_orbits_known_length(int *tl,
 
 	if (f_v) {
 		cout << "sims::compute_base_orbits_known_length: ";
-		Orbiter->Int_vec->print(cout, tl, A->base_len());
+		Int_vec_print(cout, tl, A->base_len());
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 	}
@@ -763,7 +763,7 @@ void sims::build_up_group_random_process(sims *K,
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process: "
 						"random element chosen, path = ";
-				Orbiter->Int_vec->print(cout, old_G->path, old_G->A->base_len());
+				Int_vec_print(cout, old_G->path, old_G->A->base_len());
 				cout << endl;
 			}
 			if (f_v4) {
@@ -1064,7 +1064,7 @@ void sims::build_up_group_from_generators(sims *K,
 
 	if (f_v) {
 		cout << "sims::build_up_group_from_generators base: ";
-		Orbiter->Lint_vec->print(cout, GA->get_base(), GA->base_len());
+		Lint_vec_print(cout, GA->get_base(), GA->base_len());
 		cout << endl;
 
 #if 0

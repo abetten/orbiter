@@ -559,7 +559,7 @@ public:
 		int *&interesting_sets, int &nb_interesting_sets, 
 		int &orbit_idx, int verbose_level);
 	void classify_k_subsets(long int *the_set, int n, int k,
-		tally *&C, int verbose_level);
+			data_structures::tally *&C, int verbose_level);
 	void trace_all_k_subsets_and_compute_frequencies(
 			long int *the_set,
 			int n, int k, int &nCk, int *&isotype, int *&orbit_frequencies, int &nb_orbits,
@@ -1058,11 +1058,11 @@ public:
 		int *&perm, int *&perm_inv, int verbose_level);
 	void read_memory_object(
 			int &depth_completed,
-			memory_object *m, int &nb_group_elements,
+			orbiter_kernel_system::memory_object *m, int &nb_group_elements,
 			int verbose_level);
 	void write_memory_object(
 			int depth_completed,
-			memory_object *m, int &nb_group_elements,
+			orbiter_kernel_system::memory_object *m, int &nb_group_elements,
 			int verbose_level);
 	long int calc_size_on_file(int depth_completed,
 			int verbose_level);
@@ -1316,11 +1316,11 @@ public:
 	// in poset_orbit_node_io.cpp:
 	void read_memory_object(
 		poset_classification *PC,
-		actions::action *A, memory_object *m,
+		actions::action *A, orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements, int verbose_level);
 	void write_memory_object(
 		poset_classification *PC,
-		actions::action *A, memory_object *m,
+		actions::action *A, orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements, int verbose_level);
 	long int calc_size_on_file(
 			actions::action *A, int verbose_level);

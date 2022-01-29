@@ -555,7 +555,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 					"orbit on pairs "
 					<< orbit_on_pairs_idx << " / "
 					<< nb_orbits_on_pairs << " pair \\{";
-			Orbiter->Lint_vec->print(cout, pair_orbit->data, 2);
+			Lint_vec_print(cout, pair_orbit->data, 2);
 			cout << "\\}_{" << pair_orbit->group_order_as_lint() << "}" << endl;
 		}
 
@@ -601,12 +601,12 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 
 			// prepare the flag
 			// copy the arc:
-			Orbiter->Lint_vec->copy(The_arc->data, Flag + 0, 6);
+			Lint_vec_copy(The_arc->data, Flag + 0, 6);
 			// copy orb and the pair:
 			Flag[6] = orbit_on_pairs_idx;
 			p0 = pair_orbit->data[0];
 			p1 = pair_orbit->data[1];
-			Orbiter->Lint_vec->copy(pair_orbit->data, Flag + 7, 2);
+			Lint_vec_copy(pair_orbit->data, Flag + 7, 2);
 			Flag[9] = orbit_on_partition_idx;
 			Flag[10] = partition_rk;
 
@@ -619,7 +619,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_vv) {
 				cout << "surfaces_arc_lifting::downstep_one_arc The partition is: ";
 				for (h = 0; h < 2; h++) {
-					Orbiter->Int_vec->print(cout, part + h * 2, 2);
+					Int_vec_print(cout, part + h * 2, 2);
 				}
 				cout << endl;
 			}
@@ -664,7 +664,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"the arc is: ";
-				Orbiter->Lint_vec->print(cout, The_arc->data, 6);
+				Lint_vec_print(cout, The_arc->data, 6);
 				cout << endl;
 			}
 			Surf->F->PG_elements_embed(The_arc->data, Arc6, 6, 3, 4, v4);
@@ -672,7 +672,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"after embedding, the arc is: ";
-				Orbiter->Lint_vec->print(cout, Arc6, 6);
+				Lint_vec_print(cout, Arc6, 6);
 				cout << endl;
 			}
 
@@ -685,7 +685,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"the rearranged arcs is: ";
-				Orbiter->Lint_vec->print(cout, Arc6_rearranged, 6);
+				Lint_vec_print(cout, Arc6_rearranged, 6);
 				cout << endl;
 			}
 
@@ -716,14 +716,14 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"after Surf->do_arc_lifting_with_two_lines" << endl;
 				cout << "coeff20: ";
-				Orbiter->Int_vec->print(cout, coeff20, 20);
+				Int_vec_print(cout, coeff20, 20);
 				cout << endl;
 				cout << "lines27: ";
-				Orbiter->Lint_vec->print(cout, lines27, 27);
+				Lint_vec_print(cout, lines27, 27);
 				cout << endl;
 			}
-			Orbiter->Int_vec->copy_to_lint(coeff20, Flag + 13, 20);
-			Orbiter->Lint_vec->copy(lines27, Flag + 33, 27);
+			Int_vec_copy_to_lint(coeff20, Flag + 13, 20);
+			Lint_vec_copy(lines27, Flag + 33, 27);
 
 
 			long int arc_stab_order;
@@ -826,7 +826,7 @@ void surfaces_arc_lifting::report(
 
 	{
 		ofstream fp(fname_arc_lifting.c_str());
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 		L.head(fp,
 			FALSE /* f_book */,
@@ -858,7 +858,7 @@ void surfaces_arc_lifting::report(
 
 
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_arc_lifting << " of size "
 			<< Fio.file_size(fname_arc_lifting.c_str()) << endl;
@@ -1015,7 +1015,7 @@ void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 {
 	int flag_orbit_idx;
 	int i;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	ost << "Flag orbits: \\\\" << endl;
 	ost << "The number of flag orbits is " << Flag_orbits->nb_flag_orbits << " \\\\" << endl;
@@ -1169,7 +1169,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 
 		ost << "\\end{align*}" << endl;
 		ost << "$$" << endl;
-		Orbiter->Lint_vec->print(ost, Flag + 13, 20);
+		Lint_vec_print(ost, Flag + 13, 20);
 		ost << "$$" << endl;
 
 
@@ -1232,7 +1232,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 				<< ", and corresponds to the partition $";
 		Combi.set_partition_4_into_2_unrank(orbit_rep, part);
 		for (h = 0; h < 2; h++) {
-			Orbiter->Int_vec->print(ost, part + h * 2, 2);
+			Int_vec_print(ost, part + h * 2, 2);
 		}
 		ost << "$\\\\" << endl;
 
@@ -1502,7 +1502,7 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 	int f_v = (verbose_level >= 1);
 	int i;
 	int f_print_stabilizer_gens = TRUE;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	surfaces_arc_lifting_definition_node *D;
 	ring_theory::longinteger_domain Dom;
 	ring_theory::longinteger_object go1, ol;

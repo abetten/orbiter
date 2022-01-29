@@ -175,7 +175,7 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 		ST.replace_extension_with(fname_base, "_drawing");
 
 		Dio->draw_partitioned(fname_base,
-				Orbiter->draw_options,
+				orbiter_kernel_system::Orbiter->draw_options,
 			FALSE, 0, 0,
 			verbose_level);
 	}
@@ -185,7 +185,7 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 		D2 = Dio->trivial_column_reductions(verbose_level);
 
 		string fname2;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		fname2.assign(Descr->input_file);
 		ST.replace_extension_with(fname2, "_red.diophant");

@@ -335,7 +335,7 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 	ost << endl;
 
 	for (h = 0; h < N; h++) {
-		Orbiter->Int_vec->zero(set, k);
+		Int_vec_zero(set, k);
 		Combi.unrank_k_subset(h, set, n, k);
 
 
@@ -533,7 +533,7 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 		pivot = B[db];
 		pivot_inv = F->inverse(pivot);
 
-		Orbiter->Int_vec->zero(Q, dq + 1);
+		Int_vec_zero(Q, dq + 1);
 		data_structures::algorithms Algo;
 
 		if (f_report) {

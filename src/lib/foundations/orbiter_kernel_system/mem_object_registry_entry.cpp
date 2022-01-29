@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 
@@ -225,10 +226,5 @@ void mem_object_registry_entry::print_csv(ostream &ost, int line)
 
 
 
+}}}
 
-
-
-
-
-
-}}

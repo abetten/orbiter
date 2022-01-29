@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 BLT_set_create::BLT_set_create()
@@ -60,7 +60,7 @@ void BLT_set_create::freeself()
 }
 
 void BLT_set_create::init(
-		blt_set_domain *Blt_set_domain,
+		orthogonal_geometry::blt_set_domain *Blt_set_domain,
 		BLT_set_create_description *Descr,
 		orthogonal_space_with_action *OA,
 		int verbose_level)
@@ -274,7 +274,7 @@ void BLT_set_create::init(
 		}
 
 		set = NEW_lint(OA->Descr->F->q + 1);
-		Orbiter->Lint_vec->copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
+		Lint_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
 
 		Sg = NEW_OBJECT(groups::strong_generators);
 
@@ -323,7 +323,7 @@ void BLT_set_create::init(
 
 	if (f_v) {
 		cout << "BLT_set_create::init set = ";
-		Orbiter->Lint_vec->print(cout, set, OA->Descr->F->q + 1);
+		Lint_vec_print(cout, set, OA->Descr->F->q + 1);
 		cout << endl;
 	}
 
@@ -406,7 +406,7 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	sprintf(title, "BLT-set %s", label_tex.c_str());
 
@@ -461,7 +461,7 @@ void BLT_set_create::print_set_of_points(std::ostream &ost, long int *Pts, int n
 				OA->O->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
-				Orbiter->Int_vec->print(ost, v, n + 1);
+				Int_vec_print(ost, v, n + 1);
 				ost << "\\\\" << endl;
 			}
 		}
@@ -499,7 +499,7 @@ void BLT_set_create::print_set_of_points_with_ABC(std::ostream &ost, long int *P
 				c = ABC[3 * (I * 40 + h) + 2];
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
-				Orbiter->Int_vec->print(ost, v, n + 1);
+				Int_vec_print(ost, v, n + 1);
 				ost << " & ";
 				ost << "(";
 				ost << a;

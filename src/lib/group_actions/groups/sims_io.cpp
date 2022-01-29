@@ -28,7 +28,7 @@ void sims::create_group_tree(const char *fname,
 	int *Elt;
 	int *Elt2;
 	int *Fst;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -78,7 +78,7 @@ void sims::create_group_tree(const char *fname,
 				if (h < l - 1 && j == 0) {
 					continue;
 					}
-				Orbiter->Int_vec->zero(path, l);
+				Int_vec_zero(path, l);
 				path[h] = j;
 				fp << h + 1;
 				for (i = 0; i <= h; i++) {
@@ -146,7 +146,7 @@ void sims::print_transversals_short()
 
 void sims::print_transversal_lengths()
 {
-	Orbiter->Int_vec->print(cout, orbit_len, A->base_len());
+	Int_vec_print(cout, orbit_len, A->base_len());
 	cout << endl;
 #if 0
 	int i, l;
@@ -399,7 +399,7 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	//char *elt;
 	ring_theory::longinteger_object go;
 	long int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	//elt = NEW_char(A->coded_elt_size_in_char);
@@ -428,7 +428,7 @@ void sims::print_all_group_elements_to_file(char *fname,
 	int *Elt;
 	ring_theory::longinteger_object go;
 	long int i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
@@ -605,7 +605,7 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 	int *Elt1;
 	long int goi, i;
 	ring_theory::longinteger_object go;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	group_order(go);
 	goi = go.as_lint();
@@ -641,7 +641,7 @@ void sims::read_list_of_elements(actions::action *A, char *fname,
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;
 	int goi, i;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	goi = Fio.file_size(fname) / A->coded_elt_size_in_char;
 	if (f_v) {
@@ -684,7 +684,7 @@ void sims::write_as_magma_permutation_group(std::string &fname_base,
 	int *Elt2;
 	int *Table;
 	combinatorics::combinatorics_domain Combi;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group" << endl;
@@ -699,7 +699,7 @@ void sims::write_as_magma_permutation_group(std::string &fname_base,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Table = NEW_int(l * n);
-	Orbiter->Int_vec->zero(Table, l * n);
+	Int_vec_zero(Table, l * n);
 	for (h = 0; h < l; h++) {
 		if (f_v) {
 			cout << "sims::write_as_magma_permutation_group "

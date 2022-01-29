@@ -143,7 +143,7 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 	if (f_v) {
 		cout << "We found " << nb_gens << " strong generators" << endl;
 		cout << "transversal_length = ";
-		Orbiter->Int_vec->print(cout, transversal_length, n);
+		Int_vec_print(cout, transversal_length, n);
 		cout << endl;
 		cout << "group order: ";
 
@@ -168,7 +168,7 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 		cout << "The strong generators are:" << endl;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "generator " << i << " / " << nb_gens << ":" << endl;
-			Orbiter->Int_vec->matrix_print(Data + i * n * n, n, n);
+			Int_matrix_print(Data + i * n * n, n, n);
 			}
 		}
 
@@ -205,7 +205,7 @@ int generators_symplectic_group::count_strong_generators(int &nb,
 			cout << "depth " << depth << " " << cur_candidate[depth]
 				<< " / " << nb_candidates[depth] << " which is " << a << endl;
 			}
-		Orbiter->Int_vec->copy(Points + a * n, Mtx + depth * n, n);
+		Int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
 		if (!count_strong_generators(nb, transversal_length,
@@ -226,7 +226,7 @@ int generators_symplectic_group::get_strong_generators(int *Data,
 	if (depth == n) {
 		//cout << "solution " << nb << endl;
 		//int_matrix_print(Mtx, n, n);
-		Orbiter->Int_vec->copy(Mtx, Data + nb * n * n, n * n);
+		Int_vec_copy(Mtx, Data + nb * n * n, n * n);
 		nb++;
 		return FALSE;
 		}
@@ -241,7 +241,7 @@ int generators_symplectic_group::get_strong_generators(int *Data,
 			cout << "depth " << depth << " " << cur_candidate[depth]
 				<< " / " << nb_candidates[depth] << " which is " << a << endl;
 			}
-		Orbiter->Int_vec->copy(Points + a * n, Mtx + depth * n, n);
+		Int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
 		if (!get_strong_generators(Data, nb, first_moved,
@@ -287,11 +287,11 @@ void generators_symplectic_group::create_next_candidate_set(
 
 	if (EVEN(level)) {
 
-		Orbiter->Int_vec->copy(Mtx + level * n, v, n);
+		Int_vec_copy(Mtx + level * n, v, n);
 
 		for (i = 0; i < nb_candidates[level]; i++) {
 			ai = candidates[level][i];
-			Orbiter->Int_vec->copy(Points + ai * n, w, n);
+			Int_vec_copy(Points + ai * n, w, n);
 			if (dot_product(v, w) == 1) {
 				candidates[level + 1][nb++] = ai;
 				}
@@ -299,12 +299,12 @@ void generators_symplectic_group::create_next_candidate_set(
 		}
 	else {
 
-		Orbiter->Int_vec->copy(Mtx + (level - 1) * n, v, n);
-		Orbiter->Int_vec->copy(Mtx + level * n, v2, n);
+		Int_vec_copy(Mtx + (level - 1) * n, v, n);
+		Int_vec_copy(Mtx + level * n, v2, n);
 
 		for (i = 0; i < nb_candidates[level - 1]; i++) {
 			ai = candidates[level - 1][i];
-			Orbiter->Int_vec->copy(Points + ai * n, w, n);
+			Int_vec_copy(Points + ai * n, w, n);
 			if (dot_product(v, w) == 0 && dot_product(v2, w) == 0) {
 				candidates[level + 1][nb++] = ai;
 				}

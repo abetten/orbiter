@@ -457,7 +457,8 @@ public:
 	void make_element(int *Elt, int *data, int verbose_level);
 	void make_GL_element(int *Elt, int *A, int f);
 	void orthogonal_group_random_generator(
-			actions::action *A, orthogonal *O,
+			actions::action *A,
+			orthogonal_geometry::orthogonal *O,
 		int f_siegel, 
 		int f_reflection, 
 		int f_similarity,
@@ -501,7 +502,7 @@ public:
 	std::string fname;
 	std::string fname_csv;
 
-	tally *Classify_orbits_by_length;
+	data_structures::tally *Classify_orbits_by_length;
 	data_structures::set_of_sets *Orbits_classified;
 
 	int *Orbits_classified_length; // [Orbits_classified_nb_types]

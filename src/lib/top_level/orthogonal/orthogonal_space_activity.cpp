@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace orthogonal_geometry {
+namespace orthogonal_geometry_applications {
 
 
 orthogonal_space_activity::orthogonal_space_activity()
@@ -71,7 +71,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 
-		Blt_set_domain = NEW_OBJECT(blt_set_domain);
+		Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity before Blt_set_domain->init" << endl;
@@ -87,7 +87,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		BC->init(Blt_set_domain, Descr->BLT_Set_create_description, OA, verbose_level);
 
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 
 		cout << "We have created the following BLT-set:" << endl;
@@ -118,7 +118,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 
-		Blt_set_domain = NEW_OBJECT(blt_set_domain);
+		Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity before Blt_set_domain->init" << endl;
@@ -167,7 +167,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 
-		Blt_set_domain = NEW_OBJECT(blt_set_domain);
+		Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity before Blt_set_domain->init" << endl;
@@ -223,12 +223,12 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 			cout << "orthogonal_space_activity::perform_activity before OA->report" << endl;
 		}
 
-		if (!Orbiter->f_draw_options) {
+		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
 			cout << "please use -draw_options ... -end" << endl;
 			exit(1);
 		}
 
-		OA->report(Orbiter->draw_options,
+		OA->report(orbiter_kernel_system::Orbiter->draw_options,
 				verbose_level);
 
 
@@ -289,7 +289,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (TRUE) {
 			cout << "There are " << OA->O->alpha << " lines on point = "
 					<< Descr->lines_on_point_rank << ". They are: ";
-			Orbiter->Lint_vec->print_fully(cout, line_pencil_line_ranks, OA->O->alpha);
+			Lint_vec_print_fully(cout, line_pencil_line_ranks, OA->O->alpha);
 			cout << endl;
 		}
 
@@ -308,11 +308,11 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		long int *pts;
 		int nb_pts;
 
-		Orbiter->Lint_vec->scan(Descr->perp_text.c_str(), pts, nb_pts);
+		Lint_vec_scan(Descr->perp_text.c_str(), pts, nb_pts);
 
 		if (f_v) {
 			cout << "Computing the common perp of the set ";
-			Orbiter->Lint_vec->print(cout, pts, nb_pts);
+			Lint_vec_print(cout, pts, nb_pts);
 			cout << endl;
 		}
 
@@ -323,7 +323,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		OA->O->perp_of_k_points(pts, nb_pts, Perp, sz, verbose_level);
 
 		cout << "The common perp of the set has size " << sz << " and is ";
-		Orbiter->Lint_vec->print_fully(cout, Perp, sz);
+		Lint_vec_print_fully(cout, Perp, sz);
 		cout << endl;
 
 		FREE_lint(Perp);

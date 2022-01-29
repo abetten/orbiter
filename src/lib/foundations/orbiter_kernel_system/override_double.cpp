@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 
@@ -34,5 +35,5 @@ override_double::~override_double()
 }
 
 
-}}
+}}}
 

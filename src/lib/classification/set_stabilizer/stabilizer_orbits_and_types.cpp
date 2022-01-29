@@ -232,7 +232,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 	nb_orbits = Schreier->nb_orbits;
 	orbit_count1 = NEW_int(nb_orbits);
 	orbit_count2 = NEW_int(nb_orbits);
-	Orbiter->Int_vec->zero(orbit_count1, nb_orbits);
+	Int_vec_zero(orbit_count1, nb_orbits);
 
 	int cnt;
 
@@ -252,7 +252,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 		find_orbit_pattern(cnt, elt1 /* transp */, verbose_level - 4);
 
 
-		Orbiter->Int_vec->copy(orbit_count1, Orbit_patterns + cnt * nb_orbits, nb_orbits);
+		Int_vec_copy(orbit_count1, Orbit_patterns + cnt * nb_orbits, nb_orbits);
 
 	}
 
@@ -263,10 +263,10 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 	if (f_v) {
 		cout << "orbit patterns (top row is orbit length): " << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				Schreier->orbit_len, 1, nb_orbits, nb_orbits, 2);
 		if (CS->SubSt->nb_interesting_subsets < 100) {
-			Orbiter->Int_vec->print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(cout,
 				Orbit_patterns, CS->SubSt->nb_interesting_subsets, nb_orbits, nb_orbits, 2);
 		}
 		else {
@@ -279,7 +279,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 	for (cnt = 0; cnt < CS->SubSt->nb_interesting_subsets; cnt++) {
 		if (cnt == 0) {
-			Orbiter->Int_vec->copy(Orbit_patterns + cnt * nb_orbits, orbit_count2, nb_orbits);
+			Int_vec_copy(Orbit_patterns + cnt * nb_orbits, orbit_count2, nb_orbits);
 			nb_interesting_subsets_reduced = 0;
 			interesting_subsets_reduced[nb_interesting_subsets_reduced++] = CS->SubSt->interesting_subsets[cnt];
 		}
@@ -290,7 +290,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 			if (cmp > 0) {
 				minimal_orbit_pattern_idx = cnt;
-				Orbiter->Int_vec->copy(Orbit_patterns + cnt * nb_orbits, orbit_count2, nb_orbits);
+				Int_vec_copy(Orbit_patterns + cnt * nb_orbits, orbit_count2, nb_orbits);
 				nb_interesting_subsets_reduced = 0;
 				interesting_subsets_reduced[nb_interesting_subsets_reduced++] = CS->SubSt->interesting_subsets[cnt];
 			}
@@ -374,7 +374,7 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int stage, in
 
 	fname.assign(CS->SubSt->fname_case_out);
 	fname.append(str);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.lint_vec_write_csv(interesting_subsets_reduced, nb_interesting_subsets_reduced,
 			fname, "interesting_subsets_reduced");
@@ -415,7 +415,7 @@ void stabilizer_orbits_and_types::find_orbit_pattern(int cnt, int *transp, int v
 	if (FALSE) {
 		cout << "stabilizer_orbits_and_types::find_orbit_pattern STABILIZER "
 				<< setw(4) << cnt << " : " << setw(4) << CS->SubSt->interesting_subsets[cnt] << " : ";
-		Orbiter->Lint_vec->print(cout, reduced_set1, reduced_set_size);
+		Lint_vec_print(cout, reduced_set1, reduced_set_size);
 		cout << endl;
 	}
 
@@ -463,10 +463,10 @@ void stabilizer_orbits_and_types::find_interesting_orbits(int verbose_level)
 		cout << "nb_interesting_orbits = " << nb_interesting_orbits << endl;
 		cout << "nb_interesting_points = " << nb_interesting_points << endl;
 		cout << "interesting_orbits:" << endl;
-		Orbiter->Int_vec->print(cout, interesting_orbits, nb_interesting_orbits);
+		Int_vec_print(cout, interesting_orbits, nb_interesting_orbits);
 		cout << endl;
 		cout << "orbit_to_interesting_orbit:" << endl;
-		Orbiter->Int_vec->print(cout, orbit_to_interesting_orbit, nb_orbits);
+		Int_vec_print(cout, orbit_to_interesting_orbit, nb_orbits);
 		cout << endl;
 	}
 
@@ -496,7 +496,7 @@ void stabilizer_orbits_and_types::find_interesting_orbits(int verbose_level)
 		for (k = 0; k < nb_interesting_orbits; k++) {
 			f = interesting_orbit_first[k];
 			l = interesting_orbit_len[k];
-			Orbiter->Lint_vec->print(cout, interesting_points + f, l);
+			Lint_vec_print(cout, interesting_points + f, l);
 			if (k < nb_interesting_orbits - 1) {
 				cout << ", ";
 			}
@@ -565,7 +565,7 @@ void stabilizer_orbits_and_types::map_subset_and_compute_local_labels(int cnt, i
 	}
 
 	if (f_v) {
-		Orbiter->Lint_vec->print(cout, reduced_set1, reduced_set_size);
+		Lint_vec_print(cout, reduced_set1, reduced_set_size);
 		cout << endl;
 	}
 
@@ -574,13 +574,13 @@ void stabilizer_orbits_and_types::map_subset_and_compute_local_labels(int cnt, i
 		cout << "stabilizer_orbits_and_types::map_subset_and_compute_local_labels "
 				"!Stab_orbits->check_orbit_count()" << endl;
 		cout << "reduced_set1: ";
-		Orbiter->Lint_vec->print(cout, reduced_set1, reduced_set_size);
+		Lint_vec_print(cout, reduced_set1, reduced_set_size);
 		cout << endl;
 		cout << "orbit_count1: ";
-		Orbiter->Int_vec->print(cout, orbit_count1, nb_orbits);
+		Int_vec_print(cout, orbit_count1, nb_orbits);
 		cout << endl;
 		cout << "orbit_count2: ";
-		Orbiter->Int_vec->print(cout, orbit_count2, nb_orbits);
+		Int_vec_print(cout, orbit_count2, nb_orbits);
 		cout << endl;
 		exit(1);
 	}
@@ -600,7 +600,7 @@ void stabilizer_orbits_and_types::map_subset_and_compute_local_labels(int cnt, i
 	}
 	if (f_v) {
 		cout << "local labels:" << endl;
-		Orbiter->Lint_vec->print(cout, reduced_set1_new_labels, reduced_set_size);
+		Lint_vec_print(cout, reduced_set1_new_labels, reduced_set_size);
 		cout << endl;
 	}
 
@@ -676,7 +676,7 @@ void stabilizer_orbits_and_types::map_reduced_set_and_do_orbit_counting(int cnt,
 		cout << "stabilizer_orbits_and_types::map_the_second_set STABILIZER "
 				<< setw(4) << cnt << " : " << setw(4)
 				<< interesting_subsets_reduced[cnt] << " : ";
-		Orbiter->Lint_vec->print(cout,
+		Lint_vec_print(cout,
 				reduced_set1,
 				reduced_set_size);
 		cout << endl;
@@ -774,16 +774,16 @@ void stabilizer_orbits_and_types::print_minimal_orbit_pattern()
 {
 	cout << "minimal_orbit_pattern_idx= " << minimal_orbit_pattern_idx << endl;
 
-	Orbiter->Int_vec->print_integer_matrix_width(cout,
+	Int_vec_print_integer_matrix_width(cout,
 			Schreier->orbit_len, 1, nb_orbits, nb_orbits, 2);
 
-	Orbiter->Int_vec->print_integer_matrix_width(cout,
+	Int_vec_print_integer_matrix_width(cout,
 			orbit_count2, 1, nb_orbits, nb_orbits, 2);
 
 	cout << "nb_interesting_subsets_reduced = " << nb_interesting_subsets_reduced << endl;
 
 	cout << "interesting_subsets_reduced:" << endl;
-	Orbiter->Lint_vec->print(cout, interesting_subsets_reduced, nb_interesting_subsets_reduced);
+	Lint_vec_print(cout, interesting_subsets_reduced, nb_interesting_subsets_reduced);
 	cout << endl;
 
 	int *the_set;
@@ -802,7 +802,7 @@ void stabilizer_orbits_and_types::print_minimal_orbit_pattern()
 	for (i = 0; i < nb_interesting_subsets_reduced; i++) {
 		Combi.unrank_k_subset(interesting_subsets_reduced[i], the_set, n, k);
 		cout << i << " : " << interesting_subsets_reduced[i] << " : ";
-		Orbiter->Int_vec->print(cout, the_set, k);
+		Int_vec_print(cout, the_set, k);
 		cout << endl;
 	}
 	FREE_int(the_set);

@@ -10,6 +10,7 @@
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orthogonal_geometry {
 
 
 // #############################################################################
@@ -770,7 +771,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 

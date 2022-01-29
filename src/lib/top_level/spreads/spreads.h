@@ -159,7 +159,7 @@ public:
 
 	// only if n = 2 * k:
 	geometry::klein_correspondence *Klein;
-	orthogonal *O;
+	layer1_foundations::orthogonal_geometry::orthogonal *O;
 
 
 	int Nb;

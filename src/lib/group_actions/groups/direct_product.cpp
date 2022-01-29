@@ -191,12 +191,12 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component1 = ";
-		Orbiter->Lint_vec->print(cout, base_for_component1,
+		Lint_vec_print(cout, base_for_component1,
 				base_len_in_component1);
 		cout << endl;
 		cout << "direct_product::init "
 				"tl_for_component1 = ";
-		Orbiter->Int_vec->print(cout, tl_for_component1,
+		Int_vec_print(cout, tl_for_component1,
 				base_len_in_component1);
 		cout << endl;
 	}
@@ -211,10 +211,10 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 
 	if (f_v) {
 		cout << "direct_product::init base_for_component2 = ";
-		Orbiter->Lint_vec->print(cout, base_for_component2, base_len_in_component2);
+		Lint_vec_print(cout, base_for_component2, base_len_in_component2);
 		cout << endl;
 		cout << "direct_product::init tl_for_component2 = ";
-		Orbiter->Int_vec->print(cout, tl_for_component2, base_len_in_component2);
+		Int_vec_print(cout, tl_for_component2, base_len_in_component2);
 		cout << endl;
 	}
 
@@ -233,10 +233,10 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 	if (f_v) {
 		cout << "direct_product::init the_base = ";
-		Orbiter->Lint_vec->print(cout, the_base, base_length);
+		Lint_vec_print(cout, the_base, base_length);
 		cout << endl;
 		cout << "direct_product::init the_transversal_length = ";
-		Orbiter->Int_vec->print(cout, the_transversal_length, base_length);
+		Int_vec_print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
 
@@ -367,7 +367,7 @@ void direct_product::element_move(int *A, int *B, int verbose_level)
 	if (f_v) {
 		cout << "direct_product::element_move" << endl;
 	}
-	Orbiter->Int_vec->copy(A, B, elt_size_int);
+	Int_vec_copy(A, B, elt_size_int);
 	if (f_v) {
 		cout << "direct_product::element_move done" << endl;
 	}
@@ -502,7 +502,7 @@ void direct_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 	if (f_v) {
 		cout << "direct_product::make_element data:" << endl;
-		Orbiter->Int_vec->print(cout, data, make_element_size);
+		Int_vec_print(cout, data, make_element_size);
 		cout << endl;
 	}
 	M1->make_element(Elt + offset_i(0),
@@ -628,26 +628,26 @@ void direct_product::make_strong_generators_data(int *&data,
 	h = 0;
 	// generators for the second component:
 	for (g = 0; g < GL2_nb_gens; g++) {
-		Orbiter->Int_vec->zero(dat, size);
+		Int_vec_zero(dat, size);
 		F1->Linear_algebra->identity_matrix(
 					dat,
 					dimension_of_matrix_group1);
-		Orbiter->Int_vec->copy(GL2_data + g * GL2_size,
+		Int_vec_copy(GL2_data + g * GL2_size,
 					dat + M1->make_element_size,
 					GL2_size);
-		Orbiter->Int_vec->copy(dat, data + h * size, size);
+		Int_vec_copy(dat, data + h * size, size);
 		h++;
 	}
 	// generators for the first component:
 	for (g = 0; g < GL1_nb_gens; g++) {
-		Orbiter->Int_vec->zero(dat, size);
-		Orbiter->Int_vec->copy(GL1_data + g * GL1_size,
+		Int_vec_zero(dat, size);
+		Int_vec_copy(GL1_data + g * GL1_size,
 					dat + 0,
 					GL1_size);
 		F2->Linear_algebra->identity_matrix(
 					dat + M1->make_element_size,
 					dimension_of_matrix_group2);
-		Orbiter->Int_vec->copy(dat, data + h * size, size);
+		Int_vec_copy(dat, data + h * size, size);
 		h++;
 	}
 	if (h != nb_gens) {

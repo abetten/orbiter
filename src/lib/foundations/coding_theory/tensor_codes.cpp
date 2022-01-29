@@ -116,13 +116,13 @@ void coding_theory_domain::twisted_tensor_product_codes(
 		cout << "beta = " << beta << endl;
 		cout << "beta_q = " << beta_q << endl;
 		cout << "Exponents: ";
-		Orbiter->Int_vec->print(cout, exponents, m);
+		Int_vec_print(cout, exponents, m);
 		cout << endl;
 		}
 
 	if (f_vv) {
 		cout << "twisted_tensor_product_codes: M:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
 		F->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
 		}
@@ -156,7 +156,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 	if (f_v) {
 		cout << "twisted_tensor_product_codes: after create_matrix_H_subfield" << endl;
 		cout << "H_subfield:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		f->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
 		}
 
@@ -302,7 +302,7 @@ void coding_theory_domain::create_matrix_M(
 
 	if (f_v) {
 		cout << "M:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
 		F->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, m, n);
@@ -319,7 +319,7 @@ void coding_theory_domain::create_matrix_M(
 		F->Linear_algebra->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
 				0 /* verbose_level */);
 		cout << "overall col_sum:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
+		Int_vec_print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
 		FREE_int(all_one);
 		FREE_int(col_sum);
 		}
@@ -425,7 +425,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_v) {
 		cout << "matrix C:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, C, m, m, m, 2);
+		Int_vec_print_integer_matrix_width(cout, C, m, m, m, 2);
 		F->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, C, m, m);
 		}
@@ -435,7 +435,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_vv) {
 		cout << "C_inv:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, C_inv, m, m, m, 2);
+		Int_vec_print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 		}
 
 	F->Linear_algebra->mult_matrix_matrix(C, C_inv, AA, m, m, m,
@@ -443,7 +443,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_vv) {
 		cout << "C * C_inv:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, AA, m, m, m, 2);
+		Int_vec_print_integer_matrix_width(cout, AA, m, m, m, 2);
 		}
 
 
@@ -452,7 +452,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_v) {
 		cout << "H = C * M:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, H, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
 		F->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, H, m, n);
 		}
@@ -469,7 +469,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_v) {
 		cout << "H_subfield:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		f->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print_subfield, H_subfield, m, n);
 		}
@@ -498,7 +498,7 @@ void coding_theory_domain::tt_field_reduction(
 		}
 	if (f_vv) {
 		cout << "before:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, M, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 		//print_integer_matrix(cout, M, m, n);
 		cout << endl;
 		F.print_integer_matrix_zech(cout, M, m, n);
@@ -534,7 +534,7 @@ void coding_theory_domain::tt_field_reduction(
 		}
 	if (f_vv) {
 		cout << "after:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, MM, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, MM, m, n, n, 2);
 		//print_integer_matrix(cout, MM, m, n);
 		cout << endl;
 		f.print_integer_matrix_zech(cout, MM, m, n);
@@ -617,7 +617,7 @@ void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
 	if (f_v) {
 		cout << "make_tensor_code_9dimensional_as_point_set done" << endl;
 		cout << "created the set: ";
-		Orbiter->Int_vec->print(cout, the_set, length);
+		Int_vec_print(cout, the_set, length);
 		cout << endl;
 		}
 }
@@ -766,7 +766,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	}
 
 	cout << "M:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, M, m, n, n, 2);
+	Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
 	{
 		int *all_one, *col_sum;
@@ -779,7 +779,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 		F.Linear_algebra->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
 				0 /* verbose_level */);
 		cout << "col_sum:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
+		Int_vec_print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
 		FREE_int(all_one);
 		FREE_int(col_sum);
 	}
@@ -794,12 +794,12 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 
 	cout << "C:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, C, m, m, m, 2);
+	Int_vec_print_integer_matrix_width(cout, C, m, m, m, 2);
 
 	F.Linear_algebra->invert_matrix(C, C_inv, m, 0 /* verbose_level */);
 
 	cout << "C_inv:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, C_inv, m, m, m, 2);
+	Int_vec_print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 
 	{
 		int *AA;
@@ -807,14 +807,14 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 		F.Linear_algebra->mult_matrix_matrix(C, C_inv, AA, m, m, m,
 				0 /* verbose_level */);
 		cout << "C * C_inv:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, AA, m, m, m, 2);
+		Int_vec_print_integer_matrix_width(cout, AA, m, m, m, 2);
 		FREE_int(AA);
 	}
 
 	F.Linear_algebra->mult_matrix_matrix(C, M, H, m, m, n,
 			0 /* verbose_level */);
 	cout << "H = C * M:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, H, m, n, n, 2);
+	Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
 
 
 #if 0
@@ -826,7 +826,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 	if (f_vv) {
 		cout << "before field reduction:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, H, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
 		cout << endl;
 		f.print_integer_matrix_zech(cout, H, m, n);
 		cout << endl;
@@ -835,13 +835,13 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	//field_reduction(F, f, m, n, H, H_subfield, TRUE, TRUE);
 	if (f_vv) {
 		cout << "after field reduction:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		cout << endl;
 		f.print_integer_matrix_zech(cout, H_subfield, m, n);
 		cout << endl;
 		}
 	cout << "H_subfield:" << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+	Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 
 	code = H_subfield;
 	length = n;

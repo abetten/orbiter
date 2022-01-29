@@ -442,7 +442,7 @@ public:
 // #############################################################################
 
 
-//! Don Knuth's dancing links solver
+//! An implementation of Donald Knuth's dancing links algorithm to solve exact cover problems
 
 
 
@@ -593,7 +593,7 @@ struct dlx_node {
 #define MCKAY_DEBUG
 
 
-//! a solver for systems of diophantine equations
+//! Possolve is a solver for systems of diophantine equations due to Brendan McKay (ca 1997)
 
 
 namespace mckay {
@@ -602,8 +602,6 @@ namespace mckay {
 	#include <stdio.h>
 	#include <math.h>
 
-	/* bigger gets more diagnostic output */
-	//#define VERBOSE 0
 
 	//#undef MCKAY_DEBUG
 	#define INTERVAL_IN_SECONDS 1
@@ -676,7 +674,6 @@ namespace mckay {
 		bool _break;
 
 		diophant *D;
-		//tLGS *_lgs;
 
 	#ifdef MCKAY_DEBUG
 		std::vector<int> range,split,branch;

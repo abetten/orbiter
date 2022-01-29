@@ -491,16 +491,16 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
 					"Basis8=" << endl;
-			Orbiter->Int_vec->matrix_print(Basis8, 2, 4);
+			Int_matrix_print(Basis8, 2, 4);
 		}
 
 		for (j = 0; j < 2; j++) {
-			Orbiter->Int_vec->copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
+			Int_vec_copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
 		}
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
 					"Basis6=" << endl;
-			Orbiter->Int_vec->matrix_print(Basis6, 2, 3);
+			Int_matrix_print(Basis6, 2, 3);
 		}
 		Bitangents[i] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 		if (f_v) {
@@ -536,13 +536,13 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 	SOA->Surf->unrank_plane(Basis12, plane_rk);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic Basis12=" << endl;
-		Orbiter->Int_vec->matrix_print(Basis12, 3, 4);
+		Int_matrix_print(Basis12, 3, 4);
 	}
 	int Basis6[6];
 	int j;
 
 	for (j = 0; j < 2; j++) {
-		Orbiter->Int_vec->copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
+		Int_vec_copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
 	}
 	Bitangents[nb_lines] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 	if (f_v) {
@@ -553,7 +553,7 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic Lines_nice = ";
-		Orbiter->Lint_vec->print(cout, Lines_nice, nb_lines);
+		Lint_vec_print(cout, Lines_nice, nb_lines);
 		cout << endl;
 	}
 
@@ -872,7 +872,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 		SOA->Surf->P2->unrank_point(v, Pts_on_curve[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_curve[i] << "}=";
-		Orbiter->Int_vec->print_fully(ost, v, 3);
+		Int_vec_print_fully(ost, v, 3);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -904,7 +904,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 
 	ost << "The curve has " << nb_bitangents << " bitangents, they are: ";
-	Orbiter->Lint_vec->print(ost, Bitangents, nb_bitangents);
+	Lint_vec_print(ost, Bitangents, nb_bitangents);
 	ost << "\\\\" << endl;
 
 

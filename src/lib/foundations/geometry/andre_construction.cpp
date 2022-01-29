@@ -157,12 +157,12 @@ void andre_construction::init(field_theory::finite_field *F,
 			}
 		cout << "andre_construction::init spread element " << i
 				<< " is " << spread_elements_numeric[i] << ":" << endl;
-		Orbiter->Int_vec->matrix_print(spread_elements_genma + i * k * n, k, n);
+		Int_matrix_print(spread_elements_genma + i * k * n, k, n);
 		cout << "pivot: ";
-		Orbiter->Int_vec->print(cout, pivot + i * k, k);
+		Int_vec_print(cout, pivot + i * k, k);
 		cout << endl;
 		cout << "non_pivot: ";
-		Orbiter->Int_vec->print(cout, non_pivot + i * (n - k), n - k);
+		Int_vec_print(cout, non_pivot + i * (n - k), n - k);
 		cout << endl;
 		}
 	if (f_v) {

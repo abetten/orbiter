@@ -119,7 +119,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	load_solution(id, data);
 	if (f_v) {
 		cout << "isomorph::probe flag orbit " << flag_orbit << " : ";
-		Orbiter->Lint_vec->print(cout, data, size);
+		Lint_vec_print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -144,7 +144,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	if (f_v) {
 		cout << "isomorph::probe the subset with rank "
 				<< subset_rk  << " is ";
-		Orbiter->Int_vec->print(cout, subset, level);
+		Int_vec_print(cout, subset, level);
 		cout << endl;
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
@@ -159,7 +159,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 
 	if (f_v) {
 		cout << "The rearranged set is ";
-		Orbiter->Lint_vec->print(cout, rearranged_set, size);
+		Lint_vec_print(cout, rearranged_set, size);
 		cout << endl;
 		}
 
@@ -191,7 +191,7 @@ void isomorph::isomorph_testing(int t0,
 	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int f_eof;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::isomorph_testing" << endl;
@@ -317,7 +317,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 	nb_cols = Reps->count;
 
 	Mtx = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec->zero(Mtx, nb_rows * nb_cols);
+	Int_vec_zero(Mtx, nb_rows * nb_cols);
 	starter_idx = NEW_int(nb_orbits);
 
 	for (i = 0; i < nb_starter; i++) {
@@ -334,7 +334,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 
 	if (f_v) {
 		cout << "starter_idx=";
-		Orbiter->Int_vec->print(cout, starter_idx, nb_orbits);
+		Int_vec_print(cout, starter_idx, nb_orbits);
 		cout << endl;
 		}
 
@@ -347,7 +347,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 	if (f_v) {
 		cout << "isomorph::write_classification_matrix" << endl;
 		cout << "The classification matrix is:" << endl;
-		Orbiter->Int_vec->matrix_print(Mtx, nb_rows, nb_cols);
+		Int_matrix_print(Mtx, nb_rows, nb_cols);
 		}
 
 	FREE_int(Mtx);
@@ -367,7 +367,7 @@ void isomorph::write_classification_graph(int verbose_level)
 	int *Nb;
 	int *Fst;
 	int i, j, f, l, d;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::write_classification_graph" << endl;
@@ -473,7 +473,7 @@ void isomorph::decomposition_matrix(int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	int m, n, i, j, a, b, f, l;
 	int *M;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph::decomposition_matrix" << endl;
@@ -553,7 +553,7 @@ void isomorph::compute_down_link(int *&down_link,
 
 	if (f_vv) {
 		cout << "down_link: ";
-		Orbiter->Int_vec->print(cout, down_link, nb_orbits);
+		Int_vec_print(cout, down_link, nb_orbits);
 		cout << endl;
 		}
 	if (f_v) {
@@ -602,7 +602,7 @@ void isomorph::do_iso_test(int t0, groups::sims *&Stab,
 	load_solution(id, data);
 	if (f_vv) {
 		cout << "isomorph::do_iso_test orbit_no = " << orbit_no << " : ";
-		Orbiter->Lint_vec->print(cout, data, size);
+		Lint_vec_print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -772,7 +772,7 @@ int isomorph::next_subset(int t0,
 	if (f_vvv) {
 		cout << "iso_node " << iso_nodes << " found minimal subset no " 
 			<< cnt_minimal << ", rank = " << subset_rank << " : ";
-		Orbiter->Int_vec->set_print(cout, subset, level);
+		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, subset, level);
 		cout << endl;
 		}
 	cnt_minimal++;
@@ -970,7 +970,7 @@ void isomorph::process_rearranged_set(
 			cout << "n e w transporter times old transporter inverse:" << endl;
 			A->element_print(tmp_Elt, cout);
 			cout << "subset: ";
-			Orbiter->Int_vec->print(cout, subset, level);
+			Int_vec_print(cout, subset, level);
 			cout << endl;
 
 			long int my_data[1000];
@@ -1165,7 +1165,7 @@ void isomorph::print_statistics_iso_test(int t0, groups::sims *Stab)
 	int nb, N;
 	double f1; //, f2;
 	combinatorics::combinatorics_domain Combi;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -1189,7 +1189,7 @@ void isomorph::print_statistics_iso_test(int t0, groups::sims *Stab)
 	f1 = ((double)nb / (double)N) * 100;
 	cout << "ancestors left = " << nb << " / " << N
 			<< " (" << f1 << "%): ";
-	Orbiter->Int_vec->set_print(cout, subset, level);
+	orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, subset, level);
 	cout << " current stabilizer order " << go 
 		<< " induced action order " << AA_go 
 		<< " nb_reps=" << Reps->nb_reps 
@@ -1549,7 +1549,7 @@ void isomorph::induced_action_on_set(
 			}
 		if (FALSE /*f_v*/) {
 			cout << "isomorph::induced_action_on_set permutation: ";
-			Orbiter->Int_vec->print(cout, data1, size);
+			Int_vec_print(cout, data1, size);
 			cout << endl;
 			}
 		AA_perm->make_element(Elt1, data1, 0 /* verbose_level */);

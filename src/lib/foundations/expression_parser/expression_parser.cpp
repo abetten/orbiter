@@ -142,6 +142,9 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace expression_parser {
+
+
 
 typedef double (*OneArgFunction)  (double arg);
 typedef const double (*TwoArgFunction)  (const double arg1, const double arg2);
@@ -584,7 +587,7 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 	}
 
 	monomial = NEW_int(Tree->managed_variables.size());
-	Orbiter->Int_vec->zero(monomial, Tree->managed_variables.size());
+	Int_vec_zero(monomial, Tree->managed_variables.size());
 
 	N = new syntax_tree_node;
 	N->Tree = Tree;
@@ -935,5 +938,6 @@ void expression_parser::parse (syntax_tree *tree, std::string & program, int ver
 	}
 
 
-}}
+}}}
+
 

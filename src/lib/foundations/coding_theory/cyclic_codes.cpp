@@ -59,7 +59,7 @@ void coding_theory_domain::make_BCH_code(int n,
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_BCH_code Sel=";
-		Orbiter->Int_vec->print(cout, Sel, nb_sel);
+		Int_vec_print(cout, Sel, nb_sel);
 		cout << endl;
 	}
 
@@ -110,7 +110,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	ring_theory::longinteger_object Qm1, Index;
 	ring_theory::longinteger_domain D;
 	number_theory::number_theory_domain NT;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	NT.factor_prime_power(q, p, e);
 	if (f_v) {
@@ -466,7 +466,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 	generator_matrix_cyclic_code(n, degree, generator_subfield, Genma);
 	cout << "coding_theory_domain::make_cyclic_code generator matrix: " << endl;
-	Orbiter->Int_vec->print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
+	Int_vec_print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
 
 
 	{
@@ -497,7 +497,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	int k = n - degree;
 
@@ -540,7 +540,7 @@ void coding_theory_domain::generator_matrix_cyclic_code(int n,
 	int i, j;
 
 	M = NEW_int(k * n);
-	Orbiter->Int_vec->zero(M, k * n);
+	Int_vec_zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j <= degree; j++) {
 			M[i * n + j + i] = generator_polynomial[j];
@@ -1043,7 +1043,7 @@ void coding_theory_domain::compute_generator_matrix(
 	}
 	if (f_v) {
 		cout << "coding_theory_domain::compute_generator_matrix generator matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix(cout, genma, k, n);
+		Int_vec_print_integer_matrix(cout, genma, k, n);
 	}
 }
 
@@ -1079,7 +1079,7 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	fname_csv.append(".csv");
 
 	cout << "roots: ";
-	Orbiter->Int_vec->print(cout, roots, nb_roots);
+	Int_vec_print(cout, roots, nb_roots);
 	cout << endl;
 
 	coding_theory_domain Codes;

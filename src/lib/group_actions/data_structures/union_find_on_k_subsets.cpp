@@ -219,7 +219,7 @@ void union_find_on_k_subsets::init(
 			}
 		if (FALSE /*f_v*/) {
 			cout << "union_find_on_k_subsets::init permutation: ";
-			Orbiter->Int_vec->print(cout, data1, set_sz);
+			Int_vec_print(cout, data1, set_sz);
 			cout << endl;
 			}
 		Ar_perm->make_element(Elt1, data1, 0 /* verbose_level */);

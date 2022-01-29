@@ -86,7 +86,7 @@ void orbits_on_something::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "orbits_on_something::init" << endl;
@@ -307,7 +307,7 @@ void orbits_on_something::orbit_type_of_set(
 	}
 	v = NEW_int(set_sz);
 	orbit_type_sz = (go + 1) * go;
-	Orbiter->Lint_vec->zero(orbit_type, orbit_type_sz);
+	Lint_vec_zero(orbit_type, orbit_type_sz);
 
 	// v[i] = index of orbit containing set[i]
 	// orbit_type[l - 1] = number of elements lying in an orbit of length l
@@ -359,7 +359,7 @@ void orbits_on_something::report_type(std::ostream &ost, long int *orbit_type, l
 	ost << "\\right]" << endl;
 #else
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 #if 0
 	ost << "\\left[" << endl;
@@ -402,10 +402,10 @@ void orbits_on_something::compute_compact_type(long int *orbit_type, long int go
 	f_col_used = NEW_int(goi);
 	row_idx = NEW_int(goi);
 	col_idx = NEW_int(goi);
-	Orbiter->Int_vec->zero(f_row_used, goi);
-	Orbiter->Int_vec->zero(f_col_used, goi);
-	Orbiter->Int_vec->zero(row_idx, goi);
-	Orbiter->Int_vec->zero(col_idx, goi);
+	Int_vec_zero(f_row_used, goi);
+	Int_vec_zero(f_col_used, goi);
+	Int_vec_zero(row_idx, goi);
+	Int_vec_zero(col_idx, goi);
 	for (i = 1; i <= goi; i++) {
 		for (j = 1; j <= goi; j++) {
 			if (orbit_type[i * goi + j - 1]) {
@@ -427,7 +427,7 @@ void orbits_on_something::compute_compact_type(long int *orbit_type, long int go
 		}
 	}
 	compact_type = NEW_lint(m * n);
-	Orbiter->Lint_vec->zero(compact_type, m * n);
+	Lint_vec_zero(compact_type, m * n);
 	row_labels = NEW_lint(m);
 	col_labels = NEW_lint(n);
 	m1 = 0;
@@ -487,7 +487,7 @@ void orbits_on_something::print_orbits_based_on_filtered_orbits(std::ostream &os
 				cout << "orbits_on_something::print_orbits_based_on_filtered_orbits l != len" << endl;
 				exit(1);
 			}
-			Orbiter->Lint_vec->print(cout, Orbit1, l);
+			Lint_vec_print(cout, Orbit1, l);
 			cout << endl;
 		}
 		FREE_lint(Orbit1);
@@ -503,7 +503,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length" << endl;
 	}
-	Classify_orbits_by_length = NEW_OBJECT(tally);
+	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
 	Classify_orbits_by_length->init(Sch->orbit_len, Sch->nb_orbits, FALSE, 0);
 
 	if (f_v) {
@@ -529,7 +529,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 		cout << "orbits_on_something::classify_orbits_by_length "
 				"after C->get_set_partition_and_types" << endl;
 		cout << "types: ";
-		Orbiter->Int_vec->print(cout, Orbits_classified_length,
+		Int_vec_print(cout, Orbits_classified_length,
 				Orbits_classified_nb_types);
 		cout << endl;
 		cout << "Orbits_classified:" << endl;
@@ -561,7 +561,7 @@ void orbits_on_something::report_classified_orbits_by_lengths(std::ostream &ost)
 {
 	int i, j;
 	long int a;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	for (i = 0; i < Orbits_classified->nb_sets; i++) {
 		ost << "Set " << i << " has size " << Orbits_classified->Set_size[i] << " : ";
@@ -716,7 +716,7 @@ void orbits_on_something::print_orbits_of_a_certain_length(int orbit_length)
 			Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
 
 			cout << i << " : ";
-			Orbiter->Lint_vec->print(cout, orbit, l);
+			Lint_vec_print(cout, orbit, l);
 			cout << endl;
 
 		}
@@ -787,7 +787,7 @@ void orbits_on_something::report_orbits_of_type(std::ostream &ost, int type_idx)
 		a = Orbits_classified->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit, len, 0 /* verbose_level*/);
 		ost << i << " : " << a << " : ";
-		Orbiter->Lint_vec->print(ost, orbit, len);
+		Lint_vec_print(ost, orbit, len);
 		ost << "\\\\" << endl;
 	}
 
@@ -827,7 +827,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	int l1, l2;
 	int t0, t1, dt;
 	int *point_color;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points_original = Orbits_classified->Set_size[type_idx];
@@ -965,7 +965,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 			a = filtered_set_of_orbits[i];
 			//a = Orbits_classified->Sets[type_idx][i];
 			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
-			Orbiter->Lint_vec->print(cout, orbit1, l1);
+			Lint_vec_print(cout, orbit1, l1);
 			if (i < filtered_set_of_orbits_size - 1) {
 				cout << ",";
 			}
@@ -1044,16 +1044,16 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering user_data before: ";
-			Orbiter->Lint_vec->print(cout, user_data, user_data_size);
+			Lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering" << endl;
 		}
 
-		Orbiter->Lint_vec->copy(user_data, my_user_data, user_data_size);
+		Lint_vec_copy(user_data, my_user_data, user_data_size);
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering user_data after: ";
-			Orbiter->Lint_vec->print(cout, my_user_data, user_data_size);
+			Lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
 
@@ -1063,7 +1063,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 
 
-	Orbiter->Lint_vec->copy(filtered_set_of_orbits, CG->points, filtered_set_of_orbits_size);
+	Lint_vec_copy(filtered_set_of_orbits, CG->points, filtered_set_of_orbits_size);
 	CG->fname_base.assign(fname);
 
 
@@ -1115,7 +1115,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	int l1, l2;
 	int t0, t1, dt;
 	int *point_color;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points = Orbits_classified->Set_size[type_idx];
@@ -1167,7 +1167,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		for (i = 0; i < nb_points; i++) {
 			a = Orbits_classified->Sets[type_idx][i];
 			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
-			Orbiter->Lint_vec->print(cout, orbit1, l1);
+			Lint_vec_print(cout, orbit1, l1);
 			if (i < nb_points - 1) {
 				cout << ",";
 			}
@@ -1245,7 +1245,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data before: ";
-			Orbiter->Lint_vec->print(cout, user_data, user_data_size);
+			Lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length" << endl;
 		}
@@ -1256,12 +1256,12 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 			my_user_data,
 			user_data_size);
 #else
-		Orbiter->Lint_vec->copy(user_data, my_user_data, user_data_size);
+		Lint_vec_copy(user_data, my_user_data, user_data_size);
 #endif
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data after: ";
-			Orbiter->Lint_vec->print(cout, my_user_data, user_data_size);
+			Lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
 
@@ -1271,7 +1271,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 
 
-	Orbiter->Lint_vec->copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
+	Lint_vec_copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
 	//sprintf(CG->fname_base, "%s", fname);
 	CG->fname_base.assign(fname);
 
@@ -1324,7 +1324,7 @@ void orbits_on_something::extract_orbits(
 			cout << "orbits_on_something::extract_orbits l != orbit_length" << endl;
 			exit(1);
 		}
-		Orbiter->Lint_vec->copy(orbit, extracted_set + i * orbit_length, orbit_length);
+		Lint_vec_copy(orbit, extracted_set + i * orbit_length, orbit_length);
 	}
 
 	FREE_lint(orbit);
@@ -1362,7 +1362,7 @@ void orbits_on_something::extract_orbits_using_classification(
 			cout << "orbits_on_something::extract_orbits_using_classification l != orbit_length" << endl;
 			exit(1);
 		}
-		Orbiter->Lint_vec->copy(orbit, extracted_set + i * orbit_length, orbit_length);
+		Lint_vec_copy(orbit, extracted_set + i * orbit_length, orbit_length);
 	}
 
 	FREE_lint(orbit);
@@ -1400,7 +1400,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	if (f_v) {
@@ -1499,16 +1499,16 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data before: ";
-			Orbiter->Lint_vec->print(cout, user_data, user_data_size);
+			Lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified" << endl;
 		}
 
-		Orbiter->Lint_vec->copy(user_data, my_user_data, user_data_size);
+		Lint_vec_copy(user_data, my_user_data, user_data_size);
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data after: ";
-			Orbiter->Lint_vec->print(cout, my_user_data, user_data_size);
+			Lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
 
@@ -1552,7 +1552,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	if (f_v) {
 		cout << "orbits_on_something::create_weighted_graph_on_orbits "
 				"orbit_lengths=";
-		Orbiter->Int_vec->print(cout, Orbit_lengths, nb_orbit_lengths);
+		Int_vec_print(cout, Orbit_lengths, nb_orbit_lengths);
 		cout << endl;
 	}
 	int nb_points_total;
@@ -1570,7 +1570,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int I, J, j0, fst, t;
 	int ol1, ol2;
 
@@ -1734,16 +1734,16 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 
 		if (f_v) {
 			cout << "orbits_on_something::create_weighted_graph_on_orbits user_data before: ";
-			Orbiter->Lint_vec->print(cout, user_data, user_data_size);
+			Lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_weighted_graph_on_orbits" << endl;
 		}
 
-		Orbiter->Lint_vec->copy(user_data, my_user_data, user_data_size);
+		Lint_vec_copy(user_data, my_user_data, user_data_size);
 
 		if (f_v) {
 			cout << "orbits_on_something::create_weighted_graph_on_orbits user_data after: ";
-			Orbiter->Lint_vec->print(cout, my_user_data, user_data_size);
+			Lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
 
@@ -1843,7 +1843,7 @@ void orbits_on_something::create_latex_report(int verbose_level)
 
 		{
 			ofstream ost(fname_tex);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -1869,7 +1869,7 @@ void orbits_on_something::create_latex_report(int verbose_level)
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname_tex << " of size "
 				<< Fio.file_size(fname_tex) << endl;
@@ -1908,7 +1908,7 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	ost << "Considering the orbit length, there are "
 			<< Orbits_classified_nb_types << " types of orbits:\\\\" << endl;
 	ost << "$$" << endl;
-	Orbiter->Int_vec->print(ost, Orbits_classified_length,
+	Int_vec_print(ost, Orbits_classified_length,
 			Orbits_classified_nb_types);
 	ost << "$$" << endl;
 	ost << "i : orbit length : number of orbits\\\\" << endl;
@@ -1985,7 +1985,7 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 			ost << "Orbit " << idx << ":" << endl;
 			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
 			//ost << "$$" << endl;
-			Orbiter->Lint_vec->print(ost, Orb, orbit_length);
+			Lint_vec_print(ost, Orb, orbit_length);
 			//ost << "$$" << endl;
 			ost << "\\\\" << endl;
 
@@ -2082,7 +2082,7 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 		Table[2 * i + 1] = Orbits_classified->Set_size[i];
 	}
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	ost << "$$" << endl;
 	L.print_lint_matrix_tex(ost,

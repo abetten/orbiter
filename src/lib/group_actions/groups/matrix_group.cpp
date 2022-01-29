@@ -1092,26 +1092,26 @@ void matrix_group::GL_zero(int *Elt)
 {
 	if (f_projective) {
 		if (f_semilinear) {
-			Orbiter->Int_vec->zero(Elt, n * n + 1);
+			Int_vec_zero(Elt, n * n + 1);
 		}
 		else {
-			Orbiter->Int_vec->zero(Elt, n * n);
+			Int_vec_zero(Elt, n * n);
 		}
 	}
 	else if (f_affine) {
 		if (f_semilinear) {
-			Orbiter->Int_vec->zero(Elt, n * n + n + 1);
+			Int_vec_zero(Elt, n * n + n + 1);
 		}
 		else {
-			Orbiter->Int_vec->zero(Elt, n * n + n);
+			Int_vec_zero(Elt, n * n + n);
 		}
 	}
 	if (f_general_linear) {
 		if (f_semilinear) {
-			Orbiter->Int_vec->zero(Elt, n * n + 1);
+			Int_vec_zero(Elt, n * n + 1);
 		}
 		else {
-			Orbiter->Int_vec->zero(Elt, n * n);
+			Int_vec_zero(Elt, n * n);
 		}
 	}
 	else {
@@ -1284,12 +1284,12 @@ void matrix_group::GL_mult_internal(
 
 void matrix_group::GL_copy(int *A, int *B)
 {
-	Orbiter->Int_vec->copy(A, B, elt_size_int);
+	Int_vec_copy(A, B, elt_size_int);
 }
 
 void matrix_group::GL_copy_internal(int *A, int *B)
 {
-	Orbiter->Int_vec->copy(A, B, elt_size_int_half);
+	Int_vec_copy(A, B, elt_size_int_half);
 }
 
 void matrix_group::GL_transpose(int *A, int *At, int verbose_level)
@@ -1512,7 +1512,7 @@ void matrix_group::GL_print_easy(int *Elt, ostream &ost)
 		ost << endl;
 	}
 	if (f_affine) {
-		Orbiter->Int_vec->print(ost, Elt + n * n, n);
+		Int_vec_print(ost, Elt + n * n, n);
 		if (f_semilinear) {
 			ost << ", " << Elt[n * n + n] << endl;
 		}
@@ -1526,9 +1526,9 @@ void matrix_group::GL_print_easy(int *Elt, ostream &ost)
 
 void matrix_group::GL_code_for_make_element(int *Elt, int *data)
 {
-	Orbiter->Int_vec->copy(Elt, data, n * n);
+	Int_vec_copy(Elt, data, n * n);
 	if (f_affine) {
-		Orbiter->Int_vec->copy(Elt + n * n, data + n * n, n);
+		Int_vec_copy(Elt + n * n, data + n * n, n);
 		if (f_semilinear) {
 			data[n * n + n] = Elt[n * n + n];
 		}
@@ -1551,7 +1551,7 @@ void matrix_group::GL_print_for_make_element(
 	int *D;
 	D = NEW_int(n * n);
 
-	Orbiter->Int_vec->copy(Elt, D, n * n);
+	Int_vec_copy(Elt, D, n * n);
 
 	if (f_projective) {
 		GFq->PG_element_normalize_from_front(D, 1, n * n);
@@ -1625,7 +1625,7 @@ void matrix_group::GL_print_easy_normalized(int *Elt, ostream &ost)
 	if (f_projective) {
 		int *D;
 		D = NEW_int(n * n);
-		Orbiter->Int_vec->copy(Elt, D, n * n);
+		Int_vec_copy(Elt, D, n * n);
 		GFq->PG_element_normalize_from_front(D, 1, n * n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
@@ -1643,7 +1643,7 @@ void matrix_group::GL_print_easy_normalized(int *Elt, ostream &ost)
 				ost << setw(w) << a << ", ";
 			}
 		}
-		Orbiter->Int_vec->print(ost, Elt + n * n, n);
+		Int_vec_print(ost, Elt + n * n, n);
 		if (f_semilinear) {
 			ost << ", " << Elt[n * n + n] << endl;
 		}
@@ -1676,7 +1676,7 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 	int *D;
 	D = NEW_int(n * n);
 
-	Orbiter->Int_vec->copy(Elt, D, n * n);
+	Int_vec_copy(Elt, D, n * n);
 	
 	if (f_projective) {
 		//GFq->PG_element_normalize_from_front(D, 1, n * n);
@@ -1779,12 +1779,12 @@ void matrix_group::GL_print_easy_latex_with_option_numerical(int *Elt, int f_num
 	D = NEW_int(n * n);
 
     if (f_projective) {
-		Orbiter->Int_vec->copy(Elt, D, n * n);
+		Int_vec_copy(Elt, D, n * n);
 		//GFq->PG_element_normalize_from_front(D, 1, n * n);
 		GFq->PG_element_normalize(D, 1, n * n);
     }
     else {
-    	Orbiter->Int_vec->copy(Elt, D, n * n);
+    	Int_vec_copy(Elt, D, n * n);
     }
 
 
@@ -1857,7 +1857,7 @@ void matrix_group::GL_print_easy_latex_with_option_numerical(int *Elt, int f_num
 		ost << "\\right]" << endl;
 	}
 	if (f_affine) {
-		Orbiter->Int_vec->print(ost, Elt + n * n, n);
+		Int_vec_print(ost, Elt + n * n, n);
 		if (f_semilinear) {
 			ost << "_{" << Elt[n * n + n] << "}" << endl;
 		}
@@ -2002,7 +2002,7 @@ void matrix_group::make_element(int *Elt,
 	}
 	if (f_vv) {
 		cout << "data: ";
-		Orbiter->Int_vec->print(cout, data, elt_size_int_half);
+		Int_vec_print(cout, data, elt_size_int_half);
 		cout << endl;
 	}
 	for (i = 0; i < elt_size_int_half; i++) {
@@ -2033,19 +2033,19 @@ void matrix_group::make_element(int *Elt,
 void matrix_group::make_GL_element(int *Elt, int *A, int f)
 {
 	if (f_projective) {
-		Orbiter->Int_vec->copy(A, Elt, n * n);
+		Int_vec_copy(A, Elt, n * n);
 		if (f_semilinear) {
 			Elt[n * n] = f % GFq->e;
 		}
 	}
 	else if (f_affine) {
-		Orbiter->Int_vec->copy(A, Elt, n * n + n);
+		Int_vec_copy(A, Elt, n * n + n);
 		if (f_semilinear) {
 			Elt[n * n + n] = f % GFq->e;
 		}
 	}
 	else if (f_general_linear) {
-		Orbiter->Int_vec->copy(A, Elt, n * n);
+		Int_vec_copy(A, Elt, n * n);
 		if (f_semilinear) {
 			Elt[n * n] = f % GFq->e;
 		}
@@ -2059,7 +2059,8 @@ void matrix_group::make_GL_element(int *Elt, int *A, int f)
 }
 
 void matrix_group::orthogonal_group_random_generator(
-		actions::action *A, orthogonal *O,
+		actions::action *A,
+		orthogonal_geometry::orthogonal *O,
 	int f_siegel, 
 	int f_reflection, 
 	int f_similarity,
@@ -2099,7 +2100,7 @@ void matrix_group::orthogonal_group_random_generator(
 		cout << "matrix_group::orthogonal_group_random_generator "
 				"after O->random_generator_for_orthogonal_group" << endl;
 		cout << "Mtx=" << endl;
-		Orbiter->Int_vec->matrix_print(Mtx, n, n);
+		Int_matrix_print(Mtx, n, n);
 	}
 	A->make_element(Elt, Mtx, verbose_level - 1);
 
@@ -2154,7 +2155,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 	}
 	if (f_v) {
 		cout << "The negative Identity matrix is:" << endl;
-		Orbiter->Int_vec->matrix_print(Id, n, n);
+		Int_matrix_print(Id, n, n);
 	}
 	cnt = 0;
 	rk = 0;
@@ -2176,18 +2177,18 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 		}
 		if (FALSE) {
 			cout << "testing matrix " << rk << " / " << goi << endl;
-			Orbiter->Int_vec->matrix_print(Elt1, n, n);
+			Int_matrix_print(Elt1, n, n);
 			S->path_unrank_lint(rk);
 			cout << "path ";
-			Orbiter->Int_vec->print(cout, S->path, S->A->base_len());
+			Int_vec_print(cout, S->path, S->A->base_len());
 			cout << endl;
 		}
 		for (i = 0; i < n; i++) {
-			Orbiter->Int_vec->copy(Elt1, Mtx1, (i + 1) * n);
+			Int_vec_copy(Elt1, Mtx1, (i + 1) * n);
 			GFq->Linear_algebra->add_vector(Id, Mtx1, Mtx2, (i + 1) * n);
 			if (FALSE) {
 				cout << "testing level " << i << " / " << n << ":" << endl;
-				Orbiter->Int_vec->matrix_print(Mtx2, (i + 1), n);
+				Int_matrix_print(Mtx2, (i + 1), n);
 			}
 			if (GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(Mtx2,
 					(i + 1), n, Mtx3, Mtx4, 0 /* verbose_level */) < i + 1) {
@@ -2211,7 +2212,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 			}
 			if (FALSE) {
 				cout << "moving on to path ";
-				Orbiter->Int_vec->print(cout, S->path, S->A->base_len());
+				Int_vec_print(cout, S->path, S->A->base_len());
 				cout << endl;
 			}
 			rk = S->path_rank_lint();
@@ -2233,7 +2234,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 								"cnt=" << cnt << endl;
 				S->path_unrank_lint(rk);
 				cout << "path ";
-				Orbiter->Int_vec->print(cout, S->path, S->A->base_len());
+				Int_vec_print(cout, S->path, S->A->base_len());
 				cout << " : ";
 				for (int t = 0; t < S->A->base_len(); t++) {
 					cout << S->get_orbit_length(t) << ", ";
@@ -2243,7 +2244,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 					cout << " select_value = " << select_value;
 				}
 				cout << endl;
-				Orbiter->Int_vec->matrix_print(Elt1, n, n);
+				Int_matrix_print(Elt1, n, n);
 			}
 			sol.push_back(rk);
 			rk++;

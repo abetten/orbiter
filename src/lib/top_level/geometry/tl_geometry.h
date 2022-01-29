@@ -644,7 +644,7 @@ public:
 	actions::action *A;
 
 
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 
 
 	int N; // = O->nb_points
@@ -672,19 +672,19 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);
-	void make_graphs(orbiter_data_file *ODF,
+	void make_graphs(orbiter_kernel_system::orbiter_data_file *ODF,
 			std::string &prefix,
 			int f_split, int split_r, int split_m,
 			int f_lexorder_test,
 			const char *fname_mask,
 			int verbose_level);
-	void make_one_graph(orbiter_data_file *ODF,
+	void make_one_graph(orbiter_kernel_system::orbiter_data_file *ODF,
 			std::string &prefix,
 			int orbit_idx,
 			int f_lexorder_test,
 			graph_theory::colored_graph *&CG,
 			int verbose_level);
-	void create_graph(orbiter_data_file *ODF,
+	void create_graph(orbiter_kernel_system::orbiter_data_file *ODF,
 		int orbit_idx,
 		long int *candidates, int nb_candidates,
 		graph_theory::colored_graph *&CG,
@@ -721,7 +721,7 @@ public:
 
 	
 	groups::matrix_group *Mtx; // only a copy of a pointer, not to be freed
-	orthogonal *O; // only a copy of a pointer, not to be freed
+	orthogonal_geometry::orthogonal *O; // only a copy of a pointer, not to be freed
 	field_theory::finite_field *F; // only a copy of a pointer, not to be freed
 
 	int *tmp_M; // [n * n]
@@ -751,7 +751,8 @@ public:
 	void init_group(int *group_generator_data, int group_generator_size, 
 		int f_group_order_target, const char *group_order_target, 
 		int verbose_level);
-	void init(actions::action *A, orthogonal *O,
+	void init(actions::action *A,
+			orthogonal_geometry::orthogonal *O,
 		int epsilon, int n, int k, field_theory::finite_field *F, int depth,
 		int verbose_level);
 	void init2(int depth, int verbose_level);

@@ -434,7 +434,7 @@ void interface_projective::do_create_spread(spreads::spread_create_description *
 
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "We have created the following spread set:" << endl;

@@ -106,7 +106,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	for (i = 0; i < A->degree; i++) {
 		F->PG_element_unrank_modified(v, 1, n + 1, i);
 		cout << "point " << i << " / " << A->degree << " is ";
-		Orbiter->Int_vec->print(cout, v, d);
+		Int_vec_print(cout, v, d);
 		cout << endl;
 	}
 
@@ -178,11 +178,11 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "arc_lifting_simeon::early_test_func checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 
@@ -191,7 +191,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 	type_collected = NEW_int(len + 2);
 
 	if (len == 0) {
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 		}
 	else {
@@ -271,7 +271,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 		}
 	cout << "We found " << nb_external_lines
 			<< " external lines, they are: ";
-	Orbiter->Lint_vec->print(cout, external_lines, nb_external_lines);
+	Lint_vec_print(cout, external_lines, nb_external_lines);
 	cout << endl;
 
 	cout << "compute bisecants and c2 points:" << endl;
@@ -292,7 +292,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 		exit(1);
 		}
 	cout << "We found " << nb_bisecants << " bisecants : ";
-	Orbiter->Int_vec->print(cout, bisecants, nb_bisecants);
+	Int_vec_print(cout, bisecants, nb_bisecants);
 	cout << endl;
 
 	c2_points = NEW_int(nb_c2points);
@@ -324,7 +324,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 			}
 		}
 	cout << "We found " << h << " c2-points: ";
-	Orbiter->Int_vec->print(cout, c2_points, h);
+	Int_vec_print(cout, c2_points, h);
 	cout << endl;
 
 	cout << "filtering the external lines:" << endl;
@@ -416,7 +416,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 		if ((i % 10000) == 0) {
 			cout << "testing orbit " << i << endl;
 			}
-		Orbiter->Int_vec->zero(covering_number, h);
+		Int_vec_zero(covering_number, h);
 		for (j = 0; j < h; j++) {
 			for (u = 0; u < target_depth; u++) {
 				a = SaS->data[u];
@@ -438,7 +438,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 			SaS->print_set_tex(cout);
 			cout << endl;
 			cout << "covering_number: ";
-			Orbiter->Int_vec->print(cout, covering_number, h);
+			Int_vec_print(cout, covering_number, h);
 			cout << endl;
 
 
@@ -447,7 +447,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 			// of external lines to get the arc:
 
 			sz = nb_external_lines;
-			Orbiter->Lint_vec->copy(external_lines, S, nb_external_lines);
+			Lint_vec_copy(external_lines, S, nb_external_lines);
 			Sorting.lint_vec_heapsort(S, nb_external_lines);
 
 
@@ -485,7 +485,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 	FREE_lint(S);
 
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "number of solutions = " << nb_sol << endl;
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -512,7 +512,7 @@ static void early_test_func_for_arc_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "early_test_func_for_arc_callback for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	Simeon->early_test_func(S, len,

@@ -111,7 +111,7 @@ int graph_classify_description::read_arguments(int argc, std::string *argv,
 			}
 			identify_data_sz = j;
 			cout << "-identify ";
-			Orbiter->Lint_vec->print(cout, identify_data, identify_data_sz);
+			Lint_vec_print(cout, identify_data, identify_data_sz);
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-depth") == 0) {
@@ -163,7 +163,7 @@ void graph_classify_description::print()
 	}
 	if (f_identify) {
 		cout << "-identify ";
-		Orbiter->Lint_vec->print(cout, identify_data, identify_data_sz);
+		Lint_vec_print(cout, identify_data, identify_data_sz);
 		cout << endl;
 	}
 	if (f_depth) {

@@ -286,7 +286,7 @@ ostream& longinteger_object::print(ostream& ost)
 			c = '0' + r[i];
 			ost << c;
 		}
-		if (Orbiter->longinteger_f_print_scientific) {
+		if (orbiter_kernel_system::Orbiter->longinteger_f_print_scientific) {
 			if (l > 5) {
 				char c1, c2;
 

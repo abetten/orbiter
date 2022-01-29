@@ -57,7 +57,7 @@ void int_vector::allocate_and_init(int len, long int *V)
 	M = NEW_lint(len);
 	m = len;
 	alloc_length = len;
-	Orbiter->Lint_vec->copy(V, M, len);
+	Lint_vec_copy(V, M, len);
 }
 
 void int_vector::allocate_and_init_int(int len, int *V)
@@ -90,7 +90,7 @@ void int_vector::read_ascii_file(std::string &fname)
 	int verbose_level = 0;
 	long int *the_set;
 	int set_size;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.read_set_from_file(fname, the_set, set_size, verbose_level);
 	allocate_and_init(set_size, the_set);
@@ -102,7 +102,7 @@ void int_vector::read_binary_file_int4(std::string &fname)
 	int verbose_level = 0;
 	long int *the_set;
 	int set_size;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.read_set_from_file_int4(fname, the_set, set_size, verbose_level);
 	allocate_and_init(set_size, the_set);
@@ -121,12 +121,12 @@ int &int_vector::length()
 
 void int_vector::print(ostream &ost)
 {
-	Orbiter->Lint_vec->print(ost, M, m);
+	Lint_vec_print(ost, M, m);
 }
 
 void int_vector::zero()
 {
-	Orbiter->Lint_vec->zero(M, m);
+	orbiter_kernel_system::Orbiter->Lint_vec->zero(M, m);
 }
 
 int int_vector::search(int a, int &idx)
@@ -155,7 +155,7 @@ void int_vector::make_space()
 		new_alloc_length = 1;
 		}
 	M1 = NEW_lint(new_alloc_length);
-	Orbiter->Lint_vec->copy(M, M1, m);
+	Lint_vec_copy(M, M1, m);
 	if (M) {
 		FREE_lint(M);
 		}
@@ -204,21 +204,21 @@ void int_vector::sort_and_remove_duplicates()
 
 void int_vector::write_to_ascii_file(std::string &fname)
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.write_set_to_file(fname, M, m, 0 /*verbose_level*/);
 }
 
 void int_vector::write_to_binary_file_int4(std::string &fname)
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.write_set_to_file_as_int4(fname, M, m, 0 /*verbose_level*/);
 }
 
 void int_vector::write_to_csv_file(std::string &fname, const char *label)
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.lint_vec_write_csv(M, m, fname, label);
 }
@@ -232,12 +232,12 @@ uint32_t int_vector::hash()
 
 int int_vector::minimum()
 {
-	return Orbiter->Lint_vec->minimum(M, m);
+	return orbiter_kernel_system::Orbiter->Lint_vec->minimum(M, m);
 }
 
 int int_vector::maximum()
 {
-	return Orbiter->Lint_vec->maximum(M, m);
+	return orbiter_kernel_system::Orbiter->Lint_vec->maximum(M, m);
 }
 
 

@@ -99,7 +99,7 @@ void surfaces_arc_lifting_definition_node::tally_f2(
 	for (i = 0; i < 45 * 72; i++) {
 		F2[i] = Seventytwo[i].f2;
 	}
-	tally_F2 = NEW_OBJECT(tally);
+	tally_F2 = NEW_OBJECT(data_structures::tally);
 	tally_F2->init(F2, 45 * 72, FALSE, 0);
 
 	f_has_F2 = TRUE;
@@ -111,7 +111,7 @@ void surfaces_arc_lifting_definition_node::tally_f2(
 void surfaces_arc_lifting_definition_node::report(int verbose_level)
 {
 	char fname_base[1000];
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	sprintf(fname_base, "clebsch_maps_surface_%d", orbit_idx);
 
@@ -143,7 +143,7 @@ void surfaces_arc_lifting_definition_node::report(int verbose_level)
 		L.foot(fp);
 
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_report << " of size " << Fio.file_size(fname_report.c_str()) << endl;
 

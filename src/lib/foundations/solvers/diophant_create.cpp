@@ -92,7 +92,7 @@ void diophant_create::init(
 
 		char str[1000];
 		string fname;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		sprintf(str, "max_arc_%d_%d_%d.diophant", Descr->input_q,
 				Descr->maximal_arc_sz, Descr->maximal_arc_d);
@@ -110,7 +110,7 @@ void diophant_create::init(
 		int sz;
 		int i, j;
 
-		Orbiter->Int_vec->scan(Descr->coefficient_matrix_text, A, sz);
+		Int_vec_scan(Descr->coefficient_matrix_text, A, sz);
 
 		D = NEW_OBJECT(diophant);
 		D->open(Descr->coefficient_matrix_m, Descr->coefficient_matrix_n);
@@ -127,7 +127,7 @@ void diophant_create::init(
 		FREE_int(A);
 	}
 	if (Descr->f_problem_of_Steiner_type) {
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int *Covering_matrix;
 		int nb_rows, nb_cols;
 		int i, j, h;
@@ -166,7 +166,7 @@ void diophant_create::init(
 	}
 
 	if (Descr->f_coefficient_matrix_csv) {
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int *A;
 		int m, n;
 		int i, j;
@@ -200,7 +200,7 @@ void diophant_create::init(
 			cout << "-RHS please specify the coefficient matrix first" << endl;
 			exit(1);
 		}
-		Orbiter->Int_vec->scan(Descr->RHS_text, RHS, sz);
+		Int_vec_scan(Descr->RHS_text, RHS, sz);
 		if (sz != 3 * D->m) {
 			cout << "number of values for RHS must be 3 times the number of rows of the system" << endl;
 			exit(1);
@@ -239,7 +239,7 @@ void diophant_create::init(
 		int *RHS;
 		int m, n;
 		int i;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		if (D == NULL) {
 			cout << "-RHS_csv please specify the coefficient matrix first" << endl;
@@ -295,7 +295,7 @@ void diophant_create::init(
 			cout << "-RHS_constant please specify the coefficient matrix first" << endl;
 			exit(1);
 		}
-		Orbiter->Int_vec->scan(Descr->RHS_constant_text, RHS, sz);
+		Int_vec_scan(Descr->RHS_constant_text, RHS, sz);
 		if (sz != 3) {
 			cout << "sz != 3" << endl;
 			exit(1);
@@ -364,7 +364,7 @@ void diophant_create::init(
 		int sz;
 		int j;
 
-		Orbiter->Int_vec->scan(Descr->x_bounds_text, x_bounds, sz);
+		Int_vec_scan(Descr->x_bounds_text, x_bounds, sz);
 		if (sz != 2 * D->n) {
 			cout << "sz != 2 * D->n" << endl;
 			exit(1);
@@ -380,7 +380,7 @@ void diophant_create::init(
 		int *x_bounds;
 		int m1, n1;
 		int j;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		if (D == NULL) {
 			cout << "-x_bounds_csv please specify the coefficient matrix first" << endl;
@@ -419,7 +419,7 @@ void diophant_create::init(
 
 
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	D->label.assign(Descr->label);

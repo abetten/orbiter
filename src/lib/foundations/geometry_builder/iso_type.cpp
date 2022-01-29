@@ -298,7 +298,7 @@ void iso_type::print_geos(int verbose_level)
 		}
 		cout << -1 << " " << Canonical_forms->B.size() << endl;
 
-		tally T;
+		data_structures::tally T;
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);
@@ -344,7 +344,7 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 		}
 		ost << -1 << " " << Canonical_forms->B.size() << endl;
 
-		tally T;
+		data_structures::tally T;
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);
@@ -402,7 +402,7 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 		}
 		ost << -1 << " " << Canonical_forms->B.size() << endl;
 
-		tally T;
+		data_structures::tally T;
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);
@@ -492,7 +492,7 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 		}
 		ost << -1 << " " << Canonical_forms->B.size() << endl;
 
-		tally T;
+		data_structures::tally T;
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);

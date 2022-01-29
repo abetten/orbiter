@@ -231,7 +231,7 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 		exit(1);
 	}
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
@@ -287,7 +287,7 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 		0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	Orbiter->Lint_vec->copy(Pts, CG->points, nb_points);
+	Lint_vec_copy(Pts, CG->points, nb_points);
 	FREE_int(A);	
 	FREE_int(Color);	
 	FREE_lint(Pts);
@@ -321,7 +321,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 		exit(1);
 	}
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
@@ -343,7 +343,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 	Pts = NEW_lint(l);
 	Color = NEW_int(l);
 
-	Orbiter->Int_vec->zero(A, l * l);
+	Int_vec_zero(A, l * l);
 
 	for (i = 0; i < l; i++) {
 		ii = f + i;
@@ -374,7 +374,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 		0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	Orbiter->Lint_vec->copy(Pts, CG->points, l);
+	Lint_vec_copy(Pts, CG->points, l);
 	FREE_int(A);
 	FREE_int(Color);
 	FREE_lint(Pts);
@@ -401,7 +401,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 		exit(1);
 	}
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
@@ -447,7 +447,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 	}
 
 	A = NEW_int(nb_pts * nb_pts);
-	Orbiter->Int_vec->zero(A, nb_pts * nb_pts);
+	Int_vec_zero(A, nb_pts * nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
 		ii = f + i;
@@ -475,7 +475,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 		0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	Orbiter->Lint_vec->copy(Pts, CG->points, nb_pts);
+	Lint_vec_copy(Pts, CG->points, nb_pts);
 	FREE_int(A);
 	FREE_int(Color);
 	FREE_lint(Pts);
@@ -502,7 +502,7 @@ void colored_graph::print()
 	cout << endl;
 #endif
 	
-	tally C;
+	data_structures::tally C;
 
 	C.init(point_color, nb_points, TRUE, 0);
 
@@ -654,7 +654,7 @@ void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_
 		Bitvec, f_ownership_of_bitvec,
 		label, label_tex,
 		verbose_level);
-	Orbiter->Lint_vec->copy(point_labels, points, nb_points);
+	Lint_vec_copy(point_labels, points, nb_points);
 	if (f_v) {
 		cout << "colored_graph::init_with_point_labels done" << endl;
 	}
@@ -697,10 +697,10 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	point_color = NEW_int(nb_points * nb_colors_per_vertex);
 
 	if (colors) {
-		Orbiter->Int_vec->copy(colors, point_color, nb_points * nb_colors_per_vertex);
+		Int_vec_copy(colors, point_color, nb_points * nb_colors_per_vertex);
 	}
 	else {
-		Orbiter->Int_vec->zero(point_color, nb_points * nb_colors_per_vertex);
+		Int_vec_zero(point_color, nb_points * nb_colors_per_vertex);
 	}
 	
 	colored_graph::f_ownership_of_bitvec = f_ownership_of_bitvec;
@@ -726,7 +726,7 @@ void colored_graph::init_no_colors(int nb_points,
 		cout << "nb_points=" << nb_points << endl;
 	}
 	vertex_colors = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(vertex_colors, nb_points);
+	Int_vec_zero(vertex_colors, nb_points);
 
 	init(nb_points, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 		vertex_colors, Bitvec, f_ownership_of_bitvec,
@@ -838,7 +838,7 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 		cout << "nb_points=" << nb_points << endl;
 	}
 	vertex_colors = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(vertex_colors, nb_points);
+	Int_vec_zero(vertex_colors, nb_points);
 
 	init_adjacency(nb_points,
 			1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
@@ -868,7 +868,7 @@ void colored_graph::init_adjacency_two_colors(int nb_points,
 	}
 
 	vertex_colors = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(vertex_colors, nb_points);
+	Int_vec_zero(vertex_colors, nb_points);
 	for (i = 0; i < sz; i++) {
 		a = subset[i];
 		vertex_colors[a] = 1;
@@ -896,7 +896,7 @@ void colored_graph::init_user_data(long int *data,
 	}
 	user_data_size = data_size;
 	user_data = NEW_lint(data_size);
-	Orbiter->Lint_vec->copy(data, user_data, data_size);
+	Lint_vec_copy(data, user_data, data_size);
 	if (f_v) {
 		cout << "colored_graph::init_user_data done" << endl;
 	}
@@ -927,7 +927,7 @@ void colored_graph::load(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	graph_theory_domain Graph;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
 	if (f_v) {
@@ -969,7 +969,7 @@ void colored_graph::draw_on_circle(
 		cout << "colored_graph::draw_on_circle" << endl;
 	}
 	string fname_full;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	fname_full.assign(fname);
 	fname_full.append(".mp");
@@ -1206,7 +1206,7 @@ void colored_graph::draw_Levi(
 			labels[i] = points[i];
 		}
 		cout << "colored_graph::draw_Levi label=";
-		Orbiter->Int_vec->print(cout, labels, m + n);
+		Int_vec_print(cout, labels, m + n);
 		cout << endl;
 	}
 	
@@ -1312,7 +1312,7 @@ void colored_graph::draw_partitioned(
 	}
 
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
@@ -1406,7 +1406,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 
 	// new user data = old user data plus the label of the point pt:
 	subgraph_user_data = NEW_lint(user_data_size + 1);
-	Orbiter->Lint_vec->copy(user_data, subgraph_user_data, user_data_size);
+	Lint_vec_copy(user_data, subgraph_user_data, user_data_size);
 	subgraph_user_data[user_data_size] = points[pt];
 
 	color_in_graph = NEW_int(nb_points * nb_colors_per_vertex);
@@ -1471,7 +1471,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 
 
 	// set the vertex labels:
-	Orbiter->Lint_vec->copy(point_labels, S->points, nb_points_subgraph);
+	Lint_vec_copy(point_labels, S->points, nb_points_subgraph);
 
 	S->init_user_data(subgraph_user_data, user_data_size + 1, verbose_level);
 
@@ -1524,7 +1524,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
 	if (f_v) {
 		cout << "colored_graph::compute_neighborhood_subgraph "
 				"of set ";
-		Orbiter->Lint_vec->print(cout, subset, subset_sz);
+		Lint_vec_print(cout, subset, subset_sz);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1538,8 +1538,8 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
 
 	// new user data = old user data plus the label of the point pt:
 	subgraph_user_data = NEW_lint(user_data_size + subset_sz);
-	Orbiter->Lint_vec->copy(user_data, subgraph_user_data, user_data_size);
-	Orbiter->Lint_vec->copy(subset, subgraph_user_data + user_data_size, subset_sz);
+	Lint_vec_copy(user_data, subgraph_user_data, user_data_size);
+	Lint_vec_copy(subset, subgraph_user_data + user_data_size, subset_sz);
 
 	color_in_graph = NEW_int(nb_points * nb_colors_per_vertex);
 	color_in_subgraph = NEW_int(nb_points * nb_colors_per_vertex);
@@ -1614,7 +1614,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
 
 
 	// set the vertex labels:
-	Orbiter->Lint_vec->copy(point_labels, S->points, nb_points_subgraph);
+	Lint_vec_copy(point_labels, S->points, nb_points_subgraph);
 
 	S->init_user_data(subgraph_user_data, user_data_size + subset_sz, verbose_level);
 
@@ -1760,7 +1760,7 @@ void colored_graph::export_to_magma(
 	int i, j;
 	int *neighbors;
 	int nb_neighbors;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_magma" << endl;
@@ -1820,7 +1820,7 @@ void colored_graph::export_to_maple(
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
 	int nb_edges;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_maple" << endl;
@@ -1886,7 +1886,7 @@ void colored_graph::export_to_file(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
@@ -1935,7 +1935,7 @@ void colored_graph::export_to_text(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_text" << endl;
@@ -1984,7 +1984,7 @@ void colored_graph::export_laplacian_to_file(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_laplacian_to_file" << endl;
@@ -2047,7 +2047,7 @@ void colored_graph::export_to_file_matlab(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file_matlab" << endl;
@@ -2096,14 +2096,14 @@ void colored_graph::export_to_csv(std::string &fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int *M;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_csv" << endl;
 	}
 
 	M = NEW_int(nb_points * nb_points);
-	Orbiter->Int_vec->zero(M, nb_points * nb_points);
+	Int_vec_zero(M, nb_points * nb_points);
 
 	for (i = 0; i < nb_points; i++) {
 		for (j = 0; j < nb_points; j++) {
@@ -2130,7 +2130,7 @@ void colored_graph::export_to_graphviz(std::string &fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int *M;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
 	if (f_v) {
@@ -2138,7 +2138,7 @@ void colored_graph::export_to_graphviz(std::string &fname, int verbose_level)
 	}
 
 	M = NEW_int(nb_points * nb_points);
-	Orbiter->Int_vec->zero(M, nb_points * nb_points);
+	Int_vec_zero(M, nb_points * nb_points);
 
 	for (i = 0; i < nb_points; i++) {
 		for (j = 0; j < nb_points; j++) {
@@ -2193,16 +2193,16 @@ void colored_graph::early_test_func_for_clique_search(
 
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_clique_search checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 	}
 
@@ -2232,16 +2232,16 @@ void colored_graph::early_test_func_for_coclique_search(
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_"
 				"coclique_search checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -2273,21 +2273,21 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_path_and_"
 				"cycle_search checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 	}
 
 	v = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(v, nb_points);
+	Int_vec_zero(v, nb_points);
 
 	//pt = S[len - 1];
 
@@ -2325,7 +2325,7 @@ int colored_graph::is_cycle(int nb_e, long int *edges,
 		cout << "colored_graph::is_cycle" << endl;
 	}
 	v = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(v, nb_points);
+	Int_vec_zero(v, nb_points);
 	
 	for (i = 0; i < nb_e; i++) {
 		a = edges[i];
@@ -2820,8 +2820,8 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 	int i;
 
 
-	Orbiter->Int_vec->scan(Control->weights_string, weights, nb_weights);
-	Orbiter->Int_vec->scan(Control->weights_bounds, bounds, nb_bounds);
+	Int_vec_scan(Control->weights_string, weights, nb_weights);
+	Int_vec_scan(Control->weights_bounds, bounds, nb_bounds);
 
 	if (nb_bounds != nb_weights) {
 		cout << "colored_graph::all_cliques_weighted_with_two_colors nb_bounds != nb_weights" << endl;
@@ -2843,7 +2843,7 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 	if (f_v) {
 		cout << "colored_graph::all_cliques_weighted_with_two_colors target_value = " << target_value << endl;
 		cout << "colored_graph::all_cliques_weighted_with_two_colors the weights are ";
-		Orbiter->Int_vec->print(cout, weights, nb_weights);
+		Int_vec_print(cout, weights, nb_weights);
 		cout << endl;
 	}
 
@@ -2887,7 +2887,7 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 		cout << "colored_graph::all_cliques_weighted_with_two_colors The solutions are:" << endl;
 		for (i = 0; i < nb_sol; i++) {
 			cout << i << " : ";
-			Orbiter->Int_vec->print(cout, Sol_weights + i * nb_weights, nb_weights);
+			Int_vec_print(cout, Sol_weights + i * nb_weights, nb_weights);
 			cout << endl;
 		}
 	}
@@ -3131,7 +3131,7 @@ void colored_graph::distance_2(int verbose_level)
 
 
 	M = NEW_int(nb_points * nb_points);
-	Orbiter->Int_vec->zero(M, nb_points * nb_points);
+	Int_vec_zero(M, nb_points * nb_points);
 
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
@@ -3195,7 +3195,7 @@ void colored_graph::properties(int verbose_level)
 	int i, j;
 
 	Degree = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(Degree, nb_points);
+	Int_vec_zero(Degree, nb_points);
 
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
@@ -3205,7 +3205,7 @@ void colored_graph::properties(int verbose_level)
 			}
 		}
 	}
-	tally T;
+	data_structures::tally T;
 
 	T.init(Degree, nb_points, FALSE, 0);
 	cout << "Degree type: ";
@@ -3234,7 +3234,7 @@ int colored_graph::test_distinguishing_property(long int *set, int sz,
 	N = 1 << sz;
 
 	neighbor_set = NEW_int(N);
-	Orbiter->Int_vec->zero(neighbor_set, N);
+	Int_vec_zero(neighbor_set, N);
 	for (i = 0; i < nb_points; i++) {
 		n = 0;
 		for (h = 0; h < sz; h++) {
@@ -3274,7 +3274,7 @@ void colored_graph::eigenvalues(double *&E, int verbose_level)
 	int i, j;
 
 	Adj = NEW_int(nb_points * nb_points);
-	Orbiter->Int_vec->zero(Adj, nb_points * nb_points);
+	Int_vec_zero(Adj, nb_points * nb_points);
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
 			if (is_adjacent(i, j)) {
@@ -3289,7 +3289,7 @@ void colored_graph::eigenvalues(double *&E, int verbose_level)
 
 	if (f_v) {
 		cout << "colored_graph::eigenvalue Adj=" << endl;
-		Orbiter->Int_vec->matrix_print(Adj, nb_points, nb_points);
+		Int_matrix_print(Adj, nb_points, nb_points);
 	}
 
 	orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
@@ -3317,8 +3317,8 @@ void colored_graph::Laplace_eigenvalues(double *&E, int verbose_level)
 
 	Adj = NEW_int(nb_points * nb_points);
 	D = NEW_int(nb_points);
-	Orbiter->Int_vec->zero(Adj, nb_points * nb_points);
-	Orbiter->Int_vec->zero(D, nb_points);
+	Int_vec_zero(Adj, nb_points * nb_points);
+	Int_vec_zero(D, nb_points);
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
 			if (is_adjacent(i, j)) {
@@ -3335,7 +3335,7 @@ void colored_graph::Laplace_eigenvalues(double *&E, int verbose_level)
 
 	if (f_v) {
 		cout << "colored_graph::Laplace_eigenvalue Adj=" << endl;
-		Orbiter->Int_vec->matrix_print(Adj, nb_points, nb_points);
+		Int_matrix_print(Adj, nb_points, nb_points);
 	}
 
 	E = new double[nb_points];
@@ -3365,7 +3365,7 @@ void call_back_clique_found_using_file_output(
 
 	//cout << "call_back_clique_found_using_file_output" << endl;
 	
-	file_output *FO = (file_output *) CF->call_back_clique_found_data1;
+	orbiter_kernel_system::file_output *FO = (orbiter_kernel_system::file_output *) CF->call_back_clique_found_data1;
 	colored_graph *CG = (colored_graph *) CF->call_back_clique_found_data2;
 	//clique_finder *CF = (clique_finder *) FO->user_data;
 

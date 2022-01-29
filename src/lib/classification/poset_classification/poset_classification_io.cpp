@@ -215,7 +215,7 @@ void poset_classification::print_problem_label()
 void poset_classification::print_level_info(int prev_level, int prev)
 {
 	int t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t1 = Os.os_ticks();
 	//cout << "poset_classification::print_level_info t0=" << t0 << endl;
@@ -319,8 +319,8 @@ void poset_classification::read_data_file(int &depth_completed,
 	int f_v = TRUE; //(verbose_level >= 1);
 	long int size;
 	int nb_group_elements;
-	memory_object *m;
-	file_io Fio;
+	orbiter_kernel_system::memory_object *m;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -345,7 +345,7 @@ void poset_classification::read_data_file(int &depth_completed,
 				"before m->alloc" << endl;
 	}
 
-	m = NEW_OBJECT(memory_object);
+	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
 	m->alloc(size, 0);
 
 	if (f_v) {
@@ -396,13 +396,13 @@ void poset_classification::read_data_file(int &depth_completed,
 void poset_classification::write_data_file(int depth_completed,
 		std::string &fname_base, int verbose_level)
 {
-	memory_object *m;
+	orbiter_kernel_system::memory_object *m;
 	int f_v = TRUE; //(verbose_level >= 1);
 	string fname;
 	int nb_group_elements;
 	long int size0;
 	int verbose_level1;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	prepare_fname_data_file(fname, fname_base, depth_completed);
 	//sprintf(fname, "%s_%d.data", fname_base, depth_completed);
@@ -430,7 +430,7 @@ void poset_classification::write_data_file(int depth_completed,
 		verbose_level1 = 2;
 	}
 
-	m = NEW_OBJECT(memory_object);
+	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
 	//m->alloc(10, 0);
 	m->alloc(size0, 0);
 	m->used_length = 0;
@@ -487,7 +487,7 @@ void poset_classification::write_file(
 		ofstream &fp,
 		int depth_completed, int verbose_level)
 {
-	memory_object *m;
+	orbiter_kernel_system::memory_object *m;
 	int f_v = (verbose_level >= 1);
 	long int size0;
 	int nb_group_elements = 0;
@@ -508,7 +508,7 @@ void poset_classification::write_file(
 		cout << "the size is very big (> 1 GB)" << endl;
 	}
 
-	m = NEW_OBJECT(memory_object);
+	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
 	m->alloc(10, 0);
 	//m->alloc(size0, 0);
 	m->used_length = 0;
@@ -567,7 +567,7 @@ void poset_classification::read_file(
 		ifstream &fp,
 		int &depth_completed, int verbose_level)
 {
-	memory_object *m;
+	orbiter_kernel_system::memory_object *m;
 	int f_v = (verbose_level >= 1);
 	long int size;
 	int nb_group_elements;
@@ -585,7 +585,7 @@ void poset_classification::read_file(
 				"size = " << size << endl;
 	}
 
-	m = NEW_OBJECT(memory_object);
+	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
 
 	m->alloc(size, 0);
 	m->used_length = 0;
@@ -915,7 +915,7 @@ int poset_classification::test_sv_level_file_binary(
 		int level, std::string &fname_base)
 {
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	create_fname_sv_level_file_binary(fname, fname_base, level);
 	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
@@ -935,7 +935,7 @@ void poset_classification::read_sv_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	create_fname_sv_level_file_binary(fname, fname_base, level);
 	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
@@ -964,7 +964,7 @@ void poset_classification::write_sv_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	create_fname_sv_level_file_binary(fname, fname_base, level);
 	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
@@ -997,7 +997,7 @@ void poset_classification::read_level_file_binary(int level,
 	string fname;
 	char str[1000];
 	int nb_group_elements;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	fname.assign(fname_base);
 	sprintf(str, "_lvl_%d.data", level);
@@ -1031,7 +1031,7 @@ void poset_classification::write_level_file_binary(int level,
 	string fname;
 	char str[1000];
 	int nb_group_elements;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(fname_base);
 	sprintf(str, "_lvl_%d.data", level);
@@ -1261,7 +1261,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			strcpy(Text_node[first + i], str);
 
 			get_set_by_level(level, i, rep);
-			Orbiter->Lint_vec->print_to_str(str, rep, level);
+			Lint_vec_print_to_str(str, rep, level);
 			Text_orbit_reps[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_reps[first + i], str);
 			
@@ -1583,7 +1583,7 @@ void poset_classification::wedge_product_export_magma(
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {

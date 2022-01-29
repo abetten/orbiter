@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 create_file_description::create_file_description()
@@ -199,5 +200,6 @@ void create_file_description::print()
 }
 
 
-}}
+}}}
+
 

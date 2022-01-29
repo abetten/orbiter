@@ -692,7 +692,7 @@ void cryptography_domain::get_random_permutation(std::string &p)
 {
 	char digits[100];
 	int i, j, k, l;
-	os_interface OS;
+	orbiter_kernel_system::os_interface OS;
 
 	for (i = 0; i < 26; i++) {
 		digits[i] = 'a' + i;
@@ -726,7 +726,7 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 		}
 	f_reached = NEW_int(m);
 	orbit = NEW_int(m);
-	Orbiter->Int_vec->zero(f_reached, m);
+	Int_vec_zero(f_reached, m);
 	cnt = 0;
 	for (x0 = 0; x0 < m; x0++) {
 		if (f_reached[x0]) {
@@ -748,7 +748,7 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 			x = y;
 			}
 		cout << "orbit " << cnt << " of " << x0 << " has length " << len << " : ";
-		Orbiter->Int_vec->print(cout, orbit, len);
+		Int_vec_print(cout, orbit, len);
 		cout << endl;
 
 		make_2D_plot(orbit, len, cnt, m, a, c, verbose_level);
@@ -775,7 +775,7 @@ void cryptography_domain::make_2D_plot(
 	int h, x, y;
 
 	M = NEW_int(m * m);
-	Orbiter->Int_vec->zero(M, m * m);
+	Int_vec_zero(M, m * m);
 
 
 
@@ -786,7 +786,7 @@ void cryptography_domain::make_2D_plot(
 	}
 	char str[1000];
 	string fname;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	snprintf(str, 1000, "orbit_cnt%d_m%d_a%d_c%d.csv", cnt, m, a, c);
 	fname.assign(str);
@@ -827,7 +827,7 @@ void cryptography_domain::do_random(int random_nb, std::string &fname_csv, int v
 		R[i] = rand();
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.int_vec_write_csv(R, random_nb, fname_csv, "R");
 
@@ -928,10 +928,10 @@ void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
 	int Dx, Dy, Dz;
 	int msRx, msRy, msRz;
 	int m, k, plain;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	number_theory::number_theory_domain NT;
 
-	Orbiter->Int_vec->scan(pt_text, v, len);
+	Int_vec_scan(pt_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1234,7 +1234,7 @@ void cryptography_domain::do_EC_points(field_theory::finite_field *F, std::strin
 		int *M;
 
 		M = NEW_int(F->q * F->q);
-		Orbiter->Int_vec->zero(M, F->q * F->q);
+		Int_vec_zero(M, F->q * F->q);
 
 
 		for (i = 0; i < (int) Pts.size(); i++) {
@@ -1250,7 +1250,7 @@ void cryptography_domain::do_EC_points(field_theory::finite_field *F, std::strin
 			}
 		}
 		string fname;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		fname.assign(label);
 		fname.append("_points_xy.csv");
@@ -1265,7 +1265,7 @@ void cryptography_domain::do_EC_points(field_theory::finite_field *F, std::strin
 		int cnt = 0;
 
 		M = NEW_int((int) Pts.size() * 2);
-		Orbiter->Int_vec->zero(M, (int) Pts.size() * 2);
+		Int_vec_zero(M, (int) Pts.size() * 2);
 
 
 		for (i = 0; i < (int) Pts.size(); i++) {
@@ -1283,7 +1283,7 @@ void cryptography_domain::do_EC_points(field_theory::finite_field *F, std::strin
 			}
 		}
 		string fname;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		fname.assign(label);
 		fname.append("_points_xy_affine_pts.csv");
@@ -1332,7 +1332,7 @@ void cryptography_domain::do_EC_add(field_theory::finite_field *F,
 	}
 	vector<vector<int>> Pts;
 
-	Orbiter->Int_vec->scan(pt1_text, v, len);
+	Int_vec_scan(pt1_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1342,7 +1342,7 @@ void cryptography_domain::do_EC_add(field_theory::finite_field *F,
 	z1 = 1;
 	FREE_int(v);
 
-	Orbiter->Int_vec->scan(pt2_text, v, len);
+	Int_vec_scan(pt2_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1390,7 +1390,7 @@ void cryptography_domain::do_EC_cyclic_subgroup(field_theory::finite_field *F,
 	vector<vector<int>> Pts;
 	int order;
 
-	Orbiter->Int_vec->scan(pt_text, v, len);
+	Int_vec_scan(pt_text, v, len);
 	if (len != 2) {
 		cout << "cryptography_domain::do_EC_cyclic_subgroup "
 				"point should have just two coordinates" << endl;
@@ -1448,7 +1448,7 @@ void cryptography_domain::do_EC_multiple_of(field_theory::finite_field *F,
 		cout << "cryptography_domain::do_EC_multiple_of" << endl;
 	}
 
-	Orbiter->Int_vec->scan(pt_text, v, len);
+	Int_vec_scan(pt_text, v, len);
 	if (len != 2) {
 		cout << "cryptography_domain::do_EC_multiple_of "
 				"point should have just two coordinates" << endl;
@@ -1499,7 +1499,7 @@ void cryptography_domain::do_EC_discrete_log(field_theory::finite_field *F,
 		cout << "cryptography_domain::do_EC_discrete_log" << endl;
 	}
 
-	Orbiter->Int_vec->scan(base_pt_text, v, len);
+	Int_vec_scan(base_pt_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1510,7 +1510,7 @@ void cryptography_domain::do_EC_discrete_log(field_theory::finite_field *F,
 	FREE_int(v);
 
 
-	Orbiter->Int_vec->scan(pt_text, v, len);
+	Int_vec_scan(pt_text, v, len);
 	if (len == 2) {
 		x3 = v[0];
 		y3 = v[1];
@@ -1565,7 +1565,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(field_theory::finite_field 
 	}
 
 
-	Orbiter->Int_vec->scan(EC_bsgs_G, v, len);
+	Int_vec_scan(EC_bsgs_G, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1581,7 +1581,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(field_theory::finite_field 
 		cout << "cryptography_domain::do_EC_baby_step_giant_step n = " << n << endl;
 	}
 
-	Orbiter->Int_vec->scan(EC_bsgs_cipher_text, v, len);
+	Int_vec_scan(EC_bsgs_cipher_text, v, len);
 
 	int cipher_text_length = len >> 1;
 	int h, i;
@@ -1684,7 +1684,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	}
 
 
-	Orbiter->Int_vec->scan(EC_bsgs_A, v, len);
+	Int_vec_scan(EC_bsgs_A, v, len);
 	if (len != 2) {
 		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode "
 				"point should have just two coordinates" << endl;
@@ -1695,7 +1695,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	Az = 1;
 	FREE_int(v);
 
-	Orbiter->Int_vec->scan(EC_bsgs_keys, keys, nb_keys);
+	Int_vec_scan(EC_bsgs_keys, keys, nb_keys);
 
 
 	n = (int) sqrt((double) EC_bsgs_N) + 1;
@@ -1704,7 +1704,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode n = " << n << endl;
 	}
 
-	Orbiter->Int_vec->scan(EC_bsgs_cipher_text, v, len);
+	Int_vec_scan(EC_bsgs_cipher_text, v, len);
 
 	int cipher_text_length = len >> 1;
 	int h;
@@ -1836,10 +1836,10 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 	if (f_v) {
 		cout << "cryptography_domain::do_RSA RSA_d=" << RSA_d << " RSA_m=" << RSA_m << endl;
 	}
-	Orbiter->Lint_vec->scan(RSA_text, data, data_sz);
+	Lint_vec_scan(RSA_text, data, data_sz);
 	if (f_v) {
 		cout << "text: ";
-		Orbiter->Lint_vec->print(cout, data, data_sz);
+		Lint_vec_print(cout, data, data_sz);
 		cout << endl;
 	}
 
@@ -1915,9 +1915,9 @@ void cryptography_domain::NTRU_encrypt(int N, int p, field_theory::finite_field 
 	int *data_Msg;
 	int sz_H, sz_R, sz_Msg;
 
-	Orbiter->Int_vec->scan(H_coeffs, data_H, sz_H);
-	Orbiter->Int_vec->scan(R_coeffs, data_R, sz_R);
-	Orbiter->Int_vec->scan(Msg_coeffs, data_Msg, sz_Msg);
+	Int_vec_scan(H_coeffs, data_H, sz_H);
+	Int_vec_scan(R_coeffs, data_R, sz_R);
+	Int_vec_scan(Msg_coeffs, data_Msg, sz_Msg);
 
 	number_theory::number_theory_domain NT;
 
@@ -2038,7 +2038,7 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs,
 	int *data_A;
 	int sz_A;
 
-	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
+	Int_vec_scan(A_coeffs, data_A, sz_A);
 
 	number_theory::number_theory_domain NT;
 
@@ -2108,7 +2108,7 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs,
 	int *data_A;
 	int sz_A;
 
-	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
+	Int_vec_scan(A_coeffs, data_A, sz_A);
 
 	number_theory::number_theory_domain NT;
 
@@ -2159,7 +2159,7 @@ void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbo
 	ofstream f(fname);
 
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
@@ -2188,7 +2188,7 @@ void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbo
 	L.foot(f);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -2211,7 +2211,7 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 	ofstream f(fname);
 
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
@@ -2241,7 +2241,7 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 	L.foot(f);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -2264,7 +2264,7 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 	ofstream f(fname);
 
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
@@ -2303,7 +2303,7 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 	L.foot(f);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -2326,7 +2326,7 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 	ofstream f(fname);
 
 
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
@@ -2355,7 +2355,7 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 	L.foot(f);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -2380,7 +2380,7 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 		ofstream ost(fname);
 
 
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 
 		L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
@@ -2479,7 +2479,7 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 		L.foot(ost);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -2502,7 +2502,7 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 		ofstream f(fname);
 
 
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 
 		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
@@ -2577,7 +2577,7 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 		L.foot(f);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -2602,7 +2602,7 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 		ofstream f(fname);
 
 
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 
 
 		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
@@ -2646,7 +2646,7 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 		L.foot(f);
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -2893,7 +2893,7 @@ void cryptography_domain::do_sift_smooth(int sift_smooth_from,
 		cout << "do_sift_smooth" << endl;
 	}
 
-	Orbiter->Int_vec->scan(sift_smooth_factor_base, B, sz);
+	Int_vec_scan(sift_smooth_factor_base, B, sz);
 	Sorting.int_vec_heapsort(B, sz);
 
 	cnt = 0;
@@ -2931,7 +2931,7 @@ void cryptography_domain::do_discrete_log(long int y, long int a, long int p, in
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "do_discrete_log" << endl;
@@ -2973,7 +2973,7 @@ void cryptography_domain::do_primitive_root(long int p, int verbose_level)
 	number_theory::number_theory_domain NT;
 	long int a;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -2993,7 +2993,7 @@ void cryptography_domain::do_primitive_root_longinteger(ring_theory::longinteger
 	number_theory::number_theory_domain NT;
 	long int a;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -3015,7 +3015,7 @@ void cryptography_domain::do_smallest_primitive_root(long int p, int verbose_lev
 	number_theory::number_theory_domain NT;
 	long int a;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 	if (f_v) {
@@ -3043,8 +3043,8 @@ void cryptography_domain::do_smallest_primitive_root_interval(long int p_min, lo
 	long int a, p, i;
 	long int *T;
 	int t0, t1, dt;
-	os_interface Os;
-	file_io Fio;
+	orbiter_kernel_system::os_interface Os;
+	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
 	t0 = Os.os_ticks();
@@ -3103,8 +3103,8 @@ void cryptography_domain::do_number_of_primitive_roots_interval(long int p_min, 
 	long int a, p, i;
 	long int *T;
 	int t0, t1, dt;
-	os_interface Os;
-	file_io Fio;
+	orbiter_kernel_system::os_interface Os;
+	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
 	t0 = Os.os_ticks();
@@ -3162,7 +3162,7 @@ void cryptography_domain::do_inverse_mod(long int a, long int n, int verbose_lev
 	number_theory::number_theory_domain NT;
 	long int b;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -3204,7 +3204,7 @@ void cryptography_domain::do_power_mod(ring_theory::longinteger_object &a,
 	//number_theory_domain NT;
 	ring_theory::longinteger_object b;
 	int t0, t1, dt;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 

@@ -34,7 +34,7 @@ void poset_classification::generate_source_code(
 	int nb_iso;
 	long int *set;
 	ring_theory::longinteger_object go;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::generate_source_code" << endl;
@@ -188,7 +188,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 	long int *set;
 	int *Elt;
 	ring_theory::longinteger_object go;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::generate_history" << endl;

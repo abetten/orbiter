@@ -34,8 +34,8 @@ void the_end(int t0)
 {
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	file_io Fio;
-	os_interface Os;
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		 cout << "the_end" << endl;
@@ -50,7 +50,7 @@ void the_end(int t0)
 		 cout << "the_end after free_global_data" << endl;
 	}
 	if (f_v) {
-		if (Orbiter->f_memory_debug) {
+		if (orbiter_kernel_system::Orbiter->f_memory_debug) {
 			//registry_dump();
 			//registry_dump_sorted();
 			}
@@ -74,7 +74,7 @@ void the_end(int t0)
 
 void the_end_quietly(int t0)
 {
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	//cout << "discreta_global the_end_quietly: freeing global data" << endl;
 	free_global_data();

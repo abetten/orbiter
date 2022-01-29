@@ -130,7 +130,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int *v;
 		int m, n;
 
-		Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
 
 		LA.do_nullspace(F,
 				v, m, n,
@@ -146,7 +146,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int *v;
 		int m, n;
 
-		Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
 
 		LA.do_RREF(F,
 				v, m, n,
@@ -164,7 +164,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int *v;
 		int m, n;
 
-		Orbiter->get_matrix_from_label(Descr->weight_enumerator_input_matrix, v, m, n);
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->weight_enumerator_input_matrix, v, m, n);
 
 
 		Codes.do_weight_enumerator(F,
@@ -253,11 +253,11 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		if (F->q < 33) {
 			cout << "Vandermonde:" << endl;
-			Orbiter->Int_vec->matrix_print(W, F->q, F->q);
+			Int_matrix_print(W, F->q, F->q);
 			cout << "Vandermonde inverse:" << endl;
-			Orbiter->Int_vec->matrix_print(W_inv, F->q, F->q);
+			Int_matrix_print(W_inv, F->q, F->q);
 
-			latex_interface LI;
+			orbiter_kernel_system::latex_interface LI;
 
 			cout << "Vandermonde:" << endl;
 
@@ -391,11 +391,11 @@ void finite_field_activity::perform_activity(int verbose_level)
 		graphics::layered_graph_draw_options *O;
 
 
-		if (!Orbiter->f_draw_options) {
+		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
 			cout << "please use option -draw_options .. -end" << endl;
 			exit(1);
 		}
-		O = Orbiter->draw_options;
+		O = orbiter_kernel_system::Orbiter->draw_options;
 
 		Geo.do_cheat_sheet_PG(F, O, Descr->cheat_sheet_PG_n,
 				verbose_level);
@@ -499,7 +499,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		m = Descr->RREF_random_matrix_m;
 		n = Descr->RREF_random_matrix_n;
 
-		os_interface Os;
+		orbiter_kernel_system::os_interface Os;
 
 		A = NEW_int(m * n);
 		for (i = 0; i < m * n; i++) {
@@ -574,7 +574,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_parse_and_evaluate) {
 
-		expression_parser_domain ED;
+		expression_parser::expression_parser_domain ED;
 
 		ED.parse_and_evaluate(F,
 				Descr->parse_name_of_formula,
@@ -598,7 +598,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		Orbiter->get_vector_from_label(Descr->product_of_elements,
+		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->product_of_elements,
 				data, sz, verbose_level);
 		s = 1;
 		for (i = 0; i < sz; i++) {
@@ -621,7 +621,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		Orbiter->get_vector_from_label(Descr->sum_of_elements,
+		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->sum_of_elements,
 				data, sz, verbose_level);
 		s = 1;
 		for (i = 0; i < sz; i++) {
@@ -645,7 +645,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		Orbiter->get_vector_from_label(Descr->negate_elements,
+		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->negate_elements,
 				data, sz, verbose_level);
 		for (i = 0; i < sz; i++) {
 			a = data[i];
@@ -669,7 +669,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		Orbiter->get_vector_from_label(Descr->inverse_elements,
+		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->inverse_elements,
 				data, sz, verbose_level);
 		for (i = 0; i < sz; i++) {
 			a = data[i];
@@ -693,7 +693,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		Orbiter->get_vector_from_label(Descr->power_map_elements,
+		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->power_map_elements,
 				data, sz, verbose_level);
 
 		if (f_v) {
@@ -717,7 +717,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		cout << "before evaluate" << endl;
 
-		expression_parser_domain ED;
+		expression_parser::expression_parser_domain ED;
 
 		ED.evaluate(F,
 				Descr->evaluate_formula_label,
@@ -747,7 +747,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Nth->init(F, Descr->nth_roots_n, verbose_level);
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		{
 			char str[1000];
 			string fname;
@@ -769,7 +769,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				author[0] = 0;
 
 
-				latex_interface L;
+				orbiter_kernel_system::latex_interface L;
 
 				L.head(ost,
 						FALSE /* f_book*/,
@@ -853,7 +853,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		C->init(F, Descr->make_BCH_code_n,
 				Descr->make_BCH_code_d, verbose_level);
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 #if 0
 		{
 			char str[1000];
@@ -898,7 +898,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				author[0] = 0;
 
 
-				latex_interface L;
+				orbiter_kernel_system::latex_interface L;
 
 				L.head(ost,
 						FALSE /* f_book*/,

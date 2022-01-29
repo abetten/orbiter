@@ -155,7 +155,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 
 
-	tally C;
+	data_structures::tally C;
 	int f, j, a, b, idx;
 
 
@@ -166,7 +166,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	for (i = 0; i < nb_pts; i++) {
 		cout << i << " : " << Pts[i] << " : ";
 		F->PG_element_unrank_modified(v, 1, len, Pts[i]);
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 
@@ -241,7 +241,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 			Intersection_sets[j][i] = idx;
 		}
 
-		Orbiter->Lint_vec->print(cout, Intersection_sets[j], sz);
+		Lint_vec_print(cout, Intersection_sets[j], sz);
 		cout << endl;
 	}
 
@@ -261,7 +261,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		}
 	}
 	cout << "Adj" << endl;
-	Orbiter->Int_vec->matrix_print(Adj, nb_secants, nb_secants);
+	Int_matrix_print(Adj, nb_secants, nb_secants);
 
 
 	cout << "Computing the unitary group:" << endl;
@@ -383,8 +383,7 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
-	//int f_embedded = TRUE;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 
 	Control->f_depth = TRUE;
@@ -447,10 +446,10 @@ void hermitian_spreads_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::early_test_func checking set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
+		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
@@ -494,7 +493,7 @@ static void HS_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "HS_early_test_func for set ";
-		Orbiter->Lint_vec->print(cout, S, len);
+		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
 	HS->early_test_func(S, len,

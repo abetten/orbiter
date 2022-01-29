@@ -121,7 +121,7 @@ void orbit_of_sets::compute(int verbose_level)
 	Sets = NEW_plint(allocation_length);
 	Extra = NEW_int(allocation_length * 2);
 	Sets[0] = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, Sets[0], sz);
+	Lint_vec_copy(set, Sets[0], sz);
 	position_of_original_set = 0;
 	Sorting.lint_vec_heapsort(Sets[0], sz);
 
@@ -143,7 +143,7 @@ void orbit_of_sets::compute(int verbose_level)
 		if (f_vv) {
 			cout << "Q_len = " << Q_len << " : used_length="
 					<< used_length << " : ";
-			Orbiter->Lint_vec->print(cout, Q, Q_len);
+			Lint_vec_print(cout, Q, Q_len);
 			cout << endl;
 		}
 		cur = Q[0];
@@ -151,7 +151,7 @@ void orbit_of_sets::compute(int verbose_level)
 			Q[i - 1] = Q[i];
 		}
 		Q_len--;
-		Orbiter->Lint_vec->copy(Sets[cur], cur_set, sz);
+		Lint_vec_copy(Sets[cur], cur_set, sz);
 
 		for (j = 0; j < gens->len; j++) {
 			if (f_vv) {
@@ -201,7 +201,7 @@ void orbit_of_sets::compute(int verbose_level)
 						cout << "reallocate Extra" << endl;
 					}
 					Extra2 = NEW_int(al2 * 2);
-					Orbiter->Int_vec->copy(Extra, Extra2, allocation_length * 2);
+					Int_vec_copy(Extra, Extra2, allocation_length * 2);
 					FREE_int(Extra);
 					Extra = Extra2;
 
@@ -210,7 +210,7 @@ void orbit_of_sets::compute(int verbose_level)
 						cout << "reallocate Q2" << endl;
 					}
 					Q2 = NEW_lint(al2);
-					Orbiter->Lint_vec->copy(Q, Q2, Q_len);
+					Lint_vec_copy(Q, Q2, Q_len);
 					FREE_lint(Q);
 					Q = Q2;
 
@@ -222,7 +222,7 @@ void orbit_of_sets::compute(int verbose_level)
 				}
 
 				Sets[used_length] = NEW_lint(sz);
-				Orbiter->Lint_vec->copy(new_set, Sets[used_length], sz);
+				Lint_vec_copy(new_set, Sets[used_length], sz);
 				Extra[used_length * 2 + 0] = cur;
 				Extra[used_length * 2 + 1] = j;
 				used_length++;

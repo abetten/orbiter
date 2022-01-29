@@ -21,6 +21,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 #define MY_OWN_BUFSIZE 1000000
 
@@ -325,7 +326,7 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 					<< nb_candidates1 - nb_candidates2 << endl;
 		}
 
-		Orbiter->Lint_vec->copy(candidates2, candidates1, nb_candidates2);
+		Lint_vec_copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
 		FREE_lint(candidates2);
@@ -532,7 +533,7 @@ void file_io::read_solution_file(std::string &fname,
 					if (y[i] != 1) {
 						cout << "file_io::read_solution_file "
 								"Not a solution!" << endl;
-						Orbiter->Int_vec->print_fully(cout, y, nb_rows);
+						Int_vec_print_fully(cout, y, nb_rows);
 						cout << endl;
 						exit(1);
 					}
@@ -1673,7 +1674,7 @@ void file_io::read_column_and_parse(std::string &fname, std::string &col_label,
 
 			S.get_string(str, i + 1, idx);
 
-			Orbiter->Lint_vec->scan(str, set, sz);
+			Lint_vec_scan(str, set, sz);
 
 			SoS->Sets[i] = set;
 			SoS->Set_size[i] = sz;
@@ -2421,7 +2422,7 @@ void file_io::read_set_from_file(std::string &fname,
 		}
 		if (f_vv) {
 			cout << "file_io::read_set_from_file the set is:" << endl;
-			Orbiter->Lint_vec->print(cout, the_set, set_size);
+			Lint_vec_print(cout, the_set, set_size);
 			cout << endl;
 		}
 	}
@@ -2504,7 +2505,7 @@ void file_io::read_set_from_file_lint(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		Orbiter->Lint_vec->print(cout, the_set, set_size);
+		Lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2577,7 +2578,7 @@ void file_io::read_set_from_file_int4(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		Orbiter->Lint_vec->print(cout, the_set, set_size);
+		Lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2620,7 +2621,7 @@ void file_io::read_set_from_file_int8(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		Orbiter->Lint_vec->print(cout, the_set, set_size);
+		Lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2754,7 +2755,7 @@ void file_io::read_k_th_set_from_file(std::string &fname, int k,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		Orbiter->Int_vec->print(cout, the_set, set_size);
+		Int_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2884,7 +2885,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 				if (f_vv) {
 					cout << "read_incidence_matrix_from_inc_file: "
 							"found the following incidence matrix:" << endl;
-					Orbiter->Int_vec->print_integer_matrix_width(cout,
+					Int_vec_print_integer_matrix_width(cout,
 						M, m, n, n, 1);
 				}
 				break;
@@ -3281,7 +3282,7 @@ void file_io::read_numbers_from_file(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		Orbiter->Int_vec->print(cout, the_set, set_size);
+		Int_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -3348,7 +3349,7 @@ void file_io::read_ascii_set_of_sets_constant_size(
 			if (f_v) {
 				cout << "file_io::read_ascii_set_of_sets_constant_size "
 						"set " << nb_sets << " / " << N << " is ";
-				Orbiter->Int_vec->print(cout, Sets + nb_sets * set_size, set_size);
+				Int_vec_print(cout, Sets + nb_sets * set_size, set_size);
 				cout << endl;
 			}
 			nb_sets++;
@@ -3841,7 +3842,7 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 	int nb_rows;
 	data_structures::string_tools ST;
 
-	Orbiter->Int_vec->scan(rows_text, Rows, nb_rows);
+	Int_vec_scan(rows_text, Rows, nb_rows);
 
 	data_structures::spreadsheet S;
 
@@ -3941,7 +3942,7 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 	int nb_cols;
 	data_structures::string_tools ST;
 
-	Orbiter->Int_vec->scan(cols_text, Cols, nb_cols);
+	Int_vec_scan(cols_text, Cols, nb_cols);
 
 	data_structures::spreadsheet S;
 
@@ -4016,14 +4017,14 @@ void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
 	int nb_cols;
 	data_structures::string_tools ST;
 
-	Orbiter->Int_vec->scan(rows_text, Rows, nb_rows);
+	Int_vec_scan(rows_text, Rows, nb_rows);
 	cout << "Rows: ";
-	Orbiter->Int_vec->print(cout, Rows, nb_rows);
+	Int_vec_print(cout, Rows, nb_rows);
 	cout << endl;
 
-	Orbiter->Int_vec->scan(cols_text, Cols, nb_cols);
+	Int_vec_scan(cols_text, Cols, nb_cols);
 	cout << "Cols: ";
-	Orbiter->Int_vec->print(cout, Cols, nb_cols);
+	Int_vec_print(cout, Cols, nb_cols);
 	cout << endl;
 
 	data_structures::spreadsheet S;
@@ -4104,7 +4105,7 @@ void file_io::do_csv_file_extract_column_to_txt(
 			int sz;
 
 			S->get_string(entry, i, identifier_column);
-			Orbiter->Lint_vec->scan(entry, v, sz);
+			Lint_vec_scan(entry, v, sz);
 			ost << sz;
 			for (j = 0; j < sz; j++) {
 				ost << " " << v[j];
@@ -4419,7 +4420,7 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 
 	cout << "nb_solutions = " << nb_solutions << endl;
 
-	tally T;
+	data_structures::tally T;
 
 	T.init(Sol, nb_solutions * solution_size, TRUE, 0);
 	cout << "tally:" << endl;
@@ -4435,7 +4436,7 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 			Pts, nb_pts, multiplicity, verbose_level);
 
 	cout << "multiplicity " << multiplicity << " number of pts = " << nb_pts << endl;
-	Orbiter->Int_vec->print(cout, Pts, nb_pts);
+	Int_vec_print(cout, Pts, nb_pts);
 	cout << endl;
 
 
@@ -4578,7 +4579,7 @@ void file_io::save_cumulative_ago(std::vector<long int> &Cumulative_Ago,
 	}
 	lint_vec_write_csv(M, Cumulative_Ago.size(), ago_fname, "Ago");
 
-	tally T;
+	data_structures::tally T;
 
 	T.init_lint(M, Cumulative_Ago.size(), FALSE, 0);
 	if (f_v) {
@@ -4649,7 +4650,7 @@ void file_io::write_characteristic_matrix(std::string &fname,
 
 	T = NEW_int(nb_rows * nb_cols);
 
-	Orbiter->Int_vec->zero(T, nb_rows * nb_cols);
+	Int_vec_zero(T, nb_rows * nb_cols);
 	for (i = 0; i < nb_rows; i++) {
 		for (h = 0; h < data_sz; h++) {
 			j = data[i * data_sz + h];
@@ -4670,6 +4671,7 @@ void file_io::write_characteristic_matrix(std::string &fname,
 }
 
 
-}}
+}}}
+
 
 

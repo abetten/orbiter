@@ -171,7 +171,7 @@ void algorithms::solve_diophant(int *Inc,
 {
 	int f_v = (verbose_level >= 1);
 	solvers::diophant *Dio;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	if (f_v) {
@@ -212,7 +212,7 @@ void algorithms::solve_diophant(int *Inc,
 		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
 		if (FALSE /*f_v4*/) {
 			cout << "Solutions:" << endl;
-			Orbiter->Lint_vec->matrix_print(Solutions, nb_sol, nb_needed);
+			Lint_matrix_print(Solutions, nb_sol, nb_needed);
 		}
 	}
 	else {

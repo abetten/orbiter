@@ -89,7 +89,7 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 	}
 	else if (ST.stringcmp(argv[i], "-prepare_frames") == 0) {
 		f_prepare_frames = TRUE;
-		Prepare_frames = NEW_OBJECT(prepare_frames);
+		Prepare_frames = NEW_OBJECT(orbiter_kernel_system::prepare_frames);
 		i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 
 		if (f_v) {

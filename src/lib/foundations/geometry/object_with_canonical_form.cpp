@@ -75,20 +75,20 @@ void object_with_canonical_form::print(ostream &ost)
 	cout << "set_as_string: " << set_as_string << endl;
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
-		Orbiter->Lint_vec->print(ost, set, sz);
+		Lint_vec_print(ost, set, sz);
 		ost << endl;
 	}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": ";
-		Orbiter->Lint_vec->print(ost, set, sz);
+		Lint_vec_print(ost, set, sz);
 		ost << endl;
 	}
 	else if (type == t_PNL) {
 		ost << "set of points of size " << sz
 				<< " and a set of lines of size " << sz2 << ": ";
-		Orbiter->Lint_vec->print(ost, set, sz);
+		Lint_vec_print(ost, set, sz);
 		ost << ", ";
-		Orbiter->Lint_vec->print(ost, set2, sz2);
+		Lint_vec_print(ost, set2, sz2);
 		ost << endl;
 	}
 	else if (type == t_PAC) {
@@ -175,22 +175,22 @@ void object_with_canonical_form::print_tex(ostream &ost)
 {
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
-		Orbiter->Lint_vec->print(ost, set, sz);
+		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
 		P->print_set_of_points(ost, set, sz);
 	}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": ";
-		Orbiter->Lint_vec->print(ost, set, sz);
+		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 	}
 	else if (type == t_PNL) {
 		ost << "set of points of size " << sz << ": ";
-		Orbiter->Lint_vec->print(ost, set, sz);
+		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 		ost << "and a set of lines of size " << sz2 << ": ";
-		Orbiter->Lint_vec->print(ost, set2, sz2);
+		Lint_vec_print(ost, set2, sz2);
 		ost << "\\\\" << endl;
 	}
 	else if (type == t_PAC) {
@@ -202,7 +202,7 @@ void object_with_canonical_form::print_tex(ostream &ost)
 		ost << "incidence structure: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
-		Orbiter->Lint_vec->print(ost, set, sz);
+		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 #if 0
 		object_with_canonical_form::set = NEW_lint(data_sz);
@@ -221,7 +221,7 @@ void object_with_canonical_form::print_tex(ostream &ost)
 		int i;
 
 		for (i = 0; i < nb_designs; i++) {
-			Orbiter->Lint_vec->print(ost, set + i * design_sz, design_sz);
+			Lint_vec_print(ost, set + i * design_sz, design_sz);
 			ost << "\\\\" << endl;
 		}
 #if 0
@@ -272,7 +272,7 @@ void object_with_canonical_form::init_point_set(
 	//object_with_canonical_form::P = P;
 	type = t_PTS;
 	object_with_canonical_form::set = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, object_with_canonical_form::set, sz);
+	Lint_vec_copy(set, object_with_canonical_form::set, sz);
 	object_with_canonical_form::sz = sz;
 	if (f_v) {
 		cout << "object_with_canonical_form::init_point_set done" << endl;
@@ -291,7 +291,7 @@ void object_with_canonical_form::init_point_set_from_string(
 
 	type = t_PTS;
 
-	Orbiter->get_lint_vector_from_label(set_text, set, sz, verbose_level);
+	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(set_text, set, sz, verbose_level);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_point_set_from_string done" << endl;
@@ -311,7 +311,7 @@ void object_with_canonical_form::init_line_set(
 	//object_with_canonical_form::P = P;
 	type = t_LNS;
 	object_with_canonical_form::set = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, object_with_canonical_form::set, sz);
+	Lint_vec_copy(set, object_with_canonical_form::set, sz);
 	object_with_canonical_form::sz = sz;
 	if (f_v) {
 		cout << "object_with_canonical_form::init_line_set done" << endl;
@@ -330,7 +330,7 @@ void object_with_canonical_form::init_line_set_from_string(
 
 	type = t_LNS;
 
-	Orbiter->Lint_vec->scan(set_text, set, sz);
+	Lint_vec_scan(set_text, set, sz);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_line_set_from_string done" << endl;
@@ -351,11 +351,11 @@ void object_with_canonical_form::init_points_and_lines(
 	type = t_PNL;
 
 	object_with_canonical_form::set = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, object_with_canonical_form::set, sz);
+	Lint_vec_copy(set, object_with_canonical_form::set, sz);
 	object_with_canonical_form::sz = sz;
 
 	object_with_canonical_form::set2 = NEW_lint(sz2);
-	Orbiter->Lint_vec->copy(set2, object_with_canonical_form::set2, sz2);
+	Lint_vec_copy(set2, object_with_canonical_form::set2, sz2);
 	object_with_canonical_form::sz2 = sz2;
 
 	if (f_v) {
@@ -376,9 +376,9 @@ void object_with_canonical_form::init_points_and_lines_from_string(
 
 	type = t_PNL;
 
-	Orbiter->Lint_vec->scan(set_text, set, sz);
+	Lint_vec_scan(set_text, set, sz);
 
-	Orbiter->Lint_vec->scan(set2_text, set2, sz2);
+	Lint_vec_scan(set2_text, set2, sz2);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_points_and_lines_from_string done" << endl;
@@ -413,7 +413,7 @@ void object_with_canonical_form::init_packing_from_set(
 		0 /* verbose_level */);
 
 	for (i = 0; i < size_of_packing; i++) {
-		Orbiter->Lint_vec->copy(packing + i * size_of_spread,
+		Lint_vec_copy(packing + i * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 #if 0
@@ -449,7 +449,7 @@ void object_with_canonical_form::init_packing_from_string(
 
 
 
-	Orbiter->Lint_vec->scan(packing_text, packing, sz);
+	Lint_vec_scan(packing_text, packing, sz);
 
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
@@ -467,7 +467,7 @@ void object_with_canonical_form::init_packing_from_string(
 		0 /* verbose_level */);
 
 	for (i = 0; i < size_of_packing; i++) {
-		Orbiter->Lint_vec->copy(packing + i * size_of_spread,
+		Lint_vec_copy(packing + i * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 #if 0
@@ -541,7 +541,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = data[i];
-		Orbiter->Lint_vec->copy(Spread_table + a * size_of_spread,
+		Lint_vec_copy(Spread_table + a * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 	if (verbose_level >= 5) {
@@ -589,7 +589,7 @@ void object_with_canonical_form::init_incidence_geometry(
 	object_with_canonical_form::P = NULL;
 	type = t_INC;
 	object_with_canonical_form::set = NEW_lint(data_sz);
-	Orbiter->Lint_vec->copy(data, object_with_canonical_form::set, data_sz);
+	Lint_vec_copy(data, object_with_canonical_form::set, data_sz);
 	object_with_canonical_form::sz = data_sz;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = b;
@@ -643,7 +643,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 	long int *flags;
 	int data_sz;
 
-	Orbiter->Lint_vec->scan(data, flags, data_sz);
+	Lint_vec_scan(data, flags, data_sz);
 
 	if (nb_flags != data_sz) {
 		cout << "object_with_canonical_form::init_incidence_geometry_from_string nb_flags != data_sz" << endl;
@@ -651,7 +651,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 	object_with_canonical_form::P = NULL;
 	type = t_INC;
 	object_with_canonical_form::set = NEW_lint(data_sz);
-	Orbiter->Lint_vec->copy(flags, object_with_canonical_form::set, data_sz);
+	Lint_vec_copy(flags, object_with_canonical_form::set, data_sz);
 	object_with_canonical_form::sz = data_sz;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = b;
@@ -681,7 +681,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string_of_row_rank
 	int i, h, a;
 	combinatorics::combinatorics_domain Combi;
 
-	Orbiter->Lint_vec->scan(data, row_ranks, data_sz);
+	Lint_vec_scan(data, row_ranks, data_sz);
 
 	if (v != data_sz) {
 		cout << "object_with_canonical_form::init_incidence_geometry_from_string v != data_sz" << endl;
@@ -702,7 +702,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string_of_row_rank
 	object_with_canonical_form::P = NULL;
 	type = t_INC;
 	object_with_canonical_form::set = NEW_lint(nb_flags);
-	Orbiter->Lint_vec->copy(flags, object_with_canonical_form::set, nb_flags);
+	Lint_vec_copy(flags, object_with_canonical_form::set, nb_flags);
 	object_with_canonical_form::sz = nb_flags;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = b;
@@ -734,7 +734,7 @@ void object_with_canonical_form::init_large_set(
 	object_with_canonical_form::P = NULL;
 	type = t_LS;
 	object_with_canonical_form::set = NEW_lint(data_sz);
-	Orbiter->Lint_vec->copy(data, object_with_canonical_form::set, data_sz);
+	Lint_vec_copy(data, object_with_canonical_form::set, data_sz);
 	object_with_canonical_form::sz = data_sz;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = data_sz;
@@ -758,7 +758,7 @@ void object_with_canonical_form::init_large_set_from_string(
 
 	type = t_LS;
 
-	Orbiter->Lint_vec->scan(data_text, set, sz);
+	Lint_vec_scan(data_text, set, sz);
 
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = sz;
@@ -860,7 +860,7 @@ void object_with_canonical_form::encoding_size_point_set(
 	}
 
 
-	C = NEW_OBJECT(tally);
+	C = NEW_OBJECT(data_structures::tally);
 
 	C->init_lint(set, sz, TRUE, 0);
 	if (C->second_nb_types > 1) {
@@ -1087,11 +1087,11 @@ void object_with_canonical_form::encode_point_set(
 	int f_vvv = FALSE; // (verbose_level >= 3);
 	
 
-	C = NEW_OBJECT(tally);
+	C = NEW_OBJECT(data_structures::tally);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::encode_point_set set=";
-		Orbiter->Lint_vec->print(cout, set, sz);
+		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 	C->init_lint(set, sz, TRUE, 0);
@@ -1493,7 +1493,7 @@ void object_with_canonical_form::encode_incidence_geometry(
 
 
 	if (f_partition) {
-		Orbiter->Int_vec->copy(partition, Enc->partition, N);
+		Int_vec_copy(partition, Enc->partition, N);
 	}
 	else {
 		Enc->partition[nb_rows - 1] = 0;
@@ -1727,7 +1727,7 @@ void object_with_canonical_form::encode_object_points(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, encoding, sz);
+	Lint_vec_copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_lines(
@@ -1741,7 +1741,7 @@ void object_with_canonical_form::encode_object_lines(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, encoding, sz);
+	Lint_vec_copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_points_and_lines(
@@ -1755,7 +1755,7 @@ void object_with_canonical_form::encode_object_points_and_lines(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, encoding, sz);
+	Lint_vec_copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_packing(
@@ -1773,7 +1773,7 @@ void object_with_canonical_form::encode_object_packing(
 	encoding = NEW_lint(encoding_sz);
 	h = 0;
 	for (i = 0; i < SoS->nb_sets; i++) {
-		Orbiter->Lint_vec->copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
+		Lint_vec_copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
 		h += SoS->Set_size[i];
 	}
 	if (h != encoding_sz) {
@@ -1793,7 +1793,7 @@ void object_with_canonical_form::encode_object_incidence_geometry(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, encoding, sz);
+	Lint_vec_copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_large_set(
@@ -1806,7 +1806,7 @@ void object_with_canonical_form::encode_object_large_set(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec->copy(set, encoding, sz);
+	Lint_vec_copy(set, encoding, sz);
 }
 
 #if 0
@@ -1944,7 +1944,7 @@ void object_with_canonical_form::run_nauty(
 	}
 	int L;
 	combinatorics::combinatorics_domain Combi;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	nauty_interface Nau;
 	combinatorics::encoded_combinatorial_object *Enc;
 
@@ -1988,7 +1988,7 @@ void object_with_canonical_form::run_nauty(
 	}
 	int t0, t1, dt, tps;
 	double delta_t_in_sec;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
@@ -1999,7 +1999,7 @@ void object_with_canonical_form::run_nauty(
 		NO,
 		verbose_level - 3);
 
-	Orbiter->Int_vec->copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
+	Int_vec_copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -2096,7 +2096,7 @@ void object_with_canonical_form::canonical_labeling(
 
 	int t0, t1, dt;
 	double delta_t_in_sec;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 

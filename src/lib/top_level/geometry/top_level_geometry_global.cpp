@@ -121,7 +121,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		Sch2->get_orbit_in_order(Orb2, 0 /* orbit_idx */, verbose_level);
 
 		int *Inc;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname.assign(fname_base);
@@ -396,7 +396,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	set = NEW_int(PA->A_on_lines->degree);
 	for (i = 1; i < S2.ht; i++) {
 		sz = S2.cellSize[i];
-		Orbiter->Int_vec->copy(S2.pointList + S2.startCell[i], set, sz);
+		Int_vec_copy(S2.pointList + S2.startCell[i], set, sz);
 		for (j = 0; j < sz; j++) {
 			set[j] += PA->A->degree;
 		}
@@ -422,7 +422,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 		Sch2->get_orbit_in_order(Orb2, 0 /* orbit_idx */, verbose_level);
 
 		int *Inc;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname.assign(fname_base);

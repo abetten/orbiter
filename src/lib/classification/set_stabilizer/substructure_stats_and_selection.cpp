@@ -109,20 +109,20 @@ void substructure_stats_and_selection::init(
 
 
 
-	T = NEW_OBJECT(tally);
+	T = NEW_OBJECT(data_structures::tally);
 
 	T->init(orbit_frequencies, nb_orbits, FALSE, 0);
 
 
 	if (f_v) {
 		cout << "substructure_stats_and_selection::init Pts=";
-		Orbiter->Lint_vec->print(cout, Pts, nb_pts);
+		Lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		cout << "substructure_stats_and_selection::init orbit isotype=";
-		Orbiter->Int_vec->print(cout, isotype, nCk);
+		Int_vec_print(cout, isotype, nCk);
 		cout << endl;
 		cout << "substructure_stats_and_selection::init orbit frequencies=";
-		Orbiter->Int_vec->print(cout, orbit_frequencies, nb_orbits);
+		Int_vec_print(cout, orbit_frequencies, nb_orbits);
 		cout << endl;
 		cout << "substructure_stats_and_selection::init orbit frequency types=";
 		T->print_naked(FALSE /* f_backwards */);
@@ -148,7 +148,7 @@ void substructure_stats_and_selection::init(
 		l = T->type_len[i];
 		cout << types[i];
 		cout << " : ";
-		Orbiter->Lint_vec->print(cout, SoS->Sets[i], SoS->Set_size[i]);
+		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
 		cout << " : ";
 
 

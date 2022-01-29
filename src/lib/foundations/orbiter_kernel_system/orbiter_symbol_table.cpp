@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orbiter_kernel_system {
 
 
 
@@ -204,5 +205,6 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 
 
 
-}}
+}}}
+
 

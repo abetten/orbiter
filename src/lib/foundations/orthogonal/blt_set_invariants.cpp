@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace orthogonal_geometry {
 
 
 
@@ -96,7 +97,7 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	set_size = D->q + 1;
 	the_set_in_orthogonal = NEW_lint(set_size);
 	the_set_in_PG = NEW_lint(set_size);
-	Orbiter->Lint_vec->copy(the_set, the_set_in_orthogonal, set_size);
+	Lint_vec_copy(the_set, the_set_in_orthogonal, set_size);
 
 	for (i = 0; i < set_size; i++) {
 		D->O->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);
@@ -355,7 +356,7 @@ void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 		//f << "\\left[" << endl;
 		//f << "\\begin{array}{c}" << endl;
 		ost << "P_{" << i /*data[i]*/ << "}=";
-		Orbiter->Int_vec->print(ost, v5, 5);
+		Int_vec_print(ost, v5, 5);
 #if 0
 		for (u = 0; u < 5; u++) {
 			for (v = 0; v < n; v++) {
@@ -377,4 +378,5 @@ void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 
 
 
-}}
+}}}
+

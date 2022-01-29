@@ -35,7 +35,7 @@ public:
 		// [Iso->Reps->count * P->nb_iso_types_of_spreads]
 
 
-	tally_vector_data *Classify;
+	data_structures::tally_vector_data *Classify;
 
 
 	int *Dual_idx;
@@ -159,7 +159,8 @@ public:
 	void report_whole(isomorph *Iso, std::ostream &ost, int verbose_level);
 	void report_title_page(isomorph *Iso, std::ostream &ost, int verbose_level);
 	void report_packings_by_ago(isomorph *Iso, std::ostream &ost,
-		invariants_packing *inv, tally &C_ago, int verbose_level);
+		invariants_packing *inv,
+		data_structures::tally &C_ago, int verbose_level);
 	void report_isomorphism_type(isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
 	void report_packing_as_table(isomorph *Iso, std::ostream &ost,
@@ -205,7 +206,7 @@ public:
 	int *nb_pts_on_plane;
 	int nb_planes;
 
-	tally *C;
+	data_structures::tally *C;
 	int nb_blocks;
 	int *block_to_plane; // [nb_blocks]
 	int *plane_to_block; // [nb_planes]
@@ -659,7 +660,7 @@ public:
 		// reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j]
 
 	int nb_sets;
-	tally *Classify_spread_invariant_by_orbit_length;
+	data_structures::tally *Classify_spread_invariant_by_orbit_length;
 
 	regular_packing *Regular_packing;
 		// correspondence between regular spreads and external lines

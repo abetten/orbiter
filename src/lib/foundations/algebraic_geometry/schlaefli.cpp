@@ -359,10 +359,10 @@ void schlaefli::make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_le
 	Adj = NEW_int(nb_trihedral_pairs * nb_trihedral_pairs);
 	T = NEW_int(nb_trihedral_pairs * 9);
 	for (i = 0; i < nb_trihedral_pairs; i++) {
-		Orbiter->Int_vec->copy(Trihedral_pairs + i * 9, T + i * 9, 9);
+		Int_vec_copy(Trihedral_pairs + i * 9, T + i * 9, 9);
 		Sorting.int_vec_heapsort(T + i * 9, 9);
 	}
-	Orbiter->Int_vec->zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
+	Int_vec_zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
 	for (i = 0; i < nb_trihedral_pairs; i++) {
 		for (j = i + 1; j < nb_trihedral_pairs; j++) {
 			if (Sorting.int_vecs_are_disjoint(T + i * 9, 9, T + j * 9, 9)) {
@@ -402,7 +402,7 @@ void schlaefli::make_trihedral_pairs(int verbose_level)
 	int size_complement;
 	char label[1000];
 	combinatorics::combinatorics_domain Combi;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::make_trihedral_pairs" << endl;
@@ -498,7 +498,7 @@ void schlaefli::process_trihedral_pairs(int verbose_level)
 	int i, j, h, rk, a;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::process_trihedral_pairs" << endl;
@@ -543,7 +543,7 @@ void schlaefli::process_trihedral_pairs(int verbose_level)
 			FALSE /* f_tex */);
 	}
 
-	Classify_trihedral_pairs_row_values = NEW_OBJECT(tally);
+	Classify_trihedral_pairs_row_values = NEW_OBJECT(data_structures::tally);
 	Classify_trihedral_pairs_row_values->init(
 		Trihedral_pairs_row_sets, 120 * 3, FALSE, 0);
 
@@ -555,7 +555,7 @@ void schlaefli::process_trihedral_pairs(int verbose_level)
 			120 * 3 / 10, 10, FALSE /* f_tex */);
 	}
 
-	Classify_trihedral_pairs_col_values = NEW_OBJECT(tally);
+	Classify_trihedral_pairs_col_values = NEW_OBJECT(data_structures::tally);
 	Classify_trihedral_pairs_col_values->init(
 		Trihedral_pairs_col_sets,
 		120 * 3, FALSE, 0);
@@ -811,7 +811,7 @@ void schlaefli::init_Trihedral_to_Eckardt(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk;
 	int tritangent_plane[3];
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::init_Trihedral_to_Eckardt" << endl;
@@ -881,7 +881,7 @@ void schlaefli::init_collinear_Eckardt_triples(int verbose_level)
 	int subset[3];
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::init_collinear_Eckardt_triples" << endl;
@@ -905,7 +905,7 @@ void schlaefli::init_collinear_Eckardt_triples(int verbose_level)
 			FALSE /* f_tex */);
 	}
 
-	Classify_collinear_Eckardt_triples = NEW_OBJECT(tally);
+	Classify_collinear_Eckardt_triples = NEW_OBJECT(data_structures::tally);
 	Classify_collinear_Eckardt_triples->init(
 		collinear_Eckardt_triples_rank, nb_collinear_Eckardt_triples,
 		FALSE, 0);
@@ -991,7 +991,7 @@ void schlaefli::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 
 
 #if 1
-	tally C;
+	data_structures::tally C;
 
 	C.init(T_idx, nb_T, TRUE, 0);
 	cout << "The trihedral pairs come in these multiplicities: ";
@@ -1041,7 +1041,7 @@ void schlaefli::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 
 	cout << "Found " << nb_T << " special trihedral pairs:" << endl;
 	cout << "T_idx: ";
-	Orbiter->Int_vec->print(cout, T_idx, nb_T);
+	Int_vec_print(cout, T_idx, nb_T);
 	cout << endl;
 	for (i = 0; i < nb_T; i++) {
 		cout << i << " / " << nb_T << " T_{"
@@ -1186,7 +1186,7 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 	Half_double_six_to_double_six = NEW_int(72);
 	Half_double_six_to_double_six_row = NEW_int(72);
 
-	Orbiter->Lint_vec->copy(Double_six, Half_double_sixes, 36 * 12);
+	Lint_vec_copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
 			Sorting.lint_vec_heapsort(
@@ -1310,7 +1310,7 @@ void schlaefli::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 	v[1] = j;
 	v[2] = k;
 	cout << "schlaefli::ijk2lmn v=";
-	Orbiter->Int_vec->print(cout, v, 3);
+	Int_vec_print(cout, v, 3);
 	cout << endl;
 	Combi.set_complement_safe(v, 3, v + 3, size_complement, 6);
 	if (size_complement != 3) {
@@ -1714,7 +1714,7 @@ void schlaefli::init_adjacency_matrix_of_lines(int verbose_level)
 	}
 
 	adjacency_matrix_of_lines = NEW_int(27 * 27);
-	Orbiter->Int_vec->zero(adjacency_matrix_of_lines, 27 * 27);
+	Int_vec_zero(adjacency_matrix_of_lines, 27 * 27);
 
 	// the ai lines:
 	for (i = 0; i < 6; i++) {
@@ -1826,11 +1826,11 @@ void schlaefli::init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_
 	}
 
 	incidence_lines_vs_tritangent_planes = NEW_int(27 * 45);
-	Orbiter->Int_vec->zero(incidence_lines_vs_tritangent_planes, 27 * 45);
+	Int_vec_zero(incidence_lines_vs_tritangent_planes, 27 * 45);
 
 
 	Lines_in_tritangent_planes = NEW_lint(45 * 3);
-	Orbiter->Lint_vec->zero(Lines_in_tritangent_planes, 45 * 3);
+	orbiter_kernel_system::Orbiter->Lint_vec->zero(Lines_in_tritangent_planes, 45 * 3);
 
 	for (j = 0; j < nb_Eckardt_points; j++) {
 		eckardt_point *E;
@@ -1997,7 +1997,7 @@ void schlaefli::latex_table_of_trihedral_pairs(std::ostream &ost)
 
 void schlaefli::latex_triads(std::ostream &ost)
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int i, j, a;
 
 	cout << "schlaefli::latex_triads" << endl;
@@ -2029,7 +2029,7 @@ void schlaefli::latex_triads(std::ostream &ost)
 
 void schlaefli::print_trihedral_pairs(std::ostream &ost)
 {
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 	int i, j, a;
 
 	//ost << "\\clearpage" << endl;
@@ -2191,7 +2191,7 @@ void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 	//ost << "\\begin{multicols}{2}" << endl;
 	for (h = 0; h < 36; h++) {
 
-		Orbiter->Lint_vec->copy(Double_six + h * 12, D, 12);
+		Lint_vec_copy(Double_six + h * 12, D, 12);
 
 		ost << "$D_{" << h << "} = " << Double_six_label_tex[h] << endl;
 
@@ -2266,7 +2266,7 @@ void schlaefli::latex_half_double_six(std::ostream &ost, int idx)
 
 
 
-	Orbiter->Lint_vec->copy(Half_double_sixes + idx * 6, H, 6);
+	Lint_vec_copy(Half_double_sixes + idx * 6, H, 6);
 
 	ost << "H_{" << idx << "} = " << Half_double_six_label_tex[idx] << endl;
 

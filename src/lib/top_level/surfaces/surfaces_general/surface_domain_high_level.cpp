@@ -556,8 +556,8 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 	}
 
 
-	if (Orbiter->f_draw_options) {
-		Surf_arc->report(Orbiter->draw_options, verbose_level);
+	if (orbiter_kernel_system::Orbiter->f_draw_options) {
+		Surf_arc->report(orbiter_kernel_system::Orbiter->draw_options, verbose_level);
 	}
 	else {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
@@ -752,7 +752,7 @@ void surface_domain_high_level::do_six_arcs(
 	}
 #endif
 
-	tally C;
+	data_structures::tally C;
 
 	C.init(Nb_E, nb_orbits, FALSE, 0);
 
@@ -840,7 +840,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 
@@ -927,7 +927,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		cout << "Rep=" << Rep[orbit_idx] << endl;
 		F0->PG_element_unrank_modified_lint(coeff20, 1, 20, Rep[orbit_idx]);
 		cout << "coeff20=";
-		Orbiter->Int_vec->print(cout, coeff20, 20);
+		Int_vec_print(cout, coeff20, 20);
 		cout << endl;
 
 		surface_create_description *Descr;
@@ -974,7 +974,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 			cout << "$$" << endl;
 
 			cout << "$$" << endl;
-			Orbiter->Int_vec->print(cout, SC->SO->eqn, 20);
+			Int_vec_print(cout, SC->SO->eqn, 20);
 			cout << endl;
 			cout << "$$" << endl;
 		}
@@ -1126,7 +1126,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 
@@ -1199,7 +1199,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	}
 
 
-	tally T_S;
+	data_structures::tally T_S;
 
 	T_S.init_lint(Nb_singular_pts, nb_orbits, FALSE, 0);
 
@@ -1213,8 +1213,8 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		fname_report.assign(fname_csv);
 		ST.chop_off_extension(fname_report);
 		fname_report.append("_report.tex");
-		latex_interface L;
-		file_io Fio;
+		orbiter_kernel_system::latex_interface L;
+		orbiter_kernel_system::file_io Fio;
 
 		{
 			ofstream ost(fname_report);
@@ -1340,7 +1340,7 @@ void surface_domain_high_level::report_singular_surfaces(std::ostream &ost,
 		Selected_Nb_lines[h] = Data_S[h].Nb_lines;
 	}
 
-	tally T_L;
+	data_structures::tally T_L;
 
 	T_L.init_lint(Selected_Nb_lines, nb_S, FALSE, 0);
 
@@ -1412,7 +1412,7 @@ void surface_domain_high_level::report_non_singular_surfaces(std::ostream &ost,
 		cout << h << " : " << Data_NS[h].orbit_idx << " : " << Data_NS[h].Nb_lines << endl;
 	}
 
-	tally T_L;
+	data_structures::tally T_L;
 
 	T_L.init_lint(Selected_Nb_lines, nb_NS, FALSE, 0);
 
@@ -1435,7 +1435,8 @@ void surface_domain_high_level::report_non_singular_surfaces(std::ostream &ost,
 }
 
 void surface_domain_high_level::report_surfaces_by_lines(std::ostream &ost,
-		struct cubic_surface_data_set *Data, tally &T, int verbose_level)
+		struct cubic_surface_data_set *Data,
+		data_structures::tally &T, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1506,7 +1507,7 @@ struct table_surfaces_field_order {
 	int nb_total;
 	int *nb_E;
 
-	tally *T_nb_E;
+	data_structures::tally *T_nb_E;
 
 
 
@@ -1523,13 +1524,13 @@ void surface_domain_high_level::do_create_surface_reports(std::string &field_ord
 
 	knowledge_base K;
 	number_theory::number_theory_domain NT;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	int *Q;
 	int nb_q;
 
-	Orbiter->Int_vec->scan(field_orders_text, Q, nb_q);
+	Int_vec_scan(field_orders_text, Q, nb_q);
 
 	int q;
 	int cur;
@@ -1584,7 +1585,7 @@ void surface_domain_high_level::do_create_surface_reports(std::string &field_ord
 				sprintf(str, "%d ", q);
 				sprintf(str_ocn, "%d ", ocn);
 
-			cmd.assign(Orbiter->orbiter_path);
+			cmd.assign(orbiter_kernel_system::Orbiter->orbiter_path);
 			cmd.append("/orbiter.out -v 3 ");
 			cmd.append("-define F -finite_field -q ");
 			cmd.append(str);
@@ -1648,7 +1649,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 	struct table_surfaces_field_order *T;
@@ -1768,7 +1769,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 			T[cur].nb_E[j] = K.cubic_surface_nb_Eckardt_points(T[cur].q, j);
 		}
 
-		T[cur].T_nb_E = NEW_OBJECT(tally);
+		T[cur].T_nb_E = NEW_OBJECT(data_structures::tally);
 
 		T[cur].T_nb_E->init(T[cur].nb_E, T[cur].nb_total, FALSE, 0);
 
@@ -1803,7 +1804,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 			const char *title = "ATLAS of Cubic Surfaces";
 			const char *author = "Anton Betten and Fatma Karaoglu";
 
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 				FALSE /* f_book */,
@@ -1920,7 +1921,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 			L.foot(ost);
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;
@@ -1956,7 +1957,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 
@@ -1981,7 +1982,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 
 			const char *author = "Anton Betten and Fatma Karaoglu";
 
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -2034,7 +2035,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 
 			L.foot(ost);
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report_tex << " of size "
 			<< Fio.file_size(fname_report_tex) << endl;
@@ -2053,7 +2054,7 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 		cout << "surface_domain_high_level::do_create_dickson_atlas verbose_level=" << verbose_level << endl;
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 
@@ -2072,7 +2073,7 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 			const char *title = "ATLAS of Dickson Surfaces";
 			const char *author = "Fatma Karaoglu";
 
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -2168,7 +2169,7 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 
 			L.foot(ost);
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;

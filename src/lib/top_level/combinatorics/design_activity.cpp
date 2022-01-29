@@ -170,19 +170,19 @@ void design_activity::do_extract_solutions_by_index(
 	int idx;
 	apps_algebra::any_group *AG;
 
-	idx = Orbiter->find_symbol(group_label);
+	idx = orbiter_kernel_system::Orbiter->find_symbol(group_label);
 
 	symbol_table_object_type t;
 
-	t = Orbiter->get_object_type(idx);
+	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 
 	if (t != t_any_group) {
 		cout << "object must be of type group, but is ";
-		Orbiter->print_type(t);
+		orbiter_kernel_system::Orbiter->print_type(t);
 		cout << endl;
 		exit(1);
 	}
-	AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 
 	Combi.load_design_table(DC,
@@ -198,9 +198,9 @@ void design_activity::do_extract_solutions_by_index(
 	int *prefix;
 	int prefix_sz;
 
-	Orbiter->Int_vec->scan(prefix_text, prefix, prefix_sz);
+	Int_vec_scan(prefix_text, prefix, prefix_sz);
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int *Sol_idx;
 	int nb_sol;
 	int sol_width;
@@ -297,19 +297,19 @@ void design_activity::do_create_table(
 	int idx;
 	apps_algebra::any_group *AG;
 
-	idx = Orbiter->find_symbol(group_label);
+	idx = orbiter_kernel_system::Orbiter->find_symbol(group_label);
 
 	symbol_table_object_type t;
 
-	t = Orbiter->get_object_type(idx);
+	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 
 	if (t != t_any_group) {
 		cout << "object must be of type group, but is ";
-		Orbiter->print_type(t);
+		orbiter_kernel_system::Orbiter->print_type(t);
 		cout << endl;
 		exit(1);
 	}
-	AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table before Combi.create_design_table" << endl;
@@ -352,19 +352,19 @@ void design_activity::do_load_table(
 	int idx;
 	apps_algebra::any_group *AG;
 
-	idx = Orbiter->find_symbol(group_label);
+	idx = orbiter_kernel_system::Orbiter->find_symbol(group_label);
 
 	symbol_table_object_type t;
 
-	t = Orbiter->get_object_type(idx);
+	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 
 	if (t != t_any_group) {
 		cout << "object must be of type group, but is ";
-		Orbiter->print_type(t);
+		orbiter_kernel_system::Orbiter->print_type(t);
 		cout << endl;
 		exit(1);
 	}
-	AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table before Combi.load_design_table" << endl;
@@ -523,7 +523,7 @@ void design_activity::do_export_inc(
 		ost << endl;
 		ost << "-1" << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -563,7 +563,7 @@ void design_activity::do_export_blocks(
 	int b = DC->sz;
 
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	Fio.lint_matrix_write_csv(fname, DC->set, 1, b);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -631,7 +631,7 @@ void design_activity::do_row_sums(
 		}
 	}
 
-	tally T;
+	data_structures::tally T;
 
 	T.init(R, v, FALSE, 0);
 	cout << "distribution of row sums: ";

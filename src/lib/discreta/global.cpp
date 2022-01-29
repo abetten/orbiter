@@ -46,7 +46,7 @@ void discreta_init()
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	char str[1000];
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	
 	discreta_home = getenv("DISCRETA_HOME");
 	if (discreta_home == NULL) {
@@ -1728,7 +1728,7 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 	
 	if (f_v) {
 		cout << "Gauss_int Gauss algorithm for matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix(cout, A, m, n);
+		Int_vec_print_integer_matrix(cout, A, m, n);
 		}
 	i = 0;
 	for (j = 0; j < n; j++) {
@@ -1824,10 +1824,10 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 		i++;
 		if (f_v) {
 			cout << "Gauss_int A=" << endl;
-			Orbiter->Int_vec->print_integer_matrix(cout, A, m, n);
+			Int_vec_print_integer_matrix(cout, A, m, n);
 			if (f_P) {
 				cout << "Gauss_int P=" << endl;
-				Orbiter->Int_vec->print_integer_matrix(cout, P, m, Pn);
+				Int_vec_print_integer_matrix(cout, P, m, Pn);
 				}
 			}
 		} // next j 
@@ -2042,7 +2042,7 @@ void fine_tune(field_theory::finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_v) {
 		cout << "fine_tune: tuning matrix:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				mtxD, 4, 4, 4, F->log10_of_q);
 		}
 
@@ -2068,7 +2068,7 @@ void fine_tune(field_theory::finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_vv) {
 		cout << "D^transpose * Gram * D = " << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				mtxF, 4, 4, 4, F->log10_of_q);
 		}
 
@@ -2118,7 +2118,7 @@ void fine_tune(field_theory::finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_vv) {
 		cout << "mtxG = s * mtxD:" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(cout,
 				mtxG, 4, 4, 4, F->log10_of_q);
 		}
 
@@ -2132,7 +2132,7 @@ void fine_tune(field_theory::finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_vv) {
 		cout << "G^transpose * Gram * G = " << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, mtxF, 4, 4, 4, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(cout, mtxF, 4, 4, 4, F->log10_of_q);
 		}
 
 	
@@ -2141,7 +2141,7 @@ void fine_tune(field_theory::finite_field *F, int *mtxD, int verbose_level)
 		}
 	if (f_v) {
 		cout << "fine_tune: the resulting matrix is" << endl;
-		Orbiter->Int_vec->print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
 		}
 
 

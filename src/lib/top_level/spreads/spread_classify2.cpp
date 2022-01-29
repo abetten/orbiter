@@ -61,11 +61,11 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 
 	//sprintf(fname_klein, "%s_%d_klein.tex", Iso->prefix, iso_cnt);
 	
-	int save_longinteger_f_print_scientific = Orbiter->longinteger_f_print_scientific;
-	Orbiter->longinteger_f_print_scientific = FALSE;
+	int save_longinteger_f_print_scientific = orbiter_kernel_system::Orbiter->longinteger_f_print_scientific;
+	orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = FALSE;
 	{
 		ofstream file(fname);
-		latex_interface L;
+		orbiter_kernel_system::latex_interface L;
 		//ofstream file_klein(fname_klein);
 		if (f_v) {
 			cout << "opening file " << fname << " for writing" << endl;
@@ -86,10 +86,10 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 	
 		L.foot(file);
 
-		Orbiter->longinteger_f_print_scientific = save_longinteger_f_print_scientific;
+		orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = save_longinteger_f_print_scientific;
 	}
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_classify::print_isomorphism_type written file "
@@ -142,7 +142,7 @@ void spread_classify::print_isomorphism_type2(isomorph *Iso,
 	
 	Stab->group_order(so);
 
-	tally C;
+	data_structures::tally C;
 
 
 	C.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
@@ -353,7 +353,7 @@ void spread_classify::klein(ostream &ost,
 		nb_planes, 
 		verbose_level);
 
-	tally C;
+	data_structures::tally C;
 	int f_second = FALSE;
 
 	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
@@ -563,7 +563,7 @@ void spread_classify::plane_intersection_type_of_klein_image(
 		data, size, the_set_out, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "after Klein correspondence:" << endl;
-		Orbiter->Lint_vec->print(cout, the_set_out, size);
+		Lint_vec_print(cout, the_set_out, size);
 		cout << endl;
 	}
 	if (f_v3) {
@@ -601,7 +601,7 @@ void spread_classify::czerwinski_oakden(int level, int verbose_level)
 	long int data[26];
 	int M[8];
 	int h, u, i, a = 0, b = 0, c = 0, d = 0;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 	int spreads[] = 	
 		{
 			// S1:
@@ -1236,13 +1236,13 @@ void spread_classify::czerwinski_oakden(int level, int verbose_level)
 							<< " c=" << c << " d=" << d << endl;
 					}
 				}
-			Orbiter->Int_vec->matrix_print(Grass->M, 2, 4);
+			Int_matrix_print(Grass->M, 2, 4);
 			data[u] = Grass->rank_lint(0);
 
 			} // next u
 
 		cout << "spread " << h << ":";
-		Orbiter->Lint_vec->print(cout, data, sz);
+		Lint_vec_print(cout, data, sz);
 		cout << endl;
 
 		fp << "0 "; // a dummy
@@ -1301,7 +1301,7 @@ void spread_classify::write_spread_to_file(int type_of_spread, int verbose_level
 
 	fname.assign(str);
 
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	data = NEW_lint(sz);
 	if (type_of_spread == SPREAD_OF_TYPE_DICKSON_KANTOR ||
@@ -1387,7 +1387,7 @@ void spread_classify::make_spread(long int *data,
 		}
 		if (f_vv) {
 			cout << "spread element " << h << ":" << endl;
-			Orbiter->Int_vec->matrix_print(Grass->M, 2, 4);
+			Int_matrix_print(Grass->M, 2, 4);
 		}
 		data[h] = Grass->rank_lint(0);
 	} // next h
@@ -1566,7 +1566,7 @@ void spread_classify::make_spread_from_q_clan(long int *data,
 		}
 		if (f_vv) {
 			cout << "spread element " << h << ":" << endl;
-			Orbiter->Int_vec->matrix_print(Grass->M, 2, 4);
+			Int_matrix_print(Grass->M, 2, 4);
 		}
 		data[h] = Grass->rank_lint(0);
 	}
@@ -1583,7 +1583,7 @@ void spread_classify::read_and_print_spread(std::string &fname, int verbose_leve
 {
 	long int *data;
 	int sz;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	Fio.read_set_from_file(fname, data, sz, verbose_level);
 	print_spread(cout, data, sz);
@@ -1599,7 +1599,7 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 	int *GG, *HH;
 	int alpha, beta, omega, x, y, tmp1, tmp2, f, z;
 	int M[8];
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (order != q * q) {
 		cout << "spread_classify::print_spread order != q * q" << endl;
@@ -1629,9 +1629,9 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 	}
 	cout << "spread::HMO after embedding" << endl;
 	cout << "Ge:" << endl;
-	Orbiter->Int_vec->matrix_print(Ge, q, q);
+	Int_matrix_print(Ge, q, q);
 	cout << "He:" << endl;
-	Orbiter->Int_vec->matrix_print(He, q, q);
+	Int_matrix_print(He, q, q);
 
 	GG = NEW_int(q2 * q2);
 	HH = NEW_int(q2 * q2);
@@ -1652,9 +1652,9 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 		}
 	}
 	cout << "GG:" << endl;
-	Orbiter->Int_vec->matrix_print(GG, q2, q2);
+	Int_matrix_print(GG, q2, q2);
 	cout << "HH:" << endl;
-	Orbiter->Int_vec->matrix_print(HH, q2, q2);
+	Int_matrix_print(HH, q2, q2);
 
 	geometry::grassmann *Gq2;
 	long int *Data2;
@@ -1692,7 +1692,7 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 			M[1 * 4 + 3] = HH[x * q2 + y];
 		}
 		cout << "element " << h << ":" << endl;
-		Orbiter->Int_vec->matrix_print(M, 2, 4);
+		Int_matrix_print(M, 2, 4);
 		for (i = 0; i < 8; i++) {
 			Gq2->M[i] = M[i];
 		}
@@ -1774,9 +1774,9 @@ void spread_classify::get_spread_matrices(int *G, int *H,
 	if (f_v) {
 		cout << "spread::get_FG_matrices" << endl;
 		cout << "G:" << endl;
-		Orbiter->Int_vec->matrix_print(G, q, q);
+		Int_matrix_print(G, q, q);
 		cout << "H:" << endl;
-		Orbiter->Int_vec->matrix_print(H, q, q);
+		Int_matrix_print(H, q, q);
 	}
 }
 
@@ -1788,7 +1788,7 @@ void spread_classify::print_spread(ostream &ost, long int *data, int sz)
 	for (h = 0; h < sz; h++) {
 		Grass->unrank_lint(data[h], 0);
 		ost << "Spread element " << h << ":" << endl;
-		Orbiter->Int_vec->matrix_print_ost(ost, Grass->M, k, n);
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print_ost(ost, Grass->M, k, n);
 	}
 }
 
@@ -1813,7 +1813,7 @@ void spread_classify::report2(isomorph &Iso, int verbose_level)
 	int f_12pt = FALSE;
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
-	latex_interface L;
+	orbiter_kernel_system::latex_interface L;
 
 	sprintf(title, "$%d$-Spreads of PG($%d,%d$)", k - 1, 2 * k - 1, q);
 	cout << "Writing file " << fname << " with "
@@ -1828,7 +1828,7 @@ void spread_classify::report2(isomorph &Iso, int verbose_level)
 	L.foot(f);
 
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -1893,7 +1893,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 	}
 
 
-	tally C_ago;
+	data_structures::tally C_ago;
 
 	C_ago.init(Ago_int, Iso.Reps->count, FALSE, 0);
 	cout << "Classification by ago:" << endl;
@@ -2092,7 +2092,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the subspaces\\\\" << endl;
 
-		tally C_ol;
+		data_structures::tally C_ol;
 
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 
@@ -2321,7 +2321,7 @@ void spread_classify::all_cooperstein_thas_quotients(
 
 		f << -1 << endl;
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -2357,7 +2357,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	ring_theory::longinteger_domain Dom;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 
 
@@ -2435,7 +2435,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 
 		Mtx->GFq->PG_element_unrank_modified(vec1, 1, n, the_point);
 		Mtx->GFq->PG_element_normalize_from_front(vec1, 1, n);
-		pivot = Orbiter->Int_vec->find_first_nonzero_entry(vec1, n);
+		pivot = orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(vec1, n);
 
 		for (i = 0; i < order + 1; i++) {
 			if (Sorting.lint_vec_search(Pts[i], nb_points, the_point, idx, 0)) {
@@ -2461,7 +2461,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 		for (i = 0; i < order; i++) {
 			a = data[List[i]];
 			Grass->unrank_lint_here(M, a, 0/*verbose_level - 4*/);
-			Orbiter->Int_vec->copy(vec1, vec2, n);
+			Int_vec_copy(vec1, vec2, n);
 			for (j = 0; j < k; j++) {
 				Mtx->GFq->Linear_algebra->Gauss_step(vec2, M + j * n, n, pivot,
 						0 /* verbose_level*/);
@@ -2474,13 +2474,13 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 			// delete column 'pivot' in the k x n matrix M.
 			// Afterwards, the matrix is k x (n - 1)
 
-			Orbiter->Int_vec->matrix_delete_column_in_place(M, k, n, pivot);
+			orbiter_kernel_system::Orbiter->Int_vec->matrix_delete_column_in_place(M, k, n, pivot);
 #endif
 
 			if (f_vv) {
 				cout << "spread_classify::cooperstein_thas_quotients the reduction "
 						"of the " << i << "-th matrix is:" << endl;
-				Orbiter->Int_vec->matrix_print(M, k, n - 1);
+				Int_matrix_print(M, k, n - 1);
 			}
 
 			b = Gr->rank_lint_here(M, 0/*verbose_level - 4*/);
@@ -2491,7 +2491,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 			cout << "spread_classify::cooperstein_thas_quotients The quotient "
 					"system with respect to orbit " << u << " / "
 					<< Orb.nb_orbits << " is:" << endl;
-			Orbiter->Lint_vec->print(cout, data2, order);
+			Lint_vec_print(cout, data2, order);
 			cout << endl;
 		}
 
@@ -2577,7 +2577,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 
 	ost << " & " << Orb.nb_orbits << " & ";
 
-	tally C_ol;
+	data_structures::tally C_ol;
 
 	C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 

@@ -151,7 +151,7 @@ void table_of_irreducible_polynomials::init(int k,
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
 				"k = " << k << " q = " << q << " Degree = ";
-		Orbiter->Int_vec->print(cout, Degree, nb_irred);
+		Int_vec_print(cout, Degree, nb_irred);
 		cout << endl;
 	}
 
@@ -200,7 +200,7 @@ void table_of_irreducible_polynomials::print(ostream &ost)
 				"degree " << d << ":" << endl;
 		for (i = 0; i < l; i++) {
 			ost << j << " : " << i << " : ";
-			Orbiter->Int_vec->print(ost, Tables[d] + i * (d + 1), d + 1);
+			Int_vec_print(ost, Tables[d] + i * (d + 1), d + 1);
 			ost << endl;
 			j++;
 		}
@@ -234,7 +234,7 @@ int table_of_irreducible_polynomials::select_polynomial_first(
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::select_polynomial_first" << endl;
 	}
-	Orbiter->Int_vec->zero(Select, nb_irred);
+	Int_vec_zero(Select, nb_irred);
 	for (i = nb_irred - 1; i >= 0; i--) {
 		d = Degree[i];
 		m = k1 / d;
@@ -375,7 +375,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 	}
 
 
-	Orbiter->Int_vec->zero(Mult, nb_irred);
+	Int_vec_zero(Mult, nb_irred);
 	for (i = 0; i < nb_irred; i++) {
 
 		d_poly = U.degree(Poly);
@@ -404,7 +404,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::factorize_polynomial "
 					"polynomial coefficients: ";
-			Orbiter->Int_vec->print(cout, Tables[d] + tt * (d + 1), d + 1);
+			Int_vec_print(cout, Tables[d] + tt * (d + 1), d + 1);
 			cout << endl;
 		}
 		if (f_v) {
@@ -467,7 +467,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::factorize_polynomial "
 				"factorization: ";
-		Orbiter->Int_vec->print(cout, Mult, nb_irred);
+		Int_vec_print(cout, Mult, nb_irred);
 		cout << endl;
 		cout << "table_of_irreducible_polynomials::factorize_polynomial "
 				"remaining polynomial = ";

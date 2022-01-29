@@ -78,7 +78,7 @@ void isomorph_global::read_statistic_files(
 	{
 		isomorph Iso;
 		int f_use_database_for_starter = TRUE;
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 
 		if (f_v) {
@@ -123,7 +123,7 @@ void isomorph_global::read_statistic_files(
 				<< " starter cases" << endl;
 
 		Stats = NEW_int(6 * Iso.nb_starter);
-		Orbiter->Int_vec->zero(Stats, 6 * Iso.nb_starter);
+		Int_vec_zero(Stats, 6 * Iso.nb_starter);
 		for (i = 0; i < Iso.nb_starter; i++) {
 			Stats[i * 6 + 0] = -1;
 			}
@@ -191,7 +191,7 @@ void isomorph_global::read_statistic_files(
 		h = 0;
 		for (i = 0; i < Iso.nb_starter; i++) {
 			if (Stats[i * 6 + 1]) {
-				Orbiter->Int_vec->copy(Stats + 6 * i, Stats_short + 6 * h, 6);
+				Int_vec_copy(Stats + 6 * i, Stats_short + 6 * h, 6);
 				Stats_short[h * 6 + 0] = i;
 				h++;
 				}
@@ -724,7 +724,7 @@ void isomorph_global::isomorph_testing(
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
 	int t0;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 
 	t0 = Os.os_ticks();
@@ -740,7 +740,7 @@ void isomorph_global::isomorph_testing(
 	{
 	isomorph Iso;
 	int f_use_database_for_starter = FALSE;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	
 	if (f_v) {
@@ -838,7 +838,7 @@ void isomorph_global::isomorph_testing(
 		if (FALSE) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			Orbiter->Lint_vec->print(cout, data1, Iso.size);
+			Lint_vec_print(cout, data1, Iso.size);
 			cout << endl;
 			}
 
@@ -965,7 +965,7 @@ void isomorph_global::identify(
 	{
 	isomorph Iso;
 	int f_use_database_for_starter = FALSE;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	
 	if (f_v) {
@@ -991,7 +991,7 @@ void isomorph_global::identify(
 		if (f_v) {
 			cout << "isomorph_global::identify read file " << fname[i] << endl;
 			cout << "the_set = ";
-			Orbiter->Lint_vec->print(cout, the_set, set_size);
+			Lint_vec_print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1102,13 +1102,13 @@ void isomorph_global::identify_table(
 
 	for (i = 0; i < nb_rows; i++) {
 	
-		Orbiter->Lint_vec->copy(Table + i * set_size, the_set, set_size);
+		Lint_vec_copy(Table + i * set_size, the_set, set_size);
 		
 		if (f_v) {
 			cout << "isomorph_global::identify_table "
 					"Identifying set no " << i << endl;
 			cout << "the_set = ";
-			Orbiter->Lint_vec->print(cout, the_set, set_size);
+			Lint_vec_print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1312,7 +1312,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		
 	if (f_vv) {
 		cout << "data after induced_action_on_set:" << endl;
-		Orbiter->Lint_vec->print(cout, data, Iso->size);
+		Lint_vec_print(cout, data, Iso->size);
 		cout << endl;
 		}
 		
@@ -1362,7 +1362,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 
 		if (f_vvv) {
 			cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
-			Orbiter->Lint_vec->matrix_print(orbit_reps, nb_orbits, Iso->level);
+			Lint_matrix_print(orbit_reps, nb_orbits, Iso->level);
 			}
 
 		if (f_vv) {
@@ -1389,7 +1389,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 				cout << "iso type " << orbit << " / " << Iso->Reps->count
 						<< " down_orbit " << u << " / "
 						<< nb_orbits << ":" << endl;
-				Orbiter->Lint_vec->print(cout, orbit_reps + u * Iso->level, Iso->level);
+				Lint_vec_print(cout, orbit_reps + u * Iso->level, Iso->level);
 				cout << endl;
 				}
 
@@ -1657,7 +1657,7 @@ static void callback_compute_down_orbits_worker(
 	int **Down_orbit_identify;
 	int *Down_identify;
 	int h, i, idx;
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "callback_compute_down_orbits_worker" << endl;

@@ -116,7 +116,7 @@ void create_graph::init(
 		int sz;
 		int nb_gens;
 
-		Orbiter->get_int_vector_from_label(description->Cayley_graph_gens,
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(description->Cayley_graph_gens,
 				v, sz, verbose_level);
 
 		nb_gens = sz / G->A_base->elt_size_in_int;
@@ -124,7 +124,7 @@ void create_graph::init(
 		cout << "number of generators = " << nb_gens << endl;
 
 		cout << "generators: ";
-		Orbiter->Int_vec->print(cout, v, sz);
+		Int_vec_print(cout, v, sz);
 		cout << endl;
 
 		data_structures_groups::vector_ge *gens;
@@ -151,7 +151,7 @@ void create_graph::init(
 		N = go.as_lint();
 
 		Adj = NEW_int(N * N);
-		Orbiter->Int_vec->zero(Adj, N * N);
+		Int_vec_zero(Adj, N * N);
 
 		for (i = 0; i < go.as_lint(); i++) {
 
@@ -206,7 +206,7 @@ void create_graph::init(
 			cout << "create_graph::init f_load_from_file_csv_no_border" << endl;
 		}
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int *M;
 		int m, n;
 
@@ -228,7 +228,7 @@ void create_graph::init(
 			cout << "create_graph::init f_load_from_file_dimacs" << endl;
 		}
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int nb_V;
 		int i, j, h;
 		std::vector<std::vector<int>> Edges;
@@ -250,7 +250,7 @@ void create_graph::init(
 			cout << "create_graph::init nb_E=" << Edges.size() << endl;
 		}
 		Adj = NEW_int(nb_V * nb_V);
-		Orbiter->Int_vec->zero(Adj, nb_V * nb_V);
+		Int_vec_zero(Adj, nb_V * nb_V);
 
 		for (h = 0; h < Edges.size(); h++) {
 			i = Edges[h][0];
@@ -279,13 +279,13 @@ void create_graph::init(
 		int *Idx;
 		int sz;
 
-		Orbiter->Int_vec->scan(description->edge_list_text, Idx, sz);
+		Int_vec_scan(description->edge_list_text, Idx, sz);
 
 		N = description->n;
 
 
 		Adj = NEW_int(N * N);
-		Orbiter->Int_vec->zero(Adj, N * N);
+		Int_vec_zero(Adj, N * N);
 		for (h = 0; h < sz; h++) {
 			a = Idx[h];
 			Combi.k2ij(a, i, j, N);
@@ -304,13 +304,13 @@ void create_graph::init(
 		int *Idx;
 		int sz, sz2;
 
-		Orbiter->Int_vec->scan(description->edges_as_pairs_text, Idx, sz);
+		Int_vec_scan(description->edges_as_pairs_text, Idx, sz);
 
 		N = description->n;
 
 
 		Adj = NEW_int(N * N);
-		Orbiter->Int_vec->zero(Adj, N * N);
+		Int_vec_zero(Adj, N * N);
 		sz2 = sz >> 1;
 		for (h = 0; h < sz2; h++) {
 			i = Idx[2 * h + 0];
@@ -335,7 +335,7 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init after create_Hamming" << endl;
+			cout << "create_graph::init after create_cycle" << endl;
 		}
 	}
 	else if (description->f_Hamming) {
@@ -547,19 +547,19 @@ void create_graph::init(
 		int idx;
 		apps_algebra::any_group *AG;
 
-		idx = Orbiter->find_symbol(description->orbital_graph_group);
+		idx = orbiter_kernel_system::Orbiter->find_symbol(description->orbital_graph_group);
 
 		symbol_table_object_type t;
 
-		t = Orbiter->get_object_type(idx);
+		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 
 		if (t != t_any_group) {
 			cout << "object must be of type group, but is ";
-			Orbiter->print_type(t);
+			orbiter_kernel_system::Orbiter->print_type(t);
 			cout << endl;
 			exit(1);
 		}
-		AG = (apps_algebra::any_group *) Orbiter->get_object(idx);
+		AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 
 
@@ -586,19 +586,19 @@ void create_graph::init(
 		int idx;
 		data_structures::vector_builder *VB;
 
-		idx = Orbiter->find_symbol(description->collinearity_graph_matrix);
+		idx = orbiter_kernel_system::Orbiter->find_symbol(description->collinearity_graph_matrix);
 
 		symbol_table_object_type t;
 
-		t = Orbiter->get_object_type(idx);
+		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 
 		if (t != t_vector) {
 			cout << "object must be of type vector, but is ";
-			Orbiter->print_type(t);
+			orbiter_kernel_system::Orbiter->print_type(t);
 			cout << endl;
 			exit(1);
 		}
-		VB = (data_structures::vector_builder *) Orbiter->get_object(idx);
+		VB = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 		make_collinearity_graph(N, Adj,
 				VB->v, VB->k, VB->len / VB->k,
@@ -616,29 +616,29 @@ void create_graph::init(
 		int idx2;
 		data_structures::vector_builder *VB2;
 
-		idx1 = Orbiter->find_symbol(description->chain_graph_partition_1);
-		idx2 = Orbiter->find_symbol(description->chain_graph_partition_2);
+		idx1 = orbiter_kernel_system::Orbiter->find_symbol(description->chain_graph_partition_1);
+		idx2 = orbiter_kernel_system::Orbiter->find_symbol(description->chain_graph_partition_2);
 
 		symbol_table_object_type t;
 
-		t = Orbiter->get_object_type(idx1);
+		t = orbiter_kernel_system::Orbiter->get_object_type(idx1);
 
 		if (t != t_vector) {
 			cout << "first partition must be of type vector, but is ";
-			Orbiter->print_type(t);
+			orbiter_kernel_system::Orbiter->print_type(t);
 			cout << endl;
 			exit(1);
 		}
-		t = Orbiter->get_object_type(idx2);
+		t = orbiter_kernel_system::Orbiter->get_object_type(idx2);
 
 		if (t != t_vector) {
 			cout << "second partition must be of type vector, but is ";
-			Orbiter->print_type(t);
+			orbiter_kernel_system::Orbiter->print_type(t);
 			cout << endl;
 			exit(1);
 		}
-		VB1 = (data_structures::vector_builder *) Orbiter->get_object(idx1);
-		VB2 = (data_structures::vector_builder *) Orbiter->get_object(idx2);
+		VB1 = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx1);
+		VB2 = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx2);
 
 		make_chain_graph(N, Adj,
 				VB1->v, VB1->len,
@@ -664,7 +664,7 @@ void create_graph::init(
 		int *subset;
 		int sz;
 
-		Orbiter->Int_vec->scan(description->subset_text, subset, sz);
+		Int_vec_scan(description->subset_text, subset, sz);
 
 		CG->init_adjacency_two_colors(N,
 				Adj, subset, sz,
@@ -954,7 +954,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	}
 	if (f_v) {
 		cout << "create_graph::create_Sarnak sqrt_mod_q:" << endl;
-		Orbiter->Int_vec->print(cout, sqrt_mod_q, q);
+		Int_vec_print(cout, sqrt_mod_q, q);
 		cout << endl;
 	}
 
@@ -1030,7 +1030,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	}
 
 	if (f_v) {
-		Orbiter->Int_vec->matrix_print(A4, nb_A4, 4);
+		Int_matrix_print(A4, nb_A4, 4);
 	}
 
 	data_structures_groups::vector_ge *gens;
@@ -1088,7 +1088,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 		if (f_vv) {
 			cout << "M4=";
-			Orbiter->Int_vec->print(cout, M4, 4);
+			Int_vec_print(cout, M4, 4);
 			cout << endl;
 		}
 
@@ -1531,7 +1531,7 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph set: ";
-		Orbiter->Lint_vec->print(cout, set, 2);
+		Lint_vec_print(cout, set, 2);
 		cout << endl;
 	}
 
@@ -1555,7 +1555,7 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 	nb_points = AG->A->degree;
 
 	M = NEW_int(nb_points * nb_points);
-	Orbiter->Int_vec->zero(M, nb_points * nb_points);
+	Int_vec_zero(M, nb_points * nb_points);
 	for (h = 0; h < Orb->used_length; h++) {
 		i = Orb->Sets[h][0];
 		j = Orb->Sets[h][1];
@@ -1599,7 +1599,7 @@ void create_graph::make_collinearity_graph(int &N, int *&Adj,
 
 	N = nb_rows;
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec->zero(Adj, N * N);
+	Int_vec_zero(Adj, N * N);
 
 	int j, i1, i2;
 
@@ -1663,7 +1663,7 @@ void create_graph::make_chain_graph(int &N, int *&Adj,
 	N = N1 + N2;
 
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec->zero(Adj, N * N);
+	Int_vec_zero(Adj, N * N);
 
 	int I, J, ii, jj;
 

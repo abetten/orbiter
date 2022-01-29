@@ -148,7 +148,7 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 		degree = Descr->list_of_blocks_v;
 		k = Descr->list_of_blocks_k;
-		Orbiter->Lint_vec->scan(Descr->list_of_blocks_text, set, sz);
+		Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
 		char str[1000];
 
@@ -189,7 +189,7 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		degree = Descr->list_of_blocks_v;
 		k = Descr->list_of_blocks_k;
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
 		Fio.lint_matrix_read_csv(Descr->list_of_blocks_from_file_fname,
@@ -244,7 +244,7 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 	if (f_v) {
 		cout << "design_create::init set = ";
-		Orbiter->Lint_vec->print(cout, set, sz);
+		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 
@@ -299,19 +299,19 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 	sz = P->N_lines;
 	set = NEW_lint(sz);
 	for (j = 0; j < sz; j++) {
-		Orbiter->Int_vec->copy(P->Implementation->Lines + j * k, block, k);
+		Int_vec_copy(P->Implementation->Lines + j * k, block, k);
 		Sorting.int_vec_heapsort(block, k);
 		set[j] = Combi.rank_k_subset(block, P->N_points, k);
 		if (f_v) {
 			cout << "block " << j << " / " << sz << " : ";
-			Orbiter->Int_vec->print(cout, block, k);
+			Int_vec_print(cout, block, k);
 			cout << " : " << set[j] << endl;
 		}
 	}
 	Sorting.lint_vec_heapsort(set, sz);
 	if (f_v) {
 		cout << "design : ";
-		Orbiter->Lint_vec->print(cout, set, sz);
+		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 
@@ -358,7 +358,7 @@ void design_create::unrank_block_in_PG_2_q(int *block,
 	Combi.unrank_k_subset(rk, block, P->N_points, k);
 	if (f_v) {
 		cout << "design_create::unrank_block_in_PG_2_q block = ";
-		Orbiter->Int_vec->print(cout, block, k);
+		Int_vec_print(cout, block, k);
 		cout << endl;
 	}
 	if (f_v) {

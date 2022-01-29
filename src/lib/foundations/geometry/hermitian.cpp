@@ -131,7 +131,7 @@ void hermitian::init(field_theory::finite_field *F, int nb_vars, int verbose_lev
 	}
 	if (f_v) {
 		cout << "the norm one elements are: ";
-		Orbiter->Int_vec->print(cout, norm_one_elements, q + 1);
+		Int_vec_print(cout, norm_one_elements, q + 1);
 		cout << endl;
 	}
 	cout << "i : norm_one_elements[i] : "
@@ -197,7 +197,7 @@ void hermitian::list_all_N(int verbose_level)
 		val0 = evaluate_hermitian_form(v, k - 1);
 		val = evaluate_hermitian_form(v, k);
 		cout << setw(5) << i << " : ";
-		Orbiter->Int_vec->print(cout, v, k);
+		Int_vec_print(cout, v, k);
 		cout << " : " << val0;
 		cout << " : " << val << endl;
 		if (val == 0) {
@@ -226,7 +226,7 @@ void hermitian::list_all_N1(int verbose_level)
 		val0 = evaluate_hermitian_form(v, k - 1);
 		val = evaluate_hermitian_form(v, k);
 		cout << setw(5) << i << " : ";
-		Orbiter->Int_vec->print(cout, v, k);
+		Int_vec_print(cout, v, k);
 		cout << " : " << val0;
 		cout << " : " << val << endl;
 		if (val != 1) {
@@ -255,7 +255,7 @@ void hermitian::list_all_S(int verbose_level)
 		val0 = evaluate_hermitian_form(v, k - 1);
 		val = evaluate_hermitian_form(v, k);
 		cout << setw(5) << i << " : ";
-		Orbiter->Int_vec->print(cout, v, k);
+		Int_vec_print(cout, v, k);
 		cout << " : " << val0;
 		cout << " : " << val << endl;
 		if (val) {
@@ -296,7 +296,7 @@ void hermitian::list_all_Sbar(int verbose_level)
 			val0 = evaluate_hermitian_form(v, k - 1);
 			val = evaluate_hermitian_form(v, k);
 			cout << setw(5) << i << "," << h << " : ";
-			Orbiter->Int_vec->print(cout, v, k);
+			Int_vec_print(cout, v, k);
 			cout << " : " << val0;
 			cout << " : " << val << endl;
 			if (val) {
@@ -346,7 +346,7 @@ void hermitian::N_unrank(int *v, int len, int rk, int verbose_level)
 		v[0] = rk + 1;
 		if (f_v) {
 			cout << "N_unrank len=" << len << " done: ";
-			Orbiter->Int_vec->print(cout, v, len);
+			Int_vec_print(cout, v, len);
 			cout << endl;
 		}
 		return;
@@ -415,7 +415,7 @@ void hermitian::N_unrank(int *v, int len, int rk, int verbose_level)
 	}
 	if (f_v) {
 		cout << "N_unrank len=" << len << " done: ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 }
@@ -427,7 +427,7 @@ int hermitian::N_rank(int *v, int len, int verbose_level)
 	
 	if (f_v) {
 		cout << "N_rank len=" << len << endl;
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	if (len == 1) {
@@ -522,7 +522,7 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 		v[0] = norm_one_elements[rk];
 		if (f_v) {
 			cout << "N1_unrank len=" << len << " done: ";
-			Orbiter->Int_vec->print(cout, v, len);
+			Int_vec_print(cout, v, len);
 			cout << endl;
 		}
 		return;
@@ -535,7 +535,7 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 		v[len - 1] = 0;
 		if (f_v) {
 			cout << "N1_unrank len=" << len << " done: ";
-			Orbiter->Int_vec->print(cout, v, len);
+			Int_vec_print(cout, v, len);
 			cout << endl;
 		}
 		return;
@@ -618,7 +618,7 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 	}
 	if (f_v) {
 		cout << "N1_unrank len=" << len << " done: ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 }
@@ -631,7 +631,7 @@ int hermitian::N1_rank(int *v, int len, int verbose_level)
 	
 	if (f_v) {
 		cout << "N1_rank len=" << len << " : ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	if (len == 1) {
@@ -788,7 +788,7 @@ void hermitian::S_unrank(int *v,
 	}
 	if (f_v) {
 		cout << "S_unrank len=" << len << " done: ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	
@@ -801,7 +801,7 @@ int hermitian::S_rank(int *v, int len, int verbose_level)
 	
 	if (f_v) {
 		cout << "S_rank len=" << len << ": ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	if (len == 1) {
@@ -906,7 +906,7 @@ void hermitian::Sbar_unrank(int *v,
 	}
 	if (f_v) {
 		cout << "Sbar_unrank len=" << len << " done: ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	
@@ -919,7 +919,7 @@ int hermitian::Sbar_rank(int *v, int len, int verbose_level)
 	
 	if (f_v) {
 		cout << "Sbar_rank len=" << len << " : ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
 	if (len == 1) {
@@ -992,7 +992,7 @@ void hermitian::create_latex_report(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			latex_interface L;
+			orbiter_kernel_system::latex_interface L;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -1018,7 +1018,7 @@ void hermitian::create_latex_report(int verbose_level)
 			L.foot(ost);
 
 		}
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -1072,12 +1072,12 @@ void hermitian::report_points(std::ostream &ost, int verbose_level)
 		unrank_point(v, rk);
 		F->PG_element_rank_modified_lint(v, 1, k, rk_in_PG[rk]);
 		ost << "$P_{" << rk << "} = ";
-		Orbiter->Int_vec->print(ost, v, k);
+		Int_vec_print(ost, v, k);
 		ost << "=" << rk_in_PG[rk] << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
 	ost << "All points: ";
-	Orbiter->Lint_vec->print(ost, rk_in_PG, nb_pts);
+	Lint_vec_print(ost, rk_in_PG, nb_pts);
 	ost << "\\\\" << endl;
 
 	FREE_int(v);

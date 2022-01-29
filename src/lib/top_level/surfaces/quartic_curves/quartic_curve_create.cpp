@@ -234,13 +234,13 @@ void quartic_curve_create::create_quartic_curve_from_description(quartic_curve_d
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_description coeffs = ";
-		Orbiter->Int_vec->print(cout, QO->eqn15, 15);
+		Int_vec_print(cout, QO->eqn15, 15);
 		cout << endl;
 	}
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_description bitangents = ";
-		Orbiter->Lint_vec->print(cout, QO->bitangents28, 28);
+		Lint_vec_print(cout, QO->bitangents28, 28);
 		cout << endl;
 	}
 
@@ -291,7 +291,7 @@ void quartic_curve_create::override_group(std::string &group_order_text,
 		cout << "quartic_curve_create::override_group before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
 
-	Orbiter->Int_vec->scan(gens_text, data, sz);
+	Int_vec_scan(gens_text, data, sz);
 	if (sz != PA->A->make_element_size * nb_gens) {
 		cout << "quartic_curve_create::override_group sz != Surf_A->A->make_element_size * nb_gens" << endl;
 		exit(1);
@@ -332,7 +332,7 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(std::string &coe
 	int *coeff_list, nb_coeff_list;
 	int i;
 
-	Orbiter->Int_vec->scan(coefficients_text, coeff_list, nb_coeff_list);
+	Int_vec_scan(coefficients_text, coeff_list, nb_coeff_list);
 #if 0
 	if (ODD(nb_coeff_list)) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficients number of "
@@ -490,14 +490,14 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(quartic_curve_dom
 
 	if (f_v) {
 		cout << "eqn15:";
-		Orbiter->Int_vec->print(cout, p_eqn, 15);
+		Int_vec_print(cout, p_eqn, 15);
 		cout << endl;
 		cout << "bitangents28:";
-		Orbiter->Lint_vec->print(cout, p_bitangents, 28);
+		Lint_vec_print(cout, p_bitangents, 28);
 		cout << endl;
 	}
-	Orbiter->Int_vec->copy(p_eqn, eqn15, 15);
-	Orbiter->Lint_vec->copy(p_bitangents, bitangents28, 28);
+	Int_vec_copy(p_eqn, eqn15, 15);
+	Lint_vec_copy(p_bitangents, bitangents28, 28);
 
 
 	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
@@ -584,11 +584,11 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 
 
-	expression_parser Parser;
-	syntax_tree *tree;
+	expression_parser::expression_parser Parser;
+	expression_parser::syntax_tree *tree;
 	int i;
 
-	tree = NEW_OBJECT(syntax_tree);
+	tree = NEW_OBJECT(expression_parser::syntax_tree);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_equation Formula " << name_of_formula << " is " << equation_text << endl;
@@ -686,7 +686,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		cout << "quartic_curve_create::create_quartic_curve_by_equation after Poly->init" << endl;
 	}
 
-	syntax_tree_node **Subtrees;
+	expression_parser::syntax_tree_node **Subtrees;
 	int nb_monomials;
 
 
@@ -801,7 +801,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 			cout << endl;
 		}
 		cout << "quartic_curve_create::create_quartic_curve_by_equation coefficient vector: ";
-		Orbiter->Int_vec->print(cout, coeffs15, nb_monomials);
+		Int_vec_print(cout, coeffs15, nb_monomials);
 		cout << endl;
 	}
 
@@ -922,7 +922,7 @@ void quartic_curve_create::apply_transformations(
 						<< transform_coeffs.size() << ":" << endl;
 			}
 
-			Orbiter->Int_vec->scan(transform_coeffs[h], transformation_coeffs, sz);
+			Int_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
 
 			if (sz != desired_sz) {
 				cout << "quartic_curve_create::apply_transformations "

@@ -151,13 +151,13 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_report) {
 
-		if (!Orbiter->f_draw_options) {
+		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
 			cout << "for a report of the group, please use -draw_options" << endl;
 			exit(1);
 		}
 
 		AG->create_latex_report(
-				Orbiter->draw_options,
+				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->f_sylow, Descr->f_group_table, Descr->f_classes,
 				verbose_level);
 
@@ -424,7 +424,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 		if (Descr->f_orbits_on_polynomials_draw_tree &&
-				!Orbiter->f_draw_options) {
+				!orbiter_kernel_system::Orbiter->f_draw_options) {
 			cout << "please use -draw_options ... -end" << endl;
 			exit(1);
 		}
@@ -441,7 +441,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->recognize_orbits_on_polynomials_text,
 				Descr->f_orbits_on_polynomials_draw_tree,
 				Descr->orbits_on_polynomials_draw_tree_idx,
-				Orbiter->draw_options,
+				orbiter_kernel_system::Orbiter->draw_options,
 				verbose_level);
 	}
 

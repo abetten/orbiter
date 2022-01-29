@@ -102,7 +102,7 @@ long int action_on_flags::compute_image(int *Elt, long int i, int verbose_level)
 	Flag->unrank(i, M1, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action_on_flags::compute_image M1=" << endl;
-		Orbiter->Int_vec->matrix_print(M1, Flag->K, n);
+		Int_matrix_print(M1, Flag->K, n);
 		}
 	if (f_v) {
 		cout << "action_on_flags::compute_image "
@@ -118,7 +118,7 @@ long int action_on_flags::compute_image(int *Elt, long int i, int verbose_level)
 		}
 	if (f_v) {
 		cout << "action_on_flags::compute_image M2=" << endl;
-		Orbiter->Int_vec->matrix_print(M2, Flag->K, n);
+		Int_matrix_print(M2, Flag->K, n);
 		}
 	j = Flag->rank(M2, 0 /*verbose_level*/);
 

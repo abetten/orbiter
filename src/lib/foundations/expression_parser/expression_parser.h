@@ -12,6 +12,8 @@
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace expression_parser {
+
 
 // #############################################################################
 // expression_parser_domain.cpp
@@ -276,7 +278,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 #endif /* SRC_LIB_FOUNDATIONS_EXPRESSION_PARSER_EXPRESSION_PARSER_H_ */

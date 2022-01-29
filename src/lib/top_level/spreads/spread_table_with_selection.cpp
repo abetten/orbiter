@@ -95,10 +95,10 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 
 	if (f_select_spread) {
-		Orbiter->Int_vec->scan(select_spread_text.c_str(), select_spread, select_spread_nb);
+		Int_vec_scan(select_spread_text.c_str(), select_spread, select_spread_nb);
 		if (f_v) {
 			cout << "select_spread = ";
-			Orbiter->Int_vec->print(cout, select_spread, select_spread_nb);
+			Int_vec_print(cout, select_spread, select_spread_nb);
 			cout << endl;
 		}
 	}
@@ -130,7 +130,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	if (f_select_spread) {
 		cout << "spread_table_with_selection::init selected spreads are "
 				"from the following orbits: ";
-		Orbiter->Int_vec->print(cout,
+		Int_vec_print(cout,
 				select_spread,
 				select_spread_nb);
 		cout << endl;
@@ -323,7 +323,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 	Spread_table = NEW_lint(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
-		Orbiter->Lint_vec->copy(Sets[i], Spread_table + i * spread_size, spread_size);
+		Lint_vec_copy(Sets[i], Spread_table + i * spread_size, spread_size);
 	}
 
 	if (f_v) {
@@ -660,7 +660,7 @@ void spread_table_with_selection::predict_spread_table_length(
 			int sz;
 
 			rep = K.Spread_representative(q, T->k /* dimension_of_spread_elements*/, no, sz);
-			Orbiter->Lint_vec->copy(rep,
+			Lint_vec_copy(rep,
 					spread_reps + nb_spread_reps * spread_size,
 					spread_size);
 
@@ -763,7 +763,7 @@ void spread_table_with_selection::make_spread_table(
 
 			Sets[nb_spreads1] = NEW_lint(spread_size);
 
-			Orbiter->Lint_vec->copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
+			Lint_vec_copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
 
 			Prev[nb_spreads1] = First[i] + SetOrb[i].Extra[j * 2 + 0];
 			Label[nb_spreads1] = SetOrb[i].Extra[j * 2 + 1];
@@ -812,7 +812,7 @@ void spread_table_with_selection::make_spread_table(
 				"The labeled spreads are:" << endl;
 		for (i = 0; i < total_nb_of_spreads; i++) {
 			cout << i << " : ";
-			Orbiter->Lint_vec->print(cout, Sets[i], spread_size /* + 1*/);
+			Lint_vec_print(cout, Sets[i], spread_size /* + 1*/);
 			cout << endl;
 			}
 		}

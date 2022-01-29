@@ -230,7 +230,7 @@ void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
 	if (f_v) {
 		cout << "geometry_global::create_Fisher_BLT_set" << endl;
 	}
-	unusual_model U;
+	orthogonal_geometry::unusual_model U;
 
 	U.setup(FQ, Fq, verbose_level);
 	U.create_Fisher_BLT_set(Fisher_BLT, ABC, verbose_level);
@@ -249,7 +249,7 @@ void geometry_global::create_Linear_BLT_set(long int *BLT, int *ABC,
 	if (f_v) {
 		cout << "geometry_global::create_Linear_BLT_set" << endl;
 	}
-	unusual_model U;
+	orthogonal_geometry::unusual_model U;
 
 	U.setup(FQ, Fq, verbose_level);
 	U.create_Linear_BLT_set(BLT, ABC, verbose_level);
@@ -268,7 +268,7 @@ void geometry_global::create_Mondello_BLT_set(long int *BLT, int *ABC,
 	if (f_v) {
 		cout << "geometry_global::create_Mondello_BLT_set" << endl;
 	}
-	unusual_model U;
+	orthogonal_geometry::unusual_model U;
 
 	U.setup(FQ, Fq, verbose_level);
 	U.create_Mondello_BLT_set(BLT, ABC, verbose_level);
@@ -295,7 +295,7 @@ void geometry_global::make_Gram_matrix_from_list_coded_quadratic_form(
 {
 	int k, i, j, c;
 
-	Orbiter->Int_vec->zero(Gram, n * n);
+	Int_vec_zero(Gram, n * n);
 	for (k = 0; k < nb_terms; k++) {
 		i = form_i[k];
 		j = form_j[k];
@@ -344,7 +344,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 	if (f_v) {
 		cout << "determine_conic q=" << q << endl;
 		cout << "input_pts: ";
-		Orbiter->Lint_vec->print(cout, input_pts, nb_pts);
+		Lint_vec_print(cout, input_pts, nb_pts);
 		cout << endl;
 		}
 	F.init_override_polynomial(q, override_poly, FALSE /* f_without_tables */, verbose_level);
@@ -365,7 +365,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 
 	if (f_v) {
 		cout << "determine_conic the six coefficients are ";
-		Orbiter->Int_vec->print(cout, six_coeffs, 6);
+		Int_vec_print(cout, six_coeffs, 6);
 		cout << endl;
 		}
 
@@ -377,12 +377,12 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 			points, nb_points, verbose_level - 2);
 	if (f_v) {
 		cout << "the " << nb_points << " conic points are: ";
-		Orbiter->Lint_vec->print(cout, points, nb_points);
+		Lint_vec_print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);
 			cout << i << " : " << points[i] << " : ";
-			Orbiter->Int_vec->print(cout, v, 3);
+			Int_vec_print(cout, v, 3);
 			cout << endl;
 			}
 		}
@@ -408,7 +408,7 @@ int geometry_global::test_if_arc(field_theory::finite_field *Fq,
 
 	if (f_v) {
 		cout << "test_if_arc testing set" << endl;
-		Orbiter->Int_vec->print(cout, set, set_sz);
+		Int_vec_print(cout, set, set_sz);
 		cout << endl;
 		}
 	Mtx = NEW_int(3 * k);
@@ -421,7 +421,7 @@ int geometry_global::test_if_arc(field_theory::finite_field *Fq,
 		Sorting.int_vec_heapsort(subset1, 3);
 		if (f_vv) {
 			cout << "testing subset ";
-			Orbiter->Int_vec->print(cout, subset1, 3);
+			Int_vec_print(cout, subset1, 3);
 			cout << endl;
 			}
 
@@ -433,7 +433,7 @@ int geometry_global::test_if_arc(field_theory::finite_field *Fq,
 			}
 		if (f_vv) {
 			cout << "matrix:" << endl;
-			Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
+			Int_vec_print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
 			}
 		rk = Fq->Linear_algebra->Gauss_easy(Mtx, 3, k);
 		if (rk < 3) {
@@ -507,7 +507,7 @@ void geometry_global::create_Buekenhout_Metz(
 		BM->P2->unrank_point(v, rk);
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec->print(cout, v, d);
+			Int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
 			}
 		}
@@ -838,7 +838,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 			}
 #endif
 		cout << i << " : ";
-		Orbiter->Int_vec->print(cout, v, len);
+		Int_vec_print(cout, v, len);
 		cout << " : ";
 		a = GFq.Linear_algebra->evaluate_quadratic_form(v, stride, epsilon, k,
 				c1, c2, c3);
@@ -881,7 +881,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	for (i = 0; i < nb; i++) {
 		GFq.Orthogonal_indexing->Sbar_unrank(v, stride, n, i, 0 /* verbose_level */);
 		cout << i << " : ";
-		Orbiter->Int_vec->set_print(cout, v, 2 * n);
+		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, v, 2 * n);
 		cout << " : ";
 		a = GFq.Linear_algebra->evaluate_hyperbolic_quadratic_form(v, stride, n);
 		cout << a;
@@ -1445,7 +1445,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 	int *A6;
 	int sz;
 
-	Orbiter->Int_vec->scan(inverse_isomorphism_klein_quadric_matrix_A6.c_str(), A6, sz);
+	Int_vec_scan(inverse_isomorphism_klein_quadric_matrix_A6.c_str(), A6, sz);
 	if (sz != 36) {
 		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
 				"The input matrix must be of size 6x6" << endl;
@@ -1454,14 +1454,14 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 
 
 	cout << "A6:" << endl;
-	Orbiter->Int_vec->matrix_print(A6, 6, 6);
+	Int_matrix_print(A6, 6, 6);
 
 	klein_correspondence *Klein;
-	orthogonal *O;
+	orthogonal_geometry::orthogonal *O;
 
 
 	Klein = NEW_OBJECT(klein_correspondence);
-	O = NEW_OBJECT(orthogonal);
+	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
 
 	O->init(1 /* epsilon */, 6, F, 0 /* verbose_level*/);
 	Klein->init(F, O, 0 /* verbose_level */);
@@ -1470,7 +1470,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 	Klein->reverse_isomorphism(A6, A4, verbose_level);
 
 	cout << "A4:" << endl;
-	Orbiter->Int_vec->matrix_print(A4, 4, 4);
+	Int_matrix_print(A4, 4, 4);
 
 	FREE_OBJECT(Klein);
 	FREE_OBJECT(O);
@@ -1494,11 +1494,11 @@ void geometry_global::do_rank_points_in_PG(
 	int *v;
 	int m, n;
 
-	Orbiter->get_matrix_from_label(label, v, m, n);
+	orbiter_kernel_system::Orbiter->get_matrix_from_label(label, v, m, n);
 
 	if (f_v) {
 		cout << "geometry_global::do_rank_points_in_PG coeff: ";
-		Orbiter->Int_vec->matrix_print(v, m, n);
+		Int_matrix_print(v, m, n);
 		cout << endl;
 	}
 
@@ -1508,7 +1508,7 @@ void geometry_global::do_rank_points_in_PG(
 	for (i = 0; i < m; i++) {
 		F->PG_element_rank_modified_lint(v + i * n, 1, n, a);
 
-		Orbiter->Int_vec->print(cout, v + i * n, n);
+		Int_vec_print(cout, v + i * n, n);
 		cout << " : " << a << endl;
 
 	}
@@ -1541,13 +1541,13 @@ void geometry_global::do_intersection_of_two_lines(
 		cout << "geometry_global::do_intersection_of_two_lines" << endl;
 	}
 
-	Orbiter->Int_vec->scan(line_1_basis, Line1, len);
+	Int_vec_scan(line_1_basis, Line1, len);
 	if (len != 8) {
 		cout << "geometry_global::do_intersection_of_two_lines len != 8" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->scan(line_2_basis, Line2, len);
+	Int_vec_scan(line_2_basis, Line2, len);
 	if (len != 8) {
 		cout << "geometry_global::do_intersection_of_two_lines len != 8" << endl;
 		cout << "received " << len << endl;
@@ -1558,7 +1558,7 @@ void geometry_global::do_intersection_of_two_lines(
 	C = NEW_int(16);
 
 	// Line 1
-	Orbiter->Int_vec->copy(Line1, A, 8);
+	Int_vec_copy(Line1, A, 8);
 	rk = F->Linear_algebra->perp_standard(4, 2, A, verbose_level);
 	if (rk != 2) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
@@ -1567,7 +1567,7 @@ void geometry_global::do_intersection_of_two_lines(
 	}
 
 	// Line 2
-	Orbiter->Int_vec->copy(Line2, B, 8);
+	Int_vec_copy(Line2, B, 8);
 	rk = F->Linear_algebra->perp_standard(4, 2, B, verbose_level);
 	if (rk != 2) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
@@ -1576,8 +1576,8 @@ void geometry_global::do_intersection_of_two_lines(
 	}
 
 
-	Orbiter->Int_vec->copy(A + 8, C, 8);
-	Orbiter->Int_vec->copy(B + 8, C + 8, 8);
+	Int_vec_copy(A + 8, C, 8);
+	Int_vec_copy(B + 8, C + 8, 8);
 	rk = F->Linear_algebra->perp_standard(4, 4, C, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 3" << endl;
@@ -1593,7 +1593,7 @@ void geometry_global::do_intersection_of_two_lines(
 		}
 
 		cout << "geometry_global::do_intersection_of_two_lines after normalize from the left:" << endl;
-		Orbiter->Int_vec->matrix_print(C + 12, 1, 4);
+		Int_matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1606,7 +1606,7 @@ void geometry_global::do_intersection_of_two_lines(
 		}
 
 		cout << "geometry_global::do_intersection_of_two_lines after normalize from the right:" << endl;
-		Orbiter->Int_vec->matrix_print(C + 12, 1, 4);
+		Int_matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1644,19 +1644,19 @@ void geometry_global::do_transversal(
 		cout << "geometry_global::do_transversal" << endl;
 	}
 
-	Orbiter->Int_vec->scan(line_1_basis, Line1, len);
+	Int_vec_scan(line_1_basis, Line1, len);
 	if (len != 8) {
 		cout << "geometry_global::do_transversal len != 8" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->scan(line_2_basis, Line2, len);
+	Int_vec_scan(line_2_basis, Line2, len);
 	if (len != 8) {
 		cout << "geometry_global::do_transversal len != 8" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->scan(point, Pt, len);
+	Int_vec_scan(point, Pt, len);
 	if (len != 4) {
 		cout << "geometry_global::do_transversal len != 4" << endl;
 		cout << "received " << len << endl;
@@ -1666,26 +1666,26 @@ void geometry_global::do_transversal(
 	B = NEW_int(16);
 
 	// Line 1
-	Orbiter->Int_vec->copy(Line1, A, 8);
-	Orbiter->Int_vec->copy(Pt, A + 8, 4);
+	Int_vec_copy(Line1, A, 8);
+	Int_vec_copy(Pt, A + 8, 4);
 	rk = F->Linear_algebra->perp_standard(4, 3, A, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_transversal rk != 3" << endl;
 		cout << "rk= " << rk << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->copy(A + 12, B, 4);
+	Int_vec_copy(A + 12, B, 4);
 
 	// Line 2
-	Orbiter->Int_vec->copy(Line2, A, 8);
-	Orbiter->Int_vec->copy(Pt, A + 8, 4);
+	Int_vec_copy(Line2, A, 8);
+	Int_vec_copy(Pt, A + 8, 4);
 	rk = F->Linear_algebra->perp_standard(4, 3, A, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_transversal rk != 3" << endl;
 		cout << "rk= " << rk << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->copy(A + 12, B + 4, 4);
+	Int_vec_copy(A + 12, B + 4, 4);
 
 	// B
 	rk = F->Linear_algebra->perp_standard(4, 2, B, verbose_level);
@@ -1702,7 +1702,7 @@ void geometry_global::do_transversal(
 		}
 
 		cout << "geometry_global::do_transversal after normalize from the left:" << endl;
-		Orbiter->Int_vec->matrix_print(B + 8, 2, 4);
+		Int_matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1715,7 +1715,7 @@ void geometry_global::do_transversal(
 		}
 
 		cout << "geometry_global::do_transversal after normalize from the right:" << endl;
-		Orbiter->Int_vec->matrix_print(B + 8, 2, 4);
+		Int_matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1906,7 +1906,7 @@ void geometry_global::do_create_desarguesian_spread(
 
 	if (f_v) {
 		cout << "Field-basis: ";
-		Orbiter->Int_vec->print(cout, SubS->Basis, s);
+		Int_vec_print(cout, SubS->Basis, s);
 		cout << endl;
 	}
 
@@ -2045,7 +2045,7 @@ void geometry_global::latex_homogeneous_equation(
 	int sz;
 	ring_theory::homogeneous_polynomial_domain *Poly;
 
-	Orbiter->Int_vec->scan(equation_text, eqn, sz);
+	Int_vec_scan(equation_text, eqn, sz);
 	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
@@ -2111,7 +2111,7 @@ void geometry_global::create_BLT_point(field_theory::finite_field *F,
 	v3 = F->mult(minus_one, F->add(
 			F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
 	v4 = 1;
-	Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
+	orbiter_kernel_system::Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
 		cout << "geometry_global::create_BLT_point done" << endl;
 	}
@@ -2138,7 +2138,7 @@ algebraic_geometry::eckardt_point_info *geometry_global::compute_eckardt_point_i
 
 	if (f_v) {
 		cout << "arc: ";
-		Orbiter->Lint_vec->print(cout, arc6, 6);
+		Lint_vec_print(cout, arc6, 6);
 		cout << endl;
 	}
 
@@ -2166,7 +2166,7 @@ int geometry_global::test_nb_Eckardt_points(
 		return TRUE;
 	}
 
-	Orbiter->Lint_vec->copy(S, Arc6, 5);
+	Lint_vec_copy(S, Arc6, 5);
 	Arc6[5] = pt;
 
 	algebraic_geometry::eckardt_point_info *E;
@@ -2223,7 +2223,7 @@ void geometry_global::rearrange_arc_for_lifting(
 
 	Combi.set_partition_4_into_2_unrank(partition_rk, part);
 
-	Orbiter->Lint_vec->copy(arc + 2, pts, 4);
+	Lint_vec_copy(arc + 2, pts, 4);
 
 	for (i = 0; i < 4; i++) {
 		a = part[i];
@@ -2276,7 +2276,7 @@ void geometry_global::find_two_lines_for_arc_lifting(
 				"in the hyperplane W = 0" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->zero(Basis + 8, 8);
+	Int_vec_zero(Basis + 8, 8);
 
 	N = Gg.nb_PG_elements(3, P->q);
 	// N = the number of points in PG(3,q)
@@ -2288,13 +2288,13 @@ void geometry_global::find_two_lines_for_arc_lifting(
 	// Make sure the rank of the subspace spanned by P1, P2 and P is three.
 
 	for (i = 0; i < N; i++) {
-		Orbiter->Int_vec->copy(Basis, Basis_search, 4);
-		Orbiter->Int_vec->copy(Basis + 4, Basis_search + 4, 4);
+		Int_vec_copy(Basis, Basis_search, 4);
+		Int_vec_copy(Basis + 4, Basis_search + 4, 4);
 		P->F->PG_element_unrank_modified(Basis_search + 8, 1, 4, i);
 		if (Basis_search[11] == 0) {
 			continue;
 		}
-		Orbiter->Int_vec->copy(Basis_search, Basis_search_copy, 12);
+		Int_vec_copy(Basis_search, Basis_search_copy, 12);
 		rk = P->F->Linear_algebra->Gauss_easy_memory_given(Basis_search_copy, 3, 4, base_cols);
 		if (rk == 3) {
 			break;
@@ -2316,14 +2316,14 @@ void geometry_global::find_two_lines_for_arc_lifting(
 	// Make sure the rank of the subspace spanned by P1, P2 and P and Q is four.
 
 	for (i = p0 + 1; i < N; i++) {
-		Orbiter->Int_vec->copy(Basis, Basis_search, 4);
-		Orbiter->Int_vec->copy(Basis + 4, Basis_search + 4, 4);
+		Int_vec_copy(Basis, Basis_search, 4);
+		Int_vec_copy(Basis + 4, Basis_search + 4, 4);
 		P->F->PG_element_unrank_modified(Basis_search + 8, 1, 4, p0);
 		P->F->PG_element_unrank_modified(Basis_search + 12, 1, 4, i);
 		if (Basis_search[15] == 0) {
 			continue;
 		}
-		Orbiter->Int_vec->copy(Basis_search, Basis_search_copy, 16);
+		Int_vec_copy(Basis_search, Basis_search_copy, 16);
 		rk = P->F->Linear_algebra->Gauss_easy_memory_given(
 				Basis_search_copy, 4, 4, base_cols);
 		if (rk == 4) {
@@ -2346,16 +2346,16 @@ void geometry_global::find_two_lines_for_arc_lifting(
 	if (f_v) {
 		cout << "geometry_global::find_two_lines_for_arc_lifting " << endl;
 		cout << "Basis:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis, 4, 4);
+		Int_matrix_print(Basis, 4, 4);
 	}
-	Orbiter->Int_vec->copy(Basis, Basis2, 4);
-	Orbiter->Int_vec->copy(Basis + 8, Basis2 + 4, 4);
-	Orbiter->Int_vec->copy(Basis + 4, Basis2 + 8, 4);
-	Orbiter->Int_vec->copy(Basis + 12, Basis2 + 12, 4);
+	Int_vec_copy(Basis, Basis2, 4);
+	Int_vec_copy(Basis + 8, Basis2 + 4, 4);
+	Int_vec_copy(Basis + 4, Basis2 + 8, 4);
+	Int_vec_copy(Basis + 12, Basis2 + 12, 4);
 	if (f_v) {
 		cout << "geometry_global::find_two_lines_for_arc_lifting "
 				"Basis2:" << endl;
-		Orbiter->Int_vec->matrix_print(Basis2, 4, 4);
+		Int_matrix_print(Basis2, 4, 4);
 	}
 	line1 = P->rank_line(Basis2);
 	line2 = P->rank_line(Basis2 + 8);
@@ -2406,7 +2406,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"A3:" << endl;
-		Orbiter->Int_vec->matrix_print(A3, 3, 3);
+		Int_matrix_print(A3, 3, 3);
 		cout << "f_semilinear = " << f_semilinear
 				<< " frobenius=" << frobenius << endl;
 	}
@@ -2416,10 +2416,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"input Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1, 2, 4);
+		Int_matrix_print(Line1, 2, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"input Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2, 2, 4);
+		Int_matrix_print(Line2, 2, 4);
 	}
 	P->F->Linear_algebra->Gauss_step_make_pivot_one(Line1 + 4, Line1,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
@@ -2434,10 +2434,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"modified Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1, 2, 4);
+		Int_matrix_print(Line1, 2, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"modified Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2, 2, 4);
+		Int_matrix_print(Line2, 2, 4);
 	}
 
 	P->F->PG_element_normalize(Line1, 1, 4);
@@ -2447,16 +2447,16 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P1 = first point on Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1, 1, 4);
+		Int_matrix_print(Line1, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P2 = first point on Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2, 1, 4);
+		Int_matrix_print(Line2, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"x = second point on Line1:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1 + 4, 1, 4);
+		Int_matrix_print(Line1 + 4, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"y = second point on Line2:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2 + 4, 1, 4);
+		Int_matrix_print(Line2 + 4, 1, 4);
 	}
 	// compute P1 * A3 to figure out if A switches P1 and P2 or not:
 	P->F->Linear_algebra->mult_vector_from_the_left(Line1, A3, P1A, 3, 3);
@@ -2464,10 +2464,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P1 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P1A, 1, 3);
+		Int_matrix_print(P1A, 1, 3);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P2 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P2A, 1, 3);
+		Int_matrix_print(P2A, 1, 3);
 	}
 	if (f_semilinear) {
 		if (f_v) {
@@ -2480,20 +2480,20 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P1 * A ^Phi^frobenius = " << endl;
-		Orbiter->Int_vec->matrix_print(P1A, 1, 3);
+		Int_matrix_print(P1A, 1, 3);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P2 * A ^Phi^frobenius = " << endl;
-		Orbiter->Int_vec->matrix_print(P2A, 1, 3);
+		Int_matrix_print(P2A, 1, 3);
 	}
 	P->F->PG_element_normalize(P1A, 1, 3);
 	P->F->PG_element_normalize(P2A, 1, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"normalized P1 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P1A, 1, 3);
+		Int_matrix_print(P1A, 1, 3);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"normalized P2 * A = " << endl;
-		Orbiter->Int_vec->matrix_print(P2A, 1, 3);
+		Int_matrix_print(P2A, 1, 3);
 	}
 	if (Sorting.int_vec_compare(P1A, Line1, 3) == 0) {
 		f_swap = FALSE;
@@ -2522,29 +2522,29 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 				"f_swap=" << f_swap << endl;
 	}
 
-	Orbiter->Int_vec->copy(Line1 + 4, x, 3);
-	Orbiter->Int_vec->copy(Line2 + 4, y, 3);
+	Int_vec_copy(Line1 + 4, x, 3);
+	Int_vec_copy(Line2 + 4, y, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"x:" << endl;
-		Orbiter->Int_vec->matrix_print(x, 1, 3);
+		Int_matrix_print(x, 1, 3);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"y:" << endl;
-		Orbiter->Int_vec->matrix_print(y, 1, 3);
+		Int_matrix_print(y, 1, 3);
 	}
 
 	P->F->Linear_algebra->linear_combination_of_vectors(1, x, m1, y, xmy, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"xmy:" << endl;
-		Orbiter->Int_vec->matrix_print(xmy, 1, 3);
+		Int_matrix_print(xmy, 1, 3);
 	}
 
 	P->F->Linear_algebra->transpose_matrix(A3, A3t, 3, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"A3t:" << endl;
-		Orbiter->Int_vec->matrix_print(A3t, 3, 3);
+		Int_matrix_print(A3t, 3, 3);
 	}
 
 
@@ -2555,7 +2555,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"v:" << endl;
-		Orbiter->Int_vec->matrix_print(v, 1, 3);
+		Int_matrix_print(v, 1, 3);
 	}
 	P->F->Linear_algebra->mult_vector_from_the_right(A3t, x, w, 3, 3);
 	if (f_semilinear) {
@@ -2564,20 +2564,20 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"w:" << endl;
-		Orbiter->Int_vec->matrix_print(w, 1, 3);
+		Int_matrix_print(w, 1, 3);
 	}
 
 	if (f_swap) {
-		Orbiter->Int_vec->copy(Line2 + 4, Mt + 0, 4);
-		Orbiter->Int_vec->copy(Line2 + 0, Mt + 4, 4);
-		Orbiter->Int_vec->copy(Line1 + 4, Mt + 8, 4);
-		Orbiter->Int_vec->copy(Line1 + 0, Mt + 12, 4);
+		Int_vec_copy(Line2 + 4, Mt + 0, 4);
+		Int_vec_copy(Line2 + 0, Mt + 4, 4);
+		Int_vec_copy(Line1 + 4, Mt + 8, 4);
+		Int_vec_copy(Line1 + 0, Mt + 12, 4);
 	}
 	else {
-		Orbiter->Int_vec->copy(Line1 + 4, Mt + 0, 4);
-		Orbiter->Int_vec->copy(Line1 + 0, Mt + 4, 4);
-		Orbiter->Int_vec->copy(Line2 + 4, Mt + 8, 4);
-		Orbiter->Int_vec->copy(Line2 + 0, Mt + 12, 4);
+		Int_vec_copy(Line1 + 4, Mt + 0, 4);
+		Int_vec_copy(Line1 + 0, Mt + 4, 4);
+		Int_vec_copy(Line2 + 4, Mt + 8, 4);
+		Int_vec_copy(Line2 + 0, Mt + 12, 4);
 	}
 
 	P->F->Linear_algebra->negate_vector_in_place(Mt + 8, 8);
@@ -2586,14 +2586,14 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"M:" << endl;
-		Orbiter->Int_vec->matrix_print(M, 4, 4);
+		Int_matrix_print(M, 4, 4);
 	}
 
 	P->F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"Mv:" << endl;
-		Orbiter->Int_vec->matrix_print(Mv, 4, 4);
+		Int_matrix_print(Mv, 4, 4);
 	}
 
 	v[3] = 0;
@@ -2602,7 +2602,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"lmei:" << endl;
-		Orbiter->Int_vec->matrix_print(lmei, 1, 4);
+		Int_matrix_print(lmei, 1, 4);
 	}
 	lambda = lmei[0];
 	mu = lmei[1];
@@ -2624,7 +2624,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"abgd:" << endl;
-		Orbiter->Int_vec->matrix_print(abgd, 1, 4);
+		Int_matrix_print(abgd, 1, 4);
 	}
 	// make an identity matrix:
 	for (i = 0; i < 3; i++) {
@@ -2634,11 +2634,11 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		A4[i * 4 + 3] = 0;
 	}
 	// fill in the last row:
-	Orbiter->Int_vec->copy(abgd, A4 + 4 * 3, 4);
+	Int_vec_copy(abgd, A4 + 4 * 3, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"A4:" << endl;
-		Orbiter->Int_vec->matrix_print(A4, 4, 4);
+		Int_matrix_print(A4, 4, 4);
 	}
 
 	if (f_semilinear) {
@@ -2690,10 +2690,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"input Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from, 2, 4);
+		Int_matrix_print(Line1_from, 2, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"input Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from, 2, 4);
+		Int_matrix_print(Line2_from, 2, 4);
 	}
 	P->F->Linear_algebra->Gauss_step_make_pivot_one(Line1_from + 4, Line1_from,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
@@ -2708,10 +2708,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"modified Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from, 2, 4);
+		Int_matrix_print(Line1_from, 2, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"modified Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from, 2, 4);
+		Int_matrix_print(Line2_from, 2, 4);
 	}
 
 	P->F->PG_element_normalize(Line1_from, 1, 4);
@@ -2721,21 +2721,21 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P1 = first point on Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from, 1, 4);
+		Int_matrix_print(Line1_from, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P2 = first point on Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from, 1, 4);
+		Int_matrix_print(Line2_from, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"u = second point on Line1_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_from + 4, 1, 4);
+		Int_matrix_print(Line1_from + 4, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"v = second point on Line2_from:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_from + 4, 1, 4);
+		Int_matrix_print(Line2_from + 4, 1, 4);
 	}
-	Orbiter->Int_vec->copy(Line1_from + 4, u, 4);
-	Orbiter->Int_vec->copy(Line1_from, P1, 4);
-	Orbiter->Int_vec->copy(Line2_from + 4, v, 4);
-	Orbiter->Int_vec->copy(Line2_from, P2, 4);
+	Int_vec_copy(Line1_from + 4, u, 4);
+	Int_vec_copy(Line1_from, P1, 4);
+	Int_vec_copy(Line2_from + 4, v, 4);
+	Int_vec_copy(Line2_from, P2, 4);
 
 
 	P->unrank_line(Line1_to, line1_to);
@@ -2743,10 +2743,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"input Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to, 2, 4);
+		Int_matrix_print(Line1_to, 2, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"input Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to, 2, 4);
+		Int_matrix_print(Line2_to, 2, 4);
 	}
 	P->F->Linear_algebra->Gauss_step_make_pivot_one(Line1_to + 4, Line1_to,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
@@ -2761,10 +2761,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"modified Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to, 2, 4);
+		Int_matrix_print(Line1_to, 2, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"modified Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to, 2, 4);
+		Int_matrix_print(Line2_to, 2, 4);
 	}
 
 	P->F->PG_element_normalize(Line1_to, 1, 4);
@@ -2774,26 +2774,26 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P1 = first point on Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to, 1, 4);
+		Int_matrix_print(Line1_to, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P2 = first point on Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to, 1, 4);
+		Int_matrix_print(Line2_to, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"x = second point on Line1_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line1_to + 4, 1, 4);
+		Int_matrix_print(Line1_to + 4, 1, 4);
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"y = second point on Line2_to:" << endl;
-		Orbiter->Int_vec->matrix_print(Line2_to + 4, 1, 4);
+		Int_matrix_print(Line2_to + 4, 1, 4);
 	}
 
 
-	Orbiter->Int_vec->copy(Line1_to + 4, x, 4);
+	Int_vec_copy(Line1_to + 4, x, 4);
 	//int_vec_copy(Line1_to, P1, 4);
 	if (Sorting.int_vec_compare(P1, Line1_to, 4)) {
 		cout << "Line1_from and Line1_to must intersect in W=0" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec->copy(Line2_to + 4, y, 4);
+	Int_vec_copy(Line2_to + 4, y, 4);
 	//int_vec_copy(Line2_to, P2, 4);
 	if (Sorting.int_vec_compare(P2, Line2_to, 4)) {
 		cout << "Line2_from and Line2_to must intersect in W=0" << endl;
@@ -2806,33 +2806,33 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"umv:" << endl;
-		Orbiter->Int_vec->matrix_print(umv, 1, 4);
+		Int_matrix_print(umv, 1, 4);
 	}
 
-	Orbiter->Int_vec->copy(x, M + 0, 4);
-	Orbiter->Int_vec->copy(P1, M + 4, 4);
-	Orbiter->Int_vec->copy(y, M + 8, 4);
-	Orbiter->Int_vec->copy(P2, M + 12, 4);
+	Int_vec_copy(x, M + 0, 4);
+	Int_vec_copy(P1, M + 4, 4);
+	Int_vec_copy(y, M + 8, 4);
+	Int_vec_copy(P2, M + 12, 4);
 
 	P->F->Linear_algebra->negate_vector_in_place(M + 8, 8);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"M:" << endl;
-		Orbiter->Int_vec->matrix_print(M, 4, 4);
+		Int_matrix_print(M, 4, 4);
 	}
 
 	P->F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"Mv:" << endl;
-		Orbiter->Int_vec->matrix_print(Mv, 4, 4);
+		Int_matrix_print(Mv, 4, 4);
 	}
 
 	P->F->Linear_algebra->mult_vector_from_the_left(umv, Mv, lmei, 4, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"lmei=" << endl;
-		Orbiter->Int_vec->matrix_print(lmei, 1, 4);
+		Int_matrix_print(lmei, 1, 4);
 	}
 	lambda = lmei[0];
 	mu = lmei[1];
@@ -2849,7 +2849,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"abgd:" << endl;
-		Orbiter->Int_vec->matrix_print(abgd, 1, 4);
+		Int_matrix_print(abgd, 1, 4);
 	}
 
 	// make an identity matrix:
@@ -2864,11 +2864,11 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 		}
 	}
 	// fill in the last row:
-	Orbiter->Int_vec->copy(abgd, A4 + 3 * 4, 4);
+	Int_vec_copy(abgd, A4 + 3 * 4, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"A4:" << endl;
-		Orbiter->Int_vec->matrix_print(A4, 4, 4);
+		Int_matrix_print(A4, 4, 4);
 
 		P->F->print_matrix_latex(cout, A4, 4, 4);
 
@@ -2953,7 +2953,7 @@ void geometry_global::andre_preimage(
 		P2->unrank_point(v, set2[i]);
 		FQ->PG_element_normalize(v, 1, 3);
 		if (f_vv) {
-			Orbiter->Int_vec->print(cout, v, 3);
+			Int_vec_print(cout, v, 3);
 			cout << " becomes ";
 		}
 
@@ -2991,9 +2991,9 @@ void geometry_global::andre_preimage(
 			}
 			if (FALSE) {
 				cout << "w1=";
-				Orbiter->Int_vec->print(cout, w1, 4);
+				Int_vec_print(cout, w1, 4);
 				cout << "w2=";
-				Orbiter->Int_vec->print(cout, w2, 4);
+				Int_vec_print(cout, w2, 4);
 				cout << endl;
 			}
 
@@ -3007,7 +3007,7 @@ void geometry_global::andre_preimage(
 				Fq->PG_element_unrank_modified(v2, 1, 2, h);
 				if (FALSE) {
 					cout << "v2=";
-					Orbiter->Int_vec->print(cout, v2, 2);
+					Int_vec_print(cout, v2, 2);
 					cout << " : ";
 				}
 				for (k = 0; k < 4; k++) {
@@ -3017,7 +3017,7 @@ void geometry_global::andre_preimage(
 				w3[4] = 0;
 				if (f_vv) {
 					cout << " ";
-					Orbiter->Int_vec->print(cout, w3, 5);
+					Int_vec_print(cout, w3, 5);
 				}
 				a = P4->rank_point(w3);
 				if (f_vv) {
@@ -3043,7 +3043,7 @@ void geometry_global::andre_preimage(
 			w1[4] = 1;
 			if (f_vv) {
 				//cout << "w1=";
-				Orbiter->Int_vec->print(cout, w1, 5);
+				Int_vec_print(cout, w1, 5);
 			}
 			a = P4->rank_point(w1);
 			if (f_vv) {
@@ -3055,7 +3055,7 @@ void geometry_global::andre_preimage(
 	if (f_v) {
 		cout << "geometry_global::andre_preimage "
 				"we found " << sz4 << " points:" << endl;
-		Orbiter->Lint_vec->print(cout, set4, sz4);
+		Lint_vec_print(cout, set4, sz4);
 		cout << endl;
 		P4->print_set(set4, sz4);
 		for (i = 0; i < sz4; i++) {

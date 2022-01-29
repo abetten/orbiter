@@ -29,7 +29,7 @@ void poset_classification::compute_orbits_on_subsets(
 	int schreier_depth = target_depth;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 
@@ -129,7 +129,7 @@ int poset_classification::main(int t0,
 	int target_depth;
 	//int f_write_files;
 	//int f_embedded = TRUE;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "poset_classification::main" << endl;
@@ -226,7 +226,7 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 	int f_create_schreier_vector = TRUE;
 	int f_debug = FALSE;
 	int f_write_files;
-	os_interface Os;
+	orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -621,7 +621,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		}
 
 
-		file_io Fio;
+		orbiter_kernel_system::file_io Fio;
 		int i;
 
 		string fname;
@@ -657,8 +657,8 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			string fname_report;
 			fname_report.assign(problem_label);
 			fname_report.append("_poset.tex");
-			latex_interface L;
-			file_io Fio;
+			orbiter_kernel_system::latex_interface L;
+			orbiter_kernel_system::file_io Fio;
 
 			{
 				ofstream ost(fname_report);
@@ -722,9 +722,9 @@ void poset_classification::recognize(std::string &set_to_recognize,
 	int *Elt_transporter_inv;
 
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
-	Orbiter->Lint_vec->scan(set_to_recognize, recognize_set, recognize_set_sz);
+	Lint_vec_scan(set_to_recognize, recognize_set, recognize_set_sz);
 	cout << "input set = " << h << " / " << nb_to_recognize << " : ";
-	Orbiter->Lint_vec->print(cout, recognize_set, recognize_set_sz);
+	Lint_vec_print(cout, recognize_set, recognize_set_sz);
 	cout << endl;
 
 	canonical_set = NEW_lint(recognize_set_sz);
@@ -749,7 +749,7 @@ void poset_classification::recognize(std::string &set_to_recognize,
 
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
 	cout << "canonical set = ";
-	Orbiter->Lint_vec->print(cout, canonical_set, recognize_set_sz);
+	Lint_vec_print(cout, canonical_set, recognize_set_sz);
 	cout << endl;
 	cout << "is orbit " << orb << endl;
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
@@ -934,7 +934,7 @@ void poset_classification::compute_flag_orbits(int size,
 				if (FALSE) {
 					int *live_points = Poo->get_node(prev)->live_points();
 					cout << "The live points are : ";
-					Orbiter->Int_vec->print(cout, live_points, nb);
+					Int_vec_print(cout, live_points, nb);
 				}
 				cout << endl;
 				}

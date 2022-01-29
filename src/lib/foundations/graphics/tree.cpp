@@ -345,7 +345,7 @@ void tree::draw(std::string &fname,
 		G.end_figure();
 		G.footer();
 	}
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname_full << " of size "
 			<< Fio.file_size(fname_full) << endl;
@@ -380,12 +380,12 @@ void tree::draw_preprocess(std::string &fname,
 
 		f_node_select = NEW_int(nb_nodes);
 
-		Orbiter->Int_vec->zero(f_node_select, nb_nodes);
-		Orbiter->Int_vec->scan(Tree_draw_options->select_path_text, my_path, sz);
+		Int_vec_zero(f_node_select, nb_nodes);
+		Int_vec_scan(Tree_draw_options->select_path_text, my_path, sz);
 
 		if (f_v) {
 			cout << "tree::draw_preprocess my_path = ";
-			Orbiter->Int_vec->print(cout, my_path, sz);
+			Int_vec_print(cout, my_path, sz);
 			cout << endl;
 		}
 
@@ -394,7 +394,7 @@ void tree::draw_preprocess(std::string &fname,
 			root->find_node(DFS_rk, my_path, sz, verbose_level);
 			if (f_v) {
 				cout << "tree::draw_preprocess my_path = ";
-				Orbiter->Int_vec->print(cout, my_path, sz);
+				Int_vec_print(cout, my_path, sz);
 				cout << " rk=" << DFS_rk << endl;
 			}
 			f_node_select[DFS_rk] = TRUE;

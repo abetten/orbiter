@@ -214,10 +214,10 @@ void clique_finder::init(clique_finder_control *Control,
 	level_m = NEW_int(Control->target_size);
 	current_clique = NEW_int(Control->target_size);
 
-	Orbiter->Int_vec->zero(level_counter, Control->target_size);
-	Orbiter->Int_vec->zero(f_level_mod, Control->target_size);
-	Orbiter->Int_vec->zero(level_r, Control->target_size);
-	Orbiter->Int_vec->zero(level_m, Control->target_size);
+	Int_vec_zero(level_counter, Control->target_size);
+	Int_vec_zero(f_level_mod, Control->target_size);
+	Int_vec_zero(level_r, Control->target_size);
+	Int_vec_zero(level_m, Control->target_size);
 
 
 	for (i = 0; i < n; i++) {
@@ -269,7 +269,7 @@ void clique_finder::init_restrictions(int *restrictions,
 void clique_finder::init_point_labels(int *pt_labels)
 {
 	point_labels = NEW_int(n);
-	Orbiter->Int_vec->copy(pt_labels, point_labels, n);
+	Int_vec_copy(pt_labels, point_labels, n);
 }
 
 void clique_finder::init_suspicious_points(int nb, int *point_list)
@@ -577,7 +577,7 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 			// If we don't have a find_candidates callback,
 			// we take all the points into consideration:
 
-			Orbiter->Int_vec->copy(pt_list, candidates + depth * n, nb_points[depth]);
+			Int_vec_copy(pt_list, candidates + depth * n, nb_points[depth]);
 			nb_candidates[depth] = nb_points[depth];
 		}
 	}
@@ -1412,7 +1412,7 @@ void clique_finder::open_tree_file(std::string &fname_base)
 
 void clique_finder::close_tree_file()
 {
-	file_io Fio;
+	orbiter_kernel_system::file_io Fio;
 
 	*fp_tree << -1 << endl;
 	fp_tree->close();
@@ -1527,7 +1527,7 @@ void clique_finder::log_position_and_choice(int depth,
 	cout << " nb_sol=" << solutions.size() << " ";
 	if (FALSE) {
 		cout << " clique ";
-		Orbiter->Int_vec->set_print(cout, current_clique, depth);
+		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, current_clique, depth);
 	}
 }
 
@@ -1538,7 +1538,7 @@ void clique_finder::log_position(int depth,
 	log_choice(depth);
 	if (FALSE) {
 		cout << " clique ";
-		Orbiter->Int_vec->set_print(cout, current_clique, depth);
+		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, current_clique, depth);
 	}
 }
 
@@ -1575,7 +1575,7 @@ void clique_finder::degree_of_point_statistic(int depth,
 	for (i = 0; i < nb_points; i++) {
 		D[i] = degree_of_point(depth, i, nb_points);
 	}
-	tally C;
+	data_structures::tally C;
 	int f_second = FALSE;
 
 	C.init(D, nb_points, f_second, verbose_level);
