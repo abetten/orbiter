@@ -326,9 +326,9 @@ void orbit_type_repository::create_latex_report(std::string &prefix, int verbose
 void orbit_type_repository::report(ostream &ost, int verbose_level)
 {
 	int type_idx;
-	layered_graph_draw_options LG_Draw_options;
 
 #if 0
+	graphics::layered_graph_draw_options LG_Draw_options;
 	Oos->A->report(ost, FALSE /* f_sims*/, NULL /* sims *S*/,
 			TRUE /* f_strong_gens */, Oos->SG,
 			&LG_Draw_options,

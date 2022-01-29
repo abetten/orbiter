@@ -84,14 +84,14 @@ public:
 
 	spreads::spread_table_with_selection *Spread_table_with_selection;
 
-	projective_space *P3;
-	projective_space *P5;
+	geometry::projective_space *P3;
+	geometry::projective_space *P5;
 	long int *the_packing; // [size_of_packing]
 	long int *spread_iso_type; // [size_of_packing]
 	long int *dual_packing; // [size_of_packing]
 	long int *list_of_lines; // [size_of_packing * spread_size]
 	long int *list_of_lines_klein_image; // [size_of_packing * spread_size]
-	grassmann *Gr; // the Grassmannian Gr_{6,3}
+	geometry::grassmann *Gr; // the Grassmannian Gr_{6,3}
 
 
 
@@ -218,7 +218,7 @@ public:
 	int *Inc;
 		// [total_nb_points * total_nb_blocks]
 
-	incidence_structure *I;
+	geometry::incidence_structure *I;
 	data_structures::partitionstack *Stack;
 	std::string fname_incidence_pic;
 	std::string fname_row_scheme;
@@ -627,7 +627,7 @@ public:
 	int *good_spreads;
 		// the union of all good orbits on spreads
 
-	spread_tables *Spread_tables_reduced;
+	geometry::spread_tables *Spread_tables_reduced;
 		// The spreads in the good orbits, listed one-by-one
 		// This table is *not* sorted.
 		// The induced action on reduced spreads (A_on_reduced_spreads)
@@ -756,7 +756,7 @@ public:
 	void select_packings(
 			std::string &fname,
 			std::string &file_of_spreads_original,
-			spread_tables *Spread_tables,
+			geometry::spread_tables *Spread_tables,
 			int f_self_polar,
 			int f_ago, int select_ago,
 			data_structures::classify_bitvectors *&CB,
@@ -765,7 +765,7 @@ public:
 			std::string &fname,
 			std::string &file_of_spreads_original,
 			int f_split, int split_r, int split_m,
-			spread_tables *Spread_tables,
+			geometry::spread_tables *Spread_tables,
 			data_structures::classify_bitvectors *&CB,
 			int verbose_level);
 

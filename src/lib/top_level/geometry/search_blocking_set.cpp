@@ -112,7 +112,8 @@ void search_blocking_set::freeself()
 	null();
 }
 
-void search_blocking_set::init(incidence_structure *Inc,
+void search_blocking_set::init(
+		geometry::incidence_structure *Inc,
 		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -2428,7 +2428,7 @@ int sorting::schreier_vector_determine_depth_recursion(
 void sorting::schreier_vector_tree(
 	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 	std::string &fname_base,
-	layered_graph_draw_options *LG_Draw_options,
+	graphics::layered_graph_draw_options *LG_Draw_options,
 	graph_theory::layered_graph *&LG,
 	int verbose_level)
 {

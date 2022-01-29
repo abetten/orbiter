@@ -80,7 +80,7 @@ void cubic_curve::init(field_theory::finite_field *F, int verbose_level)
 		cout << "cubic_curve::init q = " << q << endl;
 	}
 
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
 		cout << "cubic_curve::init before P->projective_space_init" << endl;
 	}

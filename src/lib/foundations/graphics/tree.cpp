@@ -10,6 +10,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 tree::tree()
@@ -35,7 +36,7 @@ tree::~tree()
 #define TREEPATHLEN 10000
 #define BUFSIZE_TREE 100000
 
-void tree::init(tree_draw_options *Tree_draw_options,
+void tree::init(graphics::tree_draw_options *Tree_draw_options,
 		int xmax, int ymax, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -221,7 +222,7 @@ void tree::init(tree_draw_options *Tree_draw_options,
 }
 
 void tree::draw(std::string &fname,
-		tree_draw_options *Tree_draw_options,
+		graphics::tree_draw_options *Tree_draw_options,
 		layered_graph_draw_options *Opt,
 		int verbose_level)
 {
@@ -355,7 +356,7 @@ void tree::draw(std::string &fname,
 }
 
 void tree::draw_preprocess(std::string &fname,
-		tree_draw_options *Tree_draw_options,
+		graphics::tree_draw_options *Tree_draw_options,
 		layered_graph_draw_options *Opt,
 		int verbose_level)
 {
@@ -452,8 +453,7 @@ void tree::compute_DFS_ranks(int &nb_nodes, int verbose_level)
 	}
 }
 
-}
-}
+}}}
 
 
 

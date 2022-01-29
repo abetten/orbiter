@@ -149,7 +149,7 @@ void any_group::init_modified_group(modified_group_create *MGC, int verbose_leve
 
 
 void any_group::create_latex_report(
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int f_sylow, int f_group_table, int f_classes,
 		int verbose_level)
 {
@@ -2095,7 +2095,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 }
 
 void any_group::create_latex_report_for_permutation_group(
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2190,7 +2190,7 @@ void any_group::create_latex_report_for_permutation_group(
 }
 
 void any_group::create_latex_report_for_modified_group(
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

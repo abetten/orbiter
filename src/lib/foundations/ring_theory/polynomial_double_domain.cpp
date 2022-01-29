@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace ring_theory {
 
 
 polynomial_double_domain::polynomial_double_domain()
@@ -33,7 +34,7 @@ void polynomial_double_domain::init(int alloc_length)
 	polynomial_double_domain::alloc_length = alloc_length;
 }
 
-polynomial_double *polynomial_double_domain::create_object()
+ring_theory::polynomial_double *polynomial_double_domain::create_object()
 {
 	polynomial_double *p;
 
@@ -288,5 +289,6 @@ double polynomial_double_domain::divide_linear_factor(
 
 
 
-}}
+}}}
+
 

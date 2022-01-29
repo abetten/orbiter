@@ -960,7 +960,7 @@ void colored_graph::load(std::string &fname, int verbose_level)
 
 void colored_graph::draw_on_circle(
 		std::string &fname,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -975,21 +975,21 @@ void colored_graph::draw_on_circle(
 	fname_full.append(".mp");
 
 	{
-	mp_graphics G;
-	int factor_1000 = 1000;
+		graphics::mp_graphics G;
+		int factor_1000 = 1000;
 
-	G.init(fname, Draw_options, verbose_level - 1);
+		G.init(fname, Draw_options, verbose_level - 1);
+
+		G.header();
+
+		G.begin_figure(factor_1000);
+
+		draw_on_circle_2(G, Draw_options);
+
+		G.end_figure();
+		G.footer();
 	
-	G.header();
-
-	G.begin_figure(factor_1000);
-
-	draw_on_circle_2(G, Draw_options);
-
-	G.end_figure();
-	G.footer();
-
-	//G.finish(cout, TRUE);
+		//G.finish(cout, TRUE);
 	}
 	if (f_v) {
 		cout << "colored_graph::draw_on_circle done" << endl;
@@ -997,8 +997,8 @@ void colored_graph::draw_on_circle(
 }
 
 void colored_graph::draw_on_circle_2(
-	mp_graphics &G,
-	layered_graph_draw_options *Draw_options)
+		graphics::mp_graphics &G,
+	graphics::layered_graph_draw_options *Draw_options)
 {
 	int n = nb_points;
 	int i, j;
@@ -1113,7 +1113,7 @@ void colored_graph::create_bitmatrix(data_structures::bitmatrix *&Bitmatrix,
 
 void colored_graph::draw(
 		std::string &fname,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1153,7 +1153,7 @@ void colored_graph::draw(
 
 void colored_graph::draw_Levi(
 		std::string &fname,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 	int f_partition, int nb_row_parts, int *row_part_first, 
 	int nb_col_parts, int *col_part_first, 
 	int m, int n, int f_draw_labels, 
@@ -1236,7 +1236,7 @@ void colored_graph::draw_Levi(
 
 void colored_graph::draw_with_a_given_partition(
 		std::string &fname,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 		int *parts, int nb_parts,
 		int verbose_level)
 {
@@ -1289,7 +1289,7 @@ void colored_graph::draw_with_a_given_partition(
 
 void colored_graph::draw_partitioned(
 		std::string &fname,
-		layered_graph_draw_options *Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 	int f_labels,
 	int verbose_level)
 {

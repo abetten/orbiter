@@ -21,6 +21,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 projective_space_implementation::projective_space_implementation()
@@ -441,7 +442,8 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 }
 
 
-}}
+}}}
+
 
 
 

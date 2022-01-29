@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 projective_space::projective_space()
@@ -3019,7 +3020,7 @@ void projective_space::report_summary(ostream &ost)
 }
 
 void projective_space::report(ostream &ost,
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3070,7 +3071,7 @@ void projective_space::report(ostream &ost,
 		sprintf(str, "plane_of_order_%d", q);
 		fname_base.assign(str);
 
-		plot_tools Pt;
+		graphics::plot_tools Pt;
 
 		Pt.draw_point_set_in_plane(fname_base,
 				O,
@@ -3241,7 +3242,7 @@ void projective_space::make_fname_incidence_matrix_csv(std::string &fname)
 
 
 void projective_space::create_latex_report(
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3525,7 +3526,8 @@ void projective_space::polarity_rank_k_subspace(int k,
 }
 
 
-}}
+}}}
+
 
 
 

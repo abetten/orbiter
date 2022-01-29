@@ -182,7 +182,7 @@ void action::init_action_on_lines(action *A,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	induced_actions::action_on_grassmannian *A_lines;
-	grassmann *Grass_lines;
+	geometry::grassmann *Grass_lines;
 
 	if (f_v) {
 		cout << "action::init_action_on_lines" << endl;
@@ -190,7 +190,7 @@ void action::init_action_on_lines(action *A,
 
 	A_lines = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
-	Grass_lines = NEW_OBJECT(grassmann);
+	Grass_lines = NEW_OBJECT(geometry::grassmann);
 
 
 	if (f_v) {
@@ -520,9 +520,9 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 	M = G.matrix_grp;
 	AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
-	grassmann *Gr;
+	geometry::grassmann *Gr;
 
-	Gr = NEW_OBJECT(grassmann);
+	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(M->n, k, M->GFq, verbose_level);
 	AG->init(*this, Gr, verbose_level);
 	A->type_G = action_on_grassmannian_t;
@@ -2339,7 +2339,7 @@ void action::induced_action_on_bricks(action &old_action,
 }
 
 void action::induced_action_on_andre(action *An,
-	action *An1, andre_construction *Andre,
+	action *An1, geometry::andre_construction *Andre,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

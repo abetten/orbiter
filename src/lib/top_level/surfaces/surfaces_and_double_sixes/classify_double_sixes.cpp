@@ -520,7 +520,7 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 }
 
 void classify_double_sixes::report(std::ostream &ost,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {

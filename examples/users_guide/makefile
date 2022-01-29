@@ -13721,6 +13721,26 @@ Cayley_Z11_1mod3:
 		-end 
 
 
+Cayley_Sym4_coxeter:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define S -vector -dense "1,0,2,3, 0,2,1,3, 0,1,3,2" -end \
+		-define G -permutation_group -symmetric_group 4 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end 
+
+
+Cayley_Sym4_star:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define S -vector -dense "1,0,2,3, 2,1,0,3, 3,1,2,0" -end \
+		-define G -permutation_group -symmetric_group 4 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end 
+
+
 
 
 ###############################################################################
@@ -13815,6 +13835,61 @@ Cayley_Z11_1mod3_eigenvalues_and_draw:
 	pdflatex Cayley_graph_AGL_1_11_draw.tex
 	open Cayley_graph_AGL_1_11_draw.pdf
 
+
+Cayley_Sym4_coxeter_eigenvalues_and_draw:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-define S -vector -dense "1,0,2,3, 0,2,1,3, 0,1,3,2" -end \
+		-define G -permutation_group -symmetric_group 4 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -draw -end
+	pdflatex Cayley_graph_Perm4_draw.tex
+	open Cayley_graph_Perm4_draw.pdf
+	pdflatex Cayley_graph_Perm4_eigenvalues.tex
+	open Cayley_graph_Perm4_eigenvalues.pdf
+
+Cayley_Sym5_coxeter_eigenvalues_and_draw:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-define S -vector -dense "1,0,2,3,4, 0,2,1,3,4, 0,1,3,2,4, 0,1,2,4,3" -end \
+		-define G -permutation_group -symmetric_group 5 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -draw -end
+	pdflatex Cayley_graph_Perm5_draw.tex
+	open Cayley_graph_Perm5_draw.pdf
+	pdflatex Cayley_graph_Perm5_eigenvalues.tex
+	open Cayley_graph_Perm5_eigenvalues.pdf
+
+
+Cayley_Sym4_star_eigenvalues_and_draw:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-define S -vector -dense "1,0,2,3, 2,1,0,3, 3,1,2,0" -end \
+		-define G -permutation_group -symmetric_group 4 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -draw -end
+	pdflatex Cayley_graph_Perm4_draw.tex
+	open Cayley_graph_Perm4_draw.pdf
+	pdflatex Cayley_graph_Perm4_eigenvalues.tex
+	open Cayley_graph_Perm4_eigenvalues.pdf
 
 
 small_graph_draw:

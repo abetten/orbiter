@@ -40,8 +40,8 @@ public:
 	int *Pts; // [target_size * n]
 	int *Candidates; // [degree * n]
 
-	projective_space *P;
-	grassmann *G53;
+	geometry::projective_space *P;
+	geometry::grassmann *G53;
 
 	blt_set_domain();
 	~blt_set_domain();
@@ -107,8 +107,8 @@ public:
 	data_structures::set_of_sets *Sos2;
 	data_structures::set_of_sets *Sos3;
 
-	decomposition *D2;
-	decomposition *D3;
+	geometry::decomposition *D2;
+	geometry::decomposition *D3;
 
 	int *Sos2_idx;
 	int *Sos3_idx;

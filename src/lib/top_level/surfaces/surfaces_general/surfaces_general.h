@@ -506,25 +506,25 @@ public:
 			int verbose_level);
 	void print_automorphism_group(std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		int verbose_level);
 	void cheat_sheet_basic(std::ostream &ost, int verbose_level);
 	void cheat_sheet(std::ostream &ost,
 			std::string &label_txt,
 			std::string &label_tex,
 			int f_print_orbits, std::string &fname_mask,
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 	void print_automorphism_group_gnerators(std::ostream &ost, int verbose_level);
 	void investigate_surface_and_write_report(
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 			int verbose_level);
 	void investigate_surface_and_write_report2(
 			std::ostream &ost,
-			layered_graph_draw_options *Opt,
+			graphics::layered_graph_draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,

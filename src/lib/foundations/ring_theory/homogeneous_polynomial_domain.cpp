@@ -191,7 +191,7 @@ void homogeneous_polynomial_domain::init(field_theory::finite_field *F,
 
 
 
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init before P->projective_space_init" << endl;
 	}
@@ -214,7 +214,7 @@ int homogeneous_polynomial_domain::get_nb_monomials()
 	return nb_monomials;
 }
 
-projective_space *homogeneous_polynomial_domain::get_P()
+geometry::projective_space *homogeneous_polynomial_domain::get_P()
 {
 	return P;
 }
@@ -306,7 +306,7 @@ void homogeneous_polynomial_domain::make_monomials(
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h, idx, t;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -1309,7 +1309,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 	int a, b, c, i, j, idx;
 	int *A;
 	int *V;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_semilinear" << endl;
@@ -1441,7 +1441,7 @@ void homogeneous_polynomial_domain::substitute_line(
 	int *Mtx;
 	int my_nb_affine, wt;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	if (f_v) {

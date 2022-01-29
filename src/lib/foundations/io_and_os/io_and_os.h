@@ -352,7 +352,7 @@ public:
 	// two functions from DISCRETA1:
 
 	void incma_latex_with_text_labels(std::ostream &fp,
-			draw_incidence_structure_description *Descr,
+			graphics::draw_incidence_structure_description *Descr,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
 		int *incma,

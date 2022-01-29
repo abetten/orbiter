@@ -1508,7 +1508,7 @@ void frobenius_in_PG(domain *dom, int n, permutation &p)
 	with ww(dom);
 	int i, j, l;
 	Vector v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	int qq = dom->order_int();
 	int q = dom->order_subfield_int();
@@ -1531,7 +1531,7 @@ void frobenius_in_AG(domain *dom, int n, permutation &p)
 	with ww(dom);
 	int i, j, l;
 	Vector v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	int qq = dom->order_int();
 	int q = dom->order_subfield_int();
@@ -1554,7 +1554,7 @@ void translation_in_AG(domain *dom, int n, int i,
 	with ww(dom);
 	int ii, j, l;
 	Vector v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	int q = dom->order_int();
 	l = Gg.nb_AG_elements(n, q);

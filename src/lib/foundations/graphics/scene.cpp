@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 
@@ -2792,7 +2793,7 @@ void scene::hypercube(int n, double rad_desired)
 	double t, dt;
 	numerics Num;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	int first_pt_idx;
 
@@ -4937,5 +4938,5 @@ void scene::add_a_group_of_things(int *Idx, int sz, int verbose_level)
 
 
 
-}}
+}}}
 

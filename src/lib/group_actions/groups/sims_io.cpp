@@ -759,7 +759,7 @@ void sims::write_as_magma_permutation_group(std::string &fname_base,
 
 void sims::report(std::ostream &ost,
 		std::string &prefix,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

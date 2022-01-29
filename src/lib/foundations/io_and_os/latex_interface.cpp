@@ -548,7 +548,7 @@ void latex_interface::foot(std::ostream& ost)
 // adapted to use ostream instead of FILE pointer
 
 void latex_interface::incma_latex_with_text_labels(std::ostream &fp,
-		draw_incidence_structure_description *Descr,
+		graphics::draw_incidence_structure_description *Descr,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
 	int *incma,
@@ -736,7 +736,7 @@ void latex_interface::incma_latex(std::ostream &fp,
 	if (f_v) {
 		cout << "latex_interface::incma_latex" << endl;
 	}
-	draw_incidence_structure_description *Descr;
+	graphics::draw_incidence_structure_description *Descr;
 
 	Descr = Orbiter->Draw_incidence_structure_description;
 
@@ -772,7 +772,7 @@ void latex_interface::incma_latex_with_labels(std::ostream &fp,
 	if (f_v) {
 		cout << "latex_interface::incma_latex" << endl;
 	}
-	draw_incidence_structure_description *Descr;
+	graphics::draw_incidence_structure_description *Descr;
 
 	Descr = Orbiter->Draw_incidence_structure_description;
 

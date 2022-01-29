@@ -336,7 +336,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 	if (f_v) {
 		cout << "packing_classify::init_P3_and_P5_and_Gr" << endl;
 	}
-	P3 = NEW_OBJECT(projective_space);
+	P3 = NEW_OBJECT(geometry::projective_space);
 	
 	P3->projective_space_init(3, F,
 		TRUE /* f_init_incidence_structure */, 
@@ -347,7 +347,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_lines=" << P3->N_lines << endl;
 	}
 
-	P5 = NEW_OBJECT(projective_space);
+	P5 = NEW_OBJECT(geometry::projective_space);
 
 	P5->projective_space_init(5, F,
 		TRUE /* f_init_incidence_structure */,
@@ -364,7 +364,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 	list_of_lines = NEW_lint(size_of_packing * spread_size);
 	list_of_lines_klein_image = NEW_lint(size_of_packing * spread_size);
 
-	Gr = NEW_OBJECT(grassmann);
+	Gr = NEW_OBJECT(geometry::grassmann);
 
 	Gr->init(6, 3, F, 0 /* verbose_level */);
 

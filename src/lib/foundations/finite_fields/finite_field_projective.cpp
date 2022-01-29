@@ -895,7 +895,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 void finite_field::display_all_PG_elements(int n)
 {
 	int *v = NEW_int(n + 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	int l = Gg.nb_PG_elements(n, q);
 	int i, j, a;
 
@@ -914,7 +914,7 @@ void finite_field::display_all_PG_elements(int n)
 void finite_field::display_all_PG_elements_not_in_subspace(int n, int m)
 {
 	int *v = NEW_int(n + 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	long int l = Gg.nb_PG_elements_not_in_subspace(n, m, q);
 	long int i, j, a;
 
@@ -933,7 +933,7 @@ void finite_field::display_all_PG_elements_not_in_subspace(int n, int m)
 void finite_field::display_all_AG_elements(int n)
 {
 	int *v = NEW_int(n);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	int l = Gg.nb_AG_elements(n, q);
 	int i, j;
 
@@ -1037,7 +1037,7 @@ void finite_field::do_blocking_set_family_3(int n,
 	if (f_v) {
 		cout << "finite_field::do_blocking_set_family_3" << endl;
 	}
-	projective_space *P;
+	geometry::projective_space *P;
 	int h;
 
 	if (n != 2) {
@@ -1055,7 +1055,7 @@ void finite_field::do_blocking_set_family_3(int n,
 				"we need set_size == q + 2" << endl;
 		exit(1);
 	}
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 
 	P->projective_space_init(n, this,
 		FALSE /* f_init_incidence_structure */,
@@ -1261,7 +1261,7 @@ void finite_field::create_Baer_substructure(int n,
 	if (f_v) {
 		cout << "finite_field::create_Baer_substructure" << endl;
 	}
-	projective_space *P2;
+	geometry::projective_space *P2;
 	int q = Fq->q;
 	int Q = q;
 	int sz;
@@ -1271,7 +1271,7 @@ void finite_field::create_Baer_substructure(int n,
 	number_theory::number_theory_domain NT;
 
 	//Q = q * q;
-	P2 = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(geometry::projective_space);
 
 	P2->projective_space_init(n, this,
 		FALSE /* f_init_incidence_structure */,
@@ -1433,7 +1433,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 	int i, j;
 	int d = n + 1;
 	int *v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	nb_pts = Gg.nb_pts_Qepsilon(epsilon, n, q);
 
@@ -1501,9 +1501,9 @@ void finite_field::create_hermitian(int n,
 	int i, j;
 	int d = n + 1;
 	int *v;
-	hermitian *H;
+	geometry::hermitian *H;
 
-	H = NEW_OBJECT(hermitian);
+	H = NEW_OBJECT(geometry::hermitian);
 	H->init(this, d, verbose_level - 1);
 
 	nb_pts = H->cnt_Sbar[d];
@@ -1559,7 +1559,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	if (f_v) {
 		cout << "finite_field::create_ttp_code" << endl;
 	}
-	projective_space *P;
+	geometry::projective_space *P;
 	long int i, j, d;
 	int *v;
 	int *H_subfield;
@@ -1591,7 +1591,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	}
 
 	d = m;
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 
 
 	P->projective_space_init(d - 1, Fq,
@@ -1670,9 +1670,9 @@ void finite_field::create_segre_variety(int a, int b,
 	if (f_v) {
 		cout << "finite_field::create_segre_variety" << endl;
 	}
-	projective_space *P1;
-	projective_space *P2;
-	projective_space *P3;
+	geometry::projective_space *P1;
+	geometry::projective_space *P2;
+	geometry::projective_space *P3;
 	int i, j, d, N1, N2, rk;
 	int *v1;
 	int *v2;
@@ -1687,9 +1687,9 @@ void finite_field::create_segre_variety(int a, int b,
 	if (f_v) {
 		cout << "d=" << d << " (vector space dimension)" << endl;
 	}
-	P1 = NEW_OBJECT(projective_space);
-	P2 = NEW_OBJECT(projective_space);
-	P3 = NEW_OBJECT(projective_space);
+	P1 = NEW_OBJECT(geometry::projective_space);
+	P2 = NEW_OBJECT(geometry::projective_space);
+	P3 = NEW_OBJECT(geometry::projective_space);
 	v1 = NEW_int(a + 1);
 	v2 = NEW_int(b + 1);
 	v3 = NEW_int(d);
@@ -1751,7 +1751,7 @@ void finite_field::do_andre(finite_field *Fq,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	projective_space *P2, *P4;
+	geometry::projective_space *P2, *P4;
 	int a, a0, a1;
 	int b, b0, b1;
 	int i, h, k, alpha; //, d;
@@ -1763,8 +1763,8 @@ void finite_field::do_andre(finite_field *Fq,
 	if (f_v) {
 		cout << "finite_field::do_andre for a set of size " << set_size_in << endl;
 	}
-	P2 = NEW_OBJECT(projective_space);
-	P4 = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(geometry::projective_space);
+	P4 = NEW_OBJECT(geometry::projective_space);
 
 
 	P2->projective_space_init(2, this,

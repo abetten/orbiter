@@ -367,11 +367,11 @@ public:
 			int f_box_width, int box_width, int bit_depth, int verbose_level);
 	void draw_it(
 			std::string &fname_base,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void draw_partitioned(
 			std::string &fname_base,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 		int f_solution, int *solution, int solution_sz, 
 		int verbose_level);
 	int test_solution(int *sol, int len, int verbose_level);

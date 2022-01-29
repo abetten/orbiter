@@ -3474,7 +3474,7 @@ void strong_generators::export_group_and_copy_to_latex(
 
 void strong_generators::report_fixed_objects_in_P3(
 		ostream &ost,
-		projective_space *P3,
+		geometry::projective_space *P3,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

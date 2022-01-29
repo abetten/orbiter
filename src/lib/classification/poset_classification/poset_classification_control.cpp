@@ -41,7 +41,7 @@ poset_classification_control::poset_classification_control()
 	depth = 0;
 
 	f_draw_options = TRUE;
-	draw_options = NEW_OBJECT(layered_graph_draw_options);
+	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
 	verbose_level = 0;
 	verbose_level_group_theory = 0;
@@ -159,7 +159,7 @@ int poset_classification_control::read_arguments(
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
-			draw_options = NEW_OBJECT(layered_graph_draw_options);
+			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 			if (f_v) {
 				cout << "-draw_options " << endl;
 			}

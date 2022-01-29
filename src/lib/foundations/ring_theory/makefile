@@ -11,6 +11,8 @@ MODULES = \
 	longinteger_domain.o \
 	longinteger_object.o \
 	partial_derivative.o \
+	polynomial_double_domain.o \
+	polynomial_double.o \
 	ring_theory_global.o \
 	table_of_irreducible_polynomials.o \
 	unipoly_domain.o \

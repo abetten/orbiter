@@ -153,7 +153,7 @@ void translation_plane_via_andre_model::init(
 	n1 = n + 1;
 	k1 = k + 1;
 	
-	Andre = NEW_OBJECT(andre_construction);
+	Andre = NEW_OBJECT(geometry::andre_construction);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
@@ -177,7 +177,7 @@ void translation_plane_via_andre_model::init(
 
 
 
-	Line = NEW_OBJECT(andre_construction_line_element);
+	Line = NEW_OBJECT(geometry::andre_construction_line_element);
 	Incma = NEW_int(N * N);
 	pts_on_line = NEW_int(Andre->spread_size);
 
@@ -341,7 +341,7 @@ void translation_plane_via_andre_model::init(
 	int nb_cols = N;
 	
 
-	Inc = NEW_OBJECT(incidence_structure);
+	Inc = NEW_OBJECT(geometry::incidence_structure);
 
 	Inc->init_by_matrix(nb_rows, nb_cols,
 			Incma, verbose_level - 2);

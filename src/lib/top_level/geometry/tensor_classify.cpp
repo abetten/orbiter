@@ -366,7 +366,7 @@ void tensor_classify::early_test_func(long int *S, int len,
 
 
 void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -485,7 +485,7 @@ int finite_ring::PHG_element_rank(
 	int f_v = FALSE;
 	int *w;
 	int *embedding;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (!f_chain_ring) {
 		cout << "finite_ring::PHG_element_rank not a chain ring" << endl;
@@ -551,7 +551,7 @@ void finite_ring::PHG_element_unrank(
 	int f_v = FALSE;
 	int *w;
 	int *embedding;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (!f_chain_ring) {
 		cout << "finite_ring::PHG_element_unrank not a chain ring" << endl;
@@ -600,7 +600,7 @@ void finite_ring::PHG_element_unrank(
 int finite_ring::nb_PHG_elements(int n)
 {
 	int N1, N2;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (!f_chain_ring) {
 		cout << "finite_ring::nb_PHG_elements not a chain ring" << endl;

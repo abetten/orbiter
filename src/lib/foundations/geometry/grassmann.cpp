@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 grassmann::grassmann()
@@ -1377,7 +1378,8 @@ long int grassmann::make_special_element_infinity(int verbose_level)
 }
 
 
-}}
+}}}
+
 
 
 

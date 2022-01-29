@@ -86,7 +86,7 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 	int f_v = (verbose_level >= 1);
 	int i;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "generators_symplectic_group::init" << endl;

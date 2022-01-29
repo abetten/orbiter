@@ -313,7 +313,7 @@ void orthogonal::init(int epsilon, int n,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	orthogonal::epsilon = epsilon;
@@ -641,7 +641,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 void orthogonal::init_counting_functions(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "orthogonal::init_counting_functions" << endl;
@@ -742,7 +742,7 @@ void orthogonal::init_counting_functions(int verbose_level)
 void orthogonal::init_decomposition(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	int i;
 
 	if (f_v) {
@@ -824,7 +824,7 @@ void orthogonal::init_parabolic(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	//int a, b, c;
 
@@ -888,7 +888,7 @@ void orthogonal::init_parabolic(int verbose_level)
 void orthogonal::init_parabolic_even(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "init_parabolic_even" << endl;
@@ -1004,7 +1004,7 @@ void orthogonal::init_parabolic_odd(int verbose_level)
 {
 	long int a, b, c, i, j;
 	int f_v = (verbose_level >= 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "init_parabolic_odd" << endl;

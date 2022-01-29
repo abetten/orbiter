@@ -54,7 +54,7 @@ tactical_decomposition::~tactical_decomposition()
 }
 
 void tactical_decomposition::init(int nb_rows, int nb_cols,
-		incidence_structure *Inc,
+		geometry::incidence_structure *Inc,
 		int f_combined_action,
 		actions::action *A,
 		actions::action *A_on_points,

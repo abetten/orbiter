@@ -398,35 +398,42 @@ namespace field_theory {
 	class subfield_structure;
 }
 
-// geometry:
-class andre_construction_line_element;
-class andre_construction_point_element;
-class andre_construction;
-class arc_basic;
-class arc_in_projective_space;
-class buekenhout_metz;
-class decomposition;
-class desarguesian_spread;
-class flag;
-class geometric_object_create;
-class geometric_object_description;
-class geometry_global;
-class grassmann_embedded;
-class grassmann;
-class hermitian;
-class hjelmslev;
-class incidence_structure;
-class klein_correspondence;
-class knarr;
-class object_with_canonical_form;
-class point_line;
-class points_and_lines;
-class polarity;
-class projective_space_implementation;
-class projective_space;
-class spread_tables;
-class W3q;
 
+//! projective geometry over a finite field and related topics
+
+namespace geometry {
+
+
+	// geometry:
+	class andre_construction_line_element;
+	class andre_construction_point_element;
+	class andre_construction;
+	class arc_basic;
+	class arc_in_projective_space;
+	class buekenhout_metz;
+	class decomposition;
+	class desarguesian_spread;
+	class flag;
+	class geometric_object_create;
+	class geometric_object_description;
+	class geometry_global;
+	class grassmann_embedded;
+	class grassmann;
+	class hermitian;
+	class hjelmslev;
+	class incidence_structure;
+	class klein_correspondence;
+	class knarr;
+	class object_with_canonical_form;
+	class point_line;
+	class points_and_lines;
+	class polarity;
+	class projective_space_implementation;
+	class projective_space;
+	class spread_tables;
+	class W3q;
+
+}
 
 //! exhaustive construction and classification of configurations, linear spaces, and designs
 
@@ -457,8 +464,6 @@ class numerics;
 class orbiter_session;
 class orbiter_symbol_table_entry;
 class orbiter_symbol_table;
-class polynomial_double_domain;
-class polynomial_double;
 
 
 //! graph theory: constructions, clique finding, drawing
@@ -480,29 +485,35 @@ namespace graph_theory {
 // graph_theory_nauty
 class nauty_interface;
 
+//! graphical output interfaces: 2D graphics (BMP, TikZ, Metapost) and 3D graphics (povray)
 
-// graphics:
-class animate;
-class draw_bitmap_control;
-class draw_incidence_structure_description;
-class draw_mod_n_description;
-class draw_projective_curve_description;
-class drawable_set_of_objects;
-class graphical_output;
-class layered_graph_draw_options;
-class mp_graphics;
-class parametric_curve_point;
-class parametric_curve;
-class plot_tools;
-class povray_interface;
-class povray_job_description;
-class scene;
-class tree_draw_options;
-class tree;
-class tree_node;
-class video_draw_options;
-// pointer types
-typedef tree_node *ptree_node;
+namespace graphics {
+
+	// graphics:
+	class animate;
+	class draw_bitmap_control;
+	class draw_incidence_structure_description;
+	class draw_mod_n_description;
+	class draw_projective_curve_description;
+	class drawable_set_of_objects;
+	class graphical_output;
+	class layered_graph_draw_options;
+	class mp_graphics;
+	class parametric_curve_point;
+	class parametric_curve;
+	class plot_tools;
+	class povray_interface;
+	class povray_job_description;
+	class scene;
+	class tree_draw_options;
+	class tree;
+	class tree_node;
+	class video_draw_options;
+	// pointer types
+	typedef tree_node *ptree_node;
+
+
+}
 
 
 // io_and_os:
@@ -561,6 +572,8 @@ namespace ring_theory {
 	class longinteger_domain;
 	class longinteger_object;
 	class partial_derivative;
+	class polynomial_double_domain;
+	class polynomial_double;
 	class ring_theory_global;
 	class table_of_irreducible_polynomials;
 	class unipoly_domain;

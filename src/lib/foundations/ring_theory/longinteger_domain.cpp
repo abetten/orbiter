@@ -1394,7 +1394,7 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq, int n, int q, 
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	longinteger_object A, S, B;
 
 	if (f_v) {

@@ -199,7 +199,8 @@ void coding_theory_domain::make_table_of_bounds(
 }
 
 void coding_theory_domain::make_gilbert_varshamov_code(
-		int n, int k, int d, int q, projective_space *P, int verbose_level)
+		int n, int k, int d, int q,
+		geometry::projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -265,7 +266,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 }
 
 void coding_theory_domain::make_gilbert_varshamov_code_recursion(
-		projective_space *P, int n, int d,
+		geometry::projective_space *P, int n, int d,
 		long int *set, int *f_forbidden, int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -687,7 +688,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 	int *v;
 	int *w;
 	int *Table;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	field_theory::finite_field *F = NULL;
 
 	if (f_v) {
@@ -840,7 +841,7 @@ void coding_theory_domain::codewords_affine(field_theory::finite_field *F, int n
 	long int N, h, rk;
 	int *msg;
 	int *word;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "coding_theory_domain::codewords_affine" << endl;
@@ -877,7 +878,7 @@ void coding_theory_domain::code_projective_weight_enumerator(field_theory::finit
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -949,7 +950,7 @@ void coding_theory_domain::code_weight_enumerator(field_theory::finite_field *F,
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -1023,7 +1024,7 @@ void coding_theory_domain::code_weight_enumerator_fast(field_theory::finite_fiel
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -1110,7 +1111,7 @@ void coding_theory_domain::code_projective_weights(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -1432,7 +1433,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 	int *code_word;
 	long int *set;
 	int sz;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	genma = NEW_int(k * n);
 	word = NEW_int(k);
@@ -1574,7 +1575,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 	int *genma;
 	int *word;
 	int *code_word;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
@@ -1708,7 +1709,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	int *genma;
 	int *word;
 	int *code_word;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
@@ -1893,7 +1894,7 @@ void coding_theory_domain::do_polynomial(
 	int h;
 	long int *set;
 	int set_sz = 0;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	v = NEW_int(polynomial_nb_vars);
@@ -1948,7 +1949,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 	int *M2;
 	int H2[4] = {1,1,1,2};
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	nb_factors = NT.int_log2(m);
 
@@ -2559,7 +2560,7 @@ void coding_theory_domain::do_long_code(
 	int *M;
 	int nb_rows, nb_cols;
 	int h, r, c;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	int *Wt;
 	int wt;
 	//int N;
@@ -3187,7 +3188,7 @@ void coding_theory_domain::CRC_encode_text(field_theory::nth_roots *Nth,
 	int *information_and_parity;
 	int *information_and_parity_Fq;
 	int *codeword_Fq;
-	geometry_global GG;
+	geometry::geometry_global GG;
 
 	information = NEW_int(nb_rows * nb_cols);
 	information_and_parity = NEW_int(nb_rows * nb_cols + nb_rows + nb_cols);
@@ -3407,7 +3408,7 @@ void coding_theory_domain::field_induction(std::string &fname_in,
 	long int *M2;
 	int *v;
 	int m, n;
-	geometry_global GG;
+	geometry::geometry_global GG;
 
 
 	file_io Fio;

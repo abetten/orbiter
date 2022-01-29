@@ -21,7 +21,7 @@ namespace actions {
 
 void action::report(ostream &ost, int f_sims, groups::sims *S,
 		int f_strong_gens, groups::strong_generators *SG,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -50,9 +50,9 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 
 
 		{
-			projective_space *P;
+			geometry::projective_space *P;
 
-			P = NEW_OBJECT(projective_space);
+			P = NEW_OBJECT(geometry::projective_space);
 
 			P->projective_space_init(M->n - 1, F, TRUE, verbose_level);
 
@@ -162,7 +162,7 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 }
 
 void action::report_what_we_act_on(ostream &ost,
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -179,9 +179,9 @@ void action::report_what_we_act_on(ostream &ost,
 		F = M->GFq;
 
 		{
-			projective_space *P;
+			geometry::projective_space *P;
 
-			P = NEW_OBJECT(projective_space);
+			P = NEW_OBJECT(geometry::projective_space);
 
 			P->projective_space_init(M->n - 1, F, TRUE, verbose_level);
 

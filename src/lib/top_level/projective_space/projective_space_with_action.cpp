@@ -98,7 +98,7 @@ void projective_space_with_action::init(
 	d = n + 1;
 	q = F->q;
 	
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 	P->projective_space_init(n, F,
 		f_init_incidence_structure, 
 		verbose_level);
@@ -278,7 +278,7 @@ void projective_space_with_action::canonical_form(
 #endif
 
 void projective_space_with_action::canonical_labeling(
-		object_with_canonical_form *OiP,
+		geometry::object_with_canonical_form *OiP,
 	int *canonical_labeling,
 	int verbose_level)
 {
@@ -340,7 +340,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		cout << "projective_space_with_action::report_fixed_points_lines_and_planes P->n < 3" << endl;
 		exit(1);
 	}
-	projective_space *P3;
+	geometry::projective_space *P3;
 	int i, j, cnt;
 	int v[4];
 
@@ -1080,7 +1080,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 void projective_space_with_action::report(
 	ostream &ost,
-	layered_graph_draw_options *O,
+	graphics::layered_graph_draw_options *O,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1640,7 +1640,7 @@ void projective_space_with_action::conic_type(
 }
 
 void projective_space_with_action::cheat_sheet(
-		layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

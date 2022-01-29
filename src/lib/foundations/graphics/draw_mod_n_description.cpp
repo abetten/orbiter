@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 draw_mod_n_description::draw_mod_n_description()
@@ -160,5 +161,6 @@ void draw_mod_n_description::print()
 
 
 
-}}
+}}}
+
 

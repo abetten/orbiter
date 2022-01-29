@@ -458,7 +458,7 @@ void combinatorics_global::Hill_cap56(
 	actions::action *An;
 	field_theory::finite_field *F;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	os_interface Os;
 
 	if (f_v) {
@@ -565,7 +565,7 @@ void combinatorics_global::Hill_cap56(
 	for (i = 0; i < nb_lines; i++) {
 		cout << setw(5) << i << " : " << Rank_lines[i] << endl;
 		}
-	grassmann Grass;
+	geometry::grassmann Grass;
 
 	if (f_v) {
 		cout << "Hill_cap before Grass.init" << endl;
@@ -1066,10 +1066,10 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 
 
 
-		incidence_structure *Inc;
+		geometry::incidence_structure *Inc;
 		int *partition;
 
-		Inc = NEW_OBJECT(incidence_structure);
+		Inc = NEW_OBJECT(geometry::incidence_structure);
 		Inc->init_large_set(
 				the_set_in /* blocks */,
 				N_points, design_b, design_k, partition_class_size,
@@ -1102,7 +1102,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 		int idx;
 		ring_theory::longinteger_object go;
 
-		incidence_structure *Inc_out;
+		geometry::incidence_structure *Inc_out;
 
 
 		process_object(
@@ -1206,7 +1206,7 @@ void combinatorics_global::handle_input_file(data_structures::classify_bitvector
 void combinatorics_global::process_object(
 		data_structures::classify_bitvectors *CB,
 		data_structures_groups::incidence_structure_with_group *IG,
-	incidence_structure *&Inc_out,
+		geometry::incidence_structure *&Inc_out,
 	int nb_objects_to_test,
 	int &f_found, int &idx,
 	ring_theory::longinteger_object &go,

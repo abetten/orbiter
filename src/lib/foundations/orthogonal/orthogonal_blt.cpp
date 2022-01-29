@@ -81,7 +81,7 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 	int f_vv = (verbose_level >= 2);
 	int v[5];
 	int r, i, a, b, c;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	int q = F->q;
 
@@ -144,7 +144,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 	int v[5];
 	int i, m, minus_one, exponent, a, b, c;
 	int q;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	q = F->q;
 	m = F->p; // the primitive element is a nonsquare
@@ -205,7 +205,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 	int v[5];
 	int five, r, i, a, b, c;
 	int q;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	q = F->q;
 	if (q <= 5) {

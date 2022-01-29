@@ -88,7 +88,8 @@ void recoordinatize::freeself()
 }
 
 void recoordinatize::init(int n, int k,
-		field_theory::finite_field *F, grassmann *Grass,
+		field_theory::finite_field *F,
+		geometry::grassmann *Grass,
 		actions::action *A, actions::action *A2,
 	int f_projective, int f_semilinear, 
 	int (*check_function_incremental)(int len,

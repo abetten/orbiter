@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -598,5 +599,6 @@ void geometric_object_description::print()
 
 
 
-}}
+}}}
+
 

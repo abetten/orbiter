@@ -324,20 +324,20 @@ void interface_projective::worker(int verbose_level)
 
 	if (f_create_points_on_quartic) {
 
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 		GO.do_create_points_on_quartic(desired_distance, verbose_level);
 	}
 	else if (f_create_points_on_parabola) {
 
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 		GO.do_create_points_on_parabola(desired_distance,
 				parabola_N, parabola_a, parabola_b, parabola_c, verbose_level);
 	}
 	else if (f_smooth_curve) {
 
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 		GO.do_smooth_curve(smooth_curve_label,
 				desired_distance, smooth_curve_N,

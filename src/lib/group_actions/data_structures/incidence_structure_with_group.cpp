@@ -74,7 +74,8 @@ void incidence_structure_with_group::freeself()
 	null();
 }
 
-void incidence_structure_with_group::init(incidence_structure *Inc,
+void incidence_structure_with_group::init(
+		geometry::incidence_structure *Inc,
 	int *partition,
 	int verbose_level)
 {
@@ -95,7 +96,7 @@ void incidence_structure_with_group::init(incidence_structure *Inc,
 
 void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		int f_compute_canonical_form,
-		incidence_structure *&Inc_out,
+		geometry::incidence_structure *&Inc_out,
 		int verbose_level)
 {
 

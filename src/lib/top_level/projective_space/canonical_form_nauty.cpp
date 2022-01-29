@@ -82,12 +82,12 @@ void canonical_form_nauty::quartic_curve(
 	}
 
 	ring_theory::longinteger_object pt_stab_order;
-	object_with_canonical_form *OwCF = NULL;
+	geometry::object_with_canonical_form *OwCF = NULL;
 
 	int f_compute_canonical_form = TRUE;
 
 
-	OwCF = NEW_OBJECT(object_with_canonical_form);
+	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 	if (f_v) {
 		cout << "canonical_form_nauty::quartic_curve before OwCF->init_point_set" << endl;

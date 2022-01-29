@@ -139,7 +139,7 @@ class cubic_curve {
 public:
 	int q;
 	field_theory::finite_field *F;
-	projective_space *P; // PG(2,q)
+	geometry::projective_space *P; // PG(2,q)
 
 
 	int nb_monomials;
@@ -190,10 +190,10 @@ class del_pezzo_surface_of_degree_two_domain {
 
 public:
 	field_theory::finite_field *F;
-	projective_space *P;
-	projective_space *P2;
-	grassmann *Gr; // Gr_{4,2}
-	grassmann *Gr3; // Gr_{4,3}
+	geometry::projective_space *P;
+	geometry::projective_space *P2;
+	geometry::grassmann *Gr; // Gr_{4,2}
+	geometry::grassmann *Gr3; // Gr_{4,3}
 	long int nb_lines_PG_3;
 	ring_theory::homogeneous_polynomial_domain *Poly4_3;
 		// quartic polynomials in three variables
@@ -201,7 +201,7 @@ public:
 	del_pezzo_surface_of_degree_two_domain();
 	~del_pezzo_surface_of_degree_two_domain();
 	void init(
-			projective_space *P,
+			geometry::projective_space *P,
 			ring_theory::homogeneous_polynomial_domain *Poly4_3,
 			int verbose_level);
 	void enumerate_points(int *coeff,
@@ -230,7 +230,7 @@ public:
 	syntax_tree_node **Subtrees;
 	int *Coefficient_vector;
 
-	points_and_lines *pal;
+	geometry::points_and_lines *pal;
 
 
 	del_pezzo_surface_of_degree_two_object();
@@ -263,7 +263,7 @@ class eckardt_point_info {
 public:
 
 	//surface_domain *Surf;
-	projective_space *P2;
+	geometry::projective_space *P2;
 	long int arc6[6];
 
 	int *bisecants; // [15]
@@ -281,7 +281,7 @@ public:
 	~eckardt_point_info();
 	void null();
 	void freeself();
-	void init(projective_space *P2,
+	void init(geometry::projective_space *P2,
 			long int *arc6, int verbose_level);
 	void print_bisecants(std::ostream &ost, int verbose_level);
 	void print_intersections(std::ostream &ost, int verbose_level);
@@ -337,7 +337,7 @@ class quartic_curve_domain {
 
 public:
 	field_theory::finite_field *F;
-	projective_space *P;
+	geometry::projective_space *P;
 
 	ring_theory::homogeneous_polynomial_domain *Poly1_3;
 		// linear polynomials in three variables
@@ -858,15 +858,15 @@ public:
 	int n; // = 4
 	int n2; // = 2 * n
 	field_theory::finite_field *F;
-	projective_space *P; // PG(3,q)
-	projective_space *P2; // PG(2,q)
-	grassmann *Gr; // Gr_{4,2}
-	grassmann *Gr3; // Gr_{4,3}
+	geometry::projective_space *P; // PG(3,q)
+	geometry::projective_space *P2; // PG(2,q)
+	geometry::grassmann *Gr; // Gr_{4,2}
+	geometry::grassmann *Gr3; // Gr_{4,3}
 	long int nb_lines_PG_3;
 	int nb_pts_on_surface_with_27_lines; // q^2 + 7q + 1
 
 	orthogonal *O;
-	klein_correspondence *Klein;
+	geometry::klein_correspondence *Klein;
 
 
 	int Basis0[16];

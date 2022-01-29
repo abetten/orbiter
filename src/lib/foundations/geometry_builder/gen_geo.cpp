@@ -228,9 +228,9 @@ void gen_geo::main2(int verbose_level)
 
 		}
 
-		object_with_canonical_form *OiP;
+		geometry::object_with_canonical_form *OiP;
 
-		OiP = (object_with_canonical_form *) it->Canonical_forms->Objects[0];
+		OiP = (geometry::object_with_canonical_form *) it->Canonical_forms->Objects[0];
 
 		if (inc->is_block_tactical(V, OiP->set)) {
 

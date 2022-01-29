@@ -120,7 +120,7 @@ void subfield_structure::init_with_given_basis(
 {
 	int f_v = (verbose_level >= 1);
 	int /*alpha,*/ /*omega,*/ i, j, h;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "subfield_structure::init_with_given_basis" << endl;
@@ -188,7 +188,7 @@ void subfield_structure::init_with_given_basis(
 void subfield_structure::print_embedding()
 {
 	long int i, j;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	cout << "subfield_structure::print_embedding:" << endl;
 	cout << "i : vector over F_q : embedding" << endl;
@@ -213,7 +213,7 @@ void subfield_structure::print_embedding()
 void subfield_structure::report(std::ostream &ost)
 {
 	int i, j;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	ost << "\\subsection*{The Subfield of Order $" << q << "$}" << endl;
@@ -318,7 +318,7 @@ void subfield_structure::retract_matrix(int *Mq,
 	int f_v = (verbose_level >= 1);
 	int *vec;
 	long int i, j, I, J, u, v, d, b, bv, a, rk;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "subfield_structure::retract_matrix" << endl;
@@ -537,10 +537,10 @@ void subfield_structure::create_adelaide_hyperoval(
 		int i;
 		int n = 2, d = n + 1;
 		int *v;
-		projective_space *P;
+		geometry::projective_space *P;
 
 		v = NEW_int(d);
-		P = NEW_OBJECT(projective_space);
+		P = NEW_OBJECT(geometry::projective_space);
 
 
 		P->projective_space_init(n, F,
@@ -577,7 +577,7 @@ void subfield_structure::field_reduction(int *input, int sz, int *output,
 	int i, j, a, b, c, t, J;
 	int n;
 	int *w;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "subfield_structure::field_reduction" << endl;

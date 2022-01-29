@@ -143,7 +143,7 @@ void unusual_model::setup2(
 	int f_vvv = (verbose_level >= 2);
 	int i, j, b, p, h;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	
 	if (f_v) {
 		cout << "unusual_model::setup2 f_sum_of_squares=" << f_sum_of_squares << endl;

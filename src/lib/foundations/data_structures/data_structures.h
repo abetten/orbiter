@@ -228,15 +228,15 @@ public:
 
 	classify_using_canonical_forms();
 	~classify_using_canonical_forms();
-	void orderly_test(object_with_canonical_form *OwCF,
+	void orderly_test(geometry::object_with_canonical_form *OwCF,
 			int &f_accept, int verbose_level);
-	void find_object(object_with_canonical_form *OwCF,
+	void find_object(geometry::object_with_canonical_form *OwCF,
 			int &f_found, int &idx,
 			nauty_output *&NO,
 			bitvector *&Canonical_form,
 			int verbose_level);
 		// if f_found is TRUE, B[idx] agrees with the given object
-	void add_object(object_with_canonical_form *OwCF,
+	void add_object(geometry::object_with_canonical_form *OwCF,
 			int &f_new_object,
 			int verbose_level);
 
@@ -1099,8 +1099,8 @@ public:
 		int verbose_level);
 	void compute_and_print_tdo_col_scheme(std::ostream &file,
 		int verbose_level);
-	void init_decomposition(decomposition *&D, int verbose_level);
-	void compute_tdo_decomposition(decomposition &D, 
+	void init_decomposition(geometry::decomposition *&D, int verbose_level);
+	void compute_tdo_decomposition(geometry::decomposition &D,
 		int verbose_level);
 	int is_member(int i, int a, int verbose_level);
 	void sort_all(int verbose_level);
@@ -1344,7 +1344,7 @@ public:
 	void schreier_vector_tree(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		std::string &fname_base,
-		layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		graph_theory::layered_graph *&LG,
 		int verbose_level);
 	int compare_sets(int *set1, int *set2, int sz1, int sz2);

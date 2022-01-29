@@ -28,7 +28,8 @@ classify_using_canonical_forms::~classify_using_canonical_forms()
 {
 }
 
-void classify_using_canonical_forms::orderly_test(object_with_canonical_form *OwCF,
+void classify_using_canonical_forms::orderly_test(
+		geometry::object_with_canonical_form *OwCF,
 		int &f_accept, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -94,7 +95,8 @@ void classify_using_canonical_forms::orderly_test(object_with_canonical_form *Ow
 	}
 }
 
-void classify_using_canonical_forms::find_object(object_with_canonical_form *OwCF,
+void classify_using_canonical_forms::find_object(
+		geometry::object_with_canonical_form *OwCF,
 		int &f_found, int &idx,
 		nauty_output *&NO,
 		bitvector *&Canonical_form,
@@ -151,7 +153,8 @@ void classify_using_canonical_forms::find_object(object_with_canonical_form *OwC
 	}
 }
 
-void classify_using_canonical_forms::add_object(object_with_canonical_form *OwCF,
+void classify_using_canonical_forms::add_object(
+		geometry::object_with_canonical_form *OwCF,
 		int &f_new_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -138,7 +138,7 @@ public:
 	combinatorial_object_activity_description *Descr;
 
 	int f_has_GOC;
-	geometric_object_create *GOC;
+	geometry::geometric_object_create *GOC;
 
 	int f_has_IS;
 	data_structures::data_input_stream *IS;
@@ -147,7 +147,7 @@ public:
 	combinatorial_object_activity();
 	~combinatorial_object_activity();
 	void init(combinatorial_object_activity_description *Descr,
-			geometric_object_create *GOC,
+			geometry::geometric_object_create *GOC,
 			int verbose_level);
 	void init_input_stream(combinatorial_object_activity_description *Descr,
 			data_structures::data_input_stream *IS,
@@ -256,7 +256,7 @@ public:
 	void process_object(
 			data_structures::classify_bitvectors *CB,
 			data_structures_groups::incidence_structure_with_group *IG,
-		incidence_structure *&Inc_out,
+			geometry::incidence_structure *&Inc_out,
 		int nb_objects_to_test,
 		int &f_found, int &idx,
 		ring_theory::longinteger_object &go,
@@ -681,7 +681,7 @@ public:
 
 
 	projective_geometry::projective_space_with_action *PA;
-	projective_space *P;
+	geometry::projective_space *P;
 
 	int *block; // [k]
 
@@ -1390,7 +1390,7 @@ int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_lengt
 class object_with_properties {
 public:
 
-	object_with_canonical_form *OwCF;
+	geometry::object_with_canonical_form *OwCF;
 
 	std::string label;
 
@@ -1409,7 +1409,8 @@ public:
 
 	object_with_properties();
 	~object_with_properties();
-	void init(object_with_canonical_form *OwCF,
+	void init(
+			geometry::object_with_canonical_form *OwCF,
 			data_structures::nauty_output *NO,
 			int f_projective_space, projective_geometry::projective_space_with_action *PA,
 			int max_TDO_depth,
@@ -1418,7 +1419,7 @@ public:
 	void compute_flag_orbits(int verbose_level);
 	void lift_generators_to_matrix_group(int verbose_level);
 	void init_object_in_projective_space(
-			object_with_canonical_form *OwCF,
+			geometry::object_with_canonical_form *OwCF,
 			data_structures::nauty_output *NO,
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
@@ -1574,7 +1575,7 @@ public:
 
 	int set_size;
 	int nb_blocks;
-	incidence_structure *Inc;
+	geometry::incidence_structure *Inc;
 	int f_combined_action;
 	actions::action *A;
 	actions::action *A_on_points;
@@ -1588,7 +1589,7 @@ public:
 	tactical_decomposition();
 	~tactical_decomposition();
 	void init(int nb_rows, int nb_cols,
-			incidence_structure *Inc,
+			geometry::incidence_structure *Inc,
 			int f_combined_action,
 			actions::action *Aut,
 			actions::action *A_on_points,

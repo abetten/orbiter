@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 hermitian::hermitian()
@@ -1085,7 +1086,6 @@ void hermitian::report_points(std::ostream &ost, int verbose_level)
 
 
 
-}
-}
+}}}
 
 

@@ -50,7 +50,7 @@ void quartic_curve_domain::init(field_theory::finite_field *F, int verbose_level
 
 	quartic_curve_domain::F = F;
 
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
 		cout << "quartic_curve_domain::init before P->projective_space_init" << endl;
 	}

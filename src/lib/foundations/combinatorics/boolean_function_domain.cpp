@@ -100,7 +100,7 @@ boolean_function_domain::~boolean_function_domain()
 void boolean_function_domain::init(int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	algebra::algebra_global Algebra;
 	ring_theory::longinteger_domain D;
 
@@ -263,7 +263,7 @@ void boolean_function_domain::compute_polynomial_representation(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	int s, i, u, v, a, b, c, h, idx;
 	int N;
 	int degree = n + 1;
@@ -465,7 +465,7 @@ void boolean_function_domain::evaluate_projectively(int *coeff, int *f)
 void boolean_function_domain::evaluate(int *coeff, int *f)
 {
 	int i;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	for (i = 0; i < Q; i++) {
 		Gg.AG_element_unrank(2, v1, 1, n, i);

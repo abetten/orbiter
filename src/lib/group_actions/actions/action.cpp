@@ -2809,7 +2809,7 @@ void action::point_stabilizer_any_point_with_given_group(
 }
 
 void action::make_element_which_moves_a_line_in_PG3q(
-		grassmann *Gr,
+		geometry::grassmann *Gr,
 		long int line_rk, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

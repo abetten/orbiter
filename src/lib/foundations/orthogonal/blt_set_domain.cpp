@@ -141,7 +141,7 @@ void blt_set_domain::init(orthogonal *O,
 	Candidates = NEW_int(degree * n);
 
 
-	P = NEW_OBJECT(projective_space);
+	P = NEW_OBJECT(geometry::projective_space);
 
 	if (f_v) {
 		cout << "blt_set_domain::init before P->projective_space_init" << endl;
@@ -157,7 +157,7 @@ void blt_set_domain::init(orthogonal *O,
 	}
 
 
-	G53 = NEW_OBJECT(grassmann);
+	G53 = NEW_OBJECT(geometry::grassmann);
 
 	G53->init(5, 3, F, 0 /*verbose_level - 2*/);
 

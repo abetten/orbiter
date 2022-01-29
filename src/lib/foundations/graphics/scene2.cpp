@@ -19,6 +19,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 void scene::create_regulus(int idx, int nb_lines, int verbose_level)
@@ -1208,5 +1209,6 @@ int scene::read_scene_objects(int argc, std::string *argv,
 
 
 
-}}
+}}}
+
 

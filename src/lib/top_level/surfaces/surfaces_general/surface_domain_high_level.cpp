@@ -727,7 +727,7 @@ void surface_domain_high_level::do_six_arcs(
 
 		algebraic_geometry::eckardt_point_info *E;
 
-		geometry_global Gg;
+		geometry::geometry_global Gg;
 
 		E = Gg.compute_eckardt_point_info(Surf->P2, Arc6, 0/*verbose_level*/);
 

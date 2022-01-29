@@ -274,7 +274,7 @@ public:
 	int draw_graphs_at_level_level;
 
 	int f_draw_options;
-	layered_graph_draw_options *draw_options;
+	graphics::layered_graph_draw_options *draw_options;
 
 
 	graph_classification_activity_description();
@@ -411,7 +411,7 @@ public:
 	void print_score_sequences(int level, int verbose_level);
 	void score_sequence(int n, long int *set, int sz, long int *score, int verbose_level);
 	void draw_graphs(int level,
-			layered_graph_draw_options *draw_options,
+			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 
 };

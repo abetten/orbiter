@@ -216,7 +216,7 @@ public:
 	void report(std::ostream &ost, int level,
 			semifield_level_two *L2,
 			semifield_lifting *L3,
-			layered_graph_draw_options *draw_options,
+			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void init_poset_classification(
 			poset_classification::poset_classification_control *Control,
@@ -495,7 +495,7 @@ public:
 
 	semifield_flag_orbit_node *Flag_orbits;
 
-	grassmann *Gr;
+	geometry::grassmann *Gr;
 
 	// po = primary orbit
 	// so = secondary orbit
@@ -647,8 +647,8 @@ public:
 	semifield_classify_with_substructure *SCWS;
 	semifield_classify *SC;
 	semifield_lifting *L3;
-	grassmann *Gr3;
-	grassmann *Gr2;
+	geometry::grassmann *Gr3;
+	geometry::grassmann *Gr2;
 	int *Non_unique_cases_with_non_trivial_group;
 	int nb_non_unique_cases_with_non_trivial_group;
 

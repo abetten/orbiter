@@ -172,7 +172,7 @@ void iso_type::find_and_add_geo(
 	}
 
 
-	object_with_canonical_form *OwCF;
+	geometry::object_with_canonical_form *OwCF;
 	int nb_flags;
 
 	nb_flags = sum_R;
@@ -183,7 +183,7 @@ void iso_type::find_and_add_geo(
 
 		gg->inc->geo_to_inc(v, theY, theInc, nb_flags);
 
-		OwCF = NEW_OBJECT(object_with_canonical_form);
+		OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 		OwCF->init_incidence_geometry(
 			theInc, nb_flags, v, gg->inc->Encoding->b, nb_flags,
@@ -280,9 +280,9 @@ void iso_type::print_geos(int verbose_level)
 
 			cout << h << " / " << nb_geo << ":" << endl;
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
 
 
 			gg->inc->print_inc(cout, v, OwCF->set);
@@ -335,9 +335,9 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 
 			//inc->print_geo(ost, v, theGEO1[h]);
 
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
 			gg->inc->print_inc(ost, v, OwCF->set);
 
 			ost << endl;
@@ -379,9 +379,9 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 
 
 		if (nb_geo) {
-			object_with_canonical_form *OwCF;
+			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (object_with_canonical_form *) Canonical_forms->Objects[0];
+			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[0];
 
 			k = gg->inc->compute_k(v, OwCF->set);
 
@@ -394,7 +394,7 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 				//inc->print_geo(ost, v, theGEO1[h]);
 
 
-				OwCF = (object_with_canonical_form *) Canonical_forms->Objects[h];
+				OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
 				gg->inc->print_blocks(ost, v, OwCF->set);
 
 				ost << endl;
@@ -450,9 +450,9 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 				int *K;
 				int i, j, a;
 
-				object_with_canonical_form *OwCF;
+				geometry::object_with_canonical_form *OwCF;
 
-				OwCF = (object_with_canonical_form *) Canonical_forms->Objects[h];
+				OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
 
 				theInc = OwCF->set;
 

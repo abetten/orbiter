@@ -379,7 +379,7 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
 		f_draw_matrix = TRUE;
-		Draw_bitmap_control = NEW_OBJECT(draw_bitmap_control);
+		Draw_bitmap_control = NEW_OBJECT(graphics::draw_bitmap_control);
 		if (f_v) {
 			cout << "reading -draw_matrix" << endl;
 		}
@@ -477,7 +477,7 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		f_draw_projective_curve = TRUE;
-		Draw_projective_curve_description = NEW_OBJECT(draw_projective_curve_description);
+		Draw_projective_curve_description = NEW_OBJECT(graphics::draw_projective_curve_description);
 		if (f_v) {
 			cout << "reading -draw_projective_curve" << endl;
 		}
@@ -495,7 +495,7 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
 		f_tree_draw = TRUE;
-		Tree_draw_options = NEW_OBJECT(tree_draw_options);
+		Tree_draw_options = NEW_OBJECT(graphics::tree_draw_options);
 		if (f_v) {
 			cout << "reading -tree_draw" << endl;
 		}
@@ -696,7 +696,7 @@ void interface_toolkit::worker(int verbose_level)
 				verbose_level);
 	}
 	else if (f_draw_matrix) {
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 		GO.draw_bitmap(Draw_bitmap_control, verbose_level);
 
@@ -861,14 +861,14 @@ void interface_toolkit::worker(int verbose_level)
 
 	}
 	else if (f_draw_projective_curve) {
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 		GO.draw_projective_curve(Draw_projective_curve_description,
 				Orbiter->draw_options, verbose_level);
 
 	}
 	else if (f_tree_draw) {
-		graphical_output GO;
+		graphics::graphical_output GO;
 
 		GO.tree_draw(Tree_draw_options, verbose_level);
 

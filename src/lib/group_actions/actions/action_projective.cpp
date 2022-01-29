@@ -18,7 +18,7 @@ namespace layer3_group_actions {
 namespace actions {
 
 groups::strong_generators *action::set_stabilizer_in_projective_space(
-	projective_space *P,
+		geometry::projective_space *P,
 	long int *set, int set_size, //int &canonical_pt,
 	int *canonical_set_or_NULL,
 	int verbose_level)
@@ -28,7 +28,7 @@ groups::strong_generators *action::set_stabilizer_in_projective_space(
 // December 31, 2014, moved here from projective_space.cpp
 {
 	int f_v = (verbose_level >= 1);
-	object_with_canonical_form *OwCF;
+	geometry::object_with_canonical_form *OwCF;
 	nauty_interface_with_group Nau;
 
 	if (f_v) {
@@ -38,7 +38,7 @@ groups::strong_generators *action::set_stabilizer_in_projective_space(
 	}
 
 
-	OwCF = NEW_OBJECT(object_with_canonical_form);
+	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 	OwCF->init_point_set(set, set_size, verbose_level);
 
@@ -92,7 +92,7 @@ groups::strong_generators *action::set_stabilizer_in_projective_space(
 }
 
 int action::reverse_engineer_semilinear_map(
-	projective_space *P,
+		geometry::projective_space *P,
 	int *Elt, int *Mtx, int &frobenius,
 	int verbose_level)
 // uses the function A->element_image_of
@@ -115,7 +115,7 @@ int action::reverse_engineer_semilinear_map(
 
 
 void action::report_fixed_objects_in_P3(ostream &ost,
-	projective_space *P3,
+		geometry::projective_space *P3,
 	int *Elt,
 	int verbose_level)
 {

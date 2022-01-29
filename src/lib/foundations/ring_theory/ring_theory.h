@@ -114,7 +114,7 @@ private:
 	int *Affine_to_monomial; // [nb_affine]
 		// for each vector in the affine space,
 		// record the monomial associated with it.
-	projective_space *P;
+	geometry::projective_space *P;
 
 	int *coeff2; // [nb_monomials], used in substitute_linear
 	int *coeff3; // [nb_monomials], used in substitute_linear
@@ -139,7 +139,7 @@ public:
 		monomial_ordering_type Monomial_ordering_type,
 		int verbose_level);
 	int get_nb_monomials();
-	projective_space *get_P();
+	geometry::projective_space *get_P();
 	field_theory::finite_field *get_F();
 	int get_monomial(int i, int j);
 	char *get_monomial_symbol_easy(int i);
@@ -451,6 +451,65 @@ public:
 			int *eqn_out,
 			int verbose_level);
 };
+
+
+// #############################################################################
+// polynomial_double_domain.cpp:
+// #############################################################################
+
+
+//! domain for polynomials with double coefficients
+
+
+
+class polynomial_double_domain {
+public:
+	int alloc_length;
+	polynomial_double_domain();
+	~polynomial_double_domain();
+	void init(int alloc_length);
+	ring_theory::polynomial_double *create_object();
+	void mult(polynomial_double *A,
+			polynomial_double *B, polynomial_double *C);
+	void add(polynomial_double *A,
+			polynomial_double *B, polynomial_double *C);
+	void mult_by_scalar_in_place(
+			polynomial_double *A,
+			double lambda);
+	void copy(polynomial_double *A,
+			polynomial_double *B);
+	void determinant_over_polynomial_ring(
+			polynomial_double *P,
+			polynomial_double *det, int n, int verbose_level);
+	void find_all_roots(polynomial_double *p,
+			double *lambda, int verbose_level);
+	double divide_linear_factor(polynomial_double *p,
+			polynomial_double *q,
+			double lambda, int verbose_level);
+};
+
+
+// #############################################################################
+// polynomial_double.cpp:
+// #############################################################################
+
+
+//! polynomials with double coefficients, related to class polynomial_double_domain
+
+
+class polynomial_double {
+public:
+	int alloc_length;
+	int degree;
+	double *coeff; // [alloc_length]
+	polynomial_double();
+	~polynomial_double();
+	void init(int alloc_length);
+	void print(std::ostream &ost);
+	double root_finder(int verbose_level);
+	double evaluate_at(double t);
+};
+
 
 
 // #############################################################################

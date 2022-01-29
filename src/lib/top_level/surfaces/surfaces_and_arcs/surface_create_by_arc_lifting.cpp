@@ -310,7 +310,7 @@ void surface_create_by_arc_lifting::report_summary(std::ostream &ost, int verbos
 }
 
 void surface_create_by_arc_lifting::report(std::ostream &ost,
-		layered_graph_draw_options *Opt,
+		graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

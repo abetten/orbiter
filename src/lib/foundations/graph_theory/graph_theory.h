@@ -339,32 +339,32 @@ public:
 	void load(std::string &fname, int verbose_level);
 	void draw_on_circle(
 			std::string &fname,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level);
 	void draw_on_circle_2(
-		mp_graphics &G,
-		layered_graph_draw_options *Draw_options);
+			graphics::mp_graphics &G,
+		graphics::layered_graph_draw_options *Draw_options);
 	void create_bitmatrix(data_structures::bitmatrix *&Bitmatrix,
 		int verbose_level);
 	void draw(
 			std::string &fname,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level);
 	void draw_Levi(
 			std::string &fname,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 		int f_partition, int nb_row_parts, int *row_part_first, 
 		int nb_col_parts, int *col_part_first, 
 		int m, int n, int f_draw_labels, 
 		int verbose_level);
 	void draw_with_a_given_partition(
 			std::string &fname,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 			int *parts, int nb_parts,
 			int verbose_level);
 	void draw_partitioned(
 			std::string &fname,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 		int f_labels,
 		int verbose_level);
 	colored_graph *compute_neighborhood_subgraph(
@@ -559,10 +559,7 @@ public:
 
 	void colored_graph_draw(
 			std::string &fname,
-			layered_graph_draw_options *Draw_options,
-			//int xmax_in,
-			//int ymax_in, int xmax_out, int ymax_out, double scale,
-			//double line_width,
+			graphics::layered_graph_draw_options *Draw_options,
 			int f_labels,
 			int verbose_level);
 	void colored_graph_all_cliques(
@@ -600,7 +597,7 @@ public:
 		int *first, int *len, int nb_parts, int *&R, int verbose_level);
 	void draw_bitmatrix(
 			std::string &fname_base,
-			layered_graph_draw_options *Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 			int f_dots,
 			int f_partition, int nb_row_parts, int *row_part_first,
 			int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
@@ -689,7 +686,7 @@ public:
 	void add_node_data2(int l, int n, int data, int verbose_level);
 	void add_node_data3(int l, int n, int data, int verbose_level);
 	void draw_with_options(std::string &fname,
-		layered_graph_draw_options *O, int verbose_level);
+			graphics::layered_graph_draw_options *O, int verbose_level);
 	void coordinates_direct(double x_in, double y_in, 
 		int x_max, int y_max, int f_rotated, int &x, int &y);
 	void coordinates(int id, int x_max, int y_max, 

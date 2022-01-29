@@ -108,7 +108,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	//int f_semilinear;
 	//int f_basis = TRUE;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	ovoid_classify::Descr = Descr;
 	ovoid_classify::LG = LG;
@@ -264,7 +264,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 		if (f_v) {
 			cout << "allocating Klein correspondence" << endl;
 			}
-		K = NEW_OBJECT(klein_correspondence);
+		K = NEW_OBJECT(geometry::klein_correspondence);
 
 		if (f_v) {
 			cout << "before K->init" << endl;

@@ -207,7 +207,7 @@ public:
 	int depth;
 
 	int f_draw_options;
-	layered_graph_draw_options *draw_options;
+	graphics::layered_graph_draw_options *draw_options;
 
 	int verbose_level;
 	int verbose_level_group_theory;
@@ -700,20 +700,20 @@ public:
 	void draw_poset_fname_poset_detailed(std::string &fname, int depth);
 	void write_treefile(std::string &fname_base,
 		int lvl,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level);
 	int write_treefile(std::string &fname_base, int lvl,
 		int verbose_level);
 	void draw_tree(
 			std::string &fname_base, int lvl,
-			tree_draw_options *Tree_draw_options,
-			layered_graph_draw_options *Draw_options,
+			graphics::tree_draw_options *Tree_draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 		int xmax, int ymax, int rad, int f_embedded,
 		int f_sideways, int verbose_level);
 	void draw_tree_low_level(
 			std::string &fname,
-			tree_draw_options *Tree_draw_options,
-			layered_graph_draw_options *Draw_options,
+			graphics::tree_draw_options *Tree_draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 			int nb_nodes,
 		int *coord_xyw, int *perm, int *perm_inv, 
 		int f_draw_points, int f_draw_extension_points,
@@ -721,25 +721,25 @@ public:
 		int xmax, int ymax, int rad, int f_embedded,
 		int f_sideways,
 		int verbose_level);
-	void draw_tree_low_level1(mp_graphics &G, int nb_nodes, 
+	void draw_tree_low_level1(graphics::mp_graphics &G, int nb_nodes,
 		int *coords, int *perm, int *perm_inv, 
 		int f_draw_points, int f_draw_extension_points, 
 		int f_draw_aut_group_order, 
 		int radius, int verbose_level);
 	void draw_poset_full(std::string &fname_base,
 			int depth, int data,
-			layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			double x_stretch,
 			int verbose_level);
 	void draw_poset(
 			std::string &fname_base,
 			int depth, int data,
-			layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void draw_level_graph(
 			std::string &fname_base,
 			int depth, int data, int level,
-			layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void make_flag_orbits_on_relations(
 			int depth, const char *fname_prefix, int verbose_level);

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 animate::animate()
@@ -2268,7 +2269,7 @@ void animate::draw_surface_13_1(ostream &fp)
 	int nb_select = nb_affine_pts;
 	long int i, rk;
 	int v[3];
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	if (!S->f_has_affine_space) {
 		cout << "draw_surface_13_1 "
@@ -3227,7 +3228,8 @@ void animate::draw_text_with_selection(int *selection, int nb_select,
 
 
 
-}}
+}}}
+
 
 
 

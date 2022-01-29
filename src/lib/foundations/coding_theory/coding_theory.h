@@ -37,9 +37,10 @@ public:
 	void make_table_of_bounds(
 			int n_max, int q, int verbose_level);
 	void make_gilbert_varshamov_code(
-			int n, int k, int d, int q, projective_space *P, int verbose_level);
+			int n, int k, int d, int q,
+			geometry::projective_space *P, int verbose_level);
 	void make_gilbert_varshamov_code_recursion(
-			projective_space *P, int n, int d,
+			geometry::projective_space *P, int n, int d,
 			long int *set, int *f_forbidden, int level, int verbose_level);
 
 	int gilbert_varshamov_lower_bound_for_d(int n, int k, int q, int verbose_level);

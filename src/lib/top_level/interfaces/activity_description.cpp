@@ -988,9 +988,9 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 
 	t = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
 	if (t == t_geometric_object) {
-		geometric_object_create *GOC;
+		geometry::geometric_object_create *GOC;
 
-		GOC = (geometric_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		GOC = (geometry::geometric_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
 			apps_combinatorics::combinatorial_object_activity Activity;
 

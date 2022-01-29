@@ -18,6 +18,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
+
 
 tree_draw_options::tree_draw_options()
 {
@@ -113,4 +115,5 @@ void tree_draw_options::print()
 
 
 
-}}
+}}}
+

@@ -26,7 +26,7 @@ public:
 	int n;
 	int k;
 	int q;
-	grassmann *Grass;
+	geometry::grassmann *Grass;
 	field_theory::finite_field *F;
 	actions::action *A; // P Gamma L(n,q)
 	actions::action *A2; // action of A on grassmannian of k-subspaces of V(n,q)
@@ -66,13 +66,13 @@ public:
 	~recoordinatize();
 	void null();
 	void freeself();
-	void init(int n, int k, field_theory::finite_field *F, grassmann *Grass,
+	void init(int n, int k, field_theory::finite_field *F,
+			geometry::grassmann *Grass,
 			actions::action *A, actions::action *A2,
 		int f_projective, int f_semilinear,
 		int (*check_function_incremental)(int len, long int *S,
 			void *data, int verbose_level),
 		void *check_function_incremental_data,
-		//std::string &fname_live_points,
 		int verbose_level);
 	void do_recoordinatize(long int i1, long int i2, long int i3, int verbose_level);
 	void compute_starter(long int *&S, int &size,
@@ -131,7 +131,7 @@ public:
 	actions::action *A2;
 		// action of A on grassmannian of k-subspaces of V(n,q)
 	induced_actions::action_on_grassmannian *AG;
-	grassmann *Grass;
+	geometry::grassmann *Grass;
 		// {n choose k}_q
 
 
@@ -158,7 +158,7 @@ public:
 
 
 	// only if n = 2 * k:
-	klein_correspondence *Klein;
+	geometry::klein_correspondence *Klein;
 	orthogonal *O;
 
 
@@ -224,9 +224,9 @@ public:
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int data_size, int verbose_level);
 	void plane_intersection_type_of_klein_image(
-		projective_space *P3,
-		projective_space *P5,
-		grassmann *Gr,
+			geometry::projective_space *P3,
+			geometry::projective_space *P5,
+			geometry::grassmann *Gr,
 		long int *data, int size,
 		int *&intersection_type, int &highest_intersection_number,
 		int verbose_level);
@@ -507,7 +507,7 @@ public:
 	int *sorted_packing;
 	int *dual_packing;
 
-	spread_tables *Spread_tables;
+	geometry::spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
 	data_structures::bitvector *Bitvec;
@@ -585,12 +585,12 @@ public:
 	int k1;
 	int n1;
 
-	andre_construction *Andre;
+	geometry::andre_construction *Andre;
 	int N; // number of points = number of lines
 	int twoN; // 2 * N
 	int f_semilinear;
 
-	andre_construction_line_element *Line;
+	geometry::andre_construction_line_element *Line;
 	int *Incma;
 	int *pts_on_line;
 	int *Line_through_two_points; // [N * N]
@@ -603,7 +603,7 @@ public:
 
 	groups::strong_generators *strong_gens;
 
-	incidence_structure *Inc;
+	geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 
 	poset_classification::poset_classification_control *Control;

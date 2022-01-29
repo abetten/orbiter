@@ -41,7 +41,7 @@ void tdo_scheme_compute::init(encoded_combinatorial_object *Enc,
 
 	tdo_scheme_compute::Enc = Enc;
 
-	Decomp = NEW_OBJECT(decomposition);
+	Decomp = NEW_OBJECT(geometry::decomposition);
 
 	if (f_v) {
 		cout << "tdo_scheme_compute::init before Decomp->init_incidence_matrix" << endl;

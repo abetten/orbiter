@@ -344,11 +344,11 @@ public:
 	int t0;
 
 	int f_draw_options;
-	layered_graph_draw_options *draw_options;
+	graphics::layered_graph_draw_options *draw_options;
 
 
 	int f_draw_incidence_structure_description;
-	draw_incidence_structure_description *Draw_incidence_structure_description;
+	graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
 
 	int f_list_arguments;
 
@@ -479,7 +479,7 @@ public:
 	void init_collection(std::string &label,
 			std::string &list_of_objects, int verbose_level);
 	void init_geometric_object(std::string &label,
-			geometric_object_create *COC, int verbose_level);
+			geometry::geometric_object_create *COC, int verbose_level);
 	void init_graph(std::string &label,
 			void *Gr, int verbose_level);
 	void init_spread_table(std::string &label,
@@ -539,64 +539,6 @@ public:
 };
 
 
-
-
-// #############################################################################
-// polynomial_double_domain.cpp:
-// #############################################################################
-
-
-//! domain for polynomials with double coefficients
-
-
-
-class polynomial_double_domain {
-public:
-	int alloc_length;
-	polynomial_double_domain();
-	~polynomial_double_domain();
-	void init(int alloc_length);
-	polynomial_double *create_object();
-	void mult(polynomial_double *A,
-			polynomial_double *B, polynomial_double *C);
-	void add(polynomial_double *A,
-			polynomial_double *B, polynomial_double *C);
-	void mult_by_scalar_in_place(
-			polynomial_double *A,
-			double lambda);
-	void copy(polynomial_double *A,
-			polynomial_double *B);
-	void determinant_over_polynomial_ring(
-			polynomial_double *P,
-			polynomial_double *det, int n, int verbose_level);
-	void find_all_roots(polynomial_double *p,
-			double *lambda, int verbose_level);
-	double divide_linear_factor(polynomial_double *p,
-			polynomial_double *q,
-			double lambda, int verbose_level);
-};
-
-
-// #############################################################################
-// polynomial_double.cpp:
-// #############################################################################
-
-
-//! polynomials with double coefficients, related to class polynomial_double_domain
-
-
-class polynomial_double {
-public:
-	int alloc_length;
-	int degree;
-	double *coeff; // [alloc_length]
-	polynomial_double();
-	~polynomial_double();
-	void init(int alloc_length);
-	void print(std::ostream &ost);
-	double root_finder(int verbose_level);
-	double evaluate_at(double t);
-};
 
 
 

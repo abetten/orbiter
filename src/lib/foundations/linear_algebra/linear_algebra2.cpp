@@ -628,7 +628,7 @@ void linear_algebra::random_invertible_matrix(int *M,
 	int *N;
 	int i, qk, r, rk;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	os_interface Os;
 
 	if (f_v) {
@@ -869,7 +869,7 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 	int i, j, b;
 	int ret = TRUE;
 	number_theory::number_theory_domain NT;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -1063,7 +1063,7 @@ int linear_algebra::nb_points_in_PG(int n)
 // n is projective dimension
 {
 	int N;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 	N = Gg.nb_PG_elements(n, F->q);
 	return N;
@@ -1617,7 +1617,7 @@ void linear_algebra::cubic_surface_family_G13_generators(
 
 	int h, i, j, c, m, l;
 	int *v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
 	m = Orbiter->Int_vec->maximum(data, nb_gens * data_size);
@@ -1739,7 +1739,7 @@ void linear_algebra::cubic_surface_family_F13_generators(
 
 	int h, i, j, c, m, l;
 	int *v;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
 	m = Orbiter->Int_vec->maximum(data, nb_gens * data_size);

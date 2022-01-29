@@ -310,7 +310,7 @@ void layered_graph::add_node_data3(int l, int n, int data, int verbose_level)
 
 
 void layered_graph::draw_with_options(std::string &fname,
-		layered_graph_draw_options *O, int verbose_level)
+		graphics::layered_graph_draw_options *O, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -344,7 +344,7 @@ void layered_graph::draw_with_options(std::string &fname,
 			cout << "layered_graph::draw_with_options f_embedded = " << O->f_embedded << endl;
 		}
 
-		mp_graphics G;
+		graphics::mp_graphics G;
 
 		G.init(fname_full, O, verbose_level - 1);
 

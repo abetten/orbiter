@@ -70,7 +70,7 @@ int graph_classification_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
-			draw_options = NEW_OBJECT(layered_graph_draw_options);
+			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 			if (f_v) {
 				cout << "-draw_options " << endl;
 			}

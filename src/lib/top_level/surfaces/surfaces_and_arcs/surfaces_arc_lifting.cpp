@@ -493,7 +493,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	combinatorics::combinatorics_domain Combi;
-	geometry_global Gg;
+	geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -803,7 +803,8 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 }
 
 
-void surfaces_arc_lifting::report(layered_graph_draw_options *draw_options,
+void surfaces_arc_lifting::report(
+		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -868,7 +869,7 @@ void surfaces_arc_lifting::report(layered_graph_draw_options *draw_options,
 }
 
 void surfaces_arc_lifting::report2(ostream &ost,
-		layered_graph_draw_options *draw_options,
+		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

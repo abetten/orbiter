@@ -3000,7 +3000,7 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 
 
 void algebra_global_with_action::report_tactical_decomposition_by_automorphism_group(
-		ostream &ost, projective_space *P,
+		ostream &ost, geometry::projective_space *P,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
@@ -3012,8 +3012,8 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 	}
 	int *Mtx;
 	int i, j, h;
-	incidence_structure *Inc;
-	Inc = NEW_OBJECT(incidence_structure);
+	geometry::incidence_structure *Inc;
+	Inc = NEW_OBJECT(geometry::incidence_structure);
 
 	Mtx = NEW_int(P->N_points * P->N_lines);
 	Orbiter->Int_vec->zero(Mtx, P->N_points * P->N_lines);
@@ -3607,7 +3607,8 @@ void algebra_global_with_action::do_orbits_on_polynomials(
 		groups::linear_group *LG,
 		int degree_of_poly,
 		int f_recognize, std::string &recognize_text,
-		int f_draw_tree, int draw_tree_idx, layered_graph_draw_options *Opt,
+		int f_draw_tree, int draw_tree_idx,
+		graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

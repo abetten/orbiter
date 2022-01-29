@@ -1137,9 +1137,11 @@ action *action_global::init_direct_product_group(
 
 
 
-void action_global::compute_decomposition_based_on_orbits(projective_space *P,
+void action_global::compute_decomposition_based_on_orbits(
+		geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
-		incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level)
+		geometry::incidence_structure *&Inc,
+		data_structures::partitionstack *&Stack, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1194,9 +1196,11 @@ void action_global::compute_decomposition_based_on_orbits(projective_space *P,
 }
 
 
-void action_global::compute_decomposition_based_on_orbit_length(projective_space *P,
+void action_global::compute_decomposition_based_on_orbit_length(
+		geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
-		incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level)
+		geometry::incidence_structure *&Inc,
+		data_structures::partitionstack *&Stack, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

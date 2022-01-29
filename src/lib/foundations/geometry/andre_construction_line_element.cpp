@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 
@@ -211,6 +212,6 @@ int andre_construction_line_element::make_affine_point(
 	return point_rank;
 }
 
-}
-}
+}}}
+
 

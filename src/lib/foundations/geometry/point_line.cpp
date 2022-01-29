@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace geometry {
 
 
 int point_line::is_desarguesian_plane(int verbose_level)
@@ -1343,6 +1344,5 @@ void point_line::get_MOLm(int *MOLS, int order, int m, int *&M)
 		}
 }
 
-}
-}
+}}}
 

@@ -70,7 +70,7 @@ void eckardt_point_info::freeself()
 	null();
 }
 
-void eckardt_point_info::init(projective_space *P2,
+void eckardt_point_info::init(geometry::projective_space *P2,
 		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

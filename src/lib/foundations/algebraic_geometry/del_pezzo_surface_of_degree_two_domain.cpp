@@ -45,7 +45,7 @@ del_pezzo_surface_of_degree_two_domain::~del_pezzo_surface_of_degree_two_domain(
 }
 
 void del_pezzo_surface_of_degree_two_domain::init(
-		projective_space *P,
+		geometry::projective_space *P,
 		ring_theory::homogeneous_polynomial_domain *Poly4_3,
 		int verbose_level)
 {
@@ -58,12 +58,12 @@ void del_pezzo_surface_of_degree_two_domain::init(
 	del_pezzo_surface_of_degree_two_domain::Poly4_3 = Poly4_3;
 	F = P->F;
 
-	P2 = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(geometry::projective_space);
 	P2->projective_space_init(2, F,
 		FALSE /*f_init_incidence_structure*/,
 		verbose_level);
 
-	Gr = NEW_OBJECT(grassmann);
+	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(4 /*n*/, 2, F, 0 /* verbose_level */);
 
 	nb_lines_PG_3 = Gr->nCkq->as_lint();
@@ -72,7 +72,7 @@ void del_pezzo_surface_of_degree_two_domain::init(
 		cout << "del_pezzo_surface_of_degree_two_domain::init nb_lines_PG_3 = " << nb_lines_PG_3 << endl;
 	}
 
-	Gr3 = NEW_OBJECT(grassmann);
+	Gr3 = NEW_OBJECT(geometry::grassmann);
 	Gr3->init(4, 3, F, 0 /* verbose_level*/);
 
 

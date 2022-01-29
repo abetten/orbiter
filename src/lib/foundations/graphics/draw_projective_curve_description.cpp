@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace graphics {
 
 
 draw_projective_curve_description::draw_projective_curve_description()
@@ -142,6 +143,6 @@ void draw_projective_curve_description::print()
 
 
 
-}}
+}}}
 
 

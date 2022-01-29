@@ -166,7 +166,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 	{
-		incidence_structure *Inc;
+		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
 		actions::action_global AG;
@@ -238,7 +238,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 	{
-		incidence_structure *Inc;
+		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
 		actions::action_global AG;
@@ -325,7 +325,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 	groups::schreier *Sch1;
 	groups::schreier *Sch2;
-	incidence_structure *Inc;
+	geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 	data_structures::partitionstack S1;
 	data_structures::partitionstack S2;
