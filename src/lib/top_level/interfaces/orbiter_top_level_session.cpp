@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
@@ -354,5 +355,6 @@ projective_geometry::projective_space_with_action *orbiter_top_level_session::ge
 
 
 
-}}
+}}}
+
 

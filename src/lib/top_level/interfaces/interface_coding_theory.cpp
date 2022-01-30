@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 interface_coding_theory::interface_coding_theory()
@@ -779,7 +780,6 @@ void interface_coding_theory::worker(int verbose_level)
 
 
 
+}}}
 
-
-}}
 

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 
@@ -464,12 +465,6 @@ void interface_projective::do_create_spread(spreads::spread_create_description *
 }
 
 
+}}}
 
-
-
-
-
-
-
-}}
 

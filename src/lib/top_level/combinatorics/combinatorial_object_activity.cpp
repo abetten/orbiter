@@ -1146,7 +1146,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 
 	apps_algebra::any_group *G;
 
-	G = The_Orbiter_top_level_session->get_object_of_type_any_group(group_label);
+	G = user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(group_label);
 	groups::linear_group *LG;
 
 	LG = G->LG;
@@ -1255,7 +1255,7 @@ void combinatorial_object_activity::line_covering_type(
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
+	PA = user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
 
 	geometry::projective_space *P;
 

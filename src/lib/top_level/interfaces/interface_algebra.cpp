@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 interface_algebra::interface_algebra()
@@ -601,8 +602,6 @@ void interface_algebra::do_character_table_symmetric_group(int deg, int verbose_
 
 
 
+}}}
 
-
-
-}}
 

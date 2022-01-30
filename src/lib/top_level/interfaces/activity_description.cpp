@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 activity_description::activity_description()
@@ -1486,6 +1487,6 @@ void activity_description::do_large_set_was_activity(int verbose_level)
 
 
 
-}}
+}}}
 
 

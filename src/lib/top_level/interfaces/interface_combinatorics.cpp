@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 
@@ -1023,10 +1024,5 @@ void interface_combinatorics::do_Delandtsheer_Doyen(apps_combinatorics::delandts
 }
 
 
+}}}
 
-
-
-
-
-
-}}

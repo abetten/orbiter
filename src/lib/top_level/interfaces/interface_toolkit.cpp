@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 
@@ -881,6 +882,5 @@ void interface_toolkit::worker(int verbose_level)
 }
 
 
+}}}
 
-
-}}

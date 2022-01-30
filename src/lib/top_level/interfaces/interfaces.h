@@ -13,6 +13,7 @@
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 // #############################################################################
@@ -980,10 +981,17 @@ public:
 
 
 
+// #############################################################################
+// global variable:
+// #############################################################################
 
 
 
-}}
+extern user_interface::orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
+
+
+
+}}}
 
 
 #endif /* SRC_LIB_TOP_LEVEL_INTERFACES_INTERFACES_H_ */

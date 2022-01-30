@@ -30,47 +30,47 @@ void projective_space_global::map(
 
 
 	int idx;
-	idx = The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
+	idx = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
 
 	if (idx < 0) {
 		cout << "could not find symbol " << label << endl;
 		exit(1);
 	}
-	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
+	user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
 
-	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
+	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
-	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
+	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
 		cout << "symbol table entry is a collection" << endl;
 
 		vector<string> *List;
 
-		List = (vector<string> *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+		List = (vector<string> *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 		int i;
 
 		for (i = 0; i < List->size(); i++) {
 			int idx1;
 
-			idx1 = The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol((*List)[i]);
+			idx1 = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol((*List)[i]);
 			if (idx1 < 0) {
 				cout << "could not find symbol " << (*List)[i] << endl;
 				exit(1);
 			}
 			expression_parser::formula *Formula;
-			Formula = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
+			Formula = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
 
 			PA->map(Formula,
 					evaluate_text,
 					verbose_level);
 		}
 	}
-	else if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
+	else if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
 		cout << "symbol table entry is a formula" << endl;
 
 		expression_parser::formula *Formula;
-		Formula = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+		Formula = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 
 		PA->map(Formula,
 				evaluate_text,
@@ -103,36 +103,36 @@ void projective_space_global::analyze_del_Pezzo_surface(
 
 
 	int idx;
-	idx = The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
+	idx = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
 
 	if (idx < 0) {
 		cout << "could not find symbol " << label << endl;
 		exit(1);
 	}
-	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
+	user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
 
-	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
+	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
-	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
+	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
 		cout << "symbol table entry is a collection" << endl;
 
 		vector<string> *List;
 
-		List = (vector<string> *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+		List = (vector<string> *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 		int i;
 
 		for (i = 0; i < List->size(); i++) {
 			int idx1;
 
-			idx1 = The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol((*List)[i]);
+			idx1 = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol((*List)[i]);
 			if (idx1 < 0) {
 				cout << "could not find symbol " << (*List)[i] << endl;
 				exit(1);
 			}
 			expression_parser::formula *F;
-			F = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
+			F = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
 
 			analyze_del_Pezzo_surface_formula_given(
 					PA,
@@ -141,11 +141,11 @@ void projective_space_global::analyze_del_Pezzo_surface(
 					verbose_level);
 		}
 	}
-	else if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
+	else if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
 		cout << "symbol table entry is a formula" << endl;
 
 		expression_parser::formula *F;
-		F = (expression_parser::formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+		F = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 
 		analyze_del_Pezzo_surface_formula_given(
 				PA,
