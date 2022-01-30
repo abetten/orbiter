@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 interface_povray::interface_povray()
@@ -145,5 +146,6 @@ void interface_povray::worker(int verbose_level)
 }
 
 
-}}
+}}}
+
 

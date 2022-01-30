@@ -15,19 +15,19 @@ int build_number =
 #include "../../../build_number"
 ;
 
-
+//! This is the Orbiter front-end. It passes the command line on to the user interface.
 
 int main(int argc, const char **argv)
 {
 
 	//cout << "orbiter.out main" << endl;
 
-	orbiter_top_level_session Top_level_session;
+	user_interface::orbiter_top_level_session Top_level_session;
 	int i;
 
 
 
-	The_Orbiter_top_level_session = &Top_level_session;
+	user_interface::The_Orbiter_top_level_session = &Top_level_session;
 
 
 	// setup:

@@ -95,7 +95,7 @@ void create_graph::init(
 
 		apps_algebra::any_group *G;
 
-		G = The_Orbiter_top_level_session->get_object_of_type_any_group(description->Cayley_graph_group);
+		G = user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(description->Cayley_graph_group);
 
 
 		groups::strong_generators *SG;

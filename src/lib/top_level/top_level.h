@@ -121,20 +121,25 @@ namespace apps_graph_theory {
 
 }
 
-// interfaces
-class activity_description;
-class interface_algebra;
-class interface_coding_theory;
-class interface_combinatorics;
-class interface_cryptography;
-class interface_povray;
-class interface_projective;
-class interface_symbol_table;
-class interface_toolkit;
-class orbiter_command;
-class orbiter_top_level_session;
-class symbol_definition;
+//! Orbiter command line, orbiter dash code, symbol definitions and activities
 
+namespace user_interface {
+
+	// interfaces
+	class activity_description;
+	class interface_algebra;
+	class interface_coding_theory;
+	class interface_combinatorics;
+	class interface_cryptography;
+	class interface_povray;
+	class interface_projective;
+	class interface_symbol_table;
+	class interface_toolkit;
+	class orbiter_command;
+	class orbiter_top_level_session;
+	class symbol_definition;
+
+}
 
 
 //! Applications in orthogonal geometry
@@ -309,13 +314,6 @@ namespace applications_in_algebraic_geometry {
 
 
 
-// #############################################################################
-// global variable:
-// #############################################################################
-
-
-
-extern orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
 
 
 

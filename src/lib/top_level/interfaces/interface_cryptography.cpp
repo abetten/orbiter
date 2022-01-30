@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 interface_cryptography::interface_cryptography()
@@ -1176,5 +1177,6 @@ void interface_cryptography::worker(int verbose_level)
 
 
 
-}}
+}}}
+
 

@@ -12491,6 +12491,33 @@ design_PG_2_3_group_5_sol_0:
 
 
 
+KM_cyclic_7:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define gens -vector -dense "1,2,3,4,5,6,0" -end \
+		-define G -permutation_group -symmetric_group 7 \
+			-subgroup_by_generators "C7" 7 1 gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-poset_classification_control \
+				-problem_label C7 -W -depth 3 \
+				-Kramer_Mesner_matrix 2 3 \
+				-draw_poset \
+				-draw_options -embedded -sideways -radius 50 \
+					-scale 0.5 -line_width 0.3 -end \
+			-end \
+			-orbits_on_subsets 3 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define D -diophant \
+		-label "C7_KM_2_3_system" \
+		-coefficient_matrix_csv C7_KM_2_3.csv \
+		-RHS_constant "1,1,1" \
+		-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 
 
 

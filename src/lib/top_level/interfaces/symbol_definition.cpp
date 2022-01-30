@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
+namespace user_interface {
 
 
 symbol_definition::symbol_definition()
@@ -2270,6 +2271,8 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 }
 
 
-}}
+}}}
+
+
 
 
