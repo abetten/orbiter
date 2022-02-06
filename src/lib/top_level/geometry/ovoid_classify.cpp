@@ -829,7 +829,7 @@ void ovoid_classify::compute_coloring(
 	Int_vec_print(cout, colors, starter_size - 1);
 	cout << endl;
 	nb_colors_used = nb_colors - (starter_size - 1);
-	orbiter_kernel_system::Orbiter->Int_vec->complement(colors, nb_colors, starter_size - 1);
+	Int_vec_complement(colors, nb_colors, starter_size - 1);
 	for (i = 0; i < nb_colors; i++) {
 		c = colors[i];
 		color_pos[c] = i;

@@ -728,7 +728,7 @@ void quartic_curve_object_properties::print_bitangents_with_points_on_them(std::
 					pt = pts_on_lines->Sets[i][j];
 					ost << j << " : " << pt << " : ";
 					SO->Surf->unrank_point(w, SO->Pts[pt]);
-					Orbiter->Int_vec.print(ost, w, 4);
+					Int_vec_print(ost, w, 4);
 					ost << " : ";
 					if (tangent_plane_rank_global[pt] == -1) {
 						ost << " is singular\\\\" << endl;

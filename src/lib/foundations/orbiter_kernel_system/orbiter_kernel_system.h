@@ -802,6 +802,7 @@ public:
 	void get_lint_vec(std::string &label,
 			long int *&the_set, int &set_size, int verbose_level);
 	void print_type(symbol_table_object_type t);
+	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
 	data_structures::vector_builder *get_object_of_type_vector(std::string &label);
 	void start_memory_debug();
 	void stop_memory_debug();

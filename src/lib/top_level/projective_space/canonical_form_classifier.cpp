@@ -939,31 +939,31 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 			{
 				string str;
-				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->eqn, nb_monomials);
+				Int_vec_create_string_with_quotes(str, CFS_table[i]->eqn, nb_monomials);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, CFS_table[i]->pts, CFS_table[i]->nb_pts);
+				Lint_vec_create_string_with_quotes(str, CFS_table[i]->pts, CFS_table[i]->nb_pts);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, CFS_table[i]->bitangents, CFS_table[i]->nb_bitangents);
+				Lint_vec_create_string_with_quotes(str, CFS_table[i]->bitangents, CFS_table[i]->nb_bitangents);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->transporter_to_canonical_form, A->make_element_size);
+				Int_vec_create_string_with_quotes(str, CFS_table[i]->transporter_to_canonical_form, A->make_element_size);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->canonical_equation, nb_monomials);
+				Int_vec_create_string_with_quotes(str, CFS_table[i]->canonical_equation, nb_monomials);
 				ost << str;
 			}
 			ost << ",";
@@ -1012,7 +1012,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 			{
 				string str;
-				orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, gens->tl, A->base_len());
+				Int_vec_create_string_with_quotes(str, gens->tl, A->base_len());
 				ost << str;
 			}
 			ost << ",";
@@ -1484,7 +1484,7 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 
 			string str;
 
-			orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->SubSt->orbit_frequencies, SubC->nb_orbits);
+			Int_vec_create_string_with_quotes(str, CFS_table[i]->SubSt->orbit_frequencies, SubC->nb_orbits);
 
 			S.fill_entry_with_text(j, 5, str);
 

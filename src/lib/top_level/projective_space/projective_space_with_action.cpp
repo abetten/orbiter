@@ -1429,13 +1429,13 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 				{
 					string str;
 					f << ",";
-					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
+					Int_vec_create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
 					f << str;
 				}
 				{
 					string str;
 					f << ",";
-					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
+					Int_vec_create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
 					f << str;
 				}
 
@@ -1453,13 +1453,13 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 				{
 					string str;
 					f << ",";
-					orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
+					Lint_vec_create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
 					f << str;
 				}
 				{
 					string str;
 					f << ",";
-					orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
+					Lint_vec_create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
 					f << str;
 				}
 			}

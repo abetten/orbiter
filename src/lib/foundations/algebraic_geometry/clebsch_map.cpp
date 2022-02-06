@@ -122,7 +122,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Plane, 3, 4);
+		Int_matrix_print(Plane, 3, 4);
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"base_cols: ";
 		Int_vec_print(cout, base_cols, 3);
@@ -275,14 +275,14 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "Plane rank " << plane_rk_global << " :" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Plane, 3, 4);
+		Int_matrix_print(Plane, 3, 4);
 	}
 
 	F->Linear_algebra->RREF_and_kernel(4, 3, Plane, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "Plane (3 basis vectors and dual coordinates):" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Plane, 4, 4);
+		Int_matrix_print(Plane, 4, 4);
 		cout << "base_cols: ";
 		Int_vec_print(cout, base_cols, r);
 		cout << endl;
@@ -297,7 +297,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "Line a = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[0]]
 			<< " = " << SO->Lines[line_idx[0]] << ":" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Line_a, 2, 4);
+		Int_matrix_print(Line_a, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
 		if (F->Linear_algebra->dot_product(4, Line_a + i * 4, Plane + 3 * 4)) {
@@ -316,7 +316,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "Line b = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[1]]
 			<< " = " << SO->Lines[line_idx[1]] << ":" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Line_b, 2, 4);
+		Int_matrix_print(Line_b, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
 		if (F->Linear_algebra->dot_product(4, Line_b + i * 4, Plane + 3 * 4)) {
@@ -394,7 +394,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Int_vec_copy(Plane + 3 * 4, Dual_planes + 8, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates for all three planes: " << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Dual_planes, 3, 4);
+			Int_matrix_print(Dual_planes, 3, 4);
 			cout << endl;
 		}
 
@@ -402,7 +402,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 				Dual_planes, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates and perp: " << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Dual_planes, 4, 4);
+			Int_matrix_print(Dual_planes, 4, 4);
 			cout << endl;
 			cout << "clebsch_map::compute_Clebsch_map_down_worker matrix of dual coordinates has rank " << r << endl;
 		}

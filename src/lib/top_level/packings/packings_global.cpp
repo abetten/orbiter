@@ -1129,7 +1129,7 @@ void packings_global::select_packings_self_dual(
 		nb_cols = S->get_int(g + 1, nb_cols_idx);
 
 		text = S->get_string(g + 1, input_set_idx);
-		Orbiter->Int_vec.scan(text, the_set_in, set_size_in);
+		Int_vec_scan(text, the_set_in, set_size_in);
 
 		packing_size = set_size_in;
 

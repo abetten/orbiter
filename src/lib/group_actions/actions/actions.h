@@ -396,6 +396,7 @@ public:
 	int is_matrix_group();
 	groups::matrix_group *get_matrix_group();
 	void perform_tests(groups::strong_generators *SG, int verbose_level);
+	void apply_based_on_text(std::string &input_text, std::string &input_group_element, int verbose_level);
 	void multiply_based_on_text(std::string &data_A, std::string &data_B, int verbose_level);
 	void inverse_based_on_text(std::string &data_A, int verbose_level);
 	void raise_to_the_power_based_on_text(std::string &data_A,

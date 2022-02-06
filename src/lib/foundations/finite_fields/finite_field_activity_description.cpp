@@ -40,13 +40,13 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string polynomial_mult_mod_M;
 
 	f_Berlekamp_matrix = FALSE;
-	//Berlekamp_matrix_coeffs;
+	//Berlekamp_matrix_label;
 
 	f_normal_basis = FALSE;
 	normal_basis_d = 0;
 
 	f_polynomial_find_roots = FALSE;
-	//polynomial_find_roots_A;
+	//polynomial_find_roots_label;
 
 	f_normalize_from_the_right = FALSE;
 	f_normalize_from_the_left = FALSE;
@@ -325,9 +325,9 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-Berlekamp_matrix") == 0) {
 			f_Berlekamp_matrix = TRUE;
-			Berlekamp_matrix_coeffs.assign(argv[++i]);
+			Berlekamp_matrix_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-Berlekamp_matrix " << Berlekamp_matrix_coeffs << endl;
+				cout << "-Berlekamp_matrix " << Berlekamp_matrix_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-normal_basis") == 0) {
@@ -358,9 +358,9 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-polynomial_find_roots") == 0) {
 			f_polynomial_find_roots = TRUE;
-			polynomial_find_roots_A.assign(argv[++i]);
+			polynomial_find_roots_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-polynomial_find_roots " << polynomial_find_roots_A << endl;
+				cout << "-polynomial_find_roots " << polynomial_find_roots_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-RREF") == 0) {
@@ -963,7 +963,7 @@ void finite_field_activity_description::print()
 				<< " " << polynomial_mult_mod_M << endl;
 	}
 	if (f_Berlekamp_matrix) {
-		cout << "-Berlekamp_matrix " << Berlekamp_matrix_coeffs << endl;
+		cout << "-Berlekamp_matrix " << Berlekamp_matrix_label << endl;
 	}
 	if (f_normal_basis) {
 		cout << "-normal_basis " << normal_basis_d << endl;
@@ -978,7 +978,7 @@ void finite_field_activity_description::print()
 		cout << "-nullspace " << nullspace_input_matrix << endl;
 	}
 	if (f_polynomial_find_roots) {
-		cout << "-polynomial_find_roots " << polynomial_find_roots_A << endl;
+		cout << "-polynomial_find_roots " << polynomial_find_roots_label << endl;
 	}
 	if (f_RREF) {
 		cout << "-RREF " << RREF_input_matrix << endl;
@@ -1187,11 +1187,6 @@ void finite_field_activity_description::print()
 	if (f_unrank_point_in_PG) {
 		cout << "-unrank_point_in_PG " << unrank_point_in_PG_text << endl;
 	}
-#if 0
-	if (f_rank_point_in_PG_given_as_pairs) {
-		cout << "-rank_point_in_PG " << rank_point_in_PG_given_as_pairs_n << " " << rank_point_in_PG_given_as_pairs_text << endl;
-	}
-#endif
 	if (f_field_reduction) {
 		cout << "-field_reduction "
 				<< " " << field_reduction_label

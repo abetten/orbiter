@@ -711,7 +711,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface chosen bitangents in dual coordinates = ";
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Bitangents_coeffs, 4, 3);
+		Int_matrix_print(Bitangents_coeffs, 4, 3);
 	}
 
 

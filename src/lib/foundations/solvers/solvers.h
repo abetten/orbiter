@@ -139,9 +139,7 @@ public:
 	std::string label;
 
 	int f_coefficient_matrix;
-	int coefficient_matrix_m;
-	int coefficient_matrix_n;
-	std::string coefficient_matrix_text;
+	std::string coefficient_matrix_label;
 
 	int f_problem_of_Steiner_type;
 	int problem_of_Steiner_type_nb_t_orbits;

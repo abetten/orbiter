@@ -179,7 +179,7 @@ if (f_read_solution_file) {
 			nb_solutions, Solutions, solution_size,
 			verbose_level);
 	cout << "Read the following solutions from file:" << endl;
-	Orbiter->Int_vec.matrix_print(Solutions, nb_solutions, solution_size);
+	Int_matrix_print(Solutions, nb_solutions, solution_size);
 	cout << "Number of solutions = " << nb_solutions << endl;
 	cout << "solution_size = " << solution_size << endl;
 

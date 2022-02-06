@@ -45,6 +45,12 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &parameters,
 			int verbose_level);
+	void evaluate_managed_formula(
+			formula *F,
+			field_theory::finite_field *Fq,
+			std::string &parameters,
+			int *&Values, int &nb_monomials,
+			int verbose_level);
 
 };
 
@@ -67,35 +73,95 @@ class expression_parser {
 
 
 
-  private:
+	private:
 
-	lexer *Lexer;
+		lexer *Lexer;
 
-  public:
+	public:
 
 	  // symbol table - can be accessed directly (eg. to copy a batch in)
-	  std::map<std::string, double> symbols_;
+		std::map<std::string, double> symbols;
 
-	  syntax_tree *Tree;
+	syntax_tree *Tree;
 
-	  expression_parser();
-	  ~expression_parser();
-
-
-  // access symbols with operator []
-  double & operator[] (std::string & key) { return symbols_ [key]; }
+	expression_parser();
+	~expression_parser();
 
 
+	// access symbols with operator []
+	double & operator[] (std::string & key) { return symbols [key]; }
 
-  syntax_tree_node *Primary (int verbose_level,
-		  int &f_single_literal, std::string &single_literal, int &f_has_seen_minus,
-		  const bool get);
-  syntax_tree_node *Term (int verbose_level, const bool get);
-  syntax_tree_node *AddSubtract (int verbose_level, const bool get);
-  syntax_tree_node *Comparison (int verbose_level, const bool get);
-  syntax_tree_node *Expression (int verbose_level, const bool get);
-  syntax_tree_node *CommaList (int verbose_level, const bool get);
-  void parse(syntax_tree *tree, std::string & program, int verbose_level);
+
+
+	syntax_tree_node *Primary(int verbose_level,
+		  int &f_single_literal, std::string &single_literal,
+		  int &f_has_seen_minus, const bool get);
+	syntax_tree_node *Term(int verbose_level, const bool get);
+	syntax_tree_node *AddSubtract(int verbose_level, const bool get);
+	syntax_tree_node *Comparison(int verbose_level, const bool get);
+	syntax_tree_node *Expression(int verbose_level, const bool get);
+	syntax_tree_node *CommaList(int verbose_level, const bool get);
+	void parse(syntax_tree *tree, std::string & program, int verbose_level);
+
+};
+
+
+// #############################################################################
+// formula_activity_description.cpp
+// #############################################################################
+
+
+//! description of an activity involving a formula
+
+class formula_activity_description {
+public:
+
+	int f_export;
+
+	int f_evaluate;
+	std::string evaluate_finite_field_label;
+	std::string evaluate_assignment;
+
+	int f_print_over_Fq;
+	std::string print_over_Fq_field_label;
+
+	int f_sweep;
+	std::string sweep_field_label;
+	std::string sweep_variables;
+
+
+
+	formula_activity_description();
+	~formula_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// formula_activity.cpp
+// #############################################################################
+
+
+//! an activity involving a formula
+
+class formula_activity {
+public:
+
+
+	formula_activity_description *Descr;
+	formula *f;
+
+	formula_activity();
+	~formula_activity();
+	void init(formula_activity_description *Descr,
+			formula *f,
+			int verbose_level);
+	void perform_activity(int verbose_level);
 
 };
 
@@ -140,6 +206,8 @@ public:
 	void evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
 			int verbose_level);
+	void print(std::ostream &ost);
+	void print_easy(field_theory::finite_field *F, std::ostream &ost);
 
 };
 
@@ -154,14 +222,14 @@ public:
 
 class lexer {
 public:
-	  std::string program_;
+	  std::string program;
 
-	  const char * pWord_;
-	  const char * pWordStart_;
+	  const char * pWord;
+	  const char * pWordStart;
 	  // last token parsed
-	  TokenType type_;
-	  std::string word_;
-	  double value_;
+	  TokenType type;
+	  std::string word;
+	  double value;
 	  syntax_tree_node_terminal *T;
 
 	  lexer();
@@ -193,10 +261,13 @@ public:
 
 	syntax_tree_node_terminal();
 	void print(std::ostream &ost);
+	void print_easy(std::ostream &ost);
 	void print_expression(std::ostream &ost);
 	void print_graphviz(std::ostream &ost);
-	int evaluate(std::map<std::string, std::string> &symbol_table,
-			field_theory::finite_field *F, int verbose_level);
+	int evaluate(
+			std::map<std::string, std::string> &symbol_table,
+			field_theory::finite_field *F,
+			int verbose_level);
 
 };
 
@@ -220,12 +291,14 @@ public:
 	int f_terminal;
 	syntax_tree_node_terminal *T;
 
+	//! multiplication or addition
 	enum syntax_tree_node_operation_type type;
 
+	// ! if we are not a terminal node, we can have any number of nodes
 	int nb_nodes;
 	syntax_tree_node *Nodes[MAX_NODES_SYNTAX_TREE];
 
-	int f_has_monomial;
+	int f_has_monomial; // only for multiplication nodes
 	int *monomial;
 
 	int f_has_minus;
@@ -233,10 +306,15 @@ public:
 	syntax_tree_node();
 	~syntax_tree_node();
 	void null();
-	void split_by_monomials(ring_theory::homogeneous_polynomial_domain *Poly,
+	void split_by_monomials(
+			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, int verbose_level);
 	int is_homogeneous(int &degree, int verbose_level);
 	void print(std::ostream &ost);
+	void print_easy(std::ostream &ost);
+	void print_easy_without_monomial(std::ostream &ost);
+	int is_mult();
+	int is_add();
 	int evaluate(std::map<std::string, std::string> &symbol_table,
 			field_theory::finite_field *F, int verbose_level);
 	void print_expression(std::ostream &ost);
@@ -251,7 +329,7 @@ public:
 // syntax_tree.cpp
 // #############################################################################
 
-//! the syntax tree of an expression
+//! the syntax tree of an expression, possibly with managed variables
 
 
 
@@ -264,10 +342,12 @@ public:
 
 	syntax_tree();
 	void print(std::ostream &ost);
+	void print_easy(std::ostream &ost);
 	void print_monomial(std::ostream &ost, int *monomial);
 	int identify_single_literal(std::string &single_literal);
 	int is_homogeneous(int &degree, int verbose_level);
-	void split_by_monomials(ring_theory::homogeneous_polynomial_domain *Poly,
+	void split_by_monomials(
+			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int verbose_level);
 
 };

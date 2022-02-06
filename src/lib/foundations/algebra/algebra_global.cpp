@@ -1220,7 +1220,7 @@ void algebra_global::gl_random_matrix(field_theory::finite_field *F, int k, int 
 	F->Linear_algebra->random_invertible_matrix(M, k, verbose_level - 2);
 
 	cout << "Random invertible matrix:" << endl;
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M, k, k);
+	Int_matrix_print(M, k, k);
 
 
 	{
@@ -1238,7 +1238,7 @@ void algebra_global::gl_random_matrix(field_theory::finite_field *F, int k, int 
 
 		U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
 		cout << "After substitution, the matrix is " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M2, k, k);
+		Int_matrix_print(M2, k, k);
 
 		U.delete_object(char_poly);
 

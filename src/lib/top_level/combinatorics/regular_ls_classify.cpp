@@ -409,7 +409,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	}
 
 	nb_open_rows = 0;
-	orbiter_kernel_system::Orbiter->Int_vec->mone(open_row_idx, Descr->m);
+	Int_vec_mone(open_row_idx, Descr->m);
 	for (i = 0; i < Descr->m; i++) {
 		if (row_sum[i] < Descr->r) {
 			open_rows[nb_open_rows] = i;
@@ -419,7 +419,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	}
 
 	nb_open_pairs = 0;
-	orbiter_kernel_system::Orbiter->Int_vec->mone(open_pair_idx, m2);
+	Int_vec_mone(open_pair_idx, m2);
 
 	for (i = 0; i < m2; i++) {
 		if (pairs[i] == FALSE) {

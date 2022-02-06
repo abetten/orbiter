@@ -135,8 +135,9 @@ void buekenhout_metz::freeself()
 	null();
 }
 
-void buekenhout_metz::init(
-		field_theory::finite_field *Fq, field_theory::finite_field *FQ,
+void buekenhout_metz::buekenhout_metz_init(
+		field_theory::finite_field *Fq,
+		field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level)
 // creates P2 over FQ and P3 over Fq, calls FQ->subfield_embedding_2dimensional
@@ -145,14 +146,14 @@ void buekenhout_metz::init(
 	int i;
 
 	if (f_v) {
-		cout << "buekenhout_metz::init q=" << q << " Q=" << Q << endl;
+		cout << "buekenhout_metz::buekenhout_metz_init q=" << q << " Q=" << Q << endl;
 	}
 	buekenhout_metz::Fq = Fq;
 	buekenhout_metz::FQ = FQ;
 	buekenhout_metz::q = Fq->q;
 	buekenhout_metz::Q = Fq->q;
 	if (Q != q * q) {
-		cout << "buekenhout_metz::init Q != q * q" << endl;
+		cout << "buekenhout_metz::buekenhout_metz_init Q != q * q" << endl;
 		exit(1);
 		}
 	buekenhout_metz::f_Uab = f_Uab;
@@ -162,12 +163,12 @@ void buekenhout_metz::init(
 	Q = q * q;
 
 	if (f_v) {
-		cout << "buekenhout_metz::init f_Uab=" << f_Uab << endl;
+		cout << "buekenhout_metz::buekenhout_metz_init f_Uab=" << f_Uab << endl;
 		if (f_Uab) {
-			cout << "buekenhout_metz::init a=" << parameter_a << endl;
-			cout << "buekenhout_metz::init b=" << parameter_b << endl;
+			cout << "buekenhout_metz::buekenhout_metz_init a=" << parameter_a << endl;
+			cout << "buekenhout_metz::buekenhout_metz_init b=" << parameter_b << endl;
 			}
-		cout << "buekenhout_metz::init f_classical=" << f_classical << endl;
+		cout << "buekenhout_metz::buekenhout_metz_init f_classical=" << f_classical << endl;
 		}
 
 	P2 = NEW_OBJECT(projective_space);
@@ -187,7 +188,7 @@ void buekenhout_metz::init(
 	T1 = FQ->T2(alpha);
 	
 	if (f_v) {
-		cout << "buekenhout_metz::init "
+		cout << "buekenhout_metz::buekenhout_metz_init "
 				"before FQ->subfield_embedding_2dimensional" << endl;
 		}
 	FQ->subfield_embedding_2dimensional(*Fq, 
@@ -220,7 +221,7 @@ void buekenhout_metz::init(
 			components, embedding, pair_embedding);
 
 
-		cout << "buekenhout_metz::init e1=" << e1 << " one_1=" << one_1
+		cout << "buekenhout_metz::buekenhout_metz_init e1=" << e1 << " one_1=" << one_1
 				<< " one_2=" << one_2 << endl;
 		}
 	
@@ -234,7 +235,7 @@ void buekenhout_metz::init(
 		}
 	minus_t0 = Fq->negate(t0);
 	if (f_v) {
-		cout << "buekenhout_metz::init t0=" << t0 << " t1=" << t1
+		cout << "buekenhout_metz::buekenhout_metz_init t0=" << t0 << " t1=" << t1
 				<< " minus_t0=" << minus_t0 << endl;
 		}
 	
@@ -246,7 +247,7 @@ void buekenhout_metz::init(
 	w4 = NEW_int(6);
 	w5 = NEW_int(6);
 	if (f_v) {
-		cout << "buekenhout_metz::init done" << endl;
+		cout << "buekenhout_metz::buekenhout_metz_init done" << endl;
 	}
 }
 

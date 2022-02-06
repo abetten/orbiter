@@ -614,7 +614,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 
 				Lint_vec_copy(line0, line, level);
 
-				orbiter_kernel_system::Orbiter->Int_vec->apply_lint(subset, live_points, line + level, target_depth);
+				Int_vec_apply_lint(subset, live_points, line + level, target_depth);
 
 				if (check_orbit_covering(line, Descr->K, 0 /* verbose_level */)) {
 					cout << "found a solution, subset " << l

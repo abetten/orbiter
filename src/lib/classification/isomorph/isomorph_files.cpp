@@ -1831,7 +1831,7 @@ void isomorph::induced_action_on_set_and_kernel(
 	
 		file << "The kernel has $" << Orb.nb_orbits
 				<< "$ orbits on the quadric.\\\\" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->distribution(Orb.orbit_len, Orb.nb_orbits,
+		Int_vec_distribution(Orb.orbit_len, Orb.nb_orbits,
 				val, mult, len);
 		file << "The orbit length are $[";
 		for (i = len - 1; i >= 0; i--) {

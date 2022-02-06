@@ -809,7 +809,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			if (f_v) {
 				cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 						"reading solution " << sol_idx << " / " << nb_solutions << ", clique after unfiltering = ";
-				Orbiter->Int_vec.print(cout, clique, solution_size);
+				Int_vec_print(cout, clique, solution_size);
 				cout << endl;
 			}
 #endif

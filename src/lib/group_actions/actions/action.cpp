@@ -3367,6 +3367,116 @@ void action::perform_tests(groups::strong_generators *SG, int verbose_level)
 }
 
 
+void action::apply_based_on_text(std::string &input_text, std::string &input_group_element, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::apply_based_on_text" << endl;
+	}
+	if (f_v) {
+		cout << "applying" << endl;
+		cout << "input = " << input_text << endl;
+		cout << "group element = " << input_group_element << endl;
+	}
+	long int *v;
+	long int *w;
+	int i, sz;
+
+	int *Elt2;
+
+	Elt2 = NEW_int(elt_size_in_int);
+
+	Lint_vec_scan(input_text, v, sz);
+	if (f_v) {
+		cout << "v=" << endl;
+		Lint_vec_print(cout, v, sz);
+	}
+
+	w = NEW_lint(sz);
+
+	make_element_from_string(Elt2, input_group_element, verbose_level);
+	if (f_v) {
+		cout << "B=" << endl;
+		element_print_quick(Elt2, cout);
+	}
+
+	for (i = 0; i < sz; i++) {
+		w[i] = element_image_of(v[i], Elt2, verbose_level - 1);
+		if (f_v) {
+			cout << "mapping " << v[i] << " -> " << w[i] << endl;
+		}
+	}
+
+	string fname;
+
+	fname.assign(label);
+	fname.append("_apply.tex");
+
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Application of Group Element in $%s$", label_tex.c_str());
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			ost << "$$" << endl;
+			element_print_latex(Elt2, ost);
+			ost << "$$" << endl;
+
+			element_print_for_make_element(Elt2, ost);
+			ost << "\\\\" << endl;
+
+			ost << "maps: \\\\" << endl;
+
+			for (i = 0; i < sz; i++) {
+				ost << "$" << v[i] << " \\mapsto " << w[i] << "$\\\\" << endl;
+			}
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+		}
+	}
+
+
+	FREE_int(Elt2);
+
+	FREE_lint(v);
+	FREE_lint(w);
+
+
+	if (f_v) {
+		cout << "action::apply_based_on_text" << endl;
+	}
+}
+
+
+
 void action::multiply_based_on_text(std::string &data_A, std::string &data_B, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -469,13 +469,13 @@ void geometry_global::create_Buekenhout_Metz(
 	buekenhout_metz *BM;
 
 	if (f_v) {
-		cout << "create_Buekenhout_Metz" << endl;
-		}
+		cout << "geometry_global::create_Buekenhout_Metz" << endl;
+	}
 
 
 	BM = NEW_OBJECT(buekenhout_metz);
 
-	BM->init(Fq, FQ,
+	BM->buekenhout_metz_init(Fq, FQ,
 		f_Uab, parameter_a, parameter_b, f_classical, verbose_level);
 
 
@@ -521,6 +521,9 @@ void geometry_global::create_Buekenhout_Metz(
 	fname.append(name);
 
 	FREE_OBJECT(BM);
+	if (f_v) {
+		cout << "geometry_global::create_Buekenhout_Metz done" << endl;
+	}
 
 }
 
@@ -1808,11 +1811,13 @@ void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 	}
 
 	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_Gr before P->create_latex_report_for_Grassmannian" << endl;
+		cout << "geometry_global::do_cheat_sheet_Gr "
+				"before P->create_latex_report_for_Grassmannian" << endl;
 	}
 	P->create_latex_report_for_Grassmannian(k, verbose_level);
 	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_Gr after P->create_latex_report_for_Grassmannian" << endl;
+		cout << "geometry_global::do_cheat_sheet_Gr "
+				"after P->create_latex_report_for_Grassmannian" << endl;
 	}
 
 
@@ -1878,19 +1883,22 @@ void geometry_global::do_create_desarguesian_spread(
 
 	if (f_v) {
 		cout << "geometry_global::do_create_desarguesian_spread" << endl;
-		cout << "geometry_global::do_create_desarguesian_spread Q=" << FQ->q << " q=" << Fq->q << " m=" << m << endl;
+		cout << "geometry_global::do_create_desarguesian_spread "
+				"Q=" << FQ->q << " q=" << Fq->q << " m=" << m << endl;
 	}
 
 	int s, n;
 
 	if (FQ->p != Fq->p) {
-		cout << "geometry_global::do_create_desarguesian_spread the fields must have the same characteristic" << endl;
+		cout << "geometry_global::do_create_desarguesian_spread "
+				"the fields must have the same characteristic" << endl;
 		exit(1);
 	}
 	s = FQ->e / Fq->e;
 
 	if (s * Fq->e != FQ->e) {
-		cout << "geometry_global::do_create_desarguesian_spread Fq is not a subfield of FQ" << endl;
+		cout << "geometry_global::do_create_desarguesian_spread "
+				"Fq is not a subfield of FQ" << endl;
 		exit(1);
 	}
 

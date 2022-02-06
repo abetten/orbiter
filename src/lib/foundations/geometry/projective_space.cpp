@@ -245,7 +245,7 @@ void projective_space::projective_space_init(int n, field_theory::finite_field *
 	}
 
 	Arc_in_projective_space = NEW_OBJECT(arc_in_projective_space);
-
+	Arc_in_projective_space->init(this, 0 /* verbose_level */);
 
 	if (f_init_incidence_structure) {
 		if (f_v) {
@@ -1287,6 +1287,11 @@ int projective_space::determine_conic_in_plane(
 	if (nb_pts < 5) {
 		cout << "projective_space::determine_conic_in_plane "
 				"need at least 5 points" << endl;
+		exit(1);
+	}
+
+	if (Arc_in_projective_space == NULL) {
+		cout << "projective_space::determine_conic_in_plane Arc_in_projective_space == NULL" << endl;
 		exit(1);
 	}
 

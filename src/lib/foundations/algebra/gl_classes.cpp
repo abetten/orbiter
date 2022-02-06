@@ -561,7 +561,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes Representative:" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Mtx, k, k);
+			Int_matrix_print(Mtx, k, k);
 		}
 
 
@@ -653,7 +653,7 @@ loop1:
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes Representative:" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Mtx, k, k);
+			Int_matrix_print(Mtx, k, k);
 		}
 
 
@@ -755,7 +755,7 @@ void gl_classes::identify_matrix(int *Mtx,
 	if (f_v) {
 		cout << "gl_classes::identify_matrix "
 				"After substitution, the matrix is " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M2, k, k);
+		Int_matrix_print(M2, k, k);
 		}
 
 
@@ -923,7 +923,7 @@ void gl_classes::identify2(int *Mtx, ring_theory::unipoly_object &poly,
 	if (f_vv) {
 		cout << "gl_classes::identify2 "
 				"transformation matrix = " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, k, k);
+		Int_matrix_print(Basis, k, k);
 		cout << endl;
 		}
 
@@ -1052,7 +1052,7 @@ void gl_classes::compute_generalized_kernels(
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels "
 					"cnt = " << cnt << " computing kernel of:" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M3, k, k);
+			Int_matrix_print(M3, k, k);
 			cout << endl;
 			}
 		Int_vec_copy(M3, M4, k * k);
@@ -1065,7 +1065,7 @@ void gl_classes::compute_generalized_kernels(
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels "
 					"kernel = " << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Data->K[cnt].M,
+			Int_matrix_print(Data->K[cnt].M,
 					Data->K[cnt].m, Data->K[cnt].n);
 			cout << endl;
 			}
@@ -1168,7 +1168,7 @@ void gl_classes::choose_basis_for_rational_normal_form(
 	if (f_vv) {
 		cout << "gl_classes::choose_basis_for_rational_normal_form "
 				"Mtx=" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Mtx, k, k);
+		Int_matrix_print(Mtx, k, k);
 		cout << endl;
 		}
 	b = 0;
@@ -1294,7 +1294,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 						}
 					if (f_v) {
 						cout << "Basis=" << endl;
-						orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, k, k);
+						Int_matrix_print(Basis, k, k);
 						}
 					b++;
 					F->Linear_algebra->mult_vector_from_the_right(Mtx, v, w, k, k);
@@ -1320,7 +1320,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 			if (f_v) {
 				cout << "gl_classes::choose_basis_for_rational_normal_"
 						"form_block Basis = " << endl;
-				orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, k, k);
+				Int_matrix_print(Basis, k, k);
 				cout << endl;
 				}
 			} // next e
@@ -1358,7 +1358,7 @@ void gl_classes::generators_for_centralizer(
 		}
 	if (f_vv) {
 		cout << "gl_classes::generators_for_centralizer " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Mtx, k, k);
+		Int_matrix_print(Mtx, k, k);
 		}
 
 	M2 = NEW_int(k * k);
@@ -1702,7 +1702,7 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 							"h = " << h << " level1 = " << level1
 							<< " level2=" << level2 << " / " << af
 							<< " chosen matrix:" << endl;
-					orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, k, k);
+					Int_matrix_print(Basis, k, k);
 					}
 
 
@@ -1876,7 +1876,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 			if (f_vv) {
 				cout << "gl_classes::choose_basis_for_rational_normal_"
 						"form_coset Basis = " << endl;
-				orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, k, k);
+				Int_matrix_print(Basis, k, k);
 				cout << endl;
 				}
 			} // next e

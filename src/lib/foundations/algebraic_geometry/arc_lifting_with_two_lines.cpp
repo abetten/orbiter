@@ -133,9 +133,9 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface" << endl;
 		cout << "line1=" << line1 << ":" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, 2, 4);
+		Int_matrix_print(Basis, 2, 4);
 		cout << "line2=" << line2 << ":" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis + 8, 2, 4);
+		Int_matrix_print(Basis + 8, 2, 4);
 	}
 	rk = F->Linear_algebra->Gauss_simple(
 			Basis, 4, 4 /*dimension*/,
@@ -220,7 +220,7 @@ void arc_lifting_with_two_lines::create_surface(
 				"rearranged arc:" << endl;
 		Lint_vec_print(cout, P, 6);
 		cout << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Arc_coords, 6, 4);
+		Int_matrix_print(Arc_coords, 6, 4);
 	}
 
 	for (i = 0; i < 4; i++) {
@@ -236,7 +236,7 @@ void arc_lifting_with_two_lines::create_surface(
 		Lint_vec_print(cout, transversal, 4);
 		cout << endl;
 		cout << "Transversals:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Transversals, 8, 4);
+		Int_matrix_print(Transversals, 8, 4);
 	}
 
 	input_Lines[0] = line1;
@@ -410,7 +410,7 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"a2=" << a2 << endl;
 		cout << "basis_a2:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(basis_a2, 2, 4);
+		Int_matrix_print(basis_a2, 2, 4);
 	}
 
 

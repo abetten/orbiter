@@ -409,7 +409,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	Long_pairs = NEW_lint(nb_long_orbits);
 
 	Short_orbit_inverse = NEW_int(Sch->nb_orbits);
-	orbiter_kernel_system::Orbiter->Int_vec->mone(Short_orbit_inverse, Sch->nb_orbits);
+	Int_vec_mone(Short_orbit_inverse, Sch->nb_orbits);
 
 	for (s = 0; s < nb_pairs_of_type1; s++) {
 		h = Pairs_of_type1[s];

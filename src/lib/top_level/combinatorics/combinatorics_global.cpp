@@ -232,9 +232,9 @@ void combinatorics_global::load_design_table(design_create *DC,
 		int gens_data_sz;
 		int nb_elements;
 
-		Orbiter->Int_vec.scan(generators_data, gens_data, gens_data_sz);
+		Int_vec_scan(generators_data, gens_data, gens_data_sz);
 		cout << "gens_data = ";
-		Orbiter->Int_vec.print(cout, gens_data, gens_data_sz);
+		Int_vec_print(cout, gens_data, gens_data_sz);
 		cout << endl;
 
 

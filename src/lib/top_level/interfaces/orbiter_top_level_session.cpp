@@ -126,7 +126,17 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 
 		// main dispatch:
 
+		if (f_v) {
+			cout << "orbiter_top_level_session::handle_everything memory_debug "
+					"before parse_and_execute" << endl;
+		}
+
 		parse_and_execute(argc, Argv, i, verbose_level);
+
+		if (f_v) {
+			cout << "orbiter_top_level_session::handle_everything memory_debug "
+					"after parse_and_execute" << endl;
+		}
 
 
 		// finish:

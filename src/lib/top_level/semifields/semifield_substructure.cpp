@@ -213,7 +213,7 @@ void semifield_substructure::compute_orbits(
 		orbit_idx = NEW_int(len);
 
 		Int_vec_zero(f_reached, len);
-		orbiter_kernel_system::Orbiter->Int_vec->mone(position, len);
+		Int_vec_mone(position, len);
 
 		int cnt, f;
 

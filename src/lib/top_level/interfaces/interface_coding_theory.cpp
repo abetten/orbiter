@@ -85,6 +85,9 @@ interface_coding_theory::interface_coding_theory()
 	//std::string field_induction_fname_out;
 	field_induction_nb_bits = 0;
 
+	f_crc32 = FALSE;
+	//std::string crc32_text;
+
 }
 
 
@@ -143,6 +146,9 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-field_induction") == 0) {
 		cout << "-field_induction <string : fname_in> <string : fname_out> <int : nb_bits>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32") == 0) {
+		cout << "-crc32 <string : text>" << endl;
 	}
 }
 
@@ -208,6 +214,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-field_induction") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -458,6 +467,15 @@ void interface_coding_theory::read_arguments(int argc,
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-crc32") == 0) {
+		f_crc32 = TRUE;
+		crc32_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-crc32 " << crc32_text
+					<< endl;
+		}
+	}
+
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
 	}
@@ -542,6 +560,10 @@ void interface_coding_theory::print()
 		cout << "-field_induction " << field_induction_fname_in
 				<< " " << field_induction_fname_out
 				<< " " << field_induction_nb_bits
+				<< endl;
+	}
+	if (f_crc32) {
+		cout << "-crc32 " << crc32_text
 				<< endl;
 	}
 }
@@ -771,6 +793,22 @@ void interface_coding_theory::worker(int verbose_level)
 				field_induction_fname_out,
 				field_induction_nb_bits,
 				verbose_level);
+
+	}
+	else if (f_crc32) {
+		cout << "-crc32 " << crc32_text
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+		uint32_t a;
+
+		a = Codes.crc32(crc32_text.c_str(), crc32_text.length());
+		cout << "CRC value of " << crc32_text << " is ";
+
+		data_structures::algorithms Algo;
+
+		Algo.print_uint32_hex(cout, a);
+		cout << endl;
 
 	}
 	if (f_v) {

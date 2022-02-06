@@ -372,7 +372,7 @@ public:
 	~buekenhout_metz();
 	void null();
 	void freeself();
-	void init(field_theory::finite_field *Fq, field_theory::finite_field *FQ,
+	void buekenhout_metz_init(field_theory::finite_field *Fq, field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level);
 	void init_ovoid(int verbose_level);
@@ -570,7 +570,6 @@ class geometric_object_create {
 public:
 	geometric_object_description *Descr;
 
-	//std::string fname;
 	int nb_pts;
 	long int *Pts;
 
@@ -625,7 +624,7 @@ public:
 	int f_BLT_FTWKB;
 #endif
 
-	int f_ovoid;
+	int f_elliptic_quadric_ovoid;
 	int f_ovoid_ST;
 
 	int f_Baer;
@@ -2278,7 +2277,7 @@ public:
 	int reverse_engineer_semilinear_map(
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
-	void create_ovoid(
+	void create_elliptic_quadric_ovoid(
 			std::string &label_txt,
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,

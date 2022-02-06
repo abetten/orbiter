@@ -153,7 +153,7 @@ int cubic_curve::compute_system_in_RREF(
 	if (f_v && FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points in coordinates:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Pts, nb_pts, 3);
+		Int_matrix_print(Pts, nb_pts, 3);
 	}
 
 	for (i = 0; i < nb_pts; i++) {
@@ -165,14 +165,14 @@ int cubic_curve::compute_system_in_RREF(
 	if (f_v && FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(System, nb_pts, nb_monomials);
+		Int_matrix_print(System, nb_pts, nb_monomials);
 	}
 	r = F->Linear_algebra->Gauss_simple(System, nb_pts, nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system in RREF:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(System, nb_pts, nb_monomials);
+		Int_matrix_print(System, nb_pts, nb_monomials);
 	}
 	if (f_v) {
 		cout << "cubic_curve::compute_system_in_RREF "
@@ -340,13 +340,13 @@ void cubic_curve::compute_inflexion_points(
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"before F->perp_standard:" << endl;
-				orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, 1, 3);
+				Int_matrix_print(Basis, 1, 3);
 			}
 			F->Linear_algebra->perp_standard(3, 1, Basis, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"after F->perp_standard:" << endl;
-				orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Basis, 3, 3);
+				Int_matrix_print(Basis, 3, 3);
 			}
 			// test if the first basis vector is a multiple of v:
 			Int_vec_copy(v, Basis2, 3);

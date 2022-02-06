@@ -122,7 +122,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		}
 	}
 	if (f_v) {
-		cout << "bisecants: ";
+		cout << "eckardt_point_info::init bisecants: ";
 		Int_vec_print(cout, bisecants, 15);
 		cout << endl;
 	}
@@ -149,7 +149,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		multiplicity, 0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "We found " << nb_B_pts << " B-pts: ";
+		cout << "eckardt_point_info::init We found " << nb_B_pts << " B-pts: ";
 		Int_vec_print(cout, B_pts, nb_B_pts);
 		cout << endl;
 	}
@@ -174,7 +174,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 			}
 
 			if (f_vv) {
-				cout << "H1=";
+				cout << "eckardt_point_info::init H1=";
 				Int_vec_print(cout, H1, 6);
 				cout << endl;
 			}
@@ -184,7 +184,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 				H[2 * u + 1] = h / 15;
 				}
 			if (f_vv) {
-				cout << "H=";
+				cout << "eckardt_point_info::init H=";
 				Int_vec_print(cout, H, 12);
 				cout << endl;
 			}
@@ -221,7 +221,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 
 	if (f_v) {
 		cout << "eckardt_point_info::init "
-			"We found " << nb_B_pts << " Eckardt points:" << endl;
+			"We found " << nb_B_pts << " Eckardt points of the Brianchon type:" << endl;
 		for (s = 0; s < nb_B_pts; s++) {
 			cout << "E_{";
 			for (l = 0; l < 3; l++) {
@@ -237,7 +237,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 	}
 
 	if (f_v) {
-		cout << "computing E_ij:" << endl;
+		cout << "eckardt_point_info::init computing Eckardt points of the second type E_ij:" << endl;
 	}
 
 
@@ -245,6 +245,10 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 	conic_coefficients = NEW_int(6 * 6);
 
 	for (j = 0; j < 6; j++) {
+
+		if (f_v) {
+			cout << "eckardt_point_info::init j=" << j << " / 6" << endl;
+		}
 
 		int deleted_point, rk, i1;
 		int *six_coeffs;
@@ -262,22 +266,44 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		int_vec_print(cout, arc5, 5);
 		cout << endl;
 #endif
+		if (f_v) {
+			cout << "eckardt_point_info::init j=" << j << " / 6 arc5 : ";
+			Lint_vec_print(cout, arc5, 5);
+			cout << endl;
+		}
 
+		if (f_v) {
+			cout << "eckardt_point_info::init j=" << j << " / 6 before P2->determine_conic_in_plane" << endl;
+		}
 		P2->determine_conic_in_plane(arc5, 5,
-			six_coeffs, 0 /* verbose_level */);
+			six_coeffs, verbose_level);
+		if (f_v) {
+			cout << "eckardt_point_info::init j=" << j << " / 6 after P2->determine_conic_in_plane" << endl;
+		}
+
 		P2->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
 
-#if 0
-		cout << "coefficients of the conic: ";
-		int_vec_print(cout, six_coeffs, 6);
-		cout << endl;
-#endif
+		if (f_v) {
+			cout << "eckardt_point_info::init j=" << j << " / 6 coefficients of the conic : ";
+			Int_vec_print(cout, six_coeffs, 6);
+			cout << endl;
+		}
 
+		if (f_v) {
+			cout << "eckardt_point_info::init j=" << j << " / 6 before P2->find_tangent_lines_to_conic" << endl;
+		}
 		P2->find_tangent_lines_to_conic(six_coeffs,
 			arc5, 5,
-			tangents, 0 /* verbose_level */);
+			tangents, verbose_level);
+		if (f_v) {
+			cout << "eckardt_point_info::init j=" << j << " / 6 after P2->find_tangent_lines_to_conic" << endl;
+		}
 
 		for (i = 0; i < 5; i++) {
+			if (f_v) {
+				cout << "eckardt_point_info::init j=" << j << " / 6 i=" << i << " / 5 tangents[i] = " << tangents[i] << endl;
+			}
+
 			P2->unrank_line(Basis, tangents[i]);
 
 #if 0
@@ -295,9 +321,8 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 					i1 = i;
 				}
 				if (f_v) {
-					cout << "eckardt_point_info::init "
-							"Found Eckardt point E_{"
-							<< i1 + 1 << j + 1 << "}" << endl;
+					cout << "eckardt_point_info::init Found Eckardt point "
+							"E_{" << i1 + 1 << j + 1 << "}" << endl;
 				}
 				E2[nb_E2 * 2 + 0] = i1;
 				E2[nb_E2 * 2 + 1] = j;
