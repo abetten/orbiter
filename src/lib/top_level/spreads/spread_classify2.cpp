@@ -1788,7 +1788,7 @@ void spread_classify::print_spread(ostream &ost, long int *data, int sz)
 	for (h = 0; h < sz; h++) {
 		Grass->unrank_lint(data[h], 0);
 		ost << "Spread element " << h << ":" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print_ost(ost, Grass->M, k, n);
+		Int_matrix_print_ost(ost, Grass->M, k, n);
 	}
 }
 
@@ -2435,7 +2435,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 
 		Mtx->GFq->PG_element_unrank_modified(vec1, 1, n, the_point);
 		Mtx->GFq->PG_element_normalize_from_front(vec1, 1, n);
-		pivot = orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(vec1, n);
+		pivot = Int_vec_find_first_nonzero_entry(vec1, n);
 
 		for (i = 0; i < order + 1; i++) {
 			if (Sorting.lint_vec_search(Pts[i], nb_points, the_point, idx, 0)) {

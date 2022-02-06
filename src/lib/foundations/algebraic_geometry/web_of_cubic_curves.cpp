@@ -216,7 +216,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "web_of_cubic_curves::init "
 				"Web_of_cubic_curves:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Web_of_cubic_curves, 45, 10);
+		Int_matrix_print(Web_of_cubic_curves, 45, 10);
 	}
 
 	if (f_v) {
@@ -234,7 +234,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "web_of_cubic_curves::init "
 				"base_curves:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(base_curves, 4, 10);
+		Int_matrix_print(base_curves, 4, 10);
 	}
 
 
@@ -242,7 +242,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "web_of_cubic_curves::init "
 				"Tritangent_plane_equations:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Tritangent_plane_equations, 45, 4);
+		Int_matrix_print(Tritangent_plane_equations, 45, 4);
 	}
 
 	The_plane_rank = NEW_lint(45);
@@ -366,7 +366,7 @@ void web_of_cubic_curves::compute_web_of_cubic_curves(long int *arc6, int verbos
 
 	if (f_v) {
 		cout << "The web of cubic curves is:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Web_of_cubic_curves, 45, 10);
+		Int_matrix_print(Web_of_cubic_curves, 45, 10);
 	}
 
 	FREE_int(bisecants);
@@ -390,7 +390,7 @@ void web_of_cubic_curves::rank_of_foursubsets(
 	}
 	if (f_v) {
 		cout << "web of cubic curves:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Web_of_cubic_curves, 45, 10);
+		Int_matrix_print(Web_of_cubic_curves, 45, 10);
 	}
 	N = Combi.int_n_choose_k(45, 4);
 	rk = NEW_int(N);
@@ -444,7 +444,7 @@ void web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_plan
 
 	if (f_v) {
 		cout << "base_curves:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(base_curves, 4, 10);
+		Int_matrix_print(base_curves, 4, 10);
 	}
 
 	// find the plane equations:
@@ -468,14 +468,14 @@ void web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_plan
 			if (f_v) {
 				cout << "h=" << h << " / " << 45
 					<< " the system is:" << endl;
-				orbiter_kernel_system::Orbiter->Int_vec->matrix_print(curves, 5, 10);
+				Int_matrix_print(curves, 5, 10);
 			}
 
 			Surf->F->Linear_algebra->transpose_matrix(curves, curves_t, 5, 10);
 
 			if (f_v) {
 				cout << "after transpose:" << endl;
-				orbiter_kernel_system::Orbiter->Int_vec->matrix_print(curves_t, 10, 5);
+				Int_matrix_print(curves_t, 10, 5);
 			}
 
 			rk = Surf->F->Linear_algebra->RREF_and_kernel(5, 10, curves_t,
@@ -510,7 +510,7 @@ void web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_plan
 	}
 	if (f_v) {
 		cout << "the plane equations are: " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Tritangent_plane_equations, 45, 4);
+		Int_matrix_print(Tritangent_plane_equations, 45, 4);
 		cout << endl;
 	}
 
@@ -683,7 +683,7 @@ void web_of_cubic_curves::extract_six_curves_from_web(
 
 	if (f_v) {
 		cout << "The six curves are:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(six_curves, 6, 10);
+		Int_matrix_print(six_curves, 6, 10);
 	}
 	if (f_v) {
 		cout << "web_of_cubic_curves::extract_six_curves_from_web done" << endl;
@@ -730,7 +730,7 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 
 	if (f_v) {
 		cout << "The six curves are:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(six_curves, 6, 10);
+		Int_matrix_print(six_curves, 6, 10);
 	}
 
 

@@ -35,7 +35,7 @@ linear_algebra_global::~linear_algebra_global()
 
 void linear_algebra_global::Berlekamp_matrix(
 		field_theory::finite_field *F,
-		std::string &Berlekamp_matrix_coeffs,
+		std::string &Berlekamp_matrix_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -48,7 +48,7 @@ void linear_algebra_global::Berlekamp_matrix(
 	int sz_A;
 
 
-	orbiter_kernel_system::Orbiter->get_vector_from_label(Berlekamp_matrix_coeffs, data_A, sz_A, verbose_level);
+	orbiter_kernel_system::Orbiter->get_vector_from_label(Berlekamp_matrix_label, data_A, sz_A, verbose_level);
 
 
 	number_theory::number_theory_domain NT;

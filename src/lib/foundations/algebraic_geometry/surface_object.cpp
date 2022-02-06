@@ -338,7 +338,7 @@ void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbo
 		Surf->P->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "surface_object::find_real_lines testing line" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M, 2, 4);
+			Int_matrix_print(M, 2, 4);
 		}
 
 		Surf->Poly3_4->substitute_line(

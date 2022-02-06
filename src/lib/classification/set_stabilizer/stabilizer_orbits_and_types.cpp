@@ -272,7 +272,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 		else {
 			cout << "too large to print" << endl;
 		}
-		//Orbiter->Int_vec.print(cout, Orbit_patterns, nb_orbits);
+		//Int_vec_print(cout, Orbit_patterns, nb_orbits);
 		//cout << endl;
 	}
 

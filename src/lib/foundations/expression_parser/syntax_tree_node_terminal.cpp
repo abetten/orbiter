@@ -43,6 +43,21 @@ void syntax_tree_node_terminal::print(std::ostream &ost)
 	}
 }
 
+void syntax_tree_node_terminal::print_easy(std::ostream &ost)
+{
+	//ost << "terminal node, ";
+	if (f_int) {
+		ost << value_int;
+	}
+	else if (f_double) {
+		ost << value_double;
+	}
+	else if (f_text) {
+		ost << value_text;
+	}
+}
+
+
 void syntax_tree_node_terminal::print_expression(std::ostream &ost)
 {
 	if (f_int) {
@@ -73,8 +88,10 @@ void syntax_tree_node_terminal::print_graphviz(std::ostream &ost)
 	}
 
 }
-int syntax_tree_node_terminal::evaluate(std::map<std::string, std::string> &symbol_table,
-		field_theory::finite_field *F, int verbose_level)
+int syntax_tree_node_terminal::evaluate(
+		std::map<std::string, std::string> &symbol_table,
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a;

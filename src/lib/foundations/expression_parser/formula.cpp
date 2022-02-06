@@ -72,8 +72,8 @@ void formula::init(std::string &label, std::string &label_tex,
 	tree = NEW_OBJECT(syntax_tree);
 
 	if (f_v) {
-		cout << "formula::initFormula " << name_of_formula << " is " << formula_text << endl;
-		cout << "formula::initManaged variables: " << managed_variables << endl;
+		cout << "formula::init Formula " << name_of_formula << " is " << formula_text << endl;
+		cout << "formula::init Managed variables: " << managed_variables << endl;
 	}
 
 	const char *p = managed_variables.c_str();
@@ -87,7 +87,7 @@ void formula::init(std::string &label, std::string &label_tex,
 
 		var.assign(str);
 		if (f_v) {
-			cout << "formula::initadding managed variable " << var << endl;
+			cout << "formula::init adding managed variable " << var << endl;
 		}
 
 		tree->managed_variables.push_back(var);
@@ -99,7 +99,7 @@ void formula::init(std::string &label, std::string &label_tex,
 	nb_managed_vars = tree->managed_variables.size();
 
 	if (f_v) {
-		cout << "formula::initManaged variables: " << endl;
+		cout << "formula::init Managed variables: " << endl;
 		for (i = 0; i < nb_managed_vars; i++) {
 			cout << i << " : " << tree->managed_variables[i] << endl;
 		}
@@ -107,16 +107,16 @@ void formula::init(std::string &label, std::string &label_tex,
 
 
 	if (f_v) {
-		cout << "formula::initStarting to parse " << name_of_formula << endl;
+		cout << "formula::init Starting to parse " << name_of_formula << endl;
 	}
 	Parser.parse(tree, formula_text, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "formula::initParsing " << name_of_formula << " finished" << endl;
+		cout << "formula::init Parsing " << name_of_formula << " finished" << endl;
 	}
 
 
 	if (FALSE) {
-		cout << "formula::initSyntax tree:" << endl;
+		cout << "formula::init Syntax tree:" << endl;
 		tree->print(cout);
 	}
 
@@ -276,42 +276,11 @@ void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 	}
 
 	data_structures::string_tools ST;
-	const char *p = evaluate_text.c_str();
-	char str[1000];
-
 	std::map<std::string, std::string> symbol_table;
-	//vector<string> symbols;
-	//vector<string> values;
 
-	while (TRUE) {
-		if (!ST.s_scan_token_comma_separated(&p, str)) {
-			break;
-		}
-		string assignment;
-		int len;
+	ST.parse_value_pairs(symbol_table,
+				evaluate_text, verbose_level);
 
-		assignment.assign(str);
-		len = strlen(str);
-
-		std::size_t found;
-
-		found = assignment.find('=');
-		if (found == std::string::npos) {
-			cout << "did not find '=' in variable assignment" << endl;
-			exit(1);
-		}
-		std::string symb = assignment.substr (0, found);
-		std::string val = assignment.substr (found + 1, len - found - 1);
-
-
-
-		cout << "adding symbol " << symb << " = " << val << endl;
-
-		symbol_table[symb] = val;
-		//symbols.push_back(symb);
-		//values.push_back(val);
-
-	}
 
 #if 0
 	cout << "symbol table:" << endl;
@@ -353,6 +322,60 @@ void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 		cout << "formula::evaluate done" << endl;
 	}
 }
+
+void formula::print(std::ostream &ost)
+{
+	tree->print(ost);
+}
+
+void formula::print_easy(field_theory::finite_field *F,
+		std::ostream &ost)
+{
+	if (f_is_homogeneous) {
+		ring_theory::homogeneous_polynomial_domain *Poly;
+		monomial_ordering_type Monomial_ordering_type = t_PART;
+		//t_LEX, // lexicographical
+		//t_PART, // by partition type
+
+		Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+		Poly->init(F, nb_managed_vars, degree,
+				FALSE /*f_init_incidence_structure*/,
+				Monomial_ordering_type,
+				0 /*verbose_level*/);
+
+		syntax_tree_node **Subtrees;
+		int nb_monomials;
+		int i;
+
+		nb_monomials = Poly->get_nb_monomials();
+
+		get_subtrees(Poly,
+				Subtrees, nb_monomials,
+				0 /*verbose_level*/);
+
+		for (i = 0; i < nb_monomials; i++) {
+			//cout << "Monomial " << i << " : ";
+			if (Subtrees[i]) {
+				Subtrees[i]->print_easy_without_monomial(cout);
+				cout << " * ";
+				Poly->print_monomial(cout, i);
+				cout << endl;
+			}
+			else {
+				//cout << "no subtree" << endl;
+				//Values[i] = 0;
+			}
+		}
+
+		FREE_OBJECT(Poly);
+	}
+	else {
+		tree->print_easy(ost);
+	}
+}
+
+
 
 
 }}}

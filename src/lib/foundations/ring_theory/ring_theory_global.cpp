@@ -667,7 +667,7 @@ void ring_theory_global::polynomial_mult_mod(
 
 void ring_theory_global::polynomial_find_roots(
 		field_theory::finite_field *F,
-		std::string &A_coeffs,
+		std::string &polynomial_find_roots_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -679,7 +679,8 @@ void ring_theory_global::polynomial_find_roots(
 	int *data_A;
 	int sz_A;
 
-	Int_vec_scan(A_coeffs, data_A, sz_A);
+	//Int_vec_scan(A_coeffs, data_A, sz_A);
+	orbiter_kernel_system::Orbiter->get_vector_from_label(polynomial_find_roots_label, data_A, sz_A, verbose_level);
 
 	number_theory::number_theory_domain NT;
 

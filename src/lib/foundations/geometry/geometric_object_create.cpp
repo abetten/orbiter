@@ -179,8 +179,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			verbose_level);
 	}
 #endif
-	else if (Descr->f_ovoid) {
-		P->create_ovoid(
+	else if (Descr->f_elliptic_quadric_ovoid) {
+		P->create_elliptic_quadric_ovoid(
 				label_txt,
 				label_tex,
 			nb_pts, Pts,

@@ -998,7 +998,7 @@ void projective_space_global::classify_quartic_curves(
 
 #if 0
 	cout << "transversal:" << endl;
-	Orbiter->Int_vec.print(cout, Classifier->transversal, Classifier->nb_types);
+	Int_vec_print(cout, Classifier->transversal, Classifier->nb_types);
 	cout << endl;
 
 	int i, j;
@@ -1012,7 +1012,7 @@ void projective_space_global::classify_quartic_curves(
 		cout << j << " : ";
 
 		if (Classifier->CFS_table[j]) {
-			Orbiter->Int_vec.print(cout,
+			Int_vec_print(cout,
 					Classifier->CFS_table[j]->SubSt->orbit_frequencies,
 					Classifier->CFS_table[j]->SubSt->nb_orbits);
 		}
@@ -1045,14 +1045,14 @@ void projective_space_global::classify_quartic_curves(
 	}
 	orbit_frequencies = NEW_int(Classifier->nb_types * nb_orbits);
 
-	Orbiter->Int_vec.zero(orbit_frequencies, Classifier->nb_types * nb_orbits);
+	Int_vec_zero(orbit_frequencies, Classifier->nb_types * nb_orbits);
 
 	for (i = 0; i < Classifier->nb_types; i++) {
 
 		j = Classifier->transversal[i];
 
 		if (Classifier->CFS_table[j]) {
-			Orbiter->Int_vec.copy(
+			Int_vec_copy(
 					Classifier->CFS_table[j]->SubSt->orbit_frequencies,
 					orbit_frequencies + i * nb_orbits,
 					nb_orbits);
@@ -1079,11 +1079,11 @@ void projective_space_global::classify_quartic_curves(
 
 
 	cout << "transversal:" << endl;
-	Orbiter->Int_vec.print(cout, transversal, nb_types);
+	Int_vec_print(cout, transversal, nb_types);
 	cout << endl;
 
 	cout << "frequency:" << endl;
-	Orbiter->Int_vec.print(cout, frequency, nb_types);
+	Int_vec_print(cout, frequency, nb_types);
 	cout << endl;
 
 	T->print_classes_bigger_than_one(verbose_level);
@@ -1202,11 +1202,11 @@ void projective_space_global::classify_quartic_curves(
 		cout << "T_O_nb_types = " << T_O_nb_types << endl;
 
 		cout << "T_O_transversal:" << endl;
-		Orbiter->Int_vec.print(cout, T_O_transversal, T_O_nb_types);
+		Int_vec_print(cout, T_O_transversal, T_O_nb_types);
 		cout << endl;
 
 		cout << "T_O_frequency:" << endl;
-		Orbiter->Int_vec.print(cout, T_O_frequency, T_O_nb_types);
+		Int_vec_print(cout, T_O_frequency, T_O_nb_types);
 		cout << endl;
 
 		T_O->print_classes_bigger_than_one(verbose_level);
@@ -1250,7 +1250,7 @@ void projective_space_global::classify_quartic_curves(
 					Stab_orbits->Schreier->nb_orbits,
 					Stab_orbits->Schreier->nb_orbits,
 					2);
-			Orbiter->Int_vec.copy(T_O->Reps_in_lex_order[u], data + u * Stab_orbits->Schreier->nb_orbits, Stab_orbits->Schreier->nb_orbits);
+			Int_vec_copy(T_O->Reps_in_lex_order[u], data + u * Stab_orbits->Schreier->nb_orbits, Stab_orbits->Schreier->nb_orbits);
 		}
 
 		fname.assign(fname_mask);

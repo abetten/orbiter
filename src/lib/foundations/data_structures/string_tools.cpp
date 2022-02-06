@@ -1146,6 +1146,96 @@ double string_tools::strtof(std::string &str)
 	return f;
 }
 
+void string_tools::parse_value_pairs(
+		std::map<std::string, std::string> &symbol_table,
+		std::string &evaluate_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	const char *p = evaluate_text.c_str();
+	char str[1000];
+
+	if (f_v) {
+		cout << "string_tools::parse_value_pairs" << endl;
+	}
+	//std::map<std::string, std::string> symbol_table;
+	//vector<string> symbols;
+	//vector<string> values;
+
+	while (TRUE) {
+		if (!s_scan_token_comma_separated(&p, str)) {
+			break;
+		}
+		string assignment;
+		int len;
+
+		assignment.assign(str);
+		len = strlen(str);
+
+		std::size_t found;
+
+		found = assignment.find('=');
+		if (found == std::string::npos) {
+			cout << "did not find '=' in variable assignment" << endl;
+			exit(1);
+		}
+		std::string symb = assignment.substr (0, found);
+		std::string val = assignment.substr (found + 1, len - found - 1);
+
+
+
+		if (f_v) {
+			cout << "adding symbol " << symb << " = " << val << endl;
+		}
+
+		symbol_table[symb] = val;
+		//symbols.push_back(symb);
+		//values.push_back(val);
+
+	}
+
+	if (f_v) {
+		cout << "string_tools::parse_value_pairs done" << endl;
+	}
+
+}
+
+void string_tools::parse_comma_separated_values(
+		std::vector<std::string> &symbol_table,
+		std::string &evaluate_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	const char *p = evaluate_text.c_str();
+	char str[1000];
+
+	if (f_v) {
+		cout << "string_tools::parse_comma_separated_values" << endl;
+	}
+
+	while (TRUE) {
+		if (!s_scan_token_comma_separated(&p, str)) {
+			break;
+		}
+		string symbol;
+
+
+		symbol.assign(str);
+
+		if (f_v) {
+			cout << "adding symbol " << symbol << endl;
+		}
+
+		symbol_table.push_back(symbol);
+
+	}
+
+	if (f_v) {
+		cout << "string_tools::parse_comma_separated_values done" << endl;
+	}
+}
+
+
+
+
 int string_tools_compare_strings(void *a, void *b, void *data)
 {
 	char *A = (char *) a;

@@ -564,8 +564,9 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			ost << "The line type is: ";
 
 			stringstream sstr;
-			orbiter_kernel_system::Orbiter->Int_vec->print_classified_str(sstr,
-					line_type, HPD->get_P()->N_lines, TRUE /* f_backwards*/);
+			Int_vec_print_classified_str(sstr,
+					line_type, HPD->get_P()->N_lines,
+					TRUE /* f_backwards*/);
 			string s = sstr.str();
 			ost << "$" << s << "$\\\\" << endl;
 			//int_vec_print_classified(line_type, HPD->P->N_lines);

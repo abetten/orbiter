@@ -104,7 +104,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		linear_algebra::linear_algebra_global LA;
 
 		LA.Berlekamp_matrix(F,
-				Descr->Berlekamp_matrix_coeffs, verbose_level);
+				Descr->Berlekamp_matrix_label, verbose_level);
 
 	}
 	else if (Descr->f_normal_basis) {
@@ -120,7 +120,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		ring_theory::ring_theory_global R;
 
 		R.polynomial_find_roots(F,
-				Descr->polynomial_find_roots_A,
+				Descr->polynomial_find_roots_label,
 				verbose_level);
 	}
 

@@ -30,6 +30,11 @@ void syntax_tree::print(std::ostream &ost)
 	Root->print(ost);
 }
 
+void syntax_tree::print_easy(std::ostream &ost)
+{
+	Root->print_easy(ost);
+}
+
 void syntax_tree::print_monomial(std::ostream &ost, int *monomial)
 {
 	int i;
@@ -82,7 +87,8 @@ int syntax_tree::is_homogeneous(int &degree, int verbose_level)
 }
 
 
-void syntax_tree::split_by_monomials(ring_theory::homogeneous_polynomial_domain *Poly,
+void syntax_tree::split_by_monomials(
+		ring_theory::homogeneous_polynomial_domain *Poly,
 		syntax_tree_node **&Subtrees, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -111,7 +117,7 @@ void syntax_tree::split_by_monomials(ring_theory::homogeneous_polynomial_domain 
 		for (i = 0; i < nb_monomials; i++) {
 			cout << "Monomial " << i << " has subtree:" << endl;
 			if (Subtrees[i]) {
-				Subtrees[i]->print(cout);
+				Subtrees[i]->print_easy(cout);
 			}
 			else {
 				cout << "no subtree" << endl;

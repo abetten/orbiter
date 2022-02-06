@@ -19,6 +19,11 @@ namespace apps_algebra {
 
 group_theoretic_activity_description::group_theoretic_activity_description()
 {
+
+	f_apply = FALSE;
+	//std::string apply_input;
+	//std::string apply_element;
+
 	f_multiply = FALSE;
 	//multiply_a = NULL;
 	//multiply_b = NULL;
@@ -230,7 +235,16 @@ int group_theoretic_activity_description::read_arguments(
 		cout << "group_theoretic_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-		if (ST.stringcmp(argv[i], "-multiply") == 0) {
+
+		if (ST.stringcmp(argv[i], "-apply") == 0) {
+			f_apply = TRUE;
+			apply_input.assign(argv[++i]);
+			apply_element.assign(argv[++i]);
+			if (f_v) {
+				cout << "-apply " << apply_input << " " << apply_element << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-multiply") == 0) {
 			f_multiply = TRUE;
 			multiply_a.assign(argv[++i]);
 			multiply_b.assign(argv[++i]);
@@ -787,6 +801,9 @@ int group_theoretic_activity_description::read_arguments(
 
 void group_theoretic_activity_description::print()
 {
+	if (f_apply) {
+		cout << "-apply " << apply_input << " " << apply_element << endl;
+	}
 	if (f_multiply) {
 		cout << "-multiply " << multiply_a << " " << multiply_b << endl;
 	}

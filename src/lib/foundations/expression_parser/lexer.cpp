@@ -21,14 +21,14 @@ namespace expression_parser {
 
 lexer::lexer()
 {
-	  //std::string program_;
+	  //std::string program;
 
-	  pWord_ = 0L;
-	  pWordStart_ = 0L;
+	  pWord = 0L;
+	  pWordStart = 0L;
 	  // last token parsed
-	  type_ = NONE;
+	  type = NONE;
 	  //std::string word_;
-	  value_ = 0.;
+	  value = 0.;
 	  T = 0L;
 }
 
@@ -126,213 +126,223 @@ TokenType lexer::GetToken (int verbose_level, const bool ignoreSign)
 	int f_v = (verbose_level >= 1);
 
 
-	  word_.erase (0, std::string::npos);
+	word.erase (0, std::string::npos);
 
-	  // skip spaces
-	  while (*pWord_ && isspace (*pWord_))
-	    ++pWord_;
+	// skip spaces
+	while (*pWord && isspace (*pWord)) {
+		  ++pWord;
+	}
 
-	  pWordStart_ = pWord_;   // remember where word_ starts *now*
+	pWordStart = pWord;   // remember where word starts *now*
 
-	  // look out for unterminated statements and things
-	  if (*pWord_ == 0 &&  // we have EOF
-	      type_ == END)  // after already detecting it
-	    throw std::runtime_error ("Unexpected end of expression.");
+	// look out for unterminated statements and things
+	if (*pWord == 0 &&  // we have EOF
+			type == END) { // after already detecting it
+		throw std::runtime_error ("Unexpected end of expression.");
+	}
 
-	  unsigned char cFirstCharacter = *pWord_;        // first character in new word_
+	unsigned char cFirstCharacter = *pWord;        // first character in new word_
 
-	  if (cFirstCharacter == 0)    // stop at end of file
-	    {
-	    word_ = "<end of expression>";
-	    if (f_v) {
-	  	  std::cout << "token END " << word_ << std::endl;
-	    }
-		create_text_token(word_);
-	    return type_ = END;
-	    }
+	if (cFirstCharacter == 0)    // stop at end of file
+	{
+		word = "<end of expression>";
+		if (f_v) {
+			std::cout << "token END " << word << std::endl;
+		}
+		create_text_token(word);
+		return type = END;
+	}
 
-	  unsigned char cNextCharacter  = *(pWord_ + 1);  // 2nd character in new word_
+	unsigned char cNextCharacter  = *(pWord + 1);  // 2nd character in new word_
 
-	  // look for number
-	  // can be: + or - followed by a decimal point
-	  // or: + or - followed by a digit
-	  // or: starting with a digit
-	  // or: decimal point followed by a digit
-	  if ((!ignoreSign &&
-		   (cFirstCharacter == '+' || cFirstCharacter == '-') &&
-		   (isdigit (cNextCharacter) || cNextCharacter == '.')
-		   )
-		  || isdigit (cFirstCharacter)
-		  // allow decimal numbers without a leading 0. e.g. ".5"
-		  // Dennis Jones 01-30-2009
-		  || (cFirstCharacter == '.' && isdigit (cNextCharacter)) )
-		  {
-	    // skip sign for now
-	    if ((cFirstCharacter == '+' || cFirstCharacter == '-'))
-	      pWord_++;
-	    while (isdigit (*pWord_) || *pWord_ == '.')
-	      pWord_++;
+	// look for number
+	// can be: + or - followed by a decimal point
+	// or: + or - followed by a digit
+	// or: starting with a digit
+	// or: decimal point followed by a digit
+	if ((!ignoreSign &&
+			(cFirstCharacter == '+' || cFirstCharacter == '-') &&
+			(isdigit (cNextCharacter) || cNextCharacter == '.')
+			)
+			|| isdigit (cFirstCharacter)
+			// allow decimal numbers without a leading 0. e.g. ".5"
+			// Dennis Jones 01-30-2009
+			|| (cFirstCharacter == '.' && isdigit (cNextCharacter)) )
+	{
+		// skip sign for now
+		if ((cFirstCharacter == '+' || cFirstCharacter == '-')) {
+			pWord++;
+		}
+		while (isdigit (*pWord) || *pWord == '.') {
+			pWord++;
+		}
 
-	    // allow for 1.53158e+15
-	    if (*pWord_ == 'e' || *pWord_ == 'E')
-	      {
-	      pWord_++; // skip 'e'
-	      if ((*pWord_  == '+' || *pWord_  == '-'))
-	        pWord_++; // skip sign after e
-	      while (isdigit (*pWord_))  // now digits after e
-	        pWord_++;
-	      }
+		// allow for 1.53158e+15
+		if (*pWord == 'e' || *pWord == 'E')
+		{
+			pWord++; // skip 'e'
+			if ((*pWord  == '+' || *pWord  == '-')) {
+				pWord++; // skip sign after e
+			}
+			while (isdigit (*pWord)) { // now digits after e
+				pWord++;
+			}
+		}
 
-	    word_ = std::string (pWordStart_, pWord_ - pWordStart_);
+		word = std::string (pWordStart, pWord - pWordStart);
 
-	    std::istringstream is (word_);
-	    // parse std::string into double value
-	    is >> value_;
+		std::istringstream is (word);
+		// parse std::string into double value
+		is >> value;
 
-	    if (is.fail () && !is.eof ())
-	      throw std::runtime_error ("Bad numeric literal: " + word_);
-	    if (f_v) {
-	  	  std::cout << "token NUMBER " << value_ << std::endl;
-	    }
+		if (is.fail () && !is.eof ()) {
+			throw std::runtime_error ("Bad numeric literal: " + word);
+		}
+		if (f_v) {
+			std::cout << "token NUMBER " << value << std::endl;
+		}
 
-		create_double_token(value_);
-	    return type_ = NUMBER;
-	    }   // end of number found
+		create_double_token(value);
+		return type = NUMBER;
+	}   // end of number found
 
-	  // special test for 2-character sequences: <= >= == !=
-	  // also +=, -=, /=, *=
-	  if (cNextCharacter == '=')
-	    {
-	    switch (cFirstCharacter)
-	      {
-	      // comparisons
-	      case '=': type_ = EQ;   break;
-	      case '<': type_ = LE;   break;
-	      case '>': type_ = GE;   break;
-	      case '!': type_ = NE;   break;
-	      // assignments
-	      case '+': type_ = ASSIGN_ADD;   break;
-	      case '-': type_ = ASSIGN_SUB;   break;
-	      case '*': type_ = ASSIGN_MUL;   break;
-	      case '/': type_ = ASSIGN_DIV;   break;
-	      // none of the above
-	      default:  type_ = NONE; break;
-	      } // end of switch on cFirstCharacter
+	// special test for 2-character sequences: <= >= == !=
+	// also +=, -=, /=, *=
+	if (cNextCharacter == '=')
+	{
+		switch (cFirstCharacter)
+		{
+			// comparisons
+			case '=': type = EQ;   break;
+			case '<': type = LE;   break;
+			case '>': type = GE;   break;
+			case '!': type = NE;   break;
+			// assignments
+			case '+': type = ASSIGN_ADD;   break;
+			case '-': type = ASSIGN_SUB;   break;
+			case '*': type = ASSIGN_MUL;   break;
+			case '/': type = ASSIGN_DIV;   break;
+			// none of the above
+			default:  type = NONE; break;
+		} // end of switch on cFirstCharacter
 
-	    if (type_ != NONE)
-	      {
-	      word_ = std::string (pWordStart_, 2);
-	      pWord_ += 2;   // skip both characters
-	      if (f_v) {
-	    	  std::cout << "token operator ";
-	    	  print_token(std::cout, type_);
-	    	  std::cout << std::endl;
-	      }
-		  create_text_token(word_);
-	      return type_;
-	      } // end of found one
-	    } // end of *=
+		if (type != NONE)
+		{
+			word = std::string (pWordStart, 2);
+			pWord += 2;   // skip both characters
+			if (f_v) {
+				std::cout << "token operator ";
+				print_token(std::cout, type);
+				std::cout << std::endl;
+			}
+			create_text_token(word);
+			return type;
+			} // end of found one
+		} // end of *=
 
-	  switch (cFirstCharacter)
-	    {
-	    case '&': if (cNextCharacter == '&')    // &&
-	                {
-	                word_ = std::string (pWordStart_, 2);
-	                pWord_ += 2;   // skip both characters
-	                if (f_v) {
-	              	  std::cout << "token AND " << std::endl;
-	                }
-	    		    T = new syntax_tree_node_terminal;
+		switch (cFirstCharacter)
+		{
+			case '&':
+				if (cNextCharacter == '&')    // &&
+				{
+					word = std::string(pWordStart, 2);
+					pWord += 2;   // skip both characters
+					if (f_v) {
+						std::cout << "token AND " << std::endl;
+					}
+					T = NEW_OBJECT(syntax_tree_node_terminal);
 	    		    T->f_text = true;
-	    		    T->value_text.assign(word_);
-	                return type_ = AND;
+	    		    T->value_text.assign(word);
+	                return type = AND;
 	                }
-	              break;
-	   case '|': if (cNextCharacter == '|')   // ||
-	                {
-	                word_ = std::string (pWordStart_, 2);
-	                pWord_ += 2;   // skip both characters
-	                if (f_v) {
-	              	  std::cout << "token OR " << std::endl;
-	                }
-	    		    T = new syntax_tree_node_terminal;
+				break;
+			case '|':
+				if (cNextCharacter == '|')   // ||
+				{
+					word = std::string(pWordStart, 2);
+					pWord += 2;   // skip both characters
+					if (f_v) {
+						std::cout << "token OR " << std::endl;
+					}
+					T = NEW_OBJECT(syntax_tree_node_terminal);
 	    		    T->f_text = true;
-	    		    T->value_text.assign(word_);
-	                return type_ = OR;
-	                }
-	              break;
-	    // single-character symbols
-	    case '=':
-	    case '<':
-	    case '>':
-	    case '+':
-	    case '-':
-	    case '/':
-	    case '*':
-	    case '(':
-	    case ')':
-	    case ',':
-	    case '!':
-	      word_ = std::string (pWordStart_, 1);
-	      ++pWord_;   // skip it
-	      type_ = TokenType (cFirstCharacter);
-	      if (f_v) {
-	    	  std::cout << "token operator ";
-	    	  print_token(std::cout, type_);
-	    	  std::cout << std::endl;
-	      }
+	    		    T->value_text.assign(word);
+	                return type = OR;
+				}
+				break;
+			// single-character symbols
+			case '=':
+			case '<':
+			case '>':
+			case '+':
+			case '-':
+			case '/':
+			case '*':
+			case '(':
+			case ')':
+			case ',':
+			case '!':
+				word = std::string(pWordStart, 1);
+				++pWord;   // skip it
+				type = TokenType (cFirstCharacter);
+				if (f_v) {
+					std::cout << "token operator ";
+					print_token(std::cout, type);
+					std::cout << std::endl;
+				}
 
-		  create_text_token(word_);
-	      return type_;
-	    } // end of switch on cFirstCharacter
+				create_text_token(word);
+				return type;
+		} // end of switch on cFirstCharacter
 
-	  if (!isalpha (cFirstCharacter))
-	    {
-	    if (cFirstCharacter < ' ')
-	      {
-	      std::ostringstream s;
-	      s << "Unexpected character (decimal " << int (cFirstCharacter) << ")";
-	      throw std::runtime_error (s.str ());
-	      }
-	    else
-	      throw std::runtime_error ("Unexpected character: " + std::string (1, cFirstCharacter));
-	    }
+		if (!isalpha (cFirstCharacter))
+		{
+			if (cFirstCharacter < ' ')
+			{
+				std::ostringstream s;
+				s << "Unexpected character (decimal " << int (cFirstCharacter) << ")";
+				throw std::runtime_error (s.str ());
+			}
+			else
+				throw std::runtime_error ("Unexpected character: " + std::string (1, cFirstCharacter));
+		}
 
-	  // we have a word (starting with A-Z) - pull it out
-	  while (isalnum (*pWord_) || *pWord_ == '_')
-	    ++pWord_;
+		// we have a word (starting with A-Z) - pull it out
+		while (isalnum (*pWord) || *pWord == '_') {
+			++pWord;
+		}
 
-	  word_ = std::string (pWordStart_, pWord_ - pWordStart_);
+		word = std::string (pWordStart, pWord - pWordStart);
 
-	  if (f_v) {
-		  std::cout << "token NAME " << word_ << std::endl;
-	  }
-	  create_text_token(word_);
-	  return type_ = NAME;
+		if (f_v) {
+			std::cout << "token NAME " << word << std::endl;
+		}
+		create_text_token(word);
+		return type = NAME;
 
 }
 
 void lexer::create_text_token(std::string &txt)
 {
-    if (T) {
-    	delete T;
-    }
-    T = new syntax_tree_node_terminal;
-    T->f_text = true;
-    T->value_text.assign(txt);
-    //std::cout << "lexer::create_text_token text=" << txt << std::endl;
+	if (T) {
+		FREE_OBJECT(T);
+	}
+	T = NEW_OBJECT(syntax_tree_node_terminal);
+	T->f_text = true;
+	T->value_text.assign(txt);
+	//std::cout << "lexer::create_text_token text=" << txt << std::endl;
 
 }
 
 void lexer::create_double_token(double dbl)
 {
-    if (T) {
-    	delete T;
-    }
-    T = new syntax_tree_node_terminal;
-    T->f_double = true;
-    T->value_double = dbl;
-    //std::cout << "lexer::create_double_token value=" << dbl << std::endl;
+	if (T) {
+		FREE_OBJECT(T);
+	}
+	T = NEW_OBJECT(syntax_tree_node_terminal);
+	T->f_double = true;
+	T->value_double = dbl;
+	//std::cout << "lexer::create_double_token value=" << dbl << std::endl;
 
 }
 
@@ -340,12 +350,12 @@ void lexer::create_double_token(double dbl)
 
 void lexer::CheckToken (TokenType wanted)
 {
-  if (type_ != wanted)
-    {
-    std::ostringstream s;
-    s << "'" << static_cast <char> (wanted) << "' expected.";
-    throw std::runtime_error (s.str ());
-    }
+	if (type != wanted)
+	{
+		std::ostringstream s;
+		s << "'" << static_cast <char> (wanted) << "' expected.";
+		throw std::runtime_error (s.str ());
+	}
 }
 
 

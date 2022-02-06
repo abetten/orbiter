@@ -528,6 +528,9 @@ public:
 	std::string line1_to_text;
 	std::string line2_to_text;
 
+	int f_planes_through_line;
+	std::string planes_through_line_rank;
+
 
 	projective_space_activity_description();
 	~projective_space_activity_description();

@@ -21,14 +21,6 @@ namespace projective_geometry {
 projective_space_activity_description::projective_space_activity_description()
 {
 
-	//f_input = FALSE;
-	//Data = NULL;
-
-#if 0
-	f_canonical_form_PG = FALSE;
-	//canonical_form_PG_n = 0;
-	Canonical_form_PG_Descr = NULL;
-#endif
 
 	f_export_point_line_incidence_matrix = FALSE;
 
@@ -231,6 +223,8 @@ projective_space_activity_description::projective_space_activity_description()
 	//std:string line1_to_text;
 	//std:string line2_to_text;
 
+	f_planes_through_line = FALSE;
+	//std::string planes_through_line_rank;
 
 }
 
@@ -252,47 +246,6 @@ int projective_space_activity_description::read_arguments(
 		cout << "projective_space_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-
-#if 0
-		if (stringcmp(argv[i], "-input") == 0) {
-			f_input = TRUE;
-			Data = NEW_OBJECT(data_input_stream);
-			if (f_v) {
-				cout << "-input" << endl;
-			}
-			i += Data->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-			if (f_v) {
-				cout << "projective_space_activity_description::read_arguments finished reading -input" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-#endif
-
-#if 0
-		if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
-			f_canonical_form_PG = TRUE;
-			if (f_v) {
-				cout << "-canonical_form_PG, reading extra arguments" << endl;
-			}
-
-			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
-
-			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			if (f_v) {
-				cout << "done reading -canonical_form_PG " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-#endif
 
 		if (ST.stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
 			f_export_point_line_incidence_matrix = TRUE;
@@ -1067,6 +1020,16 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-planes_through_line") == 0) {
+			f_planes_through_line = TRUE;
+			planes_through_line_rank.assign(argv[++i]);
+			if (f_v) {
+				cout << "-planes_through_line"
+					<< " " << planes_through_line_rank
+					<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -1352,6 +1315,11 @@ void projective_space_activity_description::print()
 				<< " " << line1_to_text
 				<< " " << line2_to_text
 				<< endl;
+	}
+	if (f_planes_through_line) {
+		cout << "-planes_through_line"
+			<< " " << planes_through_line_rank
+			<< endl;
 	}
 
 }

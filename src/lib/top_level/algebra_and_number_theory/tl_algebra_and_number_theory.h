@@ -387,6 +387,10 @@ public:
 class group_theoretic_activity_description {
 public:
 
+	int f_apply;
+	std::string apply_input;
+	std::string apply_element;
+
 	int f_multiply;
 	std::string multiply_a;
 	std::string multiply_b;
@@ -605,7 +609,6 @@ public:
 class group_theoretic_activity {
 public:
 	group_theoretic_activity_description *Descr;
-	//finite_field *F;
 
 	any_group *AG;
 
@@ -620,10 +623,12 @@ public:
 			any_group *AG,
 			int verbose_level);
 	void perform_activity(int verbose_level);
+	void apply(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
 	void raise_to_the_power(int verbose_level);
-	void do_Andre_Bruck_Bose_construction(int spread_no,
+	void do_Andre_Bruck_Bose_construction(
+			int spread_no,
 			int f_Fano, int f_arcs, int f_depth, int depth,
 			std::string &label,
 			int verbose_level);

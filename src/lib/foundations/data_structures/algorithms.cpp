@@ -130,6 +130,23 @@ void algorithms::print_pointer_hex(std::ostream &ost, void *p)
 	}
 }
 
+void algorithms::print_uint32_hex(std::ostream &ost, uint32_t val)
+{
+	uchar *pp = (uchar *)&val;
+	int i, a, low, high;
+
+	ost << "0x";
+	for (i = (int)sizeof(uint32_t) - 1; i >= 0; i--) {
+		a = (int)pp[i];
+		//cout << " a=" << a << " ";
+		low = a % 16;
+		high = a / 16;
+		print_hex_digit(ost, high);
+		print_hex_digit(ost, low);
+	}
+}
+
+
 void algorithms::print_hex_digit(std::ostream &ost, int digit)
 {
 	if (digit < 10) {

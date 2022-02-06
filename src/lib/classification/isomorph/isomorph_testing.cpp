@@ -772,7 +772,7 @@ int isomorph::next_subset(int t0,
 	if (f_vvv) {
 		cout << "iso_node " << iso_nodes << " found minimal subset no " 
 			<< cnt_minimal << ", rank = " << subset_rank << " : ";
-		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, subset, level);
+		Int_vec_set_print(cout, subset, level);
 		cout << endl;
 		}
 	cnt_minimal++;
@@ -1189,7 +1189,7 @@ void isomorph::print_statistics_iso_test(int t0, groups::sims *Stab)
 	f1 = ((double)nb / (double)N) * 100;
 	cout << "ancestors left = " << nb << " / " << N
 			<< " (" << f1 << "%): ";
-	orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, subset, level);
+	Int_vec_set_print(cout, subset, level);
 	cout << " current stabilizer order " << go 
 		<< " induced action order " << AA_go 
 		<< " nb_reps=" << Reps->nb_reps 

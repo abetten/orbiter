@@ -2643,18 +2643,20 @@ F_1024_vandermonde:
 Berlekamp_matrix_2_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -dense "1,1,0,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-Berlekamp_matrix "1,1,0,1" -end
+		-Berlekamp_matrix v -end
 
 # the polynomial X^3+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 2.
 
 Berlekamp_matrix_2_4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -dense "1,1,0,0,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-Berlekamp_matrix "1,1,0,0,1" -end
+		-Berlekamp_matrix v -end
 
 # the polynomial X^4+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 3.
 
@@ -2662,16 +2664,18 @@ Berlekamp_matrix_2_4:
 Berlekamp_matrix_4_3a:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
+		-define v -vector -field F -dense "1,3,0,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-Berlekamp_matrix "1,3,0,1" -end
+		-Berlekamp_matrix v -end
 
 Berlekamp_matrix_4_3b:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
+		-define v -vector -field F -dense "1,3,1,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-Berlekamp_matrix "1,3,1,1" -end
+		-Berlekamp_matrix v -end
 
 
 
@@ -2679,54 +2683,61 @@ Berlekamp_matrix_4_3b:
 find_roots_a:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 19 -end \
+		-define v -vector -field F -dense "18,1,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-polynomial_find_roots "18,1,1" -end
+		-polynomial_find_roots v -end
 
 find_roots_b:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 19 -end \
+		-define v -vector -field F -dense "1,3,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-polynomial_find_roots "1,3,1" -end
+		-polynomial_find_roots v -end
 
 find_roots_c:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 19 -end \
+		-define v -vector -field F -dense "1,16,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-polynomial_find_roots "1,16,1" -end
+		-polynomial_find_roots v -end
 
 find_roots_d:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 19 -end \
+		-define v -vector -field F -dense "1,18,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-polynomial_find_roots "1,18,1" -end
+		-polynomial_find_roots v -end
 
 find_roots_e:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 19 -end \
+		-define v -vector -field F -dense "1,16,3" -end \
 		-with F -do \
 		-finite_field_activity \
-		-polynomial_find_roots "1,16,3" -end
+		-polynomial_find_roots v -end
 
 
 roots_over_F2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2  -end \
+		-define v -vector -field F -dense "0,1,0,1,1,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-polynomial_find_roots "0,1,0,1,1,1" -end
+		-polynomial_find_roots v -end
 
 
 
 roots_over_F8:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-define v -vector -field F -dense "0,1,0,1,1,1" -end \
 		-with F -do \
 		-finite_field_activity \
-		-polynomial_find_roots "0,1,0,1,1,1" -end
+		-polynomial_find_roots v -end
 
 
 
@@ -3427,10 +3438,13 @@ Endrass_F7.txt:
 
 
 octic_prepare:
-	$(ORBITER_PATH)orbiter.out -v 4 -define D \
-		-diophant -label octic_monomials \
-		-coefficient_matrix 1 4 "1,1,1,1" -RHS "8,8,1" \
-		-x_min_global 0 -x_max_global 8 \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -dense "1,1,1,1" -end \
+		-define D -diophant \
+			-label octic_monomials \
+			-coefficient_matrix A \
+			-RHS "8,8,1" \
+			-x_min_global 0 -x_max_global 8 \
 		-end
 		-with D -do \
 			-diophant_activity -solve_mckay \
@@ -3442,12 +3456,12 @@ octic_prepare:
 
 
 
-ovoid_q8:
+elliptic_quadric_ovoid_q8:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space 3 F -end \
 		-define O -geometric_object P \
-			-ovoid \
+			-elliptic_quadric_ovoid \
 		-end \
 		-with O -do -combinatorial_object_activity -save \
 		-end
@@ -4061,9 +4075,6 @@ PGGL_3_8_report:
 
 
 
-#		-draw_options -radius 180 -scale 0.30 -line_width 0.75 -end \
-
-
 PGO_5_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
@@ -4109,6 +4120,8 @@ PGOm_6_2:
 		-end
 	pdflatex PGOm_6_2_report.tex
 	open PGOm_6_2_report.pdf
+
+# the following two groups are isomorphic:
 
 PSP_6_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -4488,8 +4501,6 @@ PGL_3_4_singer:
 		-end
 
 
-
-
 GL_2_8_multiply:
 	$(ORBITER_PATH)orbiter.out -v 5 \
 		-define G -linear_group -GL 2 8 -end \
@@ -4499,6 +4510,7 @@ GL_2_8_multiply:
 		-end
 	pdflatex GL_2_8_mult.tex
 	open GL_2_8_mult.pdf
+
 
 GL_2_7_multiply:
 	$(ORBITER_PATH)orbiter.out -v 5 \
@@ -4530,7 +4542,6 @@ GL_2_7_power:
 		-end
 	pdflatex GL_2_7_power.tex
 	open GL_2_7_power.pdf
-
 
 
 PGL_3_2_classes:
@@ -6882,6 +6893,26 @@ F_alpha_beta_gamma_delta:
 
 
 
+F_abcd_Eckardt_q31:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-define_surface F_abcd -q 31 \
+			-by_equation "F_abcd" \
+			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
+			$(F_abcd_eqn) \
+			"a=2,b=30,c=30,d=2" \
+			"\Da=2,b=30,c=30,d=2\D" \
+		-end \
+		-end \
+		-with F_abcd -do \
+		-cubic_surface_activity \
+			-report \
+		-end
+	pdflatex surface_equation_F_abcd_q31_report.tex
+	open surface_equation_F_abcd_q31_report.pdf
 
 
 
@@ -11793,9 +11824,12 @@ SECTION_DIOPHANT:
 
 part10:
 	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define D -diophant -label part10 \
-			-coefficient_matrix 1 10 "10,9,8,7,6,5,4,3,2,1" \
-			-RHS "10,10,1" -x_min_global 0 -x_max_global 10 \
+		-define A -vector -dense "10,9,8,7,6,5,4,3,2,1" -end \
+		-define D -diophant \
+			-label part10 \
+			-coefficient_matrix A \
+			-RHS "10,10,1" \
+			-x_min_global 0 -x_max_global 10 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
@@ -11809,9 +11843,12 @@ part10:
 
 octic_monomials:
 	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define D -diophant -label octic_monomials \
-		-coefficient_matrix 1 4 "1,1,1,1" \
-		-RHS "8,8,1" -x_min_global 0 -x_max_global 8 \
+		-define A -vector -dense "1,1,1,1" -end \
+		-define D -diophant \
+			-label octic_monomials \
+			-coefficient_matrix A \
+			-RHS "8,8,1" \
+			-x_min_global 0 -x_max_global 8 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
@@ -11823,40 +11860,44 @@ octic_monomials:
 
 
 test_system:
-	$(ORBITER_PATH)orbiter.out -v 4 -define D \
-		-diophant -label test_system \
-		-coefficient_matrix 7 6 \
-			$(TEST_SYSTEM) \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
+		-define D -diophant \
+			-label test_system \
+			-coefficient_matrix A \
 			-RHS $(TEST_RHS) \
 			-x_min_global 0 -x_max_global 1 \
 		-end
 
 
 McKay_test:
-	$(ORBITER_PATH)orbiter.out -v 4 -define D \
-		-diophant -label test_system \
-		-coefficient_matrix 7 6 \
-			$(TEST_SYSTEM) \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
+		-define D -diophant \
+			-label test_system \
+			-coefficient_matrix A \
 			-RHS $(TEST_RHS) \
 			-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
-		-end \
+		-end
 
 DLX_test:
-	$(ORBITER_PATH)orbiter.out -v 4 -define D \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
+		-define D \
 		-diophant -label test_system \
-		-coefficient_matrix 7 6 \
-			$(TEST_SYSTEM) \
+			-coefficient_matrix A \
 			-RHS $(TEST_RHS) \
 			-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_DLX \
-		-end \
+		-end
 
 #DLX_test.sol
+# 1 solution in 6 backtrack steps
 
 
 
@@ -11869,8 +11910,9 @@ SECTION_COMBINATORIAL_LINEAR_SPACES:
 
 linsp7:
 	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 1 -dense "21,15,10,6,3,1" -end \
 		-define D -diophant -label linsp7 \
-		-coefficient_matrix 1 6 "21,15,10,6,3,1" \
+		-coefficient_matrix A \
 		-RHS "21,21,1" \
 		-x_min_global 0 \
 		-x_max_global 21 \
@@ -11885,8 +11927,9 @@ linsp7:
 
 linsp6:
 	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 1 -dense "15,10,6,3,1" -end \
 		-define D -diophant -label linsp6 \
-		-coefficient_matrix 1 5 "15,10,6,3,1" \
+		-coefficient_matrix A \
 		-RHS "15,15,1" \
 		-x_min_global 0 \
 		-x_max_global 15 \
@@ -11902,20 +11945,25 @@ linsp6:
 
 
 linsp30_pt_types:
-	$(ORBITER_PATH)orbiter.out -v 4 -define D \
-		-diophant -label linsp30_pt_types \
-		-coefficient_matrix 1 3 "6,4,3" \
-		-RHS "29,29,1" -x_bounds "0,1,0,27,0,24" \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 1 -dense "6,4,3" -end \
+		-define D -diophant \
+			-label linsp30_pt_types \
+			-coefficient_matrix A \
+			-RHS "29,29,1" -x_bounds "0,1,0,27,0,24" \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
 		-end
 
 linsp30_pt_distribution:
-	$(ORBITER_PATH)orbiter.out -v 4 -define D \
-		-diophant -label linsp30_pt_distribution \
-		-coefficient_matrix 6 4 \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 6 -dense \
 			"1,1,1,1,1,1,0,0,5,2,5,2,1,5,3,7,10,1,10,1,0,10,3,21" \
+		-end \
+		-define D -diophant \
+			-label linsp30_pt_distribution \
+			-coefficient_matrix A \
 			-RHS "30,30,1,7,7,1,135,135,1,96,96,1,0,351,2,0,276,2" \
 			-x_min_global 0 -x_max_global 30 \
 		-end \
@@ -12414,6 +12462,20 @@ geo_63_3_g6:
 		-end
 
 
+
+geo_LSQ6:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 1 19 1 -end \
+		-define Geo -geometry_builder \
+			-V 6,6,6 -B 1,1,1,36 -TDO \
+			"1,0,0,6, 0,1,0,6, 0,0,1,6" \
+			-fuse 3 -fname_GEO LSQ6 \
+			-test Test_lines \
+		-end
+
+
+
+
 ###############################################################################
 # Section 10.5: Design Theory
 
@@ -12509,9 +12571,10 @@ KM_cyclic_7:
 			-orbits_on_subsets 3 \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -file C7_KM_2_3.csv -end \
 		-define D -diophant \
 		-label "C7_KM_2_3_system" \
-		-coefficient_matrix_csv C7_KM_2_3.csv \
+		-coefficient_matrix A \
 		-RHS_constant "1,1,1" \
 		-x_min_global 0 -x_max_global 1 \
 		-end \
@@ -12545,9 +12608,10 @@ KM_PGGL_2_32:
 	open KM_PGGL_2_32_poset_lvl_8.pdf
 	open KM_PGGL_2_32_KM_7_8_draw.bmp
 	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -file KM_PGGL_2_32_KM_7_8.csv -end \
 		-define D -diophant \
 		-label "KM_PGGL_2_32_KM_7_8_system" \
-		-coefficient_matrix_csv KM_PGGL_2_32_KM_7_8.csv \
+		-coefficient_matrix A \
 		-RHS_constant "10,10,1" \
 		-x_min_global 0 -x_max_global 1 \
 		-end \
@@ -12575,11 +12639,13 @@ KM_PSL_3_5:
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file KM_PSL_3_5_KM_8_10.csv \
 		-box_width 10 -bit_depth 8 -partition 3 42 174 -end
-	$(ORBITER_PATH)orbiter.out -v 4 -define D -diophant \
-		-label "KM_PSL_3_5_KM_8_10_system" \
-			-coefficient_matrix_csv KM_PSL_3_5_KM_8_10.csv \
-		-RHS_constant "93,93,1" \
-		-x_min_global 0 -x_max_global 1 \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -file KM_PSL_3_5_KM_8_10.csv -end \
+		-define D -diophant \
+			-label "KM_PSL_3_5_KM_8_10_system" \
+			-coefficient_matrix A \
+			-RHS_constant "93,93,1" \
+			-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
@@ -12955,7 +13021,9 @@ spreads4:
 		-define P -projective_space 3 F -end \
 		-with P -do \
 		-projective_space_activity \
-		-spread_classify 2 -problem_label spreads_2_2 -depth 5 -draw_poset \
+		-spread_classify 2 \
+			-problem_label spreads_2_2 -depth 5 \
+			-draw_poset \
 		-end
 
 
@@ -12966,7 +13034,8 @@ spreads16_4:
 		-define P -projective_space 3 F -end \
 		-with P -do \
 		-projective_space_activity \
-		-spread_classify 2 -problem_label spreads_4_2 \
+		-spread_classify 2 \
+			-problem_label spreads_4_2 \
 			-W -depth 17 -draw_poset \
 			-draw_options -radius 20 \
 				-nodes_empty -line_width 0.2 -embedded \
@@ -13030,6 +13099,8 @@ TP_9_1:
 	open TP9-1_report.pdf
 
 
+# ToDo:
+
 TP_16_4:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 4 -end \
@@ -13041,7 +13112,9 @@ TP_16_4:
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file TP16-4-HALL_incma.csv \
-		-box_width 6 -bit_depth 8 -partition 6 273 273 -end
+		-box_width 6 -bit_depth 8 \
+		-partition 6 273 273 \
+		-end
 	open TP16-4-HALL_incma_draw.bmp
 	pdflatex TP16-4-HALL_report.tex
 	open TP16-4-HALL_report.pdf
@@ -13739,7 +13812,8 @@ HJ_d2_graph:
 Cayley_Z11_1mod3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
-		-define S -vector -dense "1,1, 1,4, 1,7, 1,10" -end \
+		-define S -vector -dense \
+			"1,1, 1,4, 1,7, 1,10" -end \
 		-define G -linear_group -AGL 1 F \
 			-subgroup_by_generators "Z11" 11 1 "1,1" \
 		-end \
@@ -13844,9 +13918,11 @@ Paley_13_eigenvalues:
 
 Cayley_Z11_1mod3_eigenvalues_and_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-draw_options -xin 2000000 \
+			-yin 2000000 -embedded -end \
 		-define F -finite_field -q 11 -end \
-		-define S -vector -dense "1,1, 1,4, 1,7, 1,10" -end \
+		-define S -vector -dense \
+			"1,1, 1,4, 1,7, 1,10" -end \
 		-define G -linear_group -AGL 1 F \
 			-subgroup_by_generators "Z11" 11 1 "1,1" \
 		-end \
@@ -13865,8 +13941,10 @@ Cayley_Z11_1mod3_eigenvalues_and_draw:
 
 Cayley_Sym4_coxeter_eigenvalues_and_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
-		-define S -vector -dense "1,0,2,3, 0,2,1,3, 0,1,3,2" -end \
+		-draw_options -xin 2000000 -yin 2000000 \
+			-radius 20000 -embedded -nodes_empty -end \
+		-define S -vector -dense \
+			"1,0,2,3, 0,2,1,3, 0,1,3,2" -end \
 		-define G -permutation_group -symmetric_group 4 \
 		-end \
 		-define Gamma -graph \
@@ -13878,8 +13956,8 @@ Cayley_Sym4_coxeter_eigenvalues_and_draw:
 		-graph_theoretic_activity -draw -end
 	pdflatex Cayley_graph_Perm4_draw.tex
 	open Cayley_graph_Perm4_draw.pdf
-	pdflatex Cayley_graph_Perm4_eigenvalues.tex
-	open Cayley_graph_Perm4_eigenvalues.pdf
+	#pdflatex Cayley_graph_Perm4_eigenvalues.tex
+	#open Cayley_graph_Perm4_eigenvalues.pdf
 
 Cayley_Sym5_coxeter_eigenvalues_and_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -14674,7 +14752,8 @@ SUZUKI_8_GENERATORS="\
 Suzuki_8:
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define F -finite_field -q 8 -end \
-		-define gens -vector -field F -compact $(SUZUKI_8_GENERATORS) -end \
+		-define gens -vector -field F \
+			-compact $(SUZUKI_8_GENERATORS) -end \
 		-define G -linear_group -PGGL 4 8 \
 		-subgroup_by_generators "Sz8" "87360" 5 gens \
 			-end \
@@ -14952,6 +15031,46 @@ AG_2_3_c: AG_2_3.inc
 		-box_width 40 -bit_depth 24 \
 		-end
 	open AG_2_3_object0_INP_flag_orbits_draw.bmp
+
+
+
+
+geo_LSQ6_c:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries \
+				LSQ6.inc 18 39 126 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix LSQ6 \
+				-label LSQ6 \
+				-save_ago \
+				-save_transversal \
+			-end \
+			-report \
+				-prefix LSQ6 \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex LSQ6_classification.tex
+	#open LSQ6_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file LSQ6_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file LSQ6_object0_TDA_flag_orbits.csv \
+		-box_width 32 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file LSQ6_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file LSQ6_object0_INP_flag_orbits.csv \
+		-box_width 32 -bit_depth 24 \
+		-end
+	open LSQ6_object0_INP_flag_orbits_draw.bmp
 
 
 

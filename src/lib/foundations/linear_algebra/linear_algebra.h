@@ -26,7 +26,7 @@ public:
 	~linear_algebra_global();
 	void Berlekamp_matrix(
 			field_theory::finite_field *F,
-			std::string &Berlekamp_matrix_coeffs,
+			std::string &Berlekamp_matrix_label,
 			int verbose_level);
 	void compute_normal_basis(
 			field_theory::finite_field *F,
@@ -62,9 +62,6 @@ class linear_algebra {
 public:
 	field_theory::finite_field *F;
 
-	// #########################################################################
-	// linear_algebra.cpp
-	// #########################################################################
 
 	linear_algebra();
 	~linear_algebra();
@@ -269,9 +266,7 @@ public:
 	void lift_to_Klein_quadric(int *A4, int *A6, int verbose_level);
 
 
-	// #########################################################################
 	// linear_algebra2.cpp
-	// #########################################################################
 
 	void get_coefficients_in_linear_combination(
 		int k, int n, int *basis_of_subspace,
@@ -374,9 +369,7 @@ public:
 			int omega, int k, int *N, int **A, int **Av,
 			int *Omega, int verbose_level);
 
-	// #########################################################################
 	// linear_algebra3.cpp
-	// #########################################################################
 
 	void Gram_matrix(int epsilon, int k,
 		int form_c1, int form_c2, int form_c3,
@@ -430,16 +423,15 @@ public:
 	int evaluate_symmetric_form(int len, int *x, int *y);
 	int evaluate_quadratic_form_x0x3mx1x2(int *x);
 	void solve_y2py(int a, int *Y2, int &nb_sol);
-	void find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, int &nb_pts, int verbose_level);
+	void find_secant_points_wrt_x0x3mx1x2(int *Basis_line,
+			int *Pts4, int &nb_pts, int verbose_level);
 	int is_totally_isotropic_wrt_symplectic_form(int k,
 		int n, int *Basis);
 	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
 
 
 
-	// #########################################################################
 	// linear_algebra_RREF.cpp
-	// #########################################################################
 
 	int Gauss_int(int *A, int f_special,
 		int f_complete, int *base_cols,

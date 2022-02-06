@@ -38,6 +38,7 @@ public:
 	void uchar_move(uchar *p, uchar *q, int len);
 	void int_swap(int& x, int& y);
 	void print_pointer_hex(std::ostream &ost, void *p);
+	void print_uint32_hex(std::ostream &ost, uint32_t val);
 	void print_hex_digit(std::ostream &ost, int digit);
 	void print_repeated_character(std::ostream &ost, char c, int n);
 	uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
@@ -1512,6 +1513,12 @@ public:
 	int str2int(std::string &str);
 	long int strtolint(std::string &str);
 	double strtof(std::string &str);
+	void parse_value_pairs(
+			std::map<std::string, std::string> &symbol_table,
+			std::string &evaluate_text, int verbose_level);
+	void parse_comma_separated_values(
+			std::vector<std::string> &symbol_table,
+			std::string &evaluate_text, int verbose_level);
 
 
 };

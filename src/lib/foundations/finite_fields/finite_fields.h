@@ -44,13 +44,13 @@ public:
 	std::string polynomial_mult_mod_M;
 
 	int f_Berlekamp_matrix;
-	std::string Berlekamp_matrix_coeffs;
+	std::string Berlekamp_matrix_label;
 
 	int f_normal_basis;
 	int normal_basis_d;
 
 	int f_polynomial_find_roots;
-	std::string polynomial_find_roots_A;
+	std::string polynomial_find_roots_label;
 
 
 	int f_normalize_from_the_right;

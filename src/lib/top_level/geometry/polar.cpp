@@ -927,7 +927,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
-		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, S, len);
+		Int_vec_set_print(cout, S, len);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "candidates: ";
@@ -1105,7 +1105,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
-		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, S, len);
+		Int_vec_set_print(cout, S, len);
 		cout << "; # of candidates reduced from "
 			<< nb_candidates << " to " << nb_good_candidates << endl;
 		}

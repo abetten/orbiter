@@ -50,8 +50,10 @@ void expression_parser_domain::parse_and_evaluate(
 	tree = NEW_OBJECT(syntax_tree);
 
 	if (f_v) {
-		cout << "expression_parser_domain::parse_and_evaluate Formula " << name_of_formula << " is " << formula_text << endl;
-		cout << "expression_parser_domain::parse_and_evaluate Managed variables: " << managed_variables << endl;
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"Formula " << name_of_formula << " is " << formula_text << endl;
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"Managed variables: " << managed_variables << endl;
 	}
 
 	const char *p = managed_variables.c_str();
@@ -65,7 +67,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 		var.assign(str);
 		if (f_v) {
-			cout << "expression_parser_domain::parse_and_evaluate adding managed variable " << var << endl;
+			cout << "expression_parser_domain::parse_and_evaluate "
+					"adding managed variable " << var << endl;
 		}
 
 		tree->managed_variables.push_back(var);
@@ -78,7 +81,8 @@ void expression_parser_domain::parse_and_evaluate(
 	nb_vars = tree->managed_variables.size();
 
 	if (f_v) {
-		cout << "expression_parser_domain::parse_and_evaluate Managed variables: " << endl;
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"Managed variables are: " << endl;
 		for (i = 0; i < nb_vars; i++) {
 			cout << i << " : " << tree->managed_variables[i] << endl;
 		}
@@ -86,12 +90,14 @@ void expression_parser_domain::parse_and_evaluate(
 
 
 	if (f_v) {
-		cout << "expression_parser_domain::parse_and_evaluate Starting to parse " << name_of_formula << endl;
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"Starting to parse " << name_of_formula << endl;
 	}
 	Parser.parse(tree, formula_text, 0/*verbose_level*/);
 
 	if (f_v) {
-		cout << "expression_parser_domain::parse_and_evaluate Parsing " << name_of_formula << " finished" << endl;
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"Parsing " << name_of_formula << " finished" << endl;
 	}
 
 
@@ -112,15 +118,18 @@ void expression_parser_domain::parse_and_evaluate(
 	int ret, degree;
 
 	if (f_v) {
-		cout << "expression_parser_domain::parse_and_evaluate before tree->is_homogeneous" << endl;
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"before tree->is_homogeneous" << endl;
 	}
 	ret = tree->is_homogeneous(degree, verbose_level - 3);
 	if (f_v) {
-		cout << "expression_parser_domain::parse_and_evaluate after tree->is_homogeneous" << endl;
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"after tree->is_homogeneous" << endl;
 	}
 	if (ret) {
 		if (f_v) {
-			cout << "expression_parser_domain::parse_and_evaluate homogeneous of degree " << degree << endl;
+			cout << "expression_parser_domain::parse_and_evaluate "
+					"homogeneous of degree " << degree << endl;
 		}
 
 		ring_theory::homogeneous_polynomial_domain *Poly;
@@ -128,7 +137,8 @@ void expression_parser_domain::parse_and_evaluate(
 		Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 		if (f_v) {
-			cout << "expression_parser_domain::parse_and_evaluate before Poly->init" << endl;
+			cout << "expression_parser_domain::parse_and_evaluate "
+					"before Poly->init" << endl;
 		}
 		Poly->init(F,
 				nb_vars /* nb_vars */, degree,
@@ -148,7 +158,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 		if (f_v) {
 			for (i = 0; i < nb_monomials; i++) {
-				cout << "expression_parser_domain::parse_and_evaluate Monomial " << i << " : ";
+				cout << "expression_parser_domain::parse_and_evaluate "
+						"Monomial " << i << " : ";
 				if (Subtrees[i]) {
 					Subtrees[i]->print_expression(cout);
 					cout << " * ";
@@ -156,7 +167,8 @@ void expression_parser_domain::parse_and_evaluate(
 					cout << endl;
 				}
 				else {
-					cout << "expression_parser_domain::parse_and_evaluate no subtree" << endl;
+					cout << "expression_parser_domain::parse_and_evaluate "
+							"no subtree" << endl;
 				}
 			}
 		}
@@ -164,7 +176,8 @@ void expression_parser_domain::parse_and_evaluate(
 		if (f_evaluate) {
 
 			if (f_v) {
-				cout << "expression_parser_domain::parse_and_evaluate before evaluate" << endl;
+				cout << "expression_parser_domain::parse_and_evaluate "
+						"before evaluate" << endl;
 			}
 
 			const char *p = parameters.c_str();
@@ -188,7 +201,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 				found = assignment.find('=');
 				if (found == std::string::npos) {
-					cout << "expression_parser_domain::parse_and_evaluate did not find '=' in variable assignment" << endl;
+					cout << "expression_parser_domain::parse_and_evaluate "
+							"did not find '=' in variable assignment" << endl;
 					exit(1);
 				}
 				std::string symb = assignment.substr (0, found);
@@ -197,7 +211,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 
 				if (f_v) {
-					cout << "expression_parser_domain::parse_and_evaluate adding symbol " << symb << " = " << val << endl;
+					cout << "expression_parser_domain::parse_and_evaluate "
+							"adding symbol " << symb << " = " << val << endl;
 				}
 
 				symbol_table[symb] = val;
@@ -220,7 +235,8 @@ void expression_parser_domain::parse_and_evaluate(
 			Values = NEW_int(nb_monomials);
 
 			for (i = 0; i < nb_monomials; i++) {
-				cout << "expression_parser_domain::parse_and_evaluate Monomial " << i << " : ";
+				cout << "expression_parser_domain::parse_and_evaluate "
+						"Monomial " << i << " : ";
 				if (Subtrees[i]) {
 					//Subtrees[i]->print_expression(cout);
 					a = Subtrees[i]->evaluate(symbol_table, F, verbose_level);
@@ -230,18 +246,21 @@ void expression_parser_domain::parse_and_evaluate(
 					cout << endl;
 				}
 				else {
-					cout << "expression_parser_domain::parse_and_evaluate no subtree" << endl;
+					cout << "expression_parser_domain::parse_and_evaluate "
+							"no subtree" << endl;
 					Values[i] = 0;
 				}
 			}
 			if (f_v) {
-				cout << "expression_parser_domain::parse_and_evaluate evaluated polynomial:" << endl;
+				cout << "expression_parser_domain::parse_and_evaluate "
+						"evaluated polynomial:" << endl;
 				for (i = 0; i < nb_monomials; i++) {
 					cout << Values[i] << " * ";
 					Poly->print_monomial(cout, i);
 					cout << endl;
 				}
-				cout << "expression_parser_domain::parse_and_evaluate coefficient vector: ";
+				cout << "expression_parser_domain::parse_and_evaluate "
+						"coefficient vector: ";
 				Int_vec_print(cout, Values, nb_monomials);
 				cout << endl;
 			}
@@ -253,14 +272,16 @@ void expression_parser_domain::parse_and_evaluate(
 	}
 	else {
 		if (f_v) {
-			cout << "expression_parser_domain::parse_and_evaluate not homogeneous" << endl;
+			cout << "expression_parser_domain::parse_and_evaluate "
+					"not homogeneous" << endl;
 		}
 
 
 		if (f_evaluate) {
 
 			if (f_v) {
-				cout << "expression_parser_domain::parse_and_evaluate before evaluate" << endl;
+				cout << "expression_parser_domain::parse_and_evaluate "
+						"before evaluate" << endl;
 			}
 
 			const char *p = parameters.c_str();
@@ -284,7 +305,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 				found = assignment.find('=');
 				if (found == std::string::npos) {
-					cout << "expression_parser_domain::parse_and_evaluate did not find '=' in variable assignment" << endl;
+					cout << "expression_parser_domain::parse_and_evaluate "
+							"did not find '=' in variable assignment" << endl;
 					exit(1);
 				}
 				std::string symb = assignment.substr (0, found);
@@ -293,7 +315,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 
 				if (f_v) {
-					cout << "expression_parser_domain::parse_and_evaluate adding symbol " << symb << " = " << val << endl;
+					cout << "expression_parser_domain::parse_and_evaluate "
+							"adding symbol " << symb << " = " << val << endl;
 				}
 
 				symbol_table[symb] = val;
@@ -312,7 +335,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 			a = tree->Root->evaluate(symbol_table, F, verbose_level);
 			if (f_v) {
-				cout << "expression_parser_domain::parse_and_evaluate the formula evaluates to " << a << endl;
+				cout << "expression_parser_domain::parse_and_evaluate "
+						"the formula evaluates to " << a << endl;
 			}
 
 		}
@@ -429,20 +453,23 @@ int expression_parser_domain::evaluate_formula(
 	}
 
 	if (f_v) {
-		cout << "expression_parser_domain::evaluate_formula before F->get_subtrees" << endl;
+		cout << "expression_parser_domain::evaluate_formula "
+				"before F->get_subtrees" << endl;
 	}
 
 	int ret, degree;
 	ret = F->tree->is_homogeneous(degree, verbose_level - 3);
 	if (ret) {
-		cout << "expression_parser_domain::evaluate_formula homogeneous of degree " << degree << endl;
+		cout << "expression_parser_domain::evaluate_formula "
+				"homogeneous of degree " << degree << endl;
 
 		ring_theory::homogeneous_polynomial_domain *Poly;
 
 		Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 		if (f_v) {
-			cout << "expression_parser_domain::evaluate_formula before Poly->init" << endl;
+			cout << "expression_parser_domain::evaluate_formula "
+					"before Poly->init" << endl;
 		}
 		Poly->init(Fq,
 				F->nb_managed_vars /* nb_vars */, degree,
@@ -450,7 +477,8 @@ int expression_parser_domain::evaluate_formula(
 				t_PART,
 				verbose_level - 3);
 		if (f_v) {
-			cout << "expression_parser_domain::evaluate_formula after Poly->init" << endl;
+			cout << "expression_parser_domain::evaluate_formula "
+					"after Poly->init" << endl;
 		}
 
 		syntax_tree_node **Subtrees;
@@ -462,7 +490,8 @@ int expression_parser_domain::evaluate_formula(
 		F->tree->split_by_monomials(Poly, Subtrees, verbose_level);
 
 		for (i = 0; i < nb_monomials; i++) {
-			cout << "expression_parser_domain::evaluate_formula Monomial " << i << " : ";
+			cout << "expression_parser_domain::evaluate_formula "
+					"Monomial " << i << " : ";
 			if (Subtrees[i]) {
 				Subtrees[i]->print_expression(cout);
 				cout << " * ";
@@ -470,62 +499,29 @@ int expression_parser_domain::evaluate_formula(
 				cout << endl;
 			}
 			else {
-				cout << "expression_parser_domain::evaluate_formula no subtree" << endl;
+				cout << "expression_parser_domain::evaluate_formula "
+						"no subtree" << endl;
 			}
 		}
 
-		cout << "expression_parser_domain::evaluate_formula before evaluate" << endl;
+		cout << "expression_parser_domain::evaluate_formula "
+				"before evaluate" << endl;
 
-		const char *p = parameters.c_str();
-		char str[1000];
-
+		data_structures::string_tools ST;
 		std::map<std::string, std::string> symbol_table;
-		//vector<string> symbols;
-		//vector<string> values;
 
-		while (TRUE) {
-			if (!ST.s_scan_token_comma_separated(&p, str)) {
-				break;
-			}
-			string assignment;
-			int len;
-
-			assignment.assign(str);
-			len = strlen(str);
-
-			std::size_t found;
-
-			found = assignment.find('=');
-			if (found == std::string::npos) {
-				cout << "expression_parser_domain::evaluate_formula did not find '=' in variable assignment" << endl;
-				exit(1);
-			}
-			std::string symb = assignment.substr (0, found);
-			std::string val = assignment.substr (found + 1, len - found - 1);
+		ST.parse_value_pairs(symbol_table,
+				parameters, verbose_level);
 
 
-
-			cout << "expression_parser_domain::evaluate_formula adding symbol " << symb << " = " << val << endl;
-
-			symbol_table[symb] = val;
-			//symbols.push_back(symb);
-			//values.push_back(val);
-
-		}
-
-#if 0
-		cout << "expression_parser_domain::evaluate_formula symbol table:" << endl;
-		for (i = 0; i < symbol_table.size(); i++) {
-			cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
-		}
-#endif
 		int a;
 		int *Values;
 
 		Values = NEW_int(nb_monomials);
 
 		for (i = 0; i < nb_monomials; i++) {
-			cout << "expression_parser_domain::evaluate_formula Monomial " << i << " : ";
+			cout << "expression_parser_domain::evaluate_formula "
+					"Monomial " << i << " : ";
 			if (Subtrees[i]) {
 				//Subtrees[i]->print_expression(cout);
 				a = Subtrees[i]->evaluate(symbol_table, Fq, verbose_level);
@@ -535,17 +531,20 @@ int expression_parser_domain::evaluate_formula(
 				cout << endl;
 			}
 			else {
-				cout << "expression_parser_domain::evaluate_formula no subtree" << endl;
+				cout << "expression_parser_domain::evaluate_formula "
+						"no subtree" << endl;
 				Values[i] = 0;
 			}
 		}
-		cout << "expression_parser_domain::evaluate_formula evaluated polynomial:" << endl;
+		cout << "expression_parser_domain::evaluate_formula evaluated "
+				"polynomial:" << endl;
 		for (i = 0; i < nb_monomials; i++) {
 			cout << Values[i] << " * ";
 			Poly->print_monomial(cout, i);
 			cout << endl;
 		}
-		cout << "expression_parser_domain::evaluate_formula coefficient vector: ";
+		cout << "expression_parser_domain::evaluate_formula "
+				"coefficient vector: ";
 		Int_vec_print(cout, Values, nb_monomials);
 		cout << endl;
 
@@ -554,58 +553,25 @@ int expression_parser_domain::evaluate_formula(
 		FREE_OBJECT(Poly);
 	}
 	else {
-		cout << "expression_parser_domain::evaluate_formula not homogeneous" << endl;
+		cout << "expression_parser_domain::evaluate_formula "
+				"not homogeneous" << endl;
 
 
-		cout << "expression_parser_domain::evaluate_formula before evaluate" << endl;
+		cout << "expression_parser_domain::evaluate_formula "
+				"before evaluate" << endl;
 
-		const char *p = parameters.c_str();
-		char str[1000];
-
+		data_structures::string_tools ST;
 		std::map<std::string, std::string> symbol_table;
-		//vector<string> symbols;
-		//vector<string> values;
 
-		while (TRUE) {
-			if (!ST.s_scan_token_comma_separated(&p, str)) {
-				break;
-			}
-			string assignment;
-			int len;
-
-			assignment.assign(str);
-			len = strlen(str);
-
-			std::size_t found;
-
-			found = assignment.find('=');
-			if (found == std::string::npos) {
-				cout << "expression_parser_domain::evaluate_formula did not find '=' in variable assignment" << endl;
-				exit(1);
-			}
-			std::string symb = assignment.substr (0, found);
-			std::string val = assignment.substr (found + 1, len - found - 1);
+		ST.parse_value_pairs(symbol_table,
+				parameters, verbose_level);
 
 
-
-			cout << "expression_parser_domain::evaluate_formula adding symbol " << symb << " = " << val << endl;
-
-			symbol_table[symb] = val;
-			//symbols.push_back(symb);
-			//values.push_back(val);
-
-		}
-
-#if 0
-		cout << "expression_parser_domain::evaluate_formula symbol table:" << endl;
-		for (i = 0; i < symbol_table.size(); i++) {
-			cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
-		}
-#endif
 		int a;
 
 		a = F->tree->Root->evaluate(symbol_table, Fq, verbose_level);
-		cout << "expression_parser_domain::evaluate_formula the formula evaluates to " << a << endl;
+		cout << "expression_parser_domain::evaluate_formula "
+				"the formula evaluates to " << a << endl;
 
 
 		return a;
@@ -617,6 +583,132 @@ int expression_parser_domain::evaluate_formula(
 		cout << "expression_parser_domain::evaluate_formula done" << endl;
 	}
 	return 0;
+}
+
+void expression_parser_domain::evaluate_managed_formula(
+		formula *F,
+		field_theory::finite_field *Fq,
+		std::string &parameters,
+		int *&Values, int &nb_monomials,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula" << endl;
+	}
+
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula "
+				"before F->get_subtrees" << endl;
+	}
+
+	int degree;
+	if (!F->tree->is_homogeneous(degree, verbose_level - 3)) {
+		cout << "expression_parser_domain::evaluate_managed_formula not homogeneous" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula "
+				"homogeneous of degree " << degree << endl;
+	}
+
+	ring_theory::homogeneous_polynomial_domain *Poly;
+
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula "
+				"before Poly->init" << endl;
+	}
+	Poly->init(Fq,
+			F->nb_managed_vars /* nb_vars */, degree,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			0 /*verbose_level - 3*/);
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula "
+				"after Poly->init" << endl;
+	}
+
+	syntax_tree_node **Subtrees;
+	int i;
+
+	nb_monomials = Poly->get_nb_monomials();
+
+	F->tree->split_by_monomials(Poly, Subtrees, verbose_level);
+
+	for (i = 0; i < nb_monomials; i++) {
+		if (f_v) {
+			cout << "expression_parser_domain::evaluate_managed_formula "
+					"Monomial " << i << " : ";
+			if (Subtrees[i]) {
+				Subtrees[i]->print_expression(cout);
+				cout << " * ";
+				Poly->print_monomial(cout, i);
+				cout << endl;
+			}
+			else {
+				cout << "expression_parser_domain::evaluate_managed_formula "
+						"no subtree" << endl;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula "
+				"before evaluate" << endl;
+	}
+
+	data_structures::string_tools ST;
+	std::map<std::string, std::string> symbol_table;
+
+	ST.parse_value_pairs(symbol_table,
+			parameters, verbose_level);
+
+
+	int a;
+
+	Values = NEW_int(nb_monomials);
+
+	for (i = 0; i < nb_monomials; i++) {
+		if (Subtrees[i] == NULL) {
+			Values[i] = 0;
+			continue;
+		}
+
+		a = Subtrees[i]->evaluate(symbol_table, Fq, verbose_level);
+		Values[i] = a;
+
+		if (f_v) {
+			cout << "expression_parser_domain::evaluate_managed_formula "
+					"Monomial " << i << " : ";
+			cout << a << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+	}
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula evaluated "
+				"polynomial:" << endl;
+		for (i = 0; i < nb_monomials; i++) {
+			cout << Values[i] << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		cout << "expression_parser_domain::evaluate_managed_formula "
+				"coefficient vector: ";
+		Int_vec_print(cout, Values, nb_monomials);
+		cout << endl;
+	}
+
+
+	FREE_OBJECT(Poly);
+
+
+	if (f_v) {
+		cout << "expression_parser_domain::evaluate_managed_formula done" << endl;
+	}
 }
 
 

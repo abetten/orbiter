@@ -74,6 +74,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
+	if (Descr->f_apply) {
+		apply(verbose_level);
+	}
+
 	if (Descr->f_multiply) {
 		multiply(verbose_level);
 	}
@@ -476,6 +480,22 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 
+void group_theoretic_activity::apply(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::apply" << endl;
+	}
+
+	A2->apply_based_on_text(Descr->apply_input,
+			Descr->apply_element, verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::apply done" << endl;
+	}
+}
+
 
 void group_theoretic_activity::multiply(int verbose_level)
 {
@@ -587,7 +607,8 @@ void group_theoretic_activity::search_subgroup(int verbose_level)
 #endif
 
 
-void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
+void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
+		int spread_no,
 		int f_Fano, int f_arcs, int f_depth, int depth,
 		std::string &label,
 		int verbose_level)

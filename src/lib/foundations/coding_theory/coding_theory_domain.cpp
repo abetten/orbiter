@@ -4122,7 +4122,25 @@ int coding_theory_domain::remainder_is_nonzero_binary(int da, int *A,
 	return false;
 }
 
+uint32_t coding_theory_domain::crc32(const char *s, size_t n)
+// polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
+// + x^10 + x^8 + x^7 + x^5 + x^3 + x^2 + x + 1
+{
+	uint32_t crc = 0xFFFFFFFF;
 
+	for (size_t i = 0; i < n; i++) {
+		char ch = s[i];
+		for (size_t j = 0; j < 8; j++) {
+			uint32_t b = (ch^crc) & 1;
+			crc >>= 1;
+			if (b) {
+				crc = crc^0xEDB88320; // reversed polynomial
+			}
+			ch >>= 1;
+		}
+	}
+	return ~crc;
+}
 
 
 }}}

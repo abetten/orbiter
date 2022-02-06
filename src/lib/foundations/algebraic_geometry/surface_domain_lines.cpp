@@ -98,7 +98,7 @@ void surface_domain::build_cubic_surface_from_lines(
 	if (FALSE) {
 		cout << "surface_domain::create_system "
 				"The system in RREF:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(System, nb_rows, nb_monomials);
+		Int_matrix_print(System, nb_rows, nb_monomials);
 	}
 	if (f_v) {
 		cout << "surface_domain::create_system "
@@ -269,7 +269,7 @@ void surface_domain::create_system(int len, long int *S,
 	if (f_v && FALSE) {
 		cout << "surface_domain::create_system "
 				"The system:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(System, nb_rows, nb_monomials);
+		Int_matrix_print(System, nb_rows, nb_monomials);
 	}
 
 	if (f_v) {

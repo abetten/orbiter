@@ -786,7 +786,35 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->line1_to_text, Descr->line2_to_text,
 				verbose_level);
 	}
+	else if (Descr->f_planes_through_line) {
 
+		cout << "planes through line:" << endl;
+		long int *v;
+		int sz, i, j;
+
+		Lint_vec_scan(Descr->planes_through_line_rank, v, sz);
+
+
+		for (i = 0; i < sz; i++) {
+
+			std::vector<long int> plane_ranks;
+
+			PA->P->planes_through_a_line(
+					v[i], plane_ranks,
+					verbose_level);
+
+			cout << "planes through line " << v[i] << " : ";
+			for (j = 0; j < plane_ranks.size(); j++) {
+				cout << plane_ranks[j];
+				if (j < plane_ranks.size() - 1) {
+					cout << ",";
+				}
+			}
+			cout << endl;
+
+		}
+
+	}
 
 
 	if (f_v) {

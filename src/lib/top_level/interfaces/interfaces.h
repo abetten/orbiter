@@ -50,13 +50,13 @@ class activity_description {
 	apps_combinatorics::combinatorial_object_activity_description *Combinatorial_object_activity_description;
 
 	int f_graph_theoretic_activity;
-	apps_graph_theory::graph_theoretic_activity_description * Graph_theoretic_activity_description;
+	apps_graph_theory::graph_theoretic_activity_description *Graph_theoretic_activity_description;
 
 	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
 	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
 
 	int f_spread_table_activity;
-	spreads::spread_table_activity_description * Spread_table_activity_description;
+	spreads::spread_table_activity_description *Spread_table_activity_description;
 
 	int f_packing_with_symmetry_assumption_activity;
 	packings::packing_was_activity_description *Packing_was_activity_description;
@@ -75,6 +75,9 @@ class activity_description {
 
 	int f_large_set_was_activity;
 	apps_combinatorics::large_set_was_activity_description *Large_set_was_activity_description;
+
+	int f_formula_activity;
+	expression_parser::formula_activity_description *Formula_activity_description;
 
 public:
 	activity_description();
@@ -101,6 +104,7 @@ public:
 	void do_diophant_activity(int verbose_level);
 	void do_design_activity(int verbose_level);
 	void do_large_set_was_activity(int verbose_level);
+	void do_formula_activity(int verbose_level);
 
 };
 
@@ -253,6 +257,8 @@ class interface_coding_theory {
 	std::string field_induction_fname_out;
 	int field_induction_nb_bits;
 
+	int f_crc32;
+	std::string crc32_text;
 
 
 public:
@@ -614,11 +620,8 @@ class interface_symbol_table {
 public:
 	orbiter_top_level_session *Orbiter_top_level_session;
 
-
 	int f_define;
 	symbol_definition *Symbol_definition;
-
-
 
 	int f_print_symbols;
 

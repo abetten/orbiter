@@ -42,14 +42,14 @@ syntax_tree_node::~syntax_tree_node()
 {
 
 	if (f_terminal) {
-		delete T;
+		FREE_OBJECT(T);
 		T = 0L;
 	}
 	else {
 		int i;
 
 		for (i = 0; i < nb_nodes; i++) {
-			delete Nodes[i];
+			FREE_OBJECT(Nodes[i]);
 		}
 		if (monomial) {
 			FREE_int(monomial);
@@ -172,10 +172,9 @@ void syntax_tree_node::print(std::ostream &ost)
 		ost << "is terminal" << std::endl;
 		T->print(ost);
 	}
-
 	else {
-		ost << "with " << nb_nodes << " descendants" << std::endl;
-		ost << "f_has_minus = " << f_has_minus << std::endl;
+		//ost << "with " << nb_nodes << " descendants" << std::endl;
+		//ost << "f_has_minus = " << f_has_minus << std::endl;
 		int i;
 		for (i = 0; i < nb_nodes; i++) {
 			ost << "Node " << idx << ", descendant " << i << " is node " << Nodes[i]->idx << std::endl;
@@ -187,12 +186,92 @@ void syntax_tree_node::print(std::ostream &ost)
 			Nodes[i]->print(ost);
 		}
 	}
+
 	if (f_has_monomial) {
 		Tree->print_monomial(ost, monomial);
 	}
 
 }
 
+
+void syntax_tree_node::print_easy(std::ostream &ost)
+{
+	print_easy_without_monomial(ost);
+
+	if (f_has_monomial) {
+		Tree->print_monomial(ost, monomial);
+	}
+
+}
+
+void syntax_tree_node::print_easy_without_monomial(std::ostream &ost)
+{
+	int i;
+
+	//ost << "Node " << idx << ": ";
+
+	if (f_terminal) {
+		//ost << "is terminal" << std::endl;
+		T->print_easy(ost);
+	}
+	else {
+		if (nb_nodes == 1) {
+			if (f_has_minus) {
+				ost << "-";
+			}
+			Nodes[0]->print_easy(ost);
+		}
+		else {
+			if (is_mult()) {
+				if (f_has_minus) {
+					ost << "-";
+				}
+
+				for (i = 0; i < nb_nodes; i++) {
+					ost << "(";
+					Nodes[i]->print_easy(ost);
+					ost << ")";
+					if (i < nb_nodes - 1) {
+						ost << " * ";
+					}
+				}
+			}
+			else if (is_add()) {
+				for (i = 0; i < nb_nodes; i++) {
+					Nodes[i]->print_easy(ost);
+					if (i < nb_nodes - 1) {
+						ost << " + ";
+					}
+				}
+			}
+			else {
+				cout << "syntax_tree_node::evaluate unknown operation" << endl;
+				exit(1);
+			}
+		}
+	}
+
+}
+
+int syntax_tree_node::is_mult()
+{
+	if (type == operation_type_mult) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int syntax_tree_node::is_add()
+{
+	if (type == operation_type_add) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 
 int syntax_tree_node::evaluate(std::map<std::string, std::string> &symbol_table,

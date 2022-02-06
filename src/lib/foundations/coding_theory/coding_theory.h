@@ -258,6 +258,8 @@ public:
 	int remainder_is_nonzero(int da, int *A, int db, int *B, field_theory::finite_field *F);
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
+	uint32_t crc32(const char *s, size_t n);
+
 
 
 };

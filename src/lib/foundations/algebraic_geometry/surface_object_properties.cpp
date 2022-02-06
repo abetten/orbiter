@@ -405,7 +405,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		cout << endl;
 	}
 	Eckardt_points = NEW_lint(nb_Eckardt_points);
-	orbiter_kernel_system::Orbiter->Int_vec->apply_lint(Eckardt_points_index, SO->Pts,
+	Int_vec_apply_lint(Eckardt_points_index, SO->Pts,
 		Eckardt_points, nb_Eckardt_points);
 	if (f_v) {
 		cout << "surface_object::compute_properties computing Eckardt points done, we found "
@@ -478,7 +478,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		cout << endl;
 	}
 	Double_points = NEW_lint(nb_Double_points);
-	orbiter_kernel_system::Orbiter->Int_vec->apply_lint(Double_points_index, SO->Pts,
+	Int_vec_apply_lint(Double_points_index, SO->Pts,
 		Double_points, nb_Double_points);
 	if (f_v) {
 		cout << "computing Double points done, we found "
@@ -512,7 +512,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		cout << endl;
 	}
 	Single_points = NEW_lint(nb_Single_points);
-	orbiter_kernel_system::Orbiter->Int_vec->apply_lint(Single_points_index, SO->Pts,
+	Int_vec_apply_lint(Single_points_index, SO->Pts,
 			Single_points, nb_Single_points);
 	if (f_v) {
 		cout << "computing Single points done, we found "

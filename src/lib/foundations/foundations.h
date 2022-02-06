@@ -198,8 +198,8 @@ typedef int *pint;
 typedef long int *plint;
 typedef int **ppint;
 typedef long int **pplint;
-typedef short SHORT;
-typedef SHORT *PSHORT;
+//typedef short SHORT;
+//typedef SHORT *PSHORT;
 typedef char *pchar;
 typedef unsigned char uchar;
 typedef uchar *puchar;
@@ -381,6 +381,8 @@ namespace expression_parser {
 	// expression_parser:
 	class expression_parser_domain;
 	class expression_parser;
+	class formula_activity_description;
+	class formula_activity;
 	class formula;
 	class lexer;
 	class syntax_tree_node_terminal;
@@ -707,11 +709,15 @@ namespace solvers {
 #define Int_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print(A, B, C)
 #define Lint_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(A, B, C)
 
+#define Int_matrix_print_ost(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_ost(A, B, C, D)
+
 #define Int_matrix_print_bitwise(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_bitwise(A, B, C)
 
 
 #define Int_vec_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->zero(A, B);
 #define Lint_vec_zero(A, B) orbiter_kernel_system::Orbiter->Lint_vec->zero(A, B);
+
+#define Int_vec_is_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->is_zero(A, B);
 
 #define Int_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->scan(A, B, C)
 #define Lint_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->scan(A, B, C)
@@ -724,6 +730,29 @@ namespace solvers {
 
 
 #define Int_vec_print_integer_matrix_in_C_source(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_in_C_source(A, B, C, D)
+
+#define Int_vec_apply_lint(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->apply_lint(A, B, C, D)
+
+#define Int_vec_mone(A, B) orbiter_kernel_system::Orbiter->Int_vec->mone(A, B)
+
+#define Int_vec_print_Cpp(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(A, B, C)
+
+#define Int_vec_complement(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C)
+#define Int_vec_complement_to(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C, D)
+
+#define Int_vec_set_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->set_print(A, B, C)
+
+#define Int_vec_create_string_with_quotes(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(A, B, C)
+#define Lint_vec_create_string_with_quotes(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(A, B, C)
+
+
+
+#define Int_vec_print_classified_str(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_classified_str(A, B, C, D)
+
+#define Int_vec_distribution(A, B, C, D, E) orbiter_kernel_system::Orbiter->Int_vec->distribution(A, B, C, D, E)
+
+#define Int_vec_find_first_nonzero_entry(A, B) pivot = orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
+
 
 enum monomial_ordering_type {
 	t_LEX, // lexicographical

@@ -107,21 +107,19 @@ void diophant_create::init(
 	}
 	if (Descr->f_coefficient_matrix) {
 		int *A;
-		int sz;
+		int m, n;
 		int i, j;
 
-		Int_vec_scan(Descr->coefficient_matrix_text, A, sz);
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(
+				Descr->coefficient_matrix_label,
+					A, m, n);
 
 		D = NEW_OBJECT(diophant);
-		D->open(Descr->coefficient_matrix_m, Descr->coefficient_matrix_n);
+		D->open(m, n);
 
-		if (sz != Descr->coefficient_matrix_m * Descr->coefficient_matrix_n) {
-			cout << "sz != m * n" << endl;
-			exit(1);
-		}
-		for (i = 0; i < Descr->coefficient_matrix_m; i++) {
-			for (j = 0; j < Descr->coefficient_matrix_n; j++) {
-				D->Aij(i, j) = A[i * Descr->coefficient_matrix_n + j];
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				D->Aij(i, j) = A[i * n + j];
 			}
 		}
 		FREE_int(A);

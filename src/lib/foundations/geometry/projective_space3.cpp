@@ -303,7 +303,7 @@ int projective_space::reverse_engineer_semilinear_map(
 	return TRUE;
 }
 
-void projective_space::create_ovoid(
+void projective_space::create_elliptic_quadric_ovoid(
 		std::string &label_txt,
 		std::string &label_tex,
 		int &nb_pts, long int *&Pts,
@@ -312,14 +312,18 @@ void projective_space::create_ovoid(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space::create_ovoid" << endl;
+		cout << "projective_space::create_elliptic_quadric_ovoid" << endl;
 	}
-	int n = 3, epsilon = -1;
+	int epsilon = -1;
 	int c1 = 1, c2 = 0, c3 = 0;
 	int i, j, d, h;
 	int *v, *w;
 	geometry_global Gg;
 
+	if (n != 3) {
+		cout << "projective_space::create_elliptic_quadric_ovoid n != 3" << endl;
+		exit(1);
+	}
 	d = n + 1;
 
 	nb_pts = Gg.nb_pts_Qepsilon(epsilon, n, q);
@@ -373,7 +377,7 @@ void projective_space::create_ovoid(
 	FREE_int(w);
 	//FREE_int(L);
 	if (f_v) {
-		cout << "projective_space::create_ovoid done" << endl;
+		cout << "projective_space::create_elliptic_quadric_ovoid done" << endl;
 	}
 }
 
@@ -426,9 +430,6 @@ void projective_space::create_ovoid_ST(
 
 	Pts = NEW_lint(nb_pts);
 
-	if (f_v) {
-		cout << "i : point : projective rank" << endl;
-	}
 	i = 0;
 	Pts[i++] = 1; // (0,1,0,0)
 	for (x = 0; x < F->q; x++) {
@@ -450,6 +451,7 @@ void projective_space::create_ovoid_ST(
 		cout << "projective_space::create_ovoid_ST i != nb_pts" << endl;
 	}
 	if (f_v) {
+		cout << "i : point : projective rank" << endl;
 		for (i = 0; i < nb_pts; i++) {
 			cout << setw(4) << i << " : ";
 			a = Pts[i];

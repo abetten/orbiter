@@ -38,9 +38,7 @@ diophant_description::diophant_description()
 	//from_scratch_n = 0;
 
 	f_coefficient_matrix = FALSE;
-	coefficient_matrix_m = 0;
-	coefficient_matrix_n = 0;
-	//coefficient_matrix_text;
+	//coefficient_matrix_label;
 
 	f_problem_of_Steiner_type = FALSE;
 	problem_of_Steiner_type_nb_t_orbits = 0;
@@ -115,12 +113,9 @@ int diophant_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-coefficient_matrix") == 0) {
 			f_coefficient_matrix = TRUE;
-			coefficient_matrix_m = ST.strtoi(argv[++i]);
-			coefficient_matrix_n = ST.strtoi(argv[++i]);
-			coefficient_matrix_text.assign(argv[++i]);
+			coefficient_matrix_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-coefficient_matrix " << coefficient_matrix_m << " "
-					<< coefficient_matrix_n << " " << coefficient_matrix_text << endl;
+				cout << "-coefficient_matrix " << coefficient_matrix_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
@@ -240,8 +235,7 @@ void diophant_description::print()
 		cout << "-label " << label << endl;
 	}
 	if (f_coefficient_matrix) {
-		cout << "-coefficient_matrix " << coefficient_matrix_m << " "
-				<< coefficient_matrix_n << " " << coefficient_matrix_text << endl;
+		cout << "-coefficient_matrix " << coefficient_matrix_label << endl;
 	}
 	if (f_problem_of_Steiner_type) {
 		cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits

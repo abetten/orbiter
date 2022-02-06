@@ -90,6 +90,8 @@ MODULES= \
 		foundations/Eigen_interface/eigen_interface.o \
 		foundations/expression_parser/expression_parser_domain.o \
 		foundations/expression_parser/expression_parser.o \
+		foundations/expression_parser/formula_activity_description.o \
+		foundations/expression_parser/formula_activity.o \
 		foundations/expression_parser/formula.o \
 		foundations/expression_parser/lexer.o \
 		foundations/expression_parser/syntax_tree_node_terminal.o \
