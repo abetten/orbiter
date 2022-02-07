@@ -88,6 +88,13 @@ interface_coding_theory::interface_coding_theory()
 	f_crc32 = FALSE;
 	//std::string crc32_text;
 
+	f_crc32_file_based = FALSE;
+	//std::string crc32_file_based_fname;
+	crc32_file_based_block_length = 0;
+
+	f_crc_new_file_based = FALSE;
+	//std::string crc_new_file_based_fname;
+
 }
 
 
@@ -149,6 +156,12 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-crc32") == 0) {
 		cout << "-crc32 <string : text>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
+		cout << "-crc32_file_based <string : fname_in> <int : block_length>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-crc_new_file_based") == 0) {
+		cout << "-crc_new_file_based <string : fname_in>" << endl;
 	}
 }
 
@@ -217,6 +230,12 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-crc32") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc_new_file_based") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -475,6 +494,24 @@ void interface_coding_theory::read_arguments(int argc,
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
+		f_crc32_file_based = TRUE;
+		crc32_file_based_fname.assign(argv[++i]);
+		crc32_file_based_block_length = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-crc32_file_based " << crc32_file_based_fname
+					<< " " << crc32_file_based_block_length << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-crc_new_file_based") == 0) {
+		f_crc_new_file_based = TRUE;
+		crc_new_file_based_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-crc_new_file_based "
+					<< crc_new_file_based_fname
+					<< endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
@@ -564,6 +601,11 @@ void interface_coding_theory::print()
 	}
 	if (f_crc32) {
 		cout << "-crc32 " << crc32_text
+				<< endl;
+	}
+	if (f_crc_new_file_based) {
+		cout << "-crc_new_file_based "
+				<< crc_new_file_based_fname
 				<< endl;
 	}
 }
@@ -811,6 +853,27 @@ void interface_coding_theory::worker(int verbose_level)
 		cout << endl;
 
 	}
+	else if (f_crc32_file_based) {
+		cout << "-crc32_file_based " << crc32_file_based_fname
+				<< " " << crc32_file_based_block_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc32_file_based(crc32_file_based_fname, crc32_file_based_block_length, verbose_level - 1);
+
+	}
+	else if (f_crc_new_file_based) {
+		cout << "-crc_new_file_based " << crc_new_file_based_fname
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc771_file_based(crc_new_file_based_fname, verbose_level - 1);
+
+	}
+
+
 	if (f_v) {
 		cout << "interface_coding_theory::worker done" << endl;
 	}

@@ -665,6 +665,102 @@ void ring_theory_global::polynomial_mult_mod(
 	}
 }
 
+void ring_theory_global::polynomial_power_mod(
+		field_theory::finite_field *F,
+		std::string &A_coeffs, std::string &power_text, std::string &M_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::polynomial_power_mod" << endl;
+	}
+
+	int *data_A;
+	int n;
+	int *data_M;
+	int sz_A, sz_M;
+	data_structures::string_tools ST;
+
+
+	orbiter_kernel_system::Orbiter->get_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+
+
+	n = ST.strtolint(power_text);
+
+	orbiter_kernel_system::Orbiter->get_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
+
+	number_theory::number_theory_domain NT;
+
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object A, M;
+
+
+	int da = sz_A - 1;
+	int dm = sz_M - 1;
+	int i;
+
+	FX.create_object_of_degree(A, dm);
+
+	for (i = 0; i <= da; i++) {
+		if (data_A[i] < 0 || data_A[i] >= F->q) {
+			data_A[i] = NT.mod(data_A[i], F->q);
+		}
+		FX.s_i(A, i) = data_A[i];
+	}
+
+	FX.create_object_of_degree(M, dm);
+
+	for (i = 0; i <= dm; i++) {
+		if (data_M[i] < 0 || data_M[i] >= F->q) {
+			data_M[i] = NT.mod(data_M[i], F->q);
+		}
+		FX.s_i(M, i) = data_M[i];
+	}
+
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
+
+
+		cout << "M(X)=";
+		FX.print_object(M, cout);
+		cout << endl;
+	}
+
+	//FX.create_object_of_degree(C, dm + 1);
+
+
+
+	if (f_v) {
+		cout << "ring_theory_global::polynomial_power_mod before FX.mult_mod" << endl;
+	}
+
+	{
+		FX.power_mod(A, M, n, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::polynomial_power_mod after FX.mult_mod" << endl;
+	}
+
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
+
+		cout << "deg A(X) = " << FX.degree(A) << endl;
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::polynomial_power_mod done" << endl;
+	}
+}
+
 void ring_theory_global::polynomial_find_roots(
 		field_theory::finite_field *F,
 		std::string &polynomial_find_roots_label,

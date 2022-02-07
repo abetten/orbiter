@@ -43,6 +43,11 @@ public:
 	std::string polynomial_mult_mod_B;
 	std::string polynomial_mult_mod_M;
 
+	int f_polynomial_power_mod;
+	std::string polynomial_power_mod_A;
+	std::string polynomial_power_mod_n;
+	std::string polynomial_power_mod_M;
+
 	int f_Berlekamp_matrix;
 	std::string Berlekamp_matrix_label;
 

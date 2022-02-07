@@ -539,6 +539,10 @@ public:
 			field_theory::finite_field *F,
 			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
 			int verbose_level);
+	void polynomial_power_mod(
+			field_theory::finite_field *F,
+			std::string &A_coeffs, std::string &power_text, std::string &M_coeffs,
+			int verbose_level);
 	void polynomial_find_roots(
 			field_theory::finite_field *F,
 			std::string &A_coeffs,
@@ -821,8 +825,10 @@ public:
 		int f, int verbose_level);
 	void get_an_irreducible_polynomial(unipoly_object &m,
 		int f, int verbose_level);
-	void power_int(unipoly_object &a, int n, int verbose_level);
+	void power_int(unipoly_object &a, long int n, int verbose_level);
 	void power_longinteger(unipoly_object &a, longinteger_object &n, int verbose_level);
+	void power_mod(unipoly_object &a, unipoly_object &m,
+			long int n, int verbose_level);
 	void power_coefficients(unipoly_object &a, int n);
 	void minimum_polynomial(unipoly_object &a,
 		int alpha, int p, int verbose_level);

@@ -260,6 +260,13 @@ class interface_coding_theory {
 	int f_crc32;
 	std::string crc32_text;
 
+	int f_crc32_file_based;
+	std::string crc32_file_based_fname;
+	int crc32_file_based_block_length;
+
+	int f_crc_new_file_based;
+	std::string crc_new_file_based_fname;
+
 
 public:
 	interface_coding_theory();

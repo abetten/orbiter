@@ -39,6 +39,14 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string polynomial_mult_mod_B;
 	//std::string polynomial_mult_mod_M;
 
+	f_polynomial_power_mod = FALSE;
+	//std::string polynomial_power_mod_A;
+	//std::string polynomial_power_mod_n;
+	//std::string polynomial_power_mod_M;
+
+
+
+
 	f_Berlekamp_matrix = FALSE;
 	//Berlekamp_matrix_label;
 
@@ -323,6 +331,20 @@ int finite_field_activity_description::read_arguments(
 						<< " " << polynomial_mult_mod_M << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-polynomial_power_mod") == 0) {
+			f_polynomial_power_mod = TRUE;
+			polynomial_power_mod_A.assign(argv[++i]);
+			polynomial_power_mod_n.assign(argv[++i]);
+			polynomial_power_mod_M.assign(argv[++i]);
+			if (f_v) {
+				cout << "-polynomial_power_mod "
+						<< " " << polynomial_power_mod_A
+						<< " " << polynomial_power_mod_n
+						<< " " << polynomial_power_mod_M << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-Berlekamp_matrix") == 0) {
 			f_Berlekamp_matrix = TRUE;
 			Berlekamp_matrix_label.assign(argv[++i]);
@@ -961,6 +983,12 @@ void finite_field_activity_description::print()
 				<< " " << polynomial_mult_mod_A
 				<< " " << polynomial_mult_mod_B
 				<< " " << polynomial_mult_mod_M << endl;
+	}
+	if (f_polynomial_power_mod) {
+		cout << "-polynomial_power_mod "
+				<< " " << polynomial_power_mod_A
+				<< " " << polynomial_power_mod_n
+				<< " " << polynomial_power_mod_M << endl;
 	}
 	if (f_Berlekamp_matrix) {
 		cout << "-Berlekamp_matrix " << Berlekamp_matrix_label << endl;
