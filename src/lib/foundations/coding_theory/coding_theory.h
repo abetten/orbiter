@@ -259,6 +259,9 @@ public:
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
 	uint32_t crc32(const char *s, size_t n);
+	void crc32_file_based(std::string &fname_in,
+			int block_length, int verbose_level);
+	void crc771_file_based(std::string &fname_in, int verbose_level);
 
 
 

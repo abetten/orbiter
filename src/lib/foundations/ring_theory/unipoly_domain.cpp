@@ -2736,7 +2736,7 @@ void unipoly_domain::get_an_irreducible_polynomial(
 }
 
 void unipoly_domain::power_int(unipoly_object &a,
-		int n, int verbose_level)
+		long int n, int verbose_level)
 // does not mod out by factor polynomial
 {
 	int f_v = (verbose_level >= 1);
@@ -2857,6 +2857,97 @@ void unipoly_domain::power_longinteger(
 		cout << "unipoly_domain::power_longinteger done" << endl;
 	}
 }
+
+
+void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
+		long int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	unipoly_object b, c, d;
+
+	if (f_v) {
+		cout << "unipoly_domain::power_mod, verbose_level=" << verbose_level << endl;
+	}
+	if (f_vv) {
+		cout << "unipoly_domain::power_mod computing a=";
+		print_object(a, cout);
+		cout << " to the power " << n << " modulo ";
+		print_object(m, cout);
+		cout << endl;
+	}
+	//cout << "power_mod a=";
+	//print_object(a, cout);
+	//cout << " n=" << n << endl;
+	create_object_by_rank(b, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(c, 1, __FILE__, __LINE__, 0 /*verbose_level*/); // c = 1
+	create_object_by_rank(d, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+
+	assign(a, b, verbose_level);
+
+	while (n) {
+		if (f_vv) {
+			cout << "unipoly_domain::power_mod n=" << n;
+			cout << " b=";
+			print_object(b, cout);
+			cout << " c=";
+			print_object(c, cout);
+			cout << endl;
+		}
+
+		if (n % 2) {
+			if (f_vv) {
+				cout << "unipoly_domain::power_mod n is odd" << endl;
+				cout << "unipoly_domain::power_mod before mult_mod(b,c,d,m)" << endl;
+			}
+			mult_mod(b, c, d, m, verbose_level - 1);
+
+			if (f_vv) {
+				cout << "unipoly_domain::power_mod before assign(d,c)" << endl;
+			}
+			if (f_vv) {
+				cout << "b * c = d";
+				print_object(d, cout);
+				cout << endl;
+			}
+			assign(d, c, 0 /*verbose_level*/);
+		}
+		else {
+			if (f_vv) {
+				cout << "unipoly_domain::power_mod n is even" << endl;
+			}
+		}
+		if (f_vv) {
+			cout << "unipoly_domain::power_mod before mult(b,b,d)" << endl;
+		}
+		mult_mod(b, b, d, m, verbose_level - 1);
+		if (f_vv) {
+			cout << "unipoly_domain::power_mod b * b = d";
+			print_object(d, cout);
+			cout << endl;
+		}
+		if (f_vv) {
+			cout << "unipoly_domain::power_mod before assign(d,b)" << endl;
+		}
+		assign(d, b, 0 /*verbose_level*/);
+		n >>= 1;
+	}
+	if (f_vv) {
+		cout << "unipoly_domain::power_mod before assign(c,a)" << endl;
+	}
+	assign(c, a, 0 /*verbose_level*/);
+	if (f_vv) {
+		cout << "unipoly_domain::power_mod before delete_object(b)" << endl;
+	}
+	delete_object(b);
+	delete_object(c);
+	delete_object(d);
+	if (f_v) {
+		cout << "unipoly_domain::power_mod done" << endl;
+	}
+}
+
+
 
 void unipoly_domain::power_coefficients(
 	unipoly_object &a, int n)

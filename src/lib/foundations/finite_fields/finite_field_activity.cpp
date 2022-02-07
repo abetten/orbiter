@@ -99,6 +99,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->polynomial_mult_mod_A, Descr->polynomial_mult_mod_B,
 				Descr->polynomial_mult_mod_M, verbose_level);
 	}
+
+	else if (Descr->f_polynomial_power_mod) {
+
+		ring_theory::ring_theory_global R;
+
+		R.polynomial_power_mod(F,
+				Descr->polynomial_power_mod_A, Descr->polynomial_power_mod_n,
+				Descr->polynomial_power_mod_M, verbose_level);
+
+	}
+
 	else if (Descr->f_Berlekamp_matrix) {
 
 		linear_algebra::linear_algebra_global LA;

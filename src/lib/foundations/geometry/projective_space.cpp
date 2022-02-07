@@ -348,6 +348,7 @@ void projective_space::init_polarity(int verbose_level)
 	}
 
 }
+
 void projective_space::intersect_with_line(long int *set, int set_sz,
 		int line_rk, long int *intersection, int &sz, int verbose_level)
 {

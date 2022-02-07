@@ -3735,6 +3735,8 @@ fix_structure_2C:
 
 
 
+# ToDo:
+
 trans:
 	$(ORBITER_PATH)orbiter.out -v 5 \
 		-define F -finite_field -q 16 -end -end \
@@ -11908,6 +11910,24 @@ DLX_test:
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 
 
+linsp6:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define A -vector -format 1 -dense "15,10,6,3,1" -end \
+		-define D -diophant -label linsp6 \
+		-coefficient_matrix A \
+		-RHS "15,15,1" \
+		-x_min_global 0 \
+		-x_max_global 15 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+	
+# Found 15 solutions with 22 backtrack steps
+
+
+
+
 linsp7:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define A -vector -format 1 -dense "21,15,10,6,3,1" -end \
@@ -11925,20 +11945,6 @@ linsp7:
 # 32 solutions in 45 backtrack steps
 
 
-linsp6:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define A -vector -format 1 -dense "15,10,6,3,1" -end \
-		-define D -diophant -label linsp6 \
-		-coefficient_matrix A \
-		-RHS "15,15,1" \
-		-x_min_global 0 \
-		-x_max_global 15 \
-		-end \
-		-with D -do \
-			-diophant_activity -solve_mckay \
-		-end
-	
-# Found 15 solutions with 22 backtrack steps
 
 
 
@@ -13962,7 +13968,8 @@ Cayley_Sym4_coxeter_eigenvalues_and_draw:
 Cayley_Sym5_coxeter_eigenvalues_and_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
-		-define S -vector -dense "1,0,2,3,4, 0,2,1,3,4, 0,1,3,2,4, 0,1,2,4,3" -end \
+		-define S -vector -dense \
+			"1,0,2,3,4, 0,2,1,3,4, 0,1,3,2,4, 0,1,2,4,3" -end \
 		-define G -permutation_group -symmetric_group 5 \
 		-end \
 		-define Gamma -graph \
