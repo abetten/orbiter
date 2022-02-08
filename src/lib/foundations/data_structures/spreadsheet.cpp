@@ -371,7 +371,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet before tokenize" << endl;
 	}
-	tokenize(fname, tokens, nb_tokens, 0 /*verbose_level*/);
+	tokenize(fname, tokens, nb_tokens, 0 /*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet read file with "
@@ -396,7 +396,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 				<< nb_lines << " lines" << endl;
 		}
 	
-	if (f_vv) {
+	if (FALSE) {
 		{
 		int f, l, j;
 	
@@ -431,7 +431,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 			}
 		}
 
-	if (f_vv) {
+	if (FALSE) {
 		cout << "spreadsheet::read_spreadsheet" << endl;
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
@@ -895,7 +895,7 @@ void spreadsheet::tokenize(std::string &fname,
 	const char *p_buf;
 	char *str;
 	int sz;
-	int i; //, r;
+	int line_cnt, i; //, r;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
@@ -913,7 +913,9 @@ void spreadsheet::tokenize(std::string &fname,
 		string_tools ST;
 		ifstream fp(fname);
 		i = 0;
+		line_cnt = 0;
 		while (TRUE) {
+			line_cnt++;
 			if (fp.eof()) {
 				break;
 				}
@@ -921,6 +923,9 @@ void spreadsheet::tokenize(std::string &fname,
 			if (f_vv) {
 				cout << "Line read :'" << buf << "'" << endl;
 				}
+			if (strlen(buf) == 0) {
+				break;
+			}
 			p_buf = buf;
 			if (strncmp(buf, "END", 3) == 0) {
 				break;
@@ -948,10 +953,12 @@ void spreadsheet::tokenize(std::string &fname,
 					}
 				//s_scan_token(&p_buf, str);
 				//s_scan_token(&p_buf, str);
-				/* r =*/ ST.s_scan_token_comma_separated(&p_buf, str);
+				if (!ST.s_scan_token_comma_separated(&p_buf, str, verbose_level - 1)) {
+					break;
+				}
 
 				if (f_vv) {
-					cout << "Token " << setw(6) << i << " is '"
+					cout << "Line " << line_cnt << ", token " << setw(6) << i << " is '"
 							<< str << "'" << endl;
 					}
 	#if 0
@@ -1010,7 +1017,9 @@ void spreadsheet::tokenize(std::string &fname,
 						}
 					//s_scan_token(&p_buf, str);
 					//s_scan_token(&p_buf, str);
-					/*r = */ ST.s_scan_token_comma_separated(&p_buf, str);
+					if (!ST.s_scan_token_comma_separated(&p_buf, str, verbose_level - 1)) {
+						break;
+					}
 			#if 0
 					if (strcmp(str, ",") == 0) {
 						continue;

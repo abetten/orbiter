@@ -80,7 +80,7 @@ void formula::init(std::string &label, std::string &label_tex,
 	char str[1000];
 
 	while (TRUE) {
-		if (!ST.s_scan_token_comma_separated(&p, str)) {
+		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string var;

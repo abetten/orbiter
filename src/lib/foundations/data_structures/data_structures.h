@@ -1480,7 +1480,7 @@ public:
 	int s_scan_token(char **s, char *str);
 	int s_scan_token_arbitrary(char **s, char *str);
 	int s_scan_str(char **s, char *str);
-	int s_scan_token_comma_separated(const char **s, char *str);
+	int s_scan_token_comma_separated(const char **s, char *str, int verbose_level);
 	void scan_permutation_from_string(const char *s,
 		int *&perm, int &degree, int verbose_level);
 	void scan_permutation_from_stream(std::istream & is,
@@ -1698,6 +1698,9 @@ public:
 
 	int f_file;
 	std::string file_name;
+
+	int f_load_csv_no_border;
+	std::string load_csv_no_border_fname;
 
 	int f_sparse;
 	int sparse_len;

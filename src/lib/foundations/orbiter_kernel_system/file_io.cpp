@@ -1537,11 +1537,19 @@ void file_io::int_matrix_read_csv_no_border(std::string &fname,
 	{
 		data_structures::spreadsheet S;
 
-		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+		if (f_v) {
+			cout << "file_io::int_matrix_read_csv_no_border before S.read_spreadsheet" << endl;
+		}
+		S.read_spreadsheet(fname, verbose_level - 1);
+		if (f_v) {
+			cout << "file_io::int_matrix_read_csv_no_border after S.read_spreadsheet" << endl;
+		}
 
 		m = S.nb_rows;
 		n = S.nb_cols;
-		cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+		if (f_v) {
+			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+		}
 		M = NEW_int(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {

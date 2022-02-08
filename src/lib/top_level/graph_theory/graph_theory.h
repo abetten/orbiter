@@ -113,10 +113,6 @@ public:
 	int f_load;
 	std::string fname;
 
-	int f_Cayley_graph;
-	std::string Cayley_graph_group;
-	std::string Cayley_graph_gens;
-
 	int f_load_csv_no_border;
 	int f_load_dimacs;
 
@@ -189,6 +185,10 @@ public:
 	int f_chain_graph;
 	std::string chain_graph_partition_1;
 	std::string chain_graph_partition_2;
+
+	int f_Cayley_graph;
+	std::string Cayley_graph_group;
+	std::string Cayley_graph_gens;
 
 	std::vector<graph_modification_description> Modifications;
 

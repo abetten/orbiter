@@ -133,6 +133,19 @@ void vector_builder::init(vector_builder_description *Descr,
 		k = m;
 
 	}
+	else if (Descr->f_load_csv_no_border) {
+		if (f_v) {
+			cout << "vector_builder::init -load_csv_no_border " << Descr->load_csv_no_border_fname << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+		int m, n;
+
+		Fio.int_matrix_read_csv_no_border(Descr->load_csv_no_border_fname, v, m, n, verbose_level);
+		len = m * n;
+		f_has_k = TRUE;
+		k = m;
+
+	}
 	else if (Descr->f_sparse) {
 		if (f_v) {
 			cout << "vector_builder::init -sparse" << endl;
