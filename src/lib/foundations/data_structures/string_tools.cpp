@@ -282,15 +282,19 @@ int string_tools::s_scan_str(char **s, char *str)
 	return TRUE;
 }
 
-int string_tools::s_scan_token_comma_separated(const char **s, char *str)
+int string_tools::s_scan_token_comma_separated(const char **s, char *str, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	char c;
 	int len;
 
 	len = 0;
 	c = **s;
-	if (c == 0) {
+	if (c == 0 || c == 13 || c == 10) {
 		return false;
+	}
+	if (f_v) {
+		cout << "string_tools::s_scan_token_comma_separated seeing character " << (int) c << endl;
 	}
 #if 0
 	if (c == 10 || c == 13) {
@@ -618,7 +622,7 @@ void string_tools::chop_string_comma_separated(const char *str, int &argc, char 
 		if (*p_buf == 0) {
 			break;
 		}
-		s_scan_token_comma_separated(&p_buf, buf);
+		s_scan_token_comma_separated(&p_buf, buf, 0 /* verbose_level */);
 
 		if (FALSE) {
 			cout << "Token " << setw(6) << i << " is '"
@@ -634,7 +638,7 @@ void string_tools::chop_string_comma_separated(const char *str, int &argc, char 
 		if (*p_buf == 0) {
 			break;
 		}
-		s_scan_token_comma_separated(&p_buf, buf);
+		s_scan_token_comma_separated(&p_buf, buf, 0 /* verbose_level */);
 
 		if (FALSE) {
 			cout << "Token " << setw(6) << i << " is '"
@@ -1162,7 +1166,7 @@ void string_tools::parse_value_pairs(
 	//vector<string> values;
 
 	while (TRUE) {
-		if (!s_scan_token_comma_separated(&p, str)) {
+		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string assignment;
@@ -1212,7 +1216,7 @@ void string_tools::parse_comma_separated_values(
 	}
 
 	while (TRUE) {
-		if (!s_scan_token_comma_separated(&p, str)) {
+		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string symbol;

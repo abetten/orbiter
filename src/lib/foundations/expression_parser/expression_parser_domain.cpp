@@ -60,7 +60,7 @@ void expression_parser_domain::parse_and_evaluate(
 	char str[1000];
 
 	while (TRUE) {
-		if (!ST.s_scan_token_comma_separated(&p, str)) {
+		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string var;
@@ -188,7 +188,7 @@ void expression_parser_domain::parse_and_evaluate(
 			//vector<string> values;
 
 			while (TRUE) {
-				if (!ST.s_scan_token_comma_separated(&p, str)) {
+				if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 					break;
 				}
 				string assignment;
@@ -292,7 +292,7 @@ void expression_parser_domain::parse_and_evaluate(
 			//vector<string> values;
 
 			while (TRUE) {
-				if (!ST.s_scan_token_comma_separated(&p, str)) {
+				if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 					break;
 				}
 				string assignment;
