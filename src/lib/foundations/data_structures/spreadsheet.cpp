@@ -640,14 +640,29 @@ void spreadsheet::print_table_row_detailed(int row, ostream &ost)
 
 void spreadsheet::print_table_row_with_column_selection(int row,
 		int f_enclose_in_parentheses,
-		int *Col_selection, int nb_cols_selected, std::ostream &ost)
+		int *Col_selection, int nb_cols_selected,
+		std::ostream &ost, int verbose_level)
 {
-	int j, t, h;
-	int f_enclose;
+	int f_v = (verbose_level >= 1);
+	int col, h;
+	//int f_enclose;
 
+	if (f_v) {
+		cout << "spreadsheet::print_table_row_with_column_selection" << endl;
+	}
 	//cout << "Row " << row << " : ";
 	for (h = 0; h < nb_cols_selected; h++) {
-		j = Col_selection[h] + 1;
+		col = Col_selection[h];
+
+		std::string str;
+
+		get_string(str, row, col);
+
+		if (f_v) {
+			cout << "row " << row << " col " << col << " : " << str << endl;
+		}
+
+#if 0
 		t = Table[row * nb_cols + j];
 		if (t >= 0) {
 #if 0
@@ -678,6 +693,8 @@ void spreadsheet::print_table_row_with_column_selection(int row,
 				ost << "\"";
 			}
 		}
+#endif
+		ost << str;
 		if (h < nb_cols_selected - 1) {
 			ost << ",";
 		}
@@ -1222,7 +1239,7 @@ void spreadsheet::get_string_entry(std::string &entry, int i, int j)
 
 void spreadsheet::get_string(std::string &str, int i, int j)
 {
-	int t;
+	int t, l;
 	//char *str;
 	//char *s;
 	
@@ -1235,8 +1252,13 @@ void spreadsheet::get_string(std::string &str, int i, int j)
 		}
 	else {
 		//str = NEW_char(strlen(tokens[t]) + 1);
-		if (strlen(tokens[t]) >= 2 && tokens[t][0] == '"') {
+		l = strlen(tokens[t]);
+		str.assign(tokens[t]);
+#if 0
+		if (l >= 2 && tokens[t][0] == '"' && tokens[t][l - 1] == '"') {
+			tokens[t][l - 1] = 0;
 			str.assign(tokens[t] + 1);
+
 			//strcpy(str, tokens[t] + 1);
 			//str[strlen(str) - 1] = 0;
 			}
@@ -1244,6 +1266,7 @@ void spreadsheet::get_string(std::string &str, int i, int j)
 			str.assign(tokens[t]);
 			//strcpy(str, tokens[t]);
 			}
+#endif
 
 		//s = NEW_char(strlen(str) + 1);
 		//strcpy(s, str);

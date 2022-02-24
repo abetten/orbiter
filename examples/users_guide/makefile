@@ -170,13 +170,15 @@ Ree_gen2="16,3,11,5,16,22,20, 24,6,18,24,7,1,26, 9,23,17,18,23,20,13, \
 24,15,2,13,11,14,24"
 
 
-HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,\
-26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,\
-79,80,81,82"
+HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,\
+10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,\
+53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82"
 
 
-HYPEROVAL_16_144="0, 1, 2, 3, 52, 67, 89, 106, 126, 141, 159, 176, 184, 199, 220, 235, 245, 262"
-HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, 139, 156, 174, 186, 199, 217, 229, 256, 264"
+HYPEROVAL_16_144="0, 1, 2, 3, 52, 67, 89, 106, 126, \
+141, 159, 176, 184, 199, 220, 235, 245, 262"
+HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, \
+139, 156, 174, 186, 199, 217, 229, 256, 264"
 
 FILE_24_3_TFC_INC="24 24 72\
 \n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 \
@@ -330,7 +332,6 @@ F_a_b_c_d_f_g="g*b*(c*f + d*f - d*g - c + f - g)*x0*x0*x2 \
 - c*f*(a*g - b*f + b*g - a)*x1*x2*x2 \
 + (d - 1)*c*f*(a*g - b*f + b*g - a)*x1*x2*x3 \
 + c*d*f*(a*g - b*f + b*g - a)*x1*x3*x3"
-
 
 
 
@@ -1101,6 +1102,11 @@ EDGE_CURVE_Q17_AS_POINTS="4, 7, 16, 19, 20, 23, 32, 35, 89, 100, 244, 251"
 FILE_Q17="orbit,curve,pts_on_curve,bitangents,go\
 \n0,\"$(EDGE_CURVE_Q17_EQUATION)\",\"$(EDGE_CURVE_Q17_AS_POINTS)\",\"\",-1\
 \nEND"
+
+
+
+
+DESARGUES_PATH_LEX_LEAST="10 10 3\n0\n1 0\n2 0 15\n3 0 15 26\n4 0 15 26 46\n5 0 15 26 46 56\n6 0 15 26 46 56 72\n7 0 15 26 46 56 72 80\n8 0 15 26 46 56 72 80 93\n9 0 15 26 46 56 72 80 93 106\n10 0 15 26 46 56 72 80 93 106 119\n-1\n"
 
 
 
@@ -2970,6 +2976,15 @@ no:
 
 SECTION_FINITE_PROJECTIVE_SPACES:
 
+
+PG_3_2_easy:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space 3 F -end
+
+
+
+
 PG_1_16:
 	$(ORBITER_PATH)orbiter.out \
 		-define F -finite_field -q 16 -end \
@@ -2980,28 +2995,8 @@ PG_1_16:
 	pdflatex PG_1_16.tex 
 	open PG_1_16.pdf
 
-PG_2_2:
-	$(ORBITER_PATH)orbiter.out \
-		-draw_options -xout 750000 -yout 750000 \
-			-scale 0.3 -radius 250 \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_PG 2 \
-		-end
-	pdflatex PG_2_2.tex 
-	open PG_2_2.pdf
 
-
-PG_2_4_cheat_sheet_F:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 4 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_PG 2 -end
-	pdflatex PG_2_4.tex 
-	open PG_2_4.pdf
-
-PG_2_4_cheat_sheet_P:
+PG_2_4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space 2 F -end \
@@ -3012,14 +3007,6 @@ PG_2_4_cheat_sheet_P:
 	open PG_2_4.pdf
 
 
-PG_2_8:
-	$(ORBITER_PATH)orbiter.out \
-		-define F -finite_field -q 8 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_PG 2 \
-		-end
-	pdflatex PG_2_8.tex 
-	open PG_2_8.pdf
 
 
 PG_2_13:
@@ -3255,8 +3242,10 @@ PG_2_16:
 		-draw_options -xin 20000 -yin 20000 \
 		-radius 200 -line_width 0.3 -nodes_empty -end \
 		-define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_PG 2 -end
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity \
+			-cheat_sheet \
+		-end
 	pdflatex PG_2_16.tex 
 	open PG_2_16.pdf
 
@@ -3456,30 +3445,6 @@ octic_prepare:
 
 
 
-elliptic_quadric_ovoid_q8:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
-		-define O -geometric_object P \
-			-elliptic_quadric_ovoid \
-		-end \
-		-with O -do -combinatorial_object_activity -save \
-		-end
-
-#ovoid_q8.txt
-# 65 points
-
-ovoid_ST_q8:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
-		-define O -geometric_object P \
-			-ovoid_ST \
-		-end \
-		-with O -do -combinatorial_object_activity -save \
-		-end
-
-#ovoid_ST_q8.txt
 
 ###############################################################################
 # Section 4.6: The Klein Quadric and Pluecker coordinates
@@ -3700,7 +3665,7 @@ fix_structure_2A:
 		-projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG 1 \
 				"1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1" \
-				fix_structure_2A.tex \
+				fix_structure_2A \
 		-end 
 	pdflatex fix_structure_2A.tex
 	open fix_structure_2A.pdf
@@ -3714,7 +3679,7 @@ fix_structure_2B:
 		-projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG 1 \
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-				fix_structure_2B.tex \
+				fix_structure_2B \
 		-end 
 	pdflatex fix_structure_2B.tex
 	open fix_structure_2B.pdf
@@ -3728,23 +3693,24 @@ fix_structure_2C:
 		-projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG 1 \
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
-				fix_structure_2C.tex \
+				fix_structure_2C \
 		-end 
 	pdflatex fix_structure_2C.tex
 	open fix_structure_2C.pdf
 
 
 
-# ToDo:
 
 trans:
 	$(ORBITER_PATH)orbiter.out -v 5 \
-		-define F -finite_field -q 16 -end -end \
-		-with F -do -finite_field_activity \
-		-move_two_lines_in_hyperplane_stabilizer_text \
-		"1,0,0,0, 0,0,0,1" "1,1,0,2, 0,0,1,0" \
-		"1,0,0,0, 0,0,0,1" "0,1,0,1, 0,0,1,0" \
-	-end
+		-define F -finite_field -q 16 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-move_two_lines_in_hyperplane_stabilizer_text \
+				"1,0,0,0, 0,0,0,1" "1,1,0,2, 0,0,1,0" \
+				"1,0,0,0, 0,0,0,1" "0,1,0,1, 0,0,1,0" \
+		-end
 
 
 del_Pezzo_F13ab_report:
@@ -3823,7 +3789,82 @@ del_Pezzo_169:
 
 
 
-Edge_curve_conic_type:
+
+###############################################################################
+# Section 4.10: Geometric Objects
+
+
+SECTION_GEOMETRIC_OBJECTS:
+
+
+elliptic_quadric_ovoid_q8:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space 3 F -end \
+		-define O -geometric_object P \
+			-elliptic_quadric_ovoid \
+		-end \
+		-with O -do -combinatorial_object_activity -save \
+		-end
+
+#ovoid_q8.txt
+# 65 points
+
+ovoid_ST_q8:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space 3 F -end \
+		-define O -geometric_object P \
+			-ovoid_ST \
+		-end \
+		-with O -do -combinatorial_object_activity -save \
+		-end
+
+#ovoid_ST_q8.txt
+
+
+Edge_curve_17:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space 2 F -end \
+		-define C -geometric_object P \
+			-projective_variety "Edge_q17" "Edge\_q17" \
+				4 $(EDGE_CURVE_Q17_EQUATION) \
+			-monomial_type_PART \
+		-end \
+		-with C -do -combinatorial_object_activity -save \
+		-end
+
+#Edge_q17.txt
+#combinatorial_object_create::init created a set of size 12
+#( 4, 7, 16, 19, 20, 23, 32, 35, 89, 100, 244, 251 )
+
+
+
+
+
+
+
+Edge_curve_17_line_type:
+	echo $(FILE_Q17) >edge_q17.csv
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space 2 F -end \
+		-define C -geometric_object P \
+			-projective_variety "Edge_q17" "Edge\_q17" \
+				4 $(EDGE_CURVE_Q17_EQUATION) \
+			-monomial_type_PART \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-line_type \
+		-end \
+		-print_symbols
+
+#( 4^6, 2^30, 1^132, 0^139 )
+
+
+Edge_curve_q23_line_type:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 23 -end \
 		-define P -projective_space 2 F -end \
@@ -3836,9 +3877,17 @@ Edge_curve_conic_type:
 		-end \
 		-with E -do \
 		-combinatorial_object_activity \
-			-conic_type 6 \
+			-line_type \
 		-end \
 		-print_symbols
+
+
+
+
+
+
+
+
 
 
 
@@ -4350,13 +4399,6 @@ PGL_2_3:
 
 
 
-PG_3_2_again:
-	$(ORBITER_PATH)orbiter.out \
-		-define F -finite_field -q 3 -end 
-		-finite_field_activity \
-		-cheat_sheet_PG 2 -end
-	pdflatex PG_2_3.tex 
-	open PG_2_3.pdf
 
 
 #Co3 from Conway et al., 1985 (ATLAS)
@@ -8434,6 +8476,8 @@ D1_q4_with_select_double_six_b:
 	open D1_q4.pdf
 
 
+# ToDo: now projectuve_space_activity:
+
 D1_q4_trans:
 	$(ORBITER_PATH)orbiter.out -v 5 -define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity \
@@ -11989,6 +12033,17 @@ linsp30_pt_distribution:
 # geometry builder:
 ####
 
+
+geo_pasch:
+	$(ORBITER_PATH)orbiter.out -v 8 \
+		-define Test_lines -set -loop 1 7 1 -end \
+		-define Geo -geometry_builder \
+			-V 6 -B 4 -TDO 2 -fuse 1 \
+			-fname_GEO pasch \
+			-test Test_lines \
+		-end
+
+
 geo_petersen:
 	$(ORBITER_PATH)orbiter.out -v 8 \
 		-define Test_lines -set -loop 3 11 1 -end \
@@ -12112,6 +12167,23 @@ geo_10_3:
 # 8/26/2021: 0 sec on Mac
 
 
+geo_10_3_inc_draw:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries \
+			10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-draw_incidence_matrices \
+			10_3_inc \
+		-end
+	pdflatex 10_3_inc_incma.tex
+	open 10_3_inc_incma.pdf
+
+
 geo_10_3_orderly:
 	$(ORBITER_PATH)orbiter.out -v 20 \
 		-define Test_lines -set -loop 4 11 1 -end \
@@ -12150,6 +12222,33 @@ geo_10_3_tree:
 			-xin 10000 -yin 10000 \
 			-xout 1000000 -yout 500000 \
 			-scale 2 -line_width 0.3 \
+			-nodes_empty \
+		-end \
+		-tree_draw \
+			-file 10_3_tree.txt \
+		-end
+	pdflatex 10_3_tree_draw.tex
+	open 10_3_tree_draw.pdf
+
+
+
+
+geo_10_3_tree_path:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define Test_lines -set -loop 0 11 1 -end \
+		-define GEO -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-search_tree \
+			-test Test_lines \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-draw_options -embedded -radius 20 \
+			-paperheight 220 \
+			-paperwidth 330 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 500000 \
+			-scale 2 -line_width 0.3 \
 		-end \
 		-tree_draw \
 			-restrict 2 \
@@ -12162,7 +12261,6 @@ geo_10_3_tree:
 #			-nodes_empty \
 #-sideways 
 
-DESARGUES_PATH_LEX_LEAST="10 10 3\n0\n1 0\n2 0 15\n3 0 15 26\n4 0 15 26 46\n5 0 15 26 46 56\n6 0 15 26 46 56 72\n7 0 15 26 46 56 72 80\n8 0 15 26 46 56 72 80 93\n9 0 15 26 46 56 72 80 93 106\n10 0 15 26 46 56 72 80 93 106 119\n-1\n"
 
 Desargues_path_lex_least_draw:
 	echo $(DESARGUES_PATH_LEX_LEAST) >Desargues_path_lex_least.inc
@@ -12170,7 +12268,8 @@ Desargues_path_lex_least_draw:
 		-draw_incidence_structure_description \
 			-width 60 -with_10 6 -end \
 		-define C -combinatorial_objects \
-			-file_of_incidence_geometries_by_row_ranks Desargues_path_lex_least.inc 10 10 3 \
+			-file_of_incidence_geometries_by_row_ranks \
+			Desargues_path_lex_least.inc 10 10 3 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -12479,6 +12578,14 @@ geo_LSQ6:
 			-test Test_lines \
 		-end
 
+geo_16:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 3 17 1 -end \
+		-define Geo -geometry_builder \
+			-V 16 -B 20 -TDO 5 \
+			-fuse 1 -fname_GEO geo_16 \
+			-test Test_lines \
+		-end
 
 
 
@@ -12935,10 +13042,11 @@ DD_PG_2_4_M1_G1:
 
 PG_2_27_special:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 27 -override_polynomial 46 -end 
-		-with F -do \
-		-finite_field_activity \
-		-cheat_sheet_PG 2 -end
+		-define F -finite_field -q 27 -override_polynomial 46 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity \
+			-cheat_sheet \
+		-end
 	pdflatex PG_2_27.tex 
 	open PG_2_27.pdf
 
@@ -13922,10 +14030,10 @@ Paley_13_eigenvalues:
 
 
 
-Cayley_Z11_1mod3_eigenvalues_and_draw:
+Cayley_Z11_1mod3_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-draw_options -xin 2000000 \
-			-yin 2000000 -embedded -end \
+			-yin 2000000 -embedded -radius 20000 -end \
 		-define F -finite_field -q 11 -end \
 		-define S -vector -dense \
 			"1,1, 1,4, 1,7, 1,10" -end \
@@ -13936,11 +14044,7 @@ Cayley_Z11_1mod3_eigenvalues_and_draw:
 			-Cayley_graph G S \
 		-end \
 		-with Gamma -do \
-		-graph_theoretic_activity -eigenvalues -end \
-		-with Gamma -do \
 		-graph_theoretic_activity -draw -end
-	pdflatex Cayley_graph_AGL_1_11_eigenvalues.tex
-	open Cayley_graph_AGL_1_11_eigenvalues.pdf
 	pdflatex Cayley_graph_AGL_1_11_draw.tex
 	open Cayley_graph_AGL_1_11_draw.pdf
 
@@ -13965,9 +14069,10 @@ Cayley_Sym4_coxeter_eigenvalues_and_draw:
 	#pdflatex Cayley_graph_Perm4_eigenvalues.tex
 	#open Cayley_graph_Perm4_eigenvalues.pdf
 
-Cayley_Sym5_coxeter_eigenvalues_and_draw:
+Cayley_Sym5_coxeter_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-draw_options -xin 1000000 -yin 1000000 \
+			-embedded -radius 10000 -nodes_empty -end \
 		-define S -vector -dense \
 			"1,0,2,3,4, 0,2,1,3,4, 0,1,3,2,4, 0,1,2,4,3" -end \
 		-define G -permutation_group -symmetric_group 5 \
@@ -13976,13 +14081,9 @@ Cayley_Sym5_coxeter_eigenvalues_and_draw:
 			-Cayley_graph G S \
 		-end \
 		-with Gamma -do \
-		-graph_theoretic_activity -eigenvalues -end \
-		-with Gamma -do \
 		-graph_theoretic_activity -draw -end
 	pdflatex Cayley_graph_Perm5_draw.tex
 	open Cayley_graph_Perm5_draw.pdf
-	pdflatex Cayley_graph_Perm5_eigenvalues.tex
-	open Cayley_graph_Perm5_eigenvalues.pdf
 
 
 Cayley_Sym4_star_eigenvalues_and_draw:
@@ -14431,22 +14532,128 @@ HJ64_cliques5_classify:
 
 
 
-
-
 ###############################################################################
-# Chapter 13 - Canonical Forms with Nauty 
+# Chapter 13 - Combinatorial Objects
 ###############################################################################
 
 
 ###############################################################################
-# Section 13.1: Overview of Canonical Forms
+# Section 13.1: Finite Projective Spaces
+
+SECTION_COMBINATORIAL_OBJECTS:
+
+
+
+
+Hirschfeld_q4_from_set:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define H -set -here \
+			$(HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS) \
+		-end \
+		-define C -combinatorial_objects \
+			-set_of_points H \
+		-end
+
+
+
+hyperoval_16_create:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-set_of_points $(HYPEROVAL_16_16320) \
+			-set_of_points $(HYPEROVAL_16_144) \
+		-end \
+
+
+EC_read: elliptic_curve_b1_c3_q11.txt
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define C -combinatorial_objects \
+			-file_of_points elliptic_curve_b1_c3_q11.txt \
+		-end
+
+
+
+PG_3_5_assume_31_read:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_packings_through_spread_table \
+				H31_packings.csv \
+				SPREAD_TABLES_5_REG/spread_25_spreads.csv \
+				5 \
+		-end
+
+
+
+LS_AG_2_3_read:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_designs \
+			solutions.csv 9 84 3 12 \
+		-end
+
+
+
+geo_7_3_read:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries \
+				7_3.inc 7 7 21 \
+		-end
+
+
+
+Desargues_path_lex_least_read:
+	echo $(DESARGUES_PATH_LEX_LEAST) >Desargues_path_lex_least.inc
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries_by_row_ranks \
+				Desargues_path_lex_least.inc 10 10 3 \
+		-end
+
+
+
+###############################################################################
+# Section 11.1: File Formats
+
+geo_pasch_read:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries \
+				pasch.inc 6 4 12 \
+		-end
+
+geo_pasch_given:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define C -combinatorial_objects \
+			-incidence_geometry \
+				"0,1,4,6,8,11,13,14,17,19,22,23" \
+				6 4 12 \
+		-end
+
+
+
+
+
+###############################################################################
+# Chapter 14 - Canonical Forms with Nauty 
+###############################################################################
+
+
+###############################################################################
+# Section 14.1: Overview of Canonical Forms
 
 
 SECTION_OVERVIEW_CANONICAL_FORMS:
 
 
+
+
+
 ###############################################################################
-# Section 13.2: Objects in projective Space
+# Section 14.2: Objects in projective Space
 
 
 SECTION_OBJECTS_IN_PROJECTIVE_SPACE:
@@ -14773,7 +14980,7 @@ Suzuki_8:
 
 
 ###############################################################################
-# Section 13.3: Incidence Geometries
+# Section 14.3: Incidence Geometries
 
 
 SECTION_INCIDENCE_GEOMETRIES:
@@ -14907,6 +15114,34 @@ geo_10_3_c_lex_least:
 #10_3_object7_TDA_flag_orbits.csv
 
 #0 1 2 10 13 14 20 25 26 31 33 35 41 44 46 52 53 56 62 67 68 74 77 79 85 88 89 
+
+
+
+geo_14_3_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define Test_lines -set -loop 4 15 1 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 14_3.inc 14 14 42 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix 14_3 \
+				-label 14_3 \
+				-save_ago \
+				-save_transversal \
+			-end \
+		-end
+
+
+#			-report \
+#				-prefix 14_3 \
+#				-export_flag_orbits \
+#				-show_incidence_matrices \
+#				-export_group \
+#			-end \
 
 
 geo_15_3_c:
@@ -15107,9 +15342,44 @@ quartic_curve_25_0_0_canonical:
 
 
 
+geo_16_c:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries geo_16.inc 16 20 80 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix 16 \
+				-label 16 \
+				-save_ago \
+				-save_transversal \
+			-end \
+			-report \
+				-prefix 16 \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex 16_classification.tex
+	open 16_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 16_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 16_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 16_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file 16_object0_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+
 
 ###############################################################################
-# Section 13.4: Objects from Design Theory
+# Section 14.4: Objects from Design Theory
 
 
 SECTION_OBJECTS_FROM_DESIGN_THEORY:
@@ -15182,7 +15452,7 @@ design_27c:
 
 
 ###############################################################################
-# Section 13.5: Linear Codes
+# Section 14.5: Linear Codes
 
 
 SECTION_CANONICAL_FORMS_OF_LINEAR_CODES:
@@ -15401,7 +15671,7 @@ code_n15_k6_d6_b_group:
 
 
 ###############################################################################
-# Section 13.6: General Codes
+# Section 14.6: General Codes
 
 
 SECTION_CANONICAL_FORMS_OF_GENERAL_CODES:
@@ -15430,7 +15700,7 @@ Hamming_graph_7_with_Hamming_code:
 
 
 ###############################################################################
-# Section 13.7: Graphs
+# Section 14.7: Graphs
 
 
 SECTION_CANONICAL_FORMS_OF_GRAPHS:
@@ -15619,7 +15889,7 @@ PGO_5_2_graph_group: O_5_2_incidence_matrix.csv
 
 
 ###############################################################################
-# Section 13.8: Quartic Curves
+# Section 14.8: Quartic Curves
 
 
 SECTION_CANONICAL_FORMS_OF_QUARTIC_CURVES:
@@ -15641,45 +15911,6 @@ F_17_edge:
 
 
 
-
-
-Edge_curve_17:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 17 -end \
-		-define P -projective_space 2 F -end \
-		-define C -geometric_object P \
-			-projective_variety "Edge_q17" "Edge\_q17" 4 $(EDGE_CURVE_Q17_EQUATION) \
-			-monomial_type_PART \
-		-end \
-		-with C -do -combinatorial_object_activity -save \
-		-end
-
-#Edge_q17.txt
-#combinatorial_object_create::init created a set of size 12
-#( 4, 7, 16, 19, 20, 23, 32, 35, 89, 100, 244, 251 )
-
-
-
-
-
-
-
-Edge_curve_17_line_type:
-	echo $(FILE_Q17) >edge_q17.csv
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 17 -end \
-		-define P -projective_space 2 F -end \
-		-define C -geometric_object P \
-			-projective_variety "Edge_q17" "Edge\_q17" 4 $(EDGE_CURVE_Q17_EQUATION) \
-			-monomial_type_PART \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-line_type \
-		-end \
-		-print_symbols
-
-#( 4^6, 2^30, 1^132, 0^139 )
 
 
 
@@ -15754,12 +15985,12 @@ Edge_curve_17_group:
 
 
 ###############################################################################
-# Chapter 14 - Interfaces
+# Chapter 15 - Interfaces
 ###############################################################################
 
 
 ###############################################################################
-# Section 14.1: Graphical Output
+# Section 15.1: Graphical Output
 
 SECTION_GRAPHICAL_OUTPUT:
 	
@@ -15853,7 +16084,7 @@ Queens_graph:
 
 
 ###############################################################################
-# Section 14.2: The Povray Interface
+# Section 15.2: The Povray Interface
 
 
 SECTION_POVRAY:
@@ -16166,7 +16397,7 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 ###############################################################################
-# Section 14.3: Creating Animations
+# Section 15.3: Creating Animations
 
 SECTION_ANIMATIONS:
 
@@ -16709,7 +16940,7 @@ McKean_video:
 
 
 ###############################################################################
-# Section 14.4: Continuous Function Plotter
+# Section 15.4: Continuous Function Plotter
 
 
 
@@ -16821,12 +17052,12 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 ###############################################################################
-# Chapter 15 - Miscellaneous
+# Chapter 16 - Miscellaneous
 ###############################################################################
 
 
 ###############################################################################
-# Section 15.1: Miscellaneous
+# Section 16.1: Miscellaneous
 
 SECTION_MISCELLANEOUS:
 
@@ -16854,7 +17085,7 @@ misc_join:
 
 
 ###############################################################################
-# Section 15.2: Limitations
+# Section 16.2: Limitations
 
 SECTION_LIMITATIONS:
 

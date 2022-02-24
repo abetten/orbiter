@@ -952,13 +952,13 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "\t\tinput[i] = Os.random_integer(q);" << endl;
 	ost << "\t}" << endl;
 	ost << "\tcout << \"input:\" << endl;" << endl;
-	ost << "\tOrbiter->Int_vec.matrix_print(input, 1, n);" << endl;
+	ost << "\tInt_matrix_print(input, 1, n);" << endl;
 	ost << "\tcout << endl;" << endl;
 	ost << "\t" << endl;
 	ost << "\tntt" << k << "_forward(input, output, F);" << endl;
 	ost << "\t" << endl;
 	ost << "\tcout << \"output:\" << endl;" << endl;
-	ost << "\tOrbiter->Int_vec.matrix_print(output, 1, n);" << endl;
+	ost << "\tInt_matrix_print(output, 1, n);" << endl;
 	ost << "\tcout << endl;" << endl;
 	ost << "\t" << endl;
 	ost << "\tFREE_OBJECT(F);" << endl;

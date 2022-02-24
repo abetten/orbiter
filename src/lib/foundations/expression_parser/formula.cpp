@@ -146,6 +146,23 @@ void formula::init(std::string &label, std::string &label_tex,
 	}
 }
 
+int formula::is_homogeneous(int &degree, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::is_homogeneous" << endl;
+	}
+
+	if (!tree->is_homogeneous(degree, verbose_level - 3)) {
+		return FALSE;
+	}
+
+	if (f_v) {
+		cout << "formula::is_homogeneous done" << endl;
+	}
+	return TRUE;
+}
 
 void formula::get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
 		syntax_tree_node **&Subtrees, int &nb_monomials,

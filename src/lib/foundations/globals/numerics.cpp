@@ -1416,7 +1416,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Variables:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Variables, 20, 3);
+		Int_matrix_print(Variables, 20, 3);
 		}
 	Monomials = NEW_int(nb_monomials * n);
 	Int_vec_zero(Monomials, nb_monomials * n);
@@ -1428,7 +1428,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
+		Int_matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
@@ -1446,7 +1446,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
+			Int_matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
 			Int_vec_print(cout, v, n);
 			exit(1);
@@ -1622,7 +1622,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Variables:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Variables, 35, 4);
+		Int_matrix_print(Variables, 35, 4);
 		}
 	Monomials = NEW_int(nb_monomials * n);
 	Int_vec_zero(Monomials, nb_monomials * n);
@@ -1634,7 +1634,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
+		Int_matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
@@ -1652,7 +1652,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
+			Int_matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
 			Int_vec_print(cout, v, n);
 			exit(1);

@@ -1736,7 +1736,7 @@ void geometry_global::do_transversal(
 }
 
 
-
+#if 0
 void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
 		graphics::layered_graph_draw_options *O,
 		int n,
@@ -1782,6 +1782,7 @@ void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
 	}
 
 }
+#endif
 
 void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 		int n, int k,

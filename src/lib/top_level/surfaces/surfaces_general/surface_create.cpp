@@ -69,7 +69,7 @@ void surface_create::freeself()
 	null();
 }
 
-void surface_create::init_with_data(
+int surface_create::init_with_data(
 	surface_create_description *Descr,
 	surface_with_action *Surf_A, 
 	int verbose_level)
@@ -108,7 +108,13 @@ void surface_create::init_with_data(
 		cout << "surface_create::init_with_data "
 				"before create_surface_from_description" << endl;
 	}
-	create_surface_from_description(verbose_level - 1);
+	if (!create_surface_from_description(verbose_level - 1)) {
+		if (f_v) {
+			cout << "surface_create::init_with_data "
+					"create_surface_from_description returns FALSE" << endl;
+		}
+		return FALSE;
+	}
 	if (f_v) {
 		cout << "surface_create::init_with_data "
 				"after create_surface_from_description" << endl;
@@ -118,10 +124,11 @@ void surface_create::init_with_data(
 		cout << "surface_create::init_with_data "
 				"done" << endl;
 	}
+	return TRUE;
 }
 
 
-void surface_create::init(surface_create_description *Descr,
+int surface_create::init(surface_create_description *Descr,
 	surface_with_action *Surf_A,
 	int verbose_level)
 {
@@ -165,7 +172,12 @@ void surface_create::init(surface_create_description *Descr,
 	if (f_v) {
 		cout << "surface_create::init before create_surface_from_description" << endl;
 	}
-	create_surface_from_description(verbose_level);
+	if (!create_surface_from_description(verbose_level)) {
+		if (f_v) {
+			cout << "surface_create::init before create_surface_from_description could not create surface" << endl;
+		}
+		return FALSE;
+	}
 	if (f_v) {
 		cout << "surface_create::init after create_surface_from_description" << endl;
 	}
@@ -174,9 +186,10 @@ void surface_create::init(surface_create_description *Descr,
 	if (f_v) {
 		cout << "surface_create::init done" << endl;
 	}
+	return TRUE;
 }
 
-void surface_create::create_surface_from_description(int verbose_level)
+int surface_create::create_surface_from_description(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -293,7 +306,7 @@ void surface_create::create_surface_from_description(int verbose_level)
 	}
 	else if (Descr->f_by_equation) {
 
-		create_surface_by_equation(
+		if (!create_surface_by_equation(
 				Descr->equation_name_of_formula,
 				Descr->equation_name_of_formula_tex,
 				Descr->equation_managed_variables,
@@ -301,7 +314,12 @@ void surface_create::create_surface_from_description(int verbose_level)
 				Descr->equation_parameters,
 				Descr->equation_parameters_tex,
 				Descr->select_double_six_string,
-				verbose_level);
+				verbose_level)) {
+			if (f_v) {
+				cout << "surface_create::init2 cannot create surface" << endl;
+			}
+			return FALSE;
+		}
 	}
 
 	else if (Descr->f_by_double_six) {
@@ -373,6 +391,7 @@ void surface_create::create_surface_from_description(int verbose_level)
 	if (f_v) {
 		cout << "surface_create::init2 done" << endl;
 	}
+	return TRUE;
 }
 
 void surface_create::override_group(std::string &group_order_text,
@@ -1650,7 +1669,7 @@ void surface_create::create_surface_Cayley_form(
 
 
 
-void surface_create::create_surface_by_equation(
+int surface_create::create_surface_by_equation(
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
 		std::string &managed_variables,
@@ -1659,6 +1678,7 @@ void surface_create::create_surface_by_equation(
 		std::string &equation_parameters_tex,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
+// returns false if he equation is zero
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1900,7 +1920,9 @@ void surface_create::create_surface_by_equation(
 
 
 
-
+	if (Int_vec_is_zero(coeffs20, 20)) {
+		return FALSE;
+	}
 
 
 
@@ -1963,6 +1985,7 @@ void surface_create::create_surface_by_equation(
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation done" << endl;
 	}
+	return TRUE;
 }
 
 

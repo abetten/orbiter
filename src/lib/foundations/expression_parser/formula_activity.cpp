@@ -119,107 +119,26 @@ void formula_activity::perform_activity(int verbose_level)
 
 		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->sweep_field_label);
 
-		f->print_easy(F, cout);
-		cout << endl;
+		do_sweep(FALSE /* f_affine */,
+				f,
+				F, Descr->sweep_variables,
+				verbose_level);
 
-		data_structures::string_tools ST;
-		std::vector<std::string> symbol_table;
+	}
+	else if (Descr->f_sweep_affine) {
 
-		ST.parse_comma_separated_values(symbol_table,
-				Descr->sweep_variables, verbose_level);
+		cout << "before f_seep_affine" << endl;
 
-		expression_parser_domain ED;
-		geometry::geometry_global Gg;
-		int n, N;
-		int *v;
-		char str[1000];
+		field_theory::finite_field *F;
 
+		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->sweep_affine_field_label);
 
-		n = symbol_table.size();
-		v = NEW_int(n);
+		do_sweep(TRUE /* f_affine */,
+				f,
+				F, Descr->sweep_affine_variables,
+				verbose_level);
 
-		N = Gg.nb_AG_elements(n, F->q);
-
-		orbiter_kernel_system::file_io Fio;
-
-		sprintf(str, "_q%d", F->q);
-
-		string fname;
-		fname.assign("sweep_");
-		fname.append(f->name_of_formula);
-		fname.append(str);
-		fname.append(".csv");
-
-		//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
-
-		{
-			ofstream ost(fname);
-			int i, j, cnt;
-
-			ost << "Row,index,parameters,coefficients" << endl;
-
-
-			cnt = 0;
-
-			for (i = 0; i < N; i++) {
-
-
-				cout << "sweep is at " << i << " / " << N << endl;
-				string values;
-
-				Gg.AG_element_unrank(F->q, v, 1, n, i);
-				values.assign("");
-				for (j = 0; j < n; j++) {
-					values.append(symbol_table[j]);
-					values.append("=");
-					sprintf(str, "%d", v[j]);
-					values.append(str);
-					if (j < n - 1) {
-						values.append(",");
-					}
-				}
-
-				int *Values;
-				int nb_monomials;
-
-				ED.evaluate_managed_formula(
-						f,
-						F,
-						values,
-						Values, nb_monomials,
-						verbose_level - 2);
-
-
-				int c;
-
-				c = Int_vec_is_zero(Values, nb_monomials);
-
-				if (!c) {
-					ost << cnt << "," << i;
-					{
-						string str;
-						ost << ",";
-						//ost << values;
-						orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, n);
-						ost << str;
-						ost << ",";
-						orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, Values, nb_monomials);
-						ost << str;
-					}
-					ost << endl;
-
-					cnt++;
-
-				}
-
-				FREE_int(Values);
-
-			} // next i
-			ost << "END" << endl;
-		}
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	} // if (Descr->f_sweep)
+	}
 
 
 
@@ -229,6 +148,189 @@ void formula_activity::perform_activity(int verbose_level)
 
 }
 
+
+void formula_activity::do_sweep(int f_affine,
+		formula *f,
+		field_theory::finite_field *F, std::string &sweep_variables,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_activity::do_sweep" << endl;
+	}
+
+
+	f->print_easy(F, cout);
+	cout << endl;
+
+	data_structures::string_tools ST;
+	std::vector<std::string> symbol_table;
+
+	ST.parse_comma_separated_values(symbol_table,
+			sweep_variables,
+			verbose_level);
+
+	expression_parser_domain ED;
+	geometry::geometry_global Gg;
+	int n, N;
+	int *v;
+	char str[1000];
+
+
+	n = symbol_table.size();
+	v = NEW_int(n);
+
+	N = Gg.nb_AG_elements(n, F->q);
+
+	orbiter_kernel_system::file_io Fio;
+
+	sprintf(str, "_q%d", F->q);
+
+	string fname;
+	fname.assign("sweep_");
+	fname.append(f->name_of_formula);
+	fname.append(str);
+	fname.append(".csv");
+
+	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
+
+	int degree;
+
+	if (!f->is_homogeneous(degree, verbose_level - 3)) {
+		cout << "not homogeneous" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "homogeneous of degree " << degree << endl;
+	}
+
+	ring_theory::homogeneous_polynomial_domain *Poly;
+
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "before Poly->init" << endl;
+	}
+	Poly->init(F,
+			f->nb_managed_vars /* nb_vars */, degree,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			0 /*verbose_level - 3*/);
+	if (f_v) {
+		cout << "after Poly->init" << endl;
+	}
+
+	int *fun;
+	int N_points;
+
+	if (f_affine) {
+		number_theory::number_theory_domain NT;
+
+		N_points = NT.i_power_j(F->q, Poly->get_P()->n);
+	}
+	else {
+		N_points = Poly->get_P()->N_points;
+	}
+	fun = NEW_int(N_points);
+
+
+	{
+		ofstream ost(fname);
+		int i, j, cnt;
+
+		ost << "Row,index,parameters,coefficients,evaluation_vector" << endl;
+
+
+		cnt = 0;
+
+		for (i = 0; i < N; i++) {
+
+
+			cout << "sweep is at " << i << " / " << N << endl;
+			string values;
+
+			Gg.AG_element_unrank(F->q, v, 1, n, i);
+
+			if (f_affine) {
+				if (v[0] == 0) {
+					continue;
+				}
+			}
+
+			values.assign("");
+			for (j = 0; j < n; j++) {
+				values.append(symbol_table[j]);
+				values.append("=");
+				sprintf(str, "%d", v[j]);
+				values.append(str);
+				if (j < n - 1) {
+					values.append(",");
+				}
+			}
+
+			int *Values;
+			int nb_monomials;
+
+			ED.evaluate_managed_formula(
+					f,
+					F,
+					values,
+					Values, nb_monomials,
+					verbose_level - 2);
+
+
+			int c;
+
+			c = Int_vec_is_zero(Values, nb_monomials);
+
+			if (!c) {
+
+
+				if (f_affine) {
+					Poly->polynomial_function_affine(Values, fun, verbose_level);
+				}
+				else {
+					Poly->polynomial_function(Values, fun, verbose_level);
+				}
+
+
+				ost << cnt << "," << i;
+				{
+					string str;
+					ost << ",";
+					//ost << values;
+					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, n);
+					ost << str;
+					ost << ",";
+					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, Values, nb_monomials);
+					ost << str;
+					ost << ",";
+					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, fun, N_points);
+					ost << str;
+				}
+				ost << endl;
+
+				cnt++;
+
+			}
+
+			FREE_int(Values);
+
+		} // next i
+		ost << "END" << endl;
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	FREE_int(fun);
+	FREE_OBJECT(Poly);
+
+	if (f_v) {
+		cout << "formula_activity::do_sweep done" << endl;
+	}
+
+}
 
 
 }}}

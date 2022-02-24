@@ -154,8 +154,10 @@ public:
 	int f_polynomial_reduce_mod_p;
 	std::string polynomial_reduce_mod_p_A;
 
+#if 0
 	int f_cheat_sheet_PG;
 	int cheat_sheet_PG_n;
+#endif
 
 	int f_cheat_sheet_Gr;
 	int cheat_sheet_Gr_n;

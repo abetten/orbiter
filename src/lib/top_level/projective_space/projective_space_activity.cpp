@@ -142,6 +142,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 
 
+#if 0
 	else if (Descr->f_define_object) {
 		cout << "-define_object " << Descr->define_object_label << endl;
 		Descr->Object_Descr->print();
@@ -163,6 +164,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_object_label, Symb, verbose_level);
 
 	}
+#endif
+
 	else if (Descr->f_define_surface) {
 
 		cout << "f_define_surface label = " << Descr->define_surface_label << endl;
@@ -376,6 +379,18 @@ void projective_space_activity::perform_activity(int verbose_level)
 				PA,
 				Descr->sweep_4_27_surface_description,
 				Descr->sweep_4_27_fname,
+				verbose_level);
+	}
+
+	else if (Descr->f_sweep_4_L9_E4) {
+
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+
+		SH.do_sweep_4_L9_E4(
+				PA,
+				Descr->sweep_4_L9_E4_surface_description,
+				Descr->sweep_4_L9_E4_fname,
 				verbose_level);
 	}
 
@@ -790,10 +805,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		cout << "planes through line:" << endl;
 		long int *v;
-		int sz, i, j;
+		int sz, i, j, d;
+		int *M;
 
 		Lint_vec_scan(Descr->planes_through_line_rank, v, sz);
 
+		d = PA->P->n + 1;
+		M = NEW_int(3 * d);
 
 		for (i = 0; i < sz; i++) {
 
@@ -801,7 +819,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 			PA->P->planes_through_a_line(
 					v[i], plane_ranks,
-					verbose_level);
+					0 /*verbose_level*/);
 
 			cout << "planes through line " << v[i] << " : ";
 			for (j = 0; j < plane_ranks.size(); j++) {
@@ -812,7 +830,19 @@ void projective_space_activity::perform_activity(int verbose_level)
 			}
 			cout << endl;
 
+
+			cout << "planes through line " << v[i] << endl;
+			for (j = 0; j < plane_ranks.size(); j++) {
+				cout << j << " : " << plane_ranks[j] << " : " << endl;
+				PA->P->Grass_planes->unrank_lint_here(M, plane_ranks[j], 0 /* verbose_level */);
+				Int_matrix_print(M, 3, d);
+
+			}
+			cout << endl;
+
+
 		}
+		FREE_int(M);
 
 	}
 

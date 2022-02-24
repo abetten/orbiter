@@ -1312,7 +1312,7 @@ int diophant::solve_all_DLX_with_RHS(int f_write_tree,
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS "
 				"the system:" << endl;
-		Orbiter->Int_vec.matrix_print(Inc, m, n);
+		Int_matrix_print(Inc, m, n);
 	}
 	f_has_type = TRUE;
 	my_RHS = NEW_int(m);
@@ -1323,7 +1323,7 @@ int diophant::solve_all_DLX_with_RHS(int f_write_tree,
 	}
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS  RHS:" << endl;
-		Orbiter->Int_vec.matrix_print(my_RHS, m, 1);
+		Int_matrix_print(my_RHS, m, 1);
 		//cout << diophant::solve_all_DLX_with_RHS  type:" << endl;
 		//int_matrix_print(my_type, m, 1);
 	}
@@ -1392,7 +1392,7 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS "
 				"the system:" << endl;
-		Orbiter->Int_vec.matrix_print(Inc, m, n);
+		Int_matrix_print(Inc, m, n);
 	}
 	f_has_type = TRUE;
 	my_RHS = NEW_int(m);
@@ -1405,7 +1405,7 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 	}
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS  RHS:" << endl;
-		Orbiter->Int_vec.matrix_print(my_RHS, m, 1);
+		Int_matrix_print(my_RHS, m, 1);
 		//cout << diophant::solve_all_DLX_with_RHS  type:" << endl;
 		//int_matrix_print(my_type, m, 1);
 	}

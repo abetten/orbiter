@@ -103,6 +103,14 @@ geometric_object_description::geometric_object_description()
 	//variety_coeffs;
 	Monomial_ordering_type = t_PART;
 
+	f_ideal = FALSE;
+	//ideal_label;
+	//ideal_label_txt
+	ideal_degree = 0;
+	//std::string ideal_point_set_label;
+	ideal_n = 0;
+
+
 	f_intersection_of_zariski_open_sets = FALSE;
 	//Variety_coeffs
 
@@ -329,6 +337,25 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 					<< variety_degree << " "
 					<< variety_coeffs << endl;
 		}
+
+		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
+			f_ideal = TRUE;
+			ideal_label_txt.assign(argv[++i]);
+			ideal_label_tex.assign(argv[++i]);
+			ideal_degree = ST.strtoi(argv[++i]);
+			ideal_point_set_label.assign(argv[++i]);
+			ideal_n = ST.strtoi(argv[++i]);
+
+			cout << "-ideal "
+					<< ideal_label_txt << " "
+					<< ideal_label_tex << " "
+					<< ideal_degree << " "
+					<< ideal_point_set_label << " "
+					<< ideal_n << " "
+					<< endl;
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-intersection_of_zariski_open_sets") == 0) {
 			f_intersection_of_zariski_open_sets = TRUE;
 			variety_label_txt.assign(argv[++i]);
@@ -556,6 +583,17 @@ void geometric_object_description::print()
 				<< variety_degree << " "
 				<< variety_coeffs << endl;
 	}
+	if (f_ideal) {
+
+		cout << "-ideal "
+				<< ideal_label_txt << " "
+				<< ideal_label_tex << " "
+				<< ideal_degree << " "
+				<< ideal_point_set_label << " "
+				<< ideal_n << " "
+				<< endl;
+	}
+
 	if (f_intersection_of_zariski_open_sets) {
 		cout << "-intersection_of_zariski_open_sets "
 				<< variety_label_txt << " "

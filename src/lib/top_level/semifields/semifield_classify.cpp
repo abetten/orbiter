@@ -535,9 +535,9 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 	{
 		ring_theory::longinteger_object go;
-	Strong_gens->group_order(go);
+		Strong_gens->group_order(go);
 
-	ost << "1 & 1 & " << go << "\\\\" << endl;
+		ost << "1 & 1 & " << go << "\\\\" << endl;
 	}
 	ost << "\\hline" << endl;
 

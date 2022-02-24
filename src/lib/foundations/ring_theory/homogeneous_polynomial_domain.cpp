@@ -1064,7 +1064,9 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex_lint(
 
 
 	for (i = 0; i < nb_monomials; i++) {
+
 		c = coeffs[i];
+
 		if (c == 0) {
 			continue;
 		}
@@ -1072,7 +1074,6 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex_lint(
 		if ((cnt % nb_terms_per_line) == 0 && cnt) {
 			ost << new_line_text;
 		}
-
 
 		if (f_first) {
 			f_first = FALSE;
@@ -1134,6 +1135,34 @@ void homogeneous_polynomial_domain::polynomial_function(int *coeff, int *f, int 
 		f[rk] = a;
 	}
 }
+
+void homogeneous_polynomial_domain::polynomial_function_affine(
+		int *coeff, int *f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk, a;
+	long int N;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::polynomial_function "
+				"P->N_points=" << P->N_points << endl;
+	}
+	geometry::geometry_global Geo;
+	number_theory::number_theory_domain NT;
+
+	N = NT.i_power_j(F->q, P->n);
+
+	for (rk = 0; rk < N; rk++) {
+
+		Geo.AG_element_unrank(F->q, v, 1, P->n, rk);
+		v[P->n] = 1;
+
+		//unrank_point(v, rk);
+		a = evaluate_at_a_point(coeff, v);
+		f[rk] = a;
+	}
+}
+
 
 void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 		std::vector<long int> &Pts,

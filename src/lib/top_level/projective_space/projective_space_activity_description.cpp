@@ -56,10 +56,11 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string decomposition_by_subgroup_label;
 	decomposition_by_subgroup_Descr = NULL;
 
-
+#if 0
 	f_define_object = FALSE;
 	//std::string define_object_label;
 	Object_Descr = NULL;
+#endif
 
 
 	f_define_surface = FALSE;
@@ -112,6 +113,10 @@ projective_space_activity_description::projective_space_activity_description()
 	f_sweep_4_27 = FALSE;
 	//std::string sweep_4_27_fname;
 	sweep_4_27_surface_description = NULL;
+
+	f_sweep_4_L9_E4 = FALSE;
+	//std::string sweep_4_L9_E4_fname;
+	sweep_4_L9_E4_surface_description = NULL;
 
 	f_six_arcs_not_on_conic = FALSE;
 	f_filter_by_nb_Eckardt_points = FALSE;
@@ -367,7 +372,7 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-define_object") == 0) {
 			f_define_object = TRUE;
 			if (f_v) {
@@ -388,6 +393,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-define_object " << define_object_label << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-define_surface") == 0) {
 			f_define_surface = TRUE;
@@ -600,6 +606,27 @@ int projective_space_activity_description::read_arguments(
 					cout << "next argument is " << argv[i] << endl;
 				}
 				cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-sweep_4_L9_E4") == 0) {
+			f_sweep_4_L9_E4 = TRUE;
+			sweep_4_L9_E4_fname.assign(argv[++i]);
+			sweep_4_L9_E4_surface_description = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
+			if (f_v) {
+				cout << "-sweep_4_L9_E4" << endl;
+			}
+			i += sweep_4_L9_E4_surface_description->read_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+			if (f_v) {
+				cout << "done with -sweep_4_L9_E4" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-sweep_4_L9_E4 " << sweep_4_L9_E4_fname << endl;
 			}
 		}
 
@@ -1103,10 +1130,13 @@ void projective_space_activity_description::print()
 		decomposition_by_subgroup_Descr->print();
 	}
 
+#if 0
 	if (f_define_object) {
 		cout << "-define_object " << define_object_label << endl;
 		Object_Descr->print();
 	}
+#endif
+
 	if (f_define_surface) {
 		cout << "-define_surface " << define_surface_label << endl;
 		Surface_Descr->print();
@@ -1161,6 +1191,10 @@ void projective_space_activity_description::print()
 
 	if (f_sweep_4_27) {
 		cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
+	}
+
+	if (f_sweep_4_L9_E4) {
+		cout << "-sweep_4_L9_E4 " << sweep_4_L9_E4_fname << endl;
 	}
 
 	if (f_six_arcs_not_on_conic) {

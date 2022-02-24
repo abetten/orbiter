@@ -139,8 +139,10 @@ finite_field_activity_description::finite_field_activity_description()
 	f_polynomial_reduce_mod_p = FALSE;
 	//polynomial_reduce_mod_p_A;
 
+#if 0
 	f_cheat_sheet_PG = FALSE;
 	cheat_sheet_PG_n = 0;
+#endif
 
 	f_cheat_sheet_Gr = FALSE;
 	cheat_sheet_Gr_n = 0;
@@ -236,11 +238,6 @@ finite_field_activity_description::finite_field_activity_description()
 	f_unrank_point_in_PG = FALSE;
 	//std::string unrank_point_in_PG_text;
 
-#if 0
-	f_rank_point_in_PG_given_as_pairs = FALSE;
-	rank_point_in_PG_given_as_pairs_n = 0;
-	//std::string f_rank_point_in_PG_given_as_pairs_text;
-#endif
 
 	f_generator_matrix_cyclic_code = FALSE;
 	generator_matrix_cyclic_code_n = 0;
@@ -622,7 +619,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_PG") == 0) {
 			f_cheat_sheet_PG = TRUE;
 			cheat_sheet_PG_n = ST.strtoi(argv[++i]);
@@ -630,6 +627,7 @@ int finite_field_activity_description::read_arguments(
 				cout << "-cheat_sheet_PG " << cheat_sheet_PG_n << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_Gr") == 0) {
 			f_cheat_sheet_Gr = TRUE;
 			cheat_sheet_Gr_n = ST.strtoi(argv[++i]);
@@ -789,18 +787,6 @@ int finite_field_activity_description::read_arguments(
 				cout << "-unrank_point_in_PG " << unrank_point_in_PG_text << endl;
 			}
 		}
-
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-rank_point_in_PG_given_as_pairs") == 0) {
-			f_rank_point_in_PG_given_as_pairs = TRUE;
-			rank_point_in_PG_given_as_pairs_n = ST.strtoi(argv[++i]);
-			rank_point_in_PG_given_as_pairs_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-rank_point_in_PG " << rank_point_in_PG_given_as_pairs_n << " " << rank_point_in_PG_given_as_pairs_text << endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-field_reduction") == 0) {
 			f_field_reduction = TRUE;
@@ -1125,10 +1111,12 @@ void finite_field_activity_description::print()
 		cout << "-polynomial_reduce_mod_p " << polynomial_reduce_mod_p_A << endl;
 	}
 
-
+#if 0
 	if (f_cheat_sheet_PG) {
 		cout << "-cheat_sheet_PG " << cheat_sheet_PG_n << endl;
 	}
+#endif
+
 	if (f_cheat_sheet_Gr) {
 		cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
 	}

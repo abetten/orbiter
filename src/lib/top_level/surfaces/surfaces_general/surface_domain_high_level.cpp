@@ -182,6 +182,44 @@ void surface_domain_high_level::do_sweep_4_27(
 
 
 
+void surface_domain_high_level::do_sweep_4_L9_E4(
+		projective_geometry::projective_space_with_action *PA,
+		surface_create_description *Surface_Descr,
+		std::string &sweep_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4 verbose_level=" << verbose_level << endl;
+	}
+
+	surface_with_action *Surf_A;
+
+	PA->setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4 before Surf_A->sweep_4" << endl;
+	}
+	Surf_A->sweep_4_L9_E4(
+				Surface_Descr,
+				sweep_fname,
+				verbose_level);
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4 after Surf_A->sweep_4" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4 done" << endl;
+	}
+}
+
+
+
+
 void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control,

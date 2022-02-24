@@ -42,6 +42,10 @@ vector_builder_description::vector_builder_description()
 	f_load_csv_no_border = FALSE;
 	//std::string load_csv_no_border_fname;
 
+	f_load_csv_data_column = FALSE;
+	//std::string load_csv_data_column_fname;
+	load_csv_data_column_idx = 0;
+
 	f_sparse = FALSE;
 	sparse_len = 0;
 	//std::string sparse_pairs;
@@ -124,6 +128,16 @@ int vector_builder_description::read_arguments(
 				cout << "-load_csv_no_border " << load_csv_no_border_fname << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-load_csv_data_column") == 0) {
+			f_load_csv_data_column = TRUE;
+			load_csv_data_column_fname.assign(argv[++i]);
+			load_csv_data_column_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-load_csv_data_column "
+						<< load_csv_data_column_fname << " " << load_csv_data_column_idx << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-sparse") == 0) {
 			f_sparse = TRUE;
 			sparse_len = ST.strtoi(argv[++i]);
@@ -193,6 +207,10 @@ void vector_builder_description::print()
 	}
 	if (f_load_csv_no_border) {
 		cout << "-load_csv_no_border " << load_csv_no_border_fname << endl;
+	}
+	if (f_load_csv_data_column) {
+		cout << "-load_csv_data_column "
+				<< load_csv_data_column_fname << " " << load_csv_data_column_idx << endl;
 	}
 	if (f_sparse) {
 		cout << "-file " << sparse_len << " " << sparse_pairs << endl;

@@ -3320,7 +3320,7 @@ int tdo_scheme_synthetic::refine_cols_hard(
 		if (f_v) {
 			cout << "tdo_scheme_synthetic::refine_cols_hard "
 					"The distributions are:" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(distributions, nb_distributions, nb_line_types);
+			Int_matrix_print(distributions, nb_distributions, nb_line_types);
 		}
 
 #if 0
