@@ -26,6 +26,9 @@ interface_toolkit::interface_toolkit()
 	f_create_files = FALSE;
 	Create_file_description = NULL;
 
+	f_save_matrix_csv = FALSE;
+	//std::string save_matrix_csv_label;
+
 
 	f_csv_file_select_rows = FALSE;
 	//std::string csv_file_select_rows_fname;
@@ -114,6 +117,9 @@ void interface_toolkit::print_help(int argc,
 	if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		cout << "-create_files <description>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
+		cout << "-save_matrix_csv <string : label>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
@@ -180,6 +186,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return false;
 	}
 	if (ST.stringcmp(argv[i], "-create_files") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
@@ -272,6 +281,13 @@ void interface_toolkit::read_arguments(int argc,
 			}
 
 			cout << "-create_files " <<endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
+		f_save_matrix_csv = TRUE;
+		save_matrix_csv_label.assign(argv[++i]);
+		if (f_v) {
+			cout << "-save_matrix_csv " << save_matrix_csv_label << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
@@ -528,6 +544,9 @@ void interface_toolkit::print()
 		cout << "-create_files " << endl;
 		Create_file_description->print();
 	}
+	if (f_save_matrix_csv) {
+		cout << "-save_csv " << save_matrix_csv_label << endl;
+	}
 	if (f_csv_file_select_rows) {
 		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
@@ -628,6 +647,20 @@ void interface_toolkit::worker(int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 
 		Fio.create_file(Create_file_description, verbose_level);
+	}
+	else if (f_save_matrix_csv) {
+		orbiter_kernel_system::file_io Fio;
+		int *v;
+		int m, n;
+		string fname;
+
+		fname.assign(save_matrix_csv_label);
+		fname.append("_matrix.csv");
+
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(save_matrix_csv_label,
+				v, m, n);
+		Fio.int_matrix_write_csv(fname, v, m, n);
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 	else if (f_csv_file_select_rows) {
 

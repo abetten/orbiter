@@ -183,6 +183,7 @@ public:
 	void algebraic_set(int *Eqns, int nb_eqns,
 			long int *Pts, int &nb_pts, int verbose_level);
 	void polynomial_function(int *coeff, int *f, int verbose_level);
+	void polynomial_function_affine(int *coeff, int *f, int verbose_level);
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
@@ -597,6 +598,18 @@ public:
 			std::string &label_txt,
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_ideal(
+			field_theory::finite_field *F,
+			std::string &ideal_label,
+			std::string &ideal_label_tex,
+			int ideal_nb_vars, int ideal_degree,
+			std::string &ideal_point_set_label,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &r, int &nb_monomials, int *&Kernel,
 			int verbose_level);
 	// creates homogeneous_polynomial_domain
 	void create_projective_curve(

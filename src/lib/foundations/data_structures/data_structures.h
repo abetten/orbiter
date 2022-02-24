@@ -1426,7 +1426,8 @@ public:
 	void print_table_row_detailed(int row, std::ostream &ost);
 	void print_table_row_with_column_selection(int row,
 			int f_enclose_in_parentheses,
-			int *Col_selection, int nb_cols_selected, std::ostream &ost);
+			int *Col_selection, int nb_cols_selected,
+			std::ostream &ost, int verbose_level);
 	void print_table_with_row_selection(int *f_selected, 
 			std::ostream &ost);
 	void print_table_sorted(std::ostream &ost, const char *sort_by);
@@ -1519,6 +1520,7 @@ public:
 	void parse_comma_separated_values(
 			std::vector<std::string> &symbol_table,
 			std::string &evaluate_text, int verbose_level);
+	void drop_quotes(std::string &in, std::string &out);
 
 
 };
@@ -1701,6 +1703,10 @@ public:
 
 	int f_load_csv_no_border;
 	std::string load_csv_no_border_fname;
+
+	int f_load_csv_data_column;
+	std::string load_csv_data_column_fname;
+	int load_csv_data_column_idx;
 
 	int f_sparse;
 	int sparse_len;

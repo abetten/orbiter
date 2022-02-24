@@ -33,6 +33,10 @@ formula_activity_description::formula_activity_description()
 	f_sweep = FALSE;
 	//std::string sweep_field_label;
 	//std::string sweep_variables;
+
+	f_sweep_affine = FALSE;
+	//std::string sweep_affine_field_label;
+	//std::string sweep_affine_variables;
 }
 
 formula_activity_description::~formula_activity_description()
@@ -88,6 +92,17 @@ int formula_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-sweep_affine") == 0) {
+			f_sweep_affine = TRUE;
+			sweep_affine_field_label.assign(argv[++i]);
+			sweep_affine_variables.assign(argv[++i]);
+			if (f_v) {
+				cout << "-sweep "
+						<< sweep_affine_field_label
+						<< " " << sweep_affine_variables << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -124,6 +139,11 @@ void formula_activity_description::print()
 		cout << "-sweep "
 				<< sweep_field_label
 				<< " " << sweep_variables << endl;
+	}
+	if (f_sweep_affine) {
+		cout << "-sweep "
+				<< sweep_affine_field_label
+				<< " " << sweep_affine_variables << endl;
 	}
 
 }

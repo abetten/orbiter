@@ -1203,6 +1203,7 @@ void string_tools::parse_value_pairs(
 
 }
 
+
 void string_tools::parse_comma_separated_values(
 		std::vector<std::string> &symbol_table,
 		std::string &evaluate_text, int verbose_level)
@@ -1237,6 +1238,14 @@ void string_tools::parse_comma_separated_values(
 	}
 }
 
+void string_tools::drop_quotes(std::string &in, std::string &out)
+{
+	int len;
+
+	len = in.length();
+
+	out = in.substr(1, len - 2);
+}
 
 
 

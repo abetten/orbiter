@@ -77,7 +77,7 @@ int &int_matrix::s_n()
 
 void int_matrix::print()
 {
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M, m, n);
+	Int_matrix_print(M, m, n);
 }
 
 }}}

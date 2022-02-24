@@ -366,11 +366,11 @@ public:
 	std::string decomposition_by_subgroup_label;
 	groups::linear_group_description * decomposition_by_subgroup_Descr;
 
-
+#if 0
 	int f_define_object;
 	std::string define_object_label;
 	geometry::geometric_object_description *Object_Descr;
-
+#endif
 
 	int f_define_surface;
 	std::string define_surface_label;
@@ -420,6 +420,10 @@ public:
 	int f_sweep_4_27;
 	std::string sweep_4_27_fname;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_27_surface_description;
+
+	int f_sweep_4_L9_E4;
+	std::string sweep_4_L9_E4_fname;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_L9_E4_surface_description;
 
 	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;

@@ -129,6 +129,10 @@ public:
 	std::string sweep_field_label;
 	std::string sweep_variables;
 
+	int f_sweep_affine;
+	std::string sweep_affine_field_label;
+	std::string sweep_affine_variables;
+
 
 
 	formula_activity_description();
@@ -162,6 +166,10 @@ public:
 			formula *f,
 			int verbose_level);
 	void perform_activity(int verbose_level);
+	void do_sweep(int f_affine,
+			formula *f,
+			field_theory::finite_field *F, std::string &sweep_variables,
+			int verbose_level);
 
 };
 
@@ -200,6 +208,7 @@ public:
 	void init(std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
 			int verbose_level);
+	int is_homogeneous(int &degree, int verbose_level);
 	void get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int &nb_monomials,
 			int verbose_level);

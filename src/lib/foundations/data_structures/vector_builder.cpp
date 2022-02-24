@@ -146,6 +146,22 @@ void vector_builder::init(vector_builder_description *Descr,
 		k = m;
 
 	}
+	else if (Descr->f_load_csv_data_column) {
+		if (f_v) {
+			cout << "vector_builder::init -load_csv_data_column " << Descr->load_csv_data_column_fname << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+		int m, n;
+
+		Fio.int_matrix_read_csv_data_column(Descr->load_csv_data_column_fname,
+				v, m, n,
+				Descr->load_csv_data_column_idx,
+				verbose_level);
+		len = m * n;
+		f_has_k = TRUE;
+		k = m;
+
+	}
 	else if (Descr->f_sparse) {
 		if (f_v) {
 			cout << "vector_builder::init -sparse" << endl;
@@ -253,7 +269,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		cout << endl;
 		if (f_has_k) {
 			cout << "also seen as matrix of size  " << k << " x " << len / k << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(v, k, len / k);
+			Int_matrix_print(v, k, len / k);
 			cout << endl;
 
 		}

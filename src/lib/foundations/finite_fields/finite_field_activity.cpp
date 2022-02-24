@@ -395,6 +395,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Crypto.polynomial_reduce_mod_p(Descr->polynomial_reduce_mod_p_A, F,
 				verbose_level);
 	}
+
+#if 0
 	else if (Descr->f_cheat_sheet_PG) {
 
 		geometry::geometry_global Geo;
@@ -411,6 +413,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Geo.do_cheat_sheet_PG(F, O, Descr->cheat_sheet_PG_n,
 				verbose_level);
 	}
+#endif
+
 	else if (Descr->f_cheat_sheet_Gr) {
 
 		geometry::geometry_global Geo;

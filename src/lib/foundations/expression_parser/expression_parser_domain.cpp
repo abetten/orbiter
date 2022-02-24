@@ -600,11 +600,11 @@ void expression_parser_domain::evaluate_managed_formula(
 
 	if (f_v) {
 		cout << "expression_parser_domain::evaluate_managed_formula "
-				"before F->get_subtrees" << endl;
+				"before F->tree->is_homogeneous" << endl;
 	}
 
 	int degree;
-	if (!F->tree->is_homogeneous(degree, verbose_level - 3)) {
+	if (!F->is_homogeneous(degree, verbose_level - 3)) {
 		cout << "expression_parser_domain::evaluate_managed_formula not homogeneous" << endl;
 		exit(1);
 	}

@@ -1149,7 +1149,7 @@ void latex_interface::print_integer_matrix_tex_block_by_block(std::ostream &ost,
 			cout << "print_integer_matrix_tex_block_by_block I="
 				<< I << " J=" << J << " v=" << v
 				<< " w=" << w << " M=" << endl;
-			Orbiter->Int_vec->matrix_print(M, v, w);
+			Int_matrix_print(M, v, w);
 			print_integer_matrix_with_standard_labels_and_offset(
 				ost, M, v, w,
 				I * block_width,

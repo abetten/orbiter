@@ -720,7 +720,7 @@ void gl_classes::identify_matrix(int *Mtx,
 	if (f_v) {
 		cout << "gl_classes::identify_matrix "
 				"input matrix=" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Mtx, k, k);
+		Int_matrix_print(Mtx, k, k);
 		}
 
 	M2 = NEW_int(k * k);
@@ -807,7 +807,7 @@ void gl_classes::identify_matrix(int *Mtx,
 
 	if (f_v) {
 		cout << "gl_classes::identify_matrix B^-1 * A * B = " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M3, k, k);
+		Int_matrix_print(M3, k, k);
 		cout << endl;
 		}
 
@@ -987,7 +987,7 @@ void gl_classes::compute_generalized_kernels_for_each_block(
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels_for_each_block "
 					"matrix substituted into polynomial = " << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M2, k, k);
+			Int_matrix_print(M2, k, k);
 			cout << endl;
 			}
 
@@ -1389,7 +1389,7 @@ void gl_classes::generators_for_centralizer(
 	if (f_vv) {
 		cout << "gl_classes::generators_for_centralizer "
 				"After substitution, the matrix is " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M2, k, k);
+		Int_matrix_print(M2, k, k);
 		}
 
 
@@ -1457,7 +1457,7 @@ void gl_classes::generators_for_centralizer(
 		int i;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "generator " << i << " / " << nb_gens << " is" << endl;
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Gens[i], k, k);
+			Int_matrix_print(Gens[i], k, k);
 			}
 		}
 
@@ -1477,7 +1477,7 @@ void gl_classes::generators_for_centralizer(
 	if (f_vv) {
 		cout << "gl_classes::generators_for_centralizer "
 				"B^-1 * A * B = " << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(M3, k, k);
+		Int_matrix_print(M3, k, k);
 		cout << endl;
 		}
 

@@ -404,11 +404,10 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 }
 
 
-void unipoly_domain::division_with_remainder_numerically_with_report(long int rk_a, long int rk_b,
-		long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level)
-	//unipoly_object a, unipoly_object b,
-	//unipoly_object &q, unipoly_object &r,
-	//int verbose_level)
+void unipoly_domain::division_with_remainder_numerically_with_report(
+		long int rk_a, long int rk_b,
+		long int &rk_q, long int &rk_r,
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -464,11 +463,11 @@ void unipoly_domain::division_with_remainder_numerically_with_report(long int rk
 }
 
 
-void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unipoly_object &b,
-		unipoly_object &q, unipoly_object &r, int f_report, std::ostream &ost, int verbose_level)
-	//unipoly_object a, unipoly_object b,
-	//unipoly_object &q, unipoly_object &r,
-	//int verbose_level)
+void unipoly_domain::division_with_remainder_with_report(
+		unipoly_object &a, unipoly_object &b,
+		unipoly_object &q, unipoly_object &r,
+		int f_report, std::ostream &ost,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

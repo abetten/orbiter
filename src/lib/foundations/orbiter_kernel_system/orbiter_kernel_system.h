@@ -169,6 +169,8 @@ public:
 		int &m, int &n, int verbose_level);
 	void int_matrix_read_csv_no_border(std::string &fname,
 		int *&M, int &m, int &n, int verbose_level);
+	void int_matrix_read_csv_data_column(std::string &fname,
+		int *&M, int &m, int &n, int col_idx, int verbose_level);
 	void lint_matrix_read_csv(std::string &fname,
 		long int *&M, int &m, int &n, int verbose_level);
 	void double_matrix_read_csv(std::string &fname, double *&M,

@@ -518,7 +518,6 @@ namespace graphics {
 	// pointer types
 	typedef tree_node *ptree_node;
 
-
 }
 
 
@@ -548,7 +547,7 @@ namespace number_theory {
 
 }
 
-//! The Orbiter kernel. It contains functions related to memory management, os-interface, file-io etc.
+//! The Orbiter kernel. It contains functions related to the symbol-table, memory management, os-interface, file-io, latex-interface etc.
 
 namespace orbiter_kernel_system {
 
@@ -715,9 +714,9 @@ namespace solvers {
 
 
 #define Int_vec_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->zero(A, B);
-#define Lint_vec_zero(A, B) orbiter_kernel_system::Orbiter->Lint_vec->zero(A, B);
+#define Lint_vec_zero(A, B) orbiter_kernel_system::Orbiter->Lint_vec->zero(A, B)
 
-#define Int_vec_is_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->is_zero(A, B);
+#define Int_vec_is_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->is_zero(A, B)
 
 #define Int_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->scan(A, B, C)
 #define Lint_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->scan(A, B, C)

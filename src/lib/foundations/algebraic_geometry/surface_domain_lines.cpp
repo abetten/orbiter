@@ -245,7 +245,7 @@ void surface_domain::create_system(int len, long int *S,
 	if (f_v && FALSE) {
 		cout << "surface_domain::create_system list of "
 				"covered points in coordinates:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Pt_coords, nb_rows, n);
+		Int_matrix_print(Pt_coords, nb_rows, n);
 	}
 
 	if (f_v) {

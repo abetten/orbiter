@@ -677,6 +677,14 @@ public:
 	std::string variety_coeffs;
 	monomial_ordering_type Monomial_ordering_type;
 
+	int f_ideal;
+	std::string ideal_label_txt;
+	std::string ideal_label_tex;
+	int ideal_degree;
+	std::string ideal_point_set_label;
+	int ideal_n;
+
+
 	int f_intersection_of_zariski_open_sets;
 	std::vector<std::string> Variety_coeffs;
 
@@ -799,7 +807,8 @@ public:
 	void maxfit_table_reallocate(int v_max);
 	void maxfit_table_compute();
 	int packing_number_via_maxfit(int n, int k);
-	void do_inverse_isomorphism_klein_quadric(field_theory::finite_field *F,
+	void do_inverse_isomorphism_klein_quadric(
+			field_theory::finite_field *F,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 			int verbose_level);
 	void do_rank_points_in_PG(
@@ -816,10 +825,6 @@ public:
 			std::string &line_2_basis,
 			std::string &point,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_cheat_sheet_PG(field_theory::finite_field *F,
-			graphics::layered_graph_draw_options *O,
-			int n,
 			int verbose_level);
 	void do_cheat_sheet_Gr(field_theory::finite_field *F,
 			int n, int k,

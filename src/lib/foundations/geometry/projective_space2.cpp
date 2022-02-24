@@ -3988,7 +3988,7 @@ void projective_space::planes_through_a_line(
 		}
 		Int_vec_copy(M1, M2, 2 * d);
 		Int_vec_copy(v, M2 + 2 * d, d);
-		if (f_v) {
+		if (FALSE) {
 			cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
 			Int_matrix_print(M2, 3, d);
 		}

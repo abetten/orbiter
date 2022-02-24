@@ -144,13 +144,13 @@ public:
 	~surface_create();
 	void null();
 	void freeself();
-	void init_with_data(surface_create_description *Descr,
+	int init_with_data(surface_create_description *Descr,
 		surface_with_action *Surf_A,
 		int verbose_level);
-	void init(surface_create_description *Descr,
+	int init(surface_create_description *Descr,
 		surface_with_action *Surf_A,
 		int verbose_level);
-	void create_surface_from_description(int verbose_level);
+	int create_surface_from_description(int verbose_level);
 	void override_group(std::string &group_order_text,
 			int nb_gens, std::string &gens_text, int verbose_level);
 	void create_Eckardt_surface(int a, int b, int verbose_level);
@@ -180,7 +180,7 @@ public:
 	void create_surface_Cayley_form(
 			int k, int l, int m, int n,
 			int verbose_level);
-	void create_surface_by_equation(
+	int create_surface_by_equation(
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
 			std::string &managed_variables,
@@ -348,6 +348,11 @@ public:
 			std::string &sweep_fname,
 			int verbose_level);
 	void do_sweep_4_27(
+			projective_geometry::projective_space_with_action *PA,
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void do_sweep_4_L9_E4(
 			projective_geometry::projective_space_with_action *PA,
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
@@ -725,6 +730,10 @@ public:
 			std::string &sweep_fname,
 			int verbose_level);
 	void sweep_4_27(
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void sweep_4_L9_E4(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
