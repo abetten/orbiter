@@ -37,7 +37,8 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_non_conical_type = FALSE;
 
 	f_ideal = FALSE;
-	ideal_degree = 0;
+	//std::string ideal_ring_label;
+	//ideal_degree = 0;
 
 
 	f_canonical_form_PG = FALSE;
@@ -134,9 +135,10 @@ int combinatorial_object_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
 			f_ideal = TRUE;
-			ideal_degree = ST.strtoi(argv[++i]);
+			ideal_ring_label.assign(argv[++i]);
+			//ideal_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-ideal " << ideal_degree << endl;
+				cout << "-ideal " << ideal_ring_label << endl;
 			}
 		}
 
@@ -253,7 +255,7 @@ void combinatorial_object_activity_description::print()
 		cout << "-f_non_conical_type " << endl;
 	}
 	if (f_ideal) {
-		cout << "-ideal " << ideal_degree << endl;
+		cout << "-ideal " << ideal_ring_label << endl;
 	}
 	if (f_canonical_form_PG) {
 		cout << "-canonical_form_PG " << canonical_form_PG_PG_label << endl;

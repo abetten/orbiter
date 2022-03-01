@@ -128,7 +128,7 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 	}
 
 	Poly_ring = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly_ring->init(Descr->PA->F, Descr->PA->n + 1, Descr->degree, FALSE, t_PART, verbose_level);
+	Poly_ring->init(Descr->PA->F, Descr->PA->n + 1, Descr->degree, t_PART, verbose_level);
 
 
 	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);

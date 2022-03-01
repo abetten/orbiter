@@ -1787,7 +1787,6 @@ int surface_create::create_surface_by_equation(
 	}
 	Poly->init(F,
 			nb_vars /* nb_vars */, degree,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			0/*verbose_level*/);
 	if (f_v) {

@@ -1521,6 +1521,7 @@ public:
 			std::vector<std::string> &symbol_table,
 			std::string &evaluate_text, int verbose_level);
 	void drop_quotes(std::string &in, std::string &out);
+	void parse_comma_separated_strings(std::string &in, std::vector<std::string> &out);
 
 
 };

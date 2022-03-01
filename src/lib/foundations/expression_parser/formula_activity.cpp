@@ -215,7 +215,6 @@ void formula_activity::do_sweep(int f_affine,
 	}
 	Poly->init(F,
 			f->nb_managed_vars /* nb_vars */, degree,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			0 /*verbose_level - 3*/);
 	if (f_v) {
@@ -228,10 +227,12 @@ void formula_activity::do_sweep(int f_affine,
 	if (f_affine) {
 		number_theory::number_theory_domain NT;
 
-		N_points = NT.i_power_j(F->q, Poly->get_P()->n);
+		N_points = NT.i_power_j(F->q, Poly->nb_variables - 1);
 	}
 	else {
-		N_points = Poly->get_P()->N_points;
+		geometry::geometry_global Gg;
+
+		N_points = Gg.nb_PG_elements(Poly->nb_variables - 1, F->q);
 	}
 	fun = NEW_int(N_points);
 

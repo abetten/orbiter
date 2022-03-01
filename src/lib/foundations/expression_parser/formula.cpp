@@ -357,7 +357,6 @@ void formula::print_easy(field_theory::finite_field *F,
 		Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 		Poly->init(F, nb_managed_vars, degree,
-				FALSE /*f_init_incidence_structure*/,
 				Monomial_ordering_type,
 				0 /*verbose_level*/);
 

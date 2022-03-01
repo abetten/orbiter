@@ -1513,6 +1513,49 @@ void finite_field::print_matrix_numerical_latex(std::ostream &ost, int *A, int m
 
 }
 
+void finite_field::read_from_string_coefficient_vector(std::string &str,
+		int *&coeff, int &len,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::read_from_string_coefficient_vector" << endl;
+	}
+
+	number_theory::number_theory_domain NT;
+
+
+	{
+		int *coeffs;
+		int a, i;
+
+		Int_vec_scan(str, coeffs, len);
+
+		coeff = NEW_int(len);
+
+		Int_vec_zero(coeff, len);
+
+
+		for (i = 0; i < len; i++) {
+			a = coeffs[i];
+			if (a < 0 || a >= q) {
+				if (e > 1) {
+					cout << "finite_field::read_from_string_coefficient_vector "
+							"In a field extension, what do you mean by " << a << endl;
+					exit(1);
+				}
+				a = NT.mod(a, q);
+			}
+			coeff[i] = a;
+
+		}
+		FREE_int(coeffs);
+	}
+	if (f_v) {
+		cout << "finite_field::read_from_string_coefficient_vector done" << endl;
+	}
+}
 
 
 }}}

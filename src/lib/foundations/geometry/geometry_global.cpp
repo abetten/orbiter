@@ -2062,7 +2062,6 @@ void geometry_global::latex_homogeneous_equation(
 	}
 	Poly->init(F,
 			degree /* nb_vars */, degree /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 

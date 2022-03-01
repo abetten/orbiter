@@ -68,6 +68,23 @@ void orbiter_symbol_table_entry::init_finite_field(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_polynomial_ring(std::string &label,
+		ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_polynomial_ring" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_polynomial_ring;
+	ptr = HPD;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_polynomial_ring done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::init_any_group(std::string &label,
 		void *p, int verbose_level)
 {
@@ -553,6 +570,12 @@ void orbiter_symbol_table_entry::print()
 
 			F = (field_theory::finite_field *) ptr;
 			F->print();
+		}
+		else if (object_type == t_polynomial_ring) {
+			ring_theory::homogeneous_polynomial_domain *HPD;
+
+			HPD = (ring_theory::homogeneous_polynomial_domain *) ptr;
+			HPD->print();
 		}
 		else if (object_type == t_linear_group) {
 			cout << "linear group" << endl;

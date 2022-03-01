@@ -696,7 +696,6 @@ void projective_space_with_action::map(
 	}
 	Poly->init(F,
 			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -818,7 +817,6 @@ void projective_space_with_action::analyze_del_Pezzo_surface(
 	}
 	Poly4_3->init(F,
 			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {

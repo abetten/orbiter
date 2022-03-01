@@ -84,7 +84,8 @@ public:
 	int f_non_conical_type;
 
 	int f_ideal;
-	int ideal_degree;
+	std::string ideal_ring_label;
+	//int ideal_degree;
 
 
 	// options that apply to IS = data_input_stream

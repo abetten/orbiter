@@ -22,6 +22,9 @@ activity_description::activity_description()
 	f_finite_field_activity = FALSE;
 	Finite_field_activity_description = NULL;
 
+	f_polynomial_ring_activity = FALSE;
+	Polynomial_ring_activity_description = NULL;
+
 	f_projective_space_activity = FALSE;
 	Projective_space_activity_description = NULL;
 
@@ -113,6 +116,28 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-ring_theoretic_activity") == 0) {
+		f_polynomial_ring_activity = TRUE;
+		Polynomial_ring_activity_description =
+				NEW_OBJECT(ring_theory::polynomial_ring_activity_description);
+		if (f_v) {
+			cout << "reading -ring_theoretic_activity" << endl;
+		}
+		i += Polynomial_ring_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-ring_theoretic_activity" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
 	else if (ST.stringcmp(argv[i], "-projective_space_activity") == 0) {
 		f_projective_space_activity = TRUE;
 		Projective_space_activity_description =
@@ -477,6 +502,16 @@ void activity_description::worker(int verbose_level)
 		do_finite_field_activity(verbose_level);
 
 	}
+
+	else if (f_polynomial_ring_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker ring_theoretic_activity" << endl;
+		}
+		do_ring_theoretic_activity(verbose_level);
+
+	}
+
 	else if (f_projective_space_activity) {
 
 		if (f_v) {
@@ -624,6 +659,11 @@ void activity_description::print()
 		cout << "-finite_field_activity ";
 		Finite_field_activity_description->print();
 	}
+
+	else if (f_polynomial_ring_activity) {
+		cout << "-ring_theoretic_activity ";
+		Polynomial_ring_activity_description->print();
+	}
 	else if (f_projective_space_activity) {
 		cout << "-projective_space_activity ";
 		Projective_space_activity_description->print();
@@ -746,6 +786,55 @@ void activity_description::do_finite_field_activity(int verbose_level)
 }
 
 
+void activity_description::do_ring_theoretic_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_ring_theoretic_activity "
+				"finite field activity for the following objects: ";
+		Sym->print_with();
+	}
+
+	int *Idx;
+
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "-finite_field_activity requires at least one input" << endl;
+		exit(1);
+	}
+	ring_theory::homogeneous_polynomial_domain *HPD;
+
+	HPD = (ring_theory::homogeneous_polynomial_domain *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+
+	ring_theory::polynomial_ring_activity A;
+	A.init(Polynomial_ring_activity_description, HPD, verbose_level);
+
+#if 0
+	if (Sym->with_labels.size() == 2) {
+		cout << "-finite_field_activity has two inputs" << endl;
+		FA.F_secondary = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "activity_description::do_ring_theoretic_activity "
+				"before A.perform_activity" << endl;
+	}
+	A.perform_activity(verbose_level);
+	if (f_v) {
+		cout << "activity_description::do_ring_theoretic_activity "
+				"after A.perform_activity" << endl;
+	}
+
+	FREE_int(Idx);
+
+}
+
+
 void activity_description::do_projective_space_activity(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -850,7 +939,7 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 
 	if (f_v) {
 		cout << "activity_description::do_group_theoretic_activity "
-				"finite field activity for the following objects:";
+				"group theoretic activity for the following objects:";
 		Sym->print_with();
 	}
 

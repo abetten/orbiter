@@ -708,17 +708,35 @@ field_theory::finite_field *orbiter_session::get_object_of_type_finite_field(std
 
 	idx = Orbiter_symbol_table->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_session::get_object_of_type_vector cannot find symbol " << label << endl;
+		cout << "orbiter_session::get_object_of_type_finite_field cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_finite_field) {
-		cout << "orbiter_session::get_object_of_type_vector object type != t_finite_field" << endl;
+		cout << "orbiter_session::get_object_of_type_finite_field object type != t_finite_field" << endl;
 		exit(1);
 	}
 	return (field_theory::finite_field *) get_object(idx);
 
 
 }
+
+ring_theory::homogeneous_polynomial_domain *orbiter_session::get_object_of_type_polynomial_ring(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_object_of_type_polynomial_ring cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_polynomial_ring) {
+		cout << "orbiter_session::get_object_of_type_polynomial_ring object type != t_polynomial_ring" << endl;
+		exit(1);
+	}
+	return (ring_theory::homogeneous_polynomial_domain *) get_object(idx);
+
+}
+
 
 vector_builder *orbiter_session::get_object_of_type_vector(std::string &label)
 {

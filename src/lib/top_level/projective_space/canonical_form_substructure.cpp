@@ -127,7 +127,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		Canonical_form_classifier->Poly_ring->print_equation_tex(cout, eqn);
 		cout << endl;
 
-		Canonical_form_classifier->Poly_ring->get_P()->print_set_of_points(cout, pts, nb_pts);
+		//Canonical_form_classifier->Poly_ring->get_P()->print_set_of_points(cout, pts, nb_pts);
 
 
 		//cout << " bitangents=";

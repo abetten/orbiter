@@ -73,6 +73,9 @@ void any_group::init_linear_group(groups::linear_group *LG, int verbose_level)
 	Subgroup_sims = Subgroup_gens->create_sims(0/*verbose_level*/);
 	if (f_v) {
 		cout << "any_group::init_linear_group after Subgroup_gens->create_sims" << endl;
+		cout << "any_group::init_linear_group group order is ";
+		Subgroup_sims->print_group_order(cout);
+		cout << endl;
 	}
 
 	if (f_v) {

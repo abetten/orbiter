@@ -551,7 +551,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 		cout << "orthogonal::init_form_and_Gram_matrix before Poly->init" << endl;
 	}
 	Poly->init(F,
-			n /* nb_vars */, 2 /* degree */, FALSE /* f_init_incidence_structure */,
+			n /* nb_vars */, 2 /* degree */,
 			t_LEX,
 			verbose_level);
 	if (f_v) {

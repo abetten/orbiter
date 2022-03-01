@@ -191,14 +191,16 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			quartic_curve_domain_with_action *QCDA,
 			int verbose_level);
-	void create_quartic_curve_from_description(quartic_curve_domain_with_action *DomA, int verbose_level);
+	void create_quartic_curve_from_description(
+			quartic_curve_domain_with_action *DomA, int verbose_level);
 	void override_group(std::string &group_order_text,
 			int nb_gens, std::string &gens_text, int verbose_level);
 	void create_quartic_curve_by_coefficients(std::string &coefficients_text,
 			int verbose_level);
 	void create_quartic_curve_by_coefficient_vector(int *eqn15,
 			int verbose_level);
-	void create_quartic_curve_from_catalogue(quartic_curve_domain_with_action *DomA,
+	void create_quartic_curve_from_catalogue(
+			quartic_curve_domain_with_action *DomA,
 			int iso,
 			int verbose_level);
 	void create_quartic_curve_by_equation(

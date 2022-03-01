@@ -594,6 +594,9 @@ namespace ring_theory {
 	class partial_derivative;
 	class polynomial_double_domain;
 	class polynomial_double;
+	class polynomial_ring_activity_description;
+	class polynomial_ring_activity;
+	class polynomial_ring_description;
 	class ring_theory_global;
 	class table_of_irreducible_polynomials;
 	class unipoly_domain;
@@ -778,6 +781,7 @@ enum diophant_equation_type {
 enum symbol_table_object_type {
 	t_nothing_object,
 	t_finite_field,
+	t_polynomial_ring,
 	t_any_group,
 	t_linear_group,
 	t_permutation_group,
