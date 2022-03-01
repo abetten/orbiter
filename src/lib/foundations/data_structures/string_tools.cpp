@@ -1248,6 +1248,25 @@ void string_tools::drop_quotes(std::string &in, std::string &out)
 }
 
 
+void string_tools::parse_comma_separated_strings(std::string &in, std::vector<std::string> &out)
+{
+	const char *p = in.c_str();
+	char str[1000];
+
+	while (TRUE) {
+		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+			break;
+		}
+		string var;
+
+		var.assign(str);
+
+		out.push_back(var);
+
+	}
+
+}
+
 
 int string_tools_compare_strings(void *a, void *b, void *data)
 {

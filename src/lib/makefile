@@ -234,6 +234,9 @@ MODULES= \
 		foundations/ring_theory/partial_derivative.o \
 		foundations/ring_theory/polynomial_double_domain.o \
 		foundations/ring_theory/polynomial_double.o \
+		foundations/ring_theory/polynomial_ring_activity_description.o \
+		foundations/ring_theory/polynomial_ring_activity.o \
+		foundations/ring_theory/polynomial_ring_description.o \
 		foundations/ring_theory/ring_theory_global.o \
 		foundations/ring_theory/table_of_irreducible_polynomials.o \
 		foundations/ring_theory/unipoly_domain.o \

@@ -197,36 +197,27 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_GOC f_ideal" << endl;
 		}
 
-		geometry::projective_space *P;
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
-		P = GOC->Descr->P;
 
-		HPD = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->ideal_ring_label);
 
-		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC before HPD->init" << endl;
-		}
-		HPD->init(P->F, P->n + 1, Descr->ideal_degree,
-			FALSE /* f_init_incidence_structure */,
-			t_PART /*Monomial_ordering_type*/,
-			verbose_level - 2);
-		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC after HPD->init" << endl;
-		}
 
+		HPD->explore_vanishing_ideal(GOC->Pts, GOC->nb_pts, verbose_level);
+
+#if 0
 		int *Kernel;
-		//int *w1, *w2;
 		int r;
 
 		Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
-		//w1 = NEW_int(HPD->get_nb_monomials());
-		//w2 = NEW_int(HPD->get_nb_monomials());
 
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC the input set is:" << endl;
-			HPD->get_P()->print_set_numerical(cout, GOC->Pts, GOC->nb_pts);
+			cout << "combinatorial_object_activity::perform_activity_GOC the input set has size " << GOC->nb_pts << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC the input set is: " << endl;
+			Lint_vec_print(cout, GOC->Pts, GOC->nb_pts);
+			cout << endl;
+			//P->print_set_numerical(cout, GOC->Pts, GOC->nb_pts);
 		}
 
 
@@ -239,15 +230,23 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_GOC after HPD->vanishing_ideal" << endl;
 		}
 
-		int h, ns;
+
+		int h; //, ns;
 		int nb_pts;
 		long int *Pts;
 
-		ns = HPD->get_nb_monomials() - r; // dimension of null space
+		for (h = 0; h < r; h++) {
+			cout << "generator " << h << " / " << r << " is ";
+			HPD->print_equation_relaxed(cout, Kernel + h * HPD->get_nb_monomials());
+			cout << endl;
+
+		}
+
+		//ns = HPD->get_nb_monomials() - r; // dimension of null space
 
 		cout << "looping over all generators of the ideal:" << endl;
-		for (h = 0; h < ns; h++) {
-			cout << "generator " << h << " / " << ns << " is ";
+		for (h = 0; h < r; h++) {
+			cout << "generator " << h << " / " << r << " is ";
 			Int_vec_print(cout, Kernel + h * HPD->get_nb_monomials(), HPD->get_nb_monomials());
 			cout << " : " << endl;
 
@@ -268,23 +267,12 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 			cout << "They are : ";
 			Lint_vec_print(cout, Pts, nb_pts);
 			cout << endl;
-			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
+			//P->print_set_numerical(cout, Pts, nb_pts);
 
-#if 0
-			if (h == 0) {
-				size_out = HPD->get_nb_monomials();
-				set_out = NEW_lint(size_out);
-				//int_vec_copy(Kernel + h * HPD->nb_monomials, set_out, size_out);
-				int u;
-				for (u = 0; u < size_out; u++) {
-					set_out[u] = Kernel[h * HPD->get_nb_monomials() + u];
-				}
-				//break;
-			}
-#endif
 			FREE_lint(Pts);
 
 		} // next h
+#endif
 
 	}
 
@@ -548,6 +536,32 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 
 		FREE_int(F_distinguishing);
+
+	}
+	if (Descr->f_ideal) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS f_ideal" << endl;
+		}
+
+		ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->ideal_ring_label);
+
+
+		int input_idx;
+
+
+		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+			geometry::object_with_canonical_form *OwCF;
+
+			OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+
+			HPD->explore_vanishing_ideal(OwCF->set, OwCF->sz, verbose_level);
+
+		}
 
 	}
 	else if (Descr->f_save_as) {

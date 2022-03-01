@@ -142,7 +142,6 @@ void expression_parser_domain::parse_and_evaluate(
 		}
 		Poly->init(F,
 				nb_vars /* nb_vars */, degree,
-				FALSE /* f_init_incidence_structure */,
 				t_PART,
 				verbose_level - 3);
 		if (f_v) {
@@ -473,7 +472,6 @@ int expression_parser_domain::evaluate_formula(
 		}
 		Poly->init(Fq,
 				F->nb_managed_vars /* nb_vars */, degree,
-				FALSE /* f_init_incidence_structure */,
 				t_PART,
 				verbose_level - 3);
 		if (f_v) {
@@ -623,7 +621,6 @@ void expression_parser_domain::evaluate_managed_formula(
 	}
 	Poly->init(Fq,
 			F->nb_managed_vars /* nb_vars */, degree,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			0 /*verbose_level - 3*/);
 	if (f_v) {

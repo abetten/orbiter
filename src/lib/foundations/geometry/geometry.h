@@ -670,33 +670,25 @@ public:
 	int f_Maruta_Hamada_arc;
 
 	int f_projective_variety;
+	std::string projective_variety_ring_label;
 	std::string variety_label_txt;
 	std::string variety_label_tex;
-	int variety_degree;
-	int variety_n;
 	std::string variety_coeffs;
-	monomial_ordering_type Monomial_ordering_type;
-
-	int f_ideal;
-	std::string ideal_label_txt;
-	std::string ideal_label_tex;
-	int ideal_degree;
-	std::string ideal_point_set_label;
-	int ideal_n;
 
 
 	int f_intersection_of_zariski_open_sets;
+	std::string intersection_of_zariski_open_sets_ring_label;
 	std::vector<std::string> Variety_coeffs;
 
 	int f_number_of_conditions_satisfied;
+	std::string number_of_conditions_satisfied_ring_label;
 	std::string number_of_conditions_satisfied_fname;
 
 
 	int f_projective_curve;
+	std::string projective_curve_ring_label;
 	std::string curve_label_txt;
 	std::string curve_label_tex;
-	int curve_nb_vars;
-	int curve_degree;
 	std::string curve_coeffs;
 
 	int f_set;

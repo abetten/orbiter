@@ -29,6 +29,7 @@ orbits_on_polynomials::orbits_on_polynomials()
 	n = 0;
 	// go;
 	HPD = NULL;
+	P = NULL;
 	A2 = NULL;
 	Elt1 = Elt2 = Elt3 = NULL;
 	Sch = NULL;
@@ -43,6 +44,9 @@ orbits_on_polynomials::orbits_on_polynomials()
 
 orbits_on_polynomials::~orbits_on_polynomials()
 {
+	if (P) {
+		FREE_OBJECT(P);
+	}
 }
 
 void orbits_on_polynomials::init(
@@ -85,9 +89,20 @@ void orbits_on_polynomials::init(
 
 
 	HPD->init(F, n /* nb_var */, degree_of_poly,
-			TRUE /* f_init_incidence_structure */,
 			Monomial_ordering_type,
 			verbose_level - 2);
+
+	P = NEW_OBJECT(geometry::projective_space);
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init before P->projective_space_init" << endl;
+	}
+	P->projective_space_init(n - 1, F,
+		FALSE /*f_init_incidence_structure*/,
+		verbose_level);
+	if (f_v) {
+		cout << "orbits_on_polynomials::init after P->projective_space_init" << endl;
+	}
 
 	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_on_homogeneous_polynomials(A,
@@ -510,9 +525,9 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 		//int h, pt, orbit_idx;
 
 		A->group_order(go);
-		Pts = NEW_lint(HPD->get_P()->N_points);
+		Pts = NEW_lint(P->N_points);
 		coeff = NEW_int(HPD->get_nb_monomials());
-		line_type = NEW_int(HPD->get_P()->N_lines);
+		line_type = NEW_int(P->N_lines);
 		Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
 		v = NEW_int(n);
 
@@ -553,19 +568,19 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			cout << "They are : ";
 			Lint_vec_print(cout, Pts, nb_pts);
 			cout << endl;
-			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
+			P->print_set_numerical(cout, Pts, nb_pts);
 
 			F->display_table_of_projective_points(
 					ost, Pts, nb_pts, n);
 
-			HPD->get_P()->line_intersection_type(Pts, nb_pts,
+			P->line_intersection_type(Pts, nb_pts,
 					line_type, 0 /* verbose_level */);
 
 			ost << "The line type is: ";
 
 			stringstream sstr;
 			Int_vec_print_classified_str(sstr,
-					line_type, HPD->get_P()->N_lines,
+					line_type, P->N_lines,
 					TRUE /* f_backwards*/);
 			string s = sstr.str();
 			ost << "$" << s << "$\\\\" << endl;

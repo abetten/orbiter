@@ -805,6 +805,7 @@ public:
 			long int *&the_set, int &set_size, int verbose_level);
 	void print_type(symbol_table_object_type t);
 	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
+	ring_theory::homogeneous_polynomial_domain *get_object_of_type_polynomial_ring(std::string &label);
 	data_structures::vector_builder *get_object_of_type_vector(std::string &label);
 	void start_memory_debug();
 	void stop_memory_debug();
@@ -845,6 +846,8 @@ public:
 	void init(std::string &str_label);
 	void init_finite_field(std::string &label,
 			field_theory::finite_field *F, int verbose_level);
+	void init_polynomial_ring(std::string &label,
+			ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level);
 	void init_any_group(std::string &label,
 			void *p, int verbose_level);
 	void init_linear_group(std::string &label,

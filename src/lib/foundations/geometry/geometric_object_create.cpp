@@ -361,55 +361,32 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	else if (Descr->f_projective_variety) {
 
 
-		ring_theory::ring_theory_global R;
+		ring_theory::homogeneous_polynomial_domain *HPD;
 
-		R.create_projective_variety(F,
+
+		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->projective_variety_ring_label);
+
+		HPD->create_projective_variety(
 				Descr->variety_label_txt,
 				Descr->variety_label_tex,
-				P->n + 1, Descr->variety_degree,
 				Descr->variety_coeffs,
-				Descr->Monomial_ordering_type,
 				label_txt,
 				label_tex,
 				nb_pts, Pts,
 				verbose_level);
 
 	}
-	else if (Descr->f_ideal) {
-
-
-		ring_theory::ring_theory_global R;
-		int r;
-		int nb_monomials;
-		int *Kernel;
-
-		R.create_ideal(F,
-				Descr->ideal_label_txt,
-				Descr->ideal_label_tex,
-				Descr->ideal_n, Descr->ideal_degree,
-				Descr->ideal_point_set_label,
-				t_LEX,
-				//t_PART, //Descr->Monomial_ordering_type,
-				label_txt,
-				label_tex,
-				r, nb_monomials, Kernel,
-				verbose_level);
-
-		cout << "The ideal has dimension " << r << endl;
-		cout << "generators for the ideal:" << endl;
-		Int_matrix_print(Kernel, r, nb_monomials);
-
-	}
 	else if (Descr->f_intersection_of_zariski_open_sets) {
 
-		ring_theory::ring_theory_global R;
+		ring_theory::homogeneous_polynomial_domain *HPD;
 
-		R.create_intersection_of_zariski_open_sets(F,
+
+		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->intersection_of_zariski_open_sets_ring_label);
+
+		HPD->create_intersection_of_zariski_open_sets(
 				Descr->variety_label_txt,
 				Descr->variety_label_tex,
-				P->n + 1, Descr->variety_degree,
 				Descr->Variety_coeffs,
-				Descr->Monomial_ordering_type,
 				label_txt,
 				label_tex,
 				nb_pts, Pts,
@@ -417,14 +394,15 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_number_of_conditions_satisfied) {
 
-		ring_theory::ring_theory_global R;
+		ring_theory::homogeneous_polynomial_domain *HPD;
 
-		R.number_of_conditions_satisfied(F,
+
+		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->number_of_conditions_satisfied_ring_label);
+
+		HPD->number_of_conditions_satisfied(
 				Descr->variety_label_txt,
 				Descr->variety_label_tex,
-				P->n + 1, Descr->variety_degree,
 				Descr->Variety_coeffs,
-				Descr->Monomial_ordering_type,
 				Descr->number_of_conditions_satisfied_fname,
 				label_txt,
 				label_tex,
@@ -436,14 +414,15 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	else if (Descr->f_projective_curve) {
 
-		ring_theory::ring_theory_global R;
+		ring_theory::homogeneous_polynomial_domain *HPD;
 
-		R.create_projective_curve(F,
+
+		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->projective_curve_ring_label);
+
+		HPD->create_projective_curve(
 				Descr->curve_label_txt,
 				Descr->curve_label_tex,
-				Descr->curve_nb_vars, Descr->curve_degree,
 				Descr->curve_coeffs,
-				Descr->Monomial_ordering_type,
 				label_txt,
 				label_tex,
 				nb_pts, Pts,

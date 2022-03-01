@@ -95,7 +95,6 @@ void cubic_curve::init(field_theory::finite_field *F, int verbose_level)
 
 	Poly->init(F,
 			3 /* nb_vars */, 3 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 
@@ -103,7 +102,6 @@ void cubic_curve::init(field_theory::finite_field *F, int verbose_level)
 
 	Poly2->init(F,
 			3 /* nb_vars */, 2 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 

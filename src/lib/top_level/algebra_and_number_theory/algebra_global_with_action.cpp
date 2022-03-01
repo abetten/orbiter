@@ -1396,18 +1396,18 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 
 
 
-		U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
+			U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
 
-		U.characteristic_polynomial(Elt,
-				d, char_poly, verbose_level - 2);
+			U.characteristic_polynomial(Elt,
+					d, char_poly, verbose_level - 2);
 
-		cout << "The characteristic polynomial is ";
-		U.print_object(char_poly, cout);
-		cout << endl;
+			cout << "The characteristic polynomial is ";
+			U.print_object(char_poly, cout);
+			cout << endl;
 
-		eval = U.substitute_scalar_in_polynomial(char_poly,
-				1 /* scalar */, 0 /* verbose_level */);
-		U.delete_object(char_poly);
+			eval = U.substitute_scalar_in_polynomial(char_poly,
+					1 /* scalar */, 0 /* verbose_level */);
+			U.delete_object(char_poly);
 
 
 		}
@@ -3702,7 +3702,6 @@ void algebra_global_with_action::representation_on_polynomials(
 
 
 	HPD->init(F, n /* nb_var */, degree_of_poly,
-			TRUE /* f_init_incidence_structure */,
 			Monomial_ordering_type,
 			verbose_level);
 

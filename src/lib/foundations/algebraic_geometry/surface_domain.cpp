@@ -307,7 +307,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly1->init(F,
 			3 /* nb_vars */, 1 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -318,7 +317,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly2->init(F,
 			3 /* nb_vars */, 2 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -329,7 +327,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly3->init(F,
 			3 /* nb_vars */, 3 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -345,7 +342,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly1_x123->init(F,
 			3 /* nb_vars */, 1 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -356,7 +352,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly2_x123->init(F,
 			3 /* nb_vars */, 2 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -367,7 +362,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly3_x123->init(F,
 			3 /* nb_vars */, 3 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -378,7 +372,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly4_x123->init(F,
 			3 /* nb_vars */, 4 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -403,7 +396,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly1_4->init(F,
 			4 /* nb_vars */, 1 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -414,7 +406,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly2_4->init(F,
 			4 /* nb_vars */, 2 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -425,7 +416,6 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly3_4->init(F,
 			4 /* nb_vars */, 3 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -488,22 +478,18 @@ void surface_domain::init_large_polynomial_domains(int verbose_level)
 
 	Poly2_27->init(F,
 			27 /* nb_vars */, 2 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	Poly4_27->init(F,
 			27 /* nb_vars */, 4 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	Poly6_27->init(F,
 			27 /* nb_vars */, 6 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	Poly3_24->init(F,
 			24 /* nb_vars */, 3 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 

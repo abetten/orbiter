@@ -230,7 +230,6 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 					"setting up polynomial ring of degree " << degree << endl;
 		}
 		Poly[degree].init(Fq, nb_vars, degree,
-				FALSE /* f_init_incidence_structure */,
 				t_PART,
 				0 /* verbose_level */);
 		A_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());

@@ -93,12 +93,14 @@ private:
 	int nb_monomials;
 	int *Monomials; // [nb_monomials * nb_variables]
 
-	std::string *symbols;
-	std::string *symbols_latex;
 
-	char **monomial_symbols;
-	char **monomial_symbols_latex;
-	char **monomial_symbols_easy;
+	std::vector<std::string> symbols;
+	std::vector<std::string> symbols_latex;
+
+	std::vector<std::string> monomial_symbols;
+	std::vector<std::string> monomial_symbols_latex;
+	std::vector<std::string> monomial_symbols_easy;
+
 	int *Variables; // [nb_monomials * degree]
 		// Variables contains the monomials written out
 		// as a sequence of length degree
@@ -114,7 +116,6 @@ private:
 	int *Affine_to_monomial; // [nb_affine]
 		// for each vector in the affine space,
 		// record the monomial associated with it.
-	geometry::projective_space *P;
 
 	int *coeff2; // [nb_monomials], used in substitute_linear
 	int *coeff3; // [nb_monomials], used in substitute_linear
@@ -134,15 +135,25 @@ public:
 	~homogeneous_polynomial_domain();
 	void freeself();
 	void null();
-	void init(field_theory::finite_field *F, int nb_vars, int degree,
-		int f_init_incidence_structure,
-		monomial_ordering_type Monomial_ordering_type,
-		int verbose_level);
+	void init(polynomial_ring_description *Descr,
+			int verbose_level);
+	void init(field_theory::finite_field *F,
+			int nb_vars, int degree,
+			monomial_ordering_type Monomial_ordering_type,
+			int verbose_level);
+	void init_with_or_without_variables(field_theory::finite_field *F,
+			int nb_vars, int degree,
+			monomial_ordering_type Monomial_ordering_type,
+			int f_has_variables,
+			std::vector<std::string> *variables_txt,
+			std::vector<std::string> *variables_tex,
+			int verbose_level);
+	void print();
 	int get_nb_monomials();
-	geometry::projective_space *get_P();
+	int get_nb_variables();
 	field_theory::finite_field *get_F();
 	int get_monomial(int i, int j);
-	char *get_monomial_symbol_easy(int i);
+	std::string &get_monomial_symbol_easy(int i);
 	int *get_monomial_pointer(int i);
 	int evaluate_monomial(int idx_of_monomial, int *coords);
 	void remake_symbols(int symbol_offset,
@@ -154,6 +165,9 @@ public:
 			int verbose_level);
 	void make_monomials(
 			monomial_ordering_type Monomial_ordering_type,
+			int f_has_variables,
+			std::vector<std::string> *variables_txt,
+			std::vector<std::string> *variables_tex,
 			int verbose_level);
 	void rearrange_monomials_by_partition_type(int verbose_level);
 	int index_of_monomial(int *v);
@@ -163,13 +177,16 @@ public:
 	void print_monomial(std::ostream &ost, int *mon);
 	void print_monomial_latex(std::ostream &ost, int *mon);
 	void print_monomial_latex(std::ostream &ost, int i);
+	void print_monomial_relaxed(std::ostream &ost, int i);
 	void print_monomial_latex(std::string &s, int *mon);
+	void print_monomial_relaxed(std::string &s, int *mon);
 	void print_monomial_latex(std::string &s, int i);
 	void print_monomial_str(std::stringstream &ost, int i);
 	void print_monomial_latex_str(std::stringstream &ost, int i);
 	void print_equation(std::ostream &ost, int *coeffs);
 	void print_equation_simple(std::ostream &ost, int *coeffs);
 	void print_equation_tex(std::ostream &ost, int *coeffs);
+	void print_equation_relaxed(std::ostream &ost, int *coeffs);
 	void print_equation_numerical(std::ostream &ost, int *coeffs);
 	void print_equation_lint(std::ostream &ost, long int *coeffs);
 	void print_equation_lint_tex(std::ostream &ost, long int *coeffs);
@@ -213,13 +230,15 @@ public:
 		int *coeff1, int *coeff2, int *coeff3,
 		int verbose_level);
 	int is_zero(int *coeff);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
 	void unrank_coeff_vector(int *v, long int rk);
 	long int rank_coeff_vector(int *v);
 	int test_weierstrass_form(int rk,
 		int &a1, int &a2, int &a3, int &a4, int &a6,
 		int verbose_level);
+	void explore_vanishing_ideal(long int *Pts,
+			int nb_pts, int verbose_level);
 	void vanishing_ideal(long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
@@ -227,6 +246,45 @@ public:
 	void print_monomial_ordering(std::ostream &ost);
 	int *read_from_string_coefficient_pairs(std::string &str, int verbose_level);
 	int *read_from_string_coefficient_vector(std::string &str, int verbose_level);
+	void number_of_conditions_satisfied(
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			std::vector<std::string> &Variety_coeffs,
+			std::string &number_of_conditions_satisfied_fname,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	void create_intersection_of_zariski_open_sets(
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			std::vector<std::string> &Variety_coeffs,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	void create_projective_variety(
+			std::string &variety_label,
+			std::string &variety_label_tex,
+			std::string &variety_coeffs,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	void create_ideal(
+			std::string &ideal_label,
+			std::string &ideal_label_tex,
+			std::string &ideal_point_set_label,
+			int &dim_kernel, int &nb_monomials, int *&Kernel,
+			int verbose_level);
+	void create_projective_curve(
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			std::string &curve_coeffs,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
 
 
 };
@@ -512,6 +570,95 @@ public:
 };
 
 
+// #############################################################################
+// polynomial_ring_activity_description.cpp
+// #############################################################################
+
+
+//! description of a polynomial ring activity
+
+class polynomial_ring_activity_description {
+public:
+
+	int f_cheat_sheet;
+
+	int f_ideal;
+	std::string ideal_ring_label;
+	std::string ideal_label_txt;
+	std::string ideal_label_tex;
+	std::string ideal_point_set_label;
+
+
+	polynomial_ring_activity_description();
+	~polynomial_ring_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+// #############################################################################
+// polynomial_ring_activity.cpp
+// #############################################################################
+
+
+//! a polynomial ring activity
+
+class polynomial_ring_activity {
+public:
+
+	polynomial_ring_activity_description *Descr;
+	homogeneous_polynomial_domain *HPD;
+
+
+
+	polynomial_ring_activity();
+	~polynomial_ring_activity();
+	void init(polynomial_ring_activity_description *Descr,
+			homogeneous_polynomial_domain *HPD,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
+
+// #############################################################################
+// polynomial_ring_description.cpp
+// #############################################################################
+
+
+//! description of a polynomial ring
+
+class polynomial_ring_description {
+public:
+
+	int f_field;
+	std::string finite_field_label;
+
+	int f_homogeneous;
+	int homogeneous_of_degree;
+
+	int f_number_of_variables;
+	int number_of_variables;
+
+	monomial_ordering_type Monomial_ordering_type;
+
+	int f_variables;
+	std::string variables_txt;
+	std::string variables_tex;
+
+	polynomial_ring_description();
+	~polynomial_ring_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
 
 // #############################################################################
 // ring_theory_global.cpp
@@ -563,67 +710,6 @@ public:
 	void polynomial_division_from_file_all_k_error_patterns_with_report(
 			field_theory::finite_field *F,
 			std::string &input_file, long int rk1, int k, int verbose_level);
-	void number_of_conditions_satisfied(
-			field_theory::finite_field *F,
-			std::string &variety_label_txt,
-			std::string &variety_label_tex,
-			int variety_nb_vars, int variety_degree,
-			std::vector<std::string> &Variety_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &number_of_conditions_satisfied_fname,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-			int verbose_level);
-	// creates homogeneous_polynomial_domain
-	void create_intersection_of_zariski_open_sets(
-			field_theory::finite_field *F,
-			std::string &variety_label_txt,
-			std::string &variety_label_tex,
-			int variety_nb_vars, int variety_degree,
-			std::vector<std::string> &Variety_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-			int verbose_level);
-	// creates homogeneous_polynomial_domain
-	void create_projective_variety(
-			field_theory::finite_field *F,
-			std::string &variety_label,
-			std::string &variety_label_tex,
-			int variety_nb_vars, int variety_degree,
-			std::string &variety_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-			int verbose_level);
-	// creates homogeneous_polynomial_domain
-	void create_ideal(
-			field_theory::finite_field *F,
-			std::string &ideal_label,
-			std::string &ideal_label_tex,
-			int ideal_nb_vars, int ideal_degree,
-			std::string &ideal_point_set_label,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &r, int &nb_monomials, int *&Kernel,
-			int verbose_level);
-	// creates homogeneous_polynomial_domain
-	void create_projective_curve(
-			field_theory::finite_field *F,
-			std::string &variety_label_txt,
-			std::string &variety_label_tex,
-			int curve_nb_vars, int curve_degree,
-			std::string &curve_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-			int verbose_level);
-	// creates homogeneous_polynomial_domain
 	void create_irreducible_polynomial(
 			field_theory::finite_field *F,
 			unipoly_domain *Fq,

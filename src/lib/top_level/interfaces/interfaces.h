@@ -31,6 +31,9 @@ class activity_description {
 	int f_finite_field_activity;
 	field_theory::finite_field_activity_description *Finite_field_activity_description;
 
+	int f_polynomial_ring_activity;
+	ring_theory::polynomial_ring_activity_description *Polynomial_ring_activity_description;
+
 	int f_projective_space_activity;
 	projective_geometry::projective_space_activity_description *Projective_space_activity_description;
 
@@ -88,7 +91,7 @@ public:
 	void worker(int verbose_level);
 	void print();
 	void do_finite_field_activity(int verbose_level);
-	void print_finite_field_activity();
+	void do_ring_theoretic_activity(int verbose_level);
 	void do_projective_space_activity(int verbose_level);
 	void do_orthogonal_space_activity(int verbose_level);
 	void do_group_theoretic_activity(int verbose_level);
@@ -869,6 +872,9 @@ public:
 	int f_finite_field;
 	field_theory::finite_field_description *Finite_field_description;
 
+	int f_polynomial_ring;
+	ring_theory::polynomial_ring_description *Polynomial_ring_description;
+
 	int f_projective_space;
 	projective_geometry::projective_space_with_action_description *Projective_space_with_action_description;
 
@@ -962,6 +968,7 @@ public:
 	void perform_definition(int verbose_level);
 	void print();
 	void definition_of_finite_field(int verbose_level);
+	void definition_of_polynomial_ring(int verbose_level);
 	void definition_of_projective_space(int verbose_level);
 	void print_definition_of_projective_space(int verbose_level);
 	void definition_of_orthogonal_space(int verbose_level);

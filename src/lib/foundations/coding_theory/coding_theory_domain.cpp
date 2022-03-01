@@ -1866,7 +1866,6 @@ void coding_theory_domain::do_polynomial(
 	Fq->finite_field_init(2, FALSE /* f_without_tables */, 0 /* verbose_level */);
 
 	Poly->init(Fq, polynomial_nb_vars, polynomial_degree,
-				FALSE /* f_init_incidence_structure */,
 				Monomial_ordering_type,
 				0 /* verbose_level */);
 	mon = NEW_int(polynomial_nb_vars);
@@ -1899,15 +1898,18 @@ void coding_theory_domain::do_polynomial(
 	int set_sz = 0;
 	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
+	long int N_points;
+
+	N_points = Gg.nb_PG_elements(Poly->nb_variables - 1, Fq->q);
 
 	v = NEW_int(polynomial_nb_vars);
-	f = NEW_int(Poly->get_P()->N_points);
+	f = NEW_int(N_points);
 	Poly->polynomial_function(coeff, f, verbose_level);
 
 
-	set = NEW_lint(Poly->get_P()->N_points);
+	set = NEW_lint(N_points);
 
-	for (h = 0; h < Poly->get_P()->N_points; h++) {
+	for (h = 0; h < N_points; h++) {
 		Poly->unrank_point(v, h);
 		cout << h << " : ";
 		Int_vec_print(cout, v, polynomial_nb_vars);

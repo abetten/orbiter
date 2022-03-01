@@ -381,7 +381,6 @@ void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
 	}
 	Poly1->init(P2->F,
 			3 /* nb_vars */, 1 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -476,7 +475,6 @@ void eckardt_point_info::print_conics(ostream &ost, int verbose_level)
 	}
 	Poly2->init(P2->F,
 			3 /* nb_vars */, 2 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {

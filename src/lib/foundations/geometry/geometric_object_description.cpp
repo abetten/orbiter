@@ -96,19 +96,11 @@ geometric_object_description::geometric_object_description()
 	f_Maruta_Hamada_arc = FALSE;
 
 	f_projective_variety = FALSE;
+	//projective_variety_ring_label
 	//variety_label;
 	//variety_label_txt
-	variety_degree = 0;
-	variety_n = 0;
 	//variety_coeffs;
-	Monomial_ordering_type = t_PART;
-
-	f_ideal = FALSE;
-	//ideal_label;
-	//ideal_label_txt
-	ideal_degree = 0;
-	//std::string ideal_point_set_label;
-	ideal_n = 0;
+	//Monomial_ordering_type = t_PART;
 
 
 	f_intersection_of_zariski_open_sets = FALSE;
@@ -119,10 +111,9 @@ geometric_object_description::geometric_object_description()
 
 
 	f_projective_curve = FALSE;
+	//projective_curve_ring_label
 	//curve_label_txt;
 	//curve_label_tex;
-	curve_nb_vars = 0;
-	curve_degree = 0;
 	//curve_coeffs = NULL;
 
 	f_set = FALSE;
@@ -320,9 +311,9 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-projective_variety") == 0) {
 			f_projective_variety = TRUE;
+			projective_variety_ring_label.assign(argv[++i]);
 			variety_label_txt.assign(argv[++i]);
 			variety_label_tex.assign(argv[++i]);
-			variety_degree = ST.strtoi(argv[++i]);
 
 
 			orbiter_kernel_system::os_interface Os;
@@ -334,34 +325,20 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 			cout << "-projective_variety "
 					<< variety_label_txt << " "
 					<< variety_label_tex << " "
-					<< variety_degree << " "
 					<< variety_coeffs << endl;
 		}
 
-		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
-			f_ideal = TRUE;
-			ideal_label_txt.assign(argv[++i]);
-			ideal_label_tex.assign(argv[++i]);
-			ideal_degree = ST.strtoi(argv[++i]);
-			ideal_point_set_label.assign(argv[++i]);
-			ideal_n = ST.strtoi(argv[++i]);
-
-			cout << "-ideal "
-					<< ideal_label_txt << " "
-					<< ideal_label_tex << " "
-					<< ideal_degree << " "
-					<< ideal_point_set_label << " "
-					<< ideal_n << " "
-					<< endl;
-		}
 
 
 		else if (ST.stringcmp(argv[i], "-intersection_of_zariski_open_sets") == 0) {
 			f_intersection_of_zariski_open_sets = TRUE;
+			intersection_of_zariski_open_sets_ring_label.assign(argv[++i]);
 			variety_label_txt.assign(argv[++i]);
 			variety_label_tex.assign(argv[++i]);
-			variety_degree = ST.strtoi(argv[++i]);
-			variety_n = ST.strtoi(argv[++i]);
+
+			int nb;
+
+			nb = ST.strtoi(argv[++i]);
 
 			int j;
 
@@ -370,10 +347,10 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 			i++;
 
-			for (j = 0; j < variety_n; j++) {
+			for (j = 0; j < nb; j++) {
 				string s;
 
-				cout << "reading argument " << j << " / " << variety_n << " : " << argv[i] << endl;
+				cout << "reading argument " << j << " / " << nb << " : " << argv[i] << endl;
 
 				Os.get_string_from_command_line(s, argc, argv, i, verbose_level);
 				Variety_coeffs.push_back(s);
@@ -383,11 +360,11 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 
 			cout << "-intersection_of_zariski_open_sets "
+					<< intersection_of_zariski_open_sets_ring_label << " "
 					<< variety_label_txt << " "
 					<< variety_label_tex << " "
-					<< variety_degree << " "
-					<< variety_n << endl;
-			for (j = 0; j < variety_n; j++) {
+					<< endl;
+			for (j = 0; j < Variety_coeffs.size(); j++) {
 				cout << j << " : " << Variety_coeffs[j] << endl;
 			}
 		}
@@ -395,12 +372,13 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 		else if (ST.stringcmp(argv[i], "-number_of_conditions_satisfied") == 0) {
 			f_number_of_conditions_satisfied = TRUE;
+			number_of_conditions_satisfied_ring_label.assign(argv[++i]);
 			variety_label_txt.assign(argv[++i]);
 			variety_label_tex.assign(argv[++i]);
-			variety_degree = ST.strtoi(argv[++i]);
-			variety_n = ST.strtoi(argv[++i]);
 
 			number_of_conditions_satisfied_fname.assign(argv[++i]);
+
+			int nb = ST.strtoi(argv[++i]);
 
 
 			int j;
@@ -409,10 +387,10 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 			i++;
 
-			for (j = 0; j < variety_n; j++) {
+			for (j = 0; j < nb; j++) {
 				string s;
 
-				cout << "reading argument " << j << " / " << variety_n << " : " << argv[i] << endl;
+				cout << "reading argument " << j << " / " << nb << " : " << argv[i] << endl;
 
 				Os.get_string_from_command_line(s, argc, argv, i, verbose_level);
 				Variety_coeffs.push_back(s);
@@ -422,11 +400,10 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 
 			cout << "-number_of_conditions_satisfied "
+					<< number_of_conditions_satisfied_ring_label << " "
 					<< variety_label_txt << " "
-					<< variety_label_tex << " "
-					<< variety_degree << " "
-					<< variety_n << endl;
-			for (j = 0; j < variety_n; j++) {
+					<< variety_label_tex << endl;
+			for (j = 0; j < Variety_coeffs.size(); j++) {
 				cout << j << " : " << Variety_coeffs[j] << endl;
 			}
 		}
@@ -435,18 +412,19 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 		else if (ST.stringcmp(argv[i], "-projective_curve") == 0) {
 			f_projective_curve = TRUE;
+			projective_curve_ring_label.assign(argv[++i]);
 			curve_label_txt.assign(argv[++i]);
 			curve_label_tex.assign(argv[++i]);
-			curve_nb_vars = ST.strtoi(argv[++i]);
-			curve_degree = ST.strtoi(argv[++i]);
+			//curve_nb_vars = ST.strtoi(argv[++i]);
+			//curve_degree = ST.strtoi(argv[++i]);
 			curve_coeffs.assign(argv[++i]);
 			cout << "-projective_curve "
+					<< projective_curve_ring_label << " "
 					<< curve_label_txt << " "
 					<< curve_label_tex << " "
-					<< curve_nb_vars << " "
-					<< curve_degree << " "
 					<< curve_coeffs << endl;
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-monomial_type_LEX") == 0) {
 			Monomial_ordering_type = t_LEX;
 			cout << "-monomial_type_LEX " << endl;
@@ -455,6 +433,7 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 			Monomial_ordering_type = t_PART;
 			cout << "-monomial_type_PART " << endl;
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-set") == 0) {
 			f_set = TRUE;
 			set_text.assign(argv[++i]);
@@ -578,30 +557,19 @@ void geometric_object_description::print()
 	}
 	if (f_projective_variety) {
 		cout << "-projective_variety "
+				<< projective_variety_ring_label << " "
 				<< variety_label_txt << " "
 				<< variety_label_tex << " "
-				<< variety_degree << " "
 				<< variety_coeffs << endl;
-	}
-	if (f_ideal) {
-
-		cout << "-ideal "
-				<< ideal_label_txt << " "
-				<< ideal_label_tex << " "
-				<< ideal_degree << " "
-				<< ideal_point_set_label << " "
-				<< ideal_n << " "
-				<< endl;
 	}
 
 	if (f_intersection_of_zariski_open_sets) {
 		cout << "-intersection_of_zariski_open_sets "
+				<< intersection_of_zariski_open_sets_ring_label << " "
 				<< variety_label_txt << " "
 				<< variety_label_tex << " "
-				<< variety_degree << " "
-				<< variety_n << endl;
-		int j;
-		for (j = 0; j < variety_n; j++) {
+				<< endl;
+		for (int j = 0; j < Variety_coeffs.size(); j++) {
 			cout << j << " : " << Variety_coeffs[j] << endl;
 		}
 	}
@@ -609,12 +577,11 @@ void geometric_object_description::print()
 
 	if (f_number_of_conditions_satisfied) {
 		cout << "-number_of_conditions_satisfied "
+				<< number_of_conditions_satisfied_ring_label << " "
 				<< variety_label_txt << " "
-				<< variety_label_tex << " "
-				<< variety_degree << " "
-				<< variety_n << endl;
+				<< variety_label_tex << endl;
 		int j;
-		for (j = 0; j < variety_n; j++) {
+		for (j = 0; j < Variety_coeffs.size(); j++) {
 			cout << j << " : " << Variety_coeffs[j] << endl;
 		}
 	}
@@ -623,10 +590,9 @@ void geometric_object_description::print()
 
 	if (f_projective_curve) {
 		cout << "-projective_curve "
+				<< projective_curve_ring_label << " "
 				<< curve_label_txt << " "
 				<< curve_label_tex << " "
-				<< curve_nb_vars << " "
-				<< curve_degree << " "
 				<< curve_coeffs << endl;
 	}
 	if (f_set) {

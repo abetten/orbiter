@@ -362,6 +362,9 @@ public:
 	int f_restricted_action;
 	std::string restricted_action_set_text;
 
+	int f_on_k_subspaces;
+	int on_k_subspaces_k;
+
 	std::vector<std::string> from;
 
 	group_modification_description();
@@ -666,6 +669,12 @@ public:
 	void modified_group_init(
 			group_modification_description *description,
 			int verbose_level);
+	void create_restricted_action(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_k_subspaces(
+			group_modification_description *description,
+			int verbose_level);
 
 };
 
@@ -677,7 +686,7 @@ public:
 // #############################################################################
 
 
-//! orbits of a group on polynomials using Schreier orbits
+//! orbits of a group on polynomials using Schreier vectors
 
 class orbits_on_polynomials {
 public:
@@ -691,6 +700,8 @@ public:
 	ring_theory::longinteger_object go;
 
 	ring_theory::homogeneous_polynomial_domain *HPD;
+
+	geometry::projective_space *P;
 
 	actions::action *A2;
 

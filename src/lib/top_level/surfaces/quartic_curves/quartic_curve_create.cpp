@@ -173,7 +173,8 @@ void quartic_curve_create::init(
 	}
 }
 
-void quartic_curve_create::create_quartic_curve_from_description(quartic_curve_domain_with_action *DomA, int verbose_level)
+void quartic_curve_create::create_quartic_curve_from_description(
+		quartic_curve_domain_with_action *DomA, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -458,7 +459,8 @@ void quartic_curve_create::create_quartic_curve_by_coefficient_vector(int *eqn15
 }
 
 
-void quartic_curve_create::create_quartic_curve_from_catalogue(quartic_curve_domain_with_action *DomA,
+void quartic_curve_create::create_quartic_curve_from_catalogue(
+		quartic_curve_domain_with_action *DomA,
 		int iso,
 		int verbose_level)
 {
@@ -591,10 +593,13 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	tree = NEW_OBJECT(expression_parser::syntax_tree);
 
 	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation Formula " << name_of_formula << " is " << equation_text << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation Managed variables: " << managed_variables << endl;
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
+				"formula " << name_of_formula << " is " << equation_text << endl;
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
+				"managed variables: " << managed_variables << endl;
 	}
 
+#if 0
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
@@ -613,13 +618,17 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		tree->f_has_managed_variables = TRUE;
 
 	}
+#else
+	ST.parse_comma_separated_strings(managed_variables, tree->managed_variables);
+	tree->f_has_managed_variables = TRUE;
+#endif
 
 	int nb_vars;
 
 	nb_vars = tree->managed_variables.size();
 
 	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation Managed variables: " << endl;
+		cout << "quartic_curve_create::create_quartic_curve_by_equation managed variables: " << endl;
 		for (i = 0; i < nb_vars; i++) {
 			cout << i << " : " << tree->managed_variables[i] << endl;
 		}
@@ -627,7 +636,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 
 	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation Starting to parse " << name_of_formula << endl;
+		cout << "quartic_curve_create::create_quartic_curve_by_equation starting to parse " << name_of_formula << endl;
 	}
 	Parser.parse(tree, equation_text, 0/*verbose_level*/);
 	if (f_v) {
@@ -636,7 +645,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 
 	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation Syntax tree:" << endl;
+		cout << "quartic_curve_create::create_quartic_curve_by_equation syntax tree:" << endl;
 		//tree->print(cout);
 	}
 
@@ -679,7 +688,6 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	}
 	Poly->init(F,
 			nb_vars /* nb_vars */, degree,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			0/*verbose_level*/);
 	if (f_v) {
@@ -724,8 +732,9 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		cout << "quartic_curve_create::create_quartic_curve_by_equation before evaluate" << endl;
 	}
 
+	const char *p;
 	p = equation_parameters.c_str();
-	//char str[1000];
+	char str[1000];
 
 	std::map<std::string, std::string> symbol_table;
 	//vector<string> symbols;

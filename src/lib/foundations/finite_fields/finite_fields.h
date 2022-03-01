@@ -797,6 +797,9 @@ public:
 	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
 	void print_matrix_latex(std::ostream &ost, int *A, int m, int n);
 	void print_matrix_numerical_latex(std::ostream &ost, int *A, int m, int n);
+	void read_from_string_coefficient_vector(std::string &str,
+			int *&coeff, int &len,
+			int verbose_level);
 
 
 

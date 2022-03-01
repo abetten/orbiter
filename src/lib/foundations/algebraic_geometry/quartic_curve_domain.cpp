@@ -95,7 +95,6 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly1_3->init(F,
 			3 /* nb_vars */, 1 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -110,7 +109,6 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly2_3->init(F,
 			3 /* nb_vars */, 2 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -125,7 +123,6 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly3_3->init(F,
 			3 /* nb_vars */, 3 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -139,7 +136,6 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly4_3->init(F,
 			3 /* nb_vars */, 4 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -152,7 +148,6 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 	Poly3_4->init(F,
 			4 /* nb_vars */, 3 /* degree */,
-			FALSE /* f_init_incidence_structure */,
 			t_PART,
 			verbose_level);
 	if (f_v) {

@@ -24,6 +24,9 @@ group_modification_description::group_modification_description()
 	//std::string restricted_action_set_text;
 	//std::vector<std::string> from;
 
+	f_on_k_subspaces = FALSE;
+	on_k_subspaces_k = 0;
+
 }
 
 
@@ -50,6 +53,13 @@ int group_modification_description::read_arguments(
 			restricted_action_set_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-restricted_action " << restricted_action_set_text << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-on_k_subspaces") == 0) {
+			f_on_k_subspaces = TRUE;
+			on_k_subspaces_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
@@ -84,6 +94,10 @@ void group_modification_description::print()
 	if (f_restricted_action) {
 		cout << "-restricted_action " << restricted_action_set_text << endl;
 	}
+	if (f_on_k_subspaces) {
+		cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
+	}
+
 	if (from.size()) {
 		int i;
 		for (i = 0; i < from.size(); i++) {

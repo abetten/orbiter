@@ -25,6 +25,9 @@ symbol_definition::symbol_definition()
 	f_finite_field = FALSE;
 	Finite_field_description = NULL;
 
+	f_polynomial_ring = FALSE;
+	Polynomial_ring_description = NULL;
+
 	f_projective_space = FALSE;
 	Projective_space_with_action_description = NULL;
 
@@ -155,6 +158,26 @@ void symbol_definition::read_definition(
 
 		if (f_v) {
 			cout << "-finite_field" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-polynomial_ring") == 0) {
+		f_polynomial_ring = TRUE;
+		Polynomial_ring_description = NEW_OBJECT(ring_theory::polynomial_ring_description);
+		if (f_v) {
+			cout << "reading -polynomial_ring" << endl;
+		}
+		i += Polynomial_ring_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-polynomial_ring" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -687,6 +710,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_finite_field" << endl;
 		}
 	}
+	else if (f_polynomial_ring) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_polynomial_ring" << endl;
+		}
+		definition_of_polynomial_ring(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_polynomial_ring" << endl;
+		}
+	}
 	else if (f_projective_space) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_projective_space" << endl;
@@ -907,6 +939,10 @@ void symbol_definition::print()
 		cout << "-finite_field ";
 		Finite_field_description->print();
 	}
+	if (f_polynomial_ring) {
+		cout << "-polynomial_ring ";
+		Polynomial_ring_description->print();
+	}
 	if (f_projective_space) {
 		cout << "-projective_space ";
 		Projective_space_with_action_description->print();
@@ -1045,6 +1081,42 @@ void symbol_definition::definition_of_finite_field(int verbose_level)
 		cout << "symbol_definition::definition_of_finite_field done" << endl;
 	}
 }
+
+void symbol_definition::definition_of_polynomial_ring(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_polynomial_ring" << endl;
+	}
+	Polynomial_ring_description->print();
+	ring_theory::homogeneous_polynomial_domain *HPD;
+
+	HPD = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_polynomial_ring before HPD->init" << endl;
+	}
+	HPD->init(Polynomial_ring_description, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_polynomial_ring after F->init" << endl;
+	}
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_polynomial_ring(define_label, HPD, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_polynomial_ring before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_polynomial_ring done" << endl;
+	}
+}
+
 
 void symbol_definition::definition_of_projective_space(int verbose_level)
 {

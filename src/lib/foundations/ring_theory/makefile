@@ -13,6 +13,9 @@ MODULES = \
 	partial_derivative.o \
 	polynomial_double_domain.o \
 	polynomial_double.o \
+	polynomial_ring_activity_description.o \
+	polynomial_ring_activity.o \
+	polynomial_ring_description.o \
 	ring_theory_global.o \
 	table_of_irreducible_polynomials.o \
 	unipoly_domain.o \
