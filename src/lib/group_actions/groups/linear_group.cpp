@@ -426,6 +426,7 @@ void linear_group::linear_group_init(
 		}
 	}
 
+#if 0
 	if (description->f_on_k_subspaces) {
 		induced_actions::action_on_grassmannian *AG;
 		geometry::grassmann *Grass;
@@ -508,6 +509,9 @@ void linear_group::linear_group_init(
 					"action on k-subspaces done" << endl;
 		}
 	}
+#endif
+
+#if 0
 	if (description->f_restricted_action) {
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
@@ -542,6 +546,7 @@ void linear_group::linear_group_init(
 		}
 		f_OK = TRUE;
 	}
+#endif
 
 	if (!f_OK) {
 		if (f_v) {

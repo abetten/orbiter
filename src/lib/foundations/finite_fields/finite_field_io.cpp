@@ -521,16 +521,18 @@ void finite_field::multiplication_table_save_csv(int verbose_level)
 void finite_field::addition_table_reordered_save_csv(int verbose_level)
 {
 
-	if (!f_has_table) {
-		cout << "finite_field::addition_table_reordered_save_csv !f_has_table" << endl;
-		exit(1);
+	if (f_has_table) {
+		std::string fname;
+
+		make_fname_addition_table_reordered_csv(fname);
+
+		T->addition_table_reordered_save_csv(fname, verbose_level);
+	}
+	else {
+
+		cout << "finite_field::addition_table_reordered_save_csv !f_has_table, skipping" << endl;
 	}
 
-	std::string fname;
-
-	make_fname_addition_table_reordered_csv(fname);
-
-	T->addition_table_reordered_save_csv(fname, verbose_level);
 
 }
 
@@ -538,16 +540,19 @@ void finite_field::addition_table_reordered_save_csv(int verbose_level)
 void finite_field::multiplication_table_reordered_save_csv(int verbose_level)
 {
 
-	if (!f_has_table) {
-		cout << "finite_field::multiplication_table_reordered_save_csv !f_has_table" << endl;
-		exit(1);
+	if (f_has_table) {
+		std::string fname;
+
+		make_fname_multiplication_table_reordered_csv(fname);
+
+		T->multiplication_table_reordered_save_csv(fname, verbose_level);
+	}
+	else {
+
+		cout << "finite_field::multiplication_table_reordered_save_csv !f_has_table, skipping" << endl;
+
 	}
 
-	std::string fname;
-
-	make_fname_multiplication_table_reordered_csv(fname);
-
-	T->multiplication_table_reordered_save_csv(fname, verbose_level);
 
 }
 
@@ -667,29 +672,72 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 	if (f_add_mult_table) {
 
-		if (!f_has_table) {
-			cout << "finite_field::cheat_sheet !f_has_table" << endl;
-			exit(1);
+		if (f_has_table) {
+			if (f_v) {
+				T->print_add_mult_tables(cout);
+			}
+			T->print_add_mult_tables_in_C(label);
 		}
-		if (f_v) {
-			T->print_add_mult_tables(cout);
+		else {
+			cout << "finite_field::cheat_sheet !f_has_table, skipping" << endl;
 		}
-		T->print_add_mult_tables_in_C(label);
 	}
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet before cheat_sheet_subfields" << endl;
+	}
 	cheat_sheet_subfields(f, verbose_level);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet after cheat_sheet_subfields" << endl;
+	}
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet before cheat_sheet_table_of_elements" << endl;
+	}
 	cheat_sheet_table_of_elements(f, verbose_level);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet after cheat_sheet_table_of_elements" << endl;
+	}
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet before cheat_sheet_main_table" << endl;
+	}
 	cheat_sheet_main_table(f, verbose_level);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet after cheat_sheet_main_table" << endl;
+	}
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet before cheat_sheet_addition_table" << endl;
+	}
 	cheat_sheet_addition_table(f, verbose_level);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet after cheat_sheet_addition_table" << endl;
+	}
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet before cheat_sheet_multiplication_table" << endl;
+	}
 	cheat_sheet_multiplication_table(f, verbose_level);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet after cheat_sheet_multiplication_table" << endl;
+	}
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet before cheat_sheet_power_table TRUE" << endl;
+	}
 	cheat_sheet_power_table(f, TRUE /* f_with_polynomials */, verbose_level);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet after cheat_sheet_power_table TRUE" << endl;
+	}
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet before cheat_sheet_power_table FALSE" << endl;
+	}
 	cheat_sheet_power_table(f, FALSE /* f_with_polynomials */, verbose_level);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet after cheat_sheet_power_table FALSE" << endl;
+	}
 
 	if (f_v) {
 		cout << "finite_field::cheat_sheet done" << endl;
@@ -1088,6 +1136,12 @@ void finite_field::cheat_sheet_main_table(std::ostream &f, int verbose_level)
 	int *v;
 	int i, j, a;
 	int f_first;
+
+
+	if (!f_has_table) {
+		cout << "finite_field::cheat_sheet_main_table !f_has_table, skipping" << endl;
+		return;
+	}
 
 	v = NEW_int(e);
 

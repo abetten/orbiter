@@ -2864,6 +2864,7 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	int f_vvv = FALSE; //(verbose_level >= 2);
 	unipoly_object b, c, d;
 
 	if (f_v) {
@@ -2887,7 +2888,9 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 
 	while (n) {
 		if (f_vv) {
-			cout << "unipoly_domain::power_mod n=" << n;
+			cout << "unipoly_domain::power_mod n=" << n << endl;
+		}
+		if (f_vvv) {
 			cout << " b=";
 			print_object(b, cout);
 			cout << " c=";
@@ -2900,12 +2903,12 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 				cout << "unipoly_domain::power_mod n is odd" << endl;
 				cout << "unipoly_domain::power_mod before mult_mod(b,c,d,m)" << endl;
 			}
-			mult_mod(b, c, d, m, verbose_level - 1);
+			mult_mod(b, c, d, m, 0 /*verbose_level - 1*/);
 
-			if (f_vv) {
+			if (f_vvv) {
 				cout << "unipoly_domain::power_mod before assign(d,c)" << endl;
 			}
-			if (f_vv) {
+			if (f_vvv) {
 				cout << "b * c = d";
 				print_object(d, cout);
 				cout << endl;
@@ -2920,13 +2923,13 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 		if (f_vv) {
 			cout << "unipoly_domain::power_mod before mult(b,b,d)" << endl;
 		}
-		mult_mod(b, b, d, m, verbose_level - 1);
-		if (f_vv) {
+		mult_mod(b, b, d, m, 0 /*verbose_level - 1*/);
+		if (f_vvv) {
 			cout << "unipoly_domain::power_mod b * b = d";
 			print_object(d, cout);
 			cout << endl;
 		}
-		if (f_vv) {
+		if (f_vvv) {
 			cout << "unipoly_domain::power_mod before assign(d,b)" << endl;
 		}
 		assign(d, b, 0 /*verbose_level*/);

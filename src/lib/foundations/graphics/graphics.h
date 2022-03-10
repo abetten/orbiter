@@ -154,6 +154,9 @@ public:
 	int f_secondary_input_csv_file;
 	std::string secondary_input_csv_file_name;
 
+	int f_input_object;
+	std::string input_object_label;
+
 	int f_input_matrix;
 	int *M;
 	int *M2;

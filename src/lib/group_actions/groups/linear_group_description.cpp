@@ -57,8 +57,8 @@ linear_group_description::linear_group_description()
 	f_orthogonal_group = FALSE;
 	orthogonal_group_epsilon = 0;
 
-	f_on_k_subspaces = FALSE;
-	on_k_subspaces_k = 0;
+	//f_on_k_subspaces = FALSE;
+	//on_k_subspaces_k = 0;
 
 	f_on_tensors = FALSE;
 	f_on_rank_one_tensors = FALSE;
@@ -70,8 +70,8 @@ linear_group_description::linear_group_description()
 
 	f_Janko1 = FALSE;
 
-	f_restricted_action = FALSE;
-	//restricted_action_text;
+	//f_restricted_action = FALSE;
+	////restricted_action_text;
 
 	f_export_magma = FALSE;
 	//null();
@@ -426,6 +426,7 @@ int linear_group_description::read_arguments(
 				cout << "-identity_group" << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-on_k_subspaces") == 0) {
 			f_on_k_subspaces = TRUE;
 			on_k_subspaces_k = ST.strtoi(argv[++i]);
@@ -433,6 +434,7 @@ int linear_group_description::read_arguments(
 				cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-on_tensors") == 0) {
 			f_on_tensors = TRUE;
 			if (f_v) {
@@ -495,6 +497,7 @@ int linear_group_description::read_arguments(
 				cout << "-Janko1" << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-restricted_action") == 0) {
 			f_restricted_action = TRUE;
 			restricted_action_text.assign(argv[++i]);
@@ -502,6 +505,7 @@ int linear_group_description::read_arguments(
 				cout << "-restricted_action " << restricted_action_text << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			if (f_v) {
@@ -648,9 +652,11 @@ void linear_group_description::print()
 	if (f_identity_group) {
 		cout << "-identity_group" << endl;
 	}
+#if 0
 	if (f_on_k_subspaces) {
 		cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
 	}
+#endif
 	if (f_on_tensors) {
 		cout << "-on_tensors " << endl;
 	}
@@ -678,9 +684,11 @@ void linear_group_description::print()
 	if (f_Janko1) {
 		cout << "-Janko1" << endl;
 	}
+#if 0
 	if (f_restricted_action) {
 		cout << "-restricted_action " << restricted_action_text << endl;
 	}
+#endif
 	if (f_export_magma) {
 		cout << "-export_magma" << endl;
 	}

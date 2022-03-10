@@ -630,6 +630,22 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 				verbose_level);
 
 	}
+	else if (Descr->f_line_type) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS f_line_type" << endl;
+		}
+
+
+		line_type(
+					Descr->line_type_prefix,
+					Descr->line_type_projective_space_label,
+					IS,
+					verbose_level);
+
+
+
+	}
 
 
 
@@ -1343,6 +1359,107 @@ void combinatorial_object_activity::line_covering_type(
 		cout << "combinatorial_object_activity::line_covering_type done" << endl;
 	}
 }
+
+void combinatorial_object_activity::line_type(
+		std::string &prefix,
+		std::string &projective_space_label,
+		data_structures::data_input_stream *IS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+	orbiter_kernel_system::latex_interface L;
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::line_type" << endl;
+	}
+
+	projective_geometry::projective_space_with_action *PA;
+
+	PA = user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
+
+	geometry::projective_space *P;
+
+	P = PA->P;
+
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_line_type.txt");
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::line_type before latex_report" << endl;
+	}
+
+
+	{
+
+		ofstream ost(fname);
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::line_type before loop" << endl;
+		}
+
+		int i, h;
+
+		int *type;
+
+		type = NEW_int(P->N_lines);
+
+
+		for (i = 0; i < N; i++) {
+
+			geometry::object_with_canonical_form *OwCF;
+
+			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
+
+
+			P->line_intersection_type(
+					OwCF->set, OwCF->sz, type, 0 /* verbose_level */);
+				// type[N_lines]
+
+			ost << OwCF->sz;
+			for (h = 0; h < P->N_lines; h++) {
+				ost << " " << type[h];
+			}
+			ost << endl;
+
+#if 0
+			data_structures::tally T;
+
+			T.init(type, P->N_lines, FALSE, 0);
+
+			if (f_v) {
+				cout << "combinatorial_object_activity::perform_activity_GOC line type:" << endl;
+				T.print(TRUE /* f_backwards*/);
+				cout << endl;
+			}
+#endif
+
+
+
+		}
+
+		ost << -1 << endl;
+
+
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object_activity::line_type done" << endl;
+	}
+}
+
 
 
 

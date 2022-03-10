@@ -77,47 +77,63 @@ void finite_field_implementation_wo_tables::init(finite_field *F, int verbose_le
 		cout << "finite_field_implementation_wo_tables::init after GFp->finite_field_init" << endl;
 	}
 
+	if (F->e > 1) {
 
-	FX = NEW_OBJECT(ring_theory::unipoly_domain);
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init the field is an extension field" << endl;
+		}
+
+		FX = NEW_OBJECT(ring_theory::unipoly_domain);
 
 
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::init before FX->create_object_by_rank_string" << endl;
+
+
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init before FX->create_object_by_rank_string" << endl;
+		}
+		FX->create_object_by_rank_string(m, F->my_poly, 0 /*verbose_level - 2*/);
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init after FX->create_object_by_rank_string" << endl;
+		}
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init m=";
+			FX->print_object(m, cout);
+			cout << endl;
+		}
+
+		Fq = NEW_OBJECT(ring_theory::unipoly_domain);
+
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init before Fq->init_factorring" << endl;
+		}
+		Fq->init_factorring(GFp, m, verbose_level - 1);
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init after Fq->init_factorring" << endl;
+		}
+
+		int i;
+
+		factor_polynomial_degree = Fq->degree(m);
+		factor_polynomial_coefficients_negated = NEW_int(factor_polynomial_degree + 1);
+		for (i = 0; i <= factor_polynomial_degree; i++) {
+			factor_polynomial_coefficients_negated[i] = F->negate(Fq->s_i(m, i));
+		}
+
+
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init before Fq->create_object_by_rank" << endl;
+		}
+		Fq->create_object_by_rank(Alpha, F->alpha, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init after Fq->create_object_by_rank" << endl;
+		}
 	}
-	FX->create_object_by_rank_string(m, F->my_poly, 0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::init m=";
-		FX->print_object(m, cout);
-		cout << endl;
+	else {
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::init the field is a prime field" << endl;
+		}
+
 	}
-
-	Fq = NEW_OBJECT(ring_theory::unipoly_domain);
-
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::init before Fq->init_factorring" << endl;
-	}
-	Fq->init_factorring(GFp, m, verbose_level - 1);
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::init after Fq->init_factorring" << endl;
-	}
-
-	int i;
-
-	factor_polynomial_degree = Fq->degree(m);
-	factor_polynomial_coefficients_negated = NEW_int(factor_polynomial_degree + 1);
-	for (i = 0; i <= factor_polynomial_degree; i++) {
-		factor_polynomial_coefficients_negated[i] = F->negate(Fq->s_i(m, i));
-	}
-
-
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::init before Fq->create_object_by_rank" << endl;
-	}
-	Fq->create_object_by_rank(Alpha, F->alpha, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::init after Fq->create_object_by_rank" << endl;
-	}
-
 
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::init done" << endl;
@@ -132,43 +148,54 @@ int finite_field_implementation_wo_tables::mult(int i, int j, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::mult" << endl;
 	}
 
-	ring_theory::unipoly_object a, b, c;
-	int k;
+	long int k;
 
-	Fq->create_object_by_rank(a, i, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
-	Fq->create_object_by_rank(b, j, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
-	Fq->create_object_of_degree_no_test(c, factor_polynomial_degree);
+	if (F->e > 1) {
+		ring_theory::unipoly_object a, b, c;
 
-	if (f_v) {
-		cout << "a=" << endl;
-		Fq->print_object(a, cout);
-		cout << endl;
-		cout << "b=" << endl;
-		Fq->print_object(b, cout);
-		cout << endl;
-		cout << "finite_field_implementation_wo_tables::mult before Fq->mult_mod_negated" << endl;
+		Fq->create_object_by_rank(a, i, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+		Fq->create_object_by_rank(b, j, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+		Fq->create_object_of_degree_no_test(c, factor_polynomial_degree);
+
+		if (f_v) {
+			cout << "a=" << endl;
+			Fq->print_object(a, cout);
+			cout << endl;
+			cout << "b=" << endl;
+			Fq->print_object(b, cout);
+			cout << endl;
+			cout << "finite_field_implementation_wo_tables::mult before Fq->mult_mod_negated" << endl;
+		}
+
+		Fq->mult_mod_negated(a, b, c,
+				factor_polynomial_degree,
+				factor_polynomial_coefficients_negated,
+				verbose_level);
+
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::mult after Fq->mult_mod_negated" << endl;
+		}
+
+		k = Fq->rank(c);
+		if (f_v) {
+			cout << "c=" << endl;
+			Fq->print_object(c, cout);
+			cout << endl;
+			cout << "i=" << i << ", j=" << j << " k=" << k << endl;
+		}
+
+		Fq->delete_object(a);
+		Fq->delete_object(b);
+		Fq->delete_object(c);
 	}
+	else {
 
-	Fq->mult_mod_negated(a, b, c,
-			factor_polynomial_degree,
-			factor_polynomial_coefficients_negated,
-			verbose_level);
+		number_theory::number_theory_domain NT;
 
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::mult after Fq->mult_mod_negated" << endl;
+		k = NT.mult_mod(i, j, F->p);
+
+
 	}
-
-	k = Fq->rank(c);
-	if (f_v) {
-		cout << "c=" << endl;
-		Fq->print_object(c, cout);
-		cout << endl;
-		cout << "i=" << i << ", j=" << j << " k=" << k << endl;
-	}
-
-	Fq->delete_object(a);
-	Fq->delete_object(b);
-	Fq->delete_object(c);
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::mult done" << endl;
 	}
@@ -183,39 +210,49 @@ int finite_field_implementation_wo_tables::inverse(int i, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::inverse" << endl;
 	}
 
-	ring_theory::unipoly_object a, u, v, g;
-	int k;
+	long int k;
 
-	Fq->create_object_by_rank(a, i, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
-	Fq->create_object_of_degree_no_test(u, factor_polynomial_degree);
-	Fq->create_object_of_degree_no_test(v, factor_polynomial_degree);
-	Fq->create_object_of_degree_no_test(g, factor_polynomial_degree);
+	if (F->e > 1) {
+		ring_theory::unipoly_object a, u, v, g;
 
-	if (f_v) {
-		cout << "a=" << endl;
-		Fq->print_object(a, cout);
-		cout << endl;
-		cout << "finite_field_implementation_wo_tables::inverse before Fq->extended_gcd" << endl;
+		Fq->create_object_by_rank(a, i, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+		Fq->create_object_of_degree_no_test(u, factor_polynomial_degree);
+		Fq->create_object_of_degree_no_test(v, factor_polynomial_degree);
+		Fq->create_object_of_degree_no_test(g, factor_polynomial_degree);
+
+		if (f_v) {
+			cout << "a=" << endl;
+			Fq->print_object(a, cout);
+			cout << endl;
+			cout << "finite_field_implementation_wo_tables::inverse before Fq->extended_gcd" << endl;
+		}
+
+		Fq->extended_gcd(m, a, u, v, g, verbose_level);
+
+		if (f_v) {
+			cout << "finite_field_implementation_wo_tables::inverse after Fq->extended_gcd" << endl;
+		}
+
+		k = Fq->rank(v);
+		if (f_v) {
+			cout << "v=" << endl;
+			Fq->print_object(v, cout);
+			cout << endl;
+			cout << "i=" << i << ", k=" << k << endl;
+		}
+
+		Fq->delete_object(a);
+		Fq->delete_object(u);
+		Fq->delete_object(v);
+		Fq->delete_object(g);
+	}
+	else {
+		number_theory::number_theory_domain NT;
+
+		k = NT.inverse_mod(i, F->p);
+
 	}
 
-	Fq->extended_gcd(m, a, u, v, g, verbose_level);
-
-	if (f_v) {
-		cout << "finite_field_implementation_wo_tables::inverse after Fq->extended_gcd" << endl;
-	}
-
-	k = Fq->rank(v);
-	if (f_v) {
-		cout << "v=" << endl;
-		Fq->print_object(v, cout);
-		cout << endl;
-		cout << "i=" << i << ", k=" << k << endl;
-	}
-
-	Fq->delete_object(a);
-	Fq->delete_object(u);
-	Fq->delete_object(v);
-	Fq->delete_object(g);
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::inverse done" << endl;
 	}
@@ -230,20 +267,29 @@ int finite_field_implementation_wo_tables::negate(int i, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::negate" << endl;
 	}
 
-	geometry::geometry_global Gg;
+	long int k;
 
-	if (i < 0 || i >= F->q) {
-		cout << "finite_field_implementation_wo_tables::negate out of range, i = " << i << endl;
-		exit(1);
+	if (F->e > 1) {
+		geometry::geometry_global Gg;
+
+		if (i < 0 || i >= F->q) {
+			cout << "finite_field_implementation_wo_tables::negate out of range, i = " << i << endl;
+			exit(1);
+		}
+		long int l;
+
+		Gg.AG_element_unrank(F->p, v1, 1, F->e, i);
+		for (l = 0; l < F->e; l++) {
+			v2[l] = (F->p - v1[l]) % F->p;
+		}
+		k = Gg.AG_element_rank(F->p, v2, 1, F->e);
 	}
-	long int l, k;
+	else {
+		number_theory::number_theory_domain NT;
 
-	Gg.AG_element_unrank(F->p, v1, 1, F->e, i);
-	for (l = 0; l < F->e; l++) {
-		v2[l] = (F->p - v1[l]) % F->p;
+		k = NT.int_negate(i, F->p);
+
 	}
-	k = Gg.AG_element_rank(F->p, v2, 1, F->e);
-
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::negate done" << endl;
 	}
@@ -268,14 +314,24 @@ int finite_field_implementation_wo_tables::add(int i, int j, int verbose_level)
 		cout << "finite_field_implementation_wo_tables::add out of range, j = " << j << endl;
 		exit(1);
 	}
-	long int l, k;
 
-	Gg.AG_element_unrank(F->p, v1, 1, F->e, i);
-	Gg.AG_element_unrank(F->p, v2, 1, F->e, j);
-	for (l = 0; l < F->e; l++) {
-		v3[l] = (v1[l] + v2[l]) % F->p;
+	long int k;
+
+	if (F->e > 1) {
+		long int l;
+
+		Gg.AG_element_unrank(F->p, v1, 1, F->e, i);
+		Gg.AG_element_unrank(F->p, v2, 1, F->e, j);
+		for (l = 0; l < F->e; l++) {
+			v3[l] = (v1[l] + v2[l]) % F->p;
+		}
+		k = Gg.AG_element_rank(F->p, v3, 1, F->e);
 	}
-	k = Gg.AG_element_rank(F->p, v3, 1, F->e);
+	else {
+		number_theory::number_theory_domain NT;
+
+		k = NT.add_mod(i, j, F->p);
+	}
 
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::add done" << endl;

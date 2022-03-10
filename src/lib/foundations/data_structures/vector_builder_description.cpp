@@ -213,7 +213,7 @@ void vector_builder_description::print()
 				<< load_csv_data_column_fname << " " << load_csv_data_column_idx << endl;
 	}
 	if (f_sparse) {
-		cout << "-file " << sparse_len << " " << sparse_pairs << endl;
+		cout << "-sparse " << sparse_len << " " << sparse_pairs << endl;
 	}
 	if (concatenate_list.size()) {
 		int i;

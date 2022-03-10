@@ -4573,7 +4573,6 @@ static void divide(const char *in, char *out)
 		if (x == 0) {
 			continue;
 		}
-		//cout << "i=" << i << " x=" << x << endl;
 		x--;
 		for (ii = i, jj = 30; jj >= 0; ii--, jj--) {
 			R[ii] ^= B[x * 31 + jj];

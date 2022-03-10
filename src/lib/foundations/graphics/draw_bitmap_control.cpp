@@ -26,6 +26,10 @@ draw_bitmap_control::draw_bitmap_control()
 	//std::string secondary_input_csv_file_name;
 
 
+	f_input_object = FALSE;
+	//std::string input_object_label;
+
+
 	f_input_matrix = FALSE;
 	M = NULL;
 	M2 = NULL;
@@ -77,6 +81,14 @@ int draw_bitmap_control::read_arguments(
 				cout << "-secondary_input_csv_file " << secondary_input_csv_file_name << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-input_object") == 0) {
+			f_input_object = TRUE;
+			input_object_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-input_object " << input_object_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-partition") == 0) {
 			f_partition = TRUE;
 			part_width = ST.strtoi(argv[++i]);
@@ -132,6 +144,9 @@ void draw_bitmap_control::print()
 	}
 	if (f_secondary_input_csv_file) {
 		cout << "-secondary_input_csv_file " << secondary_input_csv_file_name << endl;
+	}
+	if (f_input_object) {
+		cout << "-input_object " << input_object_label << endl;
 	}
 	if (f_partition) {
 		cout << "-partition " << part_width << " " << part_row << " " << part_col << endl;

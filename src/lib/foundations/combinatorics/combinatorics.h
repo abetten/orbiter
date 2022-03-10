@@ -458,6 +458,8 @@ public:
 	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
 	void create_random_permutation(int deg,
 			std::string &fname_csv, int verbose_level);
+	void create_random_k_subsets(int n, int k, int nb,
+			std::string &fname_csv, int verbose_level);
 	void compute_incidence_matrix(int v, int b, int k, long int *Blocks_coded,
 			int *&M, int verbose_level);
 	void compute_blocks(int v, int b, int k, long int *Blocks_coded,

@@ -3409,6 +3409,61 @@ void combinatorics_domain::create_random_permutation(int deg,
 	}
 }
 
+void combinatorics_domain::create_random_k_subsets(int n, int k, int nb,
+		std::string &fname_csv, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_random_k_subsets" << endl;
+		cout << "combinatorics_domain::create_random_k_subsets n=" << n << endl;
+		cout << "combinatorics_domain::create_random_k_subsets k=" << k << endl;
+		cout << "combinatorics_domain::create_random_k_subsets nb=" << nb << endl;
+	}
+
+	{
+		orbiter_kernel_system::file_io Fio;
+		orbiter_kernel_system::os_interface Os;
+
+
+		int *T;
+		long int N;
+		long int rk;
+		int i;
+		ring_theory::longinteger_object a;
+
+		binomial(a, n, k, verbose_level);
+		if (f_v) {
+			cout << "combinatorics_domain::create_random_k_subsets a=" << a << endl;
+		}
+
+		N = a.as_lint();
+		if (f_v) {
+			cout << "combinatorics_domain::create_random_k_subsets N=" << N << endl;
+		}
+
+		T = NEW_int(nb * k);
+		for (i = 0; i < nb; i++) {
+			rk = Os.random_integer(N);
+			unrank_k_subset(rk, T + i * k, n, k);
+		}
+
+		Fio.int_matrix_write_csv(fname_csv, T, nb, k);
+
+		if (f_v) {
+			cout << "combinatorics_domain::create_random_k_subsets written file "
+					<< fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+		}
+
+		FREE_int(T);
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_random_k_subsets done" << endl;
+	}
+}
+
+
 void combinatorics_domain::compute_incidence_matrix(int v, int b, int k, long int *Blocks_coded,
 		int *&M, int verbose_level)
 {

@@ -120,14 +120,41 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input sets of points from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
+
+
+
+			set_of_sets *SoS;
+
+			SoS = NEW_OBJECT(set_of_sets);
+
+			int underlying_set_size = 0;
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+			}
+			SoS->init_from_file(
+					underlying_set_size,
+					Descr->Input[input_idx].input_string, verbose_level);
+			if (f_v) {
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "number of sets = " << SoS->nb_sets << endl;
+			}
+
+			nb_objects_to_test += SoS->nb_sets;
+
+			FREE_OBJECT(SoS);
+
+#if 0
 			nb_obj = Fio.count_number_of_orbits_in_file(
 					Descr->Input[input_idx].input_string, 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << Descr->Input[input_idx].input_string
 					<< " has " << nb_obj << " objects" << endl;
 			}
-
 			nb_objects_to_test += nb_obj;
+#endif
+
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_lines) {
 			if (f_v) {
@@ -813,7 +840,7 @@ void data_input_stream::read_objects(int verbose_level)
 			int underlying_set_size = 0;
 
 			if (f_v) {
-				cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+				cout << "data_input_stream::read_objects "
 						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
@@ -821,6 +848,7 @@ void data_input_stream::read_objects(int verbose_level)
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
 				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "number of sets = " << SoS->nb_sets << endl;
 			}
 
 
