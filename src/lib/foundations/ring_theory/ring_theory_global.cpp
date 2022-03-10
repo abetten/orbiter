@@ -603,7 +603,7 @@ void ring_theory_global::polynomial_mult_mod(
 		FX.s_i(A, i) = data_A[i];
 	}
 
-	FX.create_object_of_degree(B, da);
+	FX.create_object_of_degree(B, db);
 
 	for (i = 0; i <= db; i++) {
 		if (data_B[i] < 0 || data_B[i] >= F->q) {
@@ -677,7 +677,7 @@ void ring_theory_global::polynomial_power_mod(
 	}
 
 	int *data_A;
-	int n;
+	long int n;
 	int *data_M;
 	int sz_A, sz_M;
 	data_structures::string_tools ST;
@@ -687,6 +687,11 @@ void ring_theory_global::polynomial_power_mod(
 
 
 	n = ST.strtolint(power_text);
+
+	if (f_v) {
+		cout << "ring_theory_global::polynomial_power_mod n = " << n << endl;
+	}
+
 
 	orbiter_kernel_system::Orbiter->get_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
 

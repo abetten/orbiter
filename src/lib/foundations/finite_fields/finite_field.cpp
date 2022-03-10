@@ -964,10 +964,6 @@ int finite_field::add(int i, int j)
 	int c;
 
 	nb_times_add++;
-	if (!f_has_table) {
-		cout << "finite_field::add !f_has_table" << endl;
-		exit(1);
-	}
 	if (f_has_table) {
 		if (f_v) {
 			cout << "finite_field_by_tables::add with table" << endl;

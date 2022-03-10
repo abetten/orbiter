@@ -204,8 +204,8 @@ public:
 	int f_orthogonal_group;
 	int orthogonal_group_epsilon;
 
-	int f_on_k_subspaces;
-	int on_k_subspaces_k;
+	//int f_on_k_subspaces;
+	//int on_k_subspaces_k;
 
 	int f_on_tensors;
 	int f_on_rank_one_tensors;
@@ -217,8 +217,8 @@ public:
 
 	int f_Janko1;
 
-	int f_restricted_action;
-	std::string restricted_action_text;
+	//int f_restricted_action;
+	//std::string restricted_action_text;
 
 	int f_export_magma;
 

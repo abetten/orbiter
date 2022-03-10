@@ -107,6 +107,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_group_table = FALSE;
 	f_classes = FALSE;
 
+	f_export_group_table = FALSE;
+
 
 	f_test_if_geometric = FALSE;
 	test_if_geometric_depth = 0;
@@ -490,6 +492,12 @@ int group_theoretic_activity_description::read_arguments(
 			f_classes = TRUE;
 			if (f_v) {
 				cout << "-classes" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
+			f_export_group_table = TRUE;
+			if (f_v) {
+				cout << "-export_group_table" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-f_draw_tree") == 0) {
@@ -916,6 +924,9 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_classes) {
 		cout << "-classes" << endl;
+	}
+	if (f_export_group_table) {
+		cout << "-export_group_table" << endl;
 	}
 	if (f_draw_tree) {
 		cout << "-f_draw_tree " << endl;

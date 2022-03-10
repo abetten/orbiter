@@ -194,6 +194,51 @@ void any_group::create_latex_report(
 	}
 }
 
+void any_group::export_group_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "any_group::export_group_table" << endl;
+	}
+
+
+
+	string fname;
+	int *Table;
+	long int n;
+
+	if (f_v) {
+		cout << "any_group::export_group_table before create_group_table" << endl;
+	}
+	create_group_table(Table, n, verbose_level);
+	if (f_v) {
+		cout << "any_group::export_group_table after create_group_table" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+
+
+	fname.assign(label);
+	fname.append("_group_table.csv");
+
+	Fio.int_matrix_write_csv(fname, Table, n, n);
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	FREE_int(Table);
+
+	if (f_v) {
+		cout << "any_group::export_group_table done" << endl;
+	}
+
+
+}
+
+
 void any_group::do_export_orbiter(actions::action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -343,7 +388,8 @@ void any_group::do_canonical_image_GAP(std::string &input_set_text, int verbose_
 	}
 }
 
-void any_group::create_group_table(int verbose_level)
+
+void any_group::create_group_table(int *&Table, long int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -357,14 +403,9 @@ void any_group::create_group_table(int verbose_level)
 	goi = Subgroup_sims->group_order_lint();
 
 	if (f_v) {
-			cout << "group order = " << goi << endl;
+			cout << "any_group::create_group_table group order = " << goi << endl;
 	}
 
-
-	string fname;
-	int *Table;
-	long int n;
-	orbiter_kernel_system::file_io Fio;
 
 	Subgroup_sims->create_group_table(Table, n, verbose_level);
 
@@ -373,16 +414,6 @@ void any_group::create_group_table(int verbose_level)
 		exit(1);
 	}
 
-	fname.assign(label);
-	fname.append("_group_table.csv");
-
-	cout << "The group table is:" << endl;
-	Int_matrix_print(Table, n, n);
-
-	Fio.int_matrix_write_csv(fname, Table, n, n);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	FREE_int(Table);
 
 	if (f_v) {
 		cout << "any_group::create_group_table done" << endl;
@@ -2138,7 +2169,7 @@ void any_group::create_latex_report_for_permutation_group(
 					NULL /* extra_praeamble */);
 
 
-#if 0
+#if 1
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_permutation_group before A->report" << endl;
 			}
@@ -2162,7 +2193,7 @@ void any_group::create_latex_report_for_permutation_group(
 			//A_initial->print_base();
 			//A_initial->print_info();
 
-#if 0
+#if 1
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_permutation_group before Subgroup_sims->report" << endl;
 			}

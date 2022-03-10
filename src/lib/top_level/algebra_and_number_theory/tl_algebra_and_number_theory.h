@@ -204,11 +204,12 @@ public:
 			graphics::layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, int f_classes,
 			int verbose_level);
+	void export_group_table(int verbose_level);
 	void do_export_orbiter(actions::action *A2, int verbose_level);
 	void do_export_gap(int verbose_level);
 	void do_export_magma(int verbose_level);
 	void do_canonical_image_GAP(std::string &input_set, int verbose_level);
-	void create_group_table(int verbose_level);
+	void create_group_table(int *&Table, long int &n, int verbose_level);
 	void normalizer(int verbose_level);
 	void centralizer(
 			std::string &element_label,
@@ -484,6 +485,8 @@ public:
 		int f_group_table;
 		int f_classes;
 
+
+	int f_export_group_table;
 
 	int f_test_if_geometric;
 	int test_if_geometric_depth;

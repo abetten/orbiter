@@ -77,6 +77,8 @@ public:
 	std::string extract_subset_fname;
 
 	int f_line_type;
+	std::string line_type_projective_space_label;
+	std::string line_type_prefix;
 
 	int f_conic_type;
 	int conic_type_threshold;
@@ -204,6 +206,11 @@ public:
 			std::string &prefix,
 			std::string &projective_space_label,
 			std::string &lines,
+			data_structures::data_input_stream *IS,
+			int verbose_level);
+	void line_type(
+			std::string &prefix,
+			std::string &projective_space_label,
 			data_structures::data_input_stream *IS,
 			int verbose_level);
 

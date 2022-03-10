@@ -304,6 +304,11 @@ class interface_combinatorics {
 	int random_permutation_degree;
 	std::string random_permutation_fname_csv;
 
+	int f_create_random_k_subsets;
+	int create_random_k_subsets_n;
+	int create_random_k_subsets_k;
+	int create_random_k_subsets_nb;
+
 	int f_read_poset_file;
 	std::string read_poset_file_fname;
 

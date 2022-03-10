@@ -738,6 +738,7 @@ ring_theory::homogeneous_polynomial_domain *orbiter_session::get_object_of_type_
 }
 
 
+
 vector_builder *orbiter_session::get_object_of_type_vector(std::string &label)
 {
 	int idx;

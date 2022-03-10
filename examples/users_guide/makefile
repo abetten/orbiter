@@ -1378,6 +1378,11 @@ PR37:
 PR_100:
 		$(ORBITER_PATH)orbiter.out -v 1 -smallest_primitive_root_interval 2 100
 
+
+PR127:
+		$(ORBITER_PATH)orbiter.out -v 1 -smallest_primitive_root 127
+
+
 Eulerfunction_150:
 		$(ORBITER_PATH)orbiter.out -v 1 -eulerfunction_interval 1 150
 		$(ORBITER_PATH)orbiter.out -v 1 -csv_file_latex 1 \
@@ -2387,6 +2392,8 @@ F_8388608:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 8388608 -end
 
+# stuck in finite_field::find_primitive_element
+
 
 
 ###############################################################################
@@ -2965,6 +2972,140 @@ no:
 
 
 
+###############################################################################
+# Section 3.7: Ring theory
+
+
+
+SECTION_RING_THEORY:
+
+
+
+Polynomial_ring:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-variables "x0,x1,x2,x3" "x_0,x_1,x_2,x_3" \
+			-end \
+
+
+
+
+
+arcs_5_2_q11:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-classify_arcs \
+				-poset_classification_control \
+					-problem_label arcs_5_2_q11 \
+					-W -depth 5 \
+					-report -end \
+				-end \
+				-target_size 5 \
+				-d 2 \
+			-end \
+		-end
+	pdflatex arcs_5_2_q11_poset.tex
+	open arcs_5_2_q11_poset.pdf
+
+
+# 2 orbits: 
+# 0 1 2 3 37
+# 0 1 2 3 49
+
+
+arcs_5_2_q11_ideal:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_lex \
+			-variables "x0,x1,x2" "x_0,x_1,x_2" \
+			-end \
+		-define C -combinatorial_objects \
+			-file_of_points arcs_5_2_q11_lvl_5 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-ideal R \
+		-end
+
+#( 0, 1, 2, 3, 37 )
+#generator 0 / 1 is 7*x0*x1 + 5*x0*x2 + 10*x1*x2
+#We found 12 points on the generator of the ideal
+#They are : ( 0, 1, 2, 3, 37, 54, 74, 80, 93, 105, 121, 128 )
+
+#( 0, 1, 2, 3, 49 )
+#generator 0 / 1 is 4*x0*x1 + 8*x0*x2 + 10*x1*x2
+#looping over all generators of the ideal:
+#generator 0 / 1 is ( 0, 4, 8, 0, 10, 0 ) : 
+#We found 12 points on the generator of the ideal
+#They are : ( 0, 1, 2, 3, 41, 49, 58, 77, 83, 95, 109, 130 )
+
+
+
+PTS_OF_SURFACE_ORBIT211_Q3_L9_E4="\
+0,1,2,5,7,8,10,14,9,12, \
+15,3,16,37,31,34,20,19,17,32,36,33"
+
+
+surface_9lines_4E_ideal:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Pts -vector -dense \
+			$(PTS_OF_SURFACE_ORBIT211_Q3_L9_E4) \
+			-end \
+		-define F -finite_field -q 3 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "x0,x1,x2,x3" "x_0,x_1,x_2,x_3" \
+			-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-ideal R "surf_eqn" "surf\_eqn" Pts \
+			-end 
+
+
+#The ideal has dimension 2
+#generators for the ideal:
+#0 1 0 0 2 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 
+#0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 2 0 
+#x0*x0*x1 + 2*x0*x1*x1 + 2*x0*x1*x3
+#2*x2*x2*x3 + 2*x2*x3*x3
+
+
+F_9="x0*x0*x1 - x0*x1*x1 -x0*x1*x3 -x2*x2*x3 - x2*x3*x3"
+
+F_9_q7:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface F_9 -q 7 \
+			-by_equation "F_9" \
+			"\DF_9\D" "x0,x1,x2,x3" \
+			$(F_9) \
+			"" \
+			"\Dno parameters\D" \
+		-end \
+		-end \
+		-with F_9 -do \
+		-cubic_surface_activity \
+			-report \
+		-end
+	pdflatex surface_equation_F_9_q7_report.tex
+	open surface_equation_F_9_q7_report.pdf
+
 
 ###############################################################################
 # Chapter 4 - Geometry
@@ -3359,11 +3500,16 @@ SECTION_ALGEBRAIC_SETS:
 EC_11.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-end \
 		-define P -projective_space 2 F -end \
 		-define EC -geometric_object P \
-			-projective_variety "EC_11" "EC\_11" 3 $(EC_11_EQUATION) \
-			-monomial_type_PART \
-		-end \
+			-projective_variety R \
+				"EC_11" "EC\_11" \
+				$(EC_11_EQUATION) \
+			-end \
 		-with EC -do -combinatorial_object_activity -save \
 		-end
 
@@ -3373,13 +3519,17 @@ EC_11.txt:
 Hirschfeld_surface_q4.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-end \
 		-define P -projective_space 3 F -end \
 		-define H4 -geometric_object P \
-			-projective_variety "Hirschfeld_surface_q4" \
+			-projective_variety R \
+				"Hirschfeld_surface_q4" \
 				"Hirschfeld\_surface\_q4" \
-				3 $(HIRSCHFELD_SURFACE_EQUATION) \
-			-monomial_type_PART \
-		-end \
+				$(HIRSCHFELD_SURFACE_EQUATION) \
+			-end \
 		-with H4 -do -combinatorial_object_activity -save \
 		-end
 
@@ -3388,13 +3538,17 @@ Hirschfeld_surface_q4.txt:
 Hirschfeld_surface_q16.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 16 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-end \
 		-define P -projective_space 3 F -end \
 		-define H16 -geometric_object P \
-			-projective_variety "Hirschfeld_surface_q16" \
+			-projective_variety R \
+				"Hirschfeld_surface_q16" \
 				"Hirschfeld\_surface\_q16" \
-				3 $(HIRSCHFELD_SURFACE_EQUATION) \
-			-monomial_type_PART \
-		-end \
+				$(HIRSCHFELD_SURFACE_EQUATION) \
+			-end \
 		-with H16 -do -combinatorial_object_activity -save \
 		-end
 
@@ -3407,14 +3561,18 @@ Hirschfeld_surface_q16.txt:
 Endrass_F7.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 7 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 8 \
+			-end \
 		-define eqn -vector -field F -sparse 165 \
 			$(ENDRASS_SPARSE) -end \
 		-define P -projective_space 3 F -end \
 		-define Endrass_F7 -geometric_object P \
-			-projective_variety "Endrass_F7" \
+			-projective_variety R \
+				"Endrass_F7" \
 				"Endrass\_F7" \
-				8 eqn \
-			-monomial_type_PART \
+				eqn \
 		-end \
 		-with Endrass_F7 -do \
 		-combinatorial_object_activity -save \
@@ -3826,11 +3984,15 @@ ovoid_ST_q8:
 Edge_curve_17:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-end \
 		-define P -projective_space 2 F -end \
 		-define C -geometric_object P \
-			-projective_variety "Edge_q17" "Edge\_q17" \
-				4 $(EDGE_CURVE_Q17_EQUATION) \
-			-monomial_type_PART \
+			-projective_variety R \
+				"Edge_q17" "Edge\_q17" \
+				$(EDGE_CURVE_Q17_EQUATION) \
 		-end \
 		-with C -do -combinatorial_object_activity -save \
 		-end
@@ -3849,12 +4011,16 @@ Edge_curve_17_line_type:
 	echo $(FILE_Q17) >edge_q17.csv
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-end \
 		-define P -projective_space 2 F -end \
 		-define C -geometric_object P \
-			-projective_variety "Edge_q17" "Edge\_q17" \
-				4 $(EDGE_CURVE_Q17_EQUATION) \
-			-monomial_type_PART \
-		-end \
+			-projective_variety R \
+				"Edge_q17" "Edge\_q17" \
+				$(EDGE_CURVE_Q17_EQUATION) \
+			-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-line_type \
@@ -3918,6 +4084,10 @@ C13:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
+			-export_group_table \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
 			-report \
 		-end \
 		-with G -do \
@@ -3938,14 +4108,34 @@ Symmetric_4:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
+			-export_group_table \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
 			-report \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-save_elements_csv "Symmetric4_elts.csv" \
 		-end
-	pdflatex Perm4_report.tex
-	open Perm4_report.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file Perm4_group_table.csv \
+		-box_width 50 -bit_depth 24 -end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define M -vector -load_csv_data_column \
+			Symmetric4_elts.csv 1 -end \
+		-save_matrix_csv M 
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define all_one_r -vector -repeat 1 24 -end \
+		-define all_one_c -vector -repeat 1 4 -end \
+		-draw_matrix \
+			-input_csv_file M_matrix.csv \
+			-box_width 50 -bit_depth 8 \
+			-partition 3 \
+				all_one_r all_one_c \
+		-end
+	#pdflatex Perm4_report.tex
+	#open Perm4_report.pdf
 
 
 # ToDo:
@@ -5377,8 +5567,11 @@ PGL_3_2_singer:
 PGL_3_2_on_lines:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-orbiter_path $(ORBITER_PATH) \
-		-define G -linear_group -PGL 3 2 -on_k_subspaces 2 -end \
-		-with G -do \
+		-define G -linear_group -PGL 3 2 -end \
+		-define G_on_lines -modified_group -from G \
+			-on_k_subspaces 2 \
+		-end \
+		-with G_on_lines -do \
 		-group_theoretic_activity \
 			-poset_classification_control \
 				-problem_label PGL_3_2_lines -W -depth 7 \
@@ -5563,25 +5756,6 @@ PGGL_2_9_orbits:
 	pdflatex PGGL_2_9_poset.tex
 	open PGGL_2_9_poset.pdf
 
-
-PG_3_7_lines:
-	$(ORBITER_PATH)orbiter.out -v 7 \
-		-orbiter_path $(ORBITER_PATH) \
-		-define F -finite_field -q 7 -end \
-		-define G -linear_group -PGL 4 F -on_k_subspaces 2 -end \
-		-with G -do \
-			-group_theoretic_activity \
-				-poset_classification_control \
-				-problem_label 7_lines \
-				-depth 3 -report -end \
-				-draw_poset \
-				-draw_options -radius 200 -embedded -end \
-			-end \
-			-orbits_on_subsets 3 \
-			-report \
-		-end
-	pdflatex 7_lines_poset.tex
-	open 7_lines_poset.pdf
 
 
 
@@ -7569,9 +7743,11 @@ quartic_curve_13_2_group:
 			1,0,0,8,12,1,4,11,1, \
 			1,0,0,11,4,1,2,10,0, \
 			0,1,0,11,3,0,4,9,1" \
+		-end \
+		-define Gr -modified_group -from G \
 			-restricted_action "29,86,97,154" \
 		-end \
-		-with G -do \
+		-with Gr -do \
 		-group_theoretic_activity \
 		-report \
 		-end
@@ -7886,8 +8062,11 @@ PG_2_25:
 PG_2_25_lines:
 	$(ORBITER_PATH)orbiter.out -v 5 \
 		-orbiter_path $(ORBITER_PATH) \
-		-define G -linear_group -PGGL 3 25 -on_k_subspaces 2 -end \
-		-with G -do \
+		-define G -linear_group -PGGL 3 25 -end \
+		-define G_on_lines -modified_group -from G \
+			-on_k_subspaces 2 \
+		-end \
+		-with G_on_lines -do \
 		-group_theoretic_activity \
 			-poset_classification_control \
 				-problem_label PGGL_3_25 \
@@ -11151,6 +11330,8 @@ F256_BCH_code_d16:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 256 -end \
 		-with F -do -finite_field_activity -make_BCH_code 771 16 -end
+	pdflatex BCH_codes_q256_n771_d16.tex
+	open BCH_codes_q256_n771_d16.pdf
 
 #generator polynomial is X^{30} + 253X^{29} + 174X^{28} + 109X^{27} + 97X^{26} + 144X^{25} + 112X^{24} + 212X^{23} + 192X^{22} + 169X^{21} + 24X^{20} + 150X^{19} + 110X^{18} + 248X^{17} + 3X^{16} + 193X^{15} + 194X^{14} + 205X^{13} + 9X^{12} + 56X^{11} + 95X^{10} + 199X^{9} + 108X^{8} + 58X^{7} + 160X^{6} + 148X^{5} + 138X^{4} + 24X^{3} + 210X^{2} + 26X + 1
 

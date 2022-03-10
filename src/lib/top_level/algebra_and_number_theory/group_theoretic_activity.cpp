@@ -114,9 +114,11 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		AG->classes(verbose_level);
 	}
 
+#if 0
 	if (Descr->f_group_table) {
 		AG->create_group_table(verbose_level);
 	}
+#endif
 
 	if (Descr->f_normalizer) {
 		AG->normalizer(verbose_level);
@@ -164,6 +166,13 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->f_sylow, Descr->f_group_table, Descr->f_classes,
 				verbose_level);
+
+	}
+
+	if (Descr->f_export_group_table) {
+
+		AG->export_group_table(verbose_level);
+
 
 	}
 

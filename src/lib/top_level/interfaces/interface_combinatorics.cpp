@@ -36,6 +36,11 @@ interface_combinatorics::interface_combinatorics()
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;
 
+	f_create_random_k_subsets = FALSE;
+	create_random_k_subsets_n = 0;
+	create_random_k_subsets_k = 0;
+	create_random_k_subsets_nb = 0;
+
 	f_read_poset_file = FALSE;
 	//read_poset_file_fname;
 
@@ -123,7 +128,10 @@ void interface_combinatorics::print_help(int argc,
 		cout << "-bent <int : n>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
-		cout << "-random_permutation <ind : degree> <string : <fname_csv>" << endl;
+		cout << "-random_permutation <int : degree> <string : <fname_csv>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-create_random_k_subsets") == 0) {
+		cout << "-create_random_k_subsets <int : n> <int : k> <int : nb>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
 		cout << "-read_poset_file <string : file_name>" << endl;
@@ -201,6 +209,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-create_random_k_subsets") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
@@ -329,6 +340,15 @@ void interface_combinatorics::read_arguments(int argc,
 		random_permutation_fname_csv.assign(argv[++i]);
 		if (f_v) {
 			cout << "-random_permutation " << random_permutation_degree << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-create_random_k_subsets") == 0) {
+		f_create_random_k_subsets = TRUE;
+		create_random_k_subsets_n = ST.strtoi(argv[++i]);
+		create_random_k_subsets_k = ST.strtoi(argv[++i]);
+		create_random_k_subsets_nb = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-create_random_k_subsets " << create_random_k_subsets_n << " " << create_random_k_subsets_k << " " << create_random_k_subsets_nb << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
@@ -568,6 +588,12 @@ void interface_combinatorics::print()
 	if (f_random_permutation) {
 		cout << "-random_permutation " << random_permutation_degree << endl;
 	}
+	if (f_create_random_k_subsets) {
+		cout << "-create_random_k_subsets " << create_random_k_subsets_n
+				<< " " << create_random_k_subsets_k
+				<< " " << create_random_k_subsets_nb
+				<< endl;
+	}
 	if (f_read_poset_file) {
 		cout << "-read_poset_file " << read_poset_file_fname << endl;
 	}
@@ -670,6 +696,25 @@ void interface_combinatorics::worker(int verbose_level)
 
 		Combi.create_random_permutation(random_permutation_degree,
 				random_permutation_fname_csv, verbose_level);
+	}
+	else if (f_create_random_k_subsets) {
+
+		combinatorics::combinatorics_domain Combi;
+		string fname;
+		char str[1000];
+
+		fname.assign("random_k_subsets_");
+		sprintf(str, "n%d_k%d_nb%d.csv",
+				create_random_k_subsets_n,
+				create_random_k_subsets_k,
+				create_random_k_subsets_nb);
+		fname.append(str);
+
+		Combi.create_random_k_subsets(create_random_k_subsets_n,
+				create_random_k_subsets_k,
+				create_random_k_subsets_nb,
+				fname, verbose_level);
+
 	}
 	else if (f_read_poset_file) {
 
