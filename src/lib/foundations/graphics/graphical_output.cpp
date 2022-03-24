@@ -25,6 +25,7 @@ static int do_create_points_on_parabola_compute_point_function(double t,
 static int do_create_points_smooth_curve_compute_point_function(double t,
 		double *output, void *extra_data, int verbose_level);
 
+std::vector<int> get_color_grayscale(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
 static std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
 static void fillBitmap(BMP &image, int i, int j, std::vector<int> color);
 
@@ -170,6 +171,165 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 	if (f_v) {
 		cout << "graphical_output::draw_layered_graph_from_file done" << endl;
+	}
+}
+
+void graphical_output::do_domino_portrait(int D, int s,
+		std::string &photo_label,
+		layered_graph_draw_options *Opt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait "
+				"D=" << D << " s=" << s
+				<< " photo_label=" << photo_label << endl;
+	}
+
+
+	string fname;
+	//seed_random_generator_with_system_time();
+
+	srand(777);
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait" << endl;
+	}
+
+
+	combinatorics::domino_assignment *Domino_Assignment;
+
+	Domino_Assignment = NEW_OBJECT(combinatorics::domino_assignment);
+
+	Domino_Assignment->initialize_assignment(D, s, verbose_level - 1);
+
+	Domino_Assignment->read_photo(photo_label, verbose_level - 1);
+
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait before stage 0" << endl;
+	}
+	Domino_Assignment->stage0(verbose_level - 1);
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait after stage 0" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait before stage 1" << endl;
+	}
+	Domino_Assignment->stage1(verbose_level - 1);
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait after stage 1" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait before stage 2" << endl;
+	}
+	Domino_Assignment->stage2(verbose_level - 1);
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait after stage 2" << endl;
+	}
+
+
+
+#if 0
+	sorting Sorting;
+
+	Sorting.Heapsort_general((void *)Assi_table_sort[hd], tot_dom,
+			compare_assignment,
+			swap_assignment,
+			Assi_table[hd]);
+	//Sorting.quicksort_array(tot_dom,
+	//		(void **) Assi_table_sort[hd],
+	//		compare_assignment,
+	//		Assi_table[hd] /* void *data */);
+
+	//quicksort_array(tot_dom,
+	//		Assi_table_sort[hd],
+	//		compare_assignment,
+	//		Assi_table[hd] /* void *data */);
+#endif
+
+	//cout << "solution " << hd << " after sort" << endl;
+	//print_assignment(hd);
+
+
+	fname.assign(photo_label);
+
+	char str[1000];
+	sprintf(str, "_solution_%d", 0 /* hd */);
+	fname.append(str);
+
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait calling draw_domino" << endl;
+	}
+
+	int cost;
+
+	cost = Domino_Assignment->cost_function();
+	Domino_Assignment->draw_domino_matrix(fname,
+			Domino_Assignment->tot_dom,
+			TRUE /* f_has_cost */, cost,
+			Opt,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait after draw_domino" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait calling prepare_latex" << endl;
+	}
+	Domino_Assignment->prepare_latex(photo_label, verbose_level);
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait after prepare_latex" << endl;
+	}
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait nb_changes=" << Domino_Assignment->nb_changes << endl;
+	}
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait before classify_changes_by_type" << endl;
+	}
+
+	Domino_Assignment->classify_changes_by_type(verbose_level);
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait after classify_changes_by_type" << endl;
+	}
+
+	int *Cost;
+	int len;
+	string fname_cost;
+	orbiter_kernel_system::file_io Fio;
+	data_structures::string_tools String;
+
+	fname_cost.assign(photo_label);
+	String.chop_off_extension(fname_cost);
+	fname_cost.append("_cost.csv");
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait before get_cost_function" << endl;
+	}
+	Domino_Assignment->get_cost_function(Cost, len, verbose_level);
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait after get_cost_function" << endl;
+		cout << "graphical_output::do_domino_portrait after get_cost_function len=" << len << endl;
+	}
+
+	Fio.int_vec_write_csv(Cost, len, fname_cost, "Cost");
+
+	if (f_v) {
+		cout << "Written file " << fname_cost << " of size " << Fio.file_size(fname_cost) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graphical_output::do_domino_portrait done" << endl;
 	}
 }
 
@@ -802,10 +962,21 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	if (max_value == 0) {
 		max_value = 1;
 	}
-	for (i = max_value; i >= 0; i--) {
-		std::vector<int> color = get_color(C->bit_depth, max_value, i, C->f_invert_colors, 1);
 
-		cout << "color " << i << " : " << color[0] << "," << color[1] << "," << color[2] << endl;
+
+	if (C->f_grayscale) {
+		for (i = max_value; i >= 0; i--) {
+			std::vector<int> color = get_color_grayscale(C->bit_depth, max_value, i, C->f_invert_colors, 1);
+
+			cout << "color " << i << " : " << color[0] << "," << color[1] << "," << color[2] << endl;
+		}
+	}
+	else {
+		for (i = max_value; i >= 0; i--) {
+			std::vector<int> color = get_color(C->bit_depth, max_value, i, C->f_invert_colors, 1);
+
+			cout << "color " << i << " : " << color[0] << "," << color[1] << "," << color[2] << endl;
+		}
 	}
 
 
@@ -842,8 +1013,15 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 		indent = C->box_width >> 2;
 	}
 
+	std::vector<int> color_white;
 
-	std::vector<int> color_white = get_color(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
+	if (C->f_grayscale) {
+		color_white = get_color_grayscale(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
+	}
+	else {
+		color_white = get_color(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
+
+	}
 
 
 	for (i = 0; i < height; i++) {
@@ -858,7 +1036,17 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 			}
 			d = C->M[i * width + j];
 			//std::vector<int> color = getColor(M[idx_x * width + idx_z]);
-			std::vector<int> color = get_color(C->bit_depth, max_value, d, C->f_invert_colors, 0);
+			std::vector<int> color;
+
+			if (C->f_grayscale) {
+				color = get_color_grayscale(C->bit_depth, max_value, d, C->f_invert_colors, 0);
+			}
+			else {
+				color = get_color(C->bit_depth, max_value, d, C->f_invert_colors, 0);
+
+			}
+
+
 
 			// Here the pixel is set on the image.
 			if (C->f_box_width) {
@@ -907,7 +1095,16 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 		cout << "drawing the partition" << endl;
 		int i0, j0;
 		int h, t, I, J;
-		std::vector<int> color = get_color(C->bit_depth, max_value, 1, C->f_invert_colors, 0);
+		std::vector<int> color;
+
+
+		if (C->f_grayscale) {
+			color = get_color_grayscale(C->bit_depth, max_value, max_value, C->f_invert_colors, 0);
+		}
+		else {
+			color = get_color(C->bit_depth, max_value, 1, C->f_invert_colors, 0);
+
+		}
 
 		// row partition:
 		i0 = 0;
@@ -954,13 +1151,13 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 	cout << "before writing the image to file as " << fname_out << endl;
 
-	  image.WriteToFile(fname_out.c_str());
+	image.WriteToFile(fname_out.c_str());
 
-	  std::cout << "Written file " << fname_out << std::endl;
-	  {
-		  orbiter_kernel_system::file_io Fio;
-		  cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
-	  }
+	std::cout << "Written file " << fname_out << std::endl;
+	{
+		orbiter_kernel_system::file_io Fio;
+		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+	}
 
 
 
@@ -1779,6 +1976,26 @@ void graphical_output::draw_projective(mp_graphics &G,
 }
 
 
+std::vector<int> get_color_grayscale(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+	int r, g, b;
+
+	int d;
+
+	d = 255 / max_value;
+
+	if (loopCount > max_value) {
+		loopCount = max_value;
+	}
+
+	if (f_invert_colors) {
+		loopCount = max_value - loopCount;
+	}
+	r = g = b = loopCount * d;
+
+	return { r, g, b};
+}
 
 
 std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level)

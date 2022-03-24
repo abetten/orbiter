@@ -521,8 +521,20 @@ void tree_node::draw_vertices(mp_graphics &G,
 		f_show = TRUE;
 	}
 
+	if (!f_has_parent) {
+		f_show = FALSE;
+	}
+
 	if (f_show) {
+		if (Opt->f_nodes) {
+			G.sf_color(color);
+			//G.sf_interior(color /* fill_interior*/);
+			G.nice_circle(x, y, Opt->rad);
+		}
+
 		if (f_has_color) {
+
+
 			if (Opt->f_nodes_empty) {
 				G.sf_color(color);
 				//G.sf_interior(color /* fill_interior*/);

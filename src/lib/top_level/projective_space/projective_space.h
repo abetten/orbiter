@@ -350,7 +350,8 @@ public:
 	combinatorics::classification_of_objects_description *Canonical_form_codes_Descr;
 
 	int f_map;
-	std::string map_label;
+	std::string map_ring_label;
+	std::string map_formula_label;
 	std::string map_parameters;
 
 	int f_analyze_del_Pezzo_surface;
@@ -365,12 +366,6 @@ public:
 	int f_decomposition_by_subgroup;
 	std::string decomposition_by_subgroup_label;
 	groups::linear_group_description * decomposition_by_subgroup_Descr;
-
-#if 0
-	int f_define_object;
-	std::string define_object_label;
-	geometry::geometric_object_description *Object_Descr;
-#endif
 
 	int f_define_surface;
 	std::string define_surface_label;
@@ -582,7 +577,8 @@ class projective_space_global {
 public:
 	void map(
 			projective_space_with_action *PA,
-			std::string &label,
+			std::string &ring_label,
+			std::string &formula_label,
 			std::string &evaluate_text,
 			int verbose_level);
 	void analyze_del_Pezzo_surface(
@@ -754,10 +750,6 @@ public:
 		int verbose_level);
 	void compute_group_of_set(long int *set, int set_sz,
 			groups::strong_generators *&Sg,
-			int verbose_level);
-	void map(
-			expression_parser::formula *Formula,
-			std::string &evaluate_text,
 			int verbose_level);
 	void analyze_del_Pezzo_surface(
 			expression_parser::formula *Formula,

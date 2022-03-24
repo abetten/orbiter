@@ -271,6 +271,10 @@ public:
 	void freeself();
 	void linear_group_init(linear_group_description *description,
 		int verbose_level);
+	int linear_group_apply_modification(
+			linear_group_description *description,
+			int verbose_level);
+
 	void init_PGL2q_OnConic(int verbose_level);
 	void init_wedge_action(int verbose_level);
 	void init_wedge_action_detached(int verbose_level);
@@ -390,6 +394,12 @@ public:
 	matrix_group();
 	~matrix_group();
 	
+	void init_projective_group_label(int n,
+			field_theory::finite_field *F, int f_semilinear, int f_special,
+			actions::action *A,
+			std::string &label,
+			std::string &label_tex,
+			int verbose_level);
 	void init_projective_group(int n, field_theory::finite_field *F,
 		int f_semilinear, actions::action *A, int verbose_level);
 	void init_affine_group(int n, field_theory::finite_field *F,
@@ -1667,6 +1677,7 @@ public:
 		int verbose_level);
 	void print_all_group_elements();
 	void print_all_group_elements_tex(std::ostream &ost);
+	void print_all_group_elements_tree(std::ostream &ost);
 	void print_all_group_elements_with_permutations_tex(std::ostream &ost);
 	void print_all_group_elements_as_permutations();
 	void print_all_group_elements_as_permutations_in_special_action(
@@ -1910,6 +1921,8 @@ public:
 			field_theory::finite_field *F, int n,
 		linear_group_description *Descr,
 		data_structures_groups::vector_ge *&nice_gens,
+		std::string &label,
+		std::string &label_tex,
 		int verbose_level);
 	void special_subgroup(int verbose_level);
 	void projectivity_subgroup(sims *S, int verbose_level);

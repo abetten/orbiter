@@ -39,7 +39,8 @@ projective_space_activity_description::projective_space_activity_description()
 	Canonical_form_codes_Descr = NULL;
 
 	f_map = FALSE;
-	//std::string map_label;
+	//std::string map_ring_label;
+	//std::string map_formula_label;
 	//std::string map_parameters;
 
 	f_analyze_del_Pezzo_surface = FALSE;
@@ -55,12 +56,6 @@ projective_space_activity_description::projective_space_activity_description()
 	f_decomposition_by_subgroup = FALSE;
 	//std::string decomposition_by_subgroup_label;
 	decomposition_by_subgroup_Descr = NULL;
-
-#if 0
-	f_define_object = FALSE;
-	//std::string define_object_label;
-	Object_Descr = NULL;
-#endif
 
 
 	f_define_surface = FALSE;
@@ -314,11 +309,13 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-map") == 0) {
 			f_map = TRUE;
-			map_label.assign(argv[++i]);
+			map_ring_label.assign(argv[++i]);
+			map_formula_label.assign(argv[++i]);
 			map_parameters.assign(argv[++i]);
 			if (f_v) {
 				cout << "-map "
-						<< map_label << " "
+						<< map_ring_label << " "
+						<< map_formula_label << " "
 						<< map_parameters << " "
 						<< endl;
 			}
@@ -371,29 +368,6 @@ int projective_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-define_object") == 0) {
-			f_define_object = TRUE;
-			if (f_v) {
-				cout << "-define_object, reading extra arguments" << endl;
-			}
-
-			define_object_label.assign(argv[++i]);
-			Object_Descr = NEW_OBJECT(geometry::geometric_object_description);
-
-			i += Object_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			if (f_v) {
-				cout << "done reading -define_object " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-define_object " << define_object_label << endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-define_surface") == 0) {
 			f_define_surface = TRUE;
@@ -496,22 +470,6 @@ int projective_space_activity_description::read_arguments(
 				cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
 			}
 		}
-#if 0
-		else if (stringcmp(argv[i], "-create_surface") == 0) {
-			f_create_surface = TRUE;
-			surface_description = NEW_OBJECT(surface_create_description);
-			cout << "-create_surface" << endl;
-			i += surface_description->read_arguments(
-					argc - (i + 1), argv + i + 1,
-					verbose_level);
-			cout << "done with -create_surface" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = TRUE;
@@ -1104,7 +1062,8 @@ void projective_space_activity_description::print()
 
 	if (f_map) {
 		cout << "-map "
-				<< map_label << " "
+				<< map_ring_label << " "
+				<< map_formula_label << " "
 				<< map_parameters << " "
 				<< endl;
 	}
@@ -1130,12 +1089,6 @@ void projective_space_activity_description::print()
 		decomposition_by_subgroup_Descr->print();
 	}
 
-#if 0
-	if (f_define_object) {
-		cout << "-define_object " << define_object_label << endl;
-		Object_Descr->print();
-	}
-#endif
 
 	if (f_define_surface) {
 		cout << "-define_surface " << define_surface_label << endl;

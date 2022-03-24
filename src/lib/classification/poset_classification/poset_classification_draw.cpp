@@ -352,25 +352,9 @@ void poset_classification::draw_tree_low_level(
 	}
 	{
 
-#if 0
-		mp_graphics G(fname_full, x_min, y_min, x_max, y_max);
-	
-		G.out_xmin() = 0;
-		G.out_ymin() = 0;
-		G.out_xmax() = xmax;
-		G.out_ymax() = ymax;
-		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-#endif
 		graphics::mp_graphics G;
 
 		G.init(fname, Draw_options, verbose_level - 1);
-#if 0
-		G.setup(fname,
-				x_min, y_min, x_max, y_max, xmax, ymax,
-				f_embedded, f_sideways, scale, line_width,
-				verbose_level - 1);
-		//G.frame(0.05);
-#endif
 
 		G.header();
 		G.begin_figure(factor_1000);

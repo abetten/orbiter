@@ -96,6 +96,53 @@ matrix_group::~matrix_group()
 	}
 }
 
+void matrix_group::init_projective_group_label(int n,
+		field_theory::finite_field *F, int f_semilinear, int f_special,
+		actions::action *A,
+		std::string &label,
+		std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "matrix_group::init_projective_group_label" << endl;
+		cout << "n=" << n << endl;
+		cout << "q=" << F->q << endl;
+		cout << "f_semilinear=" << f_semilinear << endl;
+		cout << "f_special=" << f_special << endl;
+		cout << "verbose_level=" << verbose_level << endl;
+	}
+
+	char str1[1000];
+	char str2[1000];
+
+	if (f_semilinear) {
+		if (f_special) {
+			sprintf(str1, "PSSL_%d_%d", n, F->q);
+			sprintf(str2, "{\\rm P}\\Sigma {\\rm L}(%d,%d)", n, F->q);
+		}
+		else {
+			sprintf(str1, "PGGL_%d_%d", n, F->q);
+			sprintf(str2, "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
+		}
+	}
+	else {
+		if (f_special) {
+			sprintf(str1, "PSL_%d_%d", n, F->q);
+			sprintf(str2, "{\\rm PSL}(%d,%d)", n, F->q);
+		}
+		else {
+			sprintf(str1, "PGL_%d_%d", n, F->q);
+			sprintf(str2, "{\\rm PGL}(%d,%d)", n, F->q);
+		}
+	}
+	label.assign(str1);
+	label_tex.assign(str2);
+
+}
+
+
 void matrix_group::init_projective_group(int n,
 		field_theory::finite_field *F, int f_semilinear,
 		actions::action *A,
@@ -1228,7 +1275,8 @@ void matrix_group::GL_mult_internal(
 						"before GFq->semilinear_matrix_mult" << endl;
 			}
 			//GFq->semilinear_matrix_mult(A, B, AB, n);
-			GFq->Linear_algebra->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n, verbose_level - 1);
+			GFq->Linear_algebra->semilinear_matrix_mult_memory_given(
+					A, B, AB, tmp_M, n, verbose_level - 1);
 		}
 		else {
 			if (f_v) {
@@ -1262,7 +1310,8 @@ void matrix_group::GL_mult_internal(
 						"before GFq->semilinear_matrix_mult" << endl;
 			}
 			//GFq->semilinear_matrix_mult(A, B, AB, n);
-			GFq->Linear_algebra->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n, verbose_level - 1);
+			GFq->Linear_algebra->semilinear_matrix_mult_memory_given(
+					A, B, AB, tmp_M, n, verbose_level - 1);
 		}
 		else {
 			if (f_v) {

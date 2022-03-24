@@ -3682,6 +3682,150 @@ void action::inverse_based_on_text(std::string &data_A, int verbose_level)
 	}
 }
 
+void action::consecutive_powers_based_on_text(std::string &data_A,
+		std::string &exponent_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::consecutive_powers_based_on_text" << endl;
+	}
+
+	if (f_v) {
+		cout << "computing the power" << endl;
+		cout << "A=" << data_A << endl;
+		cout << "exponent=" << exponent_text << endl;
+	}
+
+	int exponent;
+	data_structures::string_tools ST;
+
+	exponent = ST.strtoi(exponent_text);
+
+	int *Elt1;
+	int *Elt2;
+
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+
+	make_element_from_string(Elt1, data_A, verbose_level);
+	if (f_v) {
+		cout << "A=" << endl;
+		element_print_quick(Elt1, cout);
+	}
+
+
+	string fname;
+
+	fname.assign(label);
+	fname.append("_all_powers.tex");
+
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Consecutive Powers of Group Element in $%s$", label_tex.c_str());
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface L;
+			int i;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			ost << "$$" << endl;
+			ost << "{" << endl;
+			element_print_latex(Elt1, ost);
+			ost << "}^i" << endl;
+			ost << "=" << endl;
+			//element_print_latex(Elt2, ost);
+			ost << "$$" << endl;
+
+			ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+			ost << "$$" << endl;
+			ost << "\\begin{array}{|r|l|}" << endl;
+			ost << "\\hline" << endl;
+
+			ost << "i & {" << endl;
+			element_print_latex(Elt1, ost);
+			ost << "}^i\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+
+
+			for (i = 1; i <= exponent; i++) {
+				move(Elt1, Elt2);
+
+
+				element_power_int_in_place(Elt2,
+						i, 0 /* verbose_level*/);
+
+				if (f_v) {
+					cout << "A^" << i << "=" << endl;
+					element_print_quick(Elt2, cout);
+					element_print_for_make_element(Elt2, cout);
+					cout << endl;
+				}
+
+
+
+				ost << i << " & $";
+				//ost << "$i=" << i << "$:" << endl;
+				//ost << "$$" << endl;
+				//ost << "{" << endl;
+				//element_print_latex(Elt1, ost);
+				//ost << "}^{" << i << "}" << endl;
+				//ost << "=" << endl;
+				element_print_latex(Elt2, ost);
+				//ost << "$$" << endl;
+				ost << "$\\\\" << endl;
+				ost << "\\hline" << endl;
+
+				//element_print_for_make_element(Elt1, ost);
+				//ost << "\\\\" << endl;
+				//element_print_for_make_element(Elt2, ost);
+				//ost << "\\\\" << endl;
+			}
+			ost << "\\end{array}" << endl;
+			ost << "$$" << endl;
+			ost << "}" << endl;
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+		}
+	}
+
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+
+
+	if (f_v) {
+		cout << "action::consecutive_powers_based_on_text done" << endl;
+	}
+}
+
+
 void action::raise_to_the_power_based_on_text(std::string &data_A,
 		std::string &exponent_text, int verbose_level)
 {
@@ -3791,6 +3935,7 @@ void action::raise_to_the_power_based_on_text(std::string &data_A,
 		cout << "action::raise_to_the_power_based_on_text done" << endl;
 	}
 }
+
 
 
 }}}

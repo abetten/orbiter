@@ -87,6 +87,12 @@ interface_combinatorics::interface_combinatorics()
 	//draw_layered_graph_fname;
 	Layered_graph_draw_options = NULL;
 
+	f_domino_portrait = FALSE;
+	domino_portrait_D = 0;
+	domino_portrait_s = 0;
+	//std::string domino_portrait_fname;
+	domino_portrait_draw_options = NULL;
+
 	f_read_solutions_and_tally = FALSE;
 	//read_solutions_and_tally_fname
 	read_solutions_and_tally_sz = 0;
@@ -175,6 +181,9 @@ void interface_combinatorics::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		cout << "-draw_layered_graph <string : fname> <layered_graph_options>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
+		cout << "-domino_portrait <string : fname> <int : D> <int : s> <layered_graph_options>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		cout << "-read_solutions_and_tally <string : fname> <int :read_solutions_and_tally_sz>" << endl;
 	}
@@ -254,6 +263,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
@@ -501,6 +513,27 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
+		f_domino_portrait = TRUE;
+		if (f_v) {
+			cout << "-draw_layered_graph " << endl;
+		}
+		domino_portrait_D = ST.strtoi(argv[++i]);
+		domino_portrait_s = ST.strtoi(argv[++i]);
+		domino_portrait_fname.assign(argv[++i]);
+		domino_portrait_draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+		i += domino_portrait_draw_options->read_arguments(argc - i - 1,
+				argv + i + 1, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::read_arguments "
+					"finished reading -domino_portrait" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		f_read_solutions_and_tally = TRUE;
 		read_solutions_and_tally_fname.assign(argv[++i]);
@@ -643,6 +676,14 @@ void interface_combinatorics::print()
 	}
 	if (f_draw_layered_graph) {
 		cout << "-draw_layered_graph " << endl;
+		Layered_graph_draw_options->print();
+	}
+	if (f_domino_portrait) {
+		cout << "-draw_layered_graph " << domino_portrait_D
+				<< " " << domino_portrait_s
+				<< " " << domino_portrait_fname;
+			cout << endl;
+		domino_portrait_draw_options->print();
 	}
 	if (f_read_solutions_and_tally) {
 		cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
@@ -733,6 +774,9 @@ void interface_combinatorics::worker(int verbose_level)
 	else if (f_conjugacy_classes_Sym_n) {
 
 		do_conjugacy_classes_Sym_n(conjugacy_classes_Sym_n_n, verbose_level);
+
+		do_conjugacy_classes_Sym_n_file(conjugacy_classes_Sym_n_n, verbose_level);
+
 	}
 	else if (f_tree_of_all_k_subsets) {
 
@@ -809,6 +853,17 @@ void interface_combinatorics::worker(int verbose_level)
 
 		GO.draw_layered_graph_from_file(draw_layered_graph_fname,
 				Layered_graph_draw_options,
+				verbose_level);
+
+	}
+	else if (f_domino_portrait) {
+		graphics::graphical_output GO;
+
+		GO.do_domino_portrait(
+				domino_portrait_D,
+				domino_portrait_s,
+				domino_portrait_fname,
+				domino_portrait_draw_options,
 				verbose_level);
 
 	}
@@ -1044,6 +1099,85 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 		cout << "interface_combinatorics::do_conjugacy_classes_Sym_n done" << endl;
 	}
 }
+
+void interface_combinatorics::do_conjugacy_classes_Sym_n_file(int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_conjugacy_classes_Sym_n_file" << endl;
+	}
+
+	int i;
+	int cnt;
+	ring_theory::longinteger_object class_size, S, F, A;
+	ring_theory::longinteger_domain D;
+	combinatorics::combinatorics_domain C;
+	combinatorics::combinatorics_domain Combi;
+
+	cnt = Combi.count_partitions(n);
+
+	int *Parts;
+
+	Parts = NEW_int(cnt * n);
+	Combi.make_partitions(n, Parts, cnt);
+
+
+	S.create(0, __FILE__, __LINE__);
+
+	string fname;
+	char str[1000];
+
+	sprintf(str, "classes_Sym_%d", n);
+
+	fname.assign(str);
+	fname.append(".csv");
+
+	{
+		ofstream fp(fname);
+
+		fp << "ROW,CYCLETYPE,CLASSSIZE" << endl;
+		//cout << "The conjugacy classes in Sym_" << n << " are:" << endl;
+		for (i = 0; i < cnt; i++) {
+			//cout << i << " : ";
+			//Int_vec_print(cout, Parts + i * n, n);
+			//cout << " : ";
+
+			fp << i;
+
+			std::string part;
+
+
+			Int_vec_create_string_with_quotes(part, Parts + i * n, n);
+
+			fp << "," << part;
+
+			C.size_of_conjugacy_class_in_sym_n(class_size, n, Parts + i * n);
+			fp << "," << class_size;
+			fp << endl;
+
+			D.add_in_place(S, class_size);
+			}
+
+		D.factorial(F, n);
+		D.integral_division_exact(F, S, A);
+		if (!A.is_one()) {
+			cout << "the class sizes do not add up" << endl;
+			exit(1);
+			}
+		cout << "The sum of the class sizes is n!" << endl;
+		fp << "END" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_conjugacy_classes_Sym_n_file done" << endl;
+	}
+}
+
 
 
 void interface_combinatorics::do_Delandtsheer_Doyen(apps_combinatorics::delandtsheer_doyen_description *Descr, int verbose_level)

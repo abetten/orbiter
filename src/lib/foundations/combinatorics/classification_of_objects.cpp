@@ -378,7 +378,8 @@ void classification_of_objects::save_transversal(int verbose_level)
 
 void classification_of_objects::process_any_object(
 		geometry::object_with_canonical_form *OwCF,
-		int input_idx, long int &ago, int &f_reject, data_structures::nauty_output *&NO,
+		int input_idx, long int &ago, int &f_reject,
+		data_structures::nauty_output *&NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

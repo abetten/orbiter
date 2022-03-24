@@ -316,6 +316,8 @@ namespace combinatorics {
 	class classification_of_objects_report_options;
 	class classification_of_objects;
 	class combinatorics_domain;
+	class domino_assignment;
+	class domino_change;
 	class encoded_combinatorial_object;
 	class geo_parameter;
 	class pentomino_puzzle;
