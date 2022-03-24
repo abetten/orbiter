@@ -79,7 +79,7 @@ class expression_parser {
 
 	public:
 
-	  // symbol table - can be accessed directly (eg. to copy a batch in)
+		// symbol table
 		std::map<std::string, double> symbols;
 
 	syntax_tree *Tree;
@@ -255,7 +255,7 @@ public:
 // syntax_tree_node_terminal.cpp
 // #############################################################################
 
-//! terminal note in the syntax tree of an expression
+//! terminal node in the syntax tree of an expression
 
 
 

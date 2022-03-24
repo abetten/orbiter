@@ -257,7 +257,8 @@ public:
 	void save_transversal(int verbose_level);
 	void process_any_object(
 			geometry::object_with_canonical_form *OwCF,
-			int input_idx, long int &ago, int &f_reject, data_structures::nauty_output *&NO,
+			int input_idx, long int &ago, int &f_reject,
+			data_structures::nauty_output *&NO,
 			int verbose_level);
 	int process_object(
 			geometry::object_with_canonical_form *OwCF,
@@ -476,6 +477,151 @@ public:
 
 };
 
+
+// ####################################################################################
+// domino_assignment.cpp:
+// ####################################################################################
+
+// the dimensions are (<D>+1) * <s>   x <D>*<s>
+// so, for D=7 we would get
+// s=4:   32x28
+// s=5:   40x35
+
+//! compute a domino portrait using an optimization algorithm
+
+class domino_assignment {
+public:
+	int D;
+	int s;
+	int size_dom;
+	int tot_dom;
+
+	int M; // number of rows  = (D + 1) * s
+	int N; // number of columns = D * s
+
+	int *ij_posi; // [M * N * 2];
+		// ij_posi[(i * N + j) * 2 + 0] = i
+		// ij_posi[(i * N + j) * 2 + 1] = j
+
+	int *assi; // [tot_dom * 5];
+		// 0: m
+		// 1: n
+		// 2: o = orientation
+		// 3: i
+		// 4: j
+		// where (i,j) is the place of the top or left half of the domino
+
+	int *broken_dom; // [M * N]
+		// broken_dom[i * n + j] is the index in the assi array
+		// of the domino piece covering the place (i,j)
+	int *matching; // [M * N]
+		// matching[i * N + j] tells the direction
+		// of the second half of the domino
+	int *A; // [M * N], the domino matrix
+	int *mphoto; // [M * N], the photo matrix
+
+	int *North; // [M * N]
+	int *South; // [M * N]
+	int *West; // [M * N]
+	int *East; // [M * N]
+
+	int brake_cnt;
+	int *brake; // [tot_dom], used as [brake_cnt]
+
+	int nb_changes;
+
+	std::vector<domino_change> Changes;
+
+
+	domino_assignment();
+	~domino_assignment();
+	void stage0(int verbose_level);
+	void stage1(int verbose_level);
+	void stage2(int verbose_level);
+	void initialize_assignment(int D, int s, int verbose_level);
+	void init_matching(int verbose_level);
+	int cost_function();
+	int compute_cost_of_one_piece(int idx);
+	int compute_cost_of_one_piece_directly(int m, int n, int o, int i, int j);
+	int my_distance(int a, int b);
+	void compute_domino_matrix(int depth);
+	void move(domino_assignment *To);
+	void draw_domino_matrix(std::string &fname,
+			int depth,
+			int f_has_cost, int cost,
+			graphics::layered_graph_draw_options *Draw_options,
+			int verbose_level);
+	void draw_domino_matrix2(std::string &fname,
+			int f_has_cost, int cost,
+		int f_frame, int f_grid, int f_B, int *B,
+		int f_numbers, int f_gray,
+		graphics::layered_graph_draw_options *Draw_options,
+		int verbose_level);
+	void read_photo(std::string &photo_fname, int verbose_level);
+	void scale_photo(double *dphoto, int verbose_level);
+	void do_flip_recorded(int f2, int verbose_level);
+	void do_flip(int f2, int verbose_level);
+	void flip_each(int verbose_level);
+	void flip_randomized(int verbose_level);
+	void do_swap_recorded(int s1, int s2, int verbose_level);
+	void do_swap(int s1, int s2, int verbose_level);
+	int do_flipswap(int f2);
+	void swap_randomized(int verbose_level);
+	void swap_each(int verbose_level);
+	void do_horizontal_rotate(int ro, int verbose_level);
+	void do_vertical_rotate(int ro, int verbose_level);
+	int modify_matching(
+			int idx_first_broken,
+			int ass_m, int ass_n,
+			int ass_o, int ass_i, int ass_j,
+			int verbose_level);
+	void follow_the_matching(
+			int l, int *used, int *reached,
+			int *list, int *length, int *prec,
+			int verbose_level);
+	int find_match(int l,
+		int *reached1, int *list1, int *length1, int *prec1,
+		int *reached2, int *list2, int *length2, int *prec2,
+		int verbose_level);
+	int breadth_search(int l, int *used, int *reached,
+			int *list, int *length, int *prec,
+			int verbose_level);
+	void rotate_once(int ro, int verbose_level);
+	void rotate_randomized(int verbose_level);
+	void do_horizontal_shift(int ro, int verbose_level);
+	void do_vertical_shift(int ro, int verbose_level);
+	void shift_once(int ro, int verbose_level);
+	void shift_once_randomized(int verbose_level);
+	void shift_randomized(int verbose_level);
+	void flip_after_shift(int verbose_level);
+	void print_matching(std::ostream &ost);
+	void print(std::ostream &ost);
+	void prepare_latex(std::string &photo_label, int verbose_level);
+	void record_flip(int idx, int verbose_level);
+	void record_swap(int s1, int s2, int verbose_level);
+	void record_matching(int verbose_level);
+	void drop_changes_to(int nb_changes_to_drop_to, int verbose_level);
+	void classify_changes_by_type(int verbose_level);
+	void get_cost_function(int *&Cost, int &len, int verbose_level);
+};
+
+// ####################################################################################
+// domino_change.cpp:
+// ####################################################################################
+
+
+//! utility class for the domino portrait algorithm
+
+class domino_change {
+public:
+	int type_of_change;
+	int cost_after_change;
+
+	domino_change();
+	~domino_change();
+	void init(domino_assignment *DA,
+			int type_of_change, int verbose_level);
+};
 
 
 
@@ -717,7 +863,7 @@ class pentomino_puzzle {
 // tdo_data.cpp TDO parameter refinement
 // #############################################################################
 
-//! a class related to the class tdo_scheme
+//! a utility class related to the class tdo_scheme
 
 class tdo_data {
 public:
@@ -767,7 +913,7 @@ public:
 
 
 
-//! refinement of the parameters of a linear space
+//! input data for the parameter refinement of a linear space
 
 class tdo_refinement_description {
 	public:
@@ -915,7 +1061,7 @@ public:
 #define EXTRA_COL_SCHEME 4
 
 
-//! internal class related to tdo_data
+//! internal class related to class tdo_data
 
 
 struct solution_file_data {
@@ -993,8 +1139,10 @@ public:
 	void free_partition(int h);
 	void complete_partition_info(int h, int verbose_level);
 	void get_row_or_col_scheme(int h, int l, int verbose_level);
-	void get_column_split_partition(int verbose_level, data_structures::partitionstack &P);
-	void get_row_split_partition(int verbose_level, data_structures::partitionstack &P);
+	void get_column_split_partition(int verbose_level,
+			data_structures::partitionstack &P);
+	void get_row_split_partition(int verbose_level,
+			data_structures::partitionstack &P);
 	void print_all_schemes();
 	void print_scheme(int h, int verbose_level);
 	void print_scheme_tex(std::ostream &ost, int h);
@@ -1006,7 +1154,8 @@ public:
 	int count_nb_inc_from_extra_row_scheme(int verbose_level);
 
 
-	int geometric_test_for_row_scheme(data_structures::partitionstack &P,
+	int geometric_test_for_row_scheme(
+			data_structures::partitionstack &P,
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distributions, int nb_distributions,
 		int f_omit1, int omit1, int verbose_level);
@@ -1033,14 +1182,16 @@ public:
 		int *&point_types, int &nb_point_types, int &point_type_len,
 		int *&distributions, int &nb_distributions,
 		int &cnt_second_system);
-	int refine_rows_hard(data_structures::partitionstack &P, int verbose_level,
+	int refine_rows_hard(data_structures::partitionstack &P,
+			int verbose_level,
 		int f_use_mckay, int f_once,
 		int *&point_types, int &nb_point_types, int &point_type_len,
 		int *&distributions, int &nb_distributions,
 		int &cnt_second_system,
 		int f_omit1, int omit1, int f_omit, int omit,
 		int f_use_packing_numbers, int f_dual_is_linear_space);
-	void row_refinement_L1_L2(data_structures::partitionstack &P, int f_omit, int omit,
+	void row_refinement_L1_L2(data_structures::partitionstack &P,
+			int f_omit, int omit,
 		int &L1, int &L2, int verbose_level);
 	int tdo_rows_setup_first_system(int verbose_level,
 		tdo_data &T, int r, data_structures::partitionstack &P,

@@ -48,6 +48,8 @@ MODULES= \
 		foundations/combinatorics/classification_of_objects_report_options.o \
 		foundations/combinatorics/classification_of_objects.o \
 		foundations/combinatorics/combinatorics_domain.o \
+		foundations/combinatorics/domino_assignment.o \
+		foundations/combinatorics/domino_change.o \
 		foundations/combinatorics/encoded_combinatorial_object.o \
 		foundations/combinatorics/geo_parameter.o \
 		foundations/combinatorics/pentomino_puzzle.o \

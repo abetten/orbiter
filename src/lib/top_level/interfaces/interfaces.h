@@ -263,6 +263,9 @@ class interface_coding_theory {
 	int f_crc32;
 	std::string crc32_text;
 
+	int f_crc32_hexdata;
+	std::string crc32_hexdata_text;
+
 	int f_crc32_file_based;
 	std::string crc32_file_based_fname;
 	int crc32_file_based_block_length;
@@ -349,8 +352,14 @@ class interface_combinatorics {
 	apps_combinatorics::regular_linear_space_description *Rls_descr;
 
 	int f_draw_layered_graph;
+	int domino_portrait_D;
+	int domino_portrait_s;
 	std::string draw_layered_graph_fname;
 	graphics::layered_graph_draw_options *Layered_graph_draw_options;
+
+	int f_domino_portrait;
+	std::string domino_portrait_fname;
+	graphics::layered_graph_draw_options *domino_portrait_draw_options;
 
 	int f_read_solutions_and_tally;
 	std::string read_solutions_and_tally_fname;
@@ -387,6 +396,7 @@ public:
 	void do_diophant_activity(solvers::diophant_activity_description *Descr, int verbose_level);
 	void do_bent(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
+	void do_conjugacy_classes_Sym_n_file(int n, int verbose_level);
 	void do_Delandtsheer_Doyen(apps_combinatorics::delandtsheer_doyen_description *Descr, int verbose_level);
 
 };
@@ -854,6 +864,7 @@ public:
 			orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
 	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
 	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
+	ring_theory::homogeneous_polynomial_domain *get_object_of_type_ring(std::string &label);
 
 };
 

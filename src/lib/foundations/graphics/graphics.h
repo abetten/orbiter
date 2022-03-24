@@ -176,8 +176,11 @@ public:
 #endif
 	int f_box_width;
 	int box_width;
+
 	int f_invert_colors;
 	int bit_depth;
+
+	int f_grayscale;
 
 
 	draw_bitmap_control();
@@ -428,6 +431,10 @@ public:
 	void draw_layered_graph_from_file(std::string &fname,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
+	void do_domino_portrait(int D, int s,
+			std::string &photo_label,
+			layered_graph_draw_options *Opt,
+			int verbose_level);
 	void do_create_points_on_quartic(double desired_distance, int verbose_level);
 	void do_create_points_on_parabola(double desired_distance, int N,
 			double a, double b, double c, int verbose_level);
@@ -495,7 +502,10 @@ public:
 	int f_rotated;
 
 
+	int f_nodes;
 	int f_nodes_empty;
+
+
 	int f_select_layers;
 	std::string select_layers;
 	int nb_layer_select;

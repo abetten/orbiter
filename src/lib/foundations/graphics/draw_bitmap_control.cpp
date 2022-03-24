@@ -43,8 +43,11 @@ draw_bitmap_control::draw_bitmap_control()
 
 	f_box_width = FALSE;
 	box_width = 10;
+
 	f_invert_colors = FALSE;
 	bit_depth = 8;
+
+	f_grayscale = FALSE;
 
 }
 
@@ -119,6 +122,12 @@ int draw_bitmap_control::read_arguments(
 				cout << "-invert_colors " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-grayscale") == 0) {
+			f_grayscale = TRUE;
+			if (f_v) {
+				cout << "-grayscale " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -159,6 +168,9 @@ void draw_bitmap_control::print()
 	}
 	if (f_invert_colors) {
 		cout << "-invert_colors " << endl;
+	}
+	if (f_grayscale) {
+		cout << "-grayscale " << endl;
 	}
 }
 

@@ -31,6 +31,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_inverse = FALSE;
 	//inverse_a = NULL;
 
+	f_consecutive_powers = FALSE;
+	//std::string consecutive_powers_a_text;
+	//std::string consecutive_powers_exponent_text;
+
 	f_raise_to_the_power = FALSE;
 	//std::string raise_to_the_power_a_text;
 	//std::string raise_to_the_power_exponent_text;
@@ -259,6 +263,16 @@ int group_theoretic_activity_description::read_arguments(
 			inverse_a.assign(argv[++i]);
 			if (f_v) {
 				cout << "-inverse " << inverse_a << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-consecutive_powers") == 0) {
+			f_consecutive_powers = TRUE;
+			consecutive_powers_a_text.assign(argv[++i]);
+			consecutive_powers_exponent_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-consecutive_powers " << consecutive_powers_a_text
+						<< " " << consecutive_powers_exponent_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-raise_to_the_power") == 0) {
@@ -818,6 +832,12 @@ void group_theoretic_activity_description::print()
 	if (f_inverse) {
 		cout << "-inverse " << inverse_a << endl;
 	}
+
+	if (f_consecutive_powers) {
+		cout << "-consecutive_powers " << consecutive_powers_a_text
+				<< " " << consecutive_powers_exponent_text << endl;
+	}
+
 	if (f_raise_to_the_power) {
 		cout << "-raise_to_the_power " << raise_to_the_power_a_text
 					<< " " << raise_to_the_power_exponent_text << endl;

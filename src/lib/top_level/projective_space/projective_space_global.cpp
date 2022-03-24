@@ -17,7 +17,8 @@ namespace projective_geometry {
 
 void projective_space_global::map(
 		projective_space_with_action *PA,
-		std::string &label,
+		std::string &ring_label,
+		std::string &formula_label,
 		std::string &evaluate_text,
 		int verbose_level)
 {
@@ -26,14 +27,19 @@ void projective_space_global::map(
 	if (f_v) {
 		cout << "projective_space_global::map" << endl;
 	}
-
+	if (f_v) {
+		cout << "projective_space_global::map PA->P->n = " << PA->P->n << endl;
+	}
 
 
 	int idx;
-	idx = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
+	ring_theory::homogeneous_polynomial_domain *Ring;
+	Ring = user_interface::The_Orbiter_top_level_session->get_object_of_type_ring(ring_label);
+
+	idx = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(formula_label);
 
 	if (idx < 0) {
-		cout << "could not find symbol " << label << endl;
+		cout << "could not find symbol " << formula_label << endl;
 		exit(1);
 	}
 	user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
@@ -50,6 +56,10 @@ void projective_space_global::map(
 		List = (vector<string> *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 		int i;
 
+		int *coefficient_vector; // [List->size() * Ring->get_nb_monomials()]
+
+		coefficient_vector = NEW_int(List->size() * Ring->get_nb_monomials());
+
 		for (i = 0; i < List->size(); i++) {
 			int idx1;
 
@@ -61,10 +71,41 @@ void projective_space_global::map(
 			expression_parser::formula *Formula;
 			Formula = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
 
-			PA->map(Formula,
+			if (f_v) {
+				cout << "projective_space_global::map i=" << i << " / " << List->size() << " before Ring->get_coefficient_vector" << endl;
+			}
+			Ring->get_coefficient_vector(Formula,
 					evaluate_text,
+					coefficient_vector + i * Ring->get_nb_monomials(),
 					verbose_level);
+			if (f_v) {
+				cout << "projective_space_global::map i=" << i << " / " << List->size() << " after Ring->get_coefficient_vector" << endl;
+			}
 		}
+
+		if (f_v) {
+			cout << "projective_space_global::map coefficient_vector:" << endl;
+			Int_matrix_print(coefficient_vector, List->size(), Ring->get_nb_monomials());
+		}
+
+		long int *Pts;
+		int N;
+
+		Ring->evaluate_regular_map(
+				coefficient_vector,
+				List->size(),
+				PA->P,
+				Pts, N,
+				verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_global::map permutation:" << endl;
+			Lint_vec_print(cout, Pts, N);
+			cout << endl;
+		}
+
+
+
 	}
 	else if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
 		cout << "symbol table entry is a formula" << endl;
@@ -72,9 +113,15 @@ void projective_space_global::map(
 		expression_parser::formula *Formula;
 		Formula = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
 
-		PA->map(Formula,
+		int *coefficient_vector; // [Ring->get_nb_monomials()]
+
+		coefficient_vector = NEW_int(Ring->get_nb_monomials());
+
+		Ring->get_coefficient_vector(Formula,
 				evaluate_text,
+				coefficient_vector,
 				verbose_level);
+		FREE_int(coefficient_vector);
 	}
 	else {
 		cout << "symbol table entry must be either a formula or a collection" << endl;

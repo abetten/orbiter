@@ -161,6 +161,90 @@ void algorithms::print_hex_digit(std::ostream &ost, int digit)
 	}
 }
 
+void algorithms::print_bits(std::ostream &ost, char *data, int data_size)
+{
+	int i, j;
+	unsigned char c;
+
+	for (i = 0; i < data_size; i++) {
+		c = (unsigned char) data[i];
+		for (j = 0; j < 8; j++) {
+			if (c % 2) {
+				cout << "1";
+			}
+			else {
+				cout << "0";
+			}
+			c >>= 1;
+		}
+	}
+}
+
+
+
+void algorithms::read_hex_data(std::string &str,
+		char *&data, int &data_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::read_hex_data " << str << endl;
+	}
+	int len, i;
+	unsigned char high, low;
+	unsigned char val;
+	const char *q;
+
+	len = str.length();
+	if (f_v) {
+		cout << "algorithms::read_hex_data len = " << len << endl;
+	}
+	data_size = len / 2;
+
+	data = NEW_char(data_size);
+
+	q = str.c_str();
+
+	for (i = 0; i < data_size; i++) {
+		if (f_v) {
+			cout << "algorithms::read_hex_data i = " << i << endl;
+		}
+		low = read_hex_digit(q[2 * i + 0]);
+		high = read_hex_digit(q[2 * i + 1]);
+		val = high * 16 + low;
+		if (f_v) {
+			cout << "algorithms::read_hex_data high = " << (int) high << endl;
+			cout << "algorithms::read_hex_data low = " << (int) low << endl;
+			cout << "algorithms::read_hex_data val = " << (int) val << endl;
+		}
+		data[i] = val;
+	}
+}
+
+unsigned char algorithms::read_hex_digit(char digit)
+{
+	char val;
+	int f_v = TRUE;
+
+	if (f_v) {
+		cout << "algorithms::read_hex_data digit = " << digit << endl;
+	}
+	if (digit >= '0' && digit <= '9') {
+		val = (digit - '0');
+	}
+	else if (digit >= 'A' && digit <= 'F') {
+		val = 10 + (digit - 'A');
+	}
+	else if (digit >= 'a' && digit <= 'f') {
+		val = 10 + (digit - 'a');
+	}
+	else {
+		cout << "algorithms::print_hex_digit illegal digit " << digit << endl;
+		exit(1);
+	}
+	return val;
+}
+
 void algorithms::print_repeated_character(std::ostream &ost, char c, int n)
 {
 	int i;

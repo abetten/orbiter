@@ -88,6 +88,9 @@ interface_coding_theory::interface_coding_theory()
 	f_crc32 = FALSE;
 	//std::string crc32_text;
 
+	f_crc32_hexdata = FALSE;
+	//std::string crc32_hexdata_text;
+
 	f_crc32_file_based = FALSE;
 	//std::string crc32_file_based_fname;
 	crc32_file_based_block_length = 0;
@@ -156,6 +159,9 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-crc32") == 0) {
 		cout << "-crc32 <string : text>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_hexdata") == 0) {
+		cout << "-crc32_hexdata <string : text>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
 		cout << "-crc32_file_based <string : fname_in> <int : block_length>" << endl;
@@ -230,6 +236,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-crc32") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_hexdata") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
@@ -494,6 +503,14 @@ void interface_coding_theory::read_arguments(int argc,
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-crc32_hexdata") == 0) {
+		f_crc32_hexdata = TRUE;
+		crc32_hexdata_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-crc32_hexdata " << crc32_hexdata_text
+					<< endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
 		f_crc32_file_based = TRUE;
 		crc32_file_based_fname.assign(argv[++i]);
@@ -602,6 +619,9 @@ void interface_coding_theory::print()
 	if (f_crc32) {
 		cout << "-crc32 " << crc32_text
 				<< endl;
+	}
+	if (f_crc32_hexdata) {
+		cout << "-crc32_hexdata " << crc32_hexdata_text << endl;
 	}
 	if (f_crc_new_file_based) {
 		cout << "-crc_new_file_based "
@@ -848,6 +868,44 @@ void interface_coding_theory::worker(int verbose_level)
 		cout << "CRC value of " << crc32_text << " is ";
 
 		data_structures::algorithms Algo;
+
+		Algo.print_uint32_hex(cout, a);
+		cout << endl;
+
+	}
+	else if (f_crc32_hexdata) {
+		cout << "-crc32_hexdata " << crc32_hexdata_text
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+		data_structures::algorithms Algo;
+		uint32_t a;
+		char *data;
+		int data_size;
+
+		cout << "before Algo.read_hex_data" << endl;
+		Algo.read_hex_data(crc32_hexdata_text, data, data_size, verbose_level - 2);
+		cout << "after Algo.read_hex_data" << endl;
+
+
+		int i;
+		cout << "data:" << endl;
+		for (i = 0; i < data_size; i++) {
+			cout << i << " : " << (int) data[i] << endl;
+		}
+		cout << "data:" << endl;
+		for (i = 0; i < data_size; i++) {
+			cout << "*";
+			Algo.print_repeated_character(cout, '0', 7);
+		}
+		cout << endl;
+		Algo.print_bits(cout, data, data_size);
+		cout << endl;
+
+
+		a = Codes.crc32(data, data_size);
+		cout << "CRC value of 0x" << crc32_hexdata_text << " is ";
+
 
 		Algo.print_uint32_hex(cout, a);
 		cout << endl;

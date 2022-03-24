@@ -94,11 +94,16 @@ void linear_group::linear_group_init(
 		F, n, 
 		description,
 		nice_gens,
+		label, label_tex,
 		verbose_level - 3);
 
 	if (f_v) {
 		cout << "linear_group::linear_group_init after "
 				"initial_strong_gens->init_linear_group_from_scratch" << endl;
+		cout << "label = " << label << endl;
+		cout << "group order = ";
+		initial_strong_gens->print_group_order(cout);
+		cout << endl;
 	}
 
 
@@ -106,191 +111,258 @@ void linear_group::linear_group_init(
 		cout << "linear_group::linear_group_init initializing "
 				"initial_strong_gens done" << endl;
 	}
+
+	//label.assign(A_linear->label);
+	//label_tex.assign(A_linear->label_tex);
+
 	if (f_v) {
+		cout << "linear_group::linear_group_init label=" << label << endl;
 		cout << "linear_group::linear_group_init degreee=" << A_linear->degree << endl;
 		cout << "linear_group::linear_group_init go=";
 		ring_theory::longinteger_object go;
-		A_linear->Strong_gens->group_order(go);
+		initial_strong_gens->group_order(go);
+		//A_linear->Strong_gens->group_order(go);
 		cout << go << endl;
 	}
 
-	label.assign(A_linear->label);
-	label_tex.assign(A_linear->label_tex);
 
 	Mtx = A_linear->G.matrix_grp;
 	vector_space_dimension = n;
 
 	int f_OK = FALSE;
 
-	if (description->f_PGL2OnConic) {
+	if (f_v) {
+		cout << "linear_group::linear_group_init before linear_group_apply_modification" << endl;
+	}
+
+	f_OK = linear_group_apply_modification(
+			description,
+			verbose_level);
+
+	if (f_v) {
+		cout << "linear_group::linear_group_init after linear_group_apply_modification" << endl;
+	}
+
+
+	if (!f_OK) {
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
+					"!f_OK, A2 = A_linear" << endl;
+		}
+		A2 = A_linear;
+		vector_space_dimension = n;
+		q = input_q;
+		f_has_strong_generators = TRUE;
+		Strong_gens = initial_strong_gens;
+	}
+
+
+	if (description->f_export_magma) {
+		if (f_v) {
+			cout << "linear_group::linear_group_init f_export_magma" << endl;
+		}
+		Strong_gens->export_magma(A_linear, cout, verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "linear_group::linear_group_init finialized" << endl;
+		cout << "linear_group::linear_group_init label=" << label << endl;
+		cout << "linear_group::linear_group_init degreee=" << A2->degree << endl;
+		cout << "linear_group::linear_group_init go=";
+		ring_theory::longinteger_object go;
+		Strong_gens->group_order(go);
+		cout << go << endl;
+		cout << "linear_group::linear_group_init label=" << label << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "linear_group::linear_group_init done" << endl;
+	}
+}
+
+int linear_group::linear_group_apply_modification(
+		linear_group_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_group::linear_group_apply_modification" << endl;
+	}
+	int f_OK = FALSE;
+
+	if (description->f_PGL2OnConic) {
+		if (f_v) {
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_PGL2q_OnConic" << endl;
 		}
 		init_PGL2q_OnConic(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_PGL2q_OnConic" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_wedge_action) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_wedge_action" << endl;
 		}
 		init_wedge_action(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_wedge_action" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_wedge_action_detached) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_wedge_action_detached" << endl;
 		}
 		init_wedge_action_detached(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_wedge_action_detached" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_monomial_group) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_monomial_group" << endl;
 		}
 		init_monomial_group(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_monomial_group" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_diagonal_group) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_diagonal_group" << endl;
 		}
 		init_diagonal_group(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_diagonal_group" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_null_polarity_group) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_null_polarity_group" << endl;
 		}
 		init_null_polarity_group(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_null_polarity_group" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_symplectic_group) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_symplectic_group" << endl;
 		}
 		init_symplectic_group(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_symplectic_group" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_borel_subgroup_upper) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_borel_subgroup_upper" << endl;
 		}
 		init_borel_subgroup_upper(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_borel_subgroup_upper" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_borel_subgroup_lower) {
-		cout << "linear_group::init borel_subgroup_lower "
+		cout << "linear_group::linear_group_apply_modification borel_subgroup_lower "
 				"not yet implemented" << endl;
 		exit(1);
 		}
 	if (description->f_singer_group) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_singer_group" << endl;
 		}
 		init_singer_group(
 				description->singer_power, verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_singer_group" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_singer_group_and_frobenius) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_singer_group_and_frobenius" << endl;
 		}
 		init_singer_group_and_frobenius(
 				description->singer_power, verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_singer_group_and_frobenius" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_identity_group) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_identity_subgroup" << endl;
 		}
 		init_identity_subgroup(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_identity_subgroup" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_subfield_structure_action) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_subfield_structure_action" << endl;
 		}
 		init_subfield_structure_action(
 				description->s, verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_subfield_structure_action" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_orthogonal_group) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_orthogonal_group" << endl;
 		}
 		init_orthogonal_group(
 				description->orthogonal_group_epsilon,
 				verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_orthogonal_group" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_subgroup_from_file) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_subgroup_from_file" << endl;
 		}
 		init_subgroup_from_file(
@@ -298,24 +370,26 @@ void linear_group::linear_group_init(
 			description->subgroup_label,
 			verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_subgroup_from_file" << endl;
 		}
 		f_OK = TRUE;
 		}
 	if (description->f_subgroup_by_generators) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"f_subgroup_by_generators" << endl;
 		}
 
 		int *gens;
 		int sz;
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(description->subgroup_generators_label, gens, sz, verbose_level);
+		orbiter_kernel_system::Orbiter->get_vector_from_label(
+				description->subgroup_generators_label, gens, sz,
+				verbose_level);
 
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"gens of size " << sz << ":" << endl;
 			Int_vec_print(cout, gens, sz);
 			cout << endl;
@@ -323,7 +397,7 @@ void linear_group::linear_group_init(
 
 
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_subgroup_by_generators" << endl;
 		}
 		init_subgroup_by_generators(
@@ -333,7 +407,7 @@ void linear_group::linear_group_init(
 			gens,
 			verbose_level - 1);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_subgroup_by_generators" << endl;
 		}
 		FREE_int(gens);
@@ -341,19 +415,19 @@ void linear_group::linear_group_init(
 	}
 	if (description->f_Janko1) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before init_subgroup_Janko1" << endl;
 		}
 		init_subgroup_Janko1(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after init_subgroup_Janko1" << endl;
 		}
 		f_OK = TRUE;
 	}
 	if (description->f_on_tensors) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"f_on_tensors" << endl;
 		}
 		wreath_product *W;
@@ -369,7 +443,7 @@ void linear_group::linear_group_init(
 		}
 
 		if (f_v) {
-			cout << "action::init_wreath_product_group_and_restrict "
+			cout << "linear_group::linear_group_apply_modification "
 					"before A_wreath->restricted_action" << endl;
 		}
 		A2 = A_linear->restricted_action(points, nb_points,
@@ -380,18 +454,18 @@ void linear_group::linear_group_init(
 		f_has_strong_generators = TRUE;
 		Strong_gens = initial_strong_gens;
 		if (f_v) {
-			cout << "action::init_wreath_product_group_and_restrict "
+			cout << "linear_group::linear_group_apply_modification "
 					"after A_linear->restricted_action" << endl;
 		}
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"f_on_tensors done" << endl;
 		}
 
 	}
 	if (description->f_on_rank_one_tensors) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init f_on_rank_one_tensors" << endl;
+			cout << "linear_group::linear_group_apply_modification f_on_rank_one_tensors" << endl;
 		}
 		wreath_product *W;
 		long int *points;
@@ -406,7 +480,7 @@ void linear_group::linear_group_init(
 		}
 
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"before A_wreath->restricted_action" << endl;
 		}
 		A2 = A_linear->restricted_action(points, nb_points,
@@ -417,162 +491,18 @@ void linear_group::linear_group_init(
 		f_has_strong_generators = TRUE;
 		Strong_gens = initial_strong_gens;
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_apply_modification "
 					"after A_linear->restricted_action" << endl;
 		}
 
 		if (f_v) {
-			cout << "linear_group::linear_group_init f_on_rank_one_tensors done" << endl;
+			cout << "linear_group::linear_group_apply_modification f_on_rank_one_tensors done" << endl;
 		}
 	}
-
-#if 0
-	if (description->f_on_k_subspaces) {
-		induced_actions::action_on_grassmannian *AG;
-		geometry::grassmann *Grass;
-		//action *A3;
-		
-		if (f_v) {
-			cout << "linear_group::linear_group_init creating induced action "
-					"on k-subspaces for k="
-					<< description->on_k_subspaces_k << endl;
-		}
-		AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
-		
-		Grass = NEW_OBJECT(geometry::grassmann);
-
-
-		if (f_v) {
-			cout << "linear_group::linear_group_init before Grass->init" << endl;
-		}
-
-		Grass->init(n,
-				description->on_k_subspaces_k,
-				F, 0 /* verbose_level */);
-		
-		if (f_v) {
-			cout << "linear_group::linear_group_init after Grass->init" << endl;
-		}
-
-
-		if (f_v) {
-			cout << "linear_group::linear_group_init before AG->init" << endl;
-		}
-
-		AG->init(*A_linear, Grass, verbose_level - 2);
-	
-		if (f_v) {
-			cout << "linear_group::linear_group_init after AG->init" << endl;
-		}
-
-
-		A2 = NEW_OBJECT(actions::action);
-
-		if (f_v) {
-			cout << "linear_group::linear_group_init before A2->induced_action_on_grassmannian" << endl;
-		}
-
-		A2->induced_action_on_grassmannian(A_linear, AG,
-			FALSE /* f_induce_action */, NULL /*sims *old_G */, 
-			verbose_level - 2);
-
-		if (f_v) {
-			cout << "linear_group::linear_group_init after A2->induced_action_on_grassmannian" << endl;
-		}
-
-
-		A2->f_is_linear = TRUE;
-
-		f_has_strong_generators = TRUE;
-		Strong_gens = initial_strong_gens;
-	
-		if (f_v) {
-			cout << "linear_group::linear_group_init action A2 created: ";
-			A2->print_info();
-			}
-
-		//A2 = A3;
-		f_OK = TRUE;
-
-		char str1[1000];
-		char str2[1000];
-
-		sprintf(str1, "_OnGr_%d", description->on_k_subspaces_k);
-		sprintf(str2, " {\\rm Gr}_{%d,%d}(%d)",
-				n, description->on_k_subspaces_k, F->q);
-		label.append(str1);
-		label_tex.append(str2);
-
-
-		if (f_v) {
-			cout << "linear_group::linear_group_init creating induced "
-					"action on k-subspaces done" << endl;
-		}
-	}
-#endif
-
-#if 0
-	if (description->f_restricted_action) {
-		if (f_v) {
-			cout << "linear_group::linear_group_init "
-					"restricted_action" << endl;
-		}
-		long int *points;
-		int nb_points;
-		actions::action *A3;
-
-		//Orbiter->Lint_vec.scan(description->restricted_action_text, points, nb_points);
-		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(description->restricted_action_text, points, nb_points, verbose_level);
-		if (f_v) {
-			cout << "linear_group::linear_group_init "
-					"computing restricted action on set of size " << nb_points << endl;
-			Lint_vec_print(cout, points, nb_points);
-			cout << endl;
-		}
-
-		A3 = A2->restricted_action(points, nb_points,
-				verbose_level);
-		A3->f_is_linear = TRUE;
-		f_OK = TRUE;
-		//sprintf(A2->prefix + strlen(A2->prefix), "_restr_%d", nb_points);
-		//sprintf(A2->label_latex + strlen(A2->label_latex),
-		//		"{\\rm restr}(%d)", nb_points);
-		//Strong_gens = initial_strong_gens;
-
-		A2 = A3;
-		if (f_v) {
-			cout << "linear_group::linear_group_init "
-					"after restricted_action" << endl;
-		}
-		f_OK = TRUE;
-	}
-#endif
-
-	if (!f_OK) {
-		if (f_v) {
-			cout << "linear_group::linear_group_init "
-					"!f_OK, A2 = A_linear" << endl;
-		}
-		A2 = A_linear;
-		vector_space_dimension = n;
-		q = input_q;
-		f_has_strong_generators = TRUE;
-		Strong_gens = initial_strong_gens;
-		//sprintf(prefix, "PGL_%d_%d", n, input_q);
-		//sprintf(label_latex, "\\PGL(%d,%d)", n, input_q);
-	}
-
-
-	if (description->f_export_magma) {
-		if (f_v) {
-			cout << "linear_group::linear_group_init f_export_magma" << endl;
-		}
-		Strong_gens->export_magma(A_linear, cout, verbose_level);
-	}
-
 	if (f_v) {
-		cout << "linear_group::linear_group_init done" << endl;
+		cout << "linear_group::linear_group_apply_modification done" << endl;
 	}
+	return f_OK;
 }
 
 void linear_group::init_PGL2q_OnConic(int verbose_level)
@@ -736,6 +666,7 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 			F, n2,
 			description,
 			secondary_nice_gens,
+			label, label_tex,
 			verbose_level);
 
 	if (f_v) {

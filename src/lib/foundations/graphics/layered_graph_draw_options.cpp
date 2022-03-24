@@ -54,7 +54,9 @@ layered_graph_draw_options::layered_graph_draw_options()
 	f_rotated = FALSE;
 
 
+	f_nodes = FALSE;
 	f_nodes_empty = FALSE;
+
 	f_select_layers = FALSE;
 	//select_layers = NULL;
 	nb_layer_select = 0;
@@ -211,6 +213,12 @@ int layered_graph_draw_options::read_arguments(
 				cout << "-rotated " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-nodes") == 0) {
+			f_nodes = TRUE;
+			if (f_v) {
+				cout << "-nodes " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-nodes_empty") == 0) {
 			f_nodes_empty = TRUE;
 			if (f_v) {
@@ -307,6 +315,9 @@ void layered_graph_draw_options::print()
 	}
 	if (f_rotated) {
 		cout << "f_rotated" << endl;
+	}
+	if (f_nodes) {
+		cout << "f_nodes" << endl;
 	}
 	if (f_nodes_empty) {
 		cout << "f_nodes_empty" << endl;

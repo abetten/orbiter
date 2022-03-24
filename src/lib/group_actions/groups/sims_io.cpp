@@ -471,7 +471,7 @@ void sims::print_all_group_elements()
 	FREE_int(Elt);
 }
 
-void sims::print_all_group_elements_tex(ostream &ost)
+void sims::print_all_group_elements_tex(std::ostream &ost)
 {
 	int *Elt;
 	ring_theory::longinteger_object go;
@@ -494,7 +494,58 @@ void sims::print_all_group_elements_tex(ostream &ost)
 	FREE_int(Elt);
 }
 
-void sims::print_all_group_elements_with_permutations_tex(ostream &ost)
+void sims::print_all_group_elements_tree(std::ostream &ost)
+{
+	int *Elt;
+	ring_theory::longinteger_object go;
+	long int i;
+	int j;
+	int offset = 1;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+
+
+	int *perm;
+
+	perm = NEW_int(A->degree);
+
+
+	for (i = 0; i < go.as_lint(); i++) {
+		element_unrank_lint(i, Elt);
+
+#if 0
+		ord = A->element_order(Elt);
+		ost << "Element " << setw(5) << i << " / "
+				<< go.as_int() << " of order " << ord << ":" << endl;
+		ost << "$$" << endl;
+		A->element_print_latex(Elt, ost);
+		ost << "$$" << endl;
+		//A->element_print_as_permutation(Elt, cout);
+		//cout << endl;
+#else
+		A->element_as_permutation(
+				Elt,
+				perm, 0 /*verbose_level*/);
+		ost << A->degree;
+		for (j = 0; j < A->degree; j++) {
+			ost << " " << perm[j] + offset;
+		}
+		ost << endl;
+
+		//A->element_print_as_permutation(Elt, cout);
+		//cout << endl;
+
+#endif
+	}
+
+	FREE_int(perm);
+	FREE_int(Elt);
+}
+
+
+
+void sims::print_all_group_elements_with_permutations_tex(std::ostream &ost)
 {
 	int *Elt;
 	ring_theory::longinteger_object go;
@@ -503,8 +554,10 @@ void sims::print_all_group_elements_with_permutations_tex(ostream &ost)
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 
+
 	for (i = 0; i < go.as_lint(); i++) {
 		element_unrank_lint(i, Elt);
+
 		ord = A->element_order(Elt);
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;

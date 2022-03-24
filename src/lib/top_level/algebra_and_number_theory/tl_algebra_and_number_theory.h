@@ -402,6 +402,10 @@ public:
 	int f_inverse;
 	std::string inverse_a;
 
+	int f_consecutive_powers;
+	std::string consecutive_powers_a_text;
+	std::string consecutive_powers_exponent_text;
+
 	int f_raise_to_the_power;
 	std::string raise_to_the_power_a_text;
 	std::string raise_to_the_power_exponent_text;

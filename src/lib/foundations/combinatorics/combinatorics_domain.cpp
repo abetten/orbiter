@@ -3356,7 +3356,7 @@ void combinatorics_domain::do_make_tree_of_all_k_subsets(int n, int k, int verbo
 	char fname[1000];
 
 
-	snprintf(fname, 1000, "all_k_subsets_%d_%d.tree", n, k);
+	snprintf(fname, 1000, "all_k_subsets_n%d_k%d.tree", n, k);
 	set = NEW_int(k);
 	N = Combi.int_n_choose_k(n, k);
 

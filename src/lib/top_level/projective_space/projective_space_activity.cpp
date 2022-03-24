@@ -36,15 +36,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 		cout << "projective_space_activity::perform_activity" << endl;
 	}
 
-#if 0
-	if (Descr->f_canonical_form_PG) {
-
-		PA->canonical_form(
-				Descr->Canonical_form_PG_Descr,
-				verbose_level);
-	}
-#endif
-
 	if (Descr->f_export_point_line_incidence_matrix) {
 
 		PA->P->export_incidence_matrix_to_csv(verbose_level);
@@ -75,21 +66,11 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_canonical_form_of_code) {
 
-		//projective_space_global G;
 
 		int *genma;
 		int k, n;
 
 		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->canonical_form_of_code_generator_matrix, genma, k, n);
-
-#if 0
-		G.canonical_form_of_code(
-				PA,
-				Descr->canonical_form_of_code_label,
-				v, m, n,
-				Descr->Canonical_form_codes_Descr,
-				verbose_level);
-#endif
 
 		PA->canonical_form_of_code(
 				Descr->canonical_form_of_code_label,
@@ -103,11 +84,21 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		projective_space_global G;
 
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before G.map" << endl;
+		}
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity n=" << PA->P->n << endl;
+		}
 		G.map(
 				PA,
-				Descr->map_label,
+				Descr->map_ring_label,
+				Descr->map_formula_label,
 				Descr->map_parameters,
 				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after G.map" << endl;
+		}
 
 	}
 	else if (Descr->f_analyze_del_Pezzo_surface) {

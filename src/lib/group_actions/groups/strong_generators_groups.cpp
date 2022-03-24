@@ -24,6 +24,8 @@ void strong_generators::init_linear_group_from_scratch(
 	field_theory::finite_field *F, int n,
 	linear_group_description *Descr,
 	data_structures_groups::vector_ge *&nice_gens,
+	std::string &label,
+	std::string &label_tex,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -136,6 +138,9 @@ void strong_generators::init_linear_group_from_scratch(
 				"fatal: !A->f_has_strong_generators" << endl;
 	}
 
+	label.assign(A->label);
+	label_tex.assign(A->label_tex);
+
 	if (Descr->f_special) {
 
 
@@ -145,10 +150,22 @@ void strong_generators::init_linear_group_from_scratch(
 		}
 
 		special_subgroup(verbose_level);
-		
+
+		if (Descr->f_projective) {
+
+			A->G.matrix_grp->init_projective_group_label(n,
+					F, Descr->f_semilinear, TRUE,
+					A,
+					label,
+					label_tex,
+					verbose_level);
+
+		}
+
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"special linear group done" << endl;
+			cout << "label=" << label << endl;
 		}
 	}
 	else {
@@ -181,12 +198,14 @@ void strong_generators::init_linear_group_from_scratch(
 	}
 
 	if (f_vv) {
+		cout << "strong_generators::init_linear_group_from_scratch we found the following generators:" << endl;
 		print_generators(cout);
 		print_generators_tex();
 	}
 
 
 	if (f_v) {
+		cout << "strong_generators::init_linear_group_from_scratch label=" << label << endl;
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"done" << endl;
 	}

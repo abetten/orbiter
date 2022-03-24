@@ -494,6 +494,8 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 			Int_matrix_print(Basis8, 2, 4);
 		}
 
+		// forget about the first coordinate in the basis of the line:
+		// Basis6 is the basis of the line in the plane V mod (1,0,0,0)
 		for (j = 0; j < 2; j++) {
 			Int_vec_copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
 		}

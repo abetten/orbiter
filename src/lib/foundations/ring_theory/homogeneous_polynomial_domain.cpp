@@ -2813,6 +2813,177 @@ void homogeneous_polynomial_domain::create_projective_curve(
 }
 
 
+void homogeneous_polynomial_domain::get_coefficient_vector(
+		expression_parser::formula *Formula,
+		std::string &evaluate_text,
+		int *Coefficient_vector,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector" << endl;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector" << endl;
+		cout << "formula:" << endl;
+		Formula->print();
+	}
+
+	if (!Formula->f_is_homogeneous) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula is not homogeneous" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula is homogeneous of degree " << Formula->degree << endl;
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula->nb_managed_vars = " << Formula->nb_managed_vars << endl;
+	}
+	if (Formula->nb_managed_vars != nb_variables) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula->nb_managed_vars != nb_variables" << endl;
+		exit(1);
+	}
+	if (Formula->degree != degree) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula->nb_managed_vars != degree" << endl;
+		exit(1);
+	}
+
+
+	expression_parser::syntax_tree_node **Subtrees;
+	int nb_monomials;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector before Formula->get_subtrees" << endl;
+	}
+	Formula->get_subtrees(this, Subtrees, nb_monomials, verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector after Formula->get_subtrees" << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < nb_monomials; i++) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector Monomial " << i << " : ";
+		if (Subtrees[i]) {
+			Subtrees[i]->print_expression(cout);
+			cout << " * ";
+			print_monomial(cout, i);
+			cout << endl;
+		}
+		else {
+			cout << "homogeneous_polynomial_domain::get_coefficient_vector no subtree" << endl;
+		}
+	}
+
+
+	//int *Coefficient_vector;
+
+	//Coefficient_vector = NEW_int(nb_monomials);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector before Formula->evaluate" << endl;
+	}
+	Formula->evaluate(this,
+			Subtrees, evaluate_text, Coefficient_vector,
+			verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector after Formula->evaluate" << endl;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector coefficient vector:" << endl;
+		Int_vec_print(cout, Coefficient_vector, nb_monomials);
+		cout << endl;
+	}
+
+#if 0
+	del_pezzo_surface_of_degree_two_domain *del_Pezzo;
+
+	del_Pezzo = NEW_OBJECT(del_pezzo_surface_of_degree_two_domain);
+
+	del_Pezzo->init(P, Poly4_3, verbose_level);
+
+	del_pezzo_surface_of_degree_two_object *del_Pezzo_surface;
+
+	del_Pezzo_surface = NEW_OBJECT(del_pezzo_surface_of_degree_two_object);
+
+	del_Pezzo_surface->init(del_Pezzo,
+			Formula, Subtrees, Coefficient_vector,
+			verbose_level);
+
+	del_Pezzo_surface->enumerate_points_and_lines(verbose_level);
+
+	del_Pezzo_surface->pal->write_points_to_txt_file(Formula->name_of_formula, verbose_level);
+
+	del_Pezzo_surface->create_latex_report(Formula->name_of_formula, Formula->name_of_formula_latex, verbose_level);
+
+	FREE_OBJECT(del_Pezzo_surface);
+	FREE_OBJECT(del_Pezzo);
+#endif
+
+	//FREE_int(Coefficient_vector);
+	//FREE_OBJECT(Poly);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector done" << endl;
+	}
+}
+
+
+void homogeneous_polynomial_domain::evaluate_regular_map(
+		int *Coefficient_vector,
+		int nb_eqns,
+		geometry::projective_space *P,
+		long int *&Pts, int &N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::evaluate_regular_map" << endl;
+	}
+
+	if (nb_eqns != P->n + 1) {
+		cout << "homogeneous_polynomial_domain::evaluate_regular_map nb_eqns != P->n + 1" << endl;
+		exit(1);
+	}
+
+	int *v;
+	int *w;
+	int h;
+	long int i, j;
+
+	N = P->N_points;
+	Pts = NEW_lint(N);
+	v = NEW_int(P->n + 1);
+	w = NEW_int(P->n + 1);
+
+	for (i = 0; i < N; i++) {
+		P->unrank_point(v, i);
+
+		for (h = 0; h < P->n + 1; h++) {
+			w[h] = evaluate_at_a_point(Coefficient_vector + h * nb_monomials, v);
+		}
+
+		if (!Int_vec_is_zero(w, P->n + 1)) {
+			j = P->rank_point(w);
+		}
+		else {
+			j = -1;
+		}
+		Pts[i] = j;
+	}
+	FREE_int(v);
+	FREE_int(w);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::evaluate_regular_map done" << endl;
+	}
+}
+
+
 
 // #############################################################################
 // global functions:

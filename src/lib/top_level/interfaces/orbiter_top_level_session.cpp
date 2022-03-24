@@ -363,6 +363,22 @@ projective_geometry::projective_space_with_action *orbiter_top_level_session::ge
 	return (projective_geometry::projective_space_with_action *) get_object(idx);
 }
 
+ring_theory::homogeneous_polynomial_domain *orbiter_top_level_session::get_object_of_type_ring(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_ring cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_polynomial_ring) {
+		cout << "orbiter_top_level_session::get_object_of_type_ring object type != t_polynomial_ring" << endl;
+		exit(1);
+	}
+	return (ring_theory::homogeneous_polynomial_domain *) get_object(idx);
+}
+
 
 
 }}}

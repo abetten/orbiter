@@ -285,6 +285,17 @@ public:
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
 			int verbose_level);
+	void get_coefficient_vector(
+			expression_parser::formula *Formula,
+			std::string &evaluate_text,
+			int *Coefficient_vector,
+			int verbose_level);
+	void evaluate_regular_map(
+			int *Coefficient_vector,
+			int nb_eqns,
+			geometry::projective_space *P,
+			long int *&Pts, int &N,
+			int verbose_level);
 
 
 };

@@ -12,6 +12,8 @@ MODULES = \
 		classification_of_objects_report_options.o \
 		classification_of_objects.o \
 		combinatorics_domain.o \
+		domino_assignment.o \
+		domino_change.o \
 		encoded_combinatorial_object.o \
 		geo_parameter.o \
 		pentomino_puzzle.o \

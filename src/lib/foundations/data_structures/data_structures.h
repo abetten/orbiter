@@ -40,6 +40,10 @@ public:
 	void print_pointer_hex(std::ostream &ost, void *p);
 	void print_uint32_hex(std::ostream &ost, uint32_t val);
 	void print_hex_digit(std::ostream &ost, int digit);
+	void print_bits(std::ostream &ost, char *data, int data_size);
+	void read_hex_data(std::string &str,
+			char *&data, int &data_size, int verbose_level);
+	unsigned char read_hex_digit(char digit);
 	void print_repeated_character(std::ostream &ost, char c, int n);
 	uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
 	void solve_diophant(int *Inc,

@@ -1416,6 +1416,23 @@ void action::read_conjugacy_classes_and_normalizers(
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
 
+
+	string fname_csv;
+
+	fname_csv.assign(fname);
+
+	ST.replace_extension_with(fname_csv, ".csv");
+	{
+		ofstream fp(fname_csv);
+		fp << "ROW,class_order_of_element,class_size" << endl;
+		for (i = 0; i < nb_classes; i++) {
+			fp << i << "," << class_order_of_element[i] << "," << class_size[i] << endl;
+		}
+		fp << "END" << endl;
+
+	}
+
+
 	FREE_int(perms);
 	FREE_int(class_size);
 	FREE_int(class_order_of_element);

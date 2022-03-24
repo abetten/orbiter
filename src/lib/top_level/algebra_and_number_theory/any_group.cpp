@@ -754,6 +754,8 @@ void any_group::print_elements_tex(
 		cout << "any_group::print_elements_tex" << endl;
 	}
 
+	orbiter_kernel_system::file_io Fio;
+
 	groups::strong_generators *SG;
 
 
@@ -761,10 +763,8 @@ void any_group::print_elements_tex(
 
 	groups::sims *H;
 
-	//G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = SG->create_sims(verbose_level);
 
-	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
@@ -785,6 +785,7 @@ void any_group::print_elements_tex(
 		L.head_easy(fp);
 
 		H->print_all_group_elements_tex(fp);
+		//H->print_all_group_elements_tree(fp);
 		//H->print_all_group_elements_with_permutations_tex(fp);
 
 		//Schreier.print_and_list_orbits_tex(fp);
@@ -792,6 +793,30 @@ void any_group::print_elements_tex(
 
 		L.foot(fp);
 	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	fname.assign(label);
+	fname.append("_elements_tree.txt");
+
+
+	{
+		ofstream fp(fname);
+		orbiter_kernel_system::latex_interface L;
+		//L.head_easy(fp);
+
+		//H->print_all_group_elements_tex(fp);
+		H->print_all_group_elements_tree(fp);
+		//H->print_all_group_elements_with_permutations_tex(fp);
+
+		//Schreier.print_and_list_orbits_tex(fp);
+
+		fp << -1 << endl;
+
+		//L.foot(fp);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
 
 	FREE_int(Elt);
 	if (f_v) {

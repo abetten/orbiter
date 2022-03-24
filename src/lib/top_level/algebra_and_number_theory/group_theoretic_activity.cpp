@@ -86,8 +86,20 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		inverse(verbose_level);
 	}
 
+	if (Descr->f_consecutive_powers) {
+		//raise_to_the_power(verbose_level);
+
+		A1->consecutive_powers_based_on_text(Descr->consecutive_powers_a_text,
+				Descr->consecutive_powers_exponent_text, verbose_level);
+
+	}
+
 	if (Descr->f_raise_to_the_power) {
-		raise_to_the_power(verbose_level);
+		//raise_to_the_power(verbose_level);
+
+		A1->raise_to_the_power_based_on_text(Descr->raise_to_the_power_a_text,
+				Descr->raise_to_the_power_exponent_text, verbose_level);
+
 	}
 
 	if (Descr->f_export_orbiter) {
@@ -537,6 +549,7 @@ void group_theoretic_activity::inverse(int verbose_level)
 	}
 }
 
+#if 0
 void group_theoretic_activity::raise_to_the_power(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -552,7 +565,7 @@ void group_theoretic_activity::raise_to_the_power(int verbose_level)
 		cout << "group_theoretic_activity::raise_to_the_power done" << endl;
 	}
 }
-
+#endif
 
 
 
