@@ -36,7 +36,7 @@ public:
 			groups::schreier *Classes,
 			data_structures_groups::vector_ge *Transporter,
 			int verbose_level);
-	void orbits_on_set_from_file(
+	void compute_orbit_of_set(
 			long int *the_set, int set_size,
 			actions::action *A1, actions::action *A2,
 			data_structures_groups::vector_ge *gens,
@@ -366,6 +366,9 @@ public:
 	int f_on_k_subspaces;
 	int on_k_subspaces_k;
 
+	int f_on_k_subsets;
+	int on_k_subsets_k;
+
 	std::vector<std::string> from;
 
 	group_modification_description();
@@ -680,6 +683,9 @@ public:
 			group_modification_description *description,
 			int verbose_level);
 	void create_action_on_k_subspaces(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_k_subsets(
 			group_modification_description *description,
 			int verbose_level);
 

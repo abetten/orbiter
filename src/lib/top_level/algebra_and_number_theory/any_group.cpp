@@ -1462,7 +1462,8 @@ void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_leve
 	}
 
 	if (f_v) {
-		cout << "computing orbit of set from file "
+		cout << "any_group::orbits_on_set_from_file "
+				"computing orbit of set from file "
 			<< fname_csv << ":" << endl;
 	}
 	orbiter_kernel_system::file_io Fio;
@@ -1472,7 +1473,8 @@ void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_leve
 	Fio.read_set_from_file(fname_csv,
 			the_set, set_sz, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "read a set of size " << set_sz << endl;
+		cout << "any_group::orbits_on_set_from_file "
+				"read a set of size " << set_sz << endl;
 	}
 
 
@@ -1486,14 +1488,24 @@ void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_leve
 	long int *Table;
 	int size;
 
-	Algebra.orbits_on_set_from_file(
+	if (f_v) {
+		cout << "any_group::orbits_on_set_from_file "
+				"before Algebra.compute_orbit_of_set" << endl;
+	}
+
+	Algebra.compute_orbit_of_set(
 			the_set, set_sz,
-			A, A,
-			LG->Strong_gens->gens,
+			A_base, A,
+			Subgroup_gens->gens,
 			label_set,
-			LG->label,
+			label,
 			Table, size,
 			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::orbits_on_set_from_file "
+				"after Algebra.compute_orbit_of_set" << endl;
+	}
 
 	FREE_lint(Table);
 
@@ -1930,7 +1942,7 @@ void any_group::do_conjugacy_class_of_element(
 	long int *Table;
 	int orbit_length;
 
-	Algebra.orbits_on_set_from_file(
+	Algebra.compute_orbit_of_set(
 			the_set, set_size,
 			A, &A_conj,
 			LG->Strong_gens->gens,

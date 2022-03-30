@@ -919,19 +919,23 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 		orbiter_kernel_system::Orbiter->get_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
 		orbiter_kernel_system::Orbiter->get_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
 
-		cout << "row_part: ";
-		Int_vec_print(cout, Row_parts, nb_row_parts);
-		cout << endl;
-		cout << "col_part: ";
-		Int_vec_print(cout, Col_parts, nb_col_parts);
-		cout << endl;
+		if (f_v) {
+			cout << "row_part: ";
+			Int_vec_print(cout, Row_parts, nb_row_parts);
+			cout << endl;
+			cout << "col_part: ";
+			Int_vec_print(cout, Col_parts, nb_col_parts);
+			cout << endl;
+		}
 	}
 	int i;
 	int max_value;
 	data_structures::string_tools ST;
 
 	max_value = orbiter_kernel_system::Orbiter->Int_vec->maximum(C->M, C->m * C->n);
-	cout << "max_value=" << max_value << endl;
+	if (f_v) {
+		cout << "max_value=" << max_value << endl;
+	}
 
 	//max_value += 5;
 	//cout << "max_value after adjustment=" << max_value << endl;
@@ -964,21 +968,20 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	}
 
 
-	if (C->f_grayscale) {
-		for (i = max_value; i >= 0; i--) {
-			std::vector<int> color = get_color_grayscale(C->bit_depth, max_value, i, C->f_invert_colors, 1);
+	if (f_v) {
+		cout << "graphical_output::draw_bitmap color palette:" << endl;
+		for (i = 0; i <= max_value; i++) {
+			std::vector<int> color;
 
+			if (C->f_grayscale) {
+				color = get_color_grayscale(C->bit_depth, max_value, i, C->f_invert_colors, 1);
+			}
+			else {
+				color = get_color(C->bit_depth, max_value, i, C->f_invert_colors, 1);
+			}
 			cout << "color " << i << " : " << color[0] << "," << color[1] << "," << color[2] << endl;
 		}
 	}
-	else {
-		for (i = max_value; i >= 0; i--) {
-			std::vector<int> color = get_color(C->bit_depth, max_value, i, C->f_invert_colors, 1);
-
-			cout << "color " << i << " : " << color[0] << "," << color[1] << "," << color[2] << endl;
-		}
-	}
-
 
 	int width, height;
 	//int *Table;
@@ -987,7 +990,9 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	width = C->n;
 	height = C->m;
 
-	cout << "width=" << width << endl;
+	if (f_v) {
+		cout << "width=" << width << endl;
+	}
 
 	if (C->f_box_width) {
 		image.SetSize(width * C->box_width, height * C->box_width);
@@ -1005,12 +1010,17 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	N = height * width;
 	N100 = N / 100 + 1;
 
-	cout << "N100=" << N100 << endl;
+	if (f_v) {
+		cout << "N100=" << N100 << endl;
+	}
 
 	cnt = 0;
 
 	if (C->f_secondary_input_csv_file) {
 		indent = C->box_width >> 2;
+	}
+	if (f_v) {
+		cout << "indent=" << indent << endl;
 	}
 
 	std::vector<int> color_white;
@@ -1020,8 +1030,12 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	}
 	else {
 		color_white = get_color(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
-
 	}
+
+	if (f_v) {
+		cout << "color_white=" << color_white[0] << "," << color_white[1] << "," << color_white[2] << endl;
+	}
+
 
 
 	for (i = 0; i < height; i++) {
@@ -1092,7 +1106,9 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	}
 	if (C->f_partition) {
 
-		cout << "drawing the partition" << endl;
+		if (f_v) {
+			cout << "drawing the partition" << endl;
+		}
 		int i0, j0;
 		int h, t, I, J;
 		std::vector<int> color;
@@ -1149,16 +1165,19 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 		}
 	}
 
-	cout << "before writing the image to file as " << fname_out << endl;
+	if (f_v) {
+		cout << "before writing the image to file as " << fname_out << endl;
+	}
 
 	image.WriteToFile(fname_out.c_str());
 
-	std::cout << "Written file " << fname_out << std::endl;
-	{
-		orbiter_kernel_system::file_io Fio;
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+	if (f_v) {
+		std::cout << "Written file " << fname_out << std::endl;
+		{
+			orbiter_kernel_system::file_io Fio;
+			cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		}
 	}
-
 
 
 

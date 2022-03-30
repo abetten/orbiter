@@ -490,7 +490,7 @@ public:
 		int verbose_level);
 	void find_node_by_stabilizer_order(
 			int level, int order, int verbose_level);
-	void get_all_stabilizer_orders_at_level(int level, long int *&Ago, int &nb);
+	void get_all_stabilizer_orders_at_level(int level, long int *&Ago, int &nb, int verbose_level);
 	void get_stabilizer_order(int level, int orbit_at_level, 
 			ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(int level,
@@ -884,7 +884,7 @@ public:
 			poset_classification_report_options *Opt,
 			int verbose_level);
 	void report_number_of_orbits_at_level(std::ostream &ost,
-			poset_classification_report_options *Opt);
+			poset_classification_report_options *Opt, int verbose_level);
 	void report_orbits_summary(std::ostream &ost,
 			poset_classification_report_options *Opt, int verbose_level);
 	void report_poset_of_orbits(std::ostream &ost, int verbose_level);

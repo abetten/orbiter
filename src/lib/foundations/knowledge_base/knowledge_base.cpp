@@ -374,6 +374,7 @@ void knowledge_base::quartic_curves_stab_gens(int q, int i,
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
+	stab_order_str.assign(stab_order);
 }
 
 

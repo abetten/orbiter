@@ -52,7 +52,7 @@ void poset_classification::report(std::ostream &ost,
 	if (f_v) {
 		cout << "poset_classification::report before report_number_of_orbits_at_level" << endl;
 	}
-	report_number_of_orbits_at_level(ost, Opt);
+	report_number_of_orbits_at_level(ost, Opt, verbose_level);
 	if (f_v) {
 		cout << "poset_classification::report after report_number_of_orbits_at_level" << endl;
 	}
@@ -162,8 +162,13 @@ void poset_classification::report_orbits_in_detail(std::ostream &ost,
 }
 
 void poset_classification::report_number_of_orbits_at_level(std::ostream &ost,
-		poset_classification_report_options *Opt)
+		poset_classification_report_options *Opt, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::report_number_of_orbits_at_level" << endl;
+	}
 	int *N;
 	int i;
 
@@ -182,7 +187,15 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost,
 		long int *Ago;
 		int nb;
 
-		get_all_stabilizer_orders_at_level(i, Ago, nb);
+		if (f_v) {
+			cout << "poset_classification::report_number_of_orbits_at_level before get_all_stabilizer_orders_at_level" << endl;
+		}
+
+		get_all_stabilizer_orders_at_level(i, Ago, nb, verbose_level);
+
+		if (f_v) {
+			cout << "poset_classification::report_number_of_orbits_at_level after get_all_stabilizer_orders_at_level" << endl;
+		}
 
 
 
@@ -203,6 +216,9 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost,
 
 	ost << endl;
 	FREE_int(N);
+	if (f_v) {
+		cout << "poset_classification::report_number_of_orbits_at_level done" << endl;
+	}
 
 }
 
@@ -566,7 +582,9 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 	get_stabilizer_generators(gens,
 			level, orbit_at_level, Control->verbose_level);
 
-	groups::strong_generators *projectivity_group_gens;
+
+#if 0
+	groups::strong_generators *projectivity_group_gens = NULL;
 
 	Poset->A->compute_projectivity_subgroup(projectivity_group_gens,
 			gens, 0 /*verbose_level*/);
@@ -578,6 +596,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 		projectivity_group_gens->group_order(proj_stab_order);
 		proj_stab_order.print_to_string(str2);
 	}
+#endif
 
 	get_orbit_length_and_stabilizer_order(orbit_at_level, level,
 		stab_order, orbit_length);
@@ -601,11 +620,13 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 	L.lint_set_print_tex(ost, rep, level);
 	ost << "_{";
 	ost << str;
+#if 0
 	if (projectivity_group_gens) {
 		ost << "," << str2;
 		FREE_OBJECT(projectivity_group_gens);
 		projectivity_group_gens = NULL;
 	}
+#endif
 	ost << "}";
 	ost << "$$" << endl;
 
