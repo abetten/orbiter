@@ -574,7 +574,7 @@ void algebra_global_with_action::create_subgroups(
 	}
 }
 
-void algebra_global_with_action::orbits_on_set_from_file(
+void algebra_global_with_action::compute_orbit_of_set(
 		long int *the_set, int set_size,
 		actions::action *A1, actions::action *A2,
 		data_structures_groups::vector_ge *gens,
@@ -587,7 +587,13 @@ void algebra_global_with_action::orbits_on_set_from_file(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_set_from_file" << endl;
+		cout << "algebra_global_with_action::compute_orbit_of_set" << endl;
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_orbit_of_set A1=";
+		A1->print_info();
+		cout << "algebra_global_with_action::compute_orbit_of_set A2=";
+		A2->print_info();
 	}
 
 	orbit_of_sets *OS;
@@ -595,11 +601,11 @@ void algebra_global_with_action::orbits_on_set_from_file(
 	OS = NEW_OBJECT(orbit_of_sets);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_set_from_file before OS->init" << endl;
+		cout << "algebra_global_with_action::compute_orbit_of_set before OS->init" << endl;
 	}
 	OS->init(A1, A2, the_set, set_size, gens, verbose_level - 2);
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_set_from_file after OS->init" << endl;
+		cout << "algebra_global_with_action::compute_orbit_of_set after OS->init" << endl;
 	}
 
 	if (f_v) {
@@ -627,9 +633,11 @@ void algebra_global_with_action::orbits_on_set_from_file(
 	}
 
 
+	string fname;
+
+#if 0
 	// write transporter as csv file:
 
-	string fname;
 
 	data_structures_groups::vector_ge *Coset_reps;
 
@@ -668,6 +676,7 @@ void algebra_global_with_action::orbits_on_set_from_file(
 	if (f_v) {
 		cout << "testing Coset_reps passes" << endl;
 	}
+#endif
 
 	// write as csv file:
 
@@ -726,9 +735,9 @@ void algebra_global_with_action::orbits_on_set_from_file(
 	if (f_v) {
 		cout << "after FREE_OBJECT(OS)" << endl;
 	}
-	FREE_OBJECT(Coset_reps);
+	//FREE_OBJECT(Coset_reps);
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_set_from_file done" << endl;
+		cout << "algebra_global_with_action::compute_orbit_of_set done" << endl;
 	}
 }
 

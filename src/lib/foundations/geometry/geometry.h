@@ -1656,7 +1656,6 @@ public:
 			long int *&encoding, int &encoding_sz, int verbose_level);
 	void encode_object_large_set(
 			long int *&encoding, int &encoding_sz, int verbose_level);
-	//void klein(int verbose_level);
 	void run_nauty(
 			int f_compute_canonical_form,
 			data_structures::bitvector *&Canonical_form,

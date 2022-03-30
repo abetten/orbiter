@@ -766,6 +766,10 @@ void data_input_stream::read_objects(int verbose_level)
 				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
+			if (f_v) {
+				cout << "set of sets:" << endl;
+				SoS->print_table();
+			}
 
 			int h;
 
@@ -776,6 +780,10 @@ void data_input_stream::read_objects(int verbose_level)
 
 
 				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
+
+				if (f_v) {
+					cout << "before OwCF->init_packing_from_set " << h << " / " << SoS->nb_sets << endl;
+				}
 
 				OwCF->init_packing_from_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);

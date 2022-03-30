@@ -685,11 +685,11 @@ void action::map_a_set(long int *set,
 	}
 	for (i = 0; i < n; i++) {
 		if (f_vv) {
-			cout << "i=" << i << " computing image of " << set[i] << endl;
+			cout << "action::map_a_set i=" << i << " / " << n << ", computing image of " << set[i] << endl;
 		}
 		image_set[i] = element_image_of(set[i], Elt, verbose_level - 2);
 		if (f_vv) {
-			cout << "i=" << i << " image of "
+			cout << "action::map_a_set i=" << i << " / " << n << ", image of "
 					<< set[i] << " is " << image_set[i] << endl;
 		}
 	}

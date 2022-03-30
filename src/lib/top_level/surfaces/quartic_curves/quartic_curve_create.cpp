@@ -509,7 +509,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	}
 	QO->init_equation_and_bitangents_and_compute_properties(QCDA->Dom,
 			eqn15, bitangents28,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue after QO->init_equation_and_bitangents" << endl;
@@ -522,7 +522,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	}
 	Sg->stabilizer_of_quartic_curve_from_catalogue(PA->A,
 		F, iso,
-		verbose_level);
+		verbose_level - 2);
 	f_has_group = TRUE;
 
 	if (f_v) {
@@ -531,10 +531,16 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 
 	QOA = NEW_OBJECT(quartic_curve_object_with_action);
 
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_catalogue before QOA->init" << endl;
+	}
 	QOA->init(DomA,
 			QO,
 			Sg,
-			verbose_level);
+			verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_catalogue after QOA->init" << endl;
+	}
 
 
 	char str_q[1000];

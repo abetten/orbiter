@@ -2753,12 +2753,22 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue before "
-				"cubic_surface_stab_gens" << endl;
+				"K.quartic_curves_stab_gens" << endl;
 	}
 	K.quartic_curves_stab_gens(F->q, iso,
 			data, nb_gens, data_size, ascii_target_go);
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue after "
+				"K.quartic_curves_stab_gens" << endl;
+	}
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue ascii_target_go = " << ascii_target_go << endl;
+	}
 
 	target_go.create_from_base_10_string(ascii_target_go);
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue target_go = " << target_go << endl;
+	}
 
 	if (f_v) {
 		cout << "data:" << endl;

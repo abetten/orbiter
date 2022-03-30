@@ -4144,6 +4144,18 @@ Ree_27:
 
 SECTION_INDUCED_ACTIONS:
 
+Symmetric_4_on_pairs:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-define G_on_2subsets -modified_group -from G \
+			-on_k_subsets 2 \
+		-end \
+		-with G_on_2subsets -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Perm4_on_2_subsets_report.tex
+	open Perm4_on_2_subsets_report.pdf
 
 
 T3_on_tensors:
@@ -5021,6 +5033,26 @@ poset_of_5subsets_draw:
 	pdflatex poset_5_poset_lvl_5_draw.tex
 	open poset_5_poset_lvl_5_draw.pdf
 
+
+
+Symmetric_4_on_pairs_poset:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-define G_on_2subsets -modified_group -from G \
+			-on_k_subsets 2 \
+		-end \
+		-with G_on_2subsets -do \
+		-group_theoretic_activity \
+			-poset_classification_control \
+				-problem_label Sym4_on2 \
+				-W -depth 6 -draw_options -radius 150 -end \
+				-report -end -draw_poset -end \
+			-orbits_on_subsets 6 \
+			-report \
+		-end
+	pdflatex Sym4_on2_poset.tex
+	open Sym4_on2_poset.pdf
 
 
 V_3_2_trivial:
@@ -16662,6 +16694,81 @@ finish {diffuse 0.9 phong 0.6} }" \
 
 
 
+plane1:
+	$(ORBITER_PATH)orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask plane1_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.40 -default_angle 75 -clipping_radius 5 -omit_bottom_plane  \
+		-camera 0 "0,0,1" "5,5,3" "0,0,0"  \
+		-rotate_about_z_axis \
+		-boundary_box \
+		-end \
+		-scene_objects \
+			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+			-plane_by_dual_coordinates "0,0,1,0" \
+			-plane_by_dual_coordinates "0,1,0,0" \
+			-plane_by_dual_coordinates "1,0,0,0" \
+			-point "-2.25,0,0" \
+			-point "0,-1.8,0" \
+			-point "0,0,9" \
+			-face "0,1,2,0" \
+			-group_of_things "0" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-lines 0 0.15 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-lines 1 0.15 "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}" \
+			-lines 2 0.15 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+			-group_of_things_as_interval 3 39 \
+			-lines 3 0.05 "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}" \
+			-group_of_things "0" \
+			-planes 0 "texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-group_of_things "0" \
+			-prisms 0 0.05 "texture{ pigment{ color Yellow   } finish { diffuse 0.9 phong 1}}" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv plane1_0_*.pov POV
+	mv makefile_animation POV
+
+
+
+plane2:
+	$(ORBITER_PATH)orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask plane1_%d_%03d.pov \
+		-video_options -W 2560 -H 1920  -global_picture_scale 0.40 -default_angle 75 -clipping_radius 5 -omit_bottom_plane  \
+			-camera 0 "0,0,1" "6,6,2" "0,0,0"  \
+			-rotate_about_z_axis \
+			-boundary_box \
+		-end \
+		-scene_objects \
+			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+			-plane_by_dual_coordinates "0,0,1,0" \
+			-plane_by_dual_coordinates "0,1,0,0" \
+			-plane_by_dual_coordinates "1,0,0,0" \
+			-plane_by_dual_coordinates "4,5,-1,9" \
+			-group_of_things "0" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-group_of_things_as_interval 3 39 \
+			-lines 0 0.15 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-lines 1 0.15 "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}" \
+			-lines 2 0.15 "texture{ pigment{ color Blue } finish { diffuse 0.9 }}" \
+			-lines 3 0.05 "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}" \
+			-group_of_things "0" \
+			-planes 4 "texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
+			-group_of_things "3" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv plane1_0_*.pov POV
+	mv makefile_animation POV
+
+#			-planes 5 "texture{ pigment{ color Yellow transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
+
+
 
 monkey:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
@@ -16930,6 +17037,45 @@ finish { diffuse 0.9 phong 1}}" \
 # Section 16.3: Creating Animations
 
 SECTION_ANIMATIONS:
+
+
+
+dode:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-povray \
+		-round 0 -nb_frames_default 30 -output_mask dode_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.50 -default_angle 45 -clipping_radius 5   \
+		-camera 0 "1,1,1" "-2,2,4" "0,0,0"  \
+		-rotate_about_111 \
+		-end \
+		-scene_objects \
+			-dodecahedron \
+			-group_of_things_as_interval 0 20 \
+			-spheres 0 0.075 "texture{ Polished_Chrome pigment{quick_color White} }" \
+			-group_of_things_as_interval 0 30\
+			-cylinders 1 0.05 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-group_of_things_as_interval 0 12\
+			-prisms 2 0.02 "texture{ pigment{ color Yellow transmit 0.7 } finish {diffuse 0.9 phong 0.6} }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv dode_0_*.pov POV
+	mv makefile_animation POV
+
+
+dode_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm dode.mp4
+	$(ORBITER_PATH)orbiter.out \
+		-prepare_frames \
+			-i 0 30 DODE/dode_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png \
+		-f mp4 -q:v 0 -vcodec mpeg4 dode.mp4
 
 
 monkey_video:
@@ -17698,5 +17844,8 @@ Cremona_map:
 		-projective_space_activity \
 			-map R Cremona "" \
 		-end
+
+
+
 
 
