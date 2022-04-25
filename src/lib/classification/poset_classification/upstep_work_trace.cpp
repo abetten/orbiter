@@ -91,9 +91,7 @@ trace_result upstep_work::recognize(
 	
 	if (f_v) {
 		print_level_extension_coset_info();
-		cout << "upstep_work::recognize "
-				"before recognize_recursion"
-				<< endl;
+		cout << "upstep_work::recognize before recognize_recursion" << endl;
 	}
 	r = recognize_recursion(
 		0, 0,  // start from the very first node
@@ -102,13 +100,10 @@ trace_result upstep_work::recognize(
 		verbose_level);
 	if (f_v) {
 		print_level_extension_coset_info();
-		cout << "upstep_work::recognize "
-				"after recognize_recursion"
-				<< endl;
+		cout << "upstep_work::recognize after recognize_recursion" << endl;
 	}
 	if (f_v) {
-		cout << "upstep_work::recognize "
-				"after recognize_recursion" << endl;
+		cout << "upstep_work::recognize after recognize_recursion" << endl;
 		print_level_extension_coset_info();
 		cout << " returning " << trace_result_as_text(r) << endl;
 	}
@@ -118,7 +113,8 @@ trace_result upstep_work::recognize(
 trace_result upstep_work::recognize_recursion(
 	int lvl, int current_node,
 	int &final_node, int &final_ex,
-	int f_tolerant, int verbose_level)
+	int f_tolerant,
+	int verbose_level)
 // this routine is called from
 // upstep_work::recognize
 // we are dealing with a set of size len + 1.
@@ -238,6 +234,7 @@ trace_result upstep_work::recognize_recursion(
 		current_node,
 		len,
 		f_implicit_fusion,
+		Elt3,
 		f_failure_to_find_point,
 		verbose_level - 5)) {
 
@@ -408,6 +405,7 @@ trace_result upstep_work::recognize_recursion(
 			current_extension,
 			len,
 			f_tolerant,
+			Elt1, Elt2,
 			verbose_level - 6);
 		
 		if (f_v) {
@@ -577,6 +575,7 @@ trace_result upstep_work::handle_last_level(
 			current_extension,
 			f_debug,
 			f_implicit_fusion,
+			Elt1,
 			verbose_level - 2);
 
 		if (f_vv) {

@@ -2115,14 +2115,14 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		}
 
 		int *transporter;
-		int f_implicit_fusion = FALSE;
+		//int f_implicit_fusion = FALSE;
 		int final_node;
 
 		transporter = NEW_int(T->gen->get_A()->elt_size_in_int);
 
-		T->gen->recognize(
+		T->gen->get_Orbit_tracer()->recognize(
 			spread_elements_numeric, nb_components,
-			transporter, f_implicit_fusion,
+			transporter, //f_implicit_fusion,
 			final_node, 0 /*verbose_level*/);
 		//T->identify(spread_elements_numeric, nb_components, verbose_level);
 

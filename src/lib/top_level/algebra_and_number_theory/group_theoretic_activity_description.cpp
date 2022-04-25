@@ -147,6 +147,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_save_elements_csv = FALSE;
 	//std::string save_elements_csv_fname;
 
+	f_export_inversion_graphs = FALSE;
+	//std::string export_inversion_graphs_fname;
+
+
 	f_multiply_elements_csv_column_major_ordering = FALSE;
 	//std::string multiply_elements_csv_column_major_ordering_fname1;
 	//std::string multiply_elements_csv_column_major_ordering_fname2;
@@ -583,6 +587,13 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-save_elements_csv " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_inversion_graphs") == 0) {
+			f_export_inversion_graphs = TRUE;
+			export_inversion_graphs_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_inversion_graphs " << export_inversion_graphs_fname << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
 			f_multiply_elements_csv_column_major_ordering = TRUE;
 			multiply_elements_csv_column_major_ordering_fname1.assign(argv[++i]);
@@ -981,6 +992,9 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_save_elements_csv) {
 		cout << "-save_elements_csv " << save_elements_csv_fname << endl;
+	}
+	if (f_export_inversion_graphs) {
+		cout << "-export_inversion_graphs " << export_inversion_graphs_fname << endl;
 	}
 
 	if (f_multiply_elements_csv_column_major_ordering) {

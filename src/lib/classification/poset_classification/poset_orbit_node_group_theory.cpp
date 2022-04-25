@@ -201,7 +201,13 @@ void poset_orbit_node::init_extension_node_prepare_G(
 	poset_orbit_node *Op = PC->get_node(prev);
 
 
-	Op->get_stabilizer(PC, G, go_G, verbose_level);
+	if (f_v) {
+		cout << "poset_orbit_node::init_extension_node_prepare_G before Op->get_stabilizer" << endl;
+	}
+	Op->get_stabilizer(PC, G, go_G, 0 /*verbose_level */);
+	if (f_v) {
+		cout << "poset_orbit_node::init_extension_node_prepare_G after Op->get_stabilizer" << endl;
+	}
 
 #if 0
 	G.init(PC->get_A(), verbose_level - 2);
@@ -701,7 +707,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 				NULL /* old_G */,
 				Op->Schreier_vector /* Op->sv*/,
 				pt,
-				verbose_level - 1);
+				0 /*verbose_level - 1*/);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting created action of degree "
@@ -713,7 +719,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 						"G.point_stabilizer_with_action"
 						<< endl;
 			}
-			G.point_stabilizer_with_action(&AR, H, AR.G.ABR->idx_of_root_node /* 0 */ /*pt */, verbose_level - 3);
+			G.point_stabilizer_with_action(&AR, H, AR.G.ABR->idx_of_root_node /* 0 */ /*pt */, 0 /*verbose_level - 3*/);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting after "

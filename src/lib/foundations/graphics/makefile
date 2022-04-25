@@ -21,6 +21,13 @@ MODULES = \
 	plot_tools.o \
 	povray_interface.o \
 	povray_job_description.o \
+	scene_element_of_type_edge.o \
+	scene_element_of_type_face.o \
+	scene_element_of_type_line.o \
+	scene_element_of_type_plane.o \
+	scene_element_of_type_point.o \
+	scene_element_of_type_surface.o \
+	scene_init.o \
 	scene.o \
 	scene2.o \
 	tree_draw_options.o \

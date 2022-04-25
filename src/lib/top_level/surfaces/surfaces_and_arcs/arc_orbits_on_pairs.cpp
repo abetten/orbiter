@@ -248,7 +248,7 @@ void arc_orbits_on_pairs::recognize(long int *pair, int *transporter,
 		cout << "arc_orbits_on_pairs::recognize" << endl;
 	}
 
-	Orbits_on_pairs->identify(pair, 2,
+	Orbits_on_pairs->get_Orbit_tracer()->identify(pair, 2,
 		transporter,
 		orbit_idx,
 		0 /*verbose_level */);

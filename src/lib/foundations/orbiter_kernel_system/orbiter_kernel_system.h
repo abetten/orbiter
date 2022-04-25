@@ -721,7 +721,7 @@ public:
 extern orbiter_kernel_system::orbiter_session *Orbiter;
 
 
-//! The orbiter session is responsible for the command line interface and the program execution
+//! The orbiter session is responsible for the command line interface and the program execution. There will only be one instance of this object
 
 
 class orbiter_session {

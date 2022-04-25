@@ -665,6 +665,28 @@ int action::test_if_set_stabilizes(int *Elt,
 	}
 }
 
+void action::map_a_set_based_on_hdl(long int *set,
+		long int *image_set, int n, action *A_base, int hdl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+
+	if (f_v) {
+		cout << "action::map_a_set_based_on_hdl" << endl;
+	}
+	Elt = NEW_int(elt_size_in_int);
+
+	A_base->element_retrieve(hdl, Elt, FALSE);
+
+	map_a_set(set,
+		image_set, n, Elt, verbose_level);
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "action::map_a_set_based_on_hdl done" << endl;
+	}
+}
+
 void action::map_a_set(long int *set,
 		long int *image_set, int n, int *Elt, int verbose_level)
 {

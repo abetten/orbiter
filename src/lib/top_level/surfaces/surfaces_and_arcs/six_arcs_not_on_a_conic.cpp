@@ -230,7 +230,7 @@ void six_arcs_not_on_a_conic::recognize(long int *arc6, int *transporter,
 		cout << "six_arcs_not_on_a_conic::recognize" << endl;
 	}
 
-	Gen->gen->identify(arc6, 6,
+	Gen->gen->get_Orbit_tracer()->identify(arc6, 6,
 		transporter,
 		orbit_at_level,
 		0 /*verbose_level */);

@@ -43,6 +43,15 @@ void bitvector::allocate(long int length)
 	}
 }
 
+void bitvector::zero()
+{
+	int i;
+
+	for (i = 0; i < allocated_length; i++) {
+		data[i] = 0;
+	}
+}
+
 long int bitvector::get_length()
 {
 	return length;

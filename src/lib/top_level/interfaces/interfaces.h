@@ -266,6 +266,17 @@ class interface_coding_theory {
 	int f_crc32_hexdata;
 	std::string crc32_hexdata_text;
 
+	int f_crc32_test;
+	int crc32_test_block_length;
+
+	int f_crc256_test;
+	int crc256_test_message_length;
+	int crc256_test_R;
+	int crc256_test_k;
+
+	int f_crc32_remainders;
+	int crc32_remainders_message_length;
+
 	int f_crc32_file_based;
 	std::string crc32_file_based_fname;
 	int crc32_file_based_block_length;

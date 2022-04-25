@@ -809,6 +809,75 @@ void graph_classify::draw_graphs(int level,
 	}
 }
 
+void graph_classify::recognize_graph_from_adjacency_list(int *Adj, int N2,
+		int &iso_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int h, i;
+	int size;
+	long int *the_set;
+	int *transporter;
+	int final_node;
+
+	if (f_v) {
+		cout << "graph_classify::recognize_graph_from_adjacency_list" << endl;
+	}
+
+	size = 0;
+	for (i = 0; i < N2; i++) {
+		if (Adj[i]) {
+			size++;
+		}
+	}
+	transporter = NEW_int(A_base->elt_size_in_int);
+	the_set = NEW_lint(size);
+	h = 0;
+	for (i = 0; i < N2; i++) {
+		if (Adj[i]) {
+			the_set[h++] = i;
+		}
+	}
+	if (f_v) {
+		cout << "graph_classify::recognize_graph_from_adjacency_list set=";
+		Lint_vec_print(cout, the_set, size);
+		cout << endl;
+	}
+
+	if (size == 0) {
+
+		iso_type = 0;
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "graph_classify::recognize_graph_from_adjacency_list before gen->recognize" << endl;
+		}
+
+		gen->get_Orbit_tracer()->recognize(
+				the_set, size, transporter, //FALSE /* f_implicit_fusion */,
+				final_node, verbose_level - 4);
+
+		if (f_v) {
+			cout << "graph_classify::recognize_graph_from_adjacency_list after gen->recognize" << endl;
+		}
+
+		iso_type = final_node;
+	}
+
+	FREE_int(transporter);
+	FREE_lint(the_set);
+
+	if (f_v) {
+		cout << "graph_classify::recognize_graph_from_adjacency_list done" << endl;
+	}
+}
+
+int graph_classify::number_of_orbits()
+{
+	return gen->first_node_at_level(n2);
+}
 
 // #############################################################################
 // global functions

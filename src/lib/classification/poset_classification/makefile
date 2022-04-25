@@ -9,6 +9,7 @@ MODULES = \
 	classification_base_case.o \
 	extension.o \
 	orbit_based_testing.o \
+	orbit_tracer.o \
 	poset_classification_classify.o \
 	poset_classification_combinatorics.o \
 	poset_classification_control.o \
@@ -16,7 +17,6 @@ MODULES = \
 	poset_classification_export_source_code.o \
 	poset_classification_init.o \
 	poset_classification_io.o \
-	poset_classification_recognize.o \
 	poset_classification_report_options.o \
 	poset_classification_report.o \
 	poset_classification_trace.o \

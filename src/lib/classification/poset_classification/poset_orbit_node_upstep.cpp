@@ -19,6 +19,7 @@ namespace poset_classification {
 int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	int lvl, int current_node, 
 	int current_extension, int len, int f_tolerant,
+	int *Elt_tmp1, int *Elt_tmp2,
 	int verbose_level)
 // returns next_node
 {
@@ -31,23 +32,23 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 		cout << "poset_orbit_node::apply_isomorphism" << endl;
 		}
 
-	//set = NEW_int(len + 1); // this call should be eliminated
-	set = gen->get_tmp_set_apply_fusion();
+	set = NEW_lint(len + 1); // this call should be eliminated
+	//set = gen->get_tmp_set_apply_fusion();
 
 	gen->get_A()->element_retrieve(
 			E[current_extension].get_data(),
-			gen->get_Elt1(), 0);
+			Elt_tmp1, 0);
 		// A Betten March 18 2012, this was gen->A2 previously
 	
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism "
 				"applying fusion element" << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A2()->element_print_quick(gen->get_Elt1(), cout);
+			gen->get_A2()->element_print_quick(Elt_tmp1, cout);
 			}
 		cout << "in action " << gen->get_A2()->label << ":" << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A2()->element_print_as_permutation(gen->get_Elt1(), cout);
+			gen->get_A2()->element_print_as_permutation(Elt_tmp1, cout);
 			}
 		cout << "to the set ";
 		Lint_vec_print(cout, gen->get_set_i(lvl + 1), len + 1);
@@ -57,7 +58,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 			gen->get_set_i(lvl + 1),
 			set,
 			len + 1,
-			gen->get_Elt1(), 0);
+			Elt_tmp1, 0);
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism the set becomes: ";
 		Lint_vec_print(cout, set, len + 1);
@@ -66,13 +67,13 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 
 	gen->get_A2()->element_mult(
 			gen->get_transporter()->ith(lvl + 1),
-			gen->get_Elt1(), gen->get_Elt2(), 0);
+			Elt_tmp1, Elt_tmp2, 0);
 	if (f_v) {
 		Lint_vec_print(cout,
 				gen->get_set_i(lvl + 1), len + 1);
 		cout << endl;
 		}
-	gen->get_A2()->move(gen->get_Elt2(),
+	gen->get_A2()->move(Elt_tmp2,
 			gen->get_transporter()->ith(lvl + 1));
 
 	if (gen->get_poset()->f_subspace_lattice) {
@@ -101,7 +102,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 				f_tolerant, 0);
 		}
 
-	//FREE_int(set);
+	FREE_lint(set);
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism the set ";
 		Lint_vec_print(cout, gen->get_set_i(lvl + 1), lvl + 1);
@@ -116,6 +117,7 @@ void poset_orbit_node::install_fusion_node(
 	int my_node, int my_extension, int my_coset, 
 	long int pt0, int current_extension,
 	int f_debug, int f_implicit_fusion, 
+	int *Elt_tmp,
 	int verbose_level)
 // Called from poset_orbit_node::handle_last_level
 // current_node is the same as poset_orbit_node::node !!!
@@ -165,24 +167,24 @@ void poset_orbit_node::install_fusion_node(
 	}
 	gen->get_A()->element_invert(
 			gen->get_transporter()->ith(lvl + 1),
-			gen->get_Elt1(), FALSE);
+			Elt_tmp, FALSE);
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node" << endl;
 		cout << "transporter[lvl + 1]^-1=Elt1=" << endl;
-		gen->get_A()->element_print_quick(gen->get_Elt1(), cout);
+		gen->get_A()->element_print_quick(Elt_tmp, cout);
 		gen->get_A2()->element_print_as_permutation_verbose(
-				gen->get_Elt1(), cout, 0);
+				Elt_tmp, cout, 0);
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node: "
 				"fusion element:" << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A()->element_print_quick(gen->get_Elt1(), cout);
-			gen->get_A2()->element_print_as_permutation(gen->get_Elt1(), cout);
+			gen->get_A()->element_print_quick(Elt_tmp, cout);
+			gen->get_A2()->element_print_as_permutation(Elt_tmp, cout);
 			cout << endl;
 			}
 		}
-	hdl = gen->get_A()->element_store(gen->get_Elt1(), FALSE);
+	hdl = gen->get_A()->element_store(Elt_tmp, FALSE);
 	//E[current_extension].type = EXTENSION_TYPE_FUSION;
 	gen->get_Poo()->change_extension_type(lvl,
 			current_node, current_extension,
@@ -242,14 +244,14 @@ void poset_orbit_node::install_fusion_node(
 		Lint_vec_print(cout, gen->get_set1(), lvl + 1);
 		cout << endl;
 		cout << "Elt1=" << endl;
-		gen->get_A()->element_print_quick(gen->get_Elt1(), cout);
+		gen->get_A()->element_print_quick(Elt_tmp, cout);
 		cout << "before map_a_set" << endl;
 	}
 	gen->get_A2()->map_a_set(
 			gen->get_set1(),
 			gen->get_set3(),
 			lvl + 1,
-			gen->get_Elt1(), 0);
+			Elt_tmp, 0);
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node "
 				"after map_a_set set3=";
@@ -316,6 +318,7 @@ int poset_orbit_node::trace_next_point_wrapper(
 	poset_classification *gen,
 	int lvl, int current_node,
 	int len, int f_implicit_fusion,
+	int *cosetrep,
 	int &f_failure_to_find_point,
 	int verbose_level)
 // Called from upstep_work::recognize_recursion
@@ -342,20 +345,21 @@ int poset_orbit_node::trace_next_point_wrapper(
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper setting transporter_lvl" << endl;
 	}
-	transporter_lvl = gen->get_transporter()->ith(lvl);
+	transporter_lvl = gen->get_transporter_i(lvl);
 
 	int *transporter_lvlp1;
 
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper "
 				"before trace_next_point setting transporter_lvlp1" << endl;
-		}
-	transporter_lvlp1 = gen->get_transporter()->ith(lvl + 1);
+	}
+	transporter_lvlp1 = gen->get_transporter_i(lvl + 1);
 
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper "
 				"before trace_next_point" << endl;
-		}
+	}
+
 	ret = trace_next_point(gen,
 		lvl,
 		current_node,
@@ -364,12 +368,25 @@ int poset_orbit_node::trace_next_point_wrapper(
 		gen->get_set_i(lvl + 1),
 		transporter_lvl,
 		transporter_lvlp1,
+		cosetrep,
 		f_implicit_fusion,
 		f_failure_to_find_point,
-		verbose_level);
+		0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "poset_orbit_node::trace_next_point_wrapper "
+				"gen->get_set_i(" << lvl << ")=";
+		Lint_vec_print(cout, gen->get_set_i(lvl), len + 1);
+		cout << endl;
+		cout << "poset_orbit_node::trace_next_point_wrapper "
+				"gen->get_set_i(" << lvl + 1 << ")=";
+		Lint_vec_print(cout, gen->get_set_i(lvl + 1), len + 1);
+		cout << endl;
+	}
+
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper done" << endl;
-		}
+	}
 	return ret;
 }
 
@@ -382,6 +399,7 @@ int poset_orbit_node::trace_next_point_in_place(
 	long int *tmp_set,
 	int *cur_transporter,
 	int *tmp_transporter,
+	int *cosetrep,
 	int f_implicit_fusion,
 	int &f_failure_to_find_point,
 	int verbose_level)
@@ -391,10 +409,16 @@ int poset_orbit_node::trace_next_point_in_place(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "poset_orbit_node::trace_next_point_in_place" << endl;
+		//cout << "poset_orbit_node::trace_next_point_in_place" << endl;
 		cout << "poset_orbit_node::trace_next_point_in_place "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
+
+	if (f_v) {
+		cout << "poset_orbit_node::trace_next_point_in_place, "
+				"before trace_next_point" << endl;
+	}
+
 	ret = trace_next_point(gen,
 		lvl,
 		current_node,
@@ -403,19 +427,24 @@ int poset_orbit_node::trace_next_point_in_place(
 		tmp_set,
 		cur_transporter,
 		tmp_transporter,
+		cosetrep,
 		f_implicit_fusion,
 		f_failure_to_find_point,
-		verbose_level);
+		verbose_level - 1);
+
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_in_place, "
 				"after trace_next_point" << endl;
-		}
+	}
+
 	Lint_vec_copy(tmp_set, cur_set, size);
+
 	gen->get_A()->element_move(tmp_transporter,
 			cur_transporter, 0);
+
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_in_place done" << endl;
-		}
+	}
 	return ret;
 }
 
@@ -475,16 +504,16 @@ int poset_orbit_node::trace_next_point(
 	int lvl, int current_node, int size, 
 	long int *cur_set, long int *next_set,
 	int *cur_transporter, int *next_transporter, 
+	int *cosetrep,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // Called by poset_orbit_node::trace_next_point_wrapper
 // and by poset_orbit_node::trace_next_point_in_place
 // returns FALSE only if f_implicit_fusion is TRUE and
-// the set becomes lexcographically less 
+// the set becomes lexicographically less
 {
 	long int the_point, pt0;
 	int i;
-	int *cosetrep;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
@@ -501,13 +530,12 @@ int poset_orbit_node::trace_next_point(
 				<< " prev=" << prev << " pt=" << pt << endl;
 		cout << "poset_orbit_node::trace_next_point verbose_level = "
 				<< verbose_level << endl;
-		}
+	}
 	
 	if (gen->get_poset()->f_subspace_lattice) {
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point before "
-					"orbit_representative_and_coset_rep_inv_"
-					"subspace_action" << endl;
+					"orbit_representative_and_coset_rep_inv_subspace_action" << endl;
 		}
 		orbit_representative_and_coset_rep_inv_subspace_action(
 			gen, lvl,
@@ -532,22 +560,21 @@ int poset_orbit_node::trace_next_point(
 			verbose_level - 1)) {
 			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point "
-						"orbit_representative_"
-						"and_coset_rep_inv returns FALSE, "
+						"orbit_representative_and_coset_rep_inv returns FALSE, "
 						"f_failure_to_find_point = TRUE" << endl;
-				}
+			}
 			f_failure_to_find_point = TRUE;
 			return TRUE;
-			}
+		}
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point "
 					"after orbit_representative_and_coset_rep_inv" << endl;
 		}
-		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 				<< " mapping "
-				<< the_point << "->" << pt0
+				<< the_point << " -> " << pt0
 				<< " under the element " << endl;
 		gen->get_A2()->element_print_quick(cosetrep, cout);
 		cout << "in action " << gen->get_A2()->label << endl;
@@ -563,28 +590,32 @@ int poset_orbit_node::trace_next_point(
 					"to the original point, "
 					"we apply no element and copy the set "
 					"and the transporter over:" << endl;
-			}
+		}
 		Lint_vec_copy(cur_set, next_set, size);
 		gen->get_A2()->element_move(cur_transporter, next_transporter, FALSE);
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 					<< " applying:" << endl;
 			gen->get_A2()->element_print_quick(cosetrep, cout);
+
 			cout << "in action " << gen->get_A2()->label << endl;
+
 			if (gen->allowed_to_show_group_elements()) {
 				gen->get_A2()->element_print_as_permutation_verbose(
 						cosetrep, cout, 0);
 				cout << endl;
-				}
-			cout << "cur_set: ";
+			}
+			cout << "poset_orbit_node::trace_next_point cur_set: ";
 			Lint_vec_print(cout, cur_set, size);
 			cout << endl;
-			}
+		}
 		
 		Lint_vec_copy(cur_set, next_set, lvl);
+
 		next_set[lvl] = pt0;
+
 		for (i = lvl + 1; i < size; i++) {
 			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point lvl = " << lvl
@@ -603,13 +634,13 @@ int poset_orbit_node::trace_next_point(
 						"lvl = " << lvl << ": ";
 				cout << "mapping " << i << "-th point: "
 						<< cur_set[i] << "->" << next_set[i] << endl;
-				}
 			}
+		}
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point next_set: ";
 			Lint_vec_print(cout, next_set, size);
 			cout << endl;
-			}
+		}
 
 		//gen->A->map_a_set(gen->set[lvl],
 		// gen->set[lvl + 1], len + 1, cosetrep);
@@ -654,40 +685,38 @@ int poset_orbit_node::trace_next_point(
 			gen->get_A2()->element_print_as_permutation(
 					next_transporter, cout);
 			cout << endl;
-			}
-		
 		}
+		
+	}
 	
 	if (f_implicit_fusion) {
 		// this is needed if implicit fusion nodes are used
 	
-		if (lvl > 0 &&
-				next_set[lvl] < next_set[lvl - 1]) {
+		if (lvl > 0 && next_set[lvl] < next_set[lvl - 1]) {
 			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point the set becomes "
 						"lexicographically less" << endl;
-				}
-			ret = FALSE;
 			}
+			ret = FALSE;
+		}
 		else {
 			ret = TRUE;
-			}
 		}
+	}
 	else {
 		ret = TRUE;
-		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point "
-				"lvl = " << lvl
-				<< " done, ret=" << ret << endl;
-		}
+				"lvl = " << lvl << " done, ret=" << ret << endl;
+	}
 	return ret;
 }
 
 int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 	poset_classification *gen,
 	int lvl, long int pt_to_trace,
-	long int &pt0, int *&cosetrep,
+	long int &pt0, int *cosetrep,
 	int verbose_level)
 // called by poset_orbit_node::trace_next_point
 {
@@ -699,13 +728,14 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 				"lvl=" << lvl
 				<< " pt_to_trace=" << pt_to_trace << endl;
-		}
+	}
 	if (nb_strong_generators == 0) {
-		cosetrep = gen->get_Elt1();
-		gen->get_A()->element_one(gen->get_Elt1(), FALSE);
+		//cosetrep = gen->get_Elt1();
+		gen->get_A()->element_one(cosetrep, FALSE);
 		pt0 = pt_to_trace;
 		return TRUE;
-		}
+	}
+
 	if (Schreier_vector) {
 
 		//cout << "Node " << node
@@ -732,51 +762,55 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 			}
 			return FALSE;
 		}
-		cosetrep = gen->get_schreier_vector_handler()->cosetrep;
+
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 					"after gen->Schreier_vector_handler->coset_rep_inv"
 					<< endl;
 		}
 
+		//cosetrep = gen->get_schreier_vector_handler()->cosetrep;
+
+		gen->get_A2()->element_move(gen->get_schreier_vector_handler()->cosetrep, cosetrep, 0);
+
+
 		// gen->Elt1 contains the element that maps pt_to_trace to pt0
 		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
 		//"coset_rep_inv schreier_vector_coset_rep_inv done" << endl;
-		if (f_v) {
-			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
-					"schreier vector: pt_to_trace=" << pt_to_trace
-					<< " pt0=" << pt0 << endl;
-			cout << "cosetrep:" << endl;
-			gen->get_A2()->element_print_quick(cosetrep, cout);
-		}
-		return TRUE;
 	}
 	else {
 		if (f_v) {
 			cout << "Node " << node
-					<< " poset_orbit_node::orbit_representative_and_"
-					"coset_rep_inv Schreier_vector not available" << endl;
+					<< " poset_orbit_node::orbit_representative_and_coset_rep_inv "
+							"Schreier_vector not available, "
+							"calling least_image_of_point_generators_by_handle" << endl;
 		}
+		//cosetrep = gen->get_Elt1();
+
+
+		std::vector<int> gen_handle;
+
+		get_strong_generators_handle(gen_handle, verbose_level - 2);
+
+
+		pt0 = gen->get_A2()->least_image_of_point_generators_by_handle(
+			gen_handle,
+			pt_to_trace,
+			cosetrep,
+			verbose_level - 1);
+
 	}
-	cosetrep = gen->get_Elt1();
-
-
-	std::vector<int> gen_handle;
-
-	get_strong_generators_handle(gen_handle, verbose_level - 2);
-
-
-	pt0 = gen->get_A2()->least_image_of_point_generators_by_handle(
-		gen_handle,
-		pt_to_trace, 
-		gen->get_Elt1(),
-		verbose_level - 1);
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 				"pt_to_trace=" << pt_to_trace
 				<< " pt0=" << pt0 <<  " done" << endl;
-		}
+	}
+
+	if (f_v) {
+		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv cosetrep:" << endl;
+		gen->get_A2()->element_print_quick(cosetrep, cout);
+	}
 	return TRUE;
 }
 

@@ -858,6 +858,39 @@ void graph_theory_domain::make_cycle_graph(int *&Adj, int &N,
 
 }
 
+void graph_theory_domain::make_inversion_graph(int *&Adj, int &N,
+		int *perm, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_inversion_graph" << endl;
+	}
+	int i, j, pi, pj;
+
+	N = n;
+
+
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+
+	for (i = 0; i < N; i++) {
+		pi = perm[i];
+		for (j = i + 1; j < N; j++) {
+			pj = perm[j];
+			if (pj < pi) {
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_inversion_graph done" << endl;
+	}
+
+}
+
 
 
 

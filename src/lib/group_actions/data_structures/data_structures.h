@@ -617,6 +617,7 @@ public:
 		int verbose_level);
 	void write_to_csv_file_coded(std::string &fname, int verbose_level);
 	void save_csv(std::string &fname, int verbose_level);
+	void export_inversion_graphs(std::string &fname, int verbose_level);
 	void read_column_csv(std::string &fname, actions::action *A, int col_idx, int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, groups::sims *S,

@@ -39,6 +39,7 @@ public:
 	void int_swap(int& x, int& y);
 	void print_pointer_hex(std::ostream &ost, void *p);
 	void print_uint32_hex(std::ostream &ost, uint32_t val);
+	void print_uint32_binary(std::ostream &ost, uint32_t val);
 	void print_hex_digit(std::ostream &ost, int digit);
 	void print_bits(std::ostream &ost, char *data, int data_size);
 	void read_hex_data(std::string &str,
@@ -96,7 +97,7 @@ public:
 class bitvector {
 
 private:
-	uchar *data; // [allocated_length]
+	unsigned char *data; // [allocated_length]
 	long int length; // number of bits used
 	long int allocated_length;
 
@@ -106,9 +107,10 @@ public:
 	bitvector();
 	~bitvector();
 	void allocate(long int length);
+	void zero();
 	long int get_length();
 	long int get_allocated_length();
-	uchar *get_data();
+	unsigned char *get_data();
 	void m_i(long int i, int a);
 	void set_bit(long int i);
 	int s_i(long int i);
@@ -1209,7 +1211,6 @@ public:
 			long int *v2, int len2, long int *v3, int &len3);
 	void int_vec_sorting_permutation(int *v, int len, int *perm,
 		int *perm_inv, int f_increasingly);
-	// perm and perm_inv must be allocated to len elements
 	void int_vec_quicksort(int *v, int (*compare_func)(int a, int b),
 		int left, int right);
 	void lint_vec_quicksort(long int *v,

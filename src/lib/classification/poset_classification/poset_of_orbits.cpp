@@ -690,11 +690,15 @@ void poset_of_orbits::read_memory_object(
 	long int i;
 	long int nb_nodes;
 	int version, magic_sync;
+	int *Elt_tmp;
 
 	if (f_v) {
 		cout << "poset_of_orbits::read_memory_object, "
 				"data size (in chars) = " << m->used_length << endl;
 		}
+
+	Elt_tmp = NEW_int(PC->get_poset()->A->elt_size_in_int);
+
 	nb_group_elements = 0;
 	m->read_int(&version);
 	if (version != 1) {
@@ -766,6 +770,7 @@ void poset_of_orbits::read_memory_object(
 
 		root[i].read_memory_object(PC, PC->get_poset()->A, m,
 				nb_group_elements,
+				Elt_tmp,
 				0 /*verbose_level_down*/ /*verbose_level - 1*/);
 	}
 	if (f_v) {
@@ -779,6 +784,9 @@ void poset_of_orbits::read_memory_object(
 		exit(1);
 	}
 	nb_poset_orbit_nodes_used = nb_nodes;
+
+	FREE_int(Elt_tmp);
+
 	if (f_v) {
 		cout << "poset_of_orbits::read_memory_object finished ";
 		cout << "depth_completed=" << depth_completed
@@ -796,12 +804,17 @@ void poset_of_orbits::write_memory_object(
 	int f_v = (verbose_level >= 1);
 	long int i;
 	long int nb_nodes;
+	int *Elt_tmp;
+
 
 	nb_nodes = first_node_at_level(depth_completed + 1);
 	if (f_v) {
 		cout << "poset_of_orbits::write_memory_object "
 				<< nb_nodes << " nodes" << endl;
 	}
+
+	Elt_tmp = NEW_int(PC->get_poset()->A->elt_size_in_int);
+
 	nb_group_elements = 0;
 	m->write_int(1); // version number of this file format
 	m->write_int(depth_completed);
@@ -843,6 +856,7 @@ void poset_of_orbits::write_memory_object(
 		}
 		get_node(i)->write_memory_object(PC, PC->get_poset()->A, m,
 				nb_group_elements,
+				Elt_tmp,
 				verbose_level_down /*verbose_level - 2*/);
 	}
 	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
@@ -851,6 +865,9 @@ void poset_of_orbits::write_memory_object(
 				" done, written " << nb_group_elements
 				<< " group elements" << endl;
 	}
+
+	FREE_int(Elt_tmp);
+
 	if (f_v) {
 		cout << "poset_of_orbits::write_memory_object "
 				"finished, data size (in chars) = "

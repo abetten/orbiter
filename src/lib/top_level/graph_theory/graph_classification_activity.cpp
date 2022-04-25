@@ -95,6 +95,102 @@ void graph_classification_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_recognize_graphs_from_adjacency_matrix_csv) {
+
+		cout << "f_recognize_graphs_from_adjacency_matrix_csv" << endl;
+		orbiter_kernel_system::file_io Fio;
+		int *M;
+		int m, n;
+		int h;
+		int *Iso_type;
+		int iso_type;
+
+		Fio.int_matrix_read_csv(Descr->recognize_graphs_from_adjacency_matrix_csv_fname,
+				M, m, n, 0 /*verbose_level*/);
+
+		cout << "read matrix of adjacency matrices" << endl;
+		Int_matrix_print(M, m, n);
+
+		Iso_type = NEW_int(m);
+
+		for (h = 0; h < m; h++) {
+
+			if (f_v) {
+				cout << "recognizing graph " << h << " / " << m << endl;
+			}
+
+			GC->recognize_graph_from_adjacency_list(M + h * n, n,
+					iso_type,
+					verbose_level - 4);
+
+			if (f_v) {
+				cout << "recognizing graph " << h << " / " << m << " as isomorphism type " << iso_type << endl;
+			}
+
+			Iso_type[h] = iso_type;
+		}
+
+		cout << "input graph : isomorphism type" << endl;
+		for (h = 0; h < m; h++) {
+			cout << h << " : " << Iso_type[h] << endl;
+		}
+
+		data_structures::tally By_orbit_number;
+
+		By_orbit_number.init(Iso_type, m, FALSE, 0);
+
+		data_structures::set_of_sets *SoS;
+		int *types;
+		int nb_types;
+		int u;
+		int a;
+
+		SoS = By_orbit_number.get_set_partition_and_types(
+				types, nb_types, verbose_level - 5);
+
+		SoS->sort();
+
+		cout << "Inversion graphs classified by isomorphism types:\\\\" << endl;
+		for (h = 0; h < nb_types; h++) {
+			cout << "Isomorphism type " << types[h] << " contains " << SoS->Set_size[h] << " permutations: ";
+			for (u = 0; u < SoS->Set_size[h]; u++) {
+				a = SoS->Sets[h][u];
+				cout << a;
+				if (u < SoS->Set_size[h] - 1) {
+					cout << ", ";
+				}
+			}
+			cout << "\\\\" << endl;
+		}
+
+		int nb_orbits;
+		int *complement;
+		int size_complement;
+
+		nb_orbits = GC->number_of_orbits();
+		complement = NEW_int(nb_orbits);
+
+
+		combinatorics::combinatorics_domain Combi;
+
+		Combi.set_complement(types, nb_types, complement,
+				size_complement, nb_orbits);
+
+		cout << "Number of non inversion graphs is " << size_complement << endl;
+		Int_vec_print(cout, complement, size_complement);
+		cout << endl;
+
+
+
+		FREE_OBJECT(SoS);
+		FREE_int(types);
+
+
+		FREE_int(Iso_type);
+
+	}
+
+	std::string recognize_graphs_from_adjacency_matrix_csv_fname;
 
 
 	if (f_v) {

@@ -209,6 +209,11 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		AG->save_elements_csv(Descr->save_elements_csv_fname, verbose_level);
 	}
 
+	if (Descr->f_export_inversion_graphs) {
+		AG->export_inversion_graphs(Descr->export_inversion_graphs_fname, verbose_level);
+
+	}
+
 	if (Descr->f_multiply_elements_csv_column_major_ordering) {
 		AG->multiply_elements_csv(
 				Descr->multiply_elements_csv_column_major_ordering_fname1,

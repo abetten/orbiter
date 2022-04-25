@@ -198,8 +198,6 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 
 		f_contained = poset_structure_is_contained(
 				set, lvl1, set2, lvl2, verbose_level - 2);
-		//f_contained = int_vec_sort_and_test_if_contained(
-		// set, lvl1, set2, lvl2);
 		
 		if (f_vv) {
 			cout << "f_contained=" << f_contained << endl;
@@ -273,8 +271,6 @@ int poset_classification::count_incidences_down(
 		
 		f_contained = poset_structure_is_contained(
 				set1, lvl1, set, lvl2, verbose_level - 2);
-		//f_contained = int_vec_sort_and_test_if_contained(
-		// set1, lvl1, set, lvl2);
 						
 		if (f_vv) {
 			cout << "f_contained=" << f_contained << endl;

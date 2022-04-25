@@ -937,6 +937,25 @@ void any_group::save_elements_csv(std::string &fname, int verbose_level)
 	}
 }
 
+void any_group::export_inversion_graphs(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::export_inversion_graphs" << endl;
+	}
+
+
+
+	Subgroup_sims->all_elements_export_inversion_graphs(fname, verbose_level);
+
+	if (f_v) {
+		cout << "any_group::export_inversion_graphs done" << endl;
+	}
+}
+
+
+
 void any_group::multiply_elements_csv(std::string &fname1,
 		std::string &fname2, std::string &fname3,
 		int f_column_major_ordering, int verbose_level)

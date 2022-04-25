@@ -1109,8 +1109,35 @@ FILE_Q17="orbit,curve,pts_on_curve,bitangents,go\
 
 DESARGUES_PATH_LEX_LEAST="10 10 3\n0\n1 0\n2 0 15\n3 0 15 26\n4 0 15 26 46\n5 0 15 26 46 56\n6 0 15 26 46 56 72\n7 0 15 26 46 56 72 80\n8 0 15 26 46 56 72 80 93\n9 0 15 26 46 56 72 80 93 106\n10 0 15 26 46 56 72 80 93 106 119\n-1\n"
 
+# Povray:
 
-
+# povray colors:
+POLISHED_CHROME_WHITE="texture{ Polished_Chrome pigment{quick_color White} }"
+YELLOW_TRANSPARENT="texture{ pigment{ color Yellow transmit 0.7 } finish {diffuse 0.9 phong 0.6} }"
+COLOR_RED="texture{ pigment{ color Red } finish {diffuse 0.9 phong 0.6} }"
+COLOR_RED_SHINY="texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}"
+COLOR_GREEN_SHINY="texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}"
+COLOR_BLUE_SHINY="texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}"
+COLOR_YELLOW_SHINY="texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}"
+COLOR_BLACK_SHINY="texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}"
+COLOR_RED_SEE_THROUGH="texture{ pigment{ color Red transmit 0.5 } finish { diffuse 0.9 phong 1}}"
+COLOR_GREEN_SEE_THROUGH="texture{ pigment{ color Green transmit 0.5 } finish { diffuse 0.9 phong 1}}"
+COLOR_BLUE_SEE_THROUGH="texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}"
+COLOR_YELLOW_SEE_THROUGH="texture{ pigment{ color Yellow transmit 0.5 } finish { diffuse 0.9 phong 1}}"
+COLOR_YELLOW_THICK="texture{ pigment{ color Yellow   } finish { diffuse 0.9 phong 1}}"
+COLOR_BLACK_NO_SHADOW="texture{ pigment{Black} } no_shadow"
+SURFACE_COLOR="texture{ pigment{ White*0.5  } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }"
+SURFACE_COLOR_SEETHROUGH="texture{ pigment{ White*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }"
+COLOR_GOLD="texture{ pigment{ Gold } finish \
+{ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }"
+COLOR_TURQUOISE="texture{ pigment{Cyan*1.3} \
+finish {ambient 0.4 diffuse 0.6 roughness 0.001 \
+reflection 0 specular .8} }"
 
 MONKEY_SADDLE_CUBIC="1,0,0,0,-3,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0"
 
@@ -1682,7 +1709,7 @@ trace_4:
 		-with F -do -finite_field_activity \
 			-algebraic_normal_form F_q4_trace.csv 2 \
 		-end
-	
+
 trace_4_WH_transform:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 4 -end \
@@ -3576,6 +3603,10 @@ Symmetric_4:
 		-with G -do \
 		-group_theoretic_activity \
 			-save_elements_csv "Symmetric4_elts.csv" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_inversion_graphs "Symmetric4_inversion_graphs.csv" \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 20 \
 		-draw_options \
@@ -7032,7 +7063,8 @@ quartic_curve_13_0_report:
 		-define P -projective_space 2 F -end \
 		-with P -do \
 			-projective_space_activity \
-				-define_quartic_curve C -q 13 -catalogue 0 -end \
+				-define_quartic_curve C -q 13 \
+				-catalogue 0 -end \
 			-end \
 		-with C -do \
 			-quartic_curve_activity \
@@ -7048,7 +7080,8 @@ quartic_curve_13_1_report:
 		-define P -projective_space 2 F -end \
 		-with P -do \
 			-projective_space_activity \
-				-define_quartic_curve C -q 13 -catalogue 1 -end \
+				-define_quartic_curve C -q 13 \
+				-catalogue 1 -end \
 			-end \
 		-with C -do \
 			-quartic_curve_activity \
@@ -8259,7 +8292,7 @@ D1_q4_with_select_double_six_b:
 	open D1_q4.pdf
 
 
-# ToDo: now projectuve_space_activity:
+# ToDo: now projective_space_activity:
 
 D1_q4_trans:
 	$(ORBITER_PATH)orbiter.out -v 5 -define F -finite_field -q 4 -end \
@@ -14667,6 +14700,9 @@ Cayley_Sym4_star_eigenvalues_and_draw:
 	open Cayley_graph_Perm4_eigenvalues.pdf
 
 
+
+
+
 small_graph_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -edges_as_pairs 5 \
@@ -14932,6 +14968,54 @@ graph_classify_8_r3:
 	#open graphs_v8_r3_rep_12_5.pdf
 
 
+
+
+Symmetric_4_inversion_graph_recognize:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_inversion_graphs "Symmetric4_inversion_graphs.csv" \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define GC -graph_classification \
+			-n 4 \
+			-poset_classification_control \
+				-problem_label graphs_v4 -depth 6 -draw_poset \
+				-draw_options -radius 250 -embedded -end \
+			-end \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-recognize_graphs_from_adjacency_matrix_csv Symmetric4_inversion_graphs.csv \
+		-end \
+		-print_symbols
+
+
+Symmetric_5_inversion_graph_recognize:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group -symmetric_group 5 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_inversion_graphs "Symmetric5_inversion_graphs.csv" \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define GC -graph_classification \
+			-n 5 \
+			-poset_classification_control \
+				-problem_label graphs_v5 -depth 10 -draw_poset \
+				-draw_options -radius 250 -embedded -end \
+				-report -end \
+			-end \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-recognize_graphs_from_adjacency_matrix_csv Symmetric5_inversion_graphs.csv \
+		-end \
+		-print_symbols
+	#pdflatex graphs_v5_poset.tex
+	#open graphs_v5_poset.pdf
 
 ###############################################################################
 # Section 13.4: Graph Theory: Clique finding
@@ -16277,6 +16361,19 @@ Cycle_13_aut:
 		-end \
 
 
+inversion_graph:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define G -graph \
+			-inversion_graph "1,0,2,3" \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+
+
 
 Chain_232_aut:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -16676,15 +16773,11 @@ cube:
 			-edge "5, 7" \
 			-edge "6, 7" \
 			-group_of_things_as_interval 0 8 \
-			-spheres 0 0.3 \
-"texture{ Polished_Chrome pigment{quick_color White} }" \
+			-spheres 0 0.3 $(POLISHED_CHROME_WHITE) \
 			-group_of_things_as_interval 0 6 \
-			-prisms 1 0.05 \
-"texture{ pigment{ color Yellow transmit 0.7 } \
-finish {diffuse 0.9 phong 0.6} }" \
+			-prisms 1 0.05 $(YELLOW_TRANSPARENT) \
 			-group_of_things_as_interval 0 12 \
-			-cylinders 2 0.15 \
-"texture{ pigment{ color Red } finish {diffuse 0.9 phong 0.6} }" \
+			-cylinders 2 0.15 $(COLOR_RED) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -16693,11 +16786,54 @@ finish {diffuse 0.9 phong 0.6} }" \
 	mv makefile_animation POV
 
 
+math261_test:
+	$(ORBITER_PATH)orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask math261_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.1 \
+		-default_angle 75 \
+		-clipping_radius 2.7 \
+		-end \
+		-scene_objects \
+			-point "0,0,0" \
+			-point "5,0,0" \
+			-point "0,5,0" \
+			-point "0,0,5" \
+			-point "1,2,3" \
+			-point "4,5,6" \
+			-point "5,7,9" \
+			-edge "0,1" \
+			-edge "0,2" \
+			-edge "0,3" \
+			-edge "0,4" \
+			-edge "0,5" \
+			-edge "4,6" \
+			-edge "5,6" \
+			-face "0,4,6,5" \
+			-group_of_things_as_interval 0 7 \
+			-spheres 0 0.1 $(POLISHED_CHROME_WHITE) \
+			-group_of_things_as_interval 0 7 \
+			-cylinders 1 0.05 $(COLOR_RED) \
+			-prisms 2 0.05 $(YELLOW_TRANSPARENT) \
+			-group_of_things_as_interval 0 1 \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv math261_0_*.pov POV
+	mv makefile_animation POV
+
+
 
 plane1:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask plane1_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.40 -default_angle 75 -clipping_radius 5 -omit_bottom_plane  \
+		-round 0 -nb_frames_default 30 \
+		-output_mask plane1_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.40 \
+		-default_angle 75 \
+		-clipping_radius 5 -omit_bottom_plane  \
 		-camera 0 "0,0,1" "5,5,3" "0,0,0"  \
 		-rotate_about_z_axis \
 		-boundary_box \
@@ -16714,17 +16850,17 @@ plane1:
 			-group_of_things "0" \
 			-group_of_things "1" \
 			-group_of_things "2" \
-			-lines 0 0.15 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-			-lines 1 0.15 "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}" \
-			-lines 2 0.15 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+			-lines 0 0.15 $(COLOR_RED_SHINY) \
+			-lines 1 0.15 $(COLOR_GREEN_SHINY) \
+			-lines 2 0.15 $(COLOR_BLUE_SHINY) \
 			-group_of_things_as_interval 3 39 \
-			-lines 3 0.05 "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}" \
+			-lines 3 0.05 $(COLOR_BLACK_SHINY) \
 			-group_of_things "0" \
-			-planes 0 "texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
+			-planes 0 $(COLOR_BLUE_SEE_THROUGH) \
 			-group_of_things "1" \
 			-group_of_things "2" \
 			-group_of_things "0" \
-			-prisms 0 0.05 "texture{ pigment{ color Yellow   } finish { diffuse 0.9 phong 1}}" \
+			-prisms 0 0.05 $(COLOR_YELLOW_THICK) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -16736,8 +16872,12 @@ plane1:
 
 plane2:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask plane1_%d_%03d.pov \
-		-video_options -W 2560 -H 1920  -global_picture_scale 0.40 -default_angle 75 -clipping_radius 5 -omit_bottom_plane  \
+		-round 0 -nb_frames_default 30 \
+		-output_mask plane2_%d_%03d.pov \
+		-video_options -W 2560 -H 1920 \
+		-global_picture_scale 0.40 \
+		-default_angle 75 \
+		-clipping_radius 5 -omit_bottom_plane  \
 			-camera 0 "0,0,1" "6,6,2" "0,0,0"  \
 			-rotate_about_z_axis \
 			-boundary_box \
@@ -16752,23 +16892,91 @@ plane2:
 			-group_of_things "1" \
 			-group_of_things "2" \
 			-group_of_things_as_interval 3 39 \
-			-lines 0 0.15 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-			-lines 1 0.15 "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}" \
-			-lines 2 0.15 "texture{ pigment{ color Blue } finish { diffuse 0.9 }}" \
-			-lines 3 0.05 "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}" \
+			-lines 0 0.15 $(COLOR_RED_SHINY) \
+			-lines 1 0.15 $(COLOR_GREEN_SHINY) \
+			-lines 2 0.15 $(COLOR_BLUE_SHINY) \
+			-lines 3 0.05 $(COLOR_BLACK_SHINY) \
 			-group_of_things "0" \
-			-planes 4 "texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
+			-planes 4 $(COLOR_BLUE_SEE_THROUGH) \
 			-group_of_things "3" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
 	mkdir POV
-	mv plane1_0_*.pov POV
+	mv plane2_0_*.pov POV
 	mv makefile_animation POV
 
 #			-planes 5 "texture{ pigment{ color Yellow transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
 
 
+
+analytic_geo_1:
+	$(ORBITER_PATH)orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask analytic_geo_1_%d_%03d.pov \
+		-video_options -W 2560 -H 1920 \
+		-global_picture_scale 0.80 \
+		-default_angle 75 \
+		-clipping_radius 5 -omit_bottom_plane  \
+			-camera 0 "0,0,1" "6,6,2" "0,0,0"  \
+			-rotate_about_z_axis \
+			-boundary_box \
+		-end \
+		-scene_objects \
+			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+			-plane_by_dual_coordinates "0,0,1,0" \
+			-plane_by_dual_coordinates "0,1,0,0" \
+			-plane_by_dual_coordinates "1,0,0,0" \
+			-group_of_things "0" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-group_of_things_as_interval 3 39 \
+			-lines 0 0.05 $(COLOR_RED_SHINY) \
+			-lines 1 0.05 $(COLOR_GREEN_SHINY) \
+			-lines 2 0.05 $(COLOR_BLUE_SHINY) \
+			-lines 3 0.04 $(COLOR_BLACK_SHINY) \
+			-group_of_things "0" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-planes 4 $(COLOR_BLUE_SEE_THROUGH) \
+			-planes 5 $(COLOR_GREEN_SEE_THROUGH) \
+			-planes 6 $(COLOR_RED_SEE_THROUGH) \
+			-point "0,0,0" \
+			-point "1,0,0" \
+			-point "1,2,0" \
+			-point "1,2,3" \
+			-edge "84,85" \
+			-edge "85,86" \
+			-edge "86,87" \
+			-edge "84,87" \
+			-group_of_things "84,85,86" \
+			-spheres 7 0.1 $(POLISHED_CHROME_WHITE) \
+			-group_of_things "87" \
+			-spheres 8 0.10 $(COLOR_YELLOW_SHINY) \
+			-group_of_things "0,1,2" \
+			-cylinders 9 0.075 $(POLISHED_CHROME_WHITE) \
+			-group_of_things "3" \
+			-cylinders 10 0.075 $(COLOR_YELLOW_SHINY) \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv analytic_geo_1_0_*.pov POV
+	mv makefile_animation POV
+
+
+analytic_geo_1_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm analytic_geo_1.mp4
+	$(ORBITER_PATH)orbiter.out \
+		-prepare_frames \
+			-i 0 30 PNG/ANALYTIC_GEO_1/analytic_geo_1_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png \
+		-f mp4 -q:v 0 -vcodec mpeg4 analytic_geo_1.mp4
 
 monkey:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
@@ -16786,18 +16994,14 @@ monkey:
 			-plane_by_dual_coordinates "0,0,1,0" \
 			-group_of_things "0" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ Gold } finish \
-{ambient 0.4 diffuse 0.5 roughness 0.001 \
-reflection 0.1 specular .8} }" \
-			-planes 1 "texture{ pigment{ color Blue \
-transmit 0.5 } finish { diffuse 0.9 phong 0.2}}" \
+			-cubics 0 $(COLOR_GOLD) \
+			-planes 1 $(COLOR_BLUE) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
 	mkdir POV
 	mv monkey_0_*.pov POV
 	mv makefile_animation POV
-
 
 
 
@@ -16815,19 +17019,14 @@ Eckardt:
 		-scene_objects \
 			-Hilbert_Cohn_Vossen_surface \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
-reflection 0.1 specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR) \
 			-group_of_things_as_interval 0 6 \
 			-group_of_things_as_interval 6 6 \
 			-group_of_things_as_interval_with_exceptions 12 15 \
 				"14,19,23" \
-			-lines 1 0.02 "texture{ pigment{ color Red } \
-finish { diffuse 0.9 phong 1}}" \
-			-lines 2 0.02 "texture{ pigment{ color Blue } \
-finish { diffuse 0.9 phong 1}}" \
-			-lines 3 0.02 "texture{ pigment{ color Yellow } \
-finish { diffuse 0.9 phong 1}}" \
+			-lines 1 0.02 $(COLOR_RED_SHINY) \
+			-lines 2 0.02 $(COLOR_BLUE_SHINY) \
+			-lines 3 0.02 $(COLOR_YELLOW_SHINY) \
 			-label 0 "a1" \
 			-label 2 "a2" \
 			-label 4 "a3" \
@@ -16853,11 +17052,11 @@ finish { diffuse 0.9 phong 1}}" \
 			-label 50 "c46" \
 			-label 52 "c56" \
 			-group_of_things_as_interval 0 6 \
-			-texts 4 0.2 0.15 "texture{ pigment{Black} } no_shadow" \
+			-texts 4 0.2 0.15 $(COLOR_BLACK_NO_SHADOW) \
 			-group_of_things_as_interval 6 6 \
-			-texts 5 0.2 0.15 "texture{ pigment{Black} } no_shadow" \
+			-texts 5 0.2 0.15 $(COLOR_BLACK_NO_SHADOW) \
 			-group_of_things_as_interval 12 12 \
-			-texts 6 0.2 0.15 "texture{ pigment{Black} } no_shadow" \
+			-texts 6 0.2 0.15 $(COLOR_BLACK_NO_SHADOW) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -16896,8 +17095,7 @@ Eckardt_deform:
 				$(ECKARDT_CUBIC_DEFORM2_LEX) \
 			-group_of_things_as_interval 0 93 \
 			-group_is_animated 1 \
-			-cubics 1 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 1 $(SURFACE_COLOR_SEETHROUGH) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -16928,14 +17126,11 @@ Eckardt_deform_2:
 			--group_of_things_as_interval 0 93 \
 			--group_is_animated 1 \
 			-group_of_things "0" \
-			-cubics 1 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 1 $(SURFACE_COLOR_SEETHROUGH) \
 			-group_of_things "24" \
-			-cubics 2 "texture{ pigment{ Red*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 2 $(COLOR_RED) \
 			-group_of_things "70" \
-			-cubics 3 "texture{ pigment{ Blue*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 3 $(COLOR_BLUE) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -16943,10 +17138,6 @@ finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
 	mv Eckardt_deform_0_*.pov POV
 	mv makefile_animation POV
 
-
-
-
-	
 
 
 Clebsch:
@@ -16962,21 +17153,15 @@ Clebsch:
 		-scene_objects \
 			-Clebsch_surface \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 } finish \
-{ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR) \
 			-group_of_things_as_interval 0 6 \
 			-group_of_things_as_interval 6 6 \
 			-group_of_things_as_interval 12 15 \
-			-lines 1 0.02 "texture{ pigment{ color Red } \
-finish { diffuse 0.9 phong 1}}" \
-			-lines 2 0.02 "texture{ pigment{ color Blue } \
-finish { diffuse 0.9 phong 1}}" \
-			-lines 3 0.02 "texture{ pigment{ color Yellow } \
-finish { diffuse 0.9 phong 1}}" \
+			-lines 1 0.02 $(COLOR_RED_SHINY) \
+			-lines 2 0.02 $(COLOR_BLUE_SHINY) \
+			-lines 3 0.02 $(COLOR_YELLOW_SHINY) \
 			-group_of_things_as_interval 0 12 \
-			-spheres 4 0.08 "texture{ pigment{Cyan*1.3} \
-finish {ambient 0.4 diffuse 0.6 roughness 0.001 \
-reflection 0 specular .8} }" \
+			-spheres 4 0.08 $(COLOR_TURQUOISE) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17005,21 +17190,15 @@ endrass8:
 			-group_of_things "1" \
 			-group_of_things "2" \
 			-group_of_things_as_interval 3 39 \
-			-lines 0 0.15 "texture{ pigment{ color Red } \
-finish { diffuse 0.9 phong 1}}" \
-			-lines 1 0.15 "texture{ pigment{ color Green } \
-finish { diffuse 0.9 phong 1}}" \
-			-lines 2 0.15 "texture{ pigment{ color Blue } \
-finish { diffuse 0.9 phong 1}}" \
-			-lines 3 0.05 "texture{ pigment{ color Black } \
-finish { diffuse 0.9 phong 1}}" \
+			-lines 0 0.15 $(COLOR_RED_SHINY) \
+			-lines 1 0.15 $(COLOR_GREEN_SHINY) \
+			-lines 2 0.15 $(COLOR_BLUE_SHINY) \
+			-lines 3 0.05 $(COLOR_BLACK_SHINY) \
 			-octic_lex_165 $(ENDRASS_OCTIC_LEX_165) \
 			-plane_by_dual_coordinates "0,0,1,0" \
 			-group_of_things "0" \
 			-group_of_things "0" \
-			-octics 4 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
-reflection 0.1 specular .8} }" \
+			-octics 4  $(SURFACE_COLOR_SEETHROUGH) \
 			-planes 5 "texture{ pigment{ color Blue transmit 0.5 } \
 finish { diffuse 0.9 phong 1}}" \
 		-scene_objects_end \
@@ -17043,19 +17222,23 @@ SECTION_ANIMATIONS:
 dode:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-povray \
-		-round 0 -nb_frames_default 30 -output_mask dode_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.50 -default_angle 45 -clipping_radius 5   \
+		-round 0 -nb_frames_default 30 \
+		-output_mask dode_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.50 \
+		-default_angle 45 \
+		-clipping_radius 5   \
 		-camera 0 "1,1,1" "-2,2,4" "0,0,0"  \
 		-rotate_about_111 \
 		-end \
 		-scene_objects \
 			-dodecahedron \
 			-group_of_things_as_interval 0 20 \
-			-spheres 0 0.075 "texture{ Polished_Chrome pigment{quick_color White} }" \
+			-spheres 0 0.075 $(POLISHED_CHROME_WHITE) \
 			-group_of_things_as_interval 0 30\
-			-cylinders 1 0.05 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-cylinders 1 0.05 $(COLOR_RED_SHINY) \
 			-group_of_things_as_interval 0 12\
-			-prisms 2 0.02 "texture{ pigment{ color Yellow transmit 0.7 } finish {diffuse 0.9 phong 0.6} }" \
+			-prisms 2 0.02 $(YELLOW_TRANSPARENT) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17118,10 +17301,7 @@ Eckardt_surface:
 		-scene_objects \
 			-cubic_Goursat "6,3,-15" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ \
-White*0.5 transmit 0.5 } finish {ambient 0.4 \
-diffuse 0.5 roughness 0.001 reflection 0.1 \
-specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17144,9 +17324,7 @@ Kummer_surface:
 		-scene_objects \
 			-quartic_lex_35 $(KUMMER_QUARTIC_LEX_35) \
 			-group_of_things "0" \
-			-quartics 0 "texture{ pigment{ White*0.5 transmit \
-0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
-reflection 0.1 specular .8} }" \
+			-quartics 0 $(SURFACE_COLOR_SEETHROUGH) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17187,9 +17365,7 @@ Beauville_surface:
 		-scene_objects \
 			-quintic_lex_56 $(BEAUVILLE_QUINTIC_LEX_56) \
 			-group_of_things "0" \
-			-quintics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
-reflection 0.1 specular .8} }" \
+			-quintics 0 $(SURFACE_COLOR_SEETHROUGH) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17440,14 +17616,11 @@ Clebsch_surface:
 -17.94427188,0,0,- 9.472135941,0,0,5.236067971,\
 8.472135938,- 27.41640782" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
-reflection 0.1 specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
 			-point_list_from_csv_file \
 			function_Clebsch_map_of_circle_N1000_points.csv \
 			-group_of_things_as_interval 0 954 \
-			-spheres 1 0.07 "texture{ pigment{ color Red } \
-finish { diffuse 0.9 phong 1}}" \
+			-spheres 1 0.07 $(COLOR_RED) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17469,8 +17642,7 @@ Clebsch_surface_defining_equation:
 		-scene_objects \
 			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17493,13 +17665,11 @@ Clebsch_surface_defining_equation_and_curves:
 		-scene_objects \
 			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
 			-point_list_from_csv_file \
 			function_Clebsch_map_of_circle_to_defininig_eqn_N1000_points.csv \
 			-group_of_things_as_interval 0 656 \
-			-spheres 1 0.07 "texture{ pigment{ color Red } \
-finish { diffuse 0.9 phong 1}}" \
+			-spheres 1 0.07 $(COLOR_RED) \
 			-point_list_from_csv_file \
 			function_Clebsch_map_of_circle_to_defininig_eqn_r2_N1000_points.csv \
 			-group_of_things_as_interval 656 1042 \
@@ -17533,7 +17703,7 @@ F7_povray:
 		-scene_objects \
 			-cubic_lex "0, 0, 6, 0, 0, -13.39014946, -3.341901346, -6.972931640, 5.827182718, 0, 0, 7.390149464, 7.390149464, 6.972931640, -1.512349728, -8.485281372, 0, 0, 0, 0" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
 			-line_through_point_with_direction "0, 0, 0, 1, 0, 0" \
 			-line_through_point_with_direction "0, 0, -1, 0, 1, 0" \
 			-line_through_point_with_direction "0, 0, 0, 0, 0, -1" \
@@ -17547,7 +17717,7 @@ F7_povray:
 			-line_through_point_with_direction "2.096037870, 2.096037870, 0, -1.065851905, -1.065851905, 1" \
 			-line_through_point_with_direction "3.921555783, 2.921555781, 0, -1.722456585, -1.722456585, 1" \
 			-group_of_things_as_interval 0 12 \
-			-lines 1 0.04 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
+			-lines 1 0.04 $(COLOR_YELLOW) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -17589,9 +17759,7 @@ McKean_povray:
 			-cubic_lex "0, 0, 1, 0, 0, -1, -2, 1, \
 2, 0, 0, 1, 1,-1, -1, -1, 0, 0, 0, 0" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
-reflection 0.1 specular .8} }" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV

@@ -147,6 +147,32 @@ void algorithms::print_uint32_hex(std::ostream &ost, uint32_t val)
 }
 
 
+void algorithms::print_uint32_binary(std::ostream &ost, uint32_t val)
+{
+	//uchar *pp = (uchar *)&val;
+	int i, a;
+	int bits[32];
+
+	for (i = 0; i < 32; i++) {
+		if (val % 2) {
+			bits[i] = 1;
+		}
+		else {
+			bits[i] = 0;
+		}
+		val >>= 1;
+	}
+	ost << "0b";
+	for (i = 31; i >= 0; i--) {
+		a = (int)bits[i];
+		cout << a;
+		if (i > 0 && (i % 8 == 0)) {
+			cout << ";";
+		}
+	}
+}
+
+
 void algorithms::print_hex_digit(std::ostream &ost, int digit)
 {
 	if (digit < 10) {

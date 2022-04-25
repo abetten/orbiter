@@ -91,6 +91,17 @@ interface_coding_theory::interface_coding_theory()
 	f_crc32_hexdata = FALSE;
 	//std::string crc32_hexdata_text;
 
+	f_crc32_test = FALSE;
+	crc32_test_block_length = 0;
+
+	f_crc32_remainders = FALSE;
+	crc32_remainders_message_length = 0;
+
+	f_crc256_test = FALSE;
+	crc256_test_message_length = 0;
+	crc256_test_R = 0;
+	crc256_test_k = 0;
+
 	f_crc32_file_based = FALSE;
 	//std::string crc32_file_based_fname;
 	crc32_file_based_block_length = 0;
@@ -162,6 +173,15 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-crc32_hexdata") == 0) {
 		cout << "-crc32_hexdata <string : text>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_test") == 0) {
+		cout << "-crc32_test <int : block_length>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-crc256_test") == 0) {
+		cout << "-crc256_test <int : message_length> <int : R> <int : k>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_remainders") == 0) {
+		cout << "-crc32_remainders <int : message_length>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
 		cout << "-crc32_file_based <string : fname_in> <int : block_length>" << endl;
@@ -239,6 +259,15 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-crc32_hexdata") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_test") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc256_test") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_remainders") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
@@ -511,6 +540,29 @@ void interface_coding_theory::read_arguments(int argc,
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-crc32_test") == 0) {
+		f_crc32_test = TRUE;
+		crc32_test_block_length = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-crc32_test " << crc32_test_block_length << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-crc256_test") == 0) {
+		f_crc256_test = TRUE;
+		crc256_test_message_length = ST.strtoi(argv[++i]);
+		crc256_test_R = ST.strtoi(argv[++i]);
+		crc256_test_k = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-crc256_test " << crc256_test_message_length << " " << crc256_test_R << " " << crc256_test_k << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-crc32_remainders") == 0) {
+		f_crc32_remainders = TRUE;
+		crc32_remainders_message_length = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-crc32_remainders " << crc32_remainders_message_length << endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
 		f_crc32_file_based = TRUE;
 		crc32_file_based_fname.assign(argv[++i]);
@@ -622,6 +674,19 @@ void interface_coding_theory::print()
 	}
 	if (f_crc32_hexdata) {
 		cout << "-crc32_hexdata " << crc32_hexdata_text << endl;
+	}
+	if (f_crc32_test) {
+		cout << "-crc32_test " << crc32_test_block_length << endl;
+	}
+	if (f_crc256_test) {
+		cout << "-crc256_test " << crc256_test_message_length << " " << crc256_test_R << " " << crc256_test_k << endl;
+	}
+	if (f_crc32_remainders) {
+		cout << "-crc32_remainders " << crc32_remainders_message_length << endl;
+	}
+	if (f_crc32_file_based) {
+		cout << "-crc32_file_based " << crc32_file_based_fname
+				<< " " << crc32_file_based_block_length << endl;
 	}
 	if (f_crc_new_file_based) {
 		cout << "-crc_new_file_based "
@@ -909,6 +974,42 @@ void interface_coding_theory::worker(int verbose_level)
 
 		Algo.print_uint32_hex(cout, a);
 		cout << endl;
+
+	}
+	else if (f_crc32_test) {
+		cout << "-crc32_test "
+				<< crc32_test_block_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc32_test(crc32_test_block_length, verbose_level - 1);
+
+	}
+	else if (f_crc256_test) {
+		cout << "-crc256_test "
+				<< crc256_test_message_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc256_test_k_subsets(
+				crc256_test_message_length,
+				crc256_test_R,
+				crc256_test_k,
+				verbose_level - 1);
+
+	}
+	else if (f_crc32_remainders) {
+		cout << "-crc32_remainders "
+				<< crc32_remainders_message_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc32_remainders(
+				crc32_remainders_message_length,
+				verbose_level - 1);
 
 	}
 	else if (f_crc32_file_based) {

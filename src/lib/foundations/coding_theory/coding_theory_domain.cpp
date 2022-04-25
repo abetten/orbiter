@@ -17,7 +17,7 @@ namespace layer1_foundations {
 namespace coding_theory {
 
 
-static void divide(const char *in, char *out);
+static void CRC_BCH256_771_divide(const char *in, char *out);
 
 
 coding_theory_domain::coding_theory_domain()
@@ -4147,6 +4147,367 @@ uint32_t coding_theory_domain::crc32(const char *s, size_t n)
 	return ~crc;
 }
 
+void coding_theory_domain::crc32_test(int block_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_test block_length = " << block_length << endl;
+	}
+	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
+	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
+	unsigned int i;
+	uint32_t crc;
+	char *buffer;
+	long int cnt = 0;
+	vector<unsigned int> V;
+
+	buffer = (char *) &i;
+	for (i = 0; i < 0xFFFFFFFF; i++) {
+		if ((i & 0xFFFFF) == 0) {
+			cout << "i >> 20: " << (int) (i >> 20) << " cnt = " << cnt << endl;
+		}
+		crc = crc32(buffer, 4);
+		if (crc == 0) {
+			cout << cnt << " : " << i << endl;
+			cnt++;
+			V.push_back(i);
+		}
+	}
+	data_structures::algorithms Algo;
+
+	cout << "cnt = " << cnt << endl;
+	for (i = 0; i < V.size(); i++) {
+		cout << i << " : " << V[i] << " : ";
+
+		Algo.print_uint32_hex(cout, V[i]);
+		cout << " : ";
+		Algo.print_uint32_binary(cout, V[i]);
+		//Algo.print_uint32_hex(cout, ~V[i]);
+
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_test" << endl;
+	}
+}
+
+void coding_theory_domain::crc256_test_k_subsets(int message_length, int R, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc256_test_k_subsets message_length in bytes = " << message_length << " R=" << R << " k=" << k << endl;
+	}
+	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
+	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
+	int i, h;
+	char *input;
+	char *check;
+	int *message;
+	int block_length_in_bits;
+	int R8;
+	int block_length;
+	int message_length_in_bits;
+	long int cnt;
+	data_structures::bitvector B;
+	int *set;
+	vector<unsigned int> V;
+
+	R8 = R * 8;
+	block_length = message_length + R;
+	block_length_in_bits = block_length * 8;
+	message_length_in_bits = message_length * 8;
+
+	set = NEW_int(k);
+	check = NEW_char(R);
+	message = NEW_int(message_length_in_bits);
+
+	B.allocate(block_length_in_bits);
+
+	input = (char *) B.get_data();
+	cnt = 0;
+
+	combinatorics::combinatorics_domain Combi;
+
+
+	Int_vec_zero(message, message_length_in_bits);
+
+	Combi.first_k_subset(set, message_length_in_bits, k);
+
+	while (TRUE) {
+
+
+		for (i = 0; i < k; i++) {
+			message[set[i]] = 1;
+		}
+
+		B.zero();
+		for (h = 0; h < message_length_in_bits; h++) {
+			if (message[h]) {
+				B.set_bit(h);
+			}
+		}
+
+
+		if (R == 30) {
+			CRC_BCH256_771_divide(input, check);
+		}
+		else if (R == 4) {
+			uint32_t crc;
+			char *p;
+
+			p = (char *) &crc;
+			crc = crc32(input, message_length);
+
+			check[0] = p[0];
+			check[1] = p[1];
+			check[2] = p[2];
+			check[3] = p[3];
+		}
+		else {
+			cout << "coding_theory_domain::crc256_test_k_subsets I don't have a code of that length" << endl;
+			exit(1);
+		}
+
+
+		for (h = 0; h < R; h++) {
+			if (check[h]) {
+				break;
+			}
+		}
+		if ((cnt & 0xFFFFFF) == 0) {
+			cout << cnt << " : ";
+			Int_vec_print(cout, set, k);
+			cout << endl;
+			cnt++;
+		}
+
+		if (h == R) {
+			V.push_back(cnt);
+			cout << "remainder is zero, cnt=" << cnt;
+			cout << " : ";
+			Int_vec_print(cout, set, k);
+			cout << endl;
+		}
+
+
+		for (i = 0; i < k; i++) {
+			message[set[i]] = 0;
+		}
+
+
+		if (!Combi.next_k_subset(set, message_length_in_bits, k)) {
+			break;
+		}
+
+		cnt++;
+
+
+
+	}
+
+	cout << "Number of undetected errors = " << V.size() << endl;
+
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc256_test_k_subsets" << endl;
+	}
+}
+
+void coding_theory_domain::crc32_remainders(int message_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_remainders message_length in bytes = " << message_length << endl;
+	}
+
+	uint32_t *Crc;
+	uint32_t crc;
+	int *Table;
+	int message_length_in_bits;
+	int i, j, a;
+	int R = 4;
+
+	message_length_in_bits = message_length * 8;
+
+
+	crc32_remainders_compute(message_length, R, Crc, verbose_level);
+
+
+	Table = NEW_int(message_length_in_bits * 32);
+
+	for (i = 0; i < message_length_in_bits; i++) {
+
+		crc = Crc[i];
+
+		for (j = 0; j < 32; j++) {
+			a = crc % 2;
+			Table[i * 32 + j] = a;
+			crc >>= 1;
+		}
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+	char str[1000];
+
+	sprintf(str, "crc32_remainders_M%d.csv", message_length);
+	fname.assign(str);
+
+	Fio.int_matrix_write_csv(fname, Table, message_length_in_bits, 32);
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_remainders done" << endl;
+	}
+
+}
+
+
+void coding_theory_domain::crc32_remainders_compute(int message_length, int R, uint32_t *&Crc, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_remainders_compute message_length in bytes = " << message_length << " R=" << R << endl;
+	}
+	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
+	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
+	int i, h;
+	char *input;
+	char *check;
+	int *message;
+	int block_length_in_bits;
+	int R8;
+	int block_length;
+	int message_length_in_bits;
+	long int cnt;
+	data_structures::bitvector B;
+	int *set;
+	vector<unsigned int> V;
+	int k = 1;
+
+	R8 = R * 8;
+	block_length = message_length + R;
+	block_length_in_bits = block_length * 8;
+	message_length_in_bits = message_length * 8;
+
+	set = NEW_int(k);
+	check = NEW_char(R);
+	message = NEW_int(message_length_in_bits);
+
+	B.allocate(block_length_in_bits);
+
+	input = (char *) B.get_data();
+	cnt = 0;
+
+	combinatorics::combinatorics_domain Combi;
+
+
+	Int_vec_zero(message, message_length_in_bits);
+
+
+	Crc = (uint32_t *) NEW_int(message_length_in_bits);
+
+	Combi.first_k_subset(set, message_length_in_bits, k);
+
+	while (TRUE) {
+
+
+		for (i = 0; i < k; i++) {
+			message[set[i]] = 1;
+		}
+
+		B.zero();
+		for (h = 0; h < message_length_in_bits; h++) {
+			if (message[h]) {
+				B.set_bit(h);
+			}
+		}
+
+
+		if (R == 30) {
+			CRC_BCH256_771_divide(input, check);
+		}
+		else if (R == 4) {
+			uint32_t crc;
+			char *p;
+
+			p = (char *) &crc;
+			crc = crc32(input, message_length);
+
+			Crc[cnt] = crc;
+
+			check[0] = p[0];
+			check[1] = p[1];
+			check[2] = p[2];
+			check[3] = p[3];
+		}
+		else {
+			cout << "coding_theory_domain::crc32_remainders_compute "
+					"I don't have a code of that length" << endl;
+			exit(1);
+		}
+
+
+		for (h = 0; h < R; h++) {
+			if (check[h]) {
+				break;
+			}
+		}
+		if ((cnt & 0xFFFFFF) == 0) {
+			cout << cnt << " : ";
+			Int_vec_print(cout, set, k);
+			cout << endl;
+			cnt++;
+		}
+
+		if (h == R) {
+			V.push_back(cnt);
+			cout << "remainder is zero, cnt=" << cnt;
+			cout << " : ";
+			Int_vec_print(cout, set, k);
+			cout << endl;
+		}
+
+
+		for (i = 0; i < k; i++) {
+			message[set[i]] = 0;
+		}
+
+
+		if (!Combi.next_k_subset(set, message_length_in_bits, k)) {
+			break;
+		}
+
+		cnt++;
+
+
+
+	}
+
+	if (cnt != message_length_in_bits) {
+		cout << "coding_theory_domain::crc32_remainders_compute cnt != message_length_in_bits" << endl;
+		exit(1);
+	}
+
+
+
+	cout << "Number of undetected errors = " << V.size() << endl;
+
+	//FREE_int((int *) Crc);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_remainders_compute" << endl;
+	}
+}
+
 void coding_theory_domain::crc32_file_based(std::string &fname_in,
 		int block_length, int verbose_level)
 {
@@ -4280,7 +4641,7 @@ void coding_theory_domain::crc771_file_based(std::string &fname_in, int verbose_
 				buffer[i] = 0;
 			}
 
-			divide(buffer, buffer);
+			CRC_BCH256_771_divide(buffer, buffer);
 
 			ost.write(buffer, block_length);
 
@@ -4558,7 +4919,7 @@ static const unsigned char B[] = {
 255,  3,251,224, 42,242,244,149,215,148, 22,118, 84,220,176,172, 28, 37, 52, 17,224,160, 83,195,236, 41, 88, 40,103,  1,255,
 };
 
-static void divide(const char *in, char *out)
+static void CRC_BCH256_771_divide(const char *in, char *out)
 {
 	char R[771];
 	int i, ii, jj;

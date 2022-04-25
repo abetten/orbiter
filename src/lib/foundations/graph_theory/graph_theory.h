@@ -608,6 +608,8 @@ public:
 	void list_parameters_of_SRG(int v_max, int verbose_level);
 	void make_cycle_graph(int *&Adj, int &N,
 			int n, int verbose_level);
+	void make_inversion_graph(int *&Adj, int &N,
+			int *perm, int n, int verbose_level);
 	void make_Hamming_graph(int *&Adj, int &N,
 			int n, int q, int verbose_level);
 	void make_Johnson_graph(int *&Adj, int &N,

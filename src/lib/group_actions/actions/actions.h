@@ -225,6 +225,8 @@ public:
 	int count_fixed_points(void *elt, int verbose_level);
 	int test_if_set_stabilizes(int *Elt, 
 		int size, long int *set, int verbose_level);
+	void map_a_set_based_on_hdl(long int *set,
+			long int *image_set, int n, action *A_base, int hdl, int verbose_level);
 	void map_a_set(long int *set, long int *image_set,
 		int n, int *Elt, int verbose_level);
 	void map_a_set_and_reorder(long int *set, long int *image_set,

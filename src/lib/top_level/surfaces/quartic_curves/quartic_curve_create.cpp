@@ -186,26 +186,21 @@ void quartic_curve_create::create_quartic_curve_from_description(
 
 	if (Descr->f_by_coefficients) {
 
-
 		create_quartic_curve_by_coefficients(
 				Descr->coefficients_text,
 				verbose_level);
 
-
 	}
 
 	else if (Descr->f_catalogue) {
-
 
 		create_quartic_curve_from_catalogue(
 				DomA,
 				Descr->iso,
 				verbose_level);
 
-
-
-
 	}
+
 	else if (Descr->f_by_equation) {
 
 		create_quartic_curve_by_equation(
@@ -226,7 +221,6 @@ void quartic_curve_create::create_quartic_curve_from_description(
 
 
 	if (Descr->f_override_group) {
-
 		override_group(Descr->override_group_order,
 				Descr->override_group_nb_gens,
 				Descr->override_group_gens,

@@ -721,11 +721,15 @@ int isomorph::trace_next_point(int cur_level,
 			}
 		
 		poset_classification::poset_orbit_node *O = gen->get_node(cur_node_global);
+
+		// ToDo
+#if 0
 		ret = O->trace_next_point_in_place(gen, 
 			cur_level, cur_node_global, size, 
 			canonical_set, trace_set_recursion_tmp_set1,
 			transporter, trace_set_recursion_Elt1, 
 			f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
+#endif
 		if (f_failure_to_find_point) {
 			cout << "isomorph::trace_next_point "
 					"f_failure_to_find_point" << endl;
@@ -1401,6 +1405,8 @@ void isomorph::apply_isomorphism_database(
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
 	
+	// ToDo
+#if 0
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
 				<< "isomorph::apply_isomorphism_database "
@@ -1425,7 +1431,7 @@ void isomorph::apply_isomorphism_database(
 	Lint_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->get_A()->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
-
+#endif
 }
 
 void isomorph::apply_isomorphism_oracle(
@@ -1444,6 +1450,8 @@ void isomorph::apply_isomorphism_oracle(
 		cout << " : " << endl;
 		}
 	
+	// ToDo
+#if 0
 	gen->get_A()->element_retrieve(
 			O->get_E(current_extension)->get_data(),
 			gen->get_Elt1(), FALSE);
@@ -1459,6 +1467,7 @@ void isomorph::apply_isomorphism_oracle(
 	Lint_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->get_A()->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
+#endif
 
 }
 
