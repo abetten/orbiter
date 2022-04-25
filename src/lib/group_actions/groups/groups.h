@@ -1479,6 +1479,7 @@ public:
 	void get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level);
 	void all_elements(data_structures_groups::vector_ge *&vec, int verbose_level);
 	void all_elements_save_csv(std::string &fname, int verbose_level);
+	void all_elements_export_inversion_graphs(std::string &fname, int verbose_level);
 
 
 	// sims_main.cpp:

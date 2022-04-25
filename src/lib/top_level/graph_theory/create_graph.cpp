@@ -338,6 +338,19 @@ void create_graph::init(
 			cout << "create_graph::init after create_cycle" << endl;
 		}
 	}
+	else if (description->f_inversion_graph) {
+
+		if (f_v) {
+			cout << "create_graph::init before create_inversion_graph" << endl;
+		}
+		create_inversion_graph(N, Adj, description->inversion_graph_text,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "create_graph::init after create_cycle" << endl;
+		}
+	}
 	else if (description->f_Hamming) {
 
 		if (f_v) {
@@ -754,6 +767,48 @@ void create_graph::create_cycle(int &N, int *&Adj,
 		cout << "create_graph::create_cycle done" << endl;
 	}
 }
+
+void create_graph::create_inversion_graph(int &N, int *&Adj,
+		std::string &perm_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::create_inversion_graph" << endl;
+	}
+
+	int *perm;
+	int n;
+
+	Int_vec_scan(perm_text, perm, n);
+
+
+	graph_theory::graph_theory_domain GT;
+
+
+	if (f_v) {
+		cout << "create_graph::create_inversion_graph before GT.make_inversion_graph" << endl;
+	}
+	GT.make_inversion_graph(Adj, N, perm, n, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_inversion_graph after GT.make_inversion_graph" << endl;
+	}
+
+	char str[1000];
+	sprintf(str, "Inversion_%d", n);
+	label.assign(str);
+	sprintf(str, "Inversion\\_%d", n);
+	label_tex.assign(str);
+
+
+	FREE_int(perm);
+
+	if (f_v) {
+		cout << "create_graph::create_inversion_graph done" << endl;
+	}
+}
+
+
 
 
 void create_graph::create_Hamming(int &N, int *&Adj,

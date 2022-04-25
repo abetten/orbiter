@@ -259,6 +259,10 @@ public:
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
 	uint32_t crc32(const char *s, size_t n);
+	void crc32_test(int block_length, int verbose_level);
+	void crc256_test_k_subsets(int message_length, int R, int k, int verbose_level);
+	void crc32_remainders(int message_length, int verbose_level);
+	void crc32_remainders_compute(int message_length, int R, uint32_t *&Crc, int verbose_level);
 	void crc32_file_based(std::string &fname_in,
 			int block_length, int verbose_level);
 	void crc771_file_based(std::string &fname_in, int verbose_level);

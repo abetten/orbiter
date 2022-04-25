@@ -13,6 +13,26 @@ namespace layer1_foundations {
 namespace combinatorics {
 
 
+#define TABLE_BINOMIALS_MAX 1000
+
+static ring_theory::longinteger_object *tab_binomials = NULL;
+static int tab_binomials_size = 0;
+
+#define TABLE_Q_BINOMIALS_MAX 200
+
+
+static ring_theory::longinteger_object *tab_q_binomials = NULL;
+static int tab_q_binomials_size = 0;
+static int tab_q_binomials_q = 0;
+
+
+static ring_theory::longinteger_object *tab_krawtchouk = NULL;
+static int *tab_krawtchouk_entry_computed = NULL;
+static int tab_krawtchouk_size = 0;
+static int tab_krawtchouk_n = 0;
+static int tab_krawtchouk_q = 0;
+
+
 combinatorics_domain::combinatorics_domain()
 {
 
@@ -1204,14 +1224,13 @@ void combinatorics_domain::perm_mult(int *a, int *b, int *c, long int n)
 	for (i = 0; i < n; i++) {
 		j = a[i];
 		if (j < 0 || j >= n) {
-			cout << "perm_mult a[" << i << "] = " << j
+			cout << "combinatorics_domain::perm_mult a[" << i << "] = " << j
 					<< " out of range" << endl;
 			exit(1);
 		}
 		k = b[j];
 		if (k < 0 || k >= n) {
-			cout << "perm_mult b[a[" << i << "] = " << j
-					<< "] = " << k << " out of range" << endl;
+			cout << "combinatorics_domain::perm_mult a[" << i << "] = " << j << ", b[j] = " << k << " out of range" << endl;
 			exit(1);
 		}
 		c[i] = k;
@@ -2258,11 +2277,6 @@ int combinatorics_domain::next_partition(int n, int *part)
 	return TRUE;
 }
 
-#define TABLE_BINOMIALS_MAX 1000
-
-static ring_theory::longinteger_object *tab_binomials = NULL;
-static int tab_binomials_size = 0;
-
 
 long int combinatorics_domain::binomial_lint(int n, int k)
 {
@@ -2422,12 +2436,6 @@ void combinatorics_domain::size_of_conjugacy_class_in_sym_n(
 }
 
 
-#define TABLE_Q_BINOMIALS_MAX 200
-
-
-static ring_theory::longinteger_object *tab_q_binomials = NULL;
-static int tab_q_binomials_size = 0;
-static int tab_q_binomials_q = 0;
 
 
 void combinatorics_domain::q_binomial_with_table(ring_theory::longinteger_object &a,
@@ -2600,11 +2608,6 @@ void combinatorics_domain::q_binomial_no_table(
 }
 
 
-static ring_theory::longinteger_object *tab_krawtchouk = NULL;
-static int *tab_krawtchouk_entry_computed = NULL;
-static int tab_krawtchouk_size = 0;
-static int tab_krawtchouk_n = 0;
-static int tab_krawtchouk_q = 0;
 
 void combinatorics_domain::krawtchouk_with_table(ring_theory::longinteger_object &a,
 	int n, int q, int k, int x)

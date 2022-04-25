@@ -97,8 +97,6 @@ int draw_bitmap_control::read_arguments(
 			part_width = ST.strtoi(argv[++i]);
 			part_row.assign(argv[++i]);
 			part_col.assign(argv[++i]);
-			//Orbiter->Int_vec.scan(part_row, Row_parts, nb_row_parts);
-			//Orbiter->Int_vec.scan(part_col, Col_parts, nb_col_parts);
 			if (f_v) {
 				cout << "-partition " << part_width << " " << part_row << " " << part_col << endl;
 			}

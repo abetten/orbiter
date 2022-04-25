@@ -126,6 +126,9 @@ public:
 	int f_cycle;
 	int cycle_n;
 
+	int f_inversion_graph;
+	std::string inversion_graph_text;
+
 	int f_Hamming;
 	int Hamming_n;
 	int Hamming_q;
@@ -232,6 +235,8 @@ public:
 			int verbose_level);
 	void create_cycle(int &N, int *&Adj,
 			int n, int verbose_level);
+	void create_inversion_graph(int &N, int *&Adj,
+			std::string &perm_text, int verbose_level);
 	void create_Hamming(int &N, int *&Adj, int n, int q, int verbose_level);
 	void create_Johnson(int &N, int *&Adj, int n, int k, int s, int verbose_level);
 	void create_Paley(int &N, int *&Adj, int q, int verbose_level);
@@ -275,6 +280,9 @@ public:
 
 	int f_draw_options;
 	graphics::layered_graph_draw_options *draw_options;
+
+	int f_recognize_graphs_from_adjacency_matrix_csv;
+	std::string recognize_graphs_from_adjacency_matrix_csv_fname;
 
 
 	graph_classification_activity_description();
@@ -413,6 +421,10 @@ public:
 	void draw_graphs(int level,
 			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
+	void recognize_graph_from_adjacency_list(int *Adj, int N2,
+			int &iso_type,
+			int verbose_level);
+	int number_of_orbits();
 
 };
 

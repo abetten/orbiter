@@ -39,12 +39,12 @@ void poset_classification::compute_orbits_on_subsets(
 	}
 
 	depth = target_depth;
-	downstep_orbits_print_max_orbits = 50;
-	downstep_orbits_print_max_points_per_orbit = INT_MAX;
+	//downstep_orbits_print_max_orbits = 50;
+	//downstep_orbits_print_max_points_per_orbit = INT_MAX;
 
 
 	// !!!
-	f_allowed_to_show_group_elements = FALSE;
+	//f_allowed_to_show_group_elements = FALSE;
 
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets "

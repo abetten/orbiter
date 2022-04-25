@@ -624,6 +624,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 	long int set1[1000];
 	long int set2[1000];
 	//char *elt;
+	int *Elt;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -632,6 +633,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	
+	Elt = NEW_int(gen->get_A()->elt_size_in_int);
 	f = gen->first_node_at_level(level);
 	nb_nodes = gen->nb_orbits_at_level(level);
 
@@ -738,10 +740,10 @@ void isomorph::create_level_database(int level, int verbose_level)
 					v.m_ii(idx++, O->get_E(j)->get_data());
 				}
 				else if (O->get_E(j)->get_type() == EXTENSION_TYPE_FUSION) {
-					gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), FALSE);
+					//gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), FALSE);
 
 
-					gen->get_A2()->map_a_set(set1, set2, level + 1, gen->get_Elt1(), 0);
+					gen->get_A2()->map_a_set_based_on_hdl(set1, set2, level + 1, gen->get_A(), O->get_E(j)->get_data(), 0);
 					Sorting.lint_vec_heapsort(set2, level + 1);
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {
@@ -811,9 +813,9 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 			for (j = 0; j < gen_hdl.size(); j++) {
 				gen->get_A()->element_retrieve(
-						gen_hdl[j], gen->get_Elt1(),
+						gen_hdl[j], Elt1,
 						FALSE);
-				gen->get_A()->element_write_file_fp(gen->get_Elt1(), fp,
+				gen->get_A()->element_write_file_fp(Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}
@@ -821,8 +823,8 @@ void isomorph::create_level_database(int level, int verbose_level)
 				if (O->get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
 					continue;
 				}
-				gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), FALSE);
-				gen->get_A()->element_write_file_fp(gen->get_Elt1(), fp,
+				gen->get_A()->element_retrieve(O->get_E(j)->get_data(), Elt1, FALSE);
+				gen->get_A()->element_write_file_fp(Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}
@@ -859,6 +861,8 @@ void isomorph::create_level_database(int level, int verbose_level)
 				<< gen->get_A()->coded_elt_size_in_char << endl;
 	}
 	
+	FREE_int(Elt);
+
 	//FREE_char(elt);
 	
 }

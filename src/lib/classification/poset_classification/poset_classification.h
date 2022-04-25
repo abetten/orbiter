@@ -182,6 +182,63 @@ public:
 };
 
 
+// #############################################################################
+// orbit_tracer.cpp
+// #############################################################################
+
+//! to trace a set in the poset classification algorithm
+
+
+class orbit_tracer {
+
+private:
+
+	poset_classification *PC;
+
+	// data for recognize:
+
+	data_structures_groups::vector_ge *Transporter; // [PC->sz + 1]
+
+	long int **Set; // [PC->sz + 1][PC->max_set_size]
+
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+
+
+public:
+
+	orbit_tracer();
+	~orbit_tracer();
+	void init(poset_classification *PC, int verbose_level);
+	data_structures_groups::vector_ge *get_transporter();
+	long int *get_set_i(int i);
+
+	void recognize_start_over(
+		int size,
+		int lvl, int current_node,
+		int &final_node, int verbose_level);
+	// Called from poset_orbit_node::recognize_recursion
+	// when trace_next_point returns FALSE
+	// This can happen only if f_implicit_fusion is TRUE
+	void recognize_recursion(
+		int size,
+		int lvl, int current_node, int &final_node,
+		int verbose_level);
+	// this routine is called by upstep_work::recognize
+	// we are dealing with a set of size len + 1.
+	// but we can only trace the first len points.
+	// the tracing starts at lvl = 0 with current_node = 0
+	void recognize(
+		long int *the_set, int size, int *transporter,
+		int &final_node, int verbose_level);
+	void identify(long int *data, int sz,
+			int *transporter, int &orbit_at_level,
+			int verbose_level);
+
+
+
+};
 
 
 
@@ -287,6 +344,24 @@ public:
 	std::string clique_test_graph;
 	graph_theory::colored_graph *clique_test_CG;
 
+
+
+
+	int f_has_invariant_subset_for_root_node;
+	int *invariant_subset_for_root_node;
+	int invariant_subset_for_root_node_size;
+
+
+	int f_do_group_extension_in_upstep;
+		// is TRUE by default
+
+	int f_allowed_to_show_group_elements;
+	int downstep_orbits_print_max_orbits;
+	int downstep_orbits_print_max_points_per_orbit;
+
+
+
+
 	poset_classification_control();
 	~poset_classification_control();
 	int read_arguments(
@@ -298,6 +373,9 @@ public:
 		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void init_root_node_invariant_subset(
+		int *invariant_subset, int invariant_subset_size,
 		int verbose_level);
 
 };
@@ -346,57 +424,14 @@ private:
 	long int *set_S; // [sz]
 	
 	int sz; // = depth, the target depth
-	int max_set_size; // A2->degree
-		
-	
-	int *Elt_memory; // [6 * elt_size_in_int]
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-	int *Elt4;
-	int *Elt5;
-	int *Elt6; // for poset_orbit_node::read_memory_object / write_memory_object
-	
-	long int *tmp_set_apply_fusion;
-		// used in poset_orbit_upstep.cpp poset_orbit_node::apply_isomorphism
-
-
-	// for vector space actions, allocated in init:
-	int *tmp_find_node_for_subspace_by_rank1;
-		// [vector_space_dimension] used in poset_classification_trace.cpp:
-		// find_node_for_subspace_by_rank
-	int *tmp_find_node_for_subspace_by_rank2;
-		// [sz * vector_space_dimension] used in poset_classification_trace.cpp:
-		// find_node_for_subspace_by_rank
-
+	int max_set_size; // Poset->A2->degree
 
 	
-	//int nb_times_trace;
-	//int nb_times_trace_was_saved;
-	
-	// data for recognize:
-	data_structures_groups::vector_ge *transporter; // [sz + 1]
-	long int **set; // [sz + 1][max_set_size]
-		// used in poset_classification_recognize.cpp
+	orbit_tracer *Orbit_tracer;
 
-	
 	poset_of_orbits *Poo;
 
 
-
-
-	int f_has_invariant_subset_for_root_node;
-	int *invariant_subset_for_root_node;
-	int invariant_subset_for_root_node_size;
-	
-
-	int f_do_group_extension_in_upstep;
-		// is TRUE by default
-
-	int f_allowed_to_show_group_elements;
-	int downstep_orbits_print_max_orbits;
-	int downstep_orbits_print_max_points_per_orbit;
-	
 
 
 	long int nb_times_image_of_called0;
@@ -414,19 +449,20 @@ public:
 
 	// poset_classification.cpp:
 	poset_of_orbits *get_Poo();
+	orbit_tracer *get_Orbit_tracer();
 	std::string &get_problem_label_with_path();
 	std::string &get_problem_label();
 	int first_node_at_level(int i);
 	poset_orbit_node *get_node(int node_idx);
 	data_structures_groups::vector_ge *get_transporter();
+	int *get_transporter_i(int i);
+	int get_sz();
+	int get_max_set_size();
 	long int *get_S();
 	long int *get_set_i(int i);
 	long int *get_set0();
 	long int *get_set1();
 	long int *get_set3();
-	int *get_Elt1();
-	int *get_Elt2();
-	long int *get_tmp_set_apply_fusion();
 	int allowed_to_show_group_elements();
 	int do_group_extension_in_upstep();
 	poset_with_group_action *get_poset();
@@ -592,9 +628,6 @@ public:
 		poset_with_group_action *Poset,
 		int depth,
 		classification_base_case *Base_case,
-		int verbose_level);
-	void init_root_node_invariant_subset(
-		int *invariant_subset, int invariant_subset_size, 
 		int verbose_level);
 	void init_base_case(classification_base_case *Base_case,
 		int verbose_level);
@@ -856,26 +889,6 @@ public:
 	void generate_history(int level, int verbose_level);
 
 
-	// poset_classification_recognize.cpp:
-	void recognize_start_over(
-		int size, int f_implicit_fusion,
-		int lvl, int current_node,
-		int &final_node, int verbose_level);
-	// Called from poset_orbit_node::recognize_recursion
-	// when trace_next_point returns FALSE
-	// This can happen only if f_implicit_fusion is TRUE
-	void recognize_recursion(
-		int size, int f_implicit_fusion,
-		int lvl, int current_node, int &final_node,
-		int verbose_level);
-	// this routine is called by upstep_work::recognize
-	// we are dealing with a set of size len + 1.
-	// but we can only trace the first len points.
-	// the tracing starts at lvl = 0 with current_node = 0
-	void recognize(
-		long int *the_set, int size, int *transporter, int f_implicit_fusion,
-		int &final_node, int verbose_level);
-
 
 	// in poset_classification_report.cpp:
 	void report(std::ostream &ost,
@@ -899,8 +912,6 @@ public:
 		long int *set, int sz, int *transporter,
 		int &orbit_at_level,
 		int verbose_level);
-	void identify(long int *data, int sz, int *transporter,
-		int &orbit_at_level, int verbose_level);
 	void test_identify(int level, int nb_times, int verbose_level);
 	void poset_classification_apply_isomorphism_no_transporter(
 		int cur_level, int size, int cur_node, int cur_ex,
@@ -915,7 +926,7 @@ public:
 	int trace_set_recursion(int cur_level, int cur_node,
 		int size, int level,
 		long int *canonical_set, long int *tmp_set1, long int *tmp_set2,
-		int *Elt_transporter, int *tmp_Elt1,
+		int *Elt_transporter, int *tmp_Elt1, int *tmp_Elt2,
 		int f_tolerant,
 		int verbose_level);
 		// called by poset_classification::trace_set
@@ -1296,7 +1307,7 @@ public:
 		int prev, int prev_ex, int size,
 		data_structures_groups::group_container &G,
 		ring_theory::longinteger_object &go_G,
-		data_structures_groups::group_container &H, /* longinteger_object &go_H, */
+		data_structures_groups::group_container &H,
 		int pt, int pt_orbit_len,
 		int verbose_level);
 	void create_schreier_vector_wrapper(
@@ -1317,11 +1328,15 @@ public:
 	void read_memory_object(
 		poset_classification *PC,
 		actions::action *A, orbiter_kernel_system::memory_object *m,
-		int &nb_group_elements, int verbose_level);
+		int &nb_group_elements,
+		int *Elt_tmp,
+		int verbose_level);
 	void write_memory_object(
 		poset_classification *PC,
 		actions::action *A, orbiter_kernel_system::memory_object *m,
-		int &nb_group_elements, int verbose_level);
+		int &nb_group_elements,
+		int *Elt_tmp,
+		int verbose_level);
 	long int calc_size_on_file(
 			actions::action *A, int verbose_level);
 	void sv_read_file(
@@ -1354,6 +1369,7 @@ public:
 	int apply_isomorphism(poset_classification *gen, 
 		int lvl, int current_node, 
 		int current_extension, int len, int f_tolerant, 
+		int *Elt_tmp1, int *Elt_tmp2,
 		int verbose_level);
 		// returns next_node
 	void install_fusion_node(poset_classification *gen, 
@@ -1361,11 +1377,14 @@ public:
 		int my_node, int my_extension, int my_coset, 
 		long int pt0, int current_extension,
 		int f_debug, int f_implicit_fusion, 
+		int *Elt_tmp,
 		int verbose_level);
 		// Called from poset_orbit_node::handle_last_level
 	int trace_next_point_wrapper(poset_classification *gen, int lvl, 
 		int current_node, 
-		int len, int f_implicit_fusion, int &f_failure_to_find_point, 
+		int len, int f_implicit_fusion,
+		int *cosetrep,
+		int &f_failure_to_find_point,
 		int verbose_level);
 		// Called from upstep_work::recognize_recursion
 		// applies the permutation which maps the point with index lvl 
@@ -1379,6 +1398,7 @@ public:
 		int lvl, int current_node, int size, 
 		long int *cur_set, long int *tmp_set,
 		int *cur_transporter, int *tmp_transporter, 
+		int *cosetrep,
 		int f_implicit_fusion, int &f_failure_to_find_point, 
 		int verbose_level);
 		// called by poset_classification::trace_set_recursion
@@ -1390,14 +1410,15 @@ public:
 		int lvl, int current_node, int size, 
 		long int *cur_set, long int *next_set,
 		int *cur_transporter, int *next_transporter, 
+		int *cosetrep,
 		int f_implicit_fusion, int &f_failure_to_find_point, 
 		int verbose_level);
 		// Called by poset_orbit_node::trace_next_point_wrapper 
 		// and by poset_orbit_node::trace_next_point_in_place
 		// returns FALSE only if f_implicit_fusion is TRUE and
-		// the set becomes lexcographically less 
+		// the set becomes lexicographically less
 	int orbit_representative_and_coset_rep_inv(poset_classification *gen, 
-		int lvl, long int pt_to_trace, long int &pt0, int *&cosetrep,
+		int lvl, long int pt_to_trace, long int &pt0, int *cosetrep,
 		int verbose_level);
 		// called by poset_orbit_node::trace_next_point
 		// FALSE means the point to trace was not found. 
@@ -1406,7 +1427,7 @@ public:
 	// poset_orbit_node_upstep_subspace_action.cpp:
 	void orbit_representative_and_coset_rep_inv_subspace_action(
 		poset_classification *gen, 
-		int lvl, long int pt_to_trace, long int &pt0, int *&cosetrep,
+		int lvl, long int pt_to_trace, long int &pt0, int *cosetrep,
 		int verbose_level);
 		// called by poset_orbit_node::trace_next_point
 		
@@ -1751,6 +1772,9 @@ public:
 	int nb_cosets_processed;
 	coset_table_entry *coset_table;
 
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
 
 
 	upstep_work();
@@ -1829,7 +1853,8 @@ public:
 		int verbose_level);
 	trace_result recognize_recursion(
 		int lvl, int current_node, int &final_node, int &final_ex, 
-		int f_tolerant, int verbose_level);
+		int f_tolerant,
+		int verbose_level);
 	trace_result handle_last_level(
 		int lvl, int current_node, int current_extension, int pt0, 
 		int &final_node, int &final_ex,  

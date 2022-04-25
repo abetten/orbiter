@@ -19,6 +19,11 @@ poset_of_orbits *poset_classification::get_Poo()
 	return Poo;
 }
 
+orbit_tracer *poset_classification::get_Orbit_tracer()
+{
+	return Orbit_tracer;
+}
+
 std::string &poset_classification::get_problem_label_with_path()
 {
 	return problem_label_with_path;
@@ -41,7 +46,22 @@ poset_orbit_node *poset_classification::get_node(int node_idx)
 
 data_structures_groups::vector_ge *poset_classification::get_transporter()
 {
-	return transporter;
+	return Orbit_tracer->get_transporter();
+}
+
+int *poset_classification::get_transporter_i(int i)
+{
+	return Orbit_tracer->get_transporter()->ith(i);
+}
+
+int poset_classification::get_sz()
+{
+	return sz;
+}
+
+int poset_classification::get_max_set_size()
+{
+	return max_set_size;
 }
 
 long int *poset_classification::get_S()
@@ -51,7 +71,7 @@ long int *poset_classification::get_S()
 
 long int *poset_classification::get_set_i(int i)
 {
-	return set[i];
+	return Orbit_tracer->get_set_i(i);
 }
 
 long int *poset_classification::get_set0()
@@ -69,29 +89,14 @@ long int *poset_classification::get_set3()
 	return Poo->get_set3();
 }
 
-int *poset_classification::get_Elt1()
-{
-	return Elt1;
-}
-
-int *poset_classification::get_Elt2()
-{
-	return Elt2;
-}
-
-long int *poset_classification::get_tmp_set_apply_fusion()
-{
-	return tmp_set_apply_fusion;
-}
-
 int poset_classification::allowed_to_show_group_elements()
 {
-	return f_allowed_to_show_group_elements;
+	return Control->f_allowed_to_show_group_elements;
 }
 
 int poset_classification::do_group_extension_in_upstep()
 {
-	return f_do_group_extension_in_upstep;
+	return Control->f_do_group_extension_in_upstep;
 }
 
 poset_with_group_action *poset_classification::get_poset()
@@ -131,17 +136,17 @@ int poset_classification::has_base_case()
 
 int poset_classification::has_invariant_subset_for_root_node()
 {
-	return f_has_invariant_subset_for_root_node;
+	return Control->f_has_invariant_subset_for_root_node;
 }
 
 int poset_classification::size_of_invariant_subset_for_root_node()
 {
-	return invariant_subset_for_root_node_size;
+	return Control->invariant_subset_for_root_node_size;
 }
 
 int *poset_classification::get_invariant_subset_for_root_node()
 {
-	return invariant_subset_for_root_node;
+	return Control->invariant_subset_for_root_node;
 }
 
 
@@ -163,12 +168,12 @@ int poset_classification::node_has_schreier_vector(int node_idx)
 
 int poset_classification::max_number_of_orbits_to_print()
 {
-	return downstep_orbits_print_max_orbits;
+	return Control->downstep_orbits_print_max_orbits;
 }
 
 int poset_classification::max_number_of_points_to_print_in_orbit()
 {
-	return downstep_orbits_print_max_points_per_orbit;
+	return Control->downstep_orbits_print_max_points_per_orbit;
 }
 
 void poset_classification::invoke_early_test_func(
@@ -1611,7 +1616,8 @@ void poset_classification::get_whole_orbit(
 	L.create(orbit_length, __FILE__, __LINE__);
 
 	if (f_v) {
-		cout << "poset_classification::get_whole_orbit orbit_length=" << orbit_length << endl;
+		cout << "poset_classification::get_whole_orbit "
+				"orbit_length=" << orbit_length << endl;
 	}
 	if (D.compare(L, Len) != 0) {
 		cout << "poset_classification::get_whole_orbit "
@@ -1622,7 +1628,8 @@ void poset_classification::get_whole_orbit(
 	Orbit = NEW_lint(orbit_length * depth);
 	for (rank = 0; rank < orbit_length; rank++) {
 		if (f_v) {
-			cout << "poset_classification::get_whole_orbit element " << rank << " / " << orbit_length << endl;
+			cout << "poset_classification::get_whole_orbit "
+					"element " << rank << " / " << orbit_length << endl;
 		}
 		orbit_element_unrank(depth, orbit_idx,
 				rank,
@@ -1666,30 +1673,19 @@ void poset_classification::map_to_canonical_k_subset(
 	// unrank the k-subset and its complement to our_set[set_size]:
 	Combi.unrank_k_subset_and_complement(subset_rk,
 			our_set, set_size, subset_size);
+
 	if (f_v) {
 		cout << "poset_classification::map_to_canonical_k_subset our_set=";
 		Int_vec_print(cout, our_set, set_size);
 		cout << endl;
 	}
-#if 0
-	Combi.unrank_k_subset(subset_rk, our_set, set_size, subset_size);
-	j = 0;
-	k = 0;
-	for (i = 0; i < set_size; i++) {
-		if (j < subset_size && our_set[j] == i) {
-			j++;
-			continue;
-		}
-		our_set[subset_size + k] = i;
-		k++;
-	}
-#endif
+
 	for (i = 0; i < set_size; i++) {
 		subset[i] = the_set[our_set[i]];
-		set[0][i] = subset[i];
+		//set[0][i] = subset[i]; // ToDo
 	}
 	for (i = 0; i < sz; i++) {
-		set[0][i] = subset[i];
+		//set[0][i] = subset[i]; // ToDo
 	}
 	if (f_v) {
 		cout << "poset_classification::map_to_canonical_k_subset subset=";
@@ -1697,7 +1693,8 @@ void poset_classification::map_to_canonical_k_subset(
 		cout << endl;
 	}
 	
-	Poset->A->element_one(poset_classification::transporter->ith(0), FALSE);
+	// ToDo
+	//Poset->A->element_one(poset_classification::transporter->ith(0), FALSE);
 
 
 	// trace the subset:
@@ -1961,7 +1958,7 @@ void poset_classification::trace_all_k_subsets(
 		for (i = 0; i < k; i++) {
 			subset[i] = the_set[index_set[i]];
 		}
-		Lint_vec_copy(subset, set[0], k);
+		//Lint_vec_copy(subset, set[0], k);
 
 		if (FALSE /*f_v2*/) {
 			cout << "poset_classification::trace_all_k_subsets "
@@ -1969,7 +1966,7 @@ void poset_classification::trace_all_k_subsets(
 			Lint_vec_print(cout, subset, k);
 			cout << endl;
 		}
-		Poset->A->element_one(transporter->ith(0), 0);
+		//Poset->A->element_one(transporter->ith(0), 0);
 		
 		if (k == 0) {
 			isotype[0] = 0;

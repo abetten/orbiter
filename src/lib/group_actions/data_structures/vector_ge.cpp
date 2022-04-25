@@ -784,6 +784,79 @@ void vector_ge::save_csv(std::string &fname, int verbose_level)
 	}
 
 }
+
+void vector_ge::export_inversion_graphs(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::export_inversion_graphs" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	int h;
+	int *Elt;
+	int *perm;
+	int N2;
+	combinatorics::combinatorics_domain Combi;
+
+	N2 = Combi.int_n_choose_k(A->degree, 2);
+
+	perm = NEW_int(A->degree);
+
+	{
+		ofstream ost(fname);
+
+		ost << "Row";
+		for (h = 0; h < N2; h++) {
+			ost << ",C" << h;
+		}
+		ost << endl;
+		for (h = 0; h < len; h++) {
+			Elt = ith(h);
+
+
+			int *Adj;
+			int N;
+			int i, j;
+
+			A->element_as_permutation(Elt, perm, 0 /* verbose_level*/);
+
+			graph_theory::graph_theory_domain GT;
+
+
+			if (f_v) {
+				cout << "vector_ge::export_inversion_graphs before GT.make_inversion_graph" << endl;
+			}
+			GT.make_inversion_graph(Adj, N, perm, A->degree, verbose_level);
+			if (f_v) {
+				cout << "vector_ge::export_inversion_graphs after GT.make_inversion_graph" << endl;
+			}
+
+			ost << h;
+			for (i = 0; i < N; i++) {
+				for (j = i + 1; j < N; j++) {
+					ost << "," << Adj[i * N + j];
+				}
+			}
+			ost << endl;
+
+
+			FREE_int(Adj);
+
+
+		}
+		ost << "END" << endl;
+	}
+	FREE_int(perm);
+
+	if (f_v) {
+		cout << "sims::export_inversion_graphs Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+}
+
+
 void vector_ge::read_column_csv(std::string &fname, actions::action *A, int col_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

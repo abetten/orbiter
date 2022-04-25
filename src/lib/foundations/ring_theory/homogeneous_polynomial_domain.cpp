@@ -2033,9 +2033,6 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(long int *Pts,
 		int nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, j;
-	int *System;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal" << endl;

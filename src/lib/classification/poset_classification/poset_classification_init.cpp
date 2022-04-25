@@ -27,7 +27,7 @@ poset_classification::poset_classification()
 	//problem_label[0] = 0;
 	//problem_label_with_path[0] = 0;
 	
-	Elt_memory = NULL;
+	//Elt_memory = NULL;
 
 	Poset = NULL;
 
@@ -41,43 +41,17 @@ poset_classification::poset_classification()
 	sz = 0; // = depth
 	max_set_size = 0;
 
-	Elt_memory = NULL;
-	Elt1 = NULL;
-	Elt2 = NULL;
-	Elt3 = NULL;
-	Elt4 = NULL;
-	Elt5 = NULL;
-	Elt6 = NULL;
+
+	//tmp_set_apply_fusion = NULL;
+	//tmp_find_node_for_subspace_by_rank1 = NULL;
+	//tmp_find_node_for_subspace_by_rank2 = NULL;
 
 
-	tmp_set_apply_fusion = NULL;
-	tmp_find_node_for_subspace_by_rank1 = NULL;
-	tmp_find_node_for_subspace_by_rank2 = NULL;
-
-
-
-	//nb_times_trace = 0;
-	//nb_times_trace_was_saved = 0;
 	
-	transporter = NULL;
-	set = NULL;
+	Orbit_tracer = NULL;
 	
 	Poo = NULL;
 
-
-	f_has_invariant_subset_for_root_node = FALSE;
-	invariant_subset_for_root_node = NULL;
-	invariant_subset_for_root_node_size = 0;
-	
-	
-	
-
-	
-	f_do_group_extension_in_upstep = TRUE;
-
-	f_allowed_to_show_group_elements = FALSE;	
-	downstep_orbits_print_max_orbits = 25;
-	downstep_orbits_print_max_points_per_orbit = 50;
 
 	nb_times_image_of_called0 = 0;
 	nb_times_mult_called0 = 0;
@@ -106,18 +80,13 @@ void poset_classification::null()
 
 void poset_classification::freeself()
 {
-	int i;
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "poset_classification::freeself" << endl;
 	}
-	if (Elt_memory) {
-		FREE_int(Elt_memory);
-	}
 
-	// do not free Strong_gens
 	
 
 	if (set_S) {
@@ -129,6 +98,8 @@ void poset_classification::freeself()
 	if (Schreier_vector_handler) {
 		FREE_OBJECT(Schreier_vector_handler);
 	}
+
+#if 0
 	if (tmp_set_apply_fusion) {
 		FREE_lint(tmp_set_apply_fusion);
 	}
@@ -138,17 +109,15 @@ void poset_classification::freeself()
 	if (tmp_find_node_for_subspace_by_rank2) {
 		FREE_int(tmp_find_node_for_subspace_by_rank2);
 	}
+#endif
 
 	if (f_v) {
 		cout << "poset_classification::freeself "
 				"deleting transporter and set[]" << endl;
 	}
-	if (transporter) {
-		FREE_OBJECT(transporter);
-		for (i = 0; i <= sz; i++) {
-			FREE_lint(set[i]);
-		}
-		FREE_plint(set);
+
+	if (Orbit_tracer) {
+		FREE_OBJECT(Orbit_tracer);
 	}
 
 	if (Poo) {
@@ -190,8 +159,10 @@ void poset_classification::init_internal(
 	//Control->init_labels(problem_label, problem_label_with_path);
 
 	if (f_v) {
-		cout << "poset_classification::init_internal, problem_label=" << problem_label << endl;
-		cout << "poset_classification::init_internal, problem_label_with_path=" << problem_label_with_path << endl;
+		cout << "poset_classification::init_internal, "
+				"problem_label=" << problem_label << endl;
+		cout << "poset_classification::init_internal, "
+				"problem_label_with_path=" << problem_label_with_path << endl;
 	}
 
 	if (Poset == NULL) {
@@ -266,14 +237,16 @@ void poset_classification::init_internal(
 		set_S[i] = i;
 	}
 
-	tmp_set_apply_fusion = NEW_lint(sz + 1);
+#if 0
+	//tmp_set_apply_fusion = NEW_lint(sz + 1);
+#endif
 
 	if (f_vv) {
 		cout << "poset_classification::init_internal "
 				"allocating Elt_memory" << endl;
 	}
 
-
+#if 0
 	Elt_memory = NEW_int(6 * Poset->A->elt_size_in_int);
 	Elt1 = Elt_memory + 0 * Poset->A->elt_size_in_int;
 	Elt2 = Elt_memory + 1 * Poset->A->elt_size_in_int;
@@ -281,21 +254,25 @@ void poset_classification::init_internal(
 	Elt4 = Elt_memory + 3 * Poset->A->elt_size_in_int;
 	Elt5 = Elt_memory + 4 * Poset->A->elt_size_in_int;
 	Elt6 = Elt_memory + 5 * Poset->A->elt_size_in_int;
-	
+#endif
 
 	if (sz == 0) {
 		cout << "poset_classification::init_internal sz == 0" << endl;
 		exit(1);
 	}
-	transporter = NEW_OBJECT(data_structures_groups::vector_ge);
-	transporter->init(Poset->A, verbose_level - 2);
-	transporter->allocate(sz + 1, verbose_level - 2);
-	Poset->A->element_one(transporter->ith(0), FALSE);
-	
-	set = NEW_plint(sz + 1);
-	for (i = 0; i <= sz; i++) {
-		set[i] = NEW_lint(max_set_size);
+
+	if (f_vv) {
+		cout << "poset_classification::init_internal "
+				"allocating Orbit_tracer" << endl;
 	}
+	Orbit_tracer = NEW_OBJECT(orbit_tracer);
+
+	if (f_vv) {
+		cout << "poset_classification::init_internal "
+				"before Orbit_tracer->init" << endl;
+	}
+	Orbit_tracer->init(this, verbose_level);
+
 
 	int nb_poset_orbit_nodes = 1000;
 
@@ -325,12 +302,14 @@ void poset_classification::init_internal(
 	nb_times_store_called0 = Poset->A->ptr->nb_times_store_called;
 
 
+#if 0
 	if (Poset->f_subspace_lattice) {
 		tmp_find_node_for_subspace_by_rank1 = NEW_int(Poset->VS->dimension);
 		tmp_find_node_for_subspace_by_rank2 = NEW_int(sz * Poset->VS->dimension);
 		//tmp_find_node_for_subspace_by_rank3 =
 		//		NEW_int(Poset->VS->dimension);
 	}
+#endif
 
 	if (f_v) {
 		cout << "poset_classification::init_internal done" << endl;
@@ -355,8 +334,8 @@ void poset_classification::initialize_and_allocate_root_node(
 
 	poset_classification::depth = depth;
 	poset_classification::Control = PC_control;
-	downstep_orbits_print_max_orbits = 50;
-	downstep_orbits_print_max_points_per_orbit = INT_MAX;
+	//downstep_orbits_print_max_orbits = 50;
+	//downstep_orbits_print_max_points_per_orbit = INT_MAX;
 	
 
 	// !!!
@@ -401,8 +380,8 @@ void poset_classification::initialize_with_base_case(
 	Control = PC_control;
 
 	poset_classification::depth = depth;
-	downstep_orbits_print_max_orbits = 50;
-	downstep_orbits_print_max_points_per_orbit = INT_MAX;
+	//downstep_orbits_print_max_orbits = 50;
+	//downstep_orbits_print_max_points_per_orbit = INT_MAX;
 	
 
 	// !!!
@@ -433,26 +412,6 @@ void poset_classification::initialize_with_base_case(
 	}
 }
 
-void poset_classification::init_root_node_invariant_subset(
-	int *invariant_subset, int invariant_subset_size,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "poset_classification::init_root_node_"
-				"invariant_subset" << endl;
-	}
-	f_has_invariant_subset_for_root_node = TRUE;
-	invariant_subset_for_root_node = invariant_subset;
-	invariant_subset_for_root_node_size = invariant_subset_size;
-	if (f_v) {
-		cout << "poset_classification::init_root_node_"
-				"invariant_subset "
-				"installed invariant subset of size "
-				<< invariant_subset_size << endl;
-	}
-}
 
 
 void poset_classification::init_base_case(classification_base_case *Base_case,

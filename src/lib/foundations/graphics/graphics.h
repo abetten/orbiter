@@ -168,12 +168,6 @@ public:
 	std::string part_row;
 	std::string part_col;
 
-#if 0
-	int *Row_parts;
-	int nb_row_parts;
-	int *Col_parts;
-	int nb_col_parts;
-#endif
 	int f_box_width;
 	int box_width;
 
@@ -1141,6 +1135,172 @@ public:
 };
 
 
+// #############################################################################
+// scene_element_of_type_edge.cpp
+// #############################################################################
+
+
+//! a scene element of type edge
+
+
+
+class scene_element_of_type_edge {
+
+private:
+
+	std::vector<std::string> Idx;
+		// labels of two points
+
+public:
+	scene_element_of_type_edge();
+	~scene_element_of_type_edge();
+	void init(std::string &pt1, std::string &pt2);
+	void print();
+
+};
+
+
+
+
+
+// #############################################################################
+// scene_element_of_type_face.cpp
+// #############################################################################
+
+
+//! a scene element of type face
+
+
+
+class scene_element_of_type_face {
+
+private:
+
+	std::vector<std::string> Pts;
+		// labels of the points
+
+public:
+	scene_element_of_type_face();
+	~scene_element_of_type_face();
+	void init(std::vector<std::string> &pts);
+	void print();
+
+};
+
+
+
+
+
+
+// #############################################################################
+// scene_element_of_type_line.cpp
+// #############################################################################
+
+
+//! a scene element of type line
+
+
+
+class scene_element_of_type_line {
+
+private:
+
+	double Line_coords[6];
+	// a line is given by two points
+
+public:
+	scene_element_of_type_line();
+	~scene_element_of_type_line();
+	void init(double *coord6);
+	void print();
+
+};
+
+
+
+
+// #############################################################################
+// scene_element_of_type_plane.cpp
+// #############################################################################
+
+
+//! a scene element of type plane
+
+
+
+class scene_element_of_type_plane {
+
+private:
+
+	double Plane_coords[4];
+
+public:
+	scene_element_of_type_plane();
+	~scene_element_of_type_plane();
+	void init(double *coord4);
+	void print();
+
+};
+
+
+
+
+
+
+
+// #############################################################################
+// scene_element_of_type_point.cpp
+// #############################################################################
+
+
+//! a scene element of type point
+
+
+
+class scene_element_of_type_point {
+
+private:
+
+	double Point_coords[3];
+
+public:
+	scene_element_of_type_point();
+	~scene_element_of_type_point();
+	void init(double *coord3);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// scene_element_of_type_surface.cpp
+// #############################################################################
+
+
+//! a scene element of type surface
+
+
+
+class scene_element_of_type_surface {
+
+private:
+
+	int d;
+	int nb_coeffs;
+	double *Eqn;
+
+public:
+	scene_element_of_type_surface();
+	~scene_element_of_type_surface();
+	void init(int d, int nb_coeffs, double *coords);
+	void print();
+
+};
+
+
+
+
 
 // #############################################################################
 // scene.cpp
@@ -1150,12 +1310,14 @@ public:
 #define SCENE_MAX_EDGES    100000
 #define SCENE_MAX_POINTS   200000
 #define SCENE_MAX_PLANES    10000
+#define SCENE_MAX_FACES    200000
+
+
 #define SCENE_MAX_QUADRICS  10000
 #define SCENE_MAX_OCTICS      100
 #define SCENE_MAX_QUARTICS   1000
 #define SCENE_MAX_QUINTICS    500
 #define SCENE_MAX_CUBICS    10000
-#define SCENE_MAX_FACES    200000
 
 
 //! a collection of 3D geometry objects
@@ -1241,11 +1403,88 @@ public:
 	int affine_space_q;
 	int affine_space_starting_point;
 
+	// scene_init.cpp:
+	int line6(double *x6);
+	int line(double x1, double x2, double x3,
+		double y1, double y2, double y3);
+	int point(double x1, double x2, double x3);
+	int edge(int pt1, int pt2);
+	int plane(double x1, double x2, double x3, double a);
+		// A plane is called a polynomial shape because
+		// it is defined by a first order polynomial equation.
+		// Given a plane: plane { <A, B, C>, D }
+		// it can be represented by the equation
+		// A*x + B*y + C*z - D*sqrt(A^2 + B^2 + C^2) = 0.
+		// see http://www.povray.org/documentation/view/3.6.1/297/
+	int quadric(double *coeff10);
+	// povray ordering of monomials:
+	// http://www.povray.org/documentation/view/3.6.1/298/
+	// 1: x^2
+	// 2: xy
+	// 3: xz
+	// 4: x
+	// 5: y^2
+	// 6: yz
+	// 7: y
+	// 8: z^2
+	// 9: z
+	// 10: 1
+	int cubic(double *coeff20);
+	// povray ordering of monomials:
+	// http://www.povray.org/documentation/view/3.6.1/298/
+	// 1: x^3
+	// 2: x^2y
+	// 3: x^2z
+	// 4: x^2
+	// 5: xy^2
+	// 6: xyz
+	// 7: xy
+	// 8: xz^2
+	// 9: xz
+	// 10: x
+	// 11: y^3
+	// 12: y^2z
+	// 13: y^2
+	// 14: yz^2
+	// 15: yz
+	// 16: y
+	// 17: z^3
+	// 18: z^2
+	// 19: z
+	// 20: 1
+	int quartic(double *coeff35);
+	int quintic(double *coeff_56);
+	int octic(double *coeff_165);
+	int face(int *pts, int nb_pts);
+	int face3(int pt1, int pt2, int pt3);
+	int face4(int pt1, int pt2, int pt3, int pt4);
+	int face5(int pt1, int pt2, int pt3, int pt4, int pt5);
+
+
+
+	int line_pt_and_dir(double *x6, double rad, int verbose_level);
+	int line_pt_and_dir_and_copy_points(double *x6, double rad, int verbose_level);
+	int line_through_two_pts(double *x6, double rad);
+	int line_after_recentering(double x1, double x2, double x3,
+		double y1, double y2, double y3, double rad);
+	int line_through_two_points(int pt1, int pt2,
+		double rad);
+	int plane_through_three_points(int pt1, int pt2, int pt3);
+	int quadric_through_three_lines(int line_idx1,
+		int line_idx2, int line_idx3, int verbose_level);
+	int cubic_in_orbiter_ordering(double *coeff);
+	void deformation_of_cubic_lex(int nb_frames,
+			double angle_start, double angle_max, double angle_min,
+			double *coeff1, double *coeff2,
+			int verbose_level);
+	int cubic_Goursat_ABC(double A, double B, double C);
+	int line_extended(double x1, double x2, double x3,
+		double y1, double y2, double y3,
+		double r);
+
 
 	scene();
 	~scene();
-	void null();
-	void freeself();
 	double label(int idx, std::string &txt);
 	double point_coords(int idx, int j);
 	double line_coords(int idx, int j);
@@ -1279,84 +1518,13 @@ public:
 		int verbose_level);
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
-	int line_pt_and_dir(double *x6, double rad, int verbose_level);
-	int line_pt_and_dir_and_copy_points(double *x6, double rad, int verbose_level);
-	int line_through_two_pts(double *x6, double rad);
-	int line6(double *x6);
-	int line(double x1, double x2, double x3, 
-		double y1, double y2, double y3);
-	int line_after_recentering(double x1, double x2, double x3,
-		double y1, double y2, double y3, double rad);
-	int line_through_two_points(int pt1, int pt2, 
-		double rad);
-	int edge(int pt1, int pt2);
 	void points(double *Coords, int nb_points);
-	int point(double x1, double x2, double x3);
 	int point_center_of_mass_of_face(int face_idx);
 	int point_center_of_mass_of_edge(int edge_idx);
 	int point_center_of_mass(int *Pt_idx, int nb_pts);
 	int triangle(int line1, int line2, int line3, int verbose_level);
 	int point_as_intersection_of_two_lines(int line1, int line2);
 	int plane_from_dual_coordinates(double *x4);
-	int plane(double x1, double x2, double x3, double a);
-		// A plane is called a polynomial shape because 
-		// it is defined by a first order polynomial equation. 
-		// Given a plane: plane { <A, B, C>, D }
-		// it can be represented by the equation 
-		// A*x + B*y + C*z - D*sqrt(A^2 + B^2 + C^2) = 0.
-		// see http://www.povray.org/documentation/view/3.6.1/297/
-	int plane_through_three_points(int pt1, int pt2, int pt3);
-	int quadric_through_three_lines(int line_idx1, 
-		int line_idx2, int line_idx3, int verbose_level);
-	int quintic(double *coeff_56);
-	int octic(double *coeff_165);
-	int quadric(double *coeff);
-	// povray ordering of monomials:
-	// http://www.povray.org/documentation/view/3.6.1/298/
-	// 1: x^2
-	// 2: xy
-	// 3: xz
-	// 4: x
-	// 5: y^2
-	// 6: yz
-	// 7: y
-	// 8: z^2
-	// 9: z
-	// 10: 1
-	int cubic_in_orbiter_ordering(double *coeff);
-	int cubic(double *coeff);
-	// povray ordering of monomials:
-	// http://www.povray.org/documentation/view/3.6.1/298/
-	// 1: x^3
-	// 2: x^2y
-	// 3: x^2z
-	// 4: x^2
-	// 5: xy^2
-	// 6: xyz
-	// 7: xy
-	// 8: xz^2
-	// 9: xz
-	// 10: x
-	// 11: y^3
-	// 12: y^2z
-	// 13: y^2
-	// 14: yz^2
-	// 15: yz
-	// 16: y
-	// 17: z^3
-	// 18: z^2
-	// 19: z
-	// 20: 1
-	void deformation_of_cubic_lex(int nb_frames,
-			double angle_start, double angle_max, double angle_min,
-			double *coeff1, double *coeff2,
-			int verbose_level);
-	int cubic_Goursat_ABC(double A, double B, double C);
-	int quartic(double *coeff);
-	int face(int *pts, int nb_pts);
-	int face3(int pt1, int pt2, int pt3);
-	int face4(int pt1, int pt2, int pt3, int pt4);
-	int face5(int pt1, int pt2, int pt3, int pt4, int pt5);
 	void draw_lines_with_selection(int *selection, int nb_select, 
 			std::string &options, std::ostream &ost);
 	void draw_line_with_selection(int line_idx, 
@@ -1404,9 +1572,6 @@ public:
 	int intersect_line_and_line(int line1_idx, int line2_idx, 
 		double &lambda, 
 		int verbose_level);
-	int line_extended(double x1, double x2, double x3, 
-		double y1, double y2, double y3, 
-		double r);
 	void map_a_line(int line1, int line2, 
 		int plane_idx, int line_idx, double spread, 
 		int nb_pts, 

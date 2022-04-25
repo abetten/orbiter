@@ -42,6 +42,9 @@ upstep_work::upstep_work()
 	nb_cosets = 0;
 	nb_cosets_processed = 0;
 	coset_table = NULL;
+	Elt1 = NULL;
+	Elt2 = NULL;
+	Elt3 = NULL;
 
 
 }
@@ -86,6 +89,15 @@ upstep_work::~upstep_work()
 		FREE_int(path);
 		path = NULL;
 		}
+	if (Elt1) {
+		FREE_int(Elt1);
+	}
+	if (Elt2) {
+		FREE_int(Elt2);
+	}
+	if (Elt3) {
+		FREE_int(Elt3);
+	}
 	if (f_v) {
 		cout << "upstep_work::~upstep_work done" << endl;
 		}
@@ -146,6 +158,11 @@ void upstep_work::init(poset_classification *gen,
 		Int_vec_print(cout, path, size + 1);
 		cout << endl;
 		}
+
+	Elt1 = NEW_int(gen->get_poset()->A->elt_size_in_int);
+	Elt2 = NEW_int(gen->get_poset()->A->elt_size_in_int);
+	Elt3 = NEW_int(gen->get_poset()->A->elt_size_in_int);
+
 	if (f_v) {
 		cout << "upstep_work::init done" << endl;
 		}
@@ -291,7 +308,8 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		cout << "with point " << pt << " : " << endl;
 	}
 	if (type != EXTENSION_TYPE_UNPROCESSED) {
-		cout << "extension not of unprocessed type, error" << endl;
+		cout << "upstep_work::handle_extension_unprocessed_type "
+				"extension not of unprocessed type, error" << endl;
 		cout << "type is ";
 		print_extension_type(cout, type);
 		cout << endl;
@@ -581,7 +599,8 @@ int upstep_work::init_extension_node(int verbose_level)
 				}
 				return FALSE;
 			}
-			cout << "upstep returns FALSE, the set is not canonical, "
+			cout << "upstep_for_sets returns FALSE, "
+					"the set is not canonical, "
 					"this should not happen" << endl;
 			exit(1);
 		}
@@ -888,20 +907,20 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		}
 		else if (r == no_result_extension_not_found) {
 			if (f_vvv) {
-				cout << "upstep_work::upstep_for_sets no_result_"
-						"extension_not_found" << endl;
+				cout << "upstep_work::upstep_for_sets "
+						"no_result_extension_not_found" << endl;
 			}
 		}
 		else if (r == no_result_fusion_node_installed) {
 			if (f_vvv) {
-				cout << "upstep_work::upstep_for_sets no_result_"
-						"fusion_node_installed" << endl;
+				cout << "upstep_work::upstep_for_sets "
+						"no_result_fusion_node_installed" << endl;
 			}
 		}
 		else if (r == no_result_fusion_node_already_installed) {
 			if (f_vvv) {
-				cout << "upstep_work::upstep_for_sets no_result_"
-						"fusion_node_already_installed" << endl;
+				cout << "upstep_work::upstep_for_sets "
+						"no_result_fusion_node_already_installed" << endl;
 			}
 		}
 	} // next j
@@ -921,8 +940,8 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	int f_tolerant = TRUE;
 	
 	if (f_vvv) {
-		cout << "upstep_work::upstep_for_sets H->S->transitive_"
-				"extension_tolerant up_orbit.orbit_len[0]="
+		cout << "upstep_work::upstep_for_sets H->S->transitive_extension_tolerant "
+				"up_orbit.orbit_len[0]="
 				<< up_orbit.orbit_len[0] << endl;
 	}
 	H->S->transitive_extension_tolerant(

@@ -2260,6 +2260,36 @@ void sims::all_elements_save_csv(std::string &fname, int verbose_level)
 	}
 }
 
+void sims::all_elements_export_inversion_graphs(std::string &fname, int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "sims::all_elements_export_inversion_graphs" << endl;
+	}
+
+	data_structures_groups::vector_ge *vec;
+
+	all_elements(vec, verbose_level);
+
+
+	vec->export_inversion_graphs(fname, verbose_level);
+	if (f_v) {
+		cout << "sims::all_elements_export_inversion_graphs Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	FREE_OBJECT(vec);
+
+	if (f_v) {
+		cout << "sims::all_elements_export_inversion_graphs done" << endl;
+	}
+}
+
+
+
+
 
 }}}
 

@@ -21,13 +21,15 @@ namespace poset_classification {
 void poset_orbit_node::read_memory_object(
 		poset_classification *PC,
 		actions::action *A, orbiter_kernel_system::memory_object *m, int &nb_group_elements,
+		int *Elt_tmp,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	int *Elt;
 	
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = Elt_tmp;
+	//Elt = NEW_int(A->elt_size_in_int);
 
 	//Elt = PC->Elt6;
 	m->read_int(&node);
@@ -132,7 +134,7 @@ void poset_orbit_node::read_memory_object(
 			exit(1);
 		}
 	}
-	FREE_int(Elt);
+	//FREE_int(Elt);
 	if (f_v) {
 		cout << "poset_orbit_node::read_memory_object node "
 				<< node << " finished" << endl;
@@ -141,14 +143,17 @@ void poset_orbit_node::read_memory_object(
 
 void poset_orbit_node::write_memory_object(
 		poset_classification *PC,
-		actions::action *A, orbiter_kernel_system::memory_object *m, int &nb_group_elements,
+		actions::action *A,
+		orbiter_kernel_system::memory_object *m, int &nb_group_elements,
+		int *Elt_tmp,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	int *Elt;
 	
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = Elt_tmp;
+	//Elt = NEW_int(A->elt_size_in_int);
 
 	//Elt = PC->Elt6;
 
@@ -222,7 +227,7 @@ void poset_orbit_node::write_memory_object(
 			exit(1);
 		}
 	}
-	FREE_int(Elt);
+	//FREE_int(Elt);
 	if (f_v) {
 		cout << "poset_orbit_node::write_memory_object node "
 				<< node << " finished" << endl;

@@ -29,6 +29,9 @@ graph_classification_activity_description::graph_classification_activity_descrip
 
 	f_draw_options = FALSE;
 	draw_options = NULL;
+
+	f_recognize_graphs_from_adjacency_matrix_csv = FALSE;
+	//std::string recognize_graphs_from_adjacency_matrix_csv_fname;
 }
 
 graph_classification_activity_description::~graph_classification_activity_description()
@@ -87,6 +90,14 @@ int graph_classification_activity_description::read_arguments(
 				cout << "-f_draw_options " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-recognize_graphs_from_adjacency_matrix_csv") == 0) {
+			f_recognize_graphs_from_adjacency_matrix_csv = TRUE;
+			recognize_graphs_from_adjacency_matrix_csv_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-recognize_graphs_from_adjacency_matrix_csv " << recognize_graphs_from_adjacency_matrix_csv_fname << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -120,6 +131,9 @@ void graph_classification_activity_description::print()
 	if (f_draw_options) {
 		cout << "-f_draw_options " << endl;
 		draw_options->print();
+	}
+	if (f_recognize_graphs_from_adjacency_matrix_csv) {
+		cout << "-recognize_graphs_from_adjacency_matrix_csv " << recognize_graphs_from_adjacency_matrix_csv_fname << endl;
 	}
 }
 

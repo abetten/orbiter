@@ -228,6 +228,7 @@ public:
 			std::string &Elements_text,
 			int verbose_level);
 	void save_elements_csv(std::string &fname, int verbose_level);
+	void export_inversion_graphs(std::string &fname, int verbose_level);
 	void multiply_elements_csv(std::string &fname1, std::string &fname2, std::string &fname3,
 			int f_column_major_ordering, int verbose_level);
 	void apply_elements_to_set_csv(std::string &fname1, std::string &fname2,
@@ -522,6 +523,9 @@ public:
 
 	int f_save_elements_csv;
 	std::string save_elements_csv_fname;
+
+	int f_export_inversion_graphs;
+	std::string export_inversion_graphs_fname;
 
 
 	int f_multiply_elements_csv_column_major_ordering;

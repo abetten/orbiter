@@ -516,9 +516,9 @@ void poset_classification::draw_tree_low_level1(
 						cout << endl;
 					}
 				
-					Poset->A2->element_retrieve(hdl, Elt1, FALSE);
+					//Poset->A2->element_retrieve(hdl, Elt1, FALSE);
 	
-					Poset->A2->map_a_set(set0, set1, depth + 1, Elt1, 0);
+					Poset->A2->map_a_set_based_on_hdl(set0, set1, depth + 1, Poset->A, hdl, 0);
 
 					Sorting.lint_vec_heapsort(set1, depth + 1);
 				
@@ -2210,8 +2210,11 @@ void poset_classification::make_level_graph(int depth,
 								0 /* verbose_level */);
 					}
 					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
-						Poset->A->element_retrieve(E->get_data(), Elt1, 0);
-						Poset->A2->map_a_set(the_set, the_set2, lvl + 1, Elt1, 0);
+
+						//Poset->A->element_retrieve(E->get_data(), Elt1, 0);
+
+						Poset->A2->map_a_set_based_on_hdl(the_set, the_set2, lvl + 1, Poset->A, E->get_data(), 0);
+
 						LG->add_node_vec_data(l + 2, f + so, the_set2, lvl + 1,
 								0 /* verbose_level */);
 						LG->set_distinguished_element_index(l + 2, f + so, lvl,
@@ -2480,8 +2483,9 @@ void poset_classification::make_poset_graph_detailed(graph_theory::layered_graph
 								f + so, L, 0 /* verbose_level */);
 					}
 					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
-						Poset->A->element_retrieve(E->get_data(), Elt1, 0);
-						Poset->A2->map_a_set(the_set, the_set2, L + 1, Elt1, 0);
+
+						//Poset->A->element_retrieve(E->get_data(), Elt1, 0);
+						Poset->A2->map_a_set_based_on_hdl(the_set, the_set2, L + 1, Poset->A, E->get_data(), 0);
 						LG->add_node_vec_data(3 * L + 2, f + so,
 								the_set2, L + 1, 0 /* verbose_level */);
 						LG->set_distinguished_element_index(3 * L + 2,
@@ -2694,26 +2698,32 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 						//int_vec_print(fp, set, lvl + 1);
 						print_set_special(fp, set, lvl + 1);
 
+
+						int *Elt;
+
+
+						Elt = NEW_int(Poset->A->elt_size_in_int);
+
 						fp << " & ";
 
 						hdl = E->get_data();
-						Poset->A->element_retrieve(hdl, Elt1, FALSE);
+						Poset->A->element_retrieve(hdl, Elt, FALSE);
 
 						fp << "$";
-						Poset->A->element_print_latex(Elt1, fp);
+						Poset->A->element_print_latex(Elt, fp);
 						fp << "$";
 
 						fp << " & ";
 
 						if (f_permutation_degree_is_small) {
 							fp << "$";
-							Poset->A2->element_print_as_permutation(Elt1, fp);
+							Poset->A2->element_print_as_permutation(Elt, fp);
 							fp << "$";
 
 							fp << " & ";
 						}
 
-
+						FREE_int(Elt);
 
 
 						Poo->get_node(n1)->store_set_to(this, lvl + 1 - 1, set);

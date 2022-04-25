@@ -512,6 +512,12 @@ namespace graphics {
 	class plot_tools;
 	class povray_interface;
 	class povray_job_description;
+	class scene_element_of_type_edge;
+	class scene_element_of_type_face;
+	class scene_element_of_type_line;
+	class scene_element_of_type_plane;
+	class scene_element_of_type_point;
+	class scene_element_of_type_surface;
 	class scene;
 	class tree_draw_options;
 	class tree;
@@ -521,6 +527,7 @@ namespace graphics {
 	typedef tree_node *ptree_node;
 
 }
+
 
 
 // knowledge_base:

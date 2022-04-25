@@ -185,6 +185,13 @@ MODULES= \
 		foundations/graphics/plot_tools.o \
 		foundations/graphics/povray_interface.o \
 		foundations/graphics/povray_job_description.o \
+		foundations/graphics/scene_element_of_type_edge.o \
+		foundations/graphics/scene_element_of_type_face.o \
+		foundations/graphics/scene_element_of_type_line.o \
+		foundations/graphics/scene_element_of_type_plane.o \
+		foundations/graphics/scene_element_of_type_point.o \
+		foundations/graphics/scene_element_of_type_surface.o \
+		foundations/graphics/scene_init.o \
 		foundations/graphics/scene.o \
 		foundations/graphics/scene2.o \
 		foundations/graphics/tree_draw_options.o \
@@ -370,6 +377,7 @@ MODULES= \
 		classification/poset_classification/classification_base_case.o \
 		classification/poset_classification/extension.o \
 		classification/poset_classification/orbit_based_testing.o \
+		classification/poset_classification/orbit_tracer.o \
 		classification/poset_classification/poset_classification.o \
 		classification/poset_classification/poset_classification_classify.o \
 		classification/poset_classification/poset_classification_combinatorics.o \
@@ -378,7 +386,6 @@ MODULES= \
 		classification/poset_classification/poset_classification_export_source_code.o \
 		classification/poset_classification/poset_classification_init.o \
 		classification/poset_classification/poset_classification_io.o \
-		classification/poset_classification/poset_classification_recognize.o \
 		classification/poset_classification/poset_classification_report_options.o \
 		classification/poset_classification/poset_classification_report.o \
 		classification/poset_classification/poset_classification_trace.o \

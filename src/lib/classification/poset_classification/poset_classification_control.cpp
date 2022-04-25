@@ -113,6 +113,20 @@ poset_classification_control::poset_classification_control()
 	clique_test_CG = NULL;
 
 
+	f_has_invariant_subset_for_root_node = FALSE;
+	invariant_subset_for_root_node = NULL;
+	invariant_subset_for_root_node_size = 0;
+
+
+
+
+
+	f_do_group_extension_in_upstep = TRUE;
+
+	f_allowed_to_show_group_elements = FALSE;
+	downstep_orbits_print_max_orbits = 25;
+	downstep_orbits_print_max_points_per_orbit = 50;
+
 }
 
 poset_classification_control::~poset_classification_control()
@@ -687,6 +701,24 @@ void poset_classification_control::early_test_func_for_clique_search(
 
 
 
+void poset_classification_control::init_root_node_invariant_subset(
+	int *invariant_subset, int invariant_subset_size,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control::init_root_node_invariant_subset" << endl;
+	}
+	f_has_invariant_subset_for_root_node = TRUE;
+	invariant_subset_for_root_node = invariant_subset;
+	invariant_subset_for_root_node_size = invariant_subset_size;
+	if (f_v) {
+		cout << "poset_classification_control::init_root_node_invariant_subset "
+				"installed invariant subset of size "
+				<< invariant_subset_size << endl;
+	}
+}
 
 
 
