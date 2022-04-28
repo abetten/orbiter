@@ -174,7 +174,7 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 		create_graph_on_remaining_long_orbits(
 				Packings_classified,
 				Packings,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "packing_long_orbits::init after create_graph_on_remaining_long_orbits" << endl;
@@ -285,7 +285,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 			process_single_case(
 					Packings_classified,
 					Packings,
-					verbose_level);
+					verbose_level - 2);
 
 			if (f_v) {
 				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, "
@@ -887,7 +887,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		}
 		Ar_On_Packings->all_point_orbits_from_generators(*Orbits,
 				fixpoint_clique_stabilizer_gens,
-				verbose_level);
+				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 					"after Ar_On_Packings->all_point_orbits_from_generators" << endl;

@@ -1858,11 +1858,13 @@ public:
 	int *Point_to_hyperplane; // [P->N_points]
 	int *Hyperplane_to_point; // [P->N_points]
 
+	int *f_absolute;  // [P->N_points]
 
 	polarity();
 	~polarity();
 	void init_standard_polarity(projective_space *P, int verbose_level);
 	void init_general_polarity(projective_space *P, int *Mtx, int verbose_level);
+	void determine_absolute_points(int *&f_absolute, int verbose_level);
 	void init_reversal_polarity(projective_space *P, int verbose_level);
 	void report(std::ostream &f);
 
@@ -1982,6 +1984,9 @@ public:
 		int verbose_level);
 		// row_type, col_type are the vector space dimensions of the objects
 		// indexing rows and columns.
+	int incidence_test_for_objects_of_type_ij(
+		int type_i, int type_j, int i, int j,
+		int verbose_level);
 	void incidence_and_stack_for_type_ij(
 		int row_type, int col_type,
 		incidence_structure *&Inc,

@@ -592,7 +592,7 @@ void packing_was::compute_H_orbits_on_points(int verbose_level)
 
 	Point_orbits_under_H->init(P->T->A, H_gens, TRUE /*f_load_save*/,
 			prefix_point_orbits_under_H,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_points before Point_orbits_under_H->create_latex_report" << endl;
@@ -627,7 +627,7 @@ void packing_was::compute_N_orbits_on_points(int verbose_level)
 
 	Point_orbits_under_N->init(P->T->A, N_gens, TRUE /*f_load_save*/,
 			prefix_point_orbits_under_N,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "packing_was::compute_N_orbits_on_points before Point_orbits_under_N->create_latex_report" << endl;
@@ -664,7 +664,7 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 
 	Line_orbits_under_H->init(P->T->A2, H_gens, TRUE /*f_load_save*/,
 			prefix_line_orbits_under_H,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_lines before Line_orbits_under_H->create_latex_report" << endl;
@@ -699,7 +699,7 @@ void packing_was::compute_N_orbits_on_lines(int verbose_level)
 
 	Line_orbits_under_N->init(P->T->A2, N_gens, TRUE /*f_load_save*/,
 			prefix_line_orbits_under_N,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "packing_was::compute_N_orbits_on_lines before Line_orbits_under_N->create_latex_report" << endl;
@@ -730,7 +730,7 @@ void packing_was::compute_spread_types_wrt_H(int verbose_level)
 			P->spread_size,
 			P->Spread_table_with_selection->Spread_tables->spread_table,
 			H_goi,
-			verbose_level);
+			verbose_level - 2);
 	if (FALSE) {
 		cout << "The spread types are:" << endl;
 		Spread_type->report(cout, verbose_level);
@@ -768,7 +768,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
 			H_gens,
 			TRUE /*f_load_save*/, prefix_spread_orbits,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads after Spread_orbits_under_H->init" << endl;
 	}

@@ -2308,7 +2308,7 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->init_generators(*gens, verbose_level - 2);
-	Sch->compute_point_orbit(pt, verbose_level);
+	Sch->compute_point_orbit(pt, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "

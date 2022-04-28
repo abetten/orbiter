@@ -24,6 +24,7 @@ polarity::polarity()
 	P = NULL;
 	Point_to_hyperplane = NULL;
 	Hyperplane_to_point = NULL;
+	f_absolute = NULL;
 }
 
 polarity::~polarity()
@@ -33,6 +34,9 @@ polarity::~polarity()
 	}
 	if (Hyperplane_to_point) {
 		FREE_int(Hyperplane_to_point);
+	}
+	if (f_absolute) {
+		FREE_int(f_absolute);
 	}
 }
 
@@ -94,6 +98,16 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 		}
 	}
 	FREE_int(A);
+
+
+	if (f_v) {
+		cout << "polarity::init_standard_polarity before determine_absolute_points" << endl;
+	}
+	determine_absolute_points(f_absolute, verbose_level);
+	if (f_v) {
+		cout << "polarity::init_standard_polarity after determine_absolute_points" << endl;
+	}
+
 	if (f_v) {
 		cout << "polarity::init_standard_polarity done" << endl;
 	}
@@ -164,9 +178,56 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 	}
 	FREE_int(v);
 	FREE_int(A);
+
+	if (f_v) {
+		cout << "polarity::init_general_polarity before determine_absolute_points" << endl;
+	}
+	determine_absolute_points(f_absolute, verbose_level);
+	if (f_v) {
+		cout << "polarity::init_general_polarity after determine_absolute_points" << endl;
+	}
+
+
 	if (f_v) {
 		cout << "polarity::init_general_polarity done" << endl;
 	}
+}
+
+void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	long int N_points;
+	int N = 0;
+
+	if (f_v) {
+		cout << "polarity::determine_absolute_points" << endl;
+	}
+
+	if (P->n != 3) {
+		cout << "polarity::determine_absolute_points we need n=3, skipping" << endl;
+		return;
+	}
+	N_points = P->nb_rk_k_subspaces_as_lint(1 /* type_i */);
+	f_absolute = NEW_int(N_points);
+
+	for (i = 0; i < N_points; i++) {
+		j = Point_to_hyperplane[i];
+		f_absolute[i] = P->incidence_test_for_objects_of_type_ij(
+			1 /* type_i */, P->n /* type_j */, i, j,
+			0 /* verbose_level */);
+		if (f_absolute[i]) {
+			if (FALSE) {
+				cout << "polarity::determine_absolute_points absolute point: " << i << endl;
+			}
+			N++;
+		}
+	}
+
+	if (f_v) {
+		cout << "polarity::determine_absolute_points The number of absolute points is " << N << endl;
+	}
+
 }
 
 void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
@@ -185,6 +246,8 @@ void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
 	Mtx = NEW_int(d * d);
 	Int_vec_zero(Mtx, d * d);
 
+	// the anti-diagonal matrix:
+
 	for (i = 0; i < d; i++) {
 		Mtx[i * d + d - 1 - i] = 1;
 	}
@@ -201,6 +264,10 @@ void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
 
 	FREE_int(Mtx);
 
+
+
+
+
 	if (f_v) {
 		cout << "polarity::init_reversal_polarity done" << endl;
 	}
@@ -216,7 +283,22 @@ void polarity::report(std::ostream &f)
 		f << "$" << i << " \\leftrightarrow " << Point_to_hyperplane[i] << "$\\\\" << endl;
 	}
 	f << "\\end{multicols}" << endl;
+
+	int N;
+	N = 0;
+	for (i = 0; i < P->N_points; i++) {
+		if (f_absolute[i]) {
+			N++;
+		}
+	}
+	f << "There are " << N << " absolute points: \\\\" << endl;
+	for (i = 0; i < P->N_points; i++) {
+		if (f_absolute[i]) {
+			f << "$" << i << " \\leftrightarrow " << Point_to_hyperplane[i] << "$\\\\" << endl;
+		}
+	}
 	f << "\\clearpage" << endl << endl;
+
 }
 
 }}}

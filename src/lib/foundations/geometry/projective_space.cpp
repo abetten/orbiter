@@ -342,7 +342,6 @@ void projective_space::init_polarity(int verbose_level)
 	}
 
 
-
 	if (f_v) {
 		cout << "projective_space::init_polarity done" << endl;
 	}
@@ -827,6 +826,94 @@ void projective_space::incma_for_type_ij(
 		cout << "projective_space::incma_for_type_ij done" << endl;
 	}
 }
+
+int projective_space::incidence_test_for_objects_of_type_ij(
+	int type_i, int type_j, int i, int j,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk;
+	int *Basis;
+	int *Basis2;
+	int *base_cols;
+	int d = n + 1;
+	int nb_rows, nb_cols;
+	int f_incidence = FALSE;
+
+	if (f_v) {
+		cout << "projective_space::incidence_test_for_objects_of_type_ij" << endl;
+		cout << "type_i = " << type_i << endl;
+		cout << "type_j = " << type_j << endl;
+	}
+	if (type_j < type_i) {
+		cout << "projective_space::incidence_test_for_objects_of_type_ij "
+				"type_j < type_i" << endl;
+		exit(1);
+	}
+	if (type_i < 0) {
+		cout << "projective_space::incidence_test_for_objects_of_type_ij "
+				"type_i < 0" << endl;
+		exit(1);
+	}
+	if (type_j > n + 1) {
+		cout << "projective_space::incidence_test_for_objects_of_type_ij "
+				"type_j > n + 1" << endl;
+		exit(1);
+	}
+	nb_rows = nb_rk_k_subspaces_as_lint(type_i);
+	nb_cols = nb_rk_k_subspaces_as_lint(type_j);
+
+
+	Basis = NEW_int(3 * d * d);
+	Basis2 = NEW_int(3 * d * d);
+	base_cols = NEW_int(d);
+
+	if (type_i == 1) {
+		unrank_point(Basis, i);
+	}
+	else if (type_i == 2) {
+		unrank_line(Basis, i);
+	}
+	else if (type_i == 3) {
+		unrank_plane(Basis, i);
+	}
+	else {
+		cout << "projective_space::incidence_test_for_objects_of_type_ij "
+				"row_type " << type_i
+			<< " not yet implemented" << endl;
+		exit(1);
+	}
+	if (type_j == 1) {
+		unrank_point(Basis + type_i * d, j);
+	}
+	else if (type_j == 2){
+		unrank_line(Basis + type_i * d, j);
+	}
+	else if (type_j == 3) {
+		unrank_plane(Basis + type_i * d, j);
+	}
+	else {
+		cout << "projective_space::incidence_test_for_objects_of_type_ij "
+				"type_j " << type_j
+			<< " not yet implemented" << endl;
+		exit(1);
+	}
+	rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Basis,
+			type_i + type_j, d, Basis2, base_cols,
+			0 /*verbose_level*/);
+	if (rk == type_j) {
+		f_incidence = TRUE;
+	}
+
+	FREE_int(Basis);
+	FREE_int(Basis2);
+	FREE_int(base_cols);
+	if (f_v) {
+		cout << "projective_space::incidence_test_for_objects_of_type_ij done" << endl;
+	}
+	return f_incidence;
+}
+
 
 void projective_space::incidence_and_stack_for_type_ij(
 	int row_type, int col_type,
