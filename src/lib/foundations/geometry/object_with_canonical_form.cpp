@@ -1115,8 +1115,10 @@ void object_with_canonical_form::encode_point_set(
 	nb_rows0 = P->N_points;
 	nb_cols0 = P->N_lines;
 
-	nb_rows0 += P->N_lines;
-	nb_cols0 += P->Nb_subspaces[2];
+	if (P->n >= 3) {
+		nb_rows0 += P->N_lines;
+		nb_cols0 += P->Nb_subspaces[2];
+	}
 
 	nb_rows = nb_rows0 + 1;
 	nb_cols = nb_cols0 + C->second_nb_types;
@@ -1128,8 +1130,12 @@ void object_with_canonical_form::encode_point_set(
 
 	//Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
 
-	Enc->extended_incidence_matrix_projective_space_top_left(P, verbose_level);
-
+	if (P->n >= 3) {
+		Enc->extended_incidence_matrix_projective_space_top_left(P, verbose_level);
+	}
+	else {
+		Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
+	}
 
 	// last columns:
 	for (j = 0; j < C->second_nb_types; j++) {

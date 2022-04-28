@@ -606,6 +606,12 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 
 void packing_was_fixpoints::report(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::report" << endl;
+	}
+
 	orbiter_kernel_system::file_io Fio;
 
 	{
@@ -638,7 +644,7 @@ void packing_was_fixpoints::report(int verbose_level)
 		fp << "\\noindent The field ${\\mathbb F}_{"
 				<< PW->P->q
 				<< "}$ :\\\\" << endl;
-		PW->P->F->cheat_sheet(fp, verbose_level);
+		PW->P->F->cheat_sheet(fp, verbose_level - 5);
 
 #if 0
 		fp << "\\section{The space PG$(3, " << q << ")$}" << endl;
@@ -657,12 +663,24 @@ void packing_was_fixpoints::report(int verbose_level)
 		fp << "\\section{The Group $H$}" << endl;
 		PW->H_gens->print_generators_tex(fp);
 
+		if (f_v) {
+			cout << "packing_was_fixpoints::report before PW->report2" << endl;
+		}
 		PW->report2(fp, verbose_level);
+		if (f_v) {
+			cout << "packing_was_fixpoints::report after PW->report2" << endl;
+		}
 
 		fp << "\\section{Cliques on the fixpoint graph}" << endl;
 
 		if (fixpoints_idx >= 0) {
+			if (f_v) {
+				cout << "packing_was_fixpoints::report before report2" << endl;
+			}
 			report2(fp, /*L,*/ verbose_level);
+			if (f_v) {
+				cout << "packing_was_fixpoints::report after report2" << endl;
+			}
 		}
 
 		Li.foot(fp);
@@ -671,10 +689,18 @@ void packing_was_fixpoints::report(int verbose_level)
 			<< Fio.file_size(fname) << endl;
 	}
 
+	if (f_v) {
+		cout << "packing_was_fixpoints::report done" << endl;
+	}
 }
 
 void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::report2" << endl;
+	}
 
 	ost << "\\section{Orbits of cliques on the fixpoint graph under $N$}" << endl;
 	ost << "The Group $N$ has " << nb_cliques << " orbits on "
@@ -704,12 +730,21 @@ void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ in
 
 	for (idx = 0; idx < nb_cliques; idx++) {
 
+		if (f_v) {
+			cout << "packing_was_fixpoints::report2 idx = " << idx << " / " << nb_cliques << endl;
+		}
 		long int *Orbit_numbers;
 		groups::strong_generators *Stab_gens;
 
 		Orbit_numbers = clique_by_index(idx);
 
+		if (f_v) {
+			cout << "packing_was_fixpoints::report2 idx = " << idx << " / " << nb_cliques << " before get_stabilizer" << endl;
+		}
 		Stab_gens = get_stabilizer(idx);
+		if (f_v) {
+			cout << "packing_was_fixpoints::report2 idx = " << idx << " / " << nb_cliques << " after get_stabilizer" << endl;
+		}
 
 		ost << "Clique " << idx << ":\\\\" << endl;
 
@@ -719,7 +754,6 @@ void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ in
 		ost << "\\\\" << endl;
 
 		ost << "Stabilizer:\\\\" << endl;
-
 		Stab_gens->print_generators_tex(ost);
 
 	}
@@ -742,6 +776,10 @@ void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ in
 	}
 #endif
 
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::report2 done" << endl;
+	}
 
 }
 

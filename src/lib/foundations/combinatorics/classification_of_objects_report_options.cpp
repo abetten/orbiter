@@ -59,7 +59,7 @@ int classification_of_objects_report_options::read_arguments(
 		if (ST.stringcmp(argv[i], "-prefix") == 0) {
 			f_prefix = TRUE;
 			prefix.assign(argv[++i]);
-			cout << "-prefix" << prefix << endl;
+			cout << "-prefix " << prefix << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-export_flag_orbits") == 0) {
 			f_export_flag_orbits = TRUE;

@@ -143,7 +143,7 @@ void orbits_on_something::init(
 		}
 
 		Sch = SG->orbits_on_points_schreier(
-				A, verbose_level);
+				A, verbose_level - 2);
 
 		if (f_v) {
 			cout << "orbits_on_something::init "
