@@ -1602,7 +1602,6 @@ void projective_space::cheat_sheet_points(
 
 	cheat_polarity(f, verbose_level);
 
-
 	FREE_int(v);
 	if (f_v) {
 		cout << "projective_space::cheat_sheet_points done" << endl;
@@ -1619,10 +1618,18 @@ void projective_space::cheat_polarity(std::ostream &f, int verbose_level)
 
 	f << "Standard polarity point $\\leftrightarrow$ hyperplane:\\\\" << endl;
 
+	if (Standard_polarity == NULL) {
+		cout << "projective_space::cheat_polarity NULL pointer" << endl;
+		return;
+	}
 	Standard_polarity->report(f);
 
 	f << "Reversal polarity point $\\leftrightarrow$ hyperplane:\\\\" << endl;
 
+	if (Reversal_polarity == NULL) {
+		cout << "projective_space::cheat_polarity NULL pointer" << endl;
+		return;
+	}
 	Reversal_polarity->report(f);
 
 	if (f_v) {

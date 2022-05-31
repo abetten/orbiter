@@ -577,7 +577,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		groups::strong_generators *Aut_gens;
 		ring_theory::longinteger_object go;
 
-		Aut_gens = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
+		Aut_gens = Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(SC->A, verbose_level - 2);
 

@@ -449,20 +449,6 @@ void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 		mp_graphics G;
 
 		G.init(fname_full, O, verbose_level);
-#if 0
-		mp_graphics G(fname_full,
-				0, 0,
-				O->xin, O->yin,
-				O->f_embedded, O->f_sideways, verbose_level - 1);
-		G.out_xmin() = 0;
-		G.out_ymin() = 0;
-		G.out_xmax() = O->xout;
-		G.out_ymax() = O->yout;
-		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-
-		G.tikz_global_scale = O->scale;
-		G.tikz_global_line_width = O->line_width;
-#endif
 
 		G.header();
 		G.begin_figure(factor_1000);
@@ -479,7 +465,7 @@ void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 				verbose_level);
 		if (f_v) {
 			cout << "plot_tools::draw_mod_n "
-					"after projective_plane_draw_grid2" << endl;
+					"after draw_mod_n_work" << endl;
 		}
 
 		double move_out = 0.01;
@@ -504,6 +490,9 @@ void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 }
 
 
+#ifndef M_PI
+#define M_PI 3.141516
+#endif
 
 
 void plot_tools::draw_mod_n_work(mp_graphics &G,
@@ -513,6 +502,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 {
 	int f_v = (verbose_level >= 1);
 	double *Dx, *Dy;
+	double *D2x, *D2y;
 	int *Px, *Py;
 	double x_stretch = 1.;
 	double y_stretch = 1.;
@@ -541,9 +531,10 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	Dx = new double[N];
 	Dy = new double[N];
 
-	int M;
+	int M, N0;
 
-	M = 4 * n + 1 + 4;
+	N0 = 4 * n + 1 + 4;
+	M = N0 + n;
 
 	for (i = 0; i < n; i++) {
 		Num.on_circle_double(Dx, Dy, i, start_angle + i * 360. / (double) n, 1.0);
@@ -575,6 +566,28 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	// big circle:
 	G.circle(Px[n], Py[n], (int) dx * x_stretch);
 
+
+	if (Descr->f_eigenvalues) {
+		D2x = new double[n];
+		D2y = new double[n];
+
+		double v[2];
+		double w[2];
+		for (i = 0; i < n; i++) {
+			v[0] = cos((start_angle + i * 360. / (double) n) / 360. * 2 * M_PI);
+			v[1] = sin((start_angle + i * 360. / (double) n) / 360. * 2 * M_PI);
+			w[0] = Descr->eigenvalues_A[0] * v[0] + Descr->eigenvalues_A[1] * v[1];
+			w[1] = Descr->eigenvalues_A[2] * v[0] + Descr->eigenvalues_A[3] * v[1];
+			D2x[i] = w[0];
+			D2y[i] = w[1];
+		}
+		for (i = 0; i < n; i++) {
+			Px[N0 + i] = D2x[i] * dx * x_stretch;
+			Py[N0 + i] = D2y[i] * dy * y_stretch;
+		}
+
+	}
+
 	G.sf_interior(100);
 	G.sf_color(1);
 	for (i = 0; i < n; i++) {
@@ -595,6 +608,15 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 
 		if (f_do_it) {
 			G.circle(Px[i], Py[i], O->rad);
+		}
+		if (Descr->f_eigenvalues) {
+			G.sl_ends(0, 1);
+			G.sl_color(2); // red
+			G.polygon2(Px, Py, n, i);
+			G.sl_color(4); // blue
+			G.polygon2(Px, Py, i, N0 + i);
+			G.sl_ends(0, 0);
+			G.sl_color(1); // black
 		}
 	}
 

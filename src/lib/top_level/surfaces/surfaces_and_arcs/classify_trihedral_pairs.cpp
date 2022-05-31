@@ -1055,7 +1055,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 		groups::strong_generators *S;
 		ring_theory::longinteger_object go;
 
-		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
+		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 		
 		if (type - 1 == po && orb == so) {
 			if (f_v) {

@@ -781,6 +781,12 @@ class interface_toolkit {
 	int f_tree_draw;
 	graphics::tree_draw_options *Tree_draw_options;
 
+	int f_extract_from_file;
+	std::string extract_from_file_fname;
+	std::string extract_from_file_label;
+	std::string extract_from_file_target_fname;
+
+
 public:
 
 

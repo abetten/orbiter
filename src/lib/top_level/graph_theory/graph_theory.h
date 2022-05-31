@@ -275,6 +275,10 @@ public:
 
 	int f_draw_graphs;
 
+	int f_list_graphs_at_level;
+	int list_graphs_at_level_level_min;
+	int list_graphs_at_level_level_max;
+
 	int f_draw_graphs_at_level;
 	int draw_graphs_at_level_level;
 
@@ -418,6 +422,7 @@ public:
 	void print(std::ostream &ost, long int *S, int len);
 	void print_score_sequences(int level, int verbose_level);
 	void score_sequence(int n, long int *set, int sz, long int *score, int verbose_level);
+	void list_graphs(int level_min, int level_max, int verbose_level);
 	void draw_graphs(int level,
 			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);

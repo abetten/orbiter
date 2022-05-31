@@ -351,13 +351,19 @@ void boolean_function_domain::compute_polynomial_representation(
 						continue;
 					}
 					for (v = 0; v < Poly[i].get_nb_monomials(); v++) {
+
+						// multiply  the term u in A_poly[1] with the term v in B_poly[i].
+						// To do so, the exponent vectors of the terms are added.
+						//
+						// the coefficient is a * b and will be added to the existing coefficient:
+
 						b = B_poly[i][v];
 						if (b == 0) {
 							continue;
 						}
 						c = Fq->mult(a, b);
 						Int_vec_zero(mon, n + 1);
-						for (h = 0; h <= n + 1; h++) {
+						for (h = 0; h < n + 1; h++) {
 							mon[h] = Poly[1].get_monomial(u, h) +
 									Poly[i].get_monomial(v, h);
 						}

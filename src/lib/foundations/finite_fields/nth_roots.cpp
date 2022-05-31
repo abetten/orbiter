@@ -29,7 +29,7 @@ nth_roots::nth_roots()
 	Min_poly = NULL;
 	Fp = NULL;
 	FpX = NULL;
-	Fq = NULL;
+	FQ = NULL;
 	FX = NULL;
 	m = 0;
 	r = 0;
@@ -39,8 +39,8 @@ nth_roots::nth_roots()
 	Index = NULL;
 	Subfield_Index = NULL;
 	Cyc = NULL;
-	generator = NULL;
-	generator_Fq = NULL;
+	min_poly_beta_FQ = NULL;
+	min_poly_beta_Fq = NULL;
 	subfield_degree = 0;
 	subfield_basis = NULL;
 }
@@ -144,12 +144,12 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 
 	if (f_v) {
-		cout << "nth_roots::init creating unipoly_domain Fq modulo M" << endl;
+		cout << "nth_roots::init creating unipoly_domain FQ modulo M" << endl;
 	}
 
-	Fq = NEW_OBJECT(ring_theory::unipoly_domain);
+	FQ = NEW_OBJECT(ring_theory::unipoly_domain);
 
-	Fq->init_factorring(Fp, Min_poly, verbose_level);
+	FQ->init_factorring(Fp, Min_poly, verbose_level);
 	//unipoly_domain Fq(Fp, Min_poly, verbose_level);
 		// Fq = Fp[X] modulo factor polynomial M
 
@@ -162,7 +162,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	if (f_v) {
 		cout << "nth_roots::init before R.compute_nth_roots_as_polynomials" << endl;
 	}
-	R.compute_nth_roots_as_polynomials(F, FpX, Fq, Beta, n, n, 0 /*verbose_level*/);
+	R.compute_nth_roots_as_polynomials(F, FpX, FQ, Beta, n, n, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "nth_roots::init after R.compute_nth_roots_as_polynomials" << endl;
 	}
@@ -176,24 +176,24 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		cout << "nth_roots::init the n-th roots are:" << endl;
 		for (i = 0; i < n; i++) {
 			cout << "\\beta^" << i << " &=& ";
-			Fq->print_object_tight(Beta[i], cout);
+			FQ->print_object_tight(Beta[i], cout);
 			cout << " = ";
-			Fq->print_object(Beta[i], cout);
+			FQ->print_object(Beta[i], cout);
 			cout << "\\\\" << endl;
 		}
 	}
 
 
 	R.compute_nth_roots_as_polynomials(F, FpX,
-			Fq, Fq_Elements, n, F->q - 1,
+			FQ, Fq_Elements, n, F->q - 1,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "nth_roots::init the (q-1)-th roots are:" << endl;
 		for (i = 0; i < F->q - 1; i++) {
 			cout << "\\gamma^" << i << " &=& ";
-			Fq->print_object_tight(Fq_Elements[i], cout);
+			FQ->print_object_tight(Fq_Elements[i], cout);
 			cout << " = ";
-			Fq->print_object(Fq_Elements[i], cout);
+			FQ->print_object(Fq_Elements[i], cout);
 			cout << "\\\\" << endl;
 		}
 	}
@@ -216,7 +216,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 
 
-	generator = (ring_theory::unipoly_object **) NEW_pvoid(Cyc->S->nb_sets);
+	min_poly_beta_FQ = (ring_theory::unipoly_object **) NEW_pvoid(Cyc->S->nb_sets);
 
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 
@@ -226,10 +226,10 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		}
 
 		R.create_irreducible_polynomial(F,
-				Fq,
+				FQ,
 			Beta, n,
 			Cyc->S->Sets[i], Cyc->S->Set_size[i],
-			generator[i],
+			min_poly_beta_FQ[i],
 			0 /*verbose_level*/);
 
 		//Codes.print_polynomial(Fq, Cyc->S->Set_size[i], generator[i]);
@@ -247,7 +247,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 			cout << " : ";
 
-			Codes.print_polynomial_tight(cout, *Fq, Cyc->S->Set_size[i], generator[i]);
+			Codes.print_polynomial_tight(cout, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
 
 
 			cout << endl;
@@ -307,7 +307,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 			f_first = FALSE;
 
 			for (h = 0; h < field_degree; h++) {
-				input_vector[h] = FpX->s_i(generator[i][j], h);
+				input_vector[h] = FpX->s_i(min_poly_beta_FQ[i][j], h);
 			}
 
 			Fp->Linear_algebra->get_coefficients_in_linear_combination(
@@ -328,7 +328,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 
 
-	generator_Fq = (ring_theory::unipoly_object *) NEW_pvoid(Cyc->S->nb_sets);
+	min_poly_beta_Fq = (ring_theory::unipoly_object *) NEW_pvoid(Cyc->S->nb_sets);
 
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 
@@ -340,7 +340,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		for (j = 0; j <= degree; j++) {
 
 			for (h = 0; h < field_degree; h++) {
-				input_vector[h] = FpX->s_i(generator[i][j], h);
+				input_vector[h] = FpX->s_i(min_poly_beta_FQ[i][j], h);
 			}
 
 			Fp->Linear_algebra->get_coefficients_in_linear_combination(
@@ -357,12 +357,12 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		}
 
 		FX->create_object_of_degree_with_coefficients(
-				generator_Fq[i], degree, coeffs);
+				min_poly_beta_Fq[i], degree, coeffs);
 	}
 
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 		cout << i << " : ";
-		FX->print_object(generator_Fq[i], cout);
+		FX->print_object(min_poly_beta_Fq[i], cout);
 		cout << endl;
 	}
 
@@ -373,6 +373,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int verbose_level)
 // field_basis[subfield_degree * field_degree]
+// assumes that subfield_degree divides the field_degree
 {
 	int f_v = (verbose_level >= 1);
 
@@ -398,6 +399,12 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 		cout << "nth_roots::compute_subfield subfield_degree=" << subfield_degree << endl;
 	}
 	M = NEW_int(e * (subfield_degree + 1));
+	// The j-th column of M is the coefficients of beta[j] (a vector of length e)
+	// j=0,..,subfield_degree
+	// The columns are linearly dependent.
+	// A linear dependency between the column vectors will be used to create
+	// the irreducible polynomial defining the field.
+
 	Int_vec_zero(M, e * (subfield_degree + 1));
 
 	K = NEW_int(e);
@@ -415,7 +422,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	if (f_v) {
 		cout << "nth_roots::compute_subfield before F->compute_powers" << endl;
 	}
-	R.compute_powers(F, Fq,
+	R.compute_powers(F, FQ,
 			n, subgroup_index,
 			Beta, 0/*verbose_level*/);
 
@@ -423,14 +430,14 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	if (f_v) {
 		for (i = 0; i < n; i++) {
 			cout << "\\beta^" << i << " = ";
-			Fq->print_object(Beta[i], cout);
+			FQ->print_object(Beta[i], cout);
 			cout << endl;
 		}
 	}
 
 	for (j = 0; j <= subfield_degree; j++) {
 		for (i = 0; i < e; i++) {
-			a = Fq->s_i(Beta[j], i);
+			a = FQ->s_i(Beta[j], i);
 			M[i * (subfield_degree + 1) + j] = a;
 		}
 #if 0
@@ -454,6 +461,8 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	}
 
 	field_basis = NEW_int(subfield_degree * e);
+	// field_basis is like M transposed, with the last row removed.
+	// the rows of field_basis are the beta[j], j=0,...,subfield_degree - 1.
 
 	for (j = 0; j < subfield_degree; j++) {
 		for (i = 0; i < e; i++) {
@@ -539,9 +548,9 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 				"subfield of order "
 				<< NT.i_power_j(p, subfield_degree)
 				<< " : " << a << " = ";
-		Fq->print_object(elt, cout);
+		FQ->print_object(elt, cout);
 		cout << endl;
-		Fq->delete_object(elt);
+		FQ->delete_object(elt);
 	}
 
 	FREE_int(M);
@@ -571,7 +580,7 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 
 	label.assign("\\alpha");
 
-	Fq->init_variable_name(label);
+	FQ->init_variable_name(label);
 
 
 
@@ -581,9 +590,9 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 	//ost << "\\begin{align*}" << endl;
 	for (i = 0; i < n; i++) {
 		ost << "$\\beta^{" << i << "} = ";
-		Fq->print_object_tight(Beta[i], ost);
+		FQ->print_object_tight(Beta[i], ost);
 		ost << " =  ";
-		Fq->print_object(Beta[i], ost);
+		FQ->print_object(Beta[i], ost);
 		ost << "$\\\\" << endl;
 	}
 	//ost << "\\end{align*}" << endl;
@@ -597,9 +606,9 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 	ost << "so $\\gamma=\\alpha^{" << *Subfield_Index << "}.$ \\\\" << endl;
 	for (i = 0; i < F->q - 1; i++) {
 		ost << "$\\gamma^{" << i << "} = ";
-		Fq->print_object_tight(Fq_Elements[i], ost);
+		FQ->print_object_tight(Fq_Elements[i], ost);
 		ost << " = ";
-		Fq->print_object(Fq_Elements[i], ost);
+		FQ->print_object(Fq_Elements[i], ost);
 		ost << "$\\\\" << endl;
 	}
 	//ost << "\\end{align*}" << endl;
@@ -645,11 +654,11 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 
 		ost << " & ";
 
-		Codes.print_polynomial_tight(ost, *Fq, Cyc->S->Set_size[i], generator[i]);
+		Codes.print_polynomial_tight(ost, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
 
 		ost << " & ";
 
-		FX->print_object(generator_Fq[i], ost);
+		FX->print_object(min_poly_beta_Fq[i], ost);
 
 
 		ost << "\\\\" << endl;

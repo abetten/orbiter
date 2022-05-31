@@ -79,7 +79,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 		ring_theory::ring_theory_global R;
 
 		R.polynomial_division(F,
-				Descr->polynomial_division_A, Descr->polynomial_division_B,
+				Descr->polynomial_division_A,
+				Descr->polynomial_division_B,
 				verbose_level);
 	}
 	else if (Descr->f_extended_gcd_for_polynomials) {
@@ -87,7 +88,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 		ring_theory::ring_theory_global R;
 
 		R.extended_gcd_for_polynomials(F,
-				Descr->polynomial_division_A, Descr->polynomial_division_B,
+				Descr->polynomial_division_A,
+				Descr->polynomial_division_B,
 				verbose_level);
 	}
 
@@ -96,8 +98,10 @@ void finite_field_activity::perform_activity(int verbose_level)
 		ring_theory::ring_theory_global R;
 
 		R.polynomial_mult_mod(F,
-				Descr->polynomial_mult_mod_A, Descr->polynomial_mult_mod_B,
-				Descr->polynomial_mult_mod_M, verbose_level);
+				Descr->polynomial_mult_mod_A,
+				Descr->polynomial_mult_mod_B,
+				Descr->polynomial_mult_mod_M,
+				verbose_level);
 	}
 
 	else if (Descr->f_polynomial_power_mod) {
@@ -105,8 +109,10 @@ void finite_field_activity::perform_activity(int verbose_level)
 		ring_theory::ring_theory_global R;
 
 		R.polynomial_power_mod(F,
-				Descr->polynomial_power_mod_A, Descr->polynomial_power_mod_n,
-				Descr->polynomial_power_mod_M, verbose_level);
+				Descr->polynomial_power_mod_A,
+				Descr->polynomial_power_mod_n,
+				Descr->polynomial_power_mod_M,
+				verbose_level);
 
 	}
 
@@ -318,66 +324,101 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_Koblitz_encoding(F, Descr->EC_b, Descr->EC_c,
-				Descr->EC_s, Descr->EC_pt_text, Descr->EC_message, verbose_level);
+		Crypto.do_EC_Koblitz_encoding(F,
+				Descr->EC_b,
+				Descr->EC_c,
+				Descr->EC_s,
+				Descr->EC_pt_text,
+				Descr->EC_message,
+				verbose_level);
 	}
 	else if (Descr->f_EC_points) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_points(F, Descr->EC_label, Descr->EC_b, Descr->EC_c, verbose_level);
+		Crypto.do_EC_points(F,
+				Descr->EC_label,
+				Descr->EC_b,
+				Descr->EC_c,
+				verbose_level);
 	}
 	else if (Descr->f_EC_add) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_add(F, Descr->EC_b, Descr->EC_c,
-				Descr->EC_pt1_text, Descr->EC_pt2_text, verbose_level);
+		Crypto.do_EC_add(F,
+				Descr->EC_b,
+				Descr->EC_c,
+				Descr->EC_pt1_text,
+				Descr->EC_pt2_text,
+				verbose_level);
 	}
 	else if (Descr->f_EC_cyclic_subgroup) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_cyclic_subgroup(F, Descr->EC_b, Descr->EC_c,
-				Descr->EC_pt_text, verbose_level);
+		Crypto.do_EC_cyclic_subgroup(F,
+				Descr->EC_b,
+				Descr->EC_c,
+				Descr->EC_pt_text,
+				verbose_level);
 	}
 	else if (Descr->f_EC_multiple_of) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_multiple_of(F, Descr->EC_b, Descr->EC_c,
-				Descr->EC_pt_text, Descr->EC_multiple_of_n, verbose_level);
+		Crypto.do_EC_multiple_of(F,
+				Descr->EC_b,
+				Descr->EC_c,
+				Descr->EC_pt_text,
+				Descr->EC_multiple_of_n,
+				verbose_level);
 	}
 	else if (Descr->f_EC_discrete_log) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_discrete_log(F, Descr->EC_b, Descr->EC_c, Descr->EC_pt_text,
-				Descr->EC_discrete_log_pt_text, verbose_level);
+		Crypto.do_EC_discrete_log(F,
+				Descr->EC_b,
+				Descr->EC_c,
+				Descr->EC_pt_text,
+				Descr->EC_discrete_log_pt_text,
+				verbose_level);
 	}
 	else if (Descr->f_EC_baby_step_giant_step) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_baby_step_giant_step(F, Descr->EC_b, Descr->EC_c,
-				Descr->EC_bsgs_G, Descr->EC_bsgs_N, Descr->EC_bsgs_cipher_text,
+		Crypto.do_EC_baby_step_giant_step(F,
+				Descr->EC_b,
+				Descr->EC_c,
+				Descr->EC_bsgs_G,
+				Descr->EC_bsgs_N,
+				Descr->EC_bsgs_cipher_text,
 				verbose_level);
 	}
 	else if (Descr->f_EC_baby_step_giant_step_decode) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.do_EC_baby_step_giant_step_decode(F, Descr->EC_b, Descr->EC_c,
-				Descr->EC_bsgs_A, Descr->EC_bsgs_N,
-				Descr->EC_bsgs_cipher_text, Descr->EC_bsgs_keys,
+		Crypto.do_EC_baby_step_giant_step_decode(F,
+				Descr->EC_b,
+				Descr->EC_c,
+				Descr->EC_bsgs_A,
+				Descr->EC_bsgs_N,
+				Descr->EC_bsgs_cipher_text,
+				Descr->EC_bsgs_keys,
 				verbose_level);
 	}
 	else if (Descr->f_NTRU_encrypt) {
 
 		cryptography::cryptography_domain Crypto;
 
-		Crypto.NTRU_encrypt(Descr->NTRU_encrypt_N, Descr->NTRU_encrypt_p, F,
-				Descr->NTRU_encrypt_H, Descr->NTRU_encrypt_R,
+		Crypto.NTRU_encrypt(Descr->NTRU_encrypt_N,
+				Descr->NTRU_encrypt_p,
+				F,
+				Descr->NTRU_encrypt_H,
+				Descr->NTRU_encrypt_R,
 				Descr->NTRU_encrypt_Msg,
 				verbose_level);
 	}
@@ -395,25 +436,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Crypto.polynomial_reduce_mod_p(Descr->polynomial_reduce_mod_p_A, F,
 				verbose_level);
 	}
-
-#if 0
-	else if (Descr->f_cheat_sheet_PG) {
-
-		geometry::geometry_global Geo;
-
-		graphics::layered_graph_draw_options *O;
-
-
-		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
-			cout << "please use option -draw_options .. -end" << endl;
-			exit(1);
-		}
-		O = orbiter_kernel_system::Orbiter->draw_options;
-
-		Geo.do_cheat_sheet_PG(F, O, Descr->cheat_sheet_PG_n,
-				verbose_level);
-	}
-#endif
 
 	else if (Descr->f_cheat_sheet_Gr) {
 
@@ -725,8 +747,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 
 	}
-
-
 
 	else if (Descr->f_evaluate) {
 

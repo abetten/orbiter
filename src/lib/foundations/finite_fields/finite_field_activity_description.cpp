@@ -139,11 +139,6 @@ finite_field_activity_description::finite_field_activity_description()
 	f_polynomial_reduce_mod_p = FALSE;
 	//polynomial_reduce_mod_p_A;
 
-#if 0
-	f_cheat_sheet_PG = FALSE;
-	cheat_sheet_PG_n = 0;
-#endif
-
 	f_cheat_sheet_Gr = FALSE;
 	cheat_sheet_Gr_n = 0;
 	cheat_sheet_Gr_k = 0;
@@ -619,15 +614,6 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-#if 0
-		else if (ST.stringcmp(argv[i], "-cheat_sheet_PG") == 0) {
-			f_cheat_sheet_PG = TRUE;
-			cheat_sheet_PG_n = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-cheat_sheet_PG " << cheat_sheet_PG_n << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_Gr") == 0) {
 			f_cheat_sheet_Gr = TRUE;
 			cheat_sheet_Gr_n = ST.strtoi(argv[++i]);
@@ -736,10 +722,6 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-
-
-
-
 
 
 		else if (ST.stringcmp(argv[i], "-transversal") == 0) {
@@ -861,7 +843,6 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-
 
 		else if (ST.stringcmp(argv[i], "-evaluate") == 0) {
 			f_evaluate = TRUE;

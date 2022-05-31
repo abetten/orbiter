@@ -154,11 +154,6 @@ public:
 	int f_polynomial_reduce_mod_p;
 	std::string polynomial_reduce_mod_p_A;
 
-#if 0
-	int f_cheat_sheet_PG;
-	int cheat_sheet_PG_n;
-#endif
-
 	int f_cheat_sheet_Gr;
 	int cheat_sheet_Gr_n;
 	int cheat_sheet_Gr_k;
@@ -847,11 +842,11 @@ public:
 	ring_theory::unipoly_object *Fq_Elements;
 
 	ring_theory::unipoly_object Min_poly;
-		// Min_poly = irreducible polynomial over F->p of degree field_degree
+		// Min_poly = irreducible polynomial over F->p of degree field_degree = e * m
 
 	finite_field *Fp; // the prime field F_p
 	ring_theory::unipoly_domain *FpX;
-	ring_theory::unipoly_domain *Fq; // polynomial ring F_p modulo Min_poly
+	ring_theory::unipoly_domain *FQ; // polynomial ring F_p modulo Min_poly
 	ring_theory::unipoly_domain *FX;
 
 	int m, r, field_degree;
@@ -859,15 +854,20 @@ public:
 		// field_degree = e * m
 
 	ring_theory::longinteger_object *Qm, *Qm1, *Index, *Subfield_Index;
-		// Qm = q^m
+		// Qm = q^m = p^(e*m)
 		// Qm1 = q^m - 1
 		// Index = Qm1 / n
 		// Subfield_Index = Qm1 / (q - 1)
 
 	number_theory::cyclotomic_sets *Cyc;
-	ring_theory::unipoly_object **generator;
+	ring_theory::unipoly_object **min_poly_beta_FQ;
+	// polynomials whose coefficients are again polynomials,
+	// representing field elements in FQ
+	//ring_theory::unipoly_object **generator;
 
-	ring_theory::unipoly_object *generator_Fq;
+	ring_theory::unipoly_object *min_poly_beta_Fq;
+	// polynomials whose coefficients are integers in Fq
+	//ring_theory::unipoly_object *generator_Fq;
 
 	int subfield_degree;
 	int *subfield_basis; // [subfield_degree * field_degree]

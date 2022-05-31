@@ -307,7 +307,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 		Lint_vec_print(cout, Lines, 27);
 		cout << endl;
 	}
-	D->Flag_stab_gens = Lift->Flag_orbits->Flag_orbit_node[f].gens->create_copy();
+	D->Flag_stab_gens = Lift->Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 	D->Flag_stab_gens->group_order(D->Flag_stab_go);
 
 	if (f_v) {

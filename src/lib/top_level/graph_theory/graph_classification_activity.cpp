@@ -84,6 +84,13 @@ void graph_classification_activity::perform_activity(int verbose_level)
 		}
 	}
 
+	else if (Descr->f_list_graphs_at_level) {
+
+		GC->list_graphs(Descr->list_graphs_at_level_level_min,
+				Descr->list_graphs_at_level_level_max,
+				verbose_level);
+	}
+
 	else if (Descr->f_draw_graphs_at_level) {
 
 		if (!Descr->f_draw_options) {

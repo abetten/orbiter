@@ -1829,8 +1829,8 @@ void matrix_group::GL_print_easy_latex_with_option_numerical(int *Elt, int f_num
 
     if (f_projective) {
 		Int_vec_copy(Elt, D, n * n);
-		//GFq->PG_element_normalize_from_front(D, 1, n * n);
-		GFq->PG_element_normalize(D, 1, n * n);
+		GFq->PG_element_normalize_from_front(D, 1, n * n);
+		//GFq->PG_element_normalize(D, 1, n * n);
     }
     else {
     	Int_vec_copy(Elt, D, n * n);

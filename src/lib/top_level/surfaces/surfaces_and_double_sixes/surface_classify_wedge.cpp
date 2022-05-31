@@ -506,7 +506,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 			Lint_vec_print(cout, Lines, 27);
 			cout << endl;
 		}
-		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
+		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 		S->group_order(go);
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << " go=" << go << endl;
@@ -2649,7 +2649,14 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 		cout << "surface_classify_wedge::report "
 				"before Classify_double_sixes->Flag_orbits->print_latex" << endl;
 	}
-	Classify_double_sixes->Flag_orbits->print_latex(ost, "Flag orbits for double sixes", TRUE);
+
+	{
+		string title;
+
+		title.assign("Flag orbits for double sixes");
+
+		Classify_double_sixes->Flag_orbits->print_latex(ost, title, TRUE);
+	}
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
 				"after Classify_double_sixes->Flag_orbits->print_latex" << endl;
@@ -2674,7 +2681,13 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 	if (f_v) {
 		cout << "surface_classify_wedge::report before Flag_orbits->print_latex" << endl;
 	}
-	Flag_orbits->print_latex(ost, "Flag orbits for surfaces", TRUE);
+	{
+		string title;
+
+		title.assign("Flag orbits for double surfaces");
+
+		Flag_orbits->print_latex(ost, title, TRUE);
+	}
 	if (f_v) {
 		cout << "surface_classify_wedge::report after Flag_orbits->print_latex" << endl;
 	}

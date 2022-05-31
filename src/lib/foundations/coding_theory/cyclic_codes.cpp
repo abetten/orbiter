@@ -77,10 +77,10 @@ void coding_theory_domain::make_BCH_code(int n,
 			Nth->FX->print_object(P, cout);
 			cout << endl;
 			cout << "j=" << j << endl;
-			Nth->FX->print_object(Nth->generator_Fq[j], cout);
+			Nth->FX->print_object(Nth->min_poly_beta_Fq[j], cout);
 			cout << endl;
 		}
-		Nth->FX->mult(P, Nth->generator_Fq[j], Q, verbose_level);
+		Nth->FX->mult(P, Nth->min_poly_beta_Fq[j], Q, verbose_level);
 		if (f_v) {
 			cout << "coding_theory_domain::make_BCH_code Q=";
 			Nth->FX->print_object(Q, cout);

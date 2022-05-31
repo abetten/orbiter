@@ -503,11 +503,6 @@ class design_activity_description {
 
 public:
 
-#if 0
-	int f_create_table;
-	std::string create_table_label;
-	std::string create_table_group;
-#endif
 
 	int f_load_table;
 	std::string load_table_label;

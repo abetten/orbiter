@@ -181,11 +181,13 @@ enum shallow_schreier_tree_strategy {
 
 
 
-//! enumeration to distinguish between the various types of permutation groups
+//! to distinguish between the various types of permutation groups
 
 enum permutation_group_type {
 	unknown_permutation_group_t,
 	symmetric_group_t,
+	cyclic_group_t,
+	dihedral_group_t,
 	bsgs_t,
 };
 

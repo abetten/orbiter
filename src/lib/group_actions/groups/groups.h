@@ -1729,7 +1729,7 @@ public:
 	void init_from_sims(groups::sims *S, int verbose_level);
 	void init_from_ascii_coding(actions::action *A,
 		char *ascii_coding, int verbose_level);
-	strong_generators *create_copy();
+	strong_generators *create_copy(int verbose_level);
 	void init_copy(strong_generators *S, 
 		int verbose_level);
 	void init_by_hdl_and_with_tl(actions::action *A,

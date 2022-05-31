@@ -4764,6 +4764,74 @@ void file_io::write_characteristic_matrix(std::string &fname,
 
 }
 
+void file_io::extract_from_makefile(std::string &fname, std::string &label,
+		std::vector<std::string> &text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *buf;
+	int nb_lines;
+
+	if (f_v) {
+		cout << "file_io::extract_from_makefile " << fname << endl;
+		cout << "trying to read file " << fname << " of size "
+			<< file_size(fname) << endl;
+	}
+
+	if (file_size(fname) < 0) {
+		cout << "file_io::extract_from_makefile file size is -1" << endl;
+		exit(1);
+	}
+
+	buf = NEW_char(MY_OWN_BUFSIZE);
+
+
+
+	{
+		ifstream fp(fname);
+
+
+		nb_lines = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
+			}
+
+			//cout << "count_number_of_lines_in_file "
+			// "reading line, nb_sol = " << nb_sol << endl;
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			if (strncmp(buf, label.c_str(), label.length()) == 0) {
+				if (f_v) {
+					cout << "file_io::extract_from_makefile found label " << label << " at line " << nb_lines << endl;
+				}
+				string s;
+
+				s.assign(buf);
+				text.push_back(s);
+				while (TRUE) {
+					if (fp.eof()) {
+						break;
+					}
+					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+					if (strlen(buf) == 0) {
+						break;
+					}
+					s.assign(buf);
+					text.push_back(s);
+				}
+				break;
+			}
+			nb_lines++;
+		}
+	}
+	FREE_char(buf);
+
+	if (f_v) {
+		cout << "file_io::extract_from_makefile done" << endl;
+	}
+}
+
+
 
 }}}
 

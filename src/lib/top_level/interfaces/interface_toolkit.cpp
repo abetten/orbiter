@@ -106,6 +106,12 @@ interface_toolkit::interface_toolkit()
 
 	f_tree_draw = FALSE;
 	Tree_draw_options = NULL;
+
+	f_extract_from_file = FALSE;
+	//std::string extract_from_file_fname;
+	//std::string extract_from_file_label;
+	//std::string extract_from_file_target_fname;
+
 }
 
 
@@ -175,6 +181,9 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
 		cout << "-tree_draw <options> -end" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-extract_from_file") == 0) {
+		cout << "-extract_from_file <fname> <label> <extract_from_file_target_fname>" << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -243,6 +252,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-extract_from_file") == 0) {
 		return true;
 	}
 	return false;
@@ -528,6 +540,19 @@ void interface_toolkit::read_arguments(int argc,
 			Tree_draw_options->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-extract_from_file") == 0) {
+		f_extract_from_file = TRUE;
+		extract_from_file_fname.assign(argv[++i]);
+		extract_from_file_label.assign(argv[++i]);
+		extract_from_file_target_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-extract_from_file "
+					<< extract_from_file_fname
+					<< " " << extract_from_file_label
+					<< " " << extract_from_file_target_fname
+						<< endl;
+		}
+	}
 
 
 
@@ -632,6 +657,13 @@ void interface_toolkit::print()
 	if (f_tree_draw) {
 		cout << "-tree_draw " << endl;
 		Tree_draw_options->print();
+	}
+	if (f_extract_from_file) {
+		cout << "-extract_from_file "
+				<< extract_from_file_fname
+				<< " " << extract_from_file_label
+				<< " " << extract_from_file_target_fname
+					<< endl;
 	}
 }
 
@@ -905,6 +937,31 @@ void interface_toolkit::worker(int verbose_level)
 		graphics::graphical_output GO;
 
 		GO.tree_draw(Tree_draw_options, verbose_level);
+
+	}
+	else if (f_extract_from_file) {
+
+		cout << "-extract_from_file " << extract_from_file_fname << " " << extract_from_file_label << endl;
+		orbiter_kernel_system::file_io Fio;
+		std::vector<std::string> text;
+		int i;
+
+		Fio.extract_from_makefile(extract_from_file_fname,
+				extract_from_file_label,
+				text,
+				verbose_level);
+
+		cout << "We have extracted " << text.size() << " lines of text:" << endl;
+		for (i = 0; i < text.size(); i++) {
+			cout << i << " : " << text[i] << endl;
+		}
+		{
+			std::ofstream fp_out(extract_from_file_target_fname);
+			for (i = 0; i < text.size(); i++) {
+				fp_out << text[i] << endl;
+			}
+		}
+		cout << "Written file " << extract_from_file_target_fname << " of size " << Fio.file_size(extract_from_file_target_fname) << endl;
 
 	}
 

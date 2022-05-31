@@ -69,6 +69,20 @@ int permutation_group_description::read_arguments(
 				cout << "-symmetric_group " << degree << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-cyclic_group") == 0) {
+			degree = ST.strtoi(argv[++i]);
+			type = cyclic_group_t;
+			if (f_v) {
+				cout << "-cyclic_group " << degree << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-dihedral_group") == 0) {
+			degree = ST.strtoi(argv[++i]);
+			type = dihedral_group_t;
+			if (f_v) {
+				cout << "-dihedral_group " << degree << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-bsgs") == 0) {
 			f_bsgs = TRUE;
 			bsgs_label.assign(argv[++i]);
@@ -128,6 +142,12 @@ void permutation_group_description::print()
 {
 	if (type == symmetric_group_t) {
 		cout << "-symmetric_group " << degree << endl;
+	}
+	if (type == cyclic_group_t) {
+		cout << "-cyclic_group " << degree << endl;
+	}
+	if (type == dihedral_group_t) {
+		cout << "-dihedral_group " << degree << endl;
 	}
 	if (f_bsgs) {
 		cout << "-bsgs"

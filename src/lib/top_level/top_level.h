@@ -27,7 +27,7 @@ namespace layer5_applications {
 
 
 
-//! Applications in algebra
+//! Applications in algebra and number theory
 
 
 namespace apps_algebra {
@@ -40,6 +40,7 @@ namespace apps_algebra {
 	class group_theoretic_activity_description;
 	class group_theoretic_activity;
 	class modified_group_create;
+	class orbit_cascade;
 	class orbits_on_polynomials;
 	class orbits_on_subspaces;
 	class young;

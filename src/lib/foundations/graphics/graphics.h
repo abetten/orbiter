@@ -286,6 +286,9 @@ public:
 	int f_cyclotomic_sets_thickness;
 	int cyclotomic_sets_thickness;
 
+	int f_eigenvalues;
+	double eigenvalues_A[4];
+
 
 	draw_mod_n_description();
 	~draw_mod_n_description();
@@ -585,7 +588,7 @@ class mp_graphics {
 
 	int line_thickness; // 1,2,3
 	int line_color; // 0=white, 1=black, 2=red, 3=green
-
+		// see mp_graphics::color_tikz for tikz colors
 
 	int fill_interior;
 		// in 1/100th, 

@@ -751,6 +751,9 @@ namespace solvers {
 #define Int_vec_complement(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C)
 #define Int_vec_complement_to(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C, D)
 
+#define Lint_vec_complement_to(A, B, C, D) orbiter_kernel_system::Orbiter->Lint_vec->complement(A, B, C, D)
+
+
 #define Int_vec_set_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->set_print(A, B, C)
 
 #define Int_vec_create_string_with_quotes(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(A, B, C)

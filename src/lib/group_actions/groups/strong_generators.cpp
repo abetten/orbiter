@@ -154,12 +154,20 @@ void strong_generators::init_from_ascii_coding(actions::action *A,
 }
 
 
-strong_generators *strong_generators::create_copy()
+strong_generators *strong_generators::create_copy(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::create_copy" << endl;
+	}
 	strong_generators *S;
 
 	S = NEW_OBJECT(strong_generators);
 	S->init_copy(this, 0);
+	if (f_v) {
+		cout << "strong_generators::create_copy done" << endl;
+	}
 	return S;
 }
 

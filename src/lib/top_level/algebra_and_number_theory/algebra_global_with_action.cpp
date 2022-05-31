@@ -3241,12 +3241,6 @@ void algebra_global_with_action::centralizer_of_element(
 		cout << "data_len != A->make_element_size" << endl;
 		exit(1);
 	}
-#if 0
-	if (f_v) {
-		cout << "algebra_global_with_action::centralizer_of_element Matrix:" << endl;
-		int_matrix_print(data, 4, 4);
-	}
-#endif
 
 	A->make_element(Elt, data, 0 /* verbose_level */);
 
@@ -3353,6 +3347,116 @@ void algebra_global_with_action::centralizer_of_element(
 		cout << "algebra_global_with_action::centralizer_of_element done" << endl;
 	}
 }
+
+
+void algebra_global_with_action::permutation_representation_of_element(
+		actions::action *A,
+		std::string &element_description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	string prefix;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::permutation_representation_of_element "
+				"element_description=" << element_description << endl;
+	}
+
+	prefix.assign(A->label);
+	prefix.append("_elt");
+	//prefix.append(label);
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	int *data;
+	int data_len;
+
+
+	Int_vec_scan(element_description, data, data_len);
+
+
+	if (data_len != A->make_element_size) {
+		cout << "data_len != A->make_element_size" << endl;
+		exit(1);
+	}
+
+	A->make_element(Elt, data, 0 /* verbose_level */);
+
+
+
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_permutation.tex");
+
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Permutation representation of element");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global_with_action::permutation_representation_of_element "
+						"before report" << endl;
+			}
+
+			ost << "$$" << endl;
+			A->element_print_latex(Elt, ost);
+			ost << "$$" << endl;
+
+			ost << "$$" << endl;
+			A->element_print_as_permutation(Elt, ost);
+			ost << "$$" << endl;
+
+			if (f_v) {
+				cout << "algebra_global_with_action::permutation_representation_of_element "
+						"after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+	}
+
+
+	FREE_int(data);
+
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::permutation_representation_of_element done" << endl;
+	}
+}
+
 
 void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 		actions::action *A, groups::sims *S,

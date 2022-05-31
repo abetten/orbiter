@@ -695,6 +695,77 @@ void graph_classify::score_sequence(int n,
 }
 
 
+void graph_classify::list_graphs(int level_min, int level_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int h, i, nb_orbits, level, nb;
+	long int *set;
+	int *v;
+
+	if (f_v) {
+		cout << "graph_classify::list_graphs level_min = " << level_min << " level_max = " << level_max << endl;
+	}
+
+	set = NEW_lint(level_max);
+	v = NEW_int(n2);
+
+	nb = 0;
+	for (level = level_min; level <= level_max; level++) {
+
+		nb_orbits = gen->nb_orbits_at_level(level);
+		nb += nb_orbits;
+
+		if (f_v) {
+			cout << "graph_classify::list_graphs level = " << level << " nb_orbits = " << nb_orbits << endl;
+		}
+	}
+	if (f_v) {
+		cout << "graph_classify::list_graphs total = " << nb << endl;
+	}
+
+
+	for (level = level_min; level <= level_max; level++) {
+
+		nb_orbits = gen->nb_orbits_at_level(level);
+
+		if (f_v) {
+			cout << "graph_classify::list_graphs level = " << level << " nb_orbits = " << nb_orbits << endl;
+		}
+
+		for (h = 0; h < nb_orbits; h++) {
+			groups::strong_generators *Strong_gens;
+			ring_theory::longinteger_object go;
+
+			gen->get_set_by_level(level, h, set);
+			gen->get_stabilizer_generators(Strong_gens,
+				level, h, 0 /* verbose_level*/);
+
+			Strong_gens->group_order(go);
+
+			Int_vec_zero(v, n2);
+			for (i = 0; i < level; i++) {
+				v[set[i]] = 1;
+			}
+
+			cout << h << " : ";
+			Lint_vec_print(cout, set, level);
+			cout << " : ";
+			Int_vec_print(cout, v, n2);
+			cout << " : " << go << endl;
+
+
+		}
+	}
+
+	FREE_lint(set);
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "graph_classify::list_graphs level = " << level << " done" << endl;
+	}
+}
+
+
 void graph_classify::draw_graphs(int level,
 		graphics::layered_graph_draw_options *draw_options,
 	int verbose_level)
@@ -729,14 +800,12 @@ void graph_classify::draw_graphs(int level,
 		Int_vec_zero(v, n2);
 		for (i = 0; i < level; i++) {
 			v[set[i]] = 1;
-			}
+		}
 
 		cout << h << " : ";
 		Lint_vec_print(cout, set, level);
 		cout << " : ";
-		for (i = 0; i < n2; i++) {
-			cout << v[i];
-			}
+		Int_vec_print(cout, v, n2);
 		cout << " : " << go << endl;
 
 
@@ -782,13 +851,13 @@ void graph_classify::draw_graphs(int level,
 				G.draw_tournament(x, y, dx, dy, Descr->n, set, level, draw_options->rad,
 						verbose_level - 1);
 				cout << "graph_classify::draw_graphs after G.draw_tournament" << endl;
-				}
+			}
 			else {
 				cout << "graph_classify::draw_graphs before G.draw_graph" << endl;
 				G.draw_graph(x, y, dx, dy, Descr->n, set, level, draw_options->rad,
 						verbose_level - 1);
 				cout << "graph_classify::draw_graphs after G.draw_graph" << endl;
-				}
+			}
 
 			G.end_figure();
 			G.footer();
