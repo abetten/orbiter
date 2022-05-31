@@ -529,7 +529,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 			Int_vec_print(cout, eqn, 10);
 			cout << endl;
 		}
-		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
+		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 		S->group_order(go);
 		if (f_v) {
 			cout << "po=" << po << " so=" << so

@@ -72,16 +72,46 @@ void permutation_group_create::permutation_group_init(
 
 		A_initial->init_symmetric_group(Descr->degree, f_no_base, verbose_level);
 
-		A_initial->Strong_gens->print_generators_in_latex_individually(cout);
-		A_initial->Strong_gens->print_generators_in_source_code();
-		A_initial->print_base();
-		A_initial->print_info();
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init generators:" << endl;
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout);
+			A_initial->Strong_gens->print_generators_in_source_code();
+			A_initial->print_base();
+			A_initial->print_info();
+		}
 
 		label.assign(A_initial->label);
 		label_tex.assign(A_initial->label_tex);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init initializing symmetric_group_t done" << endl;
+		}
+	}
+
+	else if (Descr->type == cyclic_group_t) {
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init initializing cyclic_group_t" << endl;
+		}
+
+		A_initial = NEW_OBJECT(actions::action);
+		int f_no_base = FALSE;
+
+		A_initial->init_cyclic_group(Descr->degree, f_no_base, verbose_level);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init generators:" << endl;
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout);
+			A_initial->Strong_gens->print_generators_in_source_code();
+			A_initial->print_base();
+			A_initial->print_info();
+		}
+
+		label.assign(A_initial->label);
+		label_tex.assign(A_initial->label_tex);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init initializing cyclic_group_t done" << endl;
 		}
 	}
 

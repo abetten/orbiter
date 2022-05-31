@@ -31,14 +31,12 @@ public:
 	actions::action *A; // do not free
 	actions::action *A2; // do not free
 
-	//int f_lint;
 	ring_theory::longinteger_object go;
 	int max_orbits;
 	int nb_orbits;
 	orbit_node *Orbit; // [max_orbits]
 	int representation_sz;
 	long int *Rep; // [nb_orbits * representation_sz]
-	//long int *Rep_lint; // [nb_orbits * representation_sz]
 
 	classification_step();
 	~classification_step();
@@ -53,6 +51,7 @@ public:
 			actions::action *A, actions::action *A2, ring_theory::longinteger_object &go,
 			int verbose_level);
 	void generate_source_code(std::string &fname_base, int verbose_level);
+	void generate_source_code(std::ostream &ost, std::string &prefix, int verbose_level);
 	long int *Rep_ith(int i);
 	void print_group_orders();
 	void print_summary(std::ostream &ost);
@@ -109,7 +108,7 @@ public:
 			actions::action *A, actions::action *A2,
 			int verbose_level);
 	void print_latex(std::ostream &ost,
-		const char *title, int f_print_stabilizer_gens);
+			std::string &title, int f_print_stabilizer_gens);
 
 };
 

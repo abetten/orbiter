@@ -229,6 +229,7 @@ public:
 	// we are dealing with a set of size len + 1.
 	// but we can only trace the first len points.
 	// the tracing starts at lvl = 0 with current_node = 0
+	// The input set the_set[] is not modified.
 	void recognize(
 		long int *the_set, int size, int *transporter,
 		int &final_node, int verbose_level);

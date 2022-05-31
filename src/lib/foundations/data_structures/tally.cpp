@@ -188,6 +188,29 @@ void tally::init_lint(long int *data,
 		}
 }
 
+void tally::init_vector_lint(std::vector<long int> &data,
+		int f_second, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *data_int;
+	int data_length;
+	int i;
+
+	if (f_v) {
+		cout << "tally::init_vector_lint" << endl;
+	}
+	data_length = data.size();
+	data_int = NEW_int(data_length);
+	for (i = 0; i < data_length; i++) {
+		data_int[i] = (int) data[i];
+
+	}
+
+	init(data_int, data_length, f_second, verbose_level);
+
+	FREE_int(data_int);
+}
+
 void tally::sort_and_classify()
 {
 	int i;

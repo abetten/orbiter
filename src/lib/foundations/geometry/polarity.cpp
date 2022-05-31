@@ -284,6 +284,10 @@ void polarity::report(std::ostream &f)
 	}
 	f << "\\end{multicols}" << endl;
 
+	if (f_absolute == NULL) {
+		cout << "polarity::report NULL pointer: f_absolute" << endl;
+		return;
+	}
 	int N;
 	N = 0;
 	for (i = 0; i < P->N_points; i++) {

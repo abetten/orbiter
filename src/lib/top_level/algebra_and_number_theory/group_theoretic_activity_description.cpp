@@ -83,6 +83,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_orbits_on_subsets = FALSE;
 	orbits_on_subsets_size = 0;
 
+	f_orbits_on_partition = FALSE;
+	orbits_on_partition_k = 0;
+
 	f_orbits_on_subspaces = FALSE;
 	orbits_on_subspaces_depth = 0;
 
@@ -94,6 +97,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_centralizer_of_element = FALSE;
 	//element_description_text = NULL;
 	//element_label = NULL;
+
+	f_permutation_representation_of_element = FALSE;
+	//std::string permutation_representation_element_text;
 
 	f_conjugacy_class_of_element = FALSE;
 
@@ -392,6 +398,15 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-orbits_on_partition") == 0) {
+			f_orbits_on_partition = TRUE;
+			orbits_on_partition_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
 			f_orbits_on_subspaces = TRUE;
 			orbits_on_subspaces_depth = ST.strtoi(argv[++i]);
@@ -448,6 +463,14 @@ int group_theoretic_activity_description::read_arguments(
 			if (f_v) {
 				cout << "-centralizer_of_element " << element_label
 						<< " " << element_description_text << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-permutation_representation_of_element") == 0) {
+			f_permutation_representation_of_element = TRUE;
+			permutation_representation_element_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-permutation_representation_of_element " << permutation_representation_element_text
+						<< " " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-conjugacy_class_of_element") == 0) {
@@ -900,6 +923,9 @@ void group_theoretic_activity_description::print()
 	if (f_orbits_on_subsets) {
 		cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
 	}
+	if (f_orbits_on_partition) {
+		cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
+	}
 
 	if (f_orbits_on_subspaces) {
 		cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
@@ -925,6 +951,11 @@ void group_theoretic_activity_description::print()
 		cout << "-centralizer_of_element " << element_label
 				<< " " << element_description_text << endl;
 	}
+	if (f_permutation_representation_of_element) {
+		cout << "-permutation_representation_of_element " << permutation_representation_element_text
+				<< " " << endl;
+	}
+
 	if (f_conjugacy_class_of_element) {
 		cout << "-conjugacy_class_of_element " << element_label
 					<< " " << element_description_text << endl;

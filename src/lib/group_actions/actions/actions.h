@@ -554,6 +554,7 @@ public:
 	/** Create the symmetric group
 	 * as abstract permutation group */
 	void init_symmetric_group(int degree, int f_no_base, int verbose_level);
+	void init_cyclic_group(int degree, int f_no_base, int verbose_level);
 
 
 	void create_sims(int verbose_level);

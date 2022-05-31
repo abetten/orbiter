@@ -682,12 +682,17 @@ public:
 
 
 	int N;
-	int *Aut;
+
+	int *Aut;  // [Aut_counter * N]
 	int Aut_counter;
-	int *Base;
+
+	int *Base; // [Base_length]
 	int Base_length;
+
 	long int *Base_lint;
 	int *Transversal_length;
+
+
 	ring_theory::longinteger_object *Ago;
 
 	int *canonical_labeling; // [N]
@@ -1575,6 +1580,8 @@ public:
 		int f_second, int verbose_level);
 	void init_lint(long int *data, int data_length,
 		int f_second, int verbose_level);
+	void init_vector_lint(std::vector<long int> &data,
+			int f_second, int verbose_level);
 	void sort_and_classify();
 	void sort_and_classify_second();
 	int class_of(int pt_idx);

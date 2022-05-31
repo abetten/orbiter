@@ -432,13 +432,6 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 	}
 	Gen = NEW_OBJECT(poset_classification);
 
-	//sprintf(Gen->problem_label_with_path, "orbits_on_k_sets");
-
-
-
-	//Gen->depth = k;
-
-	//Gen->f_W = TRUE;
 
 	if (f_v) {
 		cout << "poset_with_group_action::orbits_on_k_sets_compute calling Gen->init" << endl;
@@ -448,20 +441,6 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 			this,
 			k /* sz */,
 			verbose_level - 1);
-	//Gen->init_check_func(
-	//	check_zero_lines,
-	//	this /* candidate_check_data */);
-	//Gen->init_incremental_check_func(
-		//check_mindist_incremental,
-		//this /* candidate_check_data */);
-
-
-#if 0
-	Gen->f_print_function = TRUE;
-	Gen->print_function = print_set;
-	Gen->print_function_data = this;
-#endif
-
 
 	orbiter_kernel_system::os_interface Os;
 	int schreier_depth = k;

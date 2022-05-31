@@ -51,24 +51,13 @@ void ring_theory_global::write_code_for_division(
 
 		Os.get_date(str);
 
-		ost << "/*" << endl;
-		ost << " * " << fname_code << endl;
-		ost << " *" << endl;
-		ost << " *  Created on: " << str << endl;
-		ost << " *      Author: Orbiter" << endl;
-		ost << " */" << endl;
-		ost << endl;
-		//ost << "#include \"orbiter.h\"" << endl;
-		ost << "#include <iostream>" << endl;
-		ost << endl;
-		ost << "using namespace std;" << endl;
-		//ost << "using namespace orbiter;" << endl;
-		ost << endl;
-		ost << "void divide(const unsigned char *A, unsigned char *R);" << endl;
-		ost << endl;
-		ost << "int main(int argc, char **argv)" << endl;
-		ost << "{" << endl;
-		ost << "\t" << endl;
+		string name_of_function;
+		string name_of_array_of_polynomials;
+		char str2[1024];
+
+
+
+
 
 
 		int *data_A;
@@ -122,6 +111,51 @@ void ring_theory_global::write_code_for_division(
 			FX.print_object(poly_B, cout);
 			cout << endl;
 			}
+
+
+		name_of_function.assign("divide");
+
+		sprintf(str2, "_q%d", F->q);
+		name_of_function.append(str2);
+		sprintf(str2, "_n%d", da);
+		name_of_function.append(str2);
+		sprintf(str2, "_r%d", db);
+		name_of_function.append(str2);
+
+
+
+		name_of_array_of_polynomials.assign("CRC_polynomials");
+
+		sprintf(str2, "_q%d", F->q);
+		name_of_array_of_polynomials.append(str2);
+		sprintf(str2, "_n%d", da);
+		name_of_array_of_polynomials.append(str2);
+		sprintf(str2, "_r%d", db);
+		name_of_array_of_polynomials.append(str2);
+
+
+
+
+		ost << "/*" << endl;
+		ost << " * " << fname_code << endl;
+		ost << " *" << endl;
+		ost << " *  Created on: " << str << endl;
+		ost << " *      Author: Orbiter" << endl;
+		ost << " */" << endl;
+		ost << endl;
+		//ost << "#include \"orbiter.h\"" << endl;
+		ost << "#include <iostream>" << endl;
+		ost << endl;
+		ost << "using namespace std;" << endl;
+		//ost << "using namespace orbiter;" << endl;
+		ost << endl;
+		ost << "void " << name_of_function << "(const unsigned char *A, unsigned char *R);" << endl;
+		ost << endl;
+		ost << "int main(int argc, char **argv)" << endl;
+		ost << "{" << endl;
+		ost << "\t" << endl;
+
+
 
 		FX.create_object_of_degree(poly_Q, da);
 
@@ -190,7 +224,7 @@ void ring_theory_global::write_code_for_division(
 		ost << endl;
 
 		ost << "\t" << endl;
-		ost << "\tdivide(A, R);" << endl;
+		ost << "\t" << name_of_function << "(A, R);" << endl;
 
 		ost << endl;
 
@@ -208,8 +242,8 @@ void ring_theory_global::write_code_for_division(
 
 
 
-		ost << "\t// the size of the array B is  " << F->q - 1 << " x " << db + 1 << endl;
-		ost << "const unsigned char B[] = {" << endl;
+		ost << "\t// the size of the array " << name_of_array_of_polynomials << " is  " << F->q - 1 << " x " << db + 1 << endl;
+		ost << "const unsigned char " << name_of_array_of_polynomials << "[] = {" << endl;
 
 
 		for (i = 1; i < F->q; i++) {
@@ -226,7 +260,7 @@ void ring_theory_global::write_code_for_division(
 		ost << endl;
 
 
-		ost << "void divide(const unsigned char *in, unsigned char *out)" << endl;
+		ost << "void " << name_of_function << "(const unsigned char *in, unsigned char *out)" << endl;
 		ost << "{" << endl;
 
 
@@ -255,7 +289,7 @@ void ring_theory_global::write_code_for_division(
 		ost << "\t\t//cout << \"i=\" << i << \" x=\" << x << endl;" << endl;
 		ost << "\t\tx--;" << endl;
 		ost << "\t\tfor (ii = i, jj = " << db << "; jj >= 0; ii--, jj--) {" << endl;
-		ost << "\t\t\tR[ii] ^= B[x * " << db + 1 << " + jj];" << endl;
+		ost << "\t\t\tR[ii] ^= " << name_of_array_of_polynomials << "[x * " << db + 1 << " + jj];" << endl;
 		ost << "\t\t}" << endl;
 		ost << "\t}" << endl;
 
@@ -1260,7 +1294,7 @@ void ring_theory_global::create_irreducible_polynomial(
 		unipoly_domain *Fq,
 		unipoly_object *&Beta, int n,
 		long int *cyclotomic_set, int cylotomic_set_size,
-		unipoly_object *&generator,
+		unipoly_object *&min_poly,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1269,14 +1303,14 @@ void ring_theory_global::create_irreducible_polynomial(
 		cout << "ring_theory_global::create_irreducible_polynomial n=" << n << endl;
 	}
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial before allocating generator etc" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial before allocating min_poly etc" << endl;
 	}
 
 	int degree = cylotomic_set_size;
 
 	coding_theory::coding_theory_domain Codes;
 
-	generator = NEW_OBJECTS(unipoly_object, degree + 2);
+	min_poly = NEW_OBJECTS(unipoly_object, degree + 2);
 	unipoly_object *tmp = NEW_OBJECTS(unipoly_object, degree + 1);
 	unipoly_object *linear_factor = NEW_OBJECTS(unipoly_object, 2);
 	unipoly_object Pc, Pd;
@@ -1299,13 +1333,13 @@ void ring_theory_global::create_irreducible_polynomial(
 		if (f_v) {
 			cout << "ring_theory_global::create_irreducible_polynomial creating generator[" << i << "]" << endl;
 		}
-		Fq->create_object_by_rank(generator[i], 0, __FILE__, __LINE__, verbose_level);
+		Fq->create_object_by_rank(min_poly[i], 0, __FILE__, __LINE__, verbose_level);
 		Fq->create_object_by_rank(tmp[i], 0, __FILE__, __LINE__, verbose_level);
 	}
 	if (f_v) {
 		cout << "ring_theory_global::create_irreducible_polynomial creating generator[0]" << endl;
 	}
-	Fq->create_object_by_rank(generator[0], 1, __FILE__, __LINE__, verbose_level);
+	Fq->create_object_by_rank(min_poly[0], 1, __FILE__, __LINE__, verbose_level);
 
 	// now coeffs has degree 1
 	// and generator has degree 0
@@ -1315,7 +1349,7 @@ void ring_theory_global::create_irreducible_polynomial(
 		Codes.print_polynomial(*Fq, 1, linear_factor);
 		cout << endl;
 		cout << "ring_theory_global::create_irreducible_polynomial generator:" << endl;
-		Codes.print_polynomial(*Fq, 0, generator);
+		Codes.print_polynomial(*Fq, 0, min_poly);
 		cout << endl;
 	}
 
@@ -1355,10 +1389,10 @@ void ring_theory_global::create_irreducible_polynomial(
 
 
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign(generator[j], tmp[j])" << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign(min_poly[j], tmp[j])" << endl;
 		}
 		for (j = 0; j <= r; j++) {
-			Fq->assign(generator[j], tmp[j], verbose_level);
+			Fq->assign(min_poly[j], tmp[j], verbose_level);
 		}
 
 		//cout << "tmp:" << endl;
@@ -1366,13 +1400,15 @@ void ring_theory_global::create_irreducible_polynomial(
 		//cout << endl;
 
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign(tmp[j], generator[j + 1])" << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign(tmp[j], min_poly[j + 1])" << endl;
 		}
+
 		for (j = 0; j <= r; j++) {
-			Fq->assign(tmp[j], generator[j + 1], verbose_level);
-			}
-		Fq->delete_object(generator[0]);
-		Fq->create_object_by_rank(generator[0], 0, __FILE__, __LINE__, verbose_level);
+			Fq->assign(tmp[j], min_poly[j + 1], verbose_level);
+		}
+
+		Fq->delete_object(min_poly[0]);
+		Fq->create_object_by_rank(min_poly[0], 0, __FILE__, __LINE__, verbose_level);
 
 		//cout << "generator after shifting up:" << endl;
 		//print_polynomial(Fq, r + 1, generator);
@@ -1389,11 +1425,11 @@ void ring_theory_global::create_irreducible_polynomial(
 			if (f_v) {
 				cout << "ring_theory_global::create_irreducible_polynomial before Fq.add()" << endl;
 			}
-			Fq->add(Pc, generator[j], Pd);
+			Fq->add(Pc, min_poly[j], Pd);
 			if (f_v) {
 				cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign()" << endl;
 			}
-			Fq->assign(Pd, generator[j], verbose_level);
+			Fq->assign(Pd, min_poly[j], verbose_level);
 		}
 		r++;
 		if (f_v) {
@@ -1401,7 +1437,7 @@ void ring_theory_global::create_irreducible_polynomial(
 		}
 		if (f_v) {
 			cout << "ring_theory_global::create_irreducible_polynomial current polynomial: ";
-			Codes.print_polynomial(*Fq, r, generator);
+			Codes.print_polynomial(*Fq, r, min_poly);
 			cout << endl;
 		}
 
@@ -1413,8 +1449,8 @@ void ring_theory_global::create_irreducible_polynomial(
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial The generator polynomial is: ";
-		Codes.print_polynomial(*Fq, r, generator);
+		cout << "ring_theory_global::create_irreducible_polynomial The minimum polynomial is: ";
+		Codes.print_polynomial(*Fq, r, min_poly);
 		cout << endl;
 	}
 

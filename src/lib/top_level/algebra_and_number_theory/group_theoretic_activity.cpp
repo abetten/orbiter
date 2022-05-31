@@ -87,7 +87,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 	if (Descr->f_consecutive_powers) {
-		//raise_to_the_power(verbose_level);
 
 		A1->consecutive_powers_based_on_text(Descr->consecutive_powers_a_text,
 				Descr->consecutive_powers_exponent_text, verbose_level);
@@ -95,7 +94,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 	if (Descr->f_raise_to_the_power) {
-		//raise_to_the_power(verbose_level);
 
 		A1->raise_to_the_power_based_on_text(Descr->raise_to_the_power_a_text,
 				Descr->raise_to_the_power_exponent_text, verbose_level);
@@ -126,12 +124,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		AG->classes(verbose_level);
 	}
 
-#if 0
-	if (Descr->f_group_table) {
-		AG->create_group_table(verbose_level);
-	}
-#endif
-
 	if (Descr->f_normalizer) {
 		AG->normalizer(verbose_level);
 	}
@@ -139,6 +131,11 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	if (Descr->f_centralizer_of_element) {
 		AG->centralizer(Descr->element_label,
 				Descr->element_description_text, verbose_level);
+	}
+	if (Descr->f_permutation_representation_of_element) {
+		AG->permutation_representation_of_element(
+				Descr->permutation_representation_element_text,
+				verbose_level);
 	}
 
 	if (Descr->f_conjugacy_class_of_element) {
@@ -194,8 +191,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_print_elements_tex) {
 
-		AG->print_elements_tex(
-				verbose_level);
+		AG->print_elements_tex(verbose_level);
 	}
 
 	if (Descr->f_order_of_products) {
@@ -284,6 +280,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	if (Descr->f_orbit_of) {
 		AG->orbit_of(Descr->orbit_of_point_idx, verbose_level);
 	}
+
 	else if (Descr->f_orbits_on_subsets) {
 
 		poset_classification::poset_classification_control *Control;
@@ -304,6 +301,34 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 		FREE_OBJECT(PC);
 	}
+
+	else if (Descr->f_orbits_on_partition) {
+
+		poset_classification::poset_classification_control *Control;
+
+		if (Descr->f_poset_classification_control) {
+			Control = Descr->Control;
+		}
+		else {
+			cout << "please use option -poset_classification_control" << endl;
+			exit(1);
+			//Control = NEW_OBJECT(poset_classification_control);
+		}
+
+		orbit_cascade *Cascade;
+
+		Cascade = NEW_OBJECT(orbit_cascade);
+
+		Cascade->init(AG->A->degree,
+				Descr->orbits_on_partition_k,
+				AG,
+				Control,
+				verbose_level);
+
+
+		FREE_OBJECT(Cascade);
+	}
+
 
 	// generic orbits on points or subspaces:
 

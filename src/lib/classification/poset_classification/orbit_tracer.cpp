@@ -499,6 +499,7 @@ void orbit_tracer::recognize(
 // where H is the point stabilizer of S[len]
 // in the set-stabilizer of S[0,...,len-1],
 // (which is a subgroup of S[0,...,len]).
+// The input set the_set[] is not modified.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

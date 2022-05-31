@@ -24,6 +24,10 @@ graph_classification_activity_description::graph_classification_activity_descrip
 
 	f_draw_graphs = FALSE;
 
+	f_list_graphs_at_level = FALSE;
+	list_graphs_at_level_level_min = 0;
+	list_graphs_at_level_level_max = 0;
+
 	f_draw_graphs_at_level = FALSE;
 	draw_graphs_at_level_level = 0;
 
@@ -61,6 +65,14 @@ int graph_classification_activity_description::read_arguments(
 			f_draw_graphs = TRUE;
 			if (f_v) {
 				cout << "-draw_graphs " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-list_graphs_at_level") == 0) {
+			f_list_graphs_at_level = TRUE;
+			list_graphs_at_level_level_min = ST.strtoi(argv[++i]);
+			list_graphs_at_level_level_max = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-list_graphs_at_level " << list_graphs_at_level_level_min << " " << list_graphs_at_level_level_max << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_graphs_at_level") == 0) {
@@ -124,6 +136,9 @@ void graph_classification_activity_description::print()
 	}
 	if (f_draw_graphs) {
 		cout << "-draw_graphs " << endl;
+	}
+	if (f_list_graphs_at_level) {
+		cout << "-list_graphs_at_level " << list_graphs_at_level_level_min << " " << list_graphs_at_level_level_max << endl;
 	}
 	if (f_draw_graphs_at_level) {
 		cout << "-draw_graphs_at_level " << draw_graphs_at_level_level << endl;

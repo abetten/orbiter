@@ -45,6 +45,9 @@ draw_mod_n_description::draw_mod_n_description()
 	f_cyclotomic_sets_thickness = FALSE;
 	cyclotomic_sets_thickness = 100;
 
+	f_eigenvalues = FALSE;
+	//double eigenvalues_A[4];
+
 }
 
 draw_mod_n_description::~draw_mod_n_description()
@@ -111,6 +114,20 @@ int draw_mod_n_description::read_arguments(
 			cyclotomic_sets_thickness = ST.strtoi(argv[++i]);
 			cout << "-cyclotomic_sets_thickness " << cyclotomic_sets_thickness << endl;
 		}
+
+		else if (ST.stringcmp(argv[i], "-eigenvalues") == 0) {
+			f_eigenvalues = TRUE;
+			eigenvalues_A[0] = ST.strtof(argv[++i]);
+			eigenvalues_A[1] = ST.strtof(argv[++i]);
+			eigenvalues_A[2] = ST.strtof(argv[++i]);
+			eigenvalues_A[3] = ST.strtof(argv[++i]);
+			cout << "-eigenvalues "
+					<< eigenvalues_A[0] << " "
+					<< eigenvalues_A[1] << " "
+					<< eigenvalues_A[2] << " "
+					<< eigenvalues_A[3] << " "
+					<< endl;
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -154,6 +171,14 @@ void draw_mod_n_description::print()
 	}
 	if (f_cyclotomic_sets_thickness) {
 		cout << "-cyclotomic_sets_thickness " << cyclotomic_sets_thickness << endl;
+	}
+	if (f_eigenvalues) {
+		cout << "-eigenvalues "
+				<< eigenvalues_A[0] << " "
+				<< eigenvalues_A[1] << " "
+				<< eigenvalues_A[2] << " "
+				<< eigenvalues_A[3] << " "
+				<< endl;
 	}
 }
 

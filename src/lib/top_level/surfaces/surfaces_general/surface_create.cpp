@@ -1408,7 +1408,7 @@ void surface_create::create_surface_by_arc_lifting(
 	}
 
 
-	Sg = AL->Trihedral_pair->Aut_gens->create_copy();
+	Sg = AL->Trihedral_pair->Aut_gens->create_copy(verbose_level - 2);
 	f_has_group = TRUE;
 
 

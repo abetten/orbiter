@@ -726,7 +726,7 @@ public:
 			unipoly_domain *Fq,
 			unipoly_object *&Beta, int n,
 			long int *cyclotomic_set, int cylotomic_set_size,
-			unipoly_object *&generator,
+			unipoly_object *&min_poly,
 			int verbose_level);
 	void compute_nth_roots_as_polynomials(
 			field_theory::finite_field *F,

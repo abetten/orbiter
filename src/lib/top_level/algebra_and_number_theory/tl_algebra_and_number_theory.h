@@ -113,6 +113,10 @@ public:
 			actions::action *A, groups::sims *S,
 			std::string &element_description,
 			std::string &label, int verbose_level);
+	void permutation_representation_of_element(
+			actions::action *A,
+			std::string &element_description,
+			int verbose_level);
 	void normalizer_of_cyclic_subgroup(
 			actions::action *A, groups::sims *S,
 			std::string &element_description,
@@ -215,6 +219,9 @@ public:
 			std::string &element_label,
 			std::string &element_description_text,
 			int verbose_level);
+	void permutation_representation_of_element(
+			std::string &element_description_text,
+			int verbose_level);
 	void normalizer_of_cyclic_subgroup(
 			std::string &element_label,
 			std::string &element_description_text,
@@ -223,7 +230,7 @@ public:
 			int order_of_subgroup,
 			int verbose_level);
 	void print_elements(int verbose_level);
-	void print_elements_tex(/*int f_order_of_products, std::string &elements,*/ int verbose_level);
+	void print_elements_tex(int verbose_level);
 	void order_of_products_of_elements(
 			std::string &Elements_text,
 			int verbose_level);
@@ -243,21 +250,7 @@ public:
 	void orbits_on_set_from_file(std::string &fname_csv, int verbose_level);
 	void orbit_of(int point_idx, int verbose_level);
 	void orbits_on_points(groups::orbits_on_something *&Orb, int verbose_level);
-	void orbits_on_subsets(
-			poset_classification::poset_classification_control *Control,
-			poset_classification::poset_classification *&PC,
-			int subset_size,
-			int verbose_level);
-	void orbits_on_poset_post_processing(
-			poset_classification::poset_classification *PC,
-			int depth,
-			int verbose_level);
-	void do_conjugacy_class_of_element(
-			std::string &elt_label, std::string &elt_text, int verbose_level);
-	void do_orbits_on_group_elements_under_conjugation(
-			std::string &fname_group_elements_coded,
-			std::string &fname_transporter,
-			int verbose_level);
+
 	void create_latex_report_for_permutation_group(
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
@@ -292,6 +285,23 @@ public:
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
 
+
+	// any_group_orbits.cpp
+	void orbits_on_subsets(
+			poset_classification::poset_classification_control *Control,
+			poset_classification::poset_classification *&PC,
+			int subset_size,
+			int verbose_level);
+	void orbits_on_poset_post_processing(
+			poset_classification::poset_classification *PC,
+			int depth,
+			int verbose_level);
+	void do_conjugacy_class_of_element(
+			std::string &elt_label, std::string &elt_text, int verbose_level);
+	void do_orbits_on_group_elements_under_conjugation(
+			std::string &fname_group_elements_coded,
+			std::string &fname_transporter,
+			int verbose_level);
 
 };
 
@@ -464,6 +474,9 @@ public:
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
 
+	int f_orbits_on_partition;
+	int orbits_on_partition_k;
+
 
 
 	int f_classes_based_on_normal_form;
@@ -473,6 +486,9 @@ public:
 	int f_centralizer_of_element;
 	std::string element_description_text;
 	std::string element_label;
+
+	int f_permutation_representation_of_element;
+	std::string permutation_representation_element_text;
 
 	int f_conjugacy_class_of_element;
 	// uses element_description_text and element_label
@@ -696,6 +712,55 @@ public:
 };
 
 
+// #############################################################################
+// orbit_cascade.cpp
+// #############################################################################
+
+//! a cascade of nested orbit algorithms
+
+
+class orbit_cascade {
+public:
+
+	int N; // total size of the set
+	int k; // size of the subsets
+
+	// we assume that N = 3 * k
+
+	any_group *G;
+
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Primary_poset;
+	poset_classification::poset_classification *Orbits_on_primary_poset;
+
+	int number_primary_orbits;
+	groups::strong_generators **stabilizer_gens; // [number_primary_orbits]
+	long int *Reps_and_complements; // [number_primary_orbits * degree]
+
+	actions::action **A_restricted;
+	poset_classification::poset_with_group_action **Secondary_poset; // [number_primary_orbits]
+	poset_classification::poset_classification **orbits_secondary_poset; // [number_primary_orbits]
+
+	int *nb_orbits_secondary; // [number_primary_orbits]
+	int *flag_orbit_first; // [number_primary_orbits]
+	int nb_orbits_secondary_total;
+
+	invariant_relations::flag_orbits *Flag_orbits;
+
+	int nb_orbits_reduced;
+
+	invariant_relations::classification_step *Partition_orbits; // [nb_orbits_reduced]
+
+
+	orbit_cascade();
+	~orbit_cascade();
+	void init(int N, int k, any_group *G,
+			poset_classification::poset_classification_control *Control,
+			int verbose_level);
+	void downstep(int verbose_level);
+	void upstep(std::vector<long int> &Ago, int verbose_level);
+
+};
 
 
 // #############################################################################

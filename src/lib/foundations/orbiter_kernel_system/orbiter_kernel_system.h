@@ -298,6 +298,9 @@ public:
 			std::string &fname, int verbose_level);
 	void write_characteristic_matrix(std::string &fname,
 			long int *data, int nb_rows, int data_sz, int nb_cols, int verbose_level);
+	void extract_from_makefile(std::string &fname, std::string &label,
+			std::vector<std::string> &text,
+			int verbose_level);
 
 };
 

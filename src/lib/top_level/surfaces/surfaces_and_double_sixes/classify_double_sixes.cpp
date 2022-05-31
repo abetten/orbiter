@@ -1247,7 +1247,7 @@ void classify_double_sixes::upstep(int verbose_level)
 			Lint_vec_print(cout, double_six, 12);
 			cout << endl;
 		}
-		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
+		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 		S->group_order(go);
 		if (f_v) {
 			cout << "po=" << po << " so=" << so

@@ -19,11 +19,6 @@ namespace apps_combinatorics {
 
 design_activity_description::design_activity_description()
 {
-#if 0
-	f_create_table = FALSE;
-	//std::string create_table_label;
-	//std::string create_table_group;
-#endif
 
 	f_load_table = FALSE;
 	//std::string load_table_label;
@@ -179,13 +174,6 @@ void design_activity_description::print()
 		cout << "-canonical_form " << endl;
 		Canonical_form_Descr->print();
 	}
-#if 0
-	if (f_create_table) {
-		cout << "-create_table " << create_table_label
-				<< " " << create_table_group
-				<< endl;
-	}
-#endif
 	if (f_load_table) {
 		cout << "-load_table " << load_table_label
 				<< " " << load_table_group
