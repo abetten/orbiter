@@ -1091,10 +1091,16 @@ void action::export_to_orbiter_as_bsgs(
 	}
 
 
+	if (f_v) {
+		cout << "action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs" << endl;
+	}
 	SG->export_to_orbiter_as_bsgs(
 			this,
 			fname, label, label_tex,
 			verbose_level);
+	if (f_v) {
+		cout << "action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs" << endl;
+	}
 
 #if 0
 	SG->group_order(go);

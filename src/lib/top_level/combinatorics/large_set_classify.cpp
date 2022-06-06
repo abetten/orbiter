@@ -241,10 +241,19 @@ void large_set_classify::create_action_and_poset(int verbose_level)
 				"calling gen->initialize" << endl;
 	}
 
+	if (f_v) {
+		cout << "large_set_classify::create_action_and_poset "
+				"before gen->initialize_and_allocate_root_node" << endl;
+	}
+
 	gen->initialize_and_allocate_root_node(Control, Poset,
 		search_depth,
 		verbose_level - 1);
 
+	if (f_v) {
+		cout << "large_set_classify::create_action_and_poset "
+				"after gen->initialize_and_allocate_root_node" << endl;
+	}
 
 
 

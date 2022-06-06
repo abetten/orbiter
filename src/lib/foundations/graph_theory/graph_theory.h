@@ -65,7 +65,8 @@ public:
 
 	int print_interval;
 
-	// extra stuff for the clique finder that does not come from the command line:
+	// extra stuff for the clique finder
+	// that does not come from the command line:
 
 	int f_has_additional_test_function;
 	void (*call_back_additional_test_function)(

@@ -61,12 +61,18 @@ void design_tables::init(actions::action *A, actions::action *A2,
 			label,
 			verbose_level)) {
 
+		if (f_v) {
+			cout << "design_tables::init before init_from_file" << endl;
+		}
 
 		init_from_file(A, A2,
 				initial_set, design_size,
 				label,
 				Strong_generators, verbose_level);
 
+		if (f_v) {
+			cout << "design_tables::init after init_from_file" << endl;
+		}
 
 	}
 	else {
@@ -83,7 +89,7 @@ void design_tables::init(actions::action *A, actions::action *A2,
 		if (f_v) {
 			cout << "design_tables::init before create_table" << endl;
 		}
-		create_table(verbose_level);
+		create_table(verbose_level - 2);
 		if (f_v) {
 			cout << "design_tables::init after create_table" << endl;
 		}
@@ -129,11 +135,15 @@ void design_tables::create_table(int verbose_level)
 
 	SetOrb = NEW_OBJECT(orbit_of_sets);
 
-	cout << "design_tables::init computing orbit:" << endl;
+	if (f_v) {
+		cout << "design_tables::create_table before SetOrb->init" << endl;
+	}
 	SetOrb->init(A, A2,
 			initial_set, design_size, Strong_generators->gens,
-			verbose_level);
-	cout << "design_tables::init computing orbit done" << endl;
+			verbose_level - 2);
+	if (f_v) {
+		cout << "design_tables::create_table after SetOrb->init" << endl;
+	}
 
 	long int **Sets;
 	int i;

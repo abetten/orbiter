@@ -1020,7 +1020,7 @@ void symbol_definition::print()
 		cout << "-design_table "
 				<< design_table_label_design
 				<< " " << design_table_label
-				<< " " << design_table_group;
+				<< " " << design_table_group << endl;
 	}
 	if (f_large_set_was) {
 		cout << "-large_set_was " << large_set_was_label_design_table << endl;
@@ -2083,9 +2083,17 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 
 	LS = NEW_OBJECT(apps_combinatorics::large_set_classify);
 
+	if (f_v) {
+		cout << "symbol_definition::definition_of_design_table before LS->init" << endl;
+	}
+
 	LS->init(DC,
 			T,
 			verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_design_table after LS->init" << endl;
+	}
 
 
 

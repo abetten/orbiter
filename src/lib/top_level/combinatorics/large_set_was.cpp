@@ -487,14 +487,16 @@ void large_set_was::create_graph_on_orbits_of_length(
 }
 
 void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
-		std::string &fname_mask, int orbit_length2,
+		std::string &fname_mask, int orbit_length2, int nb_N_orbits_preselected,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
-				"orbit_length2=" << orbit_length2 << endl;
+				"orbit_length2=" << orbit_length2
+				<< " nb_of_orbits_to_choose=" << nb_of_orbits_to_choose
+				<< " nb_N_orbits_known=" << nb_N_orbits_preselected << endl;
 	}
 
 	large_set_was::orbit_length2 = orbit_length2;
@@ -509,34 +511,35 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 
 	Orbit1_idx = NEW_lint(nb_of_orbits_to_choose);
 
-	extracted_set_size = nb_of_orbits_to_choose * orbit_length;
+	extracted_set_size = nb_N_orbits_preselected * orbit_length;
 	extracted_set = NEW_lint(extracted_set_size);
 
-	nb_N_orbits = PC->nb_orbits_at_level(nb_of_orbits_to_choose);
+	nb_N_orbits = PC->nb_orbits_at_level(nb_N_orbits_preselected);
 
 	if (f_v) {
 		cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
 				"nb_N_orbits = " << nb_N_orbits << endl;
 	}
 
-	for (idx_N = nb_N_orbits - 1; idx_N >= 0; idx_N--) {
+	for (idx_N = 0; idx_N < nb_N_orbits; idx_N++) {
 
+#if 0
 		if (idx_N != 3239) {
 			continue;
 		}
-
+#endif
 
 		if (f_v) {
 			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
 					"idx_N = " << idx_N << " / " << nb_N_orbits << endl;
 		}
 
-		PC->get_set_by_level(nb_of_orbits_to_choose, idx_N, Orbit1_idx);
+		PC->get_set_by_level(nb_N_orbits_preselected, idx_N, Orbit1_idx);
 
 
 		H_orbits->extract_orbits_using_classification(
 			orbit_length,
-			nb_of_orbits_to_choose,
+			nb_N_orbits_preselected,
 			Orbit1_idx,
 			extracted_set,
 			verbose_level);
@@ -567,8 +570,12 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 				extracted_set_size /*filter_by_set_size*/,
 				orbit_length2,
 				type_idx2,
-				TRUE /*f_has_user_data*/, extracted_set /* long int *user_data */, extracted_set_size /* user_data_size */,
-				TRUE /* f_has_colors */, LS->nb_colors, LS->design_color_table,
+				TRUE /*f_has_user_data*/,
+					extracted_set /* long int *user_data */,
+					extracted_set_size /* user_data_size */,
+				TRUE /* f_has_colors */,
+					LS->nb_colors,
+					LS->design_color_table,
 				large_set_was_classify_test_pair_of_orbits,
 				this /* *test_function_data */,
 				verbose_level);

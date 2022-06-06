@@ -62,8 +62,9 @@ void large_set_was_activity::perform_activity(large_set_was_activity_description
 	if (Descr->f_create_graph_on_orbits_of_length_based_on_N_orbits) {
 
 		LSW->create_graph_on_orbits_of_length_based_on_N_orbits(
-				Descr->create_graph_on_orbits_of_length_based_on_N_orbits_fname,
+				Descr->create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask,
 				Descr->create_graph_on_orbits_of_length_based_on_N_orbits_length,
+				Descr->create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected,
 				verbose_level);
 
 	}
