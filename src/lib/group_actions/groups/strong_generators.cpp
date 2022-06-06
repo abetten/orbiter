@@ -3624,6 +3624,11 @@ void strong_generators::export_to_orbiter_as_bsgs(
 
 			Data = NEW_lint(gens->len * A2->degree);
 			for (i = 0; i < gens->len; i++) {
+
+				if (f_v) {
+					cout << "strong_generators::export_to_orbiter_as_bsgs computing generator " << i << " / " << gens->len << endl;
+				}
+
 				for (j = 0; j < A2->degree; j++) {
 					a = A2->element_image_of(j, gens->ith(i), 0 /* verbose_level*/);
 					Data[i * A2->degree + j] = a;
@@ -3631,7 +3636,13 @@ void strong_generators::export_to_orbiter_as_bsgs(
 			}
 
 
+			if (f_v) {
+				cout << "strong_generators::export_to_orbiter_as_bsgs writing csv file" << endl;
+			}
 			Fio.lint_matrix_write_csv(fname_generators, Data, gens->len, A2->degree);
+			if (f_v) {
+				cout << "strong_generators::export_to_orbiter_as_bsgs writing csv file done" << endl;
+			}
 
 
 			FREE_lint(Data);

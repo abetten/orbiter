@@ -449,9 +449,8 @@ void design_activity::do_canonical_form(combinatorics::classification_of_objects
 	}
 
 
-	combinatorics::classification_of_objects *OC;
-
 #if 0
+	combinatorics::classification_of_objects *OC;
 
 	if (f_v) {
 		cout << "design_activity::do_canonical_form" << endl;
@@ -566,7 +565,9 @@ void design_activity::do_export_blocks(
 	orbiter_kernel_system::file_io Fio;
 	Fio.lint_matrix_write_csv(fname, DC->set, 1, b);
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 
 
@@ -580,7 +581,9 @@ void design_activity::do_export_blocks(
 
 	Fio.int_matrix_write_csv(fname, Blocks, b, k);
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 
 	FREE_int(Blocks);
@@ -634,9 +637,11 @@ void design_activity::do_row_sums(
 	data_structures::tally T;
 
 	T.init(R, v, FALSE, 0);
-	cout << "distribution of row sums: ";
-	T.print(TRUE /* f_backwards */);
-	cout << endl;
+	if (f_v) {
+		cout << "distribution of row sums: ";
+		T.print(TRUE /* f_backwards */);
+		cout << endl;
+	}
 
 	FREE_int(M);
 	FREE_int(R);

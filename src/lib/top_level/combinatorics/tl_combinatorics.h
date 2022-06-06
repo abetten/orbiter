@@ -1176,8 +1176,9 @@ public:
 	int create_graph_on_orbits_of_length_length;
 
 	int f_create_graph_on_orbits_of_length_based_on_N_orbits;
-	std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname;
+	std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask;
 	int create_graph_on_orbits_of_length_based_on_N_orbits_length;
+	int create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected;
 
 	int f_read_solution_file;
 	int read_solution_file_orbit_length;
@@ -1356,7 +1357,7 @@ public:
 			std::string &fname, int orbit_length,
 			int verbose_level);
 	void create_graph_on_orbits_of_length_based_on_N_orbits(
-			std::string &fname_mask, int orbit_length2,
+			std::string &fname_mask, int orbit_length2, int nb_N_orbits_preselected,
 			int verbose_level);
 	void read_solution_file(
 			std::string &solution_file_name,

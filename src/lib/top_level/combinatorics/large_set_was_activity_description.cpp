@@ -29,8 +29,9 @@ large_set_was_activity_description::large_set_was_activity_description()
 	create_graph_on_orbits_of_length_length = 0;
 
 	f_create_graph_on_orbits_of_length_based_on_N_orbits = FALSE;
-	//std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname;
+	//std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask;
 	create_graph_on_orbits_of_length_based_on_N_orbits_length = 0;
+	create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected = 0;
 
 	f_read_solution_file = FALSE;
 	read_solution_file_orbit_length = 0;
@@ -86,11 +87,13 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 		}
 		else if (ST.stringcmp(argv[i], "-create_graph_on_orbits_of_length_based_on_N_orbits") == 0) {
 			f_create_graph_on_orbits_of_length_based_on_N_orbits = TRUE;
-			create_graph_on_orbits_of_length_based_on_N_orbits_fname.assign(argv[++i]);
+			create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask.assign(argv[++i]);
 			create_graph_on_orbits_of_length_based_on_N_orbits_length = ST.strtoi(argv[++i]);
+			create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected = ST.strtoi(argv[++i]);
 			cout << "-create_graph_on_orbits_of_length_based_on_N_orbits "
-					<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_fname
+					<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask
 					<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_length
+					<< " " << create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-read_solution_file") == 0) {
@@ -125,8 +128,9 @@ void large_set_was_activity_description::print()
 	}
 	if (f_create_graph_on_orbits_of_length_based_on_N_orbits) {
 		cout << "-create_graph_on_orbits_of_length_based_on_N_orbits "
-				<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_fname
+				<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask
 				<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_length
+				<< " " << create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected
 				<< endl;
 	}
 	if (f_read_solution_file) {

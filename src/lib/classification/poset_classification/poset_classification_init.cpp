@@ -237,29 +237,20 @@ void poset_classification::init_internal(
 		set_S[i] = i;
 	}
 
-#if 0
-	//tmp_set_apply_fusion = NEW_lint(sz + 1);
-#endif
 
 	if (f_vv) {
 		cout << "poset_classification::init_internal "
 				"allocating Elt_memory" << endl;
 	}
 
-#if 0
-	Elt_memory = NEW_int(6 * Poset->A->elt_size_in_int);
-	Elt1 = Elt_memory + 0 * Poset->A->elt_size_in_int;
-	Elt2 = Elt_memory + 1 * Poset->A->elt_size_in_int;
-	Elt3 = Elt_memory + 2 * Poset->A->elt_size_in_int;
-	Elt4 = Elt_memory + 3 * Poset->A->elt_size_in_int;
-	Elt5 = Elt_memory + 4 * Poset->A->elt_size_in_int;
-	Elt6 = Elt_memory + 5 * Poset->A->elt_size_in_int;
-#endif
 
+#if 0
 	if (sz == 0) {
 		cout << "poset_classification::init_internal sz == 0" << endl;
 		exit(1);
 	}
+#endif
+
 
 	if (f_vv) {
 		cout << "poset_classification::init_internal "
