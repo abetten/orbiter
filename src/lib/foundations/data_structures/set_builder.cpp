@@ -167,6 +167,19 @@ void set_builder::init(set_builder_description *Descr,
 		sz = m * n;
 
 	}
+	else if (Descr->f_file_orbiter_format) {
+		if (f_v) {
+			cout << "set_builder::init -file_orbiter_format " << Descr->file_orbiter_format_name << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.read_set_from_file_lint(Descr->file_orbiter_format_name,
+			set, sz, verbose_level);
+		if (f_v) {
+			cout << "set_builder::init read set of size " << sz << endl;
+		}
+
+	}
 	else {
 		cout << "set_builder::init unrecognized command to create the set" << endl;
 		exit(1);

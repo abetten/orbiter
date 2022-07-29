@@ -1536,66 +1536,70 @@ void orthogonal::parabolic_unrank_line(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "parabolic_unrank_line rk=" << rk << endl;
-		}
+		cout << "orthogonal::parabolic_unrank_line rk=" << rk << endl;
+	}
 	if (m == 0) {
 		cout << "orthogonal::parabolic_unrank_line "
 				"Witt index zero, there is no line to unrank" << endl;
 		exit(1);
-		}
+	}
 	if (rk < l1) {
-		if (f_even)
+		if (f_even) {
 			parabolic_unrank_line_L1_even(p1, p2, rk, verbose_level);
-		else
-			parabolic_unrank_line_L1_odd(p1, p2, rk, verbose_level);
-		return;
 		}
+		else {
+			parabolic_unrank_line_L1_odd(p1, p2, rk, verbose_level);
+		}
+		return;
+	}
 	rk -= l1;
 	if (f_v) {
-		cout << "reducing rk to " << rk << " l2=" << l2 << endl;
-		}
+		cout << "orthogonal::parabolic_unrank_line reducing rk to " << rk << " l2=" << l2 << endl;
+	}
 	if (rk < l2) {
-		if (f_even)
+		if (f_even) {
 			parabolic_unrank_line_L2_even(p1, p2, rk, verbose_level);
-		else
-			parabolic_unrank_line_L2_odd(p1, p2, rk, verbose_level);
-		return;
 		}
+		else {
+			parabolic_unrank_line_L2_odd(p1, p2, rk, verbose_level);
+		}
+		return;
+	}
 	rk -= l2;
 	if (f_v) {
-		cout << "reducing rk to " << rk << " l3=" << l3 << endl;
-		}
+		cout << "orthogonal::parabolic_unrank_line reducing rk to " << rk << " l3=" << l3 << endl;
+	}
 	if (rk < l3) {
 		parabolic_unrank_line_L3(p1, p2, rk, verbose_level);
 		return;
-		}
+	}
 	rk -= l3;
 	if (rk < l4) {
 		parabolic_unrank_line_L4(p1, p2, rk, verbose_level);
 		return;
-		}
+	}
 	rk -= l4;
 	if (rk < l5) {
 		parabolic_unrank_line_L5(p1, p2, rk, verbose_level);
 		return;
-		}
+	}
 	rk -= l5;
 	if (rk < l6) {
 		parabolic_unrank_line_L6(p1, p2, rk, verbose_level);
 		return;
-		}
+	}
 	rk -= l6;
 	if (rk < l7) {
 		parabolic_unrank_line_L7(p1, p2, rk, verbose_level);
 		return;
-		}
+	}
 	rk -= l7;
 	if (rk < l8) {
 		parabolic_unrank_line_L8(p1, p2, rk, verbose_level);
 		return;
-		}
+	}
 	rk -= l8;
-	cout << "error in orthogonal::parabolic_unrank_line, "
+	cout << "orthogonal::parabolic_unrank_line, "
 			"rk too big" << endl;
 	exit(1);
 }
@@ -1609,40 +1613,40 @@ long int orthogonal::parabolic_rank_line(long int p1, long int p2, int verbose_l
 	if (f_v) {
 		cout << "parabolic_rank_line "
 				"p1=" << p1 << " p2=" << p2 << endl;
-		}
+	}
 	point_rk_to_type_and_index(p1,
 			p1_type, p1_index, verbose_level);
 	if (f_v) {
 		cout << "parabolic_rank_line "
 				"p1_type=" << p1_type
 				<< " p1_index=" << p1_index << endl;
-		}
+	}
 	point_rk_to_type_and_index(p2,
 			p2_type, p2_index, verbose_level);
 	if (f_v) {
 		cout << "parabolic_rank_line "
 				"p2_type=" << p2_type
 				<< " p2_index=" << p2_index << endl;
-		}
+	}
 	type = parabolic_line_type_given_point_types(
 			p1, p2, p1_type, p2_type, verbose_level);
 	if (f_v) {
 		cout << "parabolic_rank_line "
 				"line type = " << type << endl;
-		}
+	}
 	parabolic_canonical_points_of_line(type,
 			p1, p2, cp1, cp2, verbose_level);
 	if (f_v) {
 		cout << "parabolic_rank_line "
 				"cp1=" << cp1 << " cp2=" << cp2 << endl;
-		}
+	}
 
 	if (type == 1) {
 		if (f_even)
 			return parabolic_rank_line_L1_even(cp1, cp2, verbose_level);
 		else
 			return parabolic_rank_line_L1_odd(cp1, cp2, verbose_level);
-		}
+	}
 	else if (type == 2) {
 		if (f_even)
 			return l1 +
@@ -1650,35 +1654,35 @@ long int orthogonal::parabolic_rank_line(long int p1, long int p2, int verbose_l
 		else
 			return l1 +
 					parabolic_rank_line_L2_odd(cp1, cp2, verbose_level);
-		}
+	}
 	else if (type == 3) {
 		return l1 + l2 +
 				parabolic_rank_line_L3(cp1, cp2, verbose_level);
-		}
+	}
 	else if (type == 4) {
 		return l1 + l2 + l3 +
 				parabolic_rank_line_L4(cp1, cp2, verbose_level);
-		}
+	}
 	else if (type == 5) {
 		return l1 + l2 + l3 + l4 +
 				parabolic_rank_line_L5(cp1, cp2, verbose_level);
-		}
+	}
 	else if (type == 6) {
 		return l1 + l2 + l3 + l4 + l5 +
 				parabolic_rank_line_L6(cp1, cp2, verbose_level);
-		}
+	}
 	else if (type == 7) {
 		return l1 + l2 + l3 + l4 + l5 + l6 +
 				parabolic_rank_line_L7(cp1, cp2, verbose_level);
-		}
+	}
 	else if (type == 8) {
 		return l1 + l2 + l3 + l4 + l5 + l6 + l7 +
 				parabolic_rank_line_L8(cp1, cp2, verbose_level);
-		}
+	}
 	else {
 		cout << "parabolic_rank_line type nyi" << endl;
 		exit(1);
-		}
+	}
 }
 
 void orthogonal::parabolic_unrank_line_L1_even(

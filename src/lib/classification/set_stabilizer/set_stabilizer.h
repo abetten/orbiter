@@ -293,6 +293,7 @@ public:
 	int *orbit_frequencies; // [nb_orbits]
 	int nb_orbits;
 	data_structures::tally *T;
+	// for orbit_frequencies[]
 
 
 	data_structures::set_of_sets *SoS;

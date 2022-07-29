@@ -474,6 +474,8 @@ public:
 			int verbose_level);
 	void free_global_data();
 	void free_tab_q_binomials();
+	void create_wreath_product_design(int n, int k,
+			long int *&Blocks, long int &nb_blocks, int verbose_level);
 
 };
 

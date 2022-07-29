@@ -190,7 +190,7 @@ class del_pezzo_surface_of_degree_two_domain {
 
 public:
 	field_theory::finite_field *F;
-	geometry::projective_space *P;
+	geometry::projective_space *P3;
 	geometry::projective_space *P2;
 	geometry::grassmann *Gr; // Gr_{4,2}
 	geometry::grassmann *Gr3; // Gr_{4,3}
@@ -201,7 +201,7 @@ public:
 	del_pezzo_surface_of_degree_two_domain();
 	~del_pezzo_surface_of_degree_two_domain();
 	void init(
-			geometry::projective_space *P,
+			geometry::projective_space *P3,
 			ring_theory::homogeneous_polynomial_domain *Poly4_3,
 			int verbose_level);
 	void enumerate_points(int *coeff,

@@ -937,25 +937,43 @@ void orthogonal::Siegel_move_forward(
 		cout << endl;
 		Int_vec_print(cout, v2, n);
 		cout << endl;
-		}
+	}
+	if (f_v) {
+		cout << "orthogonal::Siegel_move_forward before subspace->rank_point(v1)" << endl;
+	}
 	rk1_subspace = subspace->rank_point(v1, 1, verbose_level - 1);
+	if (f_v) {
+		cout << "orthogonal::Siegel_move_forward before subspace->rank_point(v2)" << endl;
+	}
 	rk2_subspace = subspace->rank_point(v2, 1, verbose_level - 1);
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_forward rk1_subspace=" << rk1_subspace << endl;
 		cout << "orthogonal::Siegel_move_forward rk2_subspace=" << rk2_subspace << endl;
-		}
+	}
 	if (rk1_subspace == rk2_subspace) {
 		for (i = 0; i < n; i++)
 			v4[i] = v3[i];
 		return;
-		}
+	}
 
+	if (f_v) {
+		cout << "orthogonal::Siegel_move_forward before subspace->find_root_parabolic" << endl;
+	}
 	root = subspace->find_root_parabolic(rk2_subspace, verbose_level - 2);
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_forward root=" << root << endl;
-		}
+	}
+
+	if (f_v) {
+		cout << "orthogonal::Siegel_move_forward before subspace->Siegel_Transformation" << endl;
+	}
 	subspace->Siegel_Transformation(T1,
-			rk1_subspace, rk2_subspace, root, verbose_level - 2);
+			rk1_subspace, rk2_subspace, root,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "orthogonal::Siegel_move_forward before mult_matrix_matrix" << endl;
+	}
 	F->Linear_algebra->mult_matrix_matrix(v3, T1, v4, 1, n - 2, n - 2,
 			0 /* verbose_level */);
 	v4[n - 2] = v3[n - 2];
@@ -967,7 +985,7 @@ void orthogonal::Siegel_move_forward(
 		cout << "     to ";
 		Int_vec_print(cout, v4, n);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "orthogonal::Siegel_move_forward done" << endl;
 	}

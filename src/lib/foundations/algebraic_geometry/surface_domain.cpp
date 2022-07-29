@@ -759,46 +759,73 @@ void surface_domain::list_starter_configurations(
 	long int *Lines, int nb_lines,
 	data_structures::set_of_sets *line_intersections, int *&Table, int &N,
 	int verbose_level)
+// goes over all lines and considers all 5-subsets
+// of the set of lines which intersect
+// Then filters those 5-subsets which together
+// with the original line give 19 linearly independent conditions
 {
 	int f_v = (verbose_level >= 1);
-	int subset[5];
-	long int subset2[5];
-	long int S3[6];
-	int N1, nCk, h;
-	int i, j, r;
 	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::list_starter_configurations" << endl;
 	}
 
-	N = 0;
-	for (i = 0; i < nb_lines; i++) {
-		if (line_intersections->Set_size[i] < 5) {
-			continue;
-		}
-		nCk = Combi.int_n_choose_k(line_intersections->Set_size[i], 5);
-		for (j = 0; j < nCk; j++) {
-			Combi.unrank_k_subset(j, subset,
-				line_intersections->Set_size[i], 5);
-			for (h = 0; h < 5; h++) {
-				subset2[h] = 
-				line_intersections->Sets[i][subset[h]];
-				S3[h] = Lines[subset2[h]];
+	vector<vector<int>> V;
+
+	{
+		int subset[5];
+		long int subset2[5];
+		long int S6[6];
+		int nCk, h;
+		int i, j, r;
+		N = 0;
+		for (i = 0; i < nb_lines; i++) {
+			if (line_intersections->Set_size[i] < 5) {
+				continue;
 			}
-			S3[5] = Lines[i];
-			r = rank_of_system(6, S3, 0 /*verbose_level*/);
-			if (r == 19) {
-				N++;
+			nCk = Combi.int_n_choose_k(line_intersections->Set_size[i], 5);
+			for (j = 0; j < nCk; j++) {
+				Combi.unrank_k_subset(j, subset,
+					line_intersections->Set_size[i], 5);
+				for (h = 0; h < 5; h++) {
+					subset2[h] =
+					line_intersections->Sets[i][subset[h]];
+					S6[h] = Lines[subset2[h]];
+				}
+				S6[5] = Lines[i];
+				r = rank_of_system(6, S6, 0 /*verbose_level*/);
+				if (r == 19) {
+					vector<int> v;
+
+					v.push_back(i);
+					v.push_back(j);
+					V.push_back(v);
+					N++;
+				}
 			}
 		}
 	}
+
 	if (f_v) {
 		cout << "surface_domain::list_starter_configurations We found "
 			<< N << " starter configurations on this surface" 
 			<< endl;
 	}
+
+	if (N != V.size()) {
+		cout << "surface_domain::list_starter_configurations N != V.size()" << endl;
+		exit(1);
+	}
+
 	Table = NEW_int(N * 2);
+	int i;
+
+	for (i = 0; i < V.size(); i++) {
+		Table[i * 2 + 0] = V[i][0];
+		Table[i * 2 + 1] = V[i][1];
+	}
+#if 0
 	N1 = 0;
 	for (i = 0; i < nb_lines; i++) {
 		if (line_intersections->Set_size[i] < 5) {
@@ -811,10 +838,10 @@ void surface_domain::list_starter_configurations(
 			for (h = 0; h < 5; h++) {
 				subset2[h] = 
 				line_intersections->Sets[i][subset[h]];
-				S3[h] = Lines[subset2[h]];
+				S6[h] = Lines[subset2[h]];
 			}
-			S3[5] = Lines[i];
-			r = rank_of_system(6, S3, 0 /*verbose_level*/);
+			S6[5] = Lines[i];
+			r = rank_of_system(6, S6, 0 /*verbose_level*/);
 			if (r == 19) {
 				Table[N1 * 2 + 0] = i;
 				Table[N1 * 2 + 1] = j;
@@ -826,6 +853,7 @@ void surface_domain::list_starter_configurations(
 		cout << "N1 != N" << endl;
 		exit(1);
 	}
+#endif
 	if (f_v) {
 		cout << "surface_domain::list_starter_configurations done" << endl;
 	}
@@ -1026,6 +1054,10 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points the surface has " << nb_E << " Eckardt points" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points deleting SO" << endl;
+	}
+	FREE_OBJECT(SO);
 
 	if (f_v) {
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points done" << endl;

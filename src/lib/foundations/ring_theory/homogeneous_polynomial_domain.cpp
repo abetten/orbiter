@@ -281,6 +281,14 @@ void homogeneous_polynomial_domain::print()
 }
 
 
+void homogeneous_polynomial_domain::print_latex(std::ostream &ost)
+{
+	ost << "Polynomial ring over a field of order " << F->q
+			<< " in " << nb_variables << " variables "
+			"and of degree " << degree << "\\\\" << endl;
+}
+
+
 int homogeneous_polynomial_domain::get_nb_monomials()
 {
 	return nb_monomials;
@@ -847,6 +855,24 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 		cout << "homogeneous_polynomial_domain::affine_evaluation_kernel done" << endl;
 	}
 }
+
+void homogeneous_polynomial_domain::get_quadratic_form_matrix(int *eqn, int *M)
+{
+	int h, i, j, a;
+
+	if (degree != 2) {
+		cout << "homogeneous_polynomial_domain::get_quadratic_form_matrix degree != 2" << endl;
+		exit(1);
+	}
+	Int_vec_zero(M, nb_variables * nb_variables);
+	for (h = 0; h < nb_monomials; h++) {
+		a = eqn[h];
+		i = Variables[h * 2 + 0];
+		j = Variables[h * 2 + 1];
+		M[i * nb_variables + j] = a;
+	}
+}
+
 
 void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 {
@@ -2829,21 +2855,26 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 	}
 
 	if (!Formula->f_is_homogeneous) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula is not homogeneous" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"Formula is not homogeneous" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula is homogeneous of degree " << Formula->degree << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"Formula is homogeneous of degree " << Formula->degree << endl;
 	}
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula->nb_managed_vars = " << Formula->nb_managed_vars << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"Formula->nb_managed_vars = " << Formula->nb_managed_vars << endl;
 	}
 	if (Formula->nb_managed_vars != nb_variables) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula->nb_managed_vars != nb_variables" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"Formula->nb_managed_vars != nb_variables" << endl;
 		exit(1);
 	}
 	if (Formula->degree != degree) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector Formula->nb_managed_vars != degree" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"Formula->nb_managed_vars != degree" << endl;
 		exit(1);
 	}
 
@@ -2852,11 +2883,13 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 	int nb_monomials;
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector before Formula->get_subtrees" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"before Formula->get_subtrees" << endl;
 	}
 	Formula->get_subtrees(this, Subtrees, nb_monomials, verbose_level);
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector after Formula->get_subtrees" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"after Formula->get_subtrees" << endl;
 	}
 
 	int i;
@@ -2880,17 +2913,20 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 	//Coefficient_vector = NEW_int(nb_monomials);
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector before Formula->evaluate" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"before Formula->evaluate" << endl;
 	}
 	Formula->evaluate(this,
 			Subtrees, evaluate_text, Coefficient_vector,
 			verbose_level);
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector after Formula->evaluate" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"after Formula->evaluate" << endl;
 	}
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector coefficient vector:" << endl;
+		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+				"coefficient vector:" << endl;
 		Int_vec_print(cout, Coefficient_vector, nb_monomials);
 		cout << endl;
 	}
@@ -2933,7 +2969,7 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 		int *Coefficient_vector,
 		int nb_eqns,
 		geometry::projective_space *P,
-		long int *&Pts, int &N,
+		long int *&Image_pts, int &N_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2952,12 +2988,12 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 	int h;
 	long int i, j;
 
-	N = P->N_points;
-	Pts = NEW_lint(N);
+	N_points = P->N_points;
+	Image_pts = NEW_lint(N_points);
 	v = NEW_int(P->n + 1);
 	w = NEW_int(P->n + 1);
 
-	for (i = 0; i < N; i++) {
+	for (i = 0; i < N_points; i++) {
 		P->unrank_point(v, i);
 
 		for (h = 0; h < P->n + 1; h++) {
@@ -2970,7 +3006,7 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 		else {
 			j = -1;
 		}
-		Pts[i] = j;
+		Image_pts[i] = j;
 	}
 	FREE_int(v);
 	FREE_int(w);

@@ -316,7 +316,7 @@ void poset_classification::print_fusion_nodes(int depth)
 void poset_classification::read_data_file(int &depth_completed,
 		std::string &fname, int verbose_level)
 {
-	int f_v = TRUE; //(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	long int size;
 	int nb_group_elements;
 	orbiter_kernel_system::memory_object *m;
@@ -349,8 +349,7 @@ void poset_classification::read_data_file(int &depth_completed,
 	m->alloc(size, 0);
 
 	if (f_v) {
-		cout << "poset_classification::read_data_file "
-				"after m->alloc" << endl;
+		cout << "poset_classification::read_data_file after m->alloc" << endl;
 	}
 
 	m->used_length = 0;
@@ -397,7 +396,7 @@ void poset_classification::write_data_file(int depth_completed,
 		std::string &fname_base, int verbose_level)
 {
 	orbiter_kernel_system::memory_object *m;
-	int f_v = TRUE; //(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	string fname;
 	int nb_group_elements;
 	long int size0;
@@ -415,8 +414,7 @@ void poset_classification::write_data_file(int depth_completed,
 		cout << "Poset->A->coded_elt_size_in_char = "
 				<< Poset->A->coded_elt_size_in_char << endl;
 	}
-	size0 = Poo->calc_size_on_file(
-			depth_completed, verbose_level);
+	size0 = Poo->calc_size_on_file(depth_completed, verbose_level);
 	if (f_v) {
 		cout << "size on file = " << size0 << endl;
 	}
@@ -1290,18 +1288,12 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	Sp = NEW_OBJECT(data_structures::spreadsheet);
 	Sp->init_empty_table(Nb_orbits + 1, 7);
 	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, (const char **)
-			Text_level, "Level");
-	Sp->fill_column_with_text(2, (const char **)
-			Text_node, "Node");
-	Sp->fill_column_with_text(3, (const char **)
-			Text_orbit_reps, "Orbit rep");
-	Sp->fill_column_with_text(4, (const char **)
-			Text_stab_order, "Stab order");
-	Sp->fill_column_with_text(5, (const char **)
-			Text_orbit_length, "Orbit length");
-	Sp->fill_column_with_text(6, (const char **)
-			Text_schreier_vector_length, "Schreier vector length");
+	Sp->fill_column_with_text(1, (const char **) Text_level, "Level");
+	Sp->fill_column_with_text(2, (const char **) Text_node, "Node");
+	Sp->fill_column_with_text(3, (const char **) Text_orbit_reps, "Orbit rep");
+	Sp->fill_column_with_text(4, (const char **) Text_stab_order, "Stab order");
+	Sp->fill_column_with_text(5, (const char **) Text_orbit_length, "Orbit length");
+	Sp->fill_column_with_text(6, (const char **) Text_schreier_vector_length, "Schreier vector length");
 
 #if 0
 	cout << "before Sp->save " << fname_csv << endl;

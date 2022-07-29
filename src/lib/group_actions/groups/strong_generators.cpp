@@ -3198,6 +3198,39 @@ int strong_generators::test_if_normalizing(sims *S, int verbose_level)
 }
 
 
+int strong_generators::test_if_subgroup(sims *S, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int ret = TRUE;
+
+	if (f_v) {
+		cout << "strong_generators::test_if_subgroup" << endl;
+	}
+	for (i = 0; i < gens->len; i++) {
+		if (f_v) {
+			cout << "strong_generators::test_if_subgroup "
+					"testing generator " << i << " / "
+					<< gens->len << endl;
+		}
+		if (!S->is_element_of(gens->ith(i), verbose_level)) {
+			if (f_v) {
+				cout << "strong_generators::test_if_subgroup "
+						"generator " << i << " / " << gens->len
+						<< " does not belong to the group" << endl;
+			}
+			ret = FALSE;
+			break;
+		}
+	}
+	if (f_v) {
+		cout << "strong_generators::test_if_subgroup done ret = " << ret << endl;
+	}
+	return ret;
+}
+
+
+
 void strong_generators::test_if_set_is_invariant_under_given_action(
 		actions::action *A_given, long int *set, int set_sz, int verbose_level)
 {
@@ -3218,6 +3251,113 @@ void strong_generators::test_if_set_is_invariant_under_given_action(
 	}
 	if (f_v) {
 		cout << "strong_generators::test_if_set_is_invariant_under_given_action done" << endl;
+	}
+}
+
+void strong_generators::set_of_coset_representatives(sims *S,
+		data_structures_groups::vector_ge *&coset_reps,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::set_of_coset_representatives" << endl;
+	}
+
+	ring_theory::longinteger_object G_order, H_order;
+	long int subgroup_index, i, j, cur, len;
+	//long int *Q;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	ring_theory::longinteger_domain D;
+	sims *H;
+
+	H = create_sims_in_different_action(S->A, verbose_level);
+	S->group_order(G_order);
+	group_order(H_order);
+
+	subgroup_index = D.quotient_as_lint(G_order, H_order);
+
+
+	coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	coset_reps->init(S->A, verbose_level);
+	coset_reps->allocate(subgroup_index, verbose_level);
+
+
+	Elt1 = NEW_int(S->A->elt_size_in_int);
+	Elt2 = NEW_int(S->A->elt_size_in_int);
+	Elt3 = NEW_int(S->A->elt_size_in_int);
+
+	for (i = 0; i < subgroup_index; i++) {
+
+		S->A->element_one(coset_reps->ith(i), 0);
+
+	}
+
+	//Q = NEW_lint(subgroup_index);
+
+	//Q[0] = 0;
+
+	//Q_len = 1;
+
+	cur = 0;
+	len = 1;
+
+	for (cur = 0; cur < len; cur++) {
+
+		if (f_v) {
+			cout << "strong_generators::set_of_coset_representatives cur = " << cur << endl;
+		}
+		for (i = 0; i < S->gens.len; i++) {
+
+			if (f_v) {
+				cout << "strong_generators::set_of_coset_representatives "
+						"cur = " << cur << " gen " << i << " / " << S->gens.len << endl;
+			}
+			S->A->element_mult(coset_reps->ith(cur), S->gens.ith(i), Elt1, 0);
+			S->A->element_invert(Elt1, Elt2, 0);
+
+			if (f_v) {
+				cout << "strong_generators::set_of_coset_representatives "
+						"searching for coset, len = " << len << endl;
+			}
+
+			for (j = 0; j < len; j++) {
+				if (f_v) {
+					cout << "strong_generators::set_of_coset_representatives "
+							"searching for coset at position " << j << endl;
+				}
+				S->A->element_mult(coset_reps->ith(j), Elt2, Elt3, 0);
+
+				if (H->is_element_of(Elt3, 0 /* verbose_level */)) {
+					break;
+				}
+			}
+			if (j == len) {
+				S->A->element_move(Elt1, coset_reps->ith(len), 0);
+				len++;
+			}
+
+		}
+	}
+
+	if (len != subgroup_index) {
+		cout << "strong_generators::set_of_coset_representatives len != subgroup_index" << endl;
+		exit(1);
+	}
+
+	FREE_OBJECT(H);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+
+	//FREE_lint(Q);
+
+
+	if (f_v) {
+		cout << "strong_generators::set_of_coset_representatives done" << endl;
 	}
 }
 

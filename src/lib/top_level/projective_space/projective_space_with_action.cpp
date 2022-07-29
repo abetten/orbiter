@@ -83,7 +83,7 @@ void projective_space_with_action::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::init" << endl;
+		cout << "projective_space_with_action::init, verbose_level=" << verbose_level << endl;
 	}
 	projective_space_with_action::f_init_incidence_structure = f_init_incidence_structure;
 	projective_space_with_action::n = n;
@@ -93,11 +93,30 @@ void projective_space_with_action::init(
 	q = F->q;
 	
 	P = NEW_OBJECT(geometry::projective_space);
+
+	if (f_v) {
+		cout << "projective_space_with_action::init before P->projective_space_init" << endl;
+	}
+
 	P->projective_space_init(n, F,
 		f_init_incidence_structure, 
 		verbose_level);
 	
+
+	if (f_v) {
+		cout << "projective_space_with_action::init after P->projective_space_init" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::init before init_group" << endl;
+	}
+
 	init_group(f_semilinear, verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::init after init_group" << endl;
+	}
+
 
 	if (n == 2) {
 		Dom = NEW_OBJECT(algebraic_geometry::quartic_curve_domain);
@@ -792,12 +811,12 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 
 	{
-		char title[1000];
-		char author[1000];
+		string title, author, extra_praeamble;
+		char str[1000];
 
-		snprintf(title, 1000, "Decomposition of PG($%d,%d$)", n, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Decomposition of PG($%d,%d$)", n, F->q);
+		title.assign(str);
+
 
 
 		string fname_tex;
@@ -818,7 +837,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -901,12 +920,13 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 
 	{
-		char title[1000];
-		char author[1000];
+		string title, author, extra_praeamble;
 
-		snprintf(title, 1000, "Decomposition of PG($%d,%d$)", n, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		char str[1000];
+
+		snprintf(str, 1000, "Decomposition of PG($%d,%d$)", n, F->q);
+		title.assign(str);
+
 
 
 		{
@@ -922,7 +942,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -1527,14 +1547,17 @@ void projective_space_with_action::cheat_sheet(
 
 
 	{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
 
-		snprintf(fname, 1000, "PG_%d_%d.tex", n, F->q);
-		snprintf(title, 1000, "Cheat Sheet ${\\rm PG}(%d,%d)$", n, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		string fname, title, author, extra_praeamble;
+
+		char str[1000];
+
+		snprintf(str, 1000, "PG_%d_%d.tex", n, F->q);
+		fname.assign(str);
+
+		snprintf(str, 1000, "Cheat Sheet ${\\rm PG}(%d,%d)$", n, F->q);
+		title.assign(str);
+
 
 
 		{
@@ -1550,7 +1573,7 @@ void projective_space_with_action::cheat_sheet(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -1573,6 +1596,24 @@ void projective_space_with_action::cheat_sheet(
 
 
 			P->report(ost, O, verbose_level);
+
+
+			if (n == 3) {
+
+				applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
+
+				setup_surface_with_action(
+						Surf_A,
+						verbose_level);
+
+				Surf_A->Surf->Schlaefli->print_Steiner_and_Eckardt(ost);
+
+				FREE_OBJECT(Surf_A);
+
+			}
+
+
+
 
 			if (f_v) {
 				cout << "projective_space_with_action::do_cheat_sheet_PG after PP->report" << endl;

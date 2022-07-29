@@ -311,8 +311,9 @@ void packing_classify::report_title_page(
 {
 	int f_book = TRUE;
 	int f_title = TRUE;
-	char title[1000];
-	const char *author = "Orbiter";
+	string title, author, extra_praeamble;
+	char str[1000];
+
 	int f_toc = TRUE;
 	int f_landscape = FALSE;
 	int f_12pt = FALSE;
@@ -320,12 +321,15 @@ void packing_classify::report_title_page(
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(title, "The Packings of PG$(%d,%d)$", (int)3, (int)q);
+	sprintf(str, "The Packings of PG$(%d,%d)$", (int)3, (int)q);
+	title.assign(str);
+	author.assign("Orbiter");
+
 	L.head(ost, f_book, f_title,
 		title, author, 
 		f_toc, f_landscape, f_12pt,
 		f_enlarged_page, f_pagenumbers,
-		NULL /* extra_praeamble */);
+		extra_praeamble /* extra_praeamble */);
 
 
 

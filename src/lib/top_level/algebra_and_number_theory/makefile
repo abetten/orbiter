@@ -18,6 +18,8 @@ MODULES = \
 	orbit_cascade.o \
 	orbits_on_polynomials.o \
 	orbits_on_subspaces.o \
+	polynomial_ring_activity.o \
+	vector_ge_builder.o \
 	young.o 
 
 

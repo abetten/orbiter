@@ -244,7 +244,6 @@ MODULES= \
 		foundations/ring_theory/polynomial_double_domain.o \
 		foundations/ring_theory/polynomial_double.o \
 		foundations/ring_theory/polynomial_ring_activity_description.o \
-		foundations/ring_theory/polynomial_ring_activity.o \
 		foundations/ring_theory/polynomial_ring_description.o \
 		foundations/ring_theory/ring_theory_global.o \
 		foundations/ring_theory/table_of_irreducible_polynomials.o \
@@ -308,6 +307,7 @@ MODULES= \
 		group_actions/data_structures/set_and_stabilizer.o \
 		group_actions/data_structures/union_find.o \
 		group_actions/data_structures/union_find_on_k_subsets.o \
+		group_actions/data_structures/vector_ge_description.o \
 		group_actions/data_structures/vector_ge.o \
 		group_actions/groups/direct_product.o \
 		group_actions/groups/exceptional_isomorphism_O4.o \
@@ -420,6 +420,8 @@ MODULES= \
 		top_level/algebra_and_number_theory/orbit_cascade.o \
 		top_level/algebra_and_number_theory/orbits_on_polynomials.o \
 		top_level/algebra_and_number_theory/orbits_on_subspaces.o \
+		top_level/algebra_and_number_theory/polynomial_ring_activity.o \
+		top_level/algebra_and_number_theory/vector_ge_builder.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function_classify.o \
 		top_level/combinatorics/combinatorial_object_activity_description.o \

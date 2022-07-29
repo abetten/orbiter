@@ -790,7 +790,7 @@ void combinatorics_global::append_orbit_and_adjust_size(groups::schreier *Orb,
 }
 
 
-
+#if 0
 void combinatorics_global::classify_objects_using_nauty(
 		data_structures::data_input_stream_description *Data,
 		data_structures::classify_bitvectors *CB,
@@ -798,13 +798,13 @@ void combinatorics_global::classify_objects_using_nauty(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int input_idx;
-	int t0;
-	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::os_interface Os;
-	int nb_objects_to_test;
-	long int *Ago;
-	vector<vector<long int>> Reps;
+	//int input_idx;
+	//int t0;
+	//orbiter_kernel_system::file_io Fio;
+	//orbiter_kernel_system::os_interface Os;
+	//int nb_objects_to_test;
+	//long int *Ago;
+	//vector<vector<long int>> Reps;
 
 
 	if (f_v) {
@@ -1268,7 +1268,7 @@ void combinatorics_global::process_object(
 		cout << "process_object done" << endl;
 	}
 }
-
+#endif
 
 
 

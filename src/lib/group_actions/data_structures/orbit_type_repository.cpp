@@ -273,12 +273,10 @@ void orbit_type_repository::create_latex_report(std::string &prefix, int verbose
 	fname_tex.append("_orbit_types_report.tex");
 
 	{
-		char title[1000];
-		char author[1000];
 
-		snprintf(title, 1000, "Orbits");
-		//strcpy(author, "");
-		author[0] = 0;
+		string title, author, extra_praeamble;
+
+		title.assign("Orbits");
 
 
 		{
@@ -294,7 +292,7 @@ void orbit_type_repository::create_latex_report(std::string &prefix, int verbose
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

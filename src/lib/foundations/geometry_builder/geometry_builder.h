@@ -416,6 +416,7 @@ public:
 		// = sum(i = 0; i < v_len; i++) v[i]
 	int B;
 		// = sum(i= 0; i < b_len; i++) b[i]
+	int *V_partition; // [V + 1]
 
 	int *R; // [V]
 

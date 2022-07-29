@@ -671,7 +671,7 @@ void animate::animate_one_round(
 							orbiter_kernel_system::latex_interface L;
 							//latex_head_easy(fp);
 							L.head_easy_with_extras_in_the_praeamble(fp,
-									Opt->latex_extras_for_praeamble[i].c_str());
+									Opt->latex_extras_for_praeamble[i]);
 							fp << Opt->latex_label_text[i] << endl;
 							L.foot(fp);
 

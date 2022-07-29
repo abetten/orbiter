@@ -906,6 +906,72 @@ void vector_ge::read_column_csv(std::string &fname, actions::action *A, int col_
 	}
 }
 
+void vector_ge::read_column_csv_using_column_label(std::string &fname,
+		actions::action *A, std::string &column_label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::read_column_csv column_label = " << column_label << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	data_structures::spreadsheet S;
+	int n, i, me_sz;
+
+
+	init(A, verbose_level);
+
+	me_sz = A->make_element_size;
+
+	if (f_v) {
+		cout << "vector_ge::read_column_csv reading file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+	S.read_spreadsheet(fname, verbose_level);
+
+
+	int col_idx;
+
+	col_idx = S.find_column(column_label);
+
+
+	n = S.nb_rows - 1;
+
+	allocate(n, verbose_level);
+	for (i = 0; i < n; i++) {
+		string s;
+		int *data;
+		int sz;
+
+		S.get_string(s, i + 1, col_idx);
+
+		if (s.length() >= 2 && s[0] == '"' && s[s.length() - 1] == '"') {
+			string s2;
+
+			s2 = s.substr(1, s.length() - 2);
+			s = s2;
+		}
+		Int_vec_scan(s, data, sz);
+		if (sz != me_sz) {
+			cout << "vector_ge::read_column_csv sz != me_sz" << endl;
+			cout << "vector_ge::read_column_csv sz = " << sz << endl;
+			cout << "vector_ge::read_column_csv me_sz = " << me_sz << endl;
+			exit(1);
+		}
+		A->make_element(ith(i), data, 0 /*verbose_level*/);
+		FREE_int(data);
+	}
+
+	if (f_v) {
+		cout << "vector_ge::read_column_csv done" << endl;
+	}
+}
+
+
+
 void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, groups::sims *S, int verbose_level)
 {

@@ -31,26 +31,34 @@ latex_interface::~latex_interface()
 
 void latex_interface::head_easy(std::ostream& ost)
 {
+	std::string dummy;
+
+	dummy.assign("");
+
 	head(ost,
 		FALSE /* f_book */,
 		FALSE /* f_title */,
-		"", "",
+		dummy, dummy,
 		FALSE /*f_toc */,
 		FALSE /* f_landscape */,
 		FALSE /* f_12pt */,
 		FALSE /* f_enlarged_page */,
 		TRUE /* f_pagenumbers */,
-		NULL /* extras_for_preamble */);
+		dummy /* extras_for_preamble */);
 
 }
 
 void latex_interface::head_easy_with_extras_in_the_praeamble(
-		std::ostream& ost, const char *extras)
+		std::ostream& ost, std::string &extras)
 {
+	std::string dummy;
+
+	dummy.assign("");
+
 	head(ost,
 		FALSE /* f_book */,
 		FALSE /* f_title */,
-		"", "",
+		dummy, dummy,
 		FALSE /*f_toc */,
 		FALSE /* f_landscape */,
 		FALSE /* f_12pt */,
@@ -62,24 +70,28 @@ void latex_interface::head_easy_with_extras_in_the_praeamble(
 
 void latex_interface::head_easy_sideways(std::ostream& ost)
 {
+	std::string dummy;
+
+	dummy.assign("");
+
 	head(ost, FALSE /* f_book */,
 		FALSE /* f_title */,
-		"", "",
+		dummy, dummy,
 		FALSE /*f_toc */,
 		TRUE /* f_landscape */,
 		FALSE /* f_12pt */,
 		FALSE /* f_enlarged_page */,
 		TRUE /* f_pagenumbers */,
-		NULL /* extras_for_preamble */);
+		dummy /* extras_for_preamble */);
 
 }
 
 void latex_interface::head(std::ostream& ost,
 	int f_book, int f_title,
-	const char *title, const char *author,
+	std::string &title, std::string &author,
 	int f_toc, int f_landscape, int f_12pt,
 	int f_enlarged_page, int f_pagenumbers,
-	const char *extras_for_preamble)
+	std::string &extras_for_preamble)
 {
 	if (f_12pt) {
 		ost << "\\documentclass[12pt]{";
@@ -148,7 +160,7 @@ void latex_interface::head(std::ostream& ost,
 #endif
 		}
 
-	if (extras_for_preamble) {
+	if (extras_for_preamble.length()) {
 		ost << extras_for_preamble << endl;
 		}
 	ost << endl;

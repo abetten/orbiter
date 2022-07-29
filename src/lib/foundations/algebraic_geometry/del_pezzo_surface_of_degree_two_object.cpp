@@ -67,25 +67,25 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verb
 	vector<long int> Points;
 
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines before "
-				"Dom->enumerate_points" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines "
+				"before Dom->enumerate_points" << endl;
 	}
 	Dom->enumerate_points(Coefficient_vector,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines after "
-				"Dom->enumerate_points" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines "
+				"after Dom->enumerate_points" << endl;
 	}
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines The surface "
-				"has " << Points.size() << " points" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines "
+				"The surface has " << Points.size() << " points" << endl;
 	}
 
 
 	pal = NEW_OBJECT(geometry::points_and_lines);
 
-	pal->init(Dom->P, Points, verbose_level);
+	pal->init(Dom->P3, Points, verbose_level);
 
 
 
@@ -94,7 +94,8 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verb
 	}
 }
 
-void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &label, std::string &label_tex, int verbose_level)
+void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &label,
+		std::string &label_tex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -103,16 +104,22 @@ void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &la
 	}
 
 	{
-		char str[1000];
-		string fname;
-		char title[1000];
-		char author[1000];
 
-		snprintf(str, 1000, "%s_report.tex", label.c_str());
-		fname.assign(str);
-		snprintf(title, 1000, "Del Pezzo Surface  %s", label_tex.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+		fname.assign(label);
+		fname.append("_report.tex");
+
+		title.assign("Del Pezzo Surface ");
+		title.append(label_tex);
+
+
+
 
 
 		{
@@ -128,15 +135,17 @@ void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &la
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
-				cout << "del_pezzo_surface_of_degree_two_object::create_latex_report before report_properties" << endl;
+				cout << "del_pezzo_surface_of_degree_two_object::create_latex_report "
+						"before report_properties" << endl;
 			}
 			report_properties(ost, verbose_level);
 			if (f_v) {
-				cout << "del_pezzo_surface_of_degree_two_object::create_latex_report after report_properties" << endl;
+				cout << "del_pezzo_surface_of_degree_two_object::create_latex_report "
+						"after report_properties" << endl;
 			}
 
 
@@ -162,31 +171,36 @@ void del_pezzo_surface_of_degree_two_object::report_properties(std::ostream &ost
 	}
 
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::report_properties_simple before print_equation" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::report_properties "
+				"before print_equation" << endl;
 	}
 	print_equation(ost);
 
 #if 0
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::report_properties before print_general" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::report_properties "
+				"before print_general" << endl;
 	}
 	print_general(ost);
 #endif
 
 
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::report_properties before print_lines" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::report_properties "
+				"before print_lines" << endl;
 	}
 	pal->print_all_lines(ost);
 
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::report_properties before print_points" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::report_properties "
+				"before print_points" << endl;
 	}
 	print_points(ost);
 
 #if 0
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::report_properties print_tritangent_planes" << endl;
+		cout << "del_pezzo_surface_of_degree_two_object::report_properties "
+				"print_tritangent_planes" << endl;
 	}
 	print_tritangent_planes(ost);
 
@@ -233,7 +247,8 @@ void del_pezzo_surface_of_degree_two_object::print_equation(std::ostream &ost)
 	long int rk;
 
 	Dom->F->PG_element_rank_modified_lint(Coefficient_vector, 1, 15, rk);
-	ost << "The point rank of the equation over GF$(" << Dom->F->q << ")$ is " << rk << "\\\\" << endl;
+	ost << "The point rank of the equation over GF$("
+			<< Dom->F->q << ")$ is " << rk << "\\\\" << endl;
 
 	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
 

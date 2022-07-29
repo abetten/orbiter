@@ -412,6 +412,99 @@ int rem;
     return hash;
 }
 
+void algorithms::union_of_sets(std::string &fname_set_of_sets,
+		std::string &fname_input, std::string &fname_output, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::union_of_sets" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	long int *M;
+	int m, n;
+
+	Fio.lint_matrix_read_csv(fname_set_of_sets, M, m, n, verbose_level);
+
+	if (f_v) {
+		cout << "graph_theory_domain::union_of_sets "
+				"the file " << fname_set_of_sets
+				<< " contains " << m << " sets of size " << n << endl;
+	}
+
+	std::vector<std::vector<int> > Solutions;
+	int solution_size;
+	int nb_solutions;
+
+
+	Fio.count_number_of_solutions_in_file_and_get_solution_size(
+			fname_input,
+			nb_solutions, solution_size,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::union_of_sets the file " << fname_input << " contains " << nb_solutions << " solutions" << endl;
+	}
+
+
+	Fio.read_solutions_from_file_size_is_known(fname_input,
+		Solutions, solution_size,
+		verbose_level);
+
+	int i, j, h, a, cnt;
+	data_structures::sorting Sorting;
+	long int *S;
+	long int s;
+	int len, sz;
+
+	len = Solutions.size();
+	if (len != nb_solutions) {
+		cout << "algorithms::union_of_sets len != nb_solutions" << endl;
+		exit(1);
+	}
+	sz = solution_size * n;
+	S = NEW_lint(len * sz);
+
+
+	cnt = 0;
+	for (i = 0; i < len; i++) {
+		vector<long int> U;
+
+		for (j = 0; j < solution_size; j++) {
+
+			a = Solutions[i][j];
+
+			for (h = 0; h < n; h++) {
+				s = M[a * n + h];
+				S[cnt * sz + j * n + h] = s;
+			}
+		}
+
+		Sorting.lint_vec_heapsort(S + cnt * sz, sz);
+
+		if (Sorting.lint_vec_test_if_set(S + cnt * sz, sz)) {
+			cnt++;
+		}
+	}
+
+
+	Fio.lint_matrix_write_csv(fname_output, S, cnt, sz);
+	if (f_v) {
+		cout << "graph_theory_domain::union_of_sets "
+				"written file " << fname_output
+				<< " of size " << Fio.file_size(fname_output) << endl;
+	}
+
+
+
+	FREE_lint(S);
+	if (f_v) {
+		cout << "graph_theory_domain::union_of_sets done" << endl;
+	}
+
+}
 
 
 }}}

@@ -513,6 +513,8 @@ void surface_object::find_double_six_and_rearrange_lines(
 	Surf->list_starter_configurations(Lines0, 27, 
 		line_intersections, Starter_Table, nb_starter, verbose_level);
 
+		// 432 = 36 * 12
+		// is the number of double sixes with a distinguished line.
 
 	if (nb_starter != 432) {
 		cout << "surface_object::find_double_six_and_rearrange_lines nb_starter != 432" << endl;

@@ -529,7 +529,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 				cout << "poset_classification::post_processing before make_flag_orbits_on_relations" << endl;
 			}
 			make_flag_orbits_on_relations(
-					depth, fname_prefix.c_str(), verbose_level);
+					depth, fname_prefix, verbose_level);
 			if (f_v) {
 				cout << "poset_classification::post_processing after make_flag_orbits_on_relations" << endl;
 			}

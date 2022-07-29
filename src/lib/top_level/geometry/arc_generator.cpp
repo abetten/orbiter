@@ -947,8 +947,11 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		ofstream f(fname);
 		int f_book = TRUE;
 		int f_title = TRUE;
-		char title[1000];
-		const char *author = "Orbiter";
+		string title, author, extra_praeamble;
+		char str[1000];
+
+
+		author.assign("Orbiter");
 		int f_toc = TRUE;
 		int f_landscape = FALSE;
 		int f_12pt = FALSE;
@@ -957,18 +960,20 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		orbiter_kernel_system::latex_interface L;
 
 		if (Descr->target_size == PA->q + 2) {
-			sprintf(title, "Hyperovals over ${\\mathbb F}_{%d}$", PA->q);
+			sprintf(str, "Hyperovals over ${\\mathbb F}_{%d}$", PA->q);
+			title.assign(str);
 			}
 		else {
-			sprintf(title, "Arcs over  ${\\mathbb F}_{%d}$ "
+			sprintf(str, "Arcs over  ${\\mathbb F}_{%d}$ "
 					"of size $%d$", PA->q, Descr->target_size);
+			title.assign(str);
 			}
 		cout << "Writing file " << fname << " with "
 				<< Iso.Reps->count << " arcs:" << endl;
 		L.head(f, f_book, f_title,
 			title, author,
 			f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		report_do_the_work(f, Iso, verbose_level);

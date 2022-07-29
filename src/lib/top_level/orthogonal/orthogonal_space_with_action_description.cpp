@@ -21,8 +21,10 @@ orthogonal_space_with_action_description::orthogonal_space_with_action_descripti
 {
 	epsilon = 0;
 	n = 0;
+
 	//input_q;
 	F = NULL;
+
 	f_label_txt = FALSE;
 	//std::string label_txt;
 	f_label_tex = FALSE;
@@ -55,6 +57,7 @@ int orthogonal_space_with_action_description::read_arguments(
 	input_q.assign(argv[2]);
 	//cout << "q = " << input_q << endl;
 	//cout << "orthogonal_space_with_action_description::read_arguments done" << endl;
+
 	for (i = 3; i < argc; i++) {
 
 		//cout << "projective_space_object_classifier_description::read_arguments, next argument is " << argv[i] << endl;

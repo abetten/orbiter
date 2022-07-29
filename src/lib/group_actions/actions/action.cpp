@@ -3430,19 +3430,27 @@ void action::apply_based_on_text(std::string &input_text, std::string &input_gro
 		}
 	}
 
-	string fname;
 
-	fname.assign(label);
-	fname.append("_apply.tex");
 
 
 	{
-		char title[1000];
-		char author[1000];
 
-		snprintf(title, 1000, "Application of Group Element in $%s$", label_tex.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		fname.assign(label);
+		fname.append("_apply.tex");
+
+		snprintf(str, 1000, "Application of Group Element in $%s$", label_tex.c_str());
+		title.assign(str);
+
 
 
 		{
@@ -3458,7 +3466,7 @@ void action::apply_based_on_text(std::string &input_text, std::string &input_gro
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;
@@ -3539,20 +3547,22 @@ void action::multiply_based_on_text(std::string &data_A, std::string &data_B, in
 		cout << endl;
 	}
 
-	string fname;
-
-	fname.assign(label);
-	fname.append("_mult.tex");
-
 
 	{
-		char title[1000];
-		char author[1000];
 
-		snprintf(title, 1000, "Multiplication of Group Elements in $%s$", label_tex.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
 
+
+		char str[1000];
+
+		fname.assign(label);
+		fname.append("_mult.tex");
+
+		snprintf(str, 1000, "Multiplication of Group Elements in $%s$", label_tex.c_str());
+		title.assign(str);
 
 		{
 			ofstream ost(fname);
@@ -3567,7 +3577,7 @@ void action::multiply_based_on_text(std::string &data_A, std::string &data_B, in
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;
@@ -3639,19 +3649,24 @@ void action::inverse_based_on_text(std::string &data_A, int verbose_level)
 		cout << endl;
 	}
 
-	string fname;
-
-	fname.assign(label);
-	fname.append("_inv.tex");
 
 
 	{
-		char title[1000];
-		char author[1000];
 
-		snprintf(title, 1000, "Inverse of Group Element in $%s$", label_tex.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		fname.assign(label);
+		fname.append("_inv.tex");
+
+		snprintf(str, 1000, "Inverse of Group Element in $%s$", label_tex.c_str());
+		title.assign(str);
 
 
 		{
@@ -3667,7 +3682,7 @@ void action::inverse_based_on_text(std::string &data_A, int verbose_level)
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;
@@ -3737,19 +3752,25 @@ void action::consecutive_powers_based_on_text(std::string &data_A,
 	}
 
 
-	string fname;
-
-	fname.assign(label);
-	fname.append("_all_powers.tex");
-
 
 	{
-		char title[1000];
-		char author[1000];
 
-		snprintf(title, 1000, "Consecutive Powers of Group Element in $%s$", label_tex.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		fname.assign(label);
+		fname.append("_all_powers.tex");
+
+		snprintf(str, 1000, "Consecutive Powers of Group Element in $%s$", label_tex.c_str());
+		title.assign(str);
+
 
 
 		{
@@ -3766,7 +3787,7 @@ void action::consecutive_powers_based_on_text(std::string &data_A,
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;
@@ -3893,19 +3914,22 @@ void action::raise_to_the_power_based_on_text(std::string &data_A,
 		cout << endl;
 	}
 
-	string fname;
-
-	fname.assign(label);
-	fname.append("_power.tex");
-
 
 	{
-		char title[1000];
-		char author[1000];
 
-		snprintf(title, 1000, "Power of Group Element in $%s$", label_tex.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		fname.assign(label);
+		fname.append("_power.tex");
+
+		snprintf(str, 1000, "Power of Group Element in $%s$", label_tex.c_str());
+		title.assign(str);
 
 
 		{
@@ -3921,7 +3945,7 @@ void action::raise_to_the_power_based_on_text(std::string &data_A,
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;

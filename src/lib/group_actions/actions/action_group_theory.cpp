@@ -1212,7 +1212,7 @@ void action::read_conjugacy_classes_and_normalizers(
 
 	{
 		ofstream fp(fname_latex);
-		string title;
+		string title, author, extra_praeamble;
 		orbiter_kernel_system::latex_interface L;
 
 		title.assign("Conjugacy classes of ");
@@ -1220,12 +1220,14 @@ void action::read_conjugacy_classes_and_normalizers(
 		title.append(label_latex);
 		title.append("$");
 
+		author.assign("computed by Orbiter and MAGMA");
+
 		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
-			title.c_str(), "computed by Orbiter and MAGMA" /* const char *author */,
+			title, author /* const char *author */,
 			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 
 		fp << "\\section{Conjugacy classes in $" << label_latex << "$}" << endl;
@@ -1722,17 +1724,17 @@ void action::report_fixed_objects(int *Elt,
 
 	{
 		ofstream fp(fname_latex);
-		char title[2000];
+		string title, author, extra_praeamble;
 		orbiter_kernel_system::latex_interface L;
 
-		snprintf(title, 2000, "Fixed Objects");
+		title.assign("Fixed Objects");
 
 		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
-			title, "" /* const char *author */,
+			title, author /* const char *author */,
 			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 
 		fp << "\\section{Fixed Objects}" << endl;

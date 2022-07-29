@@ -2291,7 +2291,8 @@ O_5_2_incidence_matrix.csv:
 		-end
 	open O_5_2_incidence_matrix_draw.bmp
 
-
+#O(5,2) projectively = Q(4,2) = (dual of) W(3,2) = W(3,2) 
+# recall that W(3,2) and Q(4,q) are self dual if q is even
 
 
 Op_6_2:
@@ -6185,6 +6186,7 @@ F_abcd_sweep_4_27_q7:
 
 
 
+
 F_alpha_beta_gamma_delta_q7_override_group:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
@@ -6234,6 +6236,28 @@ F_alpha_beta_gamma_delta_sweep_4_q3:
 
 # cubic surfaces with 15 lines:
 
+
+surface_15lines_q7_1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-control_six_arcs -end \
+			-define_surface S -q 7 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+				"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+				$(F_ALPHA_BETA_GAMMA_DELTA) \
+				"alpha=6,beta=4,gamma=2,delta=2" \
+				"\D\alpha=6,\beta=4,\gamma=2,\delta=2\D" \
+			-end \
+		-end \
+		-with S -do \
+			-cubic_surface_activity \
+				-report \
+		-end
+		pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
+		open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
 
 
 

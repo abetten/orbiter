@@ -20,6 +20,8 @@ void projective_space_global::map(
 		std::string &ring_label,
 		std::string &formula_label,
 		std::string &evaluate_text,
+		long int *&Image_pts,
+		int &N_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -30,6 +32,7 @@ void projective_space_global::map(
 	if (f_v) {
 		cout << "projective_space_global::map PA->P->n = " << PA->P->n << endl;
 	}
+
 
 
 	int idx;
@@ -88,19 +91,19 @@ void projective_space_global::map(
 			Int_matrix_print(coefficient_vector, List->size(), Ring->get_nb_monomials());
 		}
 
-		long int *Pts;
-		int N;
+
 
 		Ring->evaluate_regular_map(
 				coefficient_vector,
 				List->size(),
 				PA->P,
-				Pts, N,
+				Image_pts, N_points,
 				verbose_level);
+
 
 		if (f_v) {
 			cout << "projective_space_global::map permutation:" << endl;
-			Lint_vec_print(cout, Pts, N);
+			Lint_vec_print(cout, Image_pts, N_points);
 			cout << endl;
 		}
 
@@ -121,7 +124,20 @@ void projective_space_global::map(
 				evaluate_text,
 				coefficient_vector,
 				verbose_level);
+
+
+		Ring->evaluate_regular_map(
+				coefficient_vector,
+				1,
+				PA->P,
+				Image_pts, N_points,
+				verbose_level);
+
+
 		FREE_int(coefficient_vector);
+
+
+
 	}
 	else {
 		cout << "symbol table entry must be either a formula or a collection" << endl;
@@ -820,12 +836,14 @@ void projective_space_global::do_classify_cubic_curves(
 	if (f_v) {
 		cout << "projective_space_global::do_classify_cubic_curves creating cheat sheet" << endl;
 	}
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-	snprintf(title, 1000, "Cubic Curves in PG$(2,%d)$", PA->F->q);
-	strcpy(author, "");
-	snprintf(fname, 1000, "Cubic_curves_q%d.tex", PA->F->q);
+	string fname, title, author, extra_praeamble;
+	char str[1000];
+
+	snprintf(str, 1000, "Cubic Curves in PG$(2,%d)$", PA->F->q);
+	title.assign(str);
+	author.assign("");
+	snprintf(str, 1000, "Cubic_curves_q%d.tex", PA->F->q);
+	fname.assign(str);
 
 	{
 		ofstream fp(fname);
@@ -841,7 +859,7 @@ void projective_space_global::do_classify_cubic_curves(
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 		fp << "\\subsection*{" << title << "}" << endl;
 

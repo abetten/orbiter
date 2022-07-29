@@ -258,6 +258,13 @@ public:
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	groups::strong_generators *get_strong_generators();
+	int is_subgroup_of(any_group *AG_secondary, int verbose_level);
+	void set_of_coset_representatives(any_group *AG_secondary,
+			data_structures_groups::vector_ge *&coset_reps,
+			int verbose_level);
+	void report_coset_reps(
+			data_structures_groups::vector_ge *coset_reps,
+			int verbose_level);
 
 	// any_group_linear.cpp:
 	void classes_based_on_normal_form(int verbose_level);
@@ -618,6 +625,9 @@ public:
 	std::string Andre_Bruck_Bose_construction_label;
 
 
+	int f_is_subgroup_of;
+	int f_coset_reps;
+
 
 
 	group_theoretic_activity_description();
@@ -645,8 +655,12 @@ public:
 
 	any_group *AG;
 
-	actions::action *A1;
-	actions::action *A2;
+	any_group *AG_secondary; // used in Andre Bruck Bose, for instance
+
+#if 0
+	actions::action *A1; // AG->A_base; the default group action
+	actions::action *A2; // AG->A; secondary group action, used in Andre Bruck Bose
+#endif
 
 
 
@@ -654,6 +668,9 @@ public:
 	~group_theoretic_activity();
 	void init_group(group_theoretic_activity_description *Descr,
 			any_group *AG,
+			int verbose_level);
+	void init_secondary_group(group_theoretic_activity_description *Descr,
+			any_group *AG_secondary,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void apply(int verbose_level);
@@ -848,6 +865,61 @@ public:
 
 
 };
+
+
+
+// #############################################################################
+// polynomial_ring_activity.cpp
+// #############################################################################
+
+
+//! a polynomial ring activity
+
+class polynomial_ring_activity {
+public:
+
+	ring_theory::polynomial_ring_activity_description *Descr;
+	ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+
+	polynomial_ring_activity();
+	~polynomial_ring_activity();
+	void init(
+			ring_theory::polynomial_ring_activity_description *Descr,
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
+
+// #############################################################################
+// vector_ge_builder.cpp
+// #############################################################################
+
+
+
+//! to build a vector of group elements based on class vector_ge_description
+
+
+class vector_ge_builder {
+
+public:
+
+	data_structures_groups::vector_ge_description *Descr;
+
+	data_structures_groups::vector_ge *V;
+
+
+	vector_ge_builder();
+	~vector_ge_builder();
+	void init(data_structures_groups::vector_ge_description *Descr,
+			int verbose_level);
+
+};
+
+
 
 
 

@@ -1658,7 +1658,7 @@ void file_io::lint_matrix_read_csv(std::string &fname,
 	{
 		data_structures::spreadsheet S;
 
-		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+		S.read_spreadsheet(fname, verbose_level - 1);
 
 		m = S.nb_rows - 1;
 		n = S.nb_cols - 1;
@@ -2881,7 +2881,7 @@ void file_io::write_incidence_matrix_to_file(std::string &fname,
 	}
 }
 
-#define READ_INCIDENCE_BUFSIZE 1000000
+//#define READ_INCIDENCE_BUFSIZE 1000000
 
 void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 		std::string &inc_file_name, int inc_file_idx, int verbose_level)
@@ -2890,7 +2890,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 	int f_vv = (verbose_level >= 2);
 	int nb_inc;
 	int a, h, cnt;
-	char buf[READ_INCIDENCE_BUFSIZE];
+	char *buf;
 	char *p_buf;
 	int *X = NULL;
 	data_structures::string_tools ST;
@@ -2900,13 +2900,21 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 		cout << "read_incidence_matrix_from_inc_file "
 			<< inc_file_name << " no " << inc_file_idx << endl;
 	}
+
+	file_io Fio;
+	int sz;
+
+	sz = Fio.file_size(inc_file_name);
+
+	buf = NEW_char(sz);
+
 	{
 		ifstream f(inc_file_name);
 
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+		f.getline(buf, sz, '\n');
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -2922,7 +2930,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -2978,6 +2986,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 		}
 	}
 	FREE_int(X);
+	FREE_char(buf);
 }
 
 
@@ -2988,7 +2997,7 @@ void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int a, h, cnt;
-	char buf[READ_INCIDENCE_BUFSIZE];
+	char *buf;
 	char *p_buf;
 	int *X = NULL;
 	data_structures::string_tools ST;
@@ -2997,13 +3006,25 @@ void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
 	if (f_v) {
 		cout << "file_io::read_incidence_file " << inc_file_name << endl;
 	}
+
+	file_io Fio;
+	int sz;
+
+	sz = Fio.file_size(inc_file_name);
+
+	if (f_v) {
+		cout << "file_io::read_incidence_file file size = " << sz << endl;
+	}
+
+	buf = NEW_char(sz);
+
 	{
 		ifstream f(inc_file_name);
 
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+		f.getline(buf, sz, '\n');
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -3019,7 +3040,7 @@ void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -3066,6 +3087,7 @@ void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
 		}
 	}
 	FREE_int(X);
+	FREE_char(buf);
 }
 
 
@@ -3076,7 +3098,7 @@ void file_io::read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &G
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int a, h, cnt;
-	char buf[READ_INCIDENCE_BUFSIZE];
+	char *buf;
 	char *p_buf;
 	int *X = NULL;
 	data_structures::string_tools ST;
@@ -3085,13 +3107,21 @@ void file_io::read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &G
 	if (f_v) {
 		cout << "file_io::read_incidence_by_row_ranks_file " << inc_file_name << endl;
 	}
+
+	file_io Fio;
+	int sz;
+
+	sz = Fio.file_size(inc_file_name);
+
+	buf = NEW_char(sz);
+
 	{
 		ifstream f(inc_file_name);
 
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+		f.getline(buf, sz, '\n');
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -3112,7 +3142,7 @@ void file_io::read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &G
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -3159,6 +3189,7 @@ void file_io::read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &G
 		FREE_int(Row);
 		FREE_int(X);
 	}
+	FREE_char(buf);
 }
 
 
@@ -3170,7 +3201,7 @@ int file_io::inc_file_get_number_of_geometries(
 	int f_vv = (verbose_level >= 2);
 	int nb_inc;
 	int a, h, cnt;
-	char buf[READ_INCIDENCE_BUFSIZE];
+	char *buf;
 	char *p_buf;
 	int *X = NULL;
 	int m, n;
@@ -3181,13 +3212,21 @@ int file_io::inc_file_get_number_of_geometries(
 		cout << "inc_file_get_number_of_geometries "
 			<< inc_file_name << endl;
 	}
+
+	file_io Fio;
+	int sz;
+
+	sz = Fio.file_size(inc_file_name);
+
+	buf = NEW_char(sz);
+
 	{
 		ifstream f(inc_file_name);
 
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+		f.getline(buf, sz, '\n');
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -3203,7 +3242,7 @@ int file_io::inc_file_get_number_of_geometries(
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -3243,6 +3282,7 @@ int file_io::inc_file_get_number_of_geometries(
 		}
 	}
 	FREE_int(X);
+	FREE_char(buf);
 	return cnt;
 }
 
@@ -4431,6 +4471,21 @@ void file_io::do_csv_file_latex(std::string &fname,
 	}
 
 
+	string author;
+	string title;
+	string extra_praeamble;
+
+
+	char str[1000];
+
+	snprintf(str, 1000, "File");
+	title.assign(str);
+	snprintf(str, 1000, "Orbiter");
+	author.assign(str);
+
+
+
+
 	string fname_out;
 	data_structures::string_tools ST;
 
@@ -4459,13 +4514,13 @@ void file_io::do_csv_file_latex(std::string &fname,
 			L.head(ost,
 				FALSE /* f_book */,
 				TRUE /* f_title */,
-				"File", "Orbiter",
+				title, author,
 				FALSE /*f_toc */,
 				FALSE /* f_landscape */,
 				FALSE /* f_12pt */,
 				FALSE /* f_enlarged_page */,
 				TRUE /* f_pagenumbers */,
-				NULL /* extras_for_preamble */);
+				extra_praeamble /* extras_for_preamble */);
 		}
 
 		S.print_table_latex(ost,
@@ -4830,6 +4885,199 @@ void file_io::extract_from_makefile(std::string &fname, std::string &label,
 		cout << "file_io::extract_from_makefile done" << endl;
 	}
 }
+
+
+void file_io::grade_statistic_from_csv(std::string &fname_csv,
+		int f_midterm1, std::string &midterm1_label,
+		int f_midterm2, std::string &midterm2_label,
+		int f_final, std::string &final_label,
+		int f_oracle_grade, std::string &oracle_grade_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::grade_statistic_from_csv" << endl;
+	}
+
+	data_structures::spreadsheet S;
+
+	S.read_spreadsheet(fname_csv, verbose_level);
+
+
+	if (f_v) {
+		cout << "file_io::grade_statistic_from_csv S.nb_rows = " << S.nb_rows << endl;
+		cout << "file_io::grade_statistic_from_csv S.nb_cols = " << S.nb_cols << endl;
+	}
+
+	int m1_idx, m2_idx, f_idx, o_idx;
+
+	m1_idx = S.find_column(midterm1_label);
+	m2_idx = S.find_column(midterm2_label);
+	f_idx = S.find_column(final_label);
+	o_idx = S.find_column(oracle_grade_label);
+
+	int *M1_score;
+	int *M2_score;
+	int *F_score;
+	std::string *O_grade;
+	int i, j, a;
+
+	M1_score = NEW_int(S.nb_rows);
+	M2_score = NEW_int(S.nb_rows);
+	F_score = NEW_int(S.nb_rows);
+	O_grade = new string[S.nb_rows];
+
+	for (i = 0; i < S.nb_rows - 1; i++) {
+		M1_score[i] = S.get_int(i + 1, m1_idx);
+		M2_score[i] = S.get_int(i + 1, m2_idx);
+		F_score[i] = S.get_int(i + 1, f_idx);
+		S.get_string(O_grade[i], i + 1, o_idx);
+	}
+
+	int m1_count_dec[10];
+	int m2_count_dec[10];
+	int f_count_dec[10];
+
+	Int_vec_zero(m1_count_dec, 10);
+	Int_vec_zero(m2_count_dec, 10);
+	Int_vec_zero(f_count_dec, 10);
+
+	for (i = 0; i < S.nb_rows - 1; i++) {
+		a = M1_score[i];
+		j = a / 10;
+		if (j >= 10) {
+			j = 0;
+		}
+		if (j < 0) {
+			j = 0;
+		}
+		m1_count_dec[j]++;
+	}
+
+	for (i = 0; i < S.nb_rows - 1; i++) {
+		a = M2_score[i];
+		j = a / 10;
+		if (j >= 10) {
+			j = 9;
+		}
+		if (j < 0) {
+			j = 0;
+		}
+		m2_count_dec[j]++;
+	}
+
+	for (i = 0; i < S.nb_rows - 1; i++) {
+		a = F_score[i];
+		j = a / 10;
+		if (j >= 10) {
+			j = 9;
+		}
+		if (j < 0) {
+			j = 0;
+		}
+		f_count_dec[j]++;
+	}
+
+	int *T;
+
+	T = NEW_int(10 * 3);
+	for (i = 0; i < 10; i++) {
+		T[i * 3 + 0] = m1_count_dec[i];
+		T[i * 3 + 1] = m2_count_dec[i];
+		T[i * 3 + 2] = f_count_dec[i];
+	}
+
+	string fname_summary;
+
+	data_structures::string_tools ST;
+
+
+	fname_summary.assign(fname_csv);
+	ST.chop_off_extension(fname_summary);
+	fname_summary.append("_summary.csv");
+
+	int_matrix_write_csv(fname_summary, T, 10, 3);
+
+	if (f_v) {
+		cout << "Written file " << fname_summary << " of size " << file_size(fname_summary) << endl;
+	}
+
+
+#if 0
+	string author;
+	string title;
+	string extra_praeamble;
+
+
+	char str[1000];
+
+	snprintf(str, 1000, "File");
+	title.assign(str);
+	snprintf(str, 1000, "Orbiter");
+	author.assign(str);
+
+
+
+
+	string fname_out;
+	data_structures::string_tools ST;
+
+	fname_out.assign(fname_csv);
+	ST.chop_off_extension(fname_out);
+	fname_out.append(".tex");
+
+	{
+		ofstream ost(fname_out);
+		latex_interface L;
+
+		//S.print_table_latex_all_columns(ost, FALSE /* f_enclose_in_parentheses */);
+
+		int *f_column_select;
+		int j;
+
+		f_column_select = NEW_int(S.nb_cols);
+		for (j = 0; j < S.nb_cols; j++) {
+			f_column_select[j] = TRUE;
+		}
+		f_column_select[0] = FALSE;
+
+
+		if (f_produce_latex_header) {
+			//L.head_easy(ost);
+			L.head(ost,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				FALSE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				extra_praeamble /* extras_for_preamble */);
+		}
+
+		S.print_table_latex(ost,
+				f_column_select,
+				FALSE /* f_enclose_in_parentheses */,
+				nb_lines_per_table);
+
+		FREE_int(f_column_select);
+
+		if (f_produce_latex_header) {
+			L.foot(ost);
+		}
+
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+#endif
+
+
+	if (f_v) {
+		cout << "file_io::grade_statistic_from_csv done" << endl;
+	}
+}
+
 
 
 

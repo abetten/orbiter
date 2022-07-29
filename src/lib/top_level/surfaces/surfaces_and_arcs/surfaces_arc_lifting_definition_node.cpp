@@ -115,14 +115,16 @@ void surfaces_arc_lifting_definition_node::report(int verbose_level)
 
 	sprintf(fname_base, "clebsch_maps_surface_%d", orbit_idx);
 
-	char title[1000];
-	char author[1000];
+	char str[1000];
+	string title, author, extra_praeamble;
+
 	string fname_report;
 
 	fname_report.assign(fname_base);
 	fname_report.append(".tex");
-	snprintf(title, 1000, "Clebsch maps of surface %d", orbit_idx);
-	strcpy(author, "");
+	snprintf(str, 1000, "Clebsch maps of surface %d", orbit_idx);
+	title.assign(str);
+
 
 	{
 		ofstream fp(fname_report.c_str());
@@ -135,7 +137,7 @@ void surfaces_arc_lifting_definition_node::report(int verbose_level)
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		report2(fp, verbose_level);

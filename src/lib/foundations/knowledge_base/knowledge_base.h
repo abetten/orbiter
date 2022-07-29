@@ -77,6 +77,22 @@ public:
 	int tensor_orbits_nb_reps(int n);
 	long int *tensor_orbits_rep(int n, int idx);
 
+	void retrieve_BLT_set_from_database_embedded(
+			field_theory::finite_field *F,
+			int BLT_k,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	void retrieve_BLT_set_from_database(
+			field_theory::finite_field *F,
+			int f_embedded,
+			int BLT_k,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+
 	// finitefield_tables.cpp:
 	void get_primitive_polynomial(std::string &poly, int p, int e, int verbose_level);
 

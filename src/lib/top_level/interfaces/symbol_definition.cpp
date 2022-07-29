@@ -44,7 +44,7 @@ symbol_definition::symbol_definition()
 	Group_modification_description = NULL;
 
 	f_formula = FALSE;
-	F = NULL;
+	Formula = NULL;
 	//std::string label;
 	//std::string label_tex;
 	//std::string managed_variables;
@@ -113,6 +113,9 @@ symbol_definition::symbol_definition()
 
 	f_geometry_builder = FALSE;
 	Geometry_builder_description = NULL;
+
+	f_vector_ge = FALSE;
+	Vector_ge_description = NULL;
 
 }
 
@@ -303,8 +306,8 @@ void symbol_definition::read_definition(
 
 
 
-		F = NEW_OBJECT(expression_parser::formula);
-		F->init(label, label_tex, managed_variables, formula_text, verbose_level);
+		Formula = NEW_OBJECT(expression_parser::formula);
+		Formula->init(label, label_tex, managed_variables, formula_text, verbose_level);
 
 	}
 
@@ -682,6 +685,30 @@ void symbol_definition::read_definition(
 			Geometry_builder_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-vector_ge") == 0) {
+		f_vector_ge = TRUE;
+
+
+		Vector_ge_description = NEW_OBJECT(data_structures_groups::vector_ge_description);
+		if (f_v) {
+			cout << "reading -vector_ge" << endl;
+		}
+		i += Vector_ge_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-vector_ge" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-vector_ge ";
+			Vector_ge_description->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -770,7 +797,7 @@ void symbol_definition::perform_definition(int verbose_level)
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_formula" << endl;
 		}
-		definition_of_formula(F, verbose_level);
+		definition_of_formula(Formula, verbose_level);
 		if (f_v) {
 			cout << "symbol_definition::perform_definition after definition_of_formula" << endl;
 		}
@@ -920,6 +947,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after do_geometry_builder" << endl;
 		}
 	}
+	else if (f_vector_ge) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_vector_ge" << endl;
+		}
+		definition_of_vector_ge(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_vector_ge" << endl;
+		}
+	}
 
 
 
@@ -1042,6 +1078,10 @@ void symbol_definition::print()
 		cout << "-geometry_builder ";
 		Geometry_builder_description->print();
 	}
+	if (f_vector_ge) {
+		cout << "-vector_g ";
+		Vector_ge_description->print();
+	}
 }
 
 
@@ -1118,48 +1158,26 @@ void symbol_definition::definition_of_polynomial_ring(int verbose_level)
 }
 
 
+
 void symbol_definition::definition_of_projective_space(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space" << endl;
-	}
-	field_theory::finite_field *F;
-	data_structures::string_tools ST;
-
-	if (ST.starts_with_a_number(Projective_space_with_action_description->input_q)) {
-		int q;
-
-		q = ST.strtoi(Projective_space_with_action_description->input_q);
-		if (f_v) {
-			cout << "symbol_definition::definition_of_projective_space "
-					"creating the finite field of order " << q << endl;
-		}
-		F = NEW_OBJECT(field_theory::finite_field);
-		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
-		if (f_v) {
-			cout << "symbol_definition::definition_of_projective_space "
-					"the finite field of order " << q << " has been created" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "symbol_definition::definition_of_projective_space "
-					"using existing finite field " << Projective_space_with_action_description->input_q << endl;
-		}
-		int idx;
-		idx = Sym->Orbiter_top_level_session->find_symbol(Projective_space_with_action_description->input_q);
-		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+		cout << "symbol_definition::definition_of_projective_space, verbose_level=" << verbose_level << endl;
 	}
 
-	Projective_space_with_action_description->F = F;
+
+	load_finite_field(Projective_space_with_action_description->input_q,
+			Projective_space_with_action_description->F,
+			verbose_level);
+
 
 	int f_semilinear;
 	number_theory::number_theory_domain NT;
 
 
-	if (NT.is_prime(F->q)) {
+	if (NT.is_prime(Projective_space_with_action_description->F->q)) {
 		f_semilinear = FALSE;
 	}
 	else {
@@ -1177,7 +1195,8 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space before PA->init" << endl;
 	}
-	PA->init(Projective_space_with_action_description->F, Projective_space_with_action_description->n,
+	PA->init(Projective_space_with_action_description->F,
+			Projective_space_with_action_description->n,
 		f_semilinear,
 		TRUE /*f_init_incidence_structure*/,
 		verbose_level - 2);
@@ -1217,41 +1236,18 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_orthogonal_space" << endl;
 	}
-	field_theory::finite_field *F;
-	data_structures::string_tools ST;
 
-	if (ST.starts_with_a_number(Orthogonal_space_with_action_description->input_q)) {
-		int q;
 
-		q = ST.strtoi(Orthogonal_space_with_action_description->input_q);
-		if (f_v) {
-			cout << "symbol_definition::definition_of_orthogonal_space "
-					"creating finite field of order " << q << endl;
-		}
-		F = NEW_OBJECT(field_theory::finite_field);
-		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
-		if (f_v) {
-			cout << "symbol_definition::definition_of_orthogonal_space "
-					"creating finite field of order " << q << " done" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "symbol_definition::definition_of_orthogonal_space "
-					"using existing finite field " << Orthogonal_space_with_action_description->input_q << endl;
-		}
-		int idx;
-		idx = Sym->Orbiter_top_level_session->find_symbol(Orthogonal_space_with_action_description->input_q);
-		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
-	}
+	load_finite_field(Orthogonal_space_with_action_description->input_q,
+			Orthogonal_space_with_action_description->F,
+			verbose_level);
 
-	Orthogonal_space_with_action_description->F = F;
 
 	int f_semilinear;
 	number_theory::number_theory_domain NT;
 
 
-	if (NT.is_prime(F->q)) {
+	if (NT.is_prime(Orthogonal_space_with_action_description->F->q)) {
 		f_semilinear = FALSE;
 	}
 	else {
@@ -1294,38 +1290,11 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 		cout << "symbol_definition::definition_of_linear_group" << endl;
 	}
 
-	field_theory::finite_field *F;
-	data_structures::string_tools ST;
-
-	if (ST.starts_with_a_number(Linear_group_description->input_q)) {
-		int q;
-
-		q = ST.strtoi(Linear_group_description->input_q);
-		if (f_v) {
-			cout << "symbol_definition::definition "
-					"creating finite field of order " << q << endl;
-		}
-		F = NEW_OBJECT(field_theory::finite_field);
-		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
-		if (f_v) {
-			cout << "symbol_definition::definition "
-					"creating finite field of order " << q << " done" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "symbol_definition::definition "
-					"using existing finite field " << Linear_group_description->input_q << endl;
-		}
-		int idx;
-		idx = Sym->Orbiter_top_level_session->find_symbol(Linear_group_description->input_q);
-		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
-	}
+	load_finite_field(Linear_group_description->input_q,
+			Linear_group_description->F,
+			verbose_level);
 
 
-
-	Linear_group_description->F = F;
-	//q = Descr->input_q;
 
 	groups::linear_group *LG;
 
@@ -1516,7 +1485,7 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 
 
 void symbol_definition::definition_of_formula(
-		expression_parser::formula *F,
+		expression_parser::formula *Formula,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1529,7 +1498,7 @@ void symbol_definition::definition_of_formula(
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
-	Symb->init_formula(define_label, F, verbose_level);
+	Symb->init_formula(define_label, Formula, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_formula before add_symbol_table_entry" << endl;
 	}
@@ -2349,6 +2318,95 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 		cout << "symbol_definition::do_geometry_builder done" << endl;
 	}
 }
+
+void symbol_definition::load_finite_field(std::string &input_q,
+		field_theory::finite_field *&F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::load_finite_field" << endl;
+	}
+	data_structures::string_tools ST;
+
+	if (ST.starts_with_a_number(input_q)) {
+		int q;
+
+		q = ST.strtoi(input_q);
+		if (f_v) {
+			cout << "symbol_definition::load_finite_field "
+					"creating the finite field of order " << q << endl;
+		}
+		F = NEW_OBJECT(field_theory::finite_field);
+		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
+		if (f_v) {
+			cout << "symbol_definition::load_finite_field "
+					"the finite field of order " << q << " has been created" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "symbol_definition::load_finite_field "
+					"using existing finite field " << input_q << endl;
+		}
+		int idx;
+		idx = Sym->Orbiter_top_level_session->find_symbol(input_q);
+		if (idx < 0) {
+			cout << "symbol_definition::load_finite_field done cannot find finite field object" << endl;
+			exit(1);
+		}
+		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+	}
+
+	if (f_v) {
+		cout << "symbol_definition::load_finite_field done" << endl;
+	}
+}
+
+
+void symbol_definition::definition_of_vector_ge(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector_ge" << endl;
+	}
+
+
+	apps_algebra::vector_ge_builder *VB;
+
+	VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector_ge before VB->init" << endl;
+	}
+
+	VB->init(Vector_ge_description, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector_ge after VB->init" << endl;
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_vector_ge(define_label, VB, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector_ge before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector_ge done" << endl;
+	}
+}
+
+
+
 
 
 }}}

@@ -1249,172 +1249,7 @@ void finite_field::do_blocking_set_family_3(int n,
 	FREE_OBJECT(P);
 }
 
-void finite_field::create_Baer_substructure(int n,
-	finite_field *Fq,
-	std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-// creates projective_space PG(n,Q)
-// the big field FQ is given
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "finite_field::create_Baer_substructure" << endl;
-	}
-	geometry::projective_space *P2;
-	int q = Fq->q;
-	int Q = q;
-	int sz;
-	int *v;
-	int d = n + 1;
-	int i, j, a, b, index, f_is_in_subfield;
-	number_theory::number_theory_domain NT;
-
-	//Q = q * q;
-	P2 = NEW_OBJECT(geometry::projective_space);
-
-	P2->projective_space_init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level);
-
-	if (q != NT.i_power_j(p, e >> 1)) {
-		cout << "q != i_power_j(p, e >> 1)" << endl;
-		exit(1);
-	}
-
-	cout << "Q=" << Q << endl;
-	cout << "q=" << q << endl;
-
-	index = (Q - 1) / (q - 1);
-	cout << "index=" << index << endl;
-
-	v = NEW_int(d);
-	Pts = NEW_lint(P2->N_points);
-	sz = 0;
-	for (i = 0; i < P2->N_points; i++) {
-		PG_element_unrank_modified(v, 1, d, i);
-		for (j = 0; j < d; j++) {
-			a = v[j];
-			b = log_alpha(a);
-			f_is_in_subfield = FALSE;
-			if (a == 0 || (b % index) == 0) {
-				f_is_in_subfield = TRUE;
-			}
-			if (!f_is_in_subfield) {
-				break;
-			}
-		}
-		if (j == d) {
-			Pts[nb_pts++] = i;
-		}
-	}
-	cout << "the Baer substructure PG(" << n << "," << q
-			<< ") inside PG(" << n << "," << Q << ") has size "
-			<< sz << ":" << endl;
-	for (i = 0; i < sz; i++) {
-		cout << Pts[i] << " ";
-	}
-	cout << endl;
-
-
-
-	char str[1000];
-	sprintf(str, "_%d_%d.txt", n, Q);
-	//write_set_to_file(fname, S, sz, verbose_level);
-
-
-	fname.assign("Baer_substructure_in_PG");
-	fname.append(str);
-
-	FREE_int(v);
-	//FREE_int(S);
-	FREE_OBJECT(P2);
-}
-
-void finite_field::create_BLT_from_database(int f_embedded,
-	int BLT_k,
-	std::string &label_txt,
-	std::string &label_tex,
-	int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::create_BLT_from_database" << endl;
-	}
-	int i;
-	long int j;
-	int epsilon = 0;
-	int n = 4;
-	int c1 = 0, c2 = 0, c3 = 0;
-	int d = 5;
-	long int *BLT;
-	int *v;
-	knowledge_base K;
-
-	nb_pts = q + 1;
-
-	BLT = K.BLT_representative(q, BLT_k);
-
-	v = NEW_int(d);
-	Pts = NEW_lint(nb_pts);
-
-	if (f_v) {
-		cout << "i : orthogonal rank : point : projective rank" << endl;
-	}
-	for (i = 0; i < nb_pts; i++) {
-		Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, BLT[i], 0 /* verbose_level */);
-		if (f_embedded) {
-			PG_element_rank_modified_lint(v, 1, d, j);
-		}
-		else {
-			j = BLT[i];
-		}
-		// recreate v:
-		Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, BLT[i], 0 /* verbose_level */);
-		Pts[i] = j;
-		if (f_v) {
-			cout << setw(4) << i << " : " << setw(4) << BLT[i] << " : ";
-			Int_vec_print(cout, v, d);
-			cout << " : " << setw(5) << j << endl;
-		}
-	}
-
-#if 0
-	cout << "list of points:" << endl;
-	cout << nb_pts << endl;
-	for (i = 0; i < nb_pts; i++) {
-		cout << Pts[i] << " ";
-		}
-	cout << endl;
-#endif
-
-	char str[1000];
-	char str2[1000];
-	if (f_embedded) {
-		sprintf(str, "%d_%d_embedded", q, BLT_k);
-		sprintf(str2, "%d\\_%d\\_embedded", q, BLT_k);
-		label_txt.assign("BLT_");
-		label_txt.append(str);
-		label_tex.assign("BLT\\_");
-		label_tex.append(str2);
-	}
-	else {
-		sprintf(str, "%d_%d", q, BLT_k);
-		sprintf(str2, "%d\\_%d", q, BLT_k);
-		label_txt.assign("BLT_");
-		label_txt.append(str);
-		label_tex.assign("BLT\\_");
-		label_tex.append(str2);
-	}
-	//write_set_to_file(fname, L, N, verbose_level);
-
-
-	FREE_int(v);
-	//FREE_int(L);
-	//delete F;
-}
 
 
 
@@ -1450,7 +1285,8 @@ void finite_field::create_orthogonal(int epsilon, int n,
 		cout << "orthogonal rank : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+		Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
+				c1, c2, c3, i, 0 /* verbose_level */);
 		PG_element_rank_modified(v, 1, d, j);
 		Pts[i] = j;
 		if (f_v) {
@@ -1470,14 +1306,14 @@ void finite_field::create_orthogonal(int epsilon, int n,
 #endif
 
 	char str[1000];
-	char str2[1000];
 
 	algebra::algebra_global AG;
 
 	sprintf(str, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
-	sprintf(str2, "Q%s\\_%d\\_%d.txt", AG.plus_minus_letter(epsilon), n, q);
 	label_txt.assign(str);
-	label_tex.assign(str2);
+
+	sprintf(str, "Q%s\\_%d\\_%d.txt", AG.plus_minus_letter(epsilon), n, q);
+	label_tex.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
@@ -1535,11 +1371,12 @@ void finite_field::create_hermitian(int n,
 #endif
 
 	char str[1000];
-	char str2[1000];
+
 	sprintf(str, "H_%d_%d.txt", n, q);
-	sprintf(str2, "H\\_%d\\_%d.txt", n, q);
 	label_txt.assign(str);
-	label_tex.assign(str2);
+
+	sprintf(str, "H\\_%d\\_%d.txt", n, q);
+	label_tex.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
@@ -1548,7 +1385,7 @@ void finite_field::create_hermitian(int n,
 	//FREE_int(L);
 }
 
-void finite_field::create_ttp_code(finite_field *Fq,
+void finite_field::create_ttp_code(finite_field *Fq_subfield,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
 	std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
@@ -1576,7 +1413,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 
 	Codes.twisted_tensor_product_codes(
 		H_subfield, m, n,
-		this, Fq,
+		this, Fq_subfield,
 		f_construction_A, f_hyperoval,
 		f_construction_B,
 		verbose_level - 2);
@@ -1594,7 +1431,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	P = NEW_OBJECT(geometry::projective_space);
 
 
-	P->projective_space_init(d - 1, Fq,
+	P->projective_space_init(d - 1, Fq_subfield,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 	nb_pts = n;
@@ -1602,7 +1439,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	if (f_v) {
 		cout << "H_subfield:" << endl;
 		//print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		Fq->latex_matrix(cout, f_elements_exponential,
+		Fq_subfield->latex_matrix(cout, f_elements_exponential,
 			symbol_for_print_subfield, H_subfield, m, n);
 	}
 
@@ -1637,14 +1474,14 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	char str[1000];
 	if (f_construction_A) {
 		if (f_hyperoval) {
-			snprintf(str, 1000, "ttp_code_Ah_%d.txt", Fq->q);
+			snprintf(str, 1000, "ttp_code_Ah_%d.txt", Fq_subfield->q);
 		}
 		else {
-			snprintf(str, 1000, "ttp_code_A_%d.txt", Fq->q);
+			snprintf(str, 1000, "ttp_code_A_%d.txt", Fq_subfield->q);
 		}
 	}
 	else if (f_construction_B) {
-		snprintf(str, 1000, "ttp_code_B_%d.txt", Fq->q);
+		snprintf(str, 1000, "ttp_code_B_%d.txt", Fq_subfield->q);
 	}
 	fname.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
@@ -1663,17 +1500,16 @@ void finite_field::create_segre_variety(int a, int b,
 		std::string &label_tex,
 		int &nb_pts, long int *&Pts,
 	int verbose_level)
-// creates PG(a,q), PG(b,q) and PG((a+1)*(b+1)-1,q)
+// The Segre map goes from PG(a,q) cross PG(b,q) to PG((a+1)*(b+1)-1,q)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "finite_field::create_segre_variety" << endl;
 	}
-	geometry::projective_space *P1;
-	geometry::projective_space *P2;
-	geometry::projective_space *P3;
-	int i, j, d, N1, N2, rk;
+	int d;
+	long int N1, N2;
+	long int rk1, rk2, rk3;
 	int *v1;
 	int *v2;
 	int *v3;
@@ -1687,54 +1523,56 @@ void finite_field::create_segre_variety(int a, int b,
 	if (f_v) {
 		cout << "d=" << d << " (vector space dimension)" << endl;
 	}
-	P1 = NEW_OBJECT(geometry::projective_space);
-	P2 = NEW_OBJECT(geometry::projective_space);
-	P3 = NEW_OBJECT(geometry::projective_space);
+
+
 	v1 = NEW_int(a + 1);
 	v2 = NEW_int(b + 1);
 	v3 = NEW_int(d);
 
-	P1->projective_space_init(a, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	P2->projective_space_init(b, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	P3->projective_space_init(d - 1, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
+	geometry::geometry_global GG;
 
-	N1 = P1->N_points;
-	N2 = P2->N_points;
+	N1 = GG.nb_PG_elements(a, q);
+	N2 = GG.nb_PG_elements(b, q);
+
 	Pts = NEW_lint(N1 * N2);
 	nb_pts = 0;
-	for (i = 0; i < N1; i++) {
-		P1->unrank_point(v1, i);
-		for (j = 0; j < N2; j++) {
-			P2->unrank_point(v2, j);
+
+
+	for (rk1 = 0; rk1 < N1; rk1++) {
+		//P1->unrank_point(v1, rk1);
+		PG_element_unrank_modified_lint(v1, 1, a + 1, rk1);
+
+
+		for (rk2 = 0; rk2 < N2; rk2++) {
+			//P2->unrank_point(v2, rk2);
+			PG_element_unrank_modified_lint(v2, 1, b + 1, rk2);
+
+
 			Linear_algebra->mult_matrix_matrix(v1, v2, v3, a + 1, 1, b + 1,
 					0 /* verbose_level */);
-			rk = P3->rank_point(v3);
-			Pts[nb_pts++] = rk;
+
+			//rk3 = P3->rank_point(v3);
+			PG_element_rank_modified_lint(v3, 1, d, rk3);
+
+			Pts[nb_pts++] = rk3;
+
 			if (f_v) {
 				cout << setw(4) << nb_pts - 1 << " : " << endl;
 				Int_matrix_print(v3, a + 1, b + 1);
-				cout << " : " << setw(5) << rk << endl;
+				cout << " : " << setw(5) << rk3 << endl;
 			}
 		}
 	}
 
 	char str[1000];
-	char str2[1000];
-	sprintf(str, "segre_variety_%d_%d_%d", a, b, q);
-	sprintf(str2, "segre\\_variety\\_%d\\_%d\\_%d", a, b, q);
-	label_txt.assign(str);
-	label_tex.assign(str2);
 
-	FREE_OBJECT(P1);
-	FREE_OBJECT(P2);
-	FREE_OBJECT(P3);
+	sprintf(str, "segre_variety_%d_%d_%d", a, b, q);
+	label_txt.assign(str);
+
+	sprintf(str, "segre\\_variety\\_%d\\_%d\\_%d", a, b, q);
+	label_tex.assign(str);
+
 	FREE_int(v1);
 	FREE_int(v2);
 	FREE_int(v3);
@@ -1748,21 +1586,26 @@ void finite_field::do_andre(finite_field *Fq,
 	int verbose_level)
 // creates PG(2,Q) and PG(4,q)
 // this is FQ
+// this functions is not called from anywhere right now
+// it needs a pair of finite fields
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "finite_field::do_andre for a set of size " << set_size_in << endl;
+	}
+
 	geometry::projective_space *P2, *P4;
 	int a, a0, a1;
 	int b, b0, b1;
-	int i, h, k, alpha; //, d;
+	int i, h, k, alpha;
 	int *v, *w1, *w2, *w3, *v2;
 	int *components;
 	int *embedding;
 	int *pair_embedding;
 
-	if (f_v) {
-		cout << "finite_field::do_andre for a set of size " << set_size_in << endl;
-	}
+
 	P2 = NEW_OBJECT(geometry::projective_space);
 	P4 = NEW_OBJECT(geometry::projective_space);
 
@@ -1779,11 +1622,12 @@ void finite_field::do_andre(finite_field *Fq,
 
 
 	if (f_v) {
-		cout << "before subfield_embedding_2dimensional" << endl;
+		cout << "finite_field::do_andre before subfield_embedding_2dimensional" << endl;
 	}
 
 	subfield_embedding_2dimensional(*Fq,
-		components, embedding, pair_embedding, verbose_level);
+		components, embedding, pair_embedding,
+		verbose_level);
 
 		// we think of FQ as two dimensional vector space
 		// over Fq with basis (1,alpha)
@@ -1800,7 +1644,7 @@ void finite_field::do_andre(finite_field *Fq,
 		// pair_embedding[q * q]
 
 	if (f_v) {
-		cout << "after  subfield_embedding_2dimensional" << endl;
+		cout << "finite_field::do_andre after subfield_embedding_2dimensional" << endl;
 	}
 	if (f_vv) {
 		print_embedding(*Fq,
@@ -1808,7 +1652,7 @@ void finite_field::do_andre(finite_field *Fq,
 	}
 	alpha = p;
 	if (f_vv) {
-		cout << "alpha=" << alpha << endl;
+		cout << "finite_field::do_andre alpha=" << alpha << endl;
 		//FQ->print(TRUE /* f_add_mult_table */);
 	}
 
@@ -1825,7 +1669,7 @@ void finite_field::do_andre(finite_field *Fq,
 
 	for (i = 0; i < set_size_in; i++) {
 		if (f_vv) {
-			cout << "input point " << i << " is "
+			cout << "finite_field::do_andre input point " << i << " is "
 					<< the_set_in[i] << " : ";
 		}
 		P2->unrank_point(v, the_set_in[i]);
@@ -1917,6 +1761,7 @@ void finite_field::do_andre(finite_field *Fq,
 				w1[2 * h + 0] = a0;
 				w1[2 * h + 1] = a1;
 			}
+
 			w1[4] = 1;
 			if (f_vv) {
 				//cout << "w1=";
@@ -1950,6 +1795,10 @@ void finite_field::do_andre(finite_field *Fq,
 	FREE_int(components);
 	FREE_int(embedding);
 	FREE_int(pair_embedding);
+
+	if (f_v) {
+		cout << "finite_field::do_andre done" << endl;
+	}
 }
 
 
@@ -1959,7 +1808,6 @@ void finite_field::do_embed_orthogonal(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//projective_space *P;
 	int *v;
 	int d = n + 1;
 	long int h, a, b;
@@ -1968,13 +1816,6 @@ void finite_field::do_embed_orthogonal(
 	if (f_v) {
 		cout << "finite_field::do_embed_orthogonal" << endl;
 	}
-#if 0
-	P = NEW_OBJECT(projective_space);
-
-	P->init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
-#endif
 
 	if (epsilon == -1) {
 		Linear_algebra->choose_anisotropic_form(c1, c2, c3, verbose_level);
@@ -1992,7 +1833,9 @@ void finite_field::do_embed_orthogonal(
 	}
 
 	FREE_int(v);
-	//FREE_OBJECT(P);
+	if (f_v) {
+		cout << "finite_field::do_embed_orthogonal done" << endl;
+	}
 
 }
 
@@ -2042,8 +1885,8 @@ void finite_field::print_set_in_affine_plane(int len, long int *S)
 	for (x = 0; x < q; x++) {
 		for (y = 0; y < q; y++) {
 			A[(q - 1 - y) * q + x] = 0;
-			}
 		}
+	}
 	for (i = 0; i < len; i++) {
 		PG_element_unrank_modified(
 				v, 1 /* stride */, 3 /* len */, S[i]);
@@ -2053,17 +1896,17 @@ void finite_field::print_set_in_affine_plane(int len, long int *S)
 			cout << "(" << v[0] << "," << v[1]
 					<< "," << v[2] << ")" << endl;
 			continue;
-			}
+		}
 		x = v[0];
 		y = v[1];
 		A[(q - 1 - y) * q + x] = 1;
-		}
+	}
 	for (i = 0; i < q; i++) {
 		for (j = 0; j < q; j++) {
 			cout << A[i * q + j];
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	FREE_int(A);
 }
 

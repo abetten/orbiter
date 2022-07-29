@@ -399,8 +399,10 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 
 	int f_book = FALSE;
 	int f_title = TRUE;
-	char title[1000];
-	const char *author = "Orbiter";
+	char str[1000];
+
+	string title, author, extra_praeamble;
+
 	int f_toc = FALSE;
 	int f_landscape = FALSE;
 	int f_12pt = FALSE;
@@ -408,7 +410,9 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(title, "BLT-set %s", label_tex.c_str());
+	sprintf(str, "BLT-set %s", label_tex.c_str());
+	title.assign(str);
+	author.assign("Orbiter");
 
 	L.head(ost, f_book, f_title,
 		title,
@@ -418,7 +422,7 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 		f_12pt,
 		f_enlarged_page,
 		f_pagenumbers,
-		NULL /* extra_praeamble */);
+		extra_praeamble /* extra_praeamble */);
 
 
 	OA->O->report_quadratic_form(ost, verbose_level - 1);

@@ -85,7 +85,8 @@ void substructure_stats_and_selection::init(
 
 
 	if (f_v) {
-		cout << "substructure_stats_and_selection::init, fname_case_out=" << fname_case_out << " nb_pts=" << nb_pts << endl;
+		cout << "substructure_stats_and_selection::init, "
+				"fname_case_out=" << fname_case_out << " nb_pts=" << nb_pts << endl;
 	}
 
 	substructure_stats_and_selection::fname_case_out.assign(fname_case_out);
@@ -95,15 +96,18 @@ void substructure_stats_and_selection::init(
 	substructure_stats_and_selection::nb_pts = nb_pts;
 
 	if (f_v) {
-		cout << "substructure_stats_and_selection::init before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+		cout << "substructure_stats_and_selection::init "
+				"before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
 
 	SubC->PC->trace_all_k_subsets_and_compute_frequencies(
-			Pts, nb_pts, SubC->substructure_size, nCk, isotype, orbit_frequencies, nb_orbits,
+			Pts, nb_pts, SubC->substructure_size, nCk,
+			isotype, orbit_frequencies, nb_orbits,
 			0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "substructure_stats_and_selection::init after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+		cout << "substructure_stats_and_selection::init "
+				"after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
 
 
@@ -215,17 +219,20 @@ void substructure_stats_and_selection::init(
 	for (i = 0; i < nCk; i++) {
 		if (isotype[i] == selected_orbit) {
 			interesting_subsets[j++] = i;
-			//cout << "subset of rank " << i << " is isomorphic to orbit " << orb_idx << " j=" << j << endl;
+			//cout << "subset of rank " << i << " is isomorphic to orbit "
+			//<< orb_idx << " j=" << j << endl;
 			}
 		}
 	if (j != selected_frequency) {
-		cout << "substructure_stats_and_selection::init j != selected_frequency" << endl;
+		cout << "substructure_stats_and_selection::init "
+				"j != selected_frequency" << endl;
 		exit(1);
 		}
 	nb_interesting_subsets = selected_frequency;
 #if 0
 	if (f_vv) {
-		print_interesting_subsets(nb_pts, intermediate_subset_size, nb_interesting_subsets, interesting_subsets);
+		print_interesting_subsets(nb_pts, intermediate_subset_size,
+				nb_interesting_subsets, interesting_subsets);
 		}
 #endif
 

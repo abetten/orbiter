@@ -2564,14 +2564,19 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 	if (f_v) {
 		cout << "surface_classify_wedge::create_report" << endl;
 	}
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	char str[1000];
+	string fname, title, author, extra_praeamble;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(title, 1000, "Cubic Surfaces with 27 Lines over GF(%d) ", q);
-	strcpy(author, "Orbiter");
-	snprintf(fname, 1000, "Surfaces_q%d.tex", q);
+	snprintf(str, 1000, "Cubic Surfaces with 27 Lines over GF(%d) ", q);
+	title.assign(str);
+
+	strcpy(str, "Orbiter");
+	author.assign(str);
+
+	snprintf(str, 1000, "Surfaces_q%d.tex", q);
+	fname.assign(str);
+
 
 		{
 		ofstream fp(fname);
@@ -2587,7 +2592,7 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		if (f_v) {
@@ -2727,13 +2732,14 @@ void surface_classify_wedge::create_report_double_sixes(int verbose_level)
 		cout << "surface_classify_wedge::create_report_double_sixes" << endl;
 	}
 
-	char fname[1000];
-	char title[1000];
-	char author[1000];
 
-	snprintf(title, 1000, "Cheat Sheet on Double Sixes over GF(%d) ", q);
-	strcpy(author, "");
-	snprintf(fname, 1000, "Double_sixes_q%d.tex", q);
+	char str[1000];
+	string fname, title, author, extra_praeamble;
+
+	snprintf(str, 1000, "Cheat Sheet on Double Sixes over GF(%d) ", q);
+	title.assign(str);
+	snprintf(str, 1000, "Double_sixes_q%d.tex", q);
+	fname.assign(str);
 
 	{
 		ofstream fp(fname);
@@ -2749,7 +2755,7 @@ void surface_classify_wedge::create_report_double_sixes(int verbose_level)
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		if (f_v) {

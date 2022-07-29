@@ -27,10 +27,13 @@ polynomial_ring_activity_description::polynomial_ring_activity_description()
 	f_cheat_sheet = FALSE;
 
 	f_ideal = FALSE;
-	//std::string ideal_ring_label;
 	//ideal_label;
 	//ideal_label_txt
 	//std::string ideal_point_set_label;
+
+	f_apply_transformation = FALSE;
+	//std::string apply_transformation_Eqn_in_label;
+	//std::string apply_transformation_vector_ge_label;
 
 }
 
@@ -62,18 +65,30 @@ int polynomial_ring_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
 			f_ideal = TRUE;
-			ideal_ring_label.assign(argv[++i]);
 
 			ideal_label_txt.assign(argv[++i]);
 			ideal_label_tex.assign(argv[++i]);
 			ideal_point_set_label.assign(argv[++i]);
 
-			cout << "-ideal "
-					<< ideal_ring_label << " "
+			if (f_v) {
+				cout << "-ideal "
 					<< ideal_label_txt << " "
 					<< ideal_label_tex << " "
 					<< ideal_point_set_label << " "
 					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-apply_transformation") == 0) {
+			f_apply_transformation = TRUE;
+			apply_transformation_Eqn_in_label.assign(argv[++i]);
+			apply_transformation_vector_ge_label.assign(argv[++i]);
+
+			if (f_v) {
+				cout << "-apply_transformation "
+						<< apply_transformation_Eqn_in_label << " "
+						<< apply_transformation_vector_ge_label << " "
+						<< endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -102,10 +117,15 @@ void polynomial_ring_activity_description::print()
 	if (f_ideal) {
 
 		cout << "-ideal "
-				<< ideal_ring_label << " "
 				<< ideal_label_txt << " "
 				<< ideal_label_tex << " "
 				<< ideal_point_set_label << " "
+				<< endl;
+	}
+	if (f_apply_transformation) {
+		cout << "-apply_transformation "
+				<< apply_transformation_Eqn_in_label << " "
+				<< apply_transformation_vector_ge_label << " "
 				<< endl;
 	}
 }

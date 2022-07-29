@@ -55,16 +55,20 @@ void coding_theory_domain::make_mac_williams_equations(ring_theory::longinteger_
 	}
 
 	{
-		char str[1000];
+
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "MacWilliams_n%d_k%d_q%d.tex", n, k, q);
 		fname.assign(str);
-		snprintf(title, 1000, "MacWilliams System for a $[%d,%d]_{%d}$ code", n, k, q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "MacWilliams System for a $[%d,%d]_{%d}$ code", n, k, q);
+		title.assign(str);
 
 
 		{
@@ -80,7 +84,7 @@ void coding_theory_domain::make_mac_williams_equations(ring_theory::longinteger_
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -1479,14 +1483,20 @@ void coding_theory_domain::do_linear_code_through_basis(
 
 
 	{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
 
-		snprintf(fname, 1000, "code_n%d_k%d_q%d.tex", n, k, F->q);
-		snprintf(title, 1000, "Linear $[%d,%d]$ code over GF($%d$)", n, k, F->q);
-		//sprintf(author, "");
-		author[0] = 0;
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "code_n%d_k%d_q%d.tex", n, k, F->q);
+		fname.assign(str);
+		snprintf(str, 1000, "Linear $[%d,%d]$ code over GF($%d$)", n, k, F->q);
+		title.assign(str);
+
 
 
 		{
@@ -1501,7 +1511,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;
@@ -1634,14 +1644,20 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 
 
 	{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
 
-		snprintf(fname, 1000, "code_n%d_k%d_q%d.tex", n, k, F->q);
-		snprintf(title, 1000, "Linear $[%d,%d]$ code over GF($%d$)", n, k, F->q);
-		//sprintf(author, "");
-		author[0] = 0;
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "code_n%d_k%d_q%d.tex", n, k, F->q);
+		fname.assign(str);
+		snprintf(str, 1000, "Linear $[%d,%d]$ code over GF($%d$)", n, k, F->q);
+		title.assign(str);
+
 
 
 		{
@@ -1656,7 +1672,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;
@@ -1768,14 +1784,20 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 
 
 	{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
 
-		snprintf(fname, 1000, "code_n%d_k%d_q%d.tex", n, k, F->q);
-		snprintf(title, 1000, "Linear $[%d,%d]$ code over GF($%d$)", n, k, F->q);
-		//sprintf(author, "");
-		author[0] = 0;
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "code_n%d_k%d_q%d.tex", n, k, F->q);
+		fname.assign(str);
+		snprintf(str, 1000, "Linear $[%d,%d]$ code over GF($%d$)", n, k, F->q);
+		title.assign(str);
+
 
 
 		{
@@ -1790,7 +1812,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			ost << "$$" << endl;
@@ -3050,16 +3072,22 @@ void coding_theory_domain::field_reduction(
 
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "field_reduction_Q%d_q%d_%d_%d.tex", FQ->q, Fq->q, m, n);
 		fname.assign(str);
-		snprintf(title, 1000, "Field Reduction");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Field Reduction");
+		title.assign(str);
+
+
+
 
 
 		{
@@ -3075,7 +3103,7 @@ void coding_theory_domain::field_reduction(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 
@@ -3649,7 +3677,6 @@ void coding_theory_domain::search_for_CRC_polynomials(int t,
 		C[i] = 1;
 		search_for_CRC_polynomials(t, da, A, dc, C,
 				i + 1, F, nb_sol, Solutions, verbose_level);
-
 
 	}
 	else {
@@ -4322,7 +4349,8 @@ void coding_theory_domain::crc32_remainders(int message_length, int verbose_leve
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_remainders message_length in bytes = " << message_length << endl;
+		cout << "coding_theory_domain::crc32_remainders "
+				"message_length in bytes = " << message_length << endl;
 	}
 
 	uint32_t *Crc;
@@ -4493,7 +4521,8 @@ void coding_theory_domain::crc32_remainders_compute(int message_length, int R, u
 	}
 
 	if (cnt != message_length_in_bits) {
-		cout << "coding_theory_domain::crc32_remainders_compute cnt != message_length_in_bits" << endl;
+		cout << "coding_theory_domain::crc32_remainders_compute "
+				"cnt != message_length_in_bits" << endl;
 		exit(1);
 	}
 
@@ -4514,8 +4543,10 @@ void coding_theory_domain::crc32_file_based(std::string &fname_in,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based fname_in=" << fname_in << endl;
-		cout << "coding_theory_domain::crc32_file_based block_length=" << block_length << endl;
+		cout << "coding_theory_domain::crc32_file_based "
+				"fname_in=" << fname_in << endl;
+		cout << "coding_theory_domain::crc32_file_based "
+				"block_length=" << block_length << endl;
 	}
 
 	data_structures::string_tools ST;

@@ -1776,11 +1776,13 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 		T[cur].Surf_A = NEW_OBJECT(surface_with_action);
 
 		if (f_v) {
-			cout << "surface_domain_high_level::do_create_surface_atlas before Surf_A->init_with_linear_group" << endl;
+			cout << "surface_domain_high_level::do_create_surface_atlas "
+					"before Surf_A->init_with_linear_group" << endl;
 		}
 		T[cur].Surf_A->init(T[cur].Surf, T[cur].PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 		if (f_v) {
-			cout << "surface_domain_high_level::do_create_surface_atlas after Surf_A->init_with_linear_group" << endl;
+			cout << "surface_domain_high_level::do_create_surface_atlas "
+					"after Surf_A->init_with_linear_group" << endl;
 		}
 
 
@@ -1838,9 +1840,10 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 		{
 			ofstream ost(fname_report);
 
+			string title, author, extra_praeamble;
 
-			const char *title = "ATLAS of Cubic Surfaces";
-			const char *author = "Anton Betten and Fatma Karaoglu";
+			title.assign("ATLAS of Cubic Surfaces");
+			author.assign("Anton Betten and Fatma Karaoglu");
 
 			orbiter_kernel_system::latex_interface L;
 
@@ -1853,7 +1856,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 				FALSE /* f_12pt */,
 				TRUE /*f_enlarged_page */,
 				TRUE /* f_pagenumbers*/,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 			int E[] = {0,1,2,3,4,5,6,9,10,13,18,45};
@@ -2012,13 +2015,13 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 			ofstream ost(fname_report_tex);
 
 
-			string title;
+			string title, author, extra_praeamble;
 
 			title.assign("ATLAS of Cubic Surfaces");
 			sprintf(str, ", q=%d, \\#E=%d", T->q, nb_e);
 			title.append(str);
 
-			const char *author = "Anton Betten and Fatma Karaoglu";
+			author.assign("Anton Betten and Fatma Karaoglu");
 
 			orbiter_kernel_system::latex_interface L;
 
@@ -2026,13 +2029,13 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 			L.head(ost,
 				FALSE /* f_book */,
 				TRUE /* f_title */,
-				title.c_str(), author,
+				title, author,
 				FALSE /*f_toc */,
 				FALSE /* f_landscape */,
 				FALSE /* f_12pt */,
 				TRUE /*f_enlarged_page */,
 				TRUE /* f_pagenumbers*/,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 			int i;
@@ -2107,9 +2110,10 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 		{
 			ofstream ost(fname_report);
 
+			string title, author, extra_praeamble;
 
-			const char *title = "ATLAS of Dickson Surfaces";
-			const char *author = "Fatma Karaoglu";
+			title.assign("ATLAS of Dickson Surfaces");
+			author.assign("Fatma Karaoglu");
 
 			orbiter_kernel_system::latex_interface L;
 
@@ -2123,7 +2127,7 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 				FALSE /* f_12pt */,
 				TRUE /*f_enlarged_page */,
 				TRUE /* f_pagenumbers*/,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 			int field_orders[] = {2,4,8,16,32,64};

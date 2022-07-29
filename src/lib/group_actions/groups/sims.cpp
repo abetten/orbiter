@@ -1359,10 +1359,15 @@ long int sims::element_rank_lint(int *Elt)
 	return a.as_lint();
 }
 
-int sims::is_element_of(int *elt)
+int sims::is_element_of(int *elt, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, bi, jj; //, l;
+	int ret = TRUE;
 	
+	if (f_v) {
+		cout << "sims::is_element_of" << endl;
+	}
 	A->element_move(elt, eltrk1, FALSE);
 	for (i = 0; i < A->base_len(); i++) {
 		bi = A->base_i(i);
@@ -1374,7 +1379,8 @@ int sims::is_element_of(int *elt)
 		// << bi << " to " << jj << endl;
 		j = orbit_inv[i][jj];
 		if (j >= orbit_len[i]) {
-			return FALSE;
+			ret = FALSE;
+			break;
 		}
 		
 		coset_rep_inv(eltrk3, i, j, 0 /* verbose_level */);
@@ -1382,7 +1388,10 @@ int sims::is_element_of(int *elt)
 		A->element_mult(eltrk1, eltrk3, eltrk2, FALSE);
 		A->element_move(eltrk2, eltrk1, FALSE);
 	}
-	return TRUE;
+	if (f_v) {
+		cout << "sims::is_element_of done ret = " << ret << endl;
+	}
+	return ret;
 }
 
 void sims::test_element_rank_unrank()

@@ -502,7 +502,7 @@ void orthogonal::create_Law_71_BLT_set(
 		long int *set, int verbose_level)
 // This example can be found in Maska Law's thesis on page 115.
 // Maska Law: Flocks, generalised quadrangles
-// and translatrion planes from BLT-sets,
+// and translation planes from BLT-sets,
 // The University of Western Australia, 2003.
 // Note the coordinates here are different (for an unknown reason).
 // Law suggests to construct an infinite family
@@ -763,8 +763,8 @@ int orthogonal::collinearity_test(int size, long int *set, int verbose_level)
 				//form_c1, form_c2, form_c3, line[i]);
 			Int_vec_print(cout, v1, 5);
 			cout << endl;
-			}
 		}
+	}
 	y = set[size - 1];
 	//Q_epsilon_unrank(*M->GFq, v, 1, epsilon, k,
 	//form_c1, form_c2, form_c3, y);
@@ -790,16 +790,16 @@ int orthogonal::collinearity_test(int size, long int *set, int verbose_level)
 				Int_vec_print(cout, v2, 5);
 				cout << endl;
 				cout << "fxy=" << fxy << endl;
-				}
-			break;
 			}
+			break;
 		}
+	}
 
 	if (f_v) {
 		if (!f_OK) {
 			cout << "collinearity test fails" << endl;
-			}
 		}
+	}
 	return f_OK;
 }
 
@@ -823,13 +823,13 @@ int orthogonal::triple_is_collinear(long int pt1, long int pt2, long int pt3)
 	if (rk < 2) {
 		cout << "orthogonal::triple_is_collinear rk < 2" << endl;
 		exit(1);
-		}
+	}
 	if (rk == 2) {
 		return TRUE;
-		}
+	}
 	else {
 		return FALSE;
-		}
+	}
 }
 
 int orthogonal::is_minus_square(int i)
@@ -837,19 +837,19 @@ int orthogonal::is_minus_square(int i)
 	if (DOUBLYEVEN(q - 1)) {
 		if (EVEN(i)) {
 			return TRUE;
-			}
+		}
 		else {
 			return FALSE;
-			}
 		}
+	}
 	else {
 		if (EVEN(i)) {
 			return FALSE;
-			}
+		}
 		else {
 			return TRUE;
-			}
 		}
+	}
 }
 
 void orthogonal::print_minus_square_tables()
@@ -863,7 +863,7 @@ void orthogonal::print_minus_square_tables()
 			<< setw(3) << index_minus_square_without[i] << ","
 			<< setw(3) << index_minus_nonsquare[i] << " : "
 			<< setw(3) << f_is_minus_square[i] << endl;
-		}
+	}
 }
 
 // formerly DISCRETA/extras.cpp
@@ -874,7 +874,7 @@ void orthogonal::print_minus_square_tables()
 // plane_invariant started 2/23/09
 
 
-void orthogonal::plane_invariant(unusual_model *U,
+void orthogonal::plane_invariant(
 	int size, int *set,
 	int &nb_planes, int *&intersection_matrix,
 	int &Block_size, int *&Blocks,
@@ -917,37 +917,40 @@ void orthogonal::plane_invariant(unusual_model *U,
 		cout << "computing planes spanned by 3-subsets" << endl;
 		cout << "n_choose_k=" << n_choose_k << endl;
 		cout << "log2_of_q=" << log2_of_q << endl;
-		}
+	}
 	while (TRUE) {
 		cnt++;
 
 		for (i = 0; i < level; i++) {
-			F->Orthogonal_indexing->Q_unrank(Mtx + i * n, 1, n - 1, set[subset[i]], 0 /* verbose_level */);
-			}
+			F->Orthogonal_indexing->Q_unrank(
+					Mtx + i * n, 1, n - 1, set[subset[i]],
+					0 /* verbose_level */);
+		}
 		if (f_vvv) {
 			cout << "subset " << setw(5) << cnt << " : ";
 			Int_vec_print(cout, subset, level);
 			cout << " : "; // << endl;
-			}
+		}
 		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-		rk = F->Linear_algebra->Gauss_int(Mtx, f_special, f_complete,
+		rk = F->Linear_algebra->Gauss_int(
+				Mtx, f_special, f_complete,
 				base_col, FALSE, NULL, level, n, n, 0);
 		if (f_vvv) {
 			cout << "after Gauss, rank = " << rk << endl;
 			Int_vec_print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-			}
+		}
 		H = 0;
 		for (i = 0; i < level * n; i++) {
 			H = Algo.hashing_fixed_width(H, Mtx[i], log2_of_q);
-			}
+		}
 		if (f_vvv) {
 			cout << "hash =" << setw(10) << H << endl;
-			}
+		}
 		Hash[cnt] = H;
 		if (!Combi.next_k_subset(subset, size, level)) {
 			break;
-			}
 		}
+	}
 	int *Hash_sorted, *sorting_perm, *sorting_perm_inv,
 		nb_types, *type_first, *type_len;
 
@@ -958,15 +961,15 @@ void orthogonal::plane_invariant(unusual_model *U,
 
 	if (f_v) {
 		cout << nb_types << " types of planes" << endl;
-		}
+	}
 	if (f_vvv) {
 		for (i = 0; i < nb_types; i++) {
 			cout << setw(3) << i << " : "
 				<< setw(4) << type_first[i] << " : "
 				<< setw(4) << type_len[i] << " : "
 				<< setw(10) << Hash_sorted[type_first[i]] << endl;
-			}
 		}
+	}
 	int *type_len_sorted, *sorting_perm2, *sorting_perm_inv2,
 		nb_types2, *type_first2, *type_len2;
 
@@ -981,8 +984,8 @@ void orthogonal::plane_invariant(unusual_model *U,
 			//<< setw(4) << type_first2[i] << " : "
 			cout << setw(4) << type_len2[i] << " x "
 				<< setw(10) << type_len_sorted[type_first2[i]] << endl;
-			}
 		}
+	}
 	int f, ff, ll, j, u, ii, jj, idx;
 
 	f = type_first2[nb_types2 - 1];
@@ -992,7 +995,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			cout << "there is a unique plane that appears "
 					<< type_len_sorted[f]
 					<< " times among the 3-sets of points" << endl;
-			}
+		}
 		else {
 			cout << "there are " << nb_planes
 					<< " planes that each appear "
@@ -1003,9 +1006,9 @@ void orthogonal::plane_invariant(unusual_model *U,
 				cout << "The " << i << "-th plane, which is " << j
 						<< ", appears " << type_len_sorted[f + i]
 						<< " times" << endl;
-				}
 			}
 		}
+	}
 	if (f_vvv) {
 		cout << "these planes are:" << endl;
 		for (i = 0; i < nb_planes; i++) {
@@ -1019,9 +1022,9 @@ void orthogonal::plane_invariant(unusual_model *U,
 				cout << "subset " << setw(5) << cnt << " : ";
 				Int_vec_print(cout, subset, level);
 				cout << " : " << endl;
-				}
 			}
 		}
+	}
 
 	//return;
 
@@ -1042,7 +1045,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				<< setw(4) << ff << " : "
 				<< setw(4) << ll << " : "
 				<< setw(10) << Hash_sorted[type_first[j]] << endl;
-			}
+		}
 		Block_size = 0;
 		for (u = 0; u < ll; u++) {
 			cnt = sorting_perm_inv[ff + u];
@@ -1051,51 +1054,54 @@ void orthogonal::plane_invariant(unusual_model *U,
 				cout << "subset " << setw(5) << cnt << " : ";
 				Int_vec_print(cout, subset, level);
 				cout << " : " << endl;
-				}
+			}
 			for (ii = 0; ii < level; ii++) {
-				F->Orthogonal_indexing->Q_unrank(Mtx + ii * n, 1, n - 1, set[subset[ii]], 0 /* verbose_level */);
-				}
+				F->Orthogonal_indexing->Q_unrank(
+						Mtx + ii * n, 1, n - 1,
+						set[subset[ii]],
+						0 /* verbose_level */);
+			}
 			for (ii = 0; ii < level; ii++) {
 				if (!Sorting.int_vec_search(Block, Block_size, subset[ii], idx)) {
 					for (jj = Block_size; jj > idx; jj--) {
 						Block[jj] = Block[jj - 1];
-						}
+					}
 					Block[idx] = subset[ii];
 					Block_size++;
-					}
 				}
+			}
 			rk = F->Linear_algebra->Gauss_int(Mtx, f_special,
 					f_complete, base_col, FALSE, NULL, level, n, n, 0);
 			if (f_vvv)  {
 				cout << "after Gauss, rank = " << rk << endl;
 				Int_vec_print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-				}
+			}
 
 			H = 0;
 			for (ii = 0; ii < level * n; ii++) {
 				H = Algo.hashing_fixed_width(H, Mtx[ii], log2_of_q);
-				}
+			}
 			if (f_vvv) {
 				cout << "hash =" << setw(10) << H << endl;
-				}
 			}
+		}
 		if (f_vv) {
 			cout << "found Block ";
 			Int_vec_print(cout, Block, Block_size);
 			cout << endl;
-			}
+		}
 		for (u = 0; u < Block_size; u++) {
 			Blocks[i * Block_size + u] = Block[u];
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "Incidence structure between points "
 				"and high frequency planes:" << endl;
 		if (nb_planes < 30) {
 			Int_vec_print_integer_matrix_width(cout, Blocks,
 					nb_planes, Block_size, Block_size, 3);
-			}
 		}
+	}
 
 	int *Incma, *Incma_t, *IIt, *ItI;
 	int a;
@@ -1108,23 +1114,23 @@ void orthogonal::plane_invariant(unusual_model *U,
 
 	for (i = 0; i < size * nb_planes; i++) {
 		Incma[i] = 0;
-		}
+	}
 	for (i = 0; i < nb_planes; i++) {
 		for (j = 0; j < Block_size; j++) {
 			a = Blocks[i * Block_size + j];
 			Incma[a * nb_planes + i] = 1;
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "Incidence matrix:" << endl;
 		Int_vec_print_integer_matrix_width(cout, Incma,
 				size, nb_planes, nb_planes, 1);
-		}
+	}
 	for (i = 0; i < size; i++) {
 		for (j = 0; j < nb_planes; j++) {
 			Incma_t[j * size + i] = Incma[i * nb_planes + j];
-			}
 		}
+	}
 	for (i = 0; i < size; i++) {
 		for (j = 0; j < size; j++) {
 			a = 0;
@@ -1132,33 +1138,33 @@ void orthogonal::plane_invariant(unusual_model *U,
 				a += Incma[i * nb_planes + u] * Incma_t[u * size + j];
 				}
 			IIt[i * size + j] = a;
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "I * I^\\top = " << endl;
 		Int_vec_print_integer_matrix_width(cout, IIt, size, size, size, 2);
-		}
+	}
 	for (i = 0; i < nb_planes; i++) {
 		for (j = 0; j < nb_planes; j++) {
 			a = 0;
 			for (u = 0; u < size; u++) {
 				a += Incma[u * nb_planes + i] * Incma[u * nb_planes + j];
-				}
-			ItI[i * nb_planes + j] = a;
 			}
+			ItI[i * nb_planes + j] = a;
 		}
+	}
 	if (f_v) {
 		cout << "I^\\top * I = " << endl;
 		Int_vec_print_integer_matrix_width(cout, ItI,
 				nb_planes, nb_planes, nb_planes, 3);
-		}
+	}
 
 	intersection_matrix = NEW_int(nb_planes * nb_planes);
 	for (i = 0; i < nb_planes; i++) {
 		for (j = 0; j < nb_planes; j++) {
 			intersection_matrix[i * nb_planes + j] = ItI[i * nb_planes + j];
-			}
 		}
+	}
 
 #if 0
 	{
@@ -1171,9 +1177,9 @@ void orthogonal::plane_invariant(unusual_model *U,
 		for (i = 0; i < nb_planes; i++) {
 			for (j = 0; j < nb_planes; j++) {
 				fp << ItI[i * nb_planes + j] << " ";
-				}
-			fp << endl;
 			}
+			fp << endl;
+		}
 		fp << -1 << endl;
 		fp << "# Incidence structure between points "
 				"and high frequency planes:" << endl;

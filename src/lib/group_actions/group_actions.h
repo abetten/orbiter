@@ -50,6 +50,7 @@ namespace data_structures_groups {
 	class set_and_stabilizer;
 	class union_find_on_k_subsets;
 	class union_find;
+	class vector_ge_description;
 	class vector_ge;
 	typedef class vector_ge *p_vector_ge;
 

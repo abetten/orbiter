@@ -1560,7 +1560,7 @@ void linear_group::create_latex_report(
 	{
 		string fname;
 		string title;
-		string author;
+		string author, extra_praeamble;
 
 		fname.assign(label);
 		fname.append("_report.tex");
@@ -1578,13 +1578,13 @@ void linear_group::create_latex_report(
 			L.head(ost,
 					FALSE /* f_book*/,
 					TRUE /* f_title */,
-					title.c_str(), author.c_str(),
+					title, author,
 					FALSE /* f_toc */,
 					FALSE /* f_landscape */,
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

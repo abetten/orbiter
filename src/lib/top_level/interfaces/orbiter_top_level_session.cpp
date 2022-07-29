@@ -381,6 +381,80 @@ ring_theory::homogeneous_polynomial_domain *orbiter_top_level_session::get_objec
 
 
 
+void orbiter_top_level_session::get_vector_or_set(std::string &label,
+		long int *&Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::get_vector_or_set" << endl;
+	}
+
+	if (isalpha(label[0])) {
+
+		if (f_v) {
+			cout << "orbiter_top_level_session::get_vector_or_set "
+					"searching label " << label << endl;
+		}
+		int idx;
+
+		idx = Orbiter_session->find_symbol(label);
+
+		if (Orbiter_session->get_object_type(idx) == t_vector) {
+
+			data_structures::vector_builder *VB;
+
+			VB = (data_structures::vector_builder *) Orbiter_session->get_object(idx);
+
+			nb_pts = VB->len;
+			Pts = NEW_lint(nb_pts);
+			Int_vec_copy_to_lint(VB->v, Pts, nb_pts);
+
+		}
+		else if (Orbiter_session->get_object_type(idx) == t_set) {
+
+			data_structures::set_builder *SB;
+
+			SB = (data_structures::set_builder *) Orbiter_session->get_object(idx);
+
+			nb_pts = SB->sz;
+			Pts = NEW_lint(nb_pts);
+			Lint_vec_copy(SB->set, Pts, nb_pts);
+		}
+	}
+	else {
+
+		Lint_vec_scan(label, Pts, nb_pts);
+	}
+	if (f_v) {
+		cout << "orbiter_top_level_session::get_vector_or_set we found a set of size " << nb_pts << endl;
+	}
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::get_vector_or_set done" << endl;
+	}
+
+}
+
+
+apps_algebra::vector_ge_builder *orbiter_top_level_session::get_object_of_type_vector_ge(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_vector_ge cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_vector_ge) {
+		cout << "orbiter_top_level_session::get_object_of_type_vector_ge object type != t_vector_ge" << endl;
+		exit(1);
+	}
+	return (apps_algebra::vector_ge_builder *) get_object(idx);
+}
+
+
+
 }}}
 
 

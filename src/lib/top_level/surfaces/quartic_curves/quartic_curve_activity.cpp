@@ -165,11 +165,12 @@ void quartic_curve_activity::do_report(
 			ofstream ost(fname_report);
 
 
-			char title[1000];
-			char author[1000];
+			char str[1000];
+			string title, author, extra_praeamble;
 
-			snprintf(title, 1000, "%s over GF(%d)", QC->label_tex.c_str(), F->q);
-			strcpy(author, "");
+			snprintf(str, 1000, "%s over GF(%d)", QC->label_tex.c_str(), F->q);
+			title.assign(str);
+
 
 			orbiter_kernel_system::latex_interface L;
 
@@ -183,7 +184,7 @@ void quartic_curve_activity::do_report(
 				FALSE /* f_12pt */,
 				TRUE /*f_enlarged_page */,
 				TRUE /* f_pagenumbers*/,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 
@@ -208,7 +209,6 @@ void quartic_curve_activity::do_report(
 			}
 			summary_file_name.append("_summary.csv");
 
-			char str[1000];
 
 			sprintf(str, "-Q%d", F->q);
 			col_postfix.assign(str);

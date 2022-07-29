@@ -112,7 +112,8 @@ void substructure_classifier::classify_substructures(
 
 		PC->get_stabilizer_generators(
 				Strong_gens,
-				substructure_size, j, 0 /* verbose_level*/);
+				substructure_size, j,
+				0 /* verbose_level*/);
 
 		ring_theory::longinteger_object go;
 
@@ -439,7 +440,7 @@ void substructure_classifier::handle_orbit(
 	//overall_backtrack_nodes = 0;
 	if (f_v) {
 		cout << "substructure_classifier::handle_orbit calling compute_stabilizer_function" << endl;
-		}
+	}
 
 	compute_stabilizer *CS;
 
@@ -470,7 +471,7 @@ void substructure_classifier::handle_orbit(
 		cout << "substructure_classifier::handle_orbit done with compute_stabilizer" << endl;
 		cout << "substructure_classifier::handle_orbit backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
 		cout << "substructure_classifier::handle_orbit backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
-		}
+	}
 
 
 	FREE_OBJECT(CS);

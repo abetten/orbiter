@@ -40,6 +40,12 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 
 	f_cheat_sheet_orthogonal = FALSE;
 
+	f_print_points = FALSE;
+	//std::string print_points_label;
+
+	f_print_lines = FALSE;
+	//std::string print_lines_label;
+
 	f_unrank_line_through_two_points = FALSE;
 	//std::string unrank_line_through_two_points_p1;
 	//std::string unrank_line_through_two_points_p2;
@@ -158,6 +164,20 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-cheat_sheet_orthogonal "<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-print_points") == 0) {
+			f_print_points = TRUE;
+			print_points_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-print_points " << print_points_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-print_lines") == 0) {
+			f_print_lines = TRUE;
+			print_lines_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-print_lines " << print_lines_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-unrank_line_through_two_points") == 0) {
 			f_unrank_line_through_two_points = TRUE;
 			unrank_line_through_two_points_p1.assign(argv[++i]);
@@ -251,6 +271,12 @@ void orthogonal_space_activity_description::print()
 	if (f_cheat_sheet_orthogonal) {
 		f_cheat_sheet_orthogonal = TRUE;
 		cout << "-cheat_sheet_orthogonal "<< endl;
+	}
+	if (f_print_points) {
+		cout << "-print_points " << print_points_label << endl;
+	}
+	if (f_print_lines) {
+		cout << "-print_lines " << print_lines_label << endl;
 	}
 	if (f_unrank_line_through_two_points) {
 		cout << "-unrank_line_through_two_points " << unrank_line_through_two_points_p1

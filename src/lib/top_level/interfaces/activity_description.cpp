@@ -792,7 +792,7 @@ void activity_description::do_ring_theoretic_activity(int verbose_level)
 
 	if (f_v) {
 		cout << "activity_description::do_ring_theoretic_activity "
-				"finite field activity for the following objects: ";
+				"ring theoretic activity for the following objects: ";
 		Sym->print_with();
 	}
 
@@ -809,7 +809,7 @@ void activity_description::do_ring_theoretic_activity(int verbose_level)
 
 	HPD = (ring_theory::homogeneous_polynomial_domain *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
-	ring_theory::polynomial_ring_activity A;
+	apps_algebra::polynomial_ring_activity A;
 	A.init(Polynomial_ring_activity_description, HPD, verbose_level);
 
 #if 0
@@ -930,6 +930,9 @@ void activity_description::do_orthogonal_space_activity(int verbose_level)
 	}
 
 	FREE_int(Idx);
+	if (f_v) {
+		cout << "activity_description::do_orthogonal_space_activity done" << endl;
+	}
 
 }
 
@@ -969,6 +972,33 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 		apps_algebra::group_theoretic_activity Activity;
 
 		Activity.init_group(Group_theoretic_activity_description, AG, verbose_level);
+
+
+
+
+		if (Sym->with_labels.size() >= 2) {
+
+			symbol_table_object_type type;
+
+			type = Sym->Orbiter_top_level_session->get_object_type(Idx[1]);
+
+			if (type != t_any_group) {
+				cout << "activity_description::do_group_theoretic_activity secondary type is not t_any_group" << endl;
+				exit(1);
+			}
+
+			apps_algebra::any_group *AG_secondary;
+
+			AG_secondary = (apps_algebra::any_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+
+			if (f_v) {
+				cout << "activity_description::do_group_theoretic_activity "
+						"before Activity.init_secondary_group" << endl;
+			}
+			Activity.init_secondary_group(Group_theoretic_activity_description, AG_secondary, verbose_level);
+
+		}
+
 
 		if (f_v) {
 			cout << "activity_description::do_group_theoretic_activity "

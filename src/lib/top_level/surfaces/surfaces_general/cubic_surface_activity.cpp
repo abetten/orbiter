@@ -251,7 +251,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_export_tritangent_planes) {
 
-		surface_object_with_action *SoA;
+		//surface_object_with_action *SoA;
 
 		if (!SC->f_has_group) {
 			cout << "-all_quartic_curves: The automorphism group of the surface is missing" << endl;

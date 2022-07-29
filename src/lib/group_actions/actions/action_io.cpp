@@ -965,26 +965,20 @@ void action::write_set_of_elements_latex_file(std::string &fname, std::string &t
 		ofstream ost(fname);
 		number_theory::number_theory_domain NT;
 
-		char c_title[1000];
-		char author[1000];
-
-		snprintf(c_title, 1000, "%s", title.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
-
+		string author, extra_praeamble;
 
 		orbiter_kernel_system::latex_interface L;
 
 		L.head(ost,
 				FALSE /* f_book*/,
 				TRUE /* f_title */,
-				c_title, author,
+				title, author,
 				FALSE /* f_toc */,
 				FALSE /* f_landscape */,
 				TRUE /* f_12pt */,
 				TRUE /* f_enlarged_page */,
 				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 		//Nth->report(ost, verbose_level);

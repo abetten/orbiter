@@ -394,6 +394,11 @@ class interface_combinatorics {
 	int f_geometry_builder;
 	geometry_builder::geometry_builder_description *Geometry_builder_description;
 
+	int f_union;
+	std::string union_set_of_sets_fname;
+	std::string union_input_fname;
+	std::string union_output_fname;
+
 
 public:
 	interface_combinatorics();
@@ -741,6 +746,13 @@ class interface_toolkit {
 	int f_produce_latex_header;
 	std::string csv_file_latex_fname;
 
+	int f_grade_statistic_from_csv;
+	std::string grade_statistic_from_csv_fname;
+	std::string grade_statistic_from_csv_m1_label;
+	std::string grade_statistic_from_csv_m2_label;
+	std::string grade_statistic_from_csv_final_label;
+	std::string grade_statistic_from_csv_oracle_grade_label;
+
 	int f_draw_matrix;
 	graphics::draw_bitmap_control *Draw_bitmap_control;
 
@@ -882,6 +894,9 @@ public:
 	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
 	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
 	ring_theory::homogeneous_polynomial_domain *get_object_of_type_ring(std::string &label);
+	void get_vector_or_set(std::string &label,
+			long int *&Pts, int &nb_pts, int verbose_level);
+	apps_algebra::vector_ge_builder *get_object_of_type_vector_ge(std::string &label);
 
 };
 
@@ -925,7 +940,7 @@ public:
 	apps_algebra::group_modification_description *Group_modification_description;
 
 	int f_formula;
-	expression_parser::formula *F;
+	expression_parser::formula *Formula;
 	std::string label;
 	std::string label_tex;
 	std::string managed_variables;
@@ -992,6 +1007,8 @@ public:
 	int f_geometry_builder;
 	geometry_builder::geometry_builder_description *Geometry_builder_description;
 
+	int f_vector_ge;
+	data_structures_groups::vector_ge_description *Vector_ge_description;
 
 	symbol_definition();
 	~symbol_definition();
@@ -1010,7 +1027,7 @@ public:
 	void definition_of_modified_group(int verbose_level);
 	void definition_of_geometric_object(int verbose_level);
 	void definition_of_formula(
-			expression_parser::formula *F,
+			expression_parser::formula *Formula,
 			int verbose_level);
 	void definition_of_collection(std::string &list_of_objects,
 			int verbose_level);
@@ -1029,6 +1046,9 @@ public:
 	void definition_of_vector(int verbose_level);
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);
+	void load_finite_field(std::string &input_q,
+			field_theory::finite_field *&F, int verbose_level);
+	void definition_of_vector_ge(int verbose_level);
 
 };
 

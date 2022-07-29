@@ -242,10 +242,12 @@ void surface_classify_using_arc::report(
 	fname_arc_lifting.append(".tex");
 
 	{
-		char title[1000];
-		char author[1000];
-		snprintf(title, 1000, "Arc lifting over GF(%d) ", F->q);
-		strcpy(author, "");
+		char str[1000];
+		string title, author, extra_praeamble;
+
+		snprintf(str, 1000, "Arc lifting over GF(%d) ", F->q);
+		title.assign(str);
+
 
 
 		ofstream fp(fname_arc_lifting);
@@ -261,7 +263,7 @@ void surface_classify_using_arc::report(
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		report2(fp, Opt, verbose_level);

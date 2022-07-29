@@ -26,7 +26,7 @@ namespace graph_theory {
 
 #define CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS 100
 
-//! parameters that control the clique finding process
+//! settings that control the clique finding process
 
 
 class clique_finder_control {

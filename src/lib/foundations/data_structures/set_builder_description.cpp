@@ -41,6 +41,9 @@ set_builder_description::set_builder_description()
 	f_file = FALSE;
 	//std::string file_name;
 
+	f_file_orbiter_format = FALSE;
+	//std::string file_orbiter_format_name;
+
 }
 
 set_builder_description::~set_builder_description()
@@ -107,6 +110,11 @@ int set_builder_description::read_arguments(
 			file_name.assign(argv[++i]);
 			cout << "-file " << file_name << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-file_orbiter_format") == 0) {
+			f_file_orbiter_format = TRUE;
+			file_orbiter_format_name.assign(argv[++i]);
+			cout << "-file_orbiter_format " << file_orbiter_format_name << endl;
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -144,6 +152,9 @@ void set_builder_description::print()
 	}
 	if (f_file) {
 		cout << "-file " << file_name << endl;
+	}
+	if (f_file_orbiter_format) {
+		cout << "-file_orbiter_format " << file_orbiter_format_name << endl;
 	}
 }
 

@@ -34,6 +34,10 @@ design_create_description::design_create_description()
 	f_list_of_blocks_from_file = FALSE;
 	//std::string list_of_blocks_from_file_fname;
 
+	f_wreath_product_designs = FALSE;
+	wreath_product_designs_n = 0;
+	wreath_product_designs_k = 0;
+
 	f_no_group = FALSE;
 }
 
@@ -106,6 +110,17 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-wreath_product_designs") == 0) {
+			f_wreath_product_designs = TRUE;
+			wreath_product_designs_n = ST.strtoi(argv[++i]);
+			wreath_product_designs_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-wreath_product_designs "
+						<< " " << wreath_product_designs_n
+						<< " " << wreath_product_designs_k
+						<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-no_group") == 0) {
 			f_no_group = TRUE;
 			if (f_v) {
@@ -152,6 +167,12 @@ void design_create_description::print()
 		cout << "-list_of_blocks_from_file " << list_of_blocks_v
 				<< " " << list_of_blocks_k
 				<< " " << list_of_blocks_from_file_fname
+				<< endl;
+	}
+	if (f_wreath_product_designs) {
+		cout << "-wreath_product_designs "
+				<< " " << wreath_product_designs_n
+				<< " " << wreath_product_designs_k
 				<< endl;
 	}
 	if (f_no_group) {

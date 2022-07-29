@@ -1103,16 +1103,16 @@ void quartic_curve_create::compute_group(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
-	long int a;
-	actions::action *A;
-	char str[1000];
 
 	if (f_v) {
 		cout << "quartic_curve_create::compute_group" << endl;
 	}
 
 #if 0
+	int i;
+	long int a;
+	actions::action *A;
+	char str[1000];
 	A = PA->A;
 
 	projective_space_object_classifier_description *Descr;

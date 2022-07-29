@@ -67,6 +67,13 @@ interface_toolkit::interface_toolkit()
 	f_produce_latex_header = FALSE;
 	//std::vector<std::string> csv_file_latex_fname;
 
+	f_grade_statistic_from_csv = FALSE;
+	//std::string grade_statistic_from_csv_fname;
+	//std::string grade_statistic_from_csv_m1_label;
+	//std::string grade_statistic_from_csv_m2_label;
+	//std::string grade_statistic_from_csv_final_label;
+	//std::string grade_statistic_from_csv_oracle_grade_label;
+
 	f_draw_matrix = FALSE;
 	Draw_bitmap_control = NULL;
 
@@ -153,6 +160,9 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
 		cout << "-cvs_file_latex <int : f_produce_header> <string : file_name>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
+		cout << "-grade_statistic_from_csv <fname> <m1_label> <m2_label> <final_label> <oracle_grade_label>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix options -end" << endl;
 	}
@@ -225,6 +235,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
@@ -404,6 +417,23 @@ void interface_toolkit::read_arguments(int argc,
 		csv_file_latex_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
+		f_grade_statistic_from_csv = TRUE;
+		grade_statistic_from_csv_fname.assign(argv[++i]);
+		grade_statistic_from_csv_m1_label.assign(argv[++i]);
+		grade_statistic_from_csv_m2_label.assign(argv[++i]);
+		grade_statistic_from_csv_final_label.assign(argv[++i]);
+		grade_statistic_from_csv_oracle_grade_label.assign(argv[++i]);
+		if (f_v) {
+			cout << "-grade_statistic_from_csv "
+					<< " " << grade_statistic_from_csv_fname
+					<< " " << grade_statistic_from_csv_m1_label
+					<< " " << grade_statistic_from_csv_m2_label
+					<< " " << grade_statistic_from_csv_final_label
+					<< " " << grade_statistic_from_csv_oracle_grade_label
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
@@ -614,6 +644,15 @@ void interface_toolkit::print()
 	if (f_csv_file_latex) {
 		cout << "-csv_file_latex " << csv_file_latex_fname << endl;
 	}
+	if (f_grade_statistic_from_csv) {
+		cout << "-grade_statistic_from_csv "
+				<< " " << grade_statistic_from_csv_fname
+				<< " " << grade_statistic_from_csv_m1_label
+				<< " " << grade_statistic_from_csv_m2_label
+				<< " " << grade_statistic_from_csv_final_label
+				<< " " << grade_statistic_from_csv_oracle_grade_label
+				<< endl;
+	}
 	if (f_draw_matrix) {
 		cout << "-draw_matrix " << endl;
 		Draw_bitmap_control->print();
@@ -760,6 +799,22 @@ void interface_toolkit::worker(int verbose_level)
 				f_produce_latex_header,
 				nb_lines_per_table,
 				verbose_level);
+	}
+	else if (f_grade_statistic_from_csv) {
+
+		orbiter_kernel_system::file_io Fio;
+		int f_midterm1 = TRUE;
+		int f_midterm2 = TRUE;
+		int f_final = TRUE;
+		int f_oracle_grade = TRUE;
+
+		Fio.grade_statistic_from_csv(grade_statistic_from_csv_fname,
+				f_midterm1, grade_statistic_from_csv_m1_label,
+				f_midterm2, grade_statistic_from_csv_m2_label,
+				f_final, grade_statistic_from_csv_final_label,
+				f_oracle_grade, grade_statistic_from_csv_oracle_grade_label,
+				verbose_level);
+
 	}
 	else if (f_draw_matrix) {
 		graphics::graphical_output GO;

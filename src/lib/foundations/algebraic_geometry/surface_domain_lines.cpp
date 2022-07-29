@@ -1707,6 +1707,7 @@ void surface_domain::create_remaining_fifteen_lines(
  * Given a double six in double_six[12], and i,j,
  * compute c_ij = a_ib_j intersect a_jb_i
  */
+
 long int surface_domain::compute_cij(long int *double_six,
 		int i, int j, int verbose_level)
 {
