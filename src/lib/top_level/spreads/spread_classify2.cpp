@@ -66,6 +66,11 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 	{
 		ofstream file(fname);
 		orbiter_kernel_system::latex_interface L;
+
+		string title, author, extra_praeamble;
+
+		author.assign("Orbiter");
+
 		//ofstream file_klein(fname_klein);
 		if (f_v) {
 			cout << "opening file " << fname << " for writing" << endl;
@@ -73,13 +78,14 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 		}
 	
 		L.head(file,
-			FALSE/* f_book*/, FALSE /* f_title */, NULL /*title*/,
-			"Orbiter" /*char *author*/, FALSE/* f_toc*/,
+			FALSE/* f_book*/, FALSE /* f_title */,
+			title /*title*/,
+			author /*char *author*/, FALSE/* f_toc*/,
 			FALSE /* f_landscape*/,
 			FALSE /* f_12pt */,
 			TRUE /* f_enlarged_page */,
 			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		print_isomorphism_type2(Iso, file, iso_cnt, Stab, Orb, data, verbose_level);
@@ -1806,8 +1812,9 @@ void spread_classify::report2(isomorph &Iso, int verbose_level)
 	ofstream f(fname);
 	int f_book = TRUE;
 	int f_title = TRUE;
-	char title[1000];
-	const char *author = "Orbiter";
+	char str[1000];
+	string title, author, extra_praeamble;
+
 	int f_toc = TRUE;
 	int f_landscape = FALSE;
 	int f_12pt = FALSE;
@@ -1815,13 +1822,16 @@ void spread_classify::report2(isomorph &Iso, int verbose_level)
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(title, "$%d$-Spreads of PG($%d,%d$)", k - 1, 2 * k - 1, q);
+	sprintf(str, "$%d$-Spreads of PG($%d,%d$)", k - 1, 2 * k - 1, q);
+	title.assign(str);
+	author.assign("Orbiter");
+
 	cout << "Writing file " << fname << " with "
 			<< Iso.Reps->count << " spreads:" << endl;
 	L.head(f, f_book, f_title,
 		title, author, 
 		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers, 
-		NULL /* extra_praeamble */);
+		extra_praeamble /* extra_praeamble */);
 
 	report3(Iso, f, verbose_level);
 

@@ -1134,14 +1134,17 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 		cout << "algebra_global::do_cheat_sheet_GF q=" << F->q << endl;
 	}
 
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "%s.tex", F->label.c_str());
-	snprintf(title, 1000, "Cheat Sheet $%s$", F->label_tex.c_str());
-	//sprintf(author, "");
-	author[0] = 0;
+	fname.assign(F->label);
+	fname.append(".tex");
+
+	title.assign("Cheat Sheet $");
+	title.append(F->label_tex);
+	title.append("$");
 
 
 
@@ -1161,12 +1164,14 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 		orbiter_kernel_system::latex_interface L;
 
 
-		L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
-			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+		L.head(ost,
+				FALSE /* f_book*/, TRUE /* f_title */,
+				title, author,
+				FALSE /* f_toc */, FALSE /* f_landscape */,
 				TRUE /* f_12pt */,
 				TRUE /* f_enlarged_page */,
 				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 		F->cheat_sheet(ost, verbose_level);
@@ -1190,8 +1195,9 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
+	if (f_v) {
+		cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "algebra_global::do_cheat_sheet_GF q=" << F->q << " done" << endl;
@@ -1199,6 +1205,62 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 }
 
 
+
+void algebra_global::do_cheat_sheet_ring(ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::do_cheat_sheet_ring" << endl;
+	}
+
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
+
+	fname.assign("cheat_sheet_ring");
+	fname.append(".tex");
+
+	title.assign("Cheat Sheet Ring");
+	//title.append(F->label_tex);
+	//title.append("$");
+
+
+
+	{
+		ofstream ost(fname);
+
+
+		orbiter_kernel_system::latex_interface L;
+
+
+		L.head(ost,
+				FALSE /* f_book*/, TRUE /* f_title */,
+				title, author,
+				FALSE /* f_toc */, FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				extra_praeamble /* extra_praeamble */);
+
+		HPD->print_latex(ost);
+
+		HPD->print_monomial_ordering(ost);
+
+		L.foot(ost);
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global::do_cheat_sheet_ring done" << endl;
+	}
+}
 
 
 

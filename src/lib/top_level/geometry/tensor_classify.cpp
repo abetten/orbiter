@@ -383,14 +383,16 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 	orbiter_kernel_system::file_io Fio;
 	orbiter_kernel_system::latex_interface L;
 
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname, title, author, extra_praeamble;
+	char str[1000];
 	//int f_with_stabilizers = TRUE;
 
-	snprintf(title, 1000, "Wreath product $%s$", W->label_tex.c_str());
-	strcpy(author, "Orbiter");
-	snprintf(fname, 1000, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
+	snprintf(str, 1000, "Wreath product $%s$", W->label_tex.c_str());
+	title.assign(str);
+
+	author.assign("Orbiter");
+	snprintf(str, 1000, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
+	fname.assign(str);
 
 	{
 		ofstream fp(fname);
@@ -406,7 +408,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 		fp << "\\section{The field of order " << q << "}" << endl;
 		fp << "\\noindent The field ${\\mathbb F}_{"

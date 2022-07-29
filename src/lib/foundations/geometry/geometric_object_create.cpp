@@ -83,10 +83,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 
-
 		//F->export_magma(3, Pts, nb_pts, fname);
 		//F->export_gap(3, Pts, nb_pts, fname);
-
 
 	}
 	else if (Descr->f_subiaco_hyperoval) {
@@ -127,7 +125,23 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 #endif
 	else if (Descr->f_BLT_database) {
-		F->create_BLT_from_database(Descr->f_BLT_in_PG /* f_embedded */, Descr->BLT_k,
+
+		knowledge_base K;
+
+		K.retrieve_BLT_set_from_database(F,
+				FALSE /* f_embedded */,
+				Descr->BLT_database_k,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
+			verbose_level);
+	}
+	else if (Descr->f_BLT_database_embedded) {
+
+		knowledge_base K;
+
+		K.retrieve_BLT_set_from_database_embedded(F,
+				Descr->BLT_database_embedded_k,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -195,33 +209,18 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 
 
-#if 0
-	else if (Descr->f_Baer) {
-		if (!Descr->f_n) {
-			cout << "please specify the projective dimension "
-					"using the option -n <n>" << endl;
-			exit(1);
-			}
+	else if (Descr->f_Baer_substructure) {
 
-		if (!Descr->f_Q) {
-			cout << "please specify the field order "
-					"using the option -Q <Q>" << endl;
-			exit(1);
-			}
-
-		finite_field *FQ;
-
-		FQ = NEW_OBJECT(finite_field);
-		FQ->init_override_polynomial(Descr->Q, Descr->poly_Q, 0);
-
-		FQ->create_Baer_substructure(Descr->n, F,
-			fname, nb_pts, Pts,
+		P->create_Baer_substructure(
+			Pts, nb_pts,
+			label_txt,
+			label_tex,
 			verbose_level);
-		FREE_OBJECT(FQ);
+
 	}
-#endif
 	else if (Descr->f_orthogonal) {
-		F->create_orthogonal(Descr->orthogonal_epsilon, P->n,
+		F->create_orthogonal(
+				Descr->orthogonal_epsilon, P->n,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -345,7 +344,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			verbose_level);
 	}
 	else if (Descr->f_segre_variety) {
-		F->create_segre_variety(Descr->segre_variety_a, Descr->segre_variety_b,
+		F->create_segre_variety(
+				Descr->segre_variety_a, Descr->segre_variety_b,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,

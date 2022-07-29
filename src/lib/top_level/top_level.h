@@ -43,6 +43,8 @@ namespace apps_algebra {
 	class orbit_cascade;
 	class orbits_on_polynomials;
 	class orbits_on_subspaces;
+	class polynomial_ring_activity;
+	class vector_ge_builder;
 	class young;
 
 }

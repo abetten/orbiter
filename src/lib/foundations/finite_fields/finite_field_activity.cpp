@@ -784,24 +784,27 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		orbiter_kernel_system::file_io Fio;
 		{
-			char str[1000];
+
 			string fname;
+			string author;
+			string title;
+			string extra_praeamble;
+
+
+			char str[1000];
 
 			snprintf(str, 1000, "Nth_roots_q%d_n%d.tex", F->q, Descr->nth_roots_n);
-
 			fname.assign(str);
+			snprintf(str, 1000, "Nth roots");
+			title.assign(str);
+
+
 
 
 			{
 				ofstream ost(fname);
 				number_theory::number_theory_domain NT;
 
-				char title[1000];
-				char author[1000];
-
-				snprintf(title, 1000, "Nth roots");
-				//strcpy(author, "");
-				author[0] = 0;
 
 
 				orbiter_kernel_system::latex_interface L;
@@ -815,7 +818,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 						TRUE /* f_12pt */,
 						TRUE /* f_enlarged_page */,
 						TRUE /* f_pagenumbers */,
-						NULL /* extra_praeamble */);
+						extra_praeamble /* extra_praeamble */);
 
 
 				Nth->report(ost, verbose_level);
@@ -909,28 +912,29 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 #endif
 		{
-			char str[1000];
+
 			string fname;
+			string author;
+			string title;
+			string extra_praeamble;
+
+
+			char str[1000];
 
 			snprintf(str, 1000, "BCH_codes_q%d_n%d_d%d.tex",
 					F->q,
 					Descr->make_BCH_code_n,
 					Descr->make_BCH_code_d
 					);
-
 			fname.assign(str);
+			snprintf(str, 1000, "BCH codes");
+			title.assign(str);
+
 
 
 			{
 				ofstream ost(fname);
 				number_theory::number_theory_domain NT;
-
-				char title[1000];
-				char author[1000];
-
-				snprintf(title, 1000, "BCH codes");
-				//strcpy(author, "");
-				author[0] = 0;
 
 
 				orbiter_kernel_system::latex_interface L;
@@ -944,7 +948,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 						TRUE /* f_12pt */,
 						TRUE /* f_enlarged_page */,
 						TRUE /* f_pagenumbers */,
-						NULL /* extra_praeamble */);
+						extra_praeamble /* extra_praeamble */);
 
 
 				C->report(ost, verbose_level);

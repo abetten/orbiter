@@ -655,17 +655,11 @@ public:
 		int verbose_level);
 	// creates projective_space PG(n,q)
 	void create_Baer_substructure(int n,
-		finite_field *Fq,
+		finite_field *Fq_subfield,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// creates projective_space PG(n,Q)
 	// the big field FQ is given
-	void create_BLT_from_database(int f_embedded,
-		int BLT_k,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
-		int verbose_level);
 	void create_orthogonal(int epsilon, int n,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -677,7 +671,7 @@ public:
 			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// creates hermitian
-	void create_ttp_code(finite_field *Fq,
+	void create_ttp_code(finite_field *Fq_subfield,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
@@ -687,7 +681,7 @@ public:
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
 		int verbose_level);
-	// creates PG(a,q), PG(b,q) and PG((a+1)*(b+1)-1,q)
+	// The Segre map goes from PG(a,q) cross PG(b,q) to PG((a+1)*(b+1)-1,q)
 	void do_andre(finite_field *Fq,
 			long int *the_set_in, int set_size_in,
 			long int *&the_set_out, int &set_size_out,
@@ -774,9 +768,12 @@ public:
 	void report_subfields_detailed(std::ostream &ost, int verbose_level);
 	void cheat_sheet_addition_table(std::ostream &f, int verbose_level);
 	void cheat_sheet_multiplication_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_power_table(std::ostream &f, int f_with_polynomials, int verbose_level);
-	void cheat_sheet_power_table_top(std::ostream &ost, int f_with_polynomials, int verbose_level);
-	void cheat_sheet_power_table_bottom(std::ostream &ost, int f_with_polynomials, int verbose_level);
+	void cheat_sheet_power_table(std::ostream &f,
+			int f_with_polynomials, int verbose_level);
+	void cheat_sheet_power_table_top(std::ostream &ost,
+			int f_with_polynomials, int verbose_level);
+	void cheat_sheet_power_table_bottom(std::ostream &ost,
+			int f_with_polynomials, int verbose_level);
 	void cheat_sheet_table_of_elements(std::ostream &ost, int verbose_level);
 	void print_element_as_polynomial(std::ostream &ost, int *v, int verbose_level);
 	void cheat_sheet_main_table(std::ostream &f, int verbose_level);
@@ -842,11 +839,16 @@ public:
 	ring_theory::unipoly_object *Fq_Elements;
 
 	ring_theory::unipoly_object Min_poly;
-		// Min_poly = irreducible polynomial over F->p of degree field_degree = e * m
+		// Min_poly = irreducible polynomial
+		// over F->p of degree field_degree = e * m
 
 	finite_field *Fp; // the prime field F_p
+
 	ring_theory::unipoly_domain *FpX;
-	ring_theory::unipoly_domain *FQ; // polynomial ring F_p modulo Min_poly
+
+	ring_theory::unipoly_domain *FQ;
+		// polynomial ring F_p modulo Min_poly
+
 	ring_theory::unipoly_domain *FX;
 
 	int m, r, field_degree;

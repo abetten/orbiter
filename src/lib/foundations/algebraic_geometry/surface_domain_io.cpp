@@ -609,13 +609,17 @@ void surface_domain::make_table_of_surfaces(int verbose_level)
 	//int f_v = (verbose_level >= 1);
 
 
-	char fname[1000];
-	char title[1000];
-	const char *author = "Orbiter";
-	const char *extras_for_preamble = "";
+	string fname;
+	string author;
+	string title;
+	string extras_for_preamble;
 
-	sprintf(fname, "surfaces_report.tex");
-	sprintf(title, "Cubic Surfaces with 27 Lines over Finite Fields");
+	fname.assign("surfaces_report.tex");
+
+	author.assign("Orbiter");
+
+	title.assign("Cubic Surfaces with 27 Lines over Finite Fields");
+
 
 	{
 		ofstream fp(fname);

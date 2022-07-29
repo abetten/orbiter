@@ -881,6 +881,99 @@ void projective_space::create_hyperplane(
 	}
 }
 
+void projective_space::create_Baer_substructure(
+	long int *&Pts, int &nb_pts,
+	std::string &label_txt,
+	std::string &label_tex,
+	int verbose_level)
+// assumes we are in PG(n,Q) where Q = q^2
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_Baer_substructure" << endl;
+	}
+
+	// projective space over the big field FQ = this
+
+	number_theory::number_theory_domain NT;
+	int Q = q;
+	int q = NT.i_power_j(F->p, F->e >> 1);
+	if (f_v) {
+		cout << "finite_field::create_Baer_substructure Q=" << Q << " q=" << q << endl;
+	}
+
+	int sz;
+	int *v;
+	int d = n + 1;
+	int i, j, a, b, index, f_is_in_subfield;
+
+	if (f_v) {
+		cout << "finite_field::create_Baer_substructure Q=" << Q << endl;
+		cout << "finite_field::create_Baer_substructure q=" << q << endl;
+	}
+
+	index = (Q - 1) / (q - 1);
+
+	if (f_v) {
+		cout << "finite_field::create_Baer_substructure index=" << index << endl;
+	}
+
+	v = NEW_int(d);
+	Pts = NEW_lint(N_points);
+
+	sz = 0;
+	for (i = 0; i < N_points; i++) {
+
+		F->PG_element_unrank_modified(v, 1, d, i);
+
+		for (j = 0; j < d; j++) {
+			a = v[j];
+			b = F->log_alpha(a);
+			f_is_in_subfield = FALSE;
+
+			if (a == 0 || (b % index) == 0) {
+				f_is_in_subfield = TRUE;
+			}
+			if (!f_is_in_subfield) {
+				break;
+			}
+		}
+		if (j == d) {
+			Pts[nb_pts++] = i;
+		}
+	}
+	cout << "the Baer substructure "
+			"PG(" << n << "," << q << ") inside "
+			"PG(" << n << "," << Q << ") has size "
+			<< sz << ":" << endl;
+	for (i = 0; i < sz; i++) {
+		cout << Pts[i] << " ";
+	}
+	cout << endl;
+
+
+
+	char str[1000];
+
+	//write_set_to_file(fname, S, sz, verbose_level);
+
+
+	sprintf(str, "PG_%d_%d", n, F->q);
+	label_txt.assign("Baer_substructure_");
+	label_txt.append(str);
+
+	sprintf(str, "PG(%d,%d)", n, F->q);
+	label_tex.assign("Baer\\_substructure\\_");
+	label_tex.append(str);
+
+	FREE_int(v);
+	//FREE_int(S);
+	if (f_v) {
+		cout << "finite_field::create_Baer_substructure done" << endl;
+	}
+}
+
 
 
 

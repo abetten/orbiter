@@ -221,6 +221,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	Andre_Bruck_Bose_construction_spread_no = 0;
 	// Andre_Bruck_Bose_construction_label
 
+	f_is_subgroup_of = FALSE;
+	f_coset_reps = FALSE;
 
 }
 
@@ -835,6 +837,18 @@ int group_theoretic_activity_description::read_arguments(
 					<< " " << Andre_Bruck_Bose_construction_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-is_subgroup_of") == 0) {
+			f_is_subgroup_of = TRUE;
+			if (f_v) {
+				cout << "-is_subgroup_of " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-coset_reps") == 0) {
+			f_coset_reps = TRUE;
+			if (f_v) {
+				cout << "-coset_reps " << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -1139,6 +1153,12 @@ void group_theoretic_activity_description::print()
 	if (f_Andre_Bruck_Bose_construction) {
 		cout << "-Andre_Bruck_Bose_construction " << Andre_Bruck_Bose_construction_spread_no
 			<< " " << Andre_Bruck_Bose_construction_label << endl;
+	}
+	if (f_is_subgroup_of) {
+		cout << "-is_subgroup_of " << endl;
+	}
+	if (f_coset_reps) {
+		cout << "-coset_reps " << endl;
 	}
 
 }

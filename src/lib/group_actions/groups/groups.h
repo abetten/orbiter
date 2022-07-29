@@ -1446,7 +1446,7 @@ public:
 	void element_unrank_lint(long int rk, int *Elt, int verbose_level);
 	void element_unrank_lint(long int rk, int *Elt);
 	long int element_rank_lint(int *Elt);
-	int is_element_of(int *elt);
+	int is_element_of(int *elt, int verbose_level);
 	void test_element_rank_unrank();
 	void coset_rep(int *Elt, int i, int j, int verbose_level);
 		// computes a coset representative in transversal i 
@@ -1882,8 +1882,12 @@ public:
 	void compute_and_print_orbits(actions::action *A_given,
 		int verbose_level);
 	int test_if_normalizing(sims *S, int verbose_level);
+	int test_if_subgroup(sims *S, int verbose_level);
 	void test_if_set_is_invariant_under_given_action(actions::action *A_given,
 		long int *set, int set_sz, int verbose_level);
+	void set_of_coset_representatives(sims *S,
+			data_structures_groups::vector_ge *&coset_reps,
+			int verbose_level);
 	strong_generators *point_stabilizer(int pt, int verbose_level);
 	strong_generators *find_cyclic_subgroup_with_exactly_n_fixpoints(
 			int nb_fixpoints, actions::action *A_given, int verbose_level);

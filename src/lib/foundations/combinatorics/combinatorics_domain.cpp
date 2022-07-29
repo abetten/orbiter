@@ -2278,6 +2278,7 @@ int combinatorics_domain::next_partition(int n, int *part)
 }
 
 
+
 long int combinatorics_domain::binomial_lint(int n, int k)
 {
 	ring_theory::longinteger_object a;
@@ -3748,6 +3749,80 @@ void combinatorics_domain::free_tab_q_binomials()
 	if (tab_q_binomials) {
 		FREE_OBJECTS(tab_q_binomials);
 		tab_q_binomials = NULL;
+	}
+}
+
+
+void combinatorics_domain::create_wreath_product_design(int n, int k,
+		long int *&Blocks, long int &nb_blocks, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_wreath_product_design" << endl;
+	}
+
+	long int n2, nk2;
+
+	int v;
+
+	v = 2 * n;
+	n2 = binomial_lint(n, 2);
+	nk2 = binomial_lint(n, k - 2);
+
+	nb_blocks = n2 * nk2 * 2;
+
+	Blocks = NEW_lint(nb_blocks);
+
+	long int s, i, j, rk, cnt, u;
+	int *B1;
+	int *B2;
+	int *B3;
+
+	B1 = NEW_int(2);
+	B2 = NEW_int(k - 2);
+	B3 = NEW_int(k);
+
+	cnt = 0;
+
+	for (s = 0; s < 2; s++) {
+		for (i = 0; i < n2; i++) {
+			unrank_k_subset(i, B1, n, 2);
+			for (j = 0; j < nk2; j++) {
+				unrank_k_subset(j, B2, n, k - 2);
+				if (s == 0) {
+					Int_vec_copy(B1, B3, 2);
+					Int_vec_copy(B2, B3 + 2, k - 2);
+					for (u = 0; u < k - 2; u++) {
+						B3[2 + u] += n;
+					}
+				}
+				else {
+					Int_vec_copy(B2, B3, k - 2);
+					Int_vec_copy(B1, B3 + k - 2, 2);
+					for (u = 0; u < 2; u++) {
+						B3[k - 2 + u] += n;
+					}
+				}
+				rk = rank_k_subset(B3, v, k);
+				if (f_v) {
+					cout << "block " << cnt << " : ";
+					Int_vec_print(cout, B3, k);
+					cout << " rk=" << rk;
+					cout << endl;
+				}
+
+				Blocks[cnt++] = rk;
+			}
+		}
+	}
+
+	FREE_int(B1);
+	FREE_int(B2);
+	FREE_int(B3);
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_wreath_product_design done" << endl;
 	}
 }
 

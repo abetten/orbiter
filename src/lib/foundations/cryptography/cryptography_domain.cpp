@@ -2145,15 +2145,18 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs,
 
 void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level)
 {
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "jacobi_%d_%d.tex", jacobi_top, jacobi_bottom);
-	snprintf(title, 1000, "Jacobi %d over %d", jacobi_top, jacobi_bottom);
-	//sprintf(author, "");
-	author[0] = 0;
 
+	char str[1000];
+
+	snprintf(str, 1000, "jacobi_%d_%d.tex", jacobi_top, jacobi_bottom);
+	fname.assign(str);
+	snprintf(str, 1000, "Jacobi %d over %d", jacobi_top, jacobi_bottom);
+	title.assign(str);
 
 	{
 	ofstream f(fname);
@@ -2167,7 +2170,7 @@ void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbo
 			TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */,
 			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 	number_theory::number_theory_domain NT;
@@ -2197,14 +2200,19 @@ void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbo
 
 void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 {
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "solovay_strassen_%d_%d.tex", p, a);
-	snprintf(title, 1000, "Solovay Strassen %d with base %d", p, a);
-	//sprintf(author, "");
-	author[0] = 0;
+
+	char str[1000];
+
+	snprintf(str, 1000, "solovay_strassen_%d_%d.tex", p, a);
+	fname.assign(str);
+	snprintf(str, 1000, "Solovay Strassen %d with base %d", p, a);
+	title.assign(str);
+
 
 
 	{
@@ -2219,7 +2227,7 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 			TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */,
 			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 	number_theory::number_theory_domain NT;
@@ -2250,14 +2258,19 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 
 void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level)
 {
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "miller_rabin_%d.tex", p);
-	snprintf(title, 1000, "Miller Rabin %d", p);
-	//sprintf(author, "");
-	author[0] = 0;
+
+	char str[1000];
+
+	snprintf(str, 1000, "miller_rabin_%d.tex", p);
+	fname.assign(str);
+	snprintf(str, 1000, "Miller Rabin %d", p);
+	title.assign(str);
+
 
 
 	{
@@ -2272,7 +2285,7 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 			TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */,
 			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 	//longinteger_domain D;
@@ -2312,14 +2325,18 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 
 void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 {
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "fermat_%d.tex", p);
-	snprintf(title, 1000, "Fermat test %d", p);
-	//sprintf(author, "");
-	author[0] = 0;
+
+	char str[1000];
+
+	snprintf(str, 1000, "fermat_%d.tex", p);
+	fname.assign(str);
+	snprintf(str, 1000, "Fermat test %d", p);
+	title.assign(str);
 
 
 	{
@@ -2334,7 +2351,7 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 			TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */,
 			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 	//longinteger_domain D;
@@ -2366,14 +2383,19 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 		int nb_fermat, int nb_miller_rabin, int nb_solovay_strassen,
 		int verbose_level)
 {
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "pseudoprime_%d.tex", nb_digits);
-	snprintf(title, 1000, "Pseudoprime %d", nb_digits);
-	//sprintf(author, "");
-	author[0] = 0;
+
+	char str[1000];
+
+	snprintf(str, 1000, "pseudoprime_%d.tex", nb_digits);
+	fname.assign(str);
+	snprintf(str, 1000, "Pseudoprime %d", nb_digits);
+	title.assign(str);
+
 
 
 	{
@@ -2388,7 +2410,7 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 				TRUE /* f_12pt */,
 				TRUE /* f_enlarged_page */,
 				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 		ring_theory::longinteger_domain D;
@@ -2488,14 +2510,18 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 
 void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int verbose_level)
 {
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "strong_pseudoprime_%d.tex", nb_digits);
-	snprintf(title, 1000, "Strong Pseudoprime %d", nb_digits);
-	//sprintf(author, "");
-	author[0] = 0;
+
+	char str[1000];
+
+	snprintf(str, 1000, "strong_pseudoprime_%d.tex", nb_digits);
+	fname.assign(str);
+	snprintf(str, 1000, "Strong Pseudoprime %d", nb_digits);
+	title.assign(str);
 
 
 	{
@@ -2510,7 +2536,7 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 				TRUE /* f_12pt */,
 				TRUE /* f_enlarged_page */,
 				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 		ring_theory::longinteger_domain D;
@@ -2588,14 +2614,18 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 		int nb_miller_rabin, int verbose_level)
 {
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
 
-	snprintf(fname, 1000, "miller_rabin_%s.tex", number_text.c_str());
-	snprintf(title, 1000, "Miller Rabin %s", number_text.c_str());
-	//sprintf(author, "");
-	author[0] = 0;
+
+	char str[1000];
+
+	snprintf(str, 1000, "miller_rabin_%s.tex", number_text.c_str());
+	fname.assign(str);
+	snprintf(str, 1000, "Miller Rabin %s", number_text.c_str());
+	title.assign(str);
 
 
 	{
@@ -2610,7 +2640,7 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 				TRUE /* f_12pt */,
 				TRUE /* f_enlarged_page */,
 				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 
 		//longinteger_domain D;

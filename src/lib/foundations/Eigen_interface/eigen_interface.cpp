@@ -56,7 +56,9 @@ void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level)
 			X(i, j) = Mtx[i * nb_points + j];
 		}
 	}
+
 	SelfAdjointEigenSolver<MatrixXd> es(X);
+
 	if (f_v) {
 		cout << "The eigenvalues of X are:" << endl << es.eigenvalues() << endl;
 		cout << "The matrix of eigenvectors, V, is:" << endl << es.eigenvectors() << endl << endl;

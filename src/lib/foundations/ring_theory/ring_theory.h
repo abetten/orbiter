@@ -149,6 +149,7 @@ public:
 			std::vector<std::string> *variables_tex,
 			int verbose_level);
 	void print();
+	void print_latex(std::ostream &ost);
 	int get_nb_monomials();
 	int get_nb_variables();
 	field_theory::finite_field *get_F();
@@ -173,6 +174,7 @@ public:
 	int index_of_monomial(int *v);
 	void affine_evaluation_kernel(
 			int *&Kernel, int &dim_kernel, int verbose_level);
+	void get_quadratic_form_matrix(int *eqn, int *M);
 	void print_monomial(std::ostream &ost, int i);
 	void print_monomial(std::ostream &ost, int *mon);
 	void print_monomial_latex(std::ostream &ost, int *mon);
@@ -294,7 +296,7 @@ public:
 			int *Coefficient_vector,
 			int nb_eqns,
 			geometry::projective_space *P,
-			long int *&Pts, int &N,
+			long int *&Image_pts, int &N_points,
 			int verbose_level);
 
 
@@ -581,6 +583,9 @@ public:
 };
 
 
+
+
+
 // #############################################################################
 // polynomial_ring_activity_description.cpp
 // #############################################################################
@@ -594,10 +599,15 @@ public:
 	int f_cheat_sheet;
 
 	int f_ideal;
-	std::string ideal_ring_label;
+	//std::string ideal_ring_label;
 	std::string ideal_label_txt;
 	std::string ideal_label_tex;
 	std::string ideal_point_set_label;
+
+	int f_apply_transformation;
+	std::string apply_transformation_Eqn_in_label;
+	std::string apply_transformation_vector_ge_label;
+
 
 
 	polynomial_ring_activity_description();
@@ -608,31 +618,6 @@ public:
 	void print();
 
 };
-
-// #############################################################################
-// polynomial_ring_activity.cpp
-// #############################################################################
-
-
-//! a polynomial ring activity
-
-class polynomial_ring_activity {
-public:
-
-	polynomial_ring_activity_description *Descr;
-	homogeneous_polynomial_domain *HPD;
-
-
-
-	polynomial_ring_activity();
-	~polynomial_ring_activity();
-	void init(polynomial_ring_activity_description *Descr,
-			homogeneous_polynomial_domain *HPD,
-			int verbose_level);
-	void perform_activity(int verbose_level);
-
-};
-
 
 // #############################################################################
 // polynomial_ring_description.cpp

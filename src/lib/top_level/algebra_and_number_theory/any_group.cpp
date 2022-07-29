@@ -467,19 +467,15 @@ void any_group::normalizer(int verbose_level)
 
 
 
-	string fname;
-
-	fname.assign(fname_magma_prefix);
-	fname.append(".tex");
-
 
 	{
-		char title[1000];
-		char author[1000];
+		string fname, title, author, extra_praeamble;
+		char str[1000];
 
-		snprintf(title, 1000, "Normalizer of subgroup %s", LG->label_tex.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+		fname.assign(fname_magma_prefix);
+		fname.append(".tex");
+		snprintf(str, 1000, "Normalizer of subgroup %s", LG->label_tex.c_str());
+		title.assign(str);
 
 
 		{
@@ -495,7 +491,7 @@ void any_group::normalizer(int verbose_level)
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 			ost << "\\noindent The group $" << LG->label_tex << "$ "
 					"of order " << H_order << " is:\\\\" << endl;
@@ -677,8 +673,10 @@ void any_group::do_find_subgroups(
 
 	string fname;
 	string title;
-	const char *author = "Orbiter";
-	const char *extras_for_preamble = "";
+	string author;
+
+	author.assign("Orbiter");
+	string extras_for_preamble;
 
 	orbiter_kernel_system::file_io Fio;
 
@@ -700,7 +698,7 @@ void any_group::do_find_subgroups(
 		//latex_head_easy(fp);
 		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
-			title.c_str(), author,
+			title, author,
 			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
 			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
 			extras_for_preamble);
@@ -1699,6 +1697,7 @@ void any_group::create_latex_report_for_permutation_group(
 		string fname;
 		string title;
 		string author;
+		string extra_praeamble;
 
 		fname.assign(label);
 		fname.append("_report.tex");
@@ -1716,13 +1715,13 @@ void any_group::create_latex_report_for_permutation_group(
 			L.head(ost,
 					FALSE /* f_book*/,
 					TRUE /* f_title */,
-					title.c_str(), author.c_str(),
+					title, author,
 					FALSE /* f_toc */,
 					FALSE /* f_landscape */,
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 #if 1
@@ -1794,6 +1793,7 @@ void any_group::create_latex_report_for_modified_group(
 		string fname;
 		string title;
 		string author;
+		string extra_praeamble;
 
 		fname.assign(label);
 		fname.append("_report.tex");
@@ -1811,13 +1811,13 @@ void any_group::create_latex_report_for_modified_group(
 			L.head(ost,
 					FALSE /* f_book*/,
 					TRUE /* f_title */,
-					title.c_str(), author.c_str(),
+					title, author,
 					FALSE /* f_toc */,
 					FALSE /* f_landscape */,
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 #if 0
@@ -1898,8 +1898,146 @@ groups::strong_generators *any_group::get_strong_generators()
 	return SG;
 }
 
+int any_group::is_subgroup_of(any_group *AG_secondary, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret = FALSE;
 
 
+	if (f_v) {
+		cout << "any_group::is_subgroup_of" << endl;
+	}
+
+	actions::action *A1;
+	actions::action *A2;
+
+	A1 = A;
+	A2 = AG_secondary->A;
+
+	groups::strong_generators *Subgroup_gens1;
+	groups::strong_generators *Subgroup_gens2;
+
+	Subgroup_gens1 = Subgroup_gens;
+	Subgroup_gens2 = AG_secondary->Subgroup_gens;
+
+	groups::sims *S;
+
+	S = Subgroup_gens2->create_sims(verbose_level);
+
+
+	ret = Subgroup_gens1->test_if_subgroup(S, verbose_level);
+
+
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "any_group::is_subgroup_of done" << endl;
+	}
+	return ret;
+}
+
+void any_group::set_of_coset_representatives(any_group *AG_secondary,
+		data_structures_groups::vector_ge *&coset_reps,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::set_of_coset_representatives" << endl;
+	}
+
+	actions::action *A1;
+	actions::action *A2;
+
+	A1 = A;
+	A2 = AG_secondary->A;
+
+	groups::strong_generators *Subgroup_gens1;
+	groups::strong_generators *Subgroup_gens2;
+
+	Subgroup_gens1 = Subgroup_gens;
+	Subgroup_gens2 = AG_secondary->Subgroup_gens;
+
+	groups::sims *S;
+
+	S = Subgroup_gens2->create_sims(verbose_level);
+
+	if (f_v) {
+		cout << "any_group::set_of_coset_representatives "
+				"before Subgroup_gens1->set_of_coset_representatives" << endl;
+	}
+	Subgroup_gens1->set_of_coset_representatives(S,
+			coset_reps,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::set_of_coset_representatives "
+				"after Subgroup_gens1->set_of_coset_representatives" << endl;
+		cout << "any_group::set_of_coset_representatives "
+				"number of coset reps = " << coset_reps->len << endl;
+	}
+
+
+
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "any_group::set_of_coset_representatives done" << endl;
+	}
+}
+
+
+
+void any_group::report_coset_reps(
+		data_structures_groups::vector_ge *coset_reps,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::report_coset_reps" << endl;
+	}
+
+
+
+	string fname;
+
+	fname.assign(label);
+	fname.append("_coset_reps.tex");
+
+
+	{
+		ofstream fp(fname);
+		orbiter_kernel_system::latex_interface L;
+		L.head_easy(fp);
+
+		//H->print_all_group_elements_tex(fp);
+		//H->print_all_group_elements_with_permutations_tex(fp);
+
+		//Schreier.print_and_list_orbits_tex(fp);
+
+		int i;
+
+		for (i = 0; i < coset_reps->len; i++) {
+
+
+			fp << "coset " << i << " / " << coset_reps->len << ":" << endl;
+
+			fp << "$$" << endl;
+			A->element_print_latex(coset_reps->ith(i), fp);
+			fp << "$$" << endl;
+
+
+		}
+		//latex_interface L;
+
+
+		L.foot(fp);
+	}
+
+	if (f_v) {
+		cout << "any_group::report_coset_reps done" << endl;
+	}
+}
 
 
 

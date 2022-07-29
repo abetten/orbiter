@@ -252,6 +252,12 @@ public:
 
 	int f_cheat_sheet_orthogonal;
 
+	int f_print_points;
+	std::string print_points_label;
+
+	int f_print_lines;
+	std::string print_lines_label;
+
 	int f_unrank_line_through_two_points;
 	std::string unrank_line_through_two_points_p1;
 	std::string unrank_line_through_two_points_p2;
@@ -328,8 +334,10 @@ public:
 
 	int epsilon;
 	int n;
+
 	std::string input_q;
 	field_theory::finite_field *F;
+
 	int f_label_txt;
 	std::string label_txt;
 	int f_label_tex;
@@ -380,6 +388,14 @@ public:
 			int verbose_level);
 	void report2(std::ostream &ost,
 			graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void report_point_set(
+			long int *Pts, int nb_pts,
+			std::string &label_txt,
+			int verbose_level);
+	void report_line_set(
+			long int *Lines, int nb_lines,
+			std::string &label_txt,
 			int verbose_level);
 
 };

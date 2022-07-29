@@ -27,12 +27,14 @@ orthogonal_space_activity::orthogonal_space_activity()
 
 orthogonal_space_activity::~orthogonal_space_activity()
 {
+#if 0
 	if (Blt_set_domain) {
 		FREE_OBJECT(Blt_set_domain);
 	}
 	if (OA) {
 		FREE_OBJECT(OA);
 	}
+#endif
 }
 
 void orthogonal_space_activity::init(orthogonal_space_activity_description *Descr,
@@ -235,6 +237,79 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity after OA->report" << endl;
 		}
+
+	}
+
+	else if (Descr->f_print_points) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_print_points" << endl;
+		}
+
+		long int *Pts;
+		int nb_pts;
+		string label_txt;
+
+		label_txt.assign(Descr->print_points_label);
+
+		user_interface::The_Orbiter_top_level_session->get_vector_or_set(
+				Descr->print_points_label,
+				Pts, nb_pts, verbose_level);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity nb_pts = " << nb_pts << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before OA->report_point_set" << endl;
+		}
+		OA->report_point_set(
+				Pts, nb_pts,
+				label_txt,
+				verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after OA->report_point_set" << endl;
+		}
+
+		FREE_lint(Pts);
+
+	}
+
+	else if (Descr->f_print_lines) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_print_lines" << endl;
+		}
+
+		long int *Lines;
+		int nb_lines;
+		string label_txt;
+
+		label_txt.assign(Descr->print_lines_label);
+
+		user_interface::The_Orbiter_top_level_session->get_vector_or_set(
+				Descr->print_lines_label,
+				Lines, nb_lines, verbose_level);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity nb_lines = " << nb_lines << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before OA->report_line_set" << endl;
+		}
+
+
+		OA->report_line_set(
+				Lines, nb_lines,
+				label_txt,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after OA->report_line_set" << endl;
+		}
+
+		FREE_lint(Lines);
 
 	}
 

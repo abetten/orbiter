@@ -561,6 +561,25 @@ void sorting::test_if_set(int *set, int set_size)
 	FREE_int(S);
 }
 
+int sorting::lint_vec_test_if_set(long int *set, int set_size)
+{
+	long int *S;
+	int i;
+
+	S = NEW_lint(set_size);
+	for (i = 0; i < set_size; i++) {
+		S[i] = set[i];
+		}
+	lint_vec_heapsort(S, set_size);
+	for (i = 0; i < set_size - 1; i++) {
+		if (S[i] == S[i + 1]) {
+			return FALSE;
+		}
+	}
+	FREE_lint(S);
+	return TRUE;
+}
+
 int sorting::test_if_set_with_return_value(int *set, int set_size)
 {
 	int *S;

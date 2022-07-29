@@ -171,6 +171,7 @@ public:
 	void do_trace(field_theory::finite_field *F, int verbose_level);
 	void do_norm(field_theory::finite_field *F, int verbose_level);
 	void do_cheat_sheet_GF(field_theory::finite_field *F, int verbose_level);
+	void do_cheat_sheet_ring(ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level);
 	void gl_random_matrix(field_theory::finite_field *F, int k, int verbose_level);
 
 	// functions with file based input:

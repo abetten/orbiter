@@ -645,15 +645,18 @@ void semifield_classify_with_substructure::latex_report(
 		cout << "semifield_classify_with_substructure::latex_report" << endl;
 	}
 	char str[1000];
-	char author[1000];
-	char fname[1000];
+	string author, fname, extra_praeamble;
+
 	sprintf(str, "Isotopy classes of semifields of order %d", Descr->order);
 
 	string title;
 	title.assign(str);
 
-	sprintf(author, "Orbiter");
-	sprintf(fname, "Semifields_%d.tex", Descr->order);
+	sprintf(str, "Orbiter");
+	author.assign(str);
+
+	sprintf(str, "Semifields_%d.tex", Descr->order);
+	fname.assign(str);
 
 	if (f_v) {
 		cout << "writing latex file " << fname << endl;
@@ -668,14 +671,14 @@ void semifield_classify_with_substructure::latex_report(
 		L.head(fp,
 			FALSE /* f_book */,
 			TRUE /* f_title */,
-			title.c_str(),
+			title,
 			author,
 			FALSE /*f_toc */,
 			FALSE /* f_landscape */,
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		long int *Go;

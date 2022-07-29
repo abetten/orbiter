@@ -90,15 +90,28 @@ void projective_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity n=" << PA->P->n << endl;
 		}
+
+		long int *Image_pts;
+		int N_points;
+
 		G.map(
 				PA,
 				Descr->map_ring_label,
 				Descr->map_formula_label,
 				Descr->map_parameters,
+				Image_pts, N_points,
 				verbose_level);
+
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity after G.map" << endl;
 		}
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity permutation:" << endl;
+			Lint_vec_print(cout, Image_pts, N_points);
+			cout << endl;
+		}
+
 
 	}
 	else if (Descr->f_analyze_del_Pezzo_surface) {
@@ -179,7 +192,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		Symb->init_cubic_surface(Descr->define_surface_label, SC, verbose_level);
 		if (f_v) {
-			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_surface_label << endl;
+			cout << "before Orbiter->add_symbol_table_entry "
+					<< Descr->define_surface_label << endl;
 		}
 		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_surface_label, Symb, verbose_level);
 
@@ -196,11 +210,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		//G.table_of_quartic_curves(PA, verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before PA->table_of_quartic_curves" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before PA->table_of_quartic_curves" << endl;
 		}
 		PA->table_of_quartic_curves(verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after PA->table_of_quartic_curves" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after PA->table_of_quartic_curves" << endl;
 		}
 
 	}
@@ -213,11 +229,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		//G.table_of_cubic_surfaces(PA, verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before PA->table_of_cubic_surfaces" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before PA->table_of_cubic_surfaces" << endl;
 		}
 		PA->table_of_cubic_surfaces(verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after PA->table_of_cubic_surfaces" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after PA->table_of_cubic_surfaces" << endl;
 		}
 	}
 
@@ -238,14 +256,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 #endif
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before PA->create_quartic_curve" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before PA->create_quartic_curve" << endl;
 		}
 		PA->create_quartic_curve(
 				Descr->Quartic_curve_descr,
 				QC,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after PA->create_quartic_curve" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after PA->create_quartic_curve" << endl;
 		}
 
 		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
@@ -456,7 +476,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		S = NEW_OBJECT(semifields::semifield_classify_with_substructure);
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before S->init" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before S->init" << endl;
 		}
 		S->init(
 				Descr->Semifield_classify_description,
@@ -464,7 +485,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->Semifield_classify_Control,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after S->init" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after S->init" << endl;
 		}
 
 	}
@@ -562,7 +584,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_arc_with_given_set_as_s_lines_after_dualizing) {
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_arc_with_given_set_as_i_lines_after_dualizing" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_arc_with_given_set_as_i_lines_after_dualizing" << endl;
 		}
 
 		PA->P->Arc_in_projective_space->arc_lifting1(
@@ -577,7 +600,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_arc_with_two_given_sets_of_lines_after_dualizing) {
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_arc_with_two_given_sets_of_lines_after_dualizing" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_arc_with_two_given_sets_of_lines_after_dualizing" << endl;
 		}
 
 		PA->P->Arc_in_projective_space->arc_lifting2(
@@ -595,7 +619,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_arc_with_three_given_sets_of_lines_after_dualizing) {
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_arc_with_three_given_sets_of_lines_after_dualizing" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_arc_with_three_given_sets_of_lines_after_dualizing" << endl;
 		}
 
 		PA->P->Arc_in_projective_space->arc_lifting3(
@@ -614,7 +639,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_dualize_hyperplanes_to_points) {
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_dualize_hyperplanes_to_points" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_dualize_hyperplanes_to_points" << endl;
 		}
 		long int *the_set_in;
 		int set_size_in;
@@ -647,7 +673,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_dualize_points_to_hyperplanes) {
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_dualize_points_to_hyperplanes" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_dualize_points_to_hyperplanes" << endl;
 		}
 		long int *the_set_in;
 		int set_size_in;
@@ -676,7 +703,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_dualize_rank_k_subspaces) {
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_dualize_rank_k_subspaces" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_dualize_rank_k_subspaces" << endl;
 		}
 		long int *the_set_in;
 		int set_size_in;
@@ -739,7 +767,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_lines_on_point_but_within_a_plane) {
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_lines_on_point_but_within_a_plane" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_lines_on_point_but_within_a_plane" << endl;
 		}
 
 		long int point_rk = Descr->lines_on_point_but_within_a_plane_point_rk;
@@ -760,7 +789,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		cout << endl;
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity f_lines_on_point_but_within_a_plane done" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_lines_on_point_but_within_a_plane done" << endl;
 		}
 	}
 	else if (Descr->f_rank_lines_in_PG) {

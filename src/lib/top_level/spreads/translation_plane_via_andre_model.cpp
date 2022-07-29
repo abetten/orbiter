@@ -951,15 +951,13 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 
 	{
 		char str[1000];
-		string fname;
-		char title[1000];
-		char author[1000];
+		string fname, title, author, extra_praeamble;
 
 		snprintf(str, 1000, "%s_report.tex", label.c_str());
 		fname.assign(str);
-		snprintf(title, 1000, "Translation plane %s", label.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Translation plane %s", label.c_str());
+		title.assign(str);
+
 
 
 		{
@@ -975,7 +973,7 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

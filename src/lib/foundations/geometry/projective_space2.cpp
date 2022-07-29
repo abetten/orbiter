@@ -4133,7 +4133,6 @@ void projective_space::do_move_two_lines_in_hyperplane_stabilizer_text(
 }
 
 
-
 }}}
 
 

@@ -55,6 +55,8 @@ public:
 		int verbose_level);
 	// allocates Solutions[nb_sol * nb_needed]
 	uint32_t SuperFastHash (const char * data, int len);
+	void union_of_sets(std::string &fname_set_of_sets,
+			std::string &fname_input, std::string &fname_output, int verbose_level);
 
 };
 
@@ -972,6 +974,9 @@ public:
 	int f_file;
 	std::string file_name;
 
+	int f_file_orbiter_format;
+	std::string file_orbiter_format_name;
+
 	set_builder_description();
 	~set_builder_description();
 	int read_arguments(
@@ -1194,6 +1199,7 @@ public:
 	int test_if_sets_are_equal(int *set1, int *set2, int set_size);
 	int test_if_sets_are_disjoint(long int *set1, int sz1, long int *set2, int sz2);
 	void test_if_set(int *set, int set_size);
+	int lint_vec_test_if_set(long int *set, int set_size);
 	int test_if_set_with_return_value(int *set, int set_size);
 	int test_if_set_with_return_value_lint(long int *set, int set_size);
 	void rearrange_subset(int n, int k, int *set,

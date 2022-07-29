@@ -40,8 +40,9 @@ geometric_object_description::geometric_object_description()
 	f_OKeefe_Penttila = FALSE;
 
 	f_BLT_database = FALSE;
-	BLT_k = 0;
-	f_BLT_in_PG = FALSE;
+	BLT_database_k = 0;
+	f_BLT_database_embedded = FALSE;
+	BLT_database_embedded_k = 0;
 
 #if 0
 	f_BLT_Linear = FALSE;
@@ -53,7 +54,7 @@ geometric_object_description::geometric_object_description()
 	f_elliptic_quadric_ovoid = FALSE;
 	f_ovoid_ST = FALSE;
 
-	f_Baer = FALSE;
+	f_Baer_substructure = FALSE;
 
 	f_orthogonal = FALSE;
 	orthogonal_epsilon = 0;
@@ -178,12 +179,13 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 
 		else if (ST.stringcmp(argv[i], "-BLT_database") == 0) {
 			f_BLT_database = TRUE;
-			BLT_k = ST.strtoi(argv[++i]);
-			cout << "-BLT_database " << BLT_k << endl;
+			BLT_database_k = ST.strtoi(argv[++i]);
+			cout << "-BLT_database " << BLT_database_k << endl;
 		}
-		else if (ST.stringcmp(argv[i], "-BLT_in_PG") == 0) {
-			f_BLT_in_PG = TRUE;
-			cout << "-BLT_in_PG " << endl;
+		else if (ST.stringcmp(argv[i], "-BLT_database_embedded") == 0) {
+			f_BLT_database_embedded = TRUE;
+			BLT_database_embedded_k = ST.strtoi(argv[++i]);
+			cout << "-BLT_database_embedded " << BLT_database_embedded_k << endl;
 		}
 
 #if 0
@@ -213,9 +215,9 @@ int geometric_object_description::read_arguments(int argc, std::string *argv,
 			f_ovoid_ST = TRUE;
 			cout << "-ovoid_ST " << endl;
 		}
-		else if (ST.stringcmp(argv[i], "-Baer") == 0) {
-			f_Baer = TRUE;
-			cout << "-Baer " << endl;
+		else if (ST.stringcmp(argv[i], "-Baer_substructure") == 0) {
+			f_Baer_substructure = TRUE;
+			cout << "-Baer_substructure " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-orthogonal") == 0) {
 			f_orthogonal = TRUE;
@@ -483,10 +485,10 @@ void geometric_object_description::print()
 
 
 	if (f_BLT_database) {
-		cout << "-BLT_database " << BLT_k << endl;
+		cout << "-BLT_database " << BLT_database_k << endl;
 	}
-	if (f_BLT_in_PG) {
-		cout << "-BLT_in_PG " << endl;
+	if (f_BLT_database_embedded) {
+		cout << "-BLT_database_embedded " << BLT_database_embedded_k << endl;
 	}
 
 	if (f_elliptic_quadric_ovoid) {
@@ -495,8 +497,8 @@ void geometric_object_description::print()
 	if (f_ovoid_ST) {
 		cout << "-ovoid_ST " << endl;
 	}
-	if (f_Baer) {
-		cout << "-Baer " << endl;
+	if (f_Baer_substructure) {
+		cout << "-Baer_substructure " << endl;
 	}
 	if (f_orthogonal) {
 		cout << "-orthogonal " << orthogonal_epsilon << endl;

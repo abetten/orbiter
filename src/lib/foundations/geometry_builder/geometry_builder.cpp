@@ -97,6 +97,19 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	for (i = 0; i < v_len; i++) {
 		V += v[i];
 	}
+	V_partition = NEW_int(V + 1);
+	for (i = 0; i < V + 1; i++) {
+		V_partition[i] = FALSE;
+	}
+	int V2;
+
+	V2 = 0;
+	for (i = 0; i < v_len; i++) {
+		V2 += v[i];
+		V_partition[V2 - 1] = TRUE;
+	}
+	V_partition[V] = TRUE;
+
 
 	if (!Descr->f_B) {
 		cout << "please use option -B to specify the column partition" << endl;
@@ -312,7 +325,10 @@ void geometry_builder::compute_VBR(int verbose_level)
 		}
 	}
 
-	print_tdo();
+	if (f_v) {
+		cout << "geometry_builder::compute_VBR the TDO:" << endl;
+		print_tdo();
+	}
 
 	if (f_v) {
 		cout << "geometry_builder::compute_VBR done" << endl;
@@ -335,6 +351,7 @@ void geometry_builder::print_tdo()
 	cout << endl;
 	for (i = 0; i < v_len; i++) {
 		cout << setw(2) << v[i] << " ";
+		cout << "| ";
 		for (j = 0; j < b_len; j++) {
 			cout << setw(2) << TDO[i * b_len + j] << " ";
 		}

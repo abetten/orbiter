@@ -442,14 +442,12 @@ void algebra_global_with_action::create_subgroups(
 	{
 		char str[1000];
 		string fname;
-		char title[1000];
-		char author[1000];
+		string title, author, extra_praeamble;
 
 		snprintf(str, 1000, "subgroups_of_order_4.tex");
 		fname.assign(str);
-		snprintf(title, 1000, "Subgroups of order 4");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Subgroups of order 4");
+		title.assign(str);
 
 
 		{
@@ -465,7 +463,7 @@ void algebra_global_with_action::create_subgroups(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -1492,17 +1490,22 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 	Int_matrix_print(Table, L_sz, L_sz);
 
 
-	const char *fname = "group_table.tex";
-
 	{
+
+
+		string fname, title, author, extra_praeamble;
+
+		fname.assign("group_table.tex");
+
+
 		ofstream fp(fname);
 		orbiter_kernel_system::latex_interface L;
 
 		L.head(fp, FALSE /* f_book */, FALSE /* f_title */,
-			"" /*const char *title */, "" /*const char *author */,
+			title /*const char *title */, author /*const char *author */,
 			FALSE /* f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */,
 			FALSE /* f_enlarged_page */, FALSE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		L.print_integer_matrix_tex_block_by_block(fp, Table, L_sz, L_sz, 15);
@@ -3286,19 +3289,15 @@ void algebra_global_with_action::centralizer_of_element(
 	}
 
 
-	string fname;
-
-	fname.assign(prefix);
-	fname.append("_centralizer.tex");
-
 
 	{
-		char title[1000];
-		char author[1000];
+		string fname, title, author, extra_praeamble;
+		char str[1000];
 
-		snprintf(title, 1000, "Centralizer of element %s", label.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+		fname.assign(prefix);
+		fname.append("_centralizer.tex");
+		snprintf(str, 1000, "Centralizer of element %s", label.c_str());
+		title.assign(str);
 
 
 		{
@@ -3314,7 +3313,7 @@ void algebra_global_with_action::centralizer_of_element(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -3385,19 +3384,15 @@ void algebra_global_with_action::permutation_representation_of_element(
 
 
 
-	string fname;
-
-	fname.assign(prefix);
-	fname.append("_permutation.tex");
-
 
 	{
-		char title[1000];
-		char author[1000];
+		string fname, title, author, extra_praeamble;
+		char str[1000];
 
-		snprintf(title, 1000, "Permutation representation of element");
-		//strcpy(author, "");
-		author[0] = 0;
+		fname.assign(prefix);
+		fname.append("_permutation.tex");
+		snprintf(str, 1000, "Permutation representation of element");
+		title.assign(str);
 
 
 		{
@@ -3413,7 +3408,7 @@ void algebra_global_with_action::permutation_representation_of_element(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -3548,19 +3543,15 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 	gens->print_generators_tex();
 
 
-	string fname;
-
-	fname.assign(prefix);
-	fname.append(".tex");
-
-
 	{
-		char title[1000];
-		char author[1000];
 
-		snprintf(title, 1000, "Normalizer of cyclic subgroup %s", label.c_str());
-		//strcpy(author, "");
-		author[0] = 0;
+		string fname, title, author, extra_praeamble;
+		char str[1000];
+
+		fname.assign(prefix);
+		fname.append(".tex");
+		snprintf(str, 1000, "Normalizer of cyclic subgroup %s", label.c_str());
+		title.assign(str);
 
 
 		{
@@ -3576,7 +3567,7 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 			ring_theory::longinteger_object go;
 			gens->group_order(go);

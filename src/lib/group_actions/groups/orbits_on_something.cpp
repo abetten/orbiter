@@ -1833,12 +1833,9 @@ void orbits_on_something::create_latex_report(int verbose_level)
 	fname_tex.append("_orbits_report.tex");
 
 	{
-		char title[1000];
-		char author[1000];
+		string title, author, extra_praeamble;
 
-		snprintf(title, 1000, "Orbits");
-		//strcpy(author, "");
-		author[0] = 0;
+		title.assign("Orbits");
 
 
 		{
@@ -1854,7 +1851,7 @@ void orbits_on_something::create_latex_report(int verbose_level)
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

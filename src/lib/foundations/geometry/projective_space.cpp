@@ -3342,16 +3342,20 @@ void projective_space::create_latex_report(
 	}
 
 	{
-		char str[1000];
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "PG_%d_%d.tex", n, F->q);
 		fname.assign(str);
-		snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", n, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Cheat Sheet PG($%d,%d$)", n, F->q);
+		title.assign(str);
+
+
 
 
 		{
@@ -3367,7 +3371,7 @@ void projective_space::create_latex_report(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -3403,16 +3407,20 @@ void projective_space::create_latex_report_for_Grassmannian(int k, int verbose_l
 	}
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "Gr_%d_%d_%d.tex", n + 1, k, F->q);
 		fname.assign(str);
-		snprintf(title, 1000, "Cheat Sheet ${\\rm Gr}_{%d,%d,%d}$", n + 1, k, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Cheat Sheet ${\\rm Gr}_{%d,%d,%d}$", n + 1, k, F->q);
+		title.assign(str);
+
 
 
 		{
@@ -3428,7 +3436,7 @@ void projective_space::create_latex_report_for_Grassmannian(int k, int verbose_l
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

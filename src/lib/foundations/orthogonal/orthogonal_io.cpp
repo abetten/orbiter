@@ -89,6 +89,16 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 
 	ost << "The number of points is " << nb_points << "\\\\" << endl;
 	if (nb_points < 3000) {
+
+		long int *Pts;
+
+		Pts = NEW_lint(nb_points);
+		for (rk = 0; rk < nb_points; rk++) {
+			Pts[rk] = rk;
+		}
+		report_given_point_set(ost, Pts, nb_points, verbose_level);
+
+#if 0
 		ost << "points:\\\\" << endl;
 		for (rk = 0; rk < nb_points; rk++) {
 			unrank_point(v1, 1, rk, 0 /*verbose_level*/);
@@ -96,6 +106,8 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 			Int_vec_print(ost, v1, n);
 			ost << "$\\\\" << endl;
 		}
+#endif
+
 	}
 	else {
 		ost << "Too many points to print.\\\\" << endl;
@@ -103,10 +115,28 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 	//ost << endl;
 }
 
+void orthogonal::report_given_point_set(std::ostream &ost, long int *Pts, int nb_pts, int verbose_level)
+{
+	long int rk;
+	int i;
+
+	ost << "A set of points of size " << nb_pts << "\\\\" << endl;
+	ost << "The Points:\\\\" << endl;
+	for (i = 0; i < nb_pts; i++) {
+		rk = Pts[i];
+
+		unrank_point(v1, 1, rk, 0 /*verbose_level*/);
+		ost << i << " : $P_{" << rk << "} = ";
+		Int_vec_print(ost, v1, n);
+		ost << "$\\\\" << endl;
+	}
+	//ost << endl;
+}
+
 void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 {
 	int len;
-	int i, a, d = n + 1;
+	int i, a, d = n;
 	long int p1, p2;
 	orbiter_kernel_system::latex_interface Li;
 	data_structures::sorting Sorting;
@@ -190,6 +220,111 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 		//ost << "Too many lines to print. \\\\" << endl;
 	}
 }
+
+
+void orthogonal::report_given_line_set(std::ostream &ost, long int *Lines, int nb_lines, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal::report_given_line_set" << endl;
+		cout << "orthogonal::report_given_line_set Lines=";
+		Lint_vec_print(cout, Lines, nb_lines);
+		cout << endl;
+	}
+	int i, a, d = n;
+	long int p1, p2, rk;
+	orbiter_kernel_system::latex_interface Li;
+	data_structures::sorting Sorting;
+
+	ost << "A set of lines of size " << nb_lines << "\\\\" << endl;
+	ost << "The Lines:\\\\" << endl;
+
+	long int *Points_on_line;
+	int *L;
+
+	Points_on_line = NEW_lint(q + 1);
+	L = NEW_int(2 * d);
+
+	for (i = 0; i < nb_lines; i++) {
+
+		rk = Lines[i];
+
+		if (f_v) {
+			cout << "orthogonal::report_given_line_set i=" << i << " / " << nb_lines << " rk=" << rk << endl;
+		}
+
+		ost << i << " : $L_{" << rk << "} = ";
+		unrank_line(p1, p2, rk, 0 /*verbose_level - 1*/);
+		//cout << "(" << p1 << "," << p2 << ") : ";
+
+		unrank_point(v1, 1, p1, 0);
+		unrank_point(v2, 1, p2, 0);
+
+		Int_vec_copy(v1, L, d);
+		Int_vec_copy(v2, L + d, d);
+
+		ost << "\\left[" << endl;
+		Li.print_integer_matrix_tex(ost, L, 2, d);
+		ost << "\\right]" << endl;
+
+		a = evaluate_bilinear_form(v1, v2, 1);
+		if (a) {
+			cout << "not orthogonal" << endl;
+			exit(1);
+		}
+
+#if 0
+		cout << " & ";
+		j = O.rank_line(p1, p2, 0 /*verbose_level - 1*/);
+		if (i != j) {
+			cout << "error: i != j" << endl;
+			exit(1);
+		}
+#endif
+
+#if 1
+
+		points_on_line(p1, p2, Points_on_line, 0 /*verbose_level - 1*/);
+		Sorting.lint_vec_heapsort(Points_on_line, q + 1);
+
+		Li.lint_set_print_masked_tex(ost, Points_on_line, q + 1, "P_{", "}");
+		ost << "$\\\\" << endl;
+#if 0
+		for (r1 = 0; r1 <= q; r1++) {
+			for (r2 = 0; r2 <= q; r2++) {
+				if (r1 == r2)
+					continue;
+				//p3 = p1;
+				//p4 = p2;
+				p3 = O.line1[r1];
+				p4 = O.line1[r2];
+				cout << p3 << "," << p4 << " : ";
+				j = O.rank_line(p3, p4, verbose_level - 1);
+				cout << " : " << j << endl;
+				if (i != j) {
+					cout << "error: i != j" << endl;
+					exit(1);
+				}
+			}
+		}
+		cout << endl;
+#endif
+#endif
+	}
+
+	cout << "before FREE_lint(Points_on_line)" << endl;
+	FREE_lint(Points_on_line);
+	cout << "before FREE_lint(L)" << endl;
+	FREE_int(L);
+	cout << "after FREE_lint(L)" << endl;
+	if (f_v) {
+		cout << "orthogonal::report_given_line_set done" << endl;
+	}
+}
+
+
+
 void orthogonal::list_all_points_vs_points(int verbose_level)
 {
 	int t1, t2;
@@ -553,16 +688,19 @@ void orthogonal::create_latex_report(int verbose_level)
 	}
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "O_%d_%d_%d.tex", epsilon, n, F->q);
 		fname.assign(str);
-		snprintf(title, 1000, "Orthogonal Space  ${\\rm O}(%d,%d,%d)$", epsilon, n, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Orthogonal Space  ${\\rm O}(%d,%d,%d)$", epsilon, n, F->q);
+		title.assign(str);
 
 
 		{
@@ -578,7 +716,7 @@ void orthogonal::create_latex_report(int verbose_level)
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

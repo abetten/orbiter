@@ -205,12 +205,12 @@ void orthogonal_space_with_action::report(
 			L.head_easy(ost);
 
 			if (f_v) {
-				cout << "poset_classification::post_processing "
+				cout << "orthogonal_space_with_action::report "
 						"before report2" << endl;
 			}
 			report2(ost, LG_Draw_options, verbose_level);
 			if (f_v) {
-				cout << "poset_classification::post_processing "
+				cout << "orthogonal_space_with_action::report "
 						"after report2" << endl;
 			}
 
@@ -268,6 +268,113 @@ void orthogonal_space_with_action::report2(std::ostream &ost,
 		cout << "orthogonal_space_with_action::report2 done" << endl;
 	}
 }
+
+void orthogonal_space_with_action::report_point_set(
+		long int *Pts, int nb_pts,
+		std::string &label_txt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::report_point_set" << endl;
+	}
+
+	{
+		string fname_report;
+		fname_report.assign(label_txt);
+		fname_report.append("_set_report.tex");
+		orbiter_kernel_system::latex_interface L;
+		orbiter_kernel_system::file_io Fio;
+
+		{
+			ofstream ost(fname_report);
+			L.head_easy(ost);
+
+			if (f_v) {
+				cout << "orthogonal_space_with_action::report_point_set "
+						"before report_given_point_set" << endl;
+			}
+			//report2(ost, LG_Draw_options, verbose_level);
+
+			O->report_given_point_set(ost, Pts, nb_pts, verbose_level);
+
+
+			if (f_v) {
+				cout << "orthogonal_space_with_action::report_point_set "
+						"after report_given_point_set" << endl;
+			}
+
+			L.foot(ost);
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::report_point_set "
+					"Written file " << fname_report << " of size "
+					<< Fio.file_size(fname_report) << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::report_point_set done" << endl;
+	}
+}
+
+
+
+void orthogonal_space_with_action::report_line_set(
+		long int *Lines, int nb_lines,
+		std::string &label_txt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::report_line_set" << endl;
+	}
+
+	{
+		string fname_report;
+		fname_report.assign(label_txt);
+		fname_report.append("_set_of_lines_report.tex");
+		orbiter_kernel_system::latex_interface L;
+		orbiter_kernel_system::file_io Fio;
+
+		{
+			ofstream ost(fname_report);
+			L.head_easy(ost);
+
+			if (f_v) {
+				cout << "orthogonal_space_with_action::report_line_set "
+						"before report_given_line_set" << endl;
+			}
+			//report2(ost, LG_Draw_options, verbose_level);
+
+			O->report_given_line_set(ost, Lines, nb_lines, verbose_level);
+
+
+			if (f_v) {
+				cout << "orthogonal_space_with_action::report_line_set "
+						"after report_given_line_set" << endl;
+			}
+
+			L.foot(ost);
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::report_line_set "
+					"Written file " << fname_report << " of size "
+					<< Fio.file_size(fname_report) << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::report_line_set done" << endl;
+	}
+}
+
+
+
 
 }}}
 

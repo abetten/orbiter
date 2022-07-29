@@ -371,7 +371,10 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet before tokenize" << endl;
 	}
-	tokenize(fname, tokens, nb_tokens, 0 /*verbose_level - 1*/);
+	tokenize(fname, tokens, nb_tokens, verbose_level - 1);
+	if (f_v) {
+		cout << "spreadsheet::read_spreadsheet after tokenize" << endl;
+	}
 
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet read file with "
@@ -848,7 +851,7 @@ void spreadsheet::reallocate_table_add_row()
 
 int spreadsheet::find_column(std::string &column_label)
 {
- return find_by_column(column_label.c_str());
+	return find_by_column(column_label.c_str());
 }
 
 int spreadsheet::find_by_column(const char *join_by)
@@ -922,9 +925,19 @@ void spreadsheet::tokenize(std::string &fname,
 		}
 
 	sz = Fio.file_size(fname);
+	if (f_v) {
+		cout << "spreadsheet::tokenize file size " << sz << endl;
+	}
 
 	buf = NEW_char(sz + 1);
+	if (f_v) {
+		cout << "spreadsheet::tokenize after NEW_char 1" << endl;
+	}
+
 	str = NEW_char(sz + 1);
+	if (f_v) {
+		cout << "spreadsheet::tokenize after NEW_char 2" << endl;
+	}
 
 	{
 		string_tools ST;
@@ -934,19 +947,25 @@ void spreadsheet::tokenize(std::string &fname,
 		while (TRUE) {
 			line_cnt++;
 			if (fp.eof()) {
-				break;
+				if (f_vv) {
+					cout << "eof" << endl;
 				}
+				break;
+			}
+			if (f_vv) {
+				cout << "before fp.getline" << endl;
+			}
 			fp.getline(buf, sz, '\n');
 			if (f_vv) {
 				cout << "Line read :'" << buf << "'" << endl;
-				}
+			}
 			if (strlen(buf) == 0) {
 				break;
 			}
 			p_buf = buf;
 			if (strncmp(buf, "END", 3) == 0) {
 				break;
-				}
+			}
 
 	#if 0
 			// delete negative characters:
@@ -967,7 +986,7 @@ void spreadsheet::tokenize(std::string &fname,
 			while (TRUE) {
 				if (*p_buf == 0) {
 					break;
-					}
+				}
 				//s_scan_token(&p_buf, str);
 				//s_scan_token(&p_buf, str);
 				if (!ST.s_scan_token_comma_separated(&p_buf, str, verbose_level - 1)) {
@@ -977,90 +996,92 @@ void spreadsheet::tokenize(std::string &fname,
 				if (f_vv) {
 					cout << "Line " << line_cnt << ", token " << setw(6) << i << " is '"
 							<< str << "'" << endl;
-					}
+				}
 	#if 0
 				if (strcmp(str, ",") == 0) {
 					continue;
-					}
+				}
 	#endif
 				i++;
-				}
-			i++; // End of line
 			}
+			i++; // End of line
 		}
-		nb_tokens = i;
+	}
+
+
+	nb_tokens = i;
 
 
 		//f_vv = TRUE;
 
 
-		tokens = NEW_pchar(nb_tokens);
-		{
-			string_tools ST;
-			ifstream fp(fname);
-			i = 0;
+	tokens = NEW_pchar(nb_tokens);
+	{
+		string_tools ST;
+		ifstream fp(fname);
+		i = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
+			}
+			fp.getline(buf, sz, '\n');
+			p_buf = buf;
+			if (strncmp(buf, "END", 3) == 0) {
+				break;
+			}
+			if (f_vv) {
+				cout << "read line '" << p_buf << "'" << " i=" << i << endl;
+			}
+
+		#if 0
+			// delete negative characters:
+			int len = strlen(buf);
+			for (i = 0, j = 0; i < len; i++) {
+				if ((int) buf[i] >= 0) {
+					buf[j++] = buf[i];
+				}
+				else {
+					cout << "spreadsheet::tokenize skipping "
+							"negative character" << endl;
+				}
+			}
+			buf[j] = 0;
+		#endif
+
+			//i = 0;
 			while (TRUE) {
-				if (fp.eof()) {
+				if (*p_buf == 0) {
 					break;
-					}
-				fp.getline(buf, sz, '\n');
-				p_buf = buf;
-				if (strncmp(buf, "END", 3) == 0) {
+				}
+				//s_scan_token(&p_buf, str);
+				//s_scan_token(&p_buf, str);
+				if (!ST.s_scan_token_comma_separated(&p_buf, str, verbose_level - 1)) {
 					break;
-					}
-				if (f_vv) {
-					cout << "read line '" << p_buf << "'" << " i=" << i << endl;
-					}
-
-			#if 0
-				// delete negative characters:
-				int len = strlen(buf);
-				for (i = 0, j = 0; i < len; i++) {
-					if ((int) buf[i] >= 0) {
-						buf[j++] = buf[i];
-						}
-					else {
-						cout << "spreadsheet::tokenize skipping "
-								"negative character" << endl;
-						}
-					}
-				buf[j] = 0;
-			#endif
-
-				//i = 0;
-				while (TRUE) {
-					if (*p_buf == 0) {
-						break;
-						}
-					//s_scan_token(&p_buf, str);
-					//s_scan_token(&p_buf, str);
-					if (!ST.s_scan_token_comma_separated(&p_buf, str, verbose_level - 1)) {
-						break;
-					}
-			#if 0
-					if (strcmp(str, ",") == 0) {
-						continue;
-						}
-			#endif
-					tokens[i] = NEW_char(strlen(str) + 1);
-					strcpy(tokens[i], str);
-					if (f_vv) {
-						cout << "Token " << setw(6) << i << " is '"
-								<< tokens[i] << "'" << endl;
-						}
-					i++;
-					}
-
-			#if 1
-				snprintf(str, sz, "END_OF_LINE");
+				}
+		#if 0
+				if (strcmp(str, ",") == 0) {
+					continue;
+				}
+		#endif
 				tokens[i] = NEW_char(strlen(str) + 1);
 				strcpy(tokens[i], str);
 				if (f_vv) {
 					cout << "Token " << setw(6) << i << " is '"
 							<< tokens[i] << "'" << endl;
-					}
+				}
 				i++;
-			#endif
+			}
+
+		#if 1
+			snprintf(str, sz, "END_OF_LINE");
+			tokens[i] = NEW_char(strlen(str) + 1);
+			strcpy(tokens[i], str);
+			if (f_vv) {
+				cout << "Token " << setw(6) << i << " is '"
+						<< tokens[i] << "'" << endl;
+			}
+			i++;
+		#endif
 
 		}
 	}

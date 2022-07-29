@@ -496,6 +496,10 @@ void design_activity::do_export_inc(
 	fname.assign(DC->label_txt);
 	fname.append("_inc.txt");
 
+	if (f_v) {
+		cout << "design_activity::do_export_inc fname=" << fname << endl;
+	}
+
 	combinatorics::combinatorics_domain Combi;
 
 	int v = DC->degree;
@@ -508,6 +512,10 @@ void design_activity::do_export_inc(
 
 	Combi.compute_incidence_matrix(v, b, k, DC->set,
 			M, verbose_level);
+	if (f_v) {
+		cout << "design_activity::do_export_inc The incidence matrix is:" << endl;
+		Int_matrix_print(M, v, b);
+	}
 
 
 	{
@@ -524,7 +532,9 @@ void design_activity::do_export_inc(
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 	FREE_int(M);
 

@@ -28,7 +28,11 @@ void orthogonal::unrank_point(
 	if (f_v) {
 		cout << "orthogonal::unrank_point rk=" << rk
 				<< " epsilon=" << epsilon << " n=" << n << endl;
-		}
+	}
+	if (n == 0) {
+		cout << "orthogonal::unrank_point n == 0" << endl;
+		exit(1);
+	}
 	F->Orthogonal_indexing->Q_epsilon_unrank(v, stride, epsilon, n - 1,
 			form_c1, form_c2, form_c3, rk, verbose_level);
 }
@@ -41,7 +45,7 @@ long int orthogonal::rank_point(int *v, int stride, int verbose_level)
 
 	if (f_v) {
 		cout << "orthogonal::rank_point" << endl;
-		}
+	}
 	// copy the vector since Q_epsilon_rank has side effects
 	// (namely, Q_epsilon_rank damages its input vector)
 
@@ -67,18 +71,24 @@ long int orthogonal::rank_point(int *v, int stride, int verbose_level)
 void orthogonal::unrank_line(long int &p1, long int &p2,
 		long int rk, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal::unrank_line rk=" << rk << endl;
+	}
 	if (epsilon == 1) {
 		hyperbolic_unrank_line(p1, p2, rk, verbose_level);
-		return;
-		}
+	}
 	else if (epsilon == 0) {
 		parabolic_unrank_line(p1, p2, rk, verbose_level);
-		return;
-		}
+	}
 	else {
 		cout << "orthogonal::unrank_line epsilon = " << epsilon << endl;
 		exit(1);
-		}
+	}
+	if (f_v) {
+		cout << "orthogonal::unrank_line rk=" << rk << " done" << endl;
+	}
 }
 
 long int orthogonal::rank_line(long int p1, long int p2, int verbose_level)
@@ -91,14 +101,14 @@ long int orthogonal::rank_line(long int p1, long int p2, int verbose_level)
 	}
 	if (epsilon == 1) {
 		ret = hyperbolic_rank_line(p1, p2, verbose_level);
-		}
+	}
 	else if (epsilon == 0) {
 		ret = parabolic_rank_line(p1, p2, verbose_level);
-		}
+	}
 	else {
 		cout << "orthogonal::rank_line epsilon = " << epsilon << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "orthogonal::rank_line done" << endl;
 	}
@@ -111,16 +121,16 @@ int orthogonal::line_type_given_point_types(
 	if (epsilon == 1) {
 		return hyperbolic_line_type_given_point_types(
 				pt1, pt2, pt1_type, pt2_type);
-		}
+	}
 	else if (epsilon == 0) {
 		return parabolic_line_type_given_point_types(
 				pt1, pt2, pt1_type, pt2_type, FALSE);
-		}
+	}
 	else {
 		cout << "type_and_index_to_point_rk "
 				"epsilon = " << epsilon << endl;
 		exit(1);
-		}
+	}
 }
 
 long int orthogonal::type_and_index_to_point_rk(
@@ -170,15 +180,15 @@ void orthogonal::point_rk_to_type_and_index(
 	if (epsilon == 1) {
 		hyperbolic_point_rk_to_type_and_index(
 				rk, type, index);
-		}
+	}
 	else if (epsilon == 0) {
 		parabolic_point_rk_to_type_and_index(
 				rk, type, index, verbose_level);
-		}
+	}
 	else {
 		cout << "type_and_index_to_point_rk epsilon = " << epsilon << endl;
 		exit(1);
-		}
+	}
 }
 
 void orthogonal::canonical_points_of_line(
@@ -188,15 +198,15 @@ void orthogonal::canonical_points_of_line(
 	if (epsilon == 1) {
 		hyperbolic_canonical_points_of_line(line_type,
 				pt1, pt2, cpt1, cpt2, verbose_level);
-		}
+	}
 	else if (epsilon == 0) {
 		parabolic_canonical_points_of_line(line_type,
 				pt1, pt2, cpt1, cpt2, verbose_level);
-		}
+	}
 	else {
 		cout << "canonical_points_of_line epsilon = " << epsilon << endl;
 		exit(1);
-		}
+	}
 }
 
 
@@ -206,7 +216,7 @@ void orthogonal::unrank_S(int *v, int stride, int m, int rk)
 {
 	if (m == 0) {
 		return;
-		}
+	}
 	F->Orthogonal_indexing->S_unrank(v, stride, m, rk);
 }
 
@@ -217,7 +227,7 @@ long int orthogonal::rank_S(int *v, int stride, int m)
 
 	if (m == 0) {
 		return 0;
-		}
+	}
 	F->Orthogonal_indexing->S_rank(v, stride, m, rk);
 	return rk;
 }
@@ -266,7 +276,7 @@ long int orthogonal::rank_Sbar(int *v, int stride, int m)
 
 	for (i = 0; i < 2 * m; i++) {
 		v_tmp[i] = v[i * stride];
-		}
+	}
 	F->Orthogonal_indexing->Sbar_rank(v_tmp, 1, m, rk, 0 /* verbose_level */);
 	return rk;
 }

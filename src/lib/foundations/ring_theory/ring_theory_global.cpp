@@ -987,16 +987,20 @@ void ring_theory_global::mult_polynomials(
 	unipoly_domain D(F);
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "polynomial_mult_%ld_%ld.tex", rk0, rk1);
 		fname.assign(str);
-		snprintf(title, 1000, "Polynomial Mult");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Polynomial Mult");
+		title.assign(str);
+
 
 
 		{
@@ -1012,7 +1016,7 @@ void ring_theory_global::mult_polynomials(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -1058,16 +1062,22 @@ void ring_theory_global::polynomial_division_with_report(
 	unipoly_domain D(F);
 
 	{
-		char str[1000];
+
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "polynomial_division_%ld_%ld.tex", rk0, rk1);
 		fname.assign(str);
-		snprintf(title, 1000, "Polynomial Division");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Polynomial Division");
+		title.assign(str);
+
+
 
 
 		{
@@ -1083,7 +1093,7 @@ void ring_theory_global::polynomial_division_with_report(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -1129,16 +1139,20 @@ void ring_theory_global::polynomial_division_from_file_with_report(
 	}
 	unipoly_domain D(F);
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "polynomial_division_file_%ld.tex", rk1);
 		fname.assign(str);
-		snprintf(title, 1000, "Polynomial Division");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Polynomial Division");
+		title.assign(str);
+
 
 
 		{
@@ -1154,7 +1168,7 @@ void ring_theory_global::polynomial_division_from_file_with_report(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -1205,16 +1219,21 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 	}
 	unipoly_domain D(F);
 	{
-		char str[1000];
+
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "polynomial_division_file_all_%d_error_patterns_%ld.tex", k, rk1);
 		fname.assign(str);
-		snprintf(title, 1000, "Polynomial Division");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Polynomial Division");
+		title.assign(str);
+
 
 
 		{
@@ -1230,7 +1249,7 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -2052,16 +2071,19 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "Irred_q%d_d%d.tex", F->q, deg);
 		fname.assign(str);
-		snprintf(title, 1000, "Irreducible Polynomials of Degree %d over F%d", deg, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Irreducible Polynomials of Degree %d over F%d", deg, F->q);
+		title.assign(str);
 
 
 		{
@@ -2079,7 +2101,7 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

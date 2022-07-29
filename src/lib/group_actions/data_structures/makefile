@@ -16,6 +16,7 @@ MODULES = \
 	set_and_stabilizer.o \
 	union_find.o \
 	union_find_on_k_subsets.o \
+	vector_ge_description.o \
 	vector_ge.o
 
 

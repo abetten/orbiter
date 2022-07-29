@@ -194,22 +194,29 @@ void inc_encoding::print_partitioned_override_theX(
 		std::ostream &ost, int v_cur, int v_cut,
 		gen_geo *gg, int *the_X, int f_print_isot)
 {
-	int i, j, r, I, J, f_kreuz;
+	int i, j, r, J, f_kreuz;
+	int f_h_bar;
 	iso_type *it;
 
 
 	ost << endl;
-	I = 0;
+	//I = 0;
+
+	print_horizontal_bar(ost, gg, FALSE /* f_print_isot */, NULL);
+
 	for (i = 0; i <= v; i++) {
 
 		//cout << "inc_encoding::print_partitioned_override_theX i=" << i << endl;
 
+
+#if 0
 		if ((i == v) ||
 				(I < gg->Test_semicanonical->nb_i_hbar &&
 						i == gg->Test_semicanonical->i_hbar[I])) {
 			print_horizontal_bar(ost, gg, FALSE /* f_print_isot */, NULL);
 			I++;
 		}
+#endif
 
 		if (i == v) {
 			break;
@@ -295,6 +302,21 @@ void inc_encoding::print_partitioned_override_theX(
 		ost << endl;
 
 		the_X += dim_n;
+
+		if (gg->GB->V_partition[i]) {
+			f_h_bar = TRUE;
+		}
+		else {
+			f_h_bar = FALSE;
+
+		}
+
+		if (f_h_bar) {
+			print_horizontal_bar(ost, gg, FALSE /* f_print_isot */, NULL);
+		}
+
+
+		//print_horizontal_bar(ost, gg, TRUE /* f_print_isot */, gg->inc->iso_type_no_vhbars);
 
 	} // next i
 

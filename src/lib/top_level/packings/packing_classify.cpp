@@ -609,17 +609,21 @@ void packing_classify::report_fixed_objects(int *Elt,
 
 	{
 		ofstream fp(fname_latex);
-		char title[1000];
+		char str[1000];
+		string title, author, extra_praeamble;
+
 		orbiter_kernel_system::latex_interface L;
 
-		sprintf(title, "Fixed Objects");
+		sprintf(str, "Fixed Objects");
+		title.assign(str);
+		author.assign("");
 
 		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
-			title, "" /* const char *author */,
+			title, author /* const char *author */,
 			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 
 	

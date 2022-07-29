@@ -381,12 +381,11 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 
 		{
-			char title[1000];
-			char author[1000];
+			string title, author, extra_praeamble;
+			char str[1000];
 
-			snprintf(title, 1000, "Automorphism group of %s", CG->label_tex.c_str());
-			//strcpy(author, "");
-			author[0] = 0;
+			snprintf(str, 1000, "Automorphism group of %s", CG->label_tex.c_str());
+			title.assign(str);
 
 
 			{
@@ -402,7 +401,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 						TRUE /* f_12pt */,
 						TRUE /* f_enlarged_page */,
 						TRUE /* f_pagenumbers */,
-						NULL /* extra_praeamble */);
+						extra_praeamble /* extra_praeamble */);
 
 
 				ring_theory::longinteger_object go;
@@ -490,12 +489,13 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		{
 			string fname;
-			char title[1000];
-			char author[1000];
 
-			snprintf(title, 1000, "Eigenvalues of %s", CG->label_tex.c_str());
-			//strcpy(author, "");
-			author[0] = 0;
+			string title, author, extra_praeamble;
+			char str[1000];
+
+			snprintf(str, 1000, "Eigenvalues of %s", CG->label_tex.c_str());
+			title.assign(str);
+
 
 			fname.assign(CG->label);
 			fname.append("_eigenvalues.tex");
@@ -513,7 +513,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 						TRUE /* f_12pt */,
 						TRUE /* f_enlarged_page */,
 						TRUE /* f_pagenumbers */,
-						NULL /* extra_praeamble */);
+						extra_praeamble /* extra_praeamble */);
 
 
 				if (f_v) {

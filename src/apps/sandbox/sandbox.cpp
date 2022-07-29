@@ -16,13 +16,27 @@ using namespace orbiter;
 
 int main()
 {
+#if 1
+	int verbose_level = 10;
+	data_structures::algorithms Algo;
+
+	std::string fname_set_of_sets, fname_input, fname_output;
+
+	fname_set_of_sets.assign("doily.csv");
+	fname_input.assign("doily_cliques.csv");
+	fname_output.assign("doily_cliques_union.csv");
+
+	Algo.union_of_sets(fname_set_of_sets,
+			fname_input, fname_output, verbose_level);
+
+#endif
 #if 0
 	finite_field F;
 	F.finite_field_init(16, FALSE /* f_without_tables */, 0);
 
 	cout << "8 x 15 = " << F.mult(8, 15) << endl;
 #endif
-#if 1
+#if 0
 	int verbose_level = 2;
 	int nb_gens = 3;
 	int base_len = 2;

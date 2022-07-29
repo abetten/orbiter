@@ -580,6 +580,8 @@ public:
 			std::string &ring_label,
 			std::string &formula_label,
 			std::string &evaluate_text,
+			long int *&Image_pts,
+			int &N_points,
 			int verbose_level);
 	void analyze_del_Pezzo_surface(
 			projective_space_with_action *PA,

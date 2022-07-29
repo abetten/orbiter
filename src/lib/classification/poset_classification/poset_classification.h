@@ -776,7 +776,7 @@ public:
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void make_flag_orbits_on_relations(
-			int depth, const char *fname_prefix, int verbose_level);
+			int depth, std::string &fname_prefix, int verbose_level);
 	void make_full_poset_graph(int depth, graph_theory::layered_graph *&LG,
 		int data1, double x_stretch, 
 		int verbose_level);

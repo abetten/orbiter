@@ -256,7 +256,7 @@ public:
 	long int a12b, a52a;
 	long int b12b, b52a;
 	long int delta, omega, lambda, mu, nu, zeta;
-	// parabolic q odd requires square / nonsquare tables
+	// parabolic q odd requires square / non-square tables
 	int *minus_squares; // [(q-1)/2]
 	int *minus_squares_without; // [(q-1)/2 - 1]
 	int *minus_nonsquares; // [(q-1)/2]
@@ -360,7 +360,7 @@ public:
 	int BLT_test(int size, long int *set, int verbose_level);
 	int triple_is_collinear(long int pt1, long int pt2, long int pt3);
 	int collinearity_test(int size, long int *set, int verbose_level);
-	void plane_invariant(unusual_model *U,
+	void plane_invariant(
 		int size, int *set,
 		int &nb_planes, int *&intersection_matrix,
 		int &Block_size, int *&Blocks,
@@ -497,7 +497,9 @@ public:
 		int verbose_level);
 	void report_points_of_given_type(std::ostream &ost, int t, int verbose_level);
 	void report_points(std::ostream &ost, int verbose_level);
+	void report_given_point_set(std::ostream &ost, long int *Pts, int nb_pts, int verbose_level);
 	void report_lines(std::ostream &ost, int verbose_level);
+	void report_given_line_set(std::ostream &ost, long int *Lines, int nb_lines, int verbose_level);
 	void list_all_points_vs_points(int verbose_level);
 	void list_points_vs_points(int t1, int t2,
 		int verbose_level);

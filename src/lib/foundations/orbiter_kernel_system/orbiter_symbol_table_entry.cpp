@@ -555,6 +555,23 @@ void orbiter_symbol_table_entry::init_geometry_builder_object(std::string &label
 	}
 }
 
+void orbiter_symbol_table_entry::init_vector_ge(std::string &label,
+		void *V, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_vector_ge" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_vector_ge;
+	ptr = V;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_vector_ge done" << endl;
+	}
+}
+
 
 
 
@@ -659,6 +676,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_geometry_builder) {
 			cout << "geometry_builder" << endl;
+		}
+		else if (object_type == t_vector_ge) {
+			cout << "vector_ge" << endl;
 		}
 
 

@@ -615,14 +615,16 @@ void packing_was_fixpoints::report(int verbose_level)
 	orbiter_kernel_system::file_io Fio;
 
 	{
-	char fname[1000];
-	char title[1000];
-	char author[1000];
+	string fname, title, author, extra_praeamble;
+	char str[1000];
 	//int f_with_stabilizers = TRUE;
 
-	sprintf(title, "Packings in PG(3,%d) ", PW->P->q);
-	sprintf(author, "Orbiter");
-	sprintf(fname, "Packings_was_fixp_q%d.tex", PW->P->q);
+	sprintf(str, "Packings in PG(3,%d) ", PW->P->q);
+	title.assign(str);
+	sprintf(str, "Orbiter");
+	author.assign(str);
+	sprintf(str, "Packings_was_fixp_q%d.tex", PW->P->q);
+	fname.assign(str);
 
 		{
 		ofstream fp(fname);
@@ -638,7 +640,7 @@ void packing_was_fixpoints::report(int verbose_level)
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 		fp << "\\section{The field of order " << PW->P->q << "}" << endl;
 		fp << "\\noindent The field ${\\mathbb F}_{"

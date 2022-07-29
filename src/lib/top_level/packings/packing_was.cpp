@@ -1643,57 +1643,60 @@ void packing_was::report(int verbose_level)
 	orbiter_kernel_system::file_io Fio;
 
 	{
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-	//int f_with_stabilizers = TRUE;
+		string fname, title, author, extra_praeamble;
 
-	sprintf(title, "Packings in PG(3,%d) ", P->q);
-	sprintf(author, "Orbiter");
-	sprintf(fname, "Packings_q%d.tex", P->q);
+		char str[1000];
+		//int f_with_stabilizers = TRUE;
+
+		sprintf(str, "Packings in PG(3,%d) ", P->q);
+		title.assign(str);
+		sprintf(str, "Orbiter");
+		author.assign(str);
+		sprintf(str, "Packings_q%d.tex", P->q);
+		fname.assign(str);
 
 		{
-		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+			ofstream fp(fname);
+			orbiter_kernel_system::latex_interface L;
 
-		//latex_head_easy(fp);
-		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			//latex_head_easy(fp);
+			L.head(fp,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
+				extra_praeamble /* extra_praeamble */);
 
-		fp << "\\section{The field of order " << P->q << "}" << endl;
-		fp << "\\noindent The field ${\\mathbb F}_{"
-				<< P->q
-				<< "}$ :\\\\" << endl;
-		P->F->cheat_sheet(fp, verbose_level);
+			fp << "\\section{The field of order " << P->q << "}" << endl;
+			fp << "\\noindent The field ${\\mathbb F}_{"
+					<< P->q
+					<< "}$ :\\\\" << endl;
+			P->F->cheat_sheet(fp, verbose_level);
 
 #if 0
-		fp << "\\section{The space PG$(3, " << q << ")$}" << endl;
+			fp << "\\section{The space PG$(3, " << q << ")$}" << endl;
 
-		fp << "The points in the plane PG$(2, " << q << ")$:\\\\" << endl;
+			fp << "The points in the plane PG$(2, " << q << ")$:\\\\" << endl;
 
-		fp << "\\bigskip" << endl;
+			fp << "\\bigskip" << endl;
 
 
-		Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
+			Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
 
-		fp << endl;
-		fp << "\\section{Poset Classification}" << endl;
-		fp << endl;
+			fp << endl;
+			fp << "\\section{Poset Classification}" << endl;
+			fp << endl;
 #endif
-		fp << "\\section{The Group $H$}" << endl;
-		H_gens->print_generators_tex(fp);
+			fp << "\\section{The Group $H$}" << endl;
+			H_gens->print_generators_tex(fp);
 
-		report2(fp, verbose_level);
+			report2(fp, verbose_level);
 
-		L.foot(fp);
+			L.foot(fp);
 		}
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;

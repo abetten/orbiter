@@ -148,6 +148,7 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 		degree = Descr->list_of_blocks_v;
 		k = Descr->list_of_blocks_k;
+
 		Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
 		char str[1000];
@@ -202,7 +203,6 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		}
 		sz = m;
 
-		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
 
 		char str[1000];
 
@@ -213,6 +213,69 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		label_txt.assign(str);
 
 		sprintf(str, "blocks\\_v%d\\_k%d", degree, k);
+		label_tex.assign(str);
+
+
+		A = NEW_OBJECT(actions::action);
+
+		int f_no_base = FALSE;
+
+		if (Descr->f_no_group) {
+			f_no_base = TRUE;
+		}
+
+		A->init_symmetric_group(degree, f_no_base, verbose_level);
+
+		A2 = NEW_OBJECT(actions::action);
+		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+
+		Aut = NULL;
+		Aut_on_lines = NULL;
+		f_has_group = FALSE;
+		Sg = NULL;
+
+	}
+	else if (Descr->f_wreath_product_designs) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"f_wreath_product_designs" << endl;
+		}
+
+		int n;
+
+		n = Descr->wreath_product_designs_n;
+		k = Descr->wreath_product_designs_k;
+
+
+		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
+
+		degree = 2 * n;
+
+		combinatorics::combinatorics_domain Combi;
+		long int nb_blocks;
+
+
+		Combi.create_wreath_product_design(n, k,
+				set, nb_blocks, verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init "
+					"f_wreath_product_designs nb_blocks=" << nb_blocks << endl;
+		}
+
+		sz = nb_blocks;
+		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
+
+		char str[1000];
+
+		sprintf(str, "wreath_product_designs_n%d_k%d", n, k);
+		prefix.assign(str);
+
+		sprintf(str, "wreath_product_designs_n%d_k%d", n, k);
+		label_txt.assign(str);
+
+		sprintf(str, "wreath\\_product\\_designs\\_n%d\\_k%d", n, k);
 		label_tex.assign(str);
 
 		A = NEW_OBJECT(actions::action);

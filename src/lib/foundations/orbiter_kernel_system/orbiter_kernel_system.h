@@ -301,6 +301,12 @@ public:
 	void extract_from_makefile(std::string &fname, std::string &label,
 			std::vector<std::string> &text,
 			int verbose_level);
+	void grade_statistic_from_csv(std::string &fname_csv,
+			int f_midterm1, std::string &midterm1_label,
+			int f_midterm2, std::string &midterm2_label,
+			int f_final, std::string &final_label,
+			int f_oracle_grade, std::string &oracle_grade_label,
+			int verbose_level);
 
 };
 
@@ -346,13 +352,13 @@ public:
 	~latex_interface();
 	void head_easy(std::ostream& ost);
 	void head_easy_with_extras_in_the_praeamble(
-			std::ostream& ost, const char *extras);
+			std::ostream& ost, std::string &extras);
 	void head_easy_sideways(std::ostream& ost);
 	void head(std::ostream& ost, int f_book, int f_title,
-		const char *title, const char *author,
+			std::string &title, std::string &author,
 		int f_toc, int f_landscape, int f_12pt,
 		int f_enlarged_page, int f_pagenumbers,
-		const char *extras_for_preamble);
+		std::string &extras_for_preamble);
 	void foot(std::ostream& ost);
 
 	// two functions from DISCRETA1:
@@ -904,6 +910,8 @@ public:
 			data_structures::data_input_stream *IS, int verbose_level);
 	void init_geometry_builder_object(std::string &label,
 			geometry_builder::geometry_builder *GB, int verbose_level);
+	void init_vector_ge(std::string &label,
+			void *V, int verbose_level);
 	void print();
 };
 

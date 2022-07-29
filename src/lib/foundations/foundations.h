@@ -604,7 +604,6 @@ namespace ring_theory {
 	class polynomial_double_domain;
 	class polynomial_double;
 	class polynomial_ring_activity_description;
-	class polynomial_ring_activity;
 	class polynomial_ring_description;
 	class ring_theory_global;
 	class table_of_irreducible_polynomials;
@@ -823,6 +822,7 @@ enum symbol_table_object_type {
 	t_action,
 	t_poset,
 	t_poset_classification,
+	t_vector_ge,
 };
 
 

@@ -216,7 +216,8 @@ void blt_set_classify::compute_starter(
 
 
 	if (f_v) {
-		cout << "blt_set_classify::compute_starter before gen->compute_orbits_on_subsets" << endl;
+		cout << "blt_set_classify::compute_starter "
+				"before gen->compute_orbits_on_subsets" << endl;
 	}
 	gen->compute_orbits_on_subsets(
 			starter_size/* target_depth */,
@@ -225,7 +226,8 @@ void blt_set_classify::compute_starter(
 			verbose_level);
 
 	if (f_v) {
-		cout << "blt_set_classify::compute_starter after gen->compute_orbits_on_subsets" << endl;
+		cout << "blt_set_classify::compute_starter "
+				"after gen->compute_orbits_on_subsets" << endl;
 	}
 
 
@@ -1274,8 +1276,9 @@ void blt_set_classify::report2(std::ostream &ost,
 
 	int f_book = FALSE;
 	int f_title = TRUE;
-	char title[1000];
-	const char *author = "Orbiter";
+	char str[1000];
+	string title, author, extra_praeamble;
+
 	int f_toc = FALSE;
 	int f_landscape = FALSE;
 	int f_12pt = FALSE;
@@ -1283,7 +1286,11 @@ void blt_set_classify::report2(std::ostream &ost,
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(title, "BLT-sets of ${\\cal Q}(4,%d)$", q);
+	sprintf(str, "BLT-sets of ${\\cal Q}(4,%d)$", q);
+	title.assign(str);
+
+	author.assign("Orbiter");
+
 	cout << "number of BLT-sets is " << T->nb_orbits << endl;
 
 	L.head(ost, f_book, f_title,
@@ -1294,7 +1301,7 @@ void blt_set_classify::report2(std::ostream &ost,
 		f_12pt,
 		f_enlarged_page,
 		f_pagenumbers,
-		NULL /* extra_praeamble */);
+		extra_praeamble /* extra_praeamble */);
 
 
 	int h;

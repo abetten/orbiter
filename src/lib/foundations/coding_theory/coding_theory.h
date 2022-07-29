@@ -203,18 +203,18 @@ public:
 
 	void twisted_tensor_product_codes(
 		int *&H_subfield, int &m, int &n,
-		field_theory::finite_field *F, field_theory::finite_field *f,
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int f_construction_A, int f_hyperoval,
 		int f_construction_B, int verbose_level);
 	void create_matrix_M(
 		int *&M,
-		field_theory::finite_field *F, field_theory::finite_field *f,
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int &m, int &n, int &beta, int &r, int *exponents,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		int f_elements_exponential, std::string &symbol_for_print,
 		int verbose_level);
 		// int exponents[9]
-	void create_matrix_H_subfield(field_theory::finite_field *F, field_theory::finite_field*f,
+	void create_matrix_H_subfield(field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int *H_subfield, int *C, int *C_inv, int *M, int m, int n,
 		int beta, int beta_q,
 		int f_elements_exponential, std::string &symbol_for_print,

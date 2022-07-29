@@ -287,15 +287,17 @@ void orbits_on_polynomials::report(int verbose_level)
 	}
 	cout << "orbit reps:" << endl;
 
-	char title[1000];
-	char author[1000];
+	string title, author, extra_praeamble;
 	char str[1000];
 
 	sprintf(str, "poly_orbits_d%d_n%d_q%d.tex", degree_of_poly, n - 1, F->q);
 	fname_report.assign(str);
 
-	sprintf(title, "Varieties of degree %d in PG(%d,%d)", degree_of_poly, n - 1, F->q);
-	sprintf(author, "Orbiter");
+	sprintf(str, "Varieties of degree %d in PG(%d,%d)", degree_of_poly, n - 1, F->q);
+	title.assign(str);
+
+	author.assign("Orbiter");
+
 	{
 		ofstream ost(fname_report);
 		orbiter_kernel_system::latex_interface L;
@@ -309,7 +311,7 @@ void orbits_on_polynomials::report(int verbose_level)
 				TRUE /* f_12pt */,
 				TRUE /* f_enlarged_page */,
 				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
+				extra_praeamble /* extra_praeamble */);
 
 		ost << "\\small" << endl;
 		ost << "\\arraycolsep=2pt" << endl;

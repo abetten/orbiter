@@ -249,6 +249,7 @@ public:
 		char *fname, int &nb_Pts, long int *&Pts,
 		int verbose_level);
 	void append_orbit_and_adjust_size(groups::schreier *Orb, int idx, int *set, int &sz);
+#if 0
 	void classify_objects_using_nauty(
 			data_structures::data_input_stream_description *Data,
 			data_structures::classify_bitvectors *CB,
@@ -269,6 +270,7 @@ public:
 		int &f_found, int &idx,
 		ring_theory::longinteger_object &go,
 		int verbose_level);
+#endif
 
 
 };
@@ -625,6 +627,10 @@ public:
 
 	int f_list_of_blocks_from_file;
 	std::string list_of_blocks_from_file_fname;
+
+	int f_wreath_product_designs;
+	int wreath_product_designs_n;
+	int wreath_product_designs_k;
 
 	int f_no_group;
 

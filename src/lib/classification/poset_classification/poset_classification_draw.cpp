@@ -911,7 +911,7 @@ void poset_classification::draw_level_graph(
 
 
 void poset_classification::make_flag_orbits_on_relations(
-		int depth, const char *fname_prefix, int verbose_level)
+		int depth, std::string &fname_prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

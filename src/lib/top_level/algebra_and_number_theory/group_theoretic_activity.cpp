@@ -24,9 +24,12 @@ group_theoretic_activity::group_theoretic_activity()
 	Descr = NULL;
 
 	AG = NULL;
+	AG_secondary = NULL;
 
+#if 0
 	A1 = NULL;
 	A2 = NULL;
+#endif
 
 }
 
@@ -34,7 +37,6 @@ group_theoretic_activity::~group_theoretic_activity()
 {
 
 }
-
 
 void group_theoretic_activity::init_group(group_theoretic_activity_description *Descr,
 		any_group *AG,
@@ -49,7 +51,7 @@ void group_theoretic_activity::init_group(group_theoretic_activity_description *
 	group_theoretic_activity::Descr = Descr;
 	group_theoretic_activity::AG = AG;
 
-
+#if 0
 	A1 = AG->A_base;
 	A2 = AG->A;
 
@@ -57,9 +59,29 @@ void group_theoretic_activity::init_group(group_theoretic_activity_description *
 		cout << "group_theoretic_activity::init_group A1 = " << A1->label << endl;
 		cout << "group_theoretic_activity::init_group A2 = " << A2->label << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "group_theoretic_activity::init_group done" << endl;
+	}
+}
+
+void group_theoretic_activity::init_secondary_group(group_theoretic_activity_description *Descr,
+		any_group *AG_secondary,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::init_secondary_group" << endl;
+	}
+
+	group_theoretic_activity::Descr = Descr;
+	group_theoretic_activity::AG_secondary = AG_secondary;
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::init_secondary_group done" << endl;
 	}
 }
 
@@ -88,20 +110,24 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_consecutive_powers) {
 
-		A1->consecutive_powers_based_on_text(Descr->consecutive_powers_a_text,
-				Descr->consecutive_powers_exponent_text, verbose_level);
+		AG->A->consecutive_powers_based_on_text(
+				Descr->consecutive_powers_a_text,
+				Descr->consecutive_powers_exponent_text,
+				verbose_level);
 
 	}
 
 	if (Descr->f_raise_to_the_power) {
 
-		A1->raise_to_the_power_based_on_text(Descr->raise_to_the_power_a_text,
-				Descr->raise_to_the_power_exponent_text, verbose_level);
+		AG->A->raise_to_the_power_based_on_text(
+				Descr->raise_to_the_power_a_text,
+				Descr->raise_to_the_power_exponent_text,
+				verbose_level);
 
 	}
 
 	if (Descr->f_export_orbiter) {
-		AG->do_export_orbiter(A2, verbose_level);
+		AG->do_export_orbiter(AG->A, verbose_level);
 	}
 
 	if (Descr->f_export_gap) {
@@ -139,7 +165,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 	if (Descr->f_conjugacy_class_of_element) {
-		AG->do_conjugacy_class_of_element(Descr->element_label,
+		AG->do_conjugacy_class_of_element(
+				Descr->element_label,
 				Descr->element_description_text, verbose_level);
 	}
 	if (Descr->f_orbits_on_group_elements_under_conjugation) {
@@ -161,9 +188,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
-
-
-
 	if (Descr->f_report) {
 
 		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
@@ -181,7 +205,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	if (Descr->f_export_group_table) {
 
 		AG->export_group_table(verbose_level);
-
 
 	}
 
@@ -226,7 +249,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 	if (Descr->f_apply_elements_csv_to_set) {
 
-
 		AG->apply_elements_to_set_csv(
 				Descr->apply_elements_csv_to_set_fname1,
 				Descr->apply_elements_csv_to_set_fname2,
@@ -243,7 +265,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 	if (Descr->f_find_standard_generators) {
-		AG->find_standard_generators(Descr->find_standard_generators_order_a,
+
+		AG->find_standard_generators(
+				Descr->find_standard_generators_order_a,
 				Descr->find_standard_generators_order_b,
 				Descr->find_standard_generators_order_ab,
 				verbose_level);
@@ -386,15 +410,18 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 		if (Descr->f_export_trees) {
+
 			string fname_tree_mask;
 			int orbit_idx;
 
-			fname_tree_mask.assign(A2->label);
+			fname_tree_mask.assign(AG->A->label);
 			fname_tree_mask.append("_%d.layered_graph");
 
 			for (orbit_idx = 0; orbit_idx < Orb->Sch->nb_orbits; orbit_idx++) {
+
 				cout << "orbit " << orbit_idx << " / " <<  Orb->Sch->nb_orbits
 						<< " before Sch->export_tree_as_layered_graph" << endl;
+
 				Orb->Sch->export_tree_as_layered_graph(0 /* orbit_no */,
 						fname_tree_mask,
 						verbose_level - 1);
@@ -411,7 +438,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
-		AG->do_orbits_on_subspaces(this, Descr->Control, Descr->orbits_on_subspaces_depth, verbose_level);
+		AG->do_orbits_on_subspaces(this,
+				Descr->Control,
+				Descr->orbits_on_subspaces_depth,
+				verbose_level);
 	}
 	else if (Descr->f_reverse_isomorphism_exterior_square) {
 		AG->do_reverse_isomorphism_exterior_square(verbose_level);
@@ -439,17 +469,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->linear_codes_minimum_distance,
 				Descr->linear_codes_target_size, verbose_level);
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 	// tensors:
 
@@ -513,6 +532,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				AG->LG,
 				Descr->representation_on_polynomials_degree,
 				verbose_level);
+
 	}
 
 	else if (Descr->f_Andre_Bruck_Bose_construction) {
@@ -521,6 +541,48 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 					FALSE /* f_Fano */, FALSE /* f_arcs */, FALSE /* f_depth */, 0 /* depth */,
 					Descr->Andre_Bruck_Bose_construction_label,
 					verbose_level);
+	}
+	else if (Descr->f_is_subgroup_of) {
+
+		int ret;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity is_subgroup_of" << endl;
+		}
+
+		ret = AG->is_subgroup_of(AG_secondary, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity is_subgroup_of ret = " << ret << endl;
+		}
+	}
+	else if (Descr->f_coset_reps) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity coset_reps" << endl;
+		}
+
+		data_structures_groups::vector_ge *coset_reps;
+
+		AG->set_of_coset_representatives(AG_secondary, coset_reps, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity coset_reps number of coset reps = " << coset_reps->len << endl;
+		}
+
+
+		AG->report_coset_reps(
+					coset_reps,
+					verbose_level);
+
+		std::string fname_coset_reps;
+
+		fname_coset_reps.assign(AG->label);
+		fname_coset_reps.append("_coset_reps.csv");
+
+		coset_reps->save_csv(fname_coset_reps, verbose_level);
+
+		FREE_OBJECT(coset_reps);
 	}
 
 
@@ -539,7 +601,7 @@ void group_theoretic_activity::apply(int verbose_level)
 		cout << "group_theoretic_activity::apply" << endl;
 	}
 
-	A2->apply_based_on_text(Descr->apply_input,
+	AG->A->apply_based_on_text(Descr->apply_input,
 			Descr->apply_element, verbose_level);
 
 	if (f_v) {
@@ -556,7 +618,7 @@ void group_theoretic_activity::multiply(int verbose_level)
 		cout << "group_theoretic_activity::multiply" << endl;
 	}
 
-	A1->multiply_based_on_text(Descr->multiply_a,
+	AG->A->multiply_based_on_text(Descr->multiply_a,
 			Descr->multiply_b, verbose_level);
 
 	if (f_v) {
@@ -572,7 +634,7 @@ void group_theoretic_activity::inverse(int verbose_level)
 		cout << "group_theoretic_activity::inverse" << endl;
 	}
 
-	A1->inverse_based_on_text(Descr->inverse_a, verbose_level);
+	AG->A->inverse_based_on_text(Descr->inverse_a, verbose_level);
 
 	if (f_v) {
 		cout << "group_theoretic_activity::inverse done" << endl;
@@ -681,14 +743,13 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 	ring_theory::longinteger_object stab_go;
 	int order_of_plane;
 	number_theory::number_theory_domain NT;
-	knowledge_base K;
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction" << endl;
 	}
 
-	An = A1;
-	An1 = A2;
+	An = AG->A;
+	An1 = AG_secondary->A;
 	F = An->matrix_group_finite_field();
 	M = An->get_matrix_group();
 	f_semilinear = An->is_semilinear_matrix_group();
@@ -712,29 +773,60 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 	int sz;
 	//vector_ge *nice_gens;
 
+	knowledge_base K;
+
 	spread_elements_numeric = K.Spread_representative(q, k, spread_no, sz);
 
-
-
-
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"before An->stabilizer_of_spread_representative" << endl;
+	}
 	An->stabilizer_of_spread_representative(q, k, spread_no,
 			gens, stab_order, verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"after An->stabilizer_of_spread_representative" << endl;
+	}
 
 	stab_go.create_from_base_10_string(stab_order);
 
 	if (f_v) {
-		cout << "Spread stabilizer has order " << stab_go << endl;
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"Spread stabilizer has order " << stab_go << endl;
 	}
 
 	Andre = NEW_OBJECT(spreads::translation_plane_via_andre_model);
 
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"before Andre->init" << endl;
+	}
 	Andre->init(spread_elements_numeric, k, An, An1,
 		gens /*spread_stab_gens*/, stab_go, label, verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"after Andre->init" << endl;
+	}
 
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"before Andre->create_latex_report" << endl;
+	}
 	Andre->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"after Andre->create_latex_report" << endl;
+	}
 
 
 	if (f_Fano) {
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+					"f_Fano" << endl;
+		}
+
 		char prefix[1000];
 		int nb_subplanes;
 
@@ -746,19 +838,27 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 
 		if (f_depth) {
 			target_depth = depth;
-			}
+		}
 		else {
 			target_depth = 7;
-			}
+		}
 
 		nb_subplanes = Andre->arcs->nb_orbits_at_level(target_depth);
 
-		cout << "Translation plane " << q << "#" << spread_no << " has "
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"Translation plane " << q << "#" << spread_no << " has "
 				<<  nb_subplanes << " partial Fano subplanes "
 						"(up to isomorphism) at depth "
 				<< target_depth << endl;
-		}
+	}
 	else if (f_arcs) {
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+					"f_arcs" << endl;
+		}
+
 		char prefix[1000];
 		int nb;
 
@@ -766,11 +866,11 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 
 		if (f_depth) {
 			target_depth = depth;
-			}
+		}
 		else {
 			target_depth = order_of_plane + 2;
 				// we are looking for hyperovals
-			}
+		}
 
 
 		sprintf(prefix, "Arcs_TP_%d_", spread_no);
@@ -780,10 +880,11 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 
 		nb = Andre->arcs->nb_orbits_at_level(target_depth);
 
-		cout << "Translation plane " << q << "#" << spread_no << " has "
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"Translation plane " << q << "#" << spread_no << " has "
 				<<  nb << " Arcs of size " << target_depth
 				<< " (up to isomorphism)" << endl;
-		}
+	}
 
 	FREE_OBJECT(Andre);
 	FREE_OBJECT(gens);

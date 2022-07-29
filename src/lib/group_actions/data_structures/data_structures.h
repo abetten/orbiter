@@ -548,6 +548,39 @@ public:
 	int is_minimal(int rk, int verbose_level);
 };
 
+
+
+// #############################################################################
+// vector_ge_description.cpp
+// #############################################################################
+
+
+
+//! to define a vector of group elements
+
+
+class vector_ge_description {
+
+public:
+
+	int f_action;
+	std::string action_label;
+
+	int f_read_csv;
+	std::string read_csv_fname;
+	std::string read_csv_column_label;
+
+	vector_ge_description();
+	~vector_ge_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+};
+
+
+
+
 // #############################################################################
 // vector_ge.cpp
 // #############################################################################
@@ -619,6 +652,8 @@ public:
 	void save_csv(std::string &fname, int verbose_level);
 	void export_inversion_graphs(std::string &fname, int verbose_level);
 	void read_column_csv(std::string &fname, actions::action *A, int col_idx, int verbose_level);
+	void read_column_csv_using_column_label(std::string &fname,
+			actions::action *A, std::string &column_label, int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, groups::sims *S,
 		int verbose_level);

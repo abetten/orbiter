@@ -116,6 +116,10 @@ interface_combinatorics::interface_combinatorics()
 	f_geometry_builder = FALSE;
 	Geometry_builder_description = NULL;
 
+	f_union = FALSE;
+	//std::string union_set_of_sets_fname;
+	//std::string union_input_fname;
+	//std::string union_output_fname;
 }
 
 
@@ -199,6 +203,9 @@ void interface_combinatorics::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
 		cout << "-geometry_builder <description> -end" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-union") == 0) {
+		cout << "-union <fname : set_of_sets> <fname : input> <fname : output> " << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(int argc,
@@ -281,6 +288,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-union") == 0) {
 		return true;
 	}
 	return false;
@@ -598,6 +608,18 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-union") == 0) {
+		f_union = TRUE;
+		union_set_of_sets_fname.assign(argv[++i]);
+		union_input_fname.assign(argv[++i]);
+		union_output_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-union " << union_set_of_sets_fname
+				<< " " << union_input_fname
+				<< " " << union_output_fname
+				<< " " << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -711,6 +733,12 @@ void interface_combinatorics::print()
 	}
 	if (f_geometry_builder) {
 		Geometry_builder_description->print();
+	}
+	if (f_union) {
+			cout << "-union " << union_set_of_sets_fname
+				<< " " << union_input_fname
+				<< " " << union_output_fname
+				<< " " << endl;
 	}
 }
 
@@ -952,6 +980,20 @@ void interface_combinatorics::worker(int verbose_level)
 		FREE_OBJECT(GB);
 	}
 
+	else if (f_union) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -union" << endl;
+		}
+
+		data_structures::algorithms Algo;
+
+
+		Algo.union_of_sets(union_set_of_sets_fname,
+				union_input_fname, union_output_fname, verbose_level);
+
+
+
+	}
 
 }
 

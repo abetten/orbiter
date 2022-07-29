@@ -679,13 +679,18 @@ void design_parameter_database_export_tex(char *path_db)
 	ofstream f("designs.tex", ios::trunc);
 	orbiter_kernel_system::latex_interface L;
 
+	string title, author, extra_praeamble;
+
+	title.assign("$t$-Designs");
+	author.assign("DISCRETA");
+
 	L.head(f, TRUE /* f_book */, TRUE /* f_title */,
-		"$t$-Designs", "DISCRETA", TRUE /* f_toc */, 
+		title, author, TRUE /* f_toc */,
 		FALSE /* f_landscape */,
 		TRUE /* f_12pt */, 
 		TRUE /* f_enlarged_page */, 
 		TRUE /* f_pagenumbers */,
-		NULL /* extra_praeamble */);
+		extra_praeamble /* extra_praeamble */);
 	printing_mode pm(printing_mode_latex);
 	
 

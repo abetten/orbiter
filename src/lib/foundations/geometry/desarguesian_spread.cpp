@@ -487,16 +487,20 @@ void desarguesian_spread::create_latex_report(int verbose_level)
 	}
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "Desarguesian_Spread_%d_%d.tex", n - 1, q);
 		fname.assign(str);
-		snprintf(title, 1000, "Desarguesian Spread in  ${\\rm PG}(%d,%d)$", n - 1, q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Desarguesian Spread in  ${\\rm PG}(%d,%d)$", n - 1, q);
+		title.assign(str);
+
 
 
 		{
@@ -512,7 +516,7 @@ void desarguesian_spread::create_latex_report(int verbose_level)
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

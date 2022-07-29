@@ -814,14 +814,14 @@ void surfaces_arc_lifting::report(
 		cout << "surfaces_arc_lifting::report" << endl;
 	}
 	std::string fname_arc_lifting;
-	char title[1000];
-	char author[1000];
+	char str[1000];
+	string title, author, extra_praeamble;
 
 
 	fname_arc_lifting.assign(fname_base);
 	fname_arc_lifting.append(".tex");
-	snprintf(title, 1000, "Arc lifting over GF(%d) ", q);
-	strcpy(author, "");
+	snprintf(str, 1000, "Arc lifting over GF(%d) ", q);
+	title.assign(str);
 
 
 	{
@@ -837,7 +837,7 @@ void surfaces_arc_lifting::report(
 			FALSE /* f_12pt */,
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			extra_praeamble /* extra_praeamble */);
 
 
 		if (f_v) {

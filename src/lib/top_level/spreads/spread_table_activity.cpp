@@ -268,12 +268,11 @@ void spread_table_activity::report_spreads(int *spread_idx, int nb, int verbose_
 	{
 		char str[1000];
 		string fname;
-		char title[1000];
-		char author[1000];
+		string title, author, extra_praeamble;
 
-		snprintf(title, 1000, "Spreads");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Spreads");
+		title.assign(str);
+
 
 		sprintf(str, "Spreads");
 		fname.assign(str);
@@ -303,7 +302,7 @@ void spread_table_activity::report_spreads(int *spread_idx, int nb, int verbose_
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

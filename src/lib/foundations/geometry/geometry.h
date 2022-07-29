@@ -614,8 +614,9 @@ public:
 	int f_OKeefe_Penttila;
 
 	int f_BLT_database;
-	int BLT_k;
-	int f_BLT_in_PG;
+	int BLT_database_k;
+	int f_BLT_database_embedded;
+	int BLT_database_embedded_k;
 
 #if 0
 	int f_BLT_Linear;
@@ -627,7 +628,7 @@ public:
 	int f_elliptic_quadric_ovoid;
 	int f_ovoid_ST;
 
-	int f_Baer;
+	int f_Baer_substructure;
 
 	int f_orthogonal;
 	int orthogonal_epsilon;
@@ -2320,6 +2321,12 @@ public:
 		std::string &label_tex,
 		int &nb_pts, long int *&Pts,
 		int verbose_level);
+	void create_Baer_substructure(
+		long int *&Pts, int &nb_pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int verbose_level);
+	// assumes we are in PG(n,Q) where Q = q^2
 
 
 };

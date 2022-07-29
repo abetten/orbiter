@@ -307,16 +307,20 @@ void linear_algebra_global::do_nullspace(
 
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "nullspace_%d_%d.tex", m, n);
 		fname.assign(str);
-		snprintf(title, 1000, "Nullspace");
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "Nullspace");
+		title.assign(str);
+
 
 
 		{
@@ -332,7 +336,7 @@ void linear_algebra_global::do_nullspace(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {
@@ -494,16 +498,20 @@ void linear_algebra_global::RREF_demo(
 
 
 	{
-		char str[1000];
+
 		string fname;
-		char title[1000];
-		char author[1000];
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
 
 		snprintf(str, 1000, "RREF_example_q%d_%d_%d.tex", F->q, m, n);
 		fname.assign(str);
-		snprintf(title, 1000, "RREF example $q=%d$", F->q);
-		//strcpy(author, "");
-		author[0] = 0;
+		snprintf(str, 1000, "RREF example $q=%d$", F->q);
+		title.assign(str);
+
 
 
 		{
@@ -519,7 +527,7 @@ void linear_algebra_global::RREF_demo(
 					TRUE /* f_12pt */,
 					TRUE /* f_enlarged_page */,
 					FALSE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
+					extra_praeamble /* extra_praeamble */);
 
 
 			if (f_v) {

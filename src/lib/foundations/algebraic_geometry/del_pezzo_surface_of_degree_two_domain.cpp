@@ -22,7 +22,7 @@ namespace algebraic_geometry {
 del_pezzo_surface_of_degree_two_domain::del_pezzo_surface_of_degree_two_domain()
 {
 	F = NULL;
-	P = NULL;
+	P3 = NULL;
 	P2 = NULL;
 	Gr = NULL;
 	Gr3 = NULL;
@@ -45,7 +45,7 @@ del_pezzo_surface_of_degree_two_domain::~del_pezzo_surface_of_degree_two_domain(
 }
 
 void del_pezzo_surface_of_degree_two_domain::init(
-		geometry::projective_space *P,
+		geometry::projective_space *P3,
 		ring_theory::homogeneous_polynomial_domain *Poly4_3,
 		int verbose_level)
 {
@@ -54,9 +54,14 @@ void del_pezzo_surface_of_degree_two_domain::init(
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_domain::init" << endl;
 	}
-	del_pezzo_surface_of_degree_two_domain::P = P;
+
+	if (P3->n != 3) {
+		cout << "del_pezzo_surface_of_degree_two_domain::init projective space must have dimension 3" << endl;
+		exit(1);
+	}
+	del_pezzo_surface_of_degree_two_domain::P3 = P3;
 	del_pezzo_surface_of_degree_two_domain::Poly4_3 = Poly4_3;
-	F = P->F;
+	F = P3->F;
 
 	P2 = NEW_OBJECT(geometry::projective_space);
 	P2->projective_space_init(2, F,
@@ -121,7 +126,7 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 
 		if (a == 0) {
 			v4[3] = 0;
-			rk_pt = P->rank_point(v4);
+			rk_pt = P3->rank_point(v4);
 
 			Pts.push_back(rk_pt);
 			if (f_v) {
@@ -140,7 +145,7 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 			for (i = 0; i < nb_roots; i++) {
 				Int_vec_copy(v3, v4, 3);
 				v4[3] = roots[i];
-				rk_pt = P->rank_point(v4);
+				rk_pt = P3->rank_point(v4);
 
 				Pts.push_back(rk_pt);
 
@@ -169,14 +174,14 @@ void del_pezzo_surface_of_degree_two_domain::print_equation_with_line_breaks_tex
 
 void del_pezzo_surface_of_degree_two_domain::unrank_point(int *v, long int rk)
 {
-	P->unrank_point(v, rk);
+	P3->unrank_point(v, rk);
 }
 
 long int del_pezzo_surface_of_degree_two_domain::rank_point(int *v)
 {
 	long int rk;
 
-	rk = P->rank_point(v);
+	rk = P3->rank_point(v);
 	return rk;
 }
 
