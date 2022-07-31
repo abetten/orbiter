@@ -785,6 +785,7 @@ void graph_classify::draw_graphs(int level,
 
 	if (f_v) {
 		cout << "graph_classify::draw_graphs nb_orbits = " << nb_orbits << endl;
+		cout << "graph_classify::draw_graphs drawing each graph" << endl;
 	}
 
 	for (h = 0; h < nb_orbits; h++) {
@@ -871,6 +872,63 @@ void graph_classify::draw_graphs(int level,
 		//FREE_OBJECT(Strong_gens);
 		cout << "after FREE_OBJECT(Strong_gens)" << endl;
 		}
+
+
+	if (f_v) {
+		cout << "graph_classify::draw_graphs nb_orbits = " << nb_orbits << endl;
+		cout << "graph_classify::draw_graphs creating file of representatives" << endl;
+	}
+
+	string fname_list;
+	char str[1000];
+
+	fname_list.assign(gen->get_problem_label_with_path());
+
+	sprintf(str, "_level_%d_reps", level);
+	fname_list.append(str);
+	fname_list.append(".tex");
+
+
+	{
+
+
+		ofstream fp(fname_list);
+		orbiter_kernel_system::latex_interface L;
+
+		L.head_easy(fp);
+
+
+
+		for (h = 0; h < nb_orbits; h++) {
+
+			string fname_full;
+			string cmd;
+			char str[1000];
+
+			fname_full.assign(gen->get_problem_label_with_path());
+
+			sprintf(str, "_rep_%d_%d", level, h);
+
+			fname_full.append(str);
+
+			cmd.assign("pdflatex ");
+			cmd.append(fname_full);
+			cmd.append(".tex");
+
+			fp << "\\input " << fname_full << ".tex" << endl;
+
+		}
+
+		L.foot(fp);
+
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "written file " << fname_list
+			<< " of size " << Fio.file_size(fname_list) << endl;
+
+
 
 	FREE_lint(set);
 	if (f_v) {

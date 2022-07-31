@@ -64,16 +64,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Algebra.do_cheat_sheet_GF(F, verbose_level);
 	}
-	else if (Descr->f_write_code_for_division) {
-
-		ring_theory::ring_theory_global R;
-
-		R.write_code_for_division(F,
-				Descr->write_code_for_division_fname,
-				Descr->write_code_for_division_A,
-				Descr->write_code_for_division_B,
-				verbose_level);
-	}
 	else if (Descr->f_polynomial_division) {
 
 		ring_theory::ring_theory_global R;
@@ -173,24 +163,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		FREE_int(v);
 
-	}
-	else if (Descr->f_weight_enumerator) {
-
-		coding_theory::coding_theory_domain Codes;
-
-		int *v;
-		int m, n;
-
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->weight_enumerator_input_matrix, v, m, n);
-
-
-		Codes.do_weight_enumerator(F,
-				v, m, n,
-				Descr->f_normalize_from_the_left,
-				Descr->f_normalize_from_the_right,
-				verbose_level);
-
-		FREE_int(v);
 	}
 
 	else if (Descr->f_Walsh_Hadamard_transform) {
@@ -464,16 +436,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->cheat_sheet_desarguesian_spread_m,
 				verbose_level);
 	}
-	else if (Descr->f_find_CRC_polynomials) {
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.find_CRC_polynomials(F,
-				Descr->find_CRC_polynomials_nb_errors,
-				Descr->find_CRC_polynomials_information_bits,
-				Descr->find_CRC_polynomials_check_bits,
-				verbose_level);
-	}
 
 	else if (Descr->f_sift_polynomials) {
 
@@ -505,26 +467,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
-	else if (Descr->f_polynomial_division_from_file) {
-
-		ring_theory::ring_theory_global R;
-
-		R.polynomial_division_from_file_with_report(F,
-				Descr->polynomial_division_from_file_fname,
-				Descr->polynomial_division_from_file_r1,
-				verbose_level);
-	}
-
-	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
-
-		ring_theory::ring_theory_global R;
-
-		R.polynomial_division_from_file_all_k_error_patterns_with_report(F,
-				Descr->polynomial_division_from_file_all_k_bit_error_patterns_fname,
-				Descr->polynomial_division_from_file_all_k_bit_error_patterns_r1,
-				Descr->polynomial_division_from_file_all_k_bit_error_patterns_k,
-				verbose_level);
-	}
 
 	else if (Descr->f_RREF_random_matrix) {
 
@@ -758,254 +700,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->evaluate_formula_label,
 				Descr->evaluate_parameters,
 				verbose_level);
-
-	}
-	else if (Descr->f_generator_matrix_cyclic_code) {
-
-		cout << "before generator_matrix_cyclic_code" << endl;
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.generator_matrix_cyclic_code(F,
-				Descr->generator_matrix_cyclic_code_n,
-				Descr->generator_matrix_cyclic_code_poly,
-				verbose_level);
-
-	}
-
-	else if (Descr->f_nth_roots) {
-		cout << "-nth_roots n=" << Descr->nth_roots_n << endl;
-
-		nth_roots *Nth;
-
-		Nth = NEW_OBJECT(nth_roots);
-
-		Nth->init(F, Descr->nth_roots_n, verbose_level);
-
-		orbiter_kernel_system::file_io Fio;
-		{
-
-			string fname;
-			string author;
-			string title;
-			string extra_praeamble;
-
-
-			char str[1000];
-
-			snprintf(str, 1000, "Nth_roots_q%d_n%d.tex", F->q, Descr->nth_roots_n);
-			fname.assign(str);
-			snprintf(str, 1000, "Nth roots");
-			title.assign(str);
-
-
-
-
-			{
-				ofstream ost(fname);
-				number_theory::number_theory_domain NT;
-
-
-
-				orbiter_kernel_system::latex_interface L;
-
-				L.head(ost,
-						FALSE /* f_book*/,
-						TRUE /* f_title */,
-						title, author,
-						FALSE /* f_toc */,
-						FALSE /* f_landscape */,
-						TRUE /* f_12pt */,
-						TRUE /* f_enlarged_page */,
-						TRUE /* f_pagenumbers */,
-						extra_praeamble /* extra_praeamble */);
-
-
-				Nth->report(ost, verbose_level);
-
-				L.foot(ost);
-
-
-			}
-
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		}
-
-	}
-	else if (Descr->f_make_BCH_code) {
-
-#if 0
-		coding_theory_domain Codes;
-		nth_roots *Nth;
-		unipoly_object P;
-
-		int n;
-		int *Genma;
-		int degree;
-		int *generator_polynomial;
-		int i;
-
-		n = Descr->make_BCH_code_n;
-		Codes.make_BCH_code(n, F, Descr->make_BCH_code_d,
-					Nth, P,
-					verbose_level);
-
-		cout << "generator polynomial is:" << endl;
-
-		cout << "-dense \"";
-		Nth->FX->print_object_dense(P, cout);
-		cout << "\"" << endl;
-		cout << endl;
-
-		cout << "-sparse \"";
-		Nth->FX->print_object_sparse(P, cout);
-		cout << "\"" << endl;
-		cout << endl;
-
-		Nth->FX->print_object(P, cout);
-		cout << endl;
-
-		degree = Nth->FX->degree(P);
-		generator_polynomial = NEW_int(degree + 1);
-		for (i = 0; i <= degree; i++) {
-			generator_polynomial[i] = Nth->FX->s_i(P, i);
-		}
-
-		Codes.generator_matrix_cyclic_code(n,
-					degree, generator_polynomial, Genma);
-
-		int k = n - degree;
-
-#if 0
-		cout << "generator matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Genma,
-				k, n, n, F->log10_of_q);
-#endif
-
-#else
-		coding_theory::create_BCH_code *C;
-
-		C = NEW_OBJECT(coding_theory::create_BCH_code);
-
-		C->init(F, Descr->make_BCH_code_n,
-				Descr->make_BCH_code_d, verbose_level);
-
-		orbiter_kernel_system::file_io Fio;
-#if 0
-		{
-			char str[1000];
-			string fname;
-
-			fname.assign("genma_BCH");
-			sprintf(str, "_n%d", n);
-			fname.append(str);
-			sprintf(str, "_k%d", k);
-			fname.append(str);
-			sprintf(str, "_q%d", F->q);
-			fname.append(str);
-			fname.append(".csv");
-
-			Fio.int_matrix_write_csv(fname, Genma, k, n);
-
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-#endif
-		{
-
-			string fname;
-			string author;
-			string title;
-			string extra_praeamble;
-
-
-			char str[1000];
-
-			snprintf(str, 1000, "BCH_codes_q%d_n%d_d%d.tex",
-					F->q,
-					Descr->make_BCH_code_n,
-					Descr->make_BCH_code_d
-					);
-			fname.assign(str);
-			snprintf(str, 1000, "BCH codes");
-			title.assign(str);
-
-
-
-			{
-				ofstream ost(fname);
-				number_theory::number_theory_domain NT;
-
-
-				orbiter_kernel_system::latex_interface L;
-
-				L.head(ost,
-						FALSE /* f_book*/,
-						TRUE /* f_title */,
-						title, author,
-						FALSE /* f_toc */,
-						FALSE /* f_landscape */,
-						TRUE /* f_12pt */,
-						TRUE /* f_enlarged_page */,
-						TRUE /* f_pagenumbers */,
-						extra_praeamble /* extra_praeamble */);
-
-
-				C->report(ost, verbose_level);
-
-				L.foot(ost);
-
-
-			}
-
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		}
-
-#endif
-
-	}
-	else if (Descr->f_make_BCH_code_and_encode) {
-
-		coding_theory::coding_theory_domain Codes;
-		nth_roots *Nth;
-		ring_theory::unipoly_object P;
-
-		int n;
-		//int *Genma;
-		int degree;
-		int *generator_polynomial;
-		int i;
-
-		n = Descr->make_BCH_code_n;
-
-		Codes.make_BCH_code(n, F, Descr->make_BCH_code_d,
-					Nth, P,
-					verbose_level);
-
-		cout << "generator polynomial is ";
-		Nth->FX->print_object(P, cout);
-		cout << endl;
-
-		degree = Nth->FX->degree(P);
-		generator_polynomial = NEW_int(degree + 1);
-		for (i = 0; i <= degree; i++) {
-			generator_polynomial[i] = Nth->FX->s_i(P, i);
-		}
-
-		// Descr->make_BCH_code_and_encode_text
-
-		Codes.CRC_encode_text(Nth, P,
-				Descr->make_BCH_code_and_encode_text,
-				Descr->make_BCH_code_and_encode_fname,
-				verbose_level);
-
-
-	}
-	else if (Descr->f_NTT) {
-		number_theory::number_theoretic_transform NTT;
-
-		NTT.init(F, Descr->NTT_n, Descr->NTT_q, verbose_level);
 
 	}
 

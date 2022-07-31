@@ -277,7 +277,7 @@ public:
 // surface_classify_using_arc.cpp
 // #############################################################################
 
-//! classification of cubic surfaces using nonconial six-arcs as substructures
+//! classification of cubic surfaces using non-conical six-arcs as substructures
 
 
 class surface_classify_using_arc {

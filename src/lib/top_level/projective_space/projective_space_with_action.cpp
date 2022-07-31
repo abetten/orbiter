@@ -593,15 +593,16 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
-	long int a;
-	char str[1000];
 
 	if (f_v) {
 		cout << "projective_space_with_action::compute_group_of_set" << endl;
 	}
 
 #if 0
+	int i;
+	long int a;
+	char str[1000];
+
 	projective_space_object_classifier_description *Descr;
 	classification_of_objects *Classifier;
 

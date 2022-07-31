@@ -728,84 +728,36 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	long int *spread_elements_numeric; // do not free
-	actions::action *An;
-	actions::action *An1;
-	data_structures_groups::vector_ge *gens;
-	spreads::translation_plane_via_andre_model *Andre;
-	groups::matrix_group *M; // do not free
-	field_theory::finite_field *F;
-
-	int f_semilinear = FALSE;
-	int n, k, q;
-
-	string stab_order;
-	ring_theory::longinteger_object stab_go;
-	int order_of_plane;
-	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction" << endl;
 	}
 
+	actions::action *An;
+	actions::action *An1;
+	spreads::translation_plane_via_andre_model *Andre;
+
 	An = AG->A;
 	An1 = AG_secondary->A;
-	F = An->matrix_group_finite_field();
-	M = An->get_matrix_group();
-	f_semilinear = An->is_semilinear_matrix_group();
-	n = An->matrix_group_dimension();
-	if (ODD(n)) {
-		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"dimension must be even" << endl;
-		exit(1);
-	}
-	k = n >> 1;
-	q = F->q;
+
+	apps_geometry::top_level_geometry_global Geo;
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"n=" << n << " k=" << k << " q=" << q << endl;
+				"before Geo.do_Andre_Bruck_Bose_construction" << endl;
 	}
 
-	order_of_plane = NT.i_power_j(q, k);
-
-
-	int sz;
-	//vector_ge *nice_gens;
-
-	knowledge_base K;
-
-	spread_elements_numeric = K.Spread_representative(q, k, spread_no, sz);
+	Geo.do_Andre_Bruck_Bose_construction(
+			An,
+			An1,
+			Andre,
+			spread_no,
+			label,
+			verbose_level);
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"before An->stabilizer_of_spread_representative" << endl;
-	}
-	An->stabilizer_of_spread_representative(q, k, spread_no,
-			gens, stab_order, verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"after An->stabilizer_of_spread_representative" << endl;
-	}
-
-	stab_go.create_from_base_10_string(stab_order);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"Spread stabilizer has order " << stab_go << endl;
-	}
-
-	Andre = NEW_OBJECT(spreads::translation_plane_via_andre_model);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"before Andre->init" << endl;
-	}
-	Andre->init(spread_elements_numeric, k, An, An1,
-		gens /*spread_stab_gens*/, stab_go, label, verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"after Andre->init" << endl;
+				"after Geo.do_Andre_Bruck_Bose_construction" << endl;
 	}
 
 	if (f_v) {
@@ -846,7 +798,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 		nb_subplanes = Andre->arcs->nb_orbits_at_level(target_depth);
 
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"Translation plane " << q << "#" << spread_no << " has "
+				"Translation plane " << Andre->q << "#" << spread_no << " has "
 				<<  nb_subplanes << " partial Fano subplanes "
 						"(up to isomorphism) at depth "
 				<< target_depth << endl;
@@ -868,7 +820,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 			target_depth = depth;
 		}
 		else {
-			target_depth = order_of_plane + 2;
+			target_depth = Andre->order_of_plane + 2;
 				// we are looking for hyperovals
 		}
 
@@ -881,13 +833,14 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 		nb = Andre->arcs->nb_orbits_at_level(target_depth);
 
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
-				"Translation plane " << q << "#" << spread_no << " has "
+				"Translation plane " << Andre->q << "#" << spread_no << " has "
 				<<  nb << " Arcs of size " << target_depth
 				<< " (up to isomorphism)" << endl;
 	}
 
 	FREE_OBJECT(Andre);
-	FREE_OBJECT(gens);
+
+
 	if (f_v) {
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction done" << endl;
 	}

@@ -488,6 +488,7 @@ void large_set_was::create_graph_on_orbits_of_length(
 
 void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 		std::string &fname_mask, int orbit_length2, int nb_N_orbits_preselected,
+		int orbit_r, int orbit_m,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -496,7 +497,10 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 		cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
 				"orbit_length2=" << orbit_length2
 				<< " nb_of_orbits_to_choose=" << nb_of_orbits_to_choose
-				<< " nb_N_orbits_known=" << nb_N_orbits_preselected << endl;
+				<< " nb_N_orbits_known=" << nb_N_orbits_preselected
+				<< " orbit_r=" << orbit_r
+				<< " orbit_m=" << orbit_m
+				<< endl;
 	}
 
 	large_set_was::orbit_length2 = orbit_length2;
@@ -528,6 +532,10 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 			continue;
 		}
 #endif
+
+		if ((idx_N % orbit_m) != orbit_r) {
+			continue;
+		}
 
 		if (f_v) {
 			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "

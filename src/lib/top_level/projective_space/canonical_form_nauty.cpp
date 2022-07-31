@@ -119,7 +119,8 @@ void canonical_form_nauty::quartic_curve(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve before Nau.set_stabilizer_of_object" << endl;
+		cout << "canonical_form_nauty::quartic_curve "
+				"before Nau.set_stabilizer_of_object" << endl;
 	}
 	SG_pt_stab = Nau.set_stabilizer_of_object(
 			OwCF,
@@ -128,7 +129,8 @@ void canonical_form_nauty::quartic_curve(
 		NO,
 		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve after Nau.set_stabilizer_of_object" << endl;
+		cout << "canonical_form_nauty::quartic_curve "
+				"after Nau.set_stabilizer_of_object" << endl;
 	}
 
 

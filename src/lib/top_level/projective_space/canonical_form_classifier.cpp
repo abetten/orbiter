@@ -119,7 +119,8 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 
 
 	if (!Descr->f_degree) {
-		cout << "canonical_form_classifier::classify please use -degree <d>  to specify the degree" << endl;
+		cout << "canonical_form_classifier::classify "
+				"please use -degree <d>  to specify the degree" << endl;
 		exit(1);
 	}
 	if (!Descr->f_fname_base_out) {
@@ -205,13 +206,17 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 	cout << "canonical forms:" << endl;
 	for (i = 0; i < nb_objects_to_test; i++) {
 		cout << setw(2) << i << " : ";
-		Int_vec_print(cout, Canonical_forms + i * Poly_ring->get_nb_monomials(), Poly_ring->get_nb_monomials());
+		Int_vec_print(cout,
+				Canonical_forms + i * Poly_ring->get_nb_monomials(),
+				Poly_ring->get_nb_monomials());
 		cout << " : " << Goi[i] << endl;
 	}
 
 	Classification_of_quartic_curves = NEW_OBJECT(data_structures::tally_vector_data);
 
-	Classification_of_quartic_curves->init(Canonical_forms, nb_objects_to_test, Poly_ring->get_nb_monomials(), verbose_level);
+	Classification_of_quartic_curves->init(Canonical_forms,
+			nb_objects_to_test, Poly_ring->get_nb_monomials(),
+			verbose_level);
 
 
 	Classification_of_quartic_curves->get_transversal(
@@ -325,7 +330,8 @@ void canonical_form_classifier::classify_with_substructure(int verbose_level)
 	SubC = NEW_OBJECT(substructure_classifier);
 
 	if (f_v) {
-		cout << "canonical_form_classifier::classify_with_substructure before SubC->classify_substructures" << endl;
+		cout << "canonical_form_classifier::classify_with_substructure "
+				"before SubC->classify_substructures" << endl;
 	}
 
 	SubC->classify_substructures(
@@ -397,8 +403,10 @@ void canonical_form_classifier::main_loop(int verbose_level)
 		S.read_spreadsheet(fname, verbose_level);
 
 		if (f_v) {
-			cout << "canonical_form_classifier::classify_nauty S.nb_rows = " << S.nb_rows << endl;
-			cout << "canonical_form_classifier::classify_nauty S.nb_cols = " << S.nb_cols << endl;
+			cout << "canonical_form_classifier::classify_nauty "
+					"S.nb_rows = " << S.nb_rows << endl;
+			cout << "canonical_form_classifier::classify_nauty "
+					"S.nb_cols = " << S.nb_cols << endl;
 		}
 
 
@@ -567,7 +575,8 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				}
 			}
 			else {
-				cout << "canonical_form_classifier::main_loop please select which algorithm to use" << endl;
+				cout << "canonical_form_classifier::main_loop "
+						"please select which algorithm to use" << endl;
 				exit(1);
 			}
 
@@ -646,17 +655,22 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 	int f_found;
 	int idx;
 
-	CB->search_and_add_if_new(C->Canonical_form->get_data(), C /* void *extra_data */, f_found, idx, verbose_level);
+	CB->search_and_add_if_new(C->Canonical_form->get_data(),
+			C /* void *extra_data */, f_found, idx, verbose_level);
 
 
 	if (!f_found) {
 		if (f_v) {
-			cout << "After search_and_add_if_new, cnt = " << cnt << " row = " << row << " The canonical form is new" << endl;
+			cout << "After search_and_add_if_new, "
+					"cnt = " << cnt << " row = " << row
+					<< " The canonical form is new" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "After search_and_add_if_new, cnt = " << cnt << " row = " << row << " We found the canonical form at idx = " << idx << endl;
+			cout << "After search_and_add_if_new, "
+					"cnt = " << cnt << " row = " << row
+					<< " We found the canonical form at idx = " << idx << endl;
 		}
 
 

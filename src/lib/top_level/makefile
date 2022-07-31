@@ -4,6 +4,7 @@ LIB =
 LFLAGS = -lm
 
 all: algebra_and_number_theory \
+	coding_theory_apps \
 	combinatorics \
 	geometry \
 	graph_theory \
@@ -19,6 +20,7 @@ all: algebra_and_number_theory \
 
 
 algebra_and_number_theory : algebra_and_number_theory2 ; 
+coding_theory_apps : coding_theory_apps2 ;
 combinatorics : combinatorics2 ; 
 geometry : geometry2 ; 
 graph_theory : graph_theory2 ; 
@@ -31,6 +33,7 @@ spreads : spreads2 ;
 surfaces : surfaces2 ; 
 
 algebra_and_number_theory2 :  ; cd algebra_and_number_theory; $(MAKE)
+coding_theory_apps2 : ; cd coding_theory_apps; $(MAKE)
 combinatorics2 :  ; cd combinatorics; $(MAKE)
 geometry2 :  ; cd geometry; $(MAKE)
 graph_theory2 :  ; cd graph_theory; $(MAKE)
@@ -54,6 +57,7 @@ surfaces2 :  ; cd surfaces; $(MAKE)
 
 clean:
 	cd algebra_and_number_theory; $(MAKE) clean
+	cd coding_theory_apps; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
 	cd geometry; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean

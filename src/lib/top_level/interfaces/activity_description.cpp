@@ -34,6 +34,9 @@ activity_description::activity_description()
 	f_group_theoretic_activity = FALSE;
 	Group_theoretic_activity_description = NULL;
 
+	f_coding_theoretic_activity = FALSE;
+	Coding_theoretic_activity_description = NULL;
+
 	f_cubic_surface_activity = FALSE;
 	Cubic_surface_activity_description = NULL;
 
@@ -194,6 +197,27 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-group_theoretic_activities" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-coding_theoretic_activity") == 0) {
+		f_coding_theoretic_activity = TRUE;
+		Coding_theoretic_activity_description =
+				NEW_OBJECT(apps_coding_theory::coding_theoretic_activity_description);
+		if (f_v) {
+			cout << "reading -coding_theoretic_activities" << endl;
+		}
+		i += Coding_theoretic_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-coding_theoretic_activities" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -536,6 +560,14 @@ void activity_description::worker(int verbose_level)
 		do_group_theoretic_activity(verbose_level);
 
 	}
+	else if (f_coding_theoretic_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_coding_theoretic_activity" << endl;
+		}
+		do_coding_theoretic_activity(verbose_level);
+
+	}
 	else if (f_cubic_surface_activity) {
 
 		if (f_v) {
@@ -673,8 +705,12 @@ void activity_description::print()
 		Orthogonal_space_activity_description->print();
 	}
 	else if (f_group_theoretic_activity) {
-		cout << "-group_theoretic_activities ";
+		cout << "-group_theoretic_activity ";
 		Group_theoretic_activity_description->print();
+	}
+	else if (f_coding_theoretic_activity) {
+		cout << "-coding_theoretic_activity ";
+		Coding_theoretic_activity_description->print();
 	}
 	else if (f_cubic_surface_activity) {
 		cout << "-cubic_surface_activity ";
@@ -1016,6 +1052,90 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 
 	if (f_v) {
 		cout << "activity_description::do_group_theoretic_activity done" << endl;
+	}
+
+}
+
+void activity_description::do_coding_theoretic_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_coding_theoretic_activity "
+				"coding theoretic activity for the following objects:";
+		Sym->print_with();
+	}
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "-coding_theoretic_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+
+	symbol_table_object_type type;
+
+	type = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
+
+	if (type != t_finite_field) {
+		cout << "activity_description::do_coding_theoretic_activity type is not t_finite_field" << endl;
+		exit(1);
+	}
+
+	field_theory::finite_field *F;
+
+	F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		apps_coding_theory::coding_theoretic_activity Activity;
+
+		Activity.init(Coding_theoretic_activity_description, F, verbose_level);
+
+
+
+#if 0
+		if (Sym->with_labels.size() >= 2) {
+
+			symbol_table_object_type type;
+
+			type = Sym->Orbiter_top_level_session->get_object_type(Idx[1]);
+
+			if (type != t_any_group) {
+				cout << "activity_description::do_coding_theoretic_activity secondary type is not t_any_group" << endl;
+				exit(1);
+			}
+
+			apps_algebra::any_group *AG_secondary;
+
+			AG_secondary = (apps_algebra::any_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+
+			if (f_v) {
+				cout << "activity_description::do_coding_theoretic_activity "
+						"before Activity.init_secondary_group" << endl;
+			}
+			Activity.init_secondary_group(Group_theoretic_activity_description, AG_secondary, verbose_level);
+
+		}
+#endif
+
+		if (f_v) {
+			cout << "activity_description::do_coding_theoretic_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_coding_theoretic_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_coding_theoretic_activity done" << endl;
 	}
 
 }

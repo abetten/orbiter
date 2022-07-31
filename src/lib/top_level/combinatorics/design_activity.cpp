@@ -203,7 +203,7 @@ void design_activity::do_extract_solutions_by_index(
 	orbiter_kernel_system::file_io Fio;
 	int *Sol_idx;
 	int nb_sol;
-	int sol_width;
+	int sol_width = 0;
 
 	if (f_csv_format) {
 		int *Sol_idx_1;
@@ -231,6 +231,7 @@ void design_activity::do_extract_solutions_by_index(
 		SoS->init_from_orbiter_file(underlying_set_size,
 				fname_in, verbose_level);
 		nb_sol = SoS->nb_sets;
+
 		if (nb_sol) {
 			if (!SoS->has_constant_size_property()) {
 				cout << "design_activity::do_extract_solutions_by_index the sets have different sizes" << endl;

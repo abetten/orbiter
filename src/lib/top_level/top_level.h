@@ -49,6 +49,18 @@ namespace apps_algebra {
 
 }
 
+//! Applications in coding theory
+
+
+
+namespace apps_coding_theory {
+
+	class coding_theoretic_activity_description;
+	class coding_theoretic_activity;
+
+}
+
+
 //! Classification problems in combinatorics, including design theory
 
 namespace apps_combinatorics {
@@ -324,6 +336,7 @@ namespace applications_in_algebraic_geometry {
 
 
 #include "./algebra_and_number_theory/tl_algebra_and_number_theory.h"
+#include "./coding_theory_apps/coding_theory_apps.h"
 #include "./combinatorics/tl_combinatorics.h"
 #include "./geometry/tl_geometry.h"
 #include "./graph_theory/graph_theory.h"

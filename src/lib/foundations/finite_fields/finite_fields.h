@@ -26,11 +26,6 @@ public:
 
 	int f_cheat_sheet_GF;
 
-	int f_write_code_for_division;
-	std::string write_code_for_division_fname;
-	std::string write_code_for_division_A;
-	std::string write_code_for_division_B;
-
 
 	int f_polynomial_division;
 	std::string polynomial_division_A;
@@ -67,8 +62,6 @@ public:
 	int f_RREF;
 	std::string RREF_input_matrix;
 
-	int f_weight_enumerator;
-	std::string weight_enumerator_input_matrix;
 
 	int f_Walsh_Hadamard_transform;
 	std::string Walsh_Hadamard_transform_fname_csv_in;
@@ -164,11 +157,6 @@ public:
 	int f_cheat_sheet_desarguesian_spread;
 	int cheat_sheet_desarguesian_spread_m;
 
-	int f_find_CRC_polynomials;
-	int find_CRC_polynomials_nb_errors;
-	int find_CRC_polynomials_information_bits;
-	int find_CRC_polynomials_check_bits;
-
 	int f_sift_polynomials;
 	long int sift_polynomials_r0;
 	long int sift_polynomials_r1;
@@ -180,15 +168,6 @@ public:
 	int f_polynomial_division_ranked;
 	long int polynomial_division_r0;
 	long int polynomial_division_r1;
-
-	int f_polynomial_division_from_file;
-	std::string polynomial_division_from_file_fname;
-	long int polynomial_division_from_file_r1;
-
-	int f_polynomial_division_from_file_all_k_bit_error_patterns;
-	std::string polynomial_division_from_file_all_k_bit_error_patterns_fname;
-	int polynomial_division_from_file_all_k_bit_error_patterns_r1;
-	int polynomial_division_from_file_all_k_bit_error_patterns_k;
 
 	int f_RREF_random_matrix;
 	int RREF_random_matrix_m;
@@ -252,26 +231,6 @@ public:
 	int f_evaluate;
 	std::string evaluate_formula_label;
 	std::string evaluate_parameters;
-
-	int f_generator_matrix_cyclic_code;
-	int generator_matrix_cyclic_code_n;
-	std::string generator_matrix_cyclic_code_poly;
-
-	int f_nth_roots;
-	int nth_roots_n;
-
-	int f_make_BCH_code;
-	int make_BCH_code_n;
-	int make_BCH_code_d;
-
-	int f_make_BCH_code_and_encode;
-	std::string make_BCH_code_and_encode_text;
-	std::string make_BCH_code_and_encode_fname;
-
-	int f_NTT;
-	int NTT_n;
-	int NTT_q;
-
 
 	finite_field_activity_description();
 	~finite_field_activity_description();

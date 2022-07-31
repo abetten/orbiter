@@ -86,6 +86,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_list_graphs_at_level) {
 
+		cout << "graph_classification_activity::perform_activity f_list_graphs_at_level" << endl;
 		GC->list_graphs(Descr->list_graphs_at_level_level_min,
 				Descr->list_graphs_at_level_level_max,
 				verbose_level);
@@ -93,6 +94,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_draw_graphs_at_level) {
 
+		cout << "graph_classification_activity::perform_activity f_draw_graphs_at_level" << endl;
 		if (!Descr->f_draw_options) {
 			cout << "please specify -draw_options" << endl;
 			exit(1);
