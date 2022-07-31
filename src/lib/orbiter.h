@@ -36,10 +36,10 @@
  */
 
 
-#include "foundations/foundations.h"
-#include "discreta/discreta.h"
-#include "group_actions/group_actions.h"
-#include "classification/classification.h"
-#include "top_level/top_level.h"
+#include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
+#include "layer3_group_actions/group_actions.h"
+#include "layer4_classification/classification.h"
+#include "layer5_top_level/top_level.h"
 
 #endif
