@@ -434,17 +434,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->nb_Eckardt_points,
 				verbose_level);
 	}
-	else if (Descr->f_make_gilbert_varshamov_code) {
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.make_gilbert_varshamov_code(
-				Descr->make_gilbert_varshamov_code_n,
-				Descr->make_gilbert_varshamov_code_n - (PA->P->n + 1),
-				Descr->make_gilbert_varshamov_code_d,
-				PA->P->F->q,
-				PA->P, verbose_level);
-	}
 
 	else if (Descr->f_spread_classify) {
 

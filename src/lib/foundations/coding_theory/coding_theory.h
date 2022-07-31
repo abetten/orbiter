@@ -37,10 +37,12 @@ public:
 	void make_table_of_bounds(
 			int n_max, int q, int verbose_level);
 	void make_gilbert_varshamov_code(
-			int n, int k, int d, int q,
-			geometry::projective_space *P, int verbose_level);
+			int n, int k, int d,
+			field_theory::finite_field *F,
+			int verbose_level);
 	void make_gilbert_varshamov_code_recursion(
-			geometry::projective_space *P, int n, int d,
+			field_theory::finite_field *F,
+			int n, int k, int d, long int N_points,
 			long int *set, int *f_forbidden, int level, int verbose_level);
 
 	int gilbert_varshamov_lower_bound_for_d(int n, int k, int q, int verbose_level);
@@ -88,6 +90,7 @@ public:
 			int verbose_level);
 
 	void do_linear_code_through_basis(
+			field_theory::finite_field *F,
 			int n,
 			long int *basis_set, int k,
 			int f_embellish,
@@ -98,10 +101,12 @@ public:
 			int *genma,
 			int verbose_level);
 	void do_linear_code_through_columns_of_parity_check_projectively(
+			field_theory::finite_field *F,
 			int n,
 			long int *columns_set, int k,
 			int verbose_level);
 	void do_linear_code_through_columns_of_parity_check(
+			field_theory::finite_field *F,
 			int n,
 			long int *columns_set, int k,
 			int verbose_level);
@@ -121,6 +126,7 @@ public:
 			int f_nearest_codeword,
 			std::string &nearest_codeword_text,
 			int verbose_level);
+	// creates a combinatorics::boolean_function_domain object
 	void code_diagram(
 			std::string &label,
 			long int *Words,
@@ -129,6 +135,7 @@ public:
 			int verbose_level);
 	void investigate_code(long int *Words,
 			int nb_words, int n, int f_embellish, int verbose_level);
+	// creates a combinatorics::boolean_function_domain object
 	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad);
 	void place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a);
 	void do_it(int n, int r, int a, int c, int seed, int verbose_level);
@@ -143,6 +150,7 @@ public:
 			std::string &label,
 			int m, int n, std::string &genma_text,
 			int verbose_level);
+	// creates a field_theory::subfield_structure object
 	void CRC_encode_text(field_theory::nth_roots *Nth, ring_theory::unipoly_object &CRC_poly,
 		std::string &text, std::string &fname,
 		int verbose_level);

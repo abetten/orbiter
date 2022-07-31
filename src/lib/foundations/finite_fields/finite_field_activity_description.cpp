@@ -23,11 +23,6 @@ finite_field_activity_description::finite_field_activity_description()
 
 	f_cheat_sheet_GF = FALSE;
 
-	f_write_code_for_division = FALSE;
-	//std::string write_code_for_division_fname;
-	//std::string write_code_for_division_A;
-	//std::string write_code_for_division_B;
-
 	f_polynomial_division = FALSE;
 	//polynomial_division_A;
 	//polynomial_division_B;
@@ -68,9 +63,6 @@ finite_field_activity_description::finite_field_activity_description()
 
 	//cout << "finite_field_activity_description::finite_field_activity_description 3" << endl;
 	//RREF_text = NULL;
-
-	f_weight_enumerator = FALSE;
-	//std::string weight_enumerator_input_matrix;
 
 	f_Walsh_Hadamard_transform = FALSE;
 	//std::string Walsh_Hadamard_transform_fname_csv_in;
@@ -149,11 +141,6 @@ finite_field_activity_description::finite_field_activity_description()
 	f_cheat_sheet_desarguesian_spread = FALSE;
 	cheat_sheet_desarguesian_spread_m = 0;
 
-	f_find_CRC_polynomials = FALSE;
-	find_CRC_polynomials_nb_errors = 0;
-	find_CRC_polynomials_information_bits = 0;
-	find_CRC_polynomials_check_bits = 0;
-
 	f_sift_polynomials = FALSE;
 	sift_polynomials_r0 = 0;
 	sift_polynomials_r1 = 0;
@@ -165,16 +152,6 @@ finite_field_activity_description::finite_field_activity_description()
 	f_polynomial_division_ranked = FALSE;
 	polynomial_division_r0 = 0;
 	polynomial_division_r1 = 0;
-
-	f_polynomial_division_from_file = FALSE;
-	//std::string polynomial_division_from_file_fname;
-	polynomial_division_from_file_r1 = 0;
-
-	f_polynomial_division_from_file_all_k_bit_error_patterns = FALSE;
-	//std::string polynomial_division_from_file_all_k_bit_error_patterns_fname;
-	polynomial_division_from_file_all_k_bit_error_patterns_r1 = 0;
-	polynomial_division_from_file_all_k_bit_error_patterns_k = 0;
-
 
 	f_RREF_random_matrix = FALSE;
 	RREF_random_matrix_m = 0;
@@ -233,26 +210,6 @@ finite_field_activity_description::finite_field_activity_description()
 	f_unrank_point_in_PG = FALSE;
 	//std::string unrank_point_in_PG_text;
 
-
-	f_generator_matrix_cyclic_code = FALSE;
-	generator_matrix_cyclic_code_n = 0;
-	//std::string generator_matrix_cyclic_code_poly
-
-	f_nth_roots = FALSE;
-	nth_roots_n = 0;
-
-	f_make_BCH_code = FALSE;
-	make_BCH_code_n = 0;
-	make_BCH_code_d = 0;
-
-	f_make_BCH_code_and_encode = FALSE;
-	//std::string make_BCH_code_and_encode_text;
-	//std::string make_BCH_code_and_encode_fname;
-
-	f_NTT = FALSE;
-	NTT_n = 0;
-	NTT_q = 0;
-
 }
 
 
@@ -281,18 +238,6 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-write_code_for_division") == 0) {
-			f_write_code_for_division = TRUE;
-			write_code_for_division_fname.assign(argv[++i]);
-			write_code_for_division_A.assign(argv[++i]);
-			write_code_for_division_B.assign(argv[++i]);
-			if (f_v) {
-				cout << "-write_code_for_division "
-						<< write_code_for_division_fname << " "
-						<< write_code_for_division_A << " "
-						<< write_code_for_division_B << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-polynomial_division") == 0) {
 			f_polynomial_division = TRUE;
 			polynomial_division_A.assign(argv[++i]);
@@ -382,13 +327,6 @@ int finite_field_activity_description::read_arguments(
 			RREF_input_matrix.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RREF " << RREF_input_matrix << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-weight_enumerator") == 0) {
-			f_weight_enumerator = TRUE;
-			weight_enumerator_input_matrix.assign(argv[++i]);
-			if (f_v) {
-				cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
 			}
 		}
 
@@ -638,19 +576,6 @@ int finite_field_activity_description::read_arguments(
 				cout << "-cheat_sheet_desarguesian_spread " << cheat_sheet_desarguesian_spread_m << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-find_CRC_polynomials") == 0) {
-			f_find_CRC_polynomials = TRUE;
-			find_CRC_polynomials_nb_errors = ST.strtoi(argv[++i]);
-			find_CRC_polynomials_information_bits = ST.strtoi(argv[++i]);
-			find_CRC_polynomials_check_bits = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-find_CRC_polynomials "
-					<< " " << find_CRC_polynomials_nb_errors
-					<< " " << find_CRC_polynomials_information_bits
-					<< " " << find_CRC_polynomials_check_bits
-					<< endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-sift_polynomials") == 0) {
 			f_sift_polynomials = TRUE;
 			sift_polynomials_r0 = ST.strtolint(argv[++i]);
@@ -684,32 +609,6 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-polynomial_division_from_file") == 0) {
-			f_polynomial_division_from_file = TRUE;
-			polynomial_division_from_file_fname.assign(argv[++i]);
-			polynomial_division_from_file_r1 = ST.strtolint(argv[++i]);
-			if (f_v) {
-				cout << "-polynomial_division_from_file "
-					<< " " << polynomial_division_from_file_fname
-					<< " " << polynomial_division_from_file_r1
-					<< endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-polynomial_division_from_file_all_k_bit_error_patterns") == 0) {
-			f_polynomial_division_from_file_all_k_bit_error_patterns = TRUE;
-			polynomial_division_from_file_all_k_bit_error_patterns_fname.assign(argv[++i]);
-			polynomial_division_from_file_all_k_bit_error_patterns_r1 = ST.strtolint(argv[++i]);
-			polynomial_division_from_file_all_k_bit_error_patterns_k = ST.strtolint(argv[++i]);
-			if (f_v) {
-				cout << "-polynomial_division_from_file_all_k_bit_error_patterns "
-					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_fname
-					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_r1
-					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
-					<< endl;
-			}
-		}
-
 
 		else if (ST.stringcmp(argv[i], "-RREF_random_matrix") == 0) {
 			f_RREF_random_matrix = TRUE;
@@ -854,58 +753,6 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-generator_matrix_cyclic_code") == 0) {
-			f_generator_matrix_cyclic_code = TRUE;
-			generator_matrix_cyclic_code_n = ST.strtoi(argv[++i]);
-			generator_matrix_cyclic_code_poly.assign(argv[++i]);
-			if (f_v) {
-				cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
-					<< " " << generator_matrix_cyclic_code_poly
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-nth_roots") == 0) {
-			f_nth_roots = TRUE;
-			nth_roots_n = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-nth_roots " << nth_roots_n << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-make_BCH_code") == 0) {
-			f_make_BCH_code = TRUE;
-			make_BCH_code_n = ST.strtoi(argv[++i]);
-			make_BCH_code_d = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-make_BCH_code " << make_BCH_code_n
-						<< " " << make_BCH_code_d
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-make_BCH_code_and_encode") == 0) {
-			f_make_BCH_code_and_encode = TRUE;
-			make_BCH_code_n = ST.strtoi(argv[++i]);
-			make_BCH_code_d = ST.strtoi(argv[++i]);
-			make_BCH_code_and_encode_text.assign(argv[++i]);
-			make_BCH_code_and_encode_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-make_BCH_code_and_encode "
-						<< " " << make_BCH_code_n
-						<< " " << make_BCH_code_d
-						<< " " << make_BCH_code_and_encode_text
-						<< " " << make_BCH_code_and_encode_fname
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-NTT") == 0) {
-			f_NTT = TRUE;
-			NTT_n = ST.strtoi(argv[++i]);
-			NTT_q = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-NTT " << NTT_n
-						<< " " << NTT_q
-						<< endl;
-			}
-		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -930,12 +777,6 @@ void finite_field_activity_description::print()
 {
 	if (f_cheat_sheet_GF) {
 		cout << "-cheat_sheet_GF " << endl;
-	}
-	else if (f_write_code_for_division) {
-		cout << "-write_code_for_division "
-				<< write_code_for_division_fname << " "
-				<< write_code_for_division_A << " "
-				<< write_code_for_division_B << endl;
 	}
 	if (f_polynomial_division) {
 		cout << "-polynomial_division " << polynomial_division_A << " "
@@ -977,9 +818,6 @@ void finite_field_activity_description::print()
 	}
 	if (f_RREF) {
 		cout << "-RREF " << RREF_input_matrix << endl;
-	}
-	if (f_weight_enumerator) {
-		cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
 	}
 
 	if (f_Walsh_Hadamard_transform) {
@@ -1109,13 +947,6 @@ void finite_field_activity_description::print()
 	if (f_cheat_sheet_desarguesian_spread) {
 		cout << "-cheat_sheet_desarguesian_spread " << cheat_sheet_desarguesian_spread_m << endl;
 	}
-	if (f_find_CRC_polynomials) {
-		cout << "-find_CRC_polynomials "
-				<< " " << find_CRC_polynomials_nb_errors
-				<< " " << find_CRC_polynomials_information_bits
-				<< " " << find_CRC_polynomials_check_bits
-				<< endl;
-	}
 	if (f_sift_polynomials) {
 		cout << "-sift_polynomials "
 				<< " " << sift_polynomials_r0
@@ -1132,20 +963,6 @@ void finite_field_activity_description::print()
 		cout << "-polynomial_division_ranked "
 				<< " " << polynomial_division_r0
 				<< " " << polynomial_division_r1
-				<< endl;
-	}
-	if (f_polynomial_division_from_file) {
-		cout << "-polynomial_division_from_file "
-				<< " " << polynomial_division_from_file_fname
-				<< " " << polynomial_division_from_file_r1
-				<< endl;
-	}
-
-	if (f_polynomial_division_from_file_all_k_bit_error_patterns) {
-		cout << "-polynomial_division_from_file_all_k_bit_error_patterns "
-				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_fname
-				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_r1
-				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
 				<< endl;
 	}
 
@@ -1225,32 +1042,6 @@ void finite_field_activity_description::print()
 	if (f_evaluate) {
 		cout << "-evaluate " << evaluate_formula_label
 				<< " " << evaluate_parameters
-				<< endl;
-	}
-	if (f_generator_matrix_cyclic_code) {
-		cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
-			<< " " << generator_matrix_cyclic_code_poly
-			<< endl;
-	}
-	if (f_nth_roots) {
-		cout << "-nth_roots " << nth_roots_n << endl;
-	}
-	if (f_make_BCH_code) {
-		cout << "-make_BCH_code " << make_BCH_code_n
-				<< " " << make_BCH_code_d
-				<< endl;
-	}
-	if (f_make_BCH_code_and_encode) {
-		cout << "-make_BCH_code_and_encode "
-				<< " " << make_BCH_code_n
-				<< " " << make_BCH_code_d
-				<< " " << make_BCH_code_and_encode_text
-				<< " " << make_BCH_code_and_encode_fname
-				<< endl;
-	}
-	if (f_NTT) {
-		cout << "-NTT " << NTT_n
-				<< " " << NTT_q
 				<< endl;
 	}
 

@@ -427,10 +427,6 @@ public:
 	int f_surface_clebsch;
 	int f_surface_codes;
 
-	int f_make_gilbert_varshamov_code;
-	int make_gilbert_varshamov_code_n;
-	int make_gilbert_varshamov_code_d;
-
 
 	int f_spread_classify;
 	int spread_classify_k;
@@ -753,6 +749,7 @@ public:
 	void compute_group_of_set(long int *set, int set_sz,
 			groups::strong_generators *&Sg,
 			int verbose_level);
+		// ToDo
 	void analyze_del_Pezzo_surface(
 			expression_parser::formula *Formula,
 			std::string &evaluate_text,

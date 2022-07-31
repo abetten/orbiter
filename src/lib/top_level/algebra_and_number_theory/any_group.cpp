@@ -436,11 +436,22 @@ void any_group::normalizer(int verbose_level)
 	ring_theory::longinteger_object H_order;
 
 
-	fname_magma_prefix.assign(LG->label);
+
+	fname_magma_prefix.assign(label);
 	fname_magma_prefix.append("_normalizer");
 
-	G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = LG->Strong_gens->create_sims(verbose_level);
+
+	H = Subgroup_gens->create_sims(verbose_level);
+
+	if (f_linear_group) {
+		G = LG->initial_strong_gens->create_sims(verbose_level);
+	}
+	else {
+		G = PGC->A_initial->Strong_gens->create_sims(verbose_level);
+	}
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	//H = LG->Strong_gens->create_sims(verbose_level);
 
 	if (f_v) {
 		cout << "group order G = " << G->group_order_lint() << endl;
@@ -450,8 +461,8 @@ void any_group::normalizer(int verbose_level)
 	A->normalizer_using_MAGMA(fname_magma_prefix,
 			G, H, gens_N, verbose_level);
 
-	LG->initial_strong_gens->group_order(G_order);
-	LG->Strong_gens->group_order(H_order);
+	G->group_order(G_order);
+	H->group_order(H_order);
 	gens_N->group_order(N_order);
 	if (f_v) {
 		cout << "group order G = " << G->group_order_lint() << endl;
@@ -474,7 +485,7 @@ void any_group::normalizer(int verbose_level)
 
 		fname.assign(fname_magma_prefix);
 		fname.append(".tex");
-		snprintf(str, 1000, "Normalizer of subgroup %s", LG->label_tex.c_str());
+		snprintf(str, 1000, "Normalizer of subgroup %s", label_tex.c_str());
 		title.assign(str);
 
 
@@ -493,9 +504,9 @@ void any_group::normalizer(int verbose_level)
 					TRUE /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
-			ost << "\\noindent The group $" << LG->label_tex << "$ "
+			ost << "\\noindent The group $" << label_tex << "$ "
 					"of order " << H_order << " is:\\\\" << endl;
-			LG->Strong_gens->print_generators_tex(ost);
+			Subgroup_gens->print_generators_tex(ost);
 
 			ost << "\\bigskip" << endl;
 

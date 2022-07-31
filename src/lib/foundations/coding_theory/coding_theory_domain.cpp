@@ -206,23 +206,39 @@ void coding_theory_domain::make_table_of_bounds(
 }
 
 void coding_theory_domain::make_gilbert_varshamov_code(
-		int n, int k, int d, int q,
-		geometry::projective_space *P, int verbose_level)
+		int n, int k, int d,
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code" << endl;
-		cout << "coding_theory_domain::make_gilbert_varshamov_code P->N_points = " << P->N_points << endl;
 	}
+	geometry::geometry_global Gg;
+	int nmk;
+	int N_points;
 	long int *set;
 	int *f_forbidden;
 
-	set = NEW_lint(n);
-	f_forbidden = NEW_int(P->N_points);
-	Int_vec_zero(f_forbidden, P->N_points);
 
-	make_gilbert_varshamov_code_recursion(P, n, d, set, f_forbidden, 0 /*level*/, verbose_level);
+	nmk = n - k;
+
+	set = NEW_lint(n);
+
+	N_points = Gg.nb_PG_elements(nmk - 1, F->q);
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code N_points = " << N_points << endl;
+	}
+
+	f_forbidden = NEW_int(N_points);
+	Int_vec_zero(f_forbidden, N_points);
+
+	make_gilbert_varshamov_code_recursion(F,
+			n, k, d, N_points,
+			set, f_forbidden, 0 /*level*/,
+			verbose_level);
 
 
 
@@ -232,25 +248,21 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	cout << endl;
 
 	int *genma;
-	int nmk;
-
-
-	nmk = P->n + 1;
 	genma = NEW_int(n * n);
 
-	matrix_from_projective_set(P->F,
+	matrix_from_projective_set(F,
 			n, nmk, set,
 			genma,
 			verbose_level);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	Int_matrix_print(genma, P->n + 1, n);
+	Int_matrix_print(genma, nmk, n);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
 	Int_vec_print_fully(cout, genma, nmk * n);
 	cout << endl;
 
-	P->F->Linear_algebra->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
 	Int_matrix_print(genma + nmk * n, k, n);
@@ -273,7 +285,8 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 }
 
 void coding_theory_domain::make_gilbert_varshamov_code_recursion(
-		geometry::projective_space *P, int n, int d,
+		field_theory::finite_field *F,
+		int n, int k, int d, long int N_points,
 		long int *set, int *f_forbidden, int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -291,14 +304,14 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 	}
 	int a, b, i;
 
-	for (a = 0; a < P->N_points; a++) {
+	for (a = 0; a < N_points; a++) {
 
 		if (!f_forbidden[a]) {
 			break;
 		}
 	}
 
-	if (a == P->N_points) {
+	if (a == N_points) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code_recursion "
 				"failure to construct the code" << endl;
 		exit(1);
@@ -315,7 +328,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 	combinatorics::combinatorics_domain Combi;
 	int cnt;
 
-	nmk = P->n + 1;
+	nmk = n - k;
 	set[level] = a;
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code nmk = " << nmk << endl;
@@ -358,16 +371,19 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 				for (u = 0; u < i; u++) {
 					c = subset[u];
 					e = set[c];
-					P->unrank_point(v1, e);
+					F->PG_element_unrank_modified(v1, 1, nmk, e);
+					//P->unrank_point(v1, e);
 					for (t = 0; t < nmk; t++) {
-						v3[t] = P->F->add(v3[t], v1[t]);
+						v3[t] = F->add(v3[t], v1[t]);
 					}
 				}
-				P->unrank_point(v1, set[level]);
+				F->PG_element_unrank_modified(v1, 1, nmk, set[level]);
+				//P->unrank_point(v1, set[level]);
 				for (t = 0; t < nmk; t++) {
-					v3[t] = P->F->add(v3[t], v1[t]);
+					v3[t] = F->add(v3[t], v1[t]);
 				}
-				f = P->rank_point(v3);
+				F->PG_element_rank_modified(v3, 1, nmk, f);
+				//f = P->rank_point(v3);
 				if (f_v) {
 					cout << "h=" << h << " / " << N << " : ";
 					Int_vec_print(cout, subset, i);
@@ -398,7 +414,8 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 		cout << "coding_theory_domain::make_gilbert_varshamov_code "
 				"level = " << level << " : cnt = " << cnt << " calling the recursion:" << endl;
 	}
-	make_gilbert_varshamov_code_recursion(P, n, d, set, f_forbidden, level + 1, verbose_level);
+	make_gilbert_varshamov_code_recursion(F, n, k, d, N_points,
+			set, f_forbidden, level + 1, verbose_level);
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code "
 				"level = " << level << " : cnt = " << cnt << " done with the recursion:" << endl;
@@ -1427,6 +1444,7 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 
 
 void coding_theory_domain::do_linear_code_through_basis(
+		field_theory::finite_field *F,
 		int n,
 		long int *basis_set, int k,
 		int f_embellish,
@@ -1457,10 +1475,10 @@ void coding_theory_domain::do_linear_code_through_basis(
 	sz = 1 << k;
 	set = NEW_lint(sz);
 
-	field_theory::finite_field *F;
+	//field_theory::finite_field *F;
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
+	//F = NEW_OBJECT(field_theory::finite_field);
+	//F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	for (i = 0; i < sz; i++) {
 		Gg.AG_element_unrank(2, word, 1, k, i);
@@ -1536,7 +1554,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 
 	//investigate_code(set, sz, n, f_embellish, verbose_level);
 
-	FREE_OBJECT(F);
+	//FREE_OBJECT(F);
 	FREE_int(genma);
 	FREE_int(word);
 	FREE_int(code_word);
@@ -1572,6 +1590,7 @@ void coding_theory_domain::matrix_from_projective_set(field_theory::finite_field
 }
 
 void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projectively(
+		field_theory::finite_field *F,
 		int n,
 		long int *columns_set, int k,
 		int verbose_level)
@@ -1582,7 +1601,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check_projectively" << endl;
 	}
 
-	field_theory::finite_field *F;
+	//field_theory::finite_field *F;
 	int i, j;
 	int *v;
 	int *genma;
@@ -1590,8 +1609,8 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 	int *code_word;
 	geometry::geometry_global Gg;
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
+	//F = NEW_OBJECT(field_theory::finite_field);
+	//F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
 	word = NEW_int(k);
@@ -1704,7 +1723,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 	FREE_int(v);
 	FREE_int(word);
 	FREE_int(code_word);
-	FREE_OBJECT(F);
+	//FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check_projectively done" << endl;
@@ -1712,6 +1731,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 }
 
 void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
+		field_theory::finite_field *F,
 		int n,
 		long int *columns_set, int k,
 		int verbose_level)
@@ -1722,7 +1742,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check" << endl;
 	}
 
-	field_theory::finite_field *F;
+	//field_theory::finite_field *F;
 	int i, j;
 	int *v;
 	int *genma;
@@ -1730,8 +1750,8 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	int *code_word;
 	geometry::geometry_global Gg;
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
+	//F = NEW_OBJECT(field_theory::finite_field);
+	//F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
 	word = NEW_int(k);
@@ -1844,7 +1864,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	FREE_int(v);
 	FREE_int(word);
 	FREE_int(code_word);
-	FREE_OBJECT(F);
+	//FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check done" << endl;
@@ -2315,6 +2335,7 @@ void coding_theory_domain::code_diagram(
 
 void coding_theory_domain::investigate_code(long int *Words,
 		int nb_words, int n, int f_embellish, int verbose_level)
+// creates a combinatorics::boolean_function_domain object
 {
 	int f_v = (verbose_level >= 1);
 	int nb_rows, nb_cols;
@@ -2539,6 +2560,7 @@ void coding_theory_domain::do_long_code(
 		int f_nearest_codeword,
 		std::string &nearest_codeword_text,
 		int verbose_level)
+// creates a combinatorics::boolean_function_domain object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3034,6 +3056,7 @@ void coding_theory_domain::field_reduction(
 		std::string &label,
 		int m, int n, std::string &genma_text,
 		int verbose_level)
+// creates a field_theory::subfield_structure object
 {
 	int f_v = (verbose_level >= 1);
 	int *M;

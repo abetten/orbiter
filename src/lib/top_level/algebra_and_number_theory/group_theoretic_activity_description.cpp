@@ -185,9 +185,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	IA = NULL;
 
 
-
-
-
 	f_mindist = FALSE;
 	mindist = 0;
 	f_self_orthogonal = FALSE;

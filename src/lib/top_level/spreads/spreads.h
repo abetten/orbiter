@@ -584,6 +584,7 @@ public:
 	int n;
 	int k1;
 	int n1;
+	int order_of_plane;
 
 	geometry::andre_construction *Andre;
 	int N; // number of points = number of lines

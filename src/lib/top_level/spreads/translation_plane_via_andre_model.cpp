@@ -30,6 +30,7 @@ translation_plane_via_andre_model::translation_plane_via_andre_model()
 {
 	F = NULL;
 	q = k = n = k1 = n1 = 0;
+	order_of_plane = 0;
 	Andre = NULL;
 	N = 0;
 	twoN = 0;
@@ -152,6 +153,7 @@ void translation_plane_via_andre_model::init(
 	n = 2 * k;
 	n1 = n + 1;
 	k1 = k + 1;
+	order_of_plane = NT.i_power_j(q, k);
 	
 	Andre = NEW_OBJECT(geometry::andre_construction);
 

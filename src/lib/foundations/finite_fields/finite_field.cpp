@@ -170,11 +170,11 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 		f_is_prime_field = FALSE;
 		knowledge_base K;
 
-		K.get_primitive_polynomial(poly, p, e, verbose_level);
+		K.get_primitive_polynomial(poly, p, e, verbose_level - 2);
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " before init_override_polynomial poly = " << poly << endl;
 		}
-		init_override_polynomial(q, poly, f_without_tables, verbose_level);
+		init_override_polynomial(q, poly, f_without_tables, 0 /*verbose_level - 2*/);
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " after init_override_polynomial" << endl;
 		}
@@ -185,7 +185,7 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " before init_override_polynomial poly = " << poly << endl;
 		}
-		init_override_polynomial(q, poly, f_without_tables, verbose_level);
+		init_override_polynomial(q, poly, f_without_tables, 0 /*verbose_level - 2*/);
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " after init_override_polynomial" << endl;
 		}

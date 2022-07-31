@@ -423,6 +423,8 @@ MODULES= \
 		top_level/algebra_and_number_theory/polynomial_ring_activity.o \
 		top_level/algebra_and_number_theory/vector_ge_builder.o \
 		top_level/algebra_and_number_theory/young.o \
+		top_level/coding_theory_apps/coding_theoretic_activity_description.o \
+		top_level/coding_theory_apps/coding_theoretic_activity.o \
 		top_level/combinatorics/boolean_function_classify.o \
 		top_level/combinatorics/combinatorial_object_activity_description.o \
 		top_level/combinatorics/combinatorial_object_activity.o \

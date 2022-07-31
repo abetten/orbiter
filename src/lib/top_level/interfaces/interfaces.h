@@ -43,6 +43,9 @@ class activity_description {
 	int f_group_theoretic_activity;
 	apps_algebra::group_theoretic_activity_description *Group_theoretic_activity_description;
 
+	int f_coding_theoretic_activity;
+	apps_coding_theory::coding_theoretic_activity_description *Coding_theoretic_activity_description;
+
 	int f_cubic_surface_activity;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity_description *Cubic_surface_activity_description;
 
@@ -95,6 +98,7 @@ public:
 	void do_projective_space_activity(int verbose_level);
 	void do_orthogonal_space_activity(int verbose_level);
 	void do_group_theoretic_activity(int verbose_level);
+	void do_coding_theoretic_activity(int verbose_level);
 	void do_cubic_surface_activity(int verbose_level);
 	void do_quartic_curve_activity(int verbose_level);
 	void do_combinatorial_object_activity(int verbose_level);
@@ -207,17 +211,21 @@ class interface_coding_theory {
 	int make_bounds_k;
 	int make_bounds_q;
 
+#if 0
 	int f_BCH;
 	int f_BCH_dual;
 	int BCH_n;
 	int BCH_q;
 	int BCH_t;
 	//int BCH_b;
+#endif
 
 	int f_Hamming_space_distance_matrix;
 	int Hamming_space_n;
 	int Hamming_space_q;
 
+
+#if 0
 	int f_general_code_binary;
 	int general_code_binary_n;
 	std::string general_code_binary_text;
@@ -241,11 +249,6 @@ class interface_coding_theory {
 	int linear_code_through_basis_n;
 	std::string linear_code_through_basis_text;
 
-	int f_linear_code_through_columns_of_parity_check_projectively;
-	int f_linear_code_through_columns_of_parity_check;
-
-	int linear_code_through_columns_of_parity_check_k;
-	std::string linear_code_through_columns_of_parity_check_text;
 
 	int f_long_code;
 	int long_code_n;
@@ -283,7 +286,7 @@ class interface_coding_theory {
 
 	int f_crc_new_file_based;
 	std::string crc_new_file_based_fname;
-
+#endif
 
 public:
 	interface_coding_theory();

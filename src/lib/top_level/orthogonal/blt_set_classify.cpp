@@ -455,7 +455,7 @@ void blt_set_classify::create_graphs(
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
 			nb_vertices,
 			CG,  
-			verbose_level - 1)) {
+			verbose_level - 2)) {
 			list_of_cases[nb_of_cases++] = orbit;
 
 			string fname;
@@ -716,7 +716,7 @@ int blt_set_classify::create_graph(
 		starter_size, orbit_at_level, level_of_candidates_file, 
 		blt_set_classify_early_test_func_callback,
 		this /* early_test_func_callback_data */, 
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "blt_set_classify::create_graph after R->init_from_file" << endl;
 	}
@@ -758,7 +758,7 @@ int blt_set_classify::create_graph(
 		}
 		A->lexorder_test(R->candidates,
 			R->nb_candidates, nb_candidates2,
-			R->Strong_gens->gens, max_starter, verbose_level - 3);
+			R->Strong_gens->gens, max_starter, 0 /*verbose_level - 3*/);
 		if (f_vv) {
 			cout << "blt_set_classify::create_graph "
 					"After lexorder_test nb_candidates="
@@ -800,7 +800,7 @@ int blt_set_classify::create_graph(
 			R->candidates, R->nb_candidates,
 			f_eliminate_graphs_if_possible,
 			CG,
-			verbose_level);
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "blt_set_classify::create_graph after "
 				"Blt_set_domain->create_graph" << endl;

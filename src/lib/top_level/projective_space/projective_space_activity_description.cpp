@@ -122,10 +122,6 @@ projective_space_activity_description::projective_space_activity_description()
 	f_surface_clebsch = FALSE;
 	f_surface_codes = FALSE;
 
-	f_make_gilbert_varshamov_code = FALSE;
-	make_gilbert_varshamov_code_n = 0;
-	make_gilbert_varshamov_code_d = 0;
-
 	f_spread_classify = FALSE;
 	spread_classify_k = 0;
 	spread_classify_Control = NULL;
@@ -672,16 +668,6 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-make_gilbert_varshamov_code") == 0) {
-			f_make_gilbert_varshamov_code = TRUE;
-			make_gilbert_varshamov_code_n = ST.strtoi(argv[++i]);
-			make_gilbert_varshamov_code_d = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
-						<< " " << make_gilbert_varshamov_code_d << endl;
-			}
-		}
-
 		else if (ST.stringcmp(argv[i], "-spread_classify") == 0) {
 			f_spread_classify = TRUE;
 			spread_classify_k = ST.strtoi(argv[++i]);
@@ -1176,10 +1162,6 @@ void projective_space_activity_description::print()
 	if (f_control_six_arcs) {
 		cout << "-control_six_arcs " << endl;
 		Control_six_arcs->print();
-	}
-	if (f_make_gilbert_varshamov_code) {
-		cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
-				<< " " << make_gilbert_varshamov_code_d << endl;
 	}
 
 	if (f_spread_classify) {

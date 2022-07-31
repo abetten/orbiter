@@ -174,6 +174,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	long int L;
 	long int L100;
 	long int i, j, k;
@@ -230,7 +231,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 		for (j = i + 1; j < nb_points; j++, /*cnt++,*/ k++) {
 			//k = Combi.ij2k_lint(i, j, nb_points);
 
-			if ((k % L100) == 0 && k) {
+			if (f_vv && (k % L100) == 0 && k) {
 				cout << "blt_set_domain::compute_adjacency_list_fast "
 						"nb_points=" << nb_points << " progress: "
 						<< k / L100
@@ -852,7 +853,7 @@ int blt_set_domain::create_graph(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int special_line;
 	int ret = TRUE;
 
@@ -1003,10 +1004,11 @@ int blt_set_domain::create_graph(
 		sprintf(str, "BLT\\_%d", case_number);
 		label_tex.assign(str);
 
-		CG->init(nb_candidates /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
-			point_color, Bitvec, TRUE,
-			label, label_tex,
-			verbose_level - 2);
+		CG->init(nb_candidates /* nb_points */,
+				nb_colors, 1 /* nb_colors_per_vertex */,
+				point_color, Bitvec, TRUE,
+				label, label_tex,
+				verbose_level - 2);
 			// Bitvec becomes part of the colored_graph object
 	}
 	int i;
