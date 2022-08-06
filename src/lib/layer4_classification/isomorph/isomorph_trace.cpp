@@ -722,14 +722,29 @@ int isomorph::trace_next_point(int cur_level,
 		
 		poset_classification::poset_orbit_node *O = gen->get_node(cur_node_global);
 
-		// ToDo
-#if 0
-		ret = O->trace_next_point_in_place(gen, 
-			cur_level, cur_node_global, size, 
-			canonical_set, trace_set_recursion_tmp_set1,
-			transporter, trace_set_recursion_Elt1, 
-			f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
-#endif
+		if (f_v) {
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::trace_next_point before O->trace_next_point_in_place" << endl;
+		}
+		ret = O->trace_next_point_in_place(
+				gen,
+				cur_level,
+				cur_node_global,
+				size,
+				canonical_set /* long int *cur_set */,
+				trace_set_recursion_tmp_set1 /* long int *tmp_set */,
+				transporter /* int *cur_transporter */,
+				trace_set_recursion_Elt1 /* int *tmp_transporter */,
+				trace_set_recursion_cosetrep /* int *cosetrep */,
+				f_implicit_fusion,
+				f_failure_to_find_point,
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "iso_node " << iso_nodes
+					<< " isomorph::trace_next_point after O->trace_next_point_in_place" << endl;
+		}
+
 		if (f_failure_to_find_point) {
 			cout << "isomorph::trace_next_point "
 					"f_failure_to_find_point" << endl;
@@ -792,7 +807,7 @@ int isomorph::trace_next_point_database(
 	int cur_level, int cur_node_global,
 	long int *canonical_set, int *Elt_transporter,
 	int verbose_level)
-// Returns FALSE is the set becomes lexicographically smaller
+// Returns FALSE if the set becomes lexicographically smaller
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -819,6 +834,7 @@ int isomorph::trace_next_point_database(
 	cur_node_local =
 			cur_node_global -
 			gen->first_node_at_level(cur_level);
+
 	DB_level->ith_object(cur_node_local,
 			0/* btree_idx*/, *v,
 			verbose_level - 2);
@@ -991,16 +1007,16 @@ int isomorph::handle_extension(
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
 					<< " isomorph::handle_extension calling "
-							"handle_extension_oracle" << endl;
+							"handle_extension_tree" << endl;
 		}
-		next_node_global = handle_extension_oracle(cur_level,
+		next_node_global = handle_extension_tree(cur_level,
 			cur_node_global,
 			canonical_set, Elt_transporter, f_implicit_fusion,
 			f_failure_to_find_point, verbose_level);
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
 					<< " isomorph::handle_extension "
-					" handle_extension_oracle returns "
+					" handle_extension_tree returns "
 						<< next_node_global << endl;
 		}
 	}
@@ -1202,7 +1218,7 @@ int isomorph::handle_extension_database(int cur_level,
 	}
 }
 
-int isomorph::handle_extension_oracle(int cur_level,
+int isomorph::handle_extension_tree(int cur_level,
 	int cur_node_global,
 	long int *canonical_set, int *Elt_transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
@@ -1218,7 +1234,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 	f_failure_to_find_point = FALSE;
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " isomorph::handle_extension_oracle "
+				<< " isomorph::handle_extension_tree "
 				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << endl;
@@ -1227,7 +1243,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 	current_extension = O->find_extension_from_point(gen, pt0, FALSE);
 	if (current_extension < 0) {
 		cout << "iso_node " << iso_nodes
-				<< " isomorph::handle_extension_oracle "
+				<< " isomorph::handle_extension_tree "
 				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
@@ -1237,7 +1253,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 	}
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " isomorph::handle_extension_oracle "
+				<< " isomorph::handle_extension_tree "
 				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
@@ -1246,7 +1262,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 	t = O->get_E(current_extension)->get_type();
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " isomorph::handle_extension_oracle "
+				<< " isomorph::handle_extension_tree "
 				" node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
@@ -1255,7 +1271,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 	if (t == 1) {
 		if (f_v) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::handle_extension_oracle "
+					<< " isomorph::handle_extension_tree "
 					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
@@ -1265,7 +1281,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 		d = O->get_E(current_extension)->get_data();
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::handle_extension_oracle "
+					<< " isomorph::handle_extension_tree "
 					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
@@ -1279,7 +1295,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 		else {
 			if (f_vv) {
 				cout << "iso_node " << iso_nodes
-						<< " isomorph::handle_extension_oracle "
+						<< " isomorph::handle_extension_tree "
 						" node ";
 				print_node_global(cur_level, cur_node_global);
 				cout << " : ";
@@ -1297,20 +1313,20 @@ int isomorph::handle_extension_oracle(int cur_level,
 	else if (t == 2) {
 		if (f_v) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::handle_extension_oracle "
+					<< " isomorph::handle_extension_tree "
 					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "fusion node" << endl;
 		}
 		// fusion node		
-		apply_isomorphism_oracle(cur_level, cur_node_global, 
+		apply_isomorphism_tree(cur_level, cur_node_global,
 			current_extension, canonical_set, Elt_transporter, 
 			verbose_level - 2);
 
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::handle_extension_oracle "
+					<< " isomorph::handle_extension_tree "
 					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
@@ -1323,7 +1339,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 		
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::handle_extension_oracle "
+					<< " isomorph::handle_extension_tree "
 					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
@@ -1332,7 +1348,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 			Lint_vec_print(cout, canonical_set, size);
 			cout << endl;
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::handle_extension_oracle "
+					<< " isomorph::handle_extension_tree "
 					<< " before gen->find_oracle_node_for_set" << endl;
 		}
 		next_node_global = gen->find_poset_orbit_node_for_set(
@@ -1340,7 +1356,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 				verbose_level);
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
-					<< " isomorph::handle_extension_oracle "
+					<< " isomorph::handle_extension_tree "
 					" node ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
@@ -1358,7 +1374,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 		else {
 			if (f_vv) {
 				cout << "iso_node " << iso_nodes
-						<< " isomorph::handle_extension_oracle "
+						<< " isomorph::handle_extension_tree "
 						" node ";
 				print_node_global(cur_level, cur_node_global);
 				cout << " : ";
@@ -1387,7 +1403,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 
 	}
 	cout << "iso_node " << iso_nodes
-			<< " isomorph::handle_extension_oracle "
+			<< " isomorph::handle_extension_tree "
 			" node ";
 	print_node_global(cur_level, cur_node_global);
 	cout << " : ";
@@ -1403,10 +1419,18 @@ void isomorph::apply_isomorphism_database(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
-	
+
+	if (f_v) {
+		cout << "iso_node " << iso_nodes
+				<< "isomorph::apply_isomorphism_database "
+				<< " not yet implemented " << endl;
+		exit(1);
+	}
+
 	// ToDo
 #if 0
+	data_structures::sorting Sorting;
+
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
 				<< "isomorph::apply_isomorphism_database "
@@ -1434,35 +1458,36 @@ void isomorph::apply_isomorphism_database(
 #endif
 }
 
-void isomorph::apply_isomorphism_oracle(
+void isomorph::apply_isomorphism_tree(
 	int cur_level, int cur_node_global,
 	int current_extension, long int *canonical_set, int *Elt_transporter,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	poset_classification::poset_orbit_node *O = gen->get_node(cur_node_global);
-	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
-				<< " apply_isomorphism_oracle node ";
+				<< " apply_isomorphism_tree node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " : " << endl;
+		//cout << "not yet implemented" << endl;
+		//exit(1);
 	}
 	
-	// ToDo
-#if 0
+#if 1
+	poset_classification::poset_orbit_node *O = gen->get_node(cur_node_global);
+	data_structures::sorting Sorting;
 	gen->get_A()->element_retrieve(
 			O->get_E(current_extension)->get_data(),
-			gen->get_Elt1(), FALSE);
+			apply_isomorphism_tree_tmp_Elt, FALSE);
 	
 	gen->get_A2()->map_a_set(canonical_set,
-			apply_fusion_tmp_set1, size, gen->get_Elt1(), 0);
+			apply_fusion_tmp_set1, size, apply_isomorphism_tree_tmp_Elt, 0);
 
 	Sorting.lint_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
 
 	gen->get_A()->element_mult(Elt_transporter,
-			gen->get_Elt1(), apply_fusion_Elt1, FALSE);
+			apply_isomorphism_tree_tmp_Elt, apply_fusion_Elt1, FALSE);
 
 	Lint_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->get_A()->element_move(apply_fusion_Elt1,

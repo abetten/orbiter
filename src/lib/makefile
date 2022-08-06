@@ -370,6 +370,7 @@ MODULES= \
 		layer4_classification/isomorph/isomorph_global.o \
 		layer4_classification/isomorph/isomorph_testing.o \
 		layer4_classification/isomorph/isomorph_trace.o \
+		layer4_classification/isomorph/isomorph_worker.o \
 		layer4_classification/isomorph/representatives.o \
 		layer4_classification/orbits/orbit_of_equations.o \
 		layer4_classification/orbits/orbit_of_sets.o \
@@ -488,6 +489,9 @@ MODULES= \
 		layer5_top_level/interfaces/orbiter_command.o \
 		layer5_top_level/interfaces/orbiter_top_level_session.o \
 		layer5_top_level/interfaces/symbol_definition.o \
+		layer5_top_level/orthogonal/blt_set_classify_activity_description.o \
+		layer5_top_level/orthogonal/blt_set_classify_activity.o \
+		layer5_top_level/orthogonal/blt_set_classify_description.o \
 		layer5_top_level/orthogonal/blt_set_classify.o \
 		layer5_top_level/orthogonal/BLT_set_create_description.o \
 		layer5_top_level/orthogonal/BLT_set_create.o \

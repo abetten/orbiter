@@ -18,10 +18,18 @@ isomorph_arguments::isomorph_arguments()
 {
 	f_init_has_been_called = FALSE;
 
+	f_use_database_for_starter = FALSE;
+	f_implicit_fusion = FALSE;
+
 	f_build_db = FALSE;
+
 	f_read_solutions = FALSE;
-	f_read_solutions_from_clique_finder = FALSE;
-	f_read_solutions_from_clique_finder_list_of_cases = FALSE;
+
+	f_list_of_cases = FALSE;
+	//std::string list_of_cases_fname;
+
+	//f_read_solutions_from_clique_finder = FALSE;
+	//f_read_solutions_from_clique_finder_list_of_cases = FALSE;
 	//fname_list_of_cases = NULL;
 	f_read_solutions_after_split = FALSE;
 	read_solutions_split_m = 0;
@@ -55,6 +63,15 @@ isomorph_arguments::isomorph_arguments()
 	f_prefix_with_directory = FALSE;
 	//std::string prefix_with_directory;
 
+	f_prefix_classify = FALSE;
+	//std::string prefix_classify;
+
+	f_solution_prefix = FALSE;
+	//std::string solution_prefix;
+
+	f_base_fname = FALSE;
+	//std::string base_fname;
+
 	ECA = NULL;
 
 	callback_report = NULL;
@@ -78,7 +95,15 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 	data_structures::string_tools ST;
 
 	for (i = 0; i < argc; i++) {
-		if (ST.stringcmp(argv[i], "-build_db") == 0) {
+		if (ST.stringcmp(argv[i], "-use_database_for_starter") == 0) {
+			f_use_database_for_starter = TRUE;
+			cout << "-use_database_for_starter " << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-implicit_fusion") == 0) {
+			f_implicit_fusion = TRUE;
+			cout << "-implicit_fusion " << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-build_db") == 0) {
 			f_build_db = TRUE;
 			cout << "-build_db " << endl;
 		}
@@ -86,15 +111,13 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 			f_read_solutions = TRUE;
 			cout << "-read_solutions " << endl;
 		}
-		else if (ST.stringcmp(argv[i], "-read_solutions_from_clique_finder") == 0) {
-			f_read_solutions_from_clique_finder = TRUE;
-			cout << "-read_solutions_from_clique_finder " << endl;
+		else if (ST.stringcmp(argv[i], "-list_of_cases") == 0) {
+			f_list_of_cases = TRUE;
+			list_of_cases_fname.assign(argv[++i]);
+			cout << "-list_of_cases " << list_of_cases_fname << endl;
 		}
-		else if (ST.stringcmp(argv[i], "-read_solutions_from_clique_finder_list_of_cases") == 0) {
-			f_read_solutions_from_clique_finder_list_of_cases = TRUE;
-			fname_list_of_cases.assign(argv[++i]);
-			cout << "-read_solutions_from_clique_finder_list_of_cases " << fname_list_of_cases << endl;
-		}
+
+
 		else if (ST.stringcmp(argv[i], "-read_solutions_after_split") == 0) {
 			f_read_solutions_after_split = TRUE;
 			read_solutions_split_m = ST.strtoi(argv[++i]);
@@ -155,6 +178,23 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 			prefix_with_directory.assign(argv[++i]);
 			cout << "-prefix_with_directory " << prefix_with_directory << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-prefix_classify") == 0) {
+			f_prefix_classify = TRUE;
+			prefix_classify.assign(argv[++i]);
+			cout << "-prefix_classify " << prefix_classify << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-solution_prefix") == 0) {
+			f_solution_prefix = TRUE;
+			solution_prefix.assign(argv[++i]);
+			cout << "-solution_prefix " << solution_prefix << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-base_fname") == 0) {
+			f_base_fname = TRUE;
+			base_fname.assign(argv[++i]);
+			cout << "-base_fname " << base_fname << endl;
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -170,17 +210,20 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 
 void isomorph_arguments::print()
 {
+	if (f_use_database_for_starter) {
+		cout << "-use_database_for_starter " << endl;
+	}
+	if (f_implicit_fusion) {
+		cout << "-implicit_fusion " << endl;
+	}
 	if (f_build_db) {
 		cout << "-build_db " << endl;
 	}
 	if (f_read_solutions) {
 		cout << "-read_solutions " << endl;
 	}
-	if (f_read_solutions_from_clique_finder) {
-		cout << "-read_solutions_from_clique_finder " << endl;
-	}
-	if (f_read_solutions_from_clique_finder_list_of_cases) {
-		cout << "-read_solutions_from_clique_finder_list_of_cases " << fname_list_of_cases << endl;
+	if (f_list_of_cases) {
+		cout << "-list_of_cases " << list_of_cases_fname << endl;
 	}
 	if (f_read_solutions_after_split) {
 		cout << "-read_solutions_after_split " << read_solutions_split_m << endl;
@@ -222,6 +265,16 @@ void isomorph_arguments::print()
 	if (f_prefix_with_directory) {
 		cout << "-prefix_with_directory " << prefix_with_directory << endl;
 	}
+	if (f_prefix_classify) {
+		cout << "-prefix_classify " << prefix_classify << endl;
+	}
+	if (f_solution_prefix) {
+		cout << "-solution_prefix " << solution_prefix << endl;
+	}
+	if (f_base_fname) {
+		cout << "-base_fname " << base_fname << endl;
+	}
+
 }
 
 void isomorph_arguments::init(
@@ -252,12 +305,12 @@ void isomorph_arguments::init(
 	isomorph_arguments::callback_subset_orbits = callback_subset_orbits;
 	isomorph_arguments::callback_data = callback_data;
 
-	if (!ECA->f_has_solution_prefix) {
+	if (!f_solution_prefix) {
 		cout << "isomorph_arguments::init please "
 				"use -solution_prefix <solution_prefix>" << endl;
 		exit(1);
 	}
-	if (!ECA->f_has_base_fname) {
+	if (!f_base_fname) {
 		cout << "isomorph_arguments::init please "
 				"use -base_fname <base_fname>" << endl;
 		exit(1);

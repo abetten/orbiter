@@ -269,7 +269,7 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 	int nb_candidates1;
 
 	if (f_v) {
-		cout << "read_candidates_for_one_orbit_from_file" << endl;
+		cout << "file_io::read_candidates_for_one_orbit_from_file" << endl;
 		cout << "level=" << level
 				<< " orbit_at_level=" << orbit_at_level
 				<< " level_of_candidates_file="
@@ -281,12 +281,12 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 			verbose_level);
 
 	if (f_v) {
-		cout << "read_candidates_for_one_orbit_from_file "
+		cout << "file_io::read_candidates_for_one_orbit_from_file "
 				"orbit_idx=" << orbit_idx << endl;
 	}
 
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files "
+		cout << "file_io::read_candidates_for_one_orbit_from_file "
 				"before generator_read_candidates_of_orbit" << endl;
 	}
 	string fname2;
@@ -307,7 +307,7 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 		int nb_candidates2;
 
 		if (f_v) {
-			cout << "read_orbit_rep_and_candidates_from_files_"
+			cout << "file_io::read_candidates_for_one_orbit_from_file"
 					"and_process testing candidates at level " << h
 					<< " number of candidates = " << nb_candidates1 << endl;
 		}
@@ -319,7 +319,7 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 			early_test_func_callback_data, 0 /*verbose_level - 1*/);
 
 		if (f_v) {
-			cout << "read_orbit_rep_and_candidates_from_files_"
+			cout << "file_io::read_candidates_for_one_orbit_from_file"
 					"and_process number of candidates at level "
 					<< h + 1 << " reduced from " << nb_candidates1
 					<< " to " << nb_candidates2 << " by "
@@ -336,7 +336,7 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 	nb_candidates = nb_candidates1;
 
 	if (f_v) {
-		cout << "read_candidates_for_one_orbit_from_file done" << endl;
+		cout << "file_io::read_candidates_for_one_orbit_from_file done" << endl;
 	}
 }
 
@@ -352,7 +352,7 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 	int orbit_idx;
 
 	if (f_v) {
-		cout << "find_orbit_index_in_data_file" << endl;
+		cout << "file_io::find_orbit_index_in_data_file" << endl;
 	}
 
 	fname.assign(prefix);
@@ -387,7 +387,7 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 		//cout << "Read line " << cnt << "='" << buf << "'" << endl;
 		str_len = strlen(buf);
 		if (str_len == 0) {
-			cout << "read_orbit_rep_and_candidates_from_files "
+			cout << "file_io::find_orbit_index_in_data_file "
 					"str_len == 0" << endl;
 			exit(1);
 		}
@@ -403,7 +403,8 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 		}
 		len = a;
 		if (a != level_of_candidates_file) {
-			cout << "a != level_of_candidates_file" << endl;
+			cout << "file_io::find_orbit_index_in_data_file "
+					"a != level_of_candidates_file" << endl;
 			cout << "a=" << a << endl;
 			cout << "level_of_candidates_file="
 					<< level_of_candidates_file << endl;
@@ -428,7 +429,7 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 	}
 	FREE_lint(S);
 	if (f_v) {
-		cout << "find_orbit_index_in_data_file done" << endl;
+		cout << "file_io::find_orbit_index_in_data_file done" << endl;
 	}
 	return orbit_idx;
 }
@@ -458,7 +459,7 @@ void file_io::write_exact_cover_problem_to_file(int *Inc,
 			fp << endl;
 		}
 	}
-	cout << "write_exact_cover_problem_to_file written file "
+	cout << "file_io::write_exact_cover_problem_to_file written file "
 		<< fname << " of size " << file_size(fname) << endl;
 }
 
@@ -5078,6 +5079,137 @@ void file_io::grade_statistic_from_csv(std::string &fname_csv,
 	}
 }
 
+
+void file_io::count_solutions_in_list_of_files(
+		int nb_files, std::string *fname, int *List_of_cases, int *&Nb_sol_per_file,
+		int solution_size,
+		int f_has_final_test_function,
+		int (*final_test_function)(long int *data, int sz,
+				void *final_test_data, int verbose_level),
+		void *final_test_data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i, l, j, line_number;
+	long int *data;
+	int nb_fail = 0;
+	data_structures::string_tools ST;
+
+
+
+	if (f_v) {
+		cout << "file_io::count_solutions_in_list_of_files: "
+				"reading " << nb_files << " files" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+		if (f_vv) {
+			for (i = 0; i < nb_files; i++) {
+				cout << fname[i] << endl;
+			}
+		}
+	}
+
+	data = NEW_lint(solution_size);
+	Nb_sol_per_file = NEW_int(nb_files);
+
+	for (i = 0; i < nb_files; i++) {
+
+		int the_case;
+
+		the_case = List_of_cases[i];
+		Nb_sol_per_file[i] = 0;
+
+		{
+			ifstream f(fname[i]);
+			char *buf;
+			long int a;
+			char *p_buf;
+
+			if (f_v) {
+				cout << "reading file " << fname[i] << " the_case = " << the_case << " of size "
+					<< file_size(fname[i]) << endl;
+			}
+			if (file_size(fname[i]) <= 0) {
+				cout << "file " << fname[i] << " does not exist" << endl;
+				exit(1);
+			}
+			line_number = 0;
+			while (TRUE) {
+
+				if (f.eof()) {
+					break;
+				}
+				{
+					string S;
+					getline(f, S);
+
+					l = S.length();
+
+
+					buf = NEW_char(l + 1);
+
+					//cout << "read line of length " << l << " : " << S << endl;
+					for (j = 0; j < l; j++) {
+						buf[j] = S[j];
+					}
+					buf[l] = 0;
+				}
+				if (FALSE) {
+					cout << "line " << line_number << " read: " << buf << endl;
+				}
+
+				p_buf = buf;
+
+
+				ST.s_scan_lint(&p_buf, &a);
+
+				// size of the set
+
+				if (a == -1) {
+					break;
+				}
+
+				for (j = 0; j < solution_size; j++) {
+					ST.s_scan_lint(&p_buf, &a);
+					data[j] = a;
+				}
+
+
+				if (f_has_final_test_function) {
+					if (!(*final_test_function)(data, solution_size,
+							final_test_data, verbose_level - 1)) {
+						if (f_vvv) {
+							cout << "file_io::count_solutions_in_list_of_files "
+									"solution fails the final test, "
+									"skipping" << endl;
+						}
+						nb_fail++;
+						continue;
+					}
+				}
+
+				FREE_char(buf);
+				Nb_sol_per_file[i]++;
+
+			}
+
+		} // while
+
+		if (f_v) {
+			cout << "file " << fname[i] << " has " << Nb_sol_per_file[i]
+				<< " solutions and " << nb_fail
+				<< " false positives" << endl;
+		}
+
+	} // next i
+
+	FREE_lint(data);
+
+	if (f_v) {
+		cout << "file_io::count_solutions_in_list_of_files done" << endl;
+	}
+}
 
 
 

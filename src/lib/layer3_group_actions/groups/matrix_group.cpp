@@ -1477,6 +1477,14 @@ void matrix_group::GL_unpack(uchar *elt, int *Elt, int verbose_level)
 		cout << "matrix_group::GL_unpack bits_extension_degree=" << bits_extension_degree << endl;
 		cout << "matrix_group::GL_unpack char_per_elt=" << char_per_elt << endl;
 	}
+	if (elt == NULL) {
+		cout << "matrix_group::GL_unpack elt == NULL" << endl;
+		exit(1);
+	}
+	if (Elt == NULL) {
+		cout << "matrix_group::GL_unpack Elt == NULL" << endl;
+		exit(1);
+	}
 
 
 	if (f_projective) {

@@ -223,6 +223,7 @@ void poset_orbit_node::compute_schreier_vector(
 				"after get_candidates, nb_candidates=" << nb_candidates << endl;
 	}
 
+	live_points = NEW_lint(nb_candidates);
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector: "

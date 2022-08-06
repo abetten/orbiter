@@ -290,7 +290,24 @@ static void matrix_group_element_retrieve(action &A,
 	if (f_v) {
 		cout << "matrix_group_element_retrieve "
 				"hdl = " << hdl << endl;
-		}
+	}
+	if (elt == NULL) {
+		cout << "matrix_group_element_retrieve "
+				"elt == NULL" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "matrix_group_element_retrieve "
+				"overall_length = " << G.Elts->overall_length << endl;
+	}
+	if (hdl >= G.Elts->overall_length) {
+		cout << "matrix_group_element_retrieve "
+				"hdl = " << hdl << endl;
+		cout << "matrix_group_element_retrieve "
+				"overall_length = " << G.Elts->overall_length << endl;
+		exit(1);
+	}
+
 	p_elt = G.Elts->s_i(hdl);
 	//if (f_v) {
 	//	element_print_packed(G, p_elt, cout);

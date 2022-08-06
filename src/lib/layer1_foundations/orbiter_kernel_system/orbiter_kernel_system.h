@@ -307,6 +307,14 @@ public:
 			int f_final, std::string &final_label,
 			int f_oracle_grade, std::string &oracle_grade_label,
 			int verbose_level);
+	void count_solutions_in_list_of_files(
+			int nb_files, std::string *fname, int *List_of_cases, int *&Nb_sol_per_file,
+			int solution_size,
+			int f_has_final_test_function,
+			int (*final_test_function)(long int *data, int sz,
+					void *final_test_data, int verbose_level),
+			void *final_test_data,
+			int verbose_level);
 
 };
 
@@ -868,6 +876,8 @@ public:
 	void init_projective_space(std::string &label,
 			void *p, int verbose_level);
 	void init_orthogonal_space(std::string &label,
+			void *p, int verbose_level);
+	void init_BLT_set_classify(std::string &label,
 			void *p, int verbose_level);
 	void init_formula(std::string &label,
 			void *p, int verbose_level);

@@ -188,6 +188,7 @@ void isomorph::null_tmp_data()
 	tmp_Elt3 = NULL;
 	trace_set_recursion_tmp_set1 = NULL;
 	trace_set_recursion_Elt1 = NULL;
+	trace_set_recursion_cosetrep = NULL;
 	apply_fusion_tmp_set1 = NULL;
 	apply_fusion_Elt1 = NULL;
 	find_extension_set1 = NULL;
@@ -197,6 +198,7 @@ void isomorph::null_tmp_data()
 	orbit_representative_Elt1 = NULL;
 	orbit_representative_Elt2 = NULL;
 	handle_automorphism_Elt1 = NULL;
+	apply_isomorphism_tree_tmp_Elt = NULL;
 	v = NULL;
 }
 
@@ -213,6 +215,7 @@ void isomorph::allocate_tmp_data()
 
 	trace_set_recursion_tmp_set1 = NEW_lint(size);
 	trace_set_recursion_Elt1 = NEW_int(A->elt_size_in_int);
+	trace_set_recursion_cosetrep = NEW_int(A->elt_size_in_int);
 	
 	apply_fusion_tmp_set1 = NEW_lint(size);
 	apply_fusion_Elt1 = NEW_int(A->elt_size_in_int);
@@ -227,6 +230,7 @@ void isomorph::allocate_tmp_data()
 	orbit_representative_Elt2 = NEW_int(A->elt_size_in_int);
 
 	handle_automorphism_Elt1 = NEW_int(A->elt_size_in_int);
+	apply_isomorphism_tree_tmp_Elt = NEW_int(A->elt_size_in_int);
 	
 	v = new layer2_discreta::Vector[1];
 
@@ -249,6 +253,7 @@ void isomorph::free_tmp_data()
 		FREE_int(tmp_Elt3);
 		FREE_lint(trace_set_recursion_tmp_set1);
 		FREE_int(trace_set_recursion_Elt1);
+		FREE_int(trace_set_recursion_cosetrep);
 		FREE_lint(apply_fusion_tmp_set1);
 		FREE_int(apply_fusion_Elt1);
 		FREE_lint(make_set_smaller_set);
@@ -257,6 +262,7 @@ void isomorph::free_tmp_data()
 		FREE_int(orbit_representative_Elt1);
 		FREE_int(orbit_representative_Elt2);
 		FREE_int(handle_automorphism_Elt1);
+		FREE_int(apply_isomorphism_tree_tmp_Elt);
 		delete [] v;
 		}
 	null_tmp_data();
@@ -285,7 +291,7 @@ void isomorph::init(std::string &prefix,
 		cout << "f_use_database_for_starter="
 				<< f_use_database_for_starter << endl;
 		cout << "f_implicit_fusion=" << f_implicit_fusion << endl;
-		}
+	}
 
 	isomorph::prefix.assign(prefix);
 	isomorph::A_base = A_base;
@@ -302,13 +308,13 @@ void isomorph::init(std::string &prefix,
 #if 0
 	if (f_use_database_for_starter) {
 		sprintf(fname_data_file, "%s_%d.data", prefix, level - 1);
-		}
+	}
 	else {
 		sprintf(fname_data_file, "%s_%d.data", prefix, level);
-		}
+	}
 	if (f_v) {
 		cout << "fname_data_file=" << fname_data_file << endl;
-		}
+	}
 	sprintf(fname_level_file, "%s_lvl_%d", prefix, level);
 #endif
 
@@ -394,7 +400,7 @@ void isomorph::init(std::string &prefix,
 
 	if (f_v) {
 		cout << "isomorph::init done" << endl;
-		}
+	}
 }
 
 
@@ -409,13 +415,35 @@ void isomorph::init_solution(int verbose_level)
 	
 	if (f_v) {
 		cout << "isomorph::init_solution" << endl;
-		}
-	read_solution_first_and_len();
-	init_starter_number(verbose_level);
-	read_hash_and_datref_file(verbose_level);
+	}
+
+	if (f_v) {
+		cout << "isomorph::init_solution before read_solution_first_and_len" << endl;
+	}
+	read_solution_first_and_len(verbose_level - 2);
+	if (f_v) {
+		cout << "isomorph::init_solution after read_solution_first_and_len" << endl;
+	}
+
+	if (f_v) {
+		cout << "isomorph::init_solution before init_starter_number" << endl;
+	}
+	init_starter_number(verbose_level - 2);
+	if (f_v) {
+		cout << "isomorph::init_solution after init_starter_number" << endl;
+	}
+
+	if (f_v) {
+		cout << "isomorph::init_solution before init_starter_number" << endl;
+	}
+	read_hash_and_datref_file(verbose_level - 2);
+	if (f_v) {
+		cout << "isomorph::init_solution after init_starter_number" << endl;
+	}
+
 	if (f_v) {
 		cout << "isomorph::init_solution done" << endl;
-		}
+	}
 }
 
 void isomorph::load_table_of_solutions(int verbose_level)
@@ -426,60 +454,67 @@ void isomorph::load_table_of_solutions(int verbose_level)
 
 	if (f_v) {
 		cout << "isomorph::load_table_of_solutions N=" << N << endl;
-		}
-	setup_and_open_solution_database(verbose_level);
+	}
+	setup_and_open_solution_database(verbose_level - 2);
 	table_of_solutions = NEW_lint(N * size);
 	for (id = 0; id < N; id++) {
 		load_solution(id, data);
 		for (j = 0; j < size; j++) {
 			table_of_solutions[id * size + j] = data[j];
-			}
+		}
 #if 0
 		cout << "solution " << id << " : ";
 		int_vec_print(cout, table_of_solutions + id * size, size);
 		cout << endl;
 #endif
-		}
+	}
 	f_use_table_of_solutions = TRUE;
-	close_solution_database(verbose_level);
+	close_solution_database(verbose_level - 2);
 	if (f_v) {
 		cout << "isomorph::load_table_of_solutions done" << endl;
-		}
+	}
 }
 
 void isomorph::init_starter_number(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 5);
 	int i, j, f, l;
 	
 	if (f_v) {
 		cout << "isomorph::init_starter_number N=" << N << endl;
-		}
+	}
 	starter_number = NEW_int(N);
 	for (i = 0; i < nb_starter; i++) {
 		f = solution_first[i];
 		l = solution_len[i];
 		for (j = 0; j < l; j++) {
 			starter_number[f + j] = i;
-			}
 		}
-	if (f_v) {
-		cout << "starter_number:" << endl;
+	}
+	if (f_vv) {
+		cout << "isomorph::init_starter_number:" << endl;
 		Int_vec_print(cout, starter_number, N);
 		cout << endl;
-		}
+	}
+	if (f_v) {
+		cout << "isomorph::init_starter_number done" << endl;
+	}
 }
 
 
-void isomorph::list_solutions_by_starter()
+void isomorph::list_solutions_by_starter(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, idx, id, f, l, fst, len, h, pos, u;
 	long int data[1000];
 	long int data2[1000];
-	int verbose_level = 0;
 	data_structures::sorting Sorting;
 	
-	setup_and_open_solution_database(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::list_solutions_by_starter" << endl;
+	}
+	setup_and_open_solution_database(verbose_level - 2);
 	
 	j = 0;
 	for (i = 0; i < nb_starter; i++) {
@@ -512,18 +547,24 @@ void isomorph::list_solutions_by_starter()
 			j++;
 			}
 		}
-	close_solution_database(verbose_level);
+	close_solution_database(verbose_level - 2);
+	if (f_v) {
+		cout << "isomorph::list_solutions_by_starter done" << endl;
+	}
 }
 
 
-void isomorph::list_solutions_by_orbit()
+void isomorph::list_solutions_by_orbit(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, idx, id, f, l, h;
 	long int data[1000];
 	long int data2[1000];
-	int verbose_level = 0;
 	data_structures::sorting Sorting;
 	
+	if (f_v) {
+		cout << "isomorph::list_solutions_by_orbit" << endl;
+	}
 	setup_and_open_solution_database(verbose_level - 1);
 
 	for (i = 0; i < nb_orbits; i++) {
@@ -548,6 +589,9 @@ void isomorph::list_solutions_by_orbit()
 		}
 
 	close_solution_database(verbose_level);
+	if (f_v) {
+		cout << "isomorph::list_solutions_by_orbit done" << endl;
+	}
 }
 
 void isomorph::orbits_of_stabilizer(int verbose_level)
@@ -575,14 +619,14 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer before setup_and_open_solution_database" << endl;
 	}
-	setup_and_open_solution_database(verbose_level - 1);
+	setup_and_open_solution_database(verbose_level - 2);
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer after setup_and_open_solution_database" << endl;
 	}
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer before setup_and_open_level_database" << endl;
 	}
-	setup_and_open_level_database(verbose_level - 1);
+	setup_and_open_level_database(verbose_level - 2);
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer after setup_and_open_level_database" << endl;
 	}
@@ -591,7 +635,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer before prepare_database_access" << endl;
 	}
-	prepare_database_access(level, verbose_level - 1);
+	prepare_database_access(level, verbose_level - 2);
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer after prepare_database_access" << endl;
 	}
@@ -749,8 +793,8 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 		cout << "nb_starter=" << nb_starter << endl;
 		}
 	
-	close_solution_database(verbose_level);
-	close_level_database(verbose_level);
+	close_solution_database(verbose_level - 2);
+	close_level_database(verbose_level - 2);
 
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer Case " << i << " / "
@@ -794,8 +838,17 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 #endif
 
 
-	write_starter_nb_orbits(verbose_level);
-	
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer before write_starter_nb_orbits" << endl;
+	}
+	write_starter_nb_orbits(verbose_level - 2);
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer after write_starter_nb_orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer done" << endl;
+	}
 }
 
 void isomorph::orbits_of_stabilizer_case(int the_case,
@@ -810,7 +863,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer_case "
 				<< the_case << " / " << nb_starter << endl;
-		}
+	}
 	
 	f = solution_first[the_case];
 	l = solution_len[the_case];
@@ -987,6 +1040,10 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	FREE_OBJECT(S);
 	FREE_OBJECT(AA);
 	FREE_OBJECT(Schreier);
+	if (f_v) {
+		cout << "isomorph::orbits_of_stabilizer_case "
+				<< the_case << " / " << nb_starter << " done" << endl;
+	}
 	
 }
 
@@ -1004,10 +1061,18 @@ void isomorph::orbit_representative(int i, int &i0,
 	
 	if (f_v) {
 		cout << "isomorph::orbit_representative" << endl;
-		}
+	}
 
 
-	prepare_database_access(level, verbose_level);
+	if (f_v) {
+		cout << "isomorph::orbit_representative "
+				"before prepare_database_access" << endl;
+	}
+	prepare_database_access(level, verbose_level - 2);
+	if (f_v) {
+		cout << "isomorph::orbit_representative "
+				"after prepare_database_access" << endl;
+	}
 
 
 
@@ -1020,7 +1085,7 @@ void isomorph::orbit_representative(int i, int &i0,
 				"before load_strong_generators" << endl;
 		}
 	load_strong_generators(level, c, 
-		gens, go, verbose_level);
+		gens, go, verbose_level - 2);
 	if (f_v) {
 		cout << "isomorph::orbit_representative "
 				"after load_strong_generators" << endl;
@@ -1056,12 +1121,15 @@ void isomorph::orbit_representative(int i, int &i0,
 		cout << "isomorph::orbit_representative "
 				"The representative of solution " << i << " is "
 				<< i0 << " in orbit " << orbit << endl;
-		}
+	}
+	if (f_v) {
+		cout << "isomorph::orbit_representative done" << endl;
+	}
 }
 
 void isomorph::test_orbit_representative(int verbose_level)
 {
-	//int f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int r, r0, orbit, k;
@@ -1069,6 +1137,9 @@ void isomorph::test_orbit_representative(int verbose_level)
 	long int data2[1000];
 	int *transporter;
 	
+	if (f_v) {
+		cout << "isomorph::test_orbit_representative" << endl;
+	}
 	transporter = NEW_int(A->elt_size_in_int);
 
 	setup_and_open_solution_database(verbose_level - 1);
@@ -1095,11 +1166,14 @@ void isomorph::test_orbit_representative(int verbose_level)
 	
 	close_solution_database(verbose_level - 1);
 	FREE_int(transporter);
+	if (f_v) {
+		cout << "isomorph::test_orbit_representative done" << endl;
+	}
 }
 
 void isomorph::test_identify_solution(int verbose_level)
 {
-	//int f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int r, r0, id, id0;
@@ -1111,6 +1185,9 @@ void isomorph::test_identify_solution(int verbose_level)
 	combinatorics::combinatorics_domain Combi;
 	orbiter_kernel_system::os_interface Os;
 
+	if (f_v) {
+		cout << "isomorph::test_identify_solution" << endl;
+	}
 	transporter = NEW_int(A->elt_size_in_int);
 
 
@@ -1155,6 +1232,9 @@ void isomorph::test_identify_solution(int verbose_level)
 	
 	close_solution_database(verbose_level - 1);
 	FREE_int(transporter);
+	if (f_v) {
+		cout << "isomorph::test_identify_solution done" << endl;
+	}
 }
 
 void isomorph::compute_stabilizer(groups::sims *&Stab,
@@ -1321,6 +1401,9 @@ void isomorph::compute_stabilizer(groups::sims *&Stab,
 	FREE_OBJECT(gens);
 	FREE_OBJECT(Schreier);
 	FREE_lint(sets);
+	if (f_v) {
+		cout << "isomorph::compute_stabilizer done" << endl;
+	}
 }
 
 void isomorph::test_compute_stabilizer(int verbose_level)
@@ -1349,17 +1432,23 @@ void isomorph::test_compute_stabilizer(int verbose_level)
 		}
 	
 	close_solution_database(verbose_level - 1);
+	if (f_v) {
+		cout << "isomorph::test_compute_stabilizer done" << endl;
+		}
 }
 
-void isomorph::test_memory()
+void isomorph::test_memory(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	orbit_no = 0;
-	int verbose_level = 0;
 	int id;
 	//action *AA;
 	groups::sims *Stab;
 	long int data[1000];
 	
+	if (f_v) {
+		cout << "isomorph::test_memory" << endl;
+		}
 	
 	setup_and_open_solution_database(verbose_level - 1);
 
@@ -1377,10 +1466,19 @@ void isomorph::test_memory()
 		induced_action_on_set(Stab, data, 0/*verbose_level*/);
 		}
 
+	if (f_v) {
+		cout << "isomorph::test_memory done" << endl;
+		}
 }
 
 void isomorph::test_edges(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph::test_edges" << endl;
+	}
+
 	int *transporter1;
 	int *transporter2;
 	int *Elt1, *Elt2;
@@ -1443,12 +1541,15 @@ void isomorph::test_edges(int verbose_level)
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	
+	if (f_v) {
+		cout << "isomorph::test_edges done" << endl;
+	}
 }
 
 int isomorph::test_edge(int n1,
 		long int *subset1, int *transporter, int verbose_level)
 {
-	//int f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int r, r0, id, id0;
@@ -1456,6 +1557,9 @@ int isomorph::test_edge(int n1,
 	long int data2[1000];
 	data_structures::sorting Sorting;
 
+	if (f_v) {
+		cout << "isomorph::test_edge" << endl;
+	}
 
 
 	setup_and_open_solution_database(verbose_level - 1);
@@ -1494,7 +1598,13 @@ int isomorph::test_edge(int n1,
 		}
 	
 	close_solution_database(verbose_level - 1);
+
+	if (f_v) {
+		cout << "isomorph::test_edge done" << endl;
+	}
+
 	return r0;
+
 }
 
 
@@ -1516,7 +1626,7 @@ void isomorph::read_data_files_for_starter(int level,
 		cout << "isomorph::read_data_files_for_starter" << endl;
 		cout << "prefix=" << prefix << endl;
 		cout << "level=" << level << endl;
-		}
+	}
 	
 	fname_base_a.assign(prefix);
 	fname_base_a.append("a");
@@ -1525,36 +1635,42 @@ void isomorph::read_data_files_for_starter(int level,
 	
 	if (gen->has_base_case()) {
 		i0 = gen->get_Base_case()->size;
-		}
+	}
 	else {
 		i0 = 0;
-		}
+	}
 	if (f_v) {
 		cout << "isomorph::read_data_files_for_starter "
 				"i0=" << i0 << endl;
-		}
+	}
 	for (i = i0; i < level; i++) {
 		if (f_v) {
-			cout << "reading data file for level "
+			cout << "isomorph::read_data_files_for_starter "
+					"reading data file for level "
 					<< i << " with prefix " << fname_base_b << endl;
-			}
+		}
 		gen->read_level_file_binary(i, fname_base_b,
 				MINIMUM(1, verbose_level - 1));
-		}
+	}
 
 	if (f_v) {
-		cout << "reading data file for level " << level
+		cout << "isomorph::read_data_files_for_starter "
+				"reading data file for level " << level
 				<< " with prefix " << fname_base_a << endl;
-		}
+	}
 	gen->read_level_file_binary(level, fname_base_a,
 			MINIMUM(1, verbose_level - 1));
 
+	if (f_v) {
+		cout << "isomorph::read_data_files_for_starter "
+				"before compute_nb_starter" << endl;
+	}
 	compute_nb_starter(level, verbose_level);
 
 	if (f_v) {
 		cout << "isomorph::read_data_files_for_starter finished, "
 				"number of starters = " << nb_starter << endl;
-		}
+	}
 }
 
 void isomorph::compute_nb_starter(int level, int verbose_level)
@@ -1565,7 +1681,7 @@ void isomorph::compute_nb_starter(int level, int verbose_level)
 	if (f_v) {
 		cout << "isomorph::compute_nb_starter finished, "
 				"number of starters = " << nb_starter << endl;
-		}
+	}
 
 }
 
@@ -1598,7 +1714,7 @@ void isomorph::test_hash(int verbose_level)
 
 	if (f_v) {
 		cout << "isomorph::test_hash" << endl;
-		}
+	}
 	setup_and_open_solution_database(verbose_level - 1);
 	for (case_nb = 0; case_nb < nb_starter; case_nb++) {
 		f = solution_first[case_nb];
@@ -1624,6 +1740,9 @@ void isomorph::test_hash(int verbose_level)
 		}
 
 	close_solution_database(verbose_level - 1);	
+	if (f_v) {
+		cout << "isomorph::test_hash done" << endl;
+	}
 }
 
 

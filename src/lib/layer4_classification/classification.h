@@ -37,6 +37,7 @@ namespace invariant_relations {
 // isomorph
 class isomorph_arguments;
 class isomorph;
+class isomorph_worker;
 struct isomorph_worker_data;
 class representatives;
 

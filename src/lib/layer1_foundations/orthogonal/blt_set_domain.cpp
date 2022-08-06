@@ -513,20 +513,41 @@ void blt_set_domain::early_test_func(long int *S, int len,
 			}
 		}
 	}
+	if (f_v) {
+		cout << "blt_set_domain::early_test_func unranking points" << endl;
+	}
 	for (i = 0; i < len; i++) {
 		O->unrank_point(Pts + i * 5, 1,
 				S[i], 0/*verbose_level - 4*/);
+	}
+	if (f_v) {
+		cout << "blt_set_domain::early_test_func unranking candidates" << endl;
 	}
 	for (i = 0; i < nb_candidates; i++) {
 		O->unrank_point(Candidates + i * 5, 1, candidates[i],
 				0/*verbose_level - 4*/);
 	}
+	if (f_v) {
+		cout << "blt_set_domain::early_test_func unranking candidates done" << endl;
+	}
 
+	if (f_v) {
+		cout << "blt_set_domain::early_test_func computing two" << endl;
+	}
 	two = O->F->add(1, 1);
+	if (f_v) {
+		cout << "blt_set_domain::early_test_func after computing two" << endl;
+	}
 
 
 	if (len == 0) {
+		if (f_v) {
+			cout << "blt_set_domain::early_test_func len == 0, copying candidates" << endl;
+		}
 		Lint_vec_copy(candidates, good_candidates, nb_candidates);
+		if (f_v) {
+			cout << "blt_set_domain::early_test_func after copying candidates" << endl;
+		}
 		nb_good_candidates = nb_candidates;
 	}
 	else {

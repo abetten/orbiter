@@ -27,12 +27,24 @@ void isomorph::iso_test_init(int verbose_level)
 		cout << "isomorph::iso_test_init" << endl;
 	}
 	
+	if (f_v) {
+		cout << "isomorph::iso_test_init before iso_test_init2" << endl;
+	}
 	iso_test_init2(verbose_level);
+	if (f_v) {
+		cout << "isomorph::iso_test_init after iso_test_init2" << endl;
+	}
 
 
 	Reps = NEW_OBJECT(representatives);
 
+	if (f_v) {
+		cout << "isomorph::iso_test_init before Reps->init" << endl;
+	}
 	Reps->init(gen->get_A(), nb_orbits, prefix, verbose_level);
+	if (f_v) {
+		cout << "isomorph::iso_test_init after Reps->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "isomorph::iso_test_init done" << endl;

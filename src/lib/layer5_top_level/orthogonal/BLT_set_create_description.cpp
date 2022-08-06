@@ -26,21 +26,10 @@ BLT_set_create_description::BLT_set_create_description()
 	iso = 0;
 	f_family = FALSE;
 	//family_name;
-	null();
 }
 
 BLT_set_create_description::~BLT_set_create_description()
 {
-	freeself();
-}
-
-void BLT_set_create_description::null()
-{
-}
-
-void BLT_set_create_description::freeself()
-{
-	null();
 }
 
 int BLT_set_create_description::read_arguments(int argc, std::string *argv,

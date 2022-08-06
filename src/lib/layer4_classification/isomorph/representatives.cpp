@@ -20,27 +20,34 @@ namespace layer4_classification {
 
 representatives::representatives()
 {
-	null();
-}
+	A = NULL;
 
-void representatives::null()
-{
+	//std::string prefix;
+	//std::string fname_rep;
+	//std::string fname_stabgens;
+	//std::string fname_fusion;
+	//std::string fname_fusion_ge;
+
+	nb_objects = 0;
+	fusion = NULL;
+	handle = NULL;
+
 	count = 0;
 	rep = NULL;
 	stab = NULL;
-	fusion = NULL;
-	handle = NULL;
+
 	Elt1 = NULL;
 	tl = NULL;
+
+	nb_open = 0;
+	nb_reps = 0;
+	nb_fused = 0;
 }
+
+
+
 
 representatives::~representatives()
-{
-	free();
-	null();
-}
-
-void representatives::free()
 {
 	int i;
 	int f_v = TRUE;
@@ -88,6 +95,7 @@ void representatives::init(actions::action *A,
 
 	if (f_v) {
 		cout << "representatives::init prefix=" << prefix << endl;
+		cout << "representatives::init nb_objects=" << nb_objects << endl;
 		}
 	representatives::A = A;
 	representatives::nb_objects = nb_objects;
@@ -95,6 +103,9 @@ void representatives::init(actions::action *A,
 	representatives::prefix.assign(prefix);
 
 	
+	if (f_v) {
+		cout << "representatives::init before allocating things" << endl;
+	}
 	rep = NEW_int(nb_objects);
 	stab = new groups::psims[nb_objects];
 	fusion = NEW_int(nb_objects);
@@ -109,6 +120,9 @@ void representatives::init(actions::action *A,
 		handle[i] = -1;
 		}
 
+	if (f_v) {
+		cout << "representatives::init before creating fnames" << endl;
+	}
 	fname_rep.assign(prefix);
 	fname_rep.append("classification_reps.txt");
 
@@ -128,6 +142,9 @@ void representatives::init(actions::action *A,
 	fname_fusion_ge.append("classification_fusion_ge.bin");
 
 	//sprintf(fname_fusion_ge, "%sclassification_fusion_ge.bin", prefix);
+	if (f_v) {
+		cout << "representatives::init done" << endl;
+		}
 }
 
 void representatives::write_fusion(int verbose_level)
@@ -199,7 +216,8 @@ void representatives::read_fusion(int verbose_level)
 		}
 
 	if (Fio.file_size(fname_fusion) < 0) {
-		cout << "representatives::read_fusion the file " << fname_fusion << " does not exist" << endl;
+		cout << "representatives::read_fusion the file "
+				<< fname_fusion << " does not exist" << endl;
 		exit(1);
 	}
 	{
@@ -248,8 +266,7 @@ void representatives::write_representatives_and_stabilizers(
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "representatives::write_representatives_"
-				"and_stabilizers" << endl;
+		cout << "representatives::write_representatives_and_stabilizers" << endl;
 		}
 	{
 	ofstream f1(fname_rep);
@@ -299,8 +316,7 @@ void representatives::write_representatives_and_stabilizers(
 	//fclose(f2);
 	}
 	if (f_v) {
-		cout << "representatives::write_representatives_and_"
-				"stabilizers finished" << endl;
+		cout << "representatives::write_representatives_and_stabilizers finished" << endl;
 		cout << "written file " << fname_rep << " of size "
 				<< Fio.file_size(fname_rep) << endl;
 		cout << "written file " << fname_stabgens << " of size "
@@ -316,8 +332,7 @@ void representatives::read_representatives_and_stabilizers(
 	int f_vv = FALSE;//(verbose_level >=2);
 	
 	if (f_v) {
-		cout << "representatives::read_representatives_and_"
-				"stabilizers" << endl;
+		cout << "representatives::read_representatives_and_stabilizers" << endl;
 		cout << "reading files " << fname_rep << " and "
 				<< fname_stabgens << endl;
 		}
