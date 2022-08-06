@@ -6,6 +6,9 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	blt_set_classify_activity_description.o \
+	blt_set_classify_activity.o \
+	blt_set_classify_description.o \
 	blt_set_classify.o \
 	BLT_set_create_description.o \
 	BLT_set_create.o \

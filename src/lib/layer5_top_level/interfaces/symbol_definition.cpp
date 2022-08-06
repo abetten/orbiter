@@ -34,6 +34,10 @@ symbol_definition::symbol_definition()
 	f_orthogonal_space = FALSE;
 	Orthogonal_space_with_action_description = NULL;
 
+	f_BLT_set_classifier = FALSE;
+	//std::string BLT_set_classifier_label_orthogonal_geometry;
+	Blt_set_classify_description = NULL;
+
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 
@@ -228,6 +232,32 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-BLT_set_classifier") == 0) {
+		f_BLT_set_classifier = TRUE;
+		BLT_set_classifier_label_orthogonal_geometry.assign(argv[++i]);
+		Blt_set_classify_description = NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify_description);
+		if (f_v) {
+			cout << "reading -BLT_set_classifier" << endl;
+		}
+		i += Blt_set_classify_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-BLT_set_classifier" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
+	//int f_BLT_set_classifier;
+	//orthogonal_geometry_applications::blt_set_classify *BLT_set_classifier;
+
+
 	else if (ST.stringcmp(argv[i], "-linear_group") == 0) {
 		f_linear_group = TRUE;
 		Linear_group_description = NEW_OBJECT(groups::linear_group_description);
@@ -764,6 +794,16 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_orthogonal_space" << endl;
 		}
 	}
+	else if (f_BLT_set_classifier) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_BLT_set_classifier" << endl;
+		}
+		definition_of_BLT_set_classifier(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_BLT_set_classifier" << endl;
+		}
+	}
+
 	else if (f_linear_group) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_linear_group" << endl;
@@ -987,6 +1027,11 @@ void symbol_definition::print()
 		cout << "-orthogonal_space ";
 		Orthogonal_space_with_action_description->print();
 	}
+	if (f_BLT_set_classifier) {
+		cout << "-BLT_set_classifier " << BLT_set_classifier_label_orthogonal_geometry << " ";
+		Blt_set_classify_description->print();
+	}
+
 	if (f_linear_group) {
 		cout << "-linear_group ";
 		Linear_group_description->print();
@@ -1281,6 +1326,74 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		cout << "symbol_definition::definition_of_orthogonal_space done" << endl;
 	}
 }
+
+
+void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set_classifier" << endl;
+	}
+
+	//std::string BLT_set_classifier_label_orthogonal_geometry;
+	//orthogonal_geometry_applications::blt_set_classify_description *Blt_set_classify_description;
+
+
+	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
+
+	OA = The_Orbiter_top_level_session->get_object_of_type_orthogonal_space_with_action(BLT_set_classifier_label_orthogonal_geometry);
+
+	orthogonal_geometry_applications::blt_set_classify *BLT_classify;
+
+	BLT_classify = NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify);
+
+#if 0
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set_classifier before BLT_classify->init" << endl;
+	}
+	BLT_classify->init(Orthogonal_space_with_action_description,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set_classifier after BLT_classify->init" << endl;
+	}
+#endif
+
+	if (f_v) {
+		cout << "orthogonal_space_activity::perform_activity before BLT_classify->init_basic" << endl;
+	}
+
+	if (!Blt_set_classify_description->f_starter_size) {
+		cout << "please use option -starter_size <s>" << endl;
+		exit(1);
+	}
+	BLT_classify->init_basic(
+			OA,
+			OA->A,
+			OA->A->Strong_gens,
+			Blt_set_classify_description->starter_size,
+			verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_activity::perform_activity after BLT_classify->init_basic" << endl;
+	}
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_BLT_set_classify(define_label, BLT_classify, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set_classifier before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set_classifier done" << endl;
+	}
+}
+
 
 void symbol_definition::definition_of_linear_group(int verbose_level)
 {

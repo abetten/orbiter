@@ -788,49 +788,54 @@ void poset_classification::recreate_schreier_vectors_up_to_level(
 	int i;
 	
 	if (f_v) {
-		cout << "poset_classification::recreate_"
-				"schreier_vectors_up_to_level "
+		cout << "poset_classification::recreate_schreier_vectors_up_to_level "
 				"creating Schreier vectors up to "
 				"level " << lvl << endl;
 	}
 	for (i = 0; i <= lvl; i++) {
 		if (f_v) {
-			cout << "poset_classification::recreate_"
-					"schreier_vectors_up_to_level "
+			cout << "poset_classification::recreate_schreier_vectors_up_to_level "
 					"creating Schreier vectors at "
 					"level " << i << endl;
 		}
-		recreate_schreier_vectors_at_level(i, 0 /*verbose_level*/);
+		recreate_schreier_vectors_at_level(i, verbose_level - 1);
+	}
+	if (f_v) {
+		cout << "poset_classification::recreate_schreier_vectors_up_to_level done" << endl;
 	}
 }
 
 void poset_classification::recreate_schreier_vectors_at_level(
-		int i,
+		int level,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int f_vvv = FALSE;//(verbose_level >= 3);
-	int f, cur, l, prev, u;
+	int f, l, prev, u;
 	int f_recreate_extensions = FALSE;
 	int f_dont_keep_sv = FALSE;
 
 	if (f_v) {
-		cout << "poset_classification::recreate_schreier_vectors_at_level" << endl;
+		cout << "poset_classification::recreate_schreier_vectors_at_level level = " << level << endl;
 	}
-	f = Poo->first_node_at_level(i);
-	cur = Poo->first_node_at_level(i + 1);
-	l = cur - f;
+	f = Poo->first_node_at_level(level);
+	if (f_v) {
+		cout << "poset_classification::recreate_schreier_vectors_at_level f = " << f << endl;
+	}
+	//cur = Poo->first_node_at_level(level + 1);
+	//l = cur - f;
+	l = Poo->nb_orbits_at_level(level);
 
 	if (f_vv) {
-		cout << "creating Schreier vectors at depth " << i
+		cout << "creating Schreier vectors at depth " << level
 				<< " for " << l << " orbits" << endl;
 	}
 	if (f_vv) {
 		cout << "poset_classification::recreate_schreier_vectors_at_level "
 				"Testing if a schreier vector file exists" << endl;
 	}
-	if (test_sv_level_file_binary(i, problem_label_with_path)) {
+	if (test_sv_level_file_binary(level, problem_label_with_path)) {
 
 		if (f_vv) {
 			cout << "poset_classification::recreate_schreier_vectors_at_level "
@@ -838,11 +843,11 @@ void poset_classification::recreate_schreier_vectors_at_level(
 					"We will read this file" << endl;
 		}
 
-		read_sv_level_file_binary(i, problem_label_with_path, FALSE, 0, 0,
+		read_sv_level_file_binary(level, problem_label_with_path, FALSE, 0, 0,
 			f_recreate_extensions, f_dont_keep_sv, 
-			verbose_level);
+			verbose_level - 2);
 		if (f_vv) {
-			cout << "read Schreier vectors at depth " << i
+			cout << "read Schreier vectors at depth " << level
 					<< " from file" << endl;
 		}
 		return;
@@ -851,7 +856,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 
 	if (f_vv) {
 		cout << "poset_classification::recreate_schreier_vectors_at_level "
-				"No, a schreier vector file does not exists. "
+				"No, a schreier vector file does not exist. "
 				"We will create such a file now" << endl;
 	}
 
@@ -870,20 +875,19 @@ void poset_classification::recreate_schreier_vectors_at_level(
 				cout << " " << u + 1 << endl;
 			}
 		}
-		else if (f_vvv) {
-			cout << "poset_classification::recreate_"
-					"schreier_vectors_at_level "
-				<< i << " node " << u << " / " << l << endl;
+		if (f_vv) {
+			cout << "poset_classification::recreate_schreier_vectors_at_level "
+				<< level << " node " << u << " / " << l << " before compute_schreier_vector" << endl;
 		}
 			
-		Poo->get_node(prev)->compute_schreier_vector(this, i,
-				0 /*verbose_level - 1*/);
+		Poo->get_node(prev)->compute_schreier_vector(this, level,
+				verbose_level - 1);
 	}
-	write_sv_level_file_binary(i, problem_label_with_path, FALSE, 0, 0, verbose_level);
+	write_sv_level_file_binary(level, problem_label_with_path, FALSE, 0, 0, verbose_level);
 	if (f_vv) {
 		cout << "poset_classification::recreate_schreier_vectors_at_level "
 				"Written a file with Schreier "
-				"vectors at depth " << i << endl;
+				"vectors at depth " << level << endl;
 	}
 	if (f_vv) {
 		cout << endl;

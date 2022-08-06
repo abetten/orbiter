@@ -163,6 +163,8 @@ namespace orthogonal_geometry_applications {
 
 
 	// orthogonal
+	class blt_set_classify_activity_description;
+	class blt_set_classify_description;
 	class blt_set_classify;
 	class BLT_set_create_description;
 	class BLT_set_create;

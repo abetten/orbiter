@@ -21,7 +21,7 @@ orthogonal_space_activity::orthogonal_space_activity()
 {
 	Descr = NULL;
 	OA = NULL;
-	Blt_set_domain = NULL;
+	//Blt_set_domain = NULL;
 
 }
 
@@ -73,6 +73,8 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 
+		orthogonal_geometry::blt_set_domain *Blt_set_domain;
+
 		Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 
 		if (f_v) {
@@ -119,7 +121,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 			cout << "orthogonal_space_activity::perform_activity f_BLT_set_starter" << endl;
 		}
 
-
+#if 0
 		Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 
 		if (f_v) {
@@ -129,7 +131,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity after Blt_set_domain->init" << endl;
 		}
-
+#endif
 
 		blt_set_classify *BLT_classify;
 
@@ -138,7 +140,9 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity before BLT_classify->init_basic" << endl;
 		}
-		BLT_classify->init_basic(OA->A,
+		BLT_classify->init_basic(
+				OA,
+				OA->A,
 				OA->A->Strong_gens,
 				Descr->BLT_set_starter_size,
 				verbose_level);
@@ -168,7 +172,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 			cout << "orthogonal_space_activity::perform_activity f_BLT_set_graphs" << endl;
 		}
 
-
+#if 0
 		Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 
 		if (f_v) {
@@ -178,7 +182,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity after Blt_set_domain->init" << endl;
 		}
-
+#endif
 
 		blt_set_classify *BLT_classify;
 
@@ -187,7 +191,9 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity before BLT_classify->init_basic" << endl;
 		}
-		BLT_classify->init_basic(OA->A,
+		BLT_classify->init_basic(
+				OA,
+				OA->A,
 				OA->A->Strong_gens,
 				Descr->BLT_set_graphs_starter_size,
 				verbose_level);
@@ -412,17 +418,36 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_set_stabilizer) {
 
-		set_stabilizer(OA,
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"f_set_stabilizer" << endl;
+		}
+
+ 		set_stabilizer(OA,
 				Descr->set_stabilizer_intermediate_set_size,
 				Descr->set_stabilizer_fname_mask,
 				Descr->set_stabilizer_nb,
 				Descr->set_stabilizer_column_label,
 				Descr->set_stabilizer_fname_out,
 				verbose_level);
-	}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"f_set_stabilizer done" << endl;
+		}
+
+}
 	if (Descr->f_export_point_line_incidence_matrix) {
 
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"f_export_point_line_incidence_matrix" << endl;
+		}
 		OA->O->export_incidence_matrix_to_csv(verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"f_export_point_line_incidence_matrix done" << endl;
+		}
 	}
 
 

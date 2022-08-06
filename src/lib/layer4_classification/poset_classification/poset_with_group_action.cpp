@@ -333,8 +333,7 @@ void poset_with_group_action::early_test_func(
 	if (f_has_orbit_based_testing) {
 		if (f_v) {
 			cout << "poset_with_group_action::early_test_func "
-					"before Orbit_based_testing->early_test_"
-					"func_by_using_group" << endl;
+					"before Orbit_based_testing->early_test_func_by_using_group" << endl;
 		}
 		Orbit_based_testing->early_test_func(
 				S, len,
@@ -343,8 +342,7 @@ void poset_with_group_action::early_test_func(
 				verbose_level - 1);
 		if (f_v) {
 			cout << "poset_with_group_action::early_test_func "
-					"after Orbit_based_testing->early_test_"
-					"func_by_using_group" << endl;
+					"after Orbit_based_testing->early_test_func_by_using_group" << endl;
 		}
 	}
 	else {

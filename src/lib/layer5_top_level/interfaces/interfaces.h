@@ -85,6 +85,9 @@ class activity_description {
 	int f_formula_activity;
 	expression_parser::formula_activity_description *Formula_activity_description;
 
+	int f_BLT_set_classify_activity;
+	orthogonal_geometry_applications::blt_set_classify_activity_description *Blt_set_classify_activity_description;
+
 public:
 	activity_description();
 	~activity_description();
@@ -112,6 +115,7 @@ public:
 	void do_design_activity(int verbose_level);
 	void do_large_set_was_activity(int verbose_level);
 	void do_formula_activity(int verbose_level);
+	void do_BLT_set_classify_activity(int verbose_level);
 
 };
 
@@ -900,6 +904,7 @@ public:
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);
 	apps_algebra::vector_ge_builder *get_object_of_type_vector_ge(std::string &label);
+	orthogonal_geometry_applications::orthogonal_space_with_action *get_object_of_type_orthogonal_space_with_action(std::string &label);
 
 };
 
@@ -932,6 +937,9 @@ public:
 	int f_orthogonal_space;
 	orthogonal_geometry_applications::orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
 
+	int f_BLT_set_classifier;
+	std::string BLT_set_classifier_label_orthogonal_geometry;
+	orthogonal_geometry_applications::blt_set_classify_description *Blt_set_classify_description;
 
 	int f_linear_group;
 	groups::linear_group_description *Linear_group_description;
@@ -1025,6 +1033,7 @@ public:
 	void definition_of_projective_space(int verbose_level);
 	void print_definition_of_projective_space(int verbose_level);
 	void definition_of_orthogonal_space(int verbose_level);
+	void definition_of_BLT_set_classifier(int verbose_level);
 	void definition_of_linear_group(int verbose_level);
 	void definition_of_permutation_group(int verbose_level);
 	void definition_of_modified_group(int verbose_level);

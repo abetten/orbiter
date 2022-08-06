@@ -454,6 +454,23 @@ apps_algebra::vector_ge_builder *orbiter_top_level_session::get_object_of_type_v
 }
 
 
+orthogonal_geometry_applications::orthogonal_space_with_action *orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_vector_ge cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_orthogonal_space) {
+		cout << "orbiter_top_level_session::get_object_of_type_vector_ge object type != t_orthogonal_space" << endl;
+		exit(1);
+	}
+
+
+	return (orthogonal_geometry_applications::orthogonal_space_with_action *) get_object(idx);
+}
 
 }}}
 

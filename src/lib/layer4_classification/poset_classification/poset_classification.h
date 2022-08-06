@@ -523,7 +523,7 @@ public:
 	int orbit_length_as_int(int orbit_at_level, int level);
 	void recreate_schreier_vectors_up_to_level(int lvl, 
 		int verbose_level);
-	void recreate_schreier_vectors_at_level(int i,
+	void recreate_schreier_vectors_at_level(int level,
 		int verbose_level);
 	void find_node_by_stabilizer_order(
 			int level, int order, int verbose_level);

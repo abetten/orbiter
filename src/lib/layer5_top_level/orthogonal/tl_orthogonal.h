@@ -15,6 +15,98 @@ namespace orthogonal_geometry_applications {
 
 
 
+
+
+// #############################################################################
+// blt_set_classify_activity_description.cpp
+// #############################################################################
+
+//! description of an activity regarding the classification of BLT-sets
+
+
+
+class blt_set_classify_activity_description {
+
+public:
+
+	int f_compute_starter;
+	poset_classification::poset_classification_control *starter_control;
+
+	int f_create_graphs;
+
+	int f_split;
+	int split_r;
+	int split_m;
+
+	int f_isomorph;
+	std::string prefix_classify;
+	std::string prefix_iso;
+	layer4_classification::isomorph_arguments *Isomorph_arguments;
+
+	blt_set_classify_activity_description();
+	~blt_set_classify_activity_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// blt_set_classify_activity.cpp
+// #############################################################################
+
+//! an activity regarding the classification of BLT-sets
+
+
+
+class blt_set_classify_activity {
+
+public:
+
+	blt_set_classify_activity_description *Descr;
+	blt_set_classify *BLT_classify;
+	orthogonal_space_with_action *OA;
+
+	blt_set_classify_activity();
+	~blt_set_classify_activity();
+	void init(blt_set_classify_activity_description *Descr,
+			blt_set_classify *BLT_classify,
+			orthogonal_space_with_action *OA,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
+
+
+
+// #############################################################################
+// blt_set_classify_description.cpp
+// #############################################################################
+
+//! classification of BLT-sets
+
+
+
+class blt_set_classify_description {
+
+public:
+
+	int f_starter_size;
+	int starter_size;
+
+	blt_set_classify_description();
+	~blt_set_classify_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
 // #############################################################################
 // blt_set_classify.cpp
 // #############################################################################
@@ -27,9 +119,10 @@ class blt_set_classify {
 
 public:
 
+	orthogonal_space_with_action *OA;
+
 	layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
-	//linear_group *LG;
 	actions::action *A; // orthogonal group
 
 
@@ -53,9 +146,8 @@ public:
 
 	blt_set_classify();
 	~blt_set_classify();
-	void null();
-	void freeself();
-	void init_basic(actions::action *A,
+	void init_basic(orthogonal_space_with_action *OA,
+			actions::action *A,
 			groups::strong_generators *Strong_gens,
 			int starter_size,
 			int verbose_level);
@@ -117,8 +209,6 @@ public:
 
 	BLT_set_create_description();
 	~BLT_set_create_description();
-	void null();
-	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
@@ -303,7 +393,7 @@ public:
 
 	orthogonal_space_with_action *OA;
 
-	layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
+	//layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
 	orthogonal_space_activity();
 	~orthogonal_space_activity();

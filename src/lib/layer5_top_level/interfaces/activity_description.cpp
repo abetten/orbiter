@@ -77,6 +77,9 @@ activity_description::activity_description()
 	f_formula_activity = FALSE;
 	Formula_activity_description = NULL;
 
+	f_BLT_set_classify_activity = FALSE;
+	Blt_set_classify_activity_description = NULL;
+
 }
 
 activity_description::~activity_description()
@@ -498,6 +501,28 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-BLT_set_classify_activity") == 0) {
+		f_BLT_set_classify_activity = TRUE;
+		Blt_set_classify_activity_description =
+				NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify_activity_description);
+		if (f_v) {
+			cout << "reading -BLT_set_classify_activity" << endl;
+		}
+		i += Blt_set_classify_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-BLT_set_classify_activity" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
 
 	else {
 		cout << "unrecognized activity after -do : " << argv[i] << endl;
@@ -673,6 +698,14 @@ void activity_description::worker(int verbose_level)
 
 		do_formula_activity(verbose_level);
 	}
+	else if (f_BLT_set_classify_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_BLT_set_classify_activity" << endl;
+		}
+
+		do_BLT_set_classify_activity(verbose_level);
+	}
 
 
 	if (f_v) {
@@ -764,6 +797,11 @@ void activity_description::print()
 		cout << "-formula_activity ";
 		Formula_activity_description->print();
 	}
+	else if (f_BLT_set_classify_activity) {
+		cout << "-BLT_set_classify_activity ";
+		Blt_set_classify_activity_description->print();
+	}
+
 }
 
 
@@ -1812,6 +1850,64 @@ void activity_description::do_formula_activity(int verbose_level)
 	}
 
 }
+
+void activity_description::do_BLT_set_classify_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_BLT_set_classify_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	orthogonal_geometry_applications::blt_set_classify *B;
+
+	B = (orthogonal_geometry_applications::blt_set_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+
+		orthogonal_geometry_applications::blt_set_classify_activity Activity;
+
+		Activity.init(Blt_set_classify_activity_description,
+				B /* blt_set_classify *BLT_classify*/,
+				B->OA,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_BLT_set_classify_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_BLT_set_classify_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_BLT_set_classify_activity done" << endl;
+	}
+
+}
+
+
+
+
 
 
 

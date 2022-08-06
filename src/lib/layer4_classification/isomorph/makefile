@@ -12,6 +12,7 @@ MODULES = \
 	isomorph_global.o \
 	isomorph_testing.o \
 	isomorph_trace.o \
+	isomorph_worker.o \
 	isomorph.o \
 	representatives.o
 

@@ -37,6 +37,7 @@ static void blt_set_classify_early_test_func_callback(long int *S, int len,
 
 blt_set_classify::blt_set_classify()
 {
+	OA = NULL;
 	Blt_set_domain = NULL;
 	//LG = NULL;
 	A = NULL;
@@ -54,19 +55,10 @@ blt_set_classify::blt_set_classify()
 
 blt_set_classify::~blt_set_classify()
 {
-	freeself();
-}
-
-void blt_set_classify::null()
-{
-}
-
-void blt_set_classify::freeself()
-{
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "blt_set_classify::freeself before A" << endl;
+		cout << "blt_set_classify::~blt_set_classify before A" << endl;
 	}
 	if (Blt_set_domain) {
 		FREE_OBJECT(Blt_set_domain);
@@ -77,7 +69,7 @@ void blt_set_classify::freeself()
 		A = NULL;
 	}
 	if (f_v) {
-		cout << "blt_set_classify::freeself before gen" << endl;
+		cout << "blt_set_classify::~blt_set_classify before gen" << endl;
 	}
 	if (Control) {
 		FREE_OBJECT(Control);
@@ -91,15 +83,15 @@ void blt_set_classify::freeself()
 		FREE_OBJECT(gen);
 		gen = NULL;
 	}
-	null();
 	if (f_v) {
-		cout << "blt_set_classify::freeself done" << endl;
+		cout << "blt_set_classify::~blt_set_classify done" << endl;
 	}
 }
 
 
 
-void blt_set_classify::init_basic(actions::action *A,
+void blt_set_classify::init_basic(orthogonal_space_with_action *OA,
+		actions::action *A,
 		groups::strong_generators *Strong_gens,
 		int starter_size,
 		int verbose_level)
@@ -117,6 +109,7 @@ void blt_set_classify::init_basic(actions::action *A,
 	int f_semilinear;
 
 
+	blt_set_classify::OA = OA;
 	blt_set_classify::starter_size = starter_size;
 	blt_set_classify::Strong_gens = Strong_gens;
 	blt_set_classify::A = A;
