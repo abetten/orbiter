@@ -55,9 +55,11 @@ namespace apps_algebra {
 
 namespace apps_coding_theory {
 
+	class code_modification_description;
 	class coding_theoretic_activity_description;
 	class coding_theoretic_activity;
-
+	class create_code_description;
+	class create_code;
 }
 
 

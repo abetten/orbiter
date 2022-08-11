@@ -1113,50 +1113,45 @@ void activity_description::do_coding_theoretic_activity(int verbose_level)
 		exit(1);
 	}
 
-
-	symbol_table_object_type type;
-
-	type = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
-
-	if (type != t_finite_field) {
-		cout << "activity_description::do_coding_theoretic_activity type is not t_finite_field" << endl;
-		exit(1);
-	}
-
-	field_theory::finite_field *F;
-
-	F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
+		int i;
 		apps_coding_theory::coding_theoretic_activity Activity;
 
-		Activity.init(Coding_theoretic_activity_description, F, verbose_level);
 
-
-
-#if 0
-		if (Sym->with_labels.size() >= 2) {
-
+		for (i = 0; i < Sym->with_labels.size(); i++) {
 			symbol_table_object_type type;
 
-			type = Sym->Orbiter_top_level_session->get_object_type(Idx[1]);
+			type = Sym->Orbiter_top_level_session->get_object_type(Idx[i]);
 
-			if (type != t_any_group) {
-				cout << "activity_description::do_coding_theoretic_activity secondary type is not t_any_group" << endl;
-				exit(1);
+			if (type == t_finite_field) {
+
+				if (f_v) {
+					cout << "activity_description::do_coding_theoretic_activity type is t_finite_field" << endl;
+				}
+
+				field_theory::finite_field *F;
+
+				F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[i]);
+
+				Activity.init_field(Coding_theoretic_activity_description, F, verbose_level);
 			}
 
-			apps_algebra::any_group *AG_secondary;
+			else if (type == t_code) {
 
-			AG_secondary = (apps_algebra::any_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+				if (f_v) {
+					cout << "activity_description::do_coding_theoretic_activity type is t_code" << endl;
+				}
 
-			if (f_v) {
-				cout << "activity_description::do_coding_theoretic_activity "
-						"before Activity.init_secondary_group" << endl;
+				apps_coding_theory::create_code *Code;
+
+				Code = (apps_coding_theory::create_code *) Sym->Orbiter_top_level_session->get_object(Idx[i]);
+
+				Activity.init_code(Coding_theoretic_activity_description, Code, verbose_level);
+
 			}
-			Activity.init_secondary_group(Group_theoretic_activity_description, AG_secondary, verbose_level);
 
 		}
-#endif
+
 
 		if (f_v) {
 			cout << "activity_description::do_coding_theoretic_activity "

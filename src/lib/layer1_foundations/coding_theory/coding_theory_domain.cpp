@@ -208,6 +208,7 @@ void coding_theory_domain::make_table_of_bounds(
 void coding_theory_domain::make_gilbert_varshamov_code(
 		int n, int k, int d,
 		field_theory::finite_field *F,
+		int *&genma, int *&checkma,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -247,8 +248,8 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	Lint_vec_print(cout, set, n);
 	cout << endl;
 
-	int *genma;
-	genma = NEW_int(n * n);
+	int *M;
+	M = NEW_int(n * n);
 
 	matrix_from_projective_set(F,
 			n, nmk, set,
@@ -256,25 +257,31 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 			verbose_level);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	Int_matrix_print(genma, nmk, n);
+	Int_matrix_print(M, nmk, n);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	Int_vec_print_fully(cout, genma, nmk * n);
+	Int_vec_print_fully(cout, M, nmk * n);
 	cout << endl;
 
-	F->Linear_algebra->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(n, nmk, M, 0 /* verbose_level */);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
-	Int_matrix_print(genma + nmk * n, k, n);
+	Int_matrix_print(M + nmk * n, k, n);
 
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
-	Int_vec_print_fully(cout, genma + nmk * n, k * n);
+	Int_vec_print_fully(cout, M + nmk * n, k * n);
 	cout << endl;
 
 
+	genma = NEW_int(k * n);
+	checkma = NEW_int(nmk * n);
 
-	FREE_int(genma);
+	Int_vec_copy(M + nmk * n, genma, k * n);
+	Int_vec_copy(M, checkma, nmk * n);
+
+
+	//FREE_int(M);
 
 
 	FREE_lint(set);
@@ -858,7 +865,7 @@ int coding_theory_domain::code_minimum_distance(field_theory::finite_field *F, i
 
 void coding_theory_domain::codewords_affine(field_theory::finite_field *F, int n, int k,
 	int *code, // [k * n]
-	int *codewords, // q^k
+	long int *codewords, // q^k
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1442,6 +1449,130 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 }
 
 
+void coding_theory_domain::do_minimum_distance(field_theory::finite_field *F,
+		int *M, int m, int n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *A;
+	int *base_cols;
+	//int *weight_enumerator;
+	int rk, i;
+	orbiter_kernel_system::latex_interface Li;
+	orbiter_kernel_system::os_interface Os;
+	long int t0, t1, dt, tps;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "coding_theory_domain::do_minimum_distance" << endl;
+	}
+
+	A = NEW_int(n * n);
+	base_cols = NEW_int(n);
+	//weight_enumerator = NEW_int(n + 1);
+	Int_vec_copy(M, A, m * n);
+
+	if (f_v) {
+		cout << "coding_theory_domain::do_minimum_distance input matrix:" << endl;
+		Int_matrix_print(A, m, n);
+
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.print_integer_matrix_tex(cout, A, m, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+
+	}
+
+	rk = F->Linear_algebra->Gauss_int(A,
+		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL /*P*/, m, n, n,
+		0 /*verbose_level*/);
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::do_minimum_distance after RREF:" << endl;
+		Int_matrix_print(A, rk, n);
+		cout << "rk=" << rk << endl;
+
+
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.print_integer_matrix_tex(cout, A, rk, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+
+
+		cout << "coding_theory_domain::do_minimum_distance coefficients:" << endl;
+		Int_vec_print(cout, A, rk * n);
+		cout << endl;
+	}
+
+#if 0
+	code_weight_enumerator(F, n, rk,
+		A /* code */, // [k * n]
+		weight_enumerator, // [n + 1]
+		verbose_level);
+#endif
+
+	int j;
+	int d;
+	int q = F->q;
+	int idx_zero = 0;
+	int idx_one = 1;
+	int *add_table;
+	int *mult_table;
+
+
+	add_table = NEW_int(q * q);
+	mult_table = NEW_int(q * q);
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			add_table[i * q + j] = F->add(i, j);
+		}
+	}
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			mult_table[i * q + j] = F->mult(i, j);
+		}
+	}
+
+	d = mindist(n, m /* k */, q, A,
+		verbose_level - 2, idx_zero, idx_one,
+		add_table, mult_table);
+
+	t1 = Os.os_ticks();
+
+	dt = t1 - t0;
+
+	tps = Os.os_ticks_per_second();
+	//cout << "time_check_delta tps=" << tps << endl;
+
+	int days, hours, minutes, seconds;
+
+	Os.os_ticks_to_dhms(dt, tps, days, hours, minutes, seconds);
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::do_minimum_distance The minimum distance is d = " << d << ", computed in " << days << " days, " << hours << " hours, " << minutes << " minutes, " << seconds << " seconds" << endl;
+	}
+
+
+	FREE_int(add_table);
+	FREE_int(mult_table);
+
+	FREE_int(A);
+	FREE_int(base_cols);
+	//FREE_int(weight_enumerator);
+
+	if (f_v) {
+		cout << "coding_theory_domain::do_minimum_distance done" << endl;
+	}
+}
+
+
+
 
 void coding_theory_domain::do_linear_code_through_basis(
 		field_theory::finite_field *F,
@@ -1734,6 +1865,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 		field_theory::finite_field *F,
 		int n,
 		long int *columns_set, int k,
+		int *&genma,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1742,20 +1874,17 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check" << endl;
 	}
 
-	//field_theory::finite_field *F;
 	int i, j;
 	int *v;
-	int *genma;
 	int *word;
 	int *code_word;
 	geometry::geometry_global Gg;
 
-	//F = NEW_OBJECT(field_theory::finite_field);
-	//F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
 	word = NEW_int(k);
 	code_word = NEW_int(n);
+
 	for (j = 0; j < n; j++) {
 
 		Gg.AG_element_unrank(2, v, 1, k, columns_set[j]);
@@ -1763,10 +1892,13 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 			genma[i * n + j] = v[i];
 		}
 	}
-	cout << "genma:" << endl;
-	Int_matrix_print(genma, k, n);
 
+	if (f_v) {
+		cout << "coding_theory_domain::do_linear_code_through_columns_of_parity_check genma:" << endl;
+		Int_matrix_print(genma, k, n);
+	}
 
+#if 0
 	number_theory::number_theory_domain NT;
 	long int *set;
 	long int N;
@@ -1779,17 +1911,21 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 				code_word, 1, k, n, 0 /* verbose_level*/);
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
-		cout << i << " : ";
-		Int_vec_print(cout, word, k);
-		cout << " : ";
-		Int_vec_print(cout, code_word, n);
-		cout << " : " << set[i] << endl;
+		if (f_v) {
+			cout << i << " : ";
+			Int_vec_print(cout, word, k);
+			cout << " : ";
+			Int_vec_print(cout, code_word, n);
+			cout << " : " << set[i] << endl;
+		}
 	}
 
 
-	cout << "Codewords : ";
-	Lint_vec_print_fully(cout, set, N);
-	cout << endl;
+	if (f_v) {
+		cout << "Codewords : ";
+		Lint_vec_print_fully(cout, set, N);
+		cout << endl;
+	}
 
 	char str[1000];
 	string fname_csv;
@@ -1798,9 +1934,11 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	snprintf(str, 1000, "codewords_n%d_k%d_q%d.csv", n, k, F->q);
 	fname_csv.assign(str);
 	Fio.lint_matrix_write_csv(fname_csv, set, 1, N);
-	cout << "written file " << fname_csv << " of size "
-			<< Fio.file_size(fname_csv) << endl;
-
+	if (f_v) {
+		cout << "written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+	}
+#endif
 
 
 	{
@@ -1853,14 +1991,16 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 
 		orbiter_kernel_system::file_io Fio;
 
-		cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		if (f_v) {
+			cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
 
 	}
 
 
 
-	FREE_lint(set);
-	FREE_int(genma);
+	//FREE_lint(set);
+	//FREE_int(genma);
 	FREE_int(v);
 	FREE_int(word);
 	FREE_int(code_word);

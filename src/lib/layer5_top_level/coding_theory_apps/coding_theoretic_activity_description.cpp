@@ -21,19 +21,7 @@ namespace apps_coding_theory {
 
 coding_theoretic_activity_description::coding_theoretic_activity_description()
 {
-	f_make_macwilliams_system = FALSE;
-	make_macwilliams_system_q = 0;
-	make_macwilliams_system_n = 0;
-	make_macwilliams_system_k = 0;
 
-	f_table_of_bounds = FALSE;
-	table_of_bounds_n_max = 0;
-	table_of_bounds_q = 0;
-
-	f_make_bounds_for_d_given_n_and_k_and_q = FALSE;
-	make_bounds_n = 0;
-	make_bounds_k = 0;
-	make_bounds_q = 0;
 
 	f_BCH = FALSE;
 	f_BCH_dual = FALSE;
@@ -41,10 +29,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	BCH_q = 0;
 	BCH_t = 0;
 	//BCH_b = 0;
-
-	f_Hamming_space_distance_matrix = FALSE;
-	Hamming_space_n = 0;
-	Hamming_space_q = 0;
 
 	f_general_code_binary = FALSE;
 	general_code_binary_n = 0;
@@ -63,15 +47,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 
 	f_metric_balls = FALSE;
 	metric_ball_radius = 0;
-
-	f_linear_code_through_basis = FALSE;
-	linear_code_through_basis_n = 0;
-	//std::string linear_code_through_basis_text;
-
-	f_linear_code_through_columns_of_parity_check_projectively = FALSE;
-	f_linear_code_through_columns_of_parity_check = FALSE;
-	linear_code_through_columns_of_parity_check_k = 0;
-	//std::string linear_code_through_columns_of_parity_check_text;
 
 	f_long_code = FALSE;
 	long_code_n = 0;
@@ -113,10 +88,8 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_weight_enumerator = FALSE;
 	//std::string weight_enumerator_input_matrix;
 
-	f_make_gilbert_varshamov_code = FALSE;
-	make_gilbert_varshamov_code_n = 0;
-	make_gilbert_varshamov_code_k = 0;
-	make_gilbert_varshamov_code_d = 0;
+	f_minimum_distance = FALSE;
+	//std::string minimum_distance_code_label;
 
 	f_generator_matrix_cyclic_code = FALSE;
 	generator_matrix_cyclic_code_n = 0;
@@ -125,11 +98,9 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_nth_roots = FALSE;
 	nth_roots_n = 0;
 
-	f_make_BCH_code = FALSE;
+	f_make_BCH_code_and_encode = FALSE;
 	make_BCH_code_n = 0;
 	make_BCH_code_d = 0;
-
-	f_make_BCH_code_and_encode = FALSE;
 	//std::string make_BCH_code_and_encode_text;
 	//std::string make_BCH_code_and_encode_fname;
 
@@ -156,7 +127,17 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	polynomial_division_from_file_all_k_bit_error_patterns_r1 = 0;
 	polynomial_division_from_file_all_k_bit_error_patterns_k = 0;
 
+	f_export_magma = FALSE;
+	//std::string export_magma_fname;
 
+	f_export_codewords = FALSE;
+	//std::string export_codewords_fname;
+
+	f_export_genma = FALSE;
+	//std::string export_genma_fname;
+
+	f_export_checkma = FALSE;
+	//std::string export_checkma_fname;
 
 }
 
@@ -178,35 +159,7 @@ int coding_theoretic_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-make_macwilliams_system") == 0) {
-			f_make_macwilliams_system = TRUE;
-			make_macwilliams_system_n = ST.strtoi(argv[++i]);
-			make_macwilliams_system_k = ST.strtoi(argv[++i]);
-			make_macwilliams_system_q = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-make_macwilliams_system " << make_macwilliams_system_n << " " << make_macwilliams_system_k << " " << make_macwilliams_system_q << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-table_of_bounds") == 0) {
-			f_table_of_bounds = TRUE;
-			table_of_bounds_n_max = ST.strtoi(argv[++i]);
-			table_of_bounds_q = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-table_of_bounds " << table_of_bounds_n_max
-						<< " " << table_of_bounds_q << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
-			f_make_bounds_for_d_given_n_and_k_and_q = TRUE;
-			make_bounds_n = ST.strtoi(argv[++i]);
-			make_bounds_k = ST.strtoi(argv[++i]);
-			make_bounds_q = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-make_bounds_for_d_given_n_and_k_and_q "
-						<< make_bounds_n << " " << make_bounds_k << " " << make_bounds_q << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-BCH") == 0) {
+		if (ST.stringcmp(argv[i], "-BCH") == 0) {
 			f_BCH = TRUE;
 			BCH_n = ST.strtoi(argv[++i]);
 			BCH_q = ST.strtoi(argv[++i]);
@@ -224,14 +177,6 @@ int coding_theoretic_activity_description::read_arguments(
 			//BCH_b = atoi(argv[++i]);
 			if (f_v) {
 				cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
-			f_Hamming_space_distance_matrix = TRUE;
-			Hamming_space_n = ST.strtoi(argv[++i]);
-			Hamming_space_q = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
@@ -282,39 +227,6 @@ int coding_theoretic_activity_description::read_arguments(
 			}
 		}
 
-
-
-		else if (ST.stringcmp(argv[i], "-linear_code_through_basis") == 0) {
-			f_linear_code_through_basis = TRUE;
-			linear_code_through_basis_n = ST.strtoi(argv[++i]);
-			linear_code_through_basis_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-linear_code_through_basis " << linear_code_through_basis_n
-						<< " " << linear_code_through_basis_text << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
-			f_linear_code_through_columns_of_parity_check_projectively = TRUE;
-			linear_code_through_columns_of_parity_check_k = ST.strtoi(argv[++i]);
-			linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-linear_code_through_columns_of_parity_check_projectively "
-					<< linear_code_through_columns_of_parity_check_k
-					<< " " << linear_code_through_columns_of_parity_check_text << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
-			f_linear_code_through_columns_of_parity_check = TRUE;
-			linear_code_through_columns_of_parity_check_k = ST.strtoi(argv[++i]);
-			linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-linear_code_through_columns_of_parity_check "
-					<< linear_code_through_columns_of_parity_check_k
-					<< " " << linear_code_through_columns_of_parity_check_text << endl;
-			}
-		}
 
 		else if (ST.stringcmp(argv[i], "-long_code") == 0) {
 			f_long_code = TRUE;
@@ -466,17 +378,11 @@ int coding_theoretic_activity_description::read_arguments(
 				cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-make_gilbert_varshamov_code") == 0) {
-			f_make_gilbert_varshamov_code = TRUE;
-			make_gilbert_varshamov_code_n = ST.strtoi(argv[++i]);
-			make_gilbert_varshamov_code_k = ST.strtoi(argv[++i]);
-			make_gilbert_varshamov_code_d = ST.strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-minimum_distance") == 0) {
+			f_minimum_distance = TRUE;
+			minimum_distance_code_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-make_gilbert_varshamov_code"
-						<< make_gilbert_varshamov_code_n << " "
-						<< make_gilbert_varshamov_code_k << " "
-						<< make_gilbert_varshamov_code_d
-						<< endl;
+				cout << "-minimum_distance " << minimum_distance_code_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-generator_matrix_cyclic_code") == 0) {
@@ -494,16 +400,6 @@ int coding_theoretic_activity_description::read_arguments(
 			nth_roots_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-nth_roots " << nth_roots_n << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-make_BCH_code") == 0) {
-			f_make_BCH_code = TRUE;
-			make_BCH_code_n = ST.strtoi(argv[++i]);
-			make_BCH_code_d = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-make_BCH_code " << make_BCH_code_n
-						<< " " << make_BCH_code_d
-						<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-make_BCH_code_and_encode") == 0) {
@@ -581,8 +477,42 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-
-
+		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
+			f_export_magma = TRUE;
+			export_magma_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_magma "
+					<< " " << export_magma_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_codewords") == 0) {
+			f_export_codewords = TRUE;
+			export_codewords_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_codewords "
+					<< " " << export_codewords_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_genma") == 0) {
+			f_export_genma = TRUE;
+			export_genma_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_genma "
+					<< " " << export_genma_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_checkma") == 0) {
+			f_export_checkma = TRUE;
+			export_checkma_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_checkma "
+					<< " " << export_checkma_fname
+					<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -605,23 +535,11 @@ int coding_theoretic_activity_description::read_arguments(
 
 void coding_theoretic_activity_description::print()
 {
-	if (f_make_macwilliams_system) {
-		cout << "-make_macwilliams_system " << make_macwilliams_system_n << " " << make_macwilliams_system_k << " " << make_macwilliams_system_q << endl;
-	}
-	if (f_table_of_bounds) {
-		cout << "-table_of_bounds " << table_of_bounds_n_max << " " << table_of_bounds_q << endl;
-	}
-	if (f_make_bounds_for_d_given_n_and_k_and_q) {
-		cout << "-make_bounds_for_d_given_n_and_k_and_q " << make_bounds_n << " " << make_bounds_k << " " << make_bounds_q << endl;
-	}
 	if (f_BCH) {
 		cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
 	}
 	if (f_BCH_dual) {
 		cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
-	}
-	if (f_Hamming_space_distance_matrix) {
-		cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
 	}
 	if (f_general_code_binary) {
 		cout << "-general_code_binary " << general_code_binary_n << " "
@@ -644,27 +562,6 @@ void coding_theoretic_activity_description::print()
 
 	if (f_metric_balls) {
 		cout << "-metric_balls " << metric_ball_radius << endl;
-	}
-
-
-
-	if (f_linear_code_through_basis) {
-		cout << "-linear_code_through_basis " << linear_code_through_basis_n
-				<< " " << linear_code_through_basis_text << endl;
-	}
-
-	if (f_linear_code_through_columns_of_parity_check_projectively) {
-		cout << "-linear_code_through_columns_of_parity_check_projectively "
-				<< linear_code_through_columns_of_parity_check_k
-				<< " " << linear_code_through_columns_of_parity_check_text
-				<< endl;
-	}
-
-	if (f_linear_code_through_columns_of_parity_check) {
-		cout << "-linear_code_through_columns_of_parity_check "
-				<< linear_code_through_columns_of_parity_check_k
-				<< " " << linear_code_through_columns_of_parity_check_text
-				<< endl;
 	}
 
 	if (f_long_code) {
@@ -711,12 +608,8 @@ void coding_theoretic_activity_description::print()
 	if (f_weight_enumerator) {
 		cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
 	}
-	if (f_make_gilbert_varshamov_code) {
-		cout << "-make_gilbert_varshamov_code"
-				<< make_gilbert_varshamov_code_n << " "
-				<< make_gilbert_varshamov_code_k << " "
-				<< make_gilbert_varshamov_code_d
-				<< endl;
+	if (f_minimum_distance) {
+		cout << "-minimum_distance " << minimum_distance_code_label << endl;
 	}
 	if (f_generator_matrix_cyclic_code) {
 		cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
@@ -725,11 +618,6 @@ void coding_theoretic_activity_description::print()
 	}
 	if (f_nth_roots) {
 		cout << "-nth_roots " << nth_roots_n << endl;
-	}
-	if (f_make_BCH_code) {
-		cout << "-make_BCH_code " << make_BCH_code_n
-				<< " " << make_BCH_code_d
-				<< endl;
 	}
 	if (f_make_BCH_code_and_encode) {
 		cout << "-make_BCH_code_and_encode "
@@ -771,6 +659,27 @@ void coding_theoretic_activity_description::print()
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
 				<< endl;
 	}
+	if (f_export_magma) {
+		cout << "-export_magma "
+			<< " " << export_magma_fname
+			<< endl;
+	}
+	if (f_export_codewords) {
+		cout << "-export_codewords "
+			<< " " << export_codewords_fname
+			<< endl;
+	}
+	if (f_export_genma) {
+			cout << "-export_genma "
+				<< " " << export_genma_fname
+				<< endl;
+	}
+	if (f_export_checkma) {
+			cout << "-export_checkma "
+				<< " " << export_checkma_fname
+				<< endl;
+	}
+
 
 }
 

@@ -6,8 +6,11 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	code_modification_description.o \
 	coding_theoretic_activity_description.o \
-	coding_theoretic_activity.o 
+	coding_theoretic_activity.o \
+	create_code_description.o \
+	create_code.o 
 
 
 all : $(MODULES)

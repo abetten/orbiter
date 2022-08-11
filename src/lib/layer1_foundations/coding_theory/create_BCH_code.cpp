@@ -133,6 +133,76 @@ void create_BCH_code::init(field_theory::finite_field *F, int n, int d, int verb
 }
 
 
+void create_BCH_code::do_report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	string label;
+	coding_theory_domain Codes;
+	orbiter_kernel_system::latex_interface Li;
+
+	if (f_v) {
+		cout << "create_BCH_code::do_report" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "BCH_codes_q%d_n%d_d%d.tex",
+				F->q,
+				n,
+				d
+				);
+		fname.assign(str);
+		snprintf(str, 1000, "BCH codes");
+		title.assign(str);
+
+
+
+		{
+			ofstream ost(fname);
+			number_theory::number_theory_domain NT;
+
+
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			report(ost, verbose_level);
+
+			L.foot(ost);
+
+
+		}
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	}
+
+	if (f_v) {
+		cout << "create_BCH_code::do_report done" << endl;
+	}
+}
+
 void create_BCH_code::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -182,7 +252,7 @@ void create_BCH_code::report(std::ostream &ost, int verbose_level)
 	ost << "\\end{verbatim}" << endl;
 
 
-	if (n < 22) {
+	if (TRUE /*n < 22*/) {
 
 		ost << "The generator matrix is:" << endl;
 		ost << "$$" << endl;
@@ -191,6 +261,16 @@ void create_BCH_code::report(std::ostream &ost, int verbose_level)
 		ost << "\\right]" << endl;
 		ost << "$$" << endl;
 
+		ost << "The generator matrix is:" << endl;
+		ost << "\\begin{verbatim}" << endl;
+		Int_matrix_print_ost(ost, Genma, k, n);
+		ost << "\\end{verbatim}" << endl;
+
+		ost << "The generator matrix as a makefile variable is:" << endl;
+		ost << "\\begin{verbatim}" << endl;
+		ost << "CODE_BCH_F" << F->q << "_N" << n << "_K" << k << "_D" << d << "_GENMA";
+		orbiter_kernel_system::Orbiter->Int_vec->matrix_print_makefile_style_ost(ost, Genma, k, n);
+		ost << "\\end{verbatim}" << endl;
 	}
 
 	if (f_v) {

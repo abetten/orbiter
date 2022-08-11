@@ -64,6 +64,9 @@ symbol_definition::symbol_definition()
 	f_graph = FALSE;
 	Create_graph_description = NULL;
 
+	f_code = FALSE;
+	Create_code_description = NULL;
+
 	f_spread_table = FALSE;
 	//std::string spread_table_label_PA;
 	dimension_of_spread_elements = 0;
@@ -396,8 +399,36 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
+			cout << "-graph " << endl;
+			Create_graph_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-code") == 0) {
+
+		f_code = TRUE;
+		Create_code_description = NEW_OBJECT(apps_coding_theory::create_code_description);
+		if (f_v) {
+			cout << "reading -code" << endl;
+		}
+
+		i += Create_code_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-code" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-code " << endl;
+			Create_code_description->print();
+		}
+	}
+
+
 	else if (ST.stringcmp(argv[i], "-spread_table") == 0) {
 		f_spread_table = TRUE;
 
@@ -870,6 +901,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_graph" << endl;
 		}
 	}
+	else if (f_code) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_code" << endl;
+		}
+		definition_of_code(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_code" << endl;
+		}
+	}
 	else if (f_spread_table) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_projective_space" << endl;
@@ -1063,6 +1103,10 @@ void symbol_definition::print()
 	if (f_graph) {
 		cout << "-graph ";
 		Create_graph_description->print();
+	}
+	if (f_code) {
+		cout << "-code ";
+		Create_code_description->print();
 	}
 	if (f_spread_table) {
 		cout << "-spread_table ";
@@ -1708,6 +1752,59 @@ void symbol_definition::definition_of_graph(int verbose_level)
 		cout << "symbol_definition::definition_of_graph done" << endl;
 	}
 }
+
+
+void symbol_definition::definition_of_code(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_code" << endl;
+	}
+
+	apps_coding_theory::create_code *Code;
+
+	Code = NEW_OBJECT(apps_coding_theory::create_code);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_code before Code->init" << endl;
+	}
+	Code->init(Create_code_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_code after Code->init" << endl;
+	}
+	if (f_v) {
+		cout << "Code->label_txt" << Code->label_txt << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_code we created a code called " << Code->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_code(define_label, Code, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_code before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_code done" << endl;
+	}
+}
+
+
+
+
 
 
 void symbol_definition::definition_of_spread_table(int verbose_level)
