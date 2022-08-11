@@ -150,7 +150,10 @@ ENDRASS_SPARSE="\
 EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
 
 
-EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, 136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, 287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, 431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551"
+EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, \
+136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, \
+287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, \
+431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551"
 
 
 GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
@@ -787,6 +790,22 @@ HAMMING_CODE_GENERATOR="\
 0,0,1,0,1,1,0, \
 0,0,0,1,1,1,1"
 
+
+GOLAY23_CODE_GENERATOR="\
+1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1,0,0,1,0,\
+0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,1,1,0,0,1,\
+0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,\
+0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,1,1,1,1,\
+0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1,1,1,0,\
+0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,1,0,1,1,1,0,0,\
+0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,1,1,0,1,0,1,\
+0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,1,1,0,1,0,0,\
+0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,1,1,0,1,0,1,0,\
+0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,1,1,0,0,1,\
+0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,1,1,1,\
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1"
+
+
 HAMMING_CODE_ROWS_IN_BINARY_RANKS="67,37,22,15"
 
 SIMPLEX_CODE_GENMA_CYCLIC="\
@@ -827,28 +846,6 @@ REED_MULLER_4_1_COLUMNS_OF_PARTITY_CHECK="1,3,5,7,9,11,13,\
 15,17,19,21,23,25,27,29,31"
 
 #-nearest_codeword "8,16,32,24,40,48,56,1,2,4,3,5,6,7,9,18,36,27,45,54,63,33,42,20,11,53,62,31"
-
-RM_6_GENERATOR_1="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,\
-22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,\
-46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63"
-
-RM_6_GENERATOR_2="1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,\
-41,43,45,47,49,51,53,55,57,59,61,63"
-
-RM_6_GENERATOR_3="2,3,6,7,18,19,22,23,10,11,14,15,26,27,30,31,34,35,38,\
-39,42,43,46,47,50,51,54,55,58,59,62,63"
-
-RM_6_GENERATOR_4="4,6,12,14,36,38,52,54,5,7,13,15,37,39,53,55,20,22,28,\
-30,44,46,60,62,21,23,29,31,45,47,61,63"
-
-RM_6_GENERATOR_5="8,9,12,13,24,25,28,29,10,11,14,15,26,27,30,31,40,41,\
-44,45,56,57,60,61,42,43,46,47,58,59,62,63"
-
-RM_6_GENERATOR_6="16,18,24,26,48,50,56,58,17,19,25,27,49,51,57,59,20,22,\
-28,30,52,54,60,62,21,23,29,31,53,55,61,63"
-
-RM_6_GENERATOR_7="32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,\
-56,58,41,43,57,59,44,46,60,62,45,47,61,63"
 
 
 
@@ -1638,11 +1635,12 @@ RREF_RS_6_4_7:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 7 -end \
 		-define v -vector -field F -format 4 \
-			-dense $(CODE_RS_6_4_7) \
+			-compact $(CODE_RS_6_4_7) \
 		-end \
 		-with F -do \
 		-finite_field_activity -RREF v -end
 	pdflatex RREF_example_q7_4_6.tex
+	open RREF_example_q7_4_6.pdf
 	gs -sDEVICE=png16 -dFIXEDMEDIA \
 		-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
 		-r240 -oRREF_example_q7_4_6_page%02d.png \
@@ -4094,6 +4092,27 @@ PGL_3_2_classes:
 #		-classes \
 
 
+PGL_4_2_classes_based_on_normal_form:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 4 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes_based_on_normal_form \
+		-end
+	pdflatex PGL_4_2_classes_normal_form.tex
+	open PGL_4_2_classes_normal_form.pdf
+
+
+PGL_10_2_classes_based_on_normal_form:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 10 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes_based_on_normal_form \
+		-end
+	pdflatex PGL_10_2_classes_normal_form.tex
+	open PGL_10_2_classes_normal_form.pdf
+
 
 
 normal_forms_PGL_4_4:
@@ -4214,6 +4233,67 @@ PGGL_2_4_classes:
 	pdflatex PGGL_2_4_classes_out.tex
 	open PGGL_2_4_classes_out.pdf
 	open PGGL_2_4_classes_out.csv
+
+
+PGL_7_2_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 7 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_PATH)magma PGL_7_2_classes.magma
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 7 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+
+
+PGL_8_2_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 8 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_PATH)magma PGL_8_2_classes.magma
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 8 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+
+
+
+PGL_10_2_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 10 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_PATH)magma PGL_10_2_classes.magma
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 10 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
 
 
 PGGL_2_4_cent_2A:
@@ -8132,11 +8212,12 @@ Dickson_q16_analyze: poly_orbits_d3_n3_q2_F16.csv
 SECTION_CUBIC_SURFACES_ATLAS_AND_TABLES:
 
 
-MAKE_TABLE_OF_CUBIC_SURFACES=-define P -projective_space 3 F -end \
-		-with P -do \
-			-projective_space_activity \
-				-table_of_cubic_surfaces \
-			-end
+MAKE_TABLE_OF_CUBIC_SURFACES=-define \
+	P -projective_space 3 F -end \
+	-with P -do \
+		-projective_space_activity \
+			-table_of_cubic_surfaces \
+		-end
 
 cubic_surfaces_tables_17: 
 	$(ORBITER) -v 3 \
@@ -9795,12 +9876,28 @@ SECTION_CODING_THEORY_INTRODUCTION:
 
 Hamming_space_4_2_distance_matrix:
 	$(ORBITER) -Hamming_space_distance_matrix 4 2
+
+
+Hamming_space_4_2_distance_matrix_draw:
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file Hamming_n4_q2.csv \
-		-box_width 20 -bit_depth 24 -partition 4 16 16 -end
+			-input_csv_file Hamming_n4_q2.csv \
+			-box_width 20 -bit_depth 24 \
+			-partition 4 16 16 \
+		-end
 	open Hamming_n4_q2_draw.bmp
 
 
+
+Hamming_code_macwilliams:
+	$(ORBITER) -v 2 \
+		-make_macwilliams_system 7 4 2
+	pdflatex MacWilliams_n7_k4_q2.tex
+	open MacWilliams_n7_k4_q2.pdf
+
+
+
+
+# ToDo:
 
 code_5_2_3_diagram:
 	$(ORBITER) -v 2 -code_diagram "code_5_2_3" \
@@ -9869,9 +9966,34 @@ code_6:
 
 
 ###############################################################################
-# Section 10.2: Hamming codes
+# Section 10.2: Linear codes
 
-SECTION_CODING_THEORY_HAMMING_CODES:
+SECTION_CODING_THEORY_LINEAR_CODES:
+
+
+RM_3_1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-first_order_Reed_Muller 3 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma RM_3_1.magma \
+		-end
+
+
+
+
+
+simplex_code:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 3 \
+			-dense $(SIMPLEX_CODE_GENERATOR) \
+		-end \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end 
 
 
 
@@ -9883,7 +10005,7 @@ Hamming_generator:
 		-end \
 		-with F -do \
 		-finite_field_activity \
-		-nullspace v \
+			-nullspace v \
 		-end
 	pdflatex nullspace_3_7.tex
 	open nullspace_3_7.pdf
@@ -9895,13 +10017,92 @@ Hamming_generator:
 
 
 
+Hamming_code:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 3 \
+			-dense $(SIMPLEX_CODE_GENERATOR) \
+		-end \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+			-dual \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-export_magma Hamming.magma \
+		-end 
 
-Hamming_code_words:
+# writes Hamming.magma
+
+
+
+RM_3_1_and_codewords:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F -first_order_Reed_Muller 3 -end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma RM_3_1.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords RM_3_1_codewords.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_genma RM_3_1_genma.csv \
+		-end 
+
+
+RM_3_1_from_generator_matrix:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define genma -vector -format 8 -field F \
+			-compact $(CODE_RM_3_1_GENMA) \
+		-end \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix genma \
+		-end
+	#pdflatex code_n8_k4_q2.tex
+	#open code_n8_k4_q2.pdf
+
+#Codewords: (0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105)
+
+
+RM_4_1_and_codewords:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F -first_order_Reed_Muller 4 -end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma RM_4_1.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords RM_4_1_codewords.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_genma RM_4_1_genma.csv \
+		-end 
+
+RM_5_1_and_codewords:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F -first_order_Reed_Muller 5 -end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma RM_5_1.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords RM_5_1_codewords.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_genma RM_5_1_genma.csv \
+		-end 
+
+
+
+Hamming_code_words_old:
 	$(ORBITER) -v 2 \
 		-define v -vector -dense $(HAMMING_CODE_ROWS_IN_BINARY_RANKS) -end \
 		-linear_code_through_basis 7 v
 	pdflatex code_n7_k4_q2.tex
 	open code_n7_k4_q2.pdf
+
+
 
 Hamming_weight_enumerator:
 	$(ORBITER) -v 2 \
@@ -9914,7 +10115,30 @@ Hamming_weight_enumerator:
 			-weight_enumerator v \
 		-end
 
+Hamming_minimum_distance:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 4 \
+			-dense $(HAMMING_CODE_GENERATOR) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end
 
+
+Golay23_minimum_distance:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 12 \
+			-dense $(GOLAY23_CODE_GENERATOR) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end
+
+#d=7 in 0 sec
 
 Hamming_code_diagram:
 	- $(ORBITER) -v 2 -code_diagram "Hamming_7_4" \
@@ -10031,11 +10255,6 @@ Hamming_long:
 #long_code_genma_n7_k4_codeword_15.csv
 #Weight distribution:( 0, 3^7, 4^7, 7 )
 
-Hamming_code_macwilliams:
-	$(ORBITER) -v 2 \
-		-make_macwilliams_system 7 4 2
-	pdflatex MacWilliams_n7_k4_q2.tex
-	open MacWilliams_n7_k4_q2.pdf
 
 Hamming_singer:
 	$(ORBITER) -v 3 \
@@ -10143,6 +10362,8 @@ Hamming_cyclic_clean_long:
 #00001111 = 240
 
 
+
+
 ###############################################################################
 # Section 10.3: Coding Theory - Golay codes
 
@@ -10154,14 +10375,25 @@ Golay23_code_words:
 	$(ORBITER) -v 2 \
 		-define v -vector -dense $(GOLAY_23_COLUMN_RANKS_PROJECTIVELY) -end \
 		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-coding_theoretic_activity \
-			-linear_code_through_columns_of_parity_check_projectively \
-			12 v \
-		-end
-	pdflatex code_n23_k12_q2.tex
-	open code_n23_k12_q2.pdf
+		-define C -code -field F \
+			-linear_code_from_from_projective_set 12 v -end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma Golay23.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords Golay23_codewords.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_genma Golay23_genma.csv \
+		-end 
+	#pdflatex code_n23_k12_q2.tex
+	#open code_n23_k12_q2.pdf
 
+#		-with F -do \
+#		-coding_theoretic_activity \
+#			-linear_code_through_columns_of_parity_check_projectively \
+#			12 v \
+#		-end
 
 
 Golay23_code_diagram:
@@ -10386,15 +10618,6 @@ SECTION_CODING_THEORY_REED_MULLER_CODES:
 
 
 
-RM_3_1_code_words:
-	$(ORBITER) -v 2 \
-		-define v -vector -dense $(REED_MULLER_3_1_BASIS_IN_BINARY) -end \
-		-linear_code_through_basis 8 v
-	pdflatex code_n8_k4_q2.tex
-	open code_n8_k4_q2.pdf
-
-#Codewords: (0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105)
-	
 
 
 
@@ -10468,7 +10691,21 @@ RM_3_1_hole2:
 # E_2 + E_3 + E_4
 
 
+
 RM_4_1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F -first_order_Reed_Muller 4 -end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma RM_4_1.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords RM_4_1_codewords.csv \
+		-end 
+
+
+
+RM_4_1_old:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-with F -do \
@@ -10557,242 +10794,6 @@ RM_4_1_hole0:
 
 
 
-
-Reed_Muller_6:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-coding_theoretic_activity \
-			-long_code 64 7 \
-			-set_builder -loop 0 64 1 -end \
-			-set_builder -loop 0 32 1 -affine_function 2 1 -end \
-			-set_builder -loop 0 16 1 -affine_function 4 2 -clone_with_affine_function 4 3 -end \
-			-set_builder -set_builder -set_builder -loop 0 4 1 -affine_function 1 4 \
-				-clone_with_affine_function 1 12 -end -clone_with_affine_function 1 16 \
-				-end -clone_with_affine_function 1 32 -end\
-				-set_builder -set_builder -loop 0 8 1 -affine_function 1 8 \
-				-clone_with_affine_function 1 24 -end -clone_with_affine_function 1 32 -end\
-				-set_builder -loop 0 16 1 -affine_function 1 16 -clone_with_affine_function 1 48 -end \
-				-set_builder -loop 0 32 1 -affine_function 1 32 -end \
-			-end
-	$(ORBITER) -v 2 \
-		-draw_matrix \
-			-input_csv_file long_code_genma_n64_k7.csv \
-			-box_width 25 -bit_depth 8 \
-			-partition 3 7 64 \
-		-end
-	open long_code_genma_n64_k7_draw.bmp
-
-
-
-
-
-RM_6:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-coding_theoretic_activity \
-		-long_code 64 7 \
-		$(RM_6_GENERATOR_1) \
-		$(RM_6_GENERATOR_2) \
-		$(RM_6_GENERATOR_3) \
-		$(RM_6_GENERATOR_4) \
-		$(RM_6_GENERATOR_5) \
-		$(RM_6_GENERATOR_6) \
-		$(RM_6_GENERATOR_7) \
-		-end
-	$(ORBITER) -v 2 \
-		-draw_matrix \
-			-input_csv_file long_code_genma_n64_k7.csv \
-			-box_width 25 -bit_depth 8 \
-			-partition 3 7 64 \
-		-end
-	$(ORBITER) -v 2 \
-		-draw_matrix \
-			-input_csv_file long_code_genma_n64_k7_codeword_0.csv \
-			-box_width 25 -bit_depth 8 \
-			-partition 3 8 8 \
-		-end
-	$(ORBITER) -v 2 \
-		-draw_matrix \
-			-input_csv_file long_code_genma_n64_k7_codeword_1.csv \
-			-box_width 25 -bit_depth 8 \
-			-partition 3 8 8 \
-		-end
-	$(ORBITER) -v 2 \
-		-draw_matrix \
-			-input_csv_file long_code_genma_n64_k7_codeword_2.csv \
-			-box_width 25 -bit_depth 8 \
-			-partition 3 8 8 \
-		-end
-
-
-
-
-RM6words:
-	- mkdir RM6
-	#$(ORBITER) -v 2 -draw_matrix -input_csv_file long_code_genma_n64_k7_codeword_0.csv -box_width 25 -bit_depth 8 -partition 4 8 8 -end
-	$(ORBITER) -v 2 -loop L 0 128 1 \
-		-draw_matrix -input_csv_file \
-			long_code_genma_n64_k7_codeword_%L.csv \
-			-box_width 25 -bit_depth 8 -partition 4 8 8 -end \
-		-mv long_code_genma_n64_k7_codeword_%L_draw.bmp \
-			RM6/RM_6_1_codeword_%L.bmp \
-	-end_loop
-
-
-
-RM6_convert:
-	- mkdir RM6_PNG
-	convert RM6/RM_6_1_codeword_0.bmp -frame 8 RM6_PNG/000.png
-	convert RM6/RM_6_1_codeword_1.bmp -frame 8 RM6_PNG/001.png
-	convert RM6/RM_6_1_codeword_2.bmp -frame 8 RM6_PNG/002.png
-	convert RM6/RM_6_1_codeword_3.bmp -frame 8 RM6_PNG/003.png
-	convert RM6/RM_6_1_codeword_4.bmp -frame 8 RM6_PNG/004.png
-	convert RM6/RM_6_1_codeword_5.bmp -frame 8 RM6_PNG/005.png
-	convert RM6/RM_6_1_codeword_6.bmp -frame 8 RM6_PNG/006.png
-	convert RM6/RM_6_1_codeword_7.bmp -frame 8 RM6_PNG/007.png
-	convert RM6/RM_6_1_codeword_8.bmp -frame 8 RM6_PNG/008.png
-	convert RM6/RM_6_1_codeword_9.bmp -frame 8 RM6_PNG/009.png
-	convert RM6/RM_6_1_codeword_10.bmp -frame 8 RM6_PNG/010.png
-	convert RM6/RM_6_1_codeword_11.bmp -frame 8 RM6_PNG/011.png
-	convert RM6/RM_6_1_codeword_12.bmp -frame 8 RM6_PNG/012.png
-	convert RM6/RM_6_1_codeword_13.bmp -frame 8 RM6_PNG/013.png
-	convert RM6/RM_6_1_codeword_14.bmp -frame 8 RM6_PNG/014.png
-	convert RM6/RM_6_1_codeword_15.bmp -frame 8 RM6_PNG/015.png
-	convert RM6/RM_6_1_codeword_16.bmp -frame 8 RM6_PNG/016.png
-	convert RM6/RM_6_1_codeword_17.bmp -frame 8 RM6_PNG/017.png
-	convert RM6/RM_6_1_codeword_18.bmp -frame 8 RM6_PNG/018.png
-	convert RM6/RM_6_1_codeword_19.bmp -frame 8 RM6_PNG/019.png
-	convert RM6/RM_6_1_codeword_20.bmp -frame 8 RM6_PNG/020.png
-	convert RM6/RM_6_1_codeword_21.bmp -frame 8 RM6_PNG/021.png
-	convert RM6/RM_6_1_codeword_22.bmp -frame 8 RM6_PNG/022.png
-	convert RM6/RM_6_1_codeword_23.bmp -frame 8 RM6_PNG/023.png
-	convert RM6/RM_6_1_codeword_24.bmp -frame 8 RM6_PNG/024.png
-	convert RM6/RM_6_1_codeword_25.bmp -frame 8 RM6_PNG/025.png
-	convert RM6/RM_6_1_codeword_26.bmp -frame 8 RM6_PNG/026.png
-	convert RM6/RM_6_1_codeword_27.bmp -frame 8 RM6_PNG/027.png
-	convert RM6/RM_6_1_codeword_28.bmp -frame 8 RM6_PNG/028.png
-	convert RM6/RM_6_1_codeword_29.bmp -frame 8 RM6_PNG/029.png
-	convert RM6/RM_6_1_codeword_30.bmp -frame 8 RM6_PNG/030.png
-	convert RM6/RM_6_1_codeword_31.bmp -frame 8 RM6_PNG/031.png
-	convert RM6/RM_6_1_codeword_32.bmp -frame 8 RM6_PNG/032.png
-	convert RM6/RM_6_1_codeword_33.bmp -frame 8 RM6_PNG/033.png
-	convert RM6/RM_6_1_codeword_34.bmp -frame 8 RM6_PNG/034.png
-	convert RM6/RM_6_1_codeword_35.bmp -frame 8 RM6_PNG/035.png
-	convert RM6/RM_6_1_codeword_36.bmp -frame 8 RM6_PNG/036.png
-	convert RM6/RM_6_1_codeword_37.bmp -frame 8 RM6_PNG/037.png
-	convert RM6/RM_6_1_codeword_38.bmp -frame 8 RM6_PNG/038.png
-	convert RM6/RM_6_1_codeword_39.bmp -frame 8 RM6_PNG/039.png
-	convert RM6/RM_6_1_codeword_40.bmp -frame 8 RM6_PNG/040.png
-	convert RM6/RM_6_1_codeword_41.bmp -frame 8 RM6_PNG/041.png
-	convert RM6/RM_6_1_codeword_42.bmp -frame 8 RM6_PNG/042.png
-	convert RM6/RM_6_1_codeword_43.bmp -frame 8 RM6_PNG/043.png
-	convert RM6/RM_6_1_codeword_44.bmp -frame 8 RM6_PNG/044.png
-	convert RM6/RM_6_1_codeword_45.bmp -frame 8 RM6_PNG/045.png
-	convert RM6/RM_6_1_codeword_46.bmp -frame 8 RM6_PNG/046.png
-	convert RM6/RM_6_1_codeword_47.bmp -frame 8 RM6_PNG/047.png
-	convert RM6/RM_6_1_codeword_48.bmp -frame 8 RM6_PNG/048.png
-	convert RM6/RM_6_1_codeword_49.bmp -frame 8 RM6_PNG/049.png
-	convert RM6/RM_6_1_codeword_50.bmp -frame 8 RM6_PNG/050.png
-	convert RM6/RM_6_1_codeword_51.bmp -frame 8 RM6_PNG/051.png
-	convert RM6/RM_6_1_codeword_52.bmp -frame 8 RM6_PNG/052.png
-	convert RM6/RM_6_1_codeword_53.bmp -frame 8 RM6_PNG/053.png
-	convert RM6/RM_6_1_codeword_54.bmp -frame 8 RM6_PNG/054.png
-	convert RM6/RM_6_1_codeword_55.bmp -frame 8 RM6_PNG/055.png
-	convert RM6/RM_6_1_codeword_56.bmp -frame 8 RM6_PNG/056.png
-	convert RM6/RM_6_1_codeword_57.bmp -frame 8 RM6_PNG/057.png
-	convert RM6/RM_6_1_codeword_58.bmp -frame 8 RM6_PNG/058.png
-	convert RM6/RM_6_1_codeword_59.bmp -frame 8 RM6_PNG/059.png
-	convert RM6/RM_6_1_codeword_60.bmp -frame 8 RM6_PNG/060.png
-	convert RM6/RM_6_1_codeword_61.bmp -frame 8 RM6_PNG/061.png
-	convert RM6/RM_6_1_codeword_62.bmp -frame 8 RM6_PNG/062.png
-	convert RM6/RM_6_1_codeword_63.bmp -frame 8 RM6_PNG/063.png
-	convert RM6/RM_6_1_codeword_64.bmp -frame 8 RM6_PNG/064.png
-	convert RM6/RM_6_1_codeword_65.bmp -frame 8 RM6_PNG/065.png
-	convert RM6/RM_6_1_codeword_66.bmp -frame 8 RM6_PNG/066.png
-	convert RM6/RM_6_1_codeword_67.bmp -frame 8 RM6_PNG/067.png
-	convert RM6/RM_6_1_codeword_68.bmp -frame 8 RM6_PNG/068.png
-	convert RM6/RM_6_1_codeword_69.bmp -frame 8 RM6_PNG/069.png
-	convert RM6/RM_6_1_codeword_70.bmp -frame 8 RM6_PNG/070.png
-	convert RM6/RM_6_1_codeword_71.bmp -frame 8 RM6_PNG/071.png
-	convert RM6/RM_6_1_codeword_72.bmp -frame 8 RM6_PNG/072.png
-	convert RM6/RM_6_1_codeword_73.bmp -frame 8 RM6_PNG/073.png
-	convert RM6/RM_6_1_codeword_74.bmp -frame 8 RM6_PNG/074.png
-	convert RM6/RM_6_1_codeword_75.bmp -frame 8 RM6_PNG/075.png
-	convert RM6/RM_6_1_codeword_76.bmp -frame 8 RM6_PNG/076.png
-	convert RM6/RM_6_1_codeword_77.bmp -frame 8 RM6_PNG/077.png
-	convert RM6/RM_6_1_codeword_78.bmp -frame 8 RM6_PNG/078.png
-	convert RM6/RM_6_1_codeword_79.bmp -frame 8 RM6_PNG/079.png
-	convert RM6/RM_6_1_codeword_80.bmp -frame 8 RM6_PNG/080.png
-	convert RM6/RM_6_1_codeword_81.bmp -frame 8 RM6_PNG/081.png
-	convert RM6/RM_6_1_codeword_82.bmp -frame 8 RM6_PNG/082.png
-	convert RM6/RM_6_1_codeword_83.bmp -frame 8 RM6_PNG/083.png
-	convert RM6/RM_6_1_codeword_84.bmp -frame 8 RM6_PNG/084.png
-	convert RM6/RM_6_1_codeword_85.bmp -frame 8 RM6_PNG/085.png
-	convert RM6/RM_6_1_codeword_86.bmp -frame 8 RM6_PNG/086.png
-	convert RM6/RM_6_1_codeword_87.bmp -frame 8 RM6_PNG/087.png
-	convert RM6/RM_6_1_codeword_88.bmp -frame 8 RM6_PNG/088.png
-	convert RM6/RM_6_1_codeword_89.bmp -frame 8 RM6_PNG/089.png
-	convert RM6/RM_6_1_codeword_90.bmp -frame 8 RM6_PNG/090.png
-	convert RM6/RM_6_1_codeword_91.bmp -frame 8 RM6_PNG/091.png
-	convert RM6/RM_6_1_codeword_92.bmp -frame 8 RM6_PNG/092.png
-	convert RM6/RM_6_1_codeword_93.bmp -frame 8 RM6_PNG/093.png
-	convert RM6/RM_6_1_codeword_94.bmp -frame 8 RM6_PNG/094.png
-	convert RM6/RM_6_1_codeword_95.bmp -frame 8 RM6_PNG/095.png
-	convert RM6/RM_6_1_codeword_96.bmp -frame 8 RM6_PNG/096.png
-	convert RM6/RM_6_1_codeword_97.bmp -frame 8 RM6_PNG/097.png
-	convert RM6/RM_6_1_codeword_98.bmp -frame 8 RM6_PNG/098.png
-	convert RM6/RM_6_1_codeword_99.bmp -frame 8 RM6_PNG/099.png
-	convert RM6/RM_6_1_codeword_100.bmp -frame 8 RM6_PNG/100.png
-	convert RM6/RM_6_1_codeword_101.bmp -frame 8 RM6_PNG/101.png
-	convert RM6/RM_6_1_codeword_102.bmp -frame 8 RM6_PNG/102.png
-	convert RM6/RM_6_1_codeword_103.bmp -frame 8 RM6_PNG/103.png
-	convert RM6/RM_6_1_codeword_104.bmp -frame 8 RM6_PNG/104.png
-	convert RM6/RM_6_1_codeword_105.bmp -frame 8 RM6_PNG/105.png
-	convert RM6/RM_6_1_codeword_106.bmp -frame 8 RM6_PNG/106.png
-	convert RM6/RM_6_1_codeword_107.bmp -frame 8 RM6_PNG/107.png
-	convert RM6/RM_6_1_codeword_108.bmp -frame 8 RM6_PNG/108.png
-	convert RM6/RM_6_1_codeword_109.bmp -frame 8 RM6_PNG/109.png
-	convert RM6/RM_6_1_codeword_110.bmp -frame 8 RM6_PNG/110.png
-	convert RM6/RM_6_1_codeword_111.bmp -frame 8 RM6_PNG/111.png
-	convert RM6/RM_6_1_codeword_112.bmp -frame 8 RM6_PNG/112.png
-	convert RM6/RM_6_1_codeword_113.bmp -frame 8 RM6_PNG/113.png
-	convert RM6/RM_6_1_codeword_114.bmp -frame 8 RM6_PNG/114.png
-	convert RM6/RM_6_1_codeword_115.bmp -frame 8 RM6_PNG/115.png
-	convert RM6/RM_6_1_codeword_116.bmp -frame 8 RM6_PNG/116.png
-	convert RM6/RM_6_1_codeword_117.bmp -frame 8 RM6_PNG/117.png
-	convert RM6/RM_6_1_codeword_118.bmp -frame 8 RM6_PNG/118.png
-	convert RM6/RM_6_1_codeword_119.bmp -frame 8 RM6_PNG/119.png
-	convert RM6/RM_6_1_codeword_120.bmp -frame 8 RM6_PNG/120.png
-	convert RM6/RM_6_1_codeword_121.bmp -frame 8 RM6_PNG/121.png
-	convert RM6/RM_6_1_codeword_122.bmp -frame 8 RM6_PNG/122.png
-	convert RM6/RM_6_1_codeword_123.bmp -frame 8 RM6_PNG/123.png
-	convert RM6/RM_6_1_codeword_124.bmp -frame 8 RM6_PNG/124.png
-	convert RM6/RM_6_1_codeword_125.bmp -frame 8 RM6_PNG/125.png
-	convert RM6/RM_6_1_codeword_126.bmp -frame 8 RM6_PNG/126.png
-	convert RM6/RM_6_1_codeword_127.bmp -frame 8 RM6_PNG/127.png
-
-RM_6_poster:
-	convert RM6_PNG/000.png RM6_PNG/001.png RM6_PNG/002.png RM6_PNG/003.png RM6_PNG/004.png RM6_PNG/005.png RM6_PNG/006.png RM6_PNG/007.png RM6_PNG/008.png RM6_PNG/009.png RM6_PNG/010.png +append a0
-	convert RM6_PNG/011.png RM6_PNG/012.png RM6_PNG/013.png RM6_PNG/014.png RM6_PNG/015.png RM6_PNG/016.png RM6_PNG/017.png RM6_PNG/018.png RM6_PNG/019.png RM6_PNG/020.png RM6_PNG/021.png +append a1
-	convert RM6_PNG/022.png RM6_PNG/023.png RM6_PNG/024.png RM6_PNG/025.png RM6_PNG/026.png RM6_PNG/027.png RM6_PNG/028.png RM6_PNG/029.png RM6_PNG/030.png RM6_PNG/031.png RM6_PNG/032.png +append a2
-	convert RM6_PNG/033.png RM6_PNG/034.png RM6_PNG/035.png RM6_PNG/036.png RM6_PNG/037.png RM6_PNG/038.png RM6_PNG/039.png RM6_PNG/040.png RM6_PNG/041.png RM6_PNG/042.png RM6_PNG/043.png +append a3
-	convert RM6_PNG/044.png RM6_PNG/045.png RM6_PNG/046.png RM6_PNG/047.png RM6_PNG/048.png RM6_PNG/049.png RM6_PNG/050.png RM6_PNG/051.png RM6_PNG/052.png RM6_PNG/053.png RM6_PNG/054.png +append a4
-	convert RM6_PNG/055.png RM6_PNG/056.png RM6_PNG/057.png RM6_PNG/058.png RM6_PNG/059.png RM6_PNG/060.png RM6_PNG/061.png RM6_PNG/062.png RM6_PNG/063.png RM6_PNG/064.png RM6_PNG/065.png +append a5
-	convert RM6_PNG/066.png RM6_PNG/067.png RM6_PNG/068.png RM6_PNG/069.png RM6_PNG/070.png RM6_PNG/071.png RM6_PNG/072.png RM6_PNG/073.png RM6_PNG/074.png RM6_PNG/075.png RM6_PNG/076.png +append a6
-	convert RM6_PNG/077.png RM6_PNG/078.png RM6_PNG/079.png RM6_PNG/080.png RM6_PNG/081.png RM6_PNG/082.png RM6_PNG/083.png RM6_PNG/084.png RM6_PNG/085.png RM6_PNG/086.png RM6_PNG/087.png +append a7
-	convert RM6_PNG/088.png RM6_PNG/089.png RM6_PNG/090.png RM6_PNG/091.png RM6_PNG/092.png RM6_PNG/093.png RM6_PNG/094.png RM6_PNG/095.png RM6_PNG/096.png RM6_PNG/097.png RM6_PNG/098.png +append a8
-	convert RM6_PNG/099.png RM6_PNG/100.png RM6_PNG/101.png RM6_PNG/102.png RM6_PNG/103.png RM6_PNG/104.png RM6_PNG/105.png RM6_PNG/106.png RM6_PNG/107.png RM6_PNG/108.png RM6_PNG/109.png +append a9
-	convert RM6_PNG/110.png RM6_PNG/111.png RM6_PNG/112.png RM6_PNG/113.png RM6_PNG/114.png RM6_PNG/115.png RM6_PNG/116.png RM6_PNG/117.png RM6_PNG/118.png RM6_PNG/119.png RM6_PNG/120.png +append a10
-	convert RM6_PNG/121.png RM6_PNG/122.png RM6_PNG/123.png RM6_PNG/124.png RM6_PNG/125.png RM6_PNG/126.png RM6_PNG/127.png RM6_PNG/000.png RM6_PNG/000.png RM6_PNG/000.png RM6_PNG/000.png +append a11
-	convert a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 -append poster_RM_1_6.png
-
-
-
-
-
-
 ###############################################################################
 # Section 10.6: Coding Theory - BCH Codes
 
@@ -10842,39 +10843,105 @@ F_8_BCH_code_d5:
 	pdflatex BCH_codes_q8_n21_d5.tex
 	open BCH_codes_q8_n21_d5.pdf
 
+#-override_polynomial 11 
 #generator polynomial is X^{7} + 3X^{6} + 3X^{5} + 2X^{4} + X^{3} + 2X^{2} + X + 2
 
-F_8_BCH_code_d6:
+
+#CODE_BCH_F8_N21_D5_GENMA
+
+CODE_BCH_F8_N21_D5_GENMA_OVERRIDE_POLYNOMIAL11="\
+2,1,2,1,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,\
+0,2,1,2,1,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,\
+0,0,2,1,2,1,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,\
+0,0,0,2,1,2,1,2,3,3,1,0,0,0,0,0,0,0,0,0,0,\
+0,0,0,0,2,1,2,1,2,3,3,1,0,0,0,0,0,0,0,0,0,\
+0,0,0,0,0,2,1,2,1,2,3,3,1,0,0,0,0,0,0,0,0,\
+0,0,0,0,0,0,2,1,2,1,2,3,3,1,0,0,0,0,0,0,0,\
+0,0,0,0,0,0,0,2,1,2,1,2,3,3,1,0,0,0,0,0,0,\
+0,0,0,0,0,0,0,0,2,1,2,1,2,3,3,1,0,0,0,0,0,\
+0,0,0,0,0,0,0,0,0,2,1,2,1,2,3,3,1,0,0,0,0,\
+0,0,0,0,0,0,0,0,0,0,2,1,2,1,2,3,3,1,0,0,0,\
+0,0,0,0,0,0,0,0,0,0,0,2,1,2,1,2,3,3,1,0,0,\
+0,0,0,0,0,0,0,0,0,0,0,0,2,1,2,1,2,3,3,1,0,\
+0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,2,1,2,3,3,1"
+
+CODE_BCH_F8_N21_K14_D5_GENMA="\
+6,1,5,5,4,4,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,\
+0,6,1,5,5,4,4,3,1,0,0,0,0,0,0,0,0,0,0,0,0,\
+0,0,6,1,5,5,4,4,3,1,0,0,0,0,0,0,0,0,0,0,0,\
+0,0,0,6,1,5,5,4,4,3,1,0,0,0,0,0,0,0,0,0,0,\
+0,0,0,0,6,1,5,5,4,4,3,1,0,0,0,0,0,0,0,0,0,\
+0,0,0,0,0,6,1,5,5,4,4,3,1,0,0,0,0,0,0,0,0,\
+0,0,0,0,0,0,6,1,5,5,4,4,3,1,0,0,0,0,0,0,0,\
+0,0,0,0,0,0,0,6,1,5,5,4,4,3,1,0,0,0,0,0,0,\
+0,0,0,0,0,0,0,0,6,1,5,5,4,4,3,1,0,0,0,0,0,\
+0,0,0,0,0,0,0,0,0,6,1,5,5,4,4,3,1,0,0,0,0,\
+0,0,0,0,0,0,0,0,0,0,6,1,5,5,4,4,3,1,0,0,0,\
+0,0,0,0,0,0,0,0,0,0,0,6,1,5,5,4,4,3,1,0,0,\
+0,0,0,0,0,0,0,0,0,0,0,0,6,1,5,5,4,4,3,1,0,\
+0,0,0,0,0,0,0,0,0,0,0,0,0,6,1,5,5,4,4,3,1"
+
+F_8_BCH_code_d5_minimum_distance:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-define v -vector -format 14 -field F \
+			-compact $(CODE_BCH_F8_N21_D5_GENMA_OVERRIDE_POLYNOMIAL11) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end
+# important: use the same polynomial as when creating the code.
+#
+# d=5
+
+
+
+
+
+
+
+F8_BCH_code_n63_d43:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
 		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 21 6 \
+			-make_BCH_code 63 43 \
 		-end
+	pdflatex BCH_codes_q8_n63_d43.tex
+	open BCH_codes_q8_n63_d43.pdf
 
 
-#generator polynomial is X^{9} + 5X^{8} + 5X^{6} + 4X^{3} + 5X + 4
 
-F_8_BCH_code_d7:
-	$(ORBITER) -v 3 \
+
+CODE_BCH_F8_N63_K9_D43_GENMA="\
+4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,0,0,0,0,0,0,\
+0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,0,0,0,0,0,\
+0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,0,0,0,0,\
+0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,0,0,0,\
+0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,0,0,\
+0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,0,\
+0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,\
+0,0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,\
+0,0,0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1"
+
+
+
+F8_BCH_code_n63_d43_minimum_distance:
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 21 7 \
-		-end
-	pdflatex BCH_codes_q8_n21_d7.tex
-	open BCH_codes_q8_n21_d7.pdf
-
-#generator polynomial is X^{10} + X^{9} + 2X^{8} + 5X^{7} + 2X^{6} + 4X^{4} + 6X^{3} + 5X^{2} + 6X + 6
-
-F_8_BCH_code_d8:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 21 8 \
+		-define v -vector -format 9 -field F \
+			-compact $(CODE_BCH_F8_N63_K9_D43_GENMA) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
 		-end
 
-#generator polynomial is X^{12} + 2X^{10} + 6X^{9} + 5X^{8} + 7X^{7} + 6X^{6} + 2X^{5} + 7X^{4} + 5X^{3} + 5X^{2} + 6
-#k=9
-# after reduction: [63,27]_2 r=36
+
+#coding_theory_domain::do_minimum_distance The minimum distance is d = 45, computed in 0 days, 0 hours, 1 minutes, 32 seconds
+#1:32
+
+
 
 
 
@@ -11384,7 +11451,18 @@ CODE_21_15_4_weight_enumerator:
 			-weight_enumerator v \
 		-end
 
+CODE_21_15_4_minimum_distance:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -format 15 -field F \
+			-compact $(CODE_21_15_4) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end
 
+#d=4
 
 Reed_solomon_F8_work:
 	$(ORBITER) -v 3 -define F -finite_field -q 8 -end \
@@ -13470,6 +13548,38 @@ BLT_13_deep_14:
 			-problem_label BLT_q13 -W -depth 14 -end \
 		-end
 
+BLT_11_deep_search:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier O -starter_size 12 -end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q11 \
+				-W -depth 12 \
+				-report -end \
+			-end \
+		-end
+	pdflatex BLT_q11_poset.tex
+	open BLT_q11_poset.pdf
+
+
+
+
+BLT_13_deep_search:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier O -starter_size 14 -end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q13 \
+				-W -depth 14 \
+				-report -end \
+			-end \
+		-end
+	pdflatex BLT_q13_poset.tex
+	open BLT_q13_poset.pdf
 
 
 

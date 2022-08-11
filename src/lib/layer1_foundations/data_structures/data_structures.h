@@ -562,9 +562,11 @@ public:
 		int k, int n, int pivot);
 	int matrix_max_log_of_entries(int *p, int m, int n);
 	void matrix_print_ost(std::ostream &ost, int *p, int m, int n);
+	void matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n);
 	void matrix_print(int *p, int m, int n);
 	void matrix_print_tight(int *p, int m, int n);
 	void matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
+	void matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n, int w);
 	void matrix_print(int *p, int m, int n, int w);
 	void matrix_print_bitwise(int *p, int m, int n);
 	void distribution_print(std::ostream &ost,

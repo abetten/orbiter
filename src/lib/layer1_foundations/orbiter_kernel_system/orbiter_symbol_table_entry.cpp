@@ -349,6 +349,24 @@ void orbiter_symbol_table_entry::init_graph(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_code(std::string &label,
+		void *Code, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_code" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_code;
+	ptr = Code;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_code done" << endl;
+	}
+}
+
+
 void orbiter_symbol_table_entry::init_spread_table(std::string &label,
 		void *P, int verbose_level)
 {

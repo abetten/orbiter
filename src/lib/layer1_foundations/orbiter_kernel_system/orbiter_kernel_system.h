@@ -894,6 +894,8 @@ public:
 			geometry::geometric_object_create *COC, int verbose_level);
 	void init_graph(std::string &label,
 			void *Gr, int verbose_level);
+	void init_code(std::string &label,
+			void *Code, int verbose_level);
 	void init_spread_table(std::string &label,
 			void *P, int verbose_level);
 	void init_packing_was(std::string &label,

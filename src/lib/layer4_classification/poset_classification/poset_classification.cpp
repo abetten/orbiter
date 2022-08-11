@@ -947,18 +947,21 @@ void poset_classification::find_node_by_stabilizer_order(
 	}
 }
 
-void poset_classification::get_all_stabilizer_orders_at_level(int level, long int *&Ago, int &nb, int verbose_level)
+void poset_classification::get_all_stabilizer_orders_at_level(int level,
+		long int *&Ago, int &nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::get_all_stabilizer_orders_at_level, level = " << level << endl;
+		cout << "poset_classification::get_all_stabilizer_orders_at_level, "
+				"level = " << level << endl;
 	}
 	int i;
 
 	nb = nb_orbits_at_level(level);
 	if (f_v) {
-		cout << "poset_classification::get_all_stabilizer_orders_at_level nb = " << nb << endl;
+		cout << "poset_classification::get_all_stabilizer_orders_at_level "
+				"nb = " << nb << endl;
 	}
 	Ago = NEW_lint(nb);
 	for (i = 0; i < nb; i++) {

@@ -215,82 +215,11 @@ class interface_coding_theory {
 	int make_bounds_k;
 	int make_bounds_q;
 
-#if 0
-	int f_BCH;
-	int f_BCH_dual;
-	int BCH_n;
-	int BCH_q;
-	int BCH_t;
-	//int BCH_b;
-#endif
-
 	int f_Hamming_space_distance_matrix;
 	int Hamming_space_n;
 	int Hamming_space_q;
 
 
-#if 0
-	int f_general_code_binary;
-	int general_code_binary_n;
-	std::string general_code_binary_text;
-
-	int f_code_diagram;
-	std::string code_diagram_label;
-	std::string code_diagram_codewords_text;
-	int code_diagram_n;
-
-	int f_code_diagram_from_file;
-	std::string code_diagram_from_file_codewords_fname;
-
-	int f_enhance;
-	int enhance_radius;
-
-	int f_metric_balls;
-	int metric_ball_radius;
-
-
-	int f_linear_code_through_basis;
-	int linear_code_through_basis_n;
-	std::string linear_code_through_basis_text;
-
-
-	int f_long_code;
-	int long_code_n;
-	std::vector<std::string> long_code_generators;
-
-	int f_encode_text_5bits;
-	std::string encode_text_5bits_input;
-	std::string encode_text_5bits_fname;
-
-	int f_field_induction;
-	std::string field_induction_fname_in;
-	std::string field_induction_fname_out;
-	int field_induction_nb_bits;
-
-	int f_crc32;
-	std::string crc32_text;
-
-	int f_crc32_hexdata;
-	std::string crc32_hexdata_text;
-
-	int f_crc32_test;
-	int crc32_test_block_length;
-
-	int f_crc256_test;
-	int crc256_test_message_length;
-	int crc256_test_R;
-	int crc256_test_k;
-
-	int f_crc32_remainders;
-	int crc32_remainders_message_length;
-
-	int f_crc32_file_based;
-	std::string crc32_file_based_fname;
-	int crc32_file_based_block_length;
-
-	int f_crc_new_file_based;
-	std::string crc_new_file_based_fname;
-#endif
 
 public:
 	interface_coding_theory();
@@ -905,6 +834,7 @@ public:
 			long int *&Pts, int &nb_pts, int verbose_level);
 	apps_algebra::vector_ge_builder *get_object_of_type_vector_ge(std::string &label);
 	orthogonal_geometry_applications::orthogonal_space_with_action *get_object_of_type_orthogonal_space_with_action(std::string &label);
+	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
 
 };
 
@@ -966,6 +896,9 @@ public:
 
 	int f_graph;
 	apps_graph_theory::create_graph_description *Create_graph_description;
+
+	int f_code;
+	apps_coding_theory::create_code_description *Create_code_description;
 
 	int f_spread_table;
 	std::string spread_table_label_PA;
@@ -1045,6 +978,7 @@ public:
 			int verbose_level);
 	//void definition_of_combinatorial_object(int verbose_level);
 	void definition_of_graph(int verbose_level);
+	void definition_of_code(int verbose_level);
 	void definition_of_spread_table(int verbose_level);
 	void definition_of_packing_was(int verbose_level);
 	void definition_of_packing_was_choose_fixed_points(int verbose_level);

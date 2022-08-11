@@ -460,17 +460,36 @@ orthogonal_geometry_applications::orthogonal_space_with_action *orbiter_top_leve
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_vector_ge cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_orthogonal_space) {
-		cout << "orbiter_top_level_session::get_object_of_type_vector_ge object type != t_orthogonal_space" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action object type != t_orthogonal_space" << endl;
 		exit(1);
 	}
 
 
 	return (orthogonal_geometry_applications::orthogonal_space_with_action *) get_object(idx);
 }
+
+field_theory::finite_field *orbiter_top_level_session::get_object_of_type_finite_field(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_finite_field cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_finite_field) {
+		cout << "orbiter_top_level_session::get_object_of_type_finite_field object type != t_finite_field" << endl;
+		exit(1);
+	}
+
+
+	return (field_theory::finite_field *) get_object(idx);
+}
+
 
 }}}
 

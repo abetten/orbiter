@@ -424,8 +424,11 @@ MODULES= \
 		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \
 		layer5_top_level/algebra_and_number_theory/vector_ge_builder.o \
 		layer5_top_level/algebra_and_number_theory/young.o \
+		layer5_top_level/coding_theory_apps/code_modification_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity.o \
+		layer5_top_level/coding_theory_apps/create_code_description.o \
+		layer5_top_level/coding_theory_apps/create_code.o \
 		layer5_top_level/combinatorics/boolean_function_classify.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity_description.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity.o \

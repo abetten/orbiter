@@ -151,6 +151,9 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_graph) {
 		cout << "t_graph" << endl;
 	}
+	else if (t == t_code) {
+		cout << "t_code" << endl;
+	}
 	else if (t == t_spread_table) {
 		cout << "t_spread_table" << endl;
 	}

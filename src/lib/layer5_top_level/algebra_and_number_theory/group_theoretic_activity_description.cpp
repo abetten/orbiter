@@ -115,6 +115,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_report = FALSE;
 	f_sylow = FALSE;
 	f_group_table = FALSE;
+
 	f_classes = FALSE;
 
 	f_export_group_table = FALSE;

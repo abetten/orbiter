@@ -955,12 +955,20 @@ int int_vec::matrix_max_log_of_entries(int *p, int m, int n)
 	return w;
 }
 
-void int_vec::matrix_print_ost(ostream &ost, int *p, int m, int n)
+void int_vec::matrix_print_ost(std::ostream &ost, int *p, int m, int n)
 {
 	int w;
 
 	w = matrix_max_log_of_entries(p, m, n);
 	matrix_print_ost(ost, p, m, n, w);
+}
+
+void int_vec::matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n)
+{
+	int w;
+
+	w = matrix_max_log_of_entries(p, m, n);
+	matrix_print_makefile_style_ost(ost, p, m, n, w);
 }
 
 void int_vec::matrix_print(int *p, int m, int n)
@@ -988,6 +996,27 @@ void int_vec::matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w)
 			}
 		}
 		ost << endl;
+	}
+}
+
+void int_vec::matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n, int w)
+{
+	int i, j;
+
+	ost << "=\"\\" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << setw((int) w) << p[i * n + j];
+			if (i < m - 1 || j < n - 1) {
+				ost << ",";
+			}
+		}
+		if (i < m - 1) {
+			ost << "\\" << endl;
+		}
+		else {
+			ost << "\"" << endl;
+		}
 	}
 }
 

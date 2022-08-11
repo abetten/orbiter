@@ -39,6 +39,7 @@ public:
 	void make_gilbert_varshamov_code(
 			int n, int k, int d,
 			field_theory::finite_field *F,
+			int *&genma, int *&checkma,
 			int verbose_level);
 	void make_gilbert_varshamov_code_recursion(
 			field_theory::finite_field *F,
@@ -62,7 +63,7 @@ public:
 		// code[k * n]
 	void codewords_affine(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
-		int *codewords, // q^k
+		long int *codewords, // q^k
 		int verbose_level);
 	void code_projective_weight_enumerator(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
@@ -88,6 +89,9 @@ public:
 			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
+	void do_minimum_distance(field_theory::finite_field *F,
+			int *M, int m, int n,
+			int verbose_level);
 
 	void do_linear_code_through_basis(
 			field_theory::finite_field *F,
@@ -109,6 +113,7 @@ public:
 			field_theory::finite_field *F,
 			int n,
 			long int *columns_set, int k,
+			int *&genma,
 			int verbose_level);
 	void do_polynomial(
 			int n,
@@ -311,6 +316,7 @@ public:
 	create_BCH_code();
 	~create_BCH_code();
 	void init(field_theory::finite_field *F, int n, int d, int verbose_level);
+	void do_report(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 
 

@@ -439,7 +439,7 @@ public:
 // graph_modification_description.cpp
 // #############################################################################
 
-//! unary modification of graphs and tournaments
+//! unary operators to modify graphs and tournaments
 
 
 class graph_modification_description {

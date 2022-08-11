@@ -18,7 +18,7 @@ namespace linear_algebra {
 // linear_algebra_global.cpp:
 // #############################################################################
 
-//! catch all class for linear algebra functions
+//! catch all class for functions related to linear algebra
 
 class linear_algebra_global {
 public:

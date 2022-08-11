@@ -19,7 +19,12 @@ namespace apps_coding_theory {
 coding_theoretic_activity::coding_theoretic_activity()
 {
 	Descr = NULL;
+
+	f_has_finite_field = FALSE;
 	F = NULL;
+
+	f_has_code = FALSE;
+	Code = NULL;
 }
 
 coding_theoretic_activity::~coding_theoretic_activity()
@@ -27,86 +32,65 @@ coding_theoretic_activity::~coding_theoretic_activity()
 }
 
 
-void coding_theoretic_activity::init(coding_theoretic_activity_description *Descr,
+void coding_theoretic_activity::init_field(coding_theoretic_activity_description *Descr,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theoretic_activity::init" << endl;
+		cout << "coding_theoretic_activity::init_field" << endl;
 	}
 
 	coding_theoretic_activity::Descr = Descr;
+	f_has_finite_field = TRUE;
 	coding_theoretic_activity::F = F;
 
 	if (f_v) {
-		cout << "coding_theoretic_activity::init, field of order q = " << F->q << endl;
+		cout << "coding_theoretic_activity::init_field, field of order q = " << F->q << endl;
 	}
 
 	if (f_v) {
-		cout << "coding_theoretic_activity::init done" << endl;
+		cout << "coding_theoretic_activity::init_field done" << endl;
 	}
 }
+
+void coding_theoretic_activity::init_code(coding_theoretic_activity_description *Descr,
+		create_code *Code,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::init_code" << endl;
+	}
+
+	coding_theoretic_activity::Descr = Descr;
+
+	f_has_code = TRUE;
+	coding_theoretic_activity::Code = Code;
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::init_code "
+				"code=" << Code->label_txt << endl;
+	}
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::init_code done" << endl;
+	}
+}
+
 
 void coding_theoretic_activity::perform_activity(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theoretic_activity::perform_activity, q=" << F->q << endl;
+		cout << "coding_theoretic_activity::perform_activity" << endl;
 	}
 	data_structures::string_tools ST;
 
-	if (Descr->f_make_macwilliams_system) {
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.do_make_macwilliams_system(
-				Descr->make_macwilliams_system_q,
-				Descr->make_macwilliams_system_n,
-				Descr->make_macwilliams_system_k, verbose_level);
-	}
-	else if (Descr->f_table_of_bounds) {
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.make_table_of_bounds(
-				Descr->table_of_bounds_n_max,
-				Descr->table_of_bounds_q,
-				verbose_level);
-	}
-	else if (Descr->f_make_bounds_for_d_given_n_and_k_and_q) {
-
-		coding_theory::coding_theory_domain Coding;
-		int d_GV;
-		int d_singleton;
-		int d_hamming;
-		int d_plotkin;
-		int d_griesmer;
-
-		int n, k, q;
-
-		n = Descr->make_bounds_n;
-		k = Descr->make_bounds_k;
-		q = Descr->make_bounds_q;
-
-		d_GV = Coding.gilbert_varshamov_lower_bound_for_d(n, k, q, verbose_level);
-		d_singleton = Coding.singleton_bound_for_d(n, k, q, verbose_level);
-		d_hamming = Coding.hamming_bound_for_d(n, k, q, verbose_level);
-		d_plotkin = Coding.plotkin_bound_for_d(n, k, q, verbose_level);
-		d_griesmer = Coding.griesmer_bound_for_d(n, k, q, verbose_level);
-
-		cout << "n = " << n << " k=" << k << " q=" << q << endl;
-
-		cout << "d_GV = " << d_GV << endl;
-		cout << "d_singleton = " << d_singleton << endl;
-		cout << "d_hamming = " << d_hamming << endl;
-		cout << "d_plotkin = " << d_plotkin << endl;
-		cout << "d_griesmer = " << d_griesmer << endl;
-
-	}
-	else if (Descr->f_BCH) {
+	if (Descr->f_BCH) {
 
 		coding_theory::coding_theory_domain Coding;
 
@@ -125,15 +109,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				Descr->BCH_q,
 				Descr->BCH_t, 1, TRUE,
 				verbose_level);
-	}
-	else if (Descr->f_Hamming_space_distance_matrix) {
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.make_Hamming_graph_and_write_file(
-				Descr->Hamming_space_n,
-				Descr->Hamming_space_q,
-				FALSE /* f_projective*/, verbose_level);
 	}
 	else if (Descr->f_general_code_binary) {
 			long int *set;
@@ -209,73 +184,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 					verbose_level);
 	}
 
-	else if (Descr->f_linear_code_through_basis) {
-			long int *set;
-			int sz;
-			int f_embellish = FALSE;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			//Orbiter->Lint_vec.scan(linear_code_through_basis_text, set, sz);
-			orbiter_kernel_system::Orbiter->get_lint_vector_from_label(Descr->linear_code_through_basis_text, set, sz, verbose_level);
-
-			Codes.do_linear_code_through_basis(
-					F,
-					Descr->linear_code_through_basis_n,
-					set, sz /*k*/,
-					f_embellish,
-					verbose_level);
-
-			FREE_lint(set);
-
-	}
-
-	else if (Descr->f_linear_code_through_columns_of_parity_check_projectively) {
-			long int *set;
-			int n;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
-			orbiter_kernel_system::Orbiter->get_lint_vector_from_label(
-					Descr->linear_code_through_columns_of_parity_check_text, set, n, verbose_level);
-
-			Codes.do_linear_code_through_columns_of_parity_check_projectively(
-					F,
-					n,
-					set,
-					Descr->linear_code_through_columns_of_parity_check_k /*k*/,
-					verbose_level);
-
-			FREE_lint(set);
-
-	}
-
-
-	else if (Descr->f_linear_code_through_columns_of_parity_check) {
-			long int *set;
-			int n;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
-			orbiter_kernel_system::Orbiter->get_lint_vector_from_label(
-					Descr->linear_code_through_columns_of_parity_check_text,
-					set, n, verbose_level);
-
-			Codes.do_linear_code_through_columns_of_parity_check(
-					F,
-					n,
-					set,
-					Descr->linear_code_through_columns_of_parity_check_k /*k*/,
-					verbose_level);
-
-			FREE_lint(set);
-
-	}
 
 	else if (Descr->f_long_code) {
 		coding_theory::coding_theory_domain Codes;
@@ -437,18 +345,23 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		FREE_int(v);
 	}
-	else if (Descr->f_make_gilbert_varshamov_code) {
+	else if (Descr->f_minimum_distance) {
 
-		coding_theory::coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Codes;
+
+		int *v;
+		int m, n;
+
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->minimum_distance_code_label, v, m, n);
 
 
-		Coding.make_gilbert_varshamov_code(
-				Descr->make_gilbert_varshamov_code_n,
-				Descr->make_gilbert_varshamov_code_k,
-				Descr->make_gilbert_varshamov_code_d,
-				F,
+		Codes.do_minimum_distance(F,
+				v, m, n,
 				verbose_level);
+
+		FREE_int(v);
 	}
+
 	else if (Descr->f_generator_matrix_cyclic_code) {
 
 		cout << "before generator_matrix_cyclic_code" << endl;
@@ -522,138 +435,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 	}
-	else if (Descr->f_make_BCH_code) {
-
-#if 0
-		coding_theory_domain Codes;
-		nth_roots *Nth;
-		unipoly_object P;
-
-		int n;
-		int *Genma;
-		int degree;
-		int *generator_polynomial;
-		int i;
-
-		n = Descr->make_BCH_code_n;
-		Codes.make_BCH_code(n, F, Descr->make_BCH_code_d,
-					Nth, P,
-					verbose_level);
-
-		cout << "generator polynomial is:" << endl;
-
-		cout << "-dense \"";
-		Nth->FX->print_object_dense(P, cout);
-		cout << "\"" << endl;
-		cout << endl;
-
-		cout << "-sparse \"";
-		Nth->FX->print_object_sparse(P, cout);
-		cout << "\"" << endl;
-		cout << endl;
-
-		Nth->FX->print_object(P, cout);
-		cout << endl;
-
-		degree = Nth->FX->degree(P);
-		generator_polynomial = NEW_int(degree + 1);
-		for (i = 0; i <= degree; i++) {
-			generator_polynomial[i] = Nth->FX->s_i(P, i);
-		}
-
-		Codes.generator_matrix_cyclic_code(n,
-					degree, generator_polynomial, Genma);
-
-		int k = n - degree;
-
-#if 0
-		cout << "generator matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Genma,
-				k, n, n, F->log10_of_q);
-#endif
-
-#else
-		coding_theory::create_BCH_code *C;
-
-		C = NEW_OBJECT(coding_theory::create_BCH_code);
-
-		C->init(F, Descr->make_BCH_code_n,
-				Descr->make_BCH_code_d, verbose_level);
-
-		orbiter_kernel_system::file_io Fio;
-#if 0
-		{
-			char str[1000];
-			string fname;
-
-			fname.assign("genma_BCH");
-			sprintf(str, "_n%d", n);
-			fname.append(str);
-			sprintf(str, "_k%d", k);
-			fname.append(str);
-			sprintf(str, "_q%d", F->q);
-			fname.append(str);
-			fname.append(".csv");
-
-			Fio.int_matrix_write_csv(fname, Genma, k, n);
-
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-#endif
-		{
-
-			string fname;
-			string author;
-			string title;
-			string extra_praeamble;
-
-
-			char str[1000];
-
-			snprintf(str, 1000, "BCH_codes_q%d_n%d_d%d.tex",
-					F->q,
-					Descr->make_BCH_code_n,
-					Descr->make_BCH_code_d
-					);
-			fname.assign(str);
-			snprintf(str, 1000, "BCH codes");
-			title.assign(str);
-
-
-
-			{
-				ofstream ost(fname);
-				number_theory::number_theory_domain NT;
-
-
-				orbiter_kernel_system::latex_interface L;
-
-				L.head(ost,
-						FALSE /* f_book*/,
-						TRUE /* f_title */,
-						title, author,
-						FALSE /* f_toc */,
-						FALSE /* f_landscape */,
-						TRUE /* f_12pt */,
-						TRUE /* f_enlarged_page */,
-						TRUE /* f_pagenumbers */,
-						extra_praeamble /* extra_praeamble */);
-
-
-				C->report(ost, verbose_level);
-
-				L.foot(ost);
-
-
-			}
-
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		}
-
-#endif
-
-	}
 	else if (Descr->f_make_BCH_code_and_encode) {
 
 		coding_theory::coding_theory_domain Codes;
@@ -661,7 +442,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		ring_theory::unipoly_object P;
 
 		int n;
-		//int *Genma;
 		int degree;
 		int *generator_polynomial;
 		int i;
@@ -738,6 +518,90 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_k,
 				verbose_level);
 	}
+
+	else if (Descr->f_export_magma) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity f_export_magma" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity f_export_magma needs a code" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity before Code->export_magma" << endl;
+		}
+		Code->export_magma(Descr->export_magma_fname, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity after Code->export_magma" << endl;
+		}
+
+	}
+
+	else if (Descr->f_export_codewords) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity f_export_codewords" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity f_export_codewords needs a code" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity before Code->export_codewords" << endl;
+		}
+		Code->export_codewords(Descr->export_codewords_fname, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity after Code->export_codewords" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_export_genma) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity f_export_genma" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity f_export_genma needs a code" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity before Code->export_genma" << endl;
+		}
+		Code->export_genma(Descr->export_genma_fname, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity after Code->export_genma" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_export_checkma) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity f_export_checkma" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity f_export_checkma needs a code" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity before Code->export_checkma" << endl;
+		}
+		Code->export_checkma(Descr->export_checkma_fname, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity after Code->export_checkma" << endl;
+		}
+
+	}
+
+
 
 	if (f_v) {
 		cout << "coding_theoretic_activity::perform_activity done" << endl;
