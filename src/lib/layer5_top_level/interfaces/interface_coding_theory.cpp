@@ -39,7 +39,15 @@ interface_coding_theory::interface_coding_theory()
 	Hamming_space_n = 0;
 	Hamming_space_q = 0;
 
+	f_introduce_errors = FALSE;
+	introduce_errors_crc_options_description = NULL;
 
+	f_check_errors = FALSE;
+	//std::string check_errors_fname_coded;
+	//std::string check_errors_fname_error_log;
+	//std::string check_errors_fname_error_detected;
+	//std::string check_errors_fname_error_undetected;
+	check_errors_block_length = 0;
 }
 
 
@@ -59,6 +67,12 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
 		cout << "-Hamming_space_distance_matrix <int : n> <int : q>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
+		cout << "-introduce_errors <description> -end" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
+		cout << "-check_errors <string : fname_in> <string : fname_coded> <string : fname_error_log> <string : fname_error_detected> <string : fname_error_undetected> <int : block_length> <int : block_length>" << endl;
 	}
 }
 
@@ -85,6 +99,12 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -147,6 +167,45 @@ void interface_coding_theory::read_arguments(int argc,
 			cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
+		f_introduce_errors = TRUE;
+
+		introduce_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		if (f_v) {
+			cout << "-introduce_errors " << endl;
+		}
+		introduce_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		i += introduce_errors_crc_options_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		if (f_v) {
+			cout << "interface_coding_theory::read_arguments finished "
+					"reading -introduce_errors" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-introduce_errors " << endl;
+			introduce_errors_crc_options_description->print();
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
+		f_check_errors = TRUE;
+		check_errors_fname_coded.assign(argv[++i]);
+		check_errors_fname_error_log.assign(argv[++i]);
+		check_errors_fname_error_detected.assign(argv[++i]);
+		check_errors_fname_error_undetected.assign(argv[++i]);
+		check_errors_block_length = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-check_errors "
+					<< check_errors_fname_coded << " "
+					<< check_errors_fname_error_log << " "
+					<< check_errors_fname_error_detected << " "
+					<< check_errors_fname_error_undetected << " "
+					<< check_errors_block_length << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
@@ -167,6 +226,18 @@ void interface_coding_theory::print()
 	}
 	if (f_Hamming_space_distance_matrix) {
 		cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
+	}
+	if (f_introduce_errors) {
+		cout << "-introduce_errors " << endl;
+		introduce_errors_crc_options_description->print();
+	}
+	if (f_check_errors) {
+		cout << "-check_errors "
+				<< check_errors_fname_coded << " "
+				<< check_errors_fname_error_log << " "
+				<< check_errors_fname_error_detected << " "
+				<< check_errors_fname_error_undetected << " "
+				<< check_errors_block_length << endl;
 	}
 }
 
@@ -238,6 +309,31 @@ void interface_coding_theory::worker(int verbose_level)
 		Coding.make_Hamming_graph_and_write_file(Hamming_space_n, Hamming_space_q,
 				FALSE /* f_projective*/, verbose_level);
 	}
+
+	else if (f_introduce_errors) {
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.introduce_errors(introduce_errors_crc_options_description,
+				verbose_level);
+
+	}
+
+	else if (f_check_errors) {
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.check_errors(
+				check_errors_fname_coded,
+				check_errors_fname_error_log,
+				check_errors_fname_error_detected,
+				check_errors_fname_error_undetected,
+				check_errors_block_length,
+				verbose_level);
+
+	}
+
+
 
 	if (f_v) {
 		cout << "interface_coding_theory::worker done" << endl;

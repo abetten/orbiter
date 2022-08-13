@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 		coding_theory_domain.o \
+		crc_options_description.o \
 		create_BCH_code.o \
 		cyclic_codes.o \
 		tensor_codes.o \

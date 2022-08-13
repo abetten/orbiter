@@ -79,7 +79,8 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	crc256_test_k = 0;
 
 	f_crc32_file_based = FALSE;
-	//std::string crc32_file_based_fname;
+	//std::string crc32_file_based_fname_in;
+	//std::string crc32_file_based_fname_out;
 	crc32_file_based_block_length = 0;
 
 	f_crc_new_file_based = FALSE;
@@ -355,11 +356,14 @@ int coding_theoretic_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
 			f_crc32_file_based = TRUE;
-			crc32_file_based_fname.assign(argv[++i]);
+			crc32_file_based_fname_in.assign(argv[++i]);
+			crc32_file_based_fname_out.assign(argv[++i]);
 			crc32_file_based_block_length = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-crc32_file_based " << crc32_file_based_fname
-						<< " " << crc32_file_based_block_length << endl;
+				cout << "-crc32_file_based "
+						<< crc32_file_based_fname_in << " "
+						<< crc32_file_based_fname_out << " "
+						<< crc32_file_based_block_length << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-crc_new_file_based") == 0) {
@@ -597,8 +601,10 @@ void coding_theoretic_activity_description::print()
 		cout << "-crc32_remainders " << crc32_remainders_message_length << endl;
 	}
 	if (f_crc32_file_based) {
-		cout << "-crc32_file_based " << crc32_file_based_fname
-				<< " " << crc32_file_based_block_length << endl;
+		cout << "-crc32_file_based "
+				<< crc32_file_based_fname_in << " "
+				<< crc32_file_based_fname_out << " "
+				<< crc32_file_based_block_length << endl;
 	}
 	if (f_crc_new_file_based) {
 		cout << "-crc_new_file_based "

@@ -276,13 +276,62 @@ public:
 	void crc256_test_k_subsets(int message_length, int R, int k, int verbose_level);
 	void crc32_remainders(int message_length, int verbose_level);
 	void crc32_remainders_compute(int message_length, int R, uint32_t *&Crc, int verbose_level);
-	void crc32_file_based(std::string &fname_in,
+	void introduce_errors(
+			crc_options_description *Crc_options_description,
+			int verbose_level);
+	void crc32_file_based(std::string &fname_in, std::string &fname_out,
 			int block_length, int verbose_level);
 	void crc771_file_based(std::string &fname_in, int verbose_level);
+	void check_errors(std::string &fname_coded,
+			std::string &fname_error_log,
+			std::string &fname_error_detected,
+			std::string &fname_error_undetected,
+			int block_length,
+			int verbose_level);
 
 
 
 };
+
+
+// #############################################################################
+// crc_options_description.cpp:
+// #############################################################################
+
+//! options for activities involving CRC codes
+
+
+class crc_options_description {
+public:
+
+	int f_input;
+	std::string input_fname;
+
+	int f_output;
+	std::string output_fname;
+
+
+
+	int f_block_length;
+	int block_length;
+
+	int f_block_based_error_generator;
+
+	int f_file_based_error_generator;
+	int file_based_error_generator_threshold;
+
+	int f_threshold;
+	int threshold;
+
+	crc_options_description();
+	~crc_options_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
 
 // #############################################################################
 // create_BCH_code.cpp:

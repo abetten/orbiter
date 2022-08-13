@@ -1088,9 +1088,15 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 
 	dummy.assign("");
 
+	if (f_v) {
+		cout << "coding_theory_domain::make_BCH_codes before Codes.make_cyclic_code" << endl;
+	}
 	Codes.make_cyclic_code(n, q, t, roots, nb_roots,
 			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
 			fname_txt, fname_csv, verbose_level);
+	if (f_v) {
+		cout << "coding_theory_domain::make_BCH_codes after Codes.make_cyclic_code" << endl;
+	}
 
 	FREE_int(roots);
 

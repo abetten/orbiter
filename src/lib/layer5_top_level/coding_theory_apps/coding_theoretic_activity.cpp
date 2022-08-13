@@ -307,13 +307,15 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 	}
 	else if (Descr->f_crc32_file_based) {
-		cout << "-crc32_file_based " << Descr->crc32_file_based_fname
+		cout << "-crc32_file_based " << Descr->crc32_file_based_fname_in
 				<< " " << Descr->crc32_file_based_block_length
 				<< endl;
 
 		coding_theory::coding_theory_domain Codes;
 
-		Codes.crc32_file_based(Descr->crc32_file_based_fname,
+		Codes.crc32_file_based(
+				Descr->crc32_file_based_fname_in,
+				Descr->crc32_file_based_fname_out,
 				Descr->crc32_file_based_block_length,
 				verbose_level - 1);
 

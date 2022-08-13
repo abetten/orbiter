@@ -110,7 +110,8 @@ public:
 	int crc32_remainders_message_length;
 
 	int f_crc32_file_based;
-	std::string crc32_file_based_fname;
+	std::string crc32_file_based_fname_in;
+	std::string crc32_file_based_fname_out;
 	int crc32_file_based_block_length;
 
 	int f_crc_new_file_based;

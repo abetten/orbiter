@@ -286,6 +286,7 @@ void interface_algebra::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 		cout << "-draw_mod_n " << endl;
+		Draw_mod_n_description->print();
 	}
 	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
 		f_power_function_mod_n = TRUE;
