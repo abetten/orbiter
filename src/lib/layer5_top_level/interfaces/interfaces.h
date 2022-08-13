@@ -219,6 +219,16 @@ class interface_coding_theory {
 	int Hamming_space_n;
 	int Hamming_space_q;
 
+	int f_introduce_errors;
+	coding_theory::crc_options_description *introduce_errors_crc_options_description;
+
+	int f_check_errors;
+	std::string check_errors_fname_coded;
+	std::string check_errors_fname_error_log;
+	std::string check_errors_fname_error_detected;
+	std::string check_errors_fname_error_undetected;
+	int check_errors_block_length;
+
 
 
 public:

@@ -4700,160 +4700,6 @@ void coding_theory_domain::crc32_remainders_compute(int message_length, int R, u
 	}
 }
 
-void coding_theory_domain::crc32_file_based(std::string &fname_in,
-		int block_length, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based "
-				"fname_in=" << fname_in << endl;
-		cout << "coding_theory_domain::crc32_file_based "
-				"block_length=" << block_length << endl;
-	}
-
-	data_structures::string_tools ST;
-	string fname_out;
-	int information_length = block_length - 4;
-
-	fname_out.assign(fname_in);
-	ST.chop_off_extension(fname_out);
-	fname_out.append("_crc.bin");
-
-	orbiter_kernel_system::file_io Fio;
-
-	long int N, C, L;
-	char *buffer;
-
-	N = Fio.file_size(fname_in);
-
-	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based input file size = " << N << endl;
-	}
-	buffer = NEW_char(block_length);
-
-
-	ifstream ist(fname_in, ios::binary);
-
-	{
-		ofstream ost(fname_out, ios::binary);
-		uint32_t crc;
-		char *p_crc;
-
-		p_crc = (char *) &crc;
-		C = 0;
-
-		while (C < N) {
-
-			if (C + information_length > N) {
-				L = C + information_length - N;
-			}
-			else {
-				L = information_length;
-			}
-			ist.read(buffer, L);
-
-			crc = crc32(buffer, L);
-			buffer[L + 0] = p_crc[0];
-			buffer[L + 1] = p_crc[1];
-			buffer[L + 2] = p_crc[2];
-			buffer[L + 3] = p_crc[3];
-
-			ost.write(buffer, L + 4);
-
-
-			C += information_length;
-		}
-
-	}
-	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
-
-
-
-	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based done" << endl;
-	}
-
-}
-
-
-void coding_theory_domain::crc771_file_based(std::string &fname_in, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "coding_theory_domain::crc771_file_based fname_in=" << fname_in << endl;
-	}
-
-	data_structures::string_tools ST;
-	string fname_out;
-	int block_length = 771;
-	int redundancy = 30;
-	int information_length = block_length - redundancy;
-
-	fname_out.assign(fname_in);
-	ST.chop_off_extension(fname_out);
-	fname_out.append("_crc771.bin");
-
-	orbiter_kernel_system::file_io Fio;
-
-	long int N, C, L;
-	char *buffer;
-
-	N = Fio.file_size(fname_in);
-
-	if (f_v) {
-		cout << "coding_theory_domain::crc771_file_based input file size = " << N << endl;
-	}
-	buffer = NEW_char(block_length);
-
-
-	ifstream ist(fname_in, ios::binary);
-
-	{
-		ofstream ost(fname_out, ios::binary);
-		uint32_t crc;
-		char *p_crc;
-		int i;
-
-		p_crc = (char *) &crc;
-		C = 0;
-
-		while (C < N) {
-
-			if (C + information_length > N) {
-				L = C + information_length - N;
-			}
-			else {
-				L = information_length;
-			}
-			ist.read(buffer + redundancy, L);
-			for (i = 0; i < redundancy; i++) {
-				buffer[i] = 0;
-			}
-			for (i = L; i < block_length; i++) {
-				buffer[i] = 0;
-			}
-
-			CRC_BCH256_771_divide(buffer, buffer);
-
-			ost.write(buffer, block_length);
-
-
-			C += information_length;
-		}
-
-	}
-	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
-
-
-
-	if (f_v) {
-		cout << "coding_theory_domain::crc771_file_based done" << endl;
-	}
-
-}
-
 // the size of the array B is  255 x 31
 static const unsigned char B[] = {
   1, 26,210, 24,138,148,160, 58,108,199, 95, 56,  9,205,194,193,  3,248,110,150, 24,169,192,212,112,144, 97,109,174,253,  1,
@@ -5138,6 +4984,575 @@ static void CRC_BCH256_771_divide(const char *in, char *out)
 		out[i] = R[i];
 	}
 }
+
+
+
+void coding_theory_domain::introduce_errors(
+		crc_options_description *Crc_options_description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::introduce_errors " << endl;
+		Crc_options_description->print();
+	}
+
+	data_structures::string_tools ST;
+	string fname_error;
+	//int information_length = block_length - 4;
+
+	if (!Crc_options_description->f_input) {
+		cout << "coding_theory_domain::introduce_errors please use -input <fname>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_output) {
+		cout << "coding_theory_domain::introduce_errors please use -output <fname>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_block_length) {
+		cout << "coding_theory_domain::introduce_errors please use -block_length <block_length>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_threshold) {
+		cout << "coding_theory_domain::introduce_errors please use -threshold <threshold>" << endl;
+		exit(1);
+	}
+#if 1
+	fname_error.assign(Crc_options_description->output_fname);
+	ST.chop_off_extension(fname_error);
+	fname_error.append("_pattern.csv");
+#endif
+
+	int block_length;
+
+	block_length = Crc_options_description->block_length;
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L, cnt;
+	long int nb_blocks;
+	char *buffer;
+
+	N = Fio.file_size(Crc_options_description->input_fname);
+
+	if (f_v) {
+		cout << "coding_theory_domain::introduce_errors input file size = " << N << endl;
+	}
+	buffer = NEW_char(N);
+
+
+	nb_blocks = (N + block_length - 1) / block_length;
+	if (f_v) {
+		cout << "coding_theory_domain::introduce_errors nb_blocks = " << nb_blocks << endl;
+	}
+
+	int a, b, c;
+	//long int cnt;
+
+	ifstream ist(Crc_options_description->input_fname, ios::binary);
+
+	long int **Error_pattern; // [nb_blocks]
+	int *Nb_errors; // [nb_blocks]
+	int nb_errors = 0;
+
+	Error_pattern = (long int **) NEW_pvoid(nb_blocks);
+	Nb_errors = NEW_int(nb_blocks);
+
+	Int_vec_zero(Nb_errors, nb_blocks);
+
+
+	//Error_pattern = NEW_lint(2 * nb_blocks * 3);
+	//Lint_vec_zero(Error_pattern, 2 * nb_blocks * 3);
+
+	ist.read(buffer, N);
+
+
+	//cnt = 0;
+
+	for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+		if ((cnt + 1) * block_length > N) {
+			L = N - cnt * block_length;
+			cout << "truncating, L = " << L << endl;
+		}
+		else {
+			L = block_length;
+		}
+
+
+		orbiter_kernel_system::os_interface Os;
+
+		a = Os.random_integer(1000000);
+		if (a < Crc_options_description->threshold) {
+			b = Os.random_integer(L);
+			c = Os.random_integer(255) + 1;
+			buffer[cnt * block_length + b] ^= c;
+
+			if (Nb_errors[cnt] == 0) {
+				Error_pattern[cnt] = NEW_lint(3);
+				Error_pattern[cnt][0] = cnt;
+				Error_pattern[cnt][1] = b;
+				Error_pattern[cnt][2] = c;
+				Nb_errors[cnt]++;
+				nb_errors++;
+			}
+			else {
+				long int *old;
+
+				old = Error_pattern[cnt];
+				Error_pattern[cnt] = NEW_lint((Nb_errors[cnt] + 1) * 3);
+				Lint_vec_copy(old, Error_pattern[cnt], 3 * Nb_errors[cnt]);
+				FREE_lint(old);
+				Error_pattern[cnt][Nb_errors[cnt] * 3 + 0] = cnt;
+				Error_pattern[cnt][Nb_errors[cnt] * 3 + 1] = b;
+				Error_pattern[cnt][Nb_errors[cnt] * 3 + 2] = c;
+				Nb_errors[cnt]++;
+				nb_errors++;
+			}
+		}
+
+	}
+
+
+	if (Crc_options_description->f_file_based_error_generator) {
+		cout << "f_file_based_error_generator" << endl;
+
+		int threshold = Crc_options_description->file_based_error_generator_threshold;
+
+		long int cnt1;
+
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+			orbiter_kernel_system::os_interface Os;
+
+			a = Os.random_integer(1000000);
+			if (a < threshold) {
+				b = Os.random_integer(N);
+				c = Os.random_integer(255) + 1;
+				buffer[b] ^= c;
+				cnt1 = b / block_length;
+				if (Nb_errors[cnt1] == 0) {
+					Error_pattern[cnt1] = NEW_lint(3);
+					Error_pattern[cnt1][0] = b / block_length;
+					Error_pattern[cnt1][1] = b % block_length;
+					Error_pattern[cnt1][2] = c;
+					Nb_errors[cnt1]++;
+					nb_errors++;
+				}
+				else {
+					long int *old;
+
+					cnt1 = b / block_length;
+					old = Error_pattern[cnt1];
+					Error_pattern[cnt1] = NEW_lint((Nb_errors[cnt1] + 1) * 3);
+					Lint_vec_copy(old, Error_pattern[cnt1], 3 * Nb_errors[cnt1]);
+					FREE_lint(old);
+					Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 0] = b / block_length;
+					Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 1] = b % block_length;
+					Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 2] = c;
+					Nb_errors[cnt1]++;
+					nb_errors++;
+				}
+			}
+
+
+		}
+	}
+
+	long int *Ep;
+	int i, j;
+	int nb_erroneous_blocks = 0;
+
+
+	Ep = NEW_lint(nb_errors * 3);
+	j = 0;
+	for (cnt = 0; cnt < nb_blocks; cnt++) {
+		if (Nb_errors[cnt]) {
+			for (i = 0; i < Nb_errors[cnt]; i++) {
+				a = Error_pattern[cnt][i * 3 + 0];
+				b = Error_pattern[cnt][i * 3 + 1];
+				c = Error_pattern[cnt][i * 3 + 2];
+				Ep[j * 3 + 0] = a;
+				Ep[j * 3 + 1] = b;
+				Ep[j * 3 + 2] = c;
+				j++;
+			}
+			nb_erroneous_blocks++;
+		}
+	}
+	if (j != nb_errors) {
+		cout << "j != nb_errors" << endl;
+		exit(1);
+	}
+
+	cout << "nb_erroneous_blocks = " << nb_erroneous_blocks << " / " << nb_blocks << endl;
+	cout << "nb_errors = " << nb_errors << endl;
+
+	// write the modified output file:
+	{
+		ofstream ost(Crc_options_description->output_fname, ios::binary);
+		ost.write(buffer, N);
+	}
+
+	cout << "Written file " << Crc_options_description->output_fname
+			<< " of size " << Fio.file_size(Crc_options_description->output_fname) << endl;
+
+	Fio.lint_matrix_write_csv(fname_error, Ep, nb_errors, 3);
+	cout << "Written file " << fname_error << " of size " << Fio.file_size(fname_error) << endl;
+
+	//FREE_lint(Error_pattern);
+	FREE_lint(Ep);
+
+	if (f_v) {
+		cout << "coding_theory_domain::introduce_errors done" << endl;
+	}
+
+}
+
+
+void coding_theory_domain::crc32_file_based(std::string &fname_in, std::string &fname_out,
+		int block_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_file_based "
+				"fname_in=" << fname_in << endl;
+		cout << "coding_theory_domain::crc32_file_based "
+				"block_length=" << block_length << endl;
+	}
+
+	data_structures::string_tools ST;
+	//string fname_out;
+	int information_length = block_length - 4;
+
+#if 0
+	fname_out.assign(fname_in);
+	ST.chop_off_extension(fname_out);
+	fname_out.append("_crc32.bin");
+#endif
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L, nb_blocks, cnt;
+	char *buffer;
+
+	N = Fio.file_size(fname_in);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_file_based input file size = " << N << endl;
+	}
+
+	nb_blocks = (N + information_length - 1) / information_length;
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_file_based nb_blocks = " << nb_blocks << endl;
+	}
+
+	buffer = NEW_char(block_length);
+
+
+	ifstream ist(fname_in, ios::binary);
+
+	{
+		ofstream ost(fname_out, ios::binary);
+		uint32_t crc;
+		char *p_crc;
+
+		p_crc = (char *) &crc;
+		//C = 0;
+
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+		//while (C < N) {
+
+			if ((cnt + 1) * information_length > N) {
+				L = N - cnt * information_length;
+			}
+			else {
+				L = information_length;
+			}
+
+			// read information_length bytes
+			// (or less, in case we reached the end of he file)
+
+			ist.read(buffer, L);
+
+			// create 4 byte check and add to the block:
+
+			crc = crc32(buffer, L);
+			buffer[L + 0] = p_crc[0];
+			buffer[L + 1] = p_crc[1];
+			buffer[L + 2] = p_crc[2];
+			buffer[L + 3] = p_crc[3];
+
+
+			// write information_length + 4 bytes to file:
+			// (or less in case we have reached the end of the input file):
+
+			ost.write(buffer, L + 4);
+
+
+			// count the bytes read,
+			// so C is the position in the input file:
+
+			//C += L;
+		}
+
+	}
+	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc32_file_based done" << endl;
+	}
+
+}
+
+
+void coding_theory_domain::crc771_file_based(std::string &fname_in, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc771_file_based fname_in=" << fname_in << endl;
+	}
+
+	data_structures::string_tools ST;
+	string fname_out;
+	int block_length = 771;
+	int redundancy = 30;
+	int information_length = block_length - redundancy;
+
+	fname_out.assign(fname_in);
+	ST.chop_off_extension(fname_out);
+	fname_out.append("_crc771.bin");
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, C, L;
+	char *buffer;
+
+	N = Fio.file_size(fname_in);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc771_file_based input file size = " << N << endl;
+	}
+	buffer = NEW_char(block_length);
+
+
+	ifstream ist(fname_in, ios::binary);
+
+	{
+		ofstream ost(fname_out, ios::binary);
+		uint32_t crc;
+		char *p_crc;
+		int i;
+
+		p_crc = (char *) &crc;
+		C = 0;
+
+		while (C < N) {
+
+			if (C + information_length > N) {
+				L = C + information_length - N;
+			}
+			else {
+				L = information_length;
+			}
+			ist.read(buffer + redundancy, L);
+			for (i = 0; i < redundancy; i++) {
+				buffer[i] = 0;
+			}
+			for (i = L; i < block_length; i++) {
+				buffer[i] = 0;
+			}
+
+			CRC_BCH256_771_divide(buffer, buffer);
+
+			ost.write(buffer, block_length);
+
+
+			C += information_length;
+		}
+
+	}
+	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc771_file_based done" << endl;
+	}
+
+}
+
+void coding_theory_domain::check_errors(std::string &fname_coded,
+		std::string &fname_error_log,
+		std::string &fname_error_detected,
+		std::string &fname_error_undetected,
+		int block_length,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors " << endl;
+		cout << "coding_theory_domain::check_errors block_length=" << block_length << endl;
+	}
+
+	data_structures::string_tools ST;
+	//string fname_error;
+	//int information_length = block_length - 4;
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L;
+	long int nb_blocks;
+	char *buffer;
+
+	N = Fio.file_size(fname_coded);
+
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors input file size = " << N << endl;
+	}
+	buffer = NEW_char(block_length);
+
+
+	nb_blocks = (N + block_length - 1) / block_length;
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors nb_blocks = " << nb_blocks << endl;
+	}
+
+	//int a, b, c;
+	long int cnt;
+	long int nb_error_detected, nb_error_undetected;
+
+	ifstream ist(fname_coded, ios::binary);
+
+	long int *Error_pattern;
+	long int *Error_undetected;
+	int nb_error = 0;
+	int m;
+
+	cout << "Reading file " << fname_error_log << " of size " << Fio.file_size(fname_error_log) << endl;
+	Fio.lint_matrix_read_csv(fname_error_log, Error_pattern, nb_error, m, verbose_level);
+	if (m != 3) {
+		cout << "m != 3" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors nb_error = " << nb_error << endl;
+	}
+
+	long int *Faulty_blocks;
+	int cur_error;
+
+	Faulty_blocks = NEW_lint(nb_blocks * 3);
+	Error_undetected = NEW_lint(nb_blocks * 3);
+
+	nb_error_detected = 0;
+	nb_error_undetected = 0;
+	cur_error = 0;
+	cnt = 0;
+	{
+		//ofstream ost(fname_out, ios::binary);
+		uint32_t crc, crc_computed;
+		char *p_crc;
+
+		p_crc = (char *) &crc;
+
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+			if ((cnt + 1) * block_length > N) {
+				L = N - cnt * block_length;
+			}
+			else {
+				L = block_length;
+			}
+
+			// read information length + 4 bytes
+			// (this includes the 4 byte check sum at the very end)
+
+			ist.read(buffer, L);
+
+			p_crc[0] = buffer[L - 4 + 0];
+			p_crc[1] = buffer[L - 4 + 1];
+			p_crc[2] = buffer[L - 4 + 2];
+			p_crc[3] = buffer[L - 4 + 3];
+
+			crc_computed = crc32(buffer, L - 4);
+
+			if (crc_computed != crc) {
+				Faulty_blocks[nb_error_detected * 3 + 0] = cnt;
+				Faulty_blocks[nb_error_detected * 3 + 1] = crc;
+				Faulty_blocks[nb_error_detected * 3 + 2] = crc_computed;
+
+				cout << "detected error " << nb_error_detected << " in block " << cnt << endl;
+				//", crc=" << crc << " crc_computed=" << crc_computed << endl;
+				nb_error_detected++;
+			}
+			else {
+
+				while (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
+					cout << "undetected error in block " << cnt << endl;
+					Error_undetected[nb_error_undetected * 3 + 0] = cnt;
+					Error_undetected[nb_error_undetected * 3 + 1] = Error_pattern[cur_error * 3 + 1];
+					Error_undetected[nb_error_undetected * 3 + 2] = Error_pattern[cur_error * 3 + 2];
+					nb_error_undetected++;
+					cur_error++;
+				}
+			}
+
+			if (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
+				cur_error++;
+			}
+
+			//orbiter_kernel_system::os_interface Os;
+
+#if 0
+			a = Os.random_integer(1000000);
+			if (a < threshold) {
+				b = Os.random_integer(L);
+				c = Os.random_integer(256);
+				buffer[b] ^= c;
+				Error_pattern[nb_error * 3 + 0] = cnt;
+				Error_pattern[nb_error * 3 + 1] = b;
+				Error_pattern[nb_error * 3 + 2] = c;
+				nb_error++;
+			}
+#endif
+		}
+
+	}
+
+	cout << "nb_error_detected = " << nb_error_detected << " / " << nb_error << endl;
+
+	int nb_undetected_errors;
+
+
+	nb_undetected_errors = nb_error - nb_error_detected;
+
+	cout << "nb_undetected_errors = " << nb_error_undetected << endl;
+
+
+	Fio.lint_matrix_write_csv(fname_error_detected, Faulty_blocks, nb_error, 3);
+	cout << "Written file " << fname_error_detected << " of size " << Fio.file_size(fname_error_detected) << endl;
+
+	Fio.lint_matrix_write_csv(fname_error_undetected, Error_undetected, nb_error_undetected, 3);
+	cout << "Written file " << fname_error_undetected << " of size " << Fio.file_size(fname_error_undetected) << endl;
+
+
+	FREE_lint(Error_pattern);
+	FREE_lint(Error_undetected);
+
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors done" << endl;
+	}
+
+}
+
 
 
 }}}
