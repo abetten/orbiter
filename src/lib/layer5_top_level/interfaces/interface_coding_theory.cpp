@@ -366,7 +366,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 		coding_theory::coding_theory_domain Codes;
 
-		Codes.extract_block(check_errors_crc_options_description,
+		Codes.extract_block(extract_block_crc_options_description,
 				verbose_level);
 
 	}
