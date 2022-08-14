@@ -40,6 +40,9 @@ crc_options_description::crc_options_description()
 
 	f_threshold = FALSE;
 	threshold = 0;
+
+	f_error_log = FALSE;
+	//std::string error_log_fname;
 }
 
 crc_options_description::~crc_options_description()
@@ -101,6 +104,13 @@ int crc_options_description::read_arguments(
 				cout << "-threshold " << threshold << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-error_log") == 0) {
+			f_error_log = TRUE;
+			error_log_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-error_log " << error_log_fname << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -140,6 +150,9 @@ void crc_options_description::print()
 	}
 	if (f_threshold) {
 		cout << "-threshold " << threshold << endl;
+	}
+	if (f_error_log) {
+		cout << "-error_log " << error_log_fname << endl;
 	}
 
 

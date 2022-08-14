@@ -5387,30 +5387,76 @@ void coding_theory_domain::crc771_file_based(std::string &fname_in, int verbose_
 
 }
 
-void coding_theory_domain::check_errors(std::string &fname_coded,
-		std::string &fname_error_log,
-		std::string &fname_error_detected,
-		std::string &fname_error_undetected,
-		int block_length,
+void coding_theory_domain::check_errors(
+		crc_options_description *Crc_options_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "coding_theory_domain::check_errors " << endl;
-		cout << "coding_theory_domain::check_errors block_length=" << block_length << endl;
 	}
+
+	if (!Crc_options_description->f_input) {
+		cout << "coding_theory_domain::check_errors please use -input <fname>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_output) {
+		cout << "coding_theory_domain::check_errors please use -output <fname>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_block_length) {
+		cout << "coding_theory_domain::check_errors please use -block_length <block_length>" << endl;
+		exit(1);
+	}
+	int block_length;
+	int information_length;
+
+	block_length = Crc_options_description->block_length;
+	information_length = block_length - 4;
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors block_length = " << block_length << endl;
+		cout << "coding_theory_domain::check_errors information_length = " << information_length << endl;
+
+	}
+
+	if (!Crc_options_description->f_error_log) {
+		cout << "coding_theory_domain::check_errors please use -error_log <fname>" << endl;
+		exit(1);
+	}
+
+
+	std::string fname_coded;
+	std::string fname_recovered;
+	std::string fname_error_log;
+	std::string fname_error_detected;
+	std::string fname_error_undetected;
+
 
 	data_structures::string_tools ST;
 	//string fname_error;
 	//int information_length = block_length - 4;
 
 
+	fname_coded.assign(Crc_options_description->input_fname);
+	fname_recovered.assign(Crc_options_description->output_fname);
+	fname_error_log.assign(Crc_options_description->error_log_fname);
+
+	fname_error_detected.assign(Crc_options_description->input_fname);
+	ST.chop_off_extension(fname_error_detected);
+	fname_error_detected.append("_err_detected.csv");
+
+	fname_error_undetected.assign(Crc_options_description->input_fname);
+	ST.chop_off_extension(fname_error_undetected);
+	fname_error_undetected.append("_err_undetected.csv");
+
 	orbiter_kernel_system::file_io Fio;
 
 	long int N, L;
 	long int nb_blocks;
 	char *buffer;
+	char *recovered_data;
+	long int recovered_data_size = 0;
 
 	N = Fio.file_size(fname_coded);
 
@@ -5418,6 +5464,7 @@ void coding_theory_domain::check_errors(std::string &fname_coded,
 		cout << "coding_theory_domain::check_errors input file size = " << N << endl;
 	}
 	buffer = NEW_char(block_length);
+	recovered_data = NEW_char(N);
 
 
 	nb_blocks = (N + block_length - 1) / block_length;
@@ -5425,7 +5472,7 @@ void coding_theory_domain::check_errors(std::string &fname_coded,
 		cout << "coding_theory_domain::check_errors nb_blocks = " << nb_blocks << endl;
 	}
 
-	//int a, b, c;
+	int a, b, c;
 	long int cnt;
 	long int nb_error_detected, nb_error_undetected;
 
@@ -5457,7 +5504,6 @@ void coding_theory_domain::check_errors(std::string &fname_coded,
 	cur_error = 0;
 	cnt = 0;
 	{
-		//ofstream ost(fname_out, ios::binary);
 		uint32_t crc, crc_computed;
 		char *p_crc;
 
@@ -5484,6 +5530,7 @@ void coding_theory_domain::check_errors(std::string &fname_coded,
 
 			crc_computed = crc32(buffer, L - 4);
 
+
 			if (crc_computed != crc) {
 				Faulty_blocks[nb_error_detected * 3 + 0] = cnt;
 				Faulty_blocks[nb_error_detected * 3 + 1] = crc;
@@ -5492,18 +5539,37 @@ void coding_theory_domain::check_errors(std::string &fname_coded,
 				cout << "detected error " << nb_error_detected << " in block " << cnt << endl;
 				//", crc=" << crc << " crc_computed=" << crc_computed << endl;
 				nb_error_detected++;
-			}
-			else {
 
 				while (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
+					cout << "recovering error " << cur_error << " in block " << cnt << endl;
+					a = cnt;
+					b = Error_pattern[cur_error * 3 + 1];
+					c = Error_pattern[cur_error * 3 + 2];
+					buffer[b] ^= c;
+					cur_error++;
+				}
+			}
+			else {
+				while (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
 					cout << "undetected error in block " << cnt << endl;
-					Error_undetected[nb_error_undetected * 3 + 0] = cnt;
-					Error_undetected[nb_error_undetected * 3 + 1] = Error_pattern[cur_error * 3 + 1];
-					Error_undetected[nb_error_undetected * 3 + 2] = Error_pattern[cur_error * 3 + 2];
+					a = cnt;
+					b = Error_pattern[cur_error * 3 + 1];
+					c = Error_pattern[cur_error * 3 + 2];
+					//buffer[b] ^= c;
+
+					Error_undetected[nb_error_undetected * 3 + 0] = a;
+					Error_undetected[nb_error_undetected * 3 + 1] = b;
+					Error_undetected[nb_error_undetected * 3 + 2] = c;
 					nb_error_undetected++;
 					cur_error++;
 				}
 			}
+
+			int i;
+			for (i = 0; i < L - 4; i++) {
+				recovered_data[cnt * information_length + i] = buffer[i];
+			}
+			recovered_data_size += L;
 
 			if (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
 				cur_error++;
@@ -5516,8 +5582,8 @@ void coding_theory_domain::check_errors(std::string &fname_coded,
 			if (a < threshold) {
 				b = Os.random_integer(L);
 				c = Os.random_integer(256);
-				buffer[b] ^= c;
 				Error_pattern[nb_error * 3 + 0] = cnt;
+				buffer[b] ^= c;
 				Error_pattern[nb_error * 3 + 1] = b;
 				Error_pattern[nb_error * 3 + 2] = c;
 				nb_error++;
@@ -5536,13 +5602,21 @@ void coding_theory_domain::check_errors(std::string &fname_coded,
 
 	cout << "nb_undetected_errors = " << nb_error_undetected << endl;
 
-
+#if 1
 	Fio.lint_matrix_write_csv(fname_error_detected, Faulty_blocks, nb_error, 3);
 	cout << "Written file " << fname_error_detected << " of size " << Fio.file_size(fname_error_detected) << endl;
 
 	Fio.lint_matrix_write_csv(fname_error_undetected, Error_undetected, nb_error_undetected, 3);
 	cout << "Written file " << fname_error_undetected << " of size " << Fio.file_size(fname_error_undetected) << endl;
+#endif
 
+
+	{
+		ofstream ost(fname_recovered, ios::binary);
+
+		ost.write(recovered_data, recovered_data_size);
+	}
+	cout << "Written file " << fname_recovered << " of size " << Fio.file_size(fname_recovered) << endl;
 
 	FREE_lint(Error_pattern);
 	FREE_lint(Error_undetected);

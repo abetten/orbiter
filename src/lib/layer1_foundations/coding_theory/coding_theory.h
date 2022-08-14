@@ -282,11 +282,8 @@ public:
 	void crc32_file_based(std::string &fname_in, std::string &fname_out,
 			int block_length, int verbose_level);
 	void crc771_file_based(std::string &fname_in, int verbose_level);
-	void check_errors(std::string &fname_coded,
-			std::string &fname_error_log,
-			std::string &fname_error_detected,
-			std::string &fname_error_undetected,
-			int block_length,
+	void check_errors(
+			crc_options_description *Crc_options_description,
 			int verbose_level);
 
 
@@ -322,6 +319,10 @@ public:
 
 	int f_threshold;
 	int threshold;
+
+	int f_error_log;
+	std::string error_log_fname;
+
 
 	crc_options_description();
 	~crc_options_description();
