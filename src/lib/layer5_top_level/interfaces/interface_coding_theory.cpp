@@ -43,11 +43,7 @@ interface_coding_theory::interface_coding_theory()
 	introduce_errors_crc_options_description = NULL;
 
 	f_check_errors = FALSE;
-	//std::string check_errors_fname_coded;
-	//std::string check_errors_fname_error_log;
-	//std::string check_errors_fname_error_detected;
-	//std::string check_errors_fname_error_undetected;
-	check_errors_block_length = 0;
+	check_errors_crc_options_description = NULL;
 }
 
 
@@ -72,7 +68,7 @@ void interface_coding_theory::print_help(int argc,
 		cout << "-introduce_errors <description> -end" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
-		cout << "-check_errors <string : fname_in> <string : fname_coded> <string : fname_error_log> <string : fname_error_detected> <string : fname_error_undetected> <int : block_length> <int : block_length>" << endl;
+		cout << "-check_errors <description> -end" << endl;
 	}
 }
 
@@ -192,18 +188,24 @@ void interface_coding_theory::read_arguments(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
 		f_check_errors = TRUE;
-		check_errors_fname_coded.assign(argv[++i]);
-		check_errors_fname_error_log.assign(argv[++i]);
-		check_errors_fname_error_detected.assign(argv[++i]);
-		check_errors_fname_error_undetected.assign(argv[++i]);
-		check_errors_block_length = ST.strtoi(argv[++i]);
+		check_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
 		if (f_v) {
-			cout << "-check_errors "
-					<< check_errors_fname_coded << " "
-					<< check_errors_fname_error_log << " "
-					<< check_errors_fname_error_detected << " "
-					<< check_errors_fname_error_undetected << " "
-					<< check_errors_block_length << endl;
+			cout << "-check_errors " << endl;
+		}
+		check_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		i += check_errors_crc_options_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		if (f_v) {
+			cout << "interface_coding_theory::read_arguments finished "
+					"reading -check_errors" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-check_errors " << endl;
+			check_errors_crc_options_description->print();
 		}
 	}
 
@@ -232,12 +234,8 @@ void interface_coding_theory::print()
 		introduce_errors_crc_options_description->print();
 	}
 	if (f_check_errors) {
-		cout << "-check_errors "
-				<< check_errors_fname_coded << " "
-				<< check_errors_fname_error_log << " "
-				<< check_errors_fname_error_detected << " "
-				<< check_errors_fname_error_undetected << " "
-				<< check_errors_block_length << endl;
+		cout << "-check_errors " << endl;
+		check_errors_crc_options_description->print();
 	}
 }
 
@@ -323,12 +321,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 		coding_theory::coding_theory_domain Codes;
 
-		Codes.check_errors(
-				check_errors_fname_coded,
-				check_errors_fname_error_log,
-				check_errors_fname_error_detected,
-				check_errors_fname_error_undetected,
-				check_errors_block_length,
+		Codes.check_errors(check_errors_crc_options_description,
 				verbose_level);
 
 	}
