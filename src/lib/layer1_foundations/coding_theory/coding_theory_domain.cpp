@@ -5536,12 +5536,12 @@ void coding_theory_domain::check_errors(
 				Faulty_blocks[nb_error_detected * 3 + 1] = crc;
 				Faulty_blocks[nb_error_detected * 3 + 2] = crc_computed;
 
-				cout << "detected error " << nb_error_detected << " in block " << cnt << endl;
+				//cout << "detected error " << nb_error_detected << " in block " << cnt << endl;
 				//", crc=" << crc << " crc_computed=" << crc_computed << endl;
 				nb_error_detected++;
 
 				while (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
-					cout << "recovering error " << cur_error << " in block " << cnt << endl;
+					//cout << "recovering error " << cur_error << " in block " << cnt << endl;
 					a = cnt;
 					b = Error_pattern[cur_error * 3 + 1];
 					c = Error_pattern[cur_error * 3 + 2];
