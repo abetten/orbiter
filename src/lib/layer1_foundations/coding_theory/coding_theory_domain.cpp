@@ -5628,6 +5628,173 @@ void coding_theory_domain::check_errors(
 }
 
 
+void coding_theory_domain::extract_block(
+		crc_options_description *Crc_options_description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::extract_block " << endl;
+	}
+
+	if (!Crc_options_description->f_input) {
+		cout << "coding_theory_domain::extract_block please use -input <fname>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_output) {
+		cout << "coding_theory_domain::extract_block please use -output <fname>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_block_length) {
+		cout << "coding_theory_domain::extract_block please use -block_length <block_length>" << endl;
+		exit(1);
+	}
+	if (!Crc_options_description->f_selected_block) {
+		cout << "coding_theory_domain::extract_block please use -selected_block <selected_block>" << endl;
+		exit(1);
+	}
+	int block_length;
+	int information_length;
+
+	block_length = Crc_options_description->block_length;
+	information_length = block_length - 4;
+	if (f_v) {
+		cout << "coding_theory_domain::extract_block block_length = " << block_length << endl;
+		cout << "coding_theory_domain::extract_block information_length = " << information_length << endl;
+
+	}
+
+	std::string fname_coded;
+	std::string fname_out;
+	std::string fname_error_log;
+	std::string fname_error_detected;
+	std::string fname_error_undetected;
+
+
+	data_structures::string_tools ST;
+	//string fname_error;
+	//int information_length = block_length - 4;
+
+
+	fname_coded.assign(Crc_options_description->input_fname);
+	fname_out.assign(Crc_options_description->output_fname);
+	fname_error_log.assign(Crc_options_description->error_log_fname);
+
+	fname_error_detected.assign(Crc_options_description->input_fname);
+	ST.chop_off_extension(fname_error_detected);
+	fname_error_detected.append("_err_detected.csv");
+
+	fname_error_undetected.assign(Crc_options_description->input_fname);
+	ST.chop_off_extension(fname_error_undetected);
+	fname_error_undetected.append("_err_undetected.csv");
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L;
+	long int nb_blocks;
+	char *buffer;
+	//char *recovered_data;
+	//long int recovered_data_size = 0;
+
+	N = Fio.file_size(fname_coded);
+
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors input file size = " << N << endl;
+	}
+	buffer = NEW_char(block_length);
+	//recovered_data = NEW_char(N);
+
+
+	long int *Error_pattern;
+	//long int *Error_undetected;
+	int nb_error = 0;
+	int m;
+
+	cout << "Reading file " << fname_error_log << " of size " << Fio.file_size(fname_error_log) << endl;
+	Fio.lint_matrix_read_csv(fname_error_log, Error_pattern, nb_error, m, verbose_level);
+	if (m != 3) {
+		cout << "m != 3" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors nb_error = " << nb_error << endl;
+	}
+
+
+	nb_blocks = (N + block_length - 1) / block_length;
+	if (f_v) {
+		cout << "coding_theory_domain::check_errors nb_blocks = " << nb_blocks << endl;
+	}
+
+	{
+		ifstream ist(fname_coded, ios::binary);
+
+
+
+		long int a, b, c;
+		long int cnt;
+		long int cur_error;
+
+		cur_error = 0;
+
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+			if ((cnt + 1) * block_length > N) {
+				L = N - cnt * block_length;
+			}
+			else {
+				L = block_length;
+			}
+
+			// read information length + 4 bytes
+			// (this includes the 4 byte check sum at the very end)
+
+			ist.read(buffer, L);
+
+
+
+			if (cnt != Crc_options_description->selected_block) {
+
+				while (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
+					//cout << "recovering error " << cur_error << " in block " << cnt << endl;
+					a = cnt;
+					b = Error_pattern[cur_error * 3 + 1];
+					c = Error_pattern[cur_error * 3 + 2];
+					buffer[b] ^= c;
+					cur_error++;
+				}
+
+				continue;
+			}
+			{
+				ofstream ost(fname_out, ios::binary);
+
+				ost.write(buffer, L);
+			}
+			cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+			cout << "errors in block " << Crc_options_description->selected_block << ":" << endl;
+			while (cur_error < nb_error && cnt == Error_pattern[cur_error * 3 + 0]) {
+				//cout << "recovering error " << cur_error << " in block " << cnt << endl;
+				a = cnt;
+				b = Error_pattern[cur_error * 3 + 1];
+				c = Error_pattern[cur_error * 3 + 2];
+
+				cout << a << " : " << b << " : " << c << endl;
+				cur_error++;
+			}
+
+		}
+	}
+
+	if (f_v) {
+		cout << "coding_theory_domain::extract_block done" << endl;
+	}
+}
+
+
+
 
 }}}
 
