@@ -44,6 +44,10 @@ interface_coding_theory::interface_coding_theory()
 
 	f_check_errors = FALSE;
 	check_errors_crc_options_description = NULL;
+
+	f_extract_block = FALSE;
+	extract_block_crc_options_description = NULL;
+
 }
 
 
@@ -69,6 +73,9 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
 		cout << "-check_errors <description> -end" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-extract_block") == 0) {
+		cout << "-extract_block <description> -end" << endl;
 	}
 }
 
@@ -101,6 +108,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-extract_block") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -208,6 +218,28 @@ void interface_coding_theory::read_arguments(int argc,
 			check_errors_crc_options_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-extract_block") == 0) {
+		f_extract_block = TRUE;
+		extract_block_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		if (f_v) {
+			cout << "-extract_block " << endl;
+		}
+		extract_block_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		i += extract_block_crc_options_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		if (f_v) {
+			cout << "interface_coding_theory::read_arguments finished "
+					"reading -extract_block" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-extract_block " << endl;
+			extract_block_crc_options_description->print();
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
@@ -236,6 +268,10 @@ void interface_coding_theory::print()
 	if (f_check_errors) {
 		cout << "-check_errors " << endl;
 		check_errors_crc_options_description->print();
+	}
+	if (f_extract_block) {
+		cout << "-extract_block " << endl;
+		extract_block_crc_options_description->print();
 	}
 }
 
@@ -322,6 +358,15 @@ void interface_coding_theory::worker(int verbose_level)
 		coding_theory::coding_theory_domain Codes;
 
 		Codes.check_errors(check_errors_crc_options_description,
+				verbose_level);
+
+	}
+
+	else if (f_extract_block) {
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.extract_block(check_errors_crc_options_description,
 				verbose_level);
 
 	}

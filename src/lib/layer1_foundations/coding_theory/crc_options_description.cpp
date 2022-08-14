@@ -43,6 +43,9 @@ crc_options_description::crc_options_description()
 
 	f_error_log = FALSE;
 	//std::string error_log_fname;
+
+	f_selected_block = FALSE;
+	selected_block = 0;
 }
 
 crc_options_description::~crc_options_description()
@@ -111,6 +114,13 @@ int crc_options_description::read_arguments(
 				cout << "-error_log " << error_log_fname << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-selected_block") == 0) {
+			f_selected_block = TRUE;
+			selected_block = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-selected_block " << selected_block << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -153,6 +163,9 @@ void crc_options_description::print()
 	}
 	if (f_error_log) {
 		cout << "-error_log " << error_log_fname << endl;
+	}
+	if (f_selected_block) {
+		cout << "-selected_block " << selected_block << endl;
 	}
 
 

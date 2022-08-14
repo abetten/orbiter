@@ -285,6 +285,9 @@ public:
 	void check_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
+	void extract_block(
+			crc_options_description *Crc_options_description,
+			int verbose_level);
 
 
 
@@ -322,6 +325,9 @@ public:
 
 	int f_error_log;
 	std::string error_log_fname;
+
+	int f_selected_block;
+	int selected_block;
 
 
 	crc_options_description();

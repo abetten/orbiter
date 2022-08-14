@@ -224,13 +224,10 @@ class interface_coding_theory {
 
 	int f_check_errors;
 	coding_theory::crc_options_description *check_errors_crc_options_description;
-#if 0
-	std::string check_errors_fname_coded;
-	std::string check_errors_fname_error_log;
-	std::string check_errors_fname_error_detected;
-	std::string check_errors_fname_error_undetected;
-	int check_errors_block_length;
-#endif
+
+	int f_extract_block;
+	coding_theory::crc_options_description *extract_block_crc_options_description;
+
 
 
 public:
