@@ -5583,9 +5583,9 @@ void coding_theory_domain::check_errors(
 
 	nb_undetected_errors = nb_error - nb_error_detected;
 
-	cout << "nb_undetected_errors = " << nb_error_undetected << endl;
+	cout << "nb_error_undetected = " << nb_error_undetected << endl;
 
-	if (nb_undetected_errors) {
+	if (nb_error_undetected) {
 		cout << "found an undetected error" << endl;
 		while (1) {
 
