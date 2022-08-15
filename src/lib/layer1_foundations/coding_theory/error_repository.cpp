@@ -90,6 +90,7 @@ void error_repository::add_error(int offset, int error_pattern, int verbose_leve
 		}
 		Error_storage[idx * 2 + 0] = offset;
 		Error_storage[idx * 2 + 1] = error_pattern;
+		nb_errors++;
 	}
 
 	if (f_v) {
