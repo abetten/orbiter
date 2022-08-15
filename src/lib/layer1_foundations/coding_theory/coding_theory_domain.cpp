@@ -5585,6 +5585,13 @@ void coding_theory_domain::check_errors(
 
 	cout << "nb_undetected_errors = " << nb_error_undetected << endl;
 
+	if (nb_undetected_errors) {
+		cout << "found an undetected error" << endl;
+		while (1) {
+
+		}
+	}
+
 #if 1
 	Fio.lint_matrix_write_csv(fname_error_detected, Faulty_blocks, nb_error, 3);
 	cout << "Written file " << fname_error_detected << " of size " << Fio.file_size(fname_error_detected) << endl;
