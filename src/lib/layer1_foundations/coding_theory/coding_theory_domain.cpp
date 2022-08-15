@@ -5089,34 +5089,10 @@ void coding_theory_domain::introduce_errors(
 		a = Os.random_integer(1000000);
 		if (a < Crc_options_description->threshold) {
 			b = Os.random_integer(L);
-			c = Os.random_integer(255) + 1;
+			c = Os.random_integer(254) + 1;
 			buffer[cnt * block_length + b] ^= c;
 
 			Error_pattern[cnt].add_error(b, c, 0 /*verbose_level*/);
-#if 0
-			if (Nb_errors[cnt] == 0) {
-				Error_pattern[cnt] = NEW_lint(3);
-				Error_pattern[cnt][0] = cnt;
-				Error_pattern[cnt][1] = b;
-				Error_pattern[cnt][2] = c;
-				Nb_errors[cnt]++;
-				nb_errors++;
-			}
-			else {
-				long int *old;
-
-				old = Error_pattern[cnt];
-				Error_pattern[cnt] = NEW_lint((Nb_errors[cnt] + 1) * 3);
-				Lint_vec_copy(old, Error_pattern[cnt], 3 * Nb_errors[cnt]);
-				FREE_lint(old);
-				Error_pattern[cnt][Nb_errors[cnt] * 3 + 0] = cnt;
-				Error_pattern[cnt][Nb_errors[cnt] * 3 + 1] = b;
-				Error_pattern[cnt][Nb_errors[cnt] * 3 + 2] = c;
-				Nb_errors[cnt]++;
-				nb_errors++;
-			}
-#endif
-
 		}
 
 	}
@@ -5148,34 +5124,10 @@ void coding_theory_domain::introduce_errors(
 				a = Os.random_integer(1000000);
 				if (a < threshold) {
 					b = Os.random_integer(N);
-					c = Os.random_integer(255) + 1;
+					c = Os.random_integer(254) + 1;
 					buffer[b] ^= c;
 					cnt1 = b / block_length;
 					Error_pattern[cnt1].add_error(b % block_length, c, 0 /*verbose_level*/);
-	#if 0
-					if (Nb_errors[cnt1] == 0) {
-						Error_pattern[cnt1] = NEW_lint(3);
-						Error_pattern[cnt1][0] = b / block_length;
-						Error_pattern[cnt1][1] = b % block_length;
-						Error_pattern[cnt1][2] = c;
-						Nb_errors[cnt1]++;
-						nb_errors++;
-					}
-					else {
-						long int *old;
-
-						cnt1 = b / block_length;
-						old = Error_pattern[cnt1];
-						Error_pattern[cnt1] = NEW_lint((Nb_errors[cnt1] + 1) * 3);
-						Lint_vec_copy(old, Error_pattern[cnt1], 3 * Nb_errors[cnt1]);
-						FREE_lint(old);
-						Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 0] = b / block_length;
-						Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 1] = b % block_length;
-						Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 2] = c;
-						Nb_errors[cnt1]++;
-						nb_errors++;
-					}
-	#endif
 
 				}
 			}
