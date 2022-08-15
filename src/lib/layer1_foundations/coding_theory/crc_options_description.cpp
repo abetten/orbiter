@@ -38,6 +38,9 @@ crc_options_description::crc_options_description()
 	f_file_based_error_generator = FALSE;
 	file_based_error_generator_threshold = 0;
 
+	f_nb_repeats = FALSE;
+	nb_repeats = 0;
+
 	f_threshold = FALSE;
 	threshold = 0;
 
@@ -100,6 +103,14 @@ int crc_options_description::read_arguments(
 				cout << "-file_based_error_generator " << file_based_error_generator_threshold << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-nb_repeats") == 0) {
+			f_nb_repeats = TRUE;
+			nb_repeats = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-nb_repeats " << nb_repeats << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-threshold") == 0) {
 			f_threshold = TRUE;
 			threshold = ST.strtoi(argv[++i]);
@@ -157,6 +168,9 @@ void crc_options_description::print()
 	}
 	if (f_file_based_error_generator) {
 		cout << "-file_based_error_generator " << file_based_error_generator_threshold << endl;
+	}
+	if (f_nb_repeats) {
+		cout << "-nb_repeats " << nb_repeats << endl;
 	}
 	if (f_threshold) {
 		cout << "-threshold " << threshold << endl;

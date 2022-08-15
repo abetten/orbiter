@@ -10,6 +10,7 @@ MODULES = \
 		crc_options_description.o \
 		create_BCH_code.o \
 		cyclic_codes.o \
+		error_repository.o \
 		tensor_codes.o \
 		mindist.o 
 
