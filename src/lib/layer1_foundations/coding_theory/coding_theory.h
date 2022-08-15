@@ -320,6 +320,9 @@ public:
 	int f_file_based_error_generator;
 	int file_based_error_generator_threshold;
 
+	int f_nb_repeats;
+	int nb_repeats;
+
 	int f_threshold;
 	int threshold;
 
@@ -377,6 +380,32 @@ public:
 
 
 };
+
+// #############################################################################
+// error_repository.cpp:
+// #############################################################################
+
+//! to remember the errors in a block
+
+class error_repository {
+
+public:
+
+	int nb_errors;
+	int allocated_length;
+	int * Error_storage;
+		// [nb_errors * 2]
+		// offset and XOR pattern
+
+	error_repository();
+	~error_repository();
+	void init(int verbose_level);
+	void add_error(int offset, int error_pattern, int verbose_level);
+	int search(int offset, int error_pattern,
+		int &idx, int verbose_level);
+
+};
+
 
 
 }}}

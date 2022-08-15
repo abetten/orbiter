@@ -136,7 +136,7 @@ void create_BCH_code::init(field_theory::finite_field *F, int n, int d, int verb
 void create_BCH_code::do_report(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
+	//int i;
 	string label;
 	coding_theory_domain Codes;
 	orbiter_kernel_system::latex_interface Li;

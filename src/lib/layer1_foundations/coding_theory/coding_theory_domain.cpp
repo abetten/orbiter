@@ -5052,14 +5052,17 @@ void coding_theory_domain::introduce_errors(
 
 	ifstream ist(Crc_options_description->input_fname, ios::binary);
 
-	long int **Error_pattern; // [nb_blocks]
-	int *Nb_errors; // [nb_blocks]
+	error_repository *Error_pattern; // [nb_blocks]
+	//int *Nb_errors; // [nb_blocks]
 	int nb_errors = 0;
 
-	Error_pattern = (long int **) NEW_pvoid(nb_blocks);
-	Nb_errors = NEW_int(nb_blocks);
+	Error_pattern = NEW_OBJECTS(error_repository, nb_blocks);
+	//Nb_errors = NEW_int(nb_blocks);
+	for (cnt = 0; cnt < nb_blocks; cnt++) {
+		Error_pattern[cnt].init(0);
+	}
 
-	Int_vec_zero(Nb_errors, nb_blocks);
+	//Int_vec_zero(Nb_errors, nb_blocks);
 
 
 	//Error_pattern = NEW_lint(2 * nb_blocks * 3);
@@ -5089,6 +5092,8 @@ void coding_theory_domain::introduce_errors(
 			c = Os.random_integer(255) + 1;
 			buffer[cnt * block_length + b] ^= c;
 
+			Error_pattern[cnt].add_error(b, c, 0 /*verbose_level*/);
+#if 0
 			if (Nb_errors[cnt] == 0) {
 				Error_pattern[cnt] = NEW_lint(3);
 				Error_pattern[cnt][0] = cnt;
@@ -5110,6 +5115,8 @@ void coding_theory_domain::introduce_errors(
 				Nb_errors[cnt]++;
 				nb_errors++;
 			}
+#endif
+
 		}
 
 	}
@@ -5119,43 +5126,59 @@ void coding_theory_domain::introduce_errors(
 		cout << "f_file_based_error_generator" << endl;
 
 		int threshold = Crc_options_description->file_based_error_generator_threshold;
+		int nb_repeats;
 
-		long int cnt1;
+		if (!Crc_options_description->f_nb_repeats) {
+			nb_repeats = 1;
+		}
+		else {
+			nb_repeats = Crc_options_description->nb_repeats;
+		}
 
-		for (cnt = 0; cnt < nb_blocks; cnt++) {
+		int h;
 
-			orbiter_kernel_system::os_interface Os;
+		for (h = 0; h < nb_repeats; h++) {
 
-			a = Os.random_integer(1000000);
-			if (a < threshold) {
-				b = Os.random_integer(N);
-				c = Os.random_integer(255) + 1;
-				buffer[b] ^= c;
-				cnt1 = b / block_length;
-				if (Nb_errors[cnt1] == 0) {
-					Error_pattern[cnt1] = NEW_lint(3);
-					Error_pattern[cnt1][0] = b / block_length;
-					Error_pattern[cnt1][1] = b % block_length;
-					Error_pattern[cnt1][2] = c;
-					Nb_errors[cnt1]++;
-					nb_errors++;
-				}
-				else {
-					long int *old;
+			long int cnt1;
 
+			for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+				orbiter_kernel_system::os_interface Os;
+
+				a = Os.random_integer(1000000);
+				if (a < threshold) {
+					b = Os.random_integer(N);
+					c = Os.random_integer(255) + 1;
+					buffer[b] ^= c;
 					cnt1 = b / block_length;
-					old = Error_pattern[cnt1];
-					Error_pattern[cnt1] = NEW_lint((Nb_errors[cnt1] + 1) * 3);
-					Lint_vec_copy(old, Error_pattern[cnt1], 3 * Nb_errors[cnt1]);
-					FREE_lint(old);
-					Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 0] = b / block_length;
-					Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 1] = b % block_length;
-					Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 2] = c;
-					Nb_errors[cnt1]++;
-					nb_errors++;
+					Error_pattern[cnt1].add_error(b % block_length, c, 0 /*verbose_level*/);
+	#if 0
+					if (Nb_errors[cnt1] == 0) {
+						Error_pattern[cnt1] = NEW_lint(3);
+						Error_pattern[cnt1][0] = b / block_length;
+						Error_pattern[cnt1][1] = b % block_length;
+						Error_pattern[cnt1][2] = c;
+						Nb_errors[cnt1]++;
+						nb_errors++;
+					}
+					else {
+						long int *old;
+
+						cnt1 = b / block_length;
+						old = Error_pattern[cnt1];
+						Error_pattern[cnt1] = NEW_lint((Nb_errors[cnt1] + 1) * 3);
+						Lint_vec_copy(old, Error_pattern[cnt1], 3 * Nb_errors[cnt1]);
+						FREE_lint(old);
+						Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 0] = b / block_length;
+						Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 1] = b % block_length;
+						Error_pattern[cnt1][Nb_errors[cnt1] * 3 + 2] = c;
+						Nb_errors[cnt1]++;
+						nb_errors++;
+					}
+	#endif
+
 				}
 			}
-
 
 		}
 	}
@@ -5165,20 +5188,27 @@ void coding_theory_domain::introduce_errors(
 	int nb_erroneous_blocks = 0;
 
 
+	nb_errors = 0;
+	for (cnt = 0; cnt < nb_blocks; cnt++) {
+		nb_errors += Error_pattern[cnt].nb_errors;
+	}
+
 	Ep = NEW_lint(nb_errors * 3);
 	j = 0;
 	for (cnt = 0; cnt < nb_blocks; cnt++) {
-		if (Nb_errors[cnt]) {
-			for (i = 0; i < Nb_errors[cnt]; i++) {
-				a = Error_pattern[cnt][i * 3 + 0];
-				b = Error_pattern[cnt][i * 3 + 1];
-				c = Error_pattern[cnt][i * 3 + 2];
+		if (Error_pattern[cnt].nb_errors) {
+			for (i = 0; i < Error_pattern[cnt].nb_errors; i++) {
+				a = cnt;
+				b = Error_pattern[cnt].Error_storage[i * 2 + 0];
+				c = Error_pattern[cnt].Error_storage[i * 2 + 1];
 				Ep[j * 3 + 0] = a;
 				Ep[j * 3 + 1] = b;
 				Ep[j * 3 + 2] = c;
 				j++;
 			}
 			nb_erroneous_blocks++;
+		}
+		else {
 		}
 	}
 	if (j != nb_errors) {
@@ -5201,6 +5231,7 @@ void coding_theory_domain::introduce_errors(
 	Fio.lint_matrix_write_csv(fname_error, Ep, nb_errors, 3);
 	cout << "Written file " << fname_error << " of size " << Fio.file_size(fname_error) << endl;
 
+	FREE_OBJECTS(Error_pattern);
 	//FREE_lint(Error_pattern);
 	FREE_lint(Ep);
 

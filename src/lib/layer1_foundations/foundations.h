@@ -303,6 +303,7 @@ namespace coding_theory {
 	class coding_theory_domain;
 	class crc_options_description;
 	class create_BCH_code;
+	class error_repository;
 
 }
 
