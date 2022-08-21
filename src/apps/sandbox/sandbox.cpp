@@ -16,13 +16,52 @@ using namespace orbiter;
 
 int main()
 {
+	char str[10000];
+	int i;
+
+	for (i = 0; i < 10000; i++) {
+		sprintf(str, "/scratch2/betten/COMPILE/orbiter/src/apps/orbiter/orbiter.out -v 3 -seed %d "
+				"-introduce_errors "
+				"-input log_c1_0_crc32.bin "
+				"-output log_c1_0_crc32_e.bin "
+				"-block_based_error_generator "
+				"-block_length 771 "
+				"-threshold 100000 "
+				"-file_based_error_generator 100000 "
+				"-nb_repeats 30 "
+				"-end",
+				1000 + i);
+		system(str);
+		sprintf(str, "/scratch2/betten/COMPILE/orbiter/src/apps/orbiter/orbiter.out -v 3 "
+				"-check_errors "
+				"-input log_c1_0_crc32_e.bin "
+				"-output log_c1_0_recovered.txt "
+				"-error_log log_c1_0_crc32_e_pattern.csv "
+				"-block_length 771 "
+				"-end");
+		system(str);
+	}
+#if 0
+	int verbose_level = 10;
+	data_structures::algorithms Algo;
+
+	std::string fname_set_of_sets, fname_input, fname_output;
+
+	fname_set_of_sets.assign("doily.csv");
+	fname_input.assign("doily_cliques.csv");
+	fname_output.assign("doily_cliques_union.csv");
+
+	Algo.union_of_sets(fname_set_of_sets,
+			fname_input, fname_output, verbose_level);
+
+#endif
 #if 0
 	finite_field F;
 	F.finite_field_init(16, FALSE /* f_without_tables */, 0);
 
 	cout << "8 x 15 = " << F.mult(8, 15) << endl;
 #endif
-#if 1
+#if 0
 	int verbose_level = 2;
 	int nb_gens = 3;
 	int base_len = 2;

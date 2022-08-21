@@ -877,22 +877,22 @@ RECURSIVE              = YES
 
 EXCLUDE                = \
 				src/apps/ginac \
-				src/lib/foundations/BitSet \
-				src/lib/foundations/Eigen_interface/Eigen \
-				src/lib/foundations/graph_theory_nauty \
-				src/lib/foundations/graph_theory/Clique \
-				src/lib/foundations/CUDA \
-				src/lib/foundations/graphics/EasyBMP.h \
-				src/lib/foundations/graphics/EasyBMP.cpp \
-				src/lib/foundations/graphics/EasyBMP_BMP.h \
-				src/lib/foundations/graphics/EasyBMP_DataStructures.h \
-				src/lib/foundations/graphics/EasyBMP_VariousBMPutilities.h \
-				src/lib/foundations/io_and_os/chrono.h \
-				src/lib/foundations/knowledge_base/DATA \
-				src/lib/group_actions/groups/linalg.h \
-				src/lib/group_actions/groups/linalg.cpp \
-				src/lib/group_actions/groups/shallow_schreier_ai.cpp \
-				src/lib/group_actions/groups/shallow_schreier_ai.h
+				src/lib/layer1_foundations/BitSet \
+				src/lib/layer1_foundations/Eigen_interface/Eigen \
+				src/lib/layer1_foundations/graph_theory_nauty \
+				src/lib/layer1_foundations/graph_theory/Clique \
+				src/lib/layer1_foundations/CUDA \
+				src/lib/layer1_foundations/graphics/EasyBMP.h \
+				src/lib/layer1_foundations/graphics/EasyBMP.cpp \
+				src/lib/layer1_foundations/graphics/EasyBMP_BMP.h \
+				src/lib/layer1_foundations/graphics/EasyBMP_DataStructures.h \
+				src/lib/layer1_foundations/graphics/EasyBMP_VariousBMPutilities.h \
+				src/lib/layer1_foundations/io_and_os/chrono.h \
+				src/lib/layer1_foundations/knowledge_base/DATA \
+				src/lib/layer3_group_actions/groups/linalg.h \
+				src/lib/layer3_group_actions/groups/linalg.cpp \
+				src/lib/layer3_group_actions/groups/shallow_schreier_ai.cpp \
+				src/lib/layer3_group_actions/groups/shallow_schreier_ai.h
 
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
@@ -1985,7 +1985,7 @@ MAN_LINKS              = NO
 # captures the structure of the code including all documentation.
 # The default value is: NO.
 
-GENERATE_XML           = NO
+GENERATE_XML           = YES
 
 # The XML_OUTPUT tag is used to specify where the XML pages will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -2002,7 +2002,7 @@ XML_OUTPUT             = xml
 # The default value is: YES.
 # This tag requires that the tag GENERATE_XML is set to YES.
 
-XML_PROGRAMLISTING     = YES
+XML_PROGRAMLISTING     = NO
 
 #-------------------------------------------------------------------
 # Configuration options related to the DOCBOOK output
