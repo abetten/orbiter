@@ -17,15 +17,15 @@ COUNT=0;
 echo $LINE
 echo "[# LINES] => [FILE]"
 echo $LINE
-for f in $(find . -type f \
-		-name '*.cpp' -o \
+for f in $(find . -name '*.cpp' -o \
 		-name '*.CPP' -o \
 		-name '*.c' -o \
 		-name '*.C' -o \
 		-name '*.h' -o \
 		-name '*.H' -o \
 		-name '*.hpp' -o \
-		-name '*.HPP'); do 
+		-name '*.HPP' -o \
+		-path "./src/lib/foundations/Eigen_interface/Eigen" -prune -false); do
 	tmp=$(wc -l < $f); 
 	echo "$tmp => $f";
 	COUNT=$[COUNT+tmp]; 
