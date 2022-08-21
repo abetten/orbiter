@@ -31,7 +31,7 @@ using namespace GiNaC;
 #include <iostream>
 // standard C++ stuff
 using namespace std;
-// use namespace std which countains things like cout
+// use namespace std which contains things like cout
 
 
 #include "ginac_linear_algebra.cpp"

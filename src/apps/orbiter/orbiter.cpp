@@ -73,6 +73,9 @@ int main(int argc, const char **argv)
 
 	verbose_level = Top_level_session.Orbiter_session->verbose_level;
 
+	cout << "verbose_level = " << verbose_level << endl;
+
+
 	int f_v = (verbose_level > 1);
 
 	if (f_v) {
