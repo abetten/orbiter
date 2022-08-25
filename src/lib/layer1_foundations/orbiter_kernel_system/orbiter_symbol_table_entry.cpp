@@ -366,6 +366,22 @@ void orbiter_symbol_table_entry::init_code(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_spread(std::string &label,
+		void *Spread, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_spread" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_spread;
+	ptr = Spread;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_spread done" << endl;
+	}
+}
 
 void orbiter_symbol_table_entry::init_spread_table(std::string &label,
 		void *P, int verbose_level)
@@ -641,6 +657,9 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_orthogonal_space) {
 			cout << "orthogonal space" << endl;
 		}
+		else if (object_type == t_BLT_set_classify) {
+			cout << "classification object for BLT-sets" << endl;
+		}
 		else if (object_type == t_formula) {
 			cout << "formula" << endl;
 			expression_parser::formula *F;
@@ -672,6 +691,12 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_graph) {
 			cout << "graph" << endl;
+		}
+		else if (object_type == t_code) {
+			cout << "code" << endl;
+		}
+		else if (object_type == t_spread) {
+			cout << "spread" << endl;
 		}
 		else if (object_type == t_spread_table) {
 			cout << "spread table" << endl;
@@ -712,6 +737,15 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_geometry_builder) {
 			cout << "geometry_builder" << endl;
 		}
+		else if (object_type == t_action) {
+			cout << "action" << endl;
+		}
+		else if (object_type == t_poset) {
+			cout << "poset" << endl;
+		}
+		else if (object_type == t_poset_classification) {
+			cout << "classification object for posets" << endl;
+		}
 		else if (object_type == t_vector_ge) {
 			cout << "vector_ge" << endl;
 		}
@@ -720,6 +754,8 @@ void orbiter_symbol_table_entry::print()
 
 
 #if 0
+
+
 		else if (object_type == t_action) {
 			action *A;
 

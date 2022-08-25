@@ -48,6 +48,13 @@ interface_coding_theory::interface_coding_theory()
 	f_extract_block = FALSE;
 	extract_block_crc_options_description = NULL;
 
+	f_random_noise_in_bitmap_file = FALSE;
+	//std::string random_noise_in_bitmap_file_input;
+	//std::string random_noise_in_bitmap_file_output;
+	random_noise_in_bitmap_file_numerator = 0;
+	random_noise_in_bitmap_file_denominator = 0;
+
+
 }
 
 
@@ -76,6 +83,9 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-extract_block") == 0) {
 		cout << "-extract_block <description> -end" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-random_noise_in_bitmap_file") == 0) {
+		cout << "-random_noise_in_bitmap_file <fname_in> <fname_out> <numerator> <denominator>" << endl;
 	}
 }
 
@@ -111,6 +121,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-extract_block") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-random_noise_in_bitmap_file") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -240,6 +253,21 @@ void interface_coding_theory::read_arguments(int argc,
 			extract_block_crc_options_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-random_noise_in_bitmap_file") == 0) {
+		f_random_noise_in_bitmap_file = TRUE;
+		random_noise_in_bitmap_file_input.assign(argv[++i]);
+		random_noise_in_bitmap_file_output.assign(argv[++i]);
+		random_noise_in_bitmap_file_numerator = ST.strtoi(argv[++i]);
+		random_noise_in_bitmap_file_denominator = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-random_noise_in_bitmap_file "
+				<< " " << random_noise_in_bitmap_file_input
+				<< " " << random_noise_in_bitmap_file_output
+				<< " " << random_noise_in_bitmap_file_numerator
+				<< " " << random_noise_in_bitmap_file_denominator
+				<< endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
@@ -272,6 +300,14 @@ void interface_coding_theory::print()
 	if (f_extract_block) {
 		cout << "-extract_block " << endl;
 		extract_block_crc_options_description->print();
+	}
+	if (f_random_noise_in_bitmap_file) {
+		cout << "-random_noise_in_bitmap_file "
+			<< " " << random_noise_in_bitmap_file_input
+			<< " " << random_noise_in_bitmap_file_output
+			<< " " << random_noise_in_bitmap_file_numerator
+			<< " " << random_noise_in_bitmap_file_denominator
+			<< endl;
 	}
 }
 
@@ -369,6 +405,19 @@ void interface_coding_theory::worker(int verbose_level)
 		Codes.extract_block(extract_block_crc_options_description,
 				verbose_level);
 
+	}
+	else if (f_random_noise_in_bitmap_file) {
+
+		cout << "f_random_noise_in_bitmap_file" << endl;
+
+		graphics::graphical_output G;
+
+		G.random_noise_in_bitmap_file(
+				random_noise_in_bitmap_file_input,
+				random_noise_in_bitmap_file_output,
+				random_noise_in_bitmap_file_numerator,
+				random_noise_in_bitmap_file_denominator,
+				verbose_level);
 	}
 
 

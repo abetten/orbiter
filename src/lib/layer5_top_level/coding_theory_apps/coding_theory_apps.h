@@ -54,6 +54,9 @@ class coding_theoretic_activity_description {
 
 public:
 
+	// the following two functions should be retired.
+	// They are very old.
+	// They create their own finite field.
 	int f_BCH;
 	int f_BCH_dual;
 	int BCH_n;
@@ -92,30 +95,7 @@ public:
 	std::string field_induction_fname_out;
 	int field_induction_nb_bits;
 
-	int f_crc32;
-	std::string crc32_text;
 
-	int f_crc32_hexdata;
-	std::string crc32_hexdata_text;
-
-	int f_crc32_test;
-	int crc32_test_block_length;
-
-	int f_crc256_test;
-	int crc256_test_message_length;
-	int crc256_test_R;
-	int crc256_test_k;
-
-	int f_crc32_remainders;
-	int crc32_remainders_message_length;
-
-	int f_crc32_file_based;
-	std::string crc32_file_based_fname_in;
-	std::string crc32_file_based_fname_out;
-	int crc32_file_based_block_length;
-
-	int f_crc_new_file_based;
-	std::string crc_new_file_based_fname;
 
 	int f_weight_enumerator;
 	std::string weight_enumerator_input_matrix;
@@ -140,6 +120,49 @@ public:
 	int NTT_n;
 	int NTT_q;
 
+	int f_export_magma;
+	std::string export_magma_fname;
+
+	int f_export_codewords;
+	std::string export_codewords_fname;
+
+	int f_export_genma;
+	std::string export_genma_fname;
+
+	int f_export_checkma;
+	std::string export_checkma_fname;
+
+
+
+	// CRC stuff:
+	int f_crc32;
+	std::string crc32_text;
+
+	int f_crc32_hexdata;
+	std::string crc32_hexdata_text;
+
+	int f_crc32_test;
+	int crc32_test_block_length;
+
+	int f_crc256_test;
+	int crc256_test_message_length;
+	int crc256_test_R;
+	int crc256_test_k;
+
+	int f_crc32_remainders;
+	int crc32_remainders_message_length;
+
+	int f_crc_encode_file_based;
+	std::string crc_encode_file_based_fname_in;
+	std::string crc_encode_file_based_fname_out;
+	std::string crc_encode_file_based_crc_type;
+	int crc_encode_file_based_block_length;
+
+#if 0
+	int f_crc_new_file_based;
+	std::string crc_new_file_based_fname;
+#endif
+
 	int f_find_CRC_polynomials;
 	int find_CRC_polynomials_nb_errors;
 	int find_CRC_polynomials_information_bits;
@@ -159,17 +182,6 @@ public:
 	int polynomial_division_from_file_all_k_bit_error_patterns_r1;
 	int polynomial_division_from_file_all_k_bit_error_patterns_k;
 
-	int f_export_magma;
-	std::string export_magma_fname;
-
-	int f_export_codewords;
-	std::string export_codewords_fname;
-
-	int f_export_genma;
-	std::string export_genma_fname;
-
-	int f_export_checkma;
-	std::string export_checkma_fname;
 
 
 	coding_theoretic_activity_description();
@@ -187,7 +199,7 @@ public:
 // coding_theoretic_activity.cpp
 // #############################################################################
 
-//! an activity for graphs
+//! an activity for codes or finite fields
 
 
 class coding_theoretic_activity {

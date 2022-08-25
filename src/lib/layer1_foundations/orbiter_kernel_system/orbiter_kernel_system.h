@@ -298,7 +298,9 @@ public:
 			std::string &fname, int verbose_level);
 	void write_characteristic_matrix(std::string &fname,
 			long int *data, int nb_rows, int data_sz, int nb_cols, int verbose_level);
-	void extract_from_makefile(std::string &fname, std::string &label,
+	void extract_from_makefile(std::string &fname,
+			std::string &label,
+			int f_tail, std::string &tail,
 			std::vector<std::string> &text,
 			int verbose_level);
 	void grade_statistic_from_csv(std::string &fname_csv,
@@ -896,6 +898,8 @@ public:
 			void *Gr, int verbose_level);
 	void init_code(std::string &label,
 			void *Code, int verbose_level);
+	void init_spread(std::string &label,
+			void *Spread, int verbose_level);
 	void init_spread_table(std::string &label,
 			void *P, int verbose_level);
 	void init_packing_was(std::string &label,

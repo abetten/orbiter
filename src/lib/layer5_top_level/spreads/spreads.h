@@ -172,8 +172,6 @@ public:
 
 	spread_classify();
 	~spread_classify();
-	void null();
-	void freeself();
 	void init(
 			projective_geometry::projective_space_with_action *PA,
 			int k,
@@ -265,21 +263,28 @@ class spread_create_description {
 
 public:
 
-	int f_q;
-	int q;
+	int f_kernel_field;
+	std::string kernel_field_label;
+
+	int f_group;
+	std::string group_label;
+
 	int f_k;
 	int k;
+
 	int f_catalogue;
 	int iso;
+
 	int f_family;
 	std::string family_name;
+
+	int f_spread_set;
+	std::string spread_set_label;
 
 
 
 	spread_create_description();
 	~spread_create_description();
-	void null();
-	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
@@ -302,6 +307,8 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
+	apps_algebra::any_group *G;
+
 	int q;
 	field_theory::finite_field *F;
 	int k;
@@ -322,9 +329,8 @@ public:
 
 	spread_create();
 	~spread_create();
-	void null();
-	void freeself();
-	void init(spread_create_description *Descr, int verbose_level);
+	void init(spread_create_description *Descr,
+			int verbose_level);
 	void apply_transformations(
 			std::vector<std::string> transform_coeffs,
 			std::vector<int> f_inverse_transform, int verbose_level);

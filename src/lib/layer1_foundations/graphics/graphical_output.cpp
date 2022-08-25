@@ -1187,6 +1187,56 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 }
 
+void graphical_output::random_noise_in_bitmap_file(
+		std::string fname_input,
+		std::string fname_output,
+		int probability_numerator,
+		int probability_denominator,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graphical_output::random_noise_in_bitmap_file" << endl;
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	BMP image;
+	int H, W, i, j, r;
+	orbiter_kernel_system::os_interface Os;
+
+	image.ReadFromFile(fname_input.c_str());
+
+	H = image.TellHeight();
+	W = image.TellWidth();
+
+	cout << "image size H=" << H << " W=" << W << endl;
+
+
+	for (i = 0; i < H; i++) {
+		for (j = 0; j < W; j++) {
+			RGBApixel pix, pix1;
+
+			pix = image.GetPixel(j, i);
+			cout << i << " : " << j << " : " << (int) pix.Blue << "," << (int) pix.Green << "," << (int) pix.Red << endl;
+
+
+			r = Os.random_integer(probability_denominator);
+			if (r < probability_numerator) {
+				pix1.Blue = pix1.Green = pix1.Red = Os.random_integer(256);
+				pix1.Alpha = pix.Alpha;
+				image.SetPixel(j, i, pix1);
+			}
+		}
+	}
+
+	image.WriteToFile(fname_output.c_str());
+
+
+	if (f_v) {
+		cout << "graphical_output::random_noise_in_bitmap_file done" << endl;
+	}
+}
 
 void graphical_output::draw_projective_curve(draw_projective_curve_description *Descr,
 		layered_graph_draw_options *Opt, int verbose_level)

@@ -61,31 +61,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	//std::string field_induction_fname_out;
 	field_induction_nb_bits = 0;
 
-	f_crc32 = FALSE;
-	//std::string crc32_text;
-
-	f_crc32_hexdata = FALSE;
-	//std::string crc32_hexdata_text;
-
-	f_crc32_test = FALSE;
-	crc32_test_block_length = 0;
-
-	f_crc32_remainders = FALSE;
-	crc32_remainders_message_length = 0;
-
-	f_crc256_test = FALSE;
-	crc256_test_message_length = 0;
-	crc256_test_R = 0;
-	crc256_test_k = 0;
-
-	f_crc32_file_based = FALSE;
-	//std::string crc32_file_based_fname_in;
-	//std::string crc32_file_based_fname_out;
-	crc32_file_based_block_length = 0;
-
-	f_crc_new_file_based = FALSE;
-	//std::string crc_new_file_based_fname;
-
 	f_weight_enumerator = FALSE;
 	//std::string weight_enumerator_input_matrix;
 
@@ -109,6 +84,46 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	NTT_n = 0;
 	NTT_q = 0;
 
+	f_export_magma = FALSE;
+	//std::string export_magma_fname;
+
+	f_export_codewords = FALSE;
+	//std::string export_codewords_fname;
+
+	f_export_genma = FALSE;
+	//std::string export_genma_fname;
+
+	f_export_checkma = FALSE;
+	//std::string export_checkma_fname;
+
+	f_crc32 = FALSE;
+	//std::string crc32_text;
+
+	f_crc32_hexdata = FALSE;
+	//std::string crc32_hexdata_text;
+
+	f_crc32_test = FALSE;
+	crc32_test_block_length = 0;
+
+	f_crc32_remainders = FALSE;
+	crc32_remainders_message_length = 0;
+
+	f_crc256_test = FALSE;
+	crc256_test_message_length = 0;
+	crc256_test_R = 0;
+	crc256_test_k = 0;
+
+	f_crc_encode_file_based = FALSE;
+	//std::string crc_encode_file_based_fname_in;
+	//std::string crc_encode_file_based_fname_out;
+	//std::string crc_encode_file_based_crc_type;
+	crc_encode_file_based_block_length = 0;
+
+#if 0
+	f_crc_new_file_based = FALSE;
+	//std::string crc_new_file_based_fname;
+#endif
+
 	f_find_CRC_polynomials = FALSE;
 	find_CRC_polynomials_nb_errors = 0;
 	find_CRC_polynomials_information_bits = 0;
@@ -128,17 +143,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	polynomial_division_from_file_all_k_bit_error_patterns_r1 = 0;
 	polynomial_division_from_file_all_k_bit_error_patterns_k = 0;
 
-	f_export_magma = FALSE;
-	//std::string export_magma_fname;
-
-	f_export_codewords = FALSE;
-	//std::string export_codewords_fname;
-
-	f_export_genma = FALSE;
-	//std::string export_genma_fname;
-
-	f_export_checkma = FALSE;
-	//std::string export_checkma_fname;
 
 }
 
@@ -315,66 +319,6 @@ int coding_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-crc32") == 0) {
-			f_crc32 = TRUE;
-			crc32_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-crc32 " << crc32_text
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-crc32_hexdata") == 0) {
-			f_crc32_hexdata = TRUE;
-			crc32_hexdata_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-crc32_hexdata " << crc32_hexdata_text
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-crc32_test") == 0) {
-			f_crc32_test = TRUE;
-			crc32_test_block_length = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-crc32_test " << crc32_test_block_length << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-crc256_test") == 0) {
-			f_crc256_test = TRUE;
-			crc256_test_message_length = ST.strtoi(argv[++i]);
-			crc256_test_R = ST.strtoi(argv[++i]);
-			crc256_test_k = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-crc256_test " << crc256_test_message_length << " " << crc256_test_R << " " << crc256_test_k << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-crc32_remainders") == 0) {
-			f_crc32_remainders = TRUE;
-			crc32_remainders_message_length = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-crc32_remainders " << crc32_remainders_message_length << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-crc32_file_based") == 0) {
-			f_crc32_file_based = TRUE;
-			crc32_file_based_fname_in.assign(argv[++i]);
-			crc32_file_based_fname_out.assign(argv[++i]);
-			crc32_file_based_block_length = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-crc32_file_based "
-						<< crc32_file_based_fname_in << " "
-						<< crc32_file_based_fname_out << " "
-						<< crc32_file_based_block_length << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-crc_new_file_based") == 0) {
-			f_crc_new_file_based = TRUE;
-			crc_new_file_based_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-crc_new_file_based "
-						<< crc_new_file_based_fname
-						<< endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-weight_enumerator") == 0) {
 			f_weight_enumerator = TRUE;
 			weight_enumerator_input_matrix.assign(argv[++i]);
@@ -431,6 +375,108 @@ int coding_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
+			f_export_magma = TRUE;
+			export_magma_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_magma "
+					<< " " << export_magma_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_codewords") == 0) {
+			f_export_codewords = TRUE;
+			export_codewords_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_codewords "
+					<< " " << export_codewords_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_genma") == 0) {
+			f_export_genma = TRUE;
+			export_genma_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_genma "
+					<< " " << export_genma_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_checkma") == 0) {
+			f_export_checkma = TRUE;
+			export_checkma_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_checkma "
+					<< " " << export_checkma_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-crc32") == 0) {
+			f_crc32 = TRUE;
+			crc32_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-crc32 " << crc32_text
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-crc32_hexdata") == 0) {
+			f_crc32_hexdata = TRUE;
+			crc32_hexdata_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-crc32_hexdata " << crc32_hexdata_text
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-crc32_test") == 0) {
+			f_crc32_test = TRUE;
+			crc32_test_block_length = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-crc32_test " << crc32_test_block_length << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-crc256_test") == 0) {
+			f_crc256_test = TRUE;
+			crc256_test_message_length = ST.strtoi(argv[++i]);
+			crc256_test_R = ST.strtoi(argv[++i]);
+			crc256_test_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-crc256_test " << crc256_test_message_length << " " << crc256_test_R << " " << crc256_test_k << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-crc32_remainders") == 0) {
+			f_crc32_remainders = TRUE;
+			crc32_remainders_message_length = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-crc32_remainders " << crc32_remainders_message_length << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-crc_encode_file_based") == 0) {
+			f_crc_encode_file_based = TRUE;
+			crc_encode_file_based_fname_in.assign(argv[++i]);
+			crc_encode_file_based_fname_out.assign(argv[++i]);
+			crc_encode_file_based_crc_type.assign(argv[++i]);
+			crc_encode_file_based_block_length = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-crc_encode_file_based "
+						<< crc_encode_file_based_fname_in << " "
+						<< crc_encode_file_based_fname_out << " "
+						<< crc_encode_file_based_crc_type << " "
+						<< crc_encode_file_based_block_length << endl;
+			}
+		}
+
+#if 0
+		else if (ST.stringcmp(argv[i], "-crc_new_file_based") == 0) {
+			f_crc_new_file_based = TRUE;
+			crc_new_file_based_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-crc_new_file_based "
+						<< crc_new_file_based_fname
+						<< endl;
+			}
+		}
+#endif
+
 		else if (ST.stringcmp(argv[i], "-find_CRC_polynomials") == 0) {
 			f_find_CRC_polynomials = TRUE;
 			find_CRC_polynomials_nb_errors = ST.strtoi(argv[++i]);
@@ -478,42 +524,6 @@ int coding_theoretic_activity_description::read_arguments(
 					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_fname
 					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_r1
 					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
-			f_export_magma = TRUE;
-			export_magma_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-export_magma "
-					<< " " << export_magma_fname
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-export_codewords") == 0) {
-			f_export_codewords = TRUE;
-			export_codewords_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-export_codewords "
-					<< " " << export_codewords_fname
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-export_genma") == 0) {
-			f_export_genma = TRUE;
-			export_genma_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-export_genma "
-					<< " " << export_genma_fname
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-export_checkma") == 0) {
-			f_export_checkma = TRUE;
-			export_checkma_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-export_checkma "
-					<< " " << export_checkma_fname
 					<< endl;
 			}
 		}
@@ -584,33 +594,6 @@ void coding_theoretic_activity_description::print()
 				<< " " << field_induction_nb_bits
 				<< endl;
 	}
-	if (f_crc32) {
-		cout << "-crc32 " << crc32_text
-				<< endl;
-	}
-	if (f_crc32_hexdata) {
-		cout << "-crc32_hexdata " << crc32_hexdata_text << endl;
-	}
-	if (f_crc32_test) {
-		cout << "-crc32_test " << crc32_test_block_length << endl;
-	}
-	if (f_crc256_test) {
-		cout << "-crc256_test " << crc256_test_message_length << " " << crc256_test_R << " " << crc256_test_k << endl;
-	}
-	if (f_crc32_remainders) {
-		cout << "-crc32_remainders " << crc32_remainders_message_length << endl;
-	}
-	if (f_crc32_file_based) {
-		cout << "-crc32_file_based "
-				<< crc32_file_based_fname_in << " "
-				<< crc32_file_based_fname_out << " "
-				<< crc32_file_based_block_length << endl;
-	}
-	if (f_crc_new_file_based) {
-		cout << "-crc_new_file_based "
-				<< crc_new_file_based_fname
-				<< endl;
-	}
 	if (f_weight_enumerator) {
 		cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
 	}
@@ -638,6 +621,56 @@ void coding_theoretic_activity_description::print()
 				<< " " << NTT_q
 				<< endl;
 	}
+	if (f_export_magma) {
+		cout << "-export_magma "
+			<< " " << export_magma_fname
+			<< endl;
+	}
+	if (f_export_codewords) {
+		cout << "-export_codewords "
+			<< " " << export_codewords_fname
+			<< endl;
+	}
+	if (f_export_genma) {
+			cout << "-export_genma "
+				<< " " << export_genma_fname
+				<< endl;
+	}
+	if (f_export_checkma) {
+			cout << "-export_checkma "
+				<< " " << export_checkma_fname
+				<< endl;
+	}
+	if (f_crc32) {
+		cout << "-crc32 " << crc32_text
+				<< endl;
+	}
+	if (f_crc32_hexdata) {
+		cout << "-crc32_hexdata " << crc32_hexdata_text << endl;
+	}
+	if (f_crc32_test) {
+		cout << "-crc32_test " << crc32_test_block_length << endl;
+	}
+	if (f_crc256_test) {
+		cout << "-crc256_test " << crc256_test_message_length << " " << crc256_test_R << " " << crc256_test_k << endl;
+	}
+	if (f_crc32_remainders) {
+		cout << "-crc32_remainders " << crc32_remainders_message_length << endl;
+	}
+	if (f_crc_encode_file_based) {
+		cout << "-crc_encode_file_based "
+				<< crc_encode_file_based_fname_in << " "
+				<< crc_encode_file_based_fname_out << " "
+				<< crc_encode_file_based_crc_type << " "
+				<< crc_encode_file_based_block_length << endl;
+	}
+#if 0
+	if (f_crc_new_file_based) {
+		cout << "-crc_new_file_based "
+				<< crc_new_file_based_fname
+				<< endl;
+	}
+#endif
 	if (f_find_CRC_polynomials) {
 		cout << "-find_CRC_polynomials "
 				<< " " << find_CRC_polynomials_nb_errors
@@ -663,26 +696,6 @@ void coding_theoretic_activity_description::print()
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_fname
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_r1
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
-				<< endl;
-	}
-	if (f_export_magma) {
-		cout << "-export_magma "
-			<< " " << export_magma_fname
-			<< endl;
-	}
-	if (f_export_codewords) {
-		cout << "-export_codewords "
-			<< " " << export_codewords_fname
-			<< endl;
-	}
-	if (f_export_genma) {
-			cout << "-export_genma "
-				<< " " << export_genma_fname
-				<< endl;
-	}
-	if (f_export_checkma) {
-			cout << "-export_checkma "
-				<< " " << export_checkma_fname
 				<< endl;
 	}
 
