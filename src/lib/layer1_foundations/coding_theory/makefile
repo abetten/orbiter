@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+		coding_theory_domain_crc.o \
 		coding_theory_domain.o \
 		crc_options_description.o \
 		create_BCH_code.o \

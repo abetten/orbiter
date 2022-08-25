@@ -42,10 +42,14 @@ interface_projective::interface_projective()
 	//smooth_curve_Polish = NULL;
 	FP_descr = NULL;
 
-
+#if 0
 	f_create_spread = FALSE;
 	Spread_create_description = FALSE;
 
+	//std::vector<std::string> transform_coeffs;
+	//std::vector<int> f_inverse_transform;
+
+#endif
 
 	f_make_table_of_surfaces = FALSE;
 
@@ -58,8 +62,6 @@ interface_projective::interface_projective()
 	f_create_dickson_atlas = FALSE;
 
 
-	//std::vector<std::string> transform_coeffs;
-	//std::vector<int> f_inverse_transform;
 
 }
 
@@ -78,9 +80,11 @@ void interface_projective::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-smooth_curve") == 0) {
 		cout << "-smooth_curve <string : label> <double : desired_distance> <int : N> <double : boundary> <double : t_min> <double : t_max> <function>" << endl;
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-create_spread") == 0) {
 		cout << "-create_spread <description>" << endl;
 	}
+#endif
 	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		cout << "-make_table_of_surfaces " << endl;
 	}
@@ -114,9 +118,11 @@ int interface_projective::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-smooth_curve") == 0) {
 		return true;
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-create_spread") == 0) {
 		return true;
 	}
+#endif
 	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		return true;
 	}
@@ -189,6 +195,7 @@ void interface_projective::read_arguments(int argc,
 				<< endl;
 		}
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-create_spread") == 0) {
 		f_create_spread = TRUE;
 		if (f_v) {
@@ -231,6 +238,7 @@ void interface_projective::read_arguments(int argc,
 			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1] << endl;
 		}
 	}
+#endif
 	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		f_make_table_of_surfaces = TRUE;
 		if (f_v) {
@@ -283,11 +291,11 @@ void interface_projective::print()
 				<< endl;
 		FP_descr->print();
 	}
+#if 0
 	if (f_create_spread) {
 		cout << "-create_spread" << endl;
 		Spread_create_description->print();
 	}
-
 	int i;
 
 	for (i = 0; i < transform_coeffs.size(); i++) {
@@ -298,6 +306,7 @@ void interface_projective::print()
 			cout << "-transform " << transform_coeffs[i] << endl;
 		}
 	}
+#endif
 
 	if (f_make_table_of_surfaces) {
 		cout << "-make_table_of_surfaces" << endl;
@@ -345,11 +354,13 @@ void interface_projective::worker(int verbose_level)
 				smooth_curve_t_min, smooth_curve_t_max, smooth_curve_boundary,
 				FP_descr, verbose_level);
 	}
+#if 0
 	else if (f_create_spread) {
 
 		do_create_spread(Spread_create_description, verbose_level);
 
 	}
+#endif
 
 
 	else if (f_make_table_of_surfaces) {
@@ -394,7 +405,7 @@ void interface_projective::worker(int verbose_level)
 
 
 
-
+#if 0
 void interface_projective::do_create_spread(spreads::spread_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -463,6 +474,7 @@ void interface_projective::do_create_spread(spreads::spread_create_description *
 	}
 
 }
+#endif
 
 
 }}}

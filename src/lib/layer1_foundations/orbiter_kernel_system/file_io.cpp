@@ -4820,7 +4820,9 @@ void file_io::write_characteristic_matrix(std::string &fname,
 
 }
 
-void file_io::extract_from_makefile(std::string &fname, std::string &label,
+void file_io::extract_from_makefile(std::string &fname,
+		std::string &label,
+		int f_tail, std::string &tail,
 		std::vector<std::string> &text,
 		int verbose_level)
 {
@@ -4845,7 +4847,8 @@ void file_io::extract_from_makefile(std::string &fname, std::string &label,
 
 	{
 		ifstream fp(fname);
-
+		int f_found;
+		int f_has_been_found = FALSE;
 
 		nb_lines = 0;
 		while (TRUE) {
@@ -4856,7 +4859,20 @@ void file_io::extract_from_makefile(std::string &fname, std::string &label,
 			//cout << "count_number_of_lines_in_file "
 			// "reading line, nb_sol = " << nb_sol << endl;
 			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+
+			f_found = FALSE;
+
 			if (strncmp(buf, label.c_str(), label.length()) == 0) {
+				f_found = TRUE;
+			}
+			if (f_found && f_tail) {
+				if (strncmp(buf + label.length(), tail.c_str(), tail.length()) != 0) {
+					f_found = FALSE;
+				}
+			}
+
+			if (f_found) {
+				f_has_been_found = TRUE;
 				if (f_v) {
 					cout << "file_io::extract_from_makefile found label " << label << " at line " << nb_lines << endl;
 				}
@@ -4878,6 +4894,12 @@ void file_io::extract_from_makefile(std::string &fname, std::string &label,
 				break;
 			}
 			nb_lines++;
+		}
+		if (!f_has_been_found) {
+			cout << "label not be found: " << label << endl;
+			while (TRUE) {
+				;
+			}
 		}
 	}
 	FREE_char(buf);

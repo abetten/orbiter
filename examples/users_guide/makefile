@@ -314,7 +314,7 @@ F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 \
 
 # general normal form for surfaces with 27 lines:
 
-F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
+F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 \
 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2*X2 \
@@ -333,8 +333,11 @@ F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 
 
 KNECHT_13_1_AS_PAIRS="1,0,1,1,1,2,12,9"
+
 KNECHT_13_1_AS_VECTOR="1,1,1,0,0, 0,0,0,0,12, 0,0,0,0,0"
+
 KNECHT_13_2_AS_PAIRS="1,0,1,1,1,2,8,9,8,10,8,11"
+
 KNECHT_13_2_AS_VECTOR="1,1,1,0,0, 0,0,0,0,8, 0,8,0,0,0"
 
 
@@ -869,7 +872,7 @@ TEST_RHS="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
 
 
 
-PP4 = -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4
+PP4= -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4
 
 PP4_GROUP1=-subgroup "1,1,1,1, " "21" -group_label "cyclic21"
 
@@ -880,7 +883,7 @@ PP4_MASK1=\
 
 
 
-DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13 = -d1 1 -q1 7 -d2 1 -q2 13 -K 6 -search_control -W -end -problem_label DD_CC_7_13
+DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13= -d1 1 -q1 7 -d2 1 -q2 13 -K 6 -search_control -W -end -problem_label DD_CC_7_13
 
 DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_GROUP1=-subgroup "1,1,1,1, " "91" -group_label "cyclic91"
 
@@ -891,7 +894,7 @@ DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_MASK1=\
 
 
 
-DELANDTSHEER_DOYEN_PROBLEM_27_53 = -d1 1 -q1 27 -d2 1 -q2 53 -K 11 -DDx 2 -DDy 1 -search_control -W -end 
+DELANDTSHEER_DOYEN_PROBLEM_27_53= -d1 1 -q1 27 -d2 1 -q2 53 -K 11 -DDx 2 -DDy 1 -search_control -W -end 
 
 DELANDTSHEER_DOYEN_PROBLEM_27_53_GROUP1=-subgroup \
 	"1,1,1,0, 1,3,1,0, 1,9,1,0, 1,0,1,1, -2,0,-4,0" "18603" -group_label "group1"
@@ -905,7 +908,7 @@ DELANDTSHEER_DOYEN_PROBLEM_27_53_MASK1=\
 	-depth 4 \
 	-mask_label "mask1"
 
-DELANDTSHEER_DOYEN_PROBLEM_3_7 = -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -DDx 3 -DDy 1 -search_control -W -end 
+DELANDTSHEER_DOYEN_PROBLEM_3_7= -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -DDx 3 -DDy 1 -search_control -W -end 
 
 DELANDTSHEER_DOYEN_PROBLEM_3_7_GROUP1=-subgroup \
 	"1,1,1,0, 1,0,1,1 " "21" -group_label "group_cyclic"
@@ -1723,7 +1726,7 @@ F_64_over_F4_field_reduction:
 	#open field_reduction_Q64_q4_8_8.pdf
 
 
-F64_over_F2_field_reduction:
+F_64_over_F2_field_reduction:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 64 -end \
 		-define elts -vector -field F -loop 0 64 1 -end \
@@ -4006,7 +4009,8 @@ Cycle_13_power:
 		-define G -permutation_group -symmetric_group 13 -end \
 		-with G -do \
 		-group_theoretic_activity \
-			-consecutive_powers "1,2,3,4,5,6,7,8,9,10,11,12,0" 13 \
+			-consecutive_powers \
+			"1,2,3,4,5,6,7,8,9,10,11,12,0" 13 \
 		-end
 	pdflatex Perm13_all_powers.tex
 	open Perm13_all_powers.pdf
@@ -4017,7 +4021,8 @@ Cycle_12_power:
 		-define G -permutation_group -symmetric_group 12 -end \
 		-with G -do \
 		-group_theoretic_activity \
-			-consecutive_powers "1,2,3,4,5,6,7,8,9,10,11,0" 12 \
+			-consecutive_powers \
+			"1,2,3,4,5,6,7,8,9,10,11,0" 12 \
 		-end
 	pdflatex Perm12_all_powers.tex
 	open Perm12_all_powers.pdf
@@ -4197,7 +4202,8 @@ on_planes:
 		-end \
 		-with G_on_planes -do \
 		-group_theoretic_activity \
-			-apply "0,8,1,6,4,3,7,2,5" "1,0,0,0, 0,1,0,0, 0,0,0,2, 0,0,1,1" \
+			-apply "0,8,1,6,4,3,7,2,5" \
+			"1,0,0,0, 0,1,0,0, 0,0,0,2, 0,0,1,1" \
 		-end
 	pdflatex PGL_4_8_Gr_4_3_apply.tex
 	open PGL_4_8_Gr_4_3_apply.pdf
@@ -6890,8 +6896,11 @@ quartic_curves_q7_classify:
 				surface_catalogue_q7_iso%d_quartics.csv \
 				$(NB_CUBIC_SURFACES_Q7) 3 4 quartic_curves_q7 \
 		-end \
-		-print_symbols \
+		-print_symbols
+	#pdflatex quartic_curves_q7_canonical.tex
+	#open quartic_curves_q7_canonical.pdf
 
+# no quartic curve
 
 
 NB_CUBIC_SURFACES_Q13=4
@@ -6915,14 +6924,6 @@ quartic_curves_q13:
 			-end \
 		-end_loop \
 		-print_symbols
-		#pdflatex surface_catalogue_q13_iso0_quartics.tex
-		#open surface_catalogue_q13_iso0_quartics.pdf
-		#pdflatex surface_catalogue_q13_iso1_quartics.tex
-		#open surface_catalogue_q13_iso1_quartics.pdf
-		#pdflatex surface_catalogue_q13_iso2_quartics.tex
-		#open surface_catalogue_q13_iso2_quartics.pdf
-		#pdflatex surface_catalogue_q13_iso3_quartics.tex
-		#open surface_catalogue_q13_iso3_quartics.pdf
 
 
 #surface_catalogue_q13_iso0_quartics.csv
@@ -6936,9 +6937,9 @@ quartic_curves_q13_classify:
 		-projective_space_activity \
 			-classify_quartic_curves_with_substructure \
 				surface_catalogue_q13_iso%d_quartics.csv \
-				3 4 4 quartic_curves_q13 \
+				$(NB_CUBIC_SURFACES_Q13) 4 4 quartic_curves_q13 \
 		-end \
-		-print_symbols \
+		-print_symbols
 
 #q13
 #The number of types of quartic curves is 2
@@ -6990,7 +6991,7 @@ quartic_curves_q17_classify:
 
 #User time: 2:33
 #q17
-#The number of types of quartic curves is 7
+#The number of isomorphism types of quartic curves is 7
 #idx : ago
 #0 : 24
 #1 : 24
@@ -7078,8 +7079,8 @@ surface_13_0_quartics:
 			-report \
 			-export_all_quartic_curves \
 		-end
-	pdflatex surface_catalogue_q13_iso0_quartics.tex
-	open surface_catalogue_q13_iso0_quartics.pdf
+	pdflatex surface_catalogue_q13_iso0_report.tex
+	open surface_catalogue_q13_iso0_report.pdf
 
 
 surface_13_1_quartics:
@@ -7095,8 +7096,8 @@ surface_13_1_quartics:
 			-report \
 			-export_all_quartic_curves \
 		-end
-	pdflatex surface_catalogue_q13_iso1_quartics.tex
-	open surface_catalogue_q13_iso1_quartics.pdf
+	pdflatex surface_catalogue_q13_iso1_report.tex
+	open surface_catalogue_q13_iso1_report.pdf
 
 
 
@@ -7639,10 +7640,10 @@ quartic_curve_13_0_surface_create:
 #			-report_with_group \
 
 ###############################################################################
-# Section 7.3: Cubic Surfaces Classification 
+# Section 7.3: Classification of Cubic Surfaces with 27 lines
 
 
-SECTION_CUBIC_SURFACES_CLASSIFICATION:
+SECTION_CLASSIFICATION_OF_CUBIC_SURFACES_WITH_27_LINES:
 
 
 
@@ -8963,19 +8964,19 @@ search_primitive_poly_32:
 SECTION_MULTIVARIATE_POLYNOMIALS:
 
 
-CREMONA_MAP_Y0 ="3*y0*y0*y0*y0*y0*y2+4*y0*y0*y0*y1*y1*y2\
+CREMONA_MAP_Y0="3*y0*y0*y0*y0*y0*y2+4*y0*y0*y0*y1*y1*y2\
 +2*y0*y0*y0*y2*y2*y2+y0*y1*y1*y1*y1*y2\
 +6*y0*y1*y1*y2*y2*y2+9*y0*y2*y2*y2*y2*y2"
 
-CREMONA_MAP_Y1 ="y0*y0*y0*y0*y0*y1+5*y0*y0*y0*y1*y1*y1\
+CREMONA_MAP_Y1="y0*y0*y0*y0*y0*y1+5*y0*y0*y0*y1*y1*y1\
 +12*y0*y0*y0*y1*y2*y2+3*y0*y1*y1*y1*y1*y1\
 +5*y0*y1*y1*y1*y2*y2+y0*y1*y2*y2*y2*y2"
 
-CREMONA_MAP_Y2 ="10*y0*y0*y0*y0*y0*y0+11*y0*y0*y0*y0*y1*y1\
+CREMONA_MAP_Y2="10*y0*y0*y0*y0*y0*y0+11*y0*y0*y0*y0*y1*y1\
 +11*y0*y0*y0*y0*y2*y2+4*y0*y0*y1*y1*y1*y1\
 +9*y0*y0*y1*y1*y2*y2+4*y0*y0*y2*y2*y2*y2"
 
-CREMONA_MAP_Y3 = "0"
+CREMONA_MAP_Y3="0"
 
 
 
@@ -9125,7 +9126,7 @@ F_9_q7:
 
 # we create 20 5-subsets of PG(2,11) at random. Note that PG(2,11) has 133 points.
 
-random_k_subsets:
+random_k_subsets_PG_2_11:
 	$(ORBITER) -v 4 \
 		-create_random_k_subsets 133 5 20
 
@@ -9353,7 +9354,7 @@ NTRU_Q=41
 
 NTRU_D=2
 
-NTRUE_XN1="-1,0,0,0,0,0,0,1,"
+NTRU_XN1="-1,0,0,0,0,0,0,1,"
 
 # D + 1 plus ones and D minus ones
 
@@ -9369,7 +9370,7 @@ NTRU_Alice1:
 		-with F -do \
 		-finite_field_activity \
 		-extended_gcd_for_polynomials \
-			$(NTRUE_XN1) $(ALICE_PRIVATE_F) \
+			$(NTRU_XN1) $(ALICE_PRIVATE_F) \
 		-end
 
 #F_q(x) = 8X^{6} + 26X^{5} + 31X^{4} + 21X^{3} + 40X^{2} + 2X + 37
@@ -9414,7 +9415,7 @@ NTRU_encrypt:
 		$(BOB_ONE_TIME_KEY) $(BOB_MESSAGE) -end
 
 # E(X) = 31X^{6} + 19X^{5} + 4X^{4} + 2X^{3} + 40X^{2} + 3X + 25
-BOB_ENCRYPT = "25,3,40,2,4,19,31"
+BOB_ENCRYPT= "25,3,40,2,4,19,31"
 
 
 NTRU_decrypt1:
@@ -9872,6 +9873,13 @@ power_mod_3_31:
 
 SECTION_CODING_THEORY_INTRODUCTION:
 
+Allen_Gates_noise_1_percent:
+	$(ORBITER) -v 3 \
+		-random_noise_in_bitmap_file \
+		allen_Gates.bmp \
+		allen_Gates_1.bmp \
+		1 100 
+	open allen_Gates_1.bmp
 
 
 Hamming_space_4_2_distance_matrix:
@@ -9897,14 +9905,21 @@ Hamming_code_macwilliams:
 
 
 
-# ToDo:
 
 code_5_2_3_diagram:
-	$(ORBITER) -v 2 -code_diagram "code_5_2_3" \
-		$(CODE_5_2_3_CODEWORDS) 5 -metric_balls 1
-	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file code_5_2_3_diagram_01_5_4.csv \
-		-box_width 25 -bit_depth 24 -partition 4 8 4 -end
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-code_diagram "code_5_2_3" \
+			$(CODE_5_2_3_CODEWORDS) 5 \
+			-metric_balls 1 \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file code_5_2_3_diagram_01_5_4.csv \
+			-box_width 25 -bit_depth 24 \
+			-partition 4 8 4 \
+		-end
 
 
 
@@ -9945,14 +9960,17 @@ Hamming_5_2_with_5_2_3_code:
 
 
 
-
 code_6:
 	$(ORBITER) -v 2 \
-		-general_code_binary 6 "0,60,50,41,14,21,27,39"
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-general_code_binary 6 "0,60,50,41,14,21,27,39" \
+		-end
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file code_matrix_8_8.csv \
 		-box_width 20 -bit_depth 24 \
-		-partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" -end
+		-partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" \
+		-end
 	pdflatex code_6_8.tex
 	open code_6_8.pdf
 	open code_matrix_8_8_draw.bmp
@@ -10095,6 +10113,8 @@ RM_5_1_and_codewords:
 
 
 
+# ToDo:
+
 Hamming_code_words_old:
 	$(ORBITER) -v 2 \
 		-define v -vector -dense $(HAMMING_CODE_ROWS_IN_BINARY_RANKS) -end \
@@ -10141,30 +10161,41 @@ Golay23_minimum_distance:
 #d=7 in 0 sec
 
 Hamming_code_diagram:
-	- $(ORBITER) -v 2 -code_diagram "Hamming_7_4" \
-		$(HAMMING_CODE_CODEWORDS) 7 -metric_balls 1
-	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file Hamming_7_4_diagram_01_7_16.csv \
-		-box_width 25 -bit_depth 24 -partition 4 16 8 -end
-	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file Hamming_7_4_diagram_7_16.csv \
-		-box_width 25 -bit_depth 14 -partition 4 16 8 -end
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_1" "67" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_2" "37" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_3" "102" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_4" "22" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_5" "85" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_6" "51" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_7" "112" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_8" "15" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_9" "76" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_10" "42" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_11" "105" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_12" "25" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_13" "90" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_14" "60" 7 -metric_balls 1
-	$(ORBITER) -v 2 -code_diagram "Hamming_7_4_word_15" "127" 7 -metric_balls 1
+	- $(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-code_diagram "Hamming_7_4" \
+			$(HAMMING_CODE_CODEWORDS) 7 \
+			-metric_balls 1 \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file Hamming_7_4_diagram_01_7_16.csv \
+			-box_width 25 -bit_depth 24 \
+			-partition 4 16 8 \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file Hamming_7_4_diagram_7_16.csv \
+			-box_width 25 -bit_depth 14 \
+			-partition 4 16 8 \
+			-end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_1" "67" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_2" "37" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_3" "102" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_4" "22" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_5" "85" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_6" "51" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_7" "112" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_8" "15" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_9" "76" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_10" "42" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_11" "105" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_12" "25" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_13" "90" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_14" "60" 7 -metric_balls 1 -end
+	$(ORBITER) -v 2 -define F -finite_field -q 2 -end -with F -do -coding_theoretic_activity -code_diagram "Hamming_7_4_word_15" "127" 7 -metric_balls 1 -end
 	$(ORBITER) -v 2 -loop L 0 16 1 -draw_matrix \
 		-input_csv_file Hamming_7_4_word_%L_diagram_7_1.csv \
 		-box_width 25 -bit_depth 8 -partition 4 16 8 -end \
@@ -10610,6 +10641,108 @@ F256_BCH_code_d16_error:
 
 
 
+
+#CRC_FILE=allen_Gates
+CRC_FILE=javad-allahyari-Fs1E2JXM3Gc-unsplash
+
+CRC_FILE_EXTENSION=bmp
+
+
+crc_encode_16:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+			-coding_theoretic_activity \
+				-crc_encode_file_based $(CRC_FILE).$(CRC_FILE_EXTENSION) $(CRC_FILE)_crc16.bin crc16 771 \
+		-end
+
+#-rw-r--r--  1 betten  staff    646576 Aug 24 14:35 allen_Gates_crc16.bin
+#-rw-r--r--  1 betten  staff  21656232 Aug 24 15:35 javad-allahyari-Fs1E2JXM3Gc-unsplash_crc16.bin
+
+
+
+crc_encode_32:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+			-coding_theoretic_activity \
+				-crc_encode_file_based $(CRC_FILE).$(CRC_FILE_EXTENSION) $(CRC_FILE)_crc32.bin crc32 771 \
+		-end
+
+
+#-rw-r--r--  1 betten  staff    648262 Aug 24 14:34 allen_Gates_crc32.bin
+
+
+
+#crc_encode_new:
+#	$(ORBITER) -v 3 \
+#		-define F -finite_field -q 256 -end \
+#		-with F -do \
+#			-coding_theoretic_activity \
+#			-crc_new_file_based $(CRC_FILE).$(CRC_FILE_EXTENSION) \
+#		-end
+
+
+introduce_errors_16_500000:
+	$(ORBITER) -v 3 \
+		-introduce_errors \
+			-input $(CRC_FILE)_crc16.bin \
+			-output $(CRC_FILE)_crc16_e.bin \
+			-block_based_error_generator \
+			-block_length 771 \
+			-threshold 500000 \
+			-file_based_error_generator 500000 \
+			-nb_repeats 30 \
+		-end
+
+
+introduce_errors_32_100000:
+	$(ORBITER) -v 3 \
+		-introduce_errors \
+			-input $(CRC_FILE)_crc32.bin \
+			-output $(CRC_FILE)_crc32_e.bin \
+			-block_based_error_generator \
+			-block_length 771 \
+			-threshold 100000 \
+			-file_based_error_generator 100000 \
+			-nb_repeats 30 \
+		-end
+
+
+check_errors_16:
+	$(ORBITER) -v 3 \
+		-check_errors \
+			-input $(CRC_FILE)_crc16_e.bin \
+			-output $(CRC_FILE)_recovered.$(CRC_FILE_EXTENSION) \
+			-crc_type crc16 \
+			-error_log $(CRC_FILE)_crc16_e_pattern.csv \
+			-block_length 771 \
+		-end
+
+check_errors_32:
+	$(ORBITER) -v 3 \
+		-check_errors \
+			-input $(CRC_FILE)_crc32_e.bin \
+			-output $(CRC_FILE)_recovered.$(CRC_FILE_EXTENSION) \
+			-crc_type crc32 \
+			-error_log $(CRC_FILE)_crc32_e_pattern.csv \
+			-block_length 771 \
+		-end
+
+
+extract_block:
+	$(ORBITER) -v 3 \
+		-extract_block \
+			-input $(CRC_FILE)_crc32_e.bin \
+			-output $(CRC_FILE)_recovered.$(CRC_FILE_EXTENSION) \
+			-error_log $(CRC_FILE)_crc32_e_pattern.csv \
+			-block_length 771 \
+			-selected_block 813731 \
+		-end
+
+
+
+
 ###############################################################################
 # Section 10.5: Coding Theory - Reed-Muller codes
 
@@ -10632,6 +10765,12 @@ RM_3_1_Hamming_space_diagram:
 		-end
 	$(ORBITER) -v 2 \
 		-draw_matrix \
+			-input_csv_file RM_3_1_holes_8_16.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 4 16 16 \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
 			-input_csv_file RM_3_1_diagram_01_8_16.csv \
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 16 \
@@ -10642,7 +10781,7 @@ RM_3_1_Hamming_space_diagram:
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 16 \
 		-end
-	open RM_3_1_diagram_8_16_draw.bmp
+	open RM_3_1_holes_8_16_draw.bmp
 
 
 RM_3_1_split:
@@ -11004,7 +11143,7 @@ BCH_255_5_evaluate_elementary_symmetric_functions_2:
 BCH15:
 	#$(ORBITER) -BCH 15 2 3 
 	$(ORBITER) \
-		-define F -finite_field -q 7 -end \
+		-define F -finite_field -q 2 -end \
 		-with F -do -coding_theoretic_activity \
 			-BCH 15 2 5 \
 		-end
@@ -11327,6 +11466,8 @@ BCH_F256_BCH_code_d16:
 
 SECTION_CODING_THEORY_REED_SOLOMON_CODES:
 
+
+# ToDo:
 
 F_7_BCH_code_n6:
 	$(ORBITER) -v 3 \
@@ -11837,6 +11978,11 @@ all_subsets_10_3:
 	$(ORBITER) -v 2 -tree_of_all_k_subsets 10 3
 
 
+random_k_subsets:
+	$(ORBITER) -v 4 \
+		-create_random_k_subsets 10 5 20
+
+
 rank_k_subsets_test:
 	$(ORBITER) -v 2 \
 		-rank_k_subset 10 3 0,1,2,0,3,4,1,3,5,2,4,5,3,6,7,1,6,8,0,6,9
@@ -11872,9 +12018,6 @@ elementary_symmetric_functions_4:
 
 elementary_symmetric_functions_8:
 	$(ORBITER) -make_elementary_symmetric_functions 8 8
-
-
-
 
 
 
@@ -11966,7 +12109,7 @@ Large_set_C13:
 
 ## the following lines were created using -export_orbiter:
 
-GENERATORS_Perm13_Subgroup_C13_13 = \
+GENERATORS_Perm13_Subgroup_C13_13= \
 	"11,0,10,12,5,3,7,4,2,8,6,9,1"
 
 Perm13_Subgroup_C13_13:
@@ -13239,7 +13382,49 @@ max_arc_16_4r_print:
 # Section 12.1: Spreads
 
 SECTION_SPREADS:
-	
+
+SPREAD_SET_27_RAO_RAO="\
+0,0,0,0,0,0,0,0,0, \
+1,1,0,2,1,1,0,0,2, \
+1,0,1,1,2,2,0,1,0, \
+1,2,2,1,2,0,2,2,2, \
+0,0,2,2,2,0,1,2,0, \
+1,1,2,0,2,1,2,1,0, \
+0,1,0,1,0,1,0,2,1, \
+2,0,2,0,0,2,1,1,0, \
+2,2,2,0,1,1,0,1,2, \
+2,0,0,1,0,2,1,2,1, \
+0,2,2,2,2,2,2,0,2, \
+2,1,2,0,2,0,2,0,1, \
+0,1,2,2,0,1,0,1,1, \
+1,0,0,0,1,0,0,0,1, \
+2,1,0,1,2,1,0,2,0, \
+0,2,0,0,2,2,1,1,2, \
+0,0,1,0,1,2,2,2,1, \
+2,0,1,2,2,1,1,0,1, \
+0,1,1,1,1,0,1,2,2, \
+2,2,0,2,0,0,0,2,2, \
+2,1,1,1,1,2,2,1,2, \
+2,2,1,2,1,0,2,0,0, \
+1,2,0,2,0,2,1,0,0, \
+1,2,1,1,0,0,1,1,1, \
+0,2,1,1,1,1,2,2,0, \
+1,1,1,0,0,1,1,0,2, \
+1,0,2,2,1,2,2,1,1 \
+"
+
+create_spread_Rao_Rao_27:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define SS -vector -dense $(SPREAD_SET_27_RAO_RAO) -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -spread_set SS \
+			-end
+	#pdflatex Desarguesian_Spread_3_2.tex
+	#open Desarguesian_Spread_3_2.pdf
+
+
 desarguesian_spread_in_PG_3_2:
 	$(ORBITER) -v 3 \
 		-define FQ -finite_field -q 4 -end \

@@ -402,6 +402,10 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 
 		if (Orbiter_session->get_object_type(idx) == t_vector) {
 
+			if (f_v) {
+				cout << "orbiter_top_level_session::get_vector_or_set "
+						"found a vector " << label << endl;
+			}
 			data_structures::vector_builder *VB;
 
 			VB = (data_structures::vector_builder *) Orbiter_session->get_object(idx);
@@ -413,6 +417,10 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 		}
 		else if (Orbiter_session->get_object_type(idx) == t_set) {
 
+			if (f_v) {
+				cout << "orbiter_top_level_session::get_vector_or_set "
+						"found a set " << label << endl;
+			}
 			data_structures::set_builder *SB;
 
 			SB = (data_structures::set_builder *) Orbiter_session->get_object(idx);

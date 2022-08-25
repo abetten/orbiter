@@ -20,38 +20,49 @@ namespace spreads {
 
 spread_create::spread_create()
 {
-	null();
-}
+	Descr = NULL;
 
-spread_create::~spread_create()
-{
-	freeself();
-}
+	//std::string prefix;
+	//std::string label_txt;
+	//std::string label_tex;
 
-void spread_create::null()
-{
+	G = NULL;
+
+	q = 0;
 	F = NULL;
+	k = 0;
+
+	f_semilinear = FALSE;
+
 	A = NULL;
+	degree = 0;
+
 	set = NULL;
+	sz = 0;
+
 	f_has_group = FALSE;
 	Sg = NULL;
 }
 
-void spread_create::freeself()
+
+spread_create::~spread_create()
 {
+#if 0
 	if (F) {
 		FREE_OBJECT(F);
 	}
+#endif
 	if (set) {
 		FREE_lint(set);
 	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
 	}
-	null();
 }
 
-void spread_create::init(spread_create_description *Descr, int verbose_level)
+
+void spread_create::init(spread_create_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -61,37 +72,56 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 		cout << "spread_create::init" << endl;
 	}
 	spread_create::Descr = Descr;
-	if (!Descr->f_q) {
-		cout << "spread_create::init !Descr->f_q" << endl;
+	if (!Descr->f_kernel_field) {
+		cout << "spread_create::init !Descr->f_kernel_field" << endl;
 		exit(1);
 	}
-	q = Descr->q;
+
+	F = Get_object_of_type_finite_field(Descr->kernel_field_label);
+
+	q = F->q;
+
 	if (!Descr->f_k) {
 		cout << "spread_create::init !Descr->f_k" << endl;
 		exit(1);
 	}
 	k = Descr->k;
+
+	if (!Descr->f_group) {
+		cout << "spread_create::init !Descr->f_group" << endl;
+		exit(1);
+	}
+
+	G = Get_object_of_type_any_group(Descr->group_label);
+
+	if (!G->f_linear_group) {
+		cout << "spread_create::init the group must be a linear group" << endl;
+		exit(1);
+	}
+
+	A = G->A_base;
+	if (!A->is_matrix_group()) {
+		cout << "spread_create::init the base group is not a matrix group" << endl;
+		exit(1);
+	}
+	
+
+	f_semilinear = A->is_semilinear_matrix_group();
+
+
 	if (f_v) {
 		cout << "spread_create::init q = " << q << endl;
 		cout << "spread_create::init k = " << k << endl;
+		cout << "spread_create::init f_semilinear = " << f_semilinear << endl;
+		cout << "spread_create::init A->matrix_group_dimension() = " << A->matrix_group_dimension() << endl;
 	}
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
-	
 
-
-	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
+	if (A->matrix_group_dimension() != 2 * k) {
+		cout << "spread_create::init dimension of the matrix group must be 2 * k" << endl;
+		exit(1);
 	}
 
 
-	A = NEW_OBJECT(actions::action);
-
-
-	
 	if (Descr->f_family) {
 		if (f_v) {
 			cout << "spread_create::init "
@@ -151,6 +181,29 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 					"after Sg->stabilizer_of_spread_from_catalogue" << endl;
 		}
 	}
+	else if (Descr->f_spread_set) {
+
+		if (f_v) {
+			cout << "spread_create::init "
+					"spread from spread set, label = " << Descr->spread_set_label << endl;
+		}
+		long int *spread_set_matrices;
+		int sz;
+
+		Get_vector_or_set(Descr->spread_set_label, spread_set_matrices, sz);
+		if (f_v) {
+			int k2;
+
+			k2 = Descr->k * Descr->k;
+
+			cout << "spread_create::init spread_set_matrices sz = " << sz << endl;
+			Lint_matrix_print(set, sz / k2, k2);
+			cout << "spread_create::init spread_set_matrices = " << endl;
+			Lint_matrix_print(set, sz / k2, k2);
+		}
+
+		exit(1);
+	}
 	else {
 		cout << "spread_create::init we do not "
 				"recognize the type of spread" << endl;
@@ -183,7 +236,7 @@ void spread_create::apply_transformations(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "spread_create::apply_transformations done" << endl;
+		cout << "spread_create::apply_transformations not yet implemented" << endl;
 	}
 }
 
