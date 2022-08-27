@@ -21,30 +21,29 @@ namespace spreads {
 
 spread_create_description::spread_create_description()
 {
-	null();
+	f_kernel_field = FALSE;
+	//std::string kernel_field_label;
+
+	f_group = FALSE;
+	//std::string group_label;
+
+	f_k = FALSE;
+	k = 0;
+
+	f_catalogue = FALSE;
+	iso = 0;
+
+	f_family = FALSE;
+	//family_name;
+
+	f_spread_set = FALSE;
+	//std::string spread_set_label;
 }
 
 spread_create_description::~spread_create_description()
 {
-	freeself();
 }
 
-void spread_create_description::null()
-{
-	f_q = FALSE;
-	q = 0;
-	f_k = FALSE;
-	k = 0;
-	f_catalogue = FALSE;
-	iso = 0;
-	f_family = FALSE;
-	//family_name;
-}
-
-void spread_create_description::freeself()
-{
-	null();
-}
 
 int spread_create_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
@@ -55,10 +54,15 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 	cout << "spread_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			q = ST.strtoi(argv[++i]);
-			cout << "-q " << q << endl;
+		if (ST.stringcmp(argv[i], "-kernel_field") == 0) {
+			f_kernel_field = TRUE;
+			kernel_field_label.assign(argv[++i]);
+			cout << "-kernel_field " << kernel_field_label << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-group") == 0) {
+			f_group = TRUE;
+			group_label.assign(argv[++i]);
+			cout << "-group " << group_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-k") == 0) {
 			f_k = TRUE;
@@ -75,6 +79,11 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 			family_name.assign(argv[++i]);
 			cout << "-family " << family_name << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-spread_set") == 0) {
+			f_spread_set = TRUE;
+			spread_set_label.assign(argv[++i]);
+			cout << "-spread_set " << spread_set_label << endl;
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -86,8 +95,11 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 
 void spread_create_description::print()
 {
-	if (f_q) {
-		cout << "-q " << q << endl;
+	if (f_kernel_field) {
+		cout << "-kernel_field " << kernel_field_label << endl;
+	}
+	if (f_group) {
+		cout << "-group " << group_label << endl;
 	}
 	if (f_k) {
 		cout << "-k " << k << endl;
@@ -97,6 +109,9 @@ void spread_create_description::print()
 	}
 	if (f_family) {
 		cout << "-family " << family_name << endl;
+	}
+	if (f_spread_set) {
+		cout << "-spread_set " << spread_set_label << endl;
 	}
 }
 

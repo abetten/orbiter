@@ -119,6 +119,12 @@ interface_toolkit::interface_toolkit()
 	//std::string extract_from_file_label;
 	//std::string extract_from_file_target_fname;
 
+	f_extract_from_file_with_tail = FALSE;
+	//std::string extract_from_file_with_tail_fname;
+	//std::string extract_from_file_with_tail_label;
+	//std::string extract_from_file_with_tail_tail;
+	//std::string extract_from_file_with_tail_target_fname;
+
 }
 
 
@@ -194,6 +200,9 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-extract_from_file") == 0) {
 		cout << "-extract_from_file <fname> <label> <extract_from_file_target_fname>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-extract_from_file_with_tail") == 0) {
+		cout << "-extract_from_file_with_tail <fname> <label> <tail> <extract_from_file_target_fname>" << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -268,6 +277,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-extract_from_file") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-extract_from_file_with_tail") == 0) {
 		return true;
 	}
 	return false;
@@ -583,7 +595,21 @@ void interface_toolkit::read_arguments(int argc,
 						<< endl;
 		}
 	}
-
+	else if (ST.stringcmp(argv[i], "-extract_from_file_with_tail") == 0) {
+		f_extract_from_file_with_tail = TRUE;
+		extract_from_file_with_tail_fname.assign(argv[++i]);
+		extract_from_file_with_tail_label.assign(argv[++i]);
+		extract_from_file_with_tail_tail.assign(argv[++i]);
+		extract_from_file_with_tail_target_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-extract_from_file_with_tail "
+					<< extract_from_file_with_tail_fname
+					<< " " << extract_from_file_with_tail_label
+					<< " " << extract_from_file_with_tail_tail
+					<< " " << extract_from_file_with_tail_target_fname
+						<< endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -702,6 +728,14 @@ void interface_toolkit::print()
 				<< extract_from_file_fname
 				<< " " << extract_from_file_label
 				<< " " << extract_from_file_target_fname
+					<< endl;
+	}
+	if (f_extract_from_file_with_tail) {
+		cout << "-extract_from_file_with_tail "
+				<< extract_from_file_with_tail_fname
+				<< " " << extract_from_file_with_tail_label
+				<< " " << extract_from_file_with_tail_tail
+				<< " " << extract_from_file_with_tail_target_fname
 					<< endl;
 	}
 }
@@ -1000,9 +1034,11 @@ void interface_toolkit::worker(int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 		std::vector<std::string> text;
 		int i;
+		std::string tail;
 
 		Fio.extract_from_makefile(extract_from_file_fname,
 				extract_from_file_label,
+				FALSE /*  f_tail */, tail,
 				text,
 				verbose_level);
 
@@ -1017,6 +1053,32 @@ void interface_toolkit::worker(int verbose_level)
 			}
 		}
 		cout << "Written file " << extract_from_file_target_fname << " of size " << Fio.file_size(extract_from_file_target_fname) << endl;
+
+	}
+	else if (f_extract_from_file_with_tail) {
+
+		cout << "-extract_from_file_with_tail " << extract_from_file_with_tail_fname << " " << extract_from_file_with_tail_label << endl;
+		orbiter_kernel_system::file_io Fio;
+		std::vector<std::string> text;
+		int i;
+
+		Fio.extract_from_makefile(extract_from_file_with_tail_fname,
+				extract_from_file_with_tail_label,
+				TRUE /*  f_tail */, extract_from_file_with_tail_tail,
+				text,
+				verbose_level);
+
+		cout << "We have extracted " << text.size() << " lines of text:" << endl;
+		for (i = 0; i < text.size(); i++) {
+			cout << i << " : " << text[i] << endl;
+		}
+		{
+			std::ofstream fp_out(extract_from_file_with_tail_target_fname);
+			for (i = 0; i < text.size(); i++) {
+				fp_out << text[i] << endl;
+			}
+		}
+		cout << "Written file " << extract_from_file_with_tail_target_fname << " of size " << Fio.file_size(extract_from_file_with_tail_target_fname) << endl;
 
 	}
 

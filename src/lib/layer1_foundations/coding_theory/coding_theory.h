@@ -156,7 +156,8 @@ public:
 			int m, int n, std::string &genma_text,
 			int verbose_level);
 	// creates a field_theory::subfield_structure object
-	void CRC_encode_text(field_theory::nth_roots *Nth, ring_theory::unipoly_object &CRC_poly,
+	void CRC_encode_text(field_theory::nth_roots *Nth,
+			ring_theory::unipoly_object &CRC_poly,
 		std::string &text, std::string &fname,
 		int verbose_level);
 	void encode_text_5bits(std::string &text,
@@ -179,6 +180,7 @@ public:
 			int *roots, int nb_roots, int f_poly, std::string &poly,
 			int f_dual, std::string &fname_txt, std::string &fname_csv,
 			int verbose_level);
+	// this function creates a finite field, using the given polynomial if necessary
 	void generator_matrix_cyclic_code(int n,
 			int degree, int *generator_polynomial, int *&M);
 	void print_polynomial(ring_theory::unipoly_domain &Fq,
@@ -200,6 +202,7 @@ public:
 	void compute_generator_matrix(ring_theory::unipoly_object a, int *&genma,
 		int n, int &k, int verbose_level);
 	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
+	// this function creates a finite field.
 
 
 
@@ -249,11 +252,14 @@ public:
 
 
 
+	// coding_theory_domain.cpp
+
 	void find_CRC_polynomials(field_theory::finite_field *F,
 			int t, int da, int dc,
 			int verbose_level);
 	void search_for_CRC_polynomials(int t,
-			int da, int *A, int dc, int *C, int i, field_theory::finite_field *F,
+			int da, int *A, int dc, int *C,
+			int i, field_theory::finite_field *F,
 			long int &nb_sol, std::vector<std::vector<int> > &Solutions,
 			int verbose_level);
 	void search_for_CRC_polynomials_binary(int t,
@@ -271,6 +277,7 @@ public:
 	int remainder_is_nonzero(int da, int *A, int db, int *B, field_theory::finite_field *F);
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
+	uint16_t crc16(const uint8_t *data, size_t size);
 	uint32_t crc32(const char *s, size_t n);
 	void crc32_test(int block_length, int verbose_level);
 	void crc256_test_k_subsets(int message_length, int R, int k, int verbose_level);
@@ -279,9 +286,17 @@ public:
 	void introduce_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
+	void crc_encode_file_based(std::string &fname_in, std::string &fname_out,
+			std::string &crc_type,
+			int block_length, int verbose_level);
+	void crc16_file_based(std::string &fname_in, std::string &fname_out,
+			int block_length, int verbose_level);
 	void crc32_file_based(std::string &fname_in, std::string &fname_out,
 			int block_length, int verbose_level);
-	void crc771_file_based(std::string &fname_in, int verbose_level);
+	void crc771_file_based(
+			std::string &fname_in,
+			std::string &fname_out,
+			int verbose_level);
 	void check_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
@@ -310,7 +325,8 @@ public:
 	int f_output;
 	std::string output_fname;
 
-
+	int f_crc_type;
+	std::string crc_type;
 
 	int f_block_length;
 	int block_length;

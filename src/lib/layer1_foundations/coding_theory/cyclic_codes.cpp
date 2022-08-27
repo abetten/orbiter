@@ -103,6 +103,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		int *roots, int nb_roots, int f_poly, std::string &poly,
 		int f_dual, std::string &fname_txt, std::string &fname_csv,
 		int verbose_level)
+// this function creates a finite field, using the given polynomial if necessary
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1050,6 +1051,7 @@ void coding_theory_domain::compute_generator_matrix(
 
 
 void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level)
+// this function creates a finite field
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1091,9 +1093,12 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	if (f_v) {
 		cout << "coding_theory_domain::make_BCH_codes before Codes.make_cyclic_code" << endl;
 	}
+
+	// this function creates a finite field:
 	Codes.make_cyclic_code(n, q, t, roots, nb_roots,
 			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
 			fname_txt, fname_csv, verbose_level);
+
 	if (f_v) {
 		cout << "coding_theory_domain::make_BCH_codes after Codes.make_cyclic_code" << endl;
 	}
