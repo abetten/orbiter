@@ -440,6 +440,12 @@ public:
 			double t_min, double t_max, double boundary,
 			function_polish_description *FP_descr, int verbose_level);
 	void draw_bitmap(draw_bitmap_control *C, int verbose_level);
+	void random_noise_in_bitmap_file(
+			std::string fname_input,
+			std::string fname_output,
+			int probability_numerator,
+			int probability_denominator,
+			int verbose_level);
 	void draw_projective_curve(draw_projective_curve_description *Descr,
 			layered_graph_draw_options *Opt, int verbose_level);
 	void draw_projective(mp_graphics &G,

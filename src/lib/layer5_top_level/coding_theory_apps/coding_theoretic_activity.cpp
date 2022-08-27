@@ -94,6 +94,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		coding_theory::coding_theory_domain Coding;
 
+		// this function creates a finite field
 		Coding.make_BCH_codes(
 				Descr->BCH_n,
 				Descr->BCH_q,
@@ -104,6 +105,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		coding_theory::coding_theory_domain Coding;
 
+		// this function creates a finite field
 		Coding.make_BCH_codes(
 				Descr->BCH_n,
 				Descr->BCH_q,
@@ -118,7 +120,10 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			Lint_vec_scan(Descr->general_code_binary_text, set, sz);
+			//Lint_vec_scan(Descr->general_code_binary_text, set, sz);
+
+			Get_vector_or_set(Descr->general_code_binary_text, set, sz);
+
 
 			Codes.investigate_code(set, sz, Descr->general_code_binary_n, f_embellish, verbose_level);
 
@@ -133,8 +138,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			Lint_vec_scan(Descr->code_diagram_codewords_text, codewords, nb_words);
+			//Lint_vec_scan(Descr->code_diagram_codewords_text, codewords, nb_words);
 
+			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
 
 
 			Codes.code_diagram(
@@ -172,8 +178,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			Lint_vec_scan(Descr->code_diagram_codewords_text, codewords, nb_words);
+			//Lint_vec_scan(Descr->code_diagram_codewords_text, codewords, nb_words);
 
+			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
 
 
 			Codes.code_diagram(
@@ -214,119 +221,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				Descr->field_induction_fname_out,
 				Descr->field_induction_nb_bits,
 				verbose_level);
-
-	}
-	else if (Descr->f_crc32) {
-		cout << "-crc32 " << Descr->crc32_text
-				<< endl;
-
-		coding_theory::coding_theory_domain Codes;
-		uint32_t a;
-
-		a = Codes.crc32(Descr->crc32_text.c_str(), Descr->crc32_text.length());
-		cout << "CRC value of " << Descr->crc32_text << " is ";
-
-		data_structures::algorithms Algo;
-
-		Algo.print_uint32_hex(cout, a);
-		cout << endl;
-
-	}
-	else if (Descr->f_crc32_hexdata) {
-		cout << "-crc32_hexdata " << Descr->crc32_hexdata_text
-				<< endl;
-
-		coding_theory::coding_theory_domain Codes;
-		data_structures::algorithms Algo;
-		uint32_t a;
-		char *data;
-		int data_size;
-
-		cout << "before Algo.read_hex_data" << endl;
-		Algo.read_hex_data(Descr->crc32_hexdata_text, data, data_size, verbose_level - 2);
-		cout << "after Algo.read_hex_data" << endl;
-
-
-		int i;
-		cout << "data:" << endl;
-		for (i = 0; i < data_size; i++) {
-			cout << i << " : " << (int) data[i] << endl;
-		}
-		cout << "data:" << endl;
-		for (i = 0; i < data_size; i++) {
-			cout << "*";
-			Algo.print_repeated_character(cout, '0', 7);
-		}
-		cout << endl;
-		Algo.print_bits(cout, data, data_size);
-		cout << endl;
-
-
-		a = Codes.crc32(data, data_size);
-		cout << "CRC value of 0x" << Descr->crc32_hexdata_text << " is ";
-
-
-		Algo.print_uint32_hex(cout, a);
-		cout << endl;
-
-	}
-	else if (Descr->f_crc32_test) {
-		cout << "-crc32_test "
-				<< Descr->crc32_test_block_length
-				<< endl;
-
-		coding_theory::coding_theory_domain Codes;
-
-		Codes.crc32_test(Descr->crc32_test_block_length, verbose_level - 1);
-
-	}
-	else if (Descr->f_crc256_test) {
-		cout << "-crc256_test "
-				<< Descr->crc256_test_message_length
-				<< endl;
-
-		coding_theory::coding_theory_domain Codes;
-
-		Codes.crc256_test_k_subsets(
-				Descr->crc256_test_message_length,
-				Descr->crc256_test_R,
-				Descr->crc256_test_k,
-				verbose_level - 1);
-
-	}
-	else if (Descr->f_crc32_remainders) {
-		cout << "-crc32_remainders "
-				<< Descr->crc32_remainders_message_length
-				<< endl;
-
-		coding_theory::coding_theory_domain Codes;
-
-		Codes.crc32_remainders(
-				Descr->crc32_remainders_message_length,
-				verbose_level - 1);
-
-	}
-	else if (Descr->f_crc32_file_based) {
-		cout << "-crc32_file_based " << Descr->crc32_file_based_fname_in
-				<< " " << Descr->crc32_file_based_block_length
-				<< endl;
-
-		coding_theory::coding_theory_domain Codes;
-
-		Codes.crc32_file_based(
-				Descr->crc32_file_based_fname_in,
-				Descr->crc32_file_based_fname_out,
-				Descr->crc32_file_based_block_length,
-				verbose_level - 1);
-
-	}
-	else if (Descr->f_crc_new_file_based) {
-		cout << "-crc_new_file_based " << Descr->crc_new_file_based_fname
-				<< endl;
-
-		coding_theory::coding_theory_domain Codes;
-
-		Codes.crc771_file_based(Descr->crc_new_file_based_fname, verbose_level - 1);
 
 	}
 	else if (Descr->f_weight_enumerator) {
@@ -450,9 +344,11 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		n = Descr->make_BCH_code_n;
 
-		Codes.make_BCH_code(n, F, Descr->make_BCH_code_d,
-					Nth, P,
-					verbose_level);
+		Codes.make_BCH_code(n,
+				F,
+				Descr->make_BCH_code_d,
+				Nth, P,
+				verbose_level);
 
 		cout << "generator polynomial is ";
 		Nth->FX->print_object(P, cout);
@@ -478,47 +374,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		NTT.init(F, Descr->NTT_n, Descr->NTT_q, verbose_level);
 
-	}
-	else if (Descr->f_find_CRC_polynomials) {
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.find_CRC_polynomials(F,
-				Descr->find_CRC_polynomials_nb_errors,
-				Descr->find_CRC_polynomials_information_bits,
-				Descr->find_CRC_polynomials_check_bits,
-				verbose_level);
-	}
-	else if (Descr->f_write_code_for_division) {
-
-		ring_theory::ring_theory_global R;
-
-		R.write_code_for_division(F,
-				Descr->write_code_for_division_fname,
-				Descr->write_code_for_division_A,
-				Descr->write_code_for_division_B,
-				verbose_level);
-	}
-
-	else if (Descr->f_polynomial_division_from_file) {
-
-		ring_theory::ring_theory_global R;
-
-		R.polynomial_division_from_file_with_report(F,
-				Descr->polynomial_division_from_file_fname,
-				Descr->polynomial_division_from_file_r1,
-				verbose_level);
-	}
-
-	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
-
-		ring_theory::ring_theory_global R;
-
-		R.polynomial_division_from_file_all_k_error_patterns_with_report(F,
-				Descr->polynomial_division_from_file_all_k_bit_error_patterns_fname,
-				Descr->polynomial_division_from_file_all_k_bit_error_patterns_r1,
-				Descr->polynomial_division_from_file_all_k_bit_error_patterns_k,
-				verbose_level);
 	}
 
 	else if (Descr->f_export_magma) {
@@ -601,6 +456,165 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			cout << "coding_theoretic_activity::perform_activity after Code->export_checkma" << endl;
 		}
 
+	}
+
+	else if (Descr->f_crc32) {
+		cout << "-crc32 " << Descr->crc32_text << endl;
+
+		coding_theory::coding_theory_domain Codes;
+		uint32_t a;
+
+		a = Codes.crc32(Descr->crc32_text.c_str(), Descr->crc32_text.length());
+		cout << "CRC value of " << Descr->crc32_text << " is ";
+
+		data_structures::algorithms Algo;
+
+		Algo.print_uint32_hex(cout, a);
+		cout << endl;
+
+	}
+	else if (Descr->f_crc32_hexdata) {
+		cout << "-crc32_hexdata " << Descr->crc32_hexdata_text << endl;
+
+		coding_theory::coding_theory_domain Codes;
+		data_structures::algorithms Algo;
+		uint32_t a;
+		char *data;
+		int data_size;
+
+		cout << "before Algo.read_hex_data" << endl;
+		Algo.read_hex_data(Descr->crc32_hexdata_text, data, data_size, verbose_level - 2);
+		cout << "after Algo.read_hex_data" << endl;
+
+
+		int i;
+		cout << "data:" << endl;
+		for (i = 0; i < data_size; i++) {
+			cout << i << " : " << (int) data[i] << endl;
+		}
+		cout << "data:" << endl;
+		for (i = 0; i < data_size; i++) {
+			cout << "*";
+			Algo.print_repeated_character(cout, '0', 7);
+		}
+		cout << endl;
+		Algo.print_bits(cout, data, data_size);
+		cout << endl;
+
+
+		a = Codes.crc32(data, data_size);
+		cout << "CRC value of 0x" << Descr->crc32_hexdata_text << " is ";
+
+
+		Algo.print_uint32_hex(cout, a);
+		cout << endl;
+
+	}
+	else if (Descr->f_crc32_test) {
+		cout << "-crc32_test "
+				<< Descr->crc32_test_block_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc32_test(Descr->crc32_test_block_length, verbose_level - 1);
+
+	}
+	else if (Descr->f_crc256_test) {
+		cout << "-crc256_test "
+				<< Descr->crc256_test_message_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc256_test_k_subsets(
+				Descr->crc256_test_message_length,
+				Descr->crc256_test_R,
+				Descr->crc256_test_k,
+				verbose_level - 1);
+
+	}
+	else if (Descr->f_crc32_remainders) {
+		cout << "-crc32_remainders "
+				<< Descr->crc32_remainders_message_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc32_remainders(
+				Descr->crc32_remainders_message_length,
+				verbose_level - 1);
+
+	}
+	else if (Descr->f_crc_encode_file_based) {
+		cout << "-crc_encode_file_based " << Descr->crc_encode_file_based_fname_in
+				<< " " << Descr->crc_encode_file_based_block_length
+				<< " " << Descr->crc_encode_file_based_crc_type
+				<< " " << Descr->crc_encode_file_based_block_length
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc_encode_file_based(
+				Descr->crc_encode_file_based_fname_in,
+				Descr->crc_encode_file_based_fname_out,
+				Descr->crc_encode_file_based_crc_type,
+				Descr->crc_encode_file_based_block_length,
+				verbose_level - 1);
+
+	}
+
+#if 0
+	else if (Descr->f_crc_new_file_based) {
+		cout << "-crc_new_file_based " << Descr->crc_new_file_based_fname
+				<< endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		Codes.crc771_file_based(Descr->crc_new_file_based_fname, verbose_level - 1);
+
+	}
+#endif
+	else if (Descr->f_find_CRC_polynomials) {
+
+		coding_theory::coding_theory_domain Coding;
+
+		Coding.find_CRC_polynomials(F,
+				Descr->find_CRC_polynomials_nb_errors,
+				Descr->find_CRC_polynomials_information_bits,
+				Descr->find_CRC_polynomials_check_bits,
+				verbose_level);
+	}
+	else if (Descr->f_write_code_for_division) {
+
+		ring_theory::ring_theory_global R;
+
+		R.write_code_for_division(F,
+				Descr->write_code_for_division_fname,
+				Descr->write_code_for_division_A,
+				Descr->write_code_for_division_B,
+				verbose_level);
+	}
+
+	else if (Descr->f_polynomial_division_from_file) {
+
+		ring_theory::ring_theory_global R;
+
+		R.polynomial_division_from_file_with_report(F,
+				Descr->polynomial_division_from_file_fname,
+				Descr->polynomial_division_from_file_r1,
+				verbose_level);
+	}
+
+	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
+
+		ring_theory::ring_theory_global R;
+
+		R.polynomial_division_from_file_all_k_error_patterns_with_report(F,
+				Descr->polynomial_division_from_file_all_k_bit_error_patterns_fname,
+				Descr->polynomial_division_from_file_all_k_bit_error_patterns_r1,
+				Descr->polynomial_division_from_file_all_k_bit_error_patterns_k,
+				verbose_level);
 	}
 
 

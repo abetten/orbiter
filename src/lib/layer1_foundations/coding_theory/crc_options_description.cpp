@@ -30,6 +30,9 @@ crc_options_description::crc_options_description()
 	f_output = FALSE;
 	//std::string output_fname;
 
+	f_crc_type = FALSE;
+	//std::string crc_type;
+
 	f_block_length = FALSE;
 	block_length = 0;
 
@@ -83,6 +86,14 @@ int crc_options_description::read_arguments(
 				cout << "-output " << output_fname << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-crc_type") == 0) {
+			f_crc_type = TRUE;
+			crc_type.assign(argv[++i]);
+			if (f_v) {
+				cout << "-crc_type " << crc_type << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-block_length") == 0) {
 			f_block_length = TRUE;
 			block_length = ST.strtoi(argv[++i]);
@@ -159,6 +170,9 @@ void crc_options_description::print()
 	}
 	if (f_output) {
 		cout << "-output " << output_fname << endl;
+	}
+	if (f_crc_type) {
+		cout << "-crc_type " << crc_type << endl;
 	}
 	if (f_block_length) {
 		cout << "-block_length " << block_length << endl;

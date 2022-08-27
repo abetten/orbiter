@@ -228,6 +228,12 @@ class interface_coding_theory {
 	int f_extract_block;
 	coding_theory::crc_options_description *extract_block_crc_options_description;
 
+	int f_random_noise_in_bitmap_file;
+	std::string random_noise_in_bitmap_file_input;
+	std::string random_noise_in_bitmap_file_output;
+	int random_noise_in_bitmap_file_numerator;
+	int random_noise_in_bitmap_file_denominator;
+
 
 
 public:
@@ -562,9 +568,14 @@ class interface_projective {
 	function_polish_description *FP_descr;
 
 
-
+#if 0
 	int f_create_spread;
 	spreads::spread_create_description *Spread_create_description;
+
+	std::vector<std::string> transform_coeffs;
+	std::vector<int> f_inverse_transform;
+
+	#endif
 
 	int f_make_table_of_surfaces;
 
@@ -576,8 +587,7 @@ class interface_projective {
 
 	int f_create_dickson_atlas;
 
-	std::vector<std::string> transform_coeffs;
-	std::vector<int> f_inverse_transform;
+
 
 
 public:
@@ -590,7 +600,6 @@ public:
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	void do_create_spread(spreads::spread_create_description *Descr, int verbose_level);
 
 };
 
@@ -743,6 +752,12 @@ class interface_toolkit {
 	std::string extract_from_file_label;
 	std::string extract_from_file_target_fname;
 
+	int f_extract_from_file_with_tail;
+	std::string extract_from_file_with_tail_fname;
+	std::string extract_from_file_with_tail_label;
+	std::string extract_from_file_with_tail_tail;
+	std::string extract_from_file_with_tail_target_fname;
+
 
 public:
 
@@ -848,7 +863,6 @@ public:
 };
 
 
-
 // #############################################################################
 // symbol_definition.cpp
 // #############################################################################
@@ -908,6 +922,9 @@ public:
 
 	int f_code;
 	apps_coding_theory::create_code_description *Create_code_description;
+
+	int f_spread;
+	spreads::spread_create_description *Spread_create_description;
 
 	int f_spread_table;
 	std::string spread_table_label_PA;
@@ -988,6 +1005,7 @@ public:
 	//void definition_of_combinatorial_object(int verbose_level);
 	void definition_of_graph(int verbose_level);
 	void definition_of_code(int verbose_level);
+	void definition_of_spread(int verbose_level);
 	void definition_of_spread_table(int verbose_level);
 	void definition_of_packing_was(int verbose_level);
 	void definition_of_packing_was_choose_fixed_points(int verbose_level);

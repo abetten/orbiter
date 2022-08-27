@@ -94,15 +94,6 @@ spread_classify::spread_classify()
 
 spread_classify::~spread_classify()
 {
-	freeself();
-}
-
-void spread_classify::null()
-{
-}
-
-void spread_classify::freeself()
-{
 #if 0
 	if (A) {
 		FREE_OBJECT(A);
@@ -166,7 +157,6 @@ void spread_classify::freeself()
 		FREE_int(Data3);
 	}
 #endif
-	null();
 }
 
 void spread_classify::init(

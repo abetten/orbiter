@@ -67,6 +67,9 @@ symbol_definition::symbol_definition()
 	f_code = FALSE;
 	Create_code_description = NULL;
 
+	f_spread = FALSE;
+	Spread_create_description = NULL;
+
 	f_spread_table = FALSE;
 	//std::string spread_table_label_PA;
 	dimension_of_spread_elements = 0;
@@ -425,6 +428,30 @@ void symbol_definition::read_definition(
 			}
 			cout << "-code " << endl;
 			Create_code_description->print();
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-spread") == 0) {
+
+		f_spread = TRUE;
+		Spread_create_description = NEW_OBJECT(spreads::spread_create_description);
+		if (f_v) {
+			cout << "reading -spread" << endl;
+		}
+
+		i += Spread_create_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-spread" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-spread " << endl;
+			Spread_create_description->print();
 		}
 	}
 
@@ -910,6 +937,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_code" << endl;
 		}
 	}
+	else if (f_spread) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_spread" << endl;
+		}
+		definition_of_spread(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_spread" << endl;
+		}
+	}
 	else if (f_spread_table) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_projective_space" << endl;
@@ -1107,6 +1143,10 @@ void symbol_definition::print()
 	if (f_code) {
 		cout << "-code ";
 		Create_code_description->print();
+	}
+	if (f_spread) {
+		cout << "-spread ";
+		Spread_create_description->print();
 	}
 	if (f_spread_table) {
 		cout << "-spread_table ";
@@ -1802,6 +1842,50 @@ void symbol_definition::definition_of_code(int verbose_level)
 	}
 }
 
+
+void symbol_definition::definition_of_spread(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread" << endl;
+	}
+
+
+	spreads::spread_create *Spread;
+
+	Spread = NEW_OBJECT(spreads::spread_create);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread before Spread->init" << endl;
+	}
+	Spread->init(Spread_create_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread after Spread->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread we created a spread called " << Spread->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_spread(define_label, Spread, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread done" << endl;
+	}
+}
 
 
 
