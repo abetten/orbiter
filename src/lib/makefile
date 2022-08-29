@@ -38,12 +38,12 @@ MODULES= \
 		layer1_foundations/algebraic_geometry/surface_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
 		layer1_foundations/coding_theory/coding_theory_domain_crc.o \
+		layer1_foundations/coding_theory/coding_theory_domain_cyclic_codes.o \
+		layer1_foundations/coding_theory/coding_theory_domain_ttp.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
 		layer1_foundations/coding_theory/crc_options_description.o \
 		layer1_foundations/coding_theory/create_BCH_code.o \
-		layer1_foundations/coding_theory/cyclic_codes.o \
 		layer1_foundations/coding_theory/error_repository.o \
-		layer1_foundations/coding_theory/tensor_codes.o \
 		layer1_foundations/coding_theory/mindist.o \
 		layer1_foundations/combinatorics/boolean_function_domain.o \
 		layer1_foundations/combinatorics/brick_domain.o \

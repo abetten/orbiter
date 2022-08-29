@@ -17,25 +17,27 @@ namespace geometry {
 
 decomposition::decomposition()
 {
-	null();
-}
-
-decomposition::~decomposition()
-{
-	freeself();
-}
-
-void decomposition::null()
-{
+	nb_points = 0;
+	nb_blocks = 0;
 	Inc = 0;
 	I = 0;
 	Stack = NULL;
 	f_has_decomposition = FALSE;
+	row_classes = NULL;
+	row_class_inv = NULL;
+	nb_row_classes = 0;
+	col_classes = NULL;
+	col_class_inv = NULL;
+	nb_col_classes = 0;
 	f_has_row_scheme = FALSE;
+	row_scheme = NULL;
 	f_has_col_scheme = FALSE;
+	col_scheme = NULL;
 }
 
-void decomposition::freeself()
+
+
+decomposition::~decomposition()
 {
 	if (Inc) {
 		FREE_int(Inc);
@@ -58,7 +60,6 @@ void decomposition::freeself()
 	if (f_has_col_scheme) {
 		FREE_int(col_scheme);
 	}
-	null();
 }
 
 void decomposition::init_inc_and_stack(

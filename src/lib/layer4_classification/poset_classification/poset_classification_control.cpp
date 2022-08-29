@@ -365,6 +365,7 @@ int poset_classification_control::read_arguments(
 
 			if (f_v) {
 				cout << "-report" << endl;
+				report_options->print();
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-node_label_is_group_order") == 0) {

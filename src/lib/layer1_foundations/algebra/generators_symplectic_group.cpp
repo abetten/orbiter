@@ -17,30 +17,26 @@ namespace algebra {
 
 generators_symplectic_group::generators_symplectic_group()
 {
-	null();
-}
+	F = NULL;
+	n = n_half = q = qn = 0;
 
-generators_symplectic_group::~generators_symplectic_group()
-{
-	freeself();
-}
-
-void generators_symplectic_group::null()
-{
 	nb_candidates = NULL;
 	cur_candidate = NULL;
 	candidates = NULL;
+
 	Mtx = NULL;
 	v = NULL;
 	v2 = NULL;
 	w = NULL;
 	Points = NULL;
+
 	nb_gens = 0;
 	Data = NULL;
 	transversal_length = NULL;
 }
 
-void generators_symplectic_group::freeself()
+
+generators_symplectic_group::~generators_symplectic_group()
 {
 	int i;
 	
@@ -77,7 +73,6 @@ void generators_symplectic_group::freeself()
 	if (transversal_length) {
 		FREE_int(transversal_length);
 		}
-	null();
 }
 
 void generators_symplectic_group::init(field_theory::finite_field *F,

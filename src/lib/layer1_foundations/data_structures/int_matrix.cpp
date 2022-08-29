@@ -20,32 +20,23 @@ namespace data_structures {
 
 int_matrix::int_matrix()
 {
-	null();
-}
-
-int_matrix::~int_matrix()
-{
-	freeself();
-}
-
-void int_matrix::null()
-{
 	M = NULL;
 	m = 0;
 	n = 0;
 }
 
-void int_matrix::freeself()
+int_matrix::~int_matrix()
 {
 	if (M) {
 		FREE_int(M);
 		}
-	null();
 }
 
 void int_matrix::allocate(int m, int n)
 {
-	freeself();
+	if (M) {
+		FREE_int(M);
+		}
 	M = NEW_int(m * n);
 	int_matrix::m = m;
 	int_matrix::n = n;
@@ -53,7 +44,9 @@ void int_matrix::allocate(int m, int n)
 
 void int_matrix::allocate_and_init(int m, int n, int *Mtx)
 {
-	freeself();
+	if (M) {
+		FREE_int(M);
+		}
 	M = NEW_int(m * n);
 	int_matrix::m = m;
 	int_matrix::n = n;

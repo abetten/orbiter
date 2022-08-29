@@ -28,6 +28,8 @@ static int translation_plane_via_andre_model_check_subplane(int len, long int *S
 
 translation_plane_via_andre_model::translation_plane_via_andre_model()
 {
+	//std::string label_txt;
+	//std::string label_tex;
 	F = NULL;
 	q = k = n = k1 = n1 = 0;
 	order_of_plane = 0;
@@ -50,23 +52,15 @@ translation_plane_via_andre_model::translation_plane_via_andre_model()
 	Poset = NULL;
 	arcs = NULL;
 	T = NULL;
-	//null();
 }
 
 translation_plane_via_andre_model::~translation_plane_via_andre_model()
 {
-	freeself();
-}
-
-void translation_plane_via_andre_model::null()
-{
-}
-
-void translation_plane_via_andre_model::freeself()
-{
+#if 0
 	if (Andre) {
 		FREE_OBJECT(Andre);
 	}
+#endif
 	if (Line) {
 		FREE_OBJECT(Line);
 	}
@@ -108,16 +102,13 @@ void translation_plane_via_andre_model::freeself()
 	if (arcs) {
 		FREE_OBJECT(arcs);
 	}
-	null();
 }
 
 
 void translation_plane_via_andre_model::init(
-	long int *spread_elements_numeric,
-	int k, actions::action *An, actions::action *An1,
-	data_structures_groups::vector_ge *spread_stab_gens,
-	ring_theory::longinteger_object &spread_stab_go,
-	std::string &label,
+		spreads::spread_create *Spread,
+		geometry::andre_construction *Andre,
+	actions::action *An1,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -133,9 +124,20 @@ void translation_plane_via_andre_model::init(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	translation_plane_via_andre_model::label.assign(label);
+	An = Spread->A;
+
+	label_txt.assign("plane_");
+	label_txt.append(Spread->label_txt);
+
+	label_tex.assign("plane\\_");
+	label_tex.append(Spread->label_tex);
 
 	//translation_plane_via_andre_model::F = F;
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::init before An->matrix_group_finite_field()" << endl;
+		cout << "translation_plane_via_andre_model::init An=" << endl;
+		An->print_info();
+	}
 	F = An->matrix_group_finite_field();
 	if (An1->matrix_group_finite_field()->q != F->q) {
 		cout << "translation_plane_via_andre_model::init "
@@ -143,29 +145,17 @@ void translation_plane_via_andre_model::init(
 		exit(1);
 	}
 	translation_plane_via_andre_model::q = F->q;
-	translation_plane_via_andre_model::k = k;
+	translation_plane_via_andre_model::k = Spread->k;
+	actions::action *An = Spread->A;
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"q=" << q << endl;
-		cout << "translation_plane_via_andre_model::init "
-				"k=" << k << endl;
+		cout << "translation_plane_via_andre_model::init q=" << q << endl;
+		cout << "translation_plane_via_andre_model::init k=" << k << endl;
 	}
 	n = 2 * k;
 	n1 = n + 1;
 	k1 = k + 1;
 	order_of_plane = NT.i_power_j(q, k);
 	
-	Andre = NEW_OBJECT(geometry::andre_construction);
-
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"spread_elements_numeric:" << endl;
-		Lint_vec_print(cout, spread_elements_numeric,
-				NT.i_power_j(q, k) + 1);
-		cout << endl;
-	}
-
-	Andre->init(F, k, spread_elements_numeric, verbose_level - 2);
 	
 	N = Andre->N;
 	twoN = 2 * N;
@@ -230,7 +220,7 @@ void translation_plane_via_andre_model::init(
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(label);
+	fname.assign(label_txt);
 	fname.append("_incma.csv");
 	Fio.int_matrix_write_csv(fname, Incma, N, N);
 	if (f_v) {
@@ -414,13 +404,15 @@ void translation_plane_via_andre_model::init(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
-				"initializing spread stabilizer" << endl;
+				"initializing spread stabilizer, "
+				"which requires the stabilizer of the spread" << endl;
 	}
 
 	strong_gens->generators_for_translation_plane_in_andre_model(
 		An1, An, 
 		An1->G.matrix_grp, An->G.matrix_grp, 
-		spread_stab_gens, spread_stab_go, 
+		Spread->Sg,
+		//spread_stab_gens, spread_stab_go,
 		verbose_level);
 
 	if (f_v) {
@@ -955,9 +947,9 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 		char str[1000];
 		string fname, title, author, extra_praeamble;
 
-		snprintf(str, 1000, "%s_report.tex", label.c_str());
+		snprintf(str, 1000, "%s_report.tex", label_txt.c_str());
 		fname.assign(str);
-		snprintf(str, 1000, "Translation plane %s", label.c_str());
+		snprintf(str, 1000, "Translation plane %s", label_tex.c_str());
 		title.assign(str);
 
 

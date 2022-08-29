@@ -24,16 +24,6 @@ static long int vector_space_rank_point_callback(int *v, void *data);
 
 vector_space::vector_space()
 {
-	null();
-}
-
-vector_space::~vector_space()
-{
-	freeself();
-}
-
-void vector_space::null()
-{
 	dimension = 0;
 	F = NULL;
 
@@ -47,7 +37,8 @@ void vector_space::null()
 	M2 = NULL;
 }
 
-void vector_space::freeself()
+
+vector_space::~vector_space()
 {
 	if (v1) {
 		FREE_int(v1);

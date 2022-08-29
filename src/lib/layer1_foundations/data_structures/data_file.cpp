@@ -22,16 +22,6 @@ namespace data_structures {
 
 data_file::data_file()
 {
-	null();
-}
-
-data_file::~data_file()
-{
-	freeself();
-}
-
-void data_file::null()
-{
 	nb_cases = -1;
 	set_sizes = NULL;
 	sets = NULL;
@@ -43,11 +33,11 @@ void data_file::null()
 	candidates = NULL;
 }
 
-void data_file::freeself()
+data_file::~data_file()
 {
 	int i;
 	
-	cout << "data_file::freeself" << endl;
+	//cout << "data_file::freeself" << endl;
 	if (nb_cases >= 0) {
 		for (i = 0; i < nb_cases; i++) {
 			FREE_lint(sets[i]);
@@ -67,8 +57,7 @@ void data_file::freeself()
 			FREE_pint(candidates);
 			}
 		}
-	null();
-	cout << "data_file::freeself done" << endl;
+	//cout << "data_file::freeself done" << endl;
 }
 
 void data_file::read(std::string &fname,
