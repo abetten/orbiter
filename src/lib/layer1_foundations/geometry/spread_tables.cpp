@@ -57,7 +57,6 @@ spread_tables::spread_tables()
 
 	schreier_table = NULL;
 
-	//null();
 }
 
 spread_tables::~spread_tables()

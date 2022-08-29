@@ -20,47 +20,55 @@ namespace geometry {
 
 buekenhout_metz::buekenhout_metz()
 {
-	null();
-}
-
-buekenhout_metz::~buekenhout_metz()
-{
-	freeself();
-}
-
-void buekenhout_metz::null()
-{
-	f_Uab = FALSE;
-	P2 = NULL;
-	P3 = NULL;
 	FQ = NULL;
 	Fq = NULL;
+	q = 0;
+	Q = 0;
+
+	f_classical = FALSE;
+	f_Uab = FALSE;
+	parameter_a = 0;
+	parameter_b = 0;
+
+	P2 = NULL;
+	P3 = NULL;
 	v = NULL;
 	w1 = w2 = w3 = w4 = w5 = NULL;
 	components = embedding = pair_embedding = NULL;
 	ovoid = NULL;
 	U = NULL;
-	f_is_Baer = NULL;
+	sz = 0;
+	alpha = t0 = t1 = T0 = T1 = 0;
+	theta_3 = 0;
+	minus_t0 = 0;
+	sz_ovoid = 0;
+	e1 = one_1 = one_2 = 0;
+
+	secant_lines = NULL;
+	nb_secant_lines = 0;
+
+	tangent_lines = NULL;
+	nb_tangent_lines = 0;
+
+	Intersection_sets = NULL;
+	Design_blocks = NULL;
+	block = NULL;
+	block_size = 0;
 	idx_in_unital = NULL;
 	idx_in_secants = NULL;
 	tangent_line_at_point = NULL;
-	f_is_tangent_line = NULL;
 	point_of_tangency = NULL;
-	Intersection_sets = NULL;
-	Design_blocks = NULL;
-	secant_lines = NULL;
-	tangent_lines = NULL;
-	components = NULL;
-	embedding = NULL;
-	pair_embedding = NULL;
-	v = w1 = w2 = w3 = w4 = w5 = NULL;
-	U = NULL;
-	ovoid = NULL;
-	P2 = P3 = NULL;
+	f_is_tangent_line = NULL;
+	f_is_Baer = NULL;
+
+	nb_good_points = 0;
 	good_points = NULL;
 }
 
-void buekenhout_metz::freeself()
+
+
+
+buekenhout_metz::~buekenhout_metz()
 {
 	if (f_is_Baer) {
 		FREE_int(f_is_Baer);
@@ -132,7 +140,6 @@ void buekenhout_metz::freeself()
 	if (good_points) {
 		FREE_int(good_points);
 		}
-	null();
 }
 
 void buekenhout_metz::buekenhout_metz_init(

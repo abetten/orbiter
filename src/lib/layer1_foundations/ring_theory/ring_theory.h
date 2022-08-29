@@ -307,7 +307,7 @@ public:
 // longinteger_domain.cpp:
 // #############################################################################
 
-//! domain to compute with objects of type longinteger
+//! domain to compute with integers of arbitrary size, using class longinteger_object
 
 class longinteger_domain {
 
@@ -432,7 +432,7 @@ public:
 // #############################################################################
 
 
-//! a class to represent arbitrary precision integers
+//! a class to represent integers of arbitrary size
 
 
 class longinteger_object {
@@ -530,7 +530,7 @@ public:
 // #############################################################################
 
 
-//! domain for polynomials with double coefficients
+//! domain for polynomials with coefficients of type double
 
 
 
@@ -753,7 +753,7 @@ public:
 // table_of_irreducible_polynomials.cpp
 // #############################################################################
 
-//! a table of all irreducible polynomials over GF(q) of degree less than a certain value
+//! a table of all irreducible polynomials over a finite field of bounded degree
 
 class table_of_irreducible_polynomials {
 public:

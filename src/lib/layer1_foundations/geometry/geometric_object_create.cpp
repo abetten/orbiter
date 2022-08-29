@@ -30,7 +30,6 @@ geometric_object_create::geometric_object_create()
 	//std::string label_txt;
 	//std::string label_tex;
 
-	//null();
 }
 
 geometric_object_create::~geometric_object_create()

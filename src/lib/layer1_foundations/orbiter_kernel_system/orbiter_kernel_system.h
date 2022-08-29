@@ -900,6 +900,8 @@ public:
 			void *Code, int verbose_level);
 	void init_spread(std::string &label,
 			void *Spread, int verbose_level);
+	void init_translation_plane(std::string &label,
+			void *Tp, int verbose_level);
 	void init_spread_table(std::string &label,
 			void *P, int verbose_level);
 	void init_packing_was(std::string &label,

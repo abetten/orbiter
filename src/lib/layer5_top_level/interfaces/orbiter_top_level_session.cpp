@@ -498,6 +498,24 @@ field_theory::finite_field *orbiter_top_level_session::get_object_of_type_finite
 	return (field_theory::finite_field *) get_object(idx);
 }
 
+spreads::spread_create *orbiter_top_level_session::get_object_of_type_spread(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_spread cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_spread) {
+		cout << "orbiter_top_level_session::get_object_of_type_spread object type != t_spread" << endl;
+		exit(1);
+	}
+
+
+	return (spreads::spread_create *) get_object(idx);
+}
+
 
 }}}
 

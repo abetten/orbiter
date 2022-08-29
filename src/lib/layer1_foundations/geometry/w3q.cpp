@@ -20,28 +20,24 @@ namespace geometry {
 
 W3q::W3q()
 {
-	null();
-}
-
-W3q::~W3q()
-{
-	freeself();
-}
-
-void W3q::null()
-{
 	q = 0;
-	nb_lines = 0;
+
 	P3 = NULL;
 	Q4 = NULL;
 	F = NULL;
 	Basis = NULL;
+
+	nb_lines = 0;
 	Lines = NULL;
+
 	Q4_rk = NULL;
 	Line_idx = NULL;
+
+	//int v5[5];
 }
 
-void W3q::freeself()
+
+W3q::~W3q()
 {
 	if (P3) {
 		FREE_OBJECT(P3);
@@ -61,7 +57,6 @@ void W3q::freeself()
 	if (Line_idx) {
 		FREE_int(Line_idx);
 	}
-	null();
 }
 
 void W3q::init(field_theory::finite_field *F, int verbose_level)

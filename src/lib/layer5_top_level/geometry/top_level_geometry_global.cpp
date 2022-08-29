@@ -534,6 +534,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	}
 }
 
+#if 0
 void top_level_geometry_global::do_Andre_Bruck_Bose_construction(
 		actions::action *An,
 		actions::action *An1,
@@ -629,6 +630,7 @@ void top_level_geometry_global::do_Andre_Bruck_Bose_construction(
 	}
 
 }
+#endif
 
 
 }}}

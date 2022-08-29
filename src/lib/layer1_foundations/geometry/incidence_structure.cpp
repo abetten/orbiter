@@ -23,27 +23,30 @@ namespace geometry {
 
 incidence_structure::incidence_structure()
 {
-	//label[0] = 0;
+	//std::string label;
+
+	nb_rows = nb_cols = 0;
+
+	f_rowsums_constant = FALSE;
+	f_colsums_constant = FALSE;
+	r = k = 0;
+	nb_lines_on_point = NULL;
+	nb_points_on_line = NULL;
+	max_r = min_r = max_k = min_k = 0;
+	lines_on_point = NULL;
+	points_on_line = NULL;
+
+	realization_type = 0;
+
 	M = NULL;
 	O = NULL;
 	H = NULL;
-	nb_lines_on_point = NULL;
-	nb_points_on_line = NULL;
-	lines_on_point = NULL;
-	points_on_line = NULL;
-	null();
+	P = NULL;
+
 }
+
 
 incidence_structure::~incidence_structure()
-{
-	freeself();
-}
-
-void incidence_structure::null()
-{
-}
-
-void incidence_structure::freeself()
 {
 	if (M) {
 		FREE_int(M);
@@ -66,7 +69,6 @@ void incidence_structure::freeself()
 	if (points_on_line) {
 		FREE_int(points_on_line);
 	}
-	null();
 }
 
 void incidence_structure::check_point_pairs(int verbose_level)

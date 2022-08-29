@@ -36,8 +36,6 @@ public:
 	
 	a_domain();
 	~a_domain();
-	void null();
-	void freeself();
 	
 	void init_integers(int verbose_level);
 	void init_integer_fractions(int verbose_level);
@@ -240,8 +238,6 @@ public:
 
 	generators_symplectic_group();
 	~generators_symplectic_group();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int n, int verbose_level);
 	int count_strong_generators(int &nb, int *transversal_length, 
 		int &first_moved, int depth, int verbose_level);
@@ -465,8 +461,6 @@ public:
 
 	gl_classes();
 	~gl_classes();
-	void null();
-	void freeself();
 	void init(int k, field_theory::finite_field *F, int verbose_level);
 	int select_partition_first(int *Select, int *Select_partition,
 		int verbose_level);
@@ -556,8 +550,6 @@ public:
 
 	heisenberg();
 	~heisenberg();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int n, int verbose_level);
 	void unrank_element(int *Elt, long int rk);
 	long int rank_element(int *Elt);
@@ -598,8 +590,6 @@ public:
 
 	matrix_block_data();
 	~matrix_block_data();
-	void null();
-	void freeself();
 	void allocate(int k);
 };
 
@@ -631,8 +621,6 @@ public:
 
 	null_polarity_generator();
 	~null_polarity_generator();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int n, int verbose_level);
 	int count_strong_generators(int &nb, int *transversal_length, 
 		int &first_moved, int depth, int verbose_level);
@@ -704,8 +692,6 @@ public:
 
 	vector_space();
 	~vector_space();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int dimension,
 			int verbose_level);
 	void init_rank_functions(

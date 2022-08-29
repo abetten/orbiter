@@ -1257,10 +1257,31 @@ matrix_example_co_1:
 			-compact $(CONWAY_GEN1) -end \
 		-print_symbols
 
+###############################################################################
+# Section 2.8: Formula Builder
 
+SECTION_FORMULA_BUILDER:
 
+TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 
+formula_example:
+	$(ORBITER) -v 3 \
+		-define f -formula \
+			"test_formula" "test\_formula" "" \
+			$(TEST_FORMULA)
+	dot -Tpng test_formula.gv >test_formula.png
+	open test_formula.png
 
+formula_evaluate:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define f -formula \
+			"test_formula" "test\_formula" "" \
+			$(TEST_FORMULA) \
+		-with F -do -finite_field_activity \
+			-evaluate f "a=2,b=3,x=4" -end
+
+# evaluates to 1, since (-2+3*3)*4*4+2*3*4=2+4=6=1
 
 ###############################################################################
 # Chapter 3 - Basic Algebra
@@ -4476,6 +4497,26 @@ Normalizer_of_Z22_in_PGL_2_9:
 
 SECTION_ORBIT_ALGORITHMS_SCHREIER_TREES:
 
+
+orbits_PGL_4_2_on_points:
+	$(ORBITER) -v 4 \
+		-define G -linear_group -PGL 4 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+			-orbits_on_points \
+			-export_trees \
+		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			PGL_4_2_0.layered_graph \
+		-radius 500 -spanning_tree -embedded \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+		-end
+	pdflatex PGL_4_2_0_draw.tex
+	open PGL_4_2_0_draw.pdf
+	pdflatex PGL_4_2_orbits_report.tex
+	open PGL_4_2_orbits_report.pdf
 
 T3r1_orbits:
 	$(ORBITER) -v 4 \
@@ -13383,6 +13424,30 @@ max_arc_16_4r_print:
 
 SECTION_SPREADS:
 
+
+create_spread_9a:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 0 \
+			-end
+
+# desarguesian spread, ago = 5760
+
+create_spread_9b:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 1 \
+			-end
+
+
+# Hall spread, ago = 1920
+
+
+
 SPREAD_SET_27_RAO_RAO="\
 0,0,0,0,0,0,0,0,0, \
 1,1,0,2,1,1,0,0,2, \
@@ -13421,8 +13486,8 @@ create_spread_Rao_Rao_27:
 		-define S -spread -kernel_field F \
 			-group G -k 3 -spread_set SS \
 			-end
-	#pdflatex Desarguesian_Spread_3_2.tex
-	#open Desarguesian_Spread_3_2.pdf
+
+
 
 
 desarguesian_spread_in_PG_3_2:
@@ -13462,7 +13527,7 @@ desarguesian_spread_in_PG_3_5:
 	open Desarguesian_Spread_3_5.pdf
 
 
-spreads4:
+classify_spreads4:
 	- mkdir SPREADS_4
 	- rm live_points.txt
 	$(ORBITER) -v 10 \
@@ -13476,7 +13541,7 @@ spreads4:
 		-end
 
 
-spreads16_4:
+classify_spreads16_4:
 	$(ORBITER) -v 6 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 4 -end \
@@ -13491,6 +13556,8 @@ spreads16_4:
 			-end \
 			-report \
 		-end
+	pdflatex spreads_4_2_poset.tex
+	open spreads_4_2_poset.pdf
 	#pdflatex spreads_4_2_poset_detailed_lvl_17.tex
 	#open spreads_4_2_poset_detailed_lvl_17.pdf
 
@@ -13509,11 +13576,50 @@ spreads16_4:
 
 
 
+classify_spreads27_3_starter:
+	$(ORBITER) -v 6 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space 5 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-spread_classify 3 \
+			-problem_label spreads_27_3 \
+			-W -depth 28 -draw_poset \
+			-draw_options -radius 20 \
+				-nodes_empty -line_width 0.2 -embedded \
+			-end \
+			-report \
+		-end
+
+
+
 ###############################################################################
 # Section 12.2: Translation planes
 
 
 SECTION_TRANSLATION_PLANES:
+
+
+create_translation_plane_9b:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define G1 -linear_group -PGL 5 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 1 \
+			-end \
+		-define T -translation_plane S G G1 -end 
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file plane_catalogue_q3_k2_1_incma.csv \
+			-box_width 6 -bit_depth 8 \
+			-partition 2 91 91 \
+		-end
+	open plane_catalogue_q3_k2_1_incma_draw.bmp
+
+
+# creates plane_catalogue_q3_k2_1_incma.csv
 
 
 TP_9_0:
