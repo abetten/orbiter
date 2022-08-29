@@ -1,5 +1,5 @@
 /*
- * cyclic_codes.cpp
+ * coding_theory_domain_cyclic_codes.cpp
  *
  *  Created on: Jun 24, 2021
  *      Author: betten

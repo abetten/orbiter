@@ -17,23 +17,14 @@ namespace combinatorics {
 
 brick_domain::brick_domain()
 {
-	null();
+	F = NULL;
+	q = 0;
+	nb_bricks = 0;
 }
+
 
 brick_domain::~brick_domain()
 {
-	freeself();
-}
-
-void brick_domain::null()
-{
-}
-
-void brick_domain::freeself()
-{
-	//int i;
-	
-	null();
 }
 
 void brick_domain::init(field_theory::finite_field *F, int verbose_level)

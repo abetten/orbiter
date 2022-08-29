@@ -21,30 +21,25 @@ static int compare_func_for_bitvectors(void *a, void *b, void *data);
 
 classify_bitvectors::classify_bitvectors()
 {
-	null();
-}
-
-classify_bitvectors::~classify_bitvectors()
-{
-	freeself();
-}
-
-void classify_bitvectors::null()
-{
 	nb_types = 0;
+	rep_len = 0;
 	Type_data = NULL;
 	Type_rep = NULL;
 	Type_mult = NULL;
 	Type_extra_data = NULL;
-	rep_len = 0;
-	n = 0;
+
 	N = 0;
+	n = 0;
+
 	type_of = NULL;
 	C_type_of = NULL;
+
 	perm = NULL;
 }
 
-void classify_bitvectors::freeself()
+
+
+classify_bitvectors::~classify_bitvectors()
 {
 	int i;
 
@@ -75,7 +70,6 @@ void classify_bitvectors::freeself()
 	if (perm) {
 		FREE_int(perm);
 	}
-	null();
 }
 
 

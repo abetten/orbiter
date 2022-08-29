@@ -22,24 +22,17 @@ namespace geometry {
 
 hjelmslev::hjelmslev()
 {
-	null();
-}
-
-hjelmslev::~hjelmslev()
-{
-	freeself();
-}
-
-void hjelmslev::null()
-{
+	n = k = q = 0;
+	n_choose_k_p = 0;
 	R = NULL;
 	G = NULL;
+	v = NULL;
 	Mtx = NULL;
 	base_cols = NULL;
-	v = NULL;
 }
 
-void hjelmslev::freeself()
+
+hjelmslev::~hjelmslev()
 {
 	if (G) {
 		FREE_OBJECT(G);
@@ -53,7 +46,6 @@ void hjelmslev::freeself()
 	if (v) {
 		FREE_int(v);
 		}
-	null();
 }
 
 void hjelmslev::init(ring_theory::finite_ring *R,

@@ -143,6 +143,8 @@ void recoordinatize::init(int n, int k,
 	}
 }
 
+
+
 void recoordinatize::do_recoordinatize(
 		long int i1, long int i2, long int i3, int verbose_level)
 {
@@ -266,11 +268,13 @@ void recoordinatize::compute_starter(long int *&S, int &size,
 	
 
 	if (f_v) {
-		cout << "recoordinatize::compute_starter before make_first_three" << endl;
+		cout << "recoordinatize::compute_starter "
+				"before make_first_three" << endl;
 	}
 	make_first_three(starter_j1, starter_j2, starter_j3, verbose_level - 1);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter after make_first_three" << endl;
+		cout << "recoordinatize::compute_starter "
+				"after make_first_three" << endl;
 	}
 
 	// initialize S with the vector (j1,j2,j3):
@@ -335,13 +339,22 @@ void recoordinatize::stabilizer_of_first_three(
 	
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
-				"before  A0->init_matrix_group" << endl;
+				"before A0->init_projective_group" << endl;
+		cout << "recoordinatize::stabilizer_of_first_three "
+				"k=" << k << endl;
+		cout << "recoordinatize::stabilizer_of_first_three "
+				"f_semilinear=" << f_semilinear << endl;
 	}
 	A0->init_projective_group(k, F, 
 		f_semilinear, 
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+		TRUE /* f_basis */,
+		TRUE /* f_init_sims */,
 		nice_gens,
-		0 /* verbose_level */);
+		0/*verbose_level - 2*/);
+	if (f_v) {
+		cout << "recoordinatize::stabilizer_of_first_three "
+				"after A0->init_projective_group" << endl;
+	}
 	FREE_OBJECT(nice_gens);
 
 	A0->group_order(target_go);
@@ -353,12 +366,20 @@ void recoordinatize::stabilizer_of_first_three(
 		A0->print_info();
 	}
 
+	if (f_v) {
+		cout << "recoordinatize::stabilizer_of_first_three "
+				"before A0_linear->init_projective_group" << endl;
+	}
 	A0_linear->init_projective_group(k, F, 
 		FALSE /*f_semilinear*/, 
 		TRUE /*f_basis*/, TRUE /* f_init_sims */,
 		nice_gens,
 		0/*verbose_level - 2*/);
 	FREE_OBJECT(nice_gens);
+	if (f_v) {
+		cout << "recoordinatize::stabilizer_of_first_three "
+				"after A0_linear->init_projective_group" << endl;
+	}
 
 	A0_linear->group_order(go_linear);
 	if (f_v) {
@@ -746,7 +767,13 @@ void recoordinatize::make_first_three(
 	}
 
 
+	if (f_v) {
+		cout << "recoordinatize::make_first_three before Grass->make_special_element_zero" << endl;
+	}
 	j1 = Grass->make_special_element_zero(0 /* verbose_level */);
+	if (f_v) {
+		cout << "recoordinatize::make_first_three after Grass->make_special_element_zero" << endl;
+	}
 	j2 = Grass->make_special_element_infinity(0 /* verbose_level */);
 	j3 = Grass->make_special_element_one(0 /* verbose_level */);
 

@@ -178,8 +178,6 @@ public:
 
 	classify_bitvectors();
 	~classify_bitvectors();
-	void null();
-	void freeself();
 	void init(int N, int rep_len, int verbose_level);
 	int search(uchar *data, int &idx, int verbose_level);
 	void search_and_add_if_new(uchar *data,
@@ -276,8 +274,6 @@ class data_file {
 
 	data_file();
 	~data_file();
-	void null();
-	void freeself();
 	void read(std::string &fname, int f_casenumbers, int verbose_level);
 	void read_candidates(std::string &candidates_fname, int verbose_level);
 };
@@ -429,8 +425,6 @@ class fancy_set {
 
 	fancy_set();
 	~fancy_set();
-	void null();
-	void freeself();
 	void init(int n, int verbose_level);
 	void init_with_set(int n, int k, int *subset, int verbose_level);
 	void print();

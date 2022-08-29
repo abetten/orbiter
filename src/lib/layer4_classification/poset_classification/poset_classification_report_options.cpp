@@ -102,7 +102,7 @@ void poset_classification_report_options::print()
 	if (f_include_projective_stabilizer) {
 		cout << "-include_projective_stabilizer" << endl;
 	}
-
+	cout << endl;
 }
 
 int poset_classification_report_options::is_selected_by_group_order(long int so)

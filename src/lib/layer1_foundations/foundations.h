@@ -811,6 +811,7 @@ enum symbol_table_object_type {
 	t_graph,
 	t_code,
 	t_spread,
+	t_translation_plane,
 	t_spread_table,
 	t_packing_was,
 	t_packing_was_choose_fixed_points,

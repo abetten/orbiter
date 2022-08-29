@@ -94,11 +94,6 @@ knarr::knarr()
 
 knarr::~knarr()
 {
-	freeself();
-}
-
-void knarr::freeself()
-{
 	if (BLT_line_idx) {
 		FREE_int(BLT_line_idx);
 		}

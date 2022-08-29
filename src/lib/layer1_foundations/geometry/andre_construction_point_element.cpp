@@ -24,25 +24,24 @@ namespace geometry {
 
 andre_construction_point_element::andre_construction_point_element()
 {
-	null();
+	Andre = NULL;
+	k = 0;
+	n = 0;
+	q = 0;
+	spread_size = 0;
+	F = NULL;
+	point_rank = 0;
+	f_is_at_infinity = FALSE;
+	at_infinity_idx = 0;
+	affine_numeric = 0;
+	coordinates = NULL;
 }
 
 andre_construction_point_element::~andre_construction_point_element()
 {
-	freeself();
-}
-
-void andre_construction_point_element::null()
-{
-	coordinates = NULL;
-}
-
-void andre_construction_point_element::freeself()
-{
 	if (coordinates) {
 		FREE_int(coordinates);
-		}
-	null();
+	}
 }
 
 void andre_construction_point_element::init(
@@ -52,7 +51,7 @@ void andre_construction_point_element::init(
 
 	if (f_v) {
 		cout << "andre_construction_point_element::init" << endl;
-		}
+	}
 	andre_construction_point_element::Andre = Andre;
 	andre_construction_point_element::k = Andre->k;
 	andre_construction_point_element::n = Andre->n;
@@ -62,7 +61,7 @@ void andre_construction_point_element::init(
 	coordinates = NEW_int(n);
 	if (f_v) {
 		cout << "andre_construction_point_element::init done" << endl;
-		}
+	}
 }
 
 void andre_construction_point_element::unrank(
@@ -74,20 +73,20 @@ void andre_construction_point_element::unrank(
 	if (f_v) {
 		cout << "andre_construction_point_element::unrank "
 				"point_rank=" << point_rank << endl;
-		}
+	}
 	andre_construction_point_element::point_rank = point_rank;
 	if (point_rank < spread_size) {
 		f_is_at_infinity = TRUE;
 		at_infinity_idx = point_rank;
-		}
+	}
 	else {
 		f_is_at_infinity = FALSE;
 		point_rank -= spread_size;
 		Gg.AG_element_unrank(q, coordinates, 1, n, point_rank);
-		}
+	}
 	if (f_v) {
 		cout << "andre_construction_point_element::unrank done" << endl;
-		}
+	}
 }
 
 int andre_construction_point_element::rank(int verbose_level)
@@ -98,19 +97,19 @@ int andre_construction_point_element::rank(int verbose_level)
 
 	if (f_v) {
 		cout << "andre_construction_point_element::rank" << endl;
-		}
+	}
 	point_rank = 0;
 	if (f_is_at_infinity) {
 		point_rank = at_infinity_idx;
-		}
+	}
 	else {
 		point_rank = spread_size;
 		a = Gg.AG_element_rank(q, coordinates, 1, n);
 		point_rank += a;
-		}
+	}
 	if (f_v) {
 		cout << "andre_construction_point_element::rank done" << endl;
-		}
+	}
 	return point_rank;
 }
 

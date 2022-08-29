@@ -17,23 +17,19 @@ namespace algebra {
 
 heisenberg::heisenberg()
 {
-	null();
-}
+	q = 0;
+	F = NULL;
+	n = 0;
+	len = 0;
+	group_order = 0;
 
-heisenberg::~heisenberg()
-{
-	freeself();
-}
-
-void heisenberg::null()
-{
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
 	Elt4 = NULL;
 }
 
-void heisenberg::freeself()
+heisenberg::~heisenberg()
 {
 	if (Elt1) {
 		FREE_int(Elt1);

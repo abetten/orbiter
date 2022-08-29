@@ -1508,8 +1508,9 @@ void strong_generators::field_reduction(
 void strong_generators::generators_for_translation_plane_in_andre_model(
 		actions::action *A_PGL_n1_q, actions::action *A_PGL_n_q,
 	matrix_group *Mtx_n1, matrix_group *Mtx_n, 
-	data_structures_groups::vector_ge *spread_stab_gens,
-	ring_theory::longinteger_object &spread_stab_go,
+	strong_generators *spread_stab_gens,
+	//data_structures_groups::vector_ge *spread_stab_gens,
+	//ring_theory::longinteger_object &spread_stab_go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1536,7 +1537,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 
 
 	f_semilinear = Mtx_n1->f_semilinear;
-	nb_gens = spread_stab_gens->len + 1 + n * F->e;
+	nb_gens = spread_stab_gens->gens->len + 1 + n * F->e;
 	//nb_gens = spread_stab_gens->len + /* 1 + */ n * F->e;
 
 	int alpha;
@@ -1558,7 +1559,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 				"the first kind:" << endl;
 	}
 	cnt = 0;
-	for (h = 0; h < spread_stab_gens->len; h++, cnt++) {
+	for (h = 0; h < spread_stab_gens->gens->len; h++, cnt++) {
 		if (f_vv) {
 			cout << "making generator " << h << ":" << endl;
 			//int_matrix_print(spread_stab_gens->ith(h), n, n);
@@ -1574,12 +1575,12 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		}
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
-				a = spread_stab_gens->ith(h)[i * n + j];
+				a = spread_stab_gens->gens->ith(h)[i * n + j];
 				M1[i * n1 + j] = a;
 			}
 		}
 		if (f_semilinear) {
-			a = spread_stab_gens->ith(h)[n * n];
+			a = spread_stab_gens->gens->ith(h)[n * n];
 			M1[n1 * n1] = a;
 		}
 	}
@@ -1646,8 +1647,10 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	}
 
 	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object target_go, aa, b, bb, c, go;
+	ring_theory::longinteger_object spread_stab_go, target_go, aa, b, bb, c, go;
 	
+
+	spread_stab_gens->group_order(spread_stab_go);
 
 	spread_stab_go.assign_to(aa);
 	//D.multiply_up(aa, spread_stab_tl, A_PGL_n_q->base_len);

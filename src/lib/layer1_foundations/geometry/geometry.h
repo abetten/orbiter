@@ -51,8 +51,6 @@ public:
 
 	andre_construction();
 	~andre_construction();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int k, long int *spread_elements_numeric,
 		int verbose_level);
 	void points_on_line(andre_construction_line_element *Line, 
@@ -85,8 +83,6 @@ public:
 
 	andre_construction_point_element();
 	~andre_construction_point_element();
-	void null();
-	void freeself();
 	void init(andre_construction *Andre, int verbose_level);
 	void unrank(int point_rank, int verbose_level);
 	int rank(int verbose_level);
@@ -118,8 +114,6 @@ public:
 
 	andre_construction_line_element();
 	~andre_construction_line_element();
-	void null();
-	void freeself();
 	void init(andre_construction *Andre, int verbose_level);
 	void unrank(int line_rank, int verbose_level);
 	int rank(int verbose_level);
@@ -370,8 +364,6 @@ public:
 
 	buekenhout_metz();
 	~buekenhout_metz();
-	void null();
-	void freeself();
 	void buekenhout_metz_init(field_theory::finite_field *Fq, field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level);
@@ -423,8 +415,6 @@ public:
 
 	decomposition();
 	~decomposition();
-	void null();
-	void freeself();
 	void init_inc_and_stack(incidence_structure *Inc, 
 			data_structures::partitionstack *Stack,
 		int verbose_level);
@@ -543,8 +533,6 @@ public:
 
 	flag();
 	~flag();
-	void null();
-	void freeself();
 	void init(int n, int *type, int type_len, field_theory::finite_field *F,
 		int verbose_level);
 	void init_recursion(int n, int *type, int type_len, int idx, 
@@ -947,6 +935,14 @@ public:
 	long int make_special_element_zero(int verbose_level);
 	long int make_special_element_one(int verbose_level);
 	long int make_special_element_infinity(int verbose_level);
+	void make_identity_front(int *M, int verbose_level);
+	void make_identity_back(int *M, int verbose_level);
+	void copy_matrix_back(int *A, int *M, int verbose_level);
+	void make_spread_from_spread_set(
+			long int *Spread_set, int sz,
+			long int *&Spread, int &spread_sz,
+			int verbose_level);
+	void make_partition(long int *Spread, int spread_sz, long int *&Part, int &s, int verbose_level);
 
 };
 
@@ -1028,7 +1024,6 @@ public:
 	
 	hermitian();
 	~hermitian();
-	void null();
 	void init(field_theory::finite_field *F, int nb_vars, int verbose_level);
 	int nb_points();
 	void unrank_point(int *v, int rk);
@@ -1073,8 +1068,6 @@ public:
 
 	hjelmslev();
 	~hjelmslev();
-	void null();
-	void freeself();
 	void init(ring_theory::finite_ring *R, int n, int k, int verbose_level);
 	long int number_of_submodules();
 	void unrank_lint(int *M, long int rk, int verbose_level);
@@ -1128,8 +1121,6 @@ class incidence_structure {
 	
 	incidence_structure();
 	~incidence_structure();
-	void null();
-	void freeself();
 	void check_point_pairs(int verbose_level);
 	int lines_through_two_points(int *lines, int p1, int p2, 
 		int verbose_level);
@@ -1389,8 +1380,6 @@ public:
 
 	klein_correspondence();
 	~klein_correspondence();
-	void null();
-	void freeself();
 	void init(
 			field_theory::finite_field *F,
 			orthogonal_geometry::orthogonal *O,
@@ -1463,7 +1452,6 @@ public:
 
 	knarr();
 	~knarr();
-	void freeself();
 	void init(field_theory::finite_field *F, int BLT_no, int verbose_level);
 	void points_and_lines(int verbose_level);
 	void incidence_matrix(int *&Inc, int &nb_points, 
@@ -2475,8 +2463,6 @@ public:
 
 	W3q();
 	~W3q();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int verbose_level);
 	void find_lines(int verbose_level);
 	void print_lines();

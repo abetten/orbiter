@@ -16,16 +16,9 @@ namespace algebra {
 
 null_polarity_generator::null_polarity_generator()
 {
-	null();
-}
-
-null_polarity_generator::~null_polarity_generator()
-{
-	freeself();
-}
-
-void null_polarity_generator::null()
-{
+	F = NULL;
+	n = q = 0;
+	qn = 0;
 	nb_candidates = NULL;
 	cur_candidate = NULL;
 	candidates = NULL;
@@ -38,7 +31,7 @@ void null_polarity_generator::null()
 	transversal_length = NULL;
 }
 
-void null_polarity_generator::freeself()
+null_polarity_generator::~null_polarity_generator()
 {
 	int i;
 	
@@ -72,7 +65,6 @@ void null_polarity_generator::freeself()
 	if (transversal_length) {
 		FREE_int(transversal_length);
 		}
-	null();
 }
 
 void null_polarity_generator::init(field_theory::finite_field *F, int n, int verbose_level)

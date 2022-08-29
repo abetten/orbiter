@@ -677,12 +677,14 @@ public:
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
 	void raise_to_the_power(int verbose_level);
+#if 0
 	void do_Andre_Bruck_Bose_construction(
-			int spread_no,
+			spreads::spread_create *Spread,
+			geometry::andre_construction *Andre,
 			int f_Fano, int f_arcs, int f_depth, int depth,
 			std::string &label,
 			int verbose_level);
-
+#endif
 
 };
 

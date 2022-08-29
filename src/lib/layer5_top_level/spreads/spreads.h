@@ -318,12 +318,16 @@ public:
 	actions::action *A;
 	int degree;
 
+
+	geometry::grassmann *Grass;
+
 	long int *set;
 	int sz;
 
 	int f_has_group;
 	groups::strong_generators *Sg;
 
+	geometry::andre_construction *Andre;
 
 
 
@@ -584,6 +588,10 @@ public:
 
 class translation_plane_via_andre_model {
 public:
+
+	std::string label_txt;
+	std::string label_tex;
+
 	field_theory::finite_field *F;
 	int q;
 	int k;
@@ -619,18 +627,13 @@ public:
 
 	apps_combinatorics::tactical_decomposition *T;
 
-	std::string label;
-
 	translation_plane_via_andre_model();
 	~translation_plane_via_andre_model();
-	void null();
-	void freeself();
-	void init(long int *spread_elements_numeric,
-		int k, actions::action *An, actions::action *An1,
-		data_structures_groups::vector_ge *spread_stab_gens,
-		ring_theory::longinteger_object &spread_stab_go,
-		std::string &label,
-		int verbose_level);
+	void init(
+			spreads::spread_create *Spread,
+			geometry::andre_construction *Andre,
+			actions::action *An1,
+			int verbose_level);
 	void classify_arcs(const char *prefix,
 		int depth, int verbose_level);
 	void classify_subplanes(const char *prefix,

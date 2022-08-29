@@ -284,7 +284,8 @@ void action_global::make_generators_stabilizer_of_two_components(
 void action_global::make_generators_stabilizer_of_three_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
 	int k,
-	data_structures_groups::vector_ge *gens, int verbose_level)
+	data_structures_groups::vector_ge *gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -302,6 +303,10 @@ void action_global::make_generators_stabilizer_of_three_components(
 
 	if (f_v) {
 		cout << "action_global::make_generators_stabilizer_of_three_components" << endl;
+		cout << "A_PGL_n_q:" << endl;
+		A_PGL_n_q->print_info();
+		cout << "A_PGL_k_q:" << endl;
+		A_PGL_k_q->print_info();
 	}
 	n = 2 * k;
 
@@ -341,12 +346,21 @@ void action_global::make_generators_stabilizer_of_three_components(
 	if (Mtx->f_semilinear) {
 		sz++;
 	}
+	if (f_v) {
+		cout << "action_global::make_generators_stabilizer_of_three_components sz = " << sz << endl;
+	}
+	Data = NEW_int(new_len * sz);
 	
 
-	Data = NEW_int(new_len * sz);
+	if (f_v) {
+		cout << "action_global::make_generators_stabilizer_of_three_components step 1" << endl;
+	}
 	idx = 0;
 	for (h = 0; h < len; h++) {
 
+		if (f_v) {
+			cout << "action_global::make_generators_stabilizer_of_three_components step 1: " << h << " / " << len << endl;
+		}
 		P = gens_PGL_k->gens->ith(h);
 		//P = gens_PGL_k->ith(h);
 
@@ -354,23 +368,41 @@ void action_global::make_generators_stabilizer_of_three_components(
 		orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, P);
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
-			}
+		}
+		if (f_v) {
+			cout << "action_global::make_generators_stabilizer_of_three_components Q=" << endl;
+			Int_matrix_print(Q, n, n);
+		}
 		Int_vec_copy(Q, Data + idx * sz, sz);
 		idx++;
 	}
 
+	if (f_v) {
+		cout << "action_global::make_generators_stabilizer_of_three_components step 2" << endl;
+	}
 	// Q := matrix(0,I,I,0):
 	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, Id, Zero);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
+	if (f_v) {
+		cout << "action_global::make_generators_stabilizer_of_three_components Q=" << endl;
+		Int_matrix_print(Q, n, n);
+	}
 	Int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
+	if (f_v) {
+		cout << "action_global::make_generators_stabilizer_of_three_components step 3" << endl;
+	}
 	// Q := matrix(0,I,-I,-I):
 	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, minusId, minusId);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
+	}
+	if (f_v) {
+		cout << "action_global::make_generators_stabilizer_of_three_components Q=" << endl;
+		Int_matrix_print(Q, n, n);
 	}
 	Int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
@@ -382,11 +414,23 @@ void action_global::make_generators_stabilizer_of_three_components(
 		exit(1);
 	}
 
+	if (f_v) {
+		cout << "action_global::make_generators_stabilizer_of_three_components step 4" << endl;
+	}
 
 
 	gens->init(A_PGL_n_q, verbose_level - 2);
 	gens->allocate(new_len, verbose_level - 2);
 	for (h = 0; h < new_len; h++) {
+
+		if (f_v) {
+			cout << "action_global::make_generators_stabilizer_of_three_components step 4: " << h << " / " << new_len << endl;
+		}
+
+		if (f_v) {
+			cout << "action_global::make_generators_stabilizer_of_three_components generator=" << endl;
+			Int_matrix_print(Data + h * sz, n, n);
+		}
 		A_PGL_n_q->make_element(Elt1, Data + h * sz, 0);
 		if (f_vv) {
 			cout << "action_global::make_generators_stabilizer_of_three_components "

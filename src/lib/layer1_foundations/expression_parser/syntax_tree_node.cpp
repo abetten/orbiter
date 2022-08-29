@@ -289,12 +289,20 @@ int syntax_tree_node::evaluate(std::map<std::string, std::string> &symbol_table,
 		if (f_has_minus) {
 			a = F->negate(a);
 		}
+		if (f_v) {
+			cout << "syntax_tree_node::evaluate "
+					"terminal node evaluates to " << a << endl;
+		}
 	}
 	else {
 		if (nb_nodes == 1) {
 			a = Nodes[0]->evaluate(symbol_table, F, verbose_level);
 			if (f_has_minus) {
 				a = F->negate(a);
+			}
+			if (f_v) {
+				cout << "syntax_tree_node::evaluate "
+						"single node evaluates to " << a << endl;
 			}
 		}
 		else {
@@ -307,12 +315,20 @@ int syntax_tree_node::evaluate(std::map<std::string, std::string> &symbol_table,
 				if (f_has_minus) {
 					a = F->negate(a);
 				}
+				if (f_v) {
+					cout << "syntax_tree_node::evaluate "
+							"product evaluates to " << a << endl;
+				}
 			}
 			else if (type == operation_type_add) {
 				a = 0;
 				for (i = 0; i < nb_nodes; i++) {
 					b = Nodes[i]->evaluate(symbol_table, F, verbose_level);
 					a = F->add(a, b);
+				}
+				if (f_v) {
+					cout << "syntax_tree_node::evaluate "
+							"sum evaluates to " << a << endl;
 				}
 			}
 			else {

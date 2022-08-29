@@ -20,21 +20,6 @@ namespace data_structures {
 
 
 
-// #############################################################################
-// now comes partitionstack
-// #############################################################################
-
-#if 0
-ostream& operator<<(ostream& ost, partitionstack& p)
-{
-	// cout << "partitionstack::operator<< starting" << endl;
-	p.print(ost);
-	// cout << "partitionstack::operator<< finished" << endl";
-	return ost;
-};
-#endif
-
-
 partitionstack::partitionstack()
 {
 	n = 0;

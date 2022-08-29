@@ -383,6 +383,26 @@ void orbiter_symbol_table_entry::init_spread(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_translation_plane(std::string &label,
+		void *Tp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_translation_plane" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_translation_plane;
+	ptr = Tp;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_translation_plane done" << endl;
+	}
+}
+
+
+
+
 void orbiter_symbol_table_entry::init_spread_table(std::string &label,
 		void *P, int verbose_level)
 {
@@ -697,6 +717,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_spread) {
 			cout << "spread" << endl;
+		}
+		else if (object_type == t_translation_plane) {
+			cout << "translation plane" << endl;
 		}
 		else if (object_type == t_spread_table) {
 			cout << "spread table" << endl;
