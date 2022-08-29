@@ -1281,7 +1281,8 @@ formula_evaluate:
 		-with F -do -finite_field_activity \
 			-evaluate f "a=2,b=3,x=4" -end
 
-# evaluates to 1, since (-2+3*3)*4*4+2*3*4=2+4=6=1
+# should evaluate to 1, since (-2+3*3)*4*4+2*3*4=2+4=6=1 mod 5
+# but: problem with the leading minus sign
 
 ###############################################################################
 # Chapter 3 - Basic Algebra

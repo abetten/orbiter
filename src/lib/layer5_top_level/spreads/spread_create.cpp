@@ -210,7 +210,8 @@ void spread_create::init(spread_create_description *Descr,
 		Get_vector_or_set(Descr->spread_set_label, spread_set_matrices, spread_set_matrices_sz);
 		if (f_v) {
 
-			cout << "spread_create::init spread_set_matrices spread_set_matrices_sz = " << spread_set_matrices_sz << endl;
+			cout << "spread_create::init spread_set_matrices "
+					"spread_set_matrices_sz = " << spread_set_matrices_sz << endl;
 			Lint_matrix_print(spread_set_matrices, spread_set_matrices_sz / k2, k2);
 			cout << "spread_create::init spread_set_matrices = " << endl;
 			Lint_matrix_print(spread_set_matrices, spread_set_matrices_sz / k2, k2);
