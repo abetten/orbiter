@@ -20,18 +20,17 @@ namespace geometry {
 
 flag::flag()
 {
-	null();
-}
-
-flag::~flag()
-{
-	freeself();
-}
-
-void flag::null()
-{
+	F = NULL;
 	Gr = NULL;
+	n = 0;
+	s0 = s1 = s2 = 0;
+	k = K = 0;
+	type = NULL;
+	type_len = 0;
+	idx = 0;
+	N0 = N = N1 = 0;
 	Flag = NULL;
+
 	M = NULL;
 	M_Gauss = NULL;
 	transform = NULL;
@@ -41,7 +40,8 @@ void flag::null()
 	M3 = NULL;
 }
 
-void flag::freeself()
+
+flag::~flag()
 {
 	if (Gr) {
 		FREE_OBJECT(Gr);
@@ -70,7 +70,6 @@ void flag::freeself()
 	if (M3) {
 		FREE_int(M3);
 	}
-	null();
 }
 
 void flag::init(int n,

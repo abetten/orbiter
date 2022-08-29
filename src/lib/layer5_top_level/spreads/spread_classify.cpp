@@ -279,6 +279,11 @@ void spread_classify::init(
 		cout << "spread_classify::init after AG->init" <<  endl;
 	}
 
+	if (f_v) {
+		cout << "spread_classify::init before "
+				"A2->induced_action_on_grassmannian" <<  endl;
+	}
+
 	A2->induced_action_on_grassmannian(A, AG, 
 		FALSE /*f_induce_action*/, NULL /*sims *old_G */,
 		0 /*verbose_level - 2*/);
@@ -375,7 +380,11 @@ void spread_classify::init(
 					"recoordinatize::compute_starter" << endl;
 		}
 		R->compute_starter(Starter, Starter_size, 
-			Starter_Strong_gens, verbose_level - 10);
+			Starter_Strong_gens, verbose_level - 2);
+		if (f_v) {
+			cout << "spread_classify::init after "
+					"recoordinatize::compute_starter" << endl;
+		}
 
 		ring_theory::longinteger_object go;
 		Starter_Strong_gens->group_order(go);

@@ -21,20 +21,11 @@ namespace algebra {
 
 a_domain::a_domain()
 {
-	null();
+	kind = not_applicable;
+	size_of_instance_in_int = 0;
 }
 
 a_domain::~a_domain()
-{
-	freeself();
-}
-
-void a_domain::null()
-{
-	kind = not_applicable;
-}
-
-void a_domain::freeself()
 {
 	
 }

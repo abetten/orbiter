@@ -17,22 +17,12 @@ namespace data_structures {
 
 fancy_set::fancy_set()
 {
-	null();
-}
-
-fancy_set::~fancy_set()
-{
-	freeself();
-}
-
-void fancy_set::null()
-{
 	n = k = 0;
 	set = NULL;
 	set_inv = NULL;
 }
 
-void fancy_set::freeself()
+fancy_set::~fancy_set()
 {
 	if (set) {
 		FREE_lint(set);
@@ -40,7 +30,6 @@ void fancy_set::freeself()
 	if (set_inv) {
 		FREE_lint(set_inv);
 		}
-	null();
 }
 
 void fancy_set::init(int n, int verbose_level)

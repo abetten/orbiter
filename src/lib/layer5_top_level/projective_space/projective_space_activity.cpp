@@ -112,6 +112,19 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << endl;
 		}
 
+		string fname_map;
+		orbiter_kernel_system::file_io Fio;
+
+		fname_map.assign(Descr->map_formula_label);
+		fname_map.append("_map.csv");
+
+
+		Fio.lint_matrix_write_csv(fname_map, Image_pts, N_points, 1);
+		if (f_v) {
+			cout << "Written file " << fname_map << " of size " << Fio.file_size(fname_map) << endl;
+		}
+
+
 
 	}
 	else if (Descr->f_analyze_del_Pezzo_surface) {

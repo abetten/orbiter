@@ -23,23 +23,20 @@ namespace algebra {
 
 matrix_block_data::matrix_block_data()
 {
-	null();
+	d = m = 0;
+	poly_coeffs = NULL;
+	b0 = b1 = 0;
+
+	K = NULL;
+	cnt = 0;
+	dual_part = NULL;
+	part = NULL;
+	height = 0;
+	part_idx = 0;
 }
+
 
 matrix_block_data::~matrix_block_data()
-{
-	freeself();
-}
-
-void matrix_block_data::null()
-{
-	K = NULL;
-	part = NULL;
-	dual_part = NULL;
-	height = 0;
-}
-
-void matrix_block_data::freeself()
 {
 	if (K) {
 		FREE_OBJECTS(K);
@@ -50,7 +47,6 @@ void matrix_block_data::freeself()
 	if (part) {
 		FREE_int(part);
 	}
-	null();
 }
 
 void matrix_block_data::allocate(int k)

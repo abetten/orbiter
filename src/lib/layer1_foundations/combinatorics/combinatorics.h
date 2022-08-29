@@ -97,8 +97,6 @@ public:
 
 	brick_domain();
 	~brick_domain();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int verbose_level);
 	void unrank(int rk, int &f_vertical, 
 		int &x0, int &y0, int verbose_level);

@@ -70,6 +70,12 @@ symbol_definition::symbol_definition()
 	f_spread = FALSE;
 	Spread_create_description = NULL;
 
+	f_translation_plane = FALSE;
+	//std::string translation_plane_spread_label;
+	//std::string translation_plane_group_n_label;
+	//std::string translation_plane_group_np1_label;
+
+
 	f_spread_table = FALSE;
 	//std::string spread_table_label_PA;
 	dimension_of_spread_elements = 0;
@@ -452,6 +458,21 @@ void symbol_definition::read_definition(
 			}
 			cout << "-spread " << endl;
 			Spread_create_description->print();
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-translation_plane") == 0) {
+		f_translation_plane = TRUE;
+		translation_plane_spread_label.assign(argv[++i]);
+		translation_plane_group_n_label.assign(argv[++i]);
+		translation_plane_group_np1_label.assign(argv[++i]);
+		i++; // eat -end
+		i++;
+		if (f_v) {
+			cout << "-translation_plane "
+					<< " " << translation_plane_spread_label
+					<< " " << translation_plane_group_n_label
+					<< " " << translation_plane_group_np1_label
+					<< endl;
 		}
 	}
 
@@ -946,6 +967,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_spread" << endl;
 		}
 	}
+	else if (f_translation_plane) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_translation_plane" << endl;
+		}
+		definition_of_translation_plane(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_translation_plane" << endl;
+		}
+	}
 	else if (f_spread_table) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_projective_space" << endl;
@@ -1147,6 +1177,13 @@ void symbol_definition::print()
 	if (f_spread) {
 		cout << "-spread ";
 		Spread_create_description->print();
+	}
+	if (f_translation_plane) {
+		cout << "-translation_plane "
+				<< " " << translation_plane_spread_label
+				<< " " << translation_plane_group_n_label
+				<< " " << translation_plane_group_np1_label
+				<< endl;
 	}
 	if (f_spread_table) {
 		cout << "-spread_table ";
@@ -1854,6 +1891,7 @@ void symbol_definition::definition_of_spread(int verbose_level)
 
 	spreads::spread_create *Spread;
 
+
 	Spread = NEW_OBJECT(spreads::spread_create);
 
 	if (f_v) {
@@ -1887,6 +1925,84 @@ void symbol_definition::definition_of_spread(int verbose_level)
 	}
 }
 
+
+
+void symbol_definition::definition_of_translation_plane(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane" << endl;
+	}
+
+	//translation_plane_spread_label
+	//translation_plane_group_n_label
+	//translation_plane_group_np1_label
+
+
+	spreads::spread_create *Spread;
+	apps_algebra::any_group *Gn;
+	apps_algebra::any_group *Gnp1;
+	spreads::translation_plane_via_andre_model *TP;
+
+
+	Spread = Get_object_of_type_spread(translation_plane_spread_label);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane found spread " << Spread->label_txt << endl;
+	}
+
+	Gn = Get_object_of_type_any_group(translation_plane_group_n_label);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane found group Gn " << Gn->label << endl;
+	}
+
+	Gnp1 = Get_object_of_type_any_group(translation_plane_group_np1_label);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane found group Gnp1 " << Gnp1->label << endl;
+	}
+
+	TP = NEW_OBJECT(spreads::translation_plane_via_andre_model);
+
+	actions::action *An1;
+
+	An1 = Gnp1->A_base;
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane before TP->init" << endl;
+	}
+	TP->init(
+			Spread,
+			Spread->Andre,
+			An1,
+			verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane after TP->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane we created a translation plane called " << TP->label_txt << endl;
+
+	}
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_translation_plane(define_label, Spread, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_translation_plane done" << endl;
+	}
+}
 
 
 

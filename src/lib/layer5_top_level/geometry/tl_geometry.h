@@ -979,6 +979,7 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int *Elt, std::ostream &ost, std::string &fname_base,
 			int verbose_level);
+#if 0
 	void do_Andre_Bruck_Bose_construction(
 			actions::action *An,
 			actions::action *An1,
@@ -986,6 +987,7 @@ public:
 			int spread_no,
 			std::string &label,
 			int verbose_level);
+#endif
 };
 
 

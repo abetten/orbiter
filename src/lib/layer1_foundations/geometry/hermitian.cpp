@@ -33,7 +33,6 @@ hermitian::hermitian()
 	beta = 0;
 	log_beta = NULL;
 	beta_power = NULL;
-	//null();
 }
 
 hermitian::~hermitian()
@@ -62,11 +61,6 @@ hermitian::~hermitian()
 	if (beta_power) {
 		FREE_int(beta_power);
 	}
-	null();
-}
-
-void hermitian::null()
-{
 }
 
 

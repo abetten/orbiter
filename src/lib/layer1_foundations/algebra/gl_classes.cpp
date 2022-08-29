@@ -27,19 +27,9 @@ gl_classes::gl_classes()
 	Partitions = NULL;
 	v = NULL;
 	w = NULL;
-	//null();
 }
 
 gl_classes::~gl_classes()
-{
-	freeself();
-}
-
-void gl_classes::null()
-{
-}
-
-void gl_classes::freeself()
 {
 	int i;
 	
@@ -61,7 +51,6 @@ void gl_classes::freeself()
 	if (w) {
 		FREE_int(w);
 		}
-	null();
 }
 
 void gl_classes::init(int k, field_theory::finite_field *F, int verbose_level)

@@ -927,19 +927,26 @@ void grassmann::print()
 
 int grassmann::dimension_of_join(long int rk1, long int rk2, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int *A;
 	int i, r;
 
+	if (f_v) {
+		cout << "grassmann::dimension_of_join" << endl;
+	}
 	A = NEW_int(2 * k * n);
 	unrank_lint(rk1, 0);
 	for (i = 0; i < k * n; i++) {
 		A[i] = M[i];
-		}
+	}
 	unrank_lint(rk2, 0);
 	for (i = 0; i < k * n; i++) {
 		A[k * n + i] = M[i];
-		}
+	}
 	r = F->Linear_algebra->rank_of_rectangular_matrix(A, 2 * k, n, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "grassmann::dimension_of_join done" << endl;
+	}
 	return r;
 }
 
@@ -1299,14 +1306,17 @@ long int grassmann::make_special_element_zero(int verbose_level)
 		cout << "grassmann::make_special_element_zero" << endl;
 	}
 
-	int i;
+	//int i;
 
 	// make the element (I_k | 0).
 	// Let a be its rank
 	Int_vec_zero(M, k * n);
+	make_identity_front(M, verbose_level);
+#if 0
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
 	}
+#endif
 	if (f_v3) {
 		cout << "grassmann::make_special_element_zero M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
@@ -1328,15 +1338,19 @@ long int grassmann::make_special_element_one(int verbose_level)
 		cout << "grassmann::make_special_element_one" << endl;
 	}
 
-	int i;
+	//int i;
 
 	// make the element (I_k | I_k).
 	// Let a be its rank
 	Int_vec_zero(M, k * n);
+	make_identity_front(M, verbose_level);
+	make_identity_back(M, verbose_level);
+#if 0
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
 		M[i * n + k + i] = 1;
 	}
+#endif
 	if (f_v3) {
 		cout << "grassmann::make_special_element_one M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
@@ -1358,14 +1372,20 @@ long int grassmann::make_special_element_infinity(int verbose_level)
 		cout << "grassmann::make_special_element_infinity" << endl;
 	}
 
-	int i;
+	//int i;
 
 	// make the element (I_k | I_k).
 	// Let a be its rank
 	Int_vec_zero(M, k * n);
+
+	make_identity_back(M, verbose_level);
+
+#if 0
 	for (i = 0; i < k; i++) {
 		M[i * n + k + i] = 1;
 	}
+#endif
+
 	if (f_v3) {
 		cout << "grassmann::make_special_element_infinity M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
@@ -1377,6 +1397,128 @@ long int grassmann::make_special_element_infinity(int verbose_level)
 	return a;
 }
 
+
+void grassmann::make_identity_front(int *M, int verbose_level)
+{
+	int i, j, a;
+
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			if (i == j) {
+				a = 1;
+			}
+			else {
+				a = 0;
+			}
+			M[i * n + j] = a;
+		}
+	}
+}
+
+void grassmann::make_identity_back(int *M, int verbose_level)
+{
+	int i, j, a;
+
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			if (i == j) {
+				a = 1;
+			}
+			else {
+				a = 0;
+			}
+			M[i * n + k + j] = a;
+		}
+	}
+}
+
+void grassmann::copy_matrix_back(int *A, int *M, int verbose_level)
+{
+	int i, j, a;
+
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			a = A[i * k + j];
+			M[i * n + k + j] = a;
+		}
+	}
+}
+
+void grassmann::make_spread_from_spread_set(
+		long int *Spread_set, int sz,
+		long int *&Spread, int &spread_sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *M;
+	int *Spread_set_int;
+	int h, h1, k2;
+
+	if (f_v) {
+		cout << "grassmann::make_spread_from_spread_set, sz = " << sz << endl;
+	}
+
+	spread_sz = sz + 1;
+	k2 = k * k;
+	Spread = NEW_lint(spread_sz);
+	M = NEW_int(k * n);
+	Spread_set_int = NEW_int(k2 * sz);
+	for (h = 0; h < k2 * sz; h++) {
+		Spread_set_int[h] = Spread_set[h];
+	}
+
+	for (h = 0; h < spread_sz; h++) {
+		if (f_v) {
+			cout << "grassmann::make_spread_from_spread_set, h = " << h << " / " << spread_sz << endl;
+		}
+		Int_vec_zero(M, k * n);
+		if (h == 0) {
+			make_identity_front(M, 0 /* verbose_level */);
+			copy_matrix_back(Spread_set_int + h * k2, M, 0 /* verbose_level */);
+		}
+		else if (h == 1) {
+			make_identity_back(M, 0 /* verbose_level */);
+		}
+		else {
+			h1 = h - 1;
+			make_identity_front(M, 0 /* verbose_level */);
+			copy_matrix_back(Spread_set_int + h1 * k2, M, 0 /* verbose_level */);
+		}
+		if (f_v) {
+			cout << "grassmann::make_spread_from_spread_set, before rank_lint_here" << endl;
+		}
+		Spread[h] = rank_lint_here(M, 0 /*verbose_level - 4*/);
+	}
+	FREE_int(Spread_set_int);
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "grassmann::make_spread_from_spread_set done" << endl;
+	}
+}
+
+
+void grassmann::make_partition(long int *Spread, int spread_sz, long int *&Part, int &s, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "grassmann::make_partition" << endl;
+	}
+	int i;
+
+	s = nb_points_covered(verbose_level);
+
+	for (i = 0; i < spread_sz; i++) {
+		unrank_lint(Spread[i], 0 /*verbose_level - 4*/);
+		points_covered(Part + i * s, 0 /*verbose_level - 4*/);
+	}
+
+	if (f_v) {
+		cout << "grassmann::make_partition done" << endl;
+	}
+}
 
 }}}
 

@@ -29,21 +29,11 @@ desarguesian_spread::desarguesian_spread()
 	Spread_elements = NULL;
 	Rk = NULL;
 	List_of_points = NULL;
-	//null();
 };
 
 
 
 desarguesian_spread::~desarguesian_spread()
-{
-	freeself();
-}
-
-void desarguesian_spread::null()
-{
-}
-
-void desarguesian_spread::freeself()
 {
 #if 0
 	if (SubS) {
@@ -62,7 +52,6 @@ void desarguesian_spread::freeself()
 	if (List_of_points) {
 		FREE_int(List_of_points);
 	}
-	null();
 }
 
 void desarguesian_spread::init(int n, int m, int s, 

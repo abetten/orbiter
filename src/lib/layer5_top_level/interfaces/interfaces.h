@@ -859,6 +859,7 @@ public:
 	apps_algebra::vector_ge_builder *get_object_of_type_vector_ge(std::string &label);
 	orthogonal_geometry_applications::orthogonal_space_with_action *get_object_of_type_orthogonal_space_with_action(std::string &label);
 	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
+	spreads::spread_create *get_object_of_type_spread(std::string &label);
 
 };
 
@@ -925,6 +926,12 @@ public:
 
 	int f_spread;
 	spreads::spread_create_description *Spread_create_description;
+
+	int f_translation_plane;
+	std::string translation_plane_spread_label;
+	std::string translation_plane_group_n_label;
+	std::string translation_plane_group_np1_label;
+
 
 	int f_spread_table;
 	std::string spread_table_label_PA;
@@ -1006,6 +1013,7 @@ public:
 	void definition_of_graph(int verbose_level);
 	void definition_of_code(int verbose_level);
 	void definition_of_spread(int verbose_level);
+	void definition_of_translation_plane(int verbose_level);
 	void definition_of_spread_table(int verbose_level);
 	void definition_of_packing_was(int verbose_level);
 	void definition_of_packing_was_choose_fixed_points(int verbose_level);

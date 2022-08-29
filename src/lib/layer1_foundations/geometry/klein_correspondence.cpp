@@ -16,18 +16,13 @@ namespace geometry {
 
 klein_correspondence::klein_correspondence()
 {
-	null();
-}
-
-klein_correspondence::~klein_correspondence()
-{
-	freeself();
-}
-
-void klein_correspondence::null()
-{
 	P3 = NULL;
 	P5 = NULL;
+	O = NULL;
+	F = NULL;
+	q = 0;
+	nb_Pts = 0;
+	nb_pts_PG = 0;
 	Gr63 = NULL;
 	Gr62 = NULL;
 	nb_lines_orthogonal = 0;
@@ -39,7 +34,8 @@ void klein_correspondence::null()
 	//Pt_rk = NULL;
 }
 
-void klein_correspondence::freeself()
+
+klein_correspondence::~klein_correspondence()
 {
 	if (P3) {
 		FREE_OBJECT(P3);

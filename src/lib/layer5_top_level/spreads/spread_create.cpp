@@ -37,11 +37,15 @@ spread_create::spread_create()
 	A = NULL;
 	degree = 0;
 
+	Grass = NULL;
+
 	set = NULL;
 	sz = 0;
 
 	f_has_group = FALSE;
 	Sg = NULL;
+
+	Andre = NULL;
 }
 
 
@@ -52,11 +56,17 @@ spread_create::~spread_create()
 		FREE_OBJECT(F);
 	}
 #endif
+	if (Grass) {
+		FREE_OBJECT(Grass);
+	}
 	if (set) {
 		FREE_lint(set);
 	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
+	}
+	if (Andre) {
+		FREE_OBJECT(Andre);
 	}
 }
 
@@ -121,6 +131,9 @@ void spread_create::init(spread_create_description *Descr,
 		exit(1);
 	}
 
+	Grass = NEW_OBJECT(geometry::grassmann);
+	Grass->init(2 * k, k, F, verbose_level);
+
 
 	if (Descr->f_family) {
 		if (f_v) {
@@ -166,6 +179,11 @@ void spread_create::init(spread_create_description *Descr,
 		Sg->stabilizer_of_spread_from_catalogue(A, 
 			q, k, Descr->iso, 
 			verbose_level);
+		if (f_v) {
+			cout << "spread_create::init "
+					"after Sg->stabilizer_of_spread_from_catalogue" << endl;
+		}
+
 		f_has_group = TRUE;
 
 		char str[1000];
@@ -176,10 +194,6 @@ void spread_create::init(spread_create_description *Descr,
 		label_txt.assign(str);
 		sprintf(str, "catalogue\\_q%d\\_k%d\\_%d", q, k, Descr->iso);
 		label_tex.assign(str);
-		if (f_v) {
-			cout << "spread_create::init "
-					"after Sg->stabilizer_of_spread_from_catalogue" << endl;
-		}
 	}
 	else if (Descr->f_spread_set) {
 
@@ -188,21 +202,33 @@ void spread_create::init(spread_create_description *Descr,
 					"spread from spread set, label = " << Descr->spread_set_label << endl;
 		}
 		long int *spread_set_matrices;
-		int sz;
+		int spread_set_matrices_sz;
+		int k2;
 
-		Get_vector_or_set(Descr->spread_set_label, spread_set_matrices, sz);
+		k2 = Descr->k * Descr->k;
+
+		Get_vector_or_set(Descr->spread_set_label, spread_set_matrices, spread_set_matrices_sz);
 		if (f_v) {
-			int k2;
 
-			k2 = Descr->k * Descr->k;
-
-			cout << "spread_create::init spread_set_matrices sz = " << sz << endl;
-			Lint_matrix_print(set, sz / k2, k2);
+			cout << "spread_create::init spread_set_matrices "
+					"spread_set_matrices_sz = " << spread_set_matrices_sz << endl;
+			Lint_matrix_print(spread_set_matrices, spread_set_matrices_sz / k2, k2);
 			cout << "spread_create::init spread_set_matrices = " << endl;
-			Lint_matrix_print(set, sz / k2, k2);
+			Lint_matrix_print(spread_set_matrices, spread_set_matrices_sz / k2, k2);
 		}
 
-		exit(1);
+		if (f_v) {
+			cout << "spread_create::init before Grass->make_spread_from_spread_set" << endl;
+		}
+		Grass->make_spread_from_spread_set(
+				spread_set_matrices, spread_set_matrices_sz / k2,
+				set, sz,
+				verbose_level);
+		if (f_v) {
+			cout << "spread_create::init after Grass->make_spread_from_spread_set, sz = " << sz << endl;
+		}
+
+		//exit(1);
 	}
 	else {
 		cout << "spread_create::init we do not "
@@ -212,14 +238,36 @@ void spread_create::init(spread_create_description *Descr,
 
 
 	if (f_v) {
+		cout << "spread_create::init set of size " << sz << endl;
 		cout << "spread_create::init set = ";
 		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 
+	long int *Part;
+	int s;
+
+	Grass->make_partition(set, sz, Part, s, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "spread_create::init Partition:" << endl;
+		Lint_matrix_print(Part, sz, s);
+	}
+
 	if (f_has_group) {
 		cout << "spread_create::init the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
+	}
+
+
+	Andre = NEW_OBJECT(geometry::andre_construction);
+
+	if (f_v) {
+		cout << "spread_create::init before Andre->init" << endl;
+	}
+	Andre->init(F, k, set, verbose_level);
+	if (f_v) {
+		cout << "spread_create::init after Andre->init" << endl;
 	}
 
 
