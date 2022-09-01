@@ -2319,6 +2319,112 @@ public:
 
 };
 
+// #############################################################################
+// spread_domain.cpp
+// #############################################################################
+
+#define SPREAD_OF_TYPE_FTWKB 1
+#define SPREAD_OF_TYPE_KANTOR 2
+#define SPREAD_OF_TYPE_KANTOR2 3
+#define SPREAD_OF_TYPE_GANLEY 4
+#define SPREAD_OF_TYPE_LAW_PENTTILA 5
+#define SPREAD_OF_TYPE_DICKSON_KANTOR 6
+#define SPREAD_OF_TYPE_HUDSON 7
+
+//! spreads of PG(k-1,q) in PG(n-1,q) where k divides n
+
+
+class spread_domain {
+
+public:
+
+	field_theory::finite_field *F;
+
+	int n; // = a multiple of k
+	int k;
+	int kn; // = k * n
+	int q;
+
+	long int nCkq; // = {n choose k}_q
+		// used in print_elements, print_elements_and_points
+	long int nC1q; // = {n choose 1}_q
+	long int kC1q; // = {k choose 1}_q
+
+	long int qn; // q^n
+	long int qk; // q^k
+
+	int order; // q^k
+	int spread_size; // = order + 1
+
+	long int r;
+	long int nb_pts;
+	long int nb_points_total; // = nb_pts = {n choose 1}_q
+	//long int block_size; // = r = {k choose 1}_q, used in spread_lifting.spp
+
+	geometry::grassmann *Grass;
+		// {n choose k}_q
+
+	// for check_function and check_function_incremental:
+	int *tmp_M1;
+	int *tmp_M2;
+	int *tmp_M3;
+	int *tmp_M4;
+
+	// only if n = 2 * k:
+	geometry::klein_correspondence *Klein;
+	layer1_foundations::orthogonal_geometry::orthogonal *O;
+
+
+	int *Data1;
+		// for early_test_func
+		// [max_depth * kn],
+		// previously [Nb * n], which was too much
+	int *Data2;
+		// for early_test_func
+		// [n * n]
+
+	spread_domain();
+	~spread_domain();
+	void init(
+			field_theory::finite_field *F,
+			int n, int k,
+			int verbose_level);
+	void unrank_point(int *v, long int a);
+	long int rank_point(int *v);
+	void unrank_subspace(int *M, long int a);
+	long int rank_subspace(int *M);
+	void print_points();
+	void print_points(long int *pts, int len);
+	void print_elements();
+	void print_elements_and_points();
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	int check_function(int len, long int *S, int verbose_level);
+	int incremental_check_function(int len, long int *S, int verbose_level);
+	void compute_dual_spread(int *spread, int *dual_spread,
+		int verbose_level);
+	void print(std::ostream &ost, int len, long int *S);
+	void czerwinski_oakden(int level, int verbose_level);
+	void write_spread_to_file(int type_of_spread, int verbose_level);
+	void make_spread(long int *data, int type_of_spread, int verbose_level);
+	void make_spread_from_q_clan(long int *data, int type_of_spread,
+		int verbose_level);
+	void read_and_print_spread(std::string &fname, int verbose_level);
+	void HMO(std::string &fname, int verbose_level);
+	void get_spread_matrices(int *F, int *G, long int *data, int verbose_level);
+	void print_spread(std::ostream &ost, long int *data, int sz);
+	void plane_intersection_type_of_klein_image(
+			geometry::projective_space *P3,
+			geometry::projective_space *P5,
+			geometry::grassmann *Gr,
+			long int *data, int size,
+			int *&intersection_type, int &highest_intersection_number,
+			int verbose_level);
+
+};
+
 
 // #############################################################################
 // spread_tables.cpp

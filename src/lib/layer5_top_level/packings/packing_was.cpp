@@ -1530,7 +1530,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 						// b the the index into Spread_tables_reduced
 					e_idx = Regular_packing->spread_to_external_line_idx[b];
 					e = Regular_packing->External_lines[e_idx];
-					P->T->Klein->P5->unrank_line(basis_external_line, e);
+					P->T->SD->Klein->P5->unrank_line(basis_external_line, e);
 					ost << "Short orbit " << j << " / " << l << " is orbit "
 							<< a << " is spread " << b << " is external line "
 							<< e << " is:\\\\" << endl;
@@ -1746,7 +1746,7 @@ void packing_was::report_line_orbits_under_H(std::ostream &ost, int verbose_leve
 			for (h = 0; h < Orb.size(); h++) {
 				b = Orb[h];
 				ost << "$";
-				P->T->Grass->print_single_generator_matrix_tex(ost, b);
+				P->T->SD->Grass->print_single_generator_matrix_tex(ost, b);
 				ost << "_{" << b << "}";
 				ost << "$";
 				if (i < Orb.size() - 1) {

@@ -51,6 +51,7 @@ semifield_classify::semifield_classify()
 	//f_level_three_prefix = FALSE;
 	//level_three_prefix = NULL;
 
+	SD = NULL;
 	T = NULL;
 
 	A = NULL;
@@ -261,6 +262,24 @@ void semifield_classify::init(
 	Basis1 = NEW_int(k * k2);
 	Basis2 = NEW_int(k * k2);
 
+	geometry::spread_domain *SD;
+
+	SD = NEW_OBJECT(geometry::spread_domain);
+
+	if (f_v) {
+		cout << "semifield_classify::init before SD->init" << endl;
+	}
+
+	SD->init(
+			PA->F,
+			n, k,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "semifield_classify::init after SD->init" << endl;
+	}
+
+
 
 	T = NEW_OBJECT(spreads::spread_classify);
 
@@ -272,22 +291,12 @@ void semifield_classify::init(
 
 	//int max_depth = k + 1;
 
-	T->init(PA, k, //Control,
+	T->init(SD, PA, //k, //Control,
 			FALSE /* f_recoordinatize */,
 			0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "semifield_classify::init after T->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "semifield_classify::init before T->init2" << endl;
-	}
-
-	T->init2(Control, verbose_level);
-
-	if (f_v) {
-		cout << "semifield_classify::init after T->init2" << endl;
 	}
 
 	ring_theory::longinteger_object go1, go2;

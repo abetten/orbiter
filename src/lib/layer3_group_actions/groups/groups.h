@@ -168,15 +168,22 @@ public:
 	int GL_wreath_Sym_n;
 
 
+	//int n;
+
+	int f_n;
 	int n;
+
+	std::string input_q;
+
+	field_theory::finite_field *F;
 
 	// change input_q to string so that we can allow symbols:
 	//int input_q;
-	std::string input_q;
+	//std::string input_q;
 
-	int f_override_polynomial;
-	std::string override_polynomial;
-	field_theory::finite_field *F;
+	//int f_override_polynomial;
+	//std::string override_polynomial;
+	//field_theory::finite_field *F;
 	int f_semilinear;
 	int f_special;
 

@@ -579,7 +579,7 @@ void packing_classify::report_packing_as_table(
 	int nb_points;
 	int *the_spread;
 
-	nb_points = T->Grass->nb_points_covered(0 /*verbose_level*/);
+	nb_points = T->SD->Grass->nb_points_covered(0 /*verbose_level*/);
 
 	cout << "nb_points=" << nb_points << endl;
 	the_spread = NEW_int(spread_size * nb_points);
@@ -885,13 +885,13 @@ void packing_classify::report_extra_stuff(
 		ost << "PG$(3," << q << ")$ has " << nb_lines
 				<< " lines:\\\\" << endl;
 		for (u = 0; u < nb_lines; u++) {
-			T->Grass->unrank_lint(u, 0 /* verbose_level*/);
+			T->SD->Grass->unrank_lint(u, 0 /* verbose_level*/);
 			ost << "$L_{" << u << "}=";
 			ost << "\\left[" << endl;
 			ost << "\\begin{array}{c}" << endl;
-			for (i = 0; i < T->k; i++) {
-				for (j = 0; j < T->n; j++) {
-					ost << T->Grass->M[i * T->n + j];
+			for (i = 0; i < T->SD->k; i++) {
+				for (j = 0; j < T->SD->n; j++) {
+					ost << T->SD->Grass->M[i * T->SD->n + j];
 				}
 				ost << "\\\\" << endl;
 			}

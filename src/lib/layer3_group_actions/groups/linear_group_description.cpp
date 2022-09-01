@@ -26,11 +26,13 @@ linear_group_description::linear_group_description()
 	GL_wreath_Sym_d = 0;
 	GL_wreath_Sym_n = 0;
 
+	f_n = FALSE;
 	n = 0;
-	//input_q = 0;
-	f_override_polynomial = FALSE;
-	//override_polynomial;
+
+	//input_q;
+
 	F = NULL;
+
 	f_semilinear = FALSE;
 	f_special = FALSE;
 	
@@ -108,6 +110,7 @@ int linear_group_description::read_arguments(
 		// the general linear groups:
 		// GL, GGL, SL, SSL
 		if (ST.stringcmp(argv[i], "-GL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -120,6 +123,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-GGL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -132,6 +136,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-SL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -144,6 +149,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-SSL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -160,6 +166,7 @@ int linear_group_description::read_arguments(
 		// the projective linear groups:
 		// PGL, PGGL, PSL, PSSL
 		else if (ST.stringcmp(argv[i], "-PGL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
@@ -172,6 +179,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PGGL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
@@ -184,6 +192,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PSL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
@@ -196,6 +205,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PSSL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
@@ -213,6 +223,7 @@ int linear_group_description::read_arguments(
 		// the affine groups:
 		// AGL, AGGL, ASL, ASSL
 		else if (ST.stringcmp(argv[i], "-AGL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -225,6 +236,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-AGGL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -237,6 +249,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-ASL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -249,6 +262,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-ASSL") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
@@ -260,6 +274,7 @@ int linear_group_description::read_arguments(
 				cout << "-ASSL " << n << " " << input_q << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
@@ -267,6 +282,7 @@ int linear_group_description::read_arguments(
 				cout << "-override_polynomial" << override_polynomial << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-GL_d_q_wr_Sym_n") == 0) {
 			f_GL_d_q_wr_Sym_n = TRUE;
 			GL_wreath_Sym_d = ST.strtoi(argv[++i]);
@@ -281,6 +297,7 @@ int linear_group_description::read_arguments(
 		// the orthogonal groups:
 		// PGO0, PGOp, PGOm
 		else if (ST.stringcmp(argv[i], "-PGO") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal = TRUE;
@@ -290,6 +307,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PGOp") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_p = TRUE;
@@ -299,6 +317,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PGOm") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_m = TRUE;
@@ -308,6 +327,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PGGO") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal = TRUE;
@@ -317,6 +337,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PGGOp") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_p = TRUE;
@@ -326,6 +347,7 @@ int linear_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-PGGOm") == 0) {
+			f_n = TRUE;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_m = TRUE;
@@ -579,9 +601,11 @@ void linear_group_description::print()
 	if (f_affine && f_general && f_special && f_semilinear) {
 		cout << "-ASSL " << n << " " << input_q << endl;
 	}
+#if 0
 	if (f_override_polynomial) {
 		cout << "-override_polynomial" << override_polynomial << endl;
 	}
+#endif
 	if (f_GL_d_q_wr_Sym_n) {
 		cout << "-GL_d_q_wr_Sym_n " << GL_wreath_Sym_d
 				<< " " << input_q << " " << GL_wreath_Sym_n << endl;

@@ -444,6 +444,7 @@ namespace geometry {
 	class polarity;
 	class projective_space_implementation;
 	class projective_space;
+	class spread_domain;
 	class spread_tables;
 	class W3q;
 
@@ -802,6 +803,7 @@ enum symbol_table_object_type {
 	t_projective_space,
 	t_orthogonal_space,
 	t_BLT_set_classify,
+	t_spread_classify,
 	t_formula,
 	t_cubic_surface,
 	t_quartic_curve,

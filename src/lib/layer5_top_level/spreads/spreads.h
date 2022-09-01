@@ -86,18 +86,111 @@ public:
 };
 
 
+// #############################################################################
+// spread_classify_activity_description.cpp
+// #############################################################################
+
+//! description of an activity regarding the classification of spreads
+
+
+
+class spread_classify_activity_description {
+
+public:
+
+
+	int f_compute_starter;
+	poset_classification::poset_classification_control *starter_control;
+
+	int f_prepare_lifting_single_case;
+	int prepare_lifting_single_case_case_number;
+
+	int f_split;
+	int split_r;
+	int split_m;
+
+	int f_isomorph;
+	std::string prefix_classify;
+	std::string prefix_iso;
+	layer4_classification::isomorph_arguments *Isomorph_arguments;
+
+	spread_classify_activity_description();
+	~spread_classify_activity_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// spread_classify_activity.cpp
+// #############################################################################
+
+//! an activity regarding the classification of spreads
+
+
+
+class spread_classify_activity {
+
+public:
+
+	spread_classify_activity_description *Descr;
+	spread_classify *Spread_classify;
+
+	spread_classify_activity();
+	~spread_classify_activity();
+	void init(spread_classify_activity_description *Descr,
+			spread_classify *Spread_classify,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
+
+
+
+// #############################################################################
+// spread_classify_description.cpp
+// #############################################################################
+
+
+
+//! parameters for the classification algorithm of spreads
+
+
+class spread_classify_description {
+public:
+
+	int f_projective_space;
+	std::string projective_space_label;
+
+	int f_starter_size;
+	int starter_size;
+
+	int f_k;
+	int k;
+
+	int f_poset_classification_control;
+	poset_classification::poset_classification_control *Control;
+
+	int f_output_prefix;
+	std::string output_prefix;
+
+	spread_classify_description();
+	~spread_classify_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
 
 // #############################################################################
 // spread_classify.cpp
 // #############################################################################
 
-#define SPREAD_OF_TYPE_FTWKB 1
-#define SPREAD_OF_TYPE_KANTOR 2
-#define SPREAD_OF_TYPE_KANTOR2 3
-#define SPREAD_OF_TYPE_GANLEY 4
-#define SPREAD_OF_TYPE_LAW_PENTTILA 5
-#define SPREAD_OF_TYPE_DICKSON_KANTOR 6
-#define SPREAD_OF_TYPE_HUDSON 7
 
 
 //! to classify spreads of PG(k-1,q) in PG(n-1,q) where k divides n
@@ -106,24 +199,19 @@ public:
 class spread_classify {
 public:
 
+	spread_classify_description *Descr;
+	geometry::spread_domain *SD;
+
 	projective_geometry::projective_space_with_action *PA;
+	groups::strong_generators *Strong_gens;
 
 	groups::matrix_group *Mtx;
 
-
-	int order;
-	int spread_size; // = order + 1
-	int n; // = a multiple of k
-	int k;
-	int kn; // = k * n
-	int q;
-	int nCkq; // n choose k in q
-	int r, nb_pts;
-	int nb_points_total; // = nb_pts = {n choose 1}_q
-	int block_size; // = r = {k choose 1}_q
+	long int block_size; // = r = {k choose 1}_q, used in spread_lifting.spp
 
 
 	int starter_size;
+	int target_size; // = SD->spread_size
 
 
 	actions::action *A;
@@ -131,9 +219,6 @@ public:
 	actions::action *A2;
 		// action of A on grassmannian of k-subspaces of V(n,q)
 	induced_actions::action_on_grassmannian *AG;
-	geometry::grassmann *Grass;
-		// {n choose k}_q
-
 
 	int f_recoordinatize;
 	recoordinatize *R;
@@ -144,65 +229,47 @@ public:
 	int Starter_size;
 	groups::strong_generators *Starter_Strong_gens;
 
-	// for check_function_incremental:
-	int *tmp_M1;
-	int *tmp_M2;
-	int *tmp_M3;
-	int *tmp_M4;
-
+	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
+	std::string prefix;
 
 	apps_geometry::singer_cycle *Sing;
+		// not used (commented out)
 
-
-	// only if n = 2 * k:
-	geometry::klein_correspondence *Klein;
-	layer1_foundations::orthogonal_geometry::orthogonal *O;
-
-
-	int Nb;
-	int *Data1;
-		// [max_depth * kn],
-		// previously [Nb * n], which was too much
-	int *Data2;
-		// [n * n]
+	long int Nb;
+		// Combi.generalized_binomial(n, k, q);
+		// or R->nb_live_points if f_recoordinatize
 
 
 	spread_classify();
 	~spread_classify();
+	void init_basic(
+			spread_classify_description *Descr,
+			int verbose_level);
 	void init(
+			geometry::spread_domain *SD,
 			projective_geometry::projective_space_with_action *PA,
-			int k,
 			int f_recoordinatize,
 			int verbose_level);
-	void init2(
-			poset_classification::poset_classification_control *Control,
+	void init2(int verbose_level);
+	void classify_partial_spreads(int verbose_level);
+	void lifting(
+			int orbit_at_level, int level_of_candidates_file,
+			int f_lexorder_test, int f_eliminate_graphs_if_possible,
+			int &nb_vertices,
+			//graph_theory::colored_graph *&CG,
+			solvers::diophant *&Dio,
+			long int *&col_labels,
+			int &f_ruled_out,
 			int verbose_level);
-	void unrank_point(int *v, long int a);
-	long int rank_point(int *v);
-	void unrank_subspace(int *M, long int a);
-	long int rank_subspace(int *M);
-	void print_points();
-	void print_points(long int *pts, int len);
-	void print_elements();
-	void print_elements_and_points();
-	void compute(int verbose_level);
-	void early_test_func(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-	int check_function(int len, long int *S, int verbose_level);
-	int incremental_check_function(int len, long int *S, int verbose_level);
-	void lifting_prepare_function_new(exact_cover *E, int starter_case,
-		long int *candidates, int nb_candidates,
-		groups::strong_generators *Strong_gens,
-		solvers::diophant *&Dio, long int *&col_labels,
-		int &f_ruled_out,
-		int verbose_level);
-	void compute_dual_spread(int *spread, int *dual_spread,
-		int verbose_level);
+	void setup_lifting(
+			data_structures_groups::orbit_rep *R,
+			std::string &output_prefix,
+			solvers::diophant *&Dio, long int *&col_labels,
+			int &f_ruled_out,
+			int verbose_level);
 
 
 	// spread_classify2.cpp
@@ -221,23 +288,7 @@ public:
 		isomorph *Iso,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int data_size, int verbose_level);
-	void plane_intersection_type_of_klein_image(
-			geometry::projective_space *P3,
-			geometry::projective_space *P5,
-			geometry::grassmann *Gr,
-		long int *data, int size,
-		int *&intersection_type, int &highest_intersection_number,
-		int verbose_level);
 
-	void czerwinski_oakden(int level, int verbose_level);
-	void write_spread_to_file(int type_of_spread, int verbose_level);
-	void make_spread(long int *data, int type_of_spread, int verbose_level);
-	void make_spread_from_q_clan(long int *data, int type_of_spread,
-		int verbose_level);
-	void read_and_print_spread(std::string &fname, int verbose_level);
-	void HMO(std::string &fname, int verbose_level);
-	void get_spread_matrices(int *F, int *G, long int *data, int verbose_level);
-	void print_spread(std::ostream &ost, long int *data, int sz);
 	void report2(isomorph &Iso, int verbose_level);
 	void report3(isomorph &Iso, std::ostream &ost, int verbose_level);
 	void all_cooperstein_thas_quotients(isomorph &Iso, int verbose_level);
@@ -246,7 +297,6 @@ public:
 	void orbit_info_short(std::ostream &ost, isomorph &Iso, int h);
 	void report_stabilizer(isomorph &Iso, std::ostream &ost, int orbit,
 		int verbose_level);
-	void print(std::ostream &ost, int len, long int *S);
 };
 
 
@@ -353,7 +403,7 @@ class spread_lifting {
 public:
 
 	spread_classify *S;
-	exact_cover *E;
+	//exact_cover *E;
 
 	long int *starter;
 	int starter_size;
@@ -384,9 +434,7 @@ public:
 
 	spread_lifting();
 	~spread_lifting();
-	void null();
-	void freeself();
-	void init(spread_classify *S, exact_cover *E,
+	void init(spread_classify *S, //exact_cover *E,
 		long int *starter, int starter_size,
 		int starter_case_number, int starter_number_of_cases,
 		long int *candidates, int nb_candidates,

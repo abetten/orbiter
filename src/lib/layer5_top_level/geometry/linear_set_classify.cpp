@@ -66,6 +66,7 @@ linear_set_classify::linear_set_classify()
 	f_identify = FALSE;
 	k = 0;
 	order = 0;
+	SD = NULL;
 	T = NULL;
 
 	secondary_level = 0;
@@ -200,6 +201,9 @@ void linear_set_classify::freeself()
 	}
 	if (T) {
 		FREE_OBJECT(T);
+	}
+	if (SD) {
+		FREE_OBJECT(SD);
 	}
 	null();
 }
@@ -459,6 +463,34 @@ void linear_set_classify::init(
 
 
 	if (f_identify) {
+
+		//int max_depth = order + 1;
+		poset_classification::poset_classification_control *Control;
+		projective_geometry::projective_space_with_action *PA;
+
+		Control = NEW_OBJECT(poset_classification::poset_classification_control);
+		PA = NEW_OBJECT(projective_geometry::projective_space_with_action); // hack !!! ToDo
+
+		SD = NEW_OBJECT(geometry::spread_domain);
+
+		if (f_v) {
+			cout << "linear_set_classify::init before SD->init" << endl;
+		}
+
+
+		// ToDo PA is not valid!
+
+		SD->init(
+				PA->F,
+				n, k,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "linear_set_classify::init after SD->init" << endl;
+		}
+
+
+
 		T = NEW_OBJECT(spreads::spread_classify);
 
 		//int f_recoordinatize = TRUE;
@@ -470,18 +502,13 @@ void linear_set_classify::init(
 			cout << "Classifying spreads of order " << order << endl;
 		}
 
-		//int max_depth = order + 1;
-		poset_classification::poset_classification_control *Control;
-		projective_geometry::projective_space_with_action *PA;
 
-		Control = NEW_OBJECT(poset_classification::poset_classification_control);
-		PA = NEW_OBJECT(projective_geometry::projective_space_with_action); // hack !!! ToDo
-
-		T->init(PA, k,
+		T->init(SD, PA,
 				TRUE /* f_recoordinatize */,
 				verbose_level - 2);
 
-		T->init2(Control, verbose_level);
+		// ToDo:
+		//T->init2(Control, verbose_level);
 
 #if 0
 		T->init(order, n, k, max_depth,
@@ -493,13 +520,14 @@ void linear_set_classify::init(
 
 		//T->read_arguments(argc, argv);
 
+		// ToDo:
 		//T->init2(Control, verbose_level);
 
 		if (f_v) {
 			cout << "Classifying spreads planes of order "
 					<< order << ":" << endl;
 		}
-		T->compute(0 /*verbose_level*/);
+		//T->compute(0 /*verbose_level*/);
 		if (f_v) {
 			cout << "Spreads of order " << order
 					<< " have been classified" << endl;

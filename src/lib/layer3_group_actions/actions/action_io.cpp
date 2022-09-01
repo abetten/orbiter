@@ -154,7 +154,7 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 			SG->print_generators_compact(ost);
 			ost << "\\end{verbatim}" << endl;
 
-}
+		}
 	}
 	if (f_v) {
 		cout << "action::report done" << endl;

@@ -1141,7 +1141,7 @@ object_F_2:
 object_PG_3_2:
 	$(ORBITER) \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end 
+		-define P -projective_space -n 3 -field F -v 0 -end 
 
 
 vector_ex:
@@ -1173,7 +1173,7 @@ create_BLT_5_1:
 create_surface_4_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S4_0 -q 4 -catalogue 0 -end \
@@ -1851,7 +1851,7 @@ SECTION_FINITE_PROJECTIVE_SPACES:
 PG_3_2_easy:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end
+		-define P -projective_space -n 3 -field F -end
 
 
 
@@ -1859,7 +1859,7 @@ PG_3_2_easy:
 PG_1_16:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 1 F -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1870,7 +1870,7 @@ PG_1_16:
 PG_2_4:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1883,7 +1883,7 @@ PG_2_4:
 PG_2_13:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1896,7 +1896,7 @@ PG_2_13:
 PG_2_64:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 64 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1908,7 +1908,7 @@ PG_2_64:
 PG_3_2:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1919,7 +1919,7 @@ PG_3_2:
 PG_3_4:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1929,7 +1929,7 @@ PG_3_4:
 PG_3_5:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1940,7 +1940,7 @@ PG_3_5:
 PG_3_7:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1953,7 +1953,7 @@ PG_3_7:
 PG_3_8:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1964,7 +1964,7 @@ PG_3_8:
 PG_3_16:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1977,7 +1977,7 @@ PG_3_16:
 PG_3_25:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -1990,7 +1990,7 @@ PG_3_25:
 PG_4_3:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 3 -end \
-		-define P -projective_space 4 F -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -2001,7 +2001,7 @@ PG_4_3:
 PG_8_2:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 8 F -end \
+		-define P -projective_space -n 8 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -2030,7 +2030,7 @@ PG_2_4_rank_point:
 elliptic_curve_b1_c3_q11.txt:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define EC -geometric_object P \
 			-elliptic_curve 1 3 \
 		-end \
@@ -2042,7 +2042,7 @@ elliptic_curve_b1_c3_q11.txt:
 PG_2_2_incidence_matrix:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-export_point_line_incidence_matrix \
 		-end
@@ -2060,7 +2060,7 @@ PG_2_2_incidence_matrix:
 PG_2_4_incidence_matrix:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-export_point_line_incidence_matrix \
 		-end
@@ -2081,7 +2081,7 @@ PG_2_4_incidence_matrix:
 PG_2_8_incidence_matrix:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-export_point_line_incidence_matrix \
 		-end
@@ -2112,7 +2112,7 @@ PG_2_16:
 		-draw_options -xin 20000 -yin 20000 \
 		-radius 200 -line_width 0.3 -nodes_empty -end \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -2126,7 +2126,7 @@ PG_2_16:
 PG_2_4_with_decomposition:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG \
 			1 "0,1,0, 0,0,1, 2,1,1, 0" \
@@ -2209,7 +2209,7 @@ rank_lines:
 		-dense "1,0,0,0,0,1,0,0, 1,0,0,0,0,0,0,1, 0,1,0,0,0,0,2,1" \
 		-end \
 		-define F -finite_field -q 3 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-rank_lines_in_PG v1 \
@@ -2223,7 +2223,7 @@ rank_lines:
 planes_in_pencil:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-planes_through_line 0 \
@@ -2247,7 +2247,7 @@ EC_11.txt:
 			-number_of_variables 3 \
 			-homogeneous_of_degree 3 \
 			-end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define EC -geometric_object P \
 			-projective_variety R \
 				"EC_11" "EC\_11" \
@@ -2266,7 +2266,7 @@ Hirschfeld_surface_q4.txt:
 			-number_of_variables 4 \
 			-homogeneous_of_degree 3 \
 			-end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define H4 -geometric_object P \
 			-projective_variety R \
 				"Hirschfeld_surface_q4" \
@@ -2285,7 +2285,7 @@ Hirschfeld_surface_q16.txt:
 			-number_of_variables 4 \
 			-homogeneous_of_degree 3 \
 			-end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define H16 -geometric_object P \
 			-projective_variety R \
 				"Hirschfeld_surface_q16" \
@@ -2310,7 +2310,7 @@ Endrass_F7.txt:
 			-end \
 		-define eqn -vector -field F -sparse 165 \
 			$(ENDRASS_SPARSE) -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define Endrass_F7 -geometric_object P \
 			-projective_variety R \
 				"Endrass_F7" \
@@ -2564,7 +2564,7 @@ SECTION_PROJECTIVE_SPACE_ADVANCED_TOPICS:
 fix_structure_2A:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG 1 \
@@ -2578,7 +2578,7 @@ fix_structure_2A:
 fix_structure_2B:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG 1 \
@@ -2592,7 +2592,7 @@ fix_structure_2B:
 fix_structure_2C:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG 1 \
@@ -2608,7 +2608,7 @@ fix_structure_2C:
 trans:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-move_two_lines_in_hyperplane_stabilizer_text \
@@ -2620,7 +2620,7 @@ trans:
 del_Pezzo_F13ab_report:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define f3 -formula \
 			"del_Pezzo_F13a" "del\_Pezzo\_F13a" "x,y,z" \
 			"x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z" \
@@ -2640,7 +2640,7 @@ del_Pezzo_F13ab_report:
 del_Pezzo_F13a_points.txt:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define f1 -formula "del_Pezzo_F9" \
 			"del\_Pezzo\_F9" "x,y,z" \
 			"x*x*x*x+y*y*y*y+z*z*z*z" \
@@ -2675,7 +2675,7 @@ del_Pezzo_F13a_points.txt:
 del_Pezzo_169:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 169 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define f3 -formula "del_Pezzo_F169a" \
 			"del\_Pezzo\_F169a" "x,y,z" \
 			"x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z" \
@@ -2704,7 +2704,7 @@ SECTION_GEOMETRIC_OBJECTS:
 elliptic_quadric_ovoid_q8:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define O -geometric_object P \
 			-elliptic_quadric_ovoid \
 		-end \
@@ -2717,7 +2717,7 @@ elliptic_quadric_ovoid_q8:
 ovoid_ST_q8:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define O -geometric_object P \
 			-ovoid_ST \
 		-end \
@@ -2730,7 +2730,7 @@ ovoid_ST_q8:
 Baer_PG_2_4:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define O -geometric_object P \
 			-Baer_substructure \
 		-end \
@@ -2740,7 +2740,7 @@ Baer_PG_2_4:
 Baer_PG_3_4:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define O -geometric_object P \
 			-Baer_substructure \
 		-end \
@@ -2750,7 +2750,7 @@ Baer_PG_3_4:
 BLT_database_5_0:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 5 -end \
-		-define P -projective_space 4 F -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
 		-define O -geometric_object P \
 			-BLT_database 0 \
 		-end \
@@ -2763,7 +2763,7 @@ BLT_database_5_0:
 BLT_database_7_0:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 4 F -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
 		-define O -geometric_object P \
 			-BLT_database 0 \
 		-end \
@@ -2775,7 +2775,7 @@ BLT_database_7_0:
 BLT_database_7_1:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 4 F -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
 		-define S -geometric_object P \
 			-BLT_database 1 \
 		-end \
@@ -2801,7 +2801,7 @@ BLT_database_7_1_print:
 BLT_database_67_4:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 67 -end \
-		-define P -projective_space 4 F -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
 		-define Obj -geometric_object P \
 			-BLT_database 4 \
 		-end \
@@ -2881,7 +2881,7 @@ Doily_disjoint_sets_graph_cliques_5:
 PG_3_2_test:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -2896,7 +2896,7 @@ Edge_curve_17:
 			-number_of_variables 3 \
 			-homogeneous_of_degree 4 \
 			-end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define C -geometric_object P \
 			-projective_variety R \
 				"Edge_q17" "Edge\_q17" \
@@ -2923,7 +2923,7 @@ Edge_curve_17_line_type:
 			-number_of_variables 3 \
 			-homogeneous_of_degree 4 \
 			-end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define C -geometric_object P \
 			-projective_variety R \
 				"Edge_q17" "Edge\_q17" \
@@ -2941,7 +2941,7 @@ Edge_curve_17_line_type:
 Edge_curve_q23_line_type:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 23 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define E -geometric_object P \
 			-set $(EDGE_CURVE_Q23_AS_POINTS) \
 		-end \
@@ -3923,7 +3923,7 @@ SURFACE_q13_STAB="1,0,0,0,0,12,0,0,0,0,12,0,0,0,0,1, \
 surface_q13_stab_on_tritangents_orbits:
 	$(ORBITER) -v 30 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S -q 13 \
@@ -4217,7 +4217,7 @@ normal_forms_PGL_4_5:
 on_planes:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define G -linear_group -PGL 4 F -end \
 		-define G_on_planes -modified_group -from G \
 			-on_k_subspaces 3 \
@@ -5473,7 +5473,7 @@ AGGL_2_27:
 hyperoval_4_classify:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5496,7 +5496,7 @@ hyperoval_8_classify:
 	$(ORBITER) -v 4 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5567,7 +5567,7 @@ hyperoval_16_classify:
 	$(ORBITER) -v 4 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5590,7 +5590,7 @@ hyperoval_16_classify:
 hyperoval_16_1_conic_type:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define H_16_1 -geometric_object P \
 			-set $(HYPEROVAL_16_144) \
 		-end \
@@ -5607,7 +5607,7 @@ hyperoval_16_1_conic_type:
 hyperoval_16_1_nonconical_type:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define H_16_1 -geometric_object P \
 			-set $(HYPEROVAL_16_144) \
 		-end \
@@ -5629,7 +5629,7 @@ hyperoval_16_1_nonconical_type:
 hyperoval_16_2_nonconical_type:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define H_16_2 -geometric_object P \
 			-set $(HYPEROVAL_16_16320) \
 		-end \
@@ -5719,7 +5719,7 @@ hyperoval_16_stab_0_disjoint_sets_graph:
 nc_arcs_16:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5745,7 +5745,7 @@ nc_arcs_32_E13:
 	$(ORBITER) -v 4 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 32 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5789,7 +5789,7 @@ F64_frob:
 surface_64_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S -q 64 -catalogue 0 \
@@ -5816,7 +5816,7 @@ surface_64_0:
 nc_arcs_128:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 2 F -use_projectivity_subgroup -end \
+		-define P -projective_space -n 2 -field F -use_projectivity_subgroup -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5843,7 +5843,7 @@ nc_arcs_128:
 nc_arcs_256_E13:
 	$(ORBITER) -v 8 \
 		-define F -finite_field -q 256 -end \
-		-define P -projective_space 2 F -use_projectivity_subgroup -end \
+		-define P -projective_space -n 2 -field F -use_projectivity_subgroup -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5870,7 +5870,7 @@ nc_arcs_256_E13:
 Example_F64:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 			-define_surface S64_abcd_52_8_8_52 -q 64 \
@@ -5888,7 +5888,7 @@ Example_F64:
 six_arcs_4_nbE13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-control_six_arcs -problem_label sixarcs_q4 -end \
@@ -5898,7 +5898,7 @@ six_arcs_4_nbE13:
 six_arcs_8_nbE13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-control_six_arcs -problem_label sixarcs_q8 -end \
@@ -5907,7 +5907,7 @@ six_arcs_8_nbE13:
 six_arcs_16_nbE13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-control_six_arcs -problem_label sixarcs_q16 -end \
@@ -5916,7 +5916,7 @@ six_arcs_16_nbE13:
 six_arcs_32_nbE13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 32 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-control_six_arcs -problem_label sixarcs_q32 -end \
@@ -5925,7 +5925,7 @@ six_arcs_32_nbE13:
 six_arcs_64_nbE13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-control_six_arcs -problem_label sixarcs_q64 -end \
@@ -5940,7 +5940,7 @@ six_arcs_64_nbE13:
 six_arcs_128_nbE13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-control_six_arcs -problem_label sixarcs_q128 -end \
@@ -5952,7 +5952,7 @@ six_arcs_128_nbE13:
 six_arcs_256_nbE13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 256 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-control_six_arcs -problem_label sixarcs_q256 -end \
@@ -5967,7 +5967,7 @@ six_arcs_256_nbE13:
 five_arcs_q13:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5998,7 +5998,7 @@ cubic_curves_PG_2_4:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 3 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_cubic_curves -q 4 \
@@ -6031,7 +6031,7 @@ cubic_curves_PG_2_4_draw:
 cubic_curves_PG_2_8:
 	$(ORBITER) -v 3 -define G \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-classify_cubic_curves -q 8 -target_size 9 -n 3 -d 3 \
@@ -6093,7 +6093,7 @@ SECTION_CUBIC_SURFACES_CREATION:
 surface_4_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S -q 4 -catalogue 0 -end \
@@ -6113,7 +6113,7 @@ surface_4_0:
 surface_7_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S7_0 -q 7 -catalogue 0 -end \
@@ -6135,7 +6135,7 @@ surface_7_0:
 Family_general_F7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S7_abcd_2_3_3_4 -q 7 \
@@ -6157,7 +6157,7 @@ Family_general_F7:
 eckardt_13_4_12:
 	$(ORBITER) -v 6 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_2_1 -q 13 \
@@ -6178,7 +6178,7 @@ eckardt_13_4_12:
 surface_8_0_catalogue:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S8_0 -q 8 -catalogue 0 -end \
@@ -6198,7 +6198,7 @@ surface_8_0_catalogue:
 surface_8_0_clean:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S8_0 -q 8 -catalogue 0 \
@@ -6223,7 +6223,7 @@ surface_8_0_clean:
 surface_8_0b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S8_0 -q 8 -catalogue 0 \
@@ -6259,7 +6259,7 @@ surface_8_0b:
 Eckardt_13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S_q13 -q 13 \
@@ -6278,7 +6278,7 @@ Eckardt_13:
 surface_13_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S13_0 -q 13 -catalogue 0 -end \
@@ -6298,7 +6298,7 @@ surface_13_0:
 surface_16_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S16_0 -q 16 -catalogue 0 \
@@ -6332,7 +6332,7 @@ surface_16_0:
 G13_8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface T1 -family_G13 2 -q 8 -end \
@@ -6349,7 +6349,7 @@ G13_8:
 F13_8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface T1 -family_F13 2 -q 8 -end \
@@ -6370,7 +6370,7 @@ F13_8:
 F13_16:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface T2 -family_F13 2 -q 16 -end \
@@ -6389,7 +6389,7 @@ F13_16:
 F13_32:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 32 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface T3 -family_F13 2 -q 32 -end \
@@ -6408,7 +6408,7 @@ F13_32:
 F13_64a:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface K1 -family_F13 2 -q 64 -end \
@@ -6425,7 +6425,7 @@ F13_64a:
 F13_64b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface K2 -family_F13 18 -q 64 -end \
@@ -6440,7 +6440,7 @@ F13_64b:
 Colorado1:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface CO-1 -q 128 -catalogue 0 \
@@ -6461,7 +6461,7 @@ Colorado1:
 Colorado2:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface CO-2 -q 128 -catalogue 926 \
@@ -6477,7 +6477,7 @@ Colorado2:
 Colorado3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface CO-3 -q 128 -catalogue 928 \
@@ -6496,7 +6496,7 @@ Colorado3:
 F13_128a:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface CO-1 -family_F13 2 -q 128 -end \
@@ -6512,7 +6512,7 @@ F13_128a:
 F13_128b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface CO-2 -family_F13 6 -q 128 -end \
@@ -6528,7 +6528,7 @@ F13_128b:
 F13_128c:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface CO-3 -family_F13 14 -q 128 -end \
@@ -6565,7 +6565,7 @@ F_alpha_beta_gamma_delta:
 F_abcd_Eckardt_q31:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 31 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface F_abcd -q 31 \
@@ -6603,7 +6603,7 @@ surface_F_abcd:
 F_abcd_sweep_4_27_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-sweep_4_27 sweep_4_27_q7 -q 7 -by_equation "F_abcd" \
@@ -6620,7 +6620,7 @@ F_abcd_sweep_4_27_q7:
 F_alpha_beta_gamma_delta_q7_override_group:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface F_2345 -q 7 \
@@ -6650,7 +6650,7 @@ F_alpha_beta_gamma_delta_q7_override_group:
 F_alpha_beta_gamma_delta_sweep_4_q3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 3 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-sweep_4_15_lines sweep_4_15_lines_q3 -q 3 \
@@ -6670,7 +6670,7 @@ F_alpha_beta_gamma_delta_sweep_4_q3:
 surface_15lines_q7_1:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-control_six_arcs -end \
@@ -6694,7 +6694,7 @@ surface_15lines_q7_1:
 F_alpha_beta_gamma_delta_sweep_4_15_lines_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-sweep_4_15_lines sweep_4_q7 -q 7 \
@@ -6719,7 +6719,7 @@ F_alpha_beta_gamma_delta_sweep_4_15_lines_q7:
 F_alpha_beta_gamma_delta_q7_recognize:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 49 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf -W -end \
@@ -6742,7 +6742,7 @@ F_alpha_beta_gamma_delta_q7_recognize:
 surf49_recognize:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 49 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -6763,7 +6763,7 @@ surf49_recognize:
 McKean_15lines_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S \
@@ -6778,7 +6778,7 @@ McKean_15lines_q7:
 F_4_4_3_3_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface -q 7 -by_equation \
@@ -6800,7 +6800,7 @@ F_4_4_3_3_q7:
 F_alpha_beta_gamma_delta_points.txt:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-sweep nothing \
@@ -6827,7 +6827,7 @@ SECTION_CUBIC_SURFACES_AND_QUARTIC_CURVES:
 quartic_curve_9_0_report: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 9 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-define_quartic_curve C -q 9 \
@@ -6846,7 +6846,7 @@ quartic_curve_9_0_report:
 quartic_curve_13_0_report: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-define_quartic_curve C -q 13 \
@@ -6863,7 +6863,7 @@ quartic_curve_13_0_report:
 quartic_curve_13_1_report: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-define_quartic_curve C -q 13 \
@@ -6881,7 +6881,7 @@ quartic_curve_13_1_report:
 surface_4_0_quartic_curves:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S4_0 -q 4 -catalogue 0 -end \
@@ -6910,7 +6910,7 @@ quartic_curves_q7:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
 			-with P -do \
 			-projective_space_activity \
@@ -6931,7 +6931,7 @@ quartic_curves_q7_classify:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_quartic_curves_with_substructure \
@@ -6951,7 +6951,7 @@ quartic_curves_q13:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-with P -do \
 			-projective_space_activity \
@@ -6974,7 +6974,7 @@ quartic_curves_q13_classify:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_quartic_curves_with_substructure \
@@ -6997,7 +6997,7 @@ quartic_curves_q17:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 17 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q17) 1 \
 			-with P -do \
 			-projective_space_activity \
@@ -7022,7 +7022,7 @@ quartic_curves_q17_classify:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 17 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_quartic_curves_with_substructure \
@@ -7051,7 +7051,7 @@ quartic_curves_q19:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 19 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
 			-with P -do \
 			-projective_space_activity \
@@ -7075,7 +7075,7 @@ quartic_curves_q19_classify:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 19 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_quartic_curves_with_substructure \
@@ -7095,7 +7095,7 @@ quartic_curves_q19_set_stabilizer:
 	$(ORBITER) -v 3 \
 		-list_arguments \
 		-define F -finite_field -q 19 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-set_stabilizer 4 \
@@ -7111,7 +7111,7 @@ quartic_curves_q19_set_stabilizer:
 surface_13_0_quartics:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S13_0 -q 13 -catalogue 0 -end \
@@ -7128,7 +7128,7 @@ surface_13_0_quartics:
 surface_13_1_quartics:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S13_1 -q 13 -catalogue 1 -end \
@@ -7172,7 +7172,7 @@ quartic_curve_13_2_group:
 surface_25_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-define_surface S25_0 -q 25 -catalogue 0 -end \
@@ -7189,7 +7189,7 @@ surface_25_0:
 quartic_curve_25_report: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-loop L 0 18 1 \
 			-with P -do \
 				-projective_space_activity \
@@ -7249,7 +7249,7 @@ quartic_curve_25_report:
 quartic_curve_13_table: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -7263,7 +7263,7 @@ quartic_curve_13_table:
 quartic_curve_19_table: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 19 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -7278,7 +7278,7 @@ quartic_curve_19_table_latex:
 quartic_curve_25_table: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -7290,7 +7290,7 @@ quartic_curve_25_table:
 quartic_curve_27_table: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 27 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -7302,7 +7302,7 @@ quartic_curve_27_table:
 quartic_curve_29_table: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 29 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -7315,7 +7315,7 @@ quartic_curve_29_table:
 quartic_curve_31_table: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 31 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -7329,7 +7329,7 @@ quartic_curve_31_table:
 surface_25_12:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 -end \
@@ -7346,7 +7346,7 @@ surface_25_12:
 surface_25_12_t1:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7365,7 +7365,7 @@ surface_25_12_t1:
 surface_25_12_t2:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7385,7 +7385,7 @@ surface_25_12_t2:
 surface_25_12_t3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7407,7 +7407,7 @@ surface_25_12_t3:
 surface_25_12_t4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7429,7 +7429,7 @@ surface_25_12_t4:
 surface_25_12_t5:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7452,7 +7452,7 @@ surface_25_12_t5:
 PG_2_25:
 	$(ORBITER) \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity -cheat_sheet -end
 	pdflatex PG_2_25.tex 
 	open PG_2_25.pdf
@@ -7483,7 +7483,7 @@ PG_2_25_lines:
 surface_25_12_t6:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7534,7 +7534,7 @@ PG_2_25_stab_of_triangle:
 surface_25_12_t7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7561,7 +7561,7 @@ surface_25_12_t7:
 surface_25_12_t8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7588,7 +7588,7 @@ surface_25_12_t8:
 surface_25_12_t9:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7619,7 +7619,7 @@ surface_25_12_t9:
 surface_25_12_t8_quartic_curves:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S25_12 -q 25 -catalogue 12 \
@@ -7649,7 +7649,7 @@ surface_25_12_t8_quartic_curves:
 quartic_curve_13_0_surface: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-define_quartic_curve QC13_0 -q 13 -catalogue 0 -end \
@@ -7665,7 +7665,7 @@ quartic_curve_13_0_surface:
 quartic_curve_13_0_surface_create:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S -by_coefficients \
@@ -7693,7 +7693,7 @@ SECTION_CLASSIFICATION_OF_CUBIC_SURFACES_WITH_27_LINES:
 surface_classify_q4:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -7713,7 +7713,7 @@ surface_classify_q4:
 surface_classify_q4_arc_lifting_two_lines:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-control_six_arcs -problem_label sixarcs_q4 -end \
@@ -7728,7 +7728,7 @@ surface_classify_q4_arc_lifting_two_lines:
 surface_classify_q7:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -7745,7 +7745,7 @@ surface_classify_q7:
 surface_classify_q9:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 9 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -7763,7 +7763,7 @@ surface_classify_q9:
 surface_classify_q13:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes C -W -end \
@@ -7788,7 +7788,7 @@ SECTION_CUBIC_SURFACES_ISOMORPHISM_TESTING_AND_RECOGNITION:
 surface_recognize_q7_abcd_2_3_3_4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf -W -end \
@@ -7806,7 +7806,7 @@ surface_recognize_q7_abcd_2_3_3_4:
 surface_isomorph_16:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -7830,7 +7830,7 @@ surface_isomorph_16:
 surface_recognize_8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -7850,7 +7850,7 @@ surface_recognize_8:
 surface_recognize_F13_q4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -7865,7 +7865,7 @@ surface_recognize_F13_q4:
 surface_sweep_Cayley_13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_surfaces_with_double_sixes Surf27 -W -end \
@@ -7881,7 +7881,7 @@ surface_sweep_Cayley_13:
 F_sweep_15_q7:
 	$(ORBITER) -v 20 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-sweep_4_15_lines sweep_4_15_lines_q7 -q 7 \
@@ -7914,7 +7914,7 @@ SECTION_CUBIC_SURFACES_DICKSON:
 D6_q2:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D6_q2 -q 2 -by_coefficients $(D6) -end \
@@ -7933,7 +7933,7 @@ D6_q2:
 D3_q4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D3_q4 -q 4 -by_coefficients $(D3) -end \
@@ -7956,7 +7956,7 @@ D3_q4:
 D4_q8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D4_q8 -q 8 -by_coefficients $(D4) -end \
@@ -7976,7 +7976,7 @@ D4_q8:
 D6_q4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D6_q4 -q 4 -by_coefficients $(D6) -end \
@@ -7998,7 +7998,7 @@ D6_q4:
 D8_q4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D8_q4 -q 4 -by_coefficients $(D8) -end \
@@ -8017,7 +8017,7 @@ D8_q4:
 D1_q8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D1_q8 -q 8 -by_coefficients $(D1) -end \
@@ -8037,7 +8037,7 @@ D1_q8:
 D1_q4_with_select_double_six:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D1_q4 -q 4 -by_coefficients $(D1) \
@@ -8056,7 +8056,7 @@ D1_q4_with_select_double_six:
 D1_q4_with_select_double_six_b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D1_q4 -q 4 -by_coefficients $(D1) \
@@ -8086,7 +8086,7 @@ D1_q4_trans:
 D1_q4_with_select_double_six_c:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface S_D1_q4 -q 4 -by_coefficients $(D1) \
@@ -8152,7 +8152,7 @@ orbits_cubic_curves_q3:
 poly_orbits_d3_n3_q2_F2.csv: poly_orbits_d3_n3_q2.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-table_of_cubic_surfaces_compute_properties \
@@ -8163,7 +8163,7 @@ poly_orbits_d3_n3_q2_F2.csv: poly_orbits_d3_n3_q2.csv
 Dickson_q2_analyze: poly_orbits_d3_n3_q2_F2.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-cubic_surface_properties_analyze \
@@ -8177,7 +8177,7 @@ Dickson_q2_analyze: poly_orbits_d3_n3_q2_F2.csv
 poly_orbits_d3_n3_q2_F4.csv: poly_orbits_d3_n3_q2.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-table_of_cubic_surfaces_compute_properties \
@@ -8187,7 +8187,7 @@ poly_orbits_d3_n3_q2_F4.csv: poly_orbits_d3_n3_q2.csv
 Dickson_q4_analyze: poly_orbits_d3_n3_q2_F4.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-cubic_surface_properties_analyze \
@@ -8201,7 +8201,7 @@ Dickson_q4_analyze: poly_orbits_d3_n3_q2_F4.csv
 poly_orbits_d3_n3_q2_F8.csv: poly_orbits_d3_n3_q2.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-table_of_cubic_surfaces_compute_properties \
@@ -8211,7 +8211,7 @@ poly_orbits_d3_n3_q2_F8.csv: poly_orbits_d3_n3_q2.csv
 Dickson_q8_analyze: poly_orbits_d3_n3_q2_F8.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-cubic_surface_properties_analyze \
@@ -8226,7 +8226,7 @@ Dickson_q8_analyze: poly_orbits_d3_n3_q2_F8.csv
 poly_orbits_d3_n3_q2_F16.csv: poly_orbits_d3_n3_q2.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-table_of_cubic_surfaces_compute_properties \
@@ -8237,7 +8237,7 @@ poly_orbits_d3_n3_q2_F16.csv: poly_orbits_d3_n3_q2.csv
 Dickson_q16_analyze: poly_orbits_d3_n3_q2_F16.csv
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-cubic_surface_properties_analyze \
@@ -8256,7 +8256,7 @@ SECTION_CUBIC_SURFACES_ATLAS_AND_TABLES:
 
 
 MAKE_TABLE_OF_CUBIC_SURFACES=-define \
-	P -projective_space 3 F -end \
+	P -projective_space -n 3 -field F -v 0 -end \
 	-with P -do \
 		-projective_space_activity \
 			-table_of_cubic_surfaces \
@@ -8381,7 +8381,7 @@ surface_reports:
 quartic_curve_tables_23: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 23 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -8390,21 +8390,21 @@ quartic_curve_tables_23:
 quartic_curve_tables: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 9 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
 			-end
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
 			-end
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 17 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
@@ -9025,7 +9025,7 @@ CREMONA_MAP_Y3="0"
 Cremona_map:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define R -polynomial_ring \
 			-field F \
 			-number_of_variables 3 \
@@ -9054,7 +9054,7 @@ Cremona_map:
 arcs_5_2_q11:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -9145,7 +9145,7 @@ SURFACE_F_9="x0*x0*x1 - x0*x1*x1 -x0*x1*x3 -x2*x2*x3 - x2*x3*x3"
 F_9_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-define_surface F_9 -q 7 \
@@ -9182,7 +9182,7 @@ line_type_in_PG_2_11:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define C -combinatorial_objects \
 			-file_of_points random_k_subsets_n133_k5_nb20.csv \
 		-end \
@@ -13378,7 +13378,7 @@ DD_PG_2_4_M1_G1:
 PG_2_27_special:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 27 -override_polynomial 46 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet \
 		-end
@@ -13447,6 +13447,14 @@ create_spread_9b:
 
 # Hall spread, ago = 1920
 
+
+create_spread_25_7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 7 \
+			-end
 
 
 SPREAD_SET_27_RAO_RAO="\
@@ -13528,71 +13536,144 @@ desarguesian_spread_in_PG_3_5:
 	open Desarguesian_Spread_3_5.pdf
 
 
-classify_spreads4:
-	- mkdir SPREADS_4
-	- rm live_points.txt
+classify_spreads_4:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-spread_classify 2 \
-			-problem_label spreads_2_2 -depth 5 \
-			-draw_poset \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 2 \
+			-starter_size 5 \
+			-poset_classification_control \
+				-draw_options \
+					-embedded \
+				-end \
+				-draw_poset \
+					-problem_label spreads_2_2 \
+				-end \
+			-output_prefix "." \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_2_2 \
+				-W -depth 5 \
+				-report -end \
+			-end \
 		-end
+	pdflatex spreads_2_2_poset_lvl_5.tex
+	open spreads_2_2_poset_lvl_5.pdf
 
 
-classify_spreads16_4:
-	$(ORBITER) -v 6 \
-		-orbiter_path $(ORBITER_PATH) \
+classify_spreads_16_4:
+	$(ORBITER) -v 4 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-spread_classify 2 \
-			-problem_label spreads_4_2 \
-			-W -depth 17 -draw_poset \
-			-draw_options -radius 20 \
-				-nodes_empty -line_width 0.2 -embedded \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 2 \
+			-starter_size 17 \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-draw_poset \
+					-problem_label spreads_16_4 \
+				-end \
+			-output_prefix "." \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_16_4 \
+				-W -depth 17 \
+				-report -end \
 			-end \
-			-report \
 		-end
-	pdflatex spreads_4_2_poset.tex
-	open spreads_4_2_poset.pdf
-	#pdflatex spreads_4_2_poset_detailed_lvl_17.tex
-	#open spreads_4_2_poset_detailed_lvl_17.pdf
-
-# 17
-#17 0 25 50 75 90 107 122 140 144 157 179 204 213 238 268 334 345 1200 agaaaaaaadaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaagaaaaaadmaaaaaaaeaaaaaaafaaaaaaabaaaaaaabaaaaaaabaaaaaaadamejgpaaacajlfdmabfncjmbneaa
-#17 0 25 50 75 90 107 140 157 179 204 213 238 265 282 299 316 356 81600 agaaaaaaahaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaagaaaaaaffaaaaaaaeaaaaaafaaaaaaaabaaaaaaadaaaaaaabaaaaaaadamcaiaaaacaihakaaaacaijlphaaabahealaabecljdaoaabdmpbnaeaaamanajmpnaa
-#17 0 25 50 75 90 108 122 140 158 183 199 217 233 250 268 312 345 576 agaaaaaaagaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaagaaaaaadaaaaaaaacaaaaaaadaaaaaaabaaaaaaacaaaaaaabaaaaaaabaicamaababaeldibaaacajpbocaappbbnbjeaajccgpciaabbeeagcllaa
-#-1 3 1126 in 0 of a second, dt=0 tps = 100
-#(81600, 1200, 576) average is 27792 + 0 / 3
-
-
-#17 : 3 orbits
-#total: 1129
-#(81600, 1200, 576) average is 27792 + 0 / 3
+	pdflatex spreads_16_4_poset_lvl_17.tex
+	open spreads_16_4_poset_lvl_17.pdf
 
 
 
 
-classify_spreads27_3_starter:
-	$(ORBITER) -v 6 \
-		-orbiter_path $(ORBITER_PATH) \
+
+classify_spreads_25_starter:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 2 \
+			-starter_size 5 \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-W \
+				-draw_poset \
+					-problem_label spreads_25 \
+				-end \
+			-output_prefix "." \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_25 \
+				-W -depth 5 \
+				-report -end \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-prepare_lifting_single_case 0 \
+		-end
+	#pdflatex spreads_27_3_poset_detailed_lvl_5.tex
+	#open spreads_27_3_poset_detailed_lvl_5.pdf
+
+
+
+
+classify_spreads_27_3_starter:
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 3 -end \
-		-define P -projective_space 5 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-spread_classify 3 \
-			-problem_label spreads_27_3 \
-			-W -depth 28 -draw_poset \
-			-draw_options -radius 20 \
-				-nodes_empty -line_width 0.2 -embedded \
+		-define P -projective_space -n 5 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 3 \
+			-starter_size 5 \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-draw_poset \
+					-problem_label spreads_27_3 \
+				-end \
+			-output_prefix "." \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_27_3 \
+				-W -depth 5 \
+				-report -end \
 			-end \
-			-report \
+		-end \
+		-with C -do -spread_classify_activity \
+			-prepare_lifting_single_case 0 \
 		-end
+	pdflatex spreads_27_3_poset_detailed_lvl_5.tex
+	open spreads_27_3_poset_detailed_lvl_5.pdf
 
+# 50 orbits at level 5:
+#5 : 50 orbits
+#total: 60
+#(39^2, 26^2, 10, 6^2, 5, 3^9, 2^9, 1^{24}) average is 4 + 26 / 50
+
+# time 4:31
 
 
 ###############################################################################
@@ -13723,7 +13804,7 @@ spread_table_PG_3_4:
 	- mkdir SPREAD_TABLES_4
 	$(ORBITER) -v 6 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define T -spread_table P 2 "0,1,2" "SPREAD_TABLES_4/" \
 
 
@@ -14964,7 +15045,7 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 			-file_of_points elliptic_curve_b1_c3_q11.txt \
 		-end \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15000,7 +15081,7 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 			-file_of_points Hirschfeld_surface_q4.txt \
 		-end \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15033,7 +15114,7 @@ Hirschfeld_q4_set_c:
 			-set_of_points H \
 		-end \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15063,7 +15144,7 @@ Dickson_sets_stabilizer:
 			-set_of_points "0,1,2,3,5,6,9,7,10,12,4" \
 		-end \
 		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15083,7 +15164,7 @@ Endrass_7c: Endrass_F7.txt
 			-file_of_points Endrass_F7.txt \
 		-end \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15106,7 +15187,7 @@ hyperoval_16_canonical_form:
 			-set_of_points $(HYPEROVAL_16_144) \
 		-end \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15150,7 +15231,7 @@ cubic_curves_PG_2_8_canon:
 			-set_of_points "2,3,28,46,51,61,40,71" \
 		-end \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15171,7 +15252,7 @@ F_alpha_beta_gamma_delta_classify_q7_nauty: F_alpha_beta_gamma_delta_q7_points.t
 			F_alpha_beta_gamma_delta_q7_points.txt \
 		-end \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15197,7 +15278,7 @@ ovoid_q8_canon: ovoid_q8.txt
 			-file_of_points ovoid_q8.txt \
 		-end \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15234,7 +15315,7 @@ ovoid_ST_q8_canon: ovoid_ST_q8.txt
 			-file_of_points ovoid_ST_q8.txt \
 		-end \
 		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15625,7 +15706,7 @@ geo_LSQ6_c:
 quartic_curve_25_0_0_canonical: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 		-canonical_form_PG \
@@ -15738,7 +15819,7 @@ design_27c:
 			-set_of_points "2,56,30,112,253,90,440,508" \
 		-end \
 		-define F -finite_field -q 27 -override_polynomial 46 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -15864,7 +15945,7 @@ code_3_2_aut:
 		-define genma -vector -field F -format 2 \
 			-dense $(CODE_N3_K2_Q2_GENMA) \
 		-end \
-		-define P -projective_space 1 F -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -15890,7 +15971,7 @@ code_6_3_aut:
 		-define genma -vector -field F -format 3 \
 			-compact $(CODE_N6_K3_Q2_GENMA) \
 		-end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -15916,7 +15997,7 @@ RM_3_1_group:
 		-define genma -vector -field F -format 4 \
 			-compact $(CODE_RM_3_1_GENMA) \
 		-end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -15936,7 +16017,7 @@ RM_3_1_group_and_diagram:
 		-define genma -vector -field F -format 4 \
 			-compact $(CODE_RM_3_1_GENMA) \
 		-end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -15967,7 +16048,7 @@ RM_4_1_group:
 		-define genma -vector -field F -format 5 \
 			-compact $(CODE_RM_4_1_GENMA) \
 		-end \
-		-define P -projective_space 4 F -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -16000,7 +16081,7 @@ RS_6_4_7_group:
 		-define genma -vector -field F -format 4 \
 			-compact $(CODE_RS_6_4_7) \
 		-end \
-		-define P -projective_space 3 F -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -16016,7 +16097,7 @@ GV_n15_k6_d5_group:
 		-define genma -vector -field F -format 6 \
 			-compact $(CODE_GV_N15_K6) \
 		-end \
-		-define P -projective_space 5 F -end \
+		-define P -projective_space -n 5 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -16037,7 +16118,7 @@ code_n15_k6_d6_a_group:
 		-define genma -vector -field F -format 6 \
 			-compact $(CODE_15_6_6_A) \
 		-end \
-		-define P -projective_space 5 F -end \
+		-define P -projective_space -n 5 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -16055,7 +16136,7 @@ code_n15_k6_d6_b_group:
 		-define genma -vector -field F -format 6 \
 			-compact $(CODE_15_6_6_B) \
 		-end \
-		-define P -projective_space 5 F -end \
+		-define P -projective_space -n 5 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
@@ -16332,7 +16413,7 @@ Edge_curve_17_nauty:
 			-file_of_points Edge_q17.txt \
 		-end \
 		-define F -finite_field -q 17 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -16425,7 +16506,7 @@ F_7_tables:
 PG_2_4_cyclic_incma:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space 2 F -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet_for_decomposition_by_element_PG \
 			1 "0,1,0, 0,0,1, 2,1,1, 0" "PG_2_4_singer" \

@@ -38,6 +38,10 @@ symbol_definition::symbol_definition()
 	//std::string BLT_set_classifier_label_orthogonal_geometry;
 	Blt_set_classify_description = NULL;
 
+	f_spread_classifier = FALSE;
+	Spread_classify_description = NULL;
+
+
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 
@@ -265,10 +269,27 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-spread_classifier") == 0) {
+		f_spread_classifier = TRUE;
+		Spread_classify_description = NEW_OBJECT(spreads::spread_classify_description);
+		if (f_v) {
+			cout << "reading -spread_classifier" << endl;
+		}
+		i += Spread_classify_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
-	//int f_BLT_set_classifier;
-	//orthogonal_geometry_applications::blt_set_classify *BLT_set_classifier;
+		i++;
 
+		if (f_v) {
+			cout << "-spread_classifier" << endl;
+			Spread_classify_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 	else if (ST.stringcmp(argv[i], "-linear_group") == 0) {
 		f_linear_group = TRUE;
@@ -882,6 +903,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_BLT_set_classifier" << endl;
 		}
 	}
+	else if (f_spread_classifier) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_spread_classifier" << endl;
+		}
+		definition_of_spread_classifier(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_spread_classifier" << endl;
+		}
+	}
 
 	else if (f_linear_group) {
 		if (f_v) {
@@ -1137,7 +1167,10 @@ void symbol_definition::print()
 		cout << "-BLT_set_classifier " << BLT_set_classifier_label_orthogonal_geometry << " ";
 		Blt_set_classify_description->print();
 	}
-
+	if (f_spread_classifier) {
+		cout << "-spread_classifier" << endl;
+		Spread_classify_description->print();
+	}
 	if (f_linear_group) {
 		cout << "-linear_group ";
 		Linear_group_description->print();
@@ -1334,9 +1367,16 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	}
 
 
-	load_finite_field(Projective_space_with_action_description->input_q,
-			Projective_space_with_action_description->F,
-			verbose_level);
+	if (Projective_space_with_action_description->f_override_verbose_level) {
+		verbose_level = Projective_space_with_action_description->override_verbose_level;
+	}
+	if (f_v) {
+		cout << "symbol_definition::definition_of_projective_space before load_finite_field_PG" << endl;
+	}
+	load_finite_field_PG(verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_projective_space before load_finite_field_PG" << endl;
+	}
 
 
 	int f_semilinear;
@@ -1404,7 +1444,8 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 	}
 
 
-	load_finite_field(Orthogonal_space_with_action_description->input_q,
+	load_finite_field(
+			Orthogonal_space_with_action_description->input_q,
 			Orthogonal_space_with_action_description->F,
 			verbose_level);
 
@@ -1481,7 +1522,7 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 #endif
 
 	if (f_v) {
-		cout << "orthogonal_space_activity::perform_activity before BLT_classify->init_basic" << endl;
+		cout << "symbol_definition::definition_of_BLT_set_classifier before BLT_classify->init_basic" << endl;
 	}
 
 	if (!Blt_set_classify_description->f_starter_size) {
@@ -1495,7 +1536,7 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 			Blt_set_classify_description->starter_size,
 			verbose_level);
 	if (f_v) {
-		cout << "orthogonal_space_activity::perform_activity after BLT_classify->init_basic" << endl;
+		cout << "symbol_definition::definition_of_BLT_set_classifier after BLT_classify->init_basic" << endl;
 	}
 
 
@@ -1515,6 +1556,44 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 	}
 }
 
+void symbol_definition::definition_of_spread_classifier(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread_classifier" << endl;
+	}
+
+
+	spreads::spread_classify *Spread_classify;
+
+	Spread_classify = NEW_OBJECT(spreads::spread_classify);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread_classifier before Spread_classify->init_basic" << endl;
+	}
+	Spread_classify->init_basic(
+			Spread_classify_description,
+			verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread_classifier after Spread_classify->init_basic" << endl;
+	}
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_spread_classify(define_label, Spread_classify, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread_classifier before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_spread_classifier done" << endl;
+	}
+}
+
 
 void symbol_definition::definition_of_linear_group(int verbose_level)
 {
@@ -1524,9 +1603,14 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 		cout << "symbol_definition::definition_of_linear_group" << endl;
 	}
 
+	if (f_v) {
+		cout << "symbol_definition::definition_of_linear_group before load_finite_field" << endl;
+	}
 	load_finite_field(Linear_group_description->input_q,
-			Linear_group_description->F,
-			verbose_level);
+			Linear_group_description->F, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_linear_group after load_finite_field" << endl;
+	}
 
 
 
@@ -2728,6 +2812,57 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 		cout << "symbol_definition::do_geometry_builder done" << endl;
 	}
 }
+
+void symbol_definition::load_finite_field_PG(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::load_finite_field_PG" << endl;
+	}
+	data_structures::string_tools ST;
+
+
+	if (Projective_space_with_action_description->f_field) {
+		if (f_v) {
+			cout << "symbol_definition::load_finite_field_PG "
+					"using existing finite field "
+					<< Projective_space_with_action_description->field_label << endl;
+		}
+		Projective_space_with_action_description->F =
+				Get_object_of_type_finite_field(
+						Projective_space_with_action_description->field_label);
+	}
+	else if (Projective_space_with_action_description->f_q) {
+
+		int q = Projective_space_with_action_description->q;
+
+		if (f_v) {
+			cout << "symbol_definition::load_finite_field_PG "
+					"creating the finite field of order " << q << endl;
+		}
+		Projective_space_with_action_description->F = NEW_OBJECT(field_theory::finite_field);
+		Projective_space_with_action_description->F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
+		if (f_v) {
+			cout << "symbol_definition::load_finite_field_PG "
+					"the finite field of order " << q << " has been created" << endl;
+		}
+
+	}
+	else {
+		if (f_v) {
+			cout << "symbol_definition::load_finite_field_PG "
+					"please use one of -q <int> or -field <string>" << endl;
+		}
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "symbol_definition::load_finite_field_PG done" << endl;
+	}
+}
+
+
 
 void symbol_definition::load_finite_field(std::string &input_q,
 		field_theory::finite_field *&F, int verbose_level)

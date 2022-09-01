@@ -658,11 +658,21 @@ public:
 class projective_space_with_action_description {
 public:
 
+	int f_n;
 	int n;
-	std::string input_q;
+
+	int f_q;
+	int q;
+
+	int f_field;
+	std::string field_label;
+
 	field_theory::finite_field *F;
 
 	int f_use_projectivity_subgroup;
+
+	int f_override_verbose_level;
+	int override_verbose_level;
 
 	projective_space_with_action_description();
 	~projective_space_with_action_description();

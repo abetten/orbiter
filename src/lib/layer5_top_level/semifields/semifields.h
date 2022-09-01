@@ -161,6 +161,7 @@ public:
 	std::string level_three_prefix;
 
 
+	geometry::spread_domain *SD;
 	spreads::spread_classify *T;
 
 	actions::action *A; // = T->A = PGL_n_q

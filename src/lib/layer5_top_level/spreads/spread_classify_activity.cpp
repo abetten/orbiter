@@ -1,0 +1,217 @@
+/*
+ * spread_classify_activity.cpp
+ *
+ *  Created on: Aug 31, 2022
+ *      Author: betten
+ */
+
+
+
+
+
+
+
+
+#include "orbiter.h"
+
+using namespace std;
+
+namespace orbiter {
+namespace layer5_applications {
+namespace spreads {
+
+
+spread_classify_activity::spread_classify_activity()
+{
+	Descr = NULL;
+	Spread_classify = NULL;
+}
+
+spread_classify_activity::~spread_classify_activity()
+{
+}
+
+void spread_classify_activity::init(
+		spread_classify_activity_description *Descr,
+		spread_classify *Spread_classify,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spread_classify_activity::init" << endl;
+	}
+
+	spread_classify_activity::Descr = Descr;
+	spread_classify_activity::Spread_classify = Spread_classify;
+
+
+
+	if (f_v) {
+		cout << "spread_classify_activity::init done" << endl;
+	}
+}
+
+
+void spread_classify_activity::perform_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spread_classify_activity::perform_activity" << endl;
+	}
+
+	if (Descr->f_compute_starter) {
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_compute_starter" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity before Spread_classify->classify_partial_spreads" << endl;
+		}
+		Spread_classify->classify_partial_spreads(
+				verbose_level);
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity after Spread_classify->classify_partial_spreads" << endl;
+		}
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_compute_starter done" << endl;
+		}
+
+	}
+
+	else if (Descr->f_prepare_lifting_single_case) {
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_prepare_lifting" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity before Spread_classify->lifting" << endl;
+		}
+
+		int nb_vertices;
+		//graph_theory::colored_graph *CG;
+		solvers::diophant *Dio;
+		long int *col_labels;
+		int f_ruled_out;
+
+		Spread_classify->lifting(
+				Descr->prepare_lifting_single_case_case_number /* orbit_at_level */,
+				Spread_classify->starter_size - 1 /*int level_of_candidates_file*/,
+				FALSE /* f_lexorder_test */,
+				TRUE /* f_eliminate_graphs_if_possible*/,
+				nb_vertices,
+				Dio,
+				col_labels,
+				f_ruled_out,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity after Spread_classify->lifting" << endl;
+		}
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_prepare_lifting done" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_isomorph) {
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_isomorph" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity before Isomorph_arguments->init" << endl;
+		}
+
+
+		layer4_classification::exact_cover_arguments *ECA = NULL;
+
+		ECA = NEW_OBJECT(layer4_classification::exact_cover_arguments);
+
+		Descr->Isomorph_arguments->init(
+				Spread_classify->A,
+				Spread_classify->A /* A2 */,
+				Spread_classify->gen,
+				Spread_classify->target_size,
+				Spread_classify->Control,
+				ECA,
+				NULL /*void (*callback_report)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /*void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /* void *callback_data */,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity after Isomorph_arguments->init" << endl;
+		}
+
+		int size;
+
+		size = Spread_classify->target_size;
+
+		isomorph_worker *Worker;
+
+		Worker = NEW_OBJECT(isomorph_worker);
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity before Worker->init" << endl;
+		}
+
+		Worker->init(Descr->Isomorph_arguments,
+				Spread_classify->A,
+				Spread_classify->A /* A2 */,
+				Spread_classify->gen,
+				size,
+				Spread_classify->starter_size /* level */,
+				verbose_level);
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity after Worker->init" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity before Worker->execute" << endl;
+		}
+
+		Worker->execute(verbose_level);
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity after Worker->execute" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_isomorph done" << endl;
+		}
+
+		FREE_OBJECT(Worker);
+
+	}
+
+
+
+
+	if (f_v) {
+		cout << "spread_classify_activity::perform_activity done" << endl;
+	}
+
+}
+
+
+
+
+}}}
+
+

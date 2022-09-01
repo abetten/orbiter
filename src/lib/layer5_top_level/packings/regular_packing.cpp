@@ -49,7 +49,7 @@ void regular_packing::init(packing_was *PW, int verbose_level)
 	if (f_v) {
 		cout << "regular_packing::init before PW->P->T->Klein->compute_external_lines" << endl;
 	}
-	PW->P->T->Klein->compute_external_lines(External_lines, verbose_level);
+	PW->P->T->SD->Klein->compute_external_lines(External_lines, verbose_level);
 	if (f_v) {
 		cout << "regular_packing::init after PW->P->T->Klein->compute_external_lines" << endl;
 	}
@@ -57,7 +57,7 @@ void regular_packing::init(packing_was *PW, int verbose_level)
 	if (f_v) {
 		cout << "regular_packing::init before PW->P->T->Klein->identify_external_lines_and_spreads" << endl;
 	}
-	PW->P->T->Klein->identify_external_lines_and_spreads(
+	PW->P->T->SD->Klein->identify_external_lines_and_spreads(
 			PW->Spread_tables_reduced,
 			External_lines,
 			spread_to_external_line_idx,

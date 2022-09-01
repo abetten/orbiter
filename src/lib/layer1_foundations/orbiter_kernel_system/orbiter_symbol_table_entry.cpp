@@ -204,6 +204,23 @@ void orbiter_symbol_table_entry::init_BLT_set_classify(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_spread_classify(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_spread_classify" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_spread_classify;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_spread_classify done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::init_formula(std::string &label,
 		void *p, int verbose_level)
 {

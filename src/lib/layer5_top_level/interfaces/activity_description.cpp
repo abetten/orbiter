@@ -80,6 +80,9 @@ activity_description::activity_description()
 	f_BLT_set_classify_activity = FALSE;
 	Blt_set_classify_activity_description = NULL;
 
+	f_spread_classify_activity = FALSE;
+	Spread_classify_activity_description = NULL;
+
 }
 
 activity_description::~activity_description()
@@ -522,8 +525,27 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-spread_classify_activity") == 0) {
+		f_spread_classify_activity = TRUE;
+		Spread_classify_activity_description =
+				NEW_OBJECT(spreads::spread_classify_activity_description);
+		if (f_v) {
+			cout << "reading -spread_classify_activity" << endl;
+		}
+		i += Spread_classify_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
+		i++;
 
+		if (f_v) {
+			cout << "-spread_classify_activity" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 	else {
 		cout << "unrecognized activity after -do : " << argv[i] << endl;
 		exit(1);
@@ -706,6 +728,14 @@ void activity_description::worker(int verbose_level)
 
 		do_BLT_set_classify_activity(verbose_level);
 	}
+	else if (f_spread_classify_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_spread_classify_activity" << endl;
+		}
+
+		do_spread_classify_activity(verbose_level);
+	}
 
 
 	if (f_v) {
@@ -800,6 +830,10 @@ void activity_description::print()
 	else if (f_BLT_set_classify_activity) {
 		cout << "-BLT_set_classify_activity ";
 		Blt_set_classify_activity_description->print();
+	}
+	else if (f_spread_classify_activity) {
+		cout << "-spread_classify_activity ";
+		Spread_classify_activity_description->print();
 	}
 
 }
@@ -1900,6 +1934,59 @@ void activity_description::do_BLT_set_classify_activity(int verbose_level)
 
 }
 
+void activity_description::do_spread_classify_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_spread_classify_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	spreads::spread_classify *SC;
+
+	SC = (spreads::spread_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+
+		spreads::spread_classify_activity Activity;
+
+		Activity.init(
+				Spread_classify_activity_description,
+				SC,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_spread_classify_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_spread_classify_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_spread_classify_activity done" << endl;
+	}
+
+}
 
 
 

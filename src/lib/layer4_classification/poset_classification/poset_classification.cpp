@@ -129,6 +129,11 @@ data_structures_groups::schreier_vector_handler *poset_classification::get_schre
 	return Schreier_vector_handler;
 }
 
+int &poset_classification::get_depth()
+{
+	return depth;
+}
+
 int poset_classification::has_base_case()
 {
 	return f_base_case;

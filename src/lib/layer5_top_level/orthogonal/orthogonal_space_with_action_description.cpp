@@ -33,6 +33,9 @@ orthogonal_space_with_action_description::orthogonal_space_with_action_descripti
 
 }
 
+
+
+
 orthogonal_space_with_action_description::~orthogonal_space_with_action_description()
 {
 }
