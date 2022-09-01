@@ -33,6 +33,7 @@ MODULES = \
 	projective_space.o \
 	projective_space2.o \
 	projective_space3.o \
+	spread_domain.o \
 	spread_tables.o \
 	w3q.o 
 

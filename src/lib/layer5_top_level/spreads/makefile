@@ -7,6 +7,9 @@ LFLAGS = -lm
 
 MODULES = \
 	recoordinatize.o \
+	spread_classify_activity_description.o \
+	spread_classify_activity.o \
+	spread_classify_description.o \
 	spread_classify.o \
 	spread_classify2.o \
 	spread_create_description.o \

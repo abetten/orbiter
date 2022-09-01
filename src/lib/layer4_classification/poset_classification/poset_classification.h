@@ -472,6 +472,7 @@ public:
 	actions::action *get_A2();
 	algebra::vector_space *get_VS();
 	data_structures_groups::schreier_vector_handler *get_schreier_vector_handler();
+	int &get_depth();
 	int has_base_case();
 	int has_invariant_subset_for_root_node();
 	int size_of_invariant_subset_for_root_node();

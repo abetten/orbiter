@@ -246,6 +246,9 @@ namespace spreads {
 
 	// spreads:
 	class recoordinatize;
+	class spread_classify_activity_description;
+	class spread_classify_activity;
+	class spread_classify_description;
 	class spread_classify;
 	class spread_create_description;
 	class spread_create;
@@ -336,6 +339,7 @@ namespace applications_in_algebraic_geometry {
 #define Get_object_of_type_finite_field(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_finite_field(label)
 #define Get_object_of_type_any_group(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(label)
 #define Get_object_of_type_spread(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_spread(label)
+#define Get_object_of_projective_space(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(label)
 
 
 

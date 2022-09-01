@@ -1650,6 +1650,29 @@ void projective_space_with_action::do_spread_classify(int k,
 	if (f_v) {
 		cout << "projective_space_with_action::do_spread_classify" << endl;
 	}
+
+	int n;
+
+	n = A->matrix_group_dimension();
+
+	geometry::spread_domain *SD;
+
+	SD = NEW_OBJECT(geometry::spread_domain);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify before SD->init" << endl;
+	}
+
+	SD->init(
+			F,
+			n, k,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify after SD->init" << endl;
+	}
+
+
 	spreads::spread_classify *SC;
 
 	SC = NEW_OBJECT(spreads::spread_classify);
@@ -1659,8 +1682,8 @@ void projective_space_with_action::do_spread_classify(int k,
 	}
 
 	SC->init(
+			SD,
 			this,
-			k,
 			TRUE /* f_recoordinatize */,
 			verbose_level - 1);
 	if (f_v) {
@@ -1668,26 +1691,18 @@ void projective_space_with_action::do_spread_classify(int k,
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SC->init2" << endl;
-	}
-	SC->init2(Control, verbose_level);
-	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SC->init2" << endl;
+		cout << "projective_space_with_action::do_spread_classify before SC->classify_partial_spreads" << endl;
 	}
 
+	SC->classify_partial_spreads(verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SC->compute" << endl;
-	}
-
-	SC->compute(verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SC->compute" << endl;
+		cout << "projective_space_with_action::do_spread_classify after SC->classify_partial_spreads" << endl;
 	}
 
 
 	FREE_OBJECT(SC);
+	FREE_OBJECT(SD);
 
 	if (f_v) {
 		cout << "projective_space_with_action::do_spread_classify done" << endl;

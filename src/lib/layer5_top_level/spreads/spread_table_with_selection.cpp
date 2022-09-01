@@ -111,7 +111,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	F = T->PA->F;
 	q = F->q;
 
-	spread_size = T->spread_size;
+	spread_size = T->SD->spread_size;
 	size_of_packing = q * q + q + 1;
 	nb_lines = T->A2->degree;
 
@@ -623,7 +623,7 @@ void spread_table_with_selection::predict_spread_table_length(
 	}
 
 
-	nb_iso_types_of_spreads = K.Spread_nb_reps(q, T->k /* dimension_of_spread_elements */);
+	nb_iso_types_of_spreads = K.Spread_nb_reps(q, T->SD->k /* dimension_of_spread_elements */);
 	if (f_v) {
 		cout << "spread_table_with_selection::predict_spread_table_length "
 				"nb_iso_types_of_spreads = " << nb_iso_types_of_spreads << endl;
@@ -641,7 +641,7 @@ void spread_table_with_selection::predict_spread_table_length(
 		string stab_order;
 
 		A->stabilizer_of_spread_representative(q,
-				T->k /* dimension_of_spread_elements */, no, gens, stab_order,
+				T->SD->k /* dimension_of_spread_elements */, no, gens, stab_order,
 				0 /*verbose_level*/);
 
 
@@ -659,7 +659,7 @@ void spread_table_with_selection::predict_spread_table_length(
 			long int *rep;
 			int sz;
 
-			rep = K.Spread_representative(q, T->k /* dimension_of_spread_elements*/, no, sz);
+			rep = K.Spread_representative(q, T->SD->k /* dimension_of_spread_elements*/, no, sz);
 			Lint_vec_copy(rep,
 					spread_reps + nb_spread_reps * spread_size,
 					spread_size);

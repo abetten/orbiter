@@ -140,6 +140,7 @@ MODULES= \
 		layer1_foundations/geometry/projective_space.o \
 		layer1_foundations/geometry/projective_space2.o \
 		layer1_foundations/geometry/projective_space3.o \
+		layer1_foundations/geometry/spread_domain.o \
 		layer1_foundations/geometry/spread_tables.o \
 		layer1_foundations/geometry/w3q.o \
 		layer1_foundations/geometry_builder/cperm.o \
@@ -542,6 +543,9 @@ MODULES= \
 		layer5_top_level/semifields/semifield_trace.o \
 		layer5_top_level/semifields/trace_record.o \
 		layer5_top_level/spreads/recoordinatize.o \
+		layer5_top_level/spreads/spread_classify_activity_description.o \
+		layer5_top_level/spreads/spread_classify_activity.o \
+		layer5_top_level/spreads/spread_classify_description.o \
 		layer5_top_level/spreads/spread_classify.o \
 		layer5_top_level/spreads/spread_classify2.o \
 		layer5_top_level/spreads/spread_create_description.o \

@@ -423,10 +423,17 @@ class orthogonal_space_with_action_description {
 public:
 
 	int epsilon;
+
 	int n;
 
 	std::string input_q;
+
 	field_theory::finite_field *F;
+
+	//int n;
+
+	//std::string input_q;
+	//field_theory::finite_field *F;
 
 	int f_label_txt;
 	std::string label_txt;

@@ -150,6 +150,24 @@ void packing_classify::spread_table_init(
 	}
 
 
+	geometry::spread_domain *SD;
+
+	SD = NEW_OBJECT(geometry::spread_domain);
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init before SD->init" << endl;
+	}
+
+	SD->init(
+			F,
+			n, dimension_of_spread_elements,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init after SD->init" << endl;
+	}
+
+
 	T = NEW_OBJECT(spreads::spread_classify);
 
 
@@ -158,8 +176,7 @@ void packing_classify::spread_table_init(
 	}
 
 
-	T->init(PA,
-			dimension_of_spread_elements,
+	T->init(SD, PA,
 			TRUE /* f_recoordinatize */,
 			verbose_level - 1);
 
@@ -258,9 +275,9 @@ void packing_classify::init(
 
 
 	packing_classify::T = Spread_table_with_selection->T;
-	F = Spread_table_with_selection->T->Mtx->GFq;
-	q = Spread_table_with_selection->T->q;
-	spread_size = Spread_table_with_selection->T->spread_size;
+	F = Spread_table_with_selection->T->SD->F;
+	q = Spread_table_with_selection->T->SD->q;
+	spread_size = Spread_table_with_selection->T->SD->spread_size;
 	size_of_packing = q * q + q + 1;
 	nb_lines = Spread_table_with_selection->T->A2->degree;
 

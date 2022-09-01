@@ -88,6 +88,9 @@ class activity_description {
 	int f_BLT_set_classify_activity;
 	orthogonal_geometry_applications::blt_set_classify_activity_description *Blt_set_classify_activity_description;
 
+	int f_spread_classify_activity;
+	spreads::spread_classify_activity_description *Spread_classify_activity_description;
+
 public:
 	activity_description();
 	~activity_description();
@@ -116,6 +119,7 @@ public:
 	void do_large_set_was_activity(int verbose_level);
 	void do_formula_activity(int verbose_level);
 	void do_BLT_set_classify_activity(int verbose_level);
+	void do_spread_classify_activity(int verbose_level);
 
 };
 
@@ -895,6 +899,9 @@ public:
 	std::string BLT_set_classifier_label_orthogonal_geometry;
 	orthogonal_geometry_applications::blt_set_classify_description *Blt_set_classify_description;
 
+	int f_spread_classifier;
+	spreads::spread_classify_description *Spread_classify_description;
+
 	int f_linear_group;
 	groups::linear_group_description *Linear_group_description;
 
@@ -1000,6 +1007,7 @@ public:
 	void print_definition_of_projective_space(int verbose_level);
 	void definition_of_orthogonal_space(int verbose_level);
 	void definition_of_BLT_set_classifier(int verbose_level);
+	void definition_of_spread_classifier(int verbose_level);
 	void definition_of_linear_group(int verbose_level);
 	void definition_of_permutation_group(int verbose_level);
 	void definition_of_modified_group(int verbose_level);
@@ -1027,6 +1035,7 @@ public:
 	void definition_of_vector(int verbose_level);
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);
+	void load_finite_field_PG(int verbose_level);
 	void load_finite_field(std::string &input_q,
 			field_theory::finite_field *&F, int verbose_level);
 	void definition_of_vector_ge(int verbose_level);

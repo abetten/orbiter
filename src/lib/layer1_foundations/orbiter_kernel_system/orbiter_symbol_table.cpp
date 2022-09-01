@@ -130,6 +130,12 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_orthogonal_space) {
 		cout << "t_orthogonal_space" << endl;
 	}
+	else if (t == t_BLT_set_classify) {
+		cout << "t_BLT_set_classify" << endl;
+	}
+	else if (t == t_spread_classify) {
+		cout << "t_spread_classify" << endl;
+	}
 	else if (t == t_formula) {
 		cout << "t_formula" << endl;
 	}

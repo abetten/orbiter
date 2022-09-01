@@ -881,6 +881,8 @@ public:
 			void *p, int verbose_level);
 	void init_BLT_set_classify(std::string &label,
 			void *p, int verbose_level);
+	void init_spread_classify(std::string &label,
+			void *p, int verbose_level);
 	void init_formula(std::string &label,
 			void *p, int verbose_level);
 	void init_cubic_surface(std::string &label,

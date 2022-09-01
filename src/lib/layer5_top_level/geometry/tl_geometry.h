@@ -524,6 +524,7 @@ public:
 	int f_identify;
 	int k;
 	int order;
+	geometry::spread_domain *SD;
 	spreads::spread_classify *T;
 
 
