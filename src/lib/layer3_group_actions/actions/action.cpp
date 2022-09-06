@@ -1424,15 +1424,17 @@ int action::check_if_in_set_stabilizer(int *Elt,
 int action::check_if_transporter_for_set(int *Elt,
 		int size, long int *set1, long int *set2, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 4);
 	int i, a, b, idx;
 	long int *ordered_set2;
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 4);
 	data_structures::sorting Sorting;
 	
-	if (f_vv) {
+	if (f_v) {
 		cout << "action::check_if_transporter_for_set "
 				"size=" << size << endl;
+	}
+	if (f_vv) {
 		Lint_vec_print(cout, set1, size);
 		cout << endl;
 		Lint_vec_print(cout, set2, size);

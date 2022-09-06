@@ -114,23 +114,23 @@ void invariants_packing::init(isomorph *Iso,
 	invariants_packing::Iso = Iso;
 
 
-	Inv = NEW_OBJECTS(packing_invariants, Iso->Reps->count);
+	Inv = NEW_OBJECTS(packing_invariants, Iso->Folding->Reps->count);
 
 
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 		
 		if (f_v) {
 			cout << "invariants_packing::init orbit " << orbit
-					<< " / " << Iso->Reps->count << endl;
+					<< " / " << Iso->Folding->Reps->count << endl;
 		}
 
 		int rep, first, /*c,*/ id;
 		
-		rep = Iso->Reps->rep[orbit];
-		first = Iso->orbit_fst[rep];
+		rep = Iso->Folding->Reps->rep[orbit];
+		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso->starter_number[first];
-		id = Iso->orbit_perm[first];		
-		Iso->load_solution(id, P->the_packing);
+		id = Iso->Lifting->orbit_perm[first];
+		Iso->Lifting->load_solution(id, P->the_packing);
 		
 		Inv[orbit].init(P, Iso->prefix_invariants,
 				Iso->prefix_tex, orbit, P->the_packing,
@@ -144,27 +144,27 @@ void invariants_packing::init(isomorph *Iso,
 
 	
 
-	Iso->compute_Ago_Ago_induced(Ago, Ago_induced, verbose_level - 1);
+	Iso->Folding->compute_Ago_Ago_induced(Ago, Ago_induced, verbose_level - 1);
 
-	Ago_int = NEW_int(Iso->Reps->count);
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	Ago_int = NEW_int(Iso->Folding->Reps->count);
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 		Ago_int[orbit] = Ago[orbit].as_int();
 	}
 
 
-	Spread_type_of_packing = NEW_int(Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
-	Int_vec_zero(Spread_type_of_packing, Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
+	Spread_type_of_packing = NEW_int(Iso->Folding->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
+	Int_vec_zero(Spread_type_of_packing, Iso->Folding->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
 	
 	// compute Spread_type_of_packing:
 
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 		int rep, first, /*c,*/ id, a;
 		
-		rep = Iso->Reps->rep[orbit];
-		first = Iso->orbit_fst[rep];
+		rep = Iso->Folding->Reps->rep[orbit];
+		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso->starter_number[first];
-		id = Iso->orbit_perm[first];		
-		Iso->load_solution(id, P->the_packing);
+		id = Iso->Lifting->orbit_perm[first];
+		Iso->Lifting->load_solution(id, P->the_packing);
 		
 		
 		for (i = 0; i < Iso->size; i++) {
@@ -279,19 +279,19 @@ void invariants_packing::compute_dual_packings(
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings" << endl;
 	}
-	Dual_idx = NEW_int(Iso->Reps->count);
-	f_self_dual = NEW_int(Iso->Reps->count);
+	Dual_idx = NEW_int(Iso->Folding->Reps->count);
+	f_self_dual = NEW_int(Iso->Folding->Reps->count);
 	
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 
 		int rep, first, /*c,*/ id;
 		int f_implicit_fusion = TRUE;
 		
-		rep = Iso->Reps->rep[orbit];
-		first = Iso->orbit_fst[rep];
+		rep = Iso->Folding->Reps->rep[orbit];
+		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso->starter_number[first];
-		id = Iso->orbit_perm[first];		
-		Iso->load_solution(id, P->the_packing);
+		id = Iso->Lifting->orbit_perm[first];
+		Iso->Lifting->load_solution(id, P->the_packing);
 
 	
 		for (i = 0; i < Iso->size; i++) {
@@ -312,7 +312,7 @@ void invariants_packing::compute_dual_packings(
 		}
 	
 
-		Dual_idx[orbit] = Iso->identify_database_is_open(
+		Dual_idx[orbit] = Iso->Folding->identify_database_is_open(
 			P->dual_packing,
 			f_implicit_fusion, verbose_level - 3);
 	}
@@ -322,7 +322,7 @@ void invariants_packing::compute_dual_packings(
 
 	fname.assign("Dual_idx.csv");
 	Fio.int_vecs_write_csv(Dual_idx, f_self_dual,
-		Iso->Reps->count, fname, "dual_idx", "f_self_dual");
+		Iso->Folding->Reps->count, fname, "dual_idx", "f_self_dual");
 
 	fname.assign("Dual_spread_idx.csv");
 	Fio.lint_vec_write_csv(P->Spread_table_with_selection->Spread_tables->dual_spread_idx,
@@ -396,7 +396,7 @@ void invariants_packing::make_table(
 		nb = 0;
 		set = NEW_int(Classify->Frequency[i]);
 		ago = NEW_int(Classify->Frequency[i]);
-		for (j = 0; j < Iso->Reps->count; j++) {
+		for (j = 0; j < Iso->Folding->Reps->count; j++) {
 			if (Classify->rep_idx[j] == i) {
 				if (f_only_self_dual) {
 					dual = Dual_idx[j];

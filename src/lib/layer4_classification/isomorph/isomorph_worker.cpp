@@ -103,11 +103,11 @@ void isomorph_worker::execute(int verbose_level)
 			verbose_level);
 #else
 	if (f_v) {
-		cout << "isomorph_worker::execute before Iso->compute_nb_starter" << endl;
+		cout << "isomorph_worker::execute before Iso->Sub->compute_nb_starter" << endl;
 	}
-	Iso->compute_nb_starter(Iso->level, verbose_level);
+	Iso->Sub->compute_nb_starter(Iso->level, verbose_level);
 	if (f_v) {
-		cout << "isomorph_worker::execute after Iso->compute_nb_starter" << endl;
+		cout << "isomorph_worker::execute after Iso->Sub->compute_nb_starter" << endl;
 	}
 #endif
 
@@ -122,7 +122,7 @@ void isomorph_worker::execute(int verbose_level)
 		if (f_v) {
 			cout << "isomorph_worker::execute before Iso->iso_test_init" << endl;
 		}
-		Iso->iso_test_init(verbose_level);
+		Iso->Folding->iso_test_init(verbose_level);
 		if (f_v) {
 			cout << "isomorph_worker::execute after Iso->iso_test_init" << endl;
 		}
@@ -134,7 +134,7 @@ void isomorph_worker::execute(int verbose_level)
 				cout << "isomorph_worker::execute creating level database for "
 						"level " << i << " / " << Iso->level << endl;
 			}
-			Iso->create_level_database(i, verbose_level);
+			Iso->Sub->create_level_database(i, verbose_level);
 			if (f_v) {
 				cout << "isomorph_worker::execute creating level database for "
 						"level " << i << " / " << Iso->level << " done" << endl;
@@ -190,8 +190,6 @@ void isomorph_worker::execute(int verbose_level)
 		}
 		else {
 
-			List_of_cases = NEW_int(1);
-			List_of_cases[0] = 0;
 
 			string fname;
 			fname.assign(Isomorph_arguments->solution_prefix);
@@ -199,8 +197,27 @@ void isomorph_worker::execute(int verbose_level)
 			sprintf(str, "_%d_sol.txt", Iso->level);
 			fname.append(str);
 
-			fname_array = new string[1];
-			fname_array[0] = fname;
+
+			int i;
+
+
+			nb_files = Iso->Sub->gen->nb_orbits_at_level(Iso->level); // Iso->nb_starter;
+			fname_array = new string[nb_files];
+			List_of_cases = NEW_int(nb_files);
+
+			for (i = 0; i < nb_files; i++) {
+
+				List_of_cases[i] = i;
+
+				fname.assign(Isomorph_arguments->solution_prefix);
+				fname.append(Isomorph_arguments->base_fname);
+				sprintf(str, "_%d_sol.txt", i);
+				fname.append(str);
+
+				fname_array[i] = fname;
+
+			}
+
 		}
 		if (f_v) {
 			int i;
@@ -228,13 +245,13 @@ void isomorph_worker::execute(int verbose_level)
 
 		if (f_v) {
 			cout << "isomorph_global::read_solution_files "
-					"before Iso.count_solutions" << endl;
+					"before Iso->Lifting->count_solutions" << endl;
 		}
 		int f_get_statistics = FALSE;
 		int f_has_final_test_function = FALSE;
 		int *Nb_sol_per_file;
 
-		Iso->count_solutions(nb_files, fname_array, List_of_cases, Nb_sol_per_file,
+		Iso->Lifting->count_solutions(nb_files, fname_array, List_of_cases, Nb_sol_per_file,
 				f_get_statistics,
 				f_has_final_test_function,
 				NULL /* final_test_function */, NULL /* final_test_data */,
@@ -243,12 +260,25 @@ void isomorph_worker::execute(int verbose_level)
 				// now we know Iso->N, the number of solutions
 				// from the clique finder
 
+		if (f_v) {
+			cout << "isomorph_global::read_solution_files "
+					"after Iso.count_solutions Iso->Lifting->N = " << Iso->Lifting->N << endl;
+		}
 		//registry_dump_sorted_by_size();
 
-		Iso->read_solutions_from_clique_finder(
+		if (f_v) {
+			cout << "isomorph_global::read_solution_files "
+					"before Iso->Lifting->read_solutions_from_clique_finder" << endl;
+		}
+
+		Iso->Lifting->read_solutions_from_clique_finder(
 				nb_files, fname_array, List_of_cases, Nb_sol_per_file,
 				verbose_level);
 
+		if (f_v) {
+			cout << "isomorph_global::read_solution_files "
+					"after Iso->read_solutions_from_clique_finder" << endl;
+		}
 
 		if (f_v) {
 			cout << "isomorph_worker::execute after isomorph_read_solution_files" << endl;
@@ -276,27 +306,27 @@ void isomorph_worker::execute(int verbose_level)
 #endif
 
 		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->init_solution" << endl;
+			cout << "isomorph_worker::execute before Iso->Lifting->init_solution" << endl;
 		}
-		Iso->init_solution(verbose_level);
+		Iso->Lifting->init_solution(verbose_level);
 		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->init_solution" << endl;
-		}
-
-		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->orbits_of_stabilizer" << endl;
-		}
-		Iso->orbits_of_stabilizer(verbose_level);
-		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->orbits_of_stabilizer" << endl;
+			cout << "isomorph_worker::execute after Iso->Lifting->init_solution" << endl;
 		}
 
 		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->write_orbit_data" << endl;
+			cout << "isomorph_worker::execute before Iso->Lifting->orbits_of_stabilizer" << endl;
 		}
-		Iso->write_orbit_data(verbose_level);
+		Iso->Lifting->orbits_of_stabilizer(verbose_level);
 		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->write_orbit_data" << endl;
+			cout << "isomorph_worker::execute after Iso->Lifting->orbits_of_stabilizer" << endl;
+		}
+
+		if (f_v) {
+			cout << "isomorph_worker::execute before Iso->Lifting->write_orbit_data" << endl;
+		}
+		Iso->Lifting->write_orbit_data(verbose_level);
+		if (f_v) {
+			cout << "isomorph_worker::execute after Iso->Lifting->write_orbit_data" << endl;
 		}
 
 		if (f_v) {
@@ -326,36 +356,36 @@ void isomorph_worker::execute(int verbose_level)
 		//Iso.compute_nb_starter(search_depth, verbose_level);
 
 		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->init_solution" << endl;
+			cout << "isomorph_worker::execute before Iso->Lifting->init_solution" << endl;
 		}
-		Iso->init_solution(verbose_level - 1);
+		Iso->Lifting->init_solution(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->init_solution" << endl;
+			cout << "isomorph_worker::execute after Iso->Lifting->init_solution" << endl;
 		}
 
 		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->load_table_of_solutions" << endl;
+			cout << "isomorph_worker::execute before Iso->Lifting->load_table_of_solutions" << endl;
 		}
-		Iso->load_table_of_solutions(verbose_level - 1);
+		Iso->Lifting->load_table_of_solutions(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->load_table_of_solutions" << endl;
+			cout << "isomorph_worker::execute after Iso->Lifting->load_table_of_solutions" << endl;
 		}
 
 		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->read_orbit_data" << endl;
+			cout << "isomorph_worker::execute before Iso->Lifting->read_orbit_data" << endl;
 		}
-		Iso->read_orbit_data(verbose_level - 1);
+		Iso->Lifting->read_orbit_data(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->read_orbit_data" << endl;
+			cout << "isomorph_worker::execute after Iso->Lifting->read_orbit_data" << endl;
 		}
 
-		Iso->depth_completed = Iso->level /*- 2*/;
+		Iso->Sub->depth_completed = Iso->level /*- 2*/;
 
 		if (f_v) {
 			cout << "isomorph_global::isomorph_testing "
 					"before Iso->gen->recreate_schreier_vectors_up_to_level" << endl;
 		}
-		Iso->gen->recreate_schreier_vectors_up_to_level(Iso->level - 1,
+		Iso->Sub->gen->recreate_schreier_vectors_up_to_level(Iso->level - 1,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "isomorph_global::isomorph_testing "
@@ -367,7 +397,7 @@ void isomorph_worker::execute(int verbose_level)
 		if (f_v) {
 			for (i = 0; i <= Iso->level + 1; i++) {
 				cout << "gen->first_node_at_level[" << i << "]="
-						<< Iso->gen->first_node_at_level(i) << endl;
+						<< Iso->Sub->gen->first_node_at_level(i) << endl;
 			}
 			//cout << "Iso.depth_completed=" << Iso.depth_completed << endl;
 		}
@@ -378,11 +408,11 @@ void isomorph_worker::execute(int verbose_level)
 	#endif
 
 		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->iso_test_init" << endl;
+			cout << "isomorph_worker::execute before Iso->Folding->iso_test_init" << endl;
 		}
-		Iso->iso_test_init(verbose_level - 1);
+		Iso->Folding->iso_test_init(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->iso_test_init" << endl;
+			cout << "isomorph_worker::execute after Iso->Folding->iso_test_init" << endl;
 		}
 
 		int f_implicit_fusion = FALSE;
@@ -390,41 +420,41 @@ void isomorph_worker::execute(int verbose_level)
 		//Iso.gen->f_allowed_to_show_group_elements = FALSE;
 
 		if (f_v) {
-			cout << "isomorph_worker::execute before Iso->read_starter_nb_orbits" << endl;
+			cout << "isomorph_worker::execute before Iso->Lifting->read_starter_nb_orbits" << endl;
 		}
-		Iso->read_starter_nb_orbits(verbose_level); // added Oct 30, 2014
+		Iso->Lifting->read_starter_nb_orbits(verbose_level); // added Oct 30, 2014
 		if (f_v) {
-			cout << "isomorph_worker::execute after Iso->read_starter_nb_orbits" << endl;
+			cout << "isomorph_worker::execute after Iso->Lifting->read_starter_nb_orbits" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "isomorph_global::isomorph_testing before Iso->isomorph_testing" << endl;
+			cout << "isomorph_global::isomorph_testing before Iso->Folding->isomorph_testing" << endl;
 		}
 
 		std::string play_back_file_name;
 
-		Iso->isomorph_testing(0 /*t0*/,
+		Iso->Folding->isomorph_testing(0 /*t0*/,
 				FALSE /*f_play_back*/, play_back_file_name,
 				f_implicit_fusion, 1 /* print_mod*/,
 				verbose_level);
 		if (f_v) {
-			cout << "isomorph_global::isomorph_testing after Iso->isomorph_testing" << endl;
+			cout << "isomorph_global::isomorph_testing after Iso->Folding->isomorph_testing" << endl;
 		}
 
 		if (f_v) {
-			cout << "isomorph_global::isomorph_testing before Iso->Reps->save" << endl;
+			cout << "isomorph_global::isomorph_testing before Iso->Folding->Reps->save" << endl;
 		}
-		Iso->Reps->save(verbose_level - 1);
+		Iso->Folding->Reps->save(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_global::isomorph_testing after Iso->Reps->save" << endl;
+			cout << "isomorph_global::isomorph_testing after Iso->Folding->Reps->save" << endl;
 		}
 
 
 		long int data1[1000];
 		int id, orbit;
 
-		Iso->setup_and_open_solution_database(verbose_level - 1);
+		Iso->Lifting->setup_and_open_solution_database(verbose_level - 1);
 
 		string fname;
 
@@ -434,12 +464,12 @@ void isomorph_worker::execute(int verbose_level)
 		{
 			ofstream fp(fname);
 			fp << "# " << Iso->size << endl;
-			for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+			for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 
 
-				id = Iso->orbit_perm[Iso->orbit_fst[Iso->Reps->rep[orbit]]];
+				id = Iso->Lifting->orbit_perm[Iso->Lifting->orbit_fst[Iso->Folding->Reps->rep[orbit]]];
 
-				Iso->load_solution(id, data1);
+				Iso->Lifting->load_solution(id, data1);
 				if (FALSE) {
 					cout << "read representative of orbit " << orbit
 							<< " (id=" << id << ")" << endl;
@@ -459,20 +489,20 @@ void isomorph_worker::execute(int verbose_level)
 				}
 				ring_theory::longinteger_object go;
 
-				Iso->Reps->stab[orbit]->group_order(go);
+				Iso->Folding->Reps->stab[orbit]->group_order(go);
 				fp << " ";
 				go.print_not_scientific(fp);
 				fp << endl;
 
 				//write_set_to_file(fname, data1, Iso.size, verbose_level - 1);
 			}
-			fp << "-1 " << Iso->Reps->count << endl;
+			fp << "-1 " << Iso->Folding->Reps->count << endl;
 
 		}
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 
-		Iso->close_solution_database(verbose_level - 1);
+		Iso->Lifting->close_solution_database(verbose_level - 1);
 
 	#if 0
 		Iso.print_set_function = callback_print_isomorphism_type_extend_regulus;

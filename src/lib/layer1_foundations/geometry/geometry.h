@@ -943,6 +943,7 @@ public:
 			long int *&Spread, int &spread_sz,
 			int verbose_level);
 	void make_partition(long int *Spread, int spread_sz, long int *&Part, int &s, int verbose_level);
+	void make_spread_element(int *Spread_element, int *A, int verbose_level);
 
 };
 

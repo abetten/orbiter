@@ -23,11 +23,14 @@ namespace spreads {
 
 class recoordinatize {
 public:
+	geometry::spread_domain *SD;
+
 	int n;
 	int k;
 	int q;
 	geometry::grassmann *Grass;
 	field_theory::finite_field *F;
+
 	actions::action *A; // P Gamma L(n,q)
 	actions::action *A2; // action of A on grassmannian of k-subspaces of V(n,q)
 	int f_projective;
@@ -66,8 +69,10 @@ public:
 	~recoordinatize();
 	void null();
 	void freeself();
-	void init(int n, int k, field_theory::finite_field *F,
-			geometry::grassmann *Grass,
+	void init(
+			geometry::spread_domain *SD,
+			//int n, int k, field_theory::finite_field *F,
+			//geometry::grassmann *Grass,
 			actions::action *A, actions::action *A2,
 		int f_projective, int f_semilinear,
 		int (*check_function_incremental)(int len, long int *S,
@@ -82,6 +87,7 @@ public:
 	void compute_live_points(int verbose_level);
 	void compute_live_points_low_level(long int *&live_points,
 		int &nb_live_points, int verbose_level);
+	int apply_test(long int *set, int sz, int verbose_level);
 	void make_first_three(long int &j1, long int &j2, long int &j3, int verbose_level);
 };
 
@@ -104,6 +110,8 @@ public:
 
 	int f_prepare_lifting_single_case;
 	int prepare_lifting_single_case_case_number;
+
+	int f_prepare_lifting_all_cases;
 
 	int f_split;
 	int split_r;
@@ -178,6 +186,8 @@ public:
 	int f_output_prefix;
 	std::string output_prefix;
 
+	int f_recoordinatize;
+
 	spread_classify_description();
 	~spread_classify_description();
 	int read_arguments(int argc, std::string *argv,
@@ -220,7 +230,6 @@ public:
 		// action of A on grassmannian of k-subspaces of V(n,q)
 	induced_actions::action_on_grassmannian *AG;
 
-	int f_recoordinatize;
 	recoordinatize *R;
 	poset_classification::classification_base_case *Base_case;
 
@@ -251,7 +260,6 @@ public:
 	void init(
 			geometry::spread_domain *SD,
 			projective_geometry::projective_space_with_action *PA,
-			int f_recoordinatize,
 			int verbose_level);
 	void init2(int verbose_level);
 	void classify_partial_spreads(int verbose_level);
@@ -403,17 +411,22 @@ class spread_lifting {
 public:
 
 	spread_classify *S;
-	//exact_cover *E;
+	data_structures_groups::orbit_rep *R;
+	std::string output_prefix;
 
-	long int *starter;
-	int starter_size;
-	int starter_case_number;
-	int starter_number_of_cases;
+	//long int *starter; // = R->rep
+	//int starter_size; // = R->level
+	//int starter_case_number; // = R->orbit_at_level
+	//int starter_number_of_cases; // = R->nb_cases
+
+	//long int *candidates; // = R->candidates
+	//int nb_candidates;  // = R->nb_candidates
+
+	//groups::strong_generators *Strong_gens; // = R->Strong_gens
+
 	int f_lex;
 
-	long int *candidates;
-	int nb_candidates;
-	groups::strong_generators *Strong_gens;
+
 
 	long int *points_covered_by_starter;
 		// [nb_points_covered_by_starter]
@@ -426,29 +439,46 @@ public:
 		// or -1 if the point is in points_covered_by_starter
 
 
+	int nb_colors;
+	int *colors; // [nb_colors]
+
+
 	int nb_needed;
 
-	long int *col_labels; // [nb_cols]
-	int nb_cols;
 
+	long int *reduced_candidates;
+	int nb_reduced_candidates;
+
+	int nb_cols;
+	int *col_color; // [nb_cols]
+	long int *col_labels; // [nb_cols]
 
 	spread_lifting();
 	~spread_lifting();
-	void init(spread_classify *S, //exact_cover *E,
-		long int *starter, int starter_size,
-		int starter_case_number, int starter_number_of_cases,
-		long int *candidates, int nb_candidates,
-		groups::strong_generators *Strong_gens,
+	void init(spread_classify *S,
+			data_structures_groups::orbit_rep *R,
+			//exact_cover *E,
+		//long int *starter, int starter_size,
+		//int starter_case_number, int starter_number_of_cases,
+		//long int *candidates, int nb_candidates,
+		std::string &output_prefix,
+		//groups::strong_generators *Strong_gens,
 		int f_lex,
 		int verbose_level);
 	void compute_points_covered_by_starter(
 		int verbose_level);
 	void prepare_free_points(
 		int verbose_level);
+	void print_free_points();
+	void compute_colors(int &f_ruled_out, int verbose_level);
+	void reduce_candidates(int verbose_level);
 	solvers::diophant *create_system(int verbose_level);
-	void find_coloring(solvers::diophant *Dio,
-		int *&col_color, int &nb_colors,
-		int verbose_level);
+	int is_e1_vector(int *v);
+	int is_zero_vector(int *v);
+	void create_graph(
+			data_structures::bitvector *Adj,
+			int verbose_level);
+	void create_dummy_graph(int verbose_level);
 
 };
 

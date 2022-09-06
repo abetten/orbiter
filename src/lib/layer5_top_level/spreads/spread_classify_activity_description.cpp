@@ -24,6 +24,8 @@ spread_classify_activity_description::spread_classify_activity_description()
 	f_prepare_lifting_single_case = FALSE;
 	prepare_lifting_single_case_case_number = 0;
 
+	f_prepare_lifting_all_cases = FALSE;
+
 	f_split = FALSE;
 	split_r = 0;
 	split_m = 1;
@@ -69,6 +71,13 @@ int spread_classify_activity_description::read_arguments(int argc, std::string *
 				cout << "-prepare_lifting_single_case " << prepare_lifting_single_case_case_number << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-prepare_lifting_all_cases") == 0) {
+			f_prepare_lifting_all_cases = TRUE;
+			if (f_v) {
+				cout << "-prepare_lifting_all_cases " << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
 			split_r = ST.strtoi(argv[++i]);
@@ -108,6 +117,9 @@ void spread_classify_activity_description::print()
 	}
 	if (f_prepare_lifting_single_case) {
 		cout << "-prepare_lifting_single_case " << prepare_lifting_single_case_case_number << endl;
+	}
+	if (f_prepare_lifting_all_cases) {
+		cout << "-prepare_lifting_all_cases " << endl;
 	}
 	if (f_split) {
 		cout << "-split " << split_r << " " << split_m << endl;

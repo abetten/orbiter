@@ -35,11 +35,14 @@ namespace invariant_relations {
 }
 
 // isomorph
+class flag_orbit_folding;
 class isomorph_arguments;
 class isomorph;
 class isomorph_worker;
 struct isomorph_worker_data;
 class representatives;
+class substructure_classification;
+class substructure_lifting_data;
 
 
 // orbits

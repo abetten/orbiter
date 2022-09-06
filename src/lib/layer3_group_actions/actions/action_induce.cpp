@@ -1594,6 +1594,9 @@ void action::induced_action_on_sets(
 		//cout << endl;
 		print_info();
 	}
+	if (f_v) {
+		cout << "action::induced_action_on_sets done" << endl;
+	}
 }
 
 action *action::create_induced_action_on_subgroups(groups::sims *S,
@@ -2720,32 +2723,37 @@ void action::induce(action *old_action, groups::sims *old_G,
 // after this procedure, action will have
 // a sims for the group and the kernel
 // it will also have strong generators
+
+// the old_action may not have a stabilizer chain,
+// but it's subaction does.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	if (f_v) {
+		cout << "action::induce verbose_level=" << verbose_level << endl;
+	}
+
 	action *subaction;
 	groups::sims *G, *K;
 		// will become part of the action object
 		// 'this' by the end of this procedure
-	ring_theory::longinteger_object go, go1, go2, go3;
+	ring_theory::longinteger_object go, /*go1,*/ go2, go3;
 	ring_theory::longinteger_object G_order, K_order;
 	ring_theory::longinteger_domain D;
 	int b, i, old_base_len;
 	action *fallback_action;
 	
 	if (f_v) {
-		cout << "action::induce verbose_level=" << verbose_level << endl;
-	}
-	if (f_v) {
 		cout << "inducing from action:" << endl;
 		old_action->print_info();
+
 		cout << "the old group is in action:" << endl;
 		old_G->A->print_info();
 	}
 	
 	if (old_action->subaction) {
 		if (f_vv) {
-			cout << "action::induce has subaction" << endl;
+			cout << "action::induce the old action has a subaction" << endl;
 		}
 		subaction = old_action->subaction;
 		if (f_vv) {
@@ -2760,18 +2768,18 @@ void action::induce(action *old_action, groups::sims *old_G,
 		subaction = old_action;
 	}
 	old_G->group_order(go);
-	old_action->group_order(go1);
+	//old_action->group_order(go1);
 	subaction->group_order(go2);
 	if (f_v) {
 		cout << "action::induce" << endl;
 		cout << "from old action " << old_action->label << endl;
 		cout << "subaction " << subaction->label << endl;
 		cout << "target order = " << go << endl;
-		cout << "old_action order = " << go1 << endl;
+		//cout << "old_action order = " << go1 << endl;
 		cout << "subaction order = " << go2 << endl;
-		cout << "degree = " << old_action->degree << endl;
-		cout << "subaction->degree = " << subaction->degree << endl;
-		cout << "base_length = " << old_action->base_len() << endl;
+		cout << "old action has degree " << old_action->degree << endl;
+		cout << "subaction has degree " << subaction->degree << endl;
+		//cout << "base_length = " << old_action->base_len() << endl;
 		cout << "subaction->base_len = " << subaction->base_len() << endl;
 		if (base_of_choice_len) {
 			cout << "base of choice:" << endl;

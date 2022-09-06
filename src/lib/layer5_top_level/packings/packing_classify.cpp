@@ -176,9 +176,7 @@ void packing_classify::spread_table_init(
 	}
 
 
-	T->init(SD, PA,
-			TRUE /* f_recoordinatize */,
-			verbose_level - 1);
+	T->init(SD, PA, verbose_level - 1);
 
 	if (f_v) {
 		cout << "packing_classify::spread_table_init after T->init" << endl;

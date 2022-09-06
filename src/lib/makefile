@@ -367,15 +367,15 @@ MODULES= \
 		layer4_classification/classify/flag_orbit_node.o \
 		layer4_classification/classify/flag_orbits.o \
 		layer4_classification/classify/orbit_node.o \
-		layer4_classification/isomorph/isomorph.o \
+		layer4_classification/isomorph/flag_orbit_folding.o \
 		layer4_classification/isomorph/isomorph_arguments.o \
-		layer4_classification/isomorph/isomorph_database.o \
 		layer4_classification/isomorph/isomorph_files.o \
 		layer4_classification/isomorph/isomorph_global.o \
-		layer4_classification/isomorph/isomorph_testing.o \
-		layer4_classification/isomorph/isomorph_trace.o \
 		layer4_classification/isomorph/isomorph_worker.o \
+		layer4_classification/isomorph/isomorph.o \
 		layer4_classification/isomorph/representatives.o \
+		layer4_classification/isomorph/substructure_classification.o \
+		layer4_classification/isomorph/substructure_lifting_data.o \
 		layer4_classification/orbits/orbit_of_equations.o \
 		layer4_classification/orbits/orbit_of_sets.o \
 		layer4_classification/orbits/orbit_of_subspaces.o \

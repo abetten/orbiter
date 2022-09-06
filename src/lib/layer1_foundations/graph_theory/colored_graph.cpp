@@ -40,19 +40,9 @@ colored_graph::colored_graph()
 	f_has_list_of_edges = FALSE;
 	nb_edges = 0;
 	list_of_edges = NULL;
-	null();
 }
 
 colored_graph::~colored_graph()
-{
-	freeself();
-}
-
-void colored_graph::null()
-{
-}
-
-void colored_graph::freeself()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -100,7 +90,6 @@ void colored_graph::freeself()
 		}
 		FREE_int(list_of_edges);
 	}
-	null();
 	if (f_v) {
 		cout << "colored_graph::freeself" << endl;
 	}
@@ -469,10 +458,11 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 	colored_graph *CG;
 
 	CG = NEW_OBJECT(colored_graph);
-	CG->init_adjacency(nb_pts /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
-		Color, A,
-		label, label_tex,
-		0 /* verbose_level */);
+	CG->init_adjacency(nb_pts /* nb_points */,
+			nb_colors, 1 /* nb_colors_per_vertex */,
+			Color, A,
+			label, label_tex,
+			0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
 	Lint_vec_copy(Pts, CG->points, nb_pts);
@@ -634,12 +624,16 @@ void colored_graph::print_adjacency_list()
 	
 }
 
-void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
-	int *colors, data_structures::bitvector *Bitvec,
-	int f_ownership_of_bitvec,
-	long int *point_labels,
-	std::string &label, std::string &label_tex,
-	int verbose_level)
+void colored_graph::init_with_point_labels(int nb_points,
+		int nb_colors, int nb_colors_per_vertex,
+		int *colors,
+		data_structures::bitvector *Bitvec,
+		int f_ownership_of_bitvec,
+		long int *point_labels,
+		std::string &label,
+		std::string &label_tex,
+		int verbose_level)
+// point_labels is copied over
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -665,6 +659,7 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	int f_ownership_of_bitvec,
 	std::string &label, std::string &label_tex,
 	int verbose_level)
+// colors is copied over
 {
 	int f_v = (verbose_level >= 1);
 	int i;

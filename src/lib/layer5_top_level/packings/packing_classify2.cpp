@@ -31,7 +31,7 @@ void packing_classify::compute_klein_invariants(
 		cout << "packing_classify::compute_klein_invariants" << endl;
 	}
 
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 	
 		if (f_split && (orbit % split_m) != split_r) {
 			continue;
@@ -39,7 +39,7 @@ void packing_classify::compute_klein_invariants(
 		
 		if (f_v) {
 			cout << "packing_classify::compute_klein_invariants orbit "
-					<< orbit << " / " << Iso->Reps->count << endl;
+					<< orbit << " / " << Iso->Folding->Reps->count << endl;
 		}
 		
 		string fname;
@@ -52,9 +52,9 @@ void packing_classify::compute_klein_invariants(
 			}
 			continue;
 		}
-		id = Iso->orbit_perm[Iso->orbit_fst[Iso->Reps->rep[orbit]]];
+		id = Iso->Lifting->orbit_perm[Iso->Lifting->orbit_fst[Iso->Folding->Reps->rep[orbit]]];
 	
-		Iso->load_solution(id, the_packing);
+		Iso->Lifting->load_solution(id, the_packing);
 		if (f_vv) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
@@ -73,7 +73,7 @@ void packing_classify::compute_klein_invariants(
 
 		if (f_v) {
 			cout << "packing_classify::compute_klein_invariants orbit "
-					<< orbit << " / " << Iso->Reps->count
+					<< orbit << " / " << Iso->Folding->Reps->count
 					<< " before compute_and_save_klein_invariants" << endl;
 		}
 		compute_and_save_klein_invariants(Iso->prefix_invariants,
@@ -83,7 +83,7 @@ void packing_classify::compute_klein_invariants(
 			verbose_level - 2);
 		if (f_v) {
 			cout << "packing_classify::compute_klein_invariants orbit "
-					<< orbit << " / " << Iso->Reps->count
+					<< orbit << " / " << Iso->Folding->Reps->count
 					<< " after compute_and_save_klein_invariants" << endl;
 		}
 
@@ -215,7 +215,7 @@ void packing_classify::report(isomorph *Iso, int verbose_level)
 		ofstream f(fname);
 
 		cout << "Writing file " << fname << " with "
-				<< Iso->Reps->count << " spreads:" << endl;
+				<< Iso->Folding->Reps->count << " spreads:" << endl;
 
 		report_whole(Iso, f, verbose_level);
 
@@ -240,7 +240,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	report_title_page(Iso, ost, verbose_level);
 
 	ost << "\\chapter{Summary}" << endl << endl;
-	ost << "There are " << Iso->Reps->count
+	ost << "There are " << Iso->Folding->Reps->count
 			<< " packings of PG$(3," << q << ")$." << endl << endl;
 
 
@@ -270,7 +270,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	data_structures::tally C_ago;
 
 	
-	C_ago.init(inv->Ago_int, Iso->Reps->count, FALSE, 0);
+	C_ago.init(inv->Ago_int, Iso->Folding->Reps->count, FALSE, 0);
 	ost << "Classification by Ago: ";
 	C_ago.print_naked_tex(ost, TRUE /*f_backwards*/);
 	ost << "\\\\" << endl;
@@ -425,11 +425,11 @@ void packing_classify::report_isomorphism_type(
 	}
 
 
-	rep = Iso->Reps->rep[orbit];
-	first = Iso->orbit_fst[rep];
+	rep = Iso->Folding->Reps->rep[orbit];
+	first = Iso->Lifting->orbit_fst[rep];
 	//c = Iso->starter_number[first];
-	id = Iso->orbit_perm[first];		
-	Iso->load_solution(id, the_packing);
+	id = Iso->Lifting->orbit_perm[first];
+	Iso->Lifting->load_solution(id, the_packing);
 
 	
 	for (i = 0; i < Iso->size; i++) {
@@ -498,7 +498,7 @@ void packing_classify::report_isomorphism_type(
 
 	groups::sims *Stab;
 		
-	Stab = Iso->Reps->stab[orbit];
+	Stab = Iso->Folding->Reps->stab[orbit];
 
 	Stab->group_order(go);
 	ost << "Stabilizer has order $";
@@ -511,13 +511,13 @@ void packing_classify::report_isomorphism_type(
 		cout << "packing_classify::report computing induced "
 				"action on the set (in data)" << endl;
 	}
-	Iso->induced_action_on_set_basic(Stab, the_packing, verbose_level - 2);
+	Iso->Folding->induced_action_on_set_basic(Stab, the_packing, verbose_level - 2);
 
 	if (f_v) {
 		ring_theory::longinteger_object go;
 			
-		Iso->AA->group_order(go);
-		cout << "action " << Iso->AA->label << " computed, "
+		Iso->Folding->AA->group_order(go);
+		cout << "action " << Iso->Folding->AA->label << " computed, "
 				"group order is " << go << endl;
 	}
 
@@ -530,7 +530,7 @@ void packing_classify::report_isomorphism_type(
 	groups::schreier Orb;
 	//longinteger_object go;
 		
-	Iso->AA->compute_all_point_orbits(Orb,
+	Iso->Folding->AA->compute_all_point_orbits(Orb,
 			Stab->gens, verbose_level - 2);
 	//cout << "Computed all orbits on the set, "
 	//"found " << Orb.nb_orbits << " orbits" << endl;
@@ -723,7 +723,7 @@ void packing_classify::report_stabilizer(isomorph &Iso,
 	ring_theory::longinteger_object go;
 	int i;
 
-	Stab = Iso.Reps->stab[orbit];
+	Stab = Iso.Folding->Reps->stab[orbit];
 	Stab->group_order(go);
 
 	ost << "The stabilizer of order $" << go
@@ -757,7 +757,7 @@ void packing_classify::report_stabilizer_in_action(
 	ring_theory::longinteger_object go;
 	int i;
 
-	Stab = Iso.Reps->stab[orbit];
+	Stab = Iso.Folding->Reps->stab[orbit];
 	Stab->group_order(go);
 
 	ost << "The stabilizer generators in their action "
@@ -779,7 +779,7 @@ void packing_classify::report_stabilizer_in_action(
 		//ord = A->element_order(Stab->gens.ith(i));
 
 		ost << "$";
-		Iso.AA->element_print_as_permutation_with_offset(
+		Iso.Folding->AA->element_print_as_permutation_with_offset(
 			Stab->gens.ith(i), ost,
 			offset, f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one, 0 /* verbose_level */);
@@ -805,7 +805,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 		ofstream fp(fname);
 
 
-		Stab = Iso.Reps->stab[orbit];
+		Stab = Iso.Folding->Reps->stab[orbit];
 		Stab->group_order(go);
 
 		//f << "The stabilizer generators in their action on "
@@ -827,7 +827,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 			//ord = A->element_order(Stab->gens.ith(i));
 
 			fp << "g" << i + 1 << " := ";
-			Iso.AA->element_print_as_permutation_with_offset(
+			Iso.Folding->AA->element_print_as_permutation_with_offset(
 				Stab->gens.ith(i), fp,
 				offset, f_do_it_anyway_even_for_big_degree,
 				f_print_cycles_of_length_one, 0 /* verbose_level */);

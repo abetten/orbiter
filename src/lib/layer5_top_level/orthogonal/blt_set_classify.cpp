@@ -977,7 +977,7 @@ void blt_set_classify::report_from_iso(isomorph &Iso, int verbose_level)
 				"before Iso.get_orbit_transversal" << endl;
 	}
 
-	Iso.get_orbit_transversal(T, verbose_level);
+	Iso.Folding->get_orbit_transversal(T, verbose_level);
 
 	if (f_v) {
 		cout << "blt_set_classify::report_from_iso "

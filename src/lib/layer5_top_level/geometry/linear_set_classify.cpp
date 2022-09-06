@@ -503,9 +503,7 @@ void linear_set_classify::init(
 		}
 
 
-		T->init(SD, PA,
-				TRUE /* f_recoordinatize */,
-				verbose_level - 2);
+		T->init(SD, PA, verbose_level - 2);
 
 		// ToDo:
 		//T->init2(Control, verbose_level);

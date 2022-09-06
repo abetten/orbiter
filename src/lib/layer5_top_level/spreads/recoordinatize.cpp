@@ -22,6 +22,8 @@ namespace spreads {
 recoordinatize::recoordinatize()
 {
 
+	SD = NULL;
+
 	n = k = q = 0;
 
 	Grass = NULL;
@@ -87,9 +89,11 @@ void recoordinatize::freeself()
 	null();
 }
 
-void recoordinatize::init(int n, int k,
-		field_theory::finite_field *F,
-		geometry::grassmann *Grass,
+void recoordinatize::init(
+		geometry::spread_domain *SD,
+		//int n, int k,
+		//field_theory::finite_field *F,
+		//geometry::grassmann *Grass,
 		actions::action *A, actions::action *A2,
 	int f_projective, int f_semilinear, 
 	int (*check_function_incremental)(int len,
@@ -104,13 +108,18 @@ void recoordinatize::init(int n, int k,
 		cout << "recoordinatize::init" << endl;
 	}
 
+	recoordinatize::SD = SD;
+
+	recoordinatize::Grass = SD->Grass;
+	recoordinatize::F = SD->F;
+	recoordinatize::q = F->q;
+	recoordinatize::k = SD->k;
+	recoordinatize::n = SD->n;
+
+
 	recoordinatize::A = A;
 	recoordinatize::A2 = A2;
-	recoordinatize::Grass = Grass;
-	recoordinatize::F = F;
-	recoordinatize::q = F->q;
-	recoordinatize::k = k;
-	recoordinatize::n = n;
+
 	recoordinatize::f_projective = f_projective;
 	recoordinatize::f_semilinear = f_semilinear;
 	recoordinatize::check_function_incremental
@@ -500,7 +509,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 			A0_linear->Sims, live_points, nb_live_points,
 			f_path_select, select_value, verbose_level);
 		// ToDo: need to change the ranks from matrices to subspaces !!!
-#else
+#endif
 
 
 #if 0
@@ -628,14 +637,16 @@ void recoordinatize::compute_live_points_low_level(
 
 	groups::matrix_group *Mtx;
 	field_theory::finite_field *Fq;
-	long int SS[4];
+	long int set[4];
 	int *Elt1;
+	int *Elt2;
+	int f_good;
 
 	int cnt, z;
 	int cnt_mod = 1000;
 	ring_theory::longinteger_object go_linear;
 	long int gos;
-	long int i, j, h, a;
+	long int i, h, a;
 	data_structures::sorting Sorting;
 
 
@@ -647,26 +658,30 @@ void recoordinatize::compute_live_points_low_level(
 	Mtx = A0->G.matrix_grp;
 	Fq = Mtx->GFq;
 
-	SS[0] = starter_j1;
-	SS[1] = starter_j2;
-	SS[2] = starter_j3;
+	set[0] = starter_j1;
+	set[1] = starter_j2;
+	set[2] = starter_j3;
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 
 
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level "
 				"nCkq = " << nCkq << endl;
 	}
-	live_points = NEW_lint(nCkq);
-	nb_live_points = 0;
 
-	A0_linear->group_order(go_linear);
-	gos = go_linear.as_lint();
+	{
+		vector<long int> L;
 
-	cnt = 0;
-	for (h = 0; h < gos; h++) {
-		for (z = 1; z < q; z++, cnt++) {
+		nb_live_points = 0;
+
+		A0_linear->group_order(go_linear);
+		gos = go_linear.as_lint();
+
+		cnt = 0;
+		for (h = 0; h < gos; h++) {
+			A0_linear->Sims->element_unrank_lint(h, Elt1);
 			if (f_vv) {
 				if ((cnt % cnt_mod) == 0 && cnt) {
 					cout << "recoordinatize::compute_live_points_low_level"
@@ -674,7 +689,6 @@ void recoordinatize::compute_live_points_low_level(
 							<< nb_live_points << " points so far" << endl;
 				}
 			}
-			A0_linear->Sims->element_unrank_lint(h, Elt1);
 			Fq->PG_element_normalize(Elt1, 1, k * k);
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "recoordinatize::compute_live_points_low_level "
@@ -682,79 +696,124 @@ void recoordinatize::compute_live_points_low_level(
 						<< ", normalized:" << endl;
 				A0->element_print(Elt1, cout);
 			}
-			for (i = 0; i < k * k; i++) {
-				Elt1[i] = Fq->mult(Elt1[i], z);
-			}
-			if (f_v && (cnt % cnt_mod) == 0 && cnt) {
-				cout << "recoordinatize::compute_live_points_low_level "
-						"element " << cnt << " = " << h
-						<< ", multiplied by z=" << z << ":" << endl;
-				Int_vec_print_integer_matrix_width(cout,
-						Elt1, k, k, k, F->log10_of_q + 1);
-			}
-	
-			// make the k x n matrix ( I_k | Elt1 )
-			Int_vec_zero(Grass->M, k * n);
-			for (i = 0; i < k; i++) {
-				Grass->M[i * n + i] = 1;
-			}
-			for (i = 0; i < k; i++) {
-				for (j = 0; j < k; j++) {
-					Grass->M[i * n + k + j] = Elt1[i * k + j];
+
+			for (z = 1; z < q; z++, cnt++) {
+
+				// multiply Elt1 by non-zero scalar z to get Elt2:
+
+				for (i = 0; i < k * k; i++) {
+					Elt2[i] = Fq->mult(Elt1[i], z);
 				}
-			}
-			if (f_vv && (cnt % cnt_mod) == 0) {
-				cout << "recoordinatize::compute_live_points_low_level "
-						"element " << h << ":" << endl;
-				Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
-			}
-			if (FALSE || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
-				cout << h << " / " << gos
-						<< " nb_live_points=" << nb_live_points << endl;
-				Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
-			}
-			a = Grass->rank_lint(0);
-			SS[3] = a;
-			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
-				cout << "has rank " << a << endl;
-			}
-			if ((*check_function_incremental)(4, SS,
-					check_function_incremental_data,
-					0/*verbose_level - 4*/)) {
-				if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
+
+				if (f_v && (cnt % cnt_mod) == 0 && cnt) {
 					cout << "recoordinatize::compute_live_points_low_level "
-							"element " << cnt << " = " << h << ", "
-							<< z << " subspace rank " << a
-							<< " is accepted as live point no "
-							<< nb_live_points << endl;
+							"element " << cnt << " = " << h
+							<< ", multiplied by z=" << z << ":" << endl;
+					Int_vec_print_integer_matrix_width(cout,
+							Elt2, k, k, k, F->log10_of_q + 1);
 				}
-				live_points[nb_live_points++] = a;
-			}
-			else {
+
+
+				// make spread element from Elt2:
+
+				Grass->make_spread_element(Grass->M, Elt2, 0/* verbose_level*/);
+					// make the k x n matrix M = ( I_k | Elt2 )
+
+
 				if (f_vv && (cnt % cnt_mod) == 0) {
 					cout << "recoordinatize::compute_live_points_low_level "
-							"element " << cnt << " = " << h << ", "
-							<< z << " subspace rank " << a
-							<< " is not accepted" << endl;
+							"element " << h << ":" << endl;
+					Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
+				}
+				if (FALSE || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
+					cout << h << " / " << gos
+							<< " nb_live_points=" << nb_live_points << endl;
+					Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
+				}
+
+				a = Grass->rank_lint(0);
+				set[3] = a;
+
+				if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
+					cout << "has rank " << a << endl;
+				}
+
+				// perform test:
+
+				f_good = apply_test(set /* set */, 4 /* sz */, 0 /* verbose_level */);
+
+
+				if (f_good) {
+					if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
+						cout << "recoordinatize::compute_live_points_low_level "
+								"element " << cnt << " = " << h << ", "
+								<< z << " subspace rank " << a
+								<< " is accepted as live point no "
+								<< nb_live_points << endl;
+					}
+					L.push_back(a);
+					nb_live_points++;
+					//live_points[nb_live_points++] = a;
+				}
+				else {
+					if (f_vv && (cnt % cnt_mod) == 0) {
+						cout << "recoordinatize::compute_live_points_low_level "
+								"element " << cnt << " = " << h << ", "
+								<< z << " subspace rank " << a
+								<< " is not accepted" << endl;
+					}
 				}
 			}
 		}
-	}
-#endif
 
-	if (f_v) {
-		cout << "recoordinatize::compute_live_points_low_level "
-				"we found " << nb_live_points << " live points" << endl;
-	}
+		if (f_v) {
+			cout << "recoordinatize::compute_live_points_low_level "
+					"we found " << nb_live_points << " live points" << endl;
+		}
+
+		if (f_v) {
+			cout << "recoordinatize::compute_live_points_low_level "
+					"allocating and copying data" << endl;
+		}
+
+		live_points = NEW_lint(nb_live_points);
+		for (i = 0; i < nb_live_points; i++) {
+			live_points[i] = L[i];
+		}
+	} // end of L
+
+
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level "
 				"sorting" << endl;
 	}
 
 	Sorting.lint_vec_heapsort(live_points, nb_live_points);
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level done" << endl;
 	}
+}
+
+int recoordinatize::apply_test(long int *set, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "recoordinatize::apply_test" << endl;
+	}
+	int ret;
+
+	ret = (*check_function_incremental)(sz, set,
+			check_function_incremental_data,
+			0/*verbose_level - 4*/);
+	if (f_v) {
+		cout << "recoordinatize::apply_test done" << endl;
+	}
+	return ret;
 }
 
 void recoordinatize::make_first_three(

@@ -564,7 +564,7 @@ void spread_classify::report2(isomorph &Iso, int verbose_level)
 	author.assign("Orbiter");
 
 	cout << "Writing file " << fname << " with "
-			<< Iso.Reps->count << " spreads:" << endl;
+			<< Iso.Folding->Reps->count << " spreads:" << endl;
 	L.head(f, f_book, f_title,
 		title, author, 
 		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers, 
@@ -594,7 +594,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 	data_structures::sorting Sorting;
 
 	ost << "\\chapter{Summary}" << endl << endl;
-	ost << "There are " << Iso.Reps->count << " spreads." << endl << endl;
+	ost << "There are " << Iso.Folding->Reps->count << " spreads." << endl << endl;
 
 
 	//Iso.setup_and_open_solution_database(verbose_level - 1);
@@ -609,23 +609,23 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 	ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
-	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
-	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
-	Ago_int = NEW_int(Iso.Reps->count);
+	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago_int = NEW_int(Iso.Folding->Reps->count);
 
 
-	for (h = 0; h < Iso.Reps->count; h++) {
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
+	for (h = 0; h < Iso.Folding->Reps->count; h++) {
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];		
-		Iso.load_solution(id, data);
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data);
 
 		groups::sims *Stab;
 		
-		Stab = Iso.Reps->stab[h];
+		Stab = Iso.Folding->Reps->stab[h];
 
-		Iso.Reps->stab[h]->group_order(Ago[h]);
+		Iso.Folding->Reps->stab[h]->group_order(Ago[h]);
 		Ago_int[h] = Ago[h].as_int();
 		//f << "Stabilizer has order $";
 		//go.print_not_scientific(f);
@@ -633,16 +633,16 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 			cout << "spread::print_isomorphism_types computing "
 					"induced action on the set (in data)" << endl;
 		}
-		Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
+		Iso.Folding->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
 			
-		Iso.AA->group_order(Ago_induced[h]);
+		Iso.Folding->AA->group_order(Ago_induced[h]);
 	}
 
 
 	data_structures::tally C_ago;
 
-	C_ago.init(Ago_int, Iso.Reps->count, FALSE, 0);
+	C_ago.init(Ago_int, Iso.Folding->Reps->count, FALSE, 0);
 	cout << "Classification by ago:" << endl;
 	C_ago.print(FALSE /*f_backwards*/);
 
@@ -771,12 +771,12 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 	ost << "\\clearpage" << endl << endl;
 
 
-	for (h = 0; h < Iso.Reps->count; h++) {
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
+	for (h = 0; h < Iso.Folding->Reps->count; h++) {
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];		
-		Iso.load_solution(id, data);
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data);
 
 
 		ost << "\\section{Isomorphism type " << h << "}" << endl;
@@ -785,8 +785,8 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		//f << "The ambient space has dimension "
 		//<< Rk_of_span[h] << "\\\\" << endl;
 
-		if (Iso.Reps->stab[h]) {
-			Iso.Reps->stab[h]->group_order(go);
+		if (Iso.Folding->Reps->stab[h]) {
+			Iso.Folding->Reps->stab[h]->group_order(go);
 			ost << "Stabilizer has order $";
 			go.print_not_scientific(ost);
 			ost << "$\\\\" << endl;
@@ -810,18 +810,18 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 
 		groups::sims *Stab;
 		
-		Stab = Iso.Reps->stab[h];
+		Stab = Iso.Folding->Reps->stab[h];
 
 		if (f_v) {
 			cout << "spread::print_isomorphism_types computing "
 					"induced action on the set (in data)" << endl;
 		}
-		Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
+		Iso.Folding->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
 		ring_theory::longinteger_object go1;
 			
-		Iso.AA->group_order(go1);
-		cout << "action " << Iso.AA->label << " computed, "
+		Iso.Folding->AA->group_order(go1);
+		cout << "action " << Iso.Folding->AA->label << " computed, "
 				"group order is " << go1 << endl;
 
 		ost << "Order of the group that is induced on the "
@@ -834,7 +834,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		groups::schreier Orb;
 		//longinteger_object go2;
 		
-		Iso.AA->compute_all_point_orbits(Orb,
+		Iso.Folding->AA->compute_all_point_orbits(Orb,
 				Stab->gens, verbose_level - 2);
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the subspaces\\\\" << endl;
@@ -1021,7 +1021,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 
 	isomorph_global IG;
 
-	IG.init(Iso.A_base, Iso.A, Iso.gen, verbose_level);
+	IG.init(Iso.A_base, Iso.A, Iso.Sub->gen, verbose_level);
 
 	IG.report_data_in_source_code_inside_tex(Iso,
 		prefix, label_of_structure_plural, ost, verbose_level);
@@ -1059,7 +1059,7 @@ void spread_classify::all_cooperstein_thas_quotients(
 		ofstream f(fname);
 
 
-		for (h = 0; h < Iso.Reps->count; h++) {
+		for (h = 0; h < Iso.Folding->Reps->count; h++) {
 
 			cooperstein_thas_quotients(Iso, f, h, cnt, verbose_level - 1);
 
@@ -1113,14 +1113,14 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 		cout << "spread_classify::cooperstein_thas_quotients h=" << h << endl;
 	}
 
-	rep = Iso.Reps->rep[h];
-	first = Iso.orbit_fst[rep];
+	rep = Iso.Folding->Reps->rep[h];
+	first = Iso.Lifting->orbit_fst[rep];
 	//c = Iso.starter_number[first];
-	id = Iso.orbit_perm[first];		
-	Iso.load_solution(id, data);
+	id = Iso.Lifting->orbit_perm[first];
+	Iso.Lifting->load_solution(id, data);
 
 
-	Stab = Iso.Reps->stab[h];
+	Stab = Iso.Folding->Reps->stab[h];
 
 	groups::schreier Orb;
 	ring_theory::longinteger_object go;
@@ -1298,21 +1298,21 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 		
 	long int data[1000];
 
-	rep = Iso.Reps->rep[h];
-	first = Iso.orbit_fst[rep];
+	rep = Iso.Folding->Reps->rep[h];
+	first = Iso.Lifting->orbit_fst[rep];
 	//c = Iso.starter_number[first];
-	id = Iso.orbit_perm[first];		
-	Iso.load_solution(id, data);
+	id = Iso.Lifting->orbit_perm[first];
+	Iso.Lifting->load_solution(id, data);
 
 
-	Stab = Iso.Reps->stab[h];
+	Stab = Iso.Folding->Reps->stab[h];
 
-	Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
+	Iso.Folding->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
 	ring_theory::longinteger_object go1;
 			
-	Iso.AA->group_order(go1);
-	cout << "action " << Iso.AA->label << " computed, "
+	Iso.Folding->AA->group_order(go1);
+	cout << "action " << Iso.Folding->AA->label << " computed, "
 			"group order is " << go1 << endl;
 
 
@@ -1327,7 +1327,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 	groups::schreier Orb;
 	//longinteger_object go2;
 		
-	Iso.AA->compute_all_point_orbits(Orb, Stab->gens, 0 /*verbose_level - 2*/);
+	Iso.Folding->AA->compute_all_point_orbits(Orb, Stab->gens, 0 /*verbose_level - 2*/);
 	//f << "With " << Orb.nb_orbits << " orbits on the subspaces\\\\" << endl;
 
 	ost << " & " << Orb.nb_orbits << " & ";
@@ -1354,7 +1354,7 @@ void spread_classify::report_stabilizer(isomorph &Iso,
 	ring_theory::longinteger_object go;
 	int i;
 
-	Stab = Iso.Reps->stab[orbit];
+	Stab = Iso.Folding->Reps->stab[orbit];
 	Stab->group_order(go);
 
 	ost << "The stabilizer of order $" << go << "$ is generated by:\\\\" << endl;

@@ -291,9 +291,7 @@ void semifield_classify::init(
 
 	//int max_depth = k + 1;
 
-	T->init(SD, PA, //k, //Control,
-			FALSE /* f_recoordinatize */,
-			0 /*verbose_level - 2*/);
+	T->init(SD, PA, 0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "semifield_classify::init after T->init" << endl;

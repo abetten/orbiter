@@ -6,15 +6,15 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	flag_orbit_folding.o \
 	isomorph_arguments.o \
-	isomorph_database.o \
 	isomorph_files.o \
 	isomorph_global.o \
-	isomorph_testing.o \
-	isomorph_trace.o \
 	isomorph_worker.o \
 	isomorph.o \
-	representatives.o
+	representatives.o \
+	substructure_classification.o \
+	substructure_lifting_data.o
 
 
 all : $(MODULES)
