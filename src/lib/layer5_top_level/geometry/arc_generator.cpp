@@ -872,7 +872,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 			title.assign(str);
 			}
 		cout << "Writing file " << fname << " with "
-				<< Iso.Reps->count << " arcs:" << endl;
+				<< Iso.Folding->Reps->count << " arcs:" << endl;
 		L.head(f, f_book, f_title,
 			title, author,
 			f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers,
@@ -905,11 +905,11 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 
 
 	ost << "\\chapter{Summary}" << endl << endl;
-	ost << "There are " << Iso.Reps->count
+	ost << "There are " << Iso.Folding->Reps->count
 			<< " isomorphism types." << endl << endl;
 
 
-	Iso.setup_and_open_solution_database(verbose_level - 1);
+	Iso.Lifting->setup_and_open_solution_database(verbose_level - 1);
 
 	int i, first, /*c,*/ id;
 	int u, v, h, rep, tt;
@@ -921,38 +921,38 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 	ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
-	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
-	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Reps->count);
-	Ago_int = NEW_int(Iso.Reps->count);
+	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago_int = NEW_int(Iso.Folding->Reps->count);
 
 
-	for (h = 0; h < Iso.Reps->count; h++) {
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
+	for (h = 0; h < Iso.Folding->Reps->count; h++) {
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];		
-		Iso.load_solution(id, data);
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data);
 
 		groups::sims *Stab;
 		
-		Stab = Iso.Reps->stab[h];
+		Stab = Iso.Folding->Reps->stab[h];
 
-		Iso.Reps->stab[h]->group_order(Ago[h]);
+		Iso.Folding->Reps->stab[h]->group_order(Ago[h]);
 		Ago_int[h] = Ago[h].as_int();
 		if (f_v) {
 			cout << "arc_generator::report computing induced "
 					"action on the set (in data)" << endl;
 			}
-		Iso.induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
+		Iso.Folding->induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
 		
 			
-		Iso.AA->group_order(Ago_induced[h]);
+		Iso.Folding->AA->group_order(Ago_induced[h]);
 	}
 
 
 	data_structures::tally C_ago;
 
-	C_ago.init(Ago_int, Iso.Reps->count, FALSE, 0);
+	C_ago.init(Ago_int, Iso.Folding->Reps->count, FALSE, 0);
 	cout << "Classification by ago:" << endl;
 	C_ago.print(FALSE /*f_backwards*/);
 
@@ -1080,20 +1080,20 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 	ost << "\\clearpage" << endl << endl;
 
 
-	for (h = 0; h < Iso.Reps->count; h++) {
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
+	for (h = 0; h < Iso.Folding->Reps->count; h++) {
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];		
-		Iso.load_solution(id, data);
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data);
 
 
 		ost << "\\section{Isomorphism type " << h << "}" << endl;
 		ost << "\\bigskip" << endl;
 
 
-		if (Iso.Reps->stab[h]) {
-			Iso.Reps->stab[h]->group_order(go);
+		if (Iso.Folding->Reps->stab[h]) {
+			Iso.Folding->Reps->stab[h]->group_order(go);
 			ost << "Stabilizer has order $";
 			go.print_not_scientific(ost);
 			ost << "$.\\\\" << endl;
@@ -1104,18 +1104,18 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 
 		groups::sims *Stab;
 		
-		Stab = Iso.Reps->stab[h];
+		Stab = Iso.Folding->Reps->stab[h];
 
 		if (f_v) {
 			cout << "arc_generator::report computing induced "
 					"action on the set (in data)" << endl;
 		}
-		Iso.induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
+		Iso.Folding->induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
 		
 		ring_theory::longinteger_object go1;
 			
-		Iso.AA->group_order(go1);
-		cout << "action " << Iso.AA->label
+		Iso.Folding->AA->group_order(go1);
+		cout << "action " << Iso.Folding->AA->label
 				<< " computed, group order is " << go1 << endl;
 
 		ost << "Order of the group that is induced on the set is ";
@@ -1127,7 +1127,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		groups::schreier Orb;
 		//longinteger_object go2;
 		
-		Iso.AA->compute_all_point_orbits(Orb,
+		Iso.Folding->AA->compute_all_point_orbits(Orb,
 				Stab->gens, verbose_level - 2);
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the set.\\\\" << endl;
@@ -1185,14 +1185,14 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 
 	isomorph_global IG;
 
-	IG.init(Iso.A_base, Iso.A, Iso.gen, verbose_level);
+	IG.init(Iso.A_base, Iso.A, Iso.Sub->gen, verbose_level);
 
 	IG.report_data_in_source_code_inside_tex(Iso,
 		prefix, label_of_structure_plural, ost,
 		verbose_level);
 
 
-	Iso.close_solution_database(verbose_level - 1);
+	Iso.Lifting->close_solution_database(verbose_level - 1);
 
 	FREE_int(Ago_int);
 	FREE_OBJECTS(Ago);
@@ -1217,7 +1217,7 @@ void arc_generator::report_decompositions(
 
 	gens = NEW_OBJECT(groups::strong_generators);
 
-	Stab = Iso.Reps->stab[orbit];
+	Stab = Iso.Folding->Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
 
 	apps_algebra::algebra_global_with_action Algebra;
@@ -1236,7 +1236,7 @@ void arc_generator::report_stabilizer(isomorph &Iso,
 {
 	groups::sims *Stab;
 
-	Stab = Iso.Reps->stab[orbit];
+	Stab = Iso.Folding->Reps->stab[orbit];
 	groups::strong_generators *SG;
 
 	SG = NEW_OBJECT(groups::strong_generators);

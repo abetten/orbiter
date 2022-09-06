@@ -100,7 +100,7 @@ void isomorph_global::read_statistic_files(
 			cout << "isomorph_global::read_statistic_files "
 					"before Iso.read_data_files_for_starter" << endl;
 		}
-		Iso.read_data_files_for_starter(level,
+		Iso.Sub->read_data_files_for_starter(level,
 			prefix_classify, verbose_level);
 
 
@@ -119,12 +119,12 @@ void isomorph_global::read_statistic_files(
 			S[i].read_spreadsheet(fname[i], 0 /* verbose_level */);
 		}
 	
-		cout << "Allocating array Stats for " << Iso.nb_starter
+		cout << "Allocating array Stats for " << Iso.Sub->nb_starter
 				<< " starter cases" << endl;
 
-		Stats = NEW_int(6 * Iso.nb_starter);
-		Int_vec_zero(Stats, 6 * Iso.nb_starter);
-		for (i = 0; i < Iso.nb_starter; i++) {
+		Stats = NEW_int(6 * Iso.Sub->nb_starter);
+		Int_vec_zero(Stats, 6 * Iso.Sub->nb_starter);
+		for (i = 0; i < Iso.Sub->nb_starter; i++) {
 			Stats[i * 6 + 0] = -1;
 		}
 
@@ -154,7 +154,7 @@ void isomorph_global::read_statistic_files(
 		}
 
 		cout << "Read all the statistic files" << endl;
-		for (i = 0; i < Iso.nb_starter; i++) {
+		for (i = 0; i < Iso.Sub->nb_starter; i++) {
 			if (Stats[i * 6 + 0] == -1) {
 				cout << "The run is incomplete, I don't have data for case "
 						<< i << " for instance" << endl;
@@ -167,7 +167,7 @@ void isomorph_global::read_statistic_files(
 
 
 		cout << "The cases where solutions exist are:" << endl;
-		for (i = 0; i < Iso.nb_starter; i++) {
+		for (i = 0; i < Iso.Sub->nb_starter; i++) {
 			if (Stats[i * 6 + 1]) {
 				cout << setw(5) << i << " : " << setw(5)
 						<< Stats[i * 6 + 1] << " : ";
@@ -178,7 +178,7 @@ void isomorph_global::read_statistic_files(
 		int Nb_cases = 0;
 
 		Nb_cases = 0;
-		for (i = 0; i < Iso.nb_starter; i++) {
+		for (i = 0; i < Iso.Sub->nb_starter; i++) {
 			if (Stats[i * 6 + 1]) {
 				Nb_cases++;
 			}
@@ -189,7 +189,7 @@ void isomorph_global::read_statistic_files(
 
 		Stats_short = NEW_int(6 * Nb_cases);
 		h = 0;
-		for (i = 0; i < Iso.nb_starter; i++) {
+		for (i = 0; i < Iso.Sub->nb_starter; i++) {
 			if (Stats[i * 6 + 1]) {
 				Int_vec_copy(Stats + 6 * i, Stats_short + 6 * h, 6);
 				Stats_short[h * 6 + 0] = i;
@@ -220,7 +220,7 @@ void isomorph_global::read_statistic_files(
 		Nb_sol = 0;
 		Nb_col = 0;
 		Dt_in_sec = 0;
-		for (i = 0; i < Iso.nb_starter; i++) {
+		for (i = 0; i < Iso.Sub->nb_starter; i++) {
 			Nb_sol += Stats[i * 6 + 1];
 			Nb_col += Stats[i * 6 + 3];
 			Dt_in_sec += Stats[i * 6 + 5];
@@ -230,7 +230,7 @@ void isomorph_global::read_statistic_files(
 		cout << "Nb_sol = " << Nb_sol << endl;
 		cout << "Nb_col = " << Nb_col << endl;
 		cout << "Nb_col (average) = "
-				<< (double) Nb_col / Iso.nb_starter << endl;
+				<< (double) Nb_col / Iso.Sub->nb_starter << endl;
 		cout << "Dt_in_sec = " << Dt_in_sec << endl;
 
 		
@@ -306,7 +306,7 @@ void isomorph_global::init_solutions_from_memory(
 			cout << "isomorph_global::init_solutions_from_memory "
 					"before Iso.read_data_files_for_starter" << endl;
 		}
-		Iso.read_data_files_for_starter(level,
+		Iso.Sub->read_data_files_for_starter(level,
 				prefix_classify, 0/*verbose_level - 4*/);
 	
 		if (f_v) {
@@ -321,7 +321,7 @@ void isomorph_global::init_solutions_from_memory(
 					"before Iso.init_solutions" << endl;
 		}
 		//int f_get_statistics = FALSE;
-		Iso.init_solutions(Solutions, Nb_sol, verbose_level - 1);
+		Iso.Lifting->init_solutions(Solutions, Nb_sol, verbose_level - 1);
 				//
 				// now we know Iso.N, the number of solutions
 				// from the clique finder
@@ -385,9 +385,9 @@ void isomorph_global::classification_graph(
 	
 	
 	
-		Iso.write_classification_matrix(verbose_level);
-		Iso.write_classification_graph(verbose_level);
-		Iso.decomposition_matrix(verbose_level);
+		Iso.Folding->write_classification_matrix(verbose_level);
+		Iso.Folding->write_classification_graph(verbose_level);
+		Iso.Folding->decomposition_matrix(verbose_level);
 
 
 
@@ -462,7 +462,7 @@ void isomorph_global::identify(
 			if (f_v) {
 				cout << "isomorph_identify before Iso.identify" << endl;
 			}
-			Iso_type[i] = Iso.identify(the_set,
+			Iso_type[i] = Iso.Folding->identify(the_set,
 					f_implicit_fusion, verbose_level - 2);
 			if (f_v) {
 				cout << "isomorph_identify after Iso.identify" << endl;
@@ -478,7 +478,7 @@ void isomorph_global::identify(
 
 				fclose(f2);
 	#else
-				Iso.A_base->element_write_file(Iso.transporter,
+				Iso.A_base->element_write_file(Iso.Folding->transporter,
 						fname_transporter, 0 /* verbose_level*/);
 	#endif
 				cout << "isomorph_identify written file " << fname_transporter
@@ -574,13 +574,13 @@ void isomorph_global::identify_table(
 
 			if (f_v) {
 				cout << "isomorph_global::identify_table "
-						"before Iso.identify" << endl;
+						"before Iso.Folding->identify" << endl;
 			}
-			Iso_type[i] = Iso.identify(the_set,
+			Iso_type[i] = Iso.Folding->identify(the_set,
 					f_implicit_fusion, verbose_level - 2);
 			if (f_v) {
 				cout << "isomorph_global::identify_table "
-						"after Iso.identify" << endl;
+						"after Iso.Folding->identify" << endl;
 			}
 
 
@@ -659,16 +659,16 @@ void isomorph_global::worker(
 		if (f_v) {
 			cout << "isomorph_global::worker before Iso.setup_and_open_solution_database" << endl;
 		}
-		Iso.setup_and_open_solution_database(verbose_level - 1);
+		Iso.Lifting->setup_and_open_solution_database(verbose_level - 1);
 		if (f_v) {
 			cout << "isomorph_global::worker after Iso.setup_and_open_solution_database" << endl;
 		}
 		if (f_v) {
-			cout << "isomorph_global::worker before Iso.setup_and_open_level_database" << endl;
+			cout << "isomorph_global::worker before Iso.Sub->setup_and_open_level_database" << endl;
 		}
-		Iso.setup_and_open_level_database(verbose_level - 1);
+		Iso.Sub->setup_and_open_level_database(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_global::worker after Iso.setup_and_open_level_database" << endl;
+			cout << "isomorph_global::worker after Iso.Sub->setup_and_open_level_database" << endl;
 		}
 
 	#if 0
@@ -688,8 +688,8 @@ void isomorph_global::worker(
 		}
 	
 	
-		Iso.close_solution_database(verbose_level - 1);
-		Iso.close_level_database(verbose_level - 1);
+		Iso.Lifting->close_solution_database(verbose_level - 1);
+		Iso.Sub->close_level_database(verbose_level - 1);
 
 	}
 	cout << "isomorph_global::worker done" << endl;
@@ -739,18 +739,18 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 	cnt_orbits = 0;
 	cnt_special_orbits = 0;
 
-	rep = Iso->Reps->rep[orbit];
-	first = Iso->orbit_fst[rep];
+	rep = Iso->Folding->Reps->rep[orbit];
+	first = Iso->Lifting->orbit_fst[rep];
 	//c = Iso->starter_number[first];
-	id = Iso->orbit_perm[first];		
-	Iso->load_solution(id, data);
+	id = Iso->Lifting->orbit_perm[first];
+	Iso->Lifting->load_solution(id, data);
 
 	
 
 	groups::sims *Stab;
 	groups::strong_generators *Strong_gens;
 
-	Stab = Iso->Reps->stab[orbit];
+	Stab = Iso->Folding->Reps->stab[orbit];
 
 	if (f_vv) {
 		cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
@@ -762,7 +762,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 	Strong_gens->init_from_sims(Stab, verbose_level - 2);
 	
 
-	Iso->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
+	Iso->Folding->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
 	if (f_vv) {
 		cout << "data after induced_action_on_set:" << endl;
@@ -772,10 +772,10 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		
 	ring_theory::longinteger_object go1;
 			
-	Iso->AA->group_order(go1);
+	Iso->Folding->AA->group_order(go1);
 
 	if (f_vv) {
-		cout << "action " << Iso->AA->label << " computed, "
+		cout << "action " << Iso->Folding->AA->label << " computed, "
 				"group order is " << go1 << endl;
 
 		cout << "Order of the group that is induced on the object is ";
@@ -794,7 +794,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 
 		if (f_vv) {
 			cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
-					"orbit=" << orbit << " / " << Iso->Reps->count
+					"orbit=" << orbit << " / " << Iso->Folding->Reps->count
 					<< " computing orbits on subsets" << endl;
 		}
 		poset_classification::poset_classification_control *Control;
@@ -802,7 +802,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		Control = NEW_OBJECT(poset_classification::poset_classification_control);
 		Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 		Poset->init_subset_lattice(
-				Iso->A_base, Iso->AA, Strong_gens,
+				Iso->A_base, Iso->Folding->AA, Strong_gens,
 				verbose_level);
 		Poset->orbits_on_k_sets(Control,
 			Iso->level, orbit_reps, nb_orbits, verbose_level - 5);
@@ -810,7 +810,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		FREE_OBJECT(Control);
 		if (f_vv) {
 			cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
-					"orbit=" << orbit << " / " << Iso->Reps->count
+					"orbit=" << orbit << " / " << Iso->Folding->Reps->count
 					<< " computing orbits on subsets done" << endl;
 		}
 
@@ -840,7 +840,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		for (u = 0; u < nb_orbits; u++) {
 
 			if (f_vv) {
-				cout << "iso type " << orbit << " / " << Iso->Reps->count
+				cout << "iso type " << orbit << " / " << Iso->Folding->Reps->count
 						<< " down_orbit " << u << " / "
 						<< nb_orbits << ":" << endl;
 				Lint_vec_print(cout, orbit_reps + u * Iso->level, Iso->level);
@@ -859,7 +859,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 			int f_failure_to_find_point, f_found;
 
 			Iso->A_base->element_one(transporter, 0);
-			case_nb = Iso->trace_set(rearranged_set, transporter, 
+			case_nb = Iso->Folding->trace_set(rearranged_set, transporter,
 				f_implicit_fusion, f_failure_to_find_point,
 				0 /*verbose_level - 2*/);
 
@@ -872,7 +872,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 				exit(1);
 			}
 
-			f_found = Iso->find_extension_easy_new(rearranged_set,
+			f_found = Iso->Sub->find_extension_easy_new(rearranged_set,
 					case_nb, idx, 0 /* verbose_level */);
 #if 0
 			f_found = Iso.identify_solution_relaxed(prefix, transporter, 
@@ -889,7 +889,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 			}
 			else {
 				if (f_vv) {
-					cout << "iso type " << orbit << " / " << Iso->Reps->count
+					cout << "iso type " << orbit << " / " << Iso->Folding->Reps->count
 							<< " down orbit " << u << " / " << nb_orbits
 							<< " leads to orbit " << idx << endl;
 				}
@@ -941,7 +941,7 @@ void isomorph_global::report_data_in_source_code_inside_tex(
 	if (f_v) {
 		cout << "isomorph_global::report_data_in_source_code_inside_tex" << endl;
 	}
-	selection_size = Iso.Reps->count;
+	selection_size = Iso.Folding->Reps->count;
 	selection = NEW_int(selection_size);
 	for (i = 0; i < selection_size; i++) {
 		selection[i] = i;
@@ -976,11 +976,11 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 	//fp << "\\clearpage" << endl << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];		
-		Iso.load_solution(id, data);
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data);
 		for (i = 0; i < Iso.size; i++) {
 			fp << data[i];
 			if (i < Iso.size - 1) {
@@ -995,11 +995,11 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 	fp << "int " << prefix << "_reps[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];		
-		Iso.load_solution(id, data);
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data);
 		fp << "\t";
 		for (i = 0; i < Iso.size; i++) {
 			fp << data[i];
@@ -1014,13 +1014,13 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 
 		ring_theory::longinteger_object go;
 		
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];		
-		Iso.load_solution(id, data);
-		if (Iso.Reps->stab[h]) {
-			Iso.Reps->stab[h]->group_order(go);
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data);
+		if (Iso.Folding->Reps->stab[h]) {
+			Iso.Folding->Reps->stab[h]->group_order(go);
 			fp << "\"";
 			go.print_not_scientific(fp);
 			fp << "\"," << endl;
@@ -1055,7 +1055,7 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 				cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection before extract_strong_"
 						"generators_in_order" << endl;
 			}
-			Iso.Reps->stab[h]->extract_strong_generators_in_order(
+			Iso.Folding->Reps->stab[h]->extract_strong_generators_in_order(
 					*gens, tl, 0);
 
 			stab_gens_first[s] = fst;
@@ -1119,9 +1119,9 @@ static void callback_compute_down_orbits_worker(
 	isomorph_global *IG = (isomorph_global *) data;
 
 	//f_memory_debug = TRUE;
-	Nb_orbits = NEW_int(Iso->Reps->count * 2);
-	Down_orbit_identify = NEW_pint(Iso->Reps->count);
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	Nb_orbits = NEW_int(Iso->Folding->Reps->count * 2);
+	Down_orbit_identify = NEW_pint(Iso->Folding->Reps->count);
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 
 		int cnt_orbits, cnt_special_orbits;
 		int *special_orbit_identify;
@@ -1132,7 +1132,7 @@ static void callback_compute_down_orbits_worker(
 
 		if (f_vv) {
 			cout << "callback_compute_down_orbits_worker orbit "
-					<< orbit << " / " << Iso->Reps->count
+					<< orbit << " / " << Iso->Folding->Reps->count
 					<< " cnt_orbits=" << cnt_orbits
 					<< " cnt_special_orbits=" << cnt_special_orbits << endl;
 		}
@@ -1155,7 +1155,7 @@ static void callback_compute_down_orbits_worker(
 		string fname;
 
 		fname.assign("Nb_down_orbits.csv");
-		Fio.int_matrix_write_csv(fname, Nb_orbits, Iso->Reps->count, 2);
+		Fio.int_matrix_write_csv(fname, Nb_orbits, Iso->Folding->Reps->count, 2);
 	}
 
 	if (f_v) {
@@ -1166,7 +1166,7 @@ static void callback_compute_down_orbits_worker(
 
 	Down_identify = NEW_int(nb_special_orbits * 3);
 	h = 0;
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 		for (i = 0; i < Nb_orbits[orbit * 2 + 1]; i++) {
 			idx = Down_orbit_identify[orbit][i];
 			Down_identify[h * 3 + 0] = orbit;
@@ -1183,7 +1183,7 @@ static void callback_compute_down_orbits_worker(
 		Fio.int_matrix_write_csv(fname, Down_identify, nb_special_orbits, 3);
 	}
 
-	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
+	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 		FREE_int(Down_orbit_identify[orbit]);
 	}
 	FREE_pint(Down_orbit_identify);

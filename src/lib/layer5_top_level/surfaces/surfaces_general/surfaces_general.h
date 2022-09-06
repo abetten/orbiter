@@ -652,6 +652,7 @@ public:
 
 	cubic_surfaces_and_arcs::classify_trihedral_pairs *Classify_trihedral_pairs;
 
+	geometry::spread_domain *SD;
 	spreads::recoordinatize *Recoordinatize;
 	long int *regulus; // [regulus_size]
 	int regulus_size; // q + 1

@@ -286,8 +286,6 @@ public:
 
 	colored_graph();
 	~colored_graph();
-	void null();
-	void freeself();
 	void compute_edges(int verbose_level);
 	int is_adjacent(int i, int j);
 	void set_adjacency(int i, int j, int a);

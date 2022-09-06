@@ -13598,14 +13598,15 @@ classify_spreads_16_4:
 
 
 
-classify_spreads_25_starter:
-	$(ORBITER) -v 10 \
+classify_spreads_25_starter_lift_case_0:
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define C -spread_classifier \
 			-projective_space P \
 			-k 2 \
 			-starter_size 5 \
+			-recoordinatize \
 			-poset_classification_control \
 				-draw_options \
 					-radius 20 \
@@ -13617,7 +13618,7 @@ classify_spreads_25_starter:
 				-draw_poset \
 					-problem_label spreads_25 \
 				-end \
-			-output_prefix "." \
+			-output_prefix "" \
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
@@ -13629,10 +13630,146 @@ classify_spreads_25_starter:
 		-with C -do -spread_classify_activity \
 			-prepare_lifting_single_case 0 \
 		-end
-	#pdflatex spreads_27_3_poset_detailed_lvl_5.tex
-	#open spreads_27_3_poset_detailed_lvl_5.pdf
 
 
+#save_colored_graph fname=spreads_25_graph_0.bin
+#save_colored_graph nb_vertices=225
+#save_colored_graph nb_colors=21
+#save_colored_graph nb_colors_per_vertex=1
+#save_colored_graph done
+#colored_graph::save done
+#Written file spreads_25_graph_0.bin of size 5914
+
+
+spreads_25_starter_0_cliques:
+	$(ORBITER) -v 2 \
+			-define G -graph -load spreads_25_graph_0.bin -end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 21 -end \
+			-end \
+
+#graph_theoretic_activity::perform_activity Gr->label=spreads_25_graph_0 nb_sol = 7680
+
+
+classify_spreads_25_starter_lift_all_cases:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 2 \
+			-starter_size 5 \
+			-recoordinatize \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-W \
+				-draw_poset \
+					-problem_label spreads_25 \
+				-end \
+			-output_prefix "" \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_25 \
+				-W -depth 5 \
+				-report -end \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-prepare_lifting_all_cases \
+		-end
+
+spreads_25_starter_cliques:
+	$(ORBITER) -v 2 \
+		-loop L 0 29 1 \
+			-define G -graph -load spreads_25_graph_%L.bin -end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 21 -end \
+			-end \
+		-end_loop
+
+
+classify_spreads_25_isomorph:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 2 \
+			-starter_size 5 \
+			-recoordinatize \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-W \
+				-draw_poset \
+					-problem_label spreads_25 \
+				-end \
+			-output_prefix "" \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_25 \
+				-W -depth 5 \
+				-report -end \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				"./" \
+				"./" \
+				-use_database_for_starter \
+				-build_db \
+				-solution_prefix "" \
+				-base_fname "" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				"./" \
+				"./" \
+				-use_database_for_starter \
+				-read_solutions \
+				-solution_prefix "" \
+				-base_fname "spreads_25_graph" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				"./" \
+				"./" \
+				-use_database_for_starter \
+				-compute_orbits \
+				-solution_prefix "" \
+				-base_fname "spreads_25_graph" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				"./" \
+				"./" \
+				-use_database_for_starter \
+				-isomorph_testing \
+				-solution_prefix "" \
+				-base_fname "spreads_25_graph" \
+			-end \
+		-end
+
+#We found 21 isomorphism types
+#1:33
+
+#dont:
 
 
 classify_spreads_27_3_starter:
@@ -13643,6 +13780,7 @@ classify_spreads_27_3_starter:
 			-projective_space P \
 			-k 3 \
 			-starter_size 5 \
+			-recoordinatize \
 			-poset_classification_control \
 				-draw_options \
 					-radius 20 \
@@ -13674,6 +13812,43 @@ classify_spreads_27_3_starter:
 #(39^2, 26^2, 10, 6^2, 5, 3^9, 2^9, 1^{24}) average is 4 + 26 / 50
 
 # time 4:31
+
+
+
+classify_spreads_32_starter:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 9 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 5 \
+			-starter_size 5 \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-W -depth 5 \
+				-draw_poset \
+					-problem_label spreads_32 \
+				-end \
+			-output_prefix "" \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_32 \
+				-W -depth 5 \
+				-report -end \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-prepare_lifting_single_case 0 \
+		-end
+
+
+
 
 
 ###############################################################################

@@ -30,6 +30,8 @@ spread_classify_description::spread_classify_description()
 
 	f_output_prefix = FALSE;
 	//std::string output_prefix;
+
+	f_recoordinatize = FALSE;
 }
 
 spread_classify_description::~spread_classify_description()
@@ -95,6 +97,13 @@ int spread_classify_description::read_arguments(int argc, std::string *argv,
 				cout << "-output_prefix " << output_prefix << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-recoordinatize") == 0) {
+			f_recoordinatize = TRUE;
+			if (f_v) {
+				cout << "-recoordinatize " << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -123,6 +132,9 @@ void spread_classify_description::print()
 	}
 	if (f_output_prefix) {
 		cout << "-output_prefix " << output_prefix << endl;
+	}
+	if (f_recoordinatize) {
+		cout << "-recoordinatize " << endl;
 	}
 }
 

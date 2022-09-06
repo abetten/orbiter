@@ -1684,7 +1684,6 @@ void projective_space_with_action::do_spread_classify(int k,
 	SC->init(
 			SD,
 			this,
-			TRUE /* f_recoordinatize */,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space_with_action::do_spread_classify after SC->init" << endl;

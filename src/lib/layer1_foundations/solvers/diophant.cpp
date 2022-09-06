@@ -113,7 +113,7 @@ void diophant::null()
 
 void diophant::freeself()
 {
-	int verbose_level = 0;
+	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int i;
 
@@ -4445,6 +4445,13 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 		}
 #endif
 	L = (n * (n - 1)) >> 1;
+	if (f_v) {
+		cout << "diophant::make_clique_graph_adjacency_matrix L=" << L << endl;
+	}
+
+
+	Adj = NEW_OBJECT(data_structures::bitvector);
+
 #if 0
 	//length = (L + 7) >> 3;
 	Adj = bitvector_allocate(L);
@@ -4452,9 +4459,24 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 		bitvector_m_ii(Adj, i, 1);
 	}
 #else
+	if (f_v) {
+		cout << "diophant::make_clique_graph_adjacency_matrix before Adj->allocate" << endl;
+	}
 	Adj->allocate(L);
+	if (f_v) {
+		cout << "diophant::make_clique_graph_adjacency_matrix after Adj->allocate" << endl;
+	}
+	if (f_v) {
+		cout << "diophant::make_clique_graph_adjacency_matrix setting array to one" << endl;
+	}
+	for (i = 0; i < L; i++) {
+		Adj->m_i(i, 1);
+	}
 #endif
 	for (i = 0; i < m; i++) {
+		if (FALSE) {
+			cout << "diophant::make_clique_graph_adjacency_matrix i=" << i << endl;
+		}
 		for (j1 = 0; j1 < n; j1++) {
 			if (Aij(i, j1) == 0) {
 				continue;

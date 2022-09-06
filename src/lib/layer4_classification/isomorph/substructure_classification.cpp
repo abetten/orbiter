@@ -1,69 +1,214 @@
-// isomorph_database.cpp
-// 
-// Anton Betten
-// Oct 21, 2008
-//
-// moved here from iso.cpp 3/22/09
-// renamed isomorph_database.cpp from iso2.cpp 7/14/11
-//
-//
+/*
+ * substructure_classification.cpp
+ *
+ *  Created on: Sep 6, 2022
+ *      Author: betten
+ */
+
+
+
+
 
 #include "layer1_foundations/foundations.h"
 #include "layer2_discreta/discreta.h"
 #include "layer3_group_actions/group_actions.h"
 #include "classification.h"
 
-
 using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
 
-void isomorph::setup_and_open_solution_database(int verbose_level)
+
+substructure_classification::substructure_classification()
+{
+	Iso = NULL;
+
+	f_use_database_for_starter = FALSE;
+	depth_completed = 0;
+	f_use_implicit_fusion = FALSE;
+
+
+
+	//std::string fname_db_level_ge;
+
+	//std::string fname_db_level;
+	//std::string fname_db_level_idx1;
+	//std::string fname_db_level_idx2;
+
+
+	nb_starter = 0;
+
+	gen = NULL;
+
+	D1 = NULL;
+	D2 = NULL;
+	fp_ge1 = NULL;
+	fp_ge2 = NULL;
+	fp_ge = NULL;
+
+	DB_level = NULL;
+
+
+}
+
+substructure_classification::~substructure_classification()
+{
+	int f_v = FALSE;
+
+	if (f_v) {
+		cout << "substructure_classification::~substructure_classification before deleting D1" << endl;
+		}
+	if (D1) {
+		freeobject(D1);
+		D1 = NULL;
+		}
+	if (f_v) {
+		cout << "substructure_classification::~substructure_classification before deleting D2" << endl;
+		}
+	if (D2) {
+		freeobject(D2);
+		D2 = NULL;
+		}
+
+}
+
+void substructure_classification::init(isomorph *Iso,
+		poset_classification::poset_classification *gen,
+		int f_use_database_for_starter,
+		int f_implicit_fusion,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph::setup_and_open_solution_database" << endl;
+		cout << "substructure_classification::init" << endl;
+		cout << "f_use_database_for_starter="
+				<< f_use_database_for_starter << endl;
+		cout << "f_implicit_fusion=" << f_implicit_fusion << endl;
 	}
-	if (DB_sol) {
-		layer2_discreta::freeobject(DB_sol);
-		DB_sol = NULL;
+
+	substructure_classification::Iso = Iso;
+	substructure_classification::f_use_database_for_starter = f_use_database_for_starter;
+	substructure_classification::gen = gen;
+
+	f_use_implicit_fusion = f_implicit_fusion;
+
+	nb_starter = 0;
+
+#if 0
+	if (f_use_database_for_starter) {
+		sprintf(fname_data_file, "%s_%d.data", prefix, level - 1);
 	}
-	DB_sol = (layer2_discreta::database *) layer2_discreta::callocobject(layer2_discreta::DATABASE);
-	DB_sol->change_to_database();
-	
-	init_DB_sol(0 /*verbose_level - 1*/);
-	
-	DB_sol->open(0 /*verbose_level - 1*/);
+	else {
+		sprintf(fname_data_file, "%s_%d.data", prefix, level);
+	}
+	if (f_v) {
+		cout << "fname_data_file=" << fname_data_file << endl;
+	}
+	sprintf(fname_level_file, "%s_lvl_%d", prefix, level);
+#endif
+
+
+	if (f_v) {
+		cout << "substructure_classification::init done" << endl;
+	}
 }
 
-void isomorph::setup_and_create_solution_database(int verbose_level)
+void substructure_classification::read_data_files_for_starter(int level,
+	std::string &prefix, int verbose_level)
+// Calls gen->read_level_file_binary for all levels i from 0 to level
+// Uses letter a files for i from 0 to level - 1
+// and letter b file for i = level.
+// If gen->f_starter is TRUE, we start from i = gen->starter_size instead.
+// Finally, it computes nb_starter.
+{
+	int f_v = (verbose_level >= 1);
+	string fname_base_a;
+	string fname_base_b;
+	int i, i0;
+
+	if (f_v) {
+		cout << "substructure_classification::read_data_files_for_starter" << endl;
+		cout << "prefix=" << prefix << endl;
+		cout << "level=" << level << endl;
+	}
+
+	fname_base_a.assign(prefix);
+	fname_base_a.append("a");
+	fname_base_b.assign(prefix);
+	fname_base_b.append("b");
+
+	if (gen->has_base_case()) {
+		i0 = gen->get_Base_case()->size;
+	}
+	else {
+		i0 = 0;
+	}
+	if (f_v) {
+		cout << "substructure_classification::read_data_files_for_starter "
+				"i0=" << i0 << endl;
+	}
+	for (i = i0; i < level; i++) {
+		if (f_v) {
+			cout << "substructure_classification::read_data_files_for_starter "
+					"reading data file for level "
+					<< i << " with prefix " << fname_base_b << endl;
+		}
+		gen->read_level_file_binary(i, fname_base_b,
+				MINIMUM(1, verbose_level - 1));
+	}
+
+	if (f_v) {
+		cout << "substructure_classification::read_data_files_for_starter "
+				"reading data file for level " << level
+				<< " with prefix " << fname_base_a << endl;
+	}
+	gen->read_level_file_binary(level, fname_base_a,
+			MINIMUM(1, verbose_level - 1));
+
+	if (f_v) {
+		cout << "substructure_classification::read_data_files_for_starter "
+				"before compute_nb_starter" << endl;
+	}
+	compute_nb_starter(level, verbose_level);
+
+	if (f_v) {
+		cout << "substructure_classification::read_data_files_for_starter finished, "
+				"number of starters = " << nb_starter << endl;
+	}
+}
+
+void substructure_classification::compute_nb_starter(int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
+	nb_starter = gen->nb_orbits_at_level(level);
 	if (f_v) {
-		cout << "isomorph::setup_and_create_solution_database" << endl;
+		cout << "substructure_classification::compute_nb_starter finished, "
+				"number of starters = " << nb_starter << endl;
 	}
-	if (DB_sol) {
-		layer2_discreta::freeobject(DB_sol);
-		DB_sol = NULL;
-	}
-	DB_sol = (layer2_discreta::database *) layer2_discreta::callocobject(layer2_discreta::DATABASE);
-	DB_sol->change_to_database();
-	
-	init_DB_sol(0 /*verbose_level - 1*/);
-	
-	DB_sol->create(0 /*verbose_level - 1*/);
+
 }
 
-void isomorph::close_solution_database(int verbose_level)
+void substructure_classification::print_node_local(int level, int node_local)
 {
-	DB_sol->close(0/*verbose_level - 1*/);
+	int n;
+
+	n = gen->first_node_at_level(level) + node_local;
+	cout << n << "=" << level << "/" << node_local;
 }
 
-void isomorph::setup_and_open_level_database(int verbose_level)
-// Called from do_iso_test, identify and test_hash 
+void substructure_classification::print_node_global(int level, int node_global)
+{
+	int node_local;
+
+	node_local = node_global - gen->first_node_at_level(level);
+	cout << node_global << "=" << level << "/" << node_local;
+}
+
+void substructure_classification::setup_and_open_level_database(int verbose_level)
+// Called from do_iso_test, identify and test_hash
 // (Which are all in isomorph_testing.cpp)
 // Calls init_DB_level for D1 and D2 and D1->open and D2->open.
 // Calls fopen for fp_ge1 and fp_ge2.
@@ -71,7 +216,7 @@ void isomorph::setup_and_open_level_database(int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph::setup_and_open_level_database" << endl;
+		cout << "substructure_classification::setup_and_open_level_database" << endl;
 	}
 
 	if (D1) {
@@ -86,29 +231,56 @@ void isomorph::setup_and_open_level_database(int verbose_level)
 	D1->change_to_database();
 	D2 = (layer2_discreta::database *) callocobject(layer2_discreta::DATABASE);
 	D2->change_to_database();
-	
-	init_DB_level(*D1, level - 1, verbose_level - 1);
+
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database before init_DB_level D1" << endl;
+	}
+	init_DB_level(*D1, Iso->level - 1, verbose_level - 1);
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database after init_DB_level D1" << endl;
+	}
 	fname_ge1.assign(fname_db_level_ge);
-	
-	init_DB_level(*D2, level, verbose_level - 1);
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database fname_ge1=" << fname_ge1 << endl;
+	}
+
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database before init_DB_level D2" << endl;
+	}
+	init_DB_level(*D2, Iso->level, verbose_level - 1);
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database after init_DB_level D2" << endl;
+	}
 	fname_ge2.assign(fname_db_level_ge);
-	
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database fname_ge2=" << fname_ge2 << endl;
+	}
+
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database before D1->open" << endl;
+	}
 	D1->open(0/*verbose_level - 1*/);
 	D2->open(0/*verbose_level - 1*/);
 
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database before fp_ge1" << endl;
+	}
 	fp_ge1 = new ifstream(fname_ge1, ios::binary);
 	fp_ge2 = new ifstream(fname_ge2, ios::binary);
 	//fp_ge1 = fopen(fname_ge1, "r");
 	//fp_ge2 = fopen(fname_ge2, "r");
+	if (f_v) {
+		cout << "substructure_classification::setup_and_open_level_database done" << endl;
+	}
 }
 
-void isomorph::close_level_database(int verbose_level)
+void substructure_classification::close_level_database(int verbose_level)
 // Closes D1, D2, fp_ge1, fp_ge2.
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph::close_level_database" << endl;
+		cout << "substructure_classification::close_level_database" << endl;
 	}
 	D1->close(0/*verbose_level - 1*/);
 	D2->close(0/*verbose_level - 1*/);
@@ -124,7 +296,7 @@ void isomorph::close_level_database(int verbose_level)
 	fp_ge2 = NULL;
 }
 
-void isomorph::prepare_database_access(int cur_level, int verbose_level)
+void substructure_classification::prepare_database_access(int cur_level, int verbose_level)
 // sets DB_level to be D1 or D2, depending on cur_level
 // Called from make_set_smaller_database
 // and load_strong_generators
@@ -133,177 +305,48 @@ void isomorph::prepare_database_access(int cur_level, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph::prepare_database_access "
+		cout << "substructure_classification::prepare_database_access "
 				"cur_level=" << cur_level << endl;
 	}
-	if (cur_level == level - 1) {
+	if (cur_level == Iso->level - 1) {
 		//first_node = gen->first_poset_orbit_node_at_level[level - 1];
 		DB_level = D1;
 		fp_ge = fp_ge1;
 	}
-	else if (cur_level == level) {
+	else if (cur_level == Iso->level) {
 		//first_node = gen->first_poset_orbit_node_at_level[level];
 		DB_level = D2;
 		fp_ge = fp_ge2;
 	}
 	else {
-		cout << "iso_node " << iso_nodes
-				<< " isomorph::prepare_database_access "
+		cout << "iso_node " << Iso->Folding->iso_nodes
+				<< " substructure_classification::prepare_database_access "
 						"cur_level = " << cur_level << endl;
 		exit(1);
 	}
 }
 
-void isomorph::init_DB_sol(int verbose_level)
-// We assume that the starter is of size 'level' and that 
-// fields 4,..., 4+level-1 are the starter values
-{
-	int f_v = (verbose_level >= 1);
-	layer2_discreta::database &D = *DB_sol;
-	layer2_discreta::btree B1, B2, B3, B4;
-	int f_compress = TRUE;
-	int f_duplicatekeys = TRUE;
-	int i;
-
-	if (f_v) {
-		cout << "isomorph::init_DB_sol" << endl;
-	}
-	//cout << "isomorph::init_DB_sol before D.init" << endl;
-	D.init(fname_db1.c_str(), layer2_discreta::VECTOR, f_compress);
 
 
-	//cout << "isomorph::init_DB_sol before B1.init" << endl;
-	B1.init(fname_db2.c_str(), f_duplicatekeys, 0 /* btree_idx */);
-	B1.add_key_int4(0, 0); 
-		// the index of the starter
-	B1.add_key_int4(1, 0);
-		// the number of this solution within the solutions 
-		// of the same starter
-	D.btree_access().append(B1);
-
-
-	//cout << "isomorph::init_DB_sol before B2.init" << endl;
-	B2.init(fname_db3.c_str(), f_duplicatekeys, 1 /* btree_idx */);
-		// entries 4, 5, ... 4 + level - 1 are the starter values 
-	for (i = 0; i < level; i++) {
-		B2.add_key_int4(4 + i, 0);
-	}
-	//B2.add_key_int4(3, 0);
-	//B2.add_key_int4(4, 0);
-	//B2.add_key_int4(5, 0);
-	//B2.add_key_int4(6, 0);
-	//B2.add_key_int4(7, 0);
-	//B2.add_key_int4(8, 0);
-	D.btree_access().append(B2);
-
-
-	//cout << "isomorph::init_DB_sol before B3.init" << endl;
-	B3.init(fname_db4.c_str(), f_duplicatekeys, 2 /* btree_idx */);
-	B3.add_key_int4(2, 0);
-		// the id
-	D.btree_access().append(B3);
-
-
-	B4.init(fname_db5.c_str(), f_duplicatekeys, 3 /* btree_idx */);
-	B4.add_key_int4(0, 0); 
-		// the index of the starter
-	B4.add_key_int4(3, 0); 
-		// the hash value
-	D.btree_access().append(B4);
-
-
-	//cout << "isomorph::init_DB_sol done" << endl;
-}
-
-void isomorph::add_solution_to_database(long int *data,
-	int nb, int id, int no, int nb_solutions, int h, uint_4 &datref,
-	int print_mod, int verbose_level)
-{
-	int f_vvv = (verbose_level >= 3);
-	layer2_discreta::Vector v;
-	int j;
-	
-	//h = int_vec_hash_after_sorting(data + 1, size);
-	v.m_l_n(4 + size);
-	v.m_ii(0, data[0]); // starter number
-	v.m_ii(1, nb); // solution number within this starter
-	v.m_ii(2, id); // global solution number
-	v.m_ii(3, h); // the hash number
-	for (j = 0; j < size; j++) {
-		v.m_ii(4 + j, data[1 + j]);
-	}
-	if (f_vvv || ((no % print_mod) == 0)) {
-		cout << "Solution no " << no << " / " << nb_solutions
-				<< " starter case " << data[0] << " nb " << nb
-				<< " id=" << id << " : " << v << " : " << endl;
-	}
-		
-	DB_sol->add_object_return_datref(v, datref, 0/*verbose_level - 3*/);
-	if (f_vvv) {
-		cout << "solution added" << endl;
-	}
-}
-
-void isomorph::load_solution(int id, long int *data)
-{
-	int i, j, datref;
-	layer2_discreta::Vector v;
-	//int verbose_level = 0;
-	
-	if (f_use_table_of_solutions) {
-		for (j = 0; j < size; j++) {
-			data[j] = table_of_solutions[id * size + j];
-		}
-		return;
-	}
-	//DB_sol->get_object_by_unique_int4(2, id, v, verbose_level);
-	datref = id_to_datref[id];
-	DB_sol->get_object((uint_4) datref, v, 0/*verbose_level*/);
-	
-	//cout << v << endl;
-	for (i = 0; i < size; i++) {
-		data[i] = v.s_ii(4 + i);
-	}
-}
-
-void isomorph::load_solution_by_btree(
-		int btree_idx, int idx, int &id, long int *data)
-{
-	//int i;
-	layer2_discreta::Vector v;
-
-	cout << "isomorph::load_solution_by_btree" << endl;
-	exit(1);
-#if 0
-	DB_sol->ith_object(idx, btree_idx, v, 0 /*verbose_level*/);
-	for (i = 0; i < size; i++) {
-		data[i] = v.s_ii(4 + i);
-	}
-	id = v.s_ii(2);
-#endif
-}
-
-
-
-int isomorph::find_extension_easy(
+int substructure_classification::find_extension_easy(
 		long int *set, int case_nb, int &idx, int verbose_level)
 // case_nb is the starter that is associated with the given set.
-// We wish to find out if the set is a solution that has been stored 
-// with that starter. 
-// If so, we wish to determine the number of that solution amongst all 
-// solutions for that starter (returned in idx). 
+// We wish to find out if the set is a solution that has been stored
+// with that starter.
+// If so, we wish to determine the number of that solution amongst all
+// solutions for that starter (returned in idx).
 // Otherwise, we return FALSE.
 
 // returns TRUE if found, FALSE otherwise
 // Called from identify_solution
 // Linear search through all solutions at a given starter.
-// calls load solution for each of the solutions 
+// calls load solution for each of the solutions
 // stored with the case and compares the vectors.
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph::find_extension_easy "
+		cout << "substructure_classification::find_extension_easy "
 				"case_nb=" << case_nb << endl;
 	}
 #if 0
@@ -311,18 +354,18 @@ int isomorph::find_extension_easy(
 	int ret2, idx2;
 	ret1 = find_extension_easy_old(D, set, case_nb, idx1, verbose_level);
 	if (f_v) {
-		cout << "isomorph::find_extension_easy idx1=" << idx1 << endl;
+		cout << "substructure_classification::find_extension_easy idx1=" << idx1 << endl;
 	}
 	ret2 = find_extension_easy_new(D, set, case_nb, idx2, verbose_level);
 	if (f_v) {
-		cout << "isomorph::find_extension_easy idx2=" << idx2 << endl;
+		cout << "substructure_classification::find_extension_easy idx2=" << idx2 << endl;
 	}
 	if (ret1 != ret2) {
-		cout << "isomorph::find_extension_easy ret1 != ret2" << endl;
+		cout << "substructure_classification::find_extension_easy ret1 != ret2" << endl;
 		exit(1);
 	}
 	if (ret1 && (idx1 != idx2)) {
-		cout << "isomorph::find_extension_easy "
+		cout << "substructure_classification::find_extension_easy "
 				"ret1 && (idx1 != idx2)" << endl;
 		exit(1);
 	}
@@ -335,30 +378,36 @@ int isomorph::find_extension_easy(
 #endif
 }
 
-int isomorph::find_extension_search_interval(long int *set,
-	int first, int len, int &idx, 
-	int f_btree_idx, int btree_idx, 
+int substructure_classification::find_extension_search_interval(long int *set,
+	int first, int len, int &idx,
+	int f_btree_idx, int btree_idx,
 	int f_through_hash, int verbose_level)
 {
-	long int *data = find_extension_set1;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "substructure_classification::find_extension_search_interval" << endl;
+	}
+
+	long int *data = Iso->Folding->find_extension_set1;
 	int i, id = 0;
 	data_structures::sorting Sorting;
-	
+
 	for (i = 0; i < len; i++) {
 		if (f_btree_idx) {
-			load_solution_by_btree(btree_idx, first + i, id, data);
+			Iso->Lifting->load_solution_by_btree(btree_idx, first + i, id, data);
 		}
 		else {
 			if (f_through_hash) {
-				id = hash_vs_id_id[first + i];
+				id = Iso->Lifting->hash_vs_id_id[first + i];
 			}
 			else {
 				id = first + i;
 			}
-			load_solution(id, data);
+			Iso->Lifting->load_solution(id, data);
 		}
-		Sorting.lint_vec_heapsort(data + level, size - level);
-		if (Sorting.lint_vec_compare(set + level, data + level, size - level) == 0) {
+		Sorting.lint_vec_heapsort(data + Iso->level, Iso->size - Iso->level);
+		if (Sorting.lint_vec_compare(set + Iso->level, data + Iso->level, Iso->size - Iso->level) == 0) {
 			break;
 		}
 	}
@@ -369,39 +418,42 @@ int isomorph::find_extension_search_interval(long int *set,
 		//exit(1);
 	}
 	idx = id;
+	if (f_v) {
+		cout << "substructure_classification::find_extension_search_interval done" << endl;
+	}
 	return TRUE;
 }
 
-int isomorph::find_extension_easy_old(long int *set,
+int substructure_classification::find_extension_easy_old(long int *set,
 		int case_nb, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int first, len, ret;
 	data_structures::sorting Sorting;
-	
+
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_old" << endl;
+		cout << "substructure_classification::find_extension_easy_old" << endl;
 		cout << "case_nb=" << case_nb << endl;
 	}
-	Sorting.lint_vec_heapsort(set + level, size - level);
-	first = solution_first[case_nb];
-	len = solution_len[case_nb];
-	ret = find_extension_search_interval(set, 
+	Sorting.lint_vec_heapsort(set + Iso->level, Iso->size - Iso->level);
+	first = Iso->Lifting->solution_first[case_nb];
+	len = Iso->Lifting->solution_len[case_nb];
+	ret = find_extension_search_interval(set,
 		first, len, idx, FALSE, 0, FALSE, verbose_level);
 	if (f_v) {
 		if (ret) {
-			cout << "isomorph::find_extension_easy_old "
+			cout << "substructure_classification::find_extension_easy_old "
 					"solution found at idx=" << idx << endl;
 		}
 		else {
-			cout << "isomorph::find_extension_easy_old "
+			cout << "substructure_classification::find_extension_easy_old "
 					"solution not found" << endl;
 		}
 	}
 	return ret;
 }
 
-int isomorph::find_extension_easy_new(long int *set,
+int substructure_classification::find_extension_easy_new(long int *set,
 		int case_nb, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -409,29 +461,30 @@ int isomorph::find_extension_easy_new(long int *set,
 	int ret;
 	int f_found, first, idx2, len;
 	data_structures::sorting Sorting;
-	
+
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_new" << endl;
+		cout << "substructure_classification::find_extension_easy_new" << endl;
 	}
-	Sorting.lint_vec_heapsort(set + level, size - level);
-	
+	Sorting.lint_vec_heapsort(set + Iso->level, Iso->size - Iso->level);
+
 	int h;
 	data_structures::data_structures_global Data;
 
-	h = Data.lint_vec_hash_after_sorting(set, size);
+	h = Data.lint_vec_hash_after_sorting(set, Iso->size);
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_new h=" << h << endl;
+		cout << "substructure_classification::find_extension_easy_new h=" << h << endl;
 	}
 
 
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_new before "
+		cout << "substructure_classification::find_extension_easy_new before "
 				"int_vec_search_first_occurence(h)" << endl;
 	}
-	f_found = Sorting.int_vec_search_first_occurence(hash_vs_id_hash,
-			N, h, first, 0 /*verbose_level*/);
+	f_found = Sorting.int_vec_search_first_occurence(
+			Iso->Lifting->hash_vs_id_hash,
+			Iso->Lifting->N, h, first, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_new after "
+		cout << "substructure_classification::find_extension_easy_new after "
 				"int_vec_search_first_occurence(h) f_found=" << f_found << endl;
 	}
 
@@ -440,18 +493,19 @@ int isomorph::find_extension_easy_new(long int *set,
 		goto finish;
 	}
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_new before "
+		cout << "substructure_classification::find_extension_easy_new before "
 				"int_vec_search_first_occurence(h + 1) h+1=" << h + 1 << endl;
 	}
-	f_found = Sorting.int_vec_search_first_occurence(hash_vs_id_hash,
-			N, h + 1, idx2, 0 /*verbose_level*/);
+	f_found = Sorting.int_vec_search_first_occurence(
+			Iso->Lifting->hash_vs_id_hash,
+			Iso->Lifting->N, h + 1, idx2, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_new after "
+		cout << "substructure_classification::find_extension_easy_new after "
 				"int_vec_search_first_occurence(h+1) f_found=" << f_found << endl;
 	}
 	len = idx2 - first;
 	if (f_v) {
-		cout << "isomorph::find_extension_easy_new len=" << len << endl;
+		cout << "substructure_classification::find_extension_easy_new len=" << len << endl;
 	}
 #if 0
 
@@ -469,9 +523,9 @@ int isomorph::find_extension_easy_new(long int *set,
 			0 /*verbose_level */);
 
 #if 0
-	B4.search_interval_int4_int4(l0, u0, 
-		l1, u1, 
-		first, len, 
+	B4.search_interval_int4_int4(l0, u0,
+		l1, u1,
+		first, len,
 		3 /*verbose_level*/);
 #endif
 	if (f_vv) {
@@ -490,13 +544,13 @@ int isomorph::find_extension_easy_new(long int *set,
 	}
 	else {
 		if (f_v) {
-			cout << "isomorph::find_extension_easy_new before "
+			cout << "substructure_classification::find_extension_easy_new before "
 					"find_extension_search_interval" << endl;
 		}
-		ret = find_extension_search_interval(set, 
+		ret = find_extension_search_interval(set,
 			first, len, idx, FALSE, 3, TRUE, 0 /*verbose_level*/);
 		if (f_v) {
-			cout << "isomorph::find_extension_easy_new after "
+			cout << "substructure_classification::find_extension_easy_new after "
 					"find_extension_search_interval ret=" << ret << endl;
 		}
 	}
@@ -506,19 +560,19 @@ finish:
 
 	if (f_v) {
 		if (ret) {
-			cout << "isomorph::find_extension_easy_new "
+			cout << "substructure_classification::find_extension_easy_new "
 					"solution found at idx=" << idx << endl;
 		}
 		else {
-			cout << "isomorph::find_extension_easy_new "
+			cout << "substructure_classification::find_extension_easy_new "
 					"solution not found" << endl;
 		}
 	}
 	return ret;
-	
+
 }
 
-int isomorph::open_database_and_identify_object(long int *set,
+int substructure_classification::open_database_and_identify_object(long int *set,
 	int *transporter,
 	int f_implicit_fusion, int verbose_level)
 {
@@ -527,40 +581,40 @@ int isomorph::open_database_and_identify_object(long int *set,
 	int f_failure_to_find_point;
 
 	if (f_v) {
-		cout << "isomorph::open_database_and_identify_object" << endl;
+		cout << "substructure_classification::open_database_and_identify_object" << endl;
 	}
 
-	setup_and_open_solution_database(0/*verbose_level - 1*/);
+	Iso->Lifting->setup_and_open_solution_database(0/*verbose_level - 1*/);
 	setup_and_open_level_database(0/*verbose_level - 1*/);
-	
-	r = identify_solution(set, transporter, 
+
+	r = Iso->Folding->identify_solution(set, transporter,
 		f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
-	
+
 	if (f_failure_to_find_point) {
-		cout << "isomorph::open_database_and_identify_object: "
+		cout << "substructure_classification::open_database_and_identify_object: "
 				"f_failure_to_find_point" << endl;
 		r = -1;
  	}
 
 	else {
 		if (f_v) {
-			cout << "isomorph::open_database_and_identify_object: "
+			cout << "substructure_classification::open_database_and_identify_object: "
 					"object identified as belonging to isomorphism class "
 					<< r << endl;
 		}
 	}
 
-	close_solution_database(0/*verbose_level - 1*/);
+	Iso->Lifting->close_solution_database(0/*verbose_level - 1*/);
 	close_level_database(0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "isomorph::open_database_and_identify_object done" << endl;
+		cout << "substructure_classification::open_database_and_identify_object done" << endl;
 	}
 	return r;
 }
 
 
 
-void isomorph::init_DB_level(layer2_discreta::database &D,
+void substructure_classification::init_DB_level(layer2_discreta::database &D,
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -571,50 +625,101 @@ void isomorph::init_DB_level(layer2_discreta::database &D,
 	char str[1000];
 
 	if (f_v) {
-		cout << "isomorph::init_DB_level level=" << level << endl;
+		cout << "substructure_classification::init_DB_level level=" << level << endl;
 	}
 
-	fname_db_level.assign(prefix);
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level Iso->prefix=" << Iso->prefix << endl;
+	}
+	fname_db_level.assign(Iso->prefix);
 	sprintf(str, "starter_lvl_%d.db", level);
 	fname_db_level.append(str);
 
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level fname_db_level=" << fname_db_level << endl;
+	}
 
 	//sprintf(fname_db_level, "%sstarter_lvl_%d.db", prefix, level);
 
-	fname_db_level_idx1.assign(prefix);
+	fname_db_level_idx1.assign(Iso->prefix);
 	sprintf(str, "starter_lvl_%d_a.idx", level);
 	fname_db_level_idx1.append(str);
 
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level fname_db_level_idx1=" << fname_db_level_idx1 << endl;
+	}
+
 	//sprintf(fname_db_level_idx1, "%sstarter_lvl_%d_a.idx", prefix, level);
 
-	fname_db_level_idx2.assign(prefix);
+	fname_db_level_idx2.assign(Iso->prefix);
 	sprintf(str, "starter_lvl_%d_b.idx", level);
 	fname_db_level_idx2.append(str);
 
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level fname_db_level_idx2=" << fname_db_level_idx2 << endl;
+	}
 	//sprintf(fname_db_level_idx2, "%sstarter_lvl_%d_b.idx", prefix, level);
 
-	fname_db_level_ge.assign(prefix);
+	fname_db_level_ge.assign(Iso->prefix);
 	sprintf(str, "starter_lvl_%d_ge.bin", level);
 	fname_db_level_ge.append(str);
 
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level fname_db_level_ge=" << fname_db_level_ge << endl;
+	}
 
 	//sprintf(fname_db_level_ge, "%sstarter_lvl_%d_ge.bin", prefix, level);
 
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level before D.init" << endl;
+	}
 	D.init(fname_db_level.c_str(), layer2_discreta::VECTOR, f_compress);
-	
-	B1.init(fname_db_level_idx1.c_str(), f_duplicatekeys, 0 /* btree_idx */);
-	B1.add_key_int4(0, 0); 
-	D.btree_access().append(B1);
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level after D.init" << endl;
+	}
 
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level before B1.init" << endl;
+	}
+	B1.init(fname_db_level_idx1.c_str(), f_duplicatekeys, 0 /* btree_idx */);
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level after B1.init" << endl;
+	}
+
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level before B1.add_key_int4" << endl;
+	}
+	B1.add_key_int4(0, 0);
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level after B1.add_key_int4" << endl;
+	}
+
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level before D.btree_access" << endl;
+	}
+	D.btree_access().append(B1);
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level after D.btree_access" << endl;
+	}
+
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level before B2.init" << endl;
+	}
 	B2.init(fname_db_level_idx2.c_str(), f_duplicatekeys, 1 /* btree_idx */);
 		// 2 up to 2+level-1 are the values of the starter (of size level)
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level after B2.init" << endl;
+	}
 	for (i = 0; i < level; i++) {
 		B2.add_key_int4(2 + i, 0);
 	}
 	D.btree_access().append(B2);
+	if (f_v) {
+		cout << "substructure_classification::init_DB_level level=" << level << " done" << endl;
+	}
 }
 
-void isomorph::create_level_database(int level, int verbose_level)
+void substructure_classification::create_level_database(int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;//(verbose_level >= 2);
@@ -628,11 +733,11 @@ void isomorph::create_level_database(int level, int verbose_level)
 	data_structures::sorting Sorting;
 
 	if (f_v) {
-		cout << "isomorph::create_level_database "
+		cout << "substructure_classification::create_level_database "
 				"level = " << level << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 	}
-	
+
 	Elt = NEW_int(gen->get_A()->elt_size_in_int);
 	f = gen->first_node_at_level(level);
 	nb_nodes = gen->nb_orbits_at_level(level);
@@ -641,27 +746,27 @@ void isomorph::create_level_database(int level, int verbose_level)
 		cout << "f=" << f << endl;
 		cout << "nb_nodes=" << nb_nodes << endl;
 	}
-	
+
 	layer2_discreta::database D;
 	//FILE *fp;
 	int cnt = 0;
-	
+
 	//elt = NEW_char(gen->A->coded_elt_size_in_char);
-	
+
 	if (f_v) {
-		cout << "isomorph::create_level_database before init_DB_level" << endl;
+		cout << "substructure_classification::create_level_database before init_DB_level" << endl;
 	}
 	init_DB_level(D, level, verbose_level - 1);
 	if (f_v) {
-		cout << "isomorph::create_level_database after init_DB_level" << endl;
+		cout << "substructure_classification::create_level_database after init_DB_level" << endl;
 	}
-	
+
 	if (f_v) {
-		cout << "isomorph::create_level_database before D.create" << endl;
+		cout << "substructure_classification::create_level_database before D.create" << endl;
 	}
 	D.create(0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "isomorph::create_level_database after D.create" << endl;
+		cout << "substructure_classification::create_level_database after D.create" << endl;
 	}
 	//fp = fopen(fname_db_level_ge, "wb");
 	{
@@ -675,7 +780,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 			O = gen->get_node(I);
 			O->store_set_to(gen, level - 1, set1);
 			if (f_v && ((i % print_mod) == 0)) {
-				cout << "isomorph::create_level_database level "
+				cout << "substructure_classification::create_level_database level "
 						<< level << " i=" << i << " / " << nb_nodes
 						<< " set=";
 				Lint_vec_print(cout, set1, level);
@@ -718,7 +823,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 					nb_fusion++;
 				}
 			}
-			
+
 			len = 1 + 1 + level + 1;
 			if (O->get_nb_strong_generators()) {
 				len += gen->get_A()->base_len();
@@ -728,7 +833,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 			len += 1; // for the reference of the first group element
 			//len += O->nb_strong_generators;
 			//len += nb_fusion;
-			
+
 			v.m_l_n(len);
 			idx = 0;
 			v.m_ii(idx++, I);
@@ -765,8 +870,8 @@ void isomorph::create_level_database(int level, int verbose_level)
 						Lint_vec_print(cout, set2, level + 1);
 						cout << endl;
 					}
-		
-		
+
+
 					J = gen->find_poset_orbit_node_for_set(level + 1,
 							set2, FALSE /* f_tolerant */, 0);
 					v.m_ii(idx++, J);
@@ -823,39 +928,39 @@ void isomorph::create_level_database(int level, int verbose_level)
 			O->get_strong_generators_handle(gen_hdl, verbose_level);
 
 			if (f_v) {
-				cout << "isomorph::create_level_database before writing generators, gen_hdl.size()=" << gen_hdl.size() << endl;
+				cout << "substructure_classification::create_level_database before writing generators, gen_hdl.size()=" << gen_hdl.size() << endl;
 			}
 
 			for (j = 0; j < gen_hdl.size(); j++) {
 				if (f_v) {
-					cout << "isomorph::create_level_database j=" << j << " / " << gen_hdl.size()
+					cout << "substructure_classification::create_level_database j=" << j << " / " << gen_hdl.size()
 							<< " gen_hdl[j]=" << gen_hdl[j] << endl;
 				}
 				if (f_v) {
-					cout << "isomorph::create_level_database before element_retrieve" << endl;
+					cout << "substructure_classification::create_level_database before element_retrieve" << endl;
 				}
 				gen->get_A()->element_retrieve(
-						gen_hdl[j], Elt1,
+						gen_hdl[j], Iso->Folding->Elt1,
 						0/*verbose_level*/);
 				if (f_v) {
-					cout << "isomorph::create_level_database before element_write_file_fp" << endl;
+					cout << "substructure_classification::create_level_database before element_write_file_fp" << endl;
 				}
-				gen->get_A()->element_write_file_fp(Elt1, fp,
+				gen->get_A()->element_write_file_fp(Iso->Folding->Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}
 
 
 			if (f_v) {
-				cout << "isomorph::create_level_database before writing fusion elements, O->get_nb_of_extensions()=" << O->get_nb_of_extensions() << endl;
+				cout << "substructure_classification::create_level_database before writing fusion elements, O->get_nb_of_extensions()=" << O->get_nb_of_extensions() << endl;
 			}
 
 			for (j = 0; j < O->get_nb_of_extensions(); j++) {
 				if (O->get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
 					continue;
 				}
-				gen->get_A()->element_retrieve(O->get_E(j)->get_data(), Elt1, FALSE);
-				gen->get_A()->element_write_file_fp(Elt1, fp,
+				gen->get_A()->element_retrieve(O->get_E(j)->get_data(), Iso->Folding->Elt1, FALSE);
+				gen->get_A()->element_write_file_fp(Iso->Folding->Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}
@@ -867,7 +972,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 #endif
 
 			if (f_v) {
-				cout << "isomorph::create_level_database before D.add_object" << endl;
+				cout << "substructure_classification::create_level_database before D.add_object" << endl;
 			}
 
 
@@ -897,14 +1002,14 @@ void isomorph::create_level_database(int level, int verbose_level)
 		cout << "gen->A->coded_elt_size_in_char="
 				<< gen->get_A()->coded_elt_size_in_char << endl;
 	}
-	
+
 	FREE_int(Elt);
 
 	//FREE_char(elt);
-	
+
 }
 
-void isomorph::load_strong_generators(int cur_level,
+void substructure_classification::load_strong_generators(int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
 		ring_theory::longinteger_object &go,
@@ -916,19 +1021,19 @@ void isomorph::load_strong_generators(int cur_level,
 	int f_v5 = (verbose_level >= 5);
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators "
+		cout << "substructure_classification::load_strong_generators "
 				"cur_level=" << cur_level << " cur_node_local="
 				<< cur_node_local << endl;
 	}
 	if (f_use_database_for_starter) {
 		if (f_vv) {
-			cout << "isomorph::load_strong_generators "
+			cout << "substructure_classification::load_strong_generators "
 					"using database" << endl;
 		}
-		load_strong_generators_database(cur_level, cur_node_local, 
+		load_strong_generators_database(cur_level, cur_node_local,
 			gens, go, verbose_level);
 		if (f_v5) {
-			cout << "isomorph::load_strong_generators "
+			cout << "substructure_classification::load_strong_generators "
 					"found the following strong generators:" << endl;
 			gens.print(cout);
 		}
@@ -938,11 +1043,11 @@ void isomorph::load_strong_generators(int cur_level,
 			gens, go, verbose_level);
 	}
 	if (f_v) {
-		cout << "isomorph::load_strong_generators done" << endl;
+		cout << "substructure_classification::load_strong_generators done" << endl;
 	}
 }
 
-void isomorph::load_strong_generators_tree(int cur_level,
+void substructure_classification::load_strong_generators_tree(int cur_level,
 	int cur_node_local,
 	data_structures_groups::vector_ge &gens,
 	ring_theory::longinteger_object &go,
@@ -954,7 +1059,7 @@ void isomorph::load_strong_generators_tree(int cur_level,
 	//longinteger_domain Dom;
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_tree "
+		cout << "substructure_classification::load_strong_generators_tree "
 				"cur_level=" << cur_level << " cur_node_local="
 				<< cur_node_local << endl;
 	}
@@ -999,13 +1104,13 @@ void isomorph::load_strong_generators_tree(int cur_level,
 	}
 //finish:
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_tree "
+		cout << "substructure_classification::load_strong_generators_tree "
 				"cur_level=" << cur_level << " cur_node_local="
 				<< cur_node_local << " done" << endl;
 	}
 }
 
-void isomorph::load_strong_generators_database(int cur_level,
+void substructure_classification::load_strong_generators_database(int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
 		ring_theory::longinteger_object &go,
@@ -1025,7 +1130,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_database "
+		cout << "substructure_classification::load_strong_generators_database "
 				"cur_level=" << cur_level << " cur_node_local="
 				<< cur_node_local << endl;
 	}
@@ -1033,24 +1138,24 @@ void isomorph::load_strong_generators_database(int cur_level,
 	prepare_database_access(cur_level, verbose_level);
 
 	tmp_ELT = NEW_int(gen->get_A()->elt_size_in_int);
-	
+
 	//cur_node_local = cur_node - first_node;
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_database "
+		cout << "substructure_classification::load_strong_generators_database "
 				"loading object " << cur_node_local << endl;
 	}
 	DB_level->ith_object(cur_node_local, 0/* btree_idx*/, v,
 			0 /*MINIMUM(1, verbose_level - 2)*/);
-	
+
 	if (f_vvv) {
-		cout << "isomorph::load_strong_generators_database "
+		cout << "substructure_classification::load_strong_generators_database "
 				"v=" << v << endl;
 	}
 	for (i = 0; i < cur_level; i++) {
 		set[i] = v.s_ii(2 + i);
 	}
 	if (f_vv) {
-		cout << "isomorph::load_strong_generators_database set: ";
+		cout << "substructure_classification::load_strong_generators_database set: ";
 		Int_vec_print(cout, set, cur_level);
 		cout << endl;
 	}
@@ -1059,7 +1164,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 	pos = 2 + cur_level;
 	nb_strong_generators = v.s_ii(pos++);
 	if (f_vv) {
-		cout << "isomorph::load_strong_generators_database "
+		cout << "substructure_classification::load_strong_generators_database "
 				"nb_strong_generators="
 				<< nb_strong_generators << endl;
 	}
@@ -1078,7 +1183,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 	pos = v.s_l() - 1;
 	ref = v.s_ii(pos++);
 	if (f_vv) {
-		cout << "isomorph::load_strong_generators_database "
+		cout << "substructure_classification::load_strong_generators_database "
 				"ref = " << ref << endl;
 	}
 
@@ -1095,14 +1200,14 @@ finish:
 	FREE_int(tmp_ELT);
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_database "
+		cout << "substructure_classification::load_strong_generators_database "
 				"cur_level=" << cur_level << " cur_node_local="
 				<< cur_node_local << " done" << endl;
 	}
-	
+
 }
 
 
-}}
 
+}}
 

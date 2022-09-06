@@ -1520,6 +1520,31 @@ void grassmann::make_partition(long int *Spread, int spread_sz, long int *&Part,
 	}
 }
 
+void grassmann::make_spread_element(int *Spread_element, int *A, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "grassmann::make_spread_element" << endl;
+	}
+	int i, j;
+
+	// make the k x n matrix ( I_k | Elt1 )
+	Int_vec_zero(Spread_element, k * n);
+	for (i = 0; i < k; i++) {
+		Spread_element[i * n + i] = 1;
+	}
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			Spread_element[i * n + k + j] = A[i * k + j];
+		}
+	}
+	if (f_v) {
+		cout << "grassmann::make_spread_element done" << endl;
+	}
+}
+
 }}}
 
 

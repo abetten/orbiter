@@ -37,6 +37,7 @@ surface_with_action::surface_with_action()
 
 	Classify_trihedral_pairs = NULL;
 
+	SD = NULL;
 	Recoordinatize = NULL;
 	regulus = NULL;
 	regulus_size = 0;
@@ -66,6 +67,9 @@ void surface_with_action::freeself()
 	}
 	if (Classify_trihedral_pairs) {
 		FREE_OBJECT(Classify_trihedral_pairs);
+	}
+	if (SD) {
+		FREE_OBJECT(SD);
 	}
 	if (Recoordinatize) {
 		FREE_OBJECT(Recoordinatize);
@@ -174,14 +178,34 @@ void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
 		//sprintf(str, "live_points_q%d", PA->F->q);
 		//fname_live_points.assign(str);
 
+		SD = NEW_OBJECT(geometry::spread_domain);
+
+		if (f_v) {
+			cout << "surface_with_action::init before SD->init" << endl;
+		}
+
+		SD->init(
+				PA->F,
+				4 /*n*/, 2 /* k */,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "surface_with_action::init after SD->init" << endl;
+		}
+
+
+
 		Recoordinatize = NEW_OBJECT(spreads::recoordinatize);
 
 		if (f_v) {
 			cout << "surface_with_action::init "
 					"before Recoordinatize->init" << endl;
 		}
-		Recoordinatize->init(4 /*n*/, 2 /*k*/,
-			PA->F, Surf->Gr, A, A2,
+		Recoordinatize->init(
+				SD,
+				//4 /*n*/, 2 /*k*/,
+				//PA->F, Surf->Gr,
+				A, A2,
 			TRUE /* f_projective */, f_semilinear,
 			NULL /*int (*check_function_incremental)(int len,
 				int *S, void *data, int verbose_level)*/,

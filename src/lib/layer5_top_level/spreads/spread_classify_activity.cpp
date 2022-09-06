@@ -86,7 +86,7 @@ void spread_classify_activity::perform_activity(int verbose_level)
 	else if (Descr->f_prepare_lifting_single_case) {
 
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity f_prepare_lifting" << endl;
+			cout << "spread_classify_activity::perform_activity f_prepare_lifting_single_case" << endl;
 		}
 
 
@@ -95,7 +95,6 @@ void spread_classify_activity::perform_activity(int verbose_level)
 		}
 
 		int nb_vertices;
-		//graph_theory::colored_graph *CG;
 		solvers::diophant *Dio;
 		long int *col_labels;
 		int f_ruled_out;
@@ -117,7 +116,78 @@ void spread_classify_activity::perform_activity(int verbose_level)
 		}
 
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity f_prepare_lifting done" << endl;
+			cout << "spread_classify_activity::perform_activity f_prepare_lifting_single_case done" << endl;
+		}
+
+	}
+
+	else if (Descr->f_prepare_lifting_all_cases) {
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_prepare_lifting_all_cases" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity before Spread_classify->lifting" << endl;
+		}
+
+		int nb_orbits;
+		int case_nb;
+
+		nb_orbits = Spread_classify->gen->nb_orbits_at_level(Spread_classify->starter_size);
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity nb_orbits = " << nb_orbits << endl;
+		}
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity before Spread_classify->lifting" << endl;
+		}
+
+		for (case_nb = 0; case_nb < nb_orbits; case_nb++) {
+
+			int nb_vertices;
+			solvers::diophant *Dio;
+			long int *col_labels;
+			int f_ruled_out;
+
+			if (f_v) {
+				cout << "spread_classify_activity::perform_activity before Spread_classify->lifting case_nb=" << case_nb << endl;
+			}
+			Spread_classify->lifting(
+					case_nb /* orbit_at_level */,
+					Spread_classify->starter_size - 1 /*int level_of_candidates_file*/,
+					FALSE /* f_lexorder_test */,
+					TRUE /* f_eliminate_graphs_if_possible*/,
+					nb_vertices,
+					Dio,
+					col_labels,
+					f_ruled_out,
+					verbose_level);
+			if (f_v) {
+				cout << "spread_classify_activity::perform_activity after Spread_classify->lifting case_nb=" << case_nb << endl;
+			}
+
+			if (!f_ruled_out) {
+				if (f_v) {
+					cout << "spread_classify_activity::perform_activity before FREE_OBJECT(Dio)" << endl;
+				}
+				FREE_OBJECT(Dio);
+				if (f_v) {
+					cout << "spread_classify_activity::perform_activity before FREE_lint(col_labels)" << endl;
+				}
+				FREE_lint(col_labels);
+			}
+		}
+
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity after Spread_classify->lifting" << endl;
+		}
+
+		if (f_v) {
+			cout << "spread_classify_activity::perform_activity f_prepare_lifting_all_cases done" << endl;
 		}
 
 	}
@@ -141,7 +211,7 @@ void spread_classify_activity::perform_activity(int verbose_level)
 
 		Descr->Isomorph_arguments->init(
 				Spread_classify->A,
-				Spread_classify->A /* A2 */,
+				Spread_classify->A2,
 				Spread_classify->gen,
 				Spread_classify->target_size,
 				Spread_classify->Control,
@@ -170,7 +240,7 @@ void spread_classify_activity::perform_activity(int verbose_level)
 
 		Worker->init(Descr->Isomorph_arguments,
 				Spread_classify->A,
-				Spread_classify->A /* A2 */,
+				Spread_classify->A2,
 				Spread_classify->gen,
 				size,
 				Spread_classify->starter_size /* level */,
