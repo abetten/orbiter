@@ -196,15 +196,6 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_combinatorial_objects) {
 		cout << "t_combinatorial_objects" << endl;
 	}
-	else if (t == t_action) {
-		cout << "t_action" << endl;
-	}
-	else if (t == t_poset) {
-		cout << "t_poset" << endl;
-	}
-	else if (t == t_poset_classification) {
-		cout << "t_poset_classification" << endl;
-	}
 	else {
 		cout << "type is unknown" << endl;
 		exit(1);

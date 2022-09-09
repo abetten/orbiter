@@ -27,8 +27,6 @@ blt_set_classify_activity_description::blt_set_classify_activity_description()
 	split_m = 1;
 
 	f_isomorph = FALSE;
-	//std::string prefix_classify;
-	//std::string prefix_iso;
 	Isomorph_arguments = NULL;
 
 }
@@ -76,14 +74,14 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 		}
 		else if (ST.stringcmp(argv[i], "-isomorph") == 0) {
 			f_isomorph = TRUE;
-			prefix_classify.assign(argv[++i]);
-			prefix_iso.assign(argv[++i]);
+			//prefix_classify.assign(argv[++i]);
+			//prefix_iso.assign(argv[++i]);
 			Isomorph_arguments = NEW_OBJECT(layer4_classification::isomorph_arguments);
 
 			i += Isomorph_arguments->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 			if (f_v) {
-				cout << "-isomorph " << prefix_classify << " " << prefix_iso << endl;
+				cout << "-isomorph " << endl; //prefix_classify << " " << prefix_iso << endl;
 				Isomorph_arguments->print();
 			}
 		}
@@ -110,7 +108,7 @@ void blt_set_classify_activity_description::print()
 		cout << "-split " << split_r << " " << split_m << endl;
 	}
 	if (f_isomorph) {
-		cout << "-isomorph " << prefix_classify << " " << prefix_iso << endl;
+		cout << "-isomorph " << endl; //prefix_classify << " " << prefix_iso << endl;
 		Isomorph_arguments->print();
 	}
 }

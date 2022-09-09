@@ -198,8 +198,6 @@ typedef int *pint;
 typedef long int *plint;
 typedef int **ppint;
 typedef long int **pplint;
-//typedef short SHORT;
-//typedef SHORT *PSHORT;
 typedef char *pchar;
 typedef unsigned char uchar;
 typedef uchar *puchar;
@@ -210,7 +208,6 @@ typedef void *pvoid;
 #define PAGE_LENGTH_LOG 20
 #define MAX_PAGE_SIZE_IN_charS (5 * 1L << 20)
 #define BUFSIZE 100000
-#undef DEBUG_PAGE_STORAGE
 
 
 #define MINIMUM(x, y)   ( ((x) < (y)) ?  (x) : (y) )
@@ -827,9 +824,6 @@ enum symbol_table_object_type {
 	t_vector,
 	t_combinatorial_objects,
 	t_geometry_builder,
-	t_action,
-	t_poset,
-	t_poset_classification,
 	t_vector_ge,
 };
 

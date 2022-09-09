@@ -98,7 +98,7 @@ void spread_domain::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
@@ -168,7 +168,7 @@ void spread_domain::init(
 
 		if (f_v) {
 			cout << "spread_domain::init k == 2 and n == 4, "
-					"initializing klein correspondence" << endl;
+					"initializing the Klein correspondence" << endl;
 		}
 		Klein = NEW_OBJECT(geometry::klein_correspondence);
 		O = NEW_OBJECT(layer1_foundations::orthogonal_geometry::orthogonal);
@@ -179,7 +179,7 @@ void spread_domain::init(
 	else {
 		if (f_v) {
 			cout << "spread_domain::init we are not "
-					"initializing klein correspondence" << endl;
+					"initializing the Klein correspondence" << endl;
 		}
 		O = NULL;
 		Klein = NULL;

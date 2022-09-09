@@ -70,6 +70,7 @@ spread_classify::spread_classify()
 
 	Nb = 0;
 
+	Worker = NULL;
 }
 
 spread_classify::~spread_classify()

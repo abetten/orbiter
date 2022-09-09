@@ -50,6 +50,7 @@ blt_set_classify::blt_set_classify()
 	gen = NULL;
 	degree = 0;
 	target_size = 0;
+	Worker = NULL;
 	//null();
 }
 

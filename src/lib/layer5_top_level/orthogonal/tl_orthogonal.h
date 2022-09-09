@@ -39,8 +39,8 @@ public:
 	int split_m;
 
 	int f_isomorph;
-	std::string prefix_classify;
-	std::string prefix_iso;
+	//std::string prefix_classify;
+	//std::string prefix_iso;
 	layer4_classification::isomorph_arguments *Isomorph_arguments;
 
 	blt_set_classify_activity_description();
@@ -142,6 +142,8 @@ public:
 
 
 	int target_size;
+
+	isomorph_worker *Worker;
 
 
 	blt_set_classify();

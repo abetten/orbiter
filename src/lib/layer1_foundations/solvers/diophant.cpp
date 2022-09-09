@@ -113,7 +113,7 @@ void diophant::null()
 
 void diophant::freeself()
 {
-	int verbose_level = 1;
+	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int i;
 

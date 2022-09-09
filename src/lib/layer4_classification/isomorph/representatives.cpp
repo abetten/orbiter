@@ -56,7 +56,7 @@ representatives::~representatives()
 		cout << "representatives::free" << endl;
 		}
 	if (rep) {
-		FREE_int(rep);
+		FREE_lint(rep);
 		rep = NULL;
 		}
 	if (stab) {
@@ -106,7 +106,7 @@ void representatives::init(actions::action *A,
 	if (f_v) {
 		cout << "representatives::init before allocating things" << endl;
 	}
-	rep = NEW_int(nb_objects);
+	rep = NEW_lint(nb_objects);
 	stab = new groups::psims[nb_objects];
 	fusion = NEW_int(nb_objects);
 	handle = NEW_int(nb_objects);
