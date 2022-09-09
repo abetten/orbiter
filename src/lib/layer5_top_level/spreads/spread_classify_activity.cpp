@@ -230,24 +230,41 @@ void spread_classify_activity::perform_activity(int verbose_level)
 
 		size = Spread_classify->target_size;
 
-		isomorph_worker *Worker;
 
-		Worker = NEW_OBJECT(isomorph_worker);
+		if (Spread_classify->Worker == NULL) {
 
-		if (f_v) {
-			cout << "spread_classify_activity::perform_activity before Worker->init" << endl;
+			if (f_v) {
+				cout << "spread_classify_activity::perform_activity Spread_classify->Worker does not exist yet. Allocating" << endl;
+			}
+
+			Spread_classify->Worker = NEW_OBJECT(isomorph_worker);
+
+			if (f_v) {
+				cout << "spread_classify_activity::perform_activity before Worker->init" << endl;
+			}
+
+			Spread_classify->Worker->init(
+					Descr->Isomorph_arguments,
+					Spread_classify->A,
+					Spread_classify->A2,
+					Spread_classify->gen,
+					size,
+					Spread_classify->starter_size /* level */,
+					verbose_level);
+
+			if (f_v) {
+				cout << "spread_classify_activity::perform_activity after Worker->init" << endl;
+			}
 		}
+		else {
 
-		Worker->init(Descr->Isomorph_arguments,
-				Spread_classify->A,
-				Spread_classify->A2,
-				Spread_classify->gen,
-				size,
-				Spread_classify->starter_size /* level */,
-				verbose_level);
+			if (f_v) {
+				cout << "spread_classify_activity::perform_activity Spread_classify->Worker exists" << endl;
+			}
 
-		if (f_v) {
-			cout << "spread_classify_activity::perform_activity after Worker->init" << endl;
+			Spread_classify->Worker->Isomorph_arguments = Descr->Isomorph_arguments;
+
+
 		}
 
 
@@ -255,7 +272,8 @@ void spread_classify_activity::perform_activity(int verbose_level)
 			cout << "spread_classify_activity::perform_activity before Worker->execute" << endl;
 		}
 
-		Worker->execute(verbose_level);
+		Spread_classify->Worker->execute(Descr->Isomorph_arguments,
+				verbose_level);
 
 		if (f_v) {
 			cout << "spread_classify_activity::perform_activity after Worker->execute" << endl;
@@ -266,7 +284,7 @@ void spread_classify_activity::perform_activity(int verbose_level)
 			cout << "spread_classify_activity::perform_activity f_isomorph done" << endl;
 		}
 
-		FREE_OBJECT(Worker);
+		//FREE_OBJECT(Worker);
 
 	}
 

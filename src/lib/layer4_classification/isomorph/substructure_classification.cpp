@@ -779,7 +779,7 @@ void substructure_classification::create_level_database(int level, int verbose_l
 			I = f + i;
 			O = gen->get_node(I);
 			O->store_set_to(gen, level - 1, set1);
-			if (f_v && ((i % print_mod) == 0)) {
+			if (f_v && ((i % print_mod) == 0) && i) {
 				cout << "substructure_classification::create_level_database level "
 						<< level << " i=" << i << " / " << nb_nodes
 						<< " set=";

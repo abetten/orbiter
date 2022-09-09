@@ -777,44 +777,10 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_geometry_builder) {
 			cout << "geometry_builder" << endl;
 		}
-		else if (object_type == t_action) {
-			cout << "action" << endl;
-		}
-		else if (object_type == t_poset) {
-			cout << "poset" << endl;
-		}
-		else if (object_type == t_poset_classification) {
-			cout << "classification object for posets" << endl;
-		}
 		else if (object_type == t_vector_ge) {
 			cout << "vector_ge" << endl;
 		}
 
-
-
-
-#if 0
-
-
-		else if (object_type == t_action) {
-			action *A;
-
-			A = (action *) ptr;
-			A->print_info();
-		}
-		else if (object_type == t_poset) {
-			poset *P;
-
-			P = (poset *) ptr;
-			P->print();
-		}
-		else if (object_type == t_poset_classification) {
-			poset_classification *PC;
-
-			PC = (poset_classification *) ptr;
-			PC->print();
-		}
-#endif
 	}
 }
 

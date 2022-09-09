@@ -319,7 +319,10 @@ public:
 	int f_event_file; // -e <event file> option
 	std::string event_file_name;
 	int print_mod;
+
 	int f_isomorph_report;
+
+
 	int f_subset_orbits;
 	int f_subset_orbits_file;
 	std::string subset_orbits_fname;
@@ -480,12 +483,20 @@ public:
 
 	isomorph_worker();
 	~isomorph_worker();
-	void init(isomorph_arguments *Isomorph_arguments,
+	void init(
+			isomorph_arguments *Isomorph_arguments,
 			actions::action *A_base, actions::action *A,
 			poset_classification::poset_classification *gen,
 			int size, int level,
 			int verbose_level);
-	void execute(int verbose_level);
+	void execute(isomorph_arguments *Isomorph_arguments,
+			int verbose_level);
+	void build_db(int verbose_level);
+	void read_solutions(int verbose_level);
+	void compute_orbits(int verbose_level);
+	void isomorph_testing(int verbose_level);
+	void isomorph_report(int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 
 };
 
@@ -493,7 +504,6 @@ public:
 
 
 // #############################################################################
-// isomorph_files.cpp
 // isomorph.cpp
 // #############################################################################
 
@@ -542,7 +552,6 @@ public:
 	// some statistics:
 	int nb_times_make_set_smaller_called;
 
-	// isomorph.cpp
 	isomorph();
 	~isomorph();
 	void init(std::string &prefix,
@@ -557,8 +566,6 @@ public:
 			poset_classification::poset_classification *gen,
 		int size, std::string &prefix_classify, std::string &prefix,
 		int level, int verbose_level);
-
-	// isomorph_files.cpp
 	void induced_action_on_set_and_kernel(std::ostream &file,
 			actions::action *A, groups::sims *Stab, int size, long int *set,
 		int verbose_level);
@@ -612,7 +619,7 @@ public:
 
 	// classified objects:
 	int count;
-	int *rep; // [count]
+	long int *rep; // [count]
 	groups::sims **stab; // [count]
 
 
@@ -690,13 +697,11 @@ public:
 	database *D1, *D2;
 	std::string fname_ge1;
 	std::string fname_ge2;
-	//FILE *fp_ge1, *fp_ge2; // read access
 	std::ifstream *fp_ge1;
 	std::ifstream *fp_ge2;
 
 	// pointer only, do not free:
 	database *DB_level;
-	//FILE *fp_ge;
 	std::ifstream *fp_ge; // either fg_ge1 or fp_ge2
 
 	substructure_classification();

@@ -2008,7 +2008,8 @@ int flag_orbit_folding::identify_database_is_open(long int *set,
 
 	int idx;
 
-	if (!Sorting.int_vec_search(Reps->rep, Reps->count, f, idx)) {
+	if (!Sorting.lint_vec_search(Reps->rep, Reps->count,
+			f, idx, 0 /* verbose_level */)) {
 		cout << "representative not found f=" << f << endl;
 		exit(1);
 	}

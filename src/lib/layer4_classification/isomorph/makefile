@@ -8,7 +8,6 @@ LFLAGS = -lm
 MODULES = \
 	flag_orbit_folding.o \
 	isomorph_arguments.o \
-	isomorph_files.o \
 	isomorph_global.o \
 	isomorph_worker.o \
 	isomorph.o \

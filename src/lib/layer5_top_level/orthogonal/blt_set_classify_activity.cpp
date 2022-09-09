@@ -149,24 +149,37 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 
 		size = BLT_classify->q + 1;
 
-		isomorph_worker *Worker;
+		if (BLT_classify->Worker == NULL) {
 
-		Worker = NEW_OBJECT(isomorph_worker);
 
-		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity before Worker->init" << endl;
+			//isomorph_worker *Worker;
+
+			BLT_classify->Worker = NEW_OBJECT(isomorph_worker);
+
+			if (f_v) {
+				cout << "blt_set_classify_activity::perform_activity before Worker->init" << endl;
+			}
+
+			BLT_classify->Worker->init(Descr->Isomorph_arguments,
+					BLT_classify->A,
+					BLT_classify->A /* A2 */,
+					BLT_classify->gen,
+					size,
+					BLT_classify->starter_size /* level */,
+					verbose_level);
+
+			if (f_v) {
+				cout << "blt_set_classify_activity::perform_activity after Worker->init" << endl;
+			}
 		}
+		else {
 
-		Worker->init(Descr->Isomorph_arguments,
-				BLT_classify->A,
-				BLT_classify->A /* A2 */,
-				BLT_classify->gen,
-				size,
-				BLT_classify->starter_size /* level */,
-				verbose_level);
+			if (f_v) {
+				cout << "blt_set_classify_activity::perform_activity BLT_classify->Worker exists" << endl;
+			}
 
-		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity after Worker->init" << endl;
+			BLT_classify->Worker->Isomorph_arguments = Descr->Isomorph_arguments;
+
 		}
 
 
@@ -174,7 +187,7 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 			cout << "blt_set_classify_activity::perform_activity before Worker->execute" << endl;
 		}
 
-		Worker->execute(verbose_level);
+		BLT_classify->Worker->execute(Descr->Isomorph_arguments, verbose_level);
 
 		if (f_v) {
 			cout << "blt_set_classify_activity::perform_activity after Worker->execute" << endl;
@@ -185,7 +198,7 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 			cout << "blt_set_classify_activity::perform_activity f_isomorph done" << endl;
 		}
 
-		FREE_OBJECT(Worker);
+		//FREE_OBJECT(Worker);
 
 	}
 
