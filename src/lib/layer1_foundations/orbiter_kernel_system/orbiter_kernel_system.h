@@ -128,17 +128,17 @@ public:
 		int *&nb_solutions, int *&case_nb, int &nb_cases,
 		int verbose_level);
 	void read_solutions_from_file_and_get_solution_size(std::string &fname,
-		int &nb_solutions, int *&Solutions, int &solution_size,
+		int &nb_solutions, long int *&Solutions, int &solution_size,
 		int verbose_level);
 	void read_solutions_from_file(std::string &fname,
-		int &nb_solutions, int *&Solutions, int solution_size,
+		int &nb_solutions, long int *&Solutions, int solution_size,
 		int verbose_level);
 	void read_solutions_from_file_size_is_known(std::string &fname,
-		std::vector<std::vector<int> > &Solutions, int solution_size,
+		std::vector<std::vector<long int> > &Solutions, int solution_size,
 		int verbose_level);
 	void read_solutions_from_file_by_case(std::string &fname,
 		int *nb_solutions, int *case_nb, int nb_cases,
-		int **&Solutions, int solution_size,
+		long int **&Solutions, int solution_size,
 		int verbose_level);
 	void copy_file_to_ostream(std::ostream &ost, const char *fname);
 	void int_vec_write_csv(int *v, int len,

@@ -54,7 +54,7 @@ void packing_classify::compute_klein_invariants(
 		}
 		id = Iso->Lifting->orbit_perm[Iso->Lifting->orbit_fst[Iso->Folding->Reps->rep[orbit]]];
 	
-		Iso->Lifting->load_solution(id, the_packing);
+		Iso->Lifting->load_solution(id, the_packing, verbose_level - 1);
 		if (f_vv) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
@@ -429,7 +429,7 @@ void packing_classify::report_isomorphism_type(
 	first = Iso->Lifting->orbit_fst[rep];
 	//c = Iso->starter_number[first];
 	id = Iso->Lifting->orbit_perm[first];
-	Iso->Lifting->load_solution(id, the_packing);
+	Iso->Lifting->load_solution(id, the_packing, verbose_level - 1);
 
 	
 	for (i = 0; i < Iso->size; i++) {

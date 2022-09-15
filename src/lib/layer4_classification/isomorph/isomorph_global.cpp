@@ -265,7 +265,7 @@ void isomorph_global::read_statistic_files(
 void isomorph_global::init_solutions_from_memory(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
-	int **Solutions, int *Nb_sol, int verbose_level)
+	long int **Solutions, int *Nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
@@ -743,7 +743,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 	first = Iso->Lifting->orbit_fst[rep];
 	//c = Iso->starter_number[first];
 	id = Iso->Lifting->orbit_perm[first];
-	Iso->Lifting->load_solution(id, data);
+	Iso->Lifting->load_solution(id, data, verbose_level - 1);
 
 	
 
@@ -872,8 +872,11 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 				exit(1);
 			}
 
-			f_found = Iso->Sub->find_extension_easy_new(rearranged_set,
-					case_nb, idx, 0 /* verbose_level */);
+
+			Iso->Sub->find_extension_easy_new(rearranged_set,
+					case_nb, idx, f_found, 0 /* verbose_level */);
+
+
 #if 0
 			f_found = Iso.identify_solution_relaxed(prefix, transporter, 
 				f_implicit_fusion, orbit_no0,
@@ -980,7 +983,7 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
-		Iso.Lifting->load_solution(id, data);
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
 		for (i = 0; i < Iso.size; i++) {
 			fp << data[i];
 			if (i < Iso.size - 1) {
@@ -999,7 +1002,7 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
-		Iso.Lifting->load_solution(id, data);
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
 		fp << "\t";
 		for (i = 0; i < Iso.size; i++) {
 			fp << data[i];
@@ -1018,7 +1021,7 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
-		Iso.Lifting->load_solution(id, data);
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
 		if (Iso.Folding->Reps->stab[h]) {
 			Iso.Folding->Reps->stab[h]->group_order(go);
 			fp << "\"";

@@ -36,6 +36,9 @@ isomorph_arguments::isomorph_arguments()
 	
 	f_read_statistics_after_split = FALSE;
 
+	f_recognize = FALSE;
+	//std::string recognize_label;
+
 	f_compute_orbits = FALSE;
 	f_isomorph_testing = FALSE;
 	f_classification_graph = FALSE;
@@ -127,6 +130,11 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 			f_read_statistics_after_split = TRUE;
 			read_solutions_split_m = ST.strtoi(argv[++i]);
 			cout << "-read_statistics_after_split " << read_solutions_split_m << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
+			f_recognize = TRUE;
+			recognize_label.assign(argv[++i]);
+			cout << "-recognize " << recognize_label << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-compute_orbits") == 0) {
@@ -230,6 +238,9 @@ void isomorph_arguments::print()
 	}
 	if (f_read_statistics_after_split) {
 		cout << "-read_statistics_after_split " << read_solutions_split_m << endl;
+	}
+	if (f_recognize) {
+		cout << "-recognize " << recognize_label << endl;
 	}
 
 	if (f_compute_orbits) {

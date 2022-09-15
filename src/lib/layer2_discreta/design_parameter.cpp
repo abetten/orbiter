@@ -334,8 +334,9 @@ int design_parameter::residual_inverse(design_parameter& p)
 }
 
 void design_parameter::ancestor(design_parameter& p, Vector & path,
-		int f_v, int f_vv)
+		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	design_parameter s, q;
 	int f_special = FALSE;
 	number_theory::number_theory_domain NT;
@@ -370,21 +371,21 @@ void design_parameter::ancestor(design_parameter& p, Vector & path,
 		}
 	else {
 		while (s.increased_t(q)) {
-			if (f_vv) {
+			if (f_v) {
 				cout << "ancestor, increasing t to " << q << endl;
 				}
 			s.swap(q);
 			path.s_ii(0)++;
 			}
 		while (s.derived_inverse(q)) {
-			if (f_vv) {
+			if (f_v) {
 				cout << "ancestor, derived_inverse gives " << q << endl;
 				}
 			s.swap(q);
 			path.s_ii(1)++;
 			}
 		while (s.residual_inverse(q)) {
-			if (f_vv) {
+			if (f_v) {
 				cout << "ancestor, residual_inverse gives " << q << endl;
 				}
 			s.swap(q);

@@ -140,13 +140,25 @@ void andre_construction::init(field_theory::finite_field *F,
 
 	spread_elements_genma = NEW_int(spread_size * k * n);
 	for (i = 0; i < spread_size; i++) {
+		if (f_v) {
+			cout << "andre_construction::init i=" << i << endl;
+		}
 		Grass->unrank_lint_here(
 			spread_elements_genma + i * k * n,
 			spread_elements_numeric[i], 0);
 	}
 	pivot = NEW_int(spread_size * k);
 	non_pivot = NEW_int(spread_size * (n - k));
+
+	if (f_v) {
+		cout << "andre_construction::init computing pivot and non_pivot" << endl;
+	}
+
+
 	for (i = 0; i < spread_size; i++) {
+		if (f_v) {
+			cout << "andre_construction::init i=" << i << endl;
+		}
 		F->Linear_algebra->Gauss_simple(spread_elements_genma + i * k * n,
 				k, n, pivot + i * k, 0 /*verbose_level*/);
 		Combi.set_complement(pivot + i * k, k, non_pivot + i * (n - k), a, n);

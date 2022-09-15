@@ -368,6 +368,7 @@ namespace data_structures {
 	class sorting;
 	class spreadsheet;
 	class string_tools;
+	class tally_lint;
 	class tally_vector_data;
 	class tally;
 	class vector_hashing;

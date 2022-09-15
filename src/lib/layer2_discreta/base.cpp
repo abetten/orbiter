@@ -255,7 +255,7 @@ ostream& discreta_base::printobjectkindln(ostream& ost)
 	return ost;
 }
 
-int& discreta_base::s_i_i()
+long int & discreta_base::s_i_i()
 {
 	if (s_kind() != INTEGER) {
 		cout << "discreta_base::s_i_i not an integer, objectkind=";
@@ -265,7 +265,7 @@ int& discreta_base::s_i_i()
 	return as_integer().s_i();
 }
 
-void discreta_base::m_i_i(int i)
+void discreta_base::m_i_i(long int i)
 {
 	change_to_integer().m_i(i);
 }
@@ -287,28 +287,34 @@ int discreta_base::compare_with(discreta_base &a)
 int discreta_base::eq(discreta_base &a)
 {
 	int r = compare_with(a);
-	if (r == 0)
+	if (r == 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int discreta_base::neq(discreta_base &a)
 {
 	int r = compare_with(a);
-	if (r != 0)
+	if (r != 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int discreta_base::le(discreta_base &a)
 {
 	int r = compare_with(a);
-	if (r <= 0)
+	if (r <= 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int discreta_base::lt(discreta_base &a)
@@ -316,28 +322,34 @@ int discreta_base::lt(discreta_base &a)
 	//cout << "lt(): " << *this << ", " << a;
 	int r = compare_with(a);
 	//cout << " r=" << r << endl;
-	if (r < 0)
+	if (r < 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int discreta_base::ge(discreta_base &a)
 {
 	int r = compare_with(a);
-	if (r >= 0)
+	if (r >= 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int discreta_base::gt(discreta_base &a)
 {
 	int r = compare_with(a);
-	if (r > 0)
+	if (r > 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int discreta_base::is_even()
@@ -346,18 +358,22 @@ int discreta_base::is_even()
 	
 	a.m_i_i(2);
 	integral_division(a, q, r, 0);
-	if (r.is_zero())
+	if (r.is_zero()) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int discreta_base::is_odd()
 {
-	if (is_even())
+	if (is_even()) {
 		return FALSE;
-	else
+	}
+	else {
 		return TRUE;
+	}
 }
 
 
@@ -387,7 +403,7 @@ void discreta_base::mult_to(discreta_base &x, discreta_base &y)
 		exit(1);
 		// mult_to(x, y);
 		// return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::mult_to");
 	exit(1);
 }
@@ -415,7 +431,7 @@ int discreta_base::invert_mod(discreta_base &p)
 	// << " + " << v << " * " << p << endl;
 	if (!g.is_one()) {
 		return FALSE;
-		}
+	}
 	swap(u);
 	// normalize(p);
 	return TRUE;
@@ -428,7 +444,7 @@ int discreta_base::invert_to(discreta_base &x)
 		// printobjectkindln(cout);
 		// exit(1);
 		return invert_to(x);
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::invert_to");
 	exit(1);
 }
@@ -451,7 +467,7 @@ discreta_base& discreta_base::power_int(int l)
 	if (l < 0) {
 		invert();
 		l *= -1;
-		}
+	}
 	a = *this;
 	a.one();
 	b = *this;
@@ -459,12 +475,12 @@ discreta_base& discreta_base::power_int(int l)
 		if (EVEN(l)) {
 			b *= b;
 			l >>= 1;
-			}
+		}
 		if (ODD(l)) {
 			a *= b;
 			l--;
-			}
 		}
+	}
 	*this = a;
 	return *this;
 }
@@ -510,14 +526,14 @@ discreta_base& discreta_base::power_int_mod(int l, discreta_base &p)
 			c.mult_mod(b, b, p);
 			c.swap(b);
 			l >>= 1;
-			}
+		}
 		// cout << "= " << a << " * " << b << "^" << l << endl;
 		if (ODD(l)) {
 			c.mult_mod(a, b, p);
 			c.swap(a);
 			l--;
-			}
 		}
+	}
 	// cout << "= " << a << " * " << b << "^" << l << endl;
 	*this = a;
 	return *this;
@@ -537,20 +553,20 @@ discreta_base& discreta_base::power_longinteger(longinteger& l)
 			
 			d = B.s_len();
 			cout << "l=" << l << " digits=" << d << endl;
-			}
+		}
 		if (l.is_even()) {
 			b *= b;
 			// c.mult(b, b);
 			// b.swap(c);
 			l.divide_out_int(2);
-			}
+		}
 		if (l.is_odd()) {
 			a *= b;
 			// c.mult(a, b);
 			// a.swap(c);
 			l.dec();
-			}
 		}
+	}
 	*this = a;
 	return *this;
 }
@@ -570,18 +586,18 @@ discreta_base& discreta_base::power_longinteger_mod(
 			
 			d = B.s_len();
 			cout << "l=" << l << " digits=" << d << endl;
-			}
+		}
 		if (l.is_even()) {
 			c.mult_mod(b, b, p);
 			c.swap(b);
 			l.divide_out_int(2);
-			}
+		}
 		if (l.is_odd()) {
 			c.mult_mod(a, b, p);
 			c.swap(a);
 			l.dec();
-			}
 		}
+	}
 	*this = a;
 	return *this;
 }
@@ -649,7 +665,7 @@ int discreta_base::order()
 #endif
 		b *= a;
 		i++;
-		}
+	}
 #ifdef DEBUG_ORDER
 	cout << "discreta_base::order b^" << i << "=" << b << " is one " << endl;
 #endif
@@ -667,7 +683,7 @@ int discreta_base::order_mod(discreta_base &p)
 		c.mult_mod(a, b, p);
 		b.swap(c);
 		i++;
-		}
+	}
 	return i;
 }
 
@@ -695,7 +711,7 @@ void discreta_base::add_to(discreta_base &x, discreta_base &y)
 		// exit(1);
 		add_to(x, y);
 		return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::add_to");
 	exit(1);
 }
@@ -716,7 +732,7 @@ void discreta_base::negate_to(discreta_base &x)
 		exit(1);
 		// negate_to(x);
 		// return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::negate_to");
 	exit(1);
 }
@@ -737,7 +753,7 @@ void discreta_base::normalize(discreta_base &p)
 		exit(1);
 		// normalize(p);
 		// return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::normalize");
 	exit(1);
 }
@@ -750,7 +766,7 @@ void discreta_base::zero()
 		// exit(1);
 		zero();
 		return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::zero");
 	exit(1);
 }
@@ -763,7 +779,7 @@ void discreta_base::one()
 		// exit(1);
 		one();
 		return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::one");
 	exit(1);
 }
@@ -776,7 +792,7 @@ void discreta_base::m_one()
 		// exit(1);
 		m_one();
 		return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::m_one");
 	exit(1);
 }
@@ -789,7 +805,7 @@ void discreta_base::homo_z(int z)
 		// exit(1);
 		homo_z(z);
 		return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::homo_z");
 	exit(1);
 }
@@ -802,7 +818,7 @@ void discreta_base::inc()
 		// exit(1);
 		inc();
 		return ;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::inc");
 	exit(1);
 }
@@ -815,7 +831,7 @@ void discreta_base::dec()
 		// exit(1);
 		dec();
 		return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("base::dec");
 	exit(1);
 }
@@ -827,7 +843,7 @@ int discreta_base::is_zero()
 		// printobjectkindln(cout);
 		// exit(1);
 		return is_zero();
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::is_zero");
 	exit(1);
 }
@@ -839,7 +855,7 @@ int discreta_base::is_one()
 		// printobjectkindln(cout);
 		// exit(1);
 		return is_one();
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::is_one");
 	exit(1);
 }
@@ -851,7 +867,7 @@ int discreta_base::is_m_one()
 		// printobjectkindln(cout);
 		// exit(1);
 		return is_m_one();
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::is_m_one");
 	exit(1);
 }
@@ -865,7 +881,7 @@ discreta_base& discreta_base::factorial(int z)
 		b.m_i_i(z);
 		a *= b;
 		z--;
-		}
+	}
 	*this = a;
 	return *this;
 }
@@ -884,7 +900,7 @@ int discreta_base::compare_with_euclidean(discreta_base &a)
 		// printobjectkindln(cout);
 		// exit(1);
 		return compare_with_euclidean(a);
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::compare_with_euclidean");
 	exit(1);
 }
@@ -899,7 +915,7 @@ void discreta_base::integral_division(
 		// exit(1);
 		integral_division(x, q, r, verbose_level);
 		return;
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::integral_division");
 	exit(1);
 }
@@ -918,7 +934,7 @@ void discreta_base::integral_division_exact(
 		cout << "this=" << *this << " divided by "
 				<< x << " gives remainder " << r << endl;
 		exit(1);
-		}
+	}
 	NOT_EXISTING_FUNCTION("discreta_base::integral_division");
 	exit(1);
 }

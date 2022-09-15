@@ -37,6 +37,7 @@ public:
 	void uchar_print_bitwise(std::ostream &ost, uchar u);
 	void uchar_move(uchar *p, uchar *q, int len);
 	void int_swap(int& x, int& y);
+	void lint_swap(long int & x, long int & y);
 	void print_pointer_hex(std::ostream &ost, void *p);
 	void print_uint32_hex(std::ostream &ost, uint32_t val);
 	void print_uint32_binary(std::ostream &ost, uint32_t val);
@@ -399,10 +400,10 @@ public:
 	void bitvector_set_bit(uchar *bitvec, long int i);
 	int bitvector_s_i(uchar *bitvec, long int i);
 	uint32_t int_vec_hash(int *data, int len);
-	uint32_t lint_vec_hash(long int *data, int len);
+	uint64_t lint_vec_hash(long int *data, int len);
 	uint32_t char_vec_hash(char *data, int len);
 	int int_vec_hash_after_sorting(int *data, int len);
-	int lint_vec_hash_after_sorting(long int *data, int len);
+	long int lint_vec_hash_after_sorting(long int *data, int len);
 
 };
 
@@ -1218,6 +1219,9 @@ public:
 			long int *v2, int len2, long int *v3, int &len3);
 	void int_vec_sorting_permutation(int *v, int len, int *perm,
 		int *perm_inv, int f_increasingly);
+	void lint_vec_sorting_permutation(long int *v, int len,
+		int *perm, int *perm_inv, int f_increasingly);
+	// perm and perm_inv must be allocated to len elements
 	void int_vec_quicksort(int *v, int (*compare_func)(int a, int b),
 		int left, int right);
 	void lint_vec_quicksort(long int *v,
@@ -1252,9 +1256,13 @@ public:
 		// the vector is assumed to be in increasing order.
 	int vector_lint_search(std::vector<long int> &v,
 			long int a, int &idx, int verbose_level);
-	int int_vec_search_first_occurence(int *v, int len, int a, int &idx,
+	int int_vec_search_first_occurrence(int *v, int len, int a, int &idx,
 			int verbose_level);
 		// This function finds the first occurrence of the element a.
+	int lint_vec_search_first_occurrence(long int *v,
+			int len, long int a, int &idx,
+			int verbose_level);
+	// This function finds the first occurrence of the element a.
 	int longinteger_vec_search(ring_theory::longinteger_object *v, int len,
 			ring_theory::longinteger_object &a, int &idx);
 	void int_vec_classify_and_print(std::ostream &ost, int *v, int l);
@@ -1271,21 +1279,39 @@ public:
 		int &nb_types, int *type_first, int *type_len);
 	void int_vec_sorted_collect_types(int length, int *the_vec_sorted,
 		int &nb_types, int *type_first, int *type_len);
+	void lint_vec_sorted_collect_types(int length,
+		long int *the_vec_sorted,
+		int &nb_types, int *type_first, int *type_len);
 	void int_vec_print_classified(std::ostream &ost, int *vec, int len);
 	void int_vec_print_types(std::ostream &ost,
 		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
+	void lint_vec_print_types(std::ostream &ost,
+		int f_backwards, long int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
 	void int_vec_print_types_naked_stringstream(std::stringstream &sstr,
 		int f_backwards, int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
+	void lint_vec_print_types_naked_stringstream(std::stringstream &sstr,
+		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void int_vec_print_types_naked(std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
+	void lint_vec_print_types_naked(std::ostream &ost,
+		int f_backwards, long int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
 	void int_vec_print_types_naked_tex(std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
+	void lint_vec_print_types_naked_tex(std::ostream &ost,
+		int f_backwards, long int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
 	void int_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
 		int f_backwards, int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
+	void lint_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
+		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void Heapsort(void *v, int len, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
@@ -1542,6 +1568,90 @@ int string_tools_compare_strings(void *a, void *b, void *data);
 
 
 // #############################################################################
+// tally_lint.cpp
+// #############################################################################
+
+
+//! a statistical analysis of data consisting of long integers
+
+
+
+class tally_lint {
+
+public:
+
+	int data_length;
+
+	int f_data_ownership;
+	long int *data;
+	long int *data_sorted;
+	int *sorting_perm;
+		// computed using int_vec_sorting_permutation
+	int *sorting_perm_inv;
+		// perm_inv[i] is the index in data
+		// of the element in data_sorted[i]
+	int nb_types;
+	int *type_first;
+	int *type_len;
+
+	int f_second;
+	int *second_data_sorted;
+	int *second_sorting_perm;
+	int *second_sorting_perm_inv;
+	int second_nb_types;
+	int *second_type_first;
+	int *second_type_len;
+
+	tally_lint();
+	~tally_lint();
+	void init(long int *data, int data_length,
+		int f_second, int verbose_level);
+	void init_vector_lint(std::vector<long int> &data,
+			int f_second, int verbose_level);
+	void sort_and_classify();
+	void sort_and_classify_second();
+	int class_of(int pt_idx);
+	void print(int f_backwards);
+	void print_no_lf(int f_backwards);
+	void print_tex_no_lf(int f_backwards);
+	void print_first(int f_backwards);
+	void print_second(int f_backwards);
+	void print_first_tex(int f_backwards);
+	void print_second_tex(int f_backwards);
+	void print_file(std::ostream &ost, int f_backwards);
+	void print_file_tex(std::ostream &ost, int f_backwards);
+	void print_file_tex_we_are_in_math_mode(std::ostream &ost, int f_backwards);
+	void print_naked_stringstream(std::stringstream &sstr, int f_backwards);
+	void print_naked(int f_backwards);
+	void print_naked_tex(std::ostream &ost, int f_backwards);
+	void print_types_naked_tex(std::ostream &ost, int f_backwards,
+		int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
+	void print_lint_types_naked_tex(
+		std::ostream &ost, int f_backwards, long int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
+	void print_array_tex(std::ostream &ost, int f_backwards);
+	double average();
+	double average_of_non_zero_values();
+	void get_data_by_multiplicity(int *&Pts, int &nb_pts,
+		int multiplicity, int verbose_level);
+	void get_data_by_multiplicity_as_lint(
+			long int *&Pts, int &nb_pts, int multiplicity, int verbose_level);
+	int determine_class_by_value(int value);
+	int get_value_of_class(int class_idx);
+	int get_largest_value();
+	void get_class_by_value(int *&Pts, int &nb_pts, int value,
+		int verbose_level);
+	void get_class_by_value_lint(
+			long int *&Pts, int &nb_pts, int value, int verbose_level);
+	data_structures::set_of_sets *get_set_partition_and_types(int *&types,
+		int &nb_types, int verbose_level);
+	void save_classes_individually(std::string &fname);
+};
+
+
+
+// #############################################################################
 // tally.cpp
 // #############################################################################
 
@@ -1582,8 +1692,10 @@ public:
 		int f_second, int verbose_level);
 	void init_lint(long int *data, int data_length,
 		int f_second, int verbose_level);
+#if 0
 	void init_vector_lint(std::vector<long int> &data,
 			int f_second, int verbose_level);
+#endif
 	void sort_and_classify();
 	void sort_and_classify_second();
 	int class_of(int pt_idx);

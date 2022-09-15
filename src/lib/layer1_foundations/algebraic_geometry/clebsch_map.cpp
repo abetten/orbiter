@@ -449,9 +449,9 @@ void clebsch_map::clebsch_map_print_fibers()
 
 	cout << "clebsch_map::clebsch_map_print_fibers" << endl;
 	{
-		data_structures::tally C2;
+		data_structures::tally_lint C2;
 
-		C2.init_lint(Clebsch_map, SO->nb_pts, TRUE, 0);
+		C2.init(Clebsch_map, SO->nb_pts, TRUE, 0);
 		cout << "clebsch_map::clebsch_map_print_fibers The fibers "
 				"have the following sizes: ";
 		C2.print_naked(TRUE);
@@ -510,9 +510,9 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 	}
 
 	{
-		data_structures::tally C2;
+		data_structures::tally_lint C2;
 
-		C2.init_lint(Clebsch_map, SO->nb_pts, TRUE, 0);
+		C2.init(Clebsch_map, SO->nb_pts, TRUE, 0);
 		if (f_v) {
 			cout << "clebsch_map::clebsch_map_find_arc_and_lines "
 					"The fibers have the following sizes: ";

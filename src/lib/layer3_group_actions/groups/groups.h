@@ -1929,6 +1929,13 @@ public:
 
 
 	// strong_generators_groups.cpp
+	void prepare_from_generator_data(
+			actions::action *A,
+			int *data,
+			int nb_gens,
+			int data_size,
+			std::string &ascii_target_go,
+			int verbose_level);
 	void init_linear_group_from_scratch(actions::action *&A,
 			field_theory::finite_field *F, int n,
 		linear_group_description *Descr,

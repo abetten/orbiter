@@ -306,7 +306,7 @@ public:
 	void all_cooperstein_thas_quotients(isomorph &Iso, int verbose_level);
 	void cooperstein_thas_quotients(isomorph &Iso, std::ofstream &f,
 		int h, int &cnt, int verbose_level);
-	void orbit_info_short(std::ostream &ost, isomorph &Iso, int h);
+	void orbit_info_short(std::ostream &ost, isomorph &Iso, int h, int verbose_level);
 	void report_stabilizer(isomorph &Iso, std::ostream &ost, int orbit,
 		int verbose_level);
 };

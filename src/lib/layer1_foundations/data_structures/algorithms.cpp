@@ -113,6 +113,15 @@ void algorithms::int_swap(int& x, int& y)
 	y = z;
 }
 
+void algorithms::lint_swap(long int & x, long int & y)
+{
+	long int z;
+
+	z = x;
+	x = y;
+	y = z;
+}
+
 void algorithms::print_pointer_hex(std::ostream &ost, void *p)
 {
 	void *q = p;
@@ -433,7 +442,7 @@ void algorithms::union_of_sets(std::string &fname_set_of_sets,
 				<< " contains " << m << " sets of size " << n << endl;
 	}
 
-	std::vector<std::vector<int> > Solutions;
+	std::vector<std::vector<long int> > Solutions;
 	int solution_size;
 	int nb_solutions;
 

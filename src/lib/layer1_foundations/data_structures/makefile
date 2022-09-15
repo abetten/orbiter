@@ -31,6 +31,7 @@ MODULES = \
 	sorting.o \
 	spreadsheet.o \
 	string_tools.o \
+	tally_lint.o \
 	tally_vector_data.o \
 	tally.o \
 	vector_builder_description.o \

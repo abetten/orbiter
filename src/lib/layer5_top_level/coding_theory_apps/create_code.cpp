@@ -446,11 +446,17 @@ void create_code::init(
 
 	if (f_v) {
 		cout << "create_code::init we have created the following code:" << endl;
-		cout << "genma:" << endl;
-		Int_matrix_print(genma, k, n);
 
-		cout << "checkma:" << endl;
-		Int_matrix_print(checkma, nmk, n);
+		if (n < 100) {
+			cout << "genma:" << endl;
+			Int_matrix_print(genma, k, n);
+
+			cout << "checkma:" << endl;
+			Int_matrix_print(checkma, nmk, n);
+		}
+		else {
+			cout << "Too big to print." << endl;
+		}
 
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;

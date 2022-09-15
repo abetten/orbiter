@@ -30,7 +30,7 @@ integer::integer(char *p)
 	m_i((int) i);
 }
 
-integer::integer(int i)
+integer::integer(long int i)
 {
 	k = INTEGER;
 	clearself();
@@ -119,7 +119,7 @@ ostream& integer::print(ostream& ost)
 	return ost;
 }
 
-integer& integer::m_i(int i)
+integer& integer::m_i(long int i)
 {
 	if (s_kind() != INTEGER) {
 		cout << "error: integer::m_i "
@@ -133,7 +133,7 @@ integer& integer::m_i(int i)
 
 int integer::compare_with(discreta_base &a)
 {
-	int i, j;
+	long int i, j;
 	//domain *dom;
 	
 	if (s_kind() != INTEGER) {
@@ -156,10 +156,12 @@ int integer::compare_with(discreta_base &a)
 #endif
 	i = s_i();
 	j = a.s_i_i();
-	if (i < j)
+	if (i < j) {
 		return -1;
-	if (i > j)
+	}
+	if (i > j) {
 		return 1;
+	}
 	return 0;
 }
 
@@ -392,7 +394,7 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 
 void integer::negate_to(discreta_base &x)
 {
-	int i;
+	long int i;
 	domain *dom;
 	
 	if (s_kind() != INTEGER) {
@@ -429,7 +431,7 @@ void integer::negate_to(discreta_base &x)
 
 void integer::normalize(discreta_base &p)
 {
-	int i, pp;
+	long int i, pp;
 	
 	i = s_i();
 	pp = p.s_i_i();

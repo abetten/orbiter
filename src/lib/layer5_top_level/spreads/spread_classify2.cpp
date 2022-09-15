@@ -619,7 +619,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
-		Iso.Lifting->load_solution(id, data);
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
 
 		groups::sims *Stab;
 		
@@ -740,7 +740,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 			ost << " & ";
 			Ago_induced[h].print_not_scientific(ost);
 
-			orbit_info_short(ost, Iso, h);
+			orbit_info_short(ost, Iso, h, verbose_level - 1);
 
 
 			ost << "\\\\" << endl;
@@ -776,7 +776,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
-		Iso.Lifting->load_solution(id, data);
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
 
 
 		ost << "\\section{Isomorphism type " << h << "}" << endl;
@@ -1117,7 +1117,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	first = Iso.Lifting->orbit_fst[rep];
 	//c = Iso.starter_number[first];
 	id = Iso.Lifting->orbit_perm[first];
-	Iso.Lifting->load_solution(id, data);
+	Iso.Lifting->load_solution(id, data, verbose_level - 1);
 
 
 	Stab = Iso.Folding->Reps->stab[h];
@@ -1290,7 +1290,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 	}
 }
 
-void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
+void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h, int verbose_level)
 {
 	int rep, first, /*c,*/ id;
 
@@ -1302,7 +1302,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 	first = Iso.Lifting->orbit_fst[rep];
 	//c = Iso.starter_number[first];
 	id = Iso.Lifting->orbit_perm[first];
-	Iso.Lifting->load_solution(id, data);
+	Iso.Lifting->load_solution(id, data, verbose_level - 1);
 
 
 	Stab = Iso.Folding->Reps->stab[h];

@@ -328,8 +328,8 @@ void substructure_classification::prepare_database_access(int cur_level, int ver
 
 
 
-int substructure_classification::find_extension_easy(
-		long int *set, int case_nb, int &idx, int verbose_level)
+void substructure_classification::find_extension_easy(
+		long int *set, int case_nb, int &idx, int &f_found, int verbose_level)
 // case_nb is the starter that is associated with the given set.
 // We wish to find out if the set is a solution that has been stored
 // with that starter.
@@ -349,6 +349,7 @@ int substructure_classification::find_extension_easy(
 		cout << "substructure_classification::find_extension_easy "
 				"case_nb=" << case_nb << endl;
 	}
+	f_found = FALSE;
 #if 0
 	int ret1, idx1;
 	int ret2, idx2;
@@ -372,10 +373,10 @@ int substructure_classification::find_extension_easy(
 	idx = idx1;
 	return ret1;
 #else
-	int ret;
-	ret = find_extension_easy_new(set, case_nb, idx, verbose_level);
-	return ret;
-#endif
+
+	find_extension_easy_new(set, case_nb, idx, f_found, verbose_level);
+
+	#endif
 }
 
 int substructure_classification::find_extension_search_interval(long int *set,
@@ -404,7 +405,7 @@ int substructure_classification::find_extension_search_interval(long int *set,
 			else {
 				id = first + i;
 			}
-			Iso->Lifting->load_solution(id, data);
+			Iso->Lifting->load_solution(id, data, verbose_level - 1);
 		}
 		Sorting.lint_vec_heapsort(data + Iso->level, Iso->size - Iso->level);
 		if (Sorting.lint_vec_compare(set + Iso->level, data + Iso->level, Iso->size - Iso->level) == 0) {
@@ -453,13 +454,13 @@ int substructure_classification::find_extension_easy_old(long int *set,
 	return ret;
 }
 
-int substructure_classification::find_extension_easy_new(long int *set,
-		int case_nb, int &idx, int verbose_level)
+void substructure_classification::find_extension_easy_new(long int *set,
+		int case_nb, int &idx, int &f_found, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; // (verbose_level >= 2);
-	int ret;
-	int f_found, first, idx2, len;
+	//int ret;
+	int first, idx2, len;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -467,7 +468,7 @@ int substructure_classification::find_extension_easy_new(long int *set,
 	}
 	Sorting.lint_vec_heapsort(set + Iso->level, Iso->size - Iso->level);
 
-	int h;
+	long int h;
 	data_structures::data_structures_global Data;
 
 	h = Data.lint_vec_hash_after_sorting(set, Iso->size);
@@ -478,30 +479,29 @@ int substructure_classification::find_extension_easy_new(long int *set,
 
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_new before "
-				"int_vec_search_first_occurence(h)" << endl;
+				"int_vec_search_first_occurrence(h)" << endl;
 	}
-	f_found = Sorting.int_vec_search_first_occurence(
+	f_found = Sorting.lint_vec_search_first_occurrence(
 			Iso->Lifting->hash_vs_id_hash,
 			Iso->Lifting->N, h, first, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_new after "
-				"int_vec_search_first_occurence(h) f_found=" << f_found << endl;
+				"int_vec_search_first_occurrence(h) f_found=" << f_found << endl;
 	}
 
 	if (!f_found) {
-		ret = FALSE;
 		goto finish;
 	}
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_new before "
-				"int_vec_search_first_occurence(h + 1) h+1=" << h + 1 << endl;
+				"int_vec_search_first_occurrence(h + 1) h+1=" << h + 1 << endl;
 	}
-	f_found = Sorting.int_vec_search_first_occurence(
+	f_found = Sorting.lint_vec_search_first_occurrence(
 			Iso->Lifting->hash_vs_id_hash,
 			Iso->Lifting->N, h + 1, idx2, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_new after "
-				"int_vec_search_first_occurence(h+1) f_found=" << f_found << endl;
+				"int_vec_search_first_occurrence(h+1) f_found=" << f_found << endl;
 	}
 	len = idx2 - first;
 	if (f_v) {
@@ -540,18 +540,20 @@ int substructure_classification::find_extension_easy_new(long int *set,
 #endif
 
 	if (len == 0) {
-		ret = FALSE;
+		f_found = FALSE;
 	}
 	else {
 		if (f_v) {
 			cout << "substructure_classification::find_extension_easy_new before "
 					"find_extension_search_interval" << endl;
 		}
-		ret = find_extension_search_interval(set,
+
+		f_found = find_extension_search_interval(set,
 			first, len, idx, FALSE, 3, TRUE, 0 /*verbose_level*/);
+
 		if (f_v) {
 			cout << "substructure_classification::find_extension_easy_new after "
-					"find_extension_search_interval ret=" << ret << endl;
+					"find_extension_search_interval f_found=" << f_found << endl;
 		}
 	}
 
@@ -559,7 +561,7 @@ finish:
 
 
 	if (f_v) {
-		if (ret) {
+		if (f_found) {
 			cout << "substructure_classification::find_extension_easy_new "
 					"solution found at idx=" << idx << endl;
 		}
@@ -568,7 +570,6 @@ finish:
 					"solution not found" << endl;
 		}
 	}
-	return ret;
 
 }
 

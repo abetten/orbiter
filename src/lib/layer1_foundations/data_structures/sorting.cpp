@@ -850,32 +850,6 @@ void sorting::int_vec_sorting_permutation(int *v, int len,
 	int *perm, int *perm_inv, int f_increasingly)
 // perm and perm_inv must be allocated to len elements
 {
-#if 0
-	int i;
-	int *pairs;
-	pint *V;
-	
-	pairs = NEW_int(len * 2);
-	V = NEW_pint(len);
-	for (i = 0; i < len; i++) {
-		pairs[i * 2 + 0] = v[i];
-		pairs[i * 2 + 1] = i;
-		V[i] = pairs + i * 2;
-		}
-	if (f_increasingly) {
-		quicksort_array(len, (void **)V, int_compare_increasingly, NULL);
-		}
-	else {
-		quicksort_array(len, (void **)V, int_compare_decreasingly, NULL);
-		}
-	for (i = 0; i < len; i++) {
-		perm_inv[i] = V[i][1];
-		}
-	perm_inverse(perm_inv, perm, len);
-	
-	FREE_int(V);
-	FREE_pint(pairs);
-#else
 	int i;
 	combinatorics::combinatorics_domain Combi;
 	
@@ -897,8 +871,45 @@ void sorting::int_vec_sorting_permutation(int *v, int len,
 			}
 		}
 	Combi.perm_inverse(perm_inv, perm, len);
-#endif
 }
+
+void sorting::lint_vec_sorting_permutation(long int *v, int len,
+	int *perm, int *perm_inv, int f_increasingly)
+// perm and perm_inv must be allocated to len elements
+{
+	int i;
+	combinatorics::combinatorics_domain Combi;
+
+	{
+		long int *perm_inv_lint;
+		perm_inv_lint = NEW_lint(len);
+
+		for (i = 0; i < len; i++) {
+			perm_inv_lint[i] = i;
+		}
+		lint_vec_heapsort_with_log(v, perm_inv_lint, len);
+		for (i = 0; i < len; i++) {
+			perm_inv[i] = perm_inv_lint[i];
+		}
+		FREE_lint(perm_inv_lint);
+	}
+
+	if (!f_increasingly) {
+		int n2 = len >> 1;
+		int a;
+
+		for (i = 0; i < n2; i++) {
+			a = v[i];
+			v[i] = v[len - 1 - i];
+			v[len - 1 - i] = a;
+			a = perm_inv[i];
+			perm_inv[i] = perm_inv[len - 1 - i];
+			perm_inv[len - 1 - i] = a;
+		}
+	}
+	Combi.perm_inverse(perm_inv, perm, len);
+}
+
 
 void sorting::int_vec_quicksort(int *v,
 	int (*compare_func)(int a, int b), int left, int right)
@@ -1330,7 +1341,8 @@ int sorting::vector_lint_search(std::vector<long int> &v,
 	}
 	return f_found;
 }
-int sorting::int_vec_search_first_occurence(int *v,
+
+int sorting::int_vec_search_first_occurrence(int *v,
 		int len, int a, int &idx,
 		int verbose_level)
 // This function finds the first occurence of the element a.
@@ -1409,6 +1421,87 @@ int sorting::int_vec_search_first_occurence(int *v,
 		}
 	return f_found;
 }
+
+int sorting::lint_vec_search_first_occurrence(long int *v,
+		int len, long int a, int &idx,
+		int verbose_level)
+// This function finds the first occurrence of the element a.
+{
+	int l, r, m; //, res;
+	int f_found = FALSE;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "int_vec_search_first_occurrence searching for " << a
+				<< " len=" << len << endl;
+		}
+	if (len == 0) {
+		idx = 0;
+		return FALSE;
+		}
+	l = 0;
+	r = len;
+	if (f_v) {
+		cout << "int_vec_search_first_occurrence searching for "
+				<< a << " l=" << l << " r=" << r << endl;
+		}
+	// invariant:
+	// v[i] < a for i < l;
+	// v[i] >=  a for i >= r;
+	// r - l is the length of the area to search in.
+	while (l < r) {
+		m = (l + r) >> 1;
+		// if the length of the search area is even
+		// we examine the element above the middle
+		//res = v[m] - a;
+		if (f_v) {
+			cout << "int_vec_search_first_occurrence l=" << l
+					<< " r=" << r<< " m=" << m  << " v[m]=" << v[m] << endl;
+					//<< " res=" << res << endl;
+			}
+		//cout << "search l=" << l << " m=" << m << " r="
+		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
+		// so, res is
+		// positive if v[m] > a,
+		// zero if v[m] == a,
+		// negative if v[m] < a
+		if (v[m] < a /*res < 0*/) {
+			l = m + 1;
+			if (f_v) {
+				cout << "int_vec_search_first_occurrence "
+						"moving to the right" << endl;
+				}
+			}
+		else {
+			r = m;
+			if (f_v) {
+				cout << "int_vec_search_first_occurrence "
+						"moving to the left" << endl;
+				}
+			if (v[m] == a /*res == 0*/) {
+				if (f_v) {
+					cout << "int_vec_search_first_occurrence "
+							"we found the element" << endl;
+					}
+				f_found = TRUE;
+				}
+			}
+		}
+	// now: l == r;
+	// and f_found is set accordingly */
+#if 0
+	if (f_found) {
+		l--;
+		}
+#endif
+	idx = l;
+	if (f_v) {
+		cout << "int_vec_search_first_occurrence done "
+				"f_found=" << f_found << " idx=" << idx << endl;
+		}
+	return f_found;
+}
+
 
 int sorting::longinteger_vec_search(ring_theory::longinteger_object *v, int len,
 		ring_theory::longinteger_object &a, int &idx)
@@ -1609,6 +1702,34 @@ void sorting::int_vec_sorted_collect_types(int length,
 	nb_types++;
 }
 
+void sorting::lint_vec_sorted_collect_types(int length,
+	long int *the_vec_sorted,
+	int &nb_types, int *type_first, int *type_len)
+{
+	int i;
+
+	nb_types = 0;
+	type_first[0] = 0;
+	type_len[0] = 0;
+	if (length == 0) {
+		return;
+	}
+	type_len[0] = 1;
+	for (i = 1; i < length; i++) {
+		if (the_vec_sorted[i] == the_vec_sorted[i - 1]) {
+			type_len[nb_types]++;
+		}
+		else {
+			type_first[nb_types + 1] =
+				type_first[nb_types] + type_len[nb_types];
+			nb_types++;
+			type_len[nb_types] = 1;
+		}
+	}
+	nb_types++;
+}
+
+
 void sorting::int_vec_print_classified(ostream &ost, int *vec, int len)
 {
 	int *the_vec_sorted;
@@ -1644,7 +1765,7 @@ void sorting::int_vec_print_classified(ostream &ost, int *vec, int len)
 	FREE_int(type_len);
 }
 
-void sorting::int_vec_print_types(ostream &ost,
+void sorting::int_vec_print_types(std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1654,7 +1775,17 @@ void sorting::int_vec_print_types(ostream &ost,
 	ost << " )";
 }
 
-void sorting::int_vec_print_types_naked_stringstream(stringstream &sstr,
+void sorting::lint_vec_print_types(std::ostream &ost,
+	int f_backwards, long int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	ost << "( ";
+	lint_vec_print_types_naked(ost,
+		f_backwards, the_vec_sorted, nb_types, type_first, type_len);
+	ost << " )";
+}
+
+void sorting::int_vec_print_types_naked_stringstream(std::stringstream &sstr,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1688,7 +1819,42 @@ void sorting::int_vec_print_types_naked_stringstream(stringstream &sstr,
 		}
 }
 
-void sorting::int_vec_print_types_naked(ostream &ost,
+void sorting::lint_vec_print_types_naked_stringstream(std::stringstream &sstr,
+	int f_backwards, long int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l;
+	long int a;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			sstr << a;
+			if (l > 1) {
+				sstr << "^{" << l << "}";
+				}
+			if (i)
+				sstr << ", ";
+			}
+		}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			sstr << a;
+			if (l > 1) {
+				sstr << "^{" << l << "}";
+				}
+			if (i < nb_types - 1)
+				sstr << ", ";
+			}
+		}
+}
+
+void sorting::int_vec_print_types_naked(std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1722,7 +1888,43 @@ void sorting::int_vec_print_types_naked(ostream &ost,
 		}
 }
 
-void sorting::int_vec_print_types_naked_tex(ostream &ost,
+void sorting::lint_vec_print_types_naked(std::ostream &ost,
+	int f_backwards, long int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l;
+	long int a;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << a;
+			if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i)
+				ost << ", ";
+			}
+		}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << a;
+			if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i < nb_types - 1)
+				ost << ", ";
+			}
+		}
+}
+
+
+void sorting::int_vec_print_types_naked_tex(std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1764,11 +1966,96 @@ void sorting::int_vec_print_types_naked_tex(ostream &ost,
 		}
 }
 
-void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(ostream &ost,
+void sorting::lint_vec_print_types_naked_tex(std::ostream &ost,
+	int f_backwards, long int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l, a;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << "$" << a;
+			if (l > 9) {
+				ost << "^{" << l << "}";
+				}
+			else if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i)
+				ost << ",\\,";
+			ost << "$ ";
+			}
+		}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << "$" << a;
+			if (l > 9) {
+				ost << "^{" << l << "}";
+				}
+			else if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i < nb_types - 1)
+				ost << ",\\,";
+			ost << "$ ";
+			}
+		}
+}
+
+void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
 	int i, f, l, a;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << a;
+			if (l > 9) {
+				ost << "^{" << l << "}";
+				}
+			else if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i)
+				ost << ",\\,";
+			ost << " ";
+			}
+		}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			ost << a;
+			if (l > 9) {
+				ost << "^{" << l << "}";
+				}
+			else if (l > 1) {
+				ost << "^" << l;
+				}
+			if (i < nb_types - 1)
+				ost << ",\\,";
+			ost << " ";
+			}
+		}
+}
+
+void sorting::lint_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
+	int f_backwards, long int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l;
+	long int a;
 
 	if (f_backwards) {
 		for (i = nb_types - 1; i >= 0; i--) {

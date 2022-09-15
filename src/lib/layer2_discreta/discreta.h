@@ -354,7 +354,7 @@ typedef struct longinteger_representation LONGINTEGER_REPRESENTATION;
 
 
 typedef union {
-	int integer_value;
+	long int integer_value;
 	char *char_pointer;
 	int *int_pointer;
 	discreta_base *vector_pointer;
@@ -460,9 +460,9 @@ class discreta_base
 		// prints the type of the object
 	std::ostream& printobjectkindln(std::ostream&);
 
-	int& s_i_i();
+	long int &s_i_i();
 		// select_as_integer_i
-	void m_i_i(int i);
+	void m_i_i(long int i);
 		// make_as_integer_i
 
 	virtual int compare_with(discreta_base &a);
@@ -613,8 +613,8 @@ class memory: public discreta_base
 	void read_file(char *fname, int verbose_level);
 	void write_file(char *fname, int verbose_level);
 	int multiplicity_of_character(char c);
-	void compress(int f_v);
-	void decompress(int f_v);
+	void compress(int verbose_level);
+	void decompress(int verbose_level);
 	int csf();
 	void write_mem(memory & M, int debug_depth);
 	void read_mem(memory & M, int debug_depth);
@@ -671,7 +671,7 @@ class integer: public discreta_base
 	public:
 	integer();
 	integer(char *p);
-	integer(int i);
+	integer(long int i);
 	integer(const discreta_base& x);
 		// copy constructor
 	integer& operator = (const discreta_base &x);
@@ -686,8 +686,8 @@ class integer: public discreta_base
 
 	std::ostream& print(std::ostream&);
 
-	integer& m_i(int i);				// make_integer
-	int& s_i() { return self.integer_value; };	// select_integer
+	integer& m_i(long int i);				// make_integer
+	long int & s_i() { return self.integer_value; };	// select_integer
 
 	int compare_with(discreta_base &a);
 
@@ -821,10 +821,10 @@ class Vector: public discreta_base
 	
 	discreta_base & s_i(int i);
 		// select i-th vector element
-	int& s_ii(int i) 
+	long int& s_ii(int i)
 		{ return s_i(i).s_i_i(); }
 		// select i-th vector element as integer
-	void m_ii(int i, int a) { s_i(i).m_i_i(a); }
+	void m_ii(int i, long int a) { s_i(i).m_i_i(a); }
 		// make i-th vector element as integer (set value)
 	discreta_base & operator [] (int i)
 		{ return s_i(i); }
@@ -997,8 +997,8 @@ class permutation: public Vector
 	void scan(std::istream & is, int verbose_level);
 
 	void m_l(int l);
-	int& s_i(int i);
-	int& operator [] (int i) 
+	long int& s_i(int i);
+	long int& operator [] (int i)
 		{ return s_i(i); }
 
 	void mult_to(discreta_base &x, discreta_base &y);
@@ -1097,7 +1097,7 @@ class discreta_matrix: public discreta_base
 	int s_n();
 	discreta_base & s_ij(int i, int j);
 		// select (i,j)-th matrix element
-	int& s_iji(int i, int j)
+	long int& s_iji(int i, int j)
 		{ return s_ij(i, j).s_i_i(); }
 	void m_iji(int i, int j, int a) 
 		{ s_ij(i, j).m_i_i(a); }
@@ -1328,13 +1328,13 @@ class number_partition: public Vector
 	void copyobject_to(discreta_base &x);
 	std::ostream& print(std::ostream&);
 
-	int & s_type() { return Vector::s_i(0).as_integer().s_i(); }
+	long int & s_type() { return Vector::s_i(0).as_integer().s_i(); }
 	Vector & s_self() { return Vector::s_i(1).as_vector(); }
 	
 	void m_l(int l) { s_self().m_l_n(l); }
 	int s_l() { return s_self().s_l(); }
-	int & s_i(int i) { return s_self().s_ii(i); }
-	int & operator [] (int i) { return s_self().s_ii(i); }
+	long int & s_i(int i) { return s_self().s_ii(i); }
+	long int & operator [] (int i) { return s_self().s_ii(i); }
 
 	void first(int n);
 	int next();
@@ -1459,34 +1459,40 @@ class bt_key: public Vector
 	std::ostream& print(std::ostream&);
 
 	enum bt_key_kind & type() { return (enum bt_key_kind&) Vector::s_i(0).as_integer().s_i(); }
-	int & output_size() { return Vector::s_i(1).as_integer().s_i(); }
-	int & int_vec_first() { return Vector::s_i(2).as_integer().s_i(); }
-	int & int_vec_len() { return Vector::s_i(3).as_integer().s_i(); }
-	int & field1() { return Vector::s_i(4).as_integer().s_i(); }
-	int & field2() { return Vector::s_i(5).as_integer().s_i(); }
-	int & f_ascending() { return Vector::s_i(6).as_integer().s_i(); }
+	long int & output_size() { return Vector::s_i(1).as_integer().s_i(); }
+	long int & int_vec_first() { return Vector::s_i(2).as_integer().s_i(); }
+	long int & int_vec_len() { return Vector::s_i(3).as_integer().s_i(); }
+	long int & field1() { return Vector::s_i(4).as_integer().s_i(); }
+	long int & field2() { return Vector::s_i(5).as_integer().s_i(); }
+	long int & f_ascending() { return Vector::s_i(6).as_integer().s_i(); }
 	
-	void init(enum bt_key_kind type, int output_size, int field1, int field2);
-	void init_int4(int field1, int field2);
-	void init_int2(int field1, int field2);
-	void init_string(int output_size, int field1, int field2);
-	void init_int4_vec(int field1, int field2, int vec_fst, int vec_len);
-	void init_int2_vec(int field1, int field2, int vec_fst, int vec_len);
+	void init(enum bt_key_kind type, int output_size, long int field1, long int field2);
+	void init_int8(long int field1, long int field2);
+	void init_int4(long int field1, long int field2);
+	void init_int2(long int field1, long int field2);
+	void init_string(int output_size, long int field1, long int field2);
+	void init_int8_vec(long int field1, long int field2, int vec_fst, int vec_len);
+	void init_int4_vec(long int field1, long int field2, int vec_fst, int vec_len);
+	void init_int2_vec(long int field1, long int field2, int vec_fst, int vec_len);
 };
 
 int bt_lexicographic_cmp(char *p1, char *p2);
-int bt_key_int_cmp(char *p1, char *p2);
+int bt_key_int4_cmp(char *p1, char *p2);
 int bt_key_int2_cmp(char *p1, char *p2);
+void bt_key_print_int8(char **key, std::ostream& ost);
 void bt_key_print_int4(char **key, std::ostream& ost);
 void bt_key_print_int2(char **key, std::ostream& ost);
 void bt_key_print(char *key, Vector& V, std::ostream& ost);
+int bt_key_compare_int8(char **p_key1, char **p_key2);
 int bt_key_compare_int4(char **p_key1, char **p_key2);
 int bt_key_compare_int2(char **p_key1, char **p_key2);
 int bt_key_compare(char *key1, char *key2, Vector& V, int depth);
+void bt_key_fill_in_int8(char **p_key, discreta_base& key_op);
 void bt_key_fill_in_int4(char **p_key, discreta_base& key_op);
 void bt_key_fill_in_int2(char **p_key, discreta_base& key_op);
 void bt_key_fill_in_string(char **p_key, int output_size, discreta_base& key_op);
 void bt_key_fill_in(char *key, Vector& V, Vector& the_object);
+void bt_key_get_int8(char **key, int_8 &i);
 void bt_key_get_int4(char **key, int_4 &i);
 void bt_key_get_int2(char **key, int_2 &i);
 
@@ -1544,12 +1550,12 @@ class database: public Vector
 	Vector & btree_access() { return Vector::s_i(0).as_vector(); }
 	btree & btree_access_i(int i) { return btree_access().s_i(i).as_btree(); }
 	hollerith & filename() { return Vector::s_i(1).as_hollerith(); }
-	int & f_compress() { return Vector::s_i(2).as_integer().s_i(); }
-	int & objectkind() { return Vector::s_i(3).as_integer().s_i(); }
-	int & f_open() { return Vector::s_i(4).as_integer().s_i(); }
-	int & stream() { return Vector::s_i(5).as_integer().s_i(); }
-	int & file_size() { return Vector::s_i(6).as_integer().s_i(); }
-	int & file_type() { return Vector::s_i(7).as_integer().s_i(); }
+	long int & f_compress() { return Vector::s_i(2).as_integer().s_i(); }
+	long int & objectkind() { return Vector::s_i(3).as_integer().s_i(); }
+	long int & f_open() { return Vector::s_i(4).as_integer().s_i(); }
+	long int & stream() { return Vector::s_i(5).as_integer().s_i(); }
+	long int & file_size() { return Vector::s_i(6).as_integer().s_i(); }
+	long int & file_type() { return Vector::s_i(7).as_integer().s_i(); }
 
 	void init(const char *filename, int objectkind, int f_compress);
 	void init_with_file_type(const char *filename, 
@@ -1571,11 +1577,11 @@ class database: public Vector
 	void delete_object(Vector& the_object, uint_4 datref, int verbose_level);
 	void get_object(uint_4 datref, Vector &the_object, int verbose_level);
 	void get_object(DATATYPE *data_type, Vector &the_object, int verbose_level);
-	void get_object_by_unique_int4(int btree_idx, 
+	void get_object_by_unique_int8(int btree_idx,
 		int id, Vector& the_object, int verbose_level);
-	int get_object_by_unique_int4_if_there(int btree_idx, 
+	int get_object_by_unique_int8_if_there(int btree_idx,
 		int id, Vector& the_object, int verbose_level);
-	int get_highest_int4(int btree_idx);
+	long int get_highest_int8(int btree_idx);
 	void ith_object(int i, int btree_idx, 
 		Vector& the_object, int verbose_level);
 	void ith(int i, int btree_idx, 
@@ -1586,14 +1592,14 @@ class database: public Vector
 	void print_subset(Vector& datrefs, std::ostream& ost);
 	void extract_subset(Vector& datrefs, 
 		char *out_path, int verbose_level);
-	void search_int4(int btree_idx, 
-		int imin, int imax, Vector &datrefs, 
+	void search_int8(int btree_idx,
+		long int imin, long int imax, Vector &datrefs,
 		int verbose_level);
-	void search_int4_2dimensional(int btree_idx0, 
-		int imin0, int imax0, 
-		int btree_idx1, int imin1, int imax1, 
-		Vector &datrefs, int verbose_level);
-	void search_int4_multi_dimensional(Vector& btree_idx, 
+	void search_int8_2dimensional(
+			int btree_idx0, long int imin0, long int imax0,
+			int btree_idx1, long int imin1, long int imax1,
+			Vector &datrefs, int verbose_level);
+	void search_int8_multi_dimensional(Vector& btree_idx,
 		Vector& i_min, Vector &i_max, Vector& datrefs, 
 		int verbose_level);
 
@@ -1688,17 +1694,17 @@ class btree: public Vector
 	void copyobject_to(discreta_base &x);
 	std::ostream& print(std::ostream&);
 	
-	int & f_duplicatekeys() { return Vector::s_i(0).as_integer().s_i(); }
+	long int & f_duplicatekeys() { return Vector::s_i(0).as_integer().s_i(); }
 	Vector & key() { return Vector::s_i(1).as_vector(); }
 	hollerith & filename() { return Vector::s_i(2).as_hollerith(); }
-	int & f_open() { return Vector::s_i(3).as_integer().s_i(); }
-	int & stream() { return Vector::s_i(4).as_integer().s_i(); }
-	int & buf_idx() { return Vector::s_i(5).as_integer().s_i(); }
-	int & Root() { return Vector::s_i(6).as_integer().s_i(); }
-	int & FreeRec() { return Vector::s_i(7).as_integer().s_i(); }
-	int & AllocRec() { return Vector::s_i(8).as_integer().s_i(); }
-	int & btree_idx() { return Vector::s_i(9).as_integer().s_i(); }
-	int & page_table_idx() { return Vector::s_i(10).as_integer().s_i(); }
+	long int & f_open() { return Vector::s_i(3).as_integer().s_i(); }
+	long int & stream() { return Vector::s_i(4).as_integer().s_i(); }
+	long int & buf_idx() { return Vector::s_i(5).as_integer().s_i(); }
+	long int & Root() { return Vector::s_i(6).as_integer().s_i(); }
+	long int & FreeRec() { return Vector::s_i(7).as_integer().s_i(); }
+	long int & AllocRec() { return Vector::s_i(8).as_integer().s_i(); }
+	long int & btree_idx() { return Vector::s_i(9).as_integer().s_i(); }
+	long int & page_table_idx() { return Vector::s_i(10).as_integer().s_i(); }
 
 	void init(const char *file_name, int f_duplicatekeys, int btree_idx);
 	void add_key_int4(int field1, int field2);
@@ -1720,35 +1726,32 @@ class btree: public Vector
 
 	int search_string(discreta_base& key_op,
 		int& pos, int verbose_level);
-	void search_interval_int4(int i_min, int i_max, 
+	void search_interval_int8(long int i_min, long int i_max,
 		int& first, int &len, int verbose_level);
-	void search_interval_int4_int4(int l0, int u0, 
-		int l1, int u1, 
-		int& first, int &len, 
-		int verbose_level);
-	void search_interval_int4_int4_int4(int l0, int u0, 
-		int l1, int u1, 
-		int l2, int u2, 
-		int& first, int &len, 
-		int verbose_level);
-	void search_interval_int4_int4_int4_int4(int l0, int u0, 
-		int l1, int u1, 
-		int l2, int u2, 
-		int l3, int u3, 
-		int& first, int &len, 
-		int verbose_level);
-	int search_int4_int4(int data1, int data2, int &idx, int verbose_level);
-	int search_unique_int4(int i, int verbose_level);
-	int search_unique_int4_int4_int4_int4(int i0, 
-		int i1, int i2, int i3, int verbose_level);
+	void search_interval_int8_int8(long int l0, long int u0,
+		long int l1, long int u1,
+		int& first, int &len, int verbose_level);
+	void search_interval_int8_int8_int8(long int l0, long int u0,
+		long int l1, long int u1, long int l2, long int u2,
+		int& first, int &len, int verbose_level);
+	void search_interval_int8_int8_int8_int8(
+			long int l0, long int u0,
+			long int l1, long int u1,
+			long int l2, long int u2,
+			long int l3, long int u3,
+			int& first, int &len, int verbose_level);
+	int search_int8_int8(long int data1, long int data2, int& idx, int verbose_level);
+	int search_unique_int8(long int i, int verbose_level);
+	int search_unique_int8_int8_int8_int8(long int i0, long int i1,
+		long int i2, long int i3, int verbose_level);
 		// returns -1 if an element whose key starts
 		// with [i0,i1,i2,i3] could not be found or is not unique.
 		// otherwise, the idx of that element is returned
-	int search_datref_of_unique_int4(int i, 
+	int search_datref_of_unique_int8(long int i,
 		int verbose_level);
-	int search_datref_of_unique_int4_if_there(int i, 
+	int search_datref_of_unique_int8_if_there(long int i,
 		int verbose_level);
-	int get_highest_int4();
+	long int get_highest_int8();
 	void get_datrefs(int first, 
 		int len, Vector& datrefs);
 
@@ -1904,8 +1907,8 @@ class design_parameter_source: public Vector
 	std::ostream& print(std::ostream&);
 	void print2(design_parameter& p, std::ostream& ost);
 	
-	int & prev() { return Vector::s_i(0).as_integer().s_i(); }
-	int & rule() { return Vector::s_i(1).as_integer().s_i(); }
+	long int & prev() { return Vector::s_i(0).as_integer().s_i(); }
+	long int & rule() { return Vector::s_i(1).as_integer().s_i(); }
 	hollerith & comment() { return Vector::s_i(2).as_hollerith(); }
 	Vector & references() { return Vector::s_i(3).as_vector(); }
 	hollerith & references_i(int i) { return references().s_i(i).as_hollerith(); }
@@ -1937,17 +1940,17 @@ int calc_resinv(int t, int v, int k, int delta_lambda, int &c, int &T, int &V, i
 void design_mendelsohn_coefficient_matrix(int t, int m, discreta_matrix & M);
 void design_mendelsohn_rhs(int v, int t, int k, discreta_base& lambda, int m, int s, Vector & rhs);
 int design_parameter_database_already_there(database &D, design_parameter &p, int& idx);
-void design_parameter_database_add_if_new(database &D, design_parameter &p, int& highest_id, int verbose_level);
+void design_parameter_database_add_if_new(database &D, design_parameter &p, long int& highest_id, int verbose_level);
 void design_parameter_database_closure(database &D, int highest_id_already_closed, int minimal_t, int verbose_level);
 void design_parameter_database_read_design_txt(char *fname_design_txt, char *path_db, int f_form_closure, int minimal_t, int verbose_level);
 void design_parameter_database_export_tex(char *path_db);
 int determine_restricted_number_of_designs_t(database &D, btree &B, 
-	int btree_idx_tvkl, int t, int first, int len);
+	int btree_idx_tvkl, long int t, int first, int len);
 int determine_restricted_number_of_designs_t_v(database &D, btree &B, 
-	int btree_idx_tvkl, int t, int v, int first, int len);
-void prepare_design_parameters_from_id(database &D, int id, hollerith& h);
+	int btree_idx_tvkl, long int t, long int v, int first, int len);
+void prepare_design_parameters_from_id(database &D, long int id, hollerith& h);
 void prepare_link(hollerith& link, int id);
-void design_parameter_database_clans(char *path_db, int f_html, int f_v, int f_vv);
+void design_parameter_database_clans(char *path_db, int f_html, int verbose_level);
 void design_parameter_database_family_report(char *path_db, int t, int v, int k, int lambda, int minimal_t);
 void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vector &clan_lambda, Vector & clan_member, Vector & clan_member_path);
 int Maxfit(int i, int j);
@@ -1974,10 +1977,10 @@ class design_parameter: public Vector
 	void copyobject_to(discreta_base &x);
 	std::ostream& print(std::ostream&);
 	
-	int & id() { return Vector::s_i(0).as_integer().s_i(); }
-	int & t() { return Vector::s_i(1).as_integer().s_i(); }
-	int & v() { return Vector::s_i(2).as_integer().s_i(); }
-	int & K() { return Vector::s_i(3).as_integer().s_i(); }
+	long int & id() { return Vector::s_i(0).as_integer().s_i(); }
+	long int & t() { return Vector::s_i(1).as_integer().s_i(); }
+	long int & v() { return Vector::s_i(2).as_integer().s_i(); }
+	long int & K() { return Vector::s_i(3).as_integer().s_i(); }
 	discreta_base & lambda() { return Vector::s_i(4); }
 	Vector & source() { return Vector::s_i(5).as_vector(); }
 	design_parameter_source & source_i(int i) { return source().s_i(i).as_design_parameter_source(); }
@@ -1994,7 +1997,7 @@ class design_parameter: public Vector
 	int derived_inverse(design_parameter& p);
 	void supplementary_derived(design_parameter& p);
 	void residual(design_parameter& p);
-	void ancestor(design_parameter& p, Vector & path, int f_v, int f_vv);
+	void ancestor(design_parameter& p, Vector & path, int verbose_level);
 	void supplementary_residual(design_parameter& p);
 	int residual_inverse(design_parameter& p);
 	int trung_complementary(design_parameter& p);

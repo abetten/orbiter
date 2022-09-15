@@ -398,14 +398,18 @@ static long int Spreads_3_3_reps[] = {
 	0, 33879, 1339, 2679, 3992, 5340, 6773, 8085, 8924, 10610, 10978, 13073, 14194, 15382, 16422, 17466, 18734, 19411, 20753, 22075, 23411, 24426, 26057, 27396, 28888, 30045, 30571, 32077, 
 };
 static const char *Spreads_3_3_stab_order[] = {
-"766584",
-"2106",
-"1014",
-"81",
-"1092",
-"84",
-"84",
+"766584", // desarguesian = Moorhouse I
+"2106", //generalized twisted field = = Moorhouse II
+"1014", // Andre = Moorhouse VII
+"81", // Sherk = Moorhouse V
+"1092", // Hering = Moorhouse III
+"84", // flag transitive = Moorhouse IV or VI
+"84", // flag transitive = Moorhouse IV or VI
 };
+//https://ericmoorhouse.org/pub/planes27/
+// Moorhouse IV has 3-rank 271
+// Moorhouse VI has 3-rank 265
+
 static int Spreads_3_3_stab_gens[] = {
 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 
 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 

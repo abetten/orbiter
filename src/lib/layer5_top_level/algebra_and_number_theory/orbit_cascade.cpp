@@ -329,7 +329,7 @@ void orbit_cascade::init(int N, int k, any_group *G,
 
 
 
-	data_structures::tally T;
+	data_structures::tally_lint T;
 
 	T.init_vector_lint(Ago,
 			FALSE /* f_second */, 0 /* verbose_level */);
@@ -867,7 +867,7 @@ void orbit_cascade::upstep(std::vector<long int> &Ago, int verbose_level)
 			cout << i << " : " << Ago[i] << endl;
 		}
 
-		data_structures::tally T;
+		data_structures::tally_lint T;
 
 		T.init_vector_lint(Ago,
 				FALSE /* f_second */, 0 /* verbose_level */);
