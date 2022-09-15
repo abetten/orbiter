@@ -332,7 +332,7 @@ int design_parameter_database_already_there(database &D,
 	int verbose_level = 0;
 	btree& B_tvkl = D.btree_access_i(2);
 	
-	idx = B_tvkl.search_unique_int4_int4_int4_int4(
+	idx = B_tvkl.search_unique_int8_int8_int8_int8(
 		p.t(), p.v(), p.K(), p.lambda().s_i_i(), verbose_level);
 	if (idx == -1)
 		return FALSE;
@@ -341,7 +341,7 @@ int design_parameter_database_already_there(database &D,
 }
 
 void design_parameter_database_add_if_new(database &D,
-		design_parameter &p, int& highest_id, int verbose_level)
+		design_parameter &p, long int& highest_id, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx;
@@ -388,10 +388,10 @@ void design_parameter_database_closure(database &D,
 				"database not open" << endl;
 		exit(1);
 		}
-	int highest_id, old_highest_id, id;
+	long int highest_id, old_highest_id, id;
 	int btree_idx_id = 0;
 	
-	highest_id = D.get_highest_int4(btree_idx_id);
+	highest_id = D.get_highest_int8(btree_idx_id);
 	old_highest_id = highest_id;
 	if (f_v) {
 		cout << "design_parameter_database_closure "
@@ -401,7 +401,7 @@ void design_parameter_database_closure(database &D,
 	for (id = highest_id_already_closed + 1; id <= highest_id; id++) {
 		design_parameter p, q;
 		
-		D.get_object_by_unique_int4(btree_idx_id, id, p, verbose_level);
+		D.get_object_by_unique_int8(btree_idx_id, id, p, verbose_level);
 		if (f_vv) {
 			cout << "closure of design #" << id << " : " << p << endl;
 			}
@@ -570,8 +570,8 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 	p.init_database(D, path_db);
 	D.open(verbose_level - 1);
 
-	int id = 0;
-	int highest_id_already_closed = -1;
+	long int id = 0;
+	long int highest_id_already_closed = -1;
 	while (TRUE) {
 		if (f.eof()) {
 			break;
@@ -613,7 +613,7 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 		int idx;
 		if (design_parameter_database_already_there(D, p, idx)) {
 			cout << "already there, we are changing the dataset:" << endl;
-			int highest_id = -1;
+			long int highest_id = -1;
 				// highest_id is not used in the following routine 
 				//as we know the dataset is already there:
 			design_parameter_database_add_if_new(D, p,
@@ -627,7 +627,7 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 						highest_id_already_closed, minimal_t,
 						verbose_level - 2);
 	
-			highest_id_already_closed = D.get_highest_int4(btree_idx_id);
+			highest_id_already_closed = D.get_highest_int8(btree_idx_id);
 			id = highest_id_already_closed + 1;
 			}
 		}
@@ -650,9 +650,9 @@ void design_parameter_database_export_tex(char *path_db)
 	p.init_database(D, path_db);
 	D.open(verbose_level);
 
-	int id, highest_id;
+	long int id, highest_id;
 	
-	highest_id = D.get_highest_int4(btree_idx_id);
+	highest_id = D.get_highest_int8(btree_idx_id);
 
 	cout << "design_parameter_database_export_tex() db_path=" << path_db
 			<< " highest_id = " << highest_id << endl;
@@ -697,7 +697,7 @@ void design_parameter_database_export_tex(char *path_db)
 	f << "\n\\chapter{Designs by $t, v, k, \\lambda$}\n\n";
 	btree &B = D.btree_access_i(btree_idx_tvkl);
 	int idx, len;
-	int t_min, t_max, t;
+	long int t_min, t_max, t;
 	
 	len = B.length(verbose_level - 2);
 	D.ith_object(0, btree_idx_tvkl, p, verbose_level - 2);
@@ -722,9 +722,9 @@ void design_parameter_database_export_tex(char *path_db)
 	
 	for (t = t_min; t <= t_max; t++) {
 		int first, len;
-		int v, v_min, v_max;
+		long int v, v_min, v_max;
 		
-		B.search_interval_int4(t, t, first, len, verbose_level);
+		B.search_interval_int8(t, t, first, len, verbose_level);
 		if (len == 0)
 			continue;
 		
@@ -755,9 +755,9 @@ void design_parameter_database_export_tex(char *path_db)
 		fhtml_dir << "<ul>" << endl;
 		for (v = v_min; v <= v_max; v++) {
 			int first, len;
-			int k, k_min, k_max;
+			long int k, k_min, k_max;
 		
-			B.search_interval_int4_int4(t, t, v, v, first, len,
+			B.search_interval_int8_int8(t, t, v, v, first, len,
 					verbose_level);
 			if (len == 0)
 				continue;
@@ -803,7 +803,7 @@ void design_parameter_database_export_tex(char *path_db)
 			for (k = k_min; k <= k_max; k++) {
 				int first, len;
 		
-				B.search_interval_int4_int4_int4(t, t, v, v, k, k, first, len, verbose_level);
+				B.search_interval_int8_int8_int8(t, t, v, v, k, k, first, len, verbose_level);
 				if (len == 0)
 					continue;
 				
@@ -896,7 +896,7 @@ void design_parameter_database_export_tex(char *path_db)
 			f << "\n\\section{ID $\\ge " << id << "$}\n\n";
 			cout << "ID >= " << id << endl;
 			}
-		if (!D.get_object_by_unique_int4_if_there(btree_idx_id, id, p, verbose_level))
+		if (!D.get_object_by_unique_int8_if_there(btree_idx_id, id, p, verbose_level))
 			continue;
 		// f << "\\subsection*{\\# " << id << "}\n";
 		// f << "\\label{designID" << id << "}\n";
@@ -911,7 +911,7 @@ void design_parameter_database_export_tex(char *path_db)
 		Vector path;
 		
 		p1 = p;
-		p1.ancestor(ancestor, path, FALSE, FALSE);
+		p1.ancestor(ancestor, path, 0 /* verbose_level */);
 		// cout << "ancestor=" << ancestor << endl;
 		l = p.source().s_l();
 		f << "\\begin{enumerate}\n";
@@ -967,7 +967,7 @@ void design_parameter_database_export_tex(char *path_db)
 		html_head(fhtml, h1.s(), h2.s());	
 
 		for (id = page * 100; id <= MINIMUM((page + 1) * 100 - 1, highest_id); id++) {
-			if (!D.get_object_by_unique_int4_if_there(btree_idx_id, id, p, verbose_level))
+			if (!D.get_object_by_unique_int8_if_there(btree_idx_id, id, p, verbose_level))
 				continue;
 		
 			hollerith h;
@@ -980,7 +980,7 @@ void design_parameter_database_export_tex(char *path_db)
 			Vector path;
 			
 			p1 = p;
-			p1.ancestor(ancestor, path, FALSE, FALSE);
+			p1.ancestor(ancestor, path, 0 /* verbose_level */);
 			
 			l = p.source().s_l();
 			fhtml << "<ul>\n";
@@ -1034,11 +1034,11 @@ void design_parameter_database_export_tex(char *path_db)
 }
 
 int determine_restricted_number_of_designs_t(database &D, btree &B, 
-	int btree_idx_tvkl, int t, int first, int len)
+	int btree_idx_tvkl, long int t, int first, int len)
 {
 	int verbose_level = 0;
 	design_parameter p;
-	int v, v_min, v_max;
+	long int v, v_min, v_max;
 	int nb_restricted = 0;
 	
 	D.ith_object(first, btree_idx_tvkl, p, verbose_level - 2);
@@ -1049,7 +1049,7 @@ int determine_restricted_number_of_designs_t(database &D, btree &B,
 	for (v = v_min; v <= v_max; v++) {
 		int first, len;
 		
-		B.search_interval_int4_int4(t, t, v, v, first, len, verbose_level);
+		B.search_interval_int8_int8(t, t, v, v, first, len, verbose_level);
 		if (len == 0)
 			continue;
 		
@@ -1061,11 +1061,11 @@ int determine_restricted_number_of_designs_t(database &D, btree &B,
 }
 
 int determine_restricted_number_of_designs_t_v(database &D, btree &B, 
-	int btree_idx_tvkl, int t, int v, int first, int len)
+	int btree_idx_tvkl, long int t, long int v, int first, int len)
 {
 	int verbose_level = 0;
 	design_parameter p;
-	int k, k_min, k_max;
+	long int k, k_min, k_max;
 	int nb_restricted = 0;
 	
 	D.ith_object(first, btree_idx_tvkl, p, verbose_level - 2);
@@ -1076,7 +1076,7 @@ int determine_restricted_number_of_designs_t_v(database &D, btree &B,
 	for (k = k_min; k <= k_max; k++) {
 		int first, len;
 		
-		B.search_interval_int4_int4_int4(t, t, v, v, k, k, first, len, verbose_level);
+		B.search_interval_int8_int8_int8(t, t, v, v, k, k, first, len, verbose_level);
 		if (len == 0)
 			continue;
 				
@@ -1100,13 +1100,13 @@ int determine_restricted_number_of_designs_t_v(database &D, btree &B,
 	return nb_restricted;
 }
 
-void prepare_design_parameters_from_id(database &D, int id, hollerith& h)
+void prepare_design_parameters_from_id(database &D, long int id, hollerith& h)
 {
 	int verbose_level = 0;
 	int btree_idx_id = 0;
 	design_parameter p;
 	
-	D.get_object_by_unique_int4(btree_idx_id, id, p, verbose_level);
+	D.get_object_by_unique_int8(btree_idx_id, id, p, verbose_level);
 	h.init("");
 	h.append_i(p.t());
 	h.append("-(");
@@ -1129,9 +1129,9 @@ void prepare_link(hollerith& link, int id)
 
 #include <stdio.h>
 
-void design_parameter_database_clans(char *path_db, int f_html, int f_v, int f_vv)
+void design_parameter_database_clans(char *path_db, int f_html, int verbose_level)
 {
-	int verbose_level = 0;
+	//int verbose_level = 0;
 	int btree_idx_id = 0;
 	//int btree_idx_tvkl = 2;
 	
@@ -1142,9 +1142,10 @@ void design_parameter_database_clans(char *path_db, int f_html, int f_v, int f_v
 	p.init_database(D, path_db);
 	D.open(verbose_level);
 
-	int id, highest_id, idx1, idx2;
+	long int id, highest_id;
+	int idx1, idx2;
 	
-	highest_id = D.get_highest_int4(btree_idx_id);
+	highest_id = D.get_highest_int8(btree_idx_id);
 
 	ancestor.m_l(0);
 	clan_lambda.m_l(0);
@@ -1152,7 +1153,7 @@ void design_parameter_database_clans(char *path_db, int f_html, int f_v, int f_v
 	clan_member_path.m_l(0);
 	for (id = 0; id <= highest_id; id++) {
 
-		if (!D.get_object_by_unique_int4_if_there(btree_idx_id, id, p, verbose_level))
+		if (!D.get_object_by_unique_int8_if_there(btree_idx_id, id, p, verbose_level))
 			continue;
 		
 				
@@ -1163,7 +1164,7 @@ void design_parameter_database_clans(char *path_db, int f_html, int f_v, int f_v
 		
 		
 		Vector g, path;
-		p.ancestor(q, path, f_v, f_vv);
+		p.ancestor(q, path, verbose_level);
 		
 		g.m_l_n(3);
 		g[0].m_i_i(q.t());
@@ -1344,7 +1345,7 @@ void design_parameter_database_family_report(char *path_db, int t, int v, int k,
 				prepare_entry(entry, i, j, h, t, v, k, lambda);
 				id = -1;
 				if (entry.s_i(3).s_kind() == INTEGER) {
-					idx = B_tvkl.search_unique_int4_int4_int4_int4(
+					idx = B_tvkl.search_unique_int8_int8_int8_int8(
 							entry.s_ii(0), entry.s_ii(1), entry.s_ii(2),
 							entry.s_ii(3), verbose_level);
 					// idx is -1 if the dataset has not been found.

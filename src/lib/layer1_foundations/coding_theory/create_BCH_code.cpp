@@ -252,7 +252,7 @@ void create_BCH_code::report(std::ostream &ost, int verbose_level)
 	ost << "\\end{verbatim}" << endl;
 
 
-	if (TRUE /*n < 22*/) {
+	if (n < 100) {
 
 		ost << "The generator matrix is:" << endl;
 		ost << "$$" << endl;
@@ -271,6 +271,9 @@ void create_BCH_code::report(std::ostream &ost, int verbose_level)
 		ost << "CODE_BCH_F" << F->q << "_N" << n << "_K" << k << "_D" << d << "_GENMA";
 		orbiter_kernel_system::Orbiter->Int_vec->matrix_print_makefile_style_ost(ost, Genma, k, n);
 		ost << "\\end{verbatim}" << endl;
+	}
+	else {
+		ost << "The generator matrix is too big to print.\\\\" << endl;
 	}
 
 	if (f_v) {

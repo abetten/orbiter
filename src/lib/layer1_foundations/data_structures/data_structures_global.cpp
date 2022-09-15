@@ -85,12 +85,20 @@ uint32_t data_structures_global::int_vec_hash(int *data, int len)
 	return h;
 }
 
-uint32_t data_structures_global::lint_vec_hash(long int *data, int len)
+uint64_t data_structures_global::lint_vec_hash(long int *data, int len)
 {
-	uint32_t h;
+	uint32_t h1, h2;
+	uint64_t h;
 	algorithms Algo;
 
-	h = Algo.SuperFastHash ((const char *) data, (uint32_t) len * sizeof(long int));
+	h1 = Algo.SuperFastHash ((const char *) data, (uint32_t) len * sizeof(long int));
+	if (len > 1) {
+		h2 = Algo.SuperFastHash ((const char *) (data + 1), (uint32_t) (len - 1) * sizeof(long int));
+	}
+	else {
+		h2 = 0;
+	}
+	h = (uint64_t) h1 | ((uint64_t) h2 << 32);
 	return h;
 }
 
@@ -119,10 +127,11 @@ int data_structures_global::int_vec_hash_after_sorting(int *data, int len)
 	return h;
 }
 
-int data_structures_global::lint_vec_hash_after_sorting(long int *data, int len)
+long int data_structures_global::lint_vec_hash_after_sorting(long int *data, int len)
 {
 	long int *data2;
-	int i, h;
+	int i;
+	long int h;
 	sorting Sorting;
 
 	data2 = NEW_lint(len);

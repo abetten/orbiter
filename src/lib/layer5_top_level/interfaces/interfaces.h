@@ -318,12 +318,12 @@ class interface_combinatorics {
 	apps_combinatorics::regular_linear_space_description *Rls_descr;
 
 	int f_draw_layered_graph;
-	int domino_portrait_D;
-	int domino_portrait_s;
 	std::string draw_layered_graph_fname;
 	graphics::layered_graph_draw_options *Layered_graph_draw_options;
 
 	int f_domino_portrait;
+	int domino_portrait_D;
+	int domino_portrait_s;
 	std::string domino_portrait_fname;
 	graphics::layered_graph_draw_options *domino_portrait_draw_options;
 
@@ -571,15 +571,6 @@ class interface_projective {
 	double smooth_curve_t_max;
 	function_polish_description *FP_descr;
 
-
-#if 0
-	int f_create_spread;
-	spreads::spread_create_description *Spread_create_description;
-
-	std::vector<std::string> transform_coeffs;
-	std::vector<int> f_inverse_transform;
-
-	#endif
 
 	int f_make_table_of_surfaces;
 

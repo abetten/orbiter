@@ -34,14 +34,14 @@ int linear_algebra::Gauss_int(int *A,
 	if (f_v) {
 		cout << "linear_algebra::Gauss_int" << endl;
 	}
-	if (f_vv) {
-		cout << "Gauss algorithm for matrix:" << endl;
-		Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
+	if (f_v) {
+		cout << "Gauss algorithm for matrix of size " << m << " x " << n << endl;
+		//Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
 	}
 	i = 0;
 	for (j = 0; j < n; j++) {
-		if (f_vv) {
+		if (f_v) {
 			cout << "searching for pivot element in column j=" << j << endl;
 		}
 		// search for pivot element:
@@ -180,6 +180,9 @@ int linear_algebra::Gauss_int(int *A,
 		}
 	} // next j
 	rank = i;
+	if (f_v) {
+		cout << "linear_algebra::Gauss_int rank = " << i << endl;
+	}
 	if (f_complete) {
 		//if (FALSE) {
 		//	cout << ";"; cout.flush();
@@ -235,6 +238,9 @@ int linear_algebra::Gauss_int(int *A,
 		Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
 		cout << "the rank is " << rank << endl;
+	}
+	if (f_v) {
+		cout << "linear_algebra::Gauss_int the rank is " << rank << endl;
 	}
 	if (f_v) {
 		cout << "linear_algebra::Gauss_int done" << endl;

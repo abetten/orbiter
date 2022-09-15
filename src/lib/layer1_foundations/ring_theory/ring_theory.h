@@ -670,7 +670,7 @@ public:
 	~ring_theory_global();
 	void write_code_for_division(
 			field_theory::finite_field *F,
-			std::string &fname_code,
+			std::string &label_code,
 			std::string &A_coeffs, std::string &B_coeffs,
 			int verbose_level);
 	void polynomial_division(

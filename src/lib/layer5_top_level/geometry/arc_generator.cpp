@@ -931,7 +931,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
-		Iso.Lifting->load_solution(id, data);
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
 
 		groups::sims *Stab;
 		
@@ -1085,7 +1085,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		first = Iso.Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
-		Iso.Lifting->load_solution(id, data);
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
 
 
 		ost << "\\section{Isomorphism type " << h << "}" << endl;

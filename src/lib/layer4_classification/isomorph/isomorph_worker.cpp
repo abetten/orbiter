@@ -191,6 +191,19 @@ void isomorph_worker::execute(isomorph_arguments *Isomorph_arguments,
 			cout << "isomorph_worker::execute after isomorph_report" << endl;
 		}
 	}
+	else if (Isomorph_arguments->f_recognize) {
+
+
+		if (f_v) {
+			cout << "isomorph_worker::execute before recognize" << endl;
+		}
+
+		recognize(Isomorph_arguments->recognize_label, verbose_level);
+
+		if (f_v) {
+			cout << "isomorph_worker::execute after recognize" << endl;
+		}
+	}
 #if 0
 	else if (Isomorph_arguments->f_classification_graph) {
 
@@ -616,7 +629,7 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 
 			id = Iso->Lifting->orbit_perm[Iso->Lifting->orbit_fst[Iso->Folding->Reps->rep[orbit]]];
 
-			Iso->Lifting->load_solution(id, data1);
+			Iso->Lifting->load_solution(id, data1, verbose_level - 1);
 			if (FALSE) {
 				cout << "read representative of orbit " << orbit
 						<< " (id=" << id << ")" << endl;
@@ -760,6 +773,7 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 	int rep;
 	int first;
 	int id;
+	ring_theory::longinteger_object go;
 
 	Reps = Iso->Folding->Reps;
 
@@ -770,20 +784,60 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 	}
 
 	//ost << "\\clearpage" << endl << endl;
+
+	ost << "Number of isomorphism types: " << Reps->count << "\\\\" << endl;
+
 	for (h = 0; h < Reps->count; h++) {
 		rep = Iso->Folding->Reps->rep[h];
 		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
-		Iso->Lifting->load_solution(id, data);
+		Iso->Lifting->load_solution(id, data, verbose_level - 1);
+
+		ost << "Iso-type " << h << ": ";
+		ost << "$\\{$";
 		for (i = 0; i < Iso->size; i++) {
 			ost << data[i];
 			if (i < Iso->size - 1) {
 				ost << ", ";
 			}
 		}
+		ost << "$\\}_";
+		if (Iso->Folding->Reps->stab[h]) {
+			Iso->Folding->Reps->stab[h]->group_order(go);
+			ost << "{";
+			go.print_not_scientific(ost);
+			ost << "}" << endl;
+		}
+		else {
+			ost << 1;
+		}
+		ost << "$";
 		ost << "\\\\" << endl;
 	}
+	ost << "\\begin{verbatim}" << endl << endl;
+	for (h = 0; h < Reps->count; h++) {
+		rep = Iso->Folding->Reps->rep[h];
+		first = Iso->Lifting->orbit_fst[rep];
+		//c = Iso.starter_number[first];
+		id = Iso->Lifting->orbit_perm[first];
+		Iso->Lifting->load_solution(id, data, verbose_level - 1);
+		ost << "ISO_" << h << "=\"\\" << endl;
+		for (i = 0; i < Iso->size; i++) {
+			ost << data[i];
+			if (i < Iso->size - 1) {
+				ost << ", ";
+			}
+			if (i && (i % 10) == 0) {
+				ost << "\\" << endl;
+			}
+		}
+		ost << "\"";
+		ost << endl;
+		ost << endl;
+	}
+	ost << "\\end{verbatim}" << endl << endl;
+	ost << endl;
 	ost << "\\begin{verbatim}" << endl << endl;
 	ost << "int " << Iso->prefix << "_size = " << Iso->size << ";" << endl;
 	ost << "int " << Iso->prefix << "_nb_reps = " << Reps->count << ";" << endl;
@@ -793,7 +847,7 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
-		Iso->Lifting->load_solution(id, data);
+		Iso->Lifting->load_solution(id, data, verbose_level - 1);
 		ost << "\t";
 		for (i = 0; i < Iso->size; i++) {
 			ost << data[i];
@@ -805,13 +859,12 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 	ost << "const char *" << Iso->prefix << "_stab_order[] = {" << endl;
 	for (h = 0; h < Reps->count; h++) {
 
-		ring_theory::longinteger_object go;
 
 		rep = Iso->Folding->Reps->rep[h];
 		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso.starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
-		Iso->Lifting->load_solution(id, data);
+		Iso->Lifting->load_solution(id, data, verbose_level - 1);
 		if (Iso->Folding->Reps->stab[h]) {
 			Iso->Folding->Reps->stab[h]->group_order(go);
 			ost << "\"";
@@ -893,6 +946,145 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 
 	if (f_v) {
 		cout << "isomorph_worker::report done" << endl;
+	}
+}
+
+void isomorph_worker::recognize(std::string &label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize" << endl;
+	}
+
+	long int *data;
+	int sz;
+	int idx;
+
+	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(label,
+			data, sz, 0 /* verbose_level */);
+
+	//Get_vector_or_set(label, data, sz); // layer5 only
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize set=";
+		Lint_vec_print(cout, data, sz);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize before Iso->Folding->identify" << endl;
+	}
+
+	idx = Iso->Folding->identify(data,
+			Isomorph_arguments->f_implicit_fusion,
+			verbose_level);
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize after Iso->Folding->identify" << endl;
+		cout << "isomorph_worker::recognize transporter:" << endl;
+		Iso->Sub->gen->get_A()->element_print(Iso->Folding->transporter, cout);
+	}
+
+	groups::strong_generators *SG;
+	groups::strong_generators *SG_orig;
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize before Iso->Folding->Reps->get_stabilizer" << endl;
+	}
+
+	Iso->Folding->Reps->get_stabilizer(Iso, idx,
+			SG,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize after Iso->Folding->Reps->get_stabilizer" << endl;
+	}
+
+	SG_orig = NEW_OBJECT(groups::strong_generators);
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize before init_generators_for_the_conjugate_group_aGav" << endl;
+	}
+
+	SG_orig->init_generators_for_the_conjugate_group_aGav(
+			SG, Iso->Folding->transporter, 0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize after init_generators_for_the_conjugate_group_aGav" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize before test_if_set_is_invariant_under_given_action" << endl;
+	}
+	SG_orig->test_if_set_is_invariant_under_given_action(Iso->A,
+			data, sz, verbose_level);
+	if (f_v) {
+		cout << "isomorph_worker::recognize after test_if_set_is_invariant_under_given_action" << endl;
+	}
+
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		fname.assign(Iso->prefix);
+		snprintf(str, 1000, "_aut_group");
+		fname.append(str);
+		fname.append(".tex");
+		snprintf(str, 1000, "Automorphism Group");
+		title.assign(str);
+
+
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "isomorph_worker::create_latex_report before report" << endl;
+			}
+
+			SG_orig->print_generators_tex(ost);
+
+			//report(ost, verbose_level);
+			if (f_v) {
+				cout << "isomorph_worker::create_latex_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "isomorph_worker::recognize done" << endl;
 	}
 }
 

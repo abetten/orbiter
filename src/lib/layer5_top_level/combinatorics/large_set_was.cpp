@@ -635,7 +635,7 @@ void large_set_was::read_solution_file(
 
 	orbiter_kernel_system::file_io Fio;
 	int nb_solutions;
-	int *Solutions;
+	long int *Solutions;
 	int solution_size;
 
 	Fio.read_solutions_from_file_and_get_solution_size(solution_file_name,
@@ -643,7 +643,7 @@ void large_set_was::read_solution_file(
 			verbose_level);
 	cout << "Read the following solutions from file:" << endl;
 	if (nb_solutions < 100) {
-		Int_matrix_print(Solutions, nb_solutions, solution_size);
+		Lint_matrix_print(Solutions, nb_solutions, solution_size);
 	}
 	else {
 		cout << "too large to print" << endl;

@@ -632,38 +632,42 @@ static void partition_with_logging(Vector& v, permutation& p, int left, int righ
 	pivot = left;
 	if (m1) {
 		v[pivot].swap(v[left + m1]);
-		Algo.int_swap(p[pivot], p[left + m1]);
-		}
+		Algo.lint_swap(p[pivot], p[left + m1]);
+	}
 	l = left;
 	r = right;
 	while (l < r) {
 		while (TRUE) {
-			if (l > right)
+			if (l > right) {
 				break;
+			}
 			res = v[l].compare_with(v[pivot]);
-			if (res > 0)
+			if (res > 0) {
 				break;
+			}
 			l++;
-			}
+		}
 		while (TRUE) {
-			if (r < left)
+			if (r < left) {
 				break;
-			res = v[r].compare_with(v[pivot]);
-			if (res <= 0)
-				break;
-			r--;
 			}
+			res = v[r].compare_with(v[pivot]);
+			if (res <= 0) {
+				break;
+			}
+			r--;
+		}
 		// now v[l] > v[pivot] and v[r] <= v[pivot] 
 		if (l < r) {
 			v[l].swap(v[r]);
-			Algo.int_swap(p[l], p[r]);
-			}
+			Algo.lint_swap(p[l], p[r]);
 		}
+	}
 	m = r;
 	if (left != m) {
 		v[left].swap(v[m]);
-		Algo.int_swap(p[left], p[m]);
-		}
+		Algo.lint_swap(p[left], p[m]);
+	}
 	*middle = m;
 }
 
@@ -676,7 +680,7 @@ void Vector::sum_of_all_entries(discreta_base &x)
 	x = s_i(0);
 	for (i = 1; i < l; i++) {
 		x += s_i(i);
-		}
+	}
 }
 
 
@@ -689,7 +693,7 @@ void Vector::n_choose_k_first(int n, int k)
 	m_l_n(k);
 	for (i = 0; i < k; i++) {
 		m_ii(i, i);
-		}
+	}
 }
 
 int Vector::n_choose_k_next(int n, int k)
@@ -699,17 +703,17 @@ int Vector::n_choose_k_next(int n, int k)
 	if (k != s_l()) {
 		cout << "Vector::n_choose_k_next() k != s_l()";
 		exit(1);
-		}
+	}
 	for (i = 0; i < k; i++) {
 		a = s_ii(k - 1 - i);
 		if (a < n - 1 - i) {
 			m_ii(k - 1 - i, a + 1);
 			for (ii = i - 1; ii >= 0; ii--) {
 				m_ii(k - 1 - ii, s_ii(k - 1 - ii - 1) + 1);
-				}
-			return TRUE;
 			}
+			return TRUE;
 		}
+	}
 	return FALSE;
 }
 
@@ -722,10 +726,11 @@ int Vector::next_lehmercode()
 		if (s_ii(i) < j) {
 			s_i(i).inc();
 			return TRUE;
-			}
-		else
+		}
+		else {
 			m_ii(i, 0);
 		}
+	}
 	return FALSE;
 }
 
@@ -740,14 +745,15 @@ void Vector::lehmercode2perm(permutation& p)
 	list.m_l(l);
 
 	// list := (0,1,2,...,l-1):
-	for (i = 0; i < l; i++)
+	for (i = 0; i < l; i++) {
 		list.m_ii(i, i);
+	}
 	
 	for (i = 0; i < l; i++) {
 		k = s_ii(i);
 		p[i] = list.s_ii(k);
 		list.delete_element(k);
-		}
+	}
 }
 
 void Vector::q_adic(int n, int q)
@@ -761,7 +767,7 @@ void Vector::q_adic(int n, int q)
 		m_ii(i, r);
 		n /= q;
 		i++;
-		} while(n);
+	} while(n);
 }
 
 int Vector::q_adic_as_int(int q)
@@ -774,7 +780,7 @@ int Vector::q_adic_as_int(int q)
 		n *= q;
 		r = s_ii(i);
 		n += r;
-		}
+	}
 	return n;
 }
 
@@ -785,7 +791,7 @@ void Vector::mult_scalar(discreta_base& a)
 	l = s_l();
 	for (i = 0; i < l; i++) {
 		s_i(i) *= a;
-		}
+	}
 }
 
 void Vector::first_word(int n, int q)
@@ -802,9 +808,10 @@ int Vector::next_word(int q)
 	while (s_ii(i) == q - 1) {
 		m_ii(i, 0);
 		i--;
-		if (i < 0)
+		if (i < 0) {
 			return FALSE;
 		}
+	}
 	s_i(i).inc();
 	return TRUE;
 }
@@ -817,9 +824,10 @@ void Vector::first_regular_word(int n, int q)
 int Vector::next_regular_word(int q)
 {
 	do {
-		if (!next_word(q))
+		if (!next_word(q)) {
 			return FALSE;
-		} while (!is_regular_word());
+		}
+	} while (!is_regular_word());
 	return TRUE;
 }
 
@@ -829,19 +837,22 @@ int Vector::is_regular_word()
 	int n, i, k, ipk, f_rg;
 	
 	n = s_l();
-	if (n == 1)
+	if (n == 1) {
 		return TRUE;
+	}
 	k = 1;
 	do {
 		i = 0;
 		ipk = i + k;
 		while (s_ii(ipk) == s_ii(i) && i < n - 1) {
 			i++;
-			if (ipk == n - 1)
+			if (ipk == n - 1) {
 				ipk = 0;
-			else
+			}
+			else {
 				ipk++;
 			}
+		}
 		f_rg = (s_ii(ipk) < s_ii(i));
 		k++;
 	} while (f_rg && k <= n - 1);
@@ -858,7 +869,7 @@ void Vector::apply_permutation(permutation &p)
 	for (i = 0; i < l; i++) {
 		j = p.s_i(i);
 		v[j].swap(s_i(i));
-		}
+	}
 	swap(v);
 }
 
@@ -871,7 +882,7 @@ void Vector::apply_permutation_to_elements(permutation &p)
 		a = s_ii(i);
 		b = p.s_i(a);
 		m_ii(i, b);
-		}
+	}
 }
 
 void Vector::content(Vector & c, Vector & where)
@@ -887,13 +898,13 @@ void Vector::content(Vector & c, Vector & where)
 	for (i = 0; i < l; i++) {
 		x = s_i(i);
 		if (c.search(x, &idx)) {
-			}
+		}
 		else {
 			c.insert_element(idx, x);
 			where.insert_element(idx, v);
-			}
-		where[idx].as_vector().append_integer(i);
 		}
+		where[idx].as_vector().append_integer(i);
+	}
 }
 
 void Vector::content_multiplicities_only(Vector & c, Vector & mult)
@@ -909,13 +920,13 @@ void Vector::content_multiplicities_only(Vector & c, Vector & mult)
 	for (i = 0; i < l; i++) {
 		x = s_i(i);
 		if (c.search(x, &idx)) {
-			}
+		}
 		else {
 			c.insert_element(idx, x);
 			mult.insert_element(idx, int_ob);
-			}
-		mult[idx].inc();
 		}
+		mult[idx].inc();
+	}
 }
 
 int Vector::hip()
@@ -925,9 +936,10 @@ int Vector::hip()
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
-		if (s_i(i).s_kind() != INTEGER)
+		if (s_i(i).s_kind() != INTEGER) {
 			return FALSE;
 		}
+	}
 	return TRUE;
 }
 
@@ -943,11 +955,12 @@ int Vector::hip1()
 		if (s_i(i).s_kind() != INTEGER) {
 			cout << "Vector::hip1(): object not of type INTEGER\n";
 			exit(1);
-			}
+		}
 		k = s_ii(i);
-		if (!ONE_char_int(k))
+		if (!ONE_char_int(k)) {
 			return FALSE;
 		}
+	}
 	return TRUE;
 }
 
@@ -959,8 +972,9 @@ void Vector::write_mem(memory & m, int debug_depth)
 	l = s_l();
 	m.write_int(l);
 	f_hip = (char) hip();
-	if (f_hip)
+	if (f_hip) {
 		f_hip1 = (char) hip1();
+	}
 	if (debug_depth > 0) {
 		cout << "writing ";
 		if (f_hip) {

@@ -87,6 +87,7 @@ MODULES= \
 		layer1_foundations/data_structures/sorting.o \
 		layer1_foundations/data_structures/spreadsheet.o \
 		layer1_foundations/data_structures/string_tools.o \
+		layer1_foundations/data_structures/tally_lint.o \
 		layer1_foundations/data_structures/tally_vector_data.o \
 		layer1_foundations/data_structures/tally.o \
 		layer1_foundations/data_structures/vector_builder_description.o \

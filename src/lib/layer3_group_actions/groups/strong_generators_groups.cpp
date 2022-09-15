@@ -19,6 +19,79 @@ namespace layer3_group_actions {
 namespace groups {
 
 
+void strong_generators::prepare_from_generator_data(
+		actions::action *A,
+		int *data,
+		int nb_gens,
+		int data_size,
+		std::string &ascii_target_go,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::prepare_from_generator_data" << endl;
+	}
+
+	ring_theory::longinteger_object target_go;
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::prepare_from_generator_data "
+				"data_size=" << data_size << endl;
+		cout << "strong_generators::prepare_from_generator_data "
+				"nb_gens=" << nb_gens << endl;
+	}
+
+	data_structures_groups::vector_ge *gens;
+
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	gens->init(A, verbose_level - 2);
+	target_go.create_from_base_10_string(ascii_target_go);
+
+
+	gens->allocate(nb_gens, verbose_level - 2);
+	for (i = 0; i < nb_gens; i++) {
+		A->make_element(gens->ith(i), data + i * data_size, 0);
+	}
+
+	if (f_v) {
+		cout << "strong_generators::prepare_from_generator_data "
+				"generators are:" << endl;
+		gens->print_quick(cout);
+	}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::prepare_from_generator_data before "
+				"generators_to_strong_generators" << endl;
+	}
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		gens, Strong_gens2,
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::prepare_from_generator_data after "
+				"generators_to_strong_generators" << endl;
+	}
+
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_OBJECT(Strong_gens2);
+	FREE_OBJECT(gens);
+
+
+	if (f_v) {
+		cout << "strong_generators::prepare_from_generator_data done" << endl;
+	}
+}
+
+
+
 void strong_generators::init_linear_group_from_scratch(
 		actions::action *&A,
 	field_theory::finite_field *F, int n,
@@ -3189,6 +3262,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 		cout << "strong_generators::stabilizer_of_spread_from_catalogue done" << endl;
 	}
 }
+
 
 void strong_generators::stabilizer_of_pencil_of_conics(
 		actions::action *A,

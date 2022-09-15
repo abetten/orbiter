@@ -112,27 +112,10 @@ public:
 	flag_orbit_folding();
 	~flag_orbit_folding();
 	void init(isomorph *Iso, int verbose_level);
-	void compute_stabilizer(groups::sims *&Stab, int verbose_level);
-	void test_compute_stabilizer(int verbose_level);
-	void test_memory(int verbose_level);
-	void test_edges(int verbose_level);
-	int test_edge(int n1, long int *subset1,
-		int *transporter, int verbose_level);
-	void compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
-			ring_theory::longinteger_object *&Ago_induced, int verbose_level);
-	void get_orbit_transversal(data_structures_groups::orbit_transversal *&T,
-		int verbose_level);
-	void iso_test_init(int verbose_level);
-	void iso_test_init2(int verbose_level);
-	void probe(int flag_orbit, int subset_rk,
-		int f_implicit_fusion, int verbose_level);
 	void isomorph_testing(int t0, int f_play_back,
 			std::string &play_back_file_name,
 		int f_implicit_fusion, int print_mod, int verbose_level);
-	void write_classification_matrix(int verbose_level);
-	void write_classification_graph(int verbose_level);
-	void decomposition_matrix(int verbose_level);
-	void compute_down_link(int *&down_link, int verbose_level);
+		// calls do_iso_test
 	void do_iso_test(int t0, groups::sims *&Stab,
 		int f_play_back, std::ifstream *play_back_file,
 		int &f_eof, int print_mod,
@@ -279,6 +262,25 @@ public:
 			std::ifstream *play_back_file,
 		int &f_eof, int verbose_level);
 
+	void write_classification_matrix(int verbose_level);
+	void write_classification_graph(int verbose_level);
+	void decomposition_matrix(int verbose_level);
+	void compute_down_link(int *&down_link, int verbose_level);
+	void probe(int flag_orbit, int subset_rk,
+		int f_implicit_fusion, int verbose_level);
+	void test_compute_stabilizer(int verbose_level);
+	void test_memory(int verbose_level);
+	void test_edges(int verbose_level);
+	int test_edge(int n1, long int *subset1,
+		int *transporter, int verbose_level);
+	void compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
+			ring_theory::longinteger_object *&Ago_induced, int verbose_level);
+	void get_orbit_transversal(data_structures_groups::orbit_transversal *&T,
+		int verbose_level);
+	void compute_stabilizer(groups::sims *&Stab, int verbose_level);
+	void iso_test_init(int verbose_level);
+	void iso_test_init2(int verbose_level);
+
 };
 
 
@@ -312,6 +314,9 @@ public:
 
 	int f_read_statistics_after_split;
 	//int read_statistics_split_m;
+
+	int f_recognize;
+	std::string recognize_label;
 
 	int f_compute_orbits;
 	int f_isomorph_testing;
@@ -425,7 +430,7 @@ public:
 	void init_solutions_from_memory(
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
-		int **Solutions, int *Nb_sol, int verbose_level);
+		long int **Solutions, int *Nb_sol, int verbose_level);
 	void classification_graph(
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
@@ -497,6 +502,7 @@ public:
 	void isomorph_testing(int verbose_level);
 	void isomorph_report(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+	void recognize(std::string &label, int verbose_level);
 
 };
 
@@ -640,6 +646,9 @@ public:
 	void read_fusion(int verbose_level);
 	void write_representatives_and_stabilizers(int verbose_level);
 	void read_representatives_and_stabilizers(int verbose_level);
+	void get_stabilizer(isomorph *Iso, int idx,
+			groups::strong_generators *&SG,
+			int verbose_level);
 	void save(int verbose_level);
 	void load(int verbose_level);
 	void calc_fusion_statistics();
@@ -737,8 +746,8 @@ public:
 	// Called from
 	// load_strong_generators
 	// trace_next_point_database
-	int find_extension_easy(long int *set,
-		int case_nb, int &idx, int verbose_level);
+	void find_extension_easy(long int *set,
+		int case_nb, int &idx, int &f_found, int verbose_level);
 		// returns TRUE if found, FALSE otherwise
 		// Called from identify_solution
 		// Linear search through all solutions at a given starter.
@@ -750,8 +759,8 @@ public:
 		int f_through_hash, int verbose_level);
 	int find_extension_easy_old(long int *set,
 		int case_nb, int &idx, int verbose_level);
-	int find_extension_easy_new(long int *set,
-		int case_nb, int &idx, int verbose_level);
+	void find_extension_easy_new(long int *set,
+		int case_nb, int &idx, int &f_found, int verbose_level);
 	int open_database_and_identify_object(long int *set,
 		int *transporter,
 		int f_implicit_fusion, int verbose_level);
@@ -795,7 +804,8 @@ public:
 
 	isomorph *Iso;
 
-	std::string fname_staborbits;
+	std::string fname_flag_orbits;
+	std::string fname_stab_orbits;
 	std::string fname_case_len;
 	std::string fname_statistics;
 	std::string fname_hash_and_datref;
@@ -924,10 +934,10 @@ public:
 
 	Vector *v; // [1]
 	database *DB_sol;
-	int *id_to_datref;
-	int *id_to_hash;
-	int *hash_vs_id_hash; // sorted
-	int *hash_vs_id_id;
+	long int *id_to_datref;
+	long int *id_to_hash;
+	long int *hash_vs_id_hash; // sorted
+	long int *hash_vs_id_id;
 
 	substructure_lifting_data();
 	~substructure_lifting_data();
@@ -955,9 +965,9 @@ public:
 		// fields 3-8 are the starter
 	void add_solution_to_database(long int *data,
 		int nb, int id, int no,
-		int nb_solutions, int h, uint_4 &datref,
+		int nb_solutions, long int h, uint_4 &datref,
 		int print_mod, int verbose_level);
-	void load_solution(int id, long int *data);
+	void load_solution(int id, long int *data, int verbose_level);
 	void load_solution_by_btree(int btree_idx,
 		int idx, int &id, long int *data);
 	void count_solutions(
@@ -968,11 +978,11 @@ public:
 					void *final_test_data, int verbose_level),
 			void *final_test_data,
 			int verbose_level);
-	void add_solutions_to_database(int *Solutions,
+	void add_solutions_to_database(long int *Solutions,
 		int the_case, int nb_solutions, int nb_solutions_total,
 		int print_mod, int &no,
 		int verbose_level);
-	void init_solutions(int **Solutions,
+	void init_solutions(long int **Solutions,
 		int *Nb_sol, int verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
 	void count_solutions_from_clique_finder_case_by_case(int nb_files,
@@ -1024,6 +1034,7 @@ public:
 		// schreier_prev[N]
 		// and computed orbit_perm_inv[N]
 	void test_hash(int verbose_level);
+	void id_to_datref_allocate(int verbose_level);
 
 };
 

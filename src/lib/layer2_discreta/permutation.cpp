@@ -444,7 +444,7 @@ void permutation::scan(istream & is, int verbose_level)
 	swap(perm);
 }
 
-int & permutation::s_i(int i)
+long int & permutation::s_i(int i)
 {
 	int l;
 	

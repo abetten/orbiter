@@ -82,11 +82,11 @@ void memory::freeself_memory()
 	if (self.char_pointer == NULL) {
 		// cout << "returning\n";
 		return;
-		}
+	}
 	if (s_kind() != MEMORY) {
 		cout << "memory::freeself(): kind != MEM" << endl;
 		exit(1);
-		}
+	}
 	// cout << "memory::freeself_memory():"; cout << *this << endl;
 	pc = self.char_pointer;
 	if (pc) {
@@ -94,7 +94,7 @@ void memory::freeself_memory()
 		pi -= 3;
 		delete [] pi;
 		self.char_pointer = NULL;
-		}
+	}
 }
 
 kind memory::s_virtual_kind()
@@ -107,16 +107,16 @@ void memory::copyobject_to(discreta_base &x)
 	int l;
 	
 #ifdef MEMORY_COPY_VERBOSE
-	cout << "in memory::copyobject_to()\n";
+	cout << "in memory::copyobject_to" << endl;
 #endif
 	x.freeself();
 	if (x.s_kind() != MEMORY) {
 #ifdef MEMORY_CHANGE_KIND_VERBOSE
-		cout << "warning: memory::copyobject_to x not a memory\n";
+		cout << "warning: memory::copyobject_to x not a memory" << endl;
 #endif
 		x.c_kind(MEMORY);
 		// x.printobjectkindln();
-		}
+	}
 	memory m = x.as_memory();
 	
 	l = used_length();
@@ -128,7 +128,7 @@ ostream& memory::print(ostream& ost)
 {
 	if (self.char_pointer == NULL) {
 		ost << "memory not allocated";
-		}
+	}
 	cout << "memory, used_length=" << used_length() 
 		<< ", alloc_length=" << alloc_length() 
 		<< ", cur_pointer=" << cur_pointer() << endl;
@@ -142,7 +142,7 @@ void memory::init(int length, char *d)
 	alloc(length);
 	for (i = 0; i < length; i++) {
 		s_i(i) = d[i];
-		}
+	}
 }
 
 void memory::alloc(int length)
@@ -154,28 +154,28 @@ void memory::alloc(int length)
 	int *pi;
 	
 #ifdef DEBUG_MEM
-	cout << "memory::alloc()" << endl;
+	cout << "memory::alloc" << endl;
 #endif
 	if (length >= MEM_OVERSIZE) {
 		mem_oversize = MEM_OVERSIZE1;
-		}
+	}
 	else {
 		mem_oversize = MEM_OVERSIZE;
-		}
+	}
 	freeself_memory();
 	size = length + mem_oversize + 3 * sizeof(int);
 #ifdef DEBUG_MEM
-	cout << "memory::alloc() allocating " << size << " chars" << endl;
+	cout << "memory::alloc allocating " << size << " chars" << endl;
 #endif
 
 	pi = (int *) new char[size];
 	if (pi == NULL) {
-		cout << "memoy::alloc() out of memory" << endl;
+		cout << "memoy::alloc out of memory" << endl;
 		exit(1);
-		}
+	}
 	self.char_pointer = (char *) (pi + 3);
 #ifdef DEBUG_MEM
-	cout << "memory::alloc() setting alloc_length()" << endl;
+	cout << "memory::alloc setting alloc_length" << endl;
 #endif
 	alloc_length() = length + mem_oversize;
 	used_length() = length;
@@ -195,14 +195,14 @@ void memory::append(int length, char *d)
 	new_length = old_length + length;
 	if (new_length > alloc_length()) {
 		realloc(new_length);
-		}
+	}
 	else {
 		used_length() = new_length;
-		}
+	}
 	pc = self.char_pointer;
 	for (i = 0; i < length; i++) {
 		pc[old_length + i] = d[i];
-		}
+	}
 }
 
 void memory::realloc(int new_length)
@@ -218,8 +218,8 @@ void memory::realloc(int new_length)
 	old_length = used_length();
 	old_cur_pointer = cur_pointer();
 	if (new_length < old_length) {
-		cout << "memory::realloc() warning: new_length < old_length" << endl;
-		}
+		cout << "memory::realloc warning: new_length < old_length" << endl;
+	}
 	self.char_pointer = NULL;
 	alloc(new_length);
 	pc = self.char_pointer;
@@ -227,14 +227,14 @@ void memory::realloc(int new_length)
 		i < MINIMUM(old_length, new_length); 
 		i++) {
 		pc[i] = old_pc[i];
-		}
+	}
 	for (i = old_length; i < new_length; i++) {
 		pc[i] = 0;
-		}
+	}
 	delete [] old_pi;
 	cur_pointer() = old_cur_pointer;
 #ifdef DEBUG_MEM
-	cout << "memory::realloc() to " << used_length() << " chars" << endl;
+	cout << "memory::realloc to " << used_length() << " chars" << endl;
 #endif
 }
 
@@ -255,13 +255,13 @@ void memory::read_char(char *c)
 	l = used_length();
 	l1 = l - cur_p;
 	if (l1 < 1) {
-		cout << "memory::read_char() error: l1 < 1" << endl;
+		cout << "memory::read_char error: l1 < 1" << endl;
 		exit(1);
-		}
+	}
 	cp = self.char_pointer + cur_p;
 	*c = *cp;
 #ifdef DEBUG_WRITE_CHAR
-	cout << "memory::read_char(), at " << cur_pointer() << ", reading char " << (int) c << endl;
+	cout << "memory::read_char at " << cur_pointer() << ", reading char " << (int) c << endl;
 #endif
 	cur_pointer()++;
 }
@@ -272,7 +272,7 @@ void memory::write_int(int i)
 	orbiter_kernel_system::os_interface Os;
 	
 #ifdef DEBUG_WRITE_int
-	cout << "memory::write_int(), at " << used_length() << ", writing int " << i1 << endl;
+	cout << "memory::write_int at " << used_length() << ", writing int " << i1 << endl;
 #endif
 	Os.block_swap_chars((char *) &i1, 4, 1);
 	append(4, (char *) &i1);
@@ -291,14 +291,14 @@ void memory::read_int(int *i)
 	if (l1 < 4) {
 		cout << "memory::read_int() error: l1 < 4" << endl;
 		exit(1);
-		}
+	}
 	cp = self.char_pointer + cur_p;
 	cp1 = (char *) &i1;
 	for (j = 0; j < 4; j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
-		}
+	}
 	/* i1 = *(int *) (cp + cur_p); */
 	Os.block_swap_chars((char *) &i1, 4, 1);
 #ifdef DEBUG_WRITE_int
@@ -323,15 +323,15 @@ void memory::read_file(char *fname, int verbose_level)
 	pc = self.char_pointer;
 	fp = fopen(fname, "r");
 	if ((int) fread(pc, 1 /* size */, fsize /* nitems */, fp) != fsize) {
-		cout << "memory::read_file() error in fread" << endl;
-		}
+		cout << "memory::read_file error in fread" << endl;
+	}
 	fclose(fp);
 	used_length() = fsize;
 	cur_pointer() = 0;
 	if (f_v) {
-		cout << "memory::read_file() read file " 
+		cout << "memory::read_file read file "
 			<< fname << " of size " << fsize << endl;
-		}
+	}
 }
 
 void memory::write_file(char *fname, int verbose_level)
@@ -351,13 +351,13 @@ void memory::write_file(char *fname, int verbose_level)
 	
 	fclose(fp);
 	if (Fio.file_size(fname) != size) {
-		cout << "memory::write_file() error: file_size(fname) != size" << endl;
+		cout << "memory::write_file error: file_size(fname) != size" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
-		cout << "memory::write_file() wrote file " 
+		cout << "memory::write_file wrote file "
 			<< fname << " of size " << size << endl;
-		}
+	}
 }
 
 int memory::multiplicity_of_character(char c)
@@ -367,9 +367,11 @@ int memory::multiplicity_of_character(char c)
 	
 	pc = self.char_pointer;
 	len = used_length();
-	for (i = 0; i < len; i++)
-		if (pc[i] == c)
+	for (i = 0; i < len; i++) {
+		if (pc[i] == c) {
 			l++;
+		}
+	}
 	return l;
 }
 
@@ -388,23 +390,24 @@ static void code(uchar *pc, int l, uchar *pc2, uchar code_char)
 #if 0
 		if ((posf % 100000) == 0) {
 			cout << posf << endl;
-			}
+		}
 #endif
 		for (i = 0; i < 8; i++) {
 			cc <<= 1;
 			if (pos < l) {
-				if (pc[pos] == code_char)
+				if (pc[pos] == code_char) {
 					cc = cc | 0X1U;
+				}
 				else {
 					pc2[pos2] = pc[pos];
 					pos2++;
-					}
-				pos++;
 				}
+				pos++;
 			}
+		}
 		pc2[pos2h] = cc;
 		pos2h = pos2;
-		}
+	}
 }
 
 static int decode(uchar *pc2, int l2, uchar *pc, uchar code_char)
@@ -416,46 +419,51 @@ static int decode(uchar *pc2, int l2, uchar *pc, uchar code_char)
 	
 	while (TRUE) {
 	/* for (; pos2 < l2; ) { */
-		if (pos2 >= l2 && i >= 8)
+		if (pos2 >= l2 && i >= 8) {
 			break;
+		}
 		if (i == 8) {
 			cc = pc2[pos2];
 			pos2++;
 			i = 0;
-			}
+		}
 		if (cc & (uchar) 128U) {
 			if (pc) {
 				pc[pos] = code_char;
-				}
-			pos++;
 			}
+			pos++;
+		}
 		else {
 			if (pos2 < l2) {
 				if (pc) {
 					pc[pos] = pc2[pos2];
-					}
+				}
 				pos2++;
 				pos++;
-				}
 			}
+		}
 		cc <<= 1;
 		i++;
-		}
+	}
 	return pos;
 }
 
-void memory::compress(int f_v)
+void memory::compress(int verbose_level)
 // Wolfgang Boessenecker 9/94 
 {
+	int f_v = (verbose_level >= 1);
 	memory mem2;
 	char *pc, *pc2;
 	int l, l2, l_c;
 
+	if (f_v) {
+		cout << "memory::compress" << endl;
+	}
 	pc = self.char_pointer;
 	l = used_length();
 	if (f_v) {
 		cout << "compressing from " << l << " to ";
-		}
+	}
 	l_c = multiplicity_of_character((char) 0);
 	l2 = l - l_c + ((l + 7) >> 3);
 	mem2.alloc(l2); // sets used_length to l2 
@@ -470,20 +478,27 @@ void memory::compress(int f_v)
 	if (f_v) {
 		cout << l2 << " chars." << endl;
 		print(cout);
-		}
+	}
+	if (f_v) {
+		cout << "memory::compress done" << endl;
+	}
 }
 
-void memory::decompress(int f_v)
+void memory::decompress(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	memory mem;
 	char *pc, *pc2;
 	int l, l2;
 	
+	if (f_v) {
+		cout << "memory::decompress" << endl;
+	}
 	pc2 = self.char_pointer;
 	l2 = used_length();
 	if (f_v) {
 		cout << "decompressing from " << l2 << " to ";
-		}
+	}
 	l = decode((uchar *) pc2, l2, NULL, (uchar) 0);
 	mem.alloc(l);
 	pc = mem.self.char_pointer;
@@ -491,7 +506,10 @@ void memory::decompress(int f_v)
 	swap(mem);
 	if (f_v) {
 		cout << l << " chars." << endl;
-		}
+	}
+	if (f_v) {
+		cout << "memory::decompress done" << endl;
+	}
 }
 
 int memory::csf()
@@ -514,7 +532,7 @@ void memory::write_mem(memory & M, int debug_depth)
 	for (i = 0; i < l; i++) {
 		a = s_i(i);
 		M.write_char((char) a);
-		}
+	}
 }
 
 void memory::read_mem(memory & M, int debug_depth)
@@ -529,7 +547,7 @@ void memory::read_mem(memory & M, int debug_depth)
 	for (i = 0; i < l; i++) {
 		M.read_char(&c);
 		mem[i] = c;
-		}
+	}
 	M.init(l, mem);
 	delete [] mem;
 }

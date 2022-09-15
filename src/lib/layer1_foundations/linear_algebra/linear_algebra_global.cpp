@@ -413,8 +413,8 @@ void linear_algebra_global::do_RREF(
 	base_cols = NEW_int(n);
 	Int_vec_copy(M, A, m * n);
 	if (f_v) {
-		cout << "linear_algebra_global::do_RREF input matrix A:" << endl;
-		Int_matrix_print(A, m, n);
+		cout << "linear_algebra_global::do_RREF input matrix A of size " << m << " x " << n << endl;
+		//Int_matrix_print(A, m, n);
 	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
@@ -472,9 +472,9 @@ void linear_algebra_global::do_RREF(
 	}
 
 
-	Int_vec_copy(M, A, m * n);
+	//Int_vec_copy(M, A, m * n);
 
-	RREF_demo(F, A, m, n, verbose_level);
+	//RREF_demo(F, A, m, n, verbose_level);
 
 
 

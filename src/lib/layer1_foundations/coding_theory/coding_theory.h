@@ -303,6 +303,7 @@ public:
 	void extract_block(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
+	uint16_t NetIpChecksum(uint16_t const *ipHeader, int nWords);
 
 
 

@@ -2437,6 +2437,36 @@ uint16_t gen_crc16(const uint8_t *data, uint16_t size)
 
 
 
+
+// from: https://barrgroup.com/embedded-systems/how-to/additive-checksums
+
+uint16_t coding_theory_domain::NetIpChecksum(uint16_t const *ipHeader, int nWords)
+{
+    uint32_t  sum = 0;
+
+
+    /*
+     * IP headers always contain an even number of bytes.
+     */
+    while (nWords-- > 0)
+    {
+        sum += *(ipHeader++);
+    }
+
+    /*
+     * Use carries to compute 1's complement sum.
+     */
+    sum = (sum >> 16) + (sum & 0xFFFF);
+    sum += sum >> 16;
+
+    /*
+     * Return the inverted 16-bit result.
+     */
+    return ((unsigned short) ~sum);
+
+}
+
+
 }}}
 
 

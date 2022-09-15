@@ -830,7 +830,7 @@ void file_io::count_number_of_solutions_in_file_by_case(std::string &fname,
 
 
 void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
-	int &nb_solutions, int *&Solutions, int &solution_size,
+	int &nb_solutions, long int *&Solutions, int &solution_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -856,12 +856,13 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 			<< nb_solutions << " solutions of size " << solution_size << endl;
 	}
 
-	Solutions = NEW_int(nb_solutions * solution_size);
+	Solutions = NEW_lint(nb_solutions * solution_size);
 
 	data_structures::string_tools ST;
 	char *buf;
 	char *p_buf;
-	int i, a, nb_sol;
+	int i, nb_sol;
+	long int a;
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 	nb_sol = 0;
@@ -875,7 +876,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 			}
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
-			ST.s_scan_int(&p_buf, &a);
+			ST.s_scan_lint(&p_buf, &a);
 
 			if (a == -1) {
 				break;
@@ -886,7 +887,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 				exit(1);
 			}
 			for (i = 0; i < solution_size; i++) {
-				ST.s_scan_int(&p_buf, &a);
+				ST.s_scan_lint(&p_buf, &a);
 				Solutions[nb_sol * solution_size + i] = a;
 			}
 			nb_sol++;
@@ -906,13 +907,14 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 
 
 void file_io::read_solutions_from_file(std::string &fname,
-	int &nb_solutions, int *&Solutions, int solution_size,
+	int &nb_solutions, long int *&Solutions, int solution_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
 	char *p_buf;
-	int i, a, nb_sol;
+	int i, nb_sol;
+	long int a;
 	data_structures::string_tools ST;
 
 	if (f_v) {
@@ -940,7 +942,7 @@ void file_io::read_solutions_from_file(std::string &fname,
 
 
 
-	Solutions = NEW_int(nb_solutions * solution_size);
+	Solutions = NEW_lint(nb_solutions * solution_size);
 
 	nb_sol = 0;
 	{
@@ -950,7 +952,7 @@ void file_io::read_solutions_from_file(std::string &fname,
 			f.getline(buf, MY_OWN_BUFSIZE, '\n');
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
-			ST.s_scan_int(&p_buf, &a);
+			ST.s_scan_lint(&p_buf, &a);
 
 			if (a == -1) {
 				break;
@@ -961,7 +963,7 @@ void file_io::read_solutions_from_file(std::string &fname,
 				exit(1);
 			}
 			for (i = 0; i < solution_size; i++) {
-				ST.s_scan_int(&p_buf, &a);
+				ST.s_scan_lint(&p_buf, &a);
 				Solutions[nb_sol * solution_size + i] = a;
 			}
 			nb_sol++;
@@ -980,15 +982,16 @@ void file_io::read_solutions_from_file(std::string &fname,
 
 
 void file_io::read_solutions_from_file_size_is_known(std::string &fname,
-	std::vector<std::vector<int> > &Solutions, int solution_size,
+	std::vector<std::vector<long int> > &Solutions, int solution_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
 	char *p_buf;
-	vector<int> one_solution;
+	vector<long int> one_solution;
 	data_structures::string_tools ST;
-	int i, a;
+	int i;
+	long int a;
 
 	if (f_v) {
 		cout << "read_solutions_from_file_size_is_known" << endl;
@@ -1014,7 +1017,7 @@ void file_io::read_solutions_from_file_size_is_known(std::string &fname,
 			f.getline(buf, MY_OWN_BUFSIZE, '\n');
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
-			ST.s_scan_int(&p_buf, &a);
+			ST.s_scan_lint(&p_buf, &a);
 
 			if (a == -1) {
 				break;
@@ -1022,7 +1025,7 @@ void file_io::read_solutions_from_file_size_is_known(std::string &fname,
 
 			one_solution[0] = a;
 			for (i = 1; i < solution_size; i++) {
-				ST.s_scan_int(&p_buf, &a);
+				ST.s_scan_lint(&p_buf, &a);
 				one_solution[i] = a;
 			}
 			Solutions.push_back(one_solution);
@@ -1037,7 +1040,7 @@ void file_io::read_solutions_from_file_size_is_known(std::string &fname,
 
 void file_io::read_solutions_from_file_by_case(std::string &fname,
 	int *nb_solutions, int *case_nb, int nb_cases,
-	int **&Solutions, int solution_size,
+	long int **&Solutions, int solution_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1063,7 +1066,7 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
-	Solutions = NEW_pint(nb_cases);
+	Solutions = NEW_plint(nb_cases);
 
 	{
 		ifstream fp(fname);
@@ -1093,7 +1096,7 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 					exit(1);
 				}
 				Solutions[nb_case1] =
-						NEW_int(nb_solutions[nb_case1] * solution_size);
+						NEW_lint(nb_solutions[nb_case1] * solution_size);
 				cout << "read_solutions_from_file_by_case "
 						"read start case " << the_case << endl;
 			}
@@ -1111,20 +1114,21 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 			else {
 				if (the_case >= 0) {
 					char *p_buf;
-					int sz, a;
+					long int sz;
+					long int a;
 
 					//cout << "read_solutions_from_file_by_case "
 					//"reading solution " << the_case_count
 					//<< " for case " << the_case << endl;
 					p_buf = buf;
-					ST.s_scan_int(&p_buf, &sz);
+					ST.s_scan_lint(&p_buf, &sz);
 					if (sz != solution_size) {
 						cout << "read_solutions_from_file_by_case "
 								"sz != solution_size" << endl;
 						exit(1);
 					}
 					for (i = 0; i < sz; i++) {
-						ST.s_scan_int(&p_buf, &a);
+						ST.s_scan_lint(&p_buf, &a);
 						Solutions[nb_case1][the_case_count * solution_size + i] = a;
 					}
 					the_case_count++;
@@ -1496,7 +1500,7 @@ void file_io::int_matrix_read_csv(std::string &fname,
 		if (f_v) {
 			cout << "file_io::int_matrix_read_csv before S.read_spreadsheet" << endl;
 		}
-		S.read_spreadsheet(fname, verbose_level - 1);
+		S.read_spreadsheet(fname, 0 /* verbose_level - 1*/);
 		if (f_v) {
 			cout << "file_io::int_matrix_read_csv after S.read_spreadsheet" << endl;
 		}
@@ -4548,10 +4552,10 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 {
 	int nb_solutions;
 	int solution_size = sz;
-	int *Sol;
+	long int *Sol;
 	int i, j;
 
-	std::vector<std::vector<int> > Solutions;
+	std::vector<std::vector<long int> > Solutions;
 
 
 	read_solutions_from_file_size_is_known(fname,
@@ -4560,7 +4564,7 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 
 	nb_solutions = Solutions.size();
 
-	Sol = NEW_int(nb_solutions * solution_size);
+	Sol = NEW_lint(nb_solutions * solution_size);
 	for (i = 0; i < nb_solutions; i++) {
 		for (j = 0; j < solution_size; j++) {
 			Sol[i * solution_size + j] = Solutions[i][j];
@@ -4572,7 +4576,7 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 
 	data_structures::tally T;
 
-	T.init(Sol, nb_solutions * solution_size, TRUE, 0);
+	T.init_lint(Sol, nb_solutions * solution_size, TRUE, 0);
 	cout << "tally:" << endl;
 	T.print(TRUE);
 	cout << endl;
@@ -4590,7 +4594,7 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 	cout << endl;
 
 
-	FREE_int(Sol);
+	FREE_lint(Sol);
 
 }
 

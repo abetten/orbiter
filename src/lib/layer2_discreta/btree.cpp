@@ -634,76 +634,99 @@ int btree::search_string(discreta_base& key_op, int& pos, int verbose_level)
 	return search(&the_key, NULL, &pos, 1, verbose_level);
 }
 
-void btree::search_interval_int4(int i_min, int i_max, 
+void btree::search_interval_int8(long int i_min, long int i_max,
 	int& first, int &len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "btree::search_interval_int8" << endl;
+	}
+
 	KEYTYPE key_min, key_max;
+
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
+
 	integer I_min, I_max;
+
 	I_min.m_i(i_min - 1);
 	I_max.m_i(i_max);
+
 	int idx_min, idx_max;
 	int f_found_min, f_found_max;
 	
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 	if (f_v) {
-		cout << "search_interval_int4 I_min=" << I_min << " I_max=" << I_max << endl;
-		}
+		cout << "btree::search_interval_int8 I_min=" << I_min << " I_max=" << I_max << endl;
+	}
 	
 	f_found_min = search(&key_min, NULL, &idx_min, 1, verbose_level);
 	f_found_max = search(&key_max, NULL, &idx_max, 1, verbose_level);
 	if (f_v) {
-		cout << "search_interval_int4 f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
-		cout << "search_interval_int4 f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
-		}
+		cout << "btree::search_interval_int8 f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
+		cout << "btree::search_interval_int8 f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
+	}
 	first = idx_min + 1;
 	len = idx_max - idx_min;
 }
 
-void btree::search_interval_int4_int4(int l0, int u0, 
-	int l1, int u1, int& first, int &len, int verbose_level)
+void btree::search_interval_int8_int8(long int l0, long int u0,
+	long int l1, long int u1,
+	int& first, int &len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "btree::search_interval_int4_int4 low=(" << l0 << "," << l1 << ") high=(" << u0 << "," << u1 << ")" << endl;
-		}
+		cout << "btree::search_interval_int8_int8" << endl;
+	}
+
+	if (f_v) {
+		cout << "btree::search_interval_int8_int8 low=(" << l0 << "," << l1 << ") high=(" << u0 << "," << u1 << ")" << endl;
+	}
+
 	KEYTYPE key_min, key_max;
+
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
+
 	integer I_min, I_max;
+
 	int idx_min, idx_max;
 	int f_found_min, f_found_max;
 	
 	I_min.m_i(l0);
 	I_max.m_i(u0);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 	I_min.m_i(l1 - 1);
 	I_max.m_i(u1);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 
 	f_found_min = search(&key_min, NULL, &idx_min, 2, verbose_level);
 	f_found_max = search(&key_max, NULL, &idx_max, 2, verbose_level);
 	if (f_v) {
-		cout << "search_interval_int4_int4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
-		cout << "search_interval_int4_int4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
-		}
+		cout << "search_interval_int8_int8() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
+		cout << "search_interval_int8_int8() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
+	}
 	first = idx_min + 1;
 	len = idx_max - idx_min;
 }
 
-void btree::search_interval_int4_int4_int4(int l0, int u0, 
-	int l1, int u1, int l2, int u2, 
+void btree::search_interval_int8_int8_int8(long int l0, long int u0,
+	long int l1, long int u1, long int l2, long int u2,
 	int& first, int &len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "btree::search_interval_int8_int8_int8" << endl;
+	}
+
 	KEYTYPE key_min, key_max;
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
@@ -713,18 +736,18 @@ void btree::search_interval_int4_int4_int4(int l0, int u0,
 	
 	I_min.m_i(l0);
 	I_max.m_i(u0);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 	I_min.m_i(l1);
 	I_max.m_i(u1);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 	I_min.m_i(l2 - 1);
 	I_max.m_i(u2);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 
 	f_found_min = search(&key_min, NULL, &idx_min, 3, verbose_level);
@@ -737,11 +760,20 @@ void btree::search_interval_int4_int4_int4(int l0, int u0,
 	len = idx_max - idx_min;
 }
 
-void btree::search_interval_int4_int4_int4_int4(int l0, int u0, 
-	int l1, int u1, int l2, int u2, 
-	int l3, int u3, int& first, int &len, int verbose_level)
+void btree::search_interval_int8_int8_int8_int8(
+		long int l0, long int u0,
+		long int l1, long int u1,
+		long int l2, long int u2,
+		long int l3, long int u3,
+		int& first, int &len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "btree::search_interval_int8_int8_int8_int8" << endl;
+	}
+
+
 	KEYTYPE key_min, key_max;
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
@@ -751,42 +783,43 @@ void btree::search_interval_int4_int4_int4_int4(int l0, int u0,
 	
 	I_min.m_i(l0);
 	I_max.m_i(u0);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 	I_min.m_i(l1);
 	I_max.m_i(u1);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 	I_min.m_i(l2);
 	I_max.m_i(u2);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 	I_min.m_i(l3 - 1);
 	I_max.m_i(u3);
-	bt_key_fill_in_int4(&p_key_min, I_min);
-	bt_key_fill_in_int4(&p_key_max, I_max);
+	bt_key_fill_in_int8(&p_key_min, I_min);
+	bt_key_fill_in_int8(&p_key_max, I_max);
 
 
 	f_found_min = search(&key_min, NULL, &idx_min, 4, verbose_level);
 	f_found_max = search(&key_max, NULL, &idx_max, 4, verbose_level);
 	if (f_v) {
-		cout << "search_interval_int4_int4_int4_int4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
-		cout << "search_interval_int4_int4_int4_int4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
+		cout << "search_interval_int8_int8_int8_int8() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
+		cout << "search_interval_int8_int8_int8_int8() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
 		}
 	first = idx_min + 1;
 	len = idx_max - idx_min;
 }
 
-int btree::search_int4_int4(int data1, int data2, int& idx, int verbose_level)
+int btree::search_int8_int8(long int data1, long int data2, int& idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "btree::search_int4_int4 data=(" << data1 << "," << data2 << ")" << endl;
-		}
+		cout << "btree::search_int8_int8 data=(" << data1 << "," << data2 << ")" << endl;
+	}
+
 	KEYTYPE key;
 	char *p_key = key.c;
 	integer I1, I2;
@@ -794,8 +827,8 @@ int btree::search_int4_int4(int data1, int data2, int& idx, int verbose_level)
 	
 	I1.m_i(data1);
 	I2.m_i(data2);
-	bt_key_fill_in_int4(&p_key, I1);
-	bt_key_fill_in_int4(&p_key, I2);
+	bt_key_fill_in_int8(&p_key, I1);
+	bt_key_fill_in_int8(&p_key, I2);
 
 
 
@@ -806,15 +839,15 @@ int btree::search_int4_int4(int data1, int data2, int& idx, int verbose_level)
 	return f_found;
 }
 
-int btree::search_unique_int4(int i, int verbose_level)
+int btree::search_unique_int8(long int i, int verbose_level)
 // returns -1 if the element could not be found or is not unique.
 // otherwise, the idx of the element is returned
 {
 	int first, len;
 	
-	search_interval_int4(i, i, first, len, verbose_level);
+	search_interval_int8(i, i, first, len, verbose_level);
 	if (len > 1) {
-		cout << "btree::search_unique_int4() WARNING: element is not unique, returning -1" << endl;
+		cout << "btree::search_unique_int8() WARNING: element is not unique, returning -1" << endl;
 		return -1;
 		}
 	if (len == 0) {
@@ -823,15 +856,15 @@ int btree::search_unique_int4(int i, int verbose_level)
 	return first;
 }
 
-int btree::search_unique_int4_int4_int4_int4(int i0, int i1, 
-	int i2, int i3, int verbose_level)
+int btree::search_unique_int8_int8_int8_int8(long int i0, long int i1,
+	long int i2, long int i3, int verbose_level)
 // returns -1 if an element whose key starts with [i0,i1,i2,i3] could not be found or is not unique.
 // otherwise, the idx of that element is returned
 {
 	int f_v = (verbose_level >= 1);
 	int first, len;
 	
-	search_interval_int4_int4_int4_int4(
+	search_interval_int8_int8_int8_int8(
 		i0, i0, 
 		i1, i1, 
 		i2, i2, 
@@ -857,11 +890,11 @@ int btree::search_unique_int4_int4_int4_int4(int i0, int i1,
 	return first;
 }
 
-int btree::search_datref_of_unique_int4(int i, int verbose_level)
+int btree::search_datref_of_unique_int8(long int i, int verbose_level)
 {
-	int no = search_unique_int4(i, verbose_level);
+	int no = search_unique_int8(i, verbose_level);
 	if (no == -1) {
-		cout << "btree::search_unique_int4() no == -1, cannot determine element" << endl;
+		cout << "btree::search_unique_int8() no == -1, cannot determine element" << endl;
 		exit(1);
 		}
 	KEYTYPE key;
@@ -871,9 +904,9 @@ int btree::search_datref_of_unique_int4(int i, int verbose_level)
 	return data.datref;
 }
 
-int btree::search_datref_of_unique_int4_if_there(int i, int verbose_level)
+int btree::search_datref_of_unique_int8_if_there(long int i, int verbose_level)
 {
-	int no = search_unique_int4(i, verbose_level);
+	int no = search_unique_int8(i, verbose_level);
 	if (no == -1) {
 		return -1;
 		}
@@ -884,7 +917,7 @@ int btree::search_datref_of_unique_int4_if_there(int i, int verbose_level)
 	return data.datref;
 }
 
-int btree::get_highest_int4()
+long int btree::get_highest_int8()
 // returns -1 if the btree is empty,
 // otherwise the int4 value of the key 
 // of the last (highest) element in the btree.
@@ -897,14 +930,14 @@ int btree::get_highest_int4()
 	len = length(verbose_level);
 	if (len == 0) {
 		return -1;
-		}
+	}
 	ith(len - 1, &key, &data, verbose_level);
 	// cout << i << " : ";
 	// key_print(key.c, ost);
 	// cout << endl;
 	char *p_key = key.c;
-	int_4 i;
-	bt_key_get_int4(&p_key, i);
+	int_8 i;
+	bt_key_get_int8(&p_key, i);
 	return i;
 }
 
@@ -918,7 +951,7 @@ void btree::get_datrefs(int first, int len, Vector& datrefs)
 	for (int i = 0; i < len; i++) {
 		ith(first + i, &key, &data, verbose_level);
 		datrefs.m_ii(i, data.datref);
-		}
+	}
 }
 
 int btree::search(void *pSearchKey, 
@@ -1549,17 +1582,17 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 	int new_page_num;
 	
 	if (f_v) {
-		cout << "Split page=" << BF->PageNum << " at x=" << x << endl;
+		cout << "btree::Split page=" << BF->PageNum << " at x=" << x << endl;
 		}
 	if (f_v) {
-		cout << "btree::Split() original page:" << endl;
+		cout << "btree::Split original page:" << endl;
 		page_print(BF, cout);
 		}
 	SplitBF = new Buffer;
 	fill_char((char *)SplitBF, sizeof(Buffer), 0);
 	new_page_num = AllocateRec(f_v);
 	if (f_v) {
-		cout << "Split new page=" << new_page_num << endl;
+		cout << "btree::Split new page=" << new_page_num << endl;
 		}
 	SplitBF->PageNum = (int_4) new_page_num;
 	if (x < BTREEHALFPAGESIZE) {
@@ -1598,7 +1631,7 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 	*Item = SplitItem;
 	
 	if (f_v) {
-		cout << "btree::Split() after split:" << endl;
+		cout << "btree::Split after split:" << endl;
 		cout << "original page: " << BF->PageNum << endl;
 		page_print(BF, cout);
 		cout << "new page: " << SplitBF->PageNum << endl;
@@ -1606,7 +1639,7 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 		}
 	
 	if (f_v) {
-		cout << "btree::Split() saving new page:" << endl;
+		cout << "btree::Split saving new page:" << endl;
 		}
 	SavePage(SplitBF, verbose_level - 1);
 	
@@ -1640,7 +1673,7 @@ void btree::delete_ith(int idx, int verbose_level)
 		cout << "btree::delete_ith idx=" << idx << endl;
 		}
 	if (!f_open()) {
-		cout << "btree::delete_ith() file not open" << endl;
+		cout << "btree::delete_ith file not open" << endl;
 		exit(1);
 		}
 	

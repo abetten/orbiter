@@ -31,7 +31,7 @@ ring_theory_global::~ring_theory_global()
 
 void ring_theory_global::write_code_for_division(
 		field_theory::finite_field *F,
-		std::string &fname_code,
+		std::string &label_code,
 		std::string &A_coeffs, std::string &B_coeffs,
 		int verbose_level)
 {
@@ -42,7 +42,14 @@ void ring_theory_global::write_code_for_division(
 	}
 
 
+	string fname_code;
+
+	fname_code.assign("crc_");
+	fname_code.append(label_code);
+	fname_code.append(".cpp");
+
 	{
+
 		std::ofstream ost(fname_code);
 
 
@@ -51,6 +58,7 @@ void ring_theory_global::write_code_for_division(
 
 		Os.get_date(str);
 
+		string label_of_parameters;
 		string name_of_function;
 		string name_of_array_of_polynomials;
 		char str2[1024];
@@ -114,24 +122,18 @@ void ring_theory_global::write_code_for_division(
 
 
 		name_of_function.assign("divide");
-
-		sprintf(str2, "_q%d", F->q);
-		name_of_function.append(str2);
-		sprintf(str2, "_n%d", da);
-		name_of_function.append(str2);
-		sprintf(str2, "_r%d", db);
-		name_of_function.append(str2);
+		name_of_function.append("_");
+		name_of_function.append(label_code);
 
 
+		sprintf(str2, "q%d_n%d_r%d", F->q, da, db);
 
-		name_of_array_of_polynomials.assign("CRC_polynomials");
+		label_of_parameters.assign(str2);
 
-		sprintf(str2, "_q%d", F->q);
-		name_of_array_of_polynomials.append(str2);
-		sprintf(str2, "_n%d", da);
-		name_of_array_of_polynomials.append(str2);
-		sprintf(str2, "_r%d", db);
-		name_of_array_of_polynomials.append(str2);
+
+
+		name_of_array_of_polynomials.assign("crc_poly_table_");
+		name_of_array_of_polynomials.append(label_code);
 
 
 
@@ -141,6 +143,7 @@ void ring_theory_global::write_code_for_division(
 		ost << " *" << endl;
 		ost << " *  Created on: " << str << endl;
 		ost << " *      Author: Orbiter" << endl;
+		ost << " * crc code parameters: " << label_of_parameters << endl;
 		ost << " */" << endl;
 		ost << endl;
 		//ost << "#include \"orbiter.h\"" << endl;
@@ -242,6 +245,7 @@ void ring_theory_global::write_code_for_division(
 
 
 
+		ost << "\t// crc code parameters: " << label_of_parameters << endl;
 		ost << "\t// the size of the array " << name_of_array_of_polynomials << " is  " << F->q - 1 << " x " << db + 1 << endl;
 		ost << "const unsigned char " << name_of_array_of_polynomials << "[] = {" << endl;
 

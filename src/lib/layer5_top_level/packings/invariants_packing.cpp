@@ -130,7 +130,7 @@ void invariants_packing::init(isomorph *Iso,
 		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso->starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
-		Iso->Lifting->load_solution(id, P->the_packing);
+		Iso->Lifting->load_solution(id, P->the_packing, verbose_level - 1);
 		
 		Inv[orbit].init(P, Iso->prefix_invariants,
 				Iso->prefix_tex, orbit, P->the_packing,
@@ -164,7 +164,7 @@ void invariants_packing::init(isomorph *Iso,
 		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso->starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
-		Iso->Lifting->load_solution(id, P->the_packing);
+		Iso->Lifting->load_solution(id, P->the_packing, verbose_level - 1);
 		
 		
 		for (i = 0; i < Iso->size; i++) {
@@ -291,7 +291,7 @@ void invariants_packing::compute_dual_packings(
 		first = Iso->Lifting->orbit_fst[rep];
 		//c = Iso->starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
-		Iso->Lifting->load_solution(id, P->the_packing);
+		Iso->Lifting->load_solution(id, P->the_packing, verbose_level - 1);
 
 	
 		for (i = 0; i < Iso->size; i++) {
