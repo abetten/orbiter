@@ -244,10 +244,10 @@ void spread_create::init(spread_create_description *Descr,
 		cout << endl;
 	}
 
-	long int *Part;
+	long int *Part = NULL;
 	int s;
 
-	Grass->make_partition(set, sz, Part, s, 0 /* verbose_level */);
+	Grass->make_partition(set, sz, Part, s, verbose_level - 1);
 
 	if (f_v) {
 		cout << "spread_create::init Partition:" << endl;
@@ -268,6 +268,8 @@ void spread_create::init(spread_create_description *Descr,
 	Andre->init(F, k, set, verbose_level);
 	if (f_v) {
 		cout << "spread_create::init after Andre->init" << endl;
+		cout << "spread_create::init before Andre->report" << endl;
+		Andre->report(cout, verbose_level);
 	}
 
 

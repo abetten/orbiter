@@ -48,6 +48,7 @@ namespace data_structures_groups {
 	class schreier_vector_handler;
 	class schreier_vector;
 	class set_and_stabilizer;
+	class translation_plane_via_andre_model;
 	class union_find_on_k_subsets;
 	class union_find;
 	class vector_ge_description;

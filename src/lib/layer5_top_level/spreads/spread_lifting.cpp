@@ -84,16 +84,9 @@ spread_lifting::~spread_lifting()
 void spread_lifting::init(
 		spread_classify *S,
 		data_structures_groups::orbit_rep *R,
-	//long int *starter, int starter_size,
-	//int starter_case_number, int starter_number_of_cases,
-	//long int *candidates, int nb_candidates,
 	std::string &output_prefix,
-	//groups::strong_generators *Strong_gens,
 	int f_lex, 
 	int verbose_level)
-//R->rep /* starter */, R->level /* starter_size */,
-//R->orbit_at_level, R->nb_cases,
-//R->candidates, R->nb_candidates,
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -419,14 +412,14 @@ void spread_lifting::reduce_candidates(int verbose_level)
 
 	s = S->SD->Grass->nb_points_covered(verbose_level);
 
-	Part = NEW_lint(R->nb_candidates * s);
-
 	if (f_v) {
-		cout << "spread_lifting::reduce_candidates before S->SD->Grass->make_partition" << endl;
+		cout << "spread_lifting::reduce_candidates "
+				"before S->SD->Grass->make_partition" << endl;
 	}
 	S->SD->Grass->make_partition(R->candidates, R->nb_candidates, Part, s, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "spread_lifting::reduce_candidates after S->SD->Grass->make_partition" << endl;
+		cout << "spread_lifting::reduce_candidates "
+				"after S->SD->Grass->make_partition" << endl;
 	}
 
 	if (f_v) {

@@ -3830,6 +3830,89 @@ void strong_generators::export_to_orbiter_as_bsgs(
 
 
 
+void strong_generators::report_group(std::string &prefix, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int i;
+
+	if (f_v) {
+		cout << "strong_generators::report_group" << endl;
+	}
+
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_report.tex");
+
+	{
+		char str[1000];
+		string title, author, extra_praeamble;
+
+		snprintf(str, 1000, "Group");
+		title.assign(str);
+
+
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "strong_generators::report_group before report_group2" << endl;
+			}
+			report_group2(ost, verbose_level);
+			if (f_v) {
+				cout << "strong_generators::report_group after report_group2" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "strong_generators::report_group done" << endl;
+	}
+}
+
+
+void strong_generators::report_group2(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::report_group2" << endl;
+	}
+
+	print_generators_tex(ost);
+
+	print_for_make_element(ost);
+
+	if (f_v) {
+		cout << "strong_generators::report_group2 done" << endl;
+	}
+}
+
 
 
 }}}

@@ -715,7 +715,7 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 
 
 	ost << "The plane is:" << endl;
-	Surf->P->Grass_planes->print_set_tex(ost, &plane_rk_global, 1);
+	Surf->P->Grass_planes->print_set_tex(ost, &plane_rk_global, 1, 0 /* verbose_level */);
 
 	ost << "Clebsch map for lines $" << line1
 			<< " = " << Surf->Schlaefli->Labels->Line_label_tex[line1] << ", "

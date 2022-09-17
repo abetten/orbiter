@@ -658,77 +658,57 @@ public:
 
 };
 
-
-
 // #############################################################################
-// translation_plane_via_andre_model.cpp
+// translation_plane_activity_description.cpp
 // #############################################################################
 
-//! Andre / Bruck / Bose model of a translation plane
+//! description of an activity regarding a translation plane
 
 
 
-class translation_plane_via_andre_model {
+class translation_plane_activity_description {
+
 public:
 
-	std::string label_txt;
-	std::string label_tex;
+	int f_export_incma;
+	int f_report;
 
-	field_theory::finite_field *F;
-	int q;
-	int k;
-	int n;
-	int k1;
-	int n1;
-	int order_of_plane;
-
-	geometry::andre_construction *Andre;
-	int N; // number of points = number of lines
-	int twoN; // 2 * N
-	int f_semilinear;
-
-	geometry::andre_construction_line_element *Line;
-	int *Incma;
-	int *pts_on_line;
-	int *Line_through_two_points; // [N * N]
-	int *Line_intersection; // [N * N]
-
-	actions::action *An;
-	actions::action *An1;
-
-	actions::action *OnAndre;
-
-	groups::strong_generators *strong_gens;
-
-	geometry::incidence_structure *Inc;
-	data_structures::partitionstack *Stack;
-
-	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
-	poset_classification::poset_classification *arcs;
-
-	apps_combinatorics::tactical_decomposition *T;
-
-	translation_plane_via_andre_model();
-	~translation_plane_via_andre_model();
-	void init(
-			spreads::spread_create *Spread,
-			geometry::andre_construction *Andre,
-			actions::action *An1,
-			int verbose_level);
-	void classify_arcs(const char *prefix,
-		int depth, int verbose_level);
-	void classify_subplanes(const char *prefix,
+	translation_plane_activity_description();
+	~translation_plane_activity_description();
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
-	int check_arc(long int *S, int len, int verbose_level);
-	int check_subplane(long int *S, int len, int verbose_level);
-	int check_if_quadrangle_defines_a_subplane(
-		long int *S, int *subplane7,
-		int verbose_level);
-	void create_latex_report(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void print();
 
 };
+
+
+// #############################################################################
+// translation_plane_activity.cpp
+// #############################################################################
+
+//! an activity regarding a translation plane
+
+
+
+class translation_plane_activity {
+
+public:
+
+	translation_plane_activity_description *Descr;
+	data_structures_groups::translation_plane_via_andre_model *TP;
+
+
+	translation_plane_activity();
+	~translation_plane_activity();
+	void init(
+			translation_plane_activity_description *Descr,
+			data_structures_groups::translation_plane_via_andre_model *TP,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
+
 
 
 

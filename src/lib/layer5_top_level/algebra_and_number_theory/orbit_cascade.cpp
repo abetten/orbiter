@@ -438,6 +438,7 @@ void orbit_cascade::downstep(int verbose_level)
 
 
 		for (so = 0; so < nb_orbits_secondary[po]; so++, f++) {
+
 			data_structures_groups::set_and_stabilizer *R;
 			ring_theory::longinteger_object ol;
 			ring_theory::longinteger_object go;

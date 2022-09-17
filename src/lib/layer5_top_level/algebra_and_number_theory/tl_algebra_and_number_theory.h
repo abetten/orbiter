@@ -407,7 +407,7 @@ public:
 // #############################################################################
 
 
-//! description of an activity associated with a linear group
+//! description of an activity associated with a group
 
 class group_theoretic_activity_description {
 public:
@@ -457,35 +457,6 @@ public:
 	int f_find_singer_cycle;
 
 
-
-	// options for poset classification:
-	int f_poset_classification_control;
-	poset_classification::poset_classification_control *Control;
-
-
-	// orbits on points using Schreier trees:
-	int f_orbits_on_points;
-
-		// additional options for computing orbits on points:
-		int f_export_trees;
-
-		int f_stabilizer;
-			// compute stabilizer of orbit 0,
-			// must be given with -orbits_on_points
-
-		int f_stabilizer_of_orbit_rep;
-		int stabilizer_of_orbit_rep_orbit_idx;
-
-
-	// poset classification
-	int f_orbits_on_subsets;
-	int orbits_on_subsets_size;
-
-	int f_orbits_on_partition;
-	int orbits_on_partition_k;
-
-
-
 	int f_classes_based_on_normal_form;
 
 	int f_normalizer;
@@ -524,17 +495,6 @@ public:
 
 	int f_draw_tree;
 
-	int f_orbit_of;
-	int orbit_of_point_idx;
-
-	int f_orbits_on_set_system_from_file;
-	std::string orbits_on_set_system_from_file_fname;
-	int orbits_on_set_system_first_column;
-	int orbits_on_set_system_number_of_columns;
-
-	int f_orbit_of_set_from_file;
-	std::string orbit_of_set_from_file_fname;
-
 	int f_conjugacy_class_of;
 	std::string conjugacy_class_of_data;
 
@@ -572,17 +532,64 @@ public:
 
 	int f_reverse_isomorphism_exterior_square;
 
+	int f_is_subgroup_of;
+	int f_coset_reps;
+
+
+
+	// orbits:
+
+
+	// options for poset classification:
+	int f_poset_classification_control;
+	poset_classification::poset_classification_control *Control;
+
+
+	// orbits on points using Schreier trees:
+	int f_orbits_on_points;
+
+		// additional options for computing orbits on points:
+		int f_export_trees;
+
+		int f_stabilizer;
+			// compute stabilizer of orbit 0,
+			// must be given with -orbits_on_points
+
+		int f_stabilizer_of_orbit_rep;
+		int stabilizer_of_orbit_rep_orbit_idx;
+
+
+	// poset classification
+	int f_orbits_on_subsets;
+	int orbits_on_subsets_size;
+
+	int f_orbits_on_partition;
+	int orbits_on_partition_k;
+
+
+
+	int f_orbit_of;
+	int orbit_of_point_idx;
+
+	int f_orbits_on_set_system_from_file;
+	std::string orbits_on_set_system_from_file_fname;
+	int orbits_on_set_system_first_column;
+	int orbits_on_set_system_number_of_columns;
+
+	int f_orbit_of_set_from_file;
+	std::string orbit_of_set_from_file_fname;
+
 	// classification of optimal linear codes using poset classification
 	int f_linear_codes;
 	int linear_codes_minimum_distance;
 	int linear_codes_target_size;
 
-
+#if 0
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
 	int f_isomorph_arguments;
 	isomorph_arguments *IA;
-
+#endif
 
 
 
@@ -620,14 +627,6 @@ public:
 	int f_representation_on_polynomials;
 	int representation_on_polynomials_degree;
 
-	int f_Andre_Bruck_Bose_construction;
-	int Andre_Bruck_Bose_construction_spread_no;
-	std::string Andre_Bruck_Bose_construction_label;
-
-
-	int f_is_subgroup_of;
-	int f_coset_reps;
-
 
 
 	group_theoretic_activity_description();
@@ -655,12 +654,7 @@ public:
 
 	any_group *AG;
 
-	any_group *AG_secondary; // used in Andre Bruck Bose, for instance
-
-#if 0
-	actions::action *A1; // AG->A_base; the default group action
-	actions::action *A2; // AG->A; secondary group action, used in Andre Bruck Bose
-#endif
+	any_group *AG_secondary; // used in is_subgroup_of, coset_reps
 
 
 
@@ -677,14 +671,6 @@ public:
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
 	void raise_to_the_power(int verbose_level);
-#if 0
-	void do_Andre_Bruck_Bose_construction(
-			spreads::spread_create *Spread,
-			geometry::andre_construction *Andre,
-			int f_Fano, int f_arcs, int f_depth, int depth,
-			std::string &label,
-			int verbose_level);
-#endif
 
 };
 

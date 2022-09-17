@@ -474,6 +474,90 @@ public:
 	int find(long int pt);
 };
 
+
+// #############################################################################
+// translation_plane_via_andre_model.cpp
+// #############################################################################
+
+//! Andre / Bruck / Bose model of a translation plane
+
+
+
+class translation_plane_via_andre_model {
+public:
+
+	std::string label_txt;
+	std::string label_tex;
+
+	field_theory::finite_field *F;
+	int q;
+	int k;
+	int n;
+	int k1;
+	int n1;
+	int order_of_plane;
+
+	geometry::andre_construction *Andre;
+	int N; // number of points = number of lines
+	int twoN; // 2 * N
+	int f_semilinear;
+
+	geometry::andre_construction_line_element *Line;
+	int *Incma;
+	int *pts_on_line;
+	int *Line_through_two_points; // [N * N]
+	int *Line_intersection; // [N * N]
+
+	actions::action *An;
+	actions::action *An1;
+
+	actions::action *OnAndre;
+
+	groups::strong_generators *strong_gens;
+
+	geometry::incidence_structure *Inc;
+	data_structures::partitionstack *Stack;
+
+#if 0
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *arcs;
+
+	apps_combinatorics::tactical_decomposition *T;
+#endif
+
+	translation_plane_via_andre_model();
+	~translation_plane_via_andre_model();
+	void init(
+			int k,
+			std::string &label_txt,
+			std::string &label_tex,
+			groups::strong_generators *Sg,
+			geometry::andre_construction *Andre,
+			actions::action *An,
+			actions::action *An1,
+			int verbose_level);
+#if 0
+	void classify_arcs(
+			poset_classification::poset_classification_control *Control,
+			int verbose_level);
+	void classify_subplanes(
+			poset_classification::poset_classification_control *Control,
+			int verbose_level);
+#endif
+	int check_arc(long int *S, int len, int verbose_level);
+	int check_subplane(long int *S, int len, int verbose_level);
+	int check_if_quadrangle_defines_a_subplane(
+		long int *S, int *subplane7,
+		int verbose_level);
+	void create_latex_report(int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+	void export_incma(int verbose_level);
+
+};
+
+
+
 // #############################################################################
 // union_find.cpp
 // #############################################################################

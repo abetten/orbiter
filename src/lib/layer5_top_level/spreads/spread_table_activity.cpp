@@ -355,7 +355,7 @@ void spread_table_activity::report_spread2(std::ostream &ost, int spread_idx, in
 	Lint_vec_print(ost, spread_elts, P->spread_size);
 	ost << "\\\\" << endl;
 
-	P->P3->Grass_lines->print_set_tex(ost, spread_elts, P->spread_size);
+	P->P3->Grass_lines->print_set_tex(ost, spread_elts, P->spread_size, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "spread_table_activity::report_spread2 done" << endl;

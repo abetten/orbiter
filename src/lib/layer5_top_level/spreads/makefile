@@ -18,7 +18,8 @@ MODULES = \
 	spread_table_activity_description.o \
 	spread_table_activity.o \
 	spread_table_with_selection.o \
-	translation_plane_via_andre_model.o
+	translation_plane_activity_description.o \
+	translation_plane_activity.o
 
 
 all : $(MODULES)

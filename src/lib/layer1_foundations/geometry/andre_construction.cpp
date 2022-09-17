@@ -217,12 +217,19 @@ void andre_construction::report(std::ostream &ost, int verbose_level)
 
 	if (f_v) {
 		cout << "andre_construction::report" << endl;
+		cout << "andre_construction::report spread_size=" << spread_size << endl;
 	}
 
 
 	ost << "The spread: \\\\" << endl;
 
-	Grass->print_set_tex(ost, spread_elements_numeric, spread_size);
+	if (f_v) {
+		cout << "andre_construction::report before Grass->print_set_tex" << endl;
+	}
+	Grass->print_set_tex(ost, spread_elements_numeric, spread_size, verbose_level);
+	if (f_v) {
+		cout << "andre_construction::report after Grass->print_set_tex" << endl;
+	}
 
 	if (f_v) {
 		cout << "andre_construction::report done" << endl;

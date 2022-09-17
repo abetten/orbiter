@@ -1603,6 +1603,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 		cout << "symbol_definition::definition_of_linear_group" << endl;
 	}
 
+#if 0
 	if (f_v) {
 		cout << "symbol_definition::definition_of_linear_group before load_finite_field" << endl;
 	}
@@ -1611,7 +1612,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_linear_group after load_finite_field" << endl;
 	}
-
+#endif
 
 
 	groups::linear_group *LG;
@@ -2027,7 +2028,7 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 	spreads::spread_create *Spread;
 	apps_algebra::any_group *Gn;
 	apps_algebra::any_group *Gnp1;
-	spreads::translation_plane_via_andre_model *TP;
+	data_structures_groups::translation_plane_via_andre_model *TP;
 
 
 	Spread = Get_object_of_type_spread(translation_plane_spread_label);
@@ -2048,7 +2049,7 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 		cout << "symbol_definition::definition_of_translation_plane found group Gnp1 " << Gnp1->label << endl;
 	}
 
-	TP = NEW_OBJECT(spreads::translation_plane_via_andre_model);
+	TP = NEW_OBJECT(data_structures_groups::translation_plane_via_andre_model);
 
 	actions::action *An1;
 
@@ -2058,12 +2059,23 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 		cout << "symbol_definition::definition_of_translation_plane before TP->init" << endl;
 	}
 	TP->init(
-			Spread,
+			Spread->k,
+			Spread->label_txt,
+			Spread->label_tex,
+			Spread->Sg,
 			Spread->Andre,
+			Spread->A,
 			An1,
 			verbose_level);
+
+	// TP is in layer 4 and hence does not know about the spread class,
+	// so we need to pass the arguments individually.
+
 	if (f_v) {
 		cout << "symbol_definition::definition_of_translation_plane after TP->init" << endl;
+		cout << "symbol_definition::definition_of_translation_plane TP->label_txt=" << TP->label_txt << endl;
+		cout << "symbol_definition::definition_of_translation_plane TP->label_tex=" << TP->label_tex << endl;
+		//Spread->Andre->report(cout, verbose_level);
 	}
 
 	if (f_v) {
@@ -2074,7 +2086,7 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_translation_plane(define_label, Spread, verbose_level);
+	Symb->init_translation_plane(define_label, TP, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_translation_plane before add_symbol_table_entry" << endl;
 	}

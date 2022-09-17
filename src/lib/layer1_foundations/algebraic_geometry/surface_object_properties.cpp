@@ -2149,7 +2149,7 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 	Lint_vec_print(ost, Hesse_planes, nb_Hesse_planes);
 	ost << "\\\\" << endl;
 
-	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes);
+	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes, 0 /* verbose_level */);
 
 
 	ost << endl;

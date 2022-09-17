@@ -83,6 +83,9 @@ activity_description::activity_description()
 	f_spread_classify_activity = FALSE;
 	Spread_classify_activity_description = NULL;
 
+	f_translation_plane_activity = FALSE;
+	Translation_plane_activity_description = NULL;
+
 }
 
 activity_description::~activity_description()
@@ -118,6 +121,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-finite_field_activity" << endl;
+			Finite_field_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -139,6 +143,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-ring_theoretic_activity" << endl;
+			Polynomial_ring_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -161,6 +166,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-projective_space_activity" << endl;
+			Projective_space_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -182,6 +188,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-orthogonal_space_activity" << endl;
+			Orthogonal_space_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -203,6 +210,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-group_theoretic_activities" << endl;
+			Group_theoretic_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -224,6 +232,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-coding_theoretic_activities" << endl;
+			Coding_theoretic_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -245,6 +254,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-cubic_surface_activity" << endl;
+			Cubic_surface_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -266,6 +276,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-quartic_curve_activity" << endl;
+			Quartic_curve_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -287,6 +298,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-combinatorial_object_activity" << endl;
+			Combinatorial_object_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -308,6 +320,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-graph_theoretic_activity" << endl;
+			Graph_theoretic_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -329,6 +342,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
+			Classification_of_cubic_surfaces_with_double_sixes_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -350,6 +364,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-spread_table_activity" << endl;
+			Spread_table_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -371,6 +386,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-packing_with_symmetry_assumption_activity" << endl;
+			Packing_was_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -392,6 +408,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-packing_fixed_points_activity" << endl;
+			Packing_was_fixpoints_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -413,6 +430,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-graph_classification_activity" << endl;
+			Graph_classification_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -434,6 +452,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-diophant_activity" << endl;
+			Diophant_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -455,6 +474,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-design_activity" << endl;
+			Design_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -476,6 +496,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-large_set_with_symmetry_assumption_activity" << endl;
+			Large_set_was_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -497,6 +518,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-formula_activity" << endl;
+			Formula_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -518,6 +540,7 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-BLT_set_classify_activity" << endl;
+			Blt_set_classify_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -539,6 +562,29 @@ void activity_description::read_arguments(
 
 		if (f_v) {
 			cout << "-spread_classify_activity" << endl;
+			Spread_classify_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-translation_plane_activity") == 0) {
+		f_translation_plane_activity = TRUE;
+		Translation_plane_activity_description =
+				NEW_OBJECT(spreads::translation_plane_activity_description);
+		if (f_v) {
+			cout << "reading -translation_plane_activity" << endl;
+		}
+		i += Translation_plane_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-translation_plane_activity" << endl;
+			Translation_plane_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -736,6 +782,14 @@ void activity_description::worker(int verbose_level)
 
 		do_spread_classify_activity(verbose_level);
 	}
+	else if (f_translation_plane_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_translation_plane_activity" << endl;
+		}
+
+		do_translation_plane_activity(verbose_level);
+	}
 
 
 	if (f_v) {
@@ -834,6 +888,10 @@ void activity_description::print()
 	else if (f_spread_classify_activity) {
 		cout << "-spread_classify_activity ";
 		Spread_classify_activity_description->print();
+	}
+	else if (f_translation_plane_activity) {
+		cout << "-translation_plane_activity ";
+		Translation_plane_activity_description->print();
 	}
 
 }
@@ -1988,6 +2046,59 @@ void activity_description::do_spread_classify_activity(int verbose_level)
 
 }
 
+void activity_description::do_translation_plane_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_translation_plane_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	data_structures_groups::translation_plane_via_andre_model *TP;
+
+	TP = (data_structures_groups::translation_plane_via_andre_model *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+
+		spreads::translation_plane_activity Activity;
+
+		Activity.init(
+				Translation_plane_activity_description,
+				TP,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_translation_plane_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_translation_plane_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_translation_plane_activity done" << endl;
+	}
+
+}
 
 
 
