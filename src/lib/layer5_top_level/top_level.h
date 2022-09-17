@@ -256,7 +256,8 @@ namespace spreads {
 	class spread_table_activity_description;
 	class spread_table_activity;
 	class spread_table_with_selection;
-	class translation_plane_via_andre_model;
+	class translation_plane_activity_description;
+	class translation_plane_activity;
 
 }
 

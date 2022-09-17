@@ -961,6 +961,12 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d,
 		int f_no_eigenvalue_one, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classes_GL" << endl;
+	}
+
 	algebra::gl_classes C;
 	algebra::gl_class_rep *R;
 	int nb_classes;
@@ -1030,6 +1036,9 @@ void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d
 	FREE_int(Elt);
 	FREE_OBJECTS(R);
 	FREE_OBJECT(A);
+	if (f_v) {
+		cout << "algebra_global_with_action::classes_GL done" << endl;
+	}
 }
 
 void algebra_global_with_action::do_normal_form(int q, int d,
@@ -1037,33 +1046,35 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_normal_form" << endl;
+	}
+
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
 	field_theory::finite_field *F;
 
-	if (f_v) {
-		cout << "algebra_global_with_action::do_normal_form" << endl;
-		}
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_normal_form before C.init" << endl;
-		}
+	}
 	C.init(d, F, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "algebra_global_with_action::do_normal_form after C.init" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_normal_form before C.make_classes" << endl;
-		}
+	}
 	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "algebra_global_with_action::do_normal_form after C.make_classes" << endl;
-		}
+	}
 
 
 
@@ -1123,6 +1134,9 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
 	FREE_OBJECTS(Reps);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_normal_form done" << endl;
+	}
 }
 
 
@@ -1130,6 +1144,11 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 		int f_no_eigenvalue_one, int elt_idx,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_identify_one" << endl;
+	}
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
@@ -1196,11 +1215,19 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
 	FREE_OBJECTS(Reps);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_identify_one done" << endl;
+	}
 }
 
 void algebra_global_with_action::do_identify_all(int q, int d,
 		int f_no_eigenvalue_one, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_identify_all" << endl;
+	}
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
@@ -1280,10 +1307,18 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 	FREE_OBJECTS(Reps);
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_identify_all done" << endl;
+	}
 }
 
 void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_random" << endl;
+	}
 	//gl_random_matrix(d, q, verbose_level);
 
 	algebra::gl_classes C;
@@ -1325,12 +1360,20 @@ void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one
 	FREE_int(Basis);
 	FREE_OBJECTS(Reps);
 	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_random done" << endl;
+	}
 }
 
 
 void algebra_global_with_action::group_table(int q, int d, int f_poly, std::string &poly,
 		int f_no_eigenvalue_one, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_table" << endl;
+	}
 	algebra::gl_classes C;
 	algebra::gl_class_rep *Reps;
 	int nb_classes;
@@ -1527,6 +1570,9 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 	FREE_OBJECTS(Reps);
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "algebra_global_with_action::group_table done" << endl;
+	}
 }
 
 void algebra_global_with_action::centralizer_brute_force(int q, int d,
@@ -1534,6 +1580,11 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 // problem elt_idx does not describe the group element uniquely.
 // Reason: the sims chain is not canonical.
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_brute_force" << endl;
+	}
 	actions::action *A;
 	ring_theory::longinteger_object Go;
 	field_theory::finite_field *F;
@@ -1656,12 +1707,20 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 	FREE_int(Elt3);
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_brute_force done" << endl;
+	}
 }
 
 
 void algebra_global_with_action::centralizer(int q, int d,
 		int elt_idx, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer" << endl;
+	}
 	field_theory::finite_field *F;
 	actions::action *A_PGL;
 	actions::action *A_GL;
@@ -1731,11 +1790,19 @@ void algebra_global_with_action::centralizer(int q, int d,
 	FREE_OBJECT(A_GL);
 	FREE_OBJECT(A_PGL);
 	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer done" << endl;
+	}
 
 }
 
 void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer" << endl;
+	}
 	actions::action *A;
 	field_theory::finite_field *F;
 	ring_theory::longinteger_object Go;
@@ -1788,6 +1855,9 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 	FREE_int(Elt);
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer done" << endl;
+	}
 }
 
 
@@ -1795,6 +1865,11 @@ void algebra_global_with_action::compute_regular_representation(
 		actions::action *A, groups::sims *S,
 		data_structures_groups::vector_ge *SG, int *&perm, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_regular_representation" << endl;
+	}
 	ring_theory::longinteger_object go;
 	int goi, i;
 	combinatorics::combinatorics_domain Combi;
@@ -1808,7 +1883,7 @@ void algebra_global_with_action::compute_regular_representation(
 	for (i = 0; i < SG->len; i++) {
 		S->regular_representation(SG->ith(i),
 				perm + i * goi, verbose_level);
-		}
+	}
 	cout << endl;
 	for (i = 0; i < SG->len; i++) {
 		Combi.perm_print_offset(cout,
@@ -1818,7 +1893,10 @@ void algebra_global_with_action::compute_regular_representation(
 			TRUE /* f_orbit_structure */,
 			NULL, NULL);
 		cout << endl;
-		}
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_regular_representation done" << endl;
+	}
 }
 
 void algebra_global_with_action::presentation(
@@ -1826,6 +1904,11 @@ void algebra_global_with_action::presentation(
 		data_structures_groups::vector_ge *gens, int *primes,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::presentation" << endl;
+	}
 	int *Elt1, *Elt2, *Elt3, *Elt4;
 	int i, j, jj, k, l, a, b;
 	int word[100];
@@ -1956,6 +2039,9 @@ void algebra_global_with_action::presentation(
 
 	FREE_int(word_list);
 	FREE_int(inverse_word_list);
+	if (f_v) {
+		cout << "algebra_global_with_action::presentation done" << endl;
+	}
 }
 
 
@@ -2166,6 +2252,9 @@ void algebra_global_with_action::do_eigenstuff(field_theory::finite_field *F,
 		delete [] B;
 		delete [] Bt;
 	}
+	if (f_v) {
+		cout << "algebra_global_with_action::do_eigenstuff done" << endl;
+	}
 }
 
 
@@ -2230,6 +2319,9 @@ void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
 
 	}
 	free_finite_field_domain(dom);
+	if (f_v) {
+		cout << "algebra_global_with_action::A5_in_PSL_ done" << endl;
+	}
 }
 
 void algebra_global_with_action::A5_in_PSL_2_q(int q,
@@ -2237,6 +2329,11 @@ void algebra_global_with_action::A5_in_PSL_2_q(int q,
 		layer2_discreta::discreta_matrix & B,
 		layer2_discreta::domain *dom_GFq, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::A5_in_PSL_2_q" << endl;
+	}
 	if (((q - 1) % 5) == 0) {
 		A5_in_PSL_2_q_easy(q, A, B, dom_GFq, verbose_level);
 	}
@@ -2246,6 +2343,9 @@ void algebra_global_with_action::A5_in_PSL_2_q(int q,
 	else {
 		cout << "either q + 1 or q - 1 must be divisible by 5!" << endl;
 		exit(1);
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::A5_in_PSL_2_q done" << endl;
 	}
 }
 
@@ -2260,7 +2360,8 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 	integer zeta5, zeta5v, b, c, d, b2, e;
 
 	if (f_v) {
-		cout << "algebra_global_with_action::A5_in_PSL_2_q_easy verbose_level=" << verbose_level << endl;
+		cout << "algebra_global_with_action::A5_in_PSL_2_q_easy "
+				"verbose_level=" << verbose_level << endl;
 	}
 	with w(dom_GFq);
 
@@ -2556,6 +2657,7 @@ int algebra_global_with_action::proj_order(layer2_discreta::discreta_matrix &A)
 	}
 	return ord;
 }
+
 void algebra_global_with_action::trace(
 		layer2_discreta::discreta_matrix &A,
 		layer2_discreta::discreta_base &tr)
@@ -3832,13 +3934,15 @@ void algebra_global_with_action::representation_on_polynomials(
 
 	if (LG->f_has_nice_gens) {
 		if (f_v) {
-			cout << "algebra_global_with_action::representation_on_polynomials using nice generators" << endl;
+			cout << "algebra_global_with_action::representation_on_polynomials "
+					"using nice generators" << endl;
 		}
 		LG->nice_gens->matrix_representation(A_on_HPD, M, nb_gens, verbose_level);
 	}
 	else {
 		if (f_v) {
-			cout << "algebra_global_with_action::representation_on_polynomials using strong generators" << endl;
+			cout << "algebra_global_with_action::representation_on_polynomials "
+					"using strong generators" << endl;
 		}
 		LG->Strong_gens->gens->matrix_representation(A_on_HPD, M, nb_gens, verbose_level);
 	}

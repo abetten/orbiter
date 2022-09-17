@@ -181,9 +181,6 @@ public:
 	//int input_q;
 	//std::string input_q;
 
-	//int f_override_polynomial;
-	//std::string override_polynomial;
-	//field_theory::finite_field *F;
 	int f_semilinear;
 	int f_special;
 
@@ -230,10 +227,12 @@ public:
 	int f_export_magma;
 
 
+	int f_import_group_of_plane;
+	std::string import_group_of_plane_label;
+
+
 	linear_group_description();
 	~linear_group_description();
-	void null();
-	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
@@ -274,10 +273,11 @@ public:
 
 	linear_group();
 	~linear_group();
-	void null();
-	void freeself();
 	void linear_group_init(linear_group_description *description,
 		int verbose_level);
+	void linear_group_import(int verbose_level);
+	void linear_group_import_group_of_plane(int verbose_level);
+	void linear_group_create(int verbose_level);
 	int linear_group_apply_modification(
 			linear_group_description *description,
 			int verbose_level);
@@ -1926,6 +1926,8 @@ public:
 			actions::action *A2,
 			std::string &fname, std::string &label, std::string &label_tex,
 			int verbose_level);
+	void report_group(std::string &prefix, int verbose_level);
+	void report_group2(std::ostream &ost, int verbose_level);
 
 
 	// strong_generators_groups.cpp

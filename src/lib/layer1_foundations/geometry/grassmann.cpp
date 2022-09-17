@@ -154,8 +154,13 @@ void grassmann::print_set(long int *v, int len)
 	}
 }
 
-void grassmann::print_set_tex(ostream &ost, long int *v, int len)
+void grassmann::print_set_tex(ostream &ost, long int *v, int len, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "grassmann::print_set_tex" << endl;
+	}
 	int i;
 	int *Mtx;
 	
@@ -197,6 +202,9 @@ void grassmann::print_set_tex(ostream &ost, long int *v, int len)
 		ost << "$$" << endl;
 	}
 	FREE_int(Mtx);
+	if (f_v) {
+		cout << "grassmann::print_set_tex done" << endl;
+	}
 }
 
 void grassmann::print_set_tex_with_perp(ostream &ost, long int *v, int len)
@@ -1509,6 +1517,8 @@ void grassmann::make_partition(long int *Spread, int spread_sz, long int *&Part,
 	int i;
 
 	s = nb_points_covered(verbose_level);
+
+	Part = NEW_lint(spread_sz * s);
 
 	for (i = 0; i < spread_sz; i++) {
 		unrank_lint(Spread[i], 0 /*verbose_level - 4*/);

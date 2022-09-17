@@ -8,14 +8,15 @@
 //
 //
 
-#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
+#include "group_actions.h"
 
 using namespace std;
 
 
 namespace orbiter {
-namespace layer5_applications {
-namespace spreads {
+namespace layer3_group_actions {
+namespace data_structures_groups {
 
 
 #if 0
@@ -48,10 +49,12 @@ translation_plane_via_andre_model::translation_plane_via_andre_model()
 	strong_gens = NULL;
 	Inc = NULL;
 	Stack = NULL;
+#if 0
 	Control = NULL;
 	Poset = NULL;
 	arcs = NULL;
 	T = NULL;
+#endif
 }
 
 translation_plane_via_andre_model::~translation_plane_via_andre_model()
@@ -96,20 +99,26 @@ translation_plane_via_andre_model::~translation_plane_via_andre_model()
 	if (Stack) {
 		FREE_OBJECT(Stack);
 	}
+#if 0
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
 	if (arcs) {
 		FREE_OBJECT(arcs);
 	}
+#endif
 }
 
 
 void translation_plane_via_andre_model::init(
-		spreads::spread_create *Spread,
+		int k,
+		std::string &label_txt,
+		std::string &label_tex,
+		groups::strong_generators *Sg,
 		geometry::andre_construction *Andre,
-	actions::action *An1,
-	int verbose_level)
+		actions::action *An,
+		actions::action *An1,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -124,15 +133,16 @@ void translation_plane_via_andre_model::init(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	An = Spread->A;
+	translation_plane_via_andre_model::An = An; //Spread->A;
+	translation_plane_via_andre_model::Andre = Andre;
 
-	label_txt.assign("plane_");
-	label_txt.append(Spread->label_txt);
+	translation_plane_via_andre_model::label_txt.assign("plane_");
+	translation_plane_via_andre_model::label_txt.append(label_txt);
 
-	label_tex.assign("plane\\_");
-	label_tex.append(Spread->label_tex);
+	translation_plane_via_andre_model::label_tex.assign("plane\\_");
+	translation_plane_via_andre_model::label_tex.append(label_tex);
 
-	//translation_plane_via_andre_model::F = F;
+	//translation_plane_via_andre_model::F = Andre->F;
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init before An->matrix_group_finite_field()" << endl;
 		cout << "translation_plane_via_andre_model::init An=" << endl;
@@ -145,8 +155,8 @@ void translation_plane_via_andre_model::init(
 		exit(1);
 	}
 	translation_plane_via_andre_model::q = F->q;
-	translation_plane_via_andre_model::k = Spread->k;
-	actions::action *An = Spread->A;
+	translation_plane_via_andre_model::k = k;
+	//actions::action *An = Spread->A;
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init q=" << q << endl;
 		cout << "translation_plane_via_andre_model::init k=" << k << endl;
@@ -216,7 +226,7 @@ void translation_plane_via_andre_model::init(
 				"has been computed" << endl;
 	}
 	
-
+#if 0
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
@@ -228,6 +238,7 @@ void translation_plane_via_andre_model::init(
 				"written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
+#endif
 
 	Line_through_two_points = NEW_int(N * N);
 	for (i = 0; i < N * N; i++) {
@@ -324,7 +335,7 @@ void translation_plane_via_andre_model::init(
 			"Automorphism group order = " << ago << endl;
 #endif
 
-	int f_combined_action = TRUE;
+	//int f_combined_action = TRUE;
 	//int f_write_tda_files = TRUE;
 	//int f_include_group_order = TRUE;
 	//int f_pic = FALSE;
@@ -389,14 +400,20 @@ void translation_plane_via_andre_model::init(
 	FREE_OBJECT(nice_gens);
 #endif
 
+	OnAndre = NEW_OBJECT(actions::action);
+
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
-				"initializing OnAndre" << endl;
+				"before OnAndre->induced_action_on_andre" << endl;
 	}
 
 
-	OnAndre = NEW_OBJECT(actions::action);
 	OnAndre->induced_action_on_andre(An, An1, Andre, verbose_level);
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::init "
+				"after OnAndre->induced_action_on_andre" << endl;
+	}
 
 
 	strong_gens = NEW_OBJECT(groups::strong_generators);
@@ -408,16 +425,20 @@ void translation_plane_via_andre_model::init(
 				"which requires the stabilizer of the spread" << endl;
 	}
 
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::init "
+				"before strong_gens->generators_for_translation_plane_in_andre_model" << endl;
+	}
+
 	strong_gens->generators_for_translation_plane_in_andre_model(
 		An1, An, 
 		An1->G.matrix_grp, An->G.matrix_grp, 
-		Spread->Sg,
-		//spread_stab_gens, spread_stab_go,
+		Sg,
 		verbose_level);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
-				"initializing spread stabilizer" << endl;
+				"after strong_gens->generators_for_translation_plane_in_andre_model" << endl;
 	}
 
 
@@ -435,6 +456,7 @@ void translation_plane_via_andre_model::init(
 
 
 
+#if 0
 	T = NEW_OBJECT(apps_combinatorics::tactical_decomposition);
 	T->init(nb_rows, nb_cols,
 			Inc,
@@ -445,7 +467,6 @@ void translation_plane_via_andre_model::init(
 			strong_gens /* Aut->strong_generators*/,
 			verbose_level - 1);
 
-#if 0
 	int set_size = nb_rows;
 	int nb_blocks = nb_cols;
 		
@@ -494,8 +515,10 @@ void translation_plane_via_andre_model::init(
 }
 
 
+#if 0
 void translation_plane_via_andre_model::classify_arcs(
-		const char *prefix, int depth, int verbose_level)
+		poset_classification::poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -520,19 +543,20 @@ void translation_plane_via_andre_model::classify_arcs(
 				"before gen->initialize" << endl;
 	}
 
-	Control = NEW_OBJECT(poset_classification::poset_classification_control);
+	//Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
+#if 0
 	Control->f_w = TRUE;
 	Control->f_depth = TRUE;
 	Control->depth = depth;
+#endif
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(An1, OnAndre,
 			strong_gens,
 			verbose_level);
 	arcs->initialize_and_allocate_root_node(Control, Poset,
-		depth, 
-		//prefix, "arcs",
+			Control->depth,
 		verbose_level - 1);
 
 
@@ -577,7 +601,7 @@ void translation_plane_via_andre_model::classify_arcs(
 		verbose_level);
 
 
-	arcs->print_orbit_numbers(depth);
+	arcs->print_orbit_numbers(Control->depth);
 
 
 #if 0
@@ -607,27 +631,25 @@ void translation_plane_via_andre_model::classify_arcs(
 }
 
 void translation_plane_via_andre_model::classify_subplanes(
-		const char *prefix, int verbose_level)
+		poset_classification::poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 	int depth = 7;
-	//char fname_base[1000];
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes" << endl;
 	}
 
 
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::classify_subplanes "
-				"before gen->initialize" << endl;
-	}
 
+#if 0
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
 	Control->f_w = TRUE;
+#endif
 	Control->f_depth = TRUE;
 	Control->depth = depth;
 
@@ -638,9 +660,12 @@ void translation_plane_via_andre_model::classify_subplanes(
 
 	arcs = NEW_OBJECT(poset_classification::poset_classification);
 
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::classify_subplanes "
+				"before arcs->initialize_and_allocate_root_node" << endl;
+	}
 	arcs->initialize_and_allocate_root_node(Control, Poset,
 		depth, 
-		//prefix, "subplanes",
 		verbose_level - 1);
 
 
@@ -677,13 +702,12 @@ void translation_plane_via_andre_model::classify_subplanes(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes "
-				"before generator_main" << endl;
+				"before arcs->main" << endl;
 	}
 
 	arcs->main(t0, 
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
-		//f_implicit_fusion, 
 		f_debug, 
 		verbose_level - 2);
 
@@ -716,6 +740,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 	}
 
 }
+#endif
 
 int translation_plane_via_andre_model::check_arc(
 		long int *S, int len, int verbose_level)
@@ -729,8 +754,7 @@ int translation_plane_via_andre_model::check_arc(
 		cout << "translation_plane_via_andre_model::check_arc" << endl;
 	}
 	if (f_vv) {
-		cout << "translation_plane_via_andre_model::"
-				"check_arc the set is";
+		cout << "translation_plane_via_andre_model::check_arc the set is";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
@@ -784,8 +808,8 @@ int translation_plane_via_andre_model::check_subplane(
 		cout << "translation_plane_via_andre_model::check_subplane" << endl;
 	}
 	if (f_vv) {
-		cout << "translation_plane_via_andre_model::"
-				"check_subplane the set is";
+		cout << "translation_plane_via_andre_model::check_subplane "
+				"the set is";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
@@ -1002,7 +1026,13 @@ void translation_plane_via_andre_model::report(std::ostream &ost, int verbose_le
 	}
 
 
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::report before Andre->report" << endl;
+	}
 	Andre->report(ost, verbose_level);
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::report after Andre->report" << endl;
+	}
 
 	ost << "Automorphism group:\\\\" << endl;
 
@@ -1010,10 +1040,34 @@ void translation_plane_via_andre_model::report(std::ostream &ost, int verbose_le
 	strong_gens->print_generators_tex(ost);
 	ost << "}" << endl;
 
-	T->report(TRUE /* f_enter_math */, ost);
+	//T->report(TRUE /* f_enter_math */, ost);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::report done" << endl;
+	}
+}
+
+
+void translation_plane_via_andre_model::export_incma(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::export_incma" << endl;
+	}
+	string fname;
+	orbiter_kernel_system::file_io Fio;
+
+	fname.assign(label_txt);
+	fname.append("_incma.csv");
+	Fio.int_matrix_write_csv(fname, Incma, N, N);
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::init "
+				"written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::export_incma done" << endl;
 	}
 }
 
@@ -1083,6 +1137,169 @@ static int translation_plane_via_andre_model_check_subplane(
 	}
 }
 #endif
+
+#if 0
+void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
+		spreads::spread_create *Spread,
+		geometry::andre_construction *Andre,
+		int f_Fano, int f_arcs, int f_depth, int depth,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction" << endl;
+	}
+
+	actions::action *An;
+	actions::action *An1;
+	spreads::translation_plane_via_andre_model *TP;
+
+	An = AG->A;
+	An1 = AG_secondary->A;
+
+	//apps_geometry::top_level_geometry_global Geo;
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"before Geo.do_Andre_Bruck_Bose_construction" << endl;
+	}
+
+
+	TP = NEW_OBJECT(spreads::translation_plane_via_andre_model);
+
+	if (f_v) {
+		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
+				"before TP->init" << endl;
+	}
+#if 0
+	TP->init(Spread, Andre, An1,
+		gens /*spread_stab_gens*/, stab_go, label, verbose_level);
+#endif
+
+
+	TP->init(
+		//long int *spread_elements_numeric,
+			Spread,
+			Andre,
+			//int k,
+		//actions::action *An,
+		An1,
+		//data_structures_groups::vector_ge *spread_stab_gens,
+		//ring_theory::longinteger_object &spread_stab_go,
+		label,
+		verbose_level);
+
+
+	if (f_v) {
+		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
+				"after TP->init" << endl;
+	}
+
+
+#if 0
+	Geo.do_Andre_Bruck_Bose_construction(
+			An,
+			An1,
+			TP,
+			spread_no,
+			label,
+			verbose_level);
+#endif
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"after Geo.do_Andre_Bruck_Bose_construction" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"before TP->create_latex_report" << endl;
+	}
+	TP->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"after TP->create_latex_report" << endl;
+	}
+
+
+	if (f_Fano) {
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+					"f_Fano" << endl;
+		}
+
+		char prefix[1000];
+		int nb_subplanes;
+
+		sprintf(prefix, "Fano_TP_%s_", Spread->label_txt.c_str());
+
+		TP->classify_subplanes(prefix, verbose_level);
+
+		int target_depth;
+
+		if (f_depth) {
+			target_depth = depth;
+		}
+		else {
+			target_depth = 7;
+		}
+
+		nb_subplanes = TP->arcs->nb_orbits_at_level(target_depth);
+
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"Translation plane " << Spread->label_txt << " has "
+				<<  nb_subplanes << " partial Fano subplanes "
+						"(up to isomorphism) at depth "
+				<< target_depth << endl;
+	}
+	else if (f_arcs) {
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+					"f_arcs" << endl;
+		}
+
+		char prefix[1000];
+		int nb;
+
+		int target_depth;
+
+		if (f_depth) {
+			target_depth = depth;
+		}
+		else {
+			target_depth = TP->order_of_plane + 2;
+				// we are looking for hyperovals
+		}
+
+
+		sprintf(prefix, "Arcs_TP_%s_", Spread->label_txt.c_str());
+
+		TP->classify_arcs(prefix, target_depth, verbose_level);
+
+
+		nb = TP->arcs->nb_orbits_at_level(target_depth);
+
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"Translation plane " << Spread->label_txt << " has "
+				<<  nb << " Arcs of size " << target_depth
+				<< " (up to isomorphism)" << endl;
+	}
+
+	FREE_OBJECT(TP);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction done" << endl;
+	}
+}
+#endif
+
 
 }}}
 

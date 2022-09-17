@@ -35,7 +35,6 @@ linear_group::linear_group()
 	q = 0;
 	f_has_nice_gens = FALSE;
 	nice_gens = NULL;
-	//null();
 }
 
 
@@ -43,16 +42,6 @@ linear_group::linear_group()
 
 linear_group::~linear_group()
 {
-	freeself();
-}
-
-void linear_group::null()
-{
-}
-
-void linear_group::freeself()
-{
-	null();
 }
 
 void linear_group::linear_group_init(
@@ -65,40 +54,239 @@ void linear_group::linear_group_init(
 		cout << "linear_group::linear_group_init" << endl;
 	}
 	linear_group::description = description;
+
+	if (description->f_import_group_of_plane) {
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init f_import_group_of_plane" << endl;
+		}
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init before linear_group_import" << endl;
+		}
+		linear_group_import(verbose_level);
+		if (f_v) {
+			cout << "linear_group::linear_group_init after linear_group_import" << endl;
+		}
+
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init before linear_group_create" << endl;
+		}
+		linear_group_create(verbose_level);
+		if (f_v) {
+			cout << "linear_group::linear_group_init after linear_group_create" << endl;
+		}
+
+	}
+
+	if (description->f_export_magma) {
+		if (f_v) {
+			cout << "linear_group::linear_group_init f_export_magma" << endl;
+		}
+		Strong_gens->export_magma(A_linear, cout, verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "linear_group::linear_group_init finalized" << endl;
+		cout << "linear_group::linear_group_init label=" << label << endl;
+		cout << "linear_group::linear_group_init degree=" << A2->degree << endl;
+		cout << "linear_group::linear_group_init go=";
+		ring_theory::longinteger_object go;
+		Strong_gens->group_order(go);
+		cout << go << endl;
+		cout << "linear_group::linear_group_init label=" << label << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "linear_group::linear_group_init done" << endl;
+	}
+}
+
+void linear_group::linear_group_import(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_group::linear_group_import" << endl;
+	}
+
+	if (description->f_import_group_of_plane) {
+
+		if (f_v) {
+			cout << "linear_group::linear_group_import before linear_group_import_group_of_plane" << endl;
+		}
+
+		linear_group_import_group_of_plane(verbose_level);
+
+		if (f_v) {
+			cout << "linear_group::linear_group_import after linear_group_import_group_of_plane" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "linear_group::linear_group_import done" << endl;
+	}
+}
+
+void linear_group::linear_group_import_group_of_plane(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_group::linear_group_import_group_of_plane" << endl;
+	}
+
+	if (f_v) {
+		cout << "linear_group::linear_group_import_group_of_plane import_group_of_plane_label=" << description->import_group_of_plane_label << endl;
+	}
+
+	int idx;
+
+	idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(description->import_group_of_plane_label);
+
+	data_structures_groups::translation_plane_via_andre_model *TP;
+
+	TP = (data_structures_groups::translation_plane_via_andre_model *)
+		orbiter_kernel_system::Orbiter->Orbiter_symbol_table->get_object(idx);
+
+#if 0
+	std::string label_txt;
+	std::string label_tex;
+
+	field_theory::finite_field *F;
+	int q;
+	int k;
+	int n;
+	int k1;
+	int n1;
+	int order_of_plane;
+
+	geometry::andre_construction *Andre;
+	int N; // number of points = number of lines
+	int twoN; // 2 * N
+	int f_semilinear;
+
+	geometry::andre_construction_line_element *Line;
+	int *Incma;
+	int *pts_on_line;
+	int *Line_through_two_points; // [N * N]
+	int *Line_intersection; // [N * N]
+
+	actions::action *An;
+	actions::action *An1;
+
+	actions::action *OnAndre;
+
+	groups::strong_generators *strong_gens;
+#endif
+
+	n = TP->n1;
+	F = TP->F;
+	input_q = F->q;
+	f_semilinear = TP->f_semilinear; //TP->An1->is_semilinear_matrix_group();
+
+	A_linear = TP->An1;
+	initial_strong_gens = TP->strong_gens;
+
+	Mtx = A_linear->G.matrix_grp;
+	vector_space_dimension = n;
+
+	label.assign("group_of_plane_");
+	label.append(TP->label_txt);
+	label_tex.assign("group of plane ");
+	label_tex.append(TP->label_tex);
+
+	A2 = TP->OnAndre;
+	vector_space_dimension = n;
+	q = input_q;
+	f_has_strong_generators = TRUE;
+	Strong_gens = initial_strong_gens;
+
+	if (f_v) {
+		cout << "linear_group::linear_group_import_group_of_plane done" << endl;
+	}
+}
+
+
+void linear_group::linear_group_create(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_group::linear_group_create" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	if (ST.starts_with_a_number(description->input_q)) {
+		int q;
+
+		q = ST.strtoi(description->input_q);
+		if (f_v) {
+			cout << "linear_group::linear_group_create "
+					"creating the finite field of order " << q << endl;
+		}
+		description->F = NEW_OBJECT(field_theory::finite_field);
+		description->F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
+		if (f_v) {
+			cout << "linear_group::linear_group_create "
+					"the finite field of order " << q << " has been created" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "linear_group::linear_group_create "
+					"using existing finite field " << input_q << endl;
+		}
+		int idx;
+		idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(description->input_q);
+		if (idx < 0) {
+			cout << "linear_group::linear_group_create done cannot find finite field object" << endl;
+			exit(1);
+		}
+		description->F = (field_theory::finite_field *) orbiter_kernel_system::Orbiter->Orbiter_symbol_table->get_object(idx);
+	}
+
 	n = description->n;
 	F = description->F;
 	input_q = F->q;
 	f_semilinear = description->f_semilinear;
 	if (f_v) {
-		cout << "linear_group::linear_group_init n=" << n << endl;
-		cout << "linear_group::linear_group_init q=" << input_q << endl;
-		cout << "linear_group::linear_group_init f_semilinear=" << f_semilinear << endl;
+		cout << "linear_group::linear_group_create n=" << n << endl;
+		cout << "linear_group::linear_group_create q=" << input_q << endl;
+		cout << "linear_group::linear_group_create f_semilinear=" << f_semilinear << endl;
 	}
 
 
 	if (f_v) {
-		cout << "linear_group::linear_group_init initializing projective group" << endl;
+		cout << "linear_group::linear_group_create initializing projective group" << endl;
 	}
 
 
-	
+
 	initial_strong_gens = NEW_OBJECT(strong_generators);
 
 	if (f_v) {
-		cout << "linear_group::linear_group_init before "
+		cout << "linear_group::linear_group_create before "
 				"initial_strong_gens->init_linear_group_from_scratch" << endl;
 	}
-	
+
 	initial_strong_gens->init_linear_group_from_scratch(
 		A_linear,
-		F, n, 
+		F, n,
 		description,
 		nice_gens,
 		label, label_tex,
 		verbose_level - 3);
 
 	if (f_v) {
-		cout << "linear_group::linear_group_init after "
+		cout << "linear_group::linear_group_create after "
 				"initial_strong_gens->init_linear_group_from_scratch" << endl;
 		cout << "label = " << label << endl;
 		cout << "group order = ";
@@ -108,7 +296,7 @@ void linear_group::linear_group_init(
 
 
 	if (f_v) {
-		cout << "linear_group::linear_group_init initializing "
+		cout << "linear_group::linear_group_create initializing "
 				"initial_strong_gens done" << endl;
 	}
 
@@ -116,9 +304,9 @@ void linear_group::linear_group_init(
 	//label_tex.assign(A_linear->label_tex);
 
 	if (f_v) {
-		cout << "linear_group::linear_group_init label=" << label << endl;
-		cout << "linear_group::linear_group_init degreee=" << A_linear->degree << endl;
-		cout << "linear_group::linear_group_init go=";
+		cout << "linear_group::linear_group_create label=" << label << endl;
+		cout << "linear_group::linear_group_create degree=" << A_linear->degree << endl;
+		cout << "linear_group::linear_group_create go=";
 		ring_theory::longinteger_object go;
 		initial_strong_gens->group_order(go);
 		//A_linear->Strong_gens->group_order(go);
@@ -132,7 +320,7 @@ void linear_group::linear_group_init(
 	int f_OK = FALSE;
 
 	if (f_v) {
-		cout << "linear_group::linear_group_init before linear_group_apply_modification" << endl;
+		cout << "linear_group::linear_group_create before linear_group_apply_modification" << endl;
 	}
 
 	f_OK = linear_group_apply_modification(
@@ -140,13 +328,13 @@ void linear_group::linear_group_init(
 			verbose_level);
 
 	if (f_v) {
-		cout << "linear_group::linear_group_init after linear_group_apply_modification" << endl;
+		cout << "linear_group::linear_group_create after linear_group_apply_modification" << endl;
 	}
 
 
 	if (!f_OK) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init "
+			cout << "linear_group::linear_group_create "
 					"!f_OK, A2 = A_linear" << endl;
 		}
 		A2 = A_linear;
@@ -156,30 +344,8 @@ void linear_group::linear_group_init(
 		Strong_gens = initial_strong_gens;
 	}
 
-
-	if (description->f_export_magma) {
-		if (f_v) {
-			cout << "linear_group::linear_group_init f_export_magma" << endl;
-		}
-		Strong_gens->export_magma(A_linear, cout, verbose_level);
-	}
-
-
 	if (f_v) {
-		cout << "linear_group::linear_group_init finialized" << endl;
-		cout << "linear_group::linear_group_init label=" << label << endl;
-		cout << "linear_group::linear_group_init degreee=" << A2->degree << endl;
-		cout << "linear_group::linear_group_init go=";
-		ring_theory::longinteger_object go;
-		Strong_gens->group_order(go);
-		cout << go << endl;
-		cout << "linear_group::linear_group_init label=" << label << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "linear_group::linear_group_init done" << endl;
+		cout << "linear_group::linear_group_create done" << endl;
 	}
 }
 

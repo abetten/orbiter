@@ -14,6 +14,7 @@ MODULES = \
 	schreier_vector_handler.o \
 	schreier_vector.o \
 	set_and_stabilizer.o \
+	translation_plane_via_andre_model.o \
 	union_find.o \
 	union_find_on_k_subsets.o \
 	vector_ge_description.o \

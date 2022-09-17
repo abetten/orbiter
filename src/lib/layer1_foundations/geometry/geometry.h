@@ -896,7 +896,7 @@ public:
 	void print_single_generator_matrix_tex_numerical(
 			std::ostream &ost, long int a);
 	void print_set(long int *v, int len);
-	void print_set_tex(std::ostream &ost, long int *v, int len);
+	void print_set_tex(std::ostream &ost, long int *v, int len, int verbose_level);
 	void print_set_tex_with_perp(std::ostream &ost, long int *v, int len);
 	int nb_points_covered(int verbose_level);
 	void points_covered(long int *the_points, int verbose_level);

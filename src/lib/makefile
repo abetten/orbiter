@@ -310,6 +310,7 @@ MODULES= \
 		layer3_group_actions/data_structures/schreier_vector_handler.o \
 		layer3_group_actions/data_structures/schreier_vector.o \
 		layer3_group_actions/data_structures/set_and_stabilizer.o \
+		layer3_group_actions/data_structures/translation_plane_via_andre_model.o \
 		layer3_group_actions/data_structures/union_find.o \
 		layer3_group_actions/data_structures/union_find_on_k_subsets.o \
 		layer3_group_actions/data_structures/vector_ge_description.o \
@@ -554,7 +555,8 @@ MODULES= \
 		layer5_top_level/spreads/spread_table_activity_description.o \
 		layer5_top_level/spreads/spread_table_activity.o \
 		layer5_top_level/spreads/spread_table_with_selection.o \
-		layer5_top_level/spreads/translation_plane_via_andre_model.o \
+		layer5_top_level/spreads/translation_plane_activity_description.o \
+		layer5_top_level/spreads/translation_plane_activity.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_activity_description.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_activity.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_create_description.o \

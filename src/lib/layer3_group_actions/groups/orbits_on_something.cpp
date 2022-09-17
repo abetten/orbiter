@@ -227,6 +227,7 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 	}
 
 
+
 	std::string gens_str;
 	ring_theory::longinteger_object stab_go;
 
@@ -245,6 +246,8 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 
 	sprintf(str, "_stab_orb_%d", orbit_idx);
 
+
+
 	fname_stab.assign(prefix);
 	fname_stab.append(str);
 	fname_stab.append(".makefile");
@@ -252,10 +255,12 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 	label_stab.assign(prefix);
 	label_stab.append(str);
 
+	Stab->report_group(label_stab, verbose_level);
 
 	if (f_v) {
 		cout << "orbits_on_something::init "
-				"exporting stabilizer of first orbit rep to " << fname_stab << endl;
+				"exporting stabilizer orbit representative "
+				"of orbit " << orbit_idx << " to " << fname_stab << endl;
 	}
 	Stab->export_to_orbiter_as_bsgs(
 			SG->A,

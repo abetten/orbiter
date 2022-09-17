@@ -17,6 +17,9 @@ namespace layer5_applications {
 namespace apps_algebra {
 
 
+
+
+
 group_theoretic_activity_description::group_theoretic_activity_description()
 {
 
@@ -64,31 +67,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_find_singer_cycle = FALSE;
 
-
-
-	f_poset_classification_control = FALSE;
-	Control = NULL;
-
-	f_orbits_on_points = FALSE;
-
-	f_export_trees = FALSE;
-	//f_shallow_tree = FALSE;
-
-	f_stabilizer = FALSE;
-
-	f_stabilizer_of_orbit_rep = FALSE;
-	stabilizer_of_orbit_rep_orbit_idx = 0;
-
-
-	f_orbits_on_subsets = FALSE;
-	orbits_on_subsets_size = 0;
-
-	f_orbits_on_partition = FALSE;
-	orbits_on_partition_k = 0;
-
-	f_orbits_on_subspaces = FALSE;
-	orbits_on_subspaces_depth = 0;
-
 	f_classes_based_on_normal_form = FALSE;
 
 
@@ -126,31 +104,15 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_draw_tree = FALSE;
 
-	f_orbit_of = FALSE;
-	orbit_of_point_idx = 0;
-
-	f_orbits_on_set_system_from_file = FALSE;
-	//orbits_on_set_system_from_file_fname = NULL;
-	orbits_on_set_system_first_column = 0;
-	orbits_on_set_system_number_of_columns = 0;
-
-	f_orbit_of_set_from_file = FALSE;
-	//orbit_of_set_from_file_fname = NULL;
-	//f_search_subgroup = FALSE;
-
-
 	f_conjugacy_class_of = FALSE;
 	//std::string conjugacy_class_of_data;
 
 	f_isomorphism_Klein_quadric = FALSE;
 	//std::string isomorphism_Klein_quadric_fname;
 
-	f_linear_codes = FALSE;
-	linear_codes_minimum_distance = 0;
-	linear_codes_target_size = 0;
-
 	f_print_elements = FALSE;
 	f_print_elements_tex = FALSE;
+
 	f_save_elements_csv = FALSE;
 	//std::string save_elements_csv_fname;
 
@@ -175,15 +137,68 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_order_of_products = FALSE;
 	//order_of_products_elements = NULL;
+
 	f_reverse_isomorphism_exterior_square = FALSE;
+
+	f_is_subgroup_of = FALSE;
+	f_coset_reps = FALSE;
+
+
+	// orbits:
+
+	f_poset_classification_control = FALSE;
+	Control = NULL;
+
+	f_orbits_on_points = FALSE;
+
+	f_export_trees = FALSE;
+	//f_shallow_tree = FALSE;
+
+	f_stabilizer = FALSE;
+
+	f_stabilizer_of_orbit_rep = FALSE;
+	stabilizer_of_orbit_rep_orbit_idx = 0;
+
+
+	f_orbits_on_subsets = FALSE;
+	orbits_on_subsets_size = 0;
+
+	f_orbits_on_partition = FALSE;
+	orbits_on_partition_k = 0;
+
+	f_orbits_on_subspaces = FALSE;
+	orbits_on_subspaces_depth = 0;
+
+
+
+
+
+	f_orbit_of = FALSE;
+	orbit_of_point_idx = 0;
+
+	f_orbits_on_set_system_from_file = FALSE;
+	//orbits_on_set_system_from_file_fname = NULL;
+	orbits_on_set_system_first_column = 0;
+	orbits_on_set_system_number_of_columns = 0;
+
+	f_orbit_of_set_from_file = FALSE;
+	//orbit_of_set_from_file_fname = NULL;
+	//f_search_subgroup = FALSE;
+
+
 
 
 	// classification:
-
+#if 0
 	f_exact_cover = FALSE;
 	ECA = NULL;
 	f_isomorph_arguments = FALSE;
 	IA = NULL;
+#endif
+
+	f_linear_codes = FALSE;
+	linear_codes_minimum_distance = 0;
+	linear_codes_target_size = 0;
 
 
 	f_mindist = FALSE;
@@ -215,27 +230,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	representation_on_polynomials_degree = 0;
 
 
-	f_Andre_Bruck_Bose_construction = FALSE;
-	Andre_Bruck_Bose_construction_spread_no = 0;
-	// Andre_Bruck_Bose_construction_label
-
-	f_is_subgroup_of = FALSE;
-	f_coset_reps = FALSE;
-
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
 {
-	freeself();
-}
-
-void group_theoretic_activity_description::null()
-{
-}
-
-void group_theoretic_activity_description::freeself()
-{
-	null();
 }
 
 
@@ -363,87 +361,6 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-
-
-		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-			f_poset_classification_control = TRUE;
-			Control = NEW_OBJECT(poset_classification::poset_classification_control);
-			if (f_v) {
-				cout << "-poset_classification_control " << endl;
-			}
-			i += Control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -poset_classification_control " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-orbits_on_points") == 0) {
-			f_orbits_on_points = TRUE;
-			if (f_v) {
-				cout << "-orbits_on_points" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-orbits_on_subsets") == 0) {
-			f_orbits_on_subsets = TRUE;
-			orbits_on_subsets_size = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-orbits_on_partition") == 0) {
-			f_orbits_on_partition = TRUE;
-			orbits_on_partition_k = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
-			}
-		}
-
-
-		else if (ST.stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
-			f_orbits_on_subspaces = TRUE;
-			orbits_on_subspaces_depth = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
-			f_export_trees = TRUE;
-			if (f_v) {
-				cout << "-export_trees" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-stabilizer") == 0) {
-			f_stabilizer = TRUE;
-			if (f_v) {
-				cout << "-stabilizer" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-stabilizer_of_orbit_rep") == 0) {
-			f_stabilizer_of_orbit_rep = TRUE;
-			stabilizer_of_orbit_rep_orbit_idx = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-stabilizer_of_orbit_rep" << stabilizer_of_orbit_rep_orbit_idx << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-test_if_geometric") == 0) {
-			f_test_if_geometric = TRUE;
-			test_if_geometric_depth = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-test_if_geometric" << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-classes_based_on_normal_form") == 0) {
 			f_classes_based_on_normal_form = TRUE;
 			if (f_v) {
@@ -541,37 +458,17 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-export_group_table" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-test_if_geometric") == 0) {
+			f_test_if_geometric = TRUE;
+			test_if_geometric_depth = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-test_if_geometric" << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-f_draw_tree") == 0) {
 			f_draw_tree = TRUE;
 			if (f_v) {
 				cout << "-f_draw_tree " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
-			f_orbit_of = TRUE;
-			orbit_of_point_idx = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbit_of " << orbit_of_point_idx << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-orbit_of_set_from_file") == 0) {
-			f_orbit_of_set_from_file = TRUE;
-			orbit_of_set_from_file_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-orbit_of_set_from_file"
-						<< orbit_of_set_from_file_fname << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
-			f_orbits_on_set_system_from_file = TRUE;
-			orbits_on_set_system_from_file_fname.assign(argv[++i]);
-			orbits_on_set_system_first_column = ST.strtoi(argv[++i]);
-			orbits_on_set_system_number_of_columns = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_set_system_from_file"
-						<< orbits_on_set_system_from_file_fname
-						<< " " << orbits_on_set_system_first_column << " "
-						<< orbits_on_set_system_number_of_columns << endl;
 			}
 		}
 
@@ -672,6 +569,122 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-reverse_isomorphism_exterior_square " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-is_subgroup_of") == 0) {
+			f_is_subgroup_of = TRUE;
+			if (f_v) {
+				cout << "-is_subgroup_of " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-coset_reps") == 0) {
+			f_coset_reps = TRUE;
+			if (f_v) {
+				cout << "-coset_reps " << endl;
+			}
+		}
+
+
+
+		// orbits
+
+		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
+			f_poset_classification_control = TRUE;
+			Control = NEW_OBJECT(poset_classification::poset_classification_control);
+			if (f_v) {
+				cout << "-poset_classification_control " << endl;
+			}
+			i += Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -poset_classification_control " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-orbits_on_points") == 0) {
+			f_orbits_on_points = TRUE;
+			if (f_v) {
+				cout << "-orbits_on_points" << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-orbits_on_subsets") == 0) {
+			f_orbits_on_subsets = TRUE;
+			orbits_on_subsets_size = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-orbits_on_partition") == 0) {
+			f_orbits_on_partition = TRUE;
+			orbits_on_partition_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
+			}
+		}
+
+
+		else if (ST.stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
+			f_orbits_on_subspaces = TRUE;
+			orbits_on_subspaces_depth = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
+			f_export_trees = TRUE;
+			if (f_v) {
+				cout << "-export_trees" << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-stabilizer") == 0) {
+			f_stabilizer = TRUE;
+			if (f_v) {
+				cout << "-stabilizer" << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-stabilizer_of_orbit_rep") == 0) {
+			f_stabilizer_of_orbit_rep = TRUE;
+			stabilizer_of_orbit_rep_orbit_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
+			f_orbit_of = TRUE;
+			orbit_of_point_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbit_of " << orbit_of_point_idx << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-orbit_of_set_from_file") == 0) {
+			f_orbit_of_set_from_file = TRUE;
+			orbit_of_set_from_file_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-orbit_of_set_from_file"
+						<< orbit_of_set_from_file_fname << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
+			f_orbits_on_set_system_from_file = TRUE;
+			orbits_on_set_system_from_file_fname.assign(argv[++i]);
+			orbits_on_set_system_first_column = ST.strtoi(argv[++i]);
+			orbits_on_set_system_number_of_columns = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbits_on_set_system_from_file"
+						<< orbits_on_set_system_from_file_fname
+						<< " " << orbits_on_set_system_first_column << " "
+						<< orbits_on_set_system_number_of_columns << endl;
+			}
+		}
 
 
 
@@ -691,7 +704,7 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
 			ECA = NEW_OBJECT(exact_cover_arguments);
@@ -722,7 +735,7 @@ int group_theoretic_activity_description::read_arguments(
 				}
 			}
 		}
-
+#endif
 
 
 
@@ -826,27 +839,7 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-Andre_Bruck_Bose_construction") == 0) {
-			f_Andre_Bruck_Bose_construction = TRUE;
-			Andre_Bruck_Bose_construction_spread_no = ST.strtoi(argv[++i]);
-			Andre_Bruck_Bose_construction_label.assign(argv[++i]);
-			if (f_v) {
-				cout << "-Andre_Bruck_Bose_construction " << Andre_Bruck_Bose_construction_spread_no
-					<< " " << Andre_Bruck_Bose_construction_label << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-is_subgroup_of") == 0) {
-			f_is_subgroup_of = TRUE;
-			if (f_v) {
-				cout << "-is_subgroup_of " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-coset_reps") == 0) {
-			f_coset_reps = TRUE;
-			if (f_v) {
-				cout << "-coset_reps " << endl;
-			}
-		}
+
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -921,38 +914,6 @@ void group_theoretic_activity_description::print()
 	if (f_find_singer_cycle) {
 		cout << "-find_singer_cycle " << endl;
 	}
-
-
-
-
-	if (f_poset_classification_control) {
-		Control->print();
-	}
-	if (f_orbits_on_points) {
-		cout << "-orbits_on_points" << endl;
-	}
-
-	if (f_orbits_on_subsets) {
-		cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
-	}
-	if (f_orbits_on_partition) {
-		cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
-	}
-
-	if (f_orbits_on_subspaces) {
-		cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
-	}
-
-	if (f_export_trees) {
-		cout << "-export_trees" << endl;
-	}
-
-	if (f_stabilizer) {
-		cout << "-stabilizer" << endl;
-	}
-	if (f_test_if_geometric) {
-		cout << "-test_if_geometric" << endl;
-	}
 	if (f_classes_based_on_normal_form) {
 		cout << "-classes_based_on_normal_form" << endl;
 	}
@@ -1002,23 +963,12 @@ void group_theoretic_activity_description::print()
 	if (f_export_group_table) {
 		cout << "-export_group_table" << endl;
 	}
+	if (f_test_if_geometric) {
+		cout << "-test_if_geometric " << test_if_geometric_depth << endl;
+	}
 	if (f_draw_tree) {
 		cout << "-f_draw_tree " << endl;
 	}
-	if (f_orbit_of) {
-		cout << "-orbit_of " << orbit_of_point_idx << endl;
-	}
-	if (f_orbit_of_set_from_file) {
-		cout << "-orbit_of_set_from_file"
-					<< orbit_of_set_from_file_fname << endl;
-	}
-	if (f_orbits_on_set_system_from_file) {
-		cout << "-orbits_on_set_system_from_file"
-				<< orbits_on_set_system_from_file_fname
-				<< " " << orbits_on_set_system_first_column << " "
-				<< orbits_on_set_system_number_of_columns << endl;
-	}
-
 	if (f_conjugacy_class_of) {
 		cout << "-conjugacy_class_of " << conjugacy_class_of_data << endl;
 	}
@@ -1071,6 +1021,62 @@ void group_theoretic_activity_description::print()
 	if (f_reverse_isomorphism_exterior_square) {
 		cout << "-reverse_isomorphism_exterior_square " << endl;
 	}
+	if (f_is_subgroup_of) {
+		cout << "-is_subgroup_of " << endl;
+	}
+	if (f_coset_reps) {
+		cout << "-coset_reps " << endl;
+	}
+
+
+	// orbits:
+
+
+
+
+
+	if (f_poset_classification_control) {
+		Control->print();
+	}
+	if (f_orbits_on_points) {
+		cout << "-orbits_on_points" << endl;
+	}
+
+	if (f_orbits_on_subsets) {
+		cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
+	}
+	if (f_orbits_on_partition) {
+		cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
+	}
+
+	if (f_orbits_on_subspaces) {
+		cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
+	}
+
+	if (f_export_trees) {
+		cout << "-export_trees" << endl;
+	}
+
+	if (f_stabilizer) {
+		cout << "-stabilizer" << endl;
+	}
+	if (f_stabilizer_of_orbit_rep) {
+		cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
+	}
+	if (f_orbit_of) {
+		cout << "-orbit_of " << orbit_of_point_idx << endl;
+	}
+	if (f_orbit_of_set_from_file) {
+		cout << "-orbit_of_set_from_file"
+					<< orbit_of_set_from_file_fname << endl;
+	}
+	if (f_orbits_on_set_system_from_file) {
+		cout << "-orbits_on_set_system_from_file"
+				<< orbits_on_set_system_from_file_fname
+				<< " " << orbits_on_set_system_first_column << " "
+				<< orbits_on_set_system_number_of_columns << endl;
+	}
+
 
 
 
@@ -1085,14 +1091,14 @@ void group_theoretic_activity_description::print()
 
 
 
-
+#if 0
 	if (f_exact_cover) {
 		cout << "-exact_cover" << endl;
 	}
 	if (f_isomorph_arguments) {
 		cout << "-isomorph_arguments" << endl;
 	}
-
+#endif
 
 
 
@@ -1148,16 +1154,6 @@ void group_theoretic_activity_description::print()
 		cout << "-representation_on_polynomials " << representation_on_polynomials_degree << endl;
 	}
 
-	if (f_Andre_Bruck_Bose_construction) {
-		cout << "-Andre_Bruck_Bose_construction " << Andre_Bruck_Bose_construction_spread_no
-			<< " " << Andre_Bruck_Bose_construction_label << endl;
-	}
-	if (f_is_subgroup_of) {
-		cout << "-is_subgroup_of " << endl;
-	}
-	if (f_coset_reps) {
-		cout << "-coset_reps " << endl;
-	}
 
 }
 

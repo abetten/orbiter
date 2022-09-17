@@ -60,44 +60,51 @@ void modified_group_create::modified_group_init(
 	if (Descr->f_restricted_action) {
 
 		if (f_v) {
-			cout << "modified_group_create::modified_group_init before create_restricted_action" << endl;
+			cout << "modified_group_create::modified_group_init "
+					"before create_restricted_action" << endl;
 		}
 
 		create_restricted_action(description, verbose_level);
 
 		if (f_v) {
-			cout << "modified_group_create::modified_group_init after create_restricted_action" << endl;
+			cout << "modified_group_create::modified_group_init "
+					"after create_restricted_action" << endl;
 		}
 	}
 
 	else if (Descr->f_on_k_subspaces) {
 
 		if (f_v) {
-			cout << "modified_group_create::modified_group_init before create_action_on_k_subspaces" << endl;
+			cout << "modified_group_create::modified_group_init "
+					"before create_action_on_k_subspaces" << endl;
 		}
 
 		create_action_on_k_subspaces(description, verbose_level);
 
 		if (f_v) {
-			cout << "modified_group_create::modified_group_init after create_action_on_k_subspaces" << endl;
+			cout << "modified_group_create::modified_group_init "
+					"after create_action_on_k_subspaces" << endl;
 		}
 	}
 
 	else if (Descr->f_on_k_subsets) {
 
 		if (f_v) {
-			cout << "modified_group_create::modified_group_init before create_action_on_k_subsets" << endl;
+			cout << "modified_group_create::modified_group_init "
+					"before create_action_on_k_subsets" << endl;
 		}
 
 		create_action_on_k_subsets(description, verbose_level);
 
 		if (f_v) {
-			cout << "modified_group_create::modified_group_init after create_action_on_k_subsets" << endl;
+			cout << "modified_group_create::modified_group_init "
+					"after create_action_on_k_subsets" << endl;
 		}
 	}
 
 	else {
-		cout << "modified_group_create::modified_group_init unknown operation" << endl;
+		cout << "modified_group_create::modified_group_init "
+				"unknown operation" << endl;
 
 	}
 
@@ -120,7 +127,8 @@ void modified_group_create::create_restricted_action(
 		cout << "modified_group_create::create_restricted_action" << endl;
 	}
 	if (Descr->from.size() != 1) {
-		cout << "modified_group_create::create_restricted_action need exactly one argument of type -from" << endl;
+		cout << "modified_group_create::create_restricted_action "
+				"need exactly one argument of type -from" << endl;
 		exit(1);
 	}
 
@@ -152,24 +160,28 @@ void modified_group_create::create_restricted_action(
 	int nb_points;
 
 
-	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(Descr->restricted_action_set_text,
+	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(
+			Descr->restricted_action_set_text,
 			points, nb_points, verbose_level);
 
 	//Orbiter->Lint_vec.scan(Descr->restricted_action_set_text, points, nb_points);
 
 	if (f_v) {
-		cout << "modified_group_create::create_restricted_action before A_previous->restricted_action" << endl;
+		cout << "modified_group_create::create_restricted_action "
+				"before A_previous->restricted_action" << endl;
 	}
 	A_modified = A_previous->restricted_action(points, nb_points,
 			verbose_level);
 	if (f_v) {
-		cout << "modified_group_create::create_restricted_action after A_previous->restricted_action" << endl;
+		cout << "modified_group_create::create_restricted_action "
+				"after A_previous->restricted_action" << endl;
 	}
 	A_modified->f_is_linear = A_previous->f_is_linear;
 
 	f_has_strong_generators = TRUE;
 	if (f_v) {
-		cout << "modified_group_create::create_restricted_action before Strong_gens = AG->Subgroup_gens" << endl;
+		cout << "modified_group_create::create_restricted_action "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
 	}
 	Strong_gens = AG->Subgroup_gens;
 
@@ -181,7 +193,8 @@ void modified_group_create::create_restricted_action(
 	A_modified->print_info();
 
 	if (f_v) {
-		cout << "modified_group_create::create_restricted_action before assigning label" << endl;
+		cout << "modified_group_create::create_restricted_action "
+				"before assigning label" << endl;
 	}
 	label.assign(A_previous->label);
 	label_tex.assign(A_previous->label_tex);
