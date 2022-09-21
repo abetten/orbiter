@@ -1024,11 +1024,11 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 				"Recoordinatize == NULL" << endl;
 		exit(1);
 	}
-	field_theory::finite_field *F;
+	//field_theory::finite_field *F;
 	int i, sz;
 
 
-	F = PA->F;
+	//F = PA->F;
 
 
 	// We map a_{1}, a_{2}, a_{3} to
@@ -1707,9 +1707,9 @@ void surface_with_action::report_with_group(
 				"surface_object_with_action object" << endl;
 	}
 
-	field_theory::finite_field *F;
+	//field_theory::finite_field *F;
 
-	F = PA->F;
+	//F = PA->F;
 
 	surface_object_with_action *SoA;
 

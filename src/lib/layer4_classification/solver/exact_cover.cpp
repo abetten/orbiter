@@ -313,7 +313,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 	int *Dt;
 	int *Dt_in_sec;
 	int nb_cases;
-	int total_solutions;
+	//int total_solutions;
 	int nb_deleted_solutions = 0;
 	int starter_case;
 	int the_starter_case;
@@ -348,7 +348,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 	int f_do_it;
 	int nb_col, nb_sol, nb_sol_deleted, nb_backtrack, dt, sol_length = 0;
 
-	total_solutions = 0;
+	//total_solutions = 0;
 
 	for (starter_case = 0; starter_case < starter_nb_cases; starter_case++) {
 		f_do_it = FALSE;
@@ -521,7 +521,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 					<< dt / Os.os_ticks_per_second() << " sec "
 					"(nb_sol_deleted=" << nb_sol_deleted << ")" << endl;
 			}
-		total_solutions += nb_sol;
+		//total_solutions += nb_sol;
 		Case_nb[nb_cases] = the_starter_case;
 		Nb_col[nb_cases] = nb_col;
 		Nb_sol[nb_cases] = nb_sol;

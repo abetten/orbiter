@@ -83,6 +83,9 @@ activity_description::activity_description()
 	f_spread_classify_activity = FALSE;
 	Spread_classify_activity_description = NULL;
 
+	f_spread_activity = FALSE;
+	Spread_activity_description = NULL;
+
 	f_translation_plane_activity = FALSE;
 	Translation_plane_activity_description = NULL;
 
@@ -570,6 +573,28 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-spread_activity") == 0) {
+		f_spread_activity = TRUE;
+		Spread_activity_description =
+				NEW_OBJECT(spreads::spread_activity_description);
+		if (f_v) {
+			cout << "reading -spread_activity" << endl;
+		}
+		i += Spread_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-spread_activity" << endl;
+			Spread_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-translation_plane_activity") == 0) {
 		f_translation_plane_activity = TRUE;
 		Translation_plane_activity_description =
@@ -782,6 +807,14 @@ void activity_description::worker(int verbose_level)
 
 		do_spread_classify_activity(verbose_level);
 	}
+	else if (f_spread_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_spread_activity" << endl;
+		}
+
+		do_spread_activity(verbose_level);
+	}
 	else if (f_translation_plane_activity) {
 
 		if (f_v) {
@@ -888,6 +921,10 @@ void activity_description::print()
 	else if (f_spread_classify_activity) {
 		cout << "-spread_classify_activity ";
 		Spread_classify_activity_description->print();
+	}
+	else if (f_spread_activity) {
+		cout << "-spread_activity ";
+		Spread_activity_description->print();
 	}
 	else if (f_translation_plane_activity) {
 		cout << "-translation_plane_activity ";
@@ -2045,6 +2082,61 @@ void activity_description::do_spread_classify_activity(int verbose_level)
 	}
 
 }
+
+void activity_description::do_spread_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_spread_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	spreads::spread_create *SC;
+
+	SC = (spreads::spread_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+
+		spreads::spread_activity Activity;
+
+		Activity.init(
+				Spread_activity_description,
+				SC,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_spread_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_spread_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_spread_activity done" << endl;
+	}
+
+}
+
 
 void activity_description::do_translation_plane_activity(int verbose_level)
 {

@@ -1225,9 +1225,9 @@ void object_with_canonical_form::encode_line_set(
 	nb_rows = nb_rows0 + 1;
 	nb_cols = nb_cols0 + 1;
 
-	int N;
+	//int N;
 	
-	N = nb_rows + nb_cols;
+	//N = nb_rows + nb_cols;
 
 	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
@@ -1284,9 +1284,9 @@ void object_with_canonical_form::encode_points_and_lines(
 	nb_rows = nb_rows0 + 1;
 	nb_cols = nb_cols0 + 1;
 
-	int N;
+	//int N;
 
-	N = nb_rows + nb_cols;
+	//N = nb_rows + nb_cols;
 
 	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
@@ -1407,10 +1407,11 @@ void object_with_canonical_form::encode_large_set(
 	nb_rows = v + nb_designs;
 	nb_cols = b + 1;
 
-	int N, L;
+	//int N;
+	//int L;
 
-	N = nb_rows + nb_cols;
-	L = nb_rows * nb_cols;
+	//N = nb_rows + nb_cols;
+	//L = nb_rows * nb_cols;
 
 	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
@@ -1948,7 +1949,7 @@ void object_with_canonical_form::run_nauty(
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty" << endl;
 	}
-	int L;
+	//int L;
 	combinatorics::combinatorics_domain Combi;
 	orbiter_kernel_system::file_io Fio;
 	nauty_interface Nau;
@@ -1979,7 +1980,7 @@ void object_with_canonical_form::run_nauty(
 	NO = NEW_OBJECT(data_structures::nauty_output);
 
 
-	L = Enc->nb_rows * Enc->nb_cols;
+	//L = Enc->nb_rows * Enc->nb_cols;
 
 	if (verbose_level > 5) {
 		cout << "object_with_canonical_form::run_nauty "

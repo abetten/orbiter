@@ -91,6 +91,72 @@ public:
 	void make_first_three(long int &j1, long int &j2, long int &j3, int verbose_level);
 };
 
+// #############################################################################
+// spread_activity_description.cpp
+// #############################################################################
+
+//! description of an activity regarding a spread
+
+
+
+class spread_activity_description {
+
+public:
+
+	int f_report;
+
+	spread_activity_description();
+	~spread_activity_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
+
+
+// #############################################################################
+// spread_activity.cpp
+// #############################################################################
+
+//! an activity regarding a spread
+
+
+
+class spread_activity {
+
+public:
+
+	spread_activity_description *Descr;
+	spread_create *Spread_create;
+	geometry::spread_domain *SD;
+
+	actions::action *A;
+		// P Gamma L(n,q)
+	actions::action *A2;
+		// action of A on grassmannian of k-subspaces of V(n,q)
+	induced_actions::action_on_grassmannian *AG;
+
+	actions::action *AGr;
+
+
+	spread_activity();
+	~spread_activity();
+	void init(spread_activity_description *Descr,
+			spread_create *Spread_create,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void report(int verbose_level);
+	void report2(std::ostream &ost, int verbose_level);
+
+};
+
+
+
+
+
+
 
 // #############################################################################
 // spread_classify_activity_description.cpp
@@ -671,6 +737,10 @@ class translation_plane_activity_description {
 public:
 
 	int f_export_incma;
+
+	int f_p_rank;
+	int p_rank_p;
+
 	int f_report;
 
 	translation_plane_activity_description();

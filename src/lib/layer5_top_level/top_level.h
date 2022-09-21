@@ -246,6 +246,8 @@ namespace spreads {
 
 	// spreads:
 	class recoordinatize;
+	class spread_activity_description;
+	class spread_activity;
 	class spread_classify_activity_description;
 	class spread_classify_activity;
 	class spread_classify_description;

@@ -4414,10 +4414,10 @@ void file_io::do_csv_file_concatenate(
 	nb_files = fname_in.size();
 
 	data_structures::spreadsheet *S;
-	int *identifier_column;
+	//int *identifier_column;
 
 	S = new data_structures::spreadsheet[nb_files];
-	identifier_column = NEW_int(nb_files);
+	//identifier_column = NEW_int(nb_files);
 
 	for (i = 0; i < nb_files; i++) {
 		cout << "Reading table " << fname_in[i] << endl;

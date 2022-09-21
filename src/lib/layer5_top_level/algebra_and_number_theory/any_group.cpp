@@ -1919,11 +1919,11 @@ int any_group::is_subgroup_of(any_group *AG_secondary, int verbose_level)
 		cout << "any_group::is_subgroup_of" << endl;
 	}
 
-	actions::action *A1;
-	actions::action *A2;
+	//actions::action *A1;
+	//actions::action *A2;
 
-	A1 = A;
-	A2 = AG_secondary->A;
+	//A1 = A;
+	//A2 = AG_secondary->A;
 
 	groups::strong_generators *Subgroup_gens1;
 	groups::strong_generators *Subgroup_gens2;
@@ -1957,11 +1957,11 @@ void any_group::set_of_coset_representatives(any_group *AG_secondary,
 		cout << "any_group::set_of_coset_representatives" << endl;
 	}
 
-	actions::action *A1;
-	actions::action *A2;
+	//actions::action *A1;
+	//actions::action *A2;
 
-	A1 = A;
-	A2 = AG_secondary->A;
+	//A1 = A;
+	//A2 = AG_secondary->A;
 
 	groups::strong_generators *Subgroup_gens1;
 	groups::strong_generators *Subgroup_gens2;

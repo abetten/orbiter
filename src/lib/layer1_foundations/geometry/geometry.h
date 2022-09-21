@@ -938,9 +938,14 @@ public:
 	void make_identity_front(int *M, int verbose_level);
 	void make_identity_back(int *M, int verbose_level);
 	void copy_matrix_back(int *A, int *M, int verbose_level);
+	void extract_matrix_from_back(int *A, int *M, int verbose_level);
 	void make_spread_from_spread_set(
 			long int *Spread_set, int sz,
 			long int *&Spread, int &spread_sz,
+			int verbose_level);
+	void make_spread_set_from_spread(
+			long int *Spread, int spread_sz,
+			int *&Spread_set, int &sz,
 			int verbose_level);
 	void make_partition(long int *Spread, int spread_sz, long int *&Part, int &s, int verbose_level);
 	void make_spread_element(int *Spread_element, int *A, int verbose_level);

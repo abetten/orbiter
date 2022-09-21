@@ -19,6 +19,10 @@ namespace spreads {
 translation_plane_activity_description::translation_plane_activity_description()
 {
 	f_export_incma = FALSE;
+
+	f_p_rank = FALSE;
+	p_rank_p = 0;
+
 	f_report = FALSE;
 }
 
@@ -44,6 +48,13 @@ int translation_plane_activity_description::read_arguments(int argc, std::string
 				cout << "-export_incma " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-p_rank") == 0) {
+			f_p_rank = TRUE;
+			p_rank_p = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-p_rank " << p_rank_p << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			if (f_v) {
@@ -65,6 +76,9 @@ void translation_plane_activity_description::print()
 {
 	if (f_export_incma) {
 		cout << "-export_incma " << endl;
+	}
+	if (f_p_rank) {
+		cout << "-p_rank " << p_rank_p << endl;
 	}
 	if (f_report) {
 		cout << "-report " << endl;

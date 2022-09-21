@@ -378,11 +378,13 @@ void tree_node::draw_edges(mp_graphics &G,
 	int Px[3], Py[3];
 	
 
-	int f_circle_text = TRUE;
+	//int f_circle_text = TRUE;
 
+#if 0
 	if (Opt->f_nodes_empty) {
 		f_circle_text = FALSE;
 	}
+#endif
 
 
 #if DONT_DRAW_ROOT_NODE

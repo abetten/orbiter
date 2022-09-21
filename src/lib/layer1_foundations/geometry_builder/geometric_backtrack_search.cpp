@@ -271,11 +271,11 @@ int geometric_backtrack_search::geo_back_test(int I, int verbose_level)
 				"I=" << I << endl;
 	}
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, 0);
-	int i0, i1, m, f_already_there, control_line;
+	int i0, i1, m, f_already_there; //, control_line;
 	iso_type *it;
 
 	i0 = C->i0;
-	control_line = i0 + C->v - 1;
+	//control_line = i0 + C->v - 1;
 	for (m = 0; m < C->v - 1; m++) {
 		i1 = i0 + m;
 		it = gg->inc->iso_type_at_line[i1];
@@ -978,9 +978,9 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 	}
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, J);
 	int old_x;
-	int fuse_idx, i1, j0, r, j, k;
+	int i1, j0, r, j, k; // fuse_idx
 
-	fuse_idx = C->fuse_idx;
+	//fuse_idx = C->fuse_idx;
 	i1 = C->i0 + m; // current row
 	r = C->r0 + n; // current incidence index
 	j0 = C->j0;
@@ -1086,9 +1086,9 @@ int geometric_backtrack_search::X_First(int I, int m, int J, int n, int j,
 	int f_v = (verbose_level >= 1);
 
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, J);
-	int fuse_idx, i1, j0, r;
+	int i1, j0, r; // fuse_idx
 
-	fuse_idx = C->fuse_idx;
+	//fuse_idx = C->fuse_idx;
 	i1 = C->i0 + m;
 		// current row
 

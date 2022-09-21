@@ -211,10 +211,10 @@ long int quartic_curve_domain::rank_point(int *v)
 void quartic_curve_domain::unrank_line_in_dual_coordinates(int *v, long int rk)
 {
 	int basis[9];
-	int r;
+	//int r;
 
 	P->unrank_line(basis, rk);
-	r = F->Linear_algebra->RREF_and_kernel(3, 2, basis,
+	F->Linear_algebra->RREF_and_kernel(3, 2, basis,
 			0 /* verbose_level */);
 	Int_vec_copy(basis + 6, v, 3);
 }

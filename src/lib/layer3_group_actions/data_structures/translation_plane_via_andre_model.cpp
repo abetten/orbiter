@@ -1072,6 +1072,54 @@ void translation_plane_via_andre_model::export_incma(int verbose_level)
 }
 
 
+void translation_plane_via_andre_model::p_rank(int p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::p_rank p=" << p << endl;
+	}
+
+	field_theory::finite_field *F;
+
+	F = NEW_OBJECT(field_theory::finite_field);
+
+	F->finite_field_init(p, FALSE /* f_without_tables */, 0 /*verbose_level*/);
+
+	int *base_cols;
+	int *Mtx;
+	int rk;
+
+	base_cols = NEW_int(N);
+	Mtx = NEW_int(N * N);
+
+	Int_vec_copy(Incma, Mtx, N * N);
+
+	rk = F->Linear_algebra->Gauss_int(Mtx,
+		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL /*P*/, N, N, N,
+		0 /*verbose_level*/);
+
+
+	if (f_v) {
+		cout << "linear_algebra_global::do_RREF p-rank = " << rk << endl;
+		//Int_matrix_print(Mtx, rk, N);
+		//cout << "rk=" << rk << endl;
+	}
+
+
+	FREE_int(Mtx);
+	FREE_int(base_cols);
+	FREE_OBJECT(F);
+
+	//Fio.int_matrix_write_csv(fname, Incma, N, N);
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::p_rank done" << endl;
+	}
+}
+
+
 
 
 //

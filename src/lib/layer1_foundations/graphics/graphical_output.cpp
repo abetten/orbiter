@@ -1449,10 +1449,10 @@ void graphical_output::draw_projective(mp_graphics &G,
 	double y_stretch = 1.;
 	double dx = ONE_MILLION * 50 * x_stretch;
 	double dy = ONE_MILLION * 50 * y_stretch; // stretch factor
-	double x_labels_offset = -.5;
-	double y_labels_offset = -.5;
-	double x_tick_half_width = 0.1;
-	double y_tick_half_width = 0.1;
+	//double x_labels_offset = -.5;
+	//double y_labels_offset = -.5;
+	//double x_tick_half_width = 0.1;
+	//double y_tick_half_width = 0.1;
 	int N = 30;
 	int i;
 	double x_min = -10;
@@ -1464,14 +1464,14 @@ void graphical_output::draw_projective(mp_graphics &G,
 	double y_min = 0;
 	double y_max = 2;
 	double x, y, t;
-	int subdivide_v = 4;
-	int subdivide_h = 4;
+	//int subdivide_v = 4;
+	//int subdivide_h = 4;
 	int f_plot_grid = TRUE;
 	int f_plot_curve = TRUE;
-	int x_mod = 1;
-	int y_mod = 1;
-	int x_tick_mod = 1;
-	int y_tick_mod = 1;
+	//int x_mod = 1;
+	//int y_mod = 1;
+	//int x_tick_mod = 1;
+	//int y_tick_mod = 1;
 	double height = 3.;
 	double R, R2, X, Y;
 	int mirror;
@@ -1494,17 +1494,21 @@ void graphical_output::draw_projective(mp_graphics &G,
 		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
 		t_min = -1.119437527;
 		t_max = 4;
+#if 0
 		x_mod = 100;
 		y_mod = 100;
 		x_tick_mod = 1;
 		y_tick_mod = 2;
 		subdivide_v = 1;
 		subdivide_h = 1;
+#endif
 		f_plot_curve = TRUE;
+#if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
+#endif
 		f_plot_grid = TRUE;
 		f_plot_curve = TRUE;
 		height = 6;
@@ -1523,17 +1527,21 @@ void graphical_output::draw_projective(mp_graphics &G,
 		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
 		t_min = -1.119437527;
 		t_max = 4;
+#if 0
 		x_mod = 100;
 		y_mod = 100;
 		x_tick_mod = 1;
 		y_tick_mod = 2;
 		subdivide_v = 1;
 		subdivide_h = 1;
+#endif
 		f_plot_curve = TRUE;
+#if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
+#endif
 		f_plot_grid = TRUE;
 		f_plot_curve = TRUE;
 		height = 6;
@@ -1552,17 +1560,21 @@ void graphical_output::draw_projective(mp_graphics &G,
 		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
 		t_min = 0;
 		t_max = 4;
+#if 0
 		x_mod = 100;
 		y_mod = 100;
 		x_tick_mod = 1;
 		y_tick_mod = 2;
 		subdivide_v = 1;
 		subdivide_h = 1;
+#endif
 		f_plot_curve = TRUE;
+#if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
+#endif
 		f_plot_grid = TRUE;
 		f_plot_curve = TRUE;
 		height = 6;
@@ -1581,17 +1593,21 @@ void graphical_output::draw_projective(mp_graphics &G,
 		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
 		t_min = 0;
 		t_max = 10;
+#if 0
 		x_mod = 100;
 		y_mod = 100;
 		x_tick_mod = 1;
 		y_tick_mod = 2;
 		subdivide_v = 1;
 		subdivide_h = 1;
+#endif
 		f_plot_curve = TRUE;
+#if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
+#endif
 		f_plot_grid = TRUE;
 		f_plot_curve = TRUE;
 		height = 6;

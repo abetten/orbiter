@@ -91,6 +91,9 @@ class activity_description {
 	int f_spread_classify_activity;
 	spreads::spread_classify_activity_description *Spread_classify_activity_description;
 
+	int f_spread_activity;
+	spreads::spread_activity_description *Spread_activity_description;
+
 	int f_translation_plane_activity;
 	spreads::translation_plane_activity_description *Translation_plane_activity_description;
 
@@ -123,6 +126,7 @@ public:
 	void do_formula_activity(int verbose_level);
 	void do_BLT_set_classify_activity(int verbose_level);
 	void do_spread_classify_activity(int verbose_level);
+	void do_spread_activity(int verbose_level);
 	void do_translation_plane_activity(int verbose_level);
 
 };

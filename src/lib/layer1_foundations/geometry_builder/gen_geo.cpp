@@ -282,7 +282,7 @@ void gen_geo::generate_all(int verbose_level)
 		cout << "gen_geo::generate_all, verbose_level = " << verbose_level << endl;
 	}
 
-	int ret = FALSE;
+	//int ret = FALSE;
 	int f_already_there;
 	//int s_nb_i_vbar, s_nb_i_hbar;
 	iso_type *it0, *it1;
@@ -321,7 +321,7 @@ void gen_geo::generate_all(int verbose_level)
 
 	inc->gl_nb_GEN = 0;
 	if (!Geometric_backtrack_search->First(verbose_level - 5)) {
-		ret = TRUE;
+		//ret = TRUE;
 
 		cout << "gen_geo::generate_all Geometric_backtrack_search->First "
 				"returns FALSE, no geometry exists. This is perhaps a bit unusual." << endl;

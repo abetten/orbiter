@@ -465,10 +465,10 @@ void linear_set_classify::init(
 	if (f_identify) {
 
 		//int max_depth = order + 1;
-		poset_classification::poset_classification_control *Control;
+		//poset_classification::poset_classification_control *Control;
 		projective_geometry::projective_space_with_action *PA;
 
-		Control = NEW_OBJECT(poset_classification::poset_classification_control);
+		//Control = NEW_OBJECT(poset_classification::poset_classification_control);
 		PA = NEW_OBJECT(projective_geometry::projective_space_with_action); // hack !!! ToDo
 
 		SD = NEW_OBJECT(geometry::spread_domain);

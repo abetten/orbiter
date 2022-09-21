@@ -433,9 +433,9 @@ void classification_of_objects::process_any_object(
 					"New isomorphism type! The current number of "
 				"isomorphism types is " << CB->nb_types << endl;
 		}
-		int idx;
+		//int idx;
 
-		idx = CB->type_of[CB->n - 1];
+		//idx = CB->type_of[CB->n - 1];
 
 
 #if 0

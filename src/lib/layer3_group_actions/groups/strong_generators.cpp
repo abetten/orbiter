@@ -1703,21 +1703,25 @@ void strong_generators::print_generators_tex(std::ostream &ost)
 	ring_theory::longinteger_object go;
 
 	group_order(go);
-	ost << "Strong generators for a group of order " << go << ":" << endl;
-	ost << "$$" << endl;
+	ost << "Strong generators for a group of order " << go << ":\\\\" << endl;
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
+		ost << "$" << endl;
 		A->element_print_latex(gens->ith(i), ost);
+		ost << "$" << endl;
 		if (i < gens->len - 1) {
 			ost << ", " << endl;
 		}
+#if 0
 		if (((i + 1) % 1) == 0 && i < gens->len - 1) {
 			ost << "$$" << endl;
 			ost << "$$" << endl;
 		}
+#endif
 	}
-	ost << "$$" << endl;
+	//ost << "$$" << endl;
+	ost << "\\\\" << endl;
 	print_for_make_element(ost);
 }
 

@@ -846,7 +846,7 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	groups::matrix_group *M;
+	//groups::matrix_group *M;
 
 	if (f_v) {
 		cout << "action::induced_action_on_wedge_product" << endl;
@@ -877,7 +877,7 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 				"old action not of matrix group type" << endl;
 		exit(1);
 	}
-	M = G.matrix_grp;
+	//M = G.matrix_grp;
 
 	induced_actions::action_on_wedge_product *AW;
 

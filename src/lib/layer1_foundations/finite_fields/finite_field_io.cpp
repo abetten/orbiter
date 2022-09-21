@@ -1054,7 +1054,7 @@ void finite_field::cheat_sheet_table_of_elements(std::ostream &ost, int verbose_
 {
 	int *v;
 	int i, j;
-	int f_first;
+	//int f_first;
 	//std::string my_symbol;
 
 	v = NEW_int(e);
@@ -1072,7 +1072,7 @@ void finite_field::cheat_sheet_table_of_elements(std::ostream &ost, int verbose_
 		Gg.AG_element_unrank(p, v, 1, e, i);
 		ost << setw(3) << i;
 		ost << " & ";
-		f_first = TRUE;
+		//f_first = TRUE;
 
 
 		for (j = e - 1; j >= 0; j--) {

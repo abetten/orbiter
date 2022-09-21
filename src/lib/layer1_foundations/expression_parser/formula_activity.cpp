@@ -88,9 +88,10 @@ void formula_activity::perform_activity(int verbose_level)
 		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->evaluate_finite_field_label);
 
 		expression_parser_domain ED;
-		int a;
+		//int a;
 
-		a = ED.evaluate_formula(
+		//a = ;
+		ED.evaluate_formula(
 				f,
 				F,
 				Descr->evaluate_assignment,

@@ -1,12 +1,14 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -I../..
+CPPFLAGS = -Wall -O3 -funroll-loops -I.. -I../..
 # -frename-registers
 LIB = 
 LFLAGS = -lm
 
 MODULES = \
 	recoordinatize.o \
+	spread_activity_description.o \
+	spread_activity.o \
 	spread_classify_activity_description.o \
 	spread_classify_activity.o \
 	spread_classify_description.o \

@@ -1571,10 +1571,10 @@ void surface_domain_high_level::do_create_surface_reports(std::string &field_ord
 	Int_vec_scan(field_orders_text, Q, nb_q);
 
 	int q;
-	int cur;
+	//int cur;
 	int i;
 
-	cur = 0;
+	//cur = 0;
 	for (i = 0; i < nb_q; i++) {
 
 		q = Q[i];

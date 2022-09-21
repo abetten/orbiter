@@ -622,7 +622,7 @@ void large_set_was::read_solution_file(
 	}
 
 	long int *Large_sets;
-	int nb_large_sets;
+	//int nb_large_sets;
 	long int *Packings_explicit;
 	int Sz;
 
@@ -660,7 +660,7 @@ void large_set_was::read_solution_file(
 
 
 
-	nb_large_sets = nb_solutions;
+	//nb_large_sets = nb_solutions;
 	Large_sets = NEW_lint(nb_solutions * sz);
 	for (i = 0; i < nb_solutions; i++) {
 		Lint_vec_copy(starter_set, Large_sets + i * sz, starter_set_sz);

@@ -750,7 +750,7 @@ void coding_theory_domain::crc256_test_k_subsets(int message_length, int R, int 
 	char *check;
 	int *message;
 	int block_length_in_bits;
-	int R8;
+	//int R8;
 	int block_length;
 	int message_length_in_bits;
 	long int cnt;
@@ -758,7 +758,7 @@ void coding_theory_domain::crc256_test_k_subsets(int message_length, int R, int 
 	int *set;
 	vector<unsigned int> V;
 
-	R8 = R * 8;
+	//R8 = R * 8;
 	block_length = message_length + R;
 	block_length_in_bits = block_length * 8;
 	message_length_in_bits = message_length * 8;
@@ -928,7 +928,7 @@ void coding_theory_domain::crc32_remainders_compute(int message_length, int R, u
 	char *check;
 	int *message;
 	int block_length_in_bits;
-	int R8;
+	//int R8;
 	int block_length;
 	int message_length_in_bits;
 	long int cnt;
@@ -937,7 +937,7 @@ void coding_theory_domain::crc32_remainders_compute(int message_length, int R, u
 	vector<unsigned int> V;
 	int k = 1;
 
-	R8 = R * 8;
+	//R8 = R * 8;
 	block_length = message_length + R;
 	block_length_in_bits = block_length * 8;
 	message_length_in_bits = message_length * 8;
@@ -1817,11 +1817,11 @@ void coding_theory_domain::crc771_file_based(
 
 	{
 		ofstream ost(fname_out, ios::binary);
-		uint32_t crc;
-		char *p_crc;
+		//uint32_t crc;
+		//char *p_crc;
 		int i;
 
-		p_crc = (char *) &crc;
+		//p_crc = (char *) &crc;
 		C = 0;
 
 		while (C < N) {
@@ -2168,10 +2168,10 @@ void coding_theory_domain::check_errors(
 
 	cout << "nb_error_detected = " << nb_error_detected << " / " << nb_error << endl;
 
-	int nb_undetected_errors;
+	//int nb_undetected_errors;
 
 
-	nb_undetected_errors = nb_error - nb_error_detected;
+	//nb_undetected_errors = nb_error - nb_error_detected;
 
 	cout << "nb_error_undetected = " << nb_error_undetected << endl;
 

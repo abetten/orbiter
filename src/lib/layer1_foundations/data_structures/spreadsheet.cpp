@@ -1260,7 +1260,7 @@ void spreadsheet::get_string_entry(std::string &entry, int i, int j)
 
 void spreadsheet::get_string(std::string &str, int i, int j)
 {
-	int t, l;
+	int t; // l
 	//char *str;
 	//char *s;
 	
@@ -1273,7 +1273,7 @@ void spreadsheet::get_string(std::string &str, int i, int j)
 		}
 	else {
 		//str = NEW_char(strlen(tokens[t]) + 1);
-		l = strlen(tokens[t]);
+		//l = strlen(tokens[t]);
 		str.assign(tokens[t]);
 #if 0
 		if (l >= 2 && tokens[t][0] == '"' && tokens[t][l - 1] == '"') {

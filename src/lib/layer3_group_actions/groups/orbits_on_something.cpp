@@ -220,7 +220,7 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 	Stab = Sch->stabilizer_orbit_rep(
 		SG->A,
 		full_group_order,
-		orbit_idx, verbose_level);
+		orbit_idx, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "orbits_on_something::init "
 				"after Sch->stabilizer_orbit_rep" << endl;
@@ -232,13 +232,14 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 	ring_theory::longinteger_object stab_go;
 
 
-	Stab->get_gens_data_as_string_with_quotes(gens_str, verbose_level);
+	Stab->get_gens_data_as_string_with_quotes(gens_str, 0 /*verbose_level*/);
 	Stab->group_order(stab_go);
-	cout << "The stabilizer has order " << stab_go << endl;
-	cout << "Number of generators " << Stab->gens->len << endl;
-	cout << "Generators for the stabilizer in coded form: " << endl;
-	cout << gens_str << endl;
-
+	if (f_v) {
+		cout << "orbits_on_something::init The stabilizer has order " << stab_go << endl;
+		cout << "orbits_on_something::init Number of generators " << Stab->gens->len << endl;
+		cout << "orbits_on_something::init Generators for the stabilizer in coded form: " << endl;
+		cout << gens_str << endl;
+	}
 
 	string fname_stab;
 	string label_stab;

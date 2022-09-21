@@ -207,7 +207,7 @@ void decomposition_with_fuse::init_tdo_line(int fuse_idx, int tdo_line,
 		int v, int *b, int *r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i0, j, rr;
+	int j; //, rr;
 
 	if (f_v) {
 		cout << "decomposition_with_fuse::init_tdo_line tdo_line=" << tdo_line << endl;
@@ -256,11 +256,13 @@ void decomposition_with_fuse::init_tdo_line(int fuse_idx, int tdo_line,
 
 			C->i0 = C_top->i0 + C_top->v;
 		}
-		i0 = C->i0;
+		//i0 = C->i0;
 
+#if 0
 		if (j == gg->GB->b_len - 1) {
 			rr = C->r0 + C->r;
 		}
+#endif
 	}
 
 

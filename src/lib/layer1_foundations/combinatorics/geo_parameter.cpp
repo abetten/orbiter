@@ -1046,7 +1046,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int J, u, l, i, j, a, sum, s, L, M, c, e, h, c1, c2, f;
+	int J, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f; // L
 	tdo_scheme_synthetic G;
 	data_structures::sorting Sorting;
 
@@ -1112,13 +1112,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		for (J = 0; J < nb_classes; J++) {
 			l = class_len[J];
 			s = 0;
-			L = 0;
+			//L = 0;
 			for (u = 0; u < l; u++) {
 				j = class_first[J] + u;
 				a = G.col_classes_len[h][j];
 				c = scheme[i * nb_B + j];
 				s += a * c;
-				L += a;
+				//L += a;
 			}
 
 			M = G.row_classes_len[h][i];
