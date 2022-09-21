@@ -647,14 +647,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_in;
 		int set_size_in;
 		long int *the_set_out;
-		int set_size_out;
+		//int set_size_out;
 
 		Lint_vec_scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
 
-		set_size_out = set_size_in;
+		//set_size_out = set_size_in;
 		the_set_out = NEW_lint(set_size_in);
 		for (i = 0; i < set_size_in; i++) {
 			a = the_set_in[i];
@@ -681,14 +681,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_in;
 		int set_size_in;
 		long int *the_set_out;
-		int set_size_out;
+		//int set_size_out;
 
 		Lint_vec_scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
 
-		set_size_out = set_size_in;
+		//set_size_out = set_size_in;
 		the_set_out = NEW_lint(set_size_in);
 		for (i = 0; i < set_size_in; i++) {
 			a = the_set_in[i];
@@ -711,14 +711,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_in;
 		int set_size_in;
 		long int *the_set_out;
-		int set_size_out;
+		//int set_size_out;
 
 		Lint_vec_scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
 
-		set_size_out = set_size_in;
+		//set_size_out = set_size_in;
 		the_set_out = NEW_lint(set_size_in);
 		for (i = 0; i < set_size_in; i++) {
 			a = the_set_in[i];

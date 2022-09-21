@@ -909,9 +909,9 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 	}
 
 
-	actions::action *A;
+	//actions::action *A;
 
-	A = H_LG->A2;
+	//A = H_LG->A2;
 
 
 	string fname;

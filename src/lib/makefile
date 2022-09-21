@@ -544,6 +544,8 @@ MODULES= \
 		layer5_top_level/semifields/semifield_trace.o \
 		layer5_top_level/semifields/trace_record.o \
 		layer5_top_level/spreads/recoordinatize.o \
+		layer5_top_level/spreads/spread_activity_description.o \
+		layer5_top_level/spreads/spread_activity.o \
 		layer5_top_level/spreads/spread_classify_activity_description.o \
 		layer5_top_level/spreads/spread_classify_activity.o \
 		layer5_top_level/spreads/spread_classify_description.o \

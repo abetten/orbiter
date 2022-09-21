@@ -1291,7 +1291,7 @@ void colored_graph::draw_partitioned(
 	int f_v = (verbose_level >= 1);
 	int f_dots = FALSE;
 	data_structures::bitmatrix *Bitmatrix;
-	long int len, i, j, k, ii, jj;
+	long int len, i, j, k; // , ii, jj;
 	combinatorics::combinatorics_domain Combi;
 	graph_theory_domain Graph;
 	
@@ -1320,9 +1320,9 @@ void colored_graph::draw_partitioned(
 	Bitmatrix->init(nb_points, nb_points, verbose_level);
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
-		ii = C.sorting_perm_inv[i];
+		//ii = C.sorting_perm_inv[i];
 		for (j = i + 1; j < nb_points; j++, k++) {
-			jj = C.sorting_perm_inv[j];
+			//jj = C.sorting_perm_inv[j];
 			//k = Combi.ij2k_lint(ii, jj, nb_vertices);
 			if (Bitvec->s_i(k)) {
 				Bitmatrix->m_ij(i, j, 1);
@@ -2552,7 +2552,7 @@ void colored_graph::all_cliques_rainbow(
 	else {
 		if (f_v) {
 			cout << "colored_graph::all_cliques_rainbow before CG.all_rainbow_cliques" << endl;
-			}
+		}
 		all_rainbow_cliques(Control,
 				ost_txt,
 				verbose_level - 1);
@@ -2562,7 +2562,13 @@ void colored_graph::all_cliques_rainbow(
 
 
 		if (Control->f_store_solutions) {
+			if (f_v) {
+				cout << "colored_graph::all_cliques_rainbow before write_solutions_to_csv_file" << endl;
+			}
 			write_solutions_to_csv_file(Control, ost_csv, verbose_level);
+			if (f_v) {
+				cout << "colored_graph::all_cliques_rainbow after write_solutions_to_csv_file" << endl;
+			}
 		}
 
 	}
@@ -2906,9 +2912,9 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 	int target_depth2;
 	int nb_solutions_total;
 
-	clique_finder_control *Control1;
+	//clique_finder_control *Control1;
 
-	Control1 = NEW_OBJECT(clique_finder_control);
+	//Control1 = NEW_OBJECT(clique_finder_control);
 
 	nb_solutions_total = 0;
 

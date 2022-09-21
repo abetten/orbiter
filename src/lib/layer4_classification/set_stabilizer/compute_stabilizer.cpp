@@ -1050,7 +1050,7 @@ void compute_stabilizer::add_automorphism(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v4 = (verbose_level >= 4);
-	int drop_out_level, image, f_added;
+	int drop_out_level, image; //, f_added;
 
 	//cout << "stabilizer transversal length:" << endl;
 	//Stab->print_transversal_lengths();
@@ -1065,11 +1065,11 @@ void compute_stabilizer::add_automorphism(int verbose_level)
 				cout << endl;
 			}
 		}
-		f_added = FALSE;
+		//f_added = FALSE;
 		//Stab->closure_group(2000, verbose_level - 1);
 	}
 	else {
-		f_added = TRUE;
+		//f_added = TRUE;
 		if (f_v4) {
 			cout << "compute_stabilizer::main_loop_handle_case element needs to be inserted at level = "
 				<< drop_out_level << " with image " << image << endl;

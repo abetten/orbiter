@@ -80,6 +80,26 @@ void translation_plane_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_p_rank) {
+
+		if (f_v) {
+			cout << "translation_plane_activity::perform_activity f_p_rank" << endl;
+		}
+
+		if (f_v) {
+			cout << "translation_plane_activity::perform_activity before TP->p_rank" << endl;
+		}
+		TP->p_rank(Descr->p_rank_p, verbose_level);
+		if (f_v) {
+			cout << "translation_plane_activity::perform_activity after TP->p_rank" << endl;
+		}
+
+		if (f_v) {
+			cout << "translation_plane_activity::perform_activity f_p_rank done" << endl;
+		}
+
+	}
+
 	else if (Descr->f_report) {
 
 		if (f_v) {

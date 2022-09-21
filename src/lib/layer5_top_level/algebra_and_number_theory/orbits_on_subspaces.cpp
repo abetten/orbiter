@@ -186,7 +186,7 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 static long int orbits_on_subspaces_rank_point_func(int *v, void *data)
 {
 	orbits_on_subspaces *OoS;
-	group_theoretic_activity *G;
+	//group_theoretic_activity *G;
 	poset_classification::poset_classification *gen;
 	long int rk;
 
@@ -195,7 +195,7 @@ static long int orbits_on_subspaces_rank_point_func(int *v, void *data)
 
 
 	OoS = (orbits_on_subspaces *) data;
-	G = OoS->GTA;
+	//G = OoS->GTA;
 	gen = OoS->orbits_on_subspaces_PC;
 	gen->get_VS()->F->PG_element_rank_modified_lint(v, 1,
 			gen->get_VS()->dimension, rk);
@@ -205,14 +205,14 @@ static long int orbits_on_subspaces_rank_point_func(int *v, void *data)
 static void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data)
 {
 	orbits_on_subspaces *OoS;
-	group_theoretic_activity *G;
+	//group_theoretic_activity *G;
 	poset_classification::poset_classification *gen;
 
 	//cout << "orbits_on_subspaces_unrank_point_func temporarily disabled" << endl;
 	//exit(1);
 
 	OoS = (orbits_on_subspaces *) data;
-	G = OoS->GTA;
+	//G = OoS->GTA;
 	gen = OoS->orbits_on_subspaces_PC;
 	gen->get_VS()->F->PG_element_unrank_modified(v, 1,
 			gen->get_VS()->dimension, rk);

@@ -778,7 +778,7 @@ void domino_assignment::draw_domino_matrix2(std::string &fname,
 void domino_assignment::read_photo(std::string &photo_fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *R, *B, *G, r, g, b, m, n, i, j, c;
+	int *R, *B, *G, r, g, b, m, n, i, j; // c
 	double *dphoto;
 	orbiter_kernel_system::file_io Fio;
 
@@ -836,7 +836,7 @@ void domino_assignment::read_photo(std::string &photo_fname, int verbose_level)
 					f_G >> g; G[i * N + j] = g;
 					f_B >> b; B[i * N + j] = b;
 					f = sqrt((double)(r * r + g * g + b * b));
-					c = (int)f;
+					//c = (int)f;
 					dphoto[i * N + j] = f;
 				}
 			}
@@ -1288,9 +1288,9 @@ void domino_assignment::swap_each(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int s1, s2, r1, N, N100, cnt = 0;
+	int s1, s2, N, N100, cnt = 0; // r1
 
-	r1 = 1;
+	//r1 = 1;
 	if (f_v) {
 		cout << "domino_assignment::swap_each verbose_level = " << verbose_level << endl;
 	}
@@ -1316,7 +1316,7 @@ void domino_assignment::swap_each(int verbose_level)
 void domino_assignment::do_horizontal_rotate(int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o1, o2, i1;
+	int o2, i1; // o1
 
 	if (f_v) {
 		cout << "domino_assignment::do_horizontal_rotate" << endl;
@@ -1373,7 +1373,7 @@ void domino_assignment::do_horizontal_rotate(int ro, int verbose_level)
 			assi[ro * 5 + 3] = i1 - 1;
 		}
 	}
-	o1 = assi[ro * 5 + 2];
+	//o1 = assi[ro * 5 + 2];
 	assi[ro * 5 + 2] = o2;
 	if (f_v) {
 		cout << "domino_assignment::do_horizontal_rotate done" << endl;
@@ -1383,7 +1383,7 @@ void domino_assignment::do_horizontal_rotate(int ro, int verbose_level)
 void domino_assignment::do_vertical_rotate(int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int o1, o2, j1;
+	int o2, j1;
 
 	if (f_v) {
 		cout << "domino_assignment::do_vertical_rotate ro=" << ro << endl;
@@ -1442,9 +1442,9 @@ void domino_assignment::do_vertical_rotate(int ro, int verbose_level)
 			assi[ro * 5 + 4] = j1 - 1;
 		}
 	}
-	o1 = assi[ro * 5 + 2];
+	//o1 = assi[ro * 5 + 2];
 	assi[ro * 5 + 2] = o2;
-	o1 = assi[ro * 5 + 2];
+	//o1 = assi[ro * 5 + 2];
 	assi[ro * 5 + 2] = o2;
 	if (f_v) {
 		cout << "domino_assignment::do_vertical_rotate done" << endl;
@@ -2007,7 +2007,7 @@ void domino_assignment::rotate_randomized(int verbose_level)
 void domino_assignment::do_horizontal_shift(int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int j1, j2;
+	int j2;
 
 	if (f_v) {
 		cout << "domino_assignment::do_horizontal_shift, verbose_level=" << verbose_level << endl;
@@ -2035,7 +2035,7 @@ void domino_assignment::do_horizontal_shift(int ro, int verbose_level)
 				verbose_level - 1);
 		j2 = assi[ro * 5 + 4] - 1;
 	}
-	j1 = assi[ro * 5 + 4];
+	//j1 = assi[ro * 5 + 4];
 	assi[ro * 5 + 4] = j2;
 }
 
@@ -2043,7 +2043,7 @@ void domino_assignment::do_horizontal_shift(int ro, int verbose_level)
 void domino_assignment::do_vertical_shift(int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i1, i2;
+	int i2;
 
 	if (f_v) {
 		cout << "domino_assignment::do_vertical_shift, verbose_level=" << verbose_level << endl;
@@ -2071,7 +2071,7 @@ void domino_assignment::do_vertical_shift(int ro, int verbose_level)
 				verbose_level - 1);
 		i2 = assi[ro * 5 + 3] - 1;
 	}
-	i1 = assi[ro * 5 + 3];
+	//i1 = assi[ro * 5 + 3];
 	assi[ro * 5 + 3] = i2;
 }
 

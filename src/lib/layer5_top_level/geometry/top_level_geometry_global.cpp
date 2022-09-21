@@ -72,10 +72,10 @@ void top_level_geometry_global::report_decomposition_by_group(
 		cout << "projective_space_with_action::report_decomposition_by_group" << endl;
 	}
 
-	long int order;
+	//long int order;
 
 
-	order = SG->group_order_as_lint();
+	//order = SG->group_order_as_lint();
 
 
 #if 0

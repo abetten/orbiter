@@ -22,9 +22,6 @@ geometry_builder::geometry_builder()
 {
 	Descr = NULL;
 
-	//II = 0;
-	//JJ = 0;
-
 	v = NULL;
 	v_len = 0;
 
@@ -39,6 +36,7 @@ geometry_builder::geometry_builder()
 
 	V = 0;
 	B = 0;
+	V_partition = NULL;
 	R = NULL;
 
 	f_transpose_it = FALSE;
@@ -54,6 +52,7 @@ geometry_builder::geometry_builder()
 
 
 }
+
 
 geometry_builder::~geometry_builder()
 {
@@ -248,14 +247,16 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	for (i = 0; i < Descr->test2_lines.size(); i++) {
 		int *lines;
 		int lines_len;
-		int a, j;
+		//int j; // a
 
 		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
 		Int_vec_scan(Descr->test2_lines[i], lines, lines_len);
 		//flags = true_false_string_numeric(Descr->test_flags[i].c_str());
+#if 0
 		for (j = 0; j < lines_len; j++) {
 			a = lines[j];
 		}
+#endif
 	}
 
 	if (f_v) {

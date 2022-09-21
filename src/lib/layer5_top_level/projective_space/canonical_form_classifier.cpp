@@ -906,7 +906,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 	int i, j;
 	data_structures::sorting Sorting;
 
-	int nb_orbits;
+	//int nb_orbits;
 	int nb_monomials;
 
 	actions::action *A;
@@ -919,7 +919,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 	fname.append("_canonical_form.csv");
 
 
-	nb_orbits = Classification_of_quartic_curves->nb_types;
+	//nb_orbits = Classification_of_quartic_curves->nb_types;
 	nb_monomials = Poly_ring->get_nb_monomials();
 
 

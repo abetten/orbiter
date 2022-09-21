@@ -1450,16 +1450,17 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 			verbose_level);
 
 
-	int f_semilinear;
+	//int f_semilinear;
 	number_theory::number_theory_domain NT;
 
-
+#if 0
 	if (NT.is_prime(Orthogonal_space_with_action_description->F->q)) {
 		f_semilinear = FALSE;
 	}
 	else {
 		f_semilinear = TRUE;
 	}
+#endif
 
 	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
 
@@ -1762,9 +1763,9 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 	}
 
 
-	geometry::geometric_object_create *GOC;
+	//geometry::geometric_object_create *GOC;
 
-	GOC = NEW_OBJECT(geometry::geometric_object_create);
+	//GOC = NEW_OBJECT(geometry::geometric_object_create);
 
 
 	projective_geometry::projective_space_with_action *PA;

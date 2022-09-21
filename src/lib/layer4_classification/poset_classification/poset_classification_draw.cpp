@@ -2512,7 +2512,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 	//int f_vv = FALSE; //(verbose_level >= 2);
 	string fname_base1;
 	string fname;
-	int lvl, po, so, n, n1, f, cnt;
+	int lvl, po, so, n, n1, cnt;
 	long int *set;
 	char str[1000];
 	ring_theory::longinteger_domain D;
@@ -2541,7 +2541,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 				cout << "poset_classification::print_data_structure_tex "
 						"adding edges lvl=" << lvl << " / " << depth << endl;
 			}
-			f = 0;
+			//f = 0;
 			for (po = 0; po < nb_orbits_at_level(lvl); po++, cnt++) {
 
 
@@ -2597,7 +2597,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 				cout << "poset_classification::print_data_structure_tex "
 						"adding edges lvl=" << lvl << " / " << depth << endl;
 			}
-			f = 0;
+			//f = 0;
 			for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 				n = Poo->first_node_at_level(lvl) + po;
@@ -2735,7 +2735,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 					}
 				}
 			
-				f += Poo->node_get_nb_of_extensions(n);
+				//f += Poo->node_get_nb_of_extensions(n);
 				
 
 			} // next po

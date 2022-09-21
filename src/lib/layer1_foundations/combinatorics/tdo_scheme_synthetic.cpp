@@ -1673,7 +1673,7 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	int Nb_eqns, Nb_vars;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char label[100];
+	char label[1000];
 	combinatorics_domain Combi;
 	geometry::geometry_global Gg;
 

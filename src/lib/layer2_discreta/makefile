@@ -1,5 +1,5 @@
 DISCRETA_CPP = g++
-CPPFLAGS = -Wall -I.. -O3 -march=native -funroll-loops 
+CPPFLAGS = -Wall -I.. -O3 -funroll-loops 
 LIB = 
 LFLAGS = -lm
 

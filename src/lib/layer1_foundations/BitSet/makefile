@@ -1,7 +1,8 @@
 CC=g++
 CSTD_WARN_FLAGS=-Wall #-Wattributes -Wreturn-type -Wshift-count-overflow
 CSTD_FLAGS= $(CSTD_WARN_FLAGS) -std=c++11
-OPT_FLAGS=-O3 -march=native
+OPT_FLAGS=-O3 
+#-march=native
 
 
 

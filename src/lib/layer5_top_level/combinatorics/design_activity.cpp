@@ -688,9 +688,9 @@ void design_activity::do_tactical_decomposition(
 	//int N = k * b;
 	int *M;
 	//int i, j;
-	int *R;
+	//int *R;
 
-	R = NEW_int(v);
+	//R = NEW_int(v);
 
 	Combi.compute_incidence_matrix(v, b, k, DC->set,
 			M, verbose_level);

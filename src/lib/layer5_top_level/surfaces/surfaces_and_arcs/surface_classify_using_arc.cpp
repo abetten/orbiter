@@ -81,8 +81,8 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebraic_geometry::surface_domain *Surf;
-	field_theory::finite_field *F;
+	//algebraic_geometry::surface_domain *Surf;
+	//field_theory::finite_field *F;
 	int i, j, arc_idx;
 	number_theory::number_theory_domain NT;
 
@@ -94,8 +94,8 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 
-	F = Surf_A->PA->F;
-	Surf = Surf_A->Surf;
+	//F = Surf_A->PA->F;
+	//Surf = Surf_A->Surf;
 
 
 

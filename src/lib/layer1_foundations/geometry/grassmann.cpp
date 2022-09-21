@@ -1452,6 +1452,18 @@ void grassmann::copy_matrix_back(int *A, int *M, int verbose_level)
 	}
 }
 
+void grassmann::extract_matrix_from_back(int *A, int *M, int verbose_level)
+{
+	int i, j, a;
+
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			a = M[i * n + k + j];
+			A[i * k + j] = a;
+		}
+	}
+}
+
 void grassmann::make_spread_from_spread_set(
 		long int *Spread_set, int sz,
 		long int *&Spread, int &spread_sz,
@@ -1502,6 +1514,56 @@ void grassmann::make_spread_from_spread_set(
 
 	if (f_v) {
 		cout << "grassmann::make_spread_from_spread_set done" << endl;
+	}
+}
+
+
+void grassmann::make_spread_set_from_spread(
+		long int *Spread, int spread_sz,
+		int *&Spread_set, int &sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *M, *A;
+	int h, h1, k2;
+
+	if (f_v) {
+		cout << "grassmann::make_spread_set_from_spread, spread_sz = " << spread_sz << endl;
+	}
+
+	sz = spread_sz - 1;
+	k2 = k * k;
+	Spread_set = NEW_int(sz * k2);
+	M = NEW_int(k * n);
+	A = NEW_int(k * k);
+
+	for (h = 0; h < spread_sz; h++) {
+		if (f_v) {
+			cout << "grassmann::make_spread_set_from_spread, h = " << h << " / " << spread_sz << endl;
+		}
+
+		if (h == 1) {
+			continue;
+		}
+
+		if (h > 1) {
+			h1 = h - 1;
+		}
+		else {
+			h1 = h;
+		}
+
+		unrank_lint_here(M, Spread[h], 0 /*verbose_level - 4*/);
+
+		extract_matrix_from_back(A, M, 0 /*verbose_level - 4*/);
+
+		Int_vec_copy(A, Spread_set + h1 * k2, k2);
+	}
+	FREE_int(A);
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "grassmann::make_spread_set_from_spread done" << endl;
 	}
 }
 

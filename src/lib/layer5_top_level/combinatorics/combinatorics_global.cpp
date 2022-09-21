@@ -89,13 +89,13 @@ void combinatorics_global::load_design_table(design_create *DC,
 		cout << "combinatorics_global::load_design_table" << endl;
 	}
 	orbiter_kernel_system::latex_interface L;
-	actions::action *A;
+	//actions::action *A;
 	//int *Elt1;
-	int *Elt2;
+	//int *Elt2;
 
-	A = DC->A;
+	//A = DC->A;
 
-	Elt2 = NEW_int(A->elt_size_in_int);
+	//Elt2 = NEW_int(A->elt_size_in_int);
 
 
 

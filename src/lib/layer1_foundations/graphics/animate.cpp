@@ -613,7 +613,7 @@ void animate::animate_one_round(
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
 
-					snprintf(str, 10000, "mv tmp.png %s", fname_png);
+					snprintf(str, 1000, "mv tmp.png %s", fname_png);
 					cmd.assign(str);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);

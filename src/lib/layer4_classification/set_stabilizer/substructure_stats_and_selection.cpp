@@ -135,7 +135,7 @@ void substructure_stats_and_selection::init(
 
 
 	ring_theory::longinteger_domain D;
-	int i, f, l, idx;
+	int i, /*f, l,*/ idx;
 	int j;
 
 
@@ -148,8 +148,8 @@ void substructure_stats_and_selection::init(
 	selected_type = -1;
 
 	for (i = 0; i < nb_types; i++) {
-		f = T->type_first[i];
-		l = T->type_len[i];
+		//f = T->type_first[i];
+		//l = T->type_len[i];
 		cout << types[i];
 		cout << " : ";
 		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);

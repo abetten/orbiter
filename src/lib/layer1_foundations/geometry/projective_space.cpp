@@ -837,7 +837,7 @@ int projective_space::incidence_test_for_objects_of_type_ij(
 	int *Basis2;
 	int *base_cols;
 	int d = n + 1;
-	int nb_rows, nb_cols;
+	//int nb_rows, nb_cols;
 	int f_incidence = FALSE;
 
 	if (f_v) {
@@ -860,8 +860,8 @@ int projective_space::incidence_test_for_objects_of_type_ij(
 				"type_j > n + 1" << endl;
 		exit(1);
 	}
-	nb_rows = nb_rk_k_subspaces_as_lint(type_i);
-	nb_cols = nb_rk_k_subspaces_as_lint(type_j);
+	//nb_rows = nb_rk_k_subspaces_as_lint(type_i);
+	//nb_cols = nb_rk_k_subspaces_as_lint(type_j);
 
 
 	Basis = NEW_int(3 * d * d);

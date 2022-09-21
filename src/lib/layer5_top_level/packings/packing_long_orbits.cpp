@@ -780,9 +780,9 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			//int fixpoint_clique_size;
 			//long int *Cliques; // [nb_cliques * fixpoint_clique_size]
 
-			int type_idx;
+			//int type_idx;
 
-			type_idx = PWF->PW->reduced_spread_orbits_under_H->get_orbit_type_index(Descr->orbit_length);
+			//type_idx = PWF->PW->reduced_spread_orbits_under_H->get_orbit_type_index(Descr->orbit_length);
 			//nb_points = Orbits_classified->Set_size[type_idx];
 
 			for (i = 0; i < fixpoint_clique_size; i++) {
