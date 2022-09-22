@@ -683,6 +683,7 @@ void symbol_definition::read_definition(
 
 
 		i++;
+		i++; //-end
 
 		if (f_v) {
 			if (i < argc) {

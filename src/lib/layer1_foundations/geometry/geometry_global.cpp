@@ -1521,6 +1521,58 @@ void geometry_global::do_rank_points_in_PG(
 
 }
 
+void geometry_global::do_unrank_points_in_PG(
+		field_theory::finite_field *F,
+		int n,
+		std::string &text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_unrank_points_in_PG" << endl;
+	}
+
+	long int *v;
+	int len;
+
+	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(text, v, len, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "geometry_global::do_unrank_points_in_PG rank values = ";
+		Lint_vec_print(cout, v, len);
+		cout << endl;
+	}
+
+	long int a;
+	int *M;
+	int i;
+	int d;
+
+	d = n + 1;
+	M = NEW_int(len * d);
+
+	for (i = 0; i < len; i++) {
+
+		a = v[i];
+
+		F->PG_element_unrank_modified_lint(M + i * d, 1, d, a);
+
+		cout << a << " : ";
+		Int_vec_print(cout, M + i * d, d);
+		cout << endl;
+	}
+
+
+	FREE_int(M);
+	FREE_lint(v);
+	if (f_v) {
+		cout << "geometry_global::do_unrank_points_in_PG done" << endl;
+	}
+
+}
+
+
 
 
 

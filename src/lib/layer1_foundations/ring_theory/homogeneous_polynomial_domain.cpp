@@ -2987,6 +2987,7 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 	int *w;
 	int h;
 	long int i, j;
+	int f_vv = FALSE;
 
 	N_points = P->N_points;
 	Image_pts = NEW_lint(N_points);
@@ -2994,11 +2995,25 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 	w = NEW_int(P->n + 1);
 
 	for (i = 0; i < N_points; i++) {
+
+		if (i == 98 || i == 99) {
+			f_vv = TRUE;
+		}
+		else {
+			f_vv = FALSE;
+		}
 		P->unrank_point(v, i);
+
+		if (f_vv) {
+			cout << "homogeneous_polynomial_domain::evaluate_regular_map point " << i << " is ";
+			Int_vec_print(cout, v, P->n + 1);
+			cout << endl;
+		}
 
 		for (h = 0; h < P->n + 1; h++) {
 			w[h] = evaluate_at_a_point(Coefficient_vector + h * nb_monomials, v);
 		}
+
 
 		if (!Int_vec_is_zero(w, P->n + 1)) {
 			j = P->rank_point(w);
@@ -3006,6 +3021,13 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 		else {
 			j = -1;
 		}
+
+		if (f_vv) {
+			cout << "homogeneous_polynomial_domain::evaluate_regular_map maps to ";
+			Int_vec_print(cout, w, P->n + 1);
+			cout << " = " << j << endl;
+		}
+
 		Image_pts[i] = j;
 	}
 	FREE_int(v);

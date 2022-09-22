@@ -796,6 +796,11 @@ public:
 			field_theory::finite_field *F,
 			std::string &label,
 			int verbose_level);
+	void do_unrank_points_in_PG(
+			field_theory::finite_field *F,
+			int n,
+			std::string &text,
+			int verbose_level);
 	void do_intersection_of_two_lines(field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,

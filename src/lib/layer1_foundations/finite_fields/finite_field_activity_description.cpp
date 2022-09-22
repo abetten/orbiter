@@ -208,6 +208,7 @@ finite_field_activity_description::finite_field_activity_description()
 	//rank_point_in_PG_label;
 
 	f_unrank_point_in_PG = FALSE;
+	unrank_point_in_PG_n = 0;
 	//std::string unrank_point_in_PG_text;
 
 }
@@ -663,9 +664,10 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-unrank_point_in_PG") == 0) {
 			f_unrank_point_in_PG = TRUE;
+			unrank_point_in_PG_n = ST.strtolint(argv[++i]);
 			unrank_point_in_PG_text.assign(argv[++i]);
 			if (f_v) {
-				cout << "-unrank_point_in_PG " << unrank_point_in_PG_text << endl;
+				cout << "-unrank_point_in_PG " << unrank_point_in_PG_n << " " << unrank_point_in_PG_text << endl;
 			}
 		}
 
@@ -999,7 +1001,7 @@ void finite_field_activity_description::print()
 		cout << "-rank_point_in_PG " << rank_point_in_PG_label << endl;
 	}
 	if (f_unrank_point_in_PG) {
-		cout << "-unrank_point_in_PG " << unrank_point_in_PG_text << endl;
+		cout << "-unrank_point_in_PG " << unrank_point_in_PG_n << " " << unrank_point_in_PG_text << endl;
 	}
 	if (f_field_reduction) {
 		cout << "-field_reduction "

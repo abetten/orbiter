@@ -1248,7 +1248,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 
 	ost << "\\clearpage\\subsection*{The Group Table}" << endl;
 	long int go;
-	int block_width = 24;
+	int block_width = 12;
 
 	go = Aut_gens->group_order_as_lint();
 	if (go < 50) {
