@@ -663,6 +663,19 @@ void finite_field_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_unrank_point_in_PG) {
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity f_unrank_point_in_PG" << endl;
+		}
+		geometry::geometry_global GG;
+
+		GG.do_unrank_points_in_PG(F,
+				Descr->unrank_point_in_PG_n,
+				Descr->unrank_point_in_PG_text,
+				verbose_level);
+	}
+
 	else if (Descr->f_field_reduction) {
 
 		if (f_v) {

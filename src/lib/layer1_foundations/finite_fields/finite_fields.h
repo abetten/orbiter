@@ -193,6 +193,7 @@ public:
 	std::string rank_point_in_PG_label;
 
 	int f_unrank_point_in_PG;
+	int unrank_point_in_PG_n;
 	std::string unrank_point_in_PG_text;
 
 

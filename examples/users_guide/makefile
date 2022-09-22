@@ -297,7 +297,7 @@ CODE_RS_10_8_11="\
 
 
 
-# Normal form for 15 lines:
+# Normal form for cubic surfaces with 15 rational lines:
 
 F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 \
 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 \
@@ -312,7 +312,7 @@ F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 \
 + alpha*beta*(gamma + 1)*x1*x3*x3"
 
 
-# general normal form for surfaces with 27 lines:
+# general normal form for cubic surfaces with 27 rational lines:
 
 F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
@@ -329,6 +329,23 @@ F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
 
 
+
+
+# general normal form for cubic surfaces with 27 rational lines:
+
+F_abcd_eqn_with_exponents="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0^2*X2 \
++ (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
++ (a^2*c - a^2*d - a*c^2 + b*c^2 + a*d - b*c)*(b - d)*X0*X1*X3 \
+- (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2^2 \
+- (a^2*c*d - a*b*c^2 - a^2*d + a*b*d + b*c^2 - b*c*d)*(b - d)*X0*X2*X3 \
+- (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1^2*X2 \
+- (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1^2*X3 \
++ (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X2^2 \
++ ((1+1)*a^2*b*c*d - a^2*b*d^2 - (1+1)*a^2*c*d^2 \
+- (1+1)*a*b^2*c^2 + a*b^2*c*d + (1+1)*a*b*c^2*d + a*b*c*d^2 \
+- b^2*c^2*d - a^2*b*c + a^2*c*d + a^2*d^2 + a*b^2*c + a*b*c^2 \
+- (1+1+1+1)*a*b*c*d - a*c^2*d + a*c*d^2 + b^2*c^2)*X1*X2*X3 \
++ c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3^2"
 
 
 
@@ -988,6 +1005,48 @@ FILE_Q17="orbit,curve,pts_on_curve,bitangents,go\
 
 
 DESARGUES_PATH_LEX_LEAST="10 10 3\n0\n1 0\n2 0 15\n3 0 15 26\n4 0 15 26 46\n5 0 15 26 46 56\n6 0 15 26 46 56 72\n7 0 15 26 46 56 72 80\n8 0 15 26 46 56 72 80 93\n9 0 15 26 46 56 72 80 93 106\n10 0 15 26 46 56 72 80 93 106 119\n-1\n"
+
+
+
+
+
+SPREADS_27_ISO_0="\
+0, 33879, 1339, 2678, 3994, 7671, 10180, 5862, 9524, 6852, 22243, \
+12745, 24295, 11062, 13615, 23894, 15056, 29367, 16429, 31521, 17726, \
+31103, 18887, 26333, 19566, 28400, 21531, 27228"
+
+SPREADS_27_ISO_1="\
+0, 33879, 1339, 2678, 3994, 7671, 10182, 5761, 6796, 9327, 15339, \
+31914, 24415, 12713, 22748, 11666, 13353, 23555, 30103, 16395, 17827, \
+30790, 18254, 26422, 20046, 28112, 20900, 26801"
+
+SPREADS_27_ISO_2="\
+0, 33879, 1339, 2678, 3994, 7671, 10182, 5817, 6796, 9276, 23891, \
+15368, 11666, 22124, 12713, 24415, 13353, 29619, 15910, 31914, 17030, \
+30931, 19213, 26422, 19905, 28112, 21217, 27545"
+
+SPREADS_27_ISO_3="\
+0, 33879, 1339, 2678, 3994, 7671, 10625, 6590, 9476, 5576, 24688, \
+23043, 10996, 22124, 12723, 13522, 15421, 29894, 16532, 32442, 17997, \
+31015, 18311, 26109, 19807, 28113, 21220, 27195"
+
+SPREADS_27_ISO_4="\
+0, 33879, 1339, 2678, 3994, 7674, 7051, 10666, 9327, 5419, 19806, \
+21332, 22124, 13353, 24415, 12401, 11062, 23717, 15056, 29660, 16395, \
+31950, 17873, 31153, 19212, 26221, 28515, 26708"
+
+SPREADS_27_ISO_5="\
+0, 33879, 1339, 2678, 3994, 7988, 5333, 6672, 10666, 9327, 11062, \
+22124, 13353, 15056, 16395, 17347, 31055, 27061, 24415, 12401, 23076, \
+30103, 32394, 19041, 26109, 20380, 28400, 21332"
+
+SPREADS_27_ISO_6="\
+0, 33879, 1339, 2679, 3992, 7672, 31140, 6913, 13513, 23167, 5653, \
+10607, 9131, 11225, 22548, 13074, 24645, 15124, 29345, 16226, 31506, \
+17684, 18732, 26116, 19458, 28361, 21571, 27680"
+
+
+
 
 # Povray:
 
@@ -2019,12 +2078,19 @@ SECTION_INDEXING_POINTS:
 
 PG_2_4_rank_point:
 	$(ORBITER) -v 2 \
+		-define v -vector -dense "3,3,1" -format 1 -end \
 		-define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity \
-			-rank_point_in_PG 2 "3,3,1" -end
+			-rank_point_in_PG v -end
 
 # geometry_global::do_rank_point_in_PG coeff: ( 3, 3, 1 ) has rank 20
 
+PG_2_4_unrank_point:
+	$(ORBITER) -v 2 \
+		-define v -vector -dense "19,20" -end \
+		-define F -finite_field -q 4 -end \
+		-with F -do -finite_field_activity \
+			-unrank_point_in_PG 2 v -end
 
 
 elliptic_curve_b1_c3_q11.txt:
@@ -6168,6 +6234,8 @@ eckardt_13_4_12:
 			-report \
 			-report_with_group \
 		-end
+	pdflatex surface_family_Eckardt_q13_a4_b12_with_group.tex
+	open surface_family_Eckardt_q13_a4_b12_with_group.pdf
 
 
 
@@ -10586,16 +10654,32 @@ CRC_F256_roots_771:
 		-end
 
 
-
+# alfa:
 
 CRC_F256_BCH_code_d2:
-	$(ORBITER) -v 3 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 256 -end \
-		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 771 2 \
+		-define C -code -field F \
+			-BCH 771 2 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma BCH_lq8_n771_d2.magma \
 		-end
 	pdflatex BCH_codes_q256_n771_d2.tex
 	open BCH_codes_q256_n771_d2.pdf
+
+# degree of polynomial = 3
+#-dense "214,167,1"
+#-sparse "214,0,167,1,1,2"
+
+#CRC_F256_BCH_code_d2_old:
+#	$(ORBITER) -v 3 \
+#		-define F -finite_field -q 256 -end \
+#		-with F -do -coding_theoretic_activity \
+#			-make_BCH_code 771 2 \
+#		-end
+#	pdflatex BCH_codes_q256_n771_d2.tex
+#	open BCH_codes_q256_n771_d2.pdf
 
 
 CRC_POLY_Q256_DEG2_DENSE="214,167,1"
@@ -10609,11 +10693,84 @@ CRC_F256_BCH_write_code_for_division_d2:
 		-with F -do \
 		-coding_theoretic_activity \
 			-write_code_for_division \
-			check_q256_n771_r2.cpp A B \
+			alfa A B \
 		-end
-	g++ check_q256_n771_r2.cpp -o check_q256_n771_r2.out
-	./check_q256_n771_r2.out
+	g++ crc_alfa.cpp -o crc_alfa.out
+	./crc_alfa.out
 
+
+
+
+# bravo:
+
+# degree of polynomial = 4
+#-dense "1,23,27,213,1"
+#-sparse "1,0,23,1,27,2,213,3,1,4"
+
+CRC_F256_BCH_code_d3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define C -code -field F \
+			-BCH 771 3 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma BCH_lq8_n771_d3.magma \
+		-end
+	pdflatex BCH_codes_q256_n771_d3.tex
+	open BCH_codes_q256_n771_d3.pdf
+
+
+CRC_POLY_BRAVO_DENSE="1,23,27,213,1"
+
+
+CRC_F256_BCH_write_code_for_division_Bravo:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define A -vector -field F -sparse 772 "1,771,1,0" -end \
+		-define B -vector -field F -dense $(CRC_POLY_BRAVO_DENSE) -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-write_code_for_division \
+			bravo A B \
+		-end
+	g++ crc_bravo.cpp -o crc_bravo.out
+	./crc_bravo.out
+
+
+# Charlie
+
+CRC_F256_BCH_code_d7:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define C -code -field F \
+			-BCH 771 7 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma BCH_lq8_n771_d7.magma \
+		-end
+	pdflatex BCH_codes_q256_n771_d7.tex
+	open BCH_codes_q256_n771_d7.pdf
+
+
+# polynomial of degree 12:
+#-dense "1,126,25,1,196,209,244,3,121,126,35,65,1"
+#-sparse "1,0,126,1,25,2,1,3,196,4,209,5,244,6,3,7,121,8,126,9,35,10,65,11,1,12"
+
+
+CRC_POLY_CHARLIE_DENSE="1,126,25,1,196,209,244,3,121,126,35,65,1"
+
+CRC_F256_BCH_write_code_for_division_Charlie:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define A -vector -field F -sparse 772 "1,771,1,0" -end \
+		-define B -vector -field F -dense $(CRC_POLY_CHARLIE_DENSE) -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-write_code_for_division \
+			charlie A B \
+		-end
+	g++ crc_charlie.cpp -o crc_charlie.out
+	./crc_charlie.out
 
 
 
@@ -12969,7 +13126,7 @@ design_PG_2_3_table_create:
 	$(ORBITER) -v 2 \
 		-define D -design -q 3 -family PG_2_q -end \
 		-define Sym13 -permutation_group -symmetric_group 13 -end \
-		-define T -design_table D "PG_2_13" Sym13 
+		-define T -design_table D "PG_2_13" Sym13 -end
 
 # written file PG_2_13_design_table.csv
 # 1108800 designs
@@ -13166,7 +13323,7 @@ LS_AG_2_3_design_table_create:
 		-define D -design -list_of_blocks \
 			9 3 $(AG_2_3_BLOCKS) -end \
 		-define Sym9 -permutation_group -symmetric_group 9 -end \
-		-define T -design_table D "AG_2_3" Sym9
+		-define T -design_table D "AG_2_3" Sym9 -end
 
 # creates AG_2_3_design_table.csv 
 # and AG_2_3.makefile
@@ -13275,7 +13432,7 @@ LS_AG_2_3_export_solutions:
 		-define D -design -list_of_blocks 9 3 \
 			$(AG_2_3_BLOCKS) -end \
 		-define Sym9 -permutation_group -symmetric_group 9 -end \
-		-define T -design_table D "AG_2_3" Sym9 \
+		-define T -design_table D "AG_2_3" Sym9 -end \
 		-with D -do \
 		-design_activity \
 			-extract_solutions_by_index "AG_2_3" Sym9 \
@@ -13496,7 +13653,10 @@ create_spread_Rao_Rao_27:
 			-group G -k 3 -spread_set SS \
 			-end
 
-
+SPREAD_S27_RAO_RAO="\
+0, 33879, 5418, 13103, 30556, 22107, 27225, 4045, 24924, 31961, \
+3196, 30100, 28081, 25862, 1339, 6696, 8242, 11747, 14000, 14705, \
+9784, 17843, 20772, 9271, 19413, 18678, 16109, 23924"
 
 
 desarguesian_spread_in_PG_3_2:
@@ -13653,7 +13813,7 @@ spreads_25_starter_0_cliques:
 
 
 classify_spreads_25_starter_lift_all_cases:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define C -spread_classifier \
@@ -13727,8 +13887,7 @@ classify_spreads_25_isomorph:
 		-end \
 		-with C -do -spread_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./spreads_25" \
 				-use_database_for_starter \
 				-build_db \
 				-solution_prefix "" \
@@ -13737,8 +13896,7 @@ classify_spreads_25_isomorph:
 		-end \
 		-with C -do -spread_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./spreads_25" \
 				-use_database_for_starter \
 				-read_solutions \
 				-solution_prefix "" \
@@ -13747,8 +13905,7 @@ classify_spreads_25_isomorph:
 		-end \
 		-with C -do -spread_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./spreads_25" \
 				-use_database_for_starter \
 				-compute_orbits \
 				-solution_prefix "" \
@@ -13757,19 +13914,28 @@ classify_spreads_25_isomorph:
 		-end \
 		-with C -do -spread_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./spreads_25" \
 				-use_database_for_starter \
 				-isomorph_testing \
 				-solution_prefix "" \
 				-base_fname "spreads_25_graph" \
 			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				-prefix_iso "./spreads_25" \
+				-use_database_for_starter \
+				-isomorph_report \
+				-solution_prefix "" \
+				-base_fname "spreads_25_graph" \
+			-end \
 		-end
+	pdflatex spreads_25_isomorphism_types.tex
+	open spreads_25_isomorphism_types.pdf
 
 #We found 21 isomorphism types
 #1:33
 
-#dont:
 
 
 classify_spreads_27_3_starter:
@@ -13815,14 +13981,271 @@ classify_spreads_27_3_starter:
 
 
 
+classify_spreads_27_starter_lift_all_cases:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space -n 5 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 3 \
+			-starter_size 5 \
+			-recoordinatize \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-W \
+				-draw_poset \
+					-problem_label spreads_27 \
+				-end \
+			-output_prefix "" \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_27 \
+				-W -depth 5 \
+				-report -end \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-prepare_lifting_all_cases \
+		-end
+
+
+# 50 graphs
+
+
+
+spreads_27_starter_cliques:
+	$(ORBITER) -v 2 \
+		-loop L 0 50 1 \
+			-define G -graph -load spreads_27_graph_%L.bin -end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 23 -end \
+			-end \
+		-end_loop
+
+#4:41
+
+
+
+classify_spreads_27_isomorph_and_recognize:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space -n 5 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 3 \
+			-starter_size 5 \
+			-recoordinatize \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-W \
+				-draw_poset \
+					-problem_label spreads_27 \
+				-end \
+			-output_prefix "" \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_27 \
+				-W -depth 5 \
+				-report -end \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				-prefix_iso "./spreads_27" \
+				-use_database_for_starter \
+				-build_db \
+				-solution_prefix "" \
+				-base_fname "" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				-prefix_iso "./spreads_27" \
+				-use_database_for_starter \
+				-read_solutions \
+				-solution_prefix "" \
+				-base_fname "spreads_27_graph" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				-prefix_iso "./spreads_27" \
+				-use_database_for_starter \
+				-compute_orbits \
+				-solution_prefix "" \
+				-base_fname "spreads_27_graph" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				-prefix_iso "./spreads_27" \
+				-use_database_for_starter \
+				-isomorph_testing \
+				-solution_prefix "" \
+				-base_fname "spreads_27_graph" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				-prefix_iso "./spreads_27" \
+				-use_database_for_starter \
+				-isomorph_report \
+				-solution_prefix "" \
+				-base_fname "spreads_27_graph" \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-isomorph \
+				-prefix_iso "./spreads_27" \
+				-use_database_for_starter \
+				-recognize $(SPREAD_S27_RAO_RAO) \
+				-solution_prefix "" \
+				-base_fname "spreads_27_graph" \
+			-end \
+		-end
+	#pdflatex spreads_27_isomorphism_types.tex
+	#open spreads_27_isomorphism_types.pdf
+	#pdflatex spreads_27_aut_group.tex
+	#open spreads_27_aut_group.pdf
+
+
+# SPREAD_S27_RAO_RAO is isomorphic to spread 0 in the list 
+# (which is different from the ordering of the Orbiter catalogue)
+# the stabilizer of the spread has order 84.
+
+
+#substructure_lifting_data::write_hash_and_datref_file id_to_hash tallied:
+#( 1^6076, 2^289, 3^35, 4^5 )
+# using 64 bit hash values, based on a modified version of Paul Hsieh's SuperFastHash
+
+#We found 7 isomorphism types
+#0:36
+
+#generators for the stabilizer of the Rao/Rao spread:
+#1,2,2,2,0,2,1,1,2,2,2,1,2,1,2,1,1,0,2,2,0,2,0,0,1,1,2,2,2,0,0,1,1,2,0,1, #1,0,1,0,1,2,0,1,2,2,2,2,1,1,1,0,1,1,2,0,1,1,2,1,1,1,0,2,2,2,0,2,0,1,1,0,
+
+
+
+create_spread_27_0:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 0 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	pdflatex catalogue_q3_k3_0_report.tex
+	open catalogue_q3_k3_0_report.pdf
+
+create_spread_27_1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 1 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	pdflatex catalogue_q3_k3_1_report.tex
+	open catalogue_q3_k3_1_report.pdf
+
+create_spread_27_2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 2 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	pdflatex catalogue_q3_k3_2_report.tex
+	open catalogue_q3_k3_2_report.pdf
+
+create_spread_27_3:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 3 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	pdflatex catalogue_q3_k3_3_report.tex
+	open catalogue_q3_k3_3_report.pdf
+
+create_spread_27_4:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 4 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	pdflatex catalogue_q3_k3_4_report.tex
+	open catalogue_q3_k3_4_report.pdf
+
+create_spread_27_5:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 5 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	pdflatex catalogue_q3_k3_5_report.tex
+	open catalogue_q3_k3_5_report.pdf
+
+create_spread_27_6:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 6 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	pdflatex catalogue_q3_k3_6_report.tex
+	open catalogue_q3_k3_6_report.pdf
+
+
+
+
+
+
+
+
 classify_spreads_32_starter:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 5 \
 		-define F -finite_field -q 2 -end \
 		-define P -projective_space -n 9 -field F -v 0 -end \
 		-define C -spread_classifier \
 			-projective_space P \
 			-k 5 \
 			-starter_size 5 \
+			-recoordinatize \
 			-poset_classification_control \
 				-draw_options \
 					-radius 20 \
@@ -13849,6 +14272,74 @@ classify_spreads_32_starter:
 
 
 
+#we found 2887680 live points
+#spread_classify::init The stabilizer of the first three components has order 59996160
+#poset_with_group_action::init_subset_lattice degree of action = 109221651
+
+# orbits at level in spreads_32_reps_lvl_4.csv
+#ROW,REP,AGO,OL
+#0,"0,109221650,3515245,6933315",252,1454127528968048128661913600
+#1,"0,109221650,3515245,7030463",124,2955162397580226842119372800
+#END
+
+
+
+
+classify_spreads_49_starter_lift_all_cases:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 2 \
+			-starter_size 5 \
+			-recoordinatize \
+			-poset_classification_control \
+				-draw_options \
+					-radius 20 \
+					-nodes_empty \
+					-line_width 0.2 \
+					-embedded \
+				-end \
+				-W \
+				-draw_poset \
+					-problem_label spreads_49 \
+				-end \
+			-output_prefix "" \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+				-problem_label spreads_49 \
+				-W -depth 5 \
+				-report -end \
+			-end \
+		-end \
+		-with C -do -spread_classify_activity \
+			-prepare_lifting_all_cases \
+		-end
+
+#save_colored_graph fname=spreads_49_graph_125.bin
+# 126 cases
+
+
+
+spreads_49_starter_cliques_loop:
+	$(ORBITER) -v 2 \
+		-loop L 0 126 1 \
+			-define G -graph -load spreads_49_graph_%L.bin -end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 45 -end \
+			-end \
+		-end_loop
+
+spreads_49_starter_cliques_0:
+	$(ORBITER) -v 2 \
+			-define G -graph -load spreads_49_graph_0.bin -end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 45 -end \
+			-end \
 
 
 ###############################################################################
@@ -13866,77 +14357,63 @@ create_translation_plane_9b:
 		-define S -spread -kernel_field F \
 			-group G -k 2 -catalogue 1 \
 			-end \
-		-define T -translation_plane S G G1 -end 
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end \
+		-with T -do -translation_plane_activity \
+			-report \
+		-end \
+		-define A -linear_group -import_group_of_plane T -end \
+		-with A -do \
+		-group_theoretic_activity \
+			-report \
+			-orbits_on_points \
+			-stabilizer_of_orbit_rep 3 \
+			-export_trees \
+		-end
 	$(ORBITER) -v 2 \
 		-draw_matrix \
 			-input_csv_file plane_catalogue_q3_k2_1_incma.csv \
 			-box_width 6 -bit_depth 8 \
 			-partition 2 91 91 \
 		-end
-	open plane_catalogue_q3_k2_1_incma_draw.bmp
-
-
-# creates plane_catalogue_q3_k2_1_incma.csv
-
-
-TP_9_0:
 	$(ORBITER) -v 3 \
-		-define F -finite_field -q 3 -end \
-		-define PGL4 -linear_group -PGL 4 F -end \
-		-define PGL5 -linear_group -PGL 5 F -end \
-		-with PGL4 -and PGL5 -do \
-		-group_theoretic_activity \
-			-Andre_Bruck_Bose_construction 0 "TP9-0" \
+		-draw_layered_graph \
+			orbit_PGL_5_3_on_andre_3.layered_graph \
+			-radius 500 -spanning_tree -embedded \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
 		-end
-	$(ORBITER) -v 2 \
-		-draw_matrix \
-			-input_csv_file TP9-0_incma.csv \
-			-box_width 6 -bit_depth 8 \
-			-partition 6 91 91 \
-		-end
-	open TP9-0_incma_draw.bmp
-	pdflatex TP9-0_report.tex
-	open TP9-0_report.pdf
-
-TP_9_1:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 3 -end \
-		-define PGL4 -linear_group -PGL 4 F -end \
-		-define PGL5 -linear_group -PGL 5 F -end \
-		-with PGL4 -and PGL5 -do \
-		-group_theoretic_activity \
-			-Andre_Bruck_Bose_construction 1 "TP9-1" \
-		-end
-	$(ORBITER) -v 2 \
-		-draw_matrix \
-			-input_csv_file TP9-1_incma.csv \
-			-box_width 6 -bit_depth 8 \
-			-partition 6 91 91 \
-		-end
-	open TP9-1_incma_draw.bmp
-	pdflatex TP9-1_report.tex
-	open TP9-1_report.pdf
+	#open plane_catalogue_q3_k2_1_incma_draw.bmp
+	pdflatex group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
+	#open group_of_plane_plane_catalogue_q3_k2_1_orbits_report.pdf
+	pdflatex orbit_PGL_5_3_on_andre_3_draw.tex
+	#open orbit_PGL_5_3_on_andre_3_draw.pdf
+	pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
+	open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
+	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
+	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
 
 
 
-TP_16_4:
+
+
+create_translation_plane_16_4_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define PGGL4 -linear_group -PGGL 4 F -end \
-		-define PGGL5 -linear_group -PGGL 5 F -end \
-		-with PGGL4 -and PGGL5 -do \
-		-group_theoretic_activity \
-			-Andre_Bruck_Bose_construction 0 "TP16-4-HALL" \
-		-end
+		-define G -linear_group -PGGL 4 F -end \
+		-define G1 -linear_group -PGGL 5 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 0 \
+			-end \
+		-define T -translation_plane S G G1 -end 
 	$(ORBITER) -v 2 \
 		-draw_matrix \
-			-input_csv_file TP16-4-HALL_incma.csv \
+			-input_csv_file plane_catalogue_q4_k2_0_incma.csv \
 			-box_width 6 -bit_depth 8 \
-			-partition 6 273 273 \
+			-partition 4 273 273 \
 		-end
-	open TP16-4-HALL_incma_draw.bmp
-	pdflatex TP16-4-HALL_report.tex
-	open TP16-4-HALL_report.pdf
+	open plane_catalogue_q4_k2_0_incma_draw.bmp
 
 
 #0 : "1200", // Hall spread
@@ -13944,19 +14421,22 @@ TP_16_4:
 #2 : "576", // Semifield spread
 
 
-
-TP_16_2_0:
+create_translation_plane_16_2_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
-		-define PGL8 -linear_group -PGL 8 F -end \
-		-define PGL9 -linear_group -PGL 9 F -end \
-		-with PGL8 -and PGL9 -do \
-		-group_theoretic_activity \
-			-Andre_Bruck_Bose_construction 0 "TP16-0-1008" \
+		-define G -linear_group -PGL 8 F -end \
+		-define G1 -linear_group -PGL 9 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 4 -catalogue 0 \
+			-end \
+		-define T -translation_plane S G G1 -end 
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file plane_catalogue_q2_k4_0_incma.csv \
+			-box_width 6 -bit_depth 8 \
+			-partition 4 273 273 \
 		-end
-	pdflatex TP16-0-1008_report.tex
-	open TP16-0-1008_report.pdf
-
+	open plane_catalogue_q2_k4_0_incma_draw.bmp
 
 #0 : "1008",
 #1 : "1008",
@@ -13966,6 +14446,199 @@ TP_16_2_0:
 #5 : "288",
 #6 : "3600",
 #7 : "244800",
+
+RREF_plane_16_2_0_rank_of_incma:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F  \
+			-file plane_catalogue_q2_k4_0_incma.csv \
+		-end \
+		-with F -do -finite_field_activity \
+		-RREF v -normalize_from_the_right \
+		-end
+
+# 2-rank is 106, so the plane is Lorimer-Rahilly
+
+create_translation_plane_27_Rao_Rao:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define SS -vector -dense $(SPREAD_SET_27_RAO_RAO) -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -spread_set SS \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end
+
+# error message because the group of the spread is not available
+
+# creates plane__incma.csv
+
+
+RREF_Rao_Rao_plane_incma_rank:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 3 -end \
+		-define v -vector -field F  \
+			-file plane__incma.csv \
+		-end \
+		-with F -do -finite_field_activity \
+		-RREF v -normalize_from_the_right \
+		-end
+
+# 3-rank is 271, so the Rao / Rao plane is Moorhouse IV.
+
+
+create_translation_plane_27_p_rank_of_incidence_matrix:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 6 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-p_rank 3 \
+		-end
+
+# OCN : 3-rank : spread stab : pt-orb : line-orb : Moorhouse list
+# 0 : 217 : 766584 : 757 : 757 : flag trans : desarguesian = Moorhouse I
+# 1 : 262 :   2106 : 1,27,729 : 1,27,729 : generalized twisted field = Moorhouse II
+# 2 : 268 :   1014 : 2,26,729 : 1,54,702 : Andre = Moorhouse VII
+# 3 : 273 :     81 : 1,27,729 : 1,27,729 : Sherk = Moorhouse V
+# 4 : 274 :   1092 : 28,729 : 1,756 : Hering = Moorhouse III
+# 5 : 271 :     84 : 28,729 : 1,756 : flag trans : Moorhouse IV = Rao Rao
+# 6 : 265 :     84 : 28,729 : 1,756 : flag trans :  Moorhouse VI
+
+# so, Rao / Rao is OCN=5
+
+
+
+create_translation_plane_27_5_Rao_Rao:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 5 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end \
+		-with T -do -translation_plane_activity \
+			-report \
+		-end \
+		-define A -linear_group -import_group_of_plane T -end \
+		-with A -do \
+		-group_theoretic_activity \
+			-report \
+			-orbits_on_points \
+			-stabilizer_of_orbit_rep 3 \
+			-export_trees \
+		-end
+	pdflatex group_of_plane_plane_catalogue_q3_k3_5_report.tex
+	open group_of_plane_plane_catalogue_q3_k3_5_report.pdf
+	pdflatex group_of_plane_plane_catalogue_q3_k3_5_orbits_report.tex
+	open group_of_plane_plane_catalogue_q3_k3_5_orbits_report.pdf
+	pdflatex group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.tex
+	open group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.pdf
+	#open plane_catalogue_q3_k2_1_incma_draw.bmp
+	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
+	#open group_of_plane_plane_catalogue_q3_k2_1_orbits_report.pdf
+	#pdflatex orbit_PGL_5_3_on_andre_3_draw.tex
+	#open orbit_PGL_5_3_on_andre_3_draw.pdf
+	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
+	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
+	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
+	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
+
+
+
+create_translation_plane_27_4_block_stab:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 4 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end \
+		-with T -do -translation_plane_activity \
+			-report \
+		-end \
+		-define A -linear_group -import_group_of_plane T -end \
+		-with A -do \
+		-group_theoretic_activity \
+			-report \
+			-orbits_on_points \
+			-stabilizer_of_orbit_rep 3 \
+			-export_trees \
+		-end
+	pdflatex group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.tex
+	open group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.pdf
+	
+create_translation_plane_27_5_block_stab:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 5 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end \
+		-with T -do -translation_plane_activity \
+			-report \
+		-end \
+		-define A -linear_group -import_group_of_plane T -end \
+		-with A -do \
+		-group_theoretic_activity \
+			-report \
+			-orbits_on_points \
+			-stabilizer_of_orbit_rep 3 \
+			-export_trees \
+		-end
+	pdflatex group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.tex
+	open group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.pdf
+
+
+create_translation_plane_27_6_block_stab:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 6 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end \
+		-with T -do -translation_plane_activity \
+			-report \
+		-end \
+		-define A -linear_group -import_group_of_plane T -end \
+		-with A -do \
+		-group_theoretic_activity \
+			-report \
+			-orbits_on_points \
+			-stabilizer_of_orbit_rep 3 \
+			-export_trees \
+		-end
+	pdflatex group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.tex
+	open group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.pdf
+
+
+
 
 
 
@@ -14180,8 +14853,7 @@ BLT_13_isomorph_read_DB:
 		-end \
 		-with C -do -BLT_set_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./BLT_q13" \
 				-use_database_for_starter \
 				-build_db \
 				-solution_prefix "" \
@@ -14204,8 +14876,7 @@ BLT_13_isomorph_read_solutions:
 		-end \
 		-with C -do -BLT_set_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./BLT_q13" \
 				-use_database_for_starter \
 				-read_solutions \
 				-list_of_cases BLT_q13_list_of_cases_5_0_1.csv \
@@ -14228,8 +14899,7 @@ BLT_13_isomorph_stabilizer_orbits:
 		-end \
 		-with C -do -BLT_set_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./BLT_q13" \
 				-use_database_for_starter \
 				-compute_orbits \
 				-list_of_cases BLT_q13_list_of_cases_5_0_1.csv \
@@ -14252,14 +14922,24 @@ BLT_13_isomorph_testing:
 		-end \
 		-with C -do -BLT_set_classify_activity \
 			-isomorph \
-				"./" \
-				"./" \
+				-prefix_iso "./BLT_q13" \
 				-use_database_for_starter \
 				-isomorph_testing \
 				-solution_prefix "" \
 				-base_fname "BLT_q13_graph" \
 			-end \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-isomorph \
+				-prefix_iso "./BLT_q13" \
+				-use_database_for_starter \
+				-isomorph_report \
+				-solution_prefix "" \
+				-base_fname "BLT_q13_graph" \
+			-end \
 		-end
+	pdflatex BLT_q13_isomorphism_types.tex
+	open BLT_q13_isomorphism_types.pdf
 
 
 
