@@ -16,6 +16,7 @@ MODULES = \
 	finite_field.o \
 	norm_tables.o \
 	nth_roots.o \
+	square_nonsquare.o \
 	subfield_structure.o 
 
 

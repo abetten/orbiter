@@ -1504,6 +1504,15 @@ F_5:
 	open GF_5.pdf
 
 
+F_5_add_table:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end \
+		-draw_matrix -input_csv_file GF_q5_addition_table.csv \
+			-box_width 40 -bit_depth 24 -partition 3 5 5 -end \
+
+
+
 F_127:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 127 -end \
@@ -2266,7 +2275,7 @@ GR_3_2_2:
 
 
 
-rank_lines:
+PG_3_3_rank_lines:
 	$(ORBITER) -v 2 \
 		-define v1 -vector -format 3 \
 		-dense "1,0,2,2,0,1,1,2, 1,0,2,0,0,1,1,2, 1,0,2,2,0,1,2,1" \
@@ -2284,6 +2293,21 @@ rank_lines:
 		-projective_space_activity \
 			-rank_lines_in_PG v2 \
 		-end
+
+
+PG_3_5_unrank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector \
+			-dense "0,36,72,108,144,805" \
+		-end \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-unrank_lines_in_PG v \
+		-end
+
+
 
 
 planes_in_pencil:
@@ -2576,6 +2600,20 @@ Op_6_64_report:
 	pdflatex O_1_6_64_report.tex
 	open O_1_6_64_report.pdf
 
+
+elliptic_quadric_subspace:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define v -vector -format 4 \
+			-dense "1,3,0,0,0,0, 0,0,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,1,1" \
+		-end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-intersect_with_subspace v \
+		-end
+
+#We found that the intersection contains 26 points: 
+#( 2, 3, 1572, 100, 98, 116, 132, 1570, 1588, 1604, 1631, 1688, 1704, 1706, 1747, 1745, 1847, 1845, 1856, 1888, 1904, 1931, 1988, 2004, 2022, 2020 )
 
 
 ###############################################################################
@@ -14458,6 +14496,30 @@ RREF_plane_16_2_0_rank_of_incma:
 		-end
 
 # 2-rank is 106, so the plane is Lorimer-Rahilly
+
+
+create_translation_plane_25_14_rank:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define G1 -linear_group -PGL 5 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 14 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F  \
+			-file plane_catalogue_q5_k2_14_incma.csv \
+		-end \
+		-with F -do -finite_field_activity \
+		-RREF v -normalize_from_the_right \
+		-end
+
+
 
 create_translation_plane_27_Rao_Rao:
 	$(ORBITER) -v 3 \

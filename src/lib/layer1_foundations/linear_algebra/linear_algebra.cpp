@@ -1097,8 +1097,11 @@ int linear_algebra::rank_of_rectangular_matrix(int *A,
 	B = NEW_int(m * n);
 	base_cols = NEW_int(n);
 
+	int f_complete = FALSE;
+
+
 	rk = rank_of_rectangular_matrix_memory_given(
-			A, m, n, B, base_cols, verbose_level);
+			A, m, n, B, base_cols, f_complete, verbose_level);
 
 	FREE_int(base_cols);
 	FREE_int(B);
@@ -1109,7 +1112,7 @@ int linear_algebra::rank_of_rectangular_matrix(int *A,
 }
 
 int linear_algebra::rank_of_rectangular_matrix_memory_given(
-		int *A, int m, int n, int *B, int *base_cols,
+		int *A, int m, int n, int *B, int *base_cols, int f_complete,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1122,7 +1125,7 @@ int linear_algebra::rank_of_rectangular_matrix_memory_given(
 	//B = NEW_int(m * n);
 	//base_cols = NEW_int(n);
 	Int_vec_copy(A, B, m * n);
-	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
+	rk = Gauss_int(B, FALSE, f_complete, base_cols, FALSE,
 			NULL, m, n, n, 0 /* verbose_level */);
 
 	if (FALSE) {

@@ -3484,6 +3484,12 @@ void action::apply_based_on_text(std::string &input_text, std::string &input_gro
 				ost << "$" << v[i] << " \\mapsto " << w[i] << "$\\\\" << endl;
 			}
 
+
+			ost << "image set: \\\\" << endl;
+			Lint_vec_print(ost, w, sz);
+			ost << "\\\\" << endl;
+
+
 			L.foot(ost);
 
 		}

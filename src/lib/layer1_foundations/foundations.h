@@ -407,6 +407,7 @@ namespace field_theory {
 	class finite_field_implementation_wo_tables;
 	class norm_tables;
 	class nth_roots;
+	class square_nonsquare;
 	class subfield_structure;
 }
 
@@ -587,6 +588,8 @@ namespace orthogonal_geometry {
 	// orthogonal:
 	class blt_set_domain;
 	class blt_set_invariants;
+	class orthogonal_global;
+	class orthogonal_group;
 	class orthogonal_indexing;
 	class orthogonal;
 	class unusual_model;
@@ -766,6 +769,11 @@ namespace solvers {
 #define Int_vec_distribution(A, B, C, D, E) orbiter_kernel_system::Orbiter->Int_vec->distribution(A, B, C, D, E)
 
 #define Int_vec_find_first_nonzero_entry(A, B) pivot = orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
+
+
+
+
+#define Get_matrix(label, A, m, n) orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
 
 
 enum monomial_ordering_type {

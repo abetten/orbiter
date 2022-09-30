@@ -903,20 +903,20 @@ int unusual_model::quadratic_form(
 	int w, x, y, z;
 	
 	if (f_v) {
-		cout << "quadratic_form a=" << a << " b=" << b
+		cout << "unusual_model::quadratic_form a=" << a << " b=" << b
 				<< " c=" << c << endl;
-		}
+	}
 	x = N2(a);
 	y = N2(b);
 	z = Fq->power(c, 2);
 	if (f_v) {
-		cout << "quadratic_form N(a)=" << x
+		cout << "unusual_model::quadratic_form N(a)=" << x
 				<< " N(b)=" << y << " c^2=" << z << endl;
-		}
+	}
 	w = Fq->add3(x, y, z);
 	if (f_v) {
-		cout << "quadratic_form w=" << w << endl;
-		}
+		cout << "unusual_model::quadratic_form w=" << w << endl;
+	}
 	return w;
 }
 
@@ -929,26 +929,26 @@ int unusual_model::bilinear_form(
 	int a3, b3, c3, q1, q2, q3, w;
 	
 	if (f_v) {
-		cout << "bilinear_form (" << a1 << "," << b1
+		cout << "unusual_model::bilinear_form (" << a1 << "," << b1
 			<< "," << c1 << " and " << a2 << ","
 			<< b2 << "," << c2 << ")";
-		}
+	}
 	a3 = FQ->add(a1, a2);
 	b3 = FQ->add(b1, b2);
 	c3 = Fq->add(c1, c2);
 	if (f_v) {
 		cout << "a3=" << a3 << " b3=" << b3 << " c3=" << c3 << endl;
-		}
+	}
 	q1 = quadratic_form(a1, b1, c1, 0);
 	q2 = quadratic_form(a2, b2, c2, 0);
 	q3 = quadratic_form(a3, b3, c3, 0);
 	if (f_v) {
 		cout << "q1=" << q1 << " q2=" << q2 << " q3=" << q3 << endl;
-		}
+	}
 	w = Fq->add3(q3, Fq->negate(q1), Fq->negate(q2));
 	if (f_v) {
 		cout << "evaluates to " << w << endl;
-		}
+	}
 	return w;
 }
 
@@ -961,7 +961,7 @@ void unusual_model::print_coordinates_detailed_set(
 		i = set[j];
 		print_coordinates_detailed(i, j);
 		cout << endl;
-		}
+	}
 }
 
 void unusual_model::print_coordinates_detailed(long int pt, int cnt)
@@ -1046,6 +1046,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 	int Len = 0;
 	int *Table;
 	int zeta;
+	orthogonal_global OG;
 
 	Table = NEW_int((q + 1) * 3);
 	
@@ -1056,7 +1057,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 		Table[i * 3 + 0] = FQ->mult(gamma, z2i);
 		Table[i * 3 + 1] = FQ->mult(delta, z2mi);
 		Table[i * 3 + 2] = 1;
-		}
+	}
 	Len += len;
 	convert_to_ranks(Len, Table, Set, verbose_level - 2);
 
@@ -1065,21 +1066,21 @@ int unusual_model::build_candidate_set_with_or_without_test(
 		Lint_vec_print(cout, Set, Len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, Len);
-		}
+	}
 
 	if (f_test) {
 		for (i = 1; i < Len; i++) {
-			if (!O.BLT_test_full(i, Set, 0/*verbose_level*/)) {
+			if (!OG.BLT_test_full(&O, i, Set, 0/*verbose_level*/)) {
 				cout << "BLT test fails in point " << i
 					<< " in 1st half" << endl;
 				FREE_int(Table);
 				return FALSE;
-				}
-			}
-		if (f_vv) {
-			cout << "passes BLT test for 1st half" << endl;
 			}
 		}
+		if (f_vv) {
+			cout << "passes BLT test for 1st half" << endl;
+		}
+	}
 
 	if (f_second_half) {
 		int z2s;
@@ -1091,28 +1092,28 @@ int unusual_model::build_candidate_set_with_or_without_test(
 			Table[(len + i) * 3 + 0] = FQ->mult(delta, z2i);
 			Table[(len + i) * 3 + 1] = FQ->mult(FQ->mult(gamma, z2mi), z2s);
 			Table[(len + i) * 3 + 2] = 1;
-			}
+		}
 		Len += len;
 		convert_to_ranks(Len, Table, Set, verbose_level - 2);
 		if (f_test) {
 			for (i = 1; i < len; i++) {
-				if (!O.BLT_test_full(i, Set + len,
+				if (!OG.BLT_test_full(&O, i, Set + len,
 						0/*verbose_level*/)) {
 					cout << "BLT test fails in point " << i
 						<< " in 2nd half" << endl;
 					FREE_int(Table);
 					return FALSE;
-					}
-				}
-			if (f_vv) {
-				cout << "passes BLT test for second half" << endl;
 				}
 			}
+			if (f_vv) {
+				cout << "passes BLT test for second half" << endl;
+			}
 		}
+	}
 	if (FALSE) {
 		cout << "Table:" << endl;
 		Int_vec_print_integer_matrix_width(cout, Table, Len, 3, 3, 2);
-		}
+	}
 	
 	convert_to_ranks(Len, Table, Set, verbose_level - 2);
 	
@@ -1121,7 +1122,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 		Lint_vec_print(cout, Set, Len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, Len);
-		}
+	}
 #if 0
 	//int_vec_sort(Len, Set);
 	for (i = 0; i < Len - 1; i++) {
@@ -1129,29 +1130,29 @@ int unusual_model::build_candidate_set_with_or_without_test(
 			cout << "the set contains repeats" << endl;
 			FREE_int(Table);
 			return FALSE;
-			}
 		}
+	}
 #endif
 
 	if (f_test) {
 		for (i = 1; i < Len; i++) {
-			if (!O.BLT_test(i, Set, 0/*verbose_level*/)) {
+			if (!OG.BLT_test(&O, i, Set, 0/*verbose_level*/)) {
 				if (f_v) {
 					cout << "BLT test fails in point " << i
 						<< " in the joining" << endl;
 					}
 				FREE_int(Table);
 				return FALSE;
-				}
-			}
-		if (f_v) {
-			cout << "passes BLT test" << endl;
 			}
 		}
+		if (f_v) {
+			cout << "passes BLT test" << endl;
+		}
+	}
 	if (Len < q + 1) {
 		FREE_int(Table);
 		return FALSE;
-		}
+	}
 	FREE_int(Table);
 	return TRUE;
 }
@@ -1167,6 +1168,7 @@ int unusual_model::create_orbit_of_psi(orthogonal &O, int q,
 	int len = (q + 1) / 2;
 	int *Table;
 	int zeta;
+	orthogonal_global OG;
 
 	Table = NEW_int((q + 1) / 2 * 3);
 	
@@ -1176,7 +1178,7 @@ int unusual_model::create_orbit_of_psi(orthogonal &O, int q,
 		Table[i * 3 + 0] = FQ->mult(gamma, z2i);
 		Table[i * 3 + 1] = FQ->mult(delta, FQ->power(z2i, m));
 		Table[i * 3 + 2] = 1;
-		}
+	}
 	convert_to_ranks(len, Table, Set, verbose_level - 2);
 
 	if (f_vvv) {
@@ -1184,21 +1186,21 @@ int unusual_model::create_orbit_of_psi(orthogonal &O, int q,
 		Lint_vec_print(cout, Set, len);
 		cout << endl;
 		print_coordinates_detailed_set(Set, len);
-		}
+	}
 
 	if (f_test) {
 		for (i = 1; i < len; i++) {
-			if (!O.BLT_test_full(i, Set, 0/*verbose_level*/)) {
+			if (!OG.BLT_test_full(&O, i, Set, 0/*verbose_level*/)) {
 				cout << "BLT test fails in point " << i
 					<< " in create_orbit_of_psi" << endl;
 				FREE_int(Table);
 				return FALSE;
-				}
-			}
-		if (f_vv) {
-			cout << "passes BLT test for 1st half" << endl;
 			}
 		}
+		if (f_vv) {
+			cout << "passes BLT test for 1st half" << endl;
+		}
+	}
 
 	FREE_int(Table);
 	return TRUE;
@@ -1225,11 +1227,11 @@ void unusual_model::transform_matrix_unusual_to_usual(
 	if (f_v) {
 		cout << "unusual_model::transform_matrix_"
 				"unusual_to_usual" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "transformation matrix in unusual model" << endl;
 		Int_vec_print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
-		}
+	}
 
 	Fq->Linear_algebra->mult_matrix_matrix(hyperbolic_basis,
 			M4, M4_tmp1, 4, 4, 4,
@@ -1241,21 +1243,21 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		cout << "transformation matrix in "
 				"standard coordinates:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M4_tmp2, 4, 4, 4, 3);
-		}
+	}
 	for (i = 0; i < 25; i++) {
 		M5[i] = 0;
-		}
+	}
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			a = M4_tmp2[i * 4 + j];
 			M5[(i + 1) * 5 + j + 1] = a;
-			}
 		}
+	}
 	M5[0 * 5 + 0] = 1;
 	if (f_vvv) {
 		cout << "embedded (M5):" << endl;
 		Int_vec_print_integer_matrix_width(cout, M5, 5, 5, 5, 3);
-		}
+	}
 	
 	Fq->Linear_algebra->transpose_matrix(M5, M5t, 5, 5);
 	
@@ -1266,7 +1268,7 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		cout << "Gram matrix:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				O->Gram_matrix, 5, 5, 5, 3);
-		}
+	}
 		
 
 	Fq->Linear_algebra->mult_matrix_matrix(M5, O->Gram_matrix, M5_tmp1, 5, 5, 5,
@@ -1277,21 +1279,21 @@ void unusual_model::transform_matrix_unusual_to_usual(
 	if (f_vvv) {
 		cout << "Gram matrix transformed:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M5_tmp2, 5, 5, 5, 3);
-		}
+	}
 
 	for (i = 0; i < 25; i++) {
 		if (M5_tmp2[i] != O->Gram_matrix[i]) {
 			cout << "does not preserve the form" << endl;
 			exit(1);
-			}
 		}
+	}
 
 #if 0
 	A->make_element(Elt, M5, verbose_level);
 
 	if (f_vv) {
 		A->print(cout, Elt);
-		}
+	}
 #endif
 	FREE_int(M4_tmp1);
 	FREE_int(M4_tmp2);
@@ -1319,27 +1321,27 @@ void unusual_model::transform_matrix_usual_to_unusual(
 	if (f_v) {
 		cout << "unusual_model::transform_matrix_"
 				"usual_to_unusual" << endl;
-		}
+	}
 #if 0
 	if (f_vv) {
 		A->print(cout, Elt);
-		}
+	}
 	for (i = 0; i < 25; i++) {
 		M5[i] = Elt[i];
-		}
+	}
 #endif
 	if (M5[0] != 1) {
 		a = Fq->inverse(M5[0]);
 		for (i = 0; i < 25; i++) {
 			M5[i] = Fq->mult(a, M5[i]);
-			}
 		}
+	}
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			a = M5[(i + 1) * 5 + j + 1];
 			M4_tmp2[i * 4 + j] = a;
-			}
 		}
+	}
 
 	Fq->Linear_algebra->mult_matrix_matrix(hyperbolic_basis_inverse,
 		M4_tmp2, M4_tmp1, 4, 4, 4,
@@ -1351,7 +1353,7 @@ void unusual_model::transform_matrix_usual_to_unusual(
 	if (f_vv) {
 		cout << "transformation matrix in unusual model" << endl;
 		Int_vec_print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
-		}
+	}
 	FREE_int(M4_tmp1);
 	FREE_int(M4_tmp2);
 	//FREE_int(M5);
@@ -1370,7 +1372,7 @@ void unusual_model::parse_4by4_matrix(int *M4,
 			if (x == 0 && y == 0) {
 				image1 = 0;
 				f_semi = FALSE;
-				}
+			}
 			else {
 				image1 = pair_embedding[x * q + y];
 				x = M4[i * 8 + 4 + j * 2 + 0];
@@ -1380,34 +1382,34 @@ void unusual_model::parse_4by4_matrix(int *M4,
 				v = FQ->mult(image2, u);
 				if (v == q) {
 					f_semi = FALSE;
-					}
+				}
 				else {
 					if (v != FQ->power(q, q)) {
 						cout << "unusual_model::parse_"
 							"4by4_matrix v != FQ->power(q, q)" << endl;
 						exit(1);
-						}
-					f_semi = TRUE;
 					}
+					f_semi = TRUE;
 				}
+			}
 			if (i == 0 && j == 0) {
 				a = image1;
 				f_semi1 = f_semi;
-				}
+			}
 			else if (i == 0 && j == 1) {
 				b = image1;
 				f_semi2 = f_semi;
-				}
+			}
 			else if (i == 1 && j == 0) {
 				c = image1;
 				f_semi3 = f_semi;
-				}
+			}
 			else if (i == 1 && j == 1) {
 				d = image1;
 				f_semi4 = f_semi;
-				}
 			}
 		}
+	}
 }
 
 void unusual_model::create_4by4_matrix(int *M4, 
@@ -1423,33 +1425,33 @@ void unusual_model::create_4by4_matrix(int *M4,
 			if (i == 0 && j == 0) {
 				coeff = a;
 				f_phi = f_semi1;
-				}
+			}
 			if (i == 0 && j == 1) {
 				coeff = b;
 				f_phi = f_semi2;
-				}
+			}
 			if (i == 1 && j == 0) {
 				coeff = c;
 				f_phi = f_semi3;
-				}
+			}
 			if (i == 1 && j == 1) {
 				coeff = d;
 				f_phi = f_semi4;
-				}
+			}
 			if (f_phi) {
 				image1 = FQ->mult(1, coeff);
 				image2 = FQ->mult(FQ->power(q, q), coeff);
-				}
+			}
 			else {
 				image1 = FQ->mult(1, coeff);
 				image2 = FQ->mult(q, coeff);
-				}
+			}
 			M4[i * 8 + j * 2 + 0] = components[image1 * 2 + 0];
 			M4[i * 8 + j * 2 + 1] = components[image1 * 2 + 1];
 			M4[i * 8 + 4 + j * 2 + 0] = components[image2 * 2 + 0];
 			M4[i * 8 + 4 + j * 2 + 1] = components[image2 * 2 + 1];
-			}
 		}
+	}
 }
 
 void unusual_model::print_2x2(int *v, int *f_semi)
@@ -1460,35 +1462,35 @@ void unusual_model::print_2x2(int *v, int *f_semi)
 		for (j = 0; j < 2; j++) {
 			if (f_semi[i * 2 + j]) {
 				cout << "phi.";
-				}
+			}
 			else {
 				cout << "    ";
-				}
+			}
 			a = v[2 * i + j];
 			if (a) {
 				l = FQ->log_alpha(a);
 				if (l == q * q - 1) {
 					cout << "      " << setw(FQ->log10_of_q)
 						<< 1 << " ";
-					}
+				}
 				else {
 					if ((l % (q - 1)) == 0) {
 						cout << " zeta^" << setw(FQ->log10_of_q)
 							<< l / (q - 1) << " ";
 					
-						}
+					}
 					else {
 						cout << "omega^" << setw(FQ->log10_of_q)
 							<< l << " ";
-						}
 					}
 				}
+			}
 			else {
 				cout << "      " << setw(FQ->log10_of_q) << 0 << " ";
-				}
 			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 }
 
 void unusual_model::print_M5(orthogonal *O, int *M5)

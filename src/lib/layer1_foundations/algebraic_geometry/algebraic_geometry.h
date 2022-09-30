@@ -929,8 +929,6 @@ public:
 
 	surface_domain();
 	~surface_domain();
-	void freeself();
-	void null();
 	void init(field_theory::finite_field *F, int verbose_level);
 	void init_polynomial_domains(int verbose_level);
 	void init_large_polynomial_domains(int verbose_level);

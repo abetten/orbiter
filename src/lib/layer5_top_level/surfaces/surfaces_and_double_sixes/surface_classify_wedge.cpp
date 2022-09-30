@@ -809,7 +809,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 				Lint_vec_print(cout, K1, 7);
 				cout << endl;
 				for (i = 0; i < 7; i++) {
-					Surf->O->unrank_point(w, 1, K1[i], 0 /* verbose_level*/);
+					Surf->O->Hyperbolic_pair->unrank_point(w, 1, K1[i], 0 /* verbose_level*/);
 					cout << i << " / " << 6 << " : ";
 					Int_vec_print(cout, w, 6);
 					cout << endl;
@@ -819,7 +819,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			Arc[0] = 1;
 			Arc[1] = 2;
 			for (i = 0; i < 4; i++) {
-				Surf->O->unrank_point(w, 1, K1[1 + i], 0 /* verbose_level*/);
+				Surf->O->Hyperbolic_pair->unrank_point(w, 1, K1[1 + i], 0 /* verbose_level*/);
 				Int_vec_copy(w + 3, v, 3);
 				F->PG_element_rank_modified_lint(v, 1, 3, Arc[2 + i]);
 			}

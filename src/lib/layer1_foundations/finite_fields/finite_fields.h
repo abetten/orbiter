@@ -614,12 +614,6 @@ public:
 		long int *&the_set_out, int &set_size_out,
 		int verbose_level);
 	// creates projective_space PG(n,q)
-	void create_Baer_substructure(int n,
-		finite_field *Fq_subfield,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	// creates projective_space PG(n,Q)
-	// the big field FQ is given
 	void create_orthogonal(int epsilon, int n,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -844,6 +838,35 @@ public:
 	void compute_subfield(int subfield_degree,
 			int *&field_basis, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// square_nonsquare.cpp:
+// #############################################################################
+
+//! keeping track of squares and nonsquares
+
+class square_nonsquare {
+public:
+
+	finite_field *F;
+
+	int *minus_squares; // [(q-1)/2]
+	int *minus_squares_without; // [(q-1)/2 - 1]
+	int *minus_nonsquares; // [(q-1)/2]
+	int *f_is_minus_square; // [q]
+	int *index_minus_square; // [q]
+	int *index_minus_square_without; // [q]
+	int *index_minus_nonsquare; // [q]
+
+	square_nonsquare();
+	~square_nonsquare();
+	void init(field_theory::finite_field *F, int verbose_level);
+	int is_minus_square(int i);
+	void print_minus_square_tables();
 
 };
 

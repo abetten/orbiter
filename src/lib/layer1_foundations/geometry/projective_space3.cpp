@@ -891,7 +891,7 @@ void projective_space::create_Baer_substructure(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "finite_field::create_Baer_substructure" << endl;
+		cout << "projective_space::create_Baer_substructure" << endl;
 	}
 
 	// projective space over the big field FQ = this
@@ -900,7 +900,7 @@ void projective_space::create_Baer_substructure(
 	int Q = q;
 	int q = NT.i_power_j(F->p, F->e >> 1);
 	if (f_v) {
-		cout << "finite_field::create_Baer_substructure Q=" << Q << " q=" << q << endl;
+		cout << "projective_space::create_Baer_substructure Q=" << Q << " q=" << q << endl;
 	}
 
 	int sz;
@@ -909,14 +909,14 @@ void projective_space::create_Baer_substructure(
 	int i, j, a, b, index, f_is_in_subfield;
 
 	if (f_v) {
-		cout << "finite_field::create_Baer_substructure Q=" << Q << endl;
-		cout << "finite_field::create_Baer_substructure q=" << q << endl;
+		cout << "projective_space::create_Baer_substructure Q=" << Q << endl;
+		cout << "projective_space::create_Baer_substructure q=" << q << endl;
 	}
 
 	index = (Q - 1) / (q - 1);
 
 	if (f_v) {
-		cout << "finite_field::create_Baer_substructure index=" << index << endl;
+		cout << "projective_space::create_Baer_substructure index=" << index << endl;
 	}
 
 	v = NEW_int(d);
@@ -970,7 +970,7 @@ void projective_space::create_Baer_substructure(
 	FREE_int(v);
 	//FREE_int(S);
 	if (f_v) {
-		cout << "finite_field::create_Baer_substructure done" << endl;
+		cout << "projective_space::create_Baer_substructure done" << endl;
 	}
 }
 

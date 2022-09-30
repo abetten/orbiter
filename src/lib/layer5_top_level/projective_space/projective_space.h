@@ -730,8 +730,6 @@ public:
 
 	projective_space_with_action();
 	~projective_space_with_action();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int n, int f_semilinear,
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);

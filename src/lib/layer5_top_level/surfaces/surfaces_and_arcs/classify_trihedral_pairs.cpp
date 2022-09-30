@@ -717,7 +717,9 @@ void classify_trihedral_pairs::identify_three_planes(
 	Surf->P->unrank_point(M1 + 8, p3);
 	Int_vec_copy(M1, M2, 12);
 	rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(M2, 3, 4,
-			M3, base_cols, 0 /* verbose_level */);
+			M3, base_cols,
+			FALSE /* f_complete */,
+			0 /* verbose_level */);
 	Combi.set_complement(base_cols, rk, base_cols + rk, size_complement, 4);
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_three_planes "
@@ -731,7 +733,9 @@ void classify_trihedral_pairs::identify_three_planes(
 
 		Int_vec_copy(M1, M2, 8);
 		F->Linear_algebra->rank_of_rectangular_matrix_memory_given(M2, 2, 4, M3,
-				base_cols2, 0 /* verbose_level */);
+				base_cols2,
+				FALSE /* f_complete */,
+				0 /* verbose_level */);
 
 
 		c1 = base_cols2[0];

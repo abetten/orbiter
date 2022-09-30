@@ -27,6 +27,9 @@ spread_create_description::spread_create_description()
 	f_group = FALSE;
 	//std::string group_label;
 
+	f_group_on_subspaces = FALSE;
+	//std::string group_on_subspaces_label;
+
 	f_k = FALSE;
 	k = 0;
 
@@ -38,6 +41,10 @@ spread_create_description::spread_create_description()
 
 	f_spread_set = FALSE;
 	//std::string spread_set_label;
+
+	f_transform = FALSE;
+	//std::vector<std::string> transform_text;
+	//std::vector<int> transform_f_inv;
 }
 
 spread_create_description::~spread_create_description()
@@ -64,6 +71,11 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 			group_label.assign(argv[++i]);
 			cout << "-group " << group_label << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-group_on_subspaces") == 0) {
+			f_group_on_subspaces = TRUE;
+			group_on_subspaces_label.assign(argv[++i]);
+			cout << "-group_on_subspaces " << group_on_subspaces_label << endl;
+		}
 		else if (ST.stringcmp(argv[i], "-k") == 0) {
 			f_k = TRUE;
 			k = ST.strtoi(argv[++i]);
@@ -84,6 +96,30 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 			spread_set_label.assign(argv[++i]);
 			cout << "-spread_set " << spread_set_label << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-transform") == 0) {
+			f_transform = TRUE;
+
+			string text;
+
+			text.assign(argv[++i]);
+
+			transform_text.push_back(text);
+			transform_f_inv.push_back(FALSE);
+
+			cout << "-transform " << transform_text[transform_text.size() - 1] << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-transform_inv") == 0) {
+			f_transform = TRUE;
+
+			string text;
+
+			text.assign(argv[++i]);
+
+			transform_text.push_back(text);
+			transform_f_inv.push_back(TRUE);
+
+			cout << "-transform_inv " << transform_text[transform_text.size() - 1] << endl;
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -101,6 +137,9 @@ void spread_create_description::print()
 	if (f_group) {
 		cout << "-group " << group_label << endl;
 	}
+	if (f_group_on_subspaces) {
+		cout << "-group_on_subspaces " << group_on_subspaces_label << endl;
+	}
 	if (f_k) {
 		cout << "-k " << k << endl;
 	}
@@ -112,6 +151,18 @@ void spread_create_description::print()
 	}
 	if (f_spread_set) {
 		cout << "-spread_set " << spread_set_label << endl;
+	}
+	if (f_transform) {
+		int i;
+
+		for (i = 0; i < transform_text.size(); i++) {
+			if (transform_f_inv[i]) {
+				cout << "-transform_inv " << transform_text[i] << endl;
+			}
+			else {
+				cout << "-transform " << transform_text[i] << endl;
+			}
+		}
 	}
 }
 

@@ -873,10 +873,10 @@ void polar::test_if_in_perp(long int *S, int len,
 
 	nb_good_candidates = 0;
 
-	O->unrank_point(tmp_M + 0 * n, 1, S[len - 1], 0);
+	O->Hyperbolic_pair->unrank_point(tmp_M + 0 * n, 1, S[len - 1], 0);
 	for (i = 0; i < nb_candidates; i++) {
 		c = candidates[i];
-		O->unrank_point(tmp_M + 1 * n, 1, c, 0);
+		O->Hyperbolic_pair->unrank_point(tmp_M + 1 * n, 1, c, 0);
 		if (f_vv) {
 			cout << "candidate " << i << " = " << c << ":" << endl;
 			Int_vec_print_integer_matrix_width(cout,
@@ -957,7 +957,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	candidates_expanded = NEW_int(2 * nb_candidates * (1 + nb0));
 	tmp_candidates = NEW_int(2 * nb_candidates * (1 + nb0));
 	for (i = 0; i < len; i++) {
-		O->unrank_point(M + i * n, 1, S[i], 0);
+		O->Hyperbolic_pair->unrank_point(M + i * n, 1, S[i], 0);
 		}
 	if (f_v) {
 		cout << "the basis is ";
@@ -997,7 +997,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			if (Sorting.int_vec_search(S, len, c, idx)) {
 				continue;
 				}
-			O->unrank_point(v, 1, c, 0);
+			O->Hyperbolic_pair->unrank_point(v, 1, c, 0);
 			if (f_v) {
 				cout << "i=" << i;
 				Int_vec_print(cout, v, n);
@@ -1013,7 +1013,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 						Int_vec_print(cout, w, n);
 						cout << endl;
 						}
-					d = O->rank_point(w, 1, 0);
+					d = O->Hyperbolic_pair->rank_point(w, 1, 0);
 					if (f_v) {
 						cout << "d=" << d << endl;
 						}
@@ -1050,7 +1050,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			tmp_candidates[nb_tmp_candidates++] = c;
 			continue;
 			}
-		O->unrank_point(v, 1, c, 0);
+		O->Hyperbolic_pair->unrank_point(v, 1, c, 0);
 		if (f_v) {
 			cout << "i=" << i;
 			Int_vec_print(cout, v, n);
@@ -1067,7 +1067,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 					Int_vec_print(cout, w, n);
 					cout << endl;
 					}
-				d = O->rank_point(w, 1, 0);
+				d = O->Hyperbolic_pair->rank_point(w, 1, 0);
 				if (!Sorting.int_vec_search(candidates_expanded,
 						nb_candidates_expanded, d, idx)) {
 					if (f_vv) {
@@ -1159,12 +1159,12 @@ void polar::orbit_element_rank(int &orbit_idx,
 
 void polar::unrank_point(int *v, int rk)
 {
-	O->unrank_point(v, 1, rk, 0);
+	O->Hyperbolic_pair->unrank_point(v, 1, rk, 0);
 }
 
 int polar::rank_point(int *v)
 {
-	return O->rank_point(v, 1, 0);
+	return O->Hyperbolic_pair->rank_point(v, 1, 0);
 }
 
 void polar::list_whole_orbit(int depth,
@@ -1252,7 +1252,7 @@ long int static polar_callback_rank_point_func(int *v, void *data)
 	//generator *gen = P->Gen;
 	long int rk;
 	
-	rk = P->O->rank_point(v, 1, 0);
+	rk = P->O->Hyperbolic_pair->rank_point(v, 1, 0);
 	return rk;
 }
 
@@ -1261,7 +1261,7 @@ void static polar_callback_unrank_point_func(int *v, long int rk, void *data)
 	polar *P = (polar *) data;
 	//generator *gen = P->Gen;
 	
-	P->O->unrank_point(v, 1, rk, 0);
+	P->O->Hyperbolic_pair->unrank_point(v, 1, rk, 0);
 	//PG_element_unrank_modified(*gen->F, v, 1,
 	// gen->vector_space_dimension, rk);
 }

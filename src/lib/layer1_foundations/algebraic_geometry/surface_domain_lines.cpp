@@ -30,7 +30,13 @@ void surface_domain::init_Schlaefli(int verbose_level)
 
 	Schlaefli = NEW_OBJECT(schlaefli);
 
-	Schlaefli->init(this, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_Schlaefli before Schlaefli->init" << endl;
+	}
+	Schlaefli->init(this, verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain::init_Schlaefli after Schlaefli->init" << endl;
+	}
 
 
 	if (f_v) {
@@ -513,7 +519,7 @@ int surface_domain::rank_of_four_lines_on_Klein_quadric(
 
 	coords = NEW_int(4 * 6);
 	for (i = 0; i < 4; i++) {
-		O->unrank_point(coords + i * 6, 1,
+		O->Hyperbolic_pair->unrank_point(coords + i * 6, 1,
 			o_rank[i], 0 /* verbose_level */);
 	}
 	rk = F->Linear_algebra->Gauss_easy(coords, 4, 6);
@@ -791,7 +797,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	int perp_sz = 0;
 	int sz;
 
-	sz = O->alpha * q;
+	sz = O->Hyperbolic_pair->alpha * q;
 	Perp_without_pt = NEW_plint(6);
 	for (i = 0; i < 6; i++) {
 		Perp_without_pt[i] = NEW_lint(sz);

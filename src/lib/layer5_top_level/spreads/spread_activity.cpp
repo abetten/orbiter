@@ -322,6 +322,237 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 		O2->Sch->print_orbit_lengths_tex(ost);
 		ost << "\\\\" << endl;
 
+		O2->Classify_orbits_by_length->Set_partition->print_table_latex_simple(ost);
+
+
+		ost << "Orbits: \\\\";
+		O2->Sch->list_all_orbits_tex(ost);
+		ost << "\\\\" << endl;
+
+		int f, l, j;
+		long int a;
+		long int *Orbit_elements;
+		long int *Orbit_elements_lines;
+
+		for (i = 0; i < O2->Sch->nb_orbits; i++) {
+			f = O2->Sch->orbit_first[i];
+			l = O2->Sch->orbit_len[i];
+			Orbit_elements = NEW_lint(l);
+			Orbit_elements_lines = NEW_lint(l);
+			for (j = 0; j < l; j++) {
+				a = O2->Sch->orbit[f + j];
+				Orbit_elements[j] = a;
+			}
+
+			for (j = 0; j < l; j++) {
+				a = Orbit_elements[j];
+				Orbit_elements_lines[j] = Spread_create->set[a];
+			}
+
+
+
+			ost << "Orbit of length " << l << " consists of these subspaces:\\\\" << endl;
+			Lint_vec_print(ost, Orbit_elements_lines, l);
+			ost << "\\\\" << endl;
+			SD->Grass->print_set_tex(ost, Orbit_elements_lines, l, verbose_level);
+
+			FREE_lint(Orbit_elements);
+			FREE_lint(Orbit_elements_lines);
+		}
+
+		if (Spread_create->k == 2) {
+
+
+			geometry::projective_space *P5;
+			orthogonal_geometry::orthogonal *O;
+			geometry::klein_correspondence *Klein;
+
+			P5 = NEW_OBJECT(geometry::projective_space);
+			if (f_v) {
+				cout << "spread_activity::report2 before P5->projective_space_init" << endl;
+			}
+			P5->projective_space_init(5, Spread_create->F,
+				FALSE /*f_init_incidence_structure */,
+				verbose_level - 2);
+			if (f_v) {
+				cout << "spread_activity::report2 after P5->projective_space_init" << endl;
+			}
+
+
+
+			if (f_v) {
+				cout << "spread_activity::report2 "
+						"initializing orthogonal" << endl;
+			}
+			O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+			O->init(1 /* epsilon */, 6 /* n */, Spread_create->F, verbose_level - 2);
+			if (f_v) {
+				cout << "spread_activity::report2 "
+						"initializing orthogonal done" << endl;
+			}
+
+			Klein = NEW_OBJECT(geometry::klein_correspondence);
+
+			if (f_v) {
+				cout << "spread_activity::report2 before Klein->init" << endl;
+			}
+			Klein->init(Spread_create->F, O, verbose_level - 2);
+			if (f_v) {
+				cout << "spread_activity::report2 after Klein->init" << endl;
+			}
+
+
+			long int *Pts_on_Klein;
+			long int *Pts_in_PG5;
+			long int line_rk;
+
+
+			for (i = 0; i < O2->Sch->nb_orbits; i++) {
+				f = O2->Sch->orbit_first[i];
+				l = O2->Sch->orbit_len[i];
+
+				if (f_v) {
+					cout << "spread_activity::report2 orbit " << i << " of length " << l << endl;
+				}
+
+				Orbit_elements = NEW_lint(l);
+				Orbit_elements_lines = NEW_lint(l);
+				Pts_on_Klein = NEW_lint(l);
+				Pts_in_PG5 = NEW_lint(l);
+				for (j = 0; j < l; j++) {
+					a = O2->Sch->orbit[f + j];
+					Orbit_elements[j] = a;
+				}
+
+				for (j = 0; j < l; j++) {
+					a = Orbit_elements[j];
+
+					line_rk = Spread_create->set[a];
+					Orbit_elements_lines[j] = line_rk;
+
+					Pts_on_Klein[j] = Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level */);
+					Pts_in_PG5[j] = Klein->point_on_quadric_embedded_in_P5(Pts_on_Klein[j]);
+				}
+				int *v;
+				int *w;
+
+				v = NEW_int(l * 6);
+				w = NEW_int(l * 6);
+				for (j = 0; j < l; j++) {
+					P5->unrank_point(v + j * 6, Pts_in_PG5[j]);
+				}
+
+				ost << "List of points:\\\\" << endl;
+				for (j = 0; j < l; j++) {
+					Int_vec_print(ost, v + j * 6, 6);
+					ost << "\\\\" << endl;
+				}
+				ost << "j : pt on Klein : pt in  P5:\\\\" << endl;
+				for (j = 0; j < l; j++) {
+					ost << j << " : ";
+					ost << Pts_on_Klein[j] << " : ";
+					ost << Pts_in_PG5[j];
+					ost << "\\\\" << endl;
+				}
+				ost << "Points on Klein quadric:" << endl;
+				Lint_vec_print(ost, Pts_on_Klein, l);
+				ost << "\\\\" << endl;
+
+				ost << "Points in P5:" << endl;
+				Lint_vec_print(ost, Pts_in_PG5, l);
+				ost << "\\\\" << endl;
+
+
+				int rk;
+				int base_cols[6];
+				int f_complete = TRUE;
+
+				rk = Spread_create->F->Linear_algebra->rank_of_rectangular_matrix_memory_given(v,
+						l, 6, w, base_cols, f_complete, 0 /* verbose_level*/);
+				ost << "rk=" << rk << "\\\\" << endl;
+				ost << "RREF:\\\\" << endl;
+				for (j = 0; j < rk; j++) {
+					Int_vec_print(ost, w + j * 6, 6);
+					ost << "\\\\" << endl;
+				}
+
+				int *type;
+
+				long int nb_planes;
+
+				nb_planes = P5->nb_rk_k_subspaces_as_lint(3);
+				if (f_v) {
+					cout << "spread_activity::report2 nb_planes = " << nb_planes << endl;
+				}
+
+
+				type = NEW_int(nb_planes);
+
+				if (f_v) {
+					cout << "spread_activity::report2 before P5->plane_intersection_type_basic" << endl;
+				}
+				P5->plane_intersection_type_basic(Pts_in_PG5, l,
+						type, 0 /* verbose_level*/);
+						// type[N_planes]
+
+				data_structures::tally T;
+
+				T.init(type, nb_planes, FALSE, 0);
+
+
+
+				ost << "Orbit of length " << l << " consists of these subspaces:\\\\" << endl;
+				Lint_vec_print(ost, Orbit_elements_lines, l);
+				ost << "\\\\" << endl;
+				SD->Grass->print_set_tex(ost, Orbit_elements_lines, l, verbose_level);
+				ost << "Orbit of length " << l << " consists of these points on the Klein quadric:\\\\" << endl;
+				Lint_vec_print(ost, Pts_on_Klein, l);
+				ost << "\\\\" << endl;
+
+				ost << "Plane type: ";
+				ost << "$";
+				T.print_naked_tex(ost, TRUE /* f_backwards */);
+				ost << "$";
+				ost << "\\\\" << endl;
+
+
+				if (f_v) {
+					cout << "spread_activity::report2 before FREE_int(type);" << endl;
+				}
+				FREE_int(type);
+				if (f_v) {
+					cout << "spread_activity::report2 before FREE_lint(Orbit_elements);" << endl;
+				}
+				FREE_lint(Orbit_elements);
+				FREE_lint(Orbit_elements_lines);
+				if (f_v) {
+					cout << "spread_activity::report2 before FREE_lint(Pts_on_Klein);" << endl;
+				}
+				FREE_lint(Pts_on_Klein);
+				FREE_lint(Pts_in_PG5);
+				FREE_int(v);
+				FREE_int(w);
+			}
+
+			if (f_v) {
+				cout << "spread_activity::report2 before FREE_OBJECT(P5);" << endl;
+			}
+			FREE_OBJECT(P5);
+			if (f_v) {
+				cout << "spread_activity::report2 before FREE_OBJECT(O);" << endl;
+			}
+			FREE_OBJECT(O);
+			if (f_v) {
+				cout << "spread_activity::report2 before FREE_OBJECT(Klein);" << endl;
+			}
+			FREE_OBJECT(Klein);
+			if (f_v) {
+				cout << "spread_activity::report2 after FREE_OBJECT(Klein);" << endl;
+			}
+
+		} // if k == 2
+
+
 	}
 
 	if (f_v) {

@@ -637,6 +637,7 @@ int projective_space::is_incident(int pt, int line)
 
 		rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Mtx,
 				3, n + 1, Mtx2, v /* base_cols */,
+				FALSE /* f_complete */,
 				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "rk = " << rk << endl;
@@ -812,6 +813,7 @@ void projective_space::incma_for_type_ij(
 			}
 			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Basis,
 					row_type + col_type, d, Basis2, base_cols,
+					FALSE /* f_complete */,
 					0 /*verbose_level*/);
 			if (rk == col_type) {
 				Incma[i * nb_cols + j] = 1;
@@ -900,6 +902,7 @@ int projective_space::incidence_test_for_objects_of_type_ij(
 	}
 	rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Basis,
 			type_i + type_j, d, Basis2, base_cols,
+			FALSE /* f_complete */,
 			0 /*verbose_level*/);
 	if (rk == type_j) {
 		f_incidence = TRUE;

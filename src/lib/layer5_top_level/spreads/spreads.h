@@ -397,6 +397,9 @@ public:
 	int f_group;
 	std::string group_label;
 
+	int f_group_on_subspaces;
+	std::string group_on_subspaces_label;
+
 	int f_k;
 	int k;
 
@@ -408,6 +411,10 @@ public:
 
 	int f_spread_set;
 	std::string spread_set_label;
+
+	int f_transform;
+	std::vector<std::string> transform_text;
+	std::vector<int> transform_f_inv;
 
 
 
@@ -436,6 +443,7 @@ public:
 	std::string label_tex;
 
 	apps_algebra::any_group *G;
+	apps_algebra::any_group *G_on_subspaces;
 
 	int q;
 	field_theory::finite_field *F;

@@ -102,7 +102,7 @@ void W3q::init(field_theory::finite_field *F, int verbose_level)
 	cout << endl;
 #endif
 
-	if (nb_lines != Q4->nb_points) {
+	if (nb_lines != Q4->Hyperbolic_pair->nb_points) {
 		cout << "W3q::init nb_lines != Q4->nb_points" << endl;
 		exit(1);
 	}
@@ -127,7 +127,7 @@ void W3q::init(field_theory::finite_field *F, int verbose_level)
 			cout << endl;
 		}
 		
-		rk = Q4->rank_point(v5, 1, 0);
+		rk = Q4->Hyperbolic_pair->rank_point(v5, 1, 0);
 
 		if (f_vvv) {
 			cout << "orthogonal point rank " << rk << endl;
@@ -217,7 +217,7 @@ void W3q::print_by_lines()
 		Int_vec_print(cout, Basis, 4);
 		cout << " : ";
 		Int_vec_print(cout, Basis + 4, 4);
-		Q4->unrank_point(v5, 1, Q4_rk[h], 0);
+		Q4->Hyperbolic_pair->unrank_point(v5, 1, Q4_rk[h], 0);
 		cout << " : ";
 		Int_vec_print(cout, v5, 5);
 		cout << endl;
@@ -239,7 +239,7 @@ void W3q::print_by_points()
 		Int_vec_print(cout, Basis, 4);
 		cout << " : ";
 		Int_vec_print(cout, Basis + 4, 4);
-		Q4->unrank_point(v5, 1, h, 0);
+		Q4->Hyperbolic_pair->unrank_point(v5, 1, h, 0);
 		cout << " : ";
 		Int_vec_print(cout, v5, 5);
 		cout << endl;

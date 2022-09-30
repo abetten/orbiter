@@ -135,7 +135,7 @@ void large_set_was::init(large_set_was_description *Descr,
 		int type_idx;
 
 		for (type_idx = 0; type_idx < H_orbits->Classify_orbits_by_length->nb_types; type_idx++) {
-			cout << type_idx << " : " << H_orbits->Orbits_classified->Set_size[type_idx] << endl;
+			cout << type_idx << " : " << H_orbits->Classify_orbits_by_length->Set_partition->Set_size[type_idx] << endl;
 		}
 	}
 
@@ -157,13 +157,13 @@ void large_set_was::init(large_set_was_description *Descr,
 		int type_idx;
 
 		for (type_idx = 0; type_idx < H_orbits->Classify_orbits_by_length->nb_types; type_idx++) {
-			cout << type_idx << " : " << H_orbits->Orbits_classified->Set_size[type_idx] << endl;
+			cout << type_idx << " : " << H_orbits->Classify_orbits_by_length->Set_partition->Set_size[type_idx] << endl;
 		}
 
 		//int type_idx;
 
 		for (type_idx = 0; type_idx < H_orbits->Classify_orbits_by_length->nb_types; type_idx++) {
-			H_orbits->print_orbits_of_a_certain_length(H_orbits->Orbits_classified_length[type_idx]);
+			H_orbits->print_orbits_of_a_certain_length(H_orbits->Classify_orbits_by_length->data_values[type_idx]);
 		}
 
 	}
@@ -205,7 +205,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length computing orbits "
 				"of normalizer on orbits of length " << orbit_length
 				<< ", type_idx=" << type_idx
-				<< ", number of orbits = " << H_orbits->Orbits_classified->Set_size[type_idx] << endl;
+				<< ", number of orbits = " << H_orbits->Classify_orbits_by_length->Set_partition->Set_size[type_idx] << endl;
 	}
 
 
@@ -242,8 +242,8 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 			verbose_level - 1);
 
 	A_on_orbits_restricted = A_on_orbits->restricted_action(
-			H_orbits->Orbits_classified->Sets[type_idx],
-			H_orbits->Orbits_classified->Set_size[type_idx],
+			H_orbits->Classify_orbits_by_length->Set_partition->Sets[type_idx],
+			H_orbits->Classify_orbits_by_length->Set_partition->Set_size[type_idx],
 			verbose_level);
 
 

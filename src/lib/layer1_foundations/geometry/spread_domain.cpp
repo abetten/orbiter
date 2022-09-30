@@ -390,7 +390,9 @@ void spread_domain::early_test_func(long int *S, int len,
 						2 * k, n, n, F->log10_of_q + 1);
 			}
 			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
-					M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
+					M, 2 * k, n, B, base_cols,
+					FALSE /* f_complete */,
+					0 /* verbose_level */);
 
 			if (rk < 2 * k) {
 				if (f_vv) {
@@ -461,7 +463,9 @@ int spread_domain::check_function(int len, long int *S, int verbose_level)
 						2 * k, n, n, F->log10_of_q + 1);
 			}
 			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
-					M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
+					M, 2 * k, n, B, base_cols,
+					FALSE /* f_complete */,
+					0 /* verbose_level */);
 			if (rk < 2 * k) {
 				if (f_vv) {
 					cout << "rank is " << rk << " which is bad" << endl;
@@ -543,7 +547,9 @@ int spread_domain::incremental_check_function(int len, long int *S, int verbose_
 					2 * k, n, n, F->log10_of_q + 1);
 		}
 		rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
-				M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
+				M, 2 * k, n, B, base_cols,
+				FALSE /* f_complete */,
+				0 /* verbose_level */);
 		if (rk < 2 * k) {
 			if (f_vv) {
 				cout << "rank is " << rk << " which is bad" << endl;

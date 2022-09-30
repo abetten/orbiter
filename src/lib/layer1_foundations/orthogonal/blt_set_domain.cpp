@@ -112,7 +112,7 @@ void blt_set_domain::init(orthogonal *O,
 
 
 	target_size = q + 1;
-	degree = O->nb_points;
+	degree = O->Hyperbolic_pair->nb_points;
 
 
 	if (f_v) {
@@ -200,12 +200,12 @@ void blt_set_domain::compute_adjacency_list_fast(
 
 	Pts = NEW_int(nb_points * 5);
 	form_value = NEW_int(nb_points);
-	O->unrank_point(v1, 1, first_point_of_starter, 0);
+	O->Hyperbolic_pair->unrank_point(v1, 1, first_point_of_starter, 0);
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast unranking points" << endl;
 	}
 	for (i = 0; i < nb_points; i++) {
-		O->unrank_point(Pts + i * 5, 1, points[i], 0);
+		O->Hyperbolic_pair->unrank_point(Pts + i * 5, 1, points[i], 0);
 		form_value[i] = O->evaluate_bilinear_form(v1, Pts + i * 5, 1);
 	}
 
@@ -256,7 +256,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 				Bitvec->m_i(k, 0);
 			}
 			else {
-				if (O->f_is_minus_square[d]) {
+				if (O->SN->f_is_minus_square[d]) {
 					Bitvec->m_i(k, 0);
 				}
 				else {
@@ -299,13 +299,13 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	if (f_v) {
 		cout << "blt_set_domain::compute_colors" << endl;
 	}
-	O->unrank_line(p1, p2, special_line, 0/*verbose_level*/);
+	O->Hyperbolic_pair->unrank_line(p1, p2, special_line, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "after unrank_line " << special_line << ":" << endl;
 		cout << "p1=" << p1 << " p2=" << p2 << endl;
 	}
-	O->unrank_point(v1, 1, p1, 0);
-	O->unrank_point(v2, 1, p2, 0);
+	O->Hyperbolic_pair->unrank_point(v1, 1, p1, 0);
+	O->Hyperbolic_pair->unrank_point(v2, 1, p2, 0);
 	if (f_vv) {
 		cout << "p1=" << p1 << " ";
 		Int_vec_print(cout, v1, 5);
@@ -350,7 +350,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	starter_t = NEW_int(starter_sz);
 	starter_t[0] = -1;
 	for (i = 1; i < starter_sz; i++) {
-		O->unrank_point(v3, 1, starter[i], 0);
+		O->Hyperbolic_pair->unrank_point(v3, 1, starter[i], 0);
 		a = O->evaluate_bilinear_form(v1, v3, 1);
 		b = O->evaluate_bilinear_form(v2, v3, 1);
 		if (a == 0) {
@@ -425,7 +425,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 
 
 	for (i = 0; i < nb_candidates; i++) {
-		O->unrank_point(v3, 1, candidates[i], 0);
+		O->Hyperbolic_pair->unrank_point(v3, 1, candidates[i], 0);
 		if (f_vv) {
 			cout << "candidate " << i << " / " << nb_candidates
 					<< " is " << candidates[i] << " = ";
@@ -504,7 +504,7 @@ void blt_set_domain::early_test_func(long int *S, int len,
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
-				O->unrank_point(v, 1, candidates[i],
+				O->Hyperbolic_pair->unrank_point(v, 1, candidates[i],
 						0/*verbose_level - 4*/);
 				cout << "candidate " << i << "="
 						<< candidates[i] << ": ";
@@ -517,14 +517,14 @@ void blt_set_domain::early_test_func(long int *S, int len,
 		cout << "blt_set_domain::early_test_func unranking points" << endl;
 	}
 	for (i = 0; i < len; i++) {
-		O->unrank_point(Pts + i * 5, 1,
+		O->Hyperbolic_pair->unrank_point(Pts + i * 5, 1,
 				S[i], 0/*verbose_level - 4*/);
 	}
 	if (f_v) {
 		cout << "blt_set_domain::early_test_func unranking candidates" << endl;
 	}
 	for (i = 0; i < nb_candidates; i++) {
-		O->unrank_point(Candidates + i * 5, 1, candidates[i],
+		O->Hyperbolic_pair->unrank_point(Candidates + i * 5, 1, candidates[i],
 				0/*verbose_level - 4*/);
 	}
 	if (f_v) {
@@ -624,7 +624,7 @@ void blt_set_domain::early_test_func(long int *S, int len,
 						f_OK = FALSE;
 						break;
 					}
-					if (O->f_is_minus_square[a]) {
+					if (O->SN->f_is_minus_square[a]) {
 						f_OK = FALSE;
 						break;
 					}
@@ -652,9 +652,9 @@ int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
 	int f12, f13, f23;
 	int d;
 
-	O->unrank_point(v1, 1, a, 0);
-	O->unrank_point(v2, 1, x, 0);
-	O->unrank_point(v3, 1, y, 0);
+	O->Hyperbolic_pair->unrank_point(v1, 1, a, 0);
+	O->Hyperbolic_pair->unrank_point(v2, 1, x, 0);
+	O->Hyperbolic_pair->unrank_point(v3, 1, y, 0);
 	f12 = O->evaluate_bilinear_form(v1, v2, 1);
 	f13 = O->evaluate_bilinear_form(v1, v3, 1);
 	f23 = O->evaluate_bilinear_form(v2, v3, 1);
@@ -662,7 +662,7 @@ int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
 	if (d == 0) {
 		return FALSE;
 	}
-	if (O->f_is_minus_square[d]) {
+	if (O->SN->f_is_minus_square[d]) {
 		return FALSE;
 	}
 	else {
@@ -678,6 +678,7 @@ int blt_set_domain::check_conditions(int len, long int *S, int verbose_level)
 	int f_collinearity_test = FALSE;
 	//int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	orthogonal_global OG;
 
 	//f_v = TRUE;
 	//f_vv = TRUE;
@@ -691,7 +692,7 @@ int blt_set_domain::check_conditions(int len, long int *S, int verbose_level)
 		f_OK = FALSE;
 		f_collinearity_test = TRUE;
 	}
-	if (!O->BLT_test(len, S, verbose_level)) {
+	if (!OG.BLT_test(O, len, S, verbose_level)) {
 		f_OK = FALSE;
 		f_BLT_test = TRUE;
 	}
@@ -729,18 +730,18 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 	if (f_v) {
 		cout << "blt_set_domain::collinearity_test test for" << endl;
 		for (i = 0; i < len; i++) {
-			O->unrank_point(O->v1, 1, S[i], 0);
-			Int_vec_print(cout, O->v1, n);
+			O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, S[i], 0);
+			Int_vec_print(cout, O->Hyperbolic_pair->v1, n);
 			cout << endl;
 		}
 	}
 	y = S[len - 1];
-	O->unrank_point(O->v1, 1, y, 0);
+	O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, y, 0);
 
 	for (i = 0; i < len - 1; i++) {
 		x = S[i];
-		O->unrank_point(O->v2, 1, x, 0);
-		fxy = O->evaluate_bilinear_form(O->v1, O->v2, 1);
+		O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v2, 1, x, 0);
+		fxy = O->evaluate_bilinear_form(O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
 
 		if (fxy == 0) {
 			f_OK = FALSE;
@@ -748,9 +749,9 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 				cout << "not OK; ";
 				cout << "{x,y}={" << x << ","
 						<< y << "} are collinear" << endl;
-				Int_vec_print(cout, O->v1, n);
+				Int_vec_print(cout, O->Hyperbolic_pair->v1, n);
 				cout << endl;
-				Int_vec_print(cout, O->v2, n);
+				Int_vec_print(cout, O->Hyperbolic_pair->v2, n);
 				cout << endl;
 				cout << "fxy=" << fxy << endl;
 			}
@@ -771,8 +772,8 @@ void blt_set_domain::print(ostream &ost, long int *S, int len)
 	int i;
 
 	for (i = 0; i < len; i++) {
-		O->unrank_point(O->v1, 1, S[i], 0);
-		Int_vec_print(ost, O->v1, n);
+		O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, S[i], 0);
+		Int_vec_print(ost, O->Hyperbolic_pair->v1, n);
 		ost << endl;
 	}
 }
@@ -833,8 +834,8 @@ void blt_set_domain::find_free_points(long int *S, int S_sz,
 				<< nb_free_pts << endl;
 	}
 	free_pts = NEW_lint(nb_free_pts);
-	free_pt_idx = NEW_int(O->nb_points);
-	for (h = 0; h < O->nb_points; h++) {
+	free_pt_idx = NEW_int(O->Hyperbolic_pair->nb_points);
+	for (h = 0; h < O->Hyperbolic_pair->nb_points; h++) {
 		free_pt_idx[h] = -1;
 	}
 

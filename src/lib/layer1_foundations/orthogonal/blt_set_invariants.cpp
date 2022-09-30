@@ -100,7 +100,7 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	Lint_vec_copy(the_set, the_set_in_orthogonal, set_size);
 
 	for (i = 0; i < set_size; i++) {
-		D->O->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);
+		D->O->Hyperbolic_pair->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);
 		the_set_in_PG[i] = D->P->rank_point(v5);
 	}
 
@@ -344,7 +344,7 @@ void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 	ost << "The points:\\\\" << endl;
 	int v5[5];
 	for (i = 0; i < set_size; i++) {
-		D->O->unrank_point(
+		D->O->Hyperbolic_pair->unrank_point(
 				v5, 1, the_set_in_orthogonal[i], 0 /* verbose_level */);
 		//Grass->unrank_int(data[i], 0/*verbose_level - 4*/);
 		if ((i % 4) == 0) {

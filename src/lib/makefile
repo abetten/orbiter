@@ -113,6 +113,7 @@ MODULES= \
 		layer1_foundations/finite_fields/finite_field.o \
 		layer1_foundations/finite_fields/norm_tables.o \
 		layer1_foundations/finite_fields/nth_roots.o \
+		layer1_foundations/finite_fields/square_nonsquare.o \
 		layer1_foundations/finite_fields/subfield_structure.o \
 		layer1_foundations/geometry/andre_construction.o \
 		layer1_foundations/geometry/andre_construction_line_element.o \
@@ -232,13 +233,14 @@ MODULES= \
 		layer1_foundations/orbiter_kernel_system/prepare_frames.o \
 		layer1_foundations/orthogonal/blt_set_domain.o \
 		layer1_foundations/orthogonal/blt_set_invariants.o \
-		layer1_foundations/orthogonal/orthogonal_blt.o \
+		layer1_foundations/orthogonal/hyperbolic_pair_hyperbolic.o \
+		layer1_foundations/orthogonal/hyperbolic_pair_parabolic.o \
+		layer1_foundations/orthogonal/hyperbolic_pair_rank_unrank.o \
+		layer1_foundations/orthogonal/hyperbolic_pair.o \
+		layer1_foundations/orthogonal/orthogonal_global.o \
 		layer1_foundations/orthogonal/orthogonal_group.o \
-		layer1_foundations/orthogonal/orthogonal_hyperbolic.o \
 		layer1_foundations/orthogonal/orthogonal_indexing.o \
 		layer1_foundations/orthogonal/orthogonal_io.o \
-		layer1_foundations/orthogonal/orthogonal_parabolic.o \
-		layer1_foundations/orthogonal/orthogonal_rank_unrank.o \
 		layer1_foundations/orthogonal/orthogonal.o \
 		layer1_foundations/orthogonal/unusual_model.o \
 		layer1_foundations/ring_theory/finite_ring.o \

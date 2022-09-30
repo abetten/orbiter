@@ -1153,12 +1153,12 @@ actions::action *packing_was::restricted_action(int orbit_length, int verbose_le
 	if (f_v) {
 		cout << "orbit_idx = " << orbit_idx << endl;
 		cout << "Number of orbits of length " << orbit_length << " is "
-				<< reduced_spread_orbits_under_H->Orbits_classified->Set_size[orbit_idx] << endl;
+				<< reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[orbit_idx] << endl;
 	}
 	Ar = A_on_reduced_spread_orbits->create_induced_action_by_restriction(
 		NULL,
-		reduced_spread_orbits_under_H->Orbits_classified->Set_size[orbit_idx],
-		reduced_spread_orbits_under_H->Orbits_classified->Sets[orbit_idx],
+		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[orbit_idx],
+		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[orbit_idx],
 		FALSE /* f_induce_action */,
 		verbose_level);
 
@@ -1271,7 +1271,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 			f_has_user_data, user_data, user_data_size,
 			packing_was_set_of_reduced_spreads_adjacency_test_function,
 			this /* void *test_function_data */,
-			reduced_spread_orbits_under_H->Orbits_classified,
+			reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition,
 			verbose_level);
 
 	if (f_v) {
@@ -1478,7 +1478,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 	ost << "Spread types by orbits of given length:\\\\" << endl;
 	for (i = 0; i < Orbit_invariant->nb_sets; i++) {
 		ost << "Orbits of length " <<
-				reduced_spread_orbits_under_H->Orbits_classified_length[i]
+				reduced_spread_orbits_under_H->Classify_orbits_by_length->data_values[i]
 				<< " have the following spread type:\\\\" << endl;
 
 		//Classify_spread_invariant_by_orbit_length[i].print(FALSE);
@@ -1495,8 +1495,8 @@ void packing_was::report_orbit_invariant(ostream &ost)
 			ost << "$$" << endl;
 			ost << "appears " << l << " times.\\\\" << endl;
 		}
-		if (reduced_spread_orbits_under_H->Orbits_classified_length[i] == 1 && Regular_packing) {
-			l = reduced_spread_orbits_under_H->Orbits_classified->Set_size[i];
+		if (reduced_spread_orbits_under_H->Classify_orbits_by_length->data_values[i] == 1 && Regular_packing) {
+			l = reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[i];
 
 
 			int B[] = {
@@ -1522,7 +1522,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 
 			ost << "Orbits of length one:\\\\" << endl;
 			for (j = 0; j < l; j++) {
-				a = reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j];
+				a = reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[i][j];
 				fst = reduced_spread_orbits_under_H->Sch->orbit_first[a];
 				len = reduced_spread_orbits_under_H->Sch->orbit_len[a];
 				for (h = 0; h < len; h++) {
@@ -1721,11 +1721,11 @@ void packing_was::report_line_orbits_under_H(std::ostream &ost, int verbose_leve
 	ost << "\\bigskip" << endl;
 	ost << "\\noindent" << endl;
 
-	for (i = 0; i < Line_orbits_under_H->Orbits_classified->nb_sets; i++) {
-		ost << "Set " << i << " has size " << Line_orbits_under_H->Orbits_classified->Set_size[i] << "\\\\" << endl;
+	for (i = 0; i < Line_orbits_under_H->Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		ost << "Set " << i << " has size " << Line_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[i] << "\\\\" << endl;
 
-		for (j = 0; j < Line_orbits_under_H->Orbits_classified->Set_size[i]; j++) {
-			a = Line_orbits_under_H->Orbits_classified->Sets[i][j];
+		for (j = 0; j < Line_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[i]; j++) {
+			a = Line_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[i][j];
 			ost << "Line orbit " << a << " is:\\\\" << endl;
 
 
@@ -1776,13 +1776,13 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 	}
 	nb_spreads = 0;
 
-	nb_orbits = reduced_spread_orbits_under_H->Orbits_classified->Set_size[type_idx];
+	nb_orbits = reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[type_idx];
 
 	orbit_idx = NEW_lint(nb_orbits);
 
 	orbit_length = -1;
 	for (j = 0; j < nb_orbits; j++) {
-		a = reduced_spread_orbits_under_H->Orbits_classified->Sets[type_idx][j];
+		a = reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[type_idx][j];
 
 		orbit_idx[j] = a;
 		std::vector<int> Orb;
@@ -1809,7 +1809,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 
 
 	for (j = 0; j < nb_orbits; j++) {
-		a = reduced_spread_orbits_under_H->Orbits_classified->Sets[type_idx][j];
+		a = reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[type_idx][j];
 
 		std::vector<int> Orb;
 
@@ -1852,7 +1852,7 @@ void packing_was::export_reduced_spread_orbits_csv(std::string &fname_base, int 
 	string fname;
 
 
-	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; type_idx++) {
+	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->nb_sets; type_idx++) {
 
 		char str[1000];
 		orbiter_kernel_system::file_io Fio;
@@ -1897,7 +1897,7 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original
 	int type_idx;
 
 
-	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; type_idx++) {
+	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->nb_sets; type_idx++) {
 
 		int nb_orbits;
 		int orbit_length;

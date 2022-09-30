@@ -20,15 +20,30 @@ namespace algebraic_geometry {
 
 surface_domain::surface_domain()
 {
-	v = NULL;
-	v2 = NULL;
-	w2 = NULL;
+	q = 0;
+	n = 0;
+	n2 = 0;
+
+	F = NULL;
 	P = NULL;
 	P2 = NULL;
 	Gr = NULL;
 	Gr3 = NULL;
+	nb_lines_PG_3 = 0;
+	nb_pts_on_surface_with_27_lines = 0;
+
 	O = NULL;
 	Klein = NULL;
+
+	//int Basis0[16];
+	//int Basis1[16];
+	//int Basis2[16];
+
+	v = NULL;
+	v2 = NULL;
+	w2 = NULL;
+
+	nb_monomials = 0;
 
 	Schlaefli = NULL;
 
@@ -51,26 +66,27 @@ surface_domain::surface_domain()
 	Poly6_27 = NULL;
 	Poly3_24 = NULL;
 
+	nb_monomials2 = nb_monomials4 = nb_monomials6 = 0;
+	nb_monomials3 = 0;
+
 	Clebsch_Pij = NULL;
 	Clebsch_P = NULL;
 	Clebsch_P3 = NULL;
 	Clebsch_coeffs = NULL;
 	CC = NULL;
 
-	null();
 }
+
+
+
+
 
 surface_domain::~surface_domain()
-{
-	freeself();
-}
-
-void surface_domain::freeself()
 {
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "surface_domain::freeself" << endl;
+		cout << "surface_domain::~surface_domain" << endl;
 	}
 	if (v) {
 		FREE_int(v);
@@ -156,7 +172,7 @@ void surface_domain::freeself()
 		if (Poly3_24) {
 			FREE_OBJECT(Poly3_24);
 		}
-		}
+	}
 	if (Clebsch_Pij) {
 		FREE_int(Clebsch_Pij);
 	}
@@ -172,14 +188,9 @@ void surface_domain::freeself()
 	if (CC) {
 		FREE_pint(CC);
 	}
-	null();
 	if (f_v) {
-		cout << "surface_domain::freeself done" << endl;
+		cout << "surface_domain::~surface_domain done" << endl;
 	}
-}
-
-void surface_domain::null()
-{
 }
 
 void surface_domain::init(field_theory::finite_field *F, int verbose_level)
@@ -264,7 +275,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "surface::init before init_polynomial_domains" << endl;
 	}
-	init_polynomial_domains(verbose_level);
+	init_polynomial_domains(verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init after init_polynomial_domains" << endl;
 	}
@@ -276,7 +287,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "surface::init before init_Schlaefli" << endl;
 	}
-	init_Schlaefli(verbose_level);
+	init_Schlaefli(verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init after init_Schlaefli" << endl;
 	}
@@ -917,7 +928,7 @@ long int surface_domain::line_to_wedge(long int line_rk)
 	long int a, b;
 	
 	a = Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
-	O->unrank_point(w2, 1, a, 0 /* verbose_level*/);
+	O->Hyperbolic_pair->unrank_point(w2, 1, a, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
 	F->PG_element_rank_modified_lint(v2, 1, 6 /*wedge_dimension*/, b);
 	//b = AW->rank_point(v);
@@ -954,7 +965,7 @@ long int surface_domain::klein_to_wedge(long int klein_rk)
 {
 	long int b;
 	
-	O->unrank_point(w2, 1, klein_rk, 0 /* verbose_level*/);
+	O->Hyperbolic_pair->unrank_point(w2, 1, klein_rk, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
 	F->PG_element_rank_modified_lint(v2, 1, 6 /*wedge_dimension*/, b);
 	//b = AW->rank_point(v);
