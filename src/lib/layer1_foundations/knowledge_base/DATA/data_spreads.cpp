@@ -239,28 +239,59 @@ static long int Spreads_5_2_reps[] = {
 	0, 805, 36, 72, 109, 146, 166, 194, 241, 250, 298, 327, 347, 375, 417, 454, 483, 508, 534, 581, 590, 629, 655, 703, 728, 757, 
 };
 static const char *Spreads_5_2_stab_order[] = {
-"144", // 0
-"576", // 1
-"1440", // 2
-"72", // 3
-"48", // 4
-"24", // 5
-"288", // 6
-"144", // 7
-"600", // 8
-"288", // 9
-"1152", // 10
-"120", // 11
-"187200", // 12
-"32", // 13
-"52", // 14
-"52", // 15
-"36", // 16
-"96", // 17
-"48", // 18
-"720", // 19
-"1920", // 20
+"144", // 0 = M18 = a1, rk=262
+"576", // 1 = M8 = s4
+"1440", // 2 = M3 = Hall
+"72", // 3 = Rao = M6 = a4
+"48", // 4 = M7 = a8, rk=257
+"24", // 5 = Rao = M13 = a5
+"288", // 6 = M14 = s3 = subregular, rk=260
+"144", // 7 = M12 = a6, rk=259
+"600", // 8 = Walker = M4 = a3
+"288", // 9 = M11 = s5 = subregular, rk=259
+"1152", // 10 = Dickson nearfield = M5 = a2
+"120", // 11 = Rao = M15 = a7
+"187200", // 12 = M1 = s1 = Desarguesian
+"32", // 13 = M20 = b8
+"52", // 14 = M9 = Foulser, 5-rank=258
+"52", // 15 = M19 = Foulser, 5-rank=262
+"36", // 16 = M23 = b3
+"96", // 17 = M17 = b7
+"48", // 18 = M10 = b6, rk=258
+"720", // 19 = M2 = Hering = b4
+"1920", // 20 = Walker = M16 = b5
 };
+
+
+// group order 52
+// OCN=14,15
+// The Foulser planes can be distinguished by the 2-rank:
+// M9 has 5-rank = 258
+// M19 has 5-rank = 262
+// OCN14 has 5-rank=258, = M9
+// OCN15 has 5-rank=262, = M19
+
+// group order 288,
+// OCN = 6,9
+// M11 has 5-rank = 259 = OCM9
+// M14 has 5-rank = 260 = OCN6
+
+
+// group order 144:
+// OCN = 0,7
+// M12 has 5-rank = 259 = OCN7
+// M18 has 5-rank = 262 = OCN0
+
+// group order 48:
+// OCN=4,18
+// M7 has 5-rank = 257 = OCN4
+// M10 has 5-rank = 258 = OCN18
+
+
+// where Mi is the plane with number i in the Moorhouse list (i=1,..,20 and 23):
+// http://ericmoorhouse.org/pub/planes25/index.html
+// a1-a8, b1-b8 and s1-s5 refer to the labels from the Czerwinski / Oakden list.
+
 static int Spreads_5_2_stab_gens[] = {
 1, 0, 0, 0, 0, 1, 0, 0, 4, 0, 4, 0, 0, 4, 0, 4, 
 3, 0, 0, 0, 0, 2, 0, 0, 2, 3, 2, 1, 1, 3, 2, 3, 

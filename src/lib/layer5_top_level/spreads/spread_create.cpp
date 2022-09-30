@@ -27,6 +27,7 @@ spread_create::spread_create()
 	//std::string label_tex;
 
 	G = NULL;
+	G_on_subspaces = NULL;
 
 	q = 0;
 	F = NULL;
@@ -119,6 +120,10 @@ void spread_create::init(spread_create_description *Descr,
 	f_semilinear = A->is_semilinear_matrix_group();
 
 
+	if (Descr->f_group_on_subspaces) {
+		G_on_subspaces = Get_object_of_type_any_group(Descr->group_on_subspaces_label);
+	}
+
 	if (f_v) {
 		cout << "spread_create::init q = " << q << endl;
 		cout << "spread_create::init k = " << k << endl;
@@ -137,12 +142,10 @@ void spread_create::init(spread_create_description *Descr,
 
 	if (Descr->f_family) {
 		if (f_v) {
-			cout << "spread_create::init "
-					"before Surf->create_surface_family "
+			cout << "spread_create::init family not yet implemented "
 					"family_name=" << Descr->family_name << endl;
 		}
-
-
+		exit(1);
 	}
 
 
@@ -195,6 +198,7 @@ void spread_create::init(spread_create_description *Descr,
 		sprintf(str, "catalogue\\_q%d\\_k%d\\_%d", q, k, Descr->iso);
 		label_tex.assign(str);
 	}
+
 	else if (Descr->f_spread_set) {
 
 		if (f_v) {
@@ -230,11 +234,127 @@ void spread_create::init(spread_create_description *Descr,
 
 		//exit(1);
 	}
+
 	else {
 		cout << "spread_create::init we do not "
 				"recognize the type of spread" << endl;
 		exit(1);
 	}
+
+
+
+	if (Descr->f_transform) {
+		int h;
+
+		if (!Descr->f_group_on_subspaces) {
+			cout << "-transform needs -group_on_subspaces" << endl;
+			exit(1);
+		}
+
+		int *Elt1;
+		int *Elt2;
+		//int *Elt3;
+		long int *image_set = NULL;
+
+		Elt1 = NEW_int(G->A_base->elt_size_in_int);
+		Elt2 = NEW_int(G->A_base->elt_size_in_int);
+		//Elt3 = NEW_int(G->A_base->elt_size_in_int);
+		image_set = NEW_lint(sz);
+
+		for (h = 0; h < Descr->transform_text.size(); h++) {
+			if (Descr->transform_f_inv[h]) {
+				cout << "-transform_inv " << Descr->transform_text[h] << endl;
+			}
+			else {
+				cout << "-transform " << Descr->transform_text[h] << endl;
+			}
+
+			int *transformation_coeffs;
+			int transformation_coeffs_sz;
+			//int coeffs_out[20];
+
+			if (f_v) {
+				cout << "spread_create::init "
+						"applying transformation " << h << " / "
+						<< Descr->transform_text.size() << ":" << endl;
+			}
+
+			Int_vec_scan(Descr->transform_text[h], transformation_coeffs, transformation_coeffs_sz);
+
+			if (transformation_coeffs_sz != G->A_base->make_element_size) {
+				cout << "spread_create::init "
+						"need exactly " << G->A_base->make_element_size
+						<< " coefficients for the transformation" << endl;
+				cout << "Descr->transform_text[i]=" << Descr->transform_text[h] << endl;
+				cout << "transformation_coeffs_sz=" << transformation_coeffs_sz << endl;
+				exit(1);
+			}
+
+			G->A_base->make_element(Elt1, transformation_coeffs, verbose_level);
+
+			if (Descr->transform_f_inv[h]) {
+				G->A_base->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+			}
+			else {
+				G->A_base->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+			}
+
+			//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
+#if 0
+			G->A_base->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
+
+			if (f_v) {
+				cout << "spread_create::init "
+						"applying the transformation given by:" << endl;
+				cout << "$$" << endl;
+				G->A_base->print_quick(cout, Elt2);
+				cout << endl;
+				cout << "$$" << endl;
+				cout << "spread_create::init "
+						"The inverse is:" << endl;
+				cout << "$$" << endl;
+				G->A_base->print_quick(cout, Elt3);
+				cout << endl;
+				cout << "$$" << endl;
+			}
+#endif
+			// apply the transformation:
+
+			int i;
+
+			for (i = 0; i < sz; i++) {
+				image_set[i] = G_on_subspaces->A->element_image_of(set[i], Elt2, verbose_level - 1);
+			}
+			Lint_vec_copy(image_set, set, sz);
+
+
+			if (f_has_group) {
+				groups::strong_generators *SG2;
+
+				SG2 = NEW_OBJECT(groups::strong_generators);
+				if (f_v) {
+					cout << "spread_create::init "
+							"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+				}
+				SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
+
+				if (f_v) {
+					cout << "spread_create::init "
+							"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+				}
+
+				FREE_OBJECT(Sg);
+				Sg = SG2;
+			}
+
+		} // next h
+
+		FREE_lint(image_set);
+		FREE_int(Elt1);
+		FREE_int(Elt2);
+		//FREE_int(Elt3);
+	}
+
 
 
 	if (f_v) {

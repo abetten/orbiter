@@ -2145,7 +2145,7 @@ void matrix_group::orthogonal_group_random_generator(
 				"before O->random_generator_for_orthogonal_group" << endl;
 	}
 	
-	O->random_generator_for_orthogonal_group(
+	O->Orthogonal_group->random_generator_for_orthogonal_group(
 		f_semilinear /* f_action_is_semilinear */, 
 		f_siegel, 
 		f_reflection, 
@@ -2248,7 +2248,9 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 				Int_matrix_print(Mtx2, (i + 1), n);
 			}
 			if (GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(Mtx2,
-					(i + 1), n, Mtx3, Mtx4, 0 /* verbose_level */) < i + 1) {
+					(i + 1), n, Mtx3, Mtx4,
+					FALSE /* f_complete */,
+					0 /* verbose_level */) < i + 1) {
 				if (FALSE) {
 					cout << "failing level " << i << endl;
 				}

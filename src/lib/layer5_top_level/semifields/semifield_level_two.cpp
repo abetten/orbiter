@@ -1586,6 +1586,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 			Int_vec_copy(Mtx1, Mtx2, (i + 1) * k);
 			if (F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 					Mtx2, i + 1, k, B, base_cols,
+					FALSE /* f_complete */,
 					0 /* verbose_level */) < i + 1) {
 				continue; // rank is bad
 			}
@@ -1610,6 +1611,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 #endif
 				if (F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 						Mtx2, i + 1, k, B, base_cols,
+						FALSE /* f_complete */,
 						0 /* verbose_level */) < i + 1) {
 					break; // rank is bad
 				}

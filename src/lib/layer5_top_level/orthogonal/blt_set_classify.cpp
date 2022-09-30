@@ -906,12 +906,12 @@ void blt_set_classify::lifting_prepare_function_new(
 	Pts1 = NEW_int(nb_free_points * 5);
 	Pts2 = NEW_int(nb_cols * 5);
 	for (i = 0; i < nb_free_points; i++) {
-		Blt_set_domain->O->unrank_point(Pts1 + i * 5, 1,
+		Blt_set_domain->O->Hyperbolic_pair->unrank_point(Pts1 + i * 5, 1,
 				free_point_list[i],
 				0 /*verbose_level - 1*/);
 	}
 	for (i = 0; i < nb_cols; i++) {
-		Blt_set_domain->O->unrank_point(Pts2 + i * 5, 1,
+		Blt_set_domain->O->Hyperbolic_pair->unrank_point(Pts2 + i * 5, 1,
 				col_labels[i],
 				0 /*verbose_level - 1*/);
 	}

@@ -254,8 +254,6 @@ public:
 
 	BLT_set_create();
 	~BLT_set_create();
-	void null();
-	void freeself();
 	void init(
 			layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain,
 			BLT_set_create_description *Descr,
@@ -323,8 +321,8 @@ public:
 class orthogonal_space_activity_description {
 public:
 
-	int f_input;
-	data_structures::data_input_stream_description *Data;
+	//int f_input;
+	//data_structures::data_input_stream_description *Data;
 
 	int f_create_BLT_set;
 	BLT_set_create_description * BLT_Set_create_description;
@@ -368,6 +366,9 @@ public:
 	std::string set_stabilizer_fname_out;
 
 	int f_export_point_line_incidence_matrix;
+
+	int f_intersect_with_subspace;
+	std::string intersect_with_subspace_label;
 
 
 

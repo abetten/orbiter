@@ -520,10 +520,16 @@ public:
 	std::string fname_csv;
 
 	data_structures::tally *Classify_orbits_by_length;
+
+#if 0
+	// should be in tally:
 	data_structures::set_of_sets *Orbits_classified;
 
 	int *Orbits_classified_length; // [Orbits_classified_nb_types]
 	int Orbits_classified_nb_types;
+#endif
+
+
 
 	orbits_on_something();
 	~orbits_on_something();
@@ -546,10 +552,14 @@ public:
 			int verbose_level);
 	// orbit_type[(go + 1) * go] must be allocated beforehand
 	void report_type(std::ostream &ost, long int *orbit_type, long int goi);
-	void compute_compact_type(long int *orbit_type, long int goi,
-			long int *&compact_type, long int *&row_labels, long int *&col_labels, int &m, int &n);
+	void compute_compact_type(
+			long int *orbit_type, long int goi,
+			long int *&compact_type,
+			long int *&row_labels, long int *&col_labels,
+			int &m, int &n);
 	void report_orbit_lengths(std::ostream &ost);
-	void print_orbits_based_on_filtered_orbits(std::ostream &ost, data_structures::set_of_sets *Filtered_orbits);
+	void print_orbits_based_on_filtered_orbits(std::ostream &ost,
+			data_structures::set_of_sets *Filtered_orbits);
 	void classify_orbits_by_length(int verbose_level);
 	void report_classified_orbit_lengths(std::ostream &ost);
 	void report_classified_orbits_by_lengths(std::ostream &ost);

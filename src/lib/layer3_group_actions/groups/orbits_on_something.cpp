@@ -32,10 +32,12 @@ orbits_on_something::orbits_on_something()
 	//std::string fname;
 
 	Classify_orbits_by_length = NULL;
+#if 0
 	Orbits_classified = NULL;
 
 	Orbits_classified_length = NULL;
 	Orbits_classified_nb_types = 0;
+#endif
 }
 
 orbits_on_something::~orbits_on_something()
@@ -65,12 +67,14 @@ void orbits_on_something::freeself()
 	if (Classify_orbits_by_length) {
 		FREE_OBJECT(Classify_orbits_by_length);
 	}
+#if 0
 	if (Orbits_classified) {
 		FREE_OBJECT(Orbits_classified);
 	}
 	if (Orbits_classified_length) {
 		FREE_int(Orbits_classified_length);
 	}
+#endif
 	null();
 	if (f_v) {
 		cout << "orbits_on_something::freeself "
@@ -157,16 +161,16 @@ void orbits_on_something::init(
 
 
 		{
-		ofstream fp(fname);
-		if (f_v) {
-			cout << "orbits_on_something::init "
-					"before Sch->write_to_file_binary" << endl;
-		}
-		Sch->write_to_file_binary(fp, verbose_level);
-		if (f_v) {
-			cout << "orbits_on_something::init "
-					"after Sch->write_to_file_binary" << endl;
-		}
+			ofstream fp(fname);
+			if (f_v) {
+				cout << "orbits_on_something::init "
+						"before Sch->write_to_file_binary" << endl;
+			}
+			Sch->write_to_file_binary(fp, verbose_level);
+			if (f_v) {
+				cout << "orbits_on_something::init "
+						"after Sch->write_to_file_binary" << endl;
+			}
 		}
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname.c_str()) << endl;
@@ -395,8 +399,11 @@ void orbits_on_something::report_type(std::ostream &ost, long int *orbit_type, l
 #endif
 }
 
-void orbits_on_something::compute_compact_type(long int *orbit_type, long int goi,
-		long int *&compact_type, long int *&row_labels, long int *&col_labels, int &m, int &n)
+void orbits_on_something::compute_compact_type(
+		long int *orbit_type, long int goi,
+		long int *&compact_type,
+		long int *&row_labels, long int *&col_labels,
+		int &m, int &n)
 {
 	int *f_row_used;
 	int *f_col_used;
@@ -470,7 +477,8 @@ void orbits_on_something::report_orbit_lengths(std::ostream &ost)
 	Sch->print_orbit_lengths_tex(ost);
 }
 
-void orbits_on_something::print_orbits_based_on_filtered_orbits(std::ostream &ost, data_structures::set_of_sets *Filtered_orbits)
+void orbits_on_something::print_orbits_based_on_filtered_orbits(std::ostream &ost,
+		data_structures::set_of_sets *Filtered_orbits)
 {
 	int i, j;
 	int a;
@@ -518,7 +526,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 		Classify_orbits_by_length->print_naked(FALSE);
 		cout << endl;
 	}
-
+#if 0
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length "
 				"before C->get_set_partition_and_types" << endl;
@@ -546,6 +554,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 					<< Orbits_classified->Set_size[i] << endl;
 		}
 	}
+#endif
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length done" << endl;
 	}
@@ -557,9 +566,9 @@ void orbits_on_something::report_classified_orbit_lengths(std::ostream &ost)
 
 	//Sch->print_orbit_lengths_tex(ost);
 	ost << "Type : orbit length : number of orbits of this length\\\\" << endl;
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		ost << i << " : " << Orbits_classified_length[i] << " : "
-				<< Orbits_classified->Set_size[i] << "\\\\" << endl;
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		ost << i << " : " << Classify_orbits_by_length->data_values[i] << " : "
+				<< Classify_orbits_by_length->Set_partition->Set_size[i] << "\\\\" << endl;
 	}
 }
 
@@ -569,12 +578,12 @@ void orbits_on_something::report_classified_orbits_by_lengths(std::ostream &ost)
 	long int a;
 	orbiter_kernel_system::latex_interface L;
 
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		ost << "Set " << i << " has size " << Orbits_classified->Set_size[i] << " : ";
-		for (j = 0; j < Orbits_classified->Set_size[i]; j++) {
-			a = Orbits_classified->Sets[i][j];
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		ost << "Set " << i << " has size " << Classify_orbits_by_length->Set_partition->Set_size[i] << " : ";
+		for (j = 0; j < Classify_orbits_by_length->Set_partition->Set_size[i]; j++) {
+			a = Classify_orbits_by_length->Set_partition->Sets[i][j];
 			ost << a;
-			if (j < Orbits_classified->Set_size[i] - 1) {
+			if (j < Classify_orbits_by_length->Set_partition->Set_size[i] - 1) {
 				ost << ", ";
 			}
 
@@ -587,8 +596,8 @@ int orbits_on_something::get_orbit_type_index(int orbit_length)
 {
 	int i;
 
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		if (orbit_length == Orbits_classified_length[i]) {
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		if (orbit_length == Classify_orbits_by_length->data_values[i]) {
 			return i;
 		}
 	}
@@ -600,8 +609,8 @@ int orbits_on_something::get_orbit_type_index_if_present(int orbit_length)
 {
 	int i;
 
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		if (orbit_length == Orbits_classified_length[i]) {
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		if (orbit_length == Classify_orbits_by_length->data_values[i]) {
 			return i;
 		}
 	}
@@ -659,7 +668,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	int nb_points;
 
 	type_idx = get_orbit_type_index(orbit_length);
-	nb_points = Orbits_classified->Set_size[type_idx];
+	nb_points = Classify_orbits_by_length->Set_partition->Set_size[type_idx];
 	prev_nb = nb_points;
 	if (f_v) {
 		cout << "orbits_on_something::test_orbits_of_a_certain_length "
@@ -669,7 +678,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	orbit = NEW_lint(orbit_length);
 	j = 0;
 	for (i = 0; i < nb_points; i++) {
-		a = Orbits_classified->Sets[type_idx][i];
+		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
 		if (l != orbit_length) {
 			cout << "orbits_on_something::test_orbits_of_a_certain_length l != orbit_length" << endl;
@@ -692,10 +701,10 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 #endif
 
 		if (r) {
-			Orbits_classified->Sets[type_idx][j++] = a;
+			Classify_orbits_by_length->Set_partition->Sets[type_idx][j++] = a;
 		}
 	}
-	Orbits_classified->Set_size[type_idx] = j;
+	Classify_orbits_by_length->Set_partition->Set_size[type_idx] = j;
 
 
 
@@ -715,10 +724,10 @@ void orbits_on_something::print_orbits_of_a_certain_length(int orbit_length)
 	type_idx = get_orbit_type_index(orbit_length);
 	orbit = NEW_lint(orbit_length);
 
-	cout << "There are " << Orbits_classified->Set_size[type_idx] << " orbits of length " << orbit_length << ":" << endl;
-	if (Orbits_classified->Set_size[type_idx] < 1000) {
-		for (i = 0; i < Orbits_classified->Set_size[type_idx]; i++) {
-			a = Orbits_classified->Sets[type_idx][i];
+	cout << "There are " << Classify_orbits_by_length->Set_partition->Set_size[type_idx] << " orbits of length " << orbit_length << ":" << endl;
+	if (Classify_orbits_by_length->Set_partition->Set_size[type_idx] < 1000) {
+		for (i = 0; i < Classify_orbits_by_length->Set_partition->Set_size[type_idx]; i++) {
+			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 			Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
 
 			cout << i << " : ";
@@ -753,13 +762,13 @@ int orbits_on_something::test_pair_of_orbits_of_a_equal_length(
 	int l;
 	int ret;
 
-	a = Orbits_classified->Sets[type_idx][idx1];
+	a = Classify_orbits_by_length->Set_partition->Sets[type_idx][idx1];
 	Sch->get_orbit(a, Orbit1, l, 0 /* verbose_level*/);
 	if (l != orbit_length) {
 		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length l != orbit_length" << endl;
 		exit(1);
 	}
-	b = Orbits_classified->Sets[type_idx][idx2];
+	b = Classify_orbits_by_length->Set_partition->Sets[type_idx][idx2];
 	Sch->get_orbit(b, Orbit2, l, 0 /* verbose_level*/);
 	if (l != orbit_length) {
 		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length l != orbit_length" << endl;
@@ -781,8 +790,8 @@ void orbits_on_something::report_orbits_of_type(std::ostream &ost, int type_idx)
 	int i, a, len, orbit_length;
 	long int *orbit;
 
-	orbit_length = Orbits_classified_length[type_idx];
-	nb_points = Orbits_classified->Set_size[type_idx];
+	orbit_length = Classify_orbits_by_length->data_values[type_idx];
+	nb_points = Classify_orbits_by_length->Set_partition->Set_size[type_idx];
 
 	ost << "The  orbits of type " << type_idx << " have size " << orbit_length << "\\\\" << endl;
 	ost << "The number of orbits of type " << type_idx << " is " << nb_points << "\\\\" << endl;
@@ -790,7 +799,7 @@ void orbits_on_something::report_orbits_of_type(std::ostream &ost, int type_idx)
 	orbit = NEW_lint(orbit_length);
 
 	for (i = 0; i < nb_points; i++) {
-		a = Orbits_classified->Sets[type_idx][i];
+		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit, len, 0 /* verbose_level*/);
 		ost << i << " : " << a << " : ";
 		Lint_vec_print(ost, orbit, len);
@@ -836,7 +845,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
-	nb_points_original = Orbits_classified->Set_size[type_idx];
+	nb_points_original = Classify_orbits_by_length->Set_partition->Set_size[type_idx];
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
 				"nb_points_original=" << nb_points_original << endl;
@@ -852,7 +861,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	filtered_set_of_orbits_size = 0;
 	filtered_set_of_orbits = NEW_lint(nb_points_original);
 	for (i = 0; i < nb_points_original; i++) {
-		a = Orbits_classified->Sets[type_idx][i];
+		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering l1 != orbit_length" << endl;
@@ -1124,7 +1133,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
-	nb_points = Orbits_classified->Set_size[type_idx];
+	nb_points = Classify_orbits_by_length->Set_partition->Set_size[type_idx];
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
 				"nb_points=" << nb_points << endl;
@@ -1139,7 +1148,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	if (f_has_colors) {
 		point_color = NEW_int(nb_points * orbit_length);
 		for (i = 0; i < nb_points; i++) {
-			a = Orbits_classified->Sets[type_idx][i];
+			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			if (l1 != orbit_length) {
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l1 != orbit_length" << endl;
@@ -1171,7 +1180,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	if (FALSE) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length point sets:" << endl;
 		for (i = 0; i < nb_points; i++) {
-			a = Orbits_classified->Sets[type_idx][i];
+			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			Lint_vec_print(cout, orbit1, l1);
 			if (i < nb_points - 1) {
@@ -1183,14 +1192,14 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
-		a = Orbits_classified->Sets[type_idx][i];
+		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l1 != orbit_length" << endl;
 			exit(1);
 		}
 		for (j = i + 1; j < nb_points; j++) {
-			b = Orbits_classified->Sets[type_idx][j];
+			b = Classify_orbits_by_length->Set_partition->Sets[type_idx][j];
 			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 			if (l2 != orbit_length) {
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l2 != orbit_length" << endl;
@@ -1237,7 +1246,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	CG->init_with_point_labels(nb_points, number_colors, orbit_length,
 		point_color,
 		Bitvec, TRUE /* f_ownership_of_bitvec */,
-		Orbits_classified->Sets[type_idx] /* point_labels */,
+		Classify_orbits_by_length->Set_partition->Sets[type_idx] /* point_labels */,
 		fname, fname,
 		verbose_level - 2);
 
@@ -1277,7 +1286,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 
 
-	Lint_vec_copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
+	Lint_vec_copy(Classify_orbits_by_length->Set_partition->Sets[type_idx], CG->points, nb_points);
 	//sprintf(CG->fname_base, "%s", fname);
 	CG->fname_base.assign(fname);
 
@@ -1362,7 +1371,7 @@ void orbits_on_something::extract_orbits_using_classification(
 	type_idx = get_orbit_type_index(orbit_length);
 	for (i = 0; i < nb_orbits; i++) {
 		a = orbits_idx[i];
-		b = Orbits_classified->Sets[type_idx][a];
+		b = Classify_orbits_by_length->Set_partition->Sets[type_idx][a];
 		Sch->get_orbit(b, orbit, l, 0 /* verbose_level*/);
 		if (l != orbit_length) {
 			cout << "orbits_on_something::extract_orbits_using_classification l != orbit_length" << endl;
@@ -1794,7 +1803,7 @@ void orbits_on_something::compute_orbit_invariant_after_classification(
 	if (f_v) {
 		cout << "orbits_on_something::compute_orbit_invariant_after_classification before evaluate_function_and_store" << endl;
 	}
-	Orbits_classified->evaluate_function_and_store(Orbit_invariant,
+	Classify_orbits_by_length->Set_partition->evaluate_function_and_store(Orbit_invariant,
 			evaluate_orbit_invariant_function,
 			evaluate_data,
 			verbose_level - 1);
@@ -1909,18 +1918,18 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	SG->print_generators_tex(ost);
 
 	ost << "Considering the orbit length, there are "
-			<< Orbits_classified_nb_types << " types of orbits:\\\\" << endl;
+			<< Classify_orbits_by_length->nb_types << " types of orbits:\\\\" << endl;
 	ost << "$$" << endl;
-	Int_vec_print(ost, Orbits_classified_length,
-			Orbits_classified_nb_types);
+	Int_vec_print(ost, Classify_orbits_by_length->data_values,
+			Classify_orbits_by_length->nb_types);
 	ost << "$$" << endl;
 	ost << "i : orbit length : number of orbits\\\\" << endl;
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		ost << i << " : " << Orbits_classified_length[i] << " : "
-				<< Orbits_classified->Set_size[i] << "\\\\" << endl;
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		ost << i << " : " << Classify_orbits_by_length->data_values[i] << " : "
+				<< Classify_orbits_by_length->Set_partition->Set_size[i] << "\\\\" << endl;
 	}
 	ost << "Orbits classified:\\\\" << endl;
-	Orbits_classified->print_table_tex(ost);
+	Classify_orbits_by_length->Set_partition->print_table_tex(ost);
 
 
 	cout << "orbits_on_something::report step 2" << endl;
@@ -1930,10 +1939,10 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	long int *Orb;
 	long int a;
 
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		orbit_length = Orbits_classified_length[i];
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		orbit_length = Classify_orbits_by_length->data_values[i];
 		ost << "Orbits of length " << orbit_length << ":\\\\" << endl;
-		nb_orbits = Orbits_classified->Set_size[i];
+		nb_orbits = Classify_orbits_by_length->Set_partition->Set_size[i];
 
 		Orb = NEW_lint(orbit_length);
 
@@ -1945,7 +1954,7 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 		}
 
 		for (j = 0; j < j_max; j++) {
-			idx = Orbits_classified->Sets[i][j];
+			idx = Classify_orbits_by_length->Set_partition->Sets[i][j];
 			ost << "Orbit " << idx << ":" << endl;
 
 
@@ -1976,15 +1985,15 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	ost << "\\section*{Orbits}" << endl;
 
 
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		orbit_length = Orbits_classified_length[i];
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		orbit_length = Classify_orbits_by_length->data_values[i];
 		ost << "Orbits of length " << orbit_length << ":\\\\" << endl;
-		nb_orbits = Orbits_classified->Set_size[i];
+		nb_orbits = Classify_orbits_by_length->Set_partition->Set_size[i];
 
 		Orb = NEW_lint(orbit_length);
 
 		for (j = 0; j < nb_orbits; j++) {
-			idx = Orbits_classified->Sets[i][j];
+			idx = Classify_orbits_by_length->Set_partition->Sets[i][j];
 			ost << "Orbit " << idx << ":" << endl;
 			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
 			//ost << "$$" << endl;
@@ -2069,7 +2078,7 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 
 	long int *Table;
 
-	Table = NEW_lint(Orbits_classified->nb_sets * 2);
+	Table = NEW_lint(Classify_orbits_by_length->Set_partition->nb_sets * 2);
 
 	ost << "orbit length : number of orbits of that length:\\\\" << endl;
 #if 0
@@ -2080,16 +2089,16 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 
 #endif
 
-	for (i = 0; i < Orbits_classified->nb_sets; i++) {
-		Table[2 * i + 0] = Orbits_classified_length[i];
-		Table[2 * i + 1] = Orbits_classified->Set_size[i];
+	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
+		Table[2 * i + 0] = Classify_orbits_by_length->data_values[i];
+		Table[2 * i + 1] = Classify_orbits_by_length->Set_partition->Set_size[i];
 	}
 
 	orbiter_kernel_system::latex_interface L;
 
 	ost << "$$" << endl;
 	L.print_lint_matrix_tex(ost,
-			Table, Orbits_classified->nb_sets, 2);
+			Table, Classify_orbits_by_length->Set_partition->nb_sets, 2);
 	ost << "$$" << endl;
 
 	FREE_lint(Table);

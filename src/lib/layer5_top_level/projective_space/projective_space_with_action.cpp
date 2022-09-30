@@ -21,18 +21,12 @@ namespace projective_geometry {
 
 projective_space_with_action::projective_space_with_action()
 {
-	null();
-}
-
-projective_space_with_action::~projective_space_with_action()
-{
-	freeself();
-}
-
-void projective_space_with_action::null()
-{
+	n = 0;
+	d = 0;
 	q = 0;
 	F = NULL;
+	f_semilinear = FALSE;
+	f_init_incidence_structure = FALSE;
 	P = NULL;
 	PA2 = NULL;
 	Dom = NULL;
@@ -46,7 +40,11 @@ void projective_space_with_action::null()
 	Elt1 = NULL;
 }
 
-void projective_space_with_action::freeself()
+
+
+
+
+projective_space_with_action::~projective_space_with_action()
 {
 	if (P) {
 		FREE_OBJECT(P);
@@ -72,7 +70,6 @@ void projective_space_with_action::freeself()
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
-	null();
 }
 
 void projective_space_with_action::init(
@@ -1825,7 +1822,7 @@ void projective_space_with_action::do_rank_lines_in_PG(
 }
 
 void projective_space_with_action::do_unrank_lines_in_PG(
-		std::string &text,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1834,18 +1831,23 @@ void projective_space_with_action::do_unrank_lines_in_PG(
 		cout << "projective_space_with_action::do_unrank_lines_in_PG" << endl;
 	}
 
-	long int *v;
-	int sz;
 	int len;
 	int *basis;
 
-	Lint_vec_scan(text, v, sz);
+	//Lint_vec_scan(text, v, sz);
+
+	long int *v;
+	int sz;
+
+	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(label, v, sz, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_unrank_lines_in_PG v: ";
+		cout << "projective_space_with_action::do_unrank_lines_in_PG v = ";
 		Lint_vec_print(cout, v, sz);
 		cout << endl;
 	}
+
+
 
 	len = 2 * (P->n + 1);
 

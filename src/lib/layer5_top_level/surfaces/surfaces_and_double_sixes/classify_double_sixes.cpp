@@ -398,7 +398,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 			Int_vec_print(cout, v, 6);
 			cout << endl;
 		}
-		b = Surf->O->rank_point(v, 1, 0 /* verbose_level*/);
+		b = Surf->O->Hyperbolic_pair->rank_point(v, 1, 0 /* verbose_level*/);
 		if (FALSE) {
 			cout << " : " << b;
 			cout << endl;

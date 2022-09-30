@@ -161,7 +161,7 @@ public:
 	int rank_of_rectangular_matrix(int *A,
 		int m, int n, int verbose_level);
 	int rank_of_rectangular_matrix_memory_given(int *A,
-		int m, int n, int *B, int *base_cols,
+		int m, int n, int *B, int *base_cols, int f_complete,
 		int verbose_level);
 	int rank_and_basecols(int *A, int m,
 		int *base_cols, int verbose_level);

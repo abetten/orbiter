@@ -407,7 +407,7 @@ int geometry_global::test_if_arc(field_theory::finite_field *Fq,
 
 
 	if (f_v) {
-		cout << "test_if_arc testing set" << endl;
+		cout << "geometry_global::test_if_arc testing set" << endl;
 		Int_vec_print(cout, set, set_sz);
 		cout << endl;
 		}
@@ -447,7 +447,7 @@ int geometry_global::test_if_arc(field_theory::finite_field *Fq,
 			}
 		}
 	if (f_v) {
-		cout << "passes the arc test" << endl;
+		cout << "geometry_global::test_if_arc: passes the arc test" << endl;
 		}
 	ret = TRUE;
 done:
@@ -814,7 +814,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 	int c1 = 0, c2 = 0, c3 = 0;
 	int verbose_level = 0;
 
-	cout << "test_Orthogonal" << endl;
+	cout << "geometry_global::test_Orthogonal" << endl;
 	GFq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 	v = NEW_int(k + 1);
 	//n = Witt_index(epsilon, k);
@@ -863,7 +863,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 
 
 	FREE_int(v);
-	cout << "test_Orthogonal done" << endl;
+	cout << "geometry_global::test_Orthogonal done" << endl;
 }
 
 void geometry_global::test_orthogonal(int n, int q)
@@ -875,7 +875,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	long int nb;
 	int verbose_level = 0;
 
-	cout << "test_orthogonal" << endl;
+	cout << "geometry_global::test_orthogonal" << endl;
 	GFq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 	v = NEW_int(2 * n);
 	nb = nb_pts_Sbar(n, q);
@@ -898,7 +898,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb
 			<< " singular points" << endl;
 	FREE_int(v);
-	cout << "test_orthogonal done" << endl;
+	cout << "geometry_global::test_orthogonal done" << endl;
 }
 
 
@@ -1087,11 +1087,11 @@ int &geometry_global::TDO_upper_bound(int i, int j)
 	int m, bound;
 
 	if (i <= 0) {
-		cout << "TDO_upper_bound i <= 0, i = " << i << endl;
+		cout << "geometry_global::TDO_upper_bound i <= 0, i = " << i << endl;
 		exit(1);
 		}
 	if (j <= 0) {
-		cout << "TDO_upper_bound j <= 0, j = " << j << endl;
+		cout << "geometry_global::TDO_upper_bound j <= 0, j = " << j << endl;
 		exit(1);
 		}
 	m = MAXIMUM(i, j);
@@ -1107,7 +1107,7 @@ int &geometry_global::TDO_upper_bound(int i, int j)
 		}
 	bound = TDO_upper_bound_internal(i, j);
 	if (bound == -1) {
-		cout << "TDO_upper_bound = -1 i=" << i << " j=" << j << endl;
+		cout << "geometry_global::TDO_upper_bound = -1 i=" << i << " j=" << j << endl;
 		exit(1);
 		}
 	//cout << "PACKING " << i << " " << j << " = " << bound << endl;
@@ -1117,17 +1117,17 @@ int &geometry_global::TDO_upper_bound(int i, int j)
 int &geometry_global::TDO_upper_bound_internal(int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
-		cout << "TDO_upper_bound i > v_max" << endl;
+		cout << "geometry_global::TDO_upper_bound_internal i > v_max" << endl;
 		cout << "i=" << i << endl;
 		cout << "TDO_upper_bounds_v_max=" << TDO_upper_bounds_v_max << endl;
 		exit(1);
 		}
 	if (i <= 0) {
-		cout << "TDO_upper_bound_internal i <= 0, i = " << i << endl;
+		cout << "geometry_global::TDO_upper_bound_internal i <= 0, i = " << i << endl;
 		exit(1);
 		}
 	if (j <= 0) {
-		cout << "TDO_upper_bound_internal j <= 0, j = " << j << endl;
+		cout << "geometry_global::TDO_upper_bound_internal j <= 0, j = " << j << endl;
 		exit(1);
 		}
 	return TDO_upper_bounds_table[(i - 1) * TDO_upper_bounds_v_max + j - 1];
@@ -1136,17 +1136,17 @@ int &geometry_global::TDO_upper_bound_internal(int i, int j)
 int &geometry_global::TDO_upper_bound_source(int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
-		cout << "TDO_upper_bound_source i > v_max" << endl;
+		cout << "geometry_global::TDO_upper_bound_source i > v_max" << endl;
 		cout << "i=" << i << endl;
 		cout << "TDO_upper_bounds_v_max=" << TDO_upper_bounds_v_max << endl;
 		exit(1);
 		}
 	if (i <= 0) {
-		cout << "TDO_upper_bound_source i <= 0, i = " << i << endl;
+		cout << "geometry_global::TDO_upper_bound_source i <= 0, i = " << i << endl;
 		exit(1);
 		}
 	if (j <= 0) {
-		cout << "TDO_upper_bound_source j <= 0, j = " << j << endl;
+		cout << "geometry_global::TDO_upper_bound_source j <= 0, j = " << j << endl;
 		exit(1);
 		}
 	return TDO_upper_bounds_table_source[(i - 1) * TDO_upper_bounds_v_max + j - 1];
@@ -1211,8 +1211,9 @@ void geometry_global::TDO_refine_init_upper_bounds(int v_max)
 		TDO_upper_bounds_table_source[i] = 0;
 		}
 	for (u = 0;; u++) {
-		if (TDO_upper_bounds_initial_data[u * 3 + 0] == -1)
+		if (TDO_upper_bounds_initial_data[u * 3 + 0] == -1) {
 			break;
+		}
 		i = TDO_upper_bounds_initial_data[u * 3 + 0];
 		j = TDO_upper_bounds_initial_data[u * 3 + 1];
 		bound = TDO_upper_bounds_initial_data[u * 3 + 2];
@@ -1226,8 +1227,9 @@ void geometry_global::TDO_refine_init_upper_bounds(int v_max)
 		}
 	for (i = 1; i <= v_max; i++) {
 		for (j = 1; j <= i; j++) {
-			if (TDO_upper_bound_internal(i, j) != -1)
+			if (TDO_upper_bound_internal(i, j) != -1) {
 				continue;
+			}
 			bound_braun = braun_test_upper_bound(i, j);
 			TDO_upper_bound_internal(i, j) = bound_braun;
 			TDO_upper_bound_source(i, j) = 2;
@@ -1372,7 +1374,7 @@ void geometry_global::maxfit_table_init(int v_max)
 
 void geometry_global::maxfit_table_reallocate(int v_max)
 {
-	cout << "maxfit_table_reallocate v_max=" << v_max << endl;
+	cout << "geometry_global::maxfit_table_reallocate v_max=" << v_max << endl;
 
 	FREE_int(maxfit_table);
 	maxfit_table = NEW_int(v_max * v_max);

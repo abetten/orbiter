@@ -178,7 +178,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	AO = A->G.AO;
 	O = AO->O;
 
-	N = O->nb_points;
+	N = O->Hyperbolic_pair->nb_points;
 	
 	if (f_vv) {
 		cout << "The finite field is:" << endl;
@@ -186,9 +186,9 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 		}
 
 	if (f_v) {
-		cout << "nb_points=" << O->nb_points << endl;
-		cout << "nb_lines=" << O->nb_lines << endl;
-		cout << "alpha=" << O->alpha << endl;
+		cout << "nb_points=" << O->Hyperbolic_pair->nb_points << endl;
+		cout << "nb_lines=" << O->Hyperbolic_pair->nb_lines << endl;
+		cout << "alpha=" << O->Hyperbolic_pair->alpha << endl;
 		}
 
 	Pts = NEW_int(N * Descr->d);
@@ -276,9 +276,9 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 		K->init(LG->F, O, verbose_level);
 		color_table = NEW_int(N);
 		nb_colors = Gg.nb_AG_elements(2, LG->F->q);
-		O->unrank_point(u, 1, 0, 0);
+		O->Hyperbolic_pair->unrank_point(u, 1, 0, 0);
 		for (i = 0; i < N; i++) {
-			O->unrank_point(v, 1, i, 0);
+			O->Hyperbolic_pair->unrank_point(v, 1, i, 0);
 			fxy = O->evaluate_bilinear_form(u, v, 1);
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
@@ -307,7 +307,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 			cout << i << " / " << N << " : ";
 			Int_vec_print(cout, v, Descr->d);
 
-			O->unrank_point(v, 1, i, 0);
+			O->Hyperbolic_pair->unrank_point(v, 1, i, 0);
 			fxy = O->evaluate_bilinear_form(u, v, 1);
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
@@ -354,7 +354,7 @@ void ovoid_classify::early_test_func(long int *S, int len,
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
-				O->unrank_point(u, 1, candidates[i],
+				O->Hyperbolic_pair->unrank_point(u, 1, candidates[i],
 						0/*verbose_level - 4*/);
 				cout << "candidate " << i << "="
 						<< candidates[i] << ": ";
@@ -364,10 +364,10 @@ void ovoid_classify::early_test_func(long int *S, int len,
 			}
 		}
 	for (i = 0; i < len; i++) {
-		O->unrank_point(Pts + i * Descr->d, 1, S[i], 0/*verbose_level - 4*/);
+		O->Hyperbolic_pair->unrank_point(Pts + i * Descr->d, 1, S[i], 0/*verbose_level - 4*/);
 		}
 	for (i = 0; i < nb_candidates; i++) {
-		O->unrank_point(Candidates + i * Descr->d, 1, candidates[i],
+		O->Hyperbolic_pair->unrank_point(Candidates + i * Descr->d, 1, candidates[i],
 				0/*verbose_level - 4*/);
 		}
 
@@ -411,7 +411,7 @@ void ovoid_classify::print(ostream &ost, long int *S, int len)
 	
 	for (i = 0; i < len; i++) {
 		for (i = 0; i < len; i++) {
-			O->unrank_point(u, 1, S[i], 0);
+			O->Hyperbolic_pair->unrank_point(u, 1, S[i], 0);
 			Int_vec_print(ost, u, Descr->d - 1);
 			ost << endl;
 			}
@@ -706,7 +706,7 @@ void ovoid_classify::create_graph(orbiter_kernel_system::orbiter_data_file *ODF,
 
 	Pts = NEW_int(nb_points * Descr->d);
 	for (i = 0; i < nb_points; i++) {
-		O->unrank_point(Pts + i * Descr->d, 1, candidates[i], 0);
+		O->Hyperbolic_pair->unrank_point(Pts + i * Descr->d, 1, candidates[i], 0);
 	}
 
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;

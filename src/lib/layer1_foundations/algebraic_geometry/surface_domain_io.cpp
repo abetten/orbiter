@@ -133,7 +133,7 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Klein_rk[i];
-		O->unrank_point(w, 1, a, 0 /* verbose_level*/);
+		O->Hyperbolic_pair->unrank_point(w, 1, a, 0 /* verbose_level*/);
 			// error corrected: w was v which was v[4], so too short.
 			// Aug 25, 2018
 		Int_vec_print_to_str(str, w, 6);

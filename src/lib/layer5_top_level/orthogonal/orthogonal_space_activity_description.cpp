@@ -20,8 +20,8 @@ namespace orthogonal_geometry_applications {
 orthogonal_space_activity_description::orthogonal_space_activity_description()
 {
 
-	f_input = FALSE;
-	Data = NULL;
+	//f_input = FALSE;
+	//Data = NULL;
 
 	f_create_BLT_set = FALSE;
 	BLT_Set_create_description = NULL;
@@ -66,6 +66,9 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 
 	f_export_point_line_incidence_matrix = FALSE;
 
+	f_intersect_with_subspace = FALSE;
+	//std::string intersect_with_subspace_label;
+
 
 }
 
@@ -88,6 +91,7 @@ int orthogonal_space_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (ST.stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data = NEW_OBJECT(data_structures::data_input_stream_description);
@@ -105,7 +109,9 @@ int orthogonal_space_activity_description::read_arguments(
 				}
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-create_BLT_set") == 0) {
+#endif
+
+		if (ST.stringcmp(argv[i], "-create_BLT_set") == 0) {
 			f_create_BLT_set = TRUE;
 			BLT_Set_create_description = NEW_OBJECT(BLT_set_create_description);
 			if (f_v) {
@@ -226,6 +232,14 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-export_point_line_incidence_matrix " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-intersect_with_subspace") == 0) {
+			f_intersect_with_subspace = TRUE;
+			intersect_with_subspace_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-intersect_with_subspace " << intersect_with_subspace_label << endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -252,9 +266,11 @@ int orthogonal_space_activity_description::read_arguments(
 
 void orthogonal_space_activity_description::print()
 {
+#if 0
 	if (f_input) {
 		cout << "-input" << endl;
 	}
+#endif
 	if (f_create_BLT_set) {
 		cout << "-create_BLT_set ";
 		BLT_Set_create_description->print();
@@ -301,6 +317,9 @@ void orthogonal_space_activity_description::print()
 	}
 	if (f_export_point_line_incidence_matrix) {
 		cout << "-export_point_line_incidence_matrix " << endl;
+	}
+	if (f_intersect_with_subspace) {
+		cout << "-intersect_with_subspace " << intersect_with_subspace_label << endl;
 	}
 }
 

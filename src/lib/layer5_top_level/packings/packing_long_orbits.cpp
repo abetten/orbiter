@@ -143,7 +143,7 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 		}
 
 		fixpoints_clique_case_number = 0;
-		Filtered_orbits = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified;
+		Filtered_orbits = PWF->PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition;
 
 		if (f_v) {
 			cout << "packing_long_orbits::init Filtered_orbits=" << endl;
@@ -511,7 +511,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 
 	data_structures::set_of_sets *Input;
 
-	Input = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified;
+	Input = PWF->PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition;
 
 	if (Filtered_orbits) {
 		FREE_OBJECT(Filtered_orbits);
@@ -535,7 +535,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 		int orbit_length;
 		int len1;
 
-		orbit_length = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified_length[t];
+		orbit_length = PWF->PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->data_values[t];
 		Filtered_orbits->Set_size[t] = 0;
 
 		if (f_v) {
@@ -1154,7 +1154,7 @@ void packing_long_orbits::report_filtered_orbits(ostream &ost)
 	//Sch->print_orbit_lengths_tex(ost);
 	ost << "Type : orbit length : number of orbits of this length\\\\" << endl;
 	for (i = 0; i < Filtered_orbits->nb_sets; i++) {
-		ost << i << " : " << PWF->PW->reduced_spread_orbits_under_H->Orbits_classified_length[i] << " : "
+		ost << i << " : " << PWF->PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->data_values[i] << " : "
 				<< Filtered_orbits->Set_size[i] << "\\\\" << endl;
 		}
 }

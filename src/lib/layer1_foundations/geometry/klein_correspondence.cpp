@@ -95,7 +95,7 @@ void klein_correspondence::init(
 	q = F->q;
 
 
-	nb_Pts = O->nb_points;
+	nb_Pts = O->Hyperbolic_pair->nb_points;
 	
 	P3 = NEW_OBJECT(projective_space);
 	
@@ -406,7 +406,7 @@ long int klein_correspondence::point_on_quadric_embedded_in_P5(long int pt)
 	int v6[6];
 	long int r;
 
-	O->unrank_point(v6, 1, pt, 0);
+	O->Hyperbolic_pair->unrank_point(v6, 1, pt, 0);
 	r = P5->rank_point(v6);
 	return r;
 }
@@ -423,7 +423,7 @@ long int klein_correspondence::line_to_point_on_quadric(long int line_rk, int ve
 
 	line_to_Pluecker(line_rk, v6, verbose_level);
 
-	point_rk = O->rank_point(v6, 1, 0 /* verbose_level */);
+	point_rk = O->Hyperbolic_pair->rank_point(v6, 1, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "klein_correspondence::line_to_point_on_quadric line_rk=" << line_rk
 				<< " / " << P3->N_lines << " v6 : ";
@@ -484,7 +484,7 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 	int basis_line[8]; // [2 * 4]
 	long int line_rk = 0;
 
-	O->unrank_point(v6, 1, point_rk, 0);
+	O->Hyperbolic_pair->unrank_point(v6, 1, point_rk, 0);
 	if (f_v) {
 		cout << "klein_correspondence::point_on_quadric_to_line v6=";
 		Int_vec_print(cout, v6, 6);
@@ -790,7 +790,7 @@ void klein_correspondence::identify_external_lines_and_spreads(
 			a = T->spread_table[i * T->spread_size + j];
 			b = line_to_point_on_quadric(a, 0 /* verbose_level */);
 
-			O->unrank_point(basis_elliptic_quadric + j * d, 1, b, 0);
+			O->Hyperbolic_pair->unrank_point(basis_elliptic_quadric + j * d, 1, b, 0);
 		}
 		if (FALSE) {
 			cout << "klein_correspondence::identify_external_lines_and_spreads"

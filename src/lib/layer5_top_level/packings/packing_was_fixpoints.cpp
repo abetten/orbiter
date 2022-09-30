@@ -208,7 +208,7 @@ void packing_was_fixpoints::action_on_fixpoints(int verbose_level)
 	if (f_v) {
 		cout << "fixpoints_idx = " << fixpoints_idx << endl;
 		cout << "Number of fixedpoints = "
-				<< PW->reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx] << endl;
+				<< PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[fixpoints_idx] << endl;
 	}
 
 	A_on_fixpoints = PW->restricted_action(1 /* orbit_length */, verbose_level);
@@ -796,7 +796,7 @@ long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a, int verbose_le
 		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread a=" << a << endl;
 	}
 	//a = fixpoint_clique[i];
-	b = PW->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx][a];
+	b = PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[fixpoints_idx][a];
 	if (f_v) {
 		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread b=" << b << endl;
 	}

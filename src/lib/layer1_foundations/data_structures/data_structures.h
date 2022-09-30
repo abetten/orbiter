@@ -1686,6 +1686,17 @@ public:
 	int *second_type_first;
 	int *second_type_len;
 
+	// added 09/28/2022:
+	data_structures::set_of_sets *Set_partition;
+	//data_structures::set_of_sets *Orbits_classified;
+
+	int *data_values; // [nb_types]
+
+	//int *Orbits_classified_length; // [Orbits_classified_nb_types]
+	//int Orbits_classified_nb_types;
+
+
+
 	tally();
 	~tally();
 	void init(int *data, int data_length,

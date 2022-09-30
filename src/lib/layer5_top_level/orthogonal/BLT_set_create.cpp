@@ -20,6 +20,12 @@ namespace orthogonal_geometry_applications {
 
 BLT_set_create::BLT_set_create()
 {
+	Descr = NULL;
+
+	//std::string prefix;
+	//std::string label_txt;
+	//std::string label_tex;
+
 	OA = NULL;
 	set = NULL;
 	ABC = NULL;
@@ -27,19 +33,9 @@ BLT_set_create::BLT_set_create()
 	Sg = NULL;
 	Blt_set_domain = NULL;
 	BA = NULL;
-	null();
 }
 
 BLT_set_create::~BLT_set_create()
-{
-	freeself();
-}
-
-void BLT_set_create::null()
-{
-}
-
-void BLT_set_create::freeself()
 {
 	if (set) {
 		FREE_lint(set);
@@ -56,7 +52,6 @@ void BLT_set_create::freeself()
 	if (BA) {
 		FREE_OBJECT(BA);
 	}
-	null();
 }
 
 void BLT_set_create::init(
@@ -90,6 +85,7 @@ void BLT_set_create::init(
 		char str[1000];
 		char str_q[1000];
 		f_has_group = FALSE;
+		orthogonal_geometry::orthogonal_global OG;
 
 		if (ST.stringcmp(Descr->family_name, "Linear") == 0) {
 			if (f_v) {
@@ -170,7 +166,7 @@ void BLT_set_create::init(
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-			OA->O->create_FTWKB_BLT_set(set, ABC, verbose_level);
+			OG.create_FTWKB_BLT_set(OA->O, set, ABC, verbose_level);
 			// for q congruent 2 mod 3
 			// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
@@ -184,7 +180,7 @@ void BLT_set_create::init(
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-			OA->O->create_K1_BLT_set(set, ABC, verbose_level);
+			OG.create_K1_BLT_set(OA->O, set, ABC, verbose_level);
 			// for a non-square m, and q=p^e
 			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
@@ -197,7 +193,7 @@ void BLT_set_create::init(
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-			OA->O->create_K2_BLT_set(set, ABC, verbose_level);
+			OG.create_K2_BLT_set(OA->O, set, ABC, verbose_level);
 			// for q congruent 2 or 3 mod 5
 			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
@@ -209,7 +205,7 @@ void BLT_set_create::init(
 				cout << "BLT_set_create::init creating object LP_37_72" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
-			OA->O->create_LP_37_72_BLT_set(set, verbose_level);
+			OG.create_LP_37_72_BLT_set(OA->O, set, verbose_level);
 			sprintf(str, "LP_ago72");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
@@ -218,7 +214,7 @@ void BLT_set_create::init(
 				cout << "BLT_set_create::init creating object LP_37_4a" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
-			OA->O->create_LP_37_4a_BLT_set(set, verbose_level);
+			OG.create_LP_37_4a_BLT_set(OA->O, set, verbose_level);
 			sprintf(str, "LP_ago4a");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
@@ -227,7 +223,7 @@ void BLT_set_create::init(
 				cout << "BLT_set_create::init creating object LP_37_4b" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
-			OA->O->create_LP_37_4b_BLT_set(set, verbose_level);
+			OG.create_LP_37_4b_BLT_set(OA->O, set, verbose_level);
 			sprintf(str, "LP_ago4b");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
@@ -236,12 +232,12 @@ void BLT_set_create::init(
 				cout << "BLT_set_create::init creating object LP_71" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
-			OA->O->create_Law_71_BLT_set(set, verbose_level);
+			OG.create_Law_71_BLT_set(OA->O, set, verbose_level);
 			sprintf(str, "LP");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
 		else {
-			cout << "BLT_set_create::init family name not recognized" << endl;
+			cout << "BLT_set_create::init family name is not recognized" << endl;
 			exit(1);
 		}
 
@@ -462,7 +458,7 @@ void BLT_set_create::print_set_of_points(std::ostream &ost, long int *Pts, int n
 		for (h = 0; h < 40; h++) {
 			if (I * 40 + h < nb_pts) {
 
-				OA->O->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
+				OA->O->Hyperbolic_pair->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
 				Int_vec_print(ost, v, n + 1);
@@ -496,7 +492,7 @@ void BLT_set_create::print_set_of_points_with_ABC(std::ostream &ost, long int *P
 		for (h = 0; h < 40; h++) {
 			if (I * 40 + h < nb_pts) {
 
-				OA->O->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
+				OA->O->Hyperbolic_pair->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
 
 				a = ABC[3 * (I * 40 + h) + 0];
 				b = ABC[3 * (I * 40 + h) + 1];

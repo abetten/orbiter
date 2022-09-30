@@ -732,13 +732,16 @@ void poset_classification::recognize(std::string &set_to_recognize,
 	Elt_transporter_inv = NEW_int(get_A()->elt_size_in_int);
 
 
-	data_structures_groups::set_and_stabilizer *SaS;
+	data_structures_groups::set_and_stabilizer *SaS_original;
+	data_structures_groups::set_and_stabilizer *SaS_canonical;
 	int orbit_at_level;
 
 
-	SaS = identify_and_get_stabilizer(
+	identify_and_get_stabilizer(
 			recognize_set, recognize_set_sz, Elt_transporter,
 			orbit_at_level,
+			SaS_original,
+			SaS_canonical,
 			verbose_level);
 
 
@@ -761,12 +764,22 @@ void poset_classification::recognize(std::string &set_to_recognize,
 	cout << "transporter inverse:" << endl;
 	get_A()->element_print_quick(Elt_transporter_inv, cout);
 
-	SaS->print_generators_tex(cout);
+	cout << "Stabilizer of the given set:" << endl;
+	SaS_original->print_generators_tex(cout);
+
+	cout << "Stabilizer of the canonical set:" << endl;
+	SaS_canonical->print_generators_tex(cout);
 
 	FREE_lint(canonical_set);
 	FREE_int(Elt_transporter);
 	FREE_int(Elt_transporter_inv);
 	FREE_lint(recognize_set);
+
+	if (f_v) {
+		cout << "poset_classification::recognize before FREE_OBJECT" << endl;
+	}
+	FREE_OBJECT(SaS_original);
+	FREE_OBJECT(SaS_canonical);
 
 	if (f_v) {
 		cout << "poset_classification::recognize done" << endl;

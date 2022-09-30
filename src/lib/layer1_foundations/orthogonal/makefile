@@ -8,13 +8,14 @@ LFLAGS = -lm
 MODULES = \
 	blt_set_domain.o \
 	blt_set_invariants.o \
-	orthogonal_blt.o \
+	hyperbolic_pair_hyperbolic.o \
+	hyperbolic_pair_parabolic.o \
+	hyperbolic_pair_rank_unrank.o \
+	hyperbolic_pair.o \
+	orthogonal_global.o \
 	orthogonal_group.o \
-	orthogonal_hyperbolic.o \
 	orthogonal_indexing.o \
 	orthogonal_io.o \
-	orthogonal_parabolic.o \
-	orthogonal_rank_unrank.o \
 	orthogonal.o \
 	unusual_model.o
 

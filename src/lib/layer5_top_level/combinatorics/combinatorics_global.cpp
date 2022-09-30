@@ -638,7 +638,7 @@ void combinatorics_global::Hill_cap56(
 	//Good_orbits = NEW_int(N);
 
 	for (i = 0; i < nb_pts; i++) {
-		O->unrank_point(pt_coords + i * n, 1, i, 0);
+		O->Hyperbolic_pair->unrank_point(pt_coords + i * n, 1, i, 0);
 		}
 	cout << "point coordinates:" << endl;
 	Int_vec_print_integer_matrix_width(cout, pt_coords, nb_pts, n, n, 2);

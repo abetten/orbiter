@@ -72,14 +72,16 @@ int poset_classification::find_isomorphism(
 	return ret;
 }
 
-data_structures_groups::set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
+void poset_classification::identify_and_get_stabilizer(
 		long int *set, int sz, int *transporter,
 		int &orbit_at_level,
+		data_structures_groups::set_and_stabilizer *&Set_and_stab_original,
+		data_structures_groups::set_and_stabilizer *&Set_and_stab_canonical,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//set_and_stabilizer *SaS0;
-	data_structures_groups::set_and_stabilizer *SaS;
+	//data_structures_groups::set_and_stabilizer *SaS;
 	int *Elt;
 	data_structures::sorting Sorting;
 
@@ -97,11 +99,14 @@ data_structures_groups::set_and_stabilizer *poset_classification::identify_and_g
 	Orbit_tracer->identify(set, sz, transporter,
 			orbit_at_level, verbose_level - 2);
 
-	SaS = get_set_and_stabilizer(sz,
+	Set_and_stab_canonical = get_set_and_stabilizer(sz,
+			orbit_at_level, 0 /* verbose_level */);
+
+	Set_and_stab_original = get_set_and_stabilizer(sz,
 			orbit_at_level, 0 /* verbose_level */);
 
 	Poset->A->element_invert(transporter, Elt, 0);
-	SaS->apply_to_self(Elt, 0 /* verbose_level */);
+	Set_and_stab_original->apply_to_self(Elt, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "poset_classification::identify_and_get_stabilizer "
@@ -109,11 +114,15 @@ data_structures_groups::set_and_stabilizer *poset_classification::identify_and_g
 		Lint_vec_print(cout, set, sz);
 		cout << endl;
 		cout << "poset_classification::identify_and_get_stabilizer "
-				"SaS->set=";
-		Lint_vec_print(cout, SaS->data, SaS->sz);
+				"Set_and_stab_original->set=";
+		Lint_vec_print(cout, Set_and_stab_original->data, Set_and_stab_original->sz);
+		cout << endl;
+		cout << "poset_classification::identify_and_get_stabilizer "
+				"Set_and_stab_canonical->set=";
+		Lint_vec_print(cout, Set_and_stab_canonical->data, Set_and_stab_canonical->sz);
 		cout << endl;
 	}
-	if (Sorting.compare_sets_lint(set, SaS->data, sz, SaS->sz)) {
+	if (Sorting.compare_sets_lint(set, Set_and_stab_original->data, sz, Set_and_stab_original->sz)) {
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"the sets do not agree" << endl;
 		exit(1);
@@ -124,7 +133,6 @@ data_structures_groups::set_and_stabilizer *poset_classification::identify_and_g
 		cout << "poset_classification::identify_and_get_stabilizer "
 				"done" << endl;
 	}
-	return SaS;
 }
 
 void poset_classification::test_identify(int level, int nb_times,

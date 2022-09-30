@@ -911,10 +911,12 @@ public:
 	// poset_classification_trace.cpp:
 	int find_isomorphism(long int *set1, long int *set2, int sz,
 		int *transporter, int &orbit_idx, int verbose_level);
-	data_structures_groups::set_and_stabilizer *identify_and_get_stabilizer(
-		long int *set, int sz, int *transporter,
-		int &orbit_at_level,
-		int verbose_level);
+	void identify_and_get_stabilizer(
+			long int *set, int sz, int *transporter,
+			int &orbit_at_level,
+			data_structures_groups::set_and_stabilizer *&Set_and_stab_original,
+			data_structures_groups::set_and_stabilizer *&Set_and_stab_canonical,
+			int verbose_level);
 	void test_identify(int level, int nb_times, int verbose_level);
 	void poset_classification_apply_isomorphism_no_transporter(
 		int cur_level, int size, int cur_node, int cur_ex,
