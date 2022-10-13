@@ -411,6 +411,13 @@ void canonical_form_classifier::main_loop(int verbose_level)
 
 
 
+		int idx_po, idx_so, idx_eqn, idx_pts, idx_bitangents;
+
+		idx_po = S.find_column(Descr->column_label_po);
+		idx_so = S.find_column(Descr->column_label_so);
+		idx_eqn = S.find_column(Descr->column_label_eqn);
+		idx_pts = S.find_column(Descr->column_label_pts);
+		idx_bitangents = S.find_column(Descr->column_label_bitangents);
 
 		for (row = 0; row < S.nb_rows - 1; row++, counter++) {
 
@@ -423,31 +430,35 @@ void canonical_form_classifier::main_loop(int verbose_level)
 			fname_case_out.assign(Descr->fname_base_out);
 			fname_case_out.append(str);
 
-			int j, t;
+			int t;
+			int po, so;
+
+
+			po = S.get_int(row + 1, idx_po);
+			so = S.get_int(row + 1, idx_so);
 			string eqn_txt;
 			string pts_txt;
 			string bitangents_txt;
+#if 0
 			int *eqn;
 			int sz;
 			long int *pts;
 			int nb_pts;
 			long int *bitangents;
 			int nb_bitangents;
+#endif
 
-			j = 1;
-			t = S.Table[(row + 1) * S.nb_cols + j];
+			t = S.Table[(row + 1) * S.nb_cols + idx_eqn];
 			if (S.tokens[t] == NULL) {
 				cout << "canonical_form_classifier::classify_nauty token[t] == NULL" << endl;
 			}
 			eqn_txt.assign(S.tokens[t]);
-			j = 2;
-			t = S.Table[(row + 1) * S.nb_cols + j];
+			t = S.Table[(row + 1) * S.nb_cols + idx_pts];
 			if (S.tokens[t] == NULL) {
 				cout << "canonical_form_classifier::classify_nauty token[t] == NULL" << endl;
 			}
 			pts_txt.assign(S.tokens[t]);
-			j = 3;
-			t = S.Table[(row + 1) * S.nb_cols + j];
+			t = S.Table[(row + 1) * S.nb_cols + idx_bitangents];
 			if (S.tokens[t] == NULL) {
 				cout << "canonical_form_classifier::classify_nauty token[t] == NULL" << endl;
 			}
@@ -463,6 +474,19 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				cout << "row = " << row << " eqn=" << eqn_txt << " pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
 			}
 
+
+			quartic_curve_object *Qco;
+
+			Qco = NEW_OBJECT(quartic_curve_object);
+
+			Qco->init(
+					counter, po, so,
+					eqn_txt,
+					pts_txt, bitangents_txt,
+					verbose_level);
+
+
+#if 0
 			Int_vec_scan(eqn_txt, eqn, sz);
 			Lint_vec_scan(pts_txt, pts, nb_pts);
 			Lint_vec_scan(bitangents_txt, bitangents, nb_bitangents);
@@ -476,6 +500,9 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				Lint_vec_print(cout, bitangents, nb_bitangents);
 				cout << endl;
 			}
+#endif
+
+
 
 
 			//quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Dom,
@@ -497,8 +524,9 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				transporter_to_canonical_form = NEW_int(Descr->PA->A->elt_size_in_int);
 
 
-				classify_curve_nauty(cnt, row,
-						eqn, sz, pts, nb_pts, bitangents, nb_bitangents,
+				classify_curve_nauty(//cnt, row,
+						Qco,
+						//eqn, sz, pts, nb_pts, bitangents, nb_bitangents,
 						canonical_equation,
 						transporter_to_canonical_form,
 						verbose_level);
@@ -521,7 +549,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 
 
 
-				if (nb_pts >= Descr->substructure_size) {
+				if (Qco->nb_pts >= Descr->substructure_size) {
 
 					if (f_v) {
 						cout << "canonical_form_classifier::main_loop "
@@ -536,14 +564,17 @@ void canonical_form_classifier::main_loop(int verbose_level)
 
 					CFS->classify_curve_with_substructure(
 							this,
-							counter, cnt, row,
+							//counter, //cnt, row,
 							fname_case_out,
+							Qco,
+#if 0
 							eqn,
 							sz,
 							pts,
 							nb_pts,
 							bitangents,
 							nb_bitangents,
+#endif
 							go_eqn,
 							verbose_level);
 
@@ -580,6 +611,8 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				exit(1);
 			}
 
+			FREE_OBJECT(Qco);
+
 #if 0
 			FREE_int(eqn);
 			FREE_lint(pts);
@@ -597,13 +630,16 @@ void canonical_form_classifier::main_loop(int verbose_level)
 }
 
 
-void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
+void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
+		quartic_curve_object *Qco,
+#if 0
 		int *eqn,
 		int sz,
 		long int *pts,
 		int nb_pts,
 		long int *bitangents,
 		int nb_bitangents,
+#endif
 		int *canonical_equation,
 		int *transporter_to_canonical_form,
 		int verbose_level)
@@ -630,9 +666,13 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 			Descr->PA,
 			Poly_ring,
 			AonHPD,
-			row, eqn, sz,
+			//row,
+			Qco,
+#if 0
+			eqn, sz,
 			pts, nb_pts,
 			bitangents, nb_bitangents,
+#endif
 			canonical_equation,
 			transporter_to_canonical_form,
 			gens_stab_of_canonical_equation,
@@ -662,14 +702,14 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 	if (!f_found) {
 		if (f_v) {
 			cout << "After search_and_add_if_new, "
-					"cnt = " << cnt << " row = " << row
+					"cnt = " << Qco->cnt << " po = " << Qco->po << " so = " << Qco->so
 					<< " The canonical form is new" << endl;
 		}
 	}
 	else {
 		if (f_v) {
 			cout << "After search_and_add_if_new, "
-					"cnt = " << cnt << " row = " << row
+					"cnt = " << Qco->cnt << " po = " << Qco->po << " so = " << Qco->so
 					<< " We found the canonical form at idx = " << idx << endl;
 		}
 
@@ -804,14 +844,19 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 			if (!C1->Orb->search_equation(eqn2 /*new_object */, idx2, TRUE)) {
 				// need to map points and bitangents under gamma:
 				if (f_v) {
-					cout << "we found the canonical form but we did not find the equation at idx1=" << idx1 << endl;
+					cout << "we found the canonical form but we did not find "
+							"the equation at idx1=" << idx1 << endl;
 				}
 
 
 			}
 			else {
 				if (f_v) {
-					cout << "After search_and_add_if_new, cnt = " << cnt << " row = " << row << " We found the canonical form and the equation at idx2 " << idx2 << ", idx1=" << idx1 << endl;
+					cout << "After search_and_add_if_new, cnt = " << Qco->cnt
+							<< " po = " << Qco->po
+							<< " so = " << Qco->so
+							<< " We found the canonical form and the equation "
+									"at idx2 " << idx2 << ", idx1=" << idx1 << endl;
 				}
 				found_at = idx1;
 				break;
@@ -827,21 +872,35 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 				cout << "we found the canonical form but we did not find the equation" << endl;
 			}
 
+
+			quartic_curve_object *Qc2;
+
+			Qc2 = NEW_OBJECT(quartic_curve_object);
+
+			Qc2->init_image_of(Qco,
+						Elt,
+						Descr->PA->A,
+						Descr->PA->A_on_lines,
+						eqn2,
+						verbose_level);
+
+#if 0
 			long int *pts2;
 			//int nb_pts;
 			long int *bitangents2;
 			//int nb_bitangents;
 			int i;
 
-			pts2 = NEW_lint(nb_pts);
-			bitangents2 = NEW_lint(nb_bitangents);
+			pts2 = NEW_lint(Qco->nb_pts);
+			bitangents2 = NEW_lint(Qco->nb_bitangents);
 
-			for (i = 0; i < nb_pts; i++) {
-				pts2[i] = Descr->PA->A->element_image_of(pts[i], Elt, 0 /* verbose_level */);
+			for (i = 0; i < Qco->nb_pts; i++) {
+				pts2[i] = Descr->PA->A->element_image_of(Qco->pts[i], Elt, 0 /* verbose_level */);
 			}
-			for (i = 0; i < nb_bitangents; i++) {
-				bitangents2[i] = Descr->PA->A_on_lines->element_image_of(bitangents[i], Elt, 0 /* verbose_level */);
+			for (i = 0; i < Qco->nb_bitangents; i++) {
+				bitangents2[i] = Descr->PA->A_on_lines->element_image_of(Qco->bitangents[i], Elt, 0 /* verbose_level */);
 			}
+#endif
 
 			canonical_form_nauty *C2;
 			ring_theory::longinteger_object go;
@@ -859,9 +918,14 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 					Descr->PA,
 					Poly_ring,
 					AonHPD,
-					row, eqn2, sz,
+					//row,
+					Qc2,
+#if 0
+					eqn2,
+					sz,
 					pts2, nb_pts,
 					bitangents2, nb_bitangents,
+#endif
 					canonical_equation,
 					transporter_to_canonical_form,
 					gens_stab_of_canonical_equation,

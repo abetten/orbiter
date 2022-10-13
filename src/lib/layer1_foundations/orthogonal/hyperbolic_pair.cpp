@@ -915,6 +915,39 @@ void hyperbolic_pair::fill(long int *M, int i, int j, long int a)
 	M[(i - 1) * nb_line_classes + j - 1] = a;
 }
 
+void hyperbolic_pair::print_schemes()
+{
+	int i, j;
+
+
+	cout << "       ";
+	for (j = 0; j < nb_line_classes; j++) {
+		cout << setw(7) << L[j];
+	}
+	cout << endl;
+	for (i = 0; i < nb_point_classes; i++) {
+		cout << setw(7) << P[i];
+		for (j = 0; j < nb_line_classes; j++) {
+			cout << setw(7) << A[i * nb_line_classes + j];
+		}
+		cout << endl;
+	}
+	cout << endl;
+	cout << "       ";
+	for (j = 0; j < nb_line_classes; j++) {
+		cout << setw(7) << L[j];
+	}
+	cout << endl;
+	for (i = 0; i < nb_point_classes; i++) {
+		cout << setw(7) << P[i];
+		for (j = 0; j < nb_line_classes; j++) {
+			cout << setw(7) << B[i * nb_line_classes + j];
+		}
+		cout << endl;
+	}
+	cout << endl;
+
+}
 
 
 }}}

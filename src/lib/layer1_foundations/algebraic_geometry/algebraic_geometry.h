@@ -341,6 +341,8 @@ public:
 	field_theory::finite_field *F;
 	geometry::projective_space *P;
 
+	// we use the monomial ordering t_PART in all polynomial rings:
+
 	ring_theory::homogeneous_polynomial_domain *Poly1_3;
 		// linear polynomials in three variables
 	ring_theory::homogeneous_polynomial_domain *Poly2_3;

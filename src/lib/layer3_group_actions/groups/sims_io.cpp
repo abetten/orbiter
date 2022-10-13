@@ -476,13 +476,20 @@ void sims::print_all_group_elements_tex(std::ostream &ost)
 	int *Elt;
 	ring_theory::longinteger_object go;
 	long int i, ord;
+	long int goi;
+	int *Order;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 
-	for (i = 0; i < go.as_lint(); i++) {
+	goi = go.as_lint();
+
+	Order = NEW_int(goi);
+
+	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt);
 		ord = A->element_order(Elt);
+		Order[i] = ord;
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;
 		ost << "$$" << endl;
@@ -490,8 +497,21 @@ void sims::print_all_group_elements_tex(std::ostream &ost)
 		ost << "$$" << endl;
 		//A->element_print_as_permutation(Elt, cout);
 		//cout << endl;
-		}
+	}
+
+	data_structures::tally T;
+
+	T.init(Order, goi, FALSE, 0 /*verbose_level*/);
+
+	ost << "Order structure:\\\\" << endl;
+	ost << "$" << endl;
+	T.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+	ost << "$" << endl;
+	ost << "\\\\" << endl;
+
+
 	FREE_int(Elt);
+
 }
 
 void sims::print_all_group_elements_tree(std::ostream &ost)

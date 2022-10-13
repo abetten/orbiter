@@ -1,9 +1,11 @@
 /*
- * coding_theory_domain_ttp.cpp
+ * ttp_codes.cpp
  *
- *  Created on: Jun 24, 2021
+ *  Created on: Oct 9, 2022
  *      Author: betten
  */
+
+
 
 
 
@@ -19,7 +21,20 @@ namespace layer1_foundations {
 namespace coding_theory {
 
 
-void coding_theory_domain::twisted_tensor_product_codes(
+
+
+ttp_codes::ttp_codes()
+{
+
+}
+
+ttp_codes::~ttp_codes()
+{
+
+}
+
+
+void ttp_codes::twisted_tensor_product_codes(
 	int *&H_subfield, int &m, int &n,
 	field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 	int f_construction_A, int f_hyperoval,
@@ -35,7 +50,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 	int *C_inv;
 
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes" << endl;
 	}
 
 	int q = Fq->q;
@@ -54,7 +69,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes" << endl;
 		cout << "f_construction_A=" << f_construction_A << endl;
 		cout << "f_hyperoval=" << f_hyperoval << endl;
 		cout << "f_construction_B=" << f_construction_B << endl;
@@ -72,7 +87,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 	index = (Q - 1) / (q - 1);
 
 	if (Q != FQ->q) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes Q != FQ->q" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes Q != FQ->q" << endl;
 		exit(1);
 	}
 
@@ -102,7 +117,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes before create_matrix_M" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes before create_matrix_M" << endl;
 	}
 	create_matrix_M(
 			M,
@@ -112,13 +127,13 @@ void coding_theory_domain::twisted_tensor_product_codes(
 			f_elements_exponential, symbol_for_print,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes after create_matrix_M" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes after create_matrix_M" << endl;
 	}
 
 	beta_q = FQ->power(beta, q);
 
 	if (f_vv) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes after create_matrix_M" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes after create_matrix_M" << endl;
 		cout << "m = " << m << endl;
 		cout << "n = " << n << endl;
 		cout << "Q = " << Q << endl;
@@ -131,7 +146,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 	}
 
 	if (f_vv) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes: M:" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes: M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
 		FQ->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
@@ -157,7 +172,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes before create_matrix_H_subfield" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes before create_matrix_H_subfield" << endl;
 	}
 	create_matrix_H_subfield(FQ, Fq,
 		H_subfield, C, C_inv, M, m, n, beta, beta_q,
@@ -165,11 +180,11 @@ void coding_theory_domain::twisted_tensor_product_codes(
 		f_construction_A, f_hyperoval, f_construction_B,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes after create_matrix_H_subfield" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes after create_matrix_H_subfield" << endl;
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes H_subfield:" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes H_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		Fq->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
 	}
@@ -179,13 +194,13 @@ void coding_theory_domain::twisted_tensor_product_codes(
 	FREE_int(C_inv);
 
 	if (f_v) {
-		cout << "coding_theory_domain::twisted_tensor_product_codes done" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes done" << endl;
 	}
 
 }
 
 
-void coding_theory_domain::create_matrix_M(
+void ttp_codes::create_matrix_M(
 	int *&M,
 	field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 	int &m, int &n, int &beta, int &r, int *exponents,
@@ -202,7 +217,7 @@ void coding_theory_domain::create_matrix_M(
 	q2 = q * q;
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_M" << endl;
+		cout << "ttp_codes::create_matrix_M" << endl;
 	}
 
 
@@ -298,7 +313,7 @@ void coding_theory_domain::create_matrix_M(
 		//exponents[7] = q2 + q + 1;
 	}
 	else {
-		cout << "coding_theory_domain::create_matrix_M please specify the construction using option -A or -B" << endl;
+		cout << "ttp_codes::create_matrix_M please specify the construction using option -A or -B" << endl;
 		exit(1);
 	}
 
@@ -326,10 +341,10 @@ void coding_theory_domain::create_matrix_M(
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_M M:" << endl;
+		cout << "ttp_codes::create_matrix_M M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
-		cout << "coding_theory_domain::create_matrix_M M:" << endl;
+		cout << "ttp_codes::create_matrix_M M:" << endl;
 		FQ->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, m, n);
 	}
@@ -352,14 +367,14 @@ void coding_theory_domain::create_matrix_M(
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_M done" << endl;
+		cout << "ttp_codes::create_matrix_M done" << endl;
 	}
 
 }
 
 
 
-void coding_theory_domain::create_matrix_H_subfield(
+void ttp_codes::create_matrix_H_subfield(
 		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 	int *H_subfield, int *C, int *C_inv, int *M,
 	int m, int n, int beta, int beta_q,
@@ -379,7 +394,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 	linear_algebra::representation_theory_domain Rep;
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_H_subfield" << endl;
+		cout << "ttp_codes::create_matrix_H_subfield" << endl;
 	}
 
 	q = Fq->q;
@@ -458,7 +473,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_H_subfield matrix C:" << endl;
+		cout << "ttp_codes::create_matrix_H_subfield matrix C:" << endl;
 		Int_vec_print_integer_matrix_width(cout, C, m, m, m, 2);
 		FQ->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, C, m, m);
@@ -468,7 +483,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 	FQ->Linear_algebra->invert_matrix(C, C_inv, m, 0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "coding_theory_domain::create_matrix_H_subfield C_inv:" << endl;
+		cout << "ttp_codes::create_matrix_H_subfield C_inv:" << endl;
 		Int_vec_print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 	}
 
@@ -476,7 +491,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 			0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "coding_theory_domain::create_matrix_H_subfield C * C_inv:" << endl;
+		cout << "ttp_codes::create_matrix_H_subfield C * C_inv:" << endl;
 		Int_vec_print_integer_matrix_width(cout, AA, m, m, m, 2);
 	}
 
@@ -485,7 +500,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_H_subfield H = C * M:" << endl;
+		cout << "ttp_codes::create_matrix_H_subfield H = C * M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
 		FQ->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, H, m, n);
@@ -502,7 +517,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 	tt_field_reduction(*FQ, *Fq, m, n, H, H_subfield, verbose_level - 2);
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_H_subfield H_subfield:" << endl;
+		cout << "ttp_codes::create_matrix_H_subfield H_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		Fq->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print_subfield, H_subfield, m, n);
@@ -512,14 +527,14 @@ void coding_theory_domain::create_matrix_H_subfield(
 	FREE_int(AA);
 
 	if (f_v) {
-		cout << "coding_theory_domain::create_matrix_H_subfield" << endl;
+		cout << "ttp_codes::create_matrix_H_subfield" << endl;
 	}
 
 }
 
 
 
-void coding_theory_domain::tt_field_reduction(
+void ttp_codes::tt_field_reduction(
 		field_theory::finite_field &FQ, field_theory::finite_field &f,
 		int m, int n, int *M, int *MM, int verbose_level)
 {
@@ -529,18 +544,18 @@ void coding_theory_domain::tt_field_reduction(
 	int index;
 
 	if (f_v) {
-		cout << "coding_theory_domain::tt_field_reduction" << endl;
+		cout << "ttp_codes::tt_field_reduction" << endl;
 	}
 
 	Q = FQ.q;
 	q = f.q;
 	index = (Q - 1) / (q - 1);
 	if (f_v) {
-		cout << "field coding_theory_domain::tt_field_reduction, Q=" << Q
+		cout << "ttp_codes::tt_field_reduction, Q=" << Q
 				<< " q=" << q << " index=" << index << endl;
 	}
 	if (f_vv) {
-		cout << "coding_theory_domain::tt_field_reduction before:" << endl;
+		cout << "ttp_codes::tt_field_reduction before:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 		//print_integer_matrix(cout, M, m, n);
 		cout << endl;
@@ -556,7 +571,7 @@ void coding_theory_domain::tt_field_reduction(
 			else {
 				if (f.e == 1) {
 					if (a >= q) {
-						cout << "coding_theory_domain::tt_field_reduction: element does not "
+						cout << "ttp_codes::tt_field_reduction: element does not "
 								"lie in the subfield: " << a << endl;
 						exit(1);
 					}
@@ -576,7 +591,7 @@ void coding_theory_domain::tt_field_reduction(
 		}
 	}
 	if (f_vv) {
-		cout << "coding_theory_domain::tt_field_reduction after:" << endl;
+		cout << "ttp_codes::tt_field_reduction after:" << endl;
 		Int_vec_print_integer_matrix_width(cout, MM, m, n, n, 2);
 		//print_integer_matrix(cout, MM, m, n);
 		cout << endl;
@@ -585,7 +600,7 @@ void coding_theory_domain::tt_field_reduction(
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::tt_field_reduction done" << endl;
+		cout << "ttp_codes::tt_field_reduction done" << endl;
 	}
 }
 
@@ -595,7 +610,7 @@ void coding_theory_domain::tt_field_reduction(
 
 //############################################### old stuff:
 
-void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
+void ttp_codes::make_tensor_code_9dimensional_as_point_set(
 		field_theory::finite_field *F,
 	int *&the_set, int &length,
 	int verbose_level)
@@ -608,7 +623,7 @@ void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
 	int *code;
 
 	if (f_v) {
-		cout << "make_tensor_code_9dimensional_as_point_set" << endl;
+		cout << "ttp_codes::make_tensor_code_9dimensional_as_point_set" << endl;
 		}
 	q = F->q;
 	if (q == 2) {
@@ -662,14 +677,14 @@ void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
 		}
 	FREE_int(code);
 	if (f_v) {
-		cout << "make_tensor_code_9dimensional_as_point_set done" << endl;
+		cout << "ttp_codes::make_tensor_code_9dimensional_as_point_set done" << endl;
 		cout << "created the set: ";
 		Int_vec_print(cout, the_set, length);
 		cout << endl;
 		}
 }
 
-void coding_theory_domain::make_tensor_code_9_dimensional(int q,
+void ttp_codes::make_tensor_code_9_dimensional(int q,
 	std::string &override_poly_Q, std::string &override_poly,
 	int f_hyperoval,
 	int *&code, int &length,
@@ -690,7 +705,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 
 	if (f_v) {
-		cout << "make_tensor_code_9_dimensional q=" << q << endl;
+		cout << "ttp_codes::make_tensor_code_9_dimensional q=" << q << endl;
 		}
 
 	//q = 2; override_poly_Q = ""; override_poly = ""; int f_hyperoval = FALSE;
@@ -901,10 +916,5 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 }
 
 
-
 }}}
-
-
-
-
 

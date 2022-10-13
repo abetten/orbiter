@@ -4454,6 +4454,74 @@ void file_io::do_csv_file_concatenate(
 	}
 }
 
+void file_io::do_csv_file_concatenate_from_mask(
+		std::string &fname_in_mask, int N, std::string &fname_out, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_concatenate_from_mask" << endl;
+	}
+
+	int nb_files;
+	long int i;
+
+	nb_files = N;
+
+	data_structures::spreadsheet *S;
+	//int *identifier_column;
+
+	S = new data_structures::spreadsheet[nb_files];
+	//identifier_column = NEW_int(nb_files);
+
+	for (i = 0; i < nb_files; i++) {
+
+		char str[1000];
+		std::string fname_in;
+
+		sprintf(str, fname_in_mask.c_str(), i);
+		fname_in.assign(str);
+
+		cout << "Reading table " << fname_in << endl;
+		S[i].read_spreadsheet(fname_in, 0 /*verbose_level*/);
+		cout << "Table " << fname_in << " has been read" << endl;
+
+		if (FALSE) {
+			cout << "The " << i << "-th table is:" << endl;
+			S[i].print_table(cout, FALSE);
+		}
+
+
+	}
+
+	{
+		ofstream ost(fname_out);
+		int j;
+		int cnt = 0;
+		int f_enclose_in_parentheses = FALSE;
+
+		ost << "Line,PO,";
+		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
+		for (i = 0; i < nb_files; i++) {
+			//S[i].print_table(ost, FALSE);
+			for (j = 1; j < S[i].nb_rows; j++) {
+				ost << "\"" << cnt << "\"" << ",";
+				ost << "\"" << i << "\"" << ",";
+				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
+				cnt++;
+			}
+		}
+		ost << "END" << endl;
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_concatenate_from_mask done" << endl;
+	}
+}
+
+
 void file_io::do_csv_file_latex(std::string &fname,
 		int f_produce_latex_header,
 		int nb_lines_per_table,

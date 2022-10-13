@@ -377,39 +377,6 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 }
 
 
-void orthogonal::print_schemes()
-{
-	int i, j;
-
-
-	cout << "       ";
-	for (j = 0; j < Hyperbolic_pair->nb_line_classes; j++) {
-		cout << setw(7) << Hyperbolic_pair->L[j];
-	}
-	cout << endl;
-	for (i = 0; i < Hyperbolic_pair->nb_point_classes; i++) {
-		cout << setw(7) << Hyperbolic_pair->P[i];
-		for (j = 0; j < Hyperbolic_pair->nb_line_classes; j++) {
-			cout << setw(7) << Hyperbolic_pair->A[i * Hyperbolic_pair->nb_line_classes + j];
-		}
-		cout << endl;
-	}
-	cout << endl;
-	cout << "       ";
-	for (j = 0; j < Hyperbolic_pair->nb_line_classes; j++) {
-		cout << setw(7) << Hyperbolic_pair->L[j];
-	}
-	cout << endl;
-	for (i = 0; i < Hyperbolic_pair->nb_point_classes; i++) {
-		cout << setw(7) << Hyperbolic_pair->P[i];
-		for (j = 0; j < Hyperbolic_pair->nb_line_classes; j++) {
-			cout << setw(7) << Hyperbolic_pair->B[i * Hyperbolic_pair->nb_line_classes + j];
-		}
-		cout << endl;
-	}
-	cout << endl;
-
-}
 
 void orthogonal::report_quadratic_form(std::ostream &ost, int verbose_level)
 {

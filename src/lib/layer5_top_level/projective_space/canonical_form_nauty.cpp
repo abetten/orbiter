@@ -52,9 +52,13 @@ void canonical_form_nauty::quartic_curve(
 		projective_space_with_action *PA,
 		ring_theory::homogeneous_polynomial_domain *Poly4_x123,
 		induced_actions::action_on_homogeneous_polynomials *AonHPD,
-		int idx, int *eqn, int sz,
+		//int idx,
+		quartic_curve_object *Qco,
+#if 0
+		int *eqn, int sz,
 		long int *Pts_on_curve, int sz_curve,
 		long int *bitangents, int nb_bitangents,
+#endif
 		int *canonical_equation,
 		int *transporter_to_canonical_form,
 		groups::strong_generators *&gens_stab_of_canonical_equation,
@@ -67,13 +71,13 @@ void canonical_form_nauty::quartic_curve(
 		cout << "canonical_form_nauty::quartic_curve" << endl;
 	}
 
-	canonical_form_nauty::idx = idx;
-	canonical_form_nauty::eqn = eqn;
-	canonical_form_nauty::sz = sz;
-	canonical_form_nauty::Pts_on_curve = Pts_on_curve;
-	canonical_form_nauty::sz_curve = sz_curve;
-	canonical_form_nauty::bitangents = bitangents;
-	canonical_form_nauty::nb_bitangents = nb_bitangents;
+	canonical_form_nauty::idx = Qco->cnt;
+	canonical_form_nauty::eqn = Qco->eqn;
+	canonical_form_nauty::sz = Qco->sz;
+	canonical_form_nauty::Pts_on_curve = Qco->pts;
+	canonical_form_nauty::sz_curve = Qco->nb_pts;
+	canonical_form_nauty::bitangents = Qco->bitangents;
+	canonical_form_nauty::nb_bitangents = Qco->nb_bitangents;
 
 	if (f_v) {
 		cout << "equation is:";

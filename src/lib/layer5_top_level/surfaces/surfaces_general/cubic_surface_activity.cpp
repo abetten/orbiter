@@ -157,6 +157,10 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		fname_mask.append(SC->prefix);
 		fname_mask.append("_orbit_%d");
 
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity fname_tex = " << fname_tex << endl;
+			cout << "cubic_surface_activity::perform_activity fname_quartics = " << fname_quartics << endl;
+		}
 		{
 			ofstream ost(fname_tex);
 			ofstream ost_quartics(fname_quartics);
@@ -225,6 +229,9 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		fname_curves.append(".csv");
 
 
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity fname_curves = " << fname_curves << endl;
+		}
 
 		{
 			ofstream ost_curves(fname_curves);

@@ -70,14 +70,17 @@ canonical_form_substructure::~canonical_form_substructure()
 
 void canonical_form_substructure::classify_curve_with_substructure(
 		canonical_form_classifier *Canonical_form_classifier,
-		int counter, int cnt, int row,
+		//int counter, //int cnt, int row,
 		std::string &fname_case_out,
+		quartic_curve_object *Qco,
+#if 0
 		int *eqn,
 		int sz,
 		long int *pts,
 		int nb_pts,
 		long int *bitangents,
 		int nb_bitangents,
+#endif
 		ring_theory::longinteger_object &go_eqn,
 		int verbose_level)
 {
@@ -91,19 +94,21 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 	canonical_form_substructure::fname_case_out.assign(fname_case_out);
 	canonical_form_substructure::Canonical_form_classifier = Canonical_form_classifier;
-	canonical_form_substructure::counter = counter;
-	canonical_form_substructure::cnt = cnt;
-	canonical_form_substructure::row = row;
+	canonical_form_substructure::counter = Qco->cnt;
+	canonical_form_substructure::cnt = Qco->po;
+	canonical_form_substructure::row = Qco->so;
 
-	canonical_form_substructure::eqn = eqn;
-	canonical_form_substructure::sz = sz;
-	canonical_form_substructure::pts = pts;
-	canonical_form_substructure::nb_pts = nb_pts;
+	eqn = Qco->eqn;
+	sz = Qco->sz;
+	pts = Qco->pts;
+	nb_pts = Qco->nb_pts;
 
 
-	canonical_form_substructure::bitangents = NEW_lint(nb_bitangents);
-	Lint_vec_copy(bitangents, canonical_form_substructure::bitangents, nb_bitangents);
-	canonical_form_substructure::nb_bitangents = nb_bitangents;
+	bitangents = NEW_lint(nb_bitangents);
+	Lint_vec_copy(Qco->bitangents, bitangents, nb_bitangents);
+	nb_bitangents = Qco->nb_bitangents;
+
+
 	canonical_form_substructure::canonical_equation = NEW_int(Canonical_form_classifier->Poly_ring->get_nb_monomials());
 	canonical_form_substructure::transporter_to_canonical_form = NEW_int(Canonical_form_classifier->Descr->PA->A->elt_size_in_int);
 

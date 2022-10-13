@@ -4254,7 +4254,8 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 
 	H = SG->create_sims(verbose_level);
 
-	cout << "group order H = " << H->group_order_lint() << endl;
+	cout << "algebra_global_with_action::find_standard_generators "
+			"group order H = " << H->group_order_lint() << endl;
 
 	int *Elt_a;
 	int *Elt_b;
@@ -4306,7 +4307,7 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 			}
 
 			if (f_v) {
-				cout << "a = " << setw(5) << i << ", b=" << setw(5) << j << " : " << cnt << ":" << endl;
+				cout << "algebra_global_with_action::find_standard_generators a = " << setw(5) << i << ", b=" << setw(5) << j << " : " << cnt << ":" << endl;
 				cout << "a=" << endl;
 				A2->element_print(Elt_a, cout);
 				cout << endl;
@@ -4327,7 +4328,8 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 		}
 	}
 	if (f_v) {
-		cout << "we found " << cnt << " group elements with "
+		cout << "algebra_global_with_action::find_standard_generators "
+				"we found " << cnt << " group elements with "
 				"ord_a = " << order_a << " ord_b  = " << order_b << " and ord_ab = " << order_ab << endl;
 	}
 

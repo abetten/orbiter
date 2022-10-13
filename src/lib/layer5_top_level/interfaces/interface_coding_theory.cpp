@@ -54,6 +54,12 @@ interface_coding_theory::interface_coding_theory()
 	random_noise_in_bitmap_file_numerator = 0;
 	random_noise_in_bitmap_file_denominator = 0;
 
+	f_random_noise_of_burst_type_in_bitmap_file = FALSE;
+	//std::string random_noise_of_burst_type_in_bitmap_file_input;
+	//std::string random_noise_of_burst_type_in_bitmap_file_output;
+	random_noise_of_burst_type_in_bitmap_file_numerator = 0;
+	random_noise_of_burst_type_in_bitmap_file_denominator = 0;
+	random_noise_of_burst_type_in_bitmap_file_burst_length = 0;
 
 }
 
@@ -86,6 +92,9 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-random_noise_in_bitmap_file") == 0) {
 		cout << "-random_noise_in_bitmap_file <fname_in> <fname_out> <numerator> <denominator>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
+		cout << "-random_noise_of_burst_type_in_bitmap_file <fname_in> <fname_out> <numerator> <denominator> <burst_length>" << endl;
 	}
 }
 
@@ -124,6 +133,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-random_noise_in_bitmap_file") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -268,6 +280,23 @@ void interface_coding_theory::read_arguments(int argc,
 				<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
+		f_random_noise_of_burst_type_in_bitmap_file = TRUE;
+		random_noise_of_burst_type_in_bitmap_file_input.assign(argv[++i]);
+		random_noise_of_burst_type_in_bitmap_file_output.assign(argv[++i]);
+		random_noise_of_burst_type_in_bitmap_file_numerator = ST.strtoi(argv[++i]);
+		random_noise_of_burst_type_in_bitmap_file_denominator = ST.strtoi(argv[++i]);
+		random_noise_of_burst_type_in_bitmap_file_burst_length = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-random_noise_of_burst_type_in_bitmap_file "
+				<< " " << random_noise_of_burst_type_in_bitmap_file_input
+				<< " " << random_noise_of_burst_type_in_bitmap_file_output
+				<< " " << random_noise_of_burst_type_in_bitmap_file_numerator
+				<< " " << random_noise_of_burst_type_in_bitmap_file_denominator
+				<< " " << random_noise_of_burst_type_in_bitmap_file_burst_length
+				<< endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
@@ -307,6 +336,15 @@ void interface_coding_theory::print()
 			<< " " << random_noise_in_bitmap_file_output
 			<< " " << random_noise_in_bitmap_file_numerator
 			<< " " << random_noise_in_bitmap_file_denominator
+			<< endl;
+	}
+	if (f_random_noise_of_burst_type_in_bitmap_file) {
+		cout << "-random_noise_of_burst_type_in_bitmap_file "
+			<< " " << random_noise_of_burst_type_in_bitmap_file_input
+			<< " " << random_noise_of_burst_type_in_bitmap_file_output
+			<< " " << random_noise_of_burst_type_in_bitmap_file_numerator
+			<< " " << random_noise_of_burst_type_in_bitmap_file_denominator
+			<< " " << random_noise_of_burst_type_in_bitmap_file_burst_length
 			<< endl;
 	}
 }
@@ -382,27 +420,27 @@ void interface_coding_theory::worker(int verbose_level)
 
 	else if (f_introduce_errors) {
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 
-		Codes.introduce_errors(introduce_errors_crc_options_description,
+		Crc_codes.introduce_errors(introduce_errors_crc_options_description,
 				verbose_level);
 
 	}
 
 	else if (f_check_errors) {
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 
-		Codes.check_errors(check_errors_crc_options_description,
+		Crc_codes.check_errors(check_errors_crc_options_description,
 				verbose_level);
 
 	}
 
 	else if (f_extract_block) {
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 
-		Codes.extract_block(extract_block_crc_options_description,
+		Crc_codes.extract_block(extract_block_crc_options_description,
 				verbose_level);
 
 	}
@@ -417,6 +455,20 @@ void interface_coding_theory::worker(int verbose_level)
 				random_noise_in_bitmap_file_output,
 				random_noise_in_bitmap_file_numerator,
 				random_noise_in_bitmap_file_denominator,
+				verbose_level);
+	}
+	else if (f_random_noise_of_burst_type_in_bitmap_file) {
+
+		cout << "f_random_noise_of_burst_type_in_bitmap_file" << endl;
+
+		graphics::graphical_output G;
+
+		G.random_noise_in_bitmap_file_burst(
+				random_noise_of_burst_type_in_bitmap_file_input,
+				random_noise_of_burst_type_in_bitmap_file_output,
+				random_noise_of_burst_type_in_bitmap_file_numerator,
+				random_noise_of_burst_type_in_bitmap_file_denominator,
+				random_noise_of_burst_type_in_bitmap_file_burst_length,
 				verbose_level);
 	}
 

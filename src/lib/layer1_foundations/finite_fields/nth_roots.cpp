@@ -68,7 +68,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 	ring_theory::longinteger_domain D;
 	number_theory::number_theory_domain NT;
-	coding_theory::coding_theory_domain Codes;
+	coding_theory::cyclic_codes Cyclic_codes;
 	int i;
 
 
@@ -247,7 +247,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 			cout << " : ";
 
-			Codes.print_polynomial_tight(cout, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
+			Cyclic_codes.print_polynomial_tight(cout, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
 
 
 			cout << endl;
@@ -571,7 +571,7 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i;
 	string label;
-	coding_theory::coding_theory_domain Codes;
+	coding_theory::cyclic_codes Cyclic_codes;
 	orbiter_kernel_system::latex_interface Li;
 
 	if (f_v) {
@@ -654,7 +654,7 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 
 		ost << " & ";
 
-		Codes.print_polynomial_tight(ost, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
+		Cyclic_codes.print_polynomial_tight(ost, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
 
 		ost << " & ";
 

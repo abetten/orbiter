@@ -156,55 +156,12 @@ public:
 			int m, int n, std::string &genma_text,
 			int verbose_level);
 	// creates a field_theory::subfield_structure object
-	void CRC_encode_text(field_theory::nth_roots *Nth,
-			ring_theory::unipoly_object &CRC_poly,
-		std::string &text, std::string &fname,
-		int verbose_level);
 	void encode_text_5bits(std::string &text,
 			std::string &fname, int verbose_level);
 	void field_induction(std::string &fname_in,
 			std::string &fname_out, int nb_bits, int verbose_level);
 	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
-	void generator_matrix_cyclic_code(field_theory::finite_field *F,
-			int n,
-			std::string &poly_coeffs,
-			int verbose_level);
-
-
-	// cyclic_codes.cpp:
-	void make_BCH_code(int n, field_theory::finite_field *F, int d,
-			field_theory::nth_roots *&Nth, ring_theory::unipoly_object &P,
-			int verbose_level);
-	void make_cyclic_code(int n, int q, int t,
-			int *roots, int nb_roots, int f_poly, std::string &poly,
-			int f_dual, std::string &fname_txt, std::string &fname_csv,
-			int verbose_level);
-	// this function creates a finite field, using the given polynomial if necessary
-	void generator_matrix_cyclic_code(int n,
-			int degree, int *generator_polynomial, int *&M);
-	void print_polynomial(ring_theory::unipoly_domain &Fq,
-			int degree, ring_theory::unipoly_object *coeffs);
-	void print_polynomial_tight(std::ostream &ost, ring_theory::unipoly_domain &Fq,
-			int degree, ring_theory::unipoly_object *coeffs);
-	void field_reduction(int n, int q, int p, int e, int m,
-			field_theory::finite_field &Fp, ring_theory::unipoly_domain &Fq,
-		int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
-		int f_poly, std::string &poly,
-		int verbose_level);
-	void BCH_generator_polynomial(
-			field_theory::finite_field *F,
-			ring_theory::unipoly_object &g, int n,
-			int designed_distance, int &bose_distance,
-			int &transversal_length, int *&transversal,
-			ring_theory::longinteger_object *&rank_of_irreducibles,
-			int verbose_level);
-	void compute_generator_matrix(ring_theory::unipoly_object a, int *&genma,
-		int n, int &k, int verbose_level);
-	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
-	// this function creates a finite field.
-
-
 
 	// mindist.cpp:
 	int mindist(int n, int k, int q, int *G,
@@ -214,45 +171,20 @@ public:
 	//The tables are only needed if $q = p^f$ with $f > 1$.
 	//In the GF(p) case, just pass a NULL pointer.
 
+};
 
-	// tensor_codes.cpp:
+// #############################################################################
+// crc_codes.cpp:
+// #############################################################################
 
-	void twisted_tensor_product_codes(
-		int *&H_subfield, int &m, int &n,
-		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
-		int f_construction_A, int f_hyperoval,
-		int f_construction_B, int verbose_level);
-	void create_matrix_M(
-		int *&M,
-		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
-		int &m, int &n, int &beta, int &r, int *exponents,
-		int f_construction_A, int f_hyperoval, int f_construction_B,
-		int f_elements_exponential, std::string &symbol_for_print,
-		int verbose_level);
-		// int exponents[9]
-	void create_matrix_H_subfield(field_theory::finite_field *FQ, field_theory::finite_field *Fq,
-		int *H_subfield, int *C, int *C_inv, int *M, int m, int n,
-		int beta, int beta_q,
-		int f_elements_exponential, std::string &symbol_for_print,
-		std::string &symbol_for_print_subfield,
-		int f_construction_A, int f_hyperoval, int f_construction_B,
-		int verbose_level);
-	void tt_field_reduction(field_theory::finite_field &F, field_theory::finite_field &f,
-		int m, int n, int *M, int *MM, int verbose_level);
+//! algorithms for CRC codes
 
 
-	void make_tensor_code_9dimensional_as_point_set(field_theory::finite_field *F,
-		int *&the_set, int &length,
-		int verbose_level);
-	void make_tensor_code_9_dimensional(int q,
-			std::string &override_poly_Q, std::string &override_poly,
-			int f_hyperoval,
-			int *&code, int &length,
-			int verbose_level);
+class crc_codes {
+public:
 
-
-
-	// coding_theory_domain.cpp
+	crc_codes();
+	~crc_codes();
 
 	void find_CRC_polynomials(field_theory::finite_field *F,
 			int t, int da, int dc,
@@ -304,11 +236,12 @@ public:
 			crc_options_description *Crc_options_description,
 			int verbose_level);
 	uint16_t NetIpChecksum(uint16_t const *ipHeader, int nWords);
-
-
+	void CRC_encode_text(field_theory::nth_roots *Nth,
+			ring_theory::unipoly_object &CRC_poly,
+		std::string &text, std::string &fname,
+		int verbose_level);
 
 };
-
 
 // #############################################################################
 // crc_options_description.cpp:
@@ -399,6 +332,60 @@ public:
 };
 
 // #############################################################################
+// cyclic_codes.cpp:
+// #############################################################################
+
+//! algorithms for cyclic codes
+
+
+class cyclic_codes {
+public:
+
+
+	cyclic_codes();
+	~cyclic_codes();
+
+	// cyclic_codes.cpp:
+	void make_BCH_code(int n, field_theory::finite_field *F, int d,
+			field_theory::nth_roots *&Nth, ring_theory::unipoly_object &P,
+			int verbose_level);
+	void make_cyclic_code(int n, int q, int t,
+			int *roots, int nb_roots, int f_poly, std::string &poly,
+			int f_dual, std::string &fname_txt, std::string &fname_csv,
+			int verbose_level);
+	// this function creates a finite field, using the given polynomial if necessary
+	void generator_matrix_cyclic_code(int n,
+			int degree, int *generator_polynomial, int *&M);
+	void print_polynomial(ring_theory::unipoly_domain &Fq,
+			int degree, ring_theory::unipoly_object *coeffs);
+	void print_polynomial_tight(std::ostream &ost, ring_theory::unipoly_domain &Fq,
+			int degree, ring_theory::unipoly_object *coeffs);
+	void field_reduction(int n, int q, int p, int e, int m,
+			field_theory::finite_field &Fp, ring_theory::unipoly_domain &Fq,
+		int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
+		int f_poly, std::string &poly,
+		int verbose_level);
+	void BCH_generator_polynomial(
+			field_theory::finite_field *F,
+			ring_theory::unipoly_object &g, int n,
+			int designed_distance, int &bose_distance,
+			int &transversal_length, int *&transversal,
+			ring_theory::longinteger_object *&rank_of_irreducibles,
+			int verbose_level);
+	void compute_generator_matrix(ring_theory::unipoly_object a, int *&genma,
+		int n, int &k, int verbose_level);
+	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
+	// this function creates a finite field.
+	void generator_matrix_cyclic_code(field_theory::finite_field *F,
+			int n,
+			std::string &poly_coeffs,
+			int verbose_level);
+
+
+};
+
+
+// #############################################################################
 // error_repository.cpp:
 // #############################################################################
 
@@ -420,6 +407,56 @@ public:
 	void add_error(int offset, int error_pattern, int verbose_level);
 	int search(int offset, int error_pattern,
 		int &idx, int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// ttp_codes.cpp:
+// #############################################################################
+
+//! twisted tensor product codes
+
+
+class ttp_codes {
+public:
+
+	ttp_codes();
+	~ttp_codes();
+
+	void twisted_tensor_product_codes(
+		int *&H_subfield, int &m, int &n,
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		int f_construction_A, int f_hyperoval,
+		int f_construction_B, int verbose_level);
+	void create_matrix_M(
+		int *&M,
+		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		int &m, int &n, int &beta, int &r, int *exponents,
+		int f_construction_A, int f_hyperoval, int f_construction_B,
+		int f_elements_exponential, std::string &symbol_for_print,
+		int verbose_level);
+		// int exponents[9]
+	void create_matrix_H_subfield(field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		int *H_subfield, int *C, int *C_inv, int *M, int m, int n,
+		int beta, int beta_q,
+		int f_elements_exponential, std::string &symbol_for_print,
+		std::string &symbol_for_print_subfield,
+		int f_construction_A, int f_hyperoval, int f_construction_B,
+		int verbose_level);
+	void tt_field_reduction(field_theory::finite_field &F, field_theory::finite_field &f,
+		int m, int n, int *M, int *MM, int verbose_level);
+
+
+	void make_tensor_code_9dimensional_as_point_set(field_theory::finite_field *F,
+		int *&the_set, int &length,
+		int verbose_level);
+	void make_tensor_code_9_dimensional(int q,
+			std::string &override_poly_Q, std::string &override_poly,
+			int f_hyperoval,
+			int *&code, int &length,
+			int verbose_level);
 
 };
 

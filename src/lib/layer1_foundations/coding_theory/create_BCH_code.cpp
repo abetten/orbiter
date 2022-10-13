@@ -49,7 +49,7 @@ void create_BCH_code::init(field_theory::finite_field *F, int n, int d, int verb
 		cout << "create_BCH_code::init" << endl;
 	}
 
-	coding_theory_domain Codes;
+	cyclic_codes Cyclic_codes;
 
 	create_BCH_code::n = n;
 	create_BCH_code::d = d;
@@ -121,7 +121,7 @@ void create_BCH_code::init(field_theory::finite_field *F, int n, int d, int verb
 		generator_polynomial[i] = Nth->FX->s_i(*P, i);
 	}
 
-	Codes.generator_matrix_cyclic_code(n,
+	Cyclic_codes.generator_matrix_cyclic_code(n,
 				degree, generator_polynomial, Genma);
 
 	k = n - degree;

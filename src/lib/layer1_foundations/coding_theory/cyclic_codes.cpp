@@ -1,9 +1,12 @@
 /*
- * coding_theory_domain_cyclic_codes.cpp
+ * cyclic_codes.cpp
  *
- *  Created on: Jun 24, 2021
+ *  Created on: Oct 9, 2022
  *      Author: betten
  */
+
+
+
 
 #include "foundations.h"
 
@@ -15,7 +18,19 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace coding_theory {
 
-void coding_theory_domain::make_BCH_code(int n,
+cyclic_codes::cyclic_codes()
+{
+
+}
+
+cyclic_codes::~cyclic_codes()
+{
+
+}
+
+
+
+void cyclic_codes::make_BCH_code(int n,
 		field_theory::finite_field *F, int d,
 		field_theory::nth_roots *&Nth, ring_theory::unipoly_object &P,
 		int verbose_level)
@@ -23,7 +38,7 @@ void coding_theory_domain::make_BCH_code(int n,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_BCH_code q=" << F->q << " n=" << n
+		cout << "cyclic_codes::make_BCH_code q=" << F->q << " n=" << n
 				<< " d=" << d << endl;
 	}
 
@@ -58,7 +73,7 @@ void coding_theory_domain::make_BCH_code(int n,
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_BCH_code Sel=";
+		cout << "cyclic_codes::make_BCH_code Sel=";
 		Int_vec_print(cout, Sel, nb_sel);
 		cout << endl;
 	}
@@ -73,7 +88,7 @@ void coding_theory_domain::make_BCH_code(int n,
 		j = Sel[i];
 
 		if (f_v) {
-			cout << "coding_theory_domain::make_BCH_code P=";
+			cout << "cyclic_codes::make_BCH_code P=";
 			Nth->FX->print_object(P, cout);
 			cout << endl;
 			cout << "j=" << j << endl;
@@ -82,7 +97,7 @@ void coding_theory_domain::make_BCH_code(int n,
 		}
 		Nth->FX->mult(P, Nth->min_poly_beta_Fq[j], Q, verbose_level);
 		if (f_v) {
-			cout << "coding_theory_domain::make_BCH_code Q=";
+			cout << "cyclic_codes::make_BCH_code Q=";
 			Nth->FX->print_object(Q, cout);
 			cout << endl;
 		}
@@ -92,14 +107,14 @@ void coding_theory_domain::make_BCH_code(int n,
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_BCH_code q=" << F->q << " n=" << n
+		cout << "cyclic_codes::make_BCH_code q=" << F->q << " n=" << n
 				<< " d=" << d << " done" << endl;
 	}
 }
 
 
 
-void coding_theory_domain::make_cyclic_code(int n, int q, int t,
+void cyclic_codes::make_cyclic_code(int n, int q, int t,
 		int *roots, int nb_roots, int f_poly, std::string &poly,
 		int f_dual, std::string &fname_txt, std::string &fname_csv,
 		int verbose_level)
@@ -115,19 +130,19 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 
 	NT.factor_prime_power(q, p, e);
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code q=" << q << " p=" << q
+		cout << "cyclic_codes::make_cyclic_code q=" << q << " p=" << q
 				<< " e=" << e << " n=" << n << endl;
 		for (i = 0; i < nb_roots; i++) {
 			cout << roots[i] << " ";
 		}
 		cout << endl;
 		if (f_dual) {
-			cout << "coding_theory_domain::make_cyclic_code dual code" << endl;
+			cout << "cyclic_codes::make_cyclic_code dual code" << endl;
 		}
 	}
 	m = NT.order_mod_p(q, n);
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code order mod q is m=" << m << endl;
+		cout << "cyclic_codes::make_cyclic_code order mod q is m=" << m << endl;
 	}
 	D.create_qnm1(Qm1, q, m);
 
@@ -136,17 +151,17 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	D.integral_division_by_int(Qm1, n, Index, r);
 	//b = (q - 1) / n;
 	if (r != 0) {
-		cout << "coding_theory_domain::make_cyclic_code n does not divide q^m-1" << endl;
+		cout << "cyclic_codes::make_cyclic_code n does not divide q^m-1" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code GF(" << q << "^" << m << ") has "
+		cout << "cyclic_codes::make_cyclic_code GF(" << q << "^" << m << ") has "
 				<< n << "-th roots of unity" << endl;
 		if (Index.is_one()) {
-			cout << "coding_theory_domain::make_cyclic_code this is a primitive code" << endl;
+			cout << "cyclic_codes::make_cyclic_code this is a primitive code" << endl;
 		}
 		else {
-			cout << "coding_theory_domain::make_cyclic_code we take as " << n << "-th root \\beta = \\alpha^"
+			cout << "cyclic_codes::make_cyclic_code we take as " << n << "-th root \\beta = \\alpha^"
 			<< Index << ", where \\alpha is a primitive element of "
 					"the field" << endl;
 		}
@@ -198,12 +213,12 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code transversal: ";
+		cout << "cyclic_codes::make_cyclic_code transversal: ";
 		for (i = 0; i < tl; i++) {
 			cout << transversal[i] << " ";
 		}
 		cout << endl;
-		cout << "coding_theory_domain::make_cyclic_code exponents:";
+		cout << "cyclic_codes::make_cyclic_code exponents:";
 		for (i = 0; i < n; i++) {
 			if (!taken[i]) {
 				continue;
@@ -211,7 +226,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 			cout << i << ", ";
 		}
 		cout << endl;
-		cout << "coding_theory_domain::make_cyclic_code degree=" << degree << endl;
+		cout << "cyclic_codes::make_cyclic_code degree=" << degree << endl;
 	}
 
 	if (f_dual) {
@@ -220,14 +235,14 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		}
 		degree = n - degree;
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code dually, exponents:";
+			cout << "cyclic_codes::make_cyclic_code dually, exponents:";
 			for (i = 0; i < n; i++) {
 				if (!taken[i])
 					continue;
 				cout << i << ", ";
 			}
 			cout << endl;
-			cout << "coding_theory_domain::make_cyclic_code degree=" << degree << endl;
+			cout << "cyclic_codes::make_cyclic_code degree=" << degree << endl;
 		}
 	}
 
@@ -236,7 +251,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	ring_theory::unipoly_object beta, beta_i, c;
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code creating the finite field of order " << p << endl;
+		cout << "cyclic_codes::make_cyclic_code creating the finite field of order " << p << endl;
 	}
 	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
 
@@ -245,27 +260,27 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	knowledge_base K;
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code before K.get_primitive_polynomial" << endl;
+		cout << "cyclic_codes::make_cyclic_code before K.get_primitive_polynomial" << endl;
 	}
 	K.get_primitive_polynomial(field_poly, p, field_degree, 0);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code before FpX.create_object_by_rank_string" << endl;
+		cout << "cyclic_codes::make_cyclic_code before FpX.create_object_by_rank_string" << endl;
 	}
 	FpX.create_object_by_rank_string(M, field_poly, verbose_level - 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code choosing the following irreducible "
+		cout << "cyclic_codes::make_cyclic_code choosing the following irreducible "
 				"and primitive polynomial:" << endl;
 		FpX.print_object(M, cout); cout << endl;
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code creating unipoly_domain Fq modulo M" << endl;
+		cout << "cyclic_codes::make_cyclic_code creating unipoly_domain Fq modulo M" << endl;
 	}
 	ring_theory::unipoly_domain Fq(&Fp, M, verbose_level);  // Fq = Fp[X] modulo factor polynomial M
 	if (f_vv) {
-		cout << "coding_theory_domain::make_cyclic_code extension field created" << endl;
+		cout << "cyclic_codes::make_cyclic_code extension field created" << endl;
 	}
 
 	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
@@ -279,7 +294,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 			cout << endl;
 		}
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code before Fq.power_longinteger" << endl;
+			cout << "cyclic_codes::make_cyclic_code before Fq.power_longinteger" << endl;
 		}
 		Fq.power_longinteger(beta, Index, verbose_level - 1);
 		if (f_v) {
@@ -290,12 +305,12 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 	else {
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code this is a primitive BCH code" << endl;
+			cout << "cyclic_codes::make_cyclic_code this is a primitive BCH code" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code before allocating generator etc" << endl;
+		cout << "cyclic_codes::make_cyclic_code before allocating generator etc" << endl;
 	}
 
 	ring_theory::unipoly_object *generator = NEW_OBJECTS(ring_theory::unipoly_object, degree + 2);
@@ -306,7 +321,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 
 	// create the polynomial X - a:
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code creating X-a" << endl;
+		cout << "cyclic_codes::make_cyclic_code creating X-a" << endl;
 	}
 	for (i = 0; i < 2; i++) {
 		if (i == 1) {
@@ -318,13 +333,13 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 	for (i = 0; i <= degree; i++) {
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code creating generator[" << i << "]" << endl;
+			cout << "cyclic_codes::make_cyclic_code creating generator[" << i << "]" << endl;
 		}
 		Fq.create_object_by_rank(generator[i], 0, __FILE__, __LINE__, verbose_level);
 		Fq.create_object_by_rank(tmp[i], 0, __FILE__, __LINE__, verbose_level);
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code creating generator[0]" << endl;
+		cout << "cyclic_codes::make_cyclic_code creating generator[0]" << endl;
 	}
 	Fq.create_object_by_rank(generator[0], 1, __FILE__, __LINE__, verbose_level);
 
@@ -332,20 +347,20 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	// and generator has degree 0
 
 	if (f_vv) {
-		cout << "coding_theory_domain::make_cyclic_code coeffs:" << endl;
+		cout << "cyclic_codes::make_cyclic_code coeffs:" << endl;
 		print_polynomial(Fq, 1, coeffs);
 		cout << endl;
-		cout << "coding_theory_domain::make_cyclic_code generator:" << endl;
+		cout << "cyclic_codes::make_cyclic_code generator:" << endl;
 		print_polynomial(Fq, 0, generator);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code creating Pc" << endl;
+		cout << "cyclic_codes::make_cyclic_code creating Pc" << endl;
 	}
 	Fq.create_object_by_rank(Pc, 0, __FILE__, __LINE__, verbose_level);
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code creating Pd" << endl;
+		cout << "cyclic_codes::make_cyclic_code creating Pd" << endl;
 	}
 	Fq.create_object_by_rank(Pd, 0, __FILE__, __LINE__, verbose_level);
 
@@ -358,26 +373,26 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 			continue;
 		}
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code working on root " << i << endl;
+			cout << "cyclic_codes::make_cyclic_code working on root " << i << endl;
 		}
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code before Fq.assign beta" << endl;
+			cout << "cyclic_codes::make_cyclic_code before Fq.assign beta" << endl;
 		}
 		Fq.assign(beta, beta_i, verbose_level);
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code before Fq.power_int" << endl;
+			cout << "cyclic_codes::make_cyclic_code before Fq.power_int" << endl;
 		}
 		Fq.power_int(beta_i, i, verbose_level);
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code before Fq.negate" << endl;
+			cout << "cyclic_codes::make_cyclic_code before Fq.negate" << endl;
 		}
 		Fq.negate(beta_i);
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code before Fq.assign beta_i" << endl;
+			cout << "cyclic_codes::make_cyclic_code before Fq.assign beta_i" << endl;
 		}
 		Fq.assign(beta_i, coeffs[0], verbose_level);
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code root: " << i << " : ";
+			cout << "cyclic_codes::make_cyclic_code root: " << i << " : ";
 			Fq.print_object(beta_i, cout);
 			//cout << " : ";
 			//print_polynomial(Fq, 2, coeffs);
@@ -386,7 +401,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 
 
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code before Fq.assign(generator[j], tmp[j])" << endl;
+			cout << "cyclic_codes::make_cyclic_code before Fq.assign(generator[j], tmp[j])" << endl;
 		}
 		for (j = 0; j <= r; j++) {
 			Fq.assign(generator[j], tmp[j], verbose_level);
@@ -397,7 +412,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		//cout << endl;
 
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code before Fq.assign(tmp[j], generator[j + 1])" << endl;
+			cout << "cyclic_codes::make_cyclic_code before Fq.assign(tmp[j], generator[j + 1])" << endl;
 		}
 		for (j = 0; j <= r; j++) {
 			Fq.assign(tmp[j], generator[j + 1], verbose_level);
@@ -411,34 +426,34 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 
 		for (j = 0; j <= r; j++) {
 			if (f_v) {
-				cout << "coding_theory_domain::make_cyclic_code j=" << j << endl;
+				cout << "cyclic_codes::make_cyclic_code j=" << j << endl;
 			}
 			if (f_v) {
-				cout << "coding_theory_domain::make_cyclic_code before Fq.mult(tmp[j], coeffs[0], Pc)" << endl;
+				cout << "cyclic_codes::make_cyclic_code before Fq.mult(tmp[j], coeffs[0], Pc)" << endl;
 			}
 			Fq.mult(tmp[j], coeffs[0], Pc, verbose_level - 1);
 			if (f_v) {
-				cout << "coding_theory_domain::make_cyclic_code before Fq.add()" << endl;
+				cout << "cyclic_codes::make_cyclic_code before Fq.add()" << endl;
 			}
 			Fq.add(Pc, generator[j], Pd);
 			if (f_v) {
-				cout << "coding_theory_domain::make_cyclic_code before Fq.assign()" << endl;
+				cout << "cyclic_codes::make_cyclic_code before Fq.assign()" << endl;
 			}
 			Fq.assign(Pd, generator[j], verbose_level);
 		}
 		r++;
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code r=" << r << endl;
+			cout << "cyclic_codes::make_cyclic_code r=" << r << endl;
 		}
 		if (f_v) {
-			cout << "coding_theory_domain::make_cyclic_code current polynomial: ";
+			cout << "cyclic_codes::make_cyclic_code current polynomial: ";
 			print_polynomial(Fq, r, generator);
 			cout << endl;
 		}
 
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code The generator polynomial is: ";
+		cout << "cyclic_codes::make_cyclic_code The generator polynomial is: ";
 		print_polynomial(Fq, r, generator);
 		cout << endl;
 	}
@@ -452,21 +467,21 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	int *Genma;
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code before field_reduction" << endl;
+		cout << "cyclic_codes::make_cyclic_code before field_reduction" << endl;
 	}
 	field_reduction(n, q, p, e, m, Fp, Fq, r,
 		generator, generator_subfield, f_poly, poly, verbose_level);
-	cout << "coding_theory_domain::make_cyclic_code generator polynomial:" << endl;
+	cout << "cyclic_codes::make_cyclic_code generator polynomial:" << endl;
 	for (j = 0; j <= degree; j++) {
 		cout << generator_subfield[j] << " ";
 	}
 	cout << endl;
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_cyclic_code before generator_matrix_cyclic_code" << endl;
+		cout << "cyclic_codes::make_cyclic_code before generator_matrix_cyclic_code" << endl;
 	}
 	generator_matrix_cyclic_code(n, degree, generator_subfield, Genma);
-	cout << "coding_theory_domain::make_cyclic_code generator matrix: " << endl;
+	cout << "cyclic_codes::make_cyclic_code generator matrix: " << endl;
 	Int_vec_print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
 
 
@@ -484,7 +499,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 			}
 		fp << endl;
 	}
-	cout << "coding_theory_domain::make_cyclic_code Written file " << fname_txt << " of size "
+	cout << "cyclic_codes::make_cyclic_code Written file " << fname_txt << " of size "
 			<< Fio.file_size(fname_txt) << endl;
 
 
@@ -493,7 +508,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 
 
 	Fio.int_matrix_write_csv(fname_csv, Genma, k, n);
-	cout << "coding_theory_domain::make_cyclic_code Written file " << fname_csv << " of size "
+	cout << "cyclic_codes::make_cyclic_code Written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 	}
 
@@ -534,7 +549,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 
 }
 
-void coding_theory_domain::generator_matrix_cyclic_code(int n,
+void cyclic_codes::generator_matrix_cyclic_code(int n,
 		int degree, int *generator_polynomial, int *&M)
 {
 	int k = n - degree;
@@ -549,7 +564,7 @@ void coding_theory_domain::generator_matrix_cyclic_code(int n,
 	}
 }
 
-void coding_theory_domain::print_polynomial(ring_theory::unipoly_domain &Fq,
+void cyclic_codes::print_polynomial(ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *coeffs)
 {
 	int i, f_first = TRUE;
@@ -571,7 +586,7 @@ void coding_theory_domain::print_polynomial(ring_theory::unipoly_domain &Fq,
 	}
 }
 
-void coding_theory_domain::print_polynomial_tight(std::ostream &ost,
+void cyclic_codes::print_polynomial_tight(std::ostream &ost,
 		ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *coeffs)
 {
@@ -591,7 +606,7 @@ void coding_theory_domain::print_polynomial_tight(std::ostream &ost,
 }
 
 
-void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
+void cyclic_codes::field_reduction(int n, int q, int p, int e, int m,
 		field_theory::finite_field &Fp,
 		ring_theory::unipoly_domain &Fq,
 	int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
@@ -605,14 +620,14 @@ void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
 	ring_theory::longinteger_domain D;
 
 	if (f_v) {
-		cout << "coding_theory_domain::field_reduction" << endl;
+		cout << "cyclic_codes::field_reduction" << endl;
 	}
 	D.create_qnm1(Qm1, q, m);
 
 	D.integral_division_by_int(Qm1, q - 1, Index, r);
 
 	if (r != 0) {
-		cout << "coding_theory_domain::field_reduction q - 1 "
+		cout << "cyclic_codes::field_reduction q - 1 "
 				"does not divide q^m - 1" << endl;
 		exit(1);
 	}
@@ -735,12 +750,12 @@ the_end:
 	FREE_OBJECTS(beta_rk_table);
 
 	if (f_v) {
-		cout << "coding_theory_domain::field_reduction done" << endl;
+		cout << "cyclic_codes::field_reduction done" << endl;
 	}
 
 }
 
-void coding_theory_domain::BCH_generator_polynomial(
+void cyclic_codes::BCH_generator_polynomial(
 		field_theory::finite_field *F,
 	ring_theory::unipoly_object &g, int n,
 	int designed_distance, int &bose_distance,
@@ -758,7 +773,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
-		cout << "coding_theory_domain::BCH_generator_polynomial "
+		cout << "cyclic_codes::BCH_generator_polynomial "
 				"n=" << n << " designed_distance="
 				<< designed_distance << " p=" << p << endl;
 	}
@@ -776,7 +791,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	D.integral_division_by_int(qm1, n, b, r);
 	//b = (q - 1) / n;
 	if (r != 0) {
-		cout << "coding_theory_domain::BCH_generator_polynomial r != 0" << endl;
+		cout << "cyclic_codes::BCH_generator_polynomial r != 0" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -853,7 +868,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 
 #if 0
 	if (1 + designed_distance - 2 >= q - 1) {
-		cout << "coding_theory_domain::BCH_generator_polynomial "
+		cout << "cyclic_codes::BCH_generator_polynomial "
 				"1 + designed_distance - 2 >= q - 1" << endl;
 		exit(1);
 	}
@@ -1016,7 +1031,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	}
 }
 
-void coding_theory_domain::compute_generator_matrix(
+void cyclic_codes::compute_generator_matrix(
 		ring_theory::unipoly_object a, int *&genma, int n, int &k,
 		int verbose_level)
 {
@@ -1029,7 +1044,7 @@ void coding_theory_domain::compute_generator_matrix(
 
 	k = n - d;
 	if (k < 0) {
-		cout << "coding_theory_domain::compute_generator_matrix k < 0" << endl;
+		cout << "cyclic_codes::compute_generator_matrix k < 0" << endl;
 		exit(1);
 	}
 	genma = NEW_int(k * n);
@@ -1043,20 +1058,20 @@ void coding_theory_domain::compute_generator_matrix(
 		}
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::compute_generator_matrix generator matrix:" << endl;
+		cout << "cyclic_codes::compute_generator_matrix generator matrix:" << endl;
 		Int_vec_print_integer_matrix(cout, genma, k, n);
 	}
 }
 
 
 
-void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level)
+void cyclic_codes::make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level)
 // this function creates a finite field
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_BCH_codes" << endl;
+		cout << "cyclic_codes::make_BCH_codes" << endl;
 	}
 
 	char fname[1000];
@@ -1084,37 +1099,93 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	Int_vec_print(cout, roots, nb_roots);
 	cout << endl;
 
-	coding_theory_domain Codes;
-
 	string dummy;
 
 	dummy.assign("");
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_BCH_codes before Codes.make_cyclic_code" << endl;
+		cout << "cyclic_codes::make_BCH_codes before make_cyclic_code" << endl;
 	}
 
 	// this function creates a finite field:
-	Codes.make_cyclic_code(n, q, t, roots, nb_roots,
+	make_cyclic_code(n, q, t, roots, nb_roots,
 			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
 			fname_txt, fname_csv, verbose_level);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_BCH_codes after Codes.make_cyclic_code" << endl;
+		cout << "cyclic_codes::make_BCH_codes after make_cyclic_code" << endl;
 	}
 
 	FREE_int(roots);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_BCH_codes done" << endl;
+		cout << "cyclic_codes::make_BCH_codes done" << endl;
+	}
+}
+
+void cyclic_codes::generator_matrix_cyclic_code(
+		field_theory::finite_field *F,
+		int n,
+		std::string &poly_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cyclic_codes::generator_matrix_cyclic_code" << endl;
+	}
+
+	int *coeffs;
+	int sz;
+	int k;
+	int d;
+	int *M;
+	int *v;
+	int i, j;
+	long int rk;
+	long int *Rk;
+
+	Int_vec_scan(poly_coeffs, coeffs, sz);
+	d = sz - 1;
+	k = n - d;
+
+	M = NEW_int(k * n);
+	Int_vec_zero(M, k * n);
+	for (i = 0; i < k; i++) {
+		Int_vec_copy(coeffs, M + i * n + i, d + 1);
+	}
+
+	cout << "generator matrix:" << endl;
+	Int_matrix_print(M, k, n);
+
+
+	cout << "generator matrix:" << endl;
+	Int_vec_print_fully(cout, M, k * n);
+	cout << endl;
+
+	v = NEW_int(k);
+	Rk = NEW_lint(n);
+	for (j = 0; j < n; j++) {
+		for (i = 0; i < k; i++) {
+			v[i] = M[i * n + j];
+		}
+		F->PG_element_rank_modified_lint(
+				v, 1, k, rk);
+		Rk[j] = rk;
+	}
+
+	cout << "generator matrix in projective points:" << endl;
+	Lint_vec_print_fully(cout, Rk, n);
+	cout << endl;
+
+	if (f_v) {
+		cout << "cyclic_codes::generator_matrix_cyclic_code" << endl;
 	}
 }
 
 
+
 }}}
-
-
-
 
 
 

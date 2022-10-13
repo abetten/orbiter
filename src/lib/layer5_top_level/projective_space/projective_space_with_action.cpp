@@ -983,6 +983,9 @@ void projective_space_with_action::report(
 	}
 
 
+	cout << "projective_space_with_action::report not yet implemented" << endl;
+	exit(1);
+
 
 	if (f_v) {
 		cout << "projective_space_with_action::report done" << endl;
@@ -990,56 +993,6 @@ void projective_space_with_action::report(
 }
 
 
-void projective_space_with_action::create_quartic_curve(
-		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr,
-		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *&QC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_quartic_curve" << endl;
-	}
-	if (n != 2) {
-		cout << "projective_space_with_action::create_quartic_curve we need a two-dimensional projective space" << endl;
-		exit(1);
-	}
-
-	if (Quartic_curve_descr->get_q() != q) {
-		cout << "projective_space_activity::do_create_quartic_curve Quartic_curve_descr->get_q() != q" << endl;
-		exit(1);
-	}
-
-	QC = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create);
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_quartic_curve before SC->init" << endl;
-	}
-	QC->init(Quartic_curve_descr, this, QCDA, verbose_level);
-	if (f_v) {
-		cout << "projective_space_with_action::create_quartic_curve after SC->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_quartic_curve "
-				"before SC->apply_transformations" << endl;
-	}
-	QC->apply_transformations(Quartic_curve_descr->transform_coeffs,
-			Quartic_curve_descr->f_inverse_transform,
-			verbose_level - 2);
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_quartic_curve "
-				"after SC->apply_transformations" << endl;
-	}
-
-	QC->F->PG_element_normalize(QC->QO->eqn15, 1, 15);
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_quartic_curve done" << endl;
-	}
-}
 
 void projective_space_with_action::canonical_form_of_code(
 		std::string &label,
@@ -1224,8 +1177,16 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 		}
 		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description Quartic_curve_descr;
 
-		Quartic_curve_descr.f_q = TRUE;
-		Quartic_curve_descr.q = q;
+
+		//Quartic_curve_descr.f_q = TRUE;
+		//Quartic_curve_descr.q = q;
+
+		//Quartic_curve_descr.f_space = TRUE;
+		//Quartic_curve_descr.space_label.assign(label_of_projective_space);
+
+		Quartic_curve_descr.f_space_pointer = TRUE;
+		Quartic_curve_descr.space_pointer = this;
+
 		Quartic_curve_descr.f_catalogue = TRUE;
 		Quartic_curve_descr.iso = h;
 
@@ -1252,9 +1213,10 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 
 		if (ago > 0) {
 
-			create_quartic_curve(
+			QC[h] = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create);
+
+			QC[h]->create_quartic_curve(
 						&Quartic_curve_descr,
-						QC[h],
 						verbose_level);
 
 			nb_K[h] = QC[h]->QO->QP->nb_Kovalevski;

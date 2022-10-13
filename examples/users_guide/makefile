@@ -64,6 +64,27 @@ V7_VANDERMONDE_EXTENDED="\
 
 
 
+DOILY="Row,C0,C1,C2\
+\n0,0,12,13\
+\n1,1,12,14\
+\n2,8,9,12\
+\n3,4,6,8\
+\n4,6,10,14\
+\n5,3,7,8\
+\n6,7,10,13\
+\n7,4,11,13\
+\n8,3,11,14\
+\n9,0,5,6\
+\n10,1,5,7\
+\n11,5,9,11\
+\n12,0,2,3\
+\n13,1,2,4\
+\n14,2,9,10\
+\nEND"
+
+
+
+
 #Co3 from Conway et al., 1985 (ATLAS)
 #order = 495766656000
 #Co3 from the paper by Suleiman and Wilson 1997
@@ -2616,6 +2637,55 @@ elliptic_quadric_subspace:
 #( 2, 3, 1572, 100, 98, 116, 132, 1570, 1588, 1604, 1631, 1688, 1704, 1706, 1747, 1745, 1847, 1845, 1856, 1888, 1904, 1931, 1988, 2004, 2022, 2020 )
 
 
+
+BLT_database_7_1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define S -geometric_object P \
+			-BLT_database 1 \
+		-end \
+		-with S -do -combinatorial_object_activity -save \
+		-end
+
+# writes BLT_7_1.txt
+
+BLT_database_7_1_print:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define S -set -file_orbiter_format BLT_7_1.txt -end \
+		-with O -do -orthogonal_space_activity \
+			-print_points S -end
+	pdflatex S_set_report.tex
+	open S_set_report.pdf
+
+Doily_W_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define W2_points -set -loop 0 15 1 -end \
+		-define W2_lines -set -loop 0 15 1 -end \
+		-with O -do \
+		-orthogonal_space_activity \
+			-print_points W2_points \
+		-end \
+		-with O -do \
+		-orthogonal_space_activity \
+			-print_lines W2_lines \
+		-end
+	pdflatex W2_points_set_report.tex
+	open W2_points_set_report.pdf
+	pdflatex W2_lines_set_of_lines_report.tex
+	open W2_lines_set_of_lines_report.pdf
+
+
+# the output defines doily.csv
+
+
+
+
+
 ###############################################################################
 # Section 4.8: Hermitian varieties
 
@@ -2876,29 +2946,6 @@ BLT_database_7_0:
 
 # writes BLT_7_0.txt
 
-BLT_database_7_1:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 4 -field F -v 0 -end \
-		-define S -geometric_object P \
-			-BLT_database 1 \
-		-end \
-		-with S -do -combinatorial_object_activity -save \
-		-end
-	$(ORBITER) -v 2 \
-		-define S -set -file_orbiter_format BLT_7_1.txt -end
-
-# writes BLT_7_1.txt
-
-BLT_database_7_1_print:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define O -orthogonal_space 0 5 F -without_group -end \
-		-define S -set -file_orbiter_format BLT_7_1.txt -end \
-		-with O -do -orthogonal_space_activity \
-			-print_points S -end
-	pdflatex S_set_report.tex
-	open S_set_report.pdf
 
 
 
@@ -2920,27 +2967,8 @@ BLT_database_67_4:
 
 
 
-Doily_W_2:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 0 5 F -without_group -end \
-		-define W2_points -set -loop 0 15 1 -end \
-		-define W2_lines -set -loop 0 15 1 -end \
-		-with O -do \
-		-orthogonal_space_activity \
-			-print_points W2_points \
-		-end \
-		-with O -do \
-		-orthogonal_space_activity \
-			-print_lines W2_lines \
-		-end
-	pdflatex W2_points_set_report.tex
-	open W2_points_set_report.pdf
-	pdflatex W2_lines_set_of_lines_report.tex
-	open W2_lines_set_of_lines_report.pdf
 
 
-# the output defines doily.csv
 
 
 
@@ -6934,11 +6962,7 @@ quartic_curve_9_0_report:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 9 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-define_quartic_curve C -q 9 \
-				-catalogue 0 -end \
-			-end \
+		-define C -quartic_curve -space P -catalogue 0 -end \
 		-with C -do \
 			-quartic_curve_activity \
 				-report \
@@ -6953,34 +6977,95 @@ quartic_curve_13_0_report:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-define_quartic_curve C -q 13 \
-				-catalogue 0 -end \
-			-end \
+		-define C -quartic_curve -space P -catalogue 0 \
+			-transform "10,4,1,11,5,11,4,1,1" \
+			-transform_inverse "9,1,0,12,9,0,2,10,11" \
+		-end \
 		-with C -do \
 			-quartic_curve_activity \
 				-report \
+			-end \
+		-with C -do \
+			-quartic_curve_activity \
+				-extract_orbit_on_bitangents_by_length 4 \
 			-end
-	pdflatex quartic_curve_catalogue_q13_iso0_report.tex
-	open quartic_curve_catalogue_q13_iso0_report.pdf
+	#pdflatex quartic_curve_catalogue_q13_iso0_report.tex
+	#open quartic_curve_catalogue_q13_iso0_report.pdf
 
+# 170, 111, 140, 2
+
+
+PG_2_13_rank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector -format 4 \
+		-dense "1,0,0, 0,1,0, 1,0,0, 0,0,1, 1,1,1, 0,1,0, 1,1,1, 0,0,1" \
+		-end \
+		-define F -finite_field -q 23 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v \
+		-end \
+
+
+PG_2_13_orbits_on_lines:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -linear_group -PGL 3 13 -end \
+		-define G_on_lines -modified_group -from G \
+			-on_k_subspaces 2 \
+		-end \
+		-with G_on_lines -do \
+		-group_theoretic_activity \
+			-poset_classification_control \
+				-problem_label PGL_3_13 \
+				-depth 4 \
+				-report -end \
+				-draw_poset \
+				-draw_options -radius 200 -end  \
+				-recognize "170, 111, 140, 2" \
+				-recognize "0,23,24,47" \
+			-end \
+			-orbits_on_subsets 4 \
+		-end
+	#pdflatex PGL_3_13_poset.tex
+	#open PGL_3_13_poset.pdf
+
+# stabilizer of {0,23,24,47}
+#1,0,0,7,9,0,9,5,3,
+#1,3,0,1,12,0,10,9,2,
+#1,1,11,7,9,6,10,5,2,
+#1,4,11,12,1,8,10,4,2,
 
 quartic_curve_13_1_report: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-define_quartic_curve C -q 13 \
-				-catalogue 1 -end \
-			-end \
+		-define C -quartic_curve -space P -catalogue 1 -end \
 		-with C -do \
 			-quartic_curve_activity \
 				-report \
 			-end
 	pdflatex quartic_curve_catalogue_q13_iso1_report.tex
 	open quartic_curve_catalogue_q13_iso1_report.pdf
+
+
+
+
+quartic_curve_19_4_report: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -catalogue 4 \
+		-end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end \
+		-with C -do \
+			-quartic_curve_activity \
+				-extract_orbit_on_bitangents_by_length 4 \
+			-end
 
 
 
@@ -7292,16 +7377,27 @@ surface_25_0:
 	open surface_catalogue_q25_iso0_quartics.pdf
 
 
+
+# ToDo, this curve does not have its stabilizer computed:
+
+
+quartic_curve_23_40_report: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 23 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define QC23_40 -quartic_curve -space P -catalogue 40 -end \
+			-with QC23_40 -do \
+				-quartic_curve_activity \
+					-report \
+				-end \
+
+
 quartic_curve_25_report: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 25 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-loop L 0 18 1 \
-			-with P -do \
-				-projective_space_activity \
-					-define_quartic_curve QC25_%L \
-					-q 25 -catalogue %L -end \
-				-end \
+			-define QC23_%L -quartic_curve -space P -catalogue %L -end \
 		-end_loop \
 		-print_symbols \
 		-loop L 0 18 1 \
@@ -7756,10 +7852,7 @@ quartic_curve_13_0_surface:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-define_quartic_curve QC13_0 -q 13 -catalogue 0 -end \
-			-end \
+		-define QC13_0 -quartic_curve -space P -catalogue 0 -end \
 		-with QC13_0 -do \
 			-quartic_curve_activity \
 				-create_surface \
@@ -8515,6 +8608,19 @@ quartic_curve_tables:
 			-projective_space_activity \
 				-table_of_quartic_curves \
 			-end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+			-end
+
+
+#quartic_curves_q9_info.csv
+#quartic_curves_q13_info.csv
+#quartic_curves_q17_info.csv
+#quartic_curves_q19_info.csv
 
 
 quartic_curve_tables_latex: 
@@ -8523,10 +8629,10 @@ quartic_curve_tables_latex:
 	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q13_info.csv
 	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q17_info.csv
 	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q19_info.csv
-	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q25_info.csv
-	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q27_info.csv
-	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q29_info.csv
-	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q31_info.csv
+	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q25_info.csv
+	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q27_info.csv
+	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q29_info.csv
+	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q31_info.csv
 	#$(ORBITER) -v 3 -csv_file_latex 1 quartic_curves_q9_info.csv
 	#pdflatex quartic_curves_q13_info.tex
 	#open quartic_curves_q13_info.pdf

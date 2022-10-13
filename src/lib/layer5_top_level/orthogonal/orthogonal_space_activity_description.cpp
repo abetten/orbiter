@@ -26,6 +26,7 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	f_create_BLT_set = FALSE;
 	BLT_Set_create_description = NULL;
 
+#if 0
 	f_BLT_set_starter = FALSE;
 	BLT_set_starter_size = 0;
 	BLT_set_starter_control = NULL;
@@ -37,6 +38,7 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 
 	f_fname_base_out = FALSE;
 	//fname_base_out;
+#endif
 
 	f_cheat_sheet_orthogonal = FALSE;
 
@@ -128,6 +130,8 @@ int orthogonal_space_activity_description::read_arguments(
 				}
 			}
 		}
+
+#if 0
 		else if (ST.stringcmp(argv[i], "-BLT_set_starter") == 0) {
 			f_BLT_set_starter = TRUE;
 			BLT_set_starter_size = ST.strtoi(argv[++i]);
@@ -164,6 +168,8 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-fname_base_out " << fname_base_out << endl;
 			}
 		}
+#endif
+
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
 			f_cheat_sheet_orthogonal = TRUE;
 			if (f_v) {
@@ -275,6 +281,7 @@ void orthogonal_space_activity_description::print()
 		cout << "-create_BLT_set ";
 		BLT_Set_create_description->print();
 	}
+#if 0
 	if (f_BLT_set_starter) {
 		cout << "-BLT_set_starter " << BLT_set_starter_size << endl;
 	}
@@ -284,6 +291,7 @@ void orthogonal_space_activity_description::print()
 	if (f_fname_base_out) {
 		cout << "-fname_base_out " << fname_base_out << endl;
 	}
+#endif
 	if (f_cheat_sheet_orthogonal) {
 		f_cheat_sheet_orthogonal = TRUE;
 		cout << "-cheat_sheet_orthogonal "<< endl;
