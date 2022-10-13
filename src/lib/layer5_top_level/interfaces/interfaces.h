@@ -246,7 +246,12 @@ class interface_coding_theory {
 	int random_noise_in_bitmap_file_numerator;
 	int random_noise_in_bitmap_file_denominator;
 
-
+	int f_random_noise_of_burst_type_in_bitmap_file;
+	std::string random_noise_of_burst_type_in_bitmap_file_input;
+	std::string random_noise_of_burst_type_in_bitmap_file_output;
+	int random_noise_of_burst_type_in_bitmap_file_numerator;
+	int random_noise_of_burst_type_in_bitmap_file_denominator;
+	int random_noise_of_burst_type_in_bitmap_file_burst_length;
 
 public:
 	interface_coding_theory();
@@ -694,6 +699,11 @@ class interface_toolkit {
 	std::string csv_file_concatenate_fname_out;
 	std::vector<std::string> csv_file_concatenate_fname_in;
 
+	int f_csv_file_concatenate_from_mask;
+	int csv_file_concatenate_from_mask_N;
+	std::string csv_file_concatenate_from_mask_mask;
+	std::string csv_file_concatenate_from_mask_fname_out;
+
 	int f_csv_file_extract_column_to_txt;
 	std::string csv_file_extract_column_to_txt_fname;
 	std::string csv_file_extract_column_to_txt_col_label;
@@ -933,6 +943,10 @@ public:
 	int f_spread;
 	spreads::spread_create_description *Spread_create_description;
 
+	int f_quartic_curve;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr;
+
+
 	int f_translation_plane;
 	std::string translation_plane_spread_label;
 	std::string translation_plane_group_n_label;
@@ -1020,6 +1034,7 @@ public:
 	void definition_of_graph(int verbose_level);
 	void definition_of_code(int verbose_level);
 	void definition_of_spread(int verbose_level);
+	void definition_of_quartic_curve(int verbose_level);
 	void definition_of_translation_plane(int verbose_level);
 	void definition_of_spread_table(int verbose_level);
 	void definition_of_packing_was(int verbose_level);

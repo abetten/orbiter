@@ -252,49 +252,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 	}
 
-	else if (Descr->f_define_quartic_curve) {
-
-		cout << "f_define_quartic_curve label = " << Descr->f_define_quartic_curve << endl;
-
-		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *QC;
-
-#if 0
-		projective_space_global G;
-
-		G.do_create_quartic_curve(
-			PA,
-			Descr->Quartic_curve_descr,
-			QC,
-			verbose_level);
-#endif
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before PA->create_quartic_curve" << endl;
-		}
-		PA->create_quartic_curve(
-				Descr->Quartic_curve_descr,
-				QC,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after PA->create_quartic_curve" << endl;
-		}
-
-		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
-
-		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-
-		Symb->init_quartic_curve(Descr->define_quartic_curve_label, QC, verbose_level);
-		if (f_v) {
-			cout << "before Orbiter->add_symbol_table_entry "
-					<< Descr->define_surface_label << endl;
-		}
-		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_quartic_curve_label, Symb, verbose_level);
-
-
-		//FREE_OBJECT(SC);
-	}
 
 	// surfaces:
 
@@ -448,6 +405,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+#if 0
 	else if (Descr->f_spread_classify) {
 
 #if 0
@@ -462,6 +420,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->spread_classify_Control,
 				verbose_level);
 	}
+#endif
+
 	else if (Descr->f_classify_semifields) {
 
 #if 0

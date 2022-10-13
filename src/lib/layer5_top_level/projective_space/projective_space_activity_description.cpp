@@ -66,11 +66,6 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_table_of_cubic_surfaces = FALSE;
 
-
-	f_define_quartic_curve = FALSE;
-	//std::string define_quartic_curve_label;
-	Quartic_curve_descr = NULL;
-
 	f_classify_surfaces_with_double_sixes = FALSE;
 	//std::string classify_surfaces_with_double_sixes_label;
 	classify_surfaces_with_double_sixes_control = NULL;
@@ -118,13 +113,17 @@ projective_space_activity_description::projective_space_activity_description()
 	nb_Eckardt_points = 0;
 
 
+#if 0
 	f_surface_quartic = FALSE;
 	f_surface_clebsch = FALSE;
 	f_surface_codes = FALSE;
+#endif
 
+#if 0
 	f_spread_classify = FALSE;
 	spread_classify_k = 0;
 	spread_classify_Control = NULL;
+#endif
 
 	f_classify_semifields = FALSE;
 	Semifield_classify_description = NULL;
@@ -400,28 +399,6 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-define_quartic_curve") == 0) {
-			f_define_quartic_curve = TRUE;
-			if (f_v) {
-				cout << "-define_quartic_curve, reading extra arguments" << endl;
-			}
-
-			define_quartic_curve_label.assign(argv[++i]);
-			Quartic_curve_descr = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description);
-
-			i += Quartic_curve_descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			if (f_v) {
-				cout << "done reading -define_quartic_curve " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-define_quartic_curve " << define_quartic_curve_label << endl;
-			}
-		}
-
-
 		// cubic surfaces:
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_with_double_sixes") == 0) {
 			f_classify_surfaces_with_double_sixes = TRUE;
@@ -599,6 +576,7 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-surface_quartic") == 0) {
 			f_surface_quartic = TRUE;
 			if (f_v) {
@@ -619,6 +597,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-surface_codes" << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-trihedra1_control") == 0) {
 			f_trihedra1_control = TRUE;
@@ -668,6 +647,7 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-spread_classify") == 0) {
 			f_spread_classify = TRUE;
 			spread_classify_k = ST.strtoi(argv[++i]);
@@ -689,6 +669,7 @@ int projective_space_activity_description::read_arguments(
 				spread_classify_Control->print();
 			}
 		}
+#endif
 
 		// semifields
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
@@ -1086,11 +1067,6 @@ void projective_space_activity_description::print()
 	if (f_table_of_cubic_surfaces) {
 		cout << "-table_of_cubic_surfaces " << endl;
 	}
-	if (f_define_quartic_curve) {
-		cout << "-define_quartic_curve " << define_quartic_curve_label << endl;
-		Quartic_curve_descr->print();
-	}
-
 
 	// cubic surfaces:
 	if (f_classify_surfaces_with_double_sixes) {
@@ -1142,6 +1118,7 @@ void projective_space_activity_description::print()
 	if (f_filter_by_nb_Eckardt_points) {
 		cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
 	}
+#if 0
 	if (f_surface_quartic) {
 		cout << "-surface_quartic" << endl;
 	}
@@ -1151,6 +1128,7 @@ void projective_space_activity_description::print()
 	if (f_surface_codes) {
 		cout << "-surface_codes" << endl;
 	}
+#endif
 	if (f_trihedra1_control) {
 		cout << "-trihedra1_control " << endl;
 		Trihedra1_control->print();
@@ -1164,11 +1142,13 @@ void projective_space_activity_description::print()
 		Control_six_arcs->print();
 	}
 
+#if 0
 	if (f_spread_classify) {
 		f_spread_classify = TRUE;
 		cout << "-spread_classify " << spread_classify_k << endl;
 		spread_classify_Control->print();
 	}
+#endif
 
 	// semifields
 	if (f_classify_semifields) {

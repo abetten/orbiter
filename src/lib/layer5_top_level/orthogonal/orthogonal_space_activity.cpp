@@ -115,6 +115,8 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 	}
+
+#if 0
 	else if (Descr->f_BLT_set_starter) {
 
 		if (f_v) {
@@ -223,6 +225,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 	}
+#endif
 
 
 	else if (Descr->f_cheat_sheet_orthogonal) {

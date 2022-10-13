@@ -16,7 +16,8 @@ MODULES = \
 	projective_space_global.o \
 	projective_space_with_action_description.o \
 	projective_space_with_action.o \
-
+	projective_space_with_action.o \
+	quartic_curve_object.o
 
 all : $(MODULES)
 

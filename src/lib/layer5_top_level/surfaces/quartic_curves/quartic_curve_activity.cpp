@@ -52,7 +52,11 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 
 	if (f_v) {
 		cout << "quartic_curve_activity::perform_activity" << endl;
+		Int_vec_print(cout, QC->QO->eqn15, 15);
+		cout << endl;
 	}
+
+
 
 	if (Descr->f_report) {
 
@@ -123,6 +127,46 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		}
 
 
+	}
+	if (Descr->f_extract_orbit_on_bitangents_by_length) {
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity f_extract_orbit_on_bitangents_by_length "
+					"length = " << Descr->extract_orbit_on_bitangents_by_length_length << endl;
+		}
+
+		if (QC->QOA) {
+
+			int desired_orbit_length;
+			long int *extracted_set;
+
+			desired_orbit_length = Descr->extract_orbit_on_bitangents_by_length_length;
+
+			QC->QOA->Aut_gens->extract_orbit_on_set_with_given_action_after_restriction_by_length(
+					QC->PA->A_on_lines, QC->QO->bitangents28, 28,
+					desired_orbit_length,
+					extracted_set,
+					verbose_level);
+
+
+			long int *extracted_lines;
+			int i, idx;
+
+			extracted_lines = NEW_lint(desired_orbit_length);
+
+			for (i = 0; i < desired_orbit_length; i++) {
+				idx = extracted_set[i];
+				extracted_lines[i] = QC->QO->bitangents28[idx];
+			}
+
+			cout << "Orbit on bitangents of length " << desired_orbit_length << " : ";
+			Lint_vec_print(cout, extracted_lines, desired_orbit_length);
+			cout << endl;
+			cout << "Index set : ";
+			Lint_vec_print(cout, extracted_set, desired_orbit_length);
+			cout << endl;
+
+		}
 	}
 
 
@@ -198,50 +242,7 @@ void quartic_curve_activity::do_report(
 			}
 
 
-			string summary_file_name;
-			string col_postfix;
-
-			if (QC->Descr->f_label_txt) {
-				summary_file_name.assign(QC->Descr->label_txt);
-			}
-			else {
-				summary_file_name.assign(QC->label_txt);
-			}
-			summary_file_name.append("_summary.csv");
-
-
-			sprintf(str, "-Q%d", F->q);
-			col_postfix.assign(str);
-
-			if (f_v) {
-				cout << "quartic_curve_activity::do_report "
-						"before SC->SO->SOP->create_summary_file" << endl;
-			}
-			if (QC->Descr->f_label_for_summary) {
-				QC->QO->QP->create_summary_file(summary_file_name,
-						QC->Descr->label_for_summary, col_postfix, verbose_level);
-			}
-			else {
-				QC->QO->QP->create_summary_file(summary_file_name,
-						QC->label_txt, col_postfix, verbose_level);
-			}
-			if (f_v) {
-				cout << "quartic_curve_activity::do_report "
-						"after SC->SO->SOP->create_summary_file" << endl;
-			}
-
-
 #if 0
-			if (f_v) {
-				cout << "quartic_curve_activity::do_report "
-						"before QC->QO->QP->print_everything" << endl;
-			}
-			QC->QO->QP->print_everything(ost, verbose_level);
-			if (f_v) {
-				cout << "quartic_curve_activity::do_report "
-						"after QC->QO->QP->print_everything" << endl;
-			}
-#else
 			if (f_v) {
 				cout << "quartic_curve_activity::do_report "
 						"before SC->SO->SOP->report_properties_simple" << endl;
@@ -250,6 +251,16 @@ void quartic_curve_activity::do_report(
 			if (f_v) {
 				cout << "quartic_curve_activity::do_report "
 						"after SC->SO->SOP->report_properties_simple" << endl;
+			}
+#else
+			if (f_v) {
+				cout << "quartic_curve_activity::do_report "
+						"before QC->report_properties" << endl;
+			}
+			QC->report_properties(ost, verbose_level);
+			if (f_v) {
+				cout << "quartic_curve_activity::do_report "
+						"after QC->report_properties" << endl;
 			}
 #endif
 

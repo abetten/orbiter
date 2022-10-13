@@ -59,6 +59,11 @@ interface_toolkit::interface_toolkit()
 	//std::string csv_file_concatenate_fname_out;
 	//std::vector<std::string> csv_file_concatenate_fname_in;
 
+	f_csv_file_concatenate_from_mask = FALSE;
+	csv_file_concatenate_from_mask_N = 0;
+	//std::string csv_file_concatenate_from_mask_mask;
+	//std::string csv_file_concatenate_from_mask_fname_out;
+
 	f_csv_file_extract_column_to_txt = FALSE;
 	//std::string csv_file_extract_column_to_txt_fname;
 	//std::string csv_file_extract_column_to_txt_col_label;
@@ -158,7 +163,10 @@ void interface_toolkit::print_help(int argc,
 		cout << "-cvs_file_join <int : number of files> <string : input file1> <string : column label1> ..." << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_concatenate") == 0) {
-		cout << "-csv_file_concatenate <string : fname_out> <int : number of input files> <string : inout file1> ..." << endl;
+		cout << "-csv_file_concatenate <string : fname_out> <int : number of input files> <string : input file1> ..." << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_concatenate_from_mask") == 0) {
+		cout << "-csv_file_concatenate_from_mask <int : nb_files> <string : fname_mask> <string : fname_out> " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
 		cout << "-csv_file_extract_column_to_txt <string : csv_fname> <string : col_label>" << endl;
@@ -238,6 +246,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_concatenate_from_mask") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
@@ -412,6 +423,19 @@ void interface_toolkit::read_arguments(int argc,
 			for (j = 0; j < nb; j++) {
 				cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
 			}
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_concatenate_from_mask") == 0) {
+		f_csv_file_concatenate_from_mask = TRUE;
+		csv_file_concatenate_from_mask_N = ST.strtoi(argv[++i]);
+		csv_file_concatenate_from_mask_mask.assign(argv[++i]);
+		csv_file_concatenate_from_mask_fname_out.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_concatenate_from_mask "
+					<< " " << csv_file_concatenate_from_mask_N
+					<< " " << csv_file_concatenate_from_mask_mask
+					<< " " << csv_file_concatenate_from_mask_fname_out
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
@@ -664,6 +688,13 @@ void interface_toolkit::print()
 			cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
 		}
 	}
+	if (f_csv_file_concatenate_from_mask) {
+		cout << "-csv_file_concatenate_from_mask "
+				<< " " << csv_file_concatenate_from_mask_N
+				<< " " << csv_file_concatenate_from_mask_mask
+				<< " " << csv_file_concatenate_from_mask_fname_out
+				<< endl;
+	}
 	if (f_csv_file_extract_column_to_txt) {
 		cout << "-csv_file_extract_column_to_txt " << csv_file_extract_column_to_txt_fname << " " << csv_file_extract_column_to_txt_col_label << endl;
 	}
@@ -816,6 +847,16 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.do_csv_file_concatenate(csv_file_concatenate_fname_in,
 				csv_file_concatenate_fname_out, verbose_level);
+	}
+	else if (f_csv_file_concatenate_from_mask) {
+
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.do_csv_file_concatenate_from_mask(
+				csv_file_concatenate_from_mask_mask,
+				csv_file_concatenate_from_mask_N,
+				csv_file_concatenate_from_mask_fname_out,
+				verbose_level);
 	}
 	else if (f_csv_file_extract_column_to_txt) {
 

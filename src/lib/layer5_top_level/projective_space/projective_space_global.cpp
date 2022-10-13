@@ -912,6 +912,11 @@ void projective_space_global::classify_quartic_curves_nauty(
 	Descr->fname_mask.assign(fname_mask);
 	Descr->f_fname_base_out = TRUE;
 	Descr->fname_base_out.assign(fname_classification);
+#if 0
+	Descr->column_label_eqn.assign("curve");
+	Descr->column_label_pts.assign("pts_on_curve");
+	Descr->column_label_bitangents.assign("bitangents");
+#endif
 	Descr->PA = PA;
 	Descr->f_degree = TRUE;
 	Descr->degree = 4;
@@ -919,6 +924,9 @@ void projective_space_global::classify_quartic_curves_nauty(
 	Descr->f_algorithm_nauty = TRUE;
 	Descr->f_algorithm_substructure = FALSE;
 
+	std::string column_label_eqn;
+	std::string column_label_pts;
+	std::string column_label_bitangents;
 
 	Classifier = NEW_OBJECT(canonical_form_classifier);
 
@@ -976,6 +984,11 @@ void projective_space_global::classify_quartic_curves_with_substructure(
 	Descr->fname_mask.assign(fname_mask);
 	Descr->f_fname_base_out = TRUE;
 	Descr->fname_base_out.assign(fname_classification);
+#if 0
+	Descr->column_label_eqn.assign("curve");
+	Descr->column_label_pts.assign("pts_on_curve");
+	Descr->column_label_bitangents.assign("bitangents");
+#endif
 	Descr->PA = PA;
 	Descr->f_degree = TRUE;
 	Descr->degree = degree;

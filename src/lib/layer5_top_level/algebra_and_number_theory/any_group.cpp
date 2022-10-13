@@ -1996,8 +1996,6 @@ void any_group::set_of_coset_representatives(any_group *AG_secondary,
 	}
 }
 
-
-
 void any_group::report_coset_reps(
 		data_structures_groups::vector_ge *coset_reps,
 		int verbose_level)

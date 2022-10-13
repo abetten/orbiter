@@ -35,6 +35,9 @@ public:
 
 	int f_create_surface;
 
+	int f_extract_orbit_on_bitangents_by_length;
+	int extract_orbit_on_bitangents_by_length_length;
+
 
 	quartic_curve_activity_description();
 	~quartic_curve_activity_description();
@@ -87,8 +90,16 @@ class quartic_curve_create_description {
 
 public:
 
+#if 0
 	int f_q;
 	int q;
+#endif
+
+	int f_space;
+	std::string space_label;
+
+	int f_space_pointer;
+	projective_geometry::projective_space_with_action *space_pointer;
 
 	int f_label_txt;
 	std::string label_txt;
@@ -131,7 +142,7 @@ public:
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	int get_q();
+	//int get_q();
 };
 
 
@@ -181,15 +192,16 @@ public:
 	~quartic_curve_create();
 	void null();
 	void freeself();
+	void create_quartic_curve(
+			quartic_curve_create_description *Quartic_curve_descr,
+			int verbose_level);
 	void init_with_data(
 			quartic_curve_create_description *Descr,
 			projective_geometry::projective_space_with_action *PA,
-			quartic_curve_domain_with_action *QCDA,
 			int verbose_level);
 	void init(
 			quartic_curve_create_description *Descr,
 			projective_geometry::projective_space_with_action *PA,
-			quartic_curve_domain_with_action *QCDA,
 			int verbose_level);
 	void create_quartic_curve_from_description(
 			quartic_curve_domain_with_action *DomA, int verbose_level);
@@ -219,6 +231,8 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 	// ToDo
+	void report_properties(std::ostream &ost, int verbose_level);
+	void print_general(std::ostream &ost, int verbose_level);
 
 };
 
@@ -283,7 +297,7 @@ public:
 	int pt_A; // = SOA->SO->SOP->Pts_not_on_lines[i];
 	int pt_B; // = SOA->Surf->rank_point(v);
 
-	long int *Lines_nice; // lines after transformation
+	long int *Lines_nice; // surface lines after transformation
 	int nb_lines;
 
 	long int *Bitangents;
@@ -295,7 +309,7 @@ public:
 	int *f2; // terms involving X0, with X0 removed (quadratic)
 	int *f3; // terms free of X0 (cubic)
 
-	long int *Pts_on_surface; // points on the transformed surface
+	long int *Pts_on_surface; // points on the transformed cubic surface
 	int nb_pts_on_surface;
 
 	// the equation of the quartic curve:

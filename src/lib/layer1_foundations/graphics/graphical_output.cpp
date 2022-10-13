@@ -1202,7 +1202,7 @@ void graphical_output::random_noise_in_bitmap_file(
 	orbiter_kernel_system::file_io Fio;
 
 	BMP image;
-	int H, W, i, j, r;
+	int H, W, i, j, r, c;
 	orbiter_kernel_system::os_interface Os;
 
 	image.ReadFromFile(fname_input.c_str());
@@ -1223,7 +1223,9 @@ void graphical_output::random_noise_in_bitmap_file(
 
 			r = Os.random_integer(probability_denominator);
 			if (r < probability_numerator) {
-				pix1.Blue = pix1.Green = pix1.Red = Os.random_integer(256);
+
+				c = Os.random_integer(256);
+				pix1.Blue = pix1.Green = pix1.Red = c;
 				pix1.Alpha = pix.Alpha;
 				image.SetPixel(j, i, pix1);
 			}
@@ -1235,6 +1237,69 @@ void graphical_output::random_noise_in_bitmap_file(
 
 	if (f_v) {
 		cout << "graphical_output::random_noise_in_bitmap_file done" << endl;
+	}
+}
+
+void graphical_output::random_noise_in_bitmap_file_burst(
+		std::string fname_input,
+		std::string fname_output,
+		int probability_numerator,
+		int probability_denominator,
+		int burst_length_max,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graphical_output::random_noise_in_bitmap_file_burst" << endl;
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	BMP image;
+	int H, W, i, j, h, k, r, c, burst_length;
+	orbiter_kernel_system::os_interface Os;
+
+	image.ReadFromFile(fname_input.c_str());
+
+	H = image.TellHeight();
+	W = image.TellWidth();
+
+	cout << "image size H=" << H << " W=" << W << endl;
+
+	probability_denominator *= burst_length_max * 2;
+
+	for (i = 0; i < H; i++) {
+		for (j = 0; j < W; j++) {
+			RGBApixel pix, pix1;
+
+			pix = image.GetPixel(j, i);
+			cout << i << " : " << j << " : " << (int) pix.Blue << "," << (int) pix.Green << "," << (int) pix.Red << endl;
+
+
+			r = Os.random_integer(probability_denominator);
+			if (r < probability_numerator) {
+
+				burst_length = Os.random_integer(burst_length_max);
+				c = Os.random_integer(256);
+
+				for (h = 0; h < burst_length; h++) {
+					for (k = 0; k < 5; k++) {
+						pix1.Blue = pix1.Green = pix1.Red = c;
+						pix1.Alpha = pix.Alpha;
+						if (j + h < W && i + k < H) {
+							image.SetPixel(j + h, i + k, pix1);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	image.WriteToFile(fname_output.c_str());
+
+
+	if (f_v) {
+		cout << "graphical_output::random_noise_in_bitmap_file_burst done" << endl;
 	}
 }
 

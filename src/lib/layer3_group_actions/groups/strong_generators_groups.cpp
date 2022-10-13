@@ -2748,6 +2748,8 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 		cout << "iso=" << iso << endl;
 	}
 
+	strong_generators::A = A;
+
 	int *data;
 	int nb_gens;
 	int data_size;
@@ -2819,6 +2821,9 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 		cout << "q=" << F->q << endl;
 		cout << "iso=" << iso << endl;
 	}
+
+
+	strong_generators::A = A;
 
 	int *data;
 	int nb_gens;

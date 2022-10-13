@@ -35,6 +35,12 @@ public:
 	int f_fname_base_out;
 	std::string fname_base_out;
 
+	std::string column_label_po;
+	std::string column_label_so;
+	std::string column_label_eqn;
+	std::string column_label_pts;
+	std::string column_label_bitangents;
+
 	int f_degree;
 	int degree;
 
@@ -120,13 +126,16 @@ public:
 	void classify_nauty(int verbose_level);
 	void classify_with_substructure(int verbose_level);
 	void main_loop(int verbose_level);
-	void classify_curve_nauty(int cnt, int row,
+	void classify_curve_nauty(//int cnt, int row,
+			quartic_curve_object *Qco,
+#if 0
 			int *eqn,
 			int sz,
 			long int *pts,
 			int nb_pts,
 			long int *bitangents,
 			int nb_bitangents,
+#endif
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
 			int verbose_level);
@@ -185,9 +194,13 @@ public:
 			projective_space_with_action *PA,
 			ring_theory::homogeneous_polynomial_domain *Poly4_x123,
 			induced_actions::action_on_homogeneous_polynomials *AonHPD,
-			int idx, int *eqn, int sz,
+			//int idx,
+			quartic_curve_object *Qco,
+#if 0
+			int *eqn, int sz,
 			long int *Pts_on_curve, int sz_curve,
 			long int *bitangents, int nb_bitangents,
+#endif
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
 			groups::strong_generators *&gens_stab_of_canonical_equation,
@@ -261,14 +274,17 @@ public:
 	~canonical_form_substructure();
 	void classify_curve_with_substructure(
 			canonical_form_classifier *Canonical_form_classifier,
-			int counter, int cnt, int row,
+			//int counter, //int cnt, int row,
 			std::string &fname_case_out,
+			quartic_curve_object *Qco,
+#if 0
 			int *eqn,
 			int sz,
 			long int *pts,
 			int nb_pts,
 			long int *bitangents,
 			int nb_bitangents,
+#endif
 			ring_theory::longinteger_object &go_eqn,
 			int verbose_level);
 	void handle_orbit(
@@ -377,10 +393,6 @@ public:
 	int f_table_of_cubic_surfaces;
 		// based on knowledge_base
 
-	int f_define_quartic_curve;
-	std::string define_quartic_curve_label;
-	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr;
-
 	int f_classify_surfaces_with_double_sixes;
 	std::string classify_surfaces_with_double_sixes_label;
 	poset_classification::poset_classification_control *classify_surfaces_with_double_sixes_control;
@@ -423,14 +435,18 @@ public:
 	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
+
+#if 0
 	int f_surface_quartic;
 	int f_surface_clebsch;
 	int f_surface_codes;
+#endif
 
-
+#if 0
 	int f_spread_classify;
 	int spread_classify_k;
 	poset_classification::poset_classification_control *spread_classify_Control;
+#endif
 
 	int f_classify_semifields;
 	semifields::semifield_classify_description *Semifield_classify_description;
@@ -772,10 +788,12 @@ public:
 		std::ostream &ost,
 		graphics::layered_graph_draw_options *O,
 		int verbose_level);
+#if 0
 	void create_quartic_curve(
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr,
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *&QC,
 			int verbose_level);
+#endif
 	void canonical_form_of_code(
 			std::string &label,
 			int *genma, int m, int n,
@@ -805,6 +823,50 @@ public:
 			std::string &text,
 			int verbose_level);
 
+
+};
+
+// #############################################################################
+// quartic_curve_object.cpp
+// #############################################################################
+
+
+
+
+//! a quartic curve object with bitangents and equation
+
+
+
+class quartic_curve_object {
+
+public:
+
+	int cnt;
+	int po;
+	int so;
+
+	int *eqn;
+	int sz;
+	long int *pts;
+	int nb_pts;
+	long int *bitangents;
+	int nb_bitangents;
+
+
+	quartic_curve_object();
+	~quartic_curve_object();
+	void init(
+			int cnt, int po, int so,
+			std::string &eqn_txt,
+			std::string &pts_txt, std::string &bitangents_txt,
+			int verbose_level);
+	void init_image_of(quartic_curve_object *old_one,
+			int *Elt,
+			actions::action *A,
+			actions::action *A_on_lines,
+			int *eqn2,
+			int verbose_level);
+	void print(std::ostream &ost);
 
 };
 

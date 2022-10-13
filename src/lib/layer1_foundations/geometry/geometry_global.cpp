@@ -2102,7 +2102,7 @@ void geometry_global::latex_homogeneous_equation(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "geometry_global::latex_homogeneous_equation" << endl;
+		cout << "geometry_global::latex_homogeneous_equation degree=" << degree << " nb_vars=" << nb_vars << endl;
 	}
 	int *eqn;
 	int sz;
@@ -2115,7 +2115,7 @@ void geometry_global::latex_homogeneous_equation(
 		cout << "geometry_global::latex_homogeneous_equation before Poly->init" << endl;
 	}
 	Poly->init(F,
-			degree /* nb_vars */, degree /* degree */,
+			nb_vars /* nb_vars */, degree /* degree */,
 			t_PART,
 			verbose_level);
 

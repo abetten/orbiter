@@ -74,6 +74,10 @@ symbol_definition::symbol_definition()
 	f_spread = FALSE;
 	Spread_create_description = NULL;
 
+	f_quartic_curve = FALSE;
+	Quartic_curve_descr = NULL;
+
+
 	f_translation_plane = FALSE;
 	//std::string translation_plane_spread_label;
 	//std::string translation_plane_group_n_label;
@@ -481,6 +485,32 @@ void symbol_definition::read_definition(
 			Spread_create_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-quartic_curve") == 0) {
+
+		f_quartic_curve = TRUE;
+		Quartic_curve_descr = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description);
+		if (f_v) {
+			cout << "reading -quartic_curve" << endl;
+		}
+
+		i += Quartic_curve_descr->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-quartic_curve" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-quartic_curve " << endl;
+			Quartic_curve_descr->print();
+		}
+	}
+
+
 	else if (ST.stringcmp(argv[i], "-translation_plane") == 0) {
 		f_translation_plane = TRUE;
 		translation_plane_spread_label.assign(argv[++i]);
@@ -998,6 +1028,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_spread" << endl;
 		}
 	}
+	else if (f_quartic_curve) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_quartic_curve" << endl;
+		}
+		definition_of_quartic_curve(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_quartic_curve" << endl;
+		}
+	}
 	else if (f_translation_plane) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_translation_plane" << endl;
@@ -1211,6 +1250,10 @@ void symbol_definition::print()
 	if (f_spread) {
 		cout << "-spread ";
 		Spread_create_description->print();
+	}
+	if (f_quartic_curve) {
+		cout << "-quartic_curve " << endl;
+		Quartic_curve_descr->print();
 	}
 	if (f_translation_plane) {
 		cout << "-translation_plane "
@@ -2011,6 +2054,59 @@ void symbol_definition::definition_of_spread(int verbose_level)
 		cout << "symbol_definition::definition_of_spread done" << endl;
 	}
 }
+
+
+void symbol_definition::definition_of_quartic_curve(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_quartic_curve" << endl;
+	}
+
+
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *QC;
+
+
+	QC = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_quartic_curve "
+				"before QC->create_quartic_curve" << endl;
+	}
+	QC->create_quartic_curve(
+			Quartic_curve_descr,
+			verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_quartic_curve "
+				"after QC->create_quartic_curve" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_quartic_curve we created a quartic curve called " << QC->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_quartic_curve(define_label, QC, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_quartic_curve before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_quartic_curve done" << endl;
+	}
+}
+
 
 
 

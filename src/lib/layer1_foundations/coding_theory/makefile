@@ -7,14 +7,14 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-		coding_theory_domain_crc.o \
-		coding_theory_domain_cyclic_codes.o \
-		coding_theory_domain_ttp.o \
 		coding_theory_domain.o \
+		crc_codes.o \
 		crc_options_description.o \
 		create_BCH_code.o \
+		cyclic_codes.o \
 		error_repository.o \
-		mindist.o 
+		mindist.o \
+		ttp_codes.o 
 
 
 all : $(MODULES)

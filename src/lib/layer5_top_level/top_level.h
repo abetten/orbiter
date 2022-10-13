@@ -216,6 +216,7 @@ namespace projective_geometry {
 	class projective_space_globals;
 	class projective_space_with_action_description;
 	class projective_space_with_action;
+	class quartic_curve_object;
 
 }
 

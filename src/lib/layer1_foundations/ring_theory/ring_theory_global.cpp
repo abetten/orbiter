@@ -1331,7 +1331,7 @@ void ring_theory_global::create_irreducible_polynomial(
 
 	int degree = cylotomic_set_size;
 
-	coding_theory::coding_theory_domain Codes;
+	coding_theory::cyclic_codes Cyclic_codes;
 
 	min_poly = NEW_OBJECTS(unipoly_object, degree + 2);
 	unipoly_object *tmp = NEW_OBJECTS(unipoly_object, degree + 1);
@@ -1369,10 +1369,10 @@ void ring_theory_global::create_irreducible_polynomial(
 
 	if (f_v) {
 		cout << "ring_theory_global::create_irreducible_polynomial coeffs:" << endl;
-		Codes.print_polynomial(*Fq, 1, linear_factor);
+		Cyclic_codes.print_polynomial(*Fq, 1, linear_factor);
 		cout << endl;
 		cout << "ring_theory_global::create_irreducible_polynomial generator:" << endl;
-		Codes.print_polynomial(*Fq, 0, min_poly);
+		Cyclic_codes.print_polynomial(*Fq, 0, min_poly);
 		cout << endl;
 	}
 
@@ -1460,7 +1460,7 @@ void ring_theory_global::create_irreducible_polynomial(
 		}
 		if (f_v) {
 			cout << "ring_theory_global::create_irreducible_polynomial current polynomial: ";
-			Codes.print_polynomial(*Fq, r, min_poly);
+			Cyclic_codes.print_polynomial(*Fq, r, min_poly);
 			cout << endl;
 		}
 
@@ -1473,7 +1473,7 @@ void ring_theory_global::create_irreducible_polynomial(
 
 	if (f_v) {
 		cout << "ring_theory_global::create_irreducible_polynomial The minimum polynomial is: ";
-		Codes.print_polynomial(*Fq, r, min_poly);
+		Cyclic_codes.print_polynomial(*Fq, r, min_poly);
 		cout << endl;
 	}
 

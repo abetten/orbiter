@@ -298,9 +298,11 @@ namespace coding_theory {
 
 	// coding_theory:
 	class coding_theory_domain;
+	class crc_codes;
 	class crc_options_description;
 	class create_BCH_code;
 	class error_repository;
+	class ttp_codes;
 
 }
 

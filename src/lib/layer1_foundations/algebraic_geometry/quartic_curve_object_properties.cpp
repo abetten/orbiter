@@ -418,6 +418,7 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 	ost << "\\hline" << endl;
 
 
+
 #if 0
 	ost << "\\mbox{Number of Eckardt points} & " << nb_Eckardt_points << "\\\\" << endl;
 	ost << "\\hline" << endl;

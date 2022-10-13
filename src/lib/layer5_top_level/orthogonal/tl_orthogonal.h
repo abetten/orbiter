@@ -327,7 +327,7 @@ public:
 	int f_create_BLT_set;
 	BLT_set_create_description * BLT_Set_create_description;
 
-
+#if 0
 	int f_BLT_set_starter;
 	int BLT_set_starter_size;
 	poset_classification::poset_classification_control *BLT_set_starter_control;
@@ -339,6 +339,7 @@ public:
 
 	int f_fname_base_out;
 	std::string fname_base_out;
+#endif
 
 	int f_cheat_sheet_orthogonal;
 

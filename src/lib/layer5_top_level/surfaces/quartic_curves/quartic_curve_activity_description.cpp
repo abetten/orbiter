@@ -29,6 +29,8 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 
 	f_create_surface = FALSE;
 
+	f_extract_orbit_on_bitangents_by_length = FALSE;
+	extract_orbit_on_bitangents_by_length_length = 0;
 
 }
 
@@ -62,6 +64,11 @@ int quartic_curve_activity_description::read_arguments(
 			f_create_surface = TRUE;
 			cout << "-create_surface " << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-extract_orbit_on_bitangents_by_length") == 0) {
+			f_extract_orbit_on_bitangents_by_length = TRUE;
+			extract_orbit_on_bitangents_by_length_length = ST.strtoi(argv[++i]);
+			cout << "-extract_orbit_on_bitangents_by_length " << extract_orbit_on_bitangents_by_length_length << endl;
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -91,6 +98,9 @@ void quartic_curve_activity_description::print()
 	}
 	if (f_create_surface) {
 		cout << "-create_surface " << endl;
+	}
+	if (f_extract_orbit_on_bitangents_by_length) {
+		cout << "-extract_orbit_on_bitangents_by_length " << extract_orbit_on_bitangents_by_length_length << endl;
 	}
 }
 

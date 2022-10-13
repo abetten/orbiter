@@ -1738,8 +1738,6 @@ public:
 
 	strong_generators();
 	~strong_generators();
-	void null();
-	void freeself();
 	void swap_with(strong_generators *SG);
 	void init(actions::action *A);
 	void init(actions::action *A, int verbose_level);
@@ -1873,6 +1871,15 @@ public:
 		schreier *&Sch, long int *set, int len, int verbose_level);
 	void orbits_on_points(int &nb_orbits, int *&orbit_reps, 
 		int verbose_level);
+	void orbits_on_set_with_given_action_after_restriction(
+			actions::action *A_given, long int *Set, int set_sz,
+			std::stringstream &orbit_type,
+			int verbose_level);
+	void extract_orbit_on_set_with_given_action_after_restriction_by_length(
+			actions::action *A_given, long int *Set, int set_sz,
+			int desired_orbit_length,
+			long int *&extracted_set,
+			int verbose_level);
 	void orbits_on_points_with_given_action(actions::action *A_given,
 		int &nb_orbits, int *&orbit_reps, int verbose_level);
 	schreier *orbits_on_points_schreier(actions::action *A_given,

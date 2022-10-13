@@ -216,6 +216,7 @@ public:
 	void init_parabolic_odd(int verbose_level);
 	void init_hyperbolic(int verbose_level);
 	void fill(long int *M, int i, int j, long int a);
+	void print_schemes();
 
 
 	// hyperbolic_pair_hyperbolic.cpp:
@@ -724,7 +725,6 @@ public:
 	void list_all_points_vs_points(int verbose_level);
 	void list_points_vs_points(int t1, int t2,
 		int verbose_level);
-	void print_schemes();
 	void report_quadratic_form(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void report_schemes(std::ostream &ost, int verbose_level);

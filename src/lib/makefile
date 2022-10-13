@@ -37,14 +37,14 @@ MODULES= \
 		layer1_foundations/algebraic_geometry/surface_object_properties.o \
 		layer1_foundations/algebraic_geometry/surface_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
-		layer1_foundations/coding_theory/coding_theory_domain_crc.o \
-		layer1_foundations/coding_theory/coding_theory_domain_cyclic_codes.o \
-		layer1_foundations/coding_theory/coding_theory_domain_ttp.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
+		layer1_foundations/coding_theory/crc_codes.o \
 		layer1_foundations/coding_theory/crc_options_description.o \
 		layer1_foundations/coding_theory/create_BCH_code.o \
+		layer1_foundations/coding_theory/cyclic_codes.o \
 		layer1_foundations/coding_theory/error_repository.o \
 		layer1_foundations/coding_theory/mindist.o \
+		layer1_foundations/coding_theory/ttp_codes.o \
 		layer1_foundations/combinatorics/boolean_function_domain.o \
 		layer1_foundations/combinatorics/brick_domain.o \
 		layer1_foundations/combinatorics/classification_of_objects_description.o \
@@ -535,6 +535,7 @@ MODULES= \
 		layer5_top_level/projective_space/projective_space_global.o \
 		layer5_top_level/projective_space/projective_space_with_action_description.o \
 		layer5_top_level/projective_space/projective_space_with_action.o \
+		layer5_top_level/projective_space/quartic_curve_object.o \
 		layer5_top_level/semifields/semifield_classify_description.o \
 		layer5_top_level/semifields/semifield_classify_with_substructure.o \
 		layer5_top_level/semifields/semifield_classify.o \

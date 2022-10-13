@@ -92,10 +92,10 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_BCH) {
 
-		coding_theory::coding_theory_domain Coding;
+		coding_theory::cyclic_codes Cyclic_codes;
 
 		// this function creates a finite field
-		Coding.make_BCH_codes(
+		Cyclic_codes.make_BCH_codes(
 				Descr->BCH_n,
 				Descr->BCH_q,
 				Descr->BCH_t, 1, FALSE,
@@ -103,10 +103,10 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_BCH_dual) {
 
-		coding_theory::coding_theory_domain Coding;
+		coding_theory::cyclic_codes Cyclic_codes;
 
 		// this function creates a finite field
-		Coding.make_BCH_codes(
+		Cyclic_codes.make_BCH_codes(
 				Descr->BCH_n,
 				Descr->BCH_q,
 				Descr->BCH_t, 1, TRUE,
@@ -262,9 +262,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		cout << "before generator_matrix_cyclic_code" << endl;
 
-		coding_theory::coding_theory_domain Coding;
+		coding_theory::cyclic_codes Cyclic_codes;
 
-		Coding.generator_matrix_cyclic_code(F,
+		Cyclic_codes.generator_matrix_cyclic_code(F,
 				Descr->generator_matrix_cyclic_code_n,
 				Descr->generator_matrix_cyclic_code_poly,
 				verbose_level);
@@ -333,7 +333,8 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_make_BCH_code_and_encode) {
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::cyclic_codes Cyclic_codes;
+		coding_theory::crc_codes Crc_codes;
 		field_theory::nth_roots *Nth;
 		ring_theory::unipoly_object P;
 
@@ -344,7 +345,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		n = Descr->make_BCH_code_n;
 
-		Codes.make_BCH_code(n,
+		Cyclic_codes.make_BCH_code(n,
 				F,
 				Descr->make_BCH_code_d,
 				Nth, P,
@@ -362,7 +363,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		// Descr->make_BCH_code_and_encode_text
 
-		Codes.CRC_encode_text(Nth, P,
+		Crc_codes.CRC_encode_text(Nth, P,
 				Descr->make_BCH_code_and_encode_text,
 				Descr->make_BCH_code_and_encode_fname,
 				verbose_level);
@@ -461,10 +462,10 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_crc32) {
 		cout << "-crc32 " << Descr->crc32_text << endl;
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 		uint32_t a;
 
-		a = Codes.crc32(Descr->crc32_text.c_str(), Descr->crc32_text.length());
+		a = Crc_codes.crc32(Descr->crc32_text.c_str(), Descr->crc32_text.length());
 		cout << "CRC value of " << Descr->crc32_text << " is ";
 
 		data_structures::algorithms Algo;
@@ -476,7 +477,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_crc32_hexdata) {
 		cout << "-crc32_hexdata " << Descr->crc32_hexdata_text << endl;
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 		data_structures::algorithms Algo;
 		uint32_t a;
 		char *data;
@@ -502,7 +503,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		cout << endl;
 
 
-		a = Codes.crc32(data, data_size);
+		a = Crc_codes.crc32(data, data_size);
 		cout << "CRC value of 0x" << Descr->crc32_hexdata_text << " is ";
 
 
@@ -515,9 +516,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				<< Descr->crc32_test_block_length
 				<< endl;
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 
-		Codes.crc32_test(Descr->crc32_test_block_length, verbose_level - 1);
+		Crc_codes.crc32_test(Descr->crc32_test_block_length, verbose_level - 1);
 
 	}
 	else if (Descr->f_crc256_test) {
@@ -525,9 +526,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				<< Descr->crc256_test_message_length
 				<< endl;
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 
-		Codes.crc256_test_k_subsets(
+		Crc_codes.crc256_test_k_subsets(
 				Descr->crc256_test_message_length,
 				Descr->crc256_test_R,
 				Descr->crc256_test_k,
@@ -539,9 +540,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				<< Descr->crc32_remainders_message_length
 				<< endl;
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 
-		Codes.crc32_remainders(
+		Crc_codes.crc32_remainders(
 				Descr->crc32_remainders_message_length,
 				verbose_level - 1);
 
@@ -553,9 +554,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				<< " " << Descr->crc_encode_file_based_block_length
 				<< endl;
 
-		coding_theory::coding_theory_domain Codes;
+		coding_theory::crc_codes Crc_codes;
 
-		Codes.crc_encode_file_based(
+		Crc_codes.crc_encode_file_based(
 				Descr->crc_encode_file_based_fname_in,
 				Descr->crc_encode_file_based_fname_out,
 				Descr->crc_encode_file_based_crc_type,
@@ -577,9 +578,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 #endif
 	else if (Descr->f_find_CRC_polynomials) {
 
-		coding_theory::coding_theory_domain Coding;
+		coding_theory::crc_codes Crc_codes;
 
-		Coding.find_CRC_polynomials(F,
+		Crc_codes.find_CRC_polynomials(F,
 				Descr->find_CRC_polynomials_nb_errors,
 				Descr->find_CRC_polynomials_information_bits,
 				Descr->find_CRC_polynomials_check_bits,

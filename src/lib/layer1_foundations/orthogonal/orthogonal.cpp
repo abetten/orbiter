@@ -295,7 +295,7 @@ void orthogonal::init(int epsilon, int n,
 
 
 	if (f_v) {
-		print_schemes();
+		Hyperbolic_pair->print_schemes();
 		cout << "orthogonal::init Gram matrix:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				Gram_matrix, n, n, n, F->log10_of_q + 1);

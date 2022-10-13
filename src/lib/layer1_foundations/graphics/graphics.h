@@ -446,6 +446,13 @@ public:
 			int probability_numerator,
 			int probability_denominator,
 			int verbose_level);
+	void random_noise_in_bitmap_file_burst(
+			std::string fname_input,
+			std::string fname_output,
+			int probability_numerator,
+			int probability_denominator,
+			int burst_length_max,
+			int verbose_level);
 	void draw_projective_curve(draw_projective_curve_description *Descr,
 			layered_graph_draw_options *Opt, int verbose_level);
 	void draw_projective(mp_graphics &G,

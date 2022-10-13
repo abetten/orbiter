@@ -1403,7 +1403,7 @@ void finite_field::create_ttp_code(finite_field *Fq_subfield,
 	int m, n;
 	int f_elements_exponential = TRUE;
 	string symbol_for_print_subfield;
-	coding_theory::coding_theory_domain Codes;
+	coding_theory::ttp_codes Ttp_codes;
 
 	if (f_v) {
 		cout << "finite_field::create_ttp_code" << endl;
@@ -1411,7 +1411,7 @@ void finite_field::create_ttp_code(finite_field *Fq_subfield,
 
 	symbol_for_print_subfield.assign("\\alpha");
 
-	Codes.twisted_tensor_product_codes(
+	Ttp_codes.twisted_tensor_product_codes(
 		H_subfield, m, n,
 		this, Fq_subfield,
 		f_construction_A, f_hyperoval,

@@ -1,9 +1,12 @@
 /*
- * coding_heory_domain_crc.cpp
+ * crc_codes.cpp
  *
- *  Created on: Aug 23, 2022
+ *  Created on: Oct 9, 2022
  *      Author: betten
  */
+
+
+
 
 
 
@@ -22,6 +25,18 @@ static void CRC_BCH256_771_divide(const char *in, char *out);
 
 
 
+crc_codes::crc_codes()
+{
+
+}
+
+crc_codes::~crc_codes()
+{
+
+}
+
+
+
 /*
  * twocoef.cpp
  *
@@ -34,7 +49,7 @@ static void CRC_BCH256_771_divide(const char *in, char *out);
  *
  */
 
-void coding_theory_domain::find_CRC_polynomials(
+void crc_codes::find_CRC_polynomials(
 		field_theory::finite_field *F,
 		int t, int da, int dc,
 		int verbose_level)
@@ -42,7 +57,7 @@ void coding_theory_domain::find_CRC_polynomials(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::find_CRC_polynomials t=" << t
+		cout << "crc_codes::find_CRC_polynomials t=" << t
 				<< " info=" << da << " check=" << dc << endl;
 	}
 
@@ -79,7 +94,7 @@ void coding_theory_domain::find_CRC_polynomials(
 				nb_sol, Solutions, verbose_level - 1);
 	}
 
-	cout << "coding_theory_domain::find_CRC_polynomials info=" << da
+	cout << "crc_codes::find_CRC_polynomials info=" << da
 			<< " check=" << dc << " nb_sol=" << nb_sol << endl;
 
 	for (i = 0; i < Solutions.size(); i++) {
@@ -89,12 +104,12 @@ void coding_theory_domain::find_CRC_polynomials(
 		}
 		cout << endl;
 	}
-	cout << "coding_theory_domain::find_CRC_polynomials info=" << da
+	cout << "crc_codes::find_CRC_polynomials info=" << da
 			<< " check=" << dc << " nb_sol=" << nb_sol << endl;
 
 }
 
-void coding_theory_domain::search_for_CRC_polynomials(int t,
+void crc_codes::search_for_CRC_polynomials(int t,
 		int da, int *A, int dc, int *C,
 		int i, field_theory::finite_field *F,
 		long int &nb_sol,
@@ -158,7 +173,7 @@ void coding_theory_domain::search_for_CRC_polynomials(int t,
 	}
 }
 
-void coding_theory_domain::search_for_CRC_polynomials_binary(int t,
+void crc_codes::search_for_CRC_polynomials_binary(int t,
 		int da, int *A, int dc, int *C, int i,
 		long int &nb_sol,
 		std::vector<std::vector<int> > &Solutions,
@@ -222,7 +237,7 @@ void coding_theory_domain::search_for_CRC_polynomials_binary(int t,
 }
 
 
-int coding_theory_domain::test_all_two_bit_patterns(int da, int *A,
+int crc_codes::test_all_two_bit_patterns(int da, int *A,
 		int dc, int *C,
 		field_theory::finite_field *F,
 		int verbose_level)
@@ -304,7 +319,7 @@ int coding_theory_domain::test_all_two_bit_patterns(int da, int *A,
 	return true;
 }
 
-int coding_theory_domain::test_all_three_bit_patterns(int da, int *A,
+int crc_codes::test_all_three_bit_patterns(int da, int *A,
 		int dc, int *C,
 		field_theory::finite_field *F,
 		int verbose_level)
@@ -393,7 +408,7 @@ int coding_theory_domain::test_all_three_bit_patterns(int da, int *A,
 	return true;
 }
 
-int coding_theory_domain::test_all_two_bit_patterns_binary(int da, int *A,
+int crc_codes::test_all_two_bit_patterns_binary(int da, int *A,
 		int dc, int *C,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
@@ -469,7 +484,7 @@ int coding_theory_domain::test_all_two_bit_patterns_binary(int da, int *A,
 	return true;
 }
 
-int coding_theory_domain::test_all_three_bit_patterns_binary(int da, int *A,
+int crc_codes::test_all_three_bit_patterns_binary(int da, int *A,
 		int dc, int *C,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
@@ -551,7 +566,7 @@ int coding_theory_domain::test_all_three_bit_patterns_binary(int da, int *A,
 }
 
 
-int coding_theory_domain::remainder_is_nonzero(int da, int *A,
+int crc_codes::remainder_is_nonzero(int da, int *A,
 		int db, int *B, field_theory::finite_field *F)
 // returns true if the remainder of A after division by B is nonzero
 {
@@ -586,7 +601,7 @@ int coding_theory_domain::remainder_is_nonzero(int da, int *A,
 }
 
 
-int coding_theory_domain::remainder_is_nonzero_binary(int da, int *A,
+int crc_codes::remainder_is_nonzero_binary(int da, int *A,
 		int db, int *B)
 // returns true if the remainder of A after division by B is nonzero
 {
@@ -622,7 +637,7 @@ int coding_theory_domain::remainder_is_nonzero_binary(int da, int *A,
 
 #define CRC16 0x8005
 
-uint16_t coding_theory_domain::crc16(const uint8_t *data, size_t size)
+uint16_t crc_codes::crc16(const uint8_t *data, size_t size)
 {
     uint16_t out = 0;
     int bits_read = 0, bit_flag;
@@ -670,7 +685,7 @@ uint16_t coding_theory_domain::crc16(const uint8_t *data, size_t size)
     return crc;
 }
 
-uint32_t coding_theory_domain::crc32(const char *s, size_t n)
+uint32_t crc_codes::crc32(const char *s, size_t n)
 // polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 // + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
 {
@@ -690,12 +705,12 @@ uint32_t coding_theory_domain::crc32(const char *s, size_t n)
 	return ~crc;
 }
 
-void coding_theory_domain::crc32_test(int block_length, int verbose_level)
+void crc_codes::crc32_test(int block_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_test block_length = " << block_length << endl;
+		cout << "crc_codes::crc32_test block_length = " << block_length << endl;
 	}
 	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
 	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
@@ -732,16 +747,16 @@ void coding_theory_domain::crc32_test(int block_length, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_test" << endl;
+		cout << "crc_codes::crc32_test" << endl;
 	}
 }
 
-void coding_theory_domain::crc256_test_k_subsets(int message_length, int R, int k, int verbose_level)
+void crc_codes::crc256_test_k_subsets(int message_length, int R, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc256_test_k_subsets message_length in bytes = " << message_length << " R=" << R << " k=" << k << endl;
+		cout << "crc_codes::crc256_test_k_subsets message_length in bytes = " << message_length << " R=" << R << " k=" << k << endl;
 	}
 	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
 	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
@@ -810,7 +825,7 @@ void coding_theory_domain::crc256_test_k_subsets(int message_length, int R, int 
 			check[3] = p[3];
 		}
 		else {
-			cout << "coding_theory_domain::crc256_test_k_subsets I don't have a code of that length" << endl;
+			cout << "crc_codes::crc256_test_k_subsets I don't have a code of that length" << endl;
 			exit(1);
 		}
 
@@ -856,16 +871,16 @@ void coding_theory_domain::crc256_test_k_subsets(int message_length, int R, int 
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc256_test_k_subsets" << endl;
+		cout << "crc_codes::crc256_test_k_subsets" << endl;
 	}
 }
 
-void coding_theory_domain::crc32_remainders(int message_length, int verbose_level)
+void crc_codes::crc32_remainders(int message_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_remainders "
+		cout << "crc_codes::crc32_remainders "
 				"message_length in bytes = " << message_length << endl;
 	}
 
@@ -908,18 +923,18 @@ void coding_theory_domain::crc32_remainders(int message_length, int verbose_leve
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_remainders done" << endl;
+		cout << "crc_codes::crc32_remainders done" << endl;
 	}
 
 }
 
 
-void coding_theory_domain::crc32_remainders_compute(int message_length, int R, uint32_t *&Crc, int verbose_level)
+void crc_codes::crc32_remainders_compute(int message_length, int R, uint32_t *&Crc, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_remainders_compute message_length in bytes = " << message_length << " R=" << R << endl;
+		cout << "crc_codes::crc32_remainders_compute message_length in bytes = " << message_length << " R=" << R << endl;
 	}
 	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
 	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
@@ -994,7 +1009,7 @@ void coding_theory_domain::crc32_remainders_compute(int message_length, int R, u
 			check[3] = p[3];
 		}
 		else {
-			cout << "coding_theory_domain::crc32_remainders_compute "
+			cout << "crc_codes::crc32_remainders_compute "
 					"I don't have a code of that length" << endl;
 			exit(1);
 		}
@@ -1037,7 +1052,7 @@ void coding_theory_domain::crc32_remainders_compute(int message_length, int R, u
 	}
 
 	if (cnt != message_length_in_bits) {
-		cout << "coding_theory_domain::crc32_remainders_compute "
+		cout << "crc_codes::crc32_remainders_compute "
 				"cnt != message_length_in_bits" << endl;
 		exit(1);
 	}
@@ -1049,7 +1064,7 @@ void coding_theory_domain::crc32_remainders_compute(int message_length, int R, u
 	//FREE_int((int *) Crc);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_remainders_compute" << endl;
+		cout << "crc_codes::crc32_remainders_compute" << endl;
 	}
 }
 
@@ -1340,14 +1355,14 @@ static void CRC_BCH256_771_divide(const char *in, char *out)
 
 
 
-void coding_theory_domain::introduce_errors(
+void crc_codes::introduce_errors(
 		crc_options_description *Crc_options_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::introduce_errors " << endl;
+		cout << "crc_codes::introduce_errors " << endl;
 		Crc_options_description->print();
 	}
 
@@ -1356,19 +1371,19 @@ void coding_theory_domain::introduce_errors(
 	//int information_length = block_length - 4;
 
 	if (!Crc_options_description->f_input) {
-		cout << "coding_theory_domain::introduce_errors please use -input <fname>" << endl;
+		cout << "crc_codes::introduce_errors please use -input <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_output) {
-		cout << "coding_theory_domain::introduce_errors please use -output <fname>" << endl;
+		cout << "crc_codes::introduce_errors please use -output <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_block_length) {
-		cout << "coding_theory_domain::introduce_errors please use -block_length <block_length>" << endl;
+		cout << "crc_codes::introduce_errors please use -block_length <block_length>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_threshold) {
-		cout << "coding_theory_domain::introduce_errors please use -threshold <threshold>" << endl;
+		cout << "crc_codes::introduce_errors please use -threshold <threshold>" << endl;
 		exit(1);
 	}
 #if 1
@@ -1390,14 +1405,14 @@ void coding_theory_domain::introduce_errors(
 	N = Fio.file_size(Crc_options_description->input_fname);
 
 	if (f_v) {
-		cout << "coding_theory_domain::introduce_errors input file size = " << N << endl;
+		cout << "crc_codes::introduce_errors input file size = " << N << endl;
 	}
 	buffer = NEW_char(N);
 
 
 	nb_blocks = (N + block_length - 1) / block_length;
 	if (f_v) {
-		cout << "coding_theory_domain::introduce_errors nb_blocks = " << nb_blocks << endl;
+		cout << "crc_codes::introduce_errors nb_blocks = " << nb_blocks << endl;
 	}
 
 	int a, b, c;
@@ -1541,28 +1556,28 @@ void coding_theory_domain::introduce_errors(
 	FREE_lint(Ep);
 
 	if (f_v) {
-		cout << "coding_theory_domain::introduce_errors done" << endl;
+		cout << "crc_codes::introduce_errors done" << endl;
 	}
 
 }
 
-void coding_theory_domain::crc_encode_file_based(std::string &fname_in, std::string &fname_out,
+void crc_codes::crc_encode_file_based(std::string &fname_in, std::string &fname_out,
 		std::string &crc_type,
 		int block_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc_encode_file_based "
+		cout << "crc_codes::crc_encode_file_based "
 				"fname_in=" << fname_in << endl;
-		cout << "coding_theory_domain::crc_encode_file_based "
+		cout << "crc_codes::crc_encode_file_based "
 				"block_length=" << block_length << endl;
 	}
 	data_structures::string_tools ST;
 
 	if (ST.stringcmp(crc_type, "crc16") == 0) {
 		if (f_v) {
-			cout << "coding_theory_domain::crc_encode_file_based "
+			cout << "crc_codes::crc_encode_file_based "
 					"crc16" << endl;
 		}
 		crc16_file_based(fname_in, fname_out,
@@ -1571,7 +1586,7 @@ void coding_theory_domain::crc_encode_file_based(std::string &fname_in, std::str
 	}
 	else if (ST.stringcmp(crc_type, "crc32") == 0) {
 		if (f_v) {
-			cout << "coding_theory_domain::crc_encode_file_based "
+			cout << "crc_codes::crc_encode_file_based "
 					"crc32" << endl;
 		}
 
@@ -1581,7 +1596,7 @@ void coding_theory_domain::crc_encode_file_based(std::string &fname_in, std::str
 	}
 	else if (ST.stringcmp(crc_type, "crc771") == 0) {
 		if (f_v) {
-			cout << "coding_theory_domain::crc_encode_file_based "
+			cout << "crc_codes::crc_encode_file_based "
 					"crc771" << endl;
 		}
 
@@ -1593,7 +1608,7 @@ void coding_theory_domain::crc_encode_file_based(std::string &fname_in, std::str
 
 	}
 	else {
-		cout << "coding_theory_domain::crc_encode_file_based "
+		cout << "crc_codes::crc_encode_file_based "
 					"crc type is unrecognized" << endl;
 		exit(1);
 
@@ -1601,21 +1616,21 @@ void coding_theory_domain::crc_encode_file_based(std::string &fname_in, std::str
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc_encode_file_based done" << endl;
+		cout << "crc_codes::crc_encode_file_based done" << endl;
 	}
 }
 
 
-void coding_theory_domain::crc16_file_based(
+void crc_codes::crc16_file_based(
 		std::string &fname_in, std::string &fname_out,
 		int block_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc16_file_based "
+		cout << "crc_codes::crc16_file_based "
 				"fname_in=" << fname_in << endl;
-		cout << "coding_theory_domain::crc16_file_based "
+		cout << "crc_codes::crc16_file_based "
 				"block_length=" << block_length << endl;
 	}
 
@@ -1630,12 +1645,12 @@ void coding_theory_domain::crc16_file_based(
 	N = Fio.file_size(fname_in);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc16_file_based input file size = " << N << endl;
+		cout << "crc_codes::crc16_file_based input file size = " << N << endl;
 	}
 
 	nb_blocks = (N + information_length - 1) / information_length;
 	if (f_v) {
-		cout << "coding_theory_domain::crc16_file_based nb_blocks = " << nb_blocks << endl;
+		cout << "crc_codes::crc16_file_based nb_blocks = " << nb_blocks << endl;
 	}
 
 	buffer = (uint8_t *) NEW_char(block_length);
@@ -1685,22 +1700,22 @@ void coding_theory_domain::crc16_file_based(
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc16_file_based done" << endl;
+		cout << "crc_codes::crc16_file_based done" << endl;
 	}
 
 }
 
 
-void coding_theory_domain::crc32_file_based(
+void crc_codes::crc32_file_based(
 		std::string &fname_in, std::string &fname_out,
 		int block_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based "
+		cout << "crc_codes::crc32_file_based "
 				"fname_in=" << fname_in << endl;
-		cout << "coding_theory_domain::crc32_file_based "
+		cout << "crc_codes::crc32_file_based "
 				"block_length=" << block_length << endl;
 	}
 
@@ -1715,12 +1730,12 @@ void coding_theory_domain::crc32_file_based(
 	N = Fio.file_size(fname_in);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based input file size = " << N << endl;
+		cout << "crc_codes::crc32_file_based input file size = " << N << endl;
 	}
 
 	nb_blocks = (N + information_length - 1) / information_length;
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based nb_blocks = " << nb_blocks << endl;
+		cout << "crc_codes::crc32_file_based nb_blocks = " << nb_blocks << endl;
 	}
 
 	buffer = NEW_char(block_length);
@@ -1778,13 +1793,13 @@ void coding_theory_domain::crc32_file_based(
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc32_file_based done" << endl;
+		cout << "crc_codes::crc32_file_based done" << endl;
 	}
 
 }
 
 
-void coding_theory_domain::crc771_file_based(
+void crc_codes::crc771_file_based(
 		std::string &fname_in,
 		std::string &fname_out,
 		int verbose_level)
@@ -1792,7 +1807,7 @@ void coding_theory_domain::crc771_file_based(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc771_file_based fname_in=" << fname_in << endl;
+		cout << "crc_codes::crc771_file_based fname_in=" << fname_in << endl;
 	}
 
 	data_structures::string_tools ST;
@@ -1808,7 +1823,7 @@ void coding_theory_domain::crc771_file_based(
 	N = Fio.file_size(fname_in);
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc771_file_based input file size = " << N << endl;
+		cout << "crc_codes::crc771_file_based input file size = " << N << endl;
 	}
 	buffer = NEW_char(block_length);
 
@@ -1854,35 +1869,35 @@ void coding_theory_domain::crc771_file_based(
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::crc771_file_based done" << endl;
+		cout << "crc_codes::crc771_file_based done" << endl;
 	}
 
 }
 
-void coding_theory_domain::check_errors(
+void crc_codes::check_errors(
 		crc_options_description *Crc_options_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors " << endl;
+		cout << "crc_codes::check_errors " << endl;
 	}
 
 	if (!Crc_options_description->f_input) {
-		cout << "coding_theory_domain::check_errors please use -input <fname>" << endl;
+		cout << "crc_codes::check_errors please use -input <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_output) {
-		cout << "coding_theory_domain::check_errors please use -output <fname>" << endl;
+		cout << "crc_codes::check_errors please use -output <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_crc_type) {
-		cout << "coding_theory_domain::check_errors please use -crc_type <type>" << endl;
+		cout << "crc_codes::check_errors please use -crc_type <type>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_block_length) {
-		cout << "coding_theory_domain::check_errors please use -block_length <block_length>" << endl;
+		cout << "crc_codes::check_errors please use -block_length <block_length>" << endl;
 		exit(1);
 	}
 	int block_length;
@@ -1897,7 +1912,7 @@ void coding_theory_domain::check_errors(
 
 	if (ST.stringcmp(Crc_options_description->crc_type, "crc16") == 0) {
 		if (f_v) {
-			cout << "coding_theory_domain::check_errors "
+			cout << "crc_codes::check_errors "
 					"crc16" << endl;
 		}
 		f_crc16 = TRUE;
@@ -1906,7 +1921,7 @@ void coding_theory_domain::check_errors(
 	}
 	else if (ST.stringcmp(Crc_options_description->crc_type, "crc32") == 0) {
 		if (f_v) {
-			cout << "coding_theory_domain::check_errors "
+			cout << "crc_codes::check_errors "
 					"crc32" << endl;
 		}
 
@@ -1916,7 +1931,7 @@ void coding_theory_domain::check_errors(
 	}
 	else if (ST.stringcmp(Crc_options_description->crc_type, "crc771") == 0) {
 		if (f_v) {
-			cout << "coding_theory_domain::check_errors "
+			cout << "crc_codes::check_errors "
 					"crc771" << endl;
 		}
 
@@ -1925,7 +1940,7 @@ void coding_theory_domain::check_errors(
 
 	}
 	else {
-		cout << "coding_theory_domain::crc_encode_file_based "
+		cout << "crc_codes::crc_encode_file_based "
 					"crc type is unrecognized" << endl;
 		exit(1);
 
@@ -1934,13 +1949,13 @@ void coding_theory_domain::check_errors(
 	block_length = Crc_options_description->block_length;
 	information_length = block_length - nb_check_bytes;
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors block_length = " << block_length << endl;
-		cout << "coding_theory_domain::check_errors information_length = " << information_length << endl;
+		cout << "crc_codes::check_errors block_length = " << block_length << endl;
+		cout << "crc_codes::check_errors information_length = " << information_length << endl;
 
 	}
 
 	if (!Crc_options_description->f_error_log) {
-		cout << "coding_theory_domain::check_errors please use -error_log <fname>" << endl;
+		cout << "crc_codes::check_errors please use -error_log <fname>" << endl;
 		exit(1);
 	}
 
@@ -1980,7 +1995,7 @@ void coding_theory_domain::check_errors(
 	N = Fio.file_size(fname_coded);
 
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors input file size = " << N << endl;
+		cout << "crc_codes::check_errors input file size = " << N << endl;
 	}
 	buffer = NEW_char(block_length);
 	recovered_data = NEW_char(N);
@@ -1988,7 +2003,7 @@ void coding_theory_domain::check_errors(
 
 	nb_blocks = (N + block_length - 1) / block_length;
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors nb_blocks = " << nb_blocks << endl;
+		cout << "crc_codes::check_errors nb_blocks = " << nb_blocks << endl;
 	}
 
 	int a, b, c;
@@ -2009,7 +2024,7 @@ void coding_theory_domain::check_errors(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors nb_error = " << nb_error << endl;
+		cout << "crc_codes::check_errors nb_error = " << nb_error << endl;
 	}
 
 	long int *Faulty_blocks;
@@ -2205,36 +2220,36 @@ void coding_theory_domain::check_errors(
 	FREE_lint(Error_undetected);
 
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors done" << endl;
+		cout << "crc_codes::check_errors done" << endl;
 	}
 
 }
 
 
-void coding_theory_domain::extract_block(
+void crc_codes::extract_block(
 		crc_options_description *Crc_options_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::extract_block " << endl;
+		cout << "crc_codes::extract_block " << endl;
 	}
 
 	if (!Crc_options_description->f_input) {
-		cout << "coding_theory_domain::extract_block please use -input <fname>" << endl;
+		cout << "crc_codes::extract_block please use -input <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_output) {
-		cout << "coding_theory_domain::extract_block please use -output <fname>" << endl;
+		cout << "crc_codes::extract_block please use -output <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_block_length) {
-		cout << "coding_theory_domain::extract_block please use -block_length <block_length>" << endl;
+		cout << "crc_codes::extract_block please use -block_length <block_length>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_selected_block) {
-		cout << "coding_theory_domain::extract_block please use -selected_block <selected_block>" << endl;
+		cout << "crc_codes::extract_block please use -selected_block <selected_block>" << endl;
 		exit(1);
 	}
 	int block_length;
@@ -2243,8 +2258,8 @@ void coding_theory_domain::extract_block(
 	block_length = Crc_options_description->block_length;
 	information_length = block_length - 4;
 	if (f_v) {
-		cout << "coding_theory_domain::extract_block block_length = " << block_length << endl;
-		cout << "coding_theory_domain::extract_block information_length = " << information_length << endl;
+		cout << "crc_codes::extract_block block_length = " << block_length << endl;
+		cout << "crc_codes::extract_block information_length = " << information_length << endl;
 
 	}
 
@@ -2283,7 +2298,7 @@ void coding_theory_domain::extract_block(
 	N = Fio.file_size(fname_coded);
 
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors input file size = " << N << endl;
+		cout << "crc_codes::check_errors input file size = " << N << endl;
 	}
 	buffer = NEW_char(block_length);
 	//recovered_data = NEW_char(N);
@@ -2301,13 +2316,13 @@ void coding_theory_domain::extract_block(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors nb_error = " << nb_error << endl;
+		cout << "crc_codes::check_errors nb_error = " << nb_error << endl;
 	}
 
 
 	nb_blocks = (N + block_length - 1) / block_length;
 	if (f_v) {
-		cout << "coding_theory_domain::check_errors nb_blocks = " << nb_blocks << endl;
+		cout << "crc_codes::check_errors nb_blocks = " << nb_blocks << endl;
 	}
 
 	{
@@ -2372,7 +2387,7 @@ void coding_theory_domain::extract_block(
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::extract_block done" << endl;
+		cout << "crc_codes::extract_block done" << endl;
 	}
 }
 
@@ -2440,7 +2455,7 @@ uint16_t gen_crc16(const uint8_t *data, uint16_t size)
 
 // from: https://barrgroup.com/embedded-systems/how-to/additive-checksums
 
-uint16_t coding_theory_domain::NetIpChecksum(uint16_t const *ipHeader, int nWords)
+uint16_t crc_codes::NetIpChecksum(uint16_t const *ipHeader, int nWords)
 {
     uint32_t  sum = 0;
 
@@ -2466,9 +2481,243 @@ uint16_t coding_theory_domain::NetIpChecksum(uint16_t const *ipHeader, int nWord
 
 }
 
+void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
+		ring_theory::unipoly_object &CRC_poly,
+	std::string &text, std::string &fname,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "crc_codes::CRC_encode_text e=" << Nth->F->e << endl;
+	}
+	int l, i, j, h, a;
+	char c;
+	int *encoding;
+	int len;
+
+
+	l = text.size();
+	encoding = NEW_int(5 * l);
+	j = 0;
+	for (i = 0; i < l; i++) {
+		c = text[i];
+		if (c >= 'A' && c <= 'Z') {
+			a = 3 + c - 'A';
+		}
+		else if (c >= 'a' && c <= 'z') {
+			a = 3 + c - 'a';
+		}
+		else if (c == ' ') {
+			a = 0;
+		}
+		else if (c == ',') {
+			a = 1;
+		}
+		else if (c == '.') {
+			a = 2;
+		}
+		else {
+			//cout << "unknown character " << c << " skipping" << endl;
+			//exit(1);
+			continue;
+		}
+		for (h = 0; h < 5; h++) {
+			encoding[j++] = a % 2;
+			a >>= 1;
+		}
+	}
+
+	len = j;
+
+	int degree;
+
+	degree = Nth->FX->degree(CRC_poly);
+	if (f_v) {
+		cout << "crc_codes::CRC_encode_text degree=" << degree << endl;
+	}
+
+	int nb_rows;
+	int nb_cols;
+	int I, IP, IPq;
+	int nb_bits;
+
+	nb_rows = 80;
+	nb_cols = 72;
+
+	nb_bits = Nth->F->e;
+
+	IP = nb_rows * nb_cols + nb_rows + nb_cols;
+
+	IPq = IP / nb_bits;
+
+
+
+	int *v;
+	int *information;
+	int *information_and_parity;
+	int *information_and_parity_Fq;
+	int *codeword_Fq;
+	geometry::geometry_global GG;
+
+	information = NEW_int(nb_rows * nb_cols);
+	information_and_parity = NEW_int(nb_rows * nb_cols + nb_rows + nb_cols);
+	information_and_parity_Fq = NEW_int(IPq);
+	codeword_Fq = NEW_int(IPq + degree);
+
+
+	int *row_parity;
+	int *col_parity;
+
+	row_parity = NEW_int(nb_rows);
+	col_parity = NEW_int(nb_cols);
+
+	v = NEW_int(nb_bits);
+
+
+	for (I = 0; I * nb_rows * nb_cols < len; I++) {
+
+		Int_vec_zero(information, nb_rows * nb_cols);
+
+		for (j = 0; j < nb_rows * nb_cols; j++) {
+			h = I * nb_rows * nb_cols + j;
+			if (h < len) {
+				information[j] = encoding[h];
+			}
+			else {
+				information[j] = 0;
+			}
+		}
+		orbiter_kernel_system::file_io Fio;
+		string fname_base;
+		string fname_out;
+		data_structures::string_tools String;
+		char str[1000];
+
+
+		fname_base.assign(fname);
+		String.chop_off_extension(fname_base);
+
+		sprintf(str, "_word%d", I);
+		fname_base.append(str);
+
+
+
+		fname_out.assign(fname_base);
+		fname_out.append("_information.csv");
+
+
+		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
+		Fio.int_matrix_write_csv(fname_out, information, nb_rows, nb_cols);
+		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+		for (j = 0; j < nb_cols; j++) {
+			a = 0;
+			for (i = 0; i < nb_rows; i++) {
+				a += information[i * nb_cols + j];
+				a %= 2;
+			}
+			col_parity[j] = a;
+		}
+
+
+		fname_out.assign(fname_base);
+		fname_out.append("_col_parity.csv");
+
+
+		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
+		Fio.int_matrix_write_csv(fname_out, col_parity, 1, nb_cols);
+		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+
+		for (i = 0; i < nb_rows; i++) {
+			a = 0;
+			for (j = 0; j < nb_cols; j++) {
+				a += information[i * nb_cols + j];
+				a %= 2;
+			}
+			row_parity[i] = a;
+		}
+
+		fname_out.assign(fname_base);
+		fname_out.append("_row_parity.csv");
+
+
+		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
+		Fio.int_matrix_write_csv(fname_out, row_parity, 1, nb_rows);
+		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+		Int_vec_copy(information, information_and_parity, nb_rows * nb_cols);
+		Int_vec_copy(row_parity, information_and_parity + nb_rows * nb_cols, nb_rows);
+		Int_vec_copy(col_parity, information_and_parity + nb_rows * nb_cols + nb_rows, nb_cols);
+
+
+		fname_out.assign(fname_base);
+		fname_out.append("_IP.csv");
+
+
+		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
+		Fio.int_matrix_write_csv(fname_out, information_and_parity, 1, nb_rows * nb_cols + nb_rows + nb_cols);
+		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+
+		for (i = 0; i < IPq; i++) {
+			for (h = 0; h < nb_bits; h++) {
+				v[h] = information_and_parity[i * nb_bits + h];
+			}
+			a = GG.AG_element_rank(2, v, 1, nb_bits);
+			information_and_parity_Fq[i] = a;
+		}
+
+		fname_out.assign(fname_base);
+		fname_out.append("_IPq.csv");
+
+		Fio.int_matrix_write_csv(fname_out, information_and_parity_Fq, 1, IPq);
+		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+		ring_theory::unipoly_object P;
+
+		Nth->FX->create_object_of_degree(P, IPq + degree);
+		for (i = 0; i < IPq; i++) {
+			a = information_and_parity_Fq[i];
+			Nth->FX->s_i(P, i + degree) = a;
+		}
+
+		cout << "P=";
+		Nth->FX->print_object(P, cout);
+		cout << endl;
+
+		ring_theory::unipoly_object Q;
+		ring_theory::unipoly_object R;
+
+		Nth->FX->create_object_of_degree(Q, IPq + degree);
+		Nth->FX->create_object_of_degree(R, degree);
+
+		Nth->FX->division_with_remainder(P, CRC_poly, Q, R, verbose_level);
+
+		cout << "R=";
+		Nth->FX->print_object(R, cout);
+		cout << endl;
+
+		Int_vec_copy(information_and_parity_Fq, codeword_Fq + degree, IPq);
+		for (i = 0; i < degree; i++) {
+			a = Nth->FX->s_i(R, i);
+			codeword_Fq[i] = a;
+		}
+
+		fname_out.assign(fname_base);
+		fname_out.append("_codeword_Fq.csv");
+
+		Fio.int_matrix_write_csv(fname_out, codeword_Fq, 1, IPq + degree);
+		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+
+	}
+
+	if (f_v) {
+		cout << "crc_codes::CRC_encode_text done" << endl;
+	}
+}
 
 }}}
-
-
-
 

@@ -283,6 +283,8 @@ public:
 			std::vector<std::string> &csv_file_join_identifier, int verbose_level);
 	void do_csv_file_concatenate(
 			std::vector<std::string> &fname, std::string &fname_out, int verbose_level);
+	void do_csv_file_concatenate_from_mask(
+			std::string &fname_in_mask, int N, std::string &fname_out, int verbose_level);
 	void do_csv_file_latex(std::string &fname,
 			int f_produce_latex_header,
 			int nb_lines_per_table,
