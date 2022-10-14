@@ -1254,10 +1254,7 @@ create_surface_4_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S4_0 -q 4 -catalogue 0 -end \
-		-end \
+		-define S4_0 -cubic_surface -space P -catalogue 0 -end \
 		-with S4_0 -do \
 			-cubic_surface_activity \
 			-report \
@@ -1531,6 +1528,14 @@ F_5_add_table:
 		-with F -do -finite_field_activity -cheat_sheet_GF -end \
 		-draw_matrix -input_csv_file GF_q5_addition_table.csv \
 			-box_width 40 -bit_depth 24 -partition 3 5 5 -end \
+
+
+F_7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_7.tex
+	open GF_7.pdf
 
 
 
@@ -2409,52 +2414,6 @@ Hirschfeld_surface_q16.txt:
 
 # the coefficient vector is given as a list of pairs. 
 # 165 = binomial(11,3)
-
-
-
-Endrass_F7.txt:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define R -polynomial_ring -field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 8 \
-			-end \
-		-define eqn -vector -field F -sparse 165 \
-			$(ENDRASS_SPARSE) -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Endrass_F7 -geometric_object P \
-			-projective_variety R \
-				"Endrass_F7" \
-				"Endrass\_F7" \
-				eqn \
-		-end \
-		-with Endrass_F7 -do \
-		-combinatorial_object_activity -save \
-		-end
-
-
-
-# we created a set of 33 points, called Endrass_F7.txt
-
-
-
-octic_prepare:
-	$(ORBITER) -v 4 \
-		-define A -vector -format 1 -dense "1,1,1,1" -end \
-		-define D -diophant \
-			-label octic_monomials \
-			-coefficient_matrix A \
-			-RHS "8,8,1" \
-			-x_min_global 0 -x_max_global 8 \
-		-end \
-		-with D -do \
-			-diophant_activity -solve_mckay \
-		-end
-	sort -r octic_monomials.sol >octic_monomials_sorted.txt
-
-#Found 165 solutions with 210 backtrack steps
-# 165=binomial(11,3)
-
 
 
 
@@ -4053,14 +4012,10 @@ SURFACE_q13_STAB="1,0,0,0,0,12,0,0,0,0,12,0,0,0,0,1, \
 
 
 surface_q13_stab_on_tritangents_orbits:
-	$(ORBITER) -v 30 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S -q 13 \
-			-arc_lifting "0,1,2,3,43,113" -end \
-		-end \
+		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report_with_group \
@@ -4096,7 +4051,7 @@ surface_q13_stab_on_tritangents_orbits:
 
 
 PGL_4_2_wd:
-	$(ORBITER) -v 12 \
+	$(ORBITER) -v 3 \
 		-define G -linear_group -PGL 4 2 -wedge_detached -end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -4109,7 +4064,7 @@ PGL_4_2_wd:
 
 
 PGL_4_2_wd_reverse:
-	$(ORBITER) -v 12 \
+	$(ORBITER) -v 3 \
 		-linear_group -PGL 4 2 -wedge_detached -end \
 		-group_theoretic_activity \
 			-reverse_isomorphism_exterior_square \
@@ -5922,11 +5877,7 @@ surface_64_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S -q 64 -catalogue 0 \
-			-end \
-		-end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
@@ -6003,11 +5954,7 @@ Example_F64:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-			-define_surface S64_abcd_52_8_8_52 -q 64 \
-				-family_general_abcd 52 8 8 52 -end \
-		-end \
+		-define S64_abcd_52_8_8_52 -cubic_surface -space P -family_general_abcd 52 8 8 52 -end \
 		-with S64_abcd_52_8_8_52 -do \
 			-cubic_surface_activity \
 			-report \
@@ -6221,22 +6168,18 @@ cubic_curves_PG_2_8_draw:
 SECTION_CUBIC_SURFACES_CREATION:
 
 
-
 surface_4_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S -q 4 -catalogue 0 -end \
-		-end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
 			-report_with_group \
 		-end
-	pdflatex surface_catalogue_q4_iso0_report.tex
-	open surface_catalogue_q4_iso0_report.pdf
+	#pdflatex surface_catalogue_q4_iso0_report.tex
+	#open surface_catalogue_q4_iso0_report.pdf
 	pdflatex surface_catalogue_q4_iso0_with_group.tex
 	open surface_catalogue_q4_iso0_with_group.pdf
 
@@ -6246,11 +6189,8 @@ surface_7_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S7_0 -q 7 -catalogue 0 -end \
-		-end \
-		-with S7_0 -do \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-with S -do \
 		-cubic_surface_activity \
 			-report \
 			-report_with_group \
@@ -6268,11 +6208,7 @@ Family_general_F7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S7_abcd_2_3_3_4 -q 7 \
-			-family_general_abcd 2 3 3 4 -end \
-		-end \
+		-define S7_abcd_2_3_3_4 -cubic_surface -space P -family_general_abcd 2 3 3 4 -end \
 		-with S7_abcd_2_3_3_4 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6290,12 +6226,8 @@ eckardt_13_4_12:
 	$(ORBITER) -v 6 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_2_1 -q 13 \
-			-family_Eckardt 4 12 -end \
-		-end \
-		-with S_2_1 -do \
+		-define Eckardt_4_12 -cubic_surface -space P -family_Eckardt 4 12 -end \
+		-with Eckardt_4_12 -do \
 		-cubic_surface_activity \
 			-report \
 			-report_with_group \
@@ -6313,10 +6245,7 @@ surface_8_0_catalogue:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S8_0 -q 8 -catalogue 0 -end \
-		-end \
+		-define S8_0 -cubic_surface -space P -catalogue 0 -end \
 		-with S8_0 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6333,15 +6262,13 @@ surface_8_0_clean:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S8_0 -q 8 -catalogue 0 \
+		-define S8_0 -cubic_surface -space P -catalogue 0 \
 			-select_double_six "15,11,22,19,24,5,16,10,23,20,25,4" \
 			-select_double_six "3,2,1,0,5,4,9,8,7,6,11,10" \
 			-transform_inverse "1,4,4,0,6,0,0,0,6,2,0,1,7,0,4,0,0" \
 			-transform "4,4,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0" \
 			-transform_inverse "2,0,0,0,0,2,0,0,0,0,2,0,1,1,2,3,0" \
-		-end -end \
+			-end \
 		-with S8_0 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6358,15 +6285,12 @@ surface_8_0b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S8_0 -q 8 -catalogue 0 \
+		-define S8_0 -cubic_surface -space P -catalogue 0 \
 			-select_double_six "15,11,22,19,24,5,16,10,23,20,25,4" \
 			-select_double_six "3,2,1,0,5,4,9,8,7,6,11,10" \
 			-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
 			-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
 			-transform_inverse "2,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
-			-end \
 		-end \
 		-with S8_0 -do \
 		-cubic_surface_activity \
@@ -6394,12 +6318,8 @@ Eckardt_13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S_q13 -q 13 \
-			-family_Eckardt 3 1 -end \
-		-end \
-		-with S_q13 -do \
+		-define Eckardt_3_1 -cubic_surface -space P -family_Eckardt 3 1 -end \
+		-with Eckardt_3_1 -do \
 		-cubic_surface_activity \
 			-report \
 			-report_with_group \
@@ -6413,10 +6333,7 @@ surface_13_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S13_0 -q 13 -catalogue 0 -end \
-		-end \
+		-define S13_0 -cubic_surface -space P -catalogue 0 -end \
 		-with S13_0 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6433,12 +6350,9 @@ surface_16_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S16_0 -q 16 -catalogue 0 \
+		-define S16_0 -cubic_surface -space P -catalogue 0 \
 			-transform "1,0,0,0,0,1,0,12,0,0,1,12,0,0,0,1,0" \
 			-transform "15,11,4,0,0,0,12,0,0,12,0,0,0,0,0,1,3" \
-			-end \
 		-end \
 		-with S16_0 -do \
 		-cubic_surface_activity \
@@ -6467,10 +6381,7 @@ G13_8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface T1 -family_G13 2 -q 8 -end \
-		-end \
+		-define T1 -cubic_surface -space P -family_G13 2 -end \
 		-with T1 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6484,10 +6395,7 @@ F13_8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface T1 -family_F13 2 -q 8 -end \
-		-end \
+		-define T1 -cubic_surface -space P -family_F13 2 -end \
 		-with T1 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6505,10 +6413,7 @@ F13_16:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface T2 -family_F13 2 -q 16 -end \
-		-end \
+		-define T2 -cubic_surface -space P -family_F13 2 -end \
 		-with T2 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6524,10 +6429,7 @@ F13_32:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 32 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface T3 -family_F13 2 -q 32 -end \
-		-end \
+		-define T3 -cubic_surface -space P -family_F13 2 -end \
 		-with T3 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6543,10 +6445,7 @@ F13_64a:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface K1 -family_F13 2 -q 64 -end \
-		-end \
+		-define K1 -cubic_surface -space P -family_F13 2 -end \
 		-with K1 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6560,10 +6459,7 @@ F13_64b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface K2 -family_F13 18 -q 64 -end \
-		-end \
+		-define K2 -cubic_surface -space P -family_F13 18 -end \
 		-with K2 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6575,11 +6471,8 @@ Colorado1:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface CO-1 -q 128 -catalogue 0 \
+		-define CO-1 -cubic_surface -space P -catalogue 0 \
 			-transform_inverse "1,0,0,0,0,1,0,96,0,0,1,96,0,0,0,1,0" \
-			-end \
 		-end \
 		-with CO-1 -do \
 		-cubic_surface_activity \
@@ -6596,11 +6489,8 @@ Colorado2:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface CO-2 -q 128 -catalogue 926 \
+		-define CO-2 -cubic_surface -space P -catalogue 926 \
 			-transform_inverse "1,0,0,0,0,1,0,32,0,0,1,32,0,0,0,1,0" \
-			-end \
 		-end \
 		-with CO-2 -do \
 		-cubic_surface_activity \
@@ -6612,11 +6502,8 @@ Colorado3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface CO-3 -q 128 -catalogue 928 \
+		-define CO-3 -cubic_surface -space P -catalogue 928 \
 			-transform_inverse "1,0,0,0,0,1,0,59,0,0,1,59,0,0,0,1,0" \
-			-end \
 		-end \
 		-with CO-3 -do \
 		-cubic_surface_activity \
@@ -6631,10 +6518,7 @@ F13_128a:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface CO-1 -family_F13 2 -q 128 -end \
-		-end \
+		-define CO-1 -cubic_surface -space P -family_F13 2 -end \
 		-with CO-1 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6647,10 +6531,7 @@ F13_128b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface CO-2 -family_F13 6 -q 128 -end \
-		-end \
+		-define CO-2 -cubic_surface -space P -family_F13 6 -end \
 		-with CO-2 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6663,10 +6544,7 @@ F13_128c:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 128 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface CO-3 -family_F13 14 -q 128 -end \
-		-end \
+		-define CO-3 -cubic_surface -space P -family_F13 14 -end \
 		-with CO-3 -do \
 		-cubic_surface_activity \
 			-report \
@@ -6678,7 +6556,9 @@ move_two_lines:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 8 -end \
 		-with F -do -finite_field_activity \
-		-move_two_lines_in_hyperplane_stabilizer 65 4680 72 657 -end
+			-move_two_lines_in_hyperplane_stabilizer \
+			65 4680 72 657 \
+		-end
 
 
 
@@ -6700,22 +6580,19 @@ F_abcd_Eckardt_q31:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 31 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface F_abcd -q 31 \
+		-define F_abcd -cubic_surface -space P \
 			-by_equation "F_abcd" \
 			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
 			$(F_abcd_eqn) \
 			"a=2,b=30,c=30,d=2" \
 			"\Da=2,b=30,c=30,d=2\D" \
 		-end \
-		-end \
 		-with F_abcd -do \
 		-cubic_surface_activity \
 			-report \
 		-end
-	pdflatex surface_equation_F_abcd_q31_report.tex
-	open surface_equation_F_abcd_q31_report.pdf
+	pdflatex surface_family_Eckardt_q13_a4_b12_with_group.tex
+	open surface_family_Eckardt_q13_a4_b12_with_group.pdf
 
 
 
@@ -6755,9 +6632,7 @@ F_alpha_beta_gamma_delta_q7_override_group:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface F_2345 -q 7 \
+		-define F_2345 -cubic_surface -space P \
 			-by_equation "F_alpha_beta_gamma_delta" \
 			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
 			$(F_ALPHA_BETA_GAMMA_DELTA) \
@@ -6766,7 +6641,6 @@ F_alpha_beta_gamma_delta_q7_override_group:
 			-override_group 6 2 \
 			"1,5,0,0,3,6,0,0,1,1,3,0,5,5,0,3, \
 			1,0,2,5,0,1,6,1,0,0,3,5,0,0,4,4" \
-		-end \
 		-end \
 		-with F_2345 -do \
 		-cubic_surface_activity \
@@ -6805,16 +6679,12 @@ surface_15lines_q7_1:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-control_six_arcs -end \
-			-define_surface S -q 7 \
-				-by_equation "F_alpha_beta_gamma_delta" \
-				"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
-				$(F_ALPHA_BETA_GAMMA_DELTA) \
-				"alpha=6,beta=4,gamma=2,delta=2" \
-				"\D\alpha=6,\beta=4,\gamma=2,\delta=2\D" \
-			-end \
+		-define S -cubic_surface -space P \
+			-by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=6,beta=4,gamma=2,delta=2" \
+			"\D\alpha=6,\beta=4,\gamma=2,\delta=2\D" \
 		-end \
 		-with S -do \
 			-cubic_surface_activity \
@@ -6898,12 +6768,11 @@ McKean_15lines_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S \
-			-by_coefficients $(SURFACE_MCKEAN_15_LINES) -q 7 \
-		-end \
-		-end 
+		-define S -cubic_surface -space P -by_coefficients $(SURFACE_MCKEAN_15_LINES) -end \
+		-with S -do \
+			-cubic_surface_activity \
+				-report \
+		-end
 	#pdflatex surface_by_coefficients_q7_report.tex
 	#open surface_by_coefficients_q7_report.pdf
 
@@ -6913,9 +6782,8 @@ F_4_4_3_3_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface -q 7 -by_equation \
+		-define S -cubic_surface -space P \
+			-by_equation \
 			"F_alpha_beta_gamma_delta" \
 			"\DF_{\alpha,\beta,\gamma,\delta}\D" \
 			"x0,x1,x2,x3" \
@@ -6923,6 +6791,9 @@ F_4_4_3_3_q7:
 			"alpha=4,beta=4,gamma=3,delta=3" \
 			"\D\alpha=4,\beta=4,\gamma=3,\delta=3\D" \
 		-end \
+		-with S -do \
+			-cubic_surface_activity \
+				-report \
 		-end
 	#pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
 	#open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
@@ -6930,23 +6801,6 @@ F_4_4_3_3_q7:
 # has 4 Eckardt points
 
 
-
-F_alpha_beta_gamma_delta_points.txt:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-sweep nothing \
-		-define_surface -q 7 -by_equation \
-			"F_alpha_beta_gamma_delta" \
-			"\DF_{\alpha,\beta,\gamma,\delta}\D" \
-			"x0,x1,x2,x3" \
-			$(F_ALPHA_BETA_GAMMA_DELTA) \
-			"alpha=2,beta=3,gamma=4,delta=5" \
-			"\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
-		-end \
-		-end 
 
 
 
@@ -7050,33 +6904,41 @@ quartic_curve_13_1_report:
 	open quartic_curve_catalogue_q13_iso1_report.pdf
 
 
+NB_QUARTIC_CURVES_Q19=14
 
-
-quartic_curve_19_4_report: 
+quartic_curves_19_report: 
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 19 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define C -quartic_curve -space P -catalogue 4 \
-		-end \
+		-loop L 0 $(NB_QUARTIC_CURVES_Q19) 1 \
+		-define C -quartic_curve -space P -catalogue %L -end \
 		-with C -do \
 			-quartic_curve_activity \
 				-report \
 			-end \
-		-with C -do \
-			-quartic_curve_activity \
-				-extract_orbit_on_bitangents_by_length 4 \
-			-end
-
+		-end_loop
+		pdflatex quartic_curve_catalogue_q19_iso0_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso1_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso2_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso3_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso4_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso5_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso6_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso7_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso8_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso9_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso10_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso11_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso12_report.tex
+		pdflatex quartic_curve_catalogue_q19_iso13_report.tex
+		#open quartic_curve_catalogue_q19_iso4_report.pdf
 
 
 surface_4_0_quartic_curves:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S4_0 -q 4 -catalogue 0 -end \
-		-end \
+		-define S4_0 -cubic_surface -space P -catalogue 0 -end \
 		-with S4_0 -do \
 		-cubic_surface_activity \
 			-report \
@@ -7092,21 +6954,17 @@ surface_4_0_quartic_curves:
 
 
 
-# full del Pezzo surfaces:
-
 
 NB_CUBIC_SURFACES_Q7=1
 
 quartic_curves_q7:
-	$(ORBITER) -v 3 \
+	$(ORBITER_PATH)orbiter.out -v 3 \
 		-list_arguments \
+		-draw_options -end \
 		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
-			-with P -do \
-			-projective_space_activity \
-				-define_surface S_%L -q 7 -catalogue %L -end \
-			-end \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
 		-end_loop \
 		-print_symbols \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
@@ -7118,48 +6976,33 @@ quartic_curves_q7:
 		-print_symbols
 
 
-quartic_curves_q7_classify:
-	$(ORBITER) -v 3 \
-		-list_arguments \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_quartic_curves_with_substructure \
-				surface_catalogue_q7_iso%d_quartics.csv \
-				$(NB_CUBIC_SURFACES_Q7) 3 4 quartic_curves_q7 \
-		-end \
-		-print_symbols
-	#pdflatex quartic_curves_q7_canonical.tex
-	#open quartic_curves_q7_canonical.pdf
-
-# no quartic curve
-
 
 NB_CUBIC_SURFACES_Q13=4
 
 quartic_curves_q13:
-	$(ORBITER) -v 3 \
+	$(ORBITER_PATH)orbiter.out -v 3 \
 		-list_arguments \
+		-draw_options -end \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
-			-with P -do \
-			-projective_space_activity \
-				-define_surface S13_%L -q 13 -catalogue %L -end \
-			-end \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
 		-end_loop \
 		-print_symbols \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
-			-with S13_%L -do \
+			-with S_%L -do \
 			-cubic_surface_activity \
 				-export_all_quartic_curves \
 			-end \
 		-end_loop \
 		-print_symbols
 
+quartic_curves_q13_combine:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q13) \
+			surface_catalogue_q13_iso%ld_quartics.csv \
+			quartics_q13.csv
 
-#surface_catalogue_q13_iso0_quartics.csv
 
 quartic_curves_q13_classify:
 	$(ORBITER) -v 3 \
@@ -7169,97 +7012,40 @@ quartic_curves_q13_classify:
 		-with P -do \
 		-projective_space_activity \
 			-classify_quartic_curves_with_substructure \
-				surface_catalogue_q13_iso%d_quartics.csv \
-				$(NB_CUBIC_SURFACES_Q13) 4 4 quartic_curves_q13 \
+				quartics_q13.csv \
+				1 4 4 quartic_curves_q13 \
 		-end \
 		-print_symbols
-
-#q13
-#The number of types of quartic curves is 2
-#idx : ago
-#0 : 24
-#1 : 48
-
-
-
-NB_CUBIC_SURFACES_Q17=7
-
-quartic_curves_q17:
-	$(ORBITER) -v 3 \
-		-list_arguments \
-		-define F -finite_field -q 17 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q17) 1 \
-			-with P -do \
-			-projective_space_activity \
-				-define_surface S17_%L -q 17 -catalogue %L -end \
-			-end \
-		-end_loop \
-		-print_symbols \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q17) 1 \
-			-with S17_%L -do \
-			-cubic_surface_activity \
-				-report \
-				-export_all_quartic_curves \
-			-end \
-		-end_loop \
-		-print_symbols
-		#pdflatex surface_catalogue_q17_iso0_report.tex
-		#open surface_catalogue_q17_iso0.pdf
-
-
-
-quartic_curves_q17_classify:
-	$(ORBITER) -v 3 \
-		-list_arguments \
-		-define F -finite_field -q 17 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_quartic_curves_with_substructure \
-				surface_catalogue_q17_iso%d_quartics.csv \
-				$(NB_CUBIC_SURFACES_Q17) 3 4 quartic_curves_q17 \
-		-end \
-		-print_symbols \
-
-#User time: 2:33
-#q17
-#The number of isomorphism types of quartic curves is 7
-#idx : ago
-#0 : 24
-#1 : 24
-#2 : 4
-#3 : 96
-#4 : 6
-#5 : 8
-#6 : 2
 
 
 
 NB_CUBIC_SURFACES_Q19=10
 
 quartic_curves_q19:
-	$(ORBITER) -v 3 \
+	$(ORBITER_PATH)orbiter.out -v 3 \
 		-list_arguments \
+		-draw_options -end \
 		-define F -finite_field -q 19 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
-			-with P -do \
-			-projective_space_activity \
-				-define_surface S19_%L -q 19 -catalogue %L -end \
-			-end \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
 		-end_loop \
 		-print_symbols \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
-			-with S19_%L -do \
+			-with S_%L -do \
 			-cubic_surface_activity \
-				-report \
 				-export_all_quartic_curves \
 			-end \
 		-end_loop \
 		-print_symbols
-		pdflatex surface_catalogue_q19_iso0_report.tex
-		open surface_catalogue_q19_iso0_report.pdf
+
+
+quartic_curves_q19_combine:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q19) \
+			surface_catalogue_q19_iso%ld_quartics.csv \
+			quartics_q19.csv
+
 
 
 quartic_curves_q19_classify:
@@ -7270,615 +7056,15 @@ quartic_curves_q19_classify:
 		-with P -do \
 		-projective_space_activity \
 			-classify_quartic_curves_with_substructure \
-				surface_catalogue_q19_iso%d_quartics.csv \
-				$(NB_CUBIC_SURFACES_Q19) 4 4 quartic_curves_q19 \
+				quartics_q19.csv \
+				1 4 4 quartic_curves_q19 \
 		-end \
 		-print_symbols
 
-# writes:
-# quartic_curves_q19_canonical_data.csv
-# quartic_curves_q19_canonical.tex
 
-# 14 isomorphism types:
-# ago dist: 4^1, 9^1, 2^4, 6^2, 8^3, 24^3
 
-quartic_curves_q19_set_stabilizer:
-	$(ORBITER) -v 3 \
-		-list_arguments \
-		-define F -finite_field -q 19 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-set_stabilizer 4 \
-				surface_catalogue_q19_iso%d_quartics.csv \
-				$(NB_CUBIC_SURFACES_Q19) "pts_on_curve" \
-		-end \
-		-print_symbols \
 
 
-
-
-
-surface_13_0_quartics:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S13_0 -q 13 -catalogue 0 -end \
-		-end \
-		-with S13_0 -do \
-		-cubic_surface_activity \
-			-report \
-			-export_all_quartic_curves \
-		-end
-	pdflatex surface_catalogue_q13_iso0_report.tex
-	open surface_catalogue_q13_iso0_report.pdf
-
-
-surface_13_1_quartics:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S13_1 -q 13 -catalogue 1 -end \
-		-end \
-		-with S13_1 -do \
-		-cubic_surface_activity \
-			-report \
-			-export_all_quartic_curves \
-		-end
-	pdflatex surface_catalogue_q13_iso1_report.tex
-	open surface_catalogue_q13_iso1_report.pdf
-
-
-
-
-
-
-quartic_curve_13_2_group:
-	$(ORBITER) -v 3 \
-		-define G -linear_group -PGL 3 13 \
-			-subgroup_by_generators "quartic_13_2" 24336 5 \
-			"1,0,0,0,1,0,1,2,12, \
-			1,0,0,1,7,0,11,0,7, \
-			1,0,0,8,12,1,4,11,1, \
-			1,0,0,11,4,1,2,10,0, \
-			0,1,0,11,3,0,4,9,1" \
-		-end \
-		-define Gr -modified_group -from G \
-			-restricted_action "29,86,97,154" \
-		-end \
-		-with Gr -do \
-		-group_theoretic_activity \
-		-report \
-		-end
-	pdflatex PGL_3_13_Subgroup_quartic_13_2_24336_report.tex
-	open PGL_3_13_Subgroup_quartic_13_2_24336_report.pdf
-	#pdflatex PGGL_3_4_report.tex
-	#open PGGL_3_4_report.pdf
-
-
-surface_25_0:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-		-define_surface S25_0 -q 25 -catalogue 0 -end \
-		-end \
-		-with S25_0 -do \
-		-cubic_surface_activity \
-			-report \
-			-export_all_quartic_curves \
-		-end
-	pdflatex surface_catalogue_q25_iso0_quartics.tex
-	open surface_catalogue_q25_iso0_quartics.pdf
-
-
-
-# ToDo, this curve does not have its stabilizer computed:
-
-
-quartic_curve_23_40_report: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 23 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define QC23_40 -quartic_curve -space P -catalogue 40 -end \
-			-with QC23_40 -do \
-				-quartic_curve_activity \
-					-report \
-				-end \
-
-
-quartic_curve_25_report: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-loop L 0 18 1 \
-			-define QC23_%L -quartic_curve -space P -catalogue %L -end \
-		-end_loop \
-		-print_symbols \
-		-loop L 0 18 1 \
-			-with QC25_%L -do \
-				-quartic_curve_activity \
-					-report \
-				-end \
-		-end_loop \
-		-print_symbols
-	pdflatex quartic_curve_catalogue_q25_iso0_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso1_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso2_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso3_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso4_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso5_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso6_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso7_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso8_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso9_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso10_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso11_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso12_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso13_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso14_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso15_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso16_report.tex
-	pdflatex quartic_curve_catalogue_q25_iso17_report.tex
-	gs -sDEVICE=pdfwrite -r120 -oquartic_curve_catalogue_q25.pdf \
-		quartic_curve_catalogue_q25_iso0_report.pdf \
-		quartic_curve_catalogue_q25_iso1_report.pdf \
-		quartic_curve_catalogue_q25_iso2_report.pdf \
-		quartic_curve_catalogue_q25_iso3_report.pdf \
-		quartic_curve_catalogue_q25_iso4_report.pdf \
-		quartic_curve_catalogue_q25_iso5_report.pdf \
-		quartic_curve_catalogue_q25_iso6_report.pdf \
-		quartic_curve_catalogue_q25_iso7_report.pdf \
-		quartic_curve_catalogue_q25_iso8_report.pdf \
-		quartic_curve_catalogue_q25_iso9_report.pdf \
-		quartic_curve_catalogue_q25_iso10_report.pdf \
-		quartic_curve_catalogue_q25_iso11_report.pdf \
-		quartic_curve_catalogue_q25_iso12_report.pdf \
-		quartic_curve_catalogue_q25_iso13_report.pdf \
-		quartic_curve_catalogue_q25_iso14_report.pdf \
-		quartic_curve_catalogue_q25_iso15_report.pdf \
-		quartic_curve_catalogue_q25_iso16_report.pdf \
-		quartic_curve_catalogue_q25_iso17_report.pdf
-	
-	#open quartic_curve_catalogue_q25_iso0_report.pdf
-
-
-quartic_curve_13_table: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-table_of_quartic_curves \
-			-end
-
-
-# quartic_curves_q13_info.csv
-
-
-
-quartic_curve_19_table: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 19 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-table_of_quartic_curves \
-			-end
-
-quartic_curve_19_table_latex: 
-	$(ORBITER) -v 3 \
-		-csv_file_latex 1 quartic_curves_q19_info.csv
-	~/bin/tth quartic_curves_q19_info.tex
-
-
-quartic_curve_25_table: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-table_of_quartic_curves \
-			-end
-
-
-# quartic_curves_q25_info.csv
-
-quartic_curve_27_table: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 27 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-table_of_quartic_curves \
-			-end
-
-
-# quartic_curves_q27_info.csv
-
-quartic_curve_29_table: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 29 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-table_of_quartic_curves \
-			-end
-
-
-# quartic_curves_q29_info.csv
-
-
-quartic_curve_31_table: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 31 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-			-projective_space_activity \
-				-table_of_quartic_curves \
-			-end
-
-
-# quartic_curves_q31_info.csv
-
-
-
-surface_25_12:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 -end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-surface_25_12_t1:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-surface_25_12_t2:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-surface_25_12_t3:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-
-surface_25_12_t4:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 0,0,1,0, 13,2,2,1, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-surface_25_12_t5:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 0,0,1,0, 13,2,2,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 13,1,1,0, 0,0,0,1, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-PG_2_25:
-	$(ORBITER) \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do -projective_space_activity -cheat_sheet -end
-	pdflatex PG_2_25.tex 
-	open PG_2_25.pdf
-
-
-
-PG_2_25_lines:
-	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
-		-define G -linear_group -PGGL 3 25 -end \
-		-define G_on_lines -modified_group -from G \
-			-on_k_subspaces 2 \
-		-end \
-		-with G_on_lines -do \
-		-group_theoretic_activity \
-			-poset_classification_control \
-				-problem_label PGGL_3_25 \
-				-depth 3 -draw_poset -draw_options -radius 200 -end -report -end \
-				-recognize "0,25,650" \
-				-recognize "430,16,364" \
-			-end \
-			-orbits_on_subsets 3 \
-			-report \
-		-end
-	pdflatex PGGL_3_25_poset.tex
-	open PGGL_3_25_poset.pdf
-
-surface_25_12_t6:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 0,0,1,0, 13,2,2,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 13,1,1,0, 0,0,0,1, 0" \
-			-transform "3,8,8,0, 22,13,22,0, 14,19,15,0, 0,0,0,1, 1" \
-			-transform_inverse "16,0,0,0, 0,16,0,0, 21,21,21,0, 0,0,0,1, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-
-PG_2_25_stab_of_triangle:
-	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
-		-define G -linear_group -PGGL 3 25 \
-			-subgroup_by_generators "triangle_stab" 6912 7 \
-			"1,0,0,0,1,0,0,0,1,1, \
-			1,0,0,0,13,0,0,0,13,1, \
-			1,0,0,0,4,0,0,0,6,1, \
-			1,0,0,0,17,0,0,0,13,0, \
-			1,0,0,0,18,0,0,0,4,1, \
-			1,0,0,0,0,11,0,1,0,0, \
-			0,1,0,0,0,20,14,0,0,0" \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-poset_classification_control \
-				-problem_label PGGL_3_25 \
-				-depth 3 -draw_poset -draw_options -radius 200 -end \
-				-recognize "8,44,226" \
-			-end \
-			-orbits_on_subsets 3 \
-		-end
-
-
-
-surface_25_12_t7:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 0,0,1,0, 13,2,2,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 13,1,1,0, 0,0,0,1, 0" \
-			-transform "3,8,8,0, 22,13,22,0, 14,19,15,0, 0,0,0,1, 1" \
-			-transform_inverse "16,0,0,0, 0,16,0,0, 21,21,21,0, 0,0,0,1, 0" \
-			-transform "1,0,0,0, 0,5,0,0, 0,0,17,0, 0,0,0,1, 1" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-
-surface_25_12_t8:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 0,0,1,0, 13,2,2,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 13,1,1,0, 0,0,0,1, 0" \
-			-transform "3,8,8,0, 22,13,22,0, 14,19,15,0, 0,0,0,1, 1" \
-			-transform_inverse "16,0,0,0, 0,16,0,0, 21,21,21,0, 0,0,0,1, 0" \
-			-transform "1,0,0,0, 0,5,0,0, 0,0,17,0, 0,0,0,1, 1" \
-			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,24, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-surface_25_12_t9:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 0,0,1,0, 13,2,2,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 13,1,1,0, 0,0,0,1, 0" \
-			-transform "3,8,8,0, 22,13,22,0, 14,19,15,0, 0,0,0,1, 1" \
-			-transform_inverse "16,0,0,0, 0,16,0,0, 21,21,21,0, 0,0,0,1, 0" \
-			-transform "1,0,0,0, 0,5,0,0, 0,0,17,0, 0,0,0,1, 1" \
-			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,24, 0" \
-			-transform "0,1,0,0, 0,0,1,0, 0,0,0,1, 1,0,0,0, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-		-end
-	pdflatex surface_catalogue_q25_iso12_with_group.tex
-	open surface_catalogue_q25_iso12_with_group.pdf
-
-
-
-
-
-surface_25_12_t8_quartic_curves:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S25_12 -q 25 -catalogue 12 \
-			-transform "1,0,0,16, 0,1,0,18, 0,0,1,8, 0,0,1,1, 0" \
-			-transform_inverse "16,0,1,0, 3,5,1,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform "3,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 0,0,1,0, 13,2,2,1, 0" \
-			-transform_inverse "1,0,0,0, 0,1,0,0, 13,1,1,0, 0,0,0,1, 0" \
-			-transform "3,8,8,0, 22,13,22,0, 14,19,15,0, 0,0,0,1, 1" \
-			-transform_inverse "16,0,0,0, 0,16,0,0, 21,21,21,0, 0,0,0,1, 0" \
-			-transform "1,0,0,0, 0,5,0,0, 0,0,17,0, 0,0,0,1, 1" \
-			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,24, 0" \
-			-end \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-all_quartic_curves \
-		-end \
-		-with S25_12 -do \
-		-cubic_surface_activity \
-			-export_all_quartic_curves \
-		-end
-	pdflatex surface_catalogue_q25_iso12_quartics.tex
-	open surface_catalogue_q25_iso12_quartics.pdf
-
-
-quartic_curve_13_0_surface: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define QC13_0 -quartic_curve -space P -catalogue 0 -end \
-		-with QC13_0 -do \
-			-quartic_curve_activity \
-				-create_surface \
-			-end
-
-#surface equation: 0, 0, 9, 0, 3, 0, 1, 0, 12, 7, 0, 4, 4, 0, 7, 12, 6, 2, 5, 10
-#9,2,3,4,1,6,12,8,7,9,4,11,4,12,7,14,12,15,6,16,2,17,5,18,10,19
-
-quartic_curve_13_0_surface_create:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S -by_coefficients \
-			"9,2,3,4,1,6,12,8,7,9,4,11,4,12,7,14,12,15,6,16,2,17,5,18,10,19" \
-			-q 13 -end \
-		-end \
-		-with S -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	pdflatex surface_by_coefficients_q13_report.tex
-	open surface_by_coefficients_q13_report.pdf
-
-#			-report_with_group \
 
 ###############################################################################
 # Section 7.3: Classification of Cubic Surfaces with 27 lines
@@ -8107,203 +7293,6 @@ F_sweep_15_q7:
 
 
 SECTION_CUBIC_SURFACES_DICKSON:
-
-
-
-D6_q2:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D6_q2 -q 2 -by_coefficients $(D6) -end \
-		-end \
-		-with S_D6_q2 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	pdflatex surface_by_coefficients_q2_report.tex
-	open surface_by_coefficients_q2_report.pdf
-	mv surface_by_coefficients_q2_points.txt surface_by_coefficients_q2_D6_points.txt
-
-
-# 1 line over GF(2)
-
-D3_q4:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D3_q4 -q 4 -by_coefficients $(D3) -end \
-		-end \
-		-with S_D3_q4 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	pdflatex surface_by_coefficients_q4_report.tex
-	open surface_by_coefficients_q4_report.pdf
-	mv surface_by_coefficients_q4_points.txt surface_by_coefficients_q4_D3_points.txt
-
-#surface_by_coefficients_q4_points.txt
-
-
-
-
-
-
-D4_q8:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D4_q8 -q 8 -by_coefficients $(D4) -end \
-		-end \
-		-with S_D4_q8 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	pdflatex surface_by_coefficients_q8_report.tex
-	open surface_by_coefficients_q8_report.pdf
-	mv surface_by_coefficients_q8_points.txt surface_by_coefficients_q8_D4_points.txt
-
-
-
-
-
-D6_q4:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D6_q4 -q 4 -by_coefficients $(D6) -end \
-		-end \
-		-with S_D6_q4 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	pdflatex surface_by_coefficients_q4_report.tex
-	open surface_by_coefficients_q4_report.pdf
-	mv surface_by_coefficients_q4_points.txt surface_by_coefficients_q4_D6_points.txt
-
-# D6 has 7 lines over GF(4)
-
-
-
-
-
-D8_q4:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D8_q4 -q 4 -by_coefficients $(D8) -end \
-		-end \
-		-with S_D8_q4 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	pdflatex surface_by_coefficients_q4_report.tex
-	open surface_by_coefficients_q4_report.pdf
-	mv surface_by_coefficients_q4_points.txt surface_by_coefficients_q4_D8_points.txt
-
-
-
-
-D1_q8:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D1_q8 -q 8 -by_coefficients $(D1) -end \
-		-end \
-		-with S_D1_q8 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	pdflatex surface_by_coefficients_q8_report.tex
-	open surface_by_coefficients_q8_report.pdf
-
-#surface_by_coefficients_q8_points.txt
-
-
-## cleaning D1 with 15 lines over F2 and 27 lines over F4:
-
-D1_q4_with_select_double_six:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D1_q4 -q 4 -by_coefficients $(D1) \
-			-select_double_six "3,9,15,19,22,26,4,10,14,18,21,25" \
-			-end \
-		-end \
-		-with S_D1_q4 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	mv surface_by_coefficients_q4_report.tex D1_q4.tex
-	pdflatex D1_q4.tex
-	open D1_q4.pdf
-
-
-D1_q4_with_select_double_six_b:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D1_q4 -q 4 -by_coefficients $(D1) \
-			-select_double_six "3,9,15,19,22,26,4,10,14,18,21,25" \
-			-select_double_six "1,2,3,4,5,0,7,8,9,10,11,6" \
-			-end \
-		-end \
-		-with S_D1_q4 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	mv surface_by_coefficients_q4_report.tex D1_q4.tex
-	pdflatex D1_q4.tex
-	open D1_q4.pdf
-
-
-# ToDo: now projective_space_activity:
-
-D1_q4_trans:
-	$(ORBITER) -v 5 -define F -finite_field -q 4 -end \
-		-with F -do -finite_field_activity \
-		-move_two_lines_in_hyperplane_stabilizer_text \
-		"1,0,0,0, 0,0,1,1" "0,1,1,1, 1,0,1,0" \
-		"1,0,0,0, 0,0,0,1" "0,1,0,1, 1,0,1,0" \
-		-end
-		
-D1_q4_with_select_double_six_c:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface S_D1_q4 -q 4 -by_coefficients $(D1) \
-			-select_double_six "3,9,15,19,22,26,4,10,14,18,21,25" \
-			-select_double_six "1,2,3,4,5,0,7,8,9,10,11,6" \
-			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
-			-end \
-		-end \
-		-with S_D1_q4 -do \
-		-cubic_surface_activity \
-			-report \
-		-end
-	mv surface_by_coefficients_q4_report.tex D1_q4.tex
-	pdflatex D1_q4.tex
-	open D1_q4.pdf
-
-
-
 
 
 
@@ -8574,6 +7563,14 @@ surface_reports:
 
 
 
+quartic_curve_tables_19: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+			-end
 
 
 
@@ -8615,24 +7612,61 @@ quartic_curve_tables:
 			-projective_space_activity \
 				-table_of_quartic_curves \
 			-end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 23 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+			-end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 25 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+			-end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 27 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+			-end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 29 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+			-end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+			-end
 
 
 #quartic_curves_q9_info.csv
 #quartic_curves_q13_info.csv
 #quartic_curves_q17_info.csv
 #quartic_curves_q19_info.csv
+#quartic_curves_q23_info.csv
 
 
 quartic_curve_tables_latex: 
-	$(ORBITER) -v 3 -csv_file_latex 1 test.csv
+	#$(ORBITER) -v 3 -csv_file_latex 1 test.csv
 	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q9_info.csv
 	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q13_info.csv
 	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q17_info.csv
 	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q19_info.csv
-	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q25_info.csv
-	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q27_info.csv
-	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q29_info.csv
-	#$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q31_info.csv
+	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q23_info.csv
+	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q25_info.csv
+	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q27_info.csv
+	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q29_info.csv
+	$(ORBITER) -v 3 -csv_file_latex 0 quartic_curves_q31_info.csv
 	#$(ORBITER) -v 3 -csv_file_latex 1 quartic_curves_q9_info.csv
 	#pdflatex quartic_curves_q13_info.tex
 	#open quartic_curves_q13_info.pdf
@@ -8642,6 +7676,10 @@ quartic_curve_tables_latex:
 
 
 
+# 9#0 has K=63 and ago=12096
+# 23#40 has K=21 and ago=168
+# 25#44 has K=21 and ago=336
+# 29#121 has K=21 and ago=168
 
 
 ###############################################################################
@@ -9358,15 +8396,12 @@ F_9_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_surface F_9 -q 7 \
+		-define F_9 -cubic_surface -space P \
 			-by_equation "F_9" \
 			"\DF_9\D" "x0,x1,x2,x3" \
 			$(SURFACE_F_9) \
 			"" \
 			"\Dno parameters\D" \
-		-end \
 		-end \
 		-with F_9 -do \
 		-cubic_surface_activity \
@@ -9433,6 +8468,52 @@ random_arc_5_2_q11_ideal:
 
 
 
+Endrass_F7.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 8 \
+			-end \
+		-define eqn -vector -field F -sparse 165 \
+			$(ENDRASS_SPARSE) -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Endrass_F7 -geometric_object P \
+			-projective_variety R \
+				"Endrass_F7" \
+				"Endrass\_F7" \
+				eqn \
+		-end \
+		-with Endrass_F7 -do \
+		-combinatorial_object_activity -save \
+		-end
+
+
+
+# we created a set of 33 points, called Endrass_F7.txt
+
+
+
+octic_prepare:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 1 -dense "1,1,1,1" -end \
+		-define D -diophant \
+			-label octic_monomials \
+			-coefficient_matrix A \
+			-RHS "8,8,1" \
+			-x_min_global 0 -x_max_global 8 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+	sort -r octic_monomials.sol >octic_monomials_sorted.txt
+
+#Found 165 solutions with 210 backtrack steps
+# 165=binomial(11,3)
+
+
+
+
 
 ###############################################################################
 # Chapter 9 - Applications
@@ -9446,6 +8527,9 @@ random_arc_5_2_q11_ideal:
 SECTION_NUMBER_THEORY:
 
 
+
+inverse_mod_26_99:
+	$(ORBITER) -v 2 -inverse_mod 26 99
 
 
 inverse_mod_a:
@@ -12810,6 +11894,7 @@ geo_10_3:
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
 			-test Test_lines \
+			-output_to_sage_file \
 		-end
 
 

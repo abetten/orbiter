@@ -59,6 +59,12 @@ geometry_builder_description::geometry_builder_description()
 
 	f_fname_GEO = FALSE;
 	//std::string fname_GEO;
+
+	f_output_to_inc_file = FALSE;
+	f_output_to_sage_file = FALSE;
+	f_output_to_blocks_file = FALSE;
+	f_output_to_blocks_latex_file = FALSE;
+
 }
 
 geometry_builder_description::~geometry_builder_description()
@@ -188,6 +194,30 @@ int geometry_builder_description::read_arguments(
 			fname_GEO.assign(argv[++i]);
 			if (f_v) {
 				cout << "-fname_GEO " << fname_GEO << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-output_to_inc_file") == 0) {
+			f_output_to_inc_file = TRUE;
+			if (f_v) {
+				cout << "-output_to_inc_file " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-output_to_sage_file") == 0) {
+			f_output_to_sage_file = TRUE;
+			if (f_v) {
+				cout << "-output_to_sage_file " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-output_to_blocks_file") == 0) {
+			f_output_to_blocks_file = TRUE;
+			if (f_v) {
+				cout << "-output_to_blocks_file " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-output_to_blocks_latex_file") == 0) {
+			f_output_to_blocks_latex_file = TRUE;
+			if (f_v) {
+				cout << "-output_to_blocks_latex_file " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
