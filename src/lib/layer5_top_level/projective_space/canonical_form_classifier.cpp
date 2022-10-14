@@ -683,6 +683,14 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 	FREE_OBJECT(gens_stab_of_canonical_equation);
 
 	canonical_labeling_len = C->canonical_labeling_len;
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify_curve_nauty canonical_labeling_len=" << canonical_labeling_len << endl;
+	}
+	if (canonical_labeling_len == 0) {
+		cout << "canonical_form_classifier::classify_curve_nauty canonical_labeling_len == 0, error" << endl;
+		exit(1);
+	}
 	alpha = NEW_lint(canonical_labeling_len);
 	gamma = NEW_int(canonical_labeling_len);
 
@@ -701,14 +709,16 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 
 	if (!f_found) {
 		if (f_v) {
-			cout << "After search_and_add_if_new, "
+			cout << "canonical_form_classifier::classify_curve_nauty "
+					"After search_and_add_if_new, "
 					"cnt = " << Qco->cnt << " po = " << Qco->po << " so = " << Qco->so
 					<< " The canonical form is new" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "After search_and_add_if_new, "
+			cout << "canonical_form_classifier::classify_curve_nauty "
+					"After search_and_add_if_new, "
 					"cnt = " << Qco->cnt << " po = " << Qco->po << " so = " << Qco->so
 					<< " We found the canonical form at idx = " << idx << endl;
 		}
@@ -729,7 +739,8 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 		int found_at = -1;
 
 		if (f_v) {
-			cout << "starting loop over idx1" << endl;
+			cout << "canonical_form_classifier::classify_curve_nauty "
+					"starting loop over idx1" << endl;
 		}
 
 		for (idx1 = idx; idx1 >= 0; idx1--) {
@@ -757,8 +768,18 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 			C1 = (canonical_form_nauty *) CB->Type_extra_data[idx1];
 
 			alpha_inv = C1->canonical_labeling;
+			if (f_v) {
+				cout << "canonical_form_classifier::classify_curve_nauty alpha_inv = " << endl;
+				Lint_vec_print(cout, alpha_inv, canonical_labeling_len);
+				cout << endl;
+			}
 
 			beta_inv = C->canonical_labeling;
+			if (f_v) {
+				cout << "canonical_form_classifier::classify_curve_nauty beta_inv = " << endl;
+				Lint_vec_print(cout, beta_inv, canonical_labeling_len);
+				cout << endl;
+			}
 
 			// compute gamma = beta * alpha^-1
 
@@ -776,6 +797,11 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 			}
 			for (i = 0; i < canonical_labeling_len; i++) {
 				gamma[i] = beta_inv[alpha[i]];
+			}
+			if (f_v) {
+				cout << "canonical_form_classifier::classify_curve_nauty gamma = " << endl;
+				Int_vec_print(cout, gamma, canonical_labeling_len);
+				cout << endl;
 			}
 
 
@@ -795,7 +821,7 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 			}
 			Descr->PA->P->reverse_engineer_semilinear_map(
 				gamma, Mtx, frobenius,
-				0 /*verbose_level*/);
+				verbose_level);
 			if (f_v) {
 				cout << "canonical_form_classifier::classify_curve_nauty after PA->P->reverse_engineer_semilinear_map" << endl;
 			}
@@ -819,12 +845,14 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 			//PA->F->matrix_inverse(Mtx, Mtx_inv, 3, 0 /* verbose_level*/);
 
 			if (f_v) {
-				cout << "canonical_form_classifier::classify_curve_nauty before substitute_semilinear" << endl;
+				cout << "canonical_form_classifier::classify_curve_nauty "
+						"before substitute_semilinear" << endl;
 			}
 			Poly_ring->substitute_semilinear(C->eqn /* coeff_in */, eqn2 /* coeff_out */,
 					Descr->PA->A->is_semilinear_matrix_group(), frobenius, Mtx, 0/*verbose_level*/);
 			if (f_v) {
-				cout << "canonical_form_classifier::classify_curve_nauty after substitute_semilinear" << endl;
+				cout << "canonical_form_classifier::classify_curve_nauty "
+						"after substitute_semilinear" << endl;
 			}
 
 			Descr->PA->F->PG_element_normalize_from_front(eqn2, 1, Poly_ring->get_nb_monomials());
@@ -869,7 +897,8 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 		if (found_at == -1) {
 
 			if (f_v) {
-				cout << "we found the canonical form but we did not find the equation" << endl;
+				cout << "canonical_form_classifier::classify_curve_nauty "
+						"we found the canonical form but we did not find the equation" << endl;
 			}
 
 
@@ -909,7 +938,8 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 			C2 = NEW_OBJECT(canonical_form_nauty);
 
 			if (f_v) {
-				cout << "we recompute the quartic curve from the canonical equation." << endl;
+				cout << "canonical_form_classifier::classify_curve_nauty "
+						"we will recompute the quartic curve from the canonical equation." << endl;
 			}
 			if (f_v) {
 				cout << "canonical_form_classifier::classify_curve_nauty before C2->quartic_curve" << endl;
@@ -935,7 +965,8 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 			}
 
 			if (f_v) {
-				cout << "After search_and_add_if_new, adding at " << idx << endl;
+				cout << "canonical_form_classifier::classify_curve_nauty "
+						"After search_and_add_if_new, adding at " << idx << endl;
 			}
 			CB->add_at_idx(C2->Canonical_form->get_data(), C2 /* void *extra_data */, idx, 0 /* verbose_level*/);
 
@@ -943,7 +974,8 @@ void canonical_form_classifier::classify_curve_nauty(//int cnt, int row,
 		} // if (found_at == -1)
 		else {
 			if (f_v) {
-				cout << "we found the equation at index " << found_at << endl;
+				cout << "canonical_form_classifier::classify_curve_nauty "
+						"we found the equation at index " << found_at << endl;
 			}
 
 		}
@@ -1050,6 +1082,9 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			long int *Pts_orig;
 			long int *Pts_canonical;
 
+			if (f_v) {
+				cout << "canonical_form_classifier::write_canonical_forms_csv i=" << i << " / " << nb_objects_to_test << " mapping points" << endl;
+			}
 			Pts_orig = CFS_table[i]->pts;
 			Pts_canonical = NEW_lint(CFS_table[i]->nb_pts);
 			for (j = 0; j < CFS_table[i]->nb_pts; j++) {
@@ -1066,11 +1101,21 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			ost << ",";
 
 
+			if (f_v) {
+				cout << "canonical_form_classifier::write_canonical_forms_csv i=" << i << " / " << nb_objects_to_test << " mapping bitangents" << endl;
+			}
 			long int *bitangents_orig;
 			long int *bitangents_canonical;
 
 			bitangents_orig = CFS_table[i]->bitangents;
 			bitangents_canonical = NEW_lint(CFS_table[i]->nb_bitangents);
+
+			if (f_v) {
+				cout << "canonical_form_classifier::write_canonical_forms_csv i=" << i << " / " << nb_objects_to_test << " bitangents_orig:" << endl;
+				Lint_vec_print(cout, bitangents_orig, CFS_table[i]->nb_bitangents);
+				cout << endl;
+			}
+
 			for (j = 0; j < CFS_table[i]->nb_bitangents; j++) {
 				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
 			}

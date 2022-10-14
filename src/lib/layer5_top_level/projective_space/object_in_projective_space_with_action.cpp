@@ -31,19 +31,9 @@ object_in_projective_space_with_action::object_in_projective_space_with_action()
 
 object_in_projective_space_with_action::~object_in_projective_space_with_action()
 {
-	freeself();
-}
-
-void object_in_projective_space_with_action::null()
-{
-}
-
-void object_in_projective_space_with_action::freeself()
-{
 	if (canonical_labeling) {
 		FREE_int(canonical_labeling);
 	}
-	null();
 }
 
 void object_in_projective_space_with_action::init(

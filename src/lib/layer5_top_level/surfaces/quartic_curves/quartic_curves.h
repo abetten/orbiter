@@ -190,8 +190,6 @@ public:
 
 	quartic_curve_create();
 	~quartic_curve_create();
-	void null();
-	void freeself();
 	void create_quartic_curve(
 			quartic_curve_create_description *Quartic_curve_descr,
 			int verbose_level);

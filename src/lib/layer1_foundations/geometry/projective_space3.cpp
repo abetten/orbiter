@@ -75,6 +75,10 @@ int projective_space::reverse_engineer_semilinear_map(
 		//j = element_image_of(i, Elt, 0);
 		j = Elt[i];
 		unrank_point(v2, j);
+		if (f_v) {
+			cout << "projective_space::reverse_engineer_semilinear_map "
+					"unit vector " << e << " has rank " << i << " and maps to " << j << endl;
+		}
 
 #if 0
 		if (f_vv) {
@@ -106,6 +110,10 @@ int projective_space::reverse_engineer_semilinear_map(
 	//j = element_image_of(i, Elt, 0);
 	j = Elt[i];
 	unrank_point(v2, j);
+	if (f_v) {
+		cout << "projective_space::reverse_engineer_semilinear_map "
+				"the all one vector has rank " << i << " and maps to " << j << endl;
+	}
 
 #if 0
 	if (f_vv) {
@@ -126,18 +134,21 @@ int projective_space::reverse_engineer_semilinear_map(
 		system[i * (d + 1) + d] = v2[i];
 	}
 	if (f_vv) {
-		cout << "linear system:" << endl;
+		cout << "projective_space::reverse_engineer_semilinear_map "
+				"linear system:" << endl;
 		Int_vec_print_integer_matrix_width(cout, system,
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;
 	}
 	rk = F->Linear_algebra->Gauss_simple(system, d, d + 1, base_cols, verbose_level - 4);
 	if (rk != d) {
-		cout << "rk != d, fatal" << endl;
+		cout << "projective_space::reverse_engineer_semilinear_map "
+				"rk != d, fatal" << endl;
 		exit(1);
 	}
 	if (f_vv) {
-		cout << "after Gauss_simple:" << endl;
+		cout << "projective_space::reverse_engineer_semilinear_map "
+				"after Gauss_simple:" << endl;
 		Int_vec_print_integer_matrix_width(cout, system,
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;

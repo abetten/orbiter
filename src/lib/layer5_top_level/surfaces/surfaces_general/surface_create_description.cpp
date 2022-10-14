@@ -21,8 +21,18 @@ namespace cubic_surfaces_in_general {
 
 surface_create_description::surface_create_description()
 {
+
+#if 0
 	f_q = FALSE;
 	q = 0;
+#endif
+
+	f_space = FALSE;
+	//std::string space_label;
+
+	f_space_pointer = FALSE;
+	space_pointer = NULL;
+
 
 	f_label_txt = FALSE;
 	//label_txt
@@ -109,21 +119,10 @@ surface_create_description::surface_create_description()
 	//std::vector<std::string> transform_coeffs;
 	//std::vector<int> f_inverse_transform;
 
-	//null();
 }
 
 surface_create_description::~surface_create_description()
 {
-	freeself();
-}
-
-void surface_create_description::null()
-{
-}
-
-void surface_create_description::freeself()
-{
-	null();
 }
 
 int surface_create_description::read_arguments(int argc, std::string *argv,
@@ -135,10 +134,18 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 	cout << "surface_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (ST.stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = ST.strtoi(argv[++i]);
 			cout << "-q " << q << endl;
+		}
+#endif
+
+		if (ST.stringcmp(argv[i], "-space") == 0) {
+			f_space = TRUE;
+			space_label.assign(argv[++i]);
+			cout << "-space " << space_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-label_txt") == 0) {
 			f_label_txt = TRUE;
@@ -323,8 +330,13 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 
 void surface_create_description::print()
 {
+#if 0
 	if (f_q) {
 		cout << "-q " << q << endl;
+	}
+#endif
+	if (f_space) {
+		cout << "-space " << space_label << endl;
 	}
 	if (f_label_txt) {
 		cout << "-label_txt " << label_txt << endl;
@@ -424,16 +436,6 @@ void surface_create_description::print()
 }
 
 
-
-int surface_create_description::get_q()
-{
-	if (!f_q) {
-		cout << "surface_create_description::get_q "
-				"q has not been set yet" << endl;
-		exit(1);
-	}
-	return q;
-}
 
 }}}}
 

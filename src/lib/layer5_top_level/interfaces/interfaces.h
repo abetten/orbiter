@@ -943,6 +943,9 @@ public:
 	int f_spread;
 	spreads::spread_create_description *Spread_create_description;
 
+	int f_cubic_surface;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr;
+
 	int f_quartic_curve;
 	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr;
 
@@ -1034,6 +1037,7 @@ public:
 	void definition_of_graph(int verbose_level);
 	void definition_of_code(int verbose_level);
 	void definition_of_spread(int verbose_level);
+	void definition_of_cubic_surface(int verbose_level);
 	void definition_of_quartic_curve(int verbose_level);
 	void definition_of_translation_plane(int verbose_level);
 	void definition_of_spread_table(int verbose_level);

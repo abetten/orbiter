@@ -126,6 +126,8 @@ public:
 
 	int f_semilinear;
 
+	projective_geometry::projective_space_with_action *PA;
+
 	algebraic_geometry::surface_domain *Surf;
 
 	surface_with_action *Surf_A;
@@ -142,13 +144,14 @@ public:
 
 	surface_create();
 	~surface_create();
-	void null();
-	void freeself();
+	void create_cubic_surface(
+			surface_create_description *Descr,
+			int verbose_level);
 	int init_with_data(surface_create_description *Descr,
 		surface_with_action *Surf_A,
 		int verbose_level);
 	int init(surface_create_description *Descr,
-		surface_with_action *Surf_A,
+		//surface_with_action *Surf_A,
 		int verbose_level);
 	int create_surface_from_description(int verbose_level);
 	void override_group(std::string &group_order_text,
@@ -223,8 +226,17 @@ class surface_create_description {
 
 public:
 
+#if 0
 	int f_q;
 	int q;
+#endif
+
+	int f_space;
+	std::string space_label;
+
+	int f_space_pointer;
+	projective_geometry::projective_space_with_action *space_pointer;
+
 
 	int f_label_txt;
 	std::string label_txt;
@@ -308,12 +320,10 @@ public:
 
 	surface_create_description();
 	~surface_create_description();
-	void null();
-	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	int get_q();
+	//int get_q();
 };
 
 
@@ -660,8 +670,6 @@ public:
 
 	surface_with_action();
 	~surface_with_action();
-	void null();
-	void freeself();
 	void init(algebraic_geometry::surface_domain *Surf,
 			projective_geometry::projective_space_with_action *PA,
 			int f_recoordinatize,
@@ -692,6 +700,7 @@ public:
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);
+#if 0
 	void create_surface(
 			surface_create_description *Surface_Descr,
 			surface_create *&SC,
@@ -701,6 +710,7 @@ public:
 			int f_has_control_six_arcs,
 			poset_classification::poset_classification_control *Control_six_arcs,
 			int verbose_level);
+#endif
 	void test_group(
 			surface_create *SC,
 			int verbose_level);

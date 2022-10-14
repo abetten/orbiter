@@ -183,6 +183,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 #endif
 
+#if 0
 	else if (Descr->f_define_surface) {
 
 		cout << "f_define_surface label = " << Descr->define_surface_label << endl;
@@ -214,6 +215,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		//FREE_OBJECT(SC);
 		//FREE_OBJECT(Surf_A);
 	}
+#endif
 
 	else if (Descr->f_table_of_quartic_curves) {
 
