@@ -104,9 +104,9 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	nb_pts = Qco->nb_pts;
 
 
-	bitangents = NEW_lint(nb_bitangents);
-	Lint_vec_copy(Qco->bitangents, bitangents, nb_bitangents);
 	nb_bitangents = Qco->nb_bitangents;
+	bitangents = NEW_lint(Qco->nb_bitangents);
+	Lint_vec_copy(Qco->bitangents, bitangents, Qco->nb_bitangents);
 
 
 	canonical_form_substructure::canonical_equation = NEW_int(Canonical_form_classifier->Poly_ring->get_nb_monomials());

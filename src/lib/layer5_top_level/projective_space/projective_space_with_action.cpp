@@ -29,6 +29,7 @@ projective_space_with_action::projective_space_with_action()
 	f_init_incidence_structure = FALSE;
 	P = NULL;
 	PA2 = NULL;
+	Surf_A = NULL;
 	Dom = NULL;
 	QCDA = NULL;
 	A = NULL;
@@ -51,6 +52,9 @@ projective_space_with_action::~projective_space_with_action()
 	}
 	if (PA2) {
 		FREE_OBJECT(PA2);
+	}
+	if (Surf_A) {
+		FREE_OBJECT(Surf_A);
 	}
 	if (Dom) {
 		FREE_OBJECT(Dom);
@@ -149,6 +153,33 @@ void projective_space_with_action::init(
 		if (f_v) {
 			cout << "projective_space_with_action::init after PA2->init" << endl;
 		}
+	}
+	if (n == 3) {
+		if (f_v) {
+			cout << "projective_space_with_action::init n == 3, so we initialize a Surf_A object" << endl;
+		}
+		if (f_v) {
+			cout << "projective_space_with_action::init before Surf->init" << endl;
+		}
+
+		algebraic_geometry::surface_domain *Surf;
+
+		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+		Surf->init(F, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "projective_space_with_action::init after Surf->init" << endl;
+		}
+
+		Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
+
+		if (f_v) {
+			cout << "projective_space_with_action::init before Surf_A->init" << endl;
+		}
+		Surf_A->init(Surf, this, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "projective_space_with_action::init after Surf_A->init" << endl;
+		}
+
 	}
 
 

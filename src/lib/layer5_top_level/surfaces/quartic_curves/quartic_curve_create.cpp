@@ -21,29 +21,32 @@ namespace quartic_curves {
 
 quartic_curve_create::quartic_curve_create()
 {
+	Descr = NULL;
+
+	//std::string prefix;
+	//std::string label_txt;
+	//std::string label_tex;
+
 	f_ownership = FALSE;
+
+	q = 0;
 	F = NULL;
+
+	f_semilinear = FALSE;
+
 	PA = NULL;
 	QCDA = NULL;
 	QO = NULL;
 	QOA = NULL;
+
 	f_has_group = FALSE;
 	Sg = NULL;
 	f_has_nice_gens = FALSE;
 	nice_gens = NULL;
-	null();
 }
+
 
 quartic_curve_create::~quartic_curve_create()
-{
-	freeself();
-}
-
-void quartic_curve_create::null()
-{
-}
-
-void quartic_curve_create::freeself()
 {
 	if (f_ownership) {
 		if (F) {
@@ -59,7 +62,6 @@ void quartic_curve_create::freeself()
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
 	}
-	null();
 }
 
 

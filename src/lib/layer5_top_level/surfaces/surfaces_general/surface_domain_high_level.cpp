@@ -971,8 +971,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		surface_create_description *Descr;
 
 		Descr = NEW_OBJECT(surface_create_description);
-		Descr->f_q = TRUE;
-		Descr->q = F->q;
+		//Descr->f_q = TRUE;
+		//Descr->q = F->q;
 		Descr->f_by_coefficients = TRUE;
 		sprintf(str, "%d,0", coeff20[0]);
 		Descr->coefficients_text.assign(str);
@@ -990,7 +990,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 			cout << "surface_domain_high_level::do_cubic_surface_properties "
 					"before SC->init" << endl;
 		}
-		SC->init(Descr, Surf_A, 0 /*verbose_level*/);
+		SC->init(Descr, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surface_domain_high_level::do_cubic_surface_properties "
 					"after SC->init" << endl;

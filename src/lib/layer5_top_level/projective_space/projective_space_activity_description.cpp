@@ -57,10 +57,11 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string decomposition_by_subgroup_label;
 	decomposition_by_subgroup_Descr = NULL;
 
-
+#if 0
 	f_define_surface = FALSE;
 	//std::string define_surface_label
 	Surface_Descr = NULL;
+#endif
 
 	f_table_of_quartic_curves = FALSE;
 
@@ -364,6 +365,7 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-define_surface") == 0) {
 			f_define_surface = TRUE;
 			if (f_v) {
@@ -384,6 +386,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-define_surface " << define_surface_label << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-table_of_quartic_curves") == 0) {
 			f_table_of_quartic_curves = TRUE;
@@ -1056,11 +1059,13 @@ void projective_space_activity_description::print()
 		decomposition_by_subgroup_Descr->print();
 	}
 
-
+#if 0
 	if (f_define_surface) {
 		cout << "-define_surface " << define_surface_label << endl;
 		Surface_Descr->print();
 	}
+#endif
+
 	if (f_table_of_quartic_curves) {
 		cout << "-table_of_quartic_curves " << endl;
 	}

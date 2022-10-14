@@ -74,6 +74,9 @@ symbol_definition::symbol_definition()
 	f_spread = FALSE;
 	Spread_create_description = NULL;
 
+	f_cubic_surface = FALSE;
+	Surface_Descr = NULL;
+
 	f_quartic_curve = FALSE;
 	Quartic_curve_descr = NULL;
 
@@ -485,6 +488,32 @@ void symbol_definition::read_definition(
 			Spread_create_description->print();
 		}
 	}
+
+	else if (ST.stringcmp(argv[i], "-cubic_surface") == 0) {
+
+		f_cubic_surface = TRUE;
+		Surface_Descr = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
+		if (f_v) {
+			cout << "reading -cubic_surface" << endl;
+		}
+
+		i += Surface_Descr->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-cubic_surface" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-cubic_surface " << endl;
+			Surface_Descr->print();
+		}
+	}
+
 	else if (ST.stringcmp(argv[i], "-quartic_curve") == 0) {
 
 		f_quartic_curve = TRUE;
@@ -1028,6 +1057,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_spread" << endl;
 		}
 	}
+	else if (f_cubic_surface) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_cubic_surface" << endl;
+		}
+		definition_of_cubic_surface(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_cubic_surface" << endl;
+		}
+	}
 	else if (f_quartic_curve) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_quartic_curve" << endl;
@@ -1250,6 +1288,10 @@ void symbol_definition::print()
 	if (f_spread) {
 		cout << "-spread ";
 		Spread_create_description->print();
+	}
+	if (f_cubic_surface) {
+		cout << "-cubic_surface " << endl;
+		Surface_Descr->print();
 	}
 	if (f_quartic_curve) {
 		cout << "-quartic_curve " << endl;
@@ -2054,6 +2096,49 @@ void symbol_definition::definition_of_spread(int verbose_level)
 		cout << "symbol_definition::definition_of_spread done" << endl;
 	}
 }
+
+
+void symbol_definition::definition_of_cubic_surface(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_cubic_surface" << endl;
+	}
+
+
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC;
+
+	SC = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create);
+
+	SC->create_cubic_surface(
+			Surface_Descr,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_cubic_surface we created a cubic surface called " << SC->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_cubic_surface(define_label, SC, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_cubic_surface before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_cubic_surface done" << endl;
+	}
+}
+
 
 
 void symbol_definition::definition_of_quartic_curve(int verbose_level)

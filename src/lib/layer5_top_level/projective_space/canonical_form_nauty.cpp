@@ -148,6 +148,9 @@ void canonical_form_nauty::quartic_curve(
 
 	}
 
+
+	canonical_labeling_len = NO->N;
+
 	FREE_OBJECT(NO);
 
 	SG_pt_stab->group_order(pt_stab_order);

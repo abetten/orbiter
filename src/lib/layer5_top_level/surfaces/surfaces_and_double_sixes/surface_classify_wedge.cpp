@@ -2817,7 +2817,7 @@ void surface_classify_wedge::test_isomorphism(
 	if (f_v) {
 		cout << "before SC1->init" << endl;
 	}
-	SC1->init(Descr1, Surf_A, verbose_level);
+	SC1->init(Descr1, verbose_level);
 	if (f_v) {
 		cout << "after SC1->init" << endl;
 	}
@@ -2825,7 +2825,7 @@ void surface_classify_wedge::test_isomorphism(
 	if (f_v) {
 		cout << "before SC2->init" << endl;
 	}
-	SC2->init(Descr2, Surf_A, verbose_level);
+	SC2->init(Descr2, verbose_level);
 	if (f_v) {
 		cout << "after SC2->init" << endl;
 	}
@@ -2884,7 +2884,7 @@ void surface_classify_wedge::recognition(
 	if (f_v) {
 		cout << "before SC->init" << endl;
 	}
-	SC->init(Descr, Surf_A, verbose_level);
+	SC->init(Descr, verbose_level);
 	if (f_v) {
 		cout << "after SC->init" << endl;
 	}
@@ -2984,13 +2984,13 @@ void surface_classify_wedge::sweep_Cayley(
 					Descr.Cayley_form_m = m;
 					Descr.Cayley_form_n = n;
 
-					Descr.f_q = TRUE;
-					Descr.q = q;
+					//Descr.f_q = TRUE;
+					//Descr.q = q;
 
 					if (f_v) {
 						cout << "k=" << k << " l=" << l << " m=" << m << " n=" << n << " before SC->init" << endl;
 					}
-					SC->init(&Descr, Surf_A, 0 /*verbose_level*/);
+					SC->init(&Descr, 0 /*verbose_level*/);
 					if (FALSE) {
 						cout << "after SC->init" << endl;
 					}

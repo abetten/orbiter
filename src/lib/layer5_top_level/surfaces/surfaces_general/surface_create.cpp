@@ -23,28 +23,35 @@ namespace cubic_surfaces_in_general {
 
 surface_create::surface_create()
 {
+	Descr = NULL;
+
+	//std::string prefix;
+	//std::string label_txt;
+	//std::string label_tex;
+
 	f_ownership = FALSE;
+
+	q = 0;
 	F = NULL;
+
+	f_semilinear = FALSE;
+
+	PA = NULL;
+
 	Surf = NULL;
 	Surf_A = NULL;
 	SO = NULL;
+
 	f_has_group = FALSE;
 	Sg = NULL;
 	f_has_nice_gens = FALSE;
 	nice_gens = NULL;
-	null();
 }
+
+
+
 
 surface_create::~surface_create()
-{
-	freeself();
-}
-
-void surface_create::null()
-{
-}
-
-void surface_create::freeself()
 {
 	if (f_ownership) {
 		if (F) {
@@ -66,8 +73,74 @@ void surface_create::freeself()
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
 	}
-	null();
 }
+
+
+void surface_create::create_cubic_surface(
+		surface_create_description *Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface" << endl;
+	}
+
+
+
+	if (Descr->f_space_pointer) {
+		PA = Descr->space_pointer;
+	}
+	else {
+		if (!Descr->f_space) {
+			cout << "surface_create::create_cubic_surface please use -space <space> to specify the projective space" << endl;
+			exit(1);
+		}
+		PA = Get_object_of_projective_space(Descr->space_label);
+	}
+
+
+	if (PA->n != 3) {
+		cout << "surface_create::create_cubic_surface we need a 3-dimensional projective space" << endl;
+		exit(1);
+	}
+
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface before init" << endl;
+	}
+	init(Descr, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface after init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface "
+				"before apply_transformations" << endl;
+	}
+	apply_transformations(Descr->transform_coeffs,
+			Descr->f_inverse_transform,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface "
+				"after apply_transformations" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface "
+				"before PG_element_normalize_from_front" << endl;
+	}
+	F->PG_element_normalize_from_front(SO->eqn, 1, 20);
+
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface done" << endl;
+	}
+}
+
 
 int surface_create::init_with_data(
 	surface_create_description *Descr,
@@ -98,11 +171,13 @@ int surface_create::init_with_data(
 	surface_create::F = Surf_A->PA->F;
 	q = F->q;
 	surface_create::Surf = Surf_A->Surf;
+#if 0
 	if (Descr->q != F->q) {
 		cout << "surface_create::init_with_data "
 				"Descr->q != F->q" << endl;
 		exit(1);
 	}
+#endif
 
 	if (f_v) {
 		cout << "surface_create::init_with_data "
@@ -129,7 +204,7 @@ int surface_create::init_with_data(
 
 
 int surface_create::init(surface_create_description *Descr,
-	surface_with_action *Surf_A,
+	//surface_with_action *Surf_A,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -141,21 +216,21 @@ int surface_create::init(surface_create_description *Descr,
 	}
 	surface_create::Descr = Descr;
 
+#if 0
 	if (!Descr->f_q) {
 		cout << "surface_create::init !Descr->f_q" << endl;
 		exit(1);
 	}
 	q = Descr->q;
-	if (f_v) {
-		cout << "surface_create::init q = " << q << endl;
-	}
+#endif
 
-	surface_create::Surf_A = Surf_A;
+
+	surface_create::Surf_A = PA->Surf_A;
 	surface_create::Surf = Surf_A->Surf;
 	surface_create::F = Surf->F;
-	if (F->q != q) {
+	q = F->q;
+	if (f_v) {
 		cout << "surface_create::init q = " << q << endl;
-		exit(1);
 	}
 
 

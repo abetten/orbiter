@@ -322,8 +322,6 @@ public:
 
 	object_in_projective_space_with_action();
 	~object_in_projective_space_with_action();
-	void null();
-	void freeself();
 	void init(
 			geometry::object_with_canonical_form *OwCF,
 			long int ago,
@@ -383,9 +381,11 @@ public:
 	std::string decomposition_by_subgroup_label;
 	groups::linear_group_description * decomposition_by_subgroup_Descr;
 
+#if 0
 	int f_define_surface;
 	std::string define_surface_label;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr;
+#endif
 
 	int f_table_of_quartic_curves;
 		// based on knowledge_base
@@ -605,12 +605,14 @@ public:
 			expression_parser::formula *F,
 			std::string &evaluate_text,
 			int verbose_level);
+#if 0
 	void do_create_surface(
 			projective_space_with_action *PA,
 			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr,
 			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
 			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *&SC,
 			int verbose_level);
+#endif
 	void conic_type(
 			projective_space_with_action *PA,
 			int threshold,
@@ -727,6 +729,9 @@ public:
 
 	// if n >= 3:
 	projective_space_with_action *PA2;
+
+	// if n == 3
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 
 	// if n == 2:

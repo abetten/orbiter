@@ -41,21 +41,10 @@ surface_with_action::surface_with_action()
 	Recoordinatize = NULL;
 	regulus = NULL;
 	regulus_size = 0;
-	//null();
 }
 
 surface_with_action::~surface_with_action()
 {
-	freeself();
-}
-
-void surface_with_action::null()
-{
-}
-
-void surface_with_action::freeself()
-{
-
 	if (A_on_planes) {
 		FREE_OBJECT(A_on_planes);
 	}
@@ -77,7 +66,6 @@ void surface_with_action::freeself()
 	if (regulus) {
 		FREE_lint(regulus);
 	}
-	null();
 }
 
 void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
@@ -1458,6 +1446,7 @@ void surface_with_action::report_double_triplets_detailed(ostream &ost)
 
 }
 
+#if 0
 void surface_with_action::create_surface(
 		surface_create_description *Surface_Descr,
 		surface_create *&SC,
@@ -1498,7 +1487,9 @@ void surface_with_action::create_surface(
 		cout << "surface_with_action::create_surface done" << endl;
 	}
 }
+#endif
 
+#if 0
 void surface_with_action::create_surface_and_do_report(
 		surface_create_description *Surface_Descr,
 		int f_has_control_six_arcs,
@@ -1625,6 +1616,7 @@ void surface_with_action::create_surface_and_do_report(
 	}
 
 }
+#endif
 
 
 void surface_with_action::test_group(
@@ -2145,7 +2137,7 @@ void surface_with_action::sweep_4_15_lines(
 						if (f_v) {
 							cout << "surface_with_action::sweep_4_15_lines before SC->init" << endl;
 						}
-						SC->init(Surface_Descr, this /*Surf_A*/, verbose_level);
+						SC->init(Surface_Descr, verbose_level);
 						if (f_v) {
 							cout << "surface_with_action::sweep_4_15_lines after SC->init" << endl;
 						}
@@ -2402,7 +2394,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 			if (f_v) {
 				cout << "surface_with_action::sweep_F_beta_9_lines before SC->init" << endl;
 			}
-			SC->init(Surface_Descr, this /*Surf_A*/, 0 /*verbose_level*/);
+			SC->init(Surface_Descr, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "surface_with_action::sweep_F_beta_9_lines after SC->init" << endl;
 			}
@@ -2727,7 +2719,7 @@ void surface_with_action::sweep_6_9_lines(
 								if (f_v) {
 									cout << "surface_with_action::sweep_6_9_lines before SC->init" << endl;
 								}
-								SC->init(Surface_Descr, this /*Surf_A*/, verbose_level);
+								SC->init(Surface_Descr, verbose_level);
 								if (f_v) {
 									cout << "surface_with_action::sweep_6_9_lines after SC->init" << endl;
 								}
@@ -3031,7 +3023,7 @@ void surface_with_action::sweep_4_27(
 					if (f_v) {
 						cout << "surface_with_action::sweep_4_27 before SC->init" << endl;
 					}
-					SC->init(Surface_Descr, this /*Surf_A*/, verbose_level);
+					SC->init(Surface_Descr, verbose_level);
 					if (f_v) {
 						cout << "surface_with_action::sweep_4_27 after SC->init" << endl;
 					}
@@ -3217,7 +3209,7 @@ void surface_with_action::sweep_4_L9_E4(
 						if (f_v) {
 							cout << "surface_with_action::sweep_4_L9_E4 before SC->init" << endl;
 						}
-						if (!SC->init(Surface_Descr, this /*Surf_A*/, verbose_level - 4)) {
+						if (!SC->init(Surface_Descr, verbose_level - 4)) {
 							FREE_OBJECT(SC);
 							continue;
 						}
@@ -3432,12 +3424,12 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 		}
 		surface_create_description Surface_create_description;
 
-		Surface_create_description.f_q = TRUE;
-		Surface_create_description.q = q;
+		//Surface_create_description.f_q = TRUE;
+		//Surface_create_description.q = q;
 		Surface_create_description.f_catalogue = TRUE;
 		Surface_create_description.iso = h;
 
-
+#if 0
 		if (f_v) {
 			cout << "surface_with_action::table_of_cubic_surfaces before create_surface" << endl;
 		}
@@ -3448,6 +3440,22 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 		if (f_v) {
 			cout << "surface_with_action::table_of_cubic_surfaces after create_surface" << endl;
 		}
+#endif
+
+
+		//surface_create *SC;
+		//SC = NEW_OBJECT(surface_create);
+
+		SC[h] = NEW_OBJECT(surface_create);
+
+		if (f_v) {
+			cout << "surface_with_action::sweep_4_27 before SC->init" << endl;
+		}
+		SC[h]->init(&Surface_create_description, verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::sweep_4_27 after SC->init" << endl;
+		}
+
 
 
 

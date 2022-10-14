@@ -257,7 +257,7 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 
 
 
-
+#if 0
 void projective_space_global::do_create_surface(
 		projective_space_with_action *PA,
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr,
@@ -330,7 +330,7 @@ void projective_space_global::do_create_surface(
 		cout << "projective_space_global::do_create_surface done" << endl;
 	}
 }
-
+#endif
 
 
 
