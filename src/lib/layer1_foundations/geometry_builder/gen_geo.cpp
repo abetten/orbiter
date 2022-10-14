@@ -201,11 +201,25 @@ void gen_geo::main2(int verbose_level)
 	iso_type *it;
 
 	it = inc->iso_type_at_line[V - 1];
-	{
+
+	if (GB->Descr->f_output_to_inc_file) {
 		string fname;
+
 		fname.assign(inc_file_name);
 		fname.append(".inc");
 		it->write_inc_file(fname, verbose_level);
+
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (GB->Descr->f_output_to_sage_file) {
+		string fname;
+
+		fname.assign(inc_file_name);
+		fname.append(".sage");
+		it->write_sage_file(fname, verbose_level);
 
 		orbiter_kernel_system::file_io Fio;
 
@@ -216,8 +230,9 @@ void gen_geo::main2(int verbose_level)
 
 	if (it->Canonical_forms->B.size()) {
 
-		{
+		if (GB->Descr->f_output_to_blocks_latex_file) {
 			string fname;
+
 			fname.assign(inc_file_name);
 			fname.append(".blocks_long");
 			it->write_blocks_file_long(fname, verbose_level);
@@ -234,14 +249,17 @@ void gen_geo::main2(int verbose_level)
 
 		if (inc->is_block_tactical(V, OiP->set)) {
 
-			string fname;
-			fname.assign(inc_file_name);
-			fname.append(".blocks");
-			it->write_blocks_file(fname, verbose_level);
+			if (GB->Descr->f_output_to_blocks_file) {
+				string fname;
 
-			orbiter_kernel_system::file_io Fio;
+				fname.assign(inc_file_name);
+				fname.append(".blocks");
+				it->write_blocks_file(fname, verbose_level);
 
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				orbiter_kernel_system::file_io Fio;
+
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
 		}
 	}
 

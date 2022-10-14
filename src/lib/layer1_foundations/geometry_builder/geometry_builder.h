@@ -367,6 +367,11 @@ public:
 	int f_fname_GEO;
 	std::string fname_GEO;
 
+	int f_output_to_inc_file;
+	int f_output_to_sage_file;
+	int f_output_to_blocks_file;
+	int f_output_to_blocks_latex_file;
+
 	geometry_builder_description();
 	~geometry_builder_description();
 	int read_arguments(
@@ -578,6 +583,7 @@ public:
 	void set_split(int row, int remainder, int modulo);
 	void print_geo(std::ostream &ost, int v, int *theGEO);
 	void print_inc(std::ostream &ost, int v, long int *theInc);
+	void print_sage(std::ostream &ost, int v, long int *theInc);
 	void print_blocks(std::ostream &ost, int v, long int *theInc);
 	void compute_blocks(long int *&Blocks, int *&K, int v, long int *theInc);
 	void compute_blocks_ranked(long int *&Blocks, int v, long int *theInc);
@@ -646,6 +652,7 @@ public:
 	void set_split(int remainder, int modulo);
 	void print_geos(int verbose_level);
 	void write_inc_file(std::string &fname, int verbose_level);
+	void write_sage_file(std::string &fname, int verbose_level);
 	void write_blocks_file(std::string &fname, int verbose_level);
 	void write_blocks_file_long(std::string &fname, int verbose_level);
 	void print_GEO(int *pc, int v, incidence *inc);

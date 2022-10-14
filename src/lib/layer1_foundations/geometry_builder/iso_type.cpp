@@ -361,6 +361,68 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 	}
 }
 
+void iso_type::write_sage_file(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "iso_type::write_sage_file" << endl;
+	}
+	{
+		ofstream ost(fname);
+		int h;
+		long int nb_geo;
+
+		nb_geo = Canonical_forms->B.size();
+
+		ost << "# Orbiter output file " << endl;
+		ost << "# Geometries with " << v << " points and " << gg->inc->Encoding->b << " blocks and " << sum_R << " flags" << endl;
+		ost << "# Number of geometries = " << Canonical_forms->B.size() << endl;
+		ost << "# Distribution of automorphism group orders: ";
+		data_structures::tally T;
+		long int *Ago;
+
+		Ago = NEW_lint(nb_geo);
+		for (h = 0; h < nb_geo; h++) {
+			Ago[h] = Canonical_forms->Ago[h];
+		}
+
+		T.init_lint(Ago, nb_geo, FALSE, 0);
+		T.print_file(ost, TRUE /* f_backwards*/);
+		ost << endl;
+
+
+		ost << "Geo := [";
+		for (h = 0; h < nb_geo; h++) {
+
+			//inc->print_geo(ost, v, theGEO1[h]);
+
+			geometry::object_with_canonical_form *OwCF;
+
+			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
+			gg->inc->print_sage(ost, v, OwCF->set);
+			if (h < nb_geo - 1) {
+				ost << ", " << endl;
+			}
+			//ost << endl;
+		}
+		ost << "];" << endl;
+		//ost << -1 << " " << Canonical_forms->B.size() << endl;
+
+		ost << "Ago := [";
+		for (h = 0; h < nb_geo; h++) {
+			ost << Ago[h];
+			if (h < nb_geo - 1) {
+				ost << ", ";
+			}
+		}
+		ost << "];" << endl;
+	}
+	if (f_v) {
+		cout << "iso_type::write_sage_file done" << endl;
+	}
+}
+
 void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

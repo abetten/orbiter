@@ -345,6 +345,36 @@ void incidence::print_inc(std::ostream &ost, int v, long int *theInc)
 
 }
 
+void incidence::print_sage(std::ostream &ost, int v, long int *theInc)
+{
+	long int *Blocks;
+	long int a;
+	int i, j, b;
+	int *K;
+
+	compute_blocks(Blocks, K, v, theInc);
+
+	b = Encoding->b;
+
+	ost << "[";
+	for (j = 0; j < b; j++) {
+		ost << "[";
+		for (i = 0; i < K[j]; i++) {
+			a = Blocks[j * v + i];
+			ost << a;
+			if (i < K[j] - 1) {
+				ost << ",";
+			}
+		}
+		ost << "]";
+		if (j < b - 1) {
+			ost << ",";
+		}
+	}
+	ost << "]";
+	FREE_lint(Blocks);
+}
+
 void incidence::print_blocks(std::ostream &ost, int v, long int *theInc)
 {
 	long int *Blocks;
