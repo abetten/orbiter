@@ -392,7 +392,7 @@ void iso_type::write_sage_file(std::string &fname, int verbose_level)
 		ost << endl;
 
 
-		ost << "Geo := [";
+		ost << "Geo = [";
 		for (h = 0; h < nb_geo; h++) {
 
 			//inc->print_geo(ost, v, theGEO1[h]);
@@ -406,17 +406,23 @@ void iso_type::write_sage_file(std::string &fname, int verbose_level)
 			}
 			//ost << endl;
 		}
-		ost << "];" << endl;
+		ost << "]" << endl;
 		//ost << -1 << " " << Canonical_forms->B.size() << endl;
 
-		ost << "Ago := [";
+		ost << endl;
+		ost << "# Automorphism group orders:" << endl;
+		ost << endl;
+		ost << "Ago = [";
 		for (h = 0; h < nb_geo; h++) {
 			ost << Ago[h];
 			if (h < nb_geo - 1) {
 				ost << ", ";
 			}
+			if ((h + 1) % 25 == 0) {
+				ost << endl;
+			}
 		}
-		ost << "];" << endl;
+		ost << "]" << endl;
 	}
 	if (f_v) {
 		cout << "iso_type::write_sage_file done" << endl;
