@@ -245,6 +245,7 @@ public:
 	void element_unrank(std::string &rank_string, int verbose_level);
 	void conjugacy_class_of(std::string &rank_string, int verbose_level);
 	void do_reverse_isomorphism_exterior_square(int verbose_level);
+
 	void orbits_on_set_system_from_file(std::string &fname_csv,
 			int number_of_columns, int first_column, int verbose_level);
 	void orbits_on_set_from_file(std::string &fname_csv, int verbose_level);
@@ -386,6 +387,8 @@ public:
 
 	int f_on_k_subsets;
 	int on_k_subsets_k;
+
+	int f_create_special_subgroup;
 
 	std::vector<std::string> from;
 
@@ -584,12 +587,6 @@ public:
 	int linear_codes_minimum_distance;
 	int linear_codes_target_size;
 
-#if 0
-	int f_exact_cover;
-	exact_cover_arguments *ECA;
-	int f_isomorph_arguments;
-	isomorph_arguments *IA;
-#endif
 
 
 
@@ -631,8 +628,6 @@ public:
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
-	void null();
-	void freeself();
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
@@ -711,6 +706,9 @@ public:
 			group_modification_description *description,
 			int verbose_level);
 	void create_action_on_k_subsets(
+			group_modification_description *description,
+			int verbose_level);
+	void create_special_subgroup(
 			group_modification_description *description,
 			int verbose_level);
 
@@ -955,8 +953,6 @@ public:
 
 	young();
 	~young();
-	void null();
-	void freeself();
 	void init(int n, int verbose_level);
 	void create_module(int *h_alpha, 
 		int *&Base, int *&base_cols, int &rk, 

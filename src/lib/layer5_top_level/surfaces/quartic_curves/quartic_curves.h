@@ -38,6 +38,14 @@ public:
 	int f_extract_orbit_on_bitangents_by_length;
 	int extract_orbit_on_bitangents_by_length_length;
 
+	int f_extract_specific_orbit_on_bitangents_by_length;
+	int extract_specific_orbit_on_bitangents_by_length_length;
+	int extract_specific_orbit_on_bitangents_by_length_index;
+
+	int f_extract_specific_orbit_on_kovalevski_points_by_length;
+	int extract_specific_orbit_on_kovalevski_points_by_length_length;
+	int extract_specific_orbit_on_kovalevski_points_by_length_index;
+
 
 	quartic_curve_activity_description();
 	~quartic_curve_activity_description();
@@ -137,8 +145,6 @@ public:
 
 	quartic_curve_create_description();
 	~quartic_curve_create_description();
-	void null();
-	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();

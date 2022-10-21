@@ -46,7 +46,7 @@ public:
 
 	int f_create_source_code;
 
-	int f_sweep;
+	int f_sweep_Cayley;
 
 
 	classification_of_cubic_surfaces_with_double_sixes_activity_description();
@@ -94,7 +94,7 @@ public:
 			cubic_surfaces_in_general::surface_create_description *surface_descr,
 			int verbose_level);
 	void do_write_source_code(int verbose_level);
-	void do_sweep(
+	void do_sweep_Cayley(
 			int verbose_level);
 
 
@@ -115,8 +115,6 @@ public:
 	int q;
 	field_theory::finite_field *F;
 	actions::action *A;
-
-	//linear_group *LG;
 
 	cubic_surfaces_in_general::surface_with_action *Surf_A;
 	algebraic_geometry::surface_domain *Surf;
@@ -214,8 +212,6 @@ public:
 
 	classify_double_sixes();
 	~classify_double_sixes();
-	void null();
-	void freeself();
 	void init(cubic_surfaces_in_general::surface_with_action *Surf_A,
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
@@ -288,8 +284,6 @@ public:
 
 	surface_classify_wedge();
 	~surface_classify_wedge();
-	void null();
-	void freeself();
 	void init(
 			cubic_surfaces_in_general::surface_with_action *Surf_A,
 		poset_classification::poset_classification_control *Control,

@@ -20,19 +20,10 @@ namespace cubic_surfaces_and_arcs {
 
 arc_partition::arc_partition()
 {
-	null();
-}
-
-arc_partition::~arc_partition()
-{
-	freeself();
-}
-
-void arc_partition::null()
-{
 	OP = NULL;
 
 	A = NULL;
+	A_on_arc = NULL;
 
 	pair_orbit_idx = -1;
 	The_pair = NULL;
@@ -47,7 +38,8 @@ void arc_partition::null()
 	nb_orbits_on_partition = 0;
 }
 
-void arc_partition::freeself()
+
+arc_partition::~arc_partition()
 {
 	if (The_pair) {
 		FREE_OBJECT(The_pair);
@@ -61,7 +53,6 @@ void arc_partition::freeself()
 	if (Orbits_on_partition) {
 		FREE_OBJECT(Orbits_on_partition);
 	}
-	null();
 }
 
 void arc_partition::init(

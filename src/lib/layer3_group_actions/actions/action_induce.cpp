@@ -1174,9 +1174,16 @@ void action::induced_action_on_determinant(
 	
 	if (f_v) {
 		cout << "action::induced_action_on_determinant" << endl;
-		}
+	}
 	A = old_G->A;
 
+	ring_theory::longinteger_object go1;
+	ring_theory::longinteger_object go2;
+
+	old_G->group_order(go1);
+	if (f_v) {
+		cout << "action::induced_action_on_determinant old group order = " << go1 << endl;
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -1203,7 +1210,17 @@ void action::induced_action_on_determinant(
 		}
 	M = A->G.matrix_grp;
 	AD = NEW_OBJECT(induced_actions::action_on_determinant);
+
+	if (f_v) {
+		cout << "action::induced_action_on_determinant before AD->init" << endl;
+	}
+
 	AD->init(*A, M->f_projective, M->n, verbose_level);
+
+	if (f_v) {
+		cout << "action::induced_action_on_determinant after AD->init" << endl;
+	}
+
 	type_G = action_on_determinant_t;
 	G.AD = AD;
 	f_allocated = TRUE;
@@ -1226,12 +1243,23 @@ void action::induced_action_on_determinant(
 	
 	allocate_element_data();
 	
+	if (f_v) {
+		cout << "action::induced_action_on_determinant "
+				"before induced_action_override_sims" << endl;
+	}
 	induced_action_override_sims(*A, old_G, verbose_level - 2);
+	if (f_v) {
+		cout << "action::induced_action_on_determinant "
+				"after induced_action_override_sims" << endl;
+	}
 	if (f_v) {
 		cout << "action::induced_action_on_determinant "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+		group_order(go2);
+		cout << "action::induced_action_on_determinant old group order = " << go1 << endl;
+		cout << "action::induced_action_on_determinant new group order = " << go1 << endl;
+	}
 }
 
 void action::induced_action_on_sign(
@@ -2868,7 +2896,7 @@ void action::induce(action *old_action, groups::sims *old_G,
 	G->build_up_group_random_process(K, old_G, go, 
 		FALSE /*f_override_chose_next_base_point*/,
 		NULL /*choose_next_base_point_method*/, 
-		verbose_level - 3);
+		verbose_level - 1);
 	if (f_v) {
 		cout << "action::induce "
 				"after G->build_up_group_random_process" << endl;

@@ -12,6 +12,22 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
+static void regular_ls_classify_print_set(std::ostream &ost, int len, long int *S, void *data);
+static void regular_ls_classify_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+#if 0
+static int regular_ls_classify_check_function_incremental_callback(int len, int *S,
+		void *data, int verbose_level);
+static void regular_ls_classify_lifting_prepare_function_new(
+	exact_cover *EC, int starter_case,
+	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+	solvers::diophant *&Dio, long int *&col_labels,
+	int &f_ruled_out,
+	int verbose_level);
+#endif
+
 regular_ls_classify::regular_ls_classify()
 {
 	Descr = NULL;
@@ -36,16 +52,6 @@ regular_ls_classify::regular_ls_classify()
 
 regular_ls_classify::~regular_ls_classify()
 {
-	freeself();
-}
-
-void regular_ls_classify::null()
-{
-}
-
-
-void regular_ls_classify::freeself()
-{
 	if (row_sum) {
 		FREE_int(row_sum);
 	}
@@ -64,7 +70,6 @@ void regular_ls_classify::freeself()
 	if (open_pair_idx) {
 		FREE_int(open_pair_idx);
 	}
-	null();
 }
 
 
@@ -361,7 +366,7 @@ void regular_ls_classify::print(ostream &ost, long int *S, int len)
 }
 
 void regular_ls_classify::lifting_prepare_function_new(
-	exact_cover *E, int starter_case,
+		solvers_package::exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
 	solvers::diophant *&Dio, long int *&col_labels,
@@ -524,7 +529,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 
 
 
-void regular_ls_classify_print_set(ostream &ost, int len, long int *S, void *data)
+static void regular_ls_classify_print_set(ostream &ost, int len, long int *S, void *data)
 {
 	regular_ls_classify *Gen = (regular_ls_classify *) data;
 	
@@ -532,7 +537,7 @@ void regular_ls_classify_print_set(ostream &ost, int len, long int *S, void *dat
 	Gen->print(ost, S, len);
 }
 
-void regular_ls_classify_early_test_function(long int *S, int len,
+static void regular_ls_classify_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -554,7 +559,8 @@ void regular_ls_classify_early_test_function(long int *S, int len,
 	}
 }
 
-void regular_ls_classify_lifting_prepare_function_new(
+#if 0
+static void regular_ls_classify_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
@@ -586,6 +592,7 @@ void regular_ls_classify_lifting_prepare_function_new(
 				"done" << endl;
 	}
 }
+#endif
 
 }}}
 

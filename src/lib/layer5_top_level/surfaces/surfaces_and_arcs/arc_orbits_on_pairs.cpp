@@ -38,19 +38,9 @@ arc_orbits_on_pairs::arc_orbits_on_pairs()
 
 	partition_orbit_first = NULL;
 	partition_orbit_len = NULL;
-	//null();
 }
 
 arc_orbits_on_pairs::~arc_orbits_on_pairs()
-{
-	freeself();
-}
-
-void arc_orbits_on_pairs::null()
-{
-}
-
-void arc_orbits_on_pairs::freeself()
 {
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -76,7 +66,6 @@ void arc_orbits_on_pairs::freeself()
 	if (partition_orbit_len) {
 		FREE_int(partition_orbit_len);
 	}
-	null();
 }
 
 void arc_orbits_on_pairs::init(

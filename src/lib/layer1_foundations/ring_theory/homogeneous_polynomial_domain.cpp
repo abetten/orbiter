@@ -57,15 +57,9 @@ homogeneous_polynomial_domain::homogeneous_polynomial_domain()
 	degree = 0;
 
 
-	//null();
 }
 
 homogeneous_polynomial_domain::~homogeneous_polynomial_domain()
-{
-	freeself();
-}
-
-void homogeneous_polynomial_domain::freeself()
 {
 	if (v) {
 		FREE_int(v);
@@ -106,11 +100,6 @@ void homogeneous_polynomial_domain::freeself()
 	if (type2) {
 		FREE_int(type2);
 	}
-	null();
-}
-
-void homogeneous_polynomial_domain::null()
-{
 }
 
 void homogeneous_polynomial_domain::init(polynomial_ring_description *Descr,
@@ -2656,7 +2645,7 @@ void homogeneous_polynomial_domain::create_projective_variety(
 	int *coeff;
 	int sz;
 
-	orbiter_kernel_system::Orbiter->get_vector_from_label(variety_coeffs, coeff, sz, verbose_level);
+	orbiter_kernel_system::Orbiter->get_int_vector_from_label(variety_coeffs, coeff, sz, verbose_level);
 
 	if (sz != get_nb_monomials()) {
 		cout << "homogeneous_polynomial_domain::create_projective_variety "

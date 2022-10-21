@@ -204,7 +204,6 @@ int surface_create::init_with_data(
 
 
 int surface_create::init(surface_create_description *Descr,
-	//surface_with_action *Surf_A,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2666,6 +2665,171 @@ void surface_create::compute_group(
 		cout << "surface_create::compute_group done" << endl;
 	}
 }
+
+
+void surface_create::export_something(std::string &what, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::export_something" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	string fname_base;
+
+	fname_base.assign("surface_");
+	fname_base.append(label_txt);
+
+	if (f_v) {
+		cout << "surface_create::export_something before SO->export_something" << endl;
+	}
+	SO->export_something(what, fname_base, verbose_level);
+	if (f_v) {
+		cout << "surface_create::export_something after SO->export_something" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::export_something done" << endl;
+	}
+
+}
+
+void surface_create::do_report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::do_report" << endl;
+	}
+
+	field_theory::finite_field *F;
+
+	F = PA->F;
+
+	{
+		string fname_report;
+
+		if (Descr->f_label_txt) {
+			fname_report.assign(label_txt);
+			fname_report.append(".tex");
+
+		}
+		else {
+			fname_report.assign("surface_");
+			fname_report.append(label_txt);
+			fname_report.append("_report.tex");
+		}
+
+		{
+			ofstream ost(fname_report);
+
+
+			char str[1000];
+			string title, author, extra_praeamble;
+
+			snprintf(str, 1000, "%s over GF(%d)", label_tex.c_str(), F->q);
+			title.assign(str);
+
+
+			orbiter_kernel_system::latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(ost,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
+				extra_praeamble /* extra_praeamble */);
+
+
+
+
+			//ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
+
+
+			if (SO->SOP == NULL) {
+				cout << "surface_create::do_report SO->SOP == NULL" << endl;
+				exit(1);
+			}
+
+
+			string summary_file_name;
+			string col_postfix;
+
+			if (Descr->f_label_txt) {
+				summary_file_name.assign(Descr->label_txt);
+			}
+			else {
+				summary_file_name.assign(label_txt);
+			}
+			summary_file_name.append("_summary.csv");
+
+
+			sprintf(str, "-Q%d", F->q);
+			col_postfix.assign(str);
+
+			if (f_v) {
+				cout << "surface_create::do_report "
+						"before SC->SO->SOP->create_summary_file" << endl;
+			}
+			if (Descr->f_label_for_summary) {
+				SO->SOP->create_summary_file(summary_file_name,
+						Descr->label_for_summary, col_postfix, verbose_level);
+			}
+			else {
+				SO->SOP->create_summary_file(summary_file_name,
+						label_txt, col_postfix, verbose_level);
+			}
+			if (f_v) {
+				cout << "surface_create::do_report "
+						"after SC->SO->SOP->create_summary_file" << endl;
+			}
+
+
+#if 0
+			if (f_v) {
+				cout << "surface_create::do_report "
+						"before SC->SO->SOP->print_everything" << endl;
+			}
+			SC->SO->SOP->print_everything(ost, verbose_level);
+			if (f_v) {
+				cout << "surface_create::do_report "
+						"after SC->SO->SOP->print_everything" << endl;
+			}
+#else
+			if (f_v) {
+				cout << "surface_create::do_report "
+						"before SC->SO->SOP->report_properties_simple" << endl;
+			}
+			SO->SOP->report_properties_simple(ost, verbose_level);
+			if (f_v) {
+				cout << "surface_create::do_report "
+						"after SC->SO->SOP->report_properties_simple" << endl;
+			}
+#endif
+
+
+			L.foot(ost);
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
+
+
+	}
+	if (f_v) {
+		cout << "surface_create::do_report done" << endl;
+	}
+
+}
+
 
 
 }}}}

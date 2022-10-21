@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace set_stabilizer {
 
 
 
@@ -1233,4 +1234,5 @@ void compute_stabilizer::print_canonical_sets()
 
 
 
-}}
+}}}
+

@@ -57,12 +57,6 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string decomposition_by_subgroup_label;
 	decomposition_by_subgroup_Descr = NULL;
 
-#if 0
-	f_define_surface = FALSE;
-	//std::string define_surface_label
-	Surface_Descr = NULL;
-#endif
-
 	f_table_of_quartic_curves = FALSE;
 
 	f_table_of_cubic_surfaces = FALSE;
@@ -113,18 +107,6 @@ projective_space_activity_description::projective_space_activity_description()
 	f_filter_by_nb_Eckardt_points = FALSE;
 	nb_Eckardt_points = 0;
 
-
-#if 0
-	f_surface_quartic = FALSE;
-	f_surface_clebsch = FALSE;
-	f_surface_codes = FALSE;
-#endif
-
-#if 0
-	f_spread_classify = FALSE;
-	spread_classify_k = 0;
-	spread_classify_Control = NULL;
-#endif
 
 	f_classify_semifields = FALSE;
 	Semifield_classify_description = NULL;
@@ -221,6 +203,16 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_planes_through_line = FALSE;
 	//std::string planes_through_line_rank;
+
+	f_restricted_incidence_matrix = FALSE;
+	restricted_incidence_matrix_type_row_objects = 0;
+	restricted_incidence_matrix_type_col_objects = 0;
+	std::string restricted_incidence_matrix_row_objects;
+	std::string restricted_incidence_matrix_col_objects;
+	//std::string restricted_incidence_matrix_file_name;
+
+	f_make_relation = FALSE;
+	make_relation_plane_rk = 0;
 
 }
 
@@ -364,29 +356,6 @@ int projective_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-define_surface") == 0) {
-			f_define_surface = TRUE;
-			if (f_v) {
-				cout << "-define_surface, reading extra arguments" << endl;
-			}
-
-			define_surface_label.assign(argv[++i]);
-			Surface_Descr = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
-
-			i += Surface_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			if (f_v) {
-				cout << "done reading -define_surface " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-define_surface " << define_surface_label << endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-table_of_quartic_curves") == 0) {
 			f_table_of_quartic_curves = TRUE;
@@ -579,29 +548,6 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-#if 0
-		else if (ST.stringcmp(argv[i], "-surface_quartic") == 0) {
-			f_surface_quartic = TRUE;
-			if (f_v) {
-				cout << "-surface_quartic" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-surface_clebsch") == 0) {
-			f_surface_clebsch = TRUE;
-			if (f_v) {
-				cout << "-surface_clebsch" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-surface_codes") == 0) {
-			f_surface_codes = TRUE;
-			if (f_v) {
-				cout << "-surface_codes" << endl;
-			}
-		}
-#endif
-
 		else if (ST.stringcmp(argv[i], "-trihedra1_control") == 0) {
 			f_trihedra1_control = TRUE;
 			Trihedra1_control = NEW_OBJECT(poset_classification::poset_classification_control);
@@ -649,30 +595,6 @@ int projective_space_activity_description::read_arguments(
 				}
 			}
 		}
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-spread_classify") == 0) {
-			f_spread_classify = TRUE;
-			spread_classify_k = ST.strtoi(argv[++i]);
-			spread_classify_Control = NEW_OBJECT(poset_classification::poset_classification_control);
-			if (f_v) {
-				cout << "-spread_classify " << endl;
-			}
-			i += spread_classify_Control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -spread_classify " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-spread_classify " << spread_classify_k << endl;
-				spread_classify_Control->print();
-			}
-		}
-#endif
 
 		// semifields
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
@@ -985,6 +907,33 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-restricted_incidence_matrix") == 0) {
+			f_restricted_incidence_matrix = TRUE;
+			restricted_incidence_matrix_type_row_objects = ST.strtoi(argv[++i]);
+			restricted_incidence_matrix_type_col_objects = ST.strtoi(argv[++i]);
+			restricted_incidence_matrix_row_objects.assign(argv[++i]);
+			restricted_incidence_matrix_col_objects.assign(argv[++i]);
+			restricted_incidence_matrix_file_name.assign(argv[++i]);
+			if (f_v) {
+				cout << "-restricted_incidence_matrix"
+						<< " " << restricted_incidence_matrix_type_row_objects
+						<< " " << restricted_incidence_matrix_type_col_objects
+						<< " " << restricted_incidence_matrix_row_objects
+						<< " " << restricted_incidence_matrix_col_objects
+						<< " " << restricted_incidence_matrix_file_name
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-make_relation") == 0) {
+			f_make_relation = TRUE;
+			make_relation_plane_rk = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-make_relation " << make_relation_plane_rk << endl;
+			}
+		}
+
+
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -1059,12 +1008,6 @@ void projective_space_activity_description::print()
 		decomposition_by_subgroup_Descr->print();
 	}
 
-#if 0
-	if (f_define_surface) {
-		cout << "-define_surface " << define_surface_label << endl;
-		Surface_Descr->print();
-	}
-#endif
 
 	if (f_table_of_quartic_curves) {
 		cout << "-table_of_quartic_curves " << endl;
@@ -1123,17 +1066,6 @@ void projective_space_activity_description::print()
 	if (f_filter_by_nb_Eckardt_points) {
 		cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
 	}
-#if 0
-	if (f_surface_quartic) {
-		cout << "-surface_quartic" << endl;
-	}
-	if (f_surface_quartic) {
-		cout << "-surface_clebsch" << endl;
-	}
-	if (f_surface_codes) {
-		cout << "-surface_codes" << endl;
-	}
-#endif
 	if (f_trihedra1_control) {
 		cout << "-trihedra1_control " << endl;
 		Trihedra1_control->print();
@@ -1147,13 +1079,6 @@ void projective_space_activity_description::print()
 		Control_six_arcs->print();
 	}
 
-#if 0
-	if (f_spread_classify) {
-		f_spread_classify = TRUE;
-		cout << "-spread_classify " << spread_classify_k << endl;
-		spread_classify_Control->print();
-	}
-#endif
 
 	// semifields
 	if (f_classify_semifields) {
@@ -1275,6 +1200,19 @@ void projective_space_activity_description::print()
 			<< " " << planes_through_line_rank
 			<< endl;
 	}
+	if (f_restricted_incidence_matrix) {
+		cout << "-restricted_incidence_matrix"
+				<< " " << restricted_incidence_matrix_type_row_objects
+				<< " " << restricted_incidence_matrix_type_col_objects
+				<< " " << restricted_incidence_matrix_row_objects
+				<< " " << restricted_incidence_matrix_col_objects
+				<< " " << restricted_incidence_matrix_file_name
+			<< endl;
+	}
+	if (f_make_relation) {
+		cout << "-make_relation " << make_relation_plane_rk << endl;
+	}
+
 
 }
 

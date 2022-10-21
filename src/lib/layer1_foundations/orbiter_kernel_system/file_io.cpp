@@ -1483,7 +1483,8 @@ void file_io::int_matrix_read_csv(std::string &fname,
 	int *&M, int &m, int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a;
+	int i, j;
+	long int a;
 
 	if (f_v) {
 		cout << "file_io::int_matrix_read_csv reading file " << fname << endl;
@@ -1514,7 +1515,7 @@ void file_io::int_matrix_read_csv(std::string &fname,
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
 
-				a = S.get_int(i + 1, j + 1);
+				a = S.get_lint(i + 1, j + 1);
 				M[i * n + j] = a;
 			}
 		}
@@ -1558,13 +1559,60 @@ void file_io::int_matrix_read_csv_no_border(std::string &fname,
 		M = NEW_int(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				a = S.get_int(i, j);
+				a = S.get_lint(i, j);
 				M[i * n + j] = a;
 			}
 		}
 	}
 	if (f_v) {
 		cout << "file_io::int_matrix_read_csv_no_border done" << endl;
+	}
+}
+
+void file_io::lint_matrix_read_csv_no_border(std::string &fname,
+	long int *&M, int &m, int &n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "file_io::lint_matrix_read_csv_no_border reading file " << fname << endl;
+	}
+	if (file_size(fname) <= 0) {
+		cout << "file_io::int_matrix_read_csv_no_border file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << file_size(fname) << endl;
+		exit(1);
+	}
+	{
+		data_structures::spreadsheet S;
+
+		if (f_v) {
+			cout << "file_io::lint_matrix_read_csv_no_border before S.read_spreadsheet" << endl;
+		}
+		S.read_spreadsheet(fname, verbose_level - 1);
+		if (f_v) {
+			cout << "file_io::lint_matrix_read_csv_no_border after S.read_spreadsheet" << endl;
+		}
+
+		m = S.nb_rows;
+		n = S.nb_cols;
+		if (f_v) {
+			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+		}
+		M = NEW_lint(m * n);
+
+		long int a;
+
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				a = S.get_lint(i, j);
+				M[i * n + j] = a;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "file_io::lint_matrix_read_csv_no_border done" << endl;
 	}
 }
 
@@ -1644,6 +1692,85 @@ void file_io::int_matrix_read_csv_data_column(std::string &fname,
 	}
 }
 
+
+void file_io::lint_matrix_read_csv_data_column(std::string &fname,
+	long int *&M, int &m, int &n, int col_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "file_io::lint_matrix_read_csv_data_column reading file " << fname << " column=" << col_idx << endl;
+	}
+	if (file_size(fname) <= 0) {
+		cout << "file_io::lint_matrix_read_csv_data_column file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << file_size(fname) << endl;
+		exit(1);
+	}
+	{
+		data_structures::spreadsheet S;
+
+		if (f_v) {
+			cout << "file_io::lint_matrix_read_csv_data_column before S.read_spreadsheet" << endl;
+		}
+		S.read_spreadsheet(fname, verbose_level - 1);
+		if (f_v) {
+			cout << "file_io::lint_matrix_read_csv_data_column after S.read_spreadsheet" << endl;
+		}
+		{
+			long int *v;
+			int sz;
+			string str, str2;
+			data_structures::string_tools ST;
+
+			S.get_string(str, 1, col_idx);
+
+			cout << "file_io::lint_matrix_read_csv_data_column read " << str << endl;
+
+			ST.drop_quotes(str, str2);
+			Lint_vec_scan(str2, v, sz);
+
+			FREE_lint(v);
+			n = sz;
+		}
+		m = S.nb_rows - 1;
+		if (f_v) {
+			cout << "The spreadsheet has " << m << " rows" << endl;
+			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+		}
+		M = NEW_lint(m * n);
+		for (i = 0; i < m; i++) {
+			string str, str2;
+			long int *v;
+			int sz;
+			data_structures::string_tools ST;
+
+			S.get_string(str, i + 1, col_idx);
+			cout << "file_io::lint_matrix_read_csv_data_column row " << i << " read " << str << endl;
+			ST.drop_quotes(str, str2);
+			Lint_vec_scan(str2, v, sz);
+
+			long int a;
+			if (sz != n) {
+				cout << "sz != n" << endl;
+				cout << "sz=" << sz << endl;
+				cout << "n=" << n << endl;
+				exit(1);
+			}
+			for (j = 0; j < sz; j++) {
+				a = v[j];
+				M[i * n + j] = a;
+			}
+			FREE_lint(v);
+		}
+	}
+	if (f_v) {
+		cout << "file_io::lint_matrix_read_csv_data_column done" << endl;
+	}
+}
+
+
 void file_io::lint_matrix_read_csv(std::string &fname,
 	long int *&M, int &m, int &n, int verbose_level)
 {
@@ -1670,7 +1797,7 @@ void file_io::lint_matrix_read_csv(std::string &fname,
 		M = NEW_lint(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				a = S.get_int(i + 1, j + 1);
+				a = S.get_lint(i + 1, j + 1);
 				M[i * n + j] = a;
 			}
 		}
@@ -5024,9 +5151,9 @@ void file_io::grade_statistic_from_csv(std::string &fname_csv,
 	O_grade = new string[S.nb_rows];
 
 	for (i = 0; i < S.nb_rows - 1; i++) {
-		M1_score[i] = S.get_int(i + 1, m1_idx);
-		M2_score[i] = S.get_int(i + 1, m2_idx);
-		F_score[i] = S.get_int(i + 1, f_idx);
+		M1_score[i] = S.get_lint(i + 1, m1_idx);
+		M2_score[i] = S.get_lint(i + 1, m2_idx);
+		F_score[i] = S.get_lint(i + 1, f_idx);
 		S.get_string(O_grade[i], i + 1, o_idx);
 	}
 

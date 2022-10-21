@@ -82,8 +82,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 	else if (Descr->f_create_source_code) {
 		do_write_source_code(verbose_level);
 	}
-	else if (Descr->f_sweep) {
-		do_sweep(verbose_level);
+	else if (Descr->f_sweep_Cayley) {
+		do_sweep_Cayley(verbose_level);
 	}
 
 }
@@ -298,27 +298,27 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_write_sourc
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep(
+void classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep" << endl;
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep "
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley "
 				"before SCW->sweep_Cayley" << endl;
 	}
 	SCW->sweep_Cayley(verbose_level);
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep "
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley "
 				"after SCW->sweep_Cayley" << endl;
 	}
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep done" << endl;
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley done" << endl;
 	}
 }
 

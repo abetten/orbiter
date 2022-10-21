@@ -43,16 +43,6 @@ design_create_description::design_create_description()
 
 design_create_description::~design_create_description()
 {
-	freeself();
-}
-
-void design_create_description::null()
-{
-}
-
-void design_create_description::freeself()
-{
-	null();
 }
 
 int design_create_description::read_arguments(int argc, std::string *argv,

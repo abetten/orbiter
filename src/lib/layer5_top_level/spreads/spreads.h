@@ -67,8 +67,6 @@ public:
 
 	recoordinatize();
 	~recoordinatize();
-	void null();
-	void freeself();
 	void init(
 			geometry::spread_domain *SD,
 			//int n, int k, field_theory::finite_field *F,
@@ -186,7 +184,7 @@ public:
 	int f_isomorph;
 	//std::string prefix_classify;
 	//std::string prefix_iso;
-	layer4_classification::isomorph_arguments *Isomorph_arguments;
+	layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
 
 	spread_classify_activity_description();
 	~spread_classify_activity_description();
@@ -318,7 +316,7 @@ public:
 		// or R->nb_live_points if f_recoordinatize
 
 
-	isomorph_worker *Worker;
+	isomorph::isomorph_worker *Worker;
 
 
 
@@ -351,11 +349,11 @@ public:
 
 
 	// spread_classify2.cpp
-	void print_isomorphism_type(isomorph *Iso,
+	void print_isomorphism_type(isomorph::isomorph *Iso,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int verbose_level);
 		// called from callback_print_isomorphism_type()
-	void print_isomorphism_type2(isomorph *Iso,
+	void print_isomorphism_type2(isomorph::isomorph *Iso,
 			std::ostream &ost,
 			int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 			long int *data, int verbose_level);
@@ -363,17 +361,17 @@ public:
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
 	void klein(std::ostream &ost,
-		isomorph *Iso,
+			isomorph::isomorph *Iso,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int data_size, int verbose_level);
 
-	void report2(isomorph &Iso, int verbose_level);
-	void report3(isomorph &Iso, std::ostream &ost, int verbose_level);
-	void all_cooperstein_thas_quotients(isomorph &Iso, int verbose_level);
-	void cooperstein_thas_quotients(isomorph &Iso, std::ofstream &f,
+	void report2(isomorph::isomorph &Iso, int verbose_level);
+	void report3(isomorph::isomorph &Iso, std::ostream &ost, int verbose_level);
+	void all_cooperstein_thas_quotients(isomorph::isomorph &Iso, int verbose_level);
+	void cooperstein_thas_quotients(isomorph::isomorph &Iso, std::ofstream &f,
 		int h, int &cnt, int verbose_level);
-	void orbit_info_short(std::ostream &ost, isomorph &Iso, int h, int verbose_level);
-	void report_stabilizer(isomorph &Iso, std::ostream &ost, int orbit,
+	void orbit_info_short(std::ostream &ost, isomorph::isomorph &Iso, int h, int verbose_level);
+	void report_stabilizer(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 		int verbose_level);
 };
 
@@ -722,7 +720,7 @@ public:
 	// i.e., the lines that are not
 	// yet part of the partial packing
 	void compute_live_blocks2(
-		exact_cover *EC, int starter_case,
+			solvers_package::exact_cover *EC, int starter_case,
 		long int *&live_blocks2, int &nb_live_blocks2,
 		long int *points_covered_by_starter, int nb_points_covered_by_starter,
 		long int *starter, int starter_size,

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 flag_orbit_folding::flag_orbit_folding()
@@ -4447,6 +4448,7 @@ void flag_orbit_folding::iso_test_init2(int verbose_level)
 
 
 
-}}
+}}}
+
 
 

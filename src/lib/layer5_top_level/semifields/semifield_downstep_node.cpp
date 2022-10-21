@@ -38,7 +38,6 @@ semifield_downstep_node::semifield_downstep_node()
 	A_on_cosets = NULL;
 	Sch = NULL;
 	first_flag_orbit = 0;
-	//null();
 }
 
 semifield_downstep_node::~semifield_downstep_node()
@@ -49,7 +48,6 @@ semifield_downstep_node::~semifield_downstep_node()
 	if (A_on_cosets) {
 		FREE_OBJECT(A_on_cosets);
 	}
-	//freeself();
 }
 
 void semifield_downstep_node::init(

@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace orbits_schreier {
 
 
 
@@ -493,6 +494,7 @@ void orbit_of_sets::get_label(std::vector<int> &Label, int verbose_level)
 
 
 
-}}
+}}}
+
 
 

@@ -1920,7 +1920,7 @@ int discreta_matrix::hip1()
 				exit(1);
 				}
 			k = s_iji(i, j);
-			if (!ONE_char_int(k))
+			if (!FITS_INTO_ONE_BYTE(k))
 				return FALSE;
 			}
 		}
@@ -2721,6 +2721,7 @@ int discreta_matrix::proj_order_mod(integer &P)
 
 
 
+#if 0
 void discreta_matrix::PG_rep(domain *dom, permutation &p, int f_action_from_right, int f_modified)
 {
 	with ww(dom);
@@ -2948,6 +2949,7 @@ void discreta_matrix::PG_k_q_design(domain *dom, int k, int f_v, int f_vv)
 		cout << *this;
 		}
 }
+#endif
 
 void discreta_matrix::determinant(discreta_base &d, int verbose_level)
 {
@@ -3056,6 +3058,7 @@ void determinant_map(discreta_base & x, discreta_base &d)
 	M.det(d, f_v, f_vv);
 }
 
+#if 0
 void discreta_matrix::PG_line_rank(int &a, int f_v)
 {
 	domain *d;
@@ -3469,6 +3472,7 @@ int nb_PG_lines(int n, int q)
 		}
 	return a;
 }
+#endif
 
 void discreta_matrix::save_as_inc_file(char *fname)
 {

@@ -18,25 +18,23 @@ namespace ring_theory {
 
 finite_ring::finite_ring()
 {
-	null();
-}
-
-finite_ring::~finite_ring()
-{
-	freeself();
-}
-
-void finite_ring::null()
-{
 	add_table = NULL;
 	mult_table = NULL;
 	f_is_unit_table = NULL;
 	negate_table = NULL;
 	inv_table = NULL;
+
+	p = 0;
+	e = 0;
 	Fp = NULL;
+
+	q = 0;
+	f_chain_ring = FALSE;
 }
 
-void finite_ring::freeself()
+
+
+finite_ring::~finite_ring()
 {
 	if (add_table) {
 		FREE_int(add_table);
@@ -56,7 +54,6 @@ void finite_ring::freeself()
 	if (Fp) {
 		FREE_OBJECT(Fp);
 		}
-	null();
 }
 
 void finite_ring::init(int q, int verbose_level)

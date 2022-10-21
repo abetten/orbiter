@@ -918,6 +918,53 @@ int projective_space::incidence_test_for_objects_of_type_ij(
 }
 
 
+void projective_space::points_on_line(long int line_rk,
+		long int *&the_points, int &nb_points, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::points_on_line" << endl;
+	}
+
+	nb_points = Grass_lines->nb_points_covered(0 /* verbose_level */);
+
+	Grass_lines->unrank_lint(line_rk, 0 /* verbose_level */);
+
+	the_points = NEW_lint(nb_points);
+
+	Grass_lines->points_covered(the_points, verbose_level);
+
+
+	if (f_v) {
+		cout << "projective_space::points_on_line done" << endl;
+	}
+}
+
+
+void projective_space::points_covered_by_plane(long int plane_rk,
+		long int *&the_points, int &nb_points, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::points_covered_by_plane" << endl;
+	}
+
+	nb_points = Grass_planes->nb_points_covered(0 /* verbose_level */);
+
+	Grass_planes->unrank_lint(plane_rk, 0 /* verbose_level */);
+
+	the_points = NEW_lint(nb_points);
+
+	Grass_planes->points_covered(the_points, verbose_level);
+
+
+	if (f_v) {
+		cout << "projective_space::points_covered_by_plane done" << endl;
+	}
+}
+
 void projective_space::incidence_and_stack_for_type_ij(
 	int row_type, int col_type,
 	incidence_structure *&Inc,

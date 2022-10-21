@@ -30,7 +30,7 @@ vector_builder::vector_builder()
 vector_builder::~vector_builder()
 {
 	if (v) {
-		FREE_int(v);
+		FREE_lint(v);
 		v = NULL;
 	}
 }
@@ -52,7 +52,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		if (f_v) {
 			cout << "vector_builder::init -dense" << endl;
 		}
-		Int_vec_scan(Descr->dense_text, v, len);
+		Lint_vec_scan(Descr->dense_text, v, len);
 
 		if (Descr->f_format) {
 			f_has_k = TRUE;
@@ -76,7 +76,7 @@ void vector_builder::init(vector_builder_description *Descr,
 			}
 			len++;
 		}
-		v = NEW_int(len);
+		v = NEW_lint(len);
 		j = 0;
 		for (i = 0; i < Descr->compact_text.length(); i++) {
 			c = Descr->compact_text[i];
@@ -107,7 +107,7 @@ void vector_builder::init(vector_builder_description *Descr,
 			cout << endl;
 		}
 
-		v = NEW_int(Descr->repeat_length);
+		v = NEW_lint(Descr->repeat_length);
 		len = Descr->repeat_length;
 
 		for (i = 0; i < Descr->repeat_length; i++) {
@@ -127,7 +127,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.int_matrix_read_csv(Descr->file_name, v, m, n, verbose_level);
+		Fio.lint_matrix_read_csv(Descr->file_name, v, m, n, verbose_level);
 		len = m * n;
 		f_has_k = TRUE;
 		k = m;
@@ -140,7 +140,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.int_matrix_read_csv_no_border(Descr->load_csv_no_border_fname, v, m, n, verbose_level);
+		Fio.lint_matrix_read_csv_no_border(Descr->load_csv_no_border_fname, v, m, n, verbose_level);
 		len = m * n;
 		f_has_k = TRUE;
 		k = m;
@@ -153,7 +153,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.int_matrix_read_csv_data_column(Descr->load_csv_data_column_fname,
+		Fio.lint_matrix_read_csv_data_column(Descr->load_csv_data_column_fname,
 				v, m, n,
 				Descr->load_csv_data_column_idx,
 				verbose_level);
@@ -175,8 +175,8 @@ void vector_builder::init(vector_builder_description *Descr,
 		Int_vec_scan(Descr->sparse_pairs, pairs, sz);
 
 		len = Descr->sparse_len;
-		v = NEW_int(len);
-		Int_vec_zero(v, len);
+		v = NEW_lint(len);
+		Lint_vec_zero(v, len);
 		nb_pairs = sz >> 1;
 		for (i = 0; i < nb_pairs; i++) {
 			c = pairs[2 * i + 0];
@@ -207,13 +207,13 @@ void vector_builder::init(vector_builder_description *Descr,
 			VB = orbiter_kernel_system::Orbiter->get_object_of_type_vector(Descr->concatenate_list[i]);
 			len += VB->len;
 		}
-		v = NEW_int(len);
+		v = NEW_lint(len);
 		j = 0;
 		for (i = 0; i < Descr->concatenate_list.size(); i++) {
 			vector_builder *VB;
 
 			VB = orbiter_kernel_system::Orbiter->get_object_of_type_vector(Descr->concatenate_list[i]);
-			Int_vec_copy(VB->v, v + j, VB->len);
+			Lint_vec_copy(VB->v, v + j, VB->len);
 			j += VB->len;
 		}
 
@@ -232,7 +232,7 @@ void vector_builder::init(vector_builder_description *Descr,
 				i += Descr->loop_increment) {
 			len++;
 		}
-		v = NEW_int(len);
+		v = NEW_lint(len);
 		cnt = 0;
 		for (i = Descr->loop_start; i < Descr->loop_upper_bound;
 				i += Descr->loop_increment) {
@@ -265,11 +265,11 @@ void vector_builder::init(vector_builder_description *Descr,
 
 	if (f_v) {
 		cout << "vector_builder::init created vector of length " << len << endl;
-		Int_vec_print(cout, v, len);
+		Lint_vec_print(cout, v, len);
 		cout << endl;
 		if (f_has_k) {
 			cout << "also seen as matrix of size  " << k << " x " << len / k << endl;
-			Int_matrix_print(v, k, len / k);
+			Lint_matrix_print(v, k, len / k);
 			cout << endl;
 
 		}

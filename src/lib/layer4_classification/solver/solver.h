@@ -14,6 +14,7 @@
 
 namespace orbiter {
 namespace layer4_classification {
+namespace solvers_package {
 
 
 // #############################################################################
@@ -105,7 +106,7 @@ public:
 		void *early_test_func_data,
 		int verbose_level);
 	void init_prepare_function_new(
-		void (*prepare_function_new)(exact_cover *E, int starter_case, 
+		void (*prepare_function_new)(solvers_package::exact_cover *E, int starter_case,
 				long int *candidates, int nb_candidates,
 				groups::strong_generators *Strong_gens,
 			solvers::diophant *&Dio, long int *&col_label,
@@ -211,7 +212,8 @@ public:
 	void compute_lifts(int verbose_level);
 };
 
-}}
+}}}
+
 
 
 #endif /* ORBITER_SRC_LIB_TOP_LEVEL_SOLVER_SOLVER_H_ */

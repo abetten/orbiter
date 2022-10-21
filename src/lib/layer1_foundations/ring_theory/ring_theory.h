@@ -18,7 +18,7 @@ namespace ring_theory {
 // #############################################################################
 
 
-//! finite chain rings
+//! ring of integers modulo q
 
 
 
@@ -39,14 +39,12 @@ class finite_ring {
 public:
 	int q;
 
-	int f_chain_ring;
+	int f_chain_ring; // true if q is a prime power
 
 
 
 	finite_ring();
 	~finite_ring();
-	void null();
-	void freeself();
 	void init(int q, int verbose_level);
 	int get_e();
 	int get_p();
@@ -133,8 +131,6 @@ public:
 
 	homogeneous_polynomial_domain();
 	~homogeneous_polynomial_domain();
-	void freeself();
-	void null();
 	void init(polynomial_ring_description *Descr,
 			int verbose_level);
 	void init(field_theory::finite_field *F,
@@ -358,6 +354,9 @@ public:
 	void integral_division_by_lint(
 		longinteger_object &a,
 		long int b, longinteger_object &q, long int &r);
+	void inverse_mod(
+		longinteger_object &a,
+		longinteger_object &m, longinteger_object &av, int verbose_level);
 	void extended_gcd(longinteger_object &a, longinteger_object &b,
 		longinteger_object &g, longinteger_object &u,
 		longinteger_object &v, int verbose_level);
@@ -421,6 +420,10 @@ public:
 	void square_root_floor(longinteger_object &a,
 			longinteger_object &x, int verbose_level);
 	void print_digits(char *rep, int len);
+	void Chinese_Remainders(
+			std::vector<long int> &Remainders,
+			std::vector<long int> &Moduli,
+			longinteger_object &x, longinteger_object &M, int verbose_level);
 
 };
 
@@ -513,8 +516,6 @@ public:
 
 	partial_derivative();
 	~partial_derivative();
-	void freeself();
-	void null();
 	void init(homogeneous_polynomial_domain *H,
 			homogeneous_polynomial_domain *Hd,
 			int variable_idx,
@@ -599,7 +600,6 @@ public:
 	int f_cheat_sheet;
 
 	int f_ideal;
-	//std::string ideal_ring_label;
 	std::string ideal_label_txt;
 	std::string ideal_label_tex;
 	std::string ideal_point_set_label;

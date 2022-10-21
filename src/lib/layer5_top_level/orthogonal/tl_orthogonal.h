@@ -41,7 +41,7 @@ public:
 	int f_isomorph;
 	//std::string prefix_classify;
 	//std::string prefix_iso;
-	layer4_classification::isomorph_arguments *Isomorph_arguments;
+	layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
 
 	blt_set_classify_activity_description();
 	~blt_set_classify_activity_description();
@@ -143,7 +143,7 @@ public:
 
 	int target_size;
 
-	isomorph_worker *Worker;
+	isomorph::isomorph_worker *Worker;
 
 
 	blt_set_classify();
@@ -174,13 +174,14 @@ public:
 		graph_theory::colored_graph *&CG,
 		int verbose_level);
 
-	void lifting_prepare_function_new(exact_cover *E, int starter_case,
+	void lifting_prepare_function_new(
+			solvers_package::exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
 		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
-	void report_from_iso(isomorph &Iso, int verbose_level);
+	void report_from_iso(isomorph::isomorph &Iso, int verbose_level);
 	void report(data_structures_groups::orbit_transversal *T,
 			int verbose_level);
 	void report2(std::ostream &ost,
@@ -294,8 +295,6 @@ public:
 
 	blt_set_with_action();
 	~blt_set_with_action();
-	void null();
-	void freeself();
 	void init_set(
 			actions::action *A,
 			orthogonal_geometry::blt_set_domain *Blt_set_domain,
@@ -321,25 +320,9 @@ public:
 class orthogonal_space_activity_description {
 public:
 
-	//int f_input;
-	//data_structures::data_input_stream_description *Data;
 
 	int f_create_BLT_set;
 	BLT_set_create_description * BLT_Set_create_description;
-
-#if 0
-	int f_BLT_set_starter;
-	int BLT_set_starter_size;
-	poset_classification::poset_classification_control *BLT_set_starter_control;
-
-	int f_BLT_set_graphs;
-	int BLT_set_graphs_starter_size;
-	int BLT_set_graphs_r;
-	int BLT_set_graphs_m;
-
-	int f_fname_base_out;
-	std::string fname_base_out;
-#endif
 
 	int f_cheat_sheet_orthogonal;
 

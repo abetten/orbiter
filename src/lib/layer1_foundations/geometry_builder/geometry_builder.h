@@ -352,6 +352,7 @@ public:
 	int f_search_tree_flags;
 
 	int f_orderly;
+	int f_special_test_not_orderly;
 
 	std::vector<std::string> test_lines;
 

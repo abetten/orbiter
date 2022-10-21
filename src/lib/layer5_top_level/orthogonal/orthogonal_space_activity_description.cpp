@@ -20,25 +20,8 @@ namespace orthogonal_geometry_applications {
 orthogonal_space_activity_description::orthogonal_space_activity_description()
 {
 
-	//f_input = FALSE;
-	//Data = NULL;
-
 	f_create_BLT_set = FALSE;
 	BLT_Set_create_description = NULL;
-
-#if 0
-	f_BLT_set_starter = FALSE;
-	BLT_set_starter_size = 0;
-	BLT_set_starter_control = NULL;
-
-	f_BLT_set_graphs = FALSE;
-	BLT_set_graphs_starter_size = 0;
-	BLT_set_graphs_r = 0;
-	BLT_set_graphs_m = 0;
-
-	f_fname_base_out = FALSE;
-	//fname_base_out;
-#endif
 
 	f_cheat_sheet_orthogonal = FALSE;
 
@@ -93,26 +76,6 @@ int orthogonal_space_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (ST.stringcmp(argv[i], "-input") == 0) {
-			f_input = TRUE;
-			Data = NEW_OBJECT(data_structures::data_input_stream_description);
-			if (f_v) {
-				cout << "-input" << endl;
-			}
-			i += Data->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-			if (f_v) {
-				cout << "orthogonal_space_activity_description::read_arguments finished reading -input" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-#endif
-
 		if (ST.stringcmp(argv[i], "-create_BLT_set") == 0) {
 			f_create_BLT_set = TRUE;
 			BLT_Set_create_description = NEW_OBJECT(BLT_set_create_description);
@@ -130,45 +93,6 @@ int orthogonal_space_activity_description::read_arguments(
 				}
 			}
 		}
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-BLT_set_starter") == 0) {
-			f_BLT_set_starter = TRUE;
-			BLT_set_starter_size = ST.strtoi(argv[++i]);
-
-			BLT_set_starter_control = NEW_OBJECT(poset_classification::poset_classification_control);
-
-			i += BLT_set_starter_control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-
-
-				cout << "-BLT_set_starter " << BLT_set_starter_size << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-BLT_set_graphs") == 0) {
-			f_BLT_set_graphs = TRUE;
-			BLT_set_graphs_starter_size = ST.strtoi(argv[++i]);
-			BLT_set_graphs_r = ST.strtoi(argv[++i]);
-			BLT_set_graphs_m = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-BLT_set_graphs " << BLT_set_graphs_starter_size << " " << BLT_set_graphs_r << " " << BLT_set_graphs_m << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-fname_base_out") == 0) {
-			f_fname_base_out = TRUE;
-			fname_base_out.assign(argv[++i]);
-			if (f_v) {
-				cout << "-fname_base_out " << fname_base_out << endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
 			f_cheat_sheet_orthogonal = TRUE;

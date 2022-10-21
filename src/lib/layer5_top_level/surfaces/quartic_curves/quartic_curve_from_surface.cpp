@@ -672,9 +672,9 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	// compute the orbit of the equation under the stabilizer of the set of points:
 
 
-	orbit_of_equations *Orb;
+	orbits_schreier::orbit_of_equations *Orb;
 
-	Orb = NEW_OBJECT(orbit_of_equations);
+	Orb = NEW_OBJECT(orbits_schreier::orbit_of_equations);
 
 
 #if 1

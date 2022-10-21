@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 isomorph_arguments::isomorph_arguments()
@@ -293,7 +294,7 @@ void isomorph_arguments::init(
 		poset_classification::poset_classification *gen,
 	int target_size,
 	poset_classification::poset_classification_control *Control,
-	exact_cover_arguments *ECA,
+	solvers_package::exact_cover_arguments *ECA,
 	void (*callback_report)(isomorph *Iso, void *data, int verbose_level), 
 	void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level), 
 	void *callback_data, 
@@ -665,5 +666,6 @@ void isomorph_arguments::execute(int verbose_level)
 }
 #endif
 
-}}
+}}}
+
 

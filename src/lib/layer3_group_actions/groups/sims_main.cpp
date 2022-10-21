@@ -753,7 +753,7 @@ void sims::build_up_group_random_process(sims *K,
 				cout << endl;
 			}
 		}
-		else if ((cnt % 2) == 1){
+		else if ((cnt % 2) == 1) {
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process: "
 						"choosing random element in the group by "

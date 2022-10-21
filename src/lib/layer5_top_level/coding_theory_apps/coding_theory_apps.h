@@ -110,9 +110,13 @@ public:
 	int f_nth_roots;
 	int nth_roots_n;
 
-	int f_make_BCH_code_and_encode;
+	int f_make_BCH_code;
 	int make_BCH_code_n;
 	int make_BCH_code_d;
+
+	int f_make_BCH_code_and_encode;
+	int make_BCH_code_and_encode_n;
+	int make_BCH_code_and_encode_d;
 	std::string make_BCH_code_and_encode_text;
 	std::string make_BCH_code_and_encode_fname;
 

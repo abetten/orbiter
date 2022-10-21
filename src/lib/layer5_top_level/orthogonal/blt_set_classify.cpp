@@ -807,7 +807,7 @@ int blt_set_classify::create_graph(
 
 
 void blt_set_classify::lifting_prepare_function_new(
-	exact_cover *E, int starter_case,
+		solvers_package::exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
 	solvers::diophant *&Dio, long int *&col_labels,
@@ -963,7 +963,7 @@ void blt_set_classify::lifting_prepare_function_new(
 }
 
 
-void blt_set_classify::report_from_iso(isomorph &Iso, int verbose_level)
+void blt_set_classify::report_from_iso(isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

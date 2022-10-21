@@ -22,22 +22,37 @@ namespace packings {
 
 packing_invariants::packing_invariants()
 {
-	null();
-}
+	P = NULL;
 
-packing_invariants::~packing_invariants()
-{
-	freeself();
-}
-
-void packing_invariants::null()
-{
+	//std::string prefix;
+	//std::string prefix_tex;
+	iso_cnt = 0;
 	the_packing = NULL;
 	list_of_lines = NULL;
 	f_has_klein = FALSE;
+	R = NULL;
+	Pts_on_plane = NULL;
+	nb_pts_on_plane = NULL;
+	nb_planes = 0;
+	C = NULL;
+	nb_blocks = 0;
+	block_to_plane = NULL;
+	plane_to_block = NULL;
+	nb_fake_blocks = nb_fake_points = total_nb_blocks = total_nb_points = 0;
+	Inc = NULL;
+	I = NULL;
+	Stack = NULL;
+
+	//std::string fname_incidence_pic;
+	//std::string fname_row_scheme;
+	//std::string fname_col_scheme;
+
 }
 
-void packing_invariants::freeself()
+
+
+
+packing_invariants::~packing_invariants()
 {
 	int i;
 	
@@ -55,7 +70,6 @@ void packing_invariants::freeself()
 		FREE_pint(Pts_on_plane);
 		FREE_int(nb_pts_on_plane);
 	}
-	null();
 }
 
 void packing_invariants::init(packing_classify *P,

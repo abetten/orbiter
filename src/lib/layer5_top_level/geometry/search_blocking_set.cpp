@@ -50,15 +50,6 @@ search_blocking_set::search_blocking_set()
 
 search_blocking_set::~search_blocking_set()
 {
-	freeself();
-}
-
-void search_blocking_set::null()
-{
-}
-
-void search_blocking_set::freeself()
-{
 	int i;
 	
 	if (Line_intersections) {
@@ -109,7 +100,6 @@ void search_blocking_set::freeself()
 			}
 		FREE_pint(save_sz);
 		}
-	null();
 }
 
 void search_blocking_set::init(

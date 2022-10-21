@@ -337,8 +337,6 @@ public:
 	
 	action_on_determinant();
 	~action_on_determinant();
-	void null();
-	void free();
 	void init(actions::action &A, int f_projective, int m, int verbose_level);
 	long int compute_image(actions::action *A, int *Elt, long int i,
 		int verbose_level);

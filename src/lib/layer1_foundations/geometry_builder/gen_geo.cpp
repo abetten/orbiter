@@ -215,6 +215,8 @@ void gen_geo::main2(int verbose_level)
 	}
 
 	if (GB->Descr->f_output_to_sage_file) {
+
+		cout << "gen_geo::main2 f_output_to_sage_file" << endl;
 		string fname;
 
 		fname.assign(inc_file_name);
@@ -338,7 +340,7 @@ void gen_geo::generate_all(int verbose_level)
 	}
 
 	inc->gl_nb_GEN = 0;
-	if (!Geometric_backtrack_search->First(verbose_level - 5)) {
+	if (!Geometric_backtrack_search->First(0 /*verbose_level - 5*/)) {
 		//ret = TRUE;
 
 		cout << "gen_geo::generate_all Geometric_backtrack_search->First "
@@ -384,20 +386,22 @@ void gen_geo::generate_all(int verbose_level)
 		}
 #endif
 		if (f_v) {
-			cout << "gen_geo::generate_all before isot_add for it0" << endl;
+			cout << "gen_geo::generate_all before it0->add_geometry" << endl;
 		}
 
 		it0->add_geometry(inc->Encoding,
 				FALSE /* f_partition_fixing_last */,
 				f_already_there,
-				verbose_level - 2);
+				verbose_level);
 
 		if (f_v) {
-			cout << "gen_geo::generate_all after isot_add for it0, f_already_there=" << f_already_there << endl;
+			cout << "gen_geo::generate_all it0->add_geometry, f_already_there=" << f_already_there << endl;
 		}
 
 
-		record_tree(inc->Encoding->v, f_already_there);
+		if (GB->Descr->f_search_tree) {
+			record_tree(inc->Encoding->v, f_already_there);
+		}
 
 
 		if (FALSE) {
@@ -443,7 +447,7 @@ void gen_geo::generate_all(int verbose_level)
 		}
 #endif
 
-		if (!Geometric_backtrack_search->Next(verbose_level - 5)) {
+		if (!Geometric_backtrack_search->Next(0 /*verbose_level - 5*/)) {
 			if (f_v) {
 				cout << "gen_geo::generate_all Geometric_backtrack_search->Next "
 						"returns FALSE, finished" << endl;

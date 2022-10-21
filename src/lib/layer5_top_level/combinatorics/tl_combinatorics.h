@@ -249,29 +249,6 @@ public:
 		char *fname, int &nb_Pts, long int *&Pts,
 		int verbose_level);
 	void append_orbit_and_adjust_size(groups::schreier *Orb, int idx, int *set, int &sz);
-#if 0
-	void classify_objects_using_nauty(
-			data_structures::data_input_stream_description *Data,
-			data_structures::classify_bitvectors *CB,
-		std::string &output_fname,
-		int verbose_level);
-	void handle_input_file(
-			data_structures::classify_bitvectors *CB,
-			int nb_objects_to_test, int t0,
-			std::string &fname, int input_file_idx, int nb_input_files,
-			int N_points, int design_b, int design_k, int partition_class_size,
-			long int *Ago, std::vector<std::vector<long int> > &Reps,
-			int verbose_level);
-	void process_object(
-			data_structures::classify_bitvectors *CB,
-			data_structures_groups::incidence_structure_with_group *IG,
-			geometry::incidence_structure *&Inc_out,
-		int nb_objects_to_test,
-		int &f_found, int &idx,
-		ring_theory::longinteger_object &go,
-		int verbose_level);
-#endif
-
 
 };
 
@@ -637,8 +614,6 @@ public:
 
 	design_create_description();
 	~design_create_description();
-	void null();
-	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	int get_q();
@@ -697,8 +672,6 @@ public:
 
 	design_create();
 	~design_create();
-	void null();
-	void freeself();
 	void init(apps_combinatorics::design_create_description *Descr, int verbose_level);
 	void create_design_PG_2_q(field_theory::finite_field *F,
 			long int *&set, int &sz, int &k, int verbose_level);
@@ -1023,8 +996,6 @@ public:
 
 	hall_system_classify();
 	~hall_system_classify();
-	void null();
-	void freeself();
 	void init(int argc, const char **argv,
 			int n, int depth,
 			int verbose_level);
@@ -1135,8 +1106,6 @@ public:
 
 	large_set_classify();
 	~large_set_classify();
-	void null();
-	void freeself();
 	void init(design_create *DC,
 			design_tables *T,
 			int verbose_level);
@@ -1533,8 +1502,6 @@ public:
 
 	regular_ls_classify();
 	~regular_ls_classify();
-	void null();
-	void freeself();
 	void init_and_run(
 			regular_linear_space_description *Descr,
 			int verbose_level);
@@ -1549,7 +1516,8 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);
-	void lifting_prepare_function_new(exact_cover *E, int starter_case,
+	void lifting_prepare_function_new(
+			solvers_package::exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
 		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
@@ -1559,19 +1527,6 @@ public:
 
 
 
-void regular_ls_classify_print_set(std::ostream &ost, int len, long int *S, void *data);
-void regular_ls_classify_early_test_function(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-int regular_ls_classify_check_function_incremental_callback(int len, int *S,
-		void *data, int verbose_level);
-void regular_ls_classify_lifting_prepare_function_new(
-	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
 
 
 

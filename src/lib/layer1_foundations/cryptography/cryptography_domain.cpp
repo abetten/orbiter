@@ -2143,60 +2143,6 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs,
 
 
 
-void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level)
-{
-	string fname;
-	string author;
-	string title;
-	string extra_praeamble;
-
-
-	char str[1000];
-
-	snprintf(str, 1000, "jacobi_%d_%d.tex", jacobi_top, jacobi_bottom);
-	fname.assign(str);
-	snprintf(str, 1000, "Jacobi %d over %d", jacobi_top, jacobi_bottom);
-	title.assign(str);
-
-	{
-	ofstream f(fname);
-
-
-	orbiter_kernel_system::latex_interface L;
-
-
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
-			extra_praeamble /* extra_praeamble */);
-
-
-	number_theory::number_theory_domain NT;
-	ring_theory::longinteger_domain D;
-
-	ring_theory::longinteger_object A, B;
-
-	A.create(jacobi_top, __FILE__, __LINE__);
-
-	B.create(jacobi_bottom, __FILE__, __LINE__);
-
-	D.jacobi(A, B, verbose_level);
-
-	NT.Jacobi_with_key_in_latex(f,
-			jacobi_top, jacobi_bottom, verbose_level);
-	//Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
-
-	L.foot(f);
-	}
-
-	orbiter_kernel_system::file_io Fio;
-
-	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-}
 
 void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 {

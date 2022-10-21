@@ -114,11 +114,11 @@ void page_storage::init(int entry_size,
 			page_storage::page_length_log--;
 			continue;
 			}
-		if (page_size > MAX_PAGE_SIZE_IN_charS) {
+		if (page_size > PAGE_STORAGE_MAX_PAGE_SIZE) {
 			if (f_v) {
 				cout << "page_storage::init page_size too big" << endl;
 				cout << "the maximum page size in char is "
-						<< MAX_PAGE_SIZE_IN_charS << endl;
+						<< PAGE_STORAGE_MAX_PAGE_SIZE << endl;
 				}
 			page_storage::page_length_log--;
 			continue;

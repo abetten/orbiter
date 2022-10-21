@@ -123,7 +123,7 @@ void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n, int
 
 	int mn, nl, lm;
 
-	mn = F->mult(l, m);
+	mn = F->mult(m, n);
 	nl = F->mult(n, l);
 	lm = F->mult(l, m);
 

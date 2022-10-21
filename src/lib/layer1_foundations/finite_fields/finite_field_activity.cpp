@@ -728,7 +728,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->product_of_elements,
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->product_of_elements,
 				data, sz, verbose_level);
 		s = 1;
 		for (i = 0; i < sz; i++) {
@@ -754,7 +754,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->sum_of_elements,
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->sum_of_elements,
 				data, sz, verbose_level);
 		s = 1;
 		for (i = 0; i < sz; i++) {
@@ -781,7 +781,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->negate_elements,
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->negate_elements,
 				data, sz, verbose_level);
 		for (i = 0; i < sz; i++) {
 			a = data[i];
@@ -808,7 +808,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->inverse_elements,
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->inverse_elements,
 				data, sz, verbose_level);
 		for (i = 0; i < sz; i++) {
 			a = data[i];
@@ -835,7 +835,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(Descr->power_map_elements,
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->power_map_elements,
 				data, sz, verbose_level);
 
 		if (f_v) {

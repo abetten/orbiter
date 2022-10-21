@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace set_stabilizer {
 
 
 
@@ -257,6 +258,6 @@ void substructure_stats_and_selection::init(
 }
 
 
-}}
+}}}
 
 

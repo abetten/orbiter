@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace solvers_package {
 
 
 exact_cover_arguments::exact_cover_arguments()
@@ -249,6 +250,7 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 	
 }
 
-}}
+}}}
+
 
 

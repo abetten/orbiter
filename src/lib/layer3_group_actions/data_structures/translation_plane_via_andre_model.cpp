@@ -366,40 +366,6 @@ void translation_plane_via_andre_model::init(
 	}
 
 
-#if 0
-	int f_basis = FALSE;
-	vector_ge *nice_gens;
-
-
-
-	f_semilinear = FALSE;
-	if (!NT.is_prime(q)) {
-		f_semilinear = TRUE;
-	}
-	
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"initializing action An" << endl;
-	}
-	An = NEW_OBJECT(action);
-	An->init_projective_group(n, F, f_semilinear,
-			f_basis, TRUE /* f_init_sims */,
-			nice_gens,
-			0 /* verbose_level */);
-	FREE_OBJECT(nice_gens);
-
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"initializing action An1" << endl;
-	}
-	An1 = NEW_OBJECT(action);
-	An1->init_projective_group(n1, F, f_semilinear,
-			f_basis, TRUE /* f_init_sims */,
-			nice_gens,
-			0 /*verbose_level */);
-	FREE_OBJECT(nice_gens);
-#endif
-
 	OnAndre = NEW_OBJECT(actions::action);
 
 	if (f_v) {

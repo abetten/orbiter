@@ -25,35 +25,35 @@ static void projective_space_init_line_action(
 
 hermitian_spreads_classify::hermitian_spreads_classify()
 {
-	null();
-}
-
-hermitian_spreads_classify::~hermitian_spreads_classify()
-{
-	freeself();
-}
-
-void hermitian_spreads_classify::null()
-{
+	n = Q = len = 0;
 	F = NULL;
 	H = NULL;
+
 	Pts = NULL;
+	nb_pts = 0;
 	v = NULL;
+	line_type = NULL;
 	P = NULL;
+	sg = NULL;
+	Intersection_sets = NULL;
+	sz = 0;
+	secants = NULL;
+	nb_secants = 0;
+	Adj = NULL;
+
 	A = NULL;
 	A2 = NULL;
 	line_type = NULL;
-	Intersection_sets = NULL;
-	secants = NULL;
-	Adj = NULL;
-	//GU = NULL;
-	sg = NULL;
 	A2r = NULL;
+
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 }
 
-void hermitian_spreads_classify::freeself()
+
+
+hermitian_spreads_classify::~hermitian_spreads_classify()
 {
 	int f_v = FALSE;
 	int i;
@@ -88,39 +88,34 @@ void hermitian_spreads_classify::freeself()
 		}
 	}
 	if (f_v) {
-		cout << "hermitian_spreads_classify::freeself deleting secants" << endl;
+		cout << "hermitian_spreads_classify::~hermitian_spreads_classify deleting secants" << endl;
 	}
 	if (secants) {
 		FREE_lint(secants);
 	}
 	if (f_v) {
-		cout << "hermitian_spreads_classify::freeself deleting Adj" << endl;
+		cout << "hermitian_spreads_classify::~hermitian_spreads_classify deleting Adj" << endl;
 	}
 	if (Adj) {
 		FREE_int(Adj);
 	}
 	if (f_v) {
-		cout << "hermitian_spreads_classify::freeself deleting GU" << endl;
+		cout << "hermitian_spreads_classify::~hermitian_spreads_classify deleting GU" << endl;
 	}
-#if 0
-	if (GU) {
-		delete GU;
-		}
-#endif
 	if (f_v) {
-		cout << "hermitian_spreads_classify::freeself deleting sg" << endl;
+		cout << "hermitian_spreads_classify::~hermitian_spreads_classify deleting sg" << endl;
 	}
 	if (sg) {
 		FREE_OBJECT(sg);
 	}
 	if (f_v) {
-		cout << "hermitian_spreads_classify::freeself deleting A2r" << endl;
+		cout << "hermitian_spreads_classify::~hermitian_spreads_classify deleting A2r" << endl;
 	}
 	if (A2r) {
 		FREE_OBJECT(A2r);
 	}
 	if (f_v) {
-		cout << "hermitian_spreads_classify::freeself deleting gen" << endl;
+		cout << "hermitian_spreads_classify::~hermitian_spreads_classify deleting gen" << endl;
 	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -128,7 +123,6 @@ void hermitian_spreads_classify::freeself()
 	if (gen) {
 		FREE_OBJECT(gen);
 	}
-	null();
 }
 
 void hermitian_spreads_classify::init(int n, int Q, int verbose_level)

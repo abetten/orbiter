@@ -93,7 +93,7 @@ public:
 
 
 	// needed once for the whole classification process:
-	substructure_classifier *SubC;
+	set_stabilizer::substructure_classifier *SubC;
 
 
 	// needed once for each object:
@@ -126,16 +126,8 @@ public:
 	void classify_nauty(int verbose_level);
 	void classify_with_substructure(int verbose_level);
 	void main_loop(int verbose_level);
-	void classify_curve_nauty(//int cnt, int row,
+	void classify_curve_nauty(
 			quartic_curve_object *Qco,
-#if 0
-			int *eqn,
-			int sz,
-			long int *pts,
-			int nb_pts,
-			long int *bitangents,
-			int nb_bitangents,
-#endif
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
 			int verbose_level);
@@ -165,15 +157,7 @@ class canonical_form_nauty {
 
 public:
 
-	int idx;
-	int *eqn;
-	int sz;
-
-	long int *Pts_on_curve;
-	int sz_curve;
-
-	long int *bitangents;
-	int nb_bitangents;
+	quartic_curve_object *Qco;
 
 	int nb_rows, nb_cols;
 	data_structures::bitvector *Canonical_form;
@@ -183,7 +167,7 @@ public:
 
 	groups::strong_generators *SG_pt_stab;
 
-	orbit_of_equations *Orb;
+	orbits_schreier::orbit_of_equations *Orb;
 
 	groups::strong_generators *Stab_gens_quartic;
 
@@ -194,13 +178,7 @@ public:
 			projective_space_with_action *PA,
 			ring_theory::homogeneous_polynomial_domain *Poly4_x123,
 			induced_actions::action_on_homogeneous_polynomials *AonHPD,
-			//int idx,
 			quartic_curve_object *Qco,
-#if 0
-			int *eqn, int sz,
-			long int *Pts_on_curve, int sz_curve,
-			long int *bitangents, int nb_bitangents,
-#endif
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
 			groups::strong_generators *&gens_stab_of_canonical_equation,
@@ -228,32 +206,24 @@ public:
 		// has substructure_classifier *SubC
 
 
-	int cnt;
-	int row;
-	int counter;
-	int *eqn;
-	int sz;
-	long int *pts;
-	int nb_pts;
-	long int *bitangents;
-	int nb_bitangents;
+	quartic_curve_object *Qco;
 
 	long int *canonical_pts;
 
 
-	substructure_stats_and_selection *SubSt;
+	set_stabilizer::substructure_stats_and_selection *SubSt;
 
 
 
 
 
-	compute_stabilizer *CS;
+	set_stabilizer::compute_stabilizer *CS;
 
 	groups::strong_generators *Gens_stabilizer_original_set;
 	groups::strong_generators *Gens_stabilizer_canonical_form;
 
 
-	orbit_of_equations *Orb;
+	orbits_schreier::orbit_of_equations *Orb;
 
 	groups::strong_generators *gens_stab_of_canonical_equation;
 
@@ -274,17 +244,8 @@ public:
 	~canonical_form_substructure();
 	void classify_curve_with_substructure(
 			canonical_form_classifier *Canonical_form_classifier,
-			//int counter, //int cnt, int row,
 			std::string &fname_case_out,
 			quartic_curve_object *Qco,
-#if 0
-			int *eqn,
-			int sz,
-			long int *pts,
-			int nb_pts,
-			long int *bitangents,
-			int nb_bitangents,
-#endif
 			ring_theory::longinteger_object &go_eqn,
 			int verbose_level);
 	void handle_orbit(
@@ -381,12 +342,6 @@ public:
 	std::string decomposition_by_subgroup_label;
 	groups::linear_group_description * decomposition_by_subgroup_Descr;
 
-#if 0
-	int f_define_surface;
-	std::string define_surface_label;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr;
-#endif
-
 	int f_table_of_quartic_curves;
 		// based on knowledge_base
 
@@ -435,18 +390,6 @@ public:
 	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
-
-#if 0
-	int f_surface_quartic;
-	int f_surface_clebsch;
-	int f_surface_codes;
-#endif
-
-#if 0
-	int f_spread_classify;
-	int spread_classify_k;
-	poset_classification::poset_classification_control *spread_classify_Control;
-#endif
 
 	int f_classify_semifields;
 	semifields::semifield_classify_description *Semifield_classify_description;
@@ -542,6 +485,15 @@ public:
 	int f_planes_through_line;
 	std::string planes_through_line_rank;
 
+	int f_restricted_incidence_matrix;
+	int restricted_incidence_matrix_type_row_objects;
+	int restricted_incidence_matrix_type_col_objects;
+	std::string restricted_incidence_matrix_row_objects;
+	std::string restricted_incidence_matrix_col_objects;
+	std::string restricted_incidence_matrix_file_name;
+
+	int f_make_relation;
+	long int make_relation_plane_rk;
 
 	projective_space_activity_description();
 	~projective_space_activity_description();
@@ -605,14 +557,6 @@ public:
 			expression_parser::formula *F,
 			std::string &evaluate_text,
 			int verbose_level);
-#if 0
-	void do_create_surface(
-			projective_space_with_action *PA,
-			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr,
-			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
-			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *&SC,
-			int verbose_level);
-#endif
 	void conic_type(
 			projective_space_with_action *PA,
 			int threshold,

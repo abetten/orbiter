@@ -29,7 +29,10 @@ group_modification_description::group_modification_description()
 	f_on_k_subsets = FALSE;
 	on_k_subsets_k = 0;
 
+	f_create_special_subgroup = FALSE;
+
 	//std::vector<std::string> from;
+
 }
 
 
@@ -72,6 +75,12 @@ int group_modification_description::read_arguments(
 				cout << "-on_k_subsets " << on_k_subsets_k << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-create_special_subgroup") == 0) {
+			f_create_special_subgroup = TRUE;
+			if (f_v) {
+				cout << "-create_special_subgroup " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
 			from_text.assign(argv[++i]);
@@ -109,6 +118,9 @@ void group_modification_description::print()
 	}
 	if (f_on_k_subsets) {
 		cout << "-on_k_subsets " << on_k_subsets_k << endl;
+	}
+	if (f_create_special_subgroup) {
+		cout << "-create_special_subgroup " << endl;
 	}
 
 	if (from.size()) {

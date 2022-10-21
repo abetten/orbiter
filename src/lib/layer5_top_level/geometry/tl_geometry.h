@@ -109,8 +109,6 @@ public:
 
 	arc_generator();
 	~arc_generator();
-	void null();
-	void freeself();
 	void main(int verbose_level);
 	void init(
 		arc_generator_description *Descr,
@@ -132,7 +130,7 @@ public:
 	void point_unrank(int *v, int rk);
 	int point_rank(int *v);
 	void compute_line_type(long int *set, int len, int verbose_level);
-	void lifting_prepare_function_new(exact_cover *E, 
+	void lifting_prepare_function_new(solvers_package::exact_cover *E,
 		int starter_case, 
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
@@ -142,11 +140,11 @@ public:
 		// compute the incidence matrix of tangent lines 
 		// versus candidate points
 		// extended by external lines versus candidate points
-	void report(isomorph &Iso, int verbose_level);
-	void report_do_the_work(std::ostream &ost, isomorph &Iso, int verbose_level);
-	void report_decompositions(isomorph &Iso, std::ostream &ost, int orbit,
+	void report(isomorph::isomorph &Iso, int verbose_level);
+	void report_do_the_work(std::ostream &ost, isomorph::isomorph &Iso, int verbose_level);
+	void report_decompositions(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 		long int *data, int verbose_level);
-	void report_stabilizer(isomorph &Iso, std::ostream &ost, int orbit,
+	void report_stabilizer(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 		int verbose_level);
 };
 
@@ -339,8 +337,6 @@ public:
 
 	classify_cubic_curves();
 	~classify_cubic_curves();
-	void null();
-	void freeself();
 	void init(
 			projective_geometry::projective_space_with_action *PA,
 			cubic_curve_with_action *CCA,
@@ -395,8 +391,6 @@ public:
 
 	cubic_curve_with_action();
 	~cubic_curve_with_action();
-	void null();
-	void freeself();
 	void init(algebraic_geometry::cubic_curve *CC, actions::action *A, int verbose_level);
 
 };
@@ -439,8 +433,6 @@ public:
 
 	hermitian_spreads_classify();
 	~hermitian_spreads_classify();
-	void null();
-	void freeself();
 	void init(int n, int Q, int verbose_level);
 	void read_arguments(int argc, std::string *argv);
 	void init2(int verbose_level);
@@ -547,8 +539,6 @@ public:
 
 	linear_set_classify();
 	~linear_set_classify();
-	void null();
-	void freeself();
 	void init(
 		int s, int n, int q,
 		std::string &poly_q, std::string &poly_Q,
@@ -827,8 +817,6 @@ public:
 	
 	search_blocking_set();
 	~search_blocking_set();
-	void null();
-	void freeself();
 	void init(geometry::incidence_structure *Inc, actions::action *A, int verbose_level);
 	void find_partial_blocking_sets(int depth, int verbose_level);
 	int test_level(int depth, int verbose_level);
@@ -880,8 +868,6 @@ public:
 
 	singer_cycle();
 	~singer_cycle();
-	void null();
-	void freeself();
 	void init(int n, field_theory::finite_field *F, actions::action *A,
 			actions::action *A2, int verbose_level);
 	void init_lines(int verbose_level);
@@ -980,15 +966,6 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int *Elt, std::ostream &ost, std::string &fname_base,
 			int verbose_level);
-#if 0
-	void do_Andre_Bruck_Bose_construction(
-			actions::action *An,
-			actions::action *An1,
-			spreads::translation_plane_via_andre_model *&Andre,
-			int spread_no,
-			std::string &label,
-			int verbose_level);
-#endif
 };
 
 

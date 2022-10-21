@@ -57,11 +57,11 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 	if (Descr->f_report) {
 
 		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity before SC->Surf_A->do_report" << endl;
+			cout << "cubic_surface_activity::perform_activity before SC->do_report" << endl;
 		}
-		SC->Surf_A->do_report(SC, verbose_level);
+		SC->do_report(verbose_level);
 		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity after SC->Surf_A->do_report" << endl;
+			cout << "cubic_surface_activity::perform_activity after SC->do_report" << endl;
 		}
 
 	}
@@ -84,19 +84,19 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		}
 
 	}
-	if (Descr->f_export_points) {
+	if (Descr->f_export_something) {
 
 		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity before SC->Surf_A->export_points" << endl;
+			cout << "cubic_surface_activity::perform_activity before SC->export_something" << endl;
 		}
-		SC->Surf_A->export_points(SC, verbose_level);
+		SC->export_something(Descr->export_something_what, verbose_level);
 		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity after SC->Surf_A->export_points" << endl;
+			cout << "cubic_surface_activity::perform_activity after SC->export_something" << endl;
 		}
 
 	}
 
-
+#if 0
 	if (Descr->f_clebsch) {
 
 	}
@@ -104,6 +104,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 	if (Descr->f_codes) {
 
 	}
+#endif
 
 	if (Descr->f_all_quartic_curves) {
 

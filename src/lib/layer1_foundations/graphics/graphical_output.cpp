@@ -916,8 +916,8 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 	if (C->f_partition) {
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
-		orbiter_kernel_system::Orbiter->get_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
 
 		if (f_v) {
 			cout << "row_part: ";

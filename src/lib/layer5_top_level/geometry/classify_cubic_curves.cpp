@@ -39,19 +39,9 @@ classify_cubic_curves::classify_cubic_curves()
 	nb_orbits_on_curves = 0;
 
 	Curves = NULL;
-	//null();
 }
 
 classify_cubic_curves::~classify_cubic_curves()
-{
-	freeself();
-}
-
-void classify_cubic_curves::null()
-{
-}
-
-void classify_cubic_curves::freeself()
 {
 	if (Arc_gen) {
 		FREE_OBJECT(Arc_gen);
@@ -68,7 +58,6 @@ void classify_cubic_curves::freeself()
 	if (Curves) {
 		FREE_OBJECT(Curves);
 	}
-	null();
 }
 
 void classify_cubic_curves::init(

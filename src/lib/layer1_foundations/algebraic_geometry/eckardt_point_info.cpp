@@ -36,15 +36,6 @@ eckardt_point_info::eckardt_point_info()
 
 eckardt_point_info::~eckardt_point_info()
 {
-	freeself();
-}
-
-void eckardt_point_info::null()
-{
-}
-
-void eckardt_point_info::freeself()
-{
 	if (bisecants) {
 		FREE_int(bisecants);
 		}
@@ -67,7 +58,6 @@ void eckardt_point_info::freeself()
 	if (E) {
 		FREE_OBJECTS(E);
 		}
-	null();
 }
 
 void eckardt_point_info::init(geometry::projective_space *P2,

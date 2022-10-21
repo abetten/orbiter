@@ -45,6 +45,7 @@ geometry_builder_description::geometry_builder_description()
 	f_search_tree_flags = FALSE;
 
 	f_orderly = FALSE;
+	f_special_test_not_orderly = FALSE;
 
 	//std::vector<std::string> test_lines;
 	//std::vector<std::string> test2_lines;
@@ -64,6 +65,7 @@ geometry_builder_description::geometry_builder_description()
 	f_output_to_sage_file = FALSE;
 	f_output_to_blocks_file = FALSE;
 	f_output_to_blocks_latex_file = FALSE;
+
 
 }
 
@@ -153,6 +155,12 @@ int geometry_builder_description::read_arguments(
 			f_orderly = TRUE;
 			if (f_v) {
 				cout << "-orderly " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-special_test_not_orderly") == 0) {
+			f_special_test_not_orderly = TRUE;
+			if (f_v) {
+				cout << "-special_test_not_orderly " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-test") == 0) {
@@ -270,6 +278,9 @@ void geometry_builder_description::print()
 	if (f_orderly) {
 		cout << "-orderly " << endl;
 	}
+	if (f_special_test_not_orderly) {
+		cout << "-special_test_not_orderly " << endl;
+	}
 	if (test_lines.size()) {
 		int i;
 
@@ -296,6 +307,18 @@ void geometry_builder_description::print()
 	}
 	if (f_fname_GEO) {
 		cout << "-fname_GEO " << fname_GEO << endl;
+	}
+	if (f_output_to_inc_file) {
+		cout << "-output_to_inc_file " << endl;
+	}
+	if (f_output_to_sage_file) {
+		cout << "-output_to_sage_file " << endl;
+	}
+	if (f_output_to_blocks_file) {
+		cout << "-output_to_blocks_file " << endl;
+	}
+	if (f_output_to_blocks_latex_file) {
+		cout << "-output_to_blocks_latex_file " << endl;
 	}
 }
 

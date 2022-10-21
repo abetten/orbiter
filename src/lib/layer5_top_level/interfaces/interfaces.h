@@ -183,7 +183,7 @@ class interface_algebra {
 	int all_rational_normal_forms_d;
 
 	int f_eigenstuff;
-	int f_eigenstuff_from_file;
+	//int f_eigenstuff_from_file;
 	std::string eigenstuff_finite_field_label;
 	int eigenstuff_n;
 	std::string eigenstuff_coeffs;
@@ -480,8 +480,8 @@ class interface_cryptography {
 	int quadratic_sieve_x0;
 
 	int f_jacobi;
-	int jacobi_top;
-	int jacobi_bottom;
+	long int jacobi_top;
+	long int jacobi_bottom;
 
 	int f_solovay_strassen;
 	int solovay_strassen_p;
@@ -518,6 +518,11 @@ class interface_cryptography {
 	int affine_sequence_a;
 	int affine_sequence_c;
 	int affine_sequence_m;
+
+	int f_Chinese_remainders;
+	std::string Chinese_remainders_R;
+	std::string Chinese_remainders_M;
+
 
 public:
 	interface_cryptography();

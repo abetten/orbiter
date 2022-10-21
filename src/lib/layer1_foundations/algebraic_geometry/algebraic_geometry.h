@@ -281,8 +281,6 @@ public:
 
 	eckardt_point_info();
 	~eckardt_point_info();
-	void null();
-	void freeself();
 	void init(geometry::projective_space *P2,
 			long int *arc6, int verbose_level);
 	void print_bisecants(std::ostream &ost, int verbose_level);
@@ -311,8 +309,6 @@ public:
 
 	eckardt_point();
 	~eckardt_point();
-	void null();
-	void freeself();
 	void print();
 	void latex(std::ostream &ost);
 	void latex_index_only(std::ostream &ost);
@@ -520,8 +516,6 @@ public:
 
 	quartic_curve_object();
 	~quartic_curve_object();
-	void freeself();
-	void null();
 	void init_equation_but_no_bitangents(quartic_curve_domain *Dom,
 			int *eqn15,
 			int verbose_level);
@@ -1373,8 +1367,6 @@ public:
 
 	surface_object();
 	~surface_object();
-	void freeself();
-	void null();
 	void init_equation_points_and_lines_only(surface_domain *Surf, int *eqn,
 		int verbose_level);
 	void init_equation(surface_domain *Surf, int *eqn, int verbose_level);
@@ -1391,6 +1383,8 @@ public:
 	void print_nine_lines_latex(std::ostream &ost, long int *nine_lines,
 		int *nine_lines_idx);
 	int find_point(long int P, int &idx);
+	void export_something(std::string &what,
+			std::string &fname_base, int verbose_level);
 
 
 };

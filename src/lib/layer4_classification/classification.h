@@ -34,27 +34,40 @@ namespace invariant_relations {
 
 }
 
-// isomorph
-class flag_orbit_folding;
-class isomorph_arguments;
-class isomorph;
-class isomorph_worker;
-struct isomorph_worker_data;
-class representatives;
-class substructure_classification;
-class substructure_lifting_data;
+
+//! classification by using substructures and lifting
+
+namespace isomorph {
+
+	// isomorph
+	class flag_orbit_folding;
+	class isomorph_arguments;
+	class isomorph;
+	class isomorph_worker;
+	struct isomorph_worker_data;
+	class representatives;
+	class substructure_classification;
+	class substructure_lifting_data;
+
+}
 
 
-// orbits
-class orbit_of_equations;
-class orbit_of_sets;
-class orbit_of_subspaces;
+//! computes orbits using Schreier vectors
+
+namespace orbits_schreier {
+
+
+	// orbits
+	class orbit_of_equations;
+	class orbit_of_sets;
+	class orbit_of_subspaces;
+
+}
 
 
 
 
-
-//! To compute orbits on sets and subspaces using poset classification
+//! orbits on sets and subspaces using poset classification
 
 namespace poset_classification {
 
@@ -74,16 +87,27 @@ namespace poset_classification {
 
 }
 
-// set_stabilizer
-class compute_stabilizer;
-class stabilizer_orbits_and_types;
-class substructure_classifier;
-class substructure_stats_and_selection;
+//! stabilizer of a set in a given action
 
-// solver:
-class exact_cover_arguments;
-class exact_cover;
+namespace set_stabilizer {
 
+	// set_stabilizer
+	class compute_stabilizer;
+	class stabilizer_orbits_and_types;
+	class substructure_classifier;
+	class substructure_stats_and_selection;
+
+}
+
+//! various solvers and tools to lift combinatorial structures
+
+namespace solvers_package {
+
+	// solver:
+	class exact_cover_arguments;
+	class exact_cover;
+
+}
 
 
 enum trace_result { 

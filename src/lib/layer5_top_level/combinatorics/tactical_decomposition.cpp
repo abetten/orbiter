@@ -32,8 +32,6 @@ tactical_decomposition::tactical_decomposition()
 	Sch_points = NULL;
 	Sch_lines = NULL;
 
-
-	//null();
 }
 
 tactical_decomposition::~tactical_decomposition()
@@ -50,7 +48,6 @@ tactical_decomposition::~tactical_decomposition()
 	if (Sch_lines) {
 		FREE_OBJECT(Sch_lines);
 	}
-	//freeself();
 }
 
 void tactical_decomposition::init(int nb_rows, int nb_cols,

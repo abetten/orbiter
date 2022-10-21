@@ -19,16 +19,6 @@ namespace apps_geometry {
 
 cubic_curve_with_action::cubic_curve_with_action()
 {
-	null();
-}
-
-cubic_curve_with_action::~cubic_curve_with_action()
-{
-	freeself();
-}
-
-void cubic_curve_with_action::null()
-{
 	q = 0;
 	F = NULL;
 	CC = NULL;
@@ -36,10 +26,9 @@ void cubic_curve_with_action::null()
 	A2 = NULL;
 	Elt1 = NULL;
 	AonHPD_3_3 = NULL;
-
 }
 
-void cubic_curve_with_action::freeself()
+cubic_curve_with_action::~cubic_curve_with_action()
 {
 	if (A) {
 		FREE_OBJECT(A);
@@ -53,7 +42,6 @@ void cubic_curve_with_action::freeself()
 	if (AonHPD_3_3) {
 		FREE_OBJECT(AonHPD_3_3);
 	}
-	null();
 }
 
 void cubic_curve_with_action::init(

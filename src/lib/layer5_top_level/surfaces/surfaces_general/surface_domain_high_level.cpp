@@ -37,7 +37,8 @@ void surface_domain_high_level::do_sweep_4_15_lines(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_15_lines" << endl;
-		cout << "surface_domain_high_level::do_sweep_4_15_lines verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_sweep_4_15_lines "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 
@@ -76,7 +77,8 @@ void surface_domain_high_level::do_sweep_F_beta_9_lines(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines" << endl;
-		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 
@@ -116,7 +118,8 @@ void surface_domain_high_level::do_sweep_6_9_lines(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_6_9_lines" << endl;
-		cout << "surface_domain_high_level::do_sweep_6_9_lines verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_sweep_6_9_lines "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 
@@ -155,7 +158,8 @@ void surface_domain_high_level::do_sweep_4_27(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_27" << endl;
-		cout << "surface_domain_high_level::do_sweep_4_27 verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_sweep_4_27 "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 	surface_with_action *Surf_A;
@@ -192,7 +196,8 @@ void surface_domain_high_level::do_sweep_4_L9_E4(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_L9_E4" << endl;
-		cout << "surface_domain_high_level::do_sweep_4_L9_E4 verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4 "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 	surface_with_action *Surf_A;

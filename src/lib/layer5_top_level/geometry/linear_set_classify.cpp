@@ -89,98 +89,89 @@ linear_set_classify::linear_set_classify()
 
 linear_set_classify::~linear_set_classify()
 {
-	freeself();
-}
-
-void linear_set_classify::null()
-{
-}
-
-void linear_set_classify::freeself()
-{
 	int f_v = FALSE;
 
 	if (VS) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete VS" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete VS" << endl;
 		}
 		FREE_OBJECT(VS);
 	}
 	if (Poset1) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete Poset1" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete Poset1" << endl;
 		}
 		FREE_OBJECT(Poset1);
 	}
 	if (Gen) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete Gen" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete Gen" << endl;
 		}
 		FREE_OBJECT(Gen);
 	}
 	if (Strong_gens) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete Strong_gens" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete Strong_gens" << endl;
 		}
 		FREE_OBJECT(Strong_gens);
 	}
 	if (D) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete D" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete D" << endl;
 		}
 		FREE_OBJECT(D);
 	}
 	if (D1) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete D1" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete D1" << endl;
 		}
 		FREE_OBJECT(D1);
 	}
 	if (spread_embedding) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete spread_embedding" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete spread_embedding" << endl;
 		}
 		FREE_OBJECT(spread_embedding);
 	}
 	if (P) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete P" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete P" << endl;
 		}
 		FREE_OBJECT(P);
 	}
 	if (Aq) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete Aq" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete Aq" << endl;
 		}
 		FREE_OBJECT(Aq);
 	}
 	if (AQ) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete AQ" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete AQ" << endl;
 		}
 		FREE_OBJECT(AQ);
 	}
 	if (A_PGLQ) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete A_PGLQ" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete A_PGLQ" << endl;
 		}
 		FREE_OBJECT(A_PGLQ);
 	}
 	if (SubS) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete SubS" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete SubS" << endl;
 		}
 		FREE_OBJECT(SubS);
 	}
 	if (Fq) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete Fq" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete Fq" << endl;
 		}
 		FREE_OBJECT(Fq);
 	}
 	if (FQ) {
 		if (f_v) {
-			cout << "linear_set_classify::freeself before delete FQ" << endl;
+			cout << "linear_set_classify::~linear_set_classify before delete FQ" << endl;
 		}
 		FREE_OBJECT(FQ);
 	}
@@ -205,7 +196,6 @@ void linear_set_classify::freeself()
 	if (SD) {
 		FREE_OBJECT(SD);
 	}
-	null();
 }
 
 void linear_set_classify::init(

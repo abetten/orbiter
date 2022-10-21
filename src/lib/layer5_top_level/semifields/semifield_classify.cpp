@@ -89,65 +89,54 @@ semifield_classify::semifield_classify()
 
 semifield_classify::~semifield_classify()
 {
-	freeself();
-}
-
-void semifield_classify::null()
-{
-
-
-}
-
-void semifield_classify::freeself()
-{
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "semifield_classify::freeself" << endl;
+		cout << "semifield_classify::~semifield_classify" << endl;
 	}
 	if (A0) {
 		FREE_OBJECT(A0);
 	}
 
 	if (f_v) {
-		cout << "semifield_classify::freeself before A0_linear" << endl;
+		cout << "semifield_classify::~semifield_classify before A0_linear" << endl;
 	}
 	if (A0_linear) {
 		FREE_OBJECT(A0_linear);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before T" << endl;
+		cout << "semifield_classify::~semifield_classify before T" << endl;
 	}
 	if (T) {
 		FREE_OBJECT(T);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before Elt1" << endl;
+		cout << "semifield_classify::~semifield_classify before Elt1" << endl;
 	}
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before Symmetry_group" << endl;
+		cout << "semifield_classify::~semifield_classify before Symmetry_group" << endl;
 	}
 	if (Symmetry_group) {
 		FREE_OBJECT(Symmetry_group);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before Poset" << endl;
+		cout << "semifield_classify::~semifield_classify before Poset" << endl;
 	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before Gen" << endl;
+		cout << "semifield_classify::~semifield_classify before Gen" << endl;
 	}
 	if (Gen) {
 		FREE_OBJECT(Gen);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before test_base_cols" << endl;
+		cout << "semifield_classify::~semifield_classify before test_base_cols" << endl;
 	}
 	if (test_base_cols) {
 		FREE_int(test_base_cols);
@@ -162,7 +151,7 @@ void semifield_classify::freeself()
 		FREE_int(test_Basis);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before Basis1" << endl;
+		cout << "semifield_classify::~semifield_classify before Basis1" << endl;
 	}
 	if (Basis1) {
 		FREE_int(Basis1);
@@ -171,14 +160,13 @@ void semifield_classify::freeself()
 		FREE_int(Basis2);
 	}
 	if (f_v) {
-		cout << "semifield_classify::freeself before desired_pivots" << endl;
+		cout << "semifield_classify::~semifield_classify before desired_pivots" << endl;
 	}
 	if (desired_pivots) {
 		FREE_int(desired_pivots);
 	}
-	null();
 	if (f_v) {
-		cout << "semifield_classify::freeself done" << endl;
+		cout << "semifield_classify::~semifield_classify done" << endl;
 	}
 }
 
@@ -1477,7 +1465,7 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
 void semifield_classify::compute_orbit_of_subspaces(
 	long int *input_data,
 	groups::strong_generators *stabilizer_gens,
-	orbit_of_subspaces *&Orb,
+	orbits_schreier::orbit_of_subspaces *&Orb,
 	int verbose_level)
 // allocates an orbit_of_subspaces data structure in Orb
 {
@@ -1487,7 +1475,7 @@ void semifield_classify::compute_orbit_of_subspaces(
 		cout << "semifield_classify::compute_orbit_of_subspaces" << endl;
 	}
 
-	Orb = NEW_OBJECT(orbit_of_subspaces);
+	Orb = NEW_OBJECT(orbits_schreier::orbit_of_subspaces);
 
 
 	Orb->init_lint(A, AS, Mtx->GFq,

@@ -20,30 +20,39 @@ namespace algebraic_geometry {
 
 arc_lifting_with_two_lines::arc_lifting_with_two_lines()
 {
-	null();
+	q = 0;
+	F = NULL;
+
+	Surf = NULL;
+
+	Arc6 = NULL;
+	arc_size = 0;
+
+	line1 = 0;
+	line2 = 0;
+
+	plane_rk = 0;
+
+	Arc_coords = NULL;
+
+	//long int P[6];
+
+	transversal_01 = transversal_23 = transversal_45 = 0;
+
+	//long int transversal[4];
+
+	//long int input_Lines[9];
+
+	//int coeff[20];
+	//long int lines27[27];
+
 }
 
 arc_lifting_with_two_lines::~arc_lifting_with_two_lines()
 {
-	freeself();
-}
-
-void arc_lifting_with_two_lines::null()
-{
-	q = 0;
-	F = NULL;
-	Surf = NULL;
-	Arc6 = NULL;
-	Arc_coords = NULL;
-
-}
-
-void arc_lifting_with_two_lines::freeself()
-{
 	if (Arc_coords) {
 		FREE_int(Arc_coords);
 	}
-	null();
 }
 
 void arc_lifting_with_two_lines::create_surface(

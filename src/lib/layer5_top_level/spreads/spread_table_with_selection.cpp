@@ -723,9 +723,9 @@ void spread_table_with_selection::make_spread_table(
 	Len = NEW_int(nb_spread_reps);
 	isomorphism_type_of_spread = NEW_int(total_nb_of_spreads);
 
-	orbit_of_sets *SetOrb;
+	orbits_schreier::orbit_of_sets *SetOrb;
 
-	SetOrb = NEW_OBJECTS(orbit_of_sets, nb_spread_reps);
+	SetOrb = NEW_OBJECTS(orbits_schreier::orbit_of_sets, nb_spread_reps);
 
 	for (i = 0; i < nb_spread_reps; i++) {
 
@@ -899,7 +899,7 @@ void spread_table_with_selection::compute_free_points2(
 }
 
 void spread_table_with_selection::compute_live_blocks2(
-	exact_cover *EC, int starter_case,
+		solvers_package::exact_cover *EC, int starter_case,
 	long int *&live_blocks2, int &nb_live_blocks2,
 	long int *points_covered_by_starter, int nb_points_covered_by_starter,
 	long int *starter, int starter_size,

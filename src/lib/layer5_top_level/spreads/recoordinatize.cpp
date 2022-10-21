@@ -49,20 +49,10 @@ recoordinatize::recoordinatize()
 	live_points = NULL;
 	nb_live_points = 0;
 
-	//null();
 }
 
 
 recoordinatize::~recoordinatize()
-{
-	freeself();
-}
-
-void recoordinatize::null()
-{
-}
-
-void recoordinatize::freeself()
 {
 	if (f_data_is_allocated) {
 		FREE_int(M);
@@ -86,14 +76,10 @@ void recoordinatize::freeself()
 	if (live_points) {
 		FREE_lint(live_points);
 	}
-	null();
 }
 
 void recoordinatize::init(
 		geometry::spread_domain *SD,
-		//int n, int k,
-		//field_theory::finite_field *F,
-		//geometry::grassmann *Grass,
 		actions::action *A, actions::action *A2,
 	int f_projective, int f_semilinear, 
 	int (*check_function_incremental)(int len,

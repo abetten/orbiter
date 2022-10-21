@@ -465,7 +465,7 @@ int number_theory_domain::i_power_j(int i, int j)
 void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	long int a, n, i;
+	long int n, i;
 	long int *T;
 	int t0, t1, dt;
 	orbiter_kernel_system::os_interface Os;
@@ -477,28 +477,52 @@ void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_
 		cout << "number_theory_domain::do_eulerfunction_interval n_min=" << n_min << " n_max=" << n_max << endl;
 	}
 
-	std::vector<std::pair<long int, long int>> Table;
+	std::vector<std::vector<long int>> Table;
 
 	for (n = n_min; n <= n_max; n++) {
 
 
-		std::pair<long int, long int> P;
+		//std::pair<long int, long int> P;
+		std::vector<long int> data;
+
+		int nb_prime_factors;
+		int nb_dpf;
+		long int a;
 
 		a = euler_function(n);
 		if (f_v) {
-			cout << "eulerfunction of " << n << " is " << a << endl;
+			cout << "number_theory_domain::do_eulerfunction_interval "
+					"Euler function of " << n << " is " << a << endl;
 		}
 
-		P.first = n;
-		P.second = a;
+		nb_prime_factors = nb_prime_factors_counting_multiplicities(n);
+		if (f_v) {
+			cout << "number_theory_domain::do_eulerfunction_interval "
+					"number of prime factors of " << n << " is " << nb_prime_factors << endl;
+		}
 
-		Table.push_back(P);
+		nb_dpf = nb_distinct_prime_factors(n);
+		if (f_v) {
+			cout << "number_theory_domain::do_eulerfunction_interval "
+					"number of distinct prime factors of " << n << " is " << nb_dpf << endl;
+		}
+
+		data.push_back(n);
+		data.push_back(a);
+		data.push_back(nb_prime_factors);
+		data.push_back(nb_dpf);
+		//P.first = n;
+		//P.second = a;
+
+		Table.push_back(data);
 
 	}
-	T = NEW_lint(2 * Table.size());
+	T = NEW_lint(4 * Table.size());
 	for (i = 0; i < Table.size(); i++) {
-		T[2 * i + 0] = Table[i].first;
-		T[2 * i + 1] = Table[i].second;
+		T[i * 4 + 0] = Table[i][0];
+		T[i * 4 + 1] = Table[i][1];
+		T[i * 4 + 2] = Table[i][2];
+		T[i * 4 + 3] = Table[i][3];
 	}
 	sprintf(str, "table_eulerfunction_%ld_%ld.csv", n_min, n_max);
 	string fname;
@@ -507,11 +531,13 @@ void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_
 
 	string *Headers;
 
-	Headers = new string[2];
+	Headers = new string[4];
 	Headers[0].assign("N");
 	Headers[1].assign("PHI");
+	Headers[2].assign("NBPF");
+	Headers[3].assign("NBDPF");
 
-	Fio.lint_matrix_write_csv_override_headers(fname, Headers, T, Table.size(), 2);
+	Fio.lint_matrix_write_csv_override_headers(fname, Headers, T, Table.size(), 4);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -531,27 +557,30 @@ void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_
 
 
 long int number_theory_domain::euler_function(long int n)
-//Computes Eulers $\varphi$-function for $n$.
+//Computes Euler's $\varphi$-function for $n$.
 //Uses the prime factorization of $n$. before: eulerfunc
 {
-	int *primes;
-	int *exponents;
-	int len;
+	//int *primes;
+	//int *exponents;
+	vector<long int> primes;
+	vector<int> exponents;
+	//int len;
 	long int i, k, p1, e1;
 
-	len = factor_int(n, primes, exponents);
+	//len = factor_int(n, primes, exponents);
+	factor_lint(n, primes, exponents);
 
 	k = 1;
-	for (i = 0; i < len; i++) {
+	for (i = 0; i < primes.size(); i++) {
 		p1 = primes[i];
 		e1 = exponents[i];
 		if (e1 > 1) {
-			k *= i_power_j(p1, e1 - 1);
+			k *= i_power_j_lint(p1, e1 - 1);
 		}
 		k *= (p1 - 1);
 	}
-	FREE_int(primes);
-	FREE_int(exponents);
+	//FREE_int(primes);
+	//FREE_int(exponents);
 	return k;
 }
 
@@ -694,8 +723,8 @@ int number_theory_domain::lint_logq(long int n, int q)
 }
 
 int number_theory_domain::is_strict_prime_power(int q)
-// assuming that q is a prime power, this fuction tests 
-// whether or not q is a srict prime power
+// assuming that q is a prime power, this function tests
+// if q is a strict prime power
 {
 	int p;
 	
@@ -888,14 +917,42 @@ int number_theory_domain::factor_int(int a, int *&primes, int *&exponents)
 	return len;
 }
 
+int number_theory_domain::nb_prime_factors_counting_multiplicities(long int a)
+{
+	vector<long int> primes;
+	vector<int> exponents;
+	int cnt = 0;
+	int i;
+
+	factor_lint(a, primes, exponents);
+	for (i = 0; i < primes.size(); i++) {
+		cnt += exponents[i];
+	}
+	return cnt;
+}
+
+int number_theory_domain::nb_distinct_prime_factors(long int a)
+{
+	vector<long int> primes;
+	vector<int> exponents;
+
+	factor_lint(a, primes, exponents);
+	return primes.size();
+}
+
+
+
+
 void number_theory_domain::factor_lint(long int a, vector<long int> &primes, vector<int> &exponents)
 {
 	int p, p0;
 
+#if 0
 	if (a == 1) {
 		cout << "number_theory_domain::factor_lint, the number is one" << endl;
 		exit(1);
 		}
+#endif
 	if (a <= 0) {
 		cout << "number_theory_domain::factor_lint, the number is <= 0" << endl;
 		exit(1);
@@ -905,7 +962,7 @@ void number_theory_domain::factor_lint(long int a, vector<long int> &primes, vec
 		p = smallest_primedivisor(a);
 		a /= p;
 		if (p == p0) {
-			exponents[exponents.size()]++;
+			exponents[exponents.size() - 1]++;
 		}
 		else {
 			primes.push_back(p);
@@ -1839,15 +1896,59 @@ int number_theory_domain::get_prime_from_table(int idx)
 	return the_first_thousand_primes[idx];
 }
 
+long int number_theory_domain::Chinese_Remainders(
+		std::vector<long int> &Remainders,
+		std::vector<long int> &Moduli, long int &M, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_Remainders" << endl;
+	}
+
+	long int k, mr1, m1v, x;
+	long int r1, r2;
+	long int m1, m2;
+	int i;
+
+	r1 = Remainders[0];
+	m1 = Moduli[0];
+	x = r1;
+
+	for (i = 1; i < Remainders.size(); i++) {
+
+		r2 = Remainders[i];
+		m2 = Moduli[i];
+
+		mr1 = int_negate(r1, m2);
+
+		m1v = inverse_mod(m1, m2);
+
+		k = mult_mod(m1v, add_mod(r2, mr1, m2), m2);
+		x = r1 + k * m1;
+
+		r1 = x;
+		m1 *= m2;
+
+	}
+
+	M = m1;
+
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_Remainders" << endl;
+	}
+	return x;
+}
+
+
 long int number_theory_domain::ChineseRemainder2(long int a1, long int a2,
 		long int p1, long int p2, int verbose_level)
 {
 	long int k, ma1, p1v, x;
-	number_theory_domain NT;
 
 	ma1 = int_negate(a1, p2);
-	p1v = NT.inverse_mod(p1, p2);
-	k = NT.mult_mod(p1v, NT.add_mod(a2, ma1, p2), p2);
+	p1v = inverse_mod(p1, p2);
+	k = mult_mod(p1v, add_mod(a2, ma1, p2), p2);
 	x = a1 + k * p1;
 	return x;
 }
@@ -2528,6 +2629,61 @@ int number_theory_domain::eulers_totient_function(int n, int verbose_level)
 		cout << "number_theory_domain::eulers_totient_function done" << endl;
 	}
 	return R.as_int();
+}
+
+void number_theory_domain::do_jacobi(long int jacobi_top, long int jacobi_bottom, int verbose_level)
+{
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
+
+
+	char str[1000];
+
+	snprintf(str, 1000, "jacobi_%ld_%ld.tex", jacobi_top, jacobi_bottom);
+	fname.assign(str);
+	snprintf(str, 1000, "Jacobi %ld over %ld", jacobi_top, jacobi_bottom);
+	title.assign(str);
+
+	{
+	ofstream f(fname);
+
+
+	orbiter_kernel_system::latex_interface L;
+
+
+	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
+		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+			TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */,
+			TRUE /* f_pagenumbers */,
+			extra_praeamble /* extra_praeamble */);
+
+
+	number_theory::number_theory_domain NT;
+	ring_theory::longinteger_domain D;
+
+	ring_theory::longinteger_object A, B;
+
+	A.create(jacobi_top, __FILE__, __LINE__);
+
+	B.create(jacobi_bottom, __FILE__, __LINE__);
+
+	D.jacobi(A, B, verbose_level);
+
+	NT.Jacobi_with_key_in_latex(f,
+			jacobi_top, jacobi_bottom, verbose_level);
+	//Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
+
+	L.foot(f);
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
 }
 
 

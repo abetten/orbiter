@@ -68,7 +68,6 @@ interface_algebra::interface_algebra()
 	all_rational_normal_forms_d = 0;
 
 	f_eigenstuff = FALSE;
-	f_eigenstuff_from_file = FALSE;
 	//std::string eigenstuff_finite_field_label;
 	eigenstuff_n = 0;
 	//eigenstuff_coeffs = NULL;
@@ -122,9 +121,6 @@ void interface_algebra::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
 		cout << "-eigenstuff <string : finite_field_label> <int : n> <intvec : coeffs>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-eigenstuff_from_file") == 0) {
-		cout << "-eigenstuff_from_file <string : finite_field_label>  <int : n> <string : fname>" << endl;
-	}
 }
 
 
@@ -177,9 +173,6 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-eigenstuff_from_file") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -318,6 +311,7 @@ void interface_algebra::read_arguments(int argc,
 				<< " " << eigenstuff_coeffs << endl;
 		}
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
 		f_eigenstuff_from_file = TRUE;
 		eigenstuff_finite_field_label.assign(argv[++i]);
@@ -330,6 +324,7 @@ void interface_algebra::read_arguments(int argc,
 					<< " " << eigenstuff_fname << endl;
 		}
 	}
+#endif
 
 }
 
@@ -397,11 +392,13 @@ void interface_algebra::print()
 			<< eigenstuff_n << " "
 			<< eigenstuff_coeffs << endl;
 	}
+#if 0
 	if (f_eigenstuff_from_file) {
 		cout << "-eigenstuff_from_file "
 				<< eigenstuff_finite_field_label << " " << eigenstuff_n
 			<< " " << eigenstuff_fname << endl;
 	}
+#endif
 
 }
 
@@ -553,6 +550,7 @@ void interface_algebra::worker(int verbose_level)
 
 	}
 
+#if 0
 	else if (f_eigenstuff_from_file) {
 
 
@@ -567,6 +565,7 @@ void interface_algebra::worker(int verbose_level)
 #endif
 
 	}
+#endif
 
 
 

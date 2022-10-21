@@ -20,6 +20,7 @@ namespace projective_geometry {
 
 canonical_form_nauty::canonical_form_nauty()
 {
+#if 0
 	idx = 0;
 	eqn = NULL;
 	sz = 0;
@@ -29,6 +30,9 @@ canonical_form_nauty::canonical_form_nauty()
 
 	bitangents = NULL;
 	nb_bitangents = 0;
+#endif
+
+	Qco = NULL;
 
 	nb_rows = 0;
 	nb_cols = 0;
@@ -52,13 +56,7 @@ void canonical_form_nauty::quartic_curve(
 		projective_space_with_action *PA,
 		ring_theory::homogeneous_polynomial_domain *Poly4_x123,
 		induced_actions::action_on_homogeneous_polynomials *AonHPD,
-		//int idx,
 		quartic_curve_object *Qco,
-#if 0
-		int *eqn, int sz,
-		long int *Pts_on_curve, int sz_curve,
-		long int *bitangents, int nb_bitangents,
-#endif
 		int *canonical_equation,
 		int *transporter_to_canonical_form,
 		groups::strong_generators *&gens_stab_of_canonical_equation,
@@ -71,6 +69,7 @@ void canonical_form_nauty::quartic_curve(
 		cout << "canonical_form_nauty::quartic_curve" << endl;
 	}
 
+#if 0
 	canonical_form_nauty::idx = Qco->cnt;
 	canonical_form_nauty::eqn = Qco->eqn;
 	canonical_form_nauty::sz = Qco->sz;
@@ -78,10 +77,13 @@ void canonical_form_nauty::quartic_curve(
 	canonical_form_nauty::sz_curve = Qco->nb_pts;
 	canonical_form_nauty::bitangents = Qco->bitangents;
 	canonical_form_nauty::nb_bitangents = Qco->nb_bitangents;
+#endif
+
+	canonical_form_nauty::Qco = Qco;
 
 	if (f_v) {
 		cout << "equation is:";
-		Poly4_x123->print_equation_simple(cout, eqn);
+		Poly4_x123->print_equation_simple(cout, Qco->eqn);
 		cout << endl;
 	}
 
@@ -94,13 +96,15 @@ void canonical_form_nauty::quartic_curve(
 	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve before OwCF->init_point_set" << endl;
+		cout << "canonical_form_nauty::quartic_curve "
+				"before OwCF->init_point_set" << endl;
 	}
 	OwCF->init_point_set(
-			Pts_on_curve, sz_curve,
+			Qco->pts, Qco->nb_pts,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve after OwCF->init_point_set" << endl;
+		cout << "canonical_form_nauty::quartic_curve "
+				"after OwCF->init_point_set" << endl;
 	}
 	OwCF->P = PA->P;
 
@@ -170,7 +174,7 @@ void canonical_form_nauty::quartic_curve(
 
 	//orbit_of_equations *Orb;
 
-	Orb = NEW_OBJECT(orbit_of_equations);
+	Orb = NEW_OBJECT(orbits_schreier::orbit_of_equations);
 
 
 #if 1
@@ -180,7 +184,7 @@ void canonical_form_nauty::quartic_curve(
 	}
 	Orb->init(PA->A, PA->F,
 		AonHPD,
-		SG_pt_stab /* A->Strong_gens*/, eqn,
+		SG_pt_stab /* A->Strong_gens*/, Qco->eqn,
 		verbose_level);
 	if (f_v) {
 		cout << "canonical_form_nauty::quartic_curve "

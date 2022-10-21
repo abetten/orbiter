@@ -56,19 +56,9 @@ surface_object_with_action::surface_object_with_action()
 	Orbits_on_Hesse_planes = NULL;
 	Orbits_on_trihedral_pairs = NULL;
 	Orbits_on_points_not_on_lines = NULL;
-	null();
 }
 
 surface_object_with_action::~surface_object_with_action()
-{
-	freeself();
-}
-
-void surface_object_with_action::null()
-{
-}
-
-void surface_object_with_action::freeself()
 {
 	if (projectivity_group_gens) {
 		FREE_OBJECT(projectivity_group_gens);
@@ -130,7 +120,6 @@ void surface_object_with_action::freeself()
 	if (Orbits_on_points_not_on_lines) {
 		FREE_OBJECT(Orbits_on_points_not_on_lines);
 	}
-	null();
 }
 
 void surface_object_with_action::init_equation(
@@ -204,7 +193,9 @@ void surface_object_with_action::init_with_group(
 	}
 
 	algebraic_geometry::surface_object *SO;
+
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+
 	if (nb_lines == 27) {
 		if (f_v) {
 			cout << "surface_object_with_action::init_with_group "

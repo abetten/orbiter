@@ -2346,6 +2346,93 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	}
 }
 
+void strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
+		actions::action *A_given, long int *Set, int set_sz,
+		int desired_orbit_length,
+		int desired_orbit_idx,
+		long int *&extracted_set,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length" << endl;
+		cout << "action=";
+		A->print_info();
+		cout << "set=";
+		Lint_vec_print(cout, Set, set_sz);
+	}
+
+	actions::action *Ar;
+	orbits_on_something *Orb;
+	std::string prefix;
+
+	Ar = A_given->restricted_action(Set, set_sz, verbose_level);
+
+	Orb = NEW_OBJECT(orbits_on_something);
+
+	prefix.assign(Ar->label);
+
+	Orb->init(Ar,
+			this,
+			FALSE /* f_load_save */,
+			prefix,
+			verbose_level);
+
+	data_structures::tally *Classify_orbits_by_length;
+	data_structures::set_of_sets *SoS;
+	int *types;
+	int nb_types;
+	int idx, orb_idx, len;
+
+	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
+	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, FALSE, 0);
+
+	SoS = Classify_orbits_by_length->get_set_partition_and_types(types,
+			nb_types, verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length" << endl;
+		cout << "types=";
+		Int_vec_print(cout, types, nb_types);
+		cout << endl;
+	}
+
+	for (idx = 0; idx < nb_types; idx++) {
+		if (types[idx] == desired_orbit_length) {
+			break;
+		}
+	}
+	if (idx == nb_types) {
+		cout << "could not find orbit of length " << desired_orbit_length << endl;
+		exit(1);
+	}
+	if (desired_orbit_idx >= SoS->Set_size[idx]) {
+		cout << "Orbit of length " << desired_orbit_length << ": desired index is out of range" << endl;
+		exit(1);
+	}
+
+	orb_idx = SoS->Sets[idx][desired_orbit_idx];
+	extracted_set = NEW_lint(desired_orbit_length);
+
+	Orb->Sch->get_orbit(orb_idx, extracted_set, len, verbose_level);
+	if (len != desired_orbit_length) {
+		cout << "len != desired_orbit_length" << endl;
+		exit(1);
+	}
+
+	//Classify_orbits_by_length->print_naked_stringstream(orbit_type, TRUE /* f_backwards */);
+
+
+	FREE_OBJECT(SoS);
+	FREE_OBJECT(Classify_orbits_by_length);
+	FREE_OBJECT(Orb);
+	FREE_OBJECT(Ar);
+
+	if (f_v) {
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length done" << endl;
+	}
+}
 
 
 

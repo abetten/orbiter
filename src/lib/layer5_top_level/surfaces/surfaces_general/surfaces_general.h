@@ -30,11 +30,12 @@ public:
 
 	int f_report_with_group;
 
-	int f_export_points;
+	int f_export_something;
+	std::string export_something_what;
 
-	int f_clebsch;
+	//int f_clebsch;
 
-	int f_codes;
+	//int f_codes;
 
 	int f_all_quartic_curves;
 
@@ -208,7 +209,9 @@ public:
 	void compute_group(
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
-	// ToDo
+		// not working ToDo
+	void export_something(std::string &what, int verbose_level);
+	void do_report(int verbose_level);
 
 };
 
@@ -225,11 +228,6 @@ public:
 class surface_create_description {
 
 public:
-
-#if 0
-	int f_q;
-	int q;
-#endif
 
 	int f_space;
 	std::string space_label;
@@ -323,7 +321,6 @@ public:
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	//int get_q();
 };
 
 
@@ -481,8 +478,6 @@ public:
 
 	surface_object_with_action();
 	~surface_object_with_action();
-	void null();
-	void freeself();
 	void init_equation(surface_with_action *Surf_A, int *eqn,
 			groups::strong_generators *Aut_gens, int verbose_level);
 	void init_with_group(surface_with_action *Surf_A,
@@ -722,12 +717,6 @@ public:
 	void create_surface_object_with_action(
 			surface_create *SC,
 			surface_object_with_action *&SoA,
-			int verbose_level);
-	void export_points(
-			surface_create *SC,
-			int verbose_level);
-	void do_report(
-			surface_create *SC,
 			int verbose_level);
 	void sweep_4_15_lines(
 			surface_create_description *Surface_Descr,

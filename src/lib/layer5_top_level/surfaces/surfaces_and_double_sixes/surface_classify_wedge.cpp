@@ -41,20 +41,10 @@ surface_classify_wedge::surface_classify_wedge()
 	Flag_orbits = NULL;
 	Surfaces = NULL;
 	
-	//null();
 
 }
 
 surface_classify_wedge::~surface_classify_wedge()
-{
-	freeself();
-}
-
-void surface_classify_wedge::null()
-{
-}
-
-void surface_classify_wedge::freeself()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -70,7 +60,7 @@ void surface_classify_wedge::freeself()
 #endif
 
 	if (f_v) {
-		cout << "surface_classify_wedge::freeself" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge" << endl;
 	}
 	if (Elt0) {
 		FREE_int(Elt0);
@@ -86,28 +76,27 @@ void surface_classify_wedge::freeself()
 	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::freeself before FREE_OBJECTS(Flag_orbits)" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge before FREE_OBJECTS(Flag_orbits)" << endl;
 	}
 	if (Flag_orbits) {
 		FREE_OBJECT(Flag_orbits);
 	}
 	if (f_v) {
-		cout << "surface_classify_wedge::freeself before FREE_OBJECTS(Surfaces)" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge before FREE_OBJECTS(Surfaces)" << endl;
 	}
 	if (Surfaces) {
 		FREE_OBJECT(Surfaces);
 	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::freeself before FREE_OBJECTS(Classify_double_sixes)" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge before FREE_OBJECTS(Classify_double_sixes)" << endl;
 	}
 	if (Classify_double_sixes) {
 		FREE_OBJECT(Classify_double_sixes);
 	}
 	if (f_v) {
-		cout << "surface_classify_wedge::freeself done" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge done" << endl;
 	}
-	null();
 }
 
 void surface_classify_wedge::init(

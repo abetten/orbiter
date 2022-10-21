@@ -35,30 +35,31 @@ classify_trihedral_pairs::classify_trihedral_pairs()
 {
 	q = 0;
 	F = NULL;
+	A = NULL;
+
 	Surf_A = NULL;
 	Surf = NULL;
+
 	gens_type1 = NULL;
 	gens_type2 = NULL;
+
 	Poset1 = NULL;
 	Poset2 = NULL;
 	orbits_on_trihedra_type1 = NULL;
 	orbits_on_trihedra_type2 = NULL;
+
+	nb_orbits_type1 = 0;
+	nb_orbits_type2 = 0;
+	nb_orbits_ordered_total = 0;
+
 	Flag_orbits = NULL;
 	nb_orbits_trihedral_pairs = 0;
 	Trihedral_pairs = NULL;
-	null();
 }
+
+
 
 classify_trihedral_pairs::~classify_trihedral_pairs()
-{
-	freeself();
-}
-
-void classify_trihedral_pairs::null()
-{
-}
-
-void classify_trihedral_pairs::freeself()
 {
 	if (gens_type1) {
 		FREE_OBJECT(gens_type1);
@@ -84,7 +85,6 @@ void classify_trihedral_pairs::freeself()
 	if (Trihedral_pairs) {
 		FREE_OBJECT(Trihedral_pairs);
 	}
-	null();
 }
 
 void classify_trihedral_pairs::init(

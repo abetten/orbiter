@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace set_stabilizer {
 
 
 
@@ -814,4 +815,5 @@ void stabilizer_orbits_and_types::print_minimal_orbit_pattern()
 
 
 
-}}
+}}}
+

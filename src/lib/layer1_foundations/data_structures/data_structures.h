@@ -1487,7 +1487,7 @@ public:
 	void get_value_double_or_NA(int i, int j, double &val, int &f_NA);
 	//void get_string_entry(std::string &entry, int i, int j);
 	void get_string(std::string &str, int i, int j);
-	long int get_int(int i, int j);
+	long int get_lint(int i, int j);
 	double get_double(int i, int j);
 	void join_with(spreadsheet *S2, int by1, int by2, 
 		int verbose_level);
@@ -1884,7 +1884,7 @@ public:
 
 	field_theory::finite_field *F;
 
-	int *v;
+	long int *v;
 	int len;
 
 	int f_has_k;

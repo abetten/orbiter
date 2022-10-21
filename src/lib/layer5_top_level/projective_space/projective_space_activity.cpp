@@ -159,63 +159,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 
 
-#if 0
-	else if (Descr->f_define_object) {
-		cout << "-define_object " << Descr->define_object_label << endl;
-		Descr->Object_Descr->print();
-
-		geometry::geometric_object_create *GeoObj;
-
-		GeoObj = NEW_OBJECT(geometry::geometric_object_create);
-
-		GeoObj->init(Descr->Object_Descr, PA->P, verbose_level);
-
-		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
-
-		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-
-		Symb->init_geometric_object(Descr->define_object_label, GeoObj, verbose_level);
-		if (f_v) {
-			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_object_label << endl;
-		}
-		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_object_label, Symb, verbose_level);
-
-	}
-#endif
-
-#if 0
-	else if (Descr->f_define_surface) {
-
-		cout << "f_define_surface label = " << Descr->define_surface_label << endl;
-
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC;
-
-		projective_space_global G;
-
-		G.do_create_surface(
-			PA,
-			Descr->Surface_Descr,
-			Surf_A,
-			SC,
-			verbose_level);
-
-		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
-
-		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-
-		Symb->init_cubic_surface(Descr->define_surface_label, SC, verbose_level);
-		if (f_v) {
-			cout << "before Orbiter->add_symbol_table_entry "
-					<< Descr->define_surface_label << endl;
-		}
-		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->define_surface_label, Symb, verbose_level);
-
-
-		//FREE_OBJECT(SC);
-		//FREE_OBJECT(Surf_A);
-	}
-#endif
 
 	else if (Descr->f_table_of_quartic_curves) {
 
@@ -377,21 +320,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
-#if 0
-	else if (Descr->f_create_surface) {
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-
-		surface_domain_high_level SH;
-
-		SH.do_create_surface(
-				PA,
-				Descr->surface_description, Descr->Control_six_arcs,
-				verbose_level);
-	}
-#endif
 	else if (Descr->f_six_arcs_not_on_conic) {
 		if (!Descr->f_control_six_arcs) {
 			cout << "please use option -control_six_arcs <description> -end" << endl;
@@ -407,34 +335,9 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
-#if 0
-	else if (Descr->f_spread_classify) {
-
-#if 0
-		projective_space_global G;
-
-		G.do_spread_classify(PA,
-				Descr->spread_classify_k,
-				Descr->spread_classify_Control,
-				verbose_level);
-#endif
-		PA->do_spread_classify(Descr->spread_classify_k,
-				Descr->spread_classify_Control,
-				verbose_level);
-	}
-#endif
 
 	else if (Descr->f_classify_semifields) {
 
-#if 0
-		projective_space_global G;
-
-		G.do_classify_semifields(
-				PA,
-				Descr->Semifield_classify_description,
-				Descr->Semifield_classify_Control,
-				verbose_level);
-#endif
 		semifields::semifield_classify_with_substructure *S;
 
 		S = NEW_OBJECT(semifields::semifield_classify_with_substructure);
@@ -466,14 +369,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
-#if 0
-		projective_space_global G;
-
-		G.do_cheat_sheet_PG(
-				PA,
-				O,
-				verbose_level);
-#endif
 		PA->cheat_sheet(O, verbose_level);
 
 	}
@@ -830,6 +725,257 @@ void projective_space_activity::perform_activity(int verbose_level)
 		FREE_int(M);
 
 	}
+	else if (Descr->f_restricted_incidence_matrix) {
+
+		cout << "f_restricted_incidence_matrix:" << endl;
+
+		long int *Row_objects;
+		int nb_row_objects;
+		long int *Col_objects;
+		int nb_col_objects;
+		int i, j;
+		int type_i = Descr->restricted_incidence_matrix_type_row_objects;
+		int type_j = Descr->restricted_incidence_matrix_type_col_objects;
+
+		int *M;
+
+		Get_vector_or_set(Descr->restricted_incidence_matrix_row_objects, Row_objects, nb_row_objects);
+		Get_vector_or_set(Descr->restricted_incidence_matrix_col_objects, Col_objects, nb_col_objects);
+
+		M = NEW_int(nb_row_objects * nb_col_objects);
+		Int_vec_zero(M, nb_row_objects * nb_col_objects);
+
+		for (i = 0; i < nb_row_objects; i++) {
+
+			for (j = 0; j < nb_col_objects; j++) {
+
+				if (PA->P->incidence_test_for_objects_of_type_ij(
+					type_i, type_j, Row_objects[i], Col_objects[j],
+					0 /* verbose_level */)) {
+					M[i * nb_col_objects + j] = 1;
+				}
+			}
+		}
+
+		orbiter_kernel_system::file_io Fio;
+		string fname_csv;
+		string fname_inc;
+
+		fname_csv.assign(Descr->restricted_incidence_matrix_file_name);
+		fname_inc.assign(Descr->restricted_incidence_matrix_file_name);
+
+		fname_csv.append(".csv");
+		Fio.int_matrix_write_csv(fname_csv, M, nb_row_objects, nb_col_objects);
+		cout << "written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+
+		fname_inc.append(".inc");
+		Fio.write_incidence_matrix_to_file(fname_inc,
+			M, nb_row_objects, nb_col_objects, 0 /*verbose_level*/);
+		cout << "written file " << fname_inc << " of size "
+				<< Fio.file_size(fname_inc) << endl;
+
+		FREE_int(M);
+
+	}
+
+
+
+
+	else if (Descr->f_make_relation) {
+
+		cout << "f_make_relation:" << endl;
+
+
+		//long int plane_rk = 0;
+		long int line_rk = 0;
+		long int *the_points; // [7]
+		long int *the_outside_points; // [8]
+		long int *the_outside_lines; // [28]
+		long int *the_inside_lines; // [21]
+		long int *points_on_inside_lines; // [21]
+		int nb_points;
+		int nb_points_outside;
+		int nb_lines_outside;
+		int nb_lines_inside;
+		int pair[2];
+		int i;
+		long int p1, p2;
+
+		combinatorics::combinatorics_domain Combi;
+		data_structures::sorting Sorting;
+
+
+
+		PA->P->points_covered_by_plane(Descr->make_relation_plane_rk,
+				the_points, nb_points, 0 /* verbose_level */);
+
+		Sorting.lint_vec_heapsort(the_points, nb_points);
+
+
+		if (nb_points != 7) {
+			cout << "f_make_relation wrong projective space, must be PG(3,2)" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "f_make_relation the_points : " << nb_points << " : ";
+			Lint_vec_print(cout, the_points, nb_points);
+			cout << endl;
+		}
+
+		the_outside_points = NEW_lint(8);
+		the_outside_lines = NEW_lint(28);
+		the_inside_lines = NEW_lint(21);
+		points_on_inside_lines = NEW_lint(21);
+
+		Combi.set_complement_lint(the_points, nb_points, the_outside_points,
+				nb_points_outside, 15 /* universal_set_size */);
+
+		if (nb_points_outside != 8) {
+			cout << "f_make_relation nb_points_outside != 8" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "f_make_relation the_outside_points : " << nb_points_outside << " : ";
+			Lint_vec_print(cout, the_outside_points, nb_points_outside);
+			cout << endl;
+		}
+
+		nb_lines_outside = 28;
+
+		for (i = 0; i < nb_lines_outside; i++) {
+			Combi.unrank_k_subset(i, pair, 8, 2);
+			p1 = the_outside_points[pair[0]];
+			p2 = the_outside_points[pair[1]];
+			line_rk = PA->P->line_through_two_points(p1, p2);
+			the_outside_lines[i] = line_rk;
+		}
+
+		Sorting.lint_vec_heapsort(the_outside_lines, nb_lines_outside);
+
+		if (f_v) {
+			cout << "f_make_relation the_outside_lines : " << nb_lines_outside << " : ";
+			Lint_vec_print(cout, the_outside_lines, nb_lines_outside);
+			cout << endl;
+		}
+
+
+		nb_lines_inside = 21;
+
+		for (i = 0; i < nb_lines_inside; i++) {
+			Combi.unrank_k_subset(i, pair, 7, 2);
+			p1 = the_points[pair[0]];
+			p2 = the_points[pair[1]];
+			line_rk = PA->P->line_through_two_points(p1, p2);
+			the_inside_lines[i] = line_rk;
+		}
+
+		if (f_v) {
+			cout << "f_make_relation the_inside_lines : " << nb_lines_inside << " : ";
+			Lint_vec_print(cout, the_inside_lines, nb_lines_inside);
+			cout << endl;
+		}
+
+
+		Sorting.lint_vec_sort_and_remove_duplicates(the_inside_lines, nb_lines_inside);
+		if (nb_lines_inside != 7) {
+			cout << "f_make_relation nb_lines_inside != 7" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "f_make_relation the_inside_lines : " << nb_lines_inside << " : ";
+			Lint_vec_print(cout, the_inside_lines, nb_lines_inside);
+			cout << endl;
+		}
+
+
+
+		for (i = 0; i < nb_lines_inside; i++) {
+			long int *pts;
+			int nb;
+
+			PA->P->points_on_line(the_inside_lines[i],
+					pts, nb, 0 /* verbose_level */);
+			if (nb != 3) {
+				cout << "f_make_relation nb != 3" << endl;
+			}
+			Lint_vec_copy(pts, points_on_inside_lines + i * 3, 3);
+			Sorting.lint_vec_heapsort(points_on_inside_lines + i * 3, 3);
+			FREE_lint(pts);
+		}
+
+
+		if (f_v) {
+			cout << "f_make_relation points_on_inside_lines : " << endl;
+			Lint_matrix_print(points_on_inside_lines, nb_lines_inside, 3);
+			cout << endl;
+		}
+
+
+		//int j;
+
+		int *M;
+
+		int nb_pts;
+		int nb_lines;
+
+		nb_pts = 21;
+		nb_lines = 28;
+
+		M = NEW_int(nb_pts * nb_lines);
+		Int_vec_zero(M, nb_pts * nb_lines);
+
+
+		int pt_idx, pt_on_line_idx;
+		long int pt, line;
+
+		for (i = 0; i < nb_pts; i++) {
+
+			pt_idx = i / 3;
+			pt_on_line_idx = i % 3;
+			line = the_inside_lines[pt_idx];
+			pt = points_on_inside_lines[pt_idx * 3 + pt_on_line_idx];
+
+
+#if 0
+			for (j = 0; j < nb_lines; j++) {
+
+				if (PA->P->incidence_test_for_objects_of_type_ij(
+					type_i, type_j, Pts[i], Lines[j],
+					0 /* verbose_level */)) {
+					M[i * nb_lines + j] = 1;
+				}
+			}
+#endif
+
+		}
+
+
+		orbiter_kernel_system::file_io Fio;
+		string fname_csv;
+		string fname_inc;
+
+		fname_csv.assign("relation");
+		fname_inc.assign("relation");
+
+		fname_csv.append(".csv");
+		Fio.int_matrix_write_csv(fname_csv, M, nb_pts, nb_lines);
+		cout << "written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+
+		fname_inc.append(".inc");
+		Fio.write_incidence_matrix_to_file(fname_inc,
+			M, nb_pts, nb_lines, 0 /*verbose_level*/);
+		cout << "written file " << fname_inc << " of size "
+				<< Fio.file_size(fname_inc) << endl;
+
+		FREE_int(M);
+
+	}
+
 
 
 	if (f_v) {

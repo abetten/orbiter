@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace orbits_schreier {
 
 orbit_of_subspaces::orbit_of_subspaces()
 {
@@ -1159,7 +1160,8 @@ void orbit_of_subspaces::compute_stabilizer(
 
 
 
-}}
+}}}
+
 
 
 

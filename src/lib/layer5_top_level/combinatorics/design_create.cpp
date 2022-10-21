@@ -45,19 +45,9 @@ design_create::design_create()
 	P = NULL;
 	block = NULL;
 
-	//null();
 }
 
 design_create::~design_create()
-{
-	freeself();
-}
-
-void design_create::null()
-{
-}
-
-void design_create::freeself()
 {
 	if (F) {
 		FREE_OBJECT(F);
@@ -74,7 +64,6 @@ void design_create::freeself()
 	if (block) {
 		FREE_int(block);
 	}
-	null();
 }
 
 void design_create::init(apps_combinatorics::design_create_description *Descr, int verbose_level)

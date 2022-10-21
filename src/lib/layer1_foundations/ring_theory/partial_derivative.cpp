@@ -27,15 +27,9 @@ partial_derivative::partial_derivative()
 	v = NULL;
 	variable_idx = 0;
 	mapping = NULL;
-	null();
 }
 
 partial_derivative::~partial_derivative()
-{
-	freeself();
-}
-
-void partial_derivative::freeself()
 {
 	if (mapping) {
 		FREE_int(mapping);
@@ -43,11 +37,6 @@ void partial_derivative::freeself()
 	if (v) {
 		FREE_int(v);
 	}
-	null();
-}
-
-void partial_derivative::null()
-{
 }
 
 void partial_derivative::init(homogeneous_polynomial_domain *H,
@@ -60,7 +49,7 @@ void partial_derivative::init(homogeneous_polynomial_domain *H,
 
 	if (f_v) {
 		cout << "partial_derivative::init" << endl;
-		}
+	}
 	partial_derivative::H = H;
 	partial_derivative::Hd = Hd;
 	partial_derivative::variable_idx = variable_idx;
@@ -99,7 +88,7 @@ void partial_derivative::init(homogeneous_polynomial_domain *H,
 
 	if (f_v) {
 		cout << "partial_derivative::init done" << endl;
-		}
+	}
 
 }
 
@@ -111,14 +100,14 @@ void partial_derivative::apply(int *eqn_in,
 
 	if (f_v) {
 		cout << "partial_derivative::apply" << endl;
-		}
+	}
 
 	H->get_F()->Linear_algebra->mult_vector_from_the_left(eqn_in, mapping,
 			eqn_out, H->get_nb_monomials(), Hd->get_nb_monomials());
 
 	if (f_v) {
 		cout << "partial_derivative::apply done" << endl;
-		}
+	}
 }
 
 

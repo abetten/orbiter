@@ -205,8 +205,6 @@ public:
 
 	semifield_classify();
 	~semifield_classify();
-	void null();
-	void freeself();
 	void init(
 			projective_geometry::projective_space_with_action *PA,
 			int k,
@@ -269,7 +267,7 @@ public:
 	void compute_orbit_of_subspaces(
 		long int *input_data,
 		groups::strong_generators *stabilizer_gens,
-		orbit_of_subspaces *&Orb,
+		orbits_schreier::orbit_of_subspaces *&Orb,
 		int verbose_level);
 	// allocates an orbit_of_subspaces data structure in Orb
 	void init_desired_pivots(int verbose_level);
@@ -668,7 +666,7 @@ public:
 	int *Len;
 	int nb_orbits_at_level_3;
 	int nb_orb_total; // = sum_i Nb_orb[i]
-	orbit_of_subspaces ***All_Orbits; // [nb_non_unique_cases_with_non_trivial_group]
+	orbits_schreier::orbit_of_subspaces ***All_Orbits; // [nb_non_unique_cases_with_non_trivial_group]
 	int *Nb_orb; // [nb_non_unique_cases_with_non_trivial_group]
 		// Nb_orb[i] is the number of orbits in All_Orbits[i]
 	int **Orbit_idx; // [nb_non_unique_cases_with_non_trivial_group]
@@ -757,8 +755,6 @@ public:
 
 	semifield_downstep_node();
 	~semifield_downstep_node();
-	void null();
-	void freeself();
 	void init(semifield_lifting *SL, int level, int orbit_number,
 		long int *Candidates, int nb_candidates, int first_flag_orbit,
 		int verbose_level);
@@ -793,8 +789,6 @@ public:
 
 	semifield_flag_orbit_node();
 	~semifield_flag_orbit_node();
-	void null();
-	void freeself();
 	void init(int downstep_primary_orbit, int downstep_secondary_orbit,
 		int pt_local, long int pt, int downstep_orbit_len, int f_long_orbit,
 		int verbose_level);

@@ -745,6 +745,47 @@ void longinteger_domain::integral_division_by_lint(
 	r = R.as_lint();
 }
 
+void longinteger_domain::inverse_mod(
+	longinteger_object &a,
+	longinteger_object &m, longinteger_object &av, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_object g, u, v;
+	//int c;
+
+	if (f_v) {
+		cout << "longinteger_domain::inverse_mod "
+				"a=" << a << " m=" << m << endl;
+	}
+	extended_gcd(
+		a,
+		m, g,
+		u, v, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "longinteger_domain::inverse_mod ";
+		g.print(cout);
+		cout << " = ";
+		u.print(cout);
+		cout << " * ";
+		a.print(cout);
+		cout << " + ";
+		v.print(cout);
+		cout << " * ";
+		m.print(cout);
+		cout << endl;
+	}
+	if (u.sign()) {
+		subtract_signless(m, u, av);
+	}
+	else {
+		u.assign_to(av);
+	}
+	if (f_v) {
+		cout << "longinteger_domain::inverse_mod "
+				"a=" << a << " m=" << m << " av=" << av << endl;
+	}
+}
+
 void longinteger_domain::extended_gcd(
 	longinteger_object &a,
 	longinteger_object &b, longinteger_object &g, 
@@ -2154,6 +2195,115 @@ void longinteger_domain::print_digits(char *rep, int len)
 	}
 }
 
+
+void longinteger_domain::Chinese_Remainders(
+		std::vector<long int> &Remainders,
+		std::vector<long int> &Moduli,
+		longinteger_object &x, longinteger_object &M, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "longinteger_domain::Chinese_Remainders" << endl;
+	}
+
+	longinteger_object k, mr1, m1v;
+	longinteger_object r1, r2;
+	longinteger_object m1, m2;
+	longinteger_object q, r1r, c, e;
+	int i;
+
+	r1.create(Remainders[0], __FILE__, __LINE__);
+	m1.create(Moduli[0], __FILE__, __LINE__);
+	x.create(Remainders[0], __FILE__, __LINE__);
+
+
+	for (i = 1; i < Remainders.size(); i++) {
+
+		r2.create(Remainders[i], __FILE__, __LINE__);
+		m2.create(Moduli[i], __FILE__, __LINE__);
+
+
+		integral_division(
+				r1, m2,
+				q, r1r,
+				0 /*verbose_level*/);
+
+		subtract_signless(m2, r1r, mr1);
+				// c = a - b, assuming a > b
+
+		if (f_v) {
+			cout << "longinteger_domain::Chinese_Remainders i=" << i << " -r1 mod m2=" << mr1 << endl;
+		}
+
+		//mr1 = int_negate(r1, m2);
+
+		inverse_mod(
+				m1,
+				m2, m1v, verbose_level);
+
+		if (f_v) {
+			cout << "longinteger_domain::Chinese_Remainders i=" << i << " m1^-1 mod m2=" << m1v << endl;
+		}
+		//m1v = inverse_mod(m1, m2);
+
+		//k = mult_mod(m1v, add_mod(r2, mr1, m2), m2);
+
+
+		add_mod(r2,
+				mr1, c,
+				m2, 0 /* verbose_level*/);
+
+		if (f_v) {
+			cout << "longinteger_domain::Chinese_Remainders i=" << i << " r2-r1=" << c << endl;
+		}
+
+
+		mult_mod(m1v,
+				c, k,
+				m2, 0 /* verbose_level*/);
+
+		if (f_v) {
+			cout << "longinteger_domain::Chinese_Remainders i=" << i << " m1^-1 * (r2-r1) = " << k << endl;
+		}
+
+
+		//x = r1 + k * m1;
+
+		mult(k, m1, e);
+
+
+		if (f_v) {
+			cout << "longinteger_domain::Chinese_Remainders i=" << i << " k * m1 = " << e << endl;
+		}
+
+		add_in_place(r1, e);
+
+
+		if (f_v) {
+			cout << "longinteger_domain::Chinese_Remainders i=" << i << " r1 = " << r1 << endl;
+		}
+
+		r1.assign_to(x);
+
+		//r1 = x;
+		//m1 *= m2;
+		mult_in_place(m1, m2);
+
+		if (f_v) {
+			cout << "longinteger_domain::Chinese_Remainders i=" << i << " x=" << x << " m1=" << m1 << endl;
+		}
+
+
+	}
+
+	m1.assign_to(M);
+	//M = m1;
+
+	if (f_v) {
+		cout << "longinteger_domain::Chinese_Remainders" << endl;
+	}
+}
 
 
 

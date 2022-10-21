@@ -1320,7 +1320,7 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 #else
 
 
-	orbit_of_sets Orb;
+	orbits_schreier::orbit_of_sets Orb;
 	long int set[1];
 	orbiter_kernel_system::file_io Fio;
 
@@ -1512,6 +1512,7 @@ void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
 }
 
 void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_level)
+// called from group_theoretic_activity: f_orbit_of_set_from_file
 {
 	int f_v = (verbose_level >= 1);
 

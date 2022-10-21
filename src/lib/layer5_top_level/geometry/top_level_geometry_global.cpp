@@ -41,9 +41,9 @@ void top_level_geometry_global::set_stabilizer_projective_space(
 		cout << "top_level_geometry_global::set_stabilizer_projective_space" << endl;
 	}
 
-	substructure_classifier *SubC;
+	set_stabilizer::substructure_classifier *SubC;
 
-	SubC = NEW_OBJECT(substructure_classifier);
+	SubC = NEW_OBJECT(set_stabilizer::substructure_classifier);
 
 	SubC->set_stabilizer_in_any_space(
 			PA->A, PA->A, PA->A->Strong_gens,
@@ -533,104 +533,6 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 		cout << "top_level_geometry_global::report_decomposition_by_single_automorphism done" << endl;
 	}
 }
-
-#if 0
-void top_level_geometry_global::do_Andre_Bruck_Bose_construction(
-		actions::action *An,
-		actions::action *An1,
-		spreads::translation_plane_via_andre_model *&Andre,
-		int spread_no,
-		std::string &label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction" << endl;
-	}
-
-	long int *spread_elements_numeric; // do not free
-	data_structures_groups::vector_ge *gens;
-	groups::matrix_group *M; // do not free
-	field_theory::finite_field *F;
-
-	int f_semilinear = FALSE;
-	int n, k, q;
-
-	string stab_order;
-	ring_theory::longinteger_object stab_go;
-	int order_of_plane;
-	number_theory::number_theory_domain NT;
-
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction" << endl;
-	}
-
-	F = An->matrix_group_finite_field();
-	M = An->get_matrix_group();
-	f_semilinear = An->is_semilinear_matrix_group();
-	n = An->matrix_group_dimension();
-	if (ODD(n)) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
-				"dimension must be even" << endl;
-		exit(1);
-	}
-	k = n >> 1;
-	q = F->q;
-
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
-				"n=" << n << " k=" << k << " q=" << q << endl;
-	}
-
-	order_of_plane = NT.i_power_j(q, k);
-
-
-	int sz;
-	//vector_ge *nice_gens;
-
-	knowledge_base K;
-
-	spread_elements_numeric = K.Spread_representative(q, k, spread_no, sz);
-
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
-				"before An->stabilizer_of_spread_representative" << endl;
-	}
-	An->stabilizer_of_spread_representative(q, k, spread_no,
-			gens, stab_order, verbose_level);
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
-				"after An->stabilizer_of_spread_representative" << endl;
-	}
-
-	stab_go.create_from_base_10_string(stab_order);
-
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
-				"Spread stabilizer has order " << stab_go << endl;
-	}
-
-	Andre = NEW_OBJECT(spreads::translation_plane_via_andre_model);
-
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
-				"before Andre->init" << endl;
-	}
-	Andre->init(spread_elements_numeric, k, An, An1,
-		gens /*spread_stab_gens*/, stab_go, label, verbose_level);
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction "
-				"after Andre->init" << endl;
-	}
-
-	FREE_OBJECT(gens);
-	if (f_v) {
-		cout << "top_level_geometry_global::do_Andre_Bruck_Bose_construction done" << endl;
-	}
-
-}
-#endif
 
 
 }}}

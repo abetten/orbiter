@@ -1860,11 +1860,18 @@ public:
 
 	int *f_absolute;  // [P->N_points]
 
+	long int *Line_to_line; // [P->N_lines] only if n = 3
+	int *f_absolute_line; // [P->N_lines] only if n = 3
+	int nb_absolute_lines;
+	int nb_self_dual_lines;
+
+
 	polarity();
 	~polarity();
 	void init_standard_polarity(projective_space *P, int verbose_level);
 	void init_general_polarity(projective_space *P, int *Mtx, int verbose_level);
 	void determine_absolute_points(int *&f_absolute, int verbose_level);
+	void determine_absolute_lines(int verbose_level);
 	void init_reversal_polarity(projective_space *P, int verbose_level);
 	void report(std::ostream &f);
 
@@ -1987,6 +1994,10 @@ public:
 	int incidence_test_for_objects_of_type_ij(
 		int type_i, int type_j, int i, int j,
 		int verbose_level);
+	void points_on_line(long int line_rk,
+			long int *&the_points, int &nb_points, int verbose_level);
+	void points_covered_by_plane(long int plane_rk,
+			long int *&the_points, int &nb_points, int verbose_level);
 	void incidence_and_stack_for_type_ij(
 		int row_type, int col_type,
 		incidence_structure *&Inc,

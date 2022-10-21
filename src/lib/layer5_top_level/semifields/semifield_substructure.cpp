@@ -180,7 +180,7 @@ void semifield_substructure::compute_orbits(
 
 
 	All_Orbits =
-			new orbit_of_subspaces **[nb_non_unique_cases_with_non_trivial_group];
+			new orbits_schreier::orbit_of_subspaces **[nb_non_unique_cases_with_non_trivial_group];
 	Nb_orb = NEW_int(nb_non_unique_cases_with_non_trivial_group);
 	Position = NEW_pint(nb_non_unique_cases_with_non_trivial_group);
 	Orbit_idx = NEW_pint(nb_non_unique_cases_with_non_trivial_group);
@@ -195,7 +195,7 @@ void semifield_substructure::compute_orbits(
 		fst = Need_orbits_fst[o];
 		len = Need_orbits_len[o];
 
-		All_Orbits[o] = new orbit_of_subspaces *[len];
+		All_Orbits[o] = new orbits_schreier::orbit_of_subspaces *[len];
 
 		if (f_v) {
 			cout << "case " << o << " / "
@@ -223,7 +223,7 @@ void semifield_substructure::compute_orbits(
 			if (f_reached[f]) {
 				continue;
 				}
-			orbit_of_subspaces *Orb;
+			orbits_schreier::orbit_of_subspaces *Orb;
 			long int *input_data;
 
 
@@ -450,7 +450,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 					<< " at position " << idx << endl;
 			}
 			for (g = 0; g < Nb_orb[idx]; g++) {
-				orbit_of_subspaces *Orb;
+				orbits_schreier::orbit_of_subspaces *Orb;
 				groups::strong_generators *gens;
 				ring_theory::longinteger_object go;
 
@@ -1057,7 +1057,7 @@ void semifield_substructure::loop_over_all_subspaces(
 					// [nb_non_unique_cases_with_non_trivial_group];
 
 					int non_unique_case_idx, orbit_idx, position;
-					orbit_of_subspaces *Orb;
+					orbits_schreier::orbit_of_subspaces *Orb;
 
 					if (!Sorting.int_vec_search(
 						Non_unique_cases_with_non_trivial_group,
@@ -1461,7 +1461,7 @@ int semifield_substructure::identify(long int *data,
 				// [nb_non_unique_cases_with_non_trivial_group];
 
 				int non_unique_case_idx, orbit_idx, position;
-				orbit_of_subspaces *Orb;
+				orbits_schreier::orbit_of_subspaces *Orb;
 
 				if (!Sorting.int_vec_search(
 					Non_unique_cases_with_non_trivial_group,

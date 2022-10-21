@@ -209,28 +209,32 @@ void algebra_global_with_action::create_subgroups(
 			SOL[nb_flag_orbits] = l;
 
 			if (f_v) {
-				cout << "algebra_global_with_action::create_subgroups before Classes->stabilizer_orbit_rep" << endl;
+				cout << "algebra_global_with_action::create_subgroups "
+						"before Classes->stabilizer_orbit_rep" << endl;
 			}
 			Flag_stab[nb_flag_orbits] = Classes->stabilizer_orbit_rep(
 					S->A,
 					go,
 					j /* orbit_idx */, 0 /*verbose_level*/);
 			if (f_v) {
-				cout << "algebra_global_with_action::create_subgroups after Classes->stabilizer_orbit_rep" << endl;
+				cout << "algebra_global_with_action::create_subgroups "
+						"after Classes->stabilizer_orbit_rep" << endl;
 			}
 
 
 			nb_flag_orbits++;
 		}
 		else {
-			cout << "Class " << j << " is rejected because the third element does not belong to the same class." << endl;
+			cout << "Class " << j << " is rejected because the third element "
+					"does not belong to the same class." << endl;
 			nb_reject++;
 		}
 
 	}
 
 	if (f_v) {
-		cout << "We found " << nb_flag_orbits << " flag orbits, with " << nb_reject << " may rejected" << endl;
+		cout << "We found " << nb_flag_orbits << " flag orbits, with "
+				<< nb_reject << " may rejected" << endl;
 
 		int h;
 
@@ -245,8 +249,9 @@ void algebra_global_with_action::create_subgroups(
 			S->element_unrank_lint(rk0, Elt0);
 			S->element_unrank_lint(rk1, Elt1);
 			S->element_unrank_lint(rk2, Elt2);
-			cout << h << " : " << SO[h] << " : " <<SOL[h] << " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
-			cout << "The subgroup consists of the following three non-identity elements:" << endl;
+			cout << h << " : " << SO[h] << " : " << SOL[h] << " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
+			cout << "The subgroup consists of the following three "
+					"non-identity elements:" << endl;
 			S->A->element_print_quick(Elt0, cout);
 			S->A->element_print_quick(Elt1, cout);
 			S->A->element_print_quick(Elt2, cout);
@@ -284,12 +289,14 @@ void algebra_global_with_action::create_subgroups(
 
 		if (f_v) {
 			cout << "upstep: considering flag orbit " << flag << " / " << nb_flag_orbits
-					<< " with a flag stabilizer of order " << Flag_stab[flag]->group_order_as_lint() << endl;
+					<< " with a flag stabilizer of order "
+					<< Flag_stab[flag]->group_order_as_lint() << endl;
 		}
 
 		if (f_fused[flag]) {
 			if (f_v) {
-				cout << "upstep: flag orbit " << flag << " / " << nb_flag_orbits << " has been fused, skipping" << endl;
+				cout << "upstep: flag orbit " << flag << " / " << nb_flag_orbits
+						<< " has been fused, skipping" << endl;
 			}
 			continue;
 		}
@@ -336,7 +343,8 @@ void algebra_global_with_action::create_subgroups(
 
 			// move cur_flag[0] to the_set[0] using the inverse of Transporter
 
-			if (!Sorting.lint_vec_search(the_set_sorted, set_size, cur_flag[0], idx, 0 /*verbose_level*/)) {
+			if (!Sorting.lint_vec_search(the_set_sorted,
+					set_size, cur_flag[0], idx, 0 /*verbose_level*/)) {
 				cout << "cannot find cur_flag[0] in the_set_sorted" << endl;
 				exit(1);
 			}
@@ -352,7 +360,8 @@ void algebra_global_with_action::create_subgroups(
 
 
 
-			if (!Sorting.lint_vec_search(the_set_sorted, set_size, cur_flag_mapped1[1], idx, 0 /*verbose_level*/)) {
+			if (!Sorting.lint_vec_search(the_set_sorted,
+					set_size, cur_flag_mapped1[1], idx, 0 /*verbose_level*/)) {
 				cout << "cannot find cur_flag[1] in the_set_sorted" << endl;
 				exit(1);
 			}
@@ -423,13 +432,15 @@ void algebra_global_with_action::create_subgroups(
 		rk2 = Flags[flag * 3 + 2];
 		cout << i << " : " << flag << " : " <<  " : " << SO[flag] << " l=" << SOL[flag]
 				<< " : " << rk0 << "," << rk1 << "," << rk2 << " : "
-				<< upstep_transversal_size[i] << " : " << Aut[i]->group_order_as_lint() << endl;
+				<< upstep_transversal_size[i] << " : "
+				<< Aut[i]->group_order_as_lint() << endl;
 
 		S->element_unrank_lint(rk0, Elt0);
 		S->element_unrank_lint(rk1, Elt1);
 		S->element_unrank_lint(rk2, Elt2);
 
-		cout << "The subgroup consists of the following three non-identity elements:" << endl;
+		cout << "The subgroup consists of the following three "
+				"non-identity elements:" << endl;
 		S->A->element_print_quick(Elt0, cout);
 		S->A->element_print_quick(Elt1, cout);
 		S->A->element_print_quick(Elt2, cout);
@@ -484,7 +495,8 @@ void algebra_global_with_action::create_subgroups(
 				S->element_unrank_lint(rk1, Elt1);
 				S->element_unrank_lint(rk2, Elt2);
 				cout << h << " : " << SO[h] << " : " << SOL[h] << " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
-				ost << "The subgroup consists of the following three non-identity elements:\\\\" << endl;
+				ost << "The subgroup consists of the following three "
+						"non-identity elements:\\\\" << endl;
 				ost << "$$" << endl;
 				S->A->element_print_latex(Elt0, ost);
 				S->A->element_print_latex(Elt1, ost);
@@ -520,7 +532,8 @@ void algebra_global_with_action::create_subgroups(
 				S->element_unrank_lint(rk1, Elt1);
 				S->element_unrank_lint(rk2, Elt2);
 
-				ost << "The subgroup consists of the following three non-identity elements:\\\\" << endl;
+				ost << "The subgroup consists of the following three "
+						"non-identity elements:\\\\" << endl;
 				ost << "$$" << endl;
 				S->A->element_print_latex(Elt0, ost);
 				S->A->element_print_latex(Elt1, ost);
@@ -581,6 +594,7 @@ void algebra_global_with_action::compute_orbit_of_set(
 		long int *&Table,
 		int &orbit_length,
 		int verbose_level)
+// called by any_group::orbits_on_set_from_file
 {
 	int f_v = (verbose_level >= 1);
 
@@ -594,9 +608,9 @@ void algebra_global_with_action::compute_orbit_of_set(
 		A2->print_info();
 	}
 
-	orbit_of_sets *OS;
+	orbits_schreier::orbit_of_sets *OS;
 
-	OS = NEW_OBJECT(orbit_of_sets);
+	OS = NEW_OBJECT(orbits_schreier::orbit_of_sets);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::compute_orbit_of_set before OS->init" << endl;
@@ -746,6 +760,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 		std::string &label,
 		std::string &label_tex,
 		int verbose_level)
+// called from group_theoretic_activity by means of any_group::classes_based_on_normal_form
 {
 	int f_v = (verbose_level >= 1);
 	string prefix;
@@ -960,6 +975,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 
 void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d,
 		int f_no_eigenvalue_one, int verbose_level)
+// called from interface_algebra
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1044,6 +1060,7 @@ void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d
 void algebra_global_with_action::do_normal_form(int q, int d,
 		int f_no_eigenvalue_one, int *data, int data_sz,
 		int verbose_level)
+// not called from anywhere at all
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1143,6 +1160,7 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 void algebra_global_with_action::do_identify_one(int q, int d,
 		int f_no_eigenvalue_one, int elt_idx,
 		int verbose_level)
+// not called at all
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1222,6 +1240,7 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 
 void algebra_global_with_action::do_identify_all(int q, int d,
 		int f_no_eigenvalue_one, int verbose_level)
+// not called at all
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1313,6 +1332,7 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 }
 
 void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one, int verbose_level)
+// not called at all
 {
 	int f_v = (verbose_level >= 1);
 

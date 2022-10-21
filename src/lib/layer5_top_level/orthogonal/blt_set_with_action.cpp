@@ -28,19 +28,9 @@ blt_set_with_action::blt_set_with_action()
 	Inv = NULL;
 	A_on_points = NULL;
 	Orbits_on_points = NULL;
-	null();
 }
 
 blt_set_with_action::~blt_set_with_action()
-{
-	freeself();
-}
-
-void blt_set_with_action::null()
-{
-}
-
-void blt_set_with_action::freeself()
 {
 	if (Inv) {
 		FREE_OBJECT(Inv);
@@ -51,7 +41,6 @@ void blt_set_with_action::freeself()
 	if (Orbits_on_points) {
 		FREE_OBJECT(Orbits_on_points);
 	}
-	null();
 }
 
 void blt_set_with_action::init_set(

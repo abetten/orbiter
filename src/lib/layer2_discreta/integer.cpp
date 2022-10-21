@@ -199,7 +199,7 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 			l1 = log2();
 			l2 = x.as_integer().log2();
 			l3 = l1 + l2;
-			if (l3 >= BITS_OF_int) {
+			if (l3 >= NB_BITS_THRESHOLD_FOR_LONGINTEGER) {
 				longinteger a, b, c;
 				
 				a.homo_z(s_i());
@@ -355,7 +355,7 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 			l1 = log2();
 			l2 = x.as_integer().log2();
 			l3 = MAXIMUM(l1, l2) + 1;;
-			if (l3 >= BITS_OF_int) {
+			if (l3 >= NB_BITS_THRESHOLD_FOR_LONGINTEGER) {
 				longinteger a, b, c;
 			
 				a.homo_z(s_i());

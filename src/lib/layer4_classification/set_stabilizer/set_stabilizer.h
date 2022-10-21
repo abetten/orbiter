@@ -9,8 +9,8 @@
 #define SRC_LIB_GROUP_ACTIONS_SET_STABILIZER_SET_STABILIZER_H_
 
 namespace orbiter {
-
 namespace layer4_classification {
+namespace set_stabilizer {
 
 
 
@@ -328,7 +328,7 @@ public:
 
 
 
-}}
+}}}
 
 
 

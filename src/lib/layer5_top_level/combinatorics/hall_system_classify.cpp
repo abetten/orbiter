@@ -26,45 +26,39 @@ static void hall_system_early_test_function(long int *S, int len,
 
 hall_system_classify::hall_system_classify()
 {
-	null();
-}
-
-hall_system_classify::~hall_system_classify()
-{
-	freeself();
-}
-
-void hall_system_classify::null()
-{
 	//e = 0;
 	n = 0;
 	nm1 = 0;
 	nb_pairs = 0;
+	nb_pairs2 = 0;
 	nb_blocks_overall = 0;
 	nb_blocks_needed = 0;
 	nb_orbits_needed = 0;
 	depth = 0;
 	N = 0;
 	N0 = 0;
-	triples = NULL;
 	row_sum = NULL;
 	pair_covering = NULL;
+	triples = NULL;
 	A = NULL;
 	A_on_triples = NULL;
 	Strong_gens_Hall_reflection = NULL;
 	Strong_gens_normalizer = NULL;
+	S = NULL;
+
+	//std::string prefix;
+	//std::string fname_orbits_on_triples;
 	Orbits_on_triples = NULL;
 	A_on_orbits = NULL;
 	f_play_it_safe = FALSE;
-	S = NULL;
-	prefix[0] = 0;
-	fname_orbits_on_triples[0] = 0;
-	Poset = NULL;
+
 	Control = NULL;
+	Poset = NULL;
 	PC = NULL;
 }
 
-void hall_system_classify::freeself()
+
+hall_system_classify::~hall_system_classify()
 {
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -108,9 +102,8 @@ void hall_system_classify::freeself()
 	if (PC) {
 		FREE_OBJECT(PC);
 	}
-	null();
 	if (f_v) {
-		cout << "hall_system::freeself done" << endl;
+		cout << "hall_system_classify::~hall_system_classify done" << endl;
 	}
 }
 

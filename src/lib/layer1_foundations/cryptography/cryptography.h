@@ -96,7 +96,6 @@ public:
 	void polynomial_reduce_mod_p(std::string &A_coeffs, field_theory::finite_field *F,
 			int verbose_level);
 
-	void do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level);
 	void do_solovay_strassen(int p, int a, int verbose_level);
 	void do_miller_rabin(int p, int nb_times, int verbose_level);
 	void do_fermat_test(int p, int nb_times, int verbose_level);

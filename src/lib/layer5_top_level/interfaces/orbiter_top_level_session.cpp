@@ -412,7 +412,7 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 
 			nb_pts = VB->len;
 			Pts = NEW_lint(nb_pts);
-			Int_vec_copy_to_lint(VB->v, Pts, nb_pts);
+			Lint_vec_copy(VB->v, Pts, nb_pts);
 
 		}
 		else if (Orbiter_session->get_object_type(idx) == t_set) {

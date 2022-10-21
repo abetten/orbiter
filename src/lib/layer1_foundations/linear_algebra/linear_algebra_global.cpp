@@ -48,7 +48,7 @@ void linear_algebra_global::Berlekamp_matrix(
 	int sz_A;
 
 
-	orbiter_kernel_system::Orbiter->get_vector_from_label(Berlekamp_matrix_label, data_A, sz_A, verbose_level);
+	orbiter_kernel_system::Orbiter->get_int_vector_from_label(Berlekamp_matrix_label, data_A, sz_A, verbose_level);
 
 
 	number_theory::number_theory_domain NT;

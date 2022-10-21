@@ -241,9 +241,9 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 				Int_vec_print(cout, BF->f_proj, BF->Q);
 				cout << endl;
 
-				orbit_of_equations *Orb;
+				orbits_schreier::orbit_of_equations *Orb;
 
-				Orb = NEW_OBJECT(orbit_of_equations);
+				Orb = NEW_OBJECT(orbits_schreier::orbit_of_equations);
 
 				Orb->f_has_print_function = TRUE;
 				Orb->print_function = boolean_function_classify_print_function;

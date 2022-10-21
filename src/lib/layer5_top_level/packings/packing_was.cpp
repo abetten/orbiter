@@ -102,18 +102,9 @@ packing_was::packing_was()
 
 packing_was::~packing_was()
 {
-}
-
-void packing_was::null()
-{
-}
-
-void packing_was::freeself()
-{
 	if (Orbit_invariant) {
 		FREE_OBJECT(Orbit_invariant);
 	}
-	null();
 }
 
 void packing_was::init(packing_was_description *Descr,
