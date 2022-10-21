@@ -25,6 +25,10 @@ polarity::polarity()
 	Point_to_hyperplane = NULL;
 	Hyperplane_to_point = NULL;
 	f_absolute = NULL;
+	Line_to_line = NULL;
+	f_absolute_line = NULL;
+	nb_absolute_lines = 0;
+	nb_self_dual_lines = 0;
 }
 
 polarity::~polarity()
@@ -38,15 +42,21 @@ polarity::~polarity()
 	if (f_absolute) {
 		FREE_int(f_absolute);
 	}
+	if (Line_to_line) {
+		FREE_lint(Line_to_line);
+	}
+	if (f_absolute_line) {
+		FREE_int(f_absolute_line);
+	}
 }
 
 void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 1);
-	int i, j;
+	long int i, j;
 	int *A;
-	int a;
+	long int a;
 	int n, d;
 	long int N_points;
 
@@ -61,6 +71,9 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 	Point_to_hyperplane = NEW_int(N_points);
 	Hyperplane_to_point = NEW_int(N_points);
 
+	if (d == 4) {
+		Line_to_line = NEW_lint(P->N_lines);
+	}
 	A = NEW_int(d * d);
 
 	for (i = 0; i < P->N_points; i++) {
@@ -80,7 +93,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 				A, d, d, d,
 				P->F->log10_of_q + 1);
 		}
-		P->F->PG_element_rank_modified(A + n * d, 1, d, a);
+		P->F->PG_element_rank_modified_lint(A + n * d, 1, d, a);
 		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
 			Int_vec_print(cout, A + n * d, d);
@@ -97,8 +110,35 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 				<< setw(4) << Hyperplane_to_point[i] << endl;
 		}
 	}
-	FREE_int(A);
 
+
+	if (d == 4) {
+		for (i = 0; i < P->N_lines; i++) {
+			P->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
+			if (f_vv) {
+				cout << "line " << i << ":" << endl;
+				Int_vec_print_integer_matrix_width(cout,
+					A, 2, d, d,
+					P->F->log10_of_q + 1);
+			}
+			P->F->Linear_algebra->perp_standard(d, 2, A, 0);
+			if (FALSE) {
+				Int_vec_print_integer_matrix_width(cout,
+					A, d, d, d,
+					P->F->log10_of_q + 1);
+			}
+			a = P->Grass_lines->rank_lint_here(A + 2 * d, 0 /*verbose_level - 4*/);
+			if (f_vv) {
+				cout << "perp of line " << i << " is " << a << ":";
+				Int_vec_print(cout, A + 2 * d, d);
+				cout << endl;
+			}
+			Line_to_line[i] = a;
+		}
+
+	}
+
+	FREE_int(A);
 
 	if (f_v) {
 		cout << "polarity::init_standard_polarity before determine_absolute_points" << endl;
@@ -108,6 +148,16 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 		cout << "polarity::init_standard_polarity after determine_absolute_points" << endl;
 	}
 
+	if (d == 4) {
+		if (f_v) {
+			cout << "polarity::init_standard_polarity before determine_absolute_lines" << endl;
+		}
+		determine_absolute_lines(verbose_level);
+		if (f_v) {
+			cout << "polarity::init_standard_polarity after determine_absolute_lines" << endl;
+		}
+
+	}
 	if (f_v) {
 		cout << "polarity::init_standard_polarity done" << endl;
 	}
@@ -120,6 +170,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 	int i;
 	int *v;
 	int *A;
+	int *B;
 	int a;
 	int n, d;
 	long int N_points;
@@ -135,8 +186,13 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 	Point_to_hyperplane = NEW_int(N_points);
 	Hyperplane_to_point = NEW_int(N_points);
 
+	if (d == 4) {
+		Line_to_line = NEW_lint(P->N_lines);
+	}
+
 	v = NEW_int(d);
 	A = NEW_int(d * d);
+	B = NEW_int(d * d);
 
 	for (i = 0; i < P->N_points; i++) {
 
@@ -176,8 +232,43 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 				<< setw(4) << Hyperplane_to_point[i] << endl;
 		}
 	}
+
+
+	if (d == 4) {
+		for (i = 0; i < P->N_lines; i++) {
+			P->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
+			if (f_vv) {
+				cout << "line " << i << ":" << endl;
+				Int_vec_print_integer_matrix_width(cout,
+					A, 2, d, d,
+					P->F->log10_of_q + 1);
+			}
+
+			P->F->Linear_algebra->mult_matrix_matrix(A, Mtx,
+					B, 2, d, d, 0 /* verbose_level*/);
+
+			P->F->Linear_algebra->perp_standard(d, 2, B, 0);
+			if (FALSE) {
+				Int_vec_print_integer_matrix_width(cout,
+					B, d, d, d,
+					P->F->log10_of_q + 1);
+			}
+			a = P->Grass_lines->rank_lint_here(B + 2 * d, 0 /*verbose_level - 4*/);
+			if (f_vv) {
+				cout << "perp of line " << i << " is " << a << ":";
+				Int_vec_print(cout, B + 2 * d, d);
+				cout << endl;
+			}
+			Line_to_line[i] = a;
+		}
+
+	}
+
+
+
 	FREE_int(v);
 	FREE_int(A);
+	FREE_int(B);
 
 	if (f_v) {
 		cout << "polarity::init_general_polarity before determine_absolute_points" << endl;
@@ -187,6 +278,16 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 		cout << "polarity::init_general_polarity after determine_absolute_points" << endl;
 	}
 
+	if (d == 4) {
+		if (f_v) {
+			cout << "polarity::init_general_polarity before determine_absolute_lines" << endl;
+		}
+		determine_absolute_lines(verbose_level);
+		if (f_v) {
+			cout << "polarity::init_general_polarity after determine_absolute_lines" << endl;
+		}
+
+	}
 
 	if (f_v) {
 		cout << "polarity::init_general_polarity done" << endl;
@@ -229,6 +330,49 @@ void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
 	}
 
 }
+
+void polarity::determine_absolute_lines(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "polarity::determine_absolute_lines" << endl;
+	}
+
+	if (P->n != 3) {
+		cout << "polarity::determine_absolute_lines we need n=3, skipping" << endl;
+		return;
+	}
+	f_absolute_line = NEW_int(P->N_lines);
+	nb_absolute_lines = 0;
+	nb_self_dual_lines = 0;
+
+	for (i = 0; i < P->N_lines; i++) {
+		j = Line_to_line[i];
+		if (P->test_if_lines_are_disjoint_from_scratch(i, j)) {
+			f_absolute_line[i] = FALSE;
+		}
+		else {
+			f_absolute_line[i] = TRUE;
+		}
+		if (f_absolute_line[i]) {
+			if (FALSE) {
+				cout << "polarity::determine_absolute_lines absolute line: " << i << endl;
+			}
+			nb_absolute_lines++;
+		}
+		if (j == i) {
+			nb_self_dual_lines++;
+		}
+	}
+
+	if (f_v) {
+		cout << "polarity::determine_absolute_lines The number of absolute lines is " << nb_absolute_lines << endl;
+	}
+
+}
+
 
 void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
 {
@@ -301,6 +445,30 @@ void polarity::report(std::ostream &f)
 			f << "$" << i << " \\leftrightarrow " << Point_to_hyperplane[i] << "$\\\\" << endl;
 		}
 	}
+
+	if (P->n + 1 == 4) {
+		f << "Lines $\\leftrightarrow$ lines:\\\\" << endl;
+		f << "\\begin{multicols}{4}" << endl;
+		for (i = 0; i < P->N_lines; i++) {
+			f << "$" << i << " \\leftrightarrow " << Line_to_line[i] << "$\\\\" << endl;
+		}
+		f << "\\end{multicols}" << endl;
+
+	}
+	f << "There are " << nb_absolute_lines << " absolute lines: \\\\" << endl;
+	for (i = 0; i < P->N_lines; i++) {
+		if (f_absolute_line[i]) {
+			f << "$" << i << " \\leftrightarrow " << Line_to_line[i] << "$\\\\" << endl;
+		}
+	}
+	f << "There are " << nb_self_dual_lines << " self dual lines: \\\\" << endl;
+	for (i = 0; i < P->N_lines; i++) {
+		if (Line_to_line[i] == i) {
+			f << "$" << i << " \\leftrightarrow " << Line_to_line[i] << "$\\\\" << endl;
+		}
+	}
+
+
 	f << "\\clearpage" << endl << endl;
 
 }

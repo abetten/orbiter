@@ -1071,6 +1071,8 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 int surface_with_action::create_double_six_from_five_lines_with_a_common_transversal(
 	long int *five_lines, long int transversal_line, long int *double_six,
 	int verbose_level)
+// a function with the same name exists in class surface_domain
+// the arguments are almost the same, except that transversal_line is missing.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1177,6 +1179,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		// and hence determine a regulus.
 		// This is because they are part of a
 		// partial ovoid on the Klein quadric.
+
 		Recoordinatize->do_recoordinatize(
 				four_lines[0], four_lines[1], four_lines[2],
 				verbose_level - 2);
@@ -1837,168 +1840,6 @@ void surface_with_action::create_surface_object_with_action(
 }
 
 
-void surface_with_action::export_points(
-		surface_create *SC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::export_points" << endl;
-	}
-
-	string fname_points;
-	orbiter_kernel_system::file_io Fio;
-
-	fname_points.assign("surface_");
-	fname_points.append(SC->label_txt);
-	fname_points.append("_points.txt");
-	Fio.write_set_to_file(fname_points, SC->SO->Pts, SC->SO->nb_pts, 0 /*verbose_level*/);
-	cout << "group_theoretic_activity::do_create_surface "
-			"Written file " << fname_points << " of size "
-			<< Fio.file_size(fname_points) << endl;
-
-	if (f_v) {
-		cout << "surface_with_action::export_points done" << endl;
-	}
-
-}
-
-void surface_with_action::do_report(
-		surface_create *SC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::do_report" << endl;
-	}
-
-	field_theory::finite_field *F;
-
-	F = PA->F;
-
-	{
-		string fname_report;
-
-		if (SC->Descr->f_label_txt) {
-			fname_report.assign(SC->label_txt);
-			fname_report.append(".tex");
-
-		}
-		else {
-			fname_report.assign("surface_");
-			fname_report.append(SC->label_txt);
-			fname_report.append("_report.tex");
-		}
-
-		{
-			ofstream ost(fname_report);
-
-
-			char str[1000];
-			string title, author, extra_praeamble;
-
-			snprintf(str, 1000, "%s over GF(%d)", SC->label_tex.c_str(), F->q);
-			title.assign(str);
-
-
-			orbiter_kernel_system::latex_interface L;
-
-			//latex_head_easy(fp);
-			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
-				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
-				extra_praeamble /* extra_praeamble */);
-
-
-
-
-			//ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
-
-
-			if (SC->SO->SOP == NULL) {
-				cout << "surface_with_action::create_surface_and_do_report SC->SO->SOP == NULL" << endl;
-				exit(1);
-			}
-
-
-			string summary_file_name;
-			string col_postfix;
-
-			if (SC->Descr->f_label_txt) {
-				summary_file_name.assign(SC->Descr->label_txt);
-			}
-			else {
-				summary_file_name.assign(SC->label_txt);
-			}
-			summary_file_name.append("_summary.csv");
-
-
-			sprintf(str, "-Q%d", F->q);
-			col_postfix.assign(str);
-
-			if (f_v) {
-				cout << "surface_with_action::create_surface_and_do_report "
-						"before SC->SO->SOP->create_summary_file" << endl;
-			}
-			if (SC->Descr->f_label_for_summary) {
-				SC->SO->SOP->create_summary_file(summary_file_name,
-						SC->Descr->label_for_summary, col_postfix, verbose_level);
-			}
-			else {
-				SC->SO->SOP->create_summary_file(summary_file_name,
-						SC->label_txt, col_postfix, verbose_level);
-			}
-			if (f_v) {
-				cout << "surface_with_action::create_surface_and_do_report "
-						"after SC->SO->SOP->create_summary_file" << endl;
-			}
-
-
-#if 0
-			if (f_v) {
-				cout << "surface_with_action::create_surface_and_do_report "
-						"before SC->SO->SOP->print_everything" << endl;
-			}
-			SC->SO->SOP->print_everything(ost, verbose_level);
-			if (f_v) {
-				cout << "surface_with_action::create_surface_and_do_report "
-						"after SC->SO->SOP->print_everything" << endl;
-			}
-#else
-			if (f_v) {
-				cout << "surface_with_action::create_surface_and_do_report "
-						"before SC->SO->SOP->report_properties_simple" << endl;
-			}
-			SC->SO->SOP->report_properties_simple(ost, verbose_level);
-			if (f_v) {
-				cout << "surface_with_action::create_surface_and_do_report "
-						"after SC->SO->SOP->report_properties_simple" << endl;
-			}
-#endif
-
-
-			L.foot(ost);
-		}
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "Written file " << fname_report << " of size "
-			<< Fio.file_size(fname_report) << endl;
-
-
-	}
-	if (f_v) {
-		cout << "surface_with_action::do_report done" << endl;
-	}
-
-}
 
 void surface_with_action::sweep_4_15_lines(
 		surface_create_description *Surface_Descr,

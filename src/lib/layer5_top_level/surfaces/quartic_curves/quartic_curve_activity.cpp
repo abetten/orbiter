@@ -162,9 +162,95 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 			cout << "Orbit on bitangents of length " << desired_orbit_length << " : ";
 			Lint_vec_print(cout, extracted_lines, desired_orbit_length);
 			cout << endl;
-			cout << "Index set : ";
-			Lint_vec_print(cout, extracted_set, desired_orbit_length);
+			//cout << "Index set : ";
+			//Lint_vec_print(cout, extracted_set, desired_orbit_length);
+			//cout << endl;
+
+		}
+	}
+	if (Descr->f_extract_specific_orbit_on_bitangents_by_length) {
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity f_extract_specific_orbit_on_bitangents_by_length "
+					"length = " << Descr->f_extract_specific_orbit_on_bitangents_by_length << endl;
+		}
+
+		if (QC->QOA) {
+
+			int desired_orbit_length;
+			int desired_orbit_idx;
+			long int *extracted_set;
+
+			desired_orbit_length = Descr->extract_specific_orbit_on_bitangents_by_length_length;
+			desired_orbit_idx = Descr->extract_specific_orbit_on_bitangents_by_length_index;
+
+			QC->QOA->Aut_gens->extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
+					QC->PA->A_on_lines, QC->QO->bitangents28, 28,
+					desired_orbit_length,
+					desired_orbit_idx,
+					extracted_set,
+					verbose_level);
+
+
+			long int *extracted_lines;
+			int i, idx;
+
+			extracted_lines = NEW_lint(desired_orbit_length);
+
+			for (i = 0; i < desired_orbit_length; i++) {
+				idx = extracted_set[i];
+				extracted_lines[i] = QC->QO->bitangents28[idx];
+			}
+
+			cout << "Orbit on bitangents of length " << desired_orbit_length << ", index " << desired_orbit_idx << " : ";
+			Lint_vec_print(cout, extracted_lines, desired_orbit_length);
 			cout << endl;
+			//cout << "Index set : ";
+			//Lint_vec_print(cout, extracted_set, desired_orbit_length);
+			//cout << endl;
+
+		}
+	}
+
+	if (Descr->f_extract_specific_orbit_on_kovalevski_points_by_length) {
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity f_extract_specific_orbit_on_kovalevski_points_by_length "
+					"length = " << Descr->f_extract_specific_orbit_on_kovalevski_points_by_length << endl;
+		}
+
+		if (QC->QOA) {
+
+			int desired_orbit_length;
+			int desired_orbit_idx;
+			long int *extracted_set;
+
+			desired_orbit_length = Descr->extract_specific_orbit_on_kovalevski_points_by_length_length;
+			desired_orbit_idx = Descr->extract_specific_orbit_on_kovalevski_points_by_length_index;
+
+			QC->QOA->Aut_gens->extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
+					QC->PA->A, QC->QO->QP->Kovalevski_points, QC->QO->QP->nb_Kovalevski,
+					desired_orbit_length,
+					desired_orbit_idx,
+					extracted_set,
+					verbose_level);
+
+			long int *extracted_objects;
+			int i, idx;
+
+			extracted_objects = NEW_lint(desired_orbit_length);
+
+			for (i = 0; i < desired_orbit_length; i++) {
+				idx = extracted_set[i];
+				extracted_objects[i] = QC->QO->QP->Kovalevski_points[idx];
+			}
+
+			cout << "Orbit on Kovalevski points of length " << desired_orbit_length << ", index " << desired_orbit_idx << " : ";
+			Lint_vec_print(cout, extracted_objects, desired_orbit_length);
+			cout << endl;
+			//cout << "Index set : ";
+			//Lint_vec_print(cout, extracted_set, desired_orbit_length);
+			//cout << endl;
 
 		}
 	}

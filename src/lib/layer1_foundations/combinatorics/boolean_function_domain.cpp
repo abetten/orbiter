@@ -109,7 +109,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "do_it n=" << n << endl;
+		cout << "boolean_function_domain::init n=" << n << endl;
 	}
 #if 0
 	if (ODD(n)) {

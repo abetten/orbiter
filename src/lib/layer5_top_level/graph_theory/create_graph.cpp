@@ -595,7 +595,7 @@ void create_graph::init(
 	else if (description->f_collinearity_graph) {
 
 
-
+#if 0
 		int idx;
 		data_structures::vector_builder *VB;
 
@@ -612,9 +612,18 @@ void create_graph::init(
 			exit(1);
 		}
 		VB = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx);
+#endif
+
+		int *v;
+		//int sz;
+		int m, n;
+
+		orbiter_kernel_system::Orbiter->get_matrix_from_label(
+				description->collinearity_graph_matrix, v, m, n);
+
 
 		make_collinearity_graph(N, Adj,
-				VB->v, VB->k, VB->len / VB->k,
+				v, m, n,
 				verbose_level);
 
 
@@ -623,7 +632,7 @@ void create_graph::init(
 	else if (description->f_chain_graph) {
 
 
-
+#if 0
 		int idx1;
 		data_structures::vector_builder *VB1;
 		int idx2;
@@ -652,10 +661,24 @@ void create_graph::init(
 		}
 		VB1 = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx1);
 		VB2 = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx2);
+#endif
+
+		int *v1;
+		int sz1;
+		int *v2;
+		int sz2;
+
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(
+				description->chain_graph_partition_1,
+				v1, sz1, 0 /* verbose_level*/);
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(
+				description->chain_graph_partition_2,
+				v2, sz2, 0 /* verbose_level*/);
+
 
 		make_chain_graph(N, Adj,
-				VB1->v, VB1->len,
-				VB2->v, VB2->len,
+				v1, sz1,
+				v2, sz2,
 				verbose_level);
 
 
@@ -1590,9 +1613,9 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 		cout << endl;
 	}
 
-	orbit_of_sets *Orb;
+	orbits_schreier::orbit_of_sets *Orb;
 
-	Orb = NEW_OBJECT(orbit_of_sets);
+	Orb = NEW_OBJECT(orbits_schreier::orbit_of_sets);
 
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph before Orb->init" << endl;

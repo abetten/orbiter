@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 isomorph::isomorph()
@@ -572,5 +573,5 @@ void isomorph::read_everything_including_classification(
 
 
 
-}}
+}}}
 

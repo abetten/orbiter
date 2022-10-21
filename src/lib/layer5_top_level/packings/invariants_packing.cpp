@@ -42,19 +42,9 @@ invariants_packing::invariants_packing()
 	Dual_idx = NULL;
 	f_self_dual = NULL;
 
-	null();
 }
 
 invariants_packing::~invariants_packing()
-{
-	freeself();
-}
-
-void invariants_packing::null()
-{
-}
-
-void invariants_packing::freeself()
 {
 	if (Inv) {
 		delete [] Inv;
@@ -95,10 +85,9 @@ void invariants_packing::freeself()
 	if (f_self_dual) {
 		FREE_int(f_self_dual);
 	}
-	null();
 }
 
-void invariants_packing::init(isomorph *Iso,
+void invariants_packing::init(isomorph::isomorph *Iso,
 		packing_classify *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -269,7 +258,7 @@ void invariants_packing::init(isomorph *Iso,
 }
 
 void invariants_packing::compute_dual_packings(
-		isomorph *Iso, int verbose_level)
+		isomorph::isomorph *Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -334,7 +323,7 @@ void invariants_packing::compute_dual_packings(
 }
 
 void invariants_packing::make_table(
-	isomorph *Iso, ostream &ost,
+		isomorph::isomorph *Iso, ostream &ost,
 	int f_only_self_dual, int f_only_not_self_dual, 
 	int verbose_level)
 {

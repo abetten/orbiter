@@ -75,29 +75,19 @@ arc_generator::arc_generator()
 
 arc_generator::~arc_generator()
 {
-	freeself();
-}
-
-void arc_generator::null()
-{
-
-}
-
-void arc_generator::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "arc_generator::freeself" << endl;
+		cout << "arc_generator::~arc_generator" << endl;
 	}
 	if (gen) {
 		if (f_v) {
-			cout << "arc_generator::freeself before FREE_OBJECT(gen)" << endl;
+			cout << "arc_generator::~arc_generator before FREE_OBJECT(gen)" << endl;
 		}
 		FREE_OBJECT(gen);
 		if (f_v) {
-			cout << "arc_generator::freeself after FREE_OBJECT(gen)" << endl;
+			cout << "arc_generator::~arc_generator after FREE_OBJECT(gen)" << endl;
 		}
 	}
 	
@@ -107,9 +97,8 @@ void arc_generator::freeself()
 	if (line_type) {
 		FREE_int(line_type);
 	}
-	null();
 	if (f_v) {
-		cout << "arc_generator::freeself done" << endl;
+		cout << "arc_generator::~arc_generator done" << endl;
 	}
 }
 
@@ -617,7 +606,7 @@ void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
 }
 
 void arc_generator::lifting_prepare_function_new(
-	exact_cover *E, int starter_case,
+		solvers_package::exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
 	solvers::diophant *&Dio, long int *&col_labels,
@@ -830,7 +819,7 @@ void arc_generator::lifting_prepare_function_new(
 }
 
 
-void arc_generator::report(isomorph &Iso, int verbose_level)
+void arc_generator::report(isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
@@ -893,7 +882,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 
 }
 
-void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_level)
+void arc_generator::report_do_the_work(ostream &ost, isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -1183,7 +1172,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 	sprintf(prefix, "arcs_%d_%d", PA->q, Descr->target_size);
 	sprintf(label_of_structure_plural, "Arcs");
 
-	isomorph_global IG;
+	isomorph::isomorph_global IG;
 
 	IG.init(Iso.A_base, Iso.A, Iso.Sub->gen, verbose_level);
 
@@ -1204,7 +1193,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 }
 
 void arc_generator::report_decompositions(
-	isomorph &Iso, ostream &ost, int orbit,
+		isomorph::isomorph &Iso, ostream &ost, int orbit,
 	long int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1231,7 +1220,7 @@ void arc_generator::report_decompositions(
 
 }
 
-void arc_generator::report_stabilizer(isomorph &Iso,
+void arc_generator::report_stabilizer(isomorph::isomorph &Iso,
 		ostream &ost, int orbit, int verbose_level)
 {
 	groups::sims *Stab;

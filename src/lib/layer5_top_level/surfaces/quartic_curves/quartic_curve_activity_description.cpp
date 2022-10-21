@@ -32,6 +32,15 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 	f_extract_orbit_on_bitangents_by_length = FALSE;
 	extract_orbit_on_bitangents_by_length_length = 0;
 
+	f_extract_specific_orbit_on_bitangents_by_length = FALSE;
+	extract_specific_orbit_on_bitangents_by_length_length = 0;
+	extract_specific_orbit_on_bitangents_by_length_index = 0;
+
+
+	f_extract_specific_orbit_on_kovalevski_points_by_length = FALSE;
+	extract_specific_orbit_on_kovalevski_points_by_length_length = 0;
+	extract_specific_orbit_on_kovalevski_points_by_length_index = 0;
+
 }
 
 quartic_curve_activity_description::~quartic_curve_activity_description()
@@ -69,6 +78,23 @@ int quartic_curve_activity_description::read_arguments(
 			extract_orbit_on_bitangents_by_length_length = ST.strtoi(argv[++i]);
 			cout << "-extract_orbit_on_bitangents_by_length " << extract_orbit_on_bitangents_by_length_length << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-extract_specific_orbit_on_bitangents_by_length") == 0) {
+			f_extract_specific_orbit_on_bitangents_by_length = TRUE;
+			extract_specific_orbit_on_bitangents_by_length_length = ST.strtoi(argv[++i]);
+			extract_specific_orbit_on_bitangents_by_length_index = ST.strtoi(argv[++i]);
+			cout << "-extract_specific_orbit_on_bitangents_by_length "
+					<< extract_specific_orbit_on_bitangents_by_length_length << " "
+					<< extract_specific_orbit_on_bitangents_by_length_index << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-extract_specific_orbit_on_kovalevski_points_by_length") == 0) {
+			f_extract_specific_orbit_on_kovalevski_points_by_length = TRUE;
+			extract_specific_orbit_on_kovalevski_points_by_length_length = ST.strtoi(argv[++i]);
+			extract_specific_orbit_on_kovalevski_points_by_length_index = ST.strtoi(argv[++i]);
+			cout << "-extract_specific_orbit_on_kovalevski_points_by_length "
+					<< extract_specific_orbit_on_kovalevski_points_by_length_length << " "
+					<< extract_specific_orbit_on_kovalevski_points_by_length_index << endl;
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -101,6 +127,11 @@ void quartic_curve_activity_description::print()
 	}
 	if (f_extract_orbit_on_bitangents_by_length) {
 		cout << "-extract_orbit_on_bitangents_by_length " << extract_orbit_on_bitangents_by_length_length << endl;
+	}
+	if (f_extract_specific_orbit_on_bitangents_by_length) {
+		cout << "-extract_specific_orbit_on_bitangents_by_length "
+				<< extract_specific_orbit_on_bitangents_by_length_length << " "
+				<< extract_specific_orbit_on_bitangents_by_length_index << endl;
 	}
 }
 

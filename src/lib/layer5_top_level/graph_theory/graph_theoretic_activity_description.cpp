@@ -58,16 +58,6 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 
 graph_theoretic_activity_description::~graph_theoretic_activity_description()
 {
-	freeself();
-}
-
-void graph_theoretic_activity_description::null()
-{
-}
-
-void graph_theoretic_activity_description::freeself()
-{
-	null();
 }
 
 int graph_theoretic_activity_description::read_arguments(

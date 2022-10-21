@@ -957,7 +957,7 @@ int Vector::hip1()
 			exit(1);
 		}
 		k = s_ii(i);
-		if (!ONE_char_int(k)) {
+		if (!FITS_INTO_ONE_BYTE(k)) {
 			return FALSE;
 		}
 	}
@@ -1275,7 +1275,7 @@ void Vector::extract_subvector(Vector & v, int first, int len)
 		}
 }
 
-
+#if 0
 void Vector::PG_element_normalize()
 // top (=highest) element which is different from zero becomes one
 {
@@ -1558,6 +1558,7 @@ void Vector::AG_element_unrank(int a)
 		a /= q;
 		}
 }
+#endif
 
 int Vector::hamming_weight()
 {

@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 static void callback_compute_down_orbits_worker(
@@ -138,12 +139,12 @@ void isomorph_global::read_statistic_files(
 			Dt = S[h].find_by_column("Dt");
 			Dt_in_sec = S[h].find_by_column("Dt_in_sec");
 			for (i = 1; i < S[h].nb_rows; i++) {
-				case_nb = S[h].get_int(i, Case_nb);
-				nb_sol = S[h].get_int(i, Nb_sol);
-				nb_backtrack = S[h].get_int(i, Nb_backtrack);
-				nb_col = S[h].get_int(i, Nb_col);
-				dt = S[h].get_int(i, Dt);
-				dt_in_sec = S[h].get_int(i, Dt_in_sec);
+				case_nb = S[h].get_lint(i, Case_nb);
+				nb_sol = S[h].get_lint(i, Nb_sol);
+				nb_backtrack = S[h].get_lint(i, Nb_backtrack);
+				nb_col = S[h].get_lint(i, Nb_col);
+				dt = S[h].get_lint(i, Dt);
+				dt_in_sec = S[h].get_lint(i, Dt_in_sec);
 				Stats[case_nb * 6 + 0] = 1;
 				Stats[case_nb * 6 + 1] = nb_sol;
 				Stats[case_nb * 6 + 2] = nb_backtrack;
@@ -1199,7 +1200,8 @@ static void callback_compute_down_orbits_worker(
 
 
 
-}}
+}}}
+
 
 
 

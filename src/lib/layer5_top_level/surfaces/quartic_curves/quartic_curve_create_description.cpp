@@ -19,8 +19,6 @@ namespace quartic_curves {
 
 quartic_curve_create_description::quartic_curve_create_description()
 {
-	//f_q = FALSE;
-	//q = 0;
 
 	f_space = FALSE;
 	//std::string space_label;
@@ -66,21 +64,10 @@ quartic_curve_create_description::quartic_curve_create_description()
 	//std::vector<std::string> transform_coeffs;
 	//std::vector<int> f_inverse_transform;
 
-	//null();
 }
 
 quartic_curve_create_description::~quartic_curve_create_description()
 {
-	freeself();
-}
-
-void quartic_curve_create_description::null()
-{
-}
-
-void quartic_curve_create_description::freeself()
-{
-	null();
 }
 
 int quartic_curve_create_description::read_arguments(int argc, std::string *argv,
@@ -92,13 +79,6 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 	cout << "quartic_curve_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (ST.stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			q = ST.strtoi(argv[++i]);
-			cout << "-q " << q << endl;
-		}
-#endif
 		if (ST.stringcmp(argv[i], "-space") == 0) {
 			f_space = TRUE;
 			space_label.assign(argv[++i]);
@@ -195,11 +175,6 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 
 void quartic_curve_create_description::print()
 {
-#if 0
-	if (f_q) {
-		cout << "-q " << q << endl;
-	}
-#endif
 	if (f_space) {
 		cout << "-space " << space_label << endl;
 	}
@@ -250,18 +225,6 @@ void quartic_curve_create_description::print()
 
 }
 
-
-#if 0
-int quartic_curve_create_description::get_q()
-{
-	if (!f_q) {
-		cout << "quartic_curve_create_description::get_q "
-				"q has not been set yet" << endl;
-		exit(1);
-	}
-	return q;
-}
-#endif
 
 
 

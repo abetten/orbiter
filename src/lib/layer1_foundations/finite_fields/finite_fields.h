@@ -913,8 +913,6 @@ public:
 
 	subfield_structure();
 	~subfield_structure();
-	void null();
-	void freeself();
 	void init(finite_field *FQ, finite_field *Fq, int verbose_level);
 	void init_with_given_basis(finite_field *FQ, finite_field *Fq,
 		int *given_basis, int verbose_level);

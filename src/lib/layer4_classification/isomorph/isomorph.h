@@ -14,6 +14,7 @@
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 // #############################################################################
 // flag_orbit_folding.cpp
@@ -355,7 +356,7 @@ public:
 	int f_base_fname;
 	std::string base_fname;
 
-	exact_cover_arguments *ECA;
+	solvers_package::exact_cover_arguments *ECA;
 
 	void (*callback_report)(isomorph *Iso, void *data,
 		int verbose_level);
@@ -377,7 +378,7 @@ public:
 			poset_classification::poset_classification *gen,
 		int target_size,
 		poset_classification::poset_classification_control *Control,
-		exact_cover_arguments *ECA,
+		solvers_package::exact_cover_arguments *ECA,
 		void (*callback_report)(isomorph *Iso, void *data,
 			int verbose_level),
 		void (*callback_subset_orbits)(isomorph *Iso, void *data,
@@ -1039,7 +1040,8 @@ public:
 };
 
 
-}}
+}}}
+
 
 
 #endif /* ORBITER_SRC_LIB_TOP_LEVEL_ISOMORPH_ISOMORPH_H_ */

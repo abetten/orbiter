@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 substructure_lifting_data::substructure_lifting_data()
@@ -2798,4 +2799,5 @@ void substructure_lifting_data::id_to_datref_allocate(int verbose_level)
 }
 
 
-}}
+}}}
+

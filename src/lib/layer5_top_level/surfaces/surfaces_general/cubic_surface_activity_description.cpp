@@ -25,11 +25,12 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 
 	f_report_with_group = FALSE;
 
-	f_export_points = FALSE;
+	f_export_something = FALSE;
+	//std::string export_something_what;
 
-	f_clebsch = FALSE;
+	//f_clebsch = FALSE;
 
-	f_codes = FALSE;
+	//f_codes = FALSE;
 
 	f_all_quartic_curves = FALSE;
 
@@ -70,12 +71,14 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-report_with_group " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-export_points") == 0) {
-			f_export_points = TRUE;
+		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
+			f_export_something = TRUE;
+			export_something_what.assign(argv[++i]);
 			if (f_v) {
-				cout << "-export_points " << endl;
+				cout << "-export_something " << export_something_what << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-clebsch") == 0) {
 			f_clebsch = TRUE;
 			if (f_v) {
@@ -88,6 +91,7 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-codes " << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-all_quartic_curves") == 0) {
 			f_all_quartic_curves = TRUE;
 			if (f_v) {
@@ -137,15 +141,17 @@ void cubic_surface_activity_description::print()
 	if (f_report_with_group) {
 		cout << "-report_with_group " << endl;
 	}
-	if (f_export_points) {
-		cout << "-export_points " << endl;
+	if (f_export_something) {
+		cout << "-export_something " << export_something_what << endl;
 	}
+#if 0
 	if (f_clebsch) {
 		cout << "-clebsch " << endl;
 	}
 	if (f_codes) {
 		cout << "-codes " << endl;
 	}
+#endif
 	if (f_all_quartic_curves) {
 		cout << "-all_quartic_curves " << endl;
 	}

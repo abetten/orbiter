@@ -39,9 +39,10 @@ namespace layer2_discreta {
 
 
 
-#define BITS_OF_int 32
+#define NB_BITS_THRESHOLD_FOR_LONGINTEGER 32
 #define SAVE_ASCII_USE_COMPRESS
 
+#define FITS_INTO_ONE_BYTE(a) (((a) > -126) && ((a) < 127))
 
 
 
@@ -314,11 +315,13 @@ void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx);
 void midpoint_of_5(int *Px, int *Py, int i1, int i2, int i3, int i4, int i5, int idx);
 void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, double r);
 
+#if 0
 void frobenius_in_PG(domain *dom, int n, permutation &p);
 // n is the projective dimension
 void frobenius_in_AG(domain *dom, int n, permutation &p);
 // n is the dimension
 void translation_in_AG(domain *dom, int n, int i, discreta_base & a, permutation &p);
+#endif
 enum printing_mode_enum current_printing_mode();
 void call_system(char *cmd);
 void fill_char(void *v, int cnt, int c);
@@ -933,6 +936,7 @@ class Vector: public discreta_base
 	void vector_of_vectors_replace(Vector &v);
 	void extract_subvector(Vector & v, int first, int len);
 
+#if 0
 	void PG_element_normalize();
 	void PG_element_rank(int &a);
 	void PG_element_rank_modified(int &a);
@@ -940,6 +944,7 @@ class Vector: public discreta_base
 	void PG_element_unrank_modified(int a);
 	void AG_element_rank(int &a);
 	void AG_element_unrank(int a);
+#endif
 	
 	int hamming_weight();
 	void scalar_product(Vector &w, discreta_base & a);
@@ -1040,10 +1045,12 @@ class permutation: public Vector
 	int is_even(int verbose_level);
 	void cycles(Vector &cycles);
 	void restrict_to_subset(permutation &q, int first, int len);
+#if 0
 	void induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int verbose_level);
 	void singer_cycle_on_points_of_projective_plane(int p, int f_modified, int verbose_level);
 	void Cn_in_Cnm(int n, int m);
 	int preimage(int i);
+#endif
 };
 
 void signum_map(discreta_base & x, discreta_base &d);
@@ -1202,6 +1209,7 @@ class discreta_matrix: public discreta_base
 	int is_in_center();
 	void power_mod(int r, integer &P, discreta_matrix &C);
 	int proj_order_mod(integer &P);
+#if 0
 	void PG_rep(domain *dom, permutation &p, int f_action_from_right, int f_modified);
 	void PG_rep(permutation &p, int f_action_from_right, int f_modified);
 	void AG_rep(domain *dom, permutation &p, int f_action_from_right);
@@ -1211,9 +1219,11 @@ class discreta_matrix: public discreta_base
 	void Simplex_code_generator_matrix(domain *dom, int k, int f_v);
 	void PG_design_point_vs_hyperplane(domain *dom, int k, int f_v);
 	void PG_k_q_design(domain *dom, int k, int f_v, int f_vv);
+#endif
 	void determinant(discreta_base &d, int verbose_level);
 	void det(discreta_base & d, int f_v, int f_vv);
 	void det_modify_input_matrix(discreta_base & d, int f_v, int f_vv);
+#if 0
 	void PG_line_rank(int &a, int f_v);
 	void PG_line_unrank(int a);
 	void PG_point_normalize(int i0, int j0, int di, int dj, int length);
@@ -1222,6 +1232,7 @@ class discreta_matrix: public discreta_base
 	void PG_element_normalize();
 	void AG_point_rank(int i0, int j0, int di, int dj, int length, int &a);
 	void AG_point_unrank(int i0, int j0, int di, int dj, int length, int a);
+#endif
 	void save_as_inc_file(char *fname);
 	void save_as_inc(std::ofstream &f);
 };

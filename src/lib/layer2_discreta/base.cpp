@@ -1125,8 +1125,8 @@ void discreta_base::write_memory(memory &m, int debug_depth)
 	k = s_kind();
 	i = (int) k;
 	c = (char) k;
-	if (!ONE_char_int(i)) {
-		cout << "write_memory(): kind not 1 char" << endl;
+	if (!FITS_INTO_ONE_BYTE(i)) {
+		cout << "write_memory(): kind not 1 byte" << endl;
 		exit(1);
 		}
 	m.write_char(c);
@@ -1313,9 +1313,9 @@ int discreta_base::calc_size_on_file()
 	k = s_kind();
 	i = (int) k;
 	//c = (char) k;
-	if (!ONE_char_int(i)) {
+	if (!FITS_INTO_ONE_BYTE(i)) {
 		cout << "write_memory "
-				"kind not 1 char" << endl;
+				"kind not 1 byte" << endl;
 		exit(1);
 		}
 	size = 1;

@@ -205,9 +205,9 @@ void spread_classify_activity::perform_activity(int verbose_level)
 		}
 
 
-		layer4_classification::exact_cover_arguments *ECA = NULL;
+		layer4_classification::solvers_package::exact_cover_arguments *ECA = NULL;
 
-		ECA = NEW_OBJECT(layer4_classification::exact_cover_arguments);
+		ECA = NEW_OBJECT(layer4_classification::solvers_package::exact_cover_arguments);
 
 		Descr->Isomorph_arguments->init(
 				Spread_classify->A,
@@ -237,7 +237,7 @@ void spread_classify_activity::perform_activity(int verbose_level)
 				cout << "spread_classify_activity::perform_activity Spread_classify->Worker does not exist yet. Allocating" << endl;
 			}
 
-			Spread_classify->Worker = NEW_OBJECT(isomorph_worker);
+			Spread_classify->Worker = NEW_OBJECT(isomorph::isomorph_worker);
 
 			if (f_v) {
 				cout << "spread_classify_activity::perform_activity before Worker->init" << endl;

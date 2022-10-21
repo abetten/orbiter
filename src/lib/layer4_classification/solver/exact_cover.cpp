@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace solvers_package {
 
 
 exact_cover::exact_cover()
@@ -159,7 +160,7 @@ void exact_cover::init_early_test_func(
 }
 
 void exact_cover::init_prepare_function_new(
-	void (*prepare_function_new)(exact_cover *E, int starter_case, 
+	void (*prepare_function_new)(solvers_package::exact_cover *E, int starter_case,
 			long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
 			solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
@@ -941,5 +942,6 @@ void exact_cover::lexorder_test(long int *live_blocks2,
 		}
 }
 
-}}
+}}}
+
 

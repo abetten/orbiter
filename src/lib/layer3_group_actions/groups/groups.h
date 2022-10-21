@@ -1880,6 +1880,12 @@ public:
 			int desired_orbit_length,
 			long int *&extracted_set,
 			int verbose_level);
+	void extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
+			actions::action *A_given, long int *Set, int set_sz,
+			int desired_orbit_length,
+			int desired_orbit_idx,
+			long int *&extracted_set,
+			int verbose_level);
 	void orbits_on_points_with_given_action(actions::action *A_given,
 		int &nb_orbits, int *&orbit_reps, int verbose_level);
 	schreier *orbits_on_points_schreier(actions::action *A_given,

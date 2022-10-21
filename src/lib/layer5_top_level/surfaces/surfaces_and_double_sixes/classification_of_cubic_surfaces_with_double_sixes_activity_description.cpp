@@ -41,7 +41,7 @@ classification_of_cubic_surfaces_with_double_sixes_activity_description::classif
 
 	f_create_source_code = FALSE;
 
-	f_sweep = FALSE;
+	f_sweep_Cayley = FALSE;
 
 }
 
@@ -161,8 +161,8 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 		else if (ST.stringcmp(argv[i], "-create_source_code") == 0) {
 			f_create_source_code = TRUE;
 		}
-		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
-			f_sweep = TRUE;
+		else if (ST.stringcmp(argv[i], "-sweep_Cayley") == 0) {
+			f_sweep_Cayley = TRUE;
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -214,8 +214,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity_description::pr
 	if (f_create_source_code) {
 		cout << "-create_source_code " << endl;
 	}
-	if (f_sweep) {
-		cout << "-sweep " << endl;
+	if (f_sweep_Cayley) {
+		cout << "-sweep_Cayley " << endl;
 	}
 }
 

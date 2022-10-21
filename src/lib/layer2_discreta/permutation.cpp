@@ -58,6 +58,7 @@ void permutation::convert_digit(int i, hollerith &a)
 	else if (current_permutation_print_type == integer_from_one) {
 		a.append_i(i + 1);
 		}
+#if 0
 	else if (current_permutation_print_type == PG_1_q_element_tex) {
 		Vector v;
 		
@@ -71,6 +72,7 @@ void permutation::convert_digit(int i, hollerith &a)
 		else
 			a.append_i(v.s_ii(0));
 		}
+#endif
 	
 }
 
@@ -444,6 +446,18 @@ void permutation::scan(istream & is, int verbose_level)
 	swap(perm);
 }
 
+void permutation::m_l(int l)
+{
+	int i;
+
+	freeself();
+	self.vector_pointer = calloc_nobjects_plus_length(l, INTEGER);
+	for (i = 0; i < l; i++) {
+		s_i(i) = i;
+		}
+}
+
+
 long int & permutation::s_i(int i)
 {
 	int l;
@@ -582,7 +596,7 @@ void permutation::write_mem(memory & M, int debug_depth)
 	
 	l = s_l();
 	M.write_int(l);
-	if (ONE_char_int(l)) {
+	if (FITS_INTO_ONE_BYTE(l)) {
 		for (i = 0; i < l; i++) {
 			a = s_i(i) + 1;
 			M.write_char((char) a);
@@ -603,7 +617,7 @@ void permutation::read_mem(memory & M, int debug_depth)
 	
 	M.read_int(&l);
 	m_l(l);
-	if (ONE_char_int(l)) {
+	if (FITS_INTO_ONE_BYTE(l)) {
 		for (i = 0; i < l; i++) {
 			M.read_char(&c);
 			a = (int) c;
@@ -627,7 +641,7 @@ int permutation::csf()
 	
 	l = s_l();
 	size += 4; /* l */
-	if (ONE_char_int(l))
+	if (FITS_INTO_ONE_BYTE(l))
 		size += l * 1;
 	else
 		size += l * 4;
@@ -1139,6 +1153,7 @@ void permutation::restrict_to_subset(permutation &q, int first, int len)
 		}
 }
 
+#if 0
 void permutation::induce_on_lines_of_PG_k_q(int k, int q,
 		permutation &per, int verbose_level)
 {
@@ -1274,17 +1289,6 @@ int permutation::preimage(int i)
 	exit(1);
 }
 
-void permutation::m_l(int l)
-{
-	int i;
-	
-	freeself();
-	self.vector_pointer = calloc_nobjects_plus_length(l, INTEGER);
-	for (i = 0; i < l; i++) {
-		s_i(i) = i;
-		}
-}
-
 void signum_map(discreta_base & x, discreta_base &d)
 {
 	int sgn;
@@ -1299,6 +1303,7 @@ void signum_map(discreta_base & x, discreta_base &d)
 	d.change_to_integer();
 	d.m_i_i(sgn);
 }
+#endif
 
 #if 0
 char get_character(istream & is, int f_v)

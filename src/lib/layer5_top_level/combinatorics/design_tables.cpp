@@ -131,9 +131,9 @@ void design_tables::create_table(int verbose_level)
 	fname_design_table.assign(label);
 	fname_design_table.append("_design_table.csv");
 
-	orbit_of_sets *SetOrb;
+	orbits_schreier::orbit_of_sets *SetOrb;
 
-	SetOrb = NEW_OBJECT(orbit_of_sets);
+	SetOrb = NEW_OBJECT(orbits_schreier::orbit_of_sets);
 
 	if (f_v) {
 		cout << "design_tables::create_table before SetOrb->init" << endl;

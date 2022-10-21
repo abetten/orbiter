@@ -48,8 +48,6 @@ public:
 
 	arc_lifting();
 	~arc_lifting();
-	void null();
-	void freeself();
 	void create_surface_and_group(
 			cubic_surfaces_in_general::surface_with_action *Surf_A, long int *Arc6,
 		int verbose_level);
@@ -93,8 +91,6 @@ public:
 
 	arc_orbits_on_pairs();
 	~arc_orbits_on_pairs();
-	void null();
-	void freeself();
 	void init(
 		surfaces_arc_lifting *SAL, int arc_idx,
 		actions::action *A,
@@ -136,8 +132,6 @@ public:
 
 	arc_partition();
 	~arc_partition();
-	void null();
-	void freeself();
 	void init(
 		arc_orbits_on_pairs *OP, int pair_orbit_idx,
 		actions::action *A, actions::action *A_on_arc,
@@ -189,8 +183,6 @@ public:
 
 	classify_trihedral_pairs();
 	~classify_trihedral_pairs();
-	void null();
-	void freeself();
 	void init(cubic_surfaces_in_general::surface_with_action *Surf_A,
 			int verbose_level);
 
@@ -256,8 +248,6 @@ public:
 
 	six_arcs_not_on_a_conic();
 	~six_arcs_not_on_a_conic();
-	void null();
-	void freeself();
 	void init(
 			apps_geometry::arc_generator_description *Descr,
 			projective_geometry::projective_space_with_action *PA,
@@ -647,8 +637,6 @@ public:
 
 	surfaces_arc_lifting();
 	~surfaces_arc_lifting();
-	void null();
-	void freeself();
 	void init(
 			cubic_surfaces_in_general::surface_with_action *Surf_A,
 		poset_classification::poset_classification_control *Control_six_arcs,

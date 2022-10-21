@@ -189,12 +189,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 
 	// classification:
-#if 0
-	f_exact_cover = FALSE;
-	ECA = NULL;
-	f_isomorph_arguments = FALSE;
-	IA = NULL;
-#endif
 
 	f_linear_codes = FALSE;
 	linear_codes_minimum_distance = 0;

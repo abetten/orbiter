@@ -25,20 +25,10 @@ six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 	nb_orbits = 0;
 	Not_on_conic_idx = NULL;
 	nb_arcs_not_on_conic = 0;
-	//null();
 }
 
 
 six_arcs_not_on_a_conic::~six_arcs_not_on_a_conic()
-{
-	freeself();
-}
-
-void six_arcs_not_on_a_conic::null()
-{
-}
-
-void six_arcs_not_on_a_conic::freeself()
 {
 	if (Gen) {
 		FREE_OBJECT(Gen);
@@ -46,7 +36,6 @@ void six_arcs_not_on_a_conic::freeself()
 	if (Not_on_conic_idx) {
 		FREE_int(Not_on_conic_idx);
 	}
-	null();
 }
 
 void six_arcs_not_on_a_conic::init(

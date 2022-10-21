@@ -414,7 +414,7 @@ int orbiter_session::find_symbol(std::string &label)
 }
 
 void orbiter_session::get_vector_from_label(std::string &label,
-		int *&v, int &sz, int verbose_level)
+		long int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -437,8 +437,8 @@ void orbiter_session::get_vector_from_label(std::string &label,
 			VB = (vector_builder *) Orbiter->get_object(idx);
 
 			sz = VB->len;
-			v = NEW_int(sz);
-			Int_vec_copy(VB->v, v, sz);
+			v = NEW_lint(sz);
+			Lint_vec_copy(VB->v, v, sz);
 		}
 		else if (Orbiter->get_object_type(idx) == t_set) {
 
@@ -447,13 +447,14 @@ void orbiter_session::get_vector_from_label(std::string &label,
 			SB = (set_builder *) Orbiter->get_object(idx);
 
 			sz = SB->sz;
-			v = NEW_int(sz);
-			Lint_vec_copy_to_int(SB->set, v, sz);
+			v = NEW_lint(sz);
+			Lint_vec_copy(SB->set, v, sz);
+			//Lint_vec_copy_to_int(SB->set, v, sz);
 		}
 	}
 	else {
 
-		Int_vec_scan(label, v, sz);
+		Lint_vec_scan(label, v, sz);
 	}
 
 	if (f_v) {
@@ -486,7 +487,7 @@ void orbiter_session::get_int_vector_from_label(std::string &label,
 
 			sz = VB->len;
 			v = NEW_int(sz);
-			Int_vec_copy(VB->v, v, sz);
+			Lint_vec_copy_to_int(VB->v, v, sz);
 		}
 		else if (Orbiter->get_object_type(idx) == t_set) {
 
@@ -535,7 +536,7 @@ void orbiter_session::get_lint_vector_from_label(std::string &label,
 
 			sz = VB->len;
 			v = NEW_lint(sz);
-			Int_vec_copy_to_lint(VB->v, v, sz);
+			Lint_vec_copy(VB->v, v, sz);
 		}
 		else if (Orbiter->get_object_type(idx) == t_set) {
 
@@ -586,7 +587,7 @@ void orbiter_session::get_matrix_from_label(std::string &label,
 
 			sz = VB->len;
 			v = NEW_int(sz);
-			Int_vec_copy(VB->v, v, sz);
+			Lint_vec_copy_to_int(VB->v, v, sz);
 
 			if (!VB->f_has_k) {
 				cout << "orbiter_session::get_matrix_from_label "

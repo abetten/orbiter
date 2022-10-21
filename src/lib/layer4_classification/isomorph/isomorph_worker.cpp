@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 isomorph_worker::isomorph_worker()
@@ -1090,5 +1091,6 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 
 
 
-}}
+}}}
+
 

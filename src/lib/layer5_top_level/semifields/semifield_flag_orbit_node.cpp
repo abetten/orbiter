@@ -34,12 +34,10 @@ semifield_flag_orbit_node::semifield_flag_orbit_node()
 	//longinteger_object go;
 	gens = NULL;
 
-	//null();
 }
 
 semifield_flag_orbit_node::~semifield_flag_orbit_node()
 {
-	//freeself();
 }
 
 

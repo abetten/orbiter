@@ -1012,9 +1012,9 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	cout << endl;
 
 
-	orbit_of_sets *OS;
+	orbits_schreier::orbit_of_sets *OS;
 
-	OS = NEW_OBJECT(orbit_of_sets);
+	OS = NEW_OBJECT(orbits_schreier::orbit_of_sets);
 	cout << "before OS->init" << endl;
 	OS->init(A, A, short_orbit, short_orbit_len,
 			Eckardt_stab->Strong_gens->gens, verbose_level);

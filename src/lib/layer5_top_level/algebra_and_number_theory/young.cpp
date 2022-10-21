@@ -18,27 +18,24 @@ namespace apps_algebra {
 
 young::young()
 {
-	null();
-}
-
-young::~young()
-{
-	freeself();
-}
-
-void young::null()
-{
+	n = 0;
 	A = NULL;
+	S = NULL;
+	//ring_theory::longinteger_object go;
+	goi = 0;
 	Elt = NULL;
 	v = NULL;
+
 	Aconj = NULL;
 	ABC = NULL;
 	Sch = NULL;
 	SG = NULL;
+	nb_classes = 0;
 	class_size = NULL;
 	class_rep = NULL;
 	D = NULL;
 
+	l1 = l2 = 0;
 	row_parts = NULL;
 	col_parts = NULL;
 	Tableau = NULL;
@@ -52,24 +49,24 @@ void young::null()
 	S2 = NULL;
 }
 
-void young::freeself()
+young::~young()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "young::freeself" << endl;
+		cout << "young::~young" << endl;
 		}
 
 	if (f_v) {
-		cout << "young::freeself before delete Sch" << endl;
+		cout << "young::~young before delete Sch" << endl;
 		}
 	if (Sch) {
 		delete Sch;
 		}
 	if (f_v) {
-		cout << "young::freeself before delete SG" << endl;
+		cout << "young::~young before delete SG" << endl;
 		}
 	if (SG) {
 		delete SG;
@@ -81,7 +78,7 @@ void young::freeself()
 		FREE_int(class_rep);
 		}
 	if (f_v) {
-		cout << "young::freeself before delete D" << endl;
+		cout << "young::~young before delete D" << endl;
 		}
 	if (D) {
 		delete D;
@@ -99,7 +96,7 @@ void young::freeself()
 		delete Col_partition;
 		}
 	if (f_v) {
-		cout << "young::freeself before delete gens1" << endl;
+		cout << "young::~young before delete gens1" << endl;
 		}
 	if (gens1) {
 		delete gens1;
@@ -108,7 +105,7 @@ void young::freeself()
 		delete gens2;
 		}
 	if (f_v) {
-		cout << "young::freeself before delete S1" << endl;
+		cout << "young::~young before delete S1" << endl;
 		}
 	if (S1) {
 		delete S1;
@@ -119,7 +116,7 @@ void young::freeself()
 
 
 	if (f_v) {
-		cout << "young::freeself before delete A" << endl;
+		cout << "young::~young before delete A" << endl;
 		}
 	if (A) {
 		delete A;
@@ -132,21 +129,21 @@ void young::freeself()
 		}
 
 	if (f_v) {
-		cout << "young::freeself before delete Aconj" << endl;
+		cout << "young::~young before delete Aconj" << endl;
 		}
 	if (Aconj) {
 		delete Aconj;
 		}
 #if 0
 	if (f_v) {
-		cout << "young::freeself before delete ABC" << endl;
+		cout << "young::~young before delete ABC" << endl;
 		}
 	if (ABC) {
 		delete ABC;
 		}
 #endif
 	if (f_v) {
-		cout << "young::freeself done" << endl;
+		cout << "young::~young done" << endl;
 		}
 }
 

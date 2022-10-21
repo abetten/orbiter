@@ -44,19 +44,9 @@ singer_cycle::singer_cycle()
 	line_orbit_inv = NULL;
 	Inc = NULL;
 	T = NULL;
-	//null();
 }
 
 singer_cycle::~singer_cycle()
-{
-	freeself();
-}
-
-void singer_cycle::null()
-{
-}
-
-void singer_cycle::freeself()
 {
 	if (poly_coeffs) {
 		FREE_int(poly_coeffs);
@@ -110,7 +100,6 @@ void singer_cycle::freeself()
 	if (P) {
 		FREE_OBJECT(P);
 	}
-	null();
 }
 
 void singer_cycle::init(int n,

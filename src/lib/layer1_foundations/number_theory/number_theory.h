@@ -228,8 +228,8 @@ public:
 	// returns the number of digits in base q representation
 	int lint_logq(long int n, int q);
 	int is_strict_prime_power(int q);
-	// assuming that q is a prime power, this fuction tests
-	// whether or not q is a strict prime power
+	// assuming that q is a prime power, this function tests
+	// if q is a strict prime power
 	int is_prime(int p);
 	int is_prime_power(int q);
 	int is_prime_power(int q, int &p, int &h);
@@ -238,6 +238,8 @@ public:
 	//The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
 	int sp_ge(int n, int p_min);
 	int factor_int(int a, int *&primes, int *&exponents);
+	int nb_prime_factors_counting_multiplicities(long int a);
+	int nb_distinct_prime_factors(long int a);
 	void factor_lint(long int a, std::vector<long int> &primes, std::vector<int> &exponents);
 	void factor_prime_power(int q, int &p, int &e);
 	long int primitive_root_randomized(long int p, int verbose_level);
@@ -265,6 +267,9 @@ public:
 	int random_integer_in_interval(int lower_bound, int upper_bound);
 	int nb_primes_available();
 	int get_prime_from_table(int idx);
+	long int Chinese_Remainders(
+			std::vector<long int> &Remainders,
+			std::vector<long int> &Moduli, long int &M, int verbose_level);
 	long int ChineseRemainder2(long int a1, long int a2,
 			long int p1, long int p2, int verbose_level);
 	void do_babystep_giantstep(long int p, long int g, long int h,
@@ -306,6 +311,7 @@ public:
 		int x3, int y3, int z3,
 		int verbose_level);
 	int eulers_totient_function(int n, int verbose_level);
+	void do_jacobi(long int jacobi_top, long int jacobi_bottom, int verbose_level);;
 
 };
 

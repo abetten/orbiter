@@ -1296,7 +1296,7 @@ void spreadsheet::get_string(std::string &str, int i, int j)
 	//return s;
 }
 
-long int spreadsheet::get_int(int i, int j)
+long int spreadsheet::get_lint(int i, int j)
 {
 	string str;
 	long int a;

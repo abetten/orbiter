@@ -17,7 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
-
+namespace orbits_schreier {
 
 static int orbit_of_equations_compare_func(void *a, void *b, void *data);
 
@@ -872,7 +872,8 @@ static int orbit_of_equations_compare_func(void *a, void *b, void *data)
 	return 0;
 }
 
-}}
+}}}
+
 
 
 

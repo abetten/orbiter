@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 representatives::representatives()
@@ -548,6 +549,7 @@ void representatives::print_fusion_statistics()
 	cout << "nb_open = " << nb_open << endl;
 }
 
-}}
+}}}
+
 
 

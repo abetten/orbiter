@@ -124,9 +124,9 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 		}
 
 
-		layer4_classification::exact_cover_arguments *ECA = NULL;
+		layer4_classification::solvers_package::exact_cover_arguments *ECA = NULL;
 
-		ECA = NEW_OBJECT(layer4_classification::exact_cover_arguments);
+		ECA = NEW_OBJECT(layer4_classification::solvers_package::exact_cover_arguments);
 
 		Descr->Isomorph_arguments->init(
 				BLT_classify->A,
@@ -154,7 +154,7 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 
 			//isomorph_worker *Worker;
 
-			BLT_classify->Worker = NEW_OBJECT(isomorph_worker);
+			BLT_classify->Worker = NEW_OBJECT(isomorph::isomorph_worker);
 
 			if (f_v) {
 				cout << "blt_set_classify_activity::perform_activity before Worker->init" << endl;

@@ -27,18 +27,9 @@ static void callback_partial_ovoid_test_early(long int *S, int len,
 
 classify_double_sixes::classify_double_sixes()
 {
-	null();
-}
-
-classify_double_sixes::~classify_double_sixes()
-{
-	freeself();
-}
-
-void classify_double_sixes::null()
-{
 	q = 0;
 	F = NULL;
+	A = NULL;
 	Surf_A = NULL;
 	Surf = NULL;
 
@@ -51,25 +42,43 @@ void classify_double_sixes::null()
 	Elt2 = NULL;
 	Elt3 = NULL;
 	Elt4 = NULL;
-	Surf = NULL;
+
 	SG_line_stab = NULL;
+
+	l_min = 0;
+	short_orbit_idx = 0;
+	nb_neighbors = 0;
 	Neighbors = NULL;
 	Neighbor_to_line = NULL;
 	Neighbor_to_klein = NULL;
 	//Line_to_neighbor = NULL;
+
+	//ring_theory::longinteger_object go, stab_go;
+
 	Stab = NULL;
 	stab_gens = NULL;
 	orbit = NULL;
+	orbit_len = 0;
+
+	pt0_idx_in_orbit = 0;
+	pt0_wedge = 0;
+	pt0_line = 0;
+	pt0_klein = 0;
+
+	//int Basis[8];
 	line_to_orbit = NULL;
 	orbit_to_line = NULL;
 	Pts_klein = NULL;
 	Pts_wedge = NULL;
+	nb_pts = 0;
+
 	Pts_wedge_to_line = NULL;
 	line_to_pts_wedge = NULL;
 	A_on_neighbors = NULL;
 	Control = NULL;
 	Poset = NULL;
 	Five_plus_one = NULL;
+
 	u = NULL;
 	v = NULL;
 	w = NULL;
@@ -85,10 +94,11 @@ void classify_double_sixes::null()
 	Flag_orbits = NULL;
 
 	Double_sixes = NULL;
-
 }
 
-void classify_double_sixes::freeself()
+
+
+classify_double_sixes::~classify_double_sixes()
 {
 	if (Elt0) {
 		FREE_int(Elt0);
@@ -120,7 +130,6 @@ void classify_double_sixes::freeself()
 	if (Double_sixes) {
 		FREE_OBJECT(Double_sixes);
 	}
-	null();
 }
 
 void classify_double_sixes::init(

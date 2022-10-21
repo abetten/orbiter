@@ -74,9 +74,13 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_nth_roots = FALSE;
 	nth_roots_n = 0;
 
-	f_make_BCH_code_and_encode = FALSE;
+	f_make_BCH_code = FALSE;
 	make_BCH_code_n = 0;
 	make_BCH_code_d = 0;
+
+	f_make_BCH_code_and_encode = FALSE;
+	make_BCH_code_and_encode_n = 0;
+	make_BCH_code_and_encode_d = 0;
 	//std::string make_BCH_code_and_encode_text;
 	//std::string make_BCH_code_and_encode_fname;
 
@@ -350,16 +354,27 @@ int coding_theoretic_activity_description::read_arguments(
 				cout << "-nth_roots " << nth_roots_n << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-make_BCH_code_and_encode") == 0) {
-			f_make_BCH_code_and_encode = TRUE;
+		else if (ST.stringcmp(argv[i], "-make_BCH_code") == 0) {
+			f_make_BCH_code = TRUE;
 			make_BCH_code_n = ST.strtoi(argv[++i]);
 			make_BCH_code_d = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-make_BCH_code "
+						<< " " << make_BCH_code_n
+						<< " " << make_BCH_code_d
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-make_BCH_code_and_encode") == 0) {
+			f_make_BCH_code_and_encode = TRUE;
+			make_BCH_code_and_encode_n = ST.strtoi(argv[++i]);
+			make_BCH_code_and_encode_d = ST.strtoi(argv[++i]);
 			make_BCH_code_and_encode_text.assign(argv[++i]);
 			make_BCH_code_and_encode_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-make_BCH_code_and_encode "
-						<< " " << make_BCH_code_n
-						<< " " << make_BCH_code_d
+						<< " " << make_BCH_code_and_encode_n
+						<< " " << make_BCH_code_and_encode_d
 						<< " " << make_BCH_code_and_encode_text
 						<< " " << make_BCH_code_and_encode_fname
 						<< endl;
@@ -608,13 +623,19 @@ void coding_theoretic_activity_description::print()
 	if (f_nth_roots) {
 		cout << "-nth_roots " << nth_roots_n << endl;
 	}
+	if (f_make_BCH_code) {
+			cout << "-make_BCH_code "
+					<< " " << make_BCH_code_n
+					<< " " << make_BCH_code_d
+					<< endl;
+	}
 	if (f_make_BCH_code_and_encode) {
-		cout << "-make_BCH_code_and_encode "
-				<< " " << make_BCH_code_n
-				<< " " << make_BCH_code_d
-				<< " " << make_BCH_code_and_encode_text
-				<< " " << make_BCH_code_and_encode_fname
-				<< endl;
+			cout << "-make_BCH_code_and_encode "
+					<< " " << make_BCH_code_and_encode_n
+					<< " " << make_BCH_code_and_encode_d
+					<< " " << make_BCH_code_and_encode_text
+					<< " " << make_BCH_code_and_encode_fname
+					<< endl;
 	}
 	if (f_NTT) {
 		cout << "-NTT " << NTT_n

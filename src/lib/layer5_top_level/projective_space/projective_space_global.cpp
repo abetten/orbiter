@@ -257,83 +257,6 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 
 
 
-#if 0
-void projective_space_global::do_create_surface(
-		projective_space_with_action *PA,
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr,
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *&SC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface" << endl;
-		cout << "projective_space_global::do_create_surface verbose_level=" << verbose_level << endl;
-	}
-
-	int q;
-	algebraic_geometry::surface_domain *Surf;
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface before Surface_Descr->get_q" << endl;
-	}
-	q = Surface_Descr->get_q();
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface q = " << q << endl;
-	}
-
-	if (PA->q != q) {
-		cout << "projective_space_global::do_create_surface PA->q != q" << endl;
-		exit(1);
-	}
-	if (PA->n != 3) {
-		cout << "projective_space_global::do_create_surface we need a three-dimensional projective space" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(PA->F, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface after Surf_A->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface before Surf_A->create_surface_and_do_report" << endl;
-	}
-
-	Surf_A->create_surface(
-			Surface_Descr,
-			SC,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface after Surf_A->create_surface_and_do_report" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_surface done" << endl;
-	}
-}
-#endif
-
-
-
 void projective_space_global::conic_type(
 		projective_space_with_action *PA,
 		int threshold,
@@ -1577,9 +1500,9 @@ void projective_space_global::set_stabilizer(
 				fname_mask, nb, column_label,
 				verbose_level);
 #endif
-	substructure_classifier *SubC;
+	set_stabilizer::substructure_classifier *SubC;
 
-	SubC = NEW_OBJECT(substructure_classifier);
+	SubC = NEW_OBJECT(set_stabilizer::substructure_classifier);
 
 	SubC->set_stabilizer_in_any_space(
 			PA->A, PA->A, PA->A->Strong_gens,

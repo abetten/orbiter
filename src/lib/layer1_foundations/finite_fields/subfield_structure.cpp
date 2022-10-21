@@ -37,15 +37,6 @@ subfield_structure::subfield_structure()
 
 subfield_structure::~subfield_structure()
 {
-	freeself();
-}
-
-void subfield_structure::null()
-{
-}
-
-void subfield_structure::freeself()
-{
 	if (Basis) {
 		FREE_int(Basis);
 	}
@@ -67,7 +58,6 @@ void subfield_structure::freeself()
 	if (v) {
 		FREE_int(v);
 	}
-	null();
 }
 
 void subfield_structure::init(finite_field *FQ,

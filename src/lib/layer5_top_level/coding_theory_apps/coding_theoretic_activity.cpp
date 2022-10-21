@@ -331,7 +331,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 	}
-	else if (Descr->f_make_BCH_code_and_encode) {
+	else if (Descr->f_make_BCH_code) {
 
 		coding_theory::cyclic_codes Cyclic_codes;
 		coding_theory::crc_codes Crc_codes;
@@ -348,6 +348,38 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		Cyclic_codes.make_BCH_code(n,
 				F,
 				Descr->make_BCH_code_d,
+				Nth, P,
+				verbose_level);
+
+		cout << "generator polynomial is ";
+		Nth->FX->print_object(P, cout);
+		cout << endl;
+
+		degree = Nth->FX->degree(P);
+		generator_polynomial = NEW_int(degree + 1);
+		for (i = 0; i <= degree; i++) {
+			generator_polynomial[i] = Nth->FX->s_i(P, i);
+		}
+
+	}
+
+	else if (Descr->f_make_BCH_code_and_encode) {
+
+		coding_theory::cyclic_codes Cyclic_codes;
+		coding_theory::crc_codes Crc_codes;
+		field_theory::nth_roots *Nth;
+		ring_theory::unipoly_object P;
+
+		int n;
+		int degree;
+		int *generator_polynomial;
+		int i;
+
+		n = Descr->make_BCH_code_and_encode_n;
+
+		Cyclic_codes.make_BCH_code(n,
+				F,
+				Descr->make_BCH_code_and_encode_d,
 				Nth, P,
 				verbose_level);
 

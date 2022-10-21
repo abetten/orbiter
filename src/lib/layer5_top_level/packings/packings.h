@@ -24,7 +24,7 @@ class invariants_packing {
 public:
 	spreads::spread_classify *T;
 	packing_classify *P;
-	isomorph *Iso; // the classification of packings
+	isomorph::isomorph *Iso; // the classification of packings
 
 
 	packing_invariants *Inv;
@@ -45,12 +45,10 @@ public:
 
 	invariants_packing();
 	~invariants_packing();
-	void null();
-	void freeself();
-	void init(isomorph *Iso, packing_classify *P, int verbose_level);
+	void init(isomorph::isomorph *Iso, packing_classify *P, int verbose_level);
 	void compute_dual_packings(
-		isomorph *Iso, int verbose_level);
-	void make_table(isomorph *Iso, std::ostream &ost,
+			isomorph::isomorph *Iso, int verbose_level);
+	void make_table(isomorph::isomorph *Iso, std::ostream &ost,
 		int f_only_self_dual,
 		int f_only_not_self_dual,
 		int verbose_level);
@@ -106,8 +104,6 @@ public:
 
 	packing_classify();
 	~packing_classify();
-	void null();
-	void freeself();
 	void spread_table_init(
 			projective_geometry::projective_space_with_action *PA,
 			int dimension_of_spread_elements,
@@ -127,7 +123,7 @@ public:
 			int verbose_level);
 	void compute(int search_depth, int verbose_level);
 	void lifting_prepare_function_new(
-		exact_cover *E, int starter_case,
+			solvers_package::exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
 		solvers::diophant *&Dio, long int *&col_labels,
@@ -148,33 +144,33 @@ public:
 
 	// packing2.cpp
 	void compute_klein_invariants(
-			isomorph *Iso, int f_split, int split_r, int split_m,
+			isomorph::isomorph *Iso, int f_split, int split_r, int split_m,
 			int verbose_level);
-	void compute_dual_spreads(isomorph *Iso, int verbose_level);
+	void compute_dual_spreads(isomorph::isomorph *Iso, int verbose_level);
 	void klein_invariants_fname(std::string &fname, std::string &prefix, int iso_cnt);
 	void compute_and_save_klein_invariants(std::string &prefix,
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
-	void report(isomorph *Iso, int verbose_level);
-	void report_whole(isomorph *Iso, std::ostream &ost, int verbose_level);
-	void report_title_page(isomorph *Iso, std::ostream &ost, int verbose_level);
-	void report_packings_by_ago(isomorph *Iso, std::ostream &ost,
+	void report(isomorph::isomorph *Iso, int verbose_level);
+	void report_whole(isomorph::isomorph *Iso, std::ostream &ost, int verbose_level);
+	void report_title_page(isomorph::isomorph *Iso, std::ostream &ost, int verbose_level);
+	void report_packings_by_ago(isomorph::isomorph *Iso, std::ostream &ost,
 		invariants_packing *inv,
 		data_structures::tally &C_ago, int verbose_level);
-	void report_isomorphism_type(isomorph *Iso, std::ostream &ost,
+	void report_isomorphism_type(isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_packing_as_table(isomorph *Iso, std::ostream &ost,
+	void report_packing_as_table(isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, long int *list_of_lines,
 		int verbose_level);
-	void report_klein_invariants(isomorph *Iso, std::ostream &ost,
+	void report_klein_invariants(isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_stabilizer(isomorph &Iso, std::ostream &ost, int orbit,
+	void report_stabilizer(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 			int verbose_level);
-	void report_stabilizer_in_action(isomorph &Iso,
+	void report_stabilizer_in_action(isomorph::isomorph &Iso,
 			std::ostream &ost, int orbit, int verbose_level);
-	void report_stabilizer_in_action_gap(isomorph &Iso,
+	void report_stabilizer_in_action_gap(isomorph::isomorph &Iso,
 			int orbit, int verbose_level);
-	void report_extra_stuff(isomorph *Iso, std::ostream &ost,
+	void report_extra_stuff(isomorph::isomorph *Iso, std::ostream &ost,
 			int verbose_level);
 };
 
@@ -227,8 +223,6 @@ public:
 
 	packing_invariants();
 	~packing_invariants();
-	void null();
-	void freeself();
 	void init(packing_classify *P,
 			std::string &prefix, std::string &prefix_tex, int iso_cnt,
 		long int *the_packing, int verbose_level);
@@ -411,10 +405,10 @@ public:
 	std::string spread_tables_prefix;
 
 	int f_exact_cover;
-	exact_cover_arguments *ECA;
+	solvers_package::exact_cover_arguments *ECA;
 
 	int f_isomorph;
-	isomorph_arguments *IA;
+	isomorph::isomorph_arguments *IA;
 
 	int f_H;
 	std::string H_label;
@@ -669,8 +663,6 @@ public:
 
 	packing_was();
 	~packing_was();
-	void null();
-	void freeself();
 	void init(packing_was_description *Descr,
 			packing_classify *P, int verbose_level);
 	void compute_H_orbits_and_reduce(int verbose_level);

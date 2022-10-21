@@ -206,7 +206,7 @@ typedef void *pvoid;
 
 
 #define PAGE_LENGTH_LOG 20
-#define MAX_PAGE_SIZE_IN_charS (5 * 1L << 20)
+#define PAGE_STORAGE_MAX_PAGE_SIZE (5 * 1L << 20)
 #define BUFSIZE 100000
 
 
@@ -219,7 +219,6 @@ typedef void *pvoid;
 #define ODD(x)      ( ((x) % 2) == 1 )
 #define DOUBLYEVEN(x)     ( ((x) % 4) == 0 )
 #define SINGLYEVEN(x)     ( ((x) % 4) == 2 )
-#define ONE_char_int(a) (((a) > -126) && ((a) < 127))
 #define ONE_MILLION 1000000
 #define ONE_HUNDRED_THOUSAND 100000
 
@@ -247,7 +246,7 @@ namespace layer1_foundations {
 
 
 
-//! Algebraic algorithms, generators for certain classes of groups, conjugacy classes in the general linear group
+//! algebraic algorithms, generators for certain classes of groups, conjugacy classes in the general linear group
 
 namespace algebra {
 
@@ -267,7 +266,7 @@ namespace algebra {
 }
 
 
-//! Cubic surfaces, quartic curves, Schlaefli labelings, Eckardt points,  Del Pezzo surfaces, Clebsch maps
+//! cubic surfaces, quartic curves, Schlaefli labelings, Eckardt points,  Del Pezzo surfaces, Clebsch maps
 
 namespace algebraic_geometry {
 
@@ -292,7 +291,7 @@ namespace algebraic_geometry {
 
 }
 
-//! Coding theory, MacWilliams, weight enumerators, cyclic codes, BCH codes, Reed-Muller codes, etc.
+//! coding theory, MacWilliams, weight enumerators, cyclic codes, BCH codes, Reed-Muller codes, etc.
 
 namespace coding_theory {
 
@@ -306,7 +305,7 @@ namespace coding_theory {
 
 }
 
-//! Combinatorics: boolean functions, combinatorial objects, classification, tactical decompositions, various puzzles
+//! combinatorics: boolean functions, combinatorial objects, classification, tactical decompositions, various puzzles
 
 namespace combinatorics {
 
@@ -332,7 +331,7 @@ namespace combinatorics {
 }
 
 
-//! Cryptography: Vigenere, Ceasar, RSA, primality tests, elliptic curve, NTRU, square roots modulo n.
+//! cryptography: Vigenere, Caesar, RSA, primality tests, elliptic curve, NTRU, square roots modulo n.
 
 namespace cryptography {
 
@@ -341,7 +340,7 @@ namespace cryptography {
 
 }
 
-//! Basic data structures used throughout the project
+//! basic data structures used throughout the project
 
 namespace data_structures {
 
@@ -378,7 +377,7 @@ namespace data_structures {
 }
 
 
-//! Expression parser, used to create an abstract syntax tree (AST) of a well-formed algebraic expression
+//! expression parser, used to create an abstract syntax tree (AST) of a well-formed algebraic expression
 
 namespace expression_parser {
 
@@ -396,7 +395,7 @@ namespace expression_parser {
 }
 
 
-//! Finite fields, n-th roots, subfields, trace and norm.
+//! finite fields, n-th roots, subfields, trace and norm.
 
 namespace field_theory {
 
@@ -414,7 +413,7 @@ namespace field_theory {
 }
 
 
-//! Projective geometry over a finite field and related topics
+//! projective geometry over a finite field and related topics
 
 namespace geometry {
 
@@ -451,7 +450,7 @@ namespace geometry {
 
 }
 
-//! Construction and classification of configurations, linear spaces, and designs
+//! construction and classification of configurations, linear spaces, and designs
 
 namespace geometry_builder {
 
@@ -538,7 +537,7 @@ namespace graphics {
 class knowledge_base;
 
 
-//! Linear algebra and representation theory
+//! linear algebra and representation theory
 
 namespace linear_algebra {
 
@@ -548,7 +547,7 @@ namespace linear_algebra {
 
 }
 
-//! Number theory, cyclotomic sets, elliptic curves, number theoretic transform (NTT)
+//! number theory, cyclotomic sets, elliptic curves, number theoretic transform (NTT)
 
 namespace number_theory {
 
@@ -560,7 +559,7 @@ namespace number_theory {
 
 }
 
-//! The Orbiter kernel. It contains functions related to the symbol-table, memory management, os-interface, file-io, latex-interface etc.
+//! the Orbiter kernel. It contains functions related to the symbol-table, memory management, os-interface, file-io, latex-interface etc.
 
 namespace orbiter_kernel_system {
 
@@ -598,7 +597,7 @@ namespace orthogonal_geometry {
 
 }
 
-//! Ring theory, including polynomial rings and longinteger arithmetic.
+//! ring theory, including polynomial rings and longinteger arithmetic.
 
 namespace ring_theory {
 	// ring_theory:
@@ -620,7 +619,7 @@ namespace ring_theory {
 
 }
 
-//! Diophantine systems of equations. Solvers Possolve and Dancing Links.
+//! diophantine systems of equations. Solvers Possolve and Dancing Links.
 
 namespace solvers {
 	// solvers

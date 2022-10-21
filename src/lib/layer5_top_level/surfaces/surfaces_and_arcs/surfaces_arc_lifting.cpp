@@ -64,23 +64,14 @@ surfaces_arc_lifting::surfaces_arc_lifting()
 
 surfaces_arc_lifting::~surfaces_arc_lifting()
 {
-	freeself();
-}
-
-void surfaces_arc_lifting::null()
-{
-}
-
-void surfaces_arc_lifting::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting::freeself" << endl;
+		cout << "surfaces_arc_lifting::~surfaces_arc_lifting" << endl;
 	}
 	if (f_v) {
-		cout << "surfaces_arc_lifting::freeself before FREE_OBJECT(Six_arcs)" << endl;
+		cout << "surfaces_arc_lifting::~surfaces_arc_lifting before FREE_OBJECT(Six_arcs)" << endl;
 	}
 	if (Six_arcs) {
 		FREE_OBJECT(Six_arcs);
@@ -105,14 +96,14 @@ void surfaces_arc_lifting::freeself()
 		FREE_int(flag_orbit_on_partition_idx);
 	}
 	if (f_v) {
-		cout << "surfaces_arc_lifting::freeself before FREE_OBJECT(Surfaces)" << endl;
+		cout << "surfaces_arc_lifting::~surfaces_arc_lifting before FREE_OBJECT(Surfaces)" << endl;
 	}
 	if (Surfaces) {
 		FREE_OBJECT(Surfaces);
 	}
 #if 0
 	if (f_v) {
-		cout << "surfaces_arc_lifting::freeself before FREE_OBJECT(A3)" << endl;
+		cout << "surfaces_arc_lifting::~surfaces_arc_lifting before FREE_OBJECT(A3)" << endl;
 	}
 	if (A3) {
 		FREE_OBJECT(A3);
@@ -120,9 +111,8 @@ void surfaces_arc_lifting::freeself()
 #endif
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting::freeself done" << endl;
+		cout << "surfaces_arc_lifting::~surfaces_arc_lifting done" << endl;
 	}
-	null();
 }
 
 void surfaces_arc_lifting::init(
@@ -161,29 +151,7 @@ void surfaces_arc_lifting::init(
 
 
 
-#if 0
-	A3 = NEW_OBJECT(action);
-
-
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"before A->init_projective_group" << endl;
-	}
-	vector_ge *nice_gens;
-	A3->init_projective_group(3, F,
-			f_semilinear,
-			TRUE /*f_basis*/, TRUE /* f_init_sims */,
-			nice_gens,
-			0 /*verbose_level*/);
-	FREE_OBJECT(nice_gens);
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"after A->init_projective_group" << endl;
-	}
-#else
 	A3 = Surf_A->PA->PA2->A;
-#endif
 
 
 

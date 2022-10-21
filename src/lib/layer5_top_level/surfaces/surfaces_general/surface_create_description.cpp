@@ -22,11 +22,6 @@ namespace cubic_surfaces_in_general {
 surface_create_description::surface_create_description()
 {
 
-#if 0
-	f_q = FALSE;
-	q = 0;
-#endif
-
 	f_space = FALSE;
 	//std::string space_label;
 
@@ -133,14 +128,6 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 
 	cout << "surface_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-
-#if 0
-		if (ST.stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			q = ST.strtoi(argv[++i]);
-			cout << "-q " << q << endl;
-		}
-#endif
 
 		if (ST.stringcmp(argv[i], "-space") == 0) {
 			f_space = TRUE;
@@ -330,11 +317,6 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 
 void surface_create_description::print()
 {
-#if 0
-	if (f_q) {
-		cout << "-q " << q << endl;
-	}
-#endif
 	if (f_space) {
 		cout << "-space " << space_label << endl;
 	}

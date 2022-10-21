@@ -1004,15 +1004,18 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 
 
 
-#if 0
-	if (!gg->GB->Descr->f_orderly) {
+#if 1
 
-		if (J == 0 && n == 0) {
-			if (C->f_last_non_zero_in_fuse) {
-				return FALSE;
+	if (gg->GB->Descr->f_special_test_not_orderly) {
+		if (!gg->GB->Descr->f_orderly) {
+
+			if (J == 0 && n == 0) {
+				if (C->f_last_non_zero_in_fuse) {
+					return FALSE;
+				}
 			}
-		}
 
+		}
 	}
 #endif
 

@@ -27,25 +27,18 @@ arc_lifting::arc_lifting()
 	Surf_A = NULL;
 
 
+	arc = NULL;
+	arc_size = 0;
+
 	the_equation = NULL;
 
 	Web = NULL;
 
 	Trihedral_pair = NULL;
 
-	null();
 }
 
 arc_lifting::~arc_lifting()
-{
-	freeself();
-}
-
-void arc_lifting::null()
-{
-}
-
-void arc_lifting::freeself()
 {
 	if (the_equation) {
 		FREE_int(the_equation);
@@ -56,8 +49,6 @@ void arc_lifting::freeself()
 	if (Trihedral_pair) {
 		FREE_OBJECT(Trihedral_pair);
 	}
-
-	null();
 }
 
 

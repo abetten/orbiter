@@ -33,7 +33,7 @@ large_set_was_activity_description::large_set_was_activity_description()
 	create_graph_on_orbits_of_length_based_on_N_orbits_length = 0;
 	create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected = 0;
 	create_graph_on_orbits_of_length_based_on_N_orbits_r = 0;
-	create_graph_on_orbits_of_length_based_on_N_orbits_r = 1;
+	create_graph_on_orbits_of_length_based_on_N_orbits_m = 1;
 
 	f_read_solution_file = FALSE;
 	read_solution_file_orbit_length = 0;
@@ -44,6 +44,9 @@ large_set_was_activity_description::~large_set_was_activity_description()
 {
 
 }
+
+
+
 
 
 int large_set_was_activity_description::read_arguments(int argc, std::string *argv,

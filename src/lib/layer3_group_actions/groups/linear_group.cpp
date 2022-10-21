@@ -550,7 +550,7 @@ int linear_group::linear_group_apply_modification(
 		int *gens;
 		int sz;
 
-		orbiter_kernel_system::Orbiter->get_vector_from_label(
+		orbiter_kernel_system::Orbiter->get_int_vector_from_label(
 				description->subgroup_generators_label, gens, sz,
 				verbose_level);
 

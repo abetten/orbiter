@@ -103,7 +103,7 @@ void iso_type::add_geometry(
 	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "iso_type::add_geometry v=" << v << endl;
+		cout << "iso_type::add_geometry v=" << v << " verbose_level=" << verbose_level << endl;
 
 		//inc->print(cout, v);
 		//print_geometry(Encoding, v, inc);
@@ -410,7 +410,7 @@ void iso_type::write_sage_file(std::string &fname, int verbose_level)
 		//ost << -1 << " " << Canonical_forms->B.size() << endl;
 
 		ost << endl;
-		ost << "# Automorphism group orders:" << endl;
+		ost << "# Automorphism group orders (25 in a row):" << endl;
 		ost << endl;
 		ost << "Ago = [";
 		for (h = 0; h < nb_geo; h++) {

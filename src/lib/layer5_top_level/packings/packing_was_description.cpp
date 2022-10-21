@@ -135,7 +135,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 
 		else if (ST.stringcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
-			ECA = NEW_OBJECT(exact_cover_arguments);
+			ECA = NEW_OBJECT(solvers_package::exact_cover_arguments);
 			i += ECA->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -150,7 +150,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 
 		else if (ST.stringcmp(argv[i], "-isomorph") == 0) {
 			f_isomorph = TRUE;
-			IA = NEW_OBJECT(isomorph_arguments);
+			IA = NEW_OBJECT(isomorph::isomorph_arguments);
 			i += IA->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 

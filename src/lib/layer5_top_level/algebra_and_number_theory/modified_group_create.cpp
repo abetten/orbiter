@@ -102,6 +102,21 @@ void modified_group_create::modified_group_init(
 		}
 	}
 
+	else if (Descr->f_create_special_subgroup) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_special_subgroup" << endl;
+		}
+
+		create_special_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_special_subgroup" << endl;
+		}
+	}
+
 	else {
 		cout << "modified_group_create::modified_group_init "
 				"unknown operation" << endl;
@@ -132,26 +147,10 @@ void modified_group_create::create_restricted_action(
 		exit(1);
 	}
 
-	int idx;
-
-
-	idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->from[0]);
-
-
-	symbol_table_object_type t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-
-
-	if (t != t_any_group) {
-		cout << "-from must give object of type t_any_group" << endl;
-		cout << "type given: ";
-		orbiter_kernel_system::Orbiter->print_type(t);
-		exit(1);
-	}
-
 	any_group *AG;
 
-	AG = (any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
+	AG = Get_object_of_type_any_group(Descr->from[0]);
+
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -159,12 +158,8 @@ void modified_group_create::create_restricted_action(
 	long int *points;
 	int nb_points;
 
-
-	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(
-			Descr->restricted_action_set_text,
-			points, nb_points, verbose_level);
-
-	//Orbiter->Lint_vec.scan(Descr->restricted_action_set_text, points, nb_points);
+	Get_vector_or_set(Descr->restricted_action_set_text,
+			points, nb_points);
 
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action "
@@ -220,26 +215,9 @@ void modified_group_create::create_action_on_k_subspaces(
 		exit(1);
 	}
 
-	int idx;
-
-
-	idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->from[0]);
-
-
-	symbol_table_object_type t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-
-
-	if (t != t_any_group) {
-		cout << "-from must give object of type t_any_group" << endl;
-		cout << "type given: ";
-		orbiter_kernel_system::Orbiter->print_type(t);
-		exit(1);
-	}
-
 	any_group *AG;
 
-	AG = (any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
+	AG = Get_object_of_type_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -369,26 +347,9 @@ void modified_group_create::create_action_on_k_subsets(
 		exit(1);
 	}
 
-	int idx;
-
-
-	idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->from[0]);
-
-
-	symbol_table_object_type t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-
-
-	if (t != t_any_group) {
-		cout << "-from must give object of type t_any_group" << endl;
-		cout << "type given: ";
-		orbiter_kernel_system::Orbiter->print_type(t);
-		exit(1);
-	}
-
 	any_group *AG;
 
-	AG = (any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
+	AG = Get_object_of_type_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -454,6 +415,108 @@ void modified_group_create::create_action_on_k_subsets(
 	}
 }
 
+
+void modified_group_create::create_special_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_special_subgroup" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_special_subgroup "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_object_of_type_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+
+
+
+
+	A_modified = A_previous;
+
+
+
+	f_has_strong_generators = TRUE;
+	if (f_v) {
+		cout << "modified_group_create::create_special_subgroup "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+	{
+		actions::action A_on_det;
+		ring_theory::longinteger_object go;
+
+
+		groups::sims *Sims;
+
+
+		if (f_v) {
+			cout << "modified_group_create::create_special_subgroup "
+					"before AG->Subgroup_gens->create_sims" << endl;
+		}
+		Sims = AG->Subgroup_gens->create_sims(verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_special_subgroup "
+					"after AG->Subgroup_gens->create_sims" << endl;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::create_special_subgroup "
+					"before A_on_det.induced_action_on_determinant" << endl;
+		}
+		A_on_det.induced_action_on_determinant(Sims, verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_special_subgroup "
+					"after A_on_det.induced_action_on_determinant" << endl;
+		}
+		A_on_det.Kernel->group_order(go);
+		if (f_v) {
+			cout << "modified_group_create::create_special_subgroup "
+					"kernel has order " << go << endl;
+		}
+
+
+		Strong_gens->init_from_sims(A_on_det.Kernel, verbose_level);
+
+		FREE_OBJECT(Sims);
+	}
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_special_subgroup "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_SpecialSub");
+	sprintf(str2, " {\\rm SpecialSub}");
+	label.append(str1);
+	label_tex.append(str2);
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_special_subgroup "
+				"done" << endl;
+	}
+}
 
 
 }}}

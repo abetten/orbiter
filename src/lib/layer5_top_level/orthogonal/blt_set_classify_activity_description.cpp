@@ -76,7 +76,7 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 			f_isomorph = TRUE;
 			//prefix_classify.assign(argv[++i]);
 			//prefix_iso.assign(argv[++i]);
-			Isomorph_arguments = NEW_OBJECT(layer4_classification::isomorph_arguments);
+			Isomorph_arguments = NEW_OBJECT(layer4_classification::isomorph::isomorph_arguments);
 
 			i += Isomorph_arguments->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);

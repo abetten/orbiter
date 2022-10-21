@@ -75,19 +75,9 @@ packing_classify::packing_classify()
 
 	nb_needed = 0;
 
-	//null();
 }
 
 packing_classify::~packing_classify()
-{
-	freeself();
-}
-
-void packing_classify::null()
-{
-}
-
-void packing_classify::freeself()
 {
 	if (Spread_table_with_selection) {
 		FREE_OBJECT(Spread_table_with_selection);
@@ -116,7 +106,6 @@ void packing_classify::freeself()
 	if (Gr) {
 		FREE_OBJECT(Gr);
 	}
-	null();
 }
 
 void packing_classify::spread_table_init(
@@ -486,7 +475,7 @@ void packing_classify::compute(int search_depth, int verbose_level)
 }
 
 void packing_classify::lifting_prepare_function_new(
-	exact_cover *E, int starter_case,
+		solvers_package::exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
 	solvers::diophant *&Dio, long int *&col_labels,

@@ -252,23 +252,6 @@ FILE_24_3_TFC_INC="24 24 72\
 \n-1 3"
 
 
-DOILY="Row,C0,C1,C2\
-\n0,0,12,13\
-\n1,1,12,14\
-\n2,8,9,12\
-\n3,4,6,8\
-\n4,6,10,14\
-\n5,3,7,8\
-\n6,7,10,13\
-\n7,4,11,13\
-\n8,3,11,14\
-\n9,0,5,6\
-\n10,1,5,7\
-\n11,5,9,11\
-\n12,0,2,3\
-\n13,1,2,4\
-\n14,2,9,10\
-\nEND"
 
 
 ELEMENTARY_SYMMETRIC_3_1="x0 + x1 + x2"
@@ -1459,6 +1442,20 @@ Eulerfunction_150:
 	pdflatex table_eulerfunction_1_150.tex
 	open table_eulerfunction_1_150.pdf
 
+Eulerfunction_1000:
+	$(ORBITER) -v 1 -eulerfunction_interval 1000 1150
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		table_eulerfunction_1000_1150.csv
+	pdflatex table_eulerfunction_1000_1150.tex
+	open table_eulerfunction_1000_1150.pdf
+
+Eulerfunction_10000:
+	$(ORBITER) -v 1 -eulerfunction_interval 10000 10150
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		table_eulerfunction_10000_10150.csv
+	pdflatex table_eulerfunction_10000_10150.tex
+	open table_eulerfunction_10000_10150.pdf
+
 PR_1000:
 	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 1000
 	$(ORBITER) -v 1 -csv_file_latex 1 \
@@ -1472,7 +1469,7 @@ PE_number_1000:
 	pdflatex table_number_of_pe_2_1000.tex
 	open table_number_of_pe_2_1000.pdf
 
-Eulerfunction_10000:
+number_of_primitive_roots_10000:
 	$(ORBITER) -v 1 -number_of_primitive_roots_interval 10000 10001
 
 
@@ -1490,6 +1487,55 @@ draw_mod_13:
 	pdflatex mod_13_draw.tex
 	open mod_13_draw.pdf
 
+
+Chinese_remainders_A:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "2,2,5" -end \
+		-define M -vector -dense "5,6,7" -end \
+		-Chinese_remainders R M
+
+Chinese_remainders_B:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "38,2" -end \
+		-define M -vector -dense "74,27" -end \
+		-Chinese_remainders R M
+
+Chinese_remainders_C2:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "2,3" -end \
+		-define M -vector -dense "2147483647,5915587277" -end \
+		-Chinese_remainders R M
+
+
+#The solution is 5684294357108828365 modulo 12703626939758759219 (computed in longinteger)
+
+# checking with Maple:
+#5684294357108828365 mod 2147483647;
+#                               2
+
+#5684294357108828365 mod 5915587277;
+#                               3
+
+
+
+Chinese_remainders_C3:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "2,3,4" -end \
+		-define M -vector -dense "2147483647,5915587277,3267000013" -end \
+		-Chinese_remainders R M
+
+
+#The solution is 31431541759324477327451572539 modulo 41502749377339016585336869847 (computed in longinteger)
+
+# checking with Maple:
+#31431541759324477327451572539 mod 2147483647;
+#                               2
+
+#31431541759324477327451572539 mod 5915587277;
+#                               3
+
+#31431541759324477327451572539 mod 3267000013;
+#                               4
 
 
 
@@ -6177,11 +6223,79 @@ surface_4_0:
 		-cubic_surface_activity \
 			-report \
 			-report_with_group \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something "points" \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something "points_off" \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something "Hesse_planes" \
 		-end
 	#pdflatex surface_catalogue_q4_iso0_report.tex
 	#open surface_catalogue_q4_iso0_report.pdf
 	pdflatex surface_catalogue_q4_iso0_with_group.tex
 	open surface_catalogue_q4_iso0_with_group.pdf
+
+# points:
+#0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82
+
+# points off:
+#15,16,17,18,19,20,21,22,24,25,28,29,32,33,36,37,40,41,43,44,45,46,49,50,55,56,57,58,63,64,65,66,71,72,73,74,77,78,83,84
+
+HIRSCHFELD_SURFACE_POINTS_OFF="15,16,17,18,19,20,21,22,24,25,28,29,32,33,36,37,40,41,43,44,45,46,49,50,55,56,57,58,63,64,65,66,71,72,73,74,77,78,83,84"
+
+#Hesse planes:
+#7,8,11,13,14,16,17,19,28,29,32,34,35,37,38,40,42,43,44,45,47,48,52,54,56,57,60,61,63,64,65,66,68,69,73,75,77,78,81,82
+
+HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,29,32,34,35,37,38,40,42,43,44,45,47,48,52,54,56,57,60,61,63,64,65,66,68,69,73,75,77,78,81,82"
+
+Hirschfeld_surface_get_incidence_matrix_40_40:
+	$(ORBITER) -v 3 \
+		-define points -vector -dense $(HIRSCHFELD_SURFACE_POINTS_OFF) -end \
+		-define planes -vector -dense $(HIRSCHFELD_SURFACE_HESSE_PLANES) -end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-restricted_incidence_matrix 1 3 points planes "H_incma_40_40" \
+		-end \
+
+
+
+Hirschfeld_surface_incma_40_40_c:
+	$(ORBITER) -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries H_incma_40_40.inc 40 40 480 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix H_incma_40_40 \
+				-label H_incma_40_40 \
+				-save_ago \
+				-save_transversal \
+			-end \
+			-report \
+				-prefix H_incma_40_40 \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file H_incma_40_40_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file H_incma_40_40_object0_TDA.csv \
+		-box_width 32 -bit_depth 24 \
+		-end
+	pdflatex H_incma_40_40_classification.tex
+	open H_incma_40_40_classification.pdf
 
 
 
@@ -7257,7 +7371,7 @@ surface_sweep_Cayley_13:
 		-end \
 		-with Surf27 -do \
 		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-sweep \
+			-sweep_Cayley \
 		-end \
 		-print_symbols
 
@@ -10190,6 +10304,15 @@ RM_3_1_Hamming_space_diagram:
 			$(REED_MULLER_3_1_CODEWORDS) 8 \
 			-metric_balls 1 \
 		-end
+
+# creates 
+# RM_3_1_8_16.tex
+# RM_3_1_diagram_8_16.csv
+# RM_3_1_diagram_01_8_16.csv
+# RM_3_1_holes_8_16.csv
+
+
+RM_3_1_draw:
 	$(ORBITER) -v 2 \
 		-draw_matrix \
 			-input_csv_file RM_3_1_holes_8_16.csv \
@@ -10208,7 +10331,7 @@ RM_3_1_Hamming_space_diagram:
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 16 \
 		-end
-	open RM_3_1_holes_8_16_draw.bmp
+	open RM_3_1_diagram_8_16_draw.bmp
 
 
 RM_3_1_split:
@@ -10382,7 +10505,8 @@ draw_cyclotomic_mod_21_q8:
 F_8_BCH_code_d3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do \
+			-coding_theoretic_activity \
 			-make_BCH_code 21 3 \
 		-end
 	pdflatex BCH_codes_q8_n21_d3.tex
@@ -10393,8 +10517,9 @@ F_8_BCH_code_d3:
 F_8_BCH_code_d4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 21 4 \
+		-with F -do \
+			-coding_theoretic_activity \
+				-make_BCH_code 21 4 \
 		-end
 
 #generator polynomial is X^{5} + 6X^{4} + 7X^{3} + 2X + 3
@@ -10403,8 +10528,9 @@ F_8_BCH_code_d4:
 F_8_BCH_code_d5:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 21 5 \
+		-with F -do \
+			-coding_theoretic_activity \
+				-make_BCH_code 21 5 \
 		-end
 	pdflatex BCH_codes_q8_n21_d5.tex
 	open BCH_codes_q8_n21_d5.pdf
@@ -10463,6 +10589,13 @@ F_8_BCH_code_d5_minimum_distance:
 
 
 
+F_8_BCH_code_d7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-with F -do \
+			-coding_theoretic_activity \
+			-make_BCH_code 21 7 \
+		-end
 
 
 
@@ -10470,7 +10603,8 @@ F_8_BCH_code_d5_minimum_distance:
 F8_BCH_code_n63_d43:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do \
+			-coding_theoretic_activity \
 			-make_BCH_code 63 43 \
 		-end
 	pdflatex BCH_codes_q8_n63_d43.tex
@@ -10515,7 +10649,8 @@ F8_BCH_code_n63_d43_minimum_distance:
 F2_BCH_code_n21:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do \
+			-coding_theoretic_activity \
 			-make_BCH_code 21 3 \
 		-end
 
@@ -10523,7 +10658,8 @@ F2_BCH_code_n21:
 F7_RS_code_n6:
 	$(ORBITER) -v 30 \
 		-define F -finite_field -q 7 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do \
+			-coding_theoretic_activity \
 			-make_BCH_code 6 3 \
 		-end
 
@@ -10531,7 +10667,8 @@ F7_RS_code_n6:
 F_64_again:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
-		-with F -do -finite_field_activity \
+		-with F -do \
+			-finite_field_activity \
 			-cheat_sheet_GF \
 		-end
 	pdflatex GF_64.tex
@@ -10571,7 +10708,8 @@ BCH15:
 	#$(ORBITER) -BCH 15 2 3 
 	$(ORBITER) \
 		-define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do \
+			-coding_theoretic_activity \
 			-BCH 15 2 5 \
 		-end
 	#$(ORBITER) -BCH 15 2 7 
@@ -11952,7 +12090,7 @@ geo_10_3_tree:
 			-test Test_lines \
 		-end
 	$(ORBITER) -v 20 \
-		-draw_options -embedded -radius 20 \
+		-draw_options -embedded -radius 40 \
 			-paperheight 220 \
 			-paperwidth 330 \
 			-xin 10000 -yin 10000 \
@@ -12054,6 +12192,7 @@ geo_12_3:
 			-V 12 -B 12 -TDO 3 \
 			-fuse 1 -fname_GEO 12_3 \
 			-test Test_lines \
+			-output_to_sage_file \
 		-end
 
 # 229 geos
@@ -12266,41 +12405,6 @@ geo_16_4_g4:
 # none
 
 
-40_4_g4.inc:
-	$(ORBITER) -v 2 \
-		-define Test_lines -set -loop 0 41 1 -end \
-		-define Geo -geometry_builder \
-			-V 40 -B 40 -TDO 4 \
-			-fuse 1 -fname_GEO 40_4_g4 \
-			-girth 4 \
-			-search_tree \
-			-test Test_lines \
-		-end
-	$(ORBITER) -v 2 \
-		-draw_options -embedded -radius 50 \
-			-xin 10000 -yin 10000 \
-			-xout 1000000 -yout 1000000 \
-			-nodes_empty \
-			-scale 0.5 -line_width 0.3 -end \
-		-tree_draw -file 40_4_g4_tree.txt -end 
-	pdflatex 40_4_g4_tree_draw.tex
-	open 40_4_g4_tree_draw.pdf
-
-
-# 2 geos, ago=51840^2
-#User time: 0.18 of a second, dt=18 tps = 100
-#nb_calls_to_densenauty=1065
-
-
-geo_63_3_g6:
-	$(ORBITER) -v 2 \
-		-define Test_lines -set -loop 4 64 1 -end \
-		-define Geo -geometry_builder \
-			-V 63 -B 63 -TDO 3 \
-			-fuse 1 -fname_GEO 63_3_g6 \
-			-girth 6 \
-			-test Test_lines \
-		-end
 
 
 
@@ -12324,6 +12428,53 @@ geo_16:
 		-end
 
 
+40_4_g4.inc:
+	$(ORBITER) -v 5 \
+		-define Test_lines -set -loop 0 41 1 -end \
+		-define Geo -geometry_builder \
+			-V 40 -B 40 -TDO 4 \
+			-fuse 1 \
+			-fname_GEO 40_4_g4 \
+			-girth 4 \
+			-search_tree \
+			-special_test_not_orderly \
+			-test Test_lines \
+			-output_to_sage_file \
+			-output_to_inc_file \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_options -embedded -radius 50 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 1000000 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw -file 40_4_g4_tree.txt -end 
+	pdflatex 40_4_g4_tree_draw.tex
+	open 40_4_g4_tree_draw.pdf
+
+
+#-special_test_not_orderly is important for speed purposes
+# 2 geos, ago=51840^2
+# 40_4_g4.inc
+
+
+geo_63_3_g6:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 4 64 1 -end \
+		-define Geo -geometry_builder \
+			-V 63 -B 63 -TDO 3 \
+			-fuse 1 -fname_GEO 63_3_g6 \
+			-girth 6 \
+			-test Test_lines \
+			-special_test_not_orderly \
+			-output_to_sage_file \
+			-output_to_inc_file \
+			-search_tree \
+		-end
+
+# time 0:38 on Mac Oct 15, 2022
+# 2 geos, ago: 12096^2
+# 63_3_g6.inc
 
 ###############################################################################
 # Section 11.5: Design Theory
@@ -13914,6 +14065,93 @@ spread_table_PG_3_4:
 # User time: 56:38 on Mac
 
 
+spread_table_PG_3_5_regular:
+	- mkdir SPREAD_TABLES_5_REG
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
+		-print_symbols
+
+# error.
+
+# 21 isomorphism types of spreads in PG(3,5)
+# 12 is the index of the regular spread in the classification of spreads
+# 12/9/2020: 34 sec on Mac
+# 155000 spreads
+
+
+PG_3_5_element_of_order_31_GL_normalizer:
+	$(ORBITER) -v 6 -define G \
+		-linear_group -GL 4 5 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-normalizer_of_cyclic_subgroup "124" \
+			"2,0,0,0, 0,0,1,0, 0,0,0,1, 0,3,0,4" \
+		-end
+	#mv normalizer_of_31_in_PGL_4_5.tex normalizer_of_31_AB_in_PGL_4_5.tex
+	pdflatex normalizer_of_124_in_GL_4_5.tex
+	open normalizer_of_124_in_GL_4_5.pdf
+
+# needs magma
+# the group has order 124.
+# the normalizer has order 1488
+# normalizer has order 1488=4*372=4*4*3*31
+
+PG_3_5_element_of_order_31_ME_normalizer:
+	$(ORBITER) -v 6 -define G \
+		-linear_group -PGL 4 5 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-normalizer_of_cyclic_subgroup "31" \
+			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
+		-end
+	mv normalizer_of_31_in_PGL_4_5.tex normalizer_of_31_ME_in_PGL_4_5.tex
+	pdflatex normalizer_of_31_ME_in_PGL_4_5.tex
+	open normalizer_of_31_ME_in_PGL_4_5.pdf
+
+
+# group has order 31
+# normalizer has order 372
+
+
+
+PG_3_5_assume_31_graph:
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
+		-define PW -packing_with_symmetry_assumption T \
+				-H "H31" $(PGL_4_5_SUBGROUP_31_ME) -end \
+				-N "N31" $(PGL_4_5_SUBGROUP_31_ME_NORMALIZER) -end \
+			-end \
+		-define PWF -packing_choose_fixed_points PW 0 -end \
+		-define L -packing_long_orbits PWF \
+			-orbit_length 31 -clique_size 1 -create_graphs -end \
+		-print_symbols
+	pdflatex H31_reduced_spread_orbits_orbits_report.tex
+	open H31_reduced_spread_orbits_orbits_report.pdf
+	pdflatex H31_line_orbits_orbits_report.tex
+	open H31_line_orbits_orbits_report.pdf
+	pdflatex H31_line_orbits_orbits_report.tex
+	open H31_line_orbits_orbits_report.pdf
+	pdflatex N31_line_orbits_orbits_report.tex
+	open N31_line_orbits_orbits_report.pdf
+	pdflatex H31_point_orbits_orbits_report.tex
+	open H31_point_orbits_orbits_report.pdf
+	pdflatex N31_point_orbits_orbits_report.tex
+	open N31_point_orbits_orbits_report.pdf
+
+	#pdflatex H31_spread_orbits_orbits_report.tex
+	#open H31_spread_orbits_orbits_report.pdf
+#H31_line_orbits_orbits.bin
+#H31_line_orbits_orbits_report.tex
+#H_spread_orbits_orbit_types_report.tex
+#H31_spread_orbits_orbits.bin
+#H31_good_orbits
+#H31_spread_types_reduced_orbit_types_report.tex
+#H31_reduced_spread_orbits_orbits.bin
+#H31_fpc0_lo.graph
 
 
 ###############################################################################
@@ -15213,6 +15451,29 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 # group order is 51840
 
 
+HIRSCHFELD_STAB_GENERATORS="1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, 1,0,0,0,0,2,0,0,0,0,2,0,0,0,0,1,0, 1,0,0,0,0,3,0,0,0,0,3,0,1,0,0,1,0, 1,0,0,0,0,1,0,0,1,1,1,0,0,1,0,1,1, 1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0, 0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0"
+
+Hirschfeld_stab_subgroup:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-define Gsp -modified_group -from G \
+			-create_special_subgroup \
+		-end \
+		-with Gsp -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-with Gsp -do \
+		-group_theoretic_activity \
+			-orbits_on_points \
+			-stabilizer \
+		-end
+
+
 Hirschfeld_q4_set_c:
 	$(ORBITER) -v 4 \
 		-define H -set -here \
@@ -15519,7 +15780,6 @@ geo_10_3_c:
 	$(ORBITER) -v 10 \
 		-draw_incidence_structure_description \
 			-width 60 -with_10 6 -end \
-		-define Test_lines -set -loop 4 11 1 -end \
 		-define C -combinatorial_objects \
 			-file_of_incidence_geometries 10_3.inc 10 10 30 \
 		-end \

@@ -530,7 +530,7 @@ void orthogonal_space_activity::set_stabilizer(
 	}
 
 
-	substructure_classifier SubC;
+	set_stabilizer::substructure_classifier SubC;
 
 	SubC.set_stabilizer_in_any_space(
 			OA->A, OA->A, OA->A->Strong_gens,

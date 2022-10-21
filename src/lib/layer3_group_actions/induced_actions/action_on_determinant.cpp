@@ -16,23 +16,15 @@ namespace induced_actions {
 
 action_on_determinant::action_on_determinant()
 {
-	null();
+	M = NULL;
+	f_projective = FALSE;
+	m = 0;
+	q = 0;
+	degree = 0;
 }
 
 action_on_determinant::~action_on_determinant()
 {
-	free();
-}
-
-void action_on_determinant::null()
-{
-	M = NULL;
-}
-
-void action_on_determinant::free()
-{
-	
-	null();
 }
 
 
@@ -45,8 +37,8 @@ void action_on_determinant::init(actions::action &A,
 	
 	if (f_v) {
 		cout << "action_on_determinant::init" << endl;
-		cout << "f_projective=" << f_projective << endl;
-		cout << "m=" << m << endl;
+		cout << "action_on_determinant::init f_projective=" << f_projective << endl;
+		cout << "action_on_determinant::init m=" << m << endl;
 		}
 	action_on_determinant::f_projective = f_projective;
 	action_on_determinant::m = m;
@@ -64,7 +56,7 @@ void action_on_determinant::init(actions::action &A,
 		degree = q - 1;
 		}
 	if (f_v) {
-		cout << "degree=" << degree << endl;
+		cout << "action_on_determinant::init degree=" << degree << endl;
 		}
 	
 	if (f_v) {

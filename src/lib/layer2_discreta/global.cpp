@@ -1502,6 +1502,7 @@ void bitset2vector(uint g, Vector &v)
 }
 #endif
 
+#if 0
 void frobenius_in_PG(domain *dom, int n, permutation &p)
 // n is the projective dimension
 {
@@ -1569,6 +1570,7 @@ void translation_in_AG(domain *dom, int n, int i,
 		// cout << " j=" << j << endl;
 		}
 }
+#endif
 
 enum printing_mode_enum current_printing_mode()
 {

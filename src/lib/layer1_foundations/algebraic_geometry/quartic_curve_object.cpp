@@ -46,16 +46,11 @@ quartic_curve_object::quartic_curve_object()
 
 quartic_curve_object::~quartic_curve_object()
 {
-	freeself();
-}
-
-void quartic_curve_object::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "quartic_curve_object::freeself" << endl;
+		cout << "quartic_curve_object::~quartic_curve_object" << endl;
 	}
 	if (Pts) {
 		FREE_lint(Pts);
@@ -72,12 +67,8 @@ void quartic_curve_object::freeself()
 
 
 	if (f_v) {
-		cout << "quartic_curve_object::freeself done" << endl;
+		cout << "quartic_curve_object::~quartic_curve_object done" << endl;
 	}
-}
-
-void quartic_curve_object::null()
-{
 }
 
 void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain *Dom,

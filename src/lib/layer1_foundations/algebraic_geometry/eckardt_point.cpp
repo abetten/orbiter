@@ -15,21 +15,14 @@ namespace algebraic_geometry {
 
 eckardt_point::eckardt_point()
 {
-	null();
+	len = 0;
+	pt = 0;
+	//int index[3];
+
 }
 
 eckardt_point::~eckardt_point()
 {
-	freeself();
-}
-
-void eckardt_point::null()
-{
-}
-
-void eckardt_point::freeself()
-{
-	null();
 }
 
 void eckardt_point::print()

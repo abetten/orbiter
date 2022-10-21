@@ -166,6 +166,10 @@ interface_cryptography::interface_cryptography()
 	affine_sequence_c = 0;
 	affine_sequence_m = 0;
 
+	f_Chinese_remainders = FALSE;
+	//std::string Chinese_remainders_R;
+	//std::string Chinese_remainders_M;
+
 }
 
 
@@ -284,6 +288,9 @@ void interface_cryptography::print_help(int argc, std::string *argv, int i, int 
 	}
 	else if (ST.stringcmp(argv[i], "-affine_sequence") == 0) {
 		cout << "-affine_sequence <int : a> <int : c> <int : m>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
+		cout << "-Chinese_remainders <string : Remainders> <string : Moduli>" << endl;
 	}
 }
 
@@ -404,6 +411,9 @@ int interface_cryptography::recognize_keyword(int argc, std::string *argv, int i
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-affine_sequence") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
 		return true;
 	}
 	return false;
@@ -741,6 +751,15 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 					<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
+		f_Chinese_remainders = TRUE;
+		Chinese_remainders_R.assign(argv[++i]);
+		Chinese_remainders_M.assign(argv[++i]);
+		if (f_v) {
+			cout << "-Chinese_remainders " << Chinese_remainders_R
+					<< " " << Chinese_remainders_M << endl;
+		}
+	}
 	if (f_v) {
 		cout << "interface_cryptography::read_arguments done" << endl;
 	}
@@ -876,6 +895,10 @@ void interface_cryptography::print()
 	if (f_affine_sequence) {
 		cout << "-affine_sequence " << affine_sequence_a
 				<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
+	}
+	if (f_Chinese_remainders) {
+		cout << "-Chinese_remainders " << Chinese_remainders_R
+				<< " " << Chinese_remainders_M << endl;
 	}
 }
 
@@ -1098,9 +1121,9 @@ void interface_cryptography::worker(int verbose_level)
 	}
 	else if (f_jacobi) {
 
-		cryptography::cryptography_domain Crypto;
+		number_theory::number_theory_domain NT;
 
-		Crypto.do_jacobi(jacobi_top, jacobi_bottom, verbose_level);
+		NT.do_jacobi(jacobi_top, jacobi_bottom, verbose_level);
 	}
 	else if (f_solovay_strassen) {
 
@@ -1172,6 +1195,57 @@ void interface_cryptography::worker(int verbose_level)
 		Crypto.make_affine_sequence(affine_sequence_a,
 				affine_sequence_c, affine_sequence_m, verbose_level);
 	}
+	else if (f_Chinese_remainders) {
+
+		long int *R;
+		int sz1;
+		long int *M;
+		int sz2;
+
+		Get_vector_or_set(Chinese_remainders_R, R, sz1);
+		Get_vector_or_set(Chinese_remainders_M, M, sz2);
+
+		number_theory::number_theory_domain NT;
+		std::vector<long int> Remainders;
+		std::vector<long int> Moduli;
+		int i;
+		long int x, Modulus;
+
+		if (sz1 != sz2) {
+			cout << "remainders and moduli must have the same length" << endl;
+			exit(1);
+		}
+
+		for (i = 0; i < sz1; i++) {
+			Remainders.push_back(R[i]);
+			Moduli.push_back(M[i]);
+		}
+
+		x = NT.Chinese_Remainders(
+				Remainders,
+				Moduli, Modulus, verbose_level);
+
+
+		cout << "The solution is " << x << " modulo " << Modulus << endl;
+
+		ring_theory::longinteger_domain D;
+		ring_theory::longinteger_object xl, Ml;
+
+		D.Chinese_Remainders(
+				Remainders,
+				Moduli,
+				xl, Ml, verbose_level);
+
+		cout << "The solution is " << xl << " modulo " << Ml << " (computed in longinteger)" << endl;
+
+		FREE_lint(R);
+		FREE_lint(M);
+
+	}
+
+
+
+
 }
 
 

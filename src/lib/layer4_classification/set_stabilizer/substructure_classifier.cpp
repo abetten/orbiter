@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace set_stabilizer {
 
 
 substructure_classifier::substructure_classifier()
@@ -487,5 +488,6 @@ void substructure_classifier::handle_orbit(
 
 
 
-}}
+}}}
+
 

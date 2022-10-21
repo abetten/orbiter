@@ -79,15 +79,6 @@ large_set_classify::large_set_classify()
 
 large_set_classify::~large_set_classify()
 {
-	freeself();
-}
-
-void large_set_classify::null()
-{
-}
-
-void large_set_classify::freeself()
-{
 	if (Design_table) {
 		FREE_OBJECT(Design_table);
 	}
@@ -108,7 +99,6 @@ void large_set_classify::freeself()
 		FREE_OBJECT(OoS);
 	}
 #endif
-	null();
 }
 
 void large_set_classify::init(design_create *DC,

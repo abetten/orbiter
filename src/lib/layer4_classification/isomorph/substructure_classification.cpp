@@ -18,6 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer4_classification {
+namespace isomorph {
 
 
 substructure_classification::substructure_classification()
@@ -1210,5 +1211,5 @@ finish:
 
 
 
-}}
+}}}
 

@@ -507,8 +507,6 @@ public:
 
 	graph_theoretic_activity_description();
 	~graph_theoretic_activity_description();
-	void null();
-	void freeself();
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
