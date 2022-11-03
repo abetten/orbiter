@@ -73,7 +73,7 @@ void canonical_form_classifier::count_nb_objects_to_test(int verbose_level)
 		char str[1000];
 		string fname;
 
-		sprintf(str, Descr->fname_mask.c_str(), cnt);
+		snprintf(str, sizeof(str), Descr->fname_mask.c_str(), cnt);
 		fname.assign(str);
 
 		data_structures::spreadsheet S;
@@ -397,7 +397,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 		string fname;
 		int row;
 
-		sprintf(str, Descr->fname_mask.c_str(), cnt);
+		snprintf(str, sizeof(str), Descr->fname_mask.c_str(), cnt);
 		fname.assign(str);
 
 		data_structures::spreadsheet S;
@@ -428,7 +428,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 						<< " row = " << row << " / " << S.nb_rows - 1 << endl;
 			}
 
-			sprintf(str, "_cnt%d", counter);
+			snprintf(str, sizeof(str), "_cnt%d", counter);
 
 			fname_case_out.assign(Descr->fname_base_out);
 			fname_case_out.append(str);

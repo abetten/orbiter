@@ -321,6 +321,7 @@ namespace combinatorics {
 	class encoded_combinatorial_object;
 	class geo_parameter;
 	class pentomino_puzzle;
+	class polynomial_function_domain;
 	class tdo_data;
 	class tdo_refinement_description;
 	class tdo_refinement;
@@ -835,6 +836,7 @@ enum symbol_table_object_type {
 	t_combinatorial_objects,
 	t_geometry_builder,
 	t_vector_ge,
+	t_action_on_forms,
 };
 
 

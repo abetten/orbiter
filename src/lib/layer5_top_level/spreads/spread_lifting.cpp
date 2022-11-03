@@ -676,7 +676,7 @@ void spread_lifting::create_graph(
 
 	char str[1000];
 	string label, label_tex;
-	sprintf(str, "_graph_%d", R->orbit_at_level);
+	snprintf(str, sizeof(str), "_graph_%d", R->orbit_at_level);
 	label.assign(S->prefix);
 	label.append(str);
 	label_tex.assign(str);
@@ -776,7 +776,7 @@ void spread_lifting::create_dummy_graph(int verbose_level)
 
 	char str[1000];
 	string label, label_tex;
-	sprintf(str, "_graph_%d", R->orbit_at_level);
+	snprintf(str, sizeof(str), "_graph_%d", R->orbit_at_level);
 	label.assign(S->prefix);
 	label.append(str);
 	label_tex.assign(str);

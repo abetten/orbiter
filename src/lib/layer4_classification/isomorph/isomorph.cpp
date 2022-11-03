@@ -154,17 +154,6 @@ void isomorph::init(std::string &prefix,
 	}
 
 
-#if 0
-	char cmd[1000];
-
-	sprintf(cmd, "mkdir %s", prefix.c_str());
-	system(cmd);
-	sprintf(cmd, "mkdir %sINVARIANTS/", prefix.c_str());
-	system(cmd);
-	sprintf(cmd, "mkdir %sTEX/", prefix.c_str());
-	system(cmd);
-#endif
-
 	if (f_v) {
 		cout << "isomorph::init done" << endl;
 	}

@@ -48,7 +48,6 @@ drawable_set_of_objects::drawable_set_of_objects()
 
 drawable_set_of_objects::~drawable_set_of_objects()
 {
-	//freeself();
 }
 
 void drawable_set_of_objects::init_spheres(int group_idx,

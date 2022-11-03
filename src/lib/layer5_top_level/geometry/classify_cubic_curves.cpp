@@ -1637,7 +1637,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			if (strlen(ref.c_str())) {
 				ref.append(",");
 			}
-			sprintf(str, "F1_{%d}", e);
+			snprintf(str, sizeof(str), "F1_{%d}", e);
 			ref.append(str);
 			References[Iso_type1[e]] = ref;
 		}
@@ -1650,7 +1650,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			if (strlen(ref.c_str())) {
 				ref.append(",");
 			}
-			sprintf(str, "F2_{%d}", e);
+			snprintf(str, sizeof(str), "F2_{%d}", e);
 			ref.append(str);
 			References[Iso_type2[e]] = ref;
 		}
@@ -1663,7 +1663,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			if (strlen(ref.c_str())) {
 				ref.append(",");
 			}
-			sprintf(str, "F3_{%d}", e);
+			snprintf(str, sizeof(str), "F3_{%d}", e);
 			ref.append(str);
 			References[Iso_type3[e]] = ref;
 		}
@@ -1676,7 +1676,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			if (strlen(ref.c_str())) {
 				ref.append(",");
 			}
-			sprintf(str, "E_{%d}", e);
+			snprintf(str, sizeof(str), "E_{%d}", e);
 			ref.append(str);
 			References[Iso_typeE[e]] = ref;
 		}
@@ -1689,7 +1689,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			if (strlen(ref.c_str())) {
 				ref.append(",");
 			}
-			sprintf(str, "H_{%d}", e);
+			snprintf(str, sizeof(str), "H_{%d}", e);
 			ref.append(str);
 			References[Iso_typeH[e]] = ref;
 		}
@@ -1708,7 +1708,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			if (strlen(ref.c_str())) {
 				ref.append(",");
 			}
-			sprintf(str, "G_{%d,%d}", c,d);
+			snprintf(str, sizeof(str), "G_{%d,%d}", c,d);
 			ref.append(str);
 			References[iso] = ref;
 		}

@@ -40,8 +40,6 @@ public:
 
 	classification_step();
 	~classification_step();
-	void null();
-	void freeself();
 	void init(actions::action *A, actions::action *A2, int max_orbits, int representation_sz,
 			ring_theory::longinteger_object &go, int verbose_level);
 	data_structures_groups::set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
@@ -92,8 +90,6 @@ public:
 
 	flag_orbits();
 	~flag_orbits();
-	void null();
-	void freeself();
 	void init(actions::action *A, actions::action *A2, int nb_primary_orbits_lower,
 			int pt_representation_sz, int nb_flag_orbits,
 			int upper_bound_for_number_of_traces,
@@ -143,8 +139,6 @@ public:
 
 	flag_orbit_node();
 	~flag_orbit_node();
-	void null();
-	void freeself();
 	void init(flag_orbits *Flag_orbits, int flag_orbit_index,
 			int downstep_primary_orbit, int downstep_secondary_orbit,
 			int downstep_orbit_len, int f_long_orbit, long int *pt_representation,
@@ -173,8 +167,6 @@ public:
 
 	orbit_node();
 	~orbit_node();
-	void null();
-	void freeself();
 	void init(classification_step *C,
 			int orbit_index, groups::strong_generators *gens,
 			long int *Rep, void *extra_data, int verbose_level);

@@ -77,7 +77,7 @@ void save_trace_record(
 
 	char str[1000];
 
-	sprintf(str, "trace_record_%03d_f%05d_po%d_so%d.csv",
+	snprintf(str, sizeof(str), "trace_record_%03d_f%05d_po%d_so%d.csv",
 			iso, f, po, so);
 
 

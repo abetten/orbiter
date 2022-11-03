@@ -98,7 +98,7 @@ public:
 
 
 	int f_weight_enumerator;
-	std::string weight_enumerator_input_matrix;
+	//std::string weight_enumerator_input_matrix;
 
 	int f_minimum_distance;
 	std::string minimum_distance_code_label;
@@ -186,6 +186,9 @@ public:
 	int polynomial_division_from_file_all_k_bit_error_patterns_r1;
 	int polynomial_division_from_file_all_k_bit_error_patterns_k;
 
+	int f_fixed_code;
+	std::string fixed_code_perm;
+
 
 
 	coding_theoretic_activity_description();
@@ -228,6 +231,10 @@ public:
 			create_code *Code,
 			int verbose_level);
 	void perform_activity(int verbose_level);
+	void do_fixed_code(field_theory::finite_field *F,
+		long int *perm, int n,
+		apps_coding_theory::create_code *Code,
+		int verbose_level);
 
 
 };
@@ -251,9 +258,9 @@ public:
 	int f_linear_code_through_generator_matrix;
 	std::string linear_code_through_generator_matrix_label_genma;
 
-	int f_linear_code_from_from_projective_set;
-	int linear_code_from_from_projective_set_nmk;
-	std::string linear_code_from_from_projective_set_set;
+	int f_linear_code_from_projective_set;
+	int linear_code_from_projective_set_nmk;
+	std::string linear_code_from_projective_set_set;
 
 	int f_linear_code_by_columns_of_parity_check;
 	int linear_code_by_columns_of_parity_check_nmk;
@@ -329,6 +336,7 @@ public:
 	void export_codewords(std::string &fname, int verbose_level);
 	void export_genma(std::string &fname, int verbose_level);
 	void export_checkma(std::string &fname, int verbose_level);
+	void weight_enumerator(int verbose_level);
 
 };
 

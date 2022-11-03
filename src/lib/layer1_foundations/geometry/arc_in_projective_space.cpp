@@ -1912,7 +1912,6 @@ void arc_in_projective_space::arc_lifting2(
 		fname_system.assign(arc_label);
 		fname_system.append(".diophant");
 
-		//sprintf(fname_system, "system_%d.diophant", back_end_counter);
 		cout << "perform_job_for_one_set saving the system "
 				"to file " << fname_system << endl;
 		D->save_in_general_format(fname_system, 0 /* verbose_level */);
@@ -2112,8 +2111,8 @@ void arc_in_projective_space::create_hyperoval(
 	v = NEW_int(d);
 	Pts = NEW_lint(P->N_points);
 
-	sprintf(str, "_q%d", P->F->q);
-	sprintf(str2, "\\_q%d", P->F->q);
+	snprintf(str, sizeof(str), "_q%d", P->F->q);
+	snprintf(str2, sizeof(str2), "\\_q%d", P->F->q);
 
 	if (f_translation) {
 		P->Arc_in_projective_space->create_translation_hyperoval(Pts, nb_pts,
@@ -2199,8 +2198,8 @@ void arc_in_projective_space::create_subiaco_oval(
 		cout << "arc_in_projective_space::create_subiaco_oval" << endl;
 	}
 
-	sprintf(str, "_q%d", P->F->q);
-	sprintf(str2, "\\_q%d", P->F->q);
+	snprintf(str, sizeof(str), "_q%d", P->F->q);
+	snprintf(str2, sizeof(str2), "\\_q%d", P->F->q);
 	{
 		arc_basic A;
 
@@ -2272,8 +2271,8 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 		A.Subiaco_hyperoval(Pts, nb_pts, verbose_level);
 	}
 
-	sprintf(str, "_q%d", P->F->q);
-	sprintf(str2, "\\_q%d", P->F->q);
+	snprintf(str, sizeof(str), "_q%d", P->F->q);
+	snprintf(str2, sizeof(str2), "\\_q%d", P->F->q);
 
 	label_txt.assign("subiaco_hyperoval");
 	label_txt.append(str);
@@ -2332,8 +2331,8 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 
 	char str[1000];
 	char str2[1000];
-	sprintf(str, "Maruta_Hamada_arc2_q%d", P->q);
-	sprintf(str2, "Maruta\\_Hamada\\_arc2\\_q%d", P->q);
+	snprintf(str, sizeof(str), "Maruta_Hamada_arc2_q%d", P->q);
+	snprintf(str2, sizeof(str2), "Maruta\\_Hamada\\_arc2\\_q%d", P->q);
 	label_txt.assign(str);
 	label_tex.assign(str);
 

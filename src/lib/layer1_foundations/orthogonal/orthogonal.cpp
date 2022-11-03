@@ -152,25 +152,25 @@ void orthogonal::init(int epsilon, int n,
 	char str[1000];
 
 	if (epsilon == 1) {
-		sprintf(str, "Op_%d_%d", n, q);
+		snprintf(str, sizeof(str), "Op_%d_%d", n, q);
 	}
 	else if (epsilon == -1) {
-		sprintf(str, "Om_%d_%d", n, q);
+		snprintf(str, sizeof(str), "Om_%d_%d", n, q);
 	}
 	else if (epsilon == 0) {
-		sprintf(str, "O_%d_%d", n, q);
+		snprintf(str, sizeof(str), "O_%d_%d", n, q);
 	}
 
 	label_txt.assign(str);
 
 	if (epsilon == 1) {
-		sprintf(str, "O^+(%d,%d)", n, q);
+		snprintf(str, sizeof(str), "O^+(%d,%d)", n, q);
 	}
 	else if (epsilon == -1) {
-		sprintf(str, "O^-(%d,%d)", n, q);
+		snprintf(str, sizeof(str), "O^-(%d,%d)", n, q);
 	}
 	else if (epsilon == 0) {
-		sprintf(str, "O(%d,%d)", n, q);
+		snprintf(str, sizeof(str), "O(%d,%d)", n, q);
 	}
 
 

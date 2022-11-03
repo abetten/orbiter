@@ -16,42 +16,34 @@ namespace induced_actions {
 
 action_on_sets::action_on_sets()
 {
-	null();
-}
-
-action_on_sets::~action_on_sets()
-{
-	free();
-}
-
-void action_on_sets::null()
-{
+	nb_sets = 0;
+	set_size = 0;
 	sets = NULL;
 	image_set = NULL;
 	perm = NULL;
 	perm_inv = NULL;
 }
 
-void action_on_sets::free()
+
+action_on_sets::~action_on_sets()
 {
 	int i;
 	
 	if (sets) {
 		for (i = 0; i < nb_sets; i++) {
 			FREE_lint(sets[i]);
-			}
-		FREE_plint(sets);
 		}
+		FREE_plint(sets);
+	}
 	if (image_set) {
 		FREE_lint(image_set);
-		}
+	}
 	if (perm) {
 		FREE_int(perm);
-		}
+	}
 	if (perm_inv) {
 		FREE_int(perm_inv);
-		}
-	null();
+	}
 }
 
 
@@ -69,7 +61,7 @@ void action_on_sets::init(int nb_sets,
 		cout << "action_on_sets::init "
 				"nb_sets=" << nb_sets
 				<< " set_size=" << set_size << endl;
-		}
+	}
 	action_on_sets::nb_sets = nb_sets;
 	action_on_sets::set_size = set_size;
 	sets = NEW_plint(nb_sets);
@@ -79,7 +71,7 @@ void action_on_sets::init(int nb_sets,
 	for (i = 0; i < nb_sets; i++) {
 		perm[i] = i;
 		perm_inv[i] = i;
-		}
+	}
 	for (i = 0; i < nb_sets; i++) {
 		sets[i] = NEW_lint(set_size);
 		for (j = 0; j < set_size; j++) {
@@ -90,8 +82,8 @@ void action_on_sets::init(int nb_sets,
 			cout << "set " << setw(3) << i << " is ";
 			Lint_vec_print(cout, sets[i], set_size);
 			cout << endl;
-			}
 		}
+	}
 	Sorting.quicksort_array_with_perm(nb_sets,
 			(void **) sets, perm_inv,
 			action_on_sets_compare,
@@ -107,7 +99,7 @@ void action_on_sets::init(int nb_sets,
 		cout << "i : perm[i] : perm_inv[i]" << endl;
 		for (i = 0; i < nb_sets; i++) {
 			cout << i << " : " << perm[i] << " : " << perm_inv[i] << endl;
-			}
+		}
 #endif
 
 		print_sets_sorted();
@@ -121,12 +113,12 @@ void action_on_sets::init(int nb_sets,
 			cout << "set " << i << " is set " << j << " : ";
 			int_vec_print(cout, sets[j], set_size);
 			cout << endl;
-			}
-#endif
 		}
+#endif
+	}
 	if (f_v) {
 		cout << "action_on_sets::init finished" << endl;
-		}
+	}
 }
 
 int action_on_sets::find_set(long int *set, int verbose_level)
@@ -170,12 +162,12 @@ long int action_on_sets::compute_image(actions::action *A,
 				"i = " << i << endl;
 		cout << "action_on_sets::compute_image "
 				"perm[i] = " << perm[i] << endl;
-		}
+	}
 	if (i < 0 || i >= nb_sets) {
 		cout << "action_on_sets::compute_image "
 				"i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		cout << "the element " << endl;
 		A->print(cout, Elt);
@@ -183,7 +175,7 @@ long int action_on_sets::compute_image(actions::action *A,
 		cout << "as permutation:" << endl;
 		A->print_as_permutation(cout, Elt);
 		cout << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "sets[perm[i]]:" << endl;
 		Lint_vec_print(cout, sets[perm[i]], set_size);
@@ -192,8 +184,8 @@ long int action_on_sets::compute_image(actions::action *A,
 			cout << j << " : " << sets[perm[i]][j] << " : " << endl;
 			A->print_point(sets[perm[i]][j], cout);
 			cout << endl;
-			}
 		}
+	}
 	A->map_a_set_and_reorder(
 			sets[perm[i]],
 			image_set,
@@ -208,8 +200,8 @@ long int action_on_sets::compute_image(actions::action *A,
 			cout << j << " : " << image_set[j] << " : " << endl;
 			A->print_point(image_set[j], cout);
 			cout << endl;
-			}
 		}
+	}
 	if (!Sorting.vec_search(
 			(void **)sets,
 			action_on_sets_compare_inverted,
@@ -218,7 +210,8 @@ long int action_on_sets::compute_image(actions::action *A,
 			image_set,
 			idx,
 			verbose_level)) {
-		int u, a, b;
+
+		int u;
 		cout << "action_on_sets::compute_image "
 				"image set not found" << endl;
 		cout << "action = " << A->label << endl;
@@ -242,34 +235,37 @@ long int action_on_sets::compute_image(actions::action *A,
 			cout << u << " : ";
 			Lint_vec_print(cout, sets[u], set_size);
 			cout << endl;
-			}
+		}
+#if 0
+		int a, b;
 		for (u = 0; u < set_size; u++) {
 			a = sets[perm[i]][u];
 			b = A->image_of(Elt, a);
 			cout << setw(3) << u << " : " << setw(3) << a
 					<< " : " << setw(3) << b << endl;
-			}
-		exit(1);
 		}
+#endif
+		exit(1);
+	}
 	if (f_v) {
 		cout << "action_on_sets::compute_image "
 				"idx = " << idx << endl;
-		}
+	}
 	res = action_on_sets_compare(image_set, sets[idx], this);
 	if (res != 0) {
 		cout << "action_on_sets::compute_image "
 				"the set we found is not the right one" << endl;
-		}
+	}
 	j = perm_inv[idx];
 	if (f_v) {
 		cout << "action_on_sets::compute_image "
 				"j = perm_inv[idx] = " << j << endl;
-		}
+	}
 	if (j < 0 || j >= nb_sets) {
 		cout << "action_on_sets::compute_image "
 				"j=" << j << " out of range" << endl;
 		exit(1);
-		}
+	}
 	return j;
 }
 
@@ -282,7 +278,7 @@ void action_on_sets::print_sets_sorted()
 		cout << "set " << i << " : is " << perm_inv[i] << " : ";
 		Lint_vec_print(cout, sets[i], set_size);
 		cout << endl;
-		}
+	}
 }
 
 void action_on_sets::print_sets_in_original_ordering()
@@ -294,7 +290,7 @@ void action_on_sets::print_sets_in_original_ordering()
 		cout << "set " << i << " : is " << perm[i] << " : ";
 		Lint_vec_print(cout, sets[perm[i]], set_size);
 		cout << endl;
-		}
+	}
 }
 
 void action_on_sets::test_sets()
@@ -310,8 +306,8 @@ void action_on_sets::test_sets()
 			cout << "The original set numbers are " << perm_inv[i]
 				<< " and " << perm_inv[i + 1] << " respectively." << endl;
 			exit(1);
-			}
 		}
+	}
 }
 
 

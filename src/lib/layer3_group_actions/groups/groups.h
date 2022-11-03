@@ -74,8 +74,6 @@ public:
 
 	direct_product();
 	~direct_product();
-	void null();
-	void freeself();
 	void init(matrix_group *M1, matrix_group *M2,
 			int verbose_level);
 	long int element_image_of(int *Elt, long int a, int verbose_level);
@@ -122,8 +120,6 @@ public:
 
 	exceptional_isomorphism_O4();
 	~exceptional_isomorphism_O4();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *Fq,
 			actions::action *A2,
 			actions::action *A4,
@@ -912,9 +908,9 @@ public:
 	int preferred_choice_function_data2;
 
 	schreier();
-	schreier(actions::action *A, int verbose_level);
 	~schreier();
-	void freeself();
+
+	schreier(actions::action *A, int verbose_level);
 	void delete_images();
 	void init_preferred_choice_function(
 			void (*preferred_choice_function)(int pt, int &pt_pref, schreier *Sch, void *data, int data2, int verbose_level),
@@ -1096,6 +1092,7 @@ public:
 	void print_and_list_orbits(std::ostream &ost);
 	void print_and_list_orbits_with_original_labels(std::ostream &ost);
 	void print_and_list_orbits_tex(std::ostream &ost);
+	void print_and_list_non_trivial_orbits_tex(std::ostream &ost);
 	void print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
 			std::ostream &ost, actions::action *default_action, strong_generators *gens,
 			int verbose_level);
@@ -1123,6 +1120,7 @@ public:
 	void print_orbit_with_original_labels(std::ostream &ost, int orbit_no);
 	void print_orbit_tex(std::ostream &ost, int orbit_no);
 	void print_orbit_sorted_tex(std::ostream &ost, int orbit_no, int f_truncate, int max_length);
+	void get_orbit_sorted(int *&v, int &len, int orbit_no);
 	void print_and_list_orbit_and_stabilizer_tex(int i,
 			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
@@ -1255,8 +1253,6 @@ public:
 
 	schreier_sims();
 	~schreier_sims();
-	void null();
-	void freeself();
 	void init(actions::action *A, int verbose_level);
 	void interested_in_kernel(actions::action *KA, int verbose_level);
 	void init_target_group_order(ring_theory::longinteger_object &tgo,
@@ -1384,10 +1380,8 @@ public:
 
 	// sims.cpp:
 	sims();
-	void null();
-	sims(actions::action *A, int verbose_level);
 	~sims();
-	void freeself();
+	sims(actions::action *A, int verbose_level);
 
 	void delete_images();
 	void init_images(int nb_images);
@@ -1694,7 +1688,9 @@ public:
 	void print_all_group_elements_to_file(char *fname,
 		int verbose_level);
 	void print_all_group_elements();
-	void print_all_group_elements_tex(std::ostream &ost);
+	void print_all_group_elements_tex(std::ostream &ost,
+			int f_with_permutation,
+			int f_override_action, actions::action *A_special);
 	void print_all_group_elements_tree(std::ostream &ost);
 	void print_all_group_elements_with_permutations_tex(std::ostream &ost);
 	void print_all_group_elements_as_permutations();
@@ -2107,8 +2103,6 @@ public:
 
 	subgroup();
 	~subgroup();
-	void null();
-	void freeself();
 	void init_from_sims(sims *S, sims *Sub,
 			strong_generators *SG, int verbose_level);
 	void init(int *Elements, int group_order, int *gens, int nb_gens);
@@ -2135,8 +2129,6 @@ public:
 
 	sylow_structure();
 	~sylow_structure();
-	void null();
-	void freeself();
 	void init(sims *S, int verbose_level);
 	void report(std::ostream &ost);
 };
@@ -2224,8 +2216,6 @@ public:
 
 	wreath_product();
 	~wreath_product();
-	void null();
-	void freeself();
 	void init_tensor_wreath_product(matrix_group *M,
 			actions::action *A_mtx, int nb_factors,
 			int verbose_level);

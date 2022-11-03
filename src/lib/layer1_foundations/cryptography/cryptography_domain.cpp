@@ -623,7 +623,8 @@ void cryptography_domain::substition_cipher(std::string &ptext, std::string &cte
 	char c;
 	char *str;
 
-	cout << "applying key:" << endl;
+	cout << "cryptography_domain::substition_cipher "
+			"applying key:" << endl;
 	for (i = 0; i < 26; i++) {
 		c = 'a' + i;
 		cout << c;
@@ -722,8 +723,9 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
-		cout << "make_affine_sequence a=" << a << " c=" << c << " m=" << m << endl;
-		}
+		cout << "cryptography_domain::make_affine_sequence "
+				"a=" << a << " c=" << c << " m=" << m << endl;
+	}
 	f_reached = NEW_int(m);
 	orbit = NEW_int(m);
 	Int_vec_zero(f_reached, m);
@@ -731,7 +733,7 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 	for (x0 = 0; x0 < m; x0++) {
 		if (f_reached[x0]) {
 			continue;
-			}
+		}
 
 		x = x0;
 		orbit[0] = x0;
@@ -743,10 +745,10 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 
 			if (f_reached[y]) {
 				break;
-				}
+			}
 			orbit[len++] = y;
 			x = y;
-			}
+		}
 		cout << "orbit " << cnt << " of " << x0 << " has length " << len << " : ";
 		Int_vec_print(cout, orbit, len);
 		cout << endl;
@@ -755,9 +757,12 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 		//make_graph(orbit, len, m, verbose_level);
 		//list_sequence_in_binary(orbit, len, m, verbose_level);
 		cnt++;
-		}
+	}
 	FREE_int(orbit);
 	FREE_int(f_reached);
+	if (f_v) {
+		cout << "cryptography_domain::make_affine_sequence done" << endl;
+	}
 
 
 }
@@ -769,8 +774,9 @@ void cryptography_domain::make_2D_plot(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "m=" << m << " orbit_len=" << orbit_len << endl;
-		}
+		cout << "cryptography_domain::make_2D_plot "
+				"m=" << m << " orbit_len=" << orbit_len << endl;
+	}
 	int *M;
 	int h, x, y;
 
@@ -795,12 +801,21 @@ void cryptography_domain::make_2D_plot(
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	FREE_int(M);
+	if (f_v) {
+		cout << "cryptography_domain::make_2D_plot done" << endl;
+	}
 }
 
 
 
 void cryptography_domain::do_random_last(int random_nb, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_random_last" << endl;
+	}
+
 	int i, r = 0;
 
 
@@ -811,11 +826,20 @@ void cryptography_domain::do_random_last(int random_nb, int verbose_level)
 	}
 	cout << r << endl;
 
+	if (f_v) {
+		cout << "cryptography_domain::do_random_last done" << endl;
+	}
 
 }
 
 void cryptography_domain::do_random(int random_nb, std::string &fname_csv, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_random" << endl;
+	}
+
 	int i;
 	int *R;
 
@@ -833,6 +857,9 @@ void cryptography_domain::do_random(int random_nb, std::string &fname_csv, int v
 
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
 
+	if (f_v) {
+		cout << "cryptography_domain::do_random done" << endl;
+	}
 
 }
 
@@ -842,15 +869,17 @@ void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_EC_Koblitz_encoding" << endl;
+	}
+
 	int x0, x, y;
 
 	if (f_v) {
-		cout << "do_EC_Koblitz_encoding" << endl;
-	}
-	if (f_v) {
-		cout << "do_EC_Koblitz_encoding b = " << EC_b << endl;
-		cout << "do_EC_Koblitz_encoding c = " << EC_c << endl;
-		cout << "do_EC_Koblitz_encoding s = " << EC_s << endl;
+		cout << "cryptography_domain::do_EC_Koblitz_encoding b = " << EC_b << endl;
+		cout << "cryptography_domain::do_EC_Koblitz_encoding c = " << EC_c << endl;
+		cout << "cryptography_domain::do_EC_Koblitz_encoding s = " << EC_s << endl;
 	}
 
 	vector<vector<int>> Encoding;
@@ -860,7 +889,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
 
 	u = F->q / 27;
 	if (f_v) {
-		cout << "do_EC_Koblitz_encoding u = " << u << endl;
+		cout << "cryptography_domain::do_EC_Koblitz_encoding u = " << u << endl;
 	}
 
 
@@ -886,7 +915,8 @@ void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
 			}
 		}
 		else {
-			cout << "failure to encode letter " << i << endl;
+			cout << "cryptography_domain::do_EC_Koblitz_encoding "
+					"failure to encode letter " << i << endl;
 			exit(1);
 		}
 	}
@@ -933,7 +963,8 @@ void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
 
 	Int_vec_scan(pt_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
+		cout << "cryptography_domain::do_EC_Koblitz_encoding "
+				"point should have just two coordinates" << endl;
 		exit(1);
 	}
 	Gx = v[0];
@@ -1079,11 +1110,11 @@ void cryptography_domain::do_EC_points(field_theory::finite_field *F, std::strin
 		int EC_b, int EC_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int x, y, r, y1, y2;
 
 	if (f_v) {
 		cout << "cryptography_domain::do_EC_points" << endl;
 	}
+	int x, y, r, y1, y2;
 	vector<vector<int>> Pts;
 
 	for (x = 0; x < F->q; x++) {
@@ -1328,13 +1359,14 @@ void cryptography_domain::do_EC_add(field_theory::finite_field *F,
 	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
 
 	if (f_v) {
-		cout << "do_EC_add" << endl;
+		cout << "cryptography_domain::do_EC_add" << endl;
 	}
 	vector<vector<int>> Pts;
 
 	Int_vec_scan(pt1_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
+		cout << "cryptography_domain::do_EC_add "
+				"point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x1 = v[0];
@@ -1344,7 +1376,8 @@ void cryptography_domain::do_EC_add(field_theory::finite_field *F,
 
 	Int_vec_scan(pt2_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
+		cout << "cryptography_domain::do_EC_add "
+				"point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x2 = v[0];
@@ -1370,7 +1403,7 @@ void cryptography_domain::do_EC_add(field_theory::finite_field *F,
 	//FREE_OBJECT(F);
 
 	if (f_v) {
-		cout << "do_EC_add done" << endl;
+		cout << "cryptography_domain::do_EC_add done" << endl;
 	}
 }
 
@@ -1378,15 +1411,17 @@ void cryptography_domain::do_EC_cyclic_subgroup(field_theory::finite_field *F,
 		int EC_b, int EC_c, std::string &pt_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_EC_cyclic_subgroup" << endl;
+	}
+
 	int x1, y1, z1;
 	int *v;
 	int len, i;
 	number_theory::number_theory_domain NT;
 	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
 
-	if (f_v) {
-		cout << "cryptography_domain::do_EC_cyclic_subgroup" << endl;
-	}
 	vector<vector<int>> Pts;
 	int order;
 
@@ -1438,15 +1473,16 @@ void cryptography_domain::do_EC_multiple_of(field_theory::finite_field *F,
 		int EC_b, int EC_c, std::string &pt_text, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_EC_multiple_of" << endl;
+	}
+
 	int x1, y1, z1;
 	int x3, y3, z3;
 	int *v;
 	int len;
 	number_theory::number_theory_domain NT;
-
-	if (f_v) {
-		cout << "cryptography_domain::do_EC_multiple_of" << endl;
-	}
 
 	Int_vec_scan(pt_text, v, len);
 	if (len != 2) {
@@ -1488,16 +1524,17 @@ void cryptography_domain::do_EC_discrete_log(field_theory::finite_field *F,
 		std::string &base_pt_text, std::string &pt_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_EC_discrete_log" << endl;
+	}
+
 	int x1, y1, z1;
 	int x3, y3, z3;
 	int *v;
 	int len;
 	int n;
 	number_theory::number_theory_domain NT;
-
-	if (f_v) {
-		cout << "cryptography_domain::do_EC_discrete_log" << endl;
-	}
 
 	Int_vec_scan(base_pt_text, v, len);
 	if (len != 2) {
@@ -1550,6 +1587,11 @@ void cryptography_domain::do_EC_baby_step_giant_step(field_theory::finite_field 
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_EC_baby_step_giant_step" << endl;
+	}
+
 	int Gx, Gy, Gz;
 	int nGx, nGy, nGz;
 	int Cx, Cy, Cz;
@@ -1559,10 +1601,6 @@ void cryptography_domain::do_EC_baby_step_giant_step(field_theory::finite_field 
 	int len;
 	int n;
 	number_theory::number_theory_domain NT;
-
-	if (f_v) {
-		cout << "cryptography_domain::do_EC_baby_step_giant_step" << endl;
-	}
 
 
 	Int_vec_scan(EC_bsgs_G, v, len);
@@ -1662,6 +1700,11 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode" << endl;
+	}
+
 	int Ax, Ay, Az;
 	int Tx, Ty, Tz;
 	int Cx, Cy, Cz;
@@ -1674,9 +1717,6 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	int u, plain;
 	number_theory::number_theory_domain NT;
 
-	if (f_v) {
-		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode" << endl;
-	}
 
 	u = F->q / 27;
 	if (f_v) {
@@ -1849,20 +1889,24 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 	M.create(RSA_m, __FILE__, __LINE__);
 	for (i = 0; i < data_sz; i++) {
 		A.create(data[i], __FILE__, __LINE__);
-		D.power_int_mod(
-				A, RSA_d, M);
-		cout << i << " : " << data[i] << " : " << A << endl;
+		D.power_int_mod(A, RSA_d, M);
+		if (f_v) {
+			cout << i << " : " << data[i] << " : " << A << endl;
+		}
 	}
 	for (i = 0; i < data_sz; i++) {
 		A.create(data[i], __FILE__, __LINE__);
-		D.power_int_mod(
-				A, RSA_d, M);
-		cout << A;
-		if (i < data_sz - 1) {
-			cout << ",";
+		D.power_int_mod(A, RSA_d, M);
+		if (f_v) {
+			cout << A;
+			if (i < data_sz - 1) {
+				cout << ",";
+			}
 		}
 	}
-	cout << endl;
+	if (f_v) {
+		cout << endl;
+	}
 
 	long int a;
 	int b, j;
@@ -1890,12 +1934,16 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 				break;
 			}
 		}
-		cout << str + j;
-		if (i < data_sz - 1) {
-			cout << ",";
+		if (f_v) {
+			cout << str + j;
+			if (i < data_sz - 1) {
+				cout << ",";
+			}
 		}
 	}
-	cout << endl;
+	if (f_v) {
+		cout << endl;
+	}
 }
 
 
@@ -1966,18 +2014,20 @@ void cryptography_domain::NTRU_encrypt(int N, int p, field_theory::finite_field 
 	FX.s_i(M, 0) = Fq->negate(1);
 	FX.s_i(M, N) = 1;
 
-	cout << "H(X)=";
-	FX.print_object(H, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "H(X)=";
+		FX.print_object(H, cout);
+		cout << endl;
 
 
-	cout << "R(X)=";
-	FX.print_object(R, cout);
-	cout << endl;
+		cout << "R(X)=";
+		FX.print_object(R, cout);
+		cout << endl;
 
-	cout << "Msg(X)=";
-	FX.print_object(Msg, cout);
-	cout << endl;
+		cout << "Msg(X)=";
+		FX.print_object(Msg, cout);
+		cout << endl;
+	}
 
 	FX.create_object_of_degree(C, dh);
 
@@ -2007,12 +2057,13 @@ void cryptography_domain::NTRU_encrypt(int N, int p, field_theory::finite_field 
 		cout << "cryptography_domain::NTRU_encrypt after FX.mult_mod" << endl;
 	}
 
-	cout << "D(X)=";
-	FX.print_object(D, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "D(X)=";
+		FX.print_object(D, cout);
+		cout << endl;
 
-	cout << "deg D(X) = " << FX.degree(D) << endl;
-
+		cout << "deg D(X) = " << FX.degree(D) << endl;
+	}
 
 
 
@@ -2061,10 +2112,11 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs,
 	}
 
 
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
-
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
+	}
 
 
 
@@ -2081,10 +2133,11 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs,
 		cout << "cryptography_domain::polynomial_center_lift after FX.mult_mod" << endl;
 	}
 
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
-
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
+	}
 
 
 
@@ -2146,6 +2199,11 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs,
 
 void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_solovay_strassen" << endl;
+	}
 	string fname;
 	string author;
 	string title;
@@ -2199,11 +2257,19 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+	if (f_v) {
+		cout << "cryptography_domain::do_solovay_strassen done" << endl;
+	}
 
 }
 
 void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_miller_rabin" << endl;
+	}
 	string fname;
 	string author;
 	string title;
@@ -2266,11 +2332,19 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+	if (f_v) {
+		cout << "cryptography_domain::do_miller_rabin done" << endl;
+	}
 
 }
 
 void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_fermat_test" << endl;
+	}
 	string fname;
 	string author;
 	string title;
@@ -2322,6 +2396,10 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+	if (f_v) {
+		cout << "cryptography_domain::do_fermat_test done" << endl;
+	}
+
 
 }
 
@@ -2329,6 +2407,11 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 		int nb_fermat, int nb_miller_rabin, int nb_solovay_strassen,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_find_pseudoprime" << endl;
+	}
 	string fname;
 	string author;
 	string title;
@@ -2451,11 +2534,19 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+	if (f_v) {
+		cout << "cryptography_domain::do_find_pseudoprime done" << endl;
+	}
 
 }
 
 void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_find_strong_pseudoprime" << endl;
+	}
 	string fname;
 	string author;
 	string title;
@@ -2553,6 +2644,9 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+	if (f_v) {
+		cout << "cryptography_domain::do_find_strong_pseudoprime done" << endl;
+	}
 
 }
 
@@ -2560,6 +2654,11 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 		int nb_miller_rabin, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_miller_rabin_text" << endl;
+	}
 	string fname;
 	string author;
 	string title;
@@ -2625,6 +2724,9 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 	orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "cryptography_domain::do_miller_rabin_text done" << endl;
+	}
 
 
 }
@@ -2642,20 +2744,26 @@ void cryptography_domain::quadratic_sieve(int n,
 	int i;
 
 	if (f_v) {
-		cout << "quadratic_sieve" << endl;
+		cout << "cryptography_domain::quadratic_sieve" << endl;
 	}
 	if (f_v) {
-		cout << "quadratic_sieve before sieve" << endl;
+		cout << "cryptography_domain::quadratic_sieve before sieve" << endl;
 	}
 	NT.sieve(primes, factorbase, verbose_level - 1);
 	if (f_v) {
-		cout << "quadratic_sieve after sieve" << endl;
+		cout << "cryptography_domain::quadratic_sieve after sieve" << endl;
 		cout << "list of primes has length " << primes.size() << endl;
 	}
 	D.create_Mersenne(M, n);
-	cout << "Mersenne number M_" << n << "=" << M << " log10=" << M.len() << endl;
+	if (f_v) {
+		cout << "cryptography_domain::quadratic_sieve "
+				"Mersenne number M_" << n << "=" << M << " log10=" << M.len() << endl;
+	}
 	D.square_root(M, sqrtM, 0 /*verbose_level - 1*/);
-	cout << "sqrtM=" << sqrtM << " log10=" << sqrtM.len() << endl;
+	if (f_v) {
+		cout << "cryptography_domain::quadratic_sieve "
+				"sqrtM=" << sqrtM << " log10=" << sqrtM.len() << endl;
+	}
 
 	// N1.mult(sqrtM, sqrtM);
 	// sqrtM.inc();
@@ -2667,7 +2775,10 @@ void cryptography_domain::quadratic_sieve(int n,
 	// longinteger_compare_verbose(N1, M);
 	// longinteger_compare_verbose(M, N2);
 
-	cout << "calling reduce_primes" << endl;
+	if (f_v) {
+		cout << "cryptography_domain::quadratic_sieve "
+				"calling reduce_primes" << endl;
+	}
 	//small_primes.m_l(0);
 	while (TRUE) {
 		//int p;
@@ -2679,22 +2790,35 @@ void cryptography_domain::quadratic_sieve(int n,
 		}
 		ring_theory::longinteger_object P, Q;
 
-		cout << "dividing out small factor " << small_factor << endl;
+		if (f_v) {
+			cout << "cryptography_domain::quadratic_sieve "
+					"dividing out small factor " << small_factor << endl;
+		}
 		small_factors.push_back(small_factor);
 		P.create(small_factor, __FILE__, __LINE__);
 		D.integral_division_exact(M, P, Q);
 		Q.assign_to(M);
-		cout << "reduced M=" << M << " log10=" << M.len() << endl;
-		D.square_root(M, sqrtM, 0 /*verbose_level - 1*/);
-		cout << "sqrtM=" << sqrtM << endl << endl;
+		if (f_v) {
+			cout << "cryptography_domain::quadratic_sieve "
+					"reduced M=" << M << " log10=" << M.len() << endl;
 		}
-	cout << "list of small factors has length " << small_factors.size() << endl;
-	for (i = 0; i < (int) small_factors.size(); i++) {
-		cout << i << " : " << small_factors[i] << endl;
+		D.square_root(M, sqrtM, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "cryptography_domain::quadratic_sieve "
+					"sqrtM=" << sqrtM << endl << endl;
+		}
+	}
+	if (f_v) {
+		cout << "cryptography_domain::quadratic_sieve "
+				"list of small factors has length " << small_factors.size() << endl;
+		for (i = 0; i < (int) small_factors.size(); i++) {
+			cout << i << " : " << small_factors[i] << endl;
+		}
 	}
 
 	if (M.is_one()) {
-		cout << "the number has been completely factored" << endl;
+		cout << "cryptography_domain::quadratic_sieve "
+				"the number has been completely factored" << endl;
 		exit(0);
 	}
 
@@ -2725,12 +2849,13 @@ void cryptography_domain::quadratic_sieve(int n,
 
 
 	if (f_v) {
-		cout << "quadratic_sieve done" << endl;
+		cout << "cryptography_domain::quadratic_sieve done" << endl;
 	}
 
 }
 
-void cryptography_domain::calc_log2(vector<int> &primes, vector<int> &primes_log2, int verbose_level)
+void cryptography_domain::calc_log2(std::vector<int> &primes,
+		std::vector<int> &primes_log2, int verbose_level)
 {
 	int i, l, k;
 
@@ -2773,15 +2898,19 @@ void cryptography_domain::square_root(std::string &square_root_number, int verbo
 	ring_theory::longinteger_object a, b;
 
 	if (f_v) {
-		cout << "square_root" << endl;
+		cout << "cryptography_domain::square_root" << endl;
 	}
 	a.create_from_base_10_string(square_root_number);
-	cout << "computing square root of " << a << endl;
+	if (f_v) {
+		cout << "computing square root of " << a << endl;
+	}
 	D.square_root(a, b, verbose_level - 4);
-	cout << "square root of " << a << " is " << b << endl;
+	if (f_v) {
+		cout << "square root of " << a << " is " << b << endl;
+	}
 
 	if (f_v) {
-		cout << "square_root done" << endl;
+		cout << "cryptography_domain::square_root done" << endl;
 	}
 }
 
@@ -2794,21 +2923,29 @@ void cryptography_domain::square_root_mod(std::string &square_root_number,
 	int b;
 
 	if (f_v) {
-		cout << "square_root" << endl;
+		cout << "cryptography_domain::square_root_mod" << endl;
 	}
 	a.create_from_base_10_string(square_root_number);
-	cout << "computing square root of " << a << endl;
+	if (f_v) {
+		cout << "cryptography_domain::square_root_mod "
+				"computing square root of " << a << endl;
+	}
 	m.create_from_base_10_string(mod_number);
-	cout << "modulo " << m << endl;
+	if (f_v) {
+		cout << "cryptography_domain::square_root_mod modulo " << m << endl;
+	}
 	b = D.square_root_mod(a.as_int(), m.as_int(), verbose_level -1);
-	cout << "square root of " << a << " mod " << m << " is " << b << endl;
+	if (f_v) {
+		cout << "cryptography_domain::square_root_mod "
+				"square root of " << a << " mod " << m << " is " << b << endl;
+	}
 
 	if (f_v) {
-		cout << "square_root done" << endl;
+		cout << "cryptography_domain::square_root_mod done" << endl;
 	}
 }
 
-void cryptography_domain::reduce_primes(vector<int> &primes,
+void cryptography_domain::reduce_primes(std::vector<int> &primes,
 		ring_theory::longinteger_object &M,
 		int &f_found_small_factor, int &small_factor,
 		int verbose_level)
@@ -2819,7 +2956,7 @@ void cryptography_domain::reduce_primes(vector<int> &primes,
 	ring_theory::longinteger_object Q, R, P;
 
 	if (f_v) {
-		cout << "reduce_primes" << endl;
+		cout << "cryptography_domain::reduce_primes" << endl;
 	}
 	f_found_small_factor = FALSE;
 	small_factor = 0;
@@ -2838,7 +2975,8 @@ void cryptography_domain::reduce_primes(vector<int> &primes,
 		// cout << "i=" << i << " p=" << p << " Mmodp=" << r
 		//<< " Legendre(r,p)=" << s << endl;
 		if (s == 0) {
-			cout << "M is divisible by " << p << endl;
+			cout << "cryptography_domain::reduce_primes "
+					"M is divisible by " << p << endl;
 			//exit(1);
 			f_found_small_factor = TRUE;
 			small_factor = p;
@@ -2850,7 +2988,8 @@ void cryptography_domain::reduce_primes(vector<int> &primes,
 			i--;
 			}
 		}
-	cout << "number of primes remaining = " << primes.size() << endl;
+	cout << "cryptography_domain::reduce_primes "
+			"number of primes remaining = " << primes.size() << endl;
 }
 
 
@@ -3052,7 +3191,7 @@ void cryptography_domain::do_smallest_primitive_root_interval(long int p_min, lo
 		T[2 * i + 0] = Table[i].first;
 		T[2 * i + 1] = Table[i].second;
 	}
-	sprintf(str, "primitive_element_table_%ld_%ld.csv", p_min, p_max);
+	snprintf(str, sizeof(str), "primitive_element_table_%ld_%ld.csv", p_min, p_max);
 	string fname;
 
 	fname.assign(str);
@@ -3112,7 +3251,7 @@ void cryptography_domain::do_number_of_primitive_roots_interval(long int p_min, 
 		T[2 * i + 0] = Table[i].first;
 		T[2 * i + 1] = Table[i].second;
 	}
-	sprintf(str, "table_number_of_pe_%ld_%ld.csv", p_min, p_max);
+	snprintf(str, sizeof(str), "table_number_of_pe_%ld_%ld.csv", p_min, p_max);
 	string fname;
 
 	fname.assign(str);
@@ -3199,7 +3338,7 @@ void cryptography_domain::do_power_mod(ring_theory::longinteger_object &a,
 
 void cryptography_domain::calc_roots(ring_theory::longinteger_object &M,
 		ring_theory::longinteger_object &sqrtM,
-	vector<int> &primes, vector<int> &R1, vector<int> &R2,
+	std::vector<int> &primes, std::vector<int> &R1, std::vector<int> &R2,
 	int verbose_level)
 // computes the root of the polynomial
 // $X^2 + a X + b$ over $GF(p)$
@@ -3518,7 +3657,7 @@ int cryptography_domain::factor_over_factor_base(ring_theory::longinteger_object
 
 int cryptography_domain::factor_over_factor_base2(
 		ring_theory::longinteger_object &x,
-		vector<int> &primes, vector<int> &exponents,
+		std::vector<int> &primes, std::vector<int> &exponents,
 		int verbose_level)
 {
 	ring_theory::longinteger_domain D;

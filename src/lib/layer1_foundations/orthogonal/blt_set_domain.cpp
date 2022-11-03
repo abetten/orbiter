@@ -41,23 +41,14 @@ blt_set_domain::blt_set_domain()
 
 blt_set_domain::~blt_set_domain()
 {
-	freeself();
-}
-
-void blt_set_domain::null()
-{
-}
-
-void blt_set_domain::freeself()
-{
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "blt_set_domain::freeself" << endl;
+		cout << "blt_set_domain::~blt_set_domain" << endl;
 	}
 	if (f_orthogonal_allocated) {
 		if (f_v) {
-			cout << "blt_set_domain::freeself before O" << endl;
+			cout << "blt_set_domain::~blt_set_domain before O" << endl;
 		}
 		if (O) {
 			FREE_OBJECT(O);
@@ -77,9 +68,8 @@ void blt_set_domain::freeself()
 	if (G53) {
 		FREE_OBJECT(G53);
 	}
-	null();
 	if (f_v) {
-		cout << "blt_set_domain::freeself done" << endl;
+		cout << "blt_set_domain::~blt_set_domain done" << endl;
 	}
 }
 
@@ -107,7 +97,7 @@ void blt_set_domain::init(orthogonal *O,
 
 	char str[1000];
 
-	sprintf(str, "BLT_q%d", q);
+	snprintf(str, sizeof(str), "BLT_q%d", q);
 	prefix.assign(str);
 
 
@@ -1021,9 +1011,9 @@ int blt_set_domain::create_graph(
 		char str[1000];
 		string label, label_tex;
 
-		sprintf(str, "BLT_%d", case_number);
+		snprintf(str, sizeof(str), "BLT_%d", case_number);
 		label.assign(str);
-		sprintf(str, "BLT\\_%d", case_number);
+		snprintf(str, sizeof(str), "BLT\\_%d", case_number);
 		label_tex.assign(str);
 
 		CG->init(nb_candidates /* nb_points */,
@@ -1043,7 +1033,7 @@ int blt_set_domain::create_graph(
 		char str[1000];
 		std::string fname;
 
-		sprintf(str, "_graph_%d_%d", starter_size, case_number);
+		snprintf(str, sizeof(str), "_graph_%d_%d", starter_size, case_number);
 		fname.assign(prefix);
 		fname.append(str);
 		CG->init_user_data(Starter_set, starter_size, verbose_level - 2);

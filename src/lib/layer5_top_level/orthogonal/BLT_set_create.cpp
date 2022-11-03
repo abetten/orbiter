@@ -106,8 +106,8 @@ void BLT_set_create::init(
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
-			sprintf(str, "Linear");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "Linear");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 
 		}
 
@@ -130,8 +130,8 @@ void BLT_set_create::init(
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
-			sprintf(str, "Fisher");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "Fisher");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 
 		}
 
@@ -154,8 +154,8 @@ void BLT_set_create::init(
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
-			sprintf(str, "Mondello");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "Mondello");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 
 		}
 
@@ -170,8 +170,8 @@ void BLT_set_create::init(
 			// for q congruent 2 mod 3
 			// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
-			sprintf(str, "FTWKB");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "FTWKB");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 
 		}
 		else if (ST.stringcmp(Descr->family_name, "Kantor1") == 0) {
@@ -184,8 +184,8 @@ void BLT_set_create::init(
 			// for a non-square m, and q=p^e
 			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
-			sprintf(str, "K1");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "K1");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "Kantor2") == 0) {
 			if (f_v) {
@@ -197,8 +197,8 @@ void BLT_set_create::init(
 			// for q congruent 2 or 3 mod 5
 			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
-			sprintf(str, "K2");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "K2");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_72") == 0) {
 			if (f_v) {
@@ -206,8 +206,8 @@ void BLT_set_create::init(
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			OG.create_LP_37_72_BLT_set(OA->O, set, verbose_level);
-			sprintf(str, "LP_ago72");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "LP_ago72");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_4a") == 0) {
 			if (f_v) {
@@ -215,8 +215,8 @@ void BLT_set_create::init(
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			OG.create_LP_37_4a_BLT_set(OA->O, set, verbose_level);
-			sprintf(str, "LP_ago4a");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "LP_ago4a");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_4b") == 0) {
 			if (f_v) {
@@ -224,8 +224,8 @@ void BLT_set_create::init(
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			OG.create_LP_37_4b_BLT_set(OA->O, set, verbose_level);
-			sprintf(str, "LP_ago4b");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "LP_ago4b");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_71") == 0) {
 			if (f_v) {
@@ -233,8 +233,8 @@ void BLT_set_create::init(
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			OG.create_Law_71_BLT_set(OA->O, set, verbose_level);
-			sprintf(str, "LP");
-			sprintf(str_q, "q%d", OA->Descr->F->q);
+			snprintf(str, sizeof(str), "LP");
+			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else {
 			cout << "BLT_set_create::init family name is not recognized" << endl;
@@ -287,8 +287,8 @@ void BLT_set_create::init(
 		char str_q[1000];
 		char str_iso[1000];
 
-		sprintf(str_q, "%d", OA->Descr->F->q);
-		sprintf(str_iso, "%d", Descr->iso);
+		snprintf(str_q, sizeof(str_q), "%d", OA->Descr->F->q);
+		snprintf(str_iso, sizeof(str_iso), "%d", Descr->iso);
 
 		prefix.assign("catalogue_q");
 		prefix.append(str_q);
@@ -406,7 +406,7 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(str, "BLT-set %s", label_tex.c_str());
+	snprintf(str, sizeof(str), "BLT-set %s", label_tex.c_str());
 	title.assign(str);
 	author.assign("Orbiter");
 

@@ -102,16 +102,12 @@ void tdo_refinement::main_loop(int verbose_level)
 	data_structures::string_tools ST;
 
 	fname.assign(Descr->fname_in);
-	//strcpy(str, Descr->fname_in);
-	//get_extension_if_present(str, ext);
-	//chop_off_extension_if_present(str, ext);
 	ST.chop_off_extension(fname);
 
 
 	fname_out.assign(fname);
-	//sprintf(fname_out, "%s", str);
 	if (Descr->f_range) {
-		sprintf(str, "_r%d_%d", Descr->range_first, Descr->range_len);
+		snprintf(str, sizeof(str), "_r%d_%d", Descr->range_first, Descr->range_len);
 		fname_out.append(str);
 	}
 	if (Descr->f_select) {
@@ -119,7 +115,6 @@ void tdo_refinement::main_loop(int verbose_level)
 		fname_out.append(Descr->select_label);
 	}
 	fname_out.append("r.tdo");
-	//sprintf(fname_out + strlen(fname_out), "r.tdo");
 	{
 
 		if (f_v) {
@@ -700,8 +695,7 @@ int tdo_refinement::do_row_refinement(
 
 		char str[1000];
 
-		//sprintf(GP2.label, "%s.%d", label_in, t + 1);
-		sprintf(str, ".%d", t + 1);
+		snprintf(str, sizeof(str), ".%d", t + 1);
 		GP2.label.assign(label_in);
 		GP2.label.append(str);
 
@@ -885,8 +879,7 @@ int tdo_refinement::do_column_refinement(
 
 		char str[1000];
 
-		//sprintf(GP2.label, "%s.%d", label_in, t + 1);
-		sprintf(str, ".%d", t + 1);
+		snprintf(str, sizeof(str), ".%d", t + 1);
 		GP2.label.assign(label_in);
 		GP2.label.append(str);
 

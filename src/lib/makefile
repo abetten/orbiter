@@ -56,6 +56,7 @@ MODULES= \
 		layer1_foundations/combinatorics/encoded_combinatorial_object.o \
 		layer1_foundations/combinatorics/geo_parameter.o \
 		layer1_foundations/combinatorics/pentomino_puzzle.o \
+		layer1_foundations/combinatorics/polynomial_function_domain.o \
 		layer1_foundations/combinatorics/tdo_data.o \
 		layer1_foundations/combinatorics/tdo_refinement_description.o \
 		layer1_foundations/combinatorics/tdo_refinement.o \
@@ -416,6 +417,10 @@ MODULES= \
 		layer4_classification/set_stabilizer/substructure_stats_and_selection.o \
 		layer4_classification/solver/exact_cover.o \
 		layer4_classification/solver/exact_cover_arguments.o \
+		layer5_top_level/algebra_and_number_theory/action_on_forms_activity_description.o \
+		layer5_top_level/algebra_and_number_theory/action_on_forms_activity.o \
+		layer5_top_level/algebra_and_number_theory/action_on_forms_description.o \
+		layer5_top_level/algebra_and_number_theory/action_on_forms.o \
 		layer5_top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		layer5_top_level/algebra_and_number_theory/any_group_linear.o \
 		layer5_top_level/algebra_and_number_theory/any_group_orbits.o \

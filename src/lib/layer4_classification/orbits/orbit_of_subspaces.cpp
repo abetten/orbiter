@@ -59,15 +59,6 @@ orbit_of_subspaces::orbit_of_subspaces()
 
 orbit_of_subspaces::~orbit_of_subspaces()
 {
-	freeself();
-}
-
-void orbit_of_subspaces::null()
-{
-}
-
-void orbit_of_subspaces::freeself()
-{
 	int i;
 	
 	if (subspace_by_rank) {
@@ -106,7 +97,6 @@ void orbit_of_subspaces::freeself()
 	if (Mtx3) {
 		FREE_int(Mtx3);
 		}
-	null();
 }
 
 void orbit_of_subspaces::init(

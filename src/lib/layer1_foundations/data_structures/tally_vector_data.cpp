@@ -258,7 +258,7 @@ void tally_vector_data::save_classes_individually(std::string &fname, int verbos
 
 		fname2.assign(fname);
 		for (j = 0; j < data_set_sz; j++) {
-			sprintf(str, "%d", Reps[i * data_set_sz + j]);
+			snprintf(str, sizeof(str), "%d", Reps[i * data_set_sz + j]);
 			fname2.append(str);
 		}
 		fname2.append(".csv");

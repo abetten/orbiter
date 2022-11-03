@@ -249,7 +249,7 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 	string label_stab;
 	char str[1000];
 
-	sprintf(str, "_stab_orb_%d", orbit_idx);
+	snprintf(str, sizeof(str), "_stab_orb_%d", orbit_idx);
 
 
 
@@ -1287,7 +1287,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 
 	Lint_vec_copy(Classify_orbits_by_length->Set_partition->Sets[type_idx], CG->points, nb_points);
-	//sprintf(CG->fname_base, "%s", fname);
 	CG->fname_base.assign(fname);
 
 

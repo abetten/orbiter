@@ -46,8 +46,6 @@ public:
 
 	blt_set_domain();
 	~blt_set_domain();
-	void null();
-	void freeself();
 	void init(orthogonal *O,
 		int verbose_level);
 	void compute_adjacency_list_fast(int first_point_of_starter,

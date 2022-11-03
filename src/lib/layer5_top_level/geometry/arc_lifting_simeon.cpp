@@ -395,7 +395,7 @@ void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_sta
 
 	char fname[1000];
 
-	sprintf(fname,
+	snprintf(fname, sizeof(fname),
 			"arc_lifting_simeon_q%d_n%d_d%d_k%d_solutions.txt",
 			q, n, d, k);
 	{

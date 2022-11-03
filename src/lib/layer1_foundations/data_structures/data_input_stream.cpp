@@ -367,7 +367,7 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				string fname;
 
 
-				sprintf(str, mask.c_str(), i);
+				snprintf(str, sizeof(str), mask.c_str(), i);
 				fname.assign(str);
 
 				set_of_sets *SoS;
@@ -930,7 +930,7 @@ void data_input_stream::read_objects(int verbose_level)
 				string fname;
 
 
-				sprintf(str, mask.c_str(), c);
+				snprintf(str, sizeof(str), mask.c_str(), c);
 				fname.assign(str);
 
 				set_of_sets *SoS;

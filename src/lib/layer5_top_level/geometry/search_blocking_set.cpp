@@ -142,10 +142,6 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		}
 	
 	
-
-	//sprintf(gen->fname_base, "blocking_set");
-	
-	
 	
 	if (f_v) {
 		cout << "find_blocking_sets calling gen->init" << endl;

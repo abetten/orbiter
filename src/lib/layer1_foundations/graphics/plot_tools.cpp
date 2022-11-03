@@ -100,7 +100,7 @@ void plot_tools::draw_density(
 
 	fname_full.assign(prefix);
 
-	sprintf(str, "_%d.mp", no);
+	snprintf(str, sizeof(str), "_%d.mp", no);
 
 	fname_full.append(str);
 	
@@ -229,7 +229,7 @@ void plot_tools::draw_density_multiple_curves(
 
 	fname_full.assign(prefix);
 
-	sprintf(str, "_%d.mp", no);
+	snprintf(str, sizeof(str), "_%d.mp", no);
 
 	fname_full.append(str);
 	
@@ -632,7 +632,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 			else {
 				j = i;
 			}
-			sprintf(str, "%d", j);
+			snprintf(str, sizeof(str), "%d", j);
 		}
 
 		if (Descr->f_mod_s) {
@@ -647,7 +647,9 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 			f_do_it = TRUE;
 		}
 		if (f_do_it) {
-			G.text(Px[n + 1 + i], Py[n + 1 + i], str);
+			string s;
+			s.assign(str);
+			G.text(Px[n + 1 + i], Py[n + 1 + i], s);
 		}
 	}
 

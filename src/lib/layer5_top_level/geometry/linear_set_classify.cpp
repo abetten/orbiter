@@ -770,7 +770,7 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 		cout << "linear_set_classify::read_data_file" << endl;
 	}
 	fname.assign(Gen->get_problem_label_with_path());
-	sprintf(str, "_%d.data", depth);
+	snprintf(str, sizeof(str), "_%d.data", depth);
 	fname.append(str);
 
 	Gen->read_data_file(depth_completed, fname, 0 /*verbose_level - 1*/);
@@ -994,7 +994,7 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 
 	char label[1000]; // ToDo
 
-	sprintf(label, "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s,
+	snprintf(label, sizeof(label), "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s,
 		secondary_level, secondary_orbit_at_level);
 
 
@@ -1366,8 +1366,8 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 
 	char label[1000];
 
-	sprintf(label,
-		"subspaces_%d_%d_%d_stabilizer_%d_%d", n, q, s,
+	snprintf(label, sizeof(label),
+			"subspaces_%d_%d_%d_stabilizer_%d_%d", n, q, s,
 		level, orbit_at_level);
 
 

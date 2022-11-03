@@ -102,44 +102,37 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 {
 	int f_v = (verbose_level >= 1);
 	long int i, a;
-	char str[1000];
+	string s;
 	int w[6];
 	int Basis[8];
-	char **Text_wedge;
-	char **Text_line;
-	char **Text_klein;
+	string *Text_wedge;
+	string *Text_line;
+	string *Text_klein;
 
 	if (f_v) {
 		cout << "surface_domain::make_spreadsheet_of_lines_in_three_kinds" << endl;
 		}
 
-	Text_wedge = NEW_pchar(nb_lines);
-	Text_line = NEW_pchar(nb_lines);
-	Text_klein = NEW_pchar(nb_lines);
+	Text_wedge = new string[nb_lines];
+	Text_line = new string[nb_lines];
+	Text_klein = new string[nb_lines];
 
 	for (i = 0; i < nb_lines; i++) {
 		a = Wedge_rk[i];
 		F->PG_element_unrank_modified_lint(w, 1, 6 /*wedge_dimension*/, a);
-		Int_vec_print_to_str(str, w, 6);
-		Text_wedge[i] = NEW_char(strlen(str) + 1);
-		strcpy(Text_wedge[i], str);
+		Int_vec_print_to_str(Text_wedge[i], w, 6);
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Line_rk[i];
 		Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
-		Int_vec_print_to_str(str, Basis, 8);
-		Text_line[i] = NEW_char(strlen(str) + 1);
-		strcpy(Text_line[i], str);
+		Int_vec_print_to_str(Text_line[i], Basis, 8);
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Klein_rk[i];
 		O->Hyperbolic_pair->unrank_point(w, 1, a, 0 /* verbose_level*/);
 			// error corrected: w was v which was v[4], so too short.
 			// Aug 25, 2018
-		Int_vec_print_to_str(str, w, 6);
-			// w was v, error corrected
-		Text_klein[i] = NEW_char(strlen(str) + 1);
-		strcpy(Text_klein[i], str);
+		Int_vec_print_to_str(Text_klein[i], w, 6);
 		}
 
 	Sp = NEW_OBJECT(data_structures::spreadsheet);
@@ -147,26 +140,17 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 	Sp->fill_column_with_row_index(0, "Idx");
 	Sp->fill_column_with_lint(1, Wedge_rk, "Wedge_rk");
 	Sp->fill_column_with_text(2,
-			(const char **) Text_wedge, "Wedge coords");
+			Text_wedge, "Wedge coords");
 	Sp->fill_column_with_lint(3, Line_rk, "Line_rk");
 	Sp->fill_column_with_text(4,
-			(const char **) Text_line, "Line basis");
+			Text_line, "Line basis");
 	Sp->fill_column_with_lint(5, Klein_rk, "Klein_rk");
 	Sp->fill_column_with_text(6,
-			(const char **) Text_klein, "Klein coords");
+			Text_klein, "Klein coords");
 
-	for (i = 0; i < nb_lines; i++) {
-		FREE_char(Text_wedge[i]);
-		}
-	FREE_pchar(Text_wedge);
-	for (i = 0; i < nb_lines; i++) {
-		FREE_char(Text_line[i]);
-		}
-	FREE_pchar(Text_line);
-	for (i = 0; i < nb_lines; i++) {
-		FREE_char(Text_klein[i]);
-		}
-	FREE_pchar(Text_klein);
+	delete [] Text_wedge;
+	delete [] Text_line;
+	delete [] Text_klein;
 
 
 	if (f_v) {
@@ -866,7 +850,7 @@ void surface_domain::make_table_of_surfaces2(std::ostream &ost,
 	for (j = 0; j < nb_E_types; j++) {
 		char str[1000];
 
-		sprintf(str, "E%d", E[j]);
+		snprintf(str, sizeof(str), "E%d", E[j]);
 		headers[1 + j].assign(str);
 	}
 

@@ -2821,20 +2821,20 @@ void knowledge_base::retrieve_BLT_set_from_database(
 	char str[1000];
 
 	if (f_embedded) {
-		sprintf(str, "%d_%d_embedded", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d_%d_embedded", F->q, BLT_k);
 		label_txt.assign("BLT_");
 		label_txt.append(str);
 
-		sprintf(str, "%d\\_%d\\_embedded", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d\\_%d\\_embedded", F->q, BLT_k);
 		label_tex.assign("BLT\\_");
 		label_tex.append(str);
 	}
 	else {
-		sprintf(str, "%d_%d", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d_%d", F->q, BLT_k);
 		label_txt.assign("BLT_");
 		label_txt.append(str);
 
-		sprintf(str, "%d\\_%d", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d\\_%d", F->q, BLT_k);
 		label_tex.assign("BLT\\_");
 		label_tex.append(str);
 	}

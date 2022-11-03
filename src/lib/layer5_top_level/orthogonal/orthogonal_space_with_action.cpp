@@ -57,7 +57,7 @@ void orthogonal_space_with_action::init(
 	else {
 		char str[1000];
 
-		sprintf(str, "O_%d_%d_%d", Descr->epsilon, Descr->n, Descr->F->q);
+		snprintf(str, sizeof(str), "O_%d_%d_%d", Descr->epsilon, Descr->n, Descr->F->q);
 		label_txt.assign(str);
 	}
 	if (Descr->f_label_tex) {
@@ -67,13 +67,13 @@ void orthogonal_space_with_action::init(
 		char str[1000];
 
 		if (Descr->epsilon == 1) {
-			sprintf(str, "O^+(%d,%d)", Descr->n, Descr->F->q);
+			snprintf(str, sizeof(str), "O^+(%d,%d)", Descr->n, Descr->F->q);
 		}
 		else if (Descr->epsilon == 0) {
-			sprintf(str, "O(%d,%d)", Descr->n, Descr->F->q);
+			snprintf(str, sizeof(str), "O(%d,%d)", Descr->n, Descr->F->q);
 		}
 		else if (Descr->epsilon == -1) {
-			sprintf(str, "O^-(%d,%d)", Descr->n, Descr->F->q);
+			snprintf(str, sizeof(str), "O^-(%d,%d)", Descr->n, Descr->F->q);
 		}
 		else {
 			cout << "orthogonal_space_with_action::init illegal value of epsilon" << endl;

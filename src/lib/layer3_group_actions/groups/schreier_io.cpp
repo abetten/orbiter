@@ -298,6 +298,25 @@ void schreier::print_and_list_orbits_tex(std::ostream &ost)
 	ost << endl;
 }
 
+void schreier::print_and_list_non_trivial_orbits_tex(std::ostream &ost)
+{
+	int orbit_no;
+
+	ost << nb_orbits << " orbits:\\\\" << endl;
+	ost << "orbits under a group with " << gens.len
+			<< " generators acting on a set of size "
+			<< A->degree << ":\\\\" << endl;
+	//ost << "i : orbit_first[i] : orbit_len[i]" << endl;
+	for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+
+		if (orbit_len[orbit_no] > 1) {
+			print_and_list_orbit_tex(orbit_no, ost);
+		}
+	}
+	ost << endl;
+}
+
+
 void schreier::print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
 		std::ostream &ost, actions::action *default_action, strong_generators *gens,
 		int verbose_level)
@@ -339,7 +358,7 @@ void schreier::make_orbit_trees(std::ostream &ost,
 	for (i = 0; i < nb_orbits; i++) {
 		char fname[1000];
 
-		sprintf(fname, fname_mask.c_str(), i);
+		snprintf(fname, sizeof(fname), fname_mask.c_str(), i);
 		ost << "" << endl;
 		ost << "\\bigskip" << endl;
 		ost << "" << endl;
@@ -1028,6 +1047,22 @@ void schreier::print_orbit_sorted_tex(std::ostream &ost,
 	FREE_int(v);
 }
 
+void schreier::get_orbit_sorted(int *&v, int &len, int orbit_no)
+{
+	int i, first;
+	data_structures::sorting Sorting;
+
+	first = orbit_first[orbit_no];
+	len = orbit_len[orbit_no];
+	v = NEW_int(len);
+	for (i = 0; i < len; i++) {
+		v[i] = orbit[first + i];
+	}
+	//int_vec_print(ost, v, len);
+	Sorting.int_vec_heapsort(v, len);
+
+}
+
 void schreier::print_orbit_sorted_with_original_labels_tex(std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
@@ -1232,7 +1267,7 @@ void schreier::draw_forest(std::string &fname_mask,
 		cout << "schreier::draw_forest" << endl;
 	}
 	for (i = 0; i < nb_orbits; i++) {
-		sprintf(str, fname_mask.c_str(), i);
+		snprintf(str, sizeof(str), fname_mask.c_str(), i);
 		string fname;
 
 		fname.assign(str);
@@ -1380,16 +1415,21 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 		int a;
 
 		a = orbit[fst + j];
-		sprintf(text, "%d", a);
+		snprintf(text, sizeof(text), "%d", a);
 		trace_back(NULL, a, l);
 		l--;
-		LG->add_text(l, horizontal_position[j], text, 0/*verbose_level*/);
+
+		string text2;
+
+		text2.assign(text);
+
+		LG->add_text(l, horizontal_position[j], text2, 0/*verbose_level*/);
 		LG->add_node_data1(l, horizontal_position[j], a, 0/*verbose_level*/);
 	}
 	char str[1000];
 	string fname;
 
-	sprintf(str, fname_mask.c_str(), orbit_no);
+	snprintf(str, sizeof(str), fname_mask.c_str(), orbit_no);
 	fname.assign(str);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	FREE_OBJECT(LG);
@@ -1582,6 +1622,7 @@ void schreier::draw_tree2(std::string &fname,
 	x = Opt->xin / 2;
 	calc_y_coordinate(y, max_depth + 1, max_depth, Opt->yin);
 	char str[1000];
+	string s;
 	int nb_gens;
 	double H; // entropy
 
@@ -1592,8 +1633,9 @@ void schreier::draw_tree2(std::string &fname,
 	else {
 		H = 0.;
 	}
-	sprintf(str, "N=%d, avg=%lf,  gens=%d, H=%lf", N, avg, nb_gens, H);
-	G.aligned_text(x, y, "", str);
+	snprintf(str, sizeof(str), "N=%d, avg=%lf,  gens=%d, H=%lf", N, avg, nb_gens, H);
+	s.assign(str);
+	G.aligned_text(x, y, "", s);
 
 
 #if 0
@@ -1626,6 +1668,7 @@ void schreier::subtree_draw_lines(
 	int pt = orbit[i];
 	int x, y, l, ii;
 	int Px[3], Py[3];
+	string s;
 
 	if (f_v) {
 		cout << "schreier::subtree_draw_lines" << endl;
@@ -1665,8 +1708,9 @@ void schreier::subtree_draw_lines(
 		if (l > 1) {
 			char str[1000];
 			// if pt is not the root node:
-			sprintf(str, "$\\alpha_{%d}$", label[i]);
-			G.aligned_text(Px[2], Py[2], "", str);
+			snprintf(str, sizeof(str), "$\\alpha_{%d}$", label[i]);
+			s.assign(str);
+			G.aligned_text(Px[2], Py[2], "", s);
 		}
 	}
 
@@ -1699,6 +1743,7 @@ void schreier::subtree_draw_vertices(
 	int x, y, l, ii;
 	//int Px[2], Py[2];
 	char str[1000];
+	string s;
 
 	if (f_v) {
 		cout << "schreier::subtree_draw_vertices" << endl;
@@ -1733,18 +1778,20 @@ void schreier::subtree_draw_vertices(
 		}
 #endif
 	if (f_has_point_labels) {
-		sprintf(str, "%ld", point_labels[pt]);
+		snprintf(str, sizeof(str), "%ld", point_labels[pt]);
 	}
 	else {
-		sprintf(str, "%d", pt);
+		snprintf(str, sizeof(str), "%d", pt);
 	}
 	if (Opt->f_nodes_empty) {
-		G.circle_text(x, y, Opt->rad, "");
+		s.assign("");
+		G.circle_text(x, y, Opt->rad, s);
 		//G.circle(x, y, rad);
 		//G.aligned_text(Px, Py, 1, "tl", str);
 	}
 	else {
-		G.circle_text(x, y, Opt->rad, str);
+		s.assign(str);
+		G.circle_text(x, y, Opt->rad, s);
 	}
 	if (f_v) {
 		cout << "schreier::subtree_draw_vertices done" << endl;

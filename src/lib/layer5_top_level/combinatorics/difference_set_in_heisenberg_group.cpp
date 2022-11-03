@@ -70,7 +70,7 @@ void difference_set_in_heisenberg_group::init(int n,
 		}
 
 	char str[1000];
-	sprintf(str, "H_%d_%d", n, q);
+	snprintf(str, sizeof(str), "H_%d_%d", n, q);
 	fname_base.assign(str);
 	//magma_write_permutation_group(fname_base,
 	//H->group_order, Table, gens, nb_gens, verbose_level);
@@ -229,7 +229,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	Sch->print_orbit_length_distribution(cout);
 
 	char str[1000];
-	sprintf(str, "N_U_2_3");
+	snprintf(str, sizeof(str), "N_U_2_3");
 	prefix.assign(str);
 
 	cout << "computing normalizer of U in G:" << endl;
@@ -998,7 +998,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	int f_w = FALSE;
 	int target_depth = nb_pairs_of_type1;
 
-	sprintf(prefix, "H_%d_%d_short", n, q);
+	snprintf(prefix, sizeof(prefix), "H_%d_%d_short", n, q);
 
 	cout << "classifying subsets:" << endl;
 

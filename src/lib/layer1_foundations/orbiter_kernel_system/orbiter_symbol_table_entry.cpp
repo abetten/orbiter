@@ -660,6 +660,26 @@ void orbiter_symbol_table_entry::init_vector_ge(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_action_on_forms(std::string &label,
+		void *AF, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_action_on_forms" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_action_on_forms;
+	ptr = AF;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_action_on_forms done" << endl;
+	}
+}
+
+
+
+
 
 
 
@@ -779,6 +799,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_vector_ge) {
 			cout << "vector_ge" << endl;
+		}
+		else if (object_type == t_action_on_forms) {
+			cout << "action_on_forms" << endl;
 		}
 
 	}

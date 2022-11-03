@@ -100,6 +100,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				Descr->BCH_q,
 				Descr->BCH_t, 1, FALSE,
 				verbose_level);
+
 	}
 	else if (Descr->f_BCH_dual) {
 
@@ -120,8 +121,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			//Lint_vec_scan(Descr->general_code_binary_text, set, sz);
-
 			Get_vector_or_set(Descr->general_code_binary_text, set, sz);
 
 
@@ -130,7 +129,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			FREE_lint(set);
 
 	}
-
 	else if (Descr->f_code_diagram) {
 			long int *codewords;
 			int nb_words;
@@ -138,15 +136,16 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			//Lint_vec_scan(Descr->code_diagram_codewords_text, codewords, nb_words);
-
 			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
 
 
 			Codes.code_diagram(
 					Descr->code_diagram_label,
 					codewords,
-					nb_words, Descr->code_diagram_n, Descr->f_metric_balls, Descr->metric_ball_radius,
+					nb_words,
+					Descr->code_diagram_n,
+					Descr->f_metric_balls,
+					Descr->metric_ball_radius,
 					Descr->f_enhance, 0 /*nb_enhance */,
 					verbose_level);
 	}
@@ -166,7 +165,10 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			Codes.code_diagram(
 					Descr->code_diagram_label,
 					codewords,
-					nb_words, Descr->code_diagram_n, Descr->f_metric_balls, Descr->metric_ball_radius,
+					nb_words,
+					Descr->code_diagram_n,
+					Descr->f_metric_balls,
+					Descr->metric_ball_radius,
 					Descr->f_enhance, Descr->enhance_radius,
 					verbose_level);
 	}
@@ -178,15 +180,16 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			coding_theory::coding_theory_domain Codes;
 
 
-			//Lint_vec_scan(Descr->code_diagram_codewords_text, codewords, nb_words);
-
 			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
 
 
 			Codes.code_diagram(
 					Descr->code_diagram_label,
 					codewords,
-					nb_words, Descr->code_diagram_n, Descr->f_metric_balls, Descr->metric_ball_radius,
+					nb_words,
+					Descr->code_diagram_n,
+					Descr->f_metric_balls,
+					Descr->metric_ball_radius,
 					Descr->f_enhance, Descr->enhance_radius,
 					verbose_level);
 	}
@@ -225,21 +228,15 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_weight_enumerator) {
 
-		coding_theory::coding_theory_domain Codes;
+		cout << "-weight_enumerator" << endl;
 
-		int *v;
-		int m, n;
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity f_weight_enumerator needs a code" << endl;
+			exit(1);
+		}
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->weight_enumerator_input_matrix, v, m, n);
+		Code->weight_enumerator(verbose_level);
 
-
-		Codes.do_weight_enumerator(F,
-				v, m, n,
-				FALSE /* f_normalize_from_the_left */,
-				FALSE /* f_normalize_from_the_right */,
-				verbose_level);
-
-		FREE_int(v);
 	}
 	else if (Descr->f_minimum_distance) {
 
@@ -248,7 +245,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		int *v;
 		int m, n;
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->minimum_distance_code_label, v, m, n);
+		Get_matrix(Descr->minimum_distance_code_label, v, m, n);
 
 
 		Codes.do_minimum_distance(F,
@@ -650,12 +647,139 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	if (Descr->f_fixed_code) {
+		cout << "-fixed_code " << Descr->fixed_code_perm << endl;
 
+		coding_theory::coding_theory_domain Codes;
+
+		long int *perm;
+		int n;
+
+		Get_vector_or_set(Descr->fixed_code_perm, perm, n);
+
+		if (!f_has_code) {
+			cout << "-fixed_code needs a code" << endl;
+			exit(1);
+		}
+
+		do_fixed_code(F,
+				perm, n, Code,
+				verbose_level);
+
+		FREE_lint(perm);
+
+	}
 
 	if (f_v) {
 		cout << "coding_theoretic_activity::perform_activity done" << endl;
 	}
 }
+
+
+void coding_theoretic_activity::do_fixed_code(field_theory::finite_field *F,
+	long int *perm, int n,
+	apps_coding_theory::create_code *Code,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_fixed_code" << endl;
+	}
+
+	if (Code->n != n) {
+		cout << "coding_theoretic_activity::do_fixed_code Code->n != n" << endl;
+		cout << "coding_theoretic_activity::do_fixed_code Code->n = " << Code->n << endl;
+		cout << "coding_theoretic_activity::do_fixed_code n = " << n << endl;
+		exit(1);
+	}
+
+#if 0
+	int *genma; // [k * n]
+	int *checkma; // [nmk * n]
+	int n;
+	int k;
+	int nmk;
+	int d;
+#endif
+
+	long int t0, t1, dt;
+	long int N;
+	int *msg;
+	int *word;
+	geometry::geometry_global Gg;
+	orbiter_kernel_system::os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_fixed_code" << endl;
+	}
+	N = Gg.nb_AG_elements(Code->k, F->q);
+	if (f_v) {
+		cout << N << " messages" << endl;
+	}
+	msg = NEW_int(Code->k);
+	word = NEW_int(Code->n);
+	int h, i, a, j, b, cnt;
+	vector<long int> V;
+
+	cnt = 0;
+	for (h = 0; h < N; h++) {
+		if ((h % ONE_MILLION) == 0) {
+			t1 = Os.os_ticks();
+			dt = t1 - t0;
+			cout << setw(10) << h << " / " << setw(10) << N << " : ";
+			Os.time_check_delta(cout, dt);
+			cout << endl;
+		}
+		Gg.AG_element_unrank(F->q, msg, 1, Code->k, h);
+		F->Linear_algebra->mult_vector_from_the_left(msg, Code->genma, word, Code->k, n);
+		for (i = 0; i < n; i++) {
+			a = word[i];
+			j = perm[i];
+			b = word[j];
+			if (a != b) {
+				break;
+			}
+		}
+		if (i == n) {
+			V.push_back(h);
+			Int_vec_print(cout, word, n);
+			cout << endl;
+			cnt++;
+		}
+	}
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_fixed_code we found " << cnt << " fixed words" << endl;
+	}
+	int *M;
+	int rk;
+
+	M = NEW_int(cnt * n);
+	for (i = 0; i < N; i++) {
+		Gg.AG_element_unrank(F->q, msg, 1, Code->k, V[i]);
+		F->Linear_algebra->mult_vector_from_the_left(msg, Code->genma, word, Code->k, n);
+		Int_vec_copy(word, M + i * n, n);
+	}
+	rk = F->Linear_algebra->Gauss_easy(M, cnt, n);
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_fixed_code The fix subcode has dimension " << rk << endl;
+		Int_matrix_print(M, rk, n);
+		cout << endl;
+		Int_vec_print_fully(cout, M, rk * n);
+		cout << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_fixed_code done" << endl;
+	}
+}
+
+
+
 
 }}}
 

@@ -862,7 +862,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 			
 	if (f_v) {
 		cout << "processing fuse simple for "
-				"pointtactical decomposition" << endl;
+				"point-tactical decomposition" << endl;
 	}
 	init_tdo_scheme(G, verbose_level);
 	h = ROW_SCHEME;
@@ -1062,7 +1062,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 			
 	if (f_v) {
 		cout << "processing fuse simple for "
-				"blocktactical decomposition" << endl;
+				"block-tactical decomposition" << endl;
 	}
 	init_tdo_scheme(G, verbose_level);
 	h = COL_SCHEME;
@@ -1279,7 +1279,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 			
 	if (f_v) {
 		cout << "processing fuse double for "
-				"pointtactical decomposition" << endl;
+				"point-tactical decomposition" << endl;
 		cout << "fuse_block_first[0]=" << fuse_block_first[0] << endl;
 		cout << "fuse_block_len[0]  =" << fuse_block_len[0] << endl;
 		cout << "fuse_block_first[1]=" << fuse_block_first[1] << endl;

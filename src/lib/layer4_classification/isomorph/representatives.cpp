@@ -127,22 +127,18 @@ void representatives::init(actions::action *A,
 	fname_rep.assign(prefix);
 	fname_rep.append("_classification_reps.txt");
 
-	//sprintf(fname_rep, "%sclassification_reps.txt", prefix);
 
 	fname_stabgens.assign(prefix);
 	fname_stabgens.append("_classification_stabgens.bin");
 
-	//sprintf(fname_stabgens, "%sclassification_stabgens.bin", prefix);
 
 	fname_fusion.assign(prefix);
 	fname_fusion.append("_classification_fusion.txt");
 
-	//sprintf(fname_fusion, "%sclassification_fusion.txt", prefix);
 
 	fname_fusion_ge.assign(prefix);
 	fname_fusion_ge.append("_classification_fusion_ge.bin");
 
-	//sprintf(fname_fusion_ge, "%sclassification_fusion_ge.bin", prefix);
 	if (f_v) {
 		cout << "representatives::init done" << endl;
 	}

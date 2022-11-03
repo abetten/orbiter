@@ -464,6 +464,9 @@ public:
 	int m;
 	int n;
 
+	int *perm_inv;
+	int *perm;
+
 	int_matrix();
 	~int_matrix();
 	void null();
@@ -474,6 +477,9 @@ public:
 	int &s_m();
 	int &s_n();
 	void print();
+	void sort_rows(int verbose_level);
+	void check_that_entries_are_distinct(int verbose_level);
+	int search(int *entry, int &idx, int verbose_level);
 
 };
 
@@ -542,8 +548,8 @@ public:
 	void scan(std::string &s, int *&v, int &len);
 	void scan(const char *s, int *&v, int &len);
 	void scan_from_stream(std::istream & is, int *&v, int &len);
-	void print_to_str(char *str, int *data, int len);
-	void print_to_str_naked(char *str, int *data, int len);
+	void print_to_str(std::string &s, int *data, int len);
+	void print_to_str_naked(std::string &s, int *data, int len);
 	void print(int *v, int len);
 	void print_integer_matrix(std::ostream &ost,
 		int *p, int m, int n);
@@ -591,8 +597,6 @@ public:
 
 	int_vector();
 	~int_vector();
-	void null();
-	void freeself();
 	void allocate(int len);
 	void allocate_and_init(int len, long int *V);
 	void allocate_and_init_int(int len, int *V);
@@ -660,8 +664,8 @@ public:
 	void scan(std::string &s, long int *&v, int &len);
 	void scan(const char *s, long int *&v, int &len);
 	void scan_from_stream(std::istream & is, long int *&v, int &len);
-	void print_to_str(char *str, long int *data, int len);
-	void print_to_str_naked(char *str, long int *data, int len);
+	void print_to_str(std::string &s, long int *data, int len);
+	void print_to_str_naked(std::string &s, long int *data, int len);
 	void create_string_with_quotes(std::string &str, long int *v, int len);
 
 
@@ -1028,8 +1032,6 @@ public:
 
 	set_of_sets_lint();
 	~set_of_sets_lint();
-	void null();
-	void freeself();
 	void init_simple(long int underlying_set_size,
 			int nb_sets, int verbose_level);
 	void init(long int underlying_set_size,
@@ -1062,8 +1064,6 @@ public:
 
 	set_of_sets();
 	~set_of_sets();
-	void null();
-	void freeself();
 	set_of_sets *copy();
 	void init_simple(int underlying_set_size, 
 		int nb_sets, int verbose_level);
@@ -1428,8 +1428,6 @@ public:
 
 	spreadsheet();
 	~spreadsheet();
-	void null();
-	void freeself();
 	void init_set_of_sets(set_of_sets *S, int f_make_heading);
 	void init_int_matrix(int nb_rows, int nb_cols, int *A);
 	void init_empty_table(int nb_rows, int nb_cols);
@@ -1439,7 +1437,7 @@ public:
 			int col_idx, std::string &text);
 	void set_entry_lint(int row_idx,
 			int col_idx, long int val);
-	void fill_column_with_text(int col_idx, const char **text, 
+	void fill_column_with_text(int col_idx, std::string *text,
 		const char *heading);
 	void fill_column_with_int(int col_idx, int *data, 
 		const char *heading);

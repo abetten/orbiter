@@ -46,16 +46,6 @@ orbit_of_sets::orbit_of_sets()
 
 orbit_of_sets::~orbit_of_sets()
 {
-	freeself();
-}
-
-void orbit_of_sets::null()
-{
-	//Sets = NULL;
-}
-
-void orbit_of_sets::freeself()
-{
 	int i;
 	
 	if (Sets) {
@@ -73,7 +63,6 @@ void orbit_of_sets::freeself()
 	if (cosetrep_tmp) {
 		FREE_int(cosetrep_tmp);
 	}
-	null();
 }
 
 void orbit_of_sets::init(actions::action *A, actions::action *A2,

@@ -1309,10 +1309,10 @@ void finite_field::create_orthogonal(int epsilon, int n,
 
 	algebra::algebra_global AG;
 
-	sprintf(str, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
+	snprintf(str, sizeof(str), "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
 	label_txt.assign(str);
 
-	sprintf(str, "Q%s\\_%d\\_%d.txt", AG.plus_minus_letter(epsilon), n, q);
+	snprintf(str, sizeof(str), "Q%s\\_%d\\_%d.txt", AG.plus_minus_letter(epsilon), n, q);
 	label_tex.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -1372,10 +1372,10 @@ void finite_field::create_hermitian(int n,
 
 	char str[1000];
 
-	sprintf(str, "H_%d_%d.txt", n, q);
+	snprintf(str, sizeof(str), "H_%d_%d.txt", n, q);
 	label_txt.assign(str);
 
-	sprintf(str, "H\\_%d\\_%d.txt", n, q);
+	snprintf(str, sizeof(str), "H\\_%d\\_%d.txt", n, q);
 	label_tex.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -1567,10 +1567,10 @@ void finite_field::create_segre_variety(int a, int b,
 
 	char str[1000];
 
-	sprintf(str, "segre_variety_%d_%d_%d", a, b, q);
+	snprintf(str, sizeof(str), "segre_variety_%d_%d_%d", a, b, q);
 	label_txt.assign(str);
 
-	sprintf(str, "segre\\_variety\\_%d\\_%d\\_%d", a, b, q);
+	snprintf(str, sizeof(str), "segre\\_variety\\_%d\\_%d\\_%d", a, b, q);
 	label_tex.assign(str);
 
 	FREE_int(v1);

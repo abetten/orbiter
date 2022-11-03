@@ -475,7 +475,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 	}
 
-	char label[1000];
+	char str[1000];
 
 	symbols.clear();
 	for (i = 0; i < nb_variables; i++) {
@@ -488,16 +488,16 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 		else {
 			if (TRUE) {
-				label[0] = 'X';
-				label[1] = '0' + i;
-				label[2] = 0;
+				str[0] = 'X';
+				str[1] = '0' + i;
+				str[2] = 0;
 			}
 			else {
-				label[0] = 'A' + i;
-				label[1] = 0;
+				str[0] = 'A' + i;
+				str[1] = 0;
 			}
 
-			s.assign(label);
+			s.assign(str);
 		}
 		symbols.push_back(s);
 	}
@@ -515,70 +515,70 @@ void homogeneous_polynomial_domain::make_monomials(
 		else {
 
 			if (TRUE) {
-				label[0] = 'X';
-				label[1] = '_';
-				label[2] = '0' + i;
-				label[3] = 0;
+				str[0] = 'X';
+				str[1] = '_';
+				str[2] = '0' + i;
+				str[3] = 0;
 			}
 			else {
-				label[0] = 'A' + i;
-				label[1] = 0;
+				str[0] = 'A' + i;
+				str[1] = 0;
 			}
 
-			s.assign(label);
+			s.assign(str);
 		}
 		symbols_latex.push_back(s);
 	}
 
 	int f_first = FALSE;
 
+	string label;
+
+
+	label.assign("");
 	monomial_symbols.clear();
 	for (i = 0; i < nb_monomials; i++) {
-		label[0] = 0;
 		f_first = TRUE;
 		for (j = 0; j < nb_variables; j++) {
 			a = Monomials[i * nb_variables + j];
 			if (a) {
 				if (!f_first) {
-					strcat(label, "*");
+					label.append("*");
 				}
 				else {
 					f_first = FALSE;
 				}
-				strcat(label, symbols[j].c_str());
+				label.append(symbols[j]);
 				if (a > 1) {
-					sprintf(label + strlen(label), "^%d", a);
+					snprintf(str, sizeof(str), "^%d", a);
+					label.append(str);
 				}
 			}
 		}
-		string s;
-
-		s.assign(label);
-		monomial_symbols.push_back(s);
+		monomial_symbols.push_back(label);
 
 	}
 
+	label.assign("");
+
 	monomial_symbols_latex.clear();
 	for (i = 0; i < nb_monomials; i++) {
-		label[0] = 0;
 		for (j = 0; j < nb_variables; j++) {
 			a = Monomials[i * nb_variables + j];
 			if (a) {
-				strcat(label, symbols_latex[j].c_str());
+				label.append(symbols_latex[j]);
 				if (a > 1) {
 					if (a >= 10) {
-						sprintf(label + strlen(label), "^{%d}", a);
+						snprintf(str, sizeof(str), "^{%d}", a);
 					}
 					else {
-						sprintf(label + strlen(label), "^%d", a);
+						snprintf(str, sizeof(str), "^%d", a);
 					}
+					label.append(str);
 				}
 			}
 		}
-		string s;
-
-		s.assign(label);
-		monomial_symbols_latex.push_back(s);
+		monomial_symbols_latex.push_back(label);
 
 	}
 
@@ -599,19 +599,18 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 	}
 
-
+	label.assign("");
 	monomial_symbols_easy.clear();
 	for (i = 0; i < nb_monomials; i++) {
-		label[0] = 'X';
-		label[1] = 0;
+		str[0] = 'X';
+		str[1] = 0;
+		label.append(str);
 		for (j = 0; j < degree; j++) {
 			a = Variables[i * degree + j];
-			sprintf(label + strlen(label), "%d", a);
+			snprintf(str, sizeof(str), "%d", a);
+			label.append(str);
 		}
-		string s;
-
-		s.assign(label);
-		monomial_symbols_easy.push_back(s);
+		monomial_symbols_easy.push_back(label);
 
 	}
 
@@ -960,10 +959,10 @@ void homogeneous_polynomial_domain::print_monomial_latex(std::string &s, int *mo
 
 
 		if (a >= 10) {
-			sprintf(str, "^{%d}", a);
+			snprintf(str, sizeof(str), "^{%d}", a);
 		}
 		else if (a > 1) {
-			sprintf(str, "^%d", a);
+			snprintf(str, sizeof(str), "^%d", a);
 		}
 		s.append(str);
 	}
@@ -1063,8 +1062,8 @@ void homogeneous_polynomial_domain::print_equation(std::ostream &ost, int *coeff
 			ost << " + ";
 		}
 		if (c > 1) {
-			F->print_element(ost, c);
-			//ost << c;
+			//F->print_element(ost, c);
+			ost << c;
 		}
 		print_monomial(ost, i);
 	}
@@ -2471,7 +2470,7 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 		char str[10000];
 
 		fname2.assign(number_of_conditions_satisfied_fname);
-		sprintf(str, "%d", t);
+		snprintf(str, sizeof(str), "%d", t);
 		fname2.append(str);
 		fname2.append(".csv");
 
@@ -2645,7 +2644,7 @@ void homogeneous_polynomial_domain::create_projective_variety(
 	int *coeff;
 	int sz;
 
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(variety_coeffs, coeff, sz, verbose_level);
+	Get_int_vector_from_label(variety_coeffs, coeff, sz, verbose_level);
 
 	if (sz != get_nb_monomials()) {
 		cout << "homogeneous_polynomial_domain::create_projective_variety "

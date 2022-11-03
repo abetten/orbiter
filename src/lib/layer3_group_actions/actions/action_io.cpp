@@ -313,7 +313,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 
 		string fname1;
 		char str[1000];
-		sprintf(str, "_lvl_%d", level);
+		snprintf(str, sizeof(str), "_lvl_%d", level);
 		fname1.assign(prefix);
 		fname1.append(str);
 
@@ -375,7 +375,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 		}
 		string fname2;
 		fname2.assign(prefix);
-		sprintf(str, "_lvl_%d_candidates.bin", level_of_candidates_file);
+		snprintf(str, sizeof(str), "_lvl_%d_candidates.bin", level_of_candidates_file);
 		fname2.append(str);
 
 

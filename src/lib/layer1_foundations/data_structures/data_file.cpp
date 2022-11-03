@@ -37,7 +37,7 @@ data_file::~data_file()
 {
 	int i;
 	
-	//cout << "data_file::freeself" << endl;
+	//cout << "data_file::~data_file" << endl;
 	if (nb_cases >= 0) {
 		for (i = 0; i < nb_cases; i++) {
 			FREE_lint(sets[i]);
@@ -57,7 +57,7 @@ data_file::~data_file()
 			FREE_pint(candidates);
 			}
 		}
-	//cout << "data_file::freeself done" << endl;
+	//cout << "data_file::~data_file done" << endl;
 }
 
 void data_file::read(std::string &fname,

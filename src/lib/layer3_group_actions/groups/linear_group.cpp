@@ -550,7 +550,7 @@ int linear_group::linear_group_apply_modification(
 		int *gens;
 		int sz;
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(
+		Get_int_vector_from_label(
 				description->subgroup_generators_label, gens, sz,
 				verbose_level);
 
@@ -712,8 +712,8 @@ void linear_group::init_PGL2q_OnConic(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_OnConic_%d_%d", n, q);
-	sprintf(str2, "{\\rm OnConic}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_OnConic_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm OnConic}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 	if (f_v) {
@@ -780,8 +780,8 @@ void linear_group::init_wedge_action(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Wedge_%d_%d", n, q);
-	sprintf(str2, "{\\rm Wedge}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_Wedge_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm Wedge}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 	if (f_v) {
@@ -872,8 +872,8 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Wedge_%d_%d_detached", n, q);
-	sprintf(str2, "{\\rm WedgeDetached}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_Wedge_%d_%d_detached", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm WedgeDetached}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 	if (f_v) {
@@ -906,8 +906,8 @@ void linear_group::init_monomial_group(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Monomial_%d_%d", n, q);
-	sprintf(str2, "{\\rm Monomial}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_Monomial_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm Monomial}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -940,8 +940,8 @@ void linear_group::init_diagonal_group(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Diagonal_%d_%d", n, q);
-	sprintf(str2, "{\\rm Diagonal}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_Diagonal_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm Diagonal}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -977,8 +977,8 @@ void linear_group::init_singer_group(int singer_power, int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Singer_%d_%d_%d", n, q, singer_power);
-	sprintf(str2, "{\\rm Singer}(%d,%d,%d)", n, q, singer_power);
+	snprintf(str1, sizeof(str1), "_Singer_%d_%d_%d", n, q, singer_power);
+	snprintf(str2, sizeof(str2), "{\\rm Singer}(%d,%d,%d)", n, q, singer_power);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1015,8 +1015,8 @@ void linear_group::init_singer_group_and_frobenius(
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Singer_and_Frob%d_%d_%d", n, q, singer_power);
-	sprintf(str2, "{\\rm SingerFrob}(%d,%d,%d)", n, q, singer_power);
+	snprintf(str1, sizeof(str1), "_Singer_and_Frob%d_%d_%d", n, q, singer_power);
+	snprintf(str2, sizeof(str2), "{\\rm SingerFrob}(%d,%d,%d)", n, q, singer_power);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1050,8 +1050,8 @@ void linear_group::init_null_polarity_group(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_NullPolarity_%d_%d", n, q);
-	sprintf(str2, "{\\rm NullPolarity}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_NullPolarity_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm NullPolarity}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1086,8 +1086,8 @@ void linear_group::init_borel_subgroup_upper(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_BorelUpper_%d_%d", n, q);
-	sprintf(str2, "{\\rm BorelUpper}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_BorelUpper_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm BorelUpper}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1120,8 +1120,8 @@ void linear_group::init_identity_subgroup(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Identity_%d_%d", n, q);
-	sprintf(str2, "{\\rm Identity}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_Identity_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm Identity}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1155,8 +1155,8 @@ void linear_group::init_symplectic_group(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Sp_%d_%d", n, q);
-	sprintf(str2, "{\\rm Sp}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_Sp_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm Sp}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1197,8 +1197,8 @@ void linear_group::init_subfield_structure_action(int s, int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Subfield_%d_%d_%d", n, q, s);
-	sprintf(str2, "{\\rm SubfieldAction}(%d,%d,%d)", n, q, s);
+	snprintf(str1, sizeof(str1), "_Subfield_%d_%d_%d", n, q, s);
+	snprintf(str2, sizeof(str2), "{\\rm SubfieldAction}(%d,%d,%d)", n, q, s);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1242,21 +1242,21 @@ void linear_group::init_orthogonal_group(int epsilon, int verbose_level)
 
 	if (EVEN(n)) {
 		if (epsilon == 1) {
-			sprintf(str1, "_Orthogonal_plus_%d_%d", n, q);
-			sprintf(str2, "{\\rm O}^+(%d,%d)", n, q);
+			snprintf(str1, sizeof(str1), "_Orthogonal_plus_%d_%d", n, q);
+			snprintf(str2, sizeof(str2), "{\\rm O}^+(%d,%d)", n, q);
 			label.append(str1);
 			label_tex.append(str2);
 		}
 		else {
-			sprintf(str1, "_Orthogonal_minus_%d_%d", n, q);
-			sprintf(str2, "{\\rm O}^-(%d,%d)", n, q);
+			snprintf(str1, sizeof(str1), "_Orthogonal_minus_%d_%d", n, q);
+			snprintf(str2, sizeof(str2), "{\\rm O}^-(%d,%d)", n, q);
 			label.append(str1);
 			label_tex.append(str2);
 		}
 	}
 	else {
-		sprintf(str1, "_Orthogonal_%d_%d", n, q);
-		sprintf(str2, "{\\rm O}(%d,%d)", n, q);
+		snprintf(str1, sizeof(str1), "_Orthogonal_%d_%d", n, q);
+		snprintf(str2, sizeof(str2), "{\\rm O}(%d,%d)", n, q);
 		label.append(str1);
 		label_tex.append(str2);
 	}
@@ -1306,8 +1306,8 @@ void linear_group::init_subgroup_from_file(
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_SubgroupFile_%d_%d", n, q);
-	sprintf(str2, "{\\rm SubgroupFile}(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "_SubgroupFile_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "{\\rm SubgroupFile}(%d,%d)", n, q);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1433,8 +1433,8 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_Subgroup_Janko1");
-	sprintf(str2, "{\\rm Subgroup Janko1}");
+	snprintf(str1, sizeof(str1), "_Subgroup_Janko1");
+	snprintf(str2, sizeof(str2), "{\\rm Subgroup Janko1}");
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -1587,7 +1587,11 @@ void linear_group::report(std::ostream &ost,
 				ost << "$$" << endl;
 				ost << "\\end{sidewaystable}" << endl;
 
-				H->print_all_group_elements_tex(ost);
+				int f_with_permutation = FALSE;
+				int f_override_action = FALSE;
+				actions::action *A_special = NULL;
+
+				H->print_all_group_elements_tex(ost, f_with_permutation, f_override_action, A_special);
 
 			}
 
@@ -1622,7 +1626,7 @@ void linear_group::report(std::ostream &ost,
 				}
 
 				fname2.assign(label);
-				sprintf(str, "_group_table_order_%ld", n);
+				snprintf(str, sizeof(str), "_group_table_order_%ld", n);
 				fname2.append(str);
 
 				{

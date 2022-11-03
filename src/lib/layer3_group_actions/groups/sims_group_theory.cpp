@@ -1962,7 +1962,7 @@ int sims::identify_group(char *path_t144,
 		}
 	char cmd[2000];
 
-	sprintf(cmd, "%s/t144.out -discreta_home %s "
+	snprintf(cmd, sizeof(cmd), "%s/t144.out -discreta_home %s "
 			"group_generators.txt >log.tmp",
 			path_t144, discreta_home);
 

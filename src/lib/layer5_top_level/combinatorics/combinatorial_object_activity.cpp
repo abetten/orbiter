@@ -22,10 +22,10 @@ combinatorial_object_activity::combinatorial_object_activity()
 {
 	Descr = NULL;
 
-	f_has_GOC = FALSE;
+	f_has_geometric_object = FALSE;
 	GOC = NULL;
 
-	f_has_IS = FALSE;
+	f_has_input_stream = FALSE;
 	IS = NULL;
 
 }
@@ -47,7 +47,7 @@ void combinatorial_object_activity::init(
 	}
 
 	combinatorial_object_activity::Descr = Descr;
-	f_has_GOC = TRUE;
+	f_has_geometric_object = TRUE;
 	combinatorial_object_activity::GOC = GOC;
 
 	if (f_v) {
@@ -69,7 +69,7 @@ void combinatorial_object_activity::init_input_stream(
 	}
 
 	combinatorial_object_activity::Descr = Descr;
-	f_has_IS = TRUE;
+	f_has_input_stream = TRUE;
 	combinatorial_object_activity::IS = IS;
 
 
@@ -85,11 +85,11 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity" << endl;
 	}
-	if (f_has_GOC) {
-		perform_activity_GOC(verbose_level);
+	if (f_has_geometric_object) {
+		perform_activity_geometric_object(verbose_level);
 	}
-	else if (f_has_IS) {
-		perform_activity_IS(verbose_level);
+	else if (f_has_input_stream) {
+		perform_activity_input_stream(verbose_level);
 	}
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity done" << endl;
@@ -97,18 +97,18 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 }
 
 
-void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
+void combinatorial_object_activity::perform_activity_geometric_object(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::perform_activity_GOC" << endl;
+		cout << "combinatorial_object_activity::perform_activity_geometric_object" << endl;
 	}
 
 	if (Descr->f_line_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC f_line_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_geometric_object f_line_type" << endl;
 		}
 
 		geometry::projective_space *P;
@@ -130,7 +130,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 		T.init(type, P->N_lines, FALSE, 0);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC line type:" << endl;
+			cout << "combinatorial_object_activity::perform_activity_geometric_object line type:" << endl;
 			T.print(TRUE /* f_backwards*/);
 			cout << endl;
 		}
@@ -141,7 +141,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 	if (Descr->f_conic_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC f_conic_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_geometric_object f_conic_type" << endl;
 		}
 
 		geometry::projective_space *P;
@@ -172,7 +172,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 	if (Descr->f_non_conical_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC f_conic_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_geometric_object f_conic_type" << endl;
 		}
 
 		geometry::projective_space *P;
@@ -194,7 +194,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 	if (Descr->f_ideal) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_GOC f_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_geometric_object f_ideal" << endl;
 		}
 
 		ring_theory::homogeneous_polynomial_domain *HPD;
@@ -296,47 +296,34 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::perform_activity_GOC done" << endl;
+		cout << "combinatorial_object_activity::perform_activity_geometric_object done" << endl;
 	}
 }
 
 
-void combinatorial_object_activity::perform_activity_IS(int verbose_level)
+void combinatorial_object_activity::perform_activity_input_stream(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::perform_activity_IS" << endl;
+		cout << "combinatorial_object_activity::perform_activity_input_stream" << endl;
 	}
 
 	if (Descr->f_canonical_form_PG) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS f_canonical_form_PG" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream f_canonical_form_PG" << endl;
 		}
 
 		projective_geometry::projective_space_with_action *PA;
+
 
 		if (Descr->f_canonical_form_PG_has_PA) {
 			PA = Descr->Canonical_form_PG_PA;
 		}
 		else {
 
-			int idx;
-
-			idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->canonical_form_PG_PG_label);
-
-			symbol_table_object_type t;
-
-			t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-			if (t != t_projective_space) {
-				cout << "combinatorial_object_activity::perform_activity_IS "
-					<< Descr->canonical_form_PG_PG_label << " is not of type projective_space" << endl;
-				exit(1);
-			}
-
-
-			PA = (projective_geometry::projective_space_with_action *) orbiter_kernel_system::Orbiter->get_object(idx);
+			PA = Get_object_of_projective_space(Descr->canonical_form_PG_PG_label);
 		}
 
 		combinatorics::classification_of_objects *CO;
@@ -344,7 +331,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		CO = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS before CO->perform_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before CO->perform_classification" << endl;
 		}
 		CO->perform_classification(
 				Descr->Canonical_form_PG_Descr,
@@ -352,7 +340,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 				IS,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS after CO->perform_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after CO->perform_classification" << endl;
 		}
 
 
@@ -360,7 +349,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		object_with_properties *OwP;
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS before post_process_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before post_process_classification" << endl;
 		}
 		post_process_classification(
 					CO,
@@ -369,18 +359,21 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 					CO->Descr->label,
 					verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS after post_process_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after post_process_classification" << endl;
 		}
 
 		if (Descr->f_report) {
 			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_IS before classification_report" << endl;
+				cout << "combinatorial_object_activity::perform_activity_input_stream "
+						"before classification_report" << endl;
 			}
 			classification_report(
 					CO,
 					OwP, verbose_level);
 			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_IS after classification_report" << endl;
+				cout << "combinatorial_object_activity::perform_activity_input_stream "
+						"after classification_report" << endl;
 			}
 		}
 
@@ -393,7 +386,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	else if (Descr->f_canonical_form) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS f_canonical_form" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"f_canonical_form" << endl;
 		}
 
 
@@ -403,7 +397,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		CO = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS before CO->perform_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before CO->perform_classification" << endl;
 		}
 		CO->perform_classification(
 				Descr->Canonical_form_Descr,
@@ -411,14 +406,16 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 				IS,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS after CO->perform_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after CO->perform_classification" << endl;
 		}
 
 
 		object_with_properties *OwP;
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS before post_process_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before post_process_classification" << endl;
 		}
 		post_process_classification(
 					CO,
@@ -427,18 +424,21 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 					CO->Descr->label,
 					verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS after post_process_classification" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after post_process_classification" << endl;
 		}
 
 		if (Descr->f_report) {
 			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_IS before classification_report" << endl;
+				cout << "combinatorial_object_activity::perform_activity_input_stream "
+						"before classification_report" << endl;
 			}
 			classification_report(
 					CO,
 					OwP, verbose_level);
 			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_IS after classification_report" << endl;
+				cout << "combinatorial_object_activity::perform_activity_input_stream "
+						"after classification_report" << endl;
 			}
 		}
 
@@ -450,7 +450,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	}
 	else if (Descr->f_draw_incidence_matrices) {
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS f_draw_incidence_matrices" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"f_draw_incidence_matrices" << endl;
 		}
 		draw_incidence_matrices(
 				Descr->draw_incidence_matrices_prefix,
@@ -461,7 +462,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	else if (Descr->f_test_distinguishing_property) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS f_test_distinguishing_property" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"f_test_distinguishing_property" << endl;
 		}
 
 		int idx;
@@ -472,7 +474,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 		if (t != t_graph) {
-			cout << "combinatorial_object_activity::perform_activity_IS "
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
 				<< Descr->test_distinguishing_property_graph << " is not of type graph" << endl;
 			exit(1);
 		}
@@ -485,7 +487,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 #if 0
 		if (!Gr->f_has_CG) {
-			cout << "combinatorial_object_activity::perform_activity_IS !Gr->f_has_CG" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream !Gr->f_has_CG" << endl;
 			exit(1);
 		}
 #endif
@@ -541,7 +543,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	if (Descr->f_ideal) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS f_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream f_ideal" << endl;
 		}
 
 		ring_theory::homogeneous_polynomial_domain *HPD;
@@ -567,7 +569,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	else if (Descr->f_save_as) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS "
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
 					"f_save_as " << Descr->save_as_fname << endl;
 		}
 
@@ -580,7 +582,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	else if (Descr->f_extract_subset) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS "
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
 					"f_extract_subset " << Descr->extract_subset_fname << endl;
 		}
 		long int *extract_idx_set;
@@ -597,7 +599,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	else if (Descr->f_unpack_from_restricted_action) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS "
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
 					"unpack_from_restricted_action "
 					<< Descr->unpack_from_restricted_action_prefix
 					<< " " << Descr->unpack_from_restricted_action_group_label << endl;
@@ -614,7 +616,7 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	else if (Descr->f_line_covering_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS "
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
 					"line_covering_type "
 					<< Descr->line_covering_type_prefix
 					<< " " << Descr->line_covering_type_projective_space
@@ -633,7 +635,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 	else if (Descr->f_line_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_IS f_line_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"f_line_type" << endl;
 		}
 
 
@@ -775,7 +778,7 @@ void combinatorial_object_activity::post_process_classification(
 		std::string label;
 		char str[1000];
 
-		sprintf(str, "_object%d", iso_type);
+		snprintf(str, sizeof(str), "_object%d", iso_type);
 		label.assign(prefix);
 		label.append(str);
 
@@ -1176,7 +1179,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 
 	apps_algebra::any_group *G;
 
-	G = user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(group_label);
+	G = Get_object_of_type_any_group(group_label);
 	groups::linear_group *LG;
 
 	LG = G->LG;
@@ -1285,7 +1288,7 @@ void combinatorial_object_activity::line_covering_type(
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
+	PA = Get_object_of_projective_space(projective_space_label);
 
 	geometry::projective_space *P;
 
@@ -1376,7 +1379,7 @@ void combinatorial_object_activity::line_type(
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
+	PA = Get_object_of_projective_space(projective_space_label);
 
 	geometry::projective_space *P;
 
@@ -1430,7 +1433,7 @@ void combinatorial_object_activity::line_type(
 			}
 			ost << endl;
 
-#if 0
+#if 1
 			data_structures::tally T;
 
 			T.init(type, P->N_lines, FALSE, 0);
@@ -1440,6 +1443,21 @@ void combinatorial_object_activity::line_type(
 				T.print(TRUE /* f_backwards*/);
 				cout << endl;
 			}
+
+			std::string fname_line_type;
+			char str[1000];
+
+			snprintf(str, sizeof(str), "_line_type_set_partition_%d.csv", i);
+
+			fname_line_type.assign(prefix);
+			fname_line_type.append(str);
+
+			T.save_classes_individually(fname_line_type);
+			if (TRUE) {
+				cout << "Written file " << fname_line_type << " of size "
+						<< Fio.file_size(fname_line_type) << endl;
+			}
+
 #endif
 
 

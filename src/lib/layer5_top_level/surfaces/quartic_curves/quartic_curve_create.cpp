@@ -504,7 +504,7 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(std::string &coe
 
 	char str_q[1000];
 
-	sprintf(str_q, "%d", F->q);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
 
 	prefix.assign("by_coefficients_q");
@@ -657,8 +657,8 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	char str_q[1000];
 	char str_a[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_a, "%d", iso);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_a, sizeof(str_a), "%d", iso);
 
 
 
@@ -961,7 +961,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 	char str_q[1000];
 
-	sprintf(str_q, "%d", F->q);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
 
 	prefix.assign("equation_");
@@ -1276,7 +1276,7 @@ void quartic_curve_create::compute_group(
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
 	for (i = 0; i < QO->nb_pts; i++) {
 		a = QO->Pts[i];
-		sprintf(str, "%ld", a);
+		snprintf(str, sizeof(str), "%ld", a);
 		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
 		if (i < QO->nb_pts - 1) {
 			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");

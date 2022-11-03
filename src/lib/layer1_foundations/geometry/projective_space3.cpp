@@ -373,8 +373,8 @@ void projective_space::create_elliptic_quadric_ovoid(
 	char str[1000];
 	char str2[1000];
 
-	sprintf(str, "_q%d", q);
-	sprintf(str2, "\\_q%d", q);
+	snprintf(str, sizeof(str), "_q%d", q);
+	snprintf(str2, sizeof(str2), "\\_q%d", q);
 
 
 	label_txt.assign("ovoid");
@@ -475,8 +475,8 @@ void projective_space::create_ovoid_ST(
 	char str[1000];
 	char str2[1000];
 
-	sprintf(str, "_q%d", q);
-	sprintf(str2, "\\_q%d", q);
+	snprintf(str, sizeof(str), "_q%d", q);
+	snprintf(str2, sizeof(str2), "\\_q%d", q);
 
 
 	label_txt.assign("ovoid_ST");
@@ -550,8 +550,8 @@ void projective_space::create_cuspidal_cubic(
 
 	char str[1000];
 	char str2[1000];
-	sprintf(str, "cuspidal_cubic_%d", q);
-	sprintf(str2, "cuspidal\\_cubic\\_%d", q);
+	snprintf(str, sizeof(str), "cuspidal_cubic_%d", q);
+	snprintf(str2, sizeof(str2), "cuspidal\\_cubic\\_%d", q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 	//write_set_to_file(fname, L, N, verbose_level);
@@ -577,7 +577,7 @@ void projective_space::create_cuspidal_cubic(
 
 	string fname2;
 
-	sprintf(str, "cuspidal_cubic_%d_subsets_%d.txt", q, k);
+	snprintf(str, sizeof(str), "cuspidal_cubic_%d_subsets_%d.txt", q, k);
 	fname2.assign(str);
 
 	{
@@ -668,8 +668,8 @@ void projective_space::create_twisted_cubic(
 
 	char str[1000];
 	char str2[1000];
-	sprintf(str, "twisted_cubic_%d", q);
-	sprintf(str2, "twisted\\_cubic\\_%d", q);
+	snprintf(str, sizeof(str), "twisted_cubic_%d", q);
+	snprintf(str2, sizeof(str2), "twisted\\_cubic\\_%d", q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 	//write_set_to_file(fname, L, N, verbose_level);
@@ -739,9 +739,9 @@ void projective_space::create_elliptic_curve(
 
 	char str[1000];
 	char str2[1000];
-	sprintf(str, "elliptic_curve_b%d_c%d_q%d",
+	snprintf(str, sizeof(str), "elliptic_curve_b%d_c%d_q%d",
 			elliptic_curve_b, elliptic_curve_c, q);
-	sprintf(str2, "elliptic\\_curve\\_b%d\\_c%d\\_q%d",
+	snprintf(str2, sizeof(str2), "elliptic\\_curve\\_b%d\\_c%d\\_q%d",
 			elliptic_curve_b, elliptic_curve_c, q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
@@ -800,8 +800,8 @@ void projective_space::create_unital_XXq_YZq_ZYq(
 
 	char str[1000];
 	char str2[1000];
-	sprintf(str, "unital_XXq_YZq_ZYq_Q%d", q);
-	sprintf(str2, "unital\\_XXq\\_YZq\\_ZYq\\_Q%d", q);
+	snprintf(str, sizeof(str), "unital_XXq_YZq_ZYq_Q%d", q);
+	snprintf(str2, sizeof(str2), "unital\\_XXq\\_YZq\\_ZYq\\_Q%d", q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 
@@ -833,8 +833,8 @@ void projective_space::create_whole_space(
 
 	char str[1000];
 	char str2[1000];
-	sprintf(str, "whole_space_PG_%d_%d", n, q);
-	sprintf(str2, "whole\\_space\\_PG\\_%d\\_%d", n, q);
+	snprintf(str, sizeof(str), "whole_space_PG_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "whole\\_space\\_PG\\_%d\\_%d", n, q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 
@@ -880,8 +880,8 @@ void projective_space::create_hyperplane(
 
 	char str[1000];
 	char str2[1000];
-	sprintf(str, "hyperplane_PG_%d_%d_pt%d", n, q, pt);
-	sprintf(str2, "hyperplane\\_PG\\_%d\\_%d\\_pt%d", n, q, pt);
+	snprintf(str, sizeof(str), "hyperplane_PG_%d_%d_pt%d", n, q, pt);
+	snprintf(str2, sizeof(str2), "hyperplane\\_PG\\_%d\\_%d\\_pt%d", n, q, pt);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 
@@ -970,11 +970,11 @@ void projective_space::create_Baer_substructure(
 	//write_set_to_file(fname, S, sz, verbose_level);
 
 
-	sprintf(str, "PG_%d_%d", n, F->q);
+	snprintf(str, sizeof(str), "PG_%d_%d", n, F->q);
 	label_txt.assign("Baer_substructure_");
 	label_txt.append(str);
 
-	sprintf(str, "PG(%d,%d)", n, F->q);
+	snprintf(str, sizeof(str), "PG(%d,%d)", n, F->q);
 	label_tex.assign("Baer\\_substructure\\_");
 	label_tex.append(str);
 

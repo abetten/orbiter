@@ -28,35 +28,15 @@ exceptional_isomorphism_O4::exceptional_isomorphism_O4()
 	E4a = NULL;
 	E2a = NULL;
 	E2b = NULL;
-//null();
 }
 
 exceptional_isomorphism_O4::~exceptional_isomorphism_O4()
 {
-	freeself();
-}
-
-void exceptional_isomorphism_O4::null()
-{
-	Fq = NULL;
-	A2 = NULL;
-	A4 = NULL;
-	A5 = NULL;
-
-	E5a = NULL;
-	E4a = NULL;
-	E2a = NULL;
-	E2b = NULL;
-}
-
-void exceptional_isomorphism_O4::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
-	null();
 	if (f_v) {
-		cout << "exceptional_isomorphism_O4::freeself finished" << endl;
+		cout << "exceptional_isomorphism_O4::~exceptional_isomorphism_O4 finished" << endl;
 		}
 }
 

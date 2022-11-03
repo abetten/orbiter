@@ -693,13 +693,6 @@ void semifield_classify::init_poset_classification(
 
 	Gen = NEW_OBJECT(poset_classification::poset_classification);
 
-	//Gen->read_arguments(argc, argv, 0);
-
-	//Gen->prefix[0] = 0;
-	//sprintf(Gen->fname_base, "%s", prefix);
-
-
-	//Gen->depth = k;
 
 	if (f_v) {
 		cout << "semifield_classify::init before Gen->init" << endl;
@@ -759,7 +752,7 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 	char str[1000];
 	string fname;
 
-	sprintf(str, "semifield_list_order%d.csv", order);
+	snprintf(str, sizeof(str), "semifield_list_order%d.csv", order);
 	fname.assign(str);
 	{
 		long int *set;
@@ -1423,10 +1416,9 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit(
 {
 	fname.assign(level_two_prefix);
 	char str[1000];
-	sprintf(str, "L2_orbit%d_cand_int8.bin", orbit);
+	snprintf(str, sizeof(str), "L2_orbit%d_cand_int8.bin", orbit);
 	fname.append(str);
 
-	//sprintf(fname, "%sL2_orbit%d_cand_int8.bin", level_two_prefix, orbit);
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_txt(
@@ -1434,10 +1426,9 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit_txt(
 {
 	fname.assign(level_two_prefix);
 	char str[1000];
-	sprintf(str, "L2_orbit%d_cand.txt", orbit);
+	snprintf(str, sizeof(str), "L2_orbit%d_cand.txt", orbit);
 	fname.append(str);
 
-	//sprintf(fname, "%sL2_orbit%d_cand.txt", level_two_prefix, orbit);
 }
 
 void semifield_classify::make_fname_candidates_at_level_three_orbit(
@@ -1445,10 +1436,9 @@ void semifield_classify::make_fname_candidates_at_level_three_orbit(
 {
 	fname.assign(level_three_prefix);
 	char str[1000];
-	sprintf(str, "L3_orbit%d_cand_int8", orbit);
+	snprintf(str, sizeof(str), "L3_orbit%d_cand_int8", orbit);
 	fname.append(str);
 
-	//sprintf(fname, "%sL3_orbit%d_cand_int8", level_three_prefix, orbit);
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
@@ -1456,7 +1446,7 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
 {
 	fname.assign(level_two_prefix);
 	char str[1000];
-	sprintf(str, "L2_orbit%d_type%d_cand_int8.bin", orbit, h);
+	snprintf(str, sizeof(str), "L2_orbit%d_type%d_cand_int8.bin", orbit, h);
 	fname.append(str);
 }
 

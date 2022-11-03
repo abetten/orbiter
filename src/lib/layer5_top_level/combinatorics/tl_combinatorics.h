@@ -87,7 +87,6 @@ public:
 
 	int f_ideal;
 	std::string ideal_ring_label;
-	//int ideal_degree;
 
 
 	// options that apply to IS = data_input_stream
@@ -140,10 +139,10 @@ class combinatorial_object_activity {
 public:
 	combinatorial_object_activity_description *Descr;
 
-	int f_has_GOC;
+	int f_has_geometric_object;
 	geometry::geometric_object_create *GOC;
 
-	int f_has_IS;
+	int f_has_input_stream;
 	data_structures::data_input_stream *IS;
 
 
@@ -156,8 +155,8 @@ public:
 			data_structures::data_input_stream *IS,
 			int verbose_level);
 	void perform_activity(int verbose_level);
-	void perform_activity_GOC(int verbose_level);
-	void perform_activity_IS(int verbose_level);
+	void perform_activity_geometric_object(int verbose_level);
+	void perform_activity_input_stream(int verbose_level);
 	void do_save(std::string &save_as_fname,
 			int f_extract, long int *extract_idx_set, int extract_size,
 			int verbose_level);

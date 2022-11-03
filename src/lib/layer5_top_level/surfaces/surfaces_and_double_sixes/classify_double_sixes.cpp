@@ -452,7 +452,7 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(
 		cout << "classify_double_sixes::make_spreadsheet_of_neighbors" << endl;
 	}
 
-	sprintf(str, "neighbors_%d.csv", q);
+	snprintf(str, sizeof(str), "neighbors_%d.csv", q);
 	fname_csv.assign(str);
 	
 
@@ -511,18 +511,20 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 				"classifying starter done" << endl;
 	}
 	
+#if 0
 	if (q < 20) {
 		{
 			data_structures::spreadsheet *Sp;
 			Five_plus_one->make_spreadsheet_of_orbit_reps(Sp, 5);
 			char str[1000];
 			string fname_csv;
-			sprintf(str, "fiveplusone_%d.csv", q);
+			snprintf(str, sizeof(str), "fiveplusone_%d.csv", q);
 			fname_csv.assign(str);
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
 		}
 	}
+#endif
 	if (f_v) {
 		cout << "classify_double_sixes::classify_partial_ovoids done" << endl;
 	}
@@ -743,7 +745,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	int *Stab_order;
 	int *Len;
 	char **Transporter;
-	char **Text;
+	string *Text;
 	long int *rep;
 	long int *lines;
 	int *data;
@@ -757,7 +759,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 		cout << "classify_double_sixes::make_spreadsheet_"
 				"of_fiveplusone_configurations" << endl;
 	}
-	sprintf(str, "fiveplusone19_%d.csv", q);
+	snprintf(str, sizeof(str), "fiveplusone19_%d.csv", q);
 	fname_csv.assign(str);
 
 	k = 5;
@@ -768,7 +770,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	Stab_order = NEW_int(nb);
 	Len = NEW_int(nb);
 	Transporter = NEW_pchar(nb);
-	Text = NEW_pchar(nb);
+	Text = new string [nb];
 	data = NEW_int(A->make_element_size);
 
 	for (i = 0; i < nb; i++) {
@@ -783,10 +785,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 		Five_plus_one->get_set_by_level(k, Idx[i], rep);
 		orbiter_kernel_system::Orbiter->Lint_vec->apply(rep, Neighbor_to_line, lines, k);
 
-		Lint_vec_print_to_str(str, lines, k);
+		Lint_vec_print_to_str(Text[i], lines, k);
 
-		Text[i] = NEW_char(strlen(str) + 1);
-		strcpy(Text[i], str);
 	}
 
 #if 0
@@ -822,7 +822,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	Sp->init_empty_table(nb + 1, 5);
 	Sp->fill_column_with_row_index(0, "Orbit");
 	Sp->fill_column_with_int(1, Idx, "Idx");
-	Sp->fill_column_with_text(2, (const char **) Text, "Rep");
+	Sp->fill_column_with_text(2, Text, "Rep");
 	Sp->fill_column_with_int(3, Stab_order, "Stab_order");
 	Sp->fill_column_with_int(4, Len, "Orbit_length");
 #if 0
@@ -840,10 +840,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	FREE_lint(lines);
 	FREE_int(Stab_order);
 	FREE_int(Len);
-	for (i = 0; i < nb; i++) {
-		FREE_char(Text[i]);
-	}
-	FREE_pchar(Text);
+	delete [] Text;
 	for (i = 0; i < nb; i++) {
 		FREE_char(Transporter[i]);
 	}

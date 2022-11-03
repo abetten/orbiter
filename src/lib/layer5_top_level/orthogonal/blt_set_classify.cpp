@@ -381,13 +381,13 @@ void blt_set_classify::create_graphs(
 
 
 
-	sprintf(str1, "_lvl_%d", starter_size);
+	snprintf(str1, sizeof(str1), "_lvl_%d", starter_size);
 	fname.assign(Blt_set_domain->prefix);
 	fname.append(str1);
 
 	fname_list_of_cases.assign(Blt_set_domain->prefix);
 	fname_list_of_cases.append("_list_of_cases");
-	sprintf(str2, "_%d_%d_%d", starter_size, orbit_at_level_r, orbit_at_level_m);
+	snprintf(str2, sizeof(str2), "_%d_%d_%d", starter_size, orbit_at_level_r, orbit_at_level_m);
 	fname_list_of_cases.append(str2);
 	fname_list_of_cases.append(".csv");
 
@@ -397,12 +397,6 @@ void blt_set_classify::create_graphs(
 	fname_time.append(str2);
 	fname_time.append(".csv");
 
-	//sprintf(fname_list_of_cases, "%slist_of_cases_%s_%d_%d_%d.txt",
-	//		output_prefix, gen->get_problem_label(), starter_size,
-	//		orbit_at_level_r, orbit_at_level_m);
-	//sprintf(fname_time, "%stime_%s_%d_%d_%d.csv",
-	//		output_prefix, gen->get_problem_label(), starter_size,
-	//		orbit_at_level_r, orbit_at_level_m);
 
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs counting number of starter in file " << fname << endl;
@@ -562,12 +556,12 @@ void blt_set_classify::create_graphs_list_of_cases(
 	orbiter_kernel_system::file_io Fio;
 
 
-	sprintf(str, "_lvl_%d", starter_size);
+	snprintf(str, sizeof(str), "_lvl_%d", starter_size);
 	fname.assign(Blt_set_domain->prefix);
 	fname.append(str);
 
 
-	sprintf(str, "_list_of_cases.txt");
+	snprintf(str, sizeof(str), "_list_of_cases.txt");
 	fname_list_of_cases.assign(Blt_set_domain->prefix);
 	fname_list_of_cases.append(case_label);
 	fname_list_of_cases.append(str);
@@ -1039,7 +1033,7 @@ void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
 		cout << "blt_set_classify::subset_orbits" << endl;
 		cout << "A->elt_size_in_int=" << A->elt_size_in_int << endl;
 	}
-	sprintf(fname, "report_BLT_%d_subset_orbits.tex", q);
+	snprintf(fname, sizeof(fname), "report_BLT_%d_subset_orbits.tex", q);
 
 
 	Iso.load_table_of_solutions(verbose_level);
@@ -1075,7 +1069,7 @@ void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
 	int f_enlarged_page = TRUE;
 	int f_pagenumbers = TRUE;
 
-	sprintf(title, "BLT-sets of Q$(4,%d)$", q);
+	snprintf(title, sizeof(title), sizeof(snprintf(str_a, sizeof(str_a), ), "BLT-sets of Q$(4,%d)$", q);
 	cout << "Writing file " << fname << " with "
 			<< Iso.Reps->count << " BLT-sets:" << endl;
 	latex_head(f, f_book, f_title,
@@ -1280,7 +1274,7 @@ void blt_set_classify::report2(std::ostream &ost,
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(str, "BLT-sets of ${\\cal Q}(4,%d)$", q);
+	snprintf(str, sizeof(str), "BLT-sets of ${\\cal Q}(4,%d)$", q);
 	title.assign(str);
 
 	author.assign("Orbiter");

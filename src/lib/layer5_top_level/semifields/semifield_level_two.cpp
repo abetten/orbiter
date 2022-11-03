@@ -1842,16 +1842,6 @@ void semifield_level_two::find_all_candidates_at_level_two(
 
 		SC->make_fname_candidates_at_level_two_orbit_by_type(
 				fname_test, orbit, 0);
-#if 0
-		if (SC->f_level_two_prefix) {
-			sprintf(fname_test, "%sC2_orbit%d_type%d_int8.bin",
-					SC->level_two_prefix, orbit, (int) 0);
-		}
-		else {
-			sprintf(fname_test, "C2_orbit%d_type%d_int8.bin",
-					orbit, (int) 0);
-		}
-#endif
 
 		if (Fio.file_size(fname_test) >= 1) {
 			cout << "Type files for orbit " << orbit
@@ -1882,11 +1872,11 @@ void semifield_level_two::find_all_candidates_at_level_two(
 						fname, orbit, h);
 #if 0
 				if (SC->f_level_two_prefix) {
-					sprintf(fname, "%sC2_orbit%d_type%d_int8.bin",
+					snprintf(fname, sizeof(fname), "%sC2_orbit%d_type%d_int8.bin",
 							SC->level_two_prefix, orbit, h);
 				}
 				else {
-					sprintf(fname, "C2_orbit%d_type%d_int8.bin",
+					snprintf(fname, sizeof(fname), "C2_orbit%d_type%d_int8.bin",
 							orbit, h);
 				}
 #endif
@@ -2068,11 +2058,11 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 				fname, orbit, h);
 #if 0
 		if (SC->f_level_two_prefix) {
-			sprintf(fname, "%sC2_orbit%d_type%d_int8.bin",
+			snprintf(fname, sizeof(fname), "%sC2_orbit%d_type%d_int8.bin",
 					SC->level_two_prefix, orbit, h);
 		}
 		else {
-			sprintf(fname, "C2_orbit%d_type%d_int8.bin", orbit, h);
+			snprintf(fname, sizeof(fname), "C2_orbit%d_type%d_int8.bin", orbit, h);
 		}
 #endif
 		cout << "Reading file " << fname << " of size "
@@ -2371,7 +2361,6 @@ void semifield_level_two::create_fname_level_info_file(std::string &fname)
 {
 	fname.assign(SC->level_two_prefix);
 	fname.append("Level_2_info.csv");
-		//sprintf(fname, "%sLevel_2_info.csv", SC->level_two_prefix);
 }
 
 

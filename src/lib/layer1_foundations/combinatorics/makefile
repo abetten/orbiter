@@ -18,6 +18,7 @@ MODULES = \
 		encoded_combinatorial_object.o \
 		geo_parameter.o \
 		pentomino_puzzle.o \
+		polynomial_function_domain.o \
 		tdo_data.o \
 		tdo_refinement_description.o \
 		tdo_refinement.o \

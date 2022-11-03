@@ -173,7 +173,7 @@ void coding_theory_domain::make_table_of_bounds(
 	std::string fname;
 	char str[1000];
 
-	sprintf(str, "_n%d_q%d", n_max, q);
+	snprintf(str, sizeof(str), "_n%d_q%d", n_max, q);
 
 	fname.assign("table_of_bounds");
 	fname.append(str);
@@ -791,7 +791,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 	char str[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	sprintf(str, "Hamming_n%d_q%d.csv", n, q);
+	snprintf(str, sizeof(str), "Hamming_n%d_q%d.csv", n, q);
 	fname.assign(str);
 
 	Fio.int_matrix_write_csv(fname, Table, height, width);
@@ -1271,10 +1271,18 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 
 	}
 
+	if (f_v) {
+		cout << "coding_theory_domain::do_weight_enumerator before Gauss_int" << endl;
+	}
+
 	rk = F->Linear_algebra->Gauss_int(A,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, m, n, n,
-		0 /*verbose_level*/);
+		verbose_level);
+
+	if (f_v) {
+		cout << "coding_theory_domain::do_weight_enumerator after Gauss_int" << endl;
+	}
 
 
 	if (f_v) {
@@ -2383,7 +2391,7 @@ void coding_theory_domain::code_diagram(
 
 		fname.assign(label);
 
-		sprintf(str, "_%d_%d.tex", n, nb_words);
+		snprintf(str, sizeof(str), "_%d_%d.tex", n, nb_words);
 		fname.append(str);
 
 		{
@@ -2417,7 +2425,7 @@ void coding_theory_domain::code_diagram(
 
 		fname.assign(label);
 
-		sprintf(str, "_diagram_%d_%d.csv", n, nb_words);
+		snprintf(str, sizeof(str), "_diagram_%d_%d.csv", n, nb_words);
 		fname.append(str);
 		orbiter_kernel_system::file_io Fio;
 
@@ -2436,7 +2444,7 @@ void coding_theory_domain::code_diagram(
 
 		fname.assign(label);
 
-		sprintf(str, "_diagram_01_%d_%d.csv", n, nb_words);
+		snprintf(str, sizeof(str), "_diagram_01_%d_%d.csv", n, nb_words);
 		fname.append(str);
 		orbiter_kernel_system::file_io Fio;
 
@@ -2452,7 +2460,7 @@ void coding_theory_domain::code_diagram(
 
 		fname.assign(label);
 
-		sprintf(str, "_holes_%d_%d.csv", n, nb_words);
+		snprintf(str, sizeof(str), "_holes_%d_%d.csv", n, nb_words);
 		fname.append(str);
 		orbiter_kernel_system::file_io Fio;
 
@@ -2537,7 +2545,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 
 	char fname[1000];
 
-	sprintf(fname, "code_%d_%d.tex", n, nb_words);
+	snprintf(fname, sizeof(fname), "code_%d_%d.tex", n, nb_words);
 
 	{
 		ofstream fp(fname);
@@ -2585,7 +2593,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		sprintf(str, "code_matrix_%d_%d.csv", nb_rows, nb_cols);
+		snprintf(str, sizeof(str), "code_matrix_%d_%d.csv", nb_rows, nb_cols);
 		fname.assign(str);
 		Fio.int_matrix_write_csv(fname, M2, nb_rows, nb_cols);
 
@@ -2608,7 +2616,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 	char fname[1000];
 
 
-	sprintf(fname, "code_%d_%d_Levi_%d_%d.bin",
+	snprintf(fname, sizeof(fname), "code_%d_%d_Levi_%d_%d.bin",
 		n, nb_words, nb_rows, nb_cols);
 	CG->save(fname, verbose_level);
 	delete CG;
@@ -2735,7 +2743,7 @@ void coding_theory_domain::do_long_code(
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		sprintf(str, "long_code_genma_n%d_k%d.csv", n, k);
+		snprintf(str, sizeof(str), "long_code_genma_n%d_k%d.csv", n, k);
 		fname.assign(str);
 		Fio.int_matrix_write_csv(fname, genma, k, n);
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -2798,7 +2806,7 @@ void coding_theory_domain::do_long_code(
 			string fname;
 			orbiter_kernel_system::file_io Fio;
 
-			sprintf(str, "long_code_genma_n%d_k%d_codeword_%d.csv", n, k, i);
+			snprintf(str, sizeof(str), "long_code_genma_n%d_k%d_codeword_%d.csv", n, k, i);
 			fname.assign(str);
 			Fio.int_matrix_write_csv(fname, M, nb_rows, nb_cols);
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -2875,7 +2883,7 @@ void coding_theory_domain::do_long_code(
 			string fname;
 			orbiter_kernel_system::file_io Fio;
 
-			sprintf(str, "long_code_genma_n%d_k%d_nearest_codeword_fourier.csv", n, k);
+			snprintf(str, sizeof(str), "long_code_genma_n%d_k%d_nearest_codeword_fourier.csv", n, k);
 			fname.assign(str);
 			Fio.int_matrix_write_csv(fname, M, nb_rows, nb_cols);
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -2893,7 +2901,7 @@ void coding_theory_domain::do_long_code(
 			string fname;
 			orbiter_kernel_system::file_io Fio;
 
-			sprintf(str, "long_code_genma_n%d_k%d_nearest_codeword.csv", n, k);
+			snprintf(str, sizeof(str), "long_code_genma_n%d_k%d_nearest_codeword.csv", n, k);
 			fname.assign(str);
 			Fio.int_matrix_write_csv(fname, M, nb_rows, nb_cols);
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -3418,7 +3426,6 @@ int coding_theory_domain::Hamming_distance_binary(int a, int b, int n)
 	}
 	return d;
 }
-
 
 
 }}}

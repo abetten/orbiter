@@ -19,23 +19,13 @@ namespace data_structures {
 
 set_of_sets_lint::set_of_sets_lint()
 {
-	null();
-}
-
-set_of_sets_lint::~set_of_sets_lint()
-{
-	freeself();
-}
-
-void set_of_sets_lint::null()
-{
 	underlying_set_size = 0;
 	nb_sets = 0;
 	Sets = NULL;
 	Set_size = NULL;
 }
 
-void set_of_sets_lint::freeself()
+set_of_sets_lint::~set_of_sets_lint()
 {
 	int i;
 
@@ -48,7 +38,6 @@ void set_of_sets_lint::freeself()
 		FREE_plint(Sets);
 		FREE_int(Set_size);
 		}
-	null();
 }
 
 void set_of_sets_lint::init_simple(long int underlying_set_size,

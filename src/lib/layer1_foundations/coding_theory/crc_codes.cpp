@@ -914,7 +914,7 @@ void crc_codes::crc32_remainders(int message_length, int verbose_level)
 	string fname;
 	char str[1000];
 
-	sprintf(str, "crc32_remainders_M%d.csv", message_length);
+	snprintf(str, sizeof(str), "crc32_remainders_M%d.csv", message_length);
 	fname.assign(str);
 
 	Fio.int_matrix_write_csv(fname, Table, message_length_in_bits, 32);
@@ -2598,7 +2598,7 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 		fname_base.assign(fname);
 		String.chop_off_extension(fname_base);
 
-		sprintf(str, "_word%d", I);
+		snprintf(str, sizeof(str), "_word%d", I);
 		fname_base.append(str);
 
 

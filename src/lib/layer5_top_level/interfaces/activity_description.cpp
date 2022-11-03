@@ -89,6 +89,8 @@ activity_description::activity_description()
 	f_translation_plane_activity = FALSE;
 	Translation_plane_activity_description = NULL;
 
+	f_action_on_forms_activity = FALSE;
+	Action_on_forms_activity_description = NULL;
 }
 
 activity_description::~activity_description()
@@ -617,6 +619,29 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-action_on_forms_activity") == 0) {
+		f_action_on_forms_activity = TRUE;
+		Action_on_forms_activity_description =
+				NEW_OBJECT(apps_algebra::action_on_forms_activity_description);
+		if (f_v) {
+			cout << "reading -action_on_forms_activity" << endl;
+		}
+		i += Action_on_forms_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-action_on_forms_activity" << endl;
+			Action_on_forms_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
 	else {
 		cout << "unrecognized activity after -do : " << argv[i] << endl;
 		exit(1);
@@ -823,7 +848,14 @@ void activity_description::worker(int verbose_level)
 
 		do_translation_plane_activity(verbose_level);
 	}
+	else if (f_action_on_forms_activity) {
 
+		if (f_v) {
+			cout << "activity_description::worker f_action_on_forms_activity" << endl;
+		}
+
+		do_action_on_forms_activity(verbose_level);
+	}
 
 	if (f_v) {
 		cout << "activity_description::worker done" << endl;
@@ -929,6 +961,10 @@ void activity_description::print()
 	else if (f_translation_plane_activity) {
 		cout << "-translation_plane_activity ";
 		Translation_plane_activity_description->print();
+	}
+	else if (f_action_on_forms_activity) {
+		cout << "-action_on_forms_activity" << endl;
+		Action_on_forms_activity_description->print();
 	}
 
 }
@@ -2191,6 +2227,62 @@ void activity_description::do_translation_plane_activity(int verbose_level)
 	}
 
 }
+
+
+void activity_description::do_action_on_forms_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_action_on_forms_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	apps_algebra::action_on_forms *AF;
+
+	AF = (apps_algebra::action_on_forms *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+
+		apps_algebra::action_on_forms_activity Activity;
+
+		Activity.init(
+				Action_on_forms_activity_description,
+				AF,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_action_on_forms_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_action_on_forms_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_action_on_forms_activity done" << endl;
+	}
+
+}
+
 
 
 

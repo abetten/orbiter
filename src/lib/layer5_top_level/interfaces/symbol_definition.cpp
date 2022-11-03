@@ -144,6 +144,8 @@ symbol_definition::symbol_definition()
 	f_vector_ge = FALSE;
 	Vector_ge_description = NULL;
 
+	f_action_on_forms = FALSE;
+	Action_on_forms_descr = NULL;
 }
 
 
@@ -899,6 +901,30 @@ void symbol_definition::read_definition(
 			Vector_ge_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-action_on_forms") == 0) {
+		f_action_on_forms = TRUE;
+
+		Action_on_forms_descr = NEW_OBJECT(apps_algebra::action_on_forms_description);
+		if (f_v) {
+			cout << "reading -action_on_forms" << endl;
+		}
+		i += Action_on_forms_descr->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-action_on_forms" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-action_on_forms ";
+			Action_on_forms_descr->print();
+		}
+	}
+
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -1210,8 +1236,18 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_vector_ge" << endl;
 		}
 	}
-
-
+	else if (f_action_on_forms) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition f_action_on_forms" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_action_on_forms" << endl;
+		}
+		definition_of_action_on_forms(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_action_on_forms" << endl;
+		}
+	}
 
 	else {
 		if (f_v) {
@@ -1366,6 +1402,10 @@ void symbol_definition::print()
 	if (f_vector_ge) {
 		cout << "-vector_g ";
 		Vector_ge_description->print();
+	}
+	if (f_action_on_forms) {
+		cout << "-action_on_forms ";
+		Action_on_forms_descr->print();
 	}
 }
 
@@ -3145,6 +3185,48 @@ void symbol_definition::definition_of_vector_ge(int verbose_level)
 	}
 }
 
+void symbol_definition::definition_of_action_on_forms(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_action_on_forms" << endl;
+	}
+
+
+	apps_algebra::action_on_forms *AF;
+
+	AF = NEW_OBJECT(apps_algebra::action_on_forms);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_action_on_forms before AF->create_action_on_forms" << endl;
+	}
+
+	AF->create_action_on_forms(
+			Action_on_forms_descr,
+			verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_action_on_forms after AF->create_action_on_forms" << endl;
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_action_on_forms(define_label, AF, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_action_on_forms before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_action_on_forms done" << endl;
+	}
+}
 
 
 

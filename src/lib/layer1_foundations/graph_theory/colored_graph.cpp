@@ -48,23 +48,23 @@ colored_graph::~colored_graph()
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "colored_graph::freeself" << endl;
+		cout << "colored_graph::~colored_graph" << endl;
 	}
 	if (user_data) {
 		if (f_v) {
-			cout << "colored_graph::freeself user_data" << endl;
+			cout << "colored_graph::~colored_graph user_data" << endl;
 		}
 		FREE_lint(user_data);
 	}
 	if (points) {
 		if (f_v) {
-			cout << "colored_graph::freeself points" << endl;
+			cout << "colored_graph::~colored_graph points" << endl;
 		}
 		FREE_lint(points);
 	}
 	if (point_color) {
 		if (f_v) {
-			cout << "colored_graph::freeself point_color" << endl;
+			cout << "colored_graph::~colored_graph point_color" << endl;
 		}
 		FREE_int(point_color);
 	}
@@ -72,7 +72,7 @@ colored_graph::~colored_graph()
 #if 0
 		if (bitvector_adjacency) {
 			if (f_v) {
-				cout << "colored_graph::freeself "
+				cout << "colored_graph::~colored_graph "
 						"bitvector_adjacency" << endl;
 			}
 			FREE_uchar(bitvector_adjacency);
@@ -86,12 +86,12 @@ colored_graph::~colored_graph()
 	}
 	if (list_of_edges) {
 		if (f_v) {
-			cout << "colored_graph::freeself list_of_edges" << endl;
+			cout << "colored_graph::~colored_graph list_of_edges" << endl;
 		}
 		FREE_int(list_of_edges);
 	}
 	if (f_v) {
-		cout << "colored_graph::freeself" << endl;
+		cout << "colored_graph::~colored_graph" << endl;
 	}
 }
 
@@ -1065,9 +1065,11 @@ void colored_graph::draw_on_circle_2(
 	}
 	if (!Draw_options->f_nodes_empty) {
 		char str[1000];
+		string s;
 		for (i = 0; i < n; i++) {
 			snprintf(str, 1000, "%d", i);
-			G.aligned_text(Px1[i], Py1[i], "", str);
+			s.assign(str);
+			G.aligned_text(Px1[i], Py1[i], "", s);
 		}
 	}
 	

@@ -524,6 +524,11 @@ void action::normalizer_of_cyclic_group_using_MAGMA(std::string &fname_magma_pre
 	}
 	groups::sims *H;
 
+
+	H = G->A->create_sims_from_single_generator_without_target_group_order(
+			Elt, verbose_level);
+
+#if 0
 	H = NEW_OBJECT(groups::sims);
 	if (f_v) {
 		cout << "action::normalizer_of_cyclic_group_using_MAGMA "
@@ -534,6 +539,7 @@ void action::normalizer_of_cyclic_group_using_MAGMA(std::string &fname_magma_pre
 		cout << "action::normalizer_of_cyclic_group_using_MAGMA "
 				"after H->init_cyclic_group_from_generator" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "action::normalizer_of_cyclic_group_using_MAGMA "
@@ -1354,7 +1360,7 @@ void action::read_conjugacy_classes_and_normalizers(
 				string label;
 				char str[1000];
 
-				sprintf(str, "c_{%d} = ", i);
+				snprintf(str, sizeof(str), "c_{%d} = ", i);
 				label.assign(str);
 
 				element_print_latex_with_extras(Elt, label, fp);

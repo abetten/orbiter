@@ -802,11 +802,11 @@ void latex_interface::incma_latex_with_labels(std::ostream &fp,
 
 
 	for (i = 0; i < v; i++) {
-		sprintf(str, "%d", row_labels_int[i]);
+		snprintf(str, sizeof(str), "%d", row_labels_int[i]);
 		point_labels[i].assign(str);
 	}
 	for (j = 0; j < b; j++) {
-		sprintf(str, "%d", col_labels_int[j]);
+		snprintf(str, sizeof(str), "%d", col_labels_int[j]);
 		block_labels[j].assign(str);
 	}
 

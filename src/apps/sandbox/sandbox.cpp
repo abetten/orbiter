@@ -20,7 +20,7 @@ int main()
 	int i;
 
 	for (i = 0; i < 10000; i++) {
-		sprintf(str, "/scratch2/betten/COMPILE/orbiter/src/apps/orbiter/orbiter.out -v 3 -seed %d "
+		snprintf(str, sizeof(str), "/scratch2/betten/COMPILE/orbiter/src/apps/orbiter/orbiter.out -v 3 -seed %d "
 				"-introduce_errors "
 				"-input log_c1_0_crc32.bin "
 				"-output log_c1_0_crc32_e.bin "
@@ -32,7 +32,7 @@ int main()
 				"-end",
 				1000 + i);
 		system(str);
-		sprintf(str, "/scratch2/betten/COMPILE/orbiter/src/apps/orbiter/orbiter.out -v 3 "
+		snprintf(str, sizeof(str), "/scratch2/betten/COMPILE/orbiter/src/apps/orbiter/orbiter.out -v 3 "
 				"-check_errors "
 				"-input log_c1_0_crc32_e.bin "
 				"-output log_c1_0_recovered.txt "

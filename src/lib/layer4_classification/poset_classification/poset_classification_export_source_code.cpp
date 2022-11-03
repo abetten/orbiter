@@ -41,7 +41,7 @@ void poset_classification::generate_source_code(
 	}
 
 	my_prefix.assign(Control->problem_label);
-	sprintf(str, "_level_%d", level);
+	snprintf(str, sizeof(str), "_level_%d", level);
 	my_prefix.append(str);
 
 	fname.assign(my_prefix);
@@ -195,7 +195,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 	}
 
 	my_prefix.assign(Control->problem_label);
-	sprintf(str, "_history_level_%d", level);
+	snprintf(str, sizeof(str), "_history_level_%d", level);
 	my_prefix.append(str);
 
 	fname.assign(my_prefix);

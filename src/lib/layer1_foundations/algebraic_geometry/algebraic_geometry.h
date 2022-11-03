@@ -54,8 +54,6 @@ public:
 
 	arc_lifting_with_two_lines();
 	~arc_lifting_with_two_lines();
-	void null();
-	void freeself();
 	void create_surface(
 		surface_domain *Surf,
 		long int *Arc6, long int line1, long int line2,
@@ -157,7 +155,6 @@ public:
 
 	cubic_curve();
 	~cubic_curve();
-	void freeself();
 	void init(field_theory::finite_field *F, int verbose_level);
 	int compute_system_in_RREF(
 			int nb_pts, long int *pt_list, int verbose_level);
@@ -312,8 +309,8 @@ public:
 	void print();
 	void latex(std::ostream &ost);
 	void latex_index_only(std::ostream &ost);
-	void latex_to_str(char *str);
-	void latex_to_str_without_E(char *str);
+	void latex_to_string(std::string &s);
+	void latex_to_str_without_E(std::string &s);
 	void init2(int i, int j);
 	void init3(int ij, int kl, int mn);
 	void init6(int i, int j, int k, int l, int m, int n);

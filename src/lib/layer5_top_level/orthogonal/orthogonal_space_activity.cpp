@@ -262,11 +262,6 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		label_txt.assign(Descr->print_points_label);
 
 		Get_vector_or_set(Descr->print_points_label, Pts, nb_pts);
-#if 0
-		user_interface::The_Orbiter_top_level_session->get_vector_or_set(
-				Descr->print_points_label,
-				Pts, nb_pts, verbose_level);
-#endif
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity nb_pts = " << nb_pts << endl;
@@ -300,11 +295,6 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		label_txt.assign(Descr->print_lines_label);
 
 		Get_vector_or_set(Descr->print_lines_label, Lines, nb_lines);
-#if 0
-		user_interface::The_Orbiter_top_level_session->get_vector_or_set(
-				Descr->print_lines_label,
-				Lines, nb_lines, verbose_level);
-#endif
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity nb_lines = " << nb_lines << endl;

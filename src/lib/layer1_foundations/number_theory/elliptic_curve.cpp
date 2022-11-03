@@ -21,22 +21,17 @@ namespace number_theory {
 
 elliptic_curve::elliptic_curve()
 {
-	null();
+	q = 0;
+	p = 0;
+	e = 0;
+	b = c = 0;
+	nb = 0;
+	T = NULL;
+	A = NULL;
+	F = NULL;
 }
 
 elliptic_curve::~elliptic_curve()
-{
-	freeself();
-}
-
-
-void elliptic_curve::null()
-{
-	T = NULL;
-	A = NULL;
-}
-
-void elliptic_curve::freeself()
 {
 	if (T) {
 		FREE_int(T);
@@ -532,7 +527,7 @@ void elliptic_curve::draw_grid2(graphics::mp_graphics &G,
 			// drawing point labels:
 			for (i = 0; i < nb; i++) {
 				char str[1000];
-				sprintf(str, "%d", i);
+				snprintf(str, sizeof(str), "%d", i);
 				x1 = T[3 * i + 0];
 				x2 = T[3 * i + 1];
 				x3 = T[3 * i + 2];

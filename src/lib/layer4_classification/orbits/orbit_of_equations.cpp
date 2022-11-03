@@ -26,32 +26,31 @@ static int orbit_of_equations_compare_func(void *a, void *b, void *data);
 orbit_of_equations::orbit_of_equations()
 {
 	A = NULL;
+	AonHPD = NULL;
 	F = NULL;
 	SG = NULL;
-	AonHPD = NULL;
+	nb_monomials = 0;
+	sz = 0;
+	sz_for_compare = 0;
+	data_tmp = NULL;
+
+	position_of_original_object = 0;
+	allocation_length = 0;
+	used_length = 0;
 	Equations = NULL;
 	prev = NULL;
 	label = NULL;
-	data_tmp = NULL;
+
 	f_has_print_function = FALSE;
 	print_function = NULL;
 	print_function_data = NULL;
+
 	f_has_reduction = FALSE;
 	reduction_function = NULL;
 	reduction_function_data = NULL;
-	null();
 }
 
 orbit_of_equations::~orbit_of_equations()
-{
-	freeself();
-}
-
-void orbit_of_equations::null()
-{
-}
-
-void orbit_of_equations::freeself()
 {
 	int i;
 	
@@ -70,7 +69,6 @@ void orbit_of_equations::freeself()
 	if (data_tmp) {
 		FREE_int(data_tmp);
 	}
-	null();
 }
 
 void orbit_of_equations::init(actions::action *A,

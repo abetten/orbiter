@@ -147,7 +147,7 @@ void permutation_group_create::permutation_group_init(
 		int *gens;
 		int sz;
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
+		Get_int_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
 #endif
 
 		int f_no_base = FALSE;
@@ -239,7 +239,7 @@ void permutation_group_create::init_subgroup_by_generators(
 	int *gens;
 	int sz;
 
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(subgroup_generators_label, gens, sz, verbose_level);
+	Get_int_vector_from_label(subgroup_generators_label, gens, sz, verbose_level);
 
 	if (sz != nb_subgroup_generators * A_initial->degree) {
 		cout << "permutation_group_create::init_subgroup_by_generators "

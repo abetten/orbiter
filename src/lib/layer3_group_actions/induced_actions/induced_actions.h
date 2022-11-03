@@ -289,8 +289,6 @@ public:
 
 	action_on_cosets();
 	~action_on_cosets();
-	void null();
-	void freeself();
 	void init(int nb_points, int *Points, 
 			actions::action *A_linear,
 		field_theory::finite_field *F,
@@ -619,11 +617,11 @@ public:
 	int f_invariant_set;
 	int *Equations;
 	int nb_equations;
-	
+
+	data_structures::int_matrix *Table_of_equations;
+
 	action_on_homogeneous_polynomials();
 	~action_on_homogeneous_polynomials();
-	void null();
-	void free();
 	void init(actions::action *A, ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	void init_invariant_set_of_equations(int *Equations, 
@@ -796,8 +794,6 @@ public:
 
 	action_on_sets();
 	~action_on_sets();
-	void null();
-	void free();
 	void init(int nb_sets, int set_size, 
 		long int *input_sets, int verbose_level);
 	int find_set(long int *set, int verbose_level);

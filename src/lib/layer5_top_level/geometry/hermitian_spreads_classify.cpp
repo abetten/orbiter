@@ -338,7 +338,7 @@ void hermitian_spreads_classify::init2(int verbose_level)
 		}
 	//depth = order + 1;
 
-	sprintf(prefix, "HS_%d_%d", n, Q);
+	snprintf(prefix, sizeof(prefix), "HS_%d_%d", n, Q);
 
 	Poset->init_subset_lattice(A, A2r,
 			sg,

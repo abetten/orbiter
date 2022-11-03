@@ -366,12 +366,12 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 
 void semifield_classify_with_substructure::create_fname_for_classification(char *fname)
 {
-	sprintf(fname, "semifields_%d_classification.bin", Sub->SC->order);
+	snprintf(fname, sizeof(fname), "semifields_%d_classification.bin", Sub->SC->order);
 }
 
 void semifield_classify_with_substructure::create_fname_for_flag_orbits(char *fname)
 {
-	sprintf(fname, "semifields_%d_flag_orbits.bin", Sub->SC->order);
+	snprintf(fname, sizeof(fname), "semifields_%d_flag_orbits.bin", Sub->SC->order);
 }
 
 void semifield_classify_with_substructure::classify_semifields(int verbose_level)
@@ -647,15 +647,15 @@ void semifield_classify_with_substructure::latex_report(
 	char str[1000];
 	string author, fname, extra_praeamble;
 
-	sprintf(str, "Isotopy classes of semifields of order %d", Descr->order);
+	snprintf(str, sizeof(str), "Isotopy classes of semifields of order %d", Descr->order);
 
 	string title;
 	title.assign(str);
 
-	sprintf(str, "Orbiter");
+	snprintf(str, sizeof(str), "Orbiter");
 	author.assign(str);
 
-	sprintf(str, "Semifields_%d.tex", Descr->order);
+	snprintf(str, sizeof(str), "Semifields_%d.tex", Descr->order);
 	fname.assign(str);
 
 	if (f_v) {
@@ -798,7 +798,7 @@ void semifield_classify_with_substructure::latex_report(
 		char str[1000];
 		string fname;
 
-		sprintf(str, "Semifields_%d_2structure.tex", Descr->order);
+		snprintf(str, sizeof(str), "Semifields_%d_2structure.tex", Descr->order);
 		fname.assign(str);
 		Fio.int_matrix_write_csv(fname, PO2, Semifields->nb_orbits, Sub->N2);
 		}
@@ -828,7 +828,7 @@ void semifield_classify_with_substructure::generate_source_code(
 	}
 	string fname_base;
 	char str[1000];
-	sprintf(str, "semifields_%d", Descr->order);
+	snprintf(str, sizeof(str), "semifields_%d", Descr->order);
 	fname_base.assign(str);
 
 	if (f_v) {

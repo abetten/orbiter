@@ -384,7 +384,7 @@ void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orb
 		string fname_base;
 		char str[1000];
 
-		sprintf(str, "_orb%d", pt_orbit);
+		snprintf(str, sizeof(str), "_orb%d", pt_orbit);
 		fname_base.assign(surface_prefix);
 		fname_base.append(str);
 		fname_base.append("_quartic");
@@ -919,7 +919,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 		string fname_col_scheme;
 
 
-		sprintf(str, "_orb%d", pt_orbit);
+		snprintf(str, sizeof(str), "_orb%d", pt_orbit);
 		fname_base.assign(surface_prefix);
 		fname_base.append(str);
 		fname_base.append("_quartic");

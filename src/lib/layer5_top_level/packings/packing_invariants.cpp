@@ -294,7 +294,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 
 		fname_incidence_pic.assign(prefix_tex);
 		char str[1000];
-		sprintf(str, "%d_packing_planes.tex", iso_cnt);
+		snprintf(str, sizeof(str), "%d_packing_planes.tex", iso_cnt);
 		fname_incidence_pic.append(str);
 		{
 			ofstream fp_pic(fname_incidence_pic);
@@ -344,12 +344,12 @@ void packing_invariants::compute_decomposition(int verbose_level)
 
 		fname_row_scheme.assign(prefix_tex);
 		char str[1000];
-		sprintf(str, "%d_packing_planes_row_scheme.tex", iso_cnt);
+		snprintf(str, sizeof(str), "%d_packing_planes_row_scheme.tex", iso_cnt);
 		fname_row_scheme.append(str);
 
 		fname_col_scheme.assign(prefix_tex);
 		//char str[1000];
-		sprintf(str, "%d_packing_planes_row_scheme.tex", iso_cnt);
+		snprintf(str, sizeof(str), "%d_packing_planes_row_scheme.tex", iso_cnt);
 		fname_col_scheme.append(str);
 
 

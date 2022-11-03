@@ -186,11 +186,6 @@ void choose_points_or_lines::compute_orbits(groups::strong_generators *Strong_ge
 	}
 	
 	gen = NEW_OBJECT(poset_classification::poset_classification);
-
-	//sprintf(gen->fname_base, "%s", label);
-	
-	
-	//gen->depth = nb_points_or_lines;
 	
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "

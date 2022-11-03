@@ -511,67 +511,6 @@ void encoded_combinatorial_object::latex_incma(std::ostream &ost,
 
 
 
-#if 0
-void projective_space_with_action::save_Levi_graph(std::string &prefix,
-		const char *mask,
-		int *Incma, int nb_rows, int nb_cols,
-		long int *canonical_labeling, int canonical_labeling_len,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::save_Levi_graph" << endl;
-	}
-	file_io Fio;
-	string fname_csv;
-	string fname_bin;
-	string fname_labeling;
-	char str[1000];
-
-	sprintf(str, mask, nb_rows, nb_cols);
-
-	fname_csv.assign(prefix);
-	fname_csv.append(str);
-	fname_csv.append(".csv");
-
-	fname_bin.assign(prefix);
-	fname_bin.append(str);
-	fname_bin.append(".graph");
-
-
-	fname_labeling.assign(prefix);
-	fname_labeling.append("_labeling");
-	fname_labeling.append(".csv");
-
-	latex_interface L;
-
-#if 0
-	cout << "labeling:" << endl;
-	L.lint_vec_print_as_matrix(cout,
-			canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
-#endif
-
-	Fio.lint_vec_write_csv(canonical_labeling, canonical_labeling_len,
-			fname_labeling, "can_lab");
-	Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
-
-
-	colored_graph *CG;
-
-	CG = NEW_OBJECT(colored_graph);
-
-	CG->create_Levi_graph_from_incidence_matrix(
-			Incma, nb_rows, nb_cols,
-			TRUE, canonical_labeling, verbose_level);
-	CG->save(fname_bin, verbose_level);
-	FREE_OBJECT(CG);
-	if (f_v) {
-		cout << "projective_space_with_action::save_Levi_graph done" << endl;
-	}
-}
-#endif
-
 
 void encoded_combinatorial_object::latex_TDA(std::ostream &ost,
 		int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
@@ -742,7 +681,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(std::ostream &ost,
 	for (i = 0; i < v; i++) {
 		char str[1000];
 
-		sprintf(str, "%d", orbit[i]);
+		snprintf(str, sizeof(str), "%d", orbit[i]);
 		point_labels[i].assign(str);
 	}
 
@@ -750,7 +689,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(std::ostream &ost,
 	for (j = 0; j < b; j++) {
 		char str[1000];
 
-		sprintf(str, "%d", orbit[nb_rows + j]);
+		snprintf(str, sizeof(str), "%d", orbit[nb_rows + j]);
 		block_labels[j].assign(str);
 	}
 

@@ -796,32 +796,31 @@ void int_vec::scan_from_stream(istream & is, int *&v, int &len)
 	}
 }
 
-void int_vec::print_to_str(char *str, int *data, int len)
+void int_vec::print_to_str(std::string &s, int *data, int len)
 {
-	int i, a;
+	string s1;
 
-	str[0] = 0;
-	strcat(str, "\" ");
-	for (i = 0; i < len; i++) {
-		a = data[i];
-		sprintf(str + strlen(str), "%d", a);
-		if (i < len - 1) {
-			strcat(str, ", ");
-		}
-	}
-	strcat(str, "\"");
+	s.assign("\" ");
+
+	print_to_str_naked(s1, data, len);
+
+	s.append(s1);
+
+	s.append("\"");
 }
 
-void int_vec::print_to_str_naked(char *str, int *data, int len)
+void int_vec::print_to_str_naked(std::string &s, int *data, int len)
 {
 	int i, a;
+	char str[1000];
 
-	str[0] = 0;
+	s.assign("");
 	for (i = 0; i < len; i++) {
 		a = data[i];
-		sprintf(str + strlen(str), "%d", a);
+		snprintf(str, sizeof(str), "%d", a);
+		s.append(str);
 		if (i < len - 1) {
-			strcat(str, ", ");
+			s.append(", ");
 		}
 	}
 }

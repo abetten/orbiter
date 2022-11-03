@@ -236,7 +236,7 @@ void surface_classify_using_arc::report(
 	string fname_arc_lifting;
 	char str[1000];
 
-	sprintf(str, "%d", F->q);
+	snprintf(str, sizeof(str), "%d", F->q);
 	fname_arc_lifting.assign("arc_lifting_q");
 	fname_arc_lifting.append(str);
 	fname_arc_lifting.append(".tex");
@@ -507,7 +507,7 @@ void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int v
 	char str[1000];
 	string fname_decomposition;
 
-	sprintf(str, "surfaces_q%d_decomposition_matrix.csv", Surf_A->PA->F->q);
+	snprintf(str, sizeof(str), "surfaces_q%d_decomposition_matrix.csv", Surf_A->PA->F->q);
 	fname_decomposition.assign(str);
 
 	Fio.int_matrix_write_csv(fname_decomposition, Decomp,

@@ -133,7 +133,7 @@ void hall_system_classify::init(
 	N = N0 * 2;
 
 	char str[1000];
-	sprintf(str, "hall_%d", n);
+	snprintf(str, sizeof(str), "hall_%d", n);
 	prefix.assign(str);
 
 	if (f_v) {

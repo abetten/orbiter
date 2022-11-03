@@ -1354,14 +1354,14 @@ void buekenhout_metz::get_name(std::string &name)
 	char str[1000];
 
 	if (f_Uab) {
-		sprintf(str, "U_%d_%d_%d", parameter_a, parameter_b, q);
+		snprintf(str, sizeof(str), "U_%d_%d_%d", parameter_a, parameter_b, q);
 		}
 	else {
 		if (f_classical) {
-			sprintf(str, "H%d", q);
+			snprintf(str, sizeof(str), "H%d", q);
 			}
 		else {
-			sprintf(str, "BM%d", q);
+			snprintf(str, sizeof(str), "BM%d", q);
 			}
 		}
 	name.assign(str);

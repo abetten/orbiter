@@ -696,7 +696,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		cmd.append("/orbiter.out -v 2 -create_graph -load_from_file ");
 		cmd.append(fname_graph);
 		cmd.append(" -end -graph_theoretic_activity -find_cliques -target_size ");
-		sprintf(str, "%d", Descr->clique_size);
+		snprintf(str, sizeof(str), "%d", Descr->clique_size);
 		cmd.append(str);
 		cmd.append(" -end -end");
 
@@ -1020,7 +1020,7 @@ void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 {
 	char str[1000];
 
-	sprintf(str, "_fpc%d", fixpoints_clique_case_number);
+	snprintf(str, sizeof(str), "_fpc%d", fixpoints_clique_case_number);
 
 	fname_graph.assign(PWF->PW->Descr->H_label);
 	fname_graph.append(str);

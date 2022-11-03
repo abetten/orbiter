@@ -230,7 +230,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			ST.chop_off_extension(fname_out);
 
 			char str[1000];
-			sprintf(str, "_case_%03d.bin", c);
+			snprintf(str, sizeof(str), "_case_%03d.bin", c);
 			fname_out.append(str);
 
 
@@ -274,7 +274,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			//ST.chop_off_extension(fname_out);
 
 			char str[1000];
-			sprintf(str, "_case_%03d.bin", c);
+			snprintf(str, sizeof(str), "_case_%03d.bin", c);
 			fname_out.append(str);
 
 

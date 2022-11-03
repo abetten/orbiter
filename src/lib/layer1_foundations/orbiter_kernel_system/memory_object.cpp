@@ -225,7 +225,18 @@ void memory_object::write_string(const char *p)
 	write_char(0);
 }
 
-void memory_object::read_string(char *&p)
+void memory_object::write_string(std::string &p)
+{
+	int l, i;
+
+	l = p.length();
+	for (i = 0; i < l; i++) {
+		write_char(p[i]);
+		}
+	write_char(0);
+}
+
+void memory_object::read_string(std::string &p)
 {	
 	char *q;
 	char c;
@@ -259,8 +270,10 @@ void memory_object::read_string(char *&p)
 	// now used_length = strlen(q) + 1
 
 	// copy the result over. This gets rid of the overhead:
-	p = NEW_char(used_length);
-	strcpy(p, q);
+	//p = NEW_char(used_length);
+	//strcpy(p, q);
+
+	p.assign(q);
 
 	FREE_char(q);
 }
@@ -379,7 +392,7 @@ void memory_object::read_int(int *i)
 
 #include <cstdio>
 
-void memory_object::read_file(const char *fname, int verbose_level)
+void memory_object::read_file(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int fsize;
@@ -414,7 +427,7 @@ void memory_object::read_file(const char *fname, int verbose_level)
 	}
 }
 
-void memory_object::write_file(const char *fname, int verbose_level)
+void memory_object::write_file(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;

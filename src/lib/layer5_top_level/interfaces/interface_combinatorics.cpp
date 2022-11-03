@@ -773,7 +773,7 @@ void interface_combinatorics::worker(int verbose_level)
 		char str[1000];
 
 		fname.assign("random_k_subsets_");
-		sprintf(str, "n%d_k%d_nb%d.csv",
+		snprintf(str, sizeof(str), "n%d_k%d_nb%d.csv",
 				create_random_k_subsets_n,
 				create_random_k_subsets_k,
 				create_random_k_subsets_nb);
@@ -1170,7 +1170,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n_file(int n, int verbose
 	string fname;
 	char str[1000];
 
-	sprintf(str, "classes_Sym_%d", n);
+	snprintf(str, sizeof(str), "classes_Sym_%d", n);
 
 	fname.assign(str);
 	fname.append(".csv");

@@ -3058,7 +3058,7 @@ void semifield_lifting::make_file_name_schreier(std::string &fname,
 {
 	char str[1000];
 
-	sprintf(str, "L%d_orbit%d_schreier.csv", level, orbit_idx);
+	snprintf(str, sizeof(str), "L%d_orbit%d_schreier.csv", level, orbit_idx);
 	if (f_prefix) {
 		fname.assign(prefix);
 		fname.append(str);
@@ -3072,7 +3072,7 @@ void semifield_lifting::create_fname_level_info_file(std::string &fname)
 {
 	char str[1000];
 
-	sprintf(str, "L%d_info.csv", cur_level);
+	snprintf(str, sizeof(str), "L%d_info.csv", cur_level);
 	if (f_prefix) {
 		fname.assign(prefix);
 		fname.append(str);
@@ -3086,7 +3086,7 @@ void semifield_lifting::make_fname_flag_orbits(std::string &fname)
 {
 	char str[1000];
 
-	sprintf(str, "L%d_flag_orbits.bin", cur_level);
+	snprintf(str, sizeof(str), "L%d_flag_orbits.bin", cur_level);
 	if (f_prefix) {
 		fname.assign(prefix);
 		fname.append(str);
@@ -3100,7 +3100,7 @@ void semifield_lifting::make_fname_stabilizers(std::string &fname)
 {
 	char str[1000];
 
-	sprintf(str, "L%d_flag_stabilizers.bin", cur_level);
+	snprintf(str, sizeof(str), "L%d_flag_stabilizers.bin", cur_level);
 	if (f_prefix) {
 		fname.assign(prefix);
 		fname.append(str);
@@ -3116,7 +3116,7 @@ void semifield_lifting::make_fname_deep_search_slice_solutions(std::string &fnam
 {
 	char str[1000];
 
-	sprintf(str, "deep_slice%d_%d_sol.txt", orbit_r, orbit_m);
+	snprintf(str, sizeof(str), "deep_slice%d_%d_sol.txt", orbit_r, orbit_m);
 	if (f_out_path) {
 		fname.assign(out_path);
 		fname.append(str);
@@ -3132,7 +3132,7 @@ void semifield_lifting::make_fname_deep_search_slice_success(std::string &fname,
 {
 	char str[1000];
 
-	sprintf(str, "deep_slice%d_%d_suc.txt", orbit_r, orbit_m);
+	snprintf(str, sizeof(str), "deep_slice%d_%d_suc.txt", orbit_r, orbit_m);
 	if (f_out_path) {
 		fname.assign(out_path);
 		fname.append(str);

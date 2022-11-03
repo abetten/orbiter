@@ -260,7 +260,7 @@ void graphical_output::do_domino_portrait(int D, int s,
 	fname.assign(photo_label);
 
 	char str[1000];
-	sprintf(str, "_solution_%d", 0 /* hd */);
+	snprintf(str, sizeof(str), "_solution_%d", 0 /* hd */);
 	fname.append(str);
 
 
@@ -900,7 +900,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	}
 	else if (C->f_input_object) {
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(C->input_object_label,
+		Get_matrix(C->input_object_label,
 				C->M, C->m, C->n);
 	}
 
@@ -916,8 +916,8 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 	if (C->f_partition) {
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
+		Get_int_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
+		Get_int_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
 
 		if (f_v) {
 			cout << "row_part: ";
@@ -1332,7 +1332,7 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			char str[1000];
 			string fname;
 
-			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, i);
+			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, i);
 			fname.assign(str);
 
 			G.init(fname, Opt, verbose_level);
@@ -1362,7 +1362,7 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 				char str[1000];
 				string fname;
 
-				sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+				snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 				fname.assign(str);
 
 				G.init(fname, Opt, verbose_level);
@@ -1389,7 +1389,7 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			char str[1000];
 			string fname;
 
-			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 			fname.assign(str);
 
 			G.init(fname, Opt, verbose_level);
@@ -1417,7 +1417,7 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			char str[1000];
 			string fname;
 
-			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 			fname.assign(str);
 
 			G.init(fname, Opt, verbose_level);
@@ -1444,7 +1444,7 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			char str[1000];
 			string fname;
 
-			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 			fname.assign(str);
 
 			G.init(fname, Opt, verbose_level);
@@ -1471,7 +1471,7 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 				char str[1000];
 				string fname;
 
-				sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+				snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 				fname.assign(str);
 
 				G.init(fname, Opt, verbose_level);
@@ -1737,32 +1737,50 @@ void graphical_output::draw_projective(mp_graphics &G,
 			Py[i] = Dy[i] * dy;
 			}
 
-		G.aligned_text_array(Px, Py, 0, "", "Transforming a Parabola");
-		G.aligned_text_array(Px, Py, 1, "", "into a Hyperbola");
+		string s;
+
+
+		s.assign("Transforming a Parabola");
+		G.aligned_text_array(Px, Py, 0, "", s);
+
+		s.assign("into a Hyperbola");
+		G.aligned_text_array(Px, Py, 1, "", s);
 		if (title_page_step == 0) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 4, "", "Step 1: Move into");
-		G.aligned_text_array(Px, Py, 5, "", "the projective plane");
+		s.assign("Step 1: Move into");
+		G.aligned_text_array(Px, Py, 4, "", s);
+
+		s.assign("the projective plane");
+		G.aligned_text_array(Px, Py, 5, "", s);
 		if (title_page_step == 1) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 6, "", "Step 2: Transform the equation");
+
+		s.assign("Step 2: Transform the equation");
+		G.aligned_text_array(Px, Py, 6, "", s);
 		if (title_page_step == 2) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 7, "", "Step 3: Move back");
-		G.aligned_text_array(Px, Py, 8, "", "in the affine plane");
+		s.assign("Step 3: Move back");
+		G.aligned_text_array(Px, Py, 7, "", s);
+
+		s.assign("in the affine plane");
+		G.aligned_text_array(Px, Py, 8, "", s);
 		if (title_page_step == 3) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 10, "", "Created by Anton Betten 2017");
+
+		s.assign("Created by Anton Betten 2017");
+		G.aligned_text_array(Px, Py, 10, "", s);
 		return;
 
 		}
 
 
 	if (f_trailer_page) {
+
+		string s;
 
 		X = 0;
 		Y = 9.5;
@@ -1777,38 +1795,52 @@ void graphical_output::draw_projective(mp_graphics &G,
 			Py[i] = Dy[i] * dy;
 			}
 
-		G.aligned_text_array(Px, Py, 0, "", "Thanks for watching!");
+		s.assign("Thanks for watching!");
+		G.aligned_text_array(Px, Py, 0, "", s);
 		if (trailer_page_step == 0) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 2, "", "credits:");
+
+		s.assign("credits:");
+		G.aligned_text_array(Px, Py, 2, "", s);
 		if (trailer_page_step == 1) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 4, "", "Felix Klein:");
+
+		s.assign("Felix Klein:");
+		G.aligned_text_array(Px, Py, 4, "", s);
 		if (trailer_page_step == 2) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 5, "", "Introduction to");
-		G.aligned_text_array(Px, Py, 6, "", "non-euclidean geometry");
-		G.aligned_text_array(Px, Py, 7, "", "(in German) 1928");
+
+		s.assign("Introduction to");
+		G.aligned_text_array(Px, Py, 5, "", s);
+		s.assign("non-euclidean geometry");
+		G.aligned_text_array(Px, Py, 6, "", s);
+		s.assign("(in German) 1928");
+		G.aligned_text_array(Px, Py, 7, "", s);
 		if (trailer_page_step == 3) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 9, "", "Latex: Donald Knuth");
-		G.aligned_text_array(Px, Py, 10, "", "Leslie Lamport");
+		s.assign("Latex: Donald Knuth");
+		G.aligned_text_array(Px, Py, 9, "", s);
+		s.assign("Leslie Lamport");
+		G.aligned_text_array(Px, Py, 10, "", s);
 		if (trailer_page_step == 4) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 11, "", "Tikz: Till Tantau");
+		s.assign("Tikz: Till Tantau");
+		G.aligned_text_array(Px, Py, 11, "", s);
 		if (trailer_page_step == 5) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 12, "", "ImageMagick Studio LLC");
+		s.assign("ImageMagick Studio LLC");
+		G.aligned_text_array(Px, Py, 12, "", s);
 		if (trailer_page_step == 6) {
 			return;
 			}
-		G.aligned_text_array(Px, Py, 14, "", "Created by Anton Betten 2017");
+		s.assign("Created by Anton Betten 2017");
+		G.aligned_text_array(Px, Py, 14, "", s);
 		return;
 
 		}

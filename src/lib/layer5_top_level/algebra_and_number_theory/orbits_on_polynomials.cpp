@@ -123,7 +123,7 @@ void orbits_on_polynomials::init(
 
 	char str[1000];
 
-	sprintf(str, "poly_orbits_d%d_n%d_q%d", degree_of_poly, n - 1, F->q);
+	snprintf(str, sizeof(str), "poly_orbits_d%d_n%d_q%d", degree_of_poly, n - 1, F->q);
 	fname_base.assign(str);
 	fname_csv.assign(fname_base);
 	fname_csv.append(".csv");
@@ -290,10 +290,10 @@ void orbits_on_polynomials::report(int verbose_level)
 	string title, author, extra_praeamble;
 	char str[1000];
 
-	sprintf(str, "poly_orbits_d%d_n%d_q%d.tex", degree_of_poly, n - 1, F->q);
+	snprintf(str, sizeof(str), "poly_orbits_d%d_n%d_q%d.tex", degree_of_poly, n - 1, F->q);
 	fname_report.assign(str);
 
-	sprintf(str, "Varieties of degree %d in PG(%d,%d)", degree_of_poly, n - 1, F->q);
+	snprintf(str, sizeof(str), "Varieties of degree %d in PG(%d,%d)", degree_of_poly, n - 1, F->q);
 	title.assign(str);
 
 	author.assign("Orbiter");

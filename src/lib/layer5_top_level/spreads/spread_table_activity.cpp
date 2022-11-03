@@ -274,7 +274,7 @@ void spread_table_activity::report_spreads(int *spread_idx, int nb, int verbose_
 		title.assign(str);
 
 
-		sprintf(str, "Spreads");
+		snprintf(str, sizeof(str), "Spreads");
 		fname.assign(str);
 
 
@@ -284,7 +284,7 @@ void spread_table_activity::report_spreads(int *spread_idx, int nb, int verbose_
 
 		for (i = 0; i < nb; i++) {
 			idx = spread_idx[i];
-			sprintf(str, "_%d", idx);
+			snprintf(str, sizeof(str), "_%d", idx);
 			fname.append(str);
 		}
 		fname.append(".tex");

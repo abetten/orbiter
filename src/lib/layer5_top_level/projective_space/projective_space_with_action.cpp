@@ -643,7 +643,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
-		sprintf(str, "%ld", a);
+		snprintf(str, sizeof(str), "%ld", a);
 		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
 		if (i < set_sz - 1) {
 			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
@@ -1279,7 +1279,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
-	sprintf(str, "_q%d", q);
+	snprintf(str, sizeof(str), "_q%d", q);
 
 	string fname;
 	fname.assign("quartic_curves");
@@ -1591,6 +1591,8 @@ void projective_space_with_action::cheat_sheet(
 
 			if (n == 3) {
 
+				// ToDo PA now has a Surf_A
+
 				applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 				setup_surface_with_action(
@@ -1783,7 +1785,7 @@ void projective_space_with_action::do_rank_lines_in_PG(
 	int *v;
 	int m, n;
 
-	orbiter_kernel_system::Orbiter->get_matrix_from_label(label, v, m, n);
+	Get_matrix(label, v, m, n);
 
 	if (f_v) {
 		cout << "projective_space_with_action::do_rank_lines_in_PG v: ";

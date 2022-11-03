@@ -471,13 +471,16 @@ void sims::print_all_group_elements()
 	FREE_int(Elt);
 }
 
-void sims::print_all_group_elements_tex(std::ostream &ost)
+void sims::print_all_group_elements_tex(std::ostream &ost,
+		int f_with_permutation,
+		int f_override_action, actions::action *A_special)
 {
 	int *Elt;
 	ring_theory::longinteger_object go;
 	long int i, ord;
 	long int goi;
 	int *Order;
+	actions::action *A1;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
@@ -486,17 +489,51 @@ void sims::print_all_group_elements_tex(std::ostream &ost)
 
 	Order = NEW_int(goi);
 
+	ost << "Group elements in action ";
+	ost << "$";
+	if (f_override_action) {
+		A1 = A_special;
+	}
+	else {
+		A1 = A;
+	}
+	ost << A1->label_tex;
+	ost << "$\\\\" << endl;
+
 	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt);
-		ord = A->element_order(Elt);
+		ord = A1->element_order(Elt);
 		Order[i] = ord;
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;
 		ost << "$$" << endl;
-		A->element_print_latex(Elt, ost);
+		A1->element_print_latex(Elt, ost);
 		ost << "$$" << endl;
-		//A->element_print_as_permutation(Elt, cout);
-		//cout << endl;
+
+		if (f_with_permutation) {
+			A1->element_print_as_permutation(Elt, ost);
+			ost << "\\\\" << endl;
+
+			int *perm;
+			int h, j;
+
+			perm = NEW_int(A1->degree);
+
+			A1->element_as_permutation(
+					Elt,
+					perm, 0 /* verbose_level */);
+
+			for (h = 0; h < A1->degree; h++) {
+				j = perm[h];
+
+				ost << j;
+				if (j < A1->degree) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+
+		}
 	}
 
 	data_structures::tally T;
@@ -883,7 +920,7 @@ void sims::report(std::ostream &ost,
 
 		if (orbit_len[orbit_idx] < 1000) {
 
-			sprintf(str, "_sims_%d", orbit_idx);
+			snprintf(str, sizeof(str), "_sims_%d", orbit_idx);
 
 			fname_base.assign(prefix);
 			fname_base.append(str);

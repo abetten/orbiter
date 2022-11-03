@@ -2614,8 +2614,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	induced_actions::action_on_homogeneous_polynomials *OnHP;
 	
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_"
-				"polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
 				"f_induce_action=" << f_induce_action << endl;
 	}
 	A = A_old;
@@ -2640,27 +2639,23 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	f_has_subaction = TRUE;
 	subaction = A;
 	if (A->type_G != matrix_group_t) {
-		cout << "action::induced_action_on_homogeneous_"
-				"polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
 				"action not of matrix group type" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_"
-				"polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
 				"before OnHP->init" << endl;
 	}
 	OnHP->init(A, HPD, verbose_level);
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_"
-				"polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
 				"after OnHP->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_"
-				"polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
 				"before OnHP->init_invariant_set_of_equations" << endl;
 	}
 	OnHP->init_invariant_set_of_equations(
@@ -2699,13 +2694,15 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	}
 
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_"
-				"polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
 				"finished, created action " << label << endl;
 		cout << "degree=" << A->degree << endl;
 		cout << "make_element_size=" << A->make_element_size << endl;
 		cout << "low_level_point_size=" << A->low_level_point_size << endl;
 		print_info();
+	}
+	if (f_v) {
+		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations done" << endl;
 	}
 }
 
@@ -3448,53 +3445,6 @@ void action::generators_to_strong_generators(
 	}
 }
 
-void action::orbits_on_equations(
-		ring_theory::homogeneous_polynomial_domain *HPD,
-	int *The_equations, int nb_equations, groups::strong_generators *gens,
-	action *&A_on_equations, groups::schreier *&Orb, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "action::orbits_on_equations" << endl;
-	}
-
-	A_on_equations = NEW_OBJECT(action);
-
-	if (f_v) {
-		cout << "action::orbits_on_equations "
-				"creating the induced action on the equations:" << endl;
-	}
-	A_on_equations->induced_action_on_homogeneous_polynomials_given_by_equations(
-		this,
-		HPD,
-		The_equations, nb_equations,
-		FALSE /* f_induce_action */, NULL /* sims *old_G */,
-		verbose_level);
-	if (f_v) {
-		cout << "action::orbits_on_equations "
-				"The induced action on the equations has been created, "
-				"degree = " << A_on_equations->degree << endl;
-	}
-
-	if (f_v) {
-		cout << "action::orbits_on_equations "
-				"computing orbits on the equations:" << endl;
-	}
-	Orb = gens->orbits_on_points_schreier(A_on_equations,
-			verbose_level);
-
-	if (f_v) {
-		cout << "action::orbits_on_equations "
-				"We found " << Orb->nb_orbits
-				<< " orbits on the equations:" << endl;
-		Orb->print_and_list_orbits_tex(cout);
-	}
-
-	if (f_v) {
-		cout << "action::orbits_on_equations done" << endl;
-	}
-}
 
 
 

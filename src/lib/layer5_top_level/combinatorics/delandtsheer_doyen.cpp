@@ -469,7 +469,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 	fname.append(Descr->group_label);
 	fname.append("_");
 	fname.append(Descr->mask_label);
-	sprintf(str, "_%d_%d_lvl_%d",
+	snprintf(str, sizeof(str), "_%d_%d_lvl_%d",
 			Descr->q1, Descr->q2, level);
 	fname.append(str);
 
@@ -672,7 +672,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	}
 	char str[1000];
 
-	sprintf(str, "_%d_%d", Descr->q1, Descr->q2);
+	snprintf(str, sizeof(str), "_%d_%d", Descr->q1, Descr->q2);
 	label.append(str);
 
 

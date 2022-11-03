@@ -776,63 +776,6 @@ void algebra_global::longinteger_collect_print(ostream &ost,
 }
 
 
-void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, h, a, b, ap, bp, g;
-	number_theory::number_theory_domain NT;
-	orbiter_kernel_system::file_io Fio;
-
-	if (f_v) {
-		cout << "algebra_global::do_equivalence_class_of_fractions" << endl;
-	}
-
-	int *Pairs;
-	int *Table;
-	int length;
-
-	Table = NEW_int(N * N);
-	Pairs = NEW_int(N * N);
-	length = 0;
-
-	for (i = 0; i < N; i++) {
-		a = i + 1;
-		for (j = 0; j < N; j++) {
-			b = j + 1;
-			g = NT.gcd_lint(a, b);
-			ap = a / g;
-			bp = b / g;
-			for (h = 0; h < length; h++) {
-				if (Pairs[h * 2 + 0] == ap && Pairs[h * 2 + 1] == bp) {
-					Table[i * N + j] = h;
-					break;
-				}
-			}
-			if (h == length) {
-				Pairs[h * 2 + 0] = ap;
-				Pairs[h * 2 + 1] = bp;
-				Table[i * N + j] = h;
-				length++;
-			}
-		}
-	}
-
-	char str[1000];
-	string fname;
-
-	sprintf(str, "table_fractions_N%d.csv", N);
-	fname.assign(str);
-	Fio.int_matrix_write_csv(fname, Table, N, N);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	FREE_int(Table);
-	FREE_int(Pairs);
-
-	if (f_v) {
-		cout << "algebra_global::do_equivalence_class_of_fractions done" << endl;
-	}
-}
-
 
 
 
@@ -1384,8 +1327,10 @@ void algebra_global::apply_Walsh_Hadamard_transform(field_theory::finite_field *
 	}
 }
 
-void algebra_global::algebraic_normal_form(field_theory::finite_field *F,
-		std::string &fname_csv_in, int n, int verbose_level)
+void algebra_global::algebraic_normal_form(
+		field_theory::finite_field *F,
+		int n,
+		int *func, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1394,19 +1339,28 @@ void algebra_global::algebraic_normal_form(field_theory::finite_field *F,
 	}
 
 
-	combinatorics::boolean_function_domain *BF;
+	F->f_print_as_exponentials = FALSE;
 
-	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
+
+	combinatorics::polynomial_function_domain *PF;
+
+	PF = NEW_OBJECT(combinatorics::polynomial_function_domain);
 
 	if (f_v) {
-		cout << "algebra_global::algebraic_normal_form before BF->init" << endl;
+		cout << "algebra_global::algebraic_normal_form before PF->init" << endl;
 	}
-	BF->init(n, verbose_level);
+	PF->init(F, n, verbose_level);
 	if (f_v) {
-		cout << "algebra_global::algebraic_normal_form after BF->init" << endl;
+		cout << "algebra_global::algebraic_normal_form after PF->init" << endl;
 	}
 
 
+	if (len != PF->Q) {
+		cout << "algebra_global::algebraic_normal_form len should be " << PF->Q << endl;
+		exit(1);
+	}
+
+#if 0
 	orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, nb_cols;
@@ -1424,6 +1378,94 @@ void algebra_global::algebraic_normal_form(field_theory::finite_field *F,
 		cout << "algebra_global::algebraic_normal_form len != BF->Q" << endl;
 		exit(1);
 	}
+#endif
+
+	int *coeff;
+	int nb_coeff;
+
+	nb_coeff = PF->Poly[PF->max_degree].get_nb_monomials();
+
+	coeff = NEW_int(nb_coeff);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form "
+				"before PF->compute_polynomial_representation" << endl;
+	}
+	PF->compute_polynomial_representation(func, coeff, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form "
+				"after PF->compute_polynomial_representation" << endl;
+	}
+
+	cout << "algebraic normal form:" << endl;
+	PF->Poly[PF->max_degree].print_equation(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in tex:" << endl;
+	PF->Poly[PF->max_degree].print_equation_tex(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in numerical form:" << endl;
+	PF->Poly[PF->max_degree].print_equation_numerical(cout, coeff);
+	cout << endl;
+
+#if 0
+
+	Fio.int_matrix_write_csv(fname_csv_out, coeff, 1, nb_coeff);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+#endif
+
+	FREE_OBJECT(PF);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form done" << endl;
+	}
+}
+
+void algebra_global::algebraic_normal_form_of_boolean_function(
+		field_theory::finite_field *F,
+		std::string &fname_csv_in, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form_of_boolean_function" << endl;
+	}
+
+
+	combinatorics::boolean_function_domain *BF;
+
+	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form_of_boolean_function before BF->init" << endl;
+	}
+	BF->init(n, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form_of_boolean_function after BF->init" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len;
+	string fname_csv_out;
+	data_structures::string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_alg_normal_form.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	if (len != BF->Q) {
+		cout << "algebra_global::algebraic_normal_form_of_boolean_function len != BF->Q" << endl;
+		exit(1);
+	}
 
 	int *coeff;
 	int nb_coeff;
@@ -1433,11 +1475,11 @@ void algebra_global::algebraic_normal_form(field_theory::finite_field *F,
 	coeff = NEW_int(nb_coeff);
 
 	if (f_v) {
-		cout << "algebra_global::algebraic_normal_form before BF->compute_polynomial_representation" << endl;
+		cout << "algebra_global::algebraic_normal_form_of_boolean_function before BF->compute_polynomial_representation" << endl;
 	}
 	BF->compute_polynomial_representation(M, coeff, verbose_level);
 	if (f_v) {
-		cout << "algebra_global::algebraic_normal_form after BF->compute_polynomial_representation" << endl;
+		cout << "algebra_global::algebraic_normal_form_of_boolean_function after BF->compute_polynomial_representation" << endl;
 	}
 
 	cout << "algebraic normal form:" << endl;
@@ -1462,7 +1504,7 @@ void algebra_global::algebraic_normal_form(field_theory::finite_field *F,
 	FREE_OBJECT(BF);
 
 	if (f_v) {
-		cout << "algebra_global::algebraic_normal_form done" << endl;
+		cout << "algebra_global::algebraic_normal_form_of_boolean_function done" << endl;
 	}
 }
 
@@ -1523,7 +1565,7 @@ void algebra_global::apply_power_function(field_theory::finite_field *F,
 
 	char str[1000];
 
-	sprintf(str, "_power_%ld.csv", d);
+	snprintf(str, sizeof(str), "_power_%ld.csv", d);
 	fname_csv_out.append(str);
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
@@ -1684,12 +1726,294 @@ void algebra_global::Vandermonde_matrix(field_theory::finite_field *F, int *&W, 
 	}
 }
 
-void algebra_global::search_APN(field_theory::finite_field *F, int verbose_level)
+void algebra_global::search_APN(field_theory::finite_field *F, int delta_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int q;
+	int *f;
+	int delta, nb_times;
+	int *A_matrix;
+	int *B_matrix;
+	int *Count_ab;
+	int *nb_times_ab;
+	int i, j;
+
+	if (f_v) {
+		cout << "algebra_global::search_APN" << endl;
+	}
+	q = F->q;
+	delta = delta_max;
+	nb_times = 0;
+	f = NEW_int(q);
+
+	A_matrix = NEW_int(q * q);
+	B_matrix = NEW_int(q * q);
+	Count_ab = NEW_int(q * q);
+	nb_times_ab = NEW_int(q * q);
+
+	std::vector<std::vector<int> > Solutions;
+
+	Int_vec_zero(A_matrix, q * q);
+	Int_vec_zero(B_matrix, q * q);
+	Int_vec_zero(Count_ab, q * q);
+	Int_vec_zero(nb_times_ab, q * q);
+
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			A_matrix[i * q + j] = F->add(i, F->negate(j));
+		}
+	}
+	search_APN_recursion(F,
+			f,
+			0 /* depth */,
+			TRUE,
+			delta, nb_times,
+			Solutions,
+			A_matrix, B_matrix, Count_ab, nb_times_ab,
+			verbose_level);
+	cout << "search_APN_recursion finished" << endl;
+	cout << "delta = " << delta << endl;
+	cout << "nb_times = " << nb_times << endl;
+
+	string fname;
+	char str[1000];
+	orbiter_kernel_system::file_io Fio;
+
+	snprintf(str, sizeof(str), "APN_functions_q%d.csv", F->q);
+
+	fname.assign(str);
+	Fio.vector_matrix_write_csv(fname, Solutions);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	FREE_int(A_matrix);
+	FREE_int(B_matrix);
+	FREE_int(Count_ab);
+	FREE_int(nb_times_ab);
+	FREE_int(f);
+
+	if (f_v) {
+		cout << "algebra_global::search_APN done" << endl;
+	}
+}
+
+
+void algebra_global::search_APN_recursion(field_theory::finite_field *F,
+		int *f, int depth, int f_normalize,
+		int &delta_max, int &nb_times,
+		std::vector<std::vector<int> > &Solutions,
+		int *A_matrix, int *B_matrix, int *Count_ab, int *nb_times_ab,
+		int verbose_level)
+{
+	if (depth == F->q) {
+		int delta;
+
+		delta = differential_uniformity(F, f, nb_times_ab, 0 /* verbose_level */);
+		if (delta < delta_max) {
+			delta_max = delta;
+			nb_times = 1;
+
+			Solutions.clear();
+
+			vector<int> S;
+			int i;
+
+			for (i = 0; i < F->q; i++) {
+				S.push_back(f[i]);
+			}
+			Solutions.push_back(S);
+
+			Int_vec_print(cout, f, F->q);
+			cout << " delta = " << delta << " nb_times=" << nb_times << endl;
+		}
+		else if (delta == delta_max) {
+			nb_times++;
+			int f_do_it;
+
+			if (nb_times > 100) {
+				if ((nb_times % 10000) == 0) {
+					f_do_it = TRUE;
+				}
+				else {
+					f_do_it = FALSE;
+				}
+			}
+			else {
+				f_do_it = TRUE;
+			}
+
+			vector<int> S;
+			int i;
+
+			for (i = 0; i < F->q; i++) {
+				S.push_back(f[i]);
+			}
+			Solutions.push_back(S);
+
+			if (f_do_it) {
+				Int_vec_print(cout, f, F->q);
+				cout << " delta = " << delta << " nb_times=" << nb_times << endl;
+			}
+		}
+		return;
+	}
+
+	int fxd;
+	int f_normalize_below;
+
+	f_normalize_below = f_normalize;
+
+	for (fxd = 0; fxd < F->q; fxd++) {
+		if (f_normalize) {
+			if (fxd) {
+				f_normalize_below = FALSE;
+				if (fxd != 1) {
+					continue;
+				}
+			}
+		}
+		f[depth] = fxd;
+
+		if (search_APN_perform_checks(F,
+				f, depth,
+				delta_max,
+				A_matrix, B_matrix, Count_ab,
+				0 /*verbose_level*/)) {
+
+			search_APN_recursion(F,
+					f, depth + 1, f_normalize_below,
+					delta_max, nb_times,
+					Solutions,
+					A_matrix, B_matrix, Count_ab, nb_times_ab,
+					verbose_level);
+
+			search_APN_undo_checks(F,
+					f, depth,
+					delta_max,
+					A_matrix, B_matrix, Count_ab,
+					0 /*verbose_level*/);
+
+		}
+		else {
+			// cannot choose this value. Continue with the search.
+		}
+	}
+}
+
+int algebra_global::search_APN_perform_checks(field_theory::finite_field *F,
+		int *f, int depth,
+		int delta_max,
+		int *A_matrix, int *B_matrix, int *Count_ab,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "algebra_global::search_APN_perform_checks" << endl;
+	}
+	for (i = 0; i < depth; i++) {
+		if (!perform_single_check(F,
+				f, depth, i, delta_max,
+				A_matrix, B_matrix, Count_ab,
+				verbose_level)) {
+			for (j = i - 1; j >= 0; j--) {
+				undo_single_check(F,
+								f, depth, j, delta_max,
+								A_matrix, B_matrix, Count_ab,
+								verbose_level);
+			}
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+void algebra_global::search_APN_undo_checks(field_theory::finite_field *F,
+		int *f, int depth,
+		int delta_max,
+		int *A_matrix, int *B_matrix, int *Count_ab,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "algebra_global::search_APN_undo_checks" << endl;
+	}
+	for (i = depth - 1; i >= 0; i--) {
+		undo_single_check(F,
+						f, depth, i, delta_max,
+						A_matrix, B_matrix, Count_ab,
+						verbose_level);
+	}
+}
+
+
+int algebra_global::perform_single_check(field_theory::finite_field *F,
+		int *f, int depth, int i, int delta_max,
+		int *A_matrix, int *B_matrix, int *Count_ab,
+		int verbose_level)
+{
+	int q;
+	int a1, b1, a2, b2;
+
+	q = F->q;
+	a1 = A_matrix[i * q + depth];
+	b1 = F->add(f[depth], F->negate(f[i]));
+	if (Count_ab[a1 * q + b1] == delta_max) {
+		return FALSE;
+	}
+	B_matrix[i * q + depth] = b1;
+	Count_ab[a1 * q + b1]++;
+
+	a2 = A_matrix[depth * q + i];
+	b2 = F->add(f[i], F->negate(f[depth]));
+	if (Count_ab[a2 * q + b2] == delta_max) {
+		Count_ab[a1 * q + b1]--;
+		B_matrix[i * q + depth] = 0;
+		return FALSE;
+	}
+	B_matrix[depth * q + i] = b2;
+	Count_ab[a2 * q + b2]++;
+	return TRUE;
+}
+
+void algebra_global::undo_single_check(field_theory::finite_field *F,
+		int *f, int depth, int i, int delta_max,
+		int *A_matrix, int *B_matrix, int *Count_ab,
+		int verbose_level)
+{
+	int q;
+	int a1, b1, a2, b2;
+
+	q = F->q;
+	a1 = A_matrix[i * q + depth];
+	b1 = F->add(f[depth], F->negate(f[i]));
+	if (Count_ab[a1 * q + b1] == 0) {
+		cout << "algebra_global::undo_single_check "
+				"Count_ab[a1 * q + b1] == 0" << endl;
+		exit(1);
+	}
+	B_matrix[i * q + depth] = b1;
+	Count_ab[a1 * q + b1]--;
+	a2 = A_matrix[depth * q + i];
+	b2 = F->add(f[i], F->negate(f[depth]));
+	if (Count_ab[a2 * q + b2] == 0) {
+		cout << "algebra_global::undo_single_check "
+				"Count_ab[a2 * q + b2] == 0" << endl;
+		exit(1);
+	}
+	B_matrix[depth * q + i] = b2;
+	Count_ab[a2 * q + b2]--;
+}
+
+void algebra_global::search_APN_old(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q;
 	int *f;
 	int delta_min, nb_times;
+	int *tmp_qxq;
 
 	if (f_v) {
 		cout << "algebra_global::search_APN" << endl;
@@ -1698,13 +2022,16 @@ void algebra_global::search_APN(field_theory::finite_field *F, int verbose_level
 	delta_min = INT_MAX;
 	nb_times = 0;
 	f = NEW_int(q);
+	tmp_qxq = NEW_int(q * q);
 
 	std::vector<std::vector<int> > Solutions;
 
-	search_APN_recursion(F,
+	search_APN_recursion_old(F,
 			f,
 			0 /* depth */,
+			TRUE,
 			delta_min, nb_times, Solutions,
+			tmp_qxq,
 			verbose_level);
 	cout << "nb_times = " << nb_times << endl;
 	FREE_int(f);
@@ -1713,26 +2040,31 @@ void algebra_global::search_APN(field_theory::finite_field *F, int verbose_level
 	char str[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	sprintf(str, "APN_functions_q%d.csv", F->q);
+	snprintf(str, sizeof(str), "APN_functions_q%d.csv", F->q);
 
 	fname.assign(str);
 	Fio.vector_matrix_write_csv(fname, Solutions);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
+	FREE_int(tmp_qxq);
 
 	if (f_v) {
 		cout << "algebra_global::search_APN done" << endl;
 	}
 }
 
-void algebra_global::search_APN_recursion(field_theory::finite_field *F,
-		int *f, int depth, int &delta_min, int &nb_times,
-		std::vector<std::vector<int> > &Solutions, int verbose_level)
+void algebra_global::search_APN_recursion_old(field_theory::finite_field *F,
+		int *f, int depth, int f_normalize,
+		int &delta_min, int &nb_times,
+		std::vector<std::vector<int> > &Solutions,
+		int *nb_times_ab,
+		int verbose_level)
 {
 	if (depth == F->q) {
 		int delta;
 
-		delta = non_linearity(F, f, 0 /* verbose_level */);
+		delta = differential_uniformity(F, f, nb_times_ab, 0 /* verbose_level */);
 		if (delta < delta_min) {
 			delta_min = delta;
 			nb_times = 1;
@@ -1783,36 +2115,52 @@ void algebra_global::search_APN_recursion(field_theory::finite_field *F,
 	}
 
 	int a;
+	int f_normalize_below;
+
+	f_normalize_below = f_normalize;
 
 	for (a = 0; a < F->q; a++) {
-		f[depth]= a;
-		search_APN_recursion(F,
-				f, depth + 1, delta_min, nb_times, Solutions, verbose_level);
+		if (f_normalize) {
+			if (a) {
+				f_normalize_below = FALSE;
+				if (a != 1) {
+					continue;
+				}
+			}
+		}
+		f[depth] = a;
+		search_APN_recursion_old(F,
+				f, depth + 1, f_normalize_below,
+				delta_min, nb_times, Solutions, nb_times_ab,
+				verbose_level);
 	}
 }
 
-int algebra_global::non_linearity(field_theory::finite_field *F, int *f, int verbose_level)
+int algebra_global::differential_uniformity(field_theory::finite_field *F,
+		int *f, int *nb_times_ab, int verbose_level)
 // f[q]
 {
 	int f_v = (verbose_level >= 1);
 	int q;
-	int a, av, x, b, fx, fxpa, mfx, dy, delta;
-	int *nb_times_ab;
+	int a, x, b, fx, fxpa, mfx, delta;
 
 	if (f_v) {
-		cout << "algebra_global::non_linearity" << endl;
+		cout << "algebra_global::differential_uniformity" << endl;
 	}
 	q = F->q;
-	nb_times_ab = NEW_int(q * q);
 	Int_vec_zero(nb_times_ab, q * q);
 	for (x = 0; x < q; x++) {
 		fx = f[x];
 		mfx = F->negate(fx);
 		for (a = 1; a < q; a++) {
 			fxpa = f[F->add(x, a)];
+#if 0
 			av = F->inverse(a);
 			dy = F->add(fxpa, mfx);
 			b = F->mult(dy, av);
+#else
+			b = F->add(fxpa, mfx);
+#endif
 			nb_times_ab[a * q + b]++;
 		}
 	}
@@ -1822,7 +2170,51 @@ int algebra_global::non_linearity(field_theory::finite_field *F, int *f, int ver
 			delta = MAXIMUM(delta, nb_times_ab[a * q + b]);
 		}
 	}
-	FREE_int(nb_times_ab);
+	return delta;
+}
+
+int algebra_global::differential_uniformity_with_fibre(field_theory::finite_field *F,
+		int *f, int *nb_times_ab, int *&Fibre, int verbose_level)
+// f[q]
+{
+	int f_v = (verbose_level >= 1);
+	int q;
+	int a, x, b, fx, fxpa, mfx, delta;
+
+	if (f_v) {
+		cout << "algebra_global::differential_uniformity" << endl;
+	}
+	q = F->q;
+	Int_vec_zero(nb_times_ab, q * q);
+	for (x = 0; x < q; x++) {
+		fx = f[x];
+		mfx = F->negate(fx);
+		for (a = 1; a < q; a++) {
+			fxpa = f[F->add(x, a)];
+			b = F->add(fxpa, mfx);
+			nb_times_ab[a * q + b]++;
+		}
+	}
+	delta = 0;
+	for (a = 1; a < q; a++) {
+		for (b = 0; b < q; b++) {
+			delta = MAXIMUM(delta, nb_times_ab[a * q + b]);
+		}
+	}
+
+	Fibre = NEW_int(q * q * delta);
+	Int_vec_zero(nb_times_ab, q * q);
+	for (x = 0; x < q; x++) {
+		fx = f[x];
+		mfx = F->negate(fx);
+		for (a = 1; a < q; a++) {
+			fxpa = f[F->add(x, a)];
+			b = F->add(fxpa, mfx);
+			Fibre[(a * q + b) * delta + nb_times_ab[a * q + b]] = x;
+			nb_times_ab[a * q + b]++;
+		}
+	}
+
 	return delta;
 }
 

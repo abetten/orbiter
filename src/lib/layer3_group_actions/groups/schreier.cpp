@@ -49,19 +49,7 @@ schreier::schreier()
 
 }
 
-schreier::schreier(actions::action *A, int verbose_level)
-{
-	init(A, verbose_level);
-}
-
 schreier::~schreier()
-{
-	//cout << "in ~schreier()" << endl;
-	freeself();
-	//cout << "~schreier() finished" << endl;
-}
-
-void schreier::freeself()
 {
 	//cout << "deleting A" << endl;
 	if (A) {
@@ -97,6 +85,12 @@ void schreier::freeself()
 	//cout << "deleting images" << endl;
 	delete_images();
 }
+
+schreier::schreier(actions::action *A, int verbose_level)
+{
+	init(A, verbose_level);
+}
+
 
 void schreier::delete_images()
 {
@@ -1054,7 +1048,7 @@ void schreier::compute_all_point_orbits(int verbose_level)
 					<< ", computing orbit of pt_pref=" << pt_pref << endl;
 			pt0 = pt;
 		}
-		compute_point_orbit(pt_pref, verbose_level - 2);
+		compute_point_orbit(pt_pref, 0 /*verbose_level - 2*/);
 	}
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
@@ -1085,7 +1079,7 @@ void schreier::compute_all_point_orbits_with_prefered_reps(
 		if (pt_loc < cur) {
 			continue;
 		}
-		compute_point_orbit(pt, verbose_level - 1);
+		compute_point_orbit(pt, 0 /*verbose_level - 1*/);
 	}
 	for (pt = 0; pt < degree; pt++) {
 		pt_loc = orbit_inv[pt];
@@ -1093,7 +1087,7 @@ void schreier::compute_all_point_orbits_with_prefered_reps(
 		if (pt_loc < cur) {
 			continue;
 		}
-		compute_point_orbit(pt, verbose_level - 1);
+		compute_point_orbit(pt, 0 /*verbose_level - 1*/);
 	}
 	if (f_v) {
 		cout << "found " << nb_orbits << " orbits";
@@ -1159,7 +1153,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 					"preferred_labels computing orbit of point "
 					<< pt << " = " << a << " / " << degree << endl;
 		}
-		compute_point_orbit(pt, verbose_level - 2);
+		compute_point_orbit(pt, 0 /*verbose_level - 2*/);
 		if (f_v) {
 			cout << "schreier::compute_all_point_orbits_with_"
 					"preferred_labels computing orbit of point "
@@ -1309,7 +1303,7 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 						<< " using generator " << i << endl;
 			}
 
-			next_pt = get_image(cur_pt, i, verbose_level);
+			next_pt = get_image(cur_pt, i, 0 /*verbose_level*/);
 
 
 				// A->element_image_of(cur_pt, gens.ith(i), FALSE);

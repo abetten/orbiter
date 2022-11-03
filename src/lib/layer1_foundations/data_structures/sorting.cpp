@@ -1264,7 +1264,7 @@ int sorting::lint_vec_search(long int *v, int len,
 
 int sorting::vector_lint_search(std::vector<long int> &v,
 		long int a, int &idx, int verbose_level)
-// This function finds the last occurence of the element a.
+// This function finds the last occurrence of the element a.
 // If a is not found, it returns in idx the position
 // where it should be inserted if
 // the vector is assumed to be in increasing order.
@@ -1345,14 +1345,14 @@ int sorting::vector_lint_search(std::vector<long int> &v,
 int sorting::int_vec_search_first_occurrence(int *v,
 		int len, int a, int &idx,
 		int verbose_level)
-// This function finds the first occurence of the element a.
+// This function finds the first occurrence of the element a.
 {
 	int l, r, m; //, res;
 	int f_found = FALSE;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "int_vec_search_first_occurence searching for " << a
+		cout << "sorting::int_vec_search_first_occurrence searching for " << a
 				<< " len=" << len << endl;
 		}
 	if (len == 0) {
@@ -1362,7 +1362,7 @@ int sorting::int_vec_search_first_occurrence(int *v,
 	l = 0;
 	r = len;
 	if (f_v) {
-		cout << "int_vec_search_first_occurence searching for "
+		cout << "sorting::int_vec_search_first_occurrence searching for "
 				<< a << " l=" << l << " r=" << r << endl;
 		}
 	// invariant:
@@ -1375,7 +1375,7 @@ int sorting::int_vec_search_first_occurrence(int *v,
 		// we examine the element above the middle
 		//res = v[m] - a;
 		if (f_v) {
-			cout << "int_vec_search_first_occurence l=" << l
+			cout << "sorting::int_vec_search_first_occurrence l=" << l
 					<< " r=" << r<< " m=" << m  << " v[m]=" << v[m] << endl;
 					//<< " res=" << res << endl;
 			}
@@ -1388,19 +1388,19 @@ int sorting::int_vec_search_first_occurrence(int *v,
 		if (v[m] < a /*res < 0*/) {
 			l = m + 1;
 			if (f_v) {
-				cout << "int_vec_search_first_occurence "
+				cout << "sorting::int_vec_search_first_occurrence "
 						"moving to the right" << endl;
 				}
 			}
 		else {
 			r = m;
 			if (f_v) {
-				cout << "int_vec_search_first_occurence "
+				cout << "sorting::int_vec_search_first_occurrence "
 						"moving to the left" << endl;
 				}
 			if (v[m] == a /*res == 0*/) {
 				if (f_v) {
-					cout << "int_vec_search_first_occurence "
+					cout << "sorting::int_vec_search_first_occurrence "
 							"we found the element" << endl;
 					}
 				f_found = TRUE;
@@ -1416,7 +1416,7 @@ int sorting::int_vec_search_first_occurrence(int *v,
 #endif
 	idx = l;
 	if (f_v) {
-		cout << "int_vec_search_first_occurence done "
+		cout << "sorting::int_vec_search_first_occurrence done "
 				"f_found=" << f_found << " idx=" << idx << endl;
 		}
 	return f_found;

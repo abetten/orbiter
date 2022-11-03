@@ -17,16 +17,6 @@ namespace poset_classification {
 
 orbit_based_testing::orbit_based_testing()
 {
-	null();
-}
-
-orbit_based_testing::~orbit_based_testing()
-{
-	freeself();
-}
-
-void orbit_based_testing::null()
-{
 	int i;
 
 	PC = NULL;
@@ -44,12 +34,11 @@ void orbit_based_testing::null()
 	}
 }
 
-void orbit_based_testing::freeself()
+orbit_based_testing::~orbit_based_testing()
 {
 	if (local_S) {
 		FREE_lint(local_S);
 	}
-	null();
 }
 
 void orbit_based_testing::init(

@@ -83,8 +83,6 @@ public:
 	compute_stabilizer();
 	~compute_stabilizer();
 
-	void null();
-	void freeself();
 	void init(
 			substructure_stats_and_selection *SubSt,
 			long int *canonical_pts,

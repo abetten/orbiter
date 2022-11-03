@@ -109,7 +109,8 @@ int tdo_data::solve_first_system(int verbose_level,
 			if (nb_line_types >= line_types_allocated) {
 				int new_nb_line_types = line_types_allocated + 100;
 				if (f_v) {
-					cout << "tdo_data::solve_first_system reallocating to " << new_nb_line_types << endl;
+					cout << "tdo_data::solve_first_system "
+							"reallocating to " << new_nb_line_types << endl;
 				}
 				int *new_line_types = NEW_int(new_nb_line_types * nb_vars);
 				for (i = 0; i < nb_line_types * nb_vars; i++) {

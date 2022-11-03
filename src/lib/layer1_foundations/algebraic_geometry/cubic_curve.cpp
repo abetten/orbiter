@@ -37,16 +37,10 @@ cubic_curve::cubic_curve()
 
 cubic_curve::~cubic_curve()
 {
-	freeself();
-}
-
-
-void cubic_curve::freeself()
-{
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "cubic_curve::freeself" << endl;
+		cout << "cubic_curve::~cubic_curve" << endl;
 	}
 	if (P) {
 		FREE_OBJECT(P);

@@ -562,9 +562,9 @@ void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 	char str_a[1000];
 	char str_b[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_a, "%d", a);
-	sprintf(str_b, "%d", b);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_a, sizeof(str_a), "%d", a);
+	snprintf(str_b, sizeof(str_b), "%d", b);
 
 
 	prefix.assign("family_Eckardt_q");
@@ -638,8 +638,8 @@ void surface_create::create_surface_G13(int a, int verbose_level)
 	char str_q[1000];
 	char str_a[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_a, "%d", a);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_a, sizeof(str_a), "%d", a);
 
 
 
@@ -706,8 +706,8 @@ void surface_create::create_surface_F13(int a, int verbose_level)
 	char str_q[1000];
 	char str_a[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_a, "%d", a);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_a, sizeof(str_a), "%d", a);
 
 
 
@@ -778,9 +778,9 @@ void surface_create::create_surface_bes(int a, int c, int verbose_level)
 	char str[1000];
 	char str2[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str, "_a%d_c%d", a, c);
-	sprintf(str2, "\\_a%d\\_c%d", a, c);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str, sizeof(str), "_a%d_c%d", a, c);
+	snprintf(str2, sizeof(str2), "\\_a%d\\_c%d", a, c);
 
 
 
@@ -851,9 +851,9 @@ void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int
 	char str[1000];
 	char str2[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str, "_a%d_b%d_c%d_d%d", a, b, c, d);
-	sprintf(str2, "\\_a%d\\_b%d\\_c%d\\_d%d", a, b, c, d);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str, sizeof(str), "_a%d_b%d_c%d_d%d", a, b, c, d);
+	snprintf(str2, sizeof(str2), "\\_a%d\\_b%d\\_c%d\\_d%d", a, b, c, d);
 
 
 
@@ -1044,7 +1044,7 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 
 	char str_q[1000];
 
-	sprintf(str_q, "%d", F->q);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
 
 	prefix.assign("by_coefficients_q");
@@ -1237,7 +1237,7 @@ void surface_create::create_surface_by_rank(std::string &rank_text, int defining
 
 	char str_q[1000];
 
-	sprintf(str_q, "%d", F->q);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
 
 	prefix.assign("by_rank_q");
@@ -1374,8 +1374,8 @@ void surface_create::create_surface_from_catalogue(int iso,
 	char str_q[1000];
 	char str_a[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_a, "%d", iso);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_a, sizeof(str_a), "%d", iso);
 
 
 
@@ -1489,8 +1489,8 @@ void surface_create::create_surface_by_arc_lifting(
 	char str_q[1000];
 	char str_a[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_a, sizeof(str_a), "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 
 	prefix.assign("arc_lifting_trihedral_q");
@@ -1503,7 +1503,7 @@ void surface_create::create_surface_by_arc_lifting(
 	label_txt.append("_arc");
 	label_txt.append(str_a);
 
-	sprintf(str_a, "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_a, sizeof(str_a), "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 	label_tex.assign("arc\\_lifting\\_trihedral\\_q");
 	label_tex.append(str_q);
@@ -1614,9 +1614,9 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	char str_lines[1000];
 	char str_a[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_lines, "%ld_%ld", line1, line2);
-	sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_lines, sizeof(str_lines), "%ld_%ld", line1, line2);
+	snprintf(str_a, sizeof(str_a), "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 
 	prefix.assign("arc_lifting_with_two_lines_q");
@@ -1633,8 +1633,8 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	label_txt.append("_arc");
 	label_txt.append(str_a);
 
-	sprintf(str_lines, "\\_%ld\\_%ld", line1, line2);
-	sprintf(str_a, "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_lines, sizeof(str_lines), "\\_%ld\\_%ld", line1, line2);
+	snprintf(str_a, sizeof(str_a), "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 	label_tex.assign("arc\\_lifting\\_with\\_two\\_lines\\_q");
 	label_tex.append(str_q);
@@ -1710,8 +1710,8 @@ void surface_create::create_surface_Cayley_form(
 	char str_q[1000];
 	char str_parameters[1000];
 
-	sprintf(str_q, "%d", F->q);
-	sprintf(str_parameters, "klmn_%d_%d_%d_%d", k, l, m, n);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	snprintf(str_parameters, sizeof(str_parameters), "klmn_%d_%d_%d_%d", k, l, m, n);
 
 
 	prefix.assign("Cayley_q");
@@ -1724,7 +1724,7 @@ void surface_create::create_surface_Cayley_form(
 	label_txt.append("_");
 	label_txt.append(str_parameters);
 
-	sprintf(str_parameters, "klmn\\_%d\\_%d\\_%d\\_%d", k, l, m, n);
+	snprintf(str_parameters, sizeof(str_parameters), "klmn\\_%d\\_%d\\_%d\\_%d", k, l, m, n);
 
 	label_tex.assign("Cayley\\_q");
 	label_tex.append(str_q);
@@ -2020,7 +2020,7 @@ int surface_create::create_surface_by_equation(
 
 	char str_q[1000];
 
-	sprintf(str_q, "%d", F->q);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
 
 	prefix.assign("equation_");
@@ -2173,7 +2173,7 @@ void surface_create::create_surface_by_double_six(
 
 	char str_q[1000];
 
-	sprintf(str_q, "%d", F->q);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
 
 	prefix.assign("DoubleSix_q");
@@ -2314,7 +2314,7 @@ void surface_create::create_surface_by_skew_hexagon(
 
 	char str_q[1000];
 
-	sprintf(str_q, "%d", F->q);
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
 
 	prefix.assign("SkewHexagon_q");
@@ -2578,7 +2578,7 @@ void surface_create::compute_group(
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
 	for (i = 0; i < SO->nb_pts; i++) {
 		a = SO->Pts[i];
-		sprintf(str, "%ld", a);
+		snprintf(str, sizeof(str), "%ld", a);
 		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
 		if (i < SO->nb_pts - 1) {
 			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
@@ -2771,7 +2771,7 @@ void surface_create::do_report(int verbose_level)
 			summary_file_name.append("_summary.csv");
 
 
-			sprintf(str, "-Q%d", F->q);
+			snprintf(str, sizeof(str), "-Q%d", F->q);
 			col_postfix.assign(str);
 
 			if (f_v) {

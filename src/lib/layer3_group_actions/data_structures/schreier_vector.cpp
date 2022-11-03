@@ -1157,15 +1157,20 @@ void schreier_vector::export_tree_as_layered_graph(
 	for (j = 0; j < len; j++) {
 		char text[1000];
 
-		sprintf(text, "%ld", orbit_elts[j]);
+		snprintf(text, sizeof(text), "%ld", orbit_elts[j]);
 		l = orbit_depth[j];
+
+		string text2;
+
+		text2.assign(text);
+
 		LG->add_text(l, horizontal_position[j],
-				text, 0/*verbose_level*/);
+				text2, 0/*verbose_level*/);
 	}
 	char str[1000];
 	string fname;
 
-	sprintf(str, fname_mask.c_str(), orbit_no);
+	snprintf(str, sizeof(str), fname_mask.c_str(), orbit_no);
 	fname.assign(str);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	FREE_OBJECT(LG);

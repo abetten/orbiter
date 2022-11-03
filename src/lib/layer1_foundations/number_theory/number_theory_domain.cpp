@@ -524,7 +524,7 @@ void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_
 		T[i * 4 + 2] = Table[i][2];
 		T[i * 4 + 3] = Table[i][3];
 	}
-	sprintf(str, "table_eulerfunction_%ld_%ld.csv", n_min, n_max);
+	snprintf(str, sizeof(str), "table_eulerfunction_%ld_%ld.csv", n_min, n_max);
 	string fname;
 
 	fname.assign(str);

@@ -127,7 +127,7 @@ void spread_tables::init(projective_space *P,
 	prefix.assign(path_to_spread_tables);
 
 	char str[1000];
-	sprintf(str, "spread_%d", NT.i_power_j(q, 2));
+	snprintf(str, sizeof(str), "spread_%d", NT.i_power_j(q, 2));
 
 	prefix.append(str);
 
@@ -265,7 +265,7 @@ void spread_tables::init_reduced(
 	prefix.assign(path_to_spread_tables);
 
 	char str[1000];
-	sprintf(str, "reduced_spread_%d", NT.i_power_j(q, 2));
+	snprintf(str, sizeof(str), "reduced_spread_%d", NT.i_power_j(q, 2));
 
 	prefix.append(str);
 

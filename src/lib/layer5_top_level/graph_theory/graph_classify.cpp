@@ -89,7 +89,7 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 
 	int N;
 	int target_depth;
-	char prefix[1000];
+	//char prefix[1000];
 	combinatorics::combinatorics_domain Combi;
 	
 
@@ -99,13 +99,13 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 	A_on_edges = NEW_OBJECT(actions::action);
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
-
+#if 0
 	if (Descr->f_tournament) {
 		if (f_v) {
 			cout << "graph_classify::init tournaments "
 					"on " << Descr->n << " vertices" << endl;
 			}
-		sprintf(prefix, "tournament_%d", Descr->n);
+		snprintf(prefix, sizeof(prefix), "tournament_%d", Descr->n);
 		if (Descr->f_no_superking) {
 			sprintf(prefix + strlen(prefix), "_no_superking");
 			}
@@ -115,7 +115,7 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 			cout << "graph_classify::init graphs "
 					"on " << Descr->n << " vertices" << endl;
 			}
-		sprintf(prefix, "graph_%d", Descr->n);
+		snprintf(prefix, sizeof(prefix), "graph_%d", Descr->n);
 		}
 	
 
@@ -131,7 +131,7 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 	if (f_v) {
 		cout << "prefix=" << prefix << endl;
 		}
-	
+#endif
 	
 	n2 = Combi.int_n_choose_k(Descr->n, 2);
 	if (f_v) {
@@ -815,7 +815,7 @@ void graph_classify::draw_graphs(int level,
 
 		fname_full.assign(gen->get_problem_label_with_path());
 
-		sprintf(str, "_rep_%d_%d.mp", level, h);
+		snprintf(str, sizeof(str), "_rep_%d_%d.mp", level, h);
 
 		fname_full.append(str);
 
@@ -884,7 +884,7 @@ void graph_classify::draw_graphs(int level,
 
 	fname_list.assign(gen->get_problem_label_with_path());
 
-	sprintf(str, "_level_%d_reps", level);
+	snprintf(str, sizeof(str), "_level_%d_reps", level);
 	fname_list.append(str);
 	fname_list.append(".tex");
 
@@ -907,7 +907,7 @@ void graph_classify::draw_graphs(int level,
 
 			fname_full.assign(gen->get_problem_label_with_path());
 
-			sprintf(str, "_rep_%d_%d", level, h);
+			snprintf(str, sizeof(str), "_rep_%d_%d", level, h);
 
 			fname_full.append(str);
 

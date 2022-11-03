@@ -460,8 +460,6 @@ public:
 
 	graph_layer();
 	~graph_layer();
-	void null();
-	void freeself();
 	void init(int nb_nodes, int id_of_first_node, int verbose_level);
 	void place(int verbose_level);
 	void place_with_grouping(int *group_size, int nb_groups, 
@@ -480,7 +478,7 @@ public:
 
 class graph_node {
 public:
-	char *label;
+	std::string label;
 	int id;
 
 	int f_has_data1;
@@ -518,10 +516,8 @@ public:
 
 	graph_node();
 	~graph_node();
-	void null();
-	void freeself();
 	void add_neighbor(int l, int n, int id);
-	void add_text(const char *text);
+	void add_text(std::string &text);
 	void add_vec_data(long int *v, int len);
 	void set_distinguished_element(int idx);
 	void add_data1(int data);
@@ -664,8 +660,6 @@ public:
 
 	layered_graph();
 	~layered_graph();
-	void null();
-	void freeself();
 	void init(int nb_layers, int *Nb_nodes_layer, 
 			std::string &fname_base, int verbose_level);
 	int nb_nodes();
@@ -677,7 +671,7 @@ public:
 	void place_with_grouping(int **Group_sizes, int *Nb_groups, 
 		double x_stretch, int verbose_level);
 	void add_edge(int l1, int n1, int l2, int n2, int verbose_level);
-	void add_text(int l, int n, const char *text, int verbose_level);
+	void add_text(int l, int n, std::string &text, int verbose_level);
 	void add_data1(int data, int verbose_level);
 	void add_node_vec_data(int l, int n, long int *v, int len,
 		int verbose_level);
@@ -749,8 +743,6 @@ public:
 
 	rainbow_cliques();
 	~rainbow_cliques();
-	void null();
-	void freeself();
 
 	void search(clique_finder_control *Control,
 			colored_graph *graph,

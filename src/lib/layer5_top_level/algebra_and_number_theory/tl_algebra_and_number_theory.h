@@ -15,6 +15,159 @@ namespace orbiter {
 namespace layer5_applications {
 namespace apps_algebra {
 
+
+// #############################################################################
+// action_on_forms_activity_description.cpp
+// #############################################################################
+
+
+//! description of an action of forms
+
+
+class action_on_forms_activity_description {
+
+public:
+
+	int f_algebraic_normal_form;
+	std::string algebraic_normal_form_input;
+
+	int f_orbits_on_functions;
+	std::string orbits_on_functions_input;
+
+	int f_associated_set_in_plane;
+	std::string associated_set_in_plane_input;
+
+	int f_differential_uniformity;
+	std::string differential_uniformity_input;
+
+
+	action_on_forms_activity_description();
+	~action_on_forms_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// action_on_forms_activity.cpp
+// #############################################################################
+
+
+//! perform an activity associated with an action on forms
+
+class action_on_forms_activity {
+public:
+	action_on_forms_activity_description *Descr;
+
+	apps_algebra::action_on_forms *AF;
+
+	//any_group *AG_secondary; // used in is_subgroup_of, coset_reps
+
+
+
+	action_on_forms_activity();
+	~action_on_forms_activity();
+	void init(action_on_forms_activity_description *Descr,
+			apps_algebra::action_on_forms *AF,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void do_algebraic_normal_form(int verbose_level);
+	void do_orbits_on_functions(int verbose_level);
+	void do_associated_set_in_plane(int verbose_level);
+	void do_differential_uniformity(int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// action_on_forms_description.cpp
+// #############################################################################
+
+
+//! description of an action of forms
+
+
+class action_on_forms_description {
+
+public:
+
+	int f_space;
+	std::string space_label;
+
+	int f_degree;
+	int degree;
+
+
+	action_on_forms_description();
+	~action_on_forms_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+
+// #############################################################################
+// action_on_forms.cpp
+// #############################################################################
+
+
+//! an action of forms
+
+
+class action_on_forms {
+
+public:
+	action_on_forms_description *Descr;
+
+	std::string prefix;
+	std::string label_txt;
+	std::string label_tex;
+
+	int q;
+	field_theory::finite_field *F;
+
+	int f_semilinear;
+
+	projective_geometry::projective_space_with_action *PA;
+
+	combinatorics::polynomial_function_domain *PF;
+
+	actions::action *A_on_poly;
+
+	int f_has_group;
+	groups::strong_generators *Sg;
+
+
+
+
+	action_on_forms();
+	~action_on_forms();
+	void create_action_on_forms(
+			action_on_forms_description *Descr,
+			int verbose_level);
+	void algebraic_normal_form(int *func, int len, int verbose_level);
+	void orbits_on_functions(int *The_functions, int nb_functions, int len,
+			int verbose_level);
+	void orbits_on_equations(int *The_equations, int nb_equations, int len,
+			groups::schreier *&Orb,
+			actions::action *&A_on_equations,
+			int verbose_level);
+	void associated_set_in_plane(int *func, int len,
+			long int *&Rk, int verbose_level);
+	void differential_uniformity(int *func, int len, int verbose_level);
+
+};
+
+
 // #############################################################################
 // algebra_global_with_action.cpp
 // #############################################################################
@@ -230,7 +383,9 @@ public:
 			int order_of_subgroup,
 			int verbose_level);
 	void print_elements(int verbose_level);
-	void print_elements_tex(int verbose_level);
+	void print_elements_tex(int f_with_permutation,
+			int f_override_action, actions::action *A_special,
+			int verbose_level);
 	void order_of_products_of_elements(
 			std::string &Elements_text,
 			int verbose_level);

@@ -29,7 +29,6 @@ bitmatrix::~bitmatrix()
 	if (data) {
 		FREE_int((int *) data);
 	}
-	//freeself();
 }
 
 void bitmatrix::init(int m, int n, int verbose_level)

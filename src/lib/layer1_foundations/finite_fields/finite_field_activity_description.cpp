@@ -68,10 +68,13 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string Walsh_Hadamard_transform_fname_csv_in;
 	Walsh_Hadamard_transform_n = 0;
 
-	f_algebraic_normal_form = FALSE;
-	//std::string algebraic_normal_form_fname_csv_in;
-	algebraic_normal_form_n = 0;
+	f_algebraic_normal_form_of_boolean_function = FALSE;
+	//std::string algebraic_normal_form_of_boolean_function_fname_csv_in;
+	algebraic_normal_form_of_boolean_function_n = 0;
 
+	f_algebraic_normal_form = FALSE;
+	algebraic_normal_form_n = 0;
+	//std::string algebraic_normal_form_input;
 
 
 	f_apply_trace_function = FALSE;
@@ -342,16 +345,28 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-algebraic_normal_form") == 0) {
-			f_algebraic_normal_form = TRUE;
-			algebraic_normal_form_fname_csv_in.assign(argv[++i]);
-			algebraic_normal_form_n = ST.strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-algebraic_normal_form_of_boolean_function") == 0) {
+			f_algebraic_normal_form_of_boolean_function = TRUE;
+			algebraic_normal_form_of_boolean_function_fname_csv_in.assign(argv[++i]);
+			algebraic_normal_form_of_boolean_function_n = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-algebraic_normal_form "
-					<< algebraic_normal_form_fname_csv_in
-					<< " " << algebraic_normal_form_n << endl;
+				cout << "-algebraic_normal_form_of_boolean_function "
+					<< algebraic_normal_form_of_boolean_function_fname_csv_in
+					<< " " << algebraic_normal_form_of_boolean_function_n << endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-algebraic_normal_form") == 0) {
+			f_algebraic_normal_form = TRUE;
+			algebraic_normal_form_n = ST.strtoi(argv[++i]);
+			algebraic_normal_form_input.assign(argv[++i]);
+			if (f_v) {
+				cout << "-algebraic_normal_form "
+					<< algebraic_normal_form_n
+					<< " " << algebraic_normal_form_input << endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-apply_trace_function") == 0) {
 			f_apply_trace_function = TRUE;
@@ -828,10 +843,15 @@ void finite_field_activity_description::print()
 				<< " " << Walsh_Hadamard_transform_n << endl;
 	}
 
+	if (f_algebraic_normal_form_of_boolean_function) {
+		cout << "-algebraic_normal_form_of_boolean_function "
+				<< algebraic_normal_form_of_boolean_function_fname_csv_in
+				<< " " << algebraic_normal_form_of_boolean_function_n << endl;
+	}
 	if (f_algebraic_normal_form) {
-		cout << "-algebraic_normal_form "
-				<< algebraic_normal_form_fname_csv_in
-				<< " " << algebraic_normal_form_n << endl;
+			cout << "-algebraic_normal_form "
+				<< algebraic_normal_form_n
+				<< " " << algebraic_normal_form_input << endl;
 	}
 
 	if (f_apply_trace_function) {

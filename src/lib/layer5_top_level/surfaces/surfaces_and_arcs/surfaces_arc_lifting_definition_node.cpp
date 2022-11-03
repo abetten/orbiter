@@ -113,7 +113,7 @@ void surfaces_arc_lifting_definition_node::report(int verbose_level)
 	char fname_base[1000];
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(fname_base, "clebsch_maps_surface_%d", orbit_idx);
+	snprintf(fname_base, sizeof(fname_base), "clebsch_maps_surface_%d", orbit_idx);
 
 	char str[1000];
 	string title, author, extra_praeamble;
