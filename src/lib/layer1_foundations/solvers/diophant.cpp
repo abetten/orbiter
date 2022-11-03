@@ -931,7 +931,7 @@ void diophant::draw_solutions(std::string &fname_base, int verbose_level)
 		fname_base2.assign(fname_base);
 		char str[1000];
 		
-		sprintf(str, "_sol_%d", i);
+		snprintf(str, sizeof(str), "_sol_%d", i);
 		fname_base2.append(str);
 		
 #if 0

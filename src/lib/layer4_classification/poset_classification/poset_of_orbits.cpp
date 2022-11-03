@@ -511,18 +511,11 @@ void poset_of_orbits::init_root_node_from_base_case(int verbose_level)
 	}
 
 	first_poset_orbit_node_at_level[0] = 0;
-#if 0
-	root[0].freeself();
-	root[0].node = 0;
-	root[0].prev = -1;
-	root[0].nb_strong_generators = 0;
-	root[0].Schreier_vector = NULL;
-#else
+
 	root[0].init_node(0,
 			-1 /* the root node does not have an ancestor */,
 			-1 /* the root node does not have a pt */,
 			verbose_level);
-#endif
 
 	for (i = 0; i < PC->get_Base_case()->size; i++) {
 
@@ -537,27 +530,15 @@ void poset_of_orbits::init_root_node_from_base_case(int verbose_level)
 		}
 		first_poset_orbit_node_at_level[i + 1] =
 				first_poset_orbit_node_at_level[i] + 1;
-#if 0
-		root[i].E = NEW_OBJECTS(extension, 1);
-		root[i].nb_extensions = 1;
-#else
 		root[i].allocate_E(1 /* nb_extensions */, verbose_level);
-#endif
+
 		root[i].get_E(0)->set_type(EXTENSION_TYPE_EXTENSION);
 		root[i].get_E(0)->set_data(i + 1);
-#if 0
-		root[i + 1].freeself();
-		root[i + 1].node = i + 1;
-		root[i + 1].prev = i;
-		root[i + 1].pt = Base_case->orbit_rep[i];
-		root[i + 1].nb_strong_generators = 0;
-		root[i + 1].Schreier_vector = NULL;
-#else
+
 		root[i + 1].init_node(i + 1,
 					i,
 					PC->get_Base_case()->orbit_rep[i],
 					verbose_level);
-#endif
 	}
 	if (f_v) {
 		cout << "poset_of_orbits::init_root_node_from_base_case "
@@ -1147,7 +1128,7 @@ void poset_of_orbits::write_candidates_binary_using_sv(
 				"lvl=" << lvl << " fname_base=" << fname_base << endl;
 	}
 	PC->make_fname_candidates_file_default(fname, lvl);
-	//sprintf(fname, "%s_lvl_%d_candidates.bin", fname_base, lvl);
+
 	{
 	int fst, len;
 	int *nb_cand;
@@ -1369,7 +1350,7 @@ void poset_of_orbits::write_lvl_file_with_candidates(
 	orbiter_kernel_system::os_interface Os;
 
 	fname1.assign(fname_base);
-	sprintf(str, "_lvl_%d_candidates.txt", lvl);
+	snprintf(str, sizeof(str), "_lvl_%d_candidates.txt", lvl);
 	fname1.append(str);
 	{
 		ofstream f(fname1);
@@ -1478,8 +1459,6 @@ void poset_of_orbits::write_lvl_file(
 	string fname1;
 	orbiter_kernel_system::file_io Fio;
 	orbiter_kernel_system::os_interface Os;
-
-	//sprintf(fname1, "%s_lvl_%d", fname_base, lvl);
 
 	PC->make_fname_lvl_file(fname1, fname_base, lvl);
 	{

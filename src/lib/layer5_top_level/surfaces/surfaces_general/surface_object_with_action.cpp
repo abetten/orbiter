@@ -1405,7 +1405,7 @@ void surface_object_with_action::print_automorphism_group_gnerators(std::ostream
 
 
 			label_group.assign("label_txt_proj_grp_syl_");
-			sprintf(str, "%d", Syl->primes[idx]);
+			snprintf(str, sizeof(str), "%d", Syl->primes[idx]);
 			label_group.append(str);
 
 			if (f_v) {
@@ -1424,7 +1424,7 @@ void surface_object_with_action::print_automorphism_group_gnerators(std::ostream
 					verbose_level - 2);
 
 			label_group.assign("label_txt_proj_grp_syl_");
-			sprintf(str, "%d", Syl->primes[idx]);
+			snprintf(str, sizeof(str), "%d", Syl->primes[idx]);
 			label_group.append(str);
 			label_group.append("_on_lines");
 

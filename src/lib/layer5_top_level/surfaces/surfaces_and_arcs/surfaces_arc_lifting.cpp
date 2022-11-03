@@ -135,7 +135,7 @@ void surfaces_arc_lifting::init(
 
 	fname_base.assign("surfaces_arc_lifting_");
 	char str[1000];
-	sprintf(str, "%d", q);
+	snprintf(str, sizeof(str), "%d", q);
 	fname_base.append(str);
 
 	A4 = Surf_A->PA->A;
@@ -851,7 +851,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 	//ost << "\\section{Cubic Surfaces over the field $\\mathbb F}_{" << q << "}$}" << endl << endl;
 
 	char str[1000];
-	sprintf(str, "\\section{The Classification of Cubic Surfaces with 27 Lines "
+	snprintf(str, sizeof(str), "\\section{The Classification of Cubic Surfaces with 27 Lines "
 			"over the field ${\\mathbb F}_{%d}$}", q);
 
 	string title;

@@ -21,19 +21,8 @@ namespace graph_theory {
 
 graph_node::graph_node()
 {
-	null();
-}
-
-graph_node::~graph_node()
-{
-	freeself();
-}
-
-void graph_node::null()
-{
-	label = NULL;
+	// std::string label;
 	id = -1;
-	layer = -1;
 	f_has_data1 = FALSE;
 	data1 = -1;
 	f_has_data2 = FALSE;
@@ -43,34 +32,38 @@ void graph_node::null()
 	f_has_vec_data = FALSE;
 	vec_data = NULL;
 	vec_data_len = 0;
+
 	f_has_distinguished_element = FALSE;
 	distinguished_element_index = -1;
+
+
+	layer = -1;
+	neighbor_list_allocated = 0;
 	nb_neighbors = 0;
 	neighbor_list = NULL;
-	neighbor_list_allocated = 0;
-	child_id = NULL;
+	x_coordinate = 0;
+
 	nb_children = 0;
 	nb_children_allocated = 0;
+	child_id = NULL;
 	weight_of_subtree = 1;
+	width = 0;
 	depth_first_node_rank = -1;
 	radius_factor = 1.;
 }
 
-void graph_node::freeself()
+
+graph_node::~graph_node()
 {
-	if (label) {
-		FREE_char(label);
-		}
 	if (neighbor_list) {
 		FREE_int(neighbor_list);
-		}
+	}
 	if (f_has_vec_data) {
 		FREE_lint(vec_data);
-		}
+	}
 	if (child_id) {
 		FREE_int(child_id);
-		}
-	null();
+	}
 }
 
 void graph_node::add_neighbor(int l, int n, int id)
@@ -101,18 +94,10 @@ void graph_node::add_neighbor(int l, int n, int id)
 	nb_neighbors++;
 }
 
-void graph_node::add_text(const char *text)
+void graph_node::add_text(std::string &text)
 {
-	int l;
-	char *p;
 
-	l = strlen(text);
-	p = NEW_char(l + 1);
-	strcpy(p, text);
-	if (label) {
-		FREE_char(label);
-		}
-	label = p;
+	label.assign(text);
 }
 
 void graph_node::add_vec_data(long int *v, int len)
@@ -157,12 +142,8 @@ void graph_node::write_memory_object(
 	if (f_v) {
 		cout << "graph_node::write_memory_object" << endl;
 		}
-	if (label == NULL) {
-		m->write_string("");
-		}
-	else {
-		m->write_string(label);
-		}
+	m->write_string(label);
+
 	m->write_int(id);
 	m->write_int(f_has_data1);
 	m->write_int(data1);

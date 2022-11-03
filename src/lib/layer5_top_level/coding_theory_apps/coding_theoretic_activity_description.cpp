@@ -62,7 +62,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	field_induction_nb_bits = 0;
 
 	f_weight_enumerator = FALSE;
-	//std::string weight_enumerator_input_matrix;
 
 	f_minimum_distance = FALSE;
 	//std::string minimum_distance_code_label;
@@ -147,6 +146,8 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	polynomial_division_from_file_all_k_bit_error_patterns_r1 = 0;
 	polynomial_division_from_file_all_k_bit_error_patterns_k = 0;
 
+	f_fixed_code = FALSE;
+	//std::string fixed_code_perm;
 
 }
 
@@ -284,7 +285,7 @@ int coding_theoretic_activity_description::read_arguments(
 						if (j) {
 							s.append(",");
 						}
-						sprintf(str, "%ld", S.set[j]);
+						snprintf(str, sizeof(str), "%ld", S.set[j]);
 						s.append(str);
 					}
 					if (f_v) {
@@ -325,9 +326,8 @@ int coding_theoretic_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-weight_enumerator") == 0) {
 			f_weight_enumerator = TRUE;
-			weight_enumerator_input_matrix.assign(argv[++i]);
 			if (f_v) {
-				cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
+				cout << "-weight_enumerator " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-minimum_distance") == 0) {
@@ -542,6 +542,15 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-fixed_code") == 0) {
+			f_fixed_code = TRUE;
+			fixed_code_perm.assign(argv[++i]);
+			if (f_v) {
+				cout << "-fixed_code "
+					<< " " << fixed_code_perm
+					<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -610,7 +619,7 @@ void coding_theoretic_activity_description::print()
 				<< endl;
 	}
 	if (f_weight_enumerator) {
-		cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
+		cout << "-weight_enumerator " << endl;
 	}
 	if (f_minimum_distance) {
 		cout << "-minimum_distance " << minimum_distance_code_label << endl;
@@ -717,6 +726,11 @@ void coding_theoretic_activity_description::print()
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_fname
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_r1
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
+				<< endl;
+	}
+	if (f_fixed_code) {
+		cout << "-fixed_code "
+				<< " " << fixed_code_perm
 				<< endl;
 	}
 

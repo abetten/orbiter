@@ -242,7 +242,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 
 	fname_base.assign("Ferdinand");
 	char str[1000];
-	sprintf(str, "%d_%d", level, group);
+	snprintf(str, sizeof(str), "%d_%d", level, group);
 	fname_base.append("Ferdinand");
 
 	Aut = NEW_OBJECT(actions::action);
@@ -773,7 +773,7 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 	prefix.assign("Ferdinand");
 	char str[1000];
-	sprintf(str, "%d_%d", level, group);
+	snprintf(str, sizeof(str), "%d_%d", level, group);
 	prefix.append(str);
 
 	cout << "classifying subsets:" << endl;
@@ -808,7 +808,7 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 
 #if 0
-	sprintf(fname, "Ferdinand%d_%d", level, group);
+	snprintf(fname, sizeof(fname), "Ferdinand%d_%d", level, group);
 	gen->draw_poset(fname, target_depth, 0 /* data */,
 			TRUE /* f_embedded */,
 			FALSE /* f_sideways */,
@@ -842,7 +842,7 @@ void cayley_graph_search::write_file(int verbose_level)
 		fname_graphs.assign("ferdinand");
 		char str[1000];
 
-		sprintf(str, "%d_%d_subgroup_%d_graphs_sz_%d.txt",
+		snprintf(str, sizeof(str), "%d_%d_subgroup_%d_graphs_sz_%d.txt",
 				level, group, subgroup, sz);
 		fname_graphs.append(str);
 

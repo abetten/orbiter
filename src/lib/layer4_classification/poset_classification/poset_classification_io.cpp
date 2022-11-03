@@ -169,7 +169,7 @@ void poset_classification::prepare_fname_data_file(std::string &fname,
 	char str[1000];
 
 	fname.assign(fname_base);
-	sprintf(str, "_%d.data", depth_completed);
+	snprintf(str, sizeof(str),  "_%d.data", depth_completed);
 	fname.append(str);
 }
 
@@ -404,7 +404,6 @@ void poset_classification::write_data_file(int depth_completed,
 	orbiter_kernel_system::file_io Fio;
 
 	prepare_fname_data_file(fname, fname_base, depth_completed);
-	//sprintf(fname, "%s_%d.data", fname_base, depth_completed);
 
 	if (f_v) {
 		cout << "poset_classification::write_data_file "
@@ -698,7 +697,7 @@ void poset_classification::housekeeping(int i,
 		char str[1000];
 
 		fname_reps_csv.assign(problem_label_with_path);
-		sprintf(str, "_reps_lvl_%d", i);
+		snprintf(str, sizeof(str), "_reps_lvl_%d", i);
 		fname_reps_csv.append(str);
 		fname_reps_csv.append(".csv");
 
@@ -867,10 +866,10 @@ void poset_classification::housekeeping_no_data_file(int i,
 #if 0
 		char fname_base2[1000];
 		
-		sprintf(fname_base2, "%sa", fname_base);
+		snprintf(fname_base2, sizeof(fname_base2), "%sa", fname_base);
 		write_level_file_binary(i, fname_base2, 1/*verbose_level*/);
 		if (i) {		
-			sprintf(fname_base2, "%sb", fname_base);
+			snprintf(fname_base2, sizeof(fname_base2), "%sb", fname_base);
 			write_level_file_binary(i - 1, fname_base2, 1/*verbose_level*/);
 			write_sv_level_file_binary(i - 1, 
 				fname_base, FALSE, 0, 0, 1/*verbose_level*/);
@@ -904,7 +903,7 @@ void poset_classification::create_fname_sv_level_file_binary(std::string &fname,
 	char str[1000];
 
 	fname.assign(fname_base);
-	sprintf(str, "_lvl_%d_sv.data", level);
+	snprintf(str, sizeof(str), "_lvl_%d_sv.data", level);
 	fname.append(str);
 
 }
@@ -916,7 +915,6 @@ int poset_classification::test_sv_level_file_binary(
 	orbiter_kernel_system::file_io Fio;
 	
 	create_fname_sv_level_file_binary(fname, fname_base, level);
-	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	if (Fio.file_size(fname) >= 1) {
 		return TRUE;
 	}
@@ -936,7 +934,6 @@ void poset_classification::read_sv_level_file_binary(
 	orbiter_kernel_system::file_io Fio;
 	
 	create_fname_sv_level_file_binary(fname, fname_base, level);
-	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::read_sv_level_file_binary "
@@ -965,7 +962,6 @@ void poset_classification::write_sv_level_file_binary(
 	orbiter_kernel_system::file_io Fio;
 
 	create_fname_sv_level_file_binary(fname, fname_base, level);
-	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::write_sv_level_file_binary "
@@ -998,7 +994,7 @@ void poset_classification::read_level_file_binary(int level,
 	orbiter_kernel_system::file_io Fio;
 	
 	fname.assign(fname_base);
-	sprintf(str, "_lvl_%d.data", level);
+	snprintf(str, sizeof(str), "_lvl_%d.data", level);
 	fname.append(str);
 	
 	if (f_v) {
@@ -1032,7 +1028,7 @@ void poset_classification::write_level_file_binary(int level,
 	orbiter_kernel_system::file_io Fio;
 
 	fname.assign(fname_base);
-	sprintf(str, "_lvl_%d.data", level);
+	snprintf(str, sizeof(str), "_lvl_%d.data", level);
 	fname.append(str);
 	
 	if (f_v) {
@@ -1082,7 +1078,7 @@ void poset_classification::make_fname_lvl_file_candidates(std::string &fname,
 	char str[1000];
 
 	fname.assign(fname_base);
-	sprintf(str, "_lvl_%d_candidates.txt", lvl);
+	snprintf(str, sizeof(str), "_lvl_%d_candidates.txt", lvl);
 	fname.append(str);
 
 }
@@ -1093,7 +1089,7 @@ void poset_classification::make_fname_lvl_file(std::string &fname,
 	char str[1000];
 
 	fname.assign(fname_base);
-	sprintf(str, "_lvl_%d", lvl);
+	snprintf(str, sizeof(str), "_lvl_%d", lvl);
 	fname.append(str);
 
 }
@@ -1104,7 +1100,7 @@ void poset_classification::make_fname_lvl_reps_file(std::string &fname,
 	char str[1000];
 
 	fname.assign(fname_base);
-	sprintf(str, "_lvl_%d_reps", lvl);
+	snprintf(str, sizeof(str), "_lvl_%d_reps", lvl);
 	fname.append(str);
 
 }
@@ -1220,12 +1216,12 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		data_structures::spreadsheet *&Sp, int max_depth)
 {
 	int Nb_orbits, nb_orbits, i, level, first;
-	pchar *Text_level;
-	pchar *Text_node;
-	pchar *Text_orbit_reps;
-	pchar *Text_stab_order;
-	pchar *Text_orbit_length;
-	pchar *Text_schreier_vector_length;
+	string *Text_level;
+	string *Text_node;
+	string *Text_orbit_reps;
+	string *Text_stab_order;
+	string *Text_orbit_length;
+	string *Text_schreier_vector_length;
 	ring_theory::longinteger_object stab_order, orbit_length;
 	int schreier_vector_length;
 	long int *rep;
@@ -1238,40 +1234,32 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	}
 
 	rep = NEW_lint(max_depth);
-	Text_level = NEW_pchar(Nb_orbits);
-	Text_node = NEW_pchar(Nb_orbits);
-	Text_orbit_reps = NEW_pchar(Nb_orbits);
-	Text_stab_order = NEW_pchar(Nb_orbits);
-	Text_orbit_length = NEW_pchar(Nb_orbits);
-	Text_schreier_vector_length = NEW_pchar(Nb_orbits);
+	Text_level = new string [Nb_orbits];
+	Text_node = new string [Nb_orbits];
+	Text_orbit_reps = new string [Nb_orbits];
+	Text_stab_order = new string [Nb_orbits];
+	Text_orbit_length = new string [Nb_orbits];
+	Text_schreier_vector_length = new string [Nb_orbits];
 
 	first = 0;
 	for (level = 0; level <= max_depth; level++) {
 		first = Poo->first_node_at_level(level);
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
-			snprintf(str,1000,  "%d", level);
-			Text_level[first + i] = NEW_char(strlen(str) + 1);
-			strcpy(Text_level[first + i], str);
+			snprintf(str, 1000,  "%d", level);
+			Text_level[first + i].assign(str);
 
 			snprintf(str, 1000, "%d", i);
-			Text_node[first + i] = NEW_char(strlen(str) + 1);
-			strcpy(Text_node[first + i], str);
+			Text_node[first + i].assign(str);
 
 			get_set_by_level(level, i, rep);
-			Lint_vec_print_to_str(str, rep, level);
-			Text_orbit_reps[first + i] = NEW_char(strlen(str) + 1);
-			strcpy(Text_orbit_reps[first + i], str);
+			Lint_vec_print_to_str(Text_orbit_reps[first + i], rep, level);
 			
 			get_orbit_length_and_stabilizer_order(i, level, 
 				stab_order, orbit_length);
-			stab_order.print_to_string(str);
-			Text_stab_order[first + i] = NEW_char(strlen(str) + 1);
-			strcpy(Text_stab_order[first + i], str);
+			stab_order.print_to_string(Text_stab_order[first + i]);
 			
-			orbit_length.print_to_string(str);
-			Text_orbit_length[first + i] = NEW_char(strlen(str) + 1);
-			strcpy(Text_orbit_length[first + i], str);
+			orbit_length.print_to_string(Text_orbit_length[first + i]);
 			
 			O = get_node_ij(level, i);
 			if (O->has_Schreier_vector()) {
@@ -1281,19 +1269,18 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 				schreier_vector_length = 0;
 			}
 			snprintf(str, 1000, "%d", schreier_vector_length);
-			Text_schreier_vector_length[first + i] = NEW_char(strlen(str) + 1);
-			strcpy(Text_schreier_vector_length[first + i], str);
+			Text_schreier_vector_length[first + i].assign(str);
 			}
 		}
 	Sp = NEW_OBJECT(data_structures::spreadsheet);
 	Sp->init_empty_table(Nb_orbits + 1, 7);
 	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, (const char **) Text_level, "Level");
-	Sp->fill_column_with_text(2, (const char **) Text_node, "Node");
-	Sp->fill_column_with_text(3, (const char **) Text_orbit_reps, "Orbit rep");
-	Sp->fill_column_with_text(4, (const char **) Text_stab_order, "Stab order");
-	Sp->fill_column_with_text(5, (const char **) Text_orbit_length, "Orbit length");
-	Sp->fill_column_with_text(6, (const char **) Text_schreier_vector_length, "Schreier vector length");
+	Sp->fill_column_with_text(1, Text_level, "Level");
+	Sp->fill_column_with_text(2, Text_node, "Node");
+	Sp->fill_column_with_text(3, Text_orbit_reps, "Orbit rep");
+	Sp->fill_column_with_text(4, Text_stab_order, "Stab order");
+	Sp->fill_column_with_text(5, Text_orbit_length, "Orbit length");
+	Sp->fill_column_with_text(6, Text_schreier_vector_length, "Schreier vector length");
 
 #if 0
 	cout << "before Sp->save " << fname_csv << endl;
@@ -1302,30 +1289,12 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 #endif
 
 	FREE_lint(rep);
-	for (i = 0; i < Nb_orbits; i++) {
-		FREE_char(Text_level[i]);
-	}
-	FREE_pchar(Text_level);
-	for (i = 0; i < Nb_orbits; i++) {
-		FREE_char(Text_node[i]);
-	}
-	FREE_pchar(Text_node);
-	for (i = 0; i < Nb_orbits; i++) {
-		FREE_char(Text_orbit_reps[i]);
-	}
-	FREE_pchar(Text_orbit_reps);
-	for (i = 0; i < Nb_orbits; i++) {
-		FREE_char(Text_stab_order[i]);
-	}
-	FREE_pchar(Text_stab_order);
-	for (i = 0; i < Nb_orbits; i++) {
-		FREE_char(Text_orbit_length[i]);
-	}
-	FREE_pchar(Text_orbit_length);
-	for (i = 0; i < Nb_orbits; i++) {
-		FREE_char(Text_schreier_vector_length[i]);
-	}
-	FREE_pchar(Text_schreier_vector_length);
+	delete [] Text_level;
+	delete [] Text_node;
+	delete [] Text_orbit_reps;
+	delete [] Text_stab_order;
+	delete [] Text_orbit_length;
+	delete [] Text_schreier_vector_length;
 	
 }
 
@@ -1336,11 +1305,11 @@ void poset_classification::make_spreadsheet_of_level_info(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; //(verbose_level >= 1);
 	int nb_rows, Nb_orbits, nb_orbits, i, level;
-	pchar *Text_label;
-	pchar *Text_nb_orbits;
-	pchar *Text_orbit_length_sum;
-	pchar *Text_schreier_vector_length_sum;
-	pchar *Text_binomial;
+	string *Text_label;
+	string *Text_nb_orbits;
+	string *Text_orbit_length_sum;
+	string *Text_schreier_vector_length_sum;
+	string *Text_binomial;
 	ring_theory::longinteger_object stab_order, orbit_length,
 		orbit_length_sum, orbit_length_total;
 	ring_theory::longinteger_object a, a_total;
@@ -1359,11 +1328,11 @@ void poset_classification::make_spreadsheet_of_level_info(
 	}
 	nb_rows = max_depth + 2; // one extra row for totals
 	rep = NEW_int(max_depth);
-	Text_label = NEW_pchar(nb_rows);
-	Text_nb_orbits = NEW_pchar(nb_rows);
-	Text_orbit_length_sum = NEW_pchar(nb_rows);
-	Text_schreier_vector_length_sum = NEW_pchar(nb_rows);
-	Text_binomial = NEW_pchar(nb_rows);
+	Text_label = new string [nb_rows];
+	Text_nb_orbits = new string [nb_rows];
+	Text_orbit_length_sum = new string [nb_rows];
+	Text_schreier_vector_length_sum = new string [nb_rows];
+	Text_binomial = new string [nb_rows];
 
 	Nb_orbits = 0;
 	orbit_length_total.create(0, __FILE__, __LINE__);
@@ -1381,12 +1350,10 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 
 		snprintf(str, 1000, "%d", level);
-		Text_label[level] = NEW_char(strlen(str) + 1);
-		strcpy(Text_label[level], str);
+		Text_label[level].assign(str);
 
 		snprintf(str, 1000, "%d", nb_orbits);
-		Text_nb_orbits[level] = NEW_char(strlen(str) + 1);
-		strcpy(Text_nb_orbits[level], str);
+		Text_nb_orbits[level].assign(str);
 
 		orbit_length_sum.create(0, __FILE__, __LINE__);
 		schreier_vector_length_sum.create(0, __FILE__, __LINE__);
@@ -1439,50 +1406,35 @@ void poset_classification::make_spreadsheet_of_level_info(
 				schreier_vector_length_sum);
 		D.add_in_place(a_total, a);
 
-		orbit_length_sum.print_to_string(str);
-		Text_orbit_length_sum[level] = NEW_char(strlen(str) + 1);
-		strcpy(Text_orbit_length_sum[level], str);
+		orbit_length_sum.print_to_string(Text_orbit_length_sum[level]);
 
-		schreier_vector_length_sum.print_to_string(str);
-		Text_schreier_vector_length_sum[level] = NEW_char(strlen(str) + 1);
-		strcpy(Text_schreier_vector_length_sum[level], str);
+		schreier_vector_length_sum.print_to_string(Text_schreier_vector_length_sum[level]);
 
-		a.print_to_string(str);
-		Text_binomial[level] = NEW_char(strlen(str) + 1);
-		strcpy(Text_binomial[level], str);
+		a.print_to_string(Text_binomial[level]);
 
 	}
 
 	level = max_depth + 1;
-	snprintf(str, 1000, "total");
-	Text_label[level] = NEW_char(strlen(str) + 1);
-	strcpy(Text_label[level], str);
+	Text_label[level].assign("total");
 
 	snprintf(str, 1000, "%d", Nb_orbits);
-	Text_nb_orbits[level] = NEW_char(strlen(str) + 1);
-	strcpy(Text_nb_orbits[level], str);
+	Text_nb_orbits[level].assign(str);
 
-	orbit_length_total.print_to_string(str);
-	Text_orbit_length_sum[level] = NEW_char(strlen(str) + 1);
-	strcpy(Text_orbit_length_sum[level], str);
+	orbit_length_total.print_to_string(Text_orbit_length_sum[level]);
 
-	schreier_vector_length_total.print_to_string(str);
-	Text_schreier_vector_length_sum[level] = NEW_char(strlen(str) + 1);
-	strcpy(Text_schreier_vector_length_sum[level], str);
+	schreier_vector_length_total.print_to_string(Text_schreier_vector_length_sum[level]);
 
-	a_total.print_to_string(str);
-	Text_binomial[level] = NEW_char(strlen(str) + 1);
-	strcpy(Text_binomial[level], str);
+	a_total.print_to_string(Text_binomial[level]);
 
 
 	Sp = NEW_OBJECT(data_structures::spreadsheet);
 	Sp->init_empty_table(nb_rows + 1, 6);
 	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, (const char **) Text_label, "Level");
-	Sp->fill_column_with_text(2, (const char **) Text_nb_orbits, "Nb_orbits");
-	Sp->fill_column_with_text(3, (const char **) Text_orbit_length_sum, "Orbit_length_sum");
-	Sp->fill_column_with_text(4, (const char **) Text_schreier_vector_length_sum, "Schreier_vector_length_sum");
-	Sp->fill_column_with_text(5, (const char **) Text_binomial, "Binomial");
+	Sp->fill_column_with_text(1, Text_label, "Level");
+	Sp->fill_column_with_text(2, Text_nb_orbits, "Nb_orbits");
+	Sp->fill_column_with_text(3, Text_orbit_length_sum, "Orbit_length_sum");
+	Sp->fill_column_with_text(4, Text_schreier_vector_length_sum, "Schreier_vector_length_sum");
+	Sp->fill_column_with_text(5, Text_binomial, "Binomial");
 
 
 
@@ -1493,28 +1445,15 @@ void poset_classification::make_spreadsheet_of_level_info(
 #endif
 
 	FREE_int(rep);
-	for (i = 0; i < nb_rows; i++) {
-		FREE_char(Text_label[i]);
-	}
-	FREE_pchar(Text_label);
-	for (i = 0; i < nb_rows; i++) {
-		FREE_char(Text_nb_orbits[i]);
-	}
-	FREE_pchar(Text_nb_orbits);
-	for (i = 0; i < nb_rows; i++) {
-		FREE_char(Text_orbit_length_sum[i]);
-	}
-	FREE_pchar(Text_orbit_length_sum);
-	for (i = 0; i < nb_rows; i++) {
-		FREE_char(Text_schreier_vector_length_sum[i]);
-	}
-	FREE_pchar(Text_schreier_vector_length_sum);
-	for (i = 0; i < nb_rows; i++) {
-		FREE_char(Text_binomial[i]);
-	}
-	FREE_pchar(Text_binomial);
+	delete [] Text_label;
+	delete [] Text_nb_orbits;
+	delete [] Text_orbit_length_sum;
+	delete [] Text_schreier_vector_length_sum;
+	delete [] Text_binomial;
 	
 }
+
+
 
 
 
@@ -1553,7 +1492,7 @@ void poset_classification::create_shallow_schreier_tree_fname_mask(
 
 	char str[1000];
 
-	sprintf(str, "%d", node);
+	snprintf(str, sizeof(str), "%d", node);
 	fname.assign(problem_label_with_path);
 	fname.append(Control->schreier_tree_prefix);
 	fname.append("shallow_schreier_tree_node_");
@@ -1799,7 +1738,7 @@ void poset_classification::write_reps_csv(int lvl, int verbose_level)
 		cout << "poset_classification::write_reps_csv" << endl;
 	}
 	fname_reps_csv.assign(problem_label_with_path);
-	sprintf(str, "_reps_lvl_%d", lvl);
+	snprintf(str, sizeof(str), "_reps_lvl_%d", lvl);
 	fname_reps_csv.append(str);
 	fname_reps_csv.append(".csv");
 

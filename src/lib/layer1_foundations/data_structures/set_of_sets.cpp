@@ -21,23 +21,13 @@ static void set_of_sets_swap_func(void *data, int i, int j, void *extra_data);
 
 set_of_sets::set_of_sets()
 {
-	null();
-}
-
-set_of_sets::~set_of_sets()
-{
-	freeself();
-}
-
-void set_of_sets::null()
-{
 	underlying_set_size = 0;
 	nb_sets = 0;
 	Sets = NULL;
 	Set_size = NULL;
 }
 
-void set_of_sets::freeself()
+set_of_sets::~set_of_sets()
 {
 	int i;
 	
@@ -50,7 +40,6 @@ void set_of_sets::freeself()
 		FREE_plint(Sets);
 		FREE_lint(Set_size);
 		}
-	null();
 }
 
 set_of_sets *set_of_sets::copy()

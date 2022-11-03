@@ -32,22 +32,12 @@ classification_step::classification_step()
 
 classification_step::~classification_step()
 {
-	freeself();
-}
-
-void classification_step::null()
-{
-}
-
-void classification_step::freeself()
-{
 	if (Orbit) {
 		FREE_OBJECTS(Orbit);
 	}
 	if (Rep) {
 		FREE_lint(Rep);
 	}
-	null();
 }
 
 void classification_step::init(actions::action *A, actions::action *A2,

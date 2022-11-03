@@ -1284,7 +1284,7 @@ static void Web_of_cubic_curves_entry_print(int *p,
 	else if (j == -1) {
 		char str[1000];
 
-		sprintf(str, "\\pi_{%d}", i);
+		snprintf(str, sizeof(str), "\\pi_{%d}", i);
 		output.append(str);
 		output.append(" = \\pi_{");
 		output.append(Web->Surf->Schlaefli->Eckard_point_label[i]);
@@ -1295,7 +1295,7 @@ static void Web_of_cubic_curves_entry_print(int *p,
 	else {
 		char str[1000];
 
-		sprintf(str, "%d", i);
+		snprintf(str, sizeof(str), "%d", i);
 		output.append(str);
 		//snprintf(output, 1000, "%d", val);
 	}

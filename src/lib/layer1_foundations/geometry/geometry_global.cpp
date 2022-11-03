@@ -998,10 +998,10 @@ void geometry_global::create_BLT(int f_embedded,
 
 	//char fname[1000];
 	if (f_embedded) {
-		sprintf(fname, "BLT_%s_%d_embedded.txt", BLT_label, q);
+		snprintf(fname, sizeof(fname), "BLT_%s_%d_embedded.txt", BLT_label, q);
 		}
 	else {
-		sprintf(fname, "BLT_%s_%d.txt", BLT_label, q);
+		snprintf(fname, sizeof(fname), "BLT_%s_%d.txt", BLT_label, q);
 		}
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -1499,7 +1499,7 @@ void geometry_global::do_rank_points_in_PG(
 	int *v;
 	int m, n;
 
-	orbiter_kernel_system::Orbiter->get_matrix_from_label(label, v, m, n);
+	Get_matrix(label, v, m, n);
 
 	if (f_v) {
 		cout << "geometry_global::do_rank_points_in_PG coeff: ";

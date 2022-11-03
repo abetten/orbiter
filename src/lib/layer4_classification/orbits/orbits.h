@@ -56,8 +56,6 @@ public:
 
 	orbit_of_equations();
 	~orbit_of_equations();
-	void null();
-	void freeself();
 	void init(actions::action *A, field_theory::finite_field *F,
 			induced_actions::action_on_homogeneous_polynomials *AonHPD,
 		groups::strong_generators *SG, int *coeff_in,
@@ -138,8 +136,6 @@ public:
 
 	orbit_of_sets();
 	~orbit_of_sets();
-	void null();
-	void freeself();
 	void init(actions::action *A, actions::action *A2,
 			long int *set, int sz,
 			data_structures_groups::vector_ge *gens, int verbose_level);
@@ -228,8 +224,6 @@ public:
 
 	orbit_of_subspaces();
 	~orbit_of_subspaces();
-	void null();
-	void freeself();
 	void init(actions::action *A, actions::action *A2, field_theory::finite_field *F,
 		int *subspace, int k, int n, 
 		int f_has_desired_pivots, int *desired_pivots, 

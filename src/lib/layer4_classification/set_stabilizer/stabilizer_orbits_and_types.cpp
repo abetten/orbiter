@@ -371,7 +371,7 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int stage, in
 	string fname;
 	char str[1000];
 
-	sprintf(str, "_stage_%d.csv", stage);
+	snprintf(str, sizeof(str), "_stage_%d.csv", stage);
 
 	fname.assign(CS->SubSt->fname_case_out);
 	fname.append(str);

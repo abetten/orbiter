@@ -1414,10 +1414,10 @@ void packings_global::select_packings_self_dual(
 	fname_self_dual.assign(fname);
 	String.chop_off_extension(fname_self_dual);
 	if (f_split) {
-		sprintf(str, "_self_dual_r%d_m%d.csv", split_r, split_m);
+		snprintf(str, sizeof(str), "_self_dual_r%d_m%d.csv", split_r, split_m);
 	}
 	else {
-		sprintf(str, "_self_dual.csv");
+		snprintf(str, sizeof(str), "_self_dual.csv");
 	}
 	fname_self_dual.append(str);
 	cout << "saving self_dual_cases to file " << fname_self_dual << endl;

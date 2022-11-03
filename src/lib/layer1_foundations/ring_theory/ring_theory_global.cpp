@@ -73,8 +73,8 @@ void ring_theory_global::write_code_for_division(
 		int sz_A, sz_B;
 
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+		Get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+		Get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
 
 
 		int w;
@@ -126,7 +126,7 @@ void ring_theory_global::write_code_for_division(
 		name_of_function.append(label_code);
 
 
-		sprintf(str2, "q%d_n%d_r%d", F->q, da, db);
+		snprintf(str2, sizeof(str2), "q%d_n%d_r%d", F->q, da, db);
 
 		label_of_parameters.assign(str2);
 
@@ -359,8 +359,8 @@ void ring_theory_global::polynomial_division(
 	int sz_A, sz_B;
 
 
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+	Get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+	Get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
 
 
 
@@ -457,8 +457,8 @@ void ring_theory_global::extended_gcd_for_polynomials(
 	int sz_A, sz_B;
 
 
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+	Get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+	Get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
 
 
 	number_theory::number_theory_domain NT;
@@ -548,7 +548,8 @@ void ring_theory_global::extended_gcd_for_polynomials(
 		c = FX.s_i(G, 0);
 		if (c != 1) {
 			if (f_v) {
-				cout << "normalization:" << endl;
+				cout << "ring_theory_global::extended_gcd_for_polynomials "
+						"before normalizing:" << endl;
 			}
 			cv = F->inverse(c);
 			if (f_v) {
@@ -573,7 +574,8 @@ void ring_theory_global::extended_gcd_for_polynomials(
 
 
 			if (f_v) {
-				cout << "after normalization:" << endl;
+				cout << "ring_theory_global::extended_gcd_for_polynomials "
+						"after normalizing:" << endl;
 
 				cout << "U(X)=";
 				FX.print_object(U, cout);
@@ -614,9 +616,9 @@ void ring_theory_global::polynomial_mult_mod(
 	int sz_A, sz_B, sz_M;
 
 
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
+	Get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+	Get_int_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+	Get_int_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
 
 	number_theory::number_theory_domain NT;
 
@@ -721,7 +723,7 @@ void ring_theory_global::polynomial_power_mod(
 	data_structures::string_tools ST;
 
 
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+	Get_int_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
 
 
 	n = ST.strtolint(power_text);
@@ -731,7 +733,7 @@ void ring_theory_global::polynomial_power_mod(
 	}
 
 
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
+	Get_int_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
 
 	number_theory::number_theory_domain NT;
 
@@ -818,8 +820,7 @@ void ring_theory_global::polynomial_find_roots(
 	int *data_A;
 	int sz_A;
 
-	//Int_vec_scan(A_coeffs, data_A, sz_A);
-	orbiter_kernel_system::Orbiter->get_int_vector_from_label(polynomial_find_roots_label, data_A, sz_A, verbose_level);
+	Get_int_vector_from_label(polynomial_find_roots_label, data_A, sz_A, verbose_level);
 
 	number_theory::number_theory_domain NT;
 
@@ -1442,15 +1443,18 @@ void ring_theory_global::create_irreducible_polynomial(
 				cout << "ring_theory_global::create_irreducible_polynomial j=" << j << endl;
 			}
 			if (f_v) {
-				cout << "ring_theory_global::create_irreducible_polynomial before Fq.mult(tmp[j], linear_factor[0], Pc)" << endl;
+				cout << "ring_theory_global::create_irreducible_polynomial "
+						"before Fq.mult(tmp[j], linear_factor[0], Pc)" << endl;
 			}
 			Fq->mult(tmp[j], linear_factor[0], Pc, verbose_level - 1);
 			if (f_v) {
-				cout << "ring_theory_global::create_irreducible_polynomial before Fq.add()" << endl;
+				cout << "ring_theory_global::create_irreducible_polynomial "
+						"before Fq.add" << endl;
 			}
 			Fq->add(Pc, min_poly[j], Pd);
 			if (f_v) {
-				cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign()" << endl;
+				cout << "ring_theory_global::create_irreducible_polynomial before "
+						"Fq.assign" << endl;
 			}
 			Fq->assign(Pd, min_poly[j], verbose_level);
 		}

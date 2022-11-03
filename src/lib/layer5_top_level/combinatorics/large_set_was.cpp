@@ -555,7 +555,7 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 
 		char str[1000];
 
-		sprintf(str, fname_mask.c_str(), idx_N);
+		snprintf(str, sizeof(str), fname_mask.c_str(), idx_N);
 		std::string fname;
 
 		fname.assign(str);

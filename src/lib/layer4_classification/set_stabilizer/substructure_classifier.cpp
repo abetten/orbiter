@@ -190,7 +190,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 		char str[1000];
 		string fname;
 
-		sprintf(str, fname_mask.c_str(), cnt);
+		snprintf(str, sizeof(str), fname_mask.c_str(), cnt);
 		fname.assign(str);
 
 		data_structures::spreadsheet S;
@@ -221,7 +221,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 		char str[1000];
 		string fname;
 
-		sprintf(str, fname_mask.c_str(), cnt);
+		snprintf(str, sizeof(str), fname_mask.c_str(), cnt);
 		fname.assign(str);
 
 		data_structures::spreadsheet S;
@@ -279,7 +279,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 			std::string fname;
 			char str[1000];
 
-			sprintf(str, "_cnt%d", counter);
+			snprintf(str, sizeof(str), "_cnt%d", counter);
 			fname.assign(fname_out);
 			fname.append(str);
 

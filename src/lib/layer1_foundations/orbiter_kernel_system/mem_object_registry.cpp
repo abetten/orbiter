@@ -162,7 +162,7 @@ void mem_object_registry::automatic_dump()
 	a = cur_time / automatic_dump_interval;
 
 	cout << "automatic memory dump " << a << endl;
-	sprintf(fname, automatic_dump_fname_mask, a);
+	snprintf(fname, sizeof(fname), automatic_dump_fname_mask, a);
 
 	dump_to_csv_file(fname);
 }
@@ -177,7 +177,7 @@ void mem_object_registry::manual_dump()
 
 	a = cur_time / automatic_dump_interval + 1;
 
-	sprintf(fname, automatic_dump_fname_mask, a);
+	snprintf(fname, sizeof(fname), automatic_dump_fname_mask, a);
 
 	dump_to_csv_file(fname);
 }

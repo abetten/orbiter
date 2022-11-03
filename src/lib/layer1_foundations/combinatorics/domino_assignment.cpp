@@ -2288,7 +2288,7 @@ void domino_assignment::prepare_latex(std::string &photo_label, int verbose_leve
 		if (f_intermediate) {
 			for (i = 0; i < Draw_cnt; i++) {
 				char fname[1000];
-				sprintf(fname, "%s_c%d", photo_label, i);
+				snprintf(fname, sizeof(fname), "%s_c%d", photo_label, i);
 				f << "\\epsfig{file=" << fname << ".1,width=\\dominowidthsmall}\\\\\\bigskip" << endl;
 				f << "after " << record_nb_improvements[i] << " improvements\\\\" << endl;
 				if (record_improvement_type[i] == IMPROVE_HORIZ_ROTATE) {

@@ -979,10 +979,10 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		//Descr->f_q = TRUE;
 		//Descr->q = F->q;
 		Descr->f_by_coefficients = TRUE;
-		sprintf(str, "%d,0", coeff20[0]);
+		snprintf(str, sizeof(str), "%d,0", coeff20[0]);
 		Descr->coefficients_text.assign(str);
 		for (i = 1; i < 20; i++) {
-			sprintf(str, ",%d,%d", coeff20[i], i);
+			snprintf(str, sizeof(str), ",%d,%d", coeff20[i], i);
 			Descr->coefficients_text.append(str);
 		}
 		cout << "Descr->coefficients_text = " << Descr->coefficients_text << endl;
@@ -1072,7 +1072,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	ST.chop_off_extension(fname_data);
 
 	char str[1000];
-	sprintf(str, "_F%d.csv", F->q);
+	snprintf(str, sizeof(str), "_F%d.csv", F->q);
 	fname_data.append(str);
 
 	long int *Vec[10];
@@ -1082,12 +1082,12 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	char str_E[1000];
 	char str_S[1000];
 	char str_D[1000];
-	sprintf(str_A, "Ago-%d", F->q);
-	sprintf(str_P, "Nb_P-%d", F->q);
-	sprintf(str_L, "Nb_L-%d", F->q);
-	sprintf(str_E, "Nb_E-%d", F->q);
-	sprintf(str_S, "Nb_S-%d", F->q);
-	sprintf(str_D, "Nb_D-%d", F->q);
+	snprintf(str_A, sizeof(str_A), "Ago-%d", F->q);
+	snprintf(str_P, sizeof(str_P), "Nb_P-%d", F->q);
+	snprintf(str_L, sizeof(str_L), "Nb_L-%d", F->q);
+	snprintf(str_E, sizeof(str_E), "Nb_E-%d", F->q);
+	snprintf(str_S, sizeof(str_S), "Nb_S-%d", F->q);
+	snprintf(str_D, sizeof(str_D), "Nb_D-%d", F->q);
 	const char *column_label[] = {
 			"Orbit_idx",
 			"Rep",
@@ -1625,8 +1625,8 @@ void surface_domain_high_level::do_create_surface_reports(std::string &field_ord
 #endif
 
 
-				sprintf(str, "%d ", q);
-				sprintf(str_ocn, "%d ", ocn);
+				snprintf(str, sizeof(str), "%d ", q);
+				snprintf(str_ocn, sizeof(str_ocn), "%d ", ocn);
 
 			cmd.assign(orbiter_kernel_system::Orbiter->orbiter_path);
 			cmd.append("/orbiter.out -v 3 ");
@@ -2011,7 +2011,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 	{
 		char str[1000];
 
-		sprintf(str, "_q%d_e%d", T->q, nb_e);
+		snprintf(str, sizeof(str), "_q%d_e%d", T->q, nb_e);
 		fname_report_tex.assign("surface_atlas");
 		fname_report_tex.append(str);
 		fname_report_tex.append(".tex");
@@ -2023,7 +2023,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 			string title, author, extra_praeamble;
 
 			title.assign("ATLAS of Cubic Surfaces");
-			sprintf(str, ", q=%d, \\#E=%d", T->q, nb_e);
+			snprintf(str, sizeof(str), ", q=%d, \\#E=%d", T->q, nb_e);
 			title.append(str);
 
 			author.assign("Anton Betten and Fatma Karaoglu");
@@ -2176,7 +2176,7 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 						char str[1000];
 
 
-						sprintf(str, "Orb%d_q%d", c, field_orders[j]);
+						snprintf(str, sizeof(str), "Orb%d_q%d", c, field_orders[j]);
 						fname_base.assign(str);
 						fname_tex.assign(fname_base);
 						fname_tex.append(".tex");
@@ -2237,7 +2237,7 @@ void surface_domain_high_level::make_fname_surface_report_tex(std::string &fname
 {
 	char str[1000];
 
-	sprintf(str, "_q%d_iso%d_with_group", q, ocn);
+	snprintf(str, sizeof(str), "_q%d_iso%d_with_group", q, ocn);
 	fname.assign("surface_catalogue");
 	fname.append(str);
 	fname.append(".tex");
@@ -2247,7 +2247,7 @@ void surface_domain_high_level::make_fname_surface_report_pdf(std::string &fname
 {
 	char str[1000];
 
-	sprintf(str, "_q%d_iso%d_with_group", q, ocn);
+	snprintf(str, sizeof(str), "_q%d_iso%d_with_group", q, ocn);
 	fname.assign("surface_catalogue");
 	fname.append(str);
 	fname.append(".pdf");

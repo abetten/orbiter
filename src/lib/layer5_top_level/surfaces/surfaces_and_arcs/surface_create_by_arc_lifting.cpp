@@ -118,10 +118,10 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	orbiter_kernel_system::file_io Fio;
 
 	magma_fname.assign("surface_q");
-	sprintf(str, "%d", SCA->Surf_A->PA->F->q);
+	snprintf(str, sizeof(str), "%d", SCA->Surf_A->PA->F->q);
 	magma_fname.append(str);
 	magma_fname.append("_iso");
-	sprintf(str, "%d", SCA->nb_surfaces);
+	snprintf(str, sizeof(str), "%d", SCA->nb_surfaces);
 	magma_fname.append("_group.magma");
 
 	AL->Trihedral_pair->Aut_gens->export_permutation_group_to_magma(
@@ -410,10 +410,10 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 	char str[1000];
 
 	fname_mask.assign("orbit_half_double_sixes_q");
-	sprintf(str, "%d", SCA->Surf_A->PA->F->q);
+	snprintf(str, sizeof(str), "%d", SCA->Surf_A->PA->F->q);
 	fname_mask.append(str);
 	fname_mask.append("_iso_");
-	sprintf(str, "%d", SCA->nb_surfaces);
+	snprintf(str, sizeof(str), "%d", SCA->nb_surfaces);
 	fname_mask.append(str);
 	fname_mask.append("_%d");
 

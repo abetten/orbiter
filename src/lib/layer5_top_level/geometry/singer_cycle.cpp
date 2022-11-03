@@ -317,14 +317,14 @@ void singer_cycle::init_lines(int verbose_level)
 			line_orbit_inv[a] = h;
 
 			char str[1000];
-			sprintf(str, "A%d", j);
+			snprintf(str, sizeof(str), "A%d", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " is " << str << endl;
 			}
 			line_orbit_label[h].assign(str);
 
-			sprintf(str, "A_{%d}", j);
+			snprintf(str, sizeof(str), "A_{%d}", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " in tex is " << str << endl;

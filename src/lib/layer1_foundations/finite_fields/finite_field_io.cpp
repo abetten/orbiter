@@ -438,7 +438,7 @@ void finite_field::make_fname_addition_table_csv(std::string &fname)
 {
 	char str[1000];
 
-	sprintf(str, "GF_q%d", q);
+	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
 	fname.append("_addition_table.csv");
 }
@@ -447,7 +447,7 @@ void finite_field::make_fname_multiplication_table_csv(std::string &fname)
 {
 	char str[1000];
 
-	sprintf(str, "GF_q%d", q);
+	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
 	fname.append("_multiplication_table.csv");
 }
@@ -456,7 +456,7 @@ void finite_field::make_fname_addition_table_reordered_csv(std::string &fname)
 {
 	char str[1000];
 
-	sprintf(str, "GF_q%d", q);
+	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
 	fname.append("_addition_table_reordered.csv");
 }
@@ -465,7 +465,7 @@ void finite_field::make_fname_multiplication_table_reordered_csv(std::string &fn
 {
 	char str[1000];
 
-	sprintf(str, "GF_q%d", q);
+	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
 	fname.append("_multiplication_table_reordered.csv");
 }
@@ -870,7 +870,7 @@ void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_leve
 
 		char str[1000];
 
-		sprintf(str, "%ld", poly_numeric);
+		snprintf(str, sizeof(str), "%ld", poly_numeric);
 		string poly_text;
 
 		poly_text.assign(str);

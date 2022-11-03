@@ -269,9 +269,13 @@ void vector_builder::init(vector_builder_description *Descr,
 		cout << endl;
 		if (f_has_k) {
 			cout << "also seen as matrix of size  " << k << " x " << len / k << endl;
-			Lint_matrix_print(v, k, len / k);
-			cout << endl;
-
+			if (k > 20) {
+				cout << "too large to print" << endl;
+			}
+			else {
+				Lint_matrix_print(v, k, len / k);
+				cout << endl;
+			}
 		}
 	}
 

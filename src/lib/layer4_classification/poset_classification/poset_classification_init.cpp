@@ -71,27 +71,18 @@ poset_classification::poset_classification()
 
 poset_classification::~poset_classification()
 {
-	freeself();
-}
-
-void poset_classification::null()
-{
-}
-
-void poset_classification::freeself()
-{
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::freeself" << endl;
+		cout << "poset_classification::~poset_classification" << endl;
 	}
 
 	
 
 	if (set_S) {
 		if (f_v) {
-			cout << "poset_classification::freeself deleting S" << endl;
+			cout << "poset_classification::~poset_classification deleting S" << endl;
 		}
 		FREE_lint(set_S);
 	}
@@ -99,20 +90,8 @@ void poset_classification::freeself()
 		FREE_OBJECT(Schreier_vector_handler);
 	}
 
-#if 0
-	if (tmp_set_apply_fusion) {
-		FREE_lint(tmp_set_apply_fusion);
-	}
-	if (tmp_find_node_for_subspace_by_rank1) {
-		FREE_int(tmp_find_node_for_subspace_by_rank1);
-	}
-	if (tmp_find_node_for_subspace_by_rank2) {
-		FREE_int(tmp_find_node_for_subspace_by_rank2);
-	}
-#endif
-
 	if (f_v) {
-		cout << "poset_classification::freeself "
+		cout << "poset_classification::~poset_classification "
 				"deleting transporter and set[]" << endl;
 	}
 
@@ -126,9 +105,8 @@ void poset_classification::freeself()
 
 
 	if (f_v) {
-		cout << "poset_classification::freeself done" << endl;
+		cout << "poset_classification::~poset_classification done" << endl;
 	}
-	null();
 }
 
 

@@ -139,7 +139,7 @@ void hollerith::append_i(int i)
 {
 	char str[1000];
 	
-	sprintf(str, "%d", i);
+	snprintf(str, sizeof(str), "%d", i);
 	append(str);
 }
 

@@ -100,7 +100,7 @@ void packing_classify::klein_invariants_fname(
 {
 	fname.assign(prefix);
 	char str[1000];
-	sprintf(str, "%d_klein_invariant.bin", iso_cnt);
+	snprintf(str, sizeof(str), "%d_klein_invariant.bin", iso_cnt);
 	fname.append(str);
 }
 
@@ -209,7 +209,7 @@ void packing_classify::report(isomorph::isomorph *Iso, int verbose_level)
 		cout << "packing_classify::report" << endl;
 	}
 
-	sprintf(fname, "packing_report_q%d.tex", (int)q);
+	snprintf(fname, sizeof(fname), "packing_report_q%d.tex", (int)q);
 
 	{
 		ofstream f(fname);
@@ -321,7 +321,7 @@ void packing_classify::report_title_page(
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(str, "The Packings of PG$(%d,%d)$", (int)3, (int)q);
+	snprintf(str, sizeof(str), "The Packings of PG$(%d,%d)$", (int)3, (int)q);
 	title.assign(str);
 	author.assign("Orbiter");
 
@@ -800,7 +800,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 	char fname[1000];
 
 
-	sprintf(fname, "group_%d.g", orbit);
+	snprintf(fname, sizeof(fname), "group_%d.g", orbit);
 	{
 		ofstream fp(fname);
 

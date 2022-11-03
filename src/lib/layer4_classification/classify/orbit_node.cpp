@@ -21,21 +21,14 @@ namespace invariant_relations {
 
 orbit_node::orbit_node()
 {
-	null();
+	C = NULL;
+	orbit_index = 0;
+	gens = NULL;
+	extra_data = NULL;
 }
 
 orbit_node::~orbit_node()
 {
-	freeself();
-}
-
-void orbit_node::null()
-{
-}
-
-void orbit_node::freeself()
-{
-	null();
 }
 
 void orbit_node::init(classification_step *C, int orbit_index,

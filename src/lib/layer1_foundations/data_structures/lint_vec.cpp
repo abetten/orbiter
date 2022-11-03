@@ -499,35 +499,39 @@ void lint_vec::scan_from_stream(istream & is, long int *&v, int &len)
 	}
 }
 
-void lint_vec::print_to_str(char *str, long int *data, int len)
-{
-	long int i, a;
 
-	str[0] = 0;
-	strcat(str, "\" ");
-	for (i = 0; i < len; i++) {
-		a = data[i];
-		sprintf(str + strlen(str), "%ld", a);
-		if (i < len - 1) {
-			strcat(str, ", ");
-		}
-	}
-	strcat(str, "\"");
+void lint_vec::print_to_str(std::string &s, long int *data, int len)
+{
+	string s1;
+
+	s.assign("\" ");
+
+	print_to_str_naked(s1, data, len);
+
+	s.append(s1);
+
+	s.append("\"");
 }
 
-void lint_vec::print_to_str_naked(char *str, long int *data, int len)
+void lint_vec::print_to_str_naked(std::string &s, long int *data, int len)
 {
-	long int i, a;
+	int i;
+	long int a;
+	char str[1000];
 
-	str[0] = 0;
+	s.assign("");
 	for (i = 0; i < len; i++) {
 		a = data[i];
-		sprintf(str + strlen(str), "%ld", a);
+		snprintf(str, sizeof(str), "%ld", a);
+		s.append(str);
 		if (i < len - 1) {
-			strcat(str, ", ");
+			s.append(", ");
 		}
 	}
 }
+
+
+
 
 
 void lint_vec::create_string_with_quotes(std::string &str, long int *v, int len)

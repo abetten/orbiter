@@ -299,7 +299,7 @@ int string_tools::s_scan_token_comma_separated(const char **s, char *str, int ve
 #if 0
 	if (c == 10 || c == 13) {
 		(*s)++;
-		sprintf(str, "END_OF_LINE");
+		//sprintf(str, "END_OF_LINE");
 		return FALSE;
 	}
 #endif
@@ -711,7 +711,7 @@ void string_tools::convert_arguments(int &argc, const char **argv, std::string *
 					string value_L;
 					char str[1000];
 
-					sprintf(str, "%d", loop_var);
+					snprintf(str, sizeof(str), "%d", loop_var);
 					value_L.assign(str);
 
 					arg.assign(argv[h]);
@@ -1011,11 +1011,11 @@ void string_tools::create_comma_separated_list(std::string &output, long int *in
 	char str[1000];
 	int i;
 
-	sprintf(str, "%ld", input[0]);
+	snprintf(str, sizeof(str), "%ld", input[0]);
 	output.assign(str);
 	for (i = 1; i < input_sz; i++) {
 		output.append(",");
-		sprintf(str, "%ld", input[i]);
+		snprintf(str, sizeof(str), "%ld", input[i]);
 		output.append(str);
 	}
 

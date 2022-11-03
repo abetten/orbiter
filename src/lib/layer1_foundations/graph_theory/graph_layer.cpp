@@ -21,25 +21,18 @@ namespace graph_theory {
 
 graph_layer::graph_layer()
 {
-	null();
+	id_of_first_node = 0;
+	nb_nodes = 0;
+	Nodes = NULL;
+	y_coordinate = 0;
 }
+
 
 graph_layer::~graph_layer()
-{
-	freeself();
-}
-
-void graph_layer::null()
-{
-	Nodes = NULL;
-}
-
-void graph_layer::freeself()
 {
 	if (Nodes) {
 		FREE_OBJECTS(Nodes);
 		}
-	null();
 }
 
 void graph_layer::init(int nb_nodes,
@@ -52,11 +45,11 @@ void graph_layer::init(int nb_nodes,
 	Nodes = NEW_OBJECTS(graph_node, nb_nodes);
 	id = id_of_first_node;
 	for (i = 0; i < nb_nodes; i++) {
-		Nodes[i].id =id;
+		Nodes[i].id = id;
 		Nodes[i].layer = i;
-		Nodes[i].label = NULL;
+		//Nodes[i].label;
 		id++;
-		}
+	}
 }
 
 void graph_layer::place(int verbose_level)
@@ -166,8 +159,7 @@ void graph_layer::read_memory_object(
 	
 	if (f_v) {
 		cout << "graph_layer::read_memory_object" << endl;
-		}
-	freeself();
+	}
 
 	m->read_int(&id_of_first_node);
 	m->read_int(&nb_nodes);

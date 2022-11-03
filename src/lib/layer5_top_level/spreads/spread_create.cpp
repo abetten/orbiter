@@ -191,11 +191,11 @@ void spread_create::init(spread_create_description *Descr,
 
 		char str[1000];
 
-		sprintf(str, "catalogue_q%d_k%d_%d", q, k, Descr->iso);
+		snprintf(str, sizeof(str), "catalogue_q%d_k%d_%d", q, k, Descr->iso);
 		prefix.assign(str);
-		sprintf(str, "catalogue_q%d_k%d_%d", q, k, Descr->iso);
+		snprintf(str, sizeof(str), "catalogue_q%d_k%d_%d", q, k, Descr->iso);
 		label_txt.assign(str);
-		sprintf(str, "catalogue\\_q%d\\_k%d\\_%d", q, k, Descr->iso);
+		snprintf(str, sizeof(str), "catalogue\\_q%d\\_k%d\\_%d", q, k, Descr->iso);
 		label_tex.assign(str);
 	}
 

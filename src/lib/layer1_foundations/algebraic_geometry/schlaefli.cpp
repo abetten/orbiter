@@ -783,7 +783,7 @@ void schlaefli::make_Eckardt_points(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	char str[1000];
+	string str;
 
 	if (f_v) {
 		cout << "schlaefli::make_Eckardt_points" << endl;
@@ -1225,18 +1225,23 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 				snprintf(str, 1000, "D_{%d%d%d}",
 					a + 1, b + 1, c + 1);
 			}
+
+			string s;
+
+			s.assign(str);
+
 			if (j == 0) {
-				sprintf(str + strlen(str), "^\\top");
+				s.append("^\\top");
 			}
 			else {
-				sprintf(str + strlen(str), "^\\bot");
+				s.append("^\\bot");
 			}
 			if (f_v) {
 				cout << "creating label " << str
 					<< " for half double six "
 					<< 2 * i + j << endl;
 			}
-			Half_double_six_label_tex[2 * i + j].assign(str);
+			Half_double_six_label_tex[2 * i + j].assign(s);
 		}
 	}
 

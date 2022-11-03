@@ -698,15 +698,16 @@ public:
 	void write_char(char c);
 	void read_char(char *c);
 	void write_string(const char *p);
-	void read_string(char *&p);
+	void write_string(std::string &p);
+	void read_string(std::string &p);
 	void write_double(double f);
 	void read_double(double *f);
 	void write_lint(long int i);
 	void read_lint(long int *i);
 	void write_int(int i);
 	void read_int(int *i);
-	void read_file(const char *fname, int verbose_level);
-	void write_file(const char *fname, int verbose_level);
+	void read_file(std::string &fname, int verbose_level);
+	void write_file(std::string &fname, int verbose_level);
 	int multiplicity_of_character(char c);
 };
 
@@ -938,6 +939,8 @@ public:
 			geometry_builder::geometry_builder *GB, int verbose_level);
 	void init_vector_ge(std::string &label,
 			void *V, int verbose_level);
+	void init_action_on_forms(std::string &label,
+			void *AF, int verbose_level);
 	void print();
 };
 

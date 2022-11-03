@@ -457,7 +457,6 @@ void isomorph_global::identify(
 
 			fname_transporter.assign("transporter_");
 			fname_transporter.append(fname[i]);
-			//sprintf(fname_transporter, "transporter_%s", fname[i]);
 	
 	
 			if (f_v) {

@@ -105,13 +105,13 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 			char str[1000];
 
-			sprintf(str, "PG_2_q%d", q);
+			snprintf(str, sizeof(str), "PG_2_q%d", q);
 			prefix.assign(str);
 
-			sprintf(str, "PG_2_%d", q);
+			snprintf(str, sizeof(str), "PG_2_%d", q);
 			label_txt.assign(str);
 
-			sprintf(str, "PG\\_2\\_%d", q);
+			snprintf(str, sizeof(str), "PG\\_2\\_%d", q);
 			label_tex.assign(str);
 		}
 
@@ -142,13 +142,13 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 		char str[1000];
 
-		sprintf(str, "blocks_v%d_k%d", degree, k);
+		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
 		prefix.assign(str);
 
-		sprintf(str, "blocks_v%d_k%d", degree, k);
+		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
 		label_txt.assign(str);
 
-		sprintf(str, "blocks\\_v%d\\_k%d", degree, k);
+		snprintf(str, sizeof(str), "blocks\\_v%d\\_k%d", degree, k);
 		label_tex.assign(str);
 
 		A = NEW_OBJECT(actions::action);
@@ -195,13 +195,13 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 		char str[1000];
 
-		sprintf(str, "blocks_v%d_k%d", degree, k);
+		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
 		prefix.assign(str);
 
-		sprintf(str, "blocks_v%d_k%d", degree, k);
+		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
 		label_txt.assign(str);
 
-		sprintf(str, "blocks\\_v%d\\_k%d", degree, k);
+		snprintf(str, sizeof(str), "blocks\\_v%d\\_k%d", degree, k);
 		label_tex.assign(str);
 
 
@@ -258,13 +258,13 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 		char str[1000];
 
-		sprintf(str, "wreath_product_designs_n%d_k%d", n, k);
+		snprintf(str, sizeof(str), "wreath_product_designs_n%d_k%d", n, k);
 		prefix.assign(str);
 
-		sprintf(str, "wreath_product_designs_n%d_k%d", n, k);
+		snprintf(str, sizeof(str), "wreath_product_designs_n%d_k%d", n, k);
 		label_txt.assign(str);
 
-		sprintf(str, "wreath\\_product\\_designs\\_n%d\\_k%d", n, k);
+		snprintf(str, sizeof(str), "wreath\\_product\\_designs\\_n%d\\_k%d", n, k);
 		label_tex.assign(str);
 
 		A = NEW_OBJECT(actions::action);

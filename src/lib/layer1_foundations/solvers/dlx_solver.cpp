@@ -109,7 +109,7 @@ void dlx_solver::init(
 
 
 	if (Descr->f_data_label) {
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->data_label,
+		Get_matrix(Descr->data_label,
 				Input_data, nb_rows, nb_cols);
 	}
 	else if (Descr->f_data_matrix) {

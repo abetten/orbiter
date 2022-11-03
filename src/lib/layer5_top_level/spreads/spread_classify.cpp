@@ -434,7 +434,7 @@ void spread_classify::init(
 		//char str[1000];
 		//string fname_live_points;
 
-		//sprintf(str, "live_points_q%d", q);
+		//snprintf(str, sizeof(str), "live_points_q%d", q);
 		//fname_live_points.assign(str);
 
 		R = NEW_OBJECT(recoordinatize);
@@ -1088,7 +1088,7 @@ void spread_classify::lifting_prepare_function_new(
 
 	char str[1000];
 	string label, label_tex;
-	sprintf(str, "graph_%d", starter_case);
+	snprintf(str, sizeof(str), "graph_%d", starter_case);
 	label.assign(str);
 	label_tex.assign(str);
 

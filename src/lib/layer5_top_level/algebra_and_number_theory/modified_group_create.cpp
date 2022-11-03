@@ -318,8 +318,8 @@ void modified_group_create::create_action_on_k_subspaces(
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_OnGr_%d", description->on_k_subspaces_k);
-	sprintf(str2, " {\\rm Gr}_{%d,%d}(%d)",
+	snprintf(str1, sizeof(str1), "_OnGr_%d", description->on_k_subspaces_k);
+	snprintf(str2, sizeof(str2), " {\\rm Gr}_{%d,%d}(%d)",
 			n, description->on_k_subspaces_k, Fq->q);
 	label.append(str1);
 	label_tex.append(str2);
@@ -401,8 +401,8 @@ void modified_group_create::create_action_on_k_subsets(
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_OnSubsets_%d", description->on_k_subsets_k);
-	sprintf(str2, " {\\rm OnSubsets}_{%d}",
+	snprintf(str1, sizeof(str1), "_OnSubsets_%d", description->on_k_subsets_k);
+	snprintf(str2, sizeof(str2), " {\\rm OnSubsets}_{%d}",
 			description->on_k_subsets_k);
 	label.append(str1);
 	label_tex.append(str2);
@@ -505,8 +505,8 @@ void modified_group_create::create_special_subgroup(
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_SpecialSub");
-	sprintf(str2, " {\\rm SpecialSub}");
+	snprintf(str1, sizeof(str1), "_SpecialSub");
+	snprintf(str2, sizeof(str2), " {\\rm SpecialSub}");
 	label.append(str1);
 	label_tex.append(str2);
 

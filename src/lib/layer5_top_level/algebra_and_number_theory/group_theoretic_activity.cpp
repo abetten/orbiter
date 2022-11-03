@@ -200,7 +200,12 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_print_elements_tex) {
 
-		AG->print_elements_tex(verbose_level);
+		int f_with_permutation = TRUE;
+		int f_override_action = TRUE;
+		actions::action *A_special;
+
+		A_special = AG->A;
+		AG->print_elements_tex(f_with_permutation, f_override_action, A_special, verbose_level);
 	}
 
 	if (Descr->f_order_of_products) {

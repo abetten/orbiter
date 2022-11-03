@@ -2939,7 +2939,7 @@ void incidence_structure::do_tdo_high_level(
 			string fname;
 			fname.assign(label);
 			char str[1000];
-			sprintf(str, "_TDO_point_class_%d.txt", i);
+			snprintf(str, sizeof(str),  "_TDO_point_class_%d.txt", i);
 			fname.append(str);
 			S.write_cell_to_file_points_or_lines(
 					row_classes[i], fname, verbose_level - 1);
@@ -2948,7 +2948,7 @@ void incidence_structure::do_tdo_high_level(
 			string fname;
 			fname.assign(label);
 			char str[1000];
-			sprintf(str, "_TDO_line_class_%d.txt", i);
+			snprintf(str, sizeof(str), "_TDO_line_class_%d.txt", i);
 			fname.append(str);
 			S.write_cell_to_file_points_or_lines(
 					col_classes[i], fname, verbose_level - 1);
@@ -3123,19 +3123,19 @@ void incidence_structure::compute_tdo_stepwise(
 
 			char str[1000];
 
-			sprintf(str, "_tdo_step_%d.tex", step);
+			snprintf(str, sizeof(str), "_tdo_step_%d.tex", step);
 			fname.assign(label);
 			fname.append(str);
 
-			sprintf(str, "_tdo_step_%d_pic.tex", step);
+			snprintf(str, sizeof(str), "_tdo_step_%d_pic.tex", step);
 			fname_pic.assign(label);
 			fname_pic.append(str);
 
-			sprintf(str, "_tdo_step_%d_scheme.tex", step);
+			snprintf(str, sizeof(str), "_tdo_step_%d_scheme.tex", step);
 			fname_scheme.assign(label);
 			fname_scheme.append(str);
 
-			sprintf(str, "_tdo_step_%d_extra.tex", step);
+			snprintf(str, sizeof(str), "_tdo_step_%d_extra.tex", step);
 			fname_extra.assign(label);
 			fname_extra.append(str);
 

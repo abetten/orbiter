@@ -140,6 +140,8 @@ public:
 	void test_unipoly();
 	void test_unipoly2();
 	int is_diagonal_matrix(int *A, int n);
+
+
 	void test_longinteger();
 	void test_longinteger2();
 	void test_longinteger3();
@@ -157,7 +159,6 @@ public:
 			ring_theory::longinteger_object &ago);
 	void longinteger_collect_print(std::ostream &ost,
 			int &nb_agos, ring_theory::longinteger_object *&agos, int *&multiplicities);
-	void do_equivalence_class_of_fractions(int N, int verbose_level);
 
 
 
@@ -173,18 +174,56 @@ public:
 	void gl_random_matrix(field_theory::finite_field *F, int k, int verbose_level);
 
 	// functions with file based input:
-	void apply_Walsh_Hadamard_transform(field_theory::finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
-	void algebraic_normal_form(field_theory::finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
+	void apply_Walsh_Hadamard_transform(field_theory::finite_field *F,
+			std::string &fname_csv_in, int n, int verbose_level);
+	void algebraic_normal_form(
+			field_theory::finite_field *F,
+			int n,
+			int *func, int len, int verbose_level);
+	void algebraic_normal_form_of_boolean_function(
+			field_theory::finite_field *F,
+			std::string &fname_csv_in, int n, int verbose_level);
 	void apply_trace_function(field_theory::finite_field *F, std::string &fname_csv_in, int verbose_level);
 	void apply_power_function(field_theory::finite_field *F, std::string &fname_csv_in, long int d, int verbose_level);
 	void identity_function(field_theory::finite_field *F, std::string &fname_csv_out, int verbose_level);
 	void Walsh_matrix(field_theory::finite_field *F, int n, int *&W, int verbose_level);
 	void Vandermonde_matrix(field_theory::finite_field *F, int *&W, int *&W_inv, int verbose_level);
-	void search_APN(field_theory::finite_field *F, int verbose_level);
+	void search_APN(field_theory::finite_field *F, int delta_max, int verbose_level);
 	void search_APN_recursion(field_theory::finite_field *F,
-			int *f, int depth, int &delta_min, int &nb_times,
-			std::vector<std::vector<int> > &Solutions, int verbose_level);
-	int non_linearity(field_theory::finite_field *F, int *f, int verbose_level);
+			int *f, int depth, int f_normalize,
+			int &delta_max, int &nb_times,
+			std::vector<std::vector<int> > &Solutions,
+			int *A_matrix, int *B_matrix, int *Count_ab, int *nb_times_ab,
+			int verbose_level);
+	int search_APN_perform_checks(field_theory::finite_field *F,
+			int *f, int depth,
+			int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	void search_APN_undo_checks(field_theory::finite_field *F,
+			int *f, int depth,
+			int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	int perform_single_check(field_theory::finite_field *F,
+			int *f, int depth, int i, int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	void undo_single_check(field_theory::finite_field *F,
+			int *f, int depth, int i, int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	void search_APN_old(field_theory::finite_field *F, int verbose_level);
+	void search_APN_recursion_old(field_theory::finite_field *F,
+			int *f, int depth, int f_normalize,
+			int &delta_min, int &nb_times,
+			std::vector<std::vector<int> > &Solutions,
+			int *nb_times_ab,
+			int verbose_level);
+	int differential_uniformity(field_theory::finite_field *F,
+			int *f, int *nb_times_ab, int verbose_level);
+	int differential_uniformity_with_fibre(field_theory::finite_field *F,
+			int *f, int *nb_times_ab, int *&Fibre, int verbose_level);
 
 	void O4_isomorphism_4to2(field_theory::finite_field *F,
 		int *At, int *As, int &f_switch, int *B,

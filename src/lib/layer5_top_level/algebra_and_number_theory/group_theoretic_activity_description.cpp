@@ -459,7 +459,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-test_if_geometric" << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-f_draw_tree") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
 			f_draw_tree = TRUE;
 			if (f_v) {
 				cout << "-f_draw_tree " << endl;
@@ -695,42 +695,6 @@ int group_theoretic_activity_description::read_arguments(
 					<< " " << linear_codes_target_size << endl;
 			}
 		}
-
-
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-exact_cover") == 0) {
-			f_exact_cover = TRUE;
-			ECA = NEW_OBJECT(exact_cover_arguments);
-			i += ECA->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done with -exact_cover" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-isomorph_arguments") == 0) {
-			f_isomorph_arguments = TRUE;
-			IA = NEW_OBJECT(isomorph_arguments);
-			i += IA->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done with -isomorph_arguments" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-#endif
-
 
 
 
@@ -1082,20 +1046,6 @@ void group_theoretic_activity_description::print()
 			cout << "-linear_codes " << linear_codes_minimum_distance
 				<< " " << linear_codes_target_size << endl;
 	}
-
-
-
-#if 0
-	if (f_exact_cover) {
-		cout << "-exact_cover" << endl;
-	}
-	if (f_isomorph_arguments) {
-		cout << "-isomorph_arguments" << endl;
-	}
-#endif
-
-
-
 
 
 

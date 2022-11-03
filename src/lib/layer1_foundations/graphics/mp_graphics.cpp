@@ -706,9 +706,11 @@ void mp_graphics::draw_axes_and_grid(
 			continue;
 		}
 		char str[1000];
-		sprintf(str, "%d", i);
+		string s;
+		snprintf(str, sizeof(str), "%d", i);
+		s.assign(str);
 		//cout << "str='" << str << "'" << endl;
-		aligned_text_array(Px, Py, j, "", str);
+		aligned_text_array(Px, Py, j, "", s);
 		j += 1;
 	}
 
@@ -733,9 +735,11 @@ void mp_graphics::draw_axes_and_grid(
 			continue;
 		}
 		char str[1000];
-		sprintf(str, "%d", i);
+		string s;
+		snprintf(str, sizeof(str), "%d", i);
+		s.assign(str);
 		//cout << "str='" << str << "'" << endl;
-		aligned_text_array(Px, Py, j, "", str);
+		aligned_text_array(Px, Py, j, "", s);
 		j += 1;
 	}
 
@@ -1533,7 +1537,7 @@ void mp_graphics::polygon2_arrow_halfway(int *Px, int *Py,
 
 void mp_graphics::polygon2_arrow_halfway_and_label(int *Px, int *Py,
 	int i1, int i2,
-	const char *alignment, const char *txt)
+	const char *alignment, std::string &s)
 {
 	int Idx[3];
 	int X[3], Y[3];
@@ -1559,11 +1563,11 @@ void mp_graphics::polygon2_arrow_halfway_and_label(int *Px, int *Py,
 
 	sl_ends(0, 0);
 	
-	aligned_text(X[2], Y[2], alignment, txt);
+	aligned_text(X[2], Y[2], alignment, s);
 }
 
 void mp_graphics::grid_aligned_text(grid_frame *F,
-		int x, int y, const char *alignment, const char *p)
+		int x, int y, const char *alignment, std::string &s)
 {
 	int *Px, *Py;
 
@@ -1578,35 +1582,35 @@ void mp_graphics::grid_aligned_text(grid_frame *F,
 		Px[0] = (int)(F->origin_x + x * F->dx);
 		Py[0] = (int)(F->origin_y + y * F->dy);
 		}
-	aligned_text(Px[0], Py[0], alignment, p);
+	aligned_text(Px[0], Py[0], alignment, s);
 	FREE_int(Px);
 	FREE_int(Py);
 }
 
 void mp_graphics::aligned_text(int x, int y,
-		const char *alignment, const char *p)
+		const char *alignment, std::string &s)
 {
 	//fp_log << "AlignedText " << x << " " << y << " "
 	// << alignment << " \"" << p << "\"" << endl;
-	aligned_text_with_offset(x, y, 0, 0, alignment, p);
+	aligned_text_with_offset(x, y, 0, 0, alignment, s);
 }
 
 void mp_graphics::aligned_text_array(int *Px, int *Py, int idx,
-		const char *alignment, const char *p)
+		const char *alignment, std::string &s)
 {
-	aligned_text(Px[idx], Py[idx], alignment, p);
+	aligned_text(Px[idx], Py[idx], alignment, s);
 }
 
 void mp_graphics::aligned_text_with_offset(int x, int y,
 		int xoffset, int yoffset,
-	const char *alignment, const char *p)
+	const char *alignment, std::string &s)
 {
 	int h_align = 1, v_align = 1;
 	int l, i;
 	char c;
 	
 	//fp_log << "AlignedText " << x << " " << y << " " << xoffset
-	// << " " << yoffset << " " << alignment << " \"" << p << "\"" << endl;
+	// << " " << yoffset << " " << alignment << " \"" << s << "\"" << endl;
 	l = strlen(alignment);
 	for (i = 0; i < l; i++) {
 		c = alignment[i];
@@ -1625,9 +1629,9 @@ void mp_graphics::aligned_text_with_offset(int x, int y,
 		}
 	//cout << "xoffset=" << xoffset << endl;
 	//cout << "yoffset=" << yoffset << endl;
-	//cout << "text=" << p << endl;
+	//cout << "text=" << s << endl;
 	st_alignment(h_align, v_align);
-	text(x + xoffset, y + yoffset, p);
+	text(x + xoffset, y + yoffset, s);
 }
 
 
@@ -1773,17 +1777,17 @@ void mp_graphics::end_figure()
 	end_figure_mp();
 }
 
-void mp_graphics::comment(const char *p)
+void mp_graphics::comment(std::string &s)
 {
-	comment_log(p);
-	comment_mp(p);
-	comment_tikz(p);
+	comment_log(s);
+	comment_mp(s);
+	comment_tikz(s);
 }
 
 
 
 
-void mp_graphics::text(int x, int y, const char *p)
+void mp_graphics::text(int x, int y, std::string &s)
 {
 	int x1, y1;
 	
@@ -1794,9 +1798,9 @@ void mp_graphics::text(int x, int y, const char *p)
 	coords_min_max(x1, y1);
 	user2dev(x1, y1);
 	
-	text_log(x1, y1, p);
-	text_mp(x1, y1, p);
-	text_tikz(x1, y1, p);
+	text_log(x1, y1, s);
+	text_mp(x1, y1, s);
+	text_tikz(x1, y1, s);
 }
 
 void mp_graphics::circle(int x, int y, int rad)
@@ -1815,9 +1819,9 @@ void mp_graphics::circle(int x, int y, int rad)
 	circle_tikz(x, y, rad);
 }
 
-void mp_graphics::circle_text(int x, int y, int rad, const char *p)
+void mp_graphics::circle_text(int x, int y, int rad, std::string &s)
 {
-	//fp_log << "CircleText " << x << " " << y << " \"" << p << "\"" << endl;
+	//fp_log << "CircleText " << x << " " << y << " \"" << s << "\"" << endl;
 
 #if 0
 	coords_min_max(x, y);
@@ -1826,7 +1830,7 @@ void mp_graphics::circle_text(int x, int y, int rad, const char *p)
 #endif
 
 	nice_circle(x, y, rad);
-	text(x, y, p);
+	text(x, y, s);
 	//output_circle_text_mp(x, y, idx, p);
 	//output_circle_text_tikz(x, y, idx, rad, p);
 }
@@ -1882,9 +1886,9 @@ void mp_graphics::footer_log()
 	fp_log << "END_OF_FILE" << endl << endl;
 }
 
-void mp_graphics::comment_log(const char *p)
+void mp_graphics::comment_log(std::string &s)
 {
-	fp_log << "Comment " << p << endl;
+	fp_log << "Comment " << s << endl;
 }
 
 void mp_graphics::st_alignment_log()
@@ -1985,9 +1989,9 @@ void mp_graphics::polygon_idx_log(int *Px, int *Py, int *Idx, int n)
 	fp_log << endl;
 }
 
-void mp_graphics::text_log(int x1, int y1, const char *p)
+void mp_graphics::text_log(int x1, int y1, std::string &s)
 {
-	fp_log << "Text " << x1 << ", " << y1 << ", \"" << p << "\"" << endl;
+	fp_log << "Text " << x1 << ", " << y1 << ", \"" << s << "\"" << endl;
 }
 
 void mp_graphics::circle_log(int x1, int y1, int rad)
@@ -2033,7 +2037,7 @@ void mp_graphics::begin_figure_mp(int factor_1000)
 	
 	//fp_mp << "defaultfont:=\"cmr7\";\n";
 
-	sprintf(str, "%lf", d);
+	snprintf(str, sizeof(str), "%lf", d);
 	l = strlen(str);
 	for (i = 0; i < l; i++) {
 		if (str[i] == ',')
@@ -2049,12 +2053,12 @@ void mp_graphics::end_figure_mp()
 	fp_mp << "endfig;" << endl << endl;
 }
 
-void mp_graphics::comment_mp(const char *p)
+void mp_graphics::comment_mp(std::string &s)
 {
-	fp_mp << "% " << p << endl;
+	fp_mp << "% " << s << endl;
 }
 
-void mp_graphics::text_mp(int x1, int y1, const char *p)
+void mp_graphics::text_mp(int x1, int y1, std::string &s)
 {
 	char align[64];
 	int lab;
@@ -2062,7 +2066,7 @@ void mp_graphics::text_mp(int x1, int y1, const char *p)
 	get_alignment_mp(align);
 	if (txt_boxed) {
 		lab = get_label(x1, y1);
-		fp_mp << "boxit.l" << lab << "(btex " << p << " etex);" << endl;
+		fp_mp << "boxit.l" << lab << "(btex " << s << " etex);" << endl;
 		fp_mp << lab << ".c=";
 		output_xy_metapost(x1, y1);
 		fp_mp << endl;
@@ -2073,7 +2077,7 @@ void mp_graphics::text_mp(int x1, int y1, const char *p)
 		
 		}
 	else {
-		fp_mp << "label" << align << "(btex " << p << " etex";
+		fp_mp << "label" << align << "(btex " << s << " etex";
 		if (txt_rotate) {
 			fp_mp << " rotated " << txt_rotate;
 			}
@@ -2135,9 +2139,9 @@ void mp_graphics::circle_mp(int x, int y, int rad)
 }
 
 void mp_graphics::output_circle_text_mp(int x, int y,
-		int idx, const char *text)
+		int idx, std::string &s)
 {
-	fp_mp << "circleit.l" << idx << "(btex " << text << " etex);" << endl;
+	fp_mp << "circleit.l" << idx << "(btex " << s << " etex);" << endl;
 	fp_mp << "l" << idx << ".c = ";
 	output_xy_metapost(x, y);
 	fp_mp << endl;
@@ -2394,26 +2398,26 @@ void mp_graphics::footer_tikz()
 		}
 }
 
-void mp_graphics::comment_tikz(const char *p)
+void mp_graphics::comment_tikz(std::string &s)
 {
-	fp_tikz << "% " << p << endl;
+	fp_tikz << "% " << s << endl;
 }
 
 
-void mp_graphics::text_tikz(int x1, int y1, const char *p)
+void mp_graphics::text_tikz(int x1, int y1, std::string &s)
 {
 	if (txt_overwrite) {
 		fp_tikz << "\\draw ";
 		output_xy_tikz(x1, y1);
 		fp_tikz << " node[fill=white] {";
-		fp_tikz << p;
+		fp_tikz << s;
 		fp_tikz << "};" << endl;
 		}
 	else {
 		fp_tikz << "\\draw ";
 		output_xy_tikz(x1, y1);
 		fp_tikz << " node{";
-		fp_tikz << p;
+		fp_tikz << s;
 		fp_tikz << "};" << endl;
 		}
 }
@@ -2444,9 +2448,6 @@ void mp_graphics::circle_tikz(int x, int y, int rad)
 void mp_graphics::output_circle_text_tikz(int x, int y,
 		int idx, int rad, const char *text)
 {
-	//char str[1000];
-
-	//sprintf(str, "%d", idx);
 
 	fp_tikz << "\\draw "; 
 	output_xy_tikz(x, y);
@@ -2796,20 +2797,22 @@ void mp_graphics::integer_4pts(int *Px, int *Py,
 		const char *align, int a)
 {
 	char str[100];
+	string s;
 
-	sprintf(str, "%d", a);
-	text_4pts(Px, Py, p1, p2, p3, p4, align, str);
+	snprintf(str, sizeof(str), "%d", a);
+	s.assign(str);
+	text_4pts(Px, Py, p1, p2, p3, p4, align, s);
 }
 
 void mp_graphics::text_4pts(int *Px, int *Py,
 		int p1, int p2, int p3, int p4,
-		const char *align, const char *str)
+		const char *align, std::string &s)
 {
 	int x = Px[p1] + Px[p2] + Px[p3] + Px[p4];
 	int y = Py[p1] + Py[p2] + Py[p3] + Py[p4];
 	x >>= 2;
 	y >>= 2;
-	aligned_text(x, y, align, str);
+	aligned_text(x, y, align, s);
 }
 
 
@@ -3018,10 +3021,14 @@ void mp_graphics::draw_graph_on_2D_grid(
 		char str[1000];
 
 		for (i = 0; i < nb_V; i++) {
-			sprintf(str, "%d", i+ point_label_offset);
+			snprintf(str, sizeof(str), "%d", i+ point_label_offset);
+			string s;
+
+			s.assign(str);
+
 			Px[0] = x + (int) X[i];
 			Py[0] = y + (int) Y[i];
-			aligned_text(Px[0], Py[0], "", str);
+			aligned_text(Px[0], Py[0], "", s);
 			}
 		}
 	if (f_directed) {
@@ -3108,6 +3115,7 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 	int f_has_labels, int *labels)
 {
 	char str[1000];
+	string s;
 	grid_frame F;
 	int i, j, ii, jj, ij, a, cnt, mn, mtn, mtn1;
 	int indent = 0;
@@ -3127,8 +3135,8 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 
 	// draw a box around it:
 
-	sprintf(str, "box outline");
-	comment(str);
+	s.assign("box outline");
+	comment(s);
 
 	grid_polygon2(&F, 0, 0, 10 * m, 0);
 	grid_polygon2(&F, 10 * m, 0, 10 * m, 10 * n);
@@ -3142,20 +3150,22 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 	sl_thickness(20); // 100 is standard
 
 	if (f_partition) {
-		sprintf(str, "row partition");
-		comment(str);
+		s.assign("row partition");
+		comment(s);
 		for (i = 0; i < nb_row_parts + 1; i++) {
-			sprintf(str, "part_%d", i);
-			comment(str);
+			snprintf(str, sizeof(str), "part_%d", i);
+			s.assign(str);
+			comment(s);
 			ii = row_part_first[i];
 			grid_polygon2(&F, ii * 10, 0 * 10, ii * 10, (n + 0) * 10);
 			//G.grid_polygon2(&F, ii * 10, -1 * 10, ii * 10, (n + 1) * 10);
 			}
-		sprintf(str, "column partition");
-		comment(str);
+		s.assign("column partition");
+		comment(s);
 		for (j = 0; j < nb_col_parts + 1; j++) {
-			sprintf(str, "part_%d", j);
-			comment(str);
+			snprintf(str, sizeof(str), "part_%d", j);
+			s.assign(str);
+			comment(s);
 			jj = col_part_first[j];
 			grid_polygon2(&F, 0 * 10, jj * 10, (m + 0) * 10, jj * 10);
 			//G.grid_polygon2(&F, -1 * 10, jj * 10, (m + 1) * 10, jj * 10);
@@ -3172,11 +3182,17 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 
 	if (f_row_grid) {
 		for (i = 0; i < m; i++) {
-			sprintf(str, "row_%d", i);
+
+			string s;
+			char str1[1000];
+
+			snprintf(str1, sizeof(str1), "row_%d", i);
+			s.assign(str);
 			if (f_has_labels) {
-				sprintf(str + strlen(str), " label %d", labels[i]);
+				snprintf(str1, sizeof(str1), " label %d", labels[i]);
+				s.append(str);
 				}
-			comment(str);
+			comment(s);
 			j = 0;
 			grid_fill_polygon5(&F,
 				10 * i + indent, 10 * j + indent,
@@ -3189,11 +3205,16 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 
 	if (f_col_grid) {
 		for (j = 0; j < n; j++) {
-			sprintf(str, "col_%d", j);
+			string s;
+
+			snprintf(str, sizeof(str), "col_%d", j);
+			s.assign(str);
+
 			if (f_has_labels) {
-				sprintf(str + strlen(str), " label %d", labels[j]);
+				snprintf(str, sizeof(str), " label %d", labels[j]);
+				s.append(str);
 				}
-			comment(str);
+			comment(s);
 			i = 0;
 			grid_fill_polygon5(&F,
 				10 * i + indent, 10 * j + indent,
@@ -3206,12 +3227,16 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 
 	if (f_has_labels) {
 		for (i = 0; i < m; i++) {
-			sprintf(str, "%d", labels[i]);
-			grid_aligned_text(&F, i * 10 + 5, -1 * 10, "", str);
+			string s;
+			snprintf(str, sizeof(str), "%d", labels[i]);
+			s.assign(str);
+			grid_aligned_text(&F, i * 10 + 5, -1 * 10, "", s);
 			}
 		for (j = 0; j < n; j++) {
-			sprintf(str, "%d", labels[m + j] - m);
-			grid_aligned_text(&F, -1 * 10, j * 10 + 5, "", str);
+			string s;
+			snprintf(str, sizeof(str), "%d", labels[m + j] - m);
+			s.assign(str);
+			grid_aligned_text(&F, -1 * 10, j * 10 + 5, "", s);
 			}
 		}
 
@@ -3258,8 +3283,10 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 
 
 
-			sprintf(str, "%d_%d", i, j);
-			comment(str);
+			snprintf(str, sizeof(str), "%d_%d", i, j);
+			string s;
+			s.assign(str);
+			comment(s);
 
 			if (f_dots) {
 				grid_polygon2(&F, 10 * i, 10 * j, 10 * i, 10 * j);
@@ -3384,44 +3411,63 @@ void mp_graphics::draw_density2(int no,
 
 
 	if (f_switch_x) {
-		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
-		aligned_text(Px[0], Py[0], "t", str);
-		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
-		aligned_text(Px[1], Py[1], "t", str);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", max_x + offset_x);
+		string s;
+		s.assign(str);
+		aligned_text(Px[0], Py[0], "t", s);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", min_x + offset_x);
+		s.assign(str);
+		aligned_text(Px[1], Py[1], "t", s);
 		}
 	else {
-		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
-		aligned_text(Px[0], Py[0], "t", str);
-		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
-		aligned_text(Px[1], Py[1], "t", str);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", min_x + offset_x);
+		string s;
+		s.assign(str);
+		aligned_text(Px[0], Py[0], "t", s);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", max_x + offset_x);
+		s.assign(str);
+		aligned_text(Px[1], Py[1], "t", s);
 		}
-	sprintf(str, "{\\bf {\\large %d}}", min_y);
-	aligned_text(Px[0], Py[0], "r", str);
-	sprintf(str, "{\\bf {\\large %d}}", max_y);
-	aligned_text(Px[3], Py[3], "r", str);
+
+
+	string s;
+
+
+	snprintf(str, sizeof(str), "{\\bf {\\large %d}}", min_y);
+	s.assign(str);
+	aligned_text(Px[0], Py[0], "r", s);
+	snprintf(str, sizeof(str), "{\\bf {\\large %d}}", max_y);
+	s.assign(str);
+	aligned_text(Px[3], Py[3], "r", s);
 
 
 
 	Px[0] = 5 * 100;
 	Py[0] = 0;
-	sprintf(str, "{\\bf {\\large %s}}", label_x);
-	aligned_text(Px[0], Py[0], "t", str);
+	snprintf(str, sizeof(str), "{\\bf {\\large %s}}", label_x);
+	s.assign(str);
+	aligned_text(Px[0], Py[0], "t", s);
 
 	Px[0] = 5 * 100;
 	Py[0] = -50;
-	sprintf(str, "{\\bf {\\large $");
+	snprintf(str, sizeof(str), "{\\bf {\\large $");
+	s.assign(str);
 	if (f_mu) {
-		sprintf(str + strlen(str), "\\overline{x}=%.1lf", average);
+		snprintf(str, sizeof(str), "\\overline{x}=%.1lf", average);
+		s.append(str);
 		}
 	if (f_sigma) {
 		if (f_mu) {
-			sprintf(str + strlen(str), "\\, ");
+			snprintf(str, sizeof(str), "\\, ");
+			s.append(str);
 			}
-		sprintf(str + strlen(str), "\\sigma=%.1lf", sigma);
+		snprintf(str, sizeof(str), "\\sigma=%.1lf", sigma);
+		s.append(str);
 		}
 	if (f_mu || f_sigma) {
-		sprintf(str + strlen(str), "$}}");
-		aligned_text(Px[0], Py[0], "t", str);
+		snprintf(str, sizeof(str), "$}}");
+		s.append(str);
+		aligned_text(Px[0], Py[0], "t", s);
 		}
 
 
@@ -3434,7 +3480,8 @@ void mp_graphics::draw_density2(int no,
 		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
-		aligned_text(Px[2], Py[2], "r", "$\\overline{x}$");
+		s.assign("$\\overline{x}$");
+		aligned_text(Px[2], Py[2], "r", s);
 		}
 
 
@@ -3456,12 +3503,13 @@ void mp_graphics::draw_density2(int no,
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
-			sprintf(str, "$\\overline{x}+%d \\sigma$", k);
+			snprintf(str, sizeof(str), "$\\overline{x}+%d \\sigma$", k);
 			}
 		else {
-			sprintf(str, "$\\overline{x}+\\sigma$");
+			snprintf(str, sizeof(str), "$\\overline{x}+\\sigma$");
 			}
-		aligned_text(Px[2], Py[2], "r", str);
+		s.assign(str);
+		aligned_text(Px[2], Py[2], "r", s);
 
 		y_in = (int) (average - k * sigma);
 		Pt.y_to_pt_on_curve(y_in, x, y,
@@ -3472,12 +3520,13 @@ void mp_graphics::draw_density2(int no,
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
-			sprintf(str, "{\\bf {\\large $\\overline{x}-%d \\sigma$}}", k);
+			snprintf(str, sizeof(str), "{\\bf {\\large $\\overline{x}-%d \\sigma$}}", k);
 			}
 		else {
-			sprintf(str, "{\\bf {\\large $\\overline{x}-\\sigma$}}");
+			snprintf(str, sizeof(str), "{\\bf {\\large $\\overline{x}-\\sigma$}}");
 			}
-		aligned_text(Px[2], Py[2], "r", str);
+		s.assign(str);
+		aligned_text(Px[2], Py[2], "r", s);
 		}
 
 #if 0
@@ -3537,8 +3586,9 @@ void mp_graphics::draw_density2(int no,
 	if (f_title) {
 		Px[0] = 5 * 100;
 		Py[0] = 1050;
-		sprintf(str, "{\\bf {\\large %s}}", title);
-		aligned_text(Px[0], Py[0], "b", str);
+		snprintf(str, sizeof(str), "{\\bf {\\large %s}}", title);
+		s.assign(str);
+		aligned_text(Px[0], Py[0], "b", s);
 		}
 
 }
@@ -3556,6 +3606,7 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 	int Px[1000], Py[1000];
 	//int phi = 360 / 12;
 	//int rad1 = 400;
+	string s;
 	char str[1000];
 	int curve;
 	plot_tools Pt;
@@ -3640,29 +3691,36 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 
 
 	if (f_switch_x) {
-		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
-		aligned_text(Px[1], Py[1], "t", str);
-		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
-		aligned_text(Px[0], Py[0], "t", str);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", max_x + offset_x);
+		s.assign(str);
+		aligned_text(Px[1], Py[1], "t", s);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", min_x + offset_x);
+		s.assign(str);
+		aligned_text(Px[0], Py[0], "t", s);
 		}
 	else {
-		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
-		aligned_text(Px[0], Py[0], "t", str);
-		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
-		aligned_text(Px[1], Py[1], "t", str);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", min_x + offset_x);
+		s.assign(str);
+		aligned_text(Px[0], Py[0], "t", s);
+		snprintf(str, sizeof(str), "{\\bf {\\large %d}}", max_x + offset_x);
+		s.assign(str);
+		aligned_text(Px[1], Py[1], "t", s);
 		}
 
-	sprintf(str, "{\\bf {\\large %d}}", min_y);
-	aligned_text(Px[0], Py[0], "r", str);
-	sprintf(str, "{\\bf {\\large %d}}", max_y);
-	aligned_text(Px[3], Py[3], "r", str);
+	snprintf(str, sizeof(str), "{\\bf {\\large %d}}", min_y);
+	s.assign(str);
+	aligned_text(Px[0], Py[0], "r", s);
+	snprintf(str, sizeof(str), "{\\bf {\\large %d}}", max_y);
+	s.assign(str);
+	aligned_text(Px[3], Py[3], "r", s);
 
 
 
 	Px[0] = 5 * 100;
 	Py[0] = 0;
-	sprintf(str, "{\\bf {\\large %s}}", label_x);
-	aligned_text(Px[0], Py[0], "t", str);
+	snprintf(str, sizeof(str), "{\\bf {\\large %s}}", label_x);
+	s.assign(str);
+	aligned_text(Px[0], Py[0], "t", s);
 
 
 
@@ -3714,8 +3772,9 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 				Px[1] = 1000;
 				Py[1] = Py[2];
 				polygon2(Px, Py, 0, 1);
-				sprintf(str, "{%d}", (int)a);
-				aligned_text(Px[0], Py[0], "r", str);
+				snprintf(str, sizeof(str), "{%d}", (int)a);
+				s.assign(str);
+				aligned_text(Px[0], Py[0], "r", s);
 				}
 			}
 		else {
@@ -3736,8 +3795,9 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 	if (f_title) {
 		Px[0] = 5 * 100;
 		Py[0] = 1050;
-		sprintf(str, "{\\bf {\\large %s}}", title);
-		aligned_text(Px[0], Py[0], "b", str);
+		snprintf(str, sizeof(str), "{\\bf {\\large %s}}", title);
+		s.assign(str);
+		aligned_text(Px[0], Py[0], "b", s);
 		}
 
 }
@@ -3751,6 +3811,7 @@ void mp_graphics::projective_plane_draw_grid2(
 	int f_v = (verbose_level >= 1);
 	double a, b;
 	int x1, x2, x3;
+	string s;
 
 	//int rad = 17000;
 	int i, h;
@@ -3815,8 +3876,10 @@ void mp_graphics::projective_plane_draw_grid2(
 		Px[i] = Dx[i] * dx;
 		Py[i] = Dy[i] * dy;
 		}
-	text(Px[0], Py[0], "$x$");
-	text(Px[1], Py[1], "$y$");
+	s.assign("$x$");
+	text(Px[0], Py[0], s);
+	s.assign("$y$");
+	text(Px[1], Py[1], s);
 
 	sl_thickness(100);
 
@@ -3886,7 +3949,8 @@ void mp_graphics::projective_plane_draw_grid2(
 			//G.nice_circle(Px[a * Q + b], Py[a * Q + b], rad);
 			nice_circle(Px[0], Py[0], O->rad);
 			if (f_point_labels) {
-				text(Px[0], Py[0], Point_labels[h]);
+				s.assign(Point_labels[h]);
+				text(Px[0], Py[0], s);
 			}
 		}
 
@@ -3924,6 +3988,7 @@ void mp_graphics::draw_matrix_in_color(
 	grid_frame F;
 	int i, j, a, cnt, mn;
 	int indent = 0;
+	string s;
 
 	mn = MAXIMUM(m, n);
 	F.f_matrix_notation = TRUE;
@@ -3940,8 +4005,8 @@ void mp_graphics::draw_matrix_in_color(
 
 	// draw a box around it:
 
-	sprintf(str, "box outline");
-	comment(str);
+	s.assign("box outline");
+	comment(s);
 
 	grid_polygon2(&F, 0, 0, 10 * m, 0);
 	grid_polygon2(&F, 10 * m, 0, 10 * m, 10 * n);
@@ -3963,11 +4028,13 @@ void mp_graphics::draw_matrix_in_color(
 
 	if (f_row_grid) {
 		for (i = 0; i < m; i++) {
-			sprintf(str, "row_%d", i);
+			snprintf(str, sizeof(str), "row_%d", i);
+			s.assign(str);
 			if (f_has_labels) {
-				sprintf(str + strlen(str), " label %d", labels[i]);
+				snprintf(str, sizeof(str), " label %d", labels[i]);
+				s.append(str);
 				}
-			comment(str);
+			comment(s);
 			j = 0;
 			grid_fill_polygon5(&F,
 				10 * i + indent, 10 * j + indent,
@@ -3980,11 +4047,13 @@ void mp_graphics::draw_matrix_in_color(
 
 	if (f_col_grid) {
 		for (j = 0; j < n; j++) {
-			sprintf(str, "col_%d", j);
+			snprintf(str, sizeof(str), "col_%d", j);
+			s.assign(str);
 			if (f_has_labels) {
-				sprintf(str + strlen(str), " label %d", labels[j]);
+				snprintf(str, sizeof(str), " label %d", labels[j]);
+				s.append(str);
 				}
-			comment(str);
+			comment(s);
 			i = 0;
 			grid_fill_polygon5(&F,
 				10 * i + indent, 10 * j + indent,
@@ -3997,12 +4066,14 @@ void mp_graphics::draw_matrix_in_color(
 
 	if (f_has_labels) {
 		for (i = 0; i < m; i++) {
-			sprintf(str, "%d", labels[i]);
-			grid_aligned_text(&F, i * 10 + 5, -1 * 10, "", str);
+			snprintf(str, sizeof(str), "%d", labels[i]);
+			s.assign(str);
+			grid_aligned_text(&F, i * 10 + 5, -1 * 10, "", s);
 			}
 		for (j = 0; j < n; j++) {
-			sprintf(str, "%d", labels[m + j] - m);
-			grid_aligned_text(&F, -1 * 10, j * 10 + 5, "", str);
+			snprintf(str, sizeof(str), "%d", labels[m + j] - m);
+			s.assign(str);
+			grid_aligned_text(&F, -1 * 10, j * 10 + 5, "", s);
 			}
 		}
 
@@ -4045,8 +4116,9 @@ void mp_graphics::draw_matrix_in_color(
 
 			if (a) {
 
-				sprintf(str, "%d_%d", i, j);
-				comment(str);
+				snprintf(str, sizeof(str), "%d_%d", i, j);
+				s.assign(str);
+				comment(s);
 
 				c = (int)((double) a / (double) color_step) + 1;
 				if (f_sufficiently_many_colors) {
@@ -4525,13 +4597,15 @@ void mp_graphics::domino_draw_assignment(int *A, int *matching, int *B,
 {
 	int Px[100], Py[100];
 	char str[1000];
+	string s;
 	int i, j, a, p, q;
 
 	if (f_cost) {
 		Px[0] = (N * dx) / 2;
 		Py[0] = (M + 1) * dy;
-		sprintf(str, "${%d}$", cost);
-		aligned_text(Px[0], Py[0], "", str);
+		snprintf(str, sizeof(str), "${%d}$", cost);
+		s.assign(str);
+		aligned_text(Px[0], Py[0], "", s);
 	}
 
 
@@ -4559,8 +4633,9 @@ void mp_graphics::domino_draw_assignment(int *A, int *matching, int *B,
 			if (f_numbers) {
 				//Px[4] = j * dx + (dx >> 1);
 				//Py[4] = (M - i) * dy - (dy >> 1);
-				sprintf(str, "$%d$", B[i * N + j]);
-				aligned_text(Px[2], Py[2], "br", str);
+				snprintf(str, sizeof(str), "$%d$", B[i * N + j]);
+				s.assign(str);
+				aligned_text(Px[2], Py[2], "br", s);
 				}
 			//cout << "i=" << i << "j=" << j << "p=" << p << endl;
 			}

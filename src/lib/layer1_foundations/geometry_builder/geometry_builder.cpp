@@ -230,7 +230,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->test_lines[i], lines, lines_len, 0 /* verbose_level*/);
+		Get_int_vector_from_label(Descr->test_lines[i], lines, lines_len, 0 /* verbose_level*/);
 		//Orbiter->Int_vec.scan(Descr->test_lines[i], lines, lines_len);
 
 		for (j = 0; j < lines_len; j++) {

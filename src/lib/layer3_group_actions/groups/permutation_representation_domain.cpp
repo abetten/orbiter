@@ -294,8 +294,8 @@ void permutation_representation_domain::init_with_base(int degree,
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "Sym%d", degree);
-	sprintf(str2, "{\\rm Sym}_{%d}", degree);
+	snprintf(str1, sizeof(str1), "Sym%d", degree);
+	snprintf(str2, sizeof(str2), "{\\rm Sym}_{%d}", degree);
 	A.label.assign(str1);
 	A.label_tex.assign(str2);
 

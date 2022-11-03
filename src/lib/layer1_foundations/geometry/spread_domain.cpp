@@ -1304,25 +1304,25 @@ void spread_domain::write_spread_to_file(int type_of_spread, int verbose_level)
 		cout << "spread_classify::write_spread_to_file" << endl;
 		}
 	if (type_of_spread == SPREAD_OF_TYPE_FTWKB) {
-		sprintf(str, "spread_q%d_FTW.txt", q);
+		snprintf(str, sizeof(str), "spread_q%d_FTW.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_KANTOR) {
-		sprintf(str, "spread_q%d_Kantor.txt", q);
+		snprintf(str, sizeof(str), "spread_q%d_Kantor.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_KANTOR2) {
-		sprintf(str, "spread_q%d_Kantor2.txt", q);
+		snprintf(str, sizeof(str), "spread_q%d_Kantor2.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_GANLEY) {
-		sprintf(str, "spread_q%d_Ganley.txt", q);
+		snprintf(str, sizeof(str), "spread_q%d_Ganley.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_LAW_PENTTILA) {
-		sprintf(str, "spread_q%d_Law_Penttila.txt", q);
+		snprintf(str, sizeof(str), "spread_q%d_Law_Penttila.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_DICKSON_KANTOR) {
-		sprintf(str, "spread_q%d_DicksonKantor.txt", q);
+		snprintf(str, sizeof(str), "spread_q%d_DicksonKantor.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_HUDSON) {
-		sprintf(str, "spread_q%d_Hudson.txt", q);
+		snprintf(str, sizeof(str), "spread_q%d_Hudson.txt", q);
 		}
 
 	string fname;

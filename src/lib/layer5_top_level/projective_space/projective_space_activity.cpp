@@ -70,7 +70,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		int *genma;
 		int k, n;
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->canonical_form_of_code_generator_matrix, genma, k, n);
+		Get_matrix(Descr->canonical_form_of_code_generator_matrix, genma, k, n);
 
 		PA->canonical_form_of_code(
 				Descr->canonical_form_of_code_label,

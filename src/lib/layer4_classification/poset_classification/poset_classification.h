@@ -151,8 +151,6 @@ public:
 
 	orbit_based_testing();
 	~orbit_based_testing();
-	void null();
-	void freeself();
 	void init(
 			poset_classification *PC,
 			int max_depth,
@@ -615,8 +613,6 @@ public:
 	// poset_classification_init.cpp:
 	poset_classification();
 	~poset_classification();
-	void null();
-	void freeself();
 	void init_internal(
 		poset_classification_control *PC_control,
 		poset_with_group_action *Poset,
@@ -867,12 +863,14 @@ public:
 	void make_fname_lvl_reps_file(std::string &fname,
 			std::string &fname_base, int lvl);
 	void log_current_node(std::ostream &f, int size);
+
 	void make_spreadsheet_of_orbit_reps(
 			data_structures::spreadsheet *&Sp,
 		int max_depth);
 	void make_spreadsheet_of_level_info(
 			data_structures::spreadsheet *&Sp,
 		int max_depth, int verbose_level);
+
 	void create_schreier_tree_fname_mask_base(
 			std::string &fname_mask);
 	void create_schreier_tree_fname_mask_base_tex(
@@ -1152,8 +1150,6 @@ public:
 
 	poset_description();
 	~poset_description();
-	void null();
-	void freeself();
 	void read_arguments_from_string(
 			const char *str, int verbose_level);
 	int read_arguments(int argc, const char **argv,
@@ -1663,8 +1659,6 @@ public:
 
 	poset_with_group_action();
 	~poset_with_group_action();
-	void null();
-	void freeself();
 	void init_subset_lattice(actions::action *A, actions::action *A2,
 			groups::strong_generators *Strong_gens,
 			int verbose_level);

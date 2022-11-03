@@ -435,14 +435,7 @@ int upstep_work::init_extension_node(int verbose_level)
 	O_cur = gen->get_node(cur);
 		
 
-#if 0
-	O_cur->freeself();
-	O_cur->node = cur;
-	O_cur->prev = prev;
-	O_cur->pt = pt;
-#else
 	O_cur->init_node(cur, prev, pt, verbose_level);
-#endif
 
 	//if (f_v) {cout << "after freeself" << endl;}
 	O_cur->store_set(gen, size - 1);

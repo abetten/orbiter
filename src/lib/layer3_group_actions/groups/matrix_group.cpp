@@ -119,22 +119,22 @@ void matrix_group::init_projective_group_label(int n,
 
 	if (f_semilinear) {
 		if (f_special) {
-			sprintf(str1, "PSSL_%d_%d", n, F->q);
-			sprintf(str2, "{\\rm P}\\Sigma {\\rm L}(%d,%d)", n, F->q);
+			snprintf(str1, sizeof(str1), "PSSL_%d_%d", n, F->q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Sigma {\\rm L}(%d,%d)", n, F->q);
 		}
 		else {
-			sprintf(str1, "PGGL_%d_%d", n, F->q);
-			sprintf(str2, "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
+			snprintf(str1, sizeof(str1), "PGGL_%d_%d", n, F->q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
 		}
 	}
 	else {
 		if (f_special) {
-			sprintf(str1, "PSL_%d_%d", n, F->q);
-			sprintf(str2, "{\\rm PSL}(%d,%d)", n, F->q);
+			snprintf(str1, sizeof(str1), "PSL_%d_%d", n, F->q);
+			snprintf(str2, sizeof(str2), "{\\rm PSL}(%d,%d)", n, F->q);
 		}
 		else {
-			sprintf(str1, "PGL_%d_%d", n, F->q);
-			sprintf(str2, "{\\rm PGL}(%d,%d)", n, F->q);
+			snprintf(str1, sizeof(str1), "PGL_%d_%d", n, F->q);
+			snprintf(str2, sizeof(str2), "{\\rm PGL}(%d,%d)", n, F->q);
 		}
 	}
 	label.assign(str1);
@@ -179,12 +179,12 @@ void matrix_group::init_projective_group(int n,
 	char str2[1000];
 
 	if (f_semilinear) {
-		sprintf(str1, "PGGL_%d_%d", n, F->q);
-		sprintf(str2, "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
+		snprintf(str1, sizeof(str1), "PGGL_%d_%d", n, F->q);
+		snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
 	}
 	else {
-		sprintf(str1, "PGL_%d_%d", n, F->q);
-		sprintf(str2, "{\\rm PGL}(%d,%d)", n, F->q);
+		snprintf(str1, sizeof(str1), "PGL_%d_%d", n, F->q);
+		snprintf(str2, sizeof(str2), "{\\rm PGL}(%d,%d)", n, F->q);
 	}
 	label.assign(str1);
 	label_tex.assign(str2);
@@ -280,12 +280,12 @@ void matrix_group::init_affine_group(int n,
 	char str2[1000];
 
 	if (f_semilinear) {
-		sprintf(str1, "AGGL_%d_%d", n, F->q);
-		sprintf(str2, "{\\rm A}\\Gamma {\\rm L}(%d,%d)", n, F->q);
+		snprintf(str1, sizeof(str1), "AGGL_%d_%d", n, F->q);
+		snprintf(str2, sizeof(str2), "{\\rm A}\\Gamma {\\rm L}(%d,%d)", n, F->q);
 	}
 	else {
-		sprintf(str1, "AGL_%d_%d", n, F->q);
-		sprintf(str2, "{\\rm AGL}(%d,%d)", n, F->q);
+		snprintf(str1, sizeof(str1), "AGL_%d_%d", n, F->q);
+		snprintf(str2, sizeof(str2), "{\\rm AGL}(%d,%d)", n, F->q);
 	}
 	label.assign(str1);
 	label_tex.assign(str2);
@@ -356,12 +356,12 @@ void matrix_group::init_general_linear_group(int n,
 	char str2[1000];
 
 	if (f_semilinear) {
-		sprintf(str1, "GGL_%d_%d", n, F->q);
-		sprintf(str2, "\\Gamma {\\rm L}(%d,%d)", n, F->q);
+		snprintf(str1, sizeof(str1), "GGL_%d_%d", n, F->q);
+		snprintf(str2, sizeof(str2), "\\Gamma {\\rm L}(%d,%d)", n, F->q);
 	}
 	else {
-		sprintf(str1, "GL_%d_%d", n, F->q);
-		sprintf(str2, "{\\rm GL}(%d,%d)", n, F->q);
+		snprintf(str1, sizeof(str1), "GL_%d_%d", n, F->q);
+		snprintf(str2, sizeof(str2), "{\\rm GL}(%d,%d)", n, F->q);
 	}
 	label.assign(str1);
 	label_tex.assign(str2);

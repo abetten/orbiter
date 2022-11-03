@@ -60,7 +60,7 @@ void animate::init(
 	animate::Opt = Povray_job_description->Video_draw_options;
 	animate::extra_data = extra_data;
 	Pov = NEW_OBJECT(povray_interface);
-	sprintf(fname_makefile, "makefile_animation");
+	snprintf(fname_makefile, sizeof(fname_makefile), "makefile_animation");
 
 
 	if (f_v) {
@@ -302,21 +302,23 @@ void animate::animate_one_round(
 
 		char fname_pov[1000];
 		char fname_png[1000];
-		char povray_opts[1000];
+		string povray_opts;
+		char str[1000];
 		data_structures::string_tools ST;
 
 
 		povray_opts[0] = 0;
 		if (Opt->f_W) {
-			sprintf(povray_opts + strlen(povray_opts), "-W%d ", Opt->W);
+			snprintf(str, sizeof(str), "-W%d ", Opt->W);
+			povray_opts.append(str);
 			}
 		if (Opt->f_H) {
-			sprintf(povray_opts + strlen(povray_opts), "-H%d ", Opt->H);
+			snprintf(str, sizeof(str), "-H%d ", Opt->H);
+			povray_opts.append(str);
 			}
-		//sprintf(povray_opts, "");
 		// for instance -W1920 -H1200  for larger pictures
-		sprintf(fname_pov, output_mask.c_str(), round, h);
-		sprintf(fname_png, output_mask.c_str(), round, h);
+		snprintf(fname_pov, sizeof(fname_pov), output_mask.c_str(), round, h);
+		snprintf(fname_png, sizeof(fname_png), output_mask.c_str(), round, h);
 		ST.replace_extension_with(fname_png, ".png");
 
 		cout << "round " << round << ", frame " << h << " / "
@@ -519,7 +521,7 @@ void animate::animate_one_round(
 				//system(cmd);
 				*fpm << "\t" << cmd << endl;
 
-				sprintf(cmd, "mv tmp.png %s", fname_png);
+				snprintf(cmd, sizeof(cmd), "mv tmp.png %s", fname_png);
 				//cout << "system: " << cmd << endl;
 				//system(cmd);
 				*fpm << "\t" << cmd << endl;
@@ -639,12 +641,12 @@ void animate::animate_one_round(
 
 
 						cout << "creating latex label " << i << endl;
-						sprintf(str, output_mask.c_str(), round, h);
+						snprintf(str, sizeof(str), output_mask.c_str(), round, h);
 
 						Opt->latex_fname_base[i].assign(str);
 
 						ST.chop_off_extension(Opt->latex_fname_base[i]);
-						sprintf(str, "_%04d", i);
+						snprintf(str, sizeof(str), "_%04d", i);
 						Opt->latex_fname_base[i].append(str);
 
 						//sprintf(Opt->latex_fname_base[i] +

@@ -30,7 +30,7 @@ void poset_classification::draw_poset_fname_base_aux_poset(
 	char str[1000];
 
 	fname.assign(problem_label_with_path);
-	sprintf(str, "_aux_poset_lvl_%d", depth);
+	snprintf(str, sizeof(str), "_aux_poset_lvl_%d", depth);
 	fname.append(str);
 }
 
@@ -40,7 +40,7 @@ void poset_classification::draw_poset_fname_base_poset_lvl(
 	char str[1000];
 
 	fname.assign(problem_label_with_path);
-	sprintf(str, "_poset_lvl_%d", depth);
+	snprintf(str, sizeof(str), "_poset_lvl_%d", depth);
 	fname.append(str);
 }
 
@@ -50,7 +50,7 @@ void poset_classification::draw_poset_fname_base_tree_lvl(
 	char str[1000];
 
 	fname.assign(problem_label_with_path);
-	sprintf(str, "_tree_lvl_%d", depth);
+	snprintf(str, sizeof(str), "_tree_lvl_%d", depth);
 	fname.append(str);
 }
 
@@ -60,7 +60,7 @@ void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
 	char str[1000];
 
 	fname.assign(problem_label_with_path);
-	sprintf(str, "_poset_detailed_lvl_%d", depth);
+	snprintf(str, sizeof(str), "_poset_detailed_lvl_%d", depth);
 	fname.append(str);
 }
 
@@ -133,7 +133,7 @@ int poset_classification::write_treefile(std::string &fname_base,
 		cout << "poset_classification::write_treefile" << endl;
 	}
 	fname1.assign(fname_base);
-	sprintf(str, "_%d.tree", lvl);
+	snprintf(str, sizeof(str), "_%d.tree", lvl);
 	fname1.append(str);
 	
 	if  (Poo->first_node_at_level(lvl + 1) < MAX_NODES_FOR_TREEFILE) {
@@ -211,11 +211,11 @@ void poset_classification::draw_tree(
 		cout << "poset_classification::draw_tree" << endl;
 	}
 	fname.assign(fname_base);
-	sprintf(str, "_%d", lvl);
+	snprintf(str, sizeof(str), "_%d", lvl);
 	fname.assign(fname_base);
 
 	fname1.assign(fname_base);
-	sprintf(str, "_%d.tree", lvl);
+	snprintf(str, sizeof(str), "_%d.tree", lvl);
 	fname1.assign(fname_base);
 
 
@@ -607,15 +607,19 @@ void poset_classification::draw_tree_low_level1(
 	G.sf_interior(100 /* fill_interior */);
 	G.sf_color(1 /* fill_color */);
 	
+
+	string s;
+
 	for (i = 0; i < nb_nodes; i++) {
 		if (i == 0) {
 			continue;
 		}
 		pt = Poo->get_node(perm_inv[i])->get_pt();
 		snprintf(str, 1000, "%d", pt);
+		s.assign(str);
 		//G.aligned_text(Px, Py, i, "", str);
 		if (f_draw_points) {
-			G.circle_text(Px[i], Py[i], rad, str);
+			G.circle_text(Px[i], Py[i], rad, s);
 		}
 		else {
 			G.circle(Px[i], Py[i], rad);
@@ -676,7 +680,8 @@ void poset_classification::draw_tree_low_level1(
 				x = Px[perm[i]] - dx0 + j * dx;
 				y = Py[perm[i]] - y_offset2;
 				if (f_draw_extension_points) {
-					G.circle_text(x, y, rad, str);
+					s.assign(str);
+					G.circle_text(x, y, rad, s);
 					//G.aligned_text_with_offset(Px, Py,
 					// perm[i], x_offset, y_offset, "", "$48$");
 				}
@@ -717,7 +722,7 @@ void poset_classification::draw_poset_full(std::string &fname_base,
 	string fname1;
 	string fname2;
 
-	sprintf(str, "_poset_full_lvl_%d.layered_graph", depth);
+	snprintf(str, sizeof(str), "_poset_full_lvl_%d.layered_graph", depth);
 
 	fname1.assign(fname_base);
 	fname1.append(str);
@@ -728,7 +733,7 @@ void poset_classification::draw_poset_full(std::string &fname_base,
 				"after LG->write_file" << endl;
 	}
 
-	sprintf(str, "_poset_full_lvl_%d", depth);
+	snprintf(str, sizeof(str), "_poset_full_lvl_%d", depth);
 
 	fname2.assign(fname_base);
 	fname2.append(str);
@@ -889,11 +894,11 @@ void poset_classification::draw_level_graph(
 	char str[1000];
 
 	fname_base1.assign(fname_base);
-	sprintf(str, "_lvl_%d_bipartite_lvl_%d", depth, level);
+	snprintf(str, sizeof(str), "_lvl_%d_bipartite_lvl_%d", depth, level);
 	fname_base1.append(str);
 
 	fname.assign(fname_base);
-	sprintf(str, "_lvl_%d_bipartite_lvl_%d.layered_graph", depth, level);
+	snprintf(str, sizeof(str), "_lvl_%d_bipartite_lvl_%d.layered_graph", depth, level);
 	fname.append(str);
 
 	LG->write_file(fname, 0 /*verbose_level*/);
@@ -964,7 +969,7 @@ void poset_classification::make_flag_orbits_on_relations(
 		orbiter_kernel_system::file_io Fio;
 
 		fname.assign(fname_prefix);
-		sprintf(str, "_depth_%d_orbit_lengths.csv", lvl);
+		snprintf(str, sizeof(str), "_depth_%d_orbit_lengths.csv", lvl);
 		fname.append(str);
 
 		Fio.int_vec_write_csv(Orbit_len[lvl], Nb_orbits[lvl],
@@ -993,7 +998,7 @@ void poset_classification::make_flag_orbits_on_relations(
 		Int_vec_zero(F, Nb_elements[lvl] * Nb_elements[lvl + 1]);
 
 		fname.assign(fname_prefix);
-		sprintf(str, "_depth_%d.csv", lvl);
+		snprintf(str, sizeof(str), "_depth_%d.csv", lvl);
 		fname.append(str);
 
 		flag_orbit_idx = 1;
@@ -1721,7 +1726,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 			}
 
 
-			char text1[1000];
+			string text1;
 			char text2[2000];
 			ring_theory::longinteger_object go, go1;
 			int n, so, len, r;
@@ -1730,17 +1735,21 @@ void poset_classification::make_auxiliary_graph(int depth,
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text1);
 			if (lvl) {
-				snprintf(text2, 2000, "$%ld_{%s}$", Poo->get_node(n)->get_pt(), text1);
+				snprintf(text2, 2000, "$%ld_{%s}$", Poo->get_node(n)->get_pt(), text1.c_str());
 			}
 			else {
-				snprintf(text2, 2000, "$\\emptyset_{%s}$", text1);
+				snprintf(text2, 2000, "$\\emptyset_{%s}$", text1.c_str());
 			}
 
 			// set label to be the automorphism group order:
 			//LG->add_text(2 * lvl + 0, po, text1, 0/*verbose_level*/);
 
 			// set label to be the pt:
-			LG->add_text(2 * lvl + 0, po, text2, 0/*verbose_level*/);
+
+			string text3;
+
+			text3.assign(text2);
+			LG->add_text(2 * lvl + 0, po, text3, 0/*verbose_level*/);
 
 
 			LG->add_node_data1(2 * lvl + 0, po, Poo->get_node(n)->get_pt(),
@@ -1762,12 +1771,16 @@ void poset_classification::make_auxiliary_graph(int depth,
 				D.integral_division_by_int(go, len, go1, r);
 
 				go1.print_to_string(text1);
-				snprintf(text2, 2000, "$%d_{%s}$", E->get_pt(), text1);
+				snprintf(text2, 2000, "$%d_{%s}$", E->get_pt(), text1.c_str());
 
 				// set label to be the automorphism group order:
 				//LG->add_text(2 * lvl + 1, f + so, text1, 0/*verbose_level*/);
 				// set label to be the point:
-				LG->add_text(2 * lvl + 1, f + so, text2, 0/*verbose_level*/);
+
+				string text3;
+
+				text3.assign(text2);
+				LG->add_text(2 * lvl + 1, f + so, text3, 0/*verbose_level*/);
 
 
 			}
@@ -1930,7 +1943,7 @@ void poset_classification::make_graph(int depth,
 			}
 
 
-			char text[1000];
+			string text;
 			char text2[1000];
 			ring_theory::longinteger_object go, go1;
 			int n;
@@ -1952,7 +1965,10 @@ void poset_classification::make_graph(int depth,
 				//snprintf(text2, 1000, "$\\emptyset$;%s", text);
 			}
 
-			LG->add_text(lvl, po, text2, 0/*verbose_level*/);
+			string text3;
+
+			text3.assign(text2);
+			LG->add_text(lvl, po, text3, 0/*verbose_level*/);
 
 			// if no vector data, the text will be printed:
 			//LG->add_node_vec_data(lvl, po, the_set, lvl, 0 /* verbose_level */);
@@ -2158,14 +2174,20 @@ void poset_classification::make_level_graph(int depth,
 			}
 
 
-			char text[1000];
+			string text;
 			ring_theory::longinteger_object go, go1;
 			int n, so, len, r;
 			
 			n = Poo->first_node_at_level(lvl) + po;
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
-			LG->add_text(l, po, text, 0/*verbose_level*/);
+
+
+			string text3;
+
+			text3.assign(text);
+
+			LG->add_text(l, po, text3, 0/*verbose_level*/);
 			LG->add_node_data1(l, po, Poo->get_node(n)->get_pt(), 0/*verbose_level*/);
 			
 			get_set_by_level(lvl, po, the_set);
@@ -2190,8 +2212,13 @@ void poset_classification::make_level_graph(int depth,
 					len = E->get_orbit_len();
 					D.integral_division_by_int(go, len, go1, r);
 					go1.print_to_string(text);
-					LG->add_text(1, f + so, text, 0/*verbose_level*/);
-					LG->add_text(2, f + so, text, 0/*verbose_level*/);
+
+					string text3;
+
+					text3.assign(text);
+
+					LG->add_text(1, f + so, text3, 0/*verbose_level*/);
+					LG->add_text(2, f + so, text3, 0/*verbose_level*/);
 					
 					//get_set_by_level(lvl, po, the_set);
 					the_set[lvl] = E->get_pt();
@@ -2422,14 +2449,19 @@ void poset_classification::make_poset_graph_detailed(graph_theory::layered_graph
 			}
 
 
-			char text[1000];
+			string text;
 			ring_theory::longinteger_object go, go1;
 			int n, so, len, r;
 			
 			n = Poo->first_node_at_level(L) + po;
 			get_stabilizer_order(L, po, go);
 			go.print_to_string(text);
-			LG->add_text(3 * L, po, text, 0/*verbose_level*/);
+
+			string text3;
+
+			text3.assign(text);
+
+			LG->add_text(3 * L, po, text3, 0/*verbose_level*/);
 			if (L) {
 				LG->add_node_data1(3 * L, po, Poo->get_node(n)->get_pt(), 0/*verbose_level*/);
 			}
@@ -2463,8 +2495,13 @@ void poset_classification::make_poset_graph_detailed(graph_theory::layered_graph
 					len = E->get_orbit_len();
 					D.integral_division_by_int(go, len, go1, r);
 					go1.print_to_string(text);
-					LG->add_text(3 * L + 1, f + so, text, 0/*verbose_level*/);
-					LG->add_text(3 * L + 2, f + so, text, 0/*verbose_level*/);
+
+					string text3;
+
+					text3.assign(text);
+
+					LG->add_text(3 * L + 1, f + so, text3, 0/*verbose_level*/);
+					LG->add_text(3 * L + 2, f + so, text3, 0/*verbose_level*/);
 					
 					//get_set_by_level(lvl, po, the_set);
 					the_set[L] = E->get_pt();
@@ -2521,7 +2558,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 		cout << "poset_classification::print_data_structure_tex" << endl;
 	}
 	fname_base1.assign(problem_label_with_path);
-	sprintf(str, "_data_lvl_%d", depth);
+	snprintf(str, sizeof(str), "_data_lvl_%d", depth);
 	fname_base1.append(str);
 
 	fname.assign(fname_base1);
@@ -2555,7 +2592,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 				}
 				n = Poo->first_node_at_level(lvl) + po;
 				
-				char text[1000];
+				string text;
 				ring_theory::longinteger_object go, go1;
 			
 				n = Poo->first_node_at_level(lvl) + po;

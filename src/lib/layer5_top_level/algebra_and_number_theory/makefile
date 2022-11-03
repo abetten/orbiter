@@ -6,6 +6,10 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	action_on_forms_activity_description.o \
+	action_on_forms_activity.o \
+	action_on_forms_description.o \
+	action_on_forms.o \
 	algebra_global_with_action.o \
 	any_group_linear.o \
 	any_group_orbits.o \

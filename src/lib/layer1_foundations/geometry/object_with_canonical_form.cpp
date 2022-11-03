@@ -291,7 +291,7 @@ void object_with_canonical_form::init_point_set_from_string(
 
 	type = t_PTS;
 
-	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(set_text, set, sz, verbose_level);
+	Get_lint_vector_from_label(set_text, set, sz, verbose_level);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_point_set_from_string done" << endl;

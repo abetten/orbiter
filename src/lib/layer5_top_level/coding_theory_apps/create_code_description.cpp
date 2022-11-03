@@ -26,9 +26,9 @@ create_code_description::create_code_description()
 	f_linear_code_through_generator_matrix = FALSE;
 	//std::string linear_code_through_generator_matrix_label_genma;
 
-	f_linear_code_from_from_projective_set = FALSE;
-	linear_code_from_from_projective_set_nmk = 0;
-	//std::string linear_code_from_from_projective_set_set;
+	f_linear_code_from_projective_set = FALSE;
+	linear_code_from_projective_set_nmk = 0;
+	//std::string linear_code_from_projective_set_set;
 
 	f_linear_code_by_columns_of_parity_check = FALSE;
 	linear_code_by_columns_of_parity_check_nmk = 0;
@@ -84,14 +84,14 @@ int create_code_description::read_arguments(
 				cout << "-linear_code_through_generator_matrix " << linear_code_through_generator_matrix_label_genma << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-linear_code_from_from_projective_set") == 0) {
-			f_linear_code_from_from_projective_set = TRUE;
-			linear_code_from_from_projective_set_nmk = ST.strtoi(argv[++i]);
-			linear_code_from_from_projective_set_set.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-linear_code_from_projective_set") == 0) {
+			f_linear_code_from_projective_set = TRUE;
+			linear_code_from_projective_set_nmk = ST.strtoi(argv[++i]);
+			linear_code_from_projective_set_set.assign(argv[++i]);
 			if (f_v) {
-				cout << "-linear_code_from_from_projective_set "
-						<< linear_code_from_from_projective_set_nmk
-						<< " " << linear_code_from_from_projective_set_set << endl;
+				cout << "-linear_code_from_projective_set "
+						<< linear_code_from_projective_set_nmk
+						<< " " << linear_code_from_projective_set_set << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-linear_code_by_columns_of_parity_check") == 0) {
@@ -174,10 +174,10 @@ void create_code_description::print()
 		cout << "-linear_code_through_generator_matrix "
 				<< linear_code_through_generator_matrix_label_genma << endl;
 	}
-	if (f_linear_code_from_from_projective_set) {
-		cout << "-linear_code_from_from_projective_set "
-				<< linear_code_from_from_projective_set_nmk
-				<< " " << linear_code_from_from_projective_set_set << endl;
+	if (f_linear_code_from_projective_set) {
+		cout << "-linear_code_from_projective_set "
+				<< linear_code_from_projective_set_nmk
+				<< " " << linear_code_from_projective_set_set << endl;
 	}
 	if (f_linear_code_by_columns_of_parity_check) {
 		cout << "-linear_code_by_columns_of_parity_check "

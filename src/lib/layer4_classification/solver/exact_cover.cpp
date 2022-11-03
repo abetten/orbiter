@@ -99,7 +99,7 @@ void exact_cover::init_basic(void *user_data,
 
 	fname.assign(input_prefix);
 	fname.append(base_fname);
-	sprintf(str, "_lvl_%d", starter_size);
+	snprintf(str, sizeof(str), "_lvl_%d", starter_size);
 	fname.append(str);
 
 	if (f_v) {
@@ -121,12 +121,12 @@ void exact_cover::init_basic(void *user_data,
 	fname_solutions.assign(solution_prefix);
 	fname_solutions.append(base_fname);
 
-	sprintf(str, "_depth_%d_solutions.txt", starter_size);
+	snprintf(str, sizeof(str), "_depth_%d_solutions.txt", starter_size);
 	fname_solutions.append(str);
 
 	fname_statistics.assign(solution_prefix);
 	fname_statistics.append(base_fname);
-	sprintf(str, "_depth_%d_statistics.csv", starter_size);
+	snprintf(str, sizeof(str), "_depth_%d_statistics.csv", starter_size);
 	fname_statistics.append(str);
 
 	if (f_vv) {
@@ -190,14 +190,14 @@ void exact_cover::set_split(int split_r, int split_m, int verbose_level)
 	fname_solutions.append(base_fname);
 
 
-	sprintf(str, "_depth_%d_split_%d_%d_solutions.txt", starter_size, split_r, split_m);
+	snprintf(str, sizeof(str), "_depth_%d_split_%d_%d_solutions.txt", starter_size, split_r, split_m);
 	fname_solutions.append(str);
 
 
 	fname_statistics.assign(solution_prefix);
 	fname_statistics.append(base_fname);
 
-	sprintf(str, "_depth_%d_split_%d_%d_statistics.csv", starter_size, split_r, split_m);
+	snprintf(str, sizeof(str), "_depth_%d_split_%d_%d_statistics.csv", starter_size, split_r, split_m);
 	fname_statistics.append(str);
 
 	if (f_v) {
@@ -221,14 +221,14 @@ void exact_cover::set_single_case(int single_case, int verbose_level)
 	fname_solutions.append(base_fname);
 
 
-	sprintf(str, "_depth_%d_case_%d_solutions.txt", starter_size, single_case);
+	snprintf(str, sizeof(str), "_depth_%d_case_%d_solutions.txt", starter_size, single_case);
 	fname_solutions.append(str);
 
 
 	fname_statistics.assign(solution_prefix);
 	fname_statistics.append(base_fname);
 
-	sprintf(str, "_depth_%d_case_%d_statistics.csv", starter_size, single_case);
+	snprintf(str, sizeof(str), "_depth_%d_case_%d_statistics.csv", starter_size, single_case);
 	fname_statistics.append(str);
 
 	if (f_v) {
@@ -387,24 +387,20 @@ void exact_cover::compute_liftings_new(int f_solve,
 		//char fname1[1000];
 
 
-		//if (f_write_tree) {
-		//	sprintf(fname1, fname_tree, starter_case);
-		//}
 		
 		string fname_system2;
 		string fname_tree2;
 		char str[1000];
 
 		if (f_draw_system) {
-			sprintf(str, "_%d", the_starter_case);
+			snprintf(str, sizeof(str), "_%d", the_starter_case);
 			fname_system2.assign(fname_system);
 			fname_system2.append(str);
 			}
 		if (f_write_tree) {
-			sprintf(str, "_%d", the_starter_case);
+			snprintf(str, sizeof(str), "_%d", the_starter_case);
 			fname_tree2.assign(fname_tree);
 			fname_tree2.append(str);
-			//sprintf(fname_tree2, "%s_%d", fname_tree, the_starter_case);
 			}
 		compute_liftings_single_case_new(the_starter_case, 
 			f_solve, f_save, f_read_instead, 
@@ -730,26 +726,20 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 		string fname_sol;
 
 		fname.assign(output_prefix);
-		sprintf(str, "system_%d.txt", starter_case);
+		snprintf(str, sizeof(str), "system_%d.txt", starter_case);
 		fname.assign(str);
 
-		//sprintf(fname, "%ssystem_%d.txt", output_prefix, starter_case);
 
 
 		fname_Levi.assign(output_prefix);
-		sprintf(str, "system_%d_Levi_graph.bin", starter_case);
+		snprintf(str, sizeof(str), "system_%d_Levi_graph.bin", starter_case);
 		fname_Levi.assign(str);
 
 
-		//sprintf(fname_Levi, "%ssystem_%d_Levi_graph.bin",
-		//		output_prefix, starter_case);
-
 
 		fname_sol.assign(output_prefix);
-		sprintf(str, "system_%d.sol", starter_case);
+		snprintf(str, sizeof(str), "system_%d.sol", starter_case);
 		fname_sol.assign(str);
-
-		//sprintf(fname_sol, "%ssystem_%d.sol", output_prefix, starter_case);
 
 
 		if (f_save) {
@@ -816,7 +806,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 				char str[1000];
 				
 
-				sprintf(str, "system_%d.solutions", starter_case);
+				snprintf(str, sizeof(str), "system_%d.solutions", starter_case);
 				fname_sol.assign(solution_prefix);
 				fname_sol.append(str);
 

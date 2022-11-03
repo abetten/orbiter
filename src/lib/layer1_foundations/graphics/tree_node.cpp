@@ -527,6 +527,8 @@ void tree_node::draw_vertices(mp_graphics &G,
 		f_show = FALSE;
 	}
 
+	string s;
+
 	if (f_show) {
 		if (Opt->f_nodes) {
 			G.sf_color(color);
@@ -543,15 +545,17 @@ void tree_node::draw_vertices(mp_graphics &G,
 				G.nice_circle(x, y, Opt->rad);
 			}
 			else {
-				sprintf(str, "%d", value);
-				G.aligned_text(x, y, "", str);
+				snprintf(str, sizeof(str), "%d", value);
+				s.assign(str);
+				G.aligned_text(x, y, "", s);
 			}
 			//snprintf(str, 1000, "%d", color);
 			//G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 		else {
-			sprintf(str, "%d", value);
-			G.aligned_text(x, y, "", str);
+			snprintf(str, sizeof(str), "%d", value);
+			s.assign(str);
+			G.aligned_text(x, y, "", s);
 		}
 
 
@@ -598,7 +602,8 @@ void tree_node::draw_vertices(mp_graphics &G,
 			snprintf(str, 1000, "L%d", T->leaf_count);
 
 			T->leaf_count++;
-			G.aligned_text(x0, y0, "", str);
+			s.assign(str);
+			G.aligned_text(x0, y0, "", s);
 		
 			}
 		}
@@ -637,6 +642,7 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 	int xx, yy;
 	int Px[3], Py[3];
 	char str[1000];
+	string s;
 	//int rad = 50;
 	
 #if DONT_DRAW_ROOT_NODE
@@ -677,7 +683,7 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 		if (f_edge_labels && label.length()) {
 			Px[2] = (xx + parent_x) >> 1;
 			Py[2] = (yy + parent_y) >> 1;
-			G.aligned_text(Px[2], Py[2], "" /*"tl"*/, label.c_str());
+			G.aligned_text(Px[2], Py[2], "" /*"tl"*/, label);
 			}
 		}
 	
@@ -700,14 +706,16 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 		G.sf_color(1); // 1 = black, 0 = white
 		G.circle(xx, yy, rad);
 #endif
-		G.aligned_text(Px[1], Py[1], "" /*"tl"*/, str);
+		s.assign(str);
+		G.aligned_text(Px[1], Py[1], "" /*"tl"*/, s);
 		}
 	else {
 		//G.aligned_text(xx, yy, 1, "tl", str);
 		}
 	if (f_i && f_circletext && f_has_color) {
 		snprintf(str, 1000, "%d", color);
-		G.aligned_text(Px[1], Py[1], "tl", str);
+		s.assign(str);
+		G.aligned_text(Px[1], Py[1], "tl", s);
 		}
 }
 

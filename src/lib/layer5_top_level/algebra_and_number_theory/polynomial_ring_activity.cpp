@@ -122,8 +122,7 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 
 		int i;
 
-		VB = user_interface::The_Orbiter_top_level_session->get_object_of_type_vector_ge(
-				Descr->apply_transformation_vector_ge_label);
+		VB = Get_object_of_type_vector_ge(Descr->apply_transformation_vector_ge_label);
 
 		V = VB->V;
 

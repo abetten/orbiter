@@ -22,16 +22,6 @@ namespace groups {
 
 sylow_structure::sylow_structure()
 {
-	null();
-}
-
-sylow_structure::~sylow_structure()
-{
-	freeself();
-}
-
-void sylow_structure::null()
-{
 	primes = NULL;
 	exponents = NULL;
 	nb_primes = 0;
@@ -39,7 +29,7 @@ void sylow_structure::null()
 	Sub = NULL;
 }
 
-void sylow_structure::freeself()
+sylow_structure::~sylow_structure()
 {
 	if (primes) {
 		FREE_int(primes);
@@ -50,7 +40,6 @@ void sylow_structure::freeself()
 	if (Sub) {
 		FREE_OBJECTS(Sub);
 		}
-	null();
 }
 
 void sylow_structure::init(sims *S, int verbose_level)

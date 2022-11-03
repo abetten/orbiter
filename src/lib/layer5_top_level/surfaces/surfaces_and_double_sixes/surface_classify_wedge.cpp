@@ -118,7 +118,7 @@ void surface_classify_wedge::init(
 	fname_base.assign("surface_");
 	char str[1000];
 
-	sprintf(str, "%d", q);
+	snprintf(str, sizeof(str), "%d", q);
 	fname_base.append(str);
 
 	
@@ -1779,7 +1779,7 @@ void surface_classify_wedge::latex_surfaces(
 	if (f_v) {
 		cout << "surface_classify_wedge::latex_surfaces" << endl;
 	}
-	sprintf(str, "Cubic Surfaces with 27 Lines in $\\PG(3,%d)$", q);
+	snprintf(str, sizeof(str), "Cubic Surfaces with 27 Lines in $\\PG(3,%d)$", q);
 	title.assign(str);
 
 
@@ -2391,7 +2391,7 @@ int surface_classify_wedge::test_if_surfaces_have_been_computed_already()
 	orbiter_kernel_system::file_io Fio;
 	int ret;
 
-	sprintf(fname, "Surfaces_q%d.data", q);
+	snprintf(fname, sizeof(fname), "Surfaces_q%d.data", q);
 	if (Fio.file_size(fname) > 0) {
 		ret = TRUE;
 	}
@@ -2411,7 +2411,7 @@ void surface_classify_wedge::write_surfaces(int verbose_level)
 	char fname[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	sprintf(fname, "Surfaces_q%d.data", q);
+	snprintf(fname, sizeof(fname), "Surfaces_q%d.data", q);
 	{
 
 		ofstream fp(fname);
@@ -2441,7 +2441,7 @@ void surface_classify_wedge::read_surfaces(int verbose_level)
 	char fname[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	sprintf(fname, "Surfaces_q%d.data", q);
+	snprintf(fname, sizeof(fname), "Surfaces_q%d.data", q);
 	cout << "Reading file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 	{
@@ -2466,7 +2466,7 @@ int surface_classify_wedge::test_if_double_sixes_have_been_computed_already()
 	orbiter_kernel_system::file_io Fio;
 	int ret;
 
-	sprintf(fname, "Double_sixes_q%d.data", q);
+	snprintf(fname, sizeof(fname), "Double_sixes_q%d.data", q);
 	if (Fio.file_size(fname) > 0) {
 		ret = TRUE;
 	}
@@ -2486,7 +2486,7 @@ void surface_classify_wedge::write_double_sixes(int verbose_level)
 	char fname[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	sprintf(fname, "Double_sixes_q%d.data", q);
+	snprintf(fname, sizeof(fname), "Double_sixes_q%d.data", q);
 	{
 
 	ofstream fp(fname);
@@ -2518,7 +2518,7 @@ void surface_classify_wedge::read_double_sixes(int verbose_level)
 	char fname[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	sprintf(fname, "Double_sixes_q%d.data", q);
+	snprintf(fname, sizeof(fname), "Double_sixes_q%d.data", q);
 	if (f_v) {
 		cout << "Reading file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -3036,14 +3036,14 @@ void surface_classify_wedge::sweep_Cayley(
 	char str[1000];
 
 	fname.assign("Cayley_q");
-	sprintf(str, "%d.csv", q);
+	snprintf(str, sizeof(str), "%d.csv", q);
 	fname.append(str);
 	orbiter_kernel_system::file_io Fio;
 
 	Fio.int_matrix_write_csv(fname, Table, cnt, 5);
 
 	fname.assign("Cayley_reverse_q");
-	sprintf(str, "%d.csv", q);
+	snprintf(str, sizeof(str), "%d.csv", q);
 	fname.append(str);
 
 	Fio.int_matrix_write_csv(fname, Table_reverse, nb_iso, 5);
@@ -3391,7 +3391,7 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 	char str[1000];
 	string fname;
 
-	sprintf(str, "surface_recognize_abcd_q%d.csv", q);
+	snprintf(str, sizeof(str), "surface_recognize_abcd_q%d.csv", q);
 	fname.assign(str);
 
 	Fio.int_matrix_write_csv(fname, Table, h, 7);

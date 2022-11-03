@@ -662,7 +662,7 @@ void action::init_permutation_group(int degree, int f_no_base, int verbose_level
 	if (f_v) {
 		cout << "action::init_permutation_group, degree=" << degree << endl;
 	}
-	sprintf(str, "Perm%d", degree);
+	snprintf(str, sizeof(str), "Perm%d", degree);
 
 
 	label.assign(str);
@@ -798,7 +798,7 @@ void action::init_permutation_group_from_generators(int degree,
 					"no target group order is given" << endl;
 		}
 	}
-	sprintf(str, "Perm%d", degree);
+	snprintf(str, sizeof(str), "Perm%d", degree);
 
 
 	label.assign(str);
@@ -960,8 +960,8 @@ void action::init_affine_group(int n, int q,
 	if (f_v) {
 		cout << "action::init_affine_group" << endl;
 	}
-	sprintf(str1, "AGL_%d_%d", n, q);
-	sprintf(str2, "AGL(%d,%d)", n, q);
+	snprintf(str1, sizeof(str1), "AGL_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "AGL(%d,%d)", n, q);
 
 	label.assign(str1);
 	label_tex.assign(str2);
@@ -1008,8 +1008,8 @@ void action::init_symmetric_group(int degree, int f_no_base, int verbose_level)
 	if (f_v) {
 		cout << "action::init_symmetric_group f_no_base=" << f_no_base << endl;
 	}
-	sprintf(str1, "Sym_%d", degree);
-	sprintf(str2, "Sym(%d)", degree);
+	snprintf(str1, sizeof(str1), "Sym_%d", degree);
+	snprintf(str2, sizeof(str2), "Sym(%d)", degree);
 
 	label.assign(str1);
 	label_tex.assign(str2);
@@ -1068,8 +1068,8 @@ void action::init_cyclic_group(int degree, int f_no_base, int verbose_level)
 	if (f_v) {
 		cout << "action::init_cyclic_group f_no_base=" << f_no_base << endl;
 	}
-	sprintf(str1, "C_%d", degree);
-	sprintf(str2, "C(%d)", degree);
+	snprintf(str1, sizeof(str1), "C_%d", degree);
+	snprintf(str2, sizeof(str2), "C(%d)", degree);
 
 	label.assign(str1);
 	label_tex.assign(str2);
@@ -1568,8 +1568,8 @@ void action::init_permutation_representation(action *A_original,
 		Int_vec_copy(W->the_transversal_length,
 				get_transversal_length(), base_len());
 
-		sprintf(str1, "_induced%d_prev", degree);
-		sprintf(str2, " induced%d prev", degree);
+		snprintf(str1, sizeof(str1), "_induced%d_prev", degree);
+		snprintf(str2, sizeof(str2), " induced%d prev", degree);
 
 		label.assign(P->label);
 		label.assign(P->label_tex);
@@ -1583,8 +1583,8 @@ void action::init_permutation_representation(action *A_original,
 		low_level_point_size = 0;
 		action::degree = degree;
 
-		sprintf(str1, "_induced%d", degree);
-		sprintf(str2, " induced%d", degree);
+		snprintf(str1, sizeof(str1), "_induced%d", degree);
+		snprintf(str2, sizeof(str2), " induced%d", degree);
 
 		label.assign(P->label);
 		label_tex.assign(P->label_tex);
@@ -1728,30 +1728,30 @@ void action::init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
 
 	if (f_semilinear) {
 		if (O->epsilon == 1) {
-			sprintf(str1, "PGGOp_%d_%d", O->n, q);
-			sprintf(str2, "{\\rm P}\\Gamma{\\rm O}^+(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGGOp_%d_%d", O->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^+(%d,%d)", O->n, q);
 		}
 		else if (O->epsilon == -1) {
-			sprintf(str1, "PGGOm_%d_%d", O->n, q);
-			sprintf(str2, "{\\rm P}\\Gamma{\\rm O}^-(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGGOm_%d_%d", O->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^-(%d,%d)", O->n, q);
 		}
 		else {
-			sprintf(str1, "PGGO_%d_%d", O->n, q);
-			sprintf(str2, "{\\rm P}\\Gamma{\\rm O}(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGGO_%d_%d", O->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}(%d,%d)", O->n, q);
 		}
 	}
 	else {
 		if (O->epsilon == 1) {
-			sprintf(str1, "PGOp_%d_%d", O->n, q);
-			sprintf(str2, "{\\rm PGO}^+(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGOp_%d_%d", O->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm PGO}^+(%d,%d)", O->n, q);
 		}
 		else if (O->epsilon == -1) {
-			sprintf(str1, "PGOm_%d_%d", O->n, q);
-			sprintf(str2, "{\\rm PGO}^-(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGOm_%d_%d", O->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm PGO}^-(%d,%d)", O->n, q);
 		}
 		else {
-			sprintf(str1, "PGO_%d_%d", O->n, q);
-			sprintf(str2, "{\\rm PGO}(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGO_%d_%d", O->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm PGO}(%d,%d)", O->n, q);
 		}
 	}
 

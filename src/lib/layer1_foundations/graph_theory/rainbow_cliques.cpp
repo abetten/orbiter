@@ -20,30 +20,20 @@ namespace graph_theory {
 
 rainbow_cliques::rainbow_cliques()
 {
+	Control = NULL;
+
 	ost_sol = NULL;
-	//f_output_solution_raw = FALSE;
 
 	graph = NULL;
 	CF = NULL;
 	f_color_satisfied = NULL;
 	color_chosen_at_depth = NULL;
 	color_frequency = NULL;
-	//target_depth = 0;
 
-	null();
 }
 
 rainbow_cliques::~rainbow_cliques()
 {
-}
-
-void rainbow_cliques::null()
-{
-}
-
-void rainbow_cliques::freeself()
-{
-	null();
 }
 
 void rainbow_cliques::search(

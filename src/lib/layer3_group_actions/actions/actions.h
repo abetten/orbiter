@@ -799,10 +799,6 @@ public:
 		data_structures_groups::vector_ge *gens,
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
-	void orbits_on_equations(
-			ring_theory::homogeneous_polynomial_domain *HPD,
-		int *The_equations, int nb_equations, groups::strong_generators *gens,
-		action *&A_on_equations, groups::schreier *&Orb, int verbose_level);
 
 	// action_io.cpp:
 	void report(std::ostream &ost, int f_sims, groups::sims *S,
@@ -1069,6 +1065,12 @@ public:
 			groups::schreier *Sch1, groups::schreier *Sch2,
 			geometry::incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack, int verbose_level);
+	void orbits_on_equations(
+			action *A,
+			ring_theory::homogeneous_polynomial_domain *HPD,
+		int *The_equations, int nb_equations, groups::strong_generators *gens,
+		actions::action *&A_on_equations, groups::schreier *&Orb,
+		int verbose_level);
 
 };
 

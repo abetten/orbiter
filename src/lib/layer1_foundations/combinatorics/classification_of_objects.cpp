@@ -1033,7 +1033,6 @@ static void print_summary_table_entry(int *Table,
 	//void *extra_data;
 	int h;
 	data_structures::sorting Sorting;
-	char str[1000];
 
 	if (f_v) {
 		cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
@@ -1045,29 +1044,29 @@ static void print_summary_table_entry(int *Table,
 	//CB = (classify_bitvectors *) data;
 	CB = PC->CB;
 
-	str[0] = 0;
-
 	if (i == -1) {
 		if (j == -1) {
-			sprintf(str, "\\mbox{Orbit}");
+			output.assign("\\mbox{Orbit}");
 		}
 		else if (j == 0) {
-			sprintf(str, "\\mbox{Rep}");
+			output.assign("\\mbox{Rep}");
 		}
 		else if (j == 1) {
-			sprintf(str, "\\#");
+			output.assign("\\#");
 		}
 		else if (j == 2) {
-			sprintf(str, "\\mbox{Ago}");
+			output.assign("\\mbox{Ago}");
 		}
 		else if (j == 3) {
-			sprintf(str, "\\mbox{Objects}");
+			output.assign("\\mbox{Objects}");
 		}
 	}
 	else {
 		//cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
 		if (j == -1) {
-			sprintf(str, "%d", i);
+			char str[1000];
+			snprintf(str, sizeof(str), "%d", i);
+			output.assign(str);
 		}
 		else if (j == 2) {
 
@@ -1099,11 +1098,12 @@ static void print_summary_table_entry(int *Table,
 			ring_theory::longinteger_object go;
 			go.create(PC->Ago_transversal[i], __FILE__, __LINE__);
 			//OiPA->Aut_gens->group_order(go);
-			go.print_to_string(str);
+			go.print_to_string(output);
 #endif
 		}
 		else if (j == 3) {
 
+			char str[1000];
 
 			int *Input_objects;
 			int nb_input_objects;
@@ -1117,14 +1117,15 @@ static void print_summary_table_entry(int *Table,
 			}
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
-			output[0] = 0;
+			output.assign("");
 			for (h = 0; h < nb_input_objects; h++) {
-				sprintf(str + strlen(str), "%d", Input_objects[h]);
+				snprintf(str, sizeof(str), "%d", Input_objects[h]);
+				output.append(str);
 				if (h < nb_input_objects - 1) {
-					strcat(str, ", ");
+					output.append(", ");
 				}
 				if (h == 10) {
-					strcat(str, "\\ldots");
+					output.append("\\ldots");
 					break;
 				}
 			}
@@ -1132,10 +1133,11 @@ static void print_summary_table_entry(int *Table,
 			FREE_int(Input_objects);
 		}
 		else {
-			sprintf(str, "%d", val);
+			char str[1000];
+			snprintf(str, sizeof(str), "%d", val);
+			output.assign(str);
 		}
 	}
-	output.assign(str);
 }
 
 

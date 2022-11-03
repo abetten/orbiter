@@ -375,15 +375,20 @@ void longinteger_object::print_width(ostream& ost, int width)
 	}
 }
 
-void longinteger_object::print_to_string(char *str)
+void longinteger_object::print_to_string(std::string &s)
 {
-	int i, j = 0;
-	char c;
 		
 	if (r == NULL) {
-		str[0] = 0;
+		s.assign("");
 	}
 	else {
+		char *str;
+		int i, j = 0;
+		char c;
+
+
+		str = NEW_char(l + 2);
+
 		if (sgn) {
 			str[j++] = '-';
 		}
@@ -391,8 +396,11 @@ void longinteger_object::print_to_string(char *str)
 			c = '0' + r[i];
 			str[j++] = c;
 		}
+		str[j] = 0;
+		s.assign(str);
+
+		FREE_char(str);
 	}
-	str[j] = 0;
 }
 
 void longinteger_object::normalize()

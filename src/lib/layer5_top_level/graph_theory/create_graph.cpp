@@ -95,7 +95,7 @@ void create_graph::init(
 
 		apps_algebra::any_group *G;
 
-		G = user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(description->Cayley_graph_group);
+		G = Get_object_of_type_any_group(description->Cayley_graph_group);
 
 
 		groups::strong_generators *SG;
@@ -116,7 +116,7 @@ void create_graph::init(
 		int sz;
 		int nb_gens;
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(description->Cayley_graph_gens,
+		Get_int_vector_from_label(description->Cayley_graph_gens,
 				v, sz, verbose_level);
 
 		nb_gens = sz / G->A_base->elt_size_in_int;
@@ -294,9 +294,9 @@ void create_graph::init(
 		}
 		FREE_int(Idx);
 		char str[1000];
-		sprintf(str, "graph_v%d_e%d", description->n, sz);
+		snprintf(str, sizeof(str), "graph_v%d_e%d", description->n, sz);
 		label.assign(str);
-		sprintf(str, "Graph\\_%d\\_%d", description->n, sz);
+		snprintf(str, sizeof(str), "Graph\\_%d\\_%d", description->n, sz);
 		label_tex.assign(str);
 	}
 	else if (description->f_edges_as_pairs) {
@@ -320,9 +320,9 @@ void create_graph::init(
 		}
 		FREE_int(Idx);
 		char str[1000];
-		sprintf(str, "graph_v%d_e%d", description->n, sz2);
+		snprintf(str, sizeof(str), "graph_v%d_e%d", description->n, sz2);
 		label.assign(str);
-		sprintf(str, "Graph\\_%d\\_%d", description->n, sz2);
+		snprintf(str, sizeof(str), "Graph\\_%d\\_%d", description->n, sz2);
 		label_tex.assign(str);
 	}
 	else if (description->f_cycle) {
@@ -517,9 +517,9 @@ void create_graph::init(
 
 
 
-		sprintf(str, "non_attacking_queens_graph_%d", n);
+		snprintf(str, sizeof(str), "non_attacking_queens_graph_%d", n);
 		label.assign(str);
-		sprintf(str, "non\\_attacking\\_queens\\_graph\\_%d", n);
+		snprintf(str, sizeof(str), "non\\_attacking\\_queens\\_graph\\_%d", n);
 		label_tex.assign(str);
 
 	}
@@ -557,23 +557,9 @@ void create_graph::init(
 
 		graph_theory::graph_theory_domain GT;
 
-		int idx;
 		apps_algebra::any_group *AG;
 
-		idx = orbiter_kernel_system::Orbiter->find_symbol(description->orbital_graph_group);
-
-		symbol_table_object_type t;
-
-		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-		if (t != t_any_group) {
-			cout << "object must be of type group, but is ";
-			orbiter_kernel_system::Orbiter->print_type(t);
-			cout << endl;
-			exit(1);
-		}
-		AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
-
+		AG = Get_object_of_type_any_group(description->orbital_graph_group);
 
 
 		if (f_v) {
@@ -595,31 +581,11 @@ void create_graph::init(
 	else if (description->f_collinearity_graph) {
 
 
-#if 0
-		int idx;
-		data_structures::vector_builder *VB;
-
-		idx = orbiter_kernel_system::Orbiter->find_symbol(description->collinearity_graph_matrix);
-
-		symbol_table_object_type t;
-
-		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-		if (t != t_vector) {
-			cout << "object must be of type vector, but is ";
-			orbiter_kernel_system::Orbiter->print_type(t);
-			cout << endl;
-			exit(1);
-		}
-		VB = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx);
-#endif
 
 		int *v;
-		//int sz;
 		int m, n;
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(
-				description->collinearity_graph_matrix, v, m, n);
+		Get_matrix(description->collinearity_graph_matrix, v, m, n);
 
 
 		make_collinearity_graph(N, Adj,
@@ -632,46 +598,16 @@ void create_graph::init(
 	else if (description->f_chain_graph) {
 
 
-#if 0
-		int idx1;
-		data_structures::vector_builder *VB1;
-		int idx2;
-		data_structures::vector_builder *VB2;
-
-		idx1 = orbiter_kernel_system::Orbiter->find_symbol(description->chain_graph_partition_1);
-		idx2 = orbiter_kernel_system::Orbiter->find_symbol(description->chain_graph_partition_2);
-
-		symbol_table_object_type t;
-
-		t = orbiter_kernel_system::Orbiter->get_object_type(idx1);
-
-		if (t != t_vector) {
-			cout << "first partition must be of type vector, but is ";
-			orbiter_kernel_system::Orbiter->print_type(t);
-			cout << endl;
-			exit(1);
-		}
-		t = orbiter_kernel_system::Orbiter->get_object_type(idx2);
-
-		if (t != t_vector) {
-			cout << "second partition must be of type vector, but is ";
-			orbiter_kernel_system::Orbiter->print_type(t);
-			cout << endl;
-			exit(1);
-		}
-		VB1 = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx1);
-		VB2 = (data_structures::vector_builder *) orbiter_kernel_system::Orbiter->get_object(idx2);
-#endif
 
 		int *v1;
 		int sz1;
 		int *v2;
 		int sz2;
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(
+		Get_int_vector_from_label(
 				description->chain_graph_partition_1,
 				v1, sz1, 0 /* verbose_level*/);
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(
+		Get_int_vector_from_label(
 				description->chain_graph_partition_2,
 				v2, sz2, 0 /* verbose_level*/);
 
@@ -780,9 +716,9 @@ void create_graph::create_cycle(int &N, int *&Adj,
 	}
 
 	char str[1000];
-	sprintf(str, "Cycle_%d", n);
+	snprintf(str, sizeof(str), "Cycle_%d", n);
 	label.assign(str);
-	sprintf(str, "Cycle\\_%d", n);
+	snprintf(str, sizeof(str), "Cycle\\_%d", n);
 	label_tex.assign(str);
 
 
@@ -818,9 +754,9 @@ void create_graph::create_inversion_graph(int &N, int *&Adj,
 	}
 
 	char str[1000];
-	sprintf(str, "Inversion_%d", n);
+	snprintf(str, sizeof(str), "Inversion_%d", n);
 	label.assign(str);
-	sprintf(str, "Inversion\\_%d", n);
+	snprintf(str, sizeof(str), "Inversion\\_%d", n);
 	label_tex.assign(str);
 
 
@@ -855,9 +791,9 @@ void create_graph::create_Hamming(int &N, int *&Adj,
 	}
 
 	char str[1000];
-	sprintf(str, "Hamming_%d_%d", n, q);
+	snprintf(str, sizeof(str), "Hamming_%d_%d", n, q);
 	label.assign(str);
-	sprintf(str, "Hamming\\_%d\\_%d", n, q);
+	snprintf(str, sizeof(str), "Hamming\\_%d\\_%d", n, q);
 	label_tex.assign(str);
 
 
@@ -888,9 +824,9 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 	}
 
 	char str[1000];
-	sprintf(str, "Johnson_%d_%d_%d", n, k, s);
+	snprintf(str, sizeof(str), "Johnson_%d_%d_%d", n, k, s);
 	label.assign(str);
-	sprintf(str, "Johnson\\_%d\\_%d\\_%d", n, k, s);
+	snprintf(str, sizeof(str), "Johnson\\_%d\\_%d\\_%d", n, k, s);
 	label_tex.assign(str);
 
 
@@ -921,9 +857,9 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	}
 
 	char str[1000];
-	sprintf(str, "Paley_%d", q);
+	snprintf(str, sizeof(str), "Paley_%d", q);
 	label.assign(str);
-	sprintf(str, "Paley\\_%d", q);
+	snprintf(str, sizeof(str), "Paley\\_%d", q);
 	label_tex.assign(str);
 
 
@@ -1241,9 +1177,9 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	//N = goi;
 
 	char str[1000];
-	sprintf(str, "Sarnak_%d_%d", p, q);
+	snprintf(str, sizeof(str), "Sarnak_%d_%d", p, q);
 	label.assign(str);
-	sprintf(str, "Sarnak\\_%d\\_%d", p, q);
+	snprintf(str, sizeof(str), "Sarnak\\_%d\\_%d", p, q);
 	label_tex.assign(str);
 
 	FREE_OBJECT(gens);
@@ -1282,9 +1218,9 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 
 	char str[1000];
 
-	sprintf(str, "Schlaefli_%d", q);
+	snprintf(str, sizeof(str), "Schlaefli_%d", q);
 	label.assign(str);
-	sprintf(str, "Schlaefli\\_%d", q);
+	snprintf(str, sizeof(str), "Schlaefli\\_%d", q);
 	label_tex.assign(str);
 
 
@@ -1455,9 +1391,9 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	//N = goi;
 
 	char str[1000];
-	sprintf(str, "Shrikhande");
+	snprintf(str, sizeof(str), "Shrikhande");
 	label.assign(str);
-	sprintf(str, "Shrikhande");
+	snprintf(str, sizeof(str), "Shrikhande");
 	label_tex.assign(str);
 
 
@@ -1494,9 +1430,9 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 
 
 	char str[1000];
-	sprintf(str, "Winnie_Li_%d_%d", q, index);
+	snprintf(str, sizeof(str), "Winnie_Li_%d_%d", q, index);
 	label.assign(str);
-	sprintf(str, "Winnie_Li\\_%d\\_%d", q, index);
+	snprintf(str, sizeof(str), "Winnie_Li\\_%d\\_%d", q, index);
 	label_tex.assign(str);
 
 
@@ -1531,9 +1467,9 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 
 
 	char str[1000];
-	sprintf(str, "Grassmann_%d_%d_%d_%d", n, k, q, r);
+	snprintf(str, sizeof(str), "Grassmann_%d_%d_%d_%d", n, k, q, r);
 	label.assign(str);
-	sprintf(str, "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, q, r);
+	snprintf(str, sizeof(str), "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, q, r);
 	label_tex.assign(str);
 
 
@@ -1567,9 +1503,9 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 
 
 	char str[1000];
-	sprintf(str, "Coll_orthogonal_%d_%d_%d", epsilon, d, q);
+	snprintf(str, sizeof(str), "Coll_orthogonal_%d_%d_%d", epsilon, d, q);
 	label.assign(str);
-	sprintf(str, "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, q);
+	snprintf(str, sizeof(str), "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, q);
 	label_tex.assign(str);
 
 	if (f_v) {
@@ -1652,11 +1588,11 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 		cout << "create_graph::make_orbital_graph AG->A->label_tex = " << AG->A->label_tex << endl;
 	}
 
-	sprintf(str, "_Orbital_%d", orbit_idx);
+	snprintf(str, sizeof(str), "_Orbital_%d", orbit_idx);
 	label.assign("Group_");
 	label.append(AG->A->label);
 	label.append(str);
-	sprintf(str, "Orbital\\_%d", orbit_idx);
+	snprintf(str, sizeof(str), "Orbital\\_%d", orbit_idx);
 	label_tex.assign("Group\\_");
 	label_tex.append(AG->A->label_tex);
 	label_tex.append(str);

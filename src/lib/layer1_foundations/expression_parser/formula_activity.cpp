@@ -186,7 +186,7 @@ void formula_activity::do_sweep(int f_affine,
 
 	orbiter_kernel_system::file_io Fio;
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 
 	string fname;
 	fname.assign("sweep_");
@@ -265,7 +265,7 @@ void formula_activity::do_sweep(int f_affine,
 			for (j = 0; j < n; j++) {
 				values.append(symbol_table[j]);
 				values.append("=");
-				sprintf(str, "%d", v[j]);
+				snprintf(str, sizeof(str), "%d", v[j]);
 				values.append(str);
 				if (j < n - 1) {
 					values.append(",");

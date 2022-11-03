@@ -965,7 +965,7 @@ void packing_was::reduce_spreads(int verbose_level)
 	fname_reduced_spread_original_idx.assign(P->path_to_spread_tables);
 
 	char str[1000];
-	sprintf(str, "reduced_spread_%d_original_idx", NT.i_power_j(P->F->q, 2));
+	snprintf(str, sizeof(str), "reduced_spread_%d_original_idx", NT.i_power_j(P->F->q, 2));
 
 	fname_reduced_spread_original_idx.append(str);
 	fname_reduced_spread_original_idx.append(".csv");
@@ -1293,7 +1293,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 		string fname1;
 		string label;
 
-		sprintf(str, "_on_spread_orbits_%d", i);
+		snprintf(str, sizeof(str), "_on_spread_orbits_%d", i);
 
 		Ari = restricted_action(Orbit_lengths[i], verbose_level);
 
@@ -1639,11 +1639,11 @@ void packing_was::report(int verbose_level)
 		char str[1000];
 		//int f_with_stabilizers = TRUE;
 
-		sprintf(str, "Packings in PG(3,%d) ", P->q);
+		snprintf(str, sizeof(str), "Packings in PG(3,%d) ", P->q);
 		title.assign(str);
-		sprintf(str, "Orbiter");
+		snprintf(str, sizeof(str), "Orbiter");
 		author.assign(str);
-		sprintf(str, "Packings_q%d.tex", P->q);
+		snprintf(str, sizeof(str), "Packings_q%d.tex", P->q);
 		fname.assign(str);
 
 		{
@@ -1862,7 +1862,7 @@ void packing_was::export_reduced_spread_orbits_csv(std::string &fname_base, int 
 					verbose_level);
 
 
-		sprintf(str, "_of_length_%d", orbit_length);
+		snprintf(str, sizeof(str), "_of_length_%d", orbit_length);
 
 		fname.assign(fname_base);
 		fname.append("_reduced_spead_orbits");

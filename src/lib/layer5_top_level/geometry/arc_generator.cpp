@@ -829,10 +829,10 @@ void arc_generator::report(isomorph::isomorph &Iso, int verbose_level)
 		cout << "arc_generator::report" << endl;
 	}
 	if (Descr->target_size == PA->q + 2) {
-		sprintf(fname, "hyperovals_%d.tex", PA->q);
+		snprintf(fname, sizeof(fname), "hyperovals_%d.tex", PA->q);
 	}
 	else {
-		sprintf(fname, "arcs_%d_%d.tex", PA->q, Descr->target_size);
+		snprintf(fname, sizeof(fname), "arcs_%d_%d.tex", PA->q, Descr->target_size);
 	}
 
 	{
@@ -852,11 +852,11 @@ void arc_generator::report(isomorph::isomorph &Iso, int verbose_level)
 		orbiter_kernel_system::latex_interface L;
 
 		if (Descr->target_size == PA->q + 2) {
-			sprintf(str, "Hyperovals over ${\\mathbb F}_{%d}$", PA->q);
+			snprintf(str, sizeof(str), "Hyperovals over ${\\mathbb F}_{%d}$", PA->q);
 			title.assign(str);
 			}
 		else {
-			sprintf(str, "Arcs over  ${\\mathbb F}_{%d}$ "
+			snprintf(str, sizeof(str), "Arcs over  ${\\mathbb F}_{%d}$ "
 					"of size $%d$", PA->q, Descr->target_size);
 			title.assign(str);
 			}
@@ -1169,8 +1169,8 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph::isomorph &Iso, in
 	char prefix[1000];
 	char label_of_structure_plural[1000];
 
-	sprintf(prefix, "arcs_%d_%d", PA->q, Descr->target_size);
-	sprintf(label_of_structure_plural, "Arcs");
+	snprintf(prefix, sizeof(prefix), "arcs_%d_%d", PA->q, Descr->target_size);
+	snprintf(label_of_structure_plural, sizeof(label_of_structure_plural), "Arcs");
 
 	isomorph::isomorph_global IG;
 

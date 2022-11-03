@@ -733,14 +733,14 @@ public:
 		int i9, int i10, int i11);
 	void polygon2_arrow_halfway(int *Px, int *Py, int i1, int i2);
 	void polygon2_arrow_halfway_and_label(int *Px, int *Py, int i1, int i2, 
-		const char *alignment, const char *txt);
+		const char *alignment, std::string &s);
 	void grid_aligned_text(grid_frame *F, int x, int y, 
-		const char *alignment, const char *p);
-	void aligned_text(int x, int y, const char *alignment, const char *p);
+		const char *alignment, std::string &s);
+	void aligned_text(int x, int y, const char *alignment, std::string &s);
 	void aligned_text_array(int *Px, int *Py, int idx, 
-		const char *alignment, const char *p);
+		const char *alignment, std::string &s);
 	void aligned_text_with_offset(int x, int y, int xoffset, int yoffset, 
-		const char *alignment, const char *p);
+		const char *alignment, std::string &s);
 
 	void st_alignment(int txt_halign, int txt_valign);
 	void sl_udsty(int line_dashing);
@@ -763,10 +763,10 @@ public:
 	void begin_figure(int factor_1000);
 	void end_figure();
 
-	void comment(const char *p);
-	void text(int x, int y, const char *p);
+	void comment(std::string &s);
+	void text(int x, int y, std::string &s);
 	void circle(int x, int y, int rad);
-	void circle_text(int x, int y, int rad, const char *text);
+	void circle_text(int x, int y, int rad, std::string &s);
 	void polygon_idx2(int *Px, int *Py, int *Idx, int n,
 			int f_cycle);
 	void bezier_idx2(int *Px, int *Py, int *Idx, int n,
@@ -778,7 +778,7 @@ public:
 	// output commands log file:
 	void header_log(std::string &str_date);
 	void footer_log();
-	void comment_log(const char *p);
+	void comment_log(std::string &s);
 	void st_alignment_log();
 	void sl_udsty_log();
 	void sl_ends_log();
@@ -795,19 +795,19 @@ public:
 	void bezier_idx_log(int *Px, int *Py, int *Idx, int n);
 	void polygon_log(int *Px, int *Py, int n);
 	void polygon_idx_log(int *Px, int *Py, int *Idx, int n);
-	void text_log(int x1, int y1, const char *p);
+	void text_log(int x1, int y1, std::string &s);
 	void circle_log(int x1, int y1, int rad);
 
 
 	// output commands metapost:
 	void header_mp(std::string &str_date);
 	void footer_mp();
-	void comment_mp(const char *p);
-	void text_mp(int x1, int y1, const char *p);
+	void comment_mp(std::string &s);
+	void text_mp(int x1, int y1, std::string &s);
 	void begin_figure_mp(int factor_1000);
 	void end_figure_mp();
 	void circle_mp(int x, int y, int rad);
-	void output_circle_text_mp(int x, int y, int idx, const char *text);
+	void output_circle_text_mp(int x, int y, int idx, std::string &s);
 	void polygon_idx_mp(int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
 	void bezier_idx_mp(int *Px, int *Py,
@@ -825,8 +825,8 @@ public:
 	// output commands tikz:
 	void header_tikz(std::string &str_date);
 	void footer_tikz();
-	void comment_tikz(const char *p);
-	void text_tikz(int x1, int y1, const char *p);
+	void comment_tikz(std::string &s);
+	void text_tikz(int x1, int y1, std::string &s);
 	void circle_tikz(int x, int y, int rad);
 	void output_circle_text_tikz(int x, int y, int idx, int rad, 
 		const char *text);
@@ -847,7 +847,7 @@ public:
 			int p1, int p2, int p3, int p4,
 			const char *align, int a);
 	void text_4pts(int *Px, int *Py, int p1, int p2, int p3, int p4,
-		const char *align, const char *str);
+		const char *align, std::string &s);
 
 
 	void draw_graph(int x, int y,

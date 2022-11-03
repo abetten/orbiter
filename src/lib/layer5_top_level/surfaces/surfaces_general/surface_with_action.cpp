@@ -160,11 +160,6 @@ void surface_with_action::init(algebraic_geometry::surface_domain *Surf,
 #endif
 
 	if (f_recoordinatize) {
-		//char str[1000];
-		//string fname_live_points;
-
-		//sprintf(str, "live_points_q%d", PA->F->q);
-		//fname_live_points.assign(str);
 
 		SD = NEW_OBJECT(geometry::spread_domain);
 
@@ -1865,7 +1860,7 @@ void surface_with_action::sweep_4_15_lines(
 	sweep_fname_csv.assign(sweep_fname);
 	char str[1000];
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
 	sweep_fname_csv.append(str);
 	sweep_fname_csv.append("_sweep4_15_data.csv");
@@ -1958,7 +1953,7 @@ void surface_with_action::sweep_4_15_lines(
 
 						char str[1000];
 
-						sprintf(str, "alpha=%d,beta=%d,gamma=%d,delta=%d", alpha, beta, gamma, delta);
+						snprintf(str, sizeof(str), "alpha=%d,beta=%d,gamma=%d,delta=%d", alpha, beta, gamma, delta);
 
 
 						Surface_Descr->equation_parameters.assign(str);
@@ -2114,7 +2109,7 @@ void surface_with_action::sweep_4_15_lines(
 	std::string fname;
 	//char str[1000];
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	fname.assign(Surface_Descr->equation_name_of_formula);
 	fname.append(str);
 	fname.append("_sweep.csv");
@@ -2180,7 +2175,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 	sweep_fname_csv.assign(sweep_fname);
 	char str[1000];
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
 	sweep_fname_csv.append(str);
 	sweep_fname_csv.append("_sweep_F_beta_9_lines_data.csv");
@@ -2223,7 +2218,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 			char str[1000];
 
-			sprintf(str, "a=%d,b=%d,c=%d,d=%d", a, b, c, d);
+			snprintf(str, sizeof(str), "a=%d,b=%d,c=%d,d=%d", a, b, c, d);
 
 
 			Surface_Descr->equation_parameters.assign(str);
@@ -2353,7 +2348,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 	}
 	std::string fname;
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	fname.assign(Surface_Descr->equation_name_of_formula);
 	fname.append(str);
 	fname.append("_sweep_F_beta_9_lines.csv");
@@ -2419,7 +2414,7 @@ void surface_with_action::sweep_6_9_lines(
 	sweep_fname_csv.assign(sweep_fname);
 	char str[1000];
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
 	sweep_fname_csv.append(str);
 	sweep_fname_csv.append("_sweep_6_9_lines_data.csv");
@@ -2548,7 +2543,7 @@ void surface_with_action::sweep_6_9_lines(
 
 								char str[1000];
 
-								sprintf(str, "a=%d,b=%d,c=%d,d=%d,f=%d,g=%d", a, b, c, d, f, g);
+								snprintf(str, sizeof(str), "a=%d,b=%d,c=%d,d=%d,f=%d,g=%d", a, b, c, d, f, g);
 
 
 								Surface_Descr->equation_parameters.assign(str);
@@ -2689,7 +2684,7 @@ void surface_with_action::sweep_6_9_lines(
 	}
 	std::string fname;
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	fname.assign(Surface_Descr->equation_name_of_formula);
 	fname.append(str);
 	fname.append("_sweep_6_9_lines.csv");
@@ -2844,7 +2839,7 @@ void surface_with_action::sweep_4_27(
 
 					char str[1000];
 
-					sprintf(str, "a=%d,b=%d,c=%d,d=%d", a, b, c, d);
+					snprintf(str, sizeof(str), "a=%d,b=%d,c=%d,d=%d", a, b, c, d);
 
 
 					Surface_Descr->equation_parameters.assign(str);
@@ -2936,7 +2931,7 @@ void surface_with_action::sweep_4_27(
 	std::string fname;
 	char str[1000];
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	fname.assign(Surface_Descr->equation_name_of_formula);
 	fname.append(str);
 	fname.append("_sweep_4_27.csv");
@@ -3002,7 +2997,7 @@ void surface_with_action::sweep_4_L9_E4(
 	sweep_fname_csv.assign(sweep_fname);
 	char str[1000];
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
 	sweep_fname_csv.append(str);
 	sweep_fname_csv.append("_sweep4_L9_E4_data.csv");
@@ -3039,7 +3034,7 @@ void surface_with_action::sweep_4_L9_E4(
 
 						char str[1000];
 
-						sprintf(str, "alpha=%d,beta=%d,delta=%d,lambda=%d", alpha, beta, delta, lambda);
+						snprintf(str, sizeof(str), "alpha=%d,beta=%d,delta=%d,lambda=%d", alpha, beta, delta, lambda);
 
 
 						Surface_Descr->equation_parameters.assign(str);
@@ -3174,7 +3169,7 @@ void surface_with_action::sweep_4_L9_E4(
 	std::string fname;
 	//char str[1000];
 
-	sprintf(str, "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", F->q);
 	fname.assign(Surface_Descr->equation_name_of_formula);
 	fname.append(str);
 	fname.append("_sweep.csv");
@@ -3527,7 +3522,7 @@ void surface_with_action::table_of_cubic_surfaces_export_csv(long int *Table,
 	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
-	sprintf(str, "_q%d", q);
+	snprintf(str, sizeof(str), "_q%d", q);
 
 	string fname;
 	fname.assign("table_of_cubic_surfaces");
@@ -3607,7 +3602,7 @@ void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
 	orbiter_kernel_system::file_io Fio;
 	char str[1000];
 
-	sprintf(str, "_q%d", q);
+	snprintf(str, sizeof(str), "_q%d", q);
 
 	string fname;
 	fname.assign("table_of_cubic_surfaces");

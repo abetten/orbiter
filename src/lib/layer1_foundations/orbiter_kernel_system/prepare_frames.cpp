@@ -147,9 +147,9 @@ void prepare_frames::do_the_work(int verbose_level)
 			if (f_step) {
 				j *= step;
 			}
-			sprintf(input_fname, input_mask[i].c_str(), (int) j);
-			sprintf(output_fname, output_mask.c_str(), (int) h);
-			sprintf(cmd, "cp %s %s", input_fname, output_fname);
+			snprintf(input_fname, sizeof(input_fname), input_mask[i].c_str(), (int) j);
+			snprintf(output_fname, sizeof(output_fname), output_mask.c_str(), (int) h);
+			snprintf(cmd, sizeof(cmd), "cp %s %s", input_fname, output_fname);
 			system(cmd);
 			h++;
 		}

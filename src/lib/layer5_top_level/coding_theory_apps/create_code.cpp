@@ -65,7 +65,7 @@ void create_code::init(
 		f_field = TRUE;
 
 
-		F = user_interface::The_Orbiter_top_level_session->get_object_of_type_finite_field(description->field_label);
+		F = Get_object_of_type_finite_field(description->field_label);
 
 	}
 
@@ -83,7 +83,7 @@ void create_code::init(
 
 		int nb_rows, nb_cols;
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(
+		Get_matrix(
 				description->linear_code_through_generator_matrix_label_genma,
 				genma, nb_rows, nb_cols);
 
@@ -102,10 +102,10 @@ void create_code::init(
 
 		char str[1000];
 
-		sprintf(str, "by_genma_n%d_k%d", n, k);
+		snprintf(str, sizeof(str), "by_genma_n%d_k%d", n, k);
 		label_txt.assign(str);
 
-		sprintf(str, "by\\_genma\\_n%d\\_k%d", n, k);
+		snprintf(str, sizeof(str), "by\\_genma\\_n%d\\_k%d", n, k);
 		label_tex.assign(str);
 
 
@@ -113,9 +113,10 @@ void create_code::init(
 			cout << "create_code::init f_linear_code_through_generator_matrix done" << endl;
 		}
 	}
-	else if (description->f_linear_code_from_from_projective_set) {
+	else if (description->f_linear_code_from_projective_set) {
 		if (f_v) {
-			cout << "create_code::init f_linear_code_from_from_projective_set" << endl;
+			cout << "create_code::init f_linear_code_from_projective_set" << endl;
+			cout << "create_code::init nmk = " << description->linear_code_from_projective_set_nmk << endl;
 		}
 
 		if (!f_field) {
@@ -127,12 +128,17 @@ void create_code::init(
 		int sz;
 
 
-		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(
-				description->linear_code_from_from_projective_set_set,
+		Get_lint_vector_from_label(
+				description->linear_code_from_projective_set_set,
 				v, sz, verbose_level);
 
+		if (f_v) {
+			cout << "create_code::init projective set:" << endl;
+			Lint_vec_print(cout, v, sz);
+			cout << endl;
+		}
 
-		nmk = description->linear_code_from_from_projective_set_nmk;
+		nmk = description->linear_code_from_projective_set_nmk;
 
 		n = sz;
 		k = n - nmk;
@@ -163,10 +169,10 @@ void create_code::init(
 
 		char str[1000];
 
-		sprintf(str, "proj_set_n%d_k%d", n, k);
+		snprintf(str, sizeof(str), "proj_set_n%d_k%d", n, k);
 		label_txt.assign(str);
 
-		sprintf(str, "proj\\_set\\_n%d\\_k%d", n, k);
+		snprintf(str, sizeof(str), "proj\\_set\\_n%d\\_k%d", n, k);
 		label_tex.assign(str);
 
 
@@ -198,14 +204,14 @@ void create_code::init(
 		int sz;
 
 
-		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(
+		Get_lint_vector_from_label(
 				description->linear_code_by_columns_of_parity_check_set,
 				set, sz, verbose_level);
 
 
 
 		n = sz;
-		nmk = description->linear_code_from_from_projective_set_nmk;
+		nmk = description->linear_code_by_columns_of_parity_check_nmk;
 		k = n - nmk;
 
 		Codes.do_linear_code_through_columns_of_parity_check(
@@ -314,10 +320,10 @@ void create_code::init(
 
 		char str[1000];
 
-		sprintf(str, "RM_m%d", m);
+		snprintf(str, sizeof(str), "RM_m%d", m);
 		label_txt.assign(str);
 
-		sprintf(str, "RM\\_m%d", m);
+		snprintf(str, sizeof(str), "RM\\_m%d", m);
 		label_tex.assign(str);
 
 
@@ -365,10 +371,10 @@ void create_code::init(
 
 		char str[1000];
 
-		sprintf(str, "BCH_n%d_d%d", n, d);
+		snprintf(str, sizeof(str), "BCH_n%d_d%d", n, d);
 		label_txt.assign(str);
 
-		sprintf(str, "BCH\\_n%d\\_d%d", n, d);
+		snprintf(str, sizeof(str), "BCH\\_n%d\\_d%d", n, d);
 		label_tex.assign(str);
 
 		Create_BCH_code->do_report(verbose_level);
@@ -422,10 +428,10 @@ void create_code::init(
 
 		char str[1000];
 
-		sprintf(str, "GV_n%d_k%d_d%d", n, k, d);
+		snprintf(str, sizeof(str), "GV_n%d_k%d_d%d", n, k, d);
 		label_txt.assign(str);
 
-		sprintf(str, "GV\\_n%d\\_k%d\\_d%d", n, k, d);
+		snprintf(str, sizeof(str), "GV\\_n%d\\_k%d\\_d%d", n, k, d);
 		label_tex.assign(str);
 
 		if (f_v) {
@@ -732,6 +738,31 @@ void create_code::export_checkma(std::string &fname, int verbose_level)
 	}
 
 }
+
+void create_code::weight_enumerator(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::weight_enumerator" << endl;
+	}
+
+	coding_theory::coding_theory_domain Codes;
+
+
+
+	Codes.do_weight_enumerator(F,
+			genma, k, n,
+			FALSE /* f_normalize_from_the_left */,
+			FALSE /* f_normalize_from_the_right */,
+			verbose_level);
+
+	if (f_v) {
+		cout << "create_code::weight_enumerator done" << endl;
+	}
+
+}
+
 
 
 

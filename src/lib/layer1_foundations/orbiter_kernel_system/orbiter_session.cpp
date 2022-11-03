@@ -374,7 +374,7 @@ void orbiter_session::fork(int argc, std::string *argv, int verbose_level)
 			if (h < places.size()) {
 				char str[1000];
 
-				sprintf(str, "%d", case_number);
+				snprintf(str, sizeof(str), "%d", case_number);
 				cmd.append(str);
 			}
 			else {
@@ -384,7 +384,7 @@ void orbiter_session::fork(int argc, std::string *argv, int verbose_level)
 		}
 		char str[1000];
 
-		sprintf(str, fork_logfile_mask.c_str(), case_number);
+		snprintf(str, sizeof(str), fork_logfile_mask.c_str(), case_number);
 		cmd.append(" >");
 		cmd.append(str);
 		cmd.append(" &");

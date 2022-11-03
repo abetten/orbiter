@@ -148,7 +148,7 @@ void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
 
 
 	fname_fixpoint_cliques_orbiter.assign(PW->Descr->N_label);
-	sprintf(str, "_fixp_cliques_lvl_%d", clique_size);
+	snprintf(str, sizeof(str), "_fixp_cliques_lvl_%d", clique_size);
 	fname_fixpoint_cliques_orbiter.append(str);
 
 
@@ -619,11 +619,11 @@ void packing_was_fixpoints::report(int verbose_level)
 	char str[1000];
 	//int f_with_stabilizers = TRUE;
 
-	sprintf(str, "Packings in PG(3,%d) ", PW->P->q);
+	snprintf(str, sizeof(str), "Packings in PG(3,%d) ", PW->P->q);
 	title.assign(str);
-	sprintf(str, "Orbiter");
+	snprintf(str, sizeof(str), "Orbiter");
 	author.assign(str);
-	sprintf(str, "Packings_was_fixp_q%d.tex", PW->P->q);
+	snprintf(str, sizeof(str), "Packings_was_fixp_q%d.tex", PW->P->q);
 	fname.assign(str);
 
 		{

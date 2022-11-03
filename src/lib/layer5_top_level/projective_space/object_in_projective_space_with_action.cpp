@@ -227,7 +227,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 
 		fname_gap.assign("class_");
 
-		sprintf(str, "%d", i);
+		snprintf(str, sizeof(str), "%d", i);
 
 		fname_gap.append(str);
 		fname_gap.append(".gap");

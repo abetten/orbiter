@@ -697,7 +697,7 @@ void any_group::do_find_subgroups(
 
 	char str[1000];
 
-	sprintf(str, "Subgroups of order $%d$ in $", order_of_subgroup);
+	snprintf(str, sizeof(str), "Subgroups of order $%d$ in $", order_of_subgroup);
 	title.assign(str);
 	title.append(LG->A2->label_tex);
 	title.append("$");
@@ -784,7 +784,8 @@ void any_group::print_elements(int verbose_level)
 	}
 }
 
-void any_group::print_elements_tex(
+void any_group::print_elements_tex(int f_with_permutation,
+		int f_override_action, actions::action *A_special,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -823,7 +824,7 @@ void any_group::print_elements_tex(
 		orbiter_kernel_system::latex_interface L;
 		L.head_easy(fp);
 
-		H->print_all_group_elements_tex(fp);
+		H->print_all_group_elements_tex(fp, f_with_permutation, f_override_action, A_special);
 		//H->print_all_group_elements_tree(fp);
 		//H->print_all_group_elements_with_permutations_tex(fp);
 
@@ -908,7 +909,9 @@ void any_group::order_of_products_of_elements(
 		orbiter_kernel_system::latex_interface L;
 		L.head_easy(fp);
 
-		H->print_all_group_elements_tex(fp);
+		int f_override_action = FALSE;
+
+		H->print_all_group_elements_tex(fp, FALSE, f_override_action, NULL);
 		//H->print_all_group_elements_with_permutations_tex(fp);
 
 		//Schreier.print_and_list_orbits_tex(fp);
@@ -1584,52 +1587,82 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 	groups::schreier *Sch;
 	Sch = NEW_OBJECT(groups::schreier);
 
-	cout << "computing orbit of point " << point_idx << ":" << endl;
+	if (f_v) {
+		cout << "any_group::orbit_of computing orbit of point " << point_idx << ":" << endl;
+	}
 
 	//A->all_point_orbits(*Sch, verbose_level);
 
-	Sch->init(A, verbose_level - 2);
+	Sch->init(A_base, verbose_level - 2);
+
+#if 0
 	if (!A->f_has_strong_generators) {
 		cout << "any_group::orbit_of !f_has_strong_generators" << endl;
 		exit(1);
 		}
-	Sch->init_generators(*LG->Strong_gens->gens /* *strong_generators */, verbose_level - 2);
+#endif
+
+	Sch->init_generators(*Subgroup_gens->gens /* *strong_generators */, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->compute_point_orbit(point_idx, verbose_level);
 
+	int orbit_idx = 0;
 
-	cout << "computing orbit of point done." << endl;
+	if (f_v) {
+		cout << "any_group::orbit_of computing orbit of point " << point_idx << " done" << endl;
+	}
 
 	string fname_tree_mask;
 	char str[1000];
 
-	fname_tree_mask.assign(LG->label);
-	sprintf(str, "_orbit_of_point_%d.layered_graph", point_idx);
+	fname_tree_mask.assign(label);
+	snprintf(str, sizeof(str), "_orbit_of_point_%d.layered_graph", point_idx);
 	fname_tree_mask.append(str);
 
 
-	Sch->export_tree_as_layered_graph(0 /* orbit_no */,
+	Sch->export_tree_as_layered_graph(orbit_idx,
 			fname_tree_mask,
 			verbose_level - 1);
 
 	groups::strong_generators *SG_stab;
 	ring_theory::longinteger_object full_group_order;
 
-	LG->Strong_gens->group_order(full_group_order);
+	Subgroup_gens->group_order(full_group_order);
 
-	cout << "computing the stabilizer of the orbit rep:" << endl;
+
+	if (f_v) {
+		cout << "any_group::orbit_of computing the stabilizer "
+				"of the rep of orbit " << orbit_idx << endl;
+		cout << "any_group::orbit_of orbit length = " << Sch->orbit_len[orbit_idx] << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::orbit_of before Sch->stabilizer_orbit_rep" << endl;
+	}
+
 	SG_stab = Sch->stabilizer_orbit_rep(
-			LG->A_linear,
+			A_base,
 			full_group_order,
-			0 /* orbit_idx */, verbose_level);
-	cout << "The stabilizer of the orbit rep has been computed:" << endl;
+			0 /* orbit_idx */, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "any_group::orbit_of after Sch->stabilizer_orbit_rep" << endl;
+	}
+
+
+	cout << "any_group::orbit_of "
+			"The stabilizer of the orbit rep has been computed:" << endl;
 	SG_stab->print_generators(cout);
 	SG_stab->print_generators_tex();
 
+#if 0
 
 	groups::schreier *shallow_tree;
 
-	cout << "computing shallow Schreier tree:" << endl;
+	if (f_v) {
+		cout << "any_group::orbit_of "
+				"computing shallow Schreier tree:" << endl;
+	}
 
 	#if 0
 	enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
@@ -1638,6 +1671,7 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 			//shallow_schreier_tree_Seress_randomized;
 			//shallow_schreier_tree_Sajeeb;
 	#endif
+
 	int orbit_idx = 0;
 	int f_randomized = TRUE;
 
@@ -1646,7 +1680,10 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 			shallow_tree,
 			verbose_level);
 
-	cout << "computing shallow Schreier tree done." << endl;
+	if (f_v) {
+		cout << "any_group::orbit_of "
+				"computing shallow Schreier tree done." << endl;
+	}
 
 	fname_tree_mask.assign(label);
 	fname_tree_mask.append("_%d_shallow.layered_graph");
@@ -1654,6 +1691,8 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
 			verbose_level - 1);
+#endif
+
 	if (f_v) {
 		cout << "any_group::orbit_of done" << endl;
 	}

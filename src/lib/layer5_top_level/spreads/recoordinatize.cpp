@@ -458,10 +458,10 @@ void recoordinatize::compute_live_points(int verbose_level)
 	len = i_power_j(Fq->q, Mtx->n) - 1;
 	for (select_value = 1; select_value < len;  select_value++) {
 		if (f_path_select) {
-			sprintf(fname, "live_points_%d.txt", select_value);
+			snprintf(fname, sizeof(fname), "live_points_%d.txt", select_value);
 			}
 		else {
-			sprintf(fname, "live_points.txt");
+			snprintf(fname, sizeof(fname), "live_points.txt");
 			}	
 		if (file_size(fname) > 1) {
 			cout << "reading live points from file "
@@ -552,7 +552,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 
 #if 0
 
-	sprintf(fname, "live_points.txt");
+	snprintf(fname, sizeof(fname), "live_points.txt");
 	if (file_size(fname) > 1) {
 		cout << "reading live points from file " << fname << endl;
 		read_set_from_file(fname, live_points, nb_live_points, verbose_level);

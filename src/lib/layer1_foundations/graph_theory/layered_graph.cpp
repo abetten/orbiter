@@ -28,24 +28,13 @@ layered_graph::layered_graph()
 	// fname_base
 	f_has_data1 = FALSE;
 	data1 = -1;
-	//null();
 }
 
 layered_graph::~layered_graph()
 {
-	freeself();
-}
-
-void layered_graph::null()
-{
-}
-
-void layered_graph::freeself()
-{
 	if (L) {
 		FREE_OBJECTS(L);
 		}
-	null();
 }
 
 void layered_graph::init(int nb_layers, int *Nb_nodes_layer, 
@@ -227,7 +216,7 @@ void layered_graph::add_edge(int l1, int n1, int l2, int n2,
 }
 
 void layered_graph::add_text(int l, int n,
-		const char *text, int verbose_level)
+		std::string &text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -530,8 +519,10 @@ void layered_graph::draw_with_options(std::string &fname,
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
 							snprintf(text, 1000, "%d", edge_label);
+							string s;
+							s.assign(text);
 							G.aligned_text_with_offset(Px[2], Py[2],
-									xoffset, yoffset, "", text);
+									xoffset, yoffset, "", s);
 							edge_label++;
 						}
 					}
@@ -551,8 +542,10 @@ void layered_graph::draw_with_options(std::string &fname,
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
 							snprintf(text, 1000, "%d", edge_label);
+							string s;
+							s.assign(text);
 							G.aligned_text_with_offset(Px[2], Py[2],
-									xoffset, yoffset, "", text);
+									xoffset, yoffset, "", s);
 							edge_label++;
 						}
 						if (l > i) {
@@ -598,8 +591,10 @@ void layered_graph::draw_with_options(std::string &fname,
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
 							snprintf(text, 1000, "%d", edge_label);
+							string s;
+							s.assign(text);
 							G.aligned_text_with_offset(Px[2], Py[2],
-									xoffset, yoffset, "", text);
+									xoffset, yoffset, "", s);
 							edge_label++;
 						}
 						if (l > i) {
@@ -625,8 +620,10 @@ void layered_graph::draw_with_options(std::string &fname,
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
 							snprintf(text, 1000, "%d", edge_label);
+							string s;
+							s.assign(text);
 							G.aligned_text_with_offset(Px[2], Py[2],
-									xoffset, yoffset, "", text);
+									xoffset, yoffset, "", s);
 							edge_label++;
 						}
 						if (l > i) {
@@ -708,16 +705,16 @@ void layered_graph::draw_with_options(std::string &fname,
 						O->f_rotated, x, y);
 
 
-				char label[1000];
+				string label;
 
 
-				if (L[i].Nodes[j].label) {
+				if (L[i].Nodes[j].label.length()) {
 					if (f_v) {
 						cout << "Vertex " << i << " " << j
 								<< " has the following label: "
 								<< L[i].Nodes[j].label << endl;
 					}
-					strcpy(label, L[i].Nodes[j].label);
+					label.assign(L[i].Nodes[j].label);
 				}
 				else {
 					if (f_v) {
@@ -737,14 +734,16 @@ void layered_graph::draw_with_options(std::string &fname,
 					}
 
 					if (L[i].Nodes[j].radius_factor >= 1.) {
-						snprintf(label, 1000, "{\\scriptsize %d}", L[i].Nodes[j].data1);
+						char str[1000];
+						snprintf(str, 1000, "{\\scriptsize %d}", L[i].Nodes[j].data1);
+						label.assign(str);
 					}
 					else {
-						label[0] = 0;
+						label.assign("");
 					}
 				}
 				else {
-					label[0] = 0;
+					label.assign("");
 				}
 
 				G.nice_circle(x, y, O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
@@ -769,7 +768,7 @@ void layered_graph::draw_with_options(std::string &fname,
 									<< " label=" << label << endl;
 						}
 
-						if (strlen(label) /* L[i].Nodes[j].radius_factor >= 1.*/) {
+						if (label.length() /* L[i].Nodes[j].radius_factor >= 1.*/) {
 							//G.circle_text(x, y, L[i].Nodes[j].label);
 							G.aligned_text(x, y, "", label);
 							//G.aligned_text(x, y, "", L[i].Nodes[j].label);
@@ -792,7 +791,9 @@ void layered_graph::draw_with_options(std::string &fname,
 					O->xin, O->yin, O->f_rotated, x, y);
 			Px[0] = 1 * O->rad;
 			Py[0] = y + 4 * O->rad;
-			G.aligned_text(Px[0], Py[0], "", "Level");
+			string s;
+			s.assign("Level");
+			G.aligned_text(Px[0], Py[0], "", s);
 			for (i = 0; i < nb_layers - 1; i++) {
 				coordinates(L[i].Nodes[0].id,
 						O->xin, O->yin, O->f_rotated, x, y);
@@ -822,7 +823,9 @@ void layered_graph::draw_with_options(std::string &fname,
 				Py[0] = y;
 				//G.nice_circle(Px[0], Py[0], rad * 4);
 				snprintf(str, 1000, "%d", i);
-				G.aligned_text(Px[0], Py[0], "", str);
+				string s;
+				s.assign(text);
+				G.aligned_text(Px[0], Py[0], "", s);
 			}
 		}
 
@@ -907,7 +910,7 @@ void layered_graph::write_file(std::string &fname,
 	M.used_length = 0;
 	M.cur_pointer = 0;
 	write_memory_object(&M, verbose_level - 1);
-	M.write_file(fname.c_str(), verbose_level - 1);
+	M.write_file(fname, verbose_level - 1);
 	if (f_v) {
 		cout << "layered_graph::write_file done" << endl;
 		}
@@ -925,7 +928,7 @@ void layered_graph::read_file(std::string &fname,
 				"reading file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 		}
-	M.read_file(fname.c_str(), verbose_level - 1);
+	M.read_file(fname, verbose_level - 1);
 	if (f_v) {
 		cout << "layered_graph::read_file "
 				"read file " << fname << endl;
@@ -982,13 +985,11 @@ void layered_graph::read_memory_object(
 	int f_v = (verbose_level >= 1);
 	int i;
 	int version, a;
-	char *p;
 	
 	if (f_v) {
 		cout << "layered_graph::read_memory_object" << endl;
-		}
+	}
 
-	freeself();
 	
 	m->read_int(&version); // version number of this file format
 	if (version != 1) {
@@ -1011,9 +1012,7 @@ void layered_graph::read_memory_object(
 		L[i].read_memory_object(m, verbose_level - 1);
 		}
 	
-	m->read_string(p);
-	fname_base.assign(p);
-	FREE_char(p);
+	m->read_string(fname_base);
 
 	m->read_int(&a);
 	if (a != MAGIC_SYNC) {
@@ -1355,7 +1354,11 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 					text[0] = 0;
 					}
 				}
-			add_text(k, r, text, 0/*verbose_level*/);
+
+			string text2;
+
+			text2.assign(text);
+			add_text(k, r, text2, 0/*verbose_level*/);
 			}
 		}
 
@@ -1436,7 +1439,12 @@ void layered_graph::init_poset_from_file(std::string &fname,
 				char text[1000];
 
 				snprintf(text, 1000, "%d", a);
-				add_text(l1, n1, text, 0/*verbose_level*/);
+
+				string text2;
+
+				text2.assign(text);
+
+				add_text(l1, n1, text2, 0/*verbose_level*/);
 			}
 		}
 

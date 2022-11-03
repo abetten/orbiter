@@ -44,21 +44,11 @@ poset_with_group_action::poset_with_group_action()
 
 poset_with_group_action::~poset_with_group_action()
 {
-	freeself();
-}
-
-void poset_with_group_action::null()
-{
-}
-
-void poset_with_group_action::freeself()
-{
 	if (f_has_orbit_based_testing) {
 		if (Orbit_based_testing) {
 			FREE_OBJECT(Orbit_based_testing);
 		}
 	}
-	null();
 }
 
 void poset_with_group_action::init_subset_lattice(actions::action *A, actions::action *A2,

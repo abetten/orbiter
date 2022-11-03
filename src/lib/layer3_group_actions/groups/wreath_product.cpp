@@ -88,21 +88,11 @@ wreath_product::wreath_product()
 
 wreath_product::~wreath_product()
 {
-	freeself();
-}
-
-void wreath_product::null()
-{
-
-}
-
-void wreath_product::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "wreath_product::freeself" << endl;
+		cout << "wreath_product::~wreath_product" << endl;
 		}
 	if (mtx_size) {
 		FREE_int(mtx_size);
@@ -182,9 +172,8 @@ void wreath_product::freeself()
 	if (Prev) {
 		FREE_int((int *) Prev);
 	}
-	null();
 	if (f_v) {
-		cout << "wreath_product::freeself finished" << endl;
+		cout << "wreath_product::~wreath_product finished" << endl;
 		}
 }
 
@@ -230,8 +219,8 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	char str1[1000];
 	char str2[1000];
 
-	sprintf(str1, "_wreath_Sym%d", nb_factors);
-	sprintf(str2, " \\wr {\\rm Sym}(%d)", nb_factors);
+	snprintf(str1, sizeof(str1), "_wreath_Sym%d", nb_factors);
+	snprintf(str2, sizeof(str2), " \\wr {\\rm Sym}(%d)", nb_factors);
 
 	label.assign(M->label);
 	label.append(str1);
@@ -1480,7 +1469,7 @@ void wreath_product::save_rank_one_tensors(int verbose_level)
 	}
 	char fname[1000];
 
-	sprintf(fname, "rank_one_tensors_q%d_f%d.txt", q, nb_factors);
+	snprintf(fname, sizeof(fname), "rank_one_tensors_q%d_f%d.txt", q, nb_factors);
 	{
 		ofstream fp(fname);
 		int i;
@@ -1518,8 +1507,8 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 	char fname1[1000];
 	char fname2[1000];
 
-	sprintf(fname1, "tensor_q%d_w%d_ranks.bin", q, nb_factors);
-	sprintf(fname2, "tensor_q%d_w%d_ranks_prev.bin", q, nb_factors);
+	snprintf(fname1, sizeof(fname1), "tensor_q%d_w%d_ranks.bin", q, nb_factors);
+	snprintf(fname2, sizeof(fname2), "tensor_q%d_w%d_ranks_prev.bin", q, nb_factors);
 
 
 	if (f_v) {
@@ -2390,7 +2379,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 void wreath_product::make_fname(char *fname, int nb_factors, int h, int b)
 {
-	sprintf(fname, "w%d_h%d_b%d.bin", nb_factors, h, b);
+	snprintf(fname, sizeof(fname), "w%d_h%d_b%d.bin", nb_factors, h, b);
 }
 
 int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
@@ -2648,7 +2637,7 @@ void wreath_product::orbits_using_files_and_union_find(
 		}
 		char fname_orbit[1000];
 
-		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%ld.bin", q, nb_factors, orbit_idx);
+		snprintf(fname_orbit, sizeof(fname_orbit), "wreath_q%d_w%d_orbit_%ld.bin", q, nb_factors, orbit_idx);
 		if (f_v) {
 			cout << "Writing the file " << fname_orbit << endl;
 		}

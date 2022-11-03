@@ -799,10 +799,13 @@ void trihedral_pair_with_action::create_action_on_equations_and_compute_orbits(
 
 	if (f_v) {
 		cout << "trihedral_pair_with_action::create_action_on_equations_and_compute_orbits "
-				"before orbits_on_equations" << endl;
+				"before AG.orbits_on_equations" << endl;
 	}
 
-	AL->Surf_A->A->orbits_on_equations(
+	actions::action_global AG;
+
+	AG.orbits_on_equations(
+			AL->Surf_A->A,
 			AL->Surf->Poly3_4,
 			The_surface_equations,
 			AL->q + 1 /* nb_equations */,
@@ -810,6 +813,11 @@ void trihedral_pair_with_action::create_action_on_equations_and_compute_orbits(
 			A_on_equations,
 			Orb,
 			verbose_level);
+
+	if (f_v) {
+		cout << "trihedral_pair_with_action::create_action_on_equations_and_compute_orbits "
+				"after AG.orbits_on_equations" << endl;
+	}
 
 	if (f_v) {
 		cout << "trihedral_pair_with_action::create_action_on_equations_and_compute_orbits done" << endl;

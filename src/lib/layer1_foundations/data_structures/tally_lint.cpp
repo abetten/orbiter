@@ -751,7 +751,7 @@ void tally_lint::save_classes_individually(std::string &fname)
 		char str[10000];
 
 		fname2.assign(fname);
-		sprintf(str, "%ld", t);
+		snprintf(str, sizeof(str), "%ld", t);
 		fname2.append(str);
 		fname2.append(".csv");
 

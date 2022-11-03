@@ -165,7 +165,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 	string base_fname;
 
 
-	sprintf(str, "LS_%s", DC->prefix);
+	snprintf(str, sizeof(str), "LS_%s", DC->prefix);
 	base_fname.assign(str);
 
 	LS->init(DC,
@@ -262,7 +262,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 			char str[1000];
 			string fname_magma_prefix;
 
-			sprintf(str, "%s_normalizer", A->label);
+			snprintf(str, sizeof(str), "%s_normalizer", A->label);
 			fname_magma_prefix.assign(str);
 
 			if (!A->f_has_sims) {
@@ -390,8 +390,8 @@ void combinatorics_global::load_design_table(design_create *DC,
 			int orbit_length;
 
 			orbit_length = Syl->primes[sylow_select];
-			sprintf(prefix, "Case_%d_", lift_case);
-			sprintf(group_label, "Syl_%d", Syl->primes[sylow_select]);
+			snprintf(prefix, sizeof(prefix), "Case_%d_", lift_case);
+			snprintf(group_label, sizeof(group_label), "Syl_%d", Syl->primes[sylow_select]);
 
 			long int *Large_sets;
 			int nb_large_sets;
@@ -765,7 +765,7 @@ void combinatorics_global::Hill_cap56(
 	for (j = 0; j < 56; j++) {
 		Pts[j] = Sets[0 * 56 + j];
 		}
-	sprintf(fname, "Hill_cap_56.txt");
+	snprintf(fname, sizeof(fname), "Hill_cap_56.txt");
 
 	FREE_int(Sets);
 

@@ -1433,7 +1433,7 @@ void strong_generators::print_generators_in_latex_individually(std::ostream &ost
 		string label;
 		char str[1000];
 
-		sprintf(str, "g_{%d} = ", i + 1);
+		snprintf(str, sizeof(str), "g_{%d} = ", i + 1);
 		label.assign(str);
 
 		//A->element_print_latex_with_extras(gens->ith(i), label, ost);
@@ -2509,7 +2509,7 @@ schreier *strong_generators::orbits_on_points_schreier(
 		cout << "strong_generators::orbits_on_points_schreier "
 				"before Sch->compute_all_point_orbits" << endl;
 	}
-	Sch->compute_all_point_orbits(0 /*verbose_level*/);
+	Sch->compute_all_point_orbits(verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
 				"after Sch->compute_all_point_orbits" << endl;
@@ -3002,7 +3002,7 @@ void strong_generators::generators_for_shallow_schreier_tree(
 		int f_circletext = TRUE;
 		int rad = 3000;
 
-		sprintf(label1, "%s_%d", label, cnt);
+		snprintf(label1, sizeof(label1), "%s_%d", label, cnt);
 		Sch->draw_tree(label1, 0 /* orbit_no */,
 			xmax, ymax, f_circletext, rad,
 			TRUE /* f_embedded */, FALSE /* f_sideways */, 
@@ -3598,25 +3598,29 @@ strong_generators *strong_generators::point_stabilizer(
 	ring_theory::longinteger_object G_order, stab_go;
 
 	if (f_v) {
-		cout << "computing orbit of point " << pt << ":" << endl;
+		cout << "strong_generators::point_stabilizer "
+				"computing orbit of point " << pt << ":" << endl;
 	}
 	group_order(G_order);
-	Sch = orbit_of_one_point_schreier(A, pt, verbose_level);
+	Sch = orbit_of_one_point_schreier(A, pt, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "orbit of point " << pt << " has length "
+		cout << "strong_generators::point_stabilizer "
+				"orbit of point " << pt << " has length "
 				<< Sch->orbit_len[0] << endl;
 	}
 	Sch->point_stabilizer(A, G_order, 
-		Stab, 0 /* orbit_no */, verbose_level);
+		Stab, 0 /* orbit_no */, 0 /*verbose_level*/);
 	Stab->group_order(stab_go);
 	if (f_v) {
-		cout << "stabilizer of point " << pt << " has order "
+		cout << "strong_generators::point_stabilizer "
+				"stabilizer of point " << pt << " has order "
 				<< stab_go << endl;
 	}
 	Stab_gens = NEW_OBJECT(strong_generators);
-	Stab_gens->init_from_sims(Stab, verbose_level);
+	Stab_gens->init_from_sims(Stab, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "generators for the stabilizer "
+		cout << "strong_generators::point_stabilizer "
+				"generators for the stabilizer "
 				"have been computed" << endl;
 	}
 	

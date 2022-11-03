@@ -1857,6 +1857,27 @@ void projective_space::cheat_sheet_subspaces(
 			}
 			f << "\\end{array}" << endl;
 			f << "\\right]" << endl;
+			if (k1 == 2) {
+				f << "\\{";
+
+				int nb;
+				long int *the_points;
+
+				nb = Gr->nb_points_covered(0 /* verbose_level*/);
+
+				the_points = NEW_lint(nb);
+
+				Gr->points_covered(the_points, 0 /* verbose_level*/);
+
+				data_structures::sorting Sorting;
+
+				Sorting.lint_vec_heapsort(the_points, nb);
+				orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(f, the_points, nb);
+				//Lint_vec_print(the_points, nb);
+
+				FREE_lint(the_points);
+				f << "\\}";
+			}
 
 			if (n == 3 && k == 1) {
 				int v6[6];

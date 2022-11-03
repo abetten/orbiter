@@ -52,7 +52,7 @@ void vector_ge_builder::init(data_structures_groups::vector_ge_description *Desc
 	apps_algebra::any_group *AG;
 
 
-	AG = user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(Descr->action_label);
+	AG = Get_object_of_type_any_group(Descr->action_label);
 
 
 	actions::action *A;

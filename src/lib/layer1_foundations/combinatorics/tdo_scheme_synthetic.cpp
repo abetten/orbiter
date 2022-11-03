@@ -3092,7 +3092,7 @@ int tdo_scheme_synthetic::refine_cols_hard(
 			if (f_vv) {
 				char label[1000];
 				
-				sprintf(label, "first_%d", r);
+				snprintf(label, sizeof(label), "first_%d", r);
 				T.D1->write_xml(cout, label);
 			}
 
@@ -3239,7 +3239,7 @@ int tdo_scheme_synthetic::refine_cols_hard(
 		if (f_vv) {
 			char label[1000];
 
-			sprintf(label, "second");
+			snprintf(label, sizeof(label), "second");
 			T.D2->write_xml(cout, label);
 			}
 
@@ -3679,13 +3679,13 @@ int tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_joining(
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
 	
 	for (I = 0; I < L2; I++) {
-		sprintf(label, "J_{%d}", I + 1);
+		snprintf(label, sizeof(label), "J_{%d}", I + 1);
 		T.D2->init_eqn_label(eqn_start + I, label);
 	}
 	for (I1 = 0; I1 < L2; I1++) {
 		for (I2 = I1 + 1; I2 < L2; I2++) {
 			k = Combi.ij2k(I1, I2, L2);
-			sprintf(label, "J_{%d,%d}", I1 + 1, I2 + 1);
+			snprintf(label, sizeof(label), "J_{%d,%d}", I1 + 1, I2 + 1);
 			T.D2->init_eqn_label(eqn_start + L2 + k, label);
 		}
 	}

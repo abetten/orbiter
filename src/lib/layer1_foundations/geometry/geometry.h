@@ -479,8 +479,6 @@ public:
 
 	desarguesian_spread();
 	~desarguesian_spread();
-	void null();
-	void freeself();
 	void init(int n, int m, int s, 
 			field_theory::subfield_structure *SubS,
 		int verbose_level);
@@ -1956,7 +1954,6 @@ public:
 
 	projective_space();
 	~projective_space();
-	void freeself();
 	void projective_space_init(int n, field_theory::finite_field *F,
 		int f_init_incidence_structure, 
 		int verbose_level);

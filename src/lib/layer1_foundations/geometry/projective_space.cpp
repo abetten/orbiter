@@ -62,34 +62,28 @@ projective_space::projective_space()
 
 projective_space::~projective_space()
 {
-	freeself();
-}
-
-
-void projective_space::freeself()
-{
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "projective_space::freeself" << endl;
+		cout << "projective_space::~projective_space" << endl;
 	}
 	if (Grass_lines) {
 		if (f_v) {
-			cout << "projective_space::freeself "
+			cout << "projective_space::~projective_space "
 					"deleting Grass_lines" << endl;
 		}
 		FREE_OBJECT(Grass_lines);
 	}
 	if (Grass_planes) {
 		if (f_v) {
-			cout << "projective_space::freeself "
+			cout << "projective_space::~projective_space "
 					"deleting Grass_planes" << endl;
 		}
 		FREE_OBJECT(Grass_planes);
 	}
 	if (Grass_hyperplanes) {
 		if (f_v) {
-			cout << "projective_space::freeself "
+			cout << "projective_space::~projective_space "
 					"deleting Grass_hyperplanes" << endl;
 		}
 		FREE_OBJECT(Grass_hyperplanes);
@@ -106,7 +100,7 @@ void projective_space::freeself()
 
 	if (Go) {
 		if (f_v) {
-			cout << "projective_space::freeself deleting Go" << endl;
+			cout << "projective_space::~projective_space deleting Go" << endl;
 		}
 		FREE_OBJECT(Go);
 	}
@@ -118,7 +112,7 @@ void projective_space::freeself()
 	}
 	if (v) {
 		if (f_v) {
-			cout << "projective_space::freeself deleting v" << endl;
+			cout << "projective_space::~projective_space deleting v" << endl;
 		}
 		FREE_int(v);
 	}
@@ -144,7 +138,7 @@ void projective_space::freeself()
 	}
 
 	if (f_v) {
-		cout << "projective_space::freeself done" << endl;
+		cout << "projective_space::~projective_space done" << endl;
 	}
 }
 
@@ -3215,7 +3209,7 @@ void projective_space::report(ostream &ost,
 		for (i = 0; i < N_points; i++) {
 			set[i] = i;
 		}
-		sprintf(str, "plane_of_order_%d", q);
+		snprintf(str, sizeof(str), "plane_of_order_%d", q);
 		fname_base.assign(str);
 
 		graphics::plot_tools Pt;
@@ -3378,7 +3372,7 @@ void projective_space::make_fname_incidence_matrix_csv(std::string &fname)
 {
 	char str[1000];
 
-	sprintf(str, "PG_n%d_q%d", n, q);
+	snprintf(str, sizeof(str), "PG_n%d_q%d", n, q);
 	fname.assign(str);
 	fname.append("_incidence_matrix.csv");
 }

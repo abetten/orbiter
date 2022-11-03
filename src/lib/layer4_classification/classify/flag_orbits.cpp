@@ -39,37 +39,27 @@ flag_orbits::flag_orbits()
 
 flag_orbits::~flag_orbits()
 {
-	freeself();
-}
-
-void flag_orbits::null()
-{
-}
-
-void flag_orbits::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "flag_orbits::freeself" << endl;
+		cout << "flag_orbits::~flag_orbits" << endl;
 	}
 	if (Flag_orbit_node) {
 		if (f_v) {
-			cout << "flag_orbits::freeself before FREE_OBJECTS(Flag_orbit_node)" << endl;
+			cout << "flag_orbits::~flag_orbits before FREE_OBJECTS(Flag_orbit_node)" << endl;
 		}
 		FREE_OBJECTS(Flag_orbit_node);
 	}
 	if (Pt) {
 		if (f_v) {
-			cout << "flag_orbits::freeself before FREE_lint(Pt)" << endl;
+			cout << "flag_orbits::~flag_orbits before FREE_lint(Pt)" << endl;
 		}
 		FREE_lint(Pt);
 	}
 	if (f_v) {
-		cout << "flag_orbits::freeself done" << endl;
+		cout << "flag_orbits::~flag_orbits done" << endl;
 	}
-	null();
 }
 
 void flag_orbits::init(actions::action *A, actions::action *A2,

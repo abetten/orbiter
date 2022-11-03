@@ -454,15 +454,15 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 			a = NO->canonical_labeling[i];
 			if (Sch->orbit_number(a) == canonical_orbit) {
-				sprintf(str, "*%d", a);
+				snprintf(str, sizeof(str), "*%d", a);
 			}
 			else {
-				sprintf(str, "%d", a);
+				snprintf(str, sizeof(str), "%d", a);
 			}
 			point_labels[i].assign(str);
 		}
 		for (j = 0; j < b; j++) {
-			sprintf(str, "%d", NO->canonical_labeling[v + j]);
+			snprintf(str, sizeof(str), "%d", NO->canonical_labeling[v + j]);
 			block_labels[j].assign(str);
 		}
 

@@ -16,27 +16,35 @@ namespace induced_actions {
 
 action_on_cosets::action_on_cosets()
 {
-	null();
+	A_linear = NULL;
+	F = NULL;
+	dimension_of_subspace = 0;
+	n = 0;
+	subspace_basis = NULL;
+	base_cols = NULL;
+
+	f_lint = FALSE;
+	nb_points = 0;
+	Points = NULL;
+	lint_Points = NULL;
+
+	v1 = NULL;
+	v2 = NULL;
+
+	unrank_point = NULL;
+	rank_point = NULL;
+	unrank_point_lint = NULL;
+	rank_point_lint = NULL;
+	rank_unrank_data = NULL;
 }
 
 action_on_cosets::~action_on_cosets()
-{
-	freeself();
-}
-
-void action_on_cosets::null()
-{
-	v1 = NULL;
-	v2 = NULL;
-}
-
-void action_on_cosets::freeself()
 {
 	int f_v = FALSE;
 	//int f_vv = FALSE;
 
 	if (f_v) {
-		cout << "action_on_cosets::free" << endl;
+		cout << "action_on_cosets::~action_on_coset" << endl;
 		}
 	if (v1) {
 		FREE_int(v1);
@@ -44,9 +52,8 @@ void action_on_cosets::freeself()
 	if (v2) {
 		FREE_int(v2);
 		}
-	null();
 	if (f_v) {
-		cout << "action_on_cosets::free done" << endl;
+		cout << "action_on_cosets::~action_on_coset done" << endl;
 		}
 }
 

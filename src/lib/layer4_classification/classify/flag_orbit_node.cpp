@@ -42,26 +42,17 @@ flag_orbit_node::flag_orbit_node()
 
 flag_orbit_node::~flag_orbit_node()
 {
-	freeself();
-}
-
-void flag_orbit_node::null()
-{
-}
-
-void flag_orbit_node::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "flag_orbit_node::freeself" << endl;
+		cout << "flag_orbit_node::~flag_orbit_node" << endl;
 	}
 	if (fusion_elt) {
 		FREE_int(fusion_elt);
 	}
 	if (f_v) {
-		cout << "flag_orbit_node::freeself before FREE_OBJECT(gens)" << endl;
+		cout << "flag_orbit_node::~flag_orbit_node before FREE_OBJECT(gens)" << endl;
 	}
 	if (gens) {
 		FREE_OBJECT(gens);
@@ -76,9 +67,8 @@ void flag_orbit_node::freeself()
 		FREE_pvoid(Receptacle);
 	}
 	if (f_v) {
-		cout << "flag_orbit_node::freeself done" << endl;
+		cout << "flag_orbit_node::~flag_orbit_node done" << endl;
 	}
-	null();
 }
 
 void flag_orbit_node::init(

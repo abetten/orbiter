@@ -52,19 +52,9 @@ schreier_sims::schreier_sims()
 	choose_next_base_point_method = NULL;
 
 	iteration = 0;
-	//null();
 }
 
 schreier_sims::~schreier_sims()
-{
-	freeself();
-}
-
-void schreier_sims::null()
-{
-}
-
-void schreier_sims::freeself()
 {
 	if (Elt1) {
 		FREE_int(Elt1);

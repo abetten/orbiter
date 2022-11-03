@@ -164,7 +164,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int *v;
 		int m, n;
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->nullspace_input_matrix, v, m, n);
+		Get_matrix(Descr->nullspace_input_matrix, v, m, n);
 
 		LA.do_nullspace(F,
 				v, m, n,
@@ -183,7 +183,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int *v;
 		int m, n;
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
+		Get_matrix(Descr->RREF_input_matrix, v, m, n);
 
 		LA.do_RREF(F,
 				v, m, n,
@@ -208,6 +208,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 
 
+	else if (Descr->f_algebraic_normal_form_of_boolean_function) {
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity f_algebraic_normal_form_of_boolean_function" << endl;
+		}
+		algebra::algebra_global Algebra;
+
+		Algebra.algebraic_normal_form_of_boolean_function(F,
+				Descr->algebraic_normal_form_of_boolean_function_fname_csv_in,
+				Descr->algebraic_normal_form_of_boolean_function_n, verbose_level);
+	}
+
 	else if (Descr->f_algebraic_normal_form) {
 
 		if (f_v) {
@@ -215,11 +227,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
-		Algebra.algebraic_normal_form(F,
-				Descr->algebraic_normal_form_fname_csv_in,
-				Descr->algebraic_normal_form_n, verbose_level);
-	}
+		int *func;
+		int len;
 
+		Get_int_vector_from_label(Descr->algebraic_normal_form_input, func, len, 0 /* verbose_level */);
+
+		Algebra.algebraic_normal_form(F,
+				Descr->algebraic_normal_form_n,
+				func, len, verbose_level);
+	}
 
 	else if (Descr->f_apply_trace_function) {
 
@@ -335,8 +351,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 			cout << "finite_field_activity::perform_activity f_search_APN_function" << endl;
 		}
 		algebra::algebra_global Algebra;
+		int delta_max = 2;
 
-		Algebra.search_APN(F, verbose_level);
+		Algebra.search_APN(F, delta_max, verbose_level);
 
 	}
 
@@ -728,7 +745,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->product_of_elements,
+		Get_int_vector_from_label(Descr->product_of_elements,
 				data, sz, verbose_level);
 		s = 1;
 		for (i = 0; i < sz; i++) {
@@ -754,7 +771,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->sum_of_elements,
+		Get_int_vector_from_label(Descr->sum_of_elements,
 				data, sz, verbose_level);
 		s = 1;
 		for (i = 0; i < sz; i++) {
@@ -781,7 +798,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->negate_elements,
+		Get_int_vector_from_label(Descr->negate_elements,
 				data, sz, verbose_level);
 		for (i = 0; i < sz; i++) {
 			a = data[i];
@@ -808,7 +825,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->inverse_elements,
+		Get_int_vector_from_label(Descr->inverse_elements,
 				data, sz, verbose_level);
 		for (i = 0; i < sz; i++) {
 			a = data[i];
@@ -835,7 +852,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				<< endl;
 		}
 
-		orbiter_kernel_system::Orbiter->get_int_vector_from_label(Descr->power_map_elements,
+		Get_int_vector_from_label(Descr->power_map_elements,
 				data, sz, verbose_level);
 
 		if (f_v) {

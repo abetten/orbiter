@@ -135,13 +135,6 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 #endif
 
 
-	//f_semilinear = TRUE;
-
-	
-	//sprintf(prefix, "ovoid_Q%d_%d_%d", epsilon, d - 1, q);
-	//sprintf(prefix_with_directory, "%s", prefix);
-	
-	//F->init_override_polynomial(q, override_poly, 0);
 
 #if 0
 	int f_siegel = TRUE;
@@ -250,13 +243,6 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 
 
 
-#if 0
-	//sprintf(gen->fname_base, "ovoid_Q%d_%d_%d", epsilon, n, q);
-
-	if (f_v) {
-		cout << "fname_base = " << gen->fname_base << endl;
-		}
-#endif
 	
 
 
@@ -452,7 +438,7 @@ void ovoid_classify::make_graphs(orbiter_kernel_system::orbiter_data_file *ODF,
 		cout << " : " << ODF->Ago_ascii[orbit_idx]
 				<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
 
-		sprintf(str, fname_mask, orbit_idx);
+		snprintf(str, sizeof(str), fname_mask, orbit_idx);
 		fname_graph.assign(str);
 
 		long int *candidates;
@@ -756,7 +742,7 @@ void ovoid_classify::create_graph(orbiter_kernel_system::orbiter_data_file *ODF,
 
 	char str[1000];
 
-	sprintf(str, "graph_ovoid_%d_%d_%d",
+	snprintf(str, sizeof(str), "graph_ovoid_%d_%d_%d",
 			LG->F->q, starter_size, orbit_idx);
 
 	string label, label_tex;

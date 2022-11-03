@@ -17,26 +17,17 @@ namespace poset_classification {
 
 poset_description::poset_description()
 {
-	null();
-}
-
-poset_description::~poset_description()
-{
-	freeself();
-}
-
-void poset_description::null()
-{
 	f_subset_lattice = FALSE;
 	f_subspace_lattice = FALSE;
-	//label[0] = 0;
+	dimension = 0;
+	q = 0;
 	f_independence_condition = FALSE;
 	independence_condition_value = 0;
 }
 
-void poset_description::freeself()
+
+poset_description::~poset_description()
 {
-	null();
 }
 
 void poset_description::read_arguments_from_string(

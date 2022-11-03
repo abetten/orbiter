@@ -71,8 +71,6 @@ public:
 
 	elliptic_curve();
 	~elliptic_curve();
-	void null();
-	void freeself();
 	void init(field_theory::finite_field *F, int b, int c, int verbose_level);
 	void compute_points(int verbose_level);
 	void add_point_to_table(int x, int y, int z);

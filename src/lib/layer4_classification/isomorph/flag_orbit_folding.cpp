@@ -164,7 +164,6 @@ void flag_orbit_folding::init(isomorph *Iso, int verbose_level)
 	event_out_fname.assign(Iso->prefix);
 	event_out_fname.append("_event.txt");
 
-	//sprintf(event_out_fname, "%sevent.txt", prefix);
 
 
 	if (f_v) {

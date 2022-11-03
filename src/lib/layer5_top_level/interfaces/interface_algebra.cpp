@@ -23,8 +23,6 @@ interface_algebra::interface_algebra()
 	f_count_subprimitive = FALSE;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
-	f_equivalence_class_of_fractions = FALSE;
-	equivalence_class_of_fractions_N = 0;
 
 
 	f_character_table_symmetric_group = FALSE;
@@ -85,9 +83,6 @@ void interface_algebra::print_help(int argc,
 	if (ST.stringcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
-		cout << "-equivalence_class_of_fractions <int : N> " << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
 		cout << "-character_table_symmetric_group <int : deg> " << endl;
 	}
@@ -137,9 +132,6 @@ int interface_algebra::recognize_keyword(int argc,
 		return false;
 	}
 	if (ST.stringcmp(argv[i], "-count_subprimitive") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
@@ -204,12 +196,6 @@ void interface_algebra::read_arguments(int argc,
 		cout << "-count_subprimitive "
 				<< count_subprimitive_Q_max
 				<< " " << count_subprimitive_H_max
-				<< endl;
-	}
-	else if (ST.stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
-		f_equivalence_class_of_fractions = TRUE;
-		equivalence_class_of_fractions_N = ST.strtoi(argv[++i]);
-		cout << "-equivalence_class_of_fractions " << equivalence_class_of_fractions_N
 				<< endl;
 	}
 	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
@@ -311,20 +297,6 @@ void interface_algebra::read_arguments(int argc,
 				<< " " << eigenstuff_coeffs << endl;
 		}
 	}
-#if 0
-	else if (ST.stringcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
-		f_eigenstuff_from_file = TRUE;
-		eigenstuff_finite_field_label.assign(argv[++i]);
-		eigenstuff_n = ST.strtoi(argv[++i]);
-		eigenstuff_fname.assign(argv[++i]);
-		if (f_v) {
-			cout << "-eigenstuff_from_file "
-					<< eigenstuff_finite_field_label
-					<< " " << eigenstuff_n
-					<< " " << eigenstuff_fname << endl;
-		}
-	}
-#endif
 
 }
 
@@ -335,11 +307,6 @@ void interface_algebra::print()
 		cout << "-count_subprimitive "
 				<< count_subprimitive_Q_max
 				<< " " << count_subprimitive_H_max
-				<< endl;
-	}
-	if (f_equivalence_class_of_fractions) {
-		cout << "-equivalence_class_of_fractions "
-				<< equivalence_class_of_fractions_N
 				<< endl;
 	}
 	if (f_character_table_symmetric_group) {
@@ -429,14 +396,6 @@ void interface_algebra::worker(int verbose_level)
 
 		Algebra.count_subprimitive(count_subprimitive_Q_max,
 				count_subprimitive_H_max);
-	}
-
-	else if (f_equivalence_class_of_fractions) {
-
-		algebra::algebra_global Algebra;
-
-		Algebra.do_equivalence_class_of_fractions(equivalence_class_of_fractions_N,
-				verbose_level);
 	}
 
 	else if (f_search_for_primitive_polynomial_in_range) {
@@ -550,22 +509,6 @@ void interface_algebra::worker(int verbose_level)
 
 	}
 
-#if 0
-	else if (f_eigenstuff_from_file) {
-
-
-#if 0
-		eigenstuff_n = strtoi(argv[++i]);
-		eigenstuff_fname.assign(argv[++i]);
-		algebra_global Algebra;
-
-		Algebra.power_mod_n(
-				power_mod_n_a, power_mod_n_n,
-				verbose_level);
-#endif
-
-	}
-#endif
 
 
 

@@ -364,13 +364,13 @@ void invariants_packing::make_table(
 		char str[1000];
 
 		if (f_only_self_dual) {
-			sprintf(str, "ids_of_self_dual_type_%d.csv", i);
+			snprintf(str, sizeof(str), "ids_of_self_dual_type_%d.csv", i);
 		}
 		else if (f_only_not_self_dual) {
-			sprintf(str, "ids_of_not_self_dual_type_%d.csv", i);
+			snprintf(str, sizeof(str), "ids_of_not_self_dual_type_%d.csv", i);
 		}
 		else {
-			sprintf(str, "ids_of_all_type_%d.csv", i);
+			snprintf(str, sizeof(str), "ids_of_all_type_%d.csv", i);
 		}
 		fname.assign(str);
 		Int_vec_print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,

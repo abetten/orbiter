@@ -40,17 +40,15 @@ void spread_classify::print_isomorphism_type(isomorph::isomorph *Iso,
 	}
 
 	fname.assign(Iso->prefix);
-	sprintf(str, "_%d.tex", iso_cnt);
+	snprintf(str, sizeof(str), "_%d.tex", iso_cnt);
 	fname.append(str);
 
-	//sprintf(fname, "%s_%d.tex", Iso->prefix, iso_cnt);
 
 
 	fname_klein.assign(Iso->prefix);
-	sprintf(str, "_%d_klein.tex", iso_cnt);
+	snprintf(str, sizeof(str), "_%d_klein.tex", iso_cnt);
 	fname_klein.append(str);
 
-	//sprintf(fname_klein, "%s_%d_klein.tex", Iso->prefix, iso_cnt);
 	
 	int save_longinteger_f_print_scientific = orbiter_kernel_system::Orbiter->longinteger_f_print_scientific;
 	orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = FALSE;
@@ -311,7 +309,7 @@ void spread_classify::save_klein_invariants(char *prefix,
 
 	char fname[1000];
 	
-	sprintf(fname, "%s%d_klein_invariant.bin", prefix, iso_cnt);
+	snprintf(fname, sizeof(fname), "%s%d_klein_invariant.bin", prefix, iso_cnt);
 	v.save_file(fname);
 
 	delete [] R;
@@ -428,7 +426,7 @@ void spread_classify::klein(ostream &ost,
 		Stack->sort_cells();
 
 		fname_pic.assign(Iso->prefix);
-		sprintf(str, "_%d_planes.tex", iso_cnt);
+		snprintf(str, sizeof(str), "_%d_planes.tex", iso_cnt);
 		fname_pic.append(str);
 
 		{
@@ -464,11 +462,11 @@ void spread_classify::klein(ostream &ost,
 
 
 		fname_row_scheme.assign(Iso->prefix);
-		sprintf(str, "_%d_planes_row_scheme.tex", iso_cnt);
+		snprintf(str, sizeof(str), "_%d_planes_row_scheme.tex", iso_cnt);
 		fname_row_scheme.append(str);
 
 		fname_col_scheme.assign(Iso->prefix);
-		sprintf(str, "_%d_planes_col_scheme.tex", iso_cnt);
+		snprintf(str, sizeof(str), "_%d_planes_col_scheme.tex", iso_cnt);
 		fname_col_scheme.append(str);
 
 		{
@@ -543,7 +541,7 @@ void spread_classify::report2(isomorph::isomorph &Iso, int verbose_level)
 	if (f_v) {
 		cout << "spread_classify::report2" << endl;
 	}
-	sprintf(fname, "report_Spreads_q%d_k%d.tex", SD->q, SD->k);
+	snprintf(fname, sizeof(fname), "report_Spreads_q%d_k%d.tex", SD->q, SD->k);
 
 	{
 	ofstream f(fname);
@@ -559,7 +557,7 @@ void spread_classify::report2(isomorph::isomorph &Iso, int verbose_level)
 	int f_pagenumbers = TRUE;
 	orbiter_kernel_system::latex_interface L;
 
-	sprintf(str, "$%d$-Spreads of PG($%d,%d$)", SD->k - 1, 2 * SD->k - 1, SD->q);
+	snprintf(str, sizeof(str), "$%d$-Spreads of PG($%d,%d$)", SD->k - 1, 2 * SD->k - 1, SD->q);
 	title.assign(str);
 	author.assign("Orbiter");
 
@@ -1015,8 +1013,8 @@ void spread_classify::report3(isomorph::isomorph &Iso, ostream &ost, int verbose
 	char prefix[1000];
 	char label_of_structure_plural[1000];
 
-	sprintf(prefix, "Spreads_%d_%d", SD->q, SD->k);
-	sprintf(label_of_structure_plural, "Spreads");
+	snprintf(prefix, sizeof(prefix), "Spreads_%d_%d", SD->q, SD->k);
+	snprintf(label_of_structure_plural, sizeof(label_of_structure_plural), "Spreads");
 
 
 	isomorph::isomorph_global IG;
@@ -1054,7 +1052,7 @@ void spread_classify::all_cooperstein_thas_quotients(
 	//Iso.setup_and_open_solution_database(verbose_level - 1);
 
 
-	sprintf(fname, "quotients_q%d.txt", SD->order);
+	snprintf(fname, sizeof(fname), "quotients_q%d.txt", SD->order);
 	{
 		ofstream f(fname);
 
@@ -1264,7 +1262,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph::isomorph &Iso,
 
 
 		char str[1000];
-		sprintf(str, "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
+		snprintf(str, sizeof(str), "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
 				NT.i_power_j(SD->q, k), h, u, orbit_length);
 
 		string fname;

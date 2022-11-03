@@ -97,18 +97,6 @@ void substructure_classification::init(isomorph *Iso,
 
 	nb_starter = 0;
 
-#if 0
-	if (f_use_database_for_starter) {
-		sprintf(fname_data_file, "%s_%d.data", prefix, level - 1);
-	}
-	else {
-		sprintf(fname_data_file, "%s_%d.data", prefix, level);
-	}
-	if (f_v) {
-		cout << "fname_data_file=" << fname_data_file << endl;
-	}
-	sprintf(fname_level_file, "%s_lvl_%d", prefix, level);
-#endif
 
 
 	if (f_v) {
@@ -634,43 +622,36 @@ void substructure_classification::init_DB_level(layer2_discreta::database &D,
 		cout << "substructure_classification::init_DB_level Iso->prefix=" << Iso->prefix << endl;
 	}
 	fname_db_level.assign(Iso->prefix);
-	sprintf(str, "starter_lvl_%d.db", level);
+	snprintf(str, sizeof(str), "starter_lvl_%d.db", level);
 	fname_db_level.append(str);
 
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level fname_db_level=" << fname_db_level << endl;
 	}
 
-	//sprintf(fname_db_level, "%sstarter_lvl_%d.db", prefix, level);
-
 	fname_db_level_idx1.assign(Iso->prefix);
-	sprintf(str, "starter_lvl_%d_a.idx", level);
+	snprintf(str, sizeof(str), "starter_lvl_%d_a.idx", level);
 	fname_db_level_idx1.append(str);
 
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level fname_db_level_idx1=" << fname_db_level_idx1 << endl;
 	}
 
-	//sprintf(fname_db_level_idx1, "%sstarter_lvl_%d_a.idx", prefix, level);
-
 	fname_db_level_idx2.assign(Iso->prefix);
-	sprintf(str, "starter_lvl_%d_b.idx", level);
+	snprintf(str, sizeof(str), "starter_lvl_%d_b.idx", level);
 	fname_db_level_idx2.append(str);
 
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level fname_db_level_idx2=" << fname_db_level_idx2 << endl;
 	}
-	//sprintf(fname_db_level_idx2, "%sstarter_lvl_%d_b.idx", prefix, level);
 
 	fname_db_level_ge.assign(Iso->prefix);
-	sprintf(str, "starter_lvl_%d_ge.bin", level);
+	snprintf(str, sizeof(str), "starter_lvl_%d_ge.bin", level);
 	fname_db_level_ge.append(str);
 
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level fname_db_level_ge=" << fname_db_level_ge << endl;
 	}
-
-	//sprintf(fname_db_level_ge, "%sstarter_lvl_%d_ge.bin", prefix, level);
 
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level before D.init" << endl;

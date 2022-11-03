@@ -97,6 +97,10 @@ class activity_description {
 	int f_translation_plane_activity;
 	spreads::translation_plane_activity_description *Translation_plane_activity_description;
 
+	int f_action_on_forms_activity;
+	apps_algebra::action_on_forms_activity_description *Action_on_forms_activity_description;
+
+
 public:
 	activity_description();
 	~activity_description();
@@ -128,6 +132,7 @@ public:
 	void do_spread_classify_activity(int verbose_level);
 	void do_spread_activity(int verbose_level);
 	void do_translation_plane_activity(int verbose_level);
+	void do_action_on_forms_activity(int verbose_level);
 
 };
 
@@ -145,9 +150,6 @@ class interface_algebra {
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
-
-	int f_equivalence_class_of_fractions;
-	int equivalence_class_of_fractions_N;
 
 	int f_character_table_symmetric_group;
 	int character_table_symmetric_group_n;
@@ -183,7 +185,6 @@ class interface_algebra {
 	int all_rational_normal_forms_d;
 
 	int f_eigenstuff;
-	//int f_eigenstuff_from_file;
 	std::string eigenstuff_finite_field_label;
 	int eigenstuff_n;
 	std::string eigenstuff_coeffs;
@@ -1015,6 +1016,9 @@ public:
 	int f_vector_ge;
 	data_structures_groups::vector_ge_description *Vector_ge_description;
 
+	int f_action_on_forms;
+	apps_algebra::action_on_forms_description *Action_on_forms_descr;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1062,6 +1066,7 @@ public:
 	void load_finite_field(std::string &input_q,
 			field_theory::finite_field *&F, int verbose_level);
 	void definition_of_vector_ge(int verbose_level);
+	void definition_of_action_on_forms(int verbose_level);
 
 };
 

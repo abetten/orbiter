@@ -310,7 +310,6 @@ void isomorph_arguments::init(
 	isomorph_arguments::gen = gen;
 	isomorph_arguments::target_size = target_size;
 	isomorph_arguments::Control = Control;
-	//sprintf(prefix_with_directory, "%s%s", Control->path, Control->problem_label);
 	//isomorph_arguments::prefix_with_directory = prefix_with_directory;
 	isomorph_arguments::ECA = ECA;
 	isomorph_arguments::callback_report = callback_report;
@@ -372,7 +371,7 @@ void isomorph_arguments::execute(int verbose_level)
 		
 		fname.assign(ECA->solution_prefix);
 		fname.append(ECA->base_fname);
-		sprintf(str, "_depth_%d_solutions.txt", ECA->starter_size);
+		snprintf(str, sizeof(str), "_depth_%d_solutions.txt", ECA->starter_size);
 
 
 		if (f_v) {
@@ -397,7 +396,7 @@ void isomorph_arguments::execute(int verbose_level)
 		
 		fname1.assign(ECA->solution_prefix);
 		fname1.append(ECA->base_fname);
-		sprintf(str, "_solutions_%d_0_1.txt", ECA->starter_size);
+		snprintf(str, sizeof(str), "_solutions_%d_0_1.txt", ECA->starter_size);
 		fname1.append(str);
 
 
@@ -439,7 +438,7 @@ void isomorph_arguments::execute(int verbose_level)
 			c = list_of_cases[i];
 
 			char str[1000];
-			sprintf(str, "_solutions_%d.txt", c);
+			snprintf(str, sizeof(str), "_solutions_%d.txt", c);
 
 			fname[i].assign(ECA->solution_prefix);
 			fname[i].append(ECA->base_fname);
@@ -474,7 +473,7 @@ void isomorph_arguments::execute(int verbose_level)
 
 
 			char str[1000];
-			sprintf(str, "_solutions_%d_%d_%d.txt", ECA->starter_size, i, read_solutions_split_m);
+			snprintf(str, sizeof(str), "_solutions_%d_%d_%d.txt", ECA->starter_size, i, read_solutions_split_m);
 
 			fname[i].assign(ECA->solution_prefix);
 			fname[i].append(ECA->base_fname);
@@ -525,7 +524,7 @@ void isomorph_arguments::execute(int verbose_level)
 
 
 			char str[1000];
-			sprintf(str, "_solutions_%d_%d_%d_stats.txt", ECA->starter_size, i, read_solutions_split_m);
+			snprintf(str, sizeof(str), "_solutions_%d_%d_%d_stats.txt", ECA->starter_size, i, read_solutions_split_m);
 
 			fname[i].assign(ECA->solution_prefix);
 			fname[i].append(ECA->base_fname);

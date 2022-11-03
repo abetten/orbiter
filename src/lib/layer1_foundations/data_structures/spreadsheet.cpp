@@ -18,23 +18,18 @@ namespace data_structures {
 
 spreadsheet::spreadsheet()
 {
-	null();
-}
-
-spreadsheet::~spreadsheet()
-{
-	freeself();
-}
-
-void spreadsheet::null()
-{
 	tokens = NULL;
+	nb_tokens = 0;
+
 	line_start = NULL;
 	line_size = NULL;
+	nb_lines = 0;
+
+	nb_rows = nb_cols = 0;
 	Table = NULL;
 }
 
-void spreadsheet::freeself()
+spreadsheet::~spreadsheet()
 {
 	int i;
 	
@@ -53,7 +48,6 @@ void spreadsheet::freeself()
 	if (Table) {
 		FREE_int(Table);
 		}
-	null();
 }
 
 void spreadsheet::init_set_of_sets(set_of_sets *S, int f_make_heading)
@@ -190,7 +184,7 @@ void spreadsheet::set_entry_lint(int row_idx,
 	int l, t;
 	char str[1000];
 
-	sprintf(str, "%ld", val);
+	snprintf(str, sizeof(str), "%ld", val);
 
 	t = Table[row_idx * nb_cols + col_idx];
 	if (tokens[t]) {
@@ -205,7 +199,7 @@ void spreadsheet::set_entry_lint(int row_idx,
 
 
 void spreadsheet::fill_column_with_text(int col_idx,
-		const char **text, const char *heading)
+		std::string *text, const char *heading)
 {
 	int i, l, t;
 	
@@ -222,9 +216,9 @@ void spreadsheet::fill_column_with_text(int col_idx,
 			strcpy(tokens[t], heading);
 			}
 		else {
-			l = strlen(text[i - 1]);
+			l = text[i - 1].length();
 			tokens[t] = NEW_char(l + 1);
-			strcpy(tokens[t], text[i - 1]);
+			strcpy(tokens[t], text[i - 1].c_str());
 			}
 		}
 }
@@ -268,19 +262,19 @@ void spreadsheet::fill_column_with_lint(int col_idx,
 			//cout << "fill_column_with_int before FREE_char i=" << i
 			//<< " col_idx=" << col_idx << " t=" << t << endl;
 			FREE_char(tokens[t]);
-			}
+		}
 		if (i == 0) {
 			l = strlen(heading);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], heading);
-			}
+		}
 		else {
-			sprintf(str, "%ld", data[i - 1]);
+			snprintf(str, sizeof(str), "%ld", data[i - 1]);
 			l = strlen(str);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], str);
-			}
 		}
+	}
 }
 
 void spreadsheet::fill_column_with_row_index(
@@ -295,19 +289,19 @@ void spreadsheet::fill_column_with_row_index(
 			//cout << "fill_column_with_row_index before FREE_char i="
 			//<< i << " col_idx=" << col_idx << " t=" << t << endl;
 			FREE_char(tokens[t]);
-			}
+		}
 		if (i == 0) {
 			l = strlen(heading);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], heading);
-			}
+		}
 		else {
 			snprintf(str, 1000, "%d", i - 1);
 			l = strlen(str);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], str);
-			}
 		}
+	}
 }
 
 void spreadsheet::add_token(const char *label)
@@ -318,18 +312,18 @@ void spreadsheet::add_token(const char *label)
 	tokens2 = NEW_pchar(nb_tokens + 1);
 	for (i = 0; i < nb_tokens; i++) {
 		tokens2[i] = tokens[i];
-		}
+	}
 	len = strlen(label);
 	tokens2[nb_tokens] = NEW_char(len + 1);
 	for (i = 0, j = 0; i < len; i++) {
 		if ((int)label[i] < 0) {
 			cout << "spreadsheet::add_token negative character "
 					<< (int) label[i] << endl;
-			}
+		}
 		else {
 			tokens2[nb_tokens][j++] = label[i];
-			}
 		}
+	}
 	tokens2[nb_tokens][j++] = 0;
 	//strcpy(tokens2[nb_tokens], label);
 	FREE_pchar(tokens);

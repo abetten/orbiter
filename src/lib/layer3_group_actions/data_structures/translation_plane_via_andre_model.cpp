@@ -497,12 +497,6 @@ void translation_plane_via_andre_model::classify_arcs(
 
 	arcs = NEW_OBJECT(poset_classification::poset_classification);
 
-	//gen->read_arguments(argc, argv, 0);
-
-	//arcs->depth = depth;
-	
-	//sprintf(fname_base, "%sarcs", prefix);
-	
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::"
 				"classify_arcs "
@@ -570,25 +564,6 @@ void translation_plane_via_andre_model::classify_arcs(
 	arcs->print_orbit_numbers(Control->depth);
 
 
-#if 0
-	char prefix_iso[1000];
-	char cmd[1000];
-
-	sprintf(prefix_iso, "ISO/");
-	sprintf(cmd, "mkdir %s", prefix_iso);
-	system(cmd);
-
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::classify_arcs "
-				"before isomorph_build_db" << endl;
-	}
-
-	isomorph_build_db(An1, OnAndre, arcs, 
-		depth, 
-		arcs->fname_base, prefix_iso, 
-		depth, verbose_level);
-
-#endif
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_arcs done" << endl;
@@ -681,25 +656,6 @@ void translation_plane_via_andre_model::classify_subplanes(
 	arcs->print_orbit_numbers(depth);
 
 
-#if 0
-	char prefix_iso[1000];
-	char cmd[1000];
-
-	sprintf(prefix_iso, "ISO/");
-	sprintf(cmd, "mkdir %s", prefix_iso);
-	system(cmd);
-
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_arcs before isomorph_build_db" << endl;
-		}
-
-	isomorph_build_db(An1, OnAndre, arcs, 
-		depth, 
-		arcs->fname_base, prefix_iso, 
-		depth, verbose_level);
-
-#endif
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes done" << endl;
@@ -1249,7 +1205,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 		char prefix[1000];
 		int nb_subplanes;
 
-		sprintf(prefix, "Fano_TP_%s_", Spread->label_txt.c_str());
+		snprintf(prefix, sizeof(prefix), "Fano_TP_%s_", Spread->label_txt.c_str());
 
 		TP->classify_subplanes(prefix, verbose_level);
 
@@ -1292,7 +1248,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 		}
 
 
-		sprintf(prefix, "Arcs_TP_%s_", Spread->label_txt.c_str());
+		snprintf(prefix, sizeof(prefix), "Arcs_TP_%s_", Spread->label_txt.c_str());
 
 		TP->classify_arcs(prefix, target_depth, verbose_level);
 

@@ -30,14 +30,15 @@ void projective_space_global::map(
 		cout << "projective_space_global::map" << endl;
 	}
 	if (f_v) {
-		cout << "projective_space_global::map PA->P->n = " << PA->P->n << endl;
+		cout << "projective_space_global::map n = " << PA->P->n << endl;
 	}
 
 
 
 	int idx;
 	ring_theory::homogeneous_polynomial_domain *Ring;
-	Ring = user_interface::The_Orbiter_top_level_session->get_object_of_type_ring(ring_label);
+
+	Ring = Get_object_of_type_ring(ring_label);
 
 	idx = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(formula_label);
 
@@ -530,7 +531,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 			string label;
 			char str[1000];
 
-			sprintf(str, "alpha=%d beta=%d", alpha, beta);
+			snprintf(str, sizeof(str), "alpha=%d beta=%d", alpha, beta);
 
 			label.assign(str);
 
@@ -1097,7 +1098,7 @@ void projective_space_global::classify_quartic_curves(
 
 	fname.assign(fname_mask);
 	String.chop_off_extension(fname);
-	sprintf(str, "_subset%d_types.csv", size);
+	snprintf(str, sizeof(str), "_subset%d_types.csv", size);
 	fname.append(str);
 
 
@@ -1256,7 +1257,7 @@ void projective_space_global::classify_quartic_curves(
 
 		fname.assign(fname_mask);
 		String.chop_off_extension(fname);
-		sprintf(str, "_subset%d_types_classified.csv", size);
+		snprintf(str, sizeof(str), "_subset%d_types_classified.csv", size);
 		fname.append(str);
 
 		Fio.int_matrix_write_csv(fname, data, T_O_nb_types, Stab_orbits->Schreier->nb_orbits);
@@ -1278,7 +1279,7 @@ void projective_space_global::classify_quartic_curves(
 
 		fname.assign(fname_mask);
 		String.chop_off_extension(fname);
-		sprintf(str, "_subset%d_cf_input.csv", size);
+		snprintf(str, sizeof(str), "_subset%d_cf_input.csv", size);
 		fname.append(str);
 
 #if 0
@@ -1299,7 +1300,7 @@ void projective_space_global::classify_quartic_curves(
 
 		fname.assign(fname_mask);
 		String.chop_off_extension(fname);
-		sprintf(str, "_subset%d_cf_output.csv", size);
+		snprintf(str, sizeof(str), "_subset%d_cf_output.csv", size);
 		fname.append(str);
 
 #if 0
@@ -1316,7 +1317,7 @@ void projective_space_global::classify_quartic_curves(
 
 		fname.assign(fname_mask);
 		String.chop_off_extension(fname);
-		sprintf(str, "_subset%d_cf_transporter.tex", size);
+		snprintf(str, sizeof(str), "_subset%d_cf_transporter.tex", size);
 		fname.append(str);
 
 

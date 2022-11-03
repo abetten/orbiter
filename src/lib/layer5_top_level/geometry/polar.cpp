@@ -166,15 +166,6 @@ void polar::init(
 	tmp_M = NEW_int(n * n);
 	base_cols = NEW_int(n);
 
-	//Gen->read_arguments(argc, argv, 0);
-
-	//Gen->prefix[0] = 0;
-	//sprintf(Gen->fname_base, "polar_%d_%d_%d_%d", epsilon, n, k, q);
-	
-	
-	//Gen->depth = depth;
-	//Gen->Control->verbose_level = verbose_level - 2;
-	
 }
 
 void polar::init2(int depth, int verbose_level)
@@ -235,7 +226,7 @@ void polar::init2(int depth, int verbose_level)
 
 	char label[1000];
 
-	sprintf(label, "polar_%d_%d_%d_%d", epsilon, n, k, q); // ToDo
+	snprintf(label, sizeof(label), "polar_%d_%d_%d_%d", epsilon, n, k, q); // ToDo
 
 
 
@@ -645,7 +636,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	{
 	char fname[1000];
 
-	sprintf(fname, "dual_polar_graph_O_%d_%d_%d.inc", epsilon, n, q);
+	snprintf(fname, sizeof(fname), "dual_polar_graph_O_%d_%d_%d.inc", epsilon, n, q);
 	{
 	ofstream f(fname);
 	f << index_int << " " << nb_e << " " << 2 * nb_e << endl;

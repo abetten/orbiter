@@ -141,9 +141,9 @@ void hadamard_classify::init(int n, int f_draw,
 
 	string label, label_tex;
 
-	sprintf(str, "Hadamard_graph_%d", n);
+	snprintf(str, sizeof(str), "Hadamard_graph_%d", n);
 	label.assign(str);;
-	sprintf(str, "Hadamard\\_graph\\_%d", n);
+	snprintf(str, sizeof(str), "Hadamard\\_graph\\_%d", n);
 	label_tex.assign(str);
 
 
@@ -192,7 +192,7 @@ void hadamard_classify::init(int n, int f_draw,
 
 	string fname_graph;
 
-	sprintf(str, "Hadamard_graph_%d.magma", n);
+	snprintf(str, sizeof(str), "Hadamard_graph_%d.magma", n);
 	fname_graph.assign(label);
 	fname_graph.append(".magma");
 
@@ -268,7 +268,7 @@ void hadamard_classify::init(int n, int f_draw,
 		char str[1000];
 		string fname_base;
 
-		sprintf(str, "Hadamard_graph_%d", n);
+		snprintf(str, sizeof(str), "Hadamard_graph_%d", n);
 		fname_base.assign(str);
 
 
@@ -305,7 +305,7 @@ void hadamard_classify::init(int n, int f_draw,
 
 
 	fname_group.assign("Hadamard_group_");
-	sprintf(str, "%d", n);
+	snprintf(str, sizeof(str), "%d", n);
 	fname_group.append(str);
 	fname_group.append(".magma");
 
@@ -313,7 +313,7 @@ void hadamard_classify::init(int n, int f_draw,
 			fname_group, A, 1 /* verbose_level */);
 
 	char prefix[1000];
-	sprintf(prefix, "./had_%d", n);
+	snprintf(prefix, sizeof(prefix), "./had_%d", n);
 
 	if (f_v) {
 		cout << "Starting the clique finder, "

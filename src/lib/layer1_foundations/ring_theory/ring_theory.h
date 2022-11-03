@@ -474,7 +474,7 @@ public:
 	int log10();
 	int output_width();
 	void print_width(std::ostream& ost, int width);
-	void print_to_string(char *str);
+	void print_to_string(std::string &s);
 	void normalize();
 	void negate();
 	int is_zero();

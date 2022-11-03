@@ -793,9 +793,9 @@ void interface_toolkit::worker(int verbose_level)
 		fname.assign(save_matrix_csv_label);
 		fname.append("_matrix.csv");
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(save_matrix_csv_label,
-				v, m, n);
+		Get_matrix(save_matrix_csv_label, v, m, n);
 		Fio.int_matrix_write_csv(fname, v, m, n);
+
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 	else if (f_csv_file_select_rows) {
@@ -940,7 +940,7 @@ void interface_toolkit::worker(int verbose_level)
 
 			fname.assign(split_by_values_fname_in);
 			ST.chop_off_extension(fname);
-			sprintf(str, "_value%d.csv", a);
+			snprintf(str, sizeof(str), "_value%d.csv", a);
 			fname.append(str);
 			for (h = 0; h < len; h++) {
 				if (M[h] == a) {
@@ -1001,7 +1001,7 @@ void interface_toolkit::worker(int verbose_level)
 				string variable;
 
 				arg.assign(loop_argv[j]);
-				sprintf(str, "%d", h);
+				snprintf(str, sizeof(str), "%d", h);
 				value_h.assign(str);
 				variable.assign("%");
 				variable.append(loop_variable);

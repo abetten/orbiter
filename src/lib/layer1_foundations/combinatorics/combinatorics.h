@@ -43,13 +43,14 @@ public:
 	ring_theory::homogeneous_polynomial_domain *Poly;
 		// Poly[i] = polynomial of degree i in n + 1 variables.
 		// i = 1,..,n
-	int **A_poly;
-	int **B_poly;
+	int **A_poly; // [1..n][Poly[i].get_nb_monomials()]
+	int **B_poly; // [1..n][Poly[i].get_nb_monomials()]
 	int *Kernel;
 	int dim_kernel;
 
 
 	long int *affine_points; // [Q]
+		// affine_points[i] = PG_rank of affine point[i]
 
 
 
@@ -60,7 +61,7 @@ public:
 	int *f2; // [Q]
 	int *F; // [Q]
 	int *T; // [Q]
-	int *W; // [Q * Q]
+	int *W; // [Q * Q] = Walsh matrix
 	int *f_proj;
 	int *f_proj2;
 
@@ -854,6 +855,60 @@ class pentomino_puzzle {
 
 };
 
+
+
+// #############################################################################
+// polynomial_function_domain.cpp
+// #############################################################################
+
+//! polynomial expressions for functions from a finite field to itself
+
+class polynomial_function_domain {
+
+public:
+	field_theory::finite_field *Fq; // the field Fq
+	int q;
+
+	int n;
+	int max_degree; // n * (q - 1)
+
+	int Q; // q^n
+
+	ring_theory::homogeneous_polynomial_domain *Poly;
+		// Poly[i] = polynomial of degree i in n + 1 variables.
+		// i = 1,..,max_degree
+	int **A_poly; // [1..max_degree][Poly[i].get_nb_monomials()]
+	int **B_poly; // [1..max_degree][Poly[i].get_nb_monomials()]
+	int **C_poly; // [1..max_degree][Poly[i].get_nb_monomials()]
+	int *Kernel;
+	int dim_kernel;
+
+
+	long int *affine_points; // [Q]
+		// affine_points[i] = PG_rank of affine point[i]
+
+
+
+	int *v; // [n]
+	int *v1; // [n + 1]
+	int *w; // [n]
+	int *f; // [Q]
+	int *f2; // [Q]
+
+
+	polynomial_function_domain();
+	~polynomial_function_domain();
+	void init(field_theory::finite_field *Fq, int n, int verbose_level);
+	void setup_polynomial_rings(int verbose_level);
+	void compute_polynomial_representation(int *func, int *coeff, int verbose_level);
+	void evaluate_projectively(int *coeff, int *f);
+	void evaluate(int *coeff, int *f);
+	void raise(int *in, int *out);
+	void multiply_i_times_j(
+			int i, int j,
+			int *A_eqn, int *B_eqn, int *C_eqn,
+		int verbose_level);
+};
 
 
 

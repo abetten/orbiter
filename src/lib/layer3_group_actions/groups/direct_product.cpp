@@ -20,41 +20,60 @@ namespace groups {
 
 direct_product::direct_product()
 {
-	null();
-}
-
-direct_product::~direct_product()
-{
-	freeself();
-}
-
-void direct_product::null()
-{
 	M1 = NULL;
 	M2 = NULL;
 	F1 = NULL;
 	F2 = NULL;
 	q1 = 0;
 	q2 = 0;
+
+	//std::string label;
+	//std::string label_tex;
+
+	degree_of_matrix_group1 = 0;
+	dimension_of_matrix_group1 = 0;
+	degree_of_matrix_group2 = 0;
+	dimension_of_matrix_group2 = 0;
+	degree_of_product_action = 0;
+	degree_overall = 0;
+	low_level_point_size = 0;
+	make_element_size = 0;
+	elt_size_int = 0;
+
 	perm_offset_i = NULL;
 	tmp_Elt1 = NULL;
+
+	bits_per_digit1 = 0;
+	bits_per_digit2 = 0;
+
+	bits_per_elt = 0;
+	char_per_elt = 0;
+
+
 	elt1 = NULL;
-	Elts = NULL;
+	base_len_in_component1 = 0;
 	base_for_component1 = NULL;
 	tl_for_component1 = NULL;
+
+	base_len_in_component2 = 0;
 	base_for_component2 = NULL;
 	tl_for_component2 = NULL;
+
+	base_length = 0;
 	the_base = NULL;
 	the_transversal_length = NULL;
+
+	Elts = NULL;
 }
 
-void direct_product::freeself()
+
+direct_product::~direct_product()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "direct_product::freeself" << endl;
+		cout << "direct_product::~direct_product" << endl;
 		}
 	if (perm_offset_i) {
 		FREE_int(perm_offset_i);
@@ -86,9 +105,8 @@ void direct_product::freeself()
 	if (the_transversal_length) {
 		FREE_int(the_transversal_length);
 	}
-	null();
 	if (f_v) {
-		cout << "direct_product::freeself finished" << endl;
+		cout << "direct_product::~direct_product finished" << endl;
 		}
 }
 
@@ -114,8 +132,6 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	label_tex.assign(M1->label_tex);
 	label_tex.append(" \\times ");
 	label_tex.append(M2->label_tex);
-	//sprintf(label, "%s_cross_%s", M1->label, M2->label);
-	//sprintf(label_tex, "%s \\times %s", M1->label_tex, M2->label_tex);
 
 	degree_of_matrix_group1 = M1->degree;
 	dimension_of_matrix_group1 = M1->n;

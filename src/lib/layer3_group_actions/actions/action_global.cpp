@@ -1283,6 +1283,59 @@ void action_global::compute_decomposition_based_on_orbit_length(
 
 
 
+void action_global::orbits_on_equations(
+		action *A,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+	int *The_equations, int nb_equations, groups::strong_generators *gens,
+	actions::action *&A_on_equations, groups::schreier *&Orb,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::orbits_on_equations" << endl;
+	}
+
+	A_on_equations = NEW_OBJECT(action);
+
+	if (f_v) {
+		cout << "action_global::orbits_on_equations "
+				"creating the induced action on the equations:" << endl;
+	}
+	A_on_equations->induced_action_on_homogeneous_polynomials_given_by_equations(
+		A,
+		HPD,
+		The_equations, nb_equations,
+		FALSE /* f_induce_action */, NULL /* sims *old_G */,
+		verbose_level);
+	if (f_v) {
+		cout << "action_global::orbits_on_equations "
+				"The induced action on the equations has been created, "
+				"degree = " << A_on_equations->degree << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::orbits_on_equations "
+				"computing orbits on the equations:" << endl;
+	}
+	Orb = gens->orbits_on_points_schreier(A_on_equations,
+			verbose_level - 2);
+
+	if (FALSE) {
+		cout << "action_global::orbits_on_equations "
+				"We found " << Orb->nb_orbits
+				<< " orbits on the equations:" << endl;
+		Orb->print_and_list_orbits_tex(cout);
+	}
+
+	if (f_v) {
+		cout << "action_global::orbits_on_equations done" << endl;
+	}
+}
+
+
+
+
 
 void callback_choose_random_generator_orthogonal(int iteration,
 	int *Elt, void *data, int verbose_level)

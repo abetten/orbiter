@@ -67,10 +67,13 @@ public:
 	std::string Walsh_Hadamard_transform_fname_csv_in;
 	int Walsh_Hadamard_transform_n;
 
-	int f_algebraic_normal_form;
-	std::string algebraic_normal_form_fname_csv_in;
-	int algebraic_normal_form_n;
+	int f_algebraic_normal_form_of_boolean_function;
+	std::string algebraic_normal_form_of_boolean_function_fname_csv_in;
+	int algebraic_normal_form_of_boolean_function_n;
 
+	int f_algebraic_normal_form;
+	int algebraic_normal_form_n;
+	std::string algebraic_normal_form_input;
 
 	int f_apply_trace_function;
 	std::string apply_trace_function_fname_csv_in;

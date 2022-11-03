@@ -20,32 +20,23 @@ namespace data_structures {
 
 int_vector::int_vector()
 {
-	null();
-}
-
-int_vector::~int_vector()
-{
-	freeself();
-}
-
-void int_vector::null()
-{
 	M = NULL;
 	m = 0;
 	alloc_length = 0;
 }
 
-void int_vector::freeself()
+int_vector::~int_vector()
 {
 	if (M) {
 		FREE_lint(M);
-		}
-	null();
+	}
 }
 
 void int_vector::allocate(int len)
 {
-	freeself();
+	if (M) {
+		FREE_lint(M);
+	}
 	M = NEW_lint(len);
 	m = 0;
 	alloc_length = len;
@@ -53,7 +44,9 @@ void int_vector::allocate(int len)
 
 void int_vector::allocate_and_init(int len, long int *V)
 {
-	freeself();
+	if (M) {
+		FREE_lint(M);
+	}
 	M = NEW_lint(len);
 	m = len;
 	alloc_length = len;
@@ -64,7 +57,9 @@ void int_vector::allocate_and_init_int(int len, int *V)
 {
 	int i;
 
-	freeself();
+	if (M) {
+		FREE_lint(M);
+	}
 	M = NEW_lint(len);
 	m = len;
 	alloc_length = len;

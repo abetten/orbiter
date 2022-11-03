@@ -193,9 +193,9 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 
 	char str[1000];
 
-	sprintf(str, "GF_%d", q);
+	snprintf(str, sizeof(str), "GF_%d", q);
 	label.assign(str);
-	sprintf(str, "{\\mathbb F}_{%d}", q);
+	snprintf(str, sizeof(str), "{\\mathbb F}_{%d}", q);
 	label_tex.assign(str);
 
 
@@ -352,12 +352,12 @@ void finite_field::init_override_polynomial(int q,
 
 	char str[1000];
 
-	sprintf(str, "GF_%d", q);
+	snprintf(str, sizeof(str), "GF_%d", q);
 	label.assign(str);
 	label.append("_poly");
 	label.append(override_poly);
 
-	sprintf(str, "{\\mathbb F}_{%d,", q);
+	snprintf(str, sizeof(str), "{\\mathbb F}_{%d,", q);
 	label_tex.assign(str);
 	label_tex.append(override_poly);
 	label_tex.append("}");

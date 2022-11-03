@@ -456,7 +456,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			char str[1000];
 
 			fname_csv.assign(problem_label_with_path);
-			sprintf(str, "_levels_%d.csv", actual_size);
+			snprintf(str, sizeof(str), "_levels_%d.csv", actual_size);
 			fname_csv.append(str);
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
@@ -478,7 +478,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			char str[1000];
 
 			fname_csv.assign(problem_label_with_path);
-			sprintf(str, "_orbits_at_level_%d.csv", actual_size);
+			snprintf(str, sizeof(str), "_orbits_at_level_%d.csv", actual_size);
 			fname_csv.append(str);
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
@@ -628,7 +628,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		char str[1000];
 
 		fname.assign(problem_label);
-		sprintf(str, "_KM_%d_%d.csv",
+		snprintf(str, sizeof(str), "_KM_%d_%d.csv",
 				Control->Kramer_Mesner_t, Control->Kramer_Mesner_k);
 		fname.append(str);
 		Fio.lint_matrix_write_csv(fname, Mtk, nb_r, nb_c);

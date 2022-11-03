@@ -54,8 +54,8 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	char str_q[1000];
 	char str_nb[1000];
 
-	sprintf(str_q, "%d", q);
-	sprintf(str_nb, "%d", nb);
+	snprintf(str_q, sizeof(str_q), "%d", q);
+	snprintf(str_nb, sizeof(str_nb), "%d", nb);
 
 	prefix.assign("surface_q");
 	prefix.append(str_q);
@@ -522,7 +522,7 @@ void surface_study::study_group(int verbose_level)
 		char str[1000];
 
 		fname_out.assign(prefix);
-		sprintf(str, "_table_%d_%d.csv", q, nb);
+		snprintf(str, sizeof(str), "_table_%d_%d.csv", q, nb);
 		fname_out.append(str);
 
 		Fio.int_matrix_write_csv(fname_out, Table, n, n);
@@ -866,7 +866,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	Triangle->init_data(triangle, nb_pts_triangle,
 			0 /* verbose_level */);
 
-	sprintf(fname_stab, "PGL_4_%d_Grassmann_4_2_%d_stab_gens_3_2.txt", q, q);
+	snprintf(fname_stab, sizeof(fname_stab), "PGL_4_%d_Grassmann_4_2_%d_stab_gens_3_2.txt", q, q);
 	Triangle->init_stab_from_file(fname_stab, 0 /* verbose_level */);
 	Triangle->Strong_gens->test_if_set_is_invariant_under_given_action(
 			A, triangle, nb_pts_triangle,
@@ -1248,7 +1248,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 				pts_on_three_lines, nb_pts_on_three_lines,
 				0 /* verbose_level */);
 
-		sprintf(fname_stab, "PGL_4_%d_stab_gens_4_1.txt", q);
+		snprintf(fname_stab, sizeof(fname_stab), "PGL_4_%d_stab_gens_4_1.txt", q);
 		cout << "Reading group from file " << fname_stab << endl;
 		Three_lines->init_stab_from_file(fname_stab, verbose_level);
 		Three_lines->Strong_gens->test_if_set_is_invariant_under_given_action(
@@ -1634,7 +1634,7 @@ static void matrix_entry_print(long int *p,
 			strcpy(str, ".");
 			}
 		else {
-			sprintf(str, "%d", val);
+			snprintf(str, sizeof(str), "%d", val);
 			}
 		}
 	output.assign(str);

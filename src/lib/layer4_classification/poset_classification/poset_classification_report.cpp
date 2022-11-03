@@ -302,10 +302,12 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 
 			get_set_by_level(level, i, rep);
 
-			orbiter_kernel_system::Orbiter->Lint_vec->print_to_str_naked(str, rep, level);
+			string s;
+
+			orbiter_kernel_system::Orbiter->Lint_vec->print_to_str_naked(s, rep, level);
 
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary set: '" << str << "'" << endl;
+				cout << "poset_classification::report_orbits_summary set: '" << s << "'" << endl;
 			}
 
 			if (f_vv) {
@@ -496,7 +498,7 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost, int verbose
 		exit(1);
 	}
 
-	sprintf(str, " -xin %d -yin %d -xout %d -yout %d -radius %d",
+	snprintf(str, sizeof(str), " -xin %d -yin %d -xout %d -yout %d -radius %d",
 			Control->draw_options->xin,
 			Control->draw_options->yin,
 			Control->draw_options->xout,
@@ -505,16 +507,16 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost, int verbose
 	cmd.append(str);
 
 	if (Control->draw_options->f_y_stretch) {
-		sprintf(str, " -y_stretch %lf ", Control->draw_options->y_stretch);
+		snprintf(str, sizeof(str), " -y_stretch %lf ", Control->draw_options->y_stretch);
 		cmd.append(str);
 	}
 
 	if (Control->draw_options->f_line_width) {
-		sprintf(str, " -line_width %lf ", Control->draw_options->line_width);
+		snprintf(str, sizeof(str), " -line_width %lf ", Control->draw_options->line_width);
 		cmd.append(str);
 	}
 	if (Control->draw_options->f_spanning_tree) {
-		sprintf(str, " -spanning_tree ");
+		snprintf(str, sizeof(str), " -spanning_tree ");
 		cmd.append(str);
 	}
 
@@ -546,7 +548,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 	int nb_extensions;
 	poset_orbit_node *O;
 	ring_theory::longinteger_object stab_order, orbit_length;
-	char str[1000];
+	string s;
 	char str2[1000];
 	long int *rep = NULL;
 	data_structures_groups::schreier_vector *Schreier_vector;
@@ -603,7 +605,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 
 
 
-	stab_order.print_to_string(str);
+	stab_order.print_to_string(s);
 
 	//orbit_length.print_to_string(str);
 
@@ -619,7 +621,7 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 	ost << "$$" << endl;
 	L.lint_set_print_tex(ost, rep, level);
 	ost << "_{";
-	ost << str;
+	ost << s;
 #if 0
 	if (projectivity_group_gens) {
 		ost << "," << str2;

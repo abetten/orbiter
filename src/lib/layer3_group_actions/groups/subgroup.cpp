@@ -29,22 +29,6 @@ subgroup::subgroup()
 
 subgroup::~subgroup()
 {
-	freeself();
-}
-
-void subgroup::null()
-{
-	A = NULL;
-	Elements = NULL;
-	group_order = 0;
-	gens = NULL;
-	nb_gens = 0;
-	Sub = NULL;
-	SG = NULL;
-}
-
-void subgroup::freeself()
-{
 	if (Elements) {
 		FREE_int(Elements);
 		}
@@ -57,7 +41,6 @@ void subgroup::freeself()
 	if (SG) {
 		FREE_OBJECT(SG);
 		}
-	null();
 }
 
 void subgroup::init_from_sims(sims *S, sims *Sub,

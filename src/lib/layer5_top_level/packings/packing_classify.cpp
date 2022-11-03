@@ -618,7 +618,7 @@ void packing_classify::report_fixed_objects(int *Elt,
 
 		orbiter_kernel_system::latex_interface L;
 
-		sprintf(str, "Fixed Objects");
+		snprintf(str, sizeof(str), "Fixed Objects");
 		title.assign(str);
 		author.assign("");
 

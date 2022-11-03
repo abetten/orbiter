@@ -361,7 +361,7 @@ void isomorph_worker::read_solutions(int verbose_level)
 			fname.assign(Isomorph_arguments->solution_prefix);
 			fname.append(Isomorph_arguments->base_fname);
 			a = List_of_cases[i];
-			sprintf(str, "_%d_%d_sol.txt", Iso->level, a);
+			snprintf(str, sizeof(str), "_%d_%d_sol.txt", Iso->level, a);
 			fname.append(str);
 
 			fname_array[i] = fname;
@@ -376,7 +376,7 @@ void isomorph_worker::read_solutions(int verbose_level)
 		string fname;
 		fname.assign(Isomorph_arguments->solution_prefix);
 		fname.append(Isomorph_arguments->base_fname);
-		sprintf(str, "_%d_sol.txt", Iso->level);
+		snprintf(str, sizeof(str), "_%d_sol.txt", Iso->level);
 		fname.append(str);
 
 
@@ -393,7 +393,7 @@ void isomorph_worker::read_solutions(int verbose_level)
 
 			fname.assign(Isomorph_arguments->solution_prefix);
 			fname.append(Isomorph_arguments->base_fname);
-			sprintf(str, "_%d_sol.txt", i);
+			snprintf(str, sizeof(str), "_%d_sol.txt", i);
 			fname.append(str);
 
 			fname_array[i] = fname;

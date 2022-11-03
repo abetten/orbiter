@@ -77,7 +77,7 @@ void combinatorics_domain::partition_dual(
 	int s, i, j, aj;
 
 	if (f_v) {
-		cout << "partition_dual" << endl;
+		cout << "combinatorics_domain::partition_dual" << endl;
 		cout << "input: ";
 		Int_vec_print(cout, part, n);
 		cout << endl;
@@ -94,7 +94,7 @@ void combinatorics_domain::partition_dual(
 			s += aj;
 			dual_part[s - 1] = j - i;
 			if (f_vv) {
-				cout << "partition_dual i=" << i << " j=" << j
+				cout << "combinatorics_domain::partition_dual i=" << i << " j=" << j
 						<< " aj=" << aj << " s=" << s << endl;
 			}
 		}
@@ -105,12 +105,12 @@ void combinatorics_domain::partition_dual(
 		s += aj;
 		dual_part[s - 1] = j;
 		if (f_vv) {
-			cout << "partition_dual j=" << j << " aj=" << aj
+			cout << "combinatorics_domain::partition_dual j=" << j << " aj=" << aj
 					<< " s=" << s << endl;
 		}
 	}
 	if (f_v) {
-		cout << "partition_dual" << endl;
+		cout << "combinatorics_domain::partition_dual" << endl;
 		cout << "output: ";
 		Int_vec_print(cout, dual_part, n);
 		cout << endl;
@@ -2790,16 +2790,6 @@ void combinatorics_domain::do_tdo_print(std::string &fname, int verbose_level)
 	chop_off_extension_if_present(str, ext);
 #endif
 
-#if 0
-	sprintf(fname_out, "%sw.tdo", str);
-	if (f_w) {
-		g = new ofstream(fname_out);
-		}
-	if (f_texfile) {
-		texfile = new ofstream(texfile_name);
-		}
-#endif
-
 
 	geo_parameter GP;
 	tdo_scheme_synthetic G;
@@ -2858,7 +2848,6 @@ void combinatorics_domain::do_tdo_print(std::string &fname, int verbose_level)
 		//cout << "before convert_single_to_stack" << endl;
 		//GP.convert_single_to_stack();
 		//cout << "after convert_single_to_stack" << endl;
-		//sprintf(label, "%s.%d", str, i);
 		//GP.write(g, label);
 		if (f_vv) {
 			cout << "before init_tdo_scheme" << endl;
@@ -2890,7 +2879,7 @@ void combinatorics_domain::do_tdo_print(std::string &fname, int verbose_level)
 		if (f_Tex) {
 			char fname[1000];
 
-			sprintf(fname, "%s.tex", GP.label);
+			snprintf(fname, sizeof(fname), "%s.tex", GP.label);
 			ofstream f(fname);
 
 			GP.print_scheme_tex(f, G, ROW);
@@ -3232,7 +3221,7 @@ void combinatorics_domain::convert_stack_to_tdo(std::string &stack_fname, int ve
 				char str[1000];
 				string s;
 
-				sprintf(str, "%d", i);
+				snprintf(str, sizeof(str), "%d", i);
 				s.assign(str);
 				GP.write(g, s);
 			}

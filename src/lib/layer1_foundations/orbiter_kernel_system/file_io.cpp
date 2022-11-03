@@ -57,7 +57,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 	{
 		ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
-			sprintf(fname, fname_in_mask, h);
+			snprintf(fname, sizeof(fname), fname_in_mask, h);
 			if (file_size(fname) < 0) {
 				cout << "concatenate_files input file does not exist: " << fname << " skipping" << endl;
 				//missing_idx[nb_missing++] = h;
@@ -101,7 +101,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 	FREE_char(buf);
 	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
 	for (h = 0; h < (int) missing_idx.size(); h++) {
-		sprintf(fname, fname_in_mask, missing_idx[h]);
+		snprintf(fname, sizeof(fname), fname_in_mask, missing_idx[h]);
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
 
@@ -132,7 +132,7 @@ void file_io::concatenate_files_into(const char *fname_in_mask, int N,
 	{
 		//ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
-			sprintf(fname, fname_in_mask, h);
+			snprintf(fname, sizeof(fname), fname_in_mask, h);
 
 			fp_out << "# start of file " << fname << endl;
 
@@ -179,7 +179,7 @@ void file_io::concatenate_files_into(const char *fname_in_mask, int N,
 	FREE_char(buf);
 	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
 	for (h = 0; h < (int) missing_idx.size(); h++) {
-		sprintf(fname, fname_in_mask, missing_idx[h]);
+		snprintf(fname, sizeof(fname), fname_in_mask, missing_idx[h]);
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
 
@@ -293,7 +293,7 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 
 	char str[1000];
 	fname2.assign(prefix);
-	sprintf(str, "_lvl_%d_candidates.bin", level_of_candidates_file);
+	snprintf(str, sizeof(str), "_lvl_%d_candidates.bin", level_of_candidates_file);
 	fname2.append(str);
 
 	poset_classification_read_candidates_of_orbit(
@@ -356,7 +356,7 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 	}
 
 	fname.assign(prefix);
-	sprintf(str, "_lvl_%d", level_of_candidates_file);
+	snprintf(str, sizeof(str), "_lvl_%d", level_of_candidates_file);
 	fname.append(str);
 
 	if (file_size(fname) <= 0) {
@@ -3464,7 +3464,7 @@ void file_io::delete_file(const char *fname)
 {
 	char str[1000];
 
-	sprintf(str, "rm %s", fname);
+	snprintf(str, sizeof(str), "rm %s", fname);
 	system(str);
 }
 
@@ -3719,7 +3719,7 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 		for (c = 0; c < nb_cases; c++) {
 
 			//i = Cases[c];
-			sprintf(str, Descr->file_mask.c_str(), c);
+			snprintf(str, sizeof(str), Descr->file_mask.c_str(), c);
 			fname.assign(str);
 
 
@@ -3728,14 +3728,14 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 
 				for (j = 0; j < Descr->nb_lines; j++) {
 					if (Descr->f_line_numeric[j]) {
-						sprintf(str, Descr->lines[j].c_str(), c);
+						snprintf(str, sizeof(str), Descr->lines[j].c_str(), c);
 					}
 					else {
 						string s;
 
 						S.get_string(s, c, 0);
 
-						sprintf(str, Descr->lines[j].c_str(), s.c_str());
+						snprintf(str, sizeof(str), Descr->lines[j].c_str(), s.c_str());
 					}
 					fix_escape_characters(str);
 					fp << str << endl;
@@ -3746,7 +3746,7 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 
 			char log_entry[1000];
 
-			sprintf(log_entry, log_mask, c);
+			snprintf(log_entry, sizeof(log_entry), log_mask, c);
 			fp_log << log_entry << endl;
 			}
 		}
@@ -3849,7 +3849,7 @@ void file_io::create_files(create_file_description *Descr,
 
 	for (i = 0; i < Descr->N; i++) {
 
-		sprintf(str, Descr->file_mask.c_str(), i);
+		snprintf(str, sizeof(str), Descr->file_mask.c_str(), i);
 		fname.assign(str);
 
 		fp_makefile << "\tsbatch " << fname << endl;
@@ -3860,7 +3860,7 @@ void file_io::create_files(create_file_description *Descr,
 
 
 				cout << "mask='" << Descr->lines[j].c_str() << "'" << endl;
-				sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
+				snprintf(str, sizeof(str), Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 
 
 				fix_escape_characters(str);
@@ -3872,7 +3872,7 @@ void file_io::create_files(create_file_description *Descr,
 					for (r = 0; r < Descr->split_m; r++) {
 						for (j = 0; j < Descr->repeat_N; j++) {
 							if ((j % Descr->split_m) == r) {
-								sprintf(str, Descr->repeat_mask.c_str(), j);
+								snprintf(str, sizeof(str), Descr->repeat_mask.c_str(), j);
 								fix_escape_characters(str);
 								fp << str << endl;
 							}
@@ -3883,7 +3883,7 @@ void file_io::create_files(create_file_description *Descr,
 				else {
 					int c;
 
-					sprintf(str, Descr->repeat_mask.c_str(), Descr->repeat_N);
+					snprintf(str, sizeof(str), Descr->repeat_mask.c_str(), Descr->repeat_N);
 					fix_escape_characters(str);
 					fp << str << endl;
 					if (!Descr->f_command) {
@@ -3892,7 +3892,7 @@ void file_io::create_files(create_file_description *Descr,
 					}
 					for (j = 0; j < Descr->repeat_N; j++) {
 						c = Descr->repeat_start + j * Descr->repeat_increment;
-						sprintf(str, Descr->command.c_str(), c, c, c, c);
+						snprintf(str, sizeof(str), Descr->command.c_str(), c, c, c, c);
 						fix_escape_characters(str);
 						fp << str << endl;
 					}
@@ -3944,7 +3944,7 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 		fp_submit_script << "#!/bin/bash" << endl;
 		for (i = 0; i < Descr->N; i++) {
 
-			sprintf(str, Descr->file_mask.c_str(), i);
+			snprintf(str, sizeof(str), Descr->file_mask.c_str(), i);
 			fname.assign(str);
 
 			fp_makefile << "\tsbatch " << fname << endl;
@@ -3953,7 +3953,7 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 				ofstream fp(fname);
 
 				for (j = 0; j < Descr->nb_lines; j++) {
-					sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
+					snprintf(str, sizeof(str), Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 					fix_escape_characters(str);
 					fp << str << endl;
 				}
@@ -3963,11 +3963,11 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 					int t;
 					//int NT;
 
-					sprintf(str, Descr->tasks_line.c_str(), Descr->nb_tasks);
+					snprintf(str, sizeof(str), Descr->tasks_line.c_str(), Descr->nb_tasks);
 					fp << str << endl;
 					//NT = Descr->N * Descr->nb_tasks;
 					for (t = 0; t < Descr->nb_tasks; t++) {
-						sprintf(str, Descr->command.c_str(), i, t, i, t);
+						snprintf(str, sizeof(str), Descr->command.c_str(), i, t, i, t);
 						fix_escape_characters(str);
 						fp << str; // << " \\" << endl;
 						for (j = 0; j < nb_cases; j++) {
@@ -3996,7 +3996,7 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 					}
 				} // if
 				else {
-					sprintf(str, Descr->command.c_str(), i);
+					snprintf(str, sizeof(str), Descr->command.c_str(), i);
 					fix_escape_characters(str);
 					fp << str << " \\" << endl;
 					//fp << command << " \\" << endl;
@@ -4024,7 +4024,7 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 				} // else
 
 				for (j = 0; j < Descr->nb_final_lines; j++) {
-					sprintf(str, Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
+					snprintf(str, sizeof(str), Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
 					fix_escape_characters(str);
 					fp << str << endl;
 				} // next j
@@ -4047,14 +4047,14 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 	int N1 = 128;
 
 	for (h = 0; h < Descr->N / N1; h++) {
-		sprintf(fname_submit_piecewise, mask_submit_script_piecewise, h * N1);
+		snprintf(fname_submit_piecewise, sizeof(fname_submit_piecewise), mask_submit_script_piecewise, h * N1);
 		{
 			ofstream fp_submit_script(fname_submit_piecewise);
 
 			fp_submit_script << "#!/bin/bash" << endl;
 			for (i = 0; i < N1; i++) {
 
-				sprintf(str, Descr->file_mask.c_str(), h * N1 + i);
+				snprintf(str, sizeof(str), Descr->file_mask.c_str(), h * N1 + i);
 				fname.assign(str);
 
 				fp_submit_script << "sbatch " << fname;
@@ -4068,7 +4068,7 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 		}
 		cout << "Written file " << fname_submit_piecewise << " of size "
 			<< Fio.file_size(fname_submit_piecewise) << endl;
-		sprintf(cmd, "chmod +x %s", fname_submit_piecewise);
+		snprintf(cmd, sizeof(cmd), "chmod +x %s", fname_submit_piecewise);
 		system(cmd);
 	}
 	if (f_v) {
@@ -4162,7 +4162,7 @@ void file_io::do_csv_file_split_rows_modulo(std::string &fname,
 
 		fname_out.assign(fname);
 		ST.chop_off_extension(fname_out);
-		sprintf(str, "_split_%d_mod_%d.csv", I, split_modulo);
+		snprintf(str, sizeof(str), "_split_%d_mod_%d.csv", I, split_modulo);
 		fname_out.append(str);
 
 		{
@@ -4606,7 +4606,7 @@ void file_io::do_csv_file_concatenate_from_mask(
 		char str[1000];
 		std::string fname_in;
 
-		sprintf(str, fname_in_mask.c_str(), i);
+		snprintf(str, sizeof(str), fname_in_mask.c_str(), i);
 		fname_in.assign(str);
 
 		cout << "Reading table " << fname_in << endl;

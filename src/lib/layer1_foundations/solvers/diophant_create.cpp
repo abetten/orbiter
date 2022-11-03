@@ -94,7 +94,7 @@ void diophant_create::init(
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		sprintf(str, "max_arc_%d_%d_%d.diophant", Descr->input_q,
+		snprintf(str, sizeof(str), "max_arc_%d_%d_%d.diophant", Descr->input_q,
 				Descr->maximal_arc_sz, Descr->maximal_arc_d);
 		fname.assign(str);
 		D->save_in_general_format(fname, verbose_level);
@@ -110,8 +110,7 @@ void diophant_create::init(
 		int m, n;
 		int i, j;
 
-		orbiter_kernel_system::Orbiter->get_matrix_from_label(
-				Descr->coefficient_matrix_label,
+		Get_matrix(Descr->coefficient_matrix_label,
 					A, m, n);
 
 		D = NEW_OBJECT(diophant);

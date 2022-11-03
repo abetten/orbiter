@@ -796,7 +796,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 
 	char str[1000];
 
-	sprintf(str, "_classes_based_on_normal_forms_%d_%d.tex", d, F->q);
+	snprintf(str, sizeof(str), "_classes_based_on_normal_forms_%d_%d.tex", d, F->q);
 	fname_output.append("_classes_normal_form.tex");
 
 	C.init(d, F, verbose_level);
@@ -1036,7 +1036,7 @@ void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d
 
 	char fname[1000];
 
-	sprintf(fname, "Class_reps_GL_%d_%d.tex", d, F->q);
+	snprintf(fname, sizeof(fname), "Class_reps_GL_%d_%d.tex", d, F->q);
 	{
 		ofstream fp(fname);
 		orbiter_kernel_system::latex_interface L;
@@ -3751,7 +3751,7 @@ void algebra_global_with_action::find_subgroups(
 				<< " subgroup_order=" << subgroup_order << endl;
 	}
 	prefix.assign(label);
-	sprintf(str, "_find_subgroup_of_order_%d", subgroup_order);
+	snprintf(str, sizeof(str), "_find_subgroup_of_order_%d", subgroup_order);
 	prefix.append(str);
 
 
@@ -3859,7 +3859,7 @@ void algebra_global_with_action::do_orbits_on_polynomials(
 		char str[1000];
 
 
-		sprintf(str, "_orbit_%d_tree", draw_tree_idx);
+		snprintf(str, sizeof(str), "_orbit_%d_tree", draw_tree_idx);
 
 		fname.assign(O->fname_base);
 		fname.append(str);
@@ -3979,7 +3979,7 @@ void algebra_global_with_action::representation_on_polynomials(
 		orbiter_kernel_system::file_io Fio;
 
 		fname.assign(LG->label);
-		sprintf(str, "_rep_%d_%d.csv", degree_of_poly, i);
+		snprintf(str, sizeof(str), "_rep_%d_%d.csv", degree_of_poly, i);
 		fname.append(str);
 		Fio.int_matrix_write_csv(fname, M + i * A_on_HPD->dimension * A_on_HPD->dimension,
 				A_on_HPD->dimension, A_on_HPD->dimension);
