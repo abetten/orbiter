@@ -37,21 +37,6 @@ void design_activity::perform_activity(design_activity_description *Descr,
 
 	design_activity::Descr = Descr;
 
-#if 0
-	if (Descr->f_create_table) {
-
-
-		do_create_table(
-				DC,
-				Descr->create_table_label,
-				Descr->create_table_group,
-				//Descr->create_table_group_order,
-				//Descr->create_table_gens,
-				verbose_level);
-
-
-	}
-#endif
 	if (Descr->f_load_table) {
 		do_load_table(
 				DC,
@@ -70,7 +55,8 @@ void design_activity::perform_activity(design_activity_description *Descr,
 	else if (Descr->f_extract_solutions_by_index_csv) {
 
 		if (f_v) {
-			cout << "design_activity::perform_activity f_extract_solutions_by_index_csv" << endl;
+			cout << "design_activity::perform_activity "
+					"f_extract_solutions_by_index_csv" << endl;
 		}
 
 		do_extract_solutions_by_index(
@@ -84,13 +70,15 @@ void design_activity::perform_activity(design_activity_description *Descr,
 				verbose_level);
 
 		if (f_v) {
-			cout << "design_activity::perform_activity f_extract_solutions_by_index_csv done" << endl;
+			cout << "design_activity::perform_activity "
+					"f_extract_solutions_by_index_csv done" << endl;
 		}
 	}
 	else if (Descr->f_extract_solutions_by_index_txt) {
 
 		if (f_v) {
-			cout << "design_activity::perform_activity f_extract_solutions_by_index_txt" << endl;
+			cout << "design_activity::perform_activity "
+					"f_extract_solutions_by_index_txt" << endl;
 		}
 
 		do_extract_solutions_by_index(
@@ -104,7 +92,8 @@ void design_activity::perform_activity(design_activity_description *Descr,
 				verbose_level);
 
 		if (f_v) {
-			cout << "design_activity::perform_activity f_extract_solutions_by_index_txt done" << endl;
+			cout << "design_activity::perform_activity "
+					"f_extract_solutions_by_index_txt done" << endl;
 		}
 	}
 	else if (Descr->f_export_inc) {
@@ -112,6 +101,15 @@ void design_activity::perform_activity(design_activity_description *Descr,
 			cout << "design_activity::perform_activity export_inc" << endl;
 		}
 		do_export_inc(
+				DC,
+				verbose_level);
+	}
+	else if (Descr->f_intersection_matrix) {
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"f_intersection_matrix" << endl;
+		}
+		do_intersection_matrix(
 				DC,
 				verbose_level);
 	}
@@ -133,7 +131,8 @@ void design_activity::perform_activity(design_activity_description *Descr,
 	}
 	else if (Descr->f_tactical_decomposition) {
 		if (f_v) {
-			cout << "design_activity::perform_activity f_tactical_decomposition" << endl;
+			cout << "design_activity::perform_activity "
+					"f_tactical_decomposition" << endl;
 		}
 		do_tactical_decomposition(
 				DC,
@@ -167,23 +166,9 @@ void design_activity::do_extract_solutions_by_index(
 	combinatorics_global Combi;
 	design_tables *T;
 
-	int idx;
 	apps_algebra::any_group *AG;
 
-	idx = orbiter_kernel_system::Orbiter->find_symbol(group_label);
-
-	symbol_table_object_type t;
-
-	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-	if (t != t_any_group) {
-		cout << "object must be of type group, but is ";
-		orbiter_kernel_system::Orbiter->print_type(t);
-		cout << endl;
-		exit(1);
-	}
-	AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
-
+	AG = Get_object_of_type_any_group(group_label);
 
 	Combi.load_design_table(DC,
 			label,
@@ -295,22 +280,9 @@ void design_activity::do_create_table(
 	design_tables *T;
 
 
-	int idx;
 	apps_algebra::any_group *AG;
 
-	idx = orbiter_kernel_system::Orbiter->find_symbol(group_label);
-
-	symbol_table_object_type t;
-
-	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-	if (t != t_any_group) {
-		cout << "object must be of type group, but is ";
-		orbiter_kernel_system::Orbiter->print_type(t);
-		cout << endl;
-		exit(1);
-	}
-	AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
+	AG = Get_object_of_type_any_group(group_label);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table before Combi.create_design_table" << endl;
@@ -348,27 +320,13 @@ void design_activity::do_load_table(
 		cout << "design_activity::do_load_table" << endl;
 	}
 
-
-
-	int idx;
 	apps_algebra::any_group *AG;
 
-	idx = orbiter_kernel_system::Orbiter->find_symbol(group_label);
-
-	symbol_table_object_type t;
-
-	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-
-	if (t != t_any_group) {
-		cout << "object must be of type group, but is ";
-		orbiter_kernel_system::Orbiter->print_type(t);
-		cout << endl;
-		exit(1);
-	}
-	AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
+	AG = Get_object_of_type_any_group(group_label);
 
 	if (f_v) {
-		cout << "design_activity::do_create_table before Combi.load_design_table" << endl;
+		cout << "design_activity::do_create_table "
+				"before Combi.load_design_table" << endl;
 	}
 
 	combinatorics_global Combi;
@@ -381,7 +339,8 @@ void design_activity::do_load_table(
 			verbose_level);
 
 	if (f_v) {
-		cout << "design_activity::do_create_table after Combi.load_design_table" << endl;
+		cout << "design_activity::do_create_table "
+				"after Combi.load_design_table" << endl;
 	}
 
 
@@ -501,30 +460,14 @@ void design_activity::do_export_inc(
 		cout << "design_activity::do_export_inc fname=" << fname << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
-
-	int v = DC->degree;
-	int k = DC->k;
-	int b = DC->sz;
-
-	int N = k * b;
-	int *M;
-	int h;
-
-	Combi.compute_incidence_matrix(v, b, k, DC->set,
-			M, verbose_level);
-	if (f_v) {
-		cout << "design_activity::do_export_inc The incidence matrix is:" << endl;
-		Int_matrix_print(M, v, b);
-	}
-
 
 	{
 		ofstream ost(fname);
 
-		ost << v << " " << b << " " << N << endl;
-		for (h = 0; h < v * b; h++) {
-			if (M[h]) {
+		int h;
+		ost << DC->v << " " << DC->b << " " << DC->nb_inc << endl;
+		for (h = 0; h < DC->v * DC->b; h++) {
+			if (DC->incma[h]) {
 				ost << h << " ";
 			}
 		}
@@ -537,8 +480,6 @@ void design_activity::do_export_inc(
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
-	FREE_int(M);
-
 	//8 8 24
 	//0 1 2 8 11 12 16 21 22 25 27 29 33 36 39 42 44 46 50 53 55 59 62 63
 	//-1 1
@@ -550,6 +491,65 @@ void design_activity::do_export_inc(
 		cout << "design_activity::do_export_inc done" << endl;
 	}
 }
+
+
+void design_activity::do_intersection_matrix(
+		design_create *DC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_activity::do_intersection_matrix" << endl;
+	}
+
+
+
+	int *AAt;
+	int i, j, h, cnt;
+
+	AAt = NEW_int(DC->v * DC->v);
+	for (i = 0; i < DC->v; i++) {
+		for (j = 0; j < DC->v; j++) {
+			cnt = 0;
+			for (h = 0; h < DC->b; h++) {
+				if (DC->incma[i * DC->b + h] && DC->incma[j * DC->b + h]) {
+					cnt++;
+				}
+			}
+			AAt[i * DC->v + j] = cnt;
+		}
+
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(DC->label_txt);
+	fname.append("_AAt.csv");
+
+	if (f_v) {
+		cout << "design_activity::do_intersection_matrix fname=" << fname << endl;
+	}
+
+	{
+		ofstream ost(fname);
+
+		Fio.int_matrix_write_csv(fname, AAt, DC->v, DC->v);
+
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "design_activity::do_intersection_matrix done" << endl;
+	}
+}
+
 
 void design_activity::do_export_blocks(
 		design_create *DC,
@@ -622,24 +622,16 @@ void design_activity::do_row_sums(
 
 	combinatorics::combinatorics_domain Combi;
 
-	int v = DC->degree;
-	int k = DC->k;
-	int b = DC->sz;
 
-	//int N = k * b;
-	int *M;
 	int i, j;
 	int *R;
 
-	R = NEW_int(v);
+	R = NEW_int(DC->v);
 
-	Combi.compute_incidence_matrix(v, b, k, DC->set,
-			M, verbose_level);
-
-	for (i = 0; i < v; i++) {
+	for (i = 0; i < DC->v; i++) {
 		R[i] = 0;
-		for (j = 0; j < b; j++) {
-			if (M[i * b + j]) {
+		for (j = 0; j < DC->b; j++) {
+			if (DC->incma[i * DC->b + j]) {
 				R[i]++;
 			}
 		}
@@ -647,14 +639,13 @@ void design_activity::do_row_sums(
 
 	data_structures::tally T;
 
-	T.init(R, v, FALSE, 0);
+	T.init(R, DC->v, FALSE, 0);
 	if (f_v) {
 		cout << "distribution of row sums: ";
 		T.print(TRUE /* f_backwards */);
 		cout << endl;
 	}
 
-	FREE_int(M);
 	FREE_int(R);
 
 
@@ -681,19 +672,7 @@ void design_activity::do_tactical_decomposition(
 
 	combinatorics::combinatorics_domain Combi;
 
-	int v = DC->degree;
-	int k = DC->k;
-	int b = DC->sz;
 
-	//int N = k * b;
-	int *M;
-	//int i, j;
-	//int *R;
-
-	//R = NEW_int(v);
-
-	Combi.compute_incidence_matrix(v, b, k, DC->set,
-			M, verbose_level);
 
 	{
 		geometry::incidence_structure *Inc;
@@ -702,11 +681,11 @@ void design_activity::do_tactical_decomposition(
 
 		Inc = NEW_OBJECT(geometry::incidence_structure);
 
-		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
+		Inc->init_by_matrix(DC->v, DC->b, DC->incma, 0 /* verbose_level */);
 
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 
-		Stack->allocate_with_two_classes(v + b, v, b, 0 /* verbose_level */);
+		Stack->allocate_with_two_classes(DC->v + DC->b, DC->v, DC->b, 0 /* verbose_level */);
 
 
 

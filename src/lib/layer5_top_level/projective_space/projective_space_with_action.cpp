@@ -1141,7 +1141,8 @@ void projective_space_with_action::canonical_form_of_code(
 	COAD.Classification_of_objects_report_options->f_show_incidence_matrices = TRUE;
 	COAD.Classification_of_objects_report_options->f_show_TDO = TRUE;
 	COAD.Classification_of_objects_report_options->f_show_TDA = TRUE;
-	COAD.Classification_of_objects_report_options->f_export_group = TRUE;
+	COAD.Classification_of_objects_report_options->f_export_group_GAP = TRUE;
+	COAD.Classification_of_objects_report_options->f_export_group_orbiter = TRUE;
 
 
 

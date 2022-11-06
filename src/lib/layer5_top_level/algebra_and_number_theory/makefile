@@ -20,6 +20,8 @@ MODULES = \
 	group_theoretic_activity.o \
 	modified_group_create.o \
 	orbit_cascade.o \
+	orbits_create_description.o \
+	orbits_create.o \
 	orbits_on_polynomials.o \
 	orbits_on_subspaces.o \
 	polynomial_ring_activity.o \

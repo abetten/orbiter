@@ -862,7 +862,8 @@ int coding_theory_domain::code_minimum_distance(field_theory::finite_field *F, i
 	return i;
 }
 
-void coding_theory_domain::codewords_affine(field_theory::finite_field *F, int n, int k,
+void coding_theory_domain::codewords_affine(field_theory::finite_field *F,
+		int n, int k,
 	int *code, // [k * n]
 	long int *codewords, // q^k
 	int verbose_level)

@@ -146,6 +146,13 @@ symbol_definition::symbol_definition()
 
 	f_action_on_forms = FALSE;
 	Action_on_forms_descr = NULL;
+
+	f_orbits = FALSE;
+	Orbits_create_description = NULL;
+
+	f_poset_classification_control = FALSE;
+	Poset_classification_control = NULL;
+
 }
 
 
@@ -924,7 +931,52 @@ void symbol_definition::read_definition(
 			Action_on_forms_descr->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-orbits") == 0) {
+		f_orbits = TRUE;
 
+		Orbits_create_description = NEW_OBJECT(apps_algebra::orbits_create_description);
+		if (f_v) {
+			cout << "reading -orbits" << endl;
+		}
+		i += Orbits_create_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-orbits" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-orbits ";
+			Orbits_create_description->print();
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
+		f_poset_classification_control = TRUE;
+
+		Poset_classification_control = NEW_OBJECT(poset_classification::poset_classification_control);
+		if (f_v) {
+			cout << "reading -poset_classification_control" << endl;
+		}
+		i += Poset_classification_control->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-poset_classification_control" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-poset_classification_control ";
+			Poset_classification_control->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -1248,6 +1300,30 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_action_on_forms" << endl;
 		}
 	}
+	else if (f_orbits) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition f_orbits" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_orbits" << endl;
+		}
+		definition_of_orbits(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_orbits" << endl;
+		}
+	}
+	else if (f_poset_classification_control) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition f_poset_classification_control" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_poset_classification_control" << endl;
+		}
+		definition_of_poset_classification_control(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_poset_classification_control" << endl;
+		}
+	}
 
 	else {
 		if (f_v) {
@@ -1406,6 +1482,14 @@ void symbol_definition::print()
 	if (f_action_on_forms) {
 		cout << "-action_on_forms ";
 		Action_on_forms_descr->print();
+	}
+	if (f_orbits) {
+		cout << "-orbits ";
+		Orbits_create_description->print();
+	}
+	if (f_poset_classification_control) {
+		cout << "-poset_classification_control ";
+		Poset_classification_control->print();
 	}
 }
 
@@ -3227,6 +3311,79 @@ void symbol_definition::definition_of_action_on_forms(int verbose_level)
 		cout << "symbol_definition::definition_of_action_on_forms done" << endl;
 	}
 }
+
+void symbol_definition::definition_of_orbits(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orbits" << endl;
+	}
+
+
+	apps_algebra::orbits_create *OC;
+
+	OC = NEW_OBJECT(apps_algebra::orbits_create);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orbits before OC->init" << endl;
+	}
+
+	OC->init(
+			Orbits_create_description,
+			verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orbits after OC->init" << endl;
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_orbits(define_label, OC, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orbits before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orbits done" << endl;
+	}
+}
+
+void symbol_definition::definition_of_poset_classification_control(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_control" << endl;
+	}
+
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_poset_classification_control(define_label, Poset_classification_control, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_control before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_control done" << endl;
+	}
+}
+
+
 
 
 

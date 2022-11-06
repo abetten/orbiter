@@ -181,7 +181,8 @@ public:
 
 	int f_show_TDA;
 
-	int f_export_group;
+	int f_export_group_orbiter;
+	int f_export_group_GAP;
 
 	int f_lex_least;
 	std::string lex_least_geometry_builder;
@@ -462,6 +463,10 @@ public:
 			std::string &fname_csv, int verbose_level);
 	void compute_incidence_matrix(int v, int b, int k, long int *Blocks_coded,
 			int *&M, int verbose_level);
+	void compute_incidence_matrix_from_sets(
+			int v, int b, long int *Sets_coded,
+			int *&M,
+			int verbose_level);
 	void compute_blocks(int v, int b, int k, long int *Blocks_coded,
 			int *&Blocks, int verbose_level);
 	void refine_the_partition(

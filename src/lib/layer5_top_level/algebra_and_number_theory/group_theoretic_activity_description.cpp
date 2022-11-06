@@ -149,6 +149,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_poset_classification_control = FALSE;
 	Control = NULL;
 
+#if 0
 	f_orbits_on_points = FALSE;
 
 	f_export_trees = FALSE;
@@ -158,7 +159,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_stabilizer_of_orbit_rep = FALSE;
 	stabilizer_of_orbit_rep_orbit_idx = 0;
-
+#endif
 
 	f_orbits_on_subsets = FALSE;
 	orbits_on_subsets_size = 0;
@@ -210,9 +211,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_classify_cubic_curves = FALSE;
 
-
+#if 0
 	f_orbits_on_polynomials = FALSE;
 	orbits_on_polynomials_degree = 0;
+#endif
 
 	f_recognize_orbits_on_polynomials = FALSE;
 	//std::string recognize_orbits_on_polynomials_text;
@@ -598,12 +600,14 @@ int group_theoretic_activity_description::read_arguments(
 				}
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;
 			if (f_v) {
 				cout << "-orbits_on_points" << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-orbits_on_subsets") == 0) {
 			f_orbits_on_subsets = TRUE;
@@ -630,6 +634,7 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
 			f_export_trees = TRUE;
 			if (f_v) {
@@ -651,6 +656,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = TRUE;
@@ -764,6 +770,8 @@ int group_theoretic_activity_description::read_arguments(
 
 
 		// other:
+
+#if 0
 		else if (ST.stringcmp(argv[i], "-orbits_on_polynomials") == 0) {
 			f_orbits_on_polynomials = TRUE;
 			orbits_on_polynomials_degree = ST.strtoi(argv[++i]);
@@ -771,6 +779,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-orbits_on_polynomials " << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-orbits_on_polynomials_draw_tree") == 0) {
 			f_orbits_on_polynomials_draw_tree = TRUE;
 			orbits_on_polynomials_draw_tree_idx = ST.strtoi(argv[++i]);
@@ -996,9 +1005,11 @@ void group_theoretic_activity_description::print()
 	if (f_poset_classification_control) {
 		Control->print();
 	}
+#if 0
 	if (f_orbits_on_points) {
 		cout << "-orbits_on_points" << endl;
 	}
+#endif
 
 	if (f_orbits_on_subsets) {
 		cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
@@ -1011,6 +1022,7 @@ void group_theoretic_activity_description::print()
 		cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
 	}
 
+#if 0
 	if (f_export_trees) {
 		cout << "-export_trees" << endl;
 	}
@@ -1021,6 +1033,7 @@ void group_theoretic_activity_description::print()
 	if (f_stabilizer_of_orbit_rep) {
 		cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
 	}
+#endif
 	if (f_orbit_of) {
 		cout << "-orbit_of " << orbit_of_point_idx << endl;
 	}
@@ -1081,9 +1094,11 @@ void group_theoretic_activity_description::print()
 
 
 	// other:
+#if 0
 	if (f_orbits_on_polynomials) {
 		cout << "-orbits_on_polynomials " << endl;
 	}
+#endif
 	if (f_orbits_on_polynomials_draw_tree) {
 			cout << "-orbits_on_polynomials_draw_tree " << orbits_on_polynomials_draw_tree_idx << endl;
 	}

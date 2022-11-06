@@ -223,6 +223,46 @@ void create_graph::init(
 		label_tex.assign("File\\_");
 		label_tex.append(label);
 	}
+
+	else if (description->f_load_adjacency_matrix_from_csv_and_select_value) {
+		if (f_v) {
+			cout << "create_graph::init f_load_adjacency_matrix_from_csv_and_select_value" << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+		int *M;
+		int m, n;
+		int i;
+
+		Fio.int_matrix_read_csv(
+				description->load_adjacency_matrix_from_csv_and_select_value_fname,
+				M, m, n, verbose_level);
+
+		if (m != n) {
+			cout << "create_graph::init the matrix is not square" << endl;
+			exit(1);
+		}
+		N = n;
+		for (i = 0; i < N * N; i++) {
+			if (M[i] == description->load_adjacency_matrix_from_csv_and_select_value_value) {
+				M[i] = 1;
+			}
+			else {
+				M[i] = 0;
+			}
+		}
+		Adj = M;
+
+		label.assign(description->fname);
+
+		data_structures::string_tools String;
+		String.chop_off_extension(label);
+
+
+		label_tex.assign("File\\_");
+		label_tex.append(label);
+	}
+
 	else if (description->f_load_dimacs) {
 		if (f_v) {
 			cout << "create_graph::init f_load_from_file_dimacs" << endl;

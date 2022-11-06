@@ -336,16 +336,15 @@ public:
 
 class file_output {
 public:
-	char fname[1000];
+	std::string fname;
 	int f_file_is_open;
 	std::ofstream *fp;
 	void *user_data;
 	
 	file_output();
 	~file_output();
-	void null();
-	void freeself();
-	void open(const char *fname, void *user_data,
+	void open(std::string &fname,
+			void *user_data,
 			int verbose_level);
 	void close();
 	void write_line(int nb, int *data,
@@ -941,6 +940,10 @@ public:
 			void *V, int verbose_level);
 	void init_action_on_forms(std::string &label,
 			void *AF, int verbose_level);
+	void init_orbits(std::string &label,
+			void *OC, int verbose_level);
+	void init_poset_classification_control(std::string &label,
+			void *PCC, int verbose_level);
 	void print();
 };
 

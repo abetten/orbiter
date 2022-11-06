@@ -537,6 +537,8 @@ public:
 			int f_load_save,
 			std::string &prefix,
 			int verbose_level);
+	void stabilizer_any_point(int pt,
+			strong_generators *&Stab, int verbose_level);
 	void stabilizer_of(int orbit_idx, int verbose_level);
 	void idx_of_points_in_orbits_of_length_l(
 			long int *set, int set_sz, int go, int l,

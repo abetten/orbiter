@@ -1442,12 +1442,12 @@ Eulerfunction_150:
 	pdflatex table_eulerfunction_1_150.tex
 	open table_eulerfunction_1_150.pdf
 
-Eulerfunction_1000:
-	$(ORBITER) -v 1 -eulerfunction_interval 1000 1150
+Eulerfunction_900:
+	$(ORBITER) -v 1 -eulerfunction_interval 900 1150
 	$(ORBITER) -v 1 -csv_file_latex 1 \
-		table_eulerfunction_1000_1150.csv
-	pdflatex table_eulerfunction_1000_1150.tex
-	open table_eulerfunction_1000_1150.pdf
+		table_eulerfunction_900_1150.csv
+	pdflatex table_eulerfunction_900_1150.tex
+	open table_eulerfunction_900_1150.pdf
 
 Eulerfunction_10000:
 	$(ORBITER) -v 1 -eulerfunction_interval 10000 10150
@@ -3335,10 +3335,8 @@ Symmetric_4_long:
 Symmetric_4_stab:
 	$(ORBITER) -v 2 \
 		-define G -permutation_group -symmetric_group 4 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_points \
-			-stabilizer_of_orbit_rep 0 \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
 	$(ORBITER) -v 2 \
 		-define gens -vector -file Perm4_stab_orb_0_gens.csv -end \
@@ -3353,6 +3351,11 @@ Symmetric_4_stab:
 		-end
 
 
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-orbits_on_points \
+#			-stabilizer_of_orbit_rep 0 \
+#		-end
 
 
 
@@ -3823,8 +3826,7 @@ Weyl_E8:
 		-end \
 		-define G -linear_group -GL 8 3 \
 		-subgroup_by_generators \
-			"Weyl_E8" "696729600" 2 \
-			$(GENERATORS_WEYL_GROUP_E8) \
+			"Weyl_E8" "696729600" 2 gens  \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -3876,6 +3878,104 @@ coset_reps_read:
 			PGOp_6_2_coset_reps.csv Element \
 		-end
 
+SP_6_2_point_stab_subgroup:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-symplectic_group \
+		-end \
+		-define G0 -modified_group -from G \
+			-point_stabilizer 0 \
+		-end \
+		-with G0 -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_6_2_report.tex
+	open PGL_6_2_report.pdf
+
+
+# group of order 23040
+
+
+PGOp_6_2_report:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGOp_6_2_report.tex
+	open PGOp_6_2_report.pdf
+
+# group order 40320
+
+
+PGOp_6_2_point_stab_subgroup:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define G0 -modified_group -from G \
+			-point_stabilizer 0 \
+		-end \
+		-with G0 -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGOp_6_2_report.tex
+	open PGOp_6_2_report.pdf
+
+
+# group of order 1152
+
+PGOp_6_2_GENS="\
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0, \
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,0,0,1,0,0,1,0,0,1,0,1,0, \
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,0,0,0,0,1,0, \
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0, \
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1, \
+1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0,1,0,0,1,0,0, \
+1,0,0,0,0,0,0,1,0,1,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1, \
+0,1,0,1,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,0,1,1,0,0,1, \
+0,0,1,1,1,1,1,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1,0,1,0,1,1,0, \
+0,0,0,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,0,1,1,0,1,0,0,0,0,0,1,1,1,1,1,0,"
+
+PGOp_6_2_linear:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-subgroup_by_generators PGOp_6_2 \
+				40320 10 $(PGOp_6_2_GENS) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_6_2_Subgroup_PGOp_6_2_40320_report.tex
+	open PGL_6_2_Subgroup_PGOp_6_2_40320_report.pdf
+
+
+
+PGOp_6_2_linear_stab_6:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-subgroup_by_generators PGOp_6_2 \
+				40320 10 $(PGOp_6_2_GENS) \
+		-end \
+		-define G6 -modified_group -from G \
+			-point_stabilizer 6 \
+		-end \
+		-with G6 -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_6_2_report.tex
+	open PGL_6_2_report.pdf
+
+
+# group of order 1440, of inder 28 in PGOp(6,2)
 
 
 
@@ -3934,7 +4034,7 @@ Co3:
 		-define g2 -vector -field F -format 22 -compact $(CONWAY_GEN2) -end \
 		-define gens -vector -concatenate g1 -concatenate g2 -end \
 		-define G -linear_group -PGL 22 2 \
-		-subgroup_by_generators "Co3" "495766656000" 2 gens \
+			-subgroup_by_generators "Co3" "495766656000" 2 gens \
 			-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -4089,11 +4189,16 @@ surface_q13_stab_on_tritangents_orbits:
 		-group_theoretic_activity \
 			-report \
 		-end \
-		-with Gr -do \
-		-group_theoretic_activity \
-			-orbits_on_points \
-			-stabilizer \
+		-define Orb -orbits -group Gr \
+			-on_points \
 		-end
+
+
+#		-with Gr -do \
+#		-group_theoretic_activity \
+#			-orbits_on_points \
+#			-stabilizer \
+#		-end
 
 
 PGL_4_2_wd:
@@ -4635,11 +4740,8 @@ SECTION_ORBIT_ALGORITHMS_SCHREIER_TREES:
 orbits_PGL_4_2_on_points:
 	$(ORBITER) -v 4 \
 		-define G -linear_group -PGL 4 2 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
-			-export_trees \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
@@ -4652,19 +4754,34 @@ orbits_PGL_4_2_on_points:
 	pdflatex PGL_4_2_orbits_report.tex
 	open PGL_4_2_orbits_report.pdf
 
+
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#			-export_trees \
+#		-end
+
+
 T3r1_orbits:
 	$(ORBITER) -v 4 \
 		-define G \
 		-linear_group -GL_d_q_wr_Sym_n 2 2 3 \
 			-on_rank_one_tensors -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
-			-export_trees \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
 	pdflatex GL_2_2_wreath_Sym3_orbits_report.tex
 	open GL_2_2_wreath_Sym3_orbits_report.pdf
+
+
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#			-export_trees \
+#		-end
+
 
 T3r1_orbits_draw:
 	$(ORBITER) -v 3 \
@@ -4735,23 +4852,21 @@ PGGL_4_4_subgroups_of_type_2C_2C: 2C_orbit_under_PGGL_4_4_elements_coded.csv
 orbits_on_conics_q13:
 	$(ORBITER) -v 4 \
 		-define G -linear_group -PGL 3 13 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_polynomials 2 \
-		-end 
-	pdflatex poly_orbits_d2_n2_q13.tex
-	open poly_orbits_d2_n2_q13.pdf
+		-define Orb -orbits -group G \
+			-on_polynomials 2 \
+		-end
+	#pdflatex poly_orbits_d2_n2_q13.tex
+	#open poly_orbits_d2_n2_q13.pdf
 
 
 orbits_cubic_curves_q2:
 	$(ORBITER) -v 4 \
 		-define G -linear_group -PGL 3 2 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_polynomials 3 \
-		-end 
-	pdflatex poly_orbits_d3_n3_q2.tex
-	open poly_orbits_d3_n3_q2.pdf
+		-define Orb -orbits -group G \
+			-on_polynomials 3 \
+		-end
+	#pdflatex poly_orbits_d3_n3_q2.tex
+	#open poly_orbits_d3_n3_q2.pdf
 
 
 orbits_cubic_curves_q2_with_draw_tree:
@@ -4759,11 +4874,10 @@ orbits_cubic_curves_q2_with_draw_tree:
 		-draw_options -yout 500000 -radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define G -linear_group -PGL 3 2 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_polynomials 3 \
-			-orbits_on_polynomials_draw_tree 6 \
-		-end 
+		-define Orb -orbits -group G \
+			-on_polynomials 3 \
+			-draw_tree 6 \
+		-end
 
 
 poly_orbits_d3_n3_q2.csv:
@@ -4771,11 +4885,10 @@ poly_orbits_d3_n3_q2.csv:
 		-draw_options -yout 500000 -radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define G -linear_group -PGL 4 2 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_polynomials 3 \
-			-orbits_on_polynomials_draw_tree 6 \
-		-end 
+		-define Orb -orbits -group G \
+			-on_polynomials 3 \
+			-draw_tree 6 \
+		-end
 
 poly_orbits_d3_n3_q2_get_ranks:
 	$(ORBITER) -v 4 \
@@ -4790,10 +4903,8 @@ T4_orbits:
 		-define G \
 		-linear_group -GL_d_q_wr_Sym_n 2 2 4 \
 			-on_tensors -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
 	pdflatex GL_2_2_wreath_Sym4_res65535_orbits.tex
 	open GL_2_2_wreath_Sym4_res65535_orbits.pdf
@@ -4801,19 +4912,30 @@ T4_orbits:
 	#open GL_2_2_wreath_Sym4_report.pdf
 
 
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#		-end
+
 
 T4r1_orbits:
 	$(ORBITER) -v 4 \
 		-define G -linear_group -GL_d_q_wr_Sym_n 2 2 4 \
 			-on_rank_one_tensors -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_points\
-			-export_trees \
-			-report \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
 	pdflatex GL_2_2_wreath_Sym4_orbits_report.tex
 	open GL_2_2_wreath_Sym4_orbits_report.pdf
+
+
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-orbits_on_points \
+#			-export_trees \
+#			-report \
+#		-end
 
 
 T4r1_orbits_draw:
@@ -4853,14 +4975,17 @@ PGGL_2_8_on_conic_orbits:
 	$(ORBITER) -v 4 \
 		-define G \
 		-linear_group -PGGL 2 8 -PGL2OnConic -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_points\
-			-report \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
-	pdflatex PGGL_2_8_OnConic_2_8_orbits_report.tex
-	open PGGL_2_8_OnConic_2_8_orbits_report.pdf
+	#pdflatex PGGL_2_8_OnConic_2_8_orbits_report.tex
+	#open PGGL_2_8_OnConic_2_8_orbits_report.pdf
 
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-orbits_on_points\
+#			-report \
+#		-end
 
 
 # example from the Fining manual, page 107:
@@ -4869,13 +4994,13 @@ PGGL_7_8_orbits:
 	$(ORBITER) -v 4 \
 		-define G \
 		-linear_group -PGGL 7 8 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
 
 # 1 min 31 sec on Mac
+
+
 
 
 
@@ -6286,7 +6411,7 @@ Hirschfeld_surface_incma_40_40_c:
 				-prefix H_incma_40_40 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	$(ORBITER) -v 2 -draw_matrix \
@@ -7414,12 +7539,11 @@ SECTION_CUBIC_SURFACES_DICKSON:
 orbits_cubic_surfaces_q3:
 	$(ORBITER) -v 4 \
 		-define G -linear_group -PGL 4 3 -end \
-		-with G -do \
-		-group_theoretic_activity \
-		-orbits_on_polynomials 3 \
-		-end 
-	pdflatex poly_orbits_d3_n3_q3.tex
-	open poly_orbits_d3_n3_q3.pdf
+		-define Orb -orbits -group G \
+			-on_polynomials 3 \
+		-end
+	#pdflatex poly_orbits_d3_n3_q3.tex
+	#open poly_orbits_d3_n3_q3.pdf
 	
 # this takes 3 days and about 150 GB memory on ripoff
 
@@ -7428,24 +7552,22 @@ orbits_cubic_curves_q2_again:
 		-define G \
 		-linear_group -PGL 3 2 \
 		-end \
-		-with G -do \
-		-group_theoretic_activity \
-		-orbits_on_polynomials 3 \
-		-end 
-	pdflatex poly_orbits_d3_n2_q2.tex
-	open poly_orbits_d3_n2_q2.pdf
+		-define Orb -orbits -group G \
+			-on_polynomials 3 \
+		-end
+	#pdflatex poly_orbits_d3_n2_q2.tex
+	#open poly_orbits_d3_n2_q2.pdf
 
 orbits_cubic_curves_q3:
 	$(ORBITER) -v 4 \
 		-define G \
 		-linear_group -PGL 3 3 \
 		-end \
-		-with G -do \
-		-group_theoretic_activity \
-		-orbits_on_polynomials 3 \
-		-end 
-	pdflatex poly_orbits_d3_n2_q3.tex
-	open poly_orbits_d3_n2_q3.pdf
+		-define Orb -orbits -group G \
+			-on_polynomials 3 \
+		-end
+	#pdflatex poly_orbits_d3_n2_q3.tex
+	#open poly_orbits_d3_n2_q3.pdf
 
 
 
@@ -9582,9 +9704,12 @@ Hamming_weight_enumerator:
 		-define v -vector -field F -format 4 \
 			-dense $(HAMMING_CODE_GENERATOR) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 Hamming_minimum_distance:
@@ -9742,13 +9867,11 @@ Hamming_long:
 Hamming_singer:
 	$(ORBITER) -v 3 \
 		-define G -linear_group -PGL 3 2 -singer 1 -end \
-		-with G -do \
-		-group_theoretic_activity \
-		-report \
-		-orbits_on_points \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
-	pdflatex PGL_3_2_Singer_3_2_1_report.tex
-	open PGL_3_2_Singer_3_2_1_report.pdf
+	#pdflatex PGL_3_2_Singer_3_2_1_report.tex
+	#open PGL_3_2_Singer_3_2_1_report.pdf
 
 # cycle is 0,1,2,5,3,4,6
 
@@ -9756,6 +9879,11 @@ Hamming_singer:
 #0100111
 #0011101
 
+#		-with G -do \
+#		-group_theoretic_activity \
+#		-report \
+#		-orbits_on_points \
+#		-end
 
 
 Hamming_cyclic_generator:
@@ -10903,9 +11031,12 @@ BCH_21_15_weight_enumerator:
 		-define v -vector -field F -format 15 \
 			-dense $(BCH_21_15_GENERATOR_MATRIX) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 # too slow!
@@ -10927,8 +11058,13 @@ BCH_21_6_weight_enumerator:
 		-define v -vector -format 6 -field F \
 			-dense $(BCH_21_6_GENERATOR_MATRIX) \
 		-end \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
 		-with F -do \
-		-coding_theoretic_activity -weight_enumerator v -end
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end
 
 # 1y^{21} + 63x^8y^{13} + 294x^{12}y^9 + 756x^{14}y^7 + 1890x^{16}y^5 + 1092x^{18}y^3
 
@@ -11049,9 +11185,12 @@ RREF_RS_6_4_7_weight_enumerator:
 		-define v -vector -format 4 -field F \
 			-compact $(CODE_RS_6_4_7) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 
@@ -11084,9 +11223,12 @@ Code_RS_11_weight_enumerator:
 		-define v -vector -format 8 -field F \
 			-compact $(CODE_RS_11_RREF) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 
@@ -11099,9 +11241,12 @@ RREF_RS_8_weight_enumerator:
 		-define v -vector -format 5 -field F \
 			-compact $(CODE_RS_8) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 
@@ -11129,9 +11274,12 @@ RREF_RS_8_reduced_weight_enumerator:
 		-define v -vector -format 15 -field F \
 			-compact $(RS_8_reduced) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 
@@ -11152,9 +11300,12 @@ CODE_21_15_4_weight_enumerator:
 		-define v -vector -format 15 -field F \
 			-compact $(CODE_21_15_4) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 CODE_21_15_4_minimum_distance:
@@ -11232,9 +11383,12 @@ GV_n15_k6_d5_weight_enumerator:
 		-define v -vector -format 6 -field F \
 			-compact $(CODE_GV_N15_K6) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 #1y^{15} + 27x^6y^9 + 24x^8y^7 + 9x^{10}y^5 + 3x^{12}y^3
@@ -11247,9 +11401,12 @@ code_n15_k6_d6_a_we:
 		-define v -vector -format 6 -field F \
 			-compact $(CODE_15_6_6_A) \
 		-end \
-		-with F -do \
+		-define C -code -field F \
+			-linear_code_through_generator_matrix v \
+		-end \
+		-with C -do \
 		-coding_theoretic_activity \
-			-weight_enumerator v \
+			-weight_enumerator \
 		-end
 
 #1y^{15} + 27x^6y^9 + 24x^8y^7 + 9x^{10}y^5 + 3x^{12}y^3
@@ -12484,7 +12641,8 @@ SECTION_DESIGN_THEORY:
 
 design_PG_2_3:
 	$(ORBITER) -v 8 \
-		-define D -design -q 3 -family PG_2_q -end \
+		-define F -finite_field -q 3 -end \
+		-define D -design -field F -family PG_2_q -end \
 		-with D -do \
 			-design_activity \
 				-export_inc \
@@ -12494,7 +12652,8 @@ design_PG_2_3:
 
 design_PG_2_4:
 	$(ORBITER) -v 8 \
-		-define D -design -q 4 -family PG_2_q -end \
+		-define F -finite_field -q 4 -end \
+		-define D -design -field F -family PG_2_q -end \
 		-with D -do \
 			-design_activity \
 				-export_inc \
@@ -12504,7 +12663,8 @@ design_PG_2_4:
 
 design_PG_2_3_table_create:
 	$(ORBITER) -v 2 \
-		-define D -design -q 3 -family PG_2_q -end \
+		-define F -finite_field -q 3 -end \
+		-define D -design -field F -family PG_2_q -end \
 		-define Sym13 -permutation_group -symmetric_group 13 -end \
 		-define T -design_table D "PG_2_13" Sym13 -end
 
@@ -12514,7 +12674,8 @@ design_PG_2_3_table_create:
 
 design_PG_2_3_group_5:
 	$(ORBITER) -v 2 \
-		-define D -design -q 3 -family PG_2_q -end \
+		-define F -finite_field -q 3 -end \
+		-define D -design -field F -family PG_2_q -end \
 		-define T -design_table D "PG_2_13" Sym13 -end \
 		-define LSW -large_set_with_symmetry_assumption T \
 				-H "5" $(GENERATORS_H5) \
@@ -12534,7 +12695,8 @@ design_PG_2_3_group_5:
 
 design_PG_2_3_group_5_sol_0:
 	$(ORBITER) -v 2 \
-		-define D -design -q 3 -family PG_2_q -end \
+		-define F -finite_field -q 3 -end \
+		-define D -design -field F -family PG_2_q -end \
 		-define T -design_table D "PG_2_13" Sym13 -end \
 		-define LSW -large_set_with_symmetry_assumption T \
 				-H "5" $(GENERATORS_H5) \
@@ -12576,16 +12738,15 @@ KM_cyclic_7:
 		-define G -permutation_group -symmetric_group 7 \
 			-subgroup_by_generators "C7" 7 1 gens \
 		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-poset_classification_control \
-				-problem_label C7 -W -depth 3 \
-				-Kramer_Mesner_matrix 2 3 \
-				-draw_poset \
-				-draw_options -embedded -sideways -radius 50 \
-					-scale 0.5 -line_width 0.3 -end \
-			-end \
-			-orbits_on_subsets 3 \
+		-define Control -poset_classification_control \
+			-problem_label C7 -W -depth 3 \
+			-Kramer_Mesner_matrix 2 3 \
+			-draw_poset \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define Orb -orbits -group G \
+			-on_subsets 3 Control \
 		-end
 	$(ORBITER) -v 4 \
 		-define A -vector -file C7_KM_2_3.csv -end \
@@ -12600,6 +12761,17 @@ KM_cyclic_7:
 		-end
 
 
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-poset_classification_control \
+#				-problem_label C7 -W -depth 3 \
+#				-Kramer_Mesner_matrix 2 3 \
+#				-draw_poset \
+#				-draw_options -embedded -sideways -radius 50 \
+#					-scale 0.5 -line_width 0.3 -end \
+#			-end \
+#			-orbits_on_subsets 3 \
+#		-end
 
 # to create simple 7-designs on 33 points with block size 8 and lambda = 10 invariant under PGGL(2,32):
 
@@ -12699,9 +12871,9 @@ AG_2_3.inc:
 
 
 LS_AG_2_3_design_table_create:
-	$(ORBITER) -v 20 \
-		-define D -design -list_of_blocks \
-			9 3 $(AG_2_3_BLOCKS) -end \
+	$(ORBITER) -v 5 \
+		-define B -vector -dense $(AG_2_3_BLOCKS) -end \
+		-define D -design -list_of_blocks 9 3 B -end \
 		-define Sym9 -permutation_group -symmetric_group 9 -end \
 		-define T -design_table D "AG_2_3" Sym9 -end
 
@@ -12723,13 +12895,20 @@ AG_2_3_on_designs:
 		-define gens -vector -file AG_2_3_gens.csv -end \
 		-define G -permutation_group \
 		-bsgs AG_2_3 "AG_2_3" 840 362880 "0,1,2,3,4,5,6,7" 8 gens -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_points \
-			-stabilizer_of_orbit_rep 0 \
+		-define Orb -orbits -group G \
+			-on_points \
 		-end
 
 #Written file AG_2_3_stab_orb_0.makefile of size 239
+
+
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-orbits_on_points \
+#			-stabilizer_of_orbit_rep 0 \
+#		-end
+
+
 
 
 # the stabilizer of the first design:
@@ -12809,8 +12988,8 @@ LS_AG_2_3_disjoint_sets_split:
 
 LS_AG_2_3_export_solutions:
 	$(ORBITER) -v 20 \
-		-define D -design -list_of_blocks 9 3 \
-			$(AG_2_3_BLOCKS) -end \
+		-define B -vector -dense $(AG_2_3_BLOCKS) -end \
+		-define D -design -list_of_blocks 9 3 B -end \
 		-define Sym9 -permutation_group -symmetric_group 9 -end \
 		-define T -design_table D "AG_2_3" Sym9 -end \
 		-with D -do \
@@ -13077,7 +13256,7 @@ desarguesian_spread_in_PG_3_5:
 
 
 classify_spreads_4:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define C -spread_classifier \
@@ -13745,12 +13924,8 @@ create_translation_plane_9b:
 			-report \
 		-end \
 		-define A -linear_group -import_group_of_plane T -end \
-		-with A -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
-			-stabilizer_of_orbit_rep 3 \
-			-export_trees \
+		-define Orb -orbits -group A \
+			-on_points \
 		-end
 	$(ORBITER) -v 2 \
 		-draw_matrix \
@@ -13775,6 +13950,13 @@ create_translation_plane_9b:
 	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
 
 
+#		-with A -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#			-stabilizer_of_orbit_rep 3 \
+#			-export_trees \
+#		-end
 
 
 
@@ -13937,12 +14119,8 @@ create_translation_plane_27_5_Rao_Rao:
 			-report \
 		-end \
 		-define A -linear_group -import_group_of_plane T -end \
-		-with A -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
-			-stabilizer_of_orbit_rep 3 \
-			-export_trees \
+		-define Orb -orbits -group A \
+			-on_points \
 		-end
 	pdflatex group_of_plane_plane_catalogue_q3_k3_5_report.tex
 	open group_of_plane_plane_catalogue_q3_k3_5_report.pdf
@@ -13959,6 +14137,15 @@ create_translation_plane_27_5_Rao_Rao:
 	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
 	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
 	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
+
+
+#		-with A -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#			-stabilizer_of_orbit_rep 3 \
+#			-export_trees \
+#		-end
 
 
 
@@ -13978,16 +14165,22 @@ create_translation_plane_27_4_block_stab:
 			-report \
 		-end \
 		-define A -linear_group -import_group_of_plane T -end \
-		-with A -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
-			-stabilizer_of_orbit_rep 3 \
-			-export_trees \
+		-define Orb -orbits -group A \
+			-on_points \
 		-end
-	pdflatex group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.tex
-	open group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.pdf
+	#pdflatex group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.tex
+	#open group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.pdf
 	
+
+#		-with A -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#			-stabilizer_of_orbit_rep 3 \
+#			-export_trees \
+#		-end
+
+
 create_translation_plane_27_5_block_stab:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 3 -end \
@@ -14004,16 +14197,19 @@ create_translation_plane_27_5_block_stab:
 			-report \
 		-end \
 		-define A -linear_group -import_group_of_plane T -end \
-		-with A -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
-			-stabilizer_of_orbit_rep 3 \
-			-export_trees \
+		-define Orb -orbits -group A \
+			-on_points \
 		-end
-	pdflatex group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.tex
-	open group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.pdf
+	#pdflatex group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.tex
+	#open group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.pdf
 
+#		-with A -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#			-stabilizer_of_orbit_rep 3 \
+#			-export_trees \
+#		-end
 
 create_translation_plane_27_6_block_stab:
 	$(ORBITER) -v 3 \
@@ -14031,15 +14227,21 @@ create_translation_plane_27_6_block_stab:
 			-report \
 		-end \
 		-define A -linear_group -import_group_of_plane T -end \
-		-with A -do \
-		-group_theoretic_activity \
-			-report \
-			-orbits_on_points \
-			-stabilizer_of_orbit_rep 3 \
-			-export_trees \
+		-define Orb -orbits -group A \
+			-on_points \
 		-end
-	pdflatex group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.tex
-	open group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.pdf
+	#pdflatex group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.tex
+	#open group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.pdf
+
+
+#		-with A -do \
+#		-group_theoretic_activity \
+#			-report \
+#			-orbits_on_points \
+#			-stabilizer_of_orbit_rep 3 \
+#			-export_trees \
+#		-end
+
 
 
 
@@ -15386,7 +15588,7 @@ SECTION_OBJECTS_IN_PROJECTIVE_SPACE:
 
 
 EC_canon: elliptic_curve_b1_c3_q11.txt
-	$(ORBITER) -v 40 \
+	$(ORBITER) -v 3 \
 		-define C -combinatorial_objects \
 			-file_of_points elliptic_curve_b1_c3_q11.txt \
 		-end \
@@ -15406,7 +15608,7 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex EC_classification.tex
@@ -15441,7 +15643,7 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex Hirschfeld_surface_q4_classification.tex
@@ -15467,11 +15669,17 @@ Hirschfeld_stab_subgroup:
 		-group_theoretic_activity \
 			-report \
 		-end \
-		-with Gsp -do \
-		-group_theoretic_activity \
-			-orbits_on_points \
-			-stabilizer \
+		-define Orb -orbits -group Gsp \
+			-on_points \
 		-end
+
+
+#		-with Gsp -do \
+#		-group_theoretic_activity \
+#			-orbits_on_points \
+#			-stabilizer \
+#		-end
+
 
 
 Hirschfeld_q4_set_c:
@@ -15572,7 +15780,7 @@ hyperoval_16_canonical_form:
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex hyperoval_q16_classification.tex
@@ -15661,7 +15869,7 @@ ovoid_q8_canon: ovoid_q8.txt
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex ovoid_classification.tex
@@ -15674,7 +15882,7 @@ ovoid_q8_canon: ovoid_q8.txt
 #				-show_TDO \
 #				-show_TDA \
 #				-dont_show_incidence_matrices \
-#				-export_group \
+#				-export_group_GAP \
 #			-end \
 
 
@@ -15698,7 +15906,7 @@ ovoid_ST_q8_canon: ovoid_ST_q8.txt
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex ovoid_ST_classification.tex
@@ -15757,7 +15965,7 @@ geo_7_3_c:
 				-prefix 7_3 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex 7_3_classification.tex
@@ -15795,7 +16003,7 @@ geo_10_3_c:
 				-prefix 10_3 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex 10_3_classification.tex
@@ -15840,7 +16048,7 @@ geo_10_3_c_lex_least:
 				-prefix 10_3 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 				-show_TDO \
 				-show_TDA \
 				-lex_least Geo \
@@ -15888,7 +16096,7 @@ geo_14_3_c:
 #				-prefix 14_3 \
 #				-export_flag_orbits \
 #				-show_incidence_matrices \
-#				-export_group \
+#				-export_group_GAP \
 #			-end \
 
 
@@ -16045,7 +16253,7 @@ geo_LSQ6_c:
 				-prefix LSQ6 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex LSQ6_classification.tex
@@ -16114,7 +16322,7 @@ geo_16_c:
 				-prefix 16 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex 16_classification.tex
@@ -16202,7 +16410,8 @@ design_27c:
 
 design_PG_2_3_canonical: 
 	$(ORBITER) -v 3 \
-		-define D -design -q 3 -family PG_2_q -end \
+		-define F -finite_field -q 3 -end \
+		-define D -design -field F -family PG_2_q -end \
 		-with D -do \
 			-design_activity \
 				-export_inc \
@@ -16226,7 +16435,7 @@ design_PG_2_3_canonical:
 				-prefix PG_2_3 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex PG_2_3_classification.tex
@@ -16261,7 +16470,7 @@ wreath_product_designs_n4_k2_c: wreath_product_designs_n4_k2_inc.txt
 				-prefix wreath_4_2 \
 				-export_flag_orbits \
 				-show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex wreath_4_2_classification.tex
@@ -16288,7 +16497,7 @@ wreath_product_designs_n8_k6_c: wreath_product_designs_n8_k6_inc.txt
 			-report \
 				-prefix wreath_8_6 \
 				-export_flag_orbits \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex wreath_8_6_classification.tex
@@ -16797,7 +17006,7 @@ Edge_curve_17_nauty:
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
-				-export_group \
+				-export_group_GAP \
 			-end \
 		-end
 	pdflatex Edge_curve_q17_classification.tex
@@ -16913,15 +17122,23 @@ schreier_tree_graphical_output:
 			-yout 500000 \
 			-radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 \
+			-embedded \
 		-end \
 		-define G -linear_group -PGL 4 2 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-orbits_on_polynomials 3 \
-			-orbits_on_polynomials_draw_tree 6 \
-		-end 
-	pdflatex poly_orbits_d3_n3_q2.tex
-	open poly_orbits_d3_n3_q2.pdf
+		-define Orb -orbits -group G \
+			-on_polynomials 3 -draw_tree 6 \
+		-end
+	pdflatex poly_orbits_d3_n3_q2_orbit_6_tree.tex
+	open poly_orbits_d3_n3_q2_orbit_6_tree.pdf
+	#pdflatex poly_orbits_d3_n3_q2.tex
+	#open poly_orbits_d3_n3_q2.pdf
+
+
+#		-with G -do \
+#		-group_theoretic_activity \
+#			-orbits_on_polynomials 3 \
+#			-orbits_on_polynomials_draw_tree 6 \
+#		-end 
 
 
 Queens_graph:

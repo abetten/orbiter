@@ -41,7 +41,6 @@ quartic_curve_object::quartic_curve_object()
 
 	QP = NULL;
 
-	//null();
 }
 
 quartic_curve_object::~quartic_curve_object()

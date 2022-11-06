@@ -1244,7 +1244,17 @@ void string_tools::drop_quotes(std::string &in, std::string &out)
 
 	len = in.length();
 
-	out = in.substr(1, len - 2);
+	if (len == 0) {
+		out = in;
+		return;
+	}
+
+	if (in[0] == '\"' && in[len - 1] == '\"') {
+		out = in.substr(1, len - 2);
+	}
+	else {
+		out = in;
+	}
 }
 
 

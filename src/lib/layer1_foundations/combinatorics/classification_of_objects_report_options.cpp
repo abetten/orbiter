@@ -32,7 +32,8 @@ classification_of_objects_report_options::classification_of_objects_report_optio
 
 	f_show_TDA = FALSE;
 
-	f_export_group = FALSE;
+	f_export_group_orbiter = FALSE;
+	f_export_group_GAP = FALSE;
 
 	f_lex_least = FALSE;
 	//std::string lex_least_geometry_builder;
@@ -93,12 +94,17 @@ int classification_of_objects_report_options::read_arguments(
 			f_show_TDO = FALSE;
 			cout << "-dont_show_TDO" << endl;
 		}
-		else if (ST.stringcmp(argv[i], "-export_group") == 0) {
-			f_export_group = TRUE;
-			cout << "-export_group" << endl;
+		else if (ST.stringcmp(argv[i], "-export_group_orbiter") == 0) {
+			f_export_group_orbiter = TRUE;
+			cout << "-export_group_orbiter" << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-export_group_GAP") == 0) {
+			f_export_group_GAP = TRUE;
+			cout << "-export_group_GAP" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dont_export_group") == 0) {
-			f_export_group = FALSE;
+			f_export_group_orbiter = FALSE;
+			f_export_group_GAP = FALSE;
 			cout << "-dont_export_group" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-lex_least") == 0) {
@@ -140,8 +146,11 @@ void classification_of_objects_report_options::print()
 	if (f_show_TDA) {
 		cout << "-show_TDA " << endl;
 	}
-	if (f_export_group) {
-		cout << "-export_group " << endl;
+	if (f_export_group_orbiter) {
+		cout << "-export_group_orbiter " << endl;
+	}
+	if (f_export_group_GAP) {
+		cout << "-export_group_GAP " << endl;
 	}
 	if (f_lex_least) {
 		cout << "-lex_least " << lex_least_geometry_builder << endl;

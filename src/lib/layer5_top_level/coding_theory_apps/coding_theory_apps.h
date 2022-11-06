@@ -130,6 +130,9 @@ public:
 	int f_export_codewords;
 	std::string export_codewords_fname;
 
+	int f_export_codewords_by_weight;
+	std::string export_codewords_by_weight_fname;
+
 	int f_export_genma;
 	std::string export_genma_fname;
 
@@ -334,6 +337,7 @@ public:
 	void create_genma_from_checkma(int verbose_level);
 	void create_checkma_from_genma(int verbose_level);
 	void export_codewords(std::string &fname, int verbose_level);
+	void export_codewords_by_weight(std::string &fname_base, int verbose_level);
 	void export_genma(std::string &fname, int verbose_level);
 	void export_checkma(std::string &fname, int verbose_level);
 	void weight_enumerator(int verbose_level);

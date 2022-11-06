@@ -35,6 +35,7 @@ design_create::design_create()
 
 	degree = 0;
 
+	f_has_set = FALSE;
 	set = NULL;
 	sz = 0;
 
@@ -45,6 +46,10 @@ design_create::design_create()
 	P = NULL;
 	block = NULL;
 
+	v = 0;
+	b = 0;
+	nb_inc = 0;
+	incma = NULL;
 }
 
 design_create::~design_create()
@@ -64,6 +69,9 @@ design_create::~design_create()
 	if (block) {
 		FREE_int(block);
 	}
+	if (incma) {
+		FREE_int(incma);
+	}
 }
 
 void design_create::init(apps_combinatorics::design_create_description *Descr, int verbose_level)
@@ -76,16 +84,14 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 	}
 	design_create::Descr = Descr;
 
-	if (Descr->f_q) {
+	if (Descr->f_field) {
 
-		q = Descr->q;
+		F = Get_object_of_type_finite_field(Descr->field_label);
+		q = F->q;
 
 		if (f_v) {
 			cout << "design_create::init q = " << q << endl;
-			//cout << "design_create::init k = " << k << endl;
 		}
-		F = NEW_OBJECT(field_theory::finite_field);
-		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	}
 
 	if (Descr->f_family) {
@@ -97,11 +103,16 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 			if (f_v) {
 				cout << "design_create::init PG(2," << q << ")" << endl;
 			}
-			if (!Descr->f_q) {
-				cout << "please use option -q <q> to specify the field order" << endl;
+			if (!Descr->f_field) {
+				cout << "please use option -field <label> to specify the field" << endl;
 				exit(1);
 			}
 			create_design_PG_2_q(F, set, sz, k, verbose_level);
+
+			f_has_set = TRUE;
+
+			v = q * q + q + 1;
+			b = v;
 
 			char str[1000];
 
@@ -113,6 +124,10 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 			snprintf(str, sizeof(str), "PG\\_2\\_%d", q);
 			label_tex.assign(str);
+		}
+		else {
+			cout << "design_create::init family name is not recognized" << endl;
+			exit(1);
 		}
 
 	}
@@ -138,7 +153,15 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		degree = Descr->list_of_blocks_v;
 		k = Descr->list_of_blocks_k;
 
-		Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
+
+
+
+		Get_lint_vector_from_label(Descr->list_of_blocks_label, set, sz, 0 /* verbose_level */);
+		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
+
+		f_has_set = TRUE;
+		v = degree;
+		b = sz;
 
 		char str[1000];
 
@@ -169,6 +192,51 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		Sg = NULL;
 
 	}
+	else if (Descr->f_list_of_sets) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"list of sets" << endl;
+		}
+
+		degree = Descr->list_of_sets_v;
+
+		Get_lint_vector_from_label(Descr->list_of_sets_label, set, sz, 0 /* verbose_level */);
+		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
+
+		f_has_set = TRUE;
+		v = degree;
+		b = sz;
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "sets_v%d", degree);
+		prefix.assign(str);
+
+		snprintf(str, sizeof(str), "sets_v%d", degree);
+		label_txt.assign(str);
+
+		snprintf(str, sizeof(str), "sets\\_v%d", degree);
+		label_tex.assign(str);
+
+		A = NEW_OBJECT(actions::action);
+
+		int f_no_base = FALSE;
+
+		if (Descr->f_no_group) {
+			f_no_base = TRUE;
+		}
+		A->init_symmetric_group(degree, f_no_base, verbose_level);
+
+		//A2 = NEW_OBJECT(actions::action);
+		//A2->induced_action_on_k_subsets(*A, k, verbose_level);
+
+		Aut = NULL;
+		Aut_on_lines = NULL;
+		f_has_group = FALSE;
+		Sg = NULL;
+
+	}
 	else if (Descr->f_list_of_blocks_from_file) {
 
 		if (f_v) {
@@ -192,6 +260,9 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		}
 		sz = m;
 
+		f_has_set = TRUE;
+		v = degree;
+		b = sz;
 
 		char str[1000];
 
@@ -256,6 +327,10 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		sz = nb_blocks;
 		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
 
+		f_has_set = TRUE;
+		v = degree;
+		b = sz;
+
 		char str[1000];
 
 		snprintf(str, sizeof(str), "wreath_product_designs_n%d_k%d", n, k);
@@ -298,6 +373,16 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		cout << "design_create::init set = ";
 		Lint_vec_print(cout, set, sz);
 		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "design_create::init before compute_incidence_matrix" << endl;
+	}
+
+	compute_incidence_matrix(verbose_level);
+
+	if (f_v) {
+		cout << "design_create::init after compute_incidence_matrix" << endl;
 	}
 
 	if (f_has_group) {
@@ -481,6 +566,59 @@ int design_create::get_color_as_two_design_assume_sorted(long int *design, int v
 		cout << "design_create::get_color_as_two_design_assume_sorted done" << endl;
 	}
 	return c;
+}
+
+void design_create::compute_incidence_matrix(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix" << endl;
+	}
+	combinatorics::combinatorics_domain Combi;
+
+
+	if (f_has_set) {
+
+		if (Descr->f_list_of_sets) {
+
+			int h;
+
+			Combi.compute_incidence_matrix_from_sets(
+						v, b, set,
+						incma,
+						verbose_level);
+
+			nb_inc = 0;
+			for (h = 0; h < v * b; h++) {
+				if (incma[h]) {
+					nb_inc++;
+				}
+			}
+
+		}
+		else {
+
+			nb_inc = k * b;
+			Combi.compute_incidence_matrix(v, b, k, set,
+					incma, verbose_level);
+
+		}
+	}
+	else {
+		cout << "design_create::compute_incidence_matrix please give a set" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix The incidence matrix is:" << endl;
+		Int_matrix_print(incma, v, b);
+	}
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix done" << endl;
+	}
+
 }
 
 }}}

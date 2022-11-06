@@ -379,6 +379,23 @@ ring_theory::homogeneous_polynomial_domain *orbiter_top_level_session::get_objec
 	return (ring_theory::homogeneous_polynomial_domain *) get_object(idx);
 }
 
+poset_classification::poset_classification_control *orbiter_top_level_session::get_object_of_type_poset_classification_control(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_ring cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_poset_classification_control) {
+		cout << "orbiter_top_level_session::get_object_of_type_ring object type != t_poset_classification_control" << endl;
+		exit(1);
+	}
+	return (poset_classification::poset_classification_control *) get_object(idx);
+}
+
+
 
 
 void orbiter_top_level_session::get_vector_or_set(std::string &label,

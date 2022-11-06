@@ -114,6 +114,11 @@ public:
 	std::string fname;
 
 	int f_load_csv_no_border;
+
+	int f_load_adjacency_matrix_from_csv_and_select_value;
+	std::string load_adjacency_matrix_from_csv_and_select_value_fname;
+	int load_adjacency_matrix_from_csv_and_select_value_value;
+
 	int f_load_dimacs;
 
 	int f_edge_list;

@@ -42,6 +42,7 @@ design_activity_description::design_activity_description()
 	//std::string extract_solutions_by_index_prefix;
 
 	f_export_inc = FALSE;
+	f_intersection_matrix = FALSE;
 	f_export_blocks = FALSE;
 	f_row_sums = FALSE;
 	f_tactical_decomposition = FALSE;
@@ -141,6 +142,12 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 				cout << "-export_inc " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-intersection_matrix") == 0) {
+			f_intersection_matrix = TRUE;
+			if (f_v) {
+				cout << "-intersection_matrix " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-export_blocks") == 0) {
 			f_export_blocks = TRUE;
 			if (f_v) {
@@ -203,6 +210,9 @@ void design_activity_description::print()
 	}
 	if (f_export_inc) {
 		cout << "-export_inc " << endl;
+	}
+	if (f_intersection_matrix) {
+		cout << "-intersection_matrix " << endl;
 	}
 	if (f_export_blocks) {
 		cout << "-export_blocks " << endl;
