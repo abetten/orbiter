@@ -737,12 +737,6 @@ public:
 		std::ostream &ost,
 		graphics::layered_graph_draw_options *O,
 		int verbose_level);
-#if 0
-	void create_quartic_curve(
-			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr,
-			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *&QC,
-			int verbose_level);
-#endif
 	void canonical_form_of_code(
 			std::string &label,
 			int *genma, int m, int n,

@@ -677,6 +677,39 @@ void orbiter_symbol_table_entry::init_action_on_forms(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_orbits(std::string &label,
+		void *OC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_orbits" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_orbits;
+	ptr = OC;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_orbits done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_poset_classification_control(std::string &label,
+		void *PCC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_poset_classification_control" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_poset_classification_control;
+	ptr = PCC;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_poset_classification_control done" << endl;
+	}
+}
 
 
 
@@ -802,6 +835,12 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_action_on_forms) {
 			cout << "action_on_forms" << endl;
+		}
+		else if (object_type == t_orbits) {
+			cout << "orbits" << endl;
+		}
+		else if (object_type == t_poset_classification_control) {
+			cout << "poset_classification_control" << endl;
 		}
 
 	}

@@ -117,6 +117,21 @@ void modified_group_create::modified_group_init(
 		}
 	}
 
+	else if (Descr->f_point_stabilizer) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_point_stabilizer_subgroup" << endl;
+		}
+
+		create_point_stabilizer_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_point_stabilizer_subgroup" << endl;
+		}
+	}
+
 	else {
 		cout << "modified_group_create::modified_group_init "
 				"unknown operation" << endl;
@@ -514,6 +529,98 @@ void modified_group_create::create_special_subgroup(
 
 	if (f_v) {
 		cout << "modified_group_create::create_special_subgroup "
+				"done" << endl;
+	}
+}
+
+
+
+void modified_group_create::create_point_stabilizer_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_point_stabilizer_subgroup" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_point_stabilizer_subgroup "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_object_of_type_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_point_stabilizer_subgroup A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_point_stabilizer_subgroup A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	A_modified = A_previous;
+
+
+
+	f_has_strong_generators = TRUE;
+	if (f_v) {
+		cout << "modified_group_create::create_point_stabilizer_subgroup "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+
+	//Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+	{
+		groups::orbits_on_something *Orb;
+
+		if (f_v) {
+			cout << "modified_group_create::create_point_stabilizer_subgroup before AG->orbits_on_points" << endl;
+		}
+
+		AG->orbits_on_points(Orb, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::create_point_stabilizer_subgroup after AG->orbits_on_points" << endl;
+		}
+
+		Orb->stabilizer_any_point(Descr->point_stabilizer_index,
+				Strong_gens, verbose_level);
+
+
+		FREE_OBJECT(Orb);
+	}
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_point_stabilizer_subgroup "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "_Stab%d", Descr->point_stabilizer_index);
+	snprintf(str2, sizeof(str2), " {\\rm Stab %d}", Descr->point_stabilizer_index);
+	label.append(str1);
+	label_tex.append(str2);
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_point_stabilizer_subgroup "
 				"done" << endl;
 	}
 }

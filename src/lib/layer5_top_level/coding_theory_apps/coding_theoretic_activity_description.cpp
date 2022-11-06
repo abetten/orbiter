@@ -93,6 +93,9 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_export_codewords = FALSE;
 	//std::string export_codewords_fname;
 
+	f_export_codewords_by_weight = FALSE;
+	//std::string export_codewords_by_weight_fname;
+
 	f_export_genma = FALSE;
 	//std::string export_genma_fname;
 
@@ -408,6 +411,15 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_codewords_by_weight") == 0) {
+			f_export_codewords_by_weight = TRUE;
+			export_codewords_by_weight_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_codewords_by_weight "
+					<< " " << export_codewords_by_weight_fname
+					<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-export_genma") == 0) {
 			f_export_genma = TRUE;
 			export_genma_fname.assign(argv[++i]);
@@ -659,6 +671,11 @@ void coding_theoretic_activity_description::print()
 	if (f_export_codewords) {
 		cout << "-export_codewords "
 			<< " " << export_codewords_fname
+			<< endl;
+	}
+	if (f_export_codewords_by_weight) {
+		cout << "-export_codewords_by_weight "
+			<< " " << export_codewords_by_weight_fname
 			<< endl;
 	}
 	if (f_export_genma) {

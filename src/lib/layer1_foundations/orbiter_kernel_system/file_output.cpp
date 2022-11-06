@@ -16,38 +16,29 @@ namespace orbiter_kernel_system {
 
 file_output::file_output()
 {
-	null();
+	//std::string fname;
+	f_file_is_open = FALSE;
+	fp = NULL;
+	user_data = NULL;
 }
 
 file_output::~file_output()
 {
-	freeself();
-}
-
-void file_output::null()
-{
-	f_file_is_open = FALSE;
-	fp = NULL;
-}
-
-void file_output::freeself()
-{
 	if (f_file_is_open) {
 		close();
-		}
-	null();
+	}
 }
 
 
-void file_output::open(const char *fname,
+void file_output::open(std::string &fname,
 		void *user_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "file_output::open" << endl;
-		}
-	strcpy(file_output::fname, fname);
+	}
+	file_output::fname.assign(fname);
 	file_output::user_data = user_data;
 	
 	fp = new ofstream;
@@ -58,7 +49,7 @@ void file_output::open(const char *fname,
 	
 	if (f_v) {
 		cout << "file_output::open done" << endl;
-		}
+	}
 }
 
 void file_output::close()
@@ -77,11 +68,11 @@ void file_output::write_line(int nb, int *data,
 	if (!f_file_is_open) {
 		cout << "file_output::write_line file is not open" << endl;
 		exit(1);
-		}
+	}
 	*fp << nb;
 	for (i = 0; i < nb; i++) {
 		*fp << " " << data[i];
-		}
+	}
 	*fp << endl;
 }
 

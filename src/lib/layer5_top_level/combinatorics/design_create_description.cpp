@@ -19,8 +19,9 @@ namespace apps_combinatorics {
 
 design_create_description::design_create_description()
 {
-	f_q = FALSE;
-	q = 0;
+	f_field = FALSE;
+	//std::string field_label;
+
 	f_catalogue = FALSE;
 	iso = 0;
 	f_family = FALSE;
@@ -29,7 +30,12 @@ design_create_description::design_create_description()
 	f_list_of_blocks = FALSE;
 	list_of_blocks_v = 0;
 	list_of_blocks_k = 0;
-	//std::string list_of_blocks_text;
+	//std::string list_of_blocks_label;
+
+	f_list_of_sets = FALSE;
+	list_of_sets_v = 0;
+	//std::string list_of_sets_label;
+
 
 	f_list_of_blocks_from_file = FALSE;
 	//std::string list_of_blocks_from_file_fname;
@@ -55,11 +61,11 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 	cout << "design_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			q = ST.strtoi(argv[++i]);
+		if (ST.stringcmp(argv[i], "-field") == 0) {
+			f_field = TRUE;
+			field_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-q " << q << endl;
+				cout << "-field " << field_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-catalogue") == 0) {
@@ -80,11 +86,21 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 			f_list_of_blocks = TRUE;
 			list_of_blocks_v = ST.strtoi(argv[++i]);
 			list_of_blocks_k = ST.strtoi(argv[++i]);
-			list_of_blocks_text.assign(argv[++i]);
+			list_of_blocks_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-list_of_blocks " << list_of_blocks_v
 						<< " " << list_of_blocks_k
-						<< " " << list_of_blocks_text
+						<< " " << list_of_blocks_label
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-list_of_sets") == 0) {
+			f_list_of_sets = TRUE;
+			list_of_sets_v = ST.strtoi(argv[++i]);
+			list_of_sets_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-list_of_sets " << list_of_sets_v
+						<< " " << list_of_sets_label
 						<< endl;
 			}
 		}
@@ -126,20 +142,10 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 }
 
 
-int design_create_description::get_q()
-{
-	if (!f_q) {
-		cout << "design_create_description::get_q "
-				"q has not been set yet" << endl;
-		exit(1);
-	}
-	return q;
-}
-
 void design_create_description::print()
 {
-	if (f_q) {
-		cout << "-q " << q << endl;
+	if (f_field) {
+		cout << "-field " << field_label << endl;
 	}
 	if (f_catalogue) {
 		cout << "-catalogue " << iso << endl;
@@ -150,7 +156,12 @@ void design_create_description::print()
 	if (f_list_of_blocks) {
 		cout << "-list_of_blocks " << list_of_blocks_v
 				<< " " << list_of_blocks_k
-				<< " " << list_of_blocks_text
+				<< " " << list_of_blocks_label
+				<< endl;
+	}
+	if (f_list_of_sets) {
+		cout << "-list_of_sets " << list_of_sets_v
+				<< " " << list_of_sets_label
 				<< endl;
 	}
 	if (f_list_of_blocks_from_file) {

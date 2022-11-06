@@ -873,6 +873,7 @@ public:
 	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
 	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
 	ring_theory::homogeneous_polynomial_domain *get_object_of_type_ring(std::string &label);
+	poset_classification::poset_classification_control *get_object_of_type_poset_classification_control(std::string &label);
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);
 	apps_algebra::vector_ge_builder *get_object_of_type_vector_ge(std::string &label);
@@ -1019,6 +1020,12 @@ public:
 	int f_action_on_forms;
 	apps_algebra::action_on_forms_description *Action_on_forms_descr;
 
+	int f_orbits;
+	apps_algebra::orbits_create_description *Orbits_create_description;
+
+	int f_poset_classification_control;
+	poset_classification::poset_classification_control *Poset_classification_control;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1067,6 +1074,8 @@ public:
 			field_theory::finite_field *&F, int verbose_level);
 	void definition_of_vector_ge(int verbose_level);
 	void definition_of_action_on_forms(int verbose_level);
+	void definition_of_orbits(int verbose_level);
+	void definition_of_poset_classification_control(int verbose_level);
 
 };
 

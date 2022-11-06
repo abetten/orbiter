@@ -505,6 +505,7 @@ public:
 	std::string extract_solutions_by_index_prefix;
 
 	int f_export_inc;
+	int f_intersection_matrix;
 	int f_export_blocks;
 	int f_row_sums;
 	int f_tactical_decomposition;
@@ -564,6 +565,9 @@ public:
 	void do_export_inc(
 			design_create *DC,
 			int verbose_level);
+	void do_intersection_matrix(
+			design_create *DC,
+			int verbose_level);
 	void do_export_blocks(
 			design_create *DC,
 			int verbose_level);
@@ -590,16 +594,23 @@ class design_create_description {
 
 public:
 
-	int f_q;
-	int q;
+	int f_field;
+	std::string field_label;
+
 	int f_catalogue;
 	int iso;
+
 	int f_family;
 	std::string family_name;
+
 	int f_list_of_blocks;
 	int list_of_blocks_v;
 	int list_of_blocks_k;
-	std::string list_of_blocks_text;
+	std::string list_of_blocks_label;
+
+	int f_list_of_sets;
+	int list_of_sets_v;
+	std::string list_of_sets_label;
 
 	int f_list_of_blocks_from_file;
 	std::string list_of_blocks_from_file_fname;
@@ -615,7 +626,6 @@ public:
 	~design_create_description();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
-	int get_q();
 	void print();
 
 };
@@ -656,6 +666,7 @@ public:
 
 	int degree;
 
+	int f_has_set;
 	long int *set;
 	int sz; // = b, the number of blocks
 
@@ -668,6 +679,10 @@ public:
 
 	int *block; // [k]
 
+	int v;
+	int b;
+	int nb_inc;
+	int *incma; // [v * b]
 
 	design_create();
 	~design_create();
@@ -680,6 +695,8 @@ public:
 			int verbose_level);
 	int get_nb_colors_as_two_design(int verbose_level);
 	int get_color_as_two_design_assume_sorted(long int *design, int verbose_level);
+	void compute_incidence_matrix(int verbose_level);
+
 };
 
 

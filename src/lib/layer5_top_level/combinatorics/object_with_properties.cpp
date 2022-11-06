@@ -297,7 +297,12 @@ void object_with_properties::latex_report(std::ostream &ost,
 	}
 
 
-	if (Report_options->f_export_group) {
+	if (Report_options->f_export_group_orbiter) {
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_export_group_orbiter" << endl;
+		}
 
 		std::string fname;
 		std::string label_txt;
@@ -319,6 +324,41 @@ void object_with_properties::latex_report(std::ostream &ost,
 				A_perm,
 				fname, label, label_tex,
 				verbose_level);
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"after A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
+		}
+	}
+
+	if (Report_options->f_export_group_GAP) {
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_export_group_GAP" << endl;
+		}
+
+		std::string fname;
+		//std::string label_txt;
+		//std::string label_tex;
+
+
+		fname.assign(label);
+		fname.append("_aut.gap");
+#if 0
+		label_txt.assign(label);
+		label_txt.append("_aut");
+		label_tex.assign(label);
+		label_tex.append("\\_aut");
+#endif
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"before A_perm->Strong_gens->export_permutation_group_to_GAP" << endl;
+		}
+		A_perm->Strong_gens->export_permutation_group_to_GAP(fname,
+				A_perm, verbose_level);
+
+
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
 					"after A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;

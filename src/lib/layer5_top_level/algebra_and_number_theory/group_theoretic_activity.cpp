@@ -353,7 +353,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 	// generic orbits on points or on subspaces:
-
+#if 0
 	else if (Descr->f_orbits_on_points) {
 
 		if (f_v) {
@@ -443,6 +443,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		FREE_OBJECT(Orb);
 
 	}
+#endif
+
 	else if (Descr->f_orbits_on_subspaces) {
 
 		if (!Descr->f_poset_classification_control) {
@@ -499,7 +501,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
-
+#if 0
 	else if (Descr->f_orbits_on_polynomials) {
 
 		algebra_global_with_action Algebra;
@@ -526,6 +528,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				orbiter_kernel_system::Orbiter->draw_options,
 				verbose_level);
 	}
+#endif
 
 	else if (Descr->f_representation_on_polynomials) {
 

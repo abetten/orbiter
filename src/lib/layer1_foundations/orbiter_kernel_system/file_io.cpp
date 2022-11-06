@@ -1736,8 +1736,8 @@ void file_io::lint_matrix_read_csv_data_column(std::string &fname,
 		}
 		m = S.nb_rows - 1;
 		if (f_v) {
-			cout << "The spreadsheet has " << m << " rows" << endl;
-			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column The spreadsheet has " << m << " rows" << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column The spreadsheet has " << S.nb_cols << " columns" << endl;
 		}
 		M = NEW_lint(m * n);
 		for (i = 0; i < m; i++) {

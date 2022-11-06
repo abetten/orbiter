@@ -23,6 +23,11 @@ create_graph_description::create_graph_description()
 	//fname = NULL;
 
 	f_load_csv_no_border = FALSE;
+
+	f_load_adjacency_matrix_from_csv_and_select_value = FALSE;
+	//std::string load_adjacency_matrix_from_csv_and_select_value_fname;
+	load_adjacency_matrix_from_csv_and_select_value_value = 0;
+
 	f_load_dimacs = FALSE;
 
 	f_edge_list = FALSE;
@@ -137,6 +142,17 @@ int create_graph_description::read_arguments(
 				cout << "-load_csv_no_border " << fname << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-load_adjacency_matrix_from_csv_and_select_value") == 0) {
+			f_load_adjacency_matrix_from_csv_and_select_value = TRUE;
+			load_adjacency_matrix_from_csv_and_select_value_fname.assign(argv[++i]);
+			load_adjacency_matrix_from_csv_and_select_value_value = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-load_adjacency_matrix_from_csv_and_select_value "
+						<< load_adjacency_matrix_from_csv_and_select_value_fname << " "
+						<< load_adjacency_matrix_from_csv_and_select_value_value << endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-load_dimacs") == 0) {
 			f_load_dimacs = TRUE;
@@ -347,6 +363,11 @@ void create_graph_description::print()
 	}
 	if (f_load_csv_no_border) {
 		cout << "-load_csv_no_border " << fname << endl;
+	}
+	if (f_load_adjacency_matrix_from_csv_and_select_value) {
+		cout << "-load_adjacency_matrix_from_csv_and_select_value "
+				<< load_adjacency_matrix_from_csv_and_select_value_fname << " "
+				<< load_adjacency_matrix_from_csv_and_select_value_value << endl;
 	}
 	if (f_load_dimacs) {
 		cout << "-load_dimacs " << fname << endl;

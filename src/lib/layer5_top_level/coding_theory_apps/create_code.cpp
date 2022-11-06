@@ -693,6 +693,123 @@ void create_code::export_codewords(std::string &fname, int verbose_level)
 
 }
 
+void create_code::export_codewords_by_weight(std::string &fname_base, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::export_codewords_by_weight" << endl;
+	}
+
+	number_theory::number_theory_domain NT;
+	coding_theory::coding_theory_domain Code;
+	long int *codewords;
+	long int N;
+
+	N = NT.i_power_j(2, k);
+
+	codewords = NEW_lint(N);
+
+	Code.codewords_affine(F, n, k,
+			genma, // [k * n]
+			codewords, // q^k
+			verbose_level);
+
+
+	data_structures::sorting Sorting;
+
+
+	Sorting.lint_vec_heapsort(codewords, N);
+
+	if (f_v) {
+		cout << "Codewords : ";
+		Lint_vec_print_fully(cout, codewords, N);
+		cout << endl;
+	}
+
+
+	int *Wt;
+	int *word;
+	int h, i, w;
+
+	word = NEW_int(n);
+	Wt = NEW_int(N);
+
+	geometry::geometry_global Gg;
+
+	if (f_v) {
+		cout << "create_code::export_codewords_by_weight computing weights" << endl;
+	}
+	for (h = 0; h < N; h++) {
+		Gg.AG_element_unrank(F->q, word, 1, n, codewords[h]);
+		w = 0;
+		for (i = 0; i < n; i++) {
+			if (word[i]) {
+				w++;
+			}
+		}
+		Wt[h] = w;
+	}
+
+
+	data_structures::tally *T;
+	data_structures::set_of_sets *SoS;
+	int *types;
+	int nb_types;
+
+	T = NEW_OBJECT(data_structures::tally);
+	T->init(Wt, N, FALSE, 0 /* verbose_level */);
+
+	SoS = T->get_set_partition_and_types(types, nb_types, 0 /* verbose_level */);
+
+	for (i = 0; i < nb_types; i++) {
+
+		if (f_v) {
+			cout << "create_code::export_codewords_by_weight we found "
+					<< SoS->Set_size[i] << " codewords of weight " << types[i] << endl;
+		}
+
+		long int *codewords_of_weight;
+		long int nb;
+		int j, a;
+
+		nb = SoS->Set_size[i];
+		codewords_of_weight = NEW_lint(nb);
+
+		for (j = 0; j < nb; j++) {
+			a = SoS->Sets[i][j];
+			codewords_of_weight[j] = codewords[a];
+		}
+
+
+		orbiter_kernel_system::file_io Fio;
+		string fname;
+		char str[1000];
+
+		fname.assign(fname_base);
+		snprintf(str, sizeof(str), "_of_weight_%d.csv", types[i]);
+		fname.append(str);
+
+
+		Fio.lint_matrix_write_csv(fname, codewords_of_weight, nb, 1);
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+		FREE_lint(codewords_of_weight);
+
+	}
+
+
+	if (f_v) {
+		cout << "create_code::export_codewords_by_weight done" << endl;
+	}
+
+}
+
+
 void create_code::export_genma(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

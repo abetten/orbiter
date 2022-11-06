@@ -3465,7 +3465,6 @@ void combinatorics_domain::compute_incidence_matrix(int v, int b, int k, long in
 	if (f_v) {
 		cout << "combinatorics_domain::compute_incidence_matrix" << endl;
 	}
-	//int N = k * b;
 	int i, j, h;
 	int *B;
 
@@ -3485,6 +3484,57 @@ void combinatorics_domain::compute_incidence_matrix(int v, int b, int k, long in
 		cout << "combinatorics_domain::compute_incidence_matrix done" << endl;
 	}
 }
+
+void combinatorics_domain::compute_incidence_matrix_from_sets(
+		int v, int b, long int *Sets_coded,
+		int *&M,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix" << endl;
+	}
+	geometry::geometry_global Gg;
+
+	int i, j;
+	int *B;
+	int *word;
+
+	word = NEW_int(v);
+	M = NEW_int(v * b);
+	B = NEW_int(v);
+	Int_vec_zero(M, v * b);
+	for (j = 0; j < b; j++) {
+		Gg.AG_element_unrank(2, word, 1, v, Sets_coded[j]);
+		if (f_v) {
+			cout << "combinatorics_domain::compute_incidence_matrix j=" << j << " coded set = " << Sets_coded[j];
+			Int_vec_print(cout, word, v);
+			cout << endl;
+		}
+		for (i = 0; i < v; i++) {
+
+			if (word[i]) {
+
+#if 0
+				int ii;
+
+				// we flip it:
+				ii = v - 1 - i;
+#endif
+
+				M[i * b + j] = 1;
+			}
+		}
+	}
+	FREE_int(B);
+	FREE_int(word);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix done" << endl;
+	}
+}
+
 
 void combinatorics_domain::compute_blocks(int v, int b, int k, long int *Blocks_coded,
 		int *&Blocks, int verbose_level)

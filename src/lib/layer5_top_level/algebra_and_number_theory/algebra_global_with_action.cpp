@@ -3829,6 +3829,7 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 	}
 }
 
+#if 0
 void algebra_global_with_action::do_orbits_on_polynomials(
 		groups::linear_group *LG,
 		int degree_of_poly,
@@ -3880,6 +3881,7 @@ void algebra_global_with_action::do_orbits_on_polynomials(
 		cout << "algebra_global_with_action::do_orbits_on_polynomials done" << endl;
 	}
 }
+#endif
 
 void algebra_global_with_action::representation_on_polynomials(
 		groups::linear_group *LG,

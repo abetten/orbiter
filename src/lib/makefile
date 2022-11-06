@@ -431,6 +431,8 @@ MODULES= \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		layer5_top_level/algebra_and_number_theory/modified_group_create.o \
 		layer5_top_level/algebra_and_number_theory/orbit_cascade.o \
+		layer5_top_level/algebra_and_number_theory/orbits_create_description.o \
+		layer5_top_level/algebra_and_number_theory/orbits_create.o \
 		layer5_top_level/algebra_and_number_theory/orbits_on_polynomials.o \
 		layer5_top_level/algebra_and_number_theory/orbits_on_subspaces.o \
 		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \

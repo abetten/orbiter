@@ -837,6 +837,8 @@ enum symbol_table_object_type {
 	t_geometry_builder,
 	t_vector_ge,
 	t_action_on_forms,
+	t_orbits,
+	t_poset_classification_control,
 };
 
 

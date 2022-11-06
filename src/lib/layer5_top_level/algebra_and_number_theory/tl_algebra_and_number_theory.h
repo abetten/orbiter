@@ -286,6 +286,7 @@ public:
 			actions::action *A, groups::strong_generators *SG,
 			data_structures_groups::vector_ge *cosets,
 			int *&relative_order_table, int verbose_level);
+#if 0
 	void do_orbits_on_polynomials(
 			groups::linear_group *LG,
 			int degree_of_poly,
@@ -293,6 +294,7 @@ public:
 			int f_draw_tree, int draw_tree_idx,
 			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
+#endif
 	void representation_on_polynomials(
 			groups::linear_group *LG,
 			int degree_of_poly,
@@ -545,6 +547,9 @@ public:
 
 	int f_create_special_subgroup;
 
+	int f_point_stabilizer;
+	int point_stabilizer_index;
+
 	std::vector<std::string> from;
 
 	group_modification_description();
@@ -703,6 +708,7 @@ public:
 	poset_classification::poset_classification_control *Control;
 
 
+#if 0
 	// orbits on points using Schreier trees:
 	int f_orbits_on_points;
 
@@ -715,7 +721,7 @@ public:
 
 		int f_stabilizer_of_orbit_rep;
 		int stabilizer_of_orbit_rep_orbit_idx;
-
+#endif
 
 	// poset classification
 	int f_orbits_on_subsets;
@@ -766,8 +772,10 @@ public:
 
 	int f_classify_cubic_curves;
 
+#if 0
 	int f_orbits_on_polynomials;
 	int orbits_on_polynomials_degree;
+#endif
 
 	int f_recognize_orbits_on_polynomials;
 	std::string recognize_orbits_on_polynomials_text;
@@ -866,6 +874,9 @@ public:
 	void create_special_subgroup(
 			group_modification_description *description,
 			int verbose_level);
+	void create_point_stabilizer_subgroup(
+			group_modification_description *description,
+			int verbose_level);
 
 };
 
@@ -919,6 +930,82 @@ public:
 	void upstep(std::vector<long int> &Ago, int verbose_level);
 
 };
+
+
+// #############################################################################
+// orbits_create_description.cpp
+// #############################################################################
+
+//! to describe an orbit problem
+
+
+
+class orbits_create_description {
+
+public:
+
+	int f_group;
+	std::string group_label;
+
+	int f_on_points;
+
+	int f_on_subsets;
+	int on_subsets_size;
+	std::string on_subsets_poset_classification_control_label;
+
+	int f_on_subspaces;
+	std::string on_subspaces_poset_classification_control_label;
+
+	int f_on_polynomials;
+	int on_polynomials_degree;
+
+	int f_draw_tree;
+	int draw_tree_idx;
+
+	int f_recognize;
+	std::string recognize_text;
+
+	orbits_create_description();
+	~orbits_create_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+// #############################################################################
+// orbits_create.cpp
+// #############################################################################
+
+//! to create orbits
+
+
+
+class orbits_create {
+
+public:
+	orbits_create_description *Descr;
+
+	any_group *Group;
+
+	std::string prefix;
+	std::string label_txt;
+	std::string label_tex;
+
+	groups::orbits_on_something *Orb;
+
+	poset_classification::poset_classification *On_subsets;
+
+	orbits_on_polynomials *O;
+
+	orbits_create();
+	~orbits_create();
+	void init(apps_algebra::orbits_create_description *Descr, int verbose_level);
+
+};
+
+
 
 
 // #############################################################################
