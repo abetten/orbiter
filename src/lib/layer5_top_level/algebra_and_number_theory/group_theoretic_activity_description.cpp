@@ -159,17 +159,16 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_stabilizer_of_orbit_rep = FALSE;
 	stabilizer_of_orbit_rep_orbit_idx = 0;
-#endif
 
-	f_orbits_on_subsets = FALSE;
-	orbits_on_subsets_size = 0;
+	//f_orbits_on_subsets = FALSE;
+	//orbits_on_subsets_size = 0;
 
 	f_orbits_on_partition = FALSE;
 	orbits_on_partition_k = 0;
 
 	f_orbits_on_subspaces = FALSE;
 	orbits_on_subspaces_depth = 0;
-
+#endif
 
 
 
@@ -195,15 +194,16 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	linear_codes_minimum_distance = 0;
 	linear_codes_target_size = 0;
 
-
+#if 0
 	f_mindist = FALSE;
 	mindist = 0;
 	f_self_orthogonal = FALSE;
 	f_doubly_even = FALSE;
 
-
 	f_tensor_classify = FALSE;
 	tensor_classify_depth = 0;
+#endif
+
 	f_tensor_permutations = FALSE;
 
 	f_classify_ovoids = FALSE;
@@ -214,13 +214,13 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 #if 0
 	f_orbits_on_polynomials = FALSE;
 	orbits_on_polynomials_degree = 0;
-#endif
 
 	f_recognize_orbits_on_polynomials = FALSE;
 	//std::string recognize_orbits_on_polynomials_text;
 
 	f_orbits_on_polynomials_draw_tree = FALSE;
 	orbits_on_polynomials_draw_tree_idx = 0;
+#endif
 
 	f_representation_on_polynomials = FALSE;
 	representation_on_polynomials_degree = 0;
@@ -607,7 +607,6 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-orbits_on_points" << endl;
 			}
 		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-orbits_on_subsets") == 0) {
 			f_orbits_on_subsets = TRUE;
@@ -633,6 +632,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
 			}
 		}
+#endif
 
 #if 0
 		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
@@ -705,7 +705,7 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-mindist") == 0) {
 			f_mindist = TRUE;
 			mindist = ST.strtoi(argv[++i]);
@@ -725,11 +725,12 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-doubly_even" << endl;
 			}
 		}
-
+#endif
 
 
 		// tensors:
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-tensor_classify") == 0) {
 			f_tensor_classify = TRUE;
 			tensor_classify_depth = ST.strtoi(argv[++i]);
@@ -737,6 +738,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-tensor_classify " << tensor_classify_depth << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-tensor_permutations") == 0) {
 			f_tensor_permutations = TRUE;
 			if (f_v) {
@@ -779,7 +781,6 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-orbits_on_polynomials " << endl;
 			}
 		}
-#endif
 		else if (ST.stringcmp(argv[i], "-orbits_on_polynomials_draw_tree") == 0) {
 			f_orbits_on_polynomials_draw_tree = TRUE;
 			orbits_on_polynomials_draw_tree_idx = ST.strtoi(argv[++i]);
@@ -796,6 +797,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-recognize_orbits_on_polynomials " << endl;
 			}
 		}
+#endif
 
 
 		else if (ST.stringcmp(argv[i], "-representation_on_polynomials") == 0) {
@@ -1009,11 +1011,11 @@ void group_theoretic_activity_description::print()
 	if (f_orbits_on_points) {
 		cout << "-orbits_on_points" << endl;
 	}
-#endif
 
 	if (f_orbits_on_subsets) {
 		cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
 	}
+
 	if (f_orbits_on_partition) {
 		cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
 	}
@@ -1022,7 +1024,6 @@ void group_theoretic_activity_description::print()
 		cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
 	}
 
-#if 0
 	if (f_export_trees) {
 		cout << "-export_trees" << endl;
 	}
@@ -1061,7 +1062,7 @@ void group_theoretic_activity_description::print()
 	}
 
 
-
+#if 0
 	if (f_mindist) {
 		cout << "-mindist" << mindist << endl;
 	}
@@ -1071,14 +1072,17 @@ void group_theoretic_activity_description::print()
 	if (f_doubly_even) {
 		cout << "-doubly_even" << endl;
 	}
-
+#endif
 
 
 	// tensors:
 
+#if 0
 	if (f_tensor_classify) {
 		cout << "-tensor_classify " << tensor_classify_depth << endl;
 	}
+#endif
+
 	if (f_tensor_permutations) {
 		cout << "-tensor_permutations " << endl;
 	}
@@ -1098,7 +1102,6 @@ void group_theoretic_activity_description::print()
 	if (f_orbits_on_polynomials) {
 		cout << "-orbits_on_polynomials " << endl;
 	}
-#endif
 	if (f_orbits_on_polynomials_draw_tree) {
 			cout << "-orbits_on_polynomials_draw_tree " << orbits_on_polynomials_draw_tree_idx << endl;
 	}
@@ -1107,6 +1110,7 @@ void group_theoretic_activity_description::print()
 	if (f_recognize_orbits_on_polynomials) {
 		cout << "-recognize_orbits_on_polynomials " << endl;
 	}
+#endif
 
 
 	if (f_representation_on_polynomials) {

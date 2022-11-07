@@ -266,7 +266,6 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 	int i;
 	int level, nb_orbits, cnt, nb_live_pts, nb_extensions, /*nbo,*/ nbg;
 	long int *rep = NULL;
-	char str[1000];
 	poset_orbit_node *O;
 	ring_theory::longinteger_object stab_order, orbit_length;
 	data_structures_groups::schreier_vector *Schreier_vector;
@@ -402,7 +401,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 			}
 
 			ost << cnt << " & " << level << " & " << i
-					<< " & $\\{$ " << str << " $\\}$ & ("
+					<< " & $\\{$ " << s << " $\\}$ & ("
 					<< stab_order << ", "
 					<< orbit_length << ") & ";
 

@@ -25,6 +25,12 @@ orbits_create::orbits_create()
 
 	On_subsets = NULL;
 
+	On_Subspaces = NULL;
+
+	On_tensors = NULL;
+
+	Cascade = NULL;
+
 	O = NULL;
 
 	//std::string prefix;
@@ -165,6 +171,82 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 
 		if (f_v) {
 			cout << "orbits_create::init after Group->orbits_on_subsets" << endl;
+		}
+
+	}
+	if (Descr->f_on_subspaces) {
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_subspaces" << endl;
+		}
+
+		poset_classification::poset_classification_control *Control =
+				Get_object_of_type_poset_classification_control(Descr->on_subspaces_poset_classification_control_label);
+
+
+		if (f_v) {
+			cout << "orbits_create::init before Group->do_orbits_on_subspaces" << endl;
+		}
+
+		Group->do_orbits_on_subspaces(Control,
+				On_Subspaces,
+				Descr->on_subspaces_dimension,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::init after Group->do_orbits_on_subspaces" << endl;
+		}
+
+	}
+	if (Descr->f_on_tensors) {
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_tensors" << endl;
+		}
+
+		poset_classification::poset_classification_control *Control =
+				Get_object_of_type_poset_classification_control(Descr->on_tensors_poset_classification_control_label);
+
+
+		if (f_v) {
+			cout << "orbits_create::init before Group->do_tensor_classify" << endl;
+		}
+
+		Group->do_tensor_classify(Control,
+				On_tensors,
+				Descr->on_tensors_dimension,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::init after Group->do_tensor_classify" << endl;
+		}
+
+	}
+	if (Descr->f_on_partition) {
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_partition" << endl;
+		}
+
+		poset_classification::poset_classification_control *Control =
+				Get_object_of_type_poset_classification_control(Descr->on_partition_poset_classification_control_label);
+
+
+		Cascade = NEW_OBJECT(orbit_cascade);
+
+
+		if (f_v) {
+			cout << "orbits_create::init before Cascade->init" << endl;
+		}
+
+		Cascade->init(Group->A->degree,
+				Descr->on_partition_k,
+				Group,
+				Control,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::init after Cascade->init" << endl;
 		}
 
 	}

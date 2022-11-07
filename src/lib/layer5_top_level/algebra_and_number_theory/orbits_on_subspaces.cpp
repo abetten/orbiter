@@ -28,7 +28,8 @@ static void orbits_on_subspaces_early_test_func(long int *S, int len,
 
 orbits_on_subspaces::orbits_on_subspaces()
 {
-	GTA = NULL;
+	//GTA = NULL;
+	Group = NULL;
 
 	orbits_on_subspaces_Poset = NULL;
 	orbits_on_subspaces_PC = NULL;
@@ -44,7 +45,8 @@ orbits_on_subspaces::~orbits_on_subspaces()
 {
 }
 
-void orbits_on_subspaces::init(group_theoretic_activity *GTA,
+void orbits_on_subspaces::init(
+		apps_algebra::any_group *Group,
 		poset_classification::poset_classification_control *Control,
 		int depth,
 		int verbose_level)
@@ -54,12 +56,16 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 	if (f_v) {
 		cout << "orbits_on_subspaces::init" << endl;
 	}
-	orbits_on_subspaces::GTA = GTA;
+	//orbits_on_subspaces::GTA = GTA;
+	orbits_on_subspaces::Group = Group;
 
-
+	if (!Group->f_linear_group) {
+		cout << "orbits_on_subspaces::init group must be linear" << endl;
+		exit(1);
+	}
 	int n;
 
-	n = GTA->AG->LG->n;
+	n = Group->LG->n;
 
 	Control->f_depth = TRUE;
 	Control->depth = depth;
@@ -78,7 +84,7 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 	orbits_on_subspaces_base_cols = NEW_int(n);
 
 	orbits_on_subspaces_VS = NEW_OBJECT(algebra::vector_space);
-	orbits_on_subspaces_VS->init(GTA->AG->LG->F, n /* dimension */, verbose_level - 1);
+	orbits_on_subspaces_VS->init(Group->LG->F, n /* dimension */, verbose_level - 1);
 	orbits_on_subspaces_VS->init_rank_functions(
 			orbits_on_subspaces_rank_point_func,
 			orbits_on_subspaces_unrank_point_func,
@@ -106,8 +112,8 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 #endif
 
 	orbits_on_subspaces_Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
-	orbits_on_subspaces_Poset->init_subspace_lattice(GTA->AG->A_base /*LG->A_linear*/,
-			GTA->AG->A /* LG->A2 */, GTA->AG->Subgroup_gens /* ->LG->Strong_gens */,
+	orbits_on_subspaces_Poset->init_subspace_lattice(Group->A_base /*LG->A_linear*/,
+			Group->A /* LG->A2 */, Group->Subgroup_gens /* ->LG->Strong_gens */,
 			orbits_on_subspaces_VS,
 			verbose_level);
 	orbits_on_subspaces_Poset->add_testing_without_group(
@@ -119,10 +125,10 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 
 	if (f_v) {
 		cout << "orbits_on_subspaces::init "
-				"GTA->AG->LG->label=" << GTA->AG->LG->label << endl;
+				"GTA->AG->LG->label=" << Group->LG->label << endl;
 	}
 
-	Control->problem_label.assign(GTA->AG->LG->label);
+	Control->problem_label.assign(Group->LG->label);
 	Control->f_problem_label = TRUE;
 
 	orbits_on_subspaces_PC->initialize_and_allocate_root_node(
@@ -165,7 +171,7 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 				<< Control->depth << endl;
 	}
 
-	GTA->AG->orbits_on_poset_post_processing(
+	Group->orbits_on_poset_post_processing(
 			orbits_on_subspaces_PC, Control->depth, verbose_level);
 
 
@@ -226,13 +232,13 @@ static void orbits_on_subspaces_early_test_func(long int *S, int len,
 	//verbose_level = 1;
 
 	orbits_on_subspaces *OoS;
-	group_theoretic_activity *G;
+	//group_theoretic_activity *G;
 	//poset_classification *gen;
 	int f_v = (verbose_level >= 1);
 	int i;
 
 	OoS = (orbits_on_subspaces *) data;
-	G = OoS->GTA;
+	//G = OoS->GTA;
 
 	//gen = G->orbits_on_subspaces_PC;
 
@@ -243,7 +249,7 @@ static void orbits_on_subspaces_early_test_func(long int *S, int len,
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		S[len] = candidates[i];
-		if (G->AG->subspace_orbits_test_set(len + 1, S, verbose_level - 1)) {
+		if (OoS->Group->subspace_orbits_test_set(len + 1, S, verbose_level - 1)) {
 			good_candidates[nb_good_candidates++] = candidates[i];
 		}
 	}

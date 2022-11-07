@@ -30,7 +30,16 @@ orbits_create_description::orbits_create_description()
 	//std::string on_subsets_poset_classification_control_label;
 
 	f_on_subspaces = FALSE;
+	on_subspaces_dimension = 0;
 	//std::string on_subspaces_poset_classification_control_label;
+
+	f_on_tensors = FALSE;
+	on_tensors_dimension = 0;
+	//std::string on_tensors_poset_classification_control_label;
+
+	f_on_partition = FALSE;
+	on_partition_k = 0;
+	//std::string on_partition_poset_classification_control_label;
 
 	f_on_polynomials = FALSE;
 	on_polynomials_degree = 0;
@@ -80,9 +89,29 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-on_subspaces") == 0) {
 			f_on_subspaces = TRUE;
+			on_subspaces_dimension = ST.strtoi(argv[++i]);
 			on_subspaces_poset_classification_control_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-on_subspaces " << on_subspaces_poset_classification_control_label << endl;
+				cout << "-on_subspaces " << on_subspaces_dimension << " "
+						<< on_subspaces_poset_classification_control_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-on_tensors") == 0) {
+			f_on_tensors = TRUE;
+			on_tensors_dimension = ST.strtoi(argv[++i]);
+			on_tensors_poset_classification_control_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_tensors " << on_tensors_dimension << " "
+						<< on_tensors_poset_classification_control_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-on_partition") == 0) {
+			f_on_partition = TRUE;
+			on_partition_k = ST.strtoi(argv[++i]);
+			on_partition_poset_classification_control_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_partition " << on_partition_k << " "
+						<< on_partition_poset_classification_control_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_polynomials") == 0) {
@@ -130,7 +159,16 @@ void orbits_create_description::print()
 				<< on_subsets_poset_classification_control_label << endl;
 	}
 	if (f_on_subspaces) {
-		cout << "-on_subspaces " << on_subspaces_poset_classification_control_label << endl;
+		cout << "-on_subspaces " << on_subspaces_dimension << " "
+				<< on_subspaces_poset_classification_control_label << endl;
+	}
+	if (f_on_tensors) {
+		cout << "-on_tensors " << on_tensors_dimension << " "
+				<< on_tensors_poset_classification_control_label << endl;
+	}
+	if (f_on_partition) {
+		cout << "-on_partition " << on_partition_k << " "
+				<< on_partition_poset_classification_control_label << endl;
 	}
 	if (f_on_polynomials) {
 		cout << "-on_polynomials " << on_polynomials_degree << endl;
