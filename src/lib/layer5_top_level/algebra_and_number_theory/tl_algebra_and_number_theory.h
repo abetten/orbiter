@@ -434,10 +434,14 @@ public:
 			int order_ab,
 			int verbose_level);
 	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
-	void do_orbits_on_subspaces(group_theoretic_activity *GTA,
-			poset_classification::poset_classification_control *Control, int depth, int verbose_level);
+	void do_orbits_on_subspaces(
+			poset_classification::poset_classification_control *Control,
+			orbits_on_subspaces *&OoS,
+			int depth, int verbose_level);
 	void do_tensor_classify(
-			poset_classification::poset_classification_control *Control, int depth, int verbose_level);
+			poset_classification::poset_classification_control *Control,
+			apps_geometry::tensor_classify *&T,
+			int depth, int verbose_level);
 	void do_tensor_permutations(int verbose_level);
 	void do_linear_codes(
 			poset_classification::poset_classification_control *Control,
@@ -724,11 +728,13 @@ public:
 #endif
 
 	// poset classification
+#if 0
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
 
 	int f_orbits_on_partition;
 	int orbits_on_partition_k;
+#endif
 
 
 
@@ -750,7 +756,7 @@ public:
 
 
 
-
+#if 0
 	// subspace orbits:
 	int f_orbits_on_subspaces;
 	int orbits_on_subspaces_depth;
@@ -760,10 +766,12 @@ public:
 		int mindist;
 		int f_self_orthogonal;
 		int f_doubly_even;
+#endif
 
-
+#if 0
 	int f_tensor_classify;
 	int tensor_classify_depth;
+#endif
 
 	int f_tensor_permutations;
 
@@ -775,14 +783,13 @@ public:
 #if 0
 	int f_orbits_on_polynomials;
 	int orbits_on_polynomials_degree;
-#endif
 
 	int f_recognize_orbits_on_polynomials;
 	std::string recognize_orbits_on_polynomials_text;
 
 	int f_orbits_on_polynomials_draw_tree;
 	int orbits_on_polynomials_draw_tree_idx;
-
+#endif
 
 	int f_representation_on_polynomials;
 	int representation_on_polynomials_degree;
@@ -954,7 +961,16 @@ public:
 	std::string on_subsets_poset_classification_control_label;
 
 	int f_on_subspaces;
+	int on_subspaces_dimension;
 	std::string on_subspaces_poset_classification_control_label;
+
+	int f_on_tensors;
+	int on_tensors_dimension;
+	std::string on_tensors_poset_classification_control_label;
+
+	int f_on_partition;
+	int on_partition_k;
+	std::string on_partition_poset_classification_control_label;
 
 	int f_on_polynomials;
 	int on_polynomials_degree;
@@ -996,6 +1012,12 @@ public:
 	groups::orbits_on_something *Orb;
 
 	poset_classification::poset_classification *On_subsets;
+
+	orbits_on_subspaces *On_Subspaces;
+
+	apps_geometry::tensor_classify *On_tensors;
+
+	apps_algebra::orbit_cascade *Cascade;
 
 	orbits_on_polynomials *O;
 
@@ -1074,7 +1096,8 @@ public:
 
 class orbits_on_subspaces {
 public:
-	group_theoretic_activity *GTA;
+	//group_theoretic_activity *GTA;
+	apps_algebra::any_group *Group;
 
 	// local data for orbits on subspaces:
 	poset_classification::poset_with_group_action *orbits_on_subspaces_Poset;
@@ -1086,7 +1109,8 @@ public:
 
 	orbits_on_subspaces();
 	~orbits_on_subspaces();
-	void init(group_theoretic_activity *GTA,
+	void init(
+			apps_algebra::any_group *Group,
 			poset_classification::poset_classification_control *Control,
 			int depth,
 			int verbose_level);

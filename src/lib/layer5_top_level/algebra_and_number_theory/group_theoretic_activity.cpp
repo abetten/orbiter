@@ -303,6 +303,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		AG->orbit_of(Descr->orbit_of_point_idx, verbose_level);
 	}
 
+#if 0
 	else if (Descr->f_orbits_on_subsets) {
 
 		poset_classification::poset_classification_control *Control;
@@ -350,6 +351,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 		FREE_OBJECT(Cascade);
 	}
+#endif
 
 
 	// generic orbits on points or on subspaces:
@@ -445,6 +447,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 #endif
 
+
+#if 0
 	else if (Descr->f_orbits_on_subspaces) {
 
 		if (!Descr->f_poset_classification_control) {
@@ -457,6 +461,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->orbits_on_subspaces_depth,
 				verbose_level);
 	}
+#endif
 
 
 
@@ -482,6 +487,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	// tensors:
 
+#if 0
 	else if (Descr->f_tensor_classify) {
 		if (!Descr->f_poset_classification_control) {
 			cout << "please use option -poset_classification_control descr -end" << endl;
@@ -491,6 +497,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		AG->do_tensor_classify(Descr->Control, Descr->tensor_classify_depth, verbose_level);
 
 	}
+#endif
+
 	else if (Descr->f_tensor_permutations) {
 		AG->do_tensor_permutations(verbose_level);
 	}

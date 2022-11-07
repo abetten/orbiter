@@ -385,8 +385,9 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 	}
 }
 
-void any_group::do_orbits_on_subspaces(group_theoretic_activity *GTA,
+void any_group::do_orbits_on_subspaces(
 		poset_classification::poset_classification_control *Control,
+		orbits_on_subspaces *&OoS,
 		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -405,11 +406,11 @@ void any_group::do_orbits_on_subspaces(group_theoretic_activity *GTA,
 	}
 
 
-	orbits_on_subspaces *OoS;
+	//orbits_on_subspaces *OoS;
 
 	OoS = NEW_OBJECT(orbits_on_subspaces);
 
-	OoS->init(GTA, Control, depth, verbose_level);
+	OoS->init(this, Control, depth, verbose_level);
 
 
 	//finite_field *F;
@@ -417,7 +418,7 @@ void any_group::do_orbits_on_subspaces(group_theoretic_activity *GTA,
 	//F = LG->F;
 
 
-	FREE_OBJECT(OoS);
+	//FREE_OBJECT(OoS);
 
 
 	if (f_v) {
@@ -426,7 +427,9 @@ void any_group::do_orbits_on_subspaces(group_theoretic_activity *GTA,
 }
 
 void any_group::do_tensor_classify(
-		poset_classification::poset_classification_control *Control, int depth, int verbose_level)
+		poset_classification::poset_classification_control *Control,
+		apps_geometry::tensor_classify *&T,
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -446,7 +449,7 @@ void any_group::do_tensor_classify(
 
 
 
-	apps_geometry::tensor_classify *T;
+	//apps_geometry::tensor_classify *T;
 
 	T = NEW_OBJECT(apps_geometry::tensor_classify);
 
@@ -470,7 +473,7 @@ void any_group::do_tensor_classify(
 
 
 
-	FREE_OBJECT(T);
+	//FREE_OBJECT(T);
 
 	if (f_v) {
 		cout << "any_group::do_tensor_classify done" << endl;
