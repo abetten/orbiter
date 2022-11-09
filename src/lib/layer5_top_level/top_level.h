@@ -45,6 +45,8 @@ namespace apps_algebra {
 	class group_theoretic_activity;
 	class modified_group_create;
 	class orbit_cascade;
+	class orbits_activity_description;
+	class orbits_activity;
 	class orbits_create_description;
 	class orbits_create;
 	class orbits_on_polynomials;

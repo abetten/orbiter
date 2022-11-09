@@ -1641,7 +1641,8 @@ public:
 		int verbose_level);
 	void create_group_table(int *&Table, long int &n, int verbose_level);
 	void compute_conjugacy_classes(
-			actions::action *&Aconj, induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
+			actions::action *&Aconj,
+			induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
 		strong_generators *&SG, int &nb_classes,
 		int *&class_size, int *&class_rep,
 		int verbose_level);

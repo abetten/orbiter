@@ -939,6 +939,80 @@ public:
 };
 
 
+
+// #############################################################################
+// orbits_activity_description.cpp
+// #############################################################################
+
+
+//! description of an action for orbits
+
+
+class orbits_activity_description {
+
+public:
+
+
+	int f_report;
+
+	int f_export_trees;
+
+	int f_draw_tree;
+	int draw_tree_idx;
+
+	int f_stabilizer;
+	int stabilizer_point;
+
+	int f_stabilizer_of_orbit_rep;
+	int stabilizer_of_orbit_rep_orbit_idx;
+
+
+	orbits_activity_description();
+	~orbits_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// orbits_activity.cpp
+// #############################################################################
+
+
+//! perform an activity associated with orbits
+
+class orbits_activity {
+public:
+	orbits_activity_description *Descr;
+
+	apps_algebra::orbits_create *OC;
+
+
+
+
+	orbits_activity();
+	~orbits_activity();
+	void init(orbits_activity_description *Descr,
+			apps_algebra::orbits_create *OC,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void do_report(int verbose_level);
+	void do_export_trees(int verbose_level);
+	void do_draw_tree(int verbose_level);
+	void do_stabilizer(int verbose_level);
+	void do_stabilizer_of_orbit_rep(int verbose_level);
+
+};
+
+
+
+
+
+
 // #############################################################################
 // orbits_create_description.cpp
 // #############################################################################
@@ -1009,17 +1083,23 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
+	int f_has_Orb;
 	groups::orbits_on_something *Orb;
 
+	int f_has_On_subsets;
 	poset_classification::poset_classification *On_subsets;
 
+	int f_has_On_Subspaces;
 	orbits_on_subspaces *On_Subspaces;
 
+	int f_has_On_tensors;
 	apps_geometry::tensor_classify *On_tensors;
 
+	int f_has_Cascade;
 	apps_algebra::orbit_cascade *Cascade;
 
-	orbits_on_polynomials *O;
+	int f_has_On_polynomials;
+	orbits_on_polynomials *On_polynomials;
 
 	orbits_create();
 	~orbits_create();

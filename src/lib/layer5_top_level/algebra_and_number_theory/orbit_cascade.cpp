@@ -7,10 +7,6 @@
 
 
 
-
-
-
-
 #include "orbiter.h"
 
 using namespace std;

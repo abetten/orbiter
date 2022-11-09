@@ -4150,14 +4150,10 @@ PGGL_2_8_on_conic:
 	open PGGL_2_8_OnConic_2_8_report.pdf
 
 
-SURFACE_q13_STAB="1,0,0,0,0,12,0,0,0,0,12,0,0,0,0,1, \
-1,0,0,0,0,12,0,0,0,0,1,0,0,0,0,12, \
-1,0,0,0,0,0,12,0,0,12,0,0,0,0,0,1, \
-0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1"
 
 
 
-surface_q13_stab_on_tritangents_orbits:
+surface_q13_Eckardt:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -4170,14 +4166,27 @@ surface_q13_stab_on_tritangents_orbits:
 		-cubic_surface_activity \
 			-export_tritangent_planes \
 		-end
+	pdflatex surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_with_group.tex
+	open surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_with_group.pdf
+
+
+SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
+1,0,0,0,0,12,12,6,6,0,0,7,1,0,2,0, \
+0,1,1,7,3,9,9,11,2,10,10,3,9,9,1,11"
+
+
+surface_q13_Eckardt_on_tritangent_planes:
 	$(ORBITER) -v 2 \
 		-orbiter_path $(ORBITER_PATH) \
+		-draw_options -embedded -end \
+		-define F -finite_field -q 13 -end \
+		-define gens -vector -field F -dense $(SURFACE_Q13_STAB_GENS) -end \
 		-define TriP -set -file \
-			family_Eckardt_q13_a2_b1_tritangent_planes.csv \
+			arc_lifting_trihedral_q13_arc0_1_2_3_43_113_tritangent_planes.csv \
 		-end \
-		-define G -linear_group -PGL 4 13 \
-			-subgroup_by_generators "SURF_STAB" \
-			24 4 $(SURFACE_q13_STAB) \
+		-define G -linear_group -PGL 4 F \
+			-subgroup_by_generators "stab" \
+				24 3 gens \
 			-end \
 		-define G_on_planes -modified_group -from G \
 			-on_k_subspaces 3 \
@@ -4191,14 +4200,32 @@ surface_q13_stab_on_tritangents_orbits:
 		-end \
 		-define Orb -orbits -group Gr \
 			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 1 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-stabilizer 36 \
 		-end
+	pdflatex PGL_4_13_Gr_4_3_res45_orbits_report.tex
+	open PGL_4_13_Gr_4_3_res45_orbits_report.pdf
 
 
-#		-with Gr -do \
-#		-group_theoretic_activity \
-#			-orbits_on_points \
-#			-stabilizer \
-#		-end
+	#pdflatex PGL_4_13_Gr_4_3_res45_orbit_0_tree.tex
+	#open PGL_4_13_Gr_4_3_res45_orbit_0_tree.pdf
+	#pdflatex PGL_4_13_Gr_4_3_res45_orbit_1_tree.tex
+	#open PGL_4_13_Gr_4_3_res45_orbit_1_tree.pdf
+	#pdflatex PGL_4_13_Gr_4_3_res45_stab_orb_0_report.tex
+	#open PGL_4_13_Gr_4_3_res45_stab_orb_0_report.pdf
+
+
+
 
 
 PGL_4_2_wd:
@@ -4737,11 +4764,35 @@ Normalizer_of_Z22_in_PGL_2_9:
 SECTION_ORBIT_ALGORITHMS_SCHREIER_TREES:
 
 
-orbits_PGL_4_2_on_points:
+orbits_PGL_4_2_on_points_draw_tree:
 	$(ORBITER) -v 4 \
+		-draw_options -embedded -end \
 		-define G -linear_group -PGL 4 2 -end \
 		-define Orb -orbits -group G \
 			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 \
+		-end
+	pdflatex PGL_4_2_orbit_0_tree.tex
+	open PGL_4_2_orbit_0_tree.pdf
+
+
+orbits_PGL_4_2_on_points_export_trees:
+	$(ORBITER) -v 4 \
+		-draw_options -embedded -end \
+		-define G -linear_group -PGL 4 2 -end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_trees \
 		-end
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
@@ -4751,16 +4802,7 @@ orbits_PGL_4_2_on_points:
 		-end
 	pdflatex PGL_4_2_0_draw.tex
 	open PGL_4_2_0_draw.pdf
-	pdflatex PGL_4_2_orbits_report.tex
-	open PGL_4_2_orbits_report.pdf
 
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#			-export_trees \
-#		-end
 
 
 T3r1_orbits:
@@ -4770,17 +4812,15 @@ T3r1_orbits:
 			-on_rank_one_tensors -end \
 		-define Orb -orbits -group G \
 			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 \
 		-end
-	pdflatex GL_2_2_wreath_Sym3_orbits_report.tex
-	open GL_2_2_wreath_Sym3_orbits_report.pdf
-
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#			-export_trees \
-#		-end
+	pdflatex GL_2_2_wreath_Sym3_orbit_0_tree.tex
+	open GL_2_2_wreath_Sym3_orbit_0_tree.pdf
 
 
 T3r1_orbits_draw:
@@ -4871,13 +4911,20 @@ orbits_cubic_curves_q2:
 
 orbits_cubic_curves_q2_with_draw_tree:
 	$(ORBITER) -v 4 \
-		-draw_options -yout 500000 -radius 15 -nodes_empty \
+		-draw_options -yout 500000 -radius 150 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define G -linear_group -PGL 3 2 -end \
 		-define Orb -orbits -group G \
 			-on_polynomials 3 \
+		-end \
+		-with Orb -do -orbits_activity \
 			-draw_tree 6 \
 		-end
+	pdflatex PGL_3_2_orbit_6_tree.tex
+	open PGL_3_2_orbit_6_tree.pdf
+
+
+ToDo: problem in report
 
 
 poly_orbits_d3_n3_q2.csv:
@@ -4887,6 +4934,11 @@ poly_orbits_d3_n3_q2.csv:
 		-define G -linear_group -PGL 4 2 -end \
 		-define Orb -orbits -group G \
 			-on_polynomials 3 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end \
+		-with Orb -do -orbits_activity \
 			-draw_tree 6 \
 		-end
 
@@ -4912,11 +4964,6 @@ T4_orbits:
 	#open GL_2_2_wreath_Sym4_report.pdf
 
 
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#		-end
 
 
 T4r1_orbits:
@@ -4925,30 +4972,21 @@ T4r1_orbits:
 			-on_rank_one_tensors -end \
 		-define Orb -orbits -group G \
 			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_trees \
 		-end
-	pdflatex GL_2_2_wreath_Sym4_orbits_report.tex
-	open GL_2_2_wreath_Sym4_orbits_report.pdf
-
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_points \
-#			-export_trees \
-#			-report \
-#		-end
 
 
 T4r1_orbits_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
-			GL_2_2_wreath_Sym4_res81_0.layered_graph \
+			orbit_GL_2_2_wreath_Sym4_res81_0.layered_graph \
 		-radius 400 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 2.5 -scale 0.15 \
 		-end
-	#pdflatex GL_2_2_wreath_Sym3_report.tex
-	#open GL_2_2_wreath_Sym3_report.pdf
-	pdflatex GL_2_2_wreath_Sym4_res81_0_draw.tex
-	open GL_2_2_wreath_Sym4_res81_0_draw.pdf
+	pdflatex orbit_GL_2_2_wreath_Sym4_res81_0_draw.tex
+	open orbit_GL_2_2_wreath_Sym4_res81_0_draw.pdf
 
 
 T4r1_orbits_4:
@@ -4964,8 +5002,6 @@ T4r1_orbits_4:
 		-end
 	pdflatex T4r1_poset.tex
 	open T4r1_poset.pdf
-	#pdflatex GL_2_2_wreath_Sym4_report.tex
-	#open GL_2_2_wreath_Sym4_report.pdf
 
 
 
@@ -4976,14 +5012,6 @@ PGGL_2_8_on_conic_orbits:
 		-define Orb -orbits -group G \
 			-on_points \
 		-end
-	#pdflatex PGGL_2_8_OnConic_2_8_orbits_report.tex
-	#open PGGL_2_8_OnConic_2_8_orbits_report.pdf
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_points\
-#			-report \
-#		-end
 
 
 # example from the Fining manual, page 107:
@@ -5014,7 +5042,7 @@ poset_of_4subsets:
 		-define Control -poset_classification_control \
 			-problem_label poset_4 \
 			-W -depth 4 \
-			-draw_options -radius 200 -end \
+			-draw_options -radius 200 -embedded -end \
 			-report -end \
 			-draw_poset \
 		-end \
@@ -5022,10 +5050,8 @@ poset_of_4subsets:
 		-define Orb -orbits -group G \
 			-on_subsets 4 Control \
 		-end
-	pdflatex PGL_2_3_Identity_2_3_report.tex
-	pdflatex poset_4_poset.tex
-	open PGL_2_3_Identity_2_3_report.pdf
-	open poset_4_poset.pdf
+	#pdflatex poset_4_poset_lvl_4_draw.tex
+	#open poset_4_poset_lvl_4_draw.pdf
 
 poset_of_4subsets_draw:
 	$(ORBITER) -v 3 \
@@ -5103,19 +5129,6 @@ V_3_2_trivial:
 		-end
 
 
-	#$(ORBITER) -v 5 \
-	#	-draw_layered_graph PGL_3_2_Identity_3_2_poset_lvl_3.layered_graph \
-	#			-radius 300 -embedded -line_width 1.1 -y_stretch 0.9 -scale 0.25 \
-	#			-end
-	#pdflatex PGL_3_2_Identity_3_2_report.tex
-	#open PGL_3_2_Identity_3_2_report.pdf
-	#pdflatex PGL_3_2_Identity_3_2_poset_lvl_3_draw.tex
-	#open PGL_3_2_Identity_3_2_poset_lvl_3_draw.pdf
-	#pdflatex PGL_3_2_Identity_3_2_poset.tex
-	#open PGL_3_2_Identity_3_2_poset.pdf
-
-
-
 
 V_4_2_trivial:
 	$(ORBITER) -v 5 \
@@ -5133,14 +5146,6 @@ V_4_2_trivial:
 		-define Orb -orbits -group G \
 			-on_subspaces 4 Control \
 		-end
-
-	#pdflatex PGL_4_2_Identity_4_2_report.tex
-	#open PGL_4_2_Identity_4_2_report.pdf
-	#pdflatex PGL_4_2_Identity_4_2_tree_lvl_4.tex
-	#open PGL_4_2_Identity_4_2_tree_lvl_4.pdf
-	#pdflatex PGL_4_2_Identity_4_2_poset.tex
-	#open PGL_4_2_Identity_4_2_poset.pdf
-
 
 
 
@@ -5240,7 +5245,7 @@ PGL_3_2_on_lines:
 
 
 PGL_2_5_on_subsets:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_2_5 -W -depth 6 \
@@ -5436,8 +5441,6 @@ subspaces_Op_4_2:
 			-on_subspaces 4 Control \
 		-end
 
-	#pdflatex PGL_4_2_Orthogonal_plus_4_2_poset.tex
-	#open PGL_4_2_Orthogonal_plus_4_2_poset.pdf
 
 
 PGL_4_2_on_subspaces:
@@ -5454,14 +5457,6 @@ PGL_4_2_on_subspaces:
 	pdflatex PGL_4_2_poset.tex
 	open PGL_4_2_poset.pdf
 
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_subspaces 4 \
-#			-report \
-#		-end
-#	pdflatex PGL_4_2_report.tex
-#	open PGL_4_2_report.pdf
 
 
 	
@@ -5481,14 +5476,6 @@ PGL_4_2_singer_on_subspaces:
 		-end
 
 
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_subspaces 4 \
-#			-report \
-#		-end
-#	pdflatex PGL_4_2_Singer_4_2_1_poset.tex
-#	open PGL_4_2_Singer_4_2_1_poset.pdf
-
 
 
 PGL_8_2_singer_on_subspaces:
@@ -5505,15 +5492,6 @@ PGL_8_2_singer_on_subspaces:
 		-define Orb -orbits -group G \
 			-on_subspaces 8 Control \
 		-end
-
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#		-orbits_on_subspaces 8 \
-#		-report \
-#		-end
-#	pdflatex PGL_8_2_Singer_8_2_1_poset.tex
-#	open PGL_8_2_Singer_8_2_1_poset.pdf
 
 # May 7, 2020: 16 sec on Mac
 # 1643 orbits in total
@@ -5533,16 +5511,6 @@ Op_6_2_orbits_on_subspaces:
 			-on_subspaces 6 Control \
 		-end
 
-#		-with G -do \
-#		-group_theoretic_activity \
-#		-orbits_on_subspaces 6 \
-#		-report \
-#		-end
-#	pdflatex PGL_6_2_Orthogonal_plus_6_2_report.tex
-#	open PGL_6_2_Orthogonal_plus_6_2_report.pdf
-#	pdflatex PGL_6_2_Orthogonal_plus_6_2_poset.tex
-#	open PGL_6_2_Orthogonal_plus_6_2_poset.pdf
-
 
 
 Op_6_3_orbits_on_subspaces:
@@ -5559,14 +5527,6 @@ Op_6_3_orbits_on_subspaces:
 		-define Orb -orbits -group G \
 			-on_subspaces 6 Control \
 		-end
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#		-orbits_on_subspaces 6 \
-#		-report \
-#		-end
-#	pdflatex PGL_6_3_Orthogonal_plus_6_3_report.tex
-#	open PGL_6_3_Orthogonal_plus_6_3_report.pdf
 
 # June 3, 2020 on Mac: 0 sec
 
@@ -5588,14 +5548,6 @@ Op_6_11_orbits_on_subspaces:
 			-on_subspaces 6 Control \
 		-end
 
-#		-with G -do \
-#		-group_theoretic_activity \
-#		-orbits_on_subspaces 6 \
-#		-report \
-#		-end
-#	pdflatex PGL_6_11_Orthogonal_plus_6_11_report.tex
-#	open PGL_6_11_Orthogonal_plus_6_11_report.pdf
-
 
 # June 3, 2020 on Mac: 12 sec
 
@@ -5614,16 +5566,6 @@ Op_8_2_orbits_on_subspaces:
 		-end
 
 
-#		-with G -do \
-#		-group_theoretic_activity \
-#		-orbits_on_subspaces 8 \
-#		-report \
-#		-end
-#	pdflatex PGL_8_2_Orthogonal_plus_8_2_poset.tex
-#	open PGL_8_2_Orthogonal_plus_8_2_poset.pdf
-
-
-
 PGO_7_2_on_subspaces:
 	$(ORBITER) -v 20 \
 		-orbiter_path $(ORBITER_PATH) \
@@ -5640,16 +5582,6 @@ PGO_7_2_on_subspaces:
 		-define Orb -orbits -group G \
 			-on_subspaces 7 Control \
 		-end
-
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_subspaces 7 \
-#			-report \
-#		-end
-#	pdflatex PGL_7_2_Orthogonal_7_2_poset.tex
-#	open PGL_7_2_Orthogonal_7_2_poset.pdf
-
 
 
 
@@ -6316,12 +6248,8 @@ cubic_curves_PG_2_8_draw:
 	pdflatex cc_8_poset_lvl_9_draw.tex
 	open cc_8_poset_lvl_9_draw.pdf
 
-#cc_8_poset_lvl_9.layered_graph
-#cc_8_poset_detailed_lvl_9.layered_graph
 
 
-
-	
 
 
 
@@ -12881,6 +12809,9 @@ AG_2_3_on_designs:
 		-bsgs AG_2_3 "AG_2_3" 840 362880 "0,1,2,3,4,5,6,7" 8 gens -end \
 		-define Orb -orbits -group G \
 			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-stabilizer 0 \
 		-end
 
 #Written file AG_2_3_stab_orb_0.makefile of size 239
@@ -13910,6 +13841,15 @@ create_translation_plane_9b:
 		-define A -linear_group -import_group_of_plane T -end \
 		-define Orb -orbits -group A \
 			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end \
+		-with Orb -do -orbits_activity \
+			-stabilizer 92 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_trees \
 		-end
 	$(ORBITER) -v 2 \
 		-draw_matrix \
@@ -13920,27 +13860,16 @@ create_translation_plane_9b:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			orbit_PGL_5_3_on_andre_3.layered_graph \
-			-radius 500 -spanning_tree -embedded \
-			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+			-radius 250 -spanning_tree -embedded -nodes_empty \
+			-line_width 1.1 -x_stretch 2.4 -scale 0.15 \
 		-end
-	#open plane_catalogue_q3_k2_1_incma_draw.bmp
-	pdflatex group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
-	#open group_of_plane_plane_catalogue_q3_k2_1_orbits_report.pdf
 	pdflatex orbit_PGL_5_3_on_andre_3_draw.tex
-	#open orbit_PGL_5_3_on_andre_3_draw.pdf
-	pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
-	open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
-	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
-	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
+	open orbit_PGL_5_3_on_andre_3_draw.pdf
+	pdflatex group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
+	open group_of_plane_plane_catalogue_q3_k2_1_orbits_report.pdf
+	pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_pt_92_report.tex
+	open group_of_plane_plane_catalogue_q3_k2_1_stab_pt_92_report.pdf
 
-
-#		-with A -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#			-stabilizer_of_orbit_rep 3 \
-#			-export_trees \
-#		-end
 
 
 
@@ -14024,7 +13953,7 @@ create_translation_plane_25_14_rank:
 			-file plane_catalogue_q5_k2_14_incma.csv \
 		-end \
 		-with F -do -finite_field_activity \
-		-RREF v -normalize_from_the_right \
+			-RREF v -normalize_from_the_right \
 		-end
 
 
@@ -14055,7 +13984,7 @@ RREF_Rao_Rao_plane_incma_rank:
 			-file plane__incma.csv \
 		-end \
 		-with F -do -finite_field_activity \
-		-RREF v -normalize_from_the_right \
+			-RREF v -normalize_from_the_right \
 		-end
 
 # 3-rank is 271, so the Rao / Rao plane is Moorhouse IV.
@@ -14112,24 +14041,7 @@ create_translation_plane_27_5_Rao_Rao:
 	open group_of_plane_plane_catalogue_q3_k3_5_orbits_report.pdf
 	pdflatex group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.tex
 	open group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.pdf
-	#open plane_catalogue_q3_k2_1_incma_draw.bmp
-	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
-	#open group_of_plane_plane_catalogue_q3_k2_1_orbits_report.pdf
-	#pdflatex orbit_PGL_5_3_on_andre_3_draw.tex
-	#open orbit_PGL_5_3_on_andre_3_draw.pdf
-	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
-	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
-	#pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.tex
-	#open group_of_plane_plane_catalogue_q3_k2_1_stab_orb_3_report.pdf
 
-
-#		-with A -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#			-stabilizer_of_orbit_rep 3 \
-#			-export_trees \
-#		-end
 
 
 
@@ -14152,17 +14064,7 @@ create_translation_plane_27_4_block_stab:
 		-define Orb -orbits -group A \
 			-on_points \
 		-end
-	#pdflatex group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.tex
-	#open group_of_plane_plane_catalogue_q3_k3_4_stab_orb_3_report.pdf
-	
 
-#		-with A -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#			-stabilizer_of_orbit_rep 3 \
-#			-export_trees \
-#		-end
 
 
 create_translation_plane_27_5_block_stab:
@@ -14184,16 +14086,7 @@ create_translation_plane_27_5_block_stab:
 		-define Orb -orbits -group A \
 			-on_points \
 		-end
-	#pdflatex group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.tex
-	#open group_of_plane_plane_catalogue_q3_k3_5_stab_orb_3_report.pdf
 
-#		-with A -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#			-stabilizer_of_orbit_rep 3 \
-#			-export_trees \
-#		-end
 
 create_translation_plane_27_6_block_stab:
 	$(ORBITER) -v 3 \
@@ -14214,17 +14107,6 @@ create_translation_plane_27_6_block_stab:
 		-define Orb -orbits -group A \
 			-on_points \
 		-end
-	#pdflatex group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.tex
-	#open group_of_plane_plane_catalogue_q3_k3_6_stab_orb_3_report.pdf
-
-
-#		-with A -do \
-#		-group_theoretic_activity \
-#			-report \
-#			-orbits_on_points \
-#			-stabilizer_of_orbit_rep 3 \
-#			-export_trees \
-#		-end
 
 
 
@@ -15652,13 +15534,6 @@ Hirschfeld_stab_subgroup:
 		-define Orb -orbits -group Gsp \
 			-on_points \
 		-end
-
-
-#		-with Gsp -do \
-#		-group_theoretic_activity \
-#			-orbits_on_points \
-#			-stabilizer \
-#		-end
 
 
 
@@ -17092,7 +16967,6 @@ PGL_4_2_Wedge_4_0_graphical_output:
 	pdflatex PGL_4_2_Wedge_4_2_detached_report.tex
 	open PGL_4_2_Wedge_4_2_detached_report.pdf
 
-#			-draw_options -radius 200 -end \
 
 schreier_tree_graphical_output:
 	$(ORBITER) -v 4 \
@@ -17104,19 +16978,16 @@ schreier_tree_graphical_output:
 		-end \
 		-define G -linear_group -PGL 4 2 -end \
 		-define Orb -orbits -group G \
-			-on_polynomials 3 -draw_tree 6 \
+			-on_polynomials 3 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 6 \
 		-end
 	pdflatex poly_orbits_d3_n3_q2_orbit_6_tree.tex
 	open poly_orbits_d3_n3_q2_orbit_6_tree.pdf
 	#pdflatex poly_orbits_d3_n3_q2.tex
 	#open poly_orbits_d3_n3_q2.pdf
 
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_polynomials 3 \
-#			-orbits_on_polynomials_draw_tree 6 \
-#		-end 
 
 
 Queens_graph:

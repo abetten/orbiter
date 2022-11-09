@@ -2266,15 +2266,13 @@ strong_generators *schreier::stabilizer_any_point(
 	
 	if (f_v) {
 		cout << "schreier::stabilizer_any_point "
-				"before gens->init_generators_"
-				"for_the_conjugate_group_aGav" << endl;
+				"before gens->init_generators_for_the_conjugate_group_aGav" << endl;
 	}
 	gens->init_generators_for_the_conjugate_group_aGav(gens0, 
 		transporter, verbose_level);
 	if (f_v) {
 		cout << "schreier::stabilizer_any_point "
-				"after gens->init_generators_"
-				"for_the_conjugate_group_aGav" << endl;
+				"after gens->init_generators_for_the_conjugate_group_aGav" << endl;
 	}
 
 	FREE_int(transporter);
@@ -2287,7 +2285,8 @@ strong_generators *schreier::stabilizer_any_point(
 }
 
 
-data_structures_groups::set_and_stabilizer *schreier::get_orbit_rep(actions::action *default_action,
+data_structures_groups::set_and_stabilizer *schreier::get_orbit_rep(
+		actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx, int verbose_level)
 {

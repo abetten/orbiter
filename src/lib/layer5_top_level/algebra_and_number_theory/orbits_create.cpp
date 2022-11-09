@@ -21,23 +21,30 @@ orbits_create::orbits_create()
 
 	Group = NULL;
 
+	f_has_Orb = FALSE;
 	Orb = NULL;
 
+	f_has_On_subsets = FALSE;
 	On_subsets = NULL;
 
+	f_has_On_Subspaces = FALSE;
 	On_Subspaces = NULL;
 
+	f_has_On_tensors = FALSE;
 	On_tensors = NULL;
 
+	f_has_Cascade = FALSE;
 	Cascade = NULL;
 
-	O = NULL;
+	f_has_On_polynomials = FALSE;
+	On_polynomials = NULL;
 
 	//std::string prefix;
 	//std::string label_txt;
 	//std::string label_tex;
 
 }
+
 
 orbits_create::~orbits_create()
 {
@@ -63,6 +70,8 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 	}
 
 
+	prefix.assign(Group->label);
+
 	if (Descr->f_on_points) {
 
 		if (f_v) {
@@ -75,6 +84,9 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 		}
 
 		Group->orbits_on_points(Orb, verbose_level);
+
+		f_has_Orb = TRUE;
+
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity after AG->orbits_on_points" << endl;
@@ -169,6 +181,8 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 		Group->orbits_on_subsets(Control, On_subsets,
 				Descr->on_subsets_size, verbose_level);
 
+		f_has_On_subsets = TRUE;
+
 		if (f_v) {
 			cout << "orbits_create::init after Group->orbits_on_subsets" << endl;
 		}
@@ -193,6 +207,9 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 				Descr->on_subspaces_dimension,
 				verbose_level);
 
+		f_has_On_Subspaces = TRUE;
+
+
 		if (f_v) {
 			cout << "orbits_create::init after Group->do_orbits_on_subspaces" << endl;
 		}
@@ -216,6 +233,8 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 				On_tensors,
 				Descr->on_tensors_dimension,
 				verbose_level);
+
+		f_has_On_tensors = TRUE;
 
 		if (f_v) {
 			cout << "orbits_create::init after Group->do_tensor_classify" << endl;
@@ -245,6 +264,8 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 				Control,
 				verbose_level);
 
+		f_has_Cascade = TRUE;
+
 		if (f_v) {
 			cout << "orbits_create::init after Cascade->init" << endl;
 		}
@@ -264,44 +285,23 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 			exit(1);
 		}
 
-		O = NEW_OBJECT(orbits_on_polynomials);
+		On_polynomials = NEW_OBJECT(orbits_on_polynomials);
 
 		if (f_v) {
-			cout << "orbits_create::init before O->init" << endl;
+			cout << "orbits_create::init before On_polynomials->init" << endl;
 		}
-		O->init(Group->LG,
+		On_polynomials->init(Group->LG,
 				Descr->on_polynomials_degree,
 				Descr->f_recognize, Descr->recognize_text,
 				verbose_level);
 
 		if (f_v) {
-			cout << "orbits_create::init after O->init" << endl;
+			cout << "orbits_create::init after On_polynomials->init" << endl;
 		}
 
-
-		if (Descr->f_draw_tree) {
-
-			if (f_v) {
-				cout << "orbits_create::init f_draw_tree" << endl;
-			}
-
-			string fname;
-			char str[1000];
+		f_has_On_polynomials = TRUE;
 
 
-			snprintf(str, sizeof(str), "_orbit_%d_tree", Descr->draw_tree_idx);
-
-			fname.assign(O->fname_base);
-			fname.append(str);
-
-			O->Sch->draw_tree(fname,
-					orbiter_kernel_system::Orbiter->draw_options,
-					Descr->draw_tree_idx,
-					FALSE /* f_has_point_labels */, NULL /* long int *point_labels*/,
-					verbose_level);
-		}
-
-		//O->report(verbose_level);
 
 
 	}
