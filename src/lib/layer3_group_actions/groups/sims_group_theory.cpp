@@ -1276,16 +1276,24 @@ void sims::find_standard_generators_int(int ord_a, int ord_b,
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 	while (TRUE) {
+
 		a = find_element_of_given_order_int(ord_a,
 				nb_trials1, verbose_level - 1);
+
 		nb_trials += nb_trials1;
+
 		b = find_element_of_given_order_int(ord_b,
 				nb_trials1, verbose_level - 1);
+
 		nb_trials += nb_trials1;
+
 		element_unrank_lint(a, Elt1);
 		element_unrank_lint(b, Elt2);
+
 		A->mult(Elt1, Elt2, Elt3);
+
 		o = A->element_order(Elt3);
+
 		if (o == ord_ab) {
 			break;
 		}
@@ -1380,6 +1388,7 @@ int sims::find_element_of_given_order_int(int *Elt,
 		cout << "looking for an element of order " << ord << endl;
 		cout << "max_trials = " << max_trials << endl;
 	}
+
 	Elt1 = NEW_int(A->elt_size_in_int);
 	o = 0;
 	while (nb_trials < max_trials) {
@@ -1526,19 +1535,22 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 
 	P->group_order(go_P1);
 	while (TRUE) {
+
 		c = D.compare(go_P1, go_P);
+
 		if (c == 0) {
 			break;
 		}
+
 		if (c > 0) {
 			cout << "sims::sylow_subgroup "
 					"overshooting the group order" << endl;
 			exit(1);
 		}
 
-
 		find_element_of_prime_power_order(p, Elt1, e1,
 				nb_trials, 0 /* verbose_level */);
+
 		for (i = 0; i < e1; i++) {
 			if (P->is_normalizing(Elt1,
 					0 /* verbose_level */)) {
@@ -1713,10 +1725,14 @@ void sims::create_group_table(int *&Table, long int &n,
 	Elt3 = NEW_int(A->elt_size_in_int);
 	Table = NEW_int(n * n);
 	Int_vec_zero(Table, n * n);
+
 	for (i = 0; i < n; i++) {
+
 		element_unrank_lint(i, Elt1);
 		//cout << "i=" << i << endl;
+
 		for (j = 0; j < n; j++) {
+
 			element_unrank_lint(j, Elt2);
 			A->element_mult(Elt1, Elt2, Elt3, 0);
 #if 0
@@ -1743,7 +1759,8 @@ void sims::create_group_table(int *&Table, long int &n,
 }
 
 void sims::compute_conjugacy_classes(
-		actions::action *&Aconj, induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
+		actions::action *&Aconj,
+		induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
 	strong_generators *&SG, int &nb_classes,
 	int *&class_size, int *&class_rep,
 	int verbose_level)
@@ -1768,7 +1785,8 @@ void sims::compute_conjugacy_classes(
 		verbose_level - 1);
 
 	if (f_v) {
-		cout << "sims::compute_conjugacy_classes after Aconj->induced_action_by_conjugation" << endl;
+		cout << "sims::compute_conjugacy_classes "
+				"after Aconj->induced_action_by_conjugation" << endl;
 	}
 
 	ABC = Aconj->G.ABC;
@@ -1832,12 +1850,15 @@ void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
 	if (f_v) {
 		cout << "sims::compute_all_powers" << endl;
 	}
+
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
+
 	element_unrank_lint(elt_idx, Elt1);
 	A->element_move(Elt1, Elt2, 0);
 	power_elt[0] = elt_idx;
+
 	for (i = 2; i <= n; i++) {
 		A->element_mult(Elt1, Elt2, Elt3, 0);
 		a = element_rank_lint(Elt3);
@@ -2148,10 +2169,14 @@ void sims::Cayley_graph(int *&Adj, int &sz,
 	if (f_v) {
 		cout << "Computing the Cayley graph:" << endl;
 	}
+
 	for (i = 0; i < sz; i++) {
+
 		element_unrank_lint(i, Elt1);
 		//cout << "i=" << i << endl;
+
 		for (h = 0; h < nb_S; h++) {
+
 			A->element_mult(Elt1, gens_S->ith(h), Elt2, 0);
 #if 0
 			cout << "i=" << i << " h=" << h << endl;
@@ -2164,6 +2189,7 @@ void sims::Cayley_graph(int *&Adj, int &sz,
 #endif
 			j = element_rank_lint(Elt2);
 			Adj[i * sz + j] = Adj[j * sz + i] = 1;
+
 			if (i == 0) {
 				if (f_v) {
 					cout << "edge " << i << " " << j << endl;

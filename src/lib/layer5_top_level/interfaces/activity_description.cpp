@@ -91,6 +91,10 @@ activity_description::activity_description()
 
 	f_action_on_forms_activity = FALSE;
 	Action_on_forms_activity_description = NULL;
+
+	f_orbits_activity = FALSE;
+	Orbits_activity_description = NULL;
+
 }
 
 activity_description::~activity_description()
@@ -641,6 +645,28 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-orbits_activity") == 0) {
+		f_orbits_activity = TRUE;
+		Orbits_activity_description =
+				NEW_OBJECT(apps_algebra::orbits_activity_description);
+		if (f_v) {
+			cout << "reading -orbits_activity" << endl;
+		}
+		i += Orbits_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-orbits_activity" << endl;
+			Orbits_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 	else {
 		cout << "unrecognized activity after -do : " << argv[i] << endl;
@@ -856,6 +882,14 @@ void activity_description::worker(int verbose_level)
 
 		do_action_on_forms_activity(verbose_level);
 	}
+	else if (f_orbits_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_orbits_activity" << endl;
+		}
+
+		do_orbits_activity(verbose_level);
+	}
 
 	if (f_v) {
 		cout << "activity_description::worker done" << endl;
@@ -965,6 +999,10 @@ void activity_description::print()
 	else if (f_action_on_forms_activity) {
 		cout << "-action_on_forms_activity" << endl;
 		Action_on_forms_activity_description->print();
+	}
+	else if (f_orbits_activity) {
+		cout << "-orbits_activity" << endl;
+		Orbits_activity_description->print();
 	}
 
 }
@@ -2279,6 +2317,61 @@ void activity_description::do_action_on_forms_activity(int verbose_level)
 
 	if (f_v) {
 		cout << "activity_description::do_action_on_forms_activity done" << endl;
+	}
+
+}
+
+
+void activity_description::do_orbits_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_orbits_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	apps_algebra::orbits_create *OC;
+
+	OC = (apps_algebra::orbits_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+
+		apps_algebra::orbits_activity Activity;
+
+		Activity.init(
+				Orbits_activity_description,
+				OC,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_orbits_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_orbits_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_orbits_activity done" << endl;
 	}
 
 }

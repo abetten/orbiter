@@ -100,6 +100,8 @@ class activity_description {
 	int f_action_on_forms_activity;
 	apps_algebra::action_on_forms_activity_description *Action_on_forms_activity_description;
 
+	int f_orbits_activity;
+	apps_algebra::orbits_activity_description *Orbits_activity_description;
 
 public:
 	activity_description();
@@ -133,6 +135,7 @@ public:
 	void do_spread_activity(int verbose_level);
 	void do_translation_plane_activity(int verbose_level);
 	void do_action_on_forms_activity(int verbose_level);
+	void do_orbits_activity(int verbose_level);
 
 };
 

@@ -1455,7 +1455,7 @@ void schreier::draw_tree(std::string &fname,
 	int *path;
 	int *weight;
 	int *placement_x;
-	int i, j, last, max_depth = 0;
+	int i, j, last, max_depth = 0, len;
 
 
 	if (f_v) {
@@ -1465,12 +1465,23 @@ void schreier::draw_tree(std::string &fname,
 		cout << "schreier::draw_tree Opt:" << endl;
 		Opt->print();
 	}
+
+	if (orbit_no >= nb_orbits) {
+		cout << "schreier::draw_tree orbit_no out of range" << endl;
+		exit(1);
+	}
 	path = NEW_int(A->degree);
 	weight = NEW_int(A->degree);
 	placement_x = NEW_int(A->degree);
 
 	i = orbit_first[orbit_no];
-	last = orbit_first[orbit_no + 1];
+	len = orbit_len[orbit_no];
+	last = i + len; //orbit_first[orbit_no + 1];
+	if (f_v) {
+		cout << "schreier::draw_tree first=" << i << endl;
+		cout << "schreier::draw_tree len=" << len << endl;
+		cout << "schreier::draw_tree last=" << last << endl;
+	}
 
 	for (j = 0; j < A->degree; j++) {
 		weight[j] = 0;
@@ -1498,6 +1509,9 @@ void schreier::draw_tree(std::string &fname,
 	}
 #endif
 
+	if (f_v) {
+		cout << "schreier::draw_tree before draw_tree2" << endl;
+	}
 	draw_tree2(fname,
 			Opt,
 			//xmax, ymax, f_circletext,
@@ -1507,6 +1521,9 @@ void schreier::draw_tree(std::string &fname,
 			//scale, line_width,
 			f_has_point_labels, point_labels,
 			verbose_level - 2);
+	if (f_v) {
+		cout << "schreier::draw_tree after draw_tree2" << endl;
+	}
 
 	FREE_int(path);
 	FREE_int(weight);
