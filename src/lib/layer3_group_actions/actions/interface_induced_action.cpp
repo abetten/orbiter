@@ -1025,7 +1025,13 @@ static void induced_action_element_pack(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
+		if (f_v) {
+			cout << "induced_action_element_pack before sub->element_pack" << endl;
+		}
 		sub->element_pack(Elt, elt, verbose_level);
+		if (f_v) {
+			cout << "induced_action_element_pack after sub->element_pack" << endl;
+		}
 	}
 }
 
@@ -1686,7 +1692,7 @@ static void induced_action_print_point(action &A,
 	else if (A.type_G == action_on_interior_direct_product_t) {
 		if (FALSE) {
 			cout << "action_on_interior_direct_product_t" << endl;
-			}
+		}
 		induced_actions::action_on_interior_direct_product *IDP;
 		int i, j;
 
@@ -1695,6 +1701,28 @@ static void induced_action_print_point(action &A,
 		j = a % IDP->nb_cols;
 		ost << "(" << i << "," << j << ")";
 	}
+	else if (A.type_G == action_on_wedge_product_t) {
+		if (FALSE) {
+			cout << "action_on_wedge_product_t" << endl;
+		}
+		induced_actions::action_on_wedge_product *AW = A.G.AW;
+
+		action *sub;
+
+		sub = A.subaction;
+		if (sub == NULL) {
+			cout << "induced_action_print_point "
+					"no subaction" << endl;
+			exit(1);
+		}
+		AW->unrank_point(AW->wedge_v1, a);
+		ost << a << " = ";
+		Int_vec_print(ost, AW->wedge_v1, AW->wedge_dimension);
+
+	}
+
+
+
 	else {
 		cout << "induced_action_print_point type_G unknown:: type_G = ";
 		AG.action_print_symmetry_group_type(cout, A.type_G);

@@ -591,6 +591,10 @@ void action::element_write_file_fp(int *Elt,
 	char *elt;
 	
 	elt = element_rw_memory_object;
+	if (elt == NULL) {
+		cout << "action::element_write_file_fp elt == NULL" << endl;
+		exit(1);
+	}
 	if (f_v) {
 		element_print(Elt, cout);
 		Int_vec_print(cout, Elt, elt_size_in_int);
@@ -725,6 +729,11 @@ void action::element_write_to_file_binary(int *Elt,
 	//elt = NEW_char(coded_elt_size_in_char);
 		// memory allocation should be avoided in a low-level function
 	elt = element_rw_memory_object;
+	if (elt == NULL) {
+		cout << "action::element_write_to_file_binary elt == NULL" << endl;
+		print_info();
+		exit(1);
+	}
 
 	element_pack(Elt, elt, verbose_level);
 	fp.write(elt, coded_elt_size_in_char);

@@ -1992,6 +1992,12 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 			ost << "Orbit " << idx << ":" << endl;
 
 
+			if (Sch->orbit_len[idx] != orbit_length) {
+				cout << "orbits_on_something::report Sch->orbit_len[idx] != orbit_length" << endl;
+				cout << "Sch->orbit_len[idx] = " << Sch->orbit_len[idx] << endl;
+				cout << "orbit_length = " << orbit_length << endl;
+				exit(1);
+			}
 			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
 
 			a = Orb[0];
@@ -2138,6 +2144,95 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 	FREE_lint(Table);
 
 
+
+}
+
+
+void orbits_on_something::export_something(std::string &what, int data1,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::export_something" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	string fname_base;
+
+	fname_base.assign("orbits_");
+	fname_base.append(prefix);
+
+	if (f_v) {
+		cout << "orbits_on_something::export_something before export_something_worker" << endl;
+	}
+	export_something_worker(fname_base, what, data1, fname, verbose_level);
+	if (f_v) {
+		cout << "orbits_on_something::export_something after export_something_worker" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::export_something done" << endl;
+	}
+
+}
+
+void orbits_on_something::export_something_worker(
+		std::string &fname_base,
+		std::string &what, int data1,
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::export_something_worker" << endl;
+	}
+
+	data_structures::string_tools ST;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (ST.stringcmp(what, "orbit") == 0) {
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "_orbit_%d.csv", data1);
+
+		fname.assign(fname_base);
+		fname.append(str);
+
+		int orbit_idx = data1;
+		std::vector<int> Orb;
+		int *Pts;
+		int i;
+
+		Sch->get_orbit_in_order(Orb,
+				orbit_idx, verbose_level);
+
+		Pts = NEW_int(Orb.size());
+		for (i = 0; i < Orb.size(); i++) {
+			Pts[i] = Orb[i];
+		}
+
+
+
+		Fio.int_matrix_write_csv(fname, Pts, 1, Orb.size());
+
+		FREE_int(Pts);
+
+		cout << "orbits_on_something::export_something_worker "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	else {
+		cout << "orbits_on_something::export_something_worker unrecognized export target: " << what << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::export_something_worker done" << endl;
+	}
 
 }
 

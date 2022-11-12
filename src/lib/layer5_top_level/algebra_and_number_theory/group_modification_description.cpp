@@ -29,6 +29,8 @@ group_modification_description::group_modification_description()
 	f_on_k_subsets = FALSE;
 	on_k_subsets_k = 0;
 
+	f_on_wedge_product = FALSE;
+
 	f_create_special_subgroup = FALSE;
 
 	f_point_stabilizer = FALSE;
@@ -76,6 +78,12 @@ int group_modification_description::read_arguments(
 			on_k_subsets_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-on_k_subsets " << on_k_subsets_k << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-on_wedge_product") == 0) {
+			f_on_wedge_product = TRUE;
+			if (f_v) {
+				cout << "-on_wedge_product " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-create_special_subgroup") == 0) {
@@ -128,6 +136,9 @@ void group_modification_description::print()
 	}
 	if (f_on_k_subsets) {
 		cout << "-on_k_subsets " << on_k_subsets_k << endl;
+	}
+	if (f_on_wedge_product) {
+		cout << "-on_wedge_product " << endl;
 	}
 	if (f_create_special_subgroup) {
 		cout << "-create_special_subgroup " << endl;

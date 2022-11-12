@@ -2629,6 +2629,26 @@ int sorting::integer_vec_compare(int *p, int *q, int len)
 	return 0;
 }
 
+int sorting::integer_vec_std_compare(vector<unsigned int> &p, vector<unsigned int> &q)
+{
+	int i;
+
+	if (p.size() != q.size()) {
+		cout << "sorting::integer_vec_std_compare different lengths" << endl;
+		exit(1);
+	}
+
+	for (i = 0; i < p.size(); i++) {
+		if (p[i] < q[i])
+			return -1;
+		if (p[i] > q[i])
+			return 1;
+		}
+	return 0;
+}
+
+
+
 int sorting::lint_vec_compare(long int *p, long int *q, int len)
 {
 	int i;
@@ -3182,6 +3202,19 @@ int sorting::test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int
 }
 
 int sorting::int_vec_compare(int *p, int *q, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (p[i] < q[i])
+			return -1;
+		if (p[i] > q[i])
+			return 1;
+		}
+	return 0;
+}
+
+int sorting::uint_vec_compare(unsigned int *p, unsigned int *q, int len)
 {
 	int i;
 

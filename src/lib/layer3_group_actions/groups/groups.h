@@ -448,7 +448,7 @@ public:
 	void GL_invert(int *A, int *Ainv);
 	void GL_invert_internal(int *A, int *Ainv, int verbose_level);
 	void GL_unpack(uchar *elt, int *Elt, int verbose_level);
-	void GL_pack(int *Elt, uchar *elt);
+	void GL_pack(int *Elt, uchar *elt, int verbose_level);
 	void GL_print_easy(int *Elt, std::ostream &ost);
 	void GL_code_for_make_element(int *Elt, int *data);
 	void GL_print_for_make_element(int *Elt, std::ostream &ost);
@@ -464,7 +464,7 @@ public:
 	void decode_matrix(int *Elt, int n, uchar *elt);
 	int get_digit(uchar *elt, int i, int j);
 	int decode_frobenius(uchar *elt);
-	void encode_matrix(int *Elt, int n, uchar *elt);
+	void encode_matrix(int *Elt, int n, uchar *elt, int verbose_level);
 	void put_digit(uchar *elt, int i, int j, int d);
 	void encode_frobenius(uchar *elt, int d);
 	void make_element(int *Elt, int *data, int verbose_level);
@@ -648,6 +648,13 @@ public:
 	void create_latex_report(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void report_quick(std::ostream &ost, int verbose_level);
+	void export_something(std::string &what, int data1,
+			std::string &fname, int verbose_level);
+	void export_something_worker(
+			std::string &fname_base,
+			std::string &what, int data1,
+			std::string &fname,
+			int verbose_level);
 
 };
 

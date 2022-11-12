@@ -56,6 +56,7 @@ public:
 		int verbose_level);
 	// allocates Solutions[nb_sol * nb_needed]
 	uint32_t SuperFastHash (const char * data, int len);
+	uint32_t SuperFastHash_uint(const unsigned int * p, int sz);
 	void union_of_sets(std::string &fname_set_of_sets,
 			std::string &fname_input, std::string &fname_output, int verbose_level);
 
@@ -1373,6 +1374,7 @@ public:
 		int *&pts, int &nb_pts);
 	void int_vec_bubblesort_increasing(int len, int *p);
 	int integer_vec_compare(int *p, int *q, int len);
+	int integer_vec_std_compare(std::vector<unsigned int> &p, std::vector<unsigned int> &q);
 	int lint_vec_compare(long int *p, long int *q, int len);
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
@@ -1397,6 +1399,7 @@ public:
 	int uchar_vec_compare(uchar *p, uchar *q, int len);
 	int test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int *w, int len);
 	int int_vec_compare(int *p, int *q, int len);
+	int uint_vec_compare(unsigned int *p, unsigned int *q, int len);
 	int int_vec_compare_stride(int *p, int *q, int len, int stride);
 	void sorted_vec_get_first_and_length(int *v, int len,
 			int *class_first, int *class_len, int &nb_classes);

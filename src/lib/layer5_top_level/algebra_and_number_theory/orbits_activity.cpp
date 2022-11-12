@@ -61,6 +61,10 @@ void orbits_activity::perform_activity(int verbose_level)
 	if (Descr->f_report) {
 		do_report(verbose_level);
 	}
+	if (Descr->f_export_something) {
+		do_export(verbose_level);
+
+	}
 	else if (Descr->f_export_trees) {
 		do_export_trees(verbose_level);
 	}
@@ -114,6 +118,78 @@ void orbits_activity::do_report(int verbose_level)
 
 	if (f_v) {
 		cout << "orbits_activity::do_report done" << endl;
+	}
+
+}
+
+void orbits_activity::do_export(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_export" << endl;
+	}
+
+
+	if (OC->f_has_Orb) {
+
+		string fname;
+
+		if (f_v) {
+			cout << "orbits_activity::do_export "
+					"before OC->Orb->export_something" << endl;
+		}
+
+		OC->Orb->export_something(Descr->export_something_what,
+				Descr->export_something_data1, fname, verbose_level);
+
+		if (f_v) {
+			cout << "orbits_activity::do_export "
+					"after OC->Orb->export_something" << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "orbits_activity::do_export "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+	}
+
+	else if (OC->f_has_On_polynomials) {
+
+		string fname;
+
+		if (f_v) {
+			cout << "orbits_activity::do_export "
+					"before OC->On_polynomials->export_something" << endl;
+		}
+
+		OC->On_polynomials->export_something(Descr->export_something_what,
+				Descr->export_something_data1, fname, verbose_level);
+
+		if (f_v) {
+			cout << "orbits_activity::do_export "
+					"after OC->On_polynomials->export_something" << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "orbits_activity::do_export "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+
+	}
+
+	else {
+		cout << "orbits_activity::do_export no suitable data structure" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "orbits_activity::do_export done" << endl;
 	}
 
 }

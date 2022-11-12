@@ -22,6 +22,10 @@ orbits_activity_description::orbits_activity_description()
 
 	f_report = FALSE;
 
+	f_export_something = FALSE;
+	//std::string export_something_what;
+	export_something_data1 = 0;
+
 	f_export_trees = FALSE;
 
 	f_draw_tree = FALSE;
@@ -64,6 +68,14 @@ int orbits_activity_description::read_arguments(
 			f_export_trees = TRUE;
 			if (f_v) {
 				cout << "-export_trees" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
+			f_export_something = TRUE;
+			export_something_what.assign(argv[++i]);
+			export_something_data1 = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-export_something " << export_something_what << " " << export_something_data1 << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
@@ -118,6 +130,9 @@ void orbits_activity_description::print()
 	}
 	if (f_export_trees) {
 		cout << "-export_trees" << endl;
+	}
+	if (f_export_something) {
+		cout << "-export_something " << export_something_what << " " << export_something_data1 << endl;
 	}
 	if (f_draw_tree) {
 		cout << "-draw_tree " << draw_tree_idx << endl;

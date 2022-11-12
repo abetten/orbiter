@@ -542,7 +542,7 @@ void matrix_group::setup_page_storage(
 		cout << "matrix_group::setup_page_storage before GL_one" << endl;
 	}
 	GL_one(Elt1);
-	GL_pack(Elt1, elt1);
+	GL_pack(Elt1, elt1, verbose_level);
 	if (f_vv) {
 		cout << "matrix_group::setup_page_storage before Elts->store" << endl;
 	}
@@ -1523,18 +1523,42 @@ void matrix_group::GL_unpack(uchar *elt, int *Elt, int verbose_level)
 	}
 }
 
-void matrix_group::GL_pack(int *Elt, uchar *elt)
+void matrix_group::GL_pack(int *Elt, uchar *elt, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "matrix_group::GL_pack" << endl;
+	}
+
 	int i;
 	
 	if (f_projective) {
-		encode_matrix(Elt, n, elt);
+		if (f_v) {
+			cout << "matrix_group::GL_pack f_projective" << endl;
+		}
+		if (f_v) {
+			cout << "matrix_group::GL_pack before encode_matrix" << endl;
+		}
+		encode_matrix(Elt, n, elt, verbose_level);
+		if (f_v) {
+			cout << "matrix_group::GL_pack after encode_matrix" << endl;
+		}
 		if (f_semilinear) {
 			encode_frobenius(elt, Elt[n * n]);
 		}
 	}
 	else if (f_affine) {
-		encode_matrix(Elt, n, elt);
+		if (f_v) {
+			cout << "matrix_group::GL_pack f_affine" << endl;
+		}
+		if (f_v) {
+			cout << "matrix_group::GL_pack before encode_matrix" << endl;
+		}
+		encode_matrix(Elt, n, elt, verbose_level);
+		if (f_v) {
+			cout << "matrix_group::GL_pack after encode_matrix" << endl;
+		}
 		for (i = 0; i < n; i++) {
 			put_digit(elt, n, i, Elt[n * n + i]);
 		}
@@ -1543,7 +1567,16 @@ void matrix_group::GL_pack(int *Elt, uchar *elt)
 		}
 	}
 	else if (f_general_linear) {
-		encode_matrix(Elt, n, elt);
+		if (f_v) {
+			cout << "matrix_group::GL_pack f_general_linear" << endl;
+		}
+		if (f_v) {
+			cout << "matrix_group::GL_pack before encode_matrix" << endl;
+		}
+		encode_matrix(Elt, n, elt, verbose_level);
+		if (f_v) {
+			cout << "matrix_group::GL_pack after encode_matrix" << endl;
+		}
 		if (f_semilinear) {
 			encode_frobenius(elt, Elt[n * n]);
 		}
@@ -1551,6 +1584,10 @@ void matrix_group::GL_pack(int *Elt, uchar *elt)
 	else {
 		cout << "matrix_group::GL_pack unknown group type" << endl;
 		exit(1);
+	}
+
+	if (f_v) {
+		cout << "matrix_group::GL_pack done" << endl;
 	}
 }
 
@@ -1983,14 +2020,30 @@ int matrix_group::decode_frobenius(uchar *elt)
 	return d;
 }
 
-void matrix_group::encode_matrix(int *Elt, int n, uchar *elt)
+void matrix_group::encode_matrix(int *Elt, int n, uchar *elt, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "matrix_group::encode_matrix" << endl;
+	}
 	int i, j;
+
+	if (f_v) {
+		cout << "matrix_group::encode_matrix n=" << n << endl;
+	}
+	if (elt == NULL) {
+		cout << "matrix_group::encode_matrix elt == NULL" << endl;
+		exit(1);
+	}
 
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			put_digit(elt, i, j, Elt[i * n + j]);
 		}
+	}
+	if (f_v) {
+		cout << "matrix_group::encode_matrix done" << endl;
 	}
 }
 
