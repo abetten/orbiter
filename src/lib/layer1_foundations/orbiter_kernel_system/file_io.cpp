@@ -35,8 +35,8 @@ file_io::~file_io()
 
 }
 
-void file_io::concatenate_files(const char *fname_in_mask, int N,
-	const char *fname_out, const char *EOF_marker, int f_title_line,
+void file_io::concatenate_files(std::string &fname_in_mask, int N,
+		std::string &fname_out, std::string &EOF_marker, int f_title_line,
 	int &cnt_total,
 	vector<int> missing_idx,
 	int verbose_level)
@@ -57,7 +57,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 	{
 		ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
-			snprintf(fname, sizeof(fname), fname_in_mask, h);
+			snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
 			if (file_size(fname) < 0) {
 				cout << "concatenate_files input file does not exist: " << fname << " skipping" << endl;
 				//missing_idx[nb_missing++] = h;
@@ -78,7 +78,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 
 					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
 					cout << "Read: " << buf << endl;
-					if (strncmp(buf, EOF_marker, strlen(EOF_marker)) == 0) {
+					if (strncmp(buf, EOF_marker.c_str(), strlen(EOF_marker.c_str())) == 0) {
 						break;
 					}
 					if (f_title_line) {
@@ -101,7 +101,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 	FREE_char(buf);
 	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
 	for (h = 0; h < (int) missing_idx.size(); h++) {
-		snprintf(fname, sizeof(fname), fname_in_mask, missing_idx[h]);
+		snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
 
@@ -110,8 +110,8 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 	}
 }
 
-void file_io::concatenate_files_into(const char *fname_in_mask, int N,
-	ofstream &fp_out, const char *EOF_marker, int f_title_line,
+void file_io::concatenate_files_into(std::string &fname_in_mask, int N,
+	ofstream &fp_out, std::string &EOF_marker, int f_title_line,
 	int &cnt_total,
 	vector<int> &missing_idx,
 	int verbose_level)
@@ -132,7 +132,7 @@ void file_io::concatenate_files_into(const char *fname_in_mask, int N,
 	{
 		//ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
-			snprintf(fname, sizeof(fname), fname_in_mask, h);
+			snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
 
 			fp_out << "# start of file " << fname << endl;
 
@@ -157,7 +157,7 @@ void file_io::concatenate_files_into(const char *fname_in_mask, int N,
 
 					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
 					//cout << "Read: " << buf << endl;
-					if (strncmp(buf, EOF_marker, strlen(EOF_marker)) == 0) {
+					if (strncmp(buf, EOF_marker.c_str(), strlen(EOF_marker.c_str())) == 0) {
 						break;
 					}
 					if (f_title_line) {
@@ -179,7 +179,7 @@ void file_io::concatenate_files_into(const char *fname_in_mask, int N,
 	FREE_char(buf);
 	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
 	for (h = 0; h < (int) missing_idx.size(); h++) {
-		snprintf(fname, sizeof(fname), fname_in_mask, missing_idx[h]);
+		snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
 
@@ -1142,7 +1142,7 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 	}
 }
 
-void file_io::copy_file_to_ostream(ostream &ost, const char *fname)
+void file_io::copy_file_to_ostream(ostream &ost, std::string &fname)
 {
 	//char buf[MY_OWN_BUFSIZE];
 
@@ -1178,7 +1178,7 @@ void file_io::copy_file_to_ostream(ostream &ost, const char *fname)
 }
 
 void file_io::int_vec_write_csv(int *v, int len,
-	std::string &fname, const char *label)
+	std::string &fname, std::string &label)
 {
 	int i;
 
@@ -1194,7 +1194,7 @@ void file_io::int_vec_write_csv(int *v, int len,
 }
 
 void file_io::lint_vec_write_csv(long int *v, int len,
-		std::string &fname, const char *label)
+		std::string &fname, std::string &label)
 {
 	int i;
 
@@ -1210,7 +1210,7 @@ void file_io::lint_vec_write_csv(long int *v, int len,
 }
 
 void file_io::int_vecs_write_csv(int *v1, int *v2, int len,
-		std::string &fname, const char *label1, const char *label2)
+		std::string &fname, std::string &label1, std::string &label2)
 {
 	int i;
 
@@ -1227,7 +1227,7 @@ void file_io::int_vecs_write_csv(int *v1, int *v2, int len,
 
 void file_io::int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
 		std::string &fname,
-	const char *label1, const char *label2, const char *label3)
+	std::string &label1, std::string &label2, std::string &label3)
 {
 	int i;
 
@@ -1348,7 +1348,8 @@ void file_io::lint_matrix_write_csv(std::string &fname, long int *M, int m, int 
 	}
 }
 
-void file_io::lint_matrix_write_csv_override_headers(std::string &fname, std::string *headers, long int *M, int m, int n)
+void file_io::lint_matrix_write_csv_override_headers(std::string &fname,
+		std::string *headers, long int *M, int m, int n)
 {
 	int i, j;
 
@@ -1371,7 +1372,8 @@ void file_io::lint_matrix_write_csv_override_headers(std::string &fname, std::st
 	}
 }
 
-void file_io::vector_matrix_write_csv(std::string &fname, std::vector<std::vector<int> > &V)
+void file_io::vector_matrix_write_csv(std::string &fname,
+		std::vector<std::vector<int> > &V)
 {
 	int i, j;
 	int m, n;
@@ -4926,7 +4928,12 @@ void file_io::save_cumulative_ago(std::vector<long int> &Cumulative_Ago,
 	for (u = 0; u < Cumulative_Ago.size(); u++) {
 		M[u] = Cumulative_Ago[u];
 	}
-	lint_vec_write_csv(M, Cumulative_Ago.size(), ago_fname, "Ago");
+
+	string label;
+
+	label.assign("Ago");
+
+	lint_vec_write_csv(M, Cumulative_Ago.size(), ago_fname, label);
 
 	data_structures::tally T;
 

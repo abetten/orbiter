@@ -2307,8 +2307,11 @@ void substructure_lifting_data::write_starter_nb_orbits(int verbose_level)
 		cout << "substructure_lifting_data::write_starter_nb_orbits" << endl;
 	}
 
+	string label;
+
+	label.assign("Stab_orbits");
 	Fio.int_vec_write_csv(flag_orbit_fst, Iso->Sub->nb_starter,
-			fname_orbits_of_stabilizer_csv, "Stab_orbits");
+			fname_orbits_of_stabilizer_csv, label);
 
 	if (f_v) {
 		cout << "substructure_lifting_data::write_starter_nb_orbits Written file "

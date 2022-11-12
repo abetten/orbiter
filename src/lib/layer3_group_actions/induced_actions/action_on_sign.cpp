@@ -16,25 +16,18 @@ namespace induced_actions {
 
 action_on_sign::action_on_sign()
 {
-	null();
+	A = NULL;
+	perm_degree = 0;
+	perm = NULL;
+	degree = 0;
 }
 
 action_on_sign::~action_on_sign()
 {
-	free();
-}
-
-void action_on_sign::null()
-{
-	perm = NULL;
-}
-
-void action_on_sign::free()
-{	
 	if (perm) {
 		FREE_int(perm);
 		}
-	null();
+	//null();
 }
 
 

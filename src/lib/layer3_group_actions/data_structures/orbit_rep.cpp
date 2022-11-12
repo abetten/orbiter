@@ -32,19 +32,9 @@ orbit_rep::orbit_rep()
 	stab_go = NULL;
 	candidates = NULL;
 	nb_candidates = 0;
-	null();
 }
 
 orbit_rep::~orbit_rep()
-{
-	freeself();
-}
-
-void orbit_rep::null()
-{
-}
-
-void orbit_rep::freeself()
 {
 	if (rep) {
 		FREE_lint(rep);
@@ -61,7 +51,6 @@ void orbit_rep::freeself()
 	if (stab_go) {
 		FREE_OBJECT(stab_go);
 		}
-	null();
 }
 
 void orbit_rep::init_from_file(

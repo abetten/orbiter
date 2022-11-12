@@ -16,71 +16,69 @@ namespace induced_actions {
 
 action_on_grassmannian::action_on_grassmannian()
 {
-	null();
-}
+	n = k = q = 0;
+	F = NULL;
+	low_level_point_size = 0;
 
-action_on_grassmannian::~action_on_grassmannian()
-{
-	free();
-}
-
-void action_on_grassmannian::null()
-{
-	//M = NULL;
+	A = NULL;
+	G = NULL;
 	M1 = NULL;
 	M2 = NULL;
-	G = NULL;
+
+	f_embedding = FALSE;
+	big_n = 0;
 	GE = NULL;
 	subspace_basis = NULL;
 	subspace_basis2 = NULL;
-	f_embedding = FALSE;
+
+	//ring_theory::longinteger_object degree;
+	max_string_length = 0;
 
 	f_has_print_function = FALSE;
 	print_function = NULL;
 	print_function_data = NULL;
-
 }
 
-void action_on_grassmannian::free()
+
+action_on_grassmannian::~action_on_grassmannian()
 {
 	int f_v = FALSE;
 
 	if (M1) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free "
+			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free M1" << endl;
 			}
 		FREE_int(M1);
 		}
 	if (M2) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free "
+			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free M2" << endl;
 			}
 		FREE_int(M2);
 		}
 	if (GE) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free "
+			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free GE" << endl;
 			}
 		FREE_OBJECT(GE);
 		}
 	if (subspace_basis) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free "
+			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free subspace_basis" << endl;
 			}
 		FREE_int(subspace_basis);
 		}
 	if (subspace_basis2) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free "
+			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free subspace_basis2" << endl;
 			}
 		FREE_int(subspace_basis2);
 		}
-	null();
 }
 
 void action_on_grassmannian::init(actions::action &A,

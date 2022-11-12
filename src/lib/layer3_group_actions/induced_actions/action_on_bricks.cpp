@@ -16,23 +16,14 @@ namespace induced_actions {
 
 action_on_bricks::action_on_bricks()
 {
-	null();
+	A = NULL;
+	B = NULL;
+	degree = 0;
+	f_linear_action = FALSE;
 }
 
 action_on_bricks::~action_on_bricks()
 {
-	free();
-}
-
-void action_on_bricks::null()
-{
-	A = NULL;
-	B = NULL;
-}
-
-void action_on_bricks::free()
-{
-	null();
 }
 
 void action_on_bricks::init(actions::action *A, combinatorics::brick_domain *B,

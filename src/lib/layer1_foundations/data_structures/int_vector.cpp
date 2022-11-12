@@ -68,7 +68,7 @@ void int_vector::allocate_and_init_int(int len, int *V)
 	}
 }
 
-void int_vector::init_permutation_from_string(const char *s)
+void int_vector::init_permutation_from_string(std::string &s)
 {
 	int verbose_level = 0;
 	int *perm;
@@ -211,7 +211,7 @@ void int_vector::write_to_binary_file_int4(std::string &fname)
 	Fio.write_set_to_file_as_int4(fname, M, m, 0 /*verbose_level*/);
 }
 
-void int_vector::write_to_csv_file(std::string &fname, const char *label)
+void int_vector::write_to_csv_file(std::string &fname, std::string &label)
 {
 	orbiter_kernel_system::file_io Fio;
 

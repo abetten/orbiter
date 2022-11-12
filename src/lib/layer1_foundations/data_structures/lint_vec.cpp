@@ -363,12 +363,6 @@ void lint_vec::scan(std::string &s, long int *&v, int &len)
 }
 
 
-void lint_vec::scan(const char *s, long int *&v, int &len)
-{
-	istringstream ins(s);
-	scan_from_stream(ins, v, len);
-}
-
 void lint_vec::scan_from_stream(std::istream & is, long int *&v, int &len)
 {
 	int verbose_level = 0;

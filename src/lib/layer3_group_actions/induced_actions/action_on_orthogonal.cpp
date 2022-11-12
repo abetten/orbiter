@@ -16,16 +16,7 @@ namespace induced_actions {
 
 action_on_orthogonal::action_on_orthogonal()
 {
-	null();
-}
-
-action_on_orthogonal::~action_on_orthogonal()
-{
-	free();
-}
-
-void action_on_orthogonal::null()
-{
+	original_action = NULL;
 	O = NULL;
 	v1 = NULL;
 	v2 = NULL;
@@ -34,9 +25,11 @@ void action_on_orthogonal::null()
 	f_on_points = FALSE;
 	f_on_lines = FALSE;
 	f_on_points_and_lines = FALSE;
+	low_level_point_size = 0;
+	degree = 0;
 }
 
-void action_on_orthogonal::free()
+action_on_orthogonal::~action_on_orthogonal()
 {
 	if (v1) {
 		FREE_int(v1);
@@ -50,7 +43,6 @@ void action_on_orthogonal::free()
 	if (w2) {
 		FREE_int(w2);
 		}
-	null();
 }
 
 void action_on_orthogonal::init(actions::action *original_action,

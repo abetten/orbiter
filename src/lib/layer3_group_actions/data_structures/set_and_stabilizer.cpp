@@ -16,24 +16,17 @@ namespace data_structures_groups {
 
 set_and_stabilizer::set_and_stabilizer()
 {
-	null();
-}
-
-set_and_stabilizer::~set_and_stabilizer()
-{
-	freeself();
-}
-
-void set_and_stabilizer::null()
-{
 	A = NULL;
 	A2 = NULL;
 	data = NULL;
+	sz = 0;
+	//ring_theory::longinteger_object target_go;
 	Strong_gens = NULL;
 	Stab = NULL;
 }
 
-void set_and_stabilizer::freeself()
+
+set_and_stabilizer::~set_and_stabilizer()
 {
 	if (data) {
 		FREE_lint(data);
@@ -44,8 +37,7 @@ void set_and_stabilizer::freeself()
 	if (Stab) {
 		FREE_OBJECT(Stab);
 		}
-	null();
-};
+}
 
 void set_and_stabilizer::init(actions::action *A, actions::action *A2, int verbose_level)
 {

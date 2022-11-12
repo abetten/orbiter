@@ -4083,8 +4083,8 @@ void projective_space::do_move_two_lines_in_hyperplane_stabilizer(
 }
 
 void projective_space::do_move_two_lines_in_hyperplane_stabilizer_text(
-		std::string line1_from_text, std::string line2_from_text,
-		std::string line1_to_text, std::string line2_to_text,
+		std::string &line1_from_text, std::string &line2_from_text,
+		std::string &line1_to_text, std::string &line2_to_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4107,22 +4107,22 @@ void projective_space::do_move_two_lines_in_hyperplane_stabilizer_text(
 	int *line2_to_data;
 	int sz;
 
-	Int_vec_scan(line1_from_text.c_str(), line1_from_data, sz);
+	Int_vec_scan(line1_from_text, line1_from_data, sz);
 	if (sz != 8) {
 		cout << "line1_from_text must contain exactly 8 integers" << endl;
 		exit(1);
 	}
-	Int_vec_scan(line2_from_text.c_str(), line2_from_data, sz);
+	Int_vec_scan(line2_from_text, line2_from_data, sz);
 	if (sz != 8) {
 		cout << "line2_from_text must contain exactly 8 integers" << endl;
 		exit(1);
 	}
-	Int_vec_scan(line1_to_text.c_str(), line1_to_data, sz);
+	Int_vec_scan(line1_to_text, line1_to_data, sz);
 	if (sz != 8) {
 		cout << "line1_to_text must contain exactly 8 integers" << endl;
 		exit(1);
 	}
-	Int_vec_scan(line2_to_text.c_str(), line2_to_data, sz);
+	Int_vec_scan(line2_to_text, line2_to_data, sz);
 	if (sz != 8) {
 		cout << "line2_to_text must contain exactly 8 integers" << endl;
 		exit(1);

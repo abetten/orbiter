@@ -16,25 +16,20 @@ namespace induced_actions {
 
 action_on_andre::action_on_andre()
 {
-	null();
-}
-
-action_on_andre::~action_on_andre()
-{
-	free();
-}
-
-void action_on_andre::null()
-{
 	An = NULL;
 	An1 = NULL;
 	Andre = NULL;
+	k = n = q = 0;
+	k1 = n1 = 0;
+	N = 0;
+	degree = 0;
 	coords1 = NULL;
 	coords2 = NULL;
 	coords3 = NULL;
 }
 
-void action_on_andre::free()
+
+action_on_andre::~action_on_andre()
 {
 	if (coords1) {
 		FREE_int(coords1);
@@ -45,7 +40,6 @@ void action_on_andre::free()
 	if (coords3) {
 		FREE_int(coords3);
 		}
-	null();
 }
 
 void action_on_andre::init(actions::action *An, actions::action *An1,

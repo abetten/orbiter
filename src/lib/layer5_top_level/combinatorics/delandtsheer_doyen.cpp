@@ -940,7 +940,7 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verb
 	int nb_gens;
 	data_structures_groups::vector_ge *nice_gens;
 
-	Int_vec_scan(Descr->subgroup_gens.c_str(), data, sz);
+	Int_vec_scan(Descr->subgroup_gens, data, sz);
 	nb_gens = sz / A->make_element_size;
 	if (f_v) {
 		cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;

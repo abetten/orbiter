@@ -20,23 +20,15 @@ namespace induced_actions {
 
 action_on_galois_group::action_on_galois_group()
 {
-	null();
+	A = NULL;
+	M = NULL;
+	m = 0;
+	q = 0;
+	degree = 0;
 }
 
 action_on_galois_group::~action_on_galois_group()
 {
-	free();
-}
-
-void action_on_galois_group::null()
-{
-	M = NULL;
-}
-
-void action_on_galois_group::free()
-{
-
-	null();
 }
 
 

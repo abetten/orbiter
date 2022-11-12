@@ -2097,9 +2097,6 @@ groups::sims *action::create_sims_from_generators_randomized(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//init(A);
-	//init_trivial_group(0);
-	//freeself();
 	groups::sims *S;
 
 	if (f_v) {

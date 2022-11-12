@@ -853,7 +853,10 @@ void cryptography_domain::do_random(int random_nb, std::string &fname_csv, int v
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_vec_write_csv(R, random_nb, fname_csv, "R");
+	string label;
+
+	label.assign("R");
+	Fio.int_vec_write_csv(R, random_nb, fname_csv, label);
 
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
 

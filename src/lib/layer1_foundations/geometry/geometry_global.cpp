@@ -1450,7 +1450,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 	int *A6;
 	int sz;
 
-	Int_vec_scan(inverse_isomorphism_klein_quadric_matrix_A6.c_str(), A6, sz);
+	Int_vec_scan(inverse_isomorphism_klein_quadric_matrix_A6, A6, sz);
 	if (sz != 36) {
 		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
 				"The input matrix must be of size 6x6" << endl;

@@ -16,24 +16,16 @@ namespace induced_actions {
 
 action_by_right_multiplication::action_by_right_multiplication()
 {
-	null();
-}
-
-action_by_right_multiplication::~action_by_right_multiplication()
-{
-	free();
-}
-
-void action_by_right_multiplication::null()
-{
 	Base_group = NULL;
+	f_ownership = FALSE;
+	goi = 0;
 	Elt1 = NULL;
 	Elt2 = NULL;
 }
 
-void action_by_right_multiplication::free()
+
+action_by_right_multiplication::~action_by_right_multiplication()
 {
-	
 	if (Base_group && f_ownership) {
 		delete Base_group;
 		}
@@ -43,9 +35,7 @@ void action_by_right_multiplication::free()
 	if (Elt2) {
 		FREE_int(Elt2);
 		}
-	null();
 }
-
 
 void action_by_right_multiplication::init(groups::sims *Base_group, int f_ownership, int verbose_level)
 {

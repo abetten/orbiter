@@ -16,26 +16,18 @@ namespace induced_actions {
 
 action_by_conjugation::action_by_conjugation()
 {
-	null();
-}
-
-action_by_conjugation::~action_by_conjugation()
-{
-	free();
-}
-
-void action_by_conjugation::null()
-{
-	f_ownership = FALSE;
 	Base_group = NULL;
+	f_ownership = FALSE;
+	goi = 0;
+
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
 }
 
-void action_by_conjugation::free()
+
+action_by_conjugation::~action_by_conjugation()
 {
-	
 	if (Base_group && f_ownership) {
 		FREE_OBJECT(Base_group);
 		}
@@ -48,8 +40,24 @@ void action_by_conjugation::free()
 	if (Elt3) {
 		FREE_int(Elt3);
 		}
+}
+
+#if 0
+void action_by_conjugation::null()
+{
+	f_ownership = FALSE;
+	Base_group = NULL;
+	Elt1 = NULL;
+	Elt2 = NULL;
+	Elt3 = NULL;
+}
+
+void action_by_conjugation::free()
+{
+
 	null();
 }
+#endif
 
 
 void action_by_conjugation::init(groups::sims *Base_group,

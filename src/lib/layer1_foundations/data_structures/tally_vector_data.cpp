@@ -268,15 +268,22 @@ void tally_vector_data::save_classes_individually(std::string &fname, int verbos
 		if (f_v) {
 			cout << "tally_vector_data::save_classes_individually saving file = " << fname2 << endl;
 		}
-		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], Frequency[i], fname2, "case");
+		string label;
+
+		label.assign("case");
+		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i],
+				Frequency[i], fname2, label);
 		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
 	}
 
 	string fname2;
+	string label;
+
+	label.assign("case");
 
 	fname2.assign(fname);
 	fname2.append("_all_in_one.csv");
-	Fio.int_vec_write_csv(sorting_perm_inv, data_length, fname2, "case");
+	Fio.int_vec_write_csv(sorting_perm_inv, data_length, fname2, label);
 	cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
 
 

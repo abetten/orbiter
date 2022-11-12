@@ -79,7 +79,7 @@ int algorithms::hashing_fixed_width(int hash0, int a, int bit_length)
 	return h;
 }
 
-void algorithms::uchar_print_bitwise(std::ostream &ost, uchar u)
+void algorithms::uchar_print_bitwise(std::ostream &ost, unsigned char u)
 {
 	uchar mask;
 	int i;
@@ -95,7 +95,7 @@ void algorithms::uchar_print_bitwise(std::ostream &ost, uchar u)
 	}
 }
 
-void algorithms::uchar_move(uchar *p, uchar *q, int len)
+void algorithms::uchar_move(unsigned char *p, unsigned char *q, int len)
 {
 	int i;
 

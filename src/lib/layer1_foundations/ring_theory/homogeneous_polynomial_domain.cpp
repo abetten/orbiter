@@ -2483,8 +2483,11 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 			pos = T.sorting_perm_inv[f + j];
 			the_class[j] = Pts[pos];
 		}
+		string label;
 
-		Fio.lint_vec_write_csv(the_class, l, fname2, "case");
+		label.assign("case");
+
+		Fio.lint_vec_write_csv(the_class, l, fname2, label);
 
 		cout << "class of type " << t << " contains " << l << " elements:" << endl;
 		F->display_table_of_projective_points(
@@ -2781,7 +2784,7 @@ void homogeneous_polynomial_domain::create_projective_curve(
 	int *v;
 	int v2[2];
 
-	Int_vec_scan(curve_coeffs.c_str(), coeffs, len);
+	Int_vec_scan(curve_coeffs, coeffs, len);
 	if (len != degree + 1) {
 		cout << "homogeneous_polynomial_domain::create_projective_curve "
 				"len != degree + 1" << endl;
