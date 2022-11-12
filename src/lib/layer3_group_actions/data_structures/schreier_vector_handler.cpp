@@ -16,25 +16,20 @@ namespace data_structures_groups {
 
 schreier_vector_handler::schreier_vector_handler()
 {
-	null();
-}
-
-schreier_vector_handler::~schreier_vector_handler()
-{
-	freeself();
-}
-
-void schreier_vector_handler::null()
-{
 	A = NULL;
+	A2 = NULL;
 	cosetrep = NULL;
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
 	f_check_image = FALSE;
+	f_allow_failure = FALSE;
+	nb_calls_to_coset_rep_inv = 0;
+	nb_calls_to_coset_rep_inv_recursion = 0;
 }
 
-void schreier_vector_handler::freeself()
+
+schreier_vector_handler::~schreier_vector_handler()
 {
 	if (cosetrep) {
 		FREE_int(cosetrep);
@@ -48,7 +43,6 @@ void schreier_vector_handler::freeself()
 	if (Elt3) {
 		FREE_int(Elt3);
 	}
-	null();
 }
 
 void schreier_vector_handler::init(

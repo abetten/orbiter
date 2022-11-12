@@ -45,11 +45,6 @@ public:
 	
 	group_container();
 	~group_container();
-	void null();
-	void freeself();
-	group_container(actions::action *A, int verbose_level);
-	group_container(actions::action *A, const char *ascii_coding, int verbose_level);
-	group_container(actions::action *A, vector_ge &SG, int *tl, int verbose_level);
 	void init(actions::action *A, int verbose_level);
 	void init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level);
 	void init_ascii_coding(const char *ascii_coding, int verbose_level);
@@ -121,8 +116,6 @@ public:
 
 	incidence_structure_with_group();
 	~incidence_structure_with_group();
-	void null();
-	void freeself();
 	void init(geometry::incidence_structure *Inc,
 		int *partition,
 		int verbose_level);
@@ -166,8 +159,6 @@ public:
 
 	orbit_rep();
 	~orbit_rep();
-	void null();
-	void freeself();
 	void init_from_file(actions::action *A, std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		void (*early_test_func_callback)(long int *S, int len,
@@ -200,8 +191,6 @@ public:
 
 	orbit_transversal();
 	~orbit_transversal();
-	void null();
-	void freeself();
 	void init_from_schreier(
 			groups::schreier *Sch,
 			actions::action *default_action,
@@ -211,7 +200,9 @@ public:
 			std::string &fname, int verbose_level);
 	void read_from_file_one_case_only(
 			actions::action *A, actions::action *A2, std::string &fname,
-			int case_nr, int verbose_level);
+			int case_nr,
+			set_and_stabilizer *&Rep,
+			int verbose_level);
 	data_structures::tally *get_ago_distribution(long int *&ago,
 			int verbose_level);
 	void report_ago_distribution(std::ostream &ost);
@@ -278,8 +269,6 @@ public:
 
 	orbit_type_repository();
 	~orbit_type_repository();
-	void null();
-	void freeself();
 	void init(
 			groups::orbits_on_something *Oos,
 			int nb_sets,
@@ -320,8 +309,6 @@ public:
 
 	schreier_vector_handler();
 	~schreier_vector_handler();
-	void null();
-	void freeself();
 	void init(actions::action *A, actions::action *A2,
 			int f_allow_failure,
 			int verbose_level);
@@ -375,8 +362,6 @@ public:
 
 	schreier_vector();
 	~schreier_vector();
-	void null();
-	void freeself();
 	void init(int gen_hdl_first, int nb_gen, int *sv,
 			int verbose_level);
 	void init_local_generators(
@@ -441,8 +426,6 @@ public:
 
 	set_and_stabilizer();
 	~set_and_stabilizer();
-	void null();
-	void freeself();
 	void init(actions::action *A, actions::action *A2, int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_as_lint();
@@ -578,8 +561,6 @@ public:
 
 	union_find();
 	~union_find();
-	void freeself();
-	void null();
 	void init(actions::action *A, int verbose_level);
 	int ancestor(int i);
 	int count_ancestors();
@@ -624,8 +605,6 @@ public:
 
 	union_find_on_k_subsets();
 	~union_find_on_k_subsets();
-	void freeself();
-	void null();
 	void init(actions::action *A_original, groups::sims *S,
 		long int *set, int set_sz, int k,
 		long int *interesting_k_subsets, int nb_interesting_k_subsets,
@@ -681,10 +660,7 @@ public:
 	int len;
 
 	vector_ge();
-	vector_ge(actions::action *A);
 	~vector_ge();
-	void null();
-	void freeself();
 	void init(actions::action *A, int verbose_level);
 	void copy(vector_ge *&vector_copy, int verbose_level);
 	void init_by_hdl(actions::action *A, int *gen_hdl, int nb_gen, int verbose_level);
@@ -740,7 +716,7 @@ public:
 	void read_column_csv_using_column_label(std::string &fname,
 			actions::action *A, std::string &column_label, int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
-		const char *rank_vector_text, groups::sims *S,
+			std::string &rank_vector_text, groups::sims *S,
 		int verbose_level);
 	void extract_subset_of_elements_by_rank(int *rank_vector,
 		int len, groups::sims *S, int verbose_level);

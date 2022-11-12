@@ -690,7 +690,7 @@ void orbiter_session::get_lint_vec(std::string &label,
 
 	}
 	else {
-		Lint_vec_scan(label.c_str(), the_set, set_size);
+		Lint_vec_scan(label, the_set, set_size);
 	}
 	if (f_v) {
 		cout << "orbiter_session::get_lint_vec done" << endl;

@@ -355,7 +355,7 @@ int string_tools::s_scan_token_comma_separated(const char **s, char *str, int ve
 	return TRUE;
 }
 
-void string_tools::scan_permutation_from_string(const char *s,
+void string_tools::scan_permutation_from_string(std::string &s,
 	int *&perm, int &degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -966,10 +966,12 @@ void string_tools::get_extension_if_present_and_chop_off(char *p, char *ext)
 
 void string_tools::string_fix_escape_characters(std::string &str)
 {
-	string str_t("\\t");
-	string str_D("\\D");
-	string str_B("\\B");
-	string str_n("\\n");
+	string str_t, str_D, str_B, str_n;
+
+	str_t.assign("\\t");
+	str_D.assign("\\D");
+	str_B.assign("\\B");
+	str_n.assign("\\n");
 
 
 	while (str.find(str_t) != std::string::npos) {
@@ -996,7 +998,9 @@ void string_tools::remove_specific_character(std::string &str, char c)
 
 	st[0] = c;
 	st[1] = 0;
-	string str_t(st);
+	string str_t;
+
+	str_t.assign(str);
 
 
 	while (str.find(str_t) != std::string::npos) {
@@ -1006,7 +1010,8 @@ void string_tools::remove_specific_character(std::string &str, char c)
 
 }
 
-void string_tools::create_comma_separated_list(std::string &output, long int *input, int input_sz)
+void string_tools::create_comma_separated_list(std::string &output,
+		long int *input, int input_sz)
 {
 	char str[1000];
 	int i;

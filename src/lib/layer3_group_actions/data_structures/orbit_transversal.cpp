@@ -17,28 +17,17 @@ namespace data_structures_groups {
 
 orbit_transversal::orbit_transversal()
 {
-	null();
-}
-
-orbit_transversal::~orbit_transversal()
-{
-	freeself();
-}
-
-void orbit_transversal::null()
-{
 	A = NULL;
 	A2 = NULL;
 	nb_orbits = 0;
 	Reps = NULL;
 }
 
-void orbit_transversal::freeself()
+orbit_transversal::~orbit_transversal()
 {
 	if (Reps) {
 		FREE_OBJECTS(Reps);
 		}
-	null();
 }
 
 void orbit_transversal::init_from_schreier(
@@ -162,7 +151,9 @@ void orbit_transversal::read_from_file(
 
 void orbit_transversal::read_from_file_one_case_only(
 		actions::action *A, actions::action *A2, std::string &fname,
-		int case_nr, int verbose_level)
+		int case_nr,
+		set_and_stabilizer *&Rep,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -204,7 +195,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	}
 
 
-	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
+	Rep = NEW_OBJECT(set_and_stabilizer);
 
 	//nb_cases_mod = (nb_cases / 100) + 1;
 
@@ -218,12 +209,14 @@ void orbit_transversal::read_from_file_one_case_only(
 			Aut_ascii[i], 0 /* verbose_level */);
 
 	set = NEW_lint(Set_sizes[i]);
+
 	Lint_vec_copy(Sets[i], set, Set_sizes[i]);
-	Reps[i].init_everything(A, A2, set, Set_sizes[i],
+
+	Rep->init_everything(A, A2, set, Set_sizes[i],
 		gens, 0 /* verbose_level */);
 
-	FREE_OBJECT(Reps[i].Stab);
-	Reps[i].Stab = NULL;
+	FREE_OBJECT(Rep->Stab);
+	Rep->Stab = NULL;
 
 	// gens and set is now part of Reps[i], so we don't free them here.
 

@@ -327,7 +327,9 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	ST.replace_extension_with(fname_out, "_count.csv");
 
 
-	Fio.int_vec_write_csv(Nb, m, fname_out, "nb packings before iso");
+	string label;
+	label.assign("nb packings before iso");
+	Fio.int_vec_write_csv(Nb, m, fname_out, label);
 
 	if (f_v) {
 		cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out.c_str()) << endl;

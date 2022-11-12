@@ -16,25 +16,20 @@ namespace induced_actions {
 
 action_by_representation::action_by_representation()
 {
-	null();
-}
-
-action_by_representation::~action_by_representation()
-{
-	free();
-}
-
-void action_by_representation::null()
-{
+	type = representation_type_nothing;
+	n = 0;
+	q = 0;
 	M = NULL;
 	F = NULL;
+	low_level_point_size = 0;
+	degree = 0;
+	dimension = 0;
 	v1 = NULL;
 	v2 = NULL;
 	v3 = NULL;
-	low_level_point_size = 0;
 }
 
-void action_by_representation::free()
+action_by_representation::~action_by_representation()
 {
 	if (v1) {
 		FREE_int(v1);
@@ -45,8 +40,8 @@ void action_by_representation::free()
 	if (v3) {
 		FREE_int(v3);
 		}
-	null();
 }
+
 
 void action_by_representation::init_action_on_conic(
 		actions::action &A, int verbose_level)

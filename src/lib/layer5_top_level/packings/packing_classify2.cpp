@@ -697,13 +697,13 @@ void packing_classify::report_klein_invariants(
 						<< inv->Inv[orbit].fname_row_scheme
 						<< " in" << endl;
 				Fio.copy_file_to_ostream(ost,
-						inv->Inv[orbit].fname_row_scheme.c_str());
+						inv->Inv[orbit].fname_row_scheme);
 				//f << "\\input "
 				//<< inv->Inv[orbit].fname_row_scheme << endl;
 				ost << "\\]" << endl;
 				ost << "\\[" << endl;
 				Fio.copy_file_to_ostream(ost,
-						inv->Inv[orbit].fname_col_scheme.c_str());
+						inv->Inv[orbit].fname_col_scheme);
 				//ost << "\\input "
 				//<< inv->Inv[orbit].fname_col_scheme << endl;
 				ost << "\\]" << endl;

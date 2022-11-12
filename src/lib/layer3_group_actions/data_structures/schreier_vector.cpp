@@ -16,24 +16,15 @@ namespace data_structures_groups {
 
 schreier_vector::schreier_vector()
 {
-	null();
-}
-
-schreier_vector::~schreier_vector()
-{
-	freeself();
-}
-
-void schreier_vector::null()
-{
+	gen_hdl_first = 0;
 	nb_gen = 0;
-	sv = NULL;
 	number_of_orbits = -1;
+	sv = NULL;
 	f_has_local_generators = FALSE;
 	local_gens = NULL;
 }
 
-void schreier_vector::freeself()
+schreier_vector::~schreier_vector()
 {
 	if (sv) {
 		FREE_int(sv);
@@ -43,7 +34,6 @@ void schreier_vector::freeself()
 			FREE_OBJECT(local_gens);
 		}
 	}
-	null();
 }
 
 void schreier_vector::init(

@@ -43,33 +43,9 @@ orbit_type_repository::orbit_type_repository()
 	type_len = NULL;
 	type = NULL;
 	Type_representatives = NULL;
-	//null();
 }
 
 orbit_type_repository::~orbit_type_repository()
-{
-	freeself();
-}
-
-void orbit_type_repository::null()
-{
-	Oos = NULL;
-
-	nb_sets = 0;
-	set_size = 0;
-	Sets = NULL;
-	goi = 0;
-
-	orbit_type_size = 0;
-	Type_repository = NULL;
-	nb_types = 0;
-	type_first = NULL;
-	type_len = NULL;
-	type = NULL;
-	Type_representatives = NULL;
-}
-
-void orbit_type_repository::freeself()
 {
 	if (Type_repository) {
 		FREE_lint(Type_repository);
@@ -86,7 +62,6 @@ void orbit_type_repository::freeself()
 	if (Type_representatives) {
 		FREE_lint(Type_representatives);
 	}
-	null();
 }
 
 void orbit_type_repository::init(

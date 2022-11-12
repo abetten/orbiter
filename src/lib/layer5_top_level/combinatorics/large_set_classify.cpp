@@ -335,22 +335,24 @@ void large_set_classify::read_classification_single_case(
 				"file " << fname_classification_at_level << endl;
 		}
 
-	Rep = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
+	//Rep = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 
 	data_structures_groups::orbit_transversal *T;
 	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
+	if (f_v) {
+		cout << "large_set_classify::read_classification_single_case before T->read_from_file_one_case_only" << endl;
+	}
+
 	T->read_from_file_one_case_only(gen->get_A(), gen->get_A2(),
-			fname_classification_at_level, case_nr, verbose_level - 1);
+			fname_classification_at_level,
+			case_nr,
+			Rep,
+			verbose_level - 1);
 
 	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case before copy" << endl;
+		cout << "large_set_classify::read_classification_single_case after T->read_from_file_one_case_only" << endl;
 	}
-	*Rep = T->Reps[case_nr];
-	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case before null" << endl;
-	}
-	T->Reps[case_nr].null();
 
 	if (f_v) {
 		cout << "large_set_classify::read_classification_single_case before FREE_OBJECT(T)" << endl;

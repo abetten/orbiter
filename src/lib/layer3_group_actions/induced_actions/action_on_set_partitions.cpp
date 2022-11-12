@@ -18,16 +18,6 @@ namespace induced_actions {
 
 action_on_set_partitions::action_on_set_partitions()
 {
-	null();
-}
-
-action_on_set_partitions::~action_on_set_partitions()
-{
-	free();
-}
-
-void action_on_set_partitions::null()
-{
 	nb_set_partitions = 0;
 	universal_set_size = 0;
 	partition_class_size = 0;
@@ -37,7 +27,8 @@ void action_on_set_partitions::null()
 	v2 = NULL;
 }
 
-void action_on_set_partitions::free()
+
+action_on_set_partitions::~action_on_set_partitions()
 {
 	if (v1) {
 		FREE_int(v1);
@@ -45,7 +36,6 @@ void action_on_set_partitions::free()
 	if (v2) {
 		FREE_int(v2);
 	}
-	null();
 }
 
 

@@ -321,7 +321,10 @@ void graphical_output::do_domino_portrait(int D, int s,
 		cout << "graphical_output::do_domino_portrait after get_cost_function len=" << len << endl;
 	}
 
-	Fio.int_vec_write_csv(Cost, len, fname_cost, "Cost");
+	string label;
+
+	label.assign("Cost");
+	Fio.int_vec_write_csv(Cost, len, fname_cost, label);
 
 	if (f_v) {
 		cout << "Written file " << fname_cost << " of size " << Fio.file_size(fname_cost) << endl;

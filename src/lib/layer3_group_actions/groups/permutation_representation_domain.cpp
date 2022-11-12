@@ -21,32 +21,32 @@ namespace groups {
 
 permutation_representation_domain::permutation_representation_domain()
 {
-	null();
-}
+	degree = 0;
+	f_induced_action = FALSE;
+	f_product_action = FALSE;
+	m = n = mn = offset = 0;
+	char_per_elt = 0;
+	elt_size_int = 0;
 
-permutation_representation_domain::~permutation_representation_domain()
-{
-	free();
-}
-
-void permutation_representation_domain::null()
-{
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
 	Elt4 = NULL;
+
 	elt1 = NULL;
 	elt2 = NULL;
 	elt3 = NULL;
-	Elts = NULL;
+
 	Eltrk1 = NULL;
 	Eltrk2 = NULL;
 	Eltrk3 = NULL;
+
+	Elts = NULL;
 }
 
-void permutation_representation_domain::free()
+
+permutation_representation_domain::~permutation_representation_domain()
 {
-	//cout << "permutation_representation_domain::free" << endl;
 	if (Elt1)
 		FREE_int(Elt1);
 	if (Elt2)
@@ -72,8 +72,6 @@ void permutation_representation_domain::free()
 		FREE_int(Eltrk2);
 	if (Eltrk3)
 		FREE_int(Eltrk3);
-	null();
-	//cout << "permutation_representation_domain::free finished" << endl;
 }
 
 void permutation_representation_domain::allocate()

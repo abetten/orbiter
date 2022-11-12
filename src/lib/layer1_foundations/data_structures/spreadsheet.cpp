@@ -1241,17 +1241,6 @@ void spreadsheet::get_value_double_or_NA(int i, int j,
 	}
 }
 
-#if 0
-void spreadsheet::get_string_entry(std::string &entry, int i, int j)
-{
-	char *p;
-
-	p = get_string(i, j);
-	entry.assign(p);
-	FREE_char(p);
-}
-#endif
-
 void spreadsheet::get_string(std::string &str, int i, int j)
 {
 	int t; // l

@@ -160,6 +160,7 @@ static std::map<std::string, ThreeArgFunction>  ThreeArgumentFunctions;
 
 static int LoadOneArgumentFunctions ()
   {
+#if 0
   OneArgumentFunctions ["abs"] = fabs;
   STD_FUNCTION (acos);
   STD_FUNCTION (asin);
@@ -186,6 +187,7 @@ static int LoadOneArgumentFunctions ()
   OneArgumentFunctions ["rand"] = DoRandom;
   OneArgumentFunctions ["rand"] = DoRandom;
   OneArgumentFunctions ["percent"] = DoPercent;
+#endif
 #endif
   return 0;
   } // end of LoadOneArgumentFunctions
@@ -948,7 +950,8 @@ void expression_parser::parse(syntax_tree *tree, std::string & program, int verb
 		std::cout << "expression_parser::parse after CommaList" << std::endl;
 	}
 	if (Lexer->type != END) {
-		throw std::runtime_error ("Unexpected text at end of expression: " + std::string (Lexer->pWordStart));
+		std::cout << "Unexpected text at end of expression: " << Lexer->pWordStart << endl;
+		exit(1);
 	}
 }
 

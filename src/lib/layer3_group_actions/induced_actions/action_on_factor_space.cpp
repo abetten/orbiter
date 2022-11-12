@@ -16,20 +16,15 @@ namespace induced_actions {
 
 action_on_factor_space::action_on_factor_space()
 {
-	null();
-}
-
-action_on_factor_space::~action_on_factor_space()
-{
-	free();
-}
-
-void action_on_factor_space::null()
-{
 	VS = NULL;
-	subspace_basis_size = 0;
 	subspace_basis = NULL;
+	subspace_basis_size = 0;
 	base_cols = NULL;
+
+	degree = 0;
+	large_degree = 0;
+	factor_space_len = 0;
+
 	embedding = NULL;
 	projection_table = NULL;
 	preimage_table = NULL;
@@ -38,6 +33,7 @@ void action_on_factor_space::null()
 	Tmp2 = NULL;
 	f_tables_have_been_computed = FALSE;
 	f_table_mode = FALSE;
+	nb_cosets = 0;
 	coset_reps_Gauss = NULL;
 	tmp_w = NULL;
 	tmp_w1 = NULL;
@@ -45,73 +41,74 @@ void action_on_factor_space::null()
 	tmp_v2 = NULL;
 }
 
-void action_on_factor_space::free()
+
+action_on_factor_space::~action_on_factor_space()
 {
 	int f_v = FALSE;
 	int f_vv = FALSE;
 
 	if (f_v) {
-		cout << "action_on_factor_space::free" << endl;
+		cout << "action_on_factor_space::~action_on_factor_space" << endl;
 		}
 	if (subspace_basis) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(subspace_basis)" << endl;
 			}
 		FREE_int(subspace_basis);
 		}
 	if (base_cols) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(base_cols)" << endl;
 			}
 		FREE_int(base_cols);
 		}
 	if (embedding) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(embedding)" << endl;
 			}
 		FREE_int(embedding);
 		}
 	if (projection_table) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(projection_table)" << endl;
 			}
 		FREE_lint(projection_table);
 		}
 	if (preimage_table) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(preimage_table)" << endl;
 			}
 		FREE_lint(preimage_table);
 		}
 	if (tmp) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(tmp)" << endl;
 			}
 		FREE_int(tmp);
 		}
 	if (Tmp1) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(Tmp1)" << endl;
 			}
 		FREE_int(Tmp1);
 		}
 	if (Tmp2) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(Tmp2)" << endl;
 			}
 		FREE_int(Tmp2);
 		}
 	if (coset_reps_Gauss) {
 		if (f_vv) {
-			cout << "action_on_factor_space::free "
+			cout << "action_on_factor_space::~action_on_factor_space "
 					"before FREE_int(coset_reps_Gauss)" << endl;
 			}
 		FREE_lint(coset_reps_Gauss);
@@ -128,9 +125,9 @@ void action_on_factor_space::free()
 	if (tmp_v2) {
 		FREE_int(tmp_v2);
 		}
-	null();
+	//null();
 	if (f_v) {
-		cout << "action_on_factor_space::free done" << endl;
+		cout << "action_on_factor_space::~action_on_factor_space done" << endl;
 		}
 }
 

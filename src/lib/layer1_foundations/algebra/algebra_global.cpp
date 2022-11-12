@@ -991,15 +991,17 @@ void algebra_global::do_trace(field_theory::finite_field *F, int verbose_level)
 
 	snprintf(str, 1000, "F_q%d_trace_0.csv", F->q);
 	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T0, nb_T0,
-			fname_csv, "Trace_0");
+
+	string label;
+	label.assign("Trace_0");
+	Fio.int_vec_write_csv(T0, nb_T0, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 	snprintf(str, 1000, "F_q%d_trace_1.csv", F->q);
 	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T1, nb_T1,
-			fname_csv, "Trace_1");
+	label.assign("Trace_1");
+	Fio.int_vec_write_csv(T1, nb_T1, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
@@ -1050,18 +1052,21 @@ void algebra_global::do_norm(field_theory::finite_field *F, int verbose_level)
 	char str[1000];
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
+	string label;
 
 	snprintf(str, 1000, "F_q%d_norm_0.csv", F->q);
 	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T0, nb_T0,
-			fname_csv, "Norm_0");
-	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+	label.assign("Norm_0");
+	Fio.int_vec_write_csv(T0, nb_T0, fname_csv, label);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
 
 	snprintf(str, 1000, "F_q%d_norm_1.csv", F->q);
 	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T1, nb_T1,
-			fname_csv, "Norm_1");
-	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+	label.assign("Norm_1");
+	Fio.int_vec_write_csv(T1, nb_T1, fname_csv, label);
+	cout << "written file " << fname_csv << " of size "
+		<< Fio.file_size(fname_csv) << endl;
 
 
 	if (f_v) {

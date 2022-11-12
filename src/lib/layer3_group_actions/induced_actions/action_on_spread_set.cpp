@@ -16,25 +16,25 @@ namespace induced_actions {
 
 action_on_spread_set::action_on_spread_set()
 {
-	null();
-}
+	k = n = k2 = q = 0;
+	F = NULL;
+	low_level_point_size = 0;
+	degree = 0;
 
-action_on_spread_set::~action_on_spread_set()
-{
-	free();
-}
+	A_PGL_n_q = NULL;
+	A_PGL_k_q = NULL;
+	G_PGL_k_q = NULL;
 
-void action_on_spread_set::null()
-{
-	mtx1 = NULL;
-	mtx2 = NULL;
 	Elt1 = NULL;
 	Elt2 = NULL;
+
+	mtx1 = NULL;
+	mtx2 = NULL;
 	subspace1 = NULL;
 	subspace2 = NULL;
 }
 
-void action_on_spread_set::free()
+action_on_spread_set::~action_on_spread_set()
 {
 	if (mtx1) {
 		FREE_int(mtx1);
@@ -54,7 +54,6 @@ void action_on_spread_set::free()
 	if (subspace2) {
 		FREE_int(subspace2);
 		}
-	null();
 }
 
 void action_on_spread_set::init(

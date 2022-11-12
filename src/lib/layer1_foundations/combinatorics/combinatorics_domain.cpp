@@ -3392,7 +3392,10 @@ void combinatorics_domain::create_random_permutation(int deg,
 		P = NEW_int(deg);
 		random_permutation(P, deg);
 
-		Fio.int_vec_write_csv(P, deg, fname_csv, "perm");
+		string label;
+
+		label.assign("perm");
+		Fio.int_vec_write_csv(P, deg, fname_csv, label);
 
 		FREE_int(P);
 	}

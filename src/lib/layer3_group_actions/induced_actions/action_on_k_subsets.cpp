@@ -16,22 +16,14 @@ namespace induced_actions {
 
 action_on_k_subsets::action_on_k_subsets()
 {
-	null();
-}
-
-action_on_k_subsets::~action_on_k_subsets()
-{
-	free();
-}
-
-void action_on_k_subsets::null()
-{
 	A = NULL;
+	k = 0;
+	degree = 0;
 	set1 = NULL;
 	set2 = NULL;
 }
 
-void action_on_k_subsets::free()
+action_on_k_subsets::~action_on_k_subsets()
 {
 	if (set1) {
 		FREE_int(set1);
@@ -39,7 +31,6 @@ void action_on_k_subsets::free()
 	if (set2) {
 		FREE_int(set2);
 		}
-	null();
 }
 
 void action_on_k_subsets::init(actions::action *A,

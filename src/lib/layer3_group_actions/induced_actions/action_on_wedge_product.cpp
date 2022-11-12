@@ -16,25 +16,18 @@ namespace induced_actions {
 
 action_on_wedge_product::action_on_wedge_product()
 {
-	null();
-}
-
-action_on_wedge_product::~action_on_wedge_product()
-{
-	free();
-}
-
-void action_on_wedge_product::null()
-{
+	n = q = 0;
 	M = NULL;
 	F = NULL;
+	low_level_point_size = 0;
+	degree = 0;
+	wedge_dimension = 0;
 	wedge_v1 = NULL;
 	wedge_v2 = NULL;
 	wedge_v3 = NULL;
-	low_level_point_size = 0;
 }
 
-void action_on_wedge_product::free()
+action_on_wedge_product::~action_on_wedge_product()
 {
 	if (wedge_v1) {
 		FREE_int(wedge_v1);
@@ -45,7 +38,6 @@ void action_on_wedge_product::free()
 	if (wedge_v3) {
 		FREE_int(wedge_v3);
 		}
-	null();
 }
 
 void action_on_wedge_product::init(actions::action &A, int verbose_level)

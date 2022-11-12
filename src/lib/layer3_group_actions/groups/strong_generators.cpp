@@ -864,8 +864,8 @@ void strong_generators::init_group_extension(
 }
 
 void strong_generators::switch_to_subgroup(
-	const char *rank_vector_text,
-	const char *subgroup_order_text, sims *S,
+	std::string &rank_vector_text,
+	std::string &subgroup_order_text, sims *S,
 	int *&subgroup_gens_idx, int &nb_subgroup_gens,
 	int verbose_level)
 {

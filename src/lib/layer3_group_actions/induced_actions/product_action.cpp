@@ -16,28 +16,26 @@ namespace induced_actions {
 
 product_action::product_action()
 {
-	null();
-}
-
-product_action::~product_action()
-{
-	free();
-}
-
-void product_action::null()
-{
 	A1 = NULL;
 	A2 = NULL;
+	f_use_projections = FALSE;
+	offset = 0;
+	degree = 0;
+	elt_size_in_int = 0;
+	coded_elt_size_in_char = 0;
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
+
 	elt1 = NULL;
 	elt2 = NULL;
 	elt3 = NULL;
-	offset = 0;
+
+	Elts = NULL;
 }
 
-void product_action::free()
+
+product_action::~product_action()
 {
 	if (A1) {
 		FREE_OBJECT(A1);
@@ -57,7 +55,6 @@ void product_action::free()
 		FREE_uchar(elt1);
 	if (elt3)
 		FREE_uchar(elt1);
-	null();
 }
 
 

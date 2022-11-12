@@ -519,7 +519,9 @@ void sims::point_stabilizer_stabchain_with_action(actions::action *A2,
 	}
 
 
-	data_structures_groups::vector_ge stab_gens(A);
+	data_structures_groups::vector_ge stab_gens;
+
+	stab_gens.init(A, verbose_level);
 
 	//stab_gens.append(O.schreier_gen);
 

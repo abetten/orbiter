@@ -972,8 +972,11 @@ void poset_classification::make_flag_orbits_on_relations(
 		snprintf(str, sizeof(str), "_depth_%d_orbit_lengths.csv", lvl);
 		fname.append(str);
 
+		string label;
+
+		label.assign("Orbit_length");
 		Fio.int_vec_write_csv(Orbit_len[lvl], Nb_orbits[lvl],
-			fname, "Orbit_length");
+			fname, label);
 
 		cout << "poset_classification::make_flag_orbits_on_relations "
 				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;

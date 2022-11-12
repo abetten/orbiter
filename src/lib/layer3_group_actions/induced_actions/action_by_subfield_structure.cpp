@@ -16,31 +16,33 @@ namespace induced_actions {
 
 action_by_subfield_structure::action_by_subfield_structure()
 {
-	null();
-}
+	n = 0;
+	Q = 0;
+	poly_q = NULL;
+	q = 0;
+	s = 0;
+	m = 0;
+	v1 = NULL;
+	v2 = NULL;
+	v3 = NULL;
 
-action_by_subfield_structure::~action_by_subfield_structure()
-{
-	free();
-}
+	AQ = NULL;
+	Aq = NULL;
 
-void action_by_subfield_structure::null()
-{
 	MQ = NULL;
 	FQ = NULL;
 	Mq = NULL;
 	Fq = NULL;
-	v1 = NULL;
-	v2 = NULL;
-	v3 = NULL;
+
+	S = NULL;
+
 	Eltq = NULL;
 	Mtx = NULL;
-	S = NULL;
-	Aq = NULL;
 	low_level_point_size = 0;
+	degree = 0;
 }
 
-void action_by_subfield_structure::free()
+action_by_subfield_structure::~action_by_subfield_structure()
 {
 	if (v1) {
 		FREE_int(v1);
@@ -63,7 +65,6 @@ void action_by_subfield_structure::free()
 	if (Aq) {
 		FREE_OBJECT(Aq);
 		}
-	null();
 }
 
 void action_by_subfield_structure::init(actions::action &A,
