@@ -102,6 +102,21 @@ void modified_group_create::modified_group_init(
 		}
 	}
 
+	else if (Descr->f_on_wedge_product) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_action_on_wedge_product" << endl;
+		}
+
+		create_action_on_wedge_product(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_action_on_wedge_product" << endl;
+		}
+	}
+
 	else if (Descr->f_create_special_subgroup) {
 
 		if (f_v) {
@@ -429,6 +444,88 @@ void modified_group_create::create_action_on_k_subsets(
 				"done" << endl;
 	}
 }
+
+
+void modified_group_create::create_action_on_wedge_product(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_wedge_product" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_action_on_wedge_product "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_object_of_type_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+
+
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_wedge_product "
+				"before A_previous->induced_action_on_wedge_product" << endl;
+	}
+	A_modified = A_previous->induced_action_on_wedge_product(verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_wedge_product "
+				"after A_previous->induced_action_on_wedge_product" << endl;
+	}
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_wedge_product "
+				"action A_wedge:" << endl;
+		A_modified->print_info();
+	}
+
+
+
+	f_has_strong_generators = TRUE;
+
+	//A_modified->f_is_linear = A_previous->f_is_linear;
+	//A_modified->dimension = A_previous->dimension;
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_wedge_product "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+	Strong_gens = AG->Subgroup_gens;
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_wedge_product "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "_OnWedge");
+	snprintf(str2, sizeof(str2), " {\\rm OnWedge}");
+	label.append(str1);
+	label_tex.append(str2);
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_wedge_product "
+				"done" << endl;
+	}
+}
+
+
+
 
 
 void modified_group_create::create_special_subgroup(

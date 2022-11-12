@@ -860,8 +860,9 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 	snprintf(str2, 1000, " {\\rm OnWedge}");
 
 	A->label.assign(label);
-	A->label_tex.assign(label_tex);
 	A->label.append(str1);
+
+	A->label_tex.assign(label_tex);
 	A->label_tex.append(str2);
 
 
@@ -937,83 +938,6 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 	return A;
 }
 
-#if 0
-void action::induced_action_on_wedge_product(action *A_old, 
-	action_on_wedge_product *AW, 
-	int f_induce_action, sims *old_G, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A;
-
-	if (f_v) {
-		cout << "action::induced_action_on_wedge_product "
-				"f_induce_action=" << f_induce_action << endl;
-		}
-	A = A_old;
-
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_Wedge");
-	snprintf(str2, 1000, " {\\rm OnWedge}");
-
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-
-	if (f_v) {
-		cout << "the old_action " << A->label
-				<< " has base_length = " << A->base_len()
-			<< " and degree " << A->degree << endl;
-		}
-	f_has_subaction = TRUE;
-	subaction = A;
-	if (A->type_G != matrix_group_t) {
-		cout << "action::induced_action_on_wedge_product "
-				"action not of matrix group type" << endl;
-		exit(1);
-		}
-	//M = A->G.matrix_grp;
-	type_G = action_on_wedge_product_t;
-	G.AW = AW;
-	f_allocated = TRUE;
-	make_element_size = A->make_element_size;
-	low_level_point_size = AW->low_level_point_size;
-	
-	f_has_strong_generators = FALSE;
-	
-	degree = AW->degree;
-	//base_len = 0;
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-	f_is_linear = TRUE;
-	dimension = AW->wedge_dimension;
-	
-	
-	
-	elt_size_in_int = A->elt_size_in_int;
-	coded_elt_size_in_char = A->coded_elt_size_in_char;
-	
-	allocate_element_data();
-	
-	if (f_induce_action) {
-		induced_action_override_sims(*A, old_G, 0/*verbose_level - 2*/);
-		}
-
-	if (f_v) {
-		cout << "action::induced_action_on_wedge_product "
-				"finished, created action " << label << endl;
-		cout << "degree=" << A->degree << endl;
-		cout << "make_element_size=" << A->make_element_size << endl;
-		cout << "low_level_point_size=" << A->low_level_point_size << endl;
-		print_info();
-		}
-}
-#endif
 
 void action::induced_action_by_subfield_structure(action *A_old, 
 		induced_actions::action_by_subfield_structure *SubfieldStructure,

@@ -275,8 +275,14 @@ static void matrix_group_element_pack(action &A,
 	
 	if (f_v) {
 		cout << "matrix_group_element_pack" << endl;
-		}
-	G.GL_pack(Elt1, elt1);
+	}
+	if (f_v) {
+		cout << "matrix_group_element_pack before G.GL_pack" << endl;
+	}
+	G.GL_pack(Elt1, elt1, verbose_level);
+	if (f_v) {
+		cout << "matrix_group_element_pack after G.GL_pack" << endl;
+	}
 }
 
 static void matrix_group_element_retrieve(action &A,
@@ -329,7 +335,7 @@ static int matrix_group_element_store(action &A,
 	if (f_v) {
 		cout << "matrix_group_element_store" << endl;
 		}
-	G.GL_pack(Elt, G.elt1);
+	G.GL_pack(Elt, G.elt1, verbose_level);
 	hdl = G.Elts->store(G.elt1);
 	if (f_v) {
 		cout << "matrix_group_element_store "

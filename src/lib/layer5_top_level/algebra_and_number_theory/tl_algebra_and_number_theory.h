@@ -549,6 +549,8 @@ public:
 	int f_on_k_subsets;
 	int on_k_subsets_k;
 
+	int f_on_wedge_product;
+
 	int f_create_special_subgroup;
 
 	int f_point_stabilizer;
@@ -878,6 +880,9 @@ public:
 	void create_action_on_k_subsets(
 			group_modification_description *description,
 			int verbose_level);
+	void create_action_on_wedge_product(
+			group_modification_description *description,
+			int verbose_level);
 	void create_special_subgroup(
 			group_modification_description *description,
 			int verbose_level);
@@ -955,6 +960,10 @@ public:
 
 	int f_report;
 
+	int f_export_something;
+	std::string export_something_what;
+	int export_something_data1;
+
 	int f_export_trees;
 
 	int f_draw_tree;
@@ -1001,6 +1010,7 @@ public:
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void do_report(int verbose_level);
+	void do_export(int verbose_level);
 	void do_export_trees(int verbose_level);
 	void do_draw_tree(int verbose_level);
 	void do_stabilizer(int verbose_level);
@@ -1160,6 +1170,13 @@ public:
 	void compute_points(int verbose_level);
 	void report(int verbose_level);
 	void report_detailed_list(std::ostream &ost,
+			int verbose_level);
+	void export_something(std::string &what, int data1,
+			std::string &fname, int verbose_level);
+	void export_something_worker(
+			std::string &fname_base,
+			std::string &what, int data1,
+			std::string &fname,
 			int verbose_level);
 
 
