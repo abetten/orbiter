@@ -18,7 +18,9 @@
 #ifndef EXPONENT_VECTOR_VISITOR_H
 #define EXPONENT_VECTOR_VISITOR_H
 
+#ifndef LOG
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
+#endif
 
 using std::unordered_set;
 using std::vector;
@@ -79,7 +81,7 @@ class monomial_coefficient_table final : public unordered_map<vector<unsigned in
                                                               monomial_coefficient_table_key_equal_function> {};
 
 
-class exponent_vector_visitor final : public IRTreeChildLinkArgumentVisitor,
+class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitor,
                                       public IRTreeVoidReturnTypeVariadicArgumentVisitor<vector<unsigned int>&> {
     typedef size_t index_t;
 

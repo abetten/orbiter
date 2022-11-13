@@ -2629,7 +2629,7 @@ int sorting::integer_vec_compare(int *p, int *q, int len)
 	return 0;
 }
 
-int sorting::integer_vec_std_compare(vector<unsigned int> &p, vector<unsigned int> &q)
+int sorting::integer_vec_std_compare(const vector<unsigned int> &p, const vector<unsigned int> &q)
 {
 	int i;
 

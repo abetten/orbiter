@@ -15,7 +15,9 @@
 #ifndef IR_TREE_LATEX_VISITOR_SIMPLE_TREE
 #define IR_TREE_LATEX_VISITOR_SIMPLE_TREE
 
+#ifndef LOG
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
+#endif
 
 class ir_tree_latex_visitor_simple_tree final : public ir_tree_latex_visitor, public IRTreeVoidReturnTypeVisitor {
     void add_epilogue() override;

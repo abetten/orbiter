@@ -20,9 +20,6 @@
 			previous_node = PREVIOUS_NODE; \
 			previous_node_visiting_child = VISITING_CHILD
 
-#define LOG std::cout << __FILE__ << ":" << __LINE__ << std::endl;
-
-
 void uminus_distribute_and_reduce_visitor::visit(plus_node* op_node) {
     BACKUP_PREVIOUS_BOOKKEEPING_INFO;
 

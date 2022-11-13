@@ -1374,7 +1374,7 @@ public:
 		int *&pts, int &nb_pts);
 	void int_vec_bubblesort_increasing(int len, int *p);
 	int integer_vec_compare(int *p, int *q, int len);
-	int integer_vec_std_compare(std::vector<unsigned int> &p, std::vector<unsigned int> &q);
+	int integer_vec_std_compare(const std::vector<unsigned int> &p, const std::vector<unsigned int> &q);
 	int lint_vec_compare(long int *p, long int *q, int len);
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
