@@ -18,7 +18,9 @@ using std::list;
 using std::shared_ptr;
 using std::vector;
 
+#ifndef LOG
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
+#endif
 
 #define DEFINE_ACCEPT_VISITOR_FUNCTION() \
     void accept(IRTreeVoidReturnTypeVisitor* visitor) override {visitor->visit(this);} \

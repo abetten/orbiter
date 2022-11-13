@@ -22,6 +22,8 @@ EXECUTABLE_BINARY = main
 main: $(SRCS:.cpp=.o) lexer.yy.o parser.tab.o visitors ir_tree
 	$(CC) $(CSTD) $(CPPFLAGS) $(TARGET_OBJECT_FILES) -o $@ $(LDFLAGS) -L ../../ -lorbiter $(LEXLIB)
 
+all: $(SRCS:.cpp=.o) lexer.yy.o parser.tab.o visitors ir_tree;
+
 lexer.yy.o: lexer.yy.h 
 	$(CC) $(CSTD) $(CPPFLAGS) $(@:%.o=%.cpp) -c -o $@
 

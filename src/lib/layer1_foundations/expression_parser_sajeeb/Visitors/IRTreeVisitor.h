@@ -13,7 +13,9 @@
 #ifndef IRTREETEMPLATERETURNVISITOR_H
 #define IRTREETEMPLATERETURNVISITOR_H
 
+#ifndef LOG
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
+#endif
 
 template<class return_t, class... Args>
 class IRTreeTemplateReturnTypeVariadicArgumentVisitor {

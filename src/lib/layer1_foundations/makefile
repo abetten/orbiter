@@ -28,7 +28,8 @@ all: algebra \
 	orthogonal \
 	ring_theory \
 	solvers \
-	BitSet
+	BitSet \
+	expression_parser_sajeeb
 
 
 
@@ -56,6 +57,7 @@ orthogonal : orthogonal2
 ring_theory : ring_theory2  
 solvers : solvers2 
 BitSet	:	BitSet2
+expression_parser_sajeeb : expression_parser_sajeeb2
 
 algebra2 : ; cd algebra; $(MAKE)
 algebraic_geometry2 : ; cd algebraic_geometry; $(MAKE)
@@ -80,6 +82,8 @@ orthogonal2 : ; cd orthogonal; $(MAKE)
 ring_theory2 : ; cd ring_theory; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
 BitSet2: ; cd BitSet; $(MAKE)
+expression_parser_sajeeb2:
+	$(MAKE) -C expression_parser_sajeeb all
 
 clean:
 	cd algebra; $(MAKE) clean
