@@ -6,5 +6,6 @@ var searchData=
   ['add_5fepilogue_3',['add_epilogue',['../classir__tree__latex__visitor.html#ab11a5d2897c2a13f52b8d2ef714bfa1a',1,'ir_tree_latex_visitor']]],
   ['add_5findentation_4',['add_indentation',['../classir__tree__latex__visitor.html#aab18cc357f76599f552edee9c9a143db',1,'ir_tree_latex_visitor']]],
   ['add_5fprologue_5',['add_prologue',['../classir__tree__latex__visitor.html#ae8dcc59724563c989bf01fdb8f9a0bc9',1,'ir_tree_latex_visitor']]],
-  ['ast_5froot_6',['ast_root',['../union_y_y_s_t_y_p_e.html#af1841617981884d3c2e94021b5a779e5',1,'YYSTYPE']]]
+  ['algorithms_6',['algorithms',['../structmonomial__coefficient__table__hash__function.html#ac137846ac883a1d0daae0d91ceafb86c',1,'monomial_coefficient_table_hash_function']]],
+  ['ast_5froot_7',['ast_root',['../union_y_y_s_t_y_p_e.html#af1841617981884d3c2e94021b5a779e5',1,'YYSTYPE']]]
 ];

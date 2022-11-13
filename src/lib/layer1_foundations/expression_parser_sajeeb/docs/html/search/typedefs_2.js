@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['return_5ft_0',['return_t',['../classsimplify__numerical__visitor.html#ae8109b87433c4305d99f00be0fba6c48',1,'simplify_numerical_visitor::return_t()'],['../simplify__numerical__visitor_8cpp.html#ac8ac982b144dc2e970eacec7285e7573',1,'return_t():&#160;simplify_numerical_visitor.cpp']]]
+  ['node_5ftype_0',['node_type',['../ir__tree__latex__visitor__family__tree_8cpp.html#a4e9ae02bc0e43cf902ea7d8886d4acc6',1,'node_type():&#160;ir_tree_latex_visitor_family_tree.cpp'],['../ir__tree__latex__visitor__simple__tree_8cpp.html#a4e9ae02bc0e43cf902ea7d8886d4acc6',1,'node_type():&#160;ir_tree_latex_visitor_simple_tree.cpp'],['../simplify__numerical__visitor_8cpp.html#a4e9ae02bc0e43cf902ea7d8886d4acc6',1,'node_type():&#160;simplify_numerical_visitor.cpp']]]
 ];

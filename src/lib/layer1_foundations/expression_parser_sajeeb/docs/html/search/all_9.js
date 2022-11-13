@@ -14,10 +14,12 @@ var searchData=
   ['minus_5fnode_11',['MINUS_NODE',['../classirtree__node.html#aa4f4922914ad8d2fbe95f4d37bbd3760a90e4bf7f1d7b6601ea94d942b82917af',1,'irtree_node']]],
   ['minus_5fnode_12',['minus_node',['../classdeep__copy__visitor.html#ac5891316fd79121bcc0828174a9d6172',1,'deep_copy_visitor::minus_node()'],['../classexponent__vector__visitor.html#ac5891316fd79121bcc0828174a9d6172',1,'exponent_vector_visitor::minus_node()'],['../classminus__node.html#a5bbd3247bd789c1369a7c28f0c74d285',1,'minus_node::minus_node()'],['../classminus__node.html#ad7969ec93d95d934fedacc9c83b93916',1,'minus_node::minus_node(const minus_node &amp;other)']]],
   ['monomial_5fcoefficient_5ftable_13',['monomial_coefficient_table',['../classmonomial__coefficient__table.html',1,'']]],
-  ['multiplication_5fexpansion_5fvisitor_14',['multiplication_expansion_visitor',['../classmultiplication__expansion__visitor.html',1,'']]],
-  ['multiplication_5fexpansion_5fvisitor_2ecpp_15',['multiplication_expansion_visitor.cpp',['../multiplication__expansion__visitor_8cpp.html',1,'']]],
-  ['multiplication_5fexpansion_5fvisitor_2eh_16',['multiplication_expansion_visitor.h',['../multiplication__expansion__visitor_8h.html',1,'']]],
-  ['multiply_5fnode_17',['multiply_node',['../classmultiply__node.html',1,'']]],
-  ['multiply_5fnode_18',['MULTIPLY_NODE',['../classirtree__node.html#aa4f4922914ad8d2fbe95f4d37bbd3760a21bf03e78a7f75be2e9f62b995aaf545',1,'irtree_node']]],
-  ['multiply_5fnode_19',['multiply_node',['../classdeep__copy__visitor.html#a38e6287244d648c9ba43ee2dc6a1b65f',1,'deep_copy_visitor::multiply_node()'],['../classexponent__vector__visitor.html#a38e6287244d648c9ba43ee2dc6a1b65f',1,'exponent_vector_visitor::multiply_node()'],['../classmultiply__node.html#af63377448f55223f3fa6d8e6caf740aa',1,'multiply_node::multiply_node()']]]
+  ['monomial_5fcoefficient_5ftable_5fhash_5ffunction_14',['monomial_coefficient_table_hash_function',['../structmonomial__coefficient__table__hash__function.html',1,'']]],
+  ['monomial_5fcoefficient_5ftable_5fkey_5fequal_5ffunction_15',['monomial_coefficient_table_key_equal_function',['../structmonomial__coefficient__table__key__equal__function.html',1,'']]],
+  ['multiplication_5fexpansion_5fvisitor_16',['multiplication_expansion_visitor',['../classmultiplication__expansion__visitor.html',1,'']]],
+  ['multiplication_5fexpansion_5fvisitor_2ecpp_17',['multiplication_expansion_visitor.cpp',['../multiplication__expansion__visitor_8cpp.html',1,'']]],
+  ['multiplication_5fexpansion_5fvisitor_2eh_18',['multiplication_expansion_visitor.h',['../multiplication__expansion__visitor_8h.html',1,'']]],
+  ['multiply_5fnode_19',['multiply_node',['../classmultiply__node.html',1,'']]],
+  ['multiply_5fnode_20',['MULTIPLY_NODE',['../classirtree__node.html#aa4f4922914ad8d2fbe95f4d37bbd3760a21bf03e78a7f75be2e9f62b995aaf545',1,'irtree_node']]],
+  ['multiply_5fnode_21',['multiply_node',['../classdeep__copy__visitor.html#a38e6287244d648c9ba43ee2dc6a1b65f',1,'deep_copy_visitor::multiply_node()'],['../classexponent__vector__visitor.html#a38e6287244d648c9ba43ee2dc6a1b65f',1,'exponent_vector_visitor::multiply_node()'],['../classmultiply__node.html#af63377448f55223f3fa6d8e6caf740aa',1,'multiply_node::multiply_node()']]]
 ];
