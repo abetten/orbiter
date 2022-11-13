@@ -1,0 +1,12 @@
+class irtree_node;
+class non_terminal_node;
+class terminal_node;
+class plus_node;
+class minus_node;
+class multiply_node;
+class exponent_node;
+class unary_negate_node;
+class variable_node;
+class parameter_node;
+class number_node;
+class sentinel_node;
