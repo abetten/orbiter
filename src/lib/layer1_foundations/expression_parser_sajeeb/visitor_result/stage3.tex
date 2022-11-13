@@ -1,0 +1,53 @@
+\documentclass{standalone}
+\usepackage{forest}
+\usetikzlibrary{arrows.meta}
+\begin{document}
+\begin{forest}
+for tree={
+grow'=0, treenode/.style = {align=center, inner sep=2.5pt,
+    text centered, font=\sffamily},
+arn_n/.style = {treenode, rectangle, text width=1.5em},
+arn_x/.style = {treenode},
+gray-arrow/.style = {draw=gray},
+edge=-{Stealth}}
+[\fbox{S}, arn_n
+  [\fbox{+}, arn_n
+    [\fbox{*}, arn_n
+      [a, arn_x]
+      [b, arn_x]
+      [c, arn_x]
+    ]
+    [\fbox{*}, arn_n
+      [1, arn_x]
+    ]
+    [\fbox{*}, arn_n
+      [1, arn_x]
+    ]
+    [\fbox{*}, arn_n
+      [\fbox{\^{}}, arn_n
+        [x0, arn_x]
+        [2, arn_x]
+      ]
+    ]
+    [\fbox{*}, arn_n
+      [\fbox{\^{}}, arn_n
+        [x1, arn_x]
+        [2, arn_x]
+      ]
+    ]
+    [\fbox{*}, arn_n
+    ]
+    [\fbox{*}, arn_n
+      [\fbox{\^{}}, arn_n
+        [a, arn_x]
+        [2, arn_x]
+      ]
+      [\fbox{\^{}}, arn_n
+        [x2, arn_x]
+        [2, arn_x]
+      ]
+    ]
+  ]
+]
+\end{forest}
+\end{document}
