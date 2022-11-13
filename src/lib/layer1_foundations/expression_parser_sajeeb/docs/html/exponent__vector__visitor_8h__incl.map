@@ -1,13 +1,17 @@
 <map id="Visitors/exponent_vector_visitor.h" name="Visitors/exponent_vector_visitor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="331,5,497,45"/>
-<area shape="rect" id="node2" title=" " alt="" coords="91,93,150,119"/>
-<area shape="rect" id="node3" href="$_i_r_tree_visitor_8h.html" title=" " alt="" coords="174,93,283,119"/>
-<area shape="rect" id="node6" title=" " alt="" coords="289,174,361,199"/>
-<area shape="rect" id="node7" title=" " alt="" coords="359,93,469,119"/>
-<area shape="rect" id="node8" title=" " alt="" coords="494,93,598,119"/>
-<area shape="rect" id="node9" title=" " alt="" coords="608,174,663,199"/>
-<area shape="rect" id="node10" href="$exception_8h.html" title=" " alt="" coords="673,93,774,119"/>
-<area shape="rect" id="node4" href="$node__forward__declaration_8h.html" title=" " alt="" coords="5,167,161,207"/>
-<area shape="rect" id="node5" title=" " alt="" coords="185,174,264,199"/>
-<area shape="rect" id="node11" title=" " alt="" coords="687,174,765,199"/>
+<area shape="rect" id="node1" title=" " alt="" coords="294,5,461,45"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,93,64,119"/>
+<area shape="rect" id="node3" href="$_i_r_tree_visitor_8h.html" title=" " alt="" coords="264,167,373,192"/>
+<area shape="rect" id="node6" title=" " alt="" coords="124,247,196,273"/>
+<area shape="rect" id="node7" title=" " alt="" coords="190,93,301,119"/>
+<area shape="rect" id="node8" title=" " alt="" coords="325,93,429,119"/>
+<area shape="rect" id="node9" title=" " alt="" coords="682,167,737,192"/>
+<area shape="rect" id="node10" href="$_i_r_tree_child_link_argument_visitor_8h.html" title=" " alt="" coords="453,93,672,119"/>
+<area shape="rect" id="node13" href="$exception_8h.html" title=" " alt="" coords="747,93,848,119"/>
+<area shape="rect" id="node15" title=" " alt="" coords="873,93,997,119"/>
+<area shape="rect" id="node4" href="$node__forward__declaration_8h.html" title=" " alt="" coords="403,240,559,280"/>
+<area shape="rect" id="node5" title=" " alt="" coords="279,247,358,273"/>
+<area shape="rect" id="node11" title=" " alt="" coords="571,167,610,192"/>
+<area shape="rect" id="node12" title=" " alt="" coords="427,167,496,192"/>
+<area shape="rect" id="node14" title=" " alt="" coords="761,167,839,192"/>
 </map>
