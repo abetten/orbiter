@@ -29,7 +29,7 @@ Please see the README in src/lib/layer1_foundations/expression_parser_sajeeb for
 hints regarding the installation of flex and bison.
 
 Orbiter offers latex interfaces to the following external software packages:
-- latex
+- latex, tikz, metapost
 - povray
 - magma
 - GAP
