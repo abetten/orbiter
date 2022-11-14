@@ -30,7 +30,7 @@ hints regarding the installation of flex and bison.
 
 Orbiter offers latex interfaces to the following external software packages:
 - latex, tikz, metapost
-- povray
+- povray, ffmpeg
 - magma
 - GAP
 
