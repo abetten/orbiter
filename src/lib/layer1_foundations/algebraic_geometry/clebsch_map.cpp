@@ -46,16 +46,10 @@ clebsch_map::clebsch_map()
 
 clebsch_map::~clebsch_map()
 {
-	freeself();
-}
-
-
-void clebsch_map::freeself()
-{
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "clebsch_map::freeself" << endl;
+		cout << "clebsch_map::~clebsch_map" << endl;
 	}
 }
 

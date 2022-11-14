@@ -134,9 +134,11 @@ finite_field_activity_description::finite_field_activity_description()
 	f_polynomial_reduce_mod_p = FALSE;
 	//polynomial_reduce_mod_p_A;
 
+#if 0
 	f_cheat_sheet_Gr = FALSE;
 	cheat_sheet_Gr_n = 0;
 	cheat_sheet_Gr_k = 0;
+#endif
 
 	f_cheat_sheet_hermitian = FALSE;
 	cheat_sheet_hermitian_projective_dimension = 0;
@@ -568,6 +570,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_Gr") == 0) {
 			f_cheat_sheet_Gr = TRUE;
 			cheat_sheet_Gr_n = ST.strtoi(argv[++i]);
@@ -576,6 +579,7 @@ int finite_field_activity_description::read_arguments(
 				cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
 			}
 		}
+#endif
 
 
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_hermitian") == 0) {
@@ -956,11 +960,11 @@ void finite_field_activity_description::print()
 	if (f_cheat_sheet_PG) {
 		cout << "-cheat_sheet_PG " << cheat_sheet_PG_n << endl;
 	}
-#endif
 
 	if (f_cheat_sheet_Gr) {
 		cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
 	}
+#endif
 
 
 	if (f_cheat_sheet_hermitian) {

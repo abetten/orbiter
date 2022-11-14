@@ -609,6 +609,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->Arc_generator_description,
 				verbose_level);
 	}
+#if 0
 	else if (Descr->f_latex_homogeneous_equation) {
 
 		geometry::geometry_global G;
@@ -623,6 +624,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 
 	}
+#endif
 	else if (Descr->f_lines_on_point_but_within_a_plane) {
 
 		if (f_v) {

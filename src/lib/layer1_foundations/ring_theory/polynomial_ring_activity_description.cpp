@@ -35,6 +35,13 @@ polynomial_ring_activity_description::polynomial_ring_activity_description()
 	//std::string apply_transformation_Eqn_in_label;
 	//std::string apply_transformation_vector_ge_label;
 
+	f_set_variable_names = FALSE;
+	//std::string set_variable_names_txt;
+	//std::string set_variable_names_tex;
+
+	f_print_equation = FALSE;
+	//std::string print_equation_input;
+
 }
 
 
@@ -90,7 +97,28 @@ int polynomial_ring_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-set_variable_names") == 0) {
+			f_set_variable_names = TRUE;
+			set_variable_names_txt.assign(argv[++i]);
+			set_variable_names_tex.assign(argv[++i]);
 
+			if (f_v) {
+				cout << "-set_variable_names "
+						<< set_variable_names_txt << " "
+						<< set_variable_names_tex << " "
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-print_equation") == 0) {
+			f_print_equation = TRUE;
+			print_equation_input.assign(argv[++i]);
+
+			if (f_v) {
+				cout << "-print_equation "
+						<< print_equation_input << " "
+						<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -126,6 +154,17 @@ void polynomial_ring_activity_description::print()
 		cout << "-apply_transformation "
 				<< apply_transformation_Eqn_in_label << " "
 				<< apply_transformation_vector_ge_label << " "
+				<< endl;
+	}
+	if (f_set_variable_names) {
+		cout << "-set_variable_names "
+				<< set_variable_names_txt << " "
+				<< set_variable_names_tex << " "
+				<< endl;
+	}
+	if (f_print_equation) {
+		cout << "-print_equation "
+				<< print_equation_input << " "
 				<< endl;
 	}
 }

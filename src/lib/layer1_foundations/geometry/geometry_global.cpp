@@ -1439,6 +1439,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 		field_theory::finite_field *F,
 		std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 		int verbose_level)
+// creates klein_correspondence and orthogonal_geometry::orthogonal objects
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1836,11 +1837,11 @@ void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
 	}
 
 }
-#endif
 
 void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 		int n, int k,
 		int verbose_level)
+// creates a projective_space object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1884,11 +1885,13 @@ void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 	}
 
 }
+#endif
 
 
 void geometry_global::do_cheat_sheet_hermitian(field_theory::finite_field *F,
 		int projective_dimension,
 		int verbose_level)
+// creates a hermitian object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1932,6 +1935,7 @@ void geometry_global::do_create_desarguesian_spread(
 		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int m,
 		int verbose_level)
+// creates field_theory::subfield_structure and desarguesian_spread objects
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2000,6 +2004,7 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		int verbose_level)
+// creates incidence_structure and data_structures::partitionstack objects
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2091,13 +2096,14 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 }
 
 
-
+#if 0
 void geometry_global::latex_homogeneous_equation(
 		field_theory::finite_field *F, int degree, int nb_vars,
 		std::string &equation_text,
 		std::string &symbol_txt,
 		std::string &symbol_tex,
 		int verbose_level)
+// creates ring_theory::homogeneous_polynomial_domain
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2120,8 +2126,8 @@ void geometry_global::latex_homogeneous_equation(
 			verbose_level);
 
 	Poly->remake_symbols(0 /* symbol_offset */,
-				symbol_txt.c_str(),
-				symbol_tex.c_str(),
+				symbol_txt,
+				symbol_tex,
 				verbose_level);
 
 
@@ -2137,6 +2143,7 @@ void geometry_global::latex_homogeneous_equation(
 	}
 
 }
+#endif
 
 void geometry_global::create_BLT_point(field_theory::finite_field *F,
 		int *v5, int a, int b, int c, int verbose_level)

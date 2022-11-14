@@ -154,11 +154,11 @@ public:
 	int *get_monomial_pointer(int i);
 	int evaluate_monomial(int idx_of_monomial, int *coords);
 	void remake_symbols(int symbol_offset,
-			const char *symbol_mask, const char *symbol_mask_latex,
+			std::string &symbol_mask, std::string &symbol_mask_latex,
 			int verbose_level);
 	void remake_symbols_interval(int symbol_offset,
 			int from, int len,
-			const char *symbol_mask, const char *symbol_mask_latex,
+			std::string &symbol_mask, std::string &symbol_mask_latex,
 			int verbose_level);
 	void make_monomials(
 			monomial_ordering_type Monomial_ordering_type,
@@ -608,6 +608,12 @@ public:
 	std::string apply_transformation_Eqn_in_label;
 	std::string apply_transformation_vector_ge_label;
 
+	int f_set_variable_names;
+	std::string set_variable_names_txt;
+	std::string set_variable_names_tex;
+
+	int f_print_equation;
+	std::string print_equation_input;
 
 
 	polynomial_ring_activity_description();

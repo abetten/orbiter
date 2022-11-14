@@ -235,6 +235,31 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 
 
 	}
+	else if (Descr->f_set_variable_names) {
+		cout << "-set_variable_names "
+				<< Descr->set_variable_names_txt << " "
+				<< Descr->set_variable_names_tex << " "
+				<< endl;
+
+		HPD->remake_symbols(0 /* symbol_offset */,
+				Descr->set_variable_names_txt,
+				Descr->set_variable_names_tex,
+					verbose_level);
+
+	}
+	else if (Descr->f_print_equation) {
+		cout << "-print_equation "
+				<< Descr->print_equation_input << " "
+				<< endl;
+
+		int *eqn;
+		int sz;
+
+		Get_int_vector_from_label(Descr->print_equation_input, eqn, sz, 0 /* verbose_level */);
+
+		HPD->print_equation_tex(cout, eqn);
+		cout << endl;
+	}
 
 
 	if (f_v) {

@@ -38,20 +38,9 @@ memory_object::memory_object()
 
 memory_object::~memory_object()
 {
-	freeself();
-}
-
-void memory_object::null()
-{
-	data = NULL;
-}
-
-void memory_object::freeself()
-{
 	if (data) {
 		FREE_char(data);
 		}
-	null();
 }
 
 void memory_object::init(long int length,

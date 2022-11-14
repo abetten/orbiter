@@ -196,7 +196,7 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 		int v6[6];
 
-		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
+		P->Grass_lines->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
 		Rk[i] = P->F->Orthogonal_indexing->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
 

@@ -550,8 +550,12 @@ void surface_domain::label_variables_3(
 		exit(1);
 	}
 
+	string s1, s2;
+
+	s1.assign("y_%d");
+	s2.assign("y_{%d}");
 	HPD->remake_symbols(0 /* symbol_offset */,
-			"y_%d", "y_{%d}", verbose_level);
+			s1, s2, verbose_level);
 
 	if (f_v) {
 		cout << "surface_domain::label_variables_3 done" << endl;
@@ -574,8 +578,12 @@ void surface_domain::label_variables_x123(
 	}
 
 
+	string s1, s2;
+
+	s1.assign("x_%d");
+	s2.assign("x_{%d}");
 	HPD->remake_symbols(1 /* symbol_offset */,
-			"x_%d", "x_{%d}", verbose_level);
+			s1, s2, verbose_level);
 
 	if (f_v) {
 		cout << "surface_domain::label_variables_x123 done" << endl;
@@ -598,9 +606,13 @@ void surface_domain::label_variables_4(
 		exit(1);
 		}
 
+	string s1, s2;
+
+	s1.assign("X_%d");
+	s2.assign("X_{%d}");
 
 	HPD->remake_symbols(0 /* symbol_offset */,
-			"X_%d", "X_{%d}", verbose_level);
+			s1, s2, verbose_level);
 
 
 	if (f_v) {
@@ -623,33 +635,49 @@ void surface_domain::label_variables_27(
 		exit(1);
 	}
 
+	string s1, s2;
+
+	s1.assign("y_%d");
+	s2.assign("y_{%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			0, 3,
-			"y_%d", "y_{%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("f_0%d");
+	s2.assign("f_{0%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			3, 4,
-			"f_0%d", "f_{0%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("f_1%d");
+	s2.assign("f_{1%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			7, 4,
-			"f_1%d", "f_{1%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("f_2%d");
+	s2.assign("f_{2%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			11, 4,
-			"f_2%d", "f_{2%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("g_0%d");
+	s2.assign("g_{0%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			15, 4,
-			"g_0%d", "g_{0%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("g_1%d");
+	s2.assign("g_{1%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			19, 4,
-			"g_1%d", "g_{1%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("g_2%d");
+	s2.assign("g_{2%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			23, 4,
-			"g_2%d", "g_{2%d}",
+			s1, s2,
 			verbose_level);
 
 	if (f_v) {
@@ -671,29 +699,43 @@ void surface_domain::label_variables_24(
 		exit(1);
 	}
 
+	string s1, s2;
+
+	s1.assign("f_0%d");
+	s2.assign("f_{0%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			0, 4,
-			"f_0%d", "f_{0%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("f_1%d");
+	s2.assign("f_{1%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			4, 4,
-			"f_1%d", "f_{1%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("f_2%d");
+	s2.assign("f_{2%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			8, 4,
-			"f_2%d", "f_{2%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("g_0%d");
+	s2.assign("g_{0%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			12, 4,
-			"g_0%d", "g_{0%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("g_1%d");
+	s2.assign("g_{1%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			16, 4,
-			"g_1%d", "g_{1%d}",
+			s1, s2,
 			verbose_level);
+	s1.assign("g_2%d");
+	s2.assign("g_{2%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			20, 4,
-			"g_2%d", "g_{2%d}",
+			s1, s2,
 			verbose_level);
 
 	if (f_v) {
