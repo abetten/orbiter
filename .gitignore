@@ -15,5 +15,6 @@ cmake-build-debug/
 
 .*
 !/.gitignore
+!/src/lib/layer1_foundations/expression_parser_sajeeb/.gitignore
 
 _config.yml
