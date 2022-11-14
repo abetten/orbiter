@@ -35,7 +35,8 @@ Orbiter offers latex interfaces to the following external software packages:
 - GAP
 
 Orbiter includes the following software packages (at the source code level)
-- Nauty 2.7.
+- Nauty 2.7. (Brendan McKay)
+- possolve (Brendan McKay)
 - Eigen
 - EasyBMP
 - DISCRETA (legacy code)
