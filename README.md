@@ -25,7 +25,8 @@ Requirements:
 - bison and flex and the flex library (for Sajeeb's expression parser)
 - Windows users may use Windows subsystem linux to install Orbiter.
 
-
+Please see the README in src/lib/layer1_foundations/expression_parser_sajeeb for 
+hints regarding the installation of flex and bison.
 
 Orbiter offers latex interfaces to the following external software packages:
 - latex
