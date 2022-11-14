@@ -2,10 +2,14 @@ Orbiter
 =======
 
 A C++ class library devoted to the classification of combinatorial objects.
+Besides that Orbiter offers many funtions in the field of computational group theory.
+Orbiter offers a command line interface.
+The User's Guide describes the command line language.
+We recommend to use shell scripts or makefiles to assemble commands. 
+An example makefile showing many commands is distributed with Orbiter.
 
 
-Please find the user's guide here:
-
+Please find the User's Guide here:
 
 - https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
 
@@ -23,13 +27,21 @@ Requirements:
 
 
 
-Interfaces exist to the following software packages:
+Orbiter offers latex interfaces to the following external software packages:
 - latex
 - povray
 - magma
 - GAP
 
-Orbiter includes Nauty 2.7.
+Orbiter includes the following software packages (at the source code level)
+- Nauty 2.7.
+- Eigen
+- EasyBMP
+- DISCRETA (legacy code)
+
+Statistics (as of November 2022):
+- Total number of lines of code is about 927 thousand (excluding the external software packages)
+- Total number of classes is about 518.
 
 Anton Betten
 November 14, 2022
