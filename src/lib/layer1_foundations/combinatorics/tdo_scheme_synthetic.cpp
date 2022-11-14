@@ -2090,7 +2090,9 @@ int tdo_scheme_synthetic::refine_rows_hard(
 			T.multiple_types[T.nb_multiple_types++] = r;
 		}
 		
-		T.D1->freeself();
+		//T.D1->freeself();
+		FREE_OBJECT(T.D1);
+		T.D1 = NEW_OBJECT(solvers::diophant);
 		//diophant_close(T.D1);
 		//T.D1 = NULL;
 
@@ -3190,7 +3192,9 @@ int tdo_scheme_synthetic::refine_cols_hard(
 				T.multiple_types[T.nb_multiple_types++] = r;
 			}
 
-			T.D1->freeself();
+			//T.D1->freeself();
+			FREE_OBJECT(T.D1);
+			T.D1 = NEW_OBJECT(solvers::diophant);
 			//diophant_close(T.D1);
 			//T.D1 = NULL;
 
@@ -4039,7 +4043,9 @@ int tdo_scheme_synthetic::td3_refine_rows(int verbose_level,
 			T.multiple_types[T.nb_multiple_types++] = r;
 		}
 		
-		T.D1->freeself();
+		//T.D1->freeself();
+		FREE_OBJECT(T.D1);
+		T.D1 = NEW_OBJECT(solvers::diophant);
 		//diophant_close(T.D1);
 		//T.D1 = NULL;
 		
@@ -4539,7 +4545,9 @@ int tdo_scheme_synthetic::td3_refine_columns(int verbose_level, int f_once,
 			T.multiple_types[T.nb_multiple_types++] = r;
 		}
 		
-		T.D1->freeself();
+		//T.D1->freeself();
+		FREE_OBJECT(T.D1);
+		T.D1 = NEW_OBJECT(solvers::diophant);
 		//diophant_close(T.D1);
 		//T.D1 = NULL;
 		

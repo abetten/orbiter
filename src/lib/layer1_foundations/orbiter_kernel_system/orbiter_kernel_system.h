@@ -680,8 +680,6 @@ class memory_object {
 public:
 	memory_object();
 	~memory_object();
-	void null();
-	void freeself();
 
 	char *data;
 	long int alloc_length;
@@ -732,8 +730,6 @@ public:
 	
 	orbiter_data_file();
 	~orbiter_data_file();
-	void null();
-	void freeself();
 	void load(std::string &fname, int verbose_level);
 };
 

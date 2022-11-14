@@ -3261,7 +3261,7 @@ void projective_space::report(ostream &ost,
 		if (f_v) {
 			cout << "projective_space::report before cheat_sheet_subspaces, k=" << k << endl;
 		}
-		cheat_sheet_subspaces(ost, k, verbose_level);
+		Grass_stack[k]->cheat_sheet_subspaces(ost, verbose_level);
 		if (f_v) {
 			cout << "projective_space::report after cheat_sheet_subspaces, k=" << k << endl;
 		}
@@ -3442,73 +3442,6 @@ void projective_space::create_latex_report(
 
 	if (f_v) {
 		cout << "projective_space::create_latex_report done" << endl;
-	}
-}
-
-void projective_space::create_latex_report_for_Grassmannian(int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space::create_latex_report_for_Grassmannian" << endl;
-	}
-
-	{
-
-		string fname;
-		string author;
-		string title;
-		string extra_praeamble;
-
-
-		char str[1000];
-
-		snprintf(str, 1000, "Gr_%d_%d_%d.tex", n + 1, k, F->q);
-		fname.assign(str);
-		snprintf(str, 1000, "Cheat Sheet ${\\rm Gr}_{%d,%d,%d}$", n + 1, k, F->q);
-		title.assign(str);
-
-
-
-		{
-			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					extra_praeamble /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "projective_space::create_latex_report_for_Grassmannian "
-						"before cheat_sheet_subspaces, k=" << k << endl;
-			}
-			cheat_sheet_subspaces(ost, k - 1, verbose_level);
-			if (f_v) {
-				cout << "projective_space::create_latex_report_for_Grassmannian "
-						"after cheat_sheet_subspaces, k=" << k << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space::create_latex_report_for_Grassmannian done" << endl;
 	}
 }
 

@@ -1617,6 +1617,361 @@ void grassmann::make_spread_element(int *Spread_element, int *A, int verbose_lev
 	}
 }
 
+void grassmann::cheat_sheet_subspaces(std::ostream &f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//grassmann *Gr;
+	int *v;
+	//int n1, k1;
+	int nb_k_subspaces;
+	int i, j, u;
+	int f_need_comma = FALSE;
+	combinatorics::combinatorics_domain Combi;
+
+
+	if (f_v) {
+		cout << "grassmann::cheat_sheet_subspaces vector space dimension = " << k << endl;
+	}
+	//n1 = n; // n + 1;
+	//k1 = k; // k + 1;
+	v = NEW_int(n);
+
+	if (F->q >= 10) {
+		f_need_comma = TRUE;
+	}
+
+	//Gr = NEW_OBJECT(grassmann);
+	//Gr->init(n1, k1, F, 0 /*verbose_level*/);
+
+
+	//nb_points = N_points;
+	nb_k_subspaces = Combi.generalized_binomial(n, k, q);
+
+
+	f << "PG$(" << n - 1 << ", " << q << ")$ has "
+			<< nb_k_subspaces << " $" << k - 1
+			<< "$-subspaces:\\\\" << endl;
+
+	if (nb_k_subspaces > 10000) {
+		f << "Too many to print \\\\" << endl;
+	}
+	else {
+		f << "%\\begin{multicols}{2}" << endl;
+		for (u = 0; u < nb_k_subspaces; u++) {
+			unrank_lint(u, 0 /* verbose_level*/);
+			f << "$L_{" << u << "}=\\bL";
+			f << "\\left[" << endl;
+			f << "\\begin{array}{c}" << endl;
+			for (i = 0; i < k; i++) {
+				for (j = 0; j < n; j++) {
+					f << M[i * n + j];
+					if (f_need_comma && j < n - 1) {
+						f << ", ";
+					}
+				}
+				f << "\\\\" << endl;
+			}
+			f << "\\end{array}" << endl;
+			f << "\\right]" << endl;
+			if (k == 2) {
+				f << "\\{";
+
+				int nb;
+				long int *the_points;
+
+				nb = nb_points_covered(0 /* verbose_level*/);
+
+				the_points = NEW_lint(nb);
+
+				points_covered(the_points, 0 /* verbose_level*/);
+
+				data_structures::sorting Sorting;
+
+				Sorting.lint_vec_heapsort(the_points, nb);
+				orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(f, the_points, nb);
+				//Lint_vec_print(the_points, nb);
+
+				FREE_lint(the_points);
+				f << "\\}";
+			}
+
+			if (n == 4 && k == 2) {
+				int v6[6];
+
+				Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+						<< v6[2] << "," << v6[3] << "," << v6[4]
+						<< "," << v6[5] << " ";
+				f << ")" << endl;
+
+			}
+			f << "$\\\\" << endl;
+
+			if (((u + 1) % 1000) == 0) {
+				f << "\\clearpage" << endl << endl;
+			}
+		}
+		f << "%\\end{multicols}" << endl;
+
+
+		if (n == 4 && k == 2) {
+			do_pluecker_reverse(f, nb_k_subspaces, verbose_level);
+		}
+
+	}
+	if (n == 4 && k == 2) {
+		f << "PG$(" << n << ", " << q << ")$ has "
+				<< "the following low weight Pluecker lines:\\\\" << endl;
+		for (u = 0; u < nb_k_subspaces; u++) {
+			int v6[6];
+			int w;
+
+			unrank_lint(u, 0 /* verbose_level*/);
+			Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+			w = 0;
+			for (j = 0; j < 6; j++) {
+				if (v6[j]) {
+					w++;
+				}
+			}
+			if (w == 1) {
+				f << "$L_{" << u << "}=";
+				f << "\\left[" << endl;
+				f << "\\begin{array}{c}" << endl;
+				for (i = 0; i < k; i++) {
+					for (j = 0; j < n; j++) {
+						f << M[i * n + j];
+						if (f_need_comma && j < n - 1) {
+							f << ", ";
+							}
+						}
+					f << "\\\\" << endl;
+					}
+				f << "\\end{array}" << endl;
+				f << "\\right]" << endl;
+				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+						<< v6[2] << "," << v6[3] << "," << v6[4]
+						<< "," << v6[5] << " ";
+				f << ")" << endl;
+				f << "$\\\\" << endl;
+
+			}
+		}
+
+
+	}
+
+	f << "\\clearpage" << endl << endl;
+
+	//FREE_OBJECT(Gr);
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "grassmann::cheat_sheet_subspaces "
+				"done" << endl;
+	}
+}
+
+void grassmann::Pluecker_coordinates(int line_rk, int *v6, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int basis8[8];
+	int *x4, *y4;
+	int f_elements_exponential = FALSE;
+	string symbol_for_print;
+
+	if (f_v) {
+		cout << "grassmann::Pluecker_coordinates" << endl;
+	}
+	symbol_for_print.assign("\\alpha");
+	unrank_lint(line_rk, 0 /* verbose_level */);
+	if (f_vv) {
+		cout << setw(5) << line_rk << " :" << endl;
+		F->latex_matrix(cout, f_elements_exponential,
+			symbol_for_print, M, 2, 4);
+		cout << endl;
+	}
+	Int_vec_copy(M, basis8, 8);
+	if (f_vv) {
+		Int_matrix_print(basis8, 2, 4);
+	}
+	x4 = basis8;
+	y4 = basis8 + 4;
+	v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+	v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+	v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+	v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+	v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+	v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
+	if (f_vv) {
+		cout << "v6 : ";
+		Int_vec_print(cout, v6, 6);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "grassmann::Pluecker_coordinates done" << endl;
+	}
+}
+
+
+void grassmann::do_pluecker_reverse(std::ostream &ost,
+		int nb_k_subspaces, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int v6[6];
+	int *T;
+	int *Pos;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "grassmann::do_pluecker_reverse" << endl;
+	}
+	T = NEW_int(nb_k_subspaces);
+	Pos = NEW_int(nb_k_subspaces);
+	for (i = 0; i < nb_k_subspaces; i++) {
+		unrank_lint(i, 0 /* verbose_level*/);
+		Pluecker_coordinates(i, v6, 0 /* verbose_level */);
+		F->PG_element_rank_modified(v6, 1, 6, j);
+		T[i] = j;
+		Pos[i] = i;
+	}
+	Sorting.int_vec_heapsort_with_log(T, Pos, nb_k_subspaces);
+	if (f_v) {
+		cout << "grassmann::do_pluecker_reverse after sort:" << endl;
+		for (i = 0; i < nb_k_subspaces; i++) {
+			cout << i << " : " << T[i] << " : " << Pos[i] << endl;
+		}
+	}
+
+
+	int u, u0;
+	//int n1, k1;
+	int f_need_comma = FALSE;
+
+	//n1 = n + 1;
+	//k1 = k + 1;
+	v = NEW_int(n);
+
+	ost << "Lines sorted by Pluecker coordinates\\\\" << endl;
+	ost << "%\\begin{multicols}{2}" << endl;
+	for (u0 = 0; u0 < nb_k_subspaces; u0++) {
+		u = Pos[u0];
+		unrank_lint(u, 0 /* verbose_level*/);
+
+		int v6[6];
+
+		Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+		F->PG_element_normalize(v6, 1, 6);
+		ost << "$" << u0 << /*"=" << u <<*/
+				"={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+				<< v6[2] << "," << v6[3] << "," << v6[4]
+				<< "," << v6[5] << " ";
+		ost << ")=" << endl;
+
+		ost << "L_{" << u << "}=";
+		ost << "\\left[" << endl;
+		ost << "\\begin{array}{c}" << endl;
+		for (i = 0; i < k; i++) {
+			for (j = 0; j < n; j++) {
+				ost << M[i * n + j];
+				if (f_need_comma && j < n - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+		ost << "\\end{array}" << endl;
+		ost << "\\right]" << endl;
+
+
+		ost << "$\\\\" << endl;
+
+		if (((u + 1) % 1000) == 0) {
+			ost << "\\clearpage" << endl << endl;
+		}
+	}
+	ost << "%\\end{multicols}" << endl;
+
+
+	FREE_int(T);
+	FREE_int(Pos);
+	if (f_v) {
+		cout << "grassmann::do_pluecker_reverse done" << endl;
+	}
+}
+
+void grassmann::create_latex_report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "grassmann::create_latex_report" << endl;
+	}
+
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "Gr_%d_%d_%d.tex", n, k, F->q);
+		fname.assign(str);
+		snprintf(str, 1000, "Cheat Sheet ${\\rm Gr}_{%d,%d,%d}$", n, k, F->q);
+		title.assign(str);
+
+
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "grassmann::create_latex_report "
+						"before cheat_sheet_subspaces" << endl;
+			}
+			cheat_sheet_subspaces(ost, verbose_level);
+			if (f_v) {
+				cout << "grassmann::create_latex_report "
+						"after cheat_sheet_subspaces" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "grassmann::create_latex_report done" << endl;
+	}
+}
+
+
+
+
 }}}
 
 

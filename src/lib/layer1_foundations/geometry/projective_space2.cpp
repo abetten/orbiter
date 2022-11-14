@@ -150,27 +150,27 @@ int projective_space::determine_hermitian_form_in_plane(
 	system = NEW_int(nb_pts * 9);
 	Q = F->q;
 	if (ODD(F->e)) {
-		cout << "projective_space::determine_hermitian_"
-				"form_in_plane field degree must be even" << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"field degree must be even" << endl;
 		exit(1);
 	}
 	little_e = F->e >> 1;
 	q = NT.i_power_j(F->p, little_e);
 	if (f_v) {
-		cout << "projective_space::determine_hermitian_"
-				"form_in_plane Q=" << Q << " q=" << q << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"Q=" << Q << " q=" << q << endl;
 	}
 	if (n != 2) {
-		cout << "projective_space::determine_hermitian_"
-				"form_in_plane n != 2" << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"n != 2" << endl;
 		exit(1);
 	}
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(coords + i * 3, pts[i]);
 	}
 	if (f_vv) {
-		cout << "projective_space::determine_hermitian_"
-				"form_in_plane points:" << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"points:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				coords, nb_pts, 3, 3, F->log10_of_q);
 	}
@@ -192,8 +192,8 @@ int projective_space::determine_hermitian_form_in_plane(
 		system[i * 9 + 8] = F->mult(z, yq);
 	}
 	if (f_v) {
-		cout << "projective_space::determine_hermitian_"
-				"form_in_plane system:" << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"system:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				system, nb_pts, 9, 9, F->log10_of_q);
 	}
@@ -221,8 +221,8 @@ int projective_space::determine_hermitian_form_in_plane(
 			MINIMUM(nb_pts, 9), 9, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "projective_space::determine_hermitian_form_"
-				"in_plane kernel:" << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"kernel:" << endl;
 		Int_vec_print_integer_matrix_width(cout, kernel,
 				kernel_m, kernel_n, kernel_n, F->log10_of_q);
 	}
@@ -324,73 +324,6 @@ void projective_space::circle_type_of_line_subset(
 	}
 }
 
-void projective_space::create_unital_XXq_YZq_ZYq_brute_force(
-	long int *U, int &sz, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	int *v;
-	long int e, i, a;
-	long int X, Y, Z, Xq, Yq, Zq;
-
-	if (f_v) {
-		cout << "projective_space::create_unital_XXq_YZq_ZYq" << endl;
-	}
-	if (n != 2) {
-		cout << "projective_space::create_unital_XXq_YZq_ZYq "
-				"n != 2" << endl;
-		exit(1);
- 	}
-	if (ODD(F->e)) {
-		cout << "projective_space::create_unital_XXq_YZq_ZYq "
-				"ODD(F->e)" << endl;
-		exit(1);
- 	}
-
-	v = NEW_int(3);
-	e = F->e >> 1;
-	if (f_vv) {
-		cout << "e=" << e << endl;
-	}
-	sz = 0;
-	for (i = 0; i < N_points; i++) {
-		unrank_point(v, i);
-		if (f_vvv) {
-			cout << "i=" << i << " : ";
-			Int_vec_print(cout, v, 3);
-			//cout << endl;
-		}
-		X = v[0];
-		Y = v[1];
-		Z = v[2];
-		Xq = F->frobenius_power(X, e);
-		Yq = F->frobenius_power(Y, e);
-		Zq = F->frobenius_power(Z, e);
-		a = F->add3(F->mult(X, Xq), F->mult(Y, Zq), F->mult(Z, Yq));
-		if (f_vvv) {
-			cout << " a=" << a << endl;
-		}
-		if (a == 0) {
-			//cout << "a=0, adding i=" << i << endl;
-			U[sz++] = i;
-			//int_vec_print(cout, U, sz);
-			//cout << endl;
-		}
-	}
-	if (f_vv) {
-		cout << "we found " << sz << " points:" << endl;
-		Lint_vec_print(cout, U, sz);
-		cout << endl;
-		print_set(U, sz);
-	}
-	FREE_int(v);
-
-	if (f_v) {
-		cout << "projective_space::create_unital_XXq_YZq_ZYq "
-				"done" << endl;
-	}
-}
 
 
 void projective_space::intersection_of_subspace_with_point_set(
@@ -618,14 +551,16 @@ void projective_space::plane_intersection_type(
 		cout << "projective_space::plane_intersection_type" << endl;
 	}
 	if (f_v) {
-		cout << "projective_space::plane_intersection_type before plane_intersection_type_fast" << endl;
+		cout << "projective_space::plane_intersection_type "
+				"before plane_intersection_type_fast" << endl;
 	}
 	plane_intersection_type_fast(G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "projective_space::plane_intersection_type after plane_intersection_type_fast" << endl;
+		cout << "projective_space::plane_intersection_type "
+				"after plane_intersection_type_fast" << endl;
 	}
 
 	data_structures::tally C;
@@ -662,7 +597,8 @@ void projective_space::plane_intersection_type(
 	FREE_int(nb_pts_on_plane);
 	FREE_OBJECTS(R);
 	if (f_v) {
-		cout << "projective_space::plane_intersection_type done" << endl;
+		cout << "projective_space::plane_intersection_type "
+				"done" << endl;
 	}
 
 }
@@ -684,14 +620,16 @@ void projective_space::plane_intersections(
 		cout << "projective_space::plane_intersections" << endl;
 	}
 	if (f_v) {
-		cout << "projective_space::plane_intersections before plane_intersection_type_fast" << endl;
+		cout << "projective_space::plane_intersections "
+				"before plane_intersection_type_fast" << endl;
 	}
 	plane_intersection_type_fast(G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "projective_space::plane_intersections after plane_intersection_type_fast" << endl;
+		cout << "projective_space::plane_intersections "
+				"after plane_intersection_type_fast" << endl;
 	}
 	if (f_v) {
 		cout << "projective_space::plane_intersections "
@@ -1306,7 +1244,7 @@ void projective_space::klein_correspondence(
 	long int *set_in, int set_size, long int *set_out,
 	int verbose_level)
 // Computes the Pluecker coordinates
-// for a line in PG(3,q) in the following order:
+// for a set of lines in PG(3,q) in the following order:
 // (x_1,x_2,x_3,x_4,x_5,x_6) =
 // (Pluecker_12, Pluecker_34, Pluecker_13,
 //    Pluecker_42, Pluecker_14, Pluecker_23)
@@ -1376,48 +1314,6 @@ void projective_space::klein_correspondence(
 	}
 }
 
-void projective_space::Pluecker_coordinates(
-	int line_rk, int *v6, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int basis8[8];
-	int *x4, *y4;
-	int f_elements_exponential = FALSE;
-	string symbol_for_print;
-
-	if (f_v) {
-		cout << "projective_space::Pluecker_coordinates" << endl;
-	}
-	symbol_for_print.assign("\\alpha");
-	Grass_lines->unrank_lint(line_rk, 0 /* verbose_level */);
-	if (f_vv) {
-		cout << setw(5) << line_rk << " :" << endl;
-		F->latex_matrix(cout, f_elements_exponential,
-			symbol_for_print, Grass_lines->M, 2, 4);
-		cout << endl;
-	}
-	Int_vec_copy(Grass_lines->M, basis8, 8);
-	if (f_vv) {
-		Int_matrix_print(basis8, 2, 4);
-	}
-	x4 = basis8;
-	y4 = basis8 + 4;
-	v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
-	v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
-	v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
-	v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
-	v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
-	v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
-	if (f_vv) {
-		cout << "v6 : ";
-		Int_vec_print(cout, v6, 6);
-		cout << endl;
-	}
-	if (f_v) {
-		cout << "projective_space::Pluecker_coordinates done" << endl;
-	}
-}
 
 void projective_space::klein_correspondence_special_model(
 	projective_space *P5,
@@ -1799,249 +1695,6 @@ void projective_space::cheat_sheet_lines_on_points(
 }
 
 
-void projective_space::cheat_sheet_subspaces(
-	std::ostream &f, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	grassmann *Gr;
-	int *v;
-	int n1, k1;
-	int nb_k_subspaces;
-	int i, j, u;
-	int f_need_comma = FALSE;
-	combinatorics::combinatorics_domain Combi;
-
-
-	if (f_v) {
-		cout << "projective_space::cheat_sheet_subspaces "
-				"k=" << k << endl;
-	}
-	n1 = n + 1;
-	k1 = k + 1;
-	v = NEW_int(n1);
-
-	if (F->q >= 10) {
-		f_need_comma = TRUE;
-	}
-
-	Gr = NEW_OBJECT(grassmann);
-	Gr->init(n1, k1, F, 0 /*verbose_level*/);
-
-
-	//nb_points = N_points;
-	nb_k_subspaces = Combi.generalized_binomial(n1, k1, q);
-
-
-	f << "PG$(" << n << ", " << q << ")$ has "
-			<< nb_k_subspaces << " $" << k
-			<< "$-subspaces:\\\\" << endl;
-
-	if (nb_k_subspaces > 10000) {
-		f << "Too many to print \\\\" << endl;
-	}
-	else {
-		f << "%\\begin{multicols}{2}" << endl;
-		for (u = 0; u < nb_k_subspaces; u++) {
-			Gr->unrank_lint(u, 0 /* verbose_level*/);
-			f << "$L_{" << u << "}=\\bL";
-			f << "\\left[" << endl;
-			f << "\\begin{array}{c}" << endl;
-			for (i = 0; i < k1; i++) {
-				for (j = 0; j < n1; j++) {
-					f << Gr->M[i * n1 + j];
-					if (f_need_comma && j < n1 - 1) {
-						f << ", ";
-					}
-				}
-				f << "\\\\" << endl;
-			}
-			f << "\\end{array}" << endl;
-			f << "\\right]" << endl;
-			if (k1 == 2) {
-				f << "\\{";
-
-				int nb;
-				long int *the_points;
-
-				nb = Gr->nb_points_covered(0 /* verbose_level*/);
-
-				the_points = NEW_lint(nb);
-
-				Gr->points_covered(the_points, 0 /* verbose_level*/);
-
-				data_structures::sorting Sorting;
-
-				Sorting.lint_vec_heapsort(the_points, nb);
-				orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(f, the_points, nb);
-				//Lint_vec_print(the_points, nb);
-
-				FREE_lint(the_points);
-				f << "\\}";
-			}
-
-			if (n == 3 && k == 1) {
-				int v6[6];
-
-				Pluecker_coordinates(u, v6, 0 /* verbose_level */);
-				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
-						<< v6[2] << "," << v6[3] << "," << v6[4]
-						<< "," << v6[5] << " ";
-				f << ")" << endl;
-
-			}
-			f << "$\\\\" << endl;
-
-			if (((u + 1) % 1000) == 0) {
-				f << "\\clearpage" << endl << endl;
-			}
-		}
-		f << "%\\end{multicols}" << endl;
-
-
-		if (n == 3 && k == 1) {
-			do_pluecker_reverse(f, Gr, k, nb_k_subspaces, verbose_level);
-		}
-
-	}
-	if (n == 3 && k == 1) {
-		f << "PG$(" << n << ", " << q << ")$ has "
-				<< "the following low weight Pluecker lines:\\\\" << endl;
-		for (u = 0; u < nb_k_subspaces; u++) {
-			int v6[6];
-			int w;
-
-			Gr->unrank_lint(u, 0 /* verbose_level*/);
-			Pluecker_coordinates(u, v6, 0 /* verbose_level */);
-			w = 0;
-			for (j = 0; j < 6; j++) {
-				if (v6[j]) {
-					w++;
-				}
-			}
-			if (w == 1) {
-				f << "$L_{" << u << "}=";
-				f << "\\left[" << endl;
-				f << "\\begin{array}{c}" << endl;
-				for (i = 0; i < k1; i++) {
-					for (j = 0; j < n1; j++) {
-						f << Gr->M[i * n1 + j];
-						if (f_need_comma && j < n1 - 1) {
-							f << ", ";
-							}
-						}
-					f << "\\\\" << endl;
-					}
-				f << "\\end{array}" << endl;
-				f << "\\right]" << endl;
-				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
-						<< v6[2] << "," << v6[3] << "," << v6[4]
-						<< "," << v6[5] << " ";
-				f << ")" << endl;
-				f << "$\\\\" << endl;
-
-			}
-		}
-
-
-	}
-
-	f << "\\clearpage" << endl << endl;
-
-	FREE_OBJECT(Gr);
-	FREE_int(v);
-
-	if (f_v) {
-		cout << "projective_space::cheat_sheet_subspaces "
-				"done" << endl;
-	}
-}
-
-void projective_space::do_pluecker_reverse(ostream &ost,
-		grassmann *Gr, int k, int nb_k_subspaces, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-	int v6[6];
-	int *T;
-	int *Pos;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "projective_space::do_pluecker_reverse" << endl;
-	}
-	T = NEW_int(nb_k_subspaces);
-	Pos = NEW_int(nb_k_subspaces);
-	for (i = 0; i < nb_k_subspaces; i++) {
-		Gr->unrank_lint(i, 0 /* verbose_level*/);
-		Pluecker_coordinates(i, v6, 0 /* verbose_level */);
-		F->PG_element_rank_modified(v6, 1, 6, j);
-		T[i] = j;
-		Pos[i] = i;
-	}
-	Sorting.int_vec_heapsort_with_log(T, Pos, nb_k_subspaces);
-	if (f_v) {
-		cout << "projective_space::do_pluecker_reverse after sort:" << endl;
-		for (i = 0; i < nb_k_subspaces; i++) {
-			cout << i << " : " << T[i] << " : " << Pos[i] << endl;
-		}
-	}
-
-
-	int u, u0;
-	int n1, k1;
-	int f_need_comma = FALSE;
-
-	n1 = n + 1;
-	k1 = k + 1;
-	v = NEW_int(n1);
-
-	ost << "Lines sorted by Pluecker coordinates\\\\" << endl;
-	ost << "%\\begin{multicols}{2}" << endl;
-	for (u0 = 0; u0 < nb_k_subspaces; u0++) {
-		u = Pos[u0];
-		Gr->unrank_lint(u, 0 /* verbose_level*/);
-
-		int v6[6];
-
-		Pluecker_coordinates(u, v6, 0 /* verbose_level */);
-		F->PG_element_normalize(v6, 1, 6);
-		ost << "$" << u0 << /*"=" << u <<*/
-				"={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
-				<< v6[2] << "," << v6[3] << "," << v6[4]
-				<< "," << v6[5] << " ";
-		ost << ")=" << endl;
-
-		ost << "L_{" << u << "}=";
-		ost << "\\left[" << endl;
-		ost << "\\begin{array}{c}" << endl;
-		for (i = 0; i < k1; i++) {
-			for (j = 0; j < n1; j++) {
-				ost << Gr->M[i * n1 + j];
-				if (f_need_comma && j < n1 - 1) {
-					ost << ", ";
-				}
-			}
-			ost << "\\\\" << endl;
-		}
-		ost << "\\end{array}" << endl;
-		ost << "\\right]" << endl;
-
-
-		ost << "$\\\\" << endl;
-
-		if (((u + 1) % 1000) == 0) {
-			ost << "\\clearpage" << endl << endl;
-		}
-	}
-	ost << "%\\end{multicols}" << endl;
-
-
-	FREE_int(T);
-	FREE_int(Pos);
-	if (f_v) {
-		cout << "projective_space::do_pluecker_reverse done" << endl;
-	}
-}
 
 void projective_space::cheat_sheet_line_intersection(
 		std::ostream &f, int verbose_level)
@@ -3788,7 +3441,8 @@ long int projective_space::plane_rank_using_dual_coordinates_in_three_space(
 	Int_vec_copy(eqn4, Basis, 4);
 	rk = F->Linear_algebra->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level*/);
 	if (rk != 1) {
-		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space rk != 1" << endl;
+		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space "
+				"rk != 1" << endl;
 		exit(1);
 	}
 	plane_rk = rank_plane(Basis + 1 * 4);
@@ -3812,8 +3466,8 @@ long int projective_space::dual_rank_of_plane_in_three_space(
 	unrank_plane(Basis, plane_rank);
 	rk = F->Linear_algebra->RREF_and_kernel(4, 3, Basis, 0 /* verbose_level*/);
 	if (rk != 3) {
-		cout << "projective_space::dual_rank_of_plane_"
-				"in_three_space rk != 3" << endl;
+		cout << "projective_space::dual_rank_of_plane_in_three_space "
+				"rk != 3" << endl;
 		exit(1);
 	}
 	dual_rk = rank_point(Basis + 3 * 4);
@@ -3846,6 +3500,7 @@ void projective_space::plane_equation_from_three_lines_in_three_space(
 	}
 }
 
+#if 0
 void projective_space::decomposition_from_set_partition(
 	int nb_subsets, int *sz, int **subsets,
 	incidence_structure *&Inc,
@@ -3960,6 +3615,7 @@ void projective_space::decomposition_from_set_partition(
 		cout << "projective_space::decomposition_from_set_partition done" << endl;
 	}
 }
+#endif
 
 
 

@@ -173,11 +173,13 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_classify_cubic_curves = FALSE;
 
+#if 0
 	f_latex_homogeneous_equation = FALSE;
 	latex_homogeneous_equation_degree = 0;
 	//std::string latex_homogeneous_equation_symbol_txt
 	//std::string latex_homogeneous_equation_symbol_tex
 	//std::string latex_homogeneous_equation_text;
+#endif
 
 	f_lines_on_point_but_within_a_plane = FALSE;
 	lines_on_point_but_within_a_plane_point_rk = 0;
@@ -826,7 +828,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-classify_cubic_curves " << endl;
 			}
 		}
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-latex_homogeneous_equation") == 0) {
 			f_latex_homogeneous_equation = TRUE;
 			latex_homogeneous_equation_degree = ST.strtoi(argv[++i]);
@@ -840,6 +842,8 @@ int projective_space_activity_description::read_arguments(
 						<< " " << latex_homogeneous_equation_text << endl;
 			}
 		}
+#endif
+
 		else if (ST.stringcmp(argv[i], "-lines_on_point_but_within_a_plane") == 0) {
 			f_lines_on_point_but_within_a_plane = TRUE;
 			lines_on_point_but_within_a_plane_point_rk = ST.strtoi(argv[++i]);
@@ -1160,12 +1164,14 @@ void projective_space_activity_description::print()
 		cout << "-classify_cubic_curves" << endl;
 		Arc_generator_description->print();
 	}
+#if 0
 	if (f_latex_homogeneous_equation) {
 		cout << "-latex_homogeneous_equation " << latex_homogeneous_equation_degree
 				<< " " << latex_homogeneous_equation_symbol_txt
 				<< " " << latex_homogeneous_equation_symbol_tex
 				<< " " << latex_homogeneous_equation_text << endl;
 	}
+#endif
 	if (f_lines_on_point_but_within_a_plane) {
 		cout << "-lines_on_point_but_within_a_plane "
 				<< " " << lines_on_point_but_within_a_plane_point_rk

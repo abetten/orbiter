@@ -21,19 +21,16 @@ namespace orbiter_kernel_system {
 
 orbiter_data_file::orbiter_data_file()
 {
-	null();
+	nb_cases = 0;
+	sets = NULL;
+	set_sizes = NULL;
+	Ago_ascii = NULL;
+	Aut_ascii = NULL;
+	Casenumbers = 0;
 }
+
 
 orbiter_data_file::~orbiter_data_file()
-{
-	freeself();
-}
-
-void orbiter_data_file::null()
-{
-}
-
-void orbiter_data_file::freeself()
 {
 	int i;
 	

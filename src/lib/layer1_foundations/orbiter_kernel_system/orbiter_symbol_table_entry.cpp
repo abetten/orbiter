@@ -33,7 +33,12 @@ orbiter_symbol_table_entry::orbiter_symbol_table_entry()
 
 orbiter_symbol_table_entry::~orbiter_symbol_table_entry()
 {
-	freeself();
+	if (type == t_intvec && vec) {
+		FREE_int(vec);
+		vec = 0;
+	}
+	type = t_nothing;
+	object_type = t_nothing_object;
 }
 
 void orbiter_symbol_table_entry::freeself()
@@ -45,6 +50,7 @@ void orbiter_symbol_table_entry::freeself()
 	type = t_nothing;
 	object_type = t_nothing_object;
 }
+
 
 void orbiter_symbol_table_entry::init(std::string &str_label)
 {

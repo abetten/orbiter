@@ -454,11 +454,14 @@ public:
 
 	int f_classify_cubic_curves;
 
+#if 0
 	int f_latex_homogeneous_equation;
 	int latex_homogeneous_equation_degree;
 	std::string latex_homogeneous_equation_symbol_txt;
 	std::string latex_homogeneous_equation_symbol_tex;
 	std::string latex_homogeneous_equation_text;
+		// this should be a polynomial ring activity
+#endif
 
 	int f_lines_on_point_but_within_a_plane;
 	long int lines_on_point_but_within_a_plane_point_rk;

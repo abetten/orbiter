@@ -114,8 +114,6 @@ public:
 
 	blt_set_invariants();
 	~blt_set_invariants();
-	void null();
-	void freeself();
 	void init(blt_set_domain *D, long int *the_set,
 		int verbose_level);
 	void compute(int verbose_level);
