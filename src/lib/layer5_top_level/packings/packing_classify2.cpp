@@ -109,10 +109,10 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 	long int *data, int data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object *R;
-	long int **Pts_on_plane;
-	int *nb_pts_on_plane;
-	int nb_planes;
+	//ring_theory::longinteger_object *R;
+	//long int **Pts_on_plane;
+	//int *nb_pts_on_plane;
+	//int nb_planes;
 	int i, j;
 
 	if (f_v) {
@@ -127,34 +127,52 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 
 	if (f_v) {
 		cout << "packing_classify::compute_and_save_klein_invariants "
-				"before P3->klein_correspondence" << endl;
+				"before P3->Grass_lines->klein_correspondence" << endl;
 	}
-	P3->klein_correspondence(P5,
+	P3->Grass_lines->klein_correspondence(P3, //P5,
 		data, data_size, list_of_lines_klein_image, 0/*verbose_level*/);
 
-
+	if (f_v) {
+		cout << "packing_classify::compute_and_save_klein_invariants "
+				"after P3->Grass_lines->klein_correspondence" << endl;
+	}
 
 
 	if (f_v) {
 		cout << "packing_classify::compute_and_save_klein_invariants "
-				"after P3->klein_correspondence" << endl;
+				"before plane_intersection_type_slow" << endl;
 	}
-	if (f_v) {
-		cout << "packing_classify::compute_and_save_klein_invariants "
-				"before plane_intersection_type_fast" << endl;
-	}
-	P5->plane_intersection_type_slow(Gr, list_of_lines_klein_image, data_size,
+
+	int threshold = 3;
+
+
+	geometry::intersection_type *Int_type;
+
+	P5->plane_intersection_type(
+			list_of_lines_klein_image, data_size, threshold,
+		Int_type,
+		verbose_level - 2);
+
+#if 0
+	P5->plane_intersection_type_slow(//Gr,
+			list_of_lines_klein_image, data_size, threshold,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level /*- 3*/);
+#endif
+
+	if (f_v) {
+		cout << "packing_classify::compute_and_save_klein_invariants "
+				"after plane_intersection_type_slow" << endl;
+	}
 
 	if (f_v) {
 		cout << "packing_classify::compute_and_save_klein_invariants: "
-				"We found " << nb_planes << " planes." << endl;
+				"We found " << Int_type->len << " planes." << endl;
 #if 1
-		for (i = 0; i < nb_planes; i++) {
-			cout << setw(3) << i << " : " << R[i]
-				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			Lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+		for (i = 0; i < Int_type->len; i++) {
+			cout << setw(3) << i << " : " << Int_type->R[i]
+				<< " : " << setw(5) << Int_type->nb_pts_on_plane[i] << " : ";
+			Lint_vec_print(cout, Int_type->Pts_on_plane[i], Int_type->nb_pts_on_plane[i]);
 			cout << endl;
 		}
 #endif
@@ -163,20 +181,20 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 	Vector v;
 
 	v.m_l(3);
-	v.m_ii(0, nb_planes);
+	v.m_ii(0, Int_type->len);
 	v.s_i(1).change_to_vector();
 	v.s_i(2).change_to_vector();
 
-	v.s_i(1).as_vector().m_l(nb_planes);
-	v.s_i(2).as_vector().m_l(nb_planes);
-	for (i = 0; i < nb_planes; i++) {
-		v.s_i(1).as_vector().m_ii(i, R[i].as_int());
+	v.s_i(1).as_vector().m_l(Int_type->len);
+	v.s_i(2).as_vector().m_l(Int_type->len);
+	for (i = 0; i < Int_type->len; i++) {
+		v.s_i(1).as_vector().m_ii(i, Int_type->R[i].as_int());
 		//v.s_i(1).as_vector().s_i(i).change_to_longinteger();
 		//v.s_i(1).as_vector().s_i(i).as_longinteger().allocate(1, R[i].rep());
 		v.s_i(2).as_vector().s_i(i).change_to_vector();
-		v.s_i(2).as_vector().s_i(i).as_vector().m_l(nb_pts_on_plane[i]);
-		for (j = 0; j < nb_pts_on_plane[i]; j++) {
-			v.s_i(2).as_vector().s_i(i).as_vector().m_ii(j, Pts_on_plane[i][j]);
+		v.s_i(2).as_vector().s_i(i).as_vector().m_l(Int_type->nb_pts_on_plane[i]);
+		for (j = 0; j < Int_type->nb_pts_on_plane[i]; j++) {
+			v.s_i(2).as_vector().s_i(i).as_vector().m_ii(j, Int_type->Pts_on_plane[i][j]);
 		}
 	}
 
@@ -185,12 +203,17 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 	klein_invariants_fname(fname, prefix, iso_cnt);
 	v.save_file(fname.c_str());
 
+#if 0
 	delete [] R;
 	for (i = 0; i < nb_planes; i++) {
 		FREE_lint(Pts_on_plane[i]);
 	}
 	FREE_plint(Pts_on_plane);
 	FREE_int(nb_pts_on_plane);
+#endif
+
+	FREE_OBJECT(Int_type);
+
 
 	if (f_v) {
 		cout << "packing_classify::compute_and_save_klein_invariants done" << endl;
@@ -697,13 +720,13 @@ void packing_classify::report_klein_invariants(
 						<< inv->Inv[orbit].fname_row_scheme
 						<< " in" << endl;
 				Fio.copy_file_to_ostream(ost,
-						inv->Inv[orbit].fname_row_scheme.c_str());
+						inv->Inv[orbit].fname_row_scheme);
 				//f << "\\input "
 				//<< inv->Inv[orbit].fname_row_scheme << endl;
 				ost << "\\]" << endl;
 				ost << "\\[" << endl;
 				Fio.copy_file_to_ostream(ost,
-						inv->Inv[orbit].fname_col_scheme.c_str());
+						inv->Inv[orbit].fname_col_scheme);
 				//ost << "\\input "
 				//<< inv->Inv[orbit].fname_col_scheme << endl;
 				ost << "\\]" << endl;

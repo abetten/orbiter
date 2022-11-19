@@ -251,8 +251,6 @@ public:
 
 	diophant();
 	~diophant();
-	void null();
-	void freeself();
 	
 	void open(int m, int n);
 	void init_var_labels(long int *labels, int verbose_level);

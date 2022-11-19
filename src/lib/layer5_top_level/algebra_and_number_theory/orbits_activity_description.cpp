@@ -37,6 +37,16 @@ orbits_activity_description::orbits_activity_description()
 	f_stabilizer_of_orbit_rep = FALSE;
 	stabilizer_of_orbit_rep_orbit_idx = 0;
 
+	f_Kramer_Mesner_matrix = FALSE;
+	Kramer_Mesner_t = 0;
+	Kramer_Mesner_k = 0;
+
+	f_recognize = FALSE;
+	//std::vector<std::string> recognize;
+
+	f_report_options = FALSE;
+	report_options = NULL;
+
 }
 
 
@@ -101,6 +111,49 @@ int orbits_activity_description::read_arguments(
 				cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
+			f_Kramer_Mesner_matrix = TRUE;
+			Kramer_Mesner_t = ST.strtoi(argv[++i]);
+			Kramer_Mesner_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
+
+			f_recognize = TRUE;
+			string s;
+
+			s.assign(argv[++i]);
+			recognize.push_back(s);
+			if (f_v) {
+				cout << "-recognize " << recognize[recognize.size() - 1] << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-report_options") == 0) {
+			f_report_options = TRUE;
+
+			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
+			if (f_v) {
+				cout << "-report_options " << endl;
+			}
+			i += report_options->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -report_options " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+
+			if (f_v) {
+				cout << "-report_options" << endl;
+				report_options->print();
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -143,6 +196,23 @@ void orbits_activity_description::print()
 	if (f_stabilizer_of_orbit_rep) {
 		cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
 	}
+	if (f_Kramer_Mesner_matrix) {
+		cout << "-Kramer_Mesner_matrix t=" << Kramer_Mesner_t << " k=" << Kramer_Mesner_k << endl;
+	}
+	if (f_recognize) {
+		int i;
+
+		cout << "-recognize number of sets = " << recognize.size() << endl;
+		for (i = 0; i < recognize.size(); i++) {
+			cout << i << " : " << recognize[i] << endl;
+		}
+	}
+	if (f_report_options) {
+		cout << "-report_options" << endl;
+		report_options->print();
+	}
+
+
 }
 
 

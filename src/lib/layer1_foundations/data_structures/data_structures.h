@@ -34,8 +34,8 @@ public:
 	~algorithms();
 	int hashing(int hash0, int a);
 	int hashing_fixed_width(int hash0, int a, int bit_length);
-	void uchar_print_bitwise(std::ostream &ost, uchar u);
-	void uchar_move(uchar *p, uchar *q, int len);
+	void uchar_print_bitwise(std::ostream &ost, unsigned char u);
+	void uchar_move(unsigned char *p, unsigned char *q, int len);
 	void int_swap(int& x, int& y);
 	void lint_swap(long int & x, long int & y);
 	void print_pointer_hex(std::ostream &ost, void *p);
@@ -481,6 +481,7 @@ public:
 	void sort_rows(int verbose_level);
 	void check_that_entries_are_distinct(int verbose_level);
 	int search(int *entry, int &idx, int verbose_level);
+	void write_csv(std::string &fname, int verbose_level);
 
 };
 
@@ -547,7 +548,6 @@ public:
 	void print_classified_str(std::stringstream &sstr,
 			int *v, int len, int f_backwards);
 	void scan(std::string &s, int *&v, int &len);
-	void scan(const char *s, int *&v, int &len);
 	void scan_from_stream(std::istream & is, int *&v, int &len);
 	void print_to_str(std::string &s, int *data, int len);
 	void print_to_str_naked(std::string &s, int *data, int len);
@@ -601,7 +601,7 @@ public:
 	void allocate(int len);
 	void allocate_and_init(int len, long int *V);
 	void allocate_and_init_int(int len, int *V);
-	void init_permutation_from_string(const char *s);
+	void init_permutation_from_string(std::string &s);
 	void read_ascii_file(std::string &fname);
 	void read_binary_file_int4(std::string &fname);
 	long int &s_i(int i);
@@ -617,7 +617,7 @@ public:
 	void sort_and_remove_duplicates();
 	void write_to_ascii_file(std::string &fname);
 	void write_to_binary_file_int4(std::string &fname);
-	void write_to_csv_file(std::string &fname, const char *label);
+	void write_to_csv_file(std::string &fname, std::string &label);
 	uint32_t hash();
 	int minimum();
 	int maximum();
@@ -663,7 +663,6 @@ public:
 	void matrix_print(long int *p, int m, int n);
 	void matrix_print(long int *p, int m, int n, int w);
 	void scan(std::string &s, long int *&v, int &len);
-	void scan(const char *s, long int *&v, int &len);
 	void scan_from_stream(std::istream & is, long int *&v, int &len);
 	void print_to_str(std::string &s, long int *data, int len);
 	void print_to_str_naked(std::string &s, long int *data, int len);
@@ -1486,7 +1485,6 @@ public:
 		int verbose_level);
 	void find_rows(int verbose_level);
 	void get_value_double_or_NA(int i, int j, double &val, int &f_NA);
-	//void get_string_entry(std::string &entry, int i, int j);
 	void get_string(std::string &str, int i, int j);
 	long int get_lint(int i, int j);
 	double get_double(int i, int j);
@@ -1521,7 +1519,7 @@ public:
 	int s_scan_token_arbitrary(char **s, char *str);
 	int s_scan_str(char **s, char *str);
 	int s_scan_token_comma_separated(const char **s, char *str, int verbose_level);
-	void scan_permutation_from_string(const char *s,
+	void scan_permutation_from_string(std::string &s,
 		int *&perm, int &degree, int verbose_level);
 	void scan_permutation_from_stream(std::istream & is,
 		int *&perm, int &degree, int verbose_level);
@@ -1704,10 +1702,6 @@ public:
 		int f_second, int verbose_level);
 	void init_lint(long int *data, int data_length,
 		int f_second, int verbose_level);
-#if 0
-	void init_vector_lint(std::vector<long int> &data,
-			int f_second, int verbose_level);
-#endif
 	void sort_and_classify();
 	void sort_and_classify_second();
 	int class_of(int pt_idx);

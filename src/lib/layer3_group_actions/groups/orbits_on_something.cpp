@@ -42,22 +42,6 @@ orbits_on_something::orbits_on_something()
 
 orbits_on_something::~orbits_on_something()
 {
-	freeself();
-}
-
-void orbits_on_something::null()
-{
-	A = NULL;
-	SG = NULL;
-	Sch = NULL;
-
-	f_load_save = FALSE;
-	//prefix = "";
-	//char fname[1000];
-}
-
-void orbits_on_something::freeself()
-{
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -75,12 +59,29 @@ void orbits_on_something::freeself()
 		FREE_int(Orbits_classified_length);
 	}
 #endif
-	null();
+	//null();
 	if (f_v) {
 		cout << "orbits_on_something::freeself "
 				"finished" << endl;
 	}
 }
+
+#if 0
+void orbits_on_something::null()
+{
+	A = NULL;
+	SG = NULL;
+	Sch = NULL;
+
+	f_load_save = FALSE;
+	//prefix = "";
+	//char fname[1000];
+}
+
+void orbits_on_something::freeself()
+{
+}
+#endif
 
 void orbits_on_something::init(
 		actions::action *A,

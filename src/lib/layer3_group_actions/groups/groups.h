@@ -529,8 +529,6 @@ public:
 
 	orbits_on_something();
 	~orbits_on_something();
-	void null();
-	void freeself();
 	void init(
 			actions::action *A,
 			strong_generators *SG,
@@ -771,8 +769,6 @@ public:
 
 	permutation_representation_domain();
 	~permutation_representation_domain();
-	void null();
-	void free();
 	void allocate();
 	void init_product_action(int m, int n, 
 		int page_length_log, int verbose_level);
@@ -1805,8 +1801,9 @@ public:
 	void init_group_extension(strong_generators *subgroup, 
 			data_structures_groups::vector_ge *new_gens, int index,
 		int verbose_level);
-	void switch_to_subgroup(const char *rank_vector_text, 
-		const char *subgroup_order_text, sims *S, 
+	void switch_to_subgroup(
+			std::string &rank_vector_text,
+			std::string &subgroup_order_text, sims *S,
 		int *&subgroup_gens_idx, int &nb_subgroup_gens, 
 		int verbose_level);
 	void init_subgroup(actions::action *A, int *subgroup_gens_idx,
@@ -2041,6 +2038,10 @@ public:
 			actions::action *A,
 		field_theory::finite_field *F, int iso,
 		int verbose_level);
+	void init_reduced_generating_set(
+			data_structures_groups::vector_ge *gens,
+			ring_theory::longinteger_object &target_go,
+			int verbose_level);
 	void stabilizer_of_quartic_curve_from_catalogue(
 			actions::action *A,
 		field_theory::finite_field *F, int iso,

@@ -27,9 +27,18 @@ action_by_restriction::action_by_restriction()
 
 action_by_restriction::~action_by_restriction()
 {
-	free();
+	if (points) {
+		FREE_lint(points);
+		}
+	if (points_sorted) {
+		FREE_lint(points_sorted);
+		}
+	if (perm_inv) {
+		FREE_lint(perm_inv);
+		}
 }
 
+#if 0
 void action_by_restriction::free()
 {
 	if (points) {
@@ -42,6 +51,7 @@ void action_by_restriction::free()
 		FREE_lint(perm_inv);
 		}
 }
+#endif
 
 void action_by_restriction::init_single_orbit_from_schreier_vector(
 		data_structures_groups::schreier_vector *Schreier_vector,

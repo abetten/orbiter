@@ -1259,10 +1259,14 @@ void strong_generators::generators_for_symplectic_group(
 
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_symplectic_group calling "
+		cout << "strong_generators::generators_for_symplectic_group before "
 				"generators_symplectic_group::init" << endl;
 	}
 	N->init(F, n, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::generators_for_symplectic_group after "
+				"generators_symplectic_group::init" << endl;
+	}
 	
 		// warning, N->transversal_length[n]
 		// but A->base_len = n + 1
@@ -1287,13 +1291,40 @@ void strong_generators::generators_for_symplectic_group(
 	}
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_symplectic_group calling "
+		cout << "strong_generators::generators_for_symplectic_group before "
 				"init_from_data" << endl;
 	}
 	init_from_data(A, N->Data, 
 		N->nb_gens, n * n, t_len,
 		nice_gens,
 		verbose_level);
+	if (f_v) {
+		cout << "strong_generators::generators_for_symplectic_group after "
+				"init_from_data" << endl;
+	}
+
+	ring_theory::longinteger_object target_go;
+
+
+
+	target_go.create_product(A->base_len(), tl);
+	if (f_v) {
+		cout << "strong_generators::generators_for_symplectic_group "
+				"target_go = " << target_go << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
+				"init_reduced_generating_set" << endl;
+	}
+	init_reduced_generating_set(
+			gens,
+			target_go,
+			verbose_level);
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue after "
+				"init_reduced_generating_set" << endl;
+	}
 
 
 	FREE_int(t_len);
@@ -2782,7 +2813,7 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	}
 
 
-
+#if 0
 	strong_generators *Strong_gens2;
 
 	if (f_v) {
@@ -2802,10 +2833,62 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	init_copy(Strong_gens2, 0 /* verbose_level */);
 
 	FREE_OBJECT(Strong_gens2);
+#else
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
+				"init_reduced_generating_set" << endl;
+	}
+	init_reduced_generating_set(
+			gens,
+			target_go,
+			verbose_level);
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue after "
+				"init_reduced_generating_set" << endl;
+	}
+#endif
+
 	FREE_OBJECT(gens);
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue done" << endl;
+	}
+}
+
+void strong_generators::init_reduced_generating_set(
+		data_structures_groups::vector_ge *gens,
+		ring_theory::longinteger_object &target_go,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::init_reduced_generating_set" << endl;
+	}
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::init_reduced_generating_set before "
+				"generators_to_strong_generators" << endl;
+	}
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		gens, Strong_gens2,
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::init_reduced_generating_set after "
+				"generators_to_strong_generators" << endl;
+	}
+
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_OBJECT(Strong_gens2);
+
+	if (f_v) {
+		cout << "strong_generators::init_reduced_generating_set done" << endl;
 	}
 }
 

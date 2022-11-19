@@ -67,7 +67,7 @@ public:
 // clebsch_map.cpp
 // #############################################################################
 
-//! records the images of a specific Clebsch map
+//! records the images of a specific Clebsch map, used by class layer5_applications::applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_clebsch_map
 
 
 class clebsch_map {
@@ -100,7 +100,6 @@ public:
 
 	clebsch_map();
 	~clebsch_map();
-	void freeself();
 	void init_half_double_six(surface_object *SO,
 			int hds, int verbose_level);
 	void compute_Clebsch_map_down(int verbose_level);
@@ -1112,7 +1111,7 @@ public:
 		int *the_six_plane_equations, int lambda, int *the_equation);
 	void print_equation_wrapped(std::ostream &ost, int *the_equation);
 	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
-	void alice(std::ostream &ost, long int *Lines, int nb_lines);
+	//void alice(std::ostream &ost, long int *Lines, int nb_lines);
 	void print_clebsch_P(std::ostream &ost);
 	void print_clebsch_P_matrix_only(std::ostream &ost);
 	void print_clebsch_cubics(std::ostream &ost);

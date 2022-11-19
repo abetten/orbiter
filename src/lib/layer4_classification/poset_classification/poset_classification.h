@@ -262,9 +262,6 @@ public:
 	int f_depth;
 	int depth;
 
-	int f_draw_options;
-	graphics::layered_graph_draw_options *draw_options;
-
 	int verbose_level;
 	int verbose_level_group_theory;
 
@@ -286,6 +283,13 @@ public:
 	int f_T; // draw tree file (each level)
 	int f_t; // draw tree file (only last level)
 
+
+	int f_draw_options;
+	graphics::layered_graph_draw_options *draw_options;
+		// used for write_treefile in poset_classification_io
+
+
+#if 0
 	int f_write_tree; // create a tree
 
 	int f_find_node_by_stabilizer_order;
@@ -306,10 +310,6 @@ public:
 	int f_table_of_nodes;
 	int f_make_relations_with_flag_orbits;
 
-	int f_Kramer_Mesner_matrix;
-	int Kramer_Mesner_t;
-	int Kramer_Mesner_k;
-
 	int f_level_summary_csv;
 	int f_orbit_reps_csv;
 
@@ -325,9 +325,6 @@ public:
 	int f_show_whole_orbits;
 
 
-	std::vector<std::string> recognize;
-
-
 
 	int f_export_schreier_trees;
 	int f_draw_schreier_trees;
@@ -335,6 +332,10 @@ public:
 			// comes after problem_label_with_path
 
 	int f_test_multi_edge_in_decomposition_matrix;
+#endif
+
+
+
 
 	int f_preferred_choice;
 	std::vector<std::vector<int> > preferred_choice;
@@ -659,7 +660,7 @@ public:
 			int f_use_invariant_subset_if_available,
 			int verbose_level);
 			// returns the last level that has at least one orbit
-	void post_processing(int actual_size, int verbose_level);
+	//void post_processing(int actual_size, int verbose_level);
 	void recognize(std::string &set_to_recognize,
 			int h, int nb_to_recognize, int verbose_level);
 	void extend_level(int size, 
@@ -690,6 +691,8 @@ public:
 
 
 	// poset_classification_combinatorics.cpp
+	void compute_Kramer_Mesner_matrix(int t, int k,
+			int verbose_level);
 	void Plesken_matrix_up(int depth, 
 		int *&P, int &N, int verbose_level);
 	void Plesken_matrix_down(int depth, 
@@ -892,7 +895,10 @@ public:
 
 
 	// in poset_classification_report.cpp:
-	void report(std::ostream &ost,
+	void report(
+			poset_classification_report_options *Opt,
+			int verbose_level);
+	void report2(std::ostream &ost,
 			poset_classification_report_options *Opt, int verbose_level);
 	void report_orbits_in_detail(std::ostream &ost,
 			poset_classification_report_options *Opt,
@@ -904,7 +910,7 @@ public:
 	void report_poset_of_orbits(std::ostream &ost, int verbose_level);
 	void report_orbit(int level, int orbit_at_level,
 			poset_classification_report_options *Opt,
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 
 	// poset_classification_trace.cpp:
 	int find_isomorphism(long int *set1, long int *set2, int sz,
@@ -973,6 +979,8 @@ public:
 	int select_orbits_by_stabilizer_order_so_multiple_of;
 
 	int f_include_projective_stabilizer;
+
+	int f_draw_poset;
 
 	poset_classification_report_options();
 	~poset_classification_report_options();
@@ -1352,6 +1360,7 @@ public:
 	void write_file(
 			actions::action *A, std::ofstream &fp, int &nb_group_elements,
 		int verbose_level);
+#if 0
 	void save_schreier_forest(
 		poset_classification *PC,
 		groups::schreier *Schreier,
@@ -1364,7 +1373,7 @@ public:
 		groups::schreier *Schreier,
 		int f_using_invariant_subset, actions::action *AR,
 		int verbose_level);
-
+#endif
 
 	// poset_orbit_node_upstep.cpp:
 	int apply_isomorphism(poset_classification *gen, 

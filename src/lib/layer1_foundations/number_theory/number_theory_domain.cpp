@@ -474,7 +474,8 @@ void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_
 
 	t0 = Os.os_ticks();
 	if (f_v) {
-		cout << "number_theory_domain::do_eulerfunction_interval n_min=" << n_min << " n_max=" << n_max << endl;
+		cout << "number_theory_domain::do_eulerfunction_interval "
+				"n_min=" << n_min << " n_max=" << n_max << endl;
 	}
 
 	std::vector<std::vector<long int>> Table;
@@ -806,7 +807,7 @@ int number_theory_domain::smallest_primedivisor(int n)
 }
 
 int number_theory_domain::sp_ge(int n, int p_min)
-// Computes the smalles prime dividing $n$ 
+// Computes the smallest prime dividing $n$
 // which is greater than or equal to p\_min. 
 {
 	int i, q;
@@ -1953,100 +1954,6 @@ long int number_theory_domain::ChineseRemainder2(long int a1, long int a2,
 	return x;
 }
 
-void number_theory_domain::do_babystep_giantstep(
-		long int p, long int g, long int h,
-		int f_latex, ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	long int N, n;
-	double sqrtN;
-	long int *Table1;
-	long int *Table2;
-	long int *data;
-	long int gn, gmn, hgmn;
-	long int i, r;
-	number_theory_domain NT;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "number_theory_domain::do_babystep_giantstep "
-				"p=" << p << " g=" << g << " h=" << h << endl;
-	}
-	r = NT.primitive_root(p, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "a primitive root modulo " << p << " is " << r << endl;
-	}
-
-	N = p - 1;
-	sqrtN = sqrt(N);
-	n = 1 + (int) sqrtN;
-	if (f_v) {
-		cout << "do_babystep_giantstep "
-				"p=" << p
-				<< ", g=" << g
-				<< " h=" << h
-				<< " n=" << n << endl;
-	}
-	Table1 = NEW_lint(n);
-	Table2 = NEW_lint(n);
-	data = NEW_lint(2 * n);
-	gn = NT.power_mod(g, n, p);
-	if (f_v) {
-		cout << "g^n=" << gn << endl;
-	}
-	gmn = NT.inverse_mod(gn, p);
-	if (f_v) {
-		cout << "g^-n=" << gmn << endl;
-	}
-	hgmn = NT.mult_mod(h, gmn, p);
-	if (f_v) {
-		cout << "h*g^-n=" << hgmn << endl;
-	}
-	Table1[0] = g;
-	Table2[0] = hgmn;
-	for (i = 1; i < n; i++) {
-		Table1[i] = NT.mult_mod(Table1[i - 1], g, p);
-		Table2[i] = NT.mult_mod(Table2[i - 1], gmn, p);
-	}
-	Lint_vec_copy(Table1, data, n);
-	Lint_vec_copy(Table2, data + n, n);
-	Sorting.lint_vec_heapsort(data, 2 * n);
-	if (f_v) {
-		cout << "duplicates:" << endl;
-		for (i = 1; i < 2 * n; i++) {
-			if (data[i] == data[i - 1]) {
-				cout << data[i] << endl;
-			}
-		}
-	}
-
-	if (f_latex) {
-		ost << "$$" << endl;
-		ost << "\\begin{array}[t]{|r|r|r|}" << endl;
-		ost << "\\hline" << endl;
-		ost << "i & T_1[i] & T_2[i] \\\\" << endl;
-		ost << "\\hline" << endl;
-		ost << "\\hline" << endl;
-		//ost << "i : g^i : h*g^{-i*n}" << endl;
-		for (i = 0; i < n; i++) {
-			ost << i + 1 << " & " << Table1[i] << " & "
-					<< Table2[i] << "\\\\" << endl;
-			if ((i + 1) % 10 == 0) {
-				ost << "\\hline" << endl;
-				ost << "\\end{array}" << endl;
-				ost << "\\quad" << endl;
-				ost << "\\begin{array}[t]{|r|r|r|}" << endl;
-				ost << "\\hline" << endl;
-				ost << "i & T_1[i] & T_2[i] \\\\" << endl;
-				ost << "\\hline" << endl;
-				ost << "\\hline" << endl;
-			}
-		}
-		ost << "\\hline" << endl;
-		ost << "\\end{array}" << endl;
-		ost << "$$" << endl;
-	}
-}
 
 void number_theory_domain::sieve(std::vector<int> &primes,
 		int factorbase, int verbose_level)
@@ -2685,6 +2592,249 @@ void number_theory_domain::do_jacobi(long int jacobi_top, long int jacobi_bottom
 
 
 }
+
+void number_theory_domain::elliptic_curve_addition_table(
+		geometry::projective_space *P2,
+	int *A6, int *Pts, int nb_pts, int *&Table,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, k;
+	int pi, pj, pk;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "number_theory_domain::elliptic_curve_addition_table" << endl;
+	}
+	Table = NEW_int(nb_pts * nb_pts);
+	for (i = 0; i < nb_pts; i++) {
+		pi = Pts[i];
+		for (j = 0; j < nb_pts; j++) {
+			pj = Pts[j];
+			pk = elliptic_curve_addition(P2, A6, pi, pj,
+					0 /* verbose_level */);
+			if (!Sorting.int_vec_search(Pts, nb_pts, pk, k)) {
+				cout << "number_theory_domain::elliptic_curve_addition_table cannot find point pk" << endl;
+				cout << "i=" << i << " pi=" << pi << " j=" << j
+						<< " pj=" << pj << " pk=" << pk << endl;
+				cout << "Pts: ";
+				Int_vec_print(cout, Pts, nb_pts);
+				cout << endl;
+				exit(1);
+			}
+			Table[i * nb_pts + j] = k;
+		}
+	}
+	if (f_v) {
+		cout << "number_theory_domain::elliptic_curve_addition_table done" << endl;
+	}
+}
+
+int number_theory_domain::elliptic_curve_addition(
+		geometry::projective_space *P2,
+	int *A6, int p1_rk, int p2_rk,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int p1[3];
+	int p2[3];
+	int p3[3];
+	int x1, y1, z1;
+	int x2, y2, z2;
+	int x3, y3, z3;
+	int a1, a2, a3, a4, a6;
+	int p3_rk;
+
+	if (f_v) {
+		cout << "number_theory_domain::elliptic_curve_addition" << endl;
+	}
+
+	a1 = A6[0];
+	a2 = A6[1];
+	a3 = A6[2];
+	a4 = A6[3];
+	a6 = A6[5];
+
+	P2->unrank_point(p1, p1_rk);
+	P2->unrank_point(p2, p2_rk);
+	P2->F->PG_element_normalize(p1, 1, 3);
+	P2->F->PG_element_normalize(p2, 1, 3);
+
+	x1 = p1[0];
+	y1 = p1[1];
+	z1 = p1[2];
+	x2 = p2[0];
+	y2 = p2[1];
+	z2 = p2[2];
+	if (f_vv) {
+		cout << "number_theory_domain::elliptic_curve_addition "
+				"x1=" << x1 << " y1=" << y1 << " z1=" << z1 << endl;
+		cout << "number_theory_domain::elliptic_curve_addition "
+				"x2=" << x2 << " y2=" << y2 << " z2=" << z2 << endl;
+	}
+	if (z1 == 0) {
+		if (p1_rk != 1) {
+			cout << "number_theory_domain::elliptic_curve_addition "
+					"z1 == 0 && p1_rk != 1" << endl;
+			exit(1);
+		}
+		x3 = x2;
+		y3 = y2;
+		z3 = z2;
+#if 0
+		if (z2 == 0) {
+			if (p2_rk != 1) {
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"z2 == 0 && p2_rk != 1" << endl;
+				exit(1);
+			}
+			x3 = 0;
+			y3 = 1;
+			z3 = 0;
+		}
+		else {
+			x3 = x2;
+			y3 = F->negate(F->add3(y2, F->mult(a1, x2), a3));
+			z3 = 1;
+		}
+#endif
+
+	}
+	else if (z2 == 0) {
+		if (p2_rk != 1) {
+			cout << "number_theory_domain::elliptic_curve_addition "
+					"z2 == 0 && p2_rk != 1" << endl;
+			exit(1);
+		}
+		x3 = x1;
+		y3 = y1;
+		z3 = z1;
+
+#if 0
+		// at this point, we know that z1 is not zero.
+		x3 = x1;
+		y3 = F->negate(F->add3(y1, F->mult(a1, x1), a3));
+		z3 = 1;
+#endif
+
+	}
+	else {
+		// now both points are affine.
+
+
+		int lambda_top, lambda_bottom, lambda, nu_top, nu_bottom, nu;
+		int three, two; //, m_one;
+		int c;
+
+		c = P2->F->add4(y1, y2, P2->F->mult(a1, x2), a3);
+
+		if (x1 == x2 && c == 0) {
+			x3 = 0;
+			y3 = 1;
+			z3 = 0;
+		}
+		else {
+
+			two = P2->F->add(1, 1);
+			three = P2->F->add(two, 1);
+			//m_one = F->negate(1);
+
+
+
+			if (x1 == x2) {
+
+				// point duplication:
+				lambda_top = P2->F->add4(P2->F->mult3(three, x1, x1),
+						P2->F->mult3(two, a2, x1), a4,
+						P2->F->negate(P2->F->mult(a1, y1)));
+				lambda_bottom = P2->F->add3(P2->F->mult(two, y1),
+						P2->F->mult(a1, x1), a3);
+
+				nu_top = P2->F->add4(P2->F->negate(P2->F->mult3(x1, x1, x1)),
+						P2->F->mult(a4, x1), P2->F->mult(two, a6),
+						P2->F->negate(P2->F->mult(a3, y1)));
+				nu_bottom = P2->F->add3(P2->F->mult(two, y1),
+						P2->F->mult(a1, x1), a3);
+
+			}
+			else {
+				// adding different points:
+				lambda_top = P2->F->add(y2, P2->F->negate(y1));
+				lambda_bottom = P2->F->add(x2, P2->F->negate(x1));
+
+				nu_top = P2->F->add(P2->F->mult(y1, x2), P2->F->negate(P2->F->mult(y2, x1)));
+				nu_bottom = lambda_bottom;
+			}
+
+
+			if (lambda_bottom == 0) {
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"lambda_bottom == 0" << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"x1=" << x1 << " y1=" << y1 << " z1=" << z1 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"x2=" << x2 << " y2=" << y2 << " z2=" << z2 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a1=" << a1 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a2=" << a2 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a3=" << a3 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a4=" << a4 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a6=" << a6 << endl;
+				exit(1);
+			}
+			lambda = P2->F->mult(lambda_top, P2->F->inverse(lambda_bottom));
+
+			if (nu_bottom == 0) {
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"nu_bottom == 0" << endl;
+				exit(1);
+			}
+			nu = P2->F->mult(nu_top, P2->F->inverse(nu_bottom));
+
+			if (f_vv) {
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a1=" << a1 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a2=" << a2 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a3=" << a3 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a4=" << a4 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"a6=" << a6 << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"three=" << three << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"lambda_top=" << lambda_top << endl;
+				cout << "number_theory_domain::elliptic_curve_addition "
+						"lambda=" << lambda << " nu=" << nu << endl;
+			}
+			x3 = P2->F->add3(P2->F->mult(lambda, lambda), P2->F->mult(a1, lambda),
+					P2->F->negate(P2->F->add3(a2, x1, x2)));
+			y3 = P2->F->negate(P2->F->add3(P2->F->mult(P2->F->add(lambda, a1), x3), nu, a3));
+			z3 = 1;
+		}
+	}
+	p3[0] = x3;
+	p3[1] = y3;
+	p3[2] = z3;
+	if (f_vv) {
+		cout << "number_theory_domain::elliptic_curve_addition "
+				"x3=" << x3 << " y3=" << y3 << " z3=" << z3 << endl;
+	}
+	p3_rk = P2->rank_point(p3);
+	if (f_v) {
+		cout << "number_theory_domain::elliptic_curve_addition "
+				"done" << endl;
+	}
+	return p3_rk;
+}
+
 
 
 }}}

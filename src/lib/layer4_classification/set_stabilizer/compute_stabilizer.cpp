@@ -1200,7 +1200,7 @@ void compute_stabilizer::report(std::ostream &ost)
 
 	poset_classification::poset_classification_report_options Opt;
 
-	SubSt->SubC->PC->report(ost, &Opt, 0 /* verbose_level */);
+	SubSt->SubC->PC->report2(ost, &Opt, 0 /* verbose_level */);
 
 }
 

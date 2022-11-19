@@ -22,20 +22,9 @@ union_find::union_find()
 
 union_find::~union_find()
 {
-	freeself();
-}
-
-void union_find::freeself()
-{
 	if (prev) {
 		FREE_int(prev);
 		}
-	null();
-}
-
-void union_find::null()
-{
-	prev = NULL;
 }
 
 void union_find::init(actions::action *A, int verbose_level)
@@ -46,7 +35,6 @@ void union_find::init(actions::action *A, int verbose_level)
 	if (f_v) {
 		cout << "union_find::init action=" << A->label << endl;
 		}
-	freeself();
 	union_find::A = A;
 	prev = NEW_int(A->degree);
 	for (i = 0; i < A->degree; i++) {

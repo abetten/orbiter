@@ -1002,17 +1002,10 @@ void action::init_symmetric_group(int degree, int f_no_base, int verbose_level)
 	int i, j;
 	ring_theory::longinteger_object go;
 	ring_theory::longinteger_domain D;
-	char str1[1000];
-	char str2[1000];
 	
 	if (f_v) {
 		cout << "action::init_symmetric_group f_no_base=" << f_no_base << endl;
 	}
-	snprintf(str1, sizeof(str1), "Sym_%d", degree);
-	snprintf(str2, sizeof(str2), "Sym(%d)", degree);
-
-	label.assign(str1);
-	label_tex.assign(str2);
 
 	D.factorial(go, degree);
 
@@ -1048,6 +1041,16 @@ void action::init_symmetric_group(int degree, int f_no_base, int verbose_level)
 	}
 	FREE_int(gens);
 	FREE_lint(given_base);
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "Sym_%d", degree);
+	snprintf(str2, sizeof(str2), "Sym(%d)", degree);
+
+	label.assign(str1);
+	label_tex.assign(str2);
+
 	if (f_v) {
 		cout << "action::init_symmetric_group done" << endl;
 	}
@@ -1062,17 +1065,10 @@ void action::init_cyclic_group(int degree, int f_no_base, int verbose_level)
 	int i, j;
 	ring_theory::longinteger_object go;
 	//ring_theory::longinteger_domain D;
-	char str1[1000];
-	char str2[1000];
 
 	if (f_v) {
 		cout << "action::init_cyclic_group f_no_base=" << f_no_base << endl;
 	}
-	snprintf(str1, sizeof(str1), "C_%d", degree);
-	snprintf(str2, sizeof(str2), "C(%d)", degree);
-
-	label.assign(str1);
-	label_tex.assign(str2);
 
 	//D.factorial(go, degree);
 	go.create(degree, __FILE__, __LINE__);
@@ -1109,8 +1105,82 @@ void action::init_cyclic_group(int degree, int f_no_base, int verbose_level)
 	}
 	FREE_int(gens);
 	FREE_lint(given_base);
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "C_%d", degree);
+	snprintf(str2, sizeof(str2), "C(%d)", degree);
+
+	label.assign(str1);
+	label_tex.assign(str2);
+
 	if (f_v) {
 		cout << "action::init_cyclic_group done" << endl;
+	}
+}
+
+void action::init_identity_group(int degree, int f_no_base, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_gens, *gens;
+	int given_base_length;
+	long int *given_base;
+	int i, j;
+	ring_theory::longinteger_object go;
+	//ring_theory::longinteger_domain D;
+
+	if (f_v) {
+		cout << "action::init_identity_group f_no_base=" << f_no_base << endl;
+	}
+	//D.factorial(go, degree);
+	go.create(1, __FILE__, __LINE__);
+
+	make_element_size = degree;
+	nb_gens = 1;
+	given_base_length = 1;
+	gens = NEW_int(nb_gens * degree);
+	given_base = NEW_lint(given_base_length);
+
+	for (j = 0; j < degree; j++) {
+		if (j < degree - 1) {
+			gens[0 * degree + j] = j;
+		}
+		else {
+			gens[0 * degree + j] = j;
+		}
+	}
+
+	for (i = 0; i < given_base_length; i++) {
+		given_base[i] = i;
+	}
+	if (f_v) {
+		cout << "action::init_identity_group before init_permutation_group_from_generators" << endl;
+	}
+	init_permutation_group_from_generators(degree,
+		TRUE, go,
+		nb_gens, gens,
+		given_base_length, given_base,
+		f_no_base,
+		verbose_level);
+	if (f_v) {
+		cout << "action::init_identity_group after init_permutation_group_from_generators" << endl;
+	}
+	FREE_int(gens);
+	FREE_lint(given_base);
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "Id_%d", degree);
+	snprintf(str2, sizeof(str2), "Id(%d)", degree);
+
+	label.assign(str1);
+	label_tex.assign(str2);
+
+
+	if (f_v) {
+		cout << "action::init_identity_group done" << endl;
 	}
 }
 
@@ -2097,9 +2167,6 @@ groups::sims *action::create_sims_from_generators_randomized(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//init(A);
-	//init_trivial_group(0);
-	//freeself();
 	groups::sims *S;
 
 	if (f_v) {

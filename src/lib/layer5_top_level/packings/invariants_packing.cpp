@@ -308,14 +308,19 @@ void invariants_packing::compute_dual_packings(
 
 	orbiter_kernel_system::file_io Fio;
 	string fname;
+	string label, label1, label2;
 
 	fname.assign("Dual_idx.csv");
+	label1.assign("dual_idx");
+	label2.assign("f_self_dual");
 	Fio.int_vecs_write_csv(Dual_idx, f_self_dual,
-		Iso->Folding->Reps->count, fname, "dual_idx", "f_self_dual");
+		Iso->Folding->Reps->count, fname, label1, label2);
 
 	fname.assign("Dual_spread_idx.csv");
+	label.assign("dual_spread_idx");
 	Fio.lint_vec_write_csv(P->Spread_table_with_selection->Spread_tables->dual_spread_idx,
-		P->Spread_table_with_selection->Spread_tables->nb_spreads, fname, "dual_spread_idx");
+		P->Spread_table_with_selection->Spread_tables->nb_spreads,
+		fname, label);
 	
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings done" << endl;
@@ -409,7 +414,12 @@ void invariants_packing::make_table(
 			ago[j] = Ago_int[a];
 		}
 
-		Fio.int_vecs_write_csv(set, ago, nb, fname, "ID", "ago");
+		string label1, label2;
+
+		label1.assign("ID");
+		label2.assign("ago");
+
+		Fio.int_vecs_write_csv(set, ago, nb, fname, label1, label2);
 
 		data_structures::tally C;
 

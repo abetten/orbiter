@@ -40,9 +40,6 @@ poset_classification_control::poset_classification_control()
 	f_depth = FALSE;
 	depth = 0;
 
-	f_draw_options = TRUE;
-	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
-
 	verbose_level = 0;
 	verbose_level_group_theory = 0;
 
@@ -63,6 +60,13 @@ poset_classification_control::poset_classification_control()
 	f_t = FALSE;
 	f_T = FALSE;
 
+
+
+	f_draw_options = TRUE;
+	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+
+
+#if 0
 	f_write_tree = FALSE;
 
 	f_find_node_by_stabilizer_order = FALSE;
@@ -78,10 +82,6 @@ poset_classification_control::poset_classification_control()
 	f_table_of_nodes = FALSE;
 	f_make_relations_with_flag_orbits = FALSE;
 
-	f_Kramer_Mesner_matrix = FALSE;
-	Kramer_Mesner_t = 0;
-	Kramer_Mesner_k = 0;
-
 	f_level_summary_csv = FALSE;
 	f_orbit_reps_csv = FALSE;
 
@@ -96,14 +96,15 @@ poset_classification_control::poset_classification_control()
 	f_save_stab = FALSE;
 	f_show_whole_orbits = FALSE;
 
-	//nb_recognize = 0;
-
 	f_export_schreier_trees = FALSE;
 	f_draw_schreier_trees = FALSE;
 	//schreier_tree_prefix[0] = 0;
 
 
 	f_test_multi_edge_in_decomposition_matrix = FALSE;
+#endif
+
+
 
 	f_preferred_choice = FALSE;
 	//preferred_choice
@@ -169,26 +170,6 @@ int poset_classification_control::read_arguments(
 			if (f_v) {
 				cout << "-depth " << depth << endl;
 			}
-		}
-		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
-			f_draw_options = TRUE;
-
-			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
-			if (f_v) {
-				cout << "-draw_options " << endl;
-			}
-			i += draw_options->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -draw_options " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-			//cout << "-f_draw_options " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-v") == 0) {
 			i++;
@@ -263,12 +244,39 @@ int poset_classification_control::read_arguments(
 				cout << "-T" << endl;
 			}
 		}
+
+
+
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = TRUE;
+
+			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+			if (f_v) {
+				cout << "-draw_options " << endl;
+			}
+			i += draw_options->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -draw_options " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+			//cout << "-f_draw_options " << endl;
+		}
+
+#if 0
 		else if (ST.stringcmp(argv[i], "-write_tree") == 0) {
 			f_write_tree = TRUE;
 			if (f_v) {
 				cout << "-write_tree" << endl;
 			}
 		}
+
+
 		else if (ST.stringcmp(argv[i], "-find_node_by_stabilizer_order") == 0) {
 			f_find_node_by_stabilizer_order = TRUE;
 			find_node_by_stabilizer_order = ST.strtoi(argv[++i]);
@@ -322,14 +330,6 @@ int poset_classification_control::read_arguments(
 			f_make_relations_with_flag_orbits = TRUE;
 			if (f_v) {
 				cout << "-make_relation_with_flag_orbits" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
-			f_Kramer_Mesner_matrix = TRUE;
-			Kramer_Mesner_t = ST.strtoi(argv[++i]);
-			Kramer_Mesner_k = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-level_summary_csv") == 0) {
@@ -405,16 +405,6 @@ int poset_classification_control::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
-
-			string s;
-
-			s.assign(argv[++i]);
-			recognize.push_back(s);
-			if (f_v) {
-				cout << "-recognize " << recognize[recognize.size() - 1] << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;
 			if (f_v) {
@@ -434,6 +424,9 @@ int poset_classification_control::read_arguments(
 				cout << "-test_multi_edge_in_decomposition_matrix " << endl;
 			}
 		}
+#endif
+
+
 		else if (ST.stringcmp(argv[i], "-preferred_choice") == 0) {
 
 			f_preferred_choice = TRUE;
@@ -495,10 +488,6 @@ void poset_classification_control::print()
 	if (f_path) {
 		cout << "-path" << path << endl;
 	}
-	if (f_draw_options) {
-		cout << "-draw_options" << endl;
-		draw_options->print();
-	}
 	cout << "v=" << verbose_level << endl;
 	cout << "gv=" << verbose_level_group_theory << endl;
 
@@ -528,6 +517,12 @@ void poset_classification_control::print()
 	if (f_t) {
 		cout << "-t" << endl;
 	}
+
+	if (f_draw_options) {
+		cout << "-draw_options" << endl;
+		draw_options->print();
+	}
+#if 0
 	if (f_write_tree) {
 		cout << "-write_tree" << endl;
 	}
@@ -558,9 +553,6 @@ void poset_classification_control::print()
 	if (f_make_relations_with_flag_orbits) {
 		cout << "-make_relations_with_flag_orbits" << endl;
 	}
-	if (f_Kramer_Mesner_matrix) {
-		cout << "-Kramer_Mesner_matrix t=" << Kramer_Mesner_t << " k=" << Kramer_Mesner_k << endl;
-	}
 	if (f_level_summary_csv) {
 		cout << "-level_summary_csv" << endl;
 	}
@@ -590,10 +582,6 @@ void poset_classification_control::print()
 		cout << "-show_whole_orbits" << endl;
 	}
 
-	if (recognize.size()) {
-		cout << "-recognize recognizing " << recognize.size() << " many sets" << endl;
-	}
-
 	if (f_export_schreier_trees) {
 		cout << "-export_schreier_trees" << endl;
 	}
@@ -603,6 +591,9 @@ void poset_classification_control::print()
 	if (f_test_multi_edge_in_decomposition_matrix) {
 		cout << "-test_multi_edge_in_decomposition_matrix" << endl;
 	}
+#endif
+
+
 	if (f_preferred_choice) {
 		for (int i = 0; i < preferred_choice.size(); i++) {
 			cout << "-preferred_choice "

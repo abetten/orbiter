@@ -1617,6 +1617,596 @@ void grassmann::make_spread_element(int *Spread_element, int *A, int verbose_lev
 	}
 }
 
+void grassmann::cheat_sheet_subspaces(std::ostream &f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//grassmann *Gr;
+	int *v;
+	//int n1, k1;
+	int nb_k_subspaces;
+	int i, j, u;
+	int f_need_comma = FALSE;
+	combinatorics::combinatorics_domain Combi;
+
+
+	if (f_v) {
+		cout << "grassmann::cheat_sheet_subspaces vector space dimension = " << k << endl;
+	}
+	//n1 = n; // n + 1;
+	//k1 = k; // k + 1;
+	v = NEW_int(n);
+
+	if (F->q >= 10) {
+		f_need_comma = TRUE;
+	}
+
+	//Gr = NEW_OBJECT(grassmann);
+	//Gr->init(n1, k1, F, 0 /*verbose_level*/);
+
+
+	//nb_points = N_points;
+	nb_k_subspaces = Combi.generalized_binomial(n, k, q);
+
+
+	f << "PG$(" << n - 1 << ", " << q << ")$ has "
+			<< nb_k_subspaces << " $" << k - 1
+			<< "$-subspaces:\\\\" << endl;
+
+	if (nb_k_subspaces > 10000) {
+		f << "Too many to print \\\\" << endl;
+	}
+	else {
+		f << "%\\begin{multicols}{2}" << endl;
+		for (u = 0; u < nb_k_subspaces; u++) {
+			unrank_lint(u, 0 /* verbose_level*/);
+			f << "$L_{" << u << "}=\\bL";
+			f << "\\left[" << endl;
+			f << "\\begin{array}{c}" << endl;
+			for (i = 0; i < k; i++) {
+				for (j = 0; j < n; j++) {
+					f << M[i * n + j];
+					if (f_need_comma && j < n - 1) {
+						f << ", ";
+					}
+				}
+				f << "\\\\" << endl;
+			}
+			f << "\\end{array}" << endl;
+			f << "\\right]" << endl;
+			if (k == 2) {
+				f << "\\{";
+
+				int nb;
+				long int *the_points;
+
+				nb = nb_points_covered(0 /* verbose_level*/);
+
+				the_points = NEW_lint(nb);
+
+				points_covered(the_points, 0 /* verbose_level*/);
+
+				data_structures::sorting Sorting;
+
+				Sorting.lint_vec_heapsort(the_points, nb);
+				orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(f, the_points, nb);
+				//Lint_vec_print(the_points, nb);
+
+				FREE_lint(the_points);
+				f << "\\}";
+			}
+
+			if (n == 4 && k == 2) {
+				int v6[6];
+
+				Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+						<< v6[2] << "," << v6[3] << "," << v6[4]
+						<< "," << v6[5] << " ";
+				f << ")" << endl;
+
+			}
+			f << "$\\\\" << endl;
+
+			if (((u + 1) % 1000) == 0) {
+				f << "\\clearpage" << endl << endl;
+			}
+		}
+		f << "%\\end{multicols}" << endl;
+
+
+		if (n == 4 && k == 2) {
+			do_pluecker_reverse(f, nb_k_subspaces, verbose_level);
+		}
+
+	}
+	if (n == 4 && k == 2) {
+		f << "PG$(" << n << ", " << q << ")$ has "
+				<< "the following low weight Pluecker lines:\\\\" << endl;
+		for (u = 0; u < nb_k_subspaces; u++) {
+			int v6[6];
+			int w;
+
+			unrank_lint(u, 0 /* verbose_level*/);
+			Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+			w = 0;
+			for (j = 0; j < 6; j++) {
+				if (v6[j]) {
+					w++;
+				}
+			}
+			if (w == 1) {
+				f << "$L_{" << u << "}=";
+				f << "\\left[" << endl;
+				f << "\\begin{array}{c}" << endl;
+				for (i = 0; i < k; i++) {
+					for (j = 0; j < n; j++) {
+						f << M[i * n + j];
+						if (f_need_comma && j < n - 1) {
+							f << ", ";
+							}
+						}
+					f << "\\\\" << endl;
+					}
+				f << "\\end{array}" << endl;
+				f << "\\right]" << endl;
+				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+						<< v6[2] << "," << v6[3] << "," << v6[4]
+						<< "," << v6[5] << " ";
+				f << ")" << endl;
+				f << "$\\\\" << endl;
+
+			}
+		}
+
+
+	}
+
+	f << "\\clearpage" << endl << endl;
+
+	//FREE_OBJECT(Gr);
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "grassmann::cheat_sheet_subspaces "
+				"done" << endl;
+	}
+}
+
+void grassmann::Pluecker_coordinates(int line_rk, int *v6, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int basis8[8];
+	int *x4, *y4;
+	int f_elements_exponential = FALSE;
+	string symbol_for_print;
+
+	if (f_v) {
+		cout << "grassmann::Pluecker_coordinates" << endl;
+	}
+	symbol_for_print.assign("\\alpha");
+	unrank_lint(line_rk, 0 /* verbose_level */);
+	if (f_vv) {
+		cout << setw(5) << line_rk << " :" << endl;
+		F->latex_matrix(cout, f_elements_exponential,
+			symbol_for_print, M, 2, 4);
+		cout << endl;
+	}
+	Int_vec_copy(M, basis8, 8);
+	if (f_vv) {
+		Int_matrix_print(basis8, 2, 4);
+	}
+	x4 = basis8;
+	y4 = basis8 + 4;
+	v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+	v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+	v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+	v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+	v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+	v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
+	if (f_vv) {
+		cout << "v6 : ";
+		Int_vec_print(cout, v6, 6);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "grassmann::Pluecker_coordinates done" << endl;
+	}
+}
+
+
+void grassmann::do_pluecker_reverse(std::ostream &ost,
+		int nb_k_subspaces, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int v6[6];
+	int *T;
+	int *Pos;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "grassmann::do_pluecker_reverse" << endl;
+	}
+	T = NEW_int(nb_k_subspaces);
+	Pos = NEW_int(nb_k_subspaces);
+	for (i = 0; i < nb_k_subspaces; i++) {
+		unrank_lint(i, 0 /* verbose_level*/);
+		Pluecker_coordinates(i, v6, 0 /* verbose_level */);
+		F->PG_element_rank_modified(v6, 1, 6, j);
+		T[i] = j;
+		Pos[i] = i;
+	}
+	Sorting.int_vec_heapsort_with_log(T, Pos, nb_k_subspaces);
+	if (f_v) {
+		cout << "grassmann::do_pluecker_reverse after sort:" << endl;
+		for (i = 0; i < nb_k_subspaces; i++) {
+			cout << i << " : " << T[i] << " : " << Pos[i] << endl;
+		}
+	}
+
+
+	int u, u0;
+	//int n1, k1;
+	int f_need_comma = FALSE;
+
+	//n1 = n + 1;
+	//k1 = k + 1;
+	v = NEW_int(n);
+
+	ost << "Lines sorted by Pluecker coordinates\\\\" << endl;
+	ost << "%\\begin{multicols}{2}" << endl;
+	for (u0 = 0; u0 < nb_k_subspaces; u0++) {
+		u = Pos[u0];
+		unrank_lint(u, 0 /* verbose_level*/);
+
+		int v6[6];
+
+		Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+		F->PG_element_normalize(v6, 1, 6);
+		ost << "$" << u0 << /*"=" << u <<*/
+				"={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+				<< v6[2] << "," << v6[3] << "," << v6[4]
+				<< "," << v6[5] << " ";
+		ost << ")=" << endl;
+
+		ost << "L_{" << u << "}=";
+		ost << "\\left[" << endl;
+		ost << "\\begin{array}{c}" << endl;
+		for (i = 0; i < k; i++) {
+			for (j = 0; j < n; j++) {
+				ost << M[i * n + j];
+				if (f_need_comma && j < n - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+		ost << "\\end{array}" << endl;
+		ost << "\\right]" << endl;
+
+
+		ost << "$\\\\" << endl;
+
+		if (((u + 1) % 1000) == 0) {
+			ost << "\\clearpage" << endl << endl;
+		}
+	}
+	ost << "%\\end{multicols}" << endl;
+
+
+	FREE_int(T);
+	FREE_int(Pos);
+	if (f_v) {
+		cout << "grassmann::do_pluecker_reverse done" << endl;
+	}
+}
+
+void grassmann::create_latex_report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "grassmann::create_latex_report" << endl;
+	}
+
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "Gr_%d_%d_%d.tex", n, k, F->q);
+		fname.assign(str);
+		snprintf(str, 1000, "Cheat Sheet ${\\rm Gr}_{%d,%d,%d}$", n, k, F->q);
+		title.assign(str);
+
+
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "grassmann::create_latex_report "
+						"before cheat_sheet_subspaces" << endl;
+			}
+			cheat_sheet_subspaces(ost, verbose_level);
+			if (f_v) {
+				cout << "grassmann::create_latex_report "
+						"after cheat_sheet_subspaces" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "grassmann::create_latex_report done" << endl;
+	}
+}
+
+void grassmann::klein_correspondence(
+		projective_space *P3,
+		//projective_space *P5,
+	long int *set_in, int set_size, long int *set_out,
+	int verbose_level)
+// Computes the Pluecker coordinates
+// for a set of lines in PG(3,q) in the following order:
+// (x_1,x_2,x_3,x_4,x_5,x_6) =
+// (Pluecker_12, Pluecker_34, Pluecker_13,
+//    Pluecker_42, Pluecker_14, Pluecker_23)
+// satisfying the quadratic form x_1x_2 + x_3x_4 + x_5x_6 = 0
+// The output is given as a vector of ranks of points in PG(5,q).
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int d = n + 1;
+	int h;
+	int basis8[8];
+	int v6[6];
+	int *x4, *y4;
+	long int a, b, c;
+	int f_elements_exponential = TRUE;
+	string symbol_for_print;
+
+
+
+
+	if (f_v) {
+		cout << "grassmann::klein_correspondence" << endl;
+	}
+
+
+	symbol_for_print.assign("\\alpha");
+
+	for (h = 0; h < set_size; h++) {
+		a = set_in[h];
+		unrank_lint(a, 0 /* verbose_level */);
+		if (f_vv) {
+			cout << setw(5) << h << " : " << setw(5) << a << " :" << endl;
+			P3->F->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print, M, 2, 4);
+			cout << endl;
+		}
+		Int_vec_copy(M, basis8, 8);
+		if (f_vv) {
+			Int_matrix_print(basis8, 2, 4);
+		}
+		x4 = basis8;
+		y4 = basis8 + 4;
+		v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+		v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+		v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+		v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+		v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+		v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
+		if (f_vv) {
+			cout << "v6 : ";
+			Int_vec_print(cout, v6, 6);
+			cout << endl;
+		}
+		a = F->mult(v6[0], v6[1]);
+		b = F->mult(v6[2], v6[3]);
+		c = F->mult(v6[4], v6[5]);
+		d = F->add3(a, b, c);
+		//cout << "a=" << a << " b=" << b << " c=" << c << endl;
+		//cout << "d=" << d << endl;
+		if (d) {
+			cout << "d != 0" << endl;
+			exit(1);
+		}
+
+		F->PG_element_rank_modified_lint(v6, 1, 6, set_out[h]);
+		//set_out[h] = P5->rank_point(v6);
+	}
+	if (f_v) {
+		cout << "grassmann::klein_correspondence done" << endl;
+	}
+}
+
+
+void grassmann::klein_correspondence_special_model(
+		projective_space *P3,
+		//projective_space *P5,
+	long int *table, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int d = n + 1;
+	int h;
+	int basis8[8];
+	int x6[6];
+	int y6[6];
+	int *x4, *y4;
+	int a, b, c;
+	int half;
+	int f_elements_exponential = TRUE;
+	string symbol_for_print;
+	//int *table;
+
+	if (f_v) {
+		cout << "grassmann::klein_correspondence" << endl;
+	}
+	symbol_for_print.assign("\\alpha");
+	half = F->inverse(F->add(1, 1));
+	if (f_v) {
+		cout << "half=" << half << endl;
+		cout << "N_lines=" << P3->N_lines << endl;
+	}
+	//table = NEW_int(N_lines);
+	for (h = 0; h < P3->N_lines; h++) {
+		unrank_lint(h, 0 /* verbose_level */);
+		if (f_vv) {
+			cout << setw(5) << h << " :" << endl;
+			F->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print, M, 2, 4);
+			cout << endl;
+		}
+		Int_vec_copy(M, basis8, 8);
+		if (f_vv) {
+			Int_matrix_print(basis8, 2, 4);
+		}
+		x4 = basis8;
+		y4 = basis8 + 4;
+		x6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+		x6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+		x6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+		x6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+		x6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+		x6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
+		if (f_vv) {
+			cout << "x6 : ";
+			Int_vec_print(cout, x6, 6);
+			cout << endl;
+		}
+		a = F->mult(x6[0], x6[1]);
+		b = F->mult(x6[2], x6[3]);
+		c = F->mult(x6[4], x6[5]);
+		d = F->add3(a, b, c);
+		//cout << "a=" << a << " b=" << b << " c=" << c << endl;
+		//cout << "d=" << d << endl;
+		if (d) {
+			cout << "d != 0" << endl;
+			exit(1);
+		}
+		y6[0] = F->negate(x6[0]);
+		y6[1] = x6[1];
+		y6[2] = F->mult(half, F->add(x6[2], x6[3]));
+		y6[3] = F->mult(half, F->add(x6[2], F->negate(x6[3])));
+		y6[4] = x6[4];
+		y6[5] = x6[5];
+		if (f_vv) {
+			cout << "y6 : ";
+			Int_vec_print(cout, y6, 6);
+			cout << endl;
+		}
+		F->PG_element_rank_modified_lint(y6, 1, 6, table[h]);
+		//table[h] = P5->rank_point(y6);
+	}
+
+	cout << "lines in PG(3,q) to points in PG(5,q) "
+			"in special model:" << endl;
+	for (h = 0; h < P3->N_lines; h++) {
+		cout << setw(4) << h << " : " << setw(5) << table[h] << endl;
+	}
+
+	//FREE_int(table);
+	if (f_v) {
+		cout << "grassmann::klein_correspondence_special_model done" << endl;
+	}
+}
+
+void grassmann::plane_intersection_type_of_klein_image(
+		geometry::projective_space *P3,
+		geometry::projective_space *P5,
+		long int *data, int size, int threshold,
+		intersection_type *&Int_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int N;
+	long int *the_set_out;
+
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image" << endl;
+	}
+	the_set_out = NEW_lint(size);
+
+	if (f_v) {
+		P3->print_line_set_numerical(data, size);
+	}
+	klein_correspondence(P3,
+		data, size, the_set_out,
+		0/*verbose_level*/);
+	if (f_v) {
+		cout << "after Klein correspondence:" << endl;
+		Lint_vec_print(cout, the_set_out, size);
+		cout << endl;
+	}
+
+#if 1
+	if (f_v) {
+		P5->print_set_numerical(cout, the_set_out, size);
+	}
+#endif
+
+	//F = P3->F;
+
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image "
+				"after P3->klein_correspondence" << endl;
+	}
+
+
+	N = P5->nb_rk_k_subspaces_as_lint(3);
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image N = " << N << endl;
+		cout << "grassmann::plane_intersection_type_of_klein_image threshold = " << threshold << endl;
+	}
+
+	P5->plane_intersection_type(
+		the_set_out, size, threshold,
+		Int_type,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image "
+				"corresponding to the planes with rank: " << endl;
+		Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
+		cout << endl;
+	}
+
+	FREE_lint(the_set_out);
+}
+
+
+
+
+
 }}}
 
 

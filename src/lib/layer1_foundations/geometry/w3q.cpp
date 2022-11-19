@@ -60,6 +60,7 @@ W3q::~W3q()
 }
 
 void W3q::init(field_theory::finite_field *F, int verbose_level)
+// allocates a projective_space and a orthogonal
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);

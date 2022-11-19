@@ -17,15 +17,27 @@ namespace data_structures_groups {
 
 union_find_on_k_subsets::union_find_on_k_subsets()
 {
-	null();
+	set = NULL;
+	set_sz = 0;
+	k = 0;
+
+	S = NULL;
+
+	interesting_k_subsets = NULL;
+	nb_interesting_k_subsets = 0;
+
+	A_original = NULL;
+	Ar = NULL;
+	Ar_perm = NULL;
+	Ark = NULL;
+	Arkr = NULL;
+	gens_perm = NULL;
+	UF = NULL;
 }
+
+
 
 union_find_on_k_subsets::~union_find_on_k_subsets()
-{
-	freeself();
-}
-
-void union_find_on_k_subsets::freeself()
 {
 	if (Ar) {
 		FREE_OBJECT(Ar);
@@ -45,21 +57,6 @@ void union_find_on_k_subsets::freeself()
 	if (UF) {
 		FREE_OBJECT(UF);
 		}
-	null();
-}
-
-void union_find_on_k_subsets::null()
-{
-	set = NULL;
-	interesting_k_subsets = NULL;
-	A_original = NULL;
-	Ar = NULL;
-	Ar_perm = NULL;
-	Ark = NULL;
-	Arkr = NULL;
-	gens_perm = NULL;
-	UF = NULL;
-	
 }
 
 void union_find_on_k_subsets::init(

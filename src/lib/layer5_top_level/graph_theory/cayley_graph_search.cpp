@@ -526,9 +526,12 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		for (i = 0; i < 5; i++) {
 			int *perm;
 			int degree;
+			string s;
+
+			s.assign(data_str[i]);
 
 			ST.scan_permutation_from_string(
-					data_str[i], perm, degree,
+					s, perm, degree,
 					0 /* verbose_level */);
 			cout << "degree=" << degree << endl;
 			for (j = 0; j < degree; j++) {
@@ -559,9 +562,12 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		for (i = 0; i < 4; i++) {
 			int *perm;
 			int degree;
+			string s;
+
+			s.assign(data_subgroup_str[i]);
 
 			ST.scan_permutation_from_string(
-					data_subgroup_str[i], perm, degree,
+					s, perm, degree,
 					0 /* verbose_level */);
 			for (j = 0; j < degree; j++) {
 				cout << perm[j] << " ";

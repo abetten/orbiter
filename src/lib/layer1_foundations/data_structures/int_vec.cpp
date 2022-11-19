@@ -624,22 +624,6 @@ void int_vec::scan(std::string &s, int *&v, int &len)
 }
 
 
-
-void int_vec::scan(const char *s, int *&v, int &len)
-{
-	int verbose_level = 1;
-
-	int f_v = (verbose_level >= 1);
-	if (f_v) {
-		cout << "int_vec::scan: " << s << endl;
-	}
-	istringstream ins(s);
-	scan_from_stream(ins, v, len);
-	if (f_v) {
-		cout << "int_vec::scan done, len = " << len << endl;
-	}
-}
-
 void int_vec::scan_from_stream(istream & is, int *&v, int &len)
 {
 	int verbose_level = 0;

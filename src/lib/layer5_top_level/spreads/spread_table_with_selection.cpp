@@ -95,7 +95,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 
 	if (f_select_spread) {
-		Int_vec_scan(select_spread_text.c_str(), select_spread, select_spread_nb);
+		Int_vec_scan(select_spread_text, select_spread, select_spread_nb);
 		if (f_v) {
 			cout << "select_spread = ";
 			Int_vec_print(cout, select_spread, select_spread_nb);

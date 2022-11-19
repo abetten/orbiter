@@ -84,13 +84,13 @@ public:
 	file_io();
 	~file_io();
 
-	void concatenate_files(const char *fname_in_mask, int N,
-		const char *fname_out, const char *EOF_marker, int f_title_line,
+	void concatenate_files(std::string &fname_in_mask, int N,
+			std::string &fname_out, std::string &EOF_marker, int f_title_line,
 		int &cnt_total,
 		std::vector<int> missing_idx,
 		int verbose_level);
-	void concatenate_files_into(const char *fname_in_mask, int N,
-		std::ofstream &fp_out, const char *EOF_marker, int f_title_line,
+	void concatenate_files_into(std::string &fname_in_mask, int N,
+		std::ofstream &fp_out, std::string &EOF_marker, int f_title_line,
 		int &cnt_total,
 		std::vector<int> &missing_idx,
 		int verbose_level);
@@ -140,25 +140,26 @@ public:
 		int *nb_solutions, int *case_nb, int nb_cases,
 		long int **&Solutions, int solution_size,
 		int verbose_level);
-	void copy_file_to_ostream(std::ostream &ost, const char *fname);
+	void copy_file_to_ostream(std::ostream &ost, std::string &fname);
 	void int_vec_write_csv(int *v, int len,
-			std::string &fname, const char *label);
+			std::string &fname, std::string &label);
 	void lint_vec_write_csv(long int *v, int len,
-			std::string &fname, const char *label);
+			std::string &fname, std::string &label);
 	void int_vecs_write_csv(int *v1, int *v2, int len,
-			std::string &fname,
-		const char *label1, const char *label2);
+			std::string &fname, std::string &label1, std::string &label2);
 	void int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
 			std::string &fname,
-		const char *label1, const char *label2, const char *label3);
+			std::string &label1, std::string &label2, std::string &label3);
 	void int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
 			std::string &fname, const char **column_label);
 	void lint_vec_array_write_csv(int nb_vecs, long int **Vec, int len,
 			std::string &fname, const char **column_label);
 	void int_matrix_write_csv(std::string &fname, int *M, int m, int n);
 	void lint_matrix_write_csv(std::string &fname, long int *M, int m, int n);
-	void lint_matrix_write_csv_override_headers(std::string &fname, std::string *headers, long int *M, int m, int n);
-	void vector_matrix_write_csv(std::string &fname, std::vector<std::vector<int> > &V);
+	void lint_matrix_write_csv_override_headers(std::string &fname,
+			std::string *headers, long int *M, int m, int n);
+	void vector_matrix_write_csv(std::string &fname,
+			std::vector<std::vector<int> > &V);
 	void double_matrix_write_csv(std::string &fname,
 		double *M, int m, int n);
 	void int_matrix_write_csv_with_labels(std::string &fname,
@@ -679,8 +680,6 @@ class memory_object {
 public:
 	memory_object();
 	~memory_object();
-	void null();
-	void freeself();
 
 	char *data;
 	long int alloc_length;
@@ -731,8 +730,6 @@ public:
 	
 	orbiter_data_file();
 	~orbiter_data_file();
-	void null();
-	void freeself();
 	void load(std::string &fname, int verbose_level);
 };
 

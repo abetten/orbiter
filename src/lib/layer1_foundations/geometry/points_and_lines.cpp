@@ -69,14 +69,16 @@ void points_and_lines::init(projective_space *P,
 	}
 
 
+	geometry_global Geo;
+
 	if (f_v) {
 		cout << "points_and_lines::init before "
-				"P->find_lines_which_are_contained" << endl;
+				"Geo.find_lines_which_are_contained" << endl;
 	}
-	P->find_lines_which_are_contained(Points, The_Lines, 0 /*verbose_level - 1*/);
+	Geo.find_lines_which_are_contained(P, Points, The_Lines, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "points_and_lines::init after "
-				"P->find_lines_which_are_contained" << endl;
+				"Geo.find_lines_which_are_contained" << endl;
 	}
 
 	if (f_v) {
@@ -196,7 +198,7 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 		int v6[6];
 
-		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
+		P->Grass_lines->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
 		Rk[i] = P->F->Orthogonal_indexing->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
 

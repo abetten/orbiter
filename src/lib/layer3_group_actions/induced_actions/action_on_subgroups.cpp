@@ -16,18 +16,10 @@ namespace induced_actions {
 
 action_on_subgroups::action_on_subgroups()
 {
-	null();
-}
-
-action_on_subgroups::~action_on_subgroups()
-{
-	free();
-}
-
-void action_on_subgroups::null()
-{
 	A = NULL;
 	S = NULL;
+	nb_subgroups = 0;
+	subgroup_order = 0;
 	Subgroups = NULL;
 	sets = NULL;
 	image_set = NULL;
@@ -36,7 +28,8 @@ void action_on_subgroups::null()
 	Elt1 = NULL;
 }
 
-void action_on_subgroups::free()
+
+action_on_subgroups::~action_on_subgroups()
 {
 	int i;
 	
@@ -58,7 +51,6 @@ void action_on_subgroups::free()
 	if (Elt1) {
 		FREE_int(Elt1);
 		}
-	null();
 }
 
 void action_on_subgroups::init(actions::action *A,

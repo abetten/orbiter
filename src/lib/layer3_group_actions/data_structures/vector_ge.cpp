@@ -25,26 +25,7 @@ vector_ge::vector_ge()
 	//null();
 }
 
-vector_ge::vector_ge(actions::action *A)
-{
-	null();
-	vector_ge::A = A;
-}
-
 vector_ge::~vector_ge()
-{
-	//cout << "in ~vector_ge data = " << data << endl;
-	freeself();
-}
-
-void vector_ge::null()
-{
-	vector_ge::A = NULL;
-	data = NULL;
-	len = 0;
-}
-
-void vector_ge::freeself()
 {
 	if (data) {
 		FREE_int(data);
@@ -59,8 +40,6 @@ void vector_ge::init(actions::action *A, int verbose_level)
 	if (f_v) {
 		cout << "vector_ge::init" << endl;
 	}
-	//cout << "vector_ge::init()" << endl;
-	freeself();
 	vector_ge::A = A;
 	data = NULL;
 	len = 0;
@@ -289,29 +268,6 @@ void vector_ge::print(ostream &ost)
 	}
 }
 
-#if 0
-ostream& vector_ge::print(ostream& ost)
-{
-	int i;
-	
-	ost << "(" << endl;
-	//ost << "len=" << len << " A->elt_size_in_int="
-	//<< A->elt_size_in_int << " data=" << data << endl;
-	for (i = 0; i < len; i++) {
-		if (data == NULL) {
-			cout << "vector_ge::print fatal: data == NULL" << endl;
-			exit(1);
-		}
-		A->element_print(ith(i), ost);
-		if (i < len - 1) {
-			ost << ", " << endl;
-		}
-	}
-	ost << ")" << endl;
-	return ost;
-}
-#endif
-
 void vector_ge::print_quick(ostream& ost)
 {
 	int i;
@@ -330,29 +286,6 @@ void vector_ge::print_quick(ostream& ost)
 	}
 	ost << ")" << endl;
 }
-
-#if 0
-ostream& vector_ge::print_tex(ostream& ost)
-{
-	int i;
-	
-	//ost << "(" << endl;
-	//ost << "len=" << len << " A->elt_size_in_int="
-	//<< A->elt_size_in_int << " data=" << data << endl;
-	for (i = 0; i < len; i++) {
-		if (data == NULL) {
-			cout << "vector_ge::print fatal: data == NULL" << endl;
-			exit(1);
-		}
-		A->element_print_latex(ith(i), ost);
-		if (i < len - 1) {
-			ost << ", " << endl;
-		}
-	}
-	//ost << ")" << endl;
-	return ost;
-}
-#endif
 
 void vector_ge::print_tex(ostream &ost)
 {
@@ -973,7 +906,7 @@ void vector_ge::read_column_csv_using_column_label(std::string &fname,
 
 
 void vector_ge::extract_subset_of_elements_by_rank_text_vector(
-		const char *rank_vector_text, groups::sims *S, int verbose_level)
+		std::string &rank_vector_text, groups::sims *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -88,7 +88,7 @@ void any_group::init_permutation_group(groups::permutation_group_create *PGC, in
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_group::init_linear_group" << endl;
+		cout << "any_group::init_permutation_group" << endl;
 	}
 
 	f_permutation_group = TRUE;
@@ -99,9 +99,13 @@ void any_group::init_permutation_group(groups::permutation_group_create *PGC, in
 
 	label.assign(PGC->label);
 	label_tex.assign(PGC->label_tex);
+	if (f_v) {
+		cout << "any_group::init_permutation_group label = " << label << endl;
+		cout << "any_group::init_permutation_group label_tex = " << label_tex << endl;
+	}
 
 	if (!PGC->f_has_strong_generators) {
-		cout << "any_group::init_linear_group !PGC->f_has_strong_generators" << endl;
+		cout << "any_group::init_permutation_group !PGC->f_has_strong_generators" << endl;
 		exit(1);
 	}
 	Subgroup_gens = PGC->Strong_gens;
@@ -117,7 +121,7 @@ void any_group::init_permutation_group(groups::permutation_group_create *PGC, in
 	}
 
 	if (f_v) {
-		cout << "any_group::init_linear_group done" << endl;
+		cout << "any_group::init_permutation_group done" << endl;
 	}
 }
 

@@ -79,6 +79,8 @@ void klein_correspondence::init(
 		field_theory::finite_field *F,
 		orthogonal_geometry::orthogonal *O,
 		int verbose_level)
+// opens two projective_space objects P3 and P5
+// and two grassmann objects Gr63 and Gr62
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -374,7 +376,7 @@ void klein_correspondence::plane_intersections(
 		}
 	pts = NEW_lint(nb_lines);
 	
-	P3->klein_correspondence(P5, 
+	P3->Grass_lines->klein_correspondence(P3, //P5,
 		lines_in_PG3, nb_lines, pts, 0/*verbose_level*/);
 
 	P5->plane_intersection_type_fast(Gr63, pts, nb_lines, 

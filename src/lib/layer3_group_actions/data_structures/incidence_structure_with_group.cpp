@@ -35,31 +35,9 @@ incidence_structure_with_group::incidence_structure_with_group()
 
 	A_perm = NULL;
 
-	null();
 }
 
 incidence_structure_with_group::~incidence_structure_with_group()
-{
-	freeself();
-}
-
-void incidence_structure_with_group::null()
-{
-	Inc = NULL;
-	N = 0;
-	partition = NULL;
-
-	f_has_canonical_form = FALSE;
-	canonical_form = NULL;
-	//canonical_form_len = 0;
-
-	f_has_canonical_labeling = FALSE;
-	canonical_labeling = NULL;
-
-	A_perm = NULL;
-}
-
-void incidence_structure_with_group::freeself()
 {
 	if (canonical_form) {
 		FREE_OBJECT(canonical_form);
@@ -71,7 +49,6 @@ void incidence_structure_with_group::freeself()
 	if (A_perm) {
 		FREE_OBJECT(A_perm);
 	}
-	null();
 }
 
 void incidence_structure_with_group::init(

@@ -173,12 +173,6 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_classify_cubic_curves = FALSE;
 
-	f_latex_homogeneous_equation = FALSE;
-	latex_homogeneous_equation_degree = 0;
-	//std::string latex_homogeneous_equation_symbol_txt
-	//std::string latex_homogeneous_equation_symbol_tex
-	//std::string latex_homogeneous_equation_text;
-
 	f_lines_on_point_but_within_a_plane = FALSE;
 	lines_on_point_but_within_a_plane_point_rk = 0;
 	lines_on_point_but_within_a_plane_plane_rk = 0;
@@ -213,6 +207,10 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_make_relation = FALSE;
 	make_relation_plane_rk = 0;
+
+	f_plane_intersection_type_of_klein_image = FALSE;
+	plane_intersection_type_of_klein_image_threshold = 0;
+	//std::string plane_intersection_type_of_klein_image_input;
 
 }
 
@@ -826,20 +824,6 @@ int projective_space_activity_description::read_arguments(
 				cout << "-classify_cubic_curves " << endl;
 			}
 		}
-
-		else if (ST.stringcmp(argv[i], "-latex_homogeneous_equation") == 0) {
-			f_latex_homogeneous_equation = TRUE;
-			latex_homogeneous_equation_degree = ST.strtoi(argv[++i]);
-			latex_homogeneous_equation_symbol_txt.assign(argv[++i]);
-			latex_homogeneous_equation_symbol_tex.assign(argv[++i]);
-			latex_homogeneous_equation_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-latex_homogeneous_equation " << latex_homogeneous_equation_degree
-						<< " " << latex_homogeneous_equation_symbol_txt
-						<< " " << latex_homogeneous_equation_symbol_tex
-						<< " " << latex_homogeneous_equation_text << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-lines_on_point_but_within_a_plane") == 0) {
 			f_lines_on_point_but_within_a_plane = TRUE;
 			lines_on_point_but_within_a_plane_point_rk = ST.strtoi(argv[++i]);
@@ -931,8 +915,14 @@ int projective_space_activity_description::read_arguments(
 				cout << "-make_relation " << make_relation_plane_rk << endl;
 			}
 		}
-
-
+		else if (ST.stringcmp(argv[i], "-plane_intersection_type_of_klein_image") == 0) {
+			f_plane_intersection_type_of_klein_image = TRUE;
+			plane_intersection_type_of_klein_image_threshold = ST.strtoi(argv[++i]);
+			plane_intersection_type_of_klein_image_input.assign(argv[++i]);
+			if (f_v) {
+				cout << "-plane_intersection_type_of_klein_image " << plane_intersection_type_of_klein_image_threshold << " " << plane_intersection_type_of_klein_image_input << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -1160,12 +1150,6 @@ void projective_space_activity_description::print()
 		cout << "-classify_cubic_curves" << endl;
 		Arc_generator_description->print();
 	}
-	if (f_latex_homogeneous_equation) {
-		cout << "-latex_homogeneous_equation " << latex_homogeneous_equation_degree
-				<< " " << latex_homogeneous_equation_symbol_txt
-				<< " " << latex_homogeneous_equation_symbol_tex
-				<< " " << latex_homogeneous_equation_text << endl;
-	}
 	if (f_lines_on_point_but_within_a_plane) {
 		cout << "-lines_on_point_but_within_a_plane "
 				<< " " << lines_on_point_but_within_a_plane_point_rk
@@ -1211,6 +1195,9 @@ void projective_space_activity_description::print()
 	}
 	if (f_make_relation) {
 		cout << "-make_relation " << make_relation_plane_rk << endl;
+	}
+	if (f_plane_intersection_type_of_klein_image) {
+		cout << "-plane_intersection_type_of_klein_image " << plane_intersection_type_of_klein_image_threshold << " " << plane_intersection_type_of_klein_image_input << endl;
 	}
 
 

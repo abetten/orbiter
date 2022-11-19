@@ -250,7 +250,7 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 		int v6[6];
 
-		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
+		Gr->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
 		Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
 
@@ -275,7 +275,7 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 }
 
-
+#if 0
 void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 {
 	int Pa6[6];
@@ -346,7 +346,7 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 
 
 }
-
+#endif
 
 void surface_domain::print_clebsch_P(ostream &ost)
 {

@@ -49,6 +49,7 @@ design_create::design_create()
 	v = 0;
 	b = 0;
 	nb_inc = 0;
+	f_has_incma = FALSE;
 	incma = NULL;
 }
 
@@ -130,12 +131,24 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 			exit(1);
 		}
 
+
+		if (f_v) {
+			cout << "design_create::init before compute_incidence_matrix" << endl;
+		}
+
+		compute_incidence_matrix(verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init after compute_incidence_matrix" << endl;
+		}
+
+
 	}
 	else if (Descr->f_catalogue) {
 
 		if (f_v) {
 			cout << "design_create::init "
-					"from catalogue" << endl;
+					"from catalogue not yet implemented" << endl;
 		}
 		//int nb_iso;
 		//knowledge_base K;
@@ -143,20 +156,20 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		exit(1);
 
 		}
-	else if (Descr->f_list_of_blocks) {
+	else if (Descr->f_list_of_blocks_coded) {
 
 		if (f_v) {
 			cout << "design_create::init "
-					"list of blocks" << endl;
+					"list of blocks_coded" << endl;
 		}
 
-		degree = Descr->list_of_blocks_v;
-		k = Descr->list_of_blocks_k;
+		degree = Descr->list_of_blocks_coded_v;
+		k = Descr->list_of_blocks_coded_k;
 
 
 
 
-		Get_lint_vector_from_label(Descr->list_of_blocks_label, set, sz, 0 /* verbose_level */);
+		Get_lint_vector_from_label(Descr->list_of_blocks_coded_label, set, sz, 0 /* verbose_level */);
 		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
 		f_has_set = TRUE;
@@ -191,17 +204,27 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		f_has_group = FALSE;
 		Sg = NULL;
 
+		if (f_v) {
+			cout << "design_create::init before compute_incidence_matrix" << endl;
+		}
+
+		compute_incidence_matrix(verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init after compute_incidence_matrix" << endl;
+		}
+
 	}
-	else if (Descr->f_list_of_sets) {
+	else if (Descr->f_list_of_sets_coded) {
 
 		if (f_v) {
 			cout << "design_create::init "
 					"list of sets" << endl;
 		}
 
-		degree = Descr->list_of_sets_v;
+		degree = Descr->list_of_sets_coded_v;
 
-		Get_lint_vector_from_label(Descr->list_of_sets_label, set, sz, 0 /* verbose_level */);
+		Get_lint_vector_from_label(Descr->list_of_sets_coded_label, set, sz, 0 /* verbose_level */);
 		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
 		f_has_set = TRUE;
@@ -236,21 +259,33 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		f_has_group = FALSE;
 		Sg = NULL;
 
+
+		if (f_v) {
+			cout << "design_create::init before compute_incidence_matrix" << endl;
+		}
+
+		compute_incidence_matrix(verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init after compute_incidence_matrix" << endl;
+		}
+
+
 	}
-	else if (Descr->f_list_of_blocks_from_file) {
+	else if (Descr->f_list_of_blocks_coded_from_file) {
 
 		if (f_v) {
 			cout << "design_create::init "
-					"list of blocks from file " << Descr->list_of_blocks_from_file_fname << endl;
+					"list of blocks from file " << Descr->list_of_blocks_coded_from_file_fname << endl;
 		}
 
-		degree = Descr->list_of_blocks_v;
-		k = Descr->list_of_blocks_k;
+		degree = Descr->list_of_blocks_coded_v;
+		k = Descr->list_of_blocks_coded_k;
 
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(Descr->list_of_blocks_from_file_fname,
+		Fio.lint_matrix_read_csv(Descr->list_of_blocks_coded_from_file_fname,
 				set, m, n, verbose_level);
 
 
@@ -294,7 +329,89 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		f_has_group = FALSE;
 		Sg = NULL;
 
+
+		if (f_v) {
+			cout << "design_create::init before compute_incidence_matrix" << endl;
+		}
+
+		compute_incidence_matrix(verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init after compute_incidence_matrix" << endl;
+		}
+
+
 	}
+
+
+	else if (Descr->f_list_of_blocks_from_file) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"f_list_of_blocks_from_file " << Descr->list_of_blocks_from_file_fname << endl;
+		}
+
+		degree = Descr->list_of_blocks_from_file_v;
+
+		orbiter_kernel_system::file_io Fio;
+		int m, k;
+		int *blocks;
+
+		Fio.int_matrix_read_csv(
+				Descr->list_of_blocks_from_file_fname,
+				blocks, m, k, verbose_level);
+
+
+
+		f_has_set = FALSE;
+		v = degree;
+		b = sz;
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
+		prefix.assign(str);
+
+		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
+		label_txt.assign(str);
+
+		snprintf(str, sizeof(str), "blocks\\_v%d\\_k%d", degree, k);
+		label_tex.assign(str);
+
+
+		A = NEW_OBJECT(actions::action);
+
+		int f_no_base = FALSE;
+
+		if (Descr->f_no_group) {
+			f_no_base = TRUE;
+		}
+
+		A->init_symmetric_group(degree, f_no_base, verbose_level);
+
+		A2 = NEW_OBJECT(actions::action);
+		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+
+		Aut = NULL;
+		Aut_on_lines = NULL;
+		f_has_group = FALSE;
+		Sg = NULL;
+
+
+		if (f_v) {
+			cout << "design_create::init before compute_incidence_matrix_from_blocks" << endl;
+		}
+
+		compute_incidence_matrix_from_blocks(blocks, b, k, verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init after compute_incidence_matrix_from_blocks" << endl;
+		}
+
+
+	}
+
+
 	else if (Descr->f_wreath_product_designs) {
 
 		if (f_v) {
@@ -360,30 +477,30 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 		f_has_group = FALSE;
 		Sg = NULL;
 
+
+		if (f_v) {
+			cout << "design_create::init before compute_incidence_matrix" << endl;
+		}
+
+		compute_incidence_matrix(verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init after compute_incidence_matrix" << endl;
+		}
+
+
+
 	}
 	else {
 		cout << "design_create::init no design created" << endl;
 		sz = 0;
 		f_has_group = FALSE;
+
+
 		//exit(1);
 	}
 
 
-	if (f_v) {
-		cout << "design_create::init set = ";
-		Lint_vec_print(cout, set, sz);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "design_create::init before compute_incidence_matrix" << endl;
-	}
-
-	compute_incidence_matrix(verbose_level);
-
-	if (f_v) {
-		cout << "design_create::init after compute_incidence_matrix" << endl;
-	}
 
 	if (f_has_group) {
 		cout << "design_create::init the stabilizer is:" << endl;
@@ -575,12 +692,19 @@ void design_create::compute_incidence_matrix(int verbose_level)
 	if (f_v) {
 		cout << "design_create::compute_incidence_matrix" << endl;
 	}
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix set = ";
+		Lint_vec_print(cout, set, sz);
+		cout << endl;
+	}
+
 	combinatorics::combinatorics_domain Combi;
 
 
 	if (f_has_set) {
 
-		if (Descr->f_list_of_sets) {
+		if (Descr->f_list_of_sets_coded) {
 
 			int h;
 
@@ -604,6 +728,7 @@ void design_create::compute_incidence_matrix(int verbose_level)
 					incma, verbose_level);
 
 		}
+		f_has_incma = TRUE;
 	}
 	else {
 		cout << "design_create::compute_incidence_matrix please give a set" << endl;
@@ -620,6 +745,48 @@ void design_create::compute_incidence_matrix(int verbose_level)
 	}
 
 }
+
+
+void design_create::compute_incidence_matrix_from_blocks(int *blocks, int nb_blocks, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix_from_blocks" << endl;
+	}
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix_from_blocks blocks = ";
+		Int_matrix_print(blocks, nb_blocks, k);
+		cout << endl;
+	}
+
+	b = nb_blocks;
+	int i, j, h;
+
+	incma = NEW_int(v * b);
+	Int_vec_zero(incma, v * b);
+
+	for (j = 0; j < nb_blocks; j++) {
+		for (h = 0; h < k; h++) {
+			i = blocks[j * k + h];
+			incma[i * b + j] = 1;
+		}
+	}
+
+	f_has_incma = TRUE;
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix_from_blocks The incidence matrix is:" << endl;
+		Int_matrix_print(incma, v, b);
+	}
+
+	if (f_v) {
+		cout << "design_create::compute_incidence_matrix_from_blocks done" << endl;
+	}
+
+}
+
 
 }}}
 

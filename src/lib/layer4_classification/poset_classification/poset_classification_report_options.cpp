@@ -25,11 +25,16 @@ poset_classification_report_options::poset_classification_report_options()
 {
 	f_select_orbits_by_level = FALSE;
 	select_orbits_by_level_level = 0;
+
 	f_select_orbits_by_stabilizer_order = FALSE;
 	select_orbits_by_stabilizer_order_so = 0;
+
 	f_select_orbits_by_stabilizer_order_multiple_of = FALSE;
 	select_orbits_by_stabilizer_order_so_multiple_of = 0;
+
 	f_include_projective_stabilizer = FALSE;
+
+	f_draw_poset = FALSE;
 }
 
 poset_classification_report_options::~poset_classification_report_options()
@@ -53,17 +58,25 @@ int poset_classification_report_options::read_arguments(
 		if (ST.stringcmp(argv[i], "-select_orbits_by_level") == 0) {
 			f_select_orbits_by_level = TRUE;
 			select_orbits_by_level_level = ST.strtoi(argv[++i]);
+			cout << "-select_orbits_by_level " << select_orbits_by_level_level << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-select_orbits_by_stabilizer_order") == 0) {
 			f_select_orbits_by_stabilizer_order = TRUE;
 			select_orbits_by_stabilizer_order_so = ST.strtoi(argv[++i]);
+			cout << "-select_orbits_by_stabilizer_order " << select_orbits_by_stabilizer_order_so << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-select_orbits_by_stabilizer_order_multiple_of") == 0) {
 			f_select_orbits_by_stabilizer_order_multiple_of = TRUE;
 			select_orbits_by_stabilizer_order_so_multiple_of = ST.strtoi(argv[++i]);
+			cout << "-select_orbits_by_stabilizer_order_multiple_of " << select_orbits_by_stabilizer_order_so_multiple_of << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-include_projective_stabilizer") == 0) {
 			f_include_projective_stabilizer = TRUE;
+			cout << "-include_projective_stabilizer" << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-draw_poset") == 0) {
+			f_draw_poset = TRUE;
+			cout << "-draw_poset" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -86,10 +99,6 @@ int poset_classification_report_options::read_arguments(
 
 void poset_classification_report_options::print()
 {
-	//cout << "poset_classification_report_options::print:" << endl;
-
-
-
 	if (f_select_orbits_by_level) {
 		cout << "-select_orbits_by_level " << select_orbits_by_level_level << endl;
 	}
@@ -102,7 +111,9 @@ void poset_classification_report_options::print()
 	if (f_include_projective_stabilizer) {
 		cout << "-include_projective_stabilizer" << endl;
 	}
-	cout << endl;
+	if (f_draw_poset) {
+		cout << "-draw_poset" << endl;
+	}
 }
 
 int poset_classification_report_options::is_selected_by_group_order(long int so)

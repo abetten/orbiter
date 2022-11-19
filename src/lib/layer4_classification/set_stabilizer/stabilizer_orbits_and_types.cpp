@@ -377,8 +377,11 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int stage, in
 	fname.append(str);
 	orbiter_kernel_system::file_io Fio;
 
+	string label;
+
+	label.assign("interesting_subsets_reduced");
 	Fio.lint_vec_write_csv(interesting_subsets_reduced, nb_interesting_subsets_reduced,
-			fname, "interesting_subsets_reduced");
+			fname, label);
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

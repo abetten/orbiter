@@ -437,6 +437,7 @@ namespace geometry {
 	class hermitian;
 	class hjelmslev;
 	class incidence_structure;
+	class intersection_type;
 	class klein_correspondence;
 	class knarr;
 	class object_with_canonical_form;

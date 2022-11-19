@@ -324,11 +324,23 @@ void strong_generators::init_from_data(actions::action *A, int *data,
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
+	if (f_v) {
+		cout << "strong_generators::init_from_data before gens->init_from_data" << endl;
+	}
 	gens->init_from_data(A, data, 
-		nb_elements, elt_size, verbose_level);
+		nb_elements, elt_size, verbose_level - 2);
+	if (f_v) {
+		cout << "strong_generators::init_from_data after gens->init_from_data" << endl;
+	}
 	
+	if (f_v) {
+		cout << "strong_generators::init_from_data before nice_gens->init_from_data" << endl;
+	}
 	nice_gens->init_from_data(A, data,
-		nb_elements, elt_size, verbose_level);
+		nb_elements, elt_size, verbose_level - 2);
+	if (f_v) {
+		cout << "strong_generators::init_from_data after nice_gens->init_from_data" << endl;
+	}
 
 	tl = NEW_int(A->base_len());
 	Int_vec_copy(transversal_length, tl, A->base_len());
@@ -864,8 +876,8 @@ void strong_generators::init_group_extension(
 }
 
 void strong_generators::switch_to_subgroup(
-	const char *rank_vector_text,
-	const char *subgroup_order_text, sims *S,
+	std::string &rank_vector_text,
+	std::string &subgroup_order_text, sims *S,
 	int *&subgroup_gens_idx, int &nb_subgroup_gens,
 	int verbose_level)
 {

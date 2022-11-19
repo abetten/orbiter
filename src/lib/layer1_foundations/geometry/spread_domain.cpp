@@ -1619,6 +1619,7 @@ void spread_domain::read_and_print_spread(std::string &fname, int verbose_level)
 }
 
 void spread_domain::HMO(std::string &fname, int verbose_level)
+// allocates a finite_field and a subfield_structure and a grassmann
 {
 	long int *data;
 	int sz, i, h, h1;
@@ -1820,63 +1821,6 @@ void spread_domain::print_spread(ostream &ost, long int *data, int sz)
 	}
 }
 
-
-void spread_domain::plane_intersection_type_of_klein_image(
-		geometry::projective_space *P3,
-		geometry::projective_space *P5,
-		geometry::grassmann *Gr,
-		long int *data, int size,
-		int *&intersection_type, int &highest_intersection_number,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_v3 = FALSE; //(verbose_level >= 3);
-	//finite_field *F;
-	long int N;
-	long int *the_set_out;
-
-	if (f_v) {
-		cout << "spread_domain::plane_intersection_type_of_klein_image" << endl;
-	}
-	the_set_out = NEW_lint(size);
-
-	if (f_v3) {
-		P3->print_line_set_numerical(data, size);
-	}
-	P3->klein_correspondence(P5,
-		data, size, the_set_out,
-		0/*verbose_level*/);
-	if (f_v) {
-		cout << "after Klein correspondence:" << endl;
-		Lint_vec_print(cout, the_set_out, size);
-		cout << endl;
-	}
-	if (f_v3) {
-		P5->print_set_numerical(cout, the_set_out, size);
-	}
-
-
-	//F = P3->F;
-
-	if (f_v) {
-		cout << "spread_domain::plane_intersection_type_of_klein_image "
-				"after P3->klein_correspondence" << endl;
-	}
-
-
-	N = P5->nb_rk_k_subspaces_as_lint(3);
-	if (f_v) {
-		cout << "spread_domain::plane_intersection_type_of_klein_image N = " << N << endl;
-		}
-
-
-	P5->plane_intersection_type(Gr,
-		the_set_out, size,
-		intersection_type, highest_intersection_number,
-		verbose_level - 2);
-
-	FREE_lint(the_set_out);
-}
 
 
 

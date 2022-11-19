@@ -16,24 +16,15 @@ namespace induced_actions {
 
 action_on_orbits::action_on_orbits()
 {
-	null();
-}
-
-action_on_orbits::~action_on_orbits()
-{
-	free();
-}
-
-void action_on_orbits::null()
-{
 	A = NULL;
 	Sch = NULL;
 	f_play_it_safe = FALSE;
+	degree = 0;
 }
 
-void action_on_orbits::free()
+
+action_on_orbits::~action_on_orbits()
 {
-	null();
 }
 
 void action_on_orbits::init(actions::action *A,

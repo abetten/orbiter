@@ -1145,8 +1145,18 @@ void linear_group::init_symplectic_group(int verbose_level)
 	q = input_q;
 	
 	Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "linear_group::init_symplectic_group "
+				"before Strong_gens->generators_for_symplectic_group" << endl;
+	}
 	Strong_gens->generators_for_symplectic_group(
 			A_linear, Mtx, verbose_level - 1);
+	if (f_v) {
+		cout << "linear_group::init_symplectic_group "
+				"after Strong_gens->generators_for_symplectic_group" << endl;
+		cout << "linear_group::init_symplectic_group "
+				"number of generators is " << Strong_gens->gens->len << endl;
+	}
 	f_has_strong_generators = TRUE;
 	
 	A2 = A_linear;

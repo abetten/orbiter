@@ -74,6 +74,8 @@ void poset_orbit_node::compute_flag_orbits(
 	nb_orbits = Schreier.nb_orbits;
 
 
+#if 0
+	// ToDo:
 	save_schreier_forest(
 		gen,
 		&Schreier,
@@ -84,6 +86,7 @@ void poset_orbit_node::compute_flag_orbits(
 			&Schreier,
 			f_using_invariant_subset, AR,
 			verbose_level);
+#endif
 
 	
 	if (f_v) {
@@ -136,7 +139,8 @@ void poset_orbit_node::compute_flag_orbits(
 	}
 #endif
 
-	save_shallow_schreier_forest(gen, verbose_level);
+	// ToDo:
+	//save_shallow_schreier_forest(gen, verbose_level);
 
 	
 	if (f_vvv) {

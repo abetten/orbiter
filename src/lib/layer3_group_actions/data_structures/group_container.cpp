@@ -16,16 +16,6 @@ namespace data_structures_groups {
 
 group_container::group_container()
 {
-	null();
-}
-
-group_container::~group_container()
-{
-	freeself();
-}
-
-void group_container::null()
-{
 	A = NULL;
 	f_has_ascii_coding = FALSE;
 	ascii_coding = NULL;
@@ -38,36 +28,16 @@ void group_container::null()
 	S = NULL;
 }
 
-void group_container::freeself()
+group_container::~group_container()
 {
 	delete_ascii_coding();
 	delete_strong_generators();
 	delete_sims();
 }
 
-group_container::group_container(actions::action *A, int verbose_level)
-{
-	null();
-	init(A, verbose_level);
-};
-
-group_container::group_container(actions::action *A, const char *ascii_coding, int verbose_level)
-{
-	null();
-	init(A, verbose_level);
-	init_ascii_coding(ascii_coding, verbose_level);
-};
-
-group_container::group_container(actions::action *A, vector_ge &SG, int *tl, int verbose_level)
-{
-	null();
-	init(A, verbose_level);
-	init_strong_generators(SG, tl, verbose_level - 1);
-};
-
 void group_container::init(actions::action *A, int verbose_level)
 {
-	null();
+	//null();
 	group_container::A = A;
 }
 
@@ -521,7 +491,6 @@ void group_container::point_stabilizer(group_container &stab, int pt, int verbos
 		cout << stab_gens.len << " strong generators computed" << endl;
 		}
 #endif
-	stab.freeself();
 	stab.init(A, verbose_level - 2);
 	stab.init_strong_generators(stab_gens, tl, verbose_level - 2);
 	FREE_int(tl);
@@ -575,7 +544,6 @@ void group_container::point_stabilizer_with_action(actions::action *A2,
 		cout << stab_gens.len << " strong generators computed" << endl;
 	}
 #endif
-	stab.freeself();
 	stab.init(A, verbose_level - 2);
 	if (f_v) {
 		cout << "group_container::point_stabilizer_with_action "

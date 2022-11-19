@@ -17,24 +17,21 @@ namespace induced_actions {
 
 action_on_flags::action_on_flags()
 {
-	null();
+	A = NULL;
+	n = 0;
+	F = NULL;
+	type = NULL;
+	type_len = 0;
+	Flag = NULL;
+	M = NULL;
+	degree = 0;
+	M1 = NULL;
+	M2 = NULL;
 }
+
 
 action_on_flags::~action_on_flags()
 {
-	free();
-}
-
-void action_on_flags::null()
-{
-	A = NULL;
-	type = NULL;
-	type_len = 0;
-}
-
-void action_on_flags::free()
-{
-	null();
 }
 
 void action_on_flags::init(actions::action *A, int *type,

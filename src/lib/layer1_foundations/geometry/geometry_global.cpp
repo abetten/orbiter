@@ -1439,6 +1439,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 		field_theory::finite_field *F,
 		std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 		int verbose_level)
+// creates klein_correspondence and orthogonal_geometry::orthogonal objects
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1450,7 +1451,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 	int *A6;
 	int sz;
 
-	Int_vec_scan(inverse_isomorphism_klein_quadric_matrix_A6.c_str(), A6, sz);
+	Int_vec_scan(inverse_isomorphism_klein_quadric_matrix_A6, A6, sz);
 	if (sz != 36) {
 		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
 				"The input matrix must be of size 6x6" << endl;
@@ -1836,11 +1837,11 @@ void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
 	}
 
 }
-#endif
 
 void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 		int n, int k,
 		int verbose_level)
+// creates a projective_space object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1884,11 +1885,13 @@ void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 	}
 
 }
+#endif
 
 
 void geometry_global::do_cheat_sheet_hermitian(field_theory::finite_field *F,
 		int projective_dimension,
 		int verbose_level)
+// creates a hermitian object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1932,6 +1935,7 @@ void geometry_global::do_create_desarguesian_spread(
 		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 		int m,
 		int verbose_level)
+// creates field_theory::subfield_structure and desarguesian_spread objects
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2000,6 +2004,7 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		int verbose_level)
+// creates incidence_structure and data_structures::partitionstack objects
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2091,13 +2096,14 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 }
 
 
-
+#if 0
 void geometry_global::latex_homogeneous_equation(
 		field_theory::finite_field *F, int degree, int nb_vars,
 		std::string &equation_text,
 		std::string &symbol_txt,
 		std::string &symbol_tex,
 		int verbose_level)
+// creates ring_theory::homogeneous_polynomial_domain
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2120,8 +2126,8 @@ void geometry_global::latex_homogeneous_equation(
 			verbose_level);
 
 	Poly->remake_symbols(0 /* symbol_offset */,
-				symbol_txt.c_str(),
-				symbol_tex.c_str(),
+				symbol_txt,
+				symbol_tex,
 				verbose_level);
 
 
@@ -2137,6 +2143,7 @@ void geometry_global::latex_homogeneous_equation(
 	}
 
 }
+#endif
 
 void geometry_global::create_BLT_point(field_theory::finite_field *F,
 		int *v5, int a, int b, int c, int verbose_level)
@@ -2179,6 +2186,26 @@ void geometry_global::create_BLT_point(field_theory::finite_field *F,
 	}
 }
 
+int geometry_global::nonconical_six_arc_get_nb_Eckardt_points(
+		projective_space *P2,
+		long int *Arc6, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::nonconical_six_arc_get_nb_Eckardt_points" << endl;
+	}
+
+	algebraic_geometry::eckardt_point_info *E;
+	int nb_E;
+
+	E = compute_eckardt_point_info(P2, Arc6, 0/*verbose_level*/);
+
+	nb_E = E->nb_E;
+
+	FREE_OBJECT(E);
+	return nb_E;
+}
 
 algebraic_geometry::eckardt_point_info *geometry_global::compute_eckardt_point_info(
 		projective_space *P2,
@@ -3132,6 +3159,432 @@ void geometry_global::andre_preimage(
 	FREE_int(pair_embedding);
 	if (f_v) {
 		cout << "geometry_global::andre_preimage done" << endl;
+	}
+}
+
+void geometry_global::find_secant_lines(
+		projective_space *P,
+		long int *set, int set_size,
+		long int *lines, int &nb_lines, int max_lines,
+		int verbose_level)
+// finds the secant lines as an ordered set (secant variety).
+// this is done by looping over all pairs of points and creating the
+// line that is spanned by the two points.
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, rk, d, h, idx;
+	int *M;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "geometry_global::find_secant_lines "
+				"set_size=" << set_size << endl;
+	}
+	d = P->n + 1;
+	M = NEW_int(2 * d);
+	nb_lines = 0;
+	for (i = 0; i < set_size; i++) {
+		for (j = i + 1; j < set_size; j++) {
+			P->unrank_point(M, set[i]);
+			P->unrank_point(M + d, set[j]);
+			rk = P->Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
+
+			if (!Sorting.lint_vec_search(lines, nb_lines, rk, idx, 0)) {
+				if (nb_lines == max_lines) {
+					cout << "geometry_global::find_secant_lines "
+							"nb_lines == max_lines" << endl;
+					exit(1);
+				}
+				for (h = nb_lines; h > idx; h--) {
+					lines[h] = lines[h - 1];
+				}
+				lines[idx] = rk;
+				nb_lines++;
+			}
+		}
+	}
+	FREE_int(M);
+	if (f_v) {
+		cout << "geometry_global::find_secant_lines done" << endl;
+	}
+}
+
+void geometry_global::find_lines_which_are_contained(
+		projective_space *P,
+		std::vector<long int> &Points,
+		std::vector<long int> &Lines,
+		int verbose_level)
+// finds all lines which are completely contained in the set of points
+// First, finds all lines in the set which lie
+// in the hyperplane x_d = 0.
+// Then finds all remaining lines.
+// The lines are not arranged according to a double six.
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = FALSE;
+	long int rk;
+	long int h, i, j, d, a, b;
+	int idx;
+	int *M;
+	int *M2;
+	int *Pts1;
+	int *Pts2;
+	long int *set1;
+	long int *set2;
+	int sz1, sz2;
+	int *f_taken;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"set_size=" << Points.size() << endl;
+	}
+	//nb_lines = 0;
+	d = P->n + 1;
+	M = NEW_int(3 * d);
+	M2 = NEW_int(3 * d);
+	set1 = NEW_lint(Points.size());
+	set2 = NEW_lint(Points.size());
+	sz1 = 0;
+	sz2 = 0;
+	for (i = 0; i < Points.size(); i++) {
+		P->unrank_point(M, Points[i]);
+		if (f_vvv) {
+			cout << Points[i] << " : ";
+			Int_vec_print(cout, M, d);
+			cout << endl;
+		}
+		if (M[d - 1] == 0) {
+			set1[sz1++] = Points[i];
+		}
+		else {
+			set2[sz2++] = Points[i];
+		}
+	}
+
+	// set1 is the set of points whose last coordinate is zero.
+	// set2 is the set of points whose last coordinate is nonzero.
+	Sorting.lint_vec_heapsort(set1, sz1);
+	Sorting.lint_vec_heapsort(set2, sz2);
+
+	if (f_vv) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"sz1=" << sz1 << " sz2=" << sz2 << endl;
+	}
+
+
+	// find all secants in the hyperplane:
+	long int *secants;
+	int n2, nb_secants;
+
+	n2 = (sz1 * (sz1 - 1)) >> 1;
+	// n2 is an upper bound on the number of secant lines
+
+	secants = NEW_lint(n2);
+
+
+	if (f_v) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"before find_secant_lines" << endl;
+	}
+
+	find_secant_lines(P,
+			set1, sz1,
+			secants, nb_secants, n2,
+			0/*verbose_level - 3*/);
+
+	if (f_v) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"after find_secant_lines" << endl;
+	}
+
+	if (f_vv) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"we found " << nb_secants
+				<< " secants in the hyperplane" << endl;
+	}
+
+	// first we test the secants and
+	// find those which are lines on the surface:
+	if (f_vv) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"testing secants, nb_secants=" << nb_secants << endl;
+	}
+
+	//nb_lines = 0;
+	for (i = 0; i < nb_secants; i++) {
+		rk = secants[i];
+		P->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
+		if (f_vvv) {
+			cout << "testing secant " << i << " / " << nb_secants
+					<< " which is line " << rk << ":" << endl;
+			Int_matrix_print(M, 2, d);
+		}
+
+		int coeffs[2];
+
+		// loop over all points on the line:
+		for (a = 0; a < P->q + 1; a++) {
+
+			// unrank a point on the projective line:
+			P->F->PG_element_unrank_modified(coeffs, 1, 2, a);
+			Int_vec_copy(M, M2, 2 * d);
+
+			// map the point to the line at hand.
+			// form the linear combination:
+			// coeffs[0] * row0 of M2 + coeffs[1] * row1 of M2:
+			for (h = 0; h < d; h++) {
+				M2[2 * d + h] = P->F->add(
+						P->F->mult(coeffs[0], M2[0 * d + h]),
+						P->F->mult(coeffs[1], M2[1 * d + h]));
+			}
+
+			// rank the test point and see
+			// if it belongs to the surface:
+			P->F->PG_element_rank_modified_lint(M2 + 2 * d, 1, d, b);
+			if (!Sorting.lint_vec_search(set1, sz1, b, idx, 0)) {
+				break;
+			}
+		}
+		if (a == P->q + 1) {
+			// all q + 1 points of the secant line
+			// belong to the surface, so we
+			// found a line on the surface in the hyperplane.
+			//lines[nb_lines++] = rk;
+			if (f_vv) {
+				cout << "secant " << i << " / " << nb_secants
+						<< " of rank " << rk << " is contained, adding" << endl;
+			}
+			Lines.push_back(rk);
+		}
+	}
+	FREE_lint(secants);
+
+	if (f_v) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"We found " << Lines.size() << " in the hyperplane" << endl;
+		//lint_vec_print(cout, lines, nb_lines);
+		cout << endl;
+	}
+
+
+
+	Pts1 = NEW_int(sz1 * d);
+	Pts2 = NEW_int(sz2 * d);
+
+	for (i = 0; i < sz1; i++) {
+		P->unrank_point(Pts1 + i * d, set1[i]);
+	}
+	for (i = 0; i < sz2; i++) {
+		P->unrank_point(Pts2 + i * d, set2[i]);
+	}
+
+	if (f_vv) {
+		cout << "geometry_global::find_lines_which_are_contained "
+				"checking lines through points of the hyperplane, sz1=" << sz1 << endl;
+	}
+
+	f_taken = NEW_int(sz2);
+	for (i = 0; i < sz1; i++) {
+		if (f_vvv) {
+			cout << "geometry_global::find_lines_which_are_contained "
+					"checking lines through hyperplane point " << i
+					<< " / " << sz1 << ":" << endl;
+		}
+
+		// consider a point P1 on the surface and in the hyperplane
+
+		Int_vec_zero(f_taken, sz2);
+		for (j = 0; j < sz2; j++) {
+			if (f_taken[j]) {
+				continue;
+			}
+			if (f_vvv) {
+				cout << "geometry_global::find_lines_which_are_contained "
+						"i=" << i << " j=" << j << " / " << sz2 << ":" << endl;
+			}
+
+			// consider a point P2 on the surface
+			// but not in the hyperplane:
+
+			Int_vec_copy(Pts1 + i * d, M, d);
+			Int_vec_copy(Pts2 + j * d, M + d, d);
+
+			f_taken[j] = TRUE;
+
+			if (f_vvv) {
+				Int_matrix_print(M, 2, d);
+			}
+
+			rk = P->Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
+			if (f_vvv) {
+				cout << "geometry_global::find_lines_which_are_contained "
+						"line rk=" << rk << ":" << endl;
+			}
+
+			// test the q-1 points on the line through the P1 and P2
+			// (but excluding P1 and P2 themselves):
+			for (a = 1; a < P->q; a++) {
+				Int_vec_copy(M, M2, 2 * d);
+
+				// form the linear combination P3 = P1 + a * P2:
+				for (h = 0; h < d; h++) {
+					M2[2 * d + h] =
+							P->F->add(
+								M2[0 * d + h],
+								P->F->mult(a, M2[1 * d + h]));
+				}
+				// row 2 of M2 contains the coordinates of the point P3:
+				P->F->PG_element_rank_modified_lint(M2 + 2 * d, 1, d, b);
+				if (!Sorting.lint_vec_search(set2, sz2, b, idx, 0)) {
+					break;
+				}
+				else {
+					if (f_vvv) {
+						cout << "eliminating point " << idx << endl;
+					}
+					// we don't need to consider this point for P2:
+					f_taken[idx] = TRUE;
+				}
+			}
+			if (a == P->q) {
+				// The line P1P2 is contained in the surface.
+				// Add it to lines[]
+#if 0
+				if (nb_lines == max_lines) {
+					cout << "geometry_global::find_lines_which_are_"
+							"contained nb_lines == max_lines" << endl;
+					exit(1);
+				}
+#endif
+				//lines[nb_lines++] = rk;
+				if (f_vvv) {
+					cout << "adding line " << rk << " nb_lines="
+							<< Lines.size() << endl;
+				}
+				Lines.push_back(rk);
+				if (f_vvv) {
+					cout << "adding line " << rk << " nb_lines="
+							<< Lines.size() << " done" << endl;
+				}
+			}
+		}
+	}
+	FREE_int(M);
+	FREE_int(M2);
+	FREE_lint(set1);
+	FREE_lint(set2);
+	FREE_int(Pts1);
+	FREE_int(Pts2);
+	FREE_int(f_taken);
+
+	if (f_v) {
+		cout << "geometry_global::find_lines_which_are_contained done" << endl;
+	}
+}
+
+void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
+		projective_space *P3,
+		long int line1_from, long int line2_from,
+		long int line1_to, long int line2_to, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer" << endl;
+	}
+
+	if (P3->n != 3) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer n != 3" << endl;
+		exit(1);
+	}
+	int A4[16];
+
+
+	hyperplane_lifting_with_two_lines_moved(P3,
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
+	Int_matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
+	}
+}
+
+void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
+		projective_space *P3,
+		std::string &line1_from_text, std::string &line2_from_text,
+		std::string &line1_to_text, std::string &line2_to_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
+	}
+	if (P3->n != 3) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer n != 3" << endl;
+		exit(1);
+	}
+
+	geometry_global Gg;
+	int A4[16];
+
+
+	int *line1_from_data;
+	int *line2_from_data;
+	int *line1_to_data;
+	int *line2_to_data;
+	int sz;
+
+	Int_vec_scan(line1_from_text, line1_from_data, sz);
+	if (sz != 8) {
+		cout << "line1_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	Int_vec_scan(line2_from_text, line2_from_data, sz);
+	if (sz != 8) {
+		cout << "line2_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	Int_vec_scan(line1_to_text, line1_to_data, sz);
+	if (sz != 8) {
+		cout << "line1_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	Int_vec_scan(line2_to_text, line2_to_data, sz);
+	if (sz != 8) {
+		cout << "line2_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
+	line1_from = P3->rank_line(line1_from_data);
+	line2_from = P3->rank_line(line2_from_data);
+	line1_to = P3->rank_line(line1_to_data);
+	line2_to = P3->rank_line(line2_to_data);
+
+
+	hyperplane_lifting_with_two_lines_moved(P3,
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
+	Int_matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
 	}
 }
 

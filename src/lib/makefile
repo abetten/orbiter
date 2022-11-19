@@ -133,6 +133,7 @@ MODULES= \
 		layer1_foundations/geometry/hermitian.o \
 		layer1_foundations/geometry/hjelmslev.o \
 		layer1_foundations/geometry/incidence_structure.o \
+		layer1_foundations/geometry/intersection_type.o \
 		layer1_foundations/geometry/klein_correspondence.o \
 		layer1_foundations/geometry/knarr.o \
 		layer1_foundations/geometry/object_with_canonical_form.o \

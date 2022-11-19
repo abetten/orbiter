@@ -562,6 +562,7 @@ void poset_orbit_node::write_file(actions::action *A,
 	}
 }
 
+#if 0
 void poset_orbit_node::save_schreier_forest(
 	poset_classification *PC,
 	groups::schreier *Schreier,
@@ -732,6 +733,7 @@ void poset_orbit_node::draw_schreier_forest(
 				" done" << endl;
 	}
 }
+#endif
 
 }}}
 

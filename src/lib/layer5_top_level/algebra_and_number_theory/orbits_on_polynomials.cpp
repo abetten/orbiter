@@ -224,7 +224,10 @@ void orbits_on_polynomials::init(
 		fname.assign(fname_base);
 		fname.append("_recognition.csv");
 
-		Fio.int_vec_write_csv(Idx, len, fname, "Idx");
+		string label;
+
+		label.assign("Idx");
+		Fio.int_vec_write_csv(Idx, len, fname, label);
 
 		FREE_lint(Rank);
 

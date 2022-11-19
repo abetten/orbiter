@@ -482,10 +482,13 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_isomorphism_type_of_spreads
 				<< endl;
 	}
+	string label;
+
+	label.assign("isomorphism_type_of_spread");
 	Fio.int_vec_write_csv(
 			spread_iso_type, nb_spreads,
 			fname_isomorphism_type_of_spreads,
-			"isomorphism_type_of_spread");
+			label);
 	if (f_v) {
 		cout << "spread_tables::save, "
 				"written file " << fname_isomorphism_type_of_spreads
@@ -497,10 +500,11 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_dual_spread
 				<< endl;
 	}
+	label.assign("dual_spread_idx");
 	Fio.lint_vec_write_csv(
 			dual_spread_idx, nb_spreads,
 			fname_dual_spread,
-			"dual_spread_idx");
+			label);
 	if (f_v) {
 		cout << "spread_tables::save, "
 				"written file " << fname_dual_spread
@@ -512,10 +516,11 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_self_dual_spreads
 				<< endl;
 	}
+	label.assign("self_dual_spreads");
 	Fio.lint_vec_write_csv(
 			self_dual_spreads, nb_self_dual_spreads,
 			fname_self_dual_spreads,
-			"self_dual_spreads");
+			label);
 	if (f_v) {
 		cout << "spread_tables::save, "
 				"written file " << fname_self_dual_spreads

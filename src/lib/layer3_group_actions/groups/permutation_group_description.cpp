@@ -76,6 +76,13 @@ int permutation_group_description::read_arguments(
 				cout << "-cyclic_group " << degree << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-identity_group") == 0) {
+			degree = ST.strtoi(argv[++i]);
+			type = identity_group_t;
+			if (f_v) {
+				cout << "-identity_group " << degree << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-dihedral_group") == 0) {
 			degree = ST.strtoi(argv[++i]);
 			type = dihedral_group_t;

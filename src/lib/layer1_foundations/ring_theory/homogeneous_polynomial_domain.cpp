@@ -323,7 +323,7 @@ int homogeneous_polynomial_domain::evaluate_monomial(int idx_of_monomial, int *c
 }
 
 void homogeneous_polynomial_domain::remake_symbols(int symbol_offset,
-		const char *symbol_mask, const char *symbol_mask_latex,
+		std::string &symbol_mask, std::string &symbol_mask_latex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -339,13 +339,13 @@ void homogeneous_polynomial_domain::remake_symbols(int symbol_offset,
 	symbols_latex.clear();
 	for (i = 0; i < nb_variables; i++) {
 		string s;
-		snprintf(label, 1000, symbol_mask, i + symbol_offset);
+		snprintf(label, 1000, symbol_mask.c_str(), i + symbol_offset);
 		s.assign(label);
 		symbols.push_back(s);
 	}
 	for (i = 0; i < nb_variables; i++) {
 		string s;
-		snprintf(label, 1000, symbol_mask_latex, i + symbol_offset);
+		snprintf(label, 1000, symbol_mask_latex.c_str(), i + symbol_offset);
 		s.assign(label);
 		symbols_latex.push_back(s);
 	}
@@ -357,7 +357,7 @@ void homogeneous_polynomial_domain::remake_symbols(int symbol_offset,
 
 void homogeneous_polynomial_domain::remake_symbols_interval(int symbol_offset,
 		int from, int len,
-		const char *symbol_mask, const char *symbol_mask_latex,
+		std::string &symbol_mask, std::string &symbol_mask_latex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -371,12 +371,12 @@ void homogeneous_polynomial_domain::remake_symbols_interval(int symbol_offset,
 
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		snprintf(label, 1000, symbol_mask, i + symbol_offset);
+		snprintf(label, 1000, symbol_mask.c_str(), i + symbol_offset);
 		symbols[i].assign(label);
 	}
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		snprintf(label, 1000, symbol_mask_latex, i + symbol_offset);
+		snprintf(label, 1000, symbol_mask_latex.c_str(), i + symbol_offset);
 		symbols_latex[i].assign(label);
 	}
 
@@ -2483,8 +2483,11 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 			pos = T.sorting_perm_inv[f + j];
 			the_class[j] = Pts[pos];
 		}
+		string label;
 
-		Fio.lint_vec_write_csv(the_class, l, fname2, "case");
+		label.assign("case");
+
+		Fio.lint_vec_write_csv(the_class, l, fname2, label);
 
 		cout << "class of type " << t << " contains " << l << " elements:" << endl;
 		F->display_table_of_projective_points(
@@ -2781,7 +2784,7 @@ void homogeneous_polynomial_domain::create_projective_curve(
 	int *v;
 	int v2[2];
 
-	Int_vec_scan(curve_coeffs.c_str(), coeffs, len);
+	Int_vec_scan(curve_coeffs, coeffs, len);
 	if (len != degree + 1) {
 		cout << "homogeneous_polynomial_domain::create_projective_curve "
 				"len != degree + 1" << endl;
