@@ -4497,6 +4497,100 @@ void cryptography_domain::RSA_setup(
 }
 
 
+void cryptography_domain::do_babystep_giantstep(
+		long int p, long int g, long int h,
+		int f_latex, ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int N, n;
+	double sqrtN;
+	long int *Table1;
+	long int *Table2;
+	long int *data;
+	long int gn, gmn, hgmn;
+	long int i, r;
+	number_theory::number_theory_domain NT;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "cryptography_domain::do_babystep_giantstep "
+				"p=" << p << " g=" << g << " h=" << h << endl;
+	}
+	r = NT.primitive_root(p, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "a primitive root modulo " << p << " is " << r << endl;
+	}
+
+	N = p - 1;
+	sqrtN = sqrt(N);
+	n = 1 + (int) sqrtN;
+	if (f_v) {
+		cout << "do_babystep_giantstep "
+				"p=" << p
+				<< ", g=" << g
+				<< " h=" << h
+				<< " n=" << n << endl;
+	}
+	Table1 = NEW_lint(n);
+	Table2 = NEW_lint(n);
+	data = NEW_lint(2 * n);
+	gn = NT.power_mod(g, n, p);
+	if (f_v) {
+		cout << "g^n=" << gn << endl;
+	}
+	gmn = NT.inverse_mod(gn, p);
+	if (f_v) {
+		cout << "g^-n=" << gmn << endl;
+	}
+	hgmn = NT.mult_mod(h, gmn, p);
+	if (f_v) {
+		cout << "h*g^-n=" << hgmn << endl;
+	}
+	Table1[0] = g;
+	Table2[0] = hgmn;
+	for (i = 1; i < n; i++) {
+		Table1[i] = NT.mult_mod(Table1[i - 1], g, p);
+		Table2[i] = NT.mult_mod(Table2[i - 1], gmn, p);
+	}
+	Lint_vec_copy(Table1, data, n);
+	Lint_vec_copy(Table2, data + n, n);
+	Sorting.lint_vec_heapsort(data, 2 * n);
+	if (f_v) {
+		cout << "duplicates:" << endl;
+		for (i = 1; i < 2 * n; i++) {
+			if (data[i] == data[i - 1]) {
+				cout << data[i] << endl;
+			}
+		}
+	}
+
+	if (f_latex) {
+		ost << "$$" << endl;
+		ost << "\\begin{array}[t]{|r|r|r|}" << endl;
+		ost << "\\hline" << endl;
+		ost << "i & T_1[i] & T_2[i] \\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+		//ost << "i : g^i : h*g^{-i*n}" << endl;
+		for (i = 0; i < n; i++) {
+			ost << i + 1 << " & " << Table1[i] << " & "
+					<< Table2[i] << "\\\\" << endl;
+			if ((i + 1) % 10 == 0) {
+				ost << "\\hline" << endl;
+				ost << "\\end{array}" << endl;
+				ost << "\\quad" << endl;
+				ost << "\\begin{array}[t]{|r|r|r|}" << endl;
+				ost << "\\hline" << endl;
+				ost << "i & T_1[i] & T_2[i] \\\\" << endl;
+				ost << "\\hline" << endl;
+				ost << "\\hline" << endl;
+			}
+		}
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+	}
+}
 
 
 }}}

@@ -467,7 +467,9 @@ public:
 			int v, int b, long int *Sets_coded,
 			int *&M,
 			int verbose_level);
-	void compute_blocks(int v, int b, int k, long int *Blocks_coded,
+	void compute_blocks_from_coding(int v, int b, int k, long int *Blocks_coded,
+			int *&Blocks, int verbose_level);
+	void compute_blocks_from_incma(int v, int b, int k, int *incma,
 			int *&Blocks, int verbose_level);
 	void refine_the_partition(
 			int v, int k, int b, long int *Blocks_coded,

@@ -907,6 +907,9 @@ public:
 		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 		// b^2/4 + (-c)*a + -(b^2/4-ac)
 		// = b^2/4 -ac -b^2/4 + ac = 0
+	int nonconical_six_arc_get_nb_Eckardt_points(
+			projective_space *P2,
+			long int *Arc6, int verbose_level);
 	algebraic_geometry::eckardt_point_info *compute_eckardt_point_info(
 			projective_space *P2,
 		long int *arc6,
@@ -937,6 +940,25 @@ public:
 	void andre_preimage(
 			projective_space *P2, projective_space *P4,
 		long int *set2, int sz2, long int *set4, int &sz4, int verbose_level);
+	void find_secant_lines(
+			projective_space *P,
+			long int *set, int set_size,
+			long int *lines, int &nb_lines, int max_lines,
+			int verbose_level);
+	void find_lines_which_are_contained(
+			projective_space *P,
+			std::vector<long int> &Points,
+			std::vector<long int> &Lines,
+			int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer(
+			projective_space *P3,
+			long int line1_from, long int line2_from,
+			long int line1_to, long int line2_to, int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer_text(
+			projective_space *P3,
+			std::string &line1_from_text, std::string &line2_from_text,
+			std::string &line1_to_text, std::string &line2_to_text,
+			int verbose_level);
 
 };
 
@@ -1029,6 +1051,30 @@ public:
 	void do_pluecker_reverse(std::ostream &ost,
 			int nb_k_subspaces, int verbose_level);
 	void create_latex_report(int verbose_level);
+	void klein_correspondence(
+			projective_space *P3,
+			//projective_space *P5,
+		long int *set_in, int set_size, long int *set_out, int verbose_level);
+		// Computes the Pluecker coordinates
+		// for a set of lines in PG(3,q) in the following order:
+		// (x_1,x_2,x_3,x_4,x_5,x_6) =
+		// (Pluecker_12, Pluecker_34, Pluecker_13, Pluecker_42,
+		//  Pluecker_14, Pluecker_23)
+		// satisfying the quadratic form
+		// x_1x_2 + x_3x_4 + x_5x_6 = 0
+	void klein_correspondence_special_model(
+			projective_space *P3,
+			//projective_space *P5,
+		long int *table, int verbose_level);
+	void plane_intersection_type_of_klein_image(
+			geometry::projective_space *P3,
+			geometry::projective_space *P5,
+			long int *data, int size, int threshold,
+			intersection_type *&Int_type,
+			//int *&intersection_type, int &highest_intersection_number,
+			//long int *&Highest_weight_objects, int &nb_highest_weight_objects,
+			//int *&Intersection_sets,
+			int verbose_level);
 
 };
 
@@ -1414,6 +1460,53 @@ class incidence_structure {
 
 
 
+// #############################################################################
+// intersection_type.cpp
+// #############################################################################
+
+
+
+//! intersection type of a set of points with respect to subspaces of a certain dimension
+
+
+class intersection_type {
+
+public:
+
+	long int *set;
+	int set_size;
+	int threshold;
+
+	projective_space *P;
+	grassmann *Gr;
+
+	ring_theory::longinteger_object *R;
+	long int **Pts_on_plane;
+	int *nb_pts_on_plane;
+	int len;
+
+	int *the_intersection_type;
+	int highest_intersection_number;
+
+	long int *Highest_weight_objects;
+	int nb_highest_weight_objects;
+
+	int *Intersection_sets;
+
+	data_structures::int_matrix *M;
+
+	intersection_type();
+	~intersection_type();
+	void plane_intersection_type_slow(
+		long int *set, int set_size, int threshold,
+		projective_space *P,
+		grassmann *Gr,
+		int verbose_level);
+	void compute_heighest_weight_objects(int verbose_level);
+
+
+};
+
 
 
 // #############################################################################
@@ -1470,6 +1563,7 @@ public:
 			field_theory::finite_field *F,
 			orthogonal_geometry::orthogonal *O,
 			int verbose_level);
+	// opens two projective_space objects P3 and P5
 	void plane_intersections(long int *lines_in_PG3, int nb_lines,
 			ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane,
@@ -2096,7 +2190,6 @@ public:
 	int determine_line_in_plane(long int *two_input_pts,
 		int *three_coeffs, 
 		int verbose_level);
-	int nonconical_six_arc_get_nb_Eckardt_points(long int *Arc6, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
 	int test_if_conic_contains_point(int *six_coeffs, int pt);
 	int determine_conic_in_plane(
@@ -2137,14 +2230,6 @@ public:
 		long int *set, int set_size,
 		int *type, int verbose_level);
 		// type[N_lines]
-	void find_secant_lines(
-			long int *set, int set_size,
-			long int *lines, int &nb_lines, int max_lines,
-			int verbose_level);
-	void find_lines_which_are_contained(
-			std::vector<long int> &Points,
-			std::vector<long int> &Lines,
-			int verbose_level);
 	void point_plane_incidence_matrix(
 			long int *point_rks, int nb_points,
 			long int *plane_rks, int nb_planes,
@@ -2219,29 +2304,28 @@ public:
 		grassmann *G, ring_theory::longinteger_object &rk, long int *set, int set_size,
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
-	void plane_intersection_invariant(grassmann *G, 
+	void plane_intersection_invariant(
+			grassmann *G,
 		long int *set, int set_size,
 		int *&intersection_type, int &highest_intersection_number, 
 		int *&intersection_matrix, int &nb_planes, 
 		int verbose_level);
-	void plane_intersection_type(grassmann *G, 
-		long int *set, int set_size,
-		int *&intersection_type, int &highest_intersection_number, 
+	void plane_intersection_type(
+		long int *set, int set_size, int threshold,
+		intersection_type *&Int_type,
 		int verbose_level);
-	void plane_intersections(grassmann *G, 
+	void plane_intersections(
+			grassmann *G,
 		long int *set, int set_size,
 		ring_theory::longinteger_object *&R, data_structures::set_of_sets &SoS,
 		int verbose_level);
-	void plane_intersection_type_slow(grassmann *G, 
+	void plane_intersection_type_fast(
+			grassmann *G,
 		long int *set, int set_size,
-		ring_theory::longinteger_object *&R, long int **&Pts_on_plane,
-		int *&nb_pts_on_plane, int &len,
+		ring_theory::longinteger_object *&R,
+		long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
 		int verbose_level);
-	void plane_intersection_type_fast(grassmann *G, 
-		long int *set, int set_size,
-		ring_theory::longinteger_object *&R, long int **&Pts_on_plane,
-		int *&nb_pts_on_plane, int &len,
-		int verbose_level);
+
 	void find_planes_which_intersect_in_at_least_s_points(
 		long int *set, int set_size,
 		int s,
@@ -2256,17 +2340,6 @@ public:
 			long int *set, int set_size,
 			std::vector<int> &point_indices,
 			int verbose_level);
-	void klein_correspondence(projective_space *P5, 
-		long int *set_in, int set_size, long int *set_out, int verbose_level);
-		// Computes the Pluecker coordinates
-		// for a set of lines in PG(3,q) in the following order:
-		// (x_1,x_2,x_3,x_4,x_5,x_6) = 
-		// (Pluecker_12, Pluecker_34, Pluecker_13, Pluecker_42, 
-		//  Pluecker_14, Pluecker_23)
-		// satisfying the quadratic form 
-		// x_1x_2 + x_3x_4 + x_5x_6 = 0
-	void klein_correspondence_special_model(projective_space *P5, 
-		int *table, int verbose_level);
 	void cheat_sheet_points(std::ostream &f, int verbose_level);
 	void cheat_polarity(std::ostream &f, int verbose_level);
 	void cheat_sheet_point_table(std::ostream &f, int verbose_level);
@@ -2298,10 +2371,6 @@ public:
 		int verbose_level);
 	void points_on_projective_triangle(long int *&set, int &set_size,
 		long int *three_points, int verbose_level);
-	void elliptic_curve_addition_table(int *A6, int *Pts, int nb_pts, 
-		int *&Table, int verbose_level);
-	int elliptic_curve_addition(int *A6, int p1_rk, int p2_rk, 
-		int verbose_level);
 	void line_plane_incidence_matrix_restricted(long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);
 	int test_if_lines_are_skew(int line1, int line2, int verbose_level);
@@ -2344,13 +2413,6 @@ public:
 	void planes_through_a_line(
 		long int line_rk, std::vector<long int> &plane_ranks,
 		int verbose_level);
-	void do_move_two_lines_in_hyperplane_stabilizer(
-			long int line1_from, long int line2_from,
-			long int line1_to, long int line2_to, int verbose_level);
-	void do_move_two_lines_in_hyperplane_stabilizer_text(
-			std::string &line1_from_text, std::string &line2_from_text,
-			std::string &line1_to_text, std::string &line2_to_text,
-			int verbose_level);
 
 
 
@@ -2458,13 +2520,6 @@ public:
 	void HMO(std::string &fname, int verbose_level);
 	void get_spread_matrices(int *F, int *G, long int *data, int verbose_level);
 	void print_spread(std::ostream &ost, long int *data, int sz);
-	void plane_intersection_type_of_klein_image(
-			geometry::projective_space *P3,
-			geometry::projective_space *P5,
-			geometry::grassmann *Gr,
-			long int *data, int size,
-			int *&intersection_type, int &highest_intersection_number,
-			int verbose_level);
 
 };
 

@@ -27,17 +27,21 @@ design_create_description::design_create_description()
 	f_family = FALSE;
 	//family_name;
 
-	f_list_of_blocks = FALSE;
-	list_of_blocks_v = 0;
-	list_of_blocks_k = 0;
-	//std::string list_of_blocks_label;
+	f_list_of_blocks_coded = FALSE;
+	list_of_blocks_coded_v = 0;
+	list_of_blocks_coded_k = 0;
+	//std::string list_of_blocks_coded_label;
 
-	f_list_of_sets = FALSE;
-	list_of_sets_v = 0;
-	//std::string list_of_sets_label;
+	f_list_of_sets_coded = FALSE;
+	list_of_sets_coded_v = 0;
+	//std::string list_of_sets_coded_label;
 
+
+	f_list_of_blocks_coded_from_file = FALSE;
+	//std::string list_of_blocks_coded_from_file_fname;
 
 	f_list_of_blocks_from_file = FALSE;
+	list_of_blocks_from_file_v = 0;
 	//std::string list_of_blocks_from_file_fname;
 
 	f_wreath_product_designs = FALSE;
@@ -82,40 +86,51 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 				cout << "-family " << family_name << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-list_of_blocks") == 0) {
-			f_list_of_blocks = TRUE;
-			list_of_blocks_v = ST.strtoi(argv[++i]);
-			list_of_blocks_k = ST.strtoi(argv[++i]);
-			list_of_blocks_label.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-list_of_blocks_coded") == 0) {
+			f_list_of_blocks_coded = TRUE;
+			list_of_blocks_coded_v = ST.strtoi(argv[++i]);
+			list_of_blocks_coded_k = ST.strtoi(argv[++i]);
+			list_of_blocks_coded_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-list_of_blocks " << list_of_blocks_v
-						<< " " << list_of_blocks_k
-						<< " " << list_of_blocks_label
+				cout << "-list_of_blocks " << list_of_blocks_coded_v
+						<< " " << list_of_blocks_coded_k
+						<< " " << list_of_blocks_coded_label
 						<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-list_of_sets") == 0) {
-			f_list_of_sets = TRUE;
-			list_of_sets_v = ST.strtoi(argv[++i]);
-			list_of_sets_label.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-list_of_sets_coded") == 0) {
+			f_list_of_sets_coded = TRUE;
+			list_of_sets_coded_v = ST.strtoi(argv[++i]);
+			list_of_sets_coded_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-list_of_sets " << list_of_sets_v
-						<< " " << list_of_sets_label
+				cout << "-list_of_sets_coded " << list_of_sets_coded_v
+						<< " " << list_of_sets_coded_label
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-list_of_blocks_coded_from_file") == 0) {
+			f_list_of_blocks_coded_from_file = TRUE;
+			list_of_blocks_coded_v = ST.strtoi(argv[++i]);
+			list_of_blocks_coded_k = ST.strtoi(argv[++i]);
+			list_of_blocks_coded_from_file_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-list_of_blocks_coded_from_file " << list_of_blocks_coded_v
+						<< " " << list_of_blocks_coded_k
+						<< " " << list_of_blocks_coded_from_file_fname
 						<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-list_of_blocks_from_file") == 0) {
 			f_list_of_blocks_from_file = TRUE;
-			list_of_blocks_v = ST.strtoi(argv[++i]);
-			list_of_blocks_k = ST.strtoi(argv[++i]);
+			list_of_blocks_from_file_v = ST.strtoi(argv[++i]);
 			list_of_blocks_from_file_fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-list_of_blocks_from_file " << list_of_blocks_v
-						<< " " << list_of_blocks_k
+				cout << "-list_of_blocks_from_file " << list_of_blocks_from_file_v
 						<< " " << list_of_blocks_from_file_fname
 						<< endl;
 			}
 		}
+
 		else if (ST.stringcmp(argv[i], "-wreath_product_designs") == 0) {
 			f_wreath_product_designs = TRUE;
 			wreath_product_designs_n = ST.strtoi(argv[++i]);
@@ -153,20 +168,25 @@ void design_create_description::print()
 	if (f_family) {
 		cout << "-family " << family_name << endl;
 	}
-	if (f_list_of_blocks) {
-		cout << "-list_of_blocks " << list_of_blocks_v
-				<< " " << list_of_blocks_k
-				<< " " << list_of_blocks_label
+	if (f_list_of_blocks_coded) {
+		cout << "-list_of_blocks " << list_of_blocks_coded_v
+				<< " " << list_of_blocks_coded_k
+				<< " " << list_of_blocks_coded_label
 				<< endl;
 	}
-	if (f_list_of_sets) {
-		cout << "-list_of_sets " << list_of_sets_v
-				<< " " << list_of_sets_label
+	if (f_list_of_sets_coded) {
+		cout << "-list_of_sets " << list_of_sets_coded_v
+				<< " " << list_of_sets_coded_label
+				<< endl;
+	}
+	if (f_list_of_blocks_coded_from_file) {
+		cout << "-list_of_blocks_coded_from_file " << list_of_blocks_coded_v
+				<< " " << list_of_blocks_coded_k
+				<< " " << list_of_blocks_coded_from_file_fname
 				<< endl;
 	}
 	if (f_list_of_blocks_from_file) {
-		cout << "-list_of_blocks_from_file " << list_of_blocks_v
-				<< " " << list_of_blocks_k
+		cout << "-list_of_blocks_from_file " << list_of_blocks_from_file_v
 				<< " " << list_of_blocks_from_file_fname
 				<< endl;
 	}

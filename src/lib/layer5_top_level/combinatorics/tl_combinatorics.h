@@ -603,16 +603,20 @@ public:
 	int f_family;
 	std::string family_name;
 
-	int f_list_of_blocks;
-	int list_of_blocks_v;
-	int list_of_blocks_k;
-	std::string list_of_blocks_label;
+	int f_list_of_blocks_coded;
+	int list_of_blocks_coded_v;
+	int list_of_blocks_coded_k;
+	std::string list_of_blocks_coded_label;
 
-	int f_list_of_sets;
-	int list_of_sets_v;
-	std::string list_of_sets_label;
+	int f_list_of_sets_coded;
+	int list_of_sets_coded_v;
+	std::string list_of_sets_coded_label;
+
+	int f_list_of_blocks_coded_from_file;
+	std::string list_of_blocks_coded_from_file_fname;
 
 	int f_list_of_blocks_from_file;
+	int list_of_blocks_from_file_v;
 	std::string list_of_blocks_from_file_fname;
 
 	int f_wreath_product_designs;
@@ -682,6 +686,7 @@ public:
 	int v;
 	int b;
 	int nb_inc;
+	int f_has_incma;
 	int *incma; // [v * b]
 
 	design_create();
@@ -696,6 +701,7 @@ public:
 	int get_nb_colors_as_two_design(int verbose_level);
 	int get_color_as_two_design_assume_sorted(long int *design, int verbose_level);
 	void compute_incidence_matrix(int verbose_level);
+	void compute_incidence_matrix_from_blocks(int *blocks, int nb_blocks, int k, int verbose_level);
 
 };
 

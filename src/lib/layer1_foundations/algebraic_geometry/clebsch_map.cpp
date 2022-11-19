@@ -209,19 +209,22 @@ void clebsch_map::compute_Clebsch_map_down(int verbose_level)
 	Clebsch_coeff = NEW_int(SO->nb_pts * 4);
 
 	if (f_v) {
-		cout << "clebsch_map::compute_Clebsch_map_down before compute_Clebsch_map_down_worker" << endl;
+		cout << "clebsch_map::compute_Clebsch_map_down "
+				"before compute_Clebsch_map_down_worker" << endl;
 	}
 
 	if (!compute_Clebsch_map_down_worker(
 			Clebsch_map,
 			Clebsch_coeff,
 			verbose_level)) {
-		cout << "clebsch_map::compute_Clebsch_map_down The plane contains one of the lines, "
+		cout << "clebsch_map::compute_Clebsch_map_down "
+				"The plane contains one of the lines, "
 				"this should not happen" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "clebsch_map::compute_Clebsch_map_down after compute_Clebsch_map_down_worker" << endl;
+		cout << "clebsch_map::compute_Clebsch_map_down "
+				"after compute_Clebsch_map_down_worker" << endl;
 	}
 
 	if (f_v) {
@@ -366,7 +369,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
 		Int_vec_copy(M + 3 * 4, Dual_planes, 4);
 		if (f_vv) {
-			cout << "clebsch_map::compute_Clebsch_map_down_worker First plane in dual coordinates: ";
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"First plane in dual coordinates: ";
 			Int_vec_print(cout, M + 3 * 4, 4);
 			cout << endl;
 		}
@@ -377,7 +381,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
 		Int_vec_copy(M + 3 * 4, Dual_planes + 4, 4);
 		if (f_vv) {
-			cout << "clebsch_map::compute_Clebsch_map_down_worker Second plane in dual coordinates: ";
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"Second plane in dual coordinates: ";
 			Int_vec_print(cout, M + 3 * 4, 4);
 			cout << endl;
 		}
@@ -387,7 +392,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		// plane, given by dual coordinates:
 		Int_vec_copy(Plane + 3 * 4, Dual_planes + 8, 4);
 		if (f_vv) {
-			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates for all three planes: " << endl;
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"Dual coordinates for all three planes: " << endl;
 			Int_matrix_print(Dual_planes, 3, 4);
 			cout << endl;
 		}
@@ -395,23 +401,27 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		r = F->Linear_algebra->RREF_and_kernel(4, 3,
 				Dual_planes, 0 /* verbose_level */);
 		if (f_vv) {
-			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates and perp: " << endl;
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"Dual coordinates and perp: " << endl;
 			Int_matrix_print(Dual_planes, 4, 4);
 			cout << endl;
-			cout << "clebsch_map::compute_Clebsch_map_down_worker matrix of dual coordinates has rank " << r << endl;
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"matrix of dual coordinates has rank " << r << endl;
 		}
 
 
 		if (r < 3) {
 			if (f_v) {
-				cout << "clebsch_map::compute_Clebsch_map_down_worker The line is contained in the plane" << endl;
+				cout << "clebsch_map::compute_Clebsch_map_down_worker "
+						"The line is contained in the plane" << endl;
 			}
 			Image_rk[h] = -1;
 			continue;
 		}
 		F->PG_element_normalize(Dual_planes + 12, 1, 4);
 		if (f_vv) {
-			cout << "clebsch_map::compute_Clebsch_map_down_worker intersection point normalized: ";
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"intersection point normalized: ";
 			Int_vec_print(cout, Dual_planes + 12, 4);
 			cout << endl;
 		}
@@ -424,7 +434,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			0 /* verbose_level */);
 		Image_rk[h] = Surf->P2->rank_point(coefficients);
 		if (f_vv) {
-			cout << "clebsch_map::compute_Clebsch_map_down_worker pt " << h << " / " << SO->nb_pts
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"pt " << h << " / " << SO->nb_pts
 				<< " is " << pt << " : image = ";
 			Int_vec_print(cout, Image_coeff + h * 4, 4);
 			cout << " image = " << Image_rk[h] << endl;

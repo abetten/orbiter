@@ -884,19 +884,22 @@ void action::latex_point_set(std::ostream &ost, long int *set, int sz, int verbo
 	ost << "$$}%" << endl;
 #else
 
-	if (low_level_point_size < 10) {
-		ost << "\\begin{multicols}{2}" << endl;
-	}
-	ost << "\\noindent" << endl;
-	for (i = 0; i < sz; i++) {
-		unrank_point(set[i], v);
-		ost << i << " : ";
-		ost << set[i] << " = ";
-		Int_vec_print(ost, v, low_level_point_size);
-		ost << "\\\\" << endl;
-	}
-	if (low_level_point_size < 10) {
-		ost << "\\end{multicols}" << endl;
+
+	if (ptr->ptr_unrank_point) {
+		if (low_level_point_size < 10) {
+			ost << "\\begin{multicols}{2}" << endl;
+		}
+		ost << "\\noindent" << endl;
+		for (i = 0; i < sz; i++) {
+			unrank_point(set[i], v);
+			ost << i << " : ";
+			ost << set[i] << " = ";
+			Int_vec_print(ost, v, low_level_point_size);
+			ost << "\\\\" << endl;
+		}
+		if (low_level_point_size < 10) {
+			ost << "\\end{multicols}" << endl;
+		}
 	}
 #endif
 

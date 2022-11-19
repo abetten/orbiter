@@ -667,10 +667,13 @@ void poset_classification::housekeeping(int i,
 		cout << "average word length=" <<
 				(double) nb2 / (double) nb1 << endl;
 	}
+
+#if 0
 	if (Control->f_find_node_by_stabilizer_order) {
 		find_node_by_stabilizer_order(i,
 				Control->find_node_by_stabilizer_order, verbose_level);
 	}
+#endif
 	if (f_vv) {
 		if (nb_nodes < 1000) {
 			int f_with_strong_generators = FALSE;
@@ -806,7 +809,6 @@ void poset_classification::housekeeping(int i,
 
 		write_treefile(problem_label_with_path, i,
 				Control->draw_options,
-				//Control->xmax, Control->ymax, Control->radius, f_embedded,
 				0 /*verbose_level - 1*/);
 			// in poset_classification_draw.cpp
 
@@ -888,7 +890,6 @@ void poset_classification::housekeeping_no_data_file(int i,
 	if (Control->f_T || (Control->f_t && i == sz)) {
 		write_treefile(problem_label_with_path, i,
 				Control->draw_options,
-				//Control->xmax, Control->ymax, Control->radius, f_embedded,
 				verbose_level - 1);
 	}
 	if (f_v) {
@@ -1463,7 +1464,7 @@ void poset_classification::create_schreier_tree_fname_mask_base(
 {
 
 	fname_mask.assign(problem_label_with_path);
-	fname_mask.append(Control->schreier_tree_prefix);
+	//fname_mask.append(Control->schreier_tree_prefix);
 	fname_mask.append("schreier_tree_node_%d_%d");
 }
 
@@ -1472,7 +1473,7 @@ void poset_classification::create_schreier_tree_fname_mask_base_tex(
 {
 
 	fname_mask.assign(problem_label_with_path);
-	fname_mask.append(Control->schreier_tree_prefix);
+	//fname_mask.append(Control->schreier_tree_prefix);
 	fname_mask.append("schreier_tree_node_%d.tex");
 }
 
@@ -1481,7 +1482,7 @@ void poset_classification::create_shallow_schreier_tree_fname_mask_base(
 {
 
 	fname_mask.assign(problem_label_with_path);
-	fname_mask.append(Control->schreier_tree_prefix);
+	//fname_mask.append(Control->schreier_tree_prefix);
 	fname_mask.append("shallow_schreier_tree_node_%d_%d");
 
 }
@@ -1494,7 +1495,7 @@ void poset_classification::create_shallow_schreier_tree_fname_mask(
 
 	snprintf(str, sizeof(str), "%d", node);
 	fname.assign(problem_label_with_path);
-	fname.append(Control->schreier_tree_prefix);
+	//fname.append(Control->schreier_tree_prefix);
 	fname.append("shallow_schreier_tree_node_");
 	fname.append(str);
 	fname.append("_%d");

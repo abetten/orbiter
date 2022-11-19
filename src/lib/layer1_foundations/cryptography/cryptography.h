@@ -205,6 +205,9 @@ public:
 		int nb_bits,
 		int nb_tests_solovay_strassen, int f_miller_rabin_test,
 		int verbose_level);
+	void do_babystep_giantstep(
+			long int p, long int g, long int h,
+			int f_latex, std::ostream &ost, int verbose_level);
 
 };
 

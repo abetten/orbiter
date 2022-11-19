@@ -235,7 +235,6 @@ class six_arcs_not_on_a_conic {
 
 public:
 
-	//projective_space *P2; // do not free
 	apps_geometry::arc_generator_description *Descr;
 	projective_geometry::projective_space_with_action *PA;
 
@@ -252,7 +251,6 @@ public:
 			apps_geometry::arc_generator_description *Descr,
 			projective_geometry::projective_space_with_action *PA,
 		int f_test_nb_Eckardt_points, int nb_E,
-		//algebraic_geometry::surface_domain *Surf,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);

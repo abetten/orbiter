@@ -77,6 +77,24 @@ void orbits_activity::perform_activity(int verbose_level)
 	else if (Descr->f_stabilizer_of_orbit_rep) {
 		do_stabilizer_of_orbit_rep(verbose_level);
 	}
+	else if (Descr->f_Kramer_Mesner_matrix) {
+
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_Kramer_Mesner_matrix" << endl;
+		}
+		do_Kramer_Mesner_matrix(verbose_level);
+	}
+	else if (Descr->f_recognize) {
+
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_recognize" << endl;
+		}
+		do_recognize(verbose_level);
+
+	}
+
+
+
 
 
 	if (f_v) {
@@ -110,6 +128,65 @@ void orbits_activity::do_report(int verbose_level)
 
 
 	}
+	else if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"before OC->On_subsets->report" << endl;
+		}
+
+		poset_classification::poset_classification_report_options *report_options;
+
+		if (Descr->f_report_options) {
+			report_options = Descr->report_options;
+		}
+		else {
+			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
+		}
+		OC->On_subsets->report(
+				report_options,
+				verbose_level);
+		if (!Descr->f_report_options) {
+			FREE_OBJECT(report_options);
+		}
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"after OC->On_subsets->report" << endl;
+		}
+
+
+	}
+
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"before OC->On_Subspaces->orbits_on_subspaces_PC->report" << endl;
+		}
+
+		poset_classification::poset_classification_report_options *report_options;
+
+		if (Descr->f_report_options) {
+			report_options = Descr->report_options;
+		}
+		else {
+			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
+		}
+
+		OC->On_Subspaces->orbits_on_subspaces_PC->report(
+				report_options,
+				verbose_level);
+		if (!Descr->f_report_options) {
+			FREE_OBJECT(report_options);
+		}
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"after OC->On_Subspaces->orbits_on_subspaces_PC->report" << endl;
+		}
+
+	}
+
+
 	else {
 		cout << "orbits_activity::do_report no suitable data structure" << endl;
 		exit(1);
@@ -395,6 +472,132 @@ void orbits_activity::do_stabilizer_of_orbit_rep(int verbose_level)
 		cout << "orbits_activity::do_stabilizer_of_orbit_rep done" << endl;
 	}
 
+}
+
+void orbits_activity::do_Kramer_Mesner_matrix(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_Kramer_Mesner_matrix" << endl;
+	}
+
+	if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"before OC->On_subsets->compute_Kramer_Mesner_matrix" << endl;
+		}
+		OC->On_subsets->compute_Kramer_Mesner_matrix(
+				Descr->Kramer_Mesner_t,
+				Descr->Kramer_Mesner_k,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"after OC->On_subsets->compute_Kramer_Mesner_matrix" << endl;
+		}
+
+	}
+
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"before OC->On_Subspaces->orbits_on_subspaces_PC->compute_Kramer_Mesner_matrix" << endl;
+		}
+		OC->On_Subspaces->orbits_on_subspaces_PC->compute_Kramer_Mesner_matrix(
+				Descr->Kramer_Mesner_t,
+				Descr->Kramer_Mesner_k,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"after OC->On_Subspaces->orbits_on_subspaces_PC->compute_Kramer_Mesner_matrix" << endl;
+		}
+
+	}
+
+	else {
+		cout << "orbits_activity::do_stabilizer_of_orbit_rep no suitable data structure" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "orbits_activity::do_Kramer_Mesner_matrix done" << endl;
+	}
+}
+
+void orbits_activity::do_recognize(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_recognize" << endl;
+	}
+
+	if (OC->f_has_On_subsets) {
+
+		int h;
+
+		for (h = 0; h < Descr->recognize.size(); h++) {
+			if (f_v) {
+				cout << "orbits_activity::do_recognize "
+						"h=" << h << " / " << Descr->recognize.size() << endl;
+			}
+			if (f_v) {
+				cout << "orbits_activity::do_recognize "
+						"before OC->On_subsets->recognize" << endl;
+			}
+
+			OC->On_subsets->recognize(Descr->recognize[h],
+					h, Descr->recognize.size(),
+					verbose_level);
+			if (f_v) {
+				cout << "orbits_activity::do_recognize "
+						"after OC->On_subsets->recognize" << endl;
+			}
+		}
+
+
+
+	}
+
+	else if (OC->f_has_On_Subspaces) {
+
+		int h;
+
+		for (h = 0; h < Descr->recognize.size(); h++) {
+			if (f_v) {
+				cout << "orbits_activity::do_recognize "
+						"h=" << h << " / " << Descr->recognize.size() << endl;
+			}
+			if (f_v) {
+				cout << "orbits_activity::do_recognize "
+						"before OC->On_Subspaces->orbits_on_subspaces_PC->recognize" << endl;
+			}
+
+			OC->On_Subspaces->orbits_on_subspaces_PC->recognize(Descr->recognize[h],
+					h, Descr->recognize.size(),
+					verbose_level);
+
+			if (f_v) {
+				cout << "orbits_activity::do_recognize "
+						"after OC->On_Subspaces->orbits_on_subspaces_PC->recognize" << endl;
+			}
+
+		}
+
+	}
+
+	else {
+		cout << "orbits_activity::do_stabilizer_of_orbit_rep no suitable data structure" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "orbits_activity::do_recognize done" << endl;
+	}
 }
 
 }}}

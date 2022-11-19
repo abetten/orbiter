@@ -1426,8 +1426,10 @@ void surface_classify_wedge::identify_surface(
 	// find all lines which are completely contained in the
 	// set of points:
 
+	geometry::geometry_global Geo;
 	vector<long int> My_Lines;
-	Surf->P->find_lines_which_are_contained(
+
+	Geo.find_lines_which_are_contained(Surf->P,
 			My_Points,
 			My_Lines,
 			0/*verbose_level - 2*/);

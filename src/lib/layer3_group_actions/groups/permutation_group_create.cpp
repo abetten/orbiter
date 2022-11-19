@@ -115,6 +115,33 @@ void permutation_group_create::permutation_group_init(
 		}
 	}
 
+	else if (Descr->type == identity_group_t) {
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init initializing identity_group_t" << endl;
+		}
+
+		A_initial = NEW_OBJECT(actions::action);
+		int f_no_base = FALSE;
+
+		A_initial->init_identity_group(Descr->degree, f_no_base, verbose_level);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init generators:" << endl;
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout);
+			A_initial->Strong_gens->print_generators_in_source_code();
+			A_initial->print_base();
+			A_initial->print_info();
+		}
+
+		label.assign(A_initial->label);
+		label_tex.assign(A_initial->label_tex);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init initializing identity_group_t done" << endl;
+		}
+	}
+
 	else if (Descr->type == bsgs_t) {
 
 		A_initial = NEW_OBJECT(actions::action);
@@ -211,6 +238,10 @@ void permutation_group_create::permutation_group_init(
 		f_has_strong_generators = TRUE;
 		Strong_gens = A_initial->Strong_gens;
 
+	}
+	if (f_v) {
+		cout << "permutation_group_create::permutation_group_init label = " << label << endl;
+		cout << "permutation_group_create::permutation_group_init label_tex = " << label_tex << endl;
 	}
 
 

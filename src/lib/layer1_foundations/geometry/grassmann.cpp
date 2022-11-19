@@ -1969,6 +1969,241 @@ void grassmann::create_latex_report(int verbose_level)
 	}
 }
 
+void grassmann::klein_correspondence(
+		projective_space *P3,
+		//projective_space *P5,
+	long int *set_in, int set_size, long int *set_out,
+	int verbose_level)
+// Computes the Pluecker coordinates
+// for a set of lines in PG(3,q) in the following order:
+// (x_1,x_2,x_3,x_4,x_5,x_6) =
+// (Pluecker_12, Pluecker_34, Pluecker_13,
+//    Pluecker_42, Pluecker_14, Pluecker_23)
+// satisfying the quadratic form x_1x_2 + x_3x_4 + x_5x_6 = 0
+// The output is given as a vector of ranks of points in PG(5,q).
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int d = n + 1;
+	int h;
+	int basis8[8];
+	int v6[6];
+	int *x4, *y4;
+	long int a, b, c;
+	int f_elements_exponential = TRUE;
+	string symbol_for_print;
+
+
+
+
+	if (f_v) {
+		cout << "grassmann::klein_correspondence" << endl;
+	}
+
+
+	symbol_for_print.assign("\\alpha");
+
+	for (h = 0; h < set_size; h++) {
+		a = set_in[h];
+		unrank_lint(a, 0 /* verbose_level */);
+		if (f_vv) {
+			cout << setw(5) << h << " : " << setw(5) << a << " :" << endl;
+			P3->F->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print, M, 2, 4);
+			cout << endl;
+		}
+		Int_vec_copy(M, basis8, 8);
+		if (f_vv) {
+			Int_matrix_print(basis8, 2, 4);
+		}
+		x4 = basis8;
+		y4 = basis8 + 4;
+		v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+		v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+		v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+		v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+		v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+		v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
+		if (f_vv) {
+			cout << "v6 : ";
+			Int_vec_print(cout, v6, 6);
+			cout << endl;
+		}
+		a = F->mult(v6[0], v6[1]);
+		b = F->mult(v6[2], v6[3]);
+		c = F->mult(v6[4], v6[5]);
+		d = F->add3(a, b, c);
+		//cout << "a=" << a << " b=" << b << " c=" << c << endl;
+		//cout << "d=" << d << endl;
+		if (d) {
+			cout << "d != 0" << endl;
+			exit(1);
+		}
+
+		F->PG_element_rank_modified_lint(v6, 1, 6, set_out[h]);
+		//set_out[h] = P5->rank_point(v6);
+	}
+	if (f_v) {
+		cout << "grassmann::klein_correspondence done" << endl;
+	}
+}
+
+
+void grassmann::klein_correspondence_special_model(
+		projective_space *P3,
+		//projective_space *P5,
+	long int *table, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int d = n + 1;
+	int h;
+	int basis8[8];
+	int x6[6];
+	int y6[6];
+	int *x4, *y4;
+	int a, b, c;
+	int half;
+	int f_elements_exponential = TRUE;
+	string symbol_for_print;
+	//int *table;
+
+	if (f_v) {
+		cout << "grassmann::klein_correspondence" << endl;
+	}
+	symbol_for_print.assign("\\alpha");
+	half = F->inverse(F->add(1, 1));
+	if (f_v) {
+		cout << "half=" << half << endl;
+		cout << "N_lines=" << P3->N_lines << endl;
+	}
+	//table = NEW_int(N_lines);
+	for (h = 0; h < P3->N_lines; h++) {
+		unrank_lint(h, 0 /* verbose_level */);
+		if (f_vv) {
+			cout << setw(5) << h << " :" << endl;
+			F->latex_matrix(cout, f_elements_exponential,
+				symbol_for_print, M, 2, 4);
+			cout << endl;
+		}
+		Int_vec_copy(M, basis8, 8);
+		if (f_vv) {
+			Int_matrix_print(basis8, 2, 4);
+		}
+		x4 = basis8;
+		y4 = basis8 + 4;
+		x6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+		x6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+		x6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+		x6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+		x6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+		x6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
+		if (f_vv) {
+			cout << "x6 : ";
+			Int_vec_print(cout, x6, 6);
+			cout << endl;
+		}
+		a = F->mult(x6[0], x6[1]);
+		b = F->mult(x6[2], x6[3]);
+		c = F->mult(x6[4], x6[5]);
+		d = F->add3(a, b, c);
+		//cout << "a=" << a << " b=" << b << " c=" << c << endl;
+		//cout << "d=" << d << endl;
+		if (d) {
+			cout << "d != 0" << endl;
+			exit(1);
+		}
+		y6[0] = F->negate(x6[0]);
+		y6[1] = x6[1];
+		y6[2] = F->mult(half, F->add(x6[2], x6[3]));
+		y6[3] = F->mult(half, F->add(x6[2], F->negate(x6[3])));
+		y6[4] = x6[4];
+		y6[5] = x6[5];
+		if (f_vv) {
+			cout << "y6 : ";
+			Int_vec_print(cout, y6, 6);
+			cout << endl;
+		}
+		F->PG_element_rank_modified_lint(y6, 1, 6, table[h]);
+		//table[h] = P5->rank_point(y6);
+	}
+
+	cout << "lines in PG(3,q) to points in PG(5,q) "
+			"in special model:" << endl;
+	for (h = 0; h < P3->N_lines; h++) {
+		cout << setw(4) << h << " : " << setw(5) << table[h] << endl;
+	}
+
+	//FREE_int(table);
+	if (f_v) {
+		cout << "grassmann::klein_correspondence_special_model done" << endl;
+	}
+}
+
+void grassmann::plane_intersection_type_of_klein_image(
+		geometry::projective_space *P3,
+		geometry::projective_space *P5,
+		long int *data, int size, int threshold,
+		intersection_type *&Int_type,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int N;
+	long int *the_set_out;
+
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image" << endl;
+	}
+	the_set_out = NEW_lint(size);
+
+	if (f_v) {
+		P3->print_line_set_numerical(data, size);
+	}
+	klein_correspondence(P3,
+		data, size, the_set_out,
+		0/*verbose_level*/);
+	if (f_v) {
+		cout << "after Klein correspondence:" << endl;
+		Lint_vec_print(cout, the_set_out, size);
+		cout << endl;
+	}
+
+#if 1
+	if (f_v) {
+		P5->print_set_numerical(cout, the_set_out, size);
+	}
+#endif
+
+	//F = P3->F;
+
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image "
+				"after P3->klein_correspondence" << endl;
+	}
+
+
+	N = P5->nb_rk_k_subspaces_as_lint(3);
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image N = " << N << endl;
+		cout << "grassmann::plane_intersection_type_of_klein_image threshold = " << threshold << endl;
+	}
+
+	P5->plane_intersection_type(
+		the_set_out, size, threshold,
+		Int_type,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "grassmann::plane_intersection_type_of_klein_image "
+				"corresponding to the planes with rank: " << endl;
+		Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
+		cout << endl;
+	}
+
+	FREE_lint(the_set_out);
+}
+
+
 
 
 

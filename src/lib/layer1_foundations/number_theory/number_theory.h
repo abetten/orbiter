@@ -270,8 +270,6 @@ public:
 			std::vector<long int> &Moduli, long int &M, int verbose_level);
 	long int ChineseRemainder2(long int a1, long int a2,
 			long int p1, long int p2, int verbose_level);
-	void do_babystep_giantstep(long int p, long int g, long int h,
-			int f_latex, std::ostream &ost, int verbose_level);
 	void sieve(std::vector<int> &primes,
 			int factorbase, int verbose_level);
 	void sieve_primes(std::vector<int> &v,
@@ -309,7 +307,15 @@ public:
 		int x3, int y3, int z3,
 		int verbose_level);
 	int eulers_totient_function(int n, int verbose_level);
-	void do_jacobi(long int jacobi_top, long int jacobi_bottom, int verbose_level);;
+	void do_jacobi(long int jacobi_top, long int jacobi_bottom, int verbose_level);
+	void elliptic_curve_addition_table(
+			geometry::projective_space *P2,
+		int *A6, int *Pts, int nb_pts, int *&Table,
+		int verbose_level);
+	int elliptic_curve_addition(
+			geometry::projective_space *P2,
+		int *A6, int p1_rk, int p2_rk,
+		int verbose_level);
 
 };
 

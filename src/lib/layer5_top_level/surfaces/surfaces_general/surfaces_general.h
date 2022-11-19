@@ -33,10 +33,6 @@ public:
 	int f_export_something;
 	std::string export_something_what;
 
-	//int f_clebsch;
-
-	//int f_codes;
-
 	int f_all_quartic_curves;
 
 	int f_export_all_quartic_curves;
@@ -81,7 +77,7 @@ public:
 // surface_clebsch_map.cpp
 // #############################################################################
 
-//! a Clebsch map associated with a cubic surface and a choice of half double six
+//! a Clebsch map associated with a cubic surface and a choice of half double six, to be used in surface_create_by_arc_lifting::init
 
 
 class surface_clebsch_map {
@@ -684,7 +680,8 @@ public:
 		std::vector<std::vector<long int> > &Double_sixes,
 		int verbose_level);
 	void create_regulus_and_opposite_regulus(
-		long int *three_skew_lines, long int *&regulus, long int *&opp_regulus, int &regulus_sz,
+		long int *three_skew_lines, long int *&regulus,
+		long int *&opp_regulus, int &regulus_sz,
 		int verbose_level);
 	int create_double_six_safely(
 		long int *five_lines, long int transversal_line,
@@ -695,17 +692,6 @@ public:
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);
-#if 0
-	void create_surface(
-			surface_create_description *Surface_Descr,
-			surface_create *&SC,
-			int verbose_level);
-	void create_surface_and_do_report(
-			surface_create_description *Surface_Descr,
-			int f_has_control_six_arcs,
-			poset_classification::poset_classification_control *Control_six_arcs,
-			int verbose_level);
-#endif
 	void test_group(
 			surface_create *SC,
 			int verbose_level);

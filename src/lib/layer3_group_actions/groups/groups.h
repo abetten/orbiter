@@ -2038,6 +2038,10 @@ public:
 			actions::action *A,
 		field_theory::finite_field *F, int iso,
 		int verbose_level);
+	void init_reduced_generating_set(
+			data_structures_groups::vector_ge *gens,
+			ring_theory::longinteger_object &target_go,
+			int verbose_level);
 	void stabilizer_of_quartic_curve_from_catalogue(
 			actions::action *A,
 		field_theory::finite_field *F, int iso,

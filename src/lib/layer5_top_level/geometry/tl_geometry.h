@@ -85,13 +85,10 @@ public:
 
 
 
-	//int f_semilinear;
-
 	int *forbidden_points;
 	int nb_forbidden_points;
 	int *f_is_forbidden;
 
-	//action *A;
 	groups::strong_generators *SG;
 	
 	poset_classification::poset_with_group_action *Poset;

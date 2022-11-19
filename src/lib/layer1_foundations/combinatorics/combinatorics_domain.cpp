@@ -3539,13 +3539,13 @@ void combinatorics_domain::compute_incidence_matrix_from_sets(
 }
 
 
-void combinatorics_domain::compute_blocks(int v, int b, int k, long int *Blocks_coded,
+void combinatorics_domain::compute_blocks_from_coding(int v, int b, int k, long int *Blocks_coded,
 		int *&Blocks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorics_domain::compute_blocks" << endl;
+		cout << "combinatorics_domain::compute_blocks_from_coding" << endl;
 	}
 	int j;
 
@@ -3556,7 +3556,38 @@ void combinatorics_domain::compute_blocks(int v, int b, int k, long int *Blocks_
 	}
 
 	if (f_v) {
-		cout << "combinatorics_domain::compute_blocks done" << endl;
+		cout << "combinatorics_domain::compute_blocks_from_coding done" << endl;
+	}
+}
+
+void combinatorics_domain::compute_blocks_from_incma(int v, int b, int k, int *incma,
+		int *&Blocks, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_blocks_from_incma" << endl;
+	}
+	int i, j, h;
+
+	Blocks = NEW_int(b * k);
+	Int_vec_zero(Blocks, b * k);
+	for (j = 0; j < b; j++) {
+		h = 0;
+		for (i = 0; i < v; i++) {
+			if (incma[i * b + j]) {
+				Blocks[j * k + h] = i;
+				h++;
+			}
+		}
+		if (h != k) {
+			cout << "combinatorics_domain::compute_blocks_from_incma block size is not equal to k" << endl;
+			exit(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_blocks_from_incma done" << endl;
 	}
 }
 

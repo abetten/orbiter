@@ -85,14 +85,14 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 
 	if (f_v) {
 		cout << "generators_symplectic_group::init" << endl;
-		}
+	}
 	generators_symplectic_group::F = F;
 	generators_symplectic_group::n = n;
 	if (ODD(n)) {
 		cout << "generators_symplectic_group::init "
 				"n must be even" << endl;
 		exit(1);
-		}
+	}
 	n_half = n >> 1;
 	q = F->q;
 	qn = NT.i_power_j(q, n);
@@ -101,7 +101,7 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 	candidates = NEW_pint(n + 1);
 	for (i = 0; i < n + 1; i++) {
 		candidates[i] = NEW_int(qn);
-		}
+	}
 
 	Mtx = NEW_int(n * n);
 	v = NEW_int(n);
@@ -110,14 +110,15 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 	Points = NEW_int(qn * n);
 	for (i = 0; i < qn; i++) {
 		Gg.AG_element_unrank(q, Points + i * n, 1, n, i);
-		}
+	}
 
 	create_first_candidate_set(verbose_level);
 
 	if (f_v) {
-		cout << "first candidate set has size "
+		cout << "generators_symplectic_group::init "
+				"first candidate set has size "
 				<< nb_candidates[0] << endl;
-		}
+	}
 
 	//backtrack_search(0 /* depth */, verbose_level);
 	
@@ -131,22 +132,25 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 	transversal_length = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		transversal_length[i] = 1;
-		}
+	}
 	count_strong_generators(nb_gens,
 			transversal_length, first_moved, 0, verbose_level);
 
 	if (f_v) {
-		cout << "We found " << nb_gens << " strong generators" << endl;
-		cout << "transversal_length = ";
+		cout << "generators_symplectic_group::init "
+				"We found " << nb_gens << " strong generators" << endl;
+		cout << "generators_symplectic_group::init "
+				"transversal_length = ";
 		Int_vec_print(cout, transversal_length, n);
 		cout << endl;
-		cout << "group order: ";
+		cout << "generators_symplectic_group::init "
+				"group order: ";
 
 		ring_theory::ring_theory_global R;
 
 		R.print_longinteger_after_multiplying(cout, transversal_length, n);
 		cout << endl;
-		}	
+	}
 
 	Data = NEW_int(nb_gens * n * n);
 
@@ -155,22 +159,28 @@ void generators_symplectic_group::init(field_theory::finite_field *F,
 	get_strong_generators(Data, nb, first_moved, 0, verbose_level);
 
 	if (nb != nb_gens) {
-		cout << "nb != nb_gens" << endl;
+		cout << "generators_symplectic_group::init nb != nb_gens" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
-		cout << "The strong generators are:" << endl;
-		for (i = 0; i < nb_gens; i++) {
-			cout << "generator " << i << " / " << nb_gens << ":" << endl;
-			Int_matrix_print(Data + i * n * n, n, n);
+		cout << "generators_symplectic_group::init "
+				"The " << nb_gens << " strong generators are:" << endl;
+		if (nb_gens > 10) {
+			cout << "too many to list" << endl;
+		}
+		else {
+			for (i = 0; i < nb_gens; i++) {
+				cout << "generator " << i << " / " << nb_gens << ":" << endl;
+				Int_matrix_print(Data + i * n * n, n, n);
 			}
 		}
+	}
 
 
 	if (f_v) {
 		cout << "generators_symplectic_group::init done" << endl;
-		}
+	}
 }
 
 int generators_symplectic_group::count_strong_generators(int &nb,

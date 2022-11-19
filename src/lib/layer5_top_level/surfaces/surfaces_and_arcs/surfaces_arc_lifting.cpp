@@ -961,7 +961,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 
 	poset_classification::poset_classification_report_options Opt;
 
-	Six_arcs->Gen->gen->report(ost, &Opt, verbose_level);
+	Six_arcs->Gen->gen->report2(ost, &Opt, verbose_level);
 
 
 

@@ -588,7 +588,29 @@ void design_activity::do_export_blocks(
 	int *Blocks;
 
 
-	Combi.compute_blocks(v, b, k, DC->set, Blocks, verbose_level);
+	if (DC->f_has_set) {
+		if (f_v) {
+			cout << "design_activity::do_export_blocks before Combi.compute_blocks_from_coding" << endl;
+		}
+		Combi.compute_blocks_from_coding(v, b, k, DC->set, Blocks, verbose_level);
+		if (f_v) {
+			cout << "design_activity::do_export_blocks after Combi.compute_blocks_from_coding" << endl;
+		}
+	}
+	else if (DC->f_has_incma) {
+		if (f_v) {
+			cout << "design_activity::do_export_blocks before Combi.compute_blocks_from_incma" << endl;
+		}
+		Combi.compute_blocks_from_incma(v, b, k, DC->incma,
+					Blocks, verbose_level);
+		if (f_v) {
+			cout << "design_activity::do_export_blocks after Combi.compute_blocks_from_incma" << endl;
+		}
+	}
+	else {
+		cout << "design_activity::do_export_blocks we neither have a set nor an incma" << endl;
+		exit(1);
+	}
 
 	Fio.int_matrix_write_csv(fname, Blocks, b, k);
 
@@ -696,18 +718,22 @@ void design_activity::do_tactical_decomposition(
 			ht0 = Stack->ht;
 
 			if (f_v) {
-				cout << "process_single_case before refine_column_partition_safe" << endl;
+				cout << "design_activity::do_tactical_decomposition "
+						"before refine_column_partition_safe" << endl;
 			}
 			Inc->refine_column_partition_safe(*Stack, verbose_level - 2);
 			if (f_v) {
-				cout << "process_single_case after refine_column_partition_safe" << endl;
+				cout << "design_activity::do_tactical_decomposition "
+						"after refine_column_partition_safe" << endl;
 			}
 			if (f_v) {
-				cout << "process_single_case before refine_row_partition_safe" << endl;
+				cout << "design_activity::do_tactical_decomposition "
+						"before refine_row_partition_safe" << endl;
 			}
 			Inc->refine_row_partition_safe(*Stack, verbose_level - 2);
 			if (f_v) {
-				cout << "process_single_case after refine_row_partition_safe" << endl;
+				cout << "design_activity::do_tactical_decomposition "
+						"after refine_row_partition_safe" << endl;
 			}
 			ht1 = Stack->ht;
 			if (ht1 == ht0) {

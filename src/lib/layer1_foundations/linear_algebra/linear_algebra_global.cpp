@@ -471,6 +471,16 @@ void linear_algebra_global::do_RREF(
 		}
 	}
 
+	long int *R;
+
+	R = NEW_lint(rk);
+	for (i = 0; i < rk; i++) {
+		F->PG_element_rank_modified_lint(A + i * n, 1, n, R[i]);
+	}
+	cout << "The orbiter ranks of the basis elements are: ";
+	Lint_vec_print(cout, R, rk);
+	cout << endl;
+
 
 	//Int_vec_copy(M, A, m * n);
 

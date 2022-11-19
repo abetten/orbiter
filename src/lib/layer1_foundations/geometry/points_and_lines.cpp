@@ -69,14 +69,16 @@ void points_and_lines::init(projective_space *P,
 	}
 
 
+	geometry_global Geo;
+
 	if (f_v) {
 		cout << "points_and_lines::init before "
-				"P->find_lines_which_are_contained" << endl;
+				"Geo.find_lines_which_are_contained" << endl;
 	}
-	P->find_lines_which_are_contained(Points, The_Lines, 0 /*verbose_level - 1*/);
+	Geo.find_lines_which_are_contained(P, Points, The_Lines, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "points_and_lines::init after "
-				"P->find_lines_which_are_contained" << endl;
+				"Geo.find_lines_which_are_contained" << endl;
 	}
 
 	if (f_v) {
