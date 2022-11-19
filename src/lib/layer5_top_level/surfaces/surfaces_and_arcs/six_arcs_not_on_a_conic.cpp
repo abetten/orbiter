@@ -18,7 +18,6 @@ namespace cubic_surfaces_and_arcs {
 
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 {
-	//P2 = NULL;
 	Descr = NULL;
 	PA = NULL;
 	Gen = NULL;
@@ -42,7 +41,6 @@ void six_arcs_not_on_a_conic::init(
 		apps_geometry::arc_generator_description *Descr,
 		projective_geometry::projective_space_with_action *PA,
 	int f_test_nb_Eckardt_points, int nb_E,
-	//algebraic_geometry::surface_domain *Surf,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -57,7 +55,6 @@ void six_arcs_not_on_a_conic::init(
 		exit(1);
 	}
 
-	//six_arcs_not_on_a_conic::P2 = P2;
 	six_arcs_not_on_a_conic::Descr = Descr;
 	six_arcs_not_on_a_conic::PA = PA;
 	
@@ -68,12 +65,9 @@ void six_arcs_not_on_a_conic::init(
 	Descr->target_size = 6;
 	Descr->f_d = TRUE;
 	Descr->d = 2;
-	//Descr->f_n = TRUE;
-	//Descr->n = 3;
 	Descr->f_conic_test = TRUE;
 	Descr->f_test_nb_Eckardt_points = f_test_nb_Eckardt_points;
 	Descr->nb_E = nb_E;
-	//Descr->Surf = Surf;
 
 
 

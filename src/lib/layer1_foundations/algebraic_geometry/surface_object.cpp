@@ -226,6 +226,7 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 		cout << "surface_object::enumerate_points_and_lines" << endl;
 	}
 
+	geometry::geometry_global Geo;
 	vector<long int> Points;
 	vector<long int> The_Lines;
 
@@ -255,12 +256,13 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_object::enumerate_points_and_lines before "
-				"Surf->P->find_lines_which_are_contained" << endl;
+				"Geo.find_lines_which_are_contained" << endl;
 	}
-	Surf->P->find_lines_which_are_contained(Points, The_Lines, 0 /*verbose_level - 1*/);
+	Geo.find_lines_which_are_contained(Surf->P,
+			Points, The_Lines, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_object::enumerate_points_and_lines after "
-				"Surf->P->find_lines_which_are_contained" << endl;
+				"Geo.find_lines_which_are_contained" << endl;
 	}
 
 	if (f_v) {
@@ -2026,6 +2028,18 @@ void surface_object::export_something(std::string &what,
 				<< Fio.file_size(fname) << endl;
 
 		FREE_lint(Pts_off);
+	}
+	else if (ST.stringcmp(what, "lines") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_lines.csv");
+
+		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
+		Fio.lint_matrix_write_csv(fname, Lines, nb_lines, 1);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 	}
 	else if (ST.stringcmp(what, "Eckardt_points") == 0) {
 

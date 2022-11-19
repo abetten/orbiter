@@ -481,6 +481,7 @@ public:
 	void sort_rows(int verbose_level);
 	void check_that_entries_are_distinct(int verbose_level);
 	int search(int *entry, int &idx, int verbose_level);
+	void write_csv(std::string &fname, int verbose_level);
 
 };
 

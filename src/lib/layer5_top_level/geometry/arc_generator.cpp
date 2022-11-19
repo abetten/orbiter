@@ -47,29 +47,19 @@ arc_generator::arc_generator()
 	nb_points_total = 0;
 	nb_affine_lines = 0;
 
-	//f_semilinear = FALSE;
 
-	//f_has_forbidden_point_set = FALSE;
-	//forbidden_points_string = NULL;
 	forbidden_points = NULL;
 	nb_forbidden_points = 0;
 	f_is_forbidden = NULL;
 
 
-	//A = NULL;
 	SG = NULL;
-	//Grass = NULL;
-	//AG = NULL;
-	//A_on_lines = NULL;
 
 	Poset = NULL;
-	//P = NULL;
 
 	line_type = NULL;
 
 	gen = NULL;
-
-	//null();
 
 }
 
@@ -111,8 +101,6 @@ void arc_generator::main(int verbose_level)
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	
-
 	if (f_v) {
 		cout << "arc_generator::main before compute_starter" << endl;
 	}
@@ -121,11 +109,9 @@ void arc_generator::main(int verbose_level)
 		cout << "arc_generator::main after compute_starter" << endl;
 	}
 
-
-
 	if (f_v) {
 		cout << "arc_generator::main done" << endl;
-		}
+	}
 }
 
 void arc_generator::init(

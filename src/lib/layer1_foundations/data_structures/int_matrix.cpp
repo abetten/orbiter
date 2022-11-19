@@ -172,6 +172,23 @@ int int_matrix::search(int *entry, int &idx, int verbose_level)
 	return ret;
 }
 
+void int_matrix::write_csv(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "int_matrix::write_csv" << endl;
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	Fio.int_matrix_write_csv(fname, M, m, n);
+
+	if (f_v) {
+		cout << "int_matrix::write_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+}
+
 // callbacks:
 
 static int int_matrix_compare_with(

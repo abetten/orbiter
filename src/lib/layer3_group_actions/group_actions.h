@@ -189,6 +189,7 @@ enum permutation_group_type {
 	unknown_permutation_group_t,
 	symmetric_group_t,
 	cyclic_group_t,
+	identity_group_t,
 	dihedral_group_t,
 	bsgs_t,
 };

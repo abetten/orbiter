@@ -207,6 +207,10 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 				Descr->on_subspaces_dimension,
 				verbose_level);
 
+		if (f_v) {
+			cout << "orbits_create::init after Group->do_orbits_on_subspaces" << endl;
+		}
+
 		f_has_On_Subspaces = TRUE;
 
 

@@ -212,7 +212,7 @@ int projective_space::determine_hermitian_form_in_plane(
 	if (rk != 8) {
 		if (f_v) {
 			cout << "projective_space::determine_hermitian_form_"
-					"in_plane system underdetermined" << endl;
+					"in_plane system under-determined" << endl;
 		}
 		return FALSE;
 	}
@@ -334,7 +334,8 @@ void projective_space::intersection_of_subspace_with_point_set(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space::intersection_of_subspace_with_point_set" << endl;
+		cout << "projective_space::intersection_of_subspace_"
+				"with_point_set" << endl;
 	}
 
 	int h;
@@ -359,7 +360,8 @@ void projective_space::intersection_of_subspace_with_point_set(
 
 	FREE_int(M);
 	if (f_v) {
-		cout << "projective_space::intersection_of_subspace_with_point_set done" << endl;
+		cout << "projective_space::intersection_of_subspace_"
+				"with_point_set done" << endl;
 	}
 }
 
@@ -372,7 +374,8 @@ void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteg
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space::intersection_of_subspace_with_point_set_rank_is_longinteger" << endl;
+		cout << "projective_space::intersection_of_subspace_with_"
+				"point_set_rank_is_longinteger" << endl;
 	}
 	int h;
 	int d = n + 1;
@@ -396,7 +399,8 @@ void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteg
 
 	FREE_int(M);
 	if (f_v) {
-		cout << "projective_space::intersection_of_subspace_with_point_set_rank_is_longinteger done" << endl;
+		cout << "projective_space::intersection_of_subspace_with_"
+				"point_set_rank_is_longinteger done" << endl;
 	}
 }
 
@@ -419,14 +423,16 @@ void projective_space::plane_intersection_invariant(
 		cout << "projective_space::plane_intersection_invariant" << endl;
 	}
 	if (f_v) {
-		cout << "projective_space::plane_intersection_invariant before plane_intersection_type_fast" << endl;
+		cout << "projective_space::plane_intersection_invariant "
+				"before plane_intersection_type_fast" << endl;
 	}
 	plane_intersection_type_fast(G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes_total,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "projective_space::plane_intersection_invariant after plane_intersection_type_fast" << endl;
+		cout << "projective_space::plane_intersection_invariant "
+				"after plane_intersection_type_fast" << endl;
 	}
 
 	data_structures::tally C;
@@ -535,67 +541,76 @@ void projective_space::plane_intersection_invariant(
 }
 
 void projective_space::plane_intersection_type(
-	grassmann *G,
-	long int *set, int set_size,
-	int *&intersection_type, int &highest_intersection_number,
+	long int *set, int set_size, int threshold,
+	intersection_type *&Int_type,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object *R;
-	long int **Pts_on_plane;
-	int *nb_pts_on_plane;
-	int nb_planes;
-	int i, f, l, a;
+	//int i, f, l, a;
 
 	if (f_v) {
-		cout << "projective_space::plane_intersection_type" << endl;
+		cout << "projective_space::plane_intersection_type "
+				"threshold = " << threshold << endl;
 	}
+#if 0
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type "
 				"before plane_intersection_type_fast" << endl;
 	}
 	plane_intersection_type_fast(G,
 		set, set_size,
-		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
+		R,
+		Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type "
 				"after plane_intersection_type_fast" << endl;
 	}
-
-	data_structures::tally C;
-	int f_second = FALSE;
-
-	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type "
-				"plane-intersection type: ";
-		C.print(FALSE /*f_backwards*/);
+				"before plane_intersection_type_slow" << endl;
 	}
+	plane_intersection_type_slow(
+		set, set_size, threshold,
+		R,
+		Pts_on_plane, nb_pts_on_plane, nb_planes,
+		verbose_level);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type "
+				"after plane_intersection_type_slow" << endl;
+	}
+#endif
+
+
+
+
+	Int_type = NEW_OBJECT(intersection_type);
 
 	if (f_v) {
-		cout << "The plane intersection type is (";
-		C.print_naked(FALSE /*f_backwards*/);
-		cout << ")" << endl << endl;
+		cout << "projective_space::plane_intersection_type "
+				"before Int_type->plane_intersection_type_slow" << endl;
+	}
+	Int_type->plane_intersection_type_slow(
+		set, set_size, threshold,
+		this,
+		Grass_planes,
+		verbose_level);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type "
+				"after Int_type->plane_intersection_type_slow" << endl;
 	}
 
-	f = C.type_first[C.nb_types - 1];
-	highest_intersection_number = C.data_sorted[f];
-	intersection_type = NEW_int(highest_intersection_number + 1);
-	Int_vec_zero(intersection_type, highest_intersection_number + 1);
-	for (i = 0; i < C.nb_types; i++) {
-		f = C.type_first[i];
-		l = C.type_len[i];
-		a = C.data_sorted[f];
-		intersection_type[a] = l;
+
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type "
+				"before Int_type->compute_heighest_weight_objects" << endl;
+	}
+	Int_type->compute_heighest_weight_objects(verbose_level);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type "
+				"after Int_type->compute_heighest_weight_objects" << endl;
 	}
 
-	for (i = 0; i < nb_planes; i++) {
-		FREE_lint(Pts_on_plane[i]);
-	}
-	FREE_plint(Pts_on_plane);
-	FREE_int(nb_pts_on_plane);
-	FREE_OBJECTS(R);
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type "
 				"done" << endl;
@@ -651,101 +666,6 @@ void projective_space::plane_intersections(
 	}
 }
 
-void projective_space::plane_intersection_type_slow(
-	grassmann *G,
-	long int *set, int set_size,
-	ring_theory::longinteger_object *&R,
-	long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	//int f_v3 = (verbose_level >= 3);
-	long int r, rk, i, u, d, N_planes, l;
-
-	int *Basis;
-	int *Basis_save;
-	int *Coords;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "projective_space::plane_intersection_type_slow" << endl;
-	}
-	if (f_vv) {
-		print_set_numerical(cout, set, set_size);
-	}
-	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
-		cout << "projective_space::plane_intersection_type_slow "
-				"the input set if not a set" << endl;
-		exit(1);
-	}
-	d = n + 1;
-	N_planes = nb_rk_k_subspaces_as_lint(3);
-
-	if (f_v) {
-		cout << "N_planes=" << N_planes << endl;
-	}
-	// allocate data that is returned:
-	R = NEW_OBJECTS(ring_theory::longinteger_object, N_planes);
-	Pts_on_plane = NEW_plint(N_planes);
-	nb_pts_on_plane = NEW_int(N_planes);
-
-	// allocate temporary data:
-	Basis = NEW_int(4 * d);
-	Basis_save = NEW_int(4 * d);
-	Coords = NEW_int(set_size * d);
-
-	for (i = 0; i < set_size; i++) {
-		unrank_point(Coords + i * d, set[i]);
-	}
-	if (f_vv) {
-		cout << "projective_space::plane_intersection_type_slow "
-				"Coords:" << endl;
-		Int_matrix_print(Coords, set_size, d);
-	}
-
-	l = 0;
-	for (rk = 0; rk < N_planes; rk++) {
-
-		if (N_planes > 1000000) {
-			if ((rk % 250000) == 0) {
-				cout << "projective_space::plane_intersection_type_slow "
-						<< rk << " / " << N_planes << endl;
-			}
-		}
-		G->unrank_lint_here(Basis_save, rk, 0 /* verbose_level */);
-		//int_vec_copy(G->M, Basis_save, 3 * d);
-		long int *pts_on_plane;
-		int nb = 0;
-
-		pts_on_plane = NEW_lint(set_size);
-
-		for (u = 0; u < set_size; u++) {
-			Int_vec_copy(Basis_save, Basis, 3 * d);
-			Int_vec_copy(Coords + u * d, Basis + 3 * d, d);
-			r = F->Linear_algebra->rank_of_rectangular_matrix(Basis,
-					4, d, 0 /* verbose_level */);
-			if (r < 4) {
-				pts_on_plane[nb++] = u;
-			}
-		}
-
-
-		Pts_on_plane[l] = pts_on_plane;
-		nb_pts_on_plane[l] = nb;
-		R[l].create(rk, __FILE__, __LINE__);
-		l++;
-	} // rk
-	len = l;
-
-	FREE_int(Basis);
-	FREE_int(Basis_save);
-	FREE_int(Coords);
-	if (f_v) {
-		cout << "projective_space::plane_intersection_type_slow "
-				"done" << endl;
-	}
-}
 
 void projective_space::plane_intersection_type_fast(
 	grassmann *G,
@@ -1239,170 +1159,6 @@ void projective_space::line_intersection(int line_rank,
 	}
 }
 
-void projective_space::klein_correspondence(
-	projective_space *P5,
-	long int *set_in, int set_size, long int *set_out,
-	int verbose_level)
-// Computes the Pluecker coordinates
-// for a set of lines in PG(3,q) in the following order:
-// (x_1,x_2,x_3,x_4,x_5,x_6) =
-// (Pluecker_12, Pluecker_34, Pluecker_13,
-//    Pluecker_42, Pluecker_14, Pluecker_23)
-// satisfying the quadratic form x_1x_2 + x_3x_4 + x_5x_6 = 0
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int d = n + 1;
-	int h;
-	int basis8[8];
-	int v6[6];
-	int *x4, *y4;
-	long int a, b, c;
-	int f_elements_exponential = TRUE;
-	string symbol_for_print;
-
-
-
-
-	if (f_v) {
-		cout << "projective_space::klein_correspondence" << endl;
-	}
-
-
-	symbol_for_print.assign("\\alpha");
-
-	for (h = 0; h < set_size; h++) {
-		a = set_in[h];
-		Grass_lines->unrank_lint(a, 0 /* verbose_level */);
-		if (f_vv) {
-			cout << setw(5) << h << " : " << setw(5) << a << " :" << endl;
-			F->latex_matrix(cout, f_elements_exponential,
-				symbol_for_print, Grass_lines->M, 2, 4);
-			cout << endl;
-		}
-		Int_vec_copy(Grass_lines->M, basis8, 8);
-		if (f_vv) {
-			Int_matrix_print(basis8, 2, 4);
-		}
-		x4 = basis8;
-		y4 = basis8 + 4;
-		v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
-		v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
-		v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
-		v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
-		v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
-		v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
-		if (f_vv) {
-			cout << "v6 : ";
-			Int_vec_print(cout, v6, 6);
-			cout << endl;
-		}
-		a = F->mult(v6[0], v6[1]);
-		b = F->mult(v6[2], v6[3]);
-		c = F->mult(v6[4], v6[5]);
-		d = F->add3(a, b, c);
-		//cout << "a=" << a << " b=" << b << " c=" << c << endl;
-		//cout << "d=" << d << endl;
-		if (d) {
-			cout << "d != 0" << endl;
-			exit(1);
-		}
-		set_out[h] = P5->rank_point(v6);
-	}
-	if (f_v) {
-		cout << "projective_space::klein_correspondence done" << endl;
-	}
-}
-
-
-void projective_space::klein_correspondence_special_model(
-	projective_space *P5,
-	int *table, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int d = n + 1;
-	int h;
-	int basis8[8];
-	int x6[6];
-	int y6[6];
-	int *x4, *y4;
-	int a, b, c;
-	int half;
-	int f_elements_exponential = TRUE;
-	string symbol_for_print;
-	//int *table;
-
-	if (f_v) {
-		cout << "projective_space::klein_correspondence" << endl;
-	}
-	symbol_for_print.assign("\\alpha");
-	half = F->inverse(F->add(1, 1));
-	if (f_v) {
-		cout << "half=" << half << endl;
-		cout << "N_lines=" << N_lines << endl;
-	}
-	//table = NEW_int(N_lines);
-	for (h = 0; h < N_lines; h++) {
-		Grass_lines->unrank_lint(h, 0 /* verbose_level */);
-		if (f_vv) {
-			cout << setw(5) << h << " :" << endl;
-			F->latex_matrix(cout, f_elements_exponential,
-				symbol_for_print, Grass_lines->M, 2, 4);
-			cout << endl;
-		}
-		Int_vec_copy(Grass_lines->M, basis8, 8);
-		if (f_vv) {
-			Int_matrix_print(basis8, 2, 4);
-		}
-		x4 = basis8;
-		y4 = basis8 + 4;
-		x6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
-		x6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
-		x6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
-		x6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
-		x6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
-		x6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
-		if (f_vv) {
-			cout << "x6 : ";
-			Int_vec_print(cout, x6, 6);
-			cout << endl;
-		}
-		a = F->mult(x6[0], x6[1]);
-		b = F->mult(x6[2], x6[3]);
-		c = F->mult(x6[4], x6[5]);
-		d = F->add3(a, b, c);
-		//cout << "a=" << a << " b=" << b << " c=" << c << endl;
-		//cout << "d=" << d << endl;
-		if (d) {
-			cout << "d != 0" << endl;
-			exit(1);
-		}
-		y6[0] = F->negate(x6[0]);
-		y6[1] = x6[1];
-		y6[2] = F->mult(half, F->add(x6[2], x6[3]));
-		y6[3] = F->mult(half, F->add(x6[2], F->negate(x6[3])));
-		y6[4] = x6[4];
-		y6[5] = x6[5];
-		if (f_vv) {
-			cout << "y6 : ";
-			Int_vec_print(cout, y6, 6);
-			cout << endl;
-		}
-		table[h] = P5->rank_point(y6);
-	}
-
-	cout << "lines in PG(3,q) to points in PG(5,q) "
-			"in special model:" << endl;
-	for (h = 0; h < N_lines; h++) {
-		cout << setw(4) << h << " : " << setw(5) << table[h] << endl;
-	}
-
-	//FREE_int(table);
-	if (f_v) {
-		cout << "projective_space::klein_correspondence_special_model done" << endl;
-	}
-}
 
 void projective_space::cheat_sheet_points(
 		std::ostream &f, int verbose_level)
@@ -2152,7 +1908,6 @@ void projective_space::determine_nonconical_six_subsets(
 	int *nb_pts_on_conic;
 	int len;
 
-	//geometry_global Gg;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
 
@@ -2242,6 +1997,7 @@ void projective_space::determine_nonconical_six_subsets(
 	int nb, j, nb_E;
 	int *Nb_E;
 	long int Arc6[6];
+	geometry_global Geo;
 
 	nb = Rk.size();
 	Nb_E = NEW_int(nb);
@@ -2257,7 +2013,7 @@ void projective_space::determine_nonconical_six_subsets(
 		for (j = 0; j < 6; j++) {
 			Arc6[j] = set[subset[j]];
 		}
-		nb_E = nonconical_six_arc_get_nb_Eckardt_points(
+		nb_E = Geo.nonconical_six_arc_get_nb_Eckardt_points(this,
 				Arc6, 0 /* verbose_level */);
 		Nb_E[i] = nb_E;
 	}
@@ -2270,6 +2026,7 @@ void projective_space::determine_nonconical_six_subsets(
 		T.print_file_tex(cout, TRUE /* f_backwards*/);
 		cout << endl;
 	}
+
 
 	if (nb) {
 		int m, idx;
@@ -2301,7 +2058,7 @@ void projective_space::determine_nonconical_six_subsets(
 			for (j = 0; j < 6; j++) {
 				Arc6[j] = set[subset[j]];
 			}
-			nb_E = nonconical_six_arc_get_nb_Eckardt_points(
+			nb_E = Geo.nonconical_six_arc_get_nb_Eckardt_points(this,
 					Arc6, 0 /* verbose_level */);
 			if (nb_E != m) {
 				cout << "nb_E != m" << endl;
@@ -2807,246 +2564,6 @@ void projective_space::points_on_projective_triangle(
 	}
 }
 
-void projective_space::elliptic_curve_addition_table(
-	int *A6, int *Pts, int nb_pts, int *&Table,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, k;
-	int pi, pj, pk;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "projective_space::elliptic_curve_addition_table" << endl;
-	}
-	Table = NEW_int(nb_pts * nb_pts);
-	for (i = 0; i < nb_pts; i++) {
-		pi = Pts[i];
-		for (j = 0; j < nb_pts; j++) {
-			pj = Pts[j];
-			pk = elliptic_curve_addition(A6, pi, pj,
-					0 /* verbose_level */);
-			if (!Sorting.int_vec_search(Pts, nb_pts, pk, k)) {
-				cout << "projective_space::elliptic_curve_addition_table cannot find point pk" << endl;
-				cout << "i=" << i << " pi=" << pi << " j=" << j
-						<< " pj=" << pj << " pk=" << pk << endl;
-				cout << "Pts: ";
-				Int_vec_print(cout, Pts, nb_pts);
-				cout << endl;
-				exit(1);
-			}
-			Table[i * nb_pts + j] = k;
-		}
-	}
-	if (f_v) {
-		cout << "projective_space::elliptic_curve_addition_table done" << endl;
-	}
-}
-
-int projective_space::elliptic_curve_addition(
-	int *A6, int p1_rk, int p2_rk,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int p1[3];
-	int p2[3];
-	int p3[3];
-	int x1, y1, z1;
-	int x2, y2, z2;
-	int x3, y3, z3;
-	int a1, a2, a3, a4, a6;
-	int p3_rk;
-
-	if (f_v) {
-		cout << "projective_space::elliptic_curve_addition" << endl;
-	}
-
-	a1 = A6[0];
-	a2 = A6[1];
-	a3 = A6[2];
-	a4 = A6[3];
-	a6 = A6[5];
-
-	unrank_point(p1, p1_rk);
-	unrank_point(p2, p2_rk);
-	F->PG_element_normalize(p1, 1, 3);
-	F->PG_element_normalize(p2, 1, 3);
-
-	x1 = p1[0];
-	y1 = p1[1];
-	z1 = p1[2];
-	x2 = p2[0];
-	y2 = p2[1];
-	z2 = p2[2];
-	if (f_vv) {
-		cout << "projective_space::elliptic_curve_addition "
-				"x1=" << x1 << " y1=" << y1 << " z1=" << z1 << endl;
-		cout << "projective_space::elliptic_curve_addition "
-				"x2=" << x2 << " y2=" << y2 << " z2=" << z2 << endl;
-	}
-	if (z1 == 0) {
-		if (p1_rk != 1) {
-			cout << "projective_space::elliptic_curve_addition "
-					"z1 == 0 && p1_rk != 1" << endl;
-			exit(1);
-		}
-		x3 = x2;
-		y3 = y2;
-		z3 = z2;
-#if 0
-		if (z2 == 0) {
-			if (p2_rk != 1) {
-				cout << "projective_space::elliptic_curve_addition "
-						"z2 == 0 && p2_rk != 1" << endl;
-				exit(1);
-			}
-			x3 = 0;
-			y3 = 1;
-			z3 = 0;
-		}
-		else {
-			x3 = x2;
-			y3 = F->negate(F->add3(y2, F->mult(a1, x2), a3));
-			z3 = 1;
-		}
-#endif
-
-	}
-	else if (z2 == 0) {
-		if (p2_rk != 1) {
-			cout << "projective_space::elliptic_curve_addition "
-					"z2 == 0 && p2_rk != 1" << endl;
-			exit(1);
-		}
-		x3 = x1;
-		y3 = y1;
-		z3 = z1;
-
-#if 0
-		// at this point, we know that z1 is not zero.
-		x3 = x1;
-		y3 = F->negate(F->add3(y1, F->mult(a1, x1), a3));
-		z3 = 1;
-#endif
-
-	}
-	else {
-		// now both points are affine.
-
-
-		int lambda_top, lambda_bottom, lambda, nu_top, nu_bottom, nu;
-		int three, two; //, m_one;
-		int c;
-
-		c = F->add4(y1, y2, F->mult(a1, x2), a3);
-
-		if (x1 == x2 && c == 0) {
-			x3 = 0;
-			y3 = 1;
-			z3 = 0;
-		}
-		else {
-
-			two = F->add(1, 1);
-			three = F->add(two, 1);
-			//m_one = F->negate(1);
-
-
-
-			if (x1 == x2) {
-
-				// point duplication:
-				lambda_top = F->add4(F->mult3(three, x1, x1),
-						F->mult3(two, a2, x1), a4,
-						F->negate(F->mult(a1, y1)));
-				lambda_bottom = F->add3(F->mult(two, y1),
-						F->mult(a1, x1), a3);
-
-				nu_top = F->add4(F->negate(F->mult3(x1, x1, x1)),
-						F->mult(a4, x1), F->mult(two, a6),
-						F->negate(F->mult(a3, y1)));
-				nu_bottom = F->add3(F->mult(two, y1),
-						F->mult(a1, x1), a3);
-
-			}
-			else {
-				// adding different points:
-				lambda_top = F->add(y2, F->negate(y1));
-				lambda_bottom = F->add(x2, F->negate(x1));
-
-				nu_top = F->add(F->mult(y1, x2), F->negate(F->mult(y2, x1)));
-				nu_bottom = lambda_bottom;
-			}
-
-
-			if (lambda_bottom == 0) {
-				cout << "projective_space::elliptic_curve_addition "
-						"lambda_bottom == 0" << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"x1=" << x1 << " y1=" << y1 << " z1=" << z1 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"x2=" << x2 << " y2=" << y2 << " z2=" << z2 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a1=" << a1 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a2=" << a2 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a3=" << a3 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a4=" << a4 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a6=" << a6 << endl;
-				exit(1);
-			}
-			lambda = F->mult(lambda_top, F->inverse(lambda_bottom));
-
-			if (nu_bottom == 0) {
-				cout << "projective_space::elliptic_curve_addition "
-						"nu_bottom == 0" << endl;
-				exit(1);
-			}
-			nu = F->mult(nu_top, F->inverse(nu_bottom));
-
-			if (f_vv) {
-				cout << "projective_space::elliptic_curve_addition "
-						"a1=" << a1 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a2=" << a2 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a3=" << a3 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a4=" << a4 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"a6=" << a6 << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"three=" << three << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"lambda_top=" << lambda_top << endl;
-				cout << "projective_space::elliptic_curve_addition "
-						"lambda=" << lambda << " nu=" << nu << endl;
-			}
-			x3 = F->add3(F->mult(lambda, lambda), F->mult(a1, lambda),
-					F->negate(F->add3(a2, x1, x2)));
-			y3 = F->negate(F->add3(F->mult(F->add(lambda, a1), x3), nu, a3));
-			z3 = 1;
-		}
-	}
-	p3[0] = x3;
-	p3[1] = y3;
-	p3[2] = z3;
-	if (f_vv) {
-		cout << "projective_space::elliptic_curve_addition "
-				"x3=" << x3 << " y3=" << y3 << " z3=" << z3 << endl;
-	}
-	p3_rk = rank_point(p3);
-	if (f_v) {
-		cout << "projective_space::elliptic_curve_addition "
-				"done" << endl;
-	}
-	return p3_rk;
-}
-
 
 void projective_space::line_plane_incidence_matrix_restricted(
 	long int *Lines, int nb_lines, int *&M, int &nb_planes,
@@ -3063,8 +2580,7 @@ void projective_space::line_plane_incidence_matrix_restricted(
 		cout << "projective_space::line_plane_incidence_matrix_restricted" << endl;
 	}
 	if (n <= 2) {
-		cout << "projective_space::line_plane_incidence_matrix_"
-				"restricted n <= 2" << endl;
+		cout << "projective_space::line_plane_incidence_matrix_restricted n <= 2" << endl;
 		exit(1);
 	}
 	line_sz = 2 * (n + 1);
@@ -3705,109 +3221,6 @@ void projective_space::planes_through_a_line(
 	}
 }
 
-
-void projective_space::do_move_two_lines_in_hyperplane_stabilizer(
-		long int line1_from, long int line2_from,
-		long int line1_to, long int line2_to, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer" << endl;
-	}
-
-	if (n != 3) {
-		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer n != 3" << endl;
-		exit(1);
-	}
-	geometry_global Gg;
-	int A4[16];
-
-
-	Gg.hyperplane_lifting_with_two_lines_moved(this,
-			line1_from, line1_to,
-			line2_from, line2_to,
-			A4,
-			verbose_level);
-
-	cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
-	Int_matrix_print(A4, 4, 4);
-
-	if (f_v) {
-		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
-	}
-}
-
-void projective_space::do_move_two_lines_in_hyperplane_stabilizer_text(
-		std::string &line1_from_text, std::string &line2_from_text,
-		std::string &line1_to_text, std::string &line2_to_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
-	}
-	if (n != 3) {
-		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer n != 3" << endl;
-		exit(1);
-	}
-
-	geometry_global Gg;
-	int A4[16];
-
-
-	int *line1_from_data;
-	int *line2_from_data;
-	int *line1_to_data;
-	int *line2_to_data;
-	int sz;
-
-	Int_vec_scan(line1_from_text, line1_from_data, sz);
-	if (sz != 8) {
-		cout << "line1_from_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-	Int_vec_scan(line2_from_text, line2_from_data, sz);
-	if (sz != 8) {
-		cout << "line2_from_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-	Int_vec_scan(line1_to_text, line1_to_data, sz);
-	if (sz != 8) {
-		cout << "line1_to_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-	Int_vec_scan(line2_to_text, line2_to_data, sz);
-	if (sz != 8) {
-		cout << "line2_to_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-
-	long int line1_from;
-	long int line2_from;
-	long int line1_to;
-	long int line2_to;
-
-	line1_from = rank_line(line1_from_data);
-	line2_from = rank_line(line2_from_data);
-	line1_to = rank_line(line1_to_data);
-	line2_to = rank_line(line2_to_data);
-
-
-	Gg.hyperplane_lifting_with_two_lines_moved(this,
-			line1_from, line1_to,
-			line2_from, line2_to,
-			A4,
-			verbose_level);
-
-	cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
-	Int_matrix_print(A4, 4, 4);
-
-	if (f_v) {
-		cout << "projective_space::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
-	}
-}
 
 
 }}}

@@ -1977,11 +1977,13 @@ void poset_classification::make_graph(int depth,
 			//LG->add_node_vec_data(lvl, po, the_set, lvl, 0 /* verbose_level */);
 
 
-			if (Control->f_node_label_is_group_order) {
+			// ToDo:
+			if (FALSE /* Control->f_node_label_is_group_order */) {
 				// label the node with the group order:
 				LG->add_node_data1(lvl, po, go.as_int(), 0/*verbose_level*/);
 			}
-			else if (Control->f_node_label_is_element) {
+			// ToDo:
+			else if (TRUE /* Control->f_node_label_is_element*/) {
 				// label the node with the point:
 				if (lvl) {
 					LG->add_node_data1(lvl, po, Poo->get_node(n)->get_pt(), 0/*verbose_level*/);

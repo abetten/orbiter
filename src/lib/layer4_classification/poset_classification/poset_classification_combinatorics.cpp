@@ -18,6 +18,108 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
+void poset_classification::compute_Kramer_Mesner_matrix(int t, int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "poset_classification::compute_Kramer_Mesner_matrix" << endl;
+	}
+
+
+	// compute Kramer Mesner matrices
+	long int **pM;
+	int *Nb_rows, *Nb_cols;
+	int h;
+
+	pM = NEW_plint(k);
+	Nb_rows = NEW_int(k);
+	Nb_cols = NEW_int(k);
+	for (h = 0; h < k; h++) {
+		Kramer_Mesner_matrix_neighboring(h, pM[h], Nb_rows[h], Nb_cols[h], verbose_level - 2);
+		if (f_v) {
+			cout << "poset_classification::compute_Kramer_Mesner_matrix matrix "
+					"level " << h << " computed" << endl;
+	#if 0
+			int j;
+			for (i = 0; i < Nb_rows[h]; i++) {
+				for (j = 0; j < Nb_cols[h]; j++) {
+					cout << pM[h][i * Nb_cols[h] + j];
+					if (j < Nb_cols[h]) {
+						cout << ",";
+					}
+				}
+				cout << endl;
+			}
+	#endif
+		}
+	}
+
+	long int *Mtk;
+	int nb_r, nb_c;
+
+
+	if (f_v) {
+		cout << "poset_classification::compute_Kramer_Mesner_matrix before Mtk_from_MM" << endl;
+	}
+	Mtk_from_MM(pM, Nb_rows, Nb_cols,
+			t, k,
+			Mtk,
+			nb_r, nb_c,
+			verbose_level);
+	if (f_v) {
+		cout << "poset_classification::compute_Kramer_Mesner_matrix after Mtk_from_MM" << endl;
+		cout << "poset_classification::compute_Kramer_Mesner_matrix M_{" << t << ","
+				<< k << "} has size " << nb_r << " x "
+				<< nb_c << "." << endl;
+
+#if 0
+		int j;
+		for (i = 0; i < nb_r; i++) {
+			for (j = 0; j < nb_c; j++) {
+				cout << Mtk[i * nb_c + j];
+				if (j < nb_c - 1) {
+					cout << ",";
+				}
+			}
+			cout << endl;
+		}
+#endif
+
+	}
+
+
+
+	orbiter_kernel_system::file_io Fio;
+	int i;
+
+	string fname;
+	char str[1000];
+
+	fname.assign(problem_label);
+	snprintf(str, sizeof(str), "_KM_%d_%d.csv", t, k);
+	fname.append(str);
+	Fio.lint_matrix_write_csv(fname, Mtk, nb_r, nb_c);
+	//Mtk.print(cout);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "poset_classification::compute_Kramer_Mesner_matrix computing "
+				"Kramer Mesner matrices done" << endl;
+	}
+	for (i = 0; i < k; i++) {
+		FREE_lint(pM[i]);
+	}
+	FREE_plint(pM);
+	FREE_lint(Mtk);
+
+	if (f_v) {
+		cout << "poset_classification::compute_Kramer_Mesner_matrix done" << endl;
+	}
+}
+
 void poset_classification::Plesken_matrix_up(int depth,
 		int *&P, int &N, int verbose_level)
 {

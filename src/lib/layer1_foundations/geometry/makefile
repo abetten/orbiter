@@ -23,6 +23,7 @@ MODULES = \
 	hermitian.o \
 	hjelmslev.o \
 	incidence_structure.o \
+	intersection_type.o \
 	klein_correspondence.o \
 	knarr.o \
 	object_with_canonical_form.o \

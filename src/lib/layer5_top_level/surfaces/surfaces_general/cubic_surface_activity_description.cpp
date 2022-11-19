@@ -28,10 +28,6 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 	f_export_something = FALSE;
 	//std::string export_something_what;
 
-	//f_clebsch = FALSE;
-
-	//f_codes = FALSE;
-
 	f_all_quartic_curves = FALSE;
 
 	f_export_all_quartic_curves = FALSE;
@@ -78,20 +74,6 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-export_something " << export_something_what << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-clebsch") == 0) {
-			f_clebsch = TRUE;
-			if (f_v) {
-				cout << "-clebsch " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-codes") == 0) {
-			f_codes = TRUE;
-			if (f_v) {
-				cout << "-codes " << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-all_quartic_curves") == 0) {
 			f_all_quartic_curves = TRUE;
 			if (f_v) {
@@ -144,14 +126,6 @@ void cubic_surface_activity_description::print()
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;
 	}
-#if 0
-	if (f_clebsch) {
-		cout << "-clebsch " << endl;
-	}
-	if (f_codes) {
-		cout << "-codes " << endl;
-	}
-#endif
 	if (f_all_quartic_curves) {
 		cout << "-all_quartic_curves " << endl;
 	}

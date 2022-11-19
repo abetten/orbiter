@@ -164,9 +164,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		cout << "table_of_quartic_curves" << endl;
 
-		//projective_space_global G;
-
-		//G.table_of_quartic_curves(PA, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"before PA->table_of_quartic_curves" << endl;
@@ -183,9 +180,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		cout << "table_of_cubic_surfaces" << endl;
 
-		//projective_space_global G;
-
-		//G.table_of_cubic_surfaces(PA, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"before PA->table_of_cubic_surfaces" << endl;
@@ -609,22 +603,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->Arc_generator_description,
 				verbose_level);
 	}
-#if 0
-	else if (Descr->f_latex_homogeneous_equation) {
-
-		geometry::geometry_global G;
-		int degree = Descr->latex_homogeneous_equation_degree;
-		int nb_vars = PA->d;
-
-		G.latex_homogeneous_equation(PA->F, degree, nb_vars,
-				Descr->latex_homogeneous_equation_text,
-				Descr->latex_homogeneous_equation_symbol_txt,
-				Descr->latex_homogeneous_equation_symbol_tex,
-				verbose_level);
-
-
-	}
-#endif
 	else if (Descr->f_lines_on_point_but_within_a_plane) {
 
 		if (f_v) {
@@ -671,14 +649,17 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer) {
 
 
-		PA->P->do_move_two_lines_in_hyperplane_stabilizer(
+		geometry::geometry_global Geo;
+
+		Geo.do_move_two_lines_in_hyperplane_stabilizer(PA->P,
 				Descr->line1_from, Descr->line2_from,
 				Descr->line1_to, Descr->line2_to, verbose_level);
 	}
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer_text) {
 
+		geometry::geometry_global Geo;
 
-		PA->P->do_move_two_lines_in_hyperplane_stabilizer_text(
+		Geo.do_move_two_lines_in_hyperplane_stabilizer_text(PA->P,
 				Descr->line1_from_text, Descr->line2_from_text,
 				Descr->line1_to_text, Descr->line2_to_text,
 				verbose_level);
@@ -975,6 +956,86 @@ void projective_space_activity::perform_activity(int verbose_level)
 				<< Fio.file_size(fname_inc) << endl;
 
 		FREE_int(M);
+
+	}
+	else if (Descr->f_plane_intersection_type_of_klein_image) {
+		cout << "plane_intersection_type_of_klein_image:" << Descr->plane_intersection_type_of_klein_image_input << endl;
+		cout << "plane_intersection_type_of_klein_image_threshold = " << Descr->plane_intersection_type_of_klein_image_threshold << endl;
+
+		long int *Lines;
+		int nb_lines;
+
+		Get_vector_or_set(Descr->plane_intersection_type_of_klein_image_input, Lines, nb_lines);
+
+		//int *intersection_type;
+		//int highest_intersection_number;
+
+		geometry::projective_space *P5;
+
+		P5 = NEW_OBJECT(geometry::projective_space);
+
+		int f_init_incidence_structure = TRUE;
+
+		if (f_v) {
+			cout << "before P5->projective_space_init" << endl;
+		}
+		P5->projective_space_init(5, PA->P->F,
+				f_init_incidence_structure,
+				verbose_level);
+		if (f_v) {
+			cout << "after P5->projective_space_init" << endl;
+		}
+
+		if (f_v) {
+			cout << "before plane_intersection_type_of_klein_image" << endl;
+		}
+
+		geometry::intersection_type *Int_type;
+
+		PA->P->Grass_lines->plane_intersection_type_of_klein_image(
+				PA->P /* P3 */,
+				P5,
+				Lines, nb_lines, Descr->plane_intersection_type_of_klein_image_threshold,
+				Int_type,
+				verbose_level);
+
+		if (f_v) {
+			cout << "after plane_intersection_type_of_klein_image" << endl;
+		}
+
+		cout << "intersection numbers: ";
+		Int_vec_print(cout, Int_type->the_intersection_type, Int_type->highest_intersection_number + 1);
+		cout << endl;
+
+		if (f_v) {
+			cout << "highest weight objects: " << endl;
+			Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
+			cout << endl;
+		}
+
+		if (f_v) {
+			cout << "Intersection_sets: " << endl;
+			Int_matrix_print(Int_type->Intersection_sets, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+		}
+
+		if (f_v) {
+			cout << "Intersection_sets sorted: " << endl;
+			Int_matrix_print(Int_type->M->M, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+		}
+
+		string fname;
+		data_structures::string_tools ST;
+
+		fname.assign(Descr->plane_intersection_type_of_klein_image_input);
+		ST.chop_off_extension(fname);
+		fname.append("_highest_weight_objects.csv");
+
+		Int_type->M->write_csv(fname, verbose_level);
+
+
+		FREE_OBJECT(Int_type);
+
+		FREE_OBJECT(P5);
 
 	}
 

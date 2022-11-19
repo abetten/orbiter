@@ -975,6 +975,16 @@ public:
 	int f_stabilizer_of_orbit_rep;
 	int stabilizer_of_orbit_rep_orbit_idx;
 
+	int f_Kramer_Mesner_matrix;
+	int Kramer_Mesner_t;
+	int Kramer_Mesner_k;
+
+	int f_recognize;
+	std::vector<std::string> recognize;
+
+	int f_report_options;
+	poset_classification::poset_classification_report_options *report_options;
+
 
 	orbits_activity_description();
 	~orbits_activity_description();
@@ -1015,6 +1025,8 @@ public:
 	void do_draw_tree(int verbose_level);
 	void do_stabilizer(int verbose_level);
 	void do_stabilizer_of_orbit_rep(int verbose_level);
+	void do_Kramer_Mesner_matrix(int verbose_level);
+	void do_recognize(int verbose_level);
 
 };
 
