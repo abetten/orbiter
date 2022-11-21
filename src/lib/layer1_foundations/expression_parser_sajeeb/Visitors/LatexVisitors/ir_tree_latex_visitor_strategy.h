@@ -22,10 +22,10 @@ public:
     enum class type {
         FAMILY_TREE=0, SIMPLE_TREE
     };
-    static vector<shared_ptr<IRTreeVoidReturnTypeVisitor>> concrete_strategy;
+    static vector<shared_ptr<IRTreeVoidReturnTypeVisitorInterface>> concrete_strategy;
 
     class wrapper final {
-        shared_ptr<IRTreeVoidReturnTypeVisitor> concrete_strategy;
+        shared_ptr<IRTreeVoidReturnTypeVisitorInterface> concrete_strategy;
         ir_tree_latex_visitor_strategy::type strategy_type;
 
     public:
@@ -46,12 +46,12 @@ public:
             }
         }
 
-        IRTreeVoidReturnTypeVisitor* get_visitor() {
+        IRTreeVoidReturnTypeVisitorInterface* get_visitor() {
             return concrete_strategy.get();
         }
 
         void set_output_stream(std::ostream& ostream) {
-            IRTreeVoidReturnTypeVisitor* raw_ptr = concrete_strategy.get();
+            IRTreeVoidReturnTypeVisitorInterface* raw_ptr = concrete_strategy.get();
             switch (strategy_type) {
                 case ir_tree_latex_visitor_strategy::type::FAMILY_TREE: {
                     static_cast<ir_tree_latex_visitor_family_tree*>(raw_ptr)->set_output_stream(ostream);

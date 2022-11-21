@@ -81,8 +81,8 @@ class monomial_coefficient_table final : public unordered_map<vector<unsigned in
                                                               monomial_coefficient_table_key_equal_function> {};
 
 
-class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitor,
-                                      public IRTreeVoidReturnTypeVariadicArgumentVisitor<vector<unsigned int>&> {
+class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterface,
+                                      public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<vector<unsigned int>&> {
     typedef size_t index_t;
 
     void visit(plus_node* op_node, vector<unsigned int>& exponent_vector) override;
@@ -98,7 +98,7 @@ class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitor,
     managed_variables_index_table* symbol_table;
     monomial_coefficient_table monomial_coefficient_table_;
 
-    using IRTreeVoidReturnTypeVisitor::visit;
+    using IRTreeVoidReturnTypeVisitorInterface::visit;
 
 public:
     void visit(multiply_node* op_node) override;

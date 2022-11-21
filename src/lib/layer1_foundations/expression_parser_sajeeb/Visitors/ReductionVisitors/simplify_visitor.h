@@ -12,7 +12,7 @@
 #define SIMPLIFY_VISITOR_H
 
 
-class simplify_visitor : public IRTreeVoidReturnTypeVisitor {
+class simplify_visitor : public IRTreeVoidReturnTypeVisitorInterface {
 public:
 };
 
