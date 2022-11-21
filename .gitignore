@@ -9,10 +9,12 @@ ORBITER/nbproject/
 orbiter.tar.gz
 .settings/language.settings.xml
 
-.idea/*
+idea/
 CMakeLists.txt
 cmake-build-debug/
 
+.*
+!/.gitignore
+!/src/lib/layer1_foundations/expression_parser_sajeeb/.gitignore
 
 _config.yml
-
