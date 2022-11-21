@@ -18,7 +18,7 @@
 using std::shared_ptr;
 
 class simplify_numerical_visitor : public simplify_visitor,
-                                   public IRTreeTemplateReturnTypeVariadicArgumentVisitor<decltype(number_node::value),
+                                   public IRTreeTemplateReturnTypeVariadicArgumentVisitorInterface<decltype(number_node::value),
                                            irtree_node*> {
 
     inline 

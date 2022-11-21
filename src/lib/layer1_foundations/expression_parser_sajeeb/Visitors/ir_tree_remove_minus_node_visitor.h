@@ -16,7 +16,7 @@ using std::list;
 using std::cout;
 using std::endl;
 
-class ir_tree_remove_minus_node_visitor : public IRTreeVoidReturnTypeVisitor {
+class ir_tree_remove_minus_node_visitor : public IRTreeVoidReturnTypeVisitorInterface {
 public:
     void visit(plus_node* op_node);
 	void visit(minus_node* op_node);

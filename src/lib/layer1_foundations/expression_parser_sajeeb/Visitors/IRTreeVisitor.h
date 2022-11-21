@@ -18,7 +18,7 @@
 #endif
 
 template<class return_t, class... Args>
-class IRTreeTemplateReturnTypeVariadicArgumentVisitor {
+class IRTreeTemplateReturnTypeVariadicArgumentVisitorInterface {
 public:
     virtual return_t visit(plus_node* op_node, Args... args) = 0;
     virtual return_t visit(minus_node* op_node, Args... args) = 0;
@@ -33,7 +33,7 @@ public:
 
 
 template<class return_t, class... Args>
-class IRTreeTemplateReturnTypeVariadicArgumentConstantVisitor {
+class IRTreeTemplateReturnTypeVariadicArgumentConstantVisitorInterface {
 public:
     virtual return_t visit(const plus_node* op_node, Args... args) = 0;
     virtual return_t visit(const minus_node* op_node, Args... args) = 0;
@@ -49,7 +49,7 @@ public:
 
 
 template<class... Args>
-class IRTreeVoidReturnTypeVariadicArgumentReferenceVisitor {
+class IRTreeVoidReturnTypeVariadicArgumentReferenceVisitorInterface {
 public:
     virtual void visit(plus_node* op_node, Args... args) = 0;
     virtual void visit(minus_node* op_node, Args... args) = 0;
@@ -65,7 +65,7 @@ public:
 
 
 template<class... Args>
-class IRTreeVoidReturnTypeVariadicArgumentVisitor {
+class IRTreeVoidReturnTypeVariadicArgumentVisitorInterface {
 public:
     virtual void visit(plus_node* op_node, Args... args) = 0;
     virtual void visit(minus_node* op_node, Args... args) = 0;
@@ -81,7 +81,7 @@ public:
 
 
 template<class... Args>
-class IRTreeVoidReturnTypeVariadicArgumentConstantVisitor {
+class IRTreeVoidReturnTypeVariadicArgumentConstantVisitorInterface {
 public:
     virtual void visit(const plus_node* op_node, Args... args) = 0;
     virtual void visit(const minus_node* op_node, Args... args) = 0;
@@ -96,7 +96,7 @@ public:
 
 
 template<class return_t>
-class IRTreeTemplateReturnTypeVisitor {
+class IRTreeTemplateReturnTypeVisitorInterface {
 public:
     virtual return_t visit(plus_node* op_node) = 0;
     virtual return_t visit(minus_node* op_node) = 0;
@@ -111,7 +111,7 @@ public:
 
 
 template<class return_t>
-class IRTreeTemplateReturnTypeConstantVisitor {
+class IRTreeTemplateReturnTypeConstantVisitorInterface {
 public:
     // base template function set
     virtual return_t visit(const plus_node* op_node) = 0;
@@ -126,7 +126,7 @@ public:
 };
 
 
-class IRTreeVoidReturnTypeVisitor {
+class IRTreeVoidReturnTypeVisitorInterface {
 public:
     virtual void visit(plus_node* op_node);
     virtual void visit(minus_node* op_node);
@@ -140,7 +140,7 @@ public:
 };
 
 
-class IRTreeVoidReturnTypeConstantVisitor {
+class IRTreeVoidReturnTypeConstantVisitorInterface {
 public:
     virtual void visit(const plus_node* op_node) = 0;
     virtual void visit(const minus_node* op_node) = 0;

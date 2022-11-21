@@ -18,7 +18,7 @@
 using std::string;
 using std::list;
 
-class ir_tree_to_string_visitor : public IRTreeVoidReturnTypeVisitor {
+class ir_tree_to_string_visitor : public IRTreeVoidReturnTypeVisitorInterface {
     list<string> rep;
     list<string>::iterator loc;
     list<string>::iterator left;

@@ -10,7 +10,7 @@
 #ifndef GRAMMAR_TEST_EVAL_VISITOR_H
 #define GRAMMAR_TEST_EVAL_VISITOR_H
 
-class eval_visitor : public IRTreeTemplateReturnTypeVariadicArgumentConstantVisitor<int, void*> {
+class eval_visitor : public IRTreeTemplateReturnTypeVariadicArgumentConstantVisitorInterface<int, void*> {
     typedef int return_t;
 
 public:

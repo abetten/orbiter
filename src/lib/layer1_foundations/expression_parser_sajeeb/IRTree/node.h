@@ -23,7 +23,7 @@ using std::vector;
 #endif
 
 #define DEFINE_ACCEPT_VISITOR_FUNCTION() \
-    void accept(IRTreeVoidReturnTypeVisitor* visitor) override {visitor->visit(this);} \
+    void accept(IRTreeVoidReturnTypeVisitorInterface* visitor) override {visitor->visit(this);} \
     void accept(IRTreeChildLinkArgumentVisitor* visitor) override {visitor->visit(this);} \
     void accept(IRTreeChildLinkArgumentVisitor* visitor, list<shared_ptr<irtree_node>>::iterator& link) override \
         {visitor->visit(this, link);}    \
@@ -34,7 +34,7 @@ using std::vector;
         visitor->visit(this);                                 \
     }                                    \
     void accept(simplify_visitor* visitor) override { visitor->visit(this); }                                    \
-    int accept_simplify_numerical_visitor(IRTreeTemplateReturnTypeVariadicArgumentVisitor<int, irtree_node*>* visitor,                     \
+    int accept_simplify_numerical_visitor(IRTreeTemplateReturnTypeVariadicArgumentVisitorInterface<int, irtree_node*>* visitor,                     \
                irtree_node* parent_node) override {             \
         return visitor->visit(this, parent_node);                       \
     }\
@@ -77,9 +77,9 @@ public:
     virtual ~irtree_node();
     virtual void accept(simplify_visitor* visitor) = 0;
     virtual int accept_simplify_numerical_visitor(
-                        IRTreeTemplateReturnTypeVariadicArgumentVisitor<int, irtree_node*>* visitor,
+                        IRTreeTemplateReturnTypeVariadicArgumentVisitorInterface<int, irtree_node*>* visitor,
                         irtree_node* parent_node) = 0;
-    virtual void accept(IRTreeVoidReturnTypeVisitor* visitor) = 0;
+    virtual void accept(IRTreeVoidReturnTypeVisitorInterface* visitor) = 0;
 	virtual void accept(IRTreeChildLinkArgumentVisitor* visitor) = 0;
 	virtual void accept(IRTreeChildLinkArgumentVisitor* visitor,
 						list<shared_ptr<irtree_node>>::iterator& link) = 0;
