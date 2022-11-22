@@ -30,18 +30,18 @@ lexer.yy.o: lexer.yy.h
 lexer.yy.h: scanner.lex
 	$(LEX) --header-file=lexer.yy.h -o $(@:%.h=%.cpp) $<
 
-parser.tab.hpp: parser.yacc IRtree/node.h IRtree/node.cpp
+parser.tab.hpp: parser.yacc IRTree/node.h IRTree/node.cpp
 	$(YACC) $(YACCFLAGS) $< -o $(@:%.hpp=%.cpp)
 
 parser.tab.o: parser.tab.hpp
 	$(CC) $(CSTD) $(CPPFLAGS) $(@:%.o=%.cpp) -c -o $@
 
 ir_tree: FORCE
-	ln -sf $(shell pwd)/*.mk IRtree/
-	$(MAKE) -C IRtree all
+	ln -sf $(shell pwd)/*.mk $(shell pwd)/IRTree/
+	$(MAKE) -C IRTree all
 
 visitors: FORCE
-	ln -sf $(shell pwd)/*.mk Visitors/
+	ln -sf $(shell pwd)/*.mk $(shell pwd)/Visitors/
 	$(MAKE) -C Visitors all
 
 clean: clean_base_target
