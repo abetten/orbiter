@@ -37,11 +37,11 @@ parser.tab.o: parser.tab.hpp
 	$(CC) $(CSTD) $(CPPFLAGS) $(@:%.o=%.cpp) -c -o $@
 
 ir_tree: FORCE
-	ln -sf $(shell pwd)/*.mk $(shell pwd)/IRTree/
+	ln -sf $(shell pwd)/*.mk IRTree/
 	$(MAKE) -C IRTree all
 
 visitors: FORCE
-	ln -sf $(shell pwd)/*.mk $(shell pwd)/Visitors/
+	ln -sf $(shell pwd)/*.mk Visitors/
 	$(MAKE) -C Visitors all
 
 clean: clean_base_target

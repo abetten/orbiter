@@ -12,7 +12,7 @@ CLEAN_TARGETS = $(addsuffix Clean, $(VISITOR_DIRECTORIES))
 all: $(TARGET_OBJECT_FILES) $(VISITOR_DIRECTORIES)
 
 %Visitors: FORCE
-	ln -sf $(shell pwd)/*.mk $(shell pwd)/$@
+	ln -sf $(shell pwd)/*.mk $@
 	$(MAKE) -C $@ all
 	
 clean: $(CLEAN_TARGETS) clean_base_target
