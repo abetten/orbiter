@@ -13,37 +13,37 @@ using std::shared_ptr;
 using std::cout;
 using std::endl;
 
-void IRTreeVoidReturnTypeVisitor::visit(plus_node* op_node) {
+void IRTreeVoidReturnTypeVisitorInterface::visit(plus_node* op_node) {
     for (shared_ptr<irtree_node>& child : op_node->children)
         child->accept(this);
 }
 
-void IRTreeVoidReturnTypeVisitor::visit(minus_node* op_node) {
+void IRTreeVoidReturnTypeVisitorInterface::visit(minus_node* op_node) {
     for (shared_ptr<irtree_node>& child : op_node->children)
         child->accept(this);
 }
 
-void IRTreeVoidReturnTypeVisitor::visit(multiply_node* op_node) {
+void IRTreeVoidReturnTypeVisitorInterface::visit(multiply_node* op_node) {
     for (shared_ptr<irtree_node>& child : op_node->children)
         child->accept(this);
 }
 
-void IRTreeVoidReturnTypeVisitor::visit(exponent_node* op_node) {
+void IRTreeVoidReturnTypeVisitorInterface::visit(exponent_node* op_node) {
     for (shared_ptr<irtree_node>& child : op_node->children)
         child->accept(this);
 }
 
-void IRTreeVoidReturnTypeVisitor::visit(unary_negate_node* op_node) {
+void IRTreeVoidReturnTypeVisitorInterface::visit(unary_negate_node* op_node) {
     for (shared_ptr<irtree_node>& child : op_node->children)
         child->accept(this);
 }
 
-void IRTreeVoidReturnTypeVisitor::visit(sentinel_node* op_node) {
+void IRTreeVoidReturnTypeVisitorInterface::visit(sentinel_node* op_node) {
     for (shared_ptr<irtree_node>& child : op_node->children)
         child->accept(this);
 }
 
-void IRTreeVoidReturnTypeVisitor::visit(variable_node* num_node) {}
-void IRTreeVoidReturnTypeVisitor::visit(parameter_node* node) {}
-void IRTreeVoidReturnTypeVisitor::visit(number_node* op_node) {}
+void IRTreeVoidReturnTypeVisitorInterface::visit(variable_node* num_node) {}
+void IRTreeVoidReturnTypeVisitorInterface::visit(parameter_node* node) {}
+void IRTreeVoidReturnTypeVisitorInterface::visit(number_node* op_node) {}
 

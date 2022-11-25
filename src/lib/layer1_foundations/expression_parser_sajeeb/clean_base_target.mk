@@ -1,4 +1,5 @@
 clean_base_target:
+	@-rm -rfv .deps
 	@-rm -rfv *.yy.* \
 			*.bak \
 			*.o \

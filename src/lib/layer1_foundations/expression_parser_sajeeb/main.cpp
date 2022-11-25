@@ -47,7 +47,7 @@ public:
         if (latex_output_stream.is_open()) latex_output_stream.close();
     }
 
-    IRTreeVoidReturnTypeVisitor* operator()() {
+    IRTreeVoidReturnTypeVisitorInterface* operator()() {
         if (latex_output_stream.is_open()) latex_output_stream.close();
         latex_output_stream.open(directory + "stage" + std::to_string(stage_counter++) + ".tex");
 

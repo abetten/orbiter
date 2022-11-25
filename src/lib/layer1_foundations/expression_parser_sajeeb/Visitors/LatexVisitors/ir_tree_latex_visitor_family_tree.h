@@ -12,7 +12,7 @@
 #ifndef IR_TREE_LATEX_VISITOR_FAMILY_TREE
 #define IR_TREE_LATEX_VISITOR_FAMILY_TREE
 
-class ir_tree_latex_visitor_family_tree : public IRTreeVoidReturnTypeVisitor, public ir_tree_latex_visitor {
+class ir_tree_latex_visitor_family_tree : public IRTreeVoidReturnTypeVisitorInterface, public ir_tree_latex_visitor {
     void add_epilogue() override;
     void add_prologue() override;
 
