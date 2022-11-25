@@ -16,8 +16,8 @@
 using std::list;
 using std::shared_ptr;
 
-class IRTreeChildLinkArgumentVisitor : public IRTreeVoidReturnTypeVisitor,
-                                       public IRTreeVoidReturnTypeVariadicArgumentVisitor<
+class IRTreeChildLinkArgumentVisitor : public IRTreeVoidReturnTypeVisitorInterface,
+                                       public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<
                                                 list<shared_ptr<irtree_node> >::iterator&> {
 public:
     void visit(plus_node* op_node) override;

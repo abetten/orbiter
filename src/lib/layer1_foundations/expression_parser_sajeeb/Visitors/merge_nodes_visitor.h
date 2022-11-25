@@ -12,7 +12,7 @@ using std::endl;
 using std::shared_ptr;
 using std::make_shared;
 
-class merge_nodes_visitor final : public IRTreeVoidReturnTypeVisitor {
+class merge_nodes_visitor final : public IRTreeVoidReturnTypeVisitorInterface {
 public:
     void visit(plus_node* op_node);
 	void visit(multiply_node* op_node);

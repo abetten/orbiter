@@ -19,7 +19,7 @@
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 #endif
 
-class ir_tree_latex_visitor_simple_tree final : public ir_tree_latex_visitor, public IRTreeVoidReturnTypeVisitor {
+class ir_tree_latex_visitor_simple_tree final : public ir_tree_latex_visitor, public IRTreeVoidReturnTypeVisitorInterface {
     void add_epilogue() override;
     void add_prologue() override;
 

@@ -12,7 +12,7 @@ using std::endl;
 using std::shared_ptr;
 using std::make_shared;
 
-class uminus_distribute_and_reduce_visitor : public IRTreeVoidReturnTypeVisitor {
+class uminus_distribute_and_reduce_visitor : public IRTreeVoidReturnTypeVisitorInterface {
     using node_type = irtree_node::node_type;
 
     node_type previous_node;

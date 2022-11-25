@@ -7,7 +7,7 @@
 
 #include "exponent_vector_visitor.h"
 #include "../IRTree/node.h"
-
+#include <cassert>
 
 typedef unsigned int uint32_t;
 

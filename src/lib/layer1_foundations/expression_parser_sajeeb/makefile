@@ -19,10 +19,10 @@ TEX_FILES = $(wildcard visitor_result/*.tex)
 EXECUTABLE_BINARY = main
 
 
-main: $(SRCS:.cpp=.o) lexer.yy.o parser.tab.o visitors ir_tree
-	$(CC) $(CSTD) $(CPPFLAGS) $(TARGET_OBJECT_FILES) -o $@ $(LDFLAGS) -L ../../ -lorbiter $(LEXLIB)
+main: visitors ir_tree | parser.tab.o lexer.yy.o $(SRCS:.cpp=.o)
+	$(CC) $(CSTD) $(CPPFLAGS) $(TARGET_OBJECT_FILES) -o $@ $(LDFLAGS) -L ../../ -lorbiter $(LEXLIB) -lpthread
 
-all: $(SRCS:.cpp=.o) lexer.yy.o parser.tab.o visitors ir_tree;
+all: visitors ir_tree | parser.tab.o lexer.yy.o $(SRCS:.cpp=.o);
 
 lexer.yy.o: lexer.yy.h 
 	$(CC) $(CSTD) $(CPPFLAGS) $(@:%.o=%.cpp) -c -o $@
