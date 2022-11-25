@@ -172,6 +172,18 @@ void schreier::print_orbit_length_distribution(std::ostream &ost)
 	FREE_int(mult);
 }
 
+void schreier::print_orbit_length_distribution_to_string(std::string &str)
+{
+	int *val, *mult, len;
+
+	orbiter_kernel_system::Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution_print_to_string(str, val, mult, len);
+
+	FREE_int(val);
+	FREE_int(mult);
+}
+
+
 void schreier::print_orbit_reps(std::ostream &ost)
 {
 	int i, c, r;

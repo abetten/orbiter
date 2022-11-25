@@ -241,13 +241,15 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 	}
 
 	if (f_v) {
-		cout << "projective_space_global::analyze_del_Pezzo_surface_formula_given before PA->analyze_del_Pezzo_surface" << endl;
+		cout << "projective_space_global::analyze_del_Pezzo_surface_formula_given "
+				"before PA->analyze_del_Pezzo_surface" << endl;
 	}
 
 	PA->analyze_del_Pezzo_surface(F, evaluate_text, verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_global::analyze_del_Pezzo_surface_formula_given after PA->analyze_del_Pezzo_surface" << endl;
+		cout << "projective_space_global::analyze_del_Pezzo_surface_formula_given "
+				"after PA->analyze_del_Pezzo_surface" << endl;
 	}
 
 	if (f_v) {
@@ -278,13 +280,15 @@ void projective_space_global::conic_type(
 
 
 	if (f_v) {
-		cout << "projective_space_global::conic_type before PA->conic_type" << endl;
+		cout << "projective_space_global::conic_type "
+				"before PA->conic_type" << endl;
 	}
 
 	PA->conic_type(Pts, nb_pts, threshold, verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_global::conic_type after PA->conic_type" << endl;
+		cout << "projective_space_global::conic_type "
+				"after PA->conic_type" << endl;
 	}
 
 	if (f_v) {
@@ -315,7 +319,8 @@ void projective_space_global::do_lift_skew_hexagon(
 	nb_pts = sz / 6;
 
 	if (nb_pts * 6 != sz) {
-		cout << "projective_space_global::do_lift_skew_hexagon the number of coordinates must be a multiple of 6" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"the number of coordinates must be a multiple of 6" << endl;
 		exit(1);
 	}
 
@@ -328,28 +333,33 @@ void projective_space_global::do_lift_skew_hexagon(
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
-		cout << "projective_space_global::do_lift_skew_hexagon we need a three-dimensional projective space" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"we need a three-dimensional projective space" << endl;
 		exit(1);
 	}
 
 
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon before Surf->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"before Surf->init" << endl;
 	}
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon after Surf->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"after Surf->init" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
 
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon before Surf_A->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"before Surf_A->init" << endl;
 	}
 	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon after Surf_A->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"after Surf_A->init" << endl;
 	}
 
 
@@ -360,11 +370,13 @@ void projective_space_global::do_lift_skew_hexagon(
 	Pts = NEW_lint(nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
-		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_coords + i * 6, 0 /*verbose_level*/);
+		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(
+				Pluecker_coords + i * 6, 0 /*verbose_level*/);
 	}
 
 	if (nb_pts != 6) {
-		cout << "projective_space_global::do_lift_skew_hexagon nb_pts != 6" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"nb_pts != 6" << endl;
 		exit(1);
 	}
 
@@ -378,13 +390,15 @@ void projective_space_global::do_lift_skew_hexagon(
 	std::vector<std::vector<long int> > Double_sixes;
 
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon before Surf_A->complete_skew_hexagon" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"before Surf_A->complete_skew_hexagon" << endl;
 	}
 
 	Surf_A->complete_skew_hexagon(Pts, Double_sixes, verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon after Surf_A->complete_skew_hexagon" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon "
+				"after Surf_A->complete_skew_hexagon" << endl;
 	}
 
 	cout << "We found " << Double_sixes.size() << " double sixes. They are:" << endl;
@@ -428,7 +442,8 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	Int_vec_scan(polarity_36, Polarity36, sz1);
 
 	if (sz1 != 36) {
-		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity I need exactly 36 coefficients for the polarity" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+				"We need exactly 36 coefficients for the polarity" << endl;
 		exit(1);
 	}
 
@@ -437,28 +452,33 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
-		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity we need a three-dimensional projective space" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+				"We need a three-dimensional projective space" << endl;
 		exit(1);
 	}
 
 
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity before Surf->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+				"before Surf->init" << endl;
 	}
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity after Surf->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+				"after Surf->init" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
 
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity before Surf_A->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+				"before Surf_A->init" << endl;
 	}
 	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity after Surf_A->init" << endl;
+		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+				"after Surf_A->init" << endl;
 	}
 
 
@@ -493,8 +513,12 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 
 			for (j = 0; j < 3; j++) {
-				Surf->F->Linear_algebra->mult_matrix_matrix(Pluecker_coords + j * 6, Polarity36,
-						Pluecker_coords + 18 + j * 6, 1, 6, 6, 0 /* verbose_level */);
+				Surf->F->Linear_algebra->mult_matrix_matrix(
+						Pluecker_coords + j * 6,
+						Polarity36,
+						Pluecker_coords + 18 + j * 6,
+						1, 6, 6,
+						0 /* verbose_level */);
 			}
 
 			int nb_pts;
@@ -513,11 +537,14 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 			Pts = NEW_lint(nb_pts);
 
 			for (i = 0; i < nb_pts; i++) {
-				Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_coords + i * 6, 0 /*verbose_level*/);
+				Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(
+						Pluecker_coords + i * 6,
+						0 /*verbose_level*/);
 			}
 
 			if (nb_pts != 6) {
-				cout << "projective_space_global::do_lift_skew_hexagon_with_polarity nb_pts != 6" << endl;
+				cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+						"nb_pts != 6" << endl;
 				exit(1);
 			}
 
@@ -536,13 +563,17 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 			label.assign(str);
 
 			if (f_v) {
-				cout << "projective_space_global::do_lift_skew_hexagon_with_polarity before Surf_A->complete_skew_hexagon_with_polarity" << endl;
+				cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+						"before Surf_A->complete_skew_hexagon_with_polarity" << endl;
 			}
 
-			Surf_A->complete_skew_hexagon_with_polarity(label, Pts, Polarity36, Double_sixes, verbose_level);
+			Surf_A->complete_skew_hexagon_with_polarity(label,
+					Pts, Polarity36, Double_sixes,
+					verbose_level);
 
 			if (f_v) {
-				cout << "projective_space_global::do_lift_skew_hexagon_with_polarity after Surf_A->complete_skew_hexagon_with_polarity" << endl;
+				cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
+						"after Surf_A->complete_skew_hexagon_with_polarity" << endl;
 			}
 
 			FREE_lint(Pts);
@@ -572,7 +603,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	}
 
 	if (f_v) {
-		cout << "projective_space_global::do_lift_do_lift_skew_hexagon_with_polarityskew_hexagon done" << endl;
+		cout << "projective_space_global::do_lift_do_lift_skew_hexagon_with_polarity done" << endl;
 	}
 }
 
@@ -613,14 +644,16 @@ void projective_space_global::do_classify_arcs(
 
 		idx = orbiter_kernel_system::Orbiter->find_symbol(Arc_generator_description->override_group_label);
 		if (orbiter_kernel_system::Orbiter->get_object_type(idx) != t_any_group) {
-			cout << "projective_space_global::do_classify_arcs The object given must be a group" << endl;
+			cout << "projective_space_global::do_classify_arcs "
+					"The object given must be a group" << endl;
 			exit(1);
 		}
 		AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
 
 #if 0
 		if (!LG->f_has_strong_generators) {
-			cout << "projective_space_global::do_classify_arcs the group must have strong generators" << endl;
+			cout << "projective_space_global::do_classify_arcs "
+					"the group must have strong generators" << endl;
 			exit(1);
 		}
 #endif
@@ -641,7 +674,8 @@ void projective_space_global::do_classify_arcs(
 
 
 		if (f_v) {
-			cout << "projective_space_global::do_classify_arcs before Gen->init" << endl;
+			cout << "projective_space_global::do_classify_arcs "
+					"before Gen->init" << endl;
 		}
 		Gen->init(
 				Arc_generator_description,
@@ -650,17 +684,20 @@ void projective_space_global::do_classify_arcs(
 				verbose_level);
 
 		if (f_v) {
-			cout << "projective_space_global::do_classify_arcs after Gen->init" << endl;
+			cout << "projective_space_global::do_classify_arcs "
+					"after Gen->init" << endl;
 		}
 
 
 
 		if (f_v) {
-			cout << "projective_space_global::do_classify_arcs before Gen->main" << endl;
+			cout << "projective_space_global::do_classify_arcs "
+					"before Gen->main" << endl;
 		}
 		Gen->main(verbose_level);
 		if (f_v) {
-			cout << "projective_space_global::do_classify_arcs after Gen->main" << endl;
+			cout << "projective_space_global::do_classify_arcs "
+					"after Gen->main" << endl;
 		}
 
 
@@ -692,11 +729,13 @@ void projective_space_global::do_classify_cubic_curves(
 	CC = NEW_OBJECT(algebraic_geometry::cubic_curve);
 
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves before CC->init" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"before CC->init" << endl;
 	}
 	CC->init(PA->F, verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves after CC->init" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"after CC->init" << endl;
 	}
 
 
@@ -705,11 +744,13 @@ void projective_space_global::do_classify_cubic_curves(
 	CCA = NEW_OBJECT(apps_geometry::cubic_curve_with_action);
 
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves before CCA->init" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"before CCA->init" << endl;
 	}
 	CCA->init(CC, PA->A, verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves after CCA->init" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"after CCA->init" << endl;
 	}
 
 
@@ -719,7 +760,8 @@ void projective_space_global::do_classify_cubic_curves(
 
 
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves before CCC->init" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"before CCC->init" << endl;
 	}
 	CCC->init(
 			PA,
@@ -727,38 +769,46 @@ void projective_space_global::do_classify_cubic_curves(
 			Arc_generator_description,
 			verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves after CCC->init" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"after CCC->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves before CCC->compute_starter" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"before CCC->compute_starter" << endl;
 	}
 	CCC->compute_starter(verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves after CCC->compute_starter" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"after CCC->compute_starter" << endl;
 	}
 
 #if 0
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves before CCC->test_orbits" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"before CCC->test_orbits" << endl;
 	}
 	CCC->test_orbits(verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves after CCC->test_orbits" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"after CCC->test_orbits" << endl;
 	}
 #endif
 
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves before CCC->do_classify" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"before CCC->do_classify" << endl;
 	}
 	CCC->do_classify(verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves after CCC->do_classify" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"after CCC->do_classify" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves creating cheat sheet" << endl;
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"creating cheat sheet" << endl;
 	}
 	string fname, title, author, extra_praeamble;
 	char str[1000];
@@ -788,11 +838,13 @@ void projective_space_global::do_classify_cubic_curves(
 		fp << "\\subsection*{" << title << "}" << endl;
 
 		if (f_v) {
-			cout << "projective_space_global::do_classify_cubic_curves before CCC->report" << endl;
+			cout << "projective_space_global::do_classify_cubic_curves "
+					"before CCC->report" << endl;
 		}
 		CCC->report(fp, verbose_level);
 		if (f_v) {
-			cout << "projective_space_global::do_classify_cubic_curves after CCC->report" << endl;
+			cout << "projective_space_global::do_classify_cubic_curves "
+					"after CCC->report" << endl;
 		}
 
 		L.foot(fp);
@@ -804,7 +856,8 @@ void projective_space_global::do_classify_cubic_curves(
 		<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
-		cout << "projective_space_global::do_classify_cubic_curves writing cheat sheet on "
+		cout << "projective_space_global::do_classify_cubic_curves "
+				"writing cheat sheet on "
 				"cubic curves done" << endl;
 	}
 
@@ -925,22 +978,26 @@ void projective_space_global::classify_quartic_curves_with_substructure(
 	Classifier = NEW_OBJECT(canonical_form_classifier);
 
 	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure before Classifier.classify" << endl;
+		cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				"before Classifier.classify" << endl;
 	}
 	Classifier->classify(Descr, verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure after Classifier.classify" << endl;
+		cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				"after Classifier.classify" << endl;
 	}
 
 	Descr->Canon_substructure = Classifier;
 
 
 	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure before Classifier.report" << endl;
+		cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				"before Classifier.report" << endl;
 	}
 	Classifier->report(fname_classification, verbose_level);
 	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure after Classifier.report" << endl;
+		cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				"after Classifier.report" << endl;
 	}
 
 
@@ -998,480 +1055,6 @@ void projective_space_global::classify_quartic_curves(
 			Classifier,
 			verbose_level);
 
-#if 0
-	cout << "transversal:" << endl;
-	Int_vec_print(cout, Classifier->transversal, Classifier->nb_types);
-	cout << endl;
-
-	int i, j;
-
-	cout << "orbit frequencies:" << endl;
-	for (i = 0; i < Classifier->nb_types; i++) {
-		cout << i << " : ";
-
-		j = Classifier->transversal[i];
-
-		cout << j << " : ";
-
-		if (Classifier->CFS_table[j]) {
-			Int_vec_print(cout,
-					Classifier->CFS_table[j]->SubSt->orbit_frequencies,
-					Classifier->CFS_table[j]->SubSt->nb_orbits);
-		}
-		else {
-			cout << "DNE";
-		}
-
-		cout << endl;
-
-	}
-
-	int *orbit_frequencies;
-	int nb_orbits = 0;
-
-	for (i = 0; i < Classifier->nb_types; i++) {
-		cout << i << " : ";
-
-		j = Classifier->transversal[i];
-
-		cout << j << " : ";
-
-		if (Classifier->CFS_table[j]) {
-			nb_orbits = Classifier->CFS_table[j]->SubSt->nb_orbits;
-			break;
-		}
-	}
-	if (i == Classifier->nb_types) {
-		cout << "cannot determine nb_orbits" << endl;
-		exit(1);
-	}
-	orbit_frequencies = NEW_int(Classifier->nb_types * nb_orbits);
-
-	Int_vec_zero(orbit_frequencies, Classifier->nb_types * nb_orbits);
-
-	for (i = 0; i < Classifier->nb_types; i++) {
-
-		j = Classifier->transversal[i];
-
-		if (Classifier->CFS_table[j]) {
-			Int_vec_copy(
-					Classifier->CFS_table[j]->SubSt->orbit_frequencies,
-					orbit_frequencies + i * nb_orbits,
-					nb_orbits);
-		}
-
-	}
-
-	tally_vector_data *T;
-	int *transversal;
-	int *frequency;
-	int nb_types;
-
-	T = NEW_OBJECT(tally_vector_data);
-
-	T->init(orbit_frequencies, Classifier->nb_types, nb_orbits, verbose_level);
-
-
-
-	T->get_transversal(transversal, frequency, nb_types, verbose_level);
-
-
-	cout << "Classification of types:" << endl;
-	cout << "nb_types=" << nb_types << endl;
-
-
-	cout << "transversal:" << endl;
-	Int_vec_print(cout, transversal, nb_types);
-	cout << endl;
-
-	cout << "frequency:" << endl;
-	Int_vec_print(cout, frequency, nb_types);
-	cout << endl;
-
-	T->print_classes_bigger_than_one(verbose_level);
-
-
-	file_io Fio;
-	std::string fname;
-	string_tools String;
-	char str[1000];
-
-	fname.assign(fname_mask);
-	String.chop_off_extension(fname);
-	snprintf(str, sizeof(str), "_subset%d_types.csv", size);
-	fname.append(str);
-
-
-	cout << "preparing table" << endl;
-	int *table;
-	int h;
-
-	table = NEW_int(Classifier->nb_types * (nb_orbits + 2));
-	for (i = 0; i < Classifier->nb_types; i++) {
-
-		cout << "preparing table i=" << i << endl;
-
-		h = Classifier->transversal[i];
-
-		cout << "preparing table i=" << i << " h=" << h << endl;
-
-		table[i * (nb_orbits + 2) + 0] = i;
-
-		for (j = 0; j < nb_orbits; j++) {
-			table[i * (nb_orbits + 2) + 1 + j] = orbit_frequencies[i * nb_orbits + j];
-		}
-
-		table[i * (nb_orbits + 2) + 1 + nb_orbits] = Classifier->CFS_table[h]->SubSt->selected_orbit;
-
-	}
-
-	Fio.int_matrix_write_csv(fname, table, Classifier->nb_types, nb_orbits + 2);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-	if (Classifier->nb_types == 1) {
-		cout << "preparing detailed information:" << endl;
-
-		i = 0;
-		int h;
-
-		substructure_stats_and_selection *SubSt;
-
-		h = Classifier->transversal[i];
-
-		SubSt = Classifier->CFS_table[h]->SubSt;
-
-		cout << "nb_interesting_subsets = "
-				<< SubSt->nb_interesting_subsets << endl;
-		cout << "interesting subsets: ";
-		Orbiter->Lint_vec.print(cout, SubSt->interesting_subsets, SubSt->nb_interesting_subsets);
-		cout << endl;
-
-		cout << "selected_orbit=" << SubSt->selected_orbit << endl;
-
-		cout << "generators for the canonical subset:" << endl;
-		SubSt->gens->print_generators_tex();
-
-
-		compute_stabilizer *CS;
-
-		CS = Classifier->CFS_table[h]->CS;
-
-		stabilizer_orbits_and_types *Stab_orbits;
-
-		Stab_orbits = CS->Stab_orbits;
-
-		cout << "reduced_set_size=" << Stab_orbits->reduced_set_size << endl;
-
-		cout << "nb_orbits=" << Stab_orbits->Schreier->nb_orbits << endl;
-
-		cout << "Orbit length:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
-				Stab_orbits->Schreier->orbit_len,
-				1,
-				Stab_orbits->Schreier->nb_orbits,
-				Stab_orbits->Schreier->nb_orbits,
-				2);
-
-		cout << "Orbit_patterns:" << endl;
-#if 0
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
-					Stab_orbits->Orbit_patterns,
-					CS->SubSt->nb_interesting_subsets,
-					Stab_orbits->Schreier->nb_orbits,
-					Stab_orbits->Schreier->nb_orbits,
-					2);
-#endif
-
-		cout << "minimal orbit pattern:" << endl;
-		Stab_orbits->print_minimal_orbit_pattern();
-
-
-		tally_vector_data *T_O;
-		int *T_O_transversal;
-		int *T_O_frequency;
-		int T_O_nb_types;
-
-		T_O = NEW_OBJECT(tally_vector_data);
-
-		T_O->init(Stab_orbits->Orbit_patterns, CS->SubSt->nb_interesting_subsets,
-				Stab_orbits->Schreier->nb_orbits, verbose_level);
-
-
-
-		T_O->get_transversal(T_O_transversal, T_O_frequency, T_O_nb_types, verbose_level);
-
-		cout << "T_O_nb_types = " << T_O_nb_types << endl;
-
-		cout << "T_O_transversal:" << endl;
-		Int_vec_print(cout, T_O_transversal, T_O_nb_types);
-		cout << endl;
-
-		cout << "T_O_frequency:" << endl;
-		Int_vec_print(cout, T_O_frequency, T_O_nb_types);
-		cout << endl;
-
-		T_O->print_classes_bigger_than_one(verbose_level);
-
-		cout << "Types classified:" << endl;
-		int u, v;
-
-		for (u = 0; u < T_O_nb_types; u++) {
-			v = T_O_transversal[u];
-
-			if (v == Stab_orbits->minimal_orbit_pattern_idx) {
-				cout << "*";
-			}
-			else {
-				cout << " ";
-			}
-			cout << setw(3) << u << " : " << setw(3) << v << " : " << setw(3) << T_O_frequency[u] << " : ";
-
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
-						Stab_orbits->Orbit_patterns + v * Stab_orbits->Schreier->nb_orbits,
-						1,
-						Stab_orbits->Schreier->nb_orbits,
-						Stab_orbits->Schreier->nb_orbits,
-						2);
-
-		}
-
-
-		cout << "Types classified in lex order:" << endl;
-
-		int *data;
-
-		data = NEW_int(T_O_nb_types * Stab_orbits->Schreier->nb_orbits);
-		for (u = 0; u < T_O_nb_types; u++) {
-
-			cout << setw(3) << u << " : " << setw(3) << T_O->Frequency_in_lex_order[u] << " : ";
-
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
-					T_O->Reps_in_lex_order[u],
-					1,
-					Stab_orbits->Schreier->nb_orbits,
-					Stab_orbits->Schreier->nb_orbits,
-					2);
-			Int_vec_copy(T_O->Reps_in_lex_order[u], data + u * Stab_orbits->Schreier->nb_orbits, Stab_orbits->Schreier->nb_orbits);
-		}
-
-		fname.assign(fname_mask);
-		String.chop_off_extension(fname);
-		snprintf(str, sizeof(str), "_subset%d_types_classified.csv", size);
-		fname.append(str);
-
-		Fio.int_matrix_write_csv(fname, data, T_O_nb_types, Stab_orbits->Schreier->nb_orbits);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-
-		cout << "All canonical_forms:" << endl;
-		Orbiter->Lint_vec.matrix_print_width(cout,
-				CS->Canonical_forms,
-				Stab_orbits->nb_interesting_subsets_reduced,
-				Stab_orbits->reduced_set_size,
-				Stab_orbits->reduced_set_size,
-				2);
-
-		cout << "All canonical_forms, with transporter" << endl;
-		CS->print_canonical_sets();
-
-
-		fname.assign(fname_mask);
-		String.chop_off_extension(fname);
-		snprintf(str, sizeof(str), "_subset%d_cf_input.csv", size);
-		fname.append(str);
-
-#if 0
-		Fio.lint_matrix_write_csv(fname, CS->Canonical_form_input,
-				Stab_orbits->nb_interesting_subsets_reduced,
-				Stab_orbits->reduced_set_size);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-#endif
-
-		Fio.write_characteristic_matrix(fname,
-				CS->Canonical_form_input,
-				Stab_orbits->nb_interesting_subsets_reduced,
-				Stab_orbits->reduced_set_size,
-				Stab_orbits->nb_interesting_points,
-				verbose_level);
-
-
-
-		fname.assign(fname_mask);
-		String.chop_off_extension(fname);
-		snprintf(str, sizeof(str), "_subset%d_cf_output.csv", size);
-		fname.append(str);
-
-#if 0
-		Fio.lint_matrix_write_csv(fname, CS->Canonical_forms, Stab_orbits->nb_interesting_subsets_reduced, Stab_orbits->reduced_set_size);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-#endif
-
-		Fio.write_characteristic_matrix(fname,
-				CS->Canonical_forms,
-				Stab_orbits->nb_interesting_subsets_reduced,
-				Stab_orbits->reduced_set_size,
-				Stab_orbits->nb_interesting_points,
-				verbose_level);
-
-		fname.assign(fname_mask);
-		String.chop_off_extension(fname);
-		snprintf(str, sizeof(str), "_subset%d_cf_transporter.tex", size);
-		fname.append(str);
-
-
-		std::string title;
-
-		title.assign("Transporter");
-		PA->A->write_set_of_elements_latex_file(fname, title,
-				CS->Canonical_form_transporter,
-				Stab_orbits->nb_interesting_subsets_reduced);
-
-
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	}
-#endif
-
-
-
-#if 0
-
-
-	substructure_stats_and_selection *SubSt;
-
-#if 0
-	long int *interesting_subsets; // [selected_frequency]
-	int nb_interesting_subsets;
-		// interesting_subsets are the lvl-subsets of the given set
-		// which are of the chosen type.
-		// There is nb_interesting_subsets of them.
-
-	strong_generators *gens;
-#endif
-
-
-
-	compute_stabilizer *CS;
-#if 0
-	action *A_on_the_set;
-		// only used to print the induced action on the set
-		// of the set stabilizer
-
-	sims *Stab; // the stabilizer of the original set
-
-
-	longinteger_object stab_order, new_stab_order;
-	int nb_times_orbit_count_does_not_match_up;
-	int backtrack_nodes_first_time;
-	int backtrack_nodes_total_in_loop;
-
-	stabilizer_orbits_and_types *Stab_orbits;
-#if 0
-	strong_generators *selected_set_stab_gens;
-	sims *selected_set_stab;
-
-
-	int reduced_set_size; // = set_size - level
-
-
-
-
-	long int *reduced_set1; // [set_size]
-	long int *reduced_set2; // [set_size]
-	long int *reduced_set1_new_labels; // [set_size]
-	long int *reduced_set2_new_labels; // [set_size]
-	long int *canonical_set1; // [set_size]
-	long int *canonical_set2; // [set_size]
-
-	int *elt1, *Elt1, *Elt1_inv, *new_automorphism, *Elt4;
-	int *elt2, *Elt2;
-	int *transporter0; // = elt1 * elt2
-
-	longinteger_object go_G;
-
-	schreier *Schreier;
-	int nb_orbits;
-	int *orbit_count1; // [nb_orbits]
-	int *orbit_count2; // [nb_orbits]
-
-
-	int nb_interesting_subsets_reduced;
-	long int *interesting_subsets_reduced;
-
-	int *Orbit_patterns; // [nb_interesting_subsets * nb_orbits]
-
-
-	int *orbit_to_interesting_orbit; // [nb_orbits]
-
-	int nb_interesting_orbits;
-	int *interesting_orbits;
-
-	int nb_interesting_points;
-	long int *interesting_points;
-
-	int *interesting_orbit_first;
-	int *interesting_orbit_len;
-
-	int local_idx1, local_idx2;
-#endif
-
-
-
-
-
-
-	action *A_induced;
-	longinteger_object induced_go, K_go;
-
-	int *transporter_witness;
-	int *transporter1;
-	int *transporter2;
-	int *T1, *T1v;
-	int *T2;
-
-	sims *Kernel_original;
-	sims *K; // kernel for building up Stab
-
-
-
-	sims *Aut;
-	sims *Aut_original;
-	longinteger_object ago;
-	longinteger_object ago1;
-	longinteger_object target_go;
-
-
-	//union_find_on_k_subsets *U;
-
-
-	long int *Canonical_forms; // [nb_interesting_subsets_reduced * reduced_set_size]
-	int nb_interesting_subsets_rr;
-	long int *interesting_subsets_rr;
-#endif
-
-	strong_generators *Gens_stabilizer_original_set;
-	strong_generators *Gens_stabilizer_canonical_form;
-
-
-	orbit_of_equations *Orb;
-
-	strong_generators *gens_stab_of_canonical_equation;
-
-	int *trans1;
-	int *trans2;
-	int *intermediate_equation;
-
-
-
-	int *Elt;
-	int *eqn2;
-
-	int *canonical_equation;
-	int *transporter_to_canonical_form;
-#endif
-
 	if (f_v) {
 		cout << "projective_space_global::classify_quartic_curves done" << endl;
 	}
@@ -1519,7 +1102,391 @@ void projective_space_global::set_stabilizer(
 
 }
 
+void projective_space_global::make_restricted_incidence_matrix(
+		projective_space_with_action *PA,
+		int type_i, int type_j,
+		std::string &row_objects,
+		std::string &col_objects,
+		std::string &file_name,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "projective_space_global::make_restricted_incidence_matrix" << endl;
+	}
+
+
+	long int *Row_objects;
+	int nb_row_objects;
+	long int *Col_objects;
+	int nb_col_objects;
+	int i, j;
+
+	int *M;
+
+	Get_vector_or_set(row_objects, Row_objects, nb_row_objects);
+	Get_vector_or_set(col_objects, Col_objects, nb_col_objects);
+
+	M = NEW_int(nb_row_objects * nb_col_objects);
+	Int_vec_zero(M, nb_row_objects * nb_col_objects);
+
+	for (i = 0; i < nb_row_objects; i++) {
+
+		for (j = 0; j < nb_col_objects; j++) {
+
+			if (PA->P->incidence_test_for_objects_of_type_ij(
+				type_i, type_j, Row_objects[i], Col_objects[j],
+				0 /* verbose_level */)) {
+				M[i * nb_col_objects + j] = 1;
+			}
+		}
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname_csv;
+	string fname_inc;
+
+	fname_csv.assign(file_name);
+	fname_inc.assign(file_name);
+
+	fname_csv.append(".csv");
+	Fio.int_matrix_write_csv(fname_csv, M, nb_row_objects, nb_col_objects);
+
+	if (f_v) {
+		cout << "written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+	}
+
+	fname_inc.append(".inc");
+	Fio.write_incidence_matrix_to_file(fname_inc,
+		M, nb_row_objects, nb_col_objects, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "written file " << fname_inc << " of size "
+				<< Fio.file_size(fname_inc) << endl;
+	}
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "projective_space_global::make_restricted_incidence_matrix done" << endl;
+	}
+}
+
+void projective_space_global::make_relation(
+		projective_space_with_action *PA,
+		long int plane_rk,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation" << endl;
+	}
+
+	//long int plane_rk = 0;
+	long int line_rk = 0;
+	long int *the_points; // [7]
+	long int *the_outside_points; // [8]
+	long int *the_outside_lines; // [28]
+	long int *the_inside_lines; // [21]
+	long int *points_on_inside_lines; // [21]
+	int nb_points;
+	int nb_points_outside;
+	int nb_lines_outside;
+	int nb_lines_inside;
+	int pair[2];
+	int i;
+	long int p1, p2;
+
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
+
+
+
+	PA->P->points_covered_by_plane(plane_rk,
+			the_points, nb_points, 0 /* verbose_level */);
+
+	Sorting.lint_vec_heapsort(the_points, nb_points);
+
+
+	if (nb_points != 7) {
+		cout << "projective_space_global::make_relation "
+				"wrong projective space, must be PG(3,2)" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation "
+				"the_points : " << nb_points << " : ";
+		Lint_vec_print(cout, the_points, nb_points);
+		cout << endl;
+	}
+
+	the_outside_points = NEW_lint(8);
+	the_outside_lines = NEW_lint(28);
+	the_inside_lines = NEW_lint(21);
+	points_on_inside_lines = NEW_lint(21);
+
+	Combi.set_complement_lint(the_points, nb_points, the_outside_points,
+			nb_points_outside, 15 /* universal_set_size */);
+
+	if (nb_points_outside != 8) {
+		cout << "projective_space_global::make_relation "
+				"nb_points_outside != 8" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation "
+				"the_outside_points : " << nb_points_outside << " : ";
+		Lint_vec_print(cout, the_outside_points, nb_points_outside);
+		cout << endl;
+	}
+
+	nb_lines_outside = 28;
+
+	for (i = 0; i < nb_lines_outside; i++) {
+		Combi.unrank_k_subset(i, pair, 8, 2);
+		p1 = the_outside_points[pair[0]];
+		p2 = the_outside_points[pair[1]];
+		line_rk = PA->P->line_through_two_points(p1, p2);
+		the_outside_lines[i] = line_rk;
+	}
+
+	Sorting.lint_vec_heapsort(the_outside_lines, nb_lines_outside);
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation "
+				"the_outside_lines : " << nb_lines_outside << " : ";
+		Lint_vec_print(cout, the_outside_lines, nb_lines_outside);
+		cout << endl;
+	}
+
+
+	nb_lines_inside = 21;
+
+	for (i = 0; i < nb_lines_inside; i++) {
+		Combi.unrank_k_subset(i, pair, 7, 2);
+		p1 = the_points[pair[0]];
+		p2 = the_points[pair[1]];
+		line_rk = PA->P->line_through_two_points(p1, p2);
+		the_inside_lines[i] = line_rk;
+	}
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation "
+				"the_inside_lines : " << nb_lines_inside << " : ";
+		Lint_vec_print(cout, the_inside_lines, nb_lines_inside);
+		cout << endl;
+	}
+
+
+	Sorting.lint_vec_sort_and_remove_duplicates(the_inside_lines, nb_lines_inside);
+	if (nb_lines_inside != 7) {
+		cout << "projective_space_global::make_relation "
+				"nb_lines_inside != 7" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation "
+				"the_inside_lines : " << nb_lines_inside << " : ";
+		Lint_vec_print(cout, the_inside_lines, nb_lines_inside);
+		cout << endl;
+	}
+
+
+
+	for (i = 0; i < nb_lines_inside; i++) {
+		long int *pts;
+		int nb;
+
+		PA->P->points_on_line(the_inside_lines[i],
+				pts, nb, 0 /* verbose_level */);
+		if (nb != 3) {
+			cout << "projective_space_global::make_relation "
+					"nb != 3" << endl;
+		}
+		Lint_vec_copy(pts, points_on_inside_lines + i * 3, 3);
+		Sorting.lint_vec_heapsort(points_on_inside_lines + i * 3, 3);
+		FREE_lint(pts);
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation "
+				"points_on_inside_lines : " << endl;
+		Lint_matrix_print(points_on_inside_lines, nb_lines_inside, 3);
+		cout << endl;
+	}
+
+
+	//int j;
+
+	int *M;
+
+	int nb_pts;
+	int nb_lines;
+
+	nb_pts = 21;
+	nb_lines = 28;
+
+	M = NEW_int(nb_pts * nb_lines);
+	Int_vec_zero(M, nb_pts * nb_lines);
+
+
+	int pt_idx, pt_on_line_idx;
+	long int pt, line;
+
+	for (i = 0; i < nb_pts; i++) {
+
+		pt_idx = i / 3;
+		pt_on_line_idx = i % 3;
+		line = the_inside_lines[pt_idx];
+		pt = points_on_inside_lines[pt_idx * 3 + pt_on_line_idx];
+
+
+#if 0
+		for (j = 0; j < nb_lines; j++) {
+
+			if (PA->P->incidence_test_for_objects_of_type_ij(
+				type_i, type_j, Pts[i], Lines[j],
+				0 /* verbose_level */)) {
+				M[i * nb_lines + j] = 1;
+			}
+		}
+#endif
+
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	string fname_csv;
+	string fname_inc;
+
+	fname_csv.assign("relation");
+	fname_inc.assign("relation");
+
+	fname_csv.append(".csv");
+	Fio.int_matrix_write_csv(fname_csv, M, nb_pts, nb_lines);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+	fname_inc.append(".inc");
+	Fio.write_incidence_matrix_to_file(fname_inc,
+		M, nb_pts, nb_lines, 0 /*verbose_level*/);
+	cout << "written file " << fname_inc << " of size "
+			<< Fio.file_size(fname_inc) << endl;
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "projective_space_global::make_relation done" << endl;
+	}
+
+}
+
+void projective_space_global::plane_intersection_type_of_klein_image(
+		projective_space_with_action *PA,
+		std::string &input,
+		int threshold,
+		int verbose_level)
+// creates a projective_space object P5
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image" << endl;
+	}
+	long int *Lines;
+	int nb_lines;
+
+	Get_vector_or_set(input, Lines, nb_lines);
+
+	//int *intersection_type;
+	//int highest_intersection_number;
+
+	geometry::projective_space *P5;
+
+	P5 = NEW_OBJECT(geometry::projective_space);
+
+	int f_init_incidence_structure = TRUE;
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image "
+				"before P5->projective_space_init" << endl;
+	}
+	P5->projective_space_init(5, PA->P->F,
+			f_init_incidence_structure,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image "
+				"after P5->projective_space_init" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image "
+				"before plane_intersection_type_of_klein_image" << endl;
+	}
+
+	geometry::intersection_type *Int_type;
+
+	PA->P->Grass_lines->plane_intersection_type_of_klein_image(
+			PA->P /* P3 */,
+			P5,
+			Lines, nb_lines, threshold,
+			Int_type,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image "
+				"after plane_intersection_type_of_klein_image" << endl;
+	}
+
+	cout << "projective_space_global::plane_intersection_type_of_klein_image "
+			"intersection numbers: ";
+	Int_vec_print(cout, Int_type->the_intersection_type, Int_type->highest_intersection_number + 1);
+	cout << endl;
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image "
+				"highest weight objects: " << endl;
+		Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image "
+				"Intersection_sets: " << endl;
+		Int_matrix_print(Int_type->Intersection_sets, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+	}
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image "
+				"Intersection_sets sorted: " << endl;
+		Int_matrix_print(Int_type->M->M, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+	}
+
+	string fname;
+	data_structures::string_tools ST;
+
+	fname.assign(input);
+	ST.chop_off_extension(fname);
+	fname.append("_highest_weight_objects.csv");
+
+	Int_type->M->write_csv(fname, verbose_level);
+
+
+	FREE_OBJECT(Int_type);
+
+	FREE_OBJECT(P5);
+
+	if (f_v) {
+		cout << "projective_space_global::plane_intersection_type_of_klein_image done" << endl;
+	}
+}
 
 
 }}}

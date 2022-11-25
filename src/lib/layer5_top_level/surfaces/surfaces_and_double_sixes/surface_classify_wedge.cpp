@@ -1964,9 +1964,9 @@ void surface_classify_wedge::report_surface(
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
-				"before SO->print_general" << endl;
+				"before SO->print_summary" << endl;
 	}
-	SO->SOP->print_general(ost);
+	SO->SOP->print_summary(ost);
 
 	ost << endl;
 	ost << "\\clearpage" << endl;

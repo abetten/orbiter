@@ -188,8 +188,8 @@ public:
 		// orbits on five-plus-one configurations
 
 
-	int *u, *v, *w; // temporary vectors of length 6
-	int *u1, *v1; // temporary vectors of length 6
+	//int *u, *v, *w; // temporary vectors of length 6
+	//int *u1, *v1; // temporary vectors of length 6
 
 	int len;
 		// = gen->nb_orbits_at_level(5)
@@ -275,7 +275,7 @@ public:
 
 	classify_double_sixes *Classify_double_sixes;
 
-	// classification of surfaces:
+	// classification of cubic surfaces:
 	invariant_relations::flag_orbits *Flag_orbits;
 
 	invariant_relations::classification_step *Surfaces;

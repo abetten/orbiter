@@ -31,6 +31,10 @@ public:
 
 	int f_report_with_group;
 
+	int f_export_something;
+	std::string export_something_what;
+
+
 	int f_export_points;
 
 	int f_create_surface;
@@ -133,6 +137,11 @@ public:
 	std::string equation_parameters;
 	std::string equation_parameters_tex;
 
+	int f_from_cubic_surface;
+	std::string from_cubic_surface_label;
+	int from_cubic_surface_point_orbit_idx;
+
+
 	int f_override_group;
 	std::string override_group_order;
 	int override_group_nb_gens;
@@ -191,6 +200,8 @@ public:
 	int f_has_nice_gens;
 	data_structures_groups::vector_ge *nice_gens;
 
+	int f_has_quartic_curve_from_surface;
+	quartic_curves::quartic_curve_from_surface *QC_from_surface;
 
 
 
@@ -227,16 +238,25 @@ public:
 			std::string &equation_parameters,
 			std::string &equation_parameters_tex,
 			int verbose_level);
+	void create_quartic_curve_from_cubic_surface(
+			std::string &cubic_surface_label,
+			int pt_orbit_idx,
+			//int f_TDO,
+			int verbose_level);
 	void apply_transformations(
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
+	void apply_single_transformation(int f_inverse,
+			int *transformation_coeffs,
+			int sz, int verbose_level);
 	void compute_group(
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 	// ToDo
-	void report_properties(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 	void print_general(std::ostream &ost, int verbose_level);
+	void export_something(std::string &what, int verbose_level);
 
 };
 
@@ -290,6 +310,13 @@ public:
 class quartic_curve_from_surface {
 
 public:
+
+	std::string label;
+	std::string label_tex;
+
+
+	int f_has_SC;
+	cubic_surfaces_in_general::surface_create *SC;
 
 	cubic_surfaces_in_general::surface_object_with_action *SOA;
 
@@ -351,15 +378,17 @@ public:
 	quartic_curve_from_surface();
 	~quartic_curve_from_surface();
 	void init(cubic_surfaces_in_general::surface_object_with_action *SOA, int verbose_level);
-	void quartic(std::string &surface_prefix, int pt_orbit, int f_TDO, int verbose_level);
+	void init_surface_create(cubic_surfaces_in_general::surface_create *SC,
+			int verbose_level);
+	void init_labels(std::string &label, std::string &label_tex,
+			int verbose_level);
+	void quartic(int pt_orbit, int verbose_level);
 	void compute_quartic(int pt_orbit,
 		int *equation, long int *Lines, int nb_lines,
 		int verbose_level);
 	void compute_stabilizer(int verbose_level);
 	void cheat_sheet_quartic_curve(
-			std::string &surface_prefix,
 			std::ostream &ost,
-			std::ostream &ost_curves,
 			int f_TDO,
 			int verbose_level);
 
@@ -404,6 +433,8 @@ public:
 			algebraic_geometry::quartic_curve_object *QO,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
+	void export_something(std::string &what,
+			std::string &fname_base, int verbose_level);
 
 };
 

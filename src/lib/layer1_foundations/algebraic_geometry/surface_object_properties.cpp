@@ -1064,8 +1064,8 @@ void surface_object_properties::compute_planes_and_dual_point_ranks(int verbose_
 
 
 
-
-void surface_object_properties::print_everything(ostream &ost, int verbose_level)
+#if 0
+void surface_object_properties::print_everything(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1187,7 +1187,7 @@ void surface_object_properties::print_everything(ostream &ost, int verbose_level
 		cout << "surface_object_properties::print_everything done" << endl;
 	}
 }
-
+#endif
 
 
 void surface_object_properties::report_properties(std::ostream &ost, int verbose_level)
@@ -1204,9 +1204,9 @@ void surface_object_properties::report_properties(std::ostream &ost, int verbose
 	print_equation(ost);
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties before print_general" << endl;
+		cout << "surface_object_properties::report_properties before print_summary" << endl;
 	}
-	print_general(ost);
+	print_summary(ost);
 
 
 	if (f_v) {
@@ -1268,9 +1268,9 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 	print_equation(ost);
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple before print_general" << endl;
+		cout << "surface_object_properties::report_properties_simple before print_summary" << endl;
 	}
-	print_general(ost);
+	print_summary(ost);
 
 
 
@@ -1897,9 +1897,9 @@ void surface_object_properties::print_equation(std::ostream &ost)
 
 }
 
-void surface_object_properties::print_general(std::ostream &ost)
+void surface_object_properties::print_summary(std::ostream &ost)
 {
-	ost << "\\subsection*{General information}" << endl;
+	ost << "\\subsection*{Summary}" << endl;
 
 
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
@@ -1981,17 +1981,21 @@ void surface_object_properties::print_points(std::ostream &ost)
 	//print_points_on_surface(ost);
 	print_all_points_on_surface(ost);
 
-	ost << "\\subsubsection*{Eckardt Points}" << endl;
-	cout << "surface_object_properties::print_points before print_Eckardt_points" << endl;
-	print_Eckardt_points(ost);
-
 	ost << "\\subsubsection*{Singular Points}" << endl;
 	cout << "surface_object_properties::print_points before print_singular_points" << endl;
 	print_singular_points(ost);
 
+	ost << "\\subsubsection*{Eckardt Points}" << endl;
+	cout << "surface_object_properties::print_points before print_Eckardt_points" << endl;
+	print_Eckardt_points(ost);
+
 	ost << "\\subsubsection*{Double Points}" << endl;
 	cout << "surface_object_properties::print_points before print_double_points" << endl;
 	print_double_points(ost);
+
+	ost << "\\subsubsection*{Single Points}" << endl;
+	cout << "surface_object_properties::print_points before print_single_points" << endl;
+	print_single_points(ost);
 
 	ost << "\\subsubsection*{Points on lines}" << endl;
 	cout << "surface_object_properties::print_points before print_points_on_lines" << endl;
@@ -2452,6 +2456,8 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 		}
 		ost << "\\end{multicols}" << endl;
 		ost << "The single points on the surface are:\\\\" << endl;
+		Lint_vec_print_fully(ost, Single_points, nb_Single_points);
+		ost << "\\\\" << endl;
 		//ost << "\\begin{multicols}{2}" << endl;
 	}
 	else {

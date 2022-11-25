@@ -1119,6 +1119,70 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	}
 }
 
+long int klein_correspondence::apply_null_polarity(
+	long int a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "klein_correspondence::apply_null_polarity" << endl;
+	}
+
+	int v[6];
+	int w[6];
+	int basis_line[8];
+	long int a_perp;
+
+	line_to_Pluecker(a, v, 0 /* verbose_level */);
+	w[0] = v[1];
+	w[1] = v[0];
+	w[2] = v[2];
+	w[3] = v[3];
+	w[4] = v[4];
+	w[5] = v[5];
+
+	Pluecker_to_line(w, basis_line, verbose_level);
+
+	a_perp = P3->rank_line(basis_line);
+
+	if (f_v) {
+		cout << "klein_correspondence::apply_null_polarity done" << endl;
+	}
+	return a_perp;
+}
+
+long int klein_correspondence::apply_polarity(
+	long int a, int *Polarity36, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "klein_correspondence::apply_polarity" << endl;
+	}
+
+	int v[6];
+	int w[6];
+	int basis_line[8];
+	long int a_perp;
+
+	line_to_Pluecker(a, v, 0 /* verbose_level */);
+
+	F->Linear_algebra->mult_matrix_matrix(v,
+			Polarity36,
+			w,
+			1, 6, 6,
+			0 /* verbose_level */);
+
+	Pluecker_to_line(w, basis_line, verbose_level);
+
+	a_perp = P3->rank_line(basis_line);
+
+	if (f_v) {
+		cout << "klein_correspondence::apply_polarity done" << endl;
+	}
+	return a_perp;
+}
+
 
 }}}
 

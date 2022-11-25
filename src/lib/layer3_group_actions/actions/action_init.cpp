@@ -954,17 +954,10 @@ void action::init_affine_group(int n, int q,
 	long int *given_base;
 	field_theory::finite_field F;
 	ring_theory::longinteger_object go;
-	char str1[1000];
-	char str2[1000];
 	
 	if (f_v) {
 		cout << "action::init_affine_group" << endl;
 	}
-	snprintf(str1, sizeof(str1), "AGL_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "AGL(%d,%d)", n, q);
-
-	label.assign(str1);
-	label_tex.assign(str2);
 
 	F.finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 	
@@ -987,6 +980,16 @@ void action::init_affine_group(int n, int q,
 
 	FREE_int(gens);
 	FREE_lint(given_base);
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "AGL_%d_%d", n, q);
+	snprintf(str2, sizeof(str2), "AGL(%d,%d)", n, q);
+
+	label.assign(str1);
+	label_tex.assign(str2);
+
 	if (f_v) {
 		cout << "action::init_affine_group done" << endl;
 	}

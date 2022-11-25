@@ -601,6 +601,23 @@ public:
 			std::string &fname_mask, int nb, std::string &column_label,
 			std::string &fname_out,
 			int verbose_level);
+	void make_restricted_incidence_matrix(
+			projective_space_with_action *PA,
+			int type_i, int type_j,
+			std::string &row_objects,
+			std::string &col_objects,
+			std::string &file_name,
+			int verbose_level);
+	void make_relation(
+			projective_space_with_action *PA,
+			long int plane_rk,
+			int verbose_level);
+	void plane_intersection_type_of_klein_image(
+			projective_space_with_action *PA,
+			std::string &input,
+			int threshold,
+			int verbose_level);
+	// creates a projective_space object P5
 
 };
 
@@ -787,8 +804,10 @@ public:
 
 	int *eqn;
 	int sz;
+
 	long int *pts;
 	int nb_pts;
+
 	long int *bitangents;
 	int nb_bitangents;
 
