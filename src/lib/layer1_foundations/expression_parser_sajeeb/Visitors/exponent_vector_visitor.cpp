@@ -25,19 +25,19 @@ using std::endl;
  *    |-> "VARIABLE"
  */
 void exponent_vector_visitor::visit(multiply_node* op_node) {
-    vector<unsigned int> exponent_vector;
+    vector<unsigned int> exponent_vector(symbol_table->size(), 0);
 
     for (auto it=op_node->children.begin(); it!=op_node->children.end(); ++it)
         (*it)->accept(this, exponent_vector);
-
-
 
     monomial_coefficient_table_.insert({std::move(exponent_vector), op_node});
 }
 
 void exponent_vector_visitor::visit(plus_node* op_node,vector<uint32_t>& exponent_vector) {
-    for (shared_ptr<irtree_node>& child : op_node->children)
+    for (shared_ptr<irtree_node>& child : op_node->children) {
+        if (child->type == irtree_node)
         child->accept(this, exponent_vector);
+    }
 }
 
 void exponent_vector_visitor::visit(minus_node* op_node,vector<uint32_t>& exponent_vector) {
@@ -79,7 +79,10 @@ void exponent_vector_visitor::visit(exponent_node* op_node,vector<uint32_t>& exp
         }
 }
 
-void exponent_vector_visitor::visit(unary_negate_node* op_node,vector<uint32_t>& exponent_vector) {}
+void exponent_vector_visitor::visit(unary_negate_node* op_node,vector<uint32_t>& exponent_vector) {
+    for (shared_ptr<irtree_node>& child : op_node->children)
+        child->accept(this, exponent_vector);
+}
 
 void exponent_vector_visitor::visit(variable_node* num_node,vector<uint32_t>& exponent_vector) {
     exponent_vector.at(symbol_table->index(num_node->name)) += 1;

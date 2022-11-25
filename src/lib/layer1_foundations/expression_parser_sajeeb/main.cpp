@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
 //	 std::string exp = "-(a*-b*--k^(c+d))"; // -a * b * -k^(c+d)
 //    std::string exp = "(a+k^i) * (c+d) * (e+f) * (g+h) * (1+1+1) * (1*2*1)";
 //    std::string exp = "1+2+-(3*-2)+(4*5*6*2^3^2)";
-    std::string exp = "(a*b*c)*x0*x2 + 1*x1 + 1*x2 + x0^2*x1 + x1^2*x2 + x2*x0*x1 + a^2*x2^2";
+    std::string exp = "(a*b*c)*(x0+x2) + x1 + x2 + x0^2*x1 + x1^2*x2 + x2*x0*x1 + a^2*x2^2";
 
     // (a+b)(c-d) = a*b - a*d + b*c - b*d
 

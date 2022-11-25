@@ -6,7 +6,7 @@ include auto_dependency_generation_variables.mk
 TARGET_OBJECT_FILES = main.o \
 						lexer.yy.o \
 						parser.tab.o \
-						IRtree/node.o \
+						IRTree/node.o \
 						./Visitors/*.o \
 						./Visitors/LatexVisitors/*.o \
 						./Visitors/ToStringVisitors/*.o \
@@ -47,7 +47,7 @@ visitors: FORCE
 clean: clean_base_target
 	@-rm -rfv $(EXECUTABLE_BINARY)
 	-$(MAKE) -C Visitors clean
-	-$(MAKE) -C IRtree clean
+	-$(MAKE) -C IRTree clean
 
 include clean_base_target.mk
 
