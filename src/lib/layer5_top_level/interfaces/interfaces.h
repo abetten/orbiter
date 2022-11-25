@@ -883,6 +883,7 @@ public:
 	orthogonal_geometry_applications::orthogonal_space_with_action *get_object_of_type_orthogonal_space_with_action(std::string &label);
 	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
 	spreads::spread_create *get_object_of_type_spread(std::string &label);
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *get_object_of_type_cubic_surface(std::string &label);
 
 };
 

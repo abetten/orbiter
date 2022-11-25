@@ -121,7 +121,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		Fio.lint_matrix_write_csv(fname_map, Image_pts, N_points, 1);
 		if (f_v) {
-			cout << "Written file " << fname_map << " of size " << Fio.file_size(fname_map) << endl;
+			cout << "Written file " << fname_map
+					<< " of size " << Fio.file_size(fname_map) << endl;
 		}
 
 
@@ -667,98 +668,53 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_planes_through_line) {
 
 		cout << "planes through line:" << endl;
-		long int *v;
-		int sz, i, j, d;
-		int *M;
-
-		Lint_vec_scan(Descr->planes_through_line_rank, v, sz);
-
-		d = PA->P->n + 1;
-		M = NEW_int(3 * d);
-
-		for (i = 0; i < sz; i++) {
-
-			std::vector<long int> plane_ranks;
-
-			PA->P->planes_through_a_line(
-					v[i], plane_ranks,
-					0 /*verbose_level*/);
-
-			cout << "planes through line " << v[i] << " : ";
-			for (j = 0; j < plane_ranks.size(); j++) {
-				cout << plane_ranks[j];
-				if (j < plane_ranks.size() - 1) {
-					cout << ",";
-				}
-			}
-			cout << endl;
 
 
-			cout << "planes through line " << v[i] << endl;
-			for (j = 0; j < plane_ranks.size(); j++) {
-				cout << j << " : " << plane_ranks[j] << " : " << endl;
-				PA->P->Grass_planes->unrank_lint_here(M, plane_ranks[j], 0 /* verbose_level */);
-				Int_matrix_print(M, 3, d);
+		long int *Lines;
+		int nb_lines;
+		Lint_vec_scan(Descr->planes_through_line_rank, Lines, nb_lines);
 
-			}
-			cout << endl;
+		long int *Plane_ranks;
+		int nb_planes_on_one_line;
 
+		PA->P->planes_through_line(Lines, nb_lines,
+				Plane_ranks, nb_planes_on_one_line, verbose_level);
 
-		}
-		FREE_int(M);
+		cout << "Ranks of planes on the given set of lines:" << endl;
+		Lint_matrix_print(Plane_ranks, nb_lines, nb_planes_on_one_line);
+
+		FREE_lint(Lines);
+		FREE_lint(Plane_ranks);
 
 	}
 	else if (Descr->f_restricted_incidence_matrix) {
 
 		cout << "f_restricted_incidence_matrix:" << endl;
 
-		long int *Row_objects;
-		int nb_row_objects;
-		long int *Col_objects;
-		int nb_col_objects;
-		int i, j;
 		int type_i = Descr->restricted_incidence_matrix_type_row_objects;
 		int type_j = Descr->restricted_incidence_matrix_type_col_objects;
 
-		int *M;
-
-		Get_vector_or_set(Descr->restricted_incidence_matrix_row_objects, Row_objects, nb_row_objects);
-		Get_vector_or_set(Descr->restricted_incidence_matrix_col_objects, Col_objects, nb_col_objects);
-
-		M = NEW_int(nb_row_objects * nb_col_objects);
-		Int_vec_zero(M, nb_row_objects * nb_col_objects);
-
-		for (i = 0; i < nb_row_objects; i++) {
-
-			for (j = 0; j < nb_col_objects; j++) {
-
-				if (PA->P->incidence_test_for_objects_of_type_ij(
-					type_i, type_j, Row_objects[i], Col_objects[j],
-					0 /* verbose_level */)) {
-					M[i * nb_col_objects + j] = 1;
-				}
-			}
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before make_restricted_incidence_matrix" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
-		string fname_csv;
-		string fname_inc;
+		projective_space_global G;
 
-		fname_csv.assign(Descr->restricted_incidence_matrix_file_name);
-		fname_inc.assign(Descr->restricted_incidence_matrix_file_name);
 
-		fname_csv.append(".csv");
-		Fio.int_matrix_write_csv(fname_csv, M, nb_row_objects, nb_col_objects);
-		cout << "written file " << fname_csv << " of size "
-				<< Fio.file_size(fname_csv) << endl;
+		G.make_restricted_incidence_matrix(
+				PA,
+				type_i, type_j,
+				Descr->restricted_incidence_matrix_row_objects,
+				Descr->restricted_incidence_matrix_col_objects,
+				Descr->restricted_incidence_matrix_file_name,
+				verbose_level);
 
-		fname_inc.append(".inc");
-		Fio.write_incidence_matrix_to_file(fname_inc,
-			M, nb_row_objects, nb_col_objects, 0 /*verbose_level*/);
-		cout << "written file " << fname_inc << " of size "
-				<< Fio.file_size(fname_inc) << endl;
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after make_restricted_incidence_matrix" << endl;
+		}
 
-		FREE_int(M);
 
 	}
 
@@ -769,273 +725,47 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		cout << "f_make_relation:" << endl;
 
-
-		//long int plane_rk = 0;
-		long int line_rk = 0;
-		long int *the_points; // [7]
-		long int *the_outside_points; // [8]
-		long int *the_outside_lines; // [28]
-		long int *the_inside_lines; // [21]
-		long int *points_on_inside_lines; // [21]
-		int nb_points;
-		int nb_points_outside;
-		int nb_lines_outside;
-		int nb_lines_inside;
-		int pair[2];
-		int i;
-		long int p1, p2;
-
-		combinatorics::combinatorics_domain Combi;
-		data_structures::sorting Sorting;
-
-
-
-		PA->P->points_covered_by_plane(Descr->make_relation_plane_rk,
-				the_points, nb_points, 0 /* verbose_level */);
-
-		Sorting.lint_vec_heapsort(the_points, nb_points);
-
-
-		if (nb_points != 7) {
-			cout << "f_make_relation wrong projective space, must be PG(3,2)" << endl;
-			exit(1);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before make_relation" << endl;
 		}
+
+		projective_space_global G;
+
+		G.make_relation(
+				PA,
+				Descr->make_relation_plane_rk,
+				verbose_level);
 
 		if (f_v) {
-			cout << "f_make_relation the_points : " << nb_points << " : ";
-			Lint_vec_print(cout, the_points, nb_points);
-			cout << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after make_relation" << endl;
 		}
 
-		the_outside_points = NEW_lint(8);
-		the_outside_lines = NEW_lint(28);
-		the_inside_lines = NEW_lint(21);
-		points_on_inside_lines = NEW_lint(21);
-
-		Combi.set_complement_lint(the_points, nb_points, the_outside_points,
-				nb_points_outside, 15 /* universal_set_size */);
-
-		if (nb_points_outside != 8) {
-			cout << "f_make_relation nb_points_outside != 8" << endl;
-			exit(1);
-		}
-
-		if (f_v) {
-			cout << "f_make_relation the_outside_points : " << nb_points_outside << " : ";
-			Lint_vec_print(cout, the_outside_points, nb_points_outside);
-			cout << endl;
-		}
-
-		nb_lines_outside = 28;
-
-		for (i = 0; i < nb_lines_outside; i++) {
-			Combi.unrank_k_subset(i, pair, 8, 2);
-			p1 = the_outside_points[pair[0]];
-			p2 = the_outside_points[pair[1]];
-			line_rk = PA->P->line_through_two_points(p1, p2);
-			the_outside_lines[i] = line_rk;
-		}
-
-		Sorting.lint_vec_heapsort(the_outside_lines, nb_lines_outside);
-
-		if (f_v) {
-			cout << "f_make_relation the_outside_lines : " << nb_lines_outside << " : ";
-			Lint_vec_print(cout, the_outside_lines, nb_lines_outside);
-			cout << endl;
-		}
-
-
-		nb_lines_inside = 21;
-
-		for (i = 0; i < nb_lines_inside; i++) {
-			Combi.unrank_k_subset(i, pair, 7, 2);
-			p1 = the_points[pair[0]];
-			p2 = the_points[pair[1]];
-			line_rk = PA->P->line_through_two_points(p1, p2);
-			the_inside_lines[i] = line_rk;
-		}
-
-		if (f_v) {
-			cout << "f_make_relation the_inside_lines : " << nb_lines_inside << " : ";
-			Lint_vec_print(cout, the_inside_lines, nb_lines_inside);
-			cout << endl;
-		}
-
-
-		Sorting.lint_vec_sort_and_remove_duplicates(the_inside_lines, nb_lines_inside);
-		if (nb_lines_inside != 7) {
-			cout << "f_make_relation nb_lines_inside != 7" << endl;
-			exit(1);
-		}
-
-		if (f_v) {
-			cout << "f_make_relation the_inside_lines : " << nb_lines_inside << " : ";
-			Lint_vec_print(cout, the_inside_lines, nb_lines_inside);
-			cout << endl;
-		}
-
-
-
-		for (i = 0; i < nb_lines_inside; i++) {
-			long int *pts;
-			int nb;
-
-			PA->P->points_on_line(the_inside_lines[i],
-					pts, nb, 0 /* verbose_level */);
-			if (nb != 3) {
-				cout << "f_make_relation nb != 3" << endl;
-			}
-			Lint_vec_copy(pts, points_on_inside_lines + i * 3, 3);
-			Sorting.lint_vec_heapsort(points_on_inside_lines + i * 3, 3);
-			FREE_lint(pts);
-		}
-
-
-		if (f_v) {
-			cout << "f_make_relation points_on_inside_lines : " << endl;
-			Lint_matrix_print(points_on_inside_lines, nb_lines_inside, 3);
-			cout << endl;
-		}
-
-
-		//int j;
-
-		int *M;
-
-		int nb_pts;
-		int nb_lines;
-
-		nb_pts = 21;
-		nb_lines = 28;
-
-		M = NEW_int(nb_pts * nb_lines);
-		Int_vec_zero(M, nb_pts * nb_lines);
-
-
-		int pt_idx, pt_on_line_idx;
-		long int pt, line;
-
-		for (i = 0; i < nb_pts; i++) {
-
-			pt_idx = i / 3;
-			pt_on_line_idx = i % 3;
-			line = the_inside_lines[pt_idx];
-			pt = points_on_inside_lines[pt_idx * 3 + pt_on_line_idx];
-
-
-#if 0
-			for (j = 0; j < nb_lines; j++) {
-
-				if (PA->P->incidence_test_for_objects_of_type_ij(
-					type_i, type_j, Pts[i], Lines[j],
-					0 /* verbose_level */)) {
-					M[i * nb_lines + j] = 1;
-				}
-			}
-#endif
-
-		}
-
-
-		orbiter_kernel_system::file_io Fio;
-		string fname_csv;
-		string fname_inc;
-
-		fname_csv.assign("relation");
-		fname_inc.assign("relation");
-
-		fname_csv.append(".csv");
-		Fio.int_matrix_write_csv(fname_csv, M, nb_pts, nb_lines);
-		cout << "written file " << fname_csv << " of size "
-				<< Fio.file_size(fname_csv) << endl;
-
-		fname_inc.append(".inc");
-		Fio.write_incidence_matrix_to_file(fname_inc,
-			M, nb_pts, nb_lines, 0 /*verbose_level*/);
-		cout << "written file " << fname_inc << " of size "
-				<< Fio.file_size(fname_inc) << endl;
-
-		FREE_int(M);
 
 	}
 	else if (Descr->f_plane_intersection_type_of_klein_image) {
+
 		cout << "plane_intersection_type_of_klein_image:" << Descr->plane_intersection_type_of_klein_image_input << endl;
 		cout << "plane_intersection_type_of_klein_image_threshold = " << Descr->plane_intersection_type_of_klein_image_threshold << endl;
 
-		long int *Lines;
-		int nb_lines;
-
-		Get_vector_or_set(Descr->plane_intersection_type_of_klein_image_input, Lines, nb_lines);
-
-		//int *intersection_type;
-		//int highest_intersection_number;
-
-		geometry::projective_space *P5;
-
-		P5 = NEW_OBJECT(geometry::projective_space);
-
-		int f_init_incidence_structure = TRUE;
-
 		if (f_v) {
-			cout << "before P5->projective_space_init" << endl;
-		}
-		P5->projective_space_init(5, PA->P->F,
-				f_init_incidence_structure,
-				verbose_level);
-		if (f_v) {
-			cout << "after P5->projective_space_init" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before plane_intersection_type_of_klein_image" << endl;
 		}
 
-		if (f_v) {
-			cout << "before plane_intersection_type_of_klein_image" << endl;
-		}
+		projective_space_global G;
 
-		geometry::intersection_type *Int_type;
-
-		PA->P->Grass_lines->plane_intersection_type_of_klein_image(
-				PA->P /* P3 */,
-				P5,
-				Lines, nb_lines, Descr->plane_intersection_type_of_klein_image_threshold,
-				Int_type,
+		G.plane_intersection_type_of_klein_image(
+				PA,
+				Descr->plane_intersection_type_of_klein_image_input,
+				Descr->plane_intersection_type_of_klein_image_threshold,
 				verbose_level);
 
 		if (f_v) {
-			cout << "after plane_intersection_type_of_klein_image" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after plane_intersection_type_of_klein_image" << endl;
 		}
-
-		cout << "intersection numbers: ";
-		Int_vec_print(cout, Int_type->the_intersection_type, Int_type->highest_intersection_number + 1);
-		cout << endl;
-
-		if (f_v) {
-			cout << "highest weight objects: " << endl;
-			Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
-			cout << endl;
-		}
-
-		if (f_v) {
-			cout << "Intersection_sets: " << endl;
-			Int_matrix_print(Int_type->Intersection_sets, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
-		}
-
-		if (f_v) {
-			cout << "Intersection_sets sorted: " << endl;
-			Int_matrix_print(Int_type->M->M, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
-		}
-
-		string fname;
-		data_structures::string_tools ST;
-
-		fname.assign(Descr->plane_intersection_type_of_klein_image_input);
-		ST.chop_off_extension(fname);
-		fname.append("_highest_weight_objects.csv");
-
-		Int_type->M->write_csv(fname, verbose_level);
-
-
-		FREE_OBJECT(Int_type);
-
-		FREE_OBJECT(P5);
 
 	}
 

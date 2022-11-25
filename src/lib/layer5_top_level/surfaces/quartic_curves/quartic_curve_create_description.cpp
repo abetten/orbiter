@@ -55,6 +55,10 @@ quartic_curve_create_description::quartic_curve_create_description()
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
 
+	f_from_cubic_surface = FALSE;
+	//std::string from_cubic_surface_label;
+	from_cubic_surface_point_orbit_idx = 0;
+
 	f_override_group = FALSE;
 	//std::string override_group_order;
 	override_group_nb_gens = 0;
@@ -126,9 +130,17 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 					<< equation_parameters_tex << " "
 					<< endl;
 		}
+		else if (ST.stringcmp(argv[i], "-from_cubic_surface") == 0) {
+			f_from_cubic_surface = TRUE;
 
+			from_cubic_surface_label.assign(argv[++i]);
+			from_cubic_surface_point_orbit_idx = ST.strtoi(argv[++i]);
 
-
+			cout << "-from_cubic_surface "
+					<< from_cubic_surface_label
+					<< " " << from_cubic_surface_point_orbit_idx
+					<< endl;
+		}
 		else if (ST.stringcmp(argv[i], "-override_group") == 0) {
 			f_override_group = TRUE;
 
@@ -204,6 +216,13 @@ void quartic_curve_create_description::print()
 				<< endl;
 	}
 
+	if (f_from_cubic_surface) {
+
+		cout << "-from_cubic_surface "
+				<< from_cubic_surface_label
+				<< " " << from_cubic_surface_point_orbit_idx
+				<< endl;
+	}
 
 
 	if (f_override_group) {

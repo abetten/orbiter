@@ -533,6 +533,25 @@ spreads::spread_create *orbiter_top_level_session::get_object_of_type_spread(std
 	return (spreads::spread_create *) get_object(idx);
 }
 
+applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *orbiter_top_level_session::get_object_of_type_cubic_surface(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_cubic_surface cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_cubic_surface) {
+		cout << "orbiter_top_level_session::get_object_of_type_cubic_surface object type != t_cubic_surface" << endl;
+		exit(1);
+	}
+
+
+	return (applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *) get_object(idx);
+}
+
+
 
 }}}
 

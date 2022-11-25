@@ -237,8 +237,8 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes" << endl;
 	}
 
-	algebraic_geometry::surface_domain *Surf;
-	surface_with_action *Surf_A;
+	//algebraic_geometry::surface_domain *Surf;
+	//surface_with_action *Surf_A;
 
 
 	if (f_v) {
@@ -249,7 +249,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 	prepare_surface_classify_wedge(
 			PA->F, PA,
 			Control,
-			Surf, Surf_A,
+			//Surf, Surf_A,
 			SCW,
 			verbose_level);
 
@@ -301,7 +301,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 		field_theory::finite_field *F,
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control,
-		algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
+		//algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 		cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 		int verbose_level)
 {
@@ -313,11 +313,13 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 	}
 
 
+	surface_with_action *Surf_A;
+
 	PA->setup_surface_with_action(
 			Surf_A,
 			verbose_level);
 
-	Surf = Surf_A->Surf;
+	//Surf = Surf_A->Surf;
 
 
 
@@ -805,7 +807,8 @@ void surface_domain_high_level::do_six_arcs(
 
 
 	if (f_filter_by_nb_Eckardt_points) {
-		cout << "Nonconical six-arcs associated with surfaces with " << nb_Eckardt_points << " Eckardt points in PG(2," << F->q << "):" << endl;
+		cout << "Nonconical six-arcs associated with surfaces with "
+				<< nb_Eckardt_points << " Eckardt points in PG(2," << F->q << "):" << endl;
 
 	}
 	else {
@@ -1027,7 +1030,9 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		// Otherwise we don't, because it would take too long.
 
 
-		if (F->q <= 8) {
+		if (FALSE /* F->q <= 8*/) {
+
+#if 0
 			if (f_v) {
 				cout << "surface_domain_high_level::do_cubic_surface_properties "
 						"before SC->compute_group" << endl;
@@ -1038,6 +1043,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 						"after SC->compute_group" << endl;
 			}
 			Ago[orbit_idx] = SC->Sg->group_order_as_lint();
+#endif
 		}
 		else {
 			cout << "F->q = " << F->q << " we are not computing the automorphism group" << endl;

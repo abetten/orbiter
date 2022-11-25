@@ -1052,6 +1052,31 @@ void int_vec::distribution_print(std::ostream &ost,
 	}
 }
 
+void int_vec::distribution_print_to_string(std::string &str, int *val, int *mult, int len)
+{
+	ostringstream s;
+	int i;
+
+	for (i = 0; i < len; i++) {
+		s << val[i];
+		if (mult[i] > 1) {
+			s << "^";
+			if (mult[i] >= 10) {
+				s << "{" << mult[i] << "}";
+			}
+			else {
+				s << mult[i];
+			}
+		}
+		if (i < len - 1) {
+			s << ", ";
+		}
+	}
+	str.assign(s.str());
+}
+
+
+
 void int_vec::set_print(std::ostream &ost, int *v, int len)
 {
 	int i;

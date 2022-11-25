@@ -46,6 +46,8 @@ surface_create::surface_create()
 	Sg = NULL;
 	f_has_nice_gens = FALSE;
 	nice_gens = NULL;
+
+	SOA = NULL;
 }
 
 
@@ -73,6 +75,9 @@ surface_create::~surface_create()
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
 	}
+	if (SOA) {
+		FREE_OBJECT(SOA);
+	}
 }
 
 
@@ -93,7 +98,8 @@ void surface_create::create_cubic_surface(
 	}
 	else {
 		if (!Descr->f_space) {
-			cout << "surface_create::create_cubic_surface please use -space <space> to specify the projective space" << endl;
+			cout << "surface_create::create_cubic_surface "
+					"please use -space <space> to specify the projective space" << endl;
 			exit(1);
 		}
 		PA = Get_object_of_projective_space(Descr->space_label);
@@ -101,7 +107,8 @@ void surface_create::create_cubic_surface(
 
 
 	if (PA->n != 3) {
-		cout << "surface_create::create_cubic_surface we need a 3-dimensional projective space" << endl;
+		cout << "surface_create::create_cubic_surface "
+				"we need a 3-dimensional projective space" << endl;
 		exit(1);
 	}
 
@@ -135,6 +142,27 @@ void surface_create::create_cubic_surface(
 				"before PG_element_normalize_from_front" << endl;
 	}
 	F->PG_element_normalize_from_front(SO->eqn, 1, 20);
+
+
+	SOA = NEW_OBJECT(surface_object_with_action);
+
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface "
+				"before SOA->init_with_surface_object" << endl;
+	}
+	SOA->init_with_surface_object(
+			Surf_A,
+			SO,
+			Sg,
+			f_has_nice_gens,
+			nice_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_cubic_surface "
+				"after SOA->init_with_surface_object" << endl;
+	}
+
+
 
 	if (f_v) {
 		cout << "surface_create::create_cubic_surface done" << endl;
@@ -171,13 +199,6 @@ int surface_create::init_with_data(
 	surface_create::F = Surf_A->PA->F;
 	q = F->q;
 	surface_create::Surf = Surf_A->Surf;
-#if 0
-	if (Descr->q != F->q) {
-		cout << "surface_create::init_with_data "
-				"Descr->q != F->q" << endl;
-		exit(1);
-	}
-#endif
 
 	if (f_v) {
 		cout << "surface_create::init_with_data "
@@ -202,7 +223,6 @@ int surface_create::init_with_data(
 	return TRUE;
 }
 
-
 int surface_create::init(surface_create_description *Descr,
 	int verbose_level)
 {
@@ -214,14 +234,6 @@ int surface_create::init(surface_create_description *Descr,
 		cout << "surface_create::init" << endl;
 	}
 	surface_create::Descr = Descr;
-
-#if 0
-	if (!Descr->f_q) {
-		cout << "surface_create::init !Descr->f_q" << endl;
-		exit(1);
-	}
-	q = Descr->q;
-#endif
 
 
 	surface_create::Surf_A = PA->Surf_A;
@@ -248,7 +260,8 @@ int surface_create::init(surface_create_description *Descr,
 	}
 	if (!create_surface_from_description(verbose_level)) {
 		if (f_v) {
-			cout << "surface_create::init before create_surface_from_description could not create surface" << endl;
+			cout << "surface_create::init "
+					"create_surface_from_description could not create surface" << endl;
 		}
 		return FALSE;
 	}
@@ -275,28 +288,65 @@ int surface_create::create_surface_from_description(int verbose_level)
 
 	if (Descr->f_family_Eckardt) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_Eckardt_surface" << endl;
+		}
 
-		create_Eckardt_surface(Descr->family_Eckardt_a, Descr->family_Eckardt_b, verbose_level);
+		create_Eckardt_surface(Descr->family_Eckardt_a,
+				Descr->family_Eckardt_b, verbose_level);
 		
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_Eckardt_surface" << endl;
+		}
 	}
 	else if (Descr->f_family_G13) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_G13" << endl;
+		}
 
 		create_surface_G13(Descr->family_G13_a, verbose_level);
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_G13" << endl;
+		}
 
 	}
 
 	else if (Descr->f_family_F13) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_F13" << endl;
+		}
+
 		create_surface_F13(Descr->family_F13_a, verbose_level);
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_F13" << endl;
+		}
 
 	}
 
 
 	else if (Descr->f_family_bes) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_bes" << endl;
+		}
+
 		create_surface_bes(Descr->family_bes_a, Descr->family_bes_c, verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_bes" << endl;
+		}
 
 
 	}
@@ -304,11 +354,20 @@ int surface_create::create_surface_from_description(int verbose_level)
 
 	else if (Descr->f_family_general_abcd) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_general_abcd" << endl;
+		}
+
 		create_surface_general_abcd(
 				Descr->family_general_abcd_a, Descr->family_general_abcd_b,
 				Descr->family_general_abcd_c, Descr->family_general_abcd_d,
 				verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_general_abcd" << endl;
+		}
 
 	}
 
@@ -316,16 +375,30 @@ int surface_create::create_surface_from_description(int verbose_level)
 
 	else if (Descr->f_by_coefficients) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_coefficients" << endl;
+		}
 
 		create_surface_by_coefficients(
 				Descr->coefficients_text,
 				Descr->select_double_six_string,
 				verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_coefficients" << endl;
+		}
+
 
 	}
 
 	else if (Descr->f_by_rank) {
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_rank" << endl;
+		}
 
 
 		create_surface_by_rank(
@@ -334,40 +407,77 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->select_double_six_string,
 				verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_rank" << endl;
+		}
 
 	}
 
 	else if (Descr->f_catalogue) {
 
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_from_catalogue" << endl;
+		}
+
 		create_surface_from_catalogue(
 				Descr->iso,
 				Descr->select_double_six_string,
 				verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_from_catalogue" << endl;
+		}
 
 
 
 	}
 	else if (Descr->f_arc_lifting) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_arc_lifting" << endl;
+		}
 
 		create_surface_by_arc_lifting(
 				Descr->arc_lifting_text,
 				verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_arc_lifting" << endl;
+		}
+
 
 	}
 	else if (Descr->f_arc_lifting_with_two_lines) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_arc_lifting_with_two_lines" << endl;
+		}
 
 		create_surface_by_arc_lifting_with_two_lines(
 				Descr->arc_lifting_text,
 				Descr->arc_lifting_two_lines_text,
 				verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_arc_lifting_with_two_lines" << endl;
+		}
+
+
 	}
 	else if (Descr->f_Cayley_form) {
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_Cayley_form" << endl;
+		}
 
 
 		create_surface_Cayley_form(
@@ -377,8 +487,18 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->Cayley_form_n,
 				verbose_level);
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_Cayley_form" << endl;
+		}
+
 	}
 	else if (Descr->f_by_equation) {
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_equation" << endl;
+		}
 
 		if (!create_surface_by_equation(
 				Descr->equation_name_of_formula,
@@ -394,23 +514,45 @@ int surface_create::create_surface_from_description(int verbose_level)
 			}
 			return FALSE;
 		}
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_equation" << endl;
+		}
 	}
 
 	else if (Descr->f_by_double_six) {
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_double_six" << endl;
+		}
 
 		create_surface_by_double_six(
 				Descr->by_double_six_label,
 				Descr->by_double_six_label_tex,
 				Descr->by_double_six_text,
 				verbose_level);
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_double_six" << endl;
+		}
 	}
 
 	else if (Descr->f_by_skew_hexagon) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_skew_hexagon" << endl;
+		}
 		create_surface_by_skew_hexagon(
 				Descr->by_skew_hexagon_label,
 				Descr->by_skew_hexagon_label_tex,
 				verbose_level);
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_skew_hexagon" << endl;
+		}
 	}
 
 	else {
@@ -422,20 +564,28 @@ int surface_create::create_surface_from_description(int verbose_level)
 
 	if (Descr->f_override_group) {
 
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before override_group" << endl;
+		}
 		override_group(Descr->override_group_order,
 				Descr->override_group_nb_gens,
 				Descr->override_group_gens,
 				verbose_level);
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after override_group" << endl;
+		}
 	}
 
 	if (f_v) {
-		cout << "surface_create::init2 coeffs = ";
+		cout << "surface_create::create_surface_from_description coeffs = ";
 		Int_vec_print(cout, SO->eqn, 20);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_create::init2 Lines = ";
+		cout << "surface_create::create_surface_from_description Lines = ";
 		Lint_vec_print(cout, SO->Lines, SO->nb_lines);
 		cout << endl;
 	}
@@ -443,27 +593,30 @@ int surface_create::create_surface_from_description(int verbose_level)
 
 	if (f_v) {
 		if (f_has_group) {
-			cout << "surface_create::init2 the stabilizer is:" << endl;
+			cout << "surface_create::create_surface_from_description "
+					"the stabilizer is:" << endl;
 			Sg->print_generators_tex(cout);
 		}
 		else {
-			cout << "surface_create::init2 "
+			cout << "surface_create::create_surface_from_description "
 					"The surface has no group computed" << endl;
 		}
 	}
 
 	if (f_has_group) {
 		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report before Surf_A->test_group" << endl;
+			cout << "surface_create::create_surface_from_description "
+					"before test_group" << endl;
 		}
-		Surf_A->test_group(this, verbose_level);
+		test_group(verbose_level);
 		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report after Surf_A->test_group" << endl;
+			cout << "surface_create::create_surface_from_description "
+					"after test_group" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "surface_create::init2 done" << endl;
+		cout << "surface_create::create_surface_from_description done" << endl;
 	}
 	return TRUE;
 }
@@ -483,12 +636,14 @@ void surface_create::override_group(std::string &group_order_text,
 	Sg = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
-		cout << "surface_create::override_group before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+		cout << "surface_create::override_group "
+				"before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
 
 	Int_vec_scan(gens_text, data, sz);
 	if (sz != Surf_A->A->make_element_size * nb_gens) {
-		cout << "surface_create::override_group sz != Surf_A->A->make_element_size * nb_gens" << endl;
+		cout << "surface_create::override_group "
+				"sz != Surf_A->A->make_element_size * nb_gens" << endl;
 		exit(1);
 	}
 
@@ -522,7 +677,8 @@ void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_create::create_Eckardt_surface before Surf->create_Eckardt_surface" << endl;
+		cout << "surface_create::create_Eckardt_surface "
+				"before Surf->create_Eckardt_surface" << endl;
 	}
 
 	SO = Surf->create_Eckardt_surface(a, b,
@@ -530,7 +686,8 @@ void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_Eckardt_surface after Surf->create_Eckardt_surface" << endl;
+		cout << "surface_create::create_Eckardt_surface "
+				"after Surf->create_Eckardt_surface" << endl;
 	}
 
 
@@ -541,7 +698,8 @@ void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_create::create_Eckardt_surface before Sg->stabilizer_of_Eckardt_surface" << endl;
+		cout << "surface_create::create_Eckardt_surface "
+				"before Sg->stabilizer_of_Eckardt_surface" << endl;
 	}
 
 	Sg->stabilizer_of_Eckardt_surface(
@@ -552,7 +710,8 @@ void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_Eckardt_surface after Sg->stabilizer_of_Eckardt_surface" << endl;
+		cout << "surface_create::create_Eckardt_surface "
+				"after Sg->stabilizer_of_Eckardt_surface" << endl;
 	}
 
 	f_has_group = TRUE;
@@ -603,23 +762,27 @@ void surface_create::create_surface_G13(int a, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_G13 before Surf->create_surface_G13 a=" << Descr->family_G13_a << endl;
+		cout << "surface_create::create_surface_G13 "
+				"before Surf->create_surface_G13 a=" << Descr->family_G13_a << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_G13 before Surf->create_surface_G13" << endl;
+		cout << "surface_create::create_surface_G13 "
+				"before Surf->create_surface_G13" << endl;
 	}
 
 	SO = Surf->create_surface_G13(a, verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_G13 after Surf->create_surface_G13" << endl;
+		cout << "surface_create::create_surface_G13 "
+				"after Surf->create_surface_G13" << endl;
 	}
 
 	Sg = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_G13 before Sg->stabilizer_of_G13_surface" << endl;
+		cout << "surface_create::create_surface_G13 "
+				"before Sg->stabilizer_of_G13_surface" << endl;
 	}
 
 	Sg->stabilizer_of_G13_surface(
@@ -629,7 +792,8 @@ void surface_create::create_surface_G13(int a, int verbose_level)
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_G13 after Sg->stabilizer_of_G13_surface" << endl;
+		cout << "surface_create::create_surface_G13 "
+				"after Sg->stabilizer_of_G13_surface" << endl;
 	}
 
 	f_has_group = TRUE;
@@ -671,23 +835,27 @@ void surface_create::create_surface_F13(int a, int verbose_level)
 		cout << "surface_create::create_surface_F13" << endl;
 	}
 	if (f_v) {
-		cout << "surface_create::create_surface_F13 before Surf->create_surface_F13 a=" << a << endl;
+		cout << "surface_create::create_surface_F13 "
+				"before Surf->create_surface_F13 a=" << a << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_F13 before Surf->create_surface_F13" << endl;
+		cout << "surface_create::create_surface_F13 "
+				"before Surf->create_surface_F13" << endl;
 	}
 
 	SO = Surf->create_surface_F13(a, verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_F13 after Surf->create_surface_F13" << endl;
+		cout << "surface_create::create_surface_F13 "
+				"after Surf->create_surface_F13" << endl;
 	}
 
 
 	Sg = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
-		cout << "surface_create::create_surface_F13 before Sg->stabilizer_of_F13_surface" << endl;
+		cout << "surface_create::create_surface_F13 "
+				"before Sg->stabilizer_of_F13_surface" << endl;
 	}
 
 	Sg->stabilizer_of_F13_surface(
@@ -697,7 +865,8 @@ void surface_create::create_surface_F13(int a, int verbose_level)
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_F13 after Sg->stabilizer_of_F13_surface" << endl;
+		cout << "surface_create::create_surface_F13 "
+				"after Sg->stabilizer_of_F13_surface" << endl;
 	}
 
 	f_has_group = TRUE;
@@ -741,18 +910,21 @@ void surface_create::create_surface_bes(int a, int c, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_bes before Surf->create_surface_bes "
+		cout << "surface_create::create_surface_bes "
+				"before Surf->create_surface_bes "
 				"a=" << Descr->family_bes_a << " " << Descr->family_bes_c << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_bes before Surf->create_surface_bes" << endl;
+		cout << "surface_create::create_surface_bes "
+				"before Surf->create_surface_bes" << endl;
 	}
 
 	SO = Surf->create_surface_bes(a, c, verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_bes after Surf->create_surface_bes" << endl;
+		cout << "surface_create::create_surface_bes "
+				"after Surf->create_surface_bes" << endl;
 	}
 
 
@@ -760,7 +932,8 @@ void surface_create::create_surface_bes(int a, int c, int verbose_level)
 	Sg = NEW_OBJECT(strong_generators);
 	//Sg->init(Surf_A->A, verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_bes before Sg->stabilizer_of_bes_surface" << endl;
+		cout << "surface_create::create_surface_bes "
+				"before Sg->stabilizer_of_bes_surface" << endl;
 	}
 	Sg->stabilizer_of_F13_surface(
 		Surf_A->A,
@@ -768,7 +941,8 @@ void surface_create::create_surface_bes(int a, int c, int verbose_level)
 		nice_gens,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_bes after Sg->stabilizer_of_bes_surface" << endl;
+		cout << "surface_create::create_surface_bes "
+				"after Sg->stabilizer_of_bes_surface" << endl;
 	}
 #endif
 	f_has_group = FALSE;
@@ -802,7 +976,8 @@ void surface_create::create_surface_bes(int a, int c, int verbose_level)
 }
 
 
-void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int verbose_level)
+void surface_create::create_surface_general_abcd(int a, int b, int c, int d,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -810,20 +985,23 @@ void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int
 		cout << "surface_create::create_surface_general_abcd" << endl;
 	}
 	if (f_v) {
-		cout << "surface_create::create_surface_general_abcd before Surf->create_surface_general_abcd a="
+		cout << "surface_create::create_surface_general_abcd "
+				"before Surf->create_surface_general_abcd a="
 				<< a << " b=" << b << " c="
 				<< c << " d=" << d
 				<< endl;
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_general_abcd before Surf->create_surface_general_abcd" << endl;
+		cout << "surface_create::create_surface_general_abcd "
+				"before Surf->create_surface_general_abcd" << endl;
 	}
 
 	SO = Surf->create_surface_general_abcd(a, b, c, d, verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_general_abcd after Surf->create_surface_general_abcd" << endl;
+		cout << "surface_create::create_surface_general_abcd "
+				"after Surf->create_surface_general_abcd" << endl;
 	}
 
 
@@ -832,7 +1010,8 @@ void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int
 	Sg = NEW_OBJECT(strong_generators);
 	//Sg->init(Surf_A->A, verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_general_abcd before Sg->stabilizer_of_surface" << endl;
+		cout << "surface_create::create_surface_general_abcd "
+				"before Sg->stabilizer_of_surface" << endl;
 	}
 	Sg->stabilizer_of_F13_surface(
 		Surf_A->A,
@@ -840,7 +1019,8 @@ void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int
 		nice_gens,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_general_abcd after Sg->stabilizer_of_surface" << endl;
+		cout << "surface_create::create_surface_general_abcd "
+				"after Sg->stabilizer_of_surface" << endl;
 	}
 #endif
 
@@ -874,7 +1054,8 @@ void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int
 	}
 }
 
-void surface_create::create_surface_by_coefficients(std::string &coefficients_text,
+void surface_create::create_surface_by_coefficients(
+		std::string &coefficients_text,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
 {
@@ -885,8 +1066,8 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficients surface is given "
-				"by the coefficients" << endl;
+		cout << "surface_create::create_surface_by_coefficients "
+				"surface is given as " << coefficients_text << endl;
 	}
 
 	int coeffs20[20];
@@ -896,8 +1077,8 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 
 	Int_vec_scan(coefficients_text, surface_coeffs, nb_coeffs);
 	if (ODD(nb_coeffs)) {
-		cout << "surface_create::create_surface_by_coefficients number of surface "
-				"coefficients must be even" << endl;
+		cout << "surface_create::create_surface_by_coefficients "
+				"number of coefficients must be even" << endl;
 		exit(1);
 	}
 	Int_vec_zero(coeffs20, 20);
@@ -1142,7 +1323,8 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 						"double six " << i << " / " << nb_select_double_six << endl;
 			}
 
-			Surf_A->Surf->read_string_of_schlaefli_labels(select_double_six_string[i], select_double_six, sz, verbose_level);
+			Surf_A->Surf->read_string_of_schlaefli_labels(select_double_six_string[i],
+					select_double_six, sz, verbose_level);
 
 
 			//Orbiter->Int_vec.scan(select_double_six_string[i], select_double_six, sz);
@@ -1153,7 +1335,8 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 			}
 
 			if (f_v) {
-				cout << "surface_create::create_surface_by_coefficient_vector select_double_six = ";
+				cout << "surface_create::create_surface_by_coefficient_vector "
+						"select_double_six = ";
 				Int_vec_print(cout, select_double_six, 12);
 				cout << endl;
 			}
@@ -1267,7 +1450,8 @@ void surface_create::create_surface_from_catalogue(int iso,
 		cout << "surface_create::create_surface_from_catalogue" << endl;
 	}
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue surface from catalogue" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"surface from catalogue" << endl;
 	}
 
 	int nb_select_double_six;
@@ -1281,7 +1465,8 @@ void surface_create::create_surface_from_catalogue(int iso,
 
 	nb_iso = K.cubic_surface_nb_reps(q);
 	if (Descr->iso >= nb_iso) {
-		cout << "surface_create::create_surface_from_catalogue iso >= nb_iso, "
+		cout << "surface_create::create_surface_from_catalogue "
+				"iso >= nb_iso, "
 				"this cubic surface does not exist" << endl;
 		exit(1);
 	}
@@ -1290,12 +1475,14 @@ void surface_create::create_surface_from_catalogue(int iso,
 	//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue before Surf->rearrange_lines_according_to_double_six" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"before Surf->rearrange_lines_according_to_double_six" << endl;
 	}
 	Surf->rearrange_lines_according_to_double_six(
 			Lines27, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue after Surf->rearrange_lines_according_to_double_six" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"after Surf->rearrange_lines_according_to_double_six" << endl;
 	}
 
 	if (nb_select_double_six) {
@@ -1307,26 +1494,31 @@ void surface_create::create_surface_from_catalogue(int iso,
 			long int New_lines[27];
 
 			if (f_v) {
-				cout << "surface_create::create_surface_from_catalogue selecting double six " << i << " / " << nb_select_double_six << endl;
+				cout << "surface_create::create_surface_from_catalogue "
+						"selecting double six " << i << " / " << nb_select_double_six << endl;
 			}
 			Int_vec_scan(select_double_six_string[i], select_double_six, sz);
 			if (sz != 12) {
-				cout << "surface_create::create_surface_from_catalogue f_select_double_six double six must consist of 12 numbers" << endl;
+				cout << "surface_create::create_surface_from_catalogue "
+						"f_select_double_six double six must consist of 12 numbers" << endl;
 				exit(1);
 			}
 
 			if (f_v) {
-				cout << "surface_create::create_surface_from_catalogue select_double_six = ";
+				cout << "surface_create::create_surface_from_catalogue "
+						"select_double_six = ";
 				Int_vec_print(cout, select_double_six, 12);
 				cout << endl;
 			}
 
 
 			if (f_v) {
-				cout << "surface_create::create_surface_from_catalogue before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
+				cout << "surface_create::create_surface_from_catalogue "
+						"before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
 			}
 			Surf->rearrange_lines_according_to_a_given_double_six(
-					Lines27, select_double_six, New_lines, 0 /* verbose_level */);
+					Lines27, select_double_six, New_lines,
+					0 /* verbose_level */);
 
 			Lint_vec_copy(New_lines, Lines27, 27);
 			FREE_int(select_double_six);
@@ -1336,31 +1528,37 @@ void surface_create::create_surface_from_catalogue(int iso,
 	int coeffs20[20];
 
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue before Surf->build_cubic_surface_from_lines" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"before Surf->build_cubic_surface_from_lines" << endl;
 	}
-	Surf->build_cubic_surface_from_lines(27, Lines27, coeffs20, 0 /* verbose_level */);
+	Surf->build_cubic_surface_from_lines(27, Lines27, coeffs20,
+			0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue after Surf->build_cubic_surface_from_lines" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"after Surf->build_cubic_surface_from_lines" << endl;
 	}
 
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue before SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"before SO->init_with_27_lines" << endl;
 	}
 	SO->init_with_27_lines(Surf,
 		Lines27, coeffs20,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue after SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"after SO->init_with_27_lines" << endl;
 	}
 
 
 	Sg = NEW_OBJECT(groups::strong_generators);
-	//Sg->init(Surf_A->A, verbose_level);
+
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
 	Sg->stabilizer_of_cubic_surface_from_catalogue(Surf_A->A,
 		F, iso,
@@ -1368,7 +1566,8 @@ void surface_create::create_surface_from_catalogue(int iso,
 	f_has_group = TRUE;
 
 	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
 
 	char str_q[1000];
@@ -1471,14 +1670,16 @@ void surface_create::create_surface_by_arc_lifting(
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_arc_lifting before SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_arc_lifting "
+				"before SO->init_with_27_lines" << endl;
 	}
 	SO->init_with_27_lines(Surf,
 		Lines27, coeffs20,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_arc_lifting after SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_arc_lifting "
+				"after SO->init_with_27_lines" << endl;
 	}
 
 
@@ -1490,7 +1691,8 @@ void surface_create::create_surface_by_arc_lifting(
 	char str_a[1000];
 
 	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_a, sizeof(str_a), "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_a, sizeof(str_a), "%ld_%ld_%ld_%ld_%ld_%ld",
+			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 
 	prefix.assign("arc_lifting_trihedral_q");
@@ -1503,7 +1705,8 @@ void surface_create::create_surface_by_arc_lifting(
 	label_txt.append("_arc");
 	label_txt.append(str_a);
 
-	snprintf(str_a, sizeof(str_a), "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_a, sizeof(str_a), "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld",
+			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 	label_tex.assign("arc\\_lifting\\_trihedral\\_q");
 	label_tex.append(str_q);
@@ -1547,7 +1750,8 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	Lint_vec_scan(arc_lifting_text, arc, arc_size);
 
 	if (arc_size != 6) {
-		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines arc_size != 6" << endl;
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines "
+				"arc_size != 6" << endl;
 		exit(1);
 	}
 
@@ -1595,7 +1799,8 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines before SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines "
+				"before SO->init_with_27_lines" << endl;
 	}
 
 	SO->init_with_27_lines(Surf,
@@ -1604,7 +1809,8 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines after SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines "
+				"after SO->init_with_27_lines" << endl;
 	}
 
 
@@ -1616,7 +1822,8 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 
 	snprintf(str_q, sizeof(str_q), "%d", F->q);
 	snprintf(str_lines, sizeof(str_lines), "%ld_%ld", line1, line2);
-	snprintf(str_a, sizeof(str_a), "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_a, sizeof(str_a), "%ld_%ld_%ld_%ld_%ld_%ld",
+			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 
 	prefix.assign("arc_lifting_with_two_lines_q");
@@ -1634,7 +1841,8 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	label_txt.append(str_a);
 
 	snprintf(str_lines, sizeof(str_lines), "\\_%ld\\_%ld", line1, line2);
-	snprintf(str_a, sizeof(str_a), "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+	snprintf(str_a, sizeof(str_a), "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld",
+			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
 
 	label_tex.assign("arc\\_lifting\\_with\\_two\\_lines\\_q");
 	label_tex.append(str_q);
@@ -1695,13 +1903,15 @@ void surface_create::create_surface_Cayley_form(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines before SO->init_equation_points_and_lines_only" << endl;
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines "
+				"before SO->init_equation_points_and_lines_only" << endl;
 	}
 
 	SO->init_equation_points_and_lines_only(Surf, coeffs20, verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines after SO->init_equation_points_and_lines_only" << endl;
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines "
+				"after SO->init_equation_points_and_lines_only" << endl;
 	}
 
 
@@ -1711,7 +1921,8 @@ void surface_create::create_surface_Cayley_form(
 	char str_parameters[1000];
 
 	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_parameters, sizeof(str_parameters), "klmn_%d_%d_%d_%d", k, l, m, n);
+	snprintf(str_parameters, sizeof(str_parameters),
+			"klmn_%d_%d_%d_%d", k, l, m, n);
 
 
 	prefix.assign("Cayley_q");
@@ -1724,7 +1935,8 @@ void surface_create::create_surface_Cayley_form(
 	label_txt.append("_");
 	label_txt.append(str_parameters);
 
-	snprintf(str_parameters, sizeof(str_parameters), "klmn\\_%d\\_%d\\_%d\\_%d", k, l, m, n);
+	snprintf(str_parameters, sizeof(str_parameters),
+			"klmn\\_%d\\_%d\\_%d\\_%d", k, l, m, n);
 
 	label_tex.assign("Cayley\\_q");
 	label_tex.append(str_q);
@@ -1773,8 +1985,10 @@ int surface_create::create_surface_by_equation(
 	tree = NEW_OBJECT(expression_parser::syntax_tree);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation Formula " << name_of_formula << " is " << equation_text << endl;
-		cout << "surface_create::create_surface_by_equation Managed variables: " << managed_variables << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"Formula " << name_of_formula << " is " << equation_text << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"Managed variables: " << managed_variables << endl;
 	}
 
 	const char *p = managed_variables.c_str();
@@ -1788,7 +2002,8 @@ int surface_create::create_surface_by_equation(
 
 		var.assign(str);
 		if (f_v) {
-			cout << "surface_create::create_surface_by_equation adding managed variable " << var << endl;
+			cout << "surface_create::create_surface_by_equation "
+					"adding managed variable " << var << endl;
 		}
 
 		tree->managed_variables.push_back(var);
@@ -1801,7 +2016,8 @@ int surface_create::create_surface_by_equation(
 	nb_vars = tree->managed_variables.size();
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation Managed variables: " << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"Managed variables: " << endl;
 		for (i = 0; i < nb_vars; i++) {
 			cout << i << " : " << tree->managed_variables[i] << endl;
 		}
@@ -1809,7 +2025,8 @@ int surface_create::create_surface_by_equation(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation Starting to parse " << name_of_formula << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"Starting to parse " << name_of_formula << endl;
 	}
 	Parser.parse(tree, equation_text, 0/*verbose_level*/);
 	if (f_v) {
@@ -1818,7 +2035,8 @@ int surface_create::create_surface_by_equation(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation Syntax tree:" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"Syntax tree:" << endl;
 		//tree->print(cout);
 	}
 
@@ -1833,22 +2051,27 @@ int surface_create::create_surface_by_equation(
 
 	int ret, degree;
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation before is_homogeneous" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"before is_homogeneous" << endl;
 	}
 	ret = tree->is_homogeneous(degree, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation after is_homogeneous" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"after is_homogeneous" << endl;
 	}
 	if (!ret) {
-		cout << "surface_create::create_surface_by_equation The given equation is not homogeneous" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"The given equation is not homogeneous" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation homogeneous of degree " << degree << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"homogeneous of degree " << degree << endl;
 	}
 
 	if (degree != 3) {
-		cout << "surface_create::create_surface_by_equation The given equation is homogeneous, but not of degree 3" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"The given equation is homogeneous, but not of degree 3" << endl;
 		exit(1);
 	}
 
@@ -1857,14 +2080,16 @@ int surface_create::create_surface_by_equation(
 	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation before Poly->init" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"before Poly->init" << endl;
 	}
 	Poly->init(F,
 			nb_vars /* nb_vars */, degree,
 			t_PART,
 			0/*verbose_level*/);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation after Poly->init" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"after Poly->init" << endl;
 	}
 
 	expression_parser::syntax_tree_node **Subtrees;
@@ -1874,21 +2099,25 @@ int surface_create::create_surface_by_equation(
 	nb_monomials = Poly->get_nb_monomials();
 
 	if (nb_monomials != 20) {
-		cout << "surface_create::create_surface_by_equation nb_monomials != 20" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"nb_monomials != 20" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation before tree->split_by_monomials" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"before tree->split_by_monomials" << endl;
 	}
 	tree->split_by_monomials(Poly, Subtrees, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation after tree->split_by_monomials" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"after tree->split_by_monomials" << endl;
 	}
 
 	if (f_v) {
 		for (i = 0; i < nb_monomials; i++) {
-			cout << "surface_create::create_surface_by_equation Monomial " << i << " : ";
+			cout << "surface_create::create_surface_by_equation "
+					"Monomial " << i << " : ";
 			if (Subtrees[i]) {
 				Subtrees[i]->print_expression(cout);
 				cout << " * ";
@@ -1896,13 +2125,15 @@ int surface_create::create_surface_by_equation(
 				cout << endl;
 			}
 			else {
-				cout << "surface_create::create_surface_by_equation no subtree" << endl;
+				cout << "surface_create::create_surface_by_equation "
+						"no subtree" << endl;
 			}
 		}
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation before evaluate" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"before evaluate" << endl;
 	}
 
 	p = equation_parameters.c_str();
@@ -1935,7 +2166,8 @@ int surface_create::create_surface_by_equation(
 
 
 		if (f_v) {
-			cout << "surface_create::create_surface_by_equation adding symbol " << symb << " = " << val << endl;
+			cout << "surface_create::create_surface_by_equation "
+					"adding symbol " << symb << " = " << val << endl;
 		}
 
 		symbol_table[symb] = val;
@@ -1954,14 +2186,16 @@ int surface_create::create_surface_by_equation(
 
 	for (i = 0; i < nb_monomials; i++) {
 		if (f_v) {
-			cout << "surface_create::create_surface_by_equation Monomial " << i << " : ";
+			cout << "surface_create::create_surface_by_equation "
+					"Monomial " << i << " : ";
 		}
 		if (Subtrees[i]) {
 			//Subtrees[i]->print_expression(cout);
 			a = Subtrees[i]->evaluate(symbol_table, F, 0/*verbose_level*/);
 			coeffs20[i] = a;
 			if (f_v) {
-				cout << "surface_create::create_surface_by_equation Monomial " << i << " : ";
+				cout << "surface_create::create_surface_by_equation "
+						"Monomial " << i << " : ";
 				cout << a << " * ";
 				Poly->print_monomial(cout, i);
 				cout << endl;
@@ -1969,19 +2203,22 @@ int surface_create::create_surface_by_equation(
 		}
 		else {
 			if (f_v) {
-				cout << "surface_create::create_surface_by_equation no subtree" << endl;
+				cout << "surface_create::create_surface_by_equation "
+						"no subtree" << endl;
 			}
 			coeffs20[i] = 0;
 		}
 	}
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation evaluated polynomial:" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"evaluated polynomial:" << endl;
 		for (i = 0; i < nb_monomials; i++) {
 			cout << coeffs20[i] << " * ";
 			Poly->print_monomial(cout, i);
 			cout << endl;
 		}
-		cout << "surface_create::create_surface_by_equation coefficient vector: ";
+		cout << "surface_create::create_surface_by_equation "
+				"coefficient vector: ";
 		Int_vec_print(cout, coeffs20, nb_monomials);
 		cout << endl;
 	}
@@ -2003,7 +2240,8 @@ int surface_create::create_surface_by_equation(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation before create_surface_by_coefficient_vector" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"before create_surface_by_coefficient_vector" << endl;
 	}
 
 	create_surface_by_coefficient_vector(coeffs20,
@@ -2012,7 +2250,8 @@ int surface_create::create_surface_by_equation(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation after create_surface_by_coefficient_vector" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"after create_surface_by_coefficient_vector" << endl;
 	}
 
 
@@ -2072,7 +2311,8 @@ void surface_create::create_surface_by_double_six(
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_double_six" << endl;
-		cout << "surface_create::create_surface_by_double_six double_six=" << by_double_six_text << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"double_six=" << by_double_six_text << endl;
 	}
 
 	int coeffs20[20];
@@ -2082,7 +2322,8 @@ void surface_create::create_surface_by_double_six(
 
 	Lint_vec_scan(by_double_six_text, double_six, sz);
 	if (sz != 12) {
-		cout << "surface_create::create_surface_by_double_six need exactly 12 input lines" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"need exactly 12 input lines" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -2098,12 +2339,14 @@ void surface_create::create_surface_by_double_six(
 	}
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six passes the double six property test" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"passes the double six property test" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six before Surf->build_cubic_surface_from_lines" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"before Surf->build_cubic_surface_from_lines" << endl;
 	}
 
 	Surf->build_cubic_surface_from_lines(
@@ -2111,7 +2354,8 @@ void surface_create::create_surface_by_double_six(
 		coeffs20, 0/* verbose_level*/);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six after Surf->build_cubic_surface_from_lines" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"after Surf->build_cubic_surface_from_lines" << endl;
 	}
 
 	if (f_v) {
@@ -2129,12 +2373,14 @@ void surface_create::create_surface_by_double_six(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six before Surf->create_the_fifteen_other_lines" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"before Surf->create_the_fifteen_other_lines" << endl;
 	}
 	Surf->create_the_fifteen_other_lines(Lines27,
 			Lines27 + 12, verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six after Surf->create_the_fifteen_other_lines" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"after Surf->create_the_fifteen_other_lines" << endl;
 	}
 
 
@@ -2143,17 +2389,20 @@ void surface_create::create_surface_by_double_six(
 
 #if 0
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six before SO->init_equation_points_and_lines_only" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"before SO->init_equation_points_and_lines_only" << endl;
 	}
 
 	SO->init_equation_points_and_lines_only(Surf, coeffs20, verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six after SO->init_equation_points_and_lines_only" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"after SO->init_equation_points_and_lines_only" << endl;
 	}
 #else
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six before SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"before SO->init_with_27_lines" << endl;
 	}
 
 	SO->init_with_27_lines(Surf,
@@ -2162,7 +2411,8 @@ void surface_create::create_surface_by_double_six(
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six after SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_double_six "
+				"after SO->init_with_27_lines" << endl;
 	}
 
 
@@ -2221,7 +2471,8 @@ void surface_create::create_surface_by_skew_hexagon(
 	}
 
 	if (nb_pts != 6) {
-		cout << "surface_create::create_surface_by_skew_hexagon nb_pts != 6" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"nb_pts != 6" << endl;
 		exit(1);
 	}
 
@@ -2235,13 +2486,15 @@ void surface_create::create_surface_by_skew_hexagon(
 	std::vector<std::vector<long int> > Double_sixes;
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon before Surf_A->complete_skew_hexagon" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"before Surf_A->complete_skew_hexagon" << endl;
 	}
 
 	Surf_A->complete_skew_hexagon(Pts, Double_sixes, verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon after Surf_A->complete_skew_hexagon" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"after Surf_A->complete_skew_hexagon" << endl;
 	}
 
 
@@ -2255,13 +2508,15 @@ void surface_create::create_surface_by_skew_hexagon(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon before Surf->build_cubic_surface_from_lines" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"before Surf->build_cubic_surface_from_lines" << endl;
 	}
 	Surf->build_cubic_surface_from_lines(
 		12, double_six,
 		coeffs20, 0/* verbose_level*/);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon after Surf->build_cubic_surface_from_lines" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"after Surf->build_cubic_surface_from_lines" << endl;
 	}
 
 	if (f_v) {
@@ -2279,12 +2534,14 @@ void surface_create::create_surface_by_skew_hexagon(
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon before Surf->create_the_fifteen_other_lines" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"before Surf->create_the_fifteen_other_lines" << endl;
 	}
 	Surf->create_the_fifteen_other_lines(Lines27,
 			Lines27 + 12, verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon after Surf->create_the_fifteen_other_lines" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"after Surf->create_the_fifteen_other_lines" << endl;
 	}
 
 
@@ -2296,7 +2553,8 @@ void surface_create::create_surface_by_skew_hexagon(
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon before SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"before SO->init_with_27_lines" << endl;
 	}
 
 	SO->init_with_27_lines(Surf,
@@ -2305,7 +2563,8 @@ void surface_create::create_surface_by_skew_hexagon(
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_skew_hexagon after SO->init_with_27_lines" << endl;
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"after SO->init_with_27_lines" << endl;
 	}
 
 
@@ -2343,26 +2602,19 @@ void surface_create::apply_transformations(
 	std::vector<std::string> &transform_coeffs,
 	std::vector<int> &f_inverse_transform,
 	int verbose_level)
+// applies all transformations and then recomputes the properties
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
 	int h;
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-	actions::action *A;
 	int desired_sz;
 	
 	if (f_v) {
 		cout << "surface_create::apply_transformations" << endl;
-		cout << "surface_create::apply_transformations verbose_level = " << verbose_level << endl;
+		cout << "surface_create::apply_transformations "
+				"verbose_level = " << verbose_level << endl;
 	}
 	
-	A = Surf_A->A;
 
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
 
 	if (f_semilinear) {
 		desired_sz = 17;
@@ -2377,7 +2629,6 @@ void surface_create::apply_transformations(
 		for (h = 0; h < transform_coeffs.size(); h++) {
 			int *transformation_coeffs;
 			int sz;
-			int coeffs_out[20];
 
 			if (f_v) {
 				cout << "surface_create::apply_transformations "
@@ -2396,138 +2647,33 @@ void surface_create::apply_transformations(
 				exit(1);
 			}
 
-			A->make_element(Elt1, transformation_coeffs, verbose_level);
-
-			if (f_inverse_transform[h]) {
-				A->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
-			}
-			else {
-				A->element_move(Elt1, Elt2, 0 /*verbose_level*/);
-			}
-
-			//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
-
-			A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
-
 			if (f_v) {
 				cout << "surface_create::apply_transformations "
-						"applying the transformation given by:" << endl;
-				cout << "$$" << endl;
-				A->print_quick(cout, Elt2);
-				cout << endl;
-				cout << "$$" << endl;
-				cout << "surface_create::apply_transformations "
-						"The inverse is:" << endl;
-				cout << "$$" << endl;
-				A->print_quick(cout, Elt3);
-				cout << endl;
-				cout << "$$" << endl;
+						"before apply_single_transformation" << endl;
 			}
 
-			// apply the transformation to the equation of the surface:
-
-			groups::matrix_group *M;
-	
-			M = A->G.matrix_grp;
-			M->substitute_surface_equation(Elt3,
-					SO->eqn, coeffs_out, Surf,
+			apply_single_transformation(f_inverse_transform[h],
+					transformation_coeffs,
+					sz,
 					verbose_level - 1);
-		
+
 			if (f_v) {
 				cout << "surface_create::apply_transformations "
-						"The equation of the transformed surface is:" << endl;
-				cout << "$$" << endl;
-				Surf->print_equation_tex(cout, coeffs_out);
-				cout << endl;
-				cout << "$$" << endl;
+						"after apply_single_transformation" << endl;
 			}
-
-			Int_vec_copy(coeffs_out, SO->eqn, 20);
-
-
-
-			if (f_has_group) {
-
-				// apply the transformation to the set of generators:
-
-				groups::strong_generators *SG2;
-
-				SG2 = NEW_OBJECT(groups::strong_generators);
-				if (f_v) {
-					cout << "surface_create::apply_transformations "
-							"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
-				}
-				SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
-
-				if (f_v) {
-					cout << "surface_create::apply_transformations "
-							"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
-				}
-
-				FREE_OBJECT(Sg);
-				Sg = SG2;
-
-				f_has_nice_gens = FALSE;
-				// ToDo: need to conjugate nice_gens
-			}
-
-	
-			if (f_vv) {
-				cout << "surface_create::apply_transformations Lines = ";
-				Lint_vec_print(cout, SO->Lines, SO->nb_lines);
-				cout << endl;
-			}
-			int i;
-
-			// apply the transformation to the set of lines:
-
-
-			for (i = 0; i < SO->nb_lines; i++) {
-				if (f_vv) {
-					cout << "line " << i << ":" << endl;
-					Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
-				}
-				SO->Lines[i] = Surf_A->A2->element_image_of(SO->Lines[i], Elt2, 0 /*verbose_level*/);
-				if (f_vv) {
-					cout << "maps to " << endl;
-					Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
-				}
-			}
-
-			// apply the transformation to the set of points:
-
-			for (i = 0; i < SO->nb_pts; i++) {
-				if (f_vv) {
-					cout << "point" << i << " = " << SO->Pts[i] << endl;
-				}
-				SO->Pts[i] = Surf_A->A->element_image_of(SO->Pts[i], Elt2, 0 /*verbose_level*/);
-				if (f_vv) {
-					cout << "maps to " << SO->Pts[i] << endl;
-				}
-				int a;
-
-				a = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeffs_out, SO->Pts[i]);
-				if (a) {
-					cout << "surface_create::apply_transformations something is wrong, "
-							"the image point does not lie on the transformed surface" << endl;
-					exit(1);
-				}
-
-			}
-			data_structures::sorting Sorting;
-
-			Sorting.lint_vec_heapsort(SO->Pts, SO->nb_pts);
 
 
 			FREE_int(transformation_coeffs);
 		} // next h
 
 		if (f_v) {
-			cout << "surface_create::apply_transformations before SO->recompute_properties" << endl;
+			cout << "surface_create::apply_transformations "
+					"before SO->recompute_properties" << endl;
 		}
 		SO->recompute_properties(verbose_level - 3);
 		if (f_v) {
-			cout << "surface_create::apply_transformations after SO->recompute_properties" << endl;
+			cout << "surface_create::apply_transformations "
+					"after SO->recompute_properties" << endl;
 		}
 
 	}
@@ -2538,16 +2684,171 @@ void surface_create::apply_transformations(
 	}
 
 
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
 
 	if (f_v) {
 		cout << "surface_create::apply_transformations done" << endl;
 	}
 }
 
+void surface_create::apply_single_transformation(int f_inverse,
+		int *transformation_coeffs,
+		int sz,
+		int verbose_level)
+// transforms SO->eqn, SO->Lines and SO->Pts,
+// Also transforms Sg (if f_has_group is TRUE)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
+	if (f_v) {
+		cout << "surface_create::apply_single_transformation" << endl;
+	}
+
+	actions::action *A;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int coeffs_out[20];
+
+
+	A = Surf_A->A;
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+	A->make_element(Elt1, transformation_coeffs, verbose_level);
+
+	if (f_inverse) {
+		A->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+	}
+	else {
+		A->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+	}
+
+	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
+
+	A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "surface_create::apply_single_transformation "
+				"applying the transformation given by:" << endl;
+		cout << "$$" << endl;
+		A->print_quick(cout, Elt2);
+		cout << endl;
+		cout << "$$" << endl;
+		cout << "surface_create::apply_single_transformation "
+				"The inverse is:" << endl;
+		cout << "$$" << endl;
+		A->print_quick(cout, Elt3);
+		cout << endl;
+		cout << "$$" << endl;
+	}
+
+	// apply the transformation to the equation of the surface:
+
+	groups::matrix_group *M;
+
+	M = A->G.matrix_grp;
+	M->substitute_surface_equation(Elt3,
+			SO->eqn, coeffs_out, Surf,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "surface_create::apply_single_transformation "
+				"The equation of the transformed surface is:" << endl;
+		cout << "$$" << endl;
+		Surf->print_equation_tex(cout, coeffs_out);
+		cout << endl;
+		cout << "$$" << endl;
+	}
+
+	Int_vec_copy(coeffs_out, SO->eqn, 20);
+
+
+
+	if (f_has_group) {
+
+		// apply the transformation to the set of generators:
+
+		groups::strong_generators *SG2;
+
+		SG2 = NEW_OBJECT(groups::strong_generators);
+		if (f_v) {
+			cout << "surface_create::apply_single_transformation "
+					"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+		}
+		SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
+
+		if (f_v) {
+			cout << "surface_create::apply_single_transformation "
+					"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+		}
+
+		FREE_OBJECT(Sg);
+		Sg = SG2;
+
+		f_has_nice_gens = FALSE;
+		// ToDo: need to conjugate nice_gens
+	}
+
+
+	if (f_vv) {
+		cout << "surface_create::apply_single_transformation Lines = ";
+		Lint_vec_print(cout, SO->Lines, SO->nb_lines);
+		cout << endl;
+	}
+	int i;
+
+	// apply the transformation to the set of lines:
+
+
+	for (i = 0; i < SO->nb_lines; i++) {
+		if (f_vv) {
+			cout << "line " << i << ":" << endl;
+			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
+		}
+		SO->Lines[i] = Surf_A->A2->element_image_of(SO->Lines[i], Elt2,
+				0 /*verbose_level*/);
+		if (f_vv) {
+			cout << "maps to " << endl;
+			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
+		}
+	}
+
+	// apply the transformation to the set of points:
+
+	for (i = 0; i < SO->nb_pts; i++) {
+		if (f_vv) {
+			cout << "point" << i << " = " << SO->Pts[i] << endl;
+		}
+		SO->Pts[i] = Surf_A->A->element_image_of(SO->Pts[i], Elt2, 0 /*verbose_level*/);
+		if (f_vv) {
+			cout << "maps to " << SO->Pts[i] << endl;
+		}
+		int a;
+
+		a = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeffs_out, SO->Pts[i]);
+		if (a) {
+			cout << "surface_create::apply_single_transformation something is wrong, "
+					"the image point does not lie on the transformed surface" << endl;
+			exit(1);
+		}
+
+	}
+	data_structures::sorting Sorting;
+
+	Sorting.lint_vec_heapsort(SO->Pts, SO->nb_pts);
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+
+	if (f_v) {
+		cout << "surface_create::apply_single_transformation done" << endl;
+	}
+
+}
+#if 0
 void surface_create::compute_group(
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
@@ -2665,7 +2966,7 @@ void surface_create::compute_group(
 		cout << "surface_create::compute_group done" << endl;
 	}
 }
-
+#endif
 
 void surface_create::export_something(std::string &what, int verbose_level)
 {
@@ -2683,11 +2984,13 @@ void surface_create::export_something(std::string &what, int verbose_level)
 	fname_base.append(label_txt);
 
 	if (f_v) {
-		cout << "surface_create::export_something before SO->export_something" << endl;
+		cout << "surface_create::export_something "
+				"before SO->export_something" << endl;
 	}
 	SO->export_something(what, fname_base, verbose_level);
 	if (f_v) {
-		cout << "surface_create::export_something after SO->export_something" << endl;
+		cout << "surface_create::export_something "
+				"after SO->export_something" << endl;
 	}
 
 	if (f_v) {
@@ -2751,68 +3054,7 @@ void surface_create::do_report(int verbose_level)
 
 
 			//ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
-
-
-			if (SO->SOP == NULL) {
-				cout << "surface_create::do_report SO->SOP == NULL" << endl;
-				exit(1);
-			}
-
-
-			string summary_file_name;
-			string col_postfix;
-
-			if (Descr->f_label_txt) {
-				summary_file_name.assign(Descr->label_txt);
-			}
-			else {
-				summary_file_name.assign(label_txt);
-			}
-			summary_file_name.append("_summary.csv");
-
-
-			snprintf(str, sizeof(str), "-Q%d", F->q);
-			col_postfix.assign(str);
-
-			if (f_v) {
-				cout << "surface_create::do_report "
-						"before SC->SO->SOP->create_summary_file" << endl;
-			}
-			if (Descr->f_label_for_summary) {
-				SO->SOP->create_summary_file(summary_file_name,
-						Descr->label_for_summary, col_postfix, verbose_level);
-			}
-			else {
-				SO->SOP->create_summary_file(summary_file_name,
-						label_txt, col_postfix, verbose_level);
-			}
-			if (f_v) {
-				cout << "surface_create::do_report "
-						"after SC->SO->SOP->create_summary_file" << endl;
-			}
-
-
-#if 0
-			if (f_v) {
-				cout << "surface_create::do_report "
-						"before SC->SO->SOP->print_everything" << endl;
-			}
-			SC->SO->SOP->print_everything(ost, verbose_level);
-			if (f_v) {
-				cout << "surface_create::do_report "
-						"after SC->SO->SOP->print_everything" << endl;
-			}
-#else
-			if (f_v) {
-				cout << "surface_create::do_report "
-						"before SC->SO->SOP->report_properties_simple" << endl;
-			}
-			SO->SOP->report_properties_simple(ost, verbose_level);
-			if (f_v) {
-				cout << "surface_create::do_report "
-						"after SC->SO->SOP->report_properties_simple" << endl;
-			}
-#endif
+			do_report2(ost, verbose_level);
 
 
 			L.foot(ost);
@@ -2829,6 +3071,262 @@ void surface_create::do_report(int verbose_level)
 	}
 
 }
+
+void surface_create::do_report2(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::do_report2" << endl;
+	}
+
+	if (SO->SOP == NULL) {
+		cout << "surface_create::do_report2 SO->SOP == NULL" << endl;
+		exit(1);
+	}
+
+
+	char str[1000];
+	string summary_file_name;
+	string col_postfix;
+
+	if (Descr->f_label_txt) {
+		summary_file_name.assign(Descr->label_txt);
+	}
+	else {
+		summary_file_name.assign(label_txt);
+	}
+	summary_file_name.append("_summary.csv");
+
+
+	snprintf(str, sizeof(str), "-Q%d", F->q);
+	col_postfix.assign(str);
+
+	if (f_v) {
+		cout << "surface_create::do_report2 "
+				"before SC->SO->SOP->create_summary_file" << endl;
+	}
+	if (Descr->f_label_for_summary) {
+		SO->SOP->create_summary_file(summary_file_name,
+				Descr->label_for_summary, col_postfix, verbose_level);
+	}
+	else {
+		SO->SOP->create_summary_file(summary_file_name,
+				label_txt, col_postfix, verbose_level);
+	}
+	if (f_v) {
+		cout << "surface_create::do_report2 "
+				"after SC->SO->SOP->create_summary_file" << endl;
+	}
+
+#if 0
+	if (f_v) {
+		cout << "surface_create::do_report2 "
+				"before SC->SO->SOP->report_properties_simple" << endl;
+	}
+	SO->SOP->report_properties_simple(ost, verbose_level);
+	if (f_v) {
+		cout << "surface_create::do_report2 "
+				"after SC->SO->SOP->report_properties_simple" << endl;
+	}
+#endif
+
+	if (SOA == NULL) {
+		cout << "surface_create::do_report2 SOA == NULL" << endl;
+		exit(1);
+	}
+
+
+	int f_print_orbits = FALSE;
+	std::string fname_mask;
+
+
+	graphics::layered_graph_draw_options *draw_options;
+
+	if (orbiter_kernel_system::Orbiter->f_draw_options) {
+		draw_options =
+				orbiter_kernel_system::Orbiter->draw_options;
+	}
+	else {
+		cout << "please use -draw_options" << endl;
+		exit(1);
+	}
+
+
+
+	SOA->cheat_sheet(ost,
+			label_txt,
+			label_tex,
+			f_print_orbits, fname_mask,
+			draw_options,
+			verbose_level);
+
+
+
+	if (f_v) {
+		cout << "surface_create::do_report2 done" << endl;
+	}
+
+}
+
+
+void surface_create::report_with_group(
+		int f_has_control_six_arcs,
+		poset_classification::poset_classification_control *Control_six_arcs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::report_with_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::report_with_group creating "
+				"surface_object_with_action object" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::report_with_group "
+				"The surface has been created." << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_create::report_with_group "
+				"Classifying non-conical six-arcs." << endl;
+	}
+
+	cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs;
+	apps_geometry::arc_generator_description *Six_arc_descr;
+
+	int *transporter;
+
+	Six_arcs = NEW_OBJECT(cubic_surfaces_and_arcs::six_arcs_not_on_a_conic);
+
+	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
+	Six_arc_descr->f_target_size = TRUE;
+	Six_arc_descr->target_size = 6;
+
+	if (f_has_control_six_arcs) {
+		Six_arc_descr->Control = Control_six_arcs;
+	}
+	else {
+		Six_arc_descr->Control = NEW_OBJECT(poset_classification::poset_classification_control);
+	}
+
+
+
+	// classify six arcs not on a conic:
+
+	if (f_v) {
+		cout << "surface_create::report_with_group "
+				"before Six_arcs->init:" << endl;
+	}
+
+
+	Six_arcs->init(
+			Six_arc_descr,
+			PA->PA2,
+			FALSE, 0,
+			verbose_level);
+
+	transporter = NEW_int(Six_arcs->Gen->PA->A->elt_size_in_int);
+
+
+	if (f_v) {
+		cout << "surface_create::report_with_group "
+				"before SoA->investigate_surface_and_write_report:" << endl;
+	}
+
+	if (orbiter_kernel_system::Orbiter->f_draw_options) {
+		SOA->investigate_surface_and_write_report(
+				orbiter_kernel_system::Orbiter->draw_options,
+				Surf_A->A,
+				this,
+				Six_arcs,
+				verbose_level);
+	}
+	else {
+		cout << "use -draw_options to specify the drawing option for the report" << endl;
+		exit(1);
+	}
+
+	//FREE_OBJECT(SoA);
+	FREE_OBJECT(Six_arcs);
+	FREE_OBJECT(Six_arc_descr);
+	FREE_int(transporter);
+
+	if (f_v) {
+		cout << "surface_create::report_with_group done" << endl;
+	}
+
+}
+
+void surface_create::test_group(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::test_group" << endl;
+	}
+
+
+	int *Elt2;
+
+
+	Elt2 = NEW_int(Surf_A->A->elt_size_in_int);
+
+	// test the generators:
+
+	int coeffs_out[20];
+	int i;
+
+	for (i = 0; i < Sg->gens->len; i++) {
+		cout << "surface_create::test_group "
+				"Testing generator " << i << " / "
+				<< Sg->gens->len << endl;
+		Surf_A->A->element_invert(Sg->gens->ith(i),
+				Elt2, 0 /*verbose_level*/);
+
+
+
+		groups::matrix_group *M;
+
+		M = Surf_A->A->G.matrix_grp;
+		M->substitute_surface_equation(Elt2,
+				SO->eqn, coeffs_out, Surf,
+				verbose_level - 1);
+
+
+		if (!PA->F->test_if_vectors_are_projectively_equal(SO->eqn, coeffs_out, 20)) {
+			cout << "surface_create::test_group error, "
+					"the transformation does not preserve "
+					"the equation of the surface" << endl;
+			cout << "SC->SO->eqn:" << endl;
+			Int_vec_print(cout, SO->eqn, 20);
+			cout << endl;
+			cout << "coeffs_out" << endl;
+			Int_vec_print(cout, coeffs_out, 20);
+			cout << endl;
+
+			exit(1);
+		}
+		cout << "surface_create::test_group "
+				"Generator " << i << " / " << Sg->gens->len
+				<< " is good" << endl;
+	}
+
+	FREE_int(Elt2);
+
+	if (f_v) {
+		cout << "surface_create::test_group the group is good. Done" << endl;
+	}
+}
+
+
 
 
 

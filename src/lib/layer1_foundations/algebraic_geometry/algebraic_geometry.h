@@ -1264,7 +1264,7 @@ public:
 	void compute_Trihedral_pairs_as_tritangent_planes(int verbose_level);
 
 	void compute_planes_and_dual_point_ranks(int verbose_level);
-	void print_everything(std::ostream &ost, int verbose_level);
+	//void print_everything(std::ostream &ost, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
 	void report_properties_simple(std::ostream &ost, int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);
@@ -1282,7 +1282,7 @@ public:
 	void print_lines(std::ostream &ost);
 	void print_lines_with_points_on_them(std::ostream &ost);
 	void print_equation(std::ostream &ost);
-	void print_general(std::ostream &ost);
+	void print_summary(std::ostream &ost);
 	void print_affine_points_in_source_code(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_Eckardt_points(std::ostream &ost);

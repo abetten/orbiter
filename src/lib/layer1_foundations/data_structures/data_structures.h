@@ -573,6 +573,7 @@ public:
 	void matrix_print_bitwise(int *p, int m, int n);
 	void distribution_print(std::ostream &ost,
 		int *val, int *mult, int len);
+	void distribution_print_to_string(std::string &str, int *val, int *mult, int len);
 	void set_print(std::ostream &ost, int *v, int len);
 	void integer_vec_print(std::ostream &ost, int *v, int len);
 	int hash(int *v, int len, int bit_length);
