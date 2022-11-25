@@ -79,11 +79,14 @@ classify_double_sixes::classify_double_sixes()
 	Poset = NULL;
 	Five_plus_one = NULL;
 
+#if 0
 	u = NULL;
 	v = NULL;
 	w = NULL;
 	u1 = NULL;
 	v1 = NULL;
+#endif
+
 	len = 0;
 	Idx = NULL;
 	nb = 0;
@@ -148,13 +151,13 @@ void classify_double_sixes::init(
 	q = F->q;
 	Surf = Surf_A->Surf;
 	
-	
+#if 0
 	u = NEW_int(6);
 	v = NEW_int(6);
 	w = NEW_int(6);
 	u1 = NEW_int(6);
 	v1 = NEW_int(6);
-	
+#endif
 
 
 	//A = LG->A_linear;
@@ -390,6 +393,8 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 				"PG(3,q), nb_neighbors=" << nb_neighbors << endl;
 	}
 	int N100;
+	int w[6];
+	int v[6];
 
 	N100 = nb_neighbors / 100 + 1;
 

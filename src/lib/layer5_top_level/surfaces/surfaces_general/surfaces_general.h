@@ -28,7 +28,7 @@ public:
 
 	int f_report;
 
-	int f_report_with_group;
+	//int f_report_with_group;
 
 	int f_export_something;
 	std::string export_something_what;
@@ -136,7 +136,7 @@ public:
 	int f_has_nice_gens;
 	data_structures_groups::vector_ge *nice_gens;
 
-
+	surface_object_with_action *SOA;
 
 
 	surface_create();
@@ -148,7 +148,6 @@ public:
 		surface_with_action *Surf_A,
 		int verbose_level);
 	int init(surface_create_description *Descr,
-		//surface_with_action *Surf_A,
 		int verbose_level);
 	int create_surface_from_description(int verbose_level);
 	void override_group(std::string &group_order_text,
@@ -157,7 +156,8 @@ public:
 	void create_surface_G13(int a, int verbose_level);
 	void create_surface_F13(int a, int verbose_level);
 	void create_surface_bes(int a, int c, int verbose_level);
-	void create_surface_general_abcd(int a, int b, int c, int d, int verbose_level);
+	void create_surface_general_abcd(int a, int b, int c, int d,
+			int verbose_level);
 	void create_surface_by_coefficients(std::string &coefficients_text,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
@@ -202,12 +202,27 @@ public:
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
+	// applies all transformations and then recomputes the properties
+	void apply_single_transformation(int f_inverse,
+			int *transformation_coeffs,
+			int sz,
+			int verbose_level);
+	// transforms SO->eqn, SO->Lines and SO->Pts,
+	// Also transforms Sg (if f_has_group is TRUE)
+#if 0
 	void compute_group(
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 		// not working ToDo
+#endif
 	void export_something(std::string &what, int verbose_level);
 	void do_report(int verbose_level);
+	void do_report2(std::ostream &ost, int verbose_level);
+	void report_with_group(
+			int f_has_control_six_arcs,
+			poset_classification::poset_classification_control *Control_six_arcs,
+			int verbose_level);
+	void test_group(int verbose_level);
 
 };
 
@@ -368,13 +383,16 @@ public:
 			poset_classification::poset_classification_control *Control,
 			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
+
 	void prepare_surface_classify_wedge(
 			field_theory::finite_field *F,
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control,
-			algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
+			//algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
+
+
 	void do_study_surface(field_theory::finite_field *F, int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
@@ -452,6 +470,7 @@ public:
 	actions::action *A_on_points;
 	actions::action *A_on_Eckardt_points;
 	actions::action *A_on_Double_points;
+	actions::action *A_on_Single_points;
 	actions::action *A_on_the_lines;
 	actions::action *A_single_sixes;
 	actions::action *A_on_tritangent_planes;
@@ -463,6 +482,7 @@ public:
 	groups::schreier *Orbits_on_points;
 	groups::schreier *Orbits_on_Eckardt_points;
 	groups::schreier *Orbits_on_Double_points;
+	groups::schreier *Orbits_on_Single_points;
 	groups::schreier *Orbits_on_lines;
 	groups::schreier *Orbits_on_single_sixes;
 	groups::schreier *Orbits_on_tritangent_planes;
@@ -497,6 +517,7 @@ public:
 	void init_orbits_on_points(int verbose_level);
 	void init_orbits_on_Eckardt_points(int verbose_level);
 	void init_orbits_on_Double_points(int verbose_level);
+	void init_orbits_on_Single_points(int verbose_level);
 	void init_orbits_on_lines(int verbose_level);
 	void init_orbits_on_half_double_sixes(int verbose_level);
 	void init_orbits_on_tritangent_planes(int verbose_level);
@@ -522,7 +543,7 @@ public:
 			int f_print_orbits, std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
-	void print_automorphism_group_gnerators(std::ostream &ost, int verbose_level);
+	void print_automorphism_group_generators(std::ostream &ost, int verbose_level);
 	void investigate_surface_and_write_report(
 			graphics::layered_graph_draw_options *Opt,
 			actions::action *A,
@@ -540,15 +561,17 @@ public:
 			std::string &label_tex,
 			int verbose_level);
 	void all_quartic_curves(
-			std::string &surface_prefix,
+			std::string &surface_label_txt,
+			std::string &surface_label_tex,
 			std::ostream &ost,
-			std::ostream &ost_quartics,
 			int verbose_level);
 	void export_all_quartic_curves(
-			std::string &surface_prefix,
 			std::ostream &ost_quartics_csv,
 			int verbose_level);
 	void print_full_del_Pezzo(std::ostream &ost, int verbose_level);
+	void print_everything(std::ostream &ost, int verbose_level);
+	void print_summary(std::ostream &ost);
+
 };
 
 // #############################################################################
@@ -665,10 +688,6 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);
-	long int apply_null_polarity(
-		long int a, int verbose_level);
-	long int apply_polarity(
-		long int a, int *Polarity36, int verbose_level);
 	void complete_skew_hexagon(
 		long int *skew_hexagon,
 		std::vector<std::vector<long int> > &Double_sixes,
@@ -692,18 +711,6 @@ public:
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);
-	void test_group(
-			surface_create *SC,
-			int verbose_level);
-	void report_with_group(
-			surface_create *SC,
-			int f_has_control_six_arcs,
-			poset_classification::poset_classification_control *Control_six_arcs,
-			int verbose_level);
-	void create_surface_object_with_action(
-			surface_create *SC,
-			surface_object_with_action *&SoA,
-			int verbose_level);
 	void sweep_4_15_lines(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,

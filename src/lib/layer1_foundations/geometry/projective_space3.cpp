@@ -314,7 +314,65 @@ int projective_space::reverse_engineer_semilinear_map(
 	return TRUE;
 }
 
+void projective_space::planes_through_line(long int *Lines, int nb_lines,
+		long int *&Plane_ranks, int &nb_planes_on_one_line, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, d;
+	int *M;
 
+	if (f_v) {
+		cout << "projective_space::planes_through_line" << endl;
+	}
+
+	d = n + 1;
+	M = NEW_int(3 * d);
+
+	for (i = 0; i < nb_lines; i++) {
+
+		std::vector<long int> plane_ranks;
+
+		planes_through_a_line(
+				Lines[i], plane_ranks,
+				0 /*verbose_level*/);
+
+		nb_planes_on_one_line = plane_ranks.size();
+
+		if (i == 0) {
+			Plane_ranks = NEW_lint(nb_lines * nb_planes_on_one_line);
+		}
+		for (j = 0; j < plane_ranks.size(); j++) {
+			Plane_ranks[i * nb_planes_on_one_line + j] = plane_ranks[j];
+		}
+
+		if (f_v) {
+			cout << "planes through line " << Lines[i] << " : ";
+			for (j = 0; j < plane_ranks.size(); j++) {
+				cout << plane_ranks[j];
+				if (j < plane_ranks.size() - 1) {
+					cout << ",";
+				}
+			}
+			cout << endl;
+
+			cout << "planes through line " << Lines[i] << endl;
+			for (j = 0; j < plane_ranks.size(); j++) {
+				cout << j << " : " << plane_ranks[j] << " : " << endl;
+				Grass_planes->unrank_lint_here(M, plane_ranks[j], 0 /* verbose_level */);
+				Int_matrix_print(M, 3, d);
+
+			}
+			cout << endl;
+		}
+
+
+	}
+	FREE_int(M);
+	if (f_v) {
+		cout << "projective_space::planes_through_line done" << endl;
+	}
+
+}
 
 
 

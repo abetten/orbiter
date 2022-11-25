@@ -88,6 +88,19 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	if (Descr->f_export_something) {
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity "
+					"before SC->export_something" << endl;
+		}
+		QC->export_something(Descr->export_something_what, verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity "
+					"after SC->export_something" << endl;
+		}
+
+	}
 	if (Descr->f_export_points) {
 
 		if (f_v) {
@@ -341,12 +354,12 @@ void quartic_curve_activity::do_report(
 #else
 			if (f_v) {
 				cout << "quartic_curve_activity::do_report "
-						"before QC->report_properties" << endl;
+						"before QC->report" << endl;
 			}
-			QC->report_properties(ost, verbose_level);
+			QC->report(ost, verbose_level);
 			if (f_v) {
 				cout << "quartic_curve_activity::do_report "
-						"after QC->report_properties" << endl;
+						"after QC->report" << endl;
 			}
 #endif
 

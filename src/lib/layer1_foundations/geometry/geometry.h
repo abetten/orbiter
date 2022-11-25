@@ -1590,6 +1590,10 @@ public:
 	// regular spread of PG(3,q) in table T associated with
 	// External_lines[i]
 	void reverse_isomorphism(int *A6, int *A4, int verbose_level);
+	long int apply_null_polarity(
+		long int a, int verbose_level);
+	long int apply_polarity(
+		long int a, int *Polarity36, int verbose_level);
 
 };
 
@@ -2420,6 +2424,8 @@ public:
 	int reverse_engineer_semilinear_map(
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
+	void planes_through_line(long int *Lines, int nb_lines,
+			long int *&Plane_ranks, int &nb_planes_on_one_line, int verbose_level);
 
 
 };

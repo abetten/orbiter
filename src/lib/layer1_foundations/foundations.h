@@ -762,9 +762,6 @@ namespace solvers {
 
 #define Int_vec_set_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->set_print(A, B, C)
 
-#define Int_vec_create_string_with_quotes(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(A, B, C)
-#define Lint_vec_create_string_with_quotes(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(A, B, C)
-
 
 
 #define Int_vec_print_classified_str(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_classified_str(A, B, C, D)
@@ -774,6 +771,8 @@ namespace solvers {
 #define Int_vec_find_first_nonzero_entry(A, B) pivot = orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
 
 
+#define Int_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, len)
+#define Lint_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, v, len)
 
 
 #define Get_matrix(label, A, m, n) orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)

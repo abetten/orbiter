@@ -1092,6 +1092,7 @@ public:
 	void print_orbit_lengths_tex(std::ostream &ost);
 	void print_fixed_points_tex(std::ostream &ost);
 	void print_orbit_length_distribution(std::ostream &ost);
+	void print_orbit_length_distribution_to_string(std::string &str);
 	void print_orbit_reps(std::ostream &ost);
 	void print(std::ostream &ost);
 	void print_and_list_orbits(std::ostream &ost);
