@@ -25,7 +25,7 @@ using std::endl;
  *    |-> "VARIABLE"
  */
 void exponent_vector_visitor::visit(multiply_node* op_node) {
-    vector<unsigned int> exponent_vector;
+	vector<unsigned int> exponent_vector(symbol_table->size(), 0);
 
     for (auto it=op_node->children.begin(); it!=op_node->children.end(); ++it)
         (*it)->accept(this, exponent_vector);

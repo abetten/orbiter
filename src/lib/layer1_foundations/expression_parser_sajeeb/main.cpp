@@ -147,6 +147,21 @@ int main(int argc, char** argv) {
     exponent_vector_visitor evv;
     ir_tree_root->accept(evv(managed_variables_table));
     evv.print();
+
+
+
+    cout << "Table:" << endl;
+    //monomial_coefficient_table_;
+    for (const auto& it : evv.monomial_coefficient_table_) {
+        const vector<unsigned int>& vec = it.first;
+        const irtree_node* root = it.second;
+        std::cout << root << ":  [";
+        for (const auto& itit : vec) std::cout << itit << " ";
+        std::cout << "]" << std::endl;
+    }
+
+
+
     ir_tree_root->accept(get_latex_staged_visitor());
 
     // print string representation of the IR tree

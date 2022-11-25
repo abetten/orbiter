@@ -96,11 +96,13 @@ class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterfac
     void visit(sentinel_node* op_node, vector<unsigned int>& exponent_vector) override;
 
     managed_variables_index_table* symbol_table;
-    monomial_coefficient_table monomial_coefficient_table_;
 
     using IRTreeVoidReturnTypeVisitorInterface::visit;
 
 public:
+
+    monomial_coefficient_table monomial_coefficient_table_;
+
     void visit(multiply_node* op_node) override;
     exponent_vector_visitor* operator()(managed_variables_index_table& symbol_table) {
         this->symbol_table = &symbol_table;
