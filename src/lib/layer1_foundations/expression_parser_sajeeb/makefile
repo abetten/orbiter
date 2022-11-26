@@ -6,14 +6,16 @@ include auto_dependency_generation_variables.mk
 TARGET_OBJECT_FILES = main.o \
 						lexer.yy.o \
 						parser.tab.o \
-						IRtree/node.o \
+						IRTree/node.o \
 						./Visitors/*.o \
 						./Visitors/LatexVisitors/*.o \
 						./Visitors/ToStringVisitors/*.o \
 						./Visitors/ExpansionVisitors/*.o \
 						./Visitors/CopyVisitors/*.o \
 						./Visitors/PrintVisitors/*.o \
-						./Visitors/ReductionVisitors/*.o
+						./Visitors/ReductionVisitors/*.o \
+						./Visitors/EvaluateVisitors/*.o
+
 
 TEX_FILES = $(wildcard visitor_result/*.tex)
 EXECUTABLE_BINARY = main
@@ -30,15 +32,15 @@ lexer.yy.o: lexer.yy.h
 lexer.yy.h: scanner.lex
 	$(LEX) --header-file=lexer.yy.h -o $(@:%.h=%.cpp) $<
 
-parser.tab.hpp: parser.yacc IRtree/node.h IRtree/node.cpp
+parser.tab.hpp: parser.yacc IRTree/node.h IRTree/node.cpp
 	$(YACC) $(YACCFLAGS) $< -o $(@:%.hpp=%.cpp)
 
 parser.tab.o: parser.tab.hpp
 	$(CC) $(CSTD) $(CPPFLAGS) $(@:%.o=%.cpp) -c -o $@
 
 ir_tree: FORCE
-	ln -sf $(shell pwd)/*.mk IRtree/
-	$(MAKE) -C IRtree all
+	ln -sf $(shell pwd)/*.mk IRTree/
+	$(MAKE) -C IRTree all
 
 visitors: FORCE
 	ln -sf $(shell pwd)/*.mk Visitors/
@@ -47,7 +49,7 @@ visitors: FORCE
 clean: clean_base_target
 	@-rm -rfv $(EXECUTABLE_BINARY)
 	-$(MAKE) -C Visitors clean
-	-$(MAKE) -C IRtree clean
+	-$(MAKE) -C IRTree clean
 
 include clean_base_target.mk
 

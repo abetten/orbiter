@@ -1,4 +1,4 @@
 YACCFLAGS = -d
 CSTD = -std=c++14
-CPPFLAGS = -Wall -O3 
+CPPFLAGS = -Wall -O3 -I ../../
 LDFLAGS = 

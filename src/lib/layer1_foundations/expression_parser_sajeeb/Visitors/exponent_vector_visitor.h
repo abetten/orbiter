@@ -76,32 +76,66 @@ struct monomial_coefficient_table_key_equal_function final {
     }
 };
 class monomial_coefficient_table final : public unordered_map<vector<unsigned int>,
-                                                              irtree_node*,
+                                                              vector<irtree_node*>,
                                                               monomial_coefficient_table_hash_function,
                                                               monomial_coefficient_table_key_equal_function> {};
 
 
 class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterface,
-                                      public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<vector<unsigned int>&> {
+                                      public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<vector<unsigned int>&,
+                                              list<shared_ptr<irtree_node> >::iterator&,
+                                              irtree_node*> {
     typedef size_t index_t;
 
-    void visit(plus_node* op_node, vector<unsigned int>& exponent_vector) override;
-    void visit(minus_node* op_node, vector<unsigned int>& exponent_vector) override;
-    void visit(multiply_node* op_node, vector<unsigned int>& exponent_vector) override;
-    void visit(exponent_node* op_node, vector<unsigned int>& exponent_vector) override;
-    void visit(unary_negate_node* op_node, vector<unsigned int>& exponent_vector) override;
-    void visit(variable_node* num_node, vector<unsigned int>& exponent_vector) override;
-    void visit(parameter_node* node, vector<unsigned int>& exponent_vector) override;
-    void visit(number_node* op_node, vector<unsigned int>& exponent_vector) override;
-    void visit(sentinel_node* op_node, vector<unsigned int>& exponent_vector) override;
+    void visit(plus_node* op_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(minus_node* op_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(multiply_node* op_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(exponent_node* op_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(unary_negate_node* op_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(variable_node* num_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(parameter_node* node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(number_node* op_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
+    void visit(sentinel_node* op_node,
+               vector<unsigned int>& exponent_vector,
+               list<shared_ptr<irtree_node> >::iterator& link,
+               irtree_node* parent_node) override;
 
     managed_variables_index_table* symbol_table;
-    monomial_coefficient_table monomial_coefficient_table_;
 
     using IRTreeVoidReturnTypeVisitorInterface::visit;
 
 public:
+
+    monomial_coefficient_table monomial_coefficient_table_;
+
     void visit(multiply_node* op_node) override;
+    void visit(plus_node* op_node) override;
+
+
     exponent_vector_visitor* operator()(managed_variables_index_table& symbol_table) {
         this->symbol_table = &symbol_table;
         return this;
@@ -110,8 +144,10 @@ public:
     void print() const {
         for (const auto& it : monomial_coefficient_table_) {
             const vector<unsigned int>& vec = it.first;
-            const irtree_node* root = it.second;
-            std::cout << root << ":  [";
+            const vector<irtree_node*> root_nodes = it.second;
+            std::cout << "[";
+            for (const auto& node : root_nodes) std::cout << node << " ";
+            std::cout << "]:  [";
             for (const auto& itit : vec) std::cout << itit << " ";
             std::cout << "]" << std::endl;
         }

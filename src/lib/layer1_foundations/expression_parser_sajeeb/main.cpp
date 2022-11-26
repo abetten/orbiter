@@ -7,7 +7,6 @@
 **/
     
 #include <iostream>
-#include <fstream>
 #include <unordered_map>
 #include <string>
 
@@ -24,6 +23,8 @@
 #include "Visitors/CopyVisitors/deep_copy_visitor.h"
 #include "Visitors/exponent_vector_visitor.h"
 #include "Visitors/ReductionVisitors/simplify_numerical_visitor.h"
+
+#include "orbiter.h"
 
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 
@@ -76,7 +77,7 @@ shared_ptr<irtree_node> generate_abstract_syntax_tree(std::string& exp, managed_
     return ir_tree_root;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
 	// std::string exp = "a-(-b)^(c*j*i-d*-9*-(-1+7))*e+f+g"; //a + --b^(c+d)*e + f + g
 //	 std::string exp = "a*b*c*-(d*-(e*-f*-g)*-i) * -k^-(d*-(e*-f*-g)*-i) -x -y -x -x -z + a+b+c-(d-e-(f+g))";
 //    std::string exp = "-(-(-a+-b) + -(c+d))"; // -a + -b + c + d
@@ -85,13 +86,26 @@ int main(int argc, char** argv) {
 //	 std::string exp = "-(a*-b*--k^(c+d))"; // -a * b * -k^(c+d)
 //    std::string exp = "(a+k^i) * (c+d) * (e+f) * (g+h) * (1+1+1) * (1*2*1)";
 //    std::string exp = "1+2+-(3*-2)+(4*5*6*2^3^2)";
-    std::string exp = "(a*b*c)*x0*x2 + 1*x1 + 1*x2 + x0^2*x1 + x1^2*x2 + x2*x0*x1 + a^2*x2^2";
+//    std::string exp = "(a*b*c)*x0*x2 + 1*x1 + 1*x2 + x0^2*x1 + x1^2*x2 + x2*x0*x1 + a^2*x2^2";
+    std::string exp = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0^2*X2 \
+                        + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
+                        + (a^2*c - a^2*d - a*c^2 + b*c^2 + a*d - b*c)*(b - d)*X0*X1*X3 \
+                        - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2^2 \
+                        - (a^2*c*d - a*b*c^2 - a^2*d + a*b*d + b*c^2 - b*c*d)*(b - d)*X0*X2*X3 \
+                        - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1^2*X2 \
+                        - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1^2*X3 \
+                        + (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X2^2 \
+                        + ((1+1)*a^2*b*c*d - a^2*b*d^2 - (1+1)*a^2*c*d^2 \
+                        - (1+1)*a*b^2*c^2 + a*b^2*c*d + (1+1)*a*b*c^2*d + a*b*c*d^2 \
+                        - b^2*c^2*d - a^2*b*c + a^2*c*d + a^2*d^2 + a*b^2*c + a*b*c^2 \
+                        - (1+1+1+1)*a*b*c*d - a*c^2*d + a*c*d^2 + b^2*c^2)*X1*X2*X3 \
+                        + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3^2";
 
     // (a+b)(c-d) = a*b - a*d + b*c - b*d
 
     //
     managed_variables_index_table managed_variables_table;
-    managed_variables_table.insert("x0", "x1", "x2");
+    managed_variables_table.insert("X0", "X1", "X2", "X3");
 
 
     shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(exp, managed_variables_table);
@@ -114,11 +128,8 @@ int main(int argc, char** argv) {
 
 
     // remove minus nodes
-//    LOG("");
-//    remove_minus_nodes(ir_tree_root);
-//    LOG("");
-//    ir_tree_root->accept(get_latex_staged_visitor());
-//    LOG("");
+    remove_minus_nodes(ir_tree_root);
+    ir_tree_root->accept(get_latex_staged_visitor());
 
     // merge redundant nodes
     merge_redundant_nodes(ir_tree_root);
@@ -146,7 +157,37 @@ int main(int argc, char** argv) {
     //
     exponent_vector_visitor evv;
     ir_tree_root->accept(evv(managed_variables_table));
-    evv.print();
+    eval_visitor evalVisitor;
+    orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+    int i;
+    orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+    std::string *Argv;
+    data_structures::string_tools ST;
+    ST.convert_arguments(argc, argv, Argv);
+    // argc has changed!
+    cout << "after ST.convert_arguments, argc=" << argc << endl;
+    cout << "before Top_level_session.startup_and_read_arguments" << endl;
+    i = Top_level_session.startup_and_read_arguments(argc, Argv, 1);
+    orbiter::layer1_foundations::field_theory::finite_field_description Descr;
+    orbiter::layer1_foundations::field_theory::finite_field Fq;
+    Descr.f_q = TRUE;
+    Descr.q = 7;
+    Fq.init(&Descr, 1);
+    unordered_map<string, int> assignemnt = {
+            {"a", 4},
+            {"b", 2},
+            {"c", 2},
+            {"d", 4}
+    };
+    for (auto& it : evv.monomial_coefficient_table_) {
+        const vector<unsigned int>& vec = it.first;
+        vector<irtree_node*> root_nodes = it.second;
+        int val = 0;
+        for (auto& node : root_nodes) val += node->accept(&evalVisitor, &Fq, assignemnt);
+        std::cout << val << ":  [";
+        for (const auto& itit : vec) std::cout << itit << " ";
+        std::cout << "]" << std::endl;
+    }
     ir_tree_root->accept(get_latex_staged_visitor());
 
     // print string representation of the IR tree
