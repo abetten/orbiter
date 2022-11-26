@@ -25,22 +25,39 @@ using std::endl;
  *    |-> "VARIABLE"
  */
 void exponent_vector_visitor::visit(multiply_node* op_node) {
-    vector<unsigned int> exponent_vector;
+	vector<unsigned int> exponent_vector(symbol_table->size(), 0);
 
-    for (auto it=op_node->children.begin(); it!=op_node->children.end(); ++it)
-        (*it)->accept(this, exponent_vector);
+    for (auto it=op_node->children.begin(); it!=op_node->children.end(); ++it) {
+        (*it)->accept(this, exponent_vector, it, op_node);
+    }
 
-
-
-    monomial_coefficient_table_.insert({std::move(exponent_vector), op_node});
+    monomial_coefficient_table_[exponent_vector].push_back(op_node);
 }
 
-void exponent_vector_visitor::visit(plus_node* op_node,vector<uint32_t>& exponent_vector) {
-    for (shared_ptr<irtree_node>& child : op_node->children)
-        child->accept(this, exponent_vector);
+void exponent_vector_visitor::visit(plus_node* op_node) {
+    for (auto it=op_node->children.begin(); it!=op_node->children.end(); ++it) {
+        if (it->get()->type == irtree_node::node_type::VARIABLE_NODE) {
+            shared_ptr<multiply_node> new_multiply_node = std::make_shared<multiply_node>();
+            new_multiply_node->children.push_back(*it);
+            *it = new_multiply_node;
+        }
+        it->get()->accept(this);
+    }
 }
 
-void exponent_vector_visitor::visit(minus_node* op_node,vector<uint32_t>& exponent_vector) {
+void exponent_vector_visitor::visit(plus_node* op_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
+    for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
+        it->get()->accept(this, exponent_vector, link, op_node);
+    }
+}
+
+void exponent_vector_visitor::visit(minus_node* op_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
     throw not_implemented("not implemented.");
 }
 
@@ -53,9 +70,13 @@ void exponent_vector_visitor::visit(minus_node* op_node,vector<uint32_t>& expone
  *    |-> "PARAMETER"
  *    |-> "VARIABLE"
  */
-void exponent_vector_visitor::visit(multiply_node* op_node,vector<uint32_t>& exponent_vector) {
-    for (shared_ptr<irtree_node>& child : op_node->children)
-        child->accept(this, exponent_vector);
+void exponent_vector_visitor::visit(multiply_node* op_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
+    for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
+        it->get()->accept(this, exponent_vector, link, op_node);
+    }
 }
 
 /**
@@ -67,7 +88,10 @@ void exponent_vector_visitor::visit(multiply_node* op_node,vector<uint32_t>& exp
  *                |-> "PARAMETER"
  *                |-> "VARIABLE"
  */
-void exponent_vector_visitor::visit(exponent_node* op_node,vector<uint32_t>& exponent_vector) {
+void exponent_vector_visitor::visit(exponent_node* op_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
     auto power_iter = op_node->children.begin(), base_iter = power_iter++;
     assert((*power_iter)->is_terminal() == true);
     assert((*base_iter)->is_terminal() == true);
@@ -76,24 +100,44 @@ void exponent_vector_visitor::visit(exponent_node* op_node,vector<uint32_t>& exp
             variable_node* base_node = static_cast<variable_node*>(base_iter->get());
             number_node* power_node = static_cast<number_node*>(power_iter->get());
             exponent_vector.at(symbol_table->index(base_node->name)) += power_node->value;
+            non_terminal_node* non_terminal_parent_node = static_cast<non_terminal_node*>(parent_node);
+            link = --(non_terminal_parent_node->children.erase(link));
         }
 }
 
-void exponent_vector_visitor::visit(unary_negate_node* op_node,vector<uint32_t>& exponent_vector) {}
+void exponent_vector_visitor::visit(unary_negate_node* op_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
 
-void exponent_vector_visitor::visit(variable_node* num_node,vector<uint32_t>& exponent_vector) {
+}
+
+void exponent_vector_visitor::visit(variable_node* num_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
     exponent_vector.at(symbol_table->index(num_node->name)) += 1;
+    link = --(static_cast<non_terminal_node*>(parent_node)->children.erase(link));
 }
 
-void exponent_vector_visitor::visit(parameter_node* node,vector<uint32_t>& exponent_vector) {
+void exponent_vector_visitor::visit(parameter_node* node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
     // NO-OP
 }
 
-void exponent_vector_visitor::visit(number_node* op_node,vector<uint32_t>& exponent_vector) {
+void exponent_vector_visitor::visit(number_node* op_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
     // NO-OP
 }
 
-void exponent_vector_visitor::visit(sentinel_node* op_node,vector<uint32_t>& exponent_vector) {
+void exponent_vector_visitor::visit(sentinel_node* op_node,
+                                    vector<uint32_t>& exponent_vector,
+                                    list<shared_ptr<irtree_node> >::iterator& link,
+                                    irtree_node* parent_node) {
     // NO-OP
     throw not_implemented("not implemented.");
 }

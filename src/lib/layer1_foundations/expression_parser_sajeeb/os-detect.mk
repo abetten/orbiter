@@ -14,7 +14,7 @@ ifeq ($(UNAME_S),Darwin)
 	CPPFLAGS += -I/opt/homebrew/opt/flex/include
 	CPPFLAGS += -mmacosx-version-min=$(word 4, $(shell sw_vers))
 	LEXLIB += -ll
-	LDFLAGS += -L/opt/homebrew/opt/flex/lib -L/opt/homebrew/opt/bison/lib
+	LDFLAGS += -L/usr/local/Cellar/flex/2.6.4_2/lib -L/usr/local/Cellar/bison/3.8.2/lib
 endif
 
 UNAME_P := $(shell uname -p)

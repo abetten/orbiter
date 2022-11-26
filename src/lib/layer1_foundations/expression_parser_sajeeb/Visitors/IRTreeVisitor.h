@@ -113,7 +113,6 @@ public:
 template<class return_t>
 class IRTreeTemplateReturnTypeConstantVisitorInterface {
 public:
-    // base template function set
     virtual return_t visit(const plus_node* op_node) = 0;
     virtual return_t visit(const minus_node* op_node) = 0;
     virtual return_t visit(const multiply_node* op_node) = 0;
