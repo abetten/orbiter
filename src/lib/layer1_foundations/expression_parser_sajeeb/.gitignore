@@ -1,0 +1,21 @@
+*.yy.*
+*.bak
+*.o
+*.out
+*.hacc
+*.cacc
+*.tab.*
+*.output
+docs/html
+*.fm
+*.mm
+main
+.DS_Store
+visitor_result
+
+# Ignore all *.mk files
+**/*.mk
+# Ignore all *.mk files except the ones in the root directory
+!/*.mk
+
+**/.deps/*
