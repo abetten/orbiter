@@ -1089,14 +1089,16 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	
 	for (i = 0; i < 5; i++) {
 		if (f_vv) {
-			cout << "intersecting line " << i << " = " << five_lines[i]
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"intersecting line " << i << " = " << five_lines[i]
 				<< " with line " << transversal_line << endl;
 		}
 		P[i] = Surf->P->point_of_intersection_of_a_line_and_a_line_in_three_space(
 				five_lines[i], transversal_line, 0 /* verbose_level */);
 	}
-	if (f_vv) {
-		cout << "The five intersection points are:";
+	if (f_v) {
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+				"The five intersection points are:";
 		Lint_vec_print(cout, P, 5);
 		cout << endl;
 	}
@@ -1111,6 +1113,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 	for (rk = 0; rk < nb_subsets; rk++) {
 
+		if (f_vv) {
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal subset " << rk << " / " << nb_subsets << endl;
+		}
 		// Determine a subset a_{i1},a_{i2},a_{i3},a_{i4};a_{i5}
 		Combi.unrank_k_subset(rk, subset, 5, 4);
 		Combi.set_complement(subset, 4, subset + 4, size_complement, 5);
@@ -1134,9 +1139,17 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		// This is because they are part of a
 		// partial ovoid on the Klein quadric.
 
+		if (f_vv) {
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"subset " << rk << " / " << nb_subsets << " before do_recoordinatize" << endl;
+		}
 		Recoordinatize->do_recoordinatize(
 				four_lines[0], four_lines[1], four_lines[2],
 				verbose_level - 2);
+		if (f_vv) {
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"subset " << rk << " / " << nb_subsets << " after do_recoordinatize" << endl;
+		}
 
 		A->element_invert(Recoordinatize->Elt, Elt1, 0);
 
@@ -1182,6 +1195,12 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		// Determine the point w which is the second point where 
 		// the line which is the image of a_{i4} intersects the hyperboloid:
 		// To do so, we loop over all points on the line distinct from Q4:
+
+		if (f_vv) {
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"subset " << rk << " / " << nb_subsets << " before loop" << endl;
+		}
+
 		for (a = 0; a < F->q; a++) {
 			v[0] = a;
 			v[1] = 1;
@@ -1204,6 +1223,12 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				break;
 			}
 		}
+
+		if (f_vv) {
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"subset " << rk << " / " << nb_subsets << " after loop" << endl;
+		}
+
 		if (a == F->q) {
 			if (f_v) {
 				cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
@@ -1212,6 +1237,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			}
 			return FALSE;
 		}
+
+
 		
 		// test that the line is not a line of the quadric:
 		F->Linear_algebra->add_vector(L, w, pt_coord, 4);
@@ -1258,8 +1285,16 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		Int_vec_copy(w, pi2 + 8, 4);
 		
 		// Let line3 be the intersection of pi1 and pi2:
+		if (f_v) {
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"subset " << rk << " / " << nb_subsets << " before intersect_subspaces" << endl;
+		}
 		F->Linear_algebra->intersect_subspaces(4, 3, pi1, 3, pi2,
 			d, M, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"subset " << rk << " / " << nb_subsets << " after intersect_subspaces" << endl;
+		}
 		if (d != 2) {
 			if (f_v) {
 				cout << "projective_space::create_double_six_from_five_lines_with_a_common_transversal "
@@ -1275,6 +1310,12 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		double_six[10 - rk] = line4; // fill in b_i
 	} // next rk
 
+
+	if (f_vv) {
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+				"b1,...,b5 have been created" << endl;
+	}
+
 	// Now, b_1,\ldots,b_5 have been determined.
 	b1 = double_six[6];
 	b2 = double_six[7];
@@ -1284,7 +1325,15 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 	// Next, determine a_6 as the transversal of b_1,\ldots,b_5:
 
+	if (f_vv) {
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+				"before do_recoordinatize" << endl;
+	}
 	Recoordinatize->do_recoordinatize(b1, b2, b3, verbose_level - 2);
+	if (f_vv) {
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+				"after do_recoordinatize" << endl;
+	}
 
 	A->element_invert(Recoordinatize->Elt, Elt1, 0);
 
@@ -1321,8 +1370,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 	} // next h
 
-	if (f_vv) {
-		cout << "four points have been computed:" << endl;
+	if (f_v) {
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+				"four points have been computed:" << endl;
 		Int_matrix_print(pt_coord, 4, 4);
 	}
 	line3 = -1;

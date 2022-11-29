@@ -715,9 +715,11 @@ public:
 		int verbose_level);
 	void report_points_of_given_type(std::ostream &ost, int t, int verbose_level);
 	void report_points(std::ostream &ost, int verbose_level);
-	void report_given_point_set(std::ostream &ost, long int *Pts, int nb_pts, int verbose_level);
+	void report_given_point_set(std::ostream &ost,
+			long int *Pts, int nb_pts, int verbose_level);
 	void report_lines(std::ostream &ost, int verbose_level);
-	void report_given_line_set(std::ostream &ost, long int *Lines, int nb_lines, int verbose_level);
+	void report_given_line_set(std::ostream &ost,
+			long int *Lines, int nb_lines, int verbose_level);
 	void list_all_points_vs_points(int verbose_level);
 	void list_points_vs_points(int t1, int t2,
 		int verbose_level);

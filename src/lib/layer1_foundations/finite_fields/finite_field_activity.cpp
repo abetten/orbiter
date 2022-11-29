@@ -65,7 +65,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.do_cheat_sheet_GF" << endl;
+		}
 		Algebra.do_cheat_sheet_GF(F, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.do_cheat_sheet_GF" << endl;
+		}
 	}
 	else if (Descr->f_polynomial_division) {
 
@@ -74,10 +80,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.polynomial_division" << endl;
+		}
 		R.polynomial_division(F,
 				Descr->polynomial_division_A,
 				Descr->polynomial_division_B,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.polynomial_division" << endl;
+		}
 	}
 	else if (Descr->f_extended_gcd_for_polynomials) {
 
@@ -86,10 +98,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.extended_gcd_for_polynomials" << endl;
+		}
 		R.extended_gcd_for_polynomials(F,
 				Descr->polynomial_division_A,
 				Descr->polynomial_division_B,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.extended_gcd_for_polynomials" << endl;
+		}
 	}
 
 	else if (Descr->f_polynomial_mult_mod) {
@@ -99,11 +117,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.polynomial_mult_mod" << endl;
+		}
 		R.polynomial_mult_mod(F,
 				Descr->polynomial_mult_mod_A,
 				Descr->polynomial_mult_mod_B,
 				Descr->polynomial_mult_mod_M,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.polynomial_mult_mod" << endl;
+		}
 	}
 
 	else if (Descr->f_polynomial_power_mod) {
@@ -113,11 +137,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.polynomial_power_mod" << endl;
+		}
 		R.polynomial_power_mod(F,
 				Descr->polynomial_power_mod_A,
 				Descr->polynomial_power_mod_n,
 				Descr->polynomial_power_mod_M,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.polynomial_power_mod" << endl;
+		}
 
 	}
 
@@ -128,8 +158,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		linear_algebra::linear_algebra_global LA;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before LA.Berlekamp_matrix" << endl;
+		}
 		LA.Berlekamp_matrix(F,
 				Descr->Berlekamp_matrix_label, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after LA.Berlekamp_matrix" << endl;
+		}
 
 	}
 	else if (Descr->f_normal_basis) {
@@ -139,8 +175,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		linear_algebra::linear_algebra_global LA;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before LA.compute_normal_basis" << endl;
+		}
 		LA.compute_normal_basis(F,
 				Descr->normal_basis_d, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after LA.compute_normal_basis" << endl;
+		}
 
 	}
 	else if (Descr->f_polynomial_find_roots) {
@@ -150,9 +192,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.polynomial_find_roots" << endl;
+		}
 		R.polynomial_find_roots(F,
 				Descr->polynomial_find_roots_label,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.polynomial_find_roots" << endl;
+		}
 	}
 
 	else if (Descr->f_nullspace) {
@@ -166,10 +214,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Get_matrix(Descr->nullspace_input_matrix, v, m, n);
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before LA.do_nullspace" << endl;
+		}
 		LA.do_nullspace(F,
 				v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after LA.do_nullspace" << endl;
+		}
 
 		FREE_int(v);
 
@@ -185,11 +239,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Get_matrix(Descr->RREF_input_matrix, v, m, n);
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before LA.do_RREF" << endl;
+		}
 		LA.do_RREF(F,
 				v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after LA.do_RREF" << endl;
+		}
 
 		FREE_int(v);
 
@@ -202,9 +262,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.apply_Walsh_Hadamard_transform" << endl;
+		}
 		Algebra.apply_Walsh_Hadamard_transform(F,
 				Descr->Walsh_Hadamard_transform_fname_csv_in,
 				Descr->Walsh_Hadamard_transform_n, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.apply_Walsh_Hadamard_transform" << endl;
+		}
 	}
 
 
@@ -215,9 +281,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.algebraic_normal_form_of_boolean_function" << endl;
+		}
 		Algebra.algebraic_normal_form_of_boolean_function(F,
 				Descr->algebraic_normal_form_of_boolean_function_fname_csv_in,
 				Descr->algebraic_normal_form_of_boolean_function_n, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.algebraic_normal_form_of_boolean_function" << endl;
+		}
 	}
 
 	else if (Descr->f_algebraic_normal_form) {
@@ -232,9 +304,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Get_int_vector_from_label(Descr->algebraic_normal_form_input, func, len, 0 /* verbose_level */);
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.algebraic_normal_form" << endl;
+		}
 		Algebra.algebraic_normal_form(F,
 				Descr->algebraic_normal_form_n,
 				func, len, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.algebraic_normal_form" << endl;
+		}
 	}
 
 	else if (Descr->f_apply_trace_function) {
@@ -244,8 +322,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.apply_trace_function" << endl;
+		}
 		Algebra.apply_trace_function(F,
 				Descr->apply_trace_function_fname_csv_in, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.apply_trace_function" << endl;
+		}
 	}
 
 	else if (Descr->f_apply_power_function) {
@@ -255,10 +339,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.apply_power_function" << endl;
+		}
 		Algebra.apply_power_function(F,
 				Descr->apply_power_function_fname_csv_in,
 				Descr->apply_power_function_d,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.apply_power_function" << endl;
+		}
 	}
 
 	else if (Descr->f_identity_function) {
@@ -268,8 +358,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.identity_function" << endl;
+		}
 		Algebra.identity_function(F,
 				Descr->identity_function_fname_csv_out, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.identity_function" << endl;
+		}
 	}
 
 
@@ -280,7 +376,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.do_trace" << endl;
+		}
 		Algebra.do_trace(F, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.do_trace" << endl;
+		}
 	}
 	else if (Descr->f_norm) {
 
@@ -289,7 +391,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.do_norm" << endl;
+		}
 		Algebra.do_norm(F, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.do_norm" << endl;
+		}
 	}
 	else if (Descr->f_Walsh_matrix) {
 
@@ -299,7 +407,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 		algebra::algebra_global Algebra;
 		int *W = NULL;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.Walsh_matrix" << endl;
+		}
 		Algebra.Walsh_matrix(F, Descr->Walsh_matrix_n, W, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.Walsh_matrix" << endl;
+		}
 		FREE_int(W);
 	}
 	else if (Descr->f_Vandermonde_matrix) {
@@ -311,7 +425,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int *W = NULL;
 		int *W_inv = NULL;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.Vandermonde_matrix" << endl;
+		}
 		Algebra.Vandermonde_matrix(F, W, W_inv, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.Vandermonde_matrix" << endl;
+		}
 
 		if (F->q < 33) {
 			cout << "Vandermonde:" << endl;
@@ -353,7 +473,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 		algebra::algebra_global Algebra;
 		int delta_max = 2;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.search_APN" << endl;
+		}
 		Algebra.search_APN(F, delta_max, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.search_APN" << endl;
+		}
 
 	}
 
@@ -367,9 +493,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.do_make_table_of_irreducible_polynomials" << endl;
+		}
 		R.do_make_table_of_irreducible_polynomials(F,
 				Descr->make_table_of_irreducible_polynomials_degree,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.do_make_table_of_irreducible_polynomials" << endl;
+		}
 
 	}
 	else if (Descr->f_EC_Koblitz_encoding) {
@@ -379,6 +511,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_Koblitz_encoding" << endl;
+		}
 		Crypto.do_EC_Koblitz_encoding(F,
 				Descr->EC_b,
 				Descr->EC_c,
@@ -386,6 +521,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->EC_pt_text,
 				Descr->EC_message,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_Koblitz_encoding" << endl;
+		}
 	}
 	else if (Descr->f_EC_points) {
 
@@ -394,11 +532,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_points" << endl;
+		}
 		Crypto.do_EC_points(F,
 				Descr->EC_label,
 				Descr->EC_b,
 				Descr->EC_c,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_points" << endl;
+		}
 	}
 	else if (Descr->f_EC_add) {
 
@@ -407,12 +551,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_add" << endl;
+		}
 		Crypto.do_EC_add(F,
 				Descr->EC_b,
 				Descr->EC_c,
 				Descr->EC_pt1_text,
 				Descr->EC_pt2_text,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_add" << endl;
+		}
 	}
 	else if (Descr->f_EC_cyclic_subgroup) {
 
@@ -421,11 +571,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_cyclic_subgroup" << endl;
+		}
 		Crypto.do_EC_cyclic_subgroup(F,
 				Descr->EC_b,
 				Descr->EC_c,
 				Descr->EC_pt_text,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_cyclic_subgroup" << endl;
+		}
 	}
 	else if (Descr->f_EC_multiple_of) {
 
@@ -434,12 +590,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_multiple_of" << endl;
+		}
 		Crypto.do_EC_multiple_of(F,
 				Descr->EC_b,
 				Descr->EC_c,
 				Descr->EC_pt_text,
 				Descr->EC_multiple_of_n,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_multiple_of" << endl;
+		}
 	}
 	else if (Descr->f_EC_discrete_log) {
 
@@ -448,12 +610,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_discrete_log" << endl;
+		}
 		Crypto.do_EC_discrete_log(F,
 				Descr->EC_b,
 				Descr->EC_c,
 				Descr->EC_pt_text,
 				Descr->EC_discrete_log_pt_text,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_discrete_log" << endl;
+		}
 	}
 	else if (Descr->f_EC_baby_step_giant_step) {
 
@@ -462,6 +630,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_baby_step_giant_step" << endl;
+		}
 		Crypto.do_EC_baby_step_giant_step(F,
 				Descr->EC_b,
 				Descr->EC_c,
@@ -469,6 +640,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->EC_bsgs_N,
 				Descr->EC_bsgs_cipher_text,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_baby_step_giant_step" << endl;
+		}
 	}
 	else if (Descr->f_EC_baby_step_giant_step_decode) {
 
@@ -477,6 +651,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.do_EC_baby_step_giant_step_decode" << endl;
+		}
 		Crypto.do_EC_baby_step_giant_step_decode(F,
 				Descr->EC_b,
 				Descr->EC_c,
@@ -485,6 +662,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->EC_bsgs_cipher_text,
 				Descr->EC_bsgs_keys,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.do_EC_baby_step_giant_step_decode" << endl;
+		}
 	}
 	else if (Descr->f_NTRU_encrypt) {
 
@@ -493,6 +673,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.NTRU_encrypt" << endl;
+		}
 		Crypto.NTRU_encrypt(Descr->NTRU_encrypt_N,
 				Descr->NTRU_encrypt_p,
 				F,
@@ -500,6 +683,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->NTRU_encrypt_R,
 				Descr->NTRU_encrypt_Msg,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.NTRU_encrypt" << endl;
+		}
 	}
 	else if (Descr->f_polynomial_center_lift) {
 
@@ -508,8 +694,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.polynomial_center_lift" << endl;
+		}
 		Crypto.polynomial_center_lift(Descr->polynomial_center_lift_A, F,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.polynomial_center_lift" << endl;
+		}
 	}
 	else if (Descr->f_polynomial_reduce_mod_p) {
 
@@ -518,8 +710,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		cryptography::cryptography_domain Crypto;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Crypto.polynomial_reduce_mod_p" << endl;
+		}
 		Crypto.polynomial_reduce_mod_p(Descr->polynomial_reduce_mod_p_A, F,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Crypto.polynomial_reduce_mod_p" << endl;
+		}
 	}
 
 #if 0
@@ -541,9 +739,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		geometry::geometry_global Geo;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Geo.do_cheat_sheet_hermitian" << endl;
+		}
 		Geo.do_cheat_sheet_hermitian(F,
 				Descr->cheat_sheet_hermitian_projective_dimension,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Geo.do_cheat_sheet_hermitian" << endl;
+		}
 	}
 	else if (Descr->f_cheat_sheet_desarguesian_spread) {
 
@@ -556,9 +760,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 			cout << "F_secondary == NULL" << endl;
 			exit(1);
 		}
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Geo.do_create_desarguesian_spread" << endl;
+		}
 		Geo.do_create_desarguesian_spread(F, F_secondary,
 				Descr->cheat_sheet_desarguesian_spread_m,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Geo.do_create_desarguesian_spread" << endl;
+		}
 	}
 
 	else if (Descr->f_sift_polynomials) {
@@ -568,10 +778,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.sift_polynomials" << endl;
+		}
 		R.sift_polynomials(F,
 				Descr->sift_polynomials_r0,
 				Descr->sift_polynomials_r1,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.sift_polynomials" << endl;
+		}
 	}
 
 	else if (Descr->f_mult_polynomials) {
@@ -581,10 +797,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.mult_polynomials" << endl;
+		}
 		R.mult_polynomials(F,
 				Descr->mult_polynomials_r0,
 				Descr->mult_polynomials_r1,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.mult_polynomials" << endl;
+		}
 	}
 
 	else if (Descr->f_polynomial_division_ranked) {
@@ -594,10 +816,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		ring_theory::ring_theory_global R;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before R.polynomial_division_with_report" << endl;
+		}
 		R.polynomial_division_with_report(F,
 				Descr->polynomial_division_r0,
 				Descr->polynomial_division_r1,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after R.polynomial_division_with_report" << endl;
+		}
 	}
 
 
@@ -621,11 +849,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 			A[i] = Os.random_integer(F->q);
 		}
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before LA.RREF_demo" << endl;
+		}
 		LA.RREF_demo(F,
 				A,
 				m,
 				n,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after LA.RREF_demo" << endl;
+		}
 
 		FREE_int(A);
 	}
@@ -637,6 +871,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		geometry::geometry_global GG;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before GG.do_transversal" << endl;
+		}
 		GG.do_transversal(F,
 				Descr->transversal_line_1_basis,
 				Descr->transversal_line_2_basis,
@@ -644,6 +881,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after GG.do_transversal" << endl;
+		}
 	}
 	else if (Descr->f_intersection_of_two_lines) {
 
@@ -652,12 +892,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		geometry::geometry_global GG;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before GG.do_intersection_of_two_lines" << endl;
+		}
 		GG.do_intersection_of_two_lines(F,
 				Descr->line_1_basis,
 				Descr->line_2_basis,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after GG.do_intersection_of_two_lines" << endl;
+		}
 	}
 	else if (Descr->f_inverse_isomorphism_klein_quadric) {
 
@@ -666,9 +912,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		geometry::geometry_global GG;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before GG.do_inverse_isomorphism_klein_quadric" << endl;
+		}
 		GG.do_inverse_isomorphism_klein_quadric(F,
 				Descr->inverse_isomorphism_klein_quadric_matrix_A6,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after GG.do_inverse_isomorphism_klein_quadric" << endl;
+		}
 	}
 	else if (Descr->f_rank_point_in_PG) {
 
@@ -677,9 +929,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		geometry::geometry_global GG;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before GG.do_rank_points_in_PG" << endl;
+		}
 		GG.do_rank_points_in_PG(F,
 				Descr->rank_point_in_PG_label,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after GG.do_rank_points_in_PG" << endl;
+		}
 	}
 
 	else if (Descr->f_unrank_point_in_PG) {
@@ -689,10 +947,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		geometry::geometry_global GG;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before GG.do_unrank_points_in_PG" << endl;
+		}
 		GG.do_unrank_points_in_PG(F,
 				Descr->unrank_point_in_PG_n,
 				Descr->unrank_point_in_PG_text,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after GG.do_unrank_points_in_PG" << endl;
+		}
 	}
 
 	else if (Descr->f_field_reduction) {
@@ -706,11 +970,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Fq = NEW_OBJECT(finite_field);
 		Fq->finite_field_init(Descr->field_reduction_q,
 				FALSE /* f_without_tables */, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Coding.field_reduction" << endl;
+		}
 		Coding.field_reduction(F, Fq,
 				Descr->field_reduction_label,
 				Descr->field_reduction_m, Descr->field_reduction_n,
 				Descr->field_reduction_text,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Coding.field_reduction" << endl;
+		}
 
 		FREE_OBJECT(Fq);
 
@@ -722,6 +992,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		expression_parser::expression_parser_domain ED;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before ED.parse_and_evaluate" << endl;
+		}
 		ED.parse_and_evaluate(F,
 				Descr->parse_name_of_formula,
 				Descr->parse_text,
@@ -729,6 +1002,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 				TRUE,
 				Descr->parse_parameters,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after ED.parse_and_evaluate" << endl;
+		}
 
 	}
 
@@ -880,10 +1156,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		expression_parser::expression_parser_domain ED;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before ED.evaluate" << endl;
+		}
 		ED.evaluate(F,
 				Descr->evaluate_formula_label,
 				Descr->evaluate_parameters,
 				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after ED.evaluate" << endl;
+		}
 
 	}
 

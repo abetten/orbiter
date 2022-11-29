@@ -118,7 +118,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			}
 			isomorphism_testing_surface1 = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
 			i += isomorphism_testing_surface1->
-					read_arguments(argc - (i - 1), argv + i,
+					read_arguments(argc - (i + 1), argv + i + 1,
 					verbose_level);
 			if (f_v) {
 				cout << "-isomorphism_testing after reading description of first surface" << endl;
@@ -127,7 +127,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			}
 			isomorphism_testing_surface2 = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
 			i += isomorphism_testing_surface2->
-					read_arguments(argc - (i - 1), argv + i,
+					read_arguments(argc - (i + 1), argv + i + 1,
 					verbose_level);
 			if (f_v) {
 				cout << "done with -isomorphism_testing" << endl;
@@ -146,7 +146,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			}
 			recognize_surface = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
 			i += recognize_surface->
-					read_arguments(argc - (i - 1), argv + i,
+					read_arguments(argc - (i + 1), argv + i + 1,
 					verbose_level);
 			if (f_v) {
 				cout << "done with -surface_recognize" << endl;

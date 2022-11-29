@@ -69,25 +69,6 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		}
 
 	}
-	if (Descr->f_report_with_group) {
-
-		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity before SC->Surf_A->report_with_group" << endl;
-		}
-#if 0
-		int f_has_control_six_arcs = FALSE;
-		poset_classification_control *Control_six_arcs = NULL;
-
-		SC->Surf_A->report_with_group(
-				SC,
-				f_has_control_six_arcs, Control_six_arcs,
-				verbose_level);
-#endif
-		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity after SC->Surf_A->report_with_group" << endl;
-		}
-
-	}
 	if (Descr->f_export_something) {
 
 		if (f_v) {
@@ -101,6 +82,7 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		}
 
 	}
+#if 0
 	if (Descr->f_export_points) {
 
 		if (f_v) {
@@ -112,6 +94,7 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		}
 
 	}
+#endif
 	if (Descr->f_create_surface) {
 
 		int eqn20[20];

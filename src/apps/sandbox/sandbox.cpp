@@ -16,6 +16,15 @@ using namespace orbiter;
 
 int main()
 {
+	field_theory::finite_field_description Descr;
+	field_theory::finite_field Fq;
+
+	Descr.f_q = TRUE;
+	Descr.q = 11;
+	Fq.init(&Descr, 1 /* verbose_level */);
+
+
+#if 0
 	char str[10000];
 	int i;
 
@@ -41,6 +50,7 @@ int main()
 				"-end");
 		system(str);
 	}
+#endif
 #if 0
 	int verbose_level = 10;
 	data_structures::algorithms Algo;

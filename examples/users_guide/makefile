@@ -318,7 +318,7 @@ F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 \
 
 # general normal form for cubic surfaces with 27 rational lines:
 
-F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
+F_abcd_eqn_no_exponents="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 \
 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2*X2 \
@@ -337,7 +337,7 @@ F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 
 # general normal form for cubic surfaces with 27 rational lines:
 
-F_abcd_eqn_with_exponents="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0^2*X2 \
+F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0^2*X2 \
 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
 + (a^2*c - a^2*d - a*c^2 + b*c^2 + a*d - b*c)*(b - d)*X0*X1*X3 \
 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2^2 \
@@ -3351,14 +3351,6 @@ Symmetric_4_stab:
 		-end
 
 
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_points \
-#			-stabilizer_of_orbit_rep 0 \
-#		-end
-
-
-
 
 
 ###############################################################################
@@ -4082,6 +4074,104 @@ Symmetric_4_on_pairs:
 	open Perm4_on_2_subsets_report.pdf
 
 
+
+surface_q13_Eckardt:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_tritangent_planes \
+		-end
+	pdflatex surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_report.tex
+	open surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_report.pdf
+
+
+SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
+1,0,0,0,0,12,12,6,6,0,0,7,1,0,2,0, \
+0,1,1,7,3,9,9,11,2,10,10,3,9,9,1,11"
+
+
+surface_q13_Eckardt_on_tritangent_planes:
+	$(ORBITER) -v 2 \
+		-orbiter_path $(ORBITER_PATH) \
+		-draw_options -embedded -end \
+		-define F -finite_field -q 13 -end \
+		-define gens -vector -field F -dense $(SURFACE_Q13_STAB_GENS) -end \
+		-define TriP -set -file \
+			arc_lifting_trihedral_q13_arc0_1_2_3_43_113_tritangent_planes.csv \
+		-end \
+		-define G -linear_group -PGL 4 F \
+			-subgroup_by_generators "stab" \
+				24 3 gens \
+			-end \
+		-define G_on_planes -modified_group -from G \
+			-on_k_subspaces 3 \
+		-end \
+		-define Gr -modified_group -from G_on_planes \
+			-restricted_action TriP \
+		-end \
+		-with Gr -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-define Orb -orbits -group Gr \
+			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 1 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-stabilizer 36 \
+		-end
+	pdflatex PGL_4_13_Gr_4_3_res45_orbits_report.tex
+	open PGL_4_13_Gr_4_3_res45_orbits_report.pdf
+
+
+	#pdflatex PGL_4_13_Gr_4_3_res45_orbit_0_tree.tex
+	#open PGL_4_13_Gr_4_3_res45_orbit_0_tree.pdf
+	#pdflatex PGL_4_13_Gr_4_3_res45_orbit_1_tree.tex
+	#open PGL_4_13_Gr_4_3_res45_orbit_1_tree.pdf
+	#pdflatex PGL_4_13_Gr_4_3_res45_stab_orb_0_report.tex
+	#open PGL_4_13_Gr_4_3_res45_stab_orb_0_report.pdf
+
+
+
+
+# related to planes_in_pencil:
+# we are computing the action on the planes through the line 0.
+
+
+
+on_planes:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define G_on_planes -modified_group -from G \
+			-on_k_subspaces 3 \
+		-end \
+		-with G_on_planes -do \
+		-group_theoretic_activity \
+			-apply "0,8,1,6,4,3,7,2,5" \
+			"1,0,0,0, 0,1,0,0, 0,0,0,2, 0,0,1,1" \
+		-end
+	pdflatex PGL_4_8_Gr_4_3_apply.tex
+	open PGL_4_8_Gr_4_3_apply.pdf
+
+
+
 T3_on_tensors:
 	$(ORBITER) -v 2 \
 		-define G \
@@ -4149,80 +4239,6 @@ PGGL_2_8_on_conic:
 	pdflatex PGGL_2_8_OnConic_2_8_report.tex
 	open PGGL_2_8_OnConic_2_8_report.pdf
 
-
-
-
-
-surface_q13_Eckardt:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end \
-		-with S -do \
-		-cubic_surface_activity \
-			-report_with_group \
-		-end \
-		-with S -do \
-		-cubic_surface_activity \
-			-export_tritangent_planes \
-		-end
-	pdflatex surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_with_group.tex
-	open surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_with_group.pdf
-
-
-SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
-1,0,0,0,0,12,12,6,6,0,0,7,1,0,2,0, \
-0,1,1,7,3,9,9,11,2,10,10,3,9,9,1,11"
-
-
-surface_q13_Eckardt_on_tritangent_planes:
-	$(ORBITER) -v 2 \
-		-orbiter_path $(ORBITER_PATH) \
-		-draw_options -embedded -end \
-		-define F -finite_field -q 13 -end \
-		-define gens -vector -field F -dense $(SURFACE_Q13_STAB_GENS) -end \
-		-define TriP -set -file \
-			arc_lifting_trihedral_q13_arc0_1_2_3_43_113_tritangent_planes.csv \
-		-end \
-		-define G -linear_group -PGL 4 F \
-			-subgroup_by_generators "stab" \
-				24 3 gens \
-			-end \
-		-define G_on_planes -modified_group -from G \
-			-on_k_subspaces 3 \
-		-end \
-		-define Gr -modified_group -from G_on_planes \
-			-restricted_action TriP \
-		-end \
-		-with Gr -do \
-		-group_theoretic_activity \
-			-report \
-		-end \
-		-define Orb -orbits -group Gr \
-			-on_points \
-		-end \
-		-with Orb -do -orbits_activity \
-			-report \
-		-end \
-		-with Orb -do -orbits_activity \
-			-draw_tree 0 \
-		-end \
-		-with Orb -do -orbits_activity \
-			-draw_tree 1 \
-		-end \
-		-with Orb -do -orbits_activity \
-			-stabilizer 36 \
-		-end
-	pdflatex PGL_4_13_Gr_4_3_res45_orbits_report.tex
-	open PGL_4_13_Gr_4_3_res45_orbits_report.pdf
-
-
-	#pdflatex PGL_4_13_Gr_4_3_res45_orbit_0_tree.tex
-	#open PGL_4_13_Gr_4_3_res45_orbit_0_tree.pdf
-	#pdflatex PGL_4_13_Gr_4_3_res45_orbit_1_tree.tex
-	#open PGL_4_13_Gr_4_3_res45_orbit_1_tree.pdf
-	#pdflatex PGL_4_13_Gr_4_3_res45_stab_orb_0_report.tex
-	#open PGL_4_13_Gr_4_3_res45_stab_orb_0_report.pdf
 
 
 
@@ -4475,25 +4491,6 @@ normal_forms_PGL_4_5:
 	open PGL_4_5_classes_normal_form.pdf
 
 
-
-# related to planes_in_pencil:
-# we are computing the action on the planes through the line 0.
-
-on_planes:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define G -linear_group -PGL 4 F -end \
-		-define G_on_planes -modified_group -from G \
-			-on_k_subspaces 3 \
-		-end \
-		-with G_on_planes -do \
-		-group_theoretic_activity \
-			-apply "0,8,1,6,4,3,7,2,5" \
-			"1,0,0,0, 0,1,0,0, 0,0,0,2, 0,0,1,1" \
-		-end
-	pdflatex PGL_4_8_Gr_4_3_apply.tex
-	open PGL_4_8_Gr_4_3_apply.pdf
 
 
 
@@ -6020,7 +6017,6 @@ surface_64_0:
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 	pdflatex surface_catalogue_q64_iso0_with_group.tex
 	open surface_catalogue_q64_iso0_with_group.pdf
@@ -6309,7 +6305,6 @@ surface_4_0:
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -6327,10 +6322,8 @@ surface_4_0:
 		-cubic_surface_activity \
 			-export_something "Hesse_planes" \
 		-end
-	#pdflatex surface_catalogue_q4_iso0_report.tex
-	#open surface_catalogue_q4_iso0_report.pdf
-	pdflatex surface_catalogue_q4_iso0_with_group.tex
-	open surface_catalogue_q4_iso0_with_group.pdf
+	pdflatex surface_catalogue_q4_iso0_report.tex
+	open surface_catalogue_q4_iso0_report.pdf
 
 # points:
 #0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82
@@ -6412,7 +6405,6 @@ surface_7_0:
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 			-all_quartic_curves \
 		-end \
 		-with S -do \
@@ -6421,8 +6413,6 @@ surface_7_0:
 		-end
 	pdflatex surface_catalogue_q7_iso0_report.tex
 	open surface_catalogue_q7_iso0_report.pdf
-	pdflatex surface_catalogue_q7_iso0_with_group.tex
-	open surface_catalogue_q7_iso0_with_group.pdf
 
 
 surface_7_0_plane_type_of_lines_on_Klein_quadric:
@@ -6454,7 +6444,7 @@ Family_general_F7:
 	open surface_family_general_abcd_q7_a2_b3_c3_d4_report.pdf
 		
 # Fermat with 18 Eckardt points
-# no automorphism group, so no -report_with_group and no -all_quartic_curves
+# no automorphism group
 
 
 surface_8_0:
@@ -6465,7 +6455,6 @@ surface_8_0:
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 			-all_quartic_curves \
 		-end \
 		-with S -do \
@@ -6500,12 +6489,9 @@ surface_8_0_catalogue:
 		-with S8_0 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 	pdflatex surface_catalogue_q8_iso0_report.tex
 	open surface_catalogue_q8_iso0_report.pdf
-	pdflatex surface_catalogue_q8_iso0_with_group.tex
-	open surface_catalogue_q8_iso0_with_group.pdf
 
 
 
@@ -6523,7 +6509,6 @@ surface_8_0_clean:
 		-with S8_0 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 	pdflatex surface_catalogue_q8_iso0_report.tex
 	open surface_catalogue_q8_iso0_report.pdf
@@ -6546,10 +6531,7 @@ surface_8_0b:
 		-with S8_0 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_catalogue_q8_iso0_with_group.tex
-	open surface_catalogue_q8_iso0_with_group.pdf
 
 
 
@@ -6564,7 +6546,6 @@ surface_9_0:
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 			-all_quartic_curves \
 		-end \
 		-with S -do \
@@ -6595,7 +6576,6 @@ surface_9_1:
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 			-all_quartic_curves \
 		-end \
 		-with S -do \
@@ -6620,7 +6600,7 @@ surface_9_1_plane_type_of_lines_on_Klein_quadric:
 
 # Joel:
 
-eckardt_13_4_12:
+surface_eckardt_13_4_12:
 	$(ORBITER) -v 6 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -6628,10 +6608,7 @@ eckardt_13_4_12:
 		-with Eckardt_4_12 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_family_Eckardt_q13_a4_b12_with_group.tex
-	open surface_family_Eckardt_q13_a4_b12_with_group.pdf
 
 
 
@@ -6656,10 +6633,7 @@ Eckardt_13:
 		-with Eckardt_3_1 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_family_Eckardt_q13_a3_b1_with_group.tex
-	open surface_family_Eckardt_q13_a3_b1_with_group.pdf
 
 
 
@@ -6671,10 +6645,7 @@ surface_13_0:
 		-with S13_0 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_catalogue_q13_iso0_report.tex
-	open surface_catalogue_q13_iso0_report.pdf
 
 
 # clean equation for Tekirdag-2:
@@ -6691,10 +6662,7 @@ surface_16_0:
 		-with S16_0 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_catalogue_q16_iso0_with_group.tex
-	open surface_catalogue_q16_iso0_with_group.pdf
 
 
 #		-transform_inverse "3,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0" \
@@ -6719,10 +6687,7 @@ G13_8:
 		-with T1 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_family_G13_q8_a2_with_group.tex
-	open surface_family_G13_q8_a2_with_group.pdf
 
 
 F13_8:
@@ -6733,10 +6698,7 @@ F13_8:
 		-with T1 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_family_F13_q8_a2_with_group.tex
-	open surface_family_F13_q8_a2_with_group.pdf
 
 
 
@@ -6751,10 +6713,7 @@ F13_16:
 		-with T2 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_family_F13_q16_a2_with_group.tex
-	open surface_family_F13_q16_a2_with_group.pdf
 
 
 # Tekirdag-3:
@@ -6767,10 +6726,7 @@ F13_32:
 		-with T3 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
-	pdflatex surface_family_F13_q32_a2_with_group.tex
-	open surface_family_F13_q32_a2_with_group.pdf
 
 
 # Kapadokya-1:
@@ -6783,7 +6739,6 @@ F13_64a:
 		-with K1 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 
@@ -6797,7 +6752,6 @@ F13_64b:
 		-with K2 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 
@@ -6811,7 +6765,6 @@ Colorado1:
 		-with CO-1 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 
@@ -6829,7 +6782,6 @@ Colorado2:
 		-with CO-2 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 Colorado3:
@@ -6842,7 +6794,6 @@ Colorado3:
 		-with CO-3 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 
@@ -6856,7 +6807,6 @@ F13_128a:
 		-with CO-1 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 # Colorado-2:
@@ -6869,7 +6819,6 @@ F13_128b:
 		-with CO-2 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 # Colorado-3:
@@ -6882,7 +6831,6 @@ F13_128c:
 		-with CO-3 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 
 
@@ -6909,43 +6857,40 @@ F_alpha_beta_gamma_delta:
 	dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
 
 
+surface_F_abcd_q7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-with F -do \
+		-finite_field_activity \
+		-parse_and_evaluate "Fabcd" "X0,X1,X2,X3" \
+			$(F_abcd_eqn_no_exponents) "a=4,b=2,c=2,d=4" \
+		-end
 
-F_abcd_Eckardt_q31:
+#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
+
+surface_F_abcd_Eckardt_q31:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 31 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define F_abcd -cubic_surface -space P \
 			-by_equation "F_abcd" \
 			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
-			$(F_abcd_eqn) \
-			"a=2,b=30,c=30,d=2" \
+			$(F_abcd_eqn_no_exponents) \
+			"a=2,b30,c=30,d=2" \
 			"\Da=2,b=30,c=30,d=2\D" \
 		-end \
 		-with F_abcd -do \
 		-cubic_surface_activity \
 			-report \
 		-end
-	pdflatex surface_family_Eckardt_q13_a4_b12_with_group.tex
-	open surface_family_Eckardt_q13_a4_b12_with_group.pdf
 
 
 
 
 
-surface_F_abcd:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 7 -end \
-		-with F -do \
-		-finite_field_activity \
-		-parse_and_evaluate "Fabcd" "X0,X1,X2,X3" \
-			$(F_abcd_eqn) "a=4,b=2,c=2,d=4" \
-		-end
-
-#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
 
 
-
-F_abcd_sweep_4_27_q7:
+surface_F_abcd_sweep_4_27_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -6953,7 +6898,7 @@ F_abcd_sweep_4_27_q7:
 		-projective_space_activity \
 		-sweep_4_27 sweep_4_27_q7 -q 7 -by_equation "F_abcd" \
 			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
-			$(F_abcd_eqn) \
+			$(F_abcd_eqn_no_exponents) \
 			"a=2,b=3,c=4,d=5" \
 			"\Da=2,b=3,c=4,d=5\D" \
 		-end \
@@ -6962,7 +6907,7 @@ F_abcd_sweep_4_27_q7:
 
 
 
-F_alpha_beta_gamma_delta_q7_override_group:
+surface_F_alpha_beta_gamma_delta_q7_override_group:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -6979,17 +6924,14 @@ F_alpha_beta_gamma_delta_q7_override_group:
 		-with F_2345 -do \
 		-cubic_surface_activity \
 			-report \
-			-report_with_group \
 		-end
 	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
 	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
-	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_with_group.tex
-	open surface_equation_F_alpha_beta_gamma_delta_q7_with_group.pdf
 
 # cubic surfaces with 15 lines:
 
 
-F_alpha_beta_gamma_delta_sweep_4_q3:
+surface_F_alpha_beta_gamma_delta_sweep_4_q3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 3 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -7029,7 +6971,7 @@ surface_15lines_q7_1:
 
 
 
-F_alpha_beta_gamma_delta_sweep_4_15_lines_q7:
+surface_F_alpha_beta_gamma_delta_sweep_4_15_lines_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -7054,7 +6996,7 @@ F_alpha_beta_gamma_delta_sweep_4_15_lines_q7:
 
 
 
-F_alpha_beta_gamma_delta_q7_recognize:
+surface_F_alpha_beta_gamma_delta_q7_recognize:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 49 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -7077,7 +7019,7 @@ F_alpha_beta_gamma_delta_q7_recognize:
 
 
 
-surf49_recognize:
+surface_49_recognize:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 49 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -7098,11 +7040,13 @@ surf49_recognize:
 
 
 
-McKean_15lines_q7:
+surface_McKean_15lines_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define S -cubic_surface -space P -by_coefficients $(SURFACE_MCKEAN_15_LINES) -end \
+		-define S -cubic_surface -space P \
+			-by_coefficients $(SURFACE_MCKEAN_15_LINES) \
+		-end \
 		-with S -do \
 			-cubic_surface_activity \
 				-report \
@@ -7112,7 +7056,7 @@ McKean_15lines_q7:
 
 # 2 Eckardt points
 
-F_4_4_3_3_q7:
+surface_F_abcd_4433_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -7129,10 +7073,10 @@ F_4_4_3_3_q7:
 			-cubic_surface_activity \
 				-report \
 		-end
-	#pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
-	#open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
+	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
+	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
 
-# has 4 Eckardt points
+# the surface has 15 lines and 4 Eckardt points
 
 
 
@@ -7264,36 +7208,38 @@ quartic_curves_19_report:
 		pdflatex quartic_curve_catalogue_q19_iso11_report.tex
 		pdflatex quartic_curve_catalogue_q19_iso12_report.tex
 		pdflatex quartic_curve_catalogue_q19_iso13_report.tex
-		#open quartic_curve_catalogue_q19_iso4_report.pdf
 
 
-surface_4_0_quartic_curves:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define S4_0 -cubic_surface -space P -catalogue 0 -end \
-		-with S4_0 -do \
-		-cubic_surface_activity \
-			-report \
-			-report_with_group \
-			-all_quartic_curves \
-		-end
-	pdflatex surface_catalogue_q4_iso0_report.tex
-	open surface_catalogue_q4_iso0_report.pdf
-	pdflatex surface_catalogue_q4_iso0_with_group.tex
-	open surface_catalogue_q4_iso0_with_group.pdf
-	#pdflatex surface_catalogue_q4_iso0_quartics.tex
-	#open surface_catalogue_q4_iso0_quartics.pdf
+
+quartic_curve_q9_1:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P2 -projective_space -n 2 -field F -end \
+		-define P3 -projective_space -n 3 -field F -end \
+		-define S9_1 -cubic_surface -space P3 -catalogue 1 -end \
+		-define C -quartic_curve -space P2 -from_cubic_surface S9_1 0 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex quartic_curve_surface_surface_pt_orb_0_report.tex
+	open quartic_curve_surface_surface_pt_orb_0_report.pdf
 
 
+#The points by rank are: ( 5, 18, 25, 36, 39, 40, 42, 43, 47, 50, 51, 54, 55, 58, 59, 62, 68, 69, 70, 71, 76, 77, 79, 81, 85, 87, 89, 90 )
+
+#eqn15:
+#(1,1,1,1,5,1,7,7,5,0,0,0,0,0,0)
+
+
+# the 27 single points (of the surface) are:
+#6, 17, 81, 118, 146, 192, 229, 265, 332, 351, 362, 386, 412, 432, 488, 505, 531, 544, 576, 666, 715, 717, 723, 739, 760, 762, 805
 
 
 NB_CUBIC_SURFACES_Q7=1
 
 quartic_curves_q7:
 	$(ORBITER_PATH)orbiter.out -v 3 \
-		-list_arguments \
-		-draw_options -end \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
@@ -7314,8 +7260,6 @@ NB_CUBIC_SURFACES_Q13=4
 
 quartic_curves_q13:
 	$(ORBITER_PATH)orbiter.out -v 3 \
-		-list_arguments \
-		-draw_options -end \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
@@ -7339,7 +7283,6 @@ quartic_curves_q13_combine:
 
 quartic_curves_q13_classify:
 	$(ORBITER) -v 3 \
-		-list_arguments \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
@@ -7356,8 +7299,6 @@ NB_CUBIC_SURFACES_Q19=10
 
 quartic_curves_q19:
 	$(ORBITER_PATH)orbiter.out -v 3 \
-		-list_arguments \
-		-draw_options -end \
 		-define F -finite_field -q 19 -end \
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
@@ -7383,7 +7324,6 @@ quartic_curves_q19_combine:
 
 quartic_curves_q19_classify:
 	$(ORBITER) -v 3 \
-		-list_arguments \
 		-define F -finite_field -q 19 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do \
@@ -7532,11 +7472,10 @@ surface_isomorph_16:
 		-with Surf27 -do \
 		-classification_of_cubic_surfaces_with_double_sixes_activity \
 			-isomorphism_testing \
-				-q 16 -by_coefficients \
+				-space P -by_coefficients \
 				"1,5,1,8,1,9,1,10,1,11,1,12,6,14,6,15,7,18,7,19" -end \
-				-q 16 -by_coefficients \
+				-space P -by_coefficients \
 				"13,6,3,8,3,11,13,13,1,19" -end \
-			-end \
 		-end \
 		-print_symbols
 
@@ -7556,9 +7495,8 @@ surface_recognize_8:
 		-with Surf27 -do \
 		-classification_of_cubic_surfaces_with_double_sixes_activity \
 			-recognize \
-				-q 8 \
+				-space P \
 				-by_coefficients "1,6,1,8,1,11,1,13,1,19" \
-				-end \
 			-end \
 		-end \
 		-print_symbols
@@ -9972,11 +9910,6 @@ Hamming_singer:
 #0100111
 #0011101
 
-#		-with G -do \
-#		-group_theoretic_activity \
-#		-report \
-#		-orbits_on_points \
-#		-end
 
 
 Hamming_cyclic_generator:
@@ -10235,14 +10168,6 @@ CRC_F256_BCH_code_d2:
 #-dense "214,167,1"
 #-sparse "214,0,167,1,1,2"
 
-#CRC_F256_BCH_code_d2_old:
-#	$(ORBITER) -v 3 \
-#		-define F -finite_field -q 256 -end \
-#		-with F -do -coding_theoretic_activity \
-#			-make_BCH_code 771 2 \
-#		-end
-#	pdflatex BCH_codes_q256_n771_d2.tex
-#	open BCH_codes_q256_n771_d2.pdf
 
 
 CRC_POLY_Q256_DEG2_DENSE="214,167,1"
@@ -10343,8 +10268,8 @@ CRC_F256_BCH_write_code_for_division_Charlie:
 F256_BCH_code_d16:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 256 -end \
-		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 771 16 \
+		-define C -code -field F \
+			-BCH 771 16 \
 		-end
 	pdflatex BCH_codes_q256_n771_d16.tex
 	open BCH_codes_q256_n771_d16.pdf
@@ -10570,30 +10495,35 @@ RM_3_1_holes_draw:
 RM_3_1_hole0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -file RM_3_1_holes_8_16_value0.csv -end \
 		-with F -do -finite_field_activity \
 			-algebraic_normal_form \
-			RM_3_1_holes_8_16_value0.csv 8 \
+			8 v \
 		-end
 
 # E_0 + E_1 + E_2 + E_3 + E_4
+#X8^8 + X0*X8^7 + X1*X8^7 + X2*X8^7 + X3*X8^7 + X4*X8^7 + X5*X8^7 + X6*X8^7 + X7*X8^7 + X0*X1*X8^6 + X0*X2*X8^6 + X0*X3*X8^6 + X0*X4*X8^6 + X0*X5*X8^6 + X0*X6*X8^6 + X0*X7*X8^6 + X1*X2*X8^6 + X1*X3*X8^6 + X1*X4*X8^6 + X1*X5*X8^6 + X1*X6*X8^6 + X1*X7*X8^6 + X2*X3*X8^6 + X2*X4*X8^6 + X2*X5*X8^6 + X2*X6*X8^6 + X2*X7*X8^6 + X3*X4*X8^6 + X3*X5*X8^6 + X3*X6*X8^6 + X3*X7*X8^6 + X4*X5*X8^6 + X4*X6*X8^6 + X4*X7*X8^6 + X5*X6*X8^6 + X5*X7*X8^6 + X6*X7*X8^6 + X0*X1*X2*X8^5 + X0*X1*X3*X8^5 + X0*X1*X4*X8^5 + X0*X1*X5*X8^5 + X0*X1*X6*X8^5 + X0*X1*X7*X8^5 + X0*X2*X3*X8^5 + X0*X2*X4*X8^5 + X0*X2*X5*X8^5 + X0*X2*X6*X8^5 + X0*X2*X7*X8^5 + X0*X3*X4*X8^5 + X0*X3*X5*X8^5 + X0*X3*X6*X8^5 + X0*X3*X7*X8^5 + X0*X4*X5*X8^5 + X0*X4*X6*X8^5 + X0*X4*X7*X8^5 + X0*X5*X6*X8^5 + X0*X5*X7*X8^5 + X0*X6*X7*X8^5 + X1*X2*X3*X8^5 + X1*X2*X4*X8^5 + X1*X2*X5*X8^5 + X1*X2*X6*X8^5 + X1*X2*X7*X8^5 + X1*X3*X4*X8^5 + X1*X3*X5*X8^5 + X1*X3*X6*X8^5 + X1*X3*X7*X8^5 + X1*X4*X5*X8^5 + X1*X4*X6*X8^5 + X1*X4*X7*X8^5 + X1*X5*X6*X8^5 + X1*X5*X7*X8^5 + X1*X6*X7*X8^5 + X2*X3*X4*X8^5 + X2*X3*X5*X8^5 + X2*X3*X6*X8^5 + X2*X3*X7*X8^5 + X2*X4*X5*X8^5 + X2*X4*X6*X8^5 + X2*X4*X7*X8^5 + X2*X5*X6*X8^5 + X2*X5*X7*X8^5 + X2*X6*X7*X8^5 + X3*X4*X5*X8^5 + X3*X4*X6*X8^5 + X3*X4*X7*X8^5 + X3*X5*X6*X8^5 + X3*X5*X7*X8^5 + X3*X6*X7*X8^5 + X4*X5*X6*X8^5 + X4*X5*X7*X8^5 + X4*X6*X7*X8^5 + X5*X6*X7*X8^5 + X0*X1*X2*X4*X8^4 + X0*X1*X2*X5*X8^4 + X0*X1*X2*X6*X8^4 + X0*X1*X2*X7*X8^4 + X0*X1*X3*X4*X8^4 + X0*X1*X3*X5*X8^4 + X0*X1*X3*X6*X8^4 + X0*X1*X3*X7*X8^4 + X0*X1*X4*X6*X8^4 + X0*X1*X4*X7*X8^4 + X0*X1*X5*X6*X8^4 + X0*X1*X5*X7*X8^4 + X0*X2*X3*X4*X8^4 + X0*X2*X3*X5*X8^4 + X0*X2*X3*X6*X8^4 + X0*X2*X3*X7*X8^4 + X0*X2*X4*X5*X8^4 + X0*X2*X4*X7*X8^4 + X0*X2*X5*X6*X8^4 + X0*X2*X6*X7*X8^4 + X0*X3*X4*X5*X8^4 + X0*X3*X4*X6*X8^4 + X0*X3*X5*X7*X8^4 + X0*X3*X6*X7*X8^4 + X0*X4*X5*X6*X8^4 + X0*X4*X5*X7*X8^4 + X0*X4*X6*X7*X8^4 + X0*X5*X6*X7*X8^4 + X1*X2*X3*X4*X8^4 + X1*X2*X3*X5*X8^4 + X1*X2*X3*X6*X8^4 + X1*X2*X3*X7*X8^4 + X1*X2*X4*X5*X8^4 + X1*X2*X4*X6*X8^4 + X1*X2*X5*X7*X8^4 + X1*X2*X6*X7*X8^4 + X1*X3*X4*X5*X8^4 + X1*X3*X4*X7*X8^4 + X1*X3*X5*X6*X8^4 + X1*X3*X6*X7*X8^4 + X1*X4*X5*X6*X8^4 + X1*X4*X5*X7*X8^4 + X1*X4*X6*X7*X8^4 + X1*X5*X6*X7*X8^4 + X2*X3*X4*X6*X8^4 + X2*X3*X4*X7*X8^4 + X2*X3*X5*X6*X8^4 + X2*X3*X5*X7*X8^4 + X2*X4*X5*X6*X8^4 + X2*X4*X5*X7*X8^4 + X2*X4*X6*X7*X8^4 + X2*X5*X6*X7*X8^4 + X3*X4*X5*X6*X8^4 + X3*X4*X5*X7*X8^4 + X3*X4*X6*X7*X8^4 + X3*X5*X6*X7*X8^4
 
 
 RM_3_1_hole1:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -file RM_3_1_holes_8_16_value1.csv -end \
 		-with F -do -finite_field_activity \
 			-algebraic_normal_form \
-			RM_3_1_holes_8_16_value1.csv 8 \
+			8 v \
 		-end
 
+#X0*X8^7 + X1*X8^7 + X2*X8^7 + X3*X8^7 + X4*X8^7 + X5*X8^7 + X6*X8^7 + X7*X8^7 = E_1
 #E_1 = X_0X_8^7 + X_1X_8^7 + X_2X_8^7 + X_3X_8^7 + X_4X_8^7 + X_5X_8^7 + X_6X_8^7 + X_7X_8^7
 
 RM_3_1_hole2:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -file RM_3_1_holes_8_16_value2.csv -end \
 		-with F -do -finite_field_activity \
 			-algebraic_normal_form \
-			RM_3_1_holes_8_16_value2.csv 8 \
+			8 v \
 		-end
 
 #X0*X1*X8^6 + X0*X2*X8^6 + X0*X3*X8^6 + X0*X4*X8^6 + X0*X5*X8^6 + X0*X6*X8^6 + X0*X7*X8^6 + X1*X2*X8^6 + X1*X3*X8^6 + X1*X4*X8^6 + X1*X5*X8^6 + X1*X6*X8^6 + X1*X7*X8^6 + X2*X3*X8^6 + X2*X4*X8^6 + X2*X5*X8^6 + X2*X6*X8^6 + X2*X7*X8^6 + X3*X4*X8^6 + X3*X5*X8^6 + X3*X6*X8^6 + X3*X7*X8^6 + X4*X5*X8^6 + X4*X6*X8^6 + X4*X7*X8^6 + X5*X6*X8^6 + X5*X7*X8^6 + X6*X7*X8^6 + X0*X1*X2*X8^5 + X0*X1*X3*X8^5 + X0*X1*X4*X8^5 + X0*X1*X5*X8^5 + X0*X1*X6*X8^5 + X0*X1*X7*X8^5 + X0*X2*X3*X8^5 + X0*X2*X4*X8^5 + X0*X2*X5*X8^5 + X0*X2*X6*X8^5 + X0*X2*X7*X8^5 + X0*X3*X4*X8^5 + X0*X3*X5*X8^5 + X0*X3*X6*X8^5 + X0*X3*X7*X8^5 + X0*X4*X5*X8^5 + X0*X4*X6*X8^5 + X0*X4*X7*X8^5 + X0*X5*X6*X8^5 + X0*X5*X7*X8^5 + X0*X6*X7*X8^5 + X1*X2*X3*X8^5 + X1*X2*X4*X8^5 + X1*X2*X5*X8^5 + X1*X2*X6*X8^5 + X1*X2*X7*X8^5 + X1*X3*X4*X8^5 + X1*X3*X5*X8^5 + X1*X3*X6*X8^5 + X1*X3*X7*X8^5 + X1*X4*X5*X8^5 + X1*X4*X6*X8^5 + X1*X4*X7*X8^5 + X1*X5*X6*X8^5 + X1*X5*X7*X8^5 + X1*X6*X7*X8^5 + X2*X3*X4*X8^5 + X2*X3*X5*X8^5 + X2*X3*X6*X8^5 + X2*X3*X7*X8^5 + X2*X4*X5*X8^5 + X2*X4*X6*X8^5 + X2*X4*X7*X8^5 + X2*X5*X6*X8^5 + X2*X5*X7*X8^5 + X2*X6*X7*X8^5 + X3*X4*X5*X8^5 + X3*X4*X6*X8^5 + X3*X4*X7*X8^5 + X3*X5*X6*X8^5 + X3*X5*X7*X8^5 + X3*X6*X7*X8^5 + X4*X5*X6*X8^5 + X4*X5*X7*X8^5 + X4*X6*X7*X8^5 + X5*X6*X7*X8^5 + X0*X1*X2*X4*X8^4 + X0*X1*X2*X5*X8^4 + X0*X1*X2*X6*X8^4 + X0*X1*X2*X7*X8^4 + X0*X1*X3*X4*X8^4 + X0*X1*X3*X5*X8^4 + X0*X1*X3*X6*X8^4 + X0*X1*X3*X7*X8^4 + X0*X1*X4*X6*X8^4 + X0*X1*X4*X7*X8^4 + X0*X1*X5*X6*X8^4 + X0*X1*X5*X7*X8^4 + X0*X2*X3*X4*X8^4 + X0*X2*X3*X5*X8^4 + X0*X2*X3*X6*X8^4 + X0*X2*X3*X7*X8^4 + X0*X2*X4*X5*X8^4 + X0*X2*X4*X7*X8^4 + X0*X2*X5*X6*X8^4 + X0*X2*X6*X7*X8^4 + X0*X3*X4*X5*X8^4 + X0*X3*X4*X6*X8^4 + X0*X3*X5*X7*X8^4 + X0*X3*X6*X7*X8^4 + X0*X4*X5*X6*X8^4 + X0*X4*X5*X7*X8^4 + X0*X4*X6*X7*X8^4 + X0*X5*X6*X7*X8^4 + X1*X2*X3*X4*X8^4 + X1*X2*X3*X5*X8^4 + X1*X2*X3*X6*X8^4 + X1*X2*X3*X7*X8^4 + X1*X2*X4*X5*X8^4 + X1*X2*X4*X6*X8^4 + X1*X2*X5*X7*X8^4 + X1*X2*X6*X7*X8^4 + X1*X3*X4*X5*X8^4 + X1*X3*X4*X7*X8^4 + X1*X3*X5*X6*X8^4 + X1*X3*X6*X7*X8^4 + X1*X4*X5*X6*X8^4 + X1*X4*X5*X7*X8^4 + X1*X4*X6*X7*X8^4 + X1*X5*X6*X7*X8^4 + X2*X3*X4*X6*X8^4 + X2*X3*X4*X7*X8^4 + X2*X3*X5*X6*X8^4 + X2*X3*X5*X7*X8^4 + X2*X4*X5*X6*X8^4 + X2*X4*X5*X7*X8^4 + X2*X4*X6*X7*X8^4 + X2*X5*X6*X7*X8^4 + X3*X4*X5*X6*X8^4 + X3*X4*X5*X7*X8^4 + X3*X4*X6*X7*X8^4 + X3*X5*X6*X7*X8^4
@@ -10694,9 +10624,10 @@ RM_4_1_diagram_metric_balls:
 RM_4_1_hole0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -file RM_4_1_holes_16_32_value0.csv -end \
 		-with F -do -finite_field_activity \
 			-algebraic_normal_form \
-			RM_4_1_holes_16_32_value0.csv 16 \
+			16 v \
 		-end
 
 
@@ -10726,9 +10657,8 @@ draw_cyclotomic_mod_21_q8:
 F_8_BCH_code_d3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do \
-			-coding_theoretic_activity \
-			-make_BCH_code 21 3 \
+		-define C -code -field F \
+			-BCH 21 3 \
 		-end
 	pdflatex BCH_codes_q8_n21_d3.tex
 	open BCH_codes_q8_n21_d3.pdf
@@ -10738,9 +10668,8 @@ F_8_BCH_code_d3:
 F_8_BCH_code_d4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do \
-			-coding_theoretic_activity \
-				-make_BCH_code 21 4 \
+		-define C -code -field F \
+			-BCH 21 4 \
 		-end
 
 #generator polynomial is X^{5} + 6X^{4} + 7X^{3} + 2X + 3
@@ -10749,9 +10678,8 @@ F_8_BCH_code_d4:
 F_8_BCH_code_d5:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do \
-			-coding_theoretic_activity \
-				-make_BCH_code 21 5 \
+		-define C -code -field F \
+			-BCH 21 5 \
 		-end
 	pdflatex BCH_codes_q8_n21_d5.tex
 	open BCH_codes_q8_n21_d5.pdf
@@ -10813,9 +10741,8 @@ F_8_BCH_code_d5_minimum_distance:
 F_8_BCH_code_d7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do \
-			-coding_theoretic_activity \
-			-make_BCH_code 21 7 \
+		-define C -code -field F \
+			-BCH 21 7 \
 		-end
 
 
@@ -10824,9 +10751,8 @@ F_8_BCH_code_d7:
 F8_BCH_code_n63_d43:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do \
-			-coding_theoretic_activity \
-			-make_BCH_code 63 43 \
+		-define C -code -field F \
+			-BCH 63 43 \
 		-end
 	pdflatex BCH_codes_q8_n63_d43.tex
 	open BCH_codes_q8_n63_d43.pdf
@@ -10870,18 +10796,16 @@ F8_BCH_code_n63_d43_minimum_distance:
 F2_BCH_code_n21:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
-		-with F -do \
-			-coding_theoretic_activity \
-			-make_BCH_code 21 3 \
+		-define C -code -field F \
+			-BCH 21 3 \
 		-end
 
 
 F7_RS_code_n6:
 	$(ORBITER) -v 30 \
 		-define F -finite_field -q 7 -end \
-		-with F -do \
-			-coding_theoretic_activity \
-			-make_BCH_code 6 3 \
+		-define C -code -field F \
+			-BCH 6 3 \
 		-end
 
 
@@ -10926,15 +10850,12 @@ BCH_255_5_evaluate_elementary_symmetric_functions_2:
 
 
 BCH15:
-	#$(ORBITER) -BCH 15 2 3 
 	$(ORBITER) \
 		-define F -finite_field -q 2 -end \
 		-with F -do \
 			-coding_theoretic_activity \
 			-BCH 15 2 5 \
 		-end
-	#$(ORBITER) -BCH 15 2 7 
-	#$(ORBITER) -BCH 15 2 9 
 
 
 
@@ -11236,15 +11157,15 @@ BCH_F256_roots_771:
 		-end
 
 
-
 BCH_F256_BCH_code_d16:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 256 -end \
-		-with F -do -coding_theoretic_activity \
-			-make_BCH_code 771 16 \
+		-define C -code -field F \
+			-BCH 771 16 \
 		-end
 	pdflatex BCH_codes_q256_n771_d16.tex
 	open BCH_codes_q256_n771_d16.pdf
+
 
 #generator polynomial is X^{30} + 253X^{29} + 174X^{28} + 109X^{27} + 97X^{26} + 144X^{25} + 112X^{24} + 212X^{23} + 192X^{22} + 169X^{21} + 24X^{20} + 150X^{19} + 110X^{18} + 248X^{17} + 3X^{16} + 193X^{15} + 194X^{14} + 205X^{13} + 9X^{12} + 56X^{11} + 95X^{10} + 199X^{9} + 108X^{8} + 58X^{7} + 160X^{6} + 148X^{5} + 138X^{4} + 24X^{3} + 210X^{2} + 26X + 1
 
@@ -12644,6 +12565,15 @@ geo_16_4_g4:
 # none
 
 
+geo_15_6:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 4 16 1 -end \
+		-define Geo -geometry_builder \
+			-V 15 -B 15 -TDO 6 -fuse 1 \
+			-fname_GEO 15_6 \
+			-test Test_lines \
+			-output_to_sage_file \
+		-end
 
 
 
@@ -12714,6 +12644,8 @@ geo_63_3_g6:
 # time 0:38 on Mac Oct 15, 2022
 # 2 geos, ago: 12096^2
 # 63_3_g6.inc
+# split Cayley hexagon H(2) and its dual
+# group = G_2(2) = PGU(3,3)
 
 ###############################################################################
 # Section 11.5: Design Theory
@@ -12943,12 +12875,6 @@ AG_2_3_on_designs:
 
 #Written file AG_2_3_stab_orb_0.makefile of size 239
 
-
-#		-with G -do \
-#		-group_theoretic_activity \
-#			-orbits_on_points \
-#			-stabilizer_of_orbit_rep 0 \
-#		-end
 
 
 
@@ -14829,6 +14755,12 @@ Cayley_Sym4_star:
 
 
 
+graph_of_15_lines:
+	$(ORBITER) -v 2 \
+		-define G -graph \
+			-load_csv_no_border \
+			15lines.csv \
+		-end
 
 ###############################################################################
 # Section 13.2: Graphs Theoretic Activities
@@ -15159,6 +15091,16 @@ trihedral_pair_graph_draw:
 	open trihedral_pair_disjointness_draw.bmp
 
 
+graph_of_15_lines_properties:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph \
+			-load_csv_no_border \
+			15lines.csv \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-properties \
+		-end
 
 
 ###############################################################################
@@ -15736,8 +15678,16 @@ Hirschfeld_q4_set_c:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
-			-classification_prefix Hirschfeld_surface_q4 \
-			-save_ago \
+				-classification_prefix Hirschfeld_surface_q4 \
+				-label Hirschfeld_surface_q4 \
+				-save_ago \
+				-max_TDO_depth 4 \
+			-end \
+			-report \
+				-prefix Hirschfeld_surface_q4 \
+				-show_TDO \
+				-show_TDA \
+			-end \
 		-end
 	pdflatex Hirschfeld_surface_q4_classification.tex
 	open Hirschfeld_surface_q4_classification.pdf
@@ -15766,10 +15716,16 @@ Dickson_sets_stabilizer:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
-			-classification_prefix Dickson_sets \
-			-save_ago \
+				-classification_prefix Dickson_sets \
+				-label Dickson_sets \
+				-save_ago \
+				-max_TDO_depth 4 \
 			-end \
 			-report \
+				-prefix Dickson_sets \
+				-show_TDO \
+				-show_TDA \
+			-end \
 		-end
 	pdflatex Dickson_sets_classification.tex
 	open Dickson_sets_classification.pdf
@@ -15786,16 +15742,22 @@ Endrass_7c: Endrass_F7.txt
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
-			-classification_prefix Endrass_F7 \
-			-save_ago \
+				-classification_prefix Endrass_F7 \
+				-label Endrass_F7 \
+				-save_ago \
+				-max_TDO_depth 4 \
 			-end \
 			-report \
+				-prefix Endrass_F7 \
+				-show_TDO \
+				-show_TDA \
+			-end \
 		-end
 	pdflatex Endrass_F7_classification.tex
 	open Endrass_F7_classification.pdf
 
-
-# group order is 32
+# ToDo group order is computed wrong
+# should be: group order is 32
 
 
 hyperoval_16_canonical_form:
@@ -16995,6 +16957,19 @@ PGO_5_2_graph_group: O_5_2_incidence_matrix.csv
 	open collinearity_graph_eigenvalues.pdf
 
 
+
+graph_of_15_lines_aut:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph \
+			-load_csv_no_border \
+			15lines.csv \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end
+	pdflatex 15lines_report.tex
+	open 15lines_report.pdf
 
 
 ###############################################################################

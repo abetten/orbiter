@@ -29,13 +29,11 @@ public:
 
 	int f_report;
 
-	int f_report_with_group;
-
 	int f_export_something;
 	std::string export_something_what;
 
 
-	int f_export_points;
+	//int f_export_points;
 
 	int f_create_surface;
 
@@ -101,11 +99,6 @@ public:
 class quartic_curve_create_description {
 
 public:
-
-#if 0
-	int f_q;
-	int q;
-#endif
 
 	int f_space;
 	std::string space_label;

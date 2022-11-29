@@ -45,6 +45,8 @@ intersection_type::intersection_type()
 
 }
 
+
+
 intersection_type::~intersection_type()
 {
 	int i;

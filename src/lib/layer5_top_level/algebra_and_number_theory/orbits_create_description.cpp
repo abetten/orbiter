@@ -44,12 +44,13 @@ orbits_create_description::orbits_create_description()
 	f_on_polynomials = FALSE;
 	on_polynomials_degree = 0;
 
+#if 0
 	f_draw_tree = FALSE;
 	draw_tree_idx = 0;
 
 	f_recognize = FALSE;
 	//std::string recognize_text;
-
+#endif
 }
 
 orbits_create_description::~orbits_create_description()
@@ -121,6 +122,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 				cout << "-on_polynomials " << on_polynomials_degree << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
 			f_draw_tree = TRUE;
 			draw_tree_idx = ST.strtoi(argv[++i]);
@@ -136,6 +138,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 				cout << "-recognize " << recognize_text << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
@@ -173,9 +176,11 @@ void orbits_create_description::print()
 	if (f_on_polynomials) {
 		cout << "-on_polynomials " << on_polynomials_degree << endl;
 	}
+#if 0
 	if (f_recognize) {
 		cout << "-recognize " << recognize_text << endl;
 	}
+#endif
 }
 
 

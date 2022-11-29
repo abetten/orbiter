@@ -23,12 +23,10 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 
 	f_report = FALSE;
 
-	f_report_with_group = FALSE;
-
 	f_export_something = FALSE;
 	//std::string export_something_what;
 
-	f_export_points = FALSE;
+	//f_export_points = FALSE;
 
 	f_create_surface = FALSE;
 
@@ -67,12 +65,6 @@ int quartic_curve_activity_description::read_arguments(
 				cout << "-report " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-report_with_group") == 0) {
-			f_report_with_group = TRUE;
-			if (f_v) {
-				cout << "-report_with_group " << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
 			f_export_something = TRUE;
 			export_something_what.assign(argv[++i]);
@@ -80,12 +72,14 @@ int quartic_curve_activity_description::read_arguments(
 				cout << "-export_something " << export_something_what << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-export_points") == 0) {
 			f_export_points = TRUE;
 			if (f_v) {
 				cout << "-export_points " << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-create_surface") == 0) {
 			f_create_surface = TRUE;
 			if (f_v) {
@@ -143,15 +137,14 @@ void quartic_curve_activity_description::print()
 	if (f_report) {
 		cout << "-report " << endl;
 	}
-	if (f_report_with_group) {
-		cout << "-report_with_group " << endl;
-	}
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;
 	}
+#if 0
 	if (f_export_points) {
 		cout << "-export_points " << endl;
 	}
+#endif
 	if (f_create_surface) {
 		cout << "-create_surface " << endl;
 	}

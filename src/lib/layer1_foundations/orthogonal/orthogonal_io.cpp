@@ -115,7 +115,8 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 	//ost << endl;
 }
 
-void orthogonal::report_given_point_set(std::ostream &ost, long int *Pts, int nb_pts, int verbose_level)
+void orthogonal::report_given_point_set(std::ostream &ost,
+		long int *Pts, int nb_pts, int verbose_level)
 {
 	long int rk;
 	int i;
@@ -222,7 +223,8 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 }
 
 
-void orthogonal::report_given_line_set(std::ostream &ost, long int *Lines, int nb_lines, int verbose_level)
+void orthogonal::report_given_line_set(std::ostream &ost,
+		long int *Lines, int nb_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
