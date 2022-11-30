@@ -59,7 +59,7 @@ public:
         return index_table.end();
     }
 };
-
+std::ostream& operator<< (std::ostream& os, const managed_variables_index_table& obj);
 
 struct monomial_coefficient_table_hash_function final {
     using algorithms = orbiter::layer1_foundations::data_structures::algorithms;
@@ -134,7 +134,7 @@ public:
 
     void visit(multiply_node* op_node) override;
     void visit(plus_node* op_node) override;
-
+    void visit(sentinel_node* op_node) override;
 
     exponent_vector_visitor* operator()(managed_variables_index_table& symbol_table) {
         this->symbol_table = &symbol_table;
