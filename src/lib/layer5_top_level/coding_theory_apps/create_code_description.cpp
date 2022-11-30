@@ -157,6 +157,7 @@ int create_code_description::read_arguments(
 		else {
 			cout << "create_code_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {

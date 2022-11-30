@@ -339,7 +339,7 @@ int create_graph_description::read_arguments(
 			Modifications.push_back(M);
 		}
 
-		if (ST.stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}
@@ -348,6 +348,7 @@ int create_graph_description::read_arguments(
 		else {
 			cout << "create_graph_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {
@@ -422,6 +423,9 @@ void create_graph_description::print()
 	}
 	if (f_subset) {
 		cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
+	}
+	if (f_disjoint_sets_graph) {
+		cout << "-disjoint_sets_graph " << disjoint_sets_graph_fname << endl;
 	}
 	if (f_orbital_graph) {
 		cout << "-orbital_graph " << orbital_graph_group << " " << orbital_graph_orbit_idx << endl;

@@ -63,7 +63,7 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_classify_surfaces_with_double_sixes = FALSE;
 	//std::string classify_surfaces_with_double_sixes_label;
-	classify_surfaces_with_double_sixes_control = NULL;
+	//std::string classify_surfaces_with_double_sixes_control_label;
 
 
 
@@ -76,7 +76,8 @@ projective_space_activity_description::projective_space_activity_description()
 	f_trihedra2_control = FALSE;
 	Trihedra2_control = NULL;
 	f_control_six_arcs = FALSE;
-			Control_six_arcs = NULL;
+	//std::string &Control_six_arcs_label;
+
 	//f_create_surface = FALSE;
 	//surface_description = NULL;
 
@@ -373,22 +374,12 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_with_double_sixes") == 0) {
 			f_classify_surfaces_with_double_sixes = TRUE;
 			classify_surfaces_with_double_sixes_label.assign(argv[++i]);
-			classify_surfaces_with_double_sixes_control = NEW_OBJECT(poset_classification::poset_classification_control);
-			if (f_v) {
-				cout << "-classify_surfaces_with_double_sixes " << endl;
-			}
-			i += classify_surfaces_with_double_sixes_control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
+			classify_surfaces_with_double_sixes_control_label.assign(argv[++i]);
 
 			if (f_v) {
-				cout << "done reading -poset_classification_control " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-classify_surfaces_with_double_sixes " << classify_surfaces_with_double_sixes_label << endl;
-				classify_surfaces_with_double_sixes_control->print();
+				cout << "-classify_surfaces_with_double_sixes "
+						<< classify_surfaces_with_double_sixes_label
+						<< " " << classify_surfaces_with_double_sixes_control_label << endl;
 			}
 		}
 
@@ -580,17 +571,10 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-control_six_arcs") == 0) {
 			f_control_six_arcs = TRUE;
-			Control_six_arcs = NEW_OBJECT(poset_classification::poset_classification_control);
-			i += Control_six_arcs->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
+			Control_six_arcs_label.assign(argv[++i]);
 
 			if (f_v) {
-				cout << "done reading -control_six_arcs " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
+				cout << "-control_six_arcs " << Control_six_arcs_label << endl;
 			}
 		}
 
@@ -1008,8 +992,9 @@ void projective_space_activity_description::print()
 
 	// cubic surfaces:
 	if (f_classify_surfaces_with_double_sixes) {
-		cout << "-classify_surfaces_with_double_sixes " << classify_surfaces_with_double_sixes_label << endl;
-		classify_surfaces_with_double_sixes_control->print();
+		cout << "-classify_surfaces_with_double_sixes "
+				<< classify_surfaces_with_double_sixes_label
+				<< " " << classify_surfaces_with_double_sixes_control_label << endl;
 	}
 
 	if (f_classify_surfaces_through_arcs_and_two_lines) {
@@ -1065,8 +1050,7 @@ void projective_space_activity_description::print()
 		Trihedra2_control->print();
 	}
 	if (f_control_six_arcs) {
-		cout << "-control_six_arcs " << endl;
-		Control_six_arcs->print();
+		cout << "-control_six_arcs " << Control_six_arcs_label << endl;
 	}
 
 

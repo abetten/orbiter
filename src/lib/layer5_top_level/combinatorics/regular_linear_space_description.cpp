@@ -107,6 +107,7 @@ int regular_linear_space_description::read_arguments(
 		else {
 			cout << "regular_linear_space_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	cout << "regular_linear_space_description::read_arguments done" << endl;

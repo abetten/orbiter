@@ -349,7 +349,7 @@ public:
 
 	int f_classify_surfaces_with_double_sixes;
 	std::string classify_surfaces_with_double_sixes_label;
-	poset_classification::poset_classification_control *classify_surfaces_with_double_sixes_control;
+	std::string classify_surfaces_with_double_sixes_control_label;
 
 
 	int f_classify_surfaces_through_arcs_and_two_lines;
@@ -361,7 +361,7 @@ public:
 		int f_trihedra2_control;
 		poset_classification::poset_classification_control *Trihedra2_control;
 		int f_control_six_arcs;
-		poset_classification::poset_classification_control *Control_six_arcs;
+		std::string Control_six_arcs_label;
 
 	int f_sweep;
 	std::string sweep_fname;

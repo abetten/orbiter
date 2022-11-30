@@ -230,6 +230,7 @@ int combinatorial_object_activity_description::read_arguments(
 		else {
 			cout << "combinatorial_object_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {

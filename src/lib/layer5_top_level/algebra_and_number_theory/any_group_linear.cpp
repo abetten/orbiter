@@ -427,7 +427,7 @@ void any_group::do_orbits_on_subspaces(
 }
 
 void any_group::do_tensor_classify(
-		poset_classification::poset_classification_control *Control,
+		std::string &control_label,
 		apps_geometry::tensor_classify *&T,
 		int depth, int verbose_level)
 {
@@ -446,6 +446,8 @@ void any_group::do_tensor_classify(
 
 	F = LG->F;
 
+	poset_classification::poset_classification_control *Control =
+			Get_object_of_type_poset_classification_control(control_label);
 
 
 
@@ -514,7 +516,7 @@ void any_group::do_tensor_permutations(int verbose_level)
 
 
 void any_group::do_linear_codes(
-		poset_classification::poset_classification_control *Control,
+		std::string &control_label,
 		int minimum_distance,
 		int target_size, int verbose_level)
 {
@@ -529,6 +531,8 @@ void any_group::do_linear_codes(
 		exit(1);
 	}
 
+	poset_classification::poset_classification_control *Control =
+			Get_object_of_type_poset_classification_control(control_label);
 
 	algebra_global_with_action Algebra;
 
@@ -553,7 +557,6 @@ void any_group::do_linear_codes(
 }
 
 void any_group::do_classify_ovoids(
-		poset_classification::poset_classification_control *Control,
 		apps_geometry::ovoid_classify_description *Ovoid_classify_description,
 		int verbose_level)
 {
@@ -573,7 +576,6 @@ void any_group::do_classify_ovoids(
 
 	Ovoid_classify = NEW_OBJECT(apps_geometry::ovoid_classify);
 
-	Ovoid_classify_description->Control = Control;
 
 	Ovoid_classify->init(Ovoid_classify_description,
 			LG,
@@ -596,7 +598,7 @@ int any_group::subspace_orbits_test_set(
 	///exit(1);
 
 #if 1
-	int f_v = TRUE;//(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int ret = TRUE;
 	int rk;

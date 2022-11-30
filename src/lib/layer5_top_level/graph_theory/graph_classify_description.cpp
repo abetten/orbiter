@@ -124,7 +124,9 @@ int graph_classify_description::read_arguments(int argc, std::string *argv,
 			break;
 		}
 		else {
-			cout << "ignoring argument " << argv[i] << endl;
+			cout << "graph_classify_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 

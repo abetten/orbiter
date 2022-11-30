@@ -117,7 +117,7 @@ surfaces_arc_lifting::~surfaces_arc_lifting()
 
 void surfaces_arc_lifting::init(
 		cubic_surfaces_in_general::surface_with_action *Surf_A,
-	poset_classification::poset_classification_control *Control_six_arcs,
+	std::string &Control_six_arcs_label,
 	int f_test_nb_Eckardt_points, int nb_E,
 	int verbose_level)
 {
@@ -163,14 +163,15 @@ void surfaces_arc_lifting::init(
 				"before Six_arcs->init" << endl;
 	}
 
-	Descr->Control = Control_six_arcs;
+	Descr->f_control = TRUE;
+	Descr->control_label.assign(Control_six_arcs_label);
 	Descr->f_target_size = TRUE;
 	Descr->target_size = 6;
 
 	Six_arcs->init(
 		Descr,
 		Surf_A->PA->PA2,
-		f_test_nb_Eckardt_points, nb_E, //Surf,
+		f_test_nb_Eckardt_points, nb_E,
 		verbose_level - 2);
 
 
@@ -772,7 +773,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 
 
 void surfaces_arc_lifting::report(
-		graphics::layered_graph_draw_options *draw_options,
+		std::string &Control_six_arcs_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -791,6 +792,14 @@ void surfaces_arc_lifting::report(
 	snprintf(str, 1000, "Arc lifting over GF(%d) ", q);
 	title.assign(str);
 
+	poset_classification::poset_classification_control *Control;
+
+	Control = Get_object_of_type_poset_classification_control(Control_six_arcs_label);
+
+	if (!Control->f_draw_options) {
+		cout << "surfaces_arc_lifting::report please use -draw_option in poset_classification_control" << endl;
+		exit(1);
+	}
 
 	{
 		ofstream fp(fname_arc_lifting.c_str());
@@ -813,7 +822,7 @@ void surfaces_arc_lifting::report(
 		}
 
 
-		report2(fp, draw_options, verbose_level);
+		report2(fp, Control->draw_options, verbose_level);
 
 
 		if (f_v) {

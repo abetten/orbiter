@@ -69,6 +69,11 @@ int large_set_activity_description::read_arguments(int argc, std::string *argv,
 		if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
+		else {
+			cout << "large_set_activity_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	cout << "large_set_activity_description::read_arguments done" << endl;
 	return i + 1;

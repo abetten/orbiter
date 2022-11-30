@@ -148,6 +148,7 @@ int exact_cover_arguments::read_arguments(int argc, std::string *argv,
 		else {
 			cout << "exact_cover_arguments::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	cout << "exact_cover_arguments::read_arguments done" << endl;

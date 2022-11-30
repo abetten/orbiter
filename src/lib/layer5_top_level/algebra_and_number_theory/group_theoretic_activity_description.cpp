@@ -70,8 +70,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_classes_based_on_normal_form = FALSE;
 
 
+	// Magma:
 	f_normalizer = FALSE;
 
+	// Magma:
 	f_centralizer_of_element = FALSE;
 	//element_description_text = NULL;
 	//element_label = NULL;
@@ -85,24 +87,25 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string orbits_on_group_elements_under_conjugation_fname;
 	//orbits_on_group_elements_under_conjugation_transporter_fname
 
+	// Magma:
 	f_normalizer_of_cyclic_subgroup = FALSE;
+
+	// Magma:
+	f_classes = FALSE;
 
 	f_find_subgroup = FALSE;
 	find_subgroup_order = 0;
 
 	f_report = FALSE;
-	f_sylow = FALSE;
-	f_group_table = FALSE;
-
-	f_classes = FALSE;
+	f_report_sylow = FALSE;
+	f_report_group_table = FALSE;
+	f_report_classes = FALSE;
 
 	f_export_group_table = FALSE;
 
 
 	f_test_if_geometric = FALSE;
 	test_if_geometric_depth = 0;
-
-	f_draw_tree = FALSE;
 
 	f_conjugacy_class_of = FALSE;
 	//std::string conjugacy_class_of_data;
@@ -144,34 +147,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_coset_reps = FALSE;
 
 
-	// orbits:
-
-	f_poset_classification_control = FALSE;
-	Control = NULL;
-
-#if 0
-	f_orbits_on_points = FALSE;
-
-	f_export_trees = FALSE;
-	//f_shallow_tree = FALSE;
-
-	f_stabilizer = FALSE;
-
-	f_stabilizer_of_orbit_rep = FALSE;
-	stabilizer_of_orbit_rep_orbit_idx = 0;
-
-	//f_orbits_on_subsets = FALSE;
-	//orbits_on_subsets_size = 0;
-
-	f_orbits_on_partition = FALSE;
-	orbits_on_partition_k = 0;
-
-	f_orbits_on_subspaces = FALSE;
-	orbits_on_subspaces_depth = 0;
-#endif
-
-
-
 
 	f_orbit_of = FALSE;
 	orbit_of_point_idx = 0;
@@ -191,18 +166,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	// classification:
 
 	f_linear_codes = FALSE;
+	//std::string linear_codes_control;
 	linear_codes_minimum_distance = 0;
 	linear_codes_target_size = 0;
-
-#if 0
-	f_mindist = FALSE;
-	mindist = 0;
-	f_self_orthogonal = FALSE;
-	f_doubly_even = FALSE;
-
-	f_tensor_classify = FALSE;
-	tensor_classify_depth = 0;
-#endif
 
 	f_tensor_permutations = FALSE;
 
@@ -210,17 +176,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	Ovoid_classify_description = NULL;
 
 	f_classify_cubic_curves = FALSE;
-
-#if 0
-	f_orbits_on_polynomials = FALSE;
-	orbits_on_polynomials_degree = 0;
-
-	f_recognize_orbits_on_polynomials = FALSE;
-	//std::string recognize_orbits_on_polynomials_text;
-
-	f_orbits_on_polynomials_draw_tree = FALSE;
-	orbits_on_polynomials_draw_tree_idx = 0;
-#endif
 
 	f_representation_on_polynomials = FALSE;
 	representation_on_polynomials_degree = 0;
@@ -417,6 +372,12 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << element_description_text << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-classes") == 0) {
+			f_classes = TRUE;
+			if (f_v) {
+				cout << "-classes " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-find_subgroup") == 0) {
 			f_find_subgroup = TRUE;
 			find_subgroup_order = ST.strtoi(argv[++i]);
@@ -430,22 +391,22 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-report" << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-sylow") == 0) {
-			f_sylow = TRUE;
+		else if (ST.stringcmp(argv[i], "-report_sylow") == 0) {
+			f_report_sylow = TRUE;
 			if (f_v) {
-				cout << "-sylow" << endl;
+				cout << "-report_sylow" << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-group_table") == 0) {
-			f_group_table = TRUE;
+		else if (ST.stringcmp(argv[i], "-report_group_table") == 0) {
+			f_report_group_table = TRUE;
 			if (f_v) {
-				cout << "-group_table" << endl;
+				cout << "-report_group_table" << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-classes") == 0) {
-			f_classes = TRUE;
+		else if (ST.stringcmp(argv[i], "-report_classes") == 0) {
+			f_report_classes = TRUE;
 			if (f_v) {
-				cout << "-classes" << endl;
+				cout << "-report_classes" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
@@ -459,12 +420,6 @@ int group_theoretic_activity_description::read_arguments(
 			test_if_geometric_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-test_if_geometric" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
-			f_draw_tree = TRUE;
-			if (f_v) {
-				cout << "-f_draw_tree " << endl;
 			}
 		}
 
@@ -580,84 +535,6 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-		// orbits
-
-		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-			f_poset_classification_control = TRUE;
-			Control = NEW_OBJECT(poset_classification::poset_classification_control);
-			if (f_v) {
-				cout << "-poset_classification_control " << endl;
-			}
-			i += Control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -poset_classification_control " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-orbits_on_points") == 0) {
-			f_orbits_on_points = TRUE;
-			if (f_v) {
-				cout << "-orbits_on_points" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-orbits_on_subsets") == 0) {
-			f_orbits_on_subsets = TRUE;
-			orbits_on_subsets_size = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-orbits_on_partition") == 0) {
-			f_orbits_on_partition = TRUE;
-			orbits_on_partition_k = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
-			}
-		}
-
-
-		else if (ST.stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
-			f_orbits_on_subspaces = TRUE;
-			orbits_on_subspaces_depth = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
-			}
-		}
-#endif
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
-			f_export_trees = TRUE;
-			if (f_v) {
-				cout << "-export_trees" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-stabilizer") == 0) {
-			f_stabilizer = TRUE;
-			if (f_v) {
-				cout << "-stabilizer" << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-stabilizer_of_orbit_rep") == 0) {
-			f_stabilizer_of_orbit_rep = TRUE;
-			stabilizer_of_orbit_rep_orbit_idx = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
-			}
-		}
-#endif
-
 		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = TRUE;
 			orbit_of_point_idx = ST.strtoi(argv[++i]);
@@ -694,51 +571,22 @@ int group_theoretic_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-linear_codes") == 0) {
 			f_linear_codes = TRUE;
+			linear_codes_control.assign(argv[++i]);
 			linear_codes_minimum_distance = ST.strtoi(argv[++i]);
 			linear_codes_target_size = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-linear_codes " << linear_codes_minimum_distance
-					<< " " << linear_codes_target_size << endl;
+				cout << "-linear_codes " << linear_codes_control
+						<< " " << linear_codes_minimum_distance
+						<< " " << linear_codes_target_size << endl;
 			}
 		}
 
 
 
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-mindist") == 0) {
-			f_mindist = TRUE;
-			mindist = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-mindist" << mindist << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-self_orthogonal") == 0) {
-			f_self_orthogonal = TRUE;
-			if (f_v) {
-				cout << "-self_orthogonal" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-doubly_even") == 0) {
-			f_doubly_even = TRUE;
-			if (f_v) {
-				cout << "-doubly_even" << endl;
-			}
-		}
-#endif
 
 
 		// tensors:
 
-#if 0
-		else if (ST.stringcmp(argv[i], "-tensor_classify") == 0) {
-			f_tensor_classify = TRUE;
-			tensor_classify_depth = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-tensor_classify " << tensor_classify_depth << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-tensor_permutations") == 0) {
 			f_tensor_permutations = TRUE;
 			if (f_v) {
@@ -770,34 +618,6 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-
-		// other:
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-orbits_on_polynomials") == 0) {
-			f_orbits_on_polynomials = TRUE;
-			orbits_on_polynomials_degree = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_polynomials " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-orbits_on_polynomials_draw_tree") == 0) {
-			f_orbits_on_polynomials_draw_tree = TRUE;
-			orbits_on_polynomials_draw_tree_idx = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-orbits_on_polynomials_draw_tree " << orbits_on_polynomials_draw_tree_idx << endl;
-			}
-		}
-
-
-		else if (ST.stringcmp(argv[i], "-recognize_orbits_on_polynomials") == 0) {
-			f_recognize_orbits_on_polynomials = TRUE;
-			recognize_orbits_on_polynomials_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-recognize_orbits_on_polynomials " << endl;
-			}
-		}
-#endif
 
 
 		else if (ST.stringcmp(argv[i], "-representation_on_polynomials") == 0) {
@@ -914,29 +734,29 @@ void group_theoretic_activity_description::print()
 		cout << "-normalizer_of_cyclic_subgroup " << element_label
 					<< " " << element_description_text << endl;
 	}
+	if (f_classes) {
+		cout << "-classes " << endl;
+	}
 	if (f_find_subgroup) {
 		cout << "-find_subgroup " << find_subgroup_order << endl;
 	}
 	if (f_report) {
 		cout << "-report" << endl;
 	}
-	if (f_sylow) {
-		cout << "-sylow" << endl;
+	if (f_report_sylow) {
+		cout << "-report_sylow" << endl;
 	}
-	if (f_group_table) {
-		cout << "-group_table" << endl;
+	if (f_report_group_table) {
+		cout << "-report_group_table" << endl;
 	}
-	if (f_classes) {
-		cout << "-classes" << endl;
+	if (f_report_classes) {
+		cout << "-report_classes" << endl;
 	}
 	if (f_export_group_table) {
 		cout << "-export_group_table" << endl;
 	}
 	if (f_test_if_geometric) {
 		cout << "-test_if_geometric " << test_if_geometric_depth << endl;
-	}
-	if (f_draw_tree) {
-		cout << "-f_draw_tree " << endl;
 	}
 	if (f_conjugacy_class_of) {
 		cout << "-conjugacy_class_of " << conjugacy_class_of_data << endl;
@@ -998,43 +818,6 @@ void group_theoretic_activity_description::print()
 	}
 
 
-	// orbits:
-
-
-
-
-
-	if (f_poset_classification_control) {
-		Control->print();
-	}
-#if 0
-	if (f_orbits_on_points) {
-		cout << "-orbits_on_points" << endl;
-	}
-
-	if (f_orbits_on_subsets) {
-		cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
-	}
-
-	if (f_orbits_on_partition) {
-		cout << "-orbits_on_partition " << orbits_on_partition_k << endl;
-	}
-
-	if (f_orbits_on_subspaces) {
-		cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
-	}
-
-	if (f_export_trees) {
-		cout << "-export_trees" << endl;
-	}
-
-	if (f_stabilizer) {
-		cout << "-stabilizer" << endl;
-	}
-	if (f_stabilizer_of_orbit_rep) {
-		cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
-	}
-#endif
 	if (f_orbit_of) {
 		cout << "-orbit_of " << orbit_of_point_idx << endl;
 	}
@@ -1052,36 +835,14 @@ void group_theoretic_activity_description::print()
 
 
 
-	// classification tasks:
 
 	// linear codes:
 
 	if (f_linear_codes) {
-			cout << "-linear_codes " << linear_codes_minimum_distance
-				<< " " << linear_codes_target_size << endl;
+			cout << "-linear_codes " << linear_codes_control
+					<< " " << linear_codes_minimum_distance
+					<< " " << linear_codes_target_size << endl;
 	}
-
-
-#if 0
-	if (f_mindist) {
-		cout << "-mindist" << mindist << endl;
-	}
-	if (f_self_orthogonal) {
-		cout << "-self_orthogonal" << endl;
-	}
-	if (f_doubly_even) {
-		cout << "-doubly_even" << endl;
-	}
-#endif
-
-
-	// tensors:
-
-#if 0
-	if (f_tensor_classify) {
-		cout << "-tensor_classify " << tensor_classify_depth << endl;
-	}
-#endif
 
 	if (f_tensor_permutations) {
 		cout << "-tensor_permutations " << endl;
@@ -1095,22 +856,6 @@ void group_theoretic_activity_description::print()
 		Ovoid_classify_description->print();
 	}
 
-
-
-	// other:
-#if 0
-	if (f_orbits_on_polynomials) {
-		cout << "-orbits_on_polynomials " << endl;
-	}
-	if (f_orbits_on_polynomials_draw_tree) {
-			cout << "-orbits_on_polynomials_draw_tree " << orbits_on_polynomials_draw_tree_idx << endl;
-	}
-
-
-	if (f_recognize_orbits_on_polynomials) {
-		cout << "-recognize_orbits_on_polynomials " << endl;
-	}
-#endif
 
 
 	if (f_representation_on_polynomials) {

@@ -295,7 +295,7 @@ public:
 	surface_classify_using_arc();
 	~surface_classify_using_arc();
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
-			poset_classification::poset_classification_control *Control_six_arcs,
+			std::string &Control_six_arcs_label,
 			cubic_surfaces_in_general::surface_with_action *Surf_A,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
@@ -637,14 +637,14 @@ public:
 	~surfaces_arc_lifting();
 	void init(
 			cubic_surfaces_in_general::surface_with_action *Surf_A,
-		poset_classification::poset_classification_control *Control_six_arcs,
+			std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level);
 	void downstep(int verbose_level);
 	void downstep_one_arc(int arc_idx,
 			int &cur_flag_orbit, long int *Flag, int verbose_level);
 	void report(
-			graphics::layered_graph_draw_options *draw_options,
+			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void report2(std::ostream &ost,
 			graphics::layered_graph_draw_options *draw_options,

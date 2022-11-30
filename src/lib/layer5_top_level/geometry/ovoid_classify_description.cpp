@@ -19,7 +19,8 @@ namespace apps_geometry {
 
 ovoid_classify_description::ovoid_classify_description()
 {
-	Control = NULL;
+	f_control = FALSE;
+	//std::string control_label;
 	f_epsilon = FALSE;
 	epsilon = 0;
 	f_d = FALSE;
@@ -45,7 +46,14 @@ int ovoid_classify_description::read_arguments(int argc, std::string *argv,
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-epsilon") == 0) {
+		if (ST.stringcmp(argv[i], "-control") == 0) {
+			f_control = TRUE;
+			control_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-control " << control_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-epsilon") == 0) {
 			f_epsilon = TRUE;
 			epsilon = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -64,9 +72,9 @@ int ovoid_classify_description::read_arguments(int argc, std::string *argv,
 			break;
 		}
 		else {
-			if (f_v) {
-				cout << "ignoring argument " << argv[i] << endl;
-			}
+			cout << "ovoid_classify_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 
@@ -78,7 +86,10 @@ int ovoid_classify_description::read_arguments(int argc, std::string *argv,
 
 void ovoid_classify_description::print()
 {
-	if (f_epsilon) {
+	if (f_control) {
+		cout << "-control " << control_label << endl;
+	}
+	else if (f_epsilon) {
 		cout << "-epsilon " << epsilon << endl;
 	}
 	else if (f_d) {

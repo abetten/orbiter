@@ -176,6 +176,7 @@ int graph_theoretic_activity_description::read_arguments(
 		else {
 			cout << "graph_theoretic_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 
 	} // next i

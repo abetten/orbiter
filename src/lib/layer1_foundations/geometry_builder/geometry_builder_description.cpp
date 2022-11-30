@@ -235,6 +235,7 @@ int geometry_builder_description::read_arguments(
 		else {
 			cout << "geometry_builder_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {

@@ -1585,7 +1585,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	}
 	load_finite_field_PG(verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space before load_finite_field_PG" << endl;
+		cout << "symbol_definition::definition_of_projective_space after load_finite_field_PG" << endl;
 	}
 
 
@@ -1891,7 +1891,7 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 
 	PGC->permutation_group_init(Permutation_group_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_permutation_group before PGC->permutation_group_init, "
+		cout << "symbol_definition::definition_of_permutation_group after PGC->permutation_group_init, "
 				"after PGC->permutation_group_init" << endl;
 	}
 
@@ -1940,7 +1940,7 @@ void symbol_definition::definition_of_modified_group(int verbose_level)
 
 	MGC->modified_group_init(Group_modification_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_modified_group before PGC->permutation_group_init, "
+		cout << "symbol_definition::definition_of_modified_group after PGC->permutation_group_init, "
 				"after PGC->permutation_group_init" << endl;
 	}
 
@@ -1991,6 +1991,9 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 	}
 
 	GeoObj->init(Geometric_object_description, PA->P, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_geometric_object after GeoObj->init" << endl;
+	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 

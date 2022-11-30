@@ -184,7 +184,7 @@ void BLT_set_create::init(
 			// for a non-square m, and q=p^e
 			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
-			snprintf(str, sizeof(str), "K1");
+			snprintf(str, sizeof(str), "Kantor1");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "Kantor2") == 0) {
@@ -197,7 +197,7 @@ void BLT_set_create::init(
 			// for q congruent 2 or 3 mod 5
 			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
-			snprintf(str, sizeof(str), "K2");
+			snprintf(str, sizeof(str), "Kantor2");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_72") == 0) {

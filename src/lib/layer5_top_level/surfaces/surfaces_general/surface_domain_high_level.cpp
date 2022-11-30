@@ -227,7 +227,7 @@ void surface_domain_high_level::do_sweep_4_L9_E4(
 
 void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		projective_geometry::projective_space_with_action *PA,
-		poset_classification::poset_classification_control *Control,
+		std::string &control_label,
 		cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 		int verbose_level)
 {
@@ -240,6 +240,11 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 	//algebraic_geometry::surface_domain *Surf;
 	//surface_with_action *Surf_A;
 
+	poset_classification::poset_classification_control *Control;
+
+	Control =
+			Get_object_of_type_poset_classification_control(control_label);
+
 
 	if (f_v) {
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
@@ -249,7 +254,6 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 	prepare_surface_classify_wedge(
 			PA->F, PA,
 			Control,
-			//Surf, Surf_A,
 			SCW,
 			verbose_level);
 
@@ -414,7 +418,7 @@ void surface_domain_high_level::do_study_surface(field_theory::finite_field *F, 
 
 void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 		projective_geometry::projective_space_with_action *PA,
-		poset_classification::poset_classification_control *Control_six_arcs,
+		std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
@@ -477,7 +481,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 	}
 	SAL->init(
 		Surf_A,
-		Control_six_arcs,
+		Control_six_arcs_label,
 		f_test_nb_Eckardt_points, nb_E,
 		verbose_level - 2);
 	if (f_v) {
@@ -490,7 +494,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 			cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 					"before SAL->report" << endl;
 		}
-		SAL->report(Control_six_arcs->draw_options, verbose_level - 2);
+		SAL->report(Control_six_arcs_label, verbose_level - 2);
 		if (f_v) {
 			cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 					"after SAL->report" << endl;
@@ -510,7 +514,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control1,
 		poset_classification::poset_classification_control *Control2,
-		poset_classification::poset_classification_control *Control_six_arcs,
+		std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
@@ -585,7 +589,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 
 
 	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
-			Control_six_arcs,
+			Control_six_arcs_label,
 			Surf_A,
 			f_test_nb_Eckardt_points, nb_E,
 			verbose_level);
@@ -624,7 +628,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 
 void surface_domain_high_level::do_six_arcs(
 		projective_geometry::projective_space_with_action *PA,
-		poset_classification::poset_classification_control *Control_six_arcs,
+		std::string &Control_six_arcs_label,
 		int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
 		int verbose_level)
 {
@@ -662,7 +666,8 @@ void surface_domain_high_level::do_six_arcs(
 	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Six_arc_descr->f_target_size = TRUE;
 	Six_arc_descr->target_size = 6;
-	Six_arc_descr->Control = Control_six_arcs;
+	Six_arc_descr->f_control = TRUE;
+	Six_arc_descr->control_label.assign(Control_six_arcs_label);
 
 
 

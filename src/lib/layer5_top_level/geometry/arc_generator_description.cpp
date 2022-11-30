@@ -19,8 +19,12 @@ namespace apps_geometry {
 arc_generator_description::arc_generator_description()
 {
 
-	f_poset_classification_control = FALSE;
-	Control = NULL;
+	f_control = FALSE;
+	//std::string control_label;
+
+	//f_poset_classification_control = FALSE;
+	//Control = NULL;
+
 	f_d = FALSE;
 	d = 0;
 
@@ -60,6 +64,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 	}
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification::poset_classification_control);
@@ -76,6 +81,14 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				if (i < argc) {
 					cout << "next argument is " << argv[i] << endl;
 				}
+			}
+		}
+#endif
+		if (ST.stringcmp(argv[i], "-control") == 0) {
+			f_control = TRUE;
+			control_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-control " << control_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-d") == 0) {
@@ -140,9 +153,8 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 			break;
 		}
 		else {
-			if (f_v) {
-				cout << "ignoring argument " << argv[i] << endl;
-			}
+			cout << "arc_generator_description::read_arguments unknown argument " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 
@@ -154,9 +166,16 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 
 void arc_generator_description::print()
 {
+#if 0
 	if (f_poset_classification_control) {
 		Control->print();
 	}
+#endif
+
+	if (f_control) {
+		cout << "-control " << control_label << endl;
+	}
+
 	if (f_d) {
 		cout << "-d " << d << endl;
 	}

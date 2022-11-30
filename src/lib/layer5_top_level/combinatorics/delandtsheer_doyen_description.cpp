@@ -286,6 +286,7 @@ int delandtsheer_doyen_description::read_arguments(
 		else {
 			cout << "delandtsheer_doyen_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 

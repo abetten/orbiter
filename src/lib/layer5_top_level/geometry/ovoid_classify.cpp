@@ -29,6 +29,7 @@ static void callback_ovoid_print_set(std::ostream &ost, int len, long int *S, vo
 ovoid_classify::ovoid_classify()
 {
 	Descr = NULL;
+	Control = NULL;
 	LG = NULL;
 
 	Poset = NULL;
@@ -111,7 +112,11 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	geometry::geometry_global Gg;
 
 	ovoid_classify::Descr = Descr;
+
+	Control = Get_object_of_type_poset_classification_control(Descr->control_label);
+
 	ovoid_classify::LG = LG;
+
 
 	A = LG->A2;
 	gen = NEW_OBJECT(poset_classification::poset_classification);

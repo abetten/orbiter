@@ -3186,8 +3186,7 @@ void surface_create::do_report2(std::ostream &ost, int verbose_level)
 
 
 void surface_create::report_with_group(
-		int f_has_control_six_arcs,
-		poset_classification::poset_classification_control *Control_six_arcs,
+		std::string &Control_six_arcs_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3224,13 +3223,8 @@ void surface_create::report_with_group(
 	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Six_arc_descr->f_target_size = TRUE;
 	Six_arc_descr->target_size = 6;
-
-	if (f_has_control_six_arcs) {
-		Six_arc_descr->Control = Control_six_arcs;
-	}
-	else {
-		Six_arc_descr->Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	}
+	Six_arc_descr->f_control = TRUE;
+	Six_arc_descr->control_label.assign(Control_six_arcs_label);
 
 
 

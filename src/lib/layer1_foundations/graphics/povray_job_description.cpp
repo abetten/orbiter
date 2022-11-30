@@ -126,6 +126,7 @@ int povray_job_description::read_arguments(
 		else {
 			cout << "povray_job_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {

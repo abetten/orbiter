@@ -143,6 +143,11 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
+		else {
+			cout << "orbits_create_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	cout << "orbits_create_description::read_arguments done" << endl;
 	return i + 1;

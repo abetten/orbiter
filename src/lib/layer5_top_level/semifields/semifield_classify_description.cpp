@@ -138,6 +138,7 @@ int semifield_classify_description::read_arguments(
 		else {
 			cout << "semifield_classify_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	cout << "semifield_classify_description::read_arguments done" << endl;
