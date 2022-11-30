@@ -95,6 +95,7 @@ int main(int argc, const char** argv) {
     managed_variables_index_table managed_variables_table;
     for (int i=0; i<9; ++i)
         managed_variables_table.insert("X"+std::to_string(i));
+    cout << "managed_variables_table:\n" << managed_variables_table << endl;
 
 
     shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(exp, managed_variables_table);

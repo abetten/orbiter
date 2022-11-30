@@ -17,7 +17,9 @@ using std::endl;
 using std::make_shared;
 
 std::ostream& operator<< (std::ostream& os, const managed_variables_index_table& obj) {
-
+    for (auto it=obj.begin(); it!=obj.end(); ++it)
+        os << it->first << ": " << it->second << '\n';
+    return os;
 }
 
 
