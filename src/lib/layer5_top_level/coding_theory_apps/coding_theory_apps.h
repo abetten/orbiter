@@ -54,6 +54,7 @@ class coding_theoretic_activity_description {
 
 public:
 
+#if 0
 	// the following two functions should be retired.
 	// They are very old.
 	// They create their own finite field.
@@ -63,6 +64,7 @@ public:
 	int BCH_q;
 	int BCH_t;
 	//int BCH_b;
+#endif
 
 	int f_general_code_binary;
 	int general_code_binary_n;
@@ -110,6 +112,7 @@ public:
 	int f_nth_roots;
 	int nth_roots_n;
 
+#if 0
 	int f_make_BCH_code;
 	int make_BCH_code_n;
 	int make_BCH_code_d;
@@ -119,10 +122,14 @@ public:
 	int make_BCH_code_and_encode_d;
 	std::string make_BCH_code_and_encode_text;
 	std::string make_BCH_code_and_encode_fname;
+#endif
 
 	int f_NTT;
 	int NTT_n;
 	int NTT_q;
+
+	int f_fixed_code;
+	std::string fixed_code_perm;
 
 	int f_export_magma;
 	std::string export_magma_fname;
@@ -189,9 +196,6 @@ public:
 	int polynomial_division_from_file_all_k_bit_error_patterns_r1;
 	int polynomial_division_from_file_all_k_bit_error_patterns_k;
 
-	int f_fixed_code;
-	std::string fixed_code_perm;
-
 
 
 	coding_theoretic_activity_description();
@@ -234,10 +238,6 @@ public:
 			create_code *Code,
 			int verbose_level);
 	void perform_activity(int verbose_level);
-	void do_fixed_code(field_theory::finite_field *F,
-		long int *perm, int n,
-		apps_coding_theory::create_code *Code,
-		int verbose_level);
 
 
 };
@@ -341,6 +341,9 @@ public:
 	void export_genma(std::string &fname, int verbose_level);
 	void export_checkma(std::string &fname, int verbose_level);
 	void weight_enumerator(int verbose_level);
+	void fixed_code(
+		long int *perm, int n,
+		int verbose_level);
 
 };
 

@@ -2029,57 +2029,12 @@ void surface_object::export_something(std::string &what,
 
 		FREE_lint(Pts_off);
 	}
-	else if (ST.stringcmp(what, "lines") == 0) {
-
-		fname.assign(fname_base);
-		fname.append("_lines.csv");
-
-		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, Lines, nb_lines, 1);
-
-		cout << "surface_object::export_something "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
 	else if (ST.stringcmp(what, "Eckardt_points") == 0) {
 
 		fname.assign(fname_base);
 		fname.append("_Eckardt_points.csv");
 
 		Fio.lint_matrix_write_csv(fname, SOP->Eckardt_points, 1, SOP->nb_Eckardt_points);
-
-		cout << "surface_object::export_something "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-	else if (ST.stringcmp(what, "Eckardt_points") == 0) {
-
-		fname.assign(fname_base);
-		fname.append("_Eckardt_points.csv");
-
-		Fio.lint_matrix_write_csv(fname, SOP->Eckardt_points, 1, SOP->nb_Eckardt_points);
-
-		cout << "surface_object::export_something "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-	else if (ST.stringcmp(what, "Hesse_planes") == 0) {
-
-		fname.assign(fname_base);
-		fname.append("_Hesse_planes.csv");
-
-		Fio.lint_matrix_write_csv(fname, SOP->Hesse_planes, 1, SOP->nb_Hesse_planes);
-
-		cout << "surface_object::export_something "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-	else if (ST.stringcmp(what, "axes") == 0) {
-
-		fname.assign(fname_base);
-		fname.append("_axes.csv");
-
-		Fio.lint_matrix_write_csv(fname, SOP->Axes_line_rank, 1, SOP->nb_axes);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2107,6 +2062,17 @@ void surface_object::export_something(std::string &what,
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
+	else if (ST.stringcmp(what, "zero_points") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_zero_points.csv");
+
+		Fio.lint_matrix_write_csv(fname, SOP->Pts_not_on_lines, 1, SOP->nb_pts_not_on_lines);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 	else if (ST.stringcmp(what, "singular_points") == 0) {
 
 		fname.assign(fname_base);
@@ -2118,6 +2084,56 @@ void surface_object::export_something(std::string &what,
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
+
+	else if (ST.stringcmp(what, "lines") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_lines.csv");
+
+		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
+		Fio.lint_matrix_write_csv(fname, Lines, nb_lines, 1);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	else if (ST.stringcmp(what, "axes") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_axes.csv");
+
+		Fio.lint_matrix_write_csv(fname, SOP->Axes_line_rank, 1, SOP->nb_axes);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	else if (ST.stringcmp(what, "tritangent_planes") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_tritangent_planes.csv");
+
+		Fio.lint_matrix_write_csv(fname, SOP->Tritangent_plane_rk, 1, SOP->nb_tritangent_planes);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	else if (ST.stringcmp(what, "Hesse_planes") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_Hesse_planes.csv");
+
+		Fio.lint_matrix_write_csv(fname, SOP->Hesse_planes, 1, SOP->nb_Hesse_planes);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
 	else {
 		cout << "surface_object::export_something unrecognized export target: " << what << endl;
 	}

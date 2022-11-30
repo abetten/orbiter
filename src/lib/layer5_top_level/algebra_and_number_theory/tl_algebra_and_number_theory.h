@@ -219,6 +219,8 @@ public:
 			int elt_idx, int verbose_level);
 	void centralizer(int q, int d,
 			int elt_idx, int verbose_level);
+	// creates a finite_field, and two actions
+	// using init_projective_group and init_general_linear_group
 	void centralizer(int q, int d, int verbose_level);
 	void compute_regular_representation(actions::action *A, groups::sims *S,
 			data_structures_groups::vector_ge *SG,
@@ -321,6 +323,8 @@ public:
 	void find_standard_generators(any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int order_a, int order_b, int order_ab, int verbose_level);
+	void Nth_roots(field_theory::finite_field *F,
+			int n, int verbose_level);
 
 };
 
@@ -1071,11 +1075,13 @@ public:
 	int f_on_polynomials;
 	int on_polynomials_degree;
 
+#if 0
 	int f_draw_tree;
 	int draw_tree_idx;
 
 	int f_recognize;
 	std::string recognize_text;
+#endif
 
 	orbits_create_description();
 	~orbits_create_description();
@@ -1177,7 +1183,7 @@ public:
 	void init(
 			groups::linear_group *LG,
 			int degree_of_poly,
-			int f_recognize, std::string &recognize_text,
+			//int f_recognize, std::string &recognize_text,
 			int verbose_level);
 	void compute_points(int verbose_level);
 	void report(int verbose_level);

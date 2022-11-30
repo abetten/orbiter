@@ -976,6 +976,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d,
 		int f_no_eigenvalue_one, int verbose_level)
 // called from interface_algebra
+// creates an object of type action
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1388,6 +1389,7 @@ void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one
 
 void algebra_global_with_action::group_table(int q, int d, int f_poly, std::string &poly,
 		int f_no_eigenvalue_one, int verbose_level)
+// This function does too many things!
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1599,6 +1601,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 		int elt_idx, int verbose_level)
 // problem elt_idx does not describe the group element uniquely.
 // Reason: the sims chain is not canonical.
+// creates a finite_field object and an action object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1735,6 +1738,8 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 
 void algebra_global_with_action::centralizer(int q, int d,
 		int elt_idx, int verbose_level)
+// creates a finite_field, and two actions
+// using init_projective_group and init_general_linear_group
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1817,6 +1822,8 @@ void algebra_global_with_action::centralizer(int q, int d,
 }
 
 void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
+// creates a finite_field, and an action
+// using init_projective_group
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4363,8 +4370,66 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 	}
 }
 
+void algebra_global_with_action::Nth_roots(field_theory::finite_field *F,
+		int n, int verbose_level)
+{
+	field_theory::nth_roots *Nth;
+
+	Nth = NEW_OBJECT(field_theory::nth_roots);
+
+	Nth->init(F, n, verbose_level);
+
+	orbiter_kernel_system::file_io Fio;
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
 
 
+		char str[1000];
+
+		snprintf(str, 1000, "Nth_roots_q%d_n%d.tex", F->q, n);
+		fname.assign(str);
+		snprintf(str, 1000, "Nth roots");
+		title.assign(str);
+
+
+
+
+		{
+			ofstream ost(fname);
+			number_theory::number_theory_domain NT;
+
+
+
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			Nth->report(ost, verbose_level);
+
+			L.foot(ost);
+
+
+		}
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	}
+
+}
 
 
 }}}

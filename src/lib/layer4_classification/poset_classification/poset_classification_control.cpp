@@ -107,7 +107,7 @@ poset_classification_control::poset_classification_control()
 
 
 	f_preferred_choice = FALSE;
-	//preferred_choice
+	//std::vector<std::vector<int> > preferred_choice;
 
 	f_clique_test = FALSE;
 	//std::string clique_test_graph;

@@ -2799,6 +2799,12 @@ void surface_classify_wedge::test_isomorphism(
 	if (f_v) {
 		cout << "surface_classify_wedge::test_isomorphism" << endl;
 	}
+	if (f_v) {
+		cout << "surface_classify_wedge::test_isomorphism Descr1 = " << endl;
+		Descr1->print();
+		cout << "surface_classify_wedge::test_isomorphism Descr2 = " << endl;
+		Descr2->print();
+	}
 
 	cubic_surfaces_in_general::surface_create *SC1;
 	cubic_surfaces_in_general::surface_create *SC2;
@@ -2806,19 +2812,19 @@ void surface_classify_wedge::test_isomorphism(
 	SC2 = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
 
 	if (f_v) {
-		cout << "before SC1->init" << endl;
+		cout << "before SC1->create_cubic_surface" << endl;
 	}
-	SC1->init(Descr1, verbose_level);
+	SC1->create_cubic_surface(Descr1, verbose_level);
 	if (f_v) {
-		cout << "after SC1->init" << endl;
+		cout << "after SC1->create_cubic_surface" << endl;
 	}
 
 	if (f_v) {
-		cout << "before SC2->init" << endl;
+		cout << "before SC2->create_cubic_surface" << endl;
 	}
-	SC2->init(Descr2, verbose_level);
+	SC2->create_cubic_surface(Descr2, verbose_level);
 	if (f_v) {
-		cout << "after SC2->init" << endl;
+		cout << "after SC2->create_cubic_surface" << endl;
 	}
 
 	int isomorphic_to1;

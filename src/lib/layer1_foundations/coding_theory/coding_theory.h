@@ -374,8 +374,10 @@ public:
 			int verbose_level);
 	void compute_generator_matrix(ring_theory::unipoly_object a, int *&genma,
 		int n, int &k, int verbose_level);
+#if 0
 	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
 	// this function creates a finite field.
+#endif
 	void generator_matrix_cyclic_code(field_theory::finite_field *F,
 			int n,
 			std::string &poly_coeffs,

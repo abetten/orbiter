@@ -610,6 +610,8 @@ public:
 	void display_all_PG_elements(int n);
 	void display_all_PG_elements_not_in_subspace(int n, int m);
 	void display_all_AG_elements(int n);
+
+
 	void do_cone_over(int n,
 		long int *set_in, int set_size_in,
 		long int *&set_out, int &set_size_out,

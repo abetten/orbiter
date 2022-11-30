@@ -296,7 +296,7 @@ void orbits_create::init(apps_algebra::orbits_create_description *Descr, int ver
 		}
 		On_polynomials->init(Group->LG,
 				Descr->on_polynomials_degree,
-				Descr->f_recognize, Descr->recognize_text,
+				//Descr->f_recognize, Descr->recognize_text,
 				verbose_level);
 
 		if (f_v) {

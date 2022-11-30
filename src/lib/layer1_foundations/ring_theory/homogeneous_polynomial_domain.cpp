@@ -791,7 +791,7 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 			}
 		}
 		if (f_kernel) {
-			if (f_v) {
+			if (FALSE) {
 				cout << "homogeneous_polynomial_domain::affine_evaluation_kernel "
 						"monomial ";
 				Int_vec_print(cout, Monomials + i * nb_variables, nb_variables);
@@ -825,7 +825,7 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 			}
 		}
 		if (f_kernel) {
-			if (f_v) {
+			if (FALSE) {
 				cout << "homogeneous_polynomial_domain::affine_evaluation_kernel monomial ";
 				Int_vec_print(cout, Monomials + i * nb_variables, nb_variables);
 				cout << " = ";
@@ -2987,12 +2987,15 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 
 	for (i = 0; i < N_points; i++) {
 
+#if 0
 		if (i == 98 || i == 99) {
 			f_vv = TRUE;
 		}
 		else {
 			f_vv = FALSE;
 		}
+#endif
+
 		P->unrank_point(v, i);
 
 		if (f_vv) {

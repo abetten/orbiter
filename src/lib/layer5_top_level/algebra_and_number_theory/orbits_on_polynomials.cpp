@@ -52,7 +52,7 @@ orbits_on_polynomials::~orbits_on_polynomials()
 void orbits_on_polynomials::init(
 		groups::linear_group *LG,
 		int degree_of_poly,
-		int f_recognize, std::string &recognize_text,
+		//int f_recognize, std::string &recognize_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -196,7 +196,7 @@ void orbits_on_polynomials::init(
 	}
 
 
-
+#if 0
 	if (f_recognize) {
 		long int *Rank;
 		int len;
@@ -232,7 +232,7 @@ void orbits_on_polynomials::init(
 		FREE_lint(Rank);
 
 	}
-
+#endif
 
 
 

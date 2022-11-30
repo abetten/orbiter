@@ -267,7 +267,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 		// create the polynomial
 		// \prod_{i=0}^{n-1} (1-(x_i-vec[i]*x_n)^{q-1})
-		// \prod_{i=0}^{n-1} (x_n^{n*(q-1)}-(x_i-vec[i]*x_n)^{q-1})
+		// \prod_{i=0}^{n-1} (x_n^{(q-1)}-(x_i-vec[i]*x_n)^{q-1})
 		// which is one exactly if x_i = vec[i] for all i=0..n-1 and x_n = 1.
 		// and zero otherwise.
 		// So this polynomial agrees with the q-ary function
@@ -286,7 +286,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 
 			Int_vec_zero(mon, n + 1);
-			mon[0] = 1;
+			mon[i] = 1;
 			idx = Poly[1].index_of_monomial(mon);
 			A_poly[1][idx] = 1;
 
@@ -318,6 +318,22 @@ void polynomial_function_domain::compute_polynomial_representation(
 				cout << endl;
 			}
 
+
+			// multiply B_poly[q - 1] by -1:
+
+			for (h = 0; h < Poly[(q - 1)].get_nb_monomials(); h++) {
+				B_poly[q - 1][h] = Fq->mult(m1, B_poly[q - 1][h]);
+			}
+
+
+			// need to add x_n^{(q - 1)}:
+			Int_vec_zero(mon, n + 1);
+			mon[n] = (q - 1);
+			idx = Poly[q - 1].index_of_monomial(mon);
+
+			B_poly[q - 1][idx] = Fq->add(B_poly[q - 1][idx], 1);
+
+
 			if (i == 0) {
 				Int_vec_copy(B_poly[q - 1], C_poly[q - 1], Poly[q - 1].get_nb_monomials());
 			}
@@ -330,6 +346,8 @@ void polynomial_function_domain::compute_polynomial_representation(
 							0 /*verbose_level*/);
 			}
 
+
+#if 0
 			// multiply C_poly[(i + 1) * (q - 1)] by -1:
 
 			for (h = 0; h < Poly[(i + 1) * (q - 1)].get_nb_monomials(); h++) {
@@ -342,6 +360,9 @@ void polynomial_function_domain::compute_polynomial_representation(
 			idx = Poly[(i + 1) * (q - 1)].index_of_monomial(mon);
 
 			C_poly[(i + 1) * (q - 1)][idx] = Fq->add(C_poly[(i + 1) * (q - 1)][idx], 1);
+
+#endif
+
 			if (f_v) {
 				cout << "s=" << s << " / " << Q << " : ";
 				Poly[(i + 1) * (q - 1)].print_equation(cout, C_poly[(i + 1) * (q - 1)]);

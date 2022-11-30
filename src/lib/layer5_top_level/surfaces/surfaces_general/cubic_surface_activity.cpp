@@ -265,6 +265,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		//FREE_OBJECT(SoA);
 
 	}
+#if 0
 	else if (Descr->f_export_tritangent_planes) {
 
 		//surface_object_with_action *SoA;
@@ -292,6 +293,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	}
+#endif
 
 
 	if (f_v) {

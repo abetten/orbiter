@@ -1064,7 +1064,7 @@ void cyclic_codes::compute_generator_matrix(
 }
 
 
-
+#if 0
 void cyclic_codes::make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level)
 // this function creates a finite field
 {
@@ -1122,6 +1122,7 @@ void cyclic_codes::make_BCH_codes(int n, int q, int t, int b, int f_dual, int ve
 		cout << "cyclic_codes::make_BCH_codes done" << endl;
 	}
 }
+#endif
 
 void cyclic_codes::generator_matrix_cyclic_code(
 		field_theory::finite_field *F,

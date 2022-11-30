@@ -310,6 +310,10 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			cout << "-end" << endl;
 			break;
 		}
+		else {
+			cout << "surface_create_description::read_arguments unknown command " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	cout << "surface_create_description::read_arguments done" << endl;
 	return i + 1;
