@@ -48,6 +48,11 @@ int blt_set_classify_description::read_arguments(int argc, std::string *argv,
 			cout << "-end" << endl;
 			break;
 		}
+		else {
+			cout << "blt_set_classify_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	if (f_v) {
 		cout << "blt_set_classify_description::read_arguments done" << endl;

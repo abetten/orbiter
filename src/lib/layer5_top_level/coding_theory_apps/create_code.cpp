@@ -880,6 +880,95 @@ void create_code::weight_enumerator(int verbose_level)
 
 }
 
+void create_code::fixed_code(
+	long int *perm, int n,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::fixed_code n = " << n << endl;
+	}
+	if (n != create_code::n) {
+		cout << "create_code::fixed_code the length of the permutation does not match" << endl;
+		exit(1);
+	}
+
+	long int t0, t1, dt;
+	long int N;
+	int *msg;
+	int *word;
+	geometry::geometry_global Gg;
+	orbiter_kernel_system::os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "create_code::fixed_code" << endl;
+	}
+	N = Gg.nb_AG_elements(k, F->q);
+	if (f_v) {
+		cout << N << " messages" << endl;
+	}
+	msg = NEW_int(k);
+	word = NEW_int(n);
+	int h, i, a, j, b, cnt;
+	vector<long int> V;
+
+	cnt = 0;
+	for (h = 0; h < N; h++) {
+		if ((h % ONE_MILLION) == 0) {
+			t1 = Os.os_ticks();
+			dt = t1 - t0;
+			cout << setw(10) << h << " / " << setw(10) << N << " : ";
+			Os.time_check_delta(cout, dt);
+			cout << endl;
+		}
+		Gg.AG_element_unrank(F->q, msg, 1, k, h);
+		F->Linear_algebra->mult_vector_from_the_left(msg, genma, word, k, n);
+		for (i = 0; i < n; i++) {
+			a = word[i];
+			j = perm[i];
+			b = word[j];
+			if (a != b) {
+				break;
+			}
+		}
+		if (i == n) {
+			V.push_back(h);
+			Int_vec_print(cout, word, n);
+			cout << endl;
+			cnt++;
+		}
+	}
+	if (f_v) {
+		cout << "create_code::fixed_code we found " << cnt << " fixed words" << endl;
+	}
+	int *M;
+	int rk;
+
+	M = NEW_int(cnt * n);
+	for (i = 0; i < N; i++) {
+		Gg.AG_element_unrank(F->q, msg, 1, k, V[i]);
+		F->Linear_algebra->mult_vector_from_the_left(msg, genma, word, k, n);
+		Int_vec_copy(word, M + i * n, n);
+	}
+	rk = F->Linear_algebra->Gauss_easy(M, cnt, n);
+	if (f_v) {
+		cout << "create_code::fixed_code The fix subcode has dimension " << rk << endl;
+		Int_matrix_print(M, rk, n);
+		cout << endl;
+		Int_vec_print_fully(cout, M, rk * n);
+		cout << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "create_code::fixed_code done" << endl;
+	}
+}
+
 
 
 

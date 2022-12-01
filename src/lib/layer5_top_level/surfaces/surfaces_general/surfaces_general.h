@@ -37,7 +37,7 @@ public:
 
 	int f_export_all_quartic_curves;
 
-	int f_export_tritangent_planes;
+	//int f_export_tritangent_planes;
 
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
@@ -219,8 +219,7 @@ public:
 	void do_report(int verbose_level);
 	void do_report2(std::ostream &ost, int verbose_level);
 	void report_with_group(
-			int f_has_control_six_arcs,
-			poset_classification::poset_classification_control *Control_six_arcs,
+			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void test_group(int verbose_level);
 
@@ -380,7 +379,7 @@ public:
 
 	void classify_surfaces_with_double_sixes(
 			projective_geometry::projective_space_with_action *PA,
-			poset_classification::poset_classification_control *Control,
+			std::string &control_label,
 			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
 
@@ -396,19 +395,19 @@ public:
 	void do_study_surface(field_theory::finite_field *F, int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
-			poset_classification::poset_classification_control *Control_six_arcs,
+			std::string &Control_six_arcs_label,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control1,
 			poset_classification::poset_classification_control *Control2,
-			poset_classification::poset_classification_control *Control_six_arcs,
+			std::string &Control_six_arcs_label,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void do_six_arcs(
 			projective_geometry::projective_space_with_action *PA,
-			poset_classification::poset_classification_control *Control_six_arcs,
+			std::string &Control_six_arcs_label,
 			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
 			int verbose_level);
 	void do_cubic_surface_properties(

@@ -172,22 +172,26 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 
 		K.get_primitive_polynomial(poly, p, e, verbose_level - 2);
 		if (f_v) {
-			cout << "finite_field::finite_field_init q=" << q << " before init_override_polynomial poly = " << poly << endl;
+			cout << "finite_field::finite_field_init q=" << q
+					<< " before init_override_polynomial poly = " << poly << endl;
 		}
 		init_override_polynomial(q, poly, f_without_tables, 0 /*verbose_level - 2*/);
 		if (f_v) {
-			cout << "finite_field::finite_field_init q=" << q << " after init_override_polynomial" << endl;
+			cout << "finite_field::finite_field_init q=" << q
+					<< " after init_override_polynomial" << endl;
 		}
 	}
 	else {
 		f_is_prime_field = TRUE;
 		poly.assign("");
 		if (f_v) {
-			cout << "finite_field::finite_field_init q=" << q << " before init_override_polynomial poly = " << poly << endl;
+			cout << "finite_field::finite_field_init q=" << q
+					<< " before init_override_polynomial poly = " << poly << endl;
 		}
 		init_override_polynomial(q, poly, f_without_tables, 0 /*verbose_level - 2*/);
 		if (f_v) {
-			cout << "finite_field::finite_field_init q=" << q << " after init_override_polynomial" << endl;
+			cout << "finite_field::finite_field_init q=" << q
+					<< " after init_override_polynomial" << endl;
 		}
 	}
 
@@ -218,7 +222,8 @@ void finite_field::init_implementation(int f_without_tables, int verbose_level)
 
 	if (f_without_tables) {
 		if (f_v) {
-			cout << "finite_field::init_implementation implementation without field tables" << endl;
+			cout << "finite_field::init_implementation "
+					"implementation without field tables" << endl;
 		}
 		f_has_table = FALSE;
 
@@ -234,7 +239,8 @@ void finite_field::init_implementation(int f_without_tables, int verbose_level)
 	}
 	else {
 		if (f_v) {
-			cout << "finite_field::init_implementation implementation with field tables" << endl;
+			cout << "finite_field::init_implementation "
+					"implementation with field tables" << endl;
 		}
 		T = NEW_OBJECT(finite_field_implementation_by_tables);
 
@@ -364,11 +370,13 @@ void finite_field::init_override_polynomial(int q,
 
 
 	if (f_v) {
-		cout << "finite_field::init_override_polynomial before init_implementation" << endl;
+		cout << "finite_field::init_override_polynomial "
+				"before init_implementation" << endl;
 	}
 	init_implementation(f_without_tables, verbose_level - 1);
 	if (f_v) {
-		cout << "finite_field::init_override_polynomial after init_implementation" << endl;
+		cout << "finite_field::init_override_polynomial "
+				"after init_implementation" << endl;
 	}
 
 	if (f_vv) {
@@ -400,11 +408,13 @@ int finite_field::has_quadratic_subfield()
 int finite_field::belongs_to_quadratic_subfield(int a)
 {
 	if ((e % 2) != 0) {
-		cout << "finite_field::belongs_to_quadratic_subfield does not have a quadratic subfield" << endl;
+		cout << "finite_field::belongs_to_quadratic_subfield "
+				"does not have a quadratic subfield" << endl;
 		exit(1);
 	}
 	if (!f_has_table) {
-		cout << "finite_field::belongs_to_quadratic_subfield !f_has_table" << endl;
+		cout << "finite_field::belongs_to_quadratic_subfield "
+				"!f_has_table" << endl;
 		exit(1);
 	}
 	return T->belongs_to_quadratic_subfield(a);
@@ -656,7 +666,8 @@ int finite_field::find_primitive_element(int verbose_level)
 		}
 	}
 	if (i == q) {
-		cout << "finite_field::find_primitive_element could not find a primitive element" << endl;
+		cout << "finite_field::find_primitive_element "
+				"could not find a primitive element" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -958,7 +969,7 @@ int finite_field::Z_embedding(int k)
 
 int finite_field::add(int i, int j)
 {
-	geometry::geometry_global Gg;
+	//geometry::geometry_global Gg;
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int c;

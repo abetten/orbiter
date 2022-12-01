@@ -116,6 +116,7 @@ int group_modification_description::read_arguments(
 		else {
 			cout << "group_modification_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 

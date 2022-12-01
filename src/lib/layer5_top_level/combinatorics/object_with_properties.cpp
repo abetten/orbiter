@@ -653,7 +653,13 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 
 	combinatorics::encoded_combinatorial_object *Enc;
 
-	OwCF->encode_incma(Enc, verbose_level);
+	if (f_v) {
+		cout << "object_with_properties::export_TDA_with_flag_orbits before OwCF->encode_incma" << endl;
+	}
+	OwCF->encode_incma(Enc, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "object_with_properties::export_TDA_with_flag_orbits after OwCF->encode_incma" << endl;
+	}
 
 	orbiter_kernel_system::file_io Fio;
 	string fname;
@@ -664,6 +670,11 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 
 
 	if (Flags->f_flag_orbits_have_been_computed) {
+
+		if (f_v) {
+			cout << "object_with_properties::export_TDA_with_flag_orbits f_flag_orbits_have_been_computed" << endl;
+		}
+
 		int *Inc_flag_orbits;
 		int *Inc_TDA;
 		int nb_orbits_on_flags;
@@ -715,6 +726,10 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 	}
 
 	else {
+
+		if (f_v) {
+			cout << "object_with_properties::export_TDA_with_flag_orbits flag orbits have not been computed" << endl;
+		}
 
 		int *Inc2;
 		Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);

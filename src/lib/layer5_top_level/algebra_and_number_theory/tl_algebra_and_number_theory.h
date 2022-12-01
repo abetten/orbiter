@@ -219,6 +219,8 @@ public:
 			int elt_idx, int verbose_level);
 	void centralizer(int q, int d,
 			int elt_idx, int verbose_level);
+	// creates a finite_field, and two actions
+	// using init_projective_group and init_general_linear_group
 	void centralizer(int q, int d, int verbose_level);
 	void compute_regular_representation(actions::action *A, groups::sims *S,
 			data_structures_groups::vector_ge *SG,
@@ -321,6 +323,8 @@ public:
 	void find_standard_generators(any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int order_a, int order_b, int order_ab, int verbose_level);
+	void Nth_roots(field_theory::finite_field *F,
+			int n, int verbose_level);
 
 };
 
@@ -439,16 +443,15 @@ public:
 			orbits_on_subspaces *&OoS,
 			int depth, int verbose_level);
 	void do_tensor_classify(
-			poset_classification::poset_classification_control *Control,
+			std::string &control_label,
 			apps_geometry::tensor_classify *&T,
 			int depth, int verbose_level);
 	void do_tensor_permutations(int verbose_level);
 	void do_linear_codes(
-			poset_classification::poset_classification_control *Control,
+			std::string &control_label,
 			int minimum_distance,
 			int target_size, int verbose_level);
 	void do_classify_ovoids(
-			poset_classification::poset_classification_control *Control,
 			apps_geometry::ovoid_classify_description *Ovoid_classify_description,
 			int verbose_level);
 	int subspace_orbits_test_set(
@@ -628,8 +631,10 @@ public:
 
 	int f_classes_based_on_normal_form;
 
+	// Magma:
 	int f_normalizer;
 
+	// Magma:
 	int f_centralizer_of_element;
 	std::string element_description_text;
 	std::string element_label;
@@ -644,7 +649,11 @@ public:
 	std::string orbits_on_group_elements_under_conjugation_fname;
 	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
 
+	// Magma:
 	int f_normalizer_of_cyclic_subgroup;
+
+	// Magma:
+	int f_classes;
 
 	int f_find_subgroup;
 	int find_subgroup_order;
@@ -652,17 +661,15 @@ public:
 	int f_report;
 
 		// flags that apply to report:
-		int f_sylow;
-		int f_group_table;
-		int f_classes;
+		int f_report_sylow;
+		int f_report_group_table;
+		int f_report_classes;
 
 
 	int f_export_group_table;
 
 	int f_test_if_geometric;
 	int test_if_geometric_depth;
-
-	int f_draw_tree;
 
 	int f_conjugacy_class_of;
 	std::string conjugacy_class_of_data;
@@ -706,37 +713,6 @@ public:
 
 
 
-	// orbits:
-
-
-	// options for poset classification:
-	int f_poset_classification_control;
-	poset_classification::poset_classification_control *Control;
-
-
-#if 0
-	// orbits on points using Schreier trees:
-	int f_orbits_on_points;
-
-		// additional options for computing orbits on points:
-		int f_export_trees;
-
-		int f_stabilizer;
-			// compute stabilizer of orbit 0,
-			// must be given with -orbits_on_points
-
-		int f_stabilizer_of_orbit_rep;
-		int stabilizer_of_orbit_rep_orbit_idx;
-#endif
-
-	// poset classification
-#if 0
-	int f_orbits_on_subsets;
-	int orbits_on_subsets_size;
-
-	int f_orbits_on_partition;
-	int orbits_on_partition_k;
-#endif
 
 
 
@@ -753,27 +729,12 @@ public:
 
 	// classification of optimal linear codes using poset classification
 	int f_linear_codes;
+	std::string linear_codes_control;
 	int linear_codes_minimum_distance;
 	int linear_codes_target_size;
 
 
 
-#if 0
-	// subspace orbits:
-	int f_orbits_on_subspaces;
-	int orbits_on_subspaces_depth;
-
-		// additional options for computing orbits on subspaces
-		int f_mindist;
-		int mindist;
-		int f_self_orthogonal;
-		int f_doubly_even;
-#endif
-
-#if 0
-	int f_tensor_classify;
-	int tensor_classify_depth;
-#endif
 
 	int f_tensor_permutations;
 
@@ -781,17 +742,6 @@ public:
 	apps_geometry::ovoid_classify_description *Ovoid_classify_description;
 
 	int f_classify_cubic_curves;
-
-#if 0
-	int f_orbits_on_polynomials;
-	int orbits_on_polynomials_degree;
-
-	int f_recognize_orbits_on_polynomials;
-	std::string recognize_orbits_on_polynomials_text;
-
-	int f_orbits_on_polynomials_draw_tree;
-	int orbits_on_polynomials_draw_tree_idx;
-#endif
 
 	int f_representation_on_polynomials;
 	int representation_on_polynomials_degree;
@@ -936,7 +886,7 @@ public:
 	orbit_cascade();
 	~orbit_cascade();
 	void init(int N, int k, any_group *G,
-			poset_classification::poset_classification_control *Control,
+			std::string &Control_label,
 			int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(std::vector<long int> &Ago, int verbose_level);
@@ -1071,11 +1021,13 @@ public:
 	int f_on_polynomials;
 	int on_polynomials_degree;
 
+#if 0
 	int f_draw_tree;
 	int draw_tree_idx;
 
 	int f_recognize;
 	std::string recognize_text;
+#endif
 
 	orbits_create_description();
 	~orbits_create_description();
@@ -1177,7 +1129,7 @@ public:
 	void init(
 			groups::linear_group *LG,
 			int degree_of_poly,
-			int f_recognize, std::string &recognize_text,
+			//int f_recognize, std::string &recognize_text,
 			int verbose_level);
 	void compute_points(int verbose_level);
 	void report(int verbose_level);

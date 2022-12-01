@@ -85,6 +85,7 @@ int action_on_forms_activity_description::read_arguments(
 		else {
 			cout << "action_on_forms_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 

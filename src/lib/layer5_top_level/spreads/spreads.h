@@ -44,16 +44,16 @@ public:
 
 
 	int f_data_is_allocated;
-	int *M;
-	int *M1;
-	int *AA;
-	int *AAv;
-	int *TT;
-	int *TTv;
-	int *B;
-	int *C;
-	int *N;
-	int *Elt;
+	int *M; // [(3 * k) * n]
+	int *M1; // [(3 * k) * n]
+	int *AA; // [n * n]
+	int *AAv; // [n * n]
+	int *TT; // [k * k]
+	int *TTv; // [k * k]
+	int *B; // [n * n]
+	int *C; // [n * n + 1]
+	int *N; // [(3 * k) * n]
+	int *Elt; // [A->elt_size_in_int]
 
 	// initialized in compute_starter():
 	long int starter_j1, starter_j2, starter_j3;
@@ -69,8 +69,6 @@ public:
 	~recoordinatize();
 	void init(
 			geometry::spread_domain *SD,
-			//int n, int k, field_theory::finite_field *F,
-			//geometry::grassmann *Grass,
 			actions::action *A, actions::action *A2,
 		int f_projective, int f_semilinear,
 		int (*check_function_incremental)(int len, long int *S,

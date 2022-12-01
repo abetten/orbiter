@@ -144,24 +144,32 @@ void surface_create::create_cubic_surface(
 	F->PG_element_normalize_from_front(SO->eqn, 1, 20);
 
 
-	SOA = NEW_OBJECT(surface_object_with_action);
+	if (f_has_group) {
+		SOA = NEW_OBJECT(surface_object_with_action);
 
-	if (f_v) {
-		cout << "surface_create::create_cubic_surface "
-				"before SOA->init_with_surface_object" << endl;
+		if (f_v) {
+			cout << "surface_create::create_cubic_surface "
+					"before SOA->init_with_surface_object" << endl;
+		}
+		SOA->init_with_surface_object(
+				Surf_A,
+				SO,
+				Sg,
+				f_has_nice_gens,
+				nice_gens,
+				verbose_level);
+		if (f_v) {
+			cout << "surface_create::create_cubic_surface "
+					"after SOA->init_with_surface_object" << endl;
+		}
 	}
-	SOA->init_with_surface_object(
-			Surf_A,
-			SO,
-			Sg,
-			f_has_nice_gens,
-			nice_gens,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_cubic_surface "
-				"after SOA->init_with_surface_object" << endl;
-	}
+	else {
+		if (f_v) {
+			cout << "surface_create::create_cubic_surface "
+					"automorphism group not known, skipping SOA" << endl;
+		}
 
+	}
 
 
 	if (f_v) {
@@ -599,7 +607,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		}
 		else {
 			cout << "surface_create::create_surface_from_description "
-					"The surface has no group computed" << endl;
+					"The automorphism group of the surface is not known." << endl;
 		}
 	}
 
@@ -3054,7 +3062,13 @@ void surface_create::do_report(int verbose_level)
 
 
 			//ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
+			if (f_v) {
+				cout << "surface_create::do_report before do_report2" << endl;
+			}
 			do_report2(ost, verbose_level);
+			if (f_v) {
+				cout << "surface_create::do_report after do_report2" << endl;
+			}
 
 
 			L.foot(ost);
@@ -3080,10 +3094,6 @@ void surface_create::do_report2(std::ostream &ost, int verbose_level)
 		cout << "surface_create::do_report2" << endl;
 	}
 
-	if (SO->SOP == NULL) {
-		cout << "surface_create::do_report2 SO->SOP == NULL" << endl;
-		exit(1);
-	}
 
 
 	char str[1000];
@@ -3119,48 +3129,53 @@ void surface_create::do_report2(std::ostream &ost, int verbose_level)
 				"after SC->SO->SOP->create_summary_file" << endl;
 	}
 
-#if 0
-	if (f_v) {
-		cout << "surface_create::do_report2 "
-				"before SC->SO->SOP->report_properties_simple" << endl;
-	}
-	SO->SOP->report_properties_simple(ost, verbose_level);
-	if (f_v) {
-		cout << "surface_create::do_report2 "
-				"after SC->SO->SOP->report_properties_simple" << endl;
-	}
-#endif
+
+
 
 	if (SOA == NULL) {
 		cout << "surface_create::do_report2 SOA == NULL" << endl;
-		exit(1);
-	}
+
+		if (f_v) {
+			cout << "surface_create::do_report2 "
+					"before SC->SO->SOP->report_properties_simple" << endl;
+		}
+		SO->SOP->report_properties_simple(ost, verbose_level);
+		if (f_v) {
+			cout << "surface_create::do_report2 "
+					"after SC->SO->SOP->report_properties_simple" << endl;
+		}
 
 
-	int f_print_orbits = FALSE;
-	std::string fname_mask;
-
-
-	graphics::layered_graph_draw_options *draw_options;
-
-	if (orbiter_kernel_system::Orbiter->f_draw_options) {
-		draw_options =
-				orbiter_kernel_system::Orbiter->draw_options;
 	}
 	else {
-		cout << "please use -draw_options" << endl;
-		exit(1);
+
+		int f_print_orbits = FALSE;
+		std::string fname_mask;
+
+
+		graphics::layered_graph_draw_options *draw_options;
+
+		if (orbiter_kernel_system::Orbiter->f_draw_options) {
+			draw_options =
+					orbiter_kernel_system::Orbiter->draw_options;
+		}
+		else {
+			cout << "please use -draw_options" << endl;
+			exit(1);
+		}
+
+
+		fname_mask.assign("surface_");
+		fname_mask.append(label_txt);
+
+		SOA->cheat_sheet(ost,
+				label_txt,
+				label_tex,
+				f_print_orbits, fname_mask,
+				draw_options,
+				verbose_level);
+
 	}
-
-
-
-	SOA->cheat_sheet(ost,
-			label_txt,
-			label_tex,
-			f_print_orbits, fname_mask,
-			draw_options,
-			verbose_level);
-
 
 
 	if (f_v) {
@@ -3171,8 +3186,7 @@ void surface_create::do_report2(std::ostream &ost, int verbose_level)
 
 
 void surface_create::report_with_group(
-		int f_has_control_six_arcs,
-		poset_classification::poset_classification_control *Control_six_arcs,
+		std::string &Control_six_arcs_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3209,13 +3223,8 @@ void surface_create::report_with_group(
 	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
 	Six_arc_descr->f_target_size = TRUE;
 	Six_arc_descr->target_size = 6;
-
-	if (f_has_control_six_arcs) {
-		Six_arc_descr->Control = Control_six_arcs;
-	}
-	else {
-		Six_arc_descr->Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	}
+	Six_arc_descr->f_control = TRUE;
+	Six_arc_descr->control_label.assign(Control_six_arcs_label);
 
 
 

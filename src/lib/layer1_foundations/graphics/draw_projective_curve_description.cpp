@@ -110,6 +110,7 @@ int draw_projective_curve_description::read_arguments(
 		else {
 			cout << "draw_projective_curve_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {

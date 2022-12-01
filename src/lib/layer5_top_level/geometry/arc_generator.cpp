@@ -43,6 +43,7 @@ arc_generator::arc_generator()
 {
 	Descr = NULL;
 	PA = NULL;
+	Control = NULL;
 
 	nb_points_total = 0;
 	nb_affine_lines = 0;
@@ -181,10 +182,20 @@ void arc_generator::init(
 
 	line_type = NEW_int(PA->P->N_lines);
 
-	if (f_v) {
-		cout << "arc_generator::init before prepare_generator Control=" << endl;
-		Descr->Control->print();
+
+	if (!Descr->f_control) {
+		cout << "arc_generator::init please use -control <label>" << endl;
+		exit(1);
 	}
+
+
+	Control = Get_object_of_type_poset_classification_control(Descr->control_label);
+
+	if (f_v) {
+		cout << "arc_generator::init Control=" << endl;
+		Control->print();
+	}
+
 	if (f_v) {
 		cout << "arc_generator::init before prepare_generator" << endl;
 	}
@@ -236,7 +247,7 @@ void arc_generator::prepare_generator(int verbose_level)
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	
-	gen->initialize_and_allocate_root_node(Descr->Control, Poset,
+	gen->initialize_and_allocate_root_node(Control, Poset,
 		Descr->target_size,
 		verbose_level - 1);
 
@@ -622,7 +633,7 @@ void arc_generator::lifting_prepare_function_new(
 				"needs d == 2" << endl;
 		exit(1);
 	}
-	starter_size = Descr->Control->depth;
+	starter_size = Control->depth;
 	if (f_v) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"starter_size=" << starter_size << endl;

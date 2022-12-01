@@ -75,7 +75,7 @@ surface_classify_using_arc::~surface_classify_using_arc()
 
 
 void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs(
-		poset_classification::poset_classification_control *Control_six_arcs,
+		std::string &Control_six_arcs_label,
 		cubic_surfaces_in_general::surface_with_action *Surf_A,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
@@ -104,7 +104,8 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	Descr->d = 2;
 	Descr->f_target_size = TRUE;
 	Descr->target_size = 6;
-	Descr->Control = Control_six_arcs;
+	Descr->f_control = TRUE;
+	Descr->control_label.assign(Control_six_arcs_label);
 
 
 

@@ -164,6 +164,7 @@ int orbits_activity_description::read_arguments(
 		else {
 			cout << "orbits_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 
 

@@ -92,15 +92,18 @@ int main(int argc, const char** argv) {
     // (a+b)(c-d) = a*b - a*d + b*c - b*d
 
     //
+    LOG("");
     managed_variables_index_table managed_variables_table;
     for (int i=0; i<9; ++i)
         managed_variables_table.insert("X"+std::to_string(i));
     cout << "managed_variables_table:\n" << managed_variables_table << endl;
 
 
+    LOG("");
     shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(exp, managed_variables_table);
 
 
+    LOG("");
     get_latex_staged_visitor_functor
         get_latex_staged_visitor("visitor_result/",
                                  ir_tree_latex_visitor_strategy::type::SIMPLE_TREE);
@@ -117,19 +120,25 @@ int main(int argc, const char** argv) {
 //    ir_tree_root->accept(get_latex_staged_visitor());
 
 
+    LOG("");
     // remove minus nodes
     remove_minus_nodes(ir_tree_root);
     ir_tree_root->accept(get_latex_staged_visitor());
 
-    // merge redundant nodes
+    LOG("");
+   // merge redundant nodes
     merge_redundant_nodes(ir_tree_root);
     ir_tree_root->accept(get_latex_staged_visitor());
 
-    // distribute and reduce unary minus nodes
+    LOG("");
+   // distribute and reduce unary minus nodes
      uminus_distribute_and_reduce_visitor distribute_uminus_visitor;
+     LOG("");
      ir_tree_root->accept(&distribute_uminus_visitor);
+     LOG("");
      ir_tree_root->accept(get_latex_staged_visitor());
 
+     LOG("");
      // merge redundant nodes
      merge_redundant_nodes(ir_tree_root);
      ir_tree_root->accept(get_latex_staged_visitor());
@@ -144,31 +153,35 @@ int main(int argc, const char** argv) {
 //    shared_ptr<irtree_node> ir_tree_root_cpy = ir_tree_root->accept(&deepCopyVisitor);
 //    ir_tree_root_cpy->accept(get_latex_staged_visitor());
 
-    //
+     LOG("");
+   //
     exponent_vector_visitor evv;
     ir_tree_root->accept(evv(managed_variables_table));
     eval_visitor evalVisitor;
     orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-    orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+   orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+
     std::string *Argv;
     data_structures::string_tools ST;
-    ST.convert_arguments(argc, argv, Argv);
+    LOG("");
+   ST.convert_arguments(argc, argv, Argv);
     // argc has changed!
     cout << "after ST.convert_arguments, argc=" << argc << endl;
     cout << "before Top_level_session.startup_and_read_arguments" << endl;
     static_cast<void>(Top_level_session.startup_and_read_arguments(argc, Argv, 1));
     orbiter::layer1_foundations::field_theory::finite_field_description Descr;
+    LOG("");
     orbiter::layer1_foundations::field_theory::finite_field Fq;
     Descr.f_q = TRUE;
     Descr.q = 2;
     Fq.init(&Descr, 1);
+    LOG("");
     unordered_map<string, int> assignemnt = {
             {"a", 4},
             {"b", 2},
             {"c", 2},
             {"d", 4}
     };
-    LOG("");
     for (auto& it : evv.monomial_coefficient_table_) {
         const vector<unsigned int>& vec = it.first;
         vector<irtree_node*> root_nodes = it.second;
@@ -178,7 +191,8 @@ int main(int argc, const char** argv) {
         for (const auto& itit : vec) std::cout << itit << " ";
         std::cout << "]" << std::endl;
     }
-    ir_tree_root->accept(get_latex_staged_visitor());
+   LOG("");
+   ir_tree_root->accept(get_latex_staged_visitor());
 
     // print string representation of the IR tree
     ir_tree_to_string_visitor to_string_visitor;

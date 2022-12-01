@@ -159,6 +159,7 @@ int tdo_refinement_description::read_arguments(int argc, std::string *argv, int 
 		else {
 			cout << "tdo_refinement_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	cout << "tdo_refinement_description::read_arguments done" << endl;

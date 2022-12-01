@@ -22,13 +22,14 @@ namespace apps_coding_theory {
 coding_theoretic_activity_description::coding_theoretic_activity_description()
 {
 
-
+#if 0
 	f_BCH = FALSE;
 	f_BCH_dual = FALSE;
 	BCH_n = 0;
 	BCH_q = 0;
 	BCH_t = 0;
 	//BCH_b = 0;
+#endif
 
 	f_general_code_binary = FALSE;
 	general_code_binary_n = 0;
@@ -73,6 +74,7 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_nth_roots = FALSE;
 	nth_roots_n = 0;
 
+#if 0
 	f_make_BCH_code = FALSE;
 	make_BCH_code_n = 0;
 	make_BCH_code_d = 0;
@@ -82,10 +84,14 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	make_BCH_code_and_encode_d = 0;
 	//std::string make_BCH_code_and_encode_text;
 	//std::string make_BCH_code_and_encode_fname;
+#endif
 
 	f_NTT = FALSE;
 	NTT_n = 0;
 	NTT_q = 0;
+
+	f_fixed_code = FALSE;
+	//std::string fixed_code_perm;
 
 	f_export_magma = FALSE;
 	//std::string export_magma_fname;
@@ -102,6 +108,7 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_export_checkma = FALSE;
 	//std::string export_checkma_fname;
 
+
 	f_crc32 = FALSE;
 	//std::string crc32_text;
 
@@ -111,13 +118,13 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_crc32_test = FALSE;
 	crc32_test_block_length = 0;
 
-	f_crc32_remainders = FALSE;
-	crc32_remainders_message_length = 0;
-
 	f_crc256_test = FALSE;
 	crc256_test_message_length = 0;
 	crc256_test_R = 0;
 	crc256_test_k = 0;
+
+	f_crc32_remainders = FALSE;
+	crc32_remainders_message_length = 0;
 
 	f_crc_encode_file_based = FALSE;
 	//std::string crc_encode_file_based_fname_in;
@@ -149,9 +156,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	polynomial_division_from_file_all_k_bit_error_patterns_r1 = 0;
 	polynomial_division_from_file_all_k_bit_error_patterns_k = 0;
 
-	f_fixed_code = FALSE;
-	//std::string fixed_code_perm;
-
 }
 
 coding_theoretic_activity_description::~coding_theoretic_activity_description()
@@ -172,6 +176,8 @@ int coding_theoretic_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
+
+#if 0
 		if (ST.stringcmp(argv[i], "-BCH") == 0) {
 			f_BCH = TRUE;
 			BCH_n = ST.strtoi(argv[++i]);
@@ -192,7 +198,9 @@ int coding_theoretic_activity_description::read_arguments(
 				cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
+#endif
+
+		if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
 			f_general_code_binary = TRUE;
 			general_code_binary_n = ST.strtoi(argv[++i]);
 			general_code_binary_text.assign(argv[++i]);
@@ -357,6 +365,7 @@ int coding_theoretic_activity_description::read_arguments(
 				cout << "-nth_roots " << nth_roots_n << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-make_BCH_code") == 0) {
 			f_make_BCH_code = TRUE;
 			make_BCH_code_n = ST.strtoi(argv[++i]);
@@ -383,6 +392,7 @@ int coding_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-NTT") == 0) {
 			f_NTT = TRUE;
 			NTT_n = ST.strtoi(argv[++i]);
@@ -393,6 +403,16 @@ int coding_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-fixed_code") == 0) {
+			f_fixed_code = TRUE;
+			fixed_code_perm.assign(argv[++i]);
+			if (f_v) {
+				cout << "-fixed_code "
+					<< " " << fixed_code_perm
+					<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			export_magma_fname.assign(argv[++i]);
@@ -554,15 +574,6 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-fixed_code") == 0) {
-			f_fixed_code = TRUE;
-			fixed_code_perm.assign(argv[++i]);
-			if (f_v) {
-				cout << "-fixed_code "
-					<< " " << fixed_code_perm
-					<< endl;
-			}
-		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -585,12 +596,14 @@ int coding_theoretic_activity_description::read_arguments(
 
 void coding_theoretic_activity_description::print()
 {
+#if 0
 	if (f_BCH) {
 		cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
 	}
 	if (f_BCH_dual) {
 		cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
 	}
+#endif
 	if (f_general_code_binary) {
 		cout << "-general_code_binary " << general_code_binary_n << " "
 				<< general_code_binary_text << endl;
@@ -644,6 +657,7 @@ void coding_theoretic_activity_description::print()
 	if (f_nth_roots) {
 		cout << "-nth_roots " << nth_roots_n << endl;
 	}
+#if 0
 	if (f_make_BCH_code) {
 			cout << "-make_BCH_code "
 					<< " " << make_BCH_code_n
@@ -658,9 +672,15 @@ void coding_theoretic_activity_description::print()
 					<< " " << make_BCH_code_and_encode_fname
 					<< endl;
 	}
+#endif
 	if (f_NTT) {
 		cout << "-NTT " << NTT_n
 				<< " " << NTT_q
+				<< endl;
+	}
+	if (f_fixed_code) {
+		cout << "-fixed_code "
+				<< " " << fixed_code_perm
 				<< endl;
 	}
 	if (f_export_magma) {
@@ -743,11 +763,6 @@ void coding_theoretic_activity_description::print()
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_fname
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_r1
 				<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
-				<< endl;
-	}
-	if (f_fixed_code) {
-		cout << "-fixed_code "
-				<< " " << fixed_code_perm
 				<< endl;
 	}
 

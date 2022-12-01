@@ -203,11 +203,25 @@ void gen_geo::main2(int verbose_level)
 	it = inc->iso_type_at_line[V - 1];
 
 	if (GB->Descr->f_output_to_inc_file) {
+
+		if (f_v) {
+			cout << "gen_geo::main2 f_output_to_inc_file" << endl;
+		}
+
 		string fname;
 
 		fname.assign(inc_file_name);
 		fname.append(".inc");
+
+		if (f_v) {
+			cout << "gen_geo::main2 before it->write_inc_file" << endl;
+		}
+
 		it->write_inc_file(fname, verbose_level);
+
+		if (f_v) {
+			cout << "gen_geo::main2 after it->write_inc_file" << endl;
+		}
 
 		orbiter_kernel_system::file_io Fio;
 

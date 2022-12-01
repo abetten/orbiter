@@ -179,6 +179,11 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 			cout << "-end" << endl;
 			break;
 		}
+		else {
+			cout << "quartic_curve_create_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	cout << "quartic_curve_create_description::read_arguments done" << endl;
 	return i + 1;

@@ -119,6 +119,7 @@ int graph_classification_activity_description::read_arguments(
 		else {
 			cout << "graph_classification_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 
 	} // next i

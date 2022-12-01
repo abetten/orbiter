@@ -93,7 +93,7 @@ void orbit_of_sets::init(actions::action *A, actions::action *A2,
 void orbit_of_sets::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	int i, cur, j;
 	long int *cur_set;
 	long int *new_set;

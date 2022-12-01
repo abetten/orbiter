@@ -129,7 +129,7 @@ void recoordinatize::init(
 	TT = NEW_int(k * k);
 	TTv = NEW_int(k * k);
 	B = NEW_int(n * n);
-	C = NEW_int(n * n);
+	C = NEW_int(n * n + 1);
 	N = NEW_int((3 * k) * n);
 	Elt = NEW_int(A->elt_size_in_int);
 	f_data_is_allocated = TRUE;
@@ -144,7 +144,7 @@ void recoordinatize::do_recoordinatize(
 		long int i1, long int i2, long int i3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 3);
+	int f_vv = (verbose_level >= 2);
 	int i, j;
 	long int j1, j2, j3;
 
@@ -238,6 +238,10 @@ void recoordinatize::do_recoordinatize(
 		cout << "j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
 	}
 	
+	// put a zero, just in case we are in a semilinear group:
+
+	C[n * n] = 0;
+
 	A->make_element(Elt, C, 0);
 	if (f_vv) {
 		cout << "recoordinatize::do_recoordinatize "

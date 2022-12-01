@@ -124,6 +124,11 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 			cout << "-end" << endl;
 			break;
 		}
+		else {
+			cout << "spread_create_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	cout << "spread_create_description::read_arguments done" << endl;
 	return i + 1;

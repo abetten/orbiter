@@ -89,9 +89,14 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 			cout << "-end" << endl;
 			break;
 		}
+		else {
+			cout << "blt_set_classify_activity_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	if (f_v) {
-		cout << "blt_set_classify_description::read_arguments done" << endl;
+		cout << "blt_set_classify_activity_description::read_arguments done" << endl;
 	}
 	return i + 1;
 }

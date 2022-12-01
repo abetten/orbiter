@@ -211,6 +211,7 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 		else {
 			cout << "isomorph_arguments::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	cout << "isomorph_arguments::read_arguments done" << endl;

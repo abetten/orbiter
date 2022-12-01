@@ -51,7 +51,7 @@ orbit_cascade::~orbit_cascade()
 }
 
 void orbit_cascade::init(int N, int k, any_group *G,
-		poset_classification::poset_classification_control *Control,
+		std::string &Control_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -70,7 +70,7 @@ void orbit_cascade::init(int N, int k, any_group *G,
 
 	orbit_cascade::G = G;
 
-	orbit_cascade::Control = Control;
+	Control = Get_object_of_type_poset_classification_control(Control_label);
 
 
 	Primary_poset = NEW_OBJECT(poset_classification::poset_with_group_action);

@@ -365,7 +365,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet before tokenize" << endl;
 	}
-	tokenize(fname, tokens, nb_tokens, verbose_level - 1);
+	tokenize(fname, tokens, nb_tokens, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet after tokenize" << endl;
 	}

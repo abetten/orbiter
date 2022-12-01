@@ -28,8 +28,10 @@ class arc_generator_description {
 
 public:
 
-	int f_poset_classification_control;
-	poset_classification::poset_classification_control *Control;
+	int f_control;
+	std::string control_label;
+	//int f_poset_classification_control;
+	//poset_classification::poset_classification_control *Control;
 
 	int f_d;
 	int d;
@@ -79,6 +81,7 @@ public:
 
 	arc_generator_description *Descr;
 	projective_geometry::projective_space_with_action *PA;
+	poset_classification::poset_classification_control *Control;
 
 	int nb_points_total;
 	int nb_affine_lines;
@@ -591,8 +594,9 @@ class ovoid_classify_description {
 
 public:
 
-
-	poset_classification::poset_classification_control *Control;
+	int f_control;
+	std::string control_label;
+	//poset_classification::poset_classification_control *Control;
 
 	int f_epsilon;
 	int epsilon; // the type of the quadric (0, 1 or -1)
@@ -621,6 +625,7 @@ class ovoid_classify {
 public:
 
 	ovoid_classify_description *Descr;
+	poset_classification::poset_classification_control *Control;
 	groups::linear_group *LG;
 
 	int m; // Witt index
