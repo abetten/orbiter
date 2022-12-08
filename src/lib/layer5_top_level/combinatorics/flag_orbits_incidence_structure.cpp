@@ -75,8 +75,9 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 	nb_rows = Enc->nb_rows;
 	nb_cols = Enc->nb_cols;
 
-	if (Enc->nb_flags > 1000) {
+	if (Enc->nb_flags > 10000) {
 		cout << "flag_orbits_incidence_structure::init too many flags" << endl;
+		cout << "Enc->nb_flags = " << Enc->nb_flags << endl;
 		return;
 	}
 

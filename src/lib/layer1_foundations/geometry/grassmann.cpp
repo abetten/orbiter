@@ -2157,7 +2157,7 @@ void grassmann::plane_intersection_type_of_klein_image(
 	the_set_out = NEW_lint(size);
 
 	if (f_v) {
-		P3->print_line_set_numerical(data, size);
+		P3->Reporting->print_line_set_numerical(data, size);
 	}
 	klein_correspondence(P3,
 		data, size, the_set_out,
@@ -2170,7 +2170,7 @@ void grassmann::plane_intersection_type_of_klein_image(
 
 #if 1
 	if (f_v) {
-		P5->print_set_numerical(cout, the_set_out, size);
+		P5->Reporting->print_set_numerical(cout, the_set_out, size);
 	}
 #endif
 

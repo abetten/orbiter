@@ -58,7 +58,7 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 
 			ost << "The base action is on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
 
-			P->report_summary(ost);
+			P->Reporting->report_summary(ost);
 
 
 
@@ -187,7 +187,7 @@ void action::report_what_we_act_on(ostream &ost,
 
 			ost << "\\section*{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
 
-			P->report(ost, O, verbose_level);
+			P->Reporting->report(ost, O, verbose_level);
 
 
 

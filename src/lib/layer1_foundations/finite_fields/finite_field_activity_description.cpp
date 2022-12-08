@@ -23,6 +23,8 @@ finite_field_activity_description::finite_field_activity_description()
 
 	f_cheat_sheet_GF = FALSE;
 
+	f_export_tables = FALSE;
+
 	f_polynomial_division = FALSE;
 	//polynomial_division_A;
 	//polynomial_division_B;
@@ -241,6 +243,12 @@ int finite_field_activity_description::read_arguments(
 			f_cheat_sheet_GF = TRUE;
 			if (f_v) {
 				cout << "-cheat_sheet_GF " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_tables") == 0) {
+			f_export_tables = TRUE;
+			if (f_v) {
+				cout << "-export_tables " << endl;
 			}
 		}
 
@@ -635,7 +643,7 @@ int finite_field_activity_description::read_arguments(
 			RREF_random_matrix_m = ST.strtolint(argv[++i]);
 			RREF_random_matrix_n = ST.strtolint(argv[++i]);
 			if (f_v) {
-				cout << "-RREF_demo "
+				cout << "-RREF_random_matrix "
 					<< " " << RREF_random_matrix_m
 					<< " " << RREF_random_matrix_n
 					<< endl;
@@ -798,6 +806,9 @@ void finite_field_activity_description::print()
 {
 	if (f_cheat_sheet_GF) {
 		cout << "-cheat_sheet_GF " << endl;
+	}
+	if (f_export_tables) {
+		cout << "-export_tables " << endl;
 	}
 	if (f_polynomial_division) {
 		cout << "-polynomial_division " << polynomial_division_A << " "
@@ -994,7 +1005,7 @@ void finite_field_activity_description::print()
 
 
 	if (f_RREF_random_matrix) {
-		cout << "-RREF_demo "
+		cout << "-RREF_random_matrix "
 				<< " " << RREF_random_matrix_m
 				<< " " << RREF_random_matrix_n
 				<< endl;

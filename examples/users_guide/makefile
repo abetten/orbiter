@@ -52,11 +52,22 @@ sandbox:
 test:
 	make test_2_4
 	make test_2_5
+	make test_3_1
+	make test_3_2
+	make test_3_3
+	make test_3_4
+	make test_3_5
+	make test_3_6
+	make test_4_1
 	make test_4_2
 	make test_4_3
+	make test_4_4
 	make test_4_5
+	make test_4_6
 	make test_4_7
 	make test_4_8
+	make test_4_9
+	make test_4_10
 	make test_5_1
 	make test_5_2
 	make test_5_3
@@ -121,10 +132,6 @@ test:
 
 
 test_problem:
-	make test_4_4
-	make test_4_6
-	make test_4_9
-	make test_4_10
 
 
 
@@ -1443,6 +1450,36 @@ formula_evaluate:
 
 SECTION_BASIC_NUMBER_THEORY:
 
+test_3_1:
+	make PR29
+	make PR31
+	make PR37
+	make PR_100
+	make PR_915839
+	make PR_915839_check
+	make DL_915839
+	make IM_723
+	make IM_3_19
+	make IM
+	make IM_gcd
+	make PM3a
+	make sqrt_mod
+	make sqrt_5_mod_11
+	make sqrt_5_mod_19
+	make sqrt_mod_20_31
+	make order_of_2_mod_n
+	make Eulerfunction_150
+	make Eulerfunction_900
+	make Eulerfunction_10000
+	make PR_1000
+	make PE_number_1000
+	make number_of_primitive_roots_10000
+	make power_function_2_mod_11
+	make draw_mod_13
+	make Chinese_remainders_A
+	make Chinese_remainders_B
+	make Chinese_remainders_C2
+	make Chinese_remainders_C3
 
 
 
@@ -1633,7 +1670,21 @@ Chinese_remainders_C3:
 # Section 3.2: Prime Fields
 
 SECTION_PRIME_FIELDS:
-	
+
+
+test_3_2:
+	make F_2
+	make F_3
+	make F_5
+	make F_5_add_table
+	make F_7
+	make F_127
+	make F_11_product_of_all_nonzero_elements
+	make F_7_vandermonde
+	make F_101_wo
+	make F_1021_wo
+
+
 
 F_2:
 	$(ORBITER) -v 3 -list_arguments \
@@ -1661,8 +1712,8 @@ F_5:
 F_5_add_table:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 5 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end \
-		-draw_matrix -input_csv_file GF_q5_addition_table.csv \
+		-with F -do -finite_field_activity -export_tables -end \
+		-draw_matrix -input_csv_file GF_q5_table_add.csv \
 			-box_width 40 -bit_depth 24 -partition 3 5 5 -end \
 
 
@@ -1718,6 +1769,11 @@ F_1021_wo:
 SECTION_EXTENSION_FIELDS:
 	
 
+test_3_3:
+	make F_4
+	make F_4_tables
+	make F_16
+	make F_16_tables
 
 
 F_4:
@@ -1731,14 +1787,40 @@ F_4:
 F_4_tables:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end \
-		-draw_matrix -input_csv_file GF_q4_addition_table.csv \
+		-with F -do -finite_field_activity -export_tables -end \
+		-draw_matrix -input_csv_file GF_q4_table_add.csv \
 			-box_width 40 -bit_depth 24 -partition 3 4 4 -end \
-		-draw_matrix -input_csv_file GF_q4_multiplication_table.csv \
+		-draw_matrix -input_csv_file GF_q4_table_mul.csv \
 			-box_width 40 -bit_depth 24 -partition 3 3 3 -end
 	#pdflatex GF_4.tex
 	#open GF_4.pdf
 
+F_8:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 8 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_8.tex
+	open GF_8.pdf
+
+
+F_8_tables:
+	$(ORBITER) -v 3 \
+		-define all_one -vector -repeat 1 8 -end \
+		-define F -finite_field -q 8 -end \
+		-with F -do -finite_field_activity -export_tables -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end \
+		-draw_matrix -input_csv_file GF_q8_table_add.csv \
+			-box_width 40 -bit_depth 24 -partition 3 all_one all_one -end \
+		-draw_matrix -input_csv_file GF_q8_table_mul.csv \
+			-box_width 40 -bit_depth 24 -partition 3 all_one all_one -end
+
+
+F_8b:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_8.tex
+	open GF_8.pdf
 
 
 F_16:
@@ -1752,18 +1834,19 @@ F_16:
 F_16_tables:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end
+		-with F -do -finite_field_activity -cheat_sheet_GF -end \
+		-with F -do -finite_field_activity -export_tables -end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file GF_q16_addition_table.csv \
+		-input_csv_file GF_q16_table_add.csv \
 		-box_width 40 -bit_depth 24 -partition 3 16 16 -end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file GF_q16_multiplication_table.csv \
+		-input_csv_file GF_q16_table_mul.csv \
 		-box_width 40 -bit_depth 24 -partition 3 15 15 -end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file GF_q16_addition_table_reordered.csv \
+		-input_csv_file GF_q16_table_add_r.csv \
 		-box_width 40 -bit_depth 24 -partition 3 16 16 -end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file GF_q16_multiplication_table_reordered.csv \
+		-input_csv_file GF_q16_table_mul_r.csv \
 		-box_width 40 -bit_depth 24 -partition 3 15 15 -end
 
 
@@ -1778,6 +1861,16 @@ F_16_tables:
 
 
 SECTION_LINEAR_ALGEBRA:
+
+
+test_3_4:
+	make RREF
+	make RREF_V7
+	make nullspace
+	make eigenstuff
+	make classes_GL_3_2
+	make classes_GL_4_2
+	make RREF_RS_6_4_7
 
 
 RREF:
@@ -1837,55 +1930,6 @@ classes_GL_4_2:
 	pdflatex Class_reps_GL_4_2.tex
 	open Class_reps_GL_4_2.pdf
 
-
-
-
-# 252 classes
-
-
-
-RREF_demo_4_4_q5:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 5 -end \
-		-with F -do \
-		-finite_field_activity -RREF_demo 4 4 -end
-	pdflatex RREF_example_q5_4_4.tex
-	#open RREF_example_q5_4_4.pdf
-	gs -sDEVICE=png16 -dFIXEDMEDIA \
-		-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q5_4_4_page%02d.png \
-		RREF_example_q5_4_4.pdf
-
-#-dDEVICEWIDTHPOINTS=100 -dDEVICEHEIGHTPOINTS=100 
-#-sPAPERSIZE=hagaki
-
-RREF_demo_4_6_q7:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 7 -end \
-		-with F -do \
-		-finite_field_activity -RREF_random_matrix 4 6 -end
-	pdflatex RREF_example_q7_4_6.tex
-	gs -sDEVICE=png16 -dFIXEDMEDIA \
-		-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q7_4_6_page%02d.png \
-		RREF_example_q7_4_6.pdf
-	open RREF_example_q7_4_6.pdf
-
-
-RREF_demo_4_8_q8:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 8 -end \
-		-with F -do \
-		-finite_field_activity -RREF_random_matrix 4 8 -end
-	pdflatex RREF_example_q8_4_8.tex
-	#open RREF_example_q8_4_8.pdf
-	gs -sDEVICE=png16 -dFIXEDMEDIA \
-		-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q8_4_8_page%02d.png \
-		RREF_example_q8_4_8.pdf
-
-
-
 RREF_RS_6_4_7:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 7 -end \
@@ -1894,13 +1938,6 @@ RREF_RS_6_4_7:
 		-end \
 		-with F -do \
 		-finite_field_activity -RREF v -end
-	pdflatex RREF_example_q7_4_6.tex
-	open RREF_example_q7_4_6.pdf
-	gs -sDEVICE=png16 -dFIXEDMEDIA \
-		-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q7_4_6_page%02d.png \
-		RREF_example_q7_4_6.pdf
-
 
 
 ###############################################################################
@@ -1910,6 +1947,19 @@ RREF_RS_6_4_7:
 
 SECTION_ADVANCED_TOPICS_IN_FINITE_FIELDS:
 
+
+test_3_5:
+	make normal_basis_2_3
+	make normal_basis_2_6
+	make F8_over_F2_field_reduction
+	make F_64_over_F8_field_reduction
+	make F_64_over_F4_field_reduction
+	make F_64_over_F2_field_reduction
+	make F_8_Nth_roots_21
+	make F_8_vandermonde
+	make F_1024_vandermonde
+	make NTT_k4_q17.cpp
+	make F_17_NTT_compile
 
 
 
@@ -2054,6 +2104,10 @@ F_17_NTT_compile: NTT_k4_q17.cpp
 SECTION_BASIC_RING_THEORY:
 
 
+test_3_6:
+	make Polynomial_ring
+
+
 
 Polynomial_ring:
 	$(ORBITER) -v 3 \
@@ -2076,6 +2130,23 @@ Polynomial_ring:
 # Section 4.1: Finite Projective Spaces
 
 SECTION_FINITE_PROJECTIVE_SPACES:
+
+
+test_4_1:
+	make PG_3_2_easy
+	make PG_1_16
+	make PG_2_4
+	make PG_2_13
+	make PG_2_64
+	make PG_3_2
+	make PG_3_4
+	make PG_3_5
+	make PG_3_7
+	make PG_3_8
+	make PG_3_16
+	make PG_3_25
+	make PG_4_3
+	make PG_8_2
 
 
 PG_3_2_easy:
@@ -2452,13 +2523,16 @@ test_4_4:
 
 
 
-# ToDo
+
 
 GR_3_2_2:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_Gr 3 2 -end
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-report_Grassmannian 2 \
+		-end
 	pdflatex Gr_3_2_2.tex 
 	open Gr_3_2_2.pdf
 
@@ -2594,13 +2668,15 @@ SECTION_KLEIN_QUADRIC_AND_PLUECKER_COORDINATES:
 test_4_6:
 	make GR_4_2_2
 
-# ToDo
 
 GR_4_2_2:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_Gr 4 2 -end
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-report_Grassmannian 2 \
+		-end
 	pdflatex Gr_4_2_2.tex 
 	open Gr_4_2_2.pdf
 
@@ -3010,6 +3086,8 @@ del_Pezzo_F13a_points.txt:
 # takes long time to initialize the polarity in the projective space object
 
 #projective_space::projective_space_init N_points=4855540
+
+# slow!
 
 del_Pezzo_169:
 	$(ORBITER) -v 3 \
@@ -4219,8 +4297,9 @@ PGL_2_3:
 			-report \
 			-report_group_table \
 		-end
-	#pdflatex PGL_2_3_group_table_order_24.tex
 	pdflatex PGL_2_3_report.tex
+	open PGL_2_3_report.pdf
+	#pdflatex PGL_2_3_group_table_order_24.tex
 	#open PGL_2_3_group_table_order_24.pdf
 	#open PGL_2_3_report.pdf
 
@@ -4861,7 +4940,6 @@ PGL_10_2_classes:
 		-end
 
 
-# ToDo:
 
 PGGL_2_4_cent_2A:
 	$(ORBITER) -v 3 \
@@ -4999,7 +5077,6 @@ GL_3_5_singer_power:
 	open GL_3_5_power.pdf
 
 
-# ToDo:
 
 PGL_4_5_norm_31:
 	$(ORBITER) -v 6 -define G \
@@ -5013,7 +5090,6 @@ PGL_4_5_norm_31:
 	open normalizer_of_31_in_PGL_4_5.pdf
 
 
-# ToDo
 
 Normalizer_of_Z22_in_PGL_2_9:
 	$(ORBITER) -v 2 \
@@ -9641,7 +9717,8 @@ EC_bsgs:
 		-with F -do \
 		-finite_field_activity \
 		-EC_bsgs 5 7 "147,164" 212 \
-		"172,158,45,195,50,22,10,103,55,33,50,22,145,105,31,74,73,155,67,60,25,6" \
+		"172,158,45,195,50,22,10,103,55,33,50,22,\
+		145,105,31,74,73,155,67,60,25,6" \
 		-end
 
 EC_bsgs_decode:
@@ -9650,7 +9727,8 @@ EC_bsgs_decode:
 		-with F -do \
 		-finite_field_activity \
 		-EC_bsgs_decode 5 7 "129,176" 212 \
-		"127,188,51,141,85,29,106,90,41,105,179,71,171,2,16,197,183,72,27,129,37,10" \
+		"127,188,51,141,85,29,106,90,41,105,179,71,\
+		171,2,16,197,183,72,27,129,37,10" \
 		"50,179,169,13,153,169,115,116,188,110,176" \
 		-end
 
@@ -13882,12 +13960,11 @@ AG_2_3.inc:
 
 
 
-# ToDo
 
 LS_AG_2_3_design_table_create:
 	$(ORBITER) -v 5 \
 		-define B -vector -dense $(AG_2_3_BLOCKS) -end \
-		-define D -design -list_of_blocks 9 3 B -end \
+		-define D -design -list_of_blocks_coded 9 3 B -end \
 		-define Sym9 -permutation_group -symmetric_group 9 -end \
 		-define T -design_table D "AG_2_3" Sym9 -end
 
@@ -14372,11 +14449,10 @@ classify_spreads_4:
 			-compute_starter \
 				-problem_label spreads_2_2 \
 				-W -depth 5 \
-				-report -end \
 			-end \
 		-end
-	pdflatex spreads_2_2_poset_lvl_5.tex
-	open spreads_2_2_poset_lvl_5.pdf
+	#pdflatex spreads_2_2_poset_lvl_5.tex
+	#open spreads_2_2_poset_lvl_5.pdf
 
 
 classify_spreads_16_4:
@@ -16788,7 +16864,6 @@ test_15_2:
 	make Suzuki_8
 
 
-# ToDo:
 
 EC_canon: elliptic_curve_b1_c3_q11.txt
 	$(ORBITER) -v 3 \
@@ -17484,7 +17559,7 @@ AG_2_3_c: AG_2_3.inc
 geo_LSQ6_c:
 	$(ORBITER) -v 10 \
 		-draw_incidence_structure_description \
-			-width 60 -with_10 6 -end \
+			-width 60 -width_10 6 -end \
 		-define C -combinatorial_objects \
 			-file_of_incidence_geometries \
 				LSQ6.inc 18 39 126 \
@@ -18280,10 +18355,6 @@ F_17_edge:
 
 
 
-# ToDo drawing of flag orbits
-
-
-
 Edge_curve_17_nauty: 
 	$(ORBITER) -v 3 \
 		-define C -combinatorial_objects \
@@ -18311,12 +18382,12 @@ Edge_curve_17_nauty:
 		-end
 	pdflatex Edge_curve_q17_classification.tex
 	open Edge_curve_q17_classification.pdf
-	#$(ORBITER) -v 2 -draw_matrix \
-	#	-input_csv_file Edge_curve_q17_object0_TDA_flag_orbits.csv \
-	#	-secondary_input_csv_file Edge_curve_q17_object0_TDA.csv \
-	#	-box_width 4 -bit_depth 24 \
-	#	-end
-	#open Edge_curve_q17_object0_TDA_flag_orbits_draw.bmp
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Edge_curve_q17_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file Edge_curve_q17_object0_TDA.csv \
+		-box_width 4 -bit_depth 24 \
+		-end
+	open Edge_curve_q17_object0_TDA_flag_orbits_draw.bmp
 
 # 9 backtrack nodes total
 

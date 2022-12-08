@@ -1051,21 +1051,23 @@ void finite_field_implementation_by_tables::multiplication_table_reordered_save_
 	orbiter_kernel_system::file_io Fio;
 
 	M = NEW_int(F->q * F->q);
-	for (i = 1; i < F->q; i++) {
+	for (i = 0; i < F->q; i++) {
 		a = reordered_list_of_elements[i];
-		for (j = 1; j < F->q; j++) {
+		for (j = 0; j < F->q; j++) {
 			b = reordered_list_of_elements[j];
 			c = F->mult(a, b);
 			//k = reordered_list_of_elements_inv[c];
+#if 0
 			if (c == 0) {
 				cout << "finite_field_implementation_by_tables::multiplication_table_reordered_save_csv c == 0" << endl;
 				exit(1);
 			}
-			M[(i - 1) * (F->q - 1) + j - 1] = c;
+#endif
+			M[i * (F->q - 1) + j] = c;
 		}
 	}
 
-	Fio.int_matrix_write_csv(fname, M, F->q - 1, F->q - 1);
+	Fio.int_matrix_write_csv(fname, M, F->q, F->q);
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::multiplication_table_reordered_save_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}

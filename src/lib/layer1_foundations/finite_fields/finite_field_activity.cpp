@@ -73,6 +73,21 @@ void finite_field_activity::perform_activity(int verbose_level)
 			cout << "finite_field_activity::perform_activity after Algebra.do_cheat_sheet_GF" << endl;
 		}
 	}
+	else if (Descr->f_export_tables) {
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity f_export_tables" << endl;
+		}
+		algebra::algebra_global Algebra;
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity before Algebra.export_tables" << endl;
+		}
+		Algebra.export_tables(F, verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity after Algebra.export_tables" << endl;
+		}
+	}
 	else if (Descr->f_polynomial_division) {
 
 		if (f_v) {

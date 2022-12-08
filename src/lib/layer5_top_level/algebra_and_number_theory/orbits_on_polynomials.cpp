@@ -573,7 +573,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			cout << "They are : ";
 			Lint_vec_print(cout, Pts, nb_pts);
 			cout << endl;
-			P->print_set_numerical(cout, Pts, nb_pts);
+			P->Reporting->print_set_numerical(cout, Pts, nb_pts);
 
 			F->display_table_of_projective_points(
 					ost, Pts, nb_pts, n);

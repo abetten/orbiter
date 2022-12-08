@@ -327,7 +327,7 @@ void buekenhout_metz::init_ovoid(int verbose_level)
 		cout << endl;
 		}
 	if (f_vv) {
-		P3->print_set(ovoid, sz_ovoid);
+		P3->Reporting->print_set(ovoid, sz_ovoid);
 		}
 
 	if (sz_ovoid != q * q + 1) {
@@ -413,7 +413,7 @@ void buekenhout_metz::init_ovoid_Uab_even(
 	cout << "found an ovoid of size " << sz_ovoid << ":" << endl;
 	Lint_vec_print(cout, ovoid, sz_ovoid);
 	cout << endl;
-	P3->print_set(ovoid, sz_ovoid);
+	P3->Reporting->print_set(ovoid, sz_ovoid);
 
 	if (sz_ovoid != q * q + 1) {
 		cout << "we need the ovoid to be of size q * q + 1" << endl;
@@ -538,7 +538,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 			cout << U[i] << " ";
 			}
 		cout << endl;
-		P2->print_set(U, sz);
+		P2->Reporting->print_set(U, sz);
 		}
 
 

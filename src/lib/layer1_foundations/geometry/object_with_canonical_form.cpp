@@ -148,19 +148,53 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
 		cout << "object_with_canonical_form::print_tex_detailed" << endl;
 	}
 
-	print_tex(ost);
+	if (f_v) {
+		cout << "object_with_canonical_form::print_tex_detailed before print_tex" << endl;
+	}
+	print_tex(ost, verbose_level);
+	if (f_v) {
+		cout << "object_with_canonical_form::print_tex_detailed after print_tex" << endl;
+	}
 
 	if (f_show_incma) {
 
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed f_show_incma" << endl;
+		}
+
 		combinatorics::encoded_combinatorial_object *Enc;
 
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed before encode_incma" << endl;
+		}
 		encode_incma(Enc, verbose_level);
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed after encode_incma" << endl;
+		}
 
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed before Enc->latex_set_system_by_columns" << endl;
+		}
 		Enc->latex_set_system_by_columns(ost, verbose_level);
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed after Enc->latex_set_system_by_columns" << endl;
+		}
 
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed before Enc->latex_set_system_by_rows" << endl;
+		}
 		Enc->latex_set_system_by_rows(ost, verbose_level);
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed after Enc->latex_set_system_by_rows" << endl;
+		}
 
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed before Enc->latex_incma" << endl;
+		}
 		Enc->latex_incma(ost, verbose_level);
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed after Enc->latex_incma" << endl;
+		}
 		ost << "\\\\" << endl;
 
 		FREE_OBJECT(Enc);
@@ -171,21 +205,42 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
 	}
 }
 
-void object_with_canonical_form::print_tex(ostream &ost)
+void object_with_canonical_form::print_tex(ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::print_tex" << endl;
+	}
+
 	if (type == t_PTS) {
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex t_PTS" << endl;
+		}
 		ost << "set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
-		P->print_set_of_points(ost, set, sz);
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex before P->Reporting->print_set_of_points" << endl;
+		}
+		P->Reporting->print_set_of_points(ost, set, sz);
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex after P->Reporting->print_set_of_points" << endl;
+		}
 	}
 	else if (type == t_LNS) {
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex t_LNS" << endl;
+		}
 		ost << "set of lines of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 	}
 	else if (type == t_PNL) {
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex t_PNL" << endl;
+		}
 		ost << "set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
@@ -194,11 +249,17 @@ void object_with_canonical_form::print_tex(ostream &ost)
 		ost << "\\\\" << endl;
 	}
 	else if (type == t_PAC) {
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex t_PAC" << endl;
+		}
 		ost << "packing: \\\\" << endl;
 		SoS->print_table_tex(ost);
 		ost << endl;
 	}
 	else if (type == t_INC) {
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex t_INC" << endl;
+		}
 		ost << "incidence structure: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
@@ -213,6 +274,9 @@ void object_with_canonical_form::print_tex(ostream &ost)
 #endif
 	}
 	else if (type == t_LS) {
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex t_LS" << endl;
+		}
 		ost << "large set: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
@@ -234,6 +298,10 @@ void object_with_canonical_form::print_tex(ostream &ost)
 		object_with_canonical_form::design_sz = design_sz;
 #endif
 
+	}
+
+	if (f_v) {
+		cout << "object_with_canonical_form::print_tex done" << endl;
 	}
 }
 

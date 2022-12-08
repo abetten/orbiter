@@ -655,10 +655,10 @@ void number_theoretic_transform::write_code2(std::ostream &ost,
 
 
 	if (f_forward) {
-		ost << "void ntt" << k << "_forward(int *input, int *output, finite_field *F)" << endl;
+		ost << "void ntt" << k << "_forward(int *input, int *output, orbiter::layer1_foundations::field_theory::finite_field *F)" << endl;
 	}
 	else {
-		ost << "void ntt" << k << "_backward(int *input, int *output, finite_field *F)" << endl;
+		ost << "void ntt" << k << "_backward(int *input, int *output, orbiter::layer1_foundations::field_theory::finite_field *F)" << endl;
 	}
 	ost << "{" << endl;
 	ost << "\tint t0[" << N[k] << "];" << endl;
@@ -925,21 +925,21 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "using namespace std;" << endl;
 	ost << "using namespace orbiter;" << endl;
 	ost << endl;
-	ost << "void ntt" << k << "_forward(int *input, int *output, finite_field *F);" << endl;
-	ost << "void ntt" << k << "_backward(int *input, int *output, finite_field *F);" << endl;
+	ost << "void ntt" << k << "_forward(int *input, int *output, orbiter::layer1_foundations::field_theory::finite_field *F);" << endl;
+	ost << "void ntt" << k << "_backward(int *input, int *output, orbiter::layer1_foundations::field_theory::finite_field *F);" << endl;
 	ost << endl;
 	ost << "int main(int argc, char **argv)" << endl;
 	ost << "{" << endl;
-	ost << "\torbiter::top_level::orbiter_top_level_session Top_level_session;" << endl;
-	ost << "\torbiter::top_level::The_Orbiter_top_level_session = &Top_level_session;" << endl;
-	ost << "\torbiter::top_level::The_Orbiter_top_level_session->Orbiter_session = new orbiter_session;" << endl;
-	ost << "\tfinite_field *F;" << endl;
-	ost << "\tos_interface Os;" << endl;
+	ost << "\torbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;" << endl;
+	ost << "\torbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;" << endl;
+	ost << "\torbiter::layer5_applications::user_interface::The_Orbiter_top_level_session->Orbiter_session = new orbiter::layer1_foundations::orbiter_kernel_system::orbiter_session;" << endl;
+	ost << "\torbiter::layer1_foundations::field_theory::finite_field *F;" << endl;
+	ost << "\torbiter::layer1_foundations::orbiter_kernel_system::os_interface Os;" << endl;
 	ost << "\tint q = " << q << ";" << endl;
 	ost << "\tint n = " << N[k] << ";" << endl;
 	ost << "\tint i;" << endl;
 	ost << "\t" << endl;
-	ost << "\tF = NEW_OBJECT(finite_field);" << endl;
+	ost << "\tF = NEW_OBJECT(orbiter::layer1_foundations::field_theory::finite_field);" << endl;
 	ost << "\tF->finite_field_init(q, FALSE /*f_without_tables*/, 0 /*verbose_level*/);" << endl;
 	ost << "\t" << endl;
 	ost << "\tint *input;" << endl;

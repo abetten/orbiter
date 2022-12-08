@@ -1110,8 +1110,10 @@ int group_generators_domain::index_POmega_in_PO(
 	exit(1);
 }
 
-void group_generators_domain::diagonal_orbit_perm(int n, field_theory::finite_field *F,
-		long int *orbit, long int *orbit_inv, int verbose_level)
+void group_generators_domain::diagonal_orbit_perm(
+		int n, field_theory::finite_field *F,
+		long int *orbit, long int *orbit_inv,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 1);
@@ -1161,7 +1163,8 @@ void group_generators_domain::diagonal_orbit_perm(int n, field_theory::finite_fi
 	}
 }
 
-void group_generators_domain::frobenius_orbit_perm(int n, field_theory::finite_field *F,
+void group_generators_domain::frobenius_orbit_perm(
+		int n, field_theory::finite_field *F,
 	long int *orbit, long int *orbit_inv,
 	int verbose_level)
 {
@@ -1226,7 +1229,8 @@ void group_generators_domain::frobenius_orbit_perm(int n, field_theory::finite_f
 	}
 }
 
-void group_generators_domain::projective_matrix_group_base_and_orbits(int n, field_theory::finite_field *F,
+void group_generators_domain::projective_matrix_group_base_and_orbits(
+		int n, field_theory::finite_field *F,
 	int f_semilinear,
 	int base_len, int degree,
 	long int *base, int *transversal_length,
@@ -1364,7 +1368,8 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fie
 	}
 }
 
-void group_generators_domain::projective_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
+void group_generators_domain::projective_matrix_group_base_and_transversal_length(
+		int n, field_theory::finite_field *F,
 	int f_semilinear,
 	int base_len, int degree,
 	long int *base, int *transversal_length,
@@ -1431,7 +1436,8 @@ void group_generators_domain::projective_matrix_group_base_and_transversal_lengt
 	}
 }
 
-void group_generators_domain::affine_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
+void group_generators_domain::affine_matrix_group_base_and_transversal_length(
+		int n, field_theory::finite_field *F,
 	int f_semilinear,
 	int base_len, int degree,
 	long int *base, int *transversal_length,
@@ -1480,7 +1486,8 @@ void group_generators_domain::affine_matrix_group_base_and_transversal_length(in
 }
 
 
-void group_generators_domain::general_linear_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
+void group_generators_domain::general_linear_matrix_group_base_and_transversal_length(
+		int n, field_theory::finite_field *F,
 	int f_semilinear,
 	int base_len, int degree,
 	long int *base, int *transversal_length,
@@ -2422,8 +2429,10 @@ void group_generators_domain::builtin_transversal_rep_GLnq(int *A,
 	}
 }
 
-void group_generators_domain::affine_translation(int n, field_theory::finite_field *F,
-		int coordinate_idx, int field_base_idx, int *perm, int verbose_level)
+void group_generators_domain::affine_translation(
+		int n, field_theory::finite_field *F,
+		int coordinate_idx, int field_base_idx, int *perm,
+		int verbose_level)
 // perm points to q^n int's
 // field_base_idx is the base element whose translation
 // we compute, 0 \le field_base_idx < e
@@ -2453,8 +2462,10 @@ void group_generators_domain::affine_translation(int n, field_theory::finite_fie
 	FREE_int(v);
 }
 
-void group_generators_domain::affine_multiplication(int n, field_theory::finite_field *F,
-		int multiplication_order, int *perm, int verbose_level)
+void group_generators_domain::affine_multiplication(
+		int n, field_theory::finite_field *F,
+		int multiplication_order, int *perm,
+		int verbose_level)
 // perm points to q^n int's
 // compute the diagonal multiplication by alpha, i.e.
 // the multiplication by alpha of each component
@@ -2488,8 +2499,10 @@ void group_generators_domain::affine_multiplication(int n, field_theory::finite_
 	FREE_int(v);
 }
 
-void group_generators_domain::affine_frobenius(int n, field_theory::finite_field *F,
-		int k, int *perm, int verbose_level)
+void group_generators_domain::affine_frobenius(
+		int n, field_theory::finite_field *F,
+		int k, int *perm,
+		int verbose_level)
 // perm points to q^n int's
 // compute the diagonal action of the Frobenius automorphism
 // to the power k, i.e.,
@@ -2517,7 +2530,8 @@ void group_generators_domain::affine_frobenius(int n, field_theory::finite_field
 }
 
 
-int group_generators_domain::all_affine_translations_nb_gens(int n, field_theory::finite_field *F)
+int group_generators_domain::all_affine_translations_nb_gens(
+		int n, field_theory::finite_field *F)
 {
 	int nb_gens;
 
@@ -2525,7 +2539,8 @@ int group_generators_domain::all_affine_translations_nb_gens(int n, field_theory
 	return nb_gens;
 }
 
-void group_generators_domain::all_affine_translations(int n, field_theory::finite_field *F, int *gens)
+void group_generators_domain::all_affine_translations(
+		int n, field_theory::finite_field *F, int *gens)
 {
 	int i, j, k = 0;
 	int degree;
@@ -2535,17 +2550,20 @@ void group_generators_domain::all_affine_translations(int n, field_theory::finit
 
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < F->e; j++, k++) {
-			affine_translation(n, F, i, j, gens + k * degree, 0 /* verbose_level */);
+			affine_translation(n, F, i, j, gens + k * degree,
+					0 /* verbose_level */);
 		}
 	}
 }
 
-void group_generators_domain::affine_generators(int n, field_theory::finite_field *F,
+void group_generators_domain::affine_generators(
+		int n, field_theory::finite_field *F,
 	int f_translations,
 	int f_semilinear, int frobenius_power,
 	int f_multiplication, int multiplication_order,
 	int &nb_gens, int &degree, int *&gens,
-	int &base_len, long int *&the_base, int verbose_level)
+	int &base_len, long int *&the_base,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int k, h;
@@ -2586,7 +2604,8 @@ void group_generators_domain::affine_generators(int n, field_theory::finite_fiel
 		the_base[h++] = 1;
 	}
 	if (f_semilinear) {
-		affine_frobenius(n, F, frobenius_power, gens + k * degree, 0 /* verbose_level */);
+		affine_frobenius(n, F, frobenius_power, gens + k * degree,
+				0 /* verbose_level */);
 		k++;
 		the_base[h++] = F->p;
 	}
@@ -2595,7 +2614,8 @@ void group_generators_domain::affine_generators(int n, field_theory::finite_fiel
 	}
 }
 
-void group_generators_domain::PG_element_modified_not_in_subspace_perm(field_theory::finite_field *F,
+void group_generators_domain::PG_element_modified_not_in_subspace_perm(
+		field_theory::finite_field *F,
 		int n, int m,
 	long int *orbit, long int *orbit_inv,
 	int verbose_level)

@@ -3146,7 +3146,7 @@ void geometry_global::andre_preimage(
 				"we found " << sz4 << " points:" << endl;
 		Lint_vec_print(cout, set4, sz4);
 		cout << endl;
-		P4->print_set(set4, sz4);
+		P4->Reporting->print_set(set4, sz4);
 		for (i = 0; i < sz4; i++) {
 			cout << set4[i] << " ";
 		}

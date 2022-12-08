@@ -137,7 +137,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 
 	//if (OiP->type != t_PAC) {
 
-	OwCF->print_tex(fp);
+	OwCF->print_tex(fp, verbose_level);
 		fp << endl;
 		fp << "\\bigskip" << endl;
 		fp << endl;

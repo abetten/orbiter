@@ -2728,7 +2728,8 @@ void coding_theory_domain::do_long_code(
 		int sz;
 
 
-		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(long_code_generators_text[i], set, sz, verbose_level);
+		orbiter_kernel_system::Orbiter->get_lint_vector_from_label(
+				long_code_generators_text[i], set, sz, verbose_level);
 
 		for (j = 0; j < sz; j++) {
 			genma[i * n + set[j]] = 1;

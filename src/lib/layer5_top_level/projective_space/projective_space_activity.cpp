@@ -1027,6 +1027,64 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_report_Grassmannian) {
+		{
+			string fname;
+			string author;
+			string title;
+			string extra_praeamble;
+
+
+			char str[1000];
+
+			snprintf(str, 1000, "Gr_%d_%d_%d.tex",
+					PA->P->n + 1, Descr->report_Grassmannian_k, PA->F->q);
+			fname.assign(str);
+			snprintf(str, 1000, "Cheat Sheet Gr($%d,%d,%d$)",
+					PA->P->n + 1, Descr->report_Grassmannian_k, PA->F->q);
+			title.assign(str);
+
+
+
+
+			{
+				ofstream ost(fname);
+				orbiter_kernel_system::latex_interface L;
+
+				L.head(ost,
+						FALSE /* f_book*/,
+						TRUE /* f_title */,
+						title, author,
+						FALSE /* f_toc */,
+						FALSE /* f_landscape */,
+						TRUE /* f_12pt */,
+						TRUE /* f_enlarged_page */,
+						TRUE /* f_pagenumbers */,
+						extra_praeamble /* extra_praeamble */);
+
+
+				if (f_v) {
+					cout << "projective_space_activity::perform_activity "
+							"before PA->P->create_latex_report_for_Grassmannian" << endl;
+				}
+				PA->P->Reporting->report_subspaces_of_dimension(ost, Descr->report_Grassmannian_k, verbose_level);
+				if (f_v) {
+					cout << "projective_space_activity::perform_activity "
+							"after PA->P->create_latex_report_for_Grassmannian" << endl;
+				}
+
+
+				L.foot(ost);
+
+			}
+			orbiter_kernel_system::file_io Fio;
+
+			cout << "projective_space_activity::perform_activity written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+
+	}
 
 
 	if (f_v) {

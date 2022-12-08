@@ -31,6 +31,7 @@ MODULES = \
 	points_and_lines.o \
 	polarity.o \
 	projective_space_implementation.o \
+	projective_space_reporting.o \
 	projective_space.o \
 	projective_space2.o \
 	projective_space3.o \

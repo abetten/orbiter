@@ -26,6 +26,8 @@ public:
 
 	int f_cheat_sheet_GF;
 
+	int f_export_tables;
+
 
 	int f_polynomial_division;
 	std::string polynomial_division_A;

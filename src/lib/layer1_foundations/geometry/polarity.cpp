@@ -432,6 +432,11 @@ void polarity::report(std::ostream &f)
 		cout << "polarity::report NULL pointer: f_absolute" << endl;
 		return;
 	}
+
+	if (P->N_points >= 1000) {
+		f << "Too many to list\\\\" << endl;
+		return;
+	}
 	int N;
 	N = 0;
 	for (i = 0; i < P->N_points; i++) {

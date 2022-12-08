@@ -175,7 +175,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 
 #if 1
 		if (f_vv) {
-			CC->P->print_set(S, 9);
+			CC->P->Reporting->print_set(S, 9);
 		}
 #endif
 

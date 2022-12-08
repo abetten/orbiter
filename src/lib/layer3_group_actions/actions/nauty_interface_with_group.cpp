@@ -286,14 +286,12 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 					"before nauty_interface_graph_bitvec" << endl;
 		}
 		Nau.nauty_interface_graph_bitvec(n, Bitvec,
-			//labeling,
 			partitions,
 			NO,
 			verbose_level);
 	}
 	else {
 		Nau.nauty_interface_graph_int(n, Adj,
-			//labeling,
 			partitions,
 			NO,
 			verbose_level);
@@ -787,8 +785,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 	Transversal_length = NEW_int(m + n);
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::create_automorphism_group_of_"
-				"incidence_structure_with_partition" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition" << endl;
 		}
 
 	labeling = NEW_int(m + n);
@@ -802,8 +799,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 
 	if (f_v) {
 		if (TRUE /*(input_no % 500) == 0*/) {
-			cout << "nauty_interface_with_group::create_automorphism_group_of_"
-					"incidence_structure_with_partition: "
+			cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition: "
 					"The group order is = " << Ago << endl;
 			}
 		}
@@ -818,8 +814,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 #endif
 
 	if (f_v10) {
-		cout << "nauty_interface_with_group::create_automorphism_group_of_"
-				"incidence_structure_with_partition: "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition: "
 				"labeling:" << endl;
 		Orbiter->Int_vec.print(cout, labeling, m + n);
 		cout << endl;
@@ -827,14 +822,12 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 		//int_vec_print(cout, labeling_inv, m + n);
 		//cout << endl;
 
-		cout << "nauty_interface_with_group::create_automorphism_group_of_"
-				"incidence_structure_with_partition: "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition: "
 				"Base:" << endl;
 		Orbiter->Lint_vec.print(cout, Base_lint, Base_length);
 		cout << endl;
 
-		cout << "nauty_interface_with_group::create_automorphism_group_of_"
-				"incidence_structure_with_partition: "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition: "
 				"generators:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Aut, Aut_counter, m + n, m + n, 2);
@@ -1272,7 +1265,8 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group before automorphism_group_as_permutation_group" << endl;
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"before automorphism_group_as_permutation_group" << endl;
 	}
 
 	automorphism_group_as_permutation_group(
@@ -1282,7 +1276,8 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 				verbose_level);
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group after automorphism_group_as_permutation_group" << endl;
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"after automorphism_group_as_permutation_group" << endl;
 	}
 
 	//action *A_linear;

@@ -141,6 +141,7 @@ MODULES= \
 		layer1_foundations/geometry/points_and_lines.o \
 		layer1_foundations/geometry/polarity.o \
 		layer1_foundations/geometry/projective_space_implementation.o \
+		layer1_foundations/geometry/projective_space_reporting.o \
 		layer1_foundations/geometry/projective_space.o \
 		layer1_foundations/geometry/projective_space2.o \
 		layer1_foundations/geometry/projective_space3.o \

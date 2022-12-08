@@ -445,6 +445,7 @@ namespace geometry {
 	class points_and_lines;
 	class polarity;
 	class projective_space_implementation;
+	class projective_space_reporting;
 	class projective_space;
 	class spread_domain;
 	class spread_tables;

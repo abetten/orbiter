@@ -213,6 +213,9 @@ projective_space_activity_description::projective_space_activity_description()
 	plane_intersection_type_of_klein_image_threshold = 0;
 	//std::string plane_intersection_type_of_klein_image_input;
 
+	f_report_Grassmannian = FALSE;
+	report_Grassmannian_k = 0;
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -907,6 +910,14 @@ int projective_space_activity_description::read_arguments(
 				cout << "-plane_intersection_type_of_klein_image " << plane_intersection_type_of_klein_image_threshold << " " << plane_intersection_type_of_klein_image_input << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-report_Grassmannian") == 0) {
+			f_report_Grassmannian = TRUE;
+			report_Grassmannian_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-report_Grassmannian " << report_Grassmannian_k << endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -1182,6 +1193,9 @@ void projective_space_activity_description::print()
 	}
 	if (f_plane_intersection_type_of_klein_image) {
 		cout << "-plane_intersection_type_of_klein_image " << plane_intersection_type_of_klein_image_threshold << " " << plane_intersection_type_of_klein_image_input << endl;
+	}
+	if (f_report_Grassmannian) {
+		cout << "-report_Grassmannian " << report_Grassmannian_k << endl;
 	}
 
 

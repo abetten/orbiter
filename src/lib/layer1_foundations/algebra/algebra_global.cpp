@@ -1096,13 +1096,6 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 
 
 
-	F->addition_table_save_csv(verbose_level);
-
-	F->multiplication_table_save_csv(verbose_level);
-
-	F->addition_table_reordered_save_csv(verbose_level);
-
-	F->multiplication_table_reordered_save_csv(verbose_level);
 
 
 	{
@@ -1152,6 +1145,28 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 	}
 }
 
+
+void algebra_global::export_tables(field_theory::finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::export_tables q=" << F->q << endl;
+	}
+
+	F->addition_table_save_csv(verbose_level);
+
+	F->multiplication_table_save_csv(verbose_level);
+
+	F->addition_table_reordered_save_csv(verbose_level);
+
+	F->multiplication_table_reordered_save_csv(verbose_level);
+
+
+	if (f_v) {
+		cout << "algebra_global::export_tables done" << endl;
+	}
+}
 
 
 void algebra_global::do_cheat_sheet_ring(ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level)

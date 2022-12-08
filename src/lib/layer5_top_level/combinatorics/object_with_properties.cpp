@@ -89,7 +89,7 @@ void object_with_properties::init(
 		cout << "object_with_properties::init after Nau.automorphism_group_as_permutation_group" << endl;
 	}
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "object_with_properties::init "
 				"A_perm:" << endl;
 
@@ -361,7 +361,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"after A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
+					"after A_perm->Strong_gens->export_permutation_group_to_GAP" << endl;
 		}
 	}
 
@@ -384,6 +384,12 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 
 	if (Report_options->f_export_flag_orbits) {
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_export_flag_orbits" << endl;
+		}
+
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
 					"before export_INP_with_flag_orbits" << endl;
@@ -475,6 +481,12 @@ void object_with_properties::latex_report(std::ostream &ost,
 	FREE_OBJECT(Enc2);
 
 	if (Report_options->f_show_incidence_matrices) {
+
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_show_incidence_matrices" << endl;
+		}
 
 		int v = Enc->nb_rows;
 		int b = Enc->nb_cols;
@@ -654,11 +666,13 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 	combinatorics::encoded_combinatorial_object *Enc;
 
 	if (f_v) {
-		cout << "object_with_properties::export_TDA_with_flag_orbits before OwCF->encode_incma" << endl;
+		cout << "object_with_properties::export_TDA_with_flag_orbits "
+				"before OwCF->encode_incma" << endl;
 	}
 	OwCF->encode_incma(Enc, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "object_with_properties::export_TDA_with_flag_orbits after OwCF->encode_incma" << endl;
+		cout << "object_with_properties::export_TDA_with_flag_orbits "
+				"after OwCF->encode_incma" << endl;
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -672,7 +686,8 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 	if (Flags->f_flag_orbits_have_been_computed) {
 
 		if (f_v) {
-			cout << "object_with_properties::export_TDA_with_flag_orbits f_flag_orbits_have_been_computed" << endl;
+			cout << "object_with_properties::export_TDA_with_flag_orbits "
+					"f_flag_orbits_have_been_computed" << endl;
 		}
 
 		int *Inc_flag_orbits;
@@ -728,7 +743,8 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 	else {
 
 		if (f_v) {
-			cout << "object_with_properties::export_TDA_with_flag_orbits flag orbits have not been computed" << endl;
+			cout << "object_with_properties::export_TDA_with_flag_orbits "
+					"flag orbits have not been computed" << endl;
 		}
 
 		int *Inc2;
@@ -786,12 +802,12 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 	if (f_v) {
 		cout << "object_with_properties::export_INP_with_flag_orbits before OwCF->encode_incma" << endl;
 	}
-	OwCF->encode_incma(Enc, verbose_level);
+	OwCF->encode_incma(Enc, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "object_with_properties::export_INP_with_flag_orbits after OwCF->encode_incma" << endl;
 		cout << "object_with_properties::export_INP_with_flag_orbits Enc->nb_rows = " << Enc->nb_rows << endl;
 		cout << "object_with_properties::export_INP_with_flag_orbits Enc->nb_cols = " << Enc->nb_cols << endl;
-		Enc->print_incma();
+		//Enc->print_incma();
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -803,6 +819,11 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 
 
 	if (Flags->f_flag_orbits_have_been_computed) {
+
+		if (f_v) {
+			cout << "object_with_properties::export_INP_with_flag_orbits f_flag_orbits_have_been_computed" << endl;
+		}
+
 		int *Inc_flag_orbits;
 		int *Inc;
 		int nb_orbits_on_flags;
@@ -852,6 +873,10 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 
 	}
 	else {
+
+		if (f_v) {
+			cout << "object_with_properties::export_INP_with_flag_orbits flag_orbits have nor been computed" << endl;
+		}
 
 		int *Inc2;
 

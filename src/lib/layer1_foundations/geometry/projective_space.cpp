@@ -258,6 +258,16 @@ void projective_space::projective_space_init(int n, field_theory::finite_field *
 					"the incidence structure data" << endl;
 		}
 	}
+
+	Reporting = NEW_OBJECT(projective_space_reporting);
+	if (f_v) {
+		cout << "projective_space::projective_space_init before Reporting->init" << endl;
+	}
+	Reporting->init(this, verbose_level);
+	if (f_v) {
+		cout << "projective_space::projective_space_init after Reporting->init" << endl;
+	}
+
 	if (f_v) {
 		
 		cout << "projective_space::projective_space_init n=" << n
@@ -1010,51 +1020,6 @@ long int projective_space::nb_rk_k_subspaces_as_lint(int k)
 	C.q_binomial(aa, d, k, q, 0/*verbose_level*/);
 	N = aa.as_lint();
 	return N;
-}
-
-void projective_space::print_set_of_points(ostream &ost, long int *Pts, int nb_pts)
-{
-	int h, I;
-	int *v;
-
-	v = NEW_int(n + 1);
-
-	for (I = 0; I < (nb_pts + 39) / 40; I++) {
-		ost << "$$" << endl;
-		ost << "\\begin{array}{|r|r|r|}" << endl;
-		ost << "\\hline" << endl;
-		ost << "i & \\mbox{Rank} & \\mbox{Point} \\\\" << endl;
-		ost << "\\hline" << endl;
-		ost << "\\hline" << endl;
-		for (h = 0; h < 40; h++) {
-			if (I * 40 + h < nb_pts) {
-				unrank_point(v, Pts[I * 40 + h]);
-				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
-				Int_vec_print(ost, v, n + 1);
-				ost << "\\\\" << endl;
-			}
-		}
-		ost << "\\hline" << endl;
-		ost << "\\end{array}" << endl;
-		ost << "$$" << endl;
-	}
-	FREE_int(v);
-}
-
-void projective_space::print_all_points()
-{
-	int *v;
-	int i;
-
-	v = NEW_int(n + 1);
-	cout << "All points in PG(" << n << "," << q << "):" << endl;
-	for (i = 0; i < N_points; i++) {
-		unrank_point(v, i);
-		cout << setw(3) << i << " : ";
-		Int_vec_print(cout, v, n + 1);
-		cout << endl;
-	}
-	FREE_int(v);
 }
 
 long int projective_space::rank_point(int *v)
@@ -2329,7 +2294,7 @@ void projective_space::hyperplane_intersection_type_basic(
 
 	N_hyperplanes = nb_rk_k_subspaces_as_lint(d - 1);
 	
-	// unrank all point here so we don't
+	// unrank all points here so we don't
 	// have to do it again in the loop
 	for (h = 0; h < set_size; h++) {
 		unrank_point(Pts + h * d, set[h]);
@@ -2792,7 +2757,7 @@ void projective_space::Baer_subline(long int *pts3,
 		cout << "projective_space::Baer_subline The Baer subline is";
 		Lint_vec_print(cout, pts, nb_pts);
 		cout << endl;
-		print_set(pts, nb_pts);
+		Reporting->print_set(pts, nb_pts);
 	}
 	
 
@@ -2807,186 +2772,6 @@ void projective_space::Baer_subline(long int *pts3,
 	FREE_int(z);
 }
 
-void projective_space::report_summary(ostream &ost)
-{
-	//ost << "\\parindent=0pt" << endl;
-	ost << "$q = " << F->q << "$\\\\" << endl;
-	ost << "$p = " << F->p << "$\\\\" << endl;
-	ost << "$e = " << F->e << "$\\\\" << endl;
-	ost << "$n = " << n << "$\\\\" << endl;
-	ost << "Number of points = " << N_points << "\\\\" << endl;
-	ost << "Number of lines = " << N_lines << "\\\\" << endl;
-	ost << "Number of lines on a point = " << r << "\\\\" << endl;
-	ost << "Number of points on a line = " << k << "\\\\" << endl;
-}
-
-void projective_space::report(ostream &ost,
-		graphics::layered_graph_draw_options *O,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space::report" << endl;
-	}
-
-	ost << "\\subsection*{The projective space ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
-	ost << "\\noindent" << endl;
-	ost << "\\arraycolsep=2pt" << endl;
-	ost << "\\parindent=0pt" << endl;
-	ost << "$q = " << F->q << "$\\\\" << endl;
-	ost << "$p = " << F->p << "$\\\\" << endl;
-	ost << "$e = " << F->e << "$\\\\" << endl;
-	ost << "$n = " << n << "$\\\\" << endl;
-	ost << "Number of points = " << N_points << "\\\\" << endl;
-	ost << "Number of lines = " << N_lines << "\\\\" << endl;
-	ost << "Number of lines on a point = " << r << "\\\\" << endl;
-	ost << "Number of points on a line = " << k << "\\\\" << endl;
-
-	//ost<< "\\clearpage" << endl << endl;
-	//ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
-	//F->cheat_sheet(ost, verbose_level);
-
-#if 0
-	if (f_v) {
-		cout << "projective_space::report before incidence_matrix_save_csv" << endl;
-	}
-	incidence_matrix_save_csv();
-	if (f_v) {
-		cout << "projective_space::report after incidence_matrix_save_csv" << endl;
-	}
-#endif
-
-	if (n == 2) {
-		//ost << "\\clearpage" << endl << endl;
-		ost << "\\subsection*{The plane}" << endl;
-		string fname_base;
-		char str[1000];
-		long int *set;
-		int i;
-
-		set = NEW_lint(N_points);
-		for (i = 0; i < N_points; i++) {
-			set[i] = i;
-		}
-		snprintf(str, sizeof(str), "plane_of_order_%d", q);
-		fname_base.assign(str);
-
-		graphics::plot_tools Pt;
-
-		Pt.draw_point_set_in_plane(fname_base,
-				O,
-				this,
-				set, N_points,
-				TRUE /*f_point_labels*/,
-				verbose_level);
-		FREE_lint(set);
-		ost << "{\\scriptsize" << endl;
-		ost << "$$" << endl;
-		ost << "\\input " << fname_base << "_draw.tex" << endl;
-		ost << "$$" << endl;
-		ost << "}%%" << endl;
-	}
-
-	//ost << "\\clearpage" << endl << endl;
-	ost << "\\subsection*{The points of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
-	cheat_sheet_points(ost, verbose_level);
-
-	//cheat_sheet_point_table(ost, verbose_level);
-
-
-#if 0
-	//ost << "\\clearpage" << endl << endl;
-	cheat_sheet_points_on_lines(ost, verbose_level);
-
-	//ost << "\\clearpage" << endl << endl;
-	cheat_sheet_lines_on_points(ost, verbose_level);
-#endif
-
-	// report subspaces:
-	int k;
-
-	for (k = 1; k < n; k++) {
-		//ost << "\\clearpage" << endl << endl;
-		if (k == 1) {
-			ost << "\\subsection*{The lines of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
-		}
-		else if (k == 2) {
-			ost << "\\subsection*{The planes of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
-		}
-		else {
-			ost << "\\subsection*{The subspaces of dimension " << k << " of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
-		}
-		//ost << "\\section{Subspaces of dimension " << k << "}" << endl;
-		if (f_v) {
-			cout << "projective_space::report before cheat_sheet_subspaces, k=" << k << endl;
-		}
-		Grass_stack[k + 1]->cheat_sheet_subspaces(ost, verbose_level);
-		if (f_v) {
-			cout << "projective_space::report after cheat_sheet_subspaces, k=" << k << endl;
-		}
-	}
-
-
-#if 0
-	if (n >= 2 && N_lines < 25) {
-		//ost << "\\clearpage" << endl << endl;
-		ost << "\\section*{Line intersections}" << endl;
-		cheat_sheet_line_intersection(ost, verbose_level);
-	}
-
-
-	if (n >= 2 && N_points < 25) {
-		//ost << "\\clearpage" << endl << endl;
-		ost << "\\section*{Line through point-pairs}" << endl;
-		cheat_sheet_line_through_pairs_of_points(ost, verbose_level);
-	}
-#endif
-
-	ring_theory::homogeneous_polynomial_domain *Poly1;
-	ring_theory::homogeneous_polynomial_domain *Poly2;
-	ring_theory::homogeneous_polynomial_domain *Poly3;
-	ring_theory::homogeneous_polynomial_domain *Poly4;
-
-	Poly1 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	ost << "\\subsection*{The polynomial rings associated "
-			"with ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
-	Poly1->init(F,
-			n + 1 /* nb_vars */, 1 /* degree */,
-			t_PART,
-			verbose_level);
-	Poly2->init(F,
-			n + 1 /* nb_vars */, 2 /* degree */,
-			t_PART,
-			verbose_level);
-	Poly3->init(F,
-			n + 1 /* nb_vars */, 3 /* degree */,
-			t_PART,
-			verbose_level);
-	Poly4->init(F,
-			n + 1 /* nb_vars */, 4 /* degree */,
-			t_PART,
-			verbose_level);
-
-	Poly1->print_monomial_ordering(ost);
-	Poly2->print_monomial_ordering(ost);
-	Poly3->print_monomial_ordering(ost);
-	Poly4->print_monomial_ordering(ost);
-
-	FREE_OBJECT(Poly1);
-	FREE_OBJECT(Poly2);
-	FREE_OBJECT(Poly3);
-	FREE_OBJECT(Poly4);
-
-	if (f_v) {
-		cout << "projective_space::report done" << endl;
-	}
-
-}
 
 void projective_space::export_incidence_matrix_to_csv(int verbose_level)
 {
@@ -3038,72 +2823,6 @@ void projective_space::make_fname_incidence_matrix_csv(std::string &fname)
 }
 
 
-void projective_space::create_latex_report(
-		graphics::layered_graph_draw_options *O,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space::create_latex_report" << endl;
-	}
-
-	{
-		string fname;
-		string author;
-		string title;
-		string extra_praeamble;
-
-
-		char str[1000];
-
-		snprintf(str, 1000, "PG_%d_%d.tex", n, F->q);
-		fname.assign(str);
-		snprintf(str, 1000, "Cheat Sheet PG($%d,%d$)", n, F->q);
-		title.assign(str);
-
-
-
-
-		{
-			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					extra_praeamble /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "projective_space::create_latex_report before P->report" << endl;
-			}
-			report(ost, O, verbose_level);
-			if (f_v) {
-				cout << "projective_space::create_latex_report after P->report" << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space::create_latex_report done" << endl;
-	}
-}
 
 void projective_space::compute_decomposition(data_structures::partitionstack *S1,
 		data_structures::partitionstack *S2,

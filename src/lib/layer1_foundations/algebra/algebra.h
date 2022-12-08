@@ -170,6 +170,7 @@ public:
 	void do_trace(field_theory::finite_field *F, int verbose_level);
 	void do_norm(field_theory::finite_field *F, int verbose_level);
 	void do_cheat_sheet_GF(field_theory::finite_field *F, int verbose_level);
+	void export_tables(field_theory::finite_field *F, int verbose_level);
 	void do_cheat_sheet_ring(ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level);
 	void gl_random_matrix(field_theory::finite_field *F, int k, int verbose_level);
 
@@ -390,28 +391,35 @@ public:
 	int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
 
 
-	void diagonal_orbit_perm(int n, field_theory::finite_field *F,
-			long int *orbit, long int *orbit_inv, int verbose_level);
-	void frobenius_orbit_perm(int n, field_theory::finite_field *F,
+	void diagonal_orbit_perm(
+			int n, field_theory::finite_field *F,
+			long int *orbit, long int *orbit_inv,
+			int verbose_level);
+	void frobenius_orbit_perm(
+			int n, field_theory::finite_field *F,
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
-	void projective_matrix_group_base_and_orbits(int n, field_theory::finite_field *F,
+	void projective_matrix_group_base_and_orbits(
+			int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
 		long int **orbit, long int **orbit_inv,
 		int verbose_level);
-	void projective_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
+	void projective_matrix_group_base_and_transversal_length(
+			int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
 		int verbose_level);
-	void affine_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
+	void affine_matrix_group_base_and_transversal_length(
+			int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
 		int verbose_level);
-	void general_linear_matrix_group_base_and_transversal_length(int n, field_theory::finite_field *F,
+	void general_linear_matrix_group_base_and_transversal_length(
+			int n, field_theory::finite_field *F,
 		int f_semilinear,
 		int base_len, int degree,
 		long int *base, int *transversal_length,
@@ -446,34 +454,45 @@ public:
 		int verbose_level);
 	void builtin_transversal_rep_GLnq(int *A, int n, field_theory::finite_field *F,
 		int f_semilinear, int i, int j, int verbose_level);
-	void affine_translation(int n, field_theory::finite_field *F,
+	void affine_translation(
+			int n, field_theory::finite_field *F,
 			int coordinate_idx,
-			int field_base_idx, int *perm, int verbose_level);
+			int field_base_idx, int *perm,
+			int verbose_level);
 		// perm points to q^n int's
 		// field_base_idx is the base element whose
 		// translation we compute, 0 \le field_base_idx < e
 		// coordinate_idx is the coordinate in which we shift,
 		// 0 \le coordinate_idx < n
-	void affine_multiplication(int n, field_theory::finite_field *F,
-		int multiplication_order, int *perm, int verbose_level);
+	void affine_multiplication(
+			int n, field_theory::finite_field *F,
+		int multiplication_order, int *perm,
+		int verbose_level);
 		// perm points to q^n int's
 		// compute the diagonal multiplication by alpha, i.e.
 		// the multiplication by alpha of each component
-	void affine_frobenius(int n, field_theory::finite_field *F,
-			int k, int *perm, int verbose_level);
+	void affine_frobenius(
+			int n, field_theory::finite_field *F,
+			int k, int *perm,
+			int verbose_level);
 		// perm points to q^n int's
 		// compute the diagonal action of the Frobenius
 		// automorphism to the power k, i.e.,
 		// raises each component to the p^k-th power
-	int all_affine_translations_nb_gens(int n, field_theory::finite_field *F);
-	void all_affine_translations(int n, field_theory::finite_field *F, int *gens);
-	void affine_generators(int n, field_theory::finite_field *F,
+	int all_affine_translations_nb_gens(
+			int n, field_theory::finite_field *F);
+	void all_affine_translations(
+			int n, field_theory::finite_field *F, int *gens);
+	void affine_generators(
+			int n, field_theory::finite_field *F,
 			int f_translations,
 			int f_semilinear, int frobenius_power,
 			int f_multiplication, int multiplication_order,
 			int &nb_gens, int &degree, int *&gens,
-			int &base_len, long int *&the_base, int verbose_level);
-	void PG_element_modified_not_in_subspace_perm(field_theory::finite_field *F,
+			int &base_len, long int *&the_base,
+			int verbose_level);
+	void PG_element_modified_not_in_subspace_perm(
+			field_theory::finite_field *F,
 			int n, int m,
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);

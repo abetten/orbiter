@@ -771,9 +771,11 @@ void combinatorial_object_activity::post_process_classification(
 
 	for (iso_type = 0; iso_type < CO->nb_orbits; iso_type++) {
 
-		cout << "iso_type = " << iso_type << " / " << CO->nb_orbits << endl;
-		cout << "NO=" << endl;
-		CO->NO_transversal[iso_type]->print();
+		if (f_v) {
+			cout << "combinatorial_object_activity::post_process_classification iso_type = " << iso_type << " / " << CO->nb_orbits << endl;
+			cout << "NO=" << endl;
+			//CO->NO_transversal[iso_type]->print();
+		}
 
 		std::string label;
 		char str[1000];
@@ -782,6 +784,9 @@ void combinatorial_object_activity::post_process_classification(
 		label.assign(prefix);
 		label.append(str);
 
+		if (f_v) {
+			cout << "combinatorial_object_activity::post_process_classification before OwP[iso_type].init" << endl;
+		}
 		OwP[iso_type].init(
 				CO->OWCF_transversal[iso_type],
 				CO->NO_transversal[iso_type],
@@ -789,6 +794,9 @@ void combinatorial_object_activity::post_process_classification(
 				CO->Descr->max_TDO_depth,
 				label,
 				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::post_process_classification after OwP[iso_type].init" << endl;
+		}
 
 
 	}
@@ -1052,13 +1060,19 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::report_object" << endl;
+		cout << "combinatorial_object_activity::report_object object_idx=" << object_idx << endl;
 	}
 
 
 	geometry::object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
 
+	if (f_v) {
+		cout << "combinatorial_object_activity::report_object before OwCF->print_tex_detailed" << endl;
+	}
 	OwCF->print_tex_detailed(fp, Report_options->f_show_incidence_matrices, verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_activity::report_object after OwCF->print_tex_detailed" << endl;
+	}
 
 	if (FALSE /*CO->f_projective_space*/) {
 
@@ -1073,7 +1087,13 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 
 	}
 	else {
+		if (f_v) {
+			cout << "combinatorial_object_activity::report_object before OwP[object_idx].latex_report" << endl;
+		}
 		OwP[object_idx].latex_report(fp, Report_options, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::report_object after OwP[object_idx].latex_report" << endl;
+		}
 	}
 
 
@@ -1128,6 +1148,9 @@ void combinatorial_object_activity::draw_incidence_matrices(
 
 		for (i = 0; i < N; i++) {
 
+			if (f_v) {
+				cout << "combinatorial_object_activity::draw_incidence_matrices object " << i << " / " << N << endl;
+			}
 			geometry::object_with_canonical_form *OwCF;
 
 			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
@@ -1135,13 +1158,25 @@ void combinatorial_object_activity::draw_incidence_matrices(
 
 			combinatorics::encoded_combinatorial_object *Enc;
 
+			if (f_v) {
+				cout << "combinatorial_object_activity::draw_incidence_matrices before OwCF->encode_incma" << endl;
+			}
 			OwCF->encode_incma(Enc, verbose_level);
+			if (f_v) {
+				cout << "combinatorial_object_activity::draw_incidence_matrices after OwCF->encode_incma" << endl;
+			}
 
 			//Enc->latex_set_system_by_columns(ost, verbose_level);
 
 			//Enc->latex_set_system_by_rows(ost, verbose_level);
 
+			if (f_v) {
+				cout << "combinatorial_object_activity::draw_incidence_matrices before OwCF->latex_incma" << endl;
+			}
 			Enc->latex_incma(ost, verbose_level);
+			if (f_v) {
+				cout << "combinatorial_object_activity::draw_incidence_matrices after OwCF->latex_incma" << endl;
+			}
 
 			FREE_OBJECT(Enc);
 

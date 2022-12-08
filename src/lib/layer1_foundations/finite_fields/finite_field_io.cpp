@@ -440,7 +440,7 @@ void finite_field::make_fname_addition_table_csv(std::string &fname)
 
 	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
-	fname.append("_addition_table.csv");
+	fname.append("_table_add.csv");
 }
 
 void finite_field::make_fname_multiplication_table_csv(std::string &fname)
@@ -449,7 +449,7 @@ void finite_field::make_fname_multiplication_table_csv(std::string &fname)
 
 	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
-	fname.append("_multiplication_table.csv");
+	fname.append("_table_mul.csv");
 }
 
 void finite_field::make_fname_addition_table_reordered_csv(std::string &fname)
@@ -458,7 +458,7 @@ void finite_field::make_fname_addition_table_reordered_csv(std::string &fname)
 
 	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
-	fname.append("_addition_table_reordered.csv");
+	fname.append("_table_add_r.csv");
 }
 
 void finite_field::make_fname_multiplication_table_reordered_csv(std::string &fname)
@@ -467,7 +467,7 @@ void finite_field::make_fname_multiplication_table_reordered_csv(std::string &fn
 
 	snprintf(str, sizeof(str), "GF_q%d", q);
 	fname.assign(str);
-	fname.append("_multiplication_table_reordered.csv");
+	fname.append("_table_mul_r.csv");
 }
 
 void finite_field::addition_table_save_csv(int verbose_level)
@@ -501,17 +501,17 @@ void finite_field::multiplication_table_save_csv(int verbose_level)
 	int *M;
 	orbiter_kernel_system::file_io Fio;
 
-	M = NEW_int((q - 1) * (q - 1));
-	for (i = 0; i < q - 1; i++) {
-		for (j = 0; j < q - 1; j++) {
-			k = mult(1 + i, 1 + j);
-			M[i * (q - 1) + j] = k;
+	M = NEW_int(q * q);
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			k = mult(i, j);
+			M[i * q + j] = k;
 		}
 	}
 	std::string fname;
 
 	make_fname_multiplication_table_csv(fname);
-	Fio.int_matrix_write_csv(fname, M, q - 1, q - 1);
+	Fio.int_matrix_write_csv(fname, M, q, q);
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}

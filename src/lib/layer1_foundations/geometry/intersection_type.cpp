@@ -93,7 +93,7 @@ void intersection_type::plane_intersection_type_slow(
 	//G = Grass_planes;
 
 	if (f_vv) {
-		P->print_set_numerical(cout, set, set_size);
+		P->Reporting->print_set_numerical(cout, set, set_size);
 	}
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
 		cout << "intersection_type::plane_intersection_type_slow "

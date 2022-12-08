@@ -1326,7 +1326,7 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq_brute_force(
 		cout << "we found " << sz << " points:" << endl;
 		Lint_vec_print(cout, U, sz);
 		cout << endl;
-		P->print_set(U, sz);
+		P->Reporting->print_set(U, sz);
 	}
 	FREE_int(v);
 

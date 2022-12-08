@@ -492,6 +492,9 @@ public:
 	int plane_intersection_type_of_klein_image_threshold;
 	std::string plane_intersection_type_of_klein_image_input;
 
+	int f_report_Grassmannian;
+	int report_Grassmannian_k;
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(

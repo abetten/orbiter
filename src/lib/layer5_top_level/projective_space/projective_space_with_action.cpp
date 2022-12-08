@@ -1587,7 +1587,7 @@ void projective_space_with_action::cheat_sheet(
 
 
 
-			P->report(ost, O, verbose_level);
+			P->Reporting->report(ost, O, verbose_level);
 
 
 			if (n == 3) {

@@ -1705,7 +1705,7 @@ public:
 			int f_show_incma, int verbose_level);
 	void print_tex_detailed(std::ostream &ost,
 			int f_show_incma, int verbose_level);
-	void print_tex(std::ostream &ost);
+	void print_tex(std::ostream &ost, int verbose_level);
 	void get_packing_as_set_system(long int *&Sets,
 			int &nb_sets, int &set_size, int verbose_level);
 	void init_point_set(
@@ -2084,6 +2084,48 @@ public:
 
 
 // #############################################################################
+// projective_space_reporting.cpp
+// #############################################################################
+
+//! internal representation of a projective space PG(n,q)
+
+
+class projective_space_reporting {
+
+public:
+
+	projective_space *P;
+
+	projective_space_reporting();
+	~projective_space_reporting();
+	void init(projective_space *P, int verbose_level);
+	void create_latex_report(
+			graphics::layered_graph_draw_options *O,
+			int verbose_level);
+	void report_summary(std::ostream &ost);
+	void report(std::ostream &ost,
+			graphics::layered_graph_draw_options *O,
+			int verbose_level);
+	void report_subspaces_of_dimension(std::ostream &ost, int vs_dimension, int verbose_level);
+	void cheat_sheet_points(std::ostream &f, int verbose_level);
+	void cheat_polarity(std::ostream &f, int verbose_level);
+	void cheat_sheet_point_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
+	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
+	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
+	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
+		int verbose_level);
+	void print_set_numerical(std::ostream &ost, long int *set, int set_size);
+	void print_set(long int *set, int set_size);
+	void print_line_set_numerical(long int *set, int set_size);
+	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
+	void print_all_points();
+
+
+};
+
+
+// #############################################################################
 // projective_space.cpp
 // #############################################################################
 
@@ -2121,6 +2163,8 @@ public:
 	polarity *Reversal_polarity;
 
 	arc_in_projective_space *Arc_in_projective_space;
+
+	projective_space_reporting *Reporting;
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
@@ -2176,8 +2220,6 @@ public:
 		data_structures::partitionstack *&Stack,
 		int verbose_level);
 	long int nb_rk_k_subspaces_as_lint(int k);
-	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
-	void print_all_points();
 	long int rank_point(int *v);
 	void unrank_point(int *v, long int rk);
 	void unrank_points(int *v, long int *Rk, int sz);
@@ -2267,17 +2309,11 @@ public:
 		int verbose_level);
 	void Baer_subline(long int *pts3, long int *&pts, int &nb_pts,
 		int verbose_level);
+
 	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
-	void report_summary(std::ostream &ost);
-	void report(std::ostream &ost,
-			graphics::layered_graph_draw_options *O,
-			int verbose_level);
 	void export_incidence_matrix_to_csv(int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
-	void create_latex_report(
-			graphics::layered_graph_draw_options *O,
-			int verbose_level);
 	void compute_decomposition(data_structures::partitionstack *S1,
 			data_structures::partitionstack *S2,
 			incidence_structure *&Inc,
@@ -2292,9 +2328,6 @@ public:
 			long int rk_in, long int &rk_out, int verbose_level);
 
 	// projective_space2.cpp:
-	void print_set_numerical(std::ostream &ost, long int *set, int set_size);
-	void print_set(long int *set, int set_size);
-	void print_line_set_numerical(long int *set, int set_size);
 	int determine_hermitian_form_in_plane(int *pts, int nb_pts, 
 		int *six_coeffs, int verbose_level);
 	void circle_type_of_line_subset(int *pts, int nb_pts, 
@@ -2344,14 +2377,6 @@ public:
 			long int *set, int set_size,
 			std::vector<int> &point_indices,
 			int verbose_level);
-	void cheat_sheet_points(std::ostream &f, int verbose_level);
-	void cheat_polarity(std::ostream &f, int verbose_level);
-	void cheat_sheet_point_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
-	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
-	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
-	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
-		int verbose_level);
 	void conic_type_randomized(int nb_times, 
 		long int *set, int set_size,
 		long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,

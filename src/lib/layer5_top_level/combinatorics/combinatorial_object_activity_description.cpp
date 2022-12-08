@@ -166,6 +166,7 @@ int combinatorial_object_activity_description::read_arguments(
 				if (i < argc) {
 					cout << "next argument is " << argv[i] << endl;
 				}
+				Canonical_form_PG_Descr->print();
 			}
 		}
 
