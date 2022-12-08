@@ -40,7 +40,7 @@ using std::vector;
                irtree_node* parent_node) override {             \
         return visitor->visit(this, parent_node);                       \
     }                               \
-    int accept(eval_visitor* visitor, finite_field* Fq, unordered_map<string, int>& assignment_table) {          \
+    int accept(eval_visitor* visitor, finite_field* Fq, unordered_map<string, int>& assignment_table) override {    \
         return visitor->visit(this, Fq, assignment_table);                                   \
     }\
                        \

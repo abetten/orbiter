@@ -27,39 +27,26 @@ using std::vector;
 using std::unordered_map;
 using std::string;
 
-class managed_variables_index_table {
-    unordered_map<string, size_t> index_table;
-    size_t current_index = 0;
+class managed_variables_index_table : public unordered_map<string, size_t> {
+    typedef unordered_map<string, size_t> base_t;
 
 public:
     template<class T>
     void insert(const T& name) {
-        index_table.insert({name, current_index++});
+        base_t::insert({name, size()});
     }
 
     template<class T, class... Args>
     void insert(const T& name, const Args&... args) {
-        index_table.insert({name, current_index++});
+        base_t::insert({name, size()});
         insert(args...);
     }
 
     size_t index(const string& key) const {
-        return index_table.at(key);
-    }
-
-    size_t size() const noexcept {
-        return current_index;
-    }
-
-    decltype(index_table.begin()) find(const string& key)  {
-        return index_table.find(key);
-    }
-
-    decltype(index_table.end()) end() noexcept {
-        return index_table.end();
+        return base_t::at(key);
     }
 };
-
+std::ostream& operator<< (std::ostream& os, const managed_variables_index_table& obj);
 
 struct monomial_coefficient_table_hash_function final {
     using algorithms = orbiter::layer1_foundations::data_structures::algorithms;
@@ -134,7 +121,7 @@ public:
 
     void visit(multiply_node* op_node) override;
     void visit(plus_node* op_node) override;
-
+    void visit(sentinel_node* op_node) override;
 
     exponent_vector_visitor* operator()(managed_variables_index_table& symbol_table) {
         this->symbol_table = &symbol_table;
