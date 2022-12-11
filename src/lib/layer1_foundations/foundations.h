@@ -300,6 +300,7 @@ namespace coding_theory {
 	class crc_codes;
 	class crc_options_description;
 	class create_BCH_code;
+	class create_RS_code;
 	class error_repository;
 	class ttp_codes;
 

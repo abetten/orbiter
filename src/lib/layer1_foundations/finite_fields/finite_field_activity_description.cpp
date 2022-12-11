@@ -698,6 +698,8 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
+
+
 		else if (ST.stringcmp(argv[i], "-field_reduction") == 0) {
 			f_field_reduction = TRUE;
 			field_reduction_label.assign(argv[++i]);

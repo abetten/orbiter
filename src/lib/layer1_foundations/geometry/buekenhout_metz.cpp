@@ -187,8 +187,10 @@ void buekenhout_metz::buekenhout_metz_init(
 
 
 	
+	string s;
 
-	Fq->init_symbol_for_print("\\beta");
+	s.assign("\\beta");
+	Fq->init_symbol_for_print(s);
 	
 	alpha = FQ->p;
 	T0 = FQ->negate(FQ->N2(alpha));

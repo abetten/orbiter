@@ -22,32 +22,22 @@ namespace apps_coding_theory {
 coding_theoretic_activity_description::coding_theoretic_activity_description()
 {
 
-#if 0
-	f_BCH = FALSE;
-	f_BCH_dual = FALSE;
-	BCH_n = 0;
-	BCH_q = 0;
-	BCH_t = 0;
-	//BCH_b = 0;
-#endif
-
 	f_general_code_binary = FALSE;
 	general_code_binary_n = 0;
+	//std::string general_code_binary_label;
 	//std::string general_code_binary_text;
 
+#if 0
 	f_code_diagram = FALSE;
 	//std::string code_diagram_label;
 	//std::string code_diagram_codewords_text;
 	code_diagram_n = 0;
+#endif
 
 	f_code_diagram_from_file = FALSE;
+	//std::string code_diagram_from_file_label;
 	//std::string code_diagram_from_file_codewords_fname;
-
-	f_enhance = FALSE;
-	enhance_radius = 0;
-
-	f_metric_balls = FALSE;
-	metric_ball_radius = 0;
+	code_diagram_from_file_n = 0;
 
 	f_long_code = FALSE;
 	long_code_n = 0;
@@ -74,18 +64,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_nth_roots = FALSE;
 	nth_roots_n = 0;
 
-#if 0
-	f_make_BCH_code = FALSE;
-	make_BCH_code_n = 0;
-	make_BCH_code_d = 0;
-
-	f_make_BCH_code_and_encode = FALSE;
-	make_BCH_code_and_encode_n = 0;
-	make_BCH_code_and_encode_d = 0;
-	//std::string make_BCH_code_and_encode_text;
-	//std::string make_BCH_code_and_encode_fname;
-#endif
-
 	f_NTT = FALSE;
 	NTT_n = 0;
 	NTT_q = 0;
@@ -107,6 +85,20 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 
 	f_export_checkma = FALSE;
 	//std::string export_checkma_fname;
+
+	f_make_diagram = FALSE;
+
+	f_boolean_function_of_code = FALSE;
+
+	f_embellish = FALSE;
+	embellish_radius = 0;
+
+	f_metric_balls = FALSE;
+	radius_of_metric_ball = 0;
+
+
+
+
 
 
 	f_crc32 = FALSE;
@@ -177,38 +169,19 @@ int coding_theoretic_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 
-#if 0
-		if (ST.stringcmp(argv[i], "-BCH") == 0) {
-			f_BCH = TRUE;
-			BCH_n = ST.strtoi(argv[++i]);
-			BCH_q = ST.strtoi(argv[++i]);
-			BCH_t = ST.strtoi(argv[++i]);
-			//BCH_b = atoi(argv[++i]);
-			if (f_v) {
-				cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-BCH_dual") == 0) {
-			f_BCH_dual = TRUE;
-			BCH_n = ST.strtoi(argv[++i]);
-			BCH_q = ST.strtoi(argv[++i]);
-			BCH_t = ST.strtoi(argv[++i]);
-			//BCH_b = atoi(argv[++i]);
-			if (f_v) {
-				cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
-			}
-		}
-#endif
-
 		if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
 			f_general_code_binary = TRUE;
 			general_code_binary_n = ST.strtoi(argv[++i]);
+			general_code_binary_label.assign(argv[++i]);
 			general_code_binary_text.assign(argv[++i]);
 			if (f_v) {
-				cout << "-general_code_binary " << general_code_binary_n << " "
-						<< general_code_binary_text << endl;
+				cout << "-general_code_binary " << general_code_binary_n
+						<< " " << general_code_binary_label
+						<< " " << general_code_binary_text
+						<< endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-code_diagram") == 0) {
 			f_code_diagram = TRUE;
 			code_diagram_label.assign(argv[++i]);
@@ -220,34 +193,18 @@ int coding_theoretic_activity_description::read_arguments(
 						<< " " << code_diagram_n << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-code_diagram_from_file") == 0) {
 			f_code_diagram_from_file = TRUE;
-			code_diagram_label.assign(argv[++i]);
+			code_diagram_from_file_label.assign(argv[++i]);
 			code_diagram_from_file_codewords_fname.assign(argv[++i]);
-			code_diagram_n = ST.strtoi(argv[++i]);
+			code_diagram_from_file_n = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-code_diagram_from_file " << code_diagram_label
+				cout << "-code_diagram_from_file " << code_diagram_from_file_label
 						<< " " << code_diagram_from_file_codewords_fname
-						<< " " << code_diagram_n << endl;
+						<< " " << code_diagram_from_file_n << endl;
 			}
 		}
-
-		else if (ST.stringcmp(argv[i], "-enhance") == 0) {
-			f_enhance = TRUE;
-			enhance_radius = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-enhance " << enhance_radius << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-metric_balls") == 0) {
-			f_metric_balls = TRUE;
-			metric_ball_radius = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-metric_balls " << metric_ball_radius << endl;
-			}
-		}
-
 
 		else if (ST.stringcmp(argv[i], "-long_code") == 0) {
 			f_long_code = TRUE;
@@ -259,52 +216,6 @@ int coding_theoretic_activity_description::read_arguments(
 				string s;
 
 				s.assign(argv[++i]);
-	#if 0
-				if (stringcmp(s, "-set_builder") == 0) {
-					set_builder_description Descr;
-
-					if (f_v) {
-						cout << "reading -set_builder" << endl;
-					}
-					i += Descr.read_arguments(argc - (i + 1),
-						argv + i + 1, verbose_level);
-
-					if (f_v) {
-						cout << "-set_builder" << endl;
-						cout << "i = " << i << endl;
-						cout << "argc = " << argc << endl;
-						if (i < argc) {
-							cout << "next argument is " << argv[i] << endl;
-						}
-					}
-
-					set_builder S;
-
-					S.init(&Descr, verbose_level);
-
-					if (f_v) {
-						cout << "set_builder found the following set of size " << S.sz << endl;
-						Orbiter->Lint_vec.print(cout, S.set, S.sz);
-						cout << endl;
-					}
-
-					s.assign("");
-					int j;
-					char str[1000];
-
-					for (j = 0; j < S.sz; j++) {
-						if (j) {
-							s.append(",");
-						}
-						snprintf(str, sizeof(str), "%ld", S.set[j]);
-						s.append(str);
-					}
-					if (f_v) {
-						cout << "as string: " << s << endl;
-					}
-
-				}
-	#endif
 				long_code_generators.push_back(s);
 			}
 			if (f_v) {
@@ -365,34 +276,6 @@ int coding_theoretic_activity_description::read_arguments(
 				cout << "-nth_roots " << nth_roots_n << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-make_BCH_code") == 0) {
-			f_make_BCH_code = TRUE;
-			make_BCH_code_n = ST.strtoi(argv[++i]);
-			make_BCH_code_d = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-make_BCH_code "
-						<< " " << make_BCH_code_n
-						<< " " << make_BCH_code_d
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-make_BCH_code_and_encode") == 0) {
-			f_make_BCH_code_and_encode = TRUE;
-			make_BCH_code_and_encode_n = ST.strtoi(argv[++i]);
-			make_BCH_code_and_encode_d = ST.strtoi(argv[++i]);
-			make_BCH_code_and_encode_text.assign(argv[++i]);
-			make_BCH_code_and_encode_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-make_BCH_code_and_encode "
-						<< " " << make_BCH_code_and_encode_n
-						<< " " << make_BCH_code_and_encode_d
-						<< " " << make_BCH_code_and_encode_text
-						<< " " << make_BCH_code_and_encode_fname
-						<< endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-NTT") == 0) {
 			f_NTT = TRUE;
 			NTT_n = ST.strtoi(argv[++i]);
@@ -458,6 +341,40 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-make_diagram") == 0) {
+			f_make_diagram = TRUE;
+			if (f_v) {
+				cout << "-make_diagram " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-boolean_function_of_code") == 0) {
+			f_boolean_function_of_code = TRUE;
+			if (f_v) {
+				cout << "-boolean_function_of_code " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-embellish") == 0) {
+			f_embellish = TRUE;
+			embellish_radius = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-embellish "
+					<< " " << embellish_radius
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-metric_balls") == 0) {
+			f_metric_balls = TRUE;
+			radius_of_metric_ball = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-metric_balls "
+					<< " " << radius_of_metric_ball
+					<< endl;
+			}
+		}
+
+
+
+
 		else if (ST.stringcmp(argv[i], "-crc32") == 0) {
 			f_crc32 = TRUE;
 			crc32_text.assign(argv[++i]);
@@ -596,35 +513,23 @@ int coding_theoretic_activity_description::read_arguments(
 
 void coding_theoretic_activity_description::print()
 {
-#if 0
-	if (f_BCH) {
-		cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
-	}
-	if (f_BCH_dual) {
-		cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
-	}
-#endif
 	if (f_general_code_binary) {
-		cout << "-general_code_binary " << general_code_binary_n << " "
-				<< general_code_binary_text << endl;
+		cout << "-general_code_binary " << general_code_binary_n
+				<< " " << general_code_binary_label
+				<< " " << general_code_binary_text
+				<< endl;
 	}
+#if 0
 	if (f_code_diagram) {
 		cout << "-code_diagram " << code_diagram_label
 				<< " " << code_diagram_codewords_text
 				<< " " << code_diagram_n << endl;
 	}
+#endif
 	if (f_code_diagram_from_file) {
-		cout << "-code_diagram_from_file " << code_diagram_label
+		cout << "-code_diagram_from_file " << code_diagram_from_file_label
 				<< " " << code_diagram_from_file_codewords_fname
-				<< " " << code_diagram_n << endl;
-	}
-
-	if (f_enhance) {
-		cout << "-enhance " << enhance_radius << endl;
-	}
-
-	if (f_metric_balls) {
-		cout << "-metric_balls " << metric_ball_radius << endl;
+				<< " " << code_diagram_from_file_n << endl;
 	}
 
 	if (f_long_code) {
@@ -657,22 +562,6 @@ void coding_theoretic_activity_description::print()
 	if (f_nth_roots) {
 		cout << "-nth_roots " << nth_roots_n << endl;
 	}
-#if 0
-	if (f_make_BCH_code) {
-			cout << "-make_BCH_code "
-					<< " " << make_BCH_code_n
-					<< " " << make_BCH_code_d
-					<< endl;
-	}
-	if (f_make_BCH_code_and_encode) {
-			cout << "-make_BCH_code_and_encode "
-					<< " " << make_BCH_code_and_encode_n
-					<< " " << make_BCH_code_and_encode_d
-					<< " " << make_BCH_code_and_encode_text
-					<< " " << make_BCH_code_and_encode_fname
-					<< endl;
-	}
-#endif
 	if (f_NTT) {
 		cout << "-NTT " << NTT_n
 				<< " " << NTT_q
@@ -708,6 +597,26 @@ void coding_theoretic_activity_description::print()
 				<< " " << export_checkma_fname
 				<< endl;
 	}
+	if (f_make_diagram) {
+		cout << "-make_diagram " << endl;
+	}
+	if (f_boolean_function_of_code) {
+		cout << "-boolean_function_of_code " << endl;
+	}
+	if (f_embellish) {
+		cout << "-embellish "
+			<< " " << embellish_radius
+			<< endl;
+	}
+	if (f_metric_balls) {
+		cout << "-metric_balls "
+			<< " " << radius_of_metric_ball
+			<< endl;
+	}
+
+
+
+
 	if (f_crc32) {
 		cout << "-crc32 " << crc32_text
 				<< endl;

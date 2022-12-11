@@ -90,111 +90,66 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	}
 	data_structures::string_tools ST;
 
-#if 0
-	if (Descr->f_BCH) {
+	if (Descr->f_general_code_binary) {
+			long int *Words;
+			int nb_words;
 
-		coding_theory::cyclic_codes Cyclic_codes;
+			coding_theory::coding_theory_domain Codes;
 
-		// this function creates a finite field
-		Cyclic_codes.make_BCH_codes(
-				Descr->BCH_n,
-				Descr->BCH_q,
-				Descr->BCH_t, 1, FALSE,
-				verbose_level);
+
+			Get_vector_or_set(Descr->general_code_binary_text, Words, nb_words);
+
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity before Codes.code_diagram" << endl;
+			}
+			Codes.code_diagram(
+					Descr->general_code_binary_label,
+					Words,
+					nb_words, Descr->general_code_binary_n,
+					Descr->f_metric_balls, Descr->radius_of_metric_ball,
+					Descr->f_embellish, Descr->embellish_radius,
+					verbose_level);
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity after Codes.code_diagram" << endl;
+			}
+
+
+			FREE_lint(Words);
 
 	}
-	else if (Descr->f_BCH_dual) {
+#if 0
+	else if (Descr->f_code_diagram) {
+			long int *codewords;
+			int nb_words;
 
-		coding_theory::cyclic_codes Cyclic_codes;
+			coding_theory::coding_theory_domain Codes;
 
-		// this function creates a finite field
-		Cyclic_codes.make_BCH_codes(
-				Descr->BCH_n,
-				Descr->BCH_q,
-				Descr->BCH_t, 1, TRUE,
-				verbose_level);
+
+			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
+
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity before Codes.code_diagram" << endl;
+			}
+
+			Codes.code_diagram(
+					Descr->code_diagram_label,
+					codewords,
+					nb_words,
+					Descr->code_diagram_n,
+
+					Descr->f_metric_balls,
+					Descr->radius_of_metric_ball,
+					Descr->f_embellish, Descr->embellish_radius,
+					verbose_level);
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity after Codes.code_diagram" << endl;
+			}
+
 	}
 #endif
-	if (Descr->f_general_code_binary) {
-			long int *set;
-			int sz;
-			int f_embellish = FALSE;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			Get_vector_or_set(Descr->general_code_binary_text, set, sz);
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity before Codes.investigate_code" << endl;
-			}
-
-			Codes.investigate_code(set, sz, Descr->general_code_binary_n, f_embellish, verbose_level);
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity after Codes.investigate_code" << endl;
-			}
-
-			FREE_lint(set);
-
-	}
-	else if (Descr->f_code_diagram) {
-			long int *codewords;
-			int nb_words;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
-
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity before Codes.code_diagram" << endl;
-			}
-
-			Codes.code_diagram(
-					Descr->code_diagram_label,
-					codewords,
-					nb_words,
-					Descr->code_diagram_n,
-					Descr->f_metric_balls,
-					Descr->metric_ball_radius,
-					Descr->f_enhance, 0 /*nb_enhance */,
-					verbose_level);
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity after Codes.code_diagram" << endl;
-			}
-
-	}
-
-	else if (Descr->f_code_diagram) {
-			long int *codewords;
-			int nb_words;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
-
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity before Codes.code_diagram" << endl;
-			}
-			Codes.code_diagram(
-					Descr->code_diagram_label,
-					codewords,
-					nb_words,
-					Descr->code_diagram_n,
-					Descr->f_metric_balls,
-					Descr->metric_ball_radius,
-					Descr->f_enhance, Descr->enhance_radius,
-					verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity after Codes.code_diagram" << endl;
-			}
-	}
-
 
 	else if (Descr->f_code_diagram_from_file) {
 			long int *codewords;
@@ -212,13 +167,13 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				cout << "coding_theoretic_activity::perform_activity before Codes.code_diagram" << endl;
 			}
 			Codes.code_diagram(
-					Descr->code_diagram_label,
+					Descr->code_diagram_from_file_label,
 					codewords,
 					nb_words,
-					Descr->code_diagram_n,
+					Descr->code_diagram_from_file_n,
 					Descr->f_metric_balls,
-					Descr->metric_ball_radius,
-					Descr->f_enhance, Descr->enhance_radius,
+					Descr->radius_of_metric_ball,
+					Descr->f_embellish, Descr->embellish_radius,
 					verbose_level);
 			if (f_v) {
 				cout << "coding_theoretic_activity::perform_activity after Codes.code_diagram" << endl;
@@ -351,79 +306,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 
 	}
-#if 0
-	else if (Descr->f_make_BCH_code) {
-
-		coding_theory::cyclic_codes Cyclic_codes;
-		coding_theory::crc_codes Crc_codes;
-		field_theory::nth_roots *Nth;
-		ring_theory::unipoly_object P;
-
-		int n;
-		int degree;
-		int *generator_polynomial;
-		int i;
-
-		n = Descr->make_BCH_code_n;
-
-		Cyclic_codes.make_BCH_code(n,
-				F,
-				Descr->make_BCH_code_d,
-				Nth, P,
-				verbose_level);
-
-		cout << "generator polynomial is ";
-		Nth->FX->print_object(P, cout);
-		cout << endl;
-
-		degree = Nth->FX->degree(P);
-		generator_polynomial = NEW_int(degree + 1);
-		for (i = 0; i <= degree; i++) {
-			generator_polynomial[i] = Nth->FX->s_i(P, i);
-		}
-
-	}
-
-	else if (Descr->f_make_BCH_code_and_encode) {
-
-		coding_theory::cyclic_codes Cyclic_codes;
-		coding_theory::crc_codes Crc_codes;
-		field_theory::nth_roots *Nth;
-		ring_theory::unipoly_object P;
-
-		int n;
-		int degree;
-		int *generator_polynomial;
-		int i;
-
-		n = Descr->make_BCH_code_and_encode_n;
-
-		Cyclic_codes.make_BCH_code(n,
-				F,
-				Descr->make_BCH_code_and_encode_d,
-				Nth, P,
-				verbose_level);
-
-		cout << "generator polynomial is ";
-		Nth->FX->print_object(P, cout);
-		cout << endl;
-
-		degree = Nth->FX->degree(P);
-		generator_polynomial = NEW_int(degree + 1);
-		for (i = 0; i <= degree; i++) {
-			generator_polynomial[i] = Nth->FX->s_i(P, i);
-		}
-
-		// Descr->make_BCH_code_and_encode_text
-
-		Crc_codes.CRC_encode_text(Nth, P,
-				Descr->make_BCH_code_and_encode_text,
-				Descr->make_BCH_code_and_encode_fname,
-				verbose_level);
-
-
-	}
-#endif
 	else if (Descr->f_NTT) {
 		number_theory::number_theoretic_transform NTT;
 
@@ -567,6 +449,49 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 	}
+
+	else if (Descr->f_make_diagram) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity f_make_diagram" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity f_make_diagram needs a code" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity before Code->make_diagram" << endl;
+		}
+		Code->make_diagram(
+				Descr->f_embellish, Descr->embellish_radius,
+				Descr->f_metric_balls, Descr->radius_of_metric_ball,
+				verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity after Code->make_diagram" << endl;
+		}
+	}
+	else if (Descr->f_boolean_function_of_code) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity f_boolean_function_of_code" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity f_boolean_function_of_code needs a code" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity before Code->polynomial_representation_of_boolean_function" << endl;
+		}
+		Code->polynomial_representation_of_boolean_function(
+				verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity after Code->polynomial_representation_of_boolean_function" << endl;
+		}
+	}
+
+
 
 	else if (Descr->f_crc32) {
 		cout << "-crc32 " << Descr->crc32_text << endl;

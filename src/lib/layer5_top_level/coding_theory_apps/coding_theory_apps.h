@@ -54,35 +54,22 @@ class coding_theoretic_activity_description {
 
 public:
 
-#if 0
-	// the following two functions should be retired.
-	// They are very old.
-	// They create their own finite field.
-	int f_BCH;
-	int f_BCH_dual;
-	int BCH_n;
-	int BCH_q;
-	int BCH_t;
-	//int BCH_b;
-#endif
-
 	int f_general_code_binary;
 	int general_code_binary_n;
+	std::string general_code_binary_label;
 	std::string general_code_binary_text;
 
+#if 0
 	int f_code_diagram;
 	std::string code_diagram_label;
 	std::string code_diagram_codewords_text;
 	int code_diagram_n;
+#endif
 
 	int f_code_diagram_from_file;
+	std::string code_diagram_from_file_label;
 	std::string code_diagram_from_file_codewords_fname;
-
-	int f_enhance;
-	int enhance_radius;
-
-	int f_metric_balls;
-	int metric_ball_radius;
+	int code_diagram_from_file_n;
 
 	int f_long_code;
 	int long_code_n;
@@ -112,18 +99,6 @@ public:
 	int f_nth_roots;
 	int nth_roots_n;
 
-#if 0
-	int f_make_BCH_code;
-	int make_BCH_code_n;
-	int make_BCH_code_d;
-
-	int f_make_BCH_code_and_encode;
-	int make_BCH_code_and_encode_n;
-	int make_BCH_code_and_encode_d;
-	std::string make_BCH_code_and_encode_text;
-	std::string make_BCH_code_and_encode_fname;
-#endif
-
 	int f_NTT;
 	int NTT_n;
 	int NTT_q;
@@ -146,6 +121,15 @@ public:
 	int f_export_checkma;
 	std::string export_checkma_fname;
 
+	int f_make_diagram;
+
+	int f_boolean_function_of_code;
+
+	int f_embellish;
+	int embellish_radius;
+
+	int f_metric_balls;
+	int radius_of_metric_ball;
 
 
 	// CRC stuff:
@@ -243,6 +227,75 @@ public:
 };
 
 
+// #############################################################################
+// crc_process_description.cpp
+// #############################################################################
+
+//! a description of a crc process
+
+
+class crc_process_description {
+
+public:
+
+	int f_code;
+	std::string code_label;
+
+	int f_crc_options;
+	coding_theory::crc_options_description *Crc_options;
+
+
+
+	crc_process_description();
+	~crc_process_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// crc_process.cpp
+// #############################################################################
+
+//! a crc process
+
+
+class crc_process {
+
+public:
+
+	crc_process_description *Descr;
+
+	create_code *Code;
+
+
+	int block_length;
+	long int information_length;
+	long int check_size;
+
+	long int N;
+	long int nb_blocks;
+	char *buffer;
+	char *check_data;
+
+	crc_process();
+	~crc_process();
+	void init(crc_process_description *Descr,
+			int verbose_level);
+	void encode_file(
+			std::string &fname_in, std::string &fname_out,
+			int verbose_level);
+	void encode_block(
+			long int L,
+			int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // create_code_description.cpp
@@ -258,19 +311,23 @@ public:
 	int f_field;
 	std::string field_label;
 
-	int f_linear_code_through_generator_matrix;
-	std::string linear_code_through_generator_matrix_label_genma;
+	int f_generator_matrix;
+	std::string generator_matrix_label_genma;
 
-	int f_linear_code_from_projective_set;
-	int linear_code_from_projective_set_nmk;
-	std::string linear_code_from_projective_set_set;
+	int f_basis;
+	int basis_n;
+	std::string basis_label;
 
-	int f_linear_code_by_columns_of_parity_check;
-	int linear_code_by_columns_of_parity_check_nmk;
-	std::string linear_code_by_columns_of_parity_check_set;
+	int f_projective_set;
+	int projective_set_nmk;
+	std::string projective_set_set;
 
-	int f_first_order_Reed_Muller;
-	int first_order_Reed_Muller_m;
+	int f_columns_of_generator_matrix;
+	int columns_of_generator_matrix_k;
+	std::string columns_of_generator_matrix_set;
+
+	int f_Reed_Muller;
+	int Reed_Muller_m;
 
 	int f_BCH;
 	int BCH_n;
@@ -317,7 +374,10 @@ public:
 	int f_field;
 	field_theory::finite_field *F;
 
+	int f_has_generator_matrix;
 	int *genma; // [k * n]
+
+	int f_has_check_matrix;
 	int *checkma; // [nmk * n]
 	int n;
 	int k;
@@ -325,6 +385,7 @@ public:
 	int d;
 
 	coding_theory::create_BCH_code *Create_BCH_code; // if BCH code
+	coding_theory::create_RS_code *Create_RS_code; // if RS code
 
 
 	create_code();
@@ -344,6 +405,10 @@ public:
 	void fixed_code(
 		long int *perm, int n,
 		int verbose_level);
+	void make_diagram(int f_embellish, int embellish_radius,
+			int f_metric_balls, int radius_of_metric_ball,
+			int verbose_level);
+	void polynomial_representation_of_boolean_function(int verbose_level);
 
 };
 

@@ -66,6 +66,8 @@ namespace apps_coding_theory {
 	class code_modification_description;
 	class coding_theoretic_activity_description;
 	class coding_theoretic_activity;
+	class crc_process_description;
+	class crc_process;
 	class create_code_description;
 	class create_code;
 }
@@ -356,6 +358,7 @@ namespace applications_in_algebraic_geometry {
 #define Get_object_of_type_vector_ge(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_vector_ge(label)
 #define Get_object_of_projective_space(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(label)
 #define Get_object_of_cubic_surface(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_cubic_surface(label)
+#define Get_object_of_type_code(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_code(label)
 
 
 

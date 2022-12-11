@@ -38,9 +38,11 @@ MODULES= \
 		layer1_foundations/algebraic_geometry/surface_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
+		layer1_foundations/coding_theory/crc_codes_search.o \
 		layer1_foundations/coding_theory/crc_codes.o \
 		layer1_foundations/coding_theory/crc_options_description.o \
 		layer1_foundations/coding_theory/create_BCH_code.o \
+		layer1_foundations/coding_theory/create_RS_code.o \
 		layer1_foundations/coding_theory/cyclic_codes.o \
 		layer1_foundations/coding_theory/error_repository.o \
 		layer1_foundations/coding_theory/mindist.o \
@@ -445,6 +447,8 @@ MODULES= \
 		layer5_top_level/coding_theory_apps/code_modification_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity.o \
+		layer5_top_level/coding_theory_apps/crc_process_description.o \
+		layer5_top_level/coding_theory_apps/crc_process.o \
 		layer5_top_level/coding_theory_apps/create_code_description.o \
 		layer5_top_level/coding_theory_apps/create_code.o \
 		layer5_top_level/combinatorics/boolean_function_classify.o \

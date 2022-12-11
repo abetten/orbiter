@@ -69,7 +69,7 @@ public:
 
 	boolean_function_domain();
 	~boolean_function_domain();
-	void init(int n, int verbose_level);
+	void init(field_theory::finite_field *F2, int n, int verbose_level);
 	void setup_polynomial_rings(int verbose_level);
 	void compute_polynomial_representation(int *func, int *coeff, int verbose_level);
 	void evaluate_projectively(int *coeff, int *f);

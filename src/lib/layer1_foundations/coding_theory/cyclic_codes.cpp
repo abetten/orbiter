@@ -30,90 +30,6 @@ cyclic_codes::~cyclic_codes()
 
 
 
-void cyclic_codes::make_BCH_code(int n,
-		field_theory::finite_field *F, int d,
-		field_theory::nth_roots *&Nth, ring_theory::unipoly_object &P,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "cyclic_codes::make_BCH_code q=" << F->q << " n=" << n
-				<< " d=" << d << endl;
-	}
-
-
-	Nth = NEW_OBJECT(field_theory::nth_roots);
-
-	Nth->init(F, n, verbose_level);
-
-	int *Selection;
-	int *Sel;
-	int nb_sel;
-	int i, j;
-
-
-	Selection = NEW_int(Nth->Cyc->S->nb_sets);
-	Sel = NEW_int(Nth->Cyc->S->nb_sets);
-
-	for (i = 0; i < Nth->Cyc->S->nb_sets; i++) {
-		Selection[i] = FALSE;
-	}
-
-	for (i = 0; i < d - 1; i++) {
-		j = Nth->Cyc->Index[(1 + i) % n];
-		Selection[j] = TRUE;
-	}
-
-	nb_sel = 0;
-	for (i = 0; i < Nth->Cyc->S->nb_sets; i++) {
-		if (Selection[i]) {
-			Sel[nb_sel++] = i;
-		}
-	}
-
-	if (f_v) {
-		cout << "cyclic_codes::make_BCH_code Sel=";
-		Int_vec_print(cout, Sel, nb_sel);
-		cout << endl;
-	}
-
-	ring_theory::unipoly_object Q;
-
-	Nth->FX->create_object_by_rank(P, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
-	Nth->FX->create_object_by_rank(Q, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
-
-	for (i = 0; i < nb_sel; i++) {
-
-		j = Sel[i];
-
-		if (f_v) {
-			cout << "cyclic_codes::make_BCH_code P=";
-			Nth->FX->print_object(P, cout);
-			cout << endl;
-			cout << "j=" << j << endl;
-			Nth->FX->print_object(Nth->min_poly_beta_Fq[j], cout);
-			cout << endl;
-		}
-		Nth->FX->mult(P, Nth->min_poly_beta_Fq[j], Q, verbose_level);
-		if (f_v) {
-			cout << "cyclic_codes::make_BCH_code Q=";
-			Nth->FX->print_object(Q, cout);
-			cout << endl;
-		}
-		Nth->FX->assign(Q, P, 0 /* verbose_level */);
-	}
-
-
-
-	if (f_v) {
-		cout << "cyclic_codes::make_BCH_code q=" << F->q << " n=" << n
-				<< " d=" << d << " done" << endl;
-	}
-}
-
-
-
 void cyclic_codes::make_cyclic_code(int n, int q, int t,
 		int *roots, int nb_roots, int f_poly, std::string &poly,
 		int f_dual, std::string &fname_txt, std::string &fname_csv,
@@ -151,17 +67,21 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 	D.integral_division_by_int(Qm1, n, Index, r);
 	//b = (q - 1) / n;
 	if (r != 0) {
-		cout << "cyclic_codes::make_cyclic_code n does not divide q^m-1" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"n does not divide q^m-1" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code GF(" << q << "^" << m << ") has "
+		cout << "cyclic_codes::make_cyclic_code "
+				"GF(" << q << "^" << m << ") has "
 				<< n << "-th roots of unity" << endl;
 		if (Index.is_one()) {
-			cout << "cyclic_codes::make_cyclic_code this is a primitive code" << endl;
+			cout << "cyclic_codes::make_cyclic_code "
+					"this is a primitive code" << endl;
 		}
 		else {
-			cout << "cyclic_codes::make_cyclic_code we take as " << n << "-th root \\beta = \\alpha^"
+			cout << "cyclic_codes::make_cyclic_code "
+					"we take as " << n << "-th root \\beta = \\alpha^"
 			<< Index << ", where \\alpha is a primitive element of "
 					"the field" << endl;
 		}
@@ -251,7 +171,8 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 	ring_theory::unipoly_object beta, beta_i, c;
 
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code creating the finite field of order " << p << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"creating the finite field of order " << p << endl;
 	}
 	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
 
@@ -260,12 +181,14 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 	knowledge_base K;
 
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code before K.get_primitive_polynomial" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"before K.get_primitive_polynomial" << endl;
 	}
 	K.get_primitive_polynomial(field_poly, p, field_degree, 0);
 
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code before FpX.create_object_by_rank_string" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"before FpX.create_object_by_rank_string" << endl;
 	}
 	FpX.create_object_by_rank_string(M, field_poly, verbose_level - 1);
 
@@ -276,11 +199,13 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 	}
 
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code creating unipoly_domain Fq modulo M" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"creating unipoly_domain Fq modulo M" << endl;
 	}
 	ring_theory::unipoly_domain Fq(&Fp, M, verbose_level);  // Fq = Fp[X] modulo factor polynomial M
 	if (f_vv) {
-		cout << "cyclic_codes::make_cyclic_code extension field created" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"extension field created" << endl;
 	}
 
 	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
@@ -294,7 +219,8 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 			cout << endl;
 		}
 		if (f_v) {
-			cout << "cyclic_codes::make_cyclic_code before Fq.power_longinteger" << endl;
+			cout << "cyclic_codes::make_cyclic_code "
+					"before Fq.power_longinteger" << endl;
 		}
 		Fq.power_longinteger(beta, Index, verbose_level - 1);
 		if (f_v) {
@@ -305,12 +231,14 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 	}
 	else {
 		if (f_v) {
-			cout << "cyclic_codes::make_cyclic_code this is a primitive BCH code" << endl;
+			cout << "cyclic_codes::make_cyclic_code "
+					"this is a primitive BCH code" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code before allocating generator etc" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"before allocating generator etc" << endl;
 	}
 
 	ring_theory::unipoly_object *generator = NEW_OBJECTS(ring_theory::unipoly_object, degree + 2);
@@ -333,13 +261,15 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 	}
 	for (i = 0; i <= degree; i++) {
 		if (f_v) {
-			cout << "cyclic_codes::make_cyclic_code creating generator[" << i << "]" << endl;
+			cout << "cyclic_codes::make_cyclic_code "
+					"creating generator[" << i << "]" << endl;
 		}
 		Fq.create_object_by_rank(generator[i], 0, __FILE__, __LINE__, verbose_level);
 		Fq.create_object_by_rank(tmp[i], 0, __FILE__, __LINE__, verbose_level);
 	}
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code creating generator[0]" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"creating generator[0]" << endl;
 	}
 	Fq.create_object_by_rank(generator[0], 1, __FILE__, __LINE__, verbose_level);
 
@@ -478,7 +408,8 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 	cout << endl;
 
 	if (f_v) {
-		cout << "cyclic_codes::make_cyclic_code before generator_matrix_cyclic_code" << endl;
+		cout << "cyclic_codes::make_cyclic_code "
+				"before generator_matrix_cyclic_code" << endl;
 	}
 	generator_matrix_cyclic_code(n, degree, generator_subfield, Genma);
 	cout << "cyclic_codes::make_cyclic_code generator matrix: " << endl;
@@ -499,7 +430,8 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 			}
 		fp << endl;
 	}
-	cout << "cyclic_codes::make_cyclic_code Written file " << fname_txt << " of size "
+	cout << "cyclic_codes::make_cyclic_code "
+			"Written file " << fname_txt << " of size "
 			<< Fio.file_size(fname_txt) << endl;
 
 
@@ -508,7 +440,8 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 
 
 	Fio.int_matrix_write_csv(fname_csv, Genma, k, n);
-	cout << "cyclic_codes::make_cyclic_code Written file " << fname_csv << " of size "
+	cout << "cyclic_codes::make_cyclic_code "
+			"Written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 	}
 
@@ -719,7 +652,8 @@ void cyclic_codes::field_reduction(int n, int q, int p, int e, int m,
 	{
 		field_theory::finite_field fq;
 
-		fq.init_override_polynomial(q, poly, FALSE /* f_without_tables */, verbose_level);
+		fq.init_override_polynomial(q, poly,
+				FALSE /* f_without_tables */, verbose_level);
 		cout << "q = " << q << " override polynomial = " << poly << endl;
 
 		for (i = 0; i <= degree; i++) {
@@ -1063,66 +997,6 @@ void cyclic_codes::compute_generator_matrix(
 	}
 }
 
-
-#if 0
-void cyclic_codes::make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level)
-// this function creates a finite field
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "cyclic_codes::make_BCH_codes" << endl;
-	}
-
-	char fname[1000];
-	std::string fname_txt;
-	std::string fname_csv;
-	number_theory::number_theory_domain NT;
-	int *roots;
-	int nb_roots;
-	int i, j;
-
-	roots = NEW_int(t - 1);
-	nb_roots = t - 1;
-	for (i = 0; i < t - 1; i++) {
-		j = NT.mod(b + i, n);
-		roots[i] = j;
-	}
-	snprintf(fname, 1000, "BCH_%d_%d", n, t);
-
-	fname_txt.assign(fname);
-	fname_txt.append(".txt");
-	fname_csv.assign(fname);
-	fname_csv.append(".csv");
-
-	cout << "roots: ";
-	Int_vec_print(cout, roots, nb_roots);
-	cout << endl;
-
-	string dummy;
-
-	dummy.assign("");
-
-	if (f_v) {
-		cout << "cyclic_codes::make_BCH_codes before make_cyclic_code" << endl;
-	}
-
-	// this function creates a finite field:
-	make_cyclic_code(n, q, t, roots, nb_roots,
-			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
-			fname_txt, fname_csv, verbose_level);
-
-	if (f_v) {
-		cout << "cyclic_codes::make_BCH_codes after make_cyclic_code" << endl;
-	}
-
-	FREE_int(roots);
-
-	if (f_v) {
-		cout << "cyclic_codes::make_BCH_codes done" << endl;
-	}
-}
-#endif
 
 void cyclic_codes::generator_matrix_cyclic_code(
 		field_theory::finite_field *F,

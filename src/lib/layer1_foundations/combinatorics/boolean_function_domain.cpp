@@ -40,10 +40,10 @@ boolean_function_domain::~boolean_function_domain()
 	if (NN) {
 		FREE_OBJECT(NN);
 	}
+#if 0
 	if (Fq) {
 		FREE_OBJECT(Fq);
 	}
-#if 0
 	if (FQ) {
 		FREE_OBJECT(FQ);
 	}
@@ -97,7 +97,8 @@ boolean_function_domain::~boolean_function_domain()
 	}
 }
 
-void boolean_function_domain::init(int n, int verbose_level)
+void boolean_function_domain::init(field_theory::finite_field *F2,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;
@@ -117,6 +118,12 @@ void boolean_function_domain::init(int n, int verbose_level)
 		exit(1);
 	}
 #endif
+
+	if (Fq->q != 2) {
+		cout << "boolean_function_domain::init order of the field must be equal to 2" << endl;
+		exit(1);
+	}
+
 	boolean_function_domain::n = n;
 	n2 = n >> 1;
 	Q = 1 << n;
@@ -137,8 +144,9 @@ void boolean_function_domain::init(int n, int verbose_level)
 		cout << "boolean_function_domain::init N=" << N << endl;
 	}
 
-	Fq = NEW_OBJECT(field_theory::finite_field);
-	Fq->finite_field_init(2, FALSE /* f_without_tables */, 0);
+	boolean_function_domain::Fq = F2;
+	//Fq = NEW_OBJECT(field_theory::finite_field);
+	//Fq->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	//FQ = NEW_OBJECT(finite_field);
 	//FQ->finite_field_init(Q, 0);

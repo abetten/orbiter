@@ -23,6 +23,8 @@ namespace field_theory {
 finite_field::finite_field()
 {
 	orbiter_kernel_system::Orbiter->nb_times_finite_field_created++;
+
+	Descr = NULL;
 	f_has_table = FALSE;
 	T = NULL;
 	Iwo = NULL;
@@ -106,6 +108,8 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 		exit(1);
 	}
 
+	finite_field::Descr = Descr;
+
 	if (Descr->f_override_polynomial) {
 
 
@@ -137,6 +141,15 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 		}
 
 	}
+
+	if (Descr->f_symbol) {
+		if (f_v) {
+			cout << "finite_field::init symbol for printing: " << Descr->symbol_label << endl;
+		}
+		init_symbol_for_print(Descr->symbol_label);
+	}
+
+
 	if (f_v) {
 		cout << "finite_field::init done" << endl;
 	}
@@ -203,7 +216,6 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 	label_tex.assign(str);
 
 
-
 	if (f_v) {
 		cout << "finite_field::finite_field_init done" << endl;
 	}
@@ -263,31 +275,34 @@ void finite_field::init_implementation(int f_without_tables, int verbose_level)
 
 void finite_field::set_default_symbol_for_print()
 {
+	std::string s;
+
 	if (q == 4) {
-		init_symbol_for_print("\\omega");
+		s.assign("\\omega");
 	}
 	else if (q == 8) {
-		init_symbol_for_print("\\gamma");
+		s.assign("\\gamma");
 	}
 	else if (q == 16) {
-		init_symbol_for_print("\\delta");
+		s.assign("\\delta");
 	}
 	else if (q == 32) {
-		init_symbol_for_print("\\eta");
+		s.assign("\\eta");
 	}
 	else if (q == 64) {
-		init_symbol_for_print("\\epsilon");
+		s.assign("\\epsilon");
 	}
 	else if (q == 128) {
-		init_symbol_for_print("\\zeta");
+		s.assign("\\zeta");
 	}
 	else {
-		init_symbol_for_print("\\alpha");
+		s.assign("\\alpha");
 	}
+	init_symbol_for_print(s);
 }
 
 
-void finite_field::init_symbol_for_print(const char *symbol)
+void finite_field::init_symbol_for_print(std::string &symbol)
 {
 	symbol_for_print.assign(symbol);
 }

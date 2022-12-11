@@ -1049,6 +1049,12 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 	}
 
 	{
+
+		field_theory::finite_field *F;
+
+		F = NEW_OBJECT(field_theory::finite_field);
+		F->finite_field_init(2, FALSE /* f_without_tables */, 0);
+
 		combinatorics::boolean_function_domain *BF;
 
 		BF = NEW_OBJECT(combinatorics::boolean_function_domain);
@@ -1056,7 +1062,7 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 		if (f_v) {
 			cout << "interface_combinatorics::do_bent before BF->init" << endl;
 		}
-		BF->init(n, verbose_level);
+		BF->init(F, n, verbose_level);
 		if (f_v) {
 			cout << "interface_combinatorics::do_bent after BF->init" << endl;
 		}
@@ -1083,6 +1089,7 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 
 		FREE_OBJECT(BFC);
 		FREE_OBJECT(BF);
+		FREE_OBJECT(F);
 	}
 
 	if (f_v) {

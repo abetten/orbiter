@@ -1036,7 +1036,7 @@ void finite_field::cheat_sheet_power_table_top(std::ostream &ost, int f_with_pol
 	ost << "\\hline" << endl;
 
 
-	ost << "i & \\alpha^i & \\alpha^i & \\mbox{vector}";
+	ost << "i & " << symbol_for_print << "^i & " << symbol_for_print << "^i & \\mbox{vector}";
 	if (f_with_polynomials) {
 		ost << "& \\mbox{reduced rep.}";
 	}
@@ -1120,7 +1120,7 @@ void finite_field::print_element_as_polynomial(std::ostream &ost, int *v, int ve
 			ost << setw(3) << v[j];
 		}
 		if (j) {
-			ost << "\\alpha";
+			ost << symbol_for_print;
 		}
 		if (j > 1) {
 			ost << "^{" << j << "}";
@@ -1183,7 +1183,7 @@ void finite_field::cheat_sheet_main_table(std::ostream &f, int verbose_level)
 				f << setw(3) << v[j];
 			}
 			if (j) {
-				f << "\\alpha";
+				f << symbol_for_print;
 			}
 			if (j > 1) {
 				f << "^{" << j << "}";
@@ -1274,8 +1274,8 @@ void finite_field::cheat_sheet_main_table_top(std::ostream &f, int nb_cols)
 	f << "i & \\gamma_i ";
 	f << "& -\\gamma_i";
 	f << "& \\gamma_i^{-1}";
-	f << "& \\log_\\alpha(\\gamma_i)";
-	f << "& \\alpha^i";
+	f << "& \\log_" << symbol_for_print << "(\\gamma_i)";
+	f << "& " << symbol_for_print << "^i";
 	f << "& Z_i";
 	if (e > 1) {
 		f << "& \\phi(\\gamma_i) ";

@@ -551,6 +551,25 @@ applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *o
 	return (applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *) get_object(idx);
 }
 
+apps_coding_theory::create_code *orbiter_top_level_session::get_object_of_type_code(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_code cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_code) {
+		cout << "orbiter_top_level_session::get_object_of_type_code object type != t_code" << endl;
+		exit(1);
+	}
+
+
+	return (apps_coding_theory::create_code *) get_object(idx);
+}
+
+
 
 
 }}}

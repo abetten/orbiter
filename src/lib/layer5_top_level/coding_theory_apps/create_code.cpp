@@ -29,7 +29,10 @@ create_code::create_code()
 	f_field = FALSE;
 	F = NULL;
 
+	f_has_generator_matrix = FALSE;
 	genma = NULL;
+
+	f_has_check_matrix = FALSE;
 	checkma = NULL;
 	n = 0;
 	nmk = 0;
@@ -37,6 +40,7 @@ create_code::create_code()
 	d = 0;
 
 	Create_BCH_code = NULL;
+	Create_RS_code = NULL;
 
 }
 
@@ -71,9 +75,9 @@ void create_code::init(
 
 	// main stage:
 
-	if (description->f_linear_code_through_generator_matrix) {
+	if (description->f_generator_matrix) {
 		if (f_v) {
-			cout << "create_code::init f_linear_code_through_generator_matrix" << endl;
+			cout << "create_code::init f_generator_matrix" << endl;
 		}
 
 		if (!f_field) {
@@ -84,9 +88,10 @@ void create_code::init(
 		int nb_rows, nb_cols;
 
 		Get_matrix(
-				description->linear_code_through_generator_matrix_label_genma,
+				description->generator_matrix_label_genma,
 				genma, nb_rows, nb_cols);
 
+		f_has_generator_matrix = TRUE;
 		n = nb_cols;
 		k = nb_rows;
 		nmk = n - k;
@@ -110,13 +115,12 @@ void create_code::init(
 
 
 		if (f_v) {
-			cout << "create_code::init f_linear_code_through_generator_matrix done" << endl;
+			cout << "create_code::init f_generator_matrix done" << endl;
 		}
 	}
-	else if (description->f_linear_code_from_projective_set) {
+	else if (description->f_basis) {
 		if (f_v) {
-			cout << "create_code::init f_linear_code_from_projective_set" << endl;
-			cout << "create_code::init nmk = " << description->linear_code_from_projective_set_nmk << endl;
+			cout << "create_code::init f_basis" << endl;
 		}
 
 		if (!f_field) {
@@ -129,7 +133,75 @@ void create_code::init(
 
 
 		Get_lint_vector_from_label(
-				description->linear_code_from_projective_set_set,
+				description->basis_label,
+				v, sz, verbose_level);
+
+		if (f_v) {
+			cout << "create_code::init using basis v=";
+			Lint_vec_print(cout, v, sz);
+			cout << endl;
+		}
+
+		int i;
+		int nb_rows, nb_cols;
+		geometry::geometry_global Gg;
+
+		nb_rows = sz;
+		nb_cols = description->basis_n;
+		genma = NEW_int(nb_rows * nb_cols);
+
+		if (f_v) {
+			cout << "create_code::init nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
+		}
+
+		for (i = 0; i < nb_rows; i++) {
+			Gg.AG_element_unrank(F->q, genma + i * nb_cols, 1, nb_cols, v[i]);
+		}
+
+		f_has_generator_matrix = TRUE;
+		n = nb_cols;
+		k = nb_rows;
+		nmk = n - k;
+
+
+		if (f_v) {
+			cout << "create_code::init before create_checkma_from_genma" << endl;
+		}
+		create_checkma_from_genma(verbose_level);
+		if (f_v) {
+			cout << "create_code::init after create_checkma_from_genma" << endl;
+		}
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "by_basis_n%d_k%d", n, k);
+		label_txt.assign(str);
+
+		snprintf(str, sizeof(str), "by\\_basis\\_n%d\\_k%d", n, k);
+		label_tex.assign(str);
+
+
+		if (f_v) {
+			cout << "create_code::init f_basis done" << endl;
+		}
+	}
+	else if (description->f_projective_set) {
+		if (f_v) {
+			cout << "create_code::init f_projective_set" << endl;
+			cout << "create_code::init nmk = " << description->projective_set_nmk << endl;
+		}
+
+		if (!f_field) {
+			cout << "please use option -field to specify the field of linearity" << endl;
+			exit(1);
+		}
+
+		long int *v;
+		int sz;
+
+
+		Get_lint_vector_from_label(
+				description->projective_set_set,
 				v, sz, verbose_level);
 
 		if (f_v) {
@@ -138,7 +210,7 @@ void create_code::init(
 			cout << endl;
 		}
 
-		nmk = description->linear_code_from_projective_set_nmk;
+		nmk = description->projective_set_nmk;
 
 		n = sz;
 		k = n - nmk;
@@ -157,6 +229,7 @@ void create_code::init(
 				checkma[i * n + j] = Col[i];
 			}
 		}
+		f_has_check_matrix = TRUE;
 
 		if (f_v) {
 			cout << "create_code::init checkma from projective set:" << endl;
@@ -181,16 +254,16 @@ void create_code::init(
 
 
 		if (f_v) {
-			cout << "create_code::init f_linear_code_from_from_projective_set done" << endl;
+			cout << "create_code::init f_projective_set done" << endl;
 		}
 	}
-	else if (description->f_linear_code_by_columns_of_parity_check) {
+	else if (description->f_columns_of_generator_matrix) {
 		if (f_v) {
-			cout << "create_code::init f_linear_code_by_columns_of_parity_check" << endl;
-			cout << "linear_code_by_columns_of_parity_check_nmk="
-					<< description->linear_code_by_columns_of_parity_check_nmk << endl;
-			cout << "linear_code_by_columns_of_parity_check_set="
-					<< description->linear_code_by_columns_of_parity_check_set << endl;
+			cout << "create_code::init f_columns_of_generator_matrix" << endl;
+			cout << "columns_of_generator_matrix_nmk="
+					<< description->columns_of_generator_matrix_k << endl;
+			cout << "columns_of_generator_matrix_set="
+					<< description->columns_of_generator_matrix_set << endl;
 		}
 
 		if (!f_field) {
@@ -205,22 +278,23 @@ void create_code::init(
 
 
 		Get_lint_vector_from_label(
-				description->linear_code_by_columns_of_parity_check_set,
+				description->columns_of_generator_matrix_set,
 				set, sz, verbose_level);
 
 
 
 		n = sz;
-		nmk = description->linear_code_by_columns_of_parity_check_nmk;
-		k = n - nmk;
+		k = description->columns_of_generator_matrix_k;
+		nmk = n - k;
 
-		Codes.do_linear_code_through_columns_of_parity_check(
+		Codes.do_linear_code_through_columns_of_generator_matrix(
 				F,
 				n,
 				set,
-				nmk /*k*/,
+				k,
 				genma,
 				verbose_level);
+		f_has_generator_matrix = TRUE;
 
 		if (f_v) {
 			cout << "create_code::init genma:" << endl;
@@ -242,10 +316,10 @@ void create_code::init(
 			cout << "create_code::init f_linear_code_by_columns_of_parity_check done" << endl;
 		}
 	}
-	else if (description->f_first_order_Reed_Muller) {
+	else if (description->f_Reed_Muller) {
 		if (f_v) {
-			cout << "create_code::init f_first_order_Reed_Muller" << endl;
-			cout << "m = " << description->first_order_Reed_Muller_m << endl;
+			cout << "create_code::init f_Reed_Muller" << endl;
+			cout << "m = " << description->Reed_Muller_m << endl;
 		}
 
 		if (!f_field) {
@@ -276,14 +350,16 @@ void create_code::init(
 		number_theory::number_theory_domain NT;
 		long int *v;
 
-		m = description->first_order_Reed_Muller_m;
+		m = description->Reed_Muller_m;
 
 		n = NT.i_power_j(2, m);
 		if (f_v) {
-			cout << "create_code::init f_first_order_Reed_Muller" << endl;
+			cout << "create_code::init f_Reed_Muller" << endl;
 			cout << "n = " << n << endl;
 		}
 
+		// create the column ranks:
+		// step size is 2 so we always have a one in the least significant bit.
 		v = NEW_lint(n);
 		a = 1;
 		for (i = 0; i < n; i++) {
@@ -291,16 +367,19 @@ void create_code::init(
 			a += 2;
 		}
 
-		nmk = n - m - 1;
-		k = n - nmk;
+		//nmk = n - m - 1;
+		//k = n - nmk
+		k = m + 1;
+		nmk = n - k;
 
-		Codes.do_linear_code_through_columns_of_parity_check(
+		Codes.do_linear_code_through_columns_of_generator_matrix(
 				F,
 				n,
 				v,
-				nmk /*k*/,
+				k,
 				genma,
 				verbose_level);
+		f_has_generator_matrix = TRUE;
 
 		if (f_v) {
 			cout << "create_code::init genma:" << endl;
@@ -329,7 +408,7 @@ void create_code::init(
 
 
 		if (f_v) {
-			cout << "create_code::init f_first_order_Reed_Muller done" << endl;
+			cout << "create_code::init f_Reed_Muller done" << endl;
 		}
 	}
 	else if (description->f_BCH) {
@@ -359,6 +438,7 @@ void create_code::init(
 		genma = NEW_int(k * n);
 
 		Int_vec_copy(Create_BCH_code->Genma, genma, k * n);
+		f_has_generator_matrix = TRUE;
 
 		if (f_v) {
 			cout << "create_code::init before create_checkma_from_genma" << endl;
@@ -394,8 +474,43 @@ void create_code::init(
 			exit(1);
 		}
 
-		//int Reed_Solomon_n;
-		//int Reed_Solomon_d;
+		n = description->Reed_Solomon_n;
+		d = description->Reed_Solomon_d;
+
+		Create_RS_code = NEW_OBJECT(coding_theory::create_RS_code);
+
+		Create_RS_code->init(F,
+				n,
+				d,
+				verbose_level);
+
+		k = Create_RS_code->k;
+		nmk = n - k;
+
+		genma = NEW_int(k * n);
+
+		Int_vec_copy(Create_RS_code->Genma, genma, k * n);
+		f_has_generator_matrix = TRUE;
+
+		if (f_v) {
+			cout << "create_code::init before create_checkma_from_genma" << endl;
+		}
+		create_checkma_from_genma(verbose_level);
+		if (f_v) {
+			cout << "create_code::init after create_checkma_from_genma" << endl;
+		}
+
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "RS_n%d_d%d", n, d);
+		label_txt.assign(str);
+
+		snprintf(str, sizeof(str), "RS\\_n%d\\_d%d", n, d);
+		label_tex.assign(str);
+
+		Create_RS_code->do_report(verbose_level);
+
 
 		if (f_v) {
 			cout << "create_code::init f_Reed_Solomon done" << endl;
@@ -423,6 +538,8 @@ void create_code::init(
 				F,
 				genma, checkma,
 				verbose_level);
+		f_has_generator_matrix = TRUE;
+		f_has_check_matrix = TRUE;
 
 		nmk = n - k;
 
@@ -454,11 +571,21 @@ void create_code::init(
 		cout << "create_code::init we have created the following code:" << endl;
 
 		if (n < 100) {
-			cout << "genma:" << endl;
-			Int_matrix_print(genma, k, n);
+			if (f_has_generator_matrix) {
+				cout << "genma:" << endl;
+				Int_matrix_print(genma, k, n);
+			}
+			else {
+				cout << "generator matrix is not available" << endl;
+			}
 
-			cout << "checkma:" << endl;
-			Int_matrix_print(checkma, nmk, n);
+			if (f_has_check_matrix) {
+				cout << "checkma:" << endl;
+				Int_matrix_print(checkma, nmk, n);
+			}
+			else {
+				cout << "check matrix is not available" << endl;
+			}
 		}
 		else {
 			cout << "Too big to print." << endl;
@@ -500,6 +627,17 @@ void create_code::dual_code(int verbose_level)
 	genma = genma1;
 	checkma = checkma1;
 
+	int f_has_generator_matrix_save;
+	int f_has_check_matrix_save;
+
+	f_has_generator_matrix_save = f_has_generator_matrix;
+	f_has_check_matrix_save = f_has_check_matrix;
+
+	f_has_generator_matrix = f_has_check_matrix_save;
+	f_has_check_matrix = f_has_generator_matrix_save;
+
+
+
 	label_txt.append("_dual");
 	label_tex.append("\\_dual");
 
@@ -516,6 +654,11 @@ void create_code::export_magma(std::string &fname, int verbose_level)
 
 	if (f_v) {
 		cout << "create_code::export_magma n=" << n << " k=" << k << endl;
+	}
+
+	if (!f_has_generator_matrix) {
+		cout << "create_code::export_magma generator matrix is not available" << endl;
+		exit(1);
 	}
 
 	{
@@ -569,6 +712,11 @@ void create_code::create_genma_from_checkma(int verbose_level)
 	int *M;
 	int rk;
 
+	if (!f_has_check_matrix) {
+		cout << "create_code::create_genma_from_checkma does not have check matrix" << endl;
+		exit(1);
+	}
+
 	M = NEW_int(n * n);
 
 	Int_vec_copy(checkma, M, nmk * n);
@@ -593,6 +741,7 @@ void create_code::create_genma_from_checkma(int verbose_level)
 
 	genma = NEW_int(k * n);
 	Int_vec_copy(M + nmk * n, genma, k * n);
+	f_has_generator_matrix = TRUE;
 
 	FREE_int(M);
 
@@ -617,6 +766,11 @@ void create_code::create_checkma_from_genma(int verbose_level)
 	M = NEW_int(n * n);
 
 
+	if (!f_has_generator_matrix) {
+		cout << "create_code::create_checkma_from_genma does not have generator matrix" << endl;
+		exit(1);
+	}
+
 	Int_vec_copy(genma, M, k * n);
 
 	if (f_v) {
@@ -639,6 +793,7 @@ void create_code::create_checkma_from_genma(int verbose_level)
 
 	checkma = NEW_int(nmk * n);
 	Int_vec_copy(M + k * n, checkma, nmk * n);
+	f_has_check_matrix = TRUE;
 
 	FREE_int(M);
 
@@ -654,6 +809,11 @@ void create_code::export_codewords(std::string &fname, int verbose_level)
 
 	if (f_v) {
 		cout << "create_code::export_codewords" << endl;
+	}
+
+	if (!f_has_generator_matrix) {
+		cout << "create_code::export_codewords generator matrix is not available" << endl;
+		exit(1);
 	}
 
 	number_theory::number_theory_domain NT;
@@ -701,27 +861,30 @@ void create_code::export_codewords_by_weight(std::string &fname_base, int verbos
 		cout << "create_code::export_codewords_by_weight" << endl;
 	}
 
-	number_theory::number_theory_domain NT;
+	if (!f_has_generator_matrix) {
+		cout << "create_code::export_codewords_by_weight generator matrix is not available" << endl;
+		exit(1);
+	}
+
 	coding_theory::coding_theory_domain Code;
+
 	long int *codewords;
 	long int N;
 
-	N = NT.i_power_j(2, k);
-
-	codewords = NEW_lint(N);
-
-	Code.codewords_affine(F, n, k,
-			genma, // [k * n]
-			codewords, // q^k
-			verbose_level);
-
-
-	data_structures::sorting Sorting;
-
-
-	Sorting.lint_vec_heapsort(codewords, N);
-
 	if (f_v) {
+		cout << "create_code::export_codewords_by_weight before Code.make_codewords_sorted" << endl;
+	}
+	Code.make_codewords_sorted(F,
+				n, k,
+				genma, // [k * n]
+				codewords, // q^k
+				N,
+				verbose_level);
+	if (f_v) {
+		cout << "create_code::export_codewords_by_weight after Code.make_codewords_sorted" << endl;
+	}
+
+	if (FALSE) {
 		cout << "Codewords : ";
 		Lint_vec_print_fully(cout, codewords, N);
 		cout << endl;
@@ -818,6 +981,11 @@ void create_code::export_genma(std::string &fname, int verbose_level)
 		cout << "create_code::export_genma" << endl;
 	}
 
+	if (!f_has_generator_matrix) {
+		cout << "create_code::export_genma generator matrix is not available" << endl;
+		exit(1);
+	}
+
 	orbiter_kernel_system::file_io Fio;
 
 	Fio.int_matrix_write_csv(fname, genma, k, n);
@@ -839,6 +1007,11 @@ void create_code::export_checkma(std::string &fname, int verbose_level)
 
 	if (f_v) {
 		cout << "create_code::export_checkma" << endl;
+	}
+
+	if (!f_has_check_matrix) {
+		cout << "create_code::export_checkma check matrix is not available" << endl;
+		exit(1);
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -864,15 +1037,27 @@ void create_code::weight_enumerator(int verbose_level)
 		cout << "create_code::weight_enumerator" << endl;
 	}
 
+	if (!f_has_generator_matrix) {
+		cout << "create_code::weight_enumerator generator matrix is not available" << endl;
+		exit(1);
+	}
+
+
 	coding_theory::coding_theory_domain Codes;
 
 
 
+	if (f_v) {
+		cout << "create_code::weight_enumerator before Codes.do_weight_enumerator" << endl;
+	}
 	Codes.do_weight_enumerator(F,
 			genma, k, n,
 			FALSE /* f_normalize_from_the_left */,
 			FALSE /* f_normalize_from_the_right */,
 			verbose_level);
+	if (f_v) {
+		cout << "create_code::weight_enumerator after Codes.do_weight_enumerator" << endl;
+	}
 
 	if (f_v) {
 		cout << "create_code::weight_enumerator done" << endl;
@@ -889,84 +1074,171 @@ void create_code::fixed_code(
 	if (f_v) {
 		cout << "create_code::fixed_code n = " << n << endl;
 	}
+
+
+	if (!f_has_generator_matrix) {
+		cout << "create_code::fixed_code generator matrix is not available" << endl;
+		exit(1);
+	}
+
+
+
 	if (n != create_code::n) {
 		cout << "create_code::fixed_code the length of the permutation does not match" << endl;
 		exit(1);
 	}
 
-	long int t0, t1, dt;
-	long int N;
-	int *msg;
-	int *word;
-	geometry::geometry_global Gg;
-	orbiter_kernel_system::os_interface Os;
+	coding_theory::coding_theory_domain Codes;
 
-	t0 = Os.os_ticks();
+	int subcode_k;
+	int *subcode_genma;
+
 
 	if (f_v) {
-		cout << "create_code::fixed_code" << endl;
+		cout << "create_code::fixed_code before Codes.fixed_code" << endl;
 	}
-	N = Gg.nb_AG_elements(k, F->q);
+	Codes.fixed_code(
+				F,
+				n, k, genma,
+				perm,
+				subcode_genma, subcode_k,
+				verbose_level);
 	if (f_v) {
-		cout << N << " messages" << endl;
+		cout << "create_code::fixed_code after Codes.fixed_code" << endl;
 	}
-	msg = NEW_int(k);
-	word = NEW_int(n);
-	int h, i, a, j, b, cnt;
-	vector<long int> V;
 
-	cnt = 0;
-	for (h = 0; h < N; h++) {
-		if ((h % ONE_MILLION) == 0) {
-			t1 = Os.os_ticks();
-			dt = t1 - t0;
-			cout << setw(10) << h << " / " << setw(10) << N << " : ";
-			Os.time_check_delta(cout, dt);
-			cout << endl;
-		}
-		Gg.AG_element_unrank(F->q, msg, 1, k, h);
-		F->Linear_algebra->mult_vector_from_the_left(msg, genma, word, k, n);
-		for (i = 0; i < n; i++) {
-			a = word[i];
-			j = perm[i];
-			b = word[j];
-			if (a != b) {
-				break;
-			}
-		}
-		if (i == n) {
-			V.push_back(h);
-			Int_vec_print(cout, word, n);
-			cout << endl;
-			cnt++;
-		}
-	}
 	if (f_v) {
-		cout << "create_code::fixed_code we found " << cnt << " fixed words" << endl;
-	}
-	int *M;
-	int rk;
-
-	M = NEW_int(cnt * n);
-	for (i = 0; i < N; i++) {
-		Gg.AG_element_unrank(F->q, msg, 1, k, V[i]);
-		F->Linear_algebra->mult_vector_from_the_left(msg, genma, word, k, n);
-		Int_vec_copy(word, M + i * n, n);
-	}
-	rk = F->Linear_algebra->Gauss_easy(M, cnt, n);
-	if (f_v) {
-		cout << "create_code::fixed_code The fix subcode has dimension " << rk << endl;
-		Int_matrix_print(M, rk, n);
+		cout << "create_code::fixed_code The fix subcode has dimension " << subcode_k << endl;
+		Int_matrix_print(subcode_genma, subcode_k, n);
 		cout << endl;
-		Int_vec_print_fully(cout, M, rk * n);
+		Int_vec_print_fully(cout, subcode_genma, subcode_k * n);
 		cout << endl;
 	}
-
 
 
 	if (f_v) {
 		cout << "create_code::fixed_code done" << endl;
 	}
+}
+
+
+void create_code::make_diagram(int f_embellish, int embellish_radius,
+		int f_metric_balls, int radius_of_metric_ball,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::code_diagram" << endl;
+	}
+
+
+
+	long int *Words;
+	long int nb_words;
+
+
+	coding_theory::coding_theory_domain Code;
+
+
+	if (f_v) {
+		cout << "create_code::code_diagram before Code.make_codewords_sorted" << endl;
+	}
+	Code.make_codewords_sorted(F,
+				n, k,
+				genma, // [k * n]
+				Words, // q^k
+				nb_words,
+				verbose_level);
+	if (f_v) {
+		cout << "create_code::code_diagram after Code.make_codewords_sorted" << endl;
+	}
+
+	if (FALSE) {
+		cout << "Codewords : ";
+		Lint_vec_print_fully(cout, Words, nb_words);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "create_code::code_diagram before Code.code_diagram" << endl;
+	}
+	Code.code_diagram(
+			label_txt,
+			Words,
+			nb_words, n,
+			f_metric_balls, radius_of_metric_ball,
+			f_embellish, embellish_radius,
+			verbose_level);
+	if (f_v) {
+		cout << "create_code::code_diagram after Code.code_diagram" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "create_code::code_diagram done" << endl;
+	}
+
+}
+
+
+void create_code::polynomial_representation_of_boolean_function(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::polynomial_representation_of_boolean_function" << endl;
+	}
+
+
+
+	long int *Words;
+	long int nb_words;
+
+
+	coding_theory::coding_theory_domain Codes;
+
+
+	if (f_v) {
+		cout << "create_code::code_diagram before Codes.make_codewords_sorted" << endl;
+	}
+	Codes.make_codewords_sorted(F,
+				n, k,
+				genma, // [k * n]
+				Words, // q^k
+				nb_words,
+				verbose_level);
+	if (f_v) {
+		cout << "create_code::polynomial_representation_of_boolean_function after Codes.make_codewords_sorted" << endl;
+	}
+
+	if (FALSE) {
+		cout << "Codewords : ";
+		Lint_vec_print_fully(cout, Words, nb_words);
+		cout << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "create_code::polynomial_representation_of_boolean_function before Code.code_diagram" << endl;
+	}
+	Codes.polynomial_representation_of_boolean_function(
+			F,
+			label_txt,
+			Words,
+			nb_words, n,
+			verbose_level);
+	if (f_v) {
+		cout << "create_code::polynomial_representation_of_boolean_function after Code.code_diagram" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "create_code::polynomial_representation_of_boolean_function done" << endl;
+	}
+
 }
 
 

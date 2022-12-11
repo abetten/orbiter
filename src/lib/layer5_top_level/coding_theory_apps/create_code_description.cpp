@@ -23,19 +23,23 @@ create_code_description::create_code_description()
 	f_field = FALSE;
 	//std::string field_label;
 
-	f_linear_code_through_generator_matrix = FALSE;
-	//std::string linear_code_through_generator_matrix_label_genma;
+	f_generator_matrix = FALSE;
+	//std::string generator_matrix_label_genma;
 
-	f_linear_code_from_projective_set = FALSE;
-	linear_code_from_projective_set_nmk = 0;
-	//std::string linear_code_from_projective_set_set;
+	f_basis = FALSE;
+	basis_n = 0;
+	//std::string basis_label;
 
-	f_linear_code_by_columns_of_parity_check = FALSE;
-	linear_code_by_columns_of_parity_check_nmk = 0;
-	//std::string linear_code_by_columns_of_parity_check_set;
+	f_projective_set = FALSE;
+	projective_set_nmk = 0;
+	//std::string projective_set_set;
 
-	f_first_order_Reed_Muller = FALSE;
-	first_order_Reed_Muller_m = 0;
+	f_columns_of_generator_matrix = FALSE;
+	columns_of_generator_matrix_k = 0;
+	//std::string by_columns_of_generator_matrix_set;
+
+	f_Reed_Muller = FALSE;
+	Reed_Muller_m = 0;
 
 	f_BCH = FALSE;
 	BCH_n = 0;
@@ -77,38 +81,46 @@ int create_code_description::read_arguments(
 				cout << "-field " << field_label << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-linear_code_through_generator_matrix") == 0) {
-			f_linear_code_through_generator_matrix = TRUE;
-			linear_code_through_generator_matrix_label_genma.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-generator_matrix") == 0) {
+			f_generator_matrix = TRUE;
+			generator_matrix_label_genma.assign(argv[++i]);
 			if (f_v) {
-				cout << "-linear_code_through_generator_matrix " << linear_code_through_generator_matrix_label_genma << endl;
+				cout << "-generator_matrix " << generator_matrix_label_genma << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-linear_code_from_projective_set") == 0) {
-			f_linear_code_from_projective_set = TRUE;
-			linear_code_from_projective_set_nmk = ST.strtoi(argv[++i]);
-			linear_code_from_projective_set_set.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-basis") == 0) {
+			f_basis = TRUE;
+			basis_n = ST.strtoi(argv[++i]);
+			basis_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-linear_code_from_projective_set "
-						<< linear_code_from_projective_set_nmk
-						<< " " << linear_code_from_projective_set_set << endl;
+				cout << "-basis " << basis_n << " " << basis_label << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-linear_code_by_columns_of_parity_check") == 0) {
-			f_linear_code_by_columns_of_parity_check = TRUE;
-			linear_code_by_columns_of_parity_check_nmk = ST.strtoi(argv[++i]);
-			linear_code_by_columns_of_parity_check_set.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-projective_set") == 0) {
+			f_projective_set = TRUE;
+			projective_set_nmk = ST.strtoi(argv[++i]);
+			projective_set_set.assign(argv[++i]);
 			if (f_v) {
-				cout << "-linear_code_by_columns_of_parity_check "
-						<< linear_code_by_columns_of_parity_check_nmk
-						<< " " << linear_code_by_columns_of_parity_check_set << endl;
+				cout << "-projective_set "
+						<< projective_set_nmk
+						<< " " << projective_set_set << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-first_order_Reed_Muller") == 0) {
-			f_first_order_Reed_Muller = TRUE;
-			first_order_Reed_Muller_m = ST.strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-columns_of_generator_matrix") == 0) {
+			f_columns_of_generator_matrix = TRUE;
+			columns_of_generator_matrix_k = ST.strtoi(argv[++i]);
+			columns_of_generator_matrix_set.assign(argv[++i]);
 			if (f_v) {
-				cout << "-first_order_Reed_Muller " << first_order_Reed_Muller_m << endl;
+				cout << "-columns_of_generator_matrix "
+						<< columns_of_generator_matrix_k
+						<< " " << columns_of_generator_matrix_set << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-Reed_Muller") == 0) {
+			f_Reed_Muller = TRUE;
+			Reed_Muller_m = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-Reed_Muller " << Reed_Muller_m << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-BCH") == 0) {
@@ -148,7 +160,7 @@ int create_code_description::read_arguments(
 			Modifications.push_back(M);
 		}
 
-		if (ST.stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}
@@ -171,22 +183,25 @@ void create_code_description::print()
 	if (f_field) {
 		cout << "-field " << field_label << endl;
 	}
-	if (f_linear_code_through_generator_matrix) {
-		cout << "-linear_code_through_generator_matrix "
-				<< linear_code_through_generator_matrix_label_genma << endl;
+	if (f_generator_matrix) {
+		cout << "-generator_matrix "
+				<< generator_matrix_label_genma << endl;
 	}
-	if (f_linear_code_from_projective_set) {
-		cout << "-linear_code_from_projective_set "
-				<< linear_code_from_projective_set_nmk
-				<< " " << linear_code_from_projective_set_set << endl;
+	if (f_basis) {
+		cout << "-basis " << basis_n << " " << basis_label << endl;
 	}
-	if (f_linear_code_by_columns_of_parity_check) {
-		cout << "-linear_code_by_columns_of_parity_check "
-				<< linear_code_by_columns_of_parity_check_nmk
-				<< " " << linear_code_by_columns_of_parity_check_set << endl;
+	if (f_projective_set) {
+		cout << "-projective_set "
+				<< projective_set_nmk
+				<< " " << projective_set_set << endl;
 	}
-	if (f_first_order_Reed_Muller) {
-		cout << "-first_order_Reed_Muller " << first_order_Reed_Muller_m << endl;
+	if (f_columns_of_generator_matrix) {
+		cout << "-columns_of_generator_matrix "
+				<< columns_of_generator_matrix_k
+				<< " " << columns_of_generator_matrix_set << endl;
+	}
+	if (f_Reed_Muller) {
+		cout << "-first_order_Reed_Muller " << Reed_Muller_m << endl;
 	}
 	if (f_Reed_Solomon) {
 		cout << "-Reed_Solomon " << Reed_Solomon_n << " " << Reed_Solomon_d << endl;

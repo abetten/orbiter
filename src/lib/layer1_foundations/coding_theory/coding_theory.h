@@ -61,6 +61,18 @@ public:
 	int code_minimum_distance(field_theory::finite_field *F, int n, int k,
 		int *code, int verbose_level);
 		// code[k * n]
+	void make_codewords_sorted(field_theory::finite_field *F,
+			int n, int k,
+			int *genma, // [k * n]
+			long int *&codewords, // q^k
+			long int &N,
+			int verbose_level);
+	void make_codewords(field_theory::finite_field *F,
+			int n, int k,
+			int *genma, // [k * n]
+			long int *&codewords, // q^k
+			long int &N,
+			int verbose_level);
 	void codewords_affine(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
 		long int *codewords, // q^k
@@ -92,24 +104,27 @@ public:
 	void do_minimum_distance(field_theory::finite_field *F,
 			int *M, int m, int n,
 			int verbose_level);
-
+#if 0
 	void do_linear_code_through_basis(
 			field_theory::finite_field *F,
 			int n,
 			long int *basis_set, int k,
 			int f_embellish,
 			int verbose_level);
+#endif
 	void matrix_from_projective_set(
 			field_theory::finite_field *F,
 			int n, int k, long int *columns_set_of_size_n,
 			int *genma,
 			int verbose_level);
+#if 0
 	void do_linear_code_through_columns_of_parity_check_projectively(
 			field_theory::finite_field *F,
 			int n,
 			long int *columns_set, int k,
 			int verbose_level);
-	void do_linear_code_through_columns_of_parity_check(
+#endif
+	void do_linear_code_through_columns_of_generator_matrix(
 			field_theory::finite_field *F,
 			int n,
 			long int *columns_set, int k,
@@ -120,10 +135,10 @@ public:
 			int polynomial_degree,
 			int polynomial_nb_vars,
 			std::string &polynomial_text,
-			int f_embellish,
+			//int f_embellish, int embellish_radius,
 			int verbose_level);
 	void do_sylvester_hadamard(int n,
-			int f_embellish,
+			//int f_embellish, int embellish_radius,
 			int verbose_level);
 	void do_long_code(
 			int n,
@@ -132,18 +147,9 @@ public:
 			std::string &nearest_codeword_text,
 			int verbose_level);
 	// creates a combinatorics::boolean_function_domain object
-	void code_diagram(
-			std::string &label,
-			long int *Words,
-			int nb_words, int n, int f_metric_balls, int radius_of_metric_ball,
-			int f_enhance, int radius,
-			int verbose_level);
-	void investigate_code(long int *Words,
-			int nb_words, int n, int f_embellish, int verbose_level);
-	// creates a combinatorics::boolean_function_domain object
 	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad);
 	void place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a);
-	void do_it(int n, int r, int a, int c, int seed, int verbose_level);
+	//void do_it(int n, int r, int a, int c, int seed, int verbose_level);
 	void dimensions(int n, int &nb_rows, int &nb_cols);
 	void dimensions_N(int N, int &nb_rows, int &nb_cols);
 	void print_binary(int n, int *v);
@@ -162,6 +168,25 @@ public:
 			std::string &fname_out, int nb_bits, int verbose_level);
 	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
+	void fixed_code(
+			field_theory::finite_field *F,
+			int n, int k, int *genma,
+			long int *perm,
+			int *&subcode_genma, int &subcode_k,
+			int verbose_level);
+	void code_diagram(
+			std::string &label,
+			long int *Words,
+			int nb_words, int n, int f_metric_balls, int radius_of_metric_ball,
+			int f_enhance, int radius,
+			int verbose_level);
+	void polynomial_representation_of_boolean_function(
+			field_theory::finite_field *F,
+			std::string &label_txt,
+			long int *Words,
+			int nb_words, int n,
+			int verbose_level);
+	// creates a combinatorics::boolean_function_domain object
 
 	// mindist.cpp:
 	int mindist(int n, int k, int q, int *G,
@@ -186,6 +211,7 @@ public:
 	crc_codes();
 	~crc_codes();
 
+	// crc_codes_search.cpp:
 	void find_CRC_polynomials(field_theory::finite_field *F,
 			int t, int da, int dc,
 			int verbose_level);
@@ -209,6 +235,7 @@ public:
 	int remainder_is_nonzero(int da, int *A, int db, int *B, field_theory::finite_field *F);
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
+	// crc_codes.cpp:
 	uint16_t crc16(const uint8_t *data, size_t size);
 	uint32_t crc32(const char *s, size_t n);
 	void crc32_test(int block_length, int verbose_level);
@@ -332,6 +359,41 @@ public:
 };
 
 // #############################################################################
+// create_RS_code.cpp:
+// #############################################################################
+
+//! to create a RS code
+
+
+class create_RS_code {
+public:
+
+	int n;
+	int d;
+	field_theory::finite_field *F;
+
+	ring_theory::unipoly_domain *FX; // polynomial ring over F
+
+	ring_theory::unipoly_object *P;
+
+	int degree;
+	int k;
+	int *Genma; // [k * n]
+	int *generator_polynomial; // [degree + 1]
+
+
+
+	create_RS_code();
+	~create_RS_code();
+	void init(field_theory::finite_field *F, int n, int d, int verbose_level);
+	void do_report(int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+
+
+};
+
+
+// #############################################################################
 // cyclic_codes.cpp:
 // #############################################################################
 
@@ -346,9 +408,11 @@ public:
 	~cyclic_codes();
 
 	// cyclic_codes.cpp:
+#if 0
 	void make_BCH_code(int n, field_theory::finite_field *F, int d,
 			field_theory::nth_roots *&Nth, ring_theory::unipoly_object &P,
 			int verbose_level);
+#endif
 	void make_cyclic_code(int n, int q, int t,
 			int *roots, int nb_roots, int f_poly, std::string &poly,
 			int f_dual, std::string &fname_txt, std::string &fname_csv,

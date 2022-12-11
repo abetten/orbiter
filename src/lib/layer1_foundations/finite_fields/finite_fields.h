@@ -101,6 +101,9 @@ public:
 	int f_make_table_of_irreducible_polynomials;
 	int make_table_of_irreducible_polynomials_degree;
 
+
+	// cryptography:
+
 	int f_EC_Koblitz_encoding;
 	std::string EC_message;
 	int EC_s;
@@ -136,9 +139,6 @@ public:
 	std::string EC_bsgs_A;
 	std::string EC_bsgs_keys;
 
-
-
-
 	int f_NTRU_encrypt;
 	int NTRU_encrypt_N;
 	int NTRU_encrypt_p;
@@ -151,6 +151,9 @@ public:
 
 	int f_polynomial_reduce_mod_p;
 	std::string polynomial_reduce_mod_p_A;
+
+
+
 
 #if 0
 	int f_cheat_sheet_Gr;
@@ -414,6 +417,9 @@ public:
 
 	int f_without_tables;
 
+	int f_symbol;
+	std::string symbol_label;
+
 	finite_field_description();
 	~finite_field_description();
 	int read_arguments(
@@ -445,6 +451,9 @@ private:
 	int nb_times_add;
 
 public:
+
+	finite_field_description *Descr;
+
 	int f_has_table;
 		// if TRUE, T is available, otherwise Iwo is available.
 
@@ -475,7 +484,7 @@ public:
 	void finite_field_init(int q, int f_without_tables, int verbose_level);
 	void init_implementation(int f_without_tables, int verbose_level);
 	void set_default_symbol_for_print();
-	void init_symbol_for_print(const char *symbol);
+	void init_symbol_for_print(std::string &symbol);
 	void init_override_polynomial(int q, std::string &poly,
 		int f_without_tables, int verbose_level);
 	int has_quadratic_subfield();
@@ -807,12 +816,12 @@ public:
 
 	finite_field *Fp; // the prime field F_p
 
-	ring_theory::unipoly_domain *FpX;
+	ring_theory::unipoly_domain *FpX; // polynomial ring over Fp (the small field)
 
 	ring_theory::unipoly_domain *FQ;
 		// polynomial ring F_p modulo Min_poly
 
-	ring_theory::unipoly_domain *FX;
+	ring_theory::unipoly_domain *FX; // polynomial ring over F (the big field)
 
 	int m, r, field_degree;
 		// m is the order of q modulo n

@@ -884,6 +884,7 @@ public:
 	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
 	spreads::spread_create *get_object_of_type_spread(std::string &label);
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *get_object_of_type_cubic_surface(std::string &label);
+	apps_coding_theory::create_code *get_object_of_type_code(std::string &label);
 
 };
 
