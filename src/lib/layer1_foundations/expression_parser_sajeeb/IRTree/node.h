@@ -9,6 +9,7 @@
 #include "../Visitors/CopyVisitors/deep_copy_visitor.h"
 #include "../Visitors/exponent_vector_visitor.h"
 #include "../Visitors/ReductionVisitors/simplify_visitor.h"
+#include "../Visitors/uminus_distribute_and_reduce_visitor.h"
 #include "node_forward_declaration.h"
 #include "../Visitors/EvaluateVisitors/eval_visitor.h"
 
@@ -43,6 +44,9 @@ using std::vector;
     int accept(eval_visitor* visitor, finite_field* Fq, unordered_map<string, int>& assignment_table) override {    \
         return visitor->visit(this, Fq, assignment_table);                                   \
     }\
+    void accept(uminus_distribute_and_reduce_visitor* visitor) override {\
+        visitor->visit(this);\
+    }\
                        \
     private:                             \
     void accept(exponent_vector_visitor* visitor, \
@@ -54,10 +58,16 @@ using std::vector;
     void accept(deep_copy_visitor* visitor, shared_ptr<irtree_node> root) override {          \
         return visitor->visit(this, root);  \
     }                                    \
+    void accept(uminus_distribute_and_reduce_visitor* visitor,\
+                irtree_node* parent_node, \
+                list<shared_ptr<irtree_node> >::iterator& link) override {\
+        visitor->visit(this, parent_node, link);\
+    }\
                                          \
     public:                                     \
     friend class deep_copy_visitor;             \
-    friend class exponent_vector_visitor;
+    friend class exponent_vector_visitor;       \
+    friend class uminus_distribute_and_reduce_visitor;
 
 
 
@@ -67,6 +77,9 @@ class irtree_node {
                         vector<unsigned int>& exponent_vector,
                         list<shared_ptr<irtree_node> >::iterator& link,
                         irtree_node* parent_node) = 0;
+    virtual void accept(uminus_distribute_and_reduce_visitor* visitor,
+                        irtree_node* parent_node, 
+                        list<shared_ptr<irtree_node> >::iterator& link) = 0;
 
 public:
 	enum class node_type {
@@ -96,6 +109,7 @@ public:
 						list<shared_ptr<irtree_node>>::iterator& link) = 0;
     virtual shared_ptr<irtree_node> accept(deep_copy_visitor* visitor) = 0;
     virtual void accept(exponent_vector_visitor* visitor) = 0;
+    virtual void accept(uminus_distribute_and_reduce_visitor* visitor) = 0;
     virtual int accept(eval_visitor* visitor, finite_field* Fq, unordered_map<string, int>& assignment_table) = 0;
 
 
@@ -103,6 +117,7 @@ public:
 
     friend class deep_copy_visitor;
     friend class exponent_vector_visitor;
+    friend class uminus_distribute_and_reduce_visitor;
 };
 std::ostream& operator<< (std::ostream& os, const irtree_node::node_type& obj);
 

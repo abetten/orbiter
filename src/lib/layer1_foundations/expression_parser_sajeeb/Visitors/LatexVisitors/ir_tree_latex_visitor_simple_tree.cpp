@@ -70,7 +70,7 @@ void ir_tree_latex_visitor_simple_tree::visit(exponent_node* op_node) {
 }
 
 void ir_tree_latex_visitor_simple_tree::visit(unary_negate_node* op_node) {
-    OUT << "\\fbox{-}, arn_n" << "\n";
+    OUT << "\\fbox{(-)}, arn_n" << "\n";
     add_indentation();
     for (shared_ptr<irtree_node>& child : op_node->children) {
         OUT << indentation << "[";
