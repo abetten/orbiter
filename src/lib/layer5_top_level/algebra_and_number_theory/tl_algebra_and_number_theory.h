@@ -714,6 +714,7 @@ public:
 
 
 
+	// orbit stuff:
 
 
 	int f_orbit_of;
@@ -784,10 +785,6 @@ public:
 			any_group *AG_secondary,
 			int verbose_level);
 	void perform_activity(int verbose_level);
-	void apply(int verbose_level);
-	void multiply(int verbose_level);
-	void inverse(int verbose_level);
-	void raise_to_the_power(int verbose_level);
 
 };
 

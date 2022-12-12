@@ -1185,7 +1185,82 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 
 
+	else if (Descr->f_get_primitive_polynomial) {
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity f_get_primitive_polynomial" << endl;
+		}
+
+		ring_theory::unipoly_domain FX(F);
+
+		ring_theory::unipoly_object m;
+		ring_theory::longinteger_object rk;
+
+		FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
+
+		FX.get_a_primitive_polynomial(m, Descr->get_primitive_polynomial_degree, verbose_level);
+
+		FX.rank_longinteger(m, rk);
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity get_primitive_polynomial: ";
+			//cout << d << " : " << rk << " : ";
+			cout << "\"" << rk << "\", // ";
+			FX.print_object(m, cout);
+			cout << endl;
+		}
+
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"before FX.delete_object(m)" << endl;
+		}
+		FX.delete_object(m);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"after FX.delete_object(m)" << endl;
+		}
+	}
+
+	else if (Descr->f_get_primitive_polynomial_in_range) {
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity f_get_primitive_polynomial_in_range" << endl;
+		}
+
+		ring_theory::unipoly_domain FX(F);
+		int d;
+
+		for (d = Descr->get_primitive_polynomial_in_range_min; d < Descr->get_primitive_polynomial_in_range_max; d++) {
+			ring_theory::unipoly_object m;
+			ring_theory::longinteger_object rk;
+
+			FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
+
+			FX.get_a_primitive_polynomial(m, d, verbose_level);
+
+			FX.rank_longinteger(m, rk);
+
+			if (f_v) {
+				cout << "finite_field_activity::perform_activity get_primitive_polynomial: ";
+				//cout << d << " : " << rk << " : ";
+				cout << "\"" << rk << "\", // ";
+				FX.print_object(m, cout);
+				cout << endl;
+			}
+
+
+			if (f_v) {
+				cout << "finite_field_activity::perform_activity "
+						"before FX.delete_object(m)" << endl;
+			}
+			FX.delete_object(m);
+			if (f_v) {
+				cout << "finite_field_activity::perform_activity "
+						"after FX.delete_object(m)" << endl;
+			}
+		}
+	}
 
 
 	if (f_v) {

@@ -3658,6 +3658,8 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 		long int *Words,
 		int nb_words, int n,
 		int verbose_level)
+// computes the polynomial representation for the characteristic function
+// of the set defined by the Words[] array of size nb_words.
 // creates a combinatorics::boolean_function_domain object
 {
 	int f_v = (verbose_level >= 1);
@@ -3827,6 +3829,9 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 
 	cout << "BF->Poly[n].get_nb_monomials()=" << BF->Poly[n].get_nb_monomials() << endl;
 	coeff = NEW_int(BF->Poly[n].get_nb_monomials());
+
+	// f is the characteristic function of the set defined by Words[nb_words]
+
 	f = NEW_int(N);
 	g = NEW_int(N);
 

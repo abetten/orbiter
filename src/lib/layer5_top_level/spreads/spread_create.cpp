@@ -211,7 +211,7 @@ void spread_create::init(spread_create_description *Descr,
 
 		k2 = Descr->k * Descr->k;
 
-		Get_vector_or_set(Descr->spread_set_label, spread_set_matrices, spread_set_matrices_sz);
+		Get_vector_or_set(Descr->spread_set_data, spread_set_matrices, spread_set_matrices_sz);
 		if (f_v) {
 
 			cout << "spread_create::init spread_set_matrices "
@@ -231,6 +231,9 @@ void spread_create::init(spread_create_description *Descr,
 		if (f_v) {
 			cout << "spread_create::init after Grass->make_spread_from_spread_set, sz = " << sz << endl;
 		}
+		prefix.assign(Descr->spread_set_label);
+		label_txt.assign(Descr->spread_set_label);
+		label_tex.assign(Descr->spread_set_label_tex);
 
 		//exit(1);
 	}

@@ -41,6 +41,8 @@ spread_create_description::spread_create_description()
 
 	f_spread_set = FALSE;
 	//std::string spread_set_label;
+	//std::string spread_set_label_tex;
+	//std::string spread_set_data;
 
 	f_transform = FALSE;
 	//std::vector<std::string> transform_text;
@@ -94,7 +96,11 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 		else if (ST.stringcmp(argv[i], "-spread_set") == 0) {
 			f_spread_set = TRUE;
 			spread_set_label.assign(argv[++i]);
-			cout << "-spread_set " << spread_set_label << endl;
+			spread_set_label_tex.assign(argv[++i]);
+			spread_set_data.assign(argv[++i]);
+			cout << "-spread_set " << spread_set_label
+					<< " " << spread_set_label_tex
+					<< " " << spread_set_data << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-transform") == 0) {
 			f_transform = TRUE;
@@ -155,7 +161,9 @@ void spread_create_description::print()
 		cout << "-family " << family_name << endl;
 	}
 	if (f_spread_set) {
-		cout << "-spread_set " << spread_set_label << endl;
+		cout << "-spread_set " << spread_set_label
+				<< " " << spread_set_label_tex
+				<< " " << spread_set_data << endl;
 	}
 	if (f_transform) {
 		int i;

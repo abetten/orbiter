@@ -407,6 +407,8 @@ public:
 
 	int f_spread_set;
 	std::string spread_set_label;
+	std::string spread_set_label_tex;
+	std::string spread_set_data;
 
 	int f_transform;
 	std::vector<std::string> transform_text;

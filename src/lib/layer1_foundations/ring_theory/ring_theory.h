@@ -735,10 +735,12 @@ public:
 			int d, int verbose_level);
 	void do_make_table_of_irreducible_polynomials(field_theory::finite_field *F,
 			int deg, int verbose_level);
+#if 0
 	void do_search_for_primitive_polynomial_in_range(
 			int p_min, int p_max,
 			int deg_min, int deg_max,
 			int verbose_level);
+#endif
 	char *search_for_primitive_polynomial_of_given_degree(int p,
 		int degree, int verbose_level);
 	void search_for_primitive_polynomials(int p_min, int p_max,

@@ -2165,7 +2165,7 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 
 
 
-
+#if 0
 void ring_theory_global::do_search_for_primitive_polynomial_in_range(
 		int p_min, int p_max,
 		int deg_min, int deg_max,
@@ -2204,6 +2204,7 @@ void ring_theory_global::do_search_for_primitive_polynomial_in_range(
 		cout << "ring_theory_global::do_search_for_primitive_polynomial_in_range done" << endl;
 	}
 }
+#endif
 
 char *ring_theory_global::search_for_primitive_polynomial_of_given_degree(
 		int p, int degree, int verbose_level)

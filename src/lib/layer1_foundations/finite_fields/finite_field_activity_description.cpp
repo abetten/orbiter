@@ -218,6 +218,13 @@ finite_field_activity_description::finite_field_activity_description()
 	unrank_point_in_PG_n = 0;
 	//std::string unrank_point_in_PG_text;
 
+	f_get_primitive_polynomial = FALSE;
+	get_primitive_polynomial_degree = 0;
+
+	f_get_primitive_polynomial_in_range = FALSE;
+	get_primitive_polynomial_in_range_min = 0;
+	get_primitive_polynomial_in_range_max = 0;
+
 }
 
 
@@ -784,7 +791,24 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial") == 0) {
+			f_get_primitive_polynomial = TRUE;
+			get_primitive_polynomial_degree = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-get_primitive_polynomial " << get_primitive_polynomial_degree << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial_in_range") == 0) {
+			f_get_primitive_polynomial_in_range = TRUE;
+			get_primitive_polynomial_in_range_min = ST.strtoi(argv[++i]);
+			get_primitive_polynomial_in_range_max = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-get_primitive_polynomial_in_range"
+						<< " " << get_primitive_polynomial_in_range_min
+						<< " " << get_primitive_polynomial_in_range_max
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -1081,6 +1105,15 @@ void finite_field_activity_description::print()
 	if (f_evaluate) {
 		cout << "-evaluate " << evaluate_formula_label
 				<< " " << evaluate_parameters
+				<< endl;
+	}
+	if (f_get_primitive_polynomial) {
+		cout << "-get_primitive_polynomial " << get_primitive_polynomial_degree << endl;
+	}
+	if (f_get_primitive_polynomial_in_range) {
+		cout << "-get_primitive_polynomial_in_range"
+				<< " " << get_primitive_polynomial_in_range_min
+				<< " " << get_primitive_polynomial_in_range_max
 				<< endl;
 	}
 

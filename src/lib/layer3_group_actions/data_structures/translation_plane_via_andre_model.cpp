@@ -144,7 +144,8 @@ void translation_plane_via_andre_model::init(
 
 	//translation_plane_via_andre_model::F = Andre->F;
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::init before An->matrix_group_finite_field()" << endl;
+		cout << "translation_plane_via_andre_model::init "
+				"before An->matrix_group_finite_field" << endl;
 		cout << "translation_plane_via_andre_model::init An=" << endl;
 		An->print_info();
 	}
@@ -385,40 +386,52 @@ void translation_plane_via_andre_model::init(
 	strong_gens = NEW_OBJECT(groups::strong_generators);
 
 
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"initializing spread stabilizer, "
-				"which requires the stabilizer of the spread" << endl;
+	if (Sg) {
+
+		if (f_v) {
+			cout << "translation_plane_via_andre_model::init "
+					"initializing spread stabilizer, "
+					"which requires the stabilizer of the spread" << endl;
+		}
+
+		if (f_v) {
+			cout << "translation_plane_via_andre_model::init "
+					"before strong_gens->generators_for_translation_plane_in_andre_model" << endl;
+		}
+
+		strong_gens->generators_for_translation_plane_in_andre_model(
+			An1, An,
+			An1->G.matrix_grp, An->G.matrix_grp,
+			Sg,
+			verbose_level);
+
+		if (f_v) {
+			cout << "translation_plane_via_andre_model::init "
+					"after strong_gens->generators_for_translation_plane_in_andre_model" << endl;
+		}
+
+		ring_theory::longinteger_object stab_go;
+
+		strong_gens->group_order(stab_go);
+
+		if (f_v) {
+			cout << "translation_plane_via_andre_model::init "
+					"Stabilizer has order " << stab_go << endl;
+			cout << "translation_plane_via_andre_model::init "
+					"we will now compute the tactical decomposition "
+					"induced by the spread stabilizer" << endl;
+		}
+
+	}
+	else {
+		if (f_v) {
+			cout << "translation_plane_via_andre_model::init "
+					"cannot initializing spread stabilizer" << endl;
+		}
+
 	}
 
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"before strong_gens->generators_for_translation_plane_in_andre_model" << endl;
-	}
 
-	strong_gens->generators_for_translation_plane_in_andre_model(
-		An1, An, 
-		An1->G.matrix_grp, An->G.matrix_grp, 
-		Sg,
-		verbose_level);
-
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"after strong_gens->generators_for_translation_plane_in_andre_model" << endl;
-	}
-
-
-	ring_theory::longinteger_object stab_go;
-
-	strong_gens->group_order(stab_go);
-
-	if (f_v) {
-		cout << "translation_plane_via_andre_model::init "
-				"Stabilizer has order " << stab_go << endl;
-		cout << "translation_plane_via_andre_model::init "
-				"we will now compute the tactical decomposition "
-				"induced by the spread stabilizer" << endl;
-	}
 
 
 
