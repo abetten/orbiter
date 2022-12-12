@@ -1,7 +1,7 @@
 #include "../IRTree/node_forward_declaration.h"
 #include "IRTreeVisitor.h"
 #include <iostream>
-#include <memory.h>
+#include <memory>
 #include <list>
 
 #ifndef UMINUS_DISTRIBUTE_AND_REDUCE_VISITOR
