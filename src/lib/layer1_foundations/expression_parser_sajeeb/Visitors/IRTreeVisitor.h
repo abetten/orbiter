@@ -47,23 +47,6 @@ public:
 };
 
 
-
-template<class... Args>
-class IRTreeVoidReturnTypeVariadicArgumentReferenceVisitorInterface {
-public:
-    virtual void visit(plus_node* op_node, Args... args) = 0;
-    virtual void visit(minus_node* op_node, Args... args) = 0;
-    virtual void visit(multiply_node* op_node, Args... args) = 0;
-    virtual void visit(exponent_node* op_node, Args... args) = 0;
-    virtual void visit(unary_negate_node* op_node, Args... args) = 0;
-    virtual void visit(variable_node* num_node, Args... args) = 0;
-    virtual void visit(parameter_node* node, Args... args) = 0;
-    virtual void visit(number_node* op_node, Args... args) = 0;
-    virtual void visit(sentinel_node* op_node, Args... args) = 0;
-};
-
-
-
 template<class... Args>
 class IRTreeVoidReturnTypeVariadicArgumentVisitorInterface {
 public:

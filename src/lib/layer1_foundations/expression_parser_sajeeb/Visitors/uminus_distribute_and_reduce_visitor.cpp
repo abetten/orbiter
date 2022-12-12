@@ -7,6 +7,7 @@
 **/
     
 #include "uminus_distribute_and_reduce_visitor.h"
+#include "../IRTree/node.h"
 
 #define BACKUP_PREVIOUS_BOOKKEEPING_INFO \
 			node_type backup_previous_node = previous_node; \
@@ -20,7 +21,24 @@
 			previous_node = PREVIOUS_NODE; \
 			previous_node_visiting_child = VISITING_CHILD
 
-void uminus_distribute_and_reduce_visitor::visit(plus_node* op_node) {
+
+void uminus_distribute_and_reduce_visitor::visit(variable_node* num_node, 
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {/* NO-OP */}
+void uminus_distribute_and_reduce_visitor::visit(parameter_node* node, 
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {/* NO-OP */}
+void uminus_distribute_and_reduce_visitor::visit(number_node* op_node, 
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {/* NO-OP */}
+void uminus_distribute_and_reduce_visitor::visit(sentinel_node* op_node, 
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {/* NO-OP */}
+
+
+void uminus_distribute_and_reduce_visitor::visit(plus_node* op_node,
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {
     BACKUP_PREVIOUS_BOOKKEEPING_INFO;
 
     LOG("");
@@ -56,7 +74,9 @@ void uminus_distribute_and_reduce_visitor::visit(plus_node* op_node) {
     LOG("");
 }
 
-void uminus_distribute_and_reduce_visitor::visit(minus_node* op_node) {
+void uminus_distribute_and_reduce_visitor::visit(minus_node* op_node,
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {
     BACKUP_PREVIOUS_BOOKKEEPING_INFO;
     for (shared_ptr<irtree_node>& child : op_node->children) {
         previous_node = op_node->type;
@@ -66,7 +86,9 @@ void uminus_distribute_and_reduce_visitor::visit(minus_node* op_node) {
     RESTORE_PREVIOUS_BOOKKEEPING_INFO;
 }
 
-void uminus_distribute_and_reduce_visitor::visit(multiply_node* op_node) {
+void uminus_distribute_and_reduce_visitor::visit(multiply_node* op_node,
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {
     BACKUP_PREVIOUS_BOOKKEEPING_INFO;
 
     LOG("");
@@ -136,7 +158,9 @@ void uminus_distribute_and_reduce_visitor::visit(multiply_node* op_node) {
     RESTORE_PREVIOUS_BOOKKEEPING_INFO;
 }
 
-void uminus_distribute_and_reduce_visitor::visit(exponent_node* op_node) {
+void uminus_distribute_and_reduce_visitor::visit(exponent_node* op_node,
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {
     BACKUP_PREVIOUS_BOOKKEEPING_INFO;
     LOG("");
     for (shared_ptr<irtree_node>& child : op_node->children) {
@@ -150,7 +174,9 @@ void uminus_distribute_and_reduce_visitor::visit(exponent_node* op_node) {
     RESTORE_PREVIOUS_BOOKKEEPING_INFO;
 }
 
-void uminus_distribute_and_reduce_visitor::visit(unary_negate_node* op_node) {
+void uminus_distribute_and_reduce_visitor::visit(unary_negate_node* op_node,
+                                                 const irtree_node* parent_node, 
+                                                 list<shared_ptr<irtree_node> >::iterator& link) {
     auto backup_previous_uminus_node = previous_uminus_node;
     previous_uminus_node = op_node;
     non_terminal_node* child_raw_ptr = static_cast<non_terminal_node*>(op_node->children.front().get());
@@ -183,12 +209,6 @@ void uminus_distribute_and_reduce_visitor::visit(unary_negate_node* op_node) {
 }
 
 void uminus_distribute_and_reduce_visitor::visit(sentinel_node* op_node) {
-	LOG("");
-    for (shared_ptr<irtree_node>& child : op_node->children) {
-        previous_node = op_node->type;
-        previous_node_visiting_child = &child;
-    	LOG("");
-        child->accept(this);
-    }
-	LOG("");
+    for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) 
+        op_node->accept(this, op_node, it);
 }
