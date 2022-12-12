@@ -135,10 +135,10 @@ int main(int argc, const char** argv) {
     ir_tree_root->accept(get_latex_staged_visitor());
 
    // distribute and reduce unary minus nodes
-    //  uminus_distribute_and_reduce_visitor distribute_uminus_visitor;
-    //  ir_tree_root->accept(&distribute_uminus_visitor);
-    //  merge_redundant_nodes(ir_tree_root);
-    //  ir_tree_root->accept(get_latex_staged_visitor());
+    uminus_distribute_and_reduce_visitor distribute_uminus_visitor;
+    ir_tree_root->accept(&distribute_uminus_visitor);
+    merge_redundant_nodes(ir_tree_root);
+    ir_tree_root->accept(get_latex_staged_visitor());
 
     //
     // multiplication_expansion_visitor mev;
@@ -170,7 +170,8 @@ int main(int argc, const char** argv) {
     LOG("");
     orbiter::layer1_foundations::field_theory::finite_field Fq;
     Descr.f_q = TRUE;
-    Descr.q = 2;
+    Descr.q = 5
+    ;
     Fq.init(&Descr, 1);
     LOG("");
     unordered_map<string, int> assignemnt = {
@@ -181,22 +182,18 @@ int main(int argc, const char** argv) {
     };
     LOG("evv.monomial_coefficient_table_.size(): " << evv.monomial_coefficient_table_.size());
     for (auto& it : evv.monomial_coefficient_table_) {
-        LOG("");
         const vector<unsigned int>& vec = it.first;
         std::cout << "[";
         for (const auto& itit : vec) std::cout << itit << " ";
-        std::cout << "]" << std::endl;
+        std::cout << "]: ";
 
         vector<irtree_node*> root_nodes = it.second;
-        LOG("root_nodes.size(): " << root_nodes.size());
         int val = 0;
         for (auto& node : root_nodes) {
-            LOG("node->type: " << node->type);
             auto tmp = node->accept(&evalVisitor, &Fq, assignemnt);
-            LOG("tmp: " << tmp);
             val += tmp;
         }
-        LOG("================");
+        cout << val << endl;
     }
    LOG("");
    ir_tree_root->accept(get_latex_staged_visitor());

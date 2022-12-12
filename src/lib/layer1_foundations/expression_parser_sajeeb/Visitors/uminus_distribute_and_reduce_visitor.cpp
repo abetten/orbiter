@@ -93,7 +93,7 @@ void uminus_distribute_and_reduce_visitor::visit(multiply_node* op_node,
             negative_children_count += 1;
         }
     }
-    if (negative_children_count % 2 == 0) { // even number of proceeding negative nodes
+    if (negative_children_count > 0 && negative_children_count % 2 == 0) { // even number of proceeding negative nodes
         drop_following_uminus_nodes();
     }
 
