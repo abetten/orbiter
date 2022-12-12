@@ -6,12 +6,14 @@
 **/
 
 #include <vector>
-#include "IRTreeVisitor.h"
+#include <list>
 #include <unordered_map>
 #include <unordered_set>
 #include <string>
 #include <iostream>
-#include "IRTreeChildLinkArgumentVisitor.h"
+#include <memory>
+
+#include "IRTreeVisitor.h"
 #include "../exception.h"
 #include "../../foundations.h"
 
@@ -22,6 +24,8 @@
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 #endif
 
+using std::shared_ptr;
+using std::list;
 using std::unordered_set;
 using std::vector;
 using std::unordered_map;

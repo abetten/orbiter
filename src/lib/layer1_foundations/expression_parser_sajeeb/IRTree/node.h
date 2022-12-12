@@ -59,7 +59,7 @@ using std::vector;
         return visitor->visit(this, root);  \
     }                                    \
     void accept(uminus_distribute_and_reduce_visitor* visitor,\
-                const irtree_node* parent_node, \
+                irtree_node* parent_node, \
                 list<shared_ptr<irtree_node> >::iterator& link) override {\
         visitor->visit(this, parent_node, link);\
     }\
@@ -78,7 +78,7 @@ class irtree_node {
                         list<shared_ptr<irtree_node> >::iterator& link,
                         irtree_node* parent_node) = 0;
     virtual void accept(uminus_distribute_and_reduce_visitor* visitor,
-                        const irtree_node* parent_node, 
+                        irtree_node* parent_node, 
                         list<shared_ptr<irtree_node> >::iterator& link) = 0;
 
 public:

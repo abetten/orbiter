@@ -14,25 +14,24 @@ using std::shared_ptr;
 using std::make_shared;
 
 class uminus_distribute_and_reduce_visitor : public IRTreeVoidReturnTypeVisitorInterface,
-											 public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<const irtree_node*, 
-											 															 list<shared_ptr<irtree_node> >::iterator&> {
+											 public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<irtree_node*, 
+											 			list<shared_ptr<irtree_node> >::iterator&> {
 
-	void visit(plus_node* op_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-	void visit(minus_node* op_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-	void visit(multiply_node* op_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-	void visit(exponent_node* op_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-	void visit(unary_negate_node* op_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-	void visit(variable_node* num_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-    void visit(parameter_node* node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-    void visit(number_node* op_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
-	void visit(sentinel_node* op_node, const irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+	void visit(plus_node* op_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+	void visit(minus_node* op_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+	void visit(multiply_node* op_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+	void visit(exponent_node* op_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+	void visit(unary_negate_node* op_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+	void visit(variable_node* num_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+    void visit(parameter_node* node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+    void visit(number_node* op_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
+	void visit(sentinel_node* op_node, irtree_node* parent_node, list<shared_ptr<irtree_node> >::iterator& link) override;
 
 public:
+	using IRTreeVoidReturnTypeVisitorInterface::visit;
 	void visit(sentinel_node* op_node) override;
 
 	friend class irtree_node;
-	friend class non_terminal_node;
-	friend class terminal_node;
 	friend class plus_node;
 	friend class minus_node;
 	friend class multiply_node;
