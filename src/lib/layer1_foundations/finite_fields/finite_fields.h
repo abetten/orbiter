@@ -243,6 +243,13 @@ public:
 	std::string evaluate_formula_label;
 	std::string evaluate_parameters;
 
+	int f_get_primitive_polynomial;
+	int get_primitive_polynomial_degree;
+
+	int f_get_primitive_polynomial_in_range;
+	int get_primitive_polynomial_in_range_min;
+	int get_primitive_polynomial_in_range_max;
+
 	finite_field_activity_description();
 	~finite_field_activity_description();
 	int read_arguments(

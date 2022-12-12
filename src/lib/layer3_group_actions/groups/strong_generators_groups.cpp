@@ -1634,13 +1634,15 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	n1 = Mtx_n1->n;
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_translation_plane_in_andre_model n=" << n << " n1=" << n1 << endl;
+		cout << "strong_generators::generators_for_translation_plane_in_andre_model "
+				"n=" << n << " n1=" << n1 << endl;
 	}
 	int f_semilinear;
 	int nb_gens, h, cnt, i, j, a, u;
 
 
 	f_semilinear = Mtx_n1->f_semilinear;
+
 	nb_gens = spread_stab_gens->gens->len + 1 + n * F->e;
 	//nb_gens = spread_stab_gens->len + /* 1 + */ n * F->e;
 
@@ -1649,7 +1651,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	alpha = F->primitive_root();
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_translation_plane_in_andre_model nb_gens=" << nb_gens << endl;
+		cout << "strong_generators::generators_for_translation_plane_in_andre_model "
+				"nb_gens=" << nb_gens << endl;
 	}
 	sz = n1 * n1 + 1;
 	M = NEW_int(sz * nb_gens);
@@ -1659,7 +1662,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_translation_plane_in_andre_model making generators of "
+		cout << "strong_generators::generators_for_translation_plane_in_andre_model "
+				"making generators of "
 				"the first kind:" << endl;
 	}
 	cnt = 0;

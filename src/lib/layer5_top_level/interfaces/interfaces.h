@@ -160,8 +160,10 @@ class interface_algebra {
 	int f_make_A5_in_PSL_2_q;
 	int make_A5_in_PSL_2_q_q;
 
+#if 0
 	int f_search_for_primitive_polynomial_in_range;
 	int p_min, p_max, deg_min, deg_max;
+#endif
 
 	int f_order_of_q_mod_n;
 	int order_of_q_mod_n_q;

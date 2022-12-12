@@ -2344,19 +2344,22 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 	Spread = Get_object_of_type_spread(translation_plane_spread_label);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_translation_plane found spread " << Spread->label_txt << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"found spread " << Spread->label_txt << endl;
 	}
 
 	Gn = Get_object_of_type_any_group(translation_plane_group_n_label);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_translation_plane found group Gn " << Gn->label << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"found group Gn " << Gn->label << endl;
 	}
 
 	Gnp1 = Get_object_of_type_any_group(translation_plane_group_np1_label);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_translation_plane found group Gnp1 " << Gnp1->label << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"found group Gnp1 " << Gnp1->label << endl;
 	}
 
 	TP = NEW_OBJECT(data_structures_groups::translation_plane_via_andre_model);
