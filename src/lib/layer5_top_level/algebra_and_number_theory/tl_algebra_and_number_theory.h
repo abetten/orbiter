@@ -203,7 +203,8 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
-	void classes_GL(field_theory::finite_field *F, int d, int f_no_eigenvalue_one, int verbose_level);
+	void classes_GL(field_theory::finite_field *F,
+			int d, int f_no_eigenvalue_one, int verbose_level);
 	void do_normal_form(int q, int d,
 			int f_no_eigenvalue_one, int *data, int data_sz,
 			int verbose_level);
@@ -323,8 +324,6 @@ public:
 	void find_standard_generators(any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int order_a, int order_b, int order_ab, int verbose_level);
-	void Nth_roots(field_theory::finite_field *F,
-			int n, int verbose_level);
 
 };
 

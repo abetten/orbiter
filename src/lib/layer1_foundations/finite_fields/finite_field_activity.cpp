@@ -324,7 +324,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		Algebra.algebraic_normal_form(F,
 				Descr->algebraic_normal_form_n,
-				func, len, verbose_level);
+				func, len, verbose_level - 2);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity after Algebra.algebraic_normal_form" << endl;
 		}

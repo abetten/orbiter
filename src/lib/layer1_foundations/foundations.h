@@ -296,6 +296,7 @@ namespace algebraic_geometry {
 namespace coding_theory {
 
 	// coding_theory:
+	class code_diagram;
 	class coding_theory_domain;
 	class crc_codes;
 	class crc_options_description;

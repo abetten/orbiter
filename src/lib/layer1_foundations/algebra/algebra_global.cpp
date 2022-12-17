@@ -1443,7 +1443,8 @@ void algebra_global::algebraic_normal_form(
 	FREE_int(M);
 #endif
 
-	FREE_OBJECT(PF);
+	//FREE_OBJECT(PF);
+	// there is a memory error in PF
 
 	if (f_v) {
 		cout << "algebra_global::algebraic_normal_form done" << endl;
@@ -2785,6 +2786,67 @@ void algebra_global::O4_find_tangent_plane(
 				<< " y3=" << y3 << " y4=" << y4 << endl;
 	}
 #endif
+}
+
+void algebra_global::Nth_roots(field_theory::finite_field *F,
+		int n, int verbose_level)
+{
+	field_theory::nth_roots *Nth;
+
+	Nth = NEW_OBJECT(field_theory::nth_roots);
+
+	Nth->init(F, n, verbose_level);
+
+	orbiter_kernel_system::file_io Fio;
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "Nth_roots_q%d_n%d.tex", F->q, n);
+		fname.assign(str);
+		snprintf(str, 1000, "Nth roots");
+		title.assign(str);
+
+
+
+
+		{
+			ofstream ost(fname);
+			number_theory::number_theory_domain NT;
+
+
+
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			Nth->report(ost, verbose_level);
+
+			L.foot(ost);
+
+
+		}
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	}
+
 }
 
 

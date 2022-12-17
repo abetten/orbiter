@@ -155,6 +155,10 @@ int main(int argc, const char** argv) {
     ir_tree_root->accept(evv(managed_variables_table));
     ir_tree_root->accept(get_latex_staged_visitor());
     eval_visitor evalVisitor;
+
+
+
+    // orbiter stuff
     orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
     orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
 
@@ -192,6 +196,9 @@ int main(int argc, const char** argv) {
         cout << val << endl;
     }
    ir_tree_root->accept(get_latex_staged_visitor());
+
+
+
 
     // print string representation of the IR tree
     ir_tree_to_string_visitor to_string_visitor;

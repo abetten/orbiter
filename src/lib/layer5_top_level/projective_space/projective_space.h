@@ -347,22 +347,6 @@ public:
 	int f_table_of_cubic_surfaces;
 		// based on knowledge_base
 
-	int f_classify_surfaces_with_double_sixes;
-	std::string classify_surfaces_with_double_sixes_label;
-	std::string classify_surfaces_with_double_sixes_control_label;
-
-
-	int f_classify_surfaces_through_arcs_and_two_lines;
-	int f_test_nb_Eckardt_points;
-	int nb_E;
-	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
-		int f_trihedra1_control;
-		poset_classification::poset_classification_control *Trihedra1_control;
-		int f_trihedra2_control;
-		poset_classification::poset_classification_control *Trihedra2_control;
-		int f_control_six_arcs;
-		std::string Control_six_arcs_label;
-
 	int f_sweep;
 	std::string sweep_fname;
 
@@ -386,27 +370,7 @@ public:
 	std::string sweep_4_L9_E4_fname;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_L9_E4_surface_description;
 
-	int f_six_arcs_not_on_conic;
-	int f_filter_by_nb_Eckardt_points;
-	int nb_Eckardt_points;
-
-	int f_classify_semifields;
-	semifields::semifield_classify_description *Semifield_classify_description;
-	poset_classification::poset_classification_control *Semifield_classify_Control;
-
 	int f_cheat_sheet;
-
-	int f_classify_quartic_curves_nauty;
-	std::string classify_quartic_curves_nauty_fname_mask;
-	int classify_quartic_curves_nauty_nb;
-	std::string classify_quartic_curves_nauty_fname_classification;
-
-	int f_classify_quartic_curves_with_substructure;
-	std::string classify_quartic_curves_with_substructure_fname_mask;
-	int classify_quartic_curves_with_substructure_nb;
-	int classify_quartic_curves_with_substructure_size;
-	int classify_quartic_curves_with_substructure_degree;
-	std::string classify_quartic_curves_with_substructure_fname_classification;
 
 	int f_set_stabilizer;
 	int set_stabilizer_intermediate_set_size;
@@ -447,11 +411,6 @@ public:
 
 	int f_dualize_rank_k_subspaces;
 	int dualize_rank_k_subspaces_k;
-
-	int f_classify_arcs;
-	apps_geometry::arc_generator_description *Arc_generator_description;
-
-	int f_classify_cubic_curves;
 
 	int f_lines_on_point_but_within_a_plane;
 	long int lines_on_point_but_within_a_plane_point_rk;
@@ -494,6 +453,57 @@ public:
 
 	int f_report_Grassmannian;
 	int report_Grassmannian_k;
+
+	// classification stuff:
+
+	int f_classify_surfaces_with_double_sixes;
+	std::string classify_surfaces_with_double_sixes_label;
+	std::string classify_surfaces_with_double_sixes_control_label;
+
+
+	int f_classify_surfaces_through_arcs_and_two_lines;
+
+	int f_test_nb_Eckardt_points;
+	int nb_E;
+
+	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
+
+	int f_trihedra1_control;
+	poset_classification::poset_classification_control *Trihedra1_control;
+	int f_trihedra2_control;
+	poset_classification::poset_classification_control *Trihedra2_control;
+	int f_control_six_arcs;
+	std::string Control_six_arcs_label;
+
+	int f_six_arcs_not_on_conic;
+	int f_filter_by_nb_Eckardt_points;
+	int nb_Eckardt_points;
+
+	int f_classify_quartic_curves_nauty;
+	std::string classify_quartic_curves_nauty_fname_mask;
+	int classify_quartic_curves_nauty_nb;
+	std::string classify_quartic_curves_nauty_fname_classification;
+
+	int f_classify_quartic_curves_with_substructure;
+	std::string classify_quartic_curves_with_substructure_fname_mask;
+	int classify_quartic_curves_with_substructure_nb;
+	int classify_quartic_curves_with_substructure_size;
+	int classify_quartic_curves_with_substructure_degree;
+	std::string classify_quartic_curves_with_substructure_fname_classification;
+
+
+	int f_classify_arcs;
+	apps_geometry::arc_generator_description *Arc_generator_description;
+
+	int f_classify_cubic_curves;
+
+
+
+	int f_classify_semifields;
+	semifields::semifield_classify_description *Semifield_classify_description;
+	poset_classification::poset_classification_control *Semifield_classify_Control;
+
+
 
 	projective_space_activity_description();
 	~projective_space_activity_description();
