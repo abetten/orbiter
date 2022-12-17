@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-Wall -pthread
-CSTD=-std=c++14
+CSTD=-std=c++17
 OPTFLAGS=-O3 -mtune=native -funroll-loops
 INCLUDES=-I../../BitSet  -I../../../ -I../../../group_actions/groups/
 
