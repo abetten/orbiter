@@ -75,13 +75,17 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	// Magma:
 	f_centralizer_of_element = FALSE;
-	//element_description_text = NULL;
-	//element_label = NULL;
+	//std::string centralizer_of_element_label;
+	//std::string centralizer_of_element_data;
 
 	f_permutation_representation_of_element = FALSE;
 	//std::string permutation_representation_element_text;
 
+#if 0
 	f_conjugacy_class_of_element = FALSE;
+	//std::string conjugacy_class_of_element_label;
+	//std::string conjugacy_class_of_element_data;
+#endif
 
 	f_orbits_on_group_elements_under_conjugation = FALSE;
 	//std::string orbits_on_group_elements_under_conjugation_fname;
@@ -89,6 +93,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	// Magma:
 	f_normalizer_of_cyclic_subgroup = FALSE;
+	//std::string normalizer_of_cyclic_subgroup_label;
+	//std::string normalizer_of_cyclic_subgroup_data;
 
 	// Magma:
 	f_classes = FALSE;
@@ -108,6 +114,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	test_if_geometric_depth = 0;
 
 	f_conjugacy_class_of = FALSE;
+	//std::string conjugacy_class_of_label;
 	//std::string conjugacy_class_of_data;
 
 	f_isomorphism_Klein_quadric = FALSE;
@@ -146,6 +153,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_is_subgroup_of = FALSE;
 	f_coset_reps = FALSE;
 
+	f_print_given_elements_tex = FALSE;
+	//std::string print_given_elements_tex_label;
+	//std::string print_given_elements_tex_data;
 
 
 	// orbit stuff:
@@ -329,13 +339,14 @@ int group_theoretic_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-centralizer_of_element") == 0) {
 			f_centralizer_of_element = TRUE;
-			element_label.assign(argv[++i]);
-			element_description_text.assign(argv[++i]);
+			centralizer_of_element_label.assign(argv[++i]);
+			centralizer_of_element_data.assign(argv[++i]);
 			if (f_v) {
-				cout << "-centralizer_of_element " << element_label
-						<< " " << element_description_text << endl;
+				cout << "-centralizer_of_element " << centralizer_of_element_label
+						<< " " << centralizer_of_element_data << endl;
 			}
 		}
+
 		else if (ST.stringcmp(argv[i], "-permutation_representation_of_element") == 0) {
 			f_permutation_representation_of_element = TRUE;
 			permutation_representation_element_text.assign(argv[++i]);
@@ -344,15 +355,17 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-conjugacy_class_of_element") == 0) {
 			f_conjugacy_class_of_element = TRUE;
-			element_label.assign(argv[++i]);
-			element_description_text.assign(argv[++i]);
+			conjugacy_class_of_element_label.assign(argv[++i]);
+			conjugacy_class_of_element_data.assign(argv[++i]);
 			if (f_v) {
-				cout << "-conjugacy_class_of_element " << element_label
-						<< " " << element_description_text << endl;
+				cout << "-conjugacy_class_of_element " << conjugacy_class_of_element_label
+						<< " " << conjugacy_class_of_element_data << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-orbits_on_group_elements_under_conjugation") == 0) {
 			f_orbits_on_group_elements_under_conjugation = TRUE;
 			orbits_on_group_elements_under_conjugation_fname.assign(argv[++i]);
@@ -368,11 +381,11 @@ int group_theoretic_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
 			f_normalizer_of_cyclic_subgroup = TRUE;
-			element_label.assign(argv[++i]);
-			element_description_text.assign(argv[++i]);
+			normalizer_of_cyclic_subgroup_label.assign(argv[++i]);
+			normalizer_of_cyclic_subgroup_data.assign(argv[++i]);
 			if (f_v) {
-				cout << "-normalizer_of_cyclic_subgroup " << element_label
-						<< " " << element_description_text << endl;
+				cout << "-normalizer_of_cyclic_subgroup " << normalizer_of_cyclic_subgroup_label
+						<< " " << normalizer_of_cyclic_subgroup_data << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-classes") == 0) {
@@ -428,9 +441,11 @@ int group_theoretic_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-conjugacy_class_of") == 0) {
 			f_conjugacy_class_of = TRUE;
+			conjugacy_class_of_label.assign(argv[++i]);
 			conjugacy_class_of_data.assign(argv[++i]);
 			if (f_v) {
-				cout << "-conjugacy_class_of " << conjugacy_class_of_data << endl;
+				cout << "-conjugacy_class_of " << conjugacy_class_of_label
+						<< " " << conjugacy_class_of_data << endl;
 			}
 		}
 
@@ -535,7 +550,16 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-coset_reps " << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-print_given_elements_tex") == 0) {
+			f_print_given_elements_tex = TRUE;
+			print_given_elements_tex_label.assign(argv[++i]);
+			print_given_elements_tex_data.assign(argv[++i]);
+			if (f_v) {
+				cout << "-print_given_elements_tex "
+						<< " " << print_given_elements_tex_label
+						<< " " << print_given_elements_tex_data << endl;
+			}
+		}
 
 		// orbit stuff:
 
@@ -715,29 +739,31 @@ void group_theoretic_activity_description::print()
 		cout << "-normalizer" << endl;
 	}
 	if (f_centralizer_of_element) {
-		cout << "-centralizer_of_element " << element_label
-				<< " " << element_description_text << endl;
+		cout << "-centralizer_of_element " << centralizer_of_element_label
+				<< " " << centralizer_of_element_data << endl;
 	}
 	if (f_permutation_representation_of_element) {
 		cout << "-permutation_representation_of_element " << permutation_representation_element_text
 				<< " " << endl;
 	}
-
+#if 0
 	if (f_conjugacy_class_of_element) {
-		cout << "-conjugacy_class_of_element " << element_label
-					<< " " << element_description_text << endl;
+		cout << "-conjugacy_class_of_element "
+				<< conjugacy_class_of_element_label
+				<< " " << conjugacy_class_of_element_data << endl;
 	}
+#endif
 	if (f_orbits_on_group_elements_under_conjugation) {
 		cout << "-orbits_on_group_elements_under_conjugation "
-					<< " " << orbits_on_group_elements_under_conjugation_fname
-					<< " " << orbits_on_group_elements_under_conjugation_transporter_fname
-					<< endl;
+			<< " " << orbits_on_group_elements_under_conjugation_fname
+			<< " " << orbits_on_group_elements_under_conjugation_transporter_fname
+			<< endl;
 	}
 
 
 	if (f_normalizer_of_cyclic_subgroup) {
-		cout << "-normalizer_of_cyclic_subgroup " << element_label
-					<< " " << element_description_text << endl;
+		cout << "-normalizer_of_cyclic_subgroup " << normalizer_of_cyclic_subgroup_label
+				<< " " << normalizer_of_cyclic_subgroup_data << endl;
 	}
 	if (f_classes) {
 		cout << "-classes " << endl;
@@ -764,7 +790,8 @@ void group_theoretic_activity_description::print()
 		cout << "-test_if_geometric " << test_if_geometric_depth << endl;
 	}
 	if (f_conjugacy_class_of) {
-		cout << "-conjugacy_class_of " << conjugacy_class_of_data << endl;
+		cout << "-conjugacy_class_of " << conjugacy_class_of_label
+				<< " " << conjugacy_class_of_data << endl;
 	}
 
 	if (f_isomorphism_Klein_quadric) {
@@ -820,6 +847,11 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_coset_reps) {
 		cout << "-coset_reps " << endl;
+	}
+	if (f_print_given_elements_tex) {
+		cout << "-print_given_elements_tex "
+				<< " " << print_given_elements_tex_label
+				<< " " << print_given_elements_tex_data << endl;
 	}
 
 

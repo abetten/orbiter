@@ -227,7 +227,7 @@ void any_group::orbits_on_poset_post_processing(
 
 
 
-
+#if 0
 void any_group::do_conjugacy_class_of_element(
 		std::string &elt_label, std::string &elt_text, int verbose_level)
 {
@@ -267,11 +267,13 @@ void any_group::do_conjugacy_class_of_element(
 			S = LG->Strong_gens->create_sims(verbose_level);
 
 			if (f_v) {
-				cout << "any_group::do_conjugacy_class_of_element before init_sims" << endl;
+				cout << "any_group::do_conjugacy_class_of_element "
+						"before init_sims" << endl;
 			}
 			A->init_sims_only(S, 0/*verbose_level - 1*/);
 			if (f_v) {
-				cout << "any_group::do_conjugacy_class_of_element after init_sims" << endl;
+				cout << "any_group::do_conjugacy_class_of_element "
+						"after init_sims" << endl;
 			}
 		}
 
@@ -386,7 +388,7 @@ void any_group::do_conjugacy_class_of_element(
 		cout << "any_group::do_conjugacy_class_of_element done" << endl;
 	}
 }
-
+#endif
 
 void any_group::do_orbits_on_group_elements_under_conjugation(
 		std::string &fname_group_elements_coded,

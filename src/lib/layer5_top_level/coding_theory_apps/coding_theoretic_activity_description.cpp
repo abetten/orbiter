@@ -32,12 +32,12 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	//std::string code_diagram_label;
 	//std::string code_diagram_codewords_text;
 	code_diagram_n = 0;
-#endif
 
 	f_code_diagram_from_file = FALSE;
 	//std::string code_diagram_from_file_label;
 	//std::string code_diagram_from_file_codewords_fname;
 	code_diagram_from_file_n = 0;
+#endif
 
 	f_encode_text_5bits = FALSE;
 	//encode_text_5bits_input;
@@ -59,6 +59,9 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 
 	f_nth_roots = FALSE;
 	nth_roots_n = 0;
+
+	f_Sylvester_Hadamard_code = FALSE;
+	Sylvester_Hadamard_code_n = 0;
 
 	f_NTT = FALSE;
 	NTT_n = 0;
@@ -189,7 +192,6 @@ int coding_theoretic_activity_description::read_arguments(
 						<< " " << code_diagram_n << endl;
 			}
 		}
-#endif
 		else if (ST.stringcmp(argv[i], "-code_diagram_from_file") == 0) {
 			f_code_diagram_from_file = TRUE;
 			code_diagram_from_file_label.assign(argv[++i]);
@@ -201,6 +203,7 @@ int coding_theoretic_activity_description::read_arguments(
 						<< " " << code_diagram_from_file_n << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-encode_text_5bits") == 0) {
 			f_encode_text_5bits = TRUE;
@@ -251,6 +254,13 @@ int coding_theoretic_activity_description::read_arguments(
 			nth_roots_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-nth_roots " << nth_roots_n << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-Sylvester_Hadamard_code") == 0) {
+			f_Sylvester_Hadamard_code = TRUE;
+			Sylvester_Hadamard_code_n = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-Sylvester_Hadamard_code " << Sylvester_Hadamard_code_n << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-NTT") == 0) {
@@ -381,7 +391,8 @@ int coding_theoretic_activity_description::read_arguments(
 			crc256_test_R = ST.strtoi(argv[++i]);
 			crc256_test_k = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-crc256_test " << crc256_test_message_length << " " << crc256_test_R << " " << crc256_test_k << endl;
+				cout << "-crc256_test " << crc256_test_message_length
+						<< " " << crc256_test_R << " " << crc256_test_k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-crc32_remainders") == 0) {
@@ -502,12 +513,12 @@ void coding_theoretic_activity_description::print()
 				<< " " << code_diagram_codewords_text
 				<< " " << code_diagram_n << endl;
 	}
-#endif
 	if (f_code_diagram_from_file) {
 		cout << "-code_diagram_from_file " << code_diagram_from_file_label
 				<< " " << code_diagram_from_file_codewords_fname
 				<< " " << code_diagram_from_file_n << endl;
 	}
+#endif
 
 	if (f_encode_text_5bits) {
 		cout << "-encode_text_5bits " << encode_text_5bits_input << " "
@@ -532,6 +543,9 @@ void coding_theoretic_activity_description::print()
 	}
 	if (f_nth_roots) {
 		cout << "-nth_roots " << nth_roots_n << endl;
+	}
+	if (f_Sylvester_Hadamard_code) {
+		cout << "-Sylvester_Hadamard_code " << Sylvester_Hadamard_code_n << endl;
 	}
 	if (f_NTT) {
 		cout << "-NTT " << NTT_n

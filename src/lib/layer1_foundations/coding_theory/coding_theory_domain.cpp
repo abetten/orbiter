@@ -745,7 +745,9 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 	}
 #endif
 
-	cout << "width=" << width << endl;
+	if (f_v) {
+		cout << "coding_theory_domain::make_Hamming_graph_and_write_file width=" << width << endl;
+	}
 
 	int i, j, d, h;
 
@@ -807,8 +809,14 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 
 
 void coding_theory_domain::compute_and_print_projective_weights(
-		ostream &ost, field_theory::finite_field *F, int *M, int n, int k)
+		std::ostream &ost, field_theory::finite_field *F,
+		int *M, int n, int k, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::compute_and_print_projective_weights" << endl;
+	}
 	int i;
 	int *weights;
 
@@ -827,6 +835,9 @@ void coding_theory_domain::compute_and_print_projective_weights(
 		ost << i << " : " << weights[i] << endl;
 	}
 	FREE_int(weights);
+	if (f_v) {
+		cout << "coding_theory_domain::compute_and_print_projective_weights done" << endl;
+	}
 }
 
 int coding_theory_domain::code_minimum_distance(
@@ -875,16 +886,28 @@ void coding_theory_domain::make_codewords_sorted(field_theory::finite_field *F,
 		cout << "coding_theory_domain::make_codewords_sorted" << endl;
 	}
 
+	if (f_v) {
+		cout << "coding_theory_domain::make_codewords_sorted before make_codewords" << endl;
+	}
 	make_codewords(F,
 			n, k,
 			genma, // [k * n]
 			codewords, // q^k
 			N,
 			verbose_level);
+	if (f_v) {
+		cout << "coding_theory_domain::make_codewords_sorted after make_codewords" << endl;
+	}
 
 	data_structures::sorting Sorting;
 
+	if (f_v) {
+		cout << "coding_theory_domain::make_codewords_sorted before Sorting.lint_vec_heapsort" << endl;
+	}
 	Sorting.lint_vec_heapsort(codewords, N);
+	if (f_v) {
+		cout << "coding_theory_domain::make_codewords_sorted after Sorting.lint_vec_heapsort" << endl;
+	}
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_codewords_sorted N=" << N << endl;
@@ -916,10 +939,16 @@ void coding_theory_domain::make_codewords(field_theory::finite_field *F,
 
 	codewords = NEW_lint(N);
 
+	if (f_v) {
+		cout << "coding_theory_domain::make_codewords before codewords_affine" << endl;
+	}
 	codewords_affine(F, n, k,
 			genma, // [k * n]
 			codewords, // q^k
 			verbose_level);
+	if (f_v) {
+		cout << "coding_theory_domain::make_codewords after codewords_affine" << endl;
+	}
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_codewords done" << endl;
@@ -1373,10 +1402,18 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 		cout << endl;
 	}
 
+	if (f_v) {
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"before code_weight_enumerator" << endl;
+	}
 	code_weight_enumerator(F, n, rk,
 		A /* code */, // [k * n]
 		weight_enumerator, // [n + 1]
 		verbose_level);
+	if (f_v) {
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"after code_weight_enumerator" << endl;
+	}
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator "
@@ -1622,9 +1659,15 @@ void coding_theory_domain::do_minimum_distance(field_theory::finite_field *F,
 		}
 	}
 
+	if (f_v) {
+		cout << "coding_theory_domain::do_minimum_distance before mindist" << endl;
+	}
 	d = mindist(n, m /* k */, q, A,
 		verbose_level - 2, idx_zero, idx_one,
 		add_table, mult_table);
+	if (f_v) {
+		cout << "coding_theory_domain::do_minimum_distance after mindist" << endl;
+	}
 
 	t1 = Os.os_ticks();
 
@@ -2222,8 +2265,8 @@ void coding_theory_domain::do_polynomial(
 	}
 }
 
-void coding_theory_domain::do_sylvester_hadamard(int n,
-		//int f_embellish, int embellish_radius,
+void coding_theory_domain::do_sylvester_hadamard(field_theory::finite_field *F3,
+		int n,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2233,6 +2276,11 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 	}
 	int i;
 
+	if (F3->q != 3) {
+		cout << "coding_theory_domain::do_sylvester_hadamard field should be of order 3." << endl;
+		exit(1);
+
+	}
 	if (n % 4) {
 		cout << "for Hadamard matrices, n must be divisible by 4." << endl;
 		exit(1);
@@ -2247,7 +2295,9 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 
 	nb_factors = NT.int_log2(m);
 
-	cout << "nb_factors = " << nb_factors << endl;
+	if (f_v) {
+		cout << "nb_factors = " << nb_factors << endl;
+	}
 
 	if ((2 << nb_factors) != n) {
 		cout << "for Sylvester type Hadamard matrices, "
@@ -2257,18 +2307,20 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 
 	M1 = NEW_int(2 * n * n);
 	M2 = NEW_int(2 * n * n);
-	field_theory::finite_field *F;
+	//field_theory::finite_field *F;
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(3, FALSE /* f_without_tables */, 0);
+	//F = NEW_OBJECT(field_theory::finite_field);
+	//F->finite_field_init(3, FALSE /* f_without_tables */, 0);
 	Int_vec_copy(H2, M1, 4);
 	sz = 2;
 	for (i = 0; i < nb_factors; i++) {
 
-		cout << "M1=" << endl;
-		Int_matrix_print(M1, sz, sz);
+		if (f_v) {
+			cout << "coding_theory_domain::do_sylvester_hadamard M1=" << endl;
+			Int_matrix_print(M1, sz, sz);
+		}
 
-		F->Linear_algebra->Kronecker_product_square_but_arbitrary(
+		F3->Linear_algebra->Kronecker_product_square_but_arbitrary(
 				M1, H2,
 				sz, 2, M2, sz1,
 				verbose_level);
@@ -2276,12 +2328,15 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 
 		sz = sz1;
 	}
-	cout << "Sylvester type Hadamard matrix:" << endl;
-	Int_matrix_print(M1, sz, sz);
+	if (f_v) {
+		cout << "coding_theory_domain::do_sylvester_hadamard "
+				"Sylvester type Hadamard matrix:" << endl;
+		Int_matrix_print(M1, sz, sz);
+	}
 	for (i = 0; i < sz; i++) {
 		for (j = 0; j < sz; j++) {
 			a = M1[i * sz + j];
-			M1[(sz + i) * sz + j] = F->negate(a);
+			M1[(sz + i) * sz + j] = F3->negate(a);
 		}
 	}
 
@@ -2293,8 +2348,26 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 			}
 		}
 	}
-	cout << "Sylvester type Hadamard code:" << endl;
-	Int_matrix_print(M1, 2 * sz, sz);
+	if (f_v) {
+		cout << "coding_theory_domain::do_sylvester_hadamard Sylvester type Hadamard code:" << endl;
+		Int_matrix_print(M1, 2 * sz, sz);
+	}
+
+	{
+		char str[1000];
+		string fname;
+		orbiter_kernel_system::file_io Fio;
+
+		snprintf(str, sizeof(str), "Sylvester_Hadamard_code_%d.csv", n);
+		fname.assign(str);
+		Fio.int_matrix_write_csv(fname, M1, 2 * sz, sz);
+		if (f_v) {
+			cout << "coding_theory_domain::do_sylvester_hadamard written file "
+					<< fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+	}
+
 
 
 	long int *set;
@@ -2303,6 +2376,23 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 	for (i = 0; i < 2 * sz; i++) {
 		set[i] = Gg.AG_element_rank(2, M1 + i * sz, 1, sz);
 	}
+
+	{
+		char str[1000];
+		string fname;
+		orbiter_kernel_system::file_io Fio;
+
+		snprintf(str, sizeof(str), "Sylvester_Hadamard_code_ranks_%d.csv", n);
+		fname.assign(str);
+		Fio.lint_matrix_write_csv(fname, set, 2 * sz, 1);
+
+		if (f_v) {
+			cout << "coding_theory_domain::do_sylvester_hadamard written file "
+					<< fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+	}
+
 
 #if 0
 	investigate_code(F, set, 2 * sz, n,
@@ -2314,7 +2404,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 
 	FREE_int(M1);
 	FREE_int(M2);
-	FREE_OBJECT(F);
+	//FREE_OBJECT(F);
 
 }
 
@@ -3162,9 +3252,55 @@ void coding_theory_domain::field_reduction(
 }
 
 
+
+void coding_theory_domain::field_induction(std::string &fname_in,
+		std::string &fname_out, int nb_bits, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::field_induction" << endl;
+	}
+	int i, h, len, len2;
+	long int *M;
+	long int a;
+	long int *M2;
+	int *v;
+	int m, n;
+	geometry::geometry_global GG;
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "Reading file " << fname_in << " of size " << Fio.file_size(fname_in) << endl;
+	Fio.lint_matrix_read_csv(fname_in, M, m, n, verbose_level);
+	len = m * n;
+	len2 = (len + nb_bits - 1) / nb_bits;
+	v = NEW_int(nb_bits);
+	M2 = NEW_lint(len2);
+	for (i = 0; i < len2; i++) {
+		for (h = 0; h < nb_bits; h++) {
+			v[h] = M[i * nb_bits + h];
+		}
+		a = GG.AG_element_rank(2, v, 1, nb_bits);
+		M2[i] = a;
+	}
+	Fio.lint_matrix_write_csv(fname_out, M2, 1, len2);
+	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+	if (f_v) {
+		cout << "coding_theory_domain::field_induction done" << endl;
+	}
+}
+
 void coding_theory_domain::encode_text_5bits(std::string &text,
 		std::string &fname, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::encode_text_5bits" << endl;
+	}
 	int l, i, j, h, a;
 	char c;
 	long int *encoding;
@@ -3209,39 +3345,9 @@ void coding_theory_domain::encode_text_5bits(std::string &text,
 	//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
 	Fio.lint_matrix_write_csv(fname, encoding, 1, len);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-}
-
-
-void coding_theory_domain::field_induction(std::string &fname_in,
-		std::string &fname_out, int nb_bits, int verbose_level)
-{
-	int i, h, len, len2;
-	long int *M;
-	long int a;
-	long int *M2;
-	int *v;
-	int m, n;
-	geometry::geometry_global GG;
-
-
-	orbiter_kernel_system::file_io Fio;
-
-	cout << "Reading file " << fname_in << " of size " << Fio.file_size(fname_in) << endl;
-	Fio.lint_matrix_read_csv(fname_in, M, m, n, verbose_level);
-	len = m * n;
-	len2 = (len + nb_bits - 1) / nb_bits;
-	v = NEW_int(nb_bits);
-	M2 = NEW_lint(len2);
-	for (i = 0; i < len2; i++) {
-		for (h = 0; h < nb_bits; h++) {
-			v[h] = M[i * nb_bits + h];
-		}
-		a = GG.AG_element_rank(2, v, 1, nb_bits);
-		M2[i] = a;
+	if (f_v) {
+		cout << "coding_theory_domain::encode_text_5bits done" << endl;
 	}
-	Fio.lint_matrix_write_csv(fname_out, M2, 1, len2);
-	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
-
 }
 
 int coding_theory_domain::Hamming_distance(int *v1, int *v2, int n)
@@ -3521,7 +3627,8 @@ void coding_theory_domain::code_diagram(
 		FREE_int(set_of_errors);
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::code_diagram placing metric balls done" << endl;
+		cout << "coding_theory_domain::code_diagram "
+				"placing metric balls done" << endl;
 		Int_matrix_print(M, nb_rows, nb_cols);
 	}
 
@@ -3538,7 +3645,8 @@ void coding_theory_domain::code_diagram(
 
 	for (d = 0; d < n; d++) {
 		if (f_v) {
-			cout << "coding_theory_domain::code_diagram computing words of distance " << d + 1 << " from the code" << endl;
+			cout << "coding_theory_domain::code_diagram "
+					"computing words of distance " << d + 1 << " from the code" << endl;
 		}
 		for (h = 0; h < nb_rows * nb_cols; h++) {
 			if (Distance[h] == d) {
@@ -3704,15 +3812,21 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 
 	N = 1 << n;
 
-	cout << "N=" << N << endl;
+	if (f_v) {
+		cout << "N=" << N << endl;
+	}
 
 	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
 
 
-	cout << "before BF->init, n=" << n << endl;
+	if (f_v) {
+		cout << "before BF->init, n=" << n << endl;
+	}
 	BF->init(F, n, 0 /*verbose_level*/);
 
-	cout << "BF->Poly[n].get_nb_monomials()=" << BF->Poly[n].get_nb_monomials() << endl;
+	if (f_v) {
+		cout << "BF->Poly[n].get_nb_monomials()=" << BF->Poly[n].get_nb_monomials() << endl;
+	}
 	coeff = NEW_int(BF->Poly[n].get_nb_monomials());
 
 	// f is the characteristic function of the set defined by Words[nb_words]
@@ -3725,7 +3839,9 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 		f[Words[h]] = 1;
 	}
 
-	cout << "computing the polynomial representation: " << endl;
+	if (f_v) {
+		cout << "computing the polynomial representation: " << endl;
+	}
 
 
 	BF->compute_polynomial_representation(
@@ -3734,15 +3850,17 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 
 
 
-	cout << "The representation as polynomial is: ";
+	if (f_v) {
+		cout << "The representation as polynomial is: ";
 
-	cout << " : ";
-	BF->Poly[BF->n].print_equation(cout, coeff);
-	cout << " : ";
-	//evaluate_projectively(poly, f_proj);
-	BF->evaluate(coeff, g);
-	//int_vec_print(cout, g, BF->Q);
-	cout << endl;
+		cout << " : ";
+		BF->Poly[BF->n].print_equation(cout, coeff);
+		cout << " : ";
+		//evaluate_projectively(poly, f_proj);
+		BF->evaluate(coeff, g);
+		//int_vec_print(cout, g, BF->Q);
+		cout << endl;
+	}
 
 
 	for (h = 0; h < BF->Q; h++) {

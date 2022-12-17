@@ -1162,6 +1162,41 @@ void action::export_to_orbiter_as_bsgs(
 }
 
 
+void action::print_one_element_tex(std::ostream &ost,
+		int *Elt, int f_with_permutation)
+{
+	ost << "$$" << endl;
+	element_print_latex(Elt, ost);
+	ost << "$$" << endl;
+
+	if (f_with_permutation) {
+		element_print_as_permutation(Elt, ost);
+		ost << "\\\\" << endl;
+
+		int *perm;
+		int h, j;
+
+		perm = NEW_int(degree);
+
+		element_as_permutation(
+				Elt,
+				perm, 0 /* verbose_level */);
+
+		for (h = 0; h < degree; h++) {
+			j = perm[h];
+
+			ost << j;
+			if (j < degree) {
+				ost << ", ";
+			}
+		}
+		ost << "\\\\" << endl;
+
+		FREE_int(perm);
+
+	}
+
+}
 
 
 }}}

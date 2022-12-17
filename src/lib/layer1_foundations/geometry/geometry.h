@@ -1071,9 +1071,6 @@ public:
 			geometry::projective_space *P5,
 			long int *data, int size, int threshold,
 			intersection_type *&Int_type,
-			//int *&intersection_type, int &highest_intersection_number,
-			//long int *&Highest_weight_objects, int &nb_highest_weight_objects,
-			//int *&Intersection_sets,
 			int verbose_level);
 
 };

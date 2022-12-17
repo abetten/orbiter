@@ -131,6 +131,62 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 						"after Diagram->init" << endl;
 			}
 
+			if (Descr->f_metric_balls) {
+
+				Diagram->place_metric_balls(Descr->radius_of_metric_ball, verbose_level);
+
+			}
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"before Diagram->save_distance" << endl;
+			}
+			Diagram->save_distance(verbose_level);
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"after Diagram->save_distance" << endl;
+			}
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"before Diagram->save_distance_H" << endl;
+			}
+			Diagram->save_distance_H(verbose_level);
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"after Diagram->save_distance_H" << endl;
+			}
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"before Diagram->save_diagram" << endl;
+			}
+			Diagram->save_diagram(verbose_level);
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"after Diagram->save_diagram" << endl;
+			}
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"before Diagram->save_char_func" << endl;
+			}
+			Diagram->save_char_func(verbose_level);
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"after Diagram->save_char_func" << endl;
+			}
+
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"before Diagram->report" << endl;
+			}
+			Diagram->report(verbose_level);
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"after Diagram->report" << endl;
+			}
+
 
 			FREE_lint(Words);
 
@@ -169,7 +225,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 	}
 #endif
-
+#if 0
 	else if (Descr->f_code_diagram_from_file) {
 			long int *Words;
 			int m, nb_words;
@@ -243,6 +299,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 #endif
 
 	}
+#endif
 
 #if 0
 	else if (Descr->f_long_code) {
@@ -388,6 +445,27 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 
 	}
+	else if (Descr->f_Sylvester_Hadamard_code) {
+		cout << "-Sylvester_Hadamard_code n=" << Descr->Sylvester_Hadamard_code_n << endl;
+
+		coding_theory::coding_theory_domain Codes;
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Codes.do_sylvester_hadamard" << endl;
+		}
+		Codes.do_sylvester_hadamard(F,
+				Descr->Sylvester_Hadamard_code_n,
+				verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Codes.do_sylvester_hadamard" << endl;
+		}
+
+
+	}
+
+
 	else if (Descr->f_NTT) {
 		number_theory::number_theoretic_transform NTT;
 

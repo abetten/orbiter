@@ -30,6 +30,10 @@ create_code_description::create_code_description()
 	basis_n = 0;
 	//std::string basis_label;
 
+	f_long_code = FALSE;
+	long_code_n = 0;
+	//long_code_generators;
+
 	f_projective_set = FALSE;
 	projective_set_nmk = 0;
 	//std::string projective_set_set;
@@ -53,10 +57,6 @@ create_code_description::create_code_description()
 	Gilbert_Varshamov_n = 0;
 	Gilbert_Varshamov_k = 0;
 	Gilbert_Varshamov_d = 0;
-
-	f_long_code = FALSE;
-	long_code_n = 0;
-	//long_code_generators;
 
 
 	std::vector<code_modification_description> Modifications;
@@ -99,6 +99,25 @@ int create_code_description::read_arguments(
 			basis_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-basis " << basis_n << " " << basis_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-long_code") == 0) {
+			f_long_code = TRUE;
+			long_code_n = ST.strtoi(argv[++i]);
+
+			int n, h;
+			n = ST.strtoi(argv[++i]);
+			for (h = 0; h < n; h++) {
+				string s;
+
+				s.assign(argv[++i]);
+				long_code_generators.push_back(s);
+			}
+			if (f_v) {
+				cout << "-long_code " << long_code_n << endl;
+				for (int h = 0; h < n; h++) {
+					cout << " " << long_code_generators[h] << endl;
+				}
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-projective_set") == 0) {
@@ -157,25 +176,6 @@ int create_code_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-long_code") == 0) {
-			f_long_code = TRUE;
-			long_code_n = ST.strtoi(argv[++i]);
-
-			int n, h;
-			n = ST.strtoi(argv[++i]);
-			for (h = 0; h < n; h++) {
-				string s;
-
-				s.assign(argv[++i]);
-				long_code_generators.push_back(s);
-			}
-			if (f_v) {
-				cout << "-long_code " << long_code_n << endl;
-				for (int h = 0; h < n; h++) {
-					cout << " " << long_code_generators[h] << endl;
-				}
-			}
-		}
 
 
 		else if (M.check_and_parse_argument(
@@ -214,6 +214,12 @@ void create_code_description::print()
 	if (f_basis) {
 		cout << "-basis " << basis_n << " " << basis_label << endl;
 	}
+	if (f_long_code) {
+		cout << "-long_code " << long_code_n << endl;
+		for (int h = 0; h < long_code_n; h++) {
+			cout << " " << long_code_generators[h] << endl;
+		}
+	}
 	if (f_projective_set) {
 		cout << "-projective_set "
 				<< projective_set_nmk
@@ -235,12 +241,6 @@ void create_code_description::print()
 				<< " " << Gilbert_Varshamov_k
 				<< " " << Gilbert_Varshamov_d
 				<< endl;
-	}
-	if (f_long_code) {
-		cout << "-long_code " << long_code_n << endl;
-		for (int h = 0; h < long_code_n; h++) {
-			cout << " " << long_code_generators[h] << endl;
-		}
 	}
 
 	int i;

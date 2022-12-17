@@ -282,6 +282,7 @@ void orbits_on_polynomials::compute_points(int verbose_level)
 }
 
 void orbits_on_polynomials::report(int verbose_level)
+// used to create a projective_geometry::projective_space_with_action
 {
 	int f_v = (verbose_level >= 1);
 
@@ -349,6 +350,7 @@ void orbits_on_polynomials::report(int verbose_level)
 		//Nb_pts = NEW_int(T->nb_orbits);
 
 
+#if 0
 		// compute the group of the surface:
 		projective_geometry::projective_space_with_action *PA;
 		int f_semilinear;
@@ -373,6 +375,7 @@ void orbits_on_polynomials::report(int verbose_level)
 		if (f_v) {
 			cout << "group_theoretic_activity::do_cubic_surface_properties after PA->init" << endl;
 		}
+#endif
 
 
 
@@ -458,6 +461,7 @@ void orbits_on_polynomials::report(int verbose_level)
 					}
 				}
 
+#if 0
 				PA->compute_group_of_set(set, nb_pts,
 						Sg,
 						verbose_level);
@@ -466,6 +470,8 @@ void orbits_on_polynomials::report(int verbose_level)
 				ring_theory::longinteger_object go1;
 				Sg->group_order(go1);
 				ost << go1;
+#endif
+
 				ost << "\\\\" << endl;
 
 				FREE_lint(set);
@@ -474,7 +480,7 @@ void orbits_on_polynomials::report(int verbose_level)
 			FREE_int(Idx);
 
 		}
-		FREE_OBJECT(PA);
+		//FREE_OBJECT(PA);
 
 #endif
 

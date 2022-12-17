@@ -502,39 +502,16 @@ void sims::print_all_group_elements_tex(std::ostream &ost,
 
 	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt);
+
 		ord = A1->element_order(Elt);
-		Order[i] = ord;
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;
-		ost << "$$" << endl;
-		A1->element_print_latex(Elt, ost);
-		ost << "$$" << endl;
 
-		if (f_with_permutation) {
-			A1->element_print_as_permutation(Elt, ost);
-			ost << "\\\\" << endl;
+		A1->print_one_element_tex(ost,
+				Elt, f_with_permutation);
 
-			int *perm;
-			int h, j;
-
-			perm = NEW_int(A1->degree);
-
-			A1->element_as_permutation(
-					Elt,
-					perm, 0 /* verbose_level */);
-
-			for (h = 0; h < A1->degree; h++) {
-				j = perm[h];
-
-				ost << j;
-				if (j < A1->degree) {
-					ost << ", ";
-				}
-			}
-			ost << "\\\\" << endl;
-
-		}
-	}
+		Order[i] = ord;
+}
 
 	data_structures::tally T;
 

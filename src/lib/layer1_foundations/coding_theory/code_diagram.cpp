@@ -107,15 +107,6 @@ void code_diagram::init(std::string &label,
 	}
 
 
-	save_distance(verbose_level);
-
-	save_distance_H(verbose_level);
-
-	save_diagram(verbose_level);
-
-	save_char_func(verbose_level);
-
-	report(verbose_level);
 
 	if (f_v) {
 		cout << "code_diagram::init done" << endl;

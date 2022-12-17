@@ -107,7 +107,8 @@ public:
 	void make_Hamming_graph_and_write_file(int n, int q,
 			int f_projective, int verbose_level);
 	void compute_and_print_projective_weights(
-			std::ostream &ost, field_theory::finite_field *F, int *M, int n, int k);
+			std::ostream &ost, field_theory::finite_field *F,
+			int *M, int n, int k, int verbose_level);
 	int code_minimum_distance(field_theory::finite_field *F, int n, int k,
 		int *code, int verbose_level);
 		// code[k * n]
@@ -187,8 +188,8 @@ public:
 			std::string &polynomial_text,
 			//int f_embellish, int embellish_radius,
 			int verbose_level);
-	void do_sylvester_hadamard(int n,
-			//int f_embellish, int embellish_radius,
+	void do_sylvester_hadamard(field_theory::finite_field *F3,
+			int n,
 			int verbose_level);
 #if 0
 	void do_long_code(
@@ -216,10 +217,10 @@ public:
 			int m, int n, std::string &genma_text,
 			int verbose_level);
 	// creates a field_theory::subfield_structure object
-	void encode_text_5bits(std::string &text,
-			std::string &fname, int verbose_level);
 	void field_induction(std::string &fname_in,
 			std::string &fname_out, int nb_bits, int verbose_level);
+	void encode_text_5bits(std::string &text,
+			std::string &fname, int verbose_level);
 	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
 	void fixed_code(
