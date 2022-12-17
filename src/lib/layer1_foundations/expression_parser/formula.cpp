@@ -7,12 +7,51 @@
 
 #include "foundations.h"
 
+#include "../expression_parser_sajeeb/parser.tab.hpp"
+#include "../expression_parser_sajeeb/lexer.yy.h"
+
+#include "../expression_parser_sajeeb/Visitors/PrintVisitors/ir_tree_pretty_print_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/uminus_distribute_and_reduce_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/merge_nodes_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/LatexVisitors/ir_tree_latex_visitor_strategy.h"
+#include "../expression_parser_sajeeb/Visitors/ToStringVisitors/ir_tree_to_string_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/remove_minus_nodes_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/ExpansionVisitors/multiplication_expansion_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/CopyVisitors/deep_copy_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/exponent_vector_visitor.h"
+#include "../expression_parser_sajeeb/Visitors/ReductionVisitors/simplify_numerical_visitor.h"
+
+
 using namespace std;
 
 
 namespace orbiter {
 namespace layer1_foundations {
 namespace expression_parser {
+
+#if 0
+void remove_minus_nodes(shared_ptr<irtree_node>& root) {
+    static remove_minus_nodes_visitor remove_minus_nodes;
+    root->accept(&remove_minus_nodes);
+}
+
+void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
+    static merge_nodes_visitor merge_redundant_nodes;
+    root->accept(&merge_redundant_nodes);
+}
+
+shared_ptr<irtree_node> generate_abstract_syntax_tree(std::string& exp, managed_variables_index_table managed_variables_table) {
+    shared_ptr<irtree_node> ir_tree_root;
+    YY_BUFFER_STATE buffer = yy_scan_string( exp.c_str() );
+    yy_switch_to_buffer(buffer);
+    int result = yyparse(ir_tree_root, managed_variables_table);
+    yy_delete_buffer(buffer);
+    yylex_destroy();
+    return ir_tree_root;
+}
+#endif
+
+
 
 
 formula::formula()
@@ -145,6 +184,135 @@ void formula::init(std::string &label, std::string &label_tex,
 		cout << "formula::init done" << endl;
 	}
 }
+
+#if 0
+void formula::init_Sajeeb(std::string &label, std::string &label_tex,
+		std::string &managed_variables, std::string &formula_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::init_Sajeeb" << endl;
+	}
+
+	name_of_formula.assign(label);
+	name_of_formula_latex.assign(label_tex);
+	formula::managed_variables.assign(managed_variables);
+	formula::formula_text.assign(formula_text);
+
+	//expression_parser Parser;
+	data_structures::string_tools ST;
+	int i;
+
+	//tree = NEW_OBJECT(syntax_tree);
+
+	if (f_v) {
+		cout << "formula::init_Sajeeb Formula " << name_of_formula << " is " << formula_text << endl;
+		cout << "formula::init_Sajeeb Managed variables: " << managed_variables << endl;
+	}
+
+	managed_variables_index_table managed_variables_table;
+
+	const char *p = managed_variables.c_str();
+	char str[1000];
+
+	while (TRUE) {
+		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+			break;
+		}
+		string var;
+
+		var.assign(str);
+		if (f_v) {
+			cout << "formula::init_Sajeeb adding managed variable " << var << endl;
+		}
+
+		managed_variables_table.insert(var);
+
+		//tree->managed_variables.push_back(var);
+		//tree->f_has_managed_variables = TRUE;
+
+	}
+
+
+	nb_managed_vars = managed_variables_table.size();
+	//nb_managed_vars = tree->managed_variables.size();
+
+	if (f_v) {
+		cout << "formula::init_Sajeeb Managed variables: " << endl;
+		for (i = 0; i < nb_managed_vars; i++) {
+			//cout << i << " : " << tree->managed_variables[i] << endl;
+			//cout << i << " : " << managed_variables_table[i] << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "formula::init_Sajeeb Starting to parse " << name_of_formula << endl;
+	}
+
+	shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(
+			formula_text, managed_variables_table);
+
+
+
+	//Parser.parse(tree, formula_text, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "formula::init_Sajeeb Parsing " << name_of_formula << " finished" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "formula::init_Sajeeb before remove_minus_nodes" << endl;
+	}
+	remove_minus_nodes(ir_tree_root);
+	if (f_v) {
+		cout << "formula::init_Sajeeb after remove_minus_nodes" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::init_Sajeeb before merge_redundant_nodes" << endl;
+	}
+	merge_redundant_nodes(ir_tree_root);
+	if (f_v) {
+		cout << "formula::init_Sajeeb after merge_redundant_nodes" << endl;
+	}
+
+#if 0
+	if (FALSE) {
+		cout << "formula::init_Sajeeb Syntax tree:" << endl;
+		tree->print(cout);
+	}
+
+	std::string fname;
+	fname.assign(name_of_formula);
+	fname.append(".gv");
+
+	{
+		std::ofstream ost(fname);
+		tree->Root->export_graphviz(name_of_formula, ost);
+	}
+
+	if (f_is_homogeneous) {
+		cout << "formula::init_Sajeeb before tree->is_homogeneous" << endl;
+	}
+	f_is_homogeneous = tree->is_homogeneous(degree, verbose_level - 3);
+	if (f_is_homogeneous) {
+		cout << "formula::init_Sajeeb after tree->is_homogeneous" << endl;
+	}
+
+	if (f_is_homogeneous) {
+		cout << "formula::init_Sajeeb the formula is homogeneous of degree " << degree << endl;
+	}
+#endif
+
+	if (f_v) {
+		cout << "formula::init_Sajeeb done" << endl;
+	}
+}
+#endif
+
 
 int formula::is_homogeneous(int &degree, int verbose_level)
 {

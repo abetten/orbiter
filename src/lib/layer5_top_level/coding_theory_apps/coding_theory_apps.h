@@ -71,9 +71,11 @@ public:
 	std::string code_diagram_from_file_codewords_fname;
 	int code_diagram_from_file_n;
 
+#if 0
 	int f_long_code;
 	int long_code_n;
 	std::vector<std::string> long_code_generators;
+#endif
 
 	int f_encode_text_5bits;
 	std::string encode_text_5bits_input;
@@ -341,6 +343,10 @@ public:
 	int Gilbert_Varshamov_n;
 	int Gilbert_Varshamov_k;
 	int Gilbert_Varshamov_d;
+
+	int f_long_code;
+	int long_code_n;
+	std::vector<std::string> long_code_generators;
 
 	std::vector<code_modification_description> Modifications;
 

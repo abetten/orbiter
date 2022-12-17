@@ -40,16 +40,16 @@ polynomial_function_domain::polynomial_function_domain()
 
 polynomial_function_domain::~polynomial_function_domain()
 {
-	int degree;
-
 	if (Poly) {
 		FREE_OBJECTS(Poly);
 	}
 	if (A_poly) {
-		for (degree = 1; degree <= max_degree; degree++) {
-			FREE_int(A_poly[degree]);
-			FREE_int(B_poly[degree]);
-			FREE_int(C_poly[degree]);
+		int i;
+
+		for (i = 1; i <= max_degree; i++) {
+			FREE_int(A_poly[i]);
+			FREE_int(B_poly[i]);
+			FREE_int(C_poly[i]);
 		}
 		FREE_pint(A_poly);
 		FREE_pint(B_poly);

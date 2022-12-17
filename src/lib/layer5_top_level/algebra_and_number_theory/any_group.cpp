@@ -145,8 +145,8 @@ void any_group::init_modified_group(modified_group_create *MGC, int verbose_leve
 	}
 	Subgroup_gens = MGC->Strong_gens;
 
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
+	label.assign(MGC->label);
+	label_tex.assign(MGC->label_tex);
 
 	if (f_v) {
 		cout << "any_group::init_modified_group done" << endl;

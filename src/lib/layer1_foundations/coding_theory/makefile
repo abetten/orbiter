@@ -7,6 +7,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+		code_diagram.o \
 		coding_theory_domain.o \
 		crc_codes_search.o \
 		crc_codes.o \

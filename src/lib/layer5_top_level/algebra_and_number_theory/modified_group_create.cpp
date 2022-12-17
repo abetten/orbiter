@@ -185,6 +185,9 @@ void modified_group_create::create_restricted_action(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
+
 	long int *points;
 	int nb_points;
 
@@ -252,6 +255,8 @@ void modified_group_create::create_action_on_k_subspaces(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
 
 
 
@@ -385,6 +390,8 @@ void modified_group_create::create_action_on_k_subsets(
 	A_previous = AG->A;
 
 
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
 
 
 
@@ -469,6 +476,8 @@ void modified_group_create::create_action_on_wedge_product(
 	A_previous = AG->A;
 
 
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
 
 
 
@@ -550,8 +559,8 @@ void modified_group_create::create_special_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-
-
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
 
 
 	A_modified = A_previous;
@@ -654,7 +663,8 @@ void modified_group_create::create_point_stabilizer_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
 
 	if (f_v) {
 		cout << "modified_group_create::create_point_stabilizer_subgroup A_base=";

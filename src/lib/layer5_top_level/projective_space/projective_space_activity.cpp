@@ -254,87 +254,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 
 
-	// surfaces:
-
-
-	else if (Descr->f_classify_surfaces_with_double_sixes) {
-
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
-		applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
-
-
-		SH.classify_surfaces_with_double_sixes(
-				PA,
-				Descr->classify_surfaces_with_double_sixes_control_label,
-				SCW,
-				verbose_level);
-
-		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
-
-		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-
-		Symb->init_classification_of_cubic_surfaces_with_double_sixes(Descr->classify_surfaces_with_double_sixes_label, SCW, verbose_level);
-		if (f_v) {
-			cout << "before Orbiter->add_symbol_table_entry "
-					<< Descr->classify_surfaces_with_double_sixes_label << endl;
-		}
-		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
-
-	}
-
-	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
-
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before SH.do_classify_surfaces_through_arcs_and_two_lines" << endl;
-		}
-		SH.do_classify_surfaces_through_arcs_and_two_lines(
-				PA,
-				Descr->Control_six_arcs_label,
-				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after SH.do_classify_surfaces_through_arcs_and_two_lines" << endl;
-		}
-	}
-
-	else if (Descr->f_classify_surfaces_through_arcs_and_trihedral_pairs) {
-		if (!Descr->f_trihedra1_control) {
-			cout << "please use option -trihedra1_control <description> -end" << endl;
-			exit(1);
-		}
-		if (!Descr->f_trihedra2_control) {
-			cout << "please use option -trihedra2_control <description> -end" << endl;
-			exit(1);
-		}
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <label> -end" << endl;
-			exit(1);
-		}
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before SH.do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
-		}
-		SH.do_classify_surfaces_through_arcs_and_trihedral_pairs(
-				PA,
-				Descr->Trihedra1_control, Descr->Trihedra2_control,
-				Descr->Control_six_arcs_label,
-				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after SH.do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
-		}
-	}
 	else if (Descr->f_sweep_4_15_lines) {
 
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
@@ -432,51 +351,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 	}
 
-	else if (Descr->f_six_arcs_not_on_conic) {
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before SH.do_six_arcs" << endl;
-		}
-		SH.do_six_arcs(
-				PA,
-				Descr->Control_six_arcs_label,
-				Descr->f_filter_by_nb_Eckardt_points,
-				Descr->nb_Eckardt_points,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after SH.do_six_arcs" << endl;
-		}
-	}
-
-
-	else if (Descr->f_classify_semifields) {
-
-		semifields::semifield_classify_with_substructure *S;
-
-		S = NEW_OBJECT(semifields::semifield_classify_with_substructure);
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before S->init" << endl;
-		}
-		S->init(
-				Descr->Semifield_classify_description,
-				PA,
-				Descr->Semifield_classify_Control,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after S->init" << endl;
-		}
-
-	}
 	else if (Descr->f_cheat_sheet) {
 
 		graphics::layered_graph_draw_options *O;
@@ -497,51 +372,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"after PA->cheat_sheet" << endl;
-		}
-
-	}
-	else if (Descr->f_classify_quartic_curves_nauty) {
-
-		canonical_form_classifier *Classifier;
-
-		projective_space_global G;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before G.classify_quartic_curves_nauty" << endl;
-		}
-		G.classify_quartic_curves_nauty(PA,
-				Descr->classify_quartic_curves_nauty_fname_mask,
-				Descr->classify_quartic_curves_nauty_nb,
-				Descr->classify_quartic_curves_nauty_fname_classification,
-				Classifier,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after G.classify_quartic_curves_nauty" << endl;
-		}
-	}
-
-
-	else if (Descr->f_classify_quartic_curves_with_substructure) {
-
-		projective_space_global G;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before G.classify_quartic_curves" << endl;
-		}
-		G.classify_quartic_curves(
-				PA,
-				Descr->classify_quartic_curves_with_substructure_fname_mask,
-				Descr->classify_quartic_curves_with_substructure_nb,
-				Descr->classify_quartic_curves_with_substructure_size,
-				Descr->classify_quartic_curves_with_substructure_degree,
-				Descr->classify_quartic_curves_with_substructure_fname_classification,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after G.classify_quartic_curves" << endl;
 		}
 
 	}
@@ -792,34 +622,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 		FREE_lint(the_set_in);
 		FREE_lint(the_set_out);
 
-	}
-	else if (Descr->f_classify_arcs) {
-		projective_space_global G;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity before G.do_classify_arcs" << endl;
-		}
-		G.do_classify_arcs(
-				PA,
-				Descr->Arc_generator_description,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity after G.do_classify_arcs" << endl;
-		}
-	}
-	else if (Descr->f_classify_cubic_curves) {
-		projective_space_global G;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity before G.do_classify_cubic_curves" << endl;
-		}
-		G.do_classify_cubic_curves(
-				PA,
-				Descr->Arc_generator_description,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity after G.do_classify_cubic_curves" << endl;
-		}
 	}
 	else if (Descr->f_lines_on_point_but_within_a_plane) {
 
@@ -1083,6 +885,208 @@ void projective_space_activity::perform_activity(int verbose_level)
 					<< Fio.file_size(fname) << endl;
 		}
 
+
+	}
+	// surfaces:
+
+
+	else if (Descr->f_classify_surfaces_with_double_sixes) {
+
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+		applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
+
+
+		SH.classify_surfaces_with_double_sixes(
+				PA,
+				Descr->classify_surfaces_with_double_sixes_control_label,
+				SCW,
+				verbose_level);
+
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		Symb->init_classification_of_cubic_surfaces_with_double_sixes(Descr->classify_surfaces_with_double_sixes_label, SCW, verbose_level);
+		if (f_v) {
+			cout << "before Orbiter->add_symbol_table_entry "
+					<< Descr->classify_surfaces_with_double_sixes_label << endl;
+		}
+		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
+
+	}
+
+	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
+
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before SH.do_classify_surfaces_through_arcs_and_two_lines" << endl;
+		}
+		SH.do_classify_surfaces_through_arcs_and_two_lines(
+				PA,
+				Descr->Control_six_arcs_label,
+				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after SH.do_classify_surfaces_through_arcs_and_two_lines" << endl;
+		}
+	}
+
+	else if (Descr->f_classify_surfaces_through_arcs_and_trihedral_pairs) {
+		if (!Descr->f_trihedra1_control) {
+			cout << "please use option -trihedra1_control <description> -end" << endl;
+			exit(1);
+		}
+		if (!Descr->f_trihedra2_control) {
+			cout << "please use option -trihedra2_control <description> -end" << endl;
+			exit(1);
+		}
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -control_six_arcs <label> -end" << endl;
+			exit(1);
+		}
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before SH.do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+		}
+		SH.do_classify_surfaces_through_arcs_and_trihedral_pairs(
+				PA,
+				Descr->Trihedra1_control, Descr->Trihedra2_control,
+				Descr->Control_six_arcs_label,
+				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after SH.do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+		}
+	}
+	else if (Descr->f_six_arcs_not_on_conic) {
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before SH.do_six_arcs" << endl;
+		}
+		SH.do_six_arcs(
+				PA,
+				Descr->Control_six_arcs_label,
+				Descr->f_filter_by_nb_Eckardt_points,
+				Descr->nb_Eckardt_points,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after SH.do_six_arcs" << endl;
+		}
+	}
+
+	else if (Descr->f_classify_quartic_curves_nauty) {
+
+		canonical_form_classifier *Classifier;
+
+		projective_space_global G;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before G.classify_quartic_curves_nauty" << endl;
+		}
+		G.classify_quartic_curves_nauty(PA,
+				Descr->classify_quartic_curves_nauty_fname_mask,
+				Descr->classify_quartic_curves_nauty_nb,
+				Descr->classify_quartic_curves_nauty_fname_classification,
+				Classifier,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after G.classify_quartic_curves_nauty" << endl;
+		}
+	}
+
+
+	else if (Descr->f_classify_quartic_curves_with_substructure) {
+
+		projective_space_global G;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before G.classify_quartic_curves" << endl;
+		}
+		G.classify_quartic_curves(
+				PA,
+				Descr->classify_quartic_curves_with_substructure_fname_mask,
+				Descr->classify_quartic_curves_with_substructure_nb,
+				Descr->classify_quartic_curves_with_substructure_size,
+				Descr->classify_quartic_curves_with_substructure_degree,
+				Descr->classify_quartic_curves_with_substructure_fname_classification,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after G.classify_quartic_curves" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_classify_arcs) {
+		projective_space_global G;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before G.do_classify_arcs" << endl;
+		}
+		G.do_classify_arcs(
+				PA,
+				Descr->Arc_generator_description,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after G.do_classify_arcs" << endl;
+		}
+	}
+	else if (Descr->f_classify_cubic_curves) {
+		projective_space_global G;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before G.do_classify_cubic_curves" << endl;
+		}
+		G.do_classify_cubic_curves(
+				PA,
+				Descr->Arc_generator_description,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after G.do_classify_cubic_curves" << endl;
+		}
+	}
+
+
+	else if (Descr->f_classify_semifields) {
+
+		semifields::semifield_classify_with_substructure *S;
+
+		S = NEW_OBJECT(semifields::semifield_classify_with_substructure);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before S->init" << endl;
+		}
+		S->init(
+				Descr->Semifield_classify_description,
+				PA,
+				Descr->Semifield_classify_Control,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after S->init" << endl;
+		}
 
 	}
 

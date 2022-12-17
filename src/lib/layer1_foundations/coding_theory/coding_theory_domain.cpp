@@ -32,10 +32,8 @@ coding_theory_domain::~coding_theory_domain()
 
 
 
-
-
-
-void coding_theory_domain::make_mac_williams_equations(ring_theory::longinteger_object *&M,
+void coding_theory_domain::make_mac_williams_equations(
+		ring_theory::longinteger_object *&M,
 		int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -709,7 +707,8 @@ void coding_theory_domain::do_make_macwilliams_system(
 
 
 
-void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
+void coding_theory_domain::make_Hamming_graph_and_write_file(
+		int n, int q,
 		int f_projective, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -830,7 +829,8 @@ void coding_theory_domain::compute_and_print_projective_weights(
 	FREE_int(weights);
 }
 
-int coding_theory_domain::code_minimum_distance(field_theory::finite_field *F, int n, int k,
+int coding_theory_domain::code_minimum_distance(
+		field_theory::finite_field *F, int n, int k,
 		int *code, int verbose_level)
 	// code[k * n]
 {
@@ -1250,7 +1250,8 @@ void coding_theory_domain::code_projective_weights(
 	FREE_int(word);
 }
 
-void coding_theory_domain::mac_williams_equations(ring_theory::longinteger_object *&M, int n, int k, int q)
+void coding_theory_domain::mac_williams_equations(
+		ring_theory::longinteger_object *&M, int n, int k, int q)
 {
 	combinatorics::combinatorics_domain D;
 	int i, j;
@@ -1325,7 +1326,8 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 	Int_vec_copy(M, A, m * n);
 
 	if (f_v) {
-		cout << "coding_theory_domain::do_weight_enumerator input matrix:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"input matrix:" << endl;
 		Int_matrix_print(A, m, n);
 
 		cout << "$$" << endl;
@@ -1337,7 +1339,8 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::do_weight_enumerator before Gauss_int" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"before Gauss_int" << endl;
 	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
@@ -1346,12 +1349,14 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 		verbose_level);
 
 	if (f_v) {
-		cout << "coding_theory_domain::do_weight_enumerator after Gauss_int" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"after Gauss_int" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::do_weight_enumerator after RREF:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"after RREF:" << endl;
 		Int_matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
@@ -1374,7 +1379,8 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 		verbose_level);
 
 	if (f_v) {
-		cout << "coding_theory_domain::do_weight_enumerator The weight enumerator is:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"The weight enumerator is:" << endl;
 		for (i = 0; i <= n; i++) {
 			cout << i << " : " << weight_enumerator[i] << endl;
 		}
@@ -1423,7 +1429,8 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 		cout << endl;
 
 
-		cout << "coding_theory_domain::do_weight_enumerator The weight enumerator is:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator "
+				"The weight enumerator is:" << endl;
 		for (i = 0; i <= n; i++) {
 			cout << i << " : " << weight_enumerator[i] << endl;
 		}
@@ -1480,7 +1487,8 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 
 	if (f_normalize_from_the_left) {
 		if (f_v) {
-			cout << "coding_theory_domain::do_weight_enumerator normalizing from the left" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator "
+					"normalizing from the left" << endl;
 		}
 		for (i = 0; i < rk; i++) {
 			F->PG_element_normalize_from_front(
@@ -1488,7 +1496,8 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 		}
 
 		if (f_v) {
-			cout << "coding_theory_domain::do_weight_enumerator after normalize from the left:" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator "
+					"after normalize from the left:" << endl;
 			Int_matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
@@ -1496,7 +1505,8 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 
 	if (f_normalize_from_the_right) {
 		if (f_v) {
-			cout << "coding_theory_domain::do_weight_enumerator normalizing from the right" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator "
+					"normalizing from the right" << endl;
 		}
 		for (i = 0; i < rk; i++) {
 			F->PG_element_normalize(
@@ -1504,9 +1514,11 @@ void coding_theory_domain::do_weight_enumerator(field_theory::finite_field *F,
 		}
 
 		if (f_v) {
-			cout << "coding_theory_domain::do_weight_enumerator after normalize from the right:" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator "
+					"after normalize from the right:" << endl;
 			Int_matrix_print(A, rk, n);
-			cout << "coding_theory_domain::do_weight_enumerator rk=" << rk << endl;
+			cout << "coding_theory_domain::do_weight_enumerator "
+					"rk=" << rk << endl;
 		}
 	}
 
@@ -1627,7 +1639,10 @@ void coding_theory_domain::do_minimum_distance(field_theory::finite_field *F,
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::do_minimum_distance The minimum distance is d = " << d << ", computed in " << days << " days, " << hours << " hours, " << minutes << " minutes, " << seconds << " seconds" << endl;
+		cout << "coding_theory_domain::do_minimum_distance "
+				"The minimum distance is d = " << d << ", "
+				"computed in " << days << " days, " << hours << " hours, "
+				<< minutes << " minutes, " << seconds << " seconds" << endl;
 	}
 
 
@@ -2235,7 +2250,8 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 	cout << "nb_factors = " << nb_factors << endl;
 
 	if ((2 << nb_factors) != n) {
-		cout << "for Sylvester type Hadamard matrices, n must be 4 times a power of two" << endl;
+		cout << "for Sylvester type Hadamard matrices, "
+				"n must be 4 times a power of two" << endl;
 		exit(1);
 	}
 
@@ -2525,6 +2541,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 }
 #endif
 
+#if 0
 void coding_theory_domain::do_long_code(
 		int n,
 		std::vector<std::string> &long_code_generators_text,
@@ -2777,7 +2794,9 @@ void coding_theory_domain::do_long_code(
 
 
 }
+#endif
 
+#if 0
 void coding_theory_domain::embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad)
 {
 	int i, j, u, v;
@@ -2844,6 +2863,7 @@ void coding_theory_domain::place_entry(int *M, int nb_rows, int nb_cols, int i, 
 	}
 	M[i * nb_cols + j] = a;
 }
+#endif
 
 #if 0
 void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbose_level)
@@ -2911,6 +2931,7 @@ void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbo
 }
 #endif
 
+#if 0
 void coding_theory_domain::dimensions(int n, int &nb_rows, int &nb_cols)
 {
 	int i, j;
@@ -3021,7 +3042,7 @@ void coding_theory_domain::place_binary(int *v, int n, int &i, int &j)
 		}
 	}
 }
-
+#endif
 
 
 
@@ -3351,6 +3372,7 @@ void coding_theory_domain::fixed_code(
 	}
 }
 
+#if 0
 void coding_theory_domain::code_diagram(
 		std::string &label,
 		long int *Words,
@@ -3365,7 +3387,9 @@ void coding_theory_domain::code_diagram(
 	int *M;
 	int *M1;
 	int *M2;
-	int *M3; // the holes
+	int *Distance;
+		// the distance of a word to the code.
+		// Can be used to detect deep holes.
 	int N;
 	int h, i, j;
 	orbiter_kernel_system::file_io Fio;
@@ -3389,7 +3413,7 @@ void coding_theory_domain::code_diagram(
 	v = NEW_int(n);
 	M1 = NEW_int(nb_rows * nb_cols);
 	M2 = NEW_int(nb_rows * nb_cols);
-	M3 = NEW_int(nb_rows * nb_cols);
+	Distance = NEW_int(nb_rows * nb_cols);
 	M = NEW_int(nb_rows * nb_cols);
 
 
@@ -3397,7 +3421,7 @@ void coding_theory_domain::code_diagram(
 	Int_vec_zero(M2, nb_rows * nb_cols);
 	//Orbiter->Int_vec.zero(M3, nb_rows * nb_cols);
 	for (h = 0; h < nb_rows * nb_cols; h++) {
-		M3[h] = n + 1;
+		Distance[h] = n + 1;
 	}
 
 	N = 1 << n;
@@ -3434,7 +3458,7 @@ void coding_theory_domain::code_diagram(
 		place_binary(Words[h], i, j);
 		M[i * nb_cols + j] = h + 1;
 		M2[i * nb_cols + j] = 1;
-		M3[i * nb_cols + j] = 0; // distance is zero
+		Distance[i * nb_cols + j] = 0; // distance is zero
 
 		if (f_enhance) {
 			embellish(M, nb_rows, nb_cols, i, j, h + 1 /* value */, radius);
@@ -3505,9 +3529,9 @@ void coding_theory_domain::code_diagram(
 	int *Dist_from_code_enumerator;
 	int d;
 	int s, original_value, a;
-	int *set_of_errors;
+	//int *set_of_errors;
 
-	set_of_errors = NEW_int(n);
+	//set_of_errors = NEW_int(n);
 
 	Dist_from_code_enumerator = NEW_int(n + 1);
 	Int_vec_zero(Dist_from_code_enumerator, n + 1);
@@ -3517,7 +3541,7 @@ void coding_theory_domain::code_diagram(
 			cout << "coding_theory_domain::code_diagram computing words of distance " << d + 1 << " from the code" << endl;
 		}
 		for (h = 0; h < nb_rows * nb_cols; h++) {
-			if (M3[h] == d) {
+			if (Distance[h] == d) {
 				Dist_from_code_enumerator[d]++;
 				i = h / nb_cols;
 				j = h % nb_cols;
@@ -3527,8 +3551,8 @@ void coding_theory_domain::code_diagram(
 					v[s] = (v[s] + 1) % 2;
 					place_binary(v, n, i, j);
 					a = i * nb_cols + j;
-					if (M3[a] > d + 1) {
-						M3[a] = d + 1;
+					if (Distance[a] > d + 1) {
+						Distance[a] = d + 1;
 					}
 					v[s] = original_value;
 				}
@@ -3551,7 +3575,7 @@ void coding_theory_domain::code_diagram(
 		cout << endl;
 	}
 
-	FREE_int(set_of_errors);
+	//FREE_int(set_of_errors);
 
 	{
 		char str[1000];
@@ -3629,11 +3653,11 @@ void coding_theory_domain::code_diagram(
 
 		fname.assign(label);
 
-		snprintf(str, sizeof(str), "_holes_%d_%d.csv", n, nb_words);
+		snprintf(str, sizeof(str), "_distance_%d_%d.csv", n, nb_words);
 		fname.append(str);
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.int_matrix_write_csv(fname, M3, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname, Distance, nb_rows, nb_cols);
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -3641,13 +3665,14 @@ void coding_theory_domain::code_diagram(
 	FREE_int(v);
 	FREE_int(M1);
 	FREE_int(M2);
-	FREE_int(M3);
+	FREE_int(Distance);
 	FREE_int(M);
 
 	if (f_v) {
 		cout << "coding_theory_domain::code_diagram done" << endl;
 	}
 }
+#endif
 
 
 
@@ -3667,146 +3692,6 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 	if (f_v) {
 		cout << "coding_theory_domain::polynomial_representation_of_boolean_function" << endl;
 	}
-
-#if 0
-	int nb_rows, nb_cols;
-	int *v;
-	int *M;
-	int *M1;
-	int *M2;
-	int N;
-	//int D, d;
-	int h, i, j;
-	orbiter_kernel_system::file_io Fio;
-
-	if (f_v) {
-		cout << "create_code::investigate_code" << endl;
-		cout << "n=" << n << endl;
-		cout << "set:" << endl;
-		Lint_vec_print(cout, Words, nb_words);
-		cout << endl;
-	}
-
-	dimensions(n, nb_rows, nb_cols);
-
-	if (f_v) {
-		cout << "create_code::investigate_code" << endl;
-		cout << "nb_rows=" << nb_rows << endl;
-		cout << "nb_cols=" << nb_cols << endl;
-	}
-
-	v = NEW_int(n);
-	M1 = NEW_int(nb_rows * nb_cols);
-	M2 = NEW_int(nb_rows * nb_cols);
-	M = NEW_int(nb_rows * nb_cols);
-
-
-	Int_vec_zero(M1, nb_rows * nb_cols);
-	Int_vec_zero(M2, nb_rows * nb_cols);
-
-
-	N = 1 << n;
-
-	cout << "N=" << N << endl;
-
-	cout << "placing codewords" << endl;
-	for (h = 0; h < N; h++) {
-		place_binary(h, i, j);
-		M1[i * nb_cols + j] = h;
-		//M2[i * nb_cols + j] = 1;
-		}
-	cout << "placing position values done" << endl;
-
-
-#if 0
-	colored_graph *C;
-
-	C = new colored_graph;
-
-	C->init_adjacency_no_colors(int nb_points, int *Adj, int verbose_level);
-#endif
-
-
-	char fname[1000];
-
-	snprintf(fname, sizeof(fname), "code_%d_%d.tex", n, nb_words);
-
-	{
-		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
-
-		L.head_easy(fp);
-		fp << "$$" << endl;
-		L.print_integer_matrix_tex(fp, M1, nb_rows, nb_cols);
-		fp << "$$" << endl;
-
-
-
-		cout << "placing codewords" << endl;
-		Int_vec_zero(M, nb_rows * nb_cols);
-		for (h = 0; h < nb_words; h++) {
-			convert_to_binary(n, Words[h], v);
-			cout << "codeword " << h + 1 << " = " << setw(5) << Words[h];
-			cout << " : ";
-			print_binary(n, v);
-			cout << endl;
-			place_binary(Words[h], i, j);
-			M[i * nb_cols + j] = h + 1;
-			M2[i * nb_cols + j] = 1;
-			if (f_embellish) {
-				embellish(M, nb_rows, nb_cols, i, j, h + 1, embellish_radius);
-			}
-		}
-		//int_matrix_print(M, nb_rows, nb_cols);
-		cout << "placing codewords done" << endl;
-
-		fp << "$$" << endl;
-		L.print_integer_matrix_tex(fp, M, nb_rows, nb_cols);
-		fp << "$$" << endl;
-
-
-		L.foot(fp);
-	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	cout << "M2:" << endl;
-	Int_matrix_print(M2, nb_rows, nb_cols);
-
-	{
-		char str[1000];
-		string fname;
-		orbiter_kernel_system::file_io Fio;
-
-		snprintf(str, sizeof(str), "code_matrix_%d_%d.csv", nb_rows, nb_cols);
-		fname.assign(str);
-		Fio.int_matrix_write_csv(fname, M2, nb_rows, nb_cols);
-
-	}
-
-
-#if 0
-	{
-	colored_graph *CG;
-
-	CG = NEW_OBJECT(colored_graph);
-
-	cout << "before create_Levi_graph_from_incidence_matrix" << endl;
-	CG->create_Levi_graph_from_incidence_matrix(M, nb_rows, nb_cols,
-		FALSE /* f_point_labels */, NULL /* *point_labels */,
-		verbose_level);
-
-	cout << "after create_Levi_graph_from_incidence_matrix" << endl;
-
-	char fname[1000];
-
-
-	snprintf(fname, sizeof(fname), "code_%d_%d_Levi_%d_%d.bin",
-		n, nb_words, nb_rows, nb_cols);
-	CG->save(fname, verbose_level);
-	delete CG;
-	}
-#endif
-#endif
 
 
 	combinatorics::boolean_function_domain *BF;
@@ -3862,7 +3747,7 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 
 	for (h = 0; h < BF->Q; h++) {
 		if (f[h] != g[h]) {
-			cout << "f[h] != g[h], h = " << h << ", an error has occured" << endl;
+			cout << "f[h] != g[h], h = " << h << ", an error has occurred" << endl;
 		}
 	}
 

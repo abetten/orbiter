@@ -240,6 +240,8 @@ public:
 	void O4_find_tangent_plane(field_theory::finite_field *F,
 		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
 		int *tangent_plane, int verbose_level);
+	void Nth_roots(field_theory::finite_field *F,
+			int n, int verbose_level);
 
 };
 

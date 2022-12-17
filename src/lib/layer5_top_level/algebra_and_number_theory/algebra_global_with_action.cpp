@@ -135,14 +135,16 @@ void algebra_global_with_action::create_subgroups(
 	Sorting.lint_vec_heapsort_with_log(the_set_sorted, position, set_size);
 
 
-	cout << "There are " << Classes->nb_orbits << " orbits on the given set of elements by conjugation" << endl;
+	cout << "There are " << Classes->nb_orbits << " orbits "
+			"on the given set of elements by conjugation" << endl;
 	for (i = 0; i < Classes->nb_orbits; i++) {
 
 		f = Classes->orbit_first[i];
 		l = Classes->orbit_len[i];
 		rep = Classes->orbit[f];
 		if (f_v) {
-			cout << "Orbit " << i << " has length " << l << " representative is " << rep << " = " << the_set[rep] << endl;
+			cout << "Orbit " << i << " has length " << l
+					<< " representative is " << rep << " = " << the_set[rep] << endl;
 		}
 	}
 
@@ -973,8 +975,8 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 
 
 
-void algebra_global_with_action::classes_GL(field_theory::finite_field *F, int d,
-		int f_no_eigenvalue_one, int verbose_level)
+void algebra_global_with_action::classes_GL(field_theory::finite_field *F,
+		int d, int f_no_eigenvalue_one, int verbose_level)
 // called from interface_algebra
 // creates an object of type action
 {
@@ -1178,7 +1180,8 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 
 	C.init(d, F, verbose_level);
 
-	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one, verbose_level);
+	C.make_classes(Reps, nb_classes,
+			f_no_eigenvalue_one, verbose_level);
 
 
 
@@ -1208,10 +1211,14 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 	//int go;
 	//go = Go.as_int();
 
-	cout << "Looking at element " << elt_idx << ":" << endl;
+	if (f_v) {
+		cout << "Looking at element " << elt_idx << ":" << endl;
+	}
 
 	A->Sims->element_unrank_lint(elt_idx, Elt);
-	Int_matrix_print(Elt, d, d);
+	if (f_v) {
+		Int_matrix_print(Elt, d, d);
+	}
 
 
 	algebra::gl_class_rep *R1;
@@ -1222,7 +1229,9 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 
 	class_rep = C.find_class_rep(Reps, nb_classes, R1, 0 /* verbose_level */);
 
-	cout << "class = " << class_rep << endl;
+	if (f_v) {
+		cout << "class = " << class_rep << endl;
+	}
 
 	FREE_OBJECT(R1);
 
@@ -2626,7 +2635,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 		}
 	}
 	if (i == q2) {
-		cout << "A5_in_PSL_2_q_hard() couldn't find element c" << endl;
+		cout << "A5_in_PSL_2_q_hard couldn't find element c" << endl;
 		exit(1);
 	}
 #endif
@@ -3088,7 +3097,9 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 
 		for (i = 0; i < rk; i++) {
 			for (j = 0; j < Y->goi; j++) {
-				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j), Y->D->offset(Base, s * Y->goi + j), 0);
+				Y->D->copy(
+						Y->D->offset(Module_Base, i * Y->goi + j),
+						Y->D->offset(Base, s * Y->goi + j), 0);
 				}
 			s++;
 			}
@@ -3290,8 +3301,8 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 
 
 	if (f_v) {
-		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance group set up, "
-				"calling gen->init" << endl;
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance "
+				"group set up, calling gen->init" << endl;
 		cout << "LG->A2->A->f_has_strong_generators="
 				<< LG->A2->f_has_strong_generators << endl;
 	}
@@ -3319,20 +3330,26 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	PC->initialize_and_allocate_root_node(Control, Poset,
 			target_depth, verbose_level);
 
-	if (f_v) {
-		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance before gen->main" << endl;
-	}
-
 	int t0;
 	orbiter_kernel_system::os_interface Os;
 	int depth;
 
 	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance before PC->main" << endl;
+	}
+
 	depth = PC->main(t0,
 			target_depth /*schreier_depth*/,
 		TRUE /*f_use_invariant_subset_if_available*/,
 		FALSE /*f_debug */,
 		verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance after PC->main" << endl;
+	}
+
 	if (f_v) {
 		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance depth = " << depth << endl;
 	}
@@ -4368,67 +4385,6 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 	if (f_v) {
 		cout << "algebra_global_with_action::find_standard_generators done" << endl;
 	}
-}
-
-void algebra_global_with_action::Nth_roots(field_theory::finite_field *F,
-		int n, int verbose_level)
-{
-	field_theory::nth_roots *Nth;
-
-	Nth = NEW_OBJECT(field_theory::nth_roots);
-
-	Nth->init(F, n, verbose_level);
-
-	orbiter_kernel_system::file_io Fio;
-	{
-
-		string fname;
-		string author;
-		string title;
-		string extra_praeamble;
-
-
-		char str[1000];
-
-		snprintf(str, 1000, "Nth_roots_q%d_n%d.tex", F->q, n);
-		fname.assign(str);
-		snprintf(str, 1000, "Nth roots");
-		title.assign(str);
-
-
-
-
-		{
-			ofstream ost(fname);
-			number_theory::number_theory_domain NT;
-
-
-
-			orbiter_kernel_system::latex_interface L;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					extra_praeamble /* extra_praeamble */);
-
-
-			Nth->report(ost, verbose_level);
-
-			L.foot(ost);
-
-
-		}
-
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	}
-
 }
 
 

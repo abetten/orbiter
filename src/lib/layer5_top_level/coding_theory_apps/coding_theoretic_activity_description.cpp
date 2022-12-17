@@ -39,10 +39,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	//std::string code_diagram_from_file_codewords_fname;
 	code_diagram_from_file_n = 0;
 
-	f_long_code = FALSE;
-	long_code_n = 0;
-	//long_code_generators;
-
 	f_encode_text_5bits = FALSE;
 	//encode_text_5bits_input;
 	//encode_text_5bits_fname;
@@ -206,25 +202,6 @@ int coding_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-long_code") == 0) {
-			f_long_code = TRUE;
-			long_code_n = ST.strtoi(argv[++i]);
-
-			int n, h;
-			n = ST.strtoi(argv[++i]);
-			for (h = 0; h < n; h++) {
-				string s;
-
-				s.assign(argv[++i]);
-				long_code_generators.push_back(s);
-			}
-			if (f_v) {
-				cout << "-long_code " << long_code_n << endl;
-				for (int h = 0; h < n; h++) {
-					cout << " " << long_code_generators[h] << endl;
-				}
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-encode_text_5bits") == 0) {
 			f_encode_text_5bits = TRUE;
 			encode_text_5bits_input.assign(argv[++i]);
@@ -532,12 +509,6 @@ void coding_theoretic_activity_description::print()
 				<< " " << code_diagram_from_file_n << endl;
 	}
 
-	if (f_long_code) {
-		cout << "-long_code " << long_code_n << endl;
-		for (int h = 0; h < long_code_n; h++) {
-			cout << " " << long_code_generators[h] << endl;
-		}
-	}
 	if (f_encode_text_5bits) {
 		cout << "-encode_text_5bits " << encode_text_5bits_input << " "
 				<< encode_text_5bits_fname << endl;
