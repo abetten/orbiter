@@ -20,7 +20,7 @@ SANDBOX=$(MY_PATH)/src/apps/sandbox/sandbox.out
 SRC=$(MY_PATH)/src
 MY_CPP = g++
 MY_CC = gcc
-CPPFLAGS = -Wall -I../../DEV.22/orbiter/src/lib -std=c++14
+CPPFLAGS = -Wall -I../../DEV.22/orbiter/src/lib -std=c++17
 LIB = $(SRC)/lib/liborbiter.a -lpthread
 LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
