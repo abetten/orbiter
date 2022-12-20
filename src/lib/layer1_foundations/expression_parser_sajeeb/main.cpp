@@ -6,12 +6,11 @@
 *
 **/
     
+#include "parser"
+
 #include <iostream>
 #include <unordered_map>
 #include <string>
-
-#include "parser.tab.hpp"
-#include "lexer.yy.h"
 
 #include "Visitors/PrintVisitors/ir_tree_pretty_print_visitor.h"
 #include "Visitors/uminus_distribute_and_reduce_visitor.h"
@@ -67,15 +66,7 @@ void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
     root->accept(&merge_redundant_nodes);
 }
 
-shared_ptr<irtree_node> generate_abstract_syntax_tree(std::string& exp, managed_variables_index_table managed_variables_table) {
-    shared_ptr<irtree_node> ir_tree_root;
-    YY_BUFFER_STATE buffer = yy_scan_string( exp.c_str() );
-    yy_switch_to_buffer(buffer);
-    int result = yyparse(ir_tree_root, managed_variables_table);
-    yy_delete_buffer(buffer);
-    yylex_destroy();
-    return ir_tree_root;
-}
+
 
 int main(int argc, const char** argv) {
 	// std::string exp = "a-(-b)^(c*j*i-d*-9*-(-1+7))*e+f+g"; //a + --b^(c+d)*e + f + g
@@ -109,7 +100,7 @@ int main(int argc, const char** argv) {
     cout << "managed_variables_table:\n" << managed_variables_table << endl;
 
 
-    shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(exp, managed_variables_table);
+    shared_ptr<irtree_node> ir_tree_root = parser::parse_expression(exp, managed_variables_table);
 
 
     get_latex_staged_visitor_functor
