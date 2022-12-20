@@ -196,6 +196,7 @@ public:
 	std::string formula_text;
 	syntax_tree *tree;
 
+
 	int nb_managed_vars;
 
 	int f_is_homogeneous;
@@ -208,6 +209,11 @@ public:
 	void init(std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
 			int verbose_level);
+#if 0
+	void init_Sajeeb(std::string &label, std::string &label_tex,
+			std::string &managed_variables, std::string &formula_text,
+			int verbose_level);
+#endif
 	int is_homogeneous(int &degree, int verbose_level);
 	void get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int &nb_monomials,

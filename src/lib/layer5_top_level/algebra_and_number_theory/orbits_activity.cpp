@@ -59,37 +59,103 @@ void orbits_activity::perform_activity(int verbose_level)
 	}
 
 	if (Descr->f_report) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_report" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_report" << endl;
+		}
 		do_report(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_report" << endl;
+		}
 	}
 	if (Descr->f_export_something) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_export_something" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_export" << endl;
+		}
 		do_export(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_export" << endl;
+		}
 
 	}
 	else if (Descr->f_export_trees) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_export_trees" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_export_trees" << endl;
+		}
 		do_export_trees(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_export_trees" << endl;
+		}
 	}
 	else if (Descr->f_draw_tree) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_draw_tree" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_draw_tree" << endl;
+		}
 		do_draw_tree(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_draw_tree" << endl;
+		}
 	}
 	else if (Descr->f_stabilizer) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_stabilizer" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_stabilizer" << endl;
+		}
 		do_stabilizer(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_stabilizer" << endl;
+		}
 	}
 	else if (Descr->f_stabilizer_of_orbit_rep) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_stabilizer_of_orbit_rep" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_stabilizer_of_orbit_rep" << endl;
+		}
 		do_stabilizer_of_orbit_rep(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_stabilizer_of_orbit_rep" << endl;
+		}
 	}
 	else if (Descr->f_Kramer_Mesner_matrix) {
 
 		if (f_v) {
 			cout << "orbits_activity::perform_activity f_Kramer_Mesner_matrix" << endl;
 		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_Kramer_Mesner_matrix" << endl;
+		}
 		do_Kramer_Mesner_matrix(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_Kramer_Mesner_matrix" << endl;
+		}
 	}
 	else if (Descr->f_recognize) {
 
 		if (f_v) {
 			cout << "orbits_activity::perform_activity f_recognize" << endl;
 		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_recognize" << endl;
+		}
 		do_recognize(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_recognize" << endl;
+		}
 
 	}
 
@@ -112,6 +178,11 @@ void orbits_activity::do_report(int verbose_level)
 
 
 	if (OC->f_has_Orb) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_Orb" << endl;
+		}
+
 		if (f_v) {
 			cout << "orbits_activity::do_report "
 					"before OC->Orb->create_latex_report" << endl;
@@ -124,15 +195,26 @@ void orbits_activity::do_report(int verbose_level)
 	}
 	else if (OC->f_has_On_polynomials) {
 
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_On_polynomials" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"before OC->On_polynomials->report" << endl;
+		}
 		OC->On_polynomials->report(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"after OC->On_polynomials->report" << endl;
+		}
 
 
 	}
 	else if (OC->f_has_On_subsets) {
 
 		if (f_v) {
-			cout << "orbits_activity::do_report "
-					"before OC->On_subsets->report" << endl;
+			cout << "orbits_activity::do_report f_has_On_subsets" << endl;
 		}
 
 		poset_classification::poset_classification_report_options *report_options;
@@ -143,15 +225,19 @@ void orbits_activity::do_report(int verbose_level)
 		else {
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 		}
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"before OC->On_subsets->report" << endl;
+		}
 		OC->On_subsets->report(
 				report_options,
 				verbose_level);
-		if (!Descr->f_report_options) {
-			FREE_OBJECT(report_options);
-		}
 		if (f_v) {
 			cout << "orbits_activity::do_report "
 					"after OC->On_subsets->report" << endl;
+		}
+		if (!Descr->f_report_options) {
+			FREE_OBJECT(report_options);
 		}
 
 

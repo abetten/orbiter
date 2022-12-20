@@ -18,6 +18,56 @@ namespace coding_theory {
 
 
 // #############################################################################
+// code_diagram.cpp:
+// #############################################################################
+
+//! diagram of a code in Hamming space
+
+
+class code_diagram {
+public:
+
+	long int *Words;
+	int nb_words;
+
+	std::string label;
+
+	int n;
+	long int N;
+
+	int nb_rows, nb_cols;
+	int *v;
+	int *Index_of_codeword;
+	int *Place_values;
+	int *Characteristic_function;
+	int *Distance;
+	int *Distance_H;
+		// the distance of a word to the code.
+		// Can be used to detect deep holes.
+
+	code_diagram();
+	~code_diagram();
+
+	void init(std::string &label,
+			long int *Words, int nb_words, int n, int verbose_level);
+	void place_codewords(int verbose_level);
+	void place_metric_balls(int radius_of_metric_ball, int verbose_level);
+	void compute_distances(int verbose_level);
+	void dimensions(int n, int &nb_rows, int &nb_cols);
+	void place_binary(long int h, int &i, int &j);
+	void place_binary(int *v, int n, int &i, int &j);
+	void convert_to_binary(int n, long int h, int *v);
+	void print_binary(int n, int *v);
+	void save_distance(int verbose_level);
+	void save_distance_H(int verbose_level);
+	void save_diagram(int verbose_level);
+	void save_char_func(int verbose_level);
+	void report(int verbose_level);
+
+};
+
+
+// #############################################################################
 // coding_theory_domain.cpp:
 // #############################################################################
 
@@ -57,7 +107,8 @@ public:
 	void make_Hamming_graph_and_write_file(int n, int q,
 			int f_projective, int verbose_level);
 	void compute_and_print_projective_weights(
-			std::ostream &ost, field_theory::finite_field *F, int *M, int n, int k);
+			std::ostream &ost, field_theory::finite_field *F,
+			int *M, int n, int k, int verbose_level);
 	int code_minimum_distance(field_theory::finite_field *F, int n, int k,
 		int *code, int verbose_level);
 		// code[k * n]
@@ -137,19 +188,22 @@ public:
 			std::string &polynomial_text,
 			//int f_embellish, int embellish_radius,
 			int verbose_level);
-	void do_sylvester_hadamard(int n,
-			//int f_embellish, int embellish_radius,
+	void do_sylvester_hadamard(field_theory::finite_field *F3,
+			int n,
 			int verbose_level);
+#if 0
 	void do_long_code(
 			int n,
 			std::vector<std::string> &long_code_generators_text,
 			int f_nearest_codeword,
 			std::string &nearest_codeword_text,
 			int verbose_level);
+#endif
 	// creates a combinatorics::boolean_function_domain object
-	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad);
-	void place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a);
+	//void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad);
+	//void place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a);
 	//void do_it(int n, int r, int a, int c, int seed, int verbose_level);
+#if 0
 	void dimensions(int n, int &nb_rows, int &nb_cols);
 	void dimensions_N(int N, int &nb_rows, int &nb_cols);
 	void print_binary(int n, int *v);
@@ -157,15 +211,16 @@ public:
 	int distance(int n, int a, int b);
 	void place_binary(long int h, int &i, int &j);
 	void place_binary(int *v, int n, int &i, int &j);
+#endif
 	void field_reduction(field_theory::finite_field *FQ, field_theory::finite_field *Fq,
 			std::string &label,
 			int m, int n, std::string &genma_text,
 			int verbose_level);
 	// creates a field_theory::subfield_structure object
-	void encode_text_5bits(std::string &text,
-			std::string &fname, int verbose_level);
 	void field_induction(std::string &fname_in,
 			std::string &fname_out, int nb_bits, int verbose_level);
+	void encode_text_5bits(std::string &text,
+			std::string &fname, int verbose_level);
 	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
 	void fixed_code(
@@ -174,12 +229,14 @@ public:
 			long int *perm,
 			int *&subcode_genma, int &subcode_k,
 			int verbose_level);
+#if 0
 	void code_diagram(
 			std::string &label,
 			long int *Words,
 			int nb_words, int n, int f_metric_balls, int radius_of_metric_ball,
 			int f_enhance, int radius,
 			int verbose_level);
+#endif
 	void polynomial_representation_of_boolean_function(
 			field_theory::finite_field *F,
 			std::string &label_txt,

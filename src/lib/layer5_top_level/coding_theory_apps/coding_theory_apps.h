@@ -66,14 +66,18 @@ public:
 	int code_diagram_n;
 #endif
 
+#if 0
 	int f_code_diagram_from_file;
 	std::string code_diagram_from_file_label;
 	std::string code_diagram_from_file_codewords_fname;
 	int code_diagram_from_file_n;
+#endif
 
+#if 0
 	int f_long_code;
 	int long_code_n;
 	std::vector<std::string> long_code_generators;
+#endif
 
 	int f_encode_text_5bits;
 	std::string encode_text_5bits_input;
@@ -98,6 +102,9 @@ public:
 
 	int f_nth_roots;
 	int nth_roots_n;
+
+	int f_Sylvester_Hadamard_code;
+	int Sylvester_Hadamard_code_n;
 
 	int f_NTT;
 	int NTT_n;
@@ -317,6 +324,10 @@ public:
 	int f_basis;
 	int basis_n;
 	std::string basis_label;
+
+	int f_long_code;
+	int long_code_n;
+	std::vector<std::string> long_code_generators;
 
 	int f_projective_set;
 	int projective_set_nmk;

@@ -2,7 +2,7 @@ DISCRETA_CPP = g++
 DISCRETA_CC = gcc
 CPPFLAGS = -Wall -O3 -funroll-loops -I.. \
 			-I./Clique -I../BitSet -I../../ \
-			-std=c++14 
+			-std=c++17 
 
 # -frename-registers
 LIB = 

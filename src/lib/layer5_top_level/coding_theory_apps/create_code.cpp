@@ -399,10 +399,10 @@ void create_code::init(
 
 		char str[1000];
 
-		snprintf(str, sizeof(str), "RM_m%d", m);
+		snprintf(str, sizeof(str), "RM_%d", m);
 		label_txt.assign(str);
 
-		snprintf(str, sizeof(str), "RM\\_m%d", m);
+		snprintf(str, sizeof(str), "RM\\_%d", m);
 		label_tex.assign(str);
 
 
@@ -555,6 +555,94 @@ void create_code::init(
 			cout << "create_code::init f_Gilbert_Varshamov done" << endl;
 		}
 	}
+	else if (description->f_long_code) {
+		if (f_v) {
+			cout << "create_code::init f_long_code" << endl;
+		}
+
+		if (!f_field) {
+			cout << "please use option -field to specify the field of linearity" << endl;
+			exit(1);
+		}
+
+		//int f_long_code;
+		//int long_code_n;
+		//std::vector<std::string> long_code_generators;
+
+
+		int i;
+		int nb_rows, nb_cols;
+		geometry::geometry_global Gg;
+
+		nb_rows = description->long_code_generators.size();
+		nb_cols = description->long_code_n;
+		genma = NEW_int(nb_rows * nb_cols);
+		Int_vec_zero(genma, nb_rows * nb_cols);
+
+		if (f_v) {
+			cout << "create_code::init nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
+		}
+
+		for (i = 0; i < nb_rows; i++) {
+			long int *v;
+			int sz;
+			int h;
+
+
+			Get_lint_vector_from_label(
+					description->long_code_generators[i],
+					v, sz, verbose_level);
+
+			if (f_v) {
+				cout << "create_code::init long_code row " << i << " v=";
+				Lint_vec_print(cout, v, sz);
+				cout << endl;
+			}
+
+			for (h = 0; h < sz; h++) {
+				genma[i * nb_cols + v[h]] = 1;
+			}
+
+			FREE_lint(v);
+
+			//Gg.AG_element_unrank(F->q, genma + i * nb_cols, 1, nb_cols, v[i]);
+		}
+
+		if (f_v) {
+			cout << "create_code::init genma:" << endl;
+			Int_matrix_print(genma, nb_rows, nb_cols);
+		}
+
+		f_has_generator_matrix = TRUE;
+		n = nb_cols;
+		k = nb_rows;
+		nmk = n - k;
+
+
+		if (f_v) {
+			cout << "create_code::init before create_checkma_from_genma" << endl;
+		}
+		create_checkma_from_genma(verbose_level);
+		if (f_v) {
+			cout << "create_code::init after create_checkma_from_genma" << endl;
+		}
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "long_code_n%d_k%d", n, k);
+		label_txt.assign(str);
+
+		snprintf(str, sizeof(str), "long\\_code\\_n%d\\_k%d", n, k);
+		label_tex.assign(str);
+
+
+		if (f_v) {
+			cout << "create_code::init f_long_code done" << endl;
+		}
+	}
+
+
+
 
 	int i;
 
@@ -1161,6 +1249,27 @@ void create_code::make_diagram(int f_embellish, int embellish_radius,
 	}
 
 
+
+	coding_theory::code_diagram *Diagram;
+
+	Diagram = NEW_OBJECT(coding_theory::code_diagram);
+
+	if (f_v) {
+		cout << "create_code::code_diagram "
+				"before Diagram->init" << endl;
+	}
+
+	Diagram->init(
+			label_txt,
+			Words, nb_words, n, verbose_level);
+
+	if (f_v) {
+		cout << "create_code::code_diagram "
+				"after Diagram->init" << endl;
+	}
+
+
+#if 0
 	if (f_v) {
 		cout << "create_code::code_diagram before Code.code_diagram" << endl;
 	}
@@ -1174,7 +1283,7 @@ void create_code::make_diagram(int f_embellish, int embellish_radius,
 	if (f_v) {
 		cout << "create_code::code_diagram after Code.code_diagram" << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "create_code::code_diagram done" << endl;
@@ -1210,7 +1319,8 @@ void create_code::polynomial_representation_of_boolean_function(int verbose_leve
 				nb_words,
 				verbose_level);
 	if (f_v) {
-		cout << "create_code::polynomial_representation_of_boolean_function after Codes.make_codewords_sorted" << endl;
+		cout << "create_code::polynomial_representation_of_boolean_function "
+				"after Codes.make_codewords_sorted" << endl;
 	}
 
 	if (FALSE) {
@@ -1222,7 +1332,8 @@ void create_code::polynomial_representation_of_boolean_function(int verbose_leve
 
 
 	if (f_v) {
-		cout << "create_code::polynomial_representation_of_boolean_function before Code.code_diagram" << endl;
+		cout << "create_code::polynomial_representation_of_boolean_function "
+				"before Code.code_diagram" << endl;
 	}
 	Codes.polynomial_representation_of_boolean_function(
 			F,
@@ -1231,7 +1342,8 @@ void create_code::polynomial_representation_of_boolean_function(int verbose_leve
 			nb_words, n,
 			verbose_level);
 	if (f_v) {
-		cout << "create_code::polynomial_representation_of_boolean_function after Code.code_diagram" << endl;
+		cout << "create_code::polynomial_representation_of_boolean_function "
+				"after Code.code_diagram" << endl;
 	}
 
 

@@ -869,6 +869,8 @@ public:
 	void export_to_orbiter_as_bsgs(
 			std::string &fname, std::string &label, std::string &label_tex,
 			groups::strong_generators *SG, int verbose_level);
+	void print_one_element_tex(std::ostream &ost,
+			int *Elt, int f_with_permutation);
 
 	// action_cb.cpp
 	int image_of(void *elt, int a);

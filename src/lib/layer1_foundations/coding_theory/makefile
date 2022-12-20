@@ -1,12 +1,13 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -funroll-loops -I.. -std=c++14
+CPPFLAGS = -Wall -O3 -funroll-loops -I.. -std=c++17
 # -frename-registers
 #-march=native 
 LIB = 
 LFLAGS = -lm
 
 MODULES = \
+		code_diagram.o \
 		coding_theory_domain.o \
 		crc_codes_search.o \
 		crc_codes.o \

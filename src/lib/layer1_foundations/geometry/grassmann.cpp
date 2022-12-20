@@ -872,7 +872,8 @@ void grassmann::rank_longinteger(ring_theory::longinteger_object &r,
 		c.create(0, __FILE__, __LINE__);
 	}
 	if (f_v) {
-		cout << "grassmann::rank_longinteger rank of subspace by induction is " << c << endl;
+		cout << "grassmann::rank_longinteger "
+				"rank of subspace by induction is " << c << endl;
 	}
 
 	// get in the coset:
@@ -951,7 +952,8 @@ int grassmann::dimension_of_join(long int rk1, long int rk2, int verbose_level)
 	for (i = 0; i < k * n; i++) {
 		A[k * n + i] = M[i];
 	}
-	r = F->Linear_algebra->rank_of_rectangular_matrix(A, 2 * k, n, 0 /*verbose_level*/);
+	r = F->Linear_algebra->rank_of_rectangular_matrix(
+			A, 2 * k, n, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "grassmann::dimension_of_join done" << endl;
 	}
@@ -1269,7 +1271,8 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 		}
 	}
 	if (f_v) {
-		cout << "create_graph::create_Schlaefli We found " << sz << " lines on the surface" << endl;
+		cout << "create_graph::create_Schlaefli "
+				"We found " << sz << " lines on the surface" << endl;
 	}
 
 
@@ -1285,7 +1288,8 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 			Int_vec_copy(M1, M, k * n);
 			Int_vec_copy(M2, M + k * n, k * n);
 
-			rr = F->Linear_algebra->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
+			rr = F->Linear_algebra->rank_of_rectangular_matrix(
+					M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == 2 * k) {
 				Adj[i * sz + j] = 1;
 				Adj[j * sz + i] = 1;
@@ -1568,7 +1572,8 @@ void grassmann::make_spread_set_from_spread(
 }
 
 
-void grassmann::make_partition(long int *Spread, int spread_sz, long int *&Part, int &s, int verbose_level)
+void grassmann::make_partition(long int *Spread, int spread_sz,
+		long int *&Part, int &s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

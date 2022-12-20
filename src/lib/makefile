@@ -37,6 +37,7 @@ MODULES= \
 		layer1_foundations/algebraic_geometry/surface_object_properties.o \
 		layer1_foundations/algebraic_geometry/surface_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
+		layer1_foundations/coding_theory/code_diagram.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
 		layer1_foundations/coding_theory/crc_codes_search.o \
 		layer1_foundations/coding_theory/crc_codes.o \

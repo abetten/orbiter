@@ -276,8 +276,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->centralizer" << endl;
 		}
-		AG->centralizer(Descr->element_label,
-				Descr->element_description_text, verbose_level);
+		AG->centralizer(Descr->centralizer_of_element_label,
+				Descr->centralizer_of_element_data, verbose_level);
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->centralizer" << endl;
@@ -300,7 +301,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 					"after AG->permutation_representation_of_element" << endl;
 		}
 	}
-
+#if 0
 	else if (Descr->f_conjugacy_class_of_element) {
 
 		if (f_v) {
@@ -311,14 +312,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 					"before AG->do_conjugacy_class_of_element" << endl;
 		}
 		AG->do_conjugacy_class_of_element(
-				Descr->element_label,
-				Descr->element_description_text, verbose_level);
+				Descr->conjugacy_class_of_element_label,
+				Descr->conjugacy_class_of_element_data, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->do_conjugacy_class_of_element" << endl;
 		}
 	}
-
+#endif
 	else if (Descr->f_orbits_on_group_elements_under_conjugation) {
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity f_orbits_on_group_elements_under_conjugation" << endl;
@@ -347,8 +348,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->normalizer_of_cyclic_subgroup" << endl;
 		}
-		AG->normalizer_of_cyclic_subgroup(Descr->element_label,
-				Descr->element_description_text, verbose_level);
+		AG->normalizer_of_cyclic_subgroup(
+				Descr->normalizer_of_cyclic_subgroup_label,
+				Descr->normalizer_of_cyclic_subgroup_data,
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->normalizer_of_cyclic_subgroup" << endl;
@@ -669,7 +672,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->conjugacy_class_of" << endl;
 		}
-		AG->conjugacy_class_of(Descr->conjugacy_class_of_data, verbose_level);
+		AG->conjugacy_class_of(Descr->conjugacy_class_of_label,
+				Descr->conjugacy_class_of_data,
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->conjugacy_class_of" << endl;
@@ -760,7 +765,28 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 		FREE_OBJECT(coset_reps);
 	}
+	else if (Descr->f_print_given_elements_tex) {
 
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity print_given_elements_tex" << endl;
+		}
+
+
+		int *element_data;
+		int nb_elements, n;
+
+		Get_matrix(Descr->print_given_elements_tex_data, element_data, nb_elements, n);
+
+		int f_with_permutation = FALSE;
+
+		AG->print_given_elements_tex(
+				Descr->print_given_elements_tex_label,
+				element_data, nb_elements,
+				f_with_permutation,
+				FALSE /* f_override_action */, NULL /* actions::action *A_special*/,
+				verbose_level);
+
+	}
 
 
 	// orbit stuff:

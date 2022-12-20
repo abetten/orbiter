@@ -145,8 +145,8 @@ void any_group::init_modified_group(modified_group_create *MGC, int verbose_leve
 	}
 	Subgroup_gens = MGC->Strong_gens;
 
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
+	label.assign(MGC->label);
+	label_tex.assign(MGC->label_tex);
 
 	if (f_v) {
 		cout << "any_group::init_modified_group done" << endl;
@@ -1252,7 +1252,7 @@ void any_group::element_unrank(std::string &rank_string, int verbose_level)
 
 
 
-void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
+void any_group::conjugacy_class_of(std::string &label, std::string &elt_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1277,7 +1277,9 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 	ring_theory::longinteger_object a, b;
 
 #if 1
-	cout << "creating element " << elt_data << endl;
+	if (f_v) {
+		cout << "any_group::conjugacy_class_of creating element " << elt_data << endl;
+	}
 
 	A->make_element_from_string(Elt, elt_data, 0);
 
@@ -1299,9 +1301,11 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 
 #endif
 
-	cout << "Element :" << endl;
-	A->element_print(Elt, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "any_group::conjugacy_class_of Element :" << endl;
+		A->element_print(Elt, cout);
+		cout << endl;
+	}
 
 
 	actions::action *A_conj;
@@ -1311,7 +1315,9 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 			verbose_level);
 
 
-	cout << "created action A_conj of degree " << A_conj->degree << endl;
+	if (f_v) {
+		cout << "created action A_conj of degree " << A_conj->degree << endl;
+	}
 
 #if 0
 	schreier *Sch;
@@ -1334,14 +1340,22 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 	set[0] = b.as_lint();
 
 	Orb.init(A, A_conj,
-			set, 1 /* sz */, LG->Strong_gens->gens, verbose_level);
-	cout << "Found an orbit of size " << Orb.used_length << endl;
+			set, 1 /* sz */,
+			Subgroup_gens->gens, //LG->Strong_gens->gens,
+			verbose_level);
+	if (f_v) {
+		cout << "Found an orbit of size " << Orb.used_length << endl;
+	}
 
 	std::vector<long int> Orbit;
 
-	cout << "before Orb.get_orbit_of_points" << endl;
+	if (f_v) {
+		cout << "before Orb.get_orbit_of_points" << endl;
+	}
 	Orb.get_orbit_of_points(Orbit, verbose_level);
-	cout << "Found an orbit of size " << Orbit.size() << endl;
+	if (f_v) {
+		cout << "Found an orbit of size " << Orbit.size() << endl;
+	}
 
 	int *M;
 	int i, j;
@@ -1358,12 +1372,14 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 
 	fname.assign(LG->label);
 	fname.append("_class_of_");
-	fname.append(elt_data);
+	fname.append(label);
 	fname.append(".csv");
 
 	Fio.int_matrix_write_csv(fname, M, Orbit.size(), A->make_element_size);
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 	FREE_int(M);
 
@@ -2089,6 +2105,73 @@ void any_group::report_coset_reps(
 
 	if (f_v) {
 		cout << "any_group::report_coset_reps done" << endl;
+	}
+}
+
+void any_group::print_given_elements_tex(
+		std::string &label_of_elements,
+		int *element_data, int nb_elements,
+		int f_with_permutation,
+		int f_override_action, actions::action *A_special,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::print_given_elements_tex" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+
+
+	int *Elt;
+	ring_theory::longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+
+	string fname;
+
+	fname.assign(label_of_elements);
+	fname.append("_elements.tex");
+
+
+	{
+		ofstream ost(fname);
+		orbiter_kernel_system::latex_interface L;
+		int i, ord;
+
+		L.head_easy(ost);
+
+		//H->print_all_group_elements_tex(fp, f_with_permutation, f_override_action, A_special);
+		//H->print_all_group_elements_tree(fp);
+		//H->print_all_group_elements_with_permutations_tex(fp);
+
+		//Schreier.print_and_list_orbits_tex(fp);
+
+		for (i = 0; i < nb_elements; i++) {
+			A->make_element(Elt, element_data + i * A->make_element_size, verbose_level);
+
+			ord = A->element_order(Elt);
+
+			ost << "Element " << setw(5) << i << " / "
+					<< nb_elements << " of order " << ord << ":" << endl;
+
+			A->print_one_element_tex(ost,
+					Elt, f_with_permutation);
+
+		}
+
+
+		L.foot(ost);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "any_group::print_elements_tex done" << endl;
 	}
 }
 

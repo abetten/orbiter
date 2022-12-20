@@ -203,7 +203,8 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
-	void classes_GL(field_theory::finite_field *F, int d, int f_no_eigenvalue_one, int verbose_level);
+	void classes_GL(field_theory::finite_field *F,
+			int d, int f_no_eigenvalue_one, int verbose_level);
 	void do_normal_form(int q, int d,
 			int f_no_eigenvalue_one, int *data, int data_sz,
 			int verbose_level);
@@ -323,8 +324,6 @@ public:
 	void find_standard_generators(any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int order_a, int order_b, int order_ab, int verbose_level);
-	void Nth_roots(field_theory::finite_field *F,
-			int n, int verbose_level);
 
 };
 
@@ -404,7 +403,7 @@ public:
 			int verbose_level);
 	void element_rank(std::string &elt_data, int verbose_level);
 	void element_unrank(std::string &rank_string, int verbose_level);
-	void conjugacy_class_of(std::string &rank_string, int verbose_level);
+	void conjugacy_class_of(std::string &label, std::string &rank_string, int verbose_level);
 	void do_reverse_isomorphism_exterior_square(int verbose_level);
 
 	void orbits_on_set_system_from_file(std::string &fname_csv,
@@ -426,6 +425,12 @@ public:
 			int verbose_level);
 	void report_coset_reps(
 			data_structures_groups::vector_ge *coset_reps,
+			int verbose_level);
+	void print_given_elements_tex(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int f_with_permutation,
+			int f_override_action, actions::action *A_special,
 			int verbose_level);
 
 	// any_group_linear.cpp:
@@ -468,8 +473,10 @@ public:
 			poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);
+#if 0
 	void do_conjugacy_class_of_element(
 			std::string &elt_label, std::string &elt_text, int verbose_level);
+#endif
 	void do_orbits_on_group_elements_under_conjugation(
 			std::string &fname_group_elements_coded,
 			std::string &fname_transporter,
@@ -636,14 +643,17 @@ public:
 
 	// Magma:
 	int f_centralizer_of_element;
-	std::string element_description_text;
-	std::string element_label;
+	std::string centralizer_of_element_label;
+	std::string centralizer_of_element_data;
 
 	int f_permutation_representation_of_element;
 	std::string permutation_representation_element_text;
 
+#if 0
 	int f_conjugacy_class_of_element;
-	// uses element_description_text and element_label
+	std::string conjugacy_class_of_element_label;
+	std::string conjugacy_class_of_element_data;
+#endif
 
 	int f_orbits_on_group_elements_under_conjugation;
 	std::string orbits_on_group_elements_under_conjugation_fname;
@@ -651,6 +661,8 @@ public:
 
 	// Magma:
 	int f_normalizer_of_cyclic_subgroup;
+	std::string normalizer_of_cyclic_subgroup_label;
+	std::string normalizer_of_cyclic_subgroup_data;
 
 	// Magma:
 	int f_classes;
@@ -672,6 +684,7 @@ public:
 	int test_if_geometric_depth;
 
 	int f_conjugacy_class_of;
+	std::string conjugacy_class_of_label;
 	std::string conjugacy_class_of_data;
 
 	int f_isomorphism_Klein_quadric;
@@ -710,6 +723,10 @@ public:
 
 	int f_is_subgroup_of;
 	int f_coset_reps;
+
+	int f_print_given_elements_tex;
+	std::string print_given_elements_tex_label;
+	std::string print_given_elements_tex_data;
 
 
 
