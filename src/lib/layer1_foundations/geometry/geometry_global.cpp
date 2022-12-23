@@ -3588,6 +3588,444 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 	}
 }
 
+void geometry_global::make_restricted_incidence_matrix(
+		geometry::projective_space *P,
+		int type_i, int type_j,
+		std::string &row_objects,
+		std::string &col_objects,
+		std::string &file_name,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::make_restricted_incidence_matrix" << endl;
+	}
+
+
+	long int *Row_objects;
+	int nb_row_objects;
+	long int *Col_objects;
+	int nb_col_objects;
+	int i, j;
+
+	int *M;
+
+	Get_lint_vector_from_label(row_objects, Row_objects, nb_row_objects, 0 /* verbose_level */);
+	Get_lint_vector_from_label(col_objects, Col_objects, nb_col_objects, 0 /* verbose_level */);
+
+	M = NEW_int(nb_row_objects * nb_col_objects);
+	Int_vec_zero(M, nb_row_objects * nb_col_objects);
+
+	for (i = 0; i < nb_row_objects; i++) {
+
+		for (j = 0; j < nb_col_objects; j++) {
+
+			if (P->incidence_test_for_objects_of_type_ij(
+				type_i, type_j, Row_objects[i], Col_objects[j],
+				0 /* verbose_level */)) {
+				M[i * nb_col_objects + j] = 1;
+			}
+		}
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname_csv;
+	string fname_inc;
+
+	fname_csv.assign(file_name);
+	fname_inc.assign(file_name);
+
+	fname_csv.append(".csv");
+	Fio.int_matrix_write_csv(fname_csv, M, nb_row_objects, nb_col_objects);
+
+	if (f_v) {
+		cout << "written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+	}
+
+	fname_inc.append(".inc");
+	Fio.write_incidence_matrix_to_file(fname_inc,
+		M, nb_row_objects, nb_col_objects, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "written file " << fname_inc << " of size "
+				<< Fio.file_size(fname_inc) << endl;
+	}
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "geometry_global::make_restricted_incidence_matrix done" << endl;
+	}
+}
+
+void geometry_global::plane_intersection_type_of_klein_image(
+		geometry::projective_space *P,
+		std::string &input,
+		int threshold,
+		int verbose_level)
+// creates a projective_space object P5
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image" << endl;
+	}
+	long int *Lines;
+	int nb_lines;
+
+	Get_lint_vector_from_label(input, Lines, nb_lines, 0 /* verbose_level */);
+
+	//int *intersection_type;
+	//int highest_intersection_number;
+
+	geometry::projective_space *P5;
+
+	P5 = NEW_OBJECT(geometry::projective_space);
+
+	int f_init_incidence_structure = TRUE;
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"before P5->projective_space_init" << endl;
+	}
+	P5->projective_space_init(5, P->F,
+			f_init_incidence_structure,
+			verbose_level);
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"after P5->projective_space_init" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"before plane_intersection_type_of_klein_image" << endl;
+	}
+
+	geometry::intersection_type *Int_type;
+
+	P->Grass_lines->plane_intersection_type_of_klein_image(
+			P /* P3 */,
+			P5,
+			Lines, nb_lines, threshold,
+			Int_type,
+			verbose_level);
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"after plane_intersection_type_of_klein_image" << endl;
+	}
+
+	cout << "geometry_global::plane_intersection_type_of_klein_image "
+			"intersection numbers: ";
+	Int_vec_print(cout, Int_type->the_intersection_type, Int_type->highest_intersection_number + 1);
+	cout << endl;
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"highest weight objects: " << endl;
+		Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"Intersection_sets: " << endl;
+		Int_matrix_print(Int_type->Intersection_sets, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+	}
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"Intersection_sets sorted: " << endl;
+		Int_matrix_print(Int_type->M->M, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+	}
+
+	string fname;
+	data_structures::string_tools ST;
+
+	fname.assign(input);
+	ST.chop_off_extension(fname);
+	fname.append("_highest_weight_objects.csv");
+
+	Int_type->M->write_csv(fname, verbose_level);
+
+
+	FREE_OBJECT(Int_type);
+
+	FREE_OBJECT(P5);
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image done" << endl;
+	}
+}
+
+void geometry_global::conic_type(
+		geometry::projective_space *P,
+		int threshold,
+		std::string &set_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "geometry_global::conic_type" << endl;
+	}
+
+	long int *Pts;
+	int nb_pts;
+
+	Get_lint_vector_from_label(set_text, Pts, nb_pts, 0 /* verbose_level */);
+
+
+	if (f_v) {
+		cout << "geometry_global::conic_type "
+				"before PA->conic_type" << endl;
+	}
+
+	conic_type2(P, Pts, nb_pts, threshold, verbose_level);
+
+	if (f_v) {
+		cout << "geometry_global::conic_type "
+				"after PA->conic_type" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::conic_type done" << endl;
+	}
+}
+
+
+void geometry_global::conic_type2(
+		geometry::projective_space *P,
+		long int *Pts, int nb_pts, int threshold,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::conic_type2 threshold = " << threshold << endl;
+	}
+
+
+	long int **Pts_on_conic;
+	int **Conic_eqn;
+	int *nb_pts_on_conic;
+	int len;
+	int h;
+
+
+	if (f_v) {
+		cout << "geometry_global::conic_type2 before P->conic_type" << endl;
+	}
+
+	P->conic_type(Pts, nb_pts,
+			threshold,
+			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
+			verbose_level);
+
+	if (f_v) {
+		cout << "geometry_global::conic_type2 after P->conic_type" << endl;
+	}
+
+
+	cout << "We found the following conics:" << endl;
+	for (h = 0; h < len; h++) {
+		cout << h << " : " << nb_pts_on_conic[h] << " : ";
+		Int_vec_print(cout, Conic_eqn[h], 6);
+		cout << " : ";
+		Lint_vec_print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::conic_type2 computing intersection "
+				"types with bisecants of the first 11 points:" << endl;
+	}
+	int Line_P1[55];
+	int Line_P2[55];
+	int P1, P2;
+	long int p1, p2, line_rk;
+	long int *pts_on_line;
+	long int pt;
+	int *Conic_line_intersection_sz;
+	int cnt;
+	int i, j, q, u, v;
+	int nb_pts_per_line;
+
+	q = P->F->q;
+	nb_pts_per_line = q + 1;
+	pts_on_line = NEW_lint(55 * nb_pts_per_line);
+
+	cnt = 0;
+	for (i = 0; i < 11; i++) {
+		for (j = i + 1; j < 11; j++) {
+			Line_P1[cnt] = i;
+			Line_P2[cnt] = j;
+			cnt++;
+		}
+	}
+	if (cnt != 55) {
+		cout << "cnt != 55" << endl;
+		cout << "cnt = " << cnt << endl;
+		exit(1);
+	}
+	for (u = 0; u < 55; u++) {
+		P1 = Line_P1[u];
+		P2 = Line_P2[u];
+		p1 = Pts[P1];
+		p2 = Pts[P2];
+		line_rk = P->line_through_two_points(p1, p2);
+		P->create_points_on_line(line_rk, pts_on_line + u * nb_pts_per_line, 0 /*verbose_level*/);
+	}
+
+	Conic_line_intersection_sz = NEW_int(len * 55);
+	Int_vec_zero(Conic_line_intersection_sz, len * 55);
+
+	for (h = 0; h < len; h++) {
+		for (u = 0; u < 55; u++) {
+			for (v = 0; v < nb_pts_per_line; v++) {
+				if (P->test_if_conic_contains_point(Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
+					Conic_line_intersection_sz[h * 55 + u]++;
+				}
+
+			}
+		}
+	}
+
+	data_structures::sorting Sorting;
+	int idx;
+
+	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
+	for (h = 0; h < len; h++) {
+		cout << h << " : " << nb_pts_on_conic[h] << " : ";
+		Int_vec_print(cout, Conic_eqn[h], 6);
+		cout << " : ";
+		Int_vec_print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
+		cout << " : ";
+		Lint_vec_print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		cout << " : ";
+		cout << endl;
+	}
+
+	for (u = 0; u < 55; u++) {
+		cout << "line " << u << " : ";
+		int str[55];
+
+		Int_vec_zero(str, 55);
+		for (v = 0; v < nb_pts; v++) {
+			pt = Pts[v];
+			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
+				str[v] = 1;
+			}
+		}
+		Int_vec_print_fully(cout, str, 55);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::conic_type2 done" << endl;
+	}
+
+}
+
+
+void geometry_global::do_rank_lines_in_PG(
+		geometry::projective_space *P,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_rank_lines_in_PG" << endl;
+	}
+
+	int *v;
+	int m, n;
+
+	Get_matrix(label, v, m, n);
+
+	if (f_v) {
+		cout << "geometry_global::do_rank_lines_in_PG v: ";
+		Int_matrix_print(v, m, n);
+		cout << endl;
+	}
+
+	if (n != 2 * (P->n + 1)) {
+		cout << "geometry_global::do_rank_lines_in_PG n != 2 * (P->n + 1)" << endl;
+		exit(1);
+	}
+
+	long int a;
+	int i;
+
+	for (i = 0; i < m; i++) {
+
+
+		a = P->rank_line(v + i * n);
+
+		Int_matrix_print(v + i * n, 2, P->n + 1);
+		cout << "has rank " << a << endl;
+
+	}
+
+
+	FREE_int(v);
+
+}
+
+void geometry_global::do_unrank_lines_in_PG(
+		geometry::projective_space *P,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_unrank_lines_in_PG" << endl;
+	}
+
+	int len;
+	int *basis;
+
+	long int *v;
+	int sz;
+
+	Get_lint_vector_from_label(label, v, sz, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "geometry_global::do_unrank_lines_in_PG v = ";
+		Lint_vec_print(cout, v, sz);
+		cout << endl;
+	}
+
+
+
+	len = 2 * (P->n + 1);
+
+	basis = NEW_int(len);
+
+	int i;
+
+	for (i = 0; i < sz; i++) {
+
+
+		P->unrank_line(basis, v[i]);
+
+
+		cout << v[i] << " = " << endl;
+		Int_matrix_print(basis, 2, P->n + 1);
+		cout << endl;
+
+	}
+
+
+	FREE_lint(v);
+	FREE_int(basis);
+
+}
 
 
 }}}

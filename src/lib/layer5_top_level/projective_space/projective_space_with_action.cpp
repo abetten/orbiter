@@ -96,7 +96,8 @@ void projective_space_with_action::init(
 	P = NEW_OBJECT(geometry::projective_space);
 
 	if (f_v) {
-		cout << "projective_space_with_action::init before P->projective_space_init" << endl;
+		cout << "projective_space_with_action::init "
+				"before P->projective_space_init" << endl;
 	}
 
 	P->projective_space_init(n, F,
@@ -105,17 +106,20 @@ void projective_space_with_action::init(
 	
 
 	if (f_v) {
-		cout << "projective_space_with_action::init after P->projective_space_init" << endl;
+		cout << "projective_space_with_action::init "
+				"after P->projective_space_init" << endl;
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::init before init_group" << endl;
+		cout << "projective_space_with_action::init "
+				"before init_group" << endl;
 	}
 
 	init_group(f_semilinear, verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_with_action::init after init_group" << endl;
+		cout << "projective_space_with_action::init "
+				"after init_group" << endl;
 	}
 
 
@@ -141,7 +145,8 @@ void projective_space_with_action::init(
 
 	if (n >= 3) {
 		if (f_v) {
-			cout << "projective_space_with_action::init n >= 3, so we initialize a plane" << endl;
+			cout << "projective_space_with_action::init "
+					"n >= 3, so we initialize a plane" << endl;
 		}
 		PA2 = NEW_OBJECT(projective_space_with_action);
 		if (f_v) {
@@ -156,7 +161,8 @@ void projective_space_with_action::init(
 	}
 	if (n == 3) {
 		if (f_v) {
-			cout << "projective_space_with_action::init n == 3, so we initialize a Surf_A object" << endl;
+			cout << "projective_space_with_action::init "
+					"n == 3, so we initialize a Surf_A object" << endl;
 		}
 		if (f_v) {
 			cout << "projective_space_with_action::init before Surf->init" << endl;
@@ -577,41 +583,6 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	}
 }
 
-void projective_space_with_action::report_decomposition_by_single_automorphism(
-	int *Elt, ostream &ost, std::string &fname_base,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::report_decomposition_by_single_automorphism" << endl;
-	}
-
-	apps_geometry::top_level_geometry_global Geo;
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
-				"before Geo.report_decomposition_by_single_automorphism" << endl;
-	}
-
-	Geo.report_decomposition_by_single_automorphism(
-			this,
-			Elt, ost, fname_base,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
-				"after Geo.report_decomposition_by_single_automorphism" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::report_decomposition_by_single_automorphism done" << endl;
-	}
-}
-
-
 
 
 
@@ -701,125 +672,6 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 
 
 
-void projective_space_with_action::analyze_del_Pezzo_surface(
-		expression_parser::formula *Formula,
-		std::string &evaluate_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surface" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_activity::analyze_del_Pezzo_surface" << endl;
-		cout << "formula:" << endl;
-		Formula->print();
-	}
-
-	if (!Formula->f_is_homogeneous) {
-		cout << "Formula is not homogeneous" << endl;
-		exit(1);
-	}
-	if (Formula->degree != 4) {
-		cout << "Formula is not of degree 4. Degree is " << Formula->degree << endl;
-		exit(1);
-	}
-	if (Formula->nb_managed_vars != 3) {
-		cout << "Formula should have 3 managed variables. Has " << Formula->nb_managed_vars << endl;
-		exit(1);
-	}
-
-	ring_theory::homogeneous_polynomial_domain *Poly4_3;
-
-	Poly4_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surface before Poly->init" << endl;
-	}
-	Poly4_3->init(F,
-			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surface after Poly->init" << endl;
-	}
-
-
-	expression_parser::syntax_tree_node **Subtrees;
-	int nb_monomials;
-
-	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surface before Formula->get_subtrees" << endl;
-	}
-	Formula->get_subtrees(Poly4_3, Subtrees, nb_monomials, verbose_level);
-	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surface after Formula->get_subtrees" << endl;
-	}
-
-	int i;
-
-	for (i = 0; i < nb_monomials; i++) {
-		cout << "Monomial " << i << " : ";
-		if (Subtrees[i]) {
-			Subtrees[i]->print_expression(cout);
-			cout << " * ";
-			Poly4_3->print_monomial(cout, i);
-			cout << endl;
-		}
-		else {
-			cout << "no subtree" << endl;
-		}
-	}
-
-
-	int *Coefficient_vector;
-
-	Coefficient_vector = NEW_int(nb_monomials);
-
-	Formula->evaluate(Poly4_3,
-			Subtrees, evaluate_text, Coefficient_vector,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surface coefficient vector:" << endl;
-		Int_vec_print(cout, Coefficient_vector, nb_monomials);
-		cout << endl;
-	}
-
-	algebraic_geometry::del_pezzo_surface_of_degree_two_domain *del_Pezzo;
-
-	del_Pezzo = NEW_OBJECT(algebraic_geometry::del_pezzo_surface_of_degree_two_domain);
-
-	del_Pezzo->init(P, Poly4_3, verbose_level);
-
-	algebraic_geometry::del_pezzo_surface_of_degree_two_object *del_Pezzo_surface;
-
-	del_Pezzo_surface = NEW_OBJECT(algebraic_geometry::del_pezzo_surface_of_degree_two_object);
-
-	del_Pezzo_surface->init(del_Pezzo,
-			Formula, Subtrees, Coefficient_vector,
-			verbose_level);
-
-	del_Pezzo_surface->enumerate_points_and_lines(verbose_level);
-
-	del_Pezzo_surface->pal->write_points_to_txt_file(Formula->name_of_formula, verbose_level);
-
-	del_Pezzo_surface->create_latex_report(Formula->name_of_formula, Formula->name_of_formula_latex, verbose_level);
-
-	FREE_OBJECT(del_Pezzo_surface);
-	FREE_OBJECT(del_Pezzo);
-
-	FREE_int(Coefficient_vector);
-	FREE_OBJECT(Poly4_3);
-
-	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surface done" << endl;
-	}
-}
-
-
 void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG(
 		int decomposition_by_element_power,
 		std::string &decomposition_by_element_data, std::string &fname_base,
@@ -885,10 +737,23 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 			A->element_power_int_in_place(Elt,
 					decomposition_by_element_power, verbose_level);
 
-			report_decomposition_by_single_automorphism(
+			apps_geometry::top_level_geometry_global Geo;
+
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG "
+						"before Geo.report_decomposition_by_single_automorphism" << endl;
+			}
+
+			Geo.report_decomposition_by_single_automorphism(
+					this,
 					Elt, ost, fname_base,
 					verbose_level);
 
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG "
+						"after Geo.report_decomposition_by_single_automorphism" << endl;
+			}
 			FREE_int(Elt);
 
 
@@ -909,8 +774,10 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 }
 
-void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(std::string &label,
-		groups::linear_group_description * subgroup_Descr, int verbose_level)
+void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
+		std::string &label,
+		groups::linear_group_description * subgroup_Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1003,7 +870,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 
 void projective_space_with_action::report(
-	ostream &ost,
+	std::ostream &ost,
 	graphics::layered_graph_draw_options *O,
 	int verbose_level)
 {
@@ -1397,134 +1264,6 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 
 }
 
-void projective_space_with_action::conic_type(
-		long int *Pts, int nb_pts, int threshold,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::conic_type threshold = " << threshold << endl;
-	}
-
-
-	long int **Pts_on_conic;
-	int **Conic_eqn;
-	int *nb_pts_on_conic;
-	int len;
-	int h;
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::conic_type before PA->P->conic_type" << endl;
-	}
-
-	P->conic_type(Pts, nb_pts,
-			threshold,
-			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_with_action::conic_type after PA->P->conic_type" << endl;
-	}
-
-
-	cout << "We found the following conics:" << endl;
-	for (h = 0; h < len; h++) {
-		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Int_vec_print(cout, Conic_eqn[h], 6);
-		cout << " : ";
-		Lint_vec_print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
-		cout << endl;
-	}
-
-	cout << "computing intersection types with bisecants of the first 11 points:" << endl;
-	int Line_P1[55];
-	int Line_P2[55];
-	int P1, P2;
-	long int p1, p2, line_rk;
-	long int *pts_on_line;
-	long int pt;
-	int *Conic_line_intersection_sz;
-	int cnt;
-	int i, j, q, u, v;
-	int nb_pts_per_line;
-
-	q = P->F->q;
-	nb_pts_per_line = q + 1;
-	pts_on_line = NEW_lint(55 * nb_pts_per_line);
-
-	cnt = 0;
-	for (i = 0; i < 11; i++) {
-		for (j = i + 1; j < 11; j++) {
-			Line_P1[cnt] = i;
-			Line_P2[cnt] = j;
-			cnt++;
-		}
-	}
-	if (cnt != 55) {
-		cout << "cnt != 55" << endl;
-		cout << "cnt = " << cnt << endl;
-		exit(1);
-	}
-	for (u = 0; u < 55; u++) {
-		P1 = Line_P1[u];
-		P2 = Line_P2[u];
-		p1 = Pts[P1];
-		p2 = Pts[P2];
-		line_rk = P->line_through_two_points(p1, p2);
-		P->create_points_on_line(line_rk, pts_on_line + u * nb_pts_per_line, 0 /*verbose_level*/);
-	}
-
-	Conic_line_intersection_sz = NEW_int(len * 55);
-	Int_vec_zero(Conic_line_intersection_sz, len * 55);
-
-	for (h = 0; h < len; h++) {
-		for (u = 0; u < 55; u++) {
-			for (v = 0; v < nb_pts_per_line; v++) {
-				if (P->test_if_conic_contains_point(Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
-					Conic_line_intersection_sz[h * 55 + u]++;
-				}
-
-			}
-		}
-	}
-
-	data_structures::sorting Sorting;
-	int idx;
-
-	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
-	for (h = 0; h < len; h++) {
-		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Int_vec_print(cout, Conic_eqn[h], 6);
-		cout << " : ";
-		Int_vec_print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
-		cout << " : ";
-		Lint_vec_print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
-		cout << " : ";
-		cout << endl;
-	}
-
-	for (u = 0; u < 55; u++) {
-		cout << "line " << u << " : ";
-		int str[55];
-
-		Int_vec_zero(str, 55);
-		for (v = 0; v < nb_pts; v++) {
-			pt = Pts[v];
-			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
-				str[v] = 1;
-			}
-		}
-		Int_vec_print_fully(cout, str, 55);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_with_action::conic_type done" << endl;
-	}
-
-}
 
 void projective_space_with_action::cheat_sheet(
 		graphics::layered_graph_draw_options *O,
@@ -1773,101 +1512,6 @@ void projective_space_with_action::report_decomposition_by_group(
 }
 
 
-void projective_space_with_action::do_rank_lines_in_PG(
-		std::string &label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::do_rank_lines_in_PG" << endl;
-	}
-
-	int *v;
-	int m, n;
-
-	Get_matrix(label, v, m, n);
-
-	if (f_v) {
-		cout << "projective_space_with_action::do_rank_lines_in_PG v: ";
-		Int_matrix_print(v, m, n);
-		cout << endl;
-	}
-
-	if (n != 2 * (P->n + 1)) {
-		cout << "projective_space_with_action::do_rank_lines_in_PG n != 2 * (P->n + 1)" << endl;
-		exit(1);
-	}
-
-	long int a;
-	int i;
-
-	for (i = 0; i < m; i++) {
-
-
-		a = P->rank_line(v + i * n);
-
-		Int_matrix_print(v + i * n, 2, P->n + 1);
-		cout << "has rank " << a << endl;
-
-	}
-
-
-	FREE_int(v);
-
-}
-
-void projective_space_with_action::do_unrank_lines_in_PG(
-		std::string &label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::do_unrank_lines_in_PG" << endl;
-	}
-
-	int len;
-	int *basis;
-
-	//Lint_vec_scan(text, v, sz);
-
-	long int *v;
-	int sz;
-
-	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(label, v, sz, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "projective_space_with_action::do_unrank_lines_in_PG v = ";
-		Lint_vec_print(cout, v, sz);
-		cout << endl;
-	}
-
-
-
-	len = 2 * (P->n + 1);
-
-	basis = NEW_int(len);
-
-	int i;
-
-	for (i = 0; i < sz; i++) {
-
-
-		P->unrank_line(basis, v[i]);
-
-
-		cout << v[i] << " = " << endl;
-		Int_matrix_print(basis, 2, P->n + 1);
-		cout << endl;
-
-	}
-
-
-	FREE_lint(v);
-	FREE_int(basis);
-
-}
 
 
 

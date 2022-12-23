@@ -48,21 +48,86 @@ public:
 	int f_Berlekamp_matrix;
 	std::string Berlekamp_matrix_label;
 
-	int f_normal_basis;
-	int normal_basis_d;
-
 	int f_polynomial_find_roots;
 	std::string polynomial_find_roots_label;
 
 
-	int f_normalize_from_the_right;
-	int f_normalize_from_the_left;
+	int f_product_of;
+	std::string product_of_elements;
+
+	int f_sum_of;
+	std::string sum_of_elements;
+
+	int f_negate;
+	std::string negate_elements;
+
+	int f_inverse;
+	std::string inverse_elements;
+
+	int f_power_map;
+	int power_map_k;
+	std::string power_map_elements;
+
+	int f_parse_and_evaluate;
+	std::string parse_name_of_formula;
+	std::string parse_managed_variables;
+	std::string parse_text;
+	std::string parse_parameters;
+
+	int f_evaluate;
+	std::string evaluate_formula_label;
+	std::string evaluate_parameters;
+
+
+
+	// Section 3.3:
+	// Extension fields:
+
+	int f_trace;
+
+	int f_norm;
+
+	int f_normal_basis;
+	int normal_basis_d;
+
+	int f_nth_roots;
+	int nth_roots_n;
+
+	int f_field_reduction;
+	std::string field_reduction_label;
+	int field_reduction_q;
+	int field_reduction_m;
+	int field_reduction_n;
+	std::string field_reduction_text;
+
+
+
+	// Section 3.4:
+	// Linear algebra:
 
 	int f_nullspace;
 	std::string nullspace_input_matrix;
 
 	int f_RREF;
 	std::string RREF_input_matrix;
+
+	// the following two options affect nullspace and RREF:
+	int f_normalize_from_the_right;
+	int f_normalize_from_the_left;
+
+
+	int f_RREF_random_matrix;
+	int RREF_random_matrix_m;
+	int RREF_random_matrix_n;
+
+	int f_Walsh_matrix;
+	int Walsh_matrix_n;
+
+	int f_Vandermonde_matrix;
+
+
+
+
 
 
 	int f_Walsh_Hadamard_transform;
@@ -87,19 +152,18 @@ public:
 	int f_identity_function;
 	std::string identity_function_fname_csv_out;
 
-	int f_trace;
-
-	int f_norm;
-
-	int f_Walsh_matrix;
-	int Walsh_matrix_n;
-
-	int f_Vandermonde_matrix;
-
 	int f_search_APN_function;
+
 
 	int f_make_table_of_irreducible_polynomials;
 	int make_table_of_irreducible_polynomials_degree;
+
+	int f_get_primitive_polynomial;
+	int get_primitive_polynomial_degree;
+
+	int f_get_primitive_polynomial_in_range;
+	int get_primitive_polynomial_in_range_min;
+	int get_primitive_polynomial_in_range_max;
 
 
 	// cryptography:
@@ -179,10 +243,6 @@ public:
 	long int polynomial_division_r0;
 	long int polynomial_division_r1;
 
-	int f_RREF_random_matrix;
-	int RREF_random_matrix_m;
-	int RREF_random_matrix_n;
-
 
 
 	int f_transversal;
@@ -208,47 +268,8 @@ public:
 
 
 
-	int f_field_reduction;
-	std::string field_reduction_label;
-	int field_reduction_q;
-	int field_reduction_m;
-	int field_reduction_n;
-	std::string field_reduction_text;
 
 
-
-	int f_parse_and_evaluate;
-	std::string parse_name_of_formula;
-	std::string parse_managed_variables;
-	std::string parse_text;
-	std::string parse_parameters;
-
-	int f_product_of;
-	std::string product_of_elements;
-
-	int f_sum_of;
-	std::string sum_of_elements;
-
-	int f_negate;
-	std::string negate_elements;
-
-	int f_inverse;
-	std::string inverse_elements;
-
-	int f_power_map;
-	int power_map_k;
-	std::string power_map_elements;
-
-	int f_evaluate;
-	std::string evaluate_formula_label;
-	std::string evaluate_parameters;
-
-	int f_get_primitive_polynomial;
-	int get_primitive_polynomial_degree;
-
-	int f_get_primitive_polynomial_in_range;
-	int get_primitive_polynomial_in_range_min;
-	int get_primitive_polynomial_in_range_max;
 
 	finite_field_activity_description();
 	~finite_field_activity_description();
@@ -497,7 +518,7 @@ public:
 	int has_quadratic_subfield();
 	int belongs_to_quadratic_subfield(int a);
 	long int compute_subfield_polynomial(int order_subfield,
-			int f_latex, std::ostream &ost,
+			//int f_latex, std::ostream &ost,
 			int verbose_level);
 	void compute_subfields(int verbose_level);
 	int find_primitive_element(int verbose_level);
@@ -776,6 +797,37 @@ public:
 
 };
 
+
+// #############################################################################
+// minimum_polynomial.cpp:
+// #############################################################################
+
+//! to compute the minimum polynomial of a field element in an extension field
+
+class minimum_polynomial {
+public:
+
+	finite_field *F;
+
+	int order_subfield;
+	int subgroup_index;
+	int e1;
+	int q1;
+
+	int *M; // [F->e * (e1 + 1)]
+	int *K;
+	int *base_cols;
+	int kernel_m, kernel_n;
+
+	int min_poly_rank;
+
+	minimum_polynomial();
+	~minimum_polynomial();
+	void compute_subfield_polynomial(finite_field *F,
+			int order_subfield, int verbose_level);
+	void report_table(std::ostream &ost);
+
+};
 
 
 

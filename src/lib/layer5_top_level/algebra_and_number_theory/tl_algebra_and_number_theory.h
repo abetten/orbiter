@@ -430,7 +430,18 @@ public:
 			std::string &label_of_elements,
 			int *element_data, int nb_elements,
 			int f_with_permutation,
-			int f_override_action, actions::action *A_special,
+			int f_with_fix_structure,
+			int verbose_level);
+	void process_given_elements(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void apply_isomorphism_wedge_product_4to6(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void element_processing(
+			element_processing_description *element_processing_descr,
 			int verbose_level);
 
 	// any_group_linear.cpp:
@@ -539,6 +550,37 @@ public:
 
 };
 
+// #############################################################################
+// element_processing_description.cpp
+// #############################################################################
+
+//! describe a process applied to a set of group elements
+
+class element_processing_description {
+
+public:
+
+	int f_input;
+	std::string input_label;
+
+	int f_print;
+
+	int f_apply_isomorphism_wedge_product_4to6;
+
+	int f_with_permutation;
+
+	int f_with_fix_structure;
+
+	element_processing_description();
+	~element_processing_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
 
 // #############################################################################
 // group_modification_description.cpp
@@ -594,6 +636,9 @@ public:
 	int f_apply;
 	std::string apply_input;
 	std::string apply_element;
+
+	int f_element_processing;
+	element_processing_description *element_processing_descr;
 
 	int f_multiply;
 	std::string multiply_a;
@@ -723,10 +768,6 @@ public:
 
 	int f_is_subgroup_of;
 	int f_coset_reps;
-
-	int f_print_given_elements_tex;
-	std::string print_given_elements_tex_label;
-	std::string print_given_elements_tex_data;
 
 
 

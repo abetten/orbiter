@@ -2112,7 +2112,7 @@ void any_group::print_given_elements_tex(
 		std::string &label_of_elements,
 		int *element_data, int nb_elements,
 		int f_with_permutation,
-		int f_override_action, actions::action *A_special,
+		int f_with_fix_structure,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2150,6 +2150,11 @@ void any_group::print_given_elements_tex(
 
 		//Schreier.print_and_list_orbits_tex(fp);
 
+		ost << "Action $" << label_tex << "$:\\\\" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
 		for (i = 0; i < nb_elements; i++) {
 			A->make_element(Elt, element_data + i * A->make_element_size, verbose_level);
 
@@ -2158,9 +2163,15 @@ void any_group::print_given_elements_tex(
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
 
-			A->print_one_element_tex(ost,
-					Elt, f_with_permutation);
+			A->print_one_element_tex(ost, Elt, f_with_permutation);
 
+			if (f_with_fix_structure) {
+				int f;
+
+				f = A->count_fixed_points(Elt, 0 /* verbose_level */);
+
+				ost << "$f=" << f << "$\\\\" << endl;
+			}
 		}
 
 
@@ -2174,6 +2185,243 @@ void any_group::print_given_elements_tex(
 		cout << "any_group::print_elements_tex done" << endl;
 	}
 }
+
+
+void any_group::process_given_elements(
+		std::string &label_of_elements,
+		int *element_data, int nb_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::process_given_elements" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+
+
+	int *Elt;
+	ring_theory::longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+
+	string fname;
+
+	fname.assign(label_of_elements);
+	fname.append("_processing.tex");
+
+
+	{
+		ofstream ost(fname);
+		orbiter_kernel_system::latex_interface L;
+		int i, ord;
+
+		L.head_easy(ost);
+
+		//H->print_all_group_elements_tex(fp, f_with_permutation, f_override_action, A_special);
+		//H->print_all_group_elements_tree(fp);
+		//H->print_all_group_elements_with_permutations_tex(fp);
+
+		//Schreier.print_and_list_orbits_tex(fp);
+
+		ost << "Action $" << label_tex << "$:\\\\" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+		for (i = 0; i < nb_elements; i++) {
+			A->make_element(Elt, element_data + i * A->make_element_size, verbose_level);
+
+			ord = A->element_order(Elt);
+
+			ost << "Element " << setw(5) << i << " / "
+					<< nb_elements << " of order " << ord << ":" << endl;
+
+			A->print_one_element_tex(ost, Elt, FALSE /* f_with_permutation */);
+
+		}
+
+
+		L.foot(ost);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "any_group::process_given_elements done" << endl;
+	}
+}
+
+void any_group::apply_isomorphism_wedge_product_4to6(
+		std::string &label_of_elements,
+		int *element_data, int nb_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::apply_isomorphism_wedge_product_4to6" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+
+
+
+	int *Elt;
+	int *Elt_in;
+	int *Elt_out;
+	int *Output;
+	ring_theory::longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	int elt_size_out;
+
+	elt_size_out = 6 * 6 + 1;
+
+	Elt_out = NEW_int(elt_size_out);
+
+	Output = NEW_int(nb_elements * elt_size_out);
+
+
+	string fname;
+
+	fname.assign(label_of_elements);
+	fname.append("_wedge_4to6.csv");
+
+	if (A->type_G != action_on_wedge_product_t) {
+		cout << "any_group::apply_isomorphism_wedge_product_4to6 "
+				"the action is not of wedge product type" << endl;
+		exit(1);
+	}
+
+	{
+		int i;
+
+
+
+		for (i = 0; i < nb_elements; i++) {
+
+			Elt_in = element_data + i * A->make_element_size;
+
+			A->make_element(Elt, Elt_in, verbose_level);
+
+
+			induced_actions::action_on_wedge_product *AW = A->G.AW;
+
+
+
+			AW->create_induced_matrix(
+					Elt, Elt_out, verbose_level);
+
+			if (A->is_semilinear_matrix_group()) {
+				Elt_out[6 * 6] = Elt_in[4 * 4];
+			}
+
+			Int_vec_copy(Elt_out, Output + i * elt_size_out, elt_size_out);
+
+		}
+
+	}
+
+	Fio.int_matrix_write_csv(fname, Output, nb_elements, elt_size_out);
+
+	if (f_v) {
+		cout << "any_group::apply_isomorphism_wedge_product_4to6 "
+				"Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_int(Elt);
+	FREE_int(Elt_out);
+	FREE_int(Output);
+
+
+
+	if (f_v) {
+		cout << "any_group::apply_isomorphism_wedge_product_4to6 done" << endl;
+	}
+}
+
+void any_group::element_processing(
+		element_processing_description *element_processing_descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::element_processing" << endl;
+	}
+
+	int *element_data = NULL;
+	int nb_elements;
+	int n;
+
+
+	if (element_processing_descr->f_input) {
+
+		Get_matrix(element_processing_descr->input_label, element_data, nb_elements, n);
+
+	}
+	else {
+		cout << "please use -input <label> to define input elements" << endl;
+		exit(1);
+
+	}
+
+
+	if (element_processing_descr->f_print) {
+		if (f_v) {
+			cout << "any_group::element_processing f_print" << endl;
+		}
+
+		if (f_v) {
+			cout << "any_group::element_processing before print_given_elements_tex" << endl;
+		}
+
+		print_given_elements_tex(
+				element_processing_descr->input_label,
+				element_data, nb_elements,
+				element_processing_descr->f_with_permutation,
+				element_processing_descr->f_with_fix_structure,
+				verbose_level);
+
+		if (f_v) {
+			cout << "any_group::element_processing after print_given_elements_tex" << endl;
+		}
+
+	}
+	else if (element_processing_descr->f_apply_isomorphism_wedge_product_4to6) {
+		if (f_v) {
+			cout << "any_group::element_processing f_apply_isomorphism_wedge_product_4to6" << endl;
+		}
+
+		if (f_v) {
+			cout << "any_group::element_processing before apply_isomorphism_wedge_product_4to6" << endl;
+		}
+		apply_isomorphism_wedge_product_4to6(
+				element_processing_descr->input_label,
+				element_data, nb_elements,
+				verbose_level);
+		if (f_v) {
+			cout << "any_group::element_processing after apply_isomorphism_wedge_product_4to6" << endl;
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "any_group::element_processing done" << endl;
+	}
+}
+
+
 
 
 

@@ -1740,14 +1740,14 @@ void algebra_global::Vandermonde_matrix(field_theory::finite_field *F,
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, 1000, "Vandermonde_%d.csv", q);
+	snprintf(str, 1000, "Vandermonde_q%d.csv", q);
 	fname_csv.assign(str);
 	Fio.int_matrix_write_csv(fname_csv, W, q, q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 
-	snprintf(str, 1000, "Vandermonde_inv_%d.csv", q);
+	snprintf(str, 1000, "Vandermonde_q%d_inv.csv", q);
 	fname_csv.assign(str);
 	Fio.int_matrix_write_csv(fname_csv, W_inv, q, q);
 	cout << "written file " << fname_csv << " of size "

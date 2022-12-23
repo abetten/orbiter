@@ -447,7 +447,7 @@ void orbits_on_polynomials::report(int verbose_level)
 
 				int u;
 				long int *set;
-				groups::strong_generators *Sg;
+				//groups::strong_generators *Sg;
 
 				set = NEW_lint(nb_pts);
 				for (u = 0; u < nb_pts; u++) {

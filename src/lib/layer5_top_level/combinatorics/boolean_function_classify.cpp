@@ -25,7 +25,7 @@ boolean_function_classify::boolean_function_classify()
 {
 	BF = NULL;
 	A = NULL;
-	nice_gens = NULL;
+	//nice_gens = NULL;
 	AonHPD = NULL;
 	SG = NULL;
 	A_affine = NULL;
@@ -33,12 +33,14 @@ boolean_function_classify::boolean_function_classify()
 
 boolean_function_classify::~boolean_function_classify()
 {
+#if 0
 	if (A) {
 		FREE_OBJECT(A);
 	}
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
 	}
+#endif
 	if (AonHPD) {
 		FREE_OBJECT(AonHPD);
 	}
@@ -52,7 +54,9 @@ boolean_function_classify::~boolean_function_classify()
 
 
 
-void boolean_function_classify::init_group(combinatorics::boolean_function_domain *BF, int verbose_level)
+void boolean_function_classify::init_group(combinatorics::boolean_function_domain *BF,
+		actions::action *A,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -64,8 +68,10 @@ void boolean_function_classify::init_group(combinatorics::boolean_function_domai
 
 	int degree = BF->n + 1;
 
-	A = NEW_OBJECT(actions::action);
+	boolean_function_classify::A = A;
+	//A = NEW_OBJECT(actions::action);
 
+#if 0
 	if (f_v) {
 		cout << "boolean_function_classify::init_group "
 				"before init_projective_group" << endl;
@@ -75,6 +81,7 @@ void boolean_function_classify::init_group(combinatorics::boolean_function_domai
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
+#endif
 
 	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {

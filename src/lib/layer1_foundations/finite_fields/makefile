@@ -14,6 +14,7 @@ MODULES = \
 	finite_field_io.o \
 	finite_field_projective.o \
 	finite_field.o \
+	minimum_polynomial.o \
 	norm_tables.o \
 	nth_roots.o \
 	square_nonsquare.o \

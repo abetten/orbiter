@@ -80,7 +80,7 @@ namespace actions {
  * actions for the purposes of representing groups as sims chains
  * is the following. A sims chain is efficient only if the maximal
  * degree of the basic actions (the actions in the stabilizer chain)
- * is small. For the basic action of projective groups, this contition
+ * is small. For the basic action of projective groups, this condition
  * is usually met. For most induced actions, the maximal degree is
  * large because the action has an even larger degree than the
  * original basic action. For this reason, it is not advisable to represent

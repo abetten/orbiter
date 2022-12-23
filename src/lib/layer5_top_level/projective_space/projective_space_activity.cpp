@@ -114,8 +114,6 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_map) {
 
-		projective_space_global G;
-
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity before G.map" << endl;
 		}
@@ -126,12 +124,15 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *Image_pts;
 		int N_points;
 
+		algebraic_geometry::algebraic_geometry_global AGG;
+
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"before G.map" << endl;
+					"before AGG.map" << endl;
 		}
-		G.map(
-				PA,
+
+		AGG.map(
+				PA->P,
 				Descr->map_ring_label,
 				Descr->map_formula_label,
 				Descr->map_parameters,
@@ -140,7 +141,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after G.map" << endl;
+					"after AGG.map" << endl;
 		}
 
 		if (f_v) {
@@ -182,10 +183,9 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"after G.analyze_del_Pezzo_surface" << endl;
 		}
-
 	}
 
-	else if (Descr->f_cheat_sheet_for_decomposition_by_element_PG) {
+	else if (Descr->f_decomposition_by_element_PG) {
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -224,7 +224,9 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_table_of_quartic_curves) {
 
-		cout << "table_of_quartic_curves" << endl;
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity table_of_quartic_curves" << endl;
+		}
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -240,7 +242,9 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_table_of_cubic_surfaces) {
 
-		cout << "table_of_cubic_surfaces" << endl;
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity table_of_cubic_surfaces" << endl;
+		}
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -398,13 +402,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_conic_type) {
 
-		projective_space_global G;
+		geometry::geometry_global G;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"before G.conic_type" << endl;
 		}
-		G.conic_type(PA,
+		G.conic_type(PA->P,
 				Descr->conic_type_threshold,
 				Descr->conic_type_set_text,
 				verbose_level);
@@ -639,14 +643,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 		line_pencil = NEW_lint(q + 1);
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before PA->P->create_lines_on_point_but_inside_a_plane" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->create_lines_on_point_but_inside_a_plane" << endl;
 		}
 		PA->P->create_lines_on_point_but_inside_a_plane(
 				point_rk, plane_rk,
 				line_pencil, verbose_level);
 			// assumes that line_pencil[q + 1] has been allocated
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after PA->P->create_lines_on_point_but_inside_a_plane" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->create_lines_on_point_but_inside_a_plane" << endl;
 		}
 
 		cout << "line_pencil: ";
@@ -661,27 +667,37 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_rank_lines_in_PG) {
 
 
+		geometry::geometry_global Geo;
+
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before PA->do_rank_lines_in_PG" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before Geo.do_rank_lines_in_PG" << endl;
 		}
-		PA->do_rank_lines_in_PG(
+		Geo.do_rank_lines_in_PG(
+				PA->P,
 				Descr->rank_lines_in_PG_label,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after PA->do_rank_lines_in_PG" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after Geo.do_rank_lines_in_PG" << endl;
 		}
 	}
 	else if (Descr->f_unrank_lines_in_PG) {
 
 
+		geometry::geometry_global Geo;
+
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before PA->do_unrank_lines_in_PG" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before Geo.do_unrank_lines_in_PG" << endl;
 		}
-		PA->do_unrank_lines_in_PG(
+		Geo.do_unrank_lines_in_PG(
+				PA->P,
 				Descr->unrank_lines_in_PG_text,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after PA->do_unrank_lines_in_PG" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after Geo.do_unrank_lines_in_PG" << endl;
 		}
 	}
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer) {
@@ -690,13 +706,15 @@ void projective_space_activity::perform_activity(int verbose_level)
 		geometry::geometry_global Geo;
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before Geo.do_move_two_lines_in_hyperplane_stabilizer" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before Geo.do_move_two_lines_in_hyperplane_stabilizer" << endl;
 		}
 		Geo.do_move_two_lines_in_hyperplane_stabilizer(PA->P,
 				Descr->line1_from, Descr->line2_from,
 				Descr->line1_to, Descr->line2_to, verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after Geo.do_move_two_lines_in_hyperplane_stabilizer" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after Geo.do_move_two_lines_in_hyperplane_stabilizer" << endl;
 		}
 	}
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer_text) {
@@ -704,14 +722,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 		geometry::geometry_global Geo;
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before Geo.do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before Geo.do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
 		}
 		Geo.do_move_two_lines_in_hyperplane_stabilizer_text(PA->P,
 				Descr->line1_from_text, Descr->line2_from_text,
 				Descr->line1_to_text, Descr->line2_to_text,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after Geo.do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after Geo.do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
 		}
 	}
 	else if (Descr->f_planes_through_line) {
@@ -727,12 +747,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 		int nb_planes_on_one_line;
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before PA->P->planes_through_line" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->planes_through_line" << endl;
 		}
 		PA->P->planes_through_line(Lines, nb_lines,
 				Plane_ranks, nb_planes_on_one_line, verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after PA->P->planes_through_line" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->planes_through_line" << endl;
 		}
 
 		cout << "Ranks of planes on the given set of lines:" << endl;
@@ -754,21 +776,23 @@ void projective_space_activity::perform_activity(int verbose_level)
 					"before make_restricted_incidence_matrix" << endl;
 		}
 
-		projective_space_global G;
+		geometry::geometry_global G;
 
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before G.make_restricted_incidence_matrix" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before G.make_restricted_incidence_matrix" << endl;
 		}
 		G.make_restricted_incidence_matrix(
-				PA,
+				PA->P,
 				type_i, type_j,
 				Descr->restricted_incidence_matrix_row_objects,
 				Descr->restricted_incidence_matrix_col_objects,
 				Descr->restricted_incidence_matrix_file_name,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after G.make_restricted_incidence_matrix" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after G.make_restricted_incidence_matrix" << endl;
 		}
 
 		if (f_v) {
@@ -781,7 +805,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 
 
-
+#if 0
 	else if (Descr->f_make_relation) {
 
 		cout << "f_make_relation:" << endl;
@@ -802,6 +826,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 
 	}
+#endif
 	else if (Descr->f_plane_intersection_type_of_klein_image) {
 
 
@@ -810,14 +835,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity plane_intersection_type_of_klein_image_threshold = " << Descr->plane_intersection_type_of_klein_image_threshold << endl;
 		}
 
-		projective_space_global G;
+		geometry::geometry_global G;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"before G.plane_intersection_type_of_klein_image" << endl;
 		}
 		G.plane_intersection_type_of_klein_image(
-				PA,
+				PA->P,
 				Descr->plane_intersection_type_of_klein_image_input,
 				Descr->plane_intersection_type_of_klein_image_threshold,
 				verbose_level);
@@ -830,62 +855,28 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 
 	else if (Descr->f_report_Grassmannian) {
-		{
-			string fname;
-			string author;
-			string title;
-			string extra_praeamble;
 
-
-			char str[1000];
-
-			snprintf(str, 1000, "Gr_%d_%d_%d.tex",
-					PA->P->n + 1, Descr->report_Grassmannian_k, PA->F->q);
-			fname.assign(str);
-			snprintf(str, 1000, "Cheat Sheet Gr($%d,%d,%d$)",
-					PA->P->n + 1, Descr->report_Grassmannian_k, PA->F->q);
-			title.assign(str);
-
-
-
-
-			{
-				ofstream ost(fname);
-				orbiter_kernel_system::latex_interface L;
-
-				L.head(ost,
-						FALSE /* f_book*/,
-						TRUE /* f_title */,
-						title, author,
-						FALSE /* f_toc */,
-						FALSE /* f_landscape */,
-						TRUE /* f_12pt */,
-						TRUE /* f_enlarged_page */,
-						TRUE /* f_pagenumbers */,
-						extra_praeamble /* extra_praeamble */);
-
-
-				if (f_v) {
-					cout << "projective_space_activity::perform_activity "
-							"before PA->P->create_latex_report_for_Grassmannian" << endl;
-				}
-				PA->P->Reporting->report_subspaces_of_dimension(ost, Descr->report_Grassmannian_k, verbose_level);
-				if (f_v) {
-					cout << "projective_space_activity::perform_activity "
-							"after PA->P->create_latex_report_for_Grassmannian" << endl;
-				}
-
-
-				L.foot(ost);
-
-			}
-			orbiter_kernel_system::file_io Fio;
-
-			cout << "projective_space_activity::perform_activity written file " << fname << " of size "
-					<< Fio.file_size(fname) << endl;
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity f_report_Grassmannian" << endl;
 		}
+		int k;
 
+		k = Descr->report_Grassmannian_k;
 
+		algebraic_geometry::algebraic_geometry_global AGG;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before AGG.report_grassmannian" << endl;
+		}
+		AGG.report_grassmannian(
+				PA->P,
+				k,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after AGG.report_grassmannian" << endl;
+		}
 	}
 	// surfaces:
 
@@ -1042,28 +1033,32 @@ void projective_space_activity::perform_activity(int verbose_level)
 		projective_space_global G;
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before G.do_classify_arcs" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before G.do_classify_arcs" << endl;
 		}
 		G.do_classify_arcs(
 				PA,
 				Descr->Arc_generator_description,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after G.do_classify_arcs" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after G.do_classify_arcs" << endl;
 		}
 	}
 	else if (Descr->f_classify_cubic_curves) {
 		projective_space_global G;
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before G.do_classify_cubic_curves" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"before G.do_classify_cubic_curves" << endl;
 		}
 		G.do_classify_cubic_curves(
 				PA,
 				Descr->Arc_generator_description,
 				verbose_level);
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity after G.do_classify_cubic_curves" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"after G.do_classify_cubic_curves" << endl;
 		}
 	}
 
@@ -1088,6 +1083,22 @@ void projective_space_activity::perform_activity(int verbose_level)
 					"after S->init" << endl;
 		}
 
+	}
+	else if (Descr->f_classify_bent_functions) {
+		projective_space_global G;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before G.classify_bent_functions" << endl;
+		}
+		G.classify_bent_functions(
+				PA,
+				Descr->classify_bent_functions_n,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after G.classify_bent_functions" << endl;
+		}
 	}
 
 

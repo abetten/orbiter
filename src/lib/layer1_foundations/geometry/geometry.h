@@ -959,6 +959,36 @@ public:
 			std::string &line1_from_text, std::string &line2_from_text,
 			std::string &line1_to_text, std::string &line2_to_text,
 			int verbose_level);
+	void make_restricted_incidence_matrix(
+			geometry::projective_space *P,
+			int type_i, int type_j,
+			std::string &row_objects,
+			std::string &col_objects,
+			std::string &file_name,
+			int verbose_level);
+	void plane_intersection_type_of_klein_image(
+			geometry::projective_space *P,
+			std::string &input,
+			int threshold,
+			int verbose_level);
+	// creates a projective_space object P5
+	void conic_type(
+			geometry::projective_space *P,
+			int threshold,
+			std::string &set_text,
+			int verbose_level);
+	void conic_type2(
+			geometry::projective_space *P,
+			long int *Pts, int nb_pts, int threshold,
+			int verbose_level);
+	void do_rank_lines_in_PG(
+			geometry::projective_space *P,
+			std::string &label,
+			int verbose_level);
+	void do_unrank_lines_in_PG(
+			geometry::projective_space *P,
+			std::string &label,
+			int verbose_level);
 
 };
 

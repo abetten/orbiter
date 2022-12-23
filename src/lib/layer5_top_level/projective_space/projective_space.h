@@ -332,7 +332,7 @@ public:
 	std::string analyze_del_Pezzo_surface_label;
 	std::string analyze_del_Pezzo_surface_parameters;
 
-	int f_cheat_sheet_for_decomposition_by_element_PG;
+	int f_decomposition_by_element_PG;
 	int decomposition_by_element_power;
 	std::string decomposition_by_element_data;
 	std::string decomposition_by_element_fname;
@@ -346,6 +346,7 @@ public:
 
 	int f_table_of_cubic_surfaces;
 		// based on knowledge_base
+
 
 	int f_sweep;
 	std::string sweep_fname;
@@ -444,8 +445,8 @@ public:
 	std::string restricted_incidence_matrix_col_objects;
 	std::string restricted_incidence_matrix_file_name;
 
-	int f_make_relation;
-	long int make_relation_plane_rk;
+	//int f_make_relation;
+	//long int make_relation_plane_rk;
 
 	int f_plane_intersection_type_of_klein_image;
 	int plane_intersection_type_of_klein_image_threshold;
@@ -453,6 +454,8 @@ public:
 
 	int f_report_Grassmannian;
 	int report_Grassmannian_k;
+
+
 
 	// classification stuff:
 
@@ -503,6 +506,8 @@ public:
 	semifields::semifield_classify_description *Semifield_classify_description;
 	poset_classification::poset_classification_control *Semifield_classify_Control;
 
+	int f_classify_bent_functions;
+	int classify_bent_functions_n;
 
 
 	projective_space_activity_description();
@@ -549,6 +554,7 @@ public:
 
 class projective_space_global {
 public:
+#if 0
 	void map(
 			projective_space_with_action *PA,
 			std::string &ring_label,
@@ -557,6 +563,7 @@ public:
 			long int *&Image_pts,
 			int &N_points,
 			int verbose_level);
+#endif
 	void analyze_del_Pezzo_surface(
 			projective_space_with_action *PA,
 			std::string &label,
@@ -566,11 +573,6 @@ public:
 			projective_space_with_action *PA,
 			expression_parser::formula *F,
 			std::string &evaluate_text,
-			int verbose_level);
-	void conic_type(
-			projective_space_with_action *PA,
-			int threshold,
-			std::string &set_text,
 			int verbose_level);
 	void do_lift_skew_hexagon(
 			projective_space_with_action *PA,
@@ -614,23 +616,16 @@ public:
 			std::string &fname_mask, int nb, std::string &column_label,
 			std::string &fname_out,
 			int verbose_level);
-	void make_restricted_incidence_matrix(
-			projective_space_with_action *PA,
-			int type_i, int type_j,
-			std::string &row_objects,
-			std::string &col_objects,
-			std::string &file_name,
-			int verbose_level);
+#if 0
 	void make_relation(
 			projective_space_with_action *PA,
 			long int plane_rk,
 			int verbose_level);
-	void plane_intersection_type_of_klein_image(
+#endif
+	void classify_bent_functions(
 			projective_space_with_action *PA,
-			std::string &input,
-			int threshold,
+			int n,
 			int verbose_level);
-	// creates a projective_space object P5
 
 };
 
@@ -735,25 +730,10 @@ public:
 	void report_orbits_on_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
-	void report_decomposition_by_single_automorphism(
-		int *Elt, std::ostream &ost, std::string &fname_base,
-		int verbose_level);
-	int process_object(
-		data_structures::classify_bitvectors *CB,
-		geometry::object_with_canonical_form *OiP,
-		int f_save_incma_in_and_out, std::string &prefix,
-		int nb_objects_to_test,
-		groups::strong_generators *&SG,
-		long int *canonical_labeling,
-		int verbose_level);
 	void compute_group_of_set(long int *set, int set_sz,
 			groups::strong_generators *&Sg,
 			int verbose_level);
 		// ToDo
-	void analyze_del_Pezzo_surface(
-			expression_parser::formula *Formula,
-			std::string &evaluate_text,
-			int verbose_level);
 	void do_cheat_sheet_for_decomposition_by_element_PG(
 			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data, std::string &fname_base,
@@ -771,9 +751,6 @@ public:
 			int verbose_level);
 	void table_of_quartic_curves(int verbose_level);
 	void table_of_cubic_surfaces(int verbose_level);
-	void conic_type(
-			long int *Pts, int nb_pts, int threshold,
-			int verbose_level);
 	void cheat_sheet(
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
@@ -786,12 +763,6 @@ public:
 	void report_decomposition_by_group(
 			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
 		int verbose_level);
-	void do_rank_lines_in_PG(
-			std::string &label,
-			int verbose_level);
-	void do_unrank_lines_in_PG(
-			std::string &text,
-			int verbose_level);
 
 
 };

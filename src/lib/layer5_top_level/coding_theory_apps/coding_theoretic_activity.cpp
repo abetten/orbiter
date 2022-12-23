@@ -426,25 +426,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 	}
 
-	else if (Descr->f_nth_roots) {
-		cout << "-nth_roots n=" << Descr->nth_roots_n << endl;
-
-		algebra::algebra_global Algebra;
-
-
-		if (f_v) {
-			cout << "coding_theoretic_activity::perform_activity "
-					"before Algebra.Nth_roots" << endl;
-		}
-		Algebra.Nth_roots(F,
-				Descr->nth_roots_n, verbose_level);
-		if (f_v) {
-			cout << "coding_theoretic_activity::perform_activity "
-					"after Algebra.Nth_roots" << endl;
-		}
-
-
-	}
 	else if (Descr->f_Sylvester_Hadamard_code) {
 		cout << "-Sylvester_Hadamard_code n=" << Descr->Sylvester_Hadamard_code_n << endl;
 

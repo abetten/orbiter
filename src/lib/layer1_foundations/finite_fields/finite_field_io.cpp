@@ -811,7 +811,7 @@ void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 
 			poly = compute_subfield_polynomial(
 					NT.i_power_j(p, h),
-					FALSE, cout,
+					//FALSE, cout,
 					verbose_level);
 			{
 				finite_field GFp;
@@ -865,8 +865,21 @@ void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_leve
 
 		q0 = NT.i_power_j(p, h);
 
-		poly_numeric = compute_subfield_polynomial(q0, TRUE, ost, verbose_level);
 
+		poly_numeric = compute_subfield_polynomial(q0, //TRUE, ost,
+				verbose_level);
+
+		minimum_polynomial *M;
+
+		M = NEW_OBJECT(minimum_polynomial);
+
+		M->compute_subfield_polynomial(this, q0 /* order_subfield */, FALSE /*verbose_level*/);
+
+		M->report_table(ost);
+
+
+
+		poly_numeric = M->min_poly_rank;
 
 		char str[1000];
 
@@ -888,6 +901,7 @@ void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_leve
 			Sub->report(ost);
 		}
 
+		FREE_OBJECT(M);
 		FREE_OBJECT(Sub);
 		FREE_OBJECT(Fq);
 	}

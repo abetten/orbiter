@@ -1693,7 +1693,11 @@ power_function_2_mod_11:
 draw_mod_13:
 	$(ORBITER) -v 2 \
 		-draw_options -embedded -end \
-		-draw_mod_n -n 13 -file mod_13 -power_cycle 2 -end
+		-draw_mod_n \
+			-n 13 \
+			-file mod_13 \
+			-power_cycle 2 \
+		-end
 	pdflatex mod_13_draw.tex
 	open mod_13_draw.pdf
 
@@ -1875,6 +1879,9 @@ test_3_3:
 	make F_4_tables
 	make F_16
 	make F_16_tables
+	make F_64
+	make nth_roots_63
+	make F8_F2_field_reduction
 
 
 F_4:
@@ -1939,6 +1946,7 @@ F_16:
 		-define F -finite_field -q 16 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	pdflatex GF_16.tex
+	open GF_16.pdf
 
 
 
@@ -1962,7 +1970,41 @@ F_16_tables:
 
 
 
+F_64:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 64 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_64.tex
+	open GF_64.pdf
 
+
+
+nth_roots_63:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 63 \
+		-end
+	pdflatex Nth_roots_q2_n63.tex
+	open Nth_roots_q2_n63.pdf
+
+
+F8_F2_field_reduction:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define v -vector -loop 0 8 1 -end \
+		-define C -code -field F -Reed_Solomon 7 3 -end \
+		-with F -do \
+		-finite_field_activity \
+		-field_reduction "F8_to_F2" \
+			2 1 8 v \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix -input_csv_file F8_to_F2.csv \
+		-box_width 40 -bit_depth 24 \
+		-partition 4 "3" "3,3,3,3,3,3,3,3" -end
+	convert F8_to_F2_draw.bmp F8_to_F2_draw.png
+	open F8_to_F2_draw.png
 
 
 ###############################################################################
@@ -1976,10 +2018,10 @@ test_3_4:
 	make RREF
 	make RREF_V7
 	make nullspace
+	make RREF_RS_6_4_7
 	make eigenstuff
 	make classes_GL_3_2
 	make classes_GL_4_2
-	make RREF_RS_6_4_7
 
 
 RREF:
@@ -2017,6 +2059,18 @@ nullspace:
 			-normalize_from_the_right \
 		-end
 
+RREF_RS_6_4_7:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define v -vector -field F -format 4 \
+			-compact $(CODE_RS_6_4_7) \
+		-end \
+		-with F -do \
+		-finite_field_activity -RREF v -end
+
+
+
+## these are global algebra functions:
 
 
 eigenstuff:
@@ -2038,15 +2092,6 @@ classes_GL_4_2:
 		-all_rational_normal_forms F 4 
 	pdflatex Class_reps_GL_4_2.tex
 	open Class_reps_GL_4_2.pdf
-
-RREF_RS_6_4_7:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define v -vector -field F -format 4 \
-			-compact $(CODE_RS_6_4_7) \
-		-end \
-		-with F -do \
-		-finite_field_activity -RREF v -end
 
 
 ###############################################################################
@@ -2163,7 +2208,7 @@ F_64_over_F2_field_reduction:
 F_8_Nth_roots_21:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do -finite_field_activity \
 			-nth_roots 21 \
 		-end
 	pdflatex Nth_roots_q8_n21.tex
@@ -2207,7 +2252,15 @@ F_17_NTT_compile: NTT_k4_q17.cpp
 		$(LIB) $(LFLAGS) -o NTT_k4_q17.out
 	./NTT_k4_q17.out
 
-	
+F64_1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 64 -override_polynomial 97 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 7 \
+		-end
+	pdflatex Nth_roots_q64_n7.tex
+	open Nth_roots_q64_n7.pdf
+
 
 ###############################################################################
 # Section 3.6: Basic Ring Theory
@@ -3082,7 +3135,7 @@ test_4_9:
 	make trans
 	make del_Pezzo_F13ab_report
 	make del_Pezzo_F13a_points.txt
-	make del_Pezzo_169
+	#make del_Pezzo_169
 
 
 
@@ -3092,7 +3145,7 @@ fix_structure_2A:
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
-			-cheat_sheet_for_decomposition_by_element_PG 1 \
+			-decomposition_by_element_PG 1 \
 				"1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1" \
 				fix_structure_2A \
 		-end 
@@ -3106,7 +3159,7 @@ fix_structure_2B:
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
-			-cheat_sheet_for_decomposition_by_element_PG 1 \
+			-decomposition_by_element_PG 1 \
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
 				fix_structure_2B \
 		-end 
@@ -3120,7 +3173,7 @@ fix_structure_2C:
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
-			-cheat_sheet_for_decomposition_by_element_PG 1 \
+			-decomposition_by_element_PG 1 \
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
 				fix_structure_2C \
 		-end 
@@ -9317,7 +9370,7 @@ irred_6_2:
 	pdflatex Irred_q2_d6.tex
 	open Irred_q2_d6.pdf
 
-# 9 polys
+# 9 polys: 97, 73, 67, 115, 117, 109, 91, 87, 103.
 
 irred_7_2:
 	$(ORBITER) -v 3 \
@@ -11499,7 +11552,7 @@ crc32_Berlekamp_matrix:
 CRC_F256_roots_771:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 256 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do -finite_field_activity \
 			-nth_roots 771 \
 		-end
 
@@ -12479,7 +12532,7 @@ BCH_21_poly_division_c:
 F16_roots_5:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do -finite_field_activity \
 			-nth_roots 5 \
 		-end
 	pdflatex Nth_roots_q2_n5.tex
@@ -12490,7 +12543,7 @@ F16_roots_5:
 F64_roots_21:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do -finite_field_activity \
 			-nth_roots 21 \
 		-end
 	pdflatex Nth_roots_q2_n21.tex
@@ -12501,7 +12554,7 @@ F64_roots_21:
 BCH_F256_roots_771:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 256 -end \
-		-with F -do -coding_theoretic_activity \
+		-with F -do -finite_field_activity \
 			-nth_roots 771 \
 		-end
 

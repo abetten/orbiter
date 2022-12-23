@@ -232,7 +232,7 @@ void product_action::element_move(int *A, int *B, int verbose_level)
 			B + A1->elt_size_in_int, verbose_level);
 }
 
-void product_action::element_print(int *A, ostream &ost)
+void product_action::element_print(int *A, std::ostream &ost)
 {
 	ost << "(" << endl;
 	A1->element_print(A, ost);
@@ -241,7 +241,7 @@ void product_action::element_print(int *A, ostream &ost)
 	ost << ")" << endl;
 }
 
-void product_action::element_print_latex(int *A, ostream &ost)
+void product_action::element_print_latex(int *A, std::ostream &ost)
 {
 	ost << "\\left(" << endl;
 	A1->element_print_latex(A, ost);

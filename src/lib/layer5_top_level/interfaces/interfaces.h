@@ -160,11 +160,6 @@ class interface_algebra {
 	int f_make_A5_in_PSL_2_q;
 	int make_A5_in_PSL_2_q_q;
 
-#if 0
-	int f_search_for_primitive_polynomial_in_range;
-	int p_min, p_max, deg_min, deg_max;
-#endif
-
 	int f_order_of_q_mod_n;
 	int order_of_q_mod_n_q;
 	int order_of_q_mod_n_n_min;
@@ -184,6 +179,13 @@ class interface_algebra {
 	int f_power_function_mod_n;
 	int power_function_mod_n_k;
 	int power_function_mod_n_n;
+
+
+	// the following two cannot be finite field activities because
+	// finite field activities are at layer 1 and these functions require level 5.
+
+	// perhaps they should be projective space activities,
+	// because they need a general linear group
 
 	int f_all_rational_normal_forms;
 	std::string all_rational_normal_forms_finite_field_label;
@@ -285,8 +287,10 @@ class interface_combinatorics {
 	int f_diophant_activity;
 	solvers::diophant_activity_description *Diophant_activity_description;
 
+#if 0
 	int f_bent;
 	int bent_n;
+#endif
 
 	int f_random_permutation;
 	int random_permutation_degree;
@@ -384,7 +388,7 @@ public:
 	void worker(int verbose_level);
 	void do_diophant(solvers::diophant_description *Descr, int verbose_level);
 	void do_diophant_activity(solvers::diophant_activity_description *Descr, int verbose_level);
-	void do_bent(int n, int verbose_level);
+	//void do_bent(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n_file(int n, int verbose_level);
 	void do_Delandtsheer_Doyen(apps_combinatorics::delandtsheer_doyen_description *Descr, int verbose_level);
@@ -877,7 +881,7 @@ public:
 			orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
 	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
 	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
-	ring_theory::homogeneous_polynomial_domain *get_object_of_type_ring(std::string &label);
+	//ring_theory::homogeneous_polynomial_domain *get_object_of_type_ring(std::string &label);
 	poset_classification::poset_classification_control *get_object_of_type_poset_classification_control(std::string &label);
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);

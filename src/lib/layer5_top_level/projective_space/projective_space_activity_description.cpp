@@ -47,7 +47,7 @@ projective_space_activity_description::projective_space_activity_description()
 	//analyze_del_Pezzo_surface_label;
 	//analyze_del_Pezzo_surface_parameters;
 
-	f_cheat_sheet_for_decomposition_by_element_PG = FALSE;
+	f_decomposition_by_element_PG = FALSE;
 	decomposition_by_element_power = 0;
 	//std::string decomposition_by_element_data;
 	//std::string decomposition_by_element_fname;
@@ -164,8 +164,11 @@ projective_space_activity_description::projective_space_activity_description()
 	std::string restricted_incidence_matrix_col_objects;
 	//std::string restricted_incidence_matrix_file_name;
 
+
+#if 0
 	f_make_relation = FALSE;
 	make_relation_plane_rk = 0;
+#endif
 
 	f_plane_intersection_type_of_klein_image = FALSE;
 	plane_intersection_type_of_klein_image_threshold = 0;
@@ -227,6 +230,9 @@ projective_space_activity_description::projective_space_activity_description()
 	Semifield_classify_description = NULL;
 	Semifield_classify_Control = NULL;
 
+
+	f_classify_bent_functions = FALSE;
+	classify_bent_functions_n = 0;
 
 }
 
@@ -335,13 +341,13 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-cheat_sheet_for_decomposition_by_element_PG") == 0) {
-			f_cheat_sheet_for_decomposition_by_element_PG = TRUE;
+		else if (ST.stringcmp(argv[i], "-decomposition_by_element_PG") == 0) {
+			f_decomposition_by_element_PG = TRUE;
 			decomposition_by_element_power = ST.strtoi(argv[++i]);
 			decomposition_by_element_data.assign(argv[++i]);
 			decomposition_by_element_fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-cheat_sheet_for_decomposition_by_element_PG "
+				cout << "-decomposition_by_element_PG "
 						<< decomposition_by_element_power
 						<< " " << decomposition_by_element_data
 						<< " " << decomposition_by_element_fname
@@ -715,6 +721,7 @@ int projective_space_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-make_relation") == 0) {
 			f_make_relation = TRUE;
 			make_relation_plane_rk = ST.strtoi(argv[++i]);
@@ -722,6 +729,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-make_relation " << make_relation_plane_rk << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-plane_intersection_type_of_klein_image") == 0) {
 			f_plane_intersection_type_of_klein_image = TRUE;
 			plane_intersection_type_of_klein_image_threshold = ST.strtoi(argv[++i]);
@@ -932,6 +940,15 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-classify_bent_functions") == 0) {
+			f_classify_bent_functions = TRUE;
+			classify_bent_functions_n = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-classify_bent_functions "
+						<< classify_bent_functions_n
+						<< endl;
+			}
+		}
 
 
 
@@ -996,8 +1013,8 @@ void projective_space_activity_description::print()
 				<< analyze_del_Pezzo_surface_parameters << " "
 				<< endl;
 	}
-	if (f_cheat_sheet_for_decomposition_by_element_PG) {
-		cout << "-cheat_sheet_for_decomposition_by_element_PG "
+	if (f_decomposition_by_element_PG) {
+		cout << "-decomposition_by_element_PG "
 				<< decomposition_by_element_power
 				<< " " << decomposition_by_element_data
 				<< " " << decomposition_by_element_fname
@@ -1142,9 +1159,11 @@ void projective_space_activity_description::print()
 				<< " " << restricted_incidence_matrix_file_name
 			<< endl;
 	}
+#if 0
 	if (f_make_relation) {
 		cout << "-make_relation " << make_relation_plane_rk << endl;
 	}
+#endif
 	if (f_plane_intersection_type_of_klein_image) {
 		cout << "-plane_intersection_type_of_klein_image " << plane_intersection_type_of_klein_image_threshold << " " << plane_intersection_type_of_klein_image_input << endl;
 	}
@@ -1222,6 +1241,11 @@ void projective_space_activity_description::print()
 		Semifield_classify_Control->print();
 	}
 
+	if (f_classify_bent_functions) {
+		cout << "-classify_bent_functions "
+				<< classify_bent_functions_n
+				<< endl;
+	}
 
 
 

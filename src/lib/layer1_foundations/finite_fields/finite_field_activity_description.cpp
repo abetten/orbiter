@@ -42,26 +42,85 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string polynomial_power_mod_M;
 
 
-
-
 	f_Berlekamp_matrix = FALSE;
 	//Berlekamp_matrix_label;
 
-	f_normal_basis = FALSE;
-	normal_basis_d = 0;
 
 	f_polynomial_find_roots = FALSE;
 	//polynomial_find_roots_label;
 
-	f_normalize_from_the_right = FALSE;
-	f_normalize_from_the_left = FALSE;
+	f_product_of = FALSE;
+	//std::string product_of_elements;
 
+	f_sum_of = FALSE;
+	//std::string sum_of_elements;
+
+	f_negate = FALSE;
+	//std::string negate_elements;
+
+	f_inverse = FALSE;
+	//std::string inverse_elements;
+
+	f_power_map = FALSE;
+	power_map_k = 0;
+	//std::string power_map_elements;
+
+	f_parse_and_evaluate = FALSE;
+	//parse_name_of_formula
+	//parse_managed_variables
+	//std::string parse_text;
+	//std::string parse_parameters
+
+	f_evaluate = FALSE;
+	//std::string evaluate_formula_label;
+	//std::string evaluate_parameters;
+
+
+	// Extension fields:
+
+	f_trace = FALSE;
+
+	f_norm = FALSE;
+
+	f_normal_basis = FALSE;
+	normal_basis_d = 0;
+
+	f_nth_roots = FALSE;
+	nth_roots_n = 0;
+
+	f_field_reduction = FALSE;
+	//field_reduction_label
+	field_reduction_q = 0;
+	field_reduction_m = 0;
+	field_reduction_n = 0;
+	// field_reduction_text;
+
+
+
+	// Linear Algebra
 
 	f_nullspace = FALSE;
 	//nullspace_input_matrix = NULL;
 
 	f_RREF = FALSE;
 	//RREF_input_matrix
+
+	f_normalize_from_the_right = FALSE;
+	f_normalize_from_the_left = FALSE;
+
+	f_RREF_random_matrix = FALSE;
+	RREF_random_matrix_m = 0;
+	RREF_random_matrix_n = 0;
+
+	f_Walsh_matrix = FALSE;
+	Walsh_matrix_n = 0;
+
+	f_Vandermonde_matrix = FALSE;
+
+
+
+
+
 
 	//cout << "finite_field_activity_description::finite_field_activity_description 3" << endl;
 	//RREF_text = NULL;
@@ -89,18 +148,21 @@ finite_field_activity_description::finite_field_activity_description()
 	f_identity_function = FALSE;
 	//std::string identity_function_fname_csv_out;
 
-	f_trace = FALSE;
-	f_norm = FALSE;
-
-	f_Walsh_matrix = FALSE;
-	Walsh_matrix_n = 0;
-
-	f_Vandermonde_matrix = FALSE;
 
 	f_search_APN_function = FALSE;
 
 	f_make_table_of_irreducible_polynomials = FALSE;
 	make_table_of_irreducible_polynomials_degree = 0;
+
+	f_get_primitive_polynomial = FALSE;
+	get_primitive_polynomial_degree = 0;
+
+	f_get_primitive_polynomial_in_range = FALSE;
+	get_primitive_polynomial_in_range_min = 0;
+	get_primitive_polynomial_in_range_max = 0;
+
+
+	// cryptography:
 
 	f_EC_Koblitz_encoding = FALSE;
 	EC_s = 0;
@@ -160,10 +222,6 @@ finite_field_activity_description::finite_field_activity_description()
 	polynomial_division_r0 = 0;
 	polynomial_division_r1 = 0;
 
-	f_RREF_random_matrix = FALSE;
-	RREF_random_matrix_m = 0;
-	RREF_random_matrix_n = 0;
-
 
 
 	f_transversal = FALSE;
@@ -173,39 +231,6 @@ finite_field_activity_description::finite_field_activity_description()
 	f_intersection_of_two_lines = FALSE;
 	//line_1_basis = NULL;
 	//line_2_basis = NULL;
-
-	f_field_reduction = FALSE;
-	//field_reduction_label
-	field_reduction_q = 0;
-	field_reduction_m = 0;
-	field_reduction_n = 0;
-	// field_reduction_text;
-
-	f_parse_and_evaluate = FALSE;
-	//parse_name_of_formula
-	//parse_managed_variables
-	//std::string parse_text;
-	//std::string parse_parameters
-
-	f_product_of = FALSE;
-	//std::string product_of_elements;
-
-	f_sum_of = FALSE;
-	//std::string sum_of_elements;
-
-	f_negate = FALSE;
-	//std::string negate_elements;
-
-	f_inverse = FALSE;
-	//std::string inverse_elements;
-
-	f_power_map = FALSE;
-	power_map_k = 0;
-	//std::string power_map_elements;
-
-	f_evaluate = FALSE;
-	//std::string evaluate_formula_label;
-	//std::string evaluate_parameters;
 
 
 	f_inverse_isomorphism_klein_quadric = FALSE;
@@ -218,12 +243,6 @@ finite_field_activity_description::finite_field_activity_description()
 	unrank_point_in_PG_n = 0;
 	//std::string unrank_point_in_PG_text;
 
-	f_get_primitive_polynomial = FALSE;
-	get_primitive_polynomial_degree = 0;
-
-	f_get_primitive_polynomial_in_range = FALSE;
-	get_primitive_polynomial_in_range_min = 0;
-	get_primitive_polynomial_in_range_max = 0;
 
 }
 
@@ -310,25 +329,6 @@ int finite_field_activity_description::read_arguments(
 				cout << "-Berlekamp_matrix " << Berlekamp_matrix_label << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-normal_basis") == 0) {
-			f_normal_basis = TRUE;
-			normal_basis_d = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-normal_basis " << normal_basis_d << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-normalize_from_the_right") == 0) {
-			f_normalize_from_the_right = TRUE;
-			if (f_v) {
-				cout << "-normalize_from_the_right " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-normalize_from_the_left") == 0) {
-			f_normalize_from_the_left = TRUE;
-			if (f_v) {
-				cout << "-normalize_from_the_left " << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-nullspace") == 0) {
 			f_nullspace = TRUE;
 			nullspace_input_matrix.assign(argv[++i]);
@@ -343,6 +343,125 @@ int finite_field_activity_description::read_arguments(
 				cout << "-polynomial_find_roots " << polynomial_find_roots_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-product_of") == 0) {
+			f_product_of = TRUE;
+			product_of_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-product_of " << product_of_elements
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-sum_of") == 0) {
+			f_sum_of = TRUE;
+			sum_of_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-sum_of " << sum_of_elements
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-negate") == 0) {
+			f_negate = TRUE;
+			negate_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-negate " << negate_elements
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-inverse") == 0) {
+			f_inverse = TRUE;
+			inverse_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-inverse " << inverse_elements
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-power_map") == 0) {
+			f_power_map = TRUE;
+			power_map_k = ST.strtoi(argv[++i]);
+			power_map_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-power_map " << power_map_k
+						<< " " << power_map_elements
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-parse_and_evaluate") == 0) {
+			f_parse_and_evaluate = TRUE;
+			parse_name_of_formula.assign(argv[++i]);
+			parse_managed_variables.assign(argv[++i]);
+			parse_text.assign(argv[++i]);
+			parse_parameters.assign(argv[++i]);
+			if (f_v) {
+				cout << "-parse_and_evaluate " << parse_name_of_formula
+					<< " " << parse_managed_variables
+					<< " " << parse_text
+					<< " " << parse_parameters
+					<< endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-evaluate") == 0) {
+			f_evaluate = TRUE;
+			evaluate_formula_label.assign(argv[++i]);
+			evaluate_parameters.assign(argv[++i]);
+			if (f_v) {
+				cout << "-evaluate " << evaluate_formula_label
+					<< " " << evaluate_parameters
+					<< endl;
+			}
+		}
+
+		// Extension fields:
+
+		else if (ST.stringcmp(argv[i], "-trace") == 0) {
+			f_trace = TRUE;
+			if (f_v) {
+				cout << "-trace " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-norm") == 0) {
+			f_norm = TRUE;
+			if (f_v) {
+				cout << "-norm " << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-normal_basis") == 0) {
+			f_normal_basis = TRUE;
+			normal_basis_d = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-normal_basis " << normal_basis_d << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-nth_roots") == 0) {
+			f_nth_roots = TRUE;
+			nth_roots_n = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-nth_roots " << nth_roots_n << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-field_reduction") == 0) {
+			f_field_reduction = TRUE;
+			field_reduction_label.assign(argv[++i]);
+			field_reduction_q = ST.strtoi(argv[++i]);
+			field_reduction_m = ST.strtoi(argv[++i]);
+			field_reduction_n = ST.strtoi(argv[++i]);
+			field_reduction_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-field_reduction "
+					<< " " << field_reduction_label
+					<< " " << field_reduction_q
+					<< " " << field_reduction_m
+					<< " " << field_reduction_n
+					<< " " << field_reduction_text << endl;
+			}
+		}
+
+
+
+
+
+		// Linear Algebra:
 		else if (ST.stringcmp(argv[i], "-RREF") == 0) {
 			f_RREF = TRUE;
 			RREF_input_matrix.assign(argv[++i]);
@@ -350,6 +469,48 @@ int finite_field_activity_description::read_arguments(
 				cout << "-RREF " << RREF_input_matrix << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-normalize_from_the_right") == 0) {
+			f_normalize_from_the_right = TRUE;
+			if (f_v) {
+				cout << "-normalize_from_the_right " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-normalize_from_the_left") == 0) {
+			f_normalize_from_the_left = TRUE;
+			if (f_v) {
+				cout << "-normalize_from_the_left " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-RREF_random_matrix") == 0) {
+			f_RREF_random_matrix = TRUE;
+			RREF_random_matrix_m = ST.strtolint(argv[++i]);
+			RREF_random_matrix_n = ST.strtolint(argv[++i]);
+			if (f_v) {
+				cout << "-RREF_random_matrix "
+					<< " " << RREF_random_matrix_m
+					<< " " << RREF_random_matrix_n
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-Walsh_matrix") == 0) {
+			f_Walsh_matrix = TRUE;
+			Walsh_matrix_n = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-Vandermonde_matrix") == 0) {
+			f_Vandermonde_matrix = TRUE;
+			if (f_v) {
+				cout << "-Vandermonde_matrix " << endl;
+			}
+		}
+
+
+
+
+
 
 		else if (ST.stringcmp(argv[i], "-Walsh_Hadamard_transform") == 0) {
 			f_Walsh_Hadamard_transform = TRUE;
@@ -417,40 +578,12 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-trace") == 0) {
-			f_trace = TRUE;
-			if (f_v) {
-				cout << "-trace " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-norm") == 0) {
-			f_norm = TRUE;
-			if (f_v) {
-				cout << "-norm " << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-Walsh_matrix") == 0) {
-			f_Walsh_matrix = TRUE;
-			Walsh_matrix_n = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-Vandermonde_matrix") == 0) {
-			f_Vandermonde_matrix = TRUE;
-			if (f_v) {
-				cout << "-Vandermonde_matrix " << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-search_APN_function") == 0) {
 			f_search_APN_function = TRUE;
 			if (f_v) {
 				cout << "-search_APN_function " << endl;
 			}
 		}
-
 
 		else if (ST.stringcmp(argv[i], "-make_table_of_irreducible_polynomials") == 0) {
 			f_make_table_of_irreducible_polynomials = TRUE;
@@ -460,6 +593,27 @@ int finite_field_activity_description::read_arguments(
 					<< make_table_of_irreducible_polynomials_degree << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial") == 0) {
+			f_get_primitive_polynomial = TRUE;
+			get_primitive_polynomial_degree = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-get_primitive_polynomial " << get_primitive_polynomial_degree << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial_in_range") == 0) {
+			f_get_primitive_polynomial_in_range = TRUE;
+			get_primitive_polynomial_in_range_min = ST.strtoi(argv[++i]);
+			get_primitive_polynomial_in_range_max = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-get_primitive_polynomial_in_range"
+						<< " " << get_primitive_polynomial_in_range_min
+						<< " " << get_primitive_polynomial_in_range_max
+						<< endl;
+			}
+		}
+
+		// cryptography stuff:
+
 		else if (ST.stringcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
 			f_EC_Koblitz_encoding = TRUE;
 			EC_b = ST.strtoi(argv[++i]);
@@ -645,18 +799,6 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-RREF_random_matrix") == 0) {
-			f_RREF_random_matrix = TRUE;
-			RREF_random_matrix_m = ST.strtolint(argv[++i]);
-			RREF_random_matrix_n = ST.strtolint(argv[++i]);
-			if (f_v) {
-				cout << "-RREF_random_matrix "
-					<< " " << RREF_random_matrix_m
-					<< " " << RREF_random_matrix_n
-					<< endl;
-			}
-		}
-
 
 		else if (ST.stringcmp(argv[i], "-transversal") == 0) {
 			f_transversal = TRUE;
@@ -707,109 +849,6 @@ int finite_field_activity_description::read_arguments(
 
 
 
-		else if (ST.stringcmp(argv[i], "-field_reduction") == 0) {
-			f_field_reduction = TRUE;
-			field_reduction_label.assign(argv[++i]);
-			field_reduction_q = ST.strtoi(argv[++i]);
-			field_reduction_m = ST.strtoi(argv[++i]);
-			field_reduction_n = ST.strtoi(argv[++i]);
-			field_reduction_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-field_reduction "
-					<< " " << field_reduction_label
-					<< " " << field_reduction_q
-					<< " " << field_reduction_m
-					<< " " << field_reduction_n
-					<< " " << field_reduction_text << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-parse_and_evaluate") == 0) {
-			f_parse_and_evaluate = TRUE;
-			parse_name_of_formula.assign(argv[++i]);
-			parse_managed_variables.assign(argv[++i]);
-			parse_text.assign(argv[++i]);
-			parse_parameters.assign(argv[++i]);
-			if (f_v) {
-				cout << "-parse_and_evaluate " << parse_name_of_formula
-					<< " " << parse_managed_variables
-					<< " " << parse_text
-					<< " " << parse_parameters
-					<< endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-product_of") == 0) {
-			f_product_of = TRUE;
-			product_of_elements.assign(argv[++i]);
-			if (f_v) {
-				cout << "-product_of " << product_of_elements
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-sum_of") == 0) {
-			f_sum_of = TRUE;
-			sum_of_elements.assign(argv[++i]);
-			if (f_v) {
-				cout << "-sum_of " << sum_of_elements
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-negate") == 0) {
-			f_negate = TRUE;
-			negate_elements.assign(argv[++i]);
-			if (f_v) {
-				cout << "-negate " << negate_elements
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-inverse") == 0) {
-			f_inverse = TRUE;
-			inverse_elements.assign(argv[++i]);
-			if (f_v) {
-				cout << "-inverse " << inverse_elements
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-power_map") == 0) {
-			f_power_map = TRUE;
-			power_map_k = ST.strtoi(argv[++i]);
-			power_map_elements.assign(argv[++i]);
-			if (f_v) {
-				cout << "-power_map " << power_map_k
-						<< " " << power_map_elements
-					<< endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-evaluate") == 0) {
-			f_evaluate = TRUE;
-			evaluate_formula_label.assign(argv[++i]);
-			evaluate_parameters.assign(argv[++i]);
-			if (f_v) {
-				cout << "-evaluate " << evaluate_formula_label
-					<< " " << evaluate_parameters
-					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial") == 0) {
-			f_get_primitive_polynomial = TRUE;
-			get_primitive_polynomial_degree = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-get_primitive_polynomial " << get_primitive_polynomial_degree << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial_in_range") == 0) {
-			f_get_primitive_polynomial_in_range = TRUE;
-			get_primitive_polynomial_in_range_min = ST.strtoi(argv[++i]);
-			get_primitive_polynomial_in_range_max = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-get_primitive_polynomial_in_range"
-						<< " " << get_primitive_polynomial_in_range_min
-						<< " " << get_primitive_polynomial_in_range_max
-						<< endl;
-			}
-		}
-
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -859,8 +898,77 @@ void finite_field_activity_description::print()
 	if (f_Berlekamp_matrix) {
 		cout << "-Berlekamp_matrix " << Berlekamp_matrix_label << endl;
 	}
+	if (f_polynomial_find_roots) {
+		cout << "-polynomial_find_roots " << polynomial_find_roots_label << endl;
+	}
+	if (f_product_of) {
+			cout << "-product_of " << product_of_elements
+				<< endl;
+	}
+	if (f_sum_of) {
+			cout << "-sum_of " << sum_of_elements
+				<< endl;
+	}
+	if (f_negate) {
+			cout << "-negate " << negate_elements
+				<< endl;
+	}
+	if (f_inverse) {
+			cout << "-inverse " << inverse_elements
+				<< endl;
+	}
+	if (f_power_map) {
+			cout << "-power_map " << power_map_k
+					<< " " << power_map_elements
+				<< endl;
+	}
+
+	if (f_parse_and_evaluate) {
+		cout << "-parse_and_evaluate " << parse_name_of_formula
+				<< " " << parse_managed_variables
+				<< " " << parse_text
+				<< " " << parse_parameters
+				<< endl;
+	}
+
+	if (f_evaluate) {
+		cout << "-evaluate " << evaluate_formula_label
+				<< " " << evaluate_parameters
+				<< endl;
+	}
+
+
+	// Extension fields:
+
+	if (f_trace) {
+		cout << "-trace " << endl;
+	}
+	if (f_norm) {
+		cout << "-norm " << endl;
+	}
 	if (f_normal_basis) {
 		cout << "-normal_basis " << normal_basis_d << endl;
+	}
+	if (f_nth_roots) {
+		cout << "-nth_roots " << nth_roots_n << endl;
+	}
+	if (f_field_reduction) {
+		cout << "-field_reduction "
+				<< " " << field_reduction_label
+				<< " " << field_reduction_q
+				<< " " << field_reduction_m
+				<< " " << field_reduction_n
+				<< " " << field_reduction_text << endl;
+	}
+
+
+	// Linear Algebra:
+
+	if (f_RREF) {
+		cout << "-RREF " << RREF_input_matrix << endl;
+	}
+	if (f_nullspace) {
+		cout << "-nullspace " << nullspace_input_matrix << endl;
 	}
 	if (f_normalize_from_the_right) {
 		cout << "-normalize_from_the_right " << endl;
@@ -868,15 +976,22 @@ void finite_field_activity_description::print()
 	if (f_normalize_from_the_left) {
 		cout << "-normalize_from_the_left " << endl;
 	}
-	if (f_nullspace) {
-		cout << "-nullspace " << nullspace_input_matrix << endl;
+	if (f_RREF_random_matrix) {
+		cout << "-RREF_random_matrix "
+				<< " " << RREF_random_matrix_m
+				<< " " << RREF_random_matrix_n
+				<< endl;
 	}
-	if (f_polynomial_find_roots) {
-		cout << "-polynomial_find_roots " << polynomial_find_roots_label << endl;
+	if (f_Walsh_matrix) {
+		cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
 	}
-	if (f_RREF) {
-		cout << "-RREF " << RREF_input_matrix << endl;
+	if (f_Vandermonde_matrix) {
+		cout << "-Vandermonde_matrix " << endl;
 	}
+
+
+
+
 
 	if (f_Walsh_Hadamard_transform) {
 		cout << "-Walsh_Hadamard_transform "
@@ -914,19 +1029,6 @@ void finite_field_activity_description::print()
 				<< endl;
 	}
 
-	if (f_trace) {
-		cout << "-trace " << endl;
-	}
-	if (f_norm) {
-		cout << "-norm " << endl;
-	}
-
-	if (f_Walsh_matrix) {
-		cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
-	}
-	if (f_Vandermonde_matrix) {
-		cout << "-Vandermonde_matrix " << endl;
-	}
 	if (f_search_APN_function) {
 		cout << "-search_APN_function " << endl;
 	}
@@ -935,6 +1037,18 @@ void finite_field_activity_description::print()
 		cout << "-make_table_of_irreducible_polynomials "
 				<< make_table_of_irreducible_polynomials_degree << endl;
 	}
+	if (f_get_primitive_polynomial) {
+		cout << "-get_primitive_polynomial " << get_primitive_polynomial_degree << endl;
+	}
+	if (f_get_primitive_polynomial_in_range) {
+		cout << "-get_primitive_polynomial_in_range"
+				<< " " << get_primitive_polynomial_in_range_min
+				<< " " << get_primitive_polynomial_in_range_max
+				<< endl;
+	}
+
+	// cryptography stuff:
+
 	if (f_EC_Koblitz_encoding) {
 		cout << "-EC_Koblitz_encoding "
 				<< EC_b << " " << EC_c << " " << EC_s << " "
@@ -1030,15 +1144,6 @@ void finite_field_activity_description::print()
 	}
 
 
-	if (f_RREF_random_matrix) {
-		cout << "-RREF_random_matrix "
-				<< " " << RREF_random_matrix_m
-				<< " " << RREF_random_matrix_n
-				<< endl;
-	}
-
-
-
 
 
 
@@ -1063,58 +1168,6 @@ void finite_field_activity_description::print()
 	}
 	if (f_unrank_point_in_PG) {
 		cout << "-unrank_point_in_PG " << unrank_point_in_PG_n << " " << unrank_point_in_PG_text << endl;
-	}
-	if (f_field_reduction) {
-		cout << "-field_reduction "
-				<< " " << field_reduction_label
-				<< " " << field_reduction_q
-				<< " " << field_reduction_m
-				<< " " << field_reduction_n
-				<< " " << field_reduction_text << endl;
-	}
-	if (f_parse_and_evaluate) {
-		cout << "-parse_and_evaluate " << parse_name_of_formula
-				<< " " << parse_managed_variables
-				<< " " << parse_text
-				<< " " << parse_parameters
-				<< endl;
-	}
-
-	if (f_product_of) {
-			cout << "-product_of " << product_of_elements
-				<< endl;
-	}
-	if (f_sum_of) {
-			cout << "-sum_of " << sum_of_elements
-				<< endl;
-	}
-	if (f_negate) {
-			cout << "-negate " << negate_elements
-				<< endl;
-	}
-	if (f_inverse) {
-			cout << "-inverse " << inverse_elements
-				<< endl;
-	}
-	if (f_power_map) {
-			cout << "-power_map " << power_map_k
-					<< " " << power_map_elements
-				<< endl;
-	}
-
-	if (f_evaluate) {
-		cout << "-evaluate " << evaluate_formula_label
-				<< " " << evaluate_parameters
-				<< endl;
-	}
-	if (f_get_primitive_polynomial) {
-		cout << "-get_primitive_polynomial " << get_primitive_polynomial_degree << endl;
-	}
-	if (f_get_primitive_polynomial_in_range) {
-		cout << "-get_primitive_polynomial_in_range"
-				<< " " << get_primitive_polynomial_in_range_min
-				<< " " << get_primitive_polynomial_in_range_max
-				<< endl;
 	}
 
 }

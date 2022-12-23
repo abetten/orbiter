@@ -889,6 +889,7 @@ int action_on_subgroups_compare_inverted(void *a, void *b, void *data);
 class action_on_wedge_product {
 public:
 
+	actions::action *A;
 	int n;
 	int q;
 	groups::matrix_group *M;
@@ -901,23 +902,27 @@ public:
 	int *wedge_v1; // [wedge_dimension]
 	int *wedge_v2; // [wedge_dimension]
 	int *wedge_v3; // [wedge_dimension]
+	int *Mtx_wedge; // [wedge_dimension * wedge_dimension]
 	
 	action_on_wedge_product();
 	~action_on_wedge_product();
-	void init(actions::action &A, int verbose_level);
+	void init(actions::action *A, int verbose_level);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	long int compute_image_int(
-			actions::action &A, int *Elt, long int a, int verbose_level);
-	int element_entry_frobenius(actions::action &A, int *Elt,
+			int *Elt, long int a, int verbose_level);
+	int element_entry_frobenius(int *Elt,
 		int verbose_level);
-	int element_entry_ij(actions::action &A, int *Elt, int I, int J,
+	int element_entry_ij(int *Elt, int I, int J,
 		int verbose_level);
-	int element_entry_ijkl(actions::action &A, int *Elt,
+	int element_entry_ijkl(int *Elt,
 		int i, int j, int k, int l, int verbose_level);
 	void compute_image_int_low_level(
-			actions::action &A, int *Elt, int *input, int *output,
+			int *Elt, int *input, int *output,
 		int verbose_level);
+	void create_induced_matrix(
+			int *Elt, int *Mtx2, int verbose_level);
+	void element_print_latex(int *A, std::ostream &ost);
 };
 
 

@@ -7,6 +7,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	algebraic_geometry_global.o \
 	arc_lifting_with_two_lines.o \
 	clebsch_map.o \
 	cubic_curve.o \

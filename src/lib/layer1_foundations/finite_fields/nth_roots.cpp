@@ -634,14 +634,20 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 
 	ost << "The irreducible polynomials associated with the $" << n << "$-th roots over GF$(" << F->q << ")$ are:" << endl << endl;
 
-	ost << "\\bigskip" << endl << endl;
+	ost << "\\clearpage" << endl << endl;
 
+	//ost << "\\begin{figure}" << endl;
+	//ost << "\\begin{sideways}" << endl;
+	//ost << "\\begin{minipage}{\\textwidth}" << endl;
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "\\tiny" << endl;
 	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|l|l|l|}" << endl;
+	ost << "\\begin{array}{|r|r|l|p{5cm}|l|r|}" << endl;
 	ost << "\\hline" << endl;
-	ost << "i & r_i & {\\rm Cyc}(r_i) & m_{\\beta^{r_i}}(X) & m_{\\beta^{r_i}}(X) \\\\" << endl;
+	ost << "i & r_i & {\\rm Cyc}(r_i) & $m_{\\beta^{r_i}}(X)$ & m_{\\beta^{r_i}}(X) & \\mbox{rank} \\\\" << endl;
 	ost << "\\hline" << endl;
+
+	int rk;
 
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 		ost << i << " & ";
@@ -654,11 +660,19 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 
 		ost << " & ";
 
+		ost << "$";
 		Cyclic_codes.print_polynomial_tight(ost, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
+		ost << "$";
 
 		ost << " & ";
 
 		FX->print_object(min_poly_beta_Fq[i], ost);
+
+		rk = FX->rank(min_poly_beta_Fq[i]);
+
+		ost << " & ";
+
+		ost << rk;
 
 
 		ost << "\\\\" << endl;
@@ -666,6 +680,10 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 	}
 	ost << "\\end{array}" << endl;
 	ost << "$$}" << endl;
+	//ost << "\\end{minipage}" << endl;
+	//ost << "\\end{sideways}" << endl;
+	//ost << "\\end{figure}" << endl;
+
 	ost << "\\clearpage" << endl;
 
 

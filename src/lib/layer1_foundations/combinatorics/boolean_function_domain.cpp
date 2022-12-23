@@ -119,6 +119,8 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 	}
 #endif
 
+	boolean_function_domain::Fq = F2;
+
 	if (Fq->q != 2) {
 		cout << "boolean_function_domain::init order of the field must be equal to 2" << endl;
 		exit(1);
@@ -144,7 +146,6 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 		cout << "boolean_function_domain::init N=" << N << endl;
 	}
 
-	boolean_function_domain::Fq = F2;
 	//Fq = NEW_OBJECT(field_theory::finite_field);
 	//Fq->finite_field_init(2, FALSE /* f_without_tables */, 0);
 

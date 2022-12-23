@@ -890,7 +890,7 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 	if (f_v) {
 		cout << "action::induced_action_on_wedge_product before AW->init" << endl;
 	}
-	AW->init(*this, verbose_level);
+	AW->init(this, verbose_level);
 	if (f_v) {
 		cout << "action::induced_action_on_wedge_product after AW->init" << endl;
 	}

@@ -99,6 +99,24 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 					"after AG->A->apply_based_on_text" << endl;
 		}
 	}
+	else if (Descr->f_element_processing) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity f_element_processing" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->element_processing" << endl;
+		}
+
+		AG->element_processing(Descr->element_processing_descr, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->element_processing" << endl;
+		}
+	}
+
+
 
 	else if (Descr->f_multiply) {
 		if (f_v) {
@@ -764,28 +782,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		coset_reps->save_csv(fname_coset_reps, verbose_level);
 
 		FREE_OBJECT(coset_reps);
-	}
-	else if (Descr->f_print_given_elements_tex) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity print_given_elements_tex" << endl;
-		}
-
-
-		int *element_data;
-		int nb_elements, n;
-
-		Get_matrix(Descr->print_given_elements_tex_data, element_data, nb_elements, n);
-
-		int f_with_permutation = FALSE;
-
-		AG->print_given_elements_tex(
-				Descr->print_given_elements_tex_label,
-				element_data, nb_elements,
-				f_with_permutation,
-				FALSE /* f_override_action */, NULL /* actions::action *A_special*/,
-				verbose_level);
-
 	}
 
 

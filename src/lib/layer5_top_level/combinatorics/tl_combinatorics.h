@@ -30,7 +30,7 @@ public:
 
 	// group stuff:
 	actions::action *A;
-	data_structures_groups::vector_ge *nice_gens;
+	//data_structures_groups::vector_ge *nice_gens;
 
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 	groups::strong_generators *SG;
@@ -41,7 +41,9 @@ public:
 	boolean_function_classify();
 	~boolean_function_classify();
 
-	void init_group(combinatorics::boolean_function_domain *BF, int verbose_level);
+	void init_group(combinatorics::boolean_function_domain *BF,
+			actions::action *A,
+			int verbose_level);
 	void search_for_bent_functions(int verbose_level);
 
 };

@@ -287,7 +287,7 @@ static long int induced_action_element_image_of(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
+		b = AW->compute_image_int(/**sub,*/ Elt, a, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_homogeneous_polynomials_t) {
 		if (f_v) {
@@ -729,7 +729,7 @@ static void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		AW->compute_image_int_low_level(*sub,
+		AW->compute_image_int_low_level(//*sub,
 				Elt, input, output, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_homogeneous_polynomials_t) {
@@ -1303,6 +1303,14 @@ static void induced_action_element_print_latex(action &A,
 		PA = A.G.product_action_data;
 		PA->element_print_latex((int *)elt, ost);
 	}
+
+	else if (A.type_G == action_on_wedge_product_t) {
+		induced_actions::action_on_wedge_product *AW;
+
+		AW = A.G.AW;
+		AW->element_print_latex((int *)elt, ost);
+	}
+
 	else {
 		action *sub;
 		sub = A.subaction;

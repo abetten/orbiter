@@ -363,6 +363,7 @@ projective_geometry::projective_space_with_action *orbiter_top_level_session::ge
 	return (projective_geometry::projective_space_with_action *) get_object(idx);
 }
 
+#if 0
 ring_theory::homogeneous_polynomial_domain *orbiter_top_level_session::get_object_of_type_ring(std::string &label)
 {
 	int idx;
@@ -378,6 +379,7 @@ ring_theory::homogeneous_polynomial_domain *orbiter_top_level_session::get_objec
 	}
 	return (ring_theory::homogeneous_polynomial_domain *) get_object(idx);
 }
+#endif
 
 poset_classification::poset_classification_control *orbiter_top_level_session::get_object_of_type_poset_classification_control(std::string &label)
 {

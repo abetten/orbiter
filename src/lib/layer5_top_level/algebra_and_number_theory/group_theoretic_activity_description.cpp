@@ -27,6 +27,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string apply_input;
 	//std::string apply_element;
 
+	f_element_processing = FALSE;
+	element_processing_descr = NULL;
+
 	f_multiply = FALSE;
 	//multiply_a = NULL;
 	//multiply_b = NULL;
@@ -153,10 +156,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_is_subgroup_of = FALSE;
 	f_coset_reps = FALSE;
 
-	f_print_given_elements_tex = FALSE;
-	//std::string print_given_elements_tex_label;
-	//std::string print_given_elements_tex_data;
-
 
 	// orbit stuff:
 
@@ -222,6 +221,27 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-apply " << apply_input << " " << apply_element << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-element_processing") == 0) {
+			f_element_processing = TRUE;
+			element_processing_descr = NEW_OBJECT(element_processing_description);
+			if (f_v) {
+				cout << "-element_processing" << endl;
+			}
+			i += element_processing_descr->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -element_processing " << endl;
+				element_processing_descr->print();
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-multiply") == 0) {
 			f_multiply = TRUE;
 			multiply_a.assign(argv[++i]);
@@ -550,16 +570,6 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-coset_reps " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-print_given_elements_tex") == 0) {
-			f_print_given_elements_tex = TRUE;
-			print_given_elements_tex_label.assign(argv[++i]);
-			print_given_elements_tex_data.assign(argv[++i]);
-			if (f_v) {
-				cout << "-print_given_elements_tex "
-						<< " " << print_given_elements_tex_label
-						<< " " << print_given_elements_tex_data << endl;
-			}
-		}
 
 		// orbit stuff:
 
@@ -682,6 +692,10 @@ void group_theoretic_activity_description::print()
 {
 	if (f_apply) {
 		cout << "-apply " << apply_input << " " << apply_element << endl;
+	}
+	if (f_element_processing) {
+		cout << "-element_processing " << endl;
+		element_processing_descr->print();
 	}
 	if (f_multiply) {
 		cout << "-multiply " << multiply_a << " " << multiply_b << endl;
@@ -847,11 +861,6 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_coset_reps) {
 		cout << "-coset_reps " << endl;
-	}
-	if (f_print_given_elements_tex) {
-		cout << "-print_given_elements_tex "
-				<< " " << print_given_elements_tex_label
-				<< " " << print_given_elements_tex_data << endl;
 	}
 
 

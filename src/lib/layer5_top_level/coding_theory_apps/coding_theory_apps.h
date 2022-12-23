@@ -100,9 +100,6 @@ public:
 	int generator_matrix_cyclic_code_n;
 	std::string generator_matrix_cyclic_code_poly;
 
-	int f_nth_roots;
-	int nth_roots_n;
-
 	int f_Sylvester_Hadamard_code;
 	int Sylvester_Hadamard_code_n;
 

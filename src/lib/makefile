@@ -16,6 +16,7 @@ MODULES= \
 		layer1_foundations/algebra/null_polarity_generator.o \
 		layer1_foundations/algebra/rank_checker.o \
 		layer1_foundations/algebra/vector_space.o \
+		layer1_foundations/algebraic_geometry/algebraic_geometry_global.o \
 		layer1_foundations/algebraic_geometry/arc_lifting_with_two_lines.o \
 		layer1_foundations/algebraic_geometry/clebsch_map.o \
 		layer1_foundations/algebraic_geometry/cubic_curve.o \
@@ -115,6 +116,7 @@ MODULES= \
 		layer1_foundations/finite_fields/finite_field_io.o \
 		layer1_foundations/finite_fields/finite_field_projective.o \
 		layer1_foundations/finite_fields/finite_field.o \
+		layer1_foundations/finite_fields/minimum_polynomial.o \
 		layer1_foundations/finite_fields/norm_tables.o \
 		layer1_foundations/finite_fields/nth_roots.o \
 		layer1_foundations/finite_fields/square_nonsquare.o \
@@ -431,6 +433,7 @@ MODULES= \
 		layer5_top_level/algebra_and_number_theory/any_group_orbits.o \
 		layer5_top_level/algebra_and_number_theory/any_group.o \
 		layer5_top_level/algebra_and_number_theory/character_table_burnside.o \
+		layer5_top_level/algebra_and_number_theory/element_processing_description.o \
 		layer5_top_level/algebra_and_number_theory/group_modification_description.o \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity.o \

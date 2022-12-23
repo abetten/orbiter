@@ -31,14 +31,6 @@ interface_algebra::interface_algebra()
 	f_make_A5_in_PSL_2_q = FALSE;
 	make_A5_in_PSL_2_q_q = 0;
 
-#if 0
-	f_search_for_primitive_polynomial_in_range = FALSE;
-	p_min = 0;
-	p_max = 0;
-	deg_min = 0;
-	deg_max = 0;
-#endif
-
 	f_order_of_q_mod_n = FALSE;
 	order_of_q_mod_n_q = 0;
 	order_of_q_mod_n_n_min = 0;
@@ -90,11 +82,6 @@ void interface_algebra::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		cout << "-make_A5_in_PSL_2_q <int : q> " << endl;
 	}
-#if 0
-	else if (ST.stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
-		cout << "-search_for_primitive_polynomial_in_range  " << endl;
-	}
-#endif
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		cout << "-order_of_q_mod_n <int : q> <int : n_min> <int : n_max>  " << endl;
 	}
@@ -143,11 +130,6 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		return true;
 	}
-#if 0
-	else if (ST.stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
-		return true;
-	}
-#endif
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		return true;
 	}
@@ -213,19 +195,6 @@ void interface_algebra::read_arguments(int argc,
 		make_A5_in_PSL_2_q_q = ST.strtoi(argv[++i]);
 		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
 	}
-#if 0
-	else if (ST.stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
-		f_search_for_primitive_polynomial_in_range = TRUE;
-		p_min = ST.strtoi(argv[++i]);
-		p_max = ST.strtoi(argv[++i]);
-		deg_min = ST.strtoi(argv[++i]);
-		deg_max = ST.strtoi(argv[++i]);
-		cout << "-search_for_primitive_polynomial_in_range " << p_min
-				<< " " << p_max
-				<< " " << deg_min
-				<< " " << deg_max << " " << endl;
-	}
-#endif
 
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		f_order_of_q_mod_n = TRUE;
@@ -322,14 +291,6 @@ void interface_algebra::print()
 	if (f_make_A5_in_PSL_2_q) {
 		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
 	}
-#if 0
-	if (f_search_for_primitive_polynomial_in_range) {
-		cout << "-search_for_primitive_polynomial_in_range " << p_min
-				<< " " << p_max
-				<< " " << deg_min
-				<< " " << deg_max << " " << endl;
-	}
-#endif
 	if (f_order_of_q_mod_n) {
 		cout << "-order_of_q_mod_n " << order_of_q_mod_n_q
 				<< " " << order_of_q_mod_n_n_min
@@ -473,6 +434,8 @@ void interface_algebra::worker(int verbose_level)
 				verbose_level);
 
 	}
+
+
 
 	else if (f_all_rational_normal_forms) {
 

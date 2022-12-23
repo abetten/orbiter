@@ -14,6 +14,43 @@ namespace algebraic_geometry {
 
 
 
+
+// #############################################################################
+// algebraic_geometry_global.cpp
+// #############################################################################
+
+//! catch all class for everything related to algebraic geometry
+
+
+class algebraic_geometry_global {
+
+public:
+
+	algebraic_geometry_global();
+	~algebraic_geometry_global();
+	void analyze_del_Pezzo_surface(
+			geometry::projective_space *P,
+			expression_parser::formula *Formula,
+			std::string &evaluate_text,
+			int verbose_level);
+	void report_grassmannian(
+			geometry::projective_space *P,
+			int k,
+			int verbose_level);
+	void map(
+			geometry::projective_space *P,
+			std::string &ring_label,
+			std::string &formula_label,
+			std::string &evaluate_text,
+			long int *&Image_pts,
+			int &N_points,
+			int verbose_level);
+
+
+};
+
+
+
 // #############################################################################
 // arc_lifting_with_two_lines.cpp
 // #############################################################################

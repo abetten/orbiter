@@ -57,9 +57,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	generator_matrix_cyclic_code_n = 0;
 	//std::string generator_matrix_cyclic_code_poly
 
-	f_nth_roots = FALSE;
-	nth_roots_n = 0;
-
 	f_Sylvester_Hadamard_code = FALSE;
 	Sylvester_Hadamard_code_n = 0;
 
@@ -247,13 +244,6 @@ int coding_theoretic_activity_description::read_arguments(
 				cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
 					<< " " << generator_matrix_cyclic_code_poly
 					<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-nth_roots") == 0) {
-			f_nth_roots = TRUE;
-			nth_roots_n = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-nth_roots " << nth_roots_n << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Sylvester_Hadamard_code") == 0) {
@@ -540,9 +530,6 @@ void coding_theoretic_activity_description::print()
 		cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
 			<< " " << generator_matrix_cyclic_code_poly
 			<< endl;
-	}
-	if (f_nth_roots) {
-		cout << "-nth_roots " << nth_roots_n << endl;
 	}
 	if (f_Sylvester_Hadamard_code) {
 		cout << "-Sylvester_Hadamard_code " << Sylvester_Hadamard_code_n << endl;

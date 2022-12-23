@@ -29,9 +29,6 @@ interface_combinatorics::interface_combinatorics()
 	f_diophant_activity = FALSE;
 	Diophant_activity_description = NULL;
 
-	f_bent = FALSE;
-	bent_n = 0;
-
 	f_random_permutation = FALSE;
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;
@@ -134,9 +131,6 @@ void interface_combinatorics::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		cout << "-diophant_activity <description> " << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-bent") == 0) {
-		cout << "-bent <int : n>" << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		cout << "-random_permutation <int : degree> <string : <fname_csv>" << endl;
 	}
@@ -219,9 +213,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-bent") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
@@ -347,13 +338,6 @@ void interface_combinatorics::read_arguments(int argc,
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-bent") == 0) {
-		f_bent = TRUE;
-		bent_n = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-bent " << bent_n << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
@@ -637,9 +621,6 @@ void interface_combinatorics::print()
 		cout << "-diophant_activity " << endl;
 		Diophant_activity_description->print();
 	}
-	if (f_bent) {
-		cout << "-bent " << bent_n << endl;
-	}
 	if (f_random_permutation) {
 		cout << "-random_permutation " << random_permutation_degree << endl;
 	}
@@ -755,9 +736,6 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_diophant_activity) {
 		do_diophant_activity(Diophant_activity_description, verbose_level);
-	}
-	else if (f_bent) {
-		do_bent(bent_n, verbose_level);
 	}
 	else if (f_random_permutation) {
 
@@ -1040,6 +1018,7 @@ void interface_combinatorics::do_diophant_activity(
 	}
 }
 
+#if 0
 void interface_combinatorics::do_bent(int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1075,6 +1054,7 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 			cout << "interface_combinatorics::do_bent before BFC->init_group" << endl;
 		}
 		BFC->init_group(BF, verbose_level);
+		// creates group PGGL(n+1,q)
 		if (f_v) {
 			cout << "interface_combinatorics::do_bent after BFC->init_group" << endl;
 		}
@@ -1096,7 +1076,7 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 		cout << "interface_combinatorics::do_bent done" << endl;
 	}
 }
-
+#endif
 
 void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_level)
 {

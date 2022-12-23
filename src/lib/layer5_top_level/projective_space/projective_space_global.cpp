@@ -14,144 +14,6 @@ namespace layer5_applications {
 namespace projective_geometry {
 
 
-
-void projective_space_global::map(
-		projective_space_with_action *PA,
-		std::string &ring_label,
-		std::string &formula_label,
-		std::string &evaluate_text,
-		long int *&Image_pts,
-		int &N_points,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::map" << endl;
-	}
-	if (f_v) {
-		cout << "projective_space_global::map n = " << PA->P->n << endl;
-	}
-
-
-
-	int idx;
-	ring_theory::homogeneous_polynomial_domain *Ring;
-
-	Ring = Get_object_of_type_ring(ring_label);
-
-	idx = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(formula_label);
-
-	if (idx < 0) {
-		cout << "could not find symbol " << formula_label << endl;
-		exit(1);
-	}
-	user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
-
-	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
-		cout << "symbol table entry must be of type t_object" << endl;
-		exit(1);
-	}
-	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
-		cout << "symbol table entry is a collection" << endl;
-
-		vector<string> *List;
-
-		List = (vector<string> *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
-		int i;
-
-		int *coefficient_vector; // [List->size() * Ring->get_nb_monomials()]
-
-		coefficient_vector = NEW_int(List->size() * Ring->get_nb_monomials());
-
-		for (i = 0; i < List->size(); i++) {
-			int idx1;
-
-			idx1 = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol((*List)[i]);
-			if (idx1 < 0) {
-				cout << "could not find symbol " << (*List)[i] << endl;
-				exit(1);
-			}
-			expression_parser::formula *Formula;
-			Formula = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
-
-			if (f_v) {
-				cout << "projective_space_global::map i=" << i << " / " << List->size() << " before Ring->get_coefficient_vector" << endl;
-			}
-			Ring->get_coefficient_vector(Formula,
-					evaluate_text,
-					coefficient_vector + i * Ring->get_nb_monomials(),
-					verbose_level);
-			if (f_v) {
-				cout << "projective_space_global::map i=" << i << " / " << List->size() << " after Ring->get_coefficient_vector" << endl;
-			}
-		}
-
-		if (f_v) {
-			cout << "projective_space_global::map coefficient_vector:" << endl;
-			Int_matrix_print(coefficient_vector, List->size(), Ring->get_nb_monomials());
-		}
-
-
-
-		Ring->evaluate_regular_map(
-				coefficient_vector,
-				List->size(),
-				PA->P,
-				Image_pts, N_points,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "projective_space_global::map permutation:" << endl;
-			Lint_vec_print(cout, Image_pts, N_points);
-			cout << endl;
-		}
-
-
-
-	}
-	else if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
-		cout << "symbol table entry is a formula" << endl;
-
-		expression_parser::formula *Formula;
-		Formula = (expression_parser::formula *) user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
-
-		int *coefficient_vector; // [Ring->get_nb_monomials()]
-
-		coefficient_vector = NEW_int(Ring->get_nb_monomials());
-
-		Ring->get_coefficient_vector(Formula,
-				evaluate_text,
-				coefficient_vector,
-				verbose_level);
-
-
-		Ring->evaluate_regular_map(
-				coefficient_vector,
-				1,
-				PA->P,
-				Image_pts, N_points,
-				verbose_level);
-
-
-		FREE_int(coefficient_vector);
-
-
-
-	}
-	else {
-		cout << "symbol table entry must be either a formula or a collection" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_global::map done" << endl;
-	}
-}
-
-
 void projective_space_global::analyze_del_Pezzo_surface(
 		projective_space_with_action *PA,
 		std::string &label,
@@ -228,6 +90,7 @@ void projective_space_global::analyze_del_Pezzo_surface(
 	}
 }
 
+
 void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 		projective_space_with_action *PA,
 		expression_parser::formula *F,
@@ -245,7 +108,9 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 				"before PA->analyze_del_Pezzo_surface" << endl;
 	}
 
-	PA->analyze_del_Pezzo_surface(F, evaluate_text, verbose_level);
+	algebraic_geometry::algebraic_geometry_global AGG;
+
+	AGG.analyze_del_Pezzo_surface(PA->P, F, evaluate_text, verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_global::analyze_del_Pezzo_surface_formula_given "
@@ -260,41 +125,6 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 
 
 
-void projective_space_global::conic_type(
-		projective_space_with_action *PA,
-		int threshold,
-		std::string &set_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space_global::conic_type" << endl;
-	}
-
-	long int *Pts;
-	int nb_pts;
-
-	Lint_vec_scan(set_text, Pts, nb_pts);
-
-
-	if (f_v) {
-		cout << "projective_space_global::conic_type "
-				"before PA->conic_type" << endl;
-	}
-
-	PA->conic_type(Pts, nb_pts, threshold, verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_global::conic_type "
-				"after PA->conic_type" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_global::conic_type done" << endl;
-	}
-}
 
 void projective_space_global::do_lift_skew_hexagon(
 		projective_space_with_action *PA,
@@ -1102,78 +932,8 @@ void projective_space_global::set_stabilizer(
 
 }
 
-void projective_space_global::make_restricted_incidence_matrix(
-		projective_space_with_action *PA,
-		int type_i, int type_j,
-		std::string &row_objects,
-		std::string &col_objects,
-		std::string &file_name,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "projective_space_global::make_restricted_incidence_matrix" << endl;
-	}
-
-
-	long int *Row_objects;
-	int nb_row_objects;
-	long int *Col_objects;
-	int nb_col_objects;
-	int i, j;
-
-	int *M;
-
-	Get_vector_or_set(row_objects, Row_objects, nb_row_objects);
-	Get_vector_or_set(col_objects, Col_objects, nb_col_objects);
-
-	M = NEW_int(nb_row_objects * nb_col_objects);
-	Int_vec_zero(M, nb_row_objects * nb_col_objects);
-
-	for (i = 0; i < nb_row_objects; i++) {
-
-		for (j = 0; j < nb_col_objects; j++) {
-
-			if (PA->P->incidence_test_for_objects_of_type_ij(
-				type_i, type_j, Row_objects[i], Col_objects[j],
-				0 /* verbose_level */)) {
-				M[i * nb_col_objects + j] = 1;
-			}
-		}
-	}
-
-	orbiter_kernel_system::file_io Fio;
-	string fname_csv;
-	string fname_inc;
-
-	fname_csv.assign(file_name);
-	fname_inc.assign(file_name);
-
-	fname_csv.append(".csv");
-	Fio.int_matrix_write_csv(fname_csv, M, nb_row_objects, nb_col_objects);
-
-	if (f_v) {
-		cout << "written file " << fname_csv << " of size "
-				<< Fio.file_size(fname_csv) << endl;
-	}
-
-	fname_inc.append(".inc");
-	Fio.write_incidence_matrix_to_file(fname_inc,
-		M, nb_row_objects, nb_col_objects, 0 /*verbose_level*/);
-
-	if (f_v) {
-		cout << "written file " << fname_inc << " of size "
-				<< Fio.file_size(fname_inc) << endl;
-	}
-
-	FREE_int(M);
-
-	if (f_v) {
-		cout << "projective_space_global::make_restricted_incidence_matrix done" << endl;
-	}
-}
-
+#if 0
 void projective_space_global::make_relation(
 		projective_space_with_action *PA,
 		long int plane_rk,
@@ -1387,106 +1147,70 @@ void projective_space_global::make_relation(
 	}
 
 }
+#endif
 
-void projective_space_global::plane_intersection_type_of_klein_image(
+
+void projective_space_global::classify_bent_functions(
 		projective_space_with_action *PA,
-		std::string &input,
-		int threshold,
+		int n,
 		int verbose_level)
-// creates a projective_space object P5
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image" << endl;
-	}
-	long int *Lines;
-	int nb_lines;
-
-	Get_vector_or_set(input, Lines, nb_lines);
-
-	//int *intersection_type;
-	//int highest_intersection_number;
-
-	geometry::projective_space *P5;
-
-	P5 = NEW_OBJECT(geometry::projective_space);
-
-	int f_init_incidence_structure = TRUE;
-
-	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image "
-				"before P5->projective_space_init" << endl;
-	}
-	P5->projective_space_init(5, PA->P->F,
-			f_init_incidence_structure,
-			verbose_level);
-	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image "
-				"after P5->projective_space_init" << endl;
+		cout << "projective_space_global::classify_bent_functions" << endl;
 	}
 
-	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image "
-				"before plane_intersection_type_of_klein_image" << endl;
+	if (PA->P->F->q != 2) {
+		cout << "projective_space_global::classify_bent_functions the field must have order 2" << endl;
+		exit(1);
+	}
+	if (PA->A->matrix_group_dimension() != n + 1) {
+		cout << "projective_space_global::classify_bent_functions the dimension of the matrix group must be n + 1" << endl;
+		exit(1);
 	}
 
-	geometry::intersection_type *Int_type;
+	combinatorics::boolean_function_domain *BF;
 
-	PA->P->Grass_lines->plane_intersection_type_of_klein_image(
-			PA->P /* P3 */,
-			P5,
-			Lines, nb_lines, threshold,
-			Int_type,
-			verbose_level);
+	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
 
 	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image "
-				"after plane_intersection_type_of_klein_image" << endl;
+		cout << "projective_space_global::classify_bent_functions before BF->init" << endl;
+	}
+	BF->init(PA->P->F, n, verbose_level);
+	if (f_v) {
+		cout << "projective_space_global::classify_bent_functions after BF->init" << endl;
 	}
 
-	cout << "projective_space_global::plane_intersection_type_of_klein_image "
-			"intersection numbers: ";
-	Int_vec_print(cout, Int_type->the_intersection_type, Int_type->highest_intersection_number + 1);
-	cout << endl;
+	apps_combinatorics::boolean_function_classify *BFC;
+
+	BFC = NEW_OBJECT(apps_combinatorics::boolean_function_classify);
 
 	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image "
-				"highest weight objects: " << endl;
-		Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
-		cout << endl;
+		cout << "projective_space_global::classify_bent_functions before BFC->init_group" << endl;
+	}
+	BFC->init_group(BF, PA->A, verbose_level);
+	if (f_v) {
+		cout << "projective_space_global::classify_bent_functions after BFC->init_group" << endl;
 	}
 
 	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image "
-				"Intersection_sets: " << endl;
-		Int_matrix_print(Int_type->Intersection_sets, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+		cout << "projective_space_global::classify_bent_functions before BFC->search_for_bent_functions" << endl;
 	}
+	BFC->search_for_bent_functions(verbose_level);
+	if (f_v) {
+		cout << "projective_space_global::classify_bent_functions after BFC->search_for_bent_functions" << endl;
+	}
+
+	FREE_OBJECT(BFC);
+	FREE_OBJECT(BF);
 
 	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image "
-				"Intersection_sets sorted: " << endl;
-		Int_matrix_print(Int_type->M->M, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+		cout << "projective_space_global::classify_bent_functions done" << endl;
 	}
 
-	string fname;
-	data_structures::string_tools ST;
-
-	fname.assign(input);
-	ST.chop_off_extension(fname);
-	fname.append("_highest_weight_objects.csv");
-
-	Int_type->M->write_csv(fname, verbose_level);
-
-
-	FREE_OBJECT(Int_type);
-
-	FREE_OBJECT(P5);
-
-	if (f_v) {
-		cout << "projective_space_global::plane_intersection_type_of_klein_image done" << endl;
-	}
 }
+
 
 
 }}}

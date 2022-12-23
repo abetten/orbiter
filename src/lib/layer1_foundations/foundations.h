@@ -270,7 +270,7 @@ namespace algebra {
 
 namespace algebraic_geometry {
 
-	// surfaces:
+	class algebraic_geometry_global;
 	class arc_lifting_with_two_lines;
 	class clebsch_map;
 	class cubic_curve;
@@ -409,6 +409,7 @@ namespace field_theory {
 	class finite_field;
 	class finite_field_implementation_by_tables;
 	class finite_field_implementation_wo_tables;
+	class minimum_polynomial;
 	class norm_tables;
 	class nth_roots;
 	class square_nonsquare;
@@ -779,7 +780,7 @@ namespace solvers {
 
 
 #define Get_matrix(label, A, m, n) orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
-
+#define Get_ring(label) orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(label)
 
 enum monomial_ordering_type {
 	t_LEX, // lexicographical
