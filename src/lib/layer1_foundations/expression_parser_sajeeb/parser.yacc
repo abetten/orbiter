@@ -22,7 +22,7 @@
 %union {
 	int num;
 	char* id;	// for identifier nodes
-    irtree_node* expression_node;
+    irtree_node::variant_node_types expression_node;
     sentinel_node* ast_root;
 }
 
@@ -57,26 +57,22 @@ EXPRESSION: MINUS EXPRESSION %prec UMINUS {
 			}
 			| EXPRESSION PLUS EXPRESSION {
 				auto* node = new plus_node();
-                node->add_child($1);
-                node->add_child($3);
+                node->add_child($1, $3);
                 $$ = node;
 			}
 			| EXPRESSION MINUS EXPRESSION {
                 auto* node = new minus_node();
-                node->add_child($1);
-                node->add_child($3);
+                node->add_child($1, $3);
                 $$ = node;
 			}
 			| EXPRESSION TIMES EXPRESSION {
                 auto* node = new multiply_node();
-                node->add_child($1);
-                node->add_child($3);
+                node->add_child($1, $3);
                 $$ = node;
 			}
 			| EXPRESSION EXPONENT EXPRESSION {
                 auto* node = new exponent_node();
-                node->add_child($1);
-                node->add_child($3);
+                node->add_child($1, $3);
                 $$ = node;
 			}
 			| LPARENTHESIS EXPRESSION RPARENTHESIS {

@@ -5,12 +5,10 @@
 *
 **/
 
-
+#include <string>
 #include <memory>
 
-#include "parser.tab.hpp"
-#include "lexer.yy.h"
-#include "IRTree/node.h"
+#include "IRTree/node_forward_declaration.h"
 #include "Visitors/exponent_vector_visitor.h"
 
 using std::shared_ptr;

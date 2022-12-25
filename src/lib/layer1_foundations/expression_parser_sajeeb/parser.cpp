@@ -1,4 +1,7 @@
-#include "parser"
+#include "parser.h"
+
+#include "parser.tab.hpp"
+#include "lexer.yy.h"
 
 
 shared_ptr<irtree_node> parser::parse_expression(std::string& exp, managed_variables_index_table managed_variables_table) {

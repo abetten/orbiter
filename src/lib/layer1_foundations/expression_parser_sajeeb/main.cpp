@@ -6,7 +6,7 @@
 *
 **/
     
-#include "parser"
+#include "parser.h"
 
 #include <iostream>
 #include <unordered_map>
@@ -22,6 +22,7 @@
 #include "Visitors/CopyVisitors/deep_copy_visitor.h"
 #include "Visitors/exponent_vector_visitor.h"
 #include "Visitors/ReductionVisitors/simplify_numerical_visitor.h"
+#include "Visitors/dispatcher.h"
 
 #include "orbiter.h"
 
@@ -101,7 +102,7 @@ int main(int argc, const char** argv) {
 
 
     shared_ptr<irtree_node> ir_tree_root = parser::parse_expression(exp, managed_variables_table);
-
+    dispatcher::visit(make_shared<merge_nodes_visitor>(), ir_tree_root);
 
     get_latex_staged_visitor_functor
         get_latex_staged_visitor("visitor_result/",
