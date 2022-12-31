@@ -3391,7 +3391,8 @@ void action::perform_tests(groups::strong_generators *SG, int verbose_level)
 }
 
 
-void action::apply_based_on_text(std::string &input_text, std::string &input_group_element, int verbose_level)
+void action::apply_based_on_text(std::string &input_text,
+		std::string &input_group_element, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3515,7 +3516,8 @@ void action::apply_based_on_text(std::string &input_text, std::string &input_gro
 
 
 
-void action::multiply_based_on_text(std::string &data_A, std::string &data_B, int verbose_level)
+void action::multiply_based_on_text(std::string &data_A,
+		std::string &data_B, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

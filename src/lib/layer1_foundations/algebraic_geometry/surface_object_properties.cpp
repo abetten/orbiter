@@ -1811,6 +1811,29 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 	int pt;
 
 	if (SO->nb_lines < 128) {
+
+		ost << "As lines in ${\\rm PG}(3,q)$:\\\\" << endl;
+		Lint_vec_print(ost, SO->Lines, SO->nb_lines);
+		ost << "\\\\" << endl;
+
+		ost << "As elements on the Klein quadric (in the same order):\\\\" << endl;
+		for (i = 0; i < SO->nb_lines; i++) {
+
+			long int line_rk, a;
+
+			line_rk = SO->Lines[i];
+
+			a = SO->Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
+			ost << a;
+			if (i < SO->nb_lines - 1) {
+				ost << ", ";
+			}
+
+		}
+		ost << "\\\\" << endl;
+
+
+
 		for (i = 0; i < SO->nb_lines; i++) {
 			//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
 			SO->Surf->Gr->unrank_lint(SO->Lines[i], 0 /*verbose_level*/);

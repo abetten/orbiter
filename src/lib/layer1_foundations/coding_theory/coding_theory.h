@@ -128,6 +128,12 @@ public:
 		int *code, // [k * n]
 		long int *codewords, // q^k
 		int verbose_level);
+	void codewords_table(field_theory::finite_field *F,
+			int n, int k,
+		int *code, // [k * n]
+		int *&codewords, // [q^k * n]
+		long int &N, // q^k
+		int verbose_level);
 	void code_projective_weight_enumerator(field_theory::finite_field *F, int n, int k,
 		int *code, // [k * n]
 		int *weight_enumerator, // [n + 1]

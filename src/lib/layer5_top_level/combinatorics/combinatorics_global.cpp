@@ -250,7 +250,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 		SG->init_from_data_with_target_go_ascii(A,
 				gens_data,
 				nb_elements, A->make_element_size,
-				group_order.c_str(),
+				group_order,
 				nice_gens,
 				verbose_level);
 

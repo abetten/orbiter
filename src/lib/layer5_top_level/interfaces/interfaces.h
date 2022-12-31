@@ -746,6 +746,12 @@ class interface_toolkit {
 	int f_split_by_values;
 	std::string split_by_values_fname_in;
 
+	int f_change_values;
+	std::string change_values_fname_in;
+	std::string change_values_fname_out;
+	std::string change_values_function_input;
+	std::string change_values_function_output;
+
 	int f_store_as_csv_file;
 	std::string store_as_csv_file_fname;
 	int store_as_csv_file_m;
@@ -755,6 +761,9 @@ class interface_toolkit {
 	int f_mv;
 	std::string mv_a;
 	std::string mv_b;
+
+	int f_system;
+	std::string system_command;
 
 
 	int f_loop;

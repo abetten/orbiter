@@ -2272,7 +2272,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 					cout << "wreath_product::compute_permutations_and_write_to_file "
 							"writing to file:" << endl;
 				}
-				char fname[1000];
+				std::string fname;
 
 				make_fname(fname, nb_factors, h, b);
 				{
@@ -2377,14 +2377,16 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 }
 
-void wreath_product::make_fname(char *fname, int nb_factors, int h, int b)
+void wreath_product::make_fname(std::string &fname, int nb_factors, int h, int b)
 {
-	snprintf(fname, sizeof(fname), "w%d_h%d_b%d.bin", nb_factors, h, b);
+	char str[1000];
+	snprintf(str, sizeof(str), "w%d_h%d_b%d.bin", nb_factors, h, b);
+	fname.assign(str);
 }
 
 int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
 {
-	char fname[1000];
+	std::string fname;
 	orbiter_kernel_system::file_io Fio;
 
 	make_fname(fname, nb_factors, h, b);
@@ -2483,7 +2485,7 @@ void wreath_product::orbits_using_files_and_union_find(
 				exit(1);
 			}
 			else {
-				char fname[1000];
+				std::string fname;
 
 				make_fname(fname, nb_factors, h, b);
 				if (f_v) {
@@ -2821,7 +2823,7 @@ void wreath_product::orbits_restricted(
 				cout << "file does not exist h=" << h << " b=" << b << endl;
 				exit(1);
 			}
-			char fname[1000];
+			std::string fname;
 
 			make_fname(fname, nb_factors, h, b);
 			if (f_v) {

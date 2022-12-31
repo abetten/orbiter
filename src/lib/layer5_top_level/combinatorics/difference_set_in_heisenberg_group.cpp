@@ -235,8 +235,9 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	cout << "computing normalizer of U in G:" << endl;
 
 	groups::strong_generators *gens_N;
+	groups::magma_interface M;
 
-	A->normalizer_using_MAGMA(prefix, Aut, U, gens_N, verbose_level);
+	M.normalizer_using_MAGMA(A, prefix, Aut, U, gens_N, verbose_level);
 		// added gens_N, Oct 12, 2018
 
 	fname_magma_out.assign(prefix);

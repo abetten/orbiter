@@ -314,6 +314,152 @@ public:
 };
 
 
+// #############################################################################
+// magma_interface.cpp
+// #############################################################################
+
+
+//! interface for group theoretic computations with the group theory software magma
+
+class magma_interface {
+
+public:
+	magma_interface();
+	~magma_interface();
+	void centralizer_of_element(
+			actions::action *A, groups::sims *S,
+			std::string &element_description,
+			std::string &label, int verbose_level);
+	void normalizer_of_cyclic_subgroup(
+			actions::action *A, groups::sims *S,
+			std::string &element_description,
+			std::string &label, int verbose_level);
+	void find_subgroups(
+			actions::action *A, groups::sims *S,
+			int subgroup_order,
+			std::string &label,
+			int &nb_subgroups,
+			groups::strong_generators *&H_gens,
+			groups::strong_generators *&N_gens,
+			int verbose_level);
+	void print_generators_MAGMA(actions::action *A,
+			strong_generators *SG, std::ostream &ost);
+	void export_magma(actions::action *A,
+			strong_generators *SG, std::ostream &ost, int verbose_level);
+	void export_permutation_group_to_magma(
+			std::string &fname, actions::action *A2,
+			strong_generators *SG, int verbose_level);
+	void export_group_to_magma_and_copy_to_latex(
+			std::string &label_txt,
+			std::ostream &ost,
+			actions::action *A2,
+			strong_generators *SG,
+			int verbose_level);
+	void normalizer_using_MAGMA(
+			actions::action *A,
+			std::string &fname_magma_prefix,
+			groups::sims *G, groups::sims *H,
+			groups::strong_generators *&gens_N,
+			int verbose_level);
+	void conjugacy_classes_using_MAGMA(
+			actions::action *A,
+			std::string &prefix,
+			groups::sims *G, int verbose_level);
+	void conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
+			actions::action *A,
+			std::string &prefix,
+			std::string &fname_magma,
+			std::string &fname_output);
+	void conjugacy_classes_and_normalizers_using_MAGMA(
+			actions::action *A,
+			std::string &prefix,
+			groups::sims *G, int verbose_level);
+	void read_conjugacy_classes_and_normalizers_from_MAGMA(
+			actions::action *A,
+			std::string &fname,
+			int &nb_classes,
+			int *&perms,
+			long int *&class_size,
+			int *&class_order_of_element,
+			long int *&class_normalizer_order,
+			int *&class_normalizer_number_of_generators,
+			int **&normalizer_generators_perms,
+			int verbose_level);
+	void normalizer_of_cyclic_group_using_MAGMA(
+			actions::action *A,
+			std::string &fname_magma_prefix,
+			groups::sims *G, int *Elt,
+			groups::strong_generators *&gens_N,
+			int verbose_level);
+	void centralizer_using_MAGMA(
+			actions::action *A,
+			std::string &prefix,
+			groups::sims *override_Sims, int *Elt,
+			groups::strong_generators *&gens,
+			int verbose_level);
+	void read_centralizer_magma(
+			actions::action *A,
+			std::string &fname_output,
+			groups::sims *override_Sims,
+			groups::strong_generators *&gens,
+			int verbose_level);
+	void centralizer_using_magma2(
+			actions::action *A,
+			std::string &prefix,
+			std::string &fname_magma,
+			std::string &fname_output,
+			groups::sims *override_Sims, int *Elt,
+			int verbose_level);
+	void find_subgroups_using_MAGMA(
+			actions::action *A,
+			std::string &prefix,
+			groups::sims *override_Sims,
+			int subgroup_order,
+			int &nb_subgroups,
+			groups::strong_generators *&H_gens,
+			groups::strong_generators *&N_gens,
+			int verbose_level);
+	void read_subgroups_magma(
+			actions::action *A,
+			std::string &fname_output,
+			groups::sims *override_Sims, int subgroup_order,
+			int &nb_subgroups,
+			groups::strong_generators *&H_gens,
+			groups::strong_generators *&N_gens,
+			int verbose_level);
+	void find_subgroups_using_MAGMA2(
+			actions::action *A,
+			std::string &prefix,
+			std::string &fname_magma, std::string &fname_output,
+			groups::sims *override_Sims, int subgroup_order,
+			int verbose_level);
+	void conjugacy_classes_and_normalizers(
+			actions::action *A,
+			groups::sims *override_Sims,
+			std::string &label,
+			std::string &label_tex,
+			int verbose_level);
+	void report_conjugacy_classes_and_normalizers(
+			actions::action *A,
+			std::ostream &ost,
+			groups::sims *override_Sims, int verbose_level);
+	void read_conjugacy_classes_and_normalizers(
+			actions::action *A,
+			std::string &fname, groups::sims *override_sims,
+			std::string &label_latex, int verbose_level);
+	void read_and_report_conjugacy_classes_and_normalizers(
+			actions::action *A,
+			std::ostream &ost,
+			std::string &fname, groups::sims *override_Sims,
+			int verbose_level);
+	void write_as_magma_permutation_group(sims *S,
+			std::string &fname_base,
+			data_structures_groups::vector_ge *gens, int verbose_level);
+
+
+};
+
+
 
 
 // #############################################################################
@@ -1673,8 +1819,8 @@ public:
 
 
 	// sims_io.cpp:
-	void create_group_tree(const char *fname, int f_full,
-		int verbose_level);
+	void create_group_tree(std::string &fname,
+			int f_full, int verbose_level);
 	void print_transversals();
 	void print_transversals_short();
 	void print_transversal_lengths();
@@ -1691,8 +1837,8 @@ public:
 	void print_group_order(std::ostream &ost);
 	void print_group_order_factored(std::ostream &ost);
 	void print_generators_at_level_or_below(int lvl);
-	void write_all_group_elements(char *fname, int verbose_level);
-	void print_all_group_elements_to_file(char *fname,
+	void write_all_group_elements(std::string &fname, int verbose_level);
+	void print_all_group_elements_to_file(std::string &fname,
 		int verbose_level);
 	void print_all_group_elements();
 	void print_all_group_elements_tex(std::ostream &ost,
@@ -1704,12 +1850,10 @@ public:
 	void print_all_group_elements_as_permutations_in_special_action(
 			actions::action *A_special);
 	void print_all_transversal_elements();
-	void save_list_of_elements(char *fname,
+	void save_list_of_elements(std::string &fname,
 		int verbose_level);
 	void read_list_of_elements(actions::action *A,
 		char *fname, int verbose_level);
-	void write_as_magma_permutation_group(std::string &fname_base,
-			data_structures_groups::vector_ge *gens, int verbose_level);
 	void report(std::ostream &ost,
 			std::string &prefix,
 			graphics::layered_graph_draw_options *LG_Draw_options,
@@ -1769,7 +1913,7 @@ public:
 	void init_from_data_with_target_go_ascii(actions::action *A,
 		int *data, 
 		int nb_elements, int elt_size, 
-		const char *ascii_target_go,
+		std::string &ascii_target_go,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void init_from_data_with_target_go(actions::action *A,
@@ -1829,8 +1973,7 @@ public:
 	long int group_order_as_lint();
 	void print_group_order(std::ostream &ost);
 	void print_generators_in_source_code();
-	void print_generators_in_source_code_to_file(
-	const char *fname);
+	void print_generators_in_source_code_to_file(std::string &fname);
 	void print_generators_even_odd();
 	void print_generators_MAGMA(actions::action *A, std::ostream &ost);
 	void export_magma(actions::action *A, std::ostream &ost, int verbose_level);
@@ -1927,11 +2070,6 @@ public:
 			int nb_fixpoints, actions::action *A_given, int verbose_level);
 	void make_element_which_moves_a_point_from_A_to_B(actions::action *A_given,
 		int pt_A, int pt_B, int *Elt, int verbose_level);
-	void export_group_to_magma_and_copy_to_latex(
-			std::string &label_txt,
-			std::ostream &ost,
-			actions::action *A2,
-			int verbose_level);
 	void export_group_to_GAP_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
@@ -2008,8 +2146,6 @@ public:
 			actions::action *A_PGL_n1_q, actions::action *A_PGL_n_q,
 		matrix_group *Mtx_n1, matrix_group *Mtx_n, 
 		strong_generators *spread_stab_gens,
-		//data_structures_groups::vector_ge *spread_stab_gens,
-		//ring_theory::longinteger_object &spread_stab_go,
 		int verbose_level);
 	void generators_for_the_stabilizer_of_two_components(
 			actions::action *A_PGL_n_q,
@@ -2284,7 +2420,7 @@ public:
 			int &nb_gens, int &degree,
 			int nb_factors,
 			int verbose_level);
-	void make_fname(char *fname, int nb_factors, int h, int b);
+	void make_fname(std::string &fname, int nb_factors, int h, int b);
 	int test_if_file_exists(int nb_factors, int h, int b);
 	void orbits_using_files_and_union_find(
 			strong_generators* SG,

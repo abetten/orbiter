@@ -2144,6 +2144,184 @@ void surface_object::export_something(std::string &what,
 
 }
 
+void surface_object::latex_double_six(std::ostream &ost, int idx)
+{
+	int i, j;
+	long int D[12];
+
+	Lint_vec_copy(Surf->Schlaefli->Double_six + idx * 12, D, 12);
+
+
+	ost << "\\left[";
+	ost << "\\begin{array}{cccccc}" << endl;
+	for (i = 0; i < 2; i++) {
+		for (j = 0; j < 6; j++) {
+			ost << Lines[D[i * 6 + j]];
+			if (j < 6 - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+}
+
+void surface_object::latex_double_six_wedge(std::ostream &ost, int idx)
+{
+	int i, j;
+	long int D[12];
+	long int l;
+
+	Lint_vec_copy(Surf->Schlaefli->Double_six + idx * 12, D, 12);
+
+
+	ost << "\\left[";
+	ost << "\\begin{array}{cccccc}" << endl;
+	for (i = 0; i < 2; i++) {
+		for (j = 0; j < 6; j++) {
+
+			l = Surf->line_to_wedge(Lines[D[i * 6 + j]]);
+
+			ost << l;
+			if (j < 6 - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+}
+
+
+
+void surface_object::latex_double_six_Klein(std::ostream &ost, int idx)
+{
+	int i, j;
+	long int D[12];
+	long int line_rk, a;
+
+	Lint_vec_copy(Surf->Schlaefli->Double_six + idx * 12, D, 12);
+
+
+	ost << "\\left[";
+	ost << "\\begin{array}{cccccc}" << endl;
+	for (i = 0; i < 2; i++) {
+		for (j = 0; j < 6; j++) {
+
+			line_rk = Lines[D[i * 6 + j]];
+
+			a = Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
+
+
+			ost << a;
+			if (j < 6 - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+}
+
+
+void surface_object::latex_double_six_Pluecker_coordinates_transposed(std::ostream &ost, int idx)
+{
+	int i, j;
+	long int D[12];
+	long int line_rk, klein_rk, a;
+
+	Lint_vec_copy(Surf->Schlaefli->Double_six + idx * 12, D, 12);
+
+
+	ost << "\\left[";
+	ost << "\\begin{array}{cc}" << endl;
+	for (j = 0; j < 6; j++) {
+		for (i = 0; i < 2; i++) {
+
+			line_rk = Lines[D[i * 6 + j]];
+
+			a = Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
+
+			//Surf->Gr->unrank_lint(line_rk, 0 /*verbose_level*/);
+
+
+			int v6[6];
+			int vv[6];
+
+			Surf->Gr->Pluecker_coordinates(line_rk, v6, 0 /* verbose_level */);
+
+			Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
+
+			klein_rk = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+
+			ost << "{\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+					<< v6[2] << "," << v6[3] << "," << v6[4]
+					<< "," << v6[5] << " ";
+			ost << ")";
+
+
+
+			if (i < 2 - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+}
+
+void surface_object::latex_double_six_Klein_transposed(std::ostream &ost, int idx)
+{
+	int i, j;
+	long int D[12];
+	long int line_rk, klein_rk, a;
+
+	Lint_vec_copy(Surf->Schlaefli->Double_six + idx * 12, D, 12);
+
+
+	ost << "\\left[";
+	ost << "\\begin{array}{cc}" << endl;
+	for (j = 0; j < 6; j++) {
+		for (i = 0; i < 2; i++) {
+
+			line_rk = Lines[D[i * 6 + j]];
+
+			a = Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
+
+			ost << a;
+
+
+
+			if (i < 2 - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+}
+
+
+
+void surface_object::print_lines_tex(std::ostream &ost)
+{
+
+	Surf->print_lines_tex(ost, Lines, nb_lines);
+
+}
+
+void surface_object::print_one_line_tex(std::ostream &ost, int idx)
+{
+
+	Surf->print_one_line_tex(ost, Lines, nb_lines, idx);
+
+}
+
 
 
 

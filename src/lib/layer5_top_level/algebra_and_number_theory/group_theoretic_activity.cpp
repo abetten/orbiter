@@ -493,14 +493,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->order_of_products_of_elements" << endl;
+					"before AG->order_of_products_of_elements_by_rank" << endl;
 		}
-		AG->order_of_products_of_elements(
+		AG->order_of_products_of_elements_by_rank(
 				Descr->order_of_products_elements,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->order_of_products_of_elements" << endl;
+					"after AG->order_of_products_of_elements_by_rank" << endl;
 		}
 	}
 

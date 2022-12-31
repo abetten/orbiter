@@ -352,7 +352,7 @@ void strong_generators::init_from_data(actions::action *A, int *data,
 
 void strong_generators::init_from_data_with_target_go_ascii(
 		actions::action *A, int *data,
-	int nb_elements, int elt_size, const char *ascii_target_go,
+	int nb_elements, int elt_size, std::string &ascii_target_go,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -365,14 +365,16 @@ void strong_generators::init_from_data_with_target_go_ascii(
 	strong_generators::A = A;
 	target_go.create_from_base_10_string(ascii_target_go);
 	if (f_v) {
-		cout << "strong_generators::init_from_data_with_target_go_ascii before init_from_data_with_target_go" << endl;
+		cout << "strong_generators::init_from_data_with_target_go_ascii "
+				"before init_from_data_with_target_go" << endl;
 	}
 	init_from_data_with_target_go(A, data, 
 		elt_size, nb_elements, target_go,
 		nice_gens,
 		verbose_level);
 	if (f_v) {
-		cout << "strong_generators::init_from_data_with_target_go_ascii after init_from_data_with_target_go" << endl;
+		cout << "strong_generators::init_from_data_with_target_go_ascii "
+				"after init_from_data_with_target_go" << endl;
 	}
 	if (f_v) {
 		cout << "strong_generators::init_from_data_with_target_go_ascii done" << endl;
@@ -492,7 +494,7 @@ void strong_generators::init_from_data_with_go(
 	init_from_data_with_target_go_ascii(A,
 			gens_data,
 			nb_elements, A->make_element_size,
-			go_text.c_str(),
+			go_text,
 			nice_gens,
 			verbose_level);
 
@@ -1479,7 +1481,7 @@ void strong_generators::print_generators_in_source_code()
 }
 
 void strong_generators::print_generators_in_source_code_to_file(
-		const char *fname)
+		std::string &fname)
 {
 	int i;
 	ring_theory::longinteger_object go;
@@ -1521,21 +1523,10 @@ void strong_generators::print_generators_even_odd()
 
 void strong_generators::print_generators_MAGMA(actions::action *A, std::ostream &ost)
 {
-	int i;
 
-	for (i = 0; i < gens->len; i++) {
-		//cout << "Generator " << i << " / "
-		// << gens->len << " is:" << endl;
-		A->element_print_as_permutation_with_offset(
-			gens->ith(i), ost,
-			1 /* offset */,
-			TRUE /* f_do_it_anyway_even_for_big_degree */,
-			FALSE /* f_print_cycles_of_length_one */,
-			0 /* verbose_level */);
-		if (i < gens->len - 1) {
-			ost << ", " << endl;
-		}
-	}
+	magma_interface M;
+
+	M.print_generators_MAGMA(A, this, ost);
 }
 
 void strong_generators::export_magma(actions::action *A, std::ostream &ost, int verbose_level)
@@ -1544,93 +1535,23 @@ void strong_generators::export_magma(actions::action *A, std::ostream &ost, int 
 
 	if (f_v) {
 		cout << "strong_generators::export_magma" << endl;
-		A->print_info();
 	}
-	if (A->type_G == matrix_group_t) {
-		matrix_group *M;
-		int *Elt;
-		int h, i, j;
 
-		M = A->get_matrix_group();
-		if (M->f_semilinear) {
-			cout << "cannot export to magma if semilinear" << endl;
-			return;
-		}
-		field_theory::finite_field *F;
+	magma_interface M;
 
-		F = M->GFq;
-		if (F->e > 1) {
-			int a;
-
-			if (f_v) {
-				cout << "strong_generators::export_magma extension field" << endl;
-			}
-			ost << "F<w>:=GF(" << F->q << ");" << endl;
-			ost << "G := GeneralLinearGroup(" << M->n << ", F);" << endl;
-			ost << "H := sub< G | ";
-			for (h = 0; h < gens->len; h++) {
-				Elt = gens->ith(h);
-				ost << "[";
-				for (i = 0; i < M->n; i++) {
-					for (j = 0; j < M->n; j++) {
-						a = Elt[i * M->n + j];
-						if (a < F->p) {
-							ost << a;
-						}
-						else {
-							ost << "w^" << F->log_alpha(a);
-						}
-						if (j < M->n - 1) {
-							ost << ",";
-						}
-					}
-					if (i < M->n - 1) {
-						ost << ", ";
-					}
-				}
-				ost << "]";
-				if (h < gens->len - 1) {
-					ost << ", " << endl;
-				}
-			}
-			ost << " >;" << endl;
-
-		}
-		else {
-			ost << "G := GeneralLinearGroup(" << M->n << ", GF(" << F->q << "));" << endl;
-			ost << "H := sub< G | ";
-			for (h = 0; h < gens->len; h++) {
-				Elt = gens->ith(h);
-				ost << "[";
-				for (i = 0; i < M->n; i++) {
-					for (j = 0; j < M->n; j++) {
-						ost << Elt[i * M->n + j];
-						if (j < M->n - 1) {
-							ost << ",";
-						}
-					}
-					if (i < M->n - 1) {
-						ost << ", ";
-					}
-				}
-				ost << "]";
-				if (h < gens->len - 1) {
-					ost << ", " << endl;
-				}
-			}
-			ost << " >;" << endl;
-		}
+	if (f_v) {
+		cout << "strong_generators::export_magma before M.export_magma" << endl;
 	}
+	M.export_magma(A, this, ost, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::export_magma after M.export_magma" << endl;
+	}
+
+
 	if (f_v) {
 		cout << "strong_generators::export_magma done" << endl;
 	}
 }
-
-
-//GL42 := GeneralLinearGroup(4, GF(2));
-//> Ominus42 := sub< GL42 | [1,0,0,0, 1,1,0,1, 1,0,1,0, 0,0,0,1 ],
-//>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,0,1 ],
-//>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,1,1 ] >;
 
 
 void strong_generators::canonical_image_GAP(std::string &input_set_text, std::ostream &ost)
@@ -3187,33 +3108,22 @@ void strong_generators::export_permutation_group_to_magma(
 		std::string &fname, actions::action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
-	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "strong_generators::export_permutation_group_to_magma" << endl;
 	}
-	{
-		ofstream fp(fname);
 
-		fp << "G := sub< Sym(" << A2->degree << ") |" << endl;
-		for (i = 0; i < gens->len; i++) {
-			A2->element_print_as_permutation_with_offset(
-				gens->ith(i), fp,
-				1 /* offset */,
-				TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one */,
-				0 /* verbose_level */);
-			if (i < gens->len - 1) {
-				fp << ", " << endl;
-			}
-		}
-		fp << ">;" << endl;
 
-	}
+	magma_interface M;
+
 	if (f_v) {
-		cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+		cout << "strong_generators::export_permutation_group_to_magma "
+				"before M.export_permutation_group_to_magma" << endl;
+	}
+	M.export_permutation_group_to_magma(fname, A2, this, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::export_permutation_group_to_magma "
+				"after M.export_permutation_group_to_magma" << endl;
 	}
 
 	if (f_v) {
@@ -3708,58 +3618,6 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 	}
 }
 
-void strong_generators::export_group_to_magma_and_copy_to_latex(
-		std::string &label_txt,
-		ostream &ost,
-		actions::action *A2,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-
-
-	if (f_v) {
-		cout << "strong_generators::export_group_to_magma_and_copy_to_latex" << endl;
-	}
-	string export_fname;
-
-	export_fname.assign(label_txt);
-	export_fname.append("_group.magma");
-
-	export_permutation_group_to_magma(
-			export_fname, A2, verbose_level - 2);
-	if (f_v) {
-		cout << "written file " << export_fname << " of size "
-				<< Fio.file_size(export_fname) << endl;
-	}
-
-	ost << "\\subsection*{Magma Export}" << endl;
-	ost << "To export the group to Magma, "
-			"use the following file\\\\" << endl;
-	ost << "\\begin{verbatim}" << endl;
-
-	{
-		ifstream fp1(export_fname);
-		char line[100000];
-
-		while (TRUE) {
-			if (fp1.eof()) {
-				break;
-			}
-
-			//cout << "count_number_of_orbits_in_file reading
-			//line, nb_sol = " << nb_sol << endl;
-			fp1.getline(line, 100000, '\n');
-			ost << line << endl;
-		}
-
-	}
-	ost << "\\end{verbatim}" << endl;
-
-	if (f_v) {
-		cout << "strong_generators::export_group_to_magma_and_copy_to_latex done" << endl;
-	}
-}
 
 void strong_generators::export_group_to_GAP_and_copy_to_latex(
 		std::string &label_txt,
@@ -3826,7 +3684,12 @@ void strong_generators::export_group_and_copy_to_latex(
 	if (f_v) {
 		cout << "strong_generators::export_group_and_copy_to_latex" << endl;
 	}
-	export_group_to_magma_and_copy_to_latex(label_txt, ost, A2, verbose_level);
+
+	magma_interface M;
+
+	M.export_group_to_magma_and_copy_to_latex(label_txt, ost, A2, this, verbose_level);
+
+
 	export_group_to_GAP_and_copy_to_latex(label_txt, ost, A2, verbose_level);
 	if (f_v) {
 		cout << "strong_generators::export_group_and_copy_to_latex done" << endl;

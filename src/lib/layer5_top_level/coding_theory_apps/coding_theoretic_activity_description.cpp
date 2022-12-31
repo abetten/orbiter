@@ -73,6 +73,9 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_export_codewords = FALSE;
 	//std::string export_codewords_fname;
 
+	f_export_codewords_long = FALSE;
+	//std::string export_codewords_long_fname;
+
 	f_export_codewords_by_weight = FALSE;
 	//std::string export_codewords_by_weight_fname;
 
@@ -288,6 +291,15 @@ int coding_theoretic_activity_description::read_arguments(
 			if (f_v) {
 				cout << "-export_codewords "
 					<< " " << export_codewords_fname
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_codewords_long") == 0) {
+			f_export_codewords_long = TRUE;
+			export_codewords_long_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_codewords_long "
+					<< " " << export_codewords_long_fname
 					<< endl;
 			}
 		}
@@ -552,6 +564,11 @@ void coding_theoretic_activity_description::print()
 	if (f_export_codewords) {
 		cout << "-export_codewords "
 			<< " " << export_codewords_fname
+			<< endl;
+	}
+	if (f_export_codewords_long) {
+		cout << "-export_codewords_long "
+			<< " " << export_codewords_long_fname
 			<< endl;
 	}
 	if (f_export_codewords_by_weight) {

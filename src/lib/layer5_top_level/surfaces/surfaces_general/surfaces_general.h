@@ -384,10 +384,8 @@ public:
 			int verbose_level);
 
 	void prepare_surface_classify_wedge(
-			field_theory::finite_field *F,
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control,
-			//algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
 
@@ -542,7 +540,8 @@ public:
 			int f_print_orbits, std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
-	void print_automorphism_group_generators(std::ostream &ost, int verbose_level);
+	void print_automorphism_group_generators(
+			std::ostream &ost, int verbose_level);
 	void investigate_surface_and_write_report(
 			graphics::layered_graph_draw_options *Opt,
 			actions::action *A,
@@ -570,6 +569,11 @@ public:
 	void print_full_del_Pezzo(std::ostream &ost, int verbose_level);
 	void print_everything(std::ostream &ost, int verbose_level);
 	void print_summary(std::ostream &ost);
+	void print_action_on_surface(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void print_double_sixes(std::ostream &ost);
 
 };
 

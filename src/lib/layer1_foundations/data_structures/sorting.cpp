@@ -2759,15 +2759,17 @@ void sorting::schreier_vector_tree(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	int i, r;
 	int *depth;
 	int *ancestor;
 
 	if (f_v) {
-		cout << "sorting::schreier_vector_tree, n=" << n << " f_use_pts_inv=" << f_use_pts_inv << endl;
+		cout << "sorting::schreier_vector_tree, "
+				"n=" << n << " f_use_pts_inv=" << f_use_pts_inv << endl;
 	}
 
-	if (f_v) {
+	if (f_vv) {
 		if (f_use_pts_inv) {
 			cout << "i : pts[i] : pts_inv[i] : prev[i]" << endl;
 			for (i = 0; i < n; i++) {
@@ -2784,16 +2786,18 @@ void sorting::schreier_vector_tree(
 	}
 
 	if (f_v) {
-		cout << "sorting::schreier_vector_tree before schreier_vector_compute_depth_and_ancestor" << endl;
+		cout << "sorting::schreier_vector_tree "
+				"before schreier_vector_compute_depth_and_ancestor" << endl;
 	}
 	schreier_vector_compute_depth_and_ancestor(
 		n, pts, prev, f_use_pts_inv, pts_inv,
 		depth, ancestor, verbose_level - 2);
 	if (f_v) {
-		cout << "sorting::schreier_vector_tree after schreier_vector_compute_depth_and_ancestor" << endl;
+		cout << "sorting::schreier_vector_tree "
+				"after schreier_vector_compute_depth_and_ancestor" << endl;
 	}
 
-	if (f_v) {
+	if (f_vv) {
 		cout << "i : pts[i] : prev[i] : depth[i]" << endl;
 		for (i = 0; i < n; i++) {
 			cout << i << " : " << pts[i] << " : " << prev[i] << " : " << depth[i] << endl;
@@ -2807,7 +2811,8 @@ void sorting::schreier_vector_tree(
 		}
 		else {
 			if (ancestor[i] != r) {
-				cout << "sorting::schreier_vector_tree the tree is not a tree but a forest" << endl;
+				cout << "sorting::schreier_vector_tree "
+						"the tree is not a tree but a forest" << endl;
 				exit(1);
 			}
 		}
@@ -2826,7 +2831,7 @@ void sorting::schreier_vector_tree(
 			nb_types, verbose_level);
 	SoS->sort_all(verbose_level - 2);
 
-	if (f_v) {
+	if (f_vv) {
 		cout << "sorting::schreier_vector_tree SoS=" << endl;
 		SoS->print_table();
 	}
@@ -2849,14 +2854,14 @@ void sorting::schreier_vector_tree(
 
 	for (i = 0; i < n; i++) {
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "sorting::schreier_vector_tree i=" << i << " / " << n << endl;
 		}
 		pos2 = i;
 		if (depth[i] == 0) {
 			continue;
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "sorting::schreier_vector_tree i=" << i << " / " << n << " pos2=" << pos2 << endl;
 		}
 
@@ -2875,7 +2880,7 @@ void sorting::schreier_vector_tree(
 				exit(1);
 			}
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "sorting::schreier_vector_tree i=" << i << " / " << n << " pos2=" << pos2 << " pos1=" << pos1 << endl;
 		}
 		d1 = depth[pos1];

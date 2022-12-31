@@ -990,6 +990,42 @@ void coding_theory_domain::codewords_affine(field_theory::finite_field *F,
 	}
 }
 
+void coding_theory_domain::codewords_table(field_theory::finite_field *F,
+		int n, int k,
+	int *code, // [k * n]
+	int *&codewords, // [q^k * n]
+	long int &N, // q^k
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int h;
+	int *msg;
+	int *word;
+	geometry::geometry_global Gg;
+
+	if (f_v) {
+		cout << "coding_theory_domain::codewords_table" << endl;
+	}
+	N = Gg.nb_AG_elements(k, F->q);
+	if (f_v) {
+		cout << N << " messages" << endl;
+	}
+	msg = NEW_int(k);
+	word = NEW_int(n);
+	codewords = NEW_int(N * n);
+
+	for (h = 0; h < N; h++) {
+		Gg.AG_element_unrank(F->q, msg, 1, k, h);
+		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
+		Int_vec_copy(word, codewords + h * n, n);
+	}
+	FREE_int(msg);
+	FREE_int(word);
+	if (f_v) {
+		cout << "coding_theory_domain::codewords_affine done" << endl;
+	}
+}
+
 void coding_theory_domain::code_projective_weight_enumerator(field_theory::finite_field *F,
 	int n, int k,
 	int *code, // [k * n]

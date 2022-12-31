@@ -1231,7 +1231,8 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet" << endl;
-		cout << "surface_object_with_action::cheat_sheet verbose_level = " << verbose_level << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"verbose_level = " << verbose_level << endl;
 	}
 
 	if (f_v) {
@@ -1273,7 +1274,8 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet "
 				"before print_automorphism_group" << endl;
 	}
-	print_automorphism_group(ost, f_print_orbits, fname_mask, Opt, verbose_level - 1);
+	print_automorphism_group(ost, f_print_orbits,
+			fname_mask, Opt, verbose_level - 1);
 
 
 #if 0
@@ -1295,6 +1297,8 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 
 	ost << "\\clearpage\\subsection*{The Elements of "
 			"the Automorphism Group}" << endl;
+
+
 	Aut_gens->print_elements_latex_ost(ost);
 
 	ost << "\\clearpage\\subsection*{The Group Table}" << endl;
@@ -1811,12 +1815,14 @@ void surface_object_with_action::all_quartic_curves(
 	int f_TDO = FALSE;
 
 	if (f_v) {
-		cout << "surface_object_with_action::all_quartic_curves surface_label_txt=" << surface_label_txt << endl;
+		cout << "surface_object_with_action::all_quartic_curves "
+				"surface_label_txt=" << surface_label_txt << endl;
 	}
 	int pt_orbit;
 
 
-	ost << "Orbits on points not on lines nb orbits = " << Orbits_on_points_not_on_lines->nb_orbits << "\\\\" << endl;
+	ost << "Orbits on points not on lines nb orbits = "
+			<< Orbits_on_points_not_on_lines->nb_orbits << "\\\\" << endl;
 
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
@@ -1834,31 +1840,37 @@ void surface_object_with_action::all_quartic_curves(
 
 
 		if (f_v) {
-			cout << "surface_object_with_action::all_quartic_curves before QC->quartic" << endl;
+			cout << "surface_object_with_action::all_quartic_curves "
+					"before QC->quartic" << endl;
 		}
 		QC->quartic(pt_orbit, verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_action::all_quartic_curves after QC->quartic" << endl;
+			cout << "surface_object_with_action::all_quartic_curves "
+					"after QC->quartic" << endl;
 		}
 
 		// the quartic curve is now in QC->curve
 		// as a Surf->Poly4_x123
 
 		if (f_v) {
-			cout << "surface_object_with_action::all_quartic_curves before QC->compute_stabilizer" << endl;
+			cout << "surface_object_with_action::all_quartic_curves "
+					"before QC->compute_stabilizer" << endl;
 		}
 		QC->compute_stabilizer(verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_action::all_quartic_curves after QC->compute_stabilizer" << endl;
+			cout << "surface_object_with_action::all_quartic_curves "
+					"after QC->compute_stabilizer" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "surface_object_with_action::all_quartic_curves before QC->cheat_sheet_quartic_curve" << endl;
+			cout << "surface_object_with_action::all_quartic_curves "
+					"before QC->cheat_sheet_quartic_curve" << endl;
 		}
 		QC->cheat_sheet_quartic_curve(ost, f_TDO, verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_action::all_quartic_curves after QC->cheat_sheet_quartic_curve" << endl;
+			cout << "surface_object_with_action::all_quartic_curves "
+					"after QC->cheat_sheet_quartic_curve" << endl;
 		}
 
 		FREE_OBJECT(QC);
@@ -1895,11 +1907,13 @@ void surface_object_with_action::export_all_quartic_curves(
 
 
 		if (f_v) {
-			cout << "surface_object_with_action::export_all_quartic_curves before QC->quartic" << endl;
+			cout << "surface_object_with_action::export_all_quartic_curves "
+					"before QC->quartic" << endl;
 		}
 		QC->quartic(pt_orbit, verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_action::export_all_quartic_curves after QC->quartic" << endl;
+			cout << "surface_object_with_action::export_all_quartic_curves "
+					"after QC->quartic" << endl;
 		}
 
 
@@ -1908,11 +1922,13 @@ void surface_object_with_action::export_all_quartic_curves(
 		// as a Surf->Poly4_x123
 
 		if (f_v) {
-			cout << "surface_object_with_action::export_all_quartic_curves before QC->compute_stabilizer" << endl;
+			cout << "surface_object_with_action::export_all_quartic_curves "
+					"before QC->compute_stabilizer" << endl;
 		}
 		QC->compute_stabilizer(verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_action::export_all_quartic_curves after QC->compute_stabilizer" << endl;
+			cout << "surface_object_with_action::export_all_quartic_curves "
+					"after QC->compute_stabilizer" << endl;
 		}
 
 #endif
@@ -1995,7 +2011,8 @@ void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int ver
 		P_idx_local = Orbits_on_points_not_on_lines->orbit[f];
 		P = SO->SOP->Pts_not_on_lines[P_idx_local];
 		if (!SO->find_point(P, P_idx)) {
-			cout << "surface_object_with_action::print_full_del_Pezzo could not find point" << endl;
+			cout << "surface_object_with_action::print_full_del_Pezzo "
+					"could not find point" << endl;
 			exit(1);
 		}
 		ost << i << " & " << P_idx << " & "  << P << " & ";
@@ -2003,7 +2020,8 @@ void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int ver
 		int *f_deleted;
 		int j, f_first;
 
-		SO->SOP->compute_reduced_set_of_points_not_on_lines_wrt_P(P_idx, f_deleted, verbose_level);
+		SO->SOP->compute_reduced_set_of_points_not_on_lines_wrt_P(
+				P_idx, f_deleted, verbose_level);
 		// P_idx = index into SO->Pts[]
 
 		ost << "\\{";
@@ -2021,7 +2039,8 @@ void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int ver
 		}
 		ost << "\\}";
 		ost << " & ";
-		if (SO->SOP->test_full_del_pezzo(P_idx, f_deleted, verbose_level)) {
+		if (SO->SOP->test_full_del_pezzo(
+				P_idx, f_deleted, verbose_level)) {
 			ost << " \\mbox{is full}\\\\" << endl;
 		}
 		else {
@@ -2128,7 +2147,7 @@ void surface_object_with_action::print_everything(std::ostream &ost, int verbose
 		cout << "surface_object_with_action::print_everything "
 				"before print_double sixes" << endl;
 	}
-	SO->SOP->print_double_sixes(ost);
+	print_double_sixes(ost);
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything "
@@ -2301,6 +2320,220 @@ void surface_object_with_action::print_summary(std::ostream &ost)
 #endif
 }
 
+
+void surface_object_with_action::print_action_on_surface(
+		std::string &label_of_elements,
+		int *element_data, int nb_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_action::print_action_on_surface" << endl;
+	}
+
+
+	actions::action *A;
+
+	A = Surf_A->A;
+
+	orbiter_kernel_system::file_io Fio;
+
+
+
+	int *Elt;
+	ring_theory::longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+
+	string fname;
+
+	fname.assign(label_of_elements);
+	fname.append("_action_on_surface.tex");
+
+
+	{
+		ofstream ost(fname);
+		orbiter_kernel_system::latex_interface L;
+		int i, ord;
+
+		L.head_easy(ost);
+
+		//H->print_all_group_elements_tex(fp, f_with_permutation, f_override_action, A_special);
+		//H->print_all_group_elements_tree(fp);
+		//H->print_all_group_elements_with_permutations_tex(fp);
+
+		//Schreier.print_and_list_orbits_tex(fp);
+
+		ost << "Action $" << A->label_tex << "$:\\\\" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+		for (i = 0; i < nb_elements; i++) {
+
+			A->make_element(Elt,
+					element_data + i * A->make_element_size,
+					verbose_level);
+
+			ord = A->element_order(Elt);
+
+			ost << "Element " << setw(5) << i << " / "
+					<< nb_elements << " of order " << ord << ":" << endl;
+
+			A->print_one_element_tex(ost, Elt, FALSE /*f_with_permutation*/);
+
+			if (TRUE /* f_with_fix_structure*/) {
+				int f;
+
+				f = A->count_fixed_points(Elt, 0 /* verbose_level */);
+
+				ost << "$f=" << f << "$\\\\" << endl;
+			}
+
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on points: \\\\" << endl;
+			A_on_points->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+
+			ost << "Action on Eckardt points: \\\\" << endl;
+			A_on_Eckardt_points->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on Double points: \\\\" << endl;
+			A_on_Double_points->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on Single points: \\\\" << endl;
+			A_on_Single_points->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on lines: \\\\" << endl;
+			A_on_the_lines->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on single sixes: \\\\" << endl;
+			A_single_sixes->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on tritangent planes: \\\\" << endl;
+			A_on_tritangent_planes->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on Hesse planes: \\\\" << endl;
+			A_on_Hesse_planes->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+
+			ost << "Action on trihedral pairs: \\\\" << endl;
+			A_on_trihedral_pairs->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+			ost << "Action on points not on lines: \\\\" << endl;
+			A_on_pts_not_on_lines->element_print_as_permutation(Elt, ost);
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+
+		}
+
+
+		L.foot(ost);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	FREE_int(Elt);
+
+
+	if (f_v) {
+		cout << "surface_object_with_action::print_action_on_surface done" << endl;
+	}
+}
+
+
+void surface_object_with_action::print_double_sixes(std::ostream &ost)
+{
+	int idx;
+	ost << "\\bigskip" << endl;
+
+	ost << "\\subsection*{Double sixes}" << endl;
+
+	//SO->Surf->Schlaefli->latex_table_of_double_sixes(ost);
+
+	for (idx = 0; idx < 36; idx++) {
+
+		ost << "$D_{" << idx << "} = " << SO->Surf->Schlaefli->Double_six_label_tex[idx] << endl;
+
+		ost << " = " << endl;
+
+		SO->Surf->Schlaefli->latex_double_six_symbolic(ost, idx);
+
+		ost << " = " << endl;
+
+		SO->Surf->Schlaefli->latex_double_six_index_set(ost, idx);
+
+		ost << "$\\\\" << endl;
+
+
+
+		ost << "$" << endl;
+
+		ost << " = " << endl;
+
+		SO->latex_double_six(ost, idx);
+
+		ost << "$\\\\" << endl;
+
+		ost << "$" << endl;
+
+		ost << " = " << endl;
+
+		SO->latex_double_six_wedge(ost, idx);
+
+		ost << "$\\\\" << endl;
+
+		ost << "$" << endl;
+
+		ost << " = " << endl;
+
+		SO->latex_double_six_Klein(ost, idx);
+
+		ost << "$\\\\" << endl;
+
+		ost << "$" << endl;
+
+		ost << " = " << endl;
+
+		SO->latex_double_six_Pluecker_coordinates_transposed(ost, idx);
+
+		ost << "$\\\\" << endl;
+
+		ost << "$" << endl;
+
+		ost << " = " << endl;
+
+		SO->latex_double_six_Klein_transposed(ost, idx);
+
+		ost << "$\\\\" << endl;
+
+	}
+
+
+}
 
 
 

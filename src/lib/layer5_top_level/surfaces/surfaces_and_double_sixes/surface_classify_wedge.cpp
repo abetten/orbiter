@@ -283,11 +283,13 @@ void surface_classify_wedge::classify_surfaces_from_double_sixes(
 
 
 	if (f_v) {
-		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes before downstep" << endl;
+		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes "
+				"before downstep" << endl;
 	}
 	downstep(verbose_level);
 	if (f_v) {
-		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes after downstep" << endl;
+		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes "
+				"after downstep" << endl;
 		cout << "we found " << Flag_orbits->nb_flag_orbits
 				<< " flag orbits out of "
 				<< Classify_double_sixes->Double_sixes->nb_orbits
@@ -295,11 +297,13 @@ void surface_classify_wedge::classify_surfaces_from_double_sixes(
 	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes before upstep" << endl;
+		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes "
+				"before upstep" << endl;
 	}
 	upstep(verbose_level);
 	if (f_v) {
-		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes after upstep" << endl;
+		cout << "surface_classify_wedge::classify_surfaces_from_double_sixes "
+				"after upstep" << endl;
 		cout << "we found " << Surfaces->nb_orbits
 				<< " surfaces out from "
 				<< Flag_orbits->nb_flag_orbits
@@ -702,7 +706,9 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			}
 
 
-			orbiter_kernel_system::Orbiter->Lint_vec->apply(S, Classify_double_sixes->Neighbor_to_line, S2, 5);
+			orbiter_kernel_system::Orbiter->Lint_vec->apply(S,
+					Classify_double_sixes->Neighbor_to_line,
+					S2, 5);
 			S2[5] = Classify_double_sixes->pt0_line;
 
 			four_lines[0] = S2[0];
@@ -1414,7 +1420,8 @@ void surface_classify_wedge::identify_surface(
 	vector<long int> My_Points;
 	int h;
 
-	Surf->enumerate_points(coeff_of_given_surface, My_Points, 0/*verbose_level - 2*/);
+	Surf->enumerate_points(coeff_of_given_surface,
+			My_Points, 0/*verbose_level - 2*/);
 
 	nb_points = My_Points.size();
 
@@ -1437,7 +1444,8 @@ void surface_classify_wedge::identify_surface(
 	// the lines are not arranged according to a double six
 
 	if (f_v) {
-		cout << "The surface has " << nb_points << " points and " << My_Lines.size() << " lines" << endl;
+		cout << "The surface has " << nb_points
+				<< " points and " << My_Lines.size() << " lines" << endl;
 	}
 	if (My_Lines.size() != 27 /*&& nb_lines != 21*/) {
 		cout << "the input surface has " << My_Lines.size() << " lines" << endl;
@@ -1806,12 +1814,14 @@ void surface_classify_wedge::latex_surfaces(
 #endif
 
 	if (f_v) {
-		cout << "surface_classify_wedge::latex_surfaces before Surfaces->print_latex" << endl;
+		cout << "surface_classify_wedge::latex_surfaces "
+				"before Surfaces->print_latex" << endl;
 	}
 	Surfaces->print_latex(ost, title, f_with_stabilizers,
 			FALSE, NULL, NULL);
 	if (f_v) {
-		cout << "surface_classify_wedge::latex_surfaces after Surfaces->print_latex" << endl;
+		cout << "surface_classify_wedge::latex_surfaces "
+				"after Surfaces->print_latex" << endl;
 	}
 
 
@@ -1825,7 +1835,8 @@ void surface_classify_wedge::latex_surfaces(
 	for (orbit_index = 0; orbit_index < Surfaces->nb_orbits; orbit_index++) {
 		if (f_v) {
 			cout << "surface_classify_wedge::latex_surfaces "
-					"before report_surface, orbit_index = " << orbit_index << endl;
+					"before report_surface, "
+					"orbit_index = " << orbit_index << endl;
 		}
 		report_surface(ost, orbit_index, verbose_level);
 		if (f_v) {
@@ -2623,11 +2634,13 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 #endif
 
 	if (f_v) {
-		cout << "surface_classify_wedge::report before Classify_double_sixes->report" << endl;
+		cout << "surface_classify_wedge::report "
+				"before Classify_double_sixes->report" << endl;
 	}
 	Classify_double_sixes->report(ost, draw_options, Opt, verbose_level);
 	if (f_v) {
-		cout << "surface_classify_wedge::report after Classify_double_sixes->report" << endl;
+		cout << "surface_classify_wedge::report "
+				"after Classify_double_sixes->report" << endl;
 	}
 
 	if (f_v) {

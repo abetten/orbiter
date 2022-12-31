@@ -62,17 +62,20 @@ void any_group::init_linear_group(groups::linear_group *LG, int verbose_level)
 	label_tex.assign(LG->label_tex);
 
 	if (!LG->f_has_strong_generators) {
-		cout << "any_group::init_linear_group !LG->f_has_strong_generators" << endl;
+		cout << "any_group::init_linear_group "
+				"!LG->f_has_strong_generators" << endl;
 		exit(1);
 	}
 	Subgroup_gens = LG->Strong_gens;
 
 	if (f_v) {
-		cout << "any_group::init_linear_group before Subgroup_gens->create_sims" << endl;
+		cout << "any_group::init_linear_group "
+				"before Subgroup_gens->create_sims" << endl;
 	}
 	Subgroup_sims = Subgroup_gens->create_sims(0/*verbose_level*/);
 	if (f_v) {
-		cout << "any_group::init_linear_group after Subgroup_gens->create_sims" << endl;
+		cout << "any_group::init_linear_group "
+				"after Subgroup_gens->create_sims" << endl;
 		cout << "any_group::init_linear_group group order is ";
 		Subgroup_sims->print_group_order(cout);
 		cout << endl;
@@ -105,19 +108,22 @@ void any_group::init_permutation_group(groups::permutation_group_create *PGC, in
 	}
 
 	if (!PGC->f_has_strong_generators) {
-		cout << "any_group::init_permutation_group !PGC->f_has_strong_generators" << endl;
+		cout << "any_group::init_permutation_group "
+				"!PGC->f_has_strong_generators" << endl;
 		exit(1);
 	}
 	Subgroup_gens = PGC->Strong_gens;
 
 	if (f_v) {
-		cout << "any_group::init_permutation_group before Subgroup_gens->create_sims_in_different_action" << endl;
+		cout << "any_group::init_permutation_group "
+				"before Subgroup_gens->create_sims_in_different_action" << endl;
 	}
 	Subgroup_sims = Subgroup_gens->create_sims_in_different_action(
 			A_base, 0 /*verbose_level*/);
 	//Subgroup_sims = Subgroup_gens->create_sims(verbose_level);
 	if (f_v) {
-		cout << "any_group::init_permutation_group after Subgroup_gens->create_sims_in_different_action" << endl;
+		cout << "any_group::init_permutation_group "
+				"after Subgroup_gens->create_sims_in_different_action" << endl;
 	}
 
 	if (f_v) {
@@ -140,7 +146,8 @@ void any_group::init_modified_group(modified_group_create *MGC, int verbose_leve
 	A = MGC->A_modified;
 
 	if (!MGC->f_has_strong_generators) {
-		cout << "any_group::init_linear_group !PGC->f_has_strong_generators" << endl;
+		cout << "any_group::init_linear_group "
+				"!PGC->f_has_strong_generators" << endl;
 		exit(1);
 	}
 	Subgroup_gens = MGC->Strong_gens;
@@ -214,11 +221,13 @@ void any_group::export_group_table(int verbose_level)
 	long int n;
 
 	if (f_v) {
-		cout << "any_group::export_group_table before create_group_table" << endl;
+		cout << "any_group::export_group_table "
+				"before create_group_table" << endl;
 	}
 	create_group_table(Table, n, verbose_level);
 	if (f_v) {
-		cout << "any_group::export_group_table after create_group_table" << endl;
+		cout << "any_group::export_group_table "
+				"after create_group_table" << endl;
 	}
 
 
@@ -264,18 +273,23 @@ void any_group::do_export_orbiter(actions::action *A2, int verbose_level)
 
 		if (Subgroup_gens) {
 			if (f_v) {
-				cout << "any_group::do_export_orbiter using Subgroup_gens" << endl;
+				cout << "any_group::do_export_orbiter "
+						"using Subgroup_gens" << endl;
 			}
-			Subgroup_gens->export_to_orbiter_as_bsgs(A2, fname, label, label_tex, verbose_level);
+			Subgroup_gens->export_to_orbiter_as_bsgs(A2,
+					fname, label, label_tex, verbose_level);
 		}
 		else if (A->f_has_strong_generators) {
 			if (f_v) {
-				cout << "any_group::do_export_orbiter using A_base->Strong_gens" << endl;
+				cout << "any_group::do_export_orbiter "
+						"using A_base->Strong_gens" << endl;
 			}
-			A_base->export_to_orbiter_as_bsgs(fname, label, label_tex, A_base->Strong_gens, verbose_level);
+			A_base->export_to_orbiter_as_bsgs(fname,
+					label, label_tex, A_base->Strong_gens, verbose_level);
 		}
 		else {
-			cout << "any_group::do_export_orbiter no generators to export" << endl;
+			cout << "any_group::do_export_orbiter "
+					"no generators to export" << endl;
 			exit(1);
 		}
 
@@ -308,18 +322,21 @@ void any_group::do_export_gap(int verbose_level)
 
 		if (Subgroup_gens) {
 			if (f_v) {
-				cout << "any_group::do_export_gap using Subgroup_gens" << endl;
+				cout << "any_group::do_export_gap "
+						"using Subgroup_gens" << endl;
 			}
 			Subgroup_gens->print_generators_gap(fp);
 		}
 		else if (A->f_has_strong_generators) {
 			if (f_v) {
-				cout << "any_group::do_export_gap using A_base->Strong_gens" << endl;
+				cout << "any_group::do_export_gap "
+						"using A_base->Strong_gens" << endl;
 			}
 			A->Strong_gens->print_generators_gap_in_different_action(fp, A);
 		}
 		else {
-			cout << "any_group::do_export_gap no generators to export" << endl;
+			cout << "any_group::do_export_gap "
+					"no generators to export" << endl;
 			exit(1);
 		}
 
@@ -350,7 +367,8 @@ void any_group::do_export_magma(int verbose_level)
 		groups::strong_generators *SG;
 
 		SG = get_strong_generators();
-		SG->export_magma(LG->A_linear, fp, verbose_level);
+
+		SG->export_magma(A, fp, verbose_level);
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -362,7 +380,8 @@ void any_group::do_export_magma(int verbose_level)
 	}
 }
 
-void any_group::do_canonical_image_GAP(std::string &input_set_text, int verbose_level)
+void any_group::do_canonical_image_GAP(std::string &input_set_text,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -383,7 +402,8 @@ void any_group::do_canonical_image_GAP(std::string &input_set_text, int verbose_
 		SG->canonical_image_GAP(input_set_text, ost);
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 	}
 
 
@@ -457,12 +477,16 @@ void any_group::normalizer(int verbose_level)
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
 	//H = LG->Strong_gens->create_sims(verbose_level);
 
+
+	groups::magma_interface M;
+
+
 	if (f_v) {
 		cout << "group order G = " << G->group_order_lint() << endl;
 			cout << "group order H = " << H->group_order_lint() << endl;
-			cout << "before A->normalizer_using_MAGMA" << endl;
+			cout << "before M.normalizer_using_MAGMA" << endl;
 	}
-	A->normalizer_using_MAGMA(fname_magma_prefix,
+	M.normalizer_using_MAGMA(A, fname_magma_prefix,
 			G, H, gens_N, verbose_level);
 
 	G->group_order(G_order);
@@ -553,7 +577,7 @@ void any_group::centralizer(
 		cout << "any_group::centralizer" << endl;
 	}
 
-	algebra_global_with_action Algebra;
+	groups::magma_interface M;
 	groups::sims *S;
 	groups::strong_generators *SG;
 
@@ -563,15 +587,15 @@ void any_group::centralizer(
 
 	if (f_v) {
 		cout << "any_group::centralizer "
-				"before Algebra.centralizer_of_element" << endl;
+				"before M.centralizer_of_element" << endl;
 	}
-	Algebra.centralizer_of_element(
-			LG->A2, S,
+	M.centralizer_of_element(
+			A, S,
 			element_description_text,
 			element_label, verbose_level);
 	if (f_v) {
 		cout << "any_group::centralizer "
-				"after Algebra.centralizer_of_element" << endl;
+				"after M.centralizer_of_element" << endl;
 	}
 
 	FREE_OBJECT(S);
@@ -598,7 +622,7 @@ void any_group::permutation_representation_of_element(
 				"before Algebra.permutation_representation_of_element" << endl;
 	}
 	Algebra.permutation_representation_of_element(
-			LG->A2,
+			A,
 			element_description_text,
 			verbose_level);
 	if (f_v) {
@@ -622,7 +646,7 @@ void any_group::normalizer_of_cyclic_subgroup(
 		cout << "any_group::normalizer_of_cyclic_subgroup" << endl;
 	}
 
-	algebra_global_with_action Algebra;
+	groups::magma_interface M;
 	groups::sims *S;
 	groups::strong_generators *SG;
 
@@ -631,15 +655,15 @@ void any_group::normalizer_of_cyclic_subgroup(
 
 	if (f_v) {
 		cout << "any_group::normalizer_of_cyclic_subgroup "
-				"before Algebra.normalizer_of_cyclic_subgroup" << endl;
+				"before M.normalizer_of_cyclic_subgroup" << endl;
 	}
-	Algebra.normalizer_of_cyclic_subgroup(
-			LG->A2, S,
+	M.normalizer_of_cyclic_subgroup(
+			A, S,
 			element_description_text,
 			element_label, verbose_level);
 	if (f_v) {
 		cout << "any_group::normalizer_of_cyclic_subgroup "
-				"after Algebra.normalizer_of_cyclic_subgroup" << endl;
+				"after M.normalizer_of_cyclic_subgroup" << endl;
 	}
 
 	FREE_OBJECT(S);
@@ -660,7 +684,7 @@ void any_group::do_find_subgroups(
 		cout << "any_group::do_find_subgroups" << endl;
 	}
 
-	algebra_global_with_action Algebra;
+	groups::magma_interface M;
 	groups::sims *S;
 	groups::strong_generators *SG;
 
@@ -673,17 +697,25 @@ void any_group::do_find_subgroups(
 
 	S = SG->create_sims(verbose_level);
 
-	Algebra.find_subgroups(
-			LG->A2, S,
+	if (f_v) {
+		cout << "any_group::do_find_subgroups before M.find_subgroups" << endl;
+	}
+	M.find_subgroups(
+			A, S,
 			order_of_subgroup,
-			LG->A2->label,
+			A->label,
 			nb_subgroups,
 			H_gens,
 			N_gens,
 			verbose_level);
+	if (f_v) {
+		cout << "any_group::do_find_subgroups after M.find_subgroups" << endl;
+	}
 
 
-	cout << "We found " << nb_subgroups << " subgroups" << endl;
+	if (f_v) {
+		cout << "any_group::do_find_subgroups We found " << nb_subgroups << " subgroups" << endl;
+	}
 
 
 	string fname;
@@ -695,7 +727,7 @@ void any_group::do_find_subgroups(
 
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(LG->A2->label);
+	fname.assign(A->label);
 	fname.append("_report.tex");
 
 
@@ -703,7 +735,7 @@ void any_group::do_find_subgroups(
 
 	snprintf(str, sizeof(str), "Subgroups of order $%d$ in $", order_of_subgroup);
 	title.assign(str);
-	title.append(LG->A2->label_tex);
+	title.append(A->label_tex);
 	title.append("$");
 
 
@@ -718,7 +750,7 @@ void any_group::do_find_subgroups(
 			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
 			extras_for_preamble);
 
-		LG->A2->report_groups_and_normalizers(fp,
+		A->report_groups_and_normalizers(fp,
 				nb_subgroups, H_gens, N_gens,
 				verbose_level);
 
@@ -828,7 +860,9 @@ void any_group::print_elements_tex(int f_with_permutation,
 		orbiter_kernel_system::latex_interface L;
 		L.head_easy(fp);
 
-		H->print_all_group_elements_tex(fp, f_with_permutation, f_override_action, A_special);
+		H->print_all_group_elements_tex(fp,
+				f_with_permutation,
+				f_override_action, A_special);
 		//H->print_all_group_elements_tree(fp);
 		//H->print_all_group_elements_with_permutations_tex(fp);
 
@@ -868,14 +902,14 @@ void any_group::print_elements_tex(int f_with_permutation,
 	}
 }
 
-void any_group::order_of_products_of_elements(
+void any_group::order_of_products_of_elements_by_rank(
 		std::string &Elements_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_group::order_of_products_of_elements" << endl;
+		cout << "any_group::order_of_products_of_elements_by_rank" << endl;
 	}
 
 	groups::strong_generators *SG;
@@ -963,7 +997,7 @@ void any_group::order_of_products_of_elements(
 
 	FREE_int(Elt);
 	if (f_v) {
-		cout << "any_group::order_of_products_of_elements done" << endl;
+		cout << "any_group::order_of_products_of_elements_by_rank done" << endl;
 	}
 }
 
@@ -1252,7 +1286,8 @@ void any_group::element_unrank(std::string &rank_string, int verbose_level)
 
 
 
-void any_group::conjugacy_class_of(std::string &label, std::string &elt_data, int verbose_level)
+void any_group::conjugacy_class_of(std::string &label,
+		std::string &elt_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1734,7 +1769,8 @@ void any_group::orbits_on_points(groups::orbits_on_something *&Orb, int verbose_
 	prefix.assign(label);
 
 	if (f_v) {
-		cout << "any_group::orbits_on_points before Algebra.orbits_on_points" << endl;
+		cout << "any_group::orbits_on_points "
+				"before Algebra.orbits_on_points" << endl;
 	}
 	Algebra.orbits_on_points(
 			A,
@@ -1744,7 +1780,8 @@ void any_group::orbits_on_points(groups::orbits_on_something *&Orb, int verbose_
 			Orb,
 			verbose_level);
 	if (f_v) {
-		cout << "any_group::orbits_on_points after Algebra.orbits_on_points" << endl;
+		cout << "any_group::orbits_on_points "
+				"after Algebra.orbits_on_points" << endl;
 	}
 
 
@@ -1797,38 +1834,44 @@ void any_group::create_latex_report_for_permutation_group(
 
 #if 1
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_permutation_group before A->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"before A->report" << endl;
 			}
 			A->report(ost, A->f_has_sims, A->Sims,
 					A->f_has_strong_generators, A->Strong_gens,
 					O,
 					verbose_level);
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_permutation_group after A->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"after A->report" << endl;
 			}
 #endif
 
 
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_permutation_group before Subgroup_gens->print_generators_in_latex_individually" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"before Subgroup_gens->print_generators_in_latex_individually" << endl;
 			}
 			Subgroup_gens->print_generators_in_latex_individually(ost);
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_permutation_group after Subgroup_gens->print_generators_in_latex_individually" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"after Subgroup_gens->print_generators_in_latex_individually" << endl;
 			}
 			//A_initial->print_base();
 			//A_initial->print_info();
 
 #if 1
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_permutation_group before Subgroup_sims->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"before Subgroup_sims->report" << endl;
 			}
 			Subgroup_sims->report(ost,
 					label,
 					O,
 					verbose_level);
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_permutation_group after Subgroup_sims->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"after Subgroup_sims->report" << endl;
 			}
 #endif
 
@@ -2156,7 +2199,10 @@ void any_group::print_given_elements_tex(
 		ost << endl;
 
 		for (i = 0; i < nb_elements; i++) {
-			A->make_element(Elt, element_data + i * A->make_element_size, verbose_level);
+
+			A->make_element(Elt,
+					element_data + i * A->make_element_size,
+					verbose_level);
 
 			ord = A->element_order(Elt);
 
@@ -2233,7 +2279,10 @@ void any_group::process_given_elements(
 		ost << endl;
 
 		for (i = 0; i < nb_elements; i++) {
-			A->make_element(Elt, element_data + i * A->make_element_size, verbose_level);
+
+			A->make_element(Elt,
+					element_data + i * A->make_element_size,
+					verbose_level);
 
 			ord = A->element_order(Elt);
 
@@ -2349,6 +2398,218 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 	}
 }
 
+void any_group::order_of_products_of_pairs(
+		std::string &label_of_elements,
+		int *element_data, int nb_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::order_of_products_of_pairs" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+
+
+
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Order_table;
+	ring_theory::longinteger_object go;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+
+	Order_table = NEW_int(nb_elements * nb_elements);
+
+
+	string fname;
+
+	fname.assign(label_of_elements);
+	fname.append("_order_of_products_of_pairs.csv");
+
+
+	{
+		int i, j;
+
+
+
+		for (i = 0; i < nb_elements; i++) {
+
+			A->make_element(Elt1, element_data + i * A->make_element_size, verbose_level);
+
+			for (j = 0; j < nb_elements; j++) {
+
+				A->make_element(Elt2, element_data + j * A->make_element_size, verbose_level);
+
+				A->element_mult(Elt1, Elt2, Elt3, 0);
+
+				Order_table[i * nb_elements + j] = A->element_order(Elt3);
+
+
+			}
+		}
+
+
+	}
+
+	Fio.int_matrix_write_csv(fname, Order_table, nb_elements, nb_elements);
+
+	if (f_v) {
+		cout << "any_group::order_of_products_of_pairs "
+				"Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Order_table);
+
+
+
+	if (f_v) {
+		cout << "any_group::order_of_products_of_pairs done" << endl;
+	}
+}
+
+
+void any_group::conjugate(
+		std::string &label_of_elements,
+		std::string &conjugate_data,
+		int *element_data, int nb_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::conjugate" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+
+
+
+	int *S;
+	int *Sv;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Output_table;
+	ring_theory::longinteger_object go;
+
+	S = NEW_int(A->elt_size_in_int);
+	Sv = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+
+	Output_table = NEW_int(nb_elements * A->make_element_size);
+
+	A->make_element_from_string(S, conjugate_data, verbose_level);
+
+	A->element_invert(S, Sv, verbose_level);
+
+	string fname;
+
+	fname.assign(label_of_elements);
+	fname.append("_conjugate.csv");
+
+
+	{
+		int i;
+
+
+
+		for (i = 0; i < nb_elements; i++) {
+
+			A->make_element(Elt1,
+					element_data + i * A->make_element_size,
+					verbose_level);
+
+
+			A->element_mult(Sv, Elt1, Elt2, 0);
+			A->element_mult(Elt2, S, Elt3, 0);
+
+			A->code_for_make_element(
+					Output_table + i * A->make_element_size, Elt3);
+
+
+			//A->print_one_element_tex(cout, Elt3, FALSE /* f_with_permutation */);
+
+
+		}
+
+
+	}
+
+	Fio.int_matrix_write_csv(fname, Output_table, nb_elements, A->make_element_size);
+
+	if (f_v) {
+		cout << "any_group::conjugate "
+				"Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_int(S);
+	FREE_int(Sv);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Output_table);
+
+
+
+	if (f_v) {
+		cout << "any_group::conjugate done" << endl;
+	}
+}
+
+
+void any_group::print_action_on_surface(
+		std::string &surface_label,
+		std::string &label_of_elements,
+		int *element_data, int nb_elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::print_action_on_surface" << endl;
+	}
+
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC;
+
+	SC = Get_object_of_cubic_surface(surface_label);
+
+	if (f_v) {
+		cout << "any_group::print_action_on_surface "
+				"before SC->SOA->print_action_on_surface" << endl;
+	}
+	SC->SOA->print_action_on_surface(
+			label_of_elements,
+			element_data, nb_elements,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::print_action_on_surface "
+				"after SC->SOA->print_action_on_surface" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::print_action_on_surface done" << endl;
+	}
+
+}
+
 void any_group::element_processing(
 		element_processing_description *element_processing_descr,
 		int verbose_level)
@@ -2366,7 +2627,11 @@ void any_group::element_processing(
 
 	if (element_processing_descr->f_input) {
 
-		Get_matrix(element_processing_descr->input_label, element_data, nb_elements, n);
+		if (f_v) {
+			cout << "any_group::element_processing getting input" << endl;
+		}
+		Get_matrix(element_processing_descr->input_label,
+				element_data, nb_elements, n);
 
 	}
 	else {
@@ -2382,7 +2647,8 @@ void any_group::element_processing(
 		}
 
 		if (f_v) {
-			cout << "any_group::element_processing before print_given_elements_tex" << endl;
+			cout << "any_group::element_processing "
+					"before print_given_elements_tex" << endl;
 		}
 
 		print_given_elements_tex(
@@ -2393,34 +2659,106 @@ void any_group::element_processing(
 				verbose_level);
 
 		if (f_v) {
-			cout << "any_group::element_processing after print_given_elements_tex" << endl;
+			cout << "any_group::element_processing "
+					"after print_given_elements_tex" << endl;
 		}
 
 	}
 	else if (element_processing_descr->f_apply_isomorphism_wedge_product_4to6) {
 		if (f_v) {
-			cout << "any_group::element_processing f_apply_isomorphism_wedge_product_4to6" << endl;
+			cout << "any_group::element_processing "
+					"f_apply_isomorphism_wedge_product_4to6" << endl;
 		}
 
 		if (f_v) {
-			cout << "any_group::element_processing before apply_isomorphism_wedge_product_4to6" << endl;
+			cout << "any_group::element_processing "
+					"before apply_isomorphism_wedge_product_4to6" << endl;
 		}
 		apply_isomorphism_wedge_product_4to6(
 				element_processing_descr->input_label,
 				element_data, nb_elements,
 				verbose_level);
 		if (f_v) {
-			cout << "any_group::element_processing after apply_isomorphism_wedge_product_4to6" << endl;
+			cout << "any_group::element_processing "
+					"after apply_isomorphism_wedge_product_4to6" << endl;
+		}
+
+
+	}
+	else if (element_processing_descr->f_order_of_products_of_pairs) {
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"f_order_of_products_of_pairs" << endl;
+		}
+
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"before order_of_products_of_pairs" << endl;
+		}
+		order_of_products_of_pairs(
+				element_processing_descr->input_label,
+				element_data, nb_elements,
+				verbose_level);
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"after order_of_products_of_pairs" << endl;
+		}
+
+
+	}
+	else if (element_processing_descr->f_conjugate) {
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"f_conjugate" << endl;
+		}
+
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"before conjugate" << endl;
+		}
+		conjugate(
+				element_processing_descr->input_label,
+				element_processing_descr->conjugate_data,
+				element_data, nb_elements,
+				verbose_level);
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"after conjugate" << endl;
 		}
 
 
 	}
 
+	else if (element_processing_descr->f_print_action_on_surface) {
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"f_print_action_on_surface" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"before print_action_on_surface" << endl;
+		}
+		print_action_on_surface(
+				element_processing_descr->print_action_on_surface_label,
+				element_processing_descr->input_label,
+				element_data, nb_elements,
+				verbose_level);
+		if (f_v) {
+			cout << "any_group::element_processing "
+					"after print_action_on_surface" << endl;
+		}
+
+
+	}
+
+
+
 	if (f_v) {
 		cout << "any_group::element_processing done" << endl;
 	}
 }
-
 
 
 

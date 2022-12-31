@@ -1613,8 +1613,6 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		actions::action *A_PGL_n1_q, actions::action *A_PGL_n_q,
 	matrix_group *Mtx_n1, matrix_group *Mtx_n, 
 	strong_generators *spread_stab_gens,
-	//data_structures_groups::vector_ge *spread_stab_gens,
-	//ring_theory::longinteger_object &spread_stab_go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

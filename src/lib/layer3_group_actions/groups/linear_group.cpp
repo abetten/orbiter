@@ -1705,11 +1705,15 @@ void linear_group::report(std::ostream &ost,
 
 		if (f_conjugacy_classes_and_normalizers) {
 
+
+			groups::magma_interface M;
+
+
 			if (f_v) {
 				cout << "linear_group::report f_conjugacy_classes_and_normalizers is true" << endl;
 			}
 
-			A2->report_conjugacy_classes_and_normalizers(ost, H,
+			M.report_conjugacy_classes_and_normalizers(A2, ost, H,
 					verbose_level);
 
 			if (f_v) {

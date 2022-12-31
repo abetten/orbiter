@@ -91,6 +91,12 @@ interface_toolkit::interface_toolkit()
 	f_split_by_values = FALSE;
 	//std::string split_by_values_fname_in;
 
+	f_change_values = FALSE;
+	//std::string change_values_fname_in;
+	//std::string change_values_fname_out;
+	//std::string change_values_function_input;
+	//std::string change_values_function_output;
+
 	f_store_as_csv_file = FALSE;
 	//std::string> store_as_csv_file_fname;
 	store_as_csv_file_m = 0;
@@ -100,6 +106,9 @@ interface_toolkit::interface_toolkit()
 	f_mv = FALSE;
 	//std::string mv_a;
 	//std::string mv_b;
+
+	f_system = FALSE;
+	//std::string system_command;
 
 	f_loop = FALSE;
 	loop_start_idx = 0;
@@ -186,12 +195,18 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-split_by_values") == 0) {
 		cout << "-split_by_values <string : fname_in>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-change_values") == 0) {
+		cout << "-change_values <string : fname_in> <string : fname_out> <string : input_values> <string : output_values>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		cout << "-store_as_csv_file <string : fname> <int : m> "
 				"<int : n> <string : data> " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-mv") == 0) {
 		cout << "-mv <string : from> <string : to> " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-system") == 0) {
+		cout << "-system <string : command> " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-loop") == 0) {
 		cout << "-loop <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step> <arguments> -loop_end" << endl;
@@ -269,10 +284,17 @@ int interface_toolkit::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-split_by_values") == 0) {
 		return true;
 	}
+	else if (ST.stringcmp(argv[i], "-change_values") == 0) {
+		return true;
+	}
+
 	else if (ST.stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-mv") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-system") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-loop") == 0) {
@@ -508,6 +530,21 @@ void interface_toolkit::read_arguments(int argc,
 			cout << "-split_by_values " << split_by_values_fname_in << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-change_values") == 0) {
+		f_change_values = TRUE;
+		change_values_fname_in.assign(argv[++i]);
+		change_values_fname_out.assign(argv[++i]);
+		change_values_function_input.assign(argv[++i]);
+		change_values_function_output.assign(argv[++i]);
+		if (f_v) {
+			cout << "-split_by_values "
+					<< " " << change_values_fname_in
+					<< " " << change_values_fname_out
+					<< " " << change_values_function_input
+					<< " " << change_values_function_output
+					<< endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		f_store_as_csv_file = TRUE;
 		store_as_csv_file_fname.assign(argv[++i]);
@@ -528,6 +565,13 @@ void interface_toolkit::read_arguments(int argc,
 		if (f_v) {
 			cout << "-mv " << mv_a
 				<< " " << mv_b << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-system") == 0) {
+		f_system = TRUE;
+		system_command.assign(argv[++i]);
+		if (f_v) {
+			cout << "-system " << system_command << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-loop") == 0) {
@@ -721,6 +765,12 @@ void interface_toolkit::print()
 	}
 	if (f_split_by_values) {
 		cout << "-split_by_values " << split_by_values_fname_in << endl;
+	}
+	if (f_change_values) {
+		cout << "-split_by_values " << change_values_fname_in
+				<< " " << change_values_function_input
+				<< " " << change_values_function_output
+				<< endl;
 	}
 	if (f_store_as_csv_file) {
 		cout << "-store_as_csv_file " << store_as_csv_file_fname
@@ -916,41 +966,34 @@ void interface_toolkit::worker(int verbose_level)
 		cout << "Written file " << reformat_fname_out << " of size " << Fio.file_size(reformat_fname_out) << endl;
 	}
 	else if (f_split_by_values) {
+
 		orbiter_kernel_system::file_io Fio;
-		int *M;
-		int *M2;
-		int m, n, len, t, h, a;
 
-		Fio.int_matrix_read_csv(split_by_values_fname_in, M, m, n, verbose_level);
-		len = m * n;
-		data_structures::tally T;
-
-		T.init(M, m * n, FALSE, 0);
-		cout << "values in the file : ";
-		T.print(FALSE);
-		cout << endl;
-
-		M2 = NEW_int(len);
-		for (t = 0; t < T.nb_types; t++) {
-			Int_vec_zero(M2, len);
-			a = T.data_sorted[T.type_first[t]];
-			string fname;
-			char str[1000];
-			data_structures::string_tools ST;
-
-			fname.assign(split_by_values_fname_in);
-			ST.chop_off_extension(fname);
-			snprintf(str, sizeof(str), "_value%d.csv", a);
-			fname.append(str);
-			for (h = 0; h < len; h++) {
-				if (M[h] == a) {
-					M2[h] = 1;
-				}
-			}
-			Fio.int_matrix_write_csv(fname, M2, m, n);
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		if (f_v) {
+			cout << "interface_toolkit::worker before Fio.split_by_values" << endl;
 		}
-		FREE_int(M2);
+		Fio.split_by_values(split_by_values_fname_in, verbose_level);
+		if (f_v) {
+			cout << "interface_toolkit::worker after Fio.split_by_values" << endl;
+		}
+
+
+	}
+	else if (f_change_values) {
+
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "interface_toolkit::worker before Fio.change_values" << endl;
+		}
+		Fio.change_values(change_values_fname_in, change_values_fname_out,
+				change_values_function_input, change_values_function_output,
+				verbose_level);
+		if (f_v) {
+			cout << "interface_toolkit::worker after Fio.change_values" << endl;
+		}
+
+
 	}
 	else if (f_store_as_csv_file) {
 		long int *D;
@@ -979,6 +1022,13 @@ void interface_toolkit::worker(int verbose_level)
 		cmd.append(mv_a);
 		cmd.append(" ");
 		cmd.append(mv_b);
+		cout << "executing " << cmd << endl;
+		system(cmd.c_str());
+	}
+	else if (f_system) {
+		string cmd;
+
+		cmd.assign(system_command);
 		cout << "executing " << cmd << endl;
 		system(cmd.c_str());
 	}

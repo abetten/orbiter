@@ -20,7 +20,7 @@ namespace layer3_group_actions {
 namespace groups {
 
 
-void sims::create_group_tree(const char *fname,
+void sims::create_group_tree(std::string &fname,
 		int f_full, int verbose_level)
 {
 	long int i, j, h, go, l;
@@ -392,7 +392,7 @@ void sims::print_generators_at_level_or_below(int lvl)
 		}
 }
 
-void sims::write_all_group_elements(char *fname, int verbose_level)
+void sims::write_all_group_elements(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -421,7 +421,7 @@ void sims::write_all_group_elements(char *fname, int verbose_level)
 	//FREE_char(elt);
 }
 
-void sims::print_all_group_elements_to_file(char *fname,
+void sims::print_all_group_elements_to_file(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -686,7 +686,7 @@ void sims::print_all_transversal_elements()
 	FREE_int(Elt);
 }
 
-void sims::save_list_of_elements(char *fname, int verbose_level)
+void sims::save_list_of_elements(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
@@ -697,7 +697,7 @@ void sims::save_list_of_elements(char *fname, int verbose_level)
 	group_order(go);
 	goi = go.as_lint();
 	if (f_v) {
-		cout << "sims::save_list_of_elements(): saving "
+		cout << "sims::save_list_of_elements saving "
 				<< goi << " elements to file " << fname << endl;
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -732,7 +732,7 @@ void sims::read_list_of_elements(actions::action *A, char *fname,
 
 	goi = Fio.file_size(fname) / A->coded_elt_size_in_char;
 	if (f_v) {
-		cout << "sims::read_list_of_elements(): reading "
+		cout << "sims::read_list_of_elements reading "
 				<< goi << " elements from file " << fname << endl;
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -761,88 +761,6 @@ void sims::read_list_of_elements(actions::action *A, char *fname,
 }
 
 
-void sims::write_as_magma_permutation_group(std::string &fname_base,
-		data_structures_groups::vector_ge *gens, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	long int i, k, n, l, h;
-	ring_theory::longinteger_object go;
-	int *Elt1;
-	int *Elt2;
-	int *Table;
-	combinatorics::combinatorics_domain Combi;
-	orbiter_kernel_system::file_io Fio;
-
-	if (f_v) {
-		cout << "sims::write_as_magma_permutation_group" << endl;
-		}
-	group_order(go);
-	n = go.as_int();
-	l = gens->len;
-	if (f_v) {
-		cout << "sims::write_as_magma_permutation_group "
-				"Computing the Table, go=" << go << endl;
-		}
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Table = NEW_int(l * n);
-	Int_vec_zero(Table, l * n);
-	for (h = 0; h < l; h++) {
-		if (f_v) {
-			cout << "sims::write_as_magma_permutation_group "
-					"h = " << h <<  " / " << l << endl;
-			}
-		for (i = 0; i < n; i++) {
-			if (f_v) {
-				cout << "sims::write_as_magma_permutation_group "
-						"i = " << i <<  " / " << n << endl;
-				}
-			element_unrank_lint(i, Elt1);
-
-			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
-
-			if (f_v) {
-				cout << "Elt2=" << endl;
-				A->element_print(Elt2, cout);
-				}
-			k = element_rank_lint(Elt2);
-			if (f_v) {
-				cout << "has rank k=" << k << endl;
-				}
-			Table[h * n + i] = k;
-			}
-		}
-#if 0
-> G := PermutationGroup< 12 | (1,6,7)(2,5,8,3,4,9)(11,12),
->                             (1,3)(4,9,12)(5,8,10,6,7,11) >;
-#endif
-	string fname;
-
-	fname.assign(fname_base);
-	fname.append(".magma");
-	{
-	ofstream fp(fname);
-
-	fp << "G := PermutationGroup< " << n << " | " << endl;
-	for (i = 0; i < l; i++) {
-		Combi.perm_print_counting_from_one(fp, Table + i * n, n);
-		if (i < l - 1) {
-			fp << ", " << endl;
-			}
-		}
-	fp << " >;" << endl;
-	}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Table);
-
-	if (f_v) {
-		cout << "sims::write_as_magma_permutation_group done" << endl;
-		}
-}
 
 void sims::report(std::ostream &ost,
 		std::string &prefix,
@@ -865,7 +783,10 @@ void sims::report(std::ostream &ost,
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|c|}" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Level} & \\mbox{Base pt} & \\mbox{Orbit length} & \\mbox{Subgroup order}\\\\" << endl;
+	ost << "\\mbox{Level} & "
+			"\\mbox{Base pt} & "
+			"\\mbox{Orbit length} & "
+			"\\mbox{Subgroup order}\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (int i = 0; i < my_base_len; i++) {

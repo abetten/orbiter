@@ -859,7 +859,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 
 
 void classify_double_sixes::identify_five_plus_one(
-	long int *five_lines, long int transversal_line,
+	long int *five_lines,
+	long int transversal_line,
 	long int *five_lines_out_as_neighbors, int &orbit_index,
 	int *transporter, int verbose_level)
 {
@@ -1093,8 +1094,7 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		if (f_vv) {
 			cout << "classify_double_sixes::downstep before "
-					"create_double_six_from_five_lines_with_"
-					"a_common_transversal" << endl;
+					"create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		}
 
 		c = Surf_A->create_double_six_from_five_lines_with_a_common_transversal(

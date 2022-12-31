@@ -329,6 +329,7 @@ MODULES= \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
 		layer3_group_actions/groups/linear_group.o \
 		layer3_group_actions/groups/linear_group_description.o \
+		layer3_group_actions/groups/magma_interface.o \
 		layer3_group_actions/groups/matrix_group.o \
 		layer3_group_actions/groups/orbits_on_something.o \
 		layer3_group_actions/groups/permutation_group_create.o \

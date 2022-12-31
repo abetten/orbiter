@@ -67,6 +67,7 @@ namespace groups {
 	class exceptional_isomorphism_O4;
 	class linear_group_description;
 	class linear_group;
+	class magma_interface;
 	class matrix_group;
 	class orbits_on_something;
 	class permutation_group_create;

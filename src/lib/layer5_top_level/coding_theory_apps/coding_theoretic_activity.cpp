@@ -541,6 +541,30 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_export_codewords_long) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_export_codewords_long" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_export_codewords needs a code" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Code->export_codewords_long" << endl;
+		}
+		Code->export_codewords_long(Descr->export_codewords_long_fname, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Code->export_codewords_long" << endl;
+		}
+
+	}
+
 	else if (Descr->f_export_codewords_by_weight) {
 
 		if (f_v) {

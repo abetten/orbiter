@@ -529,7 +529,6 @@ void spreadsheet::print_table_row(int row,
 		int f_enclose_in_parentheses, ostream &ost)
 {
 	int j, t; //, h;
-	int f_enclose;
 	
 	//cout << "Row " << row << " : ";
 	for (j = 0; j < nb_cols; j++) {
@@ -543,6 +542,9 @@ void spreadsheet::print_table_row(int row,
 				}
 			}
 #endif
+
+#if 0
+			int f_enclose;
 			if (tokens[t][0] == '\"') {
 				f_enclose = FALSE;
 			}
@@ -562,6 +564,9 @@ void spreadsheet::print_table_row(int row,
 			if (f_enclose) {
 				ost << "\"";
 			}
+#else
+			ost << tokens[t];
+#endif
 		}
 		if (j < nb_cols - 1) {
 			ost << ",";

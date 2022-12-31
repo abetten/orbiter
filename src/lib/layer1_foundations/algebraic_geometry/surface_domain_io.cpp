@@ -53,6 +53,7 @@ void surface_domain::print_equation_tex_lint(std::ostream &ost, long int *coeffs
 	Poly3_4->print_equation_lint_tex(ost, coeffs);
 }
 
+#if 0
 void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 {
 
@@ -94,6 +95,15 @@ void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 
 #endif
 }
+#endif
+
+
+void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
+{
+
+	print_lines_tex(ost, double_six, 12 /* nb_lines */);
+}
+
 
 void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 		data_structures::spreadsheet *&Sp,
@@ -218,8 +228,7 @@ void surface_domain::print_equation_wrapped(std::ostream &ost, int *the_equation
 
 void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
 {
-	int i;
-	orbiter_kernel_system::latex_interface L;
+	int idx;
 	long int *Rk;
 	int vv[6];
 
@@ -227,41 +236,24 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 	ost << "The lines and their Pluecker coordinates are:\\\\" << endl;
 
-	for (i = 0; i < nb_lines; i++) {
+	for (idx = 0; idx < nb_lines; idx++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		Gr->unrank_lint(Lines[i], 0 /*verbose_level*/);
-		ost << "$$" << endl;
-		ost << "\\ell_{" << i << "}";
-
-		if (nb_lines == 27) {
-			ost << " = " << Schlaefli->Labels->Line_label_tex[i];
-		}
-		ost << " = " << endl;
-		//print_integer_matrix_width(cout,
-		// Gr->M, k, n, n, F->log10_of_q + 1);
-		Gr->latex_matrix(ost, Gr->M);
-		//print_integer_matrix_tex(ost, Gr->M, 2, 4);
-		//ost << "\\right]_{" << Lines[i] << "}" << endl;
-		ost << "_{" << Lines[i] << "}" << endl;
-		ost << "=" << endl;
-		ost << "\\left[" << endl;
-		L.print_integer_matrix_tex(ost, Gr->M, 2, 4);
-		ost << "\\right]_{" << Lines[i] << "}" << endl;
-
 		int v6[6];
 
-		Gr->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
+		Gr->Pluecker_coordinates(Lines[idx], v6, 0 /* verbose_level */);
 
 		Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
 
-		Rk[i] = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+		Rk[idx] = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
 
-		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
-				<< v6[2] << "," << v6[3] << "," << v6[4]
-				<< "," << v6[5] << " ";
-		ost << ")_{" << Rk[i] << "}";
-		ost << "$$" << endl;
 	}
+
+	for (idx = 0; idx < nb_lines; idx++) {
+
+		print_one_line_tex(ost, Lines, nb_lines, idx);
+
+	}
+
 	ost << "Rank of lines: ";
 	Lint_vec_print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;
@@ -273,6 +265,48 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 	FREE_lint(Rk);
 
+}
+
+void surface_domain::print_one_line_tex(std::ostream &ost,
+		long int *Lines, int nb_lines, int idx)
+{
+	orbiter_kernel_system::latex_interface L;
+	int vv[6];
+	long int klein_rk;
+
+
+	Gr->unrank_lint(Lines[idx], 0 /*verbose_level*/);
+	ost << "$$" << endl;
+	ost << "\\ell_{" << idx << "}";
+
+	if (nb_lines == 27) {
+		ost << " = " << Schlaefli->Labels->Line_label_tex[idx];
+	}
+	ost << " = " << endl;
+	//print_integer_matrix_width(cout,
+	// Gr->M, k, n, n, F->log10_of_q + 1);
+	Gr->latex_matrix(ost, Gr->M);
+	//print_integer_matrix_tex(ost, Gr->M, 2, 4);
+	//ost << "\\right]_{" << Lines[i] << "}" << endl;
+	ost << "_{" << Lines[idx] << "}" << endl;
+	ost << "=" << endl;
+	ost << "\\left[" << endl;
+	L.print_integer_matrix_tex(ost, Gr->M, 2, 4);
+	ost << "\\right]_{" << Lines[idx] << "}" << endl;
+
+	int v6[6];
+
+	Gr->Pluecker_coordinates(Lines[idx], v6, 0 /* verbose_level */);
+
+	Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
+
+	klein_rk = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+
+	ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+			<< v6[2] << "," << v6[3] << "," << v6[4]
+			<< "," << v6[5] << " ";
+	ost << ")_{" << klein_rk << "}";
+	ost << "$$" << endl;
 }
 
 #if 0

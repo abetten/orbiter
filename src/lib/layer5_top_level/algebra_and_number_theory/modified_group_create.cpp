@@ -53,7 +53,8 @@ void modified_group_create::modified_group_init(
 	modified_group_create::Descr = description;
 
 	if (f_v) {
-		cout << "modified_group_create::modified_group_init initializing group" << endl;
+		cout << "modified_group_create::modified_group_init "
+				"initializing group" << endl;
 	}
 
 
@@ -144,6 +145,21 @@ void modified_group_create::modified_group_init(
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
 					"after create_point_stabilizer_subgroup" << endl;
+		}
+	}
+
+	else if (Descr->f_subfield_subgroup) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_subfield_subgroup" << endl;
+		}
+
+		create_subfield_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_subfield_subgroup" << endl;
 		}
 	}
 
@@ -667,10 +683,12 @@ void modified_group_create::create_point_stabilizer_subgroup(
 	label_tex.assign(AG->label_tex);
 
 	if (f_v) {
-		cout << "modified_group_create::create_point_stabilizer_subgroup A_base=";
+		cout << "modified_group_create::create_point_stabilizer_subgroup "
+				"A_base=";
 		A_base->print_info();
 		cout << endl;
-		cout << "modified_group_create::create_point_stabilizer_subgroup A_previous=";
+		cout << "modified_group_create::create_point_stabilizer_subgroup "
+				"A_previous=";
 		A_previous->print_info();
 		cout << endl;
 	}
@@ -691,13 +709,15 @@ void modified_group_create::create_point_stabilizer_subgroup(
 		groups::orbits_on_something *Orb;
 
 		if (f_v) {
-			cout << "modified_group_create::create_point_stabilizer_subgroup before AG->orbits_on_points" << endl;
+			cout << "modified_group_create::create_point_stabilizer_subgroup "
+					"before AG->orbits_on_points" << endl;
 		}
 
 		AG->orbits_on_points(Orb, verbose_level);
 
 		if (f_v) {
-			cout << "modified_group_create::create_point_stabilizer_subgroup after AG->orbits_on_points" << endl;
+			cout << "modified_group_create::create_point_stabilizer_subgroup "
+					"after AG->orbits_on_points" << endl;
 		}
 
 		Orb->stabilizer_any_point(Descr->point_stabilizer_index,
@@ -731,6 +751,110 @@ void modified_group_create::create_point_stabilizer_subgroup(
 				"done" << endl;
 	}
 }
+
+
+
+void modified_group_create::create_subfield_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_subfield_subgroup" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_subfield_subgroup "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	int index;
+
+	index = description->subfield_subgroup_index;
+
+	any_group *AG;
+
+	AG = Get_object_of_type_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
+
+	if (f_v) {
+		cout << "modified_group_create::create_subfield_subgroup "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_subfield_subgroup "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	A_modified = A_previous;
+
+
+
+	f_has_strong_generators = TRUE;
+	if (f_v) {
+		cout << "modified_group_create::create_subfield_subgroup "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+
+	//Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+#if 0
+	{
+		groups::orbits_on_something *Orb;
+
+		if (f_v) {
+			cout << "modified_group_create::create_subfield_subgroup "
+					"before AG->orbits_on_points" << endl;
+		}
+
+		AG->orbits_on_points(Orb, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::create_subfield_subgroup "
+					"after AG->orbits_on_points" << endl;
+		}
+
+		Orb->stabilizer_any_point(Descr->point_stabilizer_index,
+				Strong_gens, verbose_level);
+
+
+		FREE_OBJECT(Orb);
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_subfield_subgroup "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "_SubfieldOfIndex%d", Descr->subfield_subgroup_index);
+	snprintf(str2, sizeof(str2), " {\\rm SubfieldOfIndex %d}", Descr->subfield_subgroup_index);
+	label.append(str1);
+	label_tex.append(str2);
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_subfield_subgroup "
+				"done" << endl;
+	}
+}
+
+
 
 
 }}}

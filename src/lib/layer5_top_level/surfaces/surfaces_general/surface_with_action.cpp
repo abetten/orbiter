@@ -1745,7 +1745,8 @@ void surface_with_action::sweep_4_15_lines(
 	fname.append("_sweep.csv");
 
 	Fio.lint_matrix_write_csv(fname, T, N, 13);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 	fname.assign(Surface_Descr->equation_name_of_formula);
@@ -1767,7 +1768,8 @@ void surface_with_action::sweep_4_15_lines(
 		ost << "-1" << endl;
 
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 
@@ -2820,7 +2822,8 @@ void surface_with_action::sweep_4_L9_E4(
 	fname.append("_sweep.csv");
 
 	Fio.lint_matrix_write_csv(fname, T, N, 13);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 	fname.assign(Surface_Descr->equation_name_of_formula);
@@ -2842,7 +2845,8 @@ void surface_with_action::sweep_4_L9_E4(
 		ost << "-1" << endl;
 
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 
@@ -3322,7 +3326,8 @@ void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
 	}
 
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "surface_with_action::table_of_cubic_surfaces_export_sql done" << endl;

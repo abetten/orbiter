@@ -324,6 +324,10 @@ public:
 					void *final_test_data, int verbose_level),
 			void *final_test_data,
 			int verbose_level);
+	void split_by_values(std::string &fname_in, int verbose_level);
+	void change_values(std::string &fname_in, std::string &fname_out,
+			std::string &input_values, std::string &output_values,
+			int verbose_level);
 
 };
 

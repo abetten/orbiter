@@ -4115,14 +4115,16 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 
 	fname_out.assign(fname);
 	ST.chop_off_extension(fname_out);
-	fname_out.append("_select.csv");
+	fname_out.append("_select_");
+	fname_out.append(rows_text);
+	fname_out.append(".csv");
 
 	{
 		ofstream ost(fname_out);
-		ost << "Row,";
+		//ost << "Row,";
 		S.print_table_row(0, FALSE, ost);
 		for (i = 0; i < nb_rows; i++) {
-			ost << i << ",";
+			//ost << i << ",";
 			S.print_table_row(Rows[i] + 1, FALSE, ost);
 			}
 		ost << "END" << endl;
@@ -5436,6 +5438,125 @@ void file_io::count_solutions_in_list_of_files(
 
 	if (f_v) {
 		cout << "file_io::count_solutions_in_list_of_files done" << endl;
+	}
+}
+
+void file_io::split_by_values(std::string &fname_in, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::split_by_values" << endl;
+	}
+	int *M;
+	int *M2;
+	int m, n, len, t, h, a;
+
+	int_matrix_read_csv(fname_in, M, m, n, verbose_level);
+	len = m * n;
+	data_structures::tally T;
+
+	T.init(M, m * n, FALSE, 0);
+	cout << "values in the file : ";
+	T.print(FALSE);
+	cout << endl;
+
+	M2 = NEW_int(len);
+	for (t = 0; t < T.nb_types; t++) {
+		Int_vec_zero(M2, len);
+		a = T.data_sorted[T.type_first[t]];
+		string fname;
+		char str[1000];
+		data_structures::string_tools ST;
+
+		fname.assign(fname_in);
+		ST.chop_off_extension(fname);
+		snprintf(str, sizeof(str), "_value%d.csv", a);
+		fname.append(str);
+		for (h = 0; h < len; h++) {
+			if (M[h] == a) {
+				M2[h] = 1;
+			}
+		}
+		int_matrix_write_csv(fname, M2, m, n);
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		}
+	}
+	FREE_int(M2);
+
+	if (f_v) {
+		cout << "file_io::split_by_values done" << endl;
+	}
+}
+
+void file_io::change_values(std::string &fname_in, std::string &fname_out,
+		std::string &input_values_label, std::string &output_values_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::change_values" << endl;
+	}
+
+	long int *input_values;
+	int sz_input;
+	long int *output_values;
+	int sz_output;
+
+
+	Get_lint_vector_from_label(input_values_label, input_values, sz_input, 0 /* verbose_level */);
+	Get_lint_vector_from_label(output_values_label, output_values, sz_output, 0 /* verbose_level */);
+
+	if (sz_input != sz_output) {
+		cout << "file_io::change_values sz_input != sz_output" << endl;
+		exit(1);
+	}
+
+	int *M;
+	long int *orig_pos;
+	int m, n, len, h, a, b, idx;
+
+	int_matrix_read_csv(fname_in, M, m, n, verbose_level);
+	len = m * n;
+
+	orig_pos = NEW_lint(sz_input);
+
+	for (h = 0; h < sz_input; h++) {
+		orig_pos[h] = h;
+	}
+
+	data_structures::sorting Sorting;
+
+	Sorting.lint_vec_heapsort_with_log(input_values, orig_pos, sz_input);
+
+	for (h = 0; h < len; h++) {
+		a = M[h];
+
+		if (Sorting.lint_vec_search(input_values, sz_input, a,
+			idx, 0 /*verbose_level*/)) {
+			b = output_values[orig_pos[idx]];
+		}
+		else {
+			b = a;
+		}
+		M[h] = b;
+	}
+
+	int_matrix_write_csv(fname_out, M, m, n);
+	if (f_v) {
+		cout << "Written file " << fname_out
+				<< " of size " << file_size(fname_out) << endl;
+	}
+
+	FREE_int(M);
+	FREE_lint(orig_pos);
+	FREE_lint(input_values);
+	FREE_lint(output_values);
+
+	if (f_v) {
+		cout << "file_io::change_values done" << endl;
 	}
 }
 

@@ -232,7 +232,8 @@ public:
 	void make_spreadsheet_of_fiveplusone_configurations(
 			data_structures::spreadsheet *&Sp,
 		int verbose_level);
-	void identify_five_plus_one(long int *five_lines, long int transversal_line,
+	void identify_five_plus_one(long int *five_lines,
+			long int transversal_line,
 		long int *five_lines_out_as_neighbors, int &orbit_index,
 		int *transporter, int verbose_level);
 	void classify(int verbose_level);

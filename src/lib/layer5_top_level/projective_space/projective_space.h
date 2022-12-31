@@ -554,16 +554,6 @@ public:
 
 class projective_space_global {
 public:
-#if 0
-	void map(
-			projective_space_with_action *PA,
-			std::string &ring_label,
-			std::string &formula_label,
-			std::string &evaluate_text,
-			long int *&Image_pts,
-			int &N_points,
-			int verbose_level);
-#endif
 	void analyze_del_Pezzo_surface(
 			projective_space_with_action *PA,
 			std::string &label,

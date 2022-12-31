@@ -528,7 +528,10 @@ void surface_study::study_group(int verbose_level)
 		Fio.int_matrix_write_csv(fname_out, Table, n, n);
 		cout << "Written file " << fname_out
 				<< " of size " << Fio.file_size(fname_out) << endl;
-		SaS->Stab->write_as_magma_permutation_group(
+
+		groups::magma_interface M;
+
+		M.write_as_magma_permutation_group(SaS->Stab,
 				prefix, SaS->Strong_gens->gens, verbose_level);
 		}
 	else {

@@ -36,6 +36,9 @@ group_modification_description::group_modification_description()
 	f_point_stabilizer = FALSE;
 	point_stabilizer_index = 0;
 
+	f_subfield_subgroup = FALSE;
+	subfield_subgroup_index = 0;
+
 	//std::vector<std::string> from;
 
 }
@@ -99,6 +102,14 @@ int group_modification_description::read_arguments(
 				cout << "-point_stabilizer " << point_stabilizer_index << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-subfield_subgroup") == 0) {
+			f_subfield_subgroup = TRUE;
+			subfield_subgroup_index = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-subfield_subgroup " << subfield_subgroup_index << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
 			from_text.assign(argv[++i]);
@@ -146,6 +157,9 @@ void group_modification_description::print()
 	}
 	if (f_point_stabilizer) {
 		cout << "-point_stabilizer " << point_stabilizer_index << endl;
+	}
+	if (f_subfield_subgroup) {
+		cout << "-subfield_subgroup " << subfield_subgroup_index << endl;
 	}
 
 	if (from.size()) {

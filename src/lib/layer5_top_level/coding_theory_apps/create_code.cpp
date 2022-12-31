@@ -941,6 +941,63 @@ void create_code::export_codewords(std::string &fname, int verbose_level)
 
 }
 
+void create_code::export_codewords_long(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::export_codewords_long" << endl;
+	}
+
+	if (!f_has_generator_matrix) {
+		cout << "create_code::export_codewords_long "
+				"generator matrix is not available" << endl;
+		exit(1);
+	}
+
+	number_theory::number_theory_domain NT;
+	coding_theory::coding_theory_domain Code;
+	int *codewords;
+	long int N;
+
+	if (f_v) {
+		cout << "create_code::export_codewords_long before Code.codewords_table" << endl;
+	}
+	Code.codewords_table(F, n, k,
+			genma, // [k * n]
+			codewords, // q^k
+			N,
+			verbose_level);
+	if (f_v) {
+		cout << "create_code::export_codewords_long after Code.codewords_table" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "export_codewords_long : ";
+		Int_matrix_print(codewords, N, n);
+		cout << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	Fio.int_matrix_write_csv(fname, codewords, N, n);
+
+	if (f_v) {
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	FREE_int(codewords);
+
+	if (f_v) {
+		cout << "create_code::export_codewords_long done" << endl;
+	}
+
+}
+
+
 void create_code::export_codewords_by_weight(std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

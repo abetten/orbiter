@@ -2186,8 +2186,7 @@ void schlaefli::print_trihedral_pairs(std::ostream &ost)
 
 void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 {
-	int i, j, h;
-	long int D[12];
+	int h;
 
 	//cout << "schlaefli::latex_table_of_double_sixes" << endl;
 
@@ -2196,42 +2195,71 @@ void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 	//ost << "\\begin{multicols}{2}" << endl;
 	for (h = 0; h < 36; h++) {
 
-		Lint_vec_copy(Double_six + h * 12, D, 12);
-
 		ost << "$D_{" << h << "} = " << Double_six_label_tex[h] << endl;
 
-		ost << " = \\left[";
-		ost << "\\begin{array}{cccccc}" << endl;
-		for (i = 0; i < 2; i++) {
-			for (j = 0; j < 6; j++) {
-				ost << Labels->Line_label_tex[D[i * 6 + j]];
-				if (j < 6 - 1) {
-					ost << " & ";
-				}
-			}
-			ost << "\\\\" << endl;
-		}
-		ost << "\\end{array}" << endl;
-		ost << "\\right]" << endl;
-		ost << " = \\left[";
-		ost << "\\begin{array}{cccccc}" << endl;
-		for (i = 0; i < 2; i++) {
-			for (j = 0; j < 6; j++) {
-				ost << D[i * 6 + j];
-				if (j < 6 - 1) {
-					ost << " & ";
-				}
-			}
-			ost << "\\\\" << endl;
-		}
-		ost << "\\end{array}" << endl;
-		ost << "\\right]" << endl;
+		ost << " = " << endl;
+
+
+		latex_double_six_symbolic(ost, h);
+
+		ost << " = " << endl;
+
+
+		latex_double_six_index_set(ost, h);
+
 		ost << "$\\\\" << endl;
 		}
 	//ost << "\\end{multicols}" << endl;
 
 	//cout << "schlaefli::latex_table_of_double_sixes done" << endl;
 
+}
+
+
+void schlaefli::latex_double_six_symbolic(std::ostream &ost, int idx)
+{
+	int i, j;
+	long int D[12];
+
+	Lint_vec_copy(Double_six + idx * 12, D, 12);
+
+
+	ost << "\\left[";
+	ost << "\\begin{array}{cccccc}" << endl;
+	for (i = 0; i < 2; i++) {
+		for (j = 0; j < 6; j++) {
+			ost << Labels->Line_label_tex[D[i * 6 + j]];
+			if (j < 6 - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+}
+
+void schlaefli::latex_double_six_index_set(std::ostream &ost, int idx)
+{
+	int i, j;
+	long int D[12];
+
+	Lint_vec_copy(Double_six + idx * 12, D, 12);
+
+
+	ost << "\\left[";
+	ost << "\\begin{array}{cccccc}" << endl;
+	for (i = 0; i < 2; i++) {
+		for (j = 0; j < 6; j++) {
+			ost << D[i * 6 + j];
+			if (j < 6 - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
 }
 
 

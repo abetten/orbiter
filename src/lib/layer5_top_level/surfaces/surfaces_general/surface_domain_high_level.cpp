@@ -252,7 +252,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		Control->print();
 	}
 	prepare_surface_classify_wedge(
-			PA->F, PA,
+			PA,
 			Control,
 			SCW,
 			verbose_level);
@@ -302,10 +302,8 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 
 
 void surface_domain_high_level::prepare_surface_classify_wedge(
-		field_theory::finite_field *F,
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control,
-		//algebraic_geometry::surface_domain *&Surf, surface_with_action *&Surf_A,
 		cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 		int verbose_level)
 {
@@ -316,7 +314,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 		cout << "surface_domain_high_level::prepare_surface_classify_wedge" << endl;
 	}
 
-
+#if 0
 	surface_with_action *Surf_A;
 
 	PA->setup_surface_with_action(
@@ -324,7 +322,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 			verbose_level);
 
 	//Surf = Surf_A->Surf;
-
+#endif
 
 
 	SCW = NEW_OBJECT(cubic_surfaces_and_double_sixes::surface_classify_wedge);
@@ -333,7 +331,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->init" << endl;
 	}
 
-	SCW->init(Surf_A,
+	SCW->init(PA->Surf_A,
 			Control,
 			verbose_level - 1);
 

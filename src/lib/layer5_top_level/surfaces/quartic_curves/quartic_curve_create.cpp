@@ -434,7 +434,7 @@ void quartic_curve_create::override_group(std::string &group_order_text,
 	data_structures_groups::vector_ge *nice_gens;
 
 	Sg->init_from_data_with_target_go_ascii(PA->A, data,
-			nb_gens, PA->A->make_element_size, group_order_text.c_str(),
+			nb_gens, PA->A->make_element_size, group_order_text,
 			nice_gens,
 			verbose_level);
 

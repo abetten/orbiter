@@ -740,6 +740,8 @@ public:
 				int transversal_line, int verbose_level);
 
 	void latex_table_of_double_sixes(std::ostream &ost);
+	void latex_double_six_symbolic(std::ostream &ost, int idx);
+	void latex_double_six_index_set(std::ostream &ost, int idx);
 	void latex_table_of_half_double_sixes(std::ostream &ost);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
@@ -1148,6 +1150,8 @@ public:
 		int *the_six_plane_equations, int lambda, int *the_equation);
 	void print_equation_wrapped(std::ostream &ost, int *the_equation);
 	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
+	void print_one_line_tex(std::ostream &ost,
+			long int *Lines, int nb_lines, int idx);
 	//void alice(std::ostream &ost, long int *Lines, int nb_lines);
 	void print_clebsch_P(std::ostream &ost);
 	void print_clebsch_P_matrix_only(std::ostream &ost);
@@ -1418,6 +1422,13 @@ public:
 	int find_point(long int P, int &idx);
 	void export_something(std::string &what,
 			std::string &fname_base, int verbose_level);
+	void latex_double_six(std::ostream &ost, int idx);
+	void latex_double_six_wedge(std::ostream &ost, int idx);
+	void latex_double_six_Klein(std::ostream &ost, int idx);
+	void latex_double_six_Pluecker_coordinates_transposed(std::ostream &ost, int idx);
+	void latex_double_six_Klein_transposed(std::ostream &ost, int idx);
+	void print_lines_tex(std::ostream &ost);
+	void print_one_line_tex(std::ostream &ost, int idx);
 
 
 };

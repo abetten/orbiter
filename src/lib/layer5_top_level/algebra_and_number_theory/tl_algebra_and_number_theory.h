@@ -231,7 +231,8 @@ public:
 			data_structures_groups::vector_ge *gens,
 		int *primes, int verbose_level);
 
-	void do_eigenstuff(field_theory::finite_field *F, int size, int *Data, int verbose_level);
+	void do_eigenstuff(field_theory::finite_field *F,
+			int size, int *Data, int verbose_level);
 	void A5_in_PSL_(int q, int verbose_level);
 	void A5_in_PSL_2_q(int q,
 			layer2_discreta::discreta_matrix & A,
@@ -248,7 +249,8 @@ public:
 			layer2_discreta::domain *dom_GFq,
 			int verbose_level);
 	int proj_order(layer2_discreta::discreta_matrix &A);
-	void trace(layer2_discreta::discreta_matrix &A, layer2_discreta::discreta_base &tr);
+	void trace(layer2_discreta::discreta_matrix &A,
+			layer2_discreta::discreta_base &tr);
 	void elementwise_power_int(layer2_discreta::discreta_matrix &A, int k);
 	int is_in_center(layer2_discreta::discreta_matrix &B);
 	void matrix_convert_to_numerical(layer2_discreta::discreta_matrix &A, int *AA, int q);
@@ -265,25 +267,9 @@ public:
 			poset_classification::poset_classification_control *Control,
 			groups::linear_group *LG,
 			int d, int target_depth, int verbose_level);
-	void centralizer_of_element(
-			actions::action *A, groups::sims *S,
-			std::string &element_description,
-			std::string &label, int verbose_level);
 	void permutation_representation_of_element(
 			actions::action *A,
 			std::string &element_description,
-			int verbose_level);
-	void normalizer_of_cyclic_subgroup(
-			actions::action *A, groups::sims *S,
-			std::string &element_description,
-			std::string &label, int verbose_level);
-	void find_subgroups(
-			actions::action *A, groups::sims *S,
-			int subgroup_order,
-			std::string &label,
-			int &nb_subgroups,
-			groups::strong_generators *&H_gens,
-			groups::strong_generators *&N_gens,
 			int verbose_level);
 	void relative_order_vector_of_cosets(
 			actions::action *A, groups::strong_generators *SG,
@@ -304,9 +290,11 @@ public:
 			int verbose_level);
 
 	void do_eigenstuff_with_coefficients(
-			field_theory::finite_field *F, int n, std::string &coeffs_text, int verbose_level);
+			field_theory::finite_field *F,
+			int n, std::string &coeffs_text, int verbose_level);
 	void do_eigenstuff_from_file(
-			field_theory::finite_field *F, int n, std::string &fname, int verbose_level);
+			field_theory::finite_field *F,
+			int n, std::string &fname, int verbose_level);
 
 	void orbits_on_points(
 			actions::action *A2,
@@ -391,7 +379,7 @@ public:
 	void print_elements_tex(int f_with_permutation,
 			int f_override_action, actions::action *A_special,
 			int verbose_level);
-	void order_of_products_of_elements(
+	void order_of_products_of_elements_by_rank(
 			std::string &Elements_text,
 			int verbose_level);
 	void save_elements_csv(std::string &fname, int verbose_level);
@@ -437,6 +425,20 @@ public:
 			int *element_data, int nb_elements,
 			int verbose_level);
 	void apply_isomorphism_wedge_product_4to6(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void order_of_products_of_pairs(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void conjugate(
+			std::string &label_of_elements,
+			std::string &conjugate_data,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void print_action_on_surface(
+			std::string &surface_label,
 			std::string &label_of_elements,
 			int *element_data, int nb_elements,
 			int verbose_level);
@@ -571,6 +573,16 @@ public:
 
 	int f_with_fix_structure;
 
+	int f_order_of_products_of_pairs;
+
+	int f_conjugate;
+	std::string conjugate_data;
+
+	int f_print_action_on_surface;
+	std::string print_action_on_surface_label;
+
+
+
 	element_processing_description();
 	~element_processing_description();
 	int read_arguments(
@@ -607,6 +619,9 @@ public:
 
 	int f_point_stabilizer;
 	int point_stabilizer_index;
+
+	int f_subfield_subgroup;
+	int subfield_subgroup_index;
 
 	std::vector<std::string> from;
 
@@ -848,6 +863,38 @@ public:
 
 
 // #############################################################################
+// magma_interface.cpp
+// #############################################################################
+
+
+//! interface for group theoretic computations with the group theory software magma
+
+class magma_interface {
+
+public:
+	magma_interface();
+	~magma_interface();
+	void centralizer_of_element(
+			actions::action *A, groups::sims *S,
+			std::string &element_description,
+			std::string &label, int verbose_level);
+	void normalizer_of_cyclic_subgroup(
+			actions::action *A, groups::sims *S,
+			std::string &element_description,
+			std::string &label, int verbose_level);
+	void find_subgroups(
+			actions::action *A, groups::sims *S,
+			int subgroup_order,
+			std::string &label,
+			int &nb_subgroups,
+			groups::strong_generators *&H_gens,
+			groups::strong_generators *&N_gens,
+			int verbose_level);
+
+};
+
+
+// #############################################################################
 // modified_group_create.cpp
 // #############################################################################
 
@@ -892,6 +939,9 @@ public:
 			group_modification_description *description,
 			int verbose_level);
 	void create_point_stabilizer_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_subfield_subgroup(
 			group_modification_description *description,
 			int verbose_level);
 

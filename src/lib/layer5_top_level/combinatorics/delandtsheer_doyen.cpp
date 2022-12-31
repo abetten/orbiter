@@ -949,7 +949,7 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verb
 	Strong_gens->init_from_data_with_target_go_ascii(A0,
 			data,
 			nb_gens, A0->make_element_size,
-			Descr->subgroup_order.c_str(),
+			Descr->subgroup_order,
 			nice_gens,
 			verbose_level + 2);
 	FREE_OBJECT(nice_gens);
