@@ -148,6 +148,21 @@ void modified_group_create::modified_group_init(
 		}
 	}
 
+	else if (Descr->f_projectivity_subgroup) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_projectivity_subgroup" << endl;
+		}
+
+		create_projectivity_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_projectivity_subgroup" << endl;
+		}
+	}
+
 	else if (Descr->f_subfield_subgroup) {
 
 		if (f_v) {
@@ -753,6 +768,83 @@ void modified_group_create::create_point_stabilizer_subgroup(
 }
 
 
+void modified_group_create::create_projectivity_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_projectivity_subgroup" << endl;
+	}
+
+	any_group *AG;
+
+	AG = Get_object_of_type_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
+
+	if (f_v) {
+		cout << "modified_group_create::create_projectivity_subgroup "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_projectivity_subgroup "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	A_modified = A_previous;
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_projectivity_subgroup "
+				"before A_previous->compute_projectivity_subgroup" << endl;
+	}
+
+	A_previous->compute_projectivity_subgroup(
+			Strong_gens,
+			AG->Subgroup_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_projectivity_subgroup "
+				"after A_previous->compute_projectivity_subgroup" << endl;
+	}
+
+	f_has_strong_generators = TRUE;
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_projectivity_subgroup "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "_ProjectivitySubgroup");
+	snprintf(str2, sizeof(str2), " {\\rm\\_ProjectivitySubgroup}");
+	label.append(str1);
+	label_tex.append(str2);
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_projectivity_subgroup "
+				"done" << endl;
+	}
+}
+
+
+
 
 void modified_group_create::create_subfield_subgroup(
 		group_modification_description *description,
@@ -769,9 +861,9 @@ void modified_group_create::create_subfield_subgroup(
 		exit(1);
 	}
 
-	int index;
+	//int index;
 
-	index = description->subfield_subgroup_index;
+	//index = description->subfield_subgroup_index;
 
 	any_group *AG;
 

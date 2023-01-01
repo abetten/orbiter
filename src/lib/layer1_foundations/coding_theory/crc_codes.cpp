@@ -157,7 +157,9 @@ void crc_codes::crc256_test_k_subsets(int message_length, int R, int k, int verb
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "crc_codes::crc256_test_k_subsets message_length in bytes = " << message_length << " R=" << R << " k=" << k << endl;
+		cout << "crc_codes::crc256_test_k_subsets "
+				"message_length in bytes = " << message_length
+				<< " R=" << R << " k=" << k << endl;
 	}
 	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
 	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
@@ -226,7 +228,8 @@ void crc_codes::crc256_test_k_subsets(int message_length, int R, int k, int verb
 			check[3] = p[3];
 		}
 		else {
-			cout << "crc_codes::crc256_test_k_subsets I don't have a code of that length" << endl;
+			cout << "crc_codes::crc256_test_k_subsets "
+					"I don't have a code of that length" << endl;
 			exit(1);
 		}
 
@@ -330,12 +333,14 @@ void crc_codes::crc32_remainders(int message_length, int verbose_level)
 }
 
 
-void crc_codes::crc32_remainders_compute(int message_length, int R, uint32_t *&Crc, int verbose_level)
+void crc_codes::crc32_remainders_compute(int message_length,
+		int R, uint32_t *&Crc, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "crc_codes::crc32_remainders_compute message_length in bytes = " << message_length << " R=" << R << endl;
+		cout << "crc_codes::crc32_remainders_compute "
+				"message_length in bytes = " << message_length << " R=" << R << endl;
 	}
 	//cout << "sizeof(int) = " << (int) sizeof(int) << endl;
 	//cout << "sizeof(long int) = " << (int) sizeof(long int) << endl;
@@ -937,7 +942,8 @@ void crc_codes::introduce_errors(
 		exit(1);
 	}
 
-	cout << "nb_erroneous_blocks = " << nb_erroneous_blocks << " / " << nb_blocks << endl;
+	cout << "nb_erroneous_blocks = " << nb_erroneous_blocks
+			<< " / " << nb_blocks << endl;
 	cout << "nb_errors = " << nb_errors << endl;
 
 	// write the modified output file:
@@ -950,7 +956,8 @@ void crc_codes::introduce_errors(
 			<< " of size " << Fio.file_size(Crc_options_description->output_fname) << endl;
 
 	Fio.lint_matrix_write_csv(fname_error, Ep, nb_errors, 3);
-	cout << "Written file " << fname_error << " of size " << Fio.file_size(fname_error) << endl;
+	cout << "Written file " << fname_error << " of size "
+			<< Fio.file_size(fname_error) << endl;
 
 	FREE_OBJECTS(Error_pattern);
 	//FREE_lint(Error_pattern);
@@ -962,7 +969,9 @@ void crc_codes::introduce_errors(
 
 }
 
-void crc_codes::crc_encode_file_based(std::string &fname_in, std::string &fname_out,
+void crc_codes::crc_encode_file_based(
+		std::string &fname_in,
+		std::string &fname_out,
 		std::string &crc_type,
 		int block_length, int verbose_level)
 {
@@ -1096,7 +1105,8 @@ void crc_codes::crc16_file_based(
 		}
 
 	}
-	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+	cout << "Written file " << fname_out << " of size "
+			<< Fio.file_size(fname_out) << endl;
 
 
 
@@ -1189,7 +1199,8 @@ void crc_codes::crc32_file_based(
 		}
 
 	}
-	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+	cout << "Written file " << fname_out << " of size "
+			<< Fio.file_size(fname_out) << endl;
 
 
 
@@ -1265,7 +1276,8 @@ void crc_codes::crc771_file_based(
 		}
 
 	}
-	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+	cout << "Written file " << fname_out << " of size "
+			<< Fio.file_size(fname_out) << endl;
 
 
 
@@ -1350,8 +1362,10 @@ void crc_codes::check_errors(
 	block_length = Crc_options_description->block_length;
 	information_length = block_length - nb_check_bytes;
 	if (f_v) {
-		cout << "crc_codes::check_errors block_length = " << block_length << endl;
-		cout << "crc_codes::check_errors information_length = " << information_length << endl;
+		cout << "crc_codes::check_errors "
+				"block_length = " << block_length << endl;
+		cout << "crc_codes::check_errors "
+				"information_length = " << information_length << endl;
 
 	}
 
@@ -1418,8 +1432,12 @@ void crc_codes::check_errors(
 	int nb_error = 0;
 	int m;
 
-	cout << "Reading file " << fname_error_log << " of size " << Fio.file_size(fname_error_log) << endl;
-	Fio.lint_matrix_read_csv(fname_error_log, Error_pattern, nb_error, m, verbose_level);
+	cout << "Reading file " << fname_error_log << " of size "
+			<< Fio.file_size(fname_error_log) << endl;
+
+	Fio.lint_matrix_read_csv(fname_error_log,
+			Error_pattern, nb_error, m,
+			verbose_level);
 	if (m != 3) {
 		cout << "m != 3" << endl;
 		exit(1);
@@ -1601,11 +1619,13 @@ void crc_codes::check_errors(
 #if 1
 	cout << "Writing Faulty_blocks" << endl;
 	Fio.lint_matrix_write_csv(fname_error_detected, Faulty_blocks, nb_error_detected, 3);
-	cout << "Written file " << fname_error_detected << " of size " << Fio.file_size(fname_error_detected) << endl;
+	cout << "Written file " << fname_error_detected << " of size "
+			<< Fio.file_size(fname_error_detected) << endl;
 
 	cout << "Writing Error_undetected" << endl;
 	Fio.lint_matrix_write_csv(fname_error_undetected, Error_undetected, nb_error_undetected, 3);
-	cout << "Written file " << fname_error_undetected << " of size " << Fio.file_size(fname_error_undetected) << endl;
+	cout << "Written file " << fname_error_undetected << " of size "
+			<< Fio.file_size(fname_error_undetected) << endl;
 #endif
 
 
@@ -1659,8 +1679,10 @@ void crc_codes::extract_block(
 	block_length = Crc_options_description->block_length;
 	information_length = block_length - 4;
 	if (f_v) {
-		cout << "crc_codes::extract_block block_length = " << block_length << endl;
-		cout << "crc_codes::extract_block information_length = " << information_length << endl;
+		cout << "crc_codes::extract_block "
+				"block_length = " << block_length << endl;
+		cout << "crc_codes::extract_block "
+				"information_length = " << information_length << endl;
 
 	}
 
@@ -1935,7 +1957,8 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 
 	degree = Nth->FX->degree(CRC_poly);
 	if (f_v) {
-		cout << "crc_codes::CRC_encode_text degree=" << degree << endl;
+		cout << "crc_codes::CRC_encode_text "
+				"degree=" << degree << endl;
 	}
 
 	int nb_rows;
@@ -2010,7 +2033,8 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
 		Fio.int_matrix_write_csv(fname_out, information, nb_rows, nb_cols);
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "Written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
 
 		for (j = 0; j < nb_cols; j++) {
 			a = 0;
@@ -2028,7 +2052,8 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
 		Fio.int_matrix_write_csv(fname_out, col_parity, 1, nb_cols);
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "Written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
 
 
 		for (i = 0; i < nb_rows; i++) {
@@ -2046,7 +2071,8 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
 		Fio.int_matrix_write_csv(fname_out, row_parity, 1, nb_rows);
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "Written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
 
 		Int_vec_copy(information, information_and_parity, nb_rows * nb_cols);
 		Int_vec_copy(row_parity, information_and_parity + nb_rows * nb_cols, nb_rows);
@@ -2059,7 +2085,8 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
 		Fio.int_matrix_write_csv(fname_out, information_and_parity, 1, nb_rows * nb_cols + nb_rows + nb_cols);
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "Written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
 
 
 		for (i = 0; i < IPq; i++) {
@@ -2074,7 +2101,8 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 		fname_out.append("_IPq.csv");
 
 		Fio.int_matrix_write_csv(fname_out, information_and_parity_Fq, 1, IPq);
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "Written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
 
 		ring_theory::unipoly_object P;
 
@@ -2110,7 +2138,8 @@ void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
 		fname_out.append("_codeword_Fq.csv");
 
 		Fio.int_matrix_write_csv(fname_out, codeword_Fq, 1, IPq + degree);
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "Written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
 
 
 	}

@@ -620,6 +620,8 @@ public:
 	int f_point_stabilizer;
 	int point_stabilizer_index;
 
+	int f_projectivity_subgroup;
+
 	int f_subfield_subgroup;
 	int subfield_subgroup_index;
 
@@ -863,38 +865,6 @@ public:
 
 
 // #############################################################################
-// magma_interface.cpp
-// #############################################################################
-
-
-//! interface for group theoretic computations with the group theory software magma
-
-class magma_interface {
-
-public:
-	magma_interface();
-	~magma_interface();
-	void centralizer_of_element(
-			actions::action *A, groups::sims *S,
-			std::string &element_description,
-			std::string &label, int verbose_level);
-	void normalizer_of_cyclic_subgroup(
-			actions::action *A, groups::sims *S,
-			std::string &element_description,
-			std::string &label, int verbose_level);
-	void find_subgroups(
-			actions::action *A, groups::sims *S,
-			int subgroup_order,
-			std::string &label,
-			int &nb_subgroups,
-			groups::strong_generators *&H_gens,
-			groups::strong_generators *&N_gens,
-			int verbose_level);
-
-};
-
-
-// #############################################################################
 // modified_group_create.cpp
 // #############################################################################
 
@@ -939,6 +909,9 @@ public:
 			group_modification_description *description,
 			int verbose_level);
 	void create_point_stabilizer_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_projectivity_subgroup(
 			group_modification_description *description,
 			int verbose_level);
 	void create_subfield_subgroup(

@@ -565,6 +565,7 @@ void action_global::lift_generators(
 		data_structures_groups::vector_ge *&gens_out,
 	action *Aq, field_theory::subfield_structure *S, int n,
 	int verbose_level)
+// gens_in are m x m (i.e., small), gens_out are n x n (i.e., large). Here, m * s = n.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

@@ -410,10 +410,13 @@ void magma_interface::export_magma(actions::action *A,
 		int h, i, j;
 
 		M = A->get_matrix_group();
+
+#if 0
 		if (M->f_semilinear) {
 			cout << "cannot export to magma if semilinear" << endl;
 			return;
 		}
+#endif
 		field_theory::finite_field *F;
 
 		F = M->GFq;
@@ -452,6 +455,12 @@ void magma_interface::export_magma(actions::action *A,
 				}
 			}
 			ost << " >;" << endl;
+			if (M->f_semilinear) {
+				if (Elt[M->n * M->n]) {
+					cout << "cannot export to magma if Frobenius is present." << endl;
+					return;
+				}
+			}
 
 		}
 		else {

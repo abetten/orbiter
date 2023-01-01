@@ -161,26 +161,11 @@ public:
 	void do_minimum_distance(field_theory::finite_field *F,
 			int *M, int m, int n,
 			int verbose_level);
-#if 0
-	void do_linear_code_through_basis(
-			field_theory::finite_field *F,
-			int n,
-			long int *basis_set, int k,
-			int f_embellish,
-			int verbose_level);
-#endif
 	void matrix_from_projective_set(
 			field_theory::finite_field *F,
 			int n, int k, long int *columns_set_of_size_n,
 			int *genma,
 			int verbose_level);
-#if 0
-	void do_linear_code_through_columns_of_parity_check_projectively(
-			field_theory::finite_field *F,
-			int n,
-			long int *columns_set, int k,
-			int verbose_level);
-#endif
 	void do_linear_code_through_columns_of_generator_matrix(
 			field_theory::finite_field *F,
 			int n,
@@ -235,14 +220,6 @@ public:
 			long int *perm,
 			int *&subcode_genma, int &subcode_k,
 			int verbose_level);
-#if 0
-	void code_diagram(
-			std::string &label,
-			long int *Words,
-			int nb_words, int n, int f_metric_balls, int radius_of_metric_ball,
-			int f_enhance, int radius,
-			int verbose_level);
-#endif
 	void polynomial_representation_of_boolean_function(
 			field_theory::finite_field *F,
 			std::string &label_txt,

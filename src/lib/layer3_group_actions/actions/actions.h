@@ -966,7 +966,8 @@ public:
 
 class action_global {
 public:
-	void action_print_symmetry_group_type(std::ostream &ost, symmetry_group_type a);
+	void action_print_symmetry_group_type(
+			std::ostream &ost, symmetry_group_type a);
 	void make_generators_stabilizer_of_three_components(
 		action *A_PGL_n_q, action *A_PGL_k_q,
 		int k, data_structures_groups::vector_ge *gens, int verbose_level);
@@ -981,10 +982,12 @@ public:
 	void set_orthogonal_group_type(int f_siegel,
 		int f_reflection, int f_similarity, int f_semisimilarity);
 	int get_orthogonal_group_type_f_reflection();
-	void lift_generators(data_structures_groups::vector_ge *gens_in,
+	void lift_generators(
+			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
 		action *Aq, field_theory::subfield_structure *S, int n, int verbose_level);
-	void retract_generators(data_structures_groups::vector_ge *gens_in,
+	void retract_generators(
+			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
 		action *AQ, field_theory::subfield_structure *S, int n,
 		int verbose_level);
