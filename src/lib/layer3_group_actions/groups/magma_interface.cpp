@@ -404,7 +404,7 @@ void magma_interface::export_magma(actions::action *A,
 		cout << "magma_interface::export_magma" << endl;
 		A->print_info();
 	}
-	if (A->type_G == matrix_group_t) {
+	if (A->is_matrix_group()) {
 		matrix_group *M;
 		int *Elt;
 		int h, i, j;
@@ -487,6 +487,18 @@ void magma_interface::export_magma(actions::action *A,
 			}
 			ost << " >;" << endl;
 		}
+	}
+	else {
+		cout << "magma_interface::export_magma not A->is_matrix_group()" << endl;
+
+		actions::action_global AG;
+
+		cout << "magma_interface::export_magma type_g = ";
+
+		AG.action_print_symmetry_group_type(cout,
+				A->type_G);
+		cout << endl;
+		exit(1);
 	}
 	if (f_v) {
 		cout << "magma_interface::export_magma done" << endl;

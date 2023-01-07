@@ -1008,9 +1008,9 @@ public:
 	void test_swap();
 	void block_swap_chars(char *ptr, int size, int no);
 	void code_int4(char *&p, int_4 i);
-	int_4 decode_int4(char *&p);
-	void code_uchar(char *&p, uchar a);
-	void decode_uchar(char *&p, uchar &a);
+	int_4 decode_int4(const char *&p);
+	void code_uchar(char *&p, unsigned char a);
+	void decode_uchar(const char *&p, unsigned char &a);
 	void get_date(std::string &str);
 	void test_typedefs();
 

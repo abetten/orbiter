@@ -34,7 +34,7 @@ public:
 	actions::action *A;
 
 	int f_has_ascii_coding;
-	char *ascii_coding;
+	std::string ascii_coding;
 
 	int f_has_strong_generators;
 	vector_ge *SG;
@@ -46,8 +46,8 @@ public:
 	group_container();
 	~group_container();
 	void init(actions::action *A, int verbose_level);
-	void init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level);
-	void init_ascii_coding(const char *ascii_coding, int verbose_level);
+	void init_ascii_coding_to_sims(std::string &ascii_coding, int verbose_level);
+	void init_ascii_coding(std::string &ascii_coding, int verbose_level);
 	void delete_ascii_coding();
 	void delete_sims();
 	void init_strong_generators_empty_set(int verbose_level);

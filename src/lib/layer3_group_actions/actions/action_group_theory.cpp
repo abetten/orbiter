@@ -64,8 +64,9 @@ void action::report_groups_and_normalizers(
 	}
 }
 
+#if 0
 void action::report_fixed_objects(int *Elt,
-		char *fname_latex,
+		std::string &fname_latex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -199,6 +200,7 @@ void action::report_fixed_objects(int *Elt,
 		cout << "action::report_fixed_objects done" << endl;
 		}
 }
+#endif
 
 void action::element_conjugate_bvab(int *Elt_A,
 		int *Elt_B, int *Elt_C,

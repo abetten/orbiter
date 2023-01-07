@@ -2011,9 +2011,14 @@ void flag_orbit_folding::make_set_smaller(int case_nb_local,
 		return;
 	}
 
+	actions::action_global AcGl;
+
 	for (j = Iso->level; j < Iso->size; j++) {
 		a = set[j];
-		b = Iso->A->least_image_of_point(gens, a, Elt1, verbose_level - 1);
+
+
+		b = AcGl.least_image_of_point(Iso->A, gens, a, Elt1, verbose_level - 1);
+
 		if (b < m) {
 			Iso->A->map_a_set_and_reorder(set, image_set, Iso->size, Elt1, 0);
 			Lint_vec_copy(image_set, set, Iso->size);
@@ -2039,7 +2044,7 @@ void flag_orbit_folding::make_set_smaller(int case_nb_local,
 	cout << "j : set[j] : least image" << endl;
 	for (j = 0; j < Iso->size; j++) {
 		a = set[j];
-		b = Iso->A->least_image_of_point(gens, a, Elt1, verbose_level - 1);
+		b = AcGl.least_image_of_point(Iso->A, gens, a, Elt1, verbose_level - 1);
 		cout << setw(4) << j << " " << setw(4) << a << " "
 			<< setw(4) << b << " ";
 		if (b < a) {
@@ -2446,6 +2451,7 @@ int flag_orbit_folding::trace_next_point_database(
 
 	{
 		data_structures_groups::vector_ge gens;
+		actions::action_global AcGl;
 
 		gens.init(Iso->Sub->gen->get_A(), verbose_level - 2);
 		gens.allocate(nb_strong_generators, verbose_level - 2);
@@ -2467,7 +2473,9 @@ int flag_orbit_folding::trace_next_point_database(
 			cout << "computing least_image_of_point "
 					"for point " << pt << endl;
 		}
-		image = Iso->Sub->gen->get_A2()->least_image_of_point(gens,
+		image = AcGl.least_image_of_point(
+				Iso->Sub->gen->get_A2(),
+				gens,
 				pt, tmp_ELT, verbose_level - 3);
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes

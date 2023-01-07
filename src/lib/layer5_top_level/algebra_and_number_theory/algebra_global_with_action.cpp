@@ -3061,7 +3061,9 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 			// Create the young symmetrizer based on the partition.
 			// We do the very first tableau for this partition.
 
-		Y->young_symmetrizer(parts, nb_parts, Tableau[cnt], elt1, elt2, h_alpha, verbose_level);
+		Y->young_symmetrizer(parts, nb_parts,
+				Tableau[cnt], elt1, elt2, h_alpha,
+				verbose_level);
 
 
 		if (f_v) {

@@ -1295,7 +1295,11 @@ void poset_of_orbits::read_level_file(int level,
 			Aut.init(PC->get_poset()->A, verbose_level - 2);
 
 			if (strlen(data[i])) {
-				Aut.init_ascii_coding(data[i], verbose_level - 2);
+
+				string s;
+
+				s.assign(data[i]);
+				Aut.init_ascii_coding(s, verbose_level - 2);
 
 				Aut.decode_ascii(FALSE);
 

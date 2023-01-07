@@ -3088,6 +3088,7 @@ void surface_classify_wedge::identify_general_abcd(
 	int iso_type;
 	int *Elt;
 	int q2, q3, q4;
+	geometry::geometry_global Geo;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_general_abcd" << endl;
@@ -3128,7 +3129,7 @@ void surface_classify_wedge::identify_general_abcd(
 			}
 
 			if (EVEN(q)) {
-				F->minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(a, b,
+				Geo.minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(F, a, b,
 						a0, b0, verbose_level);
 
 				cout << "a=" << a << " b=" << b << " a0=" << a0 << " b0=" << b0 << endl;

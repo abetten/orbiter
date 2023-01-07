@@ -18,14 +18,14 @@ namespace field_theory {
 
 void finite_field::report(std::ostream &ost, int verbose_level)
 {
-	ost << "\\small" << endl;
-	ost << "\\arraycolsep=2pt" << endl;
+	//ost << "\\small" << endl;
+	//ost << "\\arraycolsep=2pt" << endl;
 	ost << "\\parindent=0pt" << endl;
 	ost << "$q = " << q << "$\\\\" << endl;
 	ost << "$p = " << p << "$\\\\" << endl;
 	ost << "$e = " << e << "$\\\\" << endl;
 
-	ost << "\\clearpage" << endl << endl;
+	//ost << "\\clearpage" << endl << endl;
 	ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
 	cheat_sheet(ost, verbose_level);
 
@@ -102,14 +102,18 @@ void finite_field::print_tables()
 	cout << "i : inverse(i) : frobenius_power(i, 1) : alpha_power(i) : "
 			"log_alpha(i)" << endl;
 	for (i = 0; i < q; i++) {
-		if (i)
+		if (i) {
 			a = inverse(i);
-		else
+		}
+		else {
 			a = -1;
-		if (i)
+		}
+		if (i) {
 			l = log_alpha(i);
-		else
+		}
+		else {
 			l = -1;
+		}
 		b = frobenius_power(i, 1);
 		c = alpha_power(i);
 		cout << setw(4) << i << " : "
@@ -130,7 +134,7 @@ void finite_field::display_T2(ostream &ost)
 	for (i = 0; i < q; i++) {
 		ost << setw((int) log10_of_q) << i << " & "
 				<< setw((int) log10_of_q) << T2(i) << endl;
-		}
+	}
 }
 
 void finite_field::display_T3(ostream &ost)
@@ -141,7 +145,7 @@ void finite_field::display_T3(ostream &ost)
 	for (i = 0; i < q; i++) {
 		ost << setw((int) log10_of_q) << i << " & "
 				<< setw((int) log10_of_q) << T3(i) << endl;
-		}
+	}
 }
 
 void finite_field::display_N2(ostream &ost)
@@ -152,7 +156,7 @@ void finite_field::display_N2(ostream &ost)
 	for (i = 0; i < q; i++) {
 		ost << setw((int) log10_of_q) << i << " & "
 				<< setw((int) log10_of_q) << N2(i) << endl;
-		}
+	}
 }
 
 void finite_field::display_N3(ostream &ost)
@@ -163,7 +167,7 @@ void finite_field::display_N3(ostream &ost)
 	for (i = 0; i < q; i++) {
 		ost << setw((int) log10_of_q) << i << " & "
 				<< setw((int) log10_of_q) << N3(i) << endl;
-		}
+	}
 }
 
 void finite_field::print_integer_matrix_zech(ostream &ost,
@@ -178,17 +182,18 @@ void finite_field::print_integer_matrix_zech(ostream &ost,
 		for (j = 0; j < n; j++) {
 			a = p[i * n + j];
 			if (a == 0) {
-				for (h = 0; h < w - 1; h++)
+				for (h = 0; h < w - 1; h++) {
 					ost << " ";
-				ost << ". ";
 				}
+				ost << ". ";
+			}
 			else {
 				a = log_alpha(a);
 				ost << setw(w) << a << " ";
-				}
 			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 }
 
 
@@ -203,19 +208,19 @@ void finite_field::print_embedding(finite_field &subfield,
 	cout << "embedding:" << endl;
 	for (i = 0; i < q; i++) {
 		cout << setw(4) << i << " : " << setw(4) << embedding[i] << endl;
-		}
+	}
 	cout << "components:" << endl;
 	for (i = 0; i < Q; i++) {
 		cout << setw(4) << i << setw(4) << components[i * 2 + 0]
 			<< setw(4) << components[i * 2 + 1] << endl;
-		}
+	}
 	cout << "pair_embeddings:" << endl;
 	for (i = 0; i < q; i++) {
 		for (j = 0; j < q; j++) {
 			cout << setw(4) << i << setw(4) << j << setw(4)
 				<< pair_embedding[i * q + j] << endl;
-			}
 		}
+	}
 }
 
 void finite_field::print_embedding_tex(finite_field &subfield,

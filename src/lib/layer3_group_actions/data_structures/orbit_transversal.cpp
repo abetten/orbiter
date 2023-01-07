@@ -122,10 +122,13 @@ void orbit_transversal::read_from_file(
 		}
 		groups::strong_generators *gens;
 		long int *set;
+		string s;
 
 		gens = NEW_OBJECT(groups::strong_generators);
+
+		s.assign(Aut_ascii[i]);
 		gens->init_from_ascii_coding(A,
-				Aut_ascii[i], 0 /* verbose_level */);
+				s, 0 /* verbose_level */);
 		
 		set = NEW_lint(Set_sizes[i]);
 		Lint_vec_copy(Sets[i], set, Set_sizes[i]);
@@ -205,8 +208,12 @@ void orbit_transversal::read_from_file_one_case_only(
 	long int *set;
 
 	gens = NEW_OBJECT(groups::strong_generators);
+
+	string s;
+
+	s.assign(Aut_ascii[i]);
 	gens->init_from_ascii_coding(A,
-			Aut_ascii[i], 0 /* verbose_level */);
+			s, 0 /* verbose_level */);
 
 	set = NEW_lint(Set_sizes[i]);
 

@@ -1314,7 +1314,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			cout << endl;
 		}
 
-		if (A_perm->reverse_engineer_semilinear_map(P,
+		if (P->reverse_engineer_semilinear_map(
 			gens->ith(g), Mtx, frobenius,
 			0 /*verbose_level - 2*/)) {
 

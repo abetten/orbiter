@@ -23,16 +23,12 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 {
 	f_report = FALSE;
 
-	//f_report_with_group = FALSE;
-
 	f_export_something = FALSE;
 	//std::string export_something_what;
 
 	f_all_quartic_curves = FALSE;
 
 	f_export_all_quartic_curves = FALSE;
-
-	//f_export_tritangent_planes = FALSE;
 
 }
 
@@ -61,14 +57,6 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-report " << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-report_with_group") == 0) {
-			f_report_with_group = TRUE;
-			if (f_v) {
-				cout << "-report_with_group " << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
 			f_export_something = TRUE;
 			export_something_what.assign(argv[++i]);
@@ -88,14 +76,6 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-export_all_quartic_curves " << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-export_tritangent_planes") == 0) {
-			f_export_tritangent_planes = TRUE;
-			if (f_v) {
-				cout << "-export_tritangent_planes " << endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -124,11 +104,6 @@ void cubic_surface_activity_description::print()
 	if (f_report) {
 		cout << "-report " << endl;
 	}
-#if 0
-	if (f_report_with_group) {
-		cout << "-report_with_group " << endl;
-	}
-#endif
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;
 	}
@@ -138,11 +113,6 @@ void cubic_surface_activity_description::print()
 	if (f_export_all_quartic_curves) {
 		cout << "-export_all_quartic_curves " << endl;
 	}
-#if 0
-	if (f_export_tritangent_planes) {
-		cout << "-export_tritangent_planes " << endl;
-	}
-#endif
 }
 
 

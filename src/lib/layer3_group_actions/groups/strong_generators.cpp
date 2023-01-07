@@ -103,7 +103,7 @@ void strong_generators::init_from_sims(groups::sims *S, int verbose_level)
 }
 
 void strong_generators::init_from_ascii_coding(actions::action *A,
-		char *ascii_coding, int verbose_level)
+		std::string &ascii_coding, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1830,6 +1830,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(std::o
 	ring_theory::longinteger_object go;
 	sims *S;
 	int *Elt;
+	geometry::geometry_global Geo;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
@@ -1848,7 +1849,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(std::o
 			field_theory::finite_field *F;
 
 			F = A->matrix_group_finite_field();
-			F->isomorphism_to_special_orthogonal(Elt, A6, 0 /* verbose_level*/);
+			Geo.isomorphism_to_special_orthogonal(F, Elt, A6, 0 /* verbose_level*/);
 			ost << "=" << endl;
 			F->print_matrix_latex(ost, A6, 6, 6);
 		}
@@ -2991,11 +2992,11 @@ void strong_generators::generators_for_shallow_schreier_tree(
 #endif
 
 void strong_generators::compute_ascii_coding(
-		char *&ascii_coding, int verbose_level)
+		std::string &ascii_coding, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int sz, i, j;
-	char *p;
+	char *p, *p0;
 	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
@@ -3003,8 +3004,8 @@ void strong_generators::compute_ascii_coding(
 	}
 	sz = 2 * ((2 + A->base_len() + A->base_len()) * sizeof(int_4) +
 			A->coded_elt_size_in_char * gens->len) + 1;
-	ascii_coding = NEW_char(sz);
-	p = ascii_coding;
+	p = NEW_char(sz);
+	p0 = p;
 	Os.code_int4(p, (int_4) A->base_len());
 
 	Os.code_int4(p, (int_4) gens->len);
@@ -3021,12 +3022,13 @@ void strong_generators::compute_ascii_coding(
 		}
 	}
 	*p++ = 0;
-	if (p - ascii_coding != sz) {
+	if (p - p0 != sz) {
 		cout << "strong_generators::compute_ascii_coding "
 				"p - ascii_coding != sz" << endl;
 		exit(1);
 	}
 	
+	ascii_coding.assign(p0);
 
 	if (f_v) {
 		cout << "strong_generators::compute_ascii_coding "
@@ -3035,11 +3037,11 @@ void strong_generators::compute_ascii_coding(
 }
 
 void strong_generators::decode_ascii_coding(
-		char *ascii_coding, int verbose_level)
+		std::string &ascii_coding, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int str_len, len, nbsg, i, j;
-	char *p, *p0;
+	const char *p, *p0;
 	actions::action *A_save;
 	int *base1;
 	orbiter_kernel_system::os_interface Os;
@@ -3053,9 +3055,9 @@ void strong_generators::decode_ascii_coding(
 	//freeself(); // ToDo
 	A = A_save;
 
-	p = ascii_coding;
+	p = ascii_coding.c_str();
 	p0 = p;
-	str_len = strlen(ascii_coding);
+	str_len = ascii_coding.length();
 	len = Os.decode_int4(p);
 	nbsg = Os.decode_int4(p);
 	if (len != A->base_len()) {
@@ -3705,6 +3707,7 @@ void strong_generators::report_fixed_objects_in_P3(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	actions::action_global AG;
 
 	if (f_v) {
 		cout << "strong_generators::report_fixed_objects_in_P3" << endl;
@@ -3714,7 +3717,8 @@ void strong_generators::report_fixed_objects_in_P3(
 	for (i = 0; i < gens->len; i++) {
 
 		ost << "\\item" << endl;
-		A->report_fixed_objects_in_P3(ost,
+		AG.report_fixed_objects_in_P3(ost,
+				A,
 				P3,
 				gens->ith(i),
 				verbose_level);

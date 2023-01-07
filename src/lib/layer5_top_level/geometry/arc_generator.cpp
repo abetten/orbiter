@@ -557,7 +557,9 @@ void arc_generator::print(int len, long int *S)
 
 void arc_generator::print_set_in_affine_plane(int len, long int *S)
 {
-	PA->F->print_set_in_affine_plane(len, S);
+	geometry::geometry_global Geo;
+
+	Geo.print_set_in_affine_plane(PA->F, len, S);
 }
 
 

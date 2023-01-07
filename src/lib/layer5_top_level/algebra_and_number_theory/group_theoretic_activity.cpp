@@ -91,7 +91,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 					"before AG->A->apply_based_on_text" << endl;
 		}
 
-		AG->A->apply_based_on_text(Descr->apply_input,
+		actions::action_global AcGl;
+
+		AcGl.apply_based_on_text(AG->A,
+				Descr->apply_input,
 				Descr->apply_element, verbose_level);
 
 		if (f_v) {
@@ -122,11 +125,15 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity f_multiply" << endl;
 		}
+
+		actions::action_global AcGl;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->A->multiply_based_on_text" << endl;
 		}
-		AG->A->multiply_based_on_text(Descr->multiply_a,
+		AcGl.multiply_based_on_text(AG->A,
+				Descr->multiply_a,
 				Descr->multiply_b, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -138,11 +145,15 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity f_inverse" << endl;
 		}
+
+		actions::action_global AcGl;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->A->inverse_based_on_text" << endl;
 		}
-		AG->A->inverse_based_on_text(Descr->inverse_a, verbose_level);
+		AcGl.inverse_based_on_text(AG->A,
+				Descr->inverse_a, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->A->inverse_based_on_text" << endl;
@@ -154,11 +165,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity f_consecutive_powers" << endl;
 		}
+
+		actions::action_global AcGl;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->A->consecutive_powers_based_on_text" << endl;
 		}
-		AG->A->consecutive_powers_based_on_text(
+		AcGl.consecutive_powers_based_on_text(AG->A,
 				Descr->consecutive_powers_a_text,
 				Descr->consecutive_powers_exponent_text,
 				verbose_level);
@@ -174,11 +188,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity f_raise_to_the_power" << endl;
 		}
+
+		actions::action_global AcGl;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->A->raise_to_the_power_based_on_text" << endl;
 		}
-		AG->A->raise_to_the_power_based_on_text(
+		AcGl.raise_to_the_power_based_on_text(AG->A,
 				Descr->raise_to_the_power_a_text,
 				Descr->raise_to_the_power_exponent_text,
 				verbose_level);

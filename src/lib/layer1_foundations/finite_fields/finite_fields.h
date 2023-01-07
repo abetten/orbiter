@@ -518,7 +518,6 @@ public:
 	int has_quadratic_subfield();
 	int belongs_to_quadratic_subfield(int a);
 	long int compute_subfield_polynomial(int order_subfield,
-			//int f_latex, std::ostream &ost,
 			int verbose_level);
 	void compute_subfields(int verbose_level);
 	int find_primitive_element(int verbose_level);
@@ -649,60 +648,6 @@ public:
 	void display_all_PG_elements(int n);
 	void display_all_PG_elements_not_in_subspace(int n, int m);
 	void display_all_AG_elements(int n);
-
-
-	void do_cone_over(int n,
-		long int *set_in, int set_size_in,
-		long int *&set_out, int &set_size_out,
-		int verbose_level);
-	void do_blocking_set_family_3(int n,
-		long int *set_in, int set_size,
-		long int *&the_set_out, int &set_size_out,
-		int verbose_level);
-	// creates projective_space PG(n,q)
-	void create_orthogonal(int epsilon, int n,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_hermitian(int n,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-		int verbose_level);
-	// creates hermitian
-	void create_ttp_code(finite_field *Fq_subfield,
-		int f_construction_A, int f_hyperoval, int f_construction_B,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-		// this is FQ
-	void create_segre_variety(int a, int b,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-		int verbose_level);
-	// The Segre map goes from PG(a,q) cross PG(b,q) to PG((a+1)*(b+1)-1,q)
-	void do_andre(finite_field *Fq,
-			long int *the_set_in, int set_size_in,
-			long int *&the_set_out, int &set_size_out,
-			int verbose_level);
-	// creates PG(2,Q) and PG(4,q)
-	// this is FQ
-	void do_embed_orthogonal(
-		int epsilon, int n,
-		long int *set_in, long int *&set_out, int set_size,
-		int verbose_level);
-	void do_embed_points(int n,
-			long int *set_in, long int *&set_out, int set_size,
-			int verbose_level);
-	void print_set_in_affine_plane(int len, long int *S);
-	void simeon(int n, int len, long int *S, int s, int verbose_level);
-	void wedge_to_klein(int *W, int *K);
-	void klein_to_wedge(int *K, int *W);
-	void isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level);
-	void minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(int x, int y,
-			int &a, int &b, int verbose_level);
-	int evaluate_Fermat_cubic(int *v);
 
 
 
@@ -875,12 +820,14 @@ public:
 
 	finite_field *Fp; // the prime field F_p
 
-	ring_theory::unipoly_domain *FpX; // polynomial ring over Fp (the small field)
+	ring_theory::unipoly_domain *FpX;
+		// polynomial ring over Fp (the small field)
 
 	ring_theory::unipoly_domain *FQ;
 		// polynomial ring F_p modulo Min_poly
 
-	ring_theory::unipoly_domain *FX; // polynomial ring over F (the big field)
+	ring_theory::unipoly_domain *FX;
+		// polynomial ring over F (the big field)
 
 	int m, r, field_degree;
 		// m is the order of q modulo n
@@ -965,6 +912,9 @@ public:
 	int s; // subfield index: q^s = Q
 	int *Basis;
 		// [s], entries are elements in FQ
+		// Basis[i] = FQ->power(omega, i);
+		// where omega = FQ->power(alpha, s);
+		// and alpha = FQ->p the primitive element in FQ.
 
 	int *embedding;
 		// [Q], entries are elements in FQ,
@@ -998,8 +948,12 @@ public:
 	int evaluate_over_FQ(int *v);
 	int evaluate_over_Fq(int *v);
 	void lift_matrix(int *MQ, int m, int *Mq, int verbose_level);
+		// input is MQ[m * m] over the field FQ.
+		// output is Mq[n * n] over the field Fq,
 	void retract_matrix(int *Mq, int n, int *MQ, int m,
 		int verbose_level);
+		// input is Mq[n * n] over the field Fq,
+		// output is MQ[m * m] over the field FQ.
 	void Adelaide_hyperoval(
 			long int *&Pts, int &nb_pts, int verbose_level);
 	void create_adelaide_hyperoval(

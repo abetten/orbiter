@@ -789,11 +789,13 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 
 
 		std::vector<int> gen_handle;
+		actions::action_global AcGl;
 
 		get_strong_generators_handle(gen_handle, verbose_level - 2);
 
 
-		pt0 = gen->get_A2()->least_image_of_point_generators_by_handle(
+		pt0 = AcGl.least_image_of_point_generators_by_handle(
+				gen->get_A2(),
 			gen_handle,
 			pt_to_trace,
 			cosetrep,

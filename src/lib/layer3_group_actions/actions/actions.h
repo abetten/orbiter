@@ -260,52 +260,15 @@ public:
 			data_structures_groups::vector_ge &gen,
 			groups::sims *S, int *sequence, int len,
 		int verbose_level);
-	int compute_orbit_of_point(
-			data_structures_groups::vector_ge &strong_generators,
-		int pt, int *orbit, 
-		int verbose_level);
-	int compute_orbit_of_point_generators_by_handle(
-		int nb_gen, int *gen_handle, 
-		int pt, int *orbit, 
-		int verbose_level);
-	int least_image_of_point(
-			data_structures_groups::vector_ge &strong_generators,
-		int pt, int *transporter, 
-		int verbose_level);
-	int least_image_of_point_generators_by_handle(
-		std::vector<int> &gen_handle,
-		int pt, int *transporter, int verbose_level);
-	int least_image_of_point_generators_by_handle(int nb_gen, 
-		int *gen_handle, int pt, int *transporter, 
-		int verbose_level);
-	void all_point_orbits(groups::schreier &Schreier, int verbose_level);
-	void all_point_orbits_from_generators(groups::schreier &Schreier,
-			groups::strong_generators *SG,
+	void compute_stabilizer_orbits(
+			data_structures::partitionstack *&Staborbits,
 			int verbose_level);
-	void all_point_orbits_from_single_generator(groups::schreier &Schreier,
+	int check_if_in_set_stabilizer(
 			int *Elt,
-			int verbose_level);
-	void compute_stabilizer_orbits(data_structures::partitionstack *&Staborbits,
-		int verbose_level);
-	int check_if_in_set_stabilizer(int *Elt, 
-		int size, long int *set,
-		int verbose_level);
-	int check_if_transporter_for_set(int *Elt, 
-		int size, long int *set1, long int *set2,
-		int verbose_level);
-	void compute_set_orbit(
-			data_structures_groups::vector_ge &gens,
-		int size, long int *set,
-		int &nb_sets, long int **&Sets,
-		int **&Transporter, 
-		int verbose_level);
-	void delete_set_orbit(int nb_sets, 
-		long int **Sets, int **Transporter);
-	void compute_minimal_set(
-			data_structures_groups::vector_ge &gens,
-		int size, long int *set,
-		long int *minimal_set, int *transporter,
-		int verbose_level);
+			int size, long int *set, int verbose_level);
+	int check_if_transporter_for_set(
+			int *Elt,
+			int size, long int *set1, long int *set2, int verbose_level);
 	void find_strong_generators_at_level(int base_len, 
 		long int *the_base, int level,
 		data_structures_groups::vector_ge &gens,
@@ -350,7 +313,8 @@ public:
 		int *base_images, int verbose_level);
 	void minimize_base_images(int level, groups::sims *S,
 		int *Elt, int verbose_level);
-	void get_generators_from_ascii_coding(char *ascii_coding, 
+	void get_generators_from_ascii_coding(
+			std::string &ascii_coding,
 			data_structures_groups::vector_ge *&gens,
 			int *&tl, int verbose_level);
 	void lexorder_test(long int *set, int set_sz, int &set_sz_after_test,
@@ -359,21 +323,6 @@ public:
 		int verbose_level);
 	void compute_orbits_on_points(groups::schreier *&Sch,
 			data_structures_groups::vector_ge *gens,
-			int verbose_level);
-
-	void stabilizer_of_dual_hyperoval_representative(int k, 
-		int n, int no,
-		data_structures_groups::vector_ge *&gens,
-		std::string &stab_order,
-		int verbose_level);
-	void stabilizer_of_spread_representative(int q,
-		int k, int no,
-		data_structures_groups::vector_ge *&gens, std::string &stab_order,
-		int verbose_level);
-	void stabilizer_of_quartic_curve_representative(
-			int q, int no,
-			data_structures_groups::vector_ge *&gens,
-			std::string &stab_order,
 			int verbose_level);
 
 	void point_stabilizer_any_point(int &pt,
@@ -397,16 +346,6 @@ public:
 	int is_general_linear();
 	int is_matrix_group();
 	groups::matrix_group *get_matrix_group();
-	void perform_tests(groups::strong_generators *SG, int verbose_level);
-	void apply_based_on_text(std::string &input_text,
-			std::string &input_group_element, int verbose_level);
-	void multiply_based_on_text(std::string &data_A,
-			std::string &data_B, int verbose_level);
-	void inverse_based_on_text(std::string &data_A, int verbose_level);
-	void consecutive_powers_based_on_text(std::string &data_A,
-			std::string &exponent_text, int verbose_level);
-	void raise_to_the_power_based_on_text(std::string &data_A,
-			std::string &exponent_text, int verbose_level);
 
 
 	// action_group_theory.cpp:
@@ -415,8 +354,6 @@ public:
 			groups::strong_generators *H_gens,
 			groups::strong_generators *N_gens,
 			int verbose_level);
-	void report_fixed_objects(int *Elt,
-			char *fname_latex, int verbose_level);
 	void element_conjugate_bvab(int *Elt_A,
 		int *Elt_B, int *Elt_C, int verbose_level);
 	void element_conjugate_babv(int *Elt_A,
@@ -810,9 +747,11 @@ public:
 	void print_group_order_long(std::ostream &ost);
 	void print_vector(data_structures_groups::vector_ge &v);
 	void print_vector_as_permutation(data_structures_groups::vector_ge &v);
-	void write_set_of_elements_latex_file(std::string &fname, std::string &title, int *Elt, int nb_elts);
+	void write_set_of_elements_latex_file(std::string &fname,
+			std::string &title, int *Elt, int nb_elts);
 	void export_to_orbiter(
-			std::string &fname, std::string &label, groups::strong_generators *SG, int verbose_level);
+			std::string &fname, std::string &label,
+			groups::strong_generators *SG, int verbose_level);
 	void export_to_orbiter_as_bsgs(
 			std::string &fname, std::string &label, std::string &label_tex,
 			groups::strong_generators *SG, int verbose_level);
@@ -922,22 +861,6 @@ public:
 	void all_elements_save_csv(std::string &fname, int verbose_level);
 
 
-	// in action_projective.cpp:
-	groups::strong_generators *set_stabilizer_in_projective_space(
-			geometry::projective_space *P,
-		long int *set, int set_size, //int &canonical_pt,
-		int *canonical_set_or_NULL,
-		int verbose_level);
-	int reverse_engineer_semilinear_map(
-			geometry::projective_space *P,
-		int *Elt, int *Mtx, int &frobenius,
-		int verbose_level);
-	// uses the function A->element_image_of
-	void report_fixed_objects_in_P3(std::ostream &ost,
-			geometry::projective_space *P3,
-		int *Elt,
-		int verbose_level);
-
 	// in backtrack.cpp
 	int is_minimal(
 		int size, long int *set, int &backtrack_level,
@@ -968,6 +891,9 @@ class action_global {
 public:
 	void action_print_symmetry_group_type(
 			std::ostream &ost, symmetry_group_type a);
+	void get_symmetry_group_type_text(
+			std::string &txt, std::string &tex,
+			symmetry_group_type a);
 	void make_generators_stabilizer_of_three_components(
 		action *A_PGL_n_q, action *A_PGL_k_q,
 		int k, data_structures_groups::vector_ge *gens, int verbose_level);
@@ -1024,6 +950,108 @@ public:
 		int *The_equations, int nb_equations, groups::strong_generators *gens,
 		actions::action *&A_on_equations, groups::schreier *&Orb,
 		int verbose_level);
+	void compute_fixed_objects_in_PG(int up_to_which_rank,
+			action *A,
+			geometry::projective_space *P,
+		int *Elt,
+		std::vector<std::vector<long int> > &Fix,
+		int verbose_level);
+	void report_fixed_objects_in_P3(std::ostream &ost,
+			action *A,
+			geometry::projective_space *P3,
+		int *Elt,
+		int verbose_level);
+	groups::strong_generators *set_stabilizer_in_projective_space(
+			action *A_linear,
+			geometry::projective_space *P,
+		long int *set, int set_size, //int &canonical_pt,
+		int *canonical_set_or_NULL,
+		int verbose_level);
+	// assuming we are in a linear action.
+	void stabilizer_of_dual_hyperoval_representative(
+			action *A,
+			int k, int n, int no,
+			data_structures_groups::vector_ge *&gens, std::string &stab_order,
+			int verbose_level);
+	void stabilizer_of_spread_representative(
+			action *A,
+			int q, int k, int no,
+			data_structures_groups::vector_ge *&gens, std::string &stab_order,
+			int verbose_level);
+	void stabilizer_of_quartic_curve_representative(
+			action *A,
+			int q, int no,
+			data_structures_groups::vector_ge *&gens,
+			std::string &stab_order,
+			int verbose_level);
+	void perform_tests(
+			action *A,
+			groups::strong_generators *SG, int verbose_level);
+	void apply_based_on_text(
+			action *A,
+			std::string &input_text,
+			std::string &input_group_element, int verbose_level);
+	void multiply_based_on_text(
+			action *A,
+			std::string &data_A,
+			std::string &data_B, int verbose_level);
+	void inverse_based_on_text(
+			action *A,
+			std::string &data_A, int verbose_level);
+	void consecutive_powers_based_on_text(
+			action *A,
+			std::string &data_A,
+			std::string &exponent_text, int verbose_level);
+	void raise_to_the_power_based_on_text(
+			action *A,
+			std::string &data_A,
+			std::string &exponent_text, int verbose_level);
+	void compute_orbit_of_point(
+			actions::action *A,
+			data_structures_groups::vector_ge &strong_generators,
+			int pt, int *orbit, int &len, int verbose_level);
+	void compute_orbit_of_point_generators_by_handle(
+			actions::action *A,
+			int nb_gen,
+		int *gen_handle, int pt, int *orbit, int &len, int verbose_level);
+	int least_image_of_point(
+			actions::action *A,
+			data_structures_groups::vector_ge &strong_generators,
+		int pt, int *transporter, int verbose_level);
+	int least_image_of_point_generators_by_handle(
+			actions::action *A,
+		std::vector<int> &gen_handle,
+		int pt, int *transporter, int verbose_level);
+	int least_image_of_point_generators_by_handle(
+			actions::action *A,
+		int nb_gen, int *gen_handle,
+		int pt, int *transporter, int verbose_level);
+	void all_point_orbits(
+			actions::action *A,
+			groups::schreier &Schreier, int verbose_level);
+	void all_point_orbits_from_generators(
+			actions::action *A,
+			groups::schreier &Schreier,
+			groups::strong_generators *SG,
+			int verbose_level);
+	void all_point_orbits_from_single_generator(
+			actions::action *A,
+			groups::schreier &Schreier,
+			int *Elt,
+			int verbose_level);
+	void compute_set_orbit(
+			actions::action *A,
+			data_structures_groups::vector_ge &gens,
+		int size, long int *set,
+		int &nb_sets, long int **&Sets, int **&Transporter,
+		int verbose_level);
+	void delete_set_orbit(
+			actions::action *A,
+			int nb_sets, long int **Sets, int **Transporter);
+	void compute_minimal_set(
+			actions::action *A,
+			data_structures_groups::vector_ge &gens, int size, long int *set,
+		long int *minimal_set, int *transporter, int verbose_level);
 
 };
 

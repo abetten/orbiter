@@ -42,6 +42,7 @@ surface_object_with_action::surface_object_with_action()
 	A_on_Single_points = NULL;
 	A_on_the_lines = NULL;
 	A_single_sixes = NULL;
+	A_double_sixes = NULL;
 	A_on_tritangent_planes = NULL;
 	A_on_Hesse_planes = NULL;
 	A_on_trihedral_pairs = NULL;
@@ -86,6 +87,9 @@ surface_object_with_action::~surface_object_with_action()
 	if (A_single_sixes) {
 		FREE_OBJECT(A_single_sixes);
 	}
+	if (A_double_sixes) {
+		FREE_OBJECT(A_double_sixes);
+	}
 	if (A_on_tritangent_planes) {
 		FREE_OBJECT(A_on_tritangent_planes);
 	}
@@ -115,6 +119,9 @@ surface_object_with_action::~surface_object_with_action()
 	}
 	if (Orbits_on_single_sixes) {
 		FREE_OBJECT(Orbits_on_single_sixes);
+	}
+	if (Orbits_on_double_sixes) {
+		FREE_OBJECT(Orbits_on_double_sixes);
 	}
 	if (Orbits_on_tritangent_planes) {
 		FREE_OBJECT(Orbits_on_tritangent_planes);
@@ -475,36 +482,64 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
-					"orbits on half double sixes" << endl;
+					"before init_orbits_on_half_double_sixes" << endl;
 		}
 		init_orbits_on_half_double_sixes(verbose_level);
 
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"after init_orbits_on_half_double_sixes" << endl;
+		}
+
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"before init_orbits_on_double_sixes" << endl;
+		}
+		init_orbits_on_double_sixes(verbose_level);
+
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"after init_orbits_on_double_sixes" << endl;
+		}
 
 		// orbits on tritangent planes:
 
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
-					"orbits on tritangent planes" << endl;
+					"before init_orbits_on_tritangent_planes" << endl;
 		}
 		init_orbits_on_tritangent_planes(verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"after init_orbits_on_tritangent_planes" << endl;
+		}
 
 
 		// orbits on Hesse planes:
 
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
-					"orbits on Hesse planes" << endl;
+					"before init_orbits_on_Hesse_planes" << endl;
 		}
 		init_orbits_on_Hesse_planes(verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"after init_orbits_on_Hesse_planes" << endl;
+		}
 
 
 		// orbits on trihedral pairs:
 
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
-					"orbits on trihedral pairs" << endl;
+					"before init_orbits_on_trihedral_pairs" << endl;
 		}
 		init_orbits_on_trihedral_pairs(verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"after init_orbits_on_trihedral_pairs" << endl;
+		}
+
 	}
 
 
@@ -513,9 +548,13 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 
 	if (f_v) {
 		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
-				"orbits on points not on lines" << endl;
+				"before init_orbits_on_points_not_on_lines" << endl;
 	}
 	init_orbits_on_points_not_on_lines(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"after init_orbits_on_points_not_on_lines" << endl;
+	}
 
 
 	if (f_v) {
@@ -784,6 +823,58 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_half_double_sixes done" << endl;
+	}
+}
+
+void surface_object_with_action::init_orbits_on_double_sixes(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_double_sixes" << endl;
+	}
+
+	long int double_six_sets[72];
+	int i, j;
+
+	for (i = 0; i < 36; i++) {
+		for (j = 0; j < 2; j++) {
+			double_six_sets[i * 2 + j] = i * 2 + j;
+		}
+	}
+
+	if (f_v) {
+		cout << "creating action on half double sixes:" << endl;
+	}
+	A_double_sixes = A_single_sixes->create_induced_action_on_sets(
+			36, 2, double_six_sets, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "creating action on half double sixes done" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "computing orbits on double sixes:" << endl;
+	}
+	if (f_has_nice_gens) {
+		Orbits_on_double_sixes = nice_gens->orbits_on_points_schreier(
+				A_double_sixes, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_double_sixes = Aut_gens->orbits_on_points_schreier(
+				A_double_sixes, 0 /*verbose_level*/);
+	}
+	if (f_v) {
+		cout << "computing orbits on double sixes done" << endl;
+	}
+	if (f_v) {
+		cout << "We found " << Orbits_on_double_sixes->nb_orbits
+				<< " orbits on double sixes" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_double_sixes done" << endl;
 	}
 }
 
@@ -1095,7 +1186,6 @@ void surface_object_with_action::print_automorphism_group(
 
 		if (f_print_orbits) {
 
-
 			string my_fname_mask;
 
 			my_fname_mask.assign(fname_mask);
@@ -1106,6 +1196,20 @@ void surface_object_with_action::print_automorphism_group(
 					verbose_level);
 		}
 	
+		ost << "\\subsection*{Orbits on double sixes}" << endl;
+		Orbits_on_double_sixes->print_and_list_orbits_tex(ost);
+
+		if (f_print_orbits) {
+
+			string my_fname_mask;
+
+			my_fname_mask.assign(fname_mask);
+			my_fname_mask.append("_double_sixes");
+
+			Orbits_on_double_sixes->make_orbit_trees(ost,
+					my_fname_mask, Opt,
+					verbose_level);
+		}
 
 		ost << "\\subsection*{Orbits on tritangent planes}" << endl;
 		Orbits_on_tritangent_planes->print_and_list_orbits_tex(ost);
@@ -2271,6 +2375,15 @@ void surface_object_with_action::print_summary(std::ostream &ost)
 	{
 		string str;
 		Orbits_on_single_sixes->print_orbit_length_distribution_to_string(str);
+		ost << str;
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+
+	ost << "\\mbox{Double sixes} & " << 36 << " & ";
+	{
+		string str;
+		Orbits_on_double_sixes->print_orbit_length_distribution_to_string(str);
 		ost << str;
 	}
 	ost << "\\\\" << endl;

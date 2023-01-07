@@ -1,6 +1,6 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -funroll-loops -I.. -I../..
+CPPFLAGS = -Wall -O3 -funroll-loops -I.. -I../.. -std=c++17
 # -frename-registers
 LIB = 
 LFLAGS = -lm
@@ -15,7 +15,6 @@ MODULES = \
 	action_init.o \
 	action_io.o \
 	action_pointer_table.o \
-	action_projective.o \
 	backtrack.o \
 	interface_direct_product.o \
 	interface_induced_action.o \

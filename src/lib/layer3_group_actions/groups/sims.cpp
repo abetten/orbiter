@@ -619,7 +619,8 @@ void sims::init_trivial_orbit(int i, int verbose_level)
 	}
 }
 
-void sims::init_generators(data_structures_groups::vector_ge &generators,
+void sims::init_generators(
+		data_structures_groups::vector_ge &generators,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -923,7 +924,8 @@ void sims::group_order(ring_theory::longinteger_object &go)
 	//cout << "sims::group_order after D.multiply_up" << endl;
 }
 
-void sims::group_order_verbose(ring_theory::longinteger_object &go, int verbose_level)
+void sims::group_order_verbose(ring_theory::longinteger_object &go,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -943,7 +945,8 @@ void sims::group_order_verbose(ring_theory::longinteger_object &go, int verbose_
 	}
 }
 
-void sims::subgroup_order_verbose(ring_theory::longinteger_object &go, int level, int verbose_level)
+void sims::subgroup_order_verbose(ring_theory::longinteger_object &go,
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;

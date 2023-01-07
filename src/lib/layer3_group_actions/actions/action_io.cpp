@@ -35,19 +35,19 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
 
-	if (degree < 100) {
-		ost << "We act on the following set:\\\\" << endl;
-		latex_all_points(ost);
-	}
+	report_what_we_act_on(ost,
+			LG_Draw_options,
+			verbose_level);
 
 	if (is_matrix_group()) {
 		ost << "The group is a matrix group.\\\\" << endl;
+
+#if 0
 		field_theory::finite_field *F;
 		groups::matrix_group *M;
 
 		M = get_matrix_group();
 		F = M->GFq;
-
 
 		{
 			geometry::projective_space *P;
@@ -64,12 +64,8 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 
 			FREE_OBJECT(P);
 		}
+#endif
 
-		ost << "\\subsection*{The finite field ${\\mathbb F}_{" << F->q << "}$}" << endl;
-
-		F->cheat_sheet(ost, verbose_level);
-
-		ost << endl << "\\bigskip" << endl << endl;
 
 
 	}
@@ -170,6 +166,19 @@ void action::report_what_we_act_on(ostream &ost,
 	if (f_v) {
 		cout << "action::report_what_we_act_on" << endl;
 	}
+
+
+	std::string txt;
+	std::string tex;
+	action_global AcGl;
+
+	AcGl.get_symmetry_group_type_text(txt, tex, type_G);
+
+
+	ost << "The action is of type " << tex << "\\\\" << endl;
+
+	ost << "\\bigskip" << endl;
+
 	if (is_matrix_group()) {
 
 		field_theory::finite_field *F;
@@ -178,6 +187,7 @@ void action::report_what_we_act_on(ostream &ost,
 		M = get_matrix_group();
 		F = M->GFq;
 
+#if 0
 		{
 			geometry::projective_space *P;
 
@@ -193,8 +203,54 @@ void action::report_what_we_act_on(ostream &ost,
 
 			FREE_OBJECT(P);
 		}
+#endif
+
+		if (type_G == action_on_orthogonal_t) {
+
+			if (G.AO->f_on_points) {
+				ost << "acting on points only\\\\" << endl;
+				ost << "Number of points = " << G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
+			}
+			else if (G.AO->f_on_lines) {
+				ost << "acting on lines only\\\\" << endl;
+				ost << "Number of lines = " << G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
+			}
+			else if (G.AO->f_on_points_and_lines) {
+				ost << "acting on points and lines\\\\" << endl;
+				ost << "Number of points = " << G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
+				ost << "Number of lines = " << G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
+			}
+
+			G.AO->O->report_quadratic_form(ost, 0 /* verbose_level */);
+
+			ost << "Tactical decomposition induced by a hyperbolic pair:\\\\" << endl;
+			G.AO->O->report_schemes_easy(ost);
+
+			G.AO->O->report_points(ost, 0 /* verbose_level */);
+
+			G.AO->O->report_lines(ost, 0 /* verbose_level */);
+
+		}
+
+		ost << "Group Action $" << label_tex << "$ on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
+
+		ost << "The finite field ${\\mathbb F}_{" << F->q << "}$:\\\\" << endl;
+
+		F->cheat_sheet(ost, verbose_level);
+
+		ost << endl << "\\bigskip" << endl << endl;
+
 
 	}
+
+
+	if (degree < 100) {
+		ost << "The group acts on the following set of size " << degree << ":\\\\" << endl;
+		latex_all_points(ost);
+	}
+
+
+
 	if (f_v) {
 		cout << "action::report_what_we_act_on done" << endl;
 	}
@@ -521,7 +577,11 @@ void action::read_file_and_print_representatives(
 
 		G = NEW_OBJECT(data_structures_groups::group_container);
 		G->init(this, verbose_level - 2);
-		G->init_ascii_coding_to_sims(Aut_ascii[i], verbose_level - 2);
+
+		string s;
+
+		s.assign(Aut_ascii[i]);
+		G->init_ascii_coding_to_sims(s, verbose_level - 2);
 
 
 		ring_theory::longinteger_object go;
@@ -606,7 +666,11 @@ void action::read_set_and_stabilizer(std::string &fname,
 		cout << "action::read_set_and_stabilizer "
 				"before G->init_ascii_coding_to_sims" << endl;
 		}
-	G->init_ascii_coding_to_sims(Aut_ascii[no], verbose_level - 2);
+
+	string s;
+
+	s.assign(Aut_ascii[no]);
+	G->init_ascii_coding_to_sims(s, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
 				"after G->init_ascii_coding_to_sims" << endl;
@@ -837,7 +901,8 @@ void action::latex_all_points(std::ostream &ost)
 	FREE_int(v);
 }
 
-void action::latex_point_set(std::ostream &ost, long int *set, int sz, int verbose_level)
+void action::latex_point_set(std::ostream &ost,
+		long int *set, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -962,7 +1027,8 @@ void action::print_vector_as_permutation(data_structures_groups::vector_ge &v)
 }
 
 
-void action::write_set_of_elements_latex_file(std::string &fname, std::string &title, int *Elt, int nb_elts)
+void action::write_set_of_elements_latex_file(std::string &fname,
+		std::string &title, int *Elt, int nb_elts)
 {
 	{
 		ofstream ost(fname);
@@ -1076,12 +1142,6 @@ void action::export_to_orbiter_as_bsgs(
 		groups::strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-#if 0
-	int i, j;
-	long int a;
-	file_io Fio;
-	longinteger_object go;
-#endif
 
 	if (f_v) {
 		cout << "action::export_to_orbiter_as_bsgs" << endl;
@@ -1089,72 +1149,18 @@ void action::export_to_orbiter_as_bsgs(
 
 
 	if (f_v) {
-		cout << "action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs" << endl;
+		cout << "action::export_to_orbiter_as_bsgs "
+				"before SG->export_to_orbiter_as_bsgs" << endl;
 	}
 	SG->export_to_orbiter_as_bsgs(
 			this,
 			fname, label, label_tex,
 			verbose_level);
 	if (f_v) {
-		cout << "action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs" << endl;
+		cout << "action::export_to_orbiter_as_bsgs "
+				"after SG->export_to_orbiter_as_bsgs" << endl;
 	}
 
-#if 0
-	SG->group_order(go);
-	if (f_v) {
-		cout << "action::export_to_orbiter_as_bsgs go = " << go << endl;
-		cout << "action::export_to_orbiter_as_bsgs number of generators = " << SG->gens->len << endl;
-		cout << "action::export_to_orbiter_as_bsgs degree = " << degree << endl;
-	}
-	{
-		ofstream fp(fname);
-
-		for (i = 0; i < SG->gens->len; i++) {
-			fp << "GENERATOR_" << label << "_" << i << " = \\" << endl;
-			fp << "\t\"";
-			for (j = 0; j < degree; j++) {
-				if (FALSE) {
-					cout << "action::export_to_orbiter_as_bsgs computing image of " << j << " under generator " << i << endl;
-				}
-				a = element_image_of(j, SG->gens->ith(i), 0 /* verbose_level*/);
-				fp << a;
-				if (j < degree - 1) {
-					fp << ",";
-				}
-			}
-			fp << "\"";
-			fp << endl;
-		}
-
-		fp << endl;
-		fp << label << ":" << endl;
-		fp << "\t$(ORBITER_PATH)orbiter.out -v 2 \\" << endl;
-		fp << "\t\t-define G -permutation_group \\" << endl;
-		fp << "\t\t-bsgs " << label << " " << label_tex << " "
-				<< degree << " " << go << " ";
-		fp << "\"";
-		SG->A->print_bare_base(fp);
-		fp << "\"";
-		fp << " ";
-		fp << SG->gens->len;
-		fp << " \\" << endl;
-		for (i = 0; i < SG->gens->len; i++) {
-			fp << "\t\t\t" << "$(GENERATOR_" << label << "_" << i << ") \\" << endl;
-		}
-		fp << "\t\t-end" << endl;
-
-		//$(ORBITER_PATH)orbiter.out -v 10 \
-		//	-define G -permutation_group \
-		//		-bsgs C13 C_{13} 13 13 0 1 \
-		//			$(GEN_C13) \
-		//		-end \
-
-		// with backslashes at the end of the line
-
-	}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-#endif
 
 	if (f_v) {
 		cout << "action::export_to_orbiter_as_bsgs" << endl;

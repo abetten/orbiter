@@ -28,8 +28,6 @@ public:
 
 	int f_report;
 
-	//int f_report_with_group;
-
 	int f_export_something;
 	std::string export_something_what;
 
@@ -37,7 +35,6 @@ public:
 
 	int f_export_all_quartic_curves;
 
-	//int f_export_tritangent_planes;
 
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
@@ -470,6 +467,7 @@ public:
 	actions::action *A_on_Single_points;
 	actions::action *A_on_the_lines;
 	actions::action *A_single_sixes;
+	actions::action *A_double_sixes;
 	actions::action *A_on_tritangent_planes;
 	actions::action *A_on_Hesse_planes;
 	actions::action *A_on_trihedral_pairs;
@@ -482,6 +480,7 @@ public:
 	groups::schreier *Orbits_on_Single_points;
 	groups::schreier *Orbits_on_lines;
 	groups::schreier *Orbits_on_single_sixes;
+	groups::schreier *Orbits_on_double_sixes;
 	groups::schreier *Orbits_on_tritangent_planes;
 	groups::schreier *Orbits_on_Hesse_planes;
 	groups::schreier *Orbits_on_trihedral_pairs;
@@ -517,6 +516,7 @@ public:
 	void init_orbits_on_Single_points(int verbose_level);
 	void init_orbits_on_lines(int verbose_level);
 	void init_orbits_on_half_double_sixes(int verbose_level);
+	void init_orbits_on_double_sixes(int verbose_level);
 	void init_orbits_on_tritangent_planes(int verbose_level);
 	void init_orbits_on_Hesse_planes(int verbose_level);
 	void init_orbits_on_trihedral_pairs(int verbose_level);

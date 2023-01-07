@@ -529,9 +529,11 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 
 
 	groups::schreier *Sch;
+	actions::action_global AcGl;
 
 	Sch = NEW_OBJECT(groups::schreier);
-	A->all_point_orbits_from_single_generator(*Sch,
+	AcGl.all_point_orbits_from_single_generator(A,
+			*Sch,
 			Elt,
 			0 /*verbose_level*/);
 	Sch->print_orbit_lengths_tex(ost);
@@ -548,7 +550,8 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 
 		Sch = NEW_OBJECT(groups::schreier);
-		A2->all_point_orbits_from_single_generator(*Sch,
+		AcGl.all_point_orbits_from_single_generator(A2,
+				*Sch,
 				Elt,
 				0 /*verbose_level*/);
 		Sch->print_orbit_lengths_tex(ost);
@@ -568,7 +571,8 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 
 		Sch = NEW_OBJECT(groups::schreier);
-		A2->all_point_orbits_from_single_generator(*Sch,
+		AcGl.all_point_orbits_from_single_generator(A2,
+				*Sch,
 				Elt,
 				0 /*verbose_level*/);
 		Sch->print_orbit_lengths_tex(ost);

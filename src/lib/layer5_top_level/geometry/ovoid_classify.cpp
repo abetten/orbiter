@@ -487,8 +487,13 @@ void ovoid_classify::make_graphs(orbiter_kernel_system::orbiter_data_file *ODF,
 
 			SG = NEW_OBJECT(groups::strong_generators);
 			SG->init(A);
+
+			string s;
+
+			s.assign(ODF->Aut_ascii[orbit_idx]);
+
 			SG->decode_ascii_coding(
-					ODF->Aut_ascii[orbit_idx], 0 /* verbose_level */);
+					s, 0 /* verbose_level */);
 			SG->group_order(go);
 
 			max_starter = ODF->sets[orbit_idx]
@@ -608,8 +613,11 @@ void ovoid_classify::make_one_graph(orbiter_kernel_system::orbiter_data_file *OD
 
 		SG = NEW_OBJECT(groups::strong_generators);
 		SG->init(A);
-		SG->decode_ascii_coding(ODF->Aut_ascii[orbit_idx],
-				0 /* verbose_level */);
+
+		string s;
+
+		s.assign(ODF->Aut_ascii[orbit_idx]);
+		SG->decode_ascii_coding(s, 0 /* verbose_level */);
 		SG->group_order(go);
 
 		max_starter = ODF->sets[orbit_idx][ODF->set_sizes[orbit_idx] - 1];

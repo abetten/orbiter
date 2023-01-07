@@ -2401,7 +2401,7 @@ int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
 void wreath_product::orbits_using_files_and_union_find(
 		strong_generators* SG,
 		actions::action *A,
-		int*& result,
+		int *&result,
 		int &nb_gens, int &degree,
 		int nb_factors,
 		int verbosity)
@@ -2673,7 +2673,7 @@ void wreath_product::orbits_using_files_and_union_find(
 void wreath_product::orbits_restricted(
 		strong_generators* SG,
 		actions::action *A,
-		int*& result,
+		int *&result,
 		int &nb_gens, int &degree,
 		int nb_factors,
 		std::string &orbits_restricted_fname,
@@ -2909,7 +2909,7 @@ void wreath_product::orbits_restricted(
 void wreath_product::orbits_restricted_compute(
 		strong_generators* SG,
 		actions::action *A,
-		int*& result,
+		int *&result,
 		int &nb_gens, int &degree,
 		int nb_factors,
 		std::string &orbits_restricted_fname,
@@ -3168,7 +3168,9 @@ void wreath_product::orbits_restricted_compute(
 			cout << "computing orbits of stabilizer on the rest of the orbit:" << endl;
 		}
 
-		A_on_orbit->all_point_orbits_from_generators(
+		actions::action_global AcGl;
+
+		AcGl.all_point_orbits_from_generators(A_on_orbit,
 				*Sch_orbit,
 				gens,
 				0 /* verbose_level */);

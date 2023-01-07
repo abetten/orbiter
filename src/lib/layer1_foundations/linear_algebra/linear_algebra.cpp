@@ -3079,13 +3079,15 @@ void linear_algebra::lift_to_Klein_quadric(int *A4, int *A6, int verbose_level)
 	int Image[36];
 	int i;
 
+	geometry::geometry_global Geo;
+
 	for (i = 0; i < 6; i++) {
-		F->klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
+		Geo.klein_to_wedge(F, Basis1 + i * 6, Basis2 + i * 6);
 	}
 
 	mult_matrix_matrix(Basis2, E, Image, 6, 6, 6, 0 /* verbose_level*/);
 	for (i = 0; i < 6; i++) {
-		F->wedge_to_klein(Image + i * 6, A6 + i * 6);
+		Geo.wedge_to_klein(F, Image + i * 6, A6 + i * 6);
 	}
 	if (f_v) {
 		cout << "linear_algebra::lift_to_Klein_quadric" << endl;

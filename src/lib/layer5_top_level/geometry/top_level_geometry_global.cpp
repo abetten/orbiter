@@ -92,8 +92,10 @@ void top_level_geometry_global::report_decomposition_by_group(
 	groups::schreier *Sch2;
 
 	Sch1 = NEW_OBJECT(groups::schreier);
+	actions::action_global AcGl;
 
-	PA->A->all_point_orbits_from_generators(*Sch1,
+	AcGl.all_point_orbits_from_generators(PA->A,
+			*Sch1,
 			SG,
 			0 /* verbose_level */);
 
@@ -101,7 +103,8 @@ void top_level_geometry_global::report_decomposition_by_group(
 	//ost << "Orbits on lines:\\\\" << endl;
 
 	Sch2 = NEW_OBJECT(groups::schreier);
-	PA->A_on_lines->all_point_orbits_from_generators(*Sch2,
+	AcGl.all_point_orbits_from_generators(PA->A_on_lines,
+			*Sch2,
 			SG,
 			0 /* verbose_level */);
 	//Sch->print_orbit_lengths_tex(ost);
@@ -152,7 +155,9 @@ void top_level_geometry_global::report_decomposition_by_group(
 	if (PA->f_has_action_on_planes) {
 		groups::schreier *Sch3;
 		Sch3 = NEW_OBJECT(groups::schreier);
-		PA->A_on_planes->all_point_orbits_from_generators(*Sch3,
+		actions::action_global AcGl;
+		AcGl.all_point_orbits_from_generators(PA->A_on_planes,
+				*Sch3,
 				SG,
 				0 /*verbose_level*/);
 		ost << "Fixed planes:\\\\" << endl;
@@ -335,15 +340,18 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 	Sch1 = NEW_OBJECT(groups::schreier);
 	Sch2 = NEW_OBJECT(groups::schreier);
+	actions::action_global AcGl;
 
-	PA->A->all_point_orbits_from_single_generator(*Sch1,
+	AcGl.all_point_orbits_from_single_generator(PA->A,
+			*Sch1,
 			Elt,
 			0 /*verbose_level*/);
 
 	//ost << "Orbits on lines:\\\\" << endl;
 
 	Sch2 = NEW_OBJECT(groups::schreier);
-	PA->A_on_lines->all_point_orbits_from_single_generator(*Sch2,
+	AcGl.all_point_orbits_from_single_generator(PA->A_on_lines,
+			*Sch2,
 			Elt,
 			0 /*verbose_level*/);
 	//Sch->print_orbit_lengths_tex(ost);
@@ -504,8 +512,10 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 	if (PA->f_has_action_on_planes) {
 		groups::schreier *Sch3;
+		actions::action_global AcGl;
 		Sch3 = NEW_OBJECT(groups::schreier);
-		PA->A_on_planes->all_point_orbits_from_single_generator(*Sch3,
+		AcGl.all_point_orbits_from_single_generator(PA->A_on_planes,
+				*Sch3,
 				Elt,
 				0 /*verbose_level*/);
 		ost << "Fixed planes:\\\\" << endl;

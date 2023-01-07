@@ -918,7 +918,7 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_csv_file_latex) {
 
 		orbiter_kernel_system::file_io Fio;
-		int nb_lines_per_table = 25;
+		int nb_lines_per_table = 40;
 
 		Fio.do_csv_file_latex(csv_file_latex_fname,
 				f_produce_latex_header,

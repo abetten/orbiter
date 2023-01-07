@@ -1522,9 +1522,14 @@ void linear_group::report(std::ostream &ost,
 #endif
 
 
-
+#if 0
 		ost << "\\noindent The group acts on a set of size "
 				<< A2->degree << "\\\\" << endl;
+#endif
+		A2->report_what_we_act_on(ost,
+				LG_Draw_options,
+				verbose_level);
+
 
 #if 0
 		if (A->degree < 1000) {

@@ -631,106 +631,14 @@ void packing_classify::report_fixed_objects(int *Elt,
 		//latex_head_easy(fp);
 
 	
-		T->A->report_fixed_objects_in_P3(fp,
+		actions::action_global AcGl;
+
+		AcGl.report_fixed_objects_in_P3(fp,
+				T->A,
 				P3,
 				Elt,
 				verbose_level);
 	
-#if 0
-		fp << "\\section{Fixed Objects}" << endl;
-
-
-
-		fp << "The element" << endl;
-		fp << "$$" << endl;
-		T->A->element_print_latex(Elt, fp);
-		fp << "$$" << endl;
-		fp << "has the following fixed objects:" << endl;
-
-
-		fp << "\\subsection{Fixed Points}" << endl;
-
-		cnt = 0;
-		for (i = 0; i < P3->N_points; i++) {
-			j = T->A->element_image_of(i, Elt, 0 /* verbose_level */);
-			if (j == i) {
-				cnt++;
-				}
-			}
-
-		fp << "There are " << cnt << " fixed points, they are: \\\\" << endl;
-		for (i = 0; i < P3->N_points; i++) {
-			j = T->A->element_image_of(i, Elt, 0 /* verbose_level */);
-			F->PG_element_unrank_modified(v, 1, 4, i);
-			if (j == i) {
-				fp << i << " : ";
-				int_vec_print(fp, v, 4);
-				fp << "\\\\" << endl;
-				cnt++;
-				}
-			}
-	
-		fp << "\\subsection{Fixed Lines}" << endl;
-
-		{
-		action *A2;
-
-		A2 = T->A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
-
-		cnt = 0;
-		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-			if (j == i) {
-				cnt++;
-				}
-			}
-
-		fp << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
-		cnt = 0;
-		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-			if (j == i) {
-				fp << i << " : $\\left[";
-				A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
-				fp << "\\right]$\\\\" << endl;
-				cnt++;
-				}
-			}
-
-		FREE_OBJECT(A2);
-		}
-	
-		fp << "\\subsection{Fixed Planes}" << endl;
-
-		{
-		action *A2;
-
-		A2 = T->A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
-
-		cnt = 0;
-		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-			if (j == i) {
-				cnt++;
-				}
-			}
-
-		fp << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
-		cnt = 0;
-		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-			if (j == i) {
-				fp << i << " : $\\left[";
-				A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
-				fp << "\\right]$\\\\" << endl;
-				cnt++;
-				}
-			}
-
-		FREE_OBJECT(A2);
-		}
-#endif
-
 
 		L.foot(fp);
 	}

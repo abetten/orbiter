@@ -67,28 +67,6 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		}
 
 	}
-#if 0
-	if (Descr->f_report_with_group) {
-
-		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity "
-					"before SC->report_with_group" << endl;
-		}
-
-		int f_has_control_six_arcs = FALSE;
-		poset_classification::poset_classification_control *Control_six_arcs = NULL;
-
-		SC->report_with_group(
-				f_has_control_six_arcs, Control_six_arcs,
-				verbose_level);
-
-		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity "
-					"after SC->report_with_group" << endl;
-		}
-
-	}
-#endif
 	if (Descr->f_export_something) {
 
 		if (f_v) {
@@ -265,35 +243,6 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		//FREE_OBJECT(SoA);
 
 	}
-#if 0
-	else if (Descr->f_export_tritangent_planes) {
-
-		//surface_object_with_action *SoA;
-
-		if (!SC->f_has_group) {
-			cout << "-all_quartic_curves: The automorphism group "
-					"of the surface is missing" << endl;
-			exit(1);
-		}
-
-		algebraic_geometry::surface_object *SO;
-		algebraic_geometry::surface_object_properties *SOP;
-
-		SO = SC->SO;
-		SOP = SO->SOP;
-
-		orbiter_kernel_system::file_io Fio;
-		string fname;
-
-		fname.assign(SC->label_txt);
-		fname.append("_tritangent_planes.csv");
-
-		Fio.lint_matrix_write_csv(fname, SOP->Tritangent_plane_rk, SOP->nb_tritangent_planes, 1);
-
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	}
-#endif
 
 
 	if (f_v) {

@@ -1245,6 +1245,7 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 	int w[4];
 	int *List;
 	combinatorics::combinatorics_domain Combi;
+	geometry_global Geo;
 
 
 	M1 = NEW_int(k * n);
@@ -1262,7 +1263,7 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 		for (j = 0; j < q + 1; j++) {
 			F->Linear_algebra->unrank_point_in_PG(v, 2, j);
 			F->Linear_algebra->mult_vector_from_the_left(v, M1, w, k, n);
-			if (F->evaluate_Fermat_cubic(w)) {
+			if (Geo.evaluate_Fermat_cubic(F, w)) {
 				break;
 			}
 		}

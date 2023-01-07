@@ -882,12 +882,14 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		groups::schreier *Orbits;
 
 		Orbits = NEW_OBJECT(groups::schreier);
+		actions::action_global AcGl;
 
 		if (f_v) {
 			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 					"before Ar_On_Packings->all_point_orbits_from_generators" << endl;
 		}
-		Ar_On_Packings->all_point_orbits_from_generators(*Orbits,
+		AcGl.all_point_orbits_from_generators(Ar_On_Packings,
+				*Orbits,
 				fixpoint_clique_stabilizer_gens,
 				0 /*verbose_level*/);
 		if (f_v) {

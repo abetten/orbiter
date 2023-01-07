@@ -137,7 +137,9 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	knowledge_base K;
 	string field_poly;
 
-	K.get_primitive_polynomial(field_poly, F->p, field_degree, 0);
+	K.get_primitive_polynomial(field_poly,
+			F->p, field_degree, 0);
+
 	FpX->create_object_by_rank_string(Min_poly,
 			field_poly,
 			verbose_level - 2);

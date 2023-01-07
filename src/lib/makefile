@@ -302,7 +302,6 @@ MODULES= \
 		layer3_group_actions/actions/action_init.o \
 		layer3_group_actions/actions/action_io.o \
 		layer3_group_actions/actions/action_pointer_table.o \
-		layer3_group_actions/actions/action_projective.o \
 		layer3_group_actions/actions/backtrack.o \
 		layer3_group_actions/actions/interface_direct_product.o \
 		layer3_group_actions/actions/interface_induced_action.o \

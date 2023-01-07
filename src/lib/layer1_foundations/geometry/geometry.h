@@ -989,6 +989,87 @@ public:
 			geometry::projective_space *P,
 			std::string &label,
 			int verbose_level);
+	void do_cone_over(int n,
+			field_theory::finite_field *F,
+		long int *set_in, int set_size_in,
+		long int *&set_out, int &set_size_out,
+		int verbose_level);
+	void do_blocking_set_family_3(int n,
+			field_theory::finite_field *F,
+		long int *set_in, int set_size,
+		long int *&the_set_out, int &set_size_out,
+		int verbose_level);
+	// creates projective_space PG(2,q)
+	void create_orthogonal(
+			field_theory::finite_field *F,
+			int epsilon, int n,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_hermitian(
+			field_theory::finite_field *F,
+			int n,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	// creates hermitian
+	void create_ttp_code(
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq_subfield,
+		int f_construction_A, int f_hyperoval, int f_construction_B,
+		std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_segre_variety(
+			field_theory::finite_field *F,
+			int a, int b,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	// The Segre map goes from PG(a,q) cross PG(b,q) to PG((a+1)*(b+1)-1,q)
+	void do_andre(
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
+			long int *the_set_in, int set_size_in,
+			long int *&the_set_out, int &set_size_out,
+		int verbose_level);
+	// creates PG(2,Q) and PG(4,q)
+	// this functions is not called from anywhere right now
+	// it needs a pair of finite fields
+	void do_embed_orthogonal(
+			field_theory::finite_field *F,
+		int epsilon, int n,
+		long int *set_in, long int *&set_out, int set_size,
+		int verbose_level);
+	void do_embed_points(
+			field_theory::finite_field *F,
+			int n,
+			long int *set_in, long int *&set_out, int set_size,
+		int verbose_level);
+	void print_set_in_affine_plane(
+			field_theory::finite_field *F,
+			int len, long int *S);
+	void simeon(
+			field_theory::finite_field *F,
+			int n, int len, long int *S, int s, int verbose_level);
+	void wedge_to_klein(
+			field_theory::finite_field *F,
+			int *W, int *K);
+	void klein_to_wedge(
+			field_theory::finite_field *F,
+			int *K, int *W);
+	void isomorphism_to_special_orthogonal(
+			field_theory::finite_field *F,
+			int *A4, int *A6, int verbose_level);
+	void minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(
+			field_theory::finite_field *F,
+			int x, int y,
+			int &a, int &b, int verbose_level);
+	int evaluate_Fermat_cubic(
+			field_theory::finite_field *F,
+			int *v);
 
 };
 

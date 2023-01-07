@@ -417,10 +417,10 @@ void os_interface::code_int4(char *&p, int_4 i)
 	code_uchar(p, q[3]);
 }
 
-int_4 os_interface::decode_int4(char *&p)
+int_4 os_interface::decode_int4(const char *&p)
 {
 	int_4 ii;
-	uchar *q = (uchar *) &ii;
+	unsigned char *q = (unsigned char *) &ii;
 	decode_uchar(p, q[0]);
 	decode_uchar(p, q[1]);
 	decode_uchar(p, q[2]);
@@ -430,7 +430,7 @@ int_4 os_interface::decode_int4(char *&p)
 	return ii;
 }
 
-void os_interface::code_uchar(char *&p, uchar a)
+void os_interface::code_uchar(char *&p, unsigned char a)
 {
 	//cout << "code_uchar " << (int) a << endl;
 	int a_high = a >> 4;
@@ -439,7 +439,7 @@ void os_interface::code_uchar(char *&p, uchar a)
 	*p++ = ascii_code[a_low];
 }
 
-void os_interface::decode_uchar(char *&p, uchar &a)
+void os_interface::decode_uchar(const char *&p, unsigned char &a)
 {
 	int a_high = (int)(*p++ - 'a');
 	int a_low = (int)(*p++ - 'a');

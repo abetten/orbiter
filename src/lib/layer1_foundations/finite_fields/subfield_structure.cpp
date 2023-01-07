@@ -273,6 +273,8 @@ int subfield_structure::evaluate_over_Fq(int *v)
 
 void subfield_structure::lift_matrix(int *MQ,
 		int m, int *Mq, int verbose_level)
+// input is MQ[m * m] over the field FQ.
+// output is Mq[n * n] over the field Fq,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, I, J, a, b, c, d, u, v, n;
@@ -304,6 +306,8 @@ void subfield_structure::lift_matrix(int *MQ,
 
 void subfield_structure::retract_matrix(int *Mq,
 		int n, int *MQ, int m, int verbose_level)
+// input is Mq[n * n] over the field Fq,
+// output is MQ[m * m] over the field FQ.
 {
 	int f_v = (verbose_level >= 1);
 	int *vec;

@@ -269,7 +269,11 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		if (f_v) {
 			cout << "geometric_object_create::init before F->create_orthogonal" << endl;
 		}
-		F->create_orthogonal(
+
+		geometry_global Geo;
+
+		Geo.create_orthogonal(
+				F,
 				Descr->orthogonal_epsilon, P->n,
 				label_txt,
 				label_tex,
@@ -284,7 +288,10 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		if (f_v) {
 			cout << "geometric_object_create::init before F->create_hermitian" << endl;
 		}
-		F->create_hermitian(P->n,
+		geometry_global Geo;
+
+		Geo.create_hermitian(F,
+				P->n,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -442,7 +449,10 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		if (f_v) {
 			cout << "geometric_object_create::init before F->create_segre_variety" << endl;
 		}
-		F->create_segre_variety(
+		geometry_global Geo;
+
+		Geo.create_segre_variety(
+				F,
 				Descr->segre_variety_a, Descr->segre_variety_b,
 				label_txt,
 				label_tex,

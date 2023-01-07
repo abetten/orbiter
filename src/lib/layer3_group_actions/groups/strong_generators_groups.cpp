@@ -2986,7 +2986,8 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 void
 strong_generators::stabilizer_of_Eckardt_surface(
 		actions::action *A,
-	field_theory::finite_field *F, int f_with_normalizer, int f_semilinear,
+	field_theory::finite_field *F,
+	int f_with_normalizer, int f_semilinear,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {

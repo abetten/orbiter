@@ -722,7 +722,8 @@ void sims::save_list_of_elements(std::string &fname, int verbose_level)
 		}
 }
 
-void sims::read_list_of_elements(actions::action *A, char *fname,
+void sims::read_list_of_elements(actions::action *A,
+		std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

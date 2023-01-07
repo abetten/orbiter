@@ -640,7 +640,10 @@ void spread_table_with_selection::predict_spread_table_length(
 		data_structures_groups::vector_ge *gens;
 		string stab_order;
 
-		A->stabilizer_of_spread_representative(q,
+		actions::action_global AcGl;
+
+		AcGl.stabilizer_of_spread_representative(A,
+				q,
 				T->SD->k /* dimension_of_spread_elements */, no, gens, stab_order,
 				0 /*verbose_level*/);
 

@@ -256,8 +256,10 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 	}
 #endif
 
+	geometry::geometry_global Geo;
+
 	for (i = 0; i < 6; i++) {
-		F->klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
+		Geo.klein_to_wedge(F, Basis1 + i * 6, Basis2 + i * 6);
 	}
 
 	F->Linear_algebra->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
@@ -288,7 +290,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 		for (j = 0; j < 6; j++) {
 			F->Linear_algebra->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 					// v[m], A[m][n], vA[n]
-			F->wedge_to_klein(v /* W */, w /*K*/);
+			Geo.wedge_to_klein(F, v /* W */, w /*K*/);
 			Int_vec_copy(w, C + j * 6, 6);
 		}
 

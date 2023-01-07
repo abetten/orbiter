@@ -1854,7 +1854,8 @@ void orbits_on_something::compute_orbit_invariant_after_classification(
 }
 
 
-void orbits_on_something::get_orbit_number_and_position(long int a, int &orbit_idx, int &orbit_pos, int verbose_level)
+void orbits_on_something::get_orbit_number_and_position(long int a,
+		int &orbit_idx, int &orbit_pos, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

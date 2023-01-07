@@ -120,7 +120,10 @@ void arc_partition::init(
 				"before A_on_rest->all_point_orbits_from_generators" << endl;
 	}
 
-	A_on_partition->all_point_orbits_from_generators(
+	actions::action_global AcGl;
+
+	AcGl.all_point_orbits_from_generators(
+			A_on_partition,
 			*Orbits_on_partition,
 			The_pair->Strong_gens,
 			verbose_level);

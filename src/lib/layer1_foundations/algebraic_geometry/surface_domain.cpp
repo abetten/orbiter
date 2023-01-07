@@ -941,7 +941,10 @@ void surface_domain::create_starter_configuration(
 
 void surface_domain::wedge_to_klein(int *W, int *K)
 {
-	F->wedge_to_klein(W, K);
+	geometry::geometry_global Geo;
+
+
+	Geo.wedge_to_klein(F, W, K);
 #if 0
 	K[0] = W[0];
 	K[1] = W[5];
@@ -954,7 +957,9 @@ void surface_domain::wedge_to_klein(int *W, int *K)
 
 void surface_domain::klein_to_wedge(int *K, int *W)
 {
-	F->klein_to_wedge(K, W);
+	geometry::geometry_global Geo;
+
+	Geo.klein_to_wedge(F, K, W);
 #if 0
 	W[0] = K[0];
 	W[1] = K[2];

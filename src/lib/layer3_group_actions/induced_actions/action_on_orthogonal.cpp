@@ -33,16 +33,16 @@ action_on_orthogonal::~action_on_orthogonal()
 {
 	if (v1) {
 		FREE_int(v1);
-		}
+	}
 	if (v2) {
 		FREE_int(v2);
-		}
+	}
 	if (w1) {
 		FREE_int(w1);
-		}
+	}
 	if (w2) {
 		FREE_int(w2);
-		}
+	}
 }
 
 void action_on_orthogonal::init(actions::action *original_action,
@@ -57,13 +57,13 @@ void action_on_orthogonal::init(actions::action *original_action,
 	if (f_v) {
 		cout << "action_on_orthogonal::init" << endl;
 		cout << "f_on_lines=" << f_on_lines << endl;
-		}
+	}
 	if (!original_action->f_is_linear) {
 		cout << "action_on_orthogonal::init "
 				"original_action not of linear type" << endl;
 		cout << "action " << original_action->label << endl;
 		exit(1);
-		}
+	}
 	action_on_orthogonal::original_action = original_action;
 	action_on_orthogonal::O = O;
 	action_on_orthogonal::f_on_points = f_on_points;
@@ -78,26 +78,26 @@ void action_on_orthogonal::init(actions::action *original_action,
 	
 	if (f_on_points) {
 		degree = O->Hyperbolic_pair->nb_points;
-		}
+	}
 	else if (f_on_lines) {
 		degree = O->Hyperbolic_pair->nb_lines;
-		}
+	}
 	else if (f_on_points_and_lines) {
 		degree = O->Hyperbolic_pair->nb_points + O->Hyperbolic_pair->nb_lines;
-		}
+	}
 	else {
 		cout << "action_on_orthogonal::init "
 				"no type of action given" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "action_on_orthogonal::init "
 				"degree=" << degree << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "action_on_orthogonal::init done" << endl;
-		}
+	}
 }
 
 void action_on_orthogonal::unrank_point(int *v, int rk)
@@ -122,14 +122,18 @@ long int action_on_orthogonal::map_a_point(
 	
 	if (f_v) {
 		cout << "action_on_orthogonal::map_a_point" << endl;
-		}
+	}
 	A = original_action;
+
 	O->Hyperbolic_pair->unrank_point(v1, 1 /* stride */, i, 0 /* verbose_level */);
+
 	A->element_image_of_low_level(v1, w1, Elt, verbose_level - 1);
+
 	j = O->Hyperbolic_pair->rank_point(w1, 1 /* stride */, 0 /* verbose_level */);
+
 	if (f_v) {
 		cout << "action_on_orthogonal::map_a_point done" << endl;
-		}
+	}
 	return j;
 }
 
@@ -143,24 +147,30 @@ long int action_on_orthogonal::map_a_line(int *Elt, long int i, int verbose_leve
 	
 	if (f_v) {
 		cout << "action_on_orthogonal::map_a_line" << endl;
-		}
+	}
 	A = original_action;
+
 	O->Hyperbolic_pair->unrank_line(p1, p2, i, 0 /*verbose_level */);
+
 	O->Hyperbolic_pair->unrank_point(v1, 1 /* stride */, p1, 0 /* verbose_level */);
 	O->Hyperbolic_pair->unrank_point(v2, 1 /* stride */, p2, 0 /* verbose_level */);
+
 	A->element_image_of_low_level(v1, w1, Elt, verbose_level - 1);
 	A->element_image_of_low_level(v2, w2, Elt, verbose_level - 1);
+
 	q1 = O->Hyperbolic_pair->rank_point(w1, 1 /* stride */, 0 /* verbose_level */);
 	q2 = O->Hyperbolic_pair->rank_point(w2, 1 /* stride */, 0 /* verbose_level */);
+
 	j = O->Hyperbolic_pair->rank_line(q1, q2, 0 /*verbose_level */);
+
 	if (f_vv) {
 		cout << "action_on_orthogonal::map_a_line i=" << i
 				<< " p1=" << p1 << " p2=" << p2
 				<< " q1=" << q1 << " q2=" << q2 << " j=" << j << endl;
-		}
+	}
 	if (f_v) {
 		cout << "action_on_orthogonal::map_a_line done" << endl;
-		}
+	}
 	return j;
 }
 
@@ -179,39 +189,42 @@ long int action_on_orthogonal::compute_image_int(
 		//cout << "A->low_level_point_size="
 		//<< A->low_level_point_size << endl;
 		//cout << "using action " << A->label << endl;
-		}
+	}
 
 	
 	if (i >= degree) {
 		cout << "action_on_orthogonal::compute_image_int "
 				"i >= degree" << endl;
-		}
+	}
 	if (f_on_points) {
 		j = map_a_point(Elt, i, verbose_level - 1);
-		}
+	}
 	else if (f_on_lines) {
 		j = map_a_line(Elt, i, verbose_level - 1);
-		}
+	}
 	else if (f_on_points_and_lines) {
 		if (i >= O->Hyperbolic_pair->nb_points) {
+
 			i -= O->Hyperbolic_pair->nb_points;
+
 			j = map_a_line(Elt, i, verbose_level - 1);
+
 			j += O->Hyperbolic_pair->nb_points;
-			}
+		}
 		else {
 			j = map_a_point(Elt, i, verbose_level - 1);
-			}
 		}
+	}
 	else {
 		cout << "action_on_orthogonal::compute_image_int "
 				"need to know the type of action" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		cout << "action_on_orthogonal::compute_image_int "
 				"image of " << i << " is " << j << endl;
-		}
+	}
 
 	return j;
 }

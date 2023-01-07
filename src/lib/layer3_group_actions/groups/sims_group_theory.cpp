@@ -734,7 +734,8 @@ void sims::point_stabilizer(data_structures_groups::vector_ge &SG,
 
 void sims::point_stabilizer_with_action(actions::action *A2,
 		data_structures_groups::vector_ge &SG,
-		int *tl, int pt, int verbose_level)
+		int *tl, int pt,
+		int verbose_level)
 // computes strong generating set for
 // the stabilizer of point pt in action A2
 {
@@ -1014,7 +1015,8 @@ int sims::test_if_subgroup(sims *old_G, int verbose_level)
 }
 
 int sims::find_element_with_exactly_n_fixpoints_in_given_action(
-		int *Elt, int nb_fixpoints, actions::action *A_given, int verbose_level)
+		int *Elt, int nb_fixpoints,
+		actions::action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -1916,7 +1918,7 @@ long int sims::invert_by_rank(long int rk_a, int verbose_level)
 
 long int sims::conjugate_by_rank(long int rk_a, long int rk_b,
 		int verbose_level)
-// comutes b^{-1} * a * b
+// computes b^{-1} * a * b
 {
 	int f_v = (verbose_level >= 1);
 	long int rk_c;

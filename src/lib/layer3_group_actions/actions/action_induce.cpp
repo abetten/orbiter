@@ -672,7 +672,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 				"low_level_point_size=" << low_level_point_size << endl;
 		print_info();
 		cout << "action::induced_action_on_grassmannian finished, "
-				"after print_info()" << endl;
+				"after print_info" << endl;
 	}
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian done" << endl;
@@ -690,7 +690,7 @@ void action::induced_action_on_spread_set(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_spread_set "
 				"f_induce_action=" << f_induce_action << endl;
-		}
+	}
 	A = A_old;
 
 	char str1[1000];
@@ -709,14 +709,14 @@ void action::induced_action_on_spread_set(action *A_old,
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	f_has_subaction = TRUE;
 	subaction = A;
 	if (!A->f_is_linear) {
 		cout << "action::induced_action_on_spread_set "
 				"action not of linear type" << endl;
 		exit(1);
-		}
+	}
 
 	f_is_linear = TRUE;
 
@@ -744,7 +744,7 @@ void action::induced_action_on_spread_set(action *A_old,
 	if (f_induce_action) {
 		induced_action_override_sims(*A,
 				old_G, 0/*verbose_level - 2*/);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_spread_set finished, "
@@ -753,7 +753,7 @@ void action::induced_action_on_spread_set(action *A_old,
 		cout << "make_element_size=" << make_element_size << endl;
 		cout << "low_level_point_size=" << low_level_point_size << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_orthogonal(action *A_old, 
@@ -767,7 +767,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_orthogonal "
 				"f_induce_action=" << f_induce_action << endl;
-		}
+	}
 	A = A_old;
 
 	char str1[1000];
@@ -776,15 +776,15 @@ void action::induced_action_on_orthogonal(action *A_old,
 	if (AO->f_on_points) {
 		snprintf(str1, 1000, "_Opts_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
 		snprintf(str2, 1000, " {\\rm OnOpts %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
-		}
+	}
 	else if (AO->f_on_lines) {
 		snprintf(str1, 1000, "_Olines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
 		snprintf(str2, 1000, " {\\rm OnOlines %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
-		}
+	}
 	else if (AO->f_on_points_and_lines) {
 		snprintf(str1, 1000, "_Optslines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
 		snprintf(str2, 1000, " {\\rm OnOptslines %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
-		}
+	}
 
 
 
@@ -799,14 +799,14 @@ void action::induced_action_on_orthogonal(action *A_old,
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	f_has_subaction = TRUE;
 	subaction = A;
 	if (!A->f_is_linear) {
 		cout << "action::induced_action_on_orthogonal "
 				"action not of linear type" << endl;
 		exit(1);
-		}
+	}
 	type_G = action_on_orthogonal_t;
 	G.AO = AO;
 	f_allocated = TRUE;
@@ -829,7 +829,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 	
 	if (f_induce_action) {
 		induced_action_override_sims(*A, old_G, 0/*verbose_level - 2*/);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_orthogonal "
@@ -838,7 +838,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 		cout << "make_element_size=" << make_element_size << endl;
 		cout << "low_level_point_size=" << low_level_point_size << endl;
 		print_info();
-		}
+	}
 }
 
 

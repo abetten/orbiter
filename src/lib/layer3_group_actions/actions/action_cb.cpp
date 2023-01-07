@@ -13,8 +13,7 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-int action::image_of(
-		void *elt, int a)
+int action::image_of(void *elt, int a)
 {
 	ptr->nb_times_image_of_called++;
 	return (*ptr->ptr_element_image_of)(*this, a, elt, 0);

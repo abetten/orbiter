@@ -260,8 +260,10 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 	cout << "Computing the unitary group:" << endl;
 
+	actions::action_global AcGl;
+
 	//int canonical_pt;
-	sg = A->set_stabilizer_in_projective_space(P,
+	sg = AcGl.set_stabilizer_in_projective_space(A, P,
 			Pts, nb_pts, /*canonical_pt,*/ NULL,
 			verbose_level);
 	//GU = P->set_stabilizer(Pts, nb_pts, verbose_level);

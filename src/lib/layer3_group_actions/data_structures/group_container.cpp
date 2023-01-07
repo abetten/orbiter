@@ -18,7 +18,7 @@ group_container::group_container()
 {
 	A = NULL;
 	f_has_ascii_coding = FALSE;
-	ascii_coding = NULL;
+	//std::string ascii_coding;
 
 	f_has_strong_generators = FALSE;
 	SG = NULL;
@@ -41,9 +41,9 @@ void group_container::init(actions::action *A, int verbose_level)
 	group_container::A = A;
 }
 
-void group_container::init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level)
+void group_container::init_ascii_coding_to_sims(std::string &ascii_coding, int verbose_level)
 {
-	if (strlen(ascii_coding)) {
+	if (ascii_coding.length()) {
 		init_ascii_coding(ascii_coding, verbose_level);
 		
 		decode_ascii(0);
@@ -59,22 +59,16 @@ void group_container::init_ascii_coding_to_sims(const char *ascii_coding, int ve
 	schreier_sims(0);
 }
 
-void group_container::init_ascii_coding(const char *ascii_coding, int verbose_level)
+void group_container::init_ascii_coding(std::string &ascii_coding, int verbose_level)
 {
 	delete_ascii_coding();
 	
-	group_container::ascii_coding = NEW_char(strlen(ascii_coding) + 1);
-	strcpy(group_container::ascii_coding, ascii_coding);
+	group_container::ascii_coding.assign(ascii_coding);
 	f_has_ascii_coding = TRUE;
 }
 
 void group_container::delete_ascii_coding()
 {
-	if (f_has_ascii_coding) {
-		FREE_char(ascii_coding);
-		f_has_ascii_coding = FALSE;
-		ascii_coding = NULL;
-	}
 }
 
 void group_container::init_strong_generators_empty_set(int verbose_level)
@@ -295,6 +289,7 @@ void group_container::code_ascii(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int sz, i, j;
 	char *p;
+	char *p0;
 	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
@@ -304,8 +299,8 @@ void group_container::code_ascii(int verbose_level)
 	require_strong_generators();
 	sz = 2 * ((2 + A->base_len() + A->base_len()) * sizeof(int_4)
 			+ A->coded_elt_size_in_char * SG->len) + 1;
-	ascii_coding = NEW_char(sz);
-	p = ascii_coding;
+	p = NEW_char(sz);
+	p0 = p;
 
 	//cout << "group::code_ascii action A->base_len=" << A->base_len << endl;
 	Os.code_int4(p, (int_4) A->base_len());
@@ -325,10 +320,12 @@ void group_container::code_ascii(int verbose_level)
 		}
 	}
 	*p++ = 0;
-	if (p - ascii_coding != sz) {
-		cout << "group_container::code_ascii p - ascii_coding != sz" << endl;
+	if (p - p0 != sz) {
+		cout << "group_container::code_ascii p - p0 != sz" << endl;
 		exit(1);
 	}
+
+	ascii_coding.assign(p0);
 	f_has_ascii_coding = TRUE;
 	if (f_v) {
 		cout << "group_container::code_ascii " << ascii_coding << endl;
@@ -341,15 +338,15 @@ void group_container::decode_ascii(int verbose_level)
 	int i, j;
 	int len, nbsg;
 	int *base1;
-	char *p, *p0;
+	const char *p, *p0;
 	int str_len;
 	orbiter_kernel_system::os_interface Os;
 
 	require_ascii_coding();
 	//cout << "group_container::decode_ascii ascii_coding=" << ascii_coding << endl;
-	p = ascii_coding;
+	p = ascii_coding.c_str();
 	p0 = p;
-	str_len = strlen(ascii_coding);
+	str_len = ascii_coding.length();
 	len = Os.decode_int4(p);
 	nbsg = Os.decode_int4(p);
 	if (len != A->base_len()) {

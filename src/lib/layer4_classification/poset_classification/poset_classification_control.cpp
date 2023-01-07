@@ -21,7 +21,8 @@ namespace poset_classification {
 
 
 
-static void poset_classification_control_early_test_function_cliques(long int *S, int len,
+static void poset_classification_control_early_test_function_cliques(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);

@@ -49,7 +49,8 @@ void surface_clebsch_map::report(std::ostream &ost, int verbose_level)
 
 }
 
-void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, int verbose_level)
+void surface_clebsch_map::init(surface_object_with_action *SOA,
+		int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -84,13 +85,15 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits << " before Clebsch_map->init_half_double_six" << endl;
+			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< " before Clebsch_map->init_half_double_six" << endl;
 	}
 	Clebsch_map->init_half_double_six(SOA->SO, hds, verbose_level);
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits << " after Clebsch_map->init_half_double_six" << endl;
+			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< " after Clebsch_map->init_half_double_six" << endl;
 	}
 
 
@@ -98,13 +101,15 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits << " before Clebsch_map->compute_Clebsch_map_down" << endl;
+			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< " before Clebsch_map->compute_Clebsch_map_down" << endl;
 	}
 	Clebsch_map->compute_Clebsch_map_down(verbose_level);
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits << " after Clebsch_map->compute_Clebsch_map_down" << endl;
+			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< " after Clebsch_map->compute_Clebsch_map_down" << endl;
 	}
 
 
@@ -112,7 +117,8 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 	if (f_v) {
 		cout << "clebsch map for lines " << Clebsch_map->line_idx[0]
 			<< " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[0]] << ", "
-			<< Clebsch_map->line_idx[1] << " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[1]]
+			<< Clebsch_map->line_idx[1] << " = "
+			<< SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[1]]
 			<< " before clebsch_map_print_fibers:" << endl;
 	}
 	Clebsch_map->clebsch_map_print_fibers();
@@ -120,7 +126,8 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 	if (f_v) {
 		cout << "clebsch map for lines " << Clebsch_map->line_idx[0]
 			<< " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[0]] << ", "
-			<< Clebsch_map->line_idx[1] << " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[1]]
+			<< Clebsch_map->line_idx[1] << " = "
+			<< SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[1]]
 			<< "  before Clebsch_map->clebsch_map_find_arc_and_lines:" << endl;
 	}
 
