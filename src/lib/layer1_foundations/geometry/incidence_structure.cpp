@@ -257,7 +257,7 @@ void incidence_structure::init_orthogonal(
 	f_rowsums_constant = TRUE;
 	f_colsums_constant = TRUE;
 	max_r = min_r = r = O->Hyperbolic_pair->alpha;
-	max_k = min_k = k = O->q + 1;
+	max_k = min_k = k = O->Quadratic_form->q + 1;
 	nb_rows = O->Hyperbolic_pair->nb_points;
 	nb_cols = O->Hyperbolic_pair->nb_lines;
 	nb_lines_on_point = NEW_int(nb_rows);
@@ -533,17 +533,17 @@ int incidence_structure::get_ij(int i, int j)
 		int *base_cols;
 
 		//cout << "incidence_structure::get_ij i=" << i << " j=" << j << endl;
-		v = NEW_int(3 * O->n);
-		base_cols = NEW_int(O->n);
+		v = NEW_int(3 * O->Quadratic_form->n);
+		base_cols = NEW_int(O->Quadratic_form->n);
 		//cout << "before O->unrank_point(v, 1, i);" << endl;
 		O->Hyperbolic_pair->unrank_point(v, 1, i, 0);
 		//cout << "before O->unrank_line(v, p1, p2, j);" << endl;
 		O->Hyperbolic_pair->unrank_line(p1, p2, j, 0 /* verbose_level */);
-		//cout << "before O->unrank_point(v + 1 * O->n, 1, p1);" << endl;
-		O->Hyperbolic_pair->unrank_point(v + 1 * O->n, 1, p1, 0);
+		//cout << "before O->unrnk_point(v + 1 * O->n, 1, p1);" << endl;
+		O->Hyperbolic_pair->unrank_point(v + 1 * O->Quadratic_form->n, 1, p1, 0);
 		//cout << "before O->unrank_point(v + 2 * O->n, 1, p2);" << endl;
-		O->Hyperbolic_pair->unrank_point(v + 2 * O->n, 1, p2, 0);
-		rk = O->F->Linear_algebra->Gauss_simple(v, 3, O->n, base_cols, 0/* verbose_level*/);
+		O->Hyperbolic_pair->unrank_point(v + 2 * O->Quadratic_form->n, 1, p2, 0);
+		rk = O->F->Linear_algebra->Gauss_simple(v, 3, O->Quadratic_form->n, base_cols, 0/* verbose_level*/);
 
 		FREE_int(v);
 		FREE_int(base_cols);
@@ -641,7 +641,7 @@ int incidence_structure::get_points_on_line(int *data, int j, int verbose_level)
 			data[h] = Data[h];
 		}
 		FREE_lint(Data);
-		k = O->q + 1;
+		k = O->Quadratic_form->q + 1;
 	}
 	else if (realization_type ==
 			INCIDENCE_STRUCTURE_REALIZATION_BY_PROJECTIVE_SPACE) {

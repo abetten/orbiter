@@ -7229,7 +7229,7 @@ test_7_1:
 surface_4_0:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P -projective_space -n 3 -field F -end \
 		-define S -cubic_surface -space P -catalogue 0 -end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -7346,7 +7346,8 @@ surface_7_0:
 
 surface_7_0_plane_type_of_lines_on_Klein_quadric:
 	$(ORBITER) -v 6 \
-		-define L_7_0 -vector -file surface_catalogue_q7_iso0_lines.csv -end \
+		-define L_7_0 -vector \
+			-file surface_catalogue_q7_iso0_lines.csv -end \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \

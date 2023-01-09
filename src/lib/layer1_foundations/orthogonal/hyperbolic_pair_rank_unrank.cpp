@@ -34,7 +34,10 @@ void hyperbolic_pair::unrank_point(
 		exit(1);
 	}
 	F->Orthogonal_indexing->Q_epsilon_unrank(v, stride, epsilon, n - 1,
-			O->form_c1, O->form_c2, O->form_c3, rk, verbose_level);
+			O->Quadratic_form->form_c1,
+			O->Quadratic_form->form_c2,
+			O->Quadratic_form->form_c3,
+			rk, verbose_level);
 }
 
 long int hyperbolic_pair::rank_point(int *v, int stride, int verbose_level)
@@ -57,7 +60,10 @@ long int hyperbolic_pair::rank_point(int *v, int stride, int verbose_level)
 		cout << "hyperbolic_pair::rank_point before F->Q_epsilon_rank" << endl;
 	}
 	ret = F->Orthogonal_indexing->Q_epsilon_rank(rk_pt_v, 1, epsilon, n - 1,
-			O->form_c1, O->form_c2, O->form_c3, verbose_level);
+			O->Quadratic_form->form_c1,
+			O->Quadratic_form->form_c2,
+			O->Quadratic_form->form_c3,
+			verbose_level);
 	if (f_v) {
 		cout << "hyperbolic_pair::rank_point after F->Q_epsilon_rank" << endl;
 	}

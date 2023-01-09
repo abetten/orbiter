@@ -763,7 +763,9 @@ void linear_algebra::solve_y2py(int a, int *Y2, int &nb_sol)
 	}
 }
 
-void linear_algebra::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, int &nb_pts, int verbose_level)
+void linear_algebra::find_secant_points_wrt_x0x3mx1x2(
+		int *Basis_line, int *Pts4, int &nb_pts,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int u;

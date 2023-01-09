@@ -141,7 +141,7 @@ int hyperbolic_pair::parabolic_type_and_index_to_point_rk(
 		}
 	}
 	else {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			return parabolic_even_type_and_index_to_point_rk(
 					type, index, verbose_level);
 		}
@@ -561,7 +561,7 @@ void hyperbolic_pair::parabolic_point_rk_to_type_and_index(
 		}
 		return;
 	}
-	if (O->f_even) {
+	if (O->Quadratic_form->f_even) {
 		parabolic_even_point_rk_to_type_and_index(rk,
 				type, index, verbose_level);
 	}
@@ -889,7 +889,7 @@ void hyperbolic_pair::parabolic_neighbor51_odd_unrank(
 	v[0] = O->subspace->Hyperbolic_pair->v_tmp2[0];
 	v[1] = 0;
 	v[2] = 0;
-	for (i = 1; i < O->subspace->n; i++) {
+	for (i = 1; i < O->subspace->Quadratic_form->n; i++) {
 		v[2 + i] = O->subspace->Hyperbolic_pair->v_tmp2[i];
 	}
 	if (f_v) {
@@ -916,13 +916,13 @@ long int hyperbolic_pair::parabolic_neighbor51_odd_rank(
 		exit(1);
 	}
 	O->subspace->Hyperbolic_pair->v_tmp2[0] = v[0];
-	for (i = 1; i < O->subspace->n; i++) {
+	for (i = 1; i < O->subspace->Quadratic_form->n; i++) {
 		O->subspace->Hyperbolic_pair->v_tmp2[i] = v[2 + i];
 	}
 	O->subspace->normalize_point(O->subspace->Hyperbolic_pair->v_tmp2, 1);
 	if (f_v) {
 		cout << "normalized and in subspace: ";
-		Int_vec_print(cout, O->subspace->Hyperbolic_pair->v_tmp2, O->subspace->n);
+		Int_vec_print(cout, O->subspace->Hyperbolic_pair->v_tmp2, O->subspace->Quadratic_form->n);
 		cout << endl;
 	}
 	O->subspace->Hyperbolic_pair->parabolic_odd_point_to_type_and_index(
@@ -949,7 +949,7 @@ void hyperbolic_pair::parabolic_neighbor52_odd_unrank(
 	v[0] = O->subspace->Hyperbolic_pair->v_tmp2[0];
 	v[1] = 0;
 	v[2] = 0;
-	for (i = 1; i < O->subspace->n; i++) {
+	for (i = 1; i < O->subspace->Quadratic_form->n; i++) {
 		v[2 + i] = O->subspace->Hyperbolic_pair->v_tmp2[i];
 	}
 	if (f_v) {
@@ -974,7 +974,7 @@ long int hyperbolic_pair::parabolic_neighbor52_odd_rank(int *v, int verbose_leve
 		exit(1);
 	}
 	O->subspace->Hyperbolic_pair->v_tmp2[0] = v[0];
-	for (i = 1; i < O->subspace->n; i++) {
+	for (i = 1; i < O->subspace->Quadratic_form->n; i++) {
 		O->subspace->Hyperbolic_pair->v_tmp2[i] = v[2 + i];
 	}
 	O->subspace->normalize_point(O->subspace->Hyperbolic_pair->v_tmp2, 1);
@@ -1000,7 +1000,7 @@ void hyperbolic_pair::parabolic_neighbor52_even_unrank(
 	v[0] = O->subspace->Hyperbolic_pair->v_tmp2[0];
 	v[1] = 0;
 	v[2] = 0;
-	for (i = 1; i < O->subspace->n; i++) {
+	for (i = 1; i < O->subspace->Quadratic_form->n; i++) {
 		v[2 + i] = O->subspace->Hyperbolic_pair->v_tmp2[i];
 	}
 	if (f_v) {
@@ -1025,7 +1025,7 @@ long int hyperbolic_pair::parabolic_neighbor52_even_rank(int *v, int verbose_lev
 		exit(1);
 	}
 	O->subspace->Hyperbolic_pair->v_tmp2[0] = v[0];
-	for (i = 1; i < O->subspace->n; i++) {
+	for (i = 1; i < O->subspace->Quadratic_form->n; i++) {
 		O->subspace->Hyperbolic_pair->v_tmp2[i] = v[2 + i];
 	}
 	O->subspace->normalize_point(O->subspace->Hyperbolic_pair->v_tmp2, 1);
@@ -1546,7 +1546,7 @@ void hyperbolic_pair::parabolic_unrank_line(
 		exit(1);
 	}
 	if (rk < l1) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			parabolic_unrank_line_L1_even(p1, p2, rk, verbose_level);
 		}
 		else {
@@ -1559,7 +1559,7 @@ void hyperbolic_pair::parabolic_unrank_line(
 		cout << "hyperbolic_pair::parabolic_unrank_line reducing rk to " << rk << " l2=" << l2 << endl;
 	}
 	if (rk < l2) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			parabolic_unrank_line_L2_even(p1, p2, rk, verbose_level);
 		}
 		else {
@@ -1644,7 +1644,7 @@ long int hyperbolic_pair::parabolic_rank_line(long int p1, long int p2, int verb
 	}
 
 	if (type == 1) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			return parabolic_rank_line_L1_even(cp1, cp2, verbose_level);
 		}
 		else {
@@ -1652,7 +1652,7 @@ long int hyperbolic_pair::parabolic_rank_line(long int p1, long int p2, int verb
 		}
 	}
 	else if (type == 2) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			return l1 +
 					parabolic_rank_line_L2_even(cp1, cp2, verbose_level);
 		}
@@ -2066,8 +2066,8 @@ void hyperbolic_pair::parabolic_unrank_line_L3(
 		Int_vec_print(cout, v3, n); cout << endl;
 		Int_vec_print(cout, v4, n); cout << endl;
 	}
-	a = O->subspace->evaluate_bilinear_form(v1, v3, 1);
-	b = O->subspace->evaluate_bilinear_form(v2, v4, 1);
+	a = O->subspace->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
+	b = O->subspace->Quadratic_form->evaluate_bilinear_form(v2, v4, 1);
 	if (f_v) {
 		cout << "a=" << a << " b=" << b << endl;
 	}
@@ -2091,7 +2091,7 @@ void hyperbolic_pair::parabolic_unrank_line_L3(
 			cout << "after scaling" << endl;
 			Int_vec_print(cout, v4, n); cout << endl;
 		}
-		c = O->subspace->evaluate_bilinear_form(v2, v4, 1);
+		c = O->subspace->Quadratic_form->evaluate_bilinear_form(v2, v4, 1);
 		if (f_v) {
 			cout << "c=" << c << endl;
 		}
@@ -2179,8 +2179,8 @@ long int hyperbolic_pair::parabolic_rank_line_L3(long int p1, long int p2, int v
 		Int_vec_print(cout, v3, n); cout << endl;
 		Int_vec_print(cout, v4, n); cout << endl;
 	}
-	a = O->subspace->evaluate_bilinear_form(v1, v3, 1);
-	b = O->subspace->evaluate_bilinear_form(v2, v4, 1);
+	a = O->subspace->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
+	b = O->subspace->Quadratic_form->evaluate_bilinear_form(v2, v4, 1);
 	if (f_v) {
 		cout << "a=" << a << " b=" << b << endl;
 	}
@@ -2204,7 +2204,7 @@ long int hyperbolic_pair::parabolic_rank_line_L3(long int p1, long int p2, int v
 			cout << "after scaling" << endl;
 			Int_vec_print(cout, v3, n); cout << endl;
 		}
-		c = O->subspace->evaluate_bilinear_form(v1, v3, 1);
+		c = O->subspace->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
 		if (f_v) {
 			cout << "c=" << c << endl;
 		}
@@ -2592,7 +2592,7 @@ long int hyperbolic_pair::parabolic_line_type_given_point_types(long int pt1, lo
 	// from now on, we assume pt1_type <= pt2_type
 
 	if (pt1_type == 1) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			return 1;
 		}
 		else {
@@ -2614,7 +2614,7 @@ long int hyperbolic_pair::parabolic_line_type_given_point_types(long int pt1, lo
 		}
 	}
 	else if (pt1_type == 2) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			if (pt2_type == 2) {
 				return parabolic_decide_P22_even(pt1, pt2);
 			}
@@ -2644,7 +2644,7 @@ long int hyperbolic_pair::parabolic_line_type_given_point_types(long int pt1, lo
 		}
 	}
 	else if (pt1_type == 3) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			if (pt2_type == 3) {
 				return parabolic_decide_P33(pt1, pt2);
 			}
@@ -2674,7 +2674,7 @@ long int hyperbolic_pair::parabolic_line_type_given_point_types(long int pt1, lo
 		}
 	}
 	else if (pt1_type == 4) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			if (pt2_type == 4) {
 				return parabolic_decide_P44(pt1, pt2);
 			}
@@ -2927,14 +2927,14 @@ long int hyperbolic_pair::find_root_parabolic(long int rk2, int verbose_level)
 		Int_vec_print(cout, O->Orthogonal_group->find_root_z, n);
 		cout << endl;
 	}
-	u = evaluate_parabolic_bilinear_form(
+	u = O->Quadratic_form->evaluate_parabolic_bilinear_form(
 			O->Orthogonal_group->find_root_z,
 			O->Orthogonal_group->find_root_x, 1, m);
 	if (u == 0) {
 		cout << "hyperbolic_pair::find_root_parabolic u=" << u << endl;
 		exit(1);
 	}
-	v = evaluate_parabolic_bilinear_form(
+	v = O->Quadratic_form->evaluate_parabolic_bilinear_form(
 			O->Orthogonal_group->find_root_z,
 			O->Orthogonal_group->find_root_y, 1, m);
 	if (v == 0) {
@@ -2960,7 +2960,7 @@ void hyperbolic_pair::parabolic_canonical_points_of_line(
 				<< " pt1=" << pt1 << " pt2=" << pt2 << endl;
 	}
 	if (line_type == 1) {
-		if (O->f_even) {
+		if (O->Quadratic_form->f_even) {
 			parabolic_canonical_points_L1_even(pt1, pt2, cpt1, cpt2);
 		}
 		else {
@@ -3182,21 +3182,6 @@ void hyperbolic_pair::parabolic_canonical_points_L8(
 	return;
 }
 
-int hyperbolic_pair::evaluate_parabolic_bilinear_form(
-		int *u, int *v, int stride, int m)
-{
-	int a, b, c;
-
-	a = evaluate_hyperbolic_bilinear_form(
-			u + stride, v + stride, stride, m);
-	if (O->f_even) {
-		return a;
-	}
-	b = F->mult(2, u[0]);
-	b = F->mult(b, v[0]);
-	c = F->add(a, b);
-	return c;
-}
 
 
 void hyperbolic_pair::parabolic_point_normalize(
@@ -3270,9 +3255,9 @@ void hyperbolic_pair::parabolic_point_properties(int *v, int stride, int n,
 			cout << endl;
 		}
 	}
-	middle_value = evaluate_hyperbolic_quadratic_form(
+	middle_value = O->Quadratic_form->evaluate_hyperbolic_quadratic_form(
 			v + 1 * stride, stride, m - 1);
-	end_value = evaluate_hyperbolic_quadratic_form(
+	end_value = O->Quadratic_form->evaluate_hyperbolic_quadratic_form(
 			v + (1 + 2 * (m - 1)) * stride, stride, 1);
 }
 

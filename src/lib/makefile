@@ -252,6 +252,7 @@ MODULES= \
 		layer1_foundations/orthogonal/orthogonal_indexing.o \
 		layer1_foundations/orthogonal/orthogonal_io.o \
 		layer1_foundations/orthogonal/orthogonal.o \
+		layer1_foundations/orthogonal/quadratic_form.o \
 		layer1_foundations/orthogonal/unusual_model.o \
 		layer1_foundations/ring_theory/finite_ring.o \
 		layer1_foundations/ring_theory/homogeneous_polynomial_domain.o \

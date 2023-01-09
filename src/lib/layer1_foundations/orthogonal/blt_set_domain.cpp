@@ -92,8 +92,8 @@ void blt_set_domain::init(orthogonal *O,
 	f_orthogonal_allocated = FALSE;
 	blt_set_domain::F = O->F;
 	blt_set_domain::q = F->q;
-	n = O->n; // vector space dimension
-	epsilon = O->epsilon;
+	n = O->Quadratic_form->n; // vector space dimension
+	epsilon = O->Quadratic_form->epsilon;
 
 	char str[1000];
 
@@ -196,7 +196,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 	}
 	for (i = 0; i < nb_points; i++) {
 		O->Hyperbolic_pair->unrank_point(Pts + i * 5, 1, points[i], 0);
-		form_value[i] = O->evaluate_bilinear_form(v1, Pts + i * 5, 1);
+		form_value[i] = O->Quadratic_form->evaluate_bilinear_form(v1, Pts + i * 5, 1);
 	}
 
 	if (f_v) {
@@ -341,8 +341,8 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	starter_t[0] = -1;
 	for (i = 1; i < starter_sz; i++) {
 		O->Hyperbolic_pair->unrank_point(v3, 1, starter[i], 0);
-		a = O->evaluate_bilinear_form(v1, v3, 1);
-		b = O->evaluate_bilinear_form(v2, v3, 1);
+		a = O->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
+		b = O->Quadratic_form->evaluate_bilinear_form(v2, v3, 1);
 		if (a == 0) {
 			cout << "a == 0, this should not be" << endl;
 			exit(1);
@@ -422,8 +422,8 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 			Int_vec_print(cout, v3, 5);
 			cout << endl;
 		}
-		a = O->evaluate_bilinear_form(v1, v3, 1);
-		b = O->evaluate_bilinear_form(v2, v3, 1);
+		a = O->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
+		b = O->Quadratic_form->evaluate_bilinear_form(v2, v3, 1);
 		if (a == 0) {
 			cout << "a == 0, this should not be" << endl;
 			exit(1);
@@ -645,9 +645,9 @@ int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
 	O->Hyperbolic_pair->unrank_point(v1, 1, a, 0);
 	O->Hyperbolic_pair->unrank_point(v2, 1, x, 0);
 	O->Hyperbolic_pair->unrank_point(v3, 1, y, 0);
-	f12 = O->evaluate_bilinear_form(v1, v2, 1);
-	f13 = O->evaluate_bilinear_form(v1, v3, 1);
-	f23 = O->evaluate_bilinear_form(v2, v3, 1);
+	f12 = O->Quadratic_form->evaluate_bilinear_form(v1, v2, 1);
+	f13 = O->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
+	f23 = O->Quadratic_form->evaluate_bilinear_form(v2, v3, 1);
 	d = O->F->product3(f12, f13, f23);
 	if (d == 0) {
 		return FALSE;
@@ -731,7 +731,7 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 	for (i = 0; i < len - 1; i++) {
 		x = S[i];
 		O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v2, 1, x, 0);
-		fxy = O->evaluate_bilinear_form(O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
+		fxy = O->Quadratic_form->evaluate_bilinear_form(O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
 
 		if (fxy == 0) {
 			f_OK = FALSE;

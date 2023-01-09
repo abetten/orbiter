@@ -123,9 +123,9 @@ void smooth_surface_object_properties::compute_tritangent_planes_by_rank(int ver
 
 	if (SO->nb_lines != 27) {
 		cout << "smooth_surface_object_properties::compute_tritangent_planes_by_rank "
-				"SO->nb_lines != 27 we don't compute the tritangent planes" << endl;
-		nb_tritangent_planes = 0;
-		return;
+				"SO->nb_lines != 27 we should not be here" << endl;
+		//nb_tritangent_planes = 0;
+		exit(1);
 	}
 
 
@@ -147,9 +147,12 @@ void smooth_surface_object_properties::compute_tritangent_planes_by_rank(int ver
 				SO->Surf, three_lines_idx);
 
 		for (i = 0; i < 3; i++) {
+
 			three_lines[i] = SO->Lines[three_lines_idx[i]];
+
 			SO->Surf->Gr->unrank_lint_here(Basis + i * 8,
 					three_lines[i], 0 /* verbose_level */);
+
 		}
 		r = SO->F->Linear_algebra->Gauss_simple(Basis, 6, 4,
 			base_cols, 0 /* verbose_level */);
@@ -165,7 +168,8 @@ void smooth_surface_object_properties::compute_tritangent_planes_by_rank(int ver
 		for (tritangent_plane_idx = 0;
 				tritangent_plane_idx < 45;
 				tritangent_plane_idx++) {
-			cout << tritangent_plane_idx << " : " << Tritangent_plane_rk[tritangent_plane_idx] << endl;
+			cout << tritangent_plane_idx << " : "
+					<< Tritangent_plane_rk[tritangent_plane_idx] << endl;
 		}
 	}
 	if (f_v) {
@@ -383,7 +387,8 @@ void smooth_surface_object_properties::print_tritangent_planes(std::ostream &ost
 
 }
 
-void smooth_surface_object_properties::print_single_tritangent_plane(std::ostream &ost, int plane_idx)
+void smooth_surface_object_properties::print_single_tritangent_plane(
+		std::ostream &ost, int plane_idx)
 {
 	long int plane_rk, b;
 	int v4[4];
@@ -428,7 +433,8 @@ void smooth_surface_object_properties::print_single_tritangent_plane(std::ostrea
 }
 
 
-void smooth_surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost,
+void smooth_surface_object_properties::latex_table_of_trihedral_pairs(
+		std::ostream &ost,
 		int *T, int nb_T)
 {
 	int h, i, j, t_idx;
@@ -488,7 +494,8 @@ void smooth_surface_object_properties::latex_table_of_trihedral_pairs(std::ostre
 	cout << "smooth_surface_object_properties::latex_table_of_trihedral_pairs done" << endl;
 }
 
-void smooth_surface_object_properties::latex_trihedral_pair(std::ostream &ost, int t_idx)
+void smooth_surface_object_properties::latex_trihedral_pair(
+		std::ostream &ost, int t_idx)
 {
 	int i, j, e, a;
 
@@ -558,7 +565,8 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 	//int plane_idx[6];
 
 	if (f_v) {
-		cout << "smooth_surface_object_properties::make_equation_in_trihedral_form t_idx=" << t_idx << endl;
+		cout << "smooth_surface_object_properties::make_equation_in_trihedral_form "
+				"t_idx=" << t_idx << endl;
 	}
 
 	if (f_v) {
@@ -568,7 +576,8 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 	}
 
 	for (h = 0; h < 6; h++) {
-		row_col_Eckardt_points[h] = SO->Surf->Schlaefli->Trihedral_to_Eckardt[t_idx * 6 + h];
+		row_col_Eckardt_points[h] =
+				SO->Surf->Schlaefli->Trihedral_to_Eckardt[t_idx * 6 + h];
 	}
 	//int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
 	for (i = 0; i < 6; i++) {
@@ -599,7 +608,8 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 		pt = SO->Pts[h];
 		SO->F->PG_element_unrank_modified(pt_on_surface, 1, 4, pt);
 		for (i = 0; i < 3; i++) {
-			evals[i] = SO->Surf->PolynomialDomains->Poly1_4->evaluate_at_a_point(F_planes + i * 4, pt_on_surface);
+			evals[i] = SO->Surf->PolynomialDomains->Poly1_4->evaluate_at_a_point(
+					F_planes + i * 4, pt_on_surface);
 		}
 		for (i = 0; i < 3; i++) {
 			evals[3 + i] = SO->Surf->PolynomialDomains->Poly1_4->evaluate_at_a_point(
@@ -639,7 +649,8 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 	}
 }
 
-void smooth_surface_object_properties::print_equation_in_trihedral_form(std::ostream &ost,
+void smooth_surface_object_properties::print_equation_in_trihedral_form(
+		std::ostream &ost,
 	int *F_planes, int *G_planes, int lambda)
 {
 
@@ -744,7 +755,8 @@ void smooth_surface_object_properties::latex_table_of_trihedral_pairs_and_clebsc
 	}
 }
 
-void smooth_surface_object_properties::latex_trihedral_pair(std::ostream &ost, int *T, long int *TE)
+void smooth_surface_object_properties::latex_trihedral_pair(
+		std::ostream &ost, int *T, long int *TE)
 {
 	int i, j, plane_rk;
 	int Mtx[16];
@@ -801,7 +813,8 @@ void smooth_surface_object_properties::latex_trihedral_pair(std::ostream &ost, i
 	ost << "\\end{array}" << endl;
 }
 
-void smooth_surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost)
+void smooth_surface_object_properties::latex_table_of_trihedral_pairs(
+		std::ostream &ost)
 {
 	int i;
 
@@ -833,7 +846,8 @@ void smooth_surface_object_properties::latex_table_of_trihedral_pairs(std::ostre
 	cout << "surface_object_properties::latex_table_of_trihedral_pairs done" << endl;
 }
 
-void smooth_surface_object_properties::print_Steiner_and_Eckardt(std::ostream &ost)
+void smooth_surface_object_properties::print_Steiner_and_Eckardt(
+		std::ostream &ost)
 {
 #if 0
 	ost << "\\clearpage" << endl << endl;

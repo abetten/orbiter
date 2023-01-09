@@ -631,7 +631,7 @@ int orthogonal_global::BLT_test(orthogonal *O, int size, long int *set, int verb
 			for (i = 0; i < size; i++) {
 				O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, set[i], verbose_level - 1);
 				cout << i << " : " << set[i] << " : ";
-				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->n);
+				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
 				cout << endl;
 			}
 		}
@@ -718,11 +718,11 @@ int orthogonal_global::BLT_test(orthogonal *O, int size, long int *set, int verb
 				cout << "not OK; i=" << i << endl;
 				cout << "{x,y,z}={" << x << "," << y
 						<< "," << z << "}" << endl;
-				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->n);
+				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
 				cout << endl;
-				Int_vec_print(cout, O->Hyperbolic_pair->v2, O->n);
+				Int_vec_print(cout, O->Hyperbolic_pair->v2, O->Quadratic_form->n);
 				cout << endl;
-				Int_vec_print(cout, O->Hyperbolic_pair->v3, O->n);
+				Int_vec_print(cout, O->Hyperbolic_pair->v3, O->Quadratic_form->n);
 				cout << endl;
 				cout << "fxz=" << fxz << " ";
 				if (EVEN(l1))
@@ -790,7 +790,7 @@ int orthogonal_global::collinearity_test(orthogonal *O, int size, long int *set,
 		//form_c1, form_c2, form_c3, x);
 
 		//fxy = evaluate_bilinear_form(*M->GFq, u, v, d, Gram);
-		fxy = O->evaluate_bilinear_form(O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
+		fxy = O->Quadratic_form->evaluate_bilinear_form(O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
 
 		if (fxy == 0) {
 			f_OK = FALSE;

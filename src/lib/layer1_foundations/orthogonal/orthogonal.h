@@ -260,10 +260,6 @@ public:
 	// m = Witt index
 	void find_root_hyperbolic_xyz(long int rk2, int m,
 		int *x, int *y, int *z, int verbose_level);
-	int evaluate_hyperbolic_quadratic_form(int *v,
-		int stride, int m);
-	int evaluate_hyperbolic_bilinear_form(int *u, int *v,
-		int stride, int m);
 
 
 	// hyperbolic_pair_parabolic.cpp:
@@ -380,8 +376,6 @@ public:
 			long int pt1, long int pt2, long int &cpt1, long int &cpt2);
 	void parabolic_canonical_points_L8(
 			long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	int evaluate_parabolic_bilinear_form(
-		int *u, int *v, int stride, int m);
 	void parabolic_point_normalize(int *v, int stride, int n);
 	void parabolic_normalize_point_wrt_subspace(int *v, int stride);
 	void parabolic_point_properties(int *v, int stride, int n,
@@ -535,10 +529,12 @@ public:
 
 	long int find_root(long int rk2, int verbose_level);
 	void Siegel_map_between_singular_points(int *T,
-			long int rk_from, long int rk_to, long int root, int verbose_level);
+			long int rk_from, long int rk_to,
+			long int root, int verbose_level);
 	void Siegel_map_between_singular_points_hyperbolic(int *T,
-		long int rk_from, long int rk_to, long int root,
-		int m, int verbose_level);
+		long int rk_from, long int rk_to,
+		long int root, int m,
+		int verbose_level);
 	void Siegel_Transformation(int *T,
 		long int rk_from, long int rk_to, long int root,
 		int verbose_level);
@@ -560,15 +556,14 @@ public:
 		int *Mtx, int verbose_level);
 	void create_random_Siegel_transformation(int *Mtx,
 		int verbose_level);
-		// Only makes a n x n matrix.
+		// Makes an n x n matrix only.
 		// Does not put a semilinear component.
 	void create_random_semisimilarity(int *Mtx, int verbose_level);
 	void create_random_similarity(int *Mtx, int verbose_level);
-		// Only makes a d x d matrix.
-		// Does not put a semilinear component.
+		// Makes an n x n matrix only. Does not put a semilinear component.
 	void create_random_orthogonal_reflection(int *Mtx,
 		int verbose_level);
-		// Only makes a d x d matrix.
+		// Makes an n x n matrix only.
 		// Does not put a semilinear component.
 	void make_orthogonal_reflection(int *M, int *z,
 		int verbose_level);
@@ -577,7 +572,7 @@ public:
 		// if u is singular and v \in \la u \ra^\perp, then
 		// \pho_{u,v}(x) :=
 		// x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
-		// is called the Siegel transform (see Taylor p. 148)
+		// is called Siegel transform (see Taylor p. 148)
 		// Here Q is the quadratic form and
 		// \beta is the corresponding bilinear form
 	void Siegel_move_forward_by_index(long int rk1, long int rk2,
@@ -612,25 +607,8 @@ public:
 class orthogonal {
 
 public:
-	int epsilon;
-	int n; // the algebraic dimension
-	int m; // Witt index
-	int q;
-	int f_even;
-	int form_c1, form_c2, form_c3;
 
-	std::string label_txt;
-	std::string label_tex;
-
-	ring_theory::homogeneous_polynomial_domain *Poly;
-	int *the_quadratic_form;
-	int *the_monomial;
-
-
-	int *Gram_matrix;
-	int *T1, *T2, *T3; // [n * n]
-
-
+	quadratic_form *Quadratic_form;
 
 
 	hyperbolic_pair *Hyperbolic_pair;
@@ -640,6 +618,7 @@ public:
 	field_theory::finite_field *F;
 
 
+	int *T1, *T2, *T3; // [n * n]
 
 	// for determine_line
 	int *determine_line_v1, *determine_line_v2, *determine_line_v3;
@@ -662,9 +641,6 @@ public:
 	void init(int epsilon, int n, field_theory::finite_field *F,
 		int verbose_level);
 	void allocate();
-	void init_form_and_Gram_matrix(int verbose_level);
-	int evaluate_quadratic_form(int *v, int stride);
-	int evaluate_bilinear_form(int *u, int *v, int stride);
 	int evaluate_bilinear_form_by_rank(int i, int j);
 	void points_on_line_by_line_rank(long int line_rk,
 		long int *line, int verbose_level);
@@ -723,7 +699,6 @@ public:
 	void list_all_points_vs_points(int verbose_level);
 	void list_points_vs_points(int t1, int t2,
 		int verbose_level);
-	void report_quadratic_form(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void report_schemes(std::ostream &ost, int verbose_level);
 	void report_schemes_easy(std::ostream &ost);
@@ -734,6 +709,56 @@ public:
 
 
 
+
+
+};
+
+
+
+// #############################################################################
+// quadratic_form.cpp
+// #############################################################################
+
+//! a nondegenerate quadratic form
+
+
+class quadratic_form {
+
+public:
+	int epsilon;
+	int n; // the algebraic dimension
+	int m; // Witt index
+	int q;
+	int f_even;
+	int form_c1, form_c2, form_c3;
+
+	std::string label_txt;
+	std::string label_tex;
+
+	ring_theory::homogeneous_polynomial_domain *Poly;
+	int *the_quadratic_form;
+	int *the_monomial;
+
+
+	int *Gram_matrix;
+
+	field_theory::finite_field *F;
+
+
+	quadratic_form();
+	~quadratic_form();
+	void init(int epsilon, int n,
+			field_theory::finite_field *F, int verbose_level);
+	void init_form_and_Gram_matrix(int verbose_level);
+	int evaluate_quadratic_form(int *v, int stride);
+	int evaluate_bilinear_form(int *u, int *v, int stride);
+	int evaluate_hyperbolic_quadratic_form(
+			int *v, int stride, int m);
+	int evaluate_hyperbolic_bilinear_form(
+			int *u, int *v, int stride, int m);
+	int evaluate_parabolic_bilinear_form(
+			int *u, int *v, int stride, int m);
+	void report_quadratic_form(std::ostream &ost, int verbose_level);
 
 
 };

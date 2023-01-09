@@ -17,6 +17,7 @@ MODULES = \
 	orthogonal_indexing.o \
 	orthogonal_io.o \
 	orthogonal.o \
+	quadratic_form.o \
 	unusual_model.o
 
 

@@ -270,7 +270,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 		O->Hyperbolic_pair->unrank_point(u, 1, 0, 0);
 		for (i = 0; i < N; i++) {
 			O->Hyperbolic_pair->unrank_point(v, 1, i, 0);
-			fxy = O->evaluate_bilinear_form(u, v, 1);
+			fxy = O->Quadratic_form->evaluate_bilinear_form(u, v, 1);
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
@@ -299,7 +299,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 			Int_vec_print(cout, v, Descr->d);
 
 			O->Hyperbolic_pair->unrank_point(v, 1, i, 0);
-			fxy = O->evaluate_bilinear_form(u, v, 1);
+			fxy = O->Quadratic_form->evaluate_bilinear_form(u, v, 1);
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
@@ -386,7 +386,7 @@ void ovoid_classify::early_test_func(long int *S, int len,
 			v2 = Candidates + j * Descr->d;
 
 
-			fxy = O->evaluate_bilinear_form(v1, v2, 1);
+			fxy = O->Quadratic_form->evaluate_bilinear_form(v1, v2, 1);
 
 
 			if (fxy) {
@@ -716,7 +716,7 @@ void ovoid_classify::create_graph(orbiter_kernel_system::orbiter_data_file *ODF,
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++, k++) {
-			fxy = O->evaluate_bilinear_form(Pts + i * Descr->d, Pts + j * Descr->d, 1);
+			fxy = O->Quadratic_form->evaluate_bilinear_form(Pts + i * Descr->d, Pts + j * Descr->d, 1);
 			if (fxy != 0) {
 				Bitvec->m_i(k, 1);
 			}

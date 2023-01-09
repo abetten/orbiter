@@ -930,7 +930,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 	for (i = 0; i < nb_free_points; i++) {
 		for (j = 0; j < nb_cols; j++) {
-			a = Blt_set_domain->O->evaluate_bilinear_form(
+			a = Blt_set_domain->O->Quadratic_form->evaluate_bilinear_form(
 					Pts1 + i * 5,
 					Pts2 + j * 5, 1);
 			if (a == 0) {

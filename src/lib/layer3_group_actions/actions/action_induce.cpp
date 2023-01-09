@@ -774,16 +774,16 @@ void action::induced_action_on_orthogonal(action *A_old,
 	char str2[1000];
 
 	if (AO->f_on_points) {
-		snprintf(str1, 1000, "_Opts_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
-		snprintf(str2, 1000, " {\\rm OnOpts %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
+		snprintf(str1, 1000, "_Opts_%d_%d_%d", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
+		snprintf(str2, 1000, " {\\rm OnOpts %d,%d,%d}", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
 	}
 	else if (AO->f_on_lines) {
-		snprintf(str1, 1000, "_Olines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
-		snprintf(str2, 1000, " {\\rm OnOlines %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
+		snprintf(str1, 1000, "_Olines_%d_%d_%d", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
+		snprintf(str2, 1000, " {\\rm OnOlines %d,%d,%d}", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
 	}
 	else if (AO->f_on_points_and_lines) {
-		snprintf(str1, 1000, "_Optslines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
-		snprintf(str2, 1000, " {\\rm OnOptslines %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
+		snprintf(str1, 1000, "_Optslines_%d_%d_%d", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
+		snprintf(str2, 1000, " {\\rm OnOptslines %d,%d,%d}", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
 	}
 
 

@@ -471,10 +471,10 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		Get_matrix(Descr->intersect_with_subspace_label, Basis, m, n);
 
-		if (n != OA->O->n) {
+		if (n != OA->O->Quadratic_form->n) {
 			cout << "error: the width of the matrix does not match with the orthogonal space" << endl;
 			cout << "width = " << n << endl;
-			cout << "dimension of orthogonal space = " << OA->O->n << endl;
+			cout << "dimension of orthogonal space = " << OA->O->Quadratic_form->n << endl;
 			exit(1);
 		}
 

@@ -21,6 +21,8 @@ namespace orthogonal_geometry {
 
 orthogonal::orthogonal()
 {
+
+#if 0
 	epsilon = n = m = q = 0;
 	f_even = FALSE;
 	form_c1 = form_c2 = form_c3 = 0;
@@ -36,7 +38,9 @@ orthogonal::orthogonal()
 	T1 = NULL;
 	T2 = NULL;
 	T3 = NULL;
+#endif
 
+	Quadratic_form = NULL;
 
 	Hyperbolic_pair = NULL;
 
@@ -44,6 +48,9 @@ orthogonal::orthogonal()
 
 	F = NULL;
 
+	T1 = NULL;
+	T2 = NULL;
+	T3 = NULL;
 
 	determine_line_v1 = NULL;
 	determine_line_v2 = NULL;
@@ -64,17 +71,18 @@ orthogonal::orthogonal()
 
 orthogonal::~orthogonal()
 {
-	if (Poly) {
-		FREE_OBJECT(Poly);
+
+	if (Quadratic_form) {
+		FREE_OBJECT(Quadratic_form);
 	}
-	if (the_quadratic_form) {
-		FREE_int(the_quadratic_form);
+
+	if (Hyperbolic_pair) {
+		FREE_OBJECT(Hyperbolic_pair);
 	}
-	if (the_monomial) {
-		FREE_int(the_monomial);
-	}
-	if (Gram_matrix) {
-		FREE_int(Gram_matrix);
+
+
+	if (SN) {
+		FREE_OBJECT(SN);
 	}
 
 	if (T1) {
@@ -85,16 +93,6 @@ orthogonal::~orthogonal()
 	}
 	if (T3) {
 		FREE_int(T3);
-	}
-
-
-	if (Hyperbolic_pair) {
-		FREE_OBJECT(Hyperbolic_pair);
-	}
-
-
-	if (SN) {
-		FREE_OBJECT(SN);
 	}
 
 	if (determine_line_v1) {
@@ -142,6 +140,24 @@ void orthogonal::init(int epsilon, int n,
 	geometry::geometry_global Gg;
 
 
+	if (f_v) {
+		cout << "orthogonal::init" << endl;
+	}
+
+	Quadratic_form = NEW_OBJECT(quadratic_form);
+
+	if (f_v) {
+		cout << "orthogonal::init before Quadratic_form->init" << endl;
+	}
+	Quadratic_form->init(epsilon, n,
+				F, verbose_level);
+	if (f_v) {
+		cout << "orthogonal::init after Quadratic_form->init" << endl;
+	}
+
+	orthogonal::F = F;
+
+#if 0
 	orthogonal::epsilon = epsilon;
 	orthogonal::F = F;
 	orthogonal::n = n;
@@ -193,6 +209,7 @@ void orthogonal::init(int epsilon, int n,
 	else {
 		f_even = FALSE;
 	}
+#endif
 
 	if (f_v) {
 		cout << "orthogonal::init before allocate" << endl;
@@ -216,7 +233,7 @@ void orthogonal::init(int epsilon, int n,
 
 
 
-
+#if 0
 	if (f_v) {
 		cout << "orthogonal::init before init_form_and_Gram_matrix" << endl;
 	}
@@ -224,7 +241,7 @@ void orthogonal::init(int epsilon, int n,
 	if (f_v) {
 		cout << "orthogonal::init after init_form_and_Gram_matrix" << endl;
 	}
-
+#endif
 
 	Hyperbolic_pair = NEW_OBJECT(hyperbolic_pair);
 
@@ -246,7 +263,7 @@ void orthogonal::init(int epsilon, int n,
 	lines_on_point_coords1 = NEW_int(Hyperbolic_pair->alpha * n);
 	lines_on_point_coords2 = NEW_int(Hyperbolic_pair->alpha * n);
 
-	if (m > 1) {
+	if (Quadratic_form->m > 1) {
 		subspace = NEW_OBJECT(orthogonal);
 		if (f_v) {
 			cout << "orthogonal::init initializing subspace" << endl;
@@ -254,9 +271,9 @@ void orthogonal::init(int epsilon, int n,
 		subspace->init(epsilon, n - 2, F, 0 /*verbose_level - 1*/);
 		if (f_v) {
 			cout << "orthogonal::init initializing subspace finished" << endl;
-			cout << "orthogonal::init subspace->epsilon=" << subspace->epsilon << endl;
-			cout << "orthogonal::init subspace->n=" << subspace->n << endl;
-			cout << "orthogonal::init subspace->m=" << subspace->m << endl;
+			cout << "orthogonal::init subspace->epsilon=" << subspace->Quadratic_form->epsilon << endl;
+			cout << "orthogonal::init subspace->n=" << subspace->Quadratic_form->n << endl;
+			cout << "orthogonal::init subspace->m=" << subspace->Quadratic_form->m << endl;
 		}
 	}
 	else {
@@ -267,9 +284,9 @@ void orthogonal::init(int epsilon, int n,
 	}
 
 	if (f_v) {
-		cout << "orthogonal::init O^" << epsilon << "(" << n << "," << q << ")" << endl;
+		cout << "orthogonal::init O^" << epsilon << "(" << n << "," << Quadratic_form->q << ")" << endl;
 		cout << "epsilon=" << epsilon
-				<< " n=" << n << " m=" << m << " q=" << q << endl;
+				<< " n=" << n << " m=" << Quadratic_form->m << " q=" << Quadratic_form->q << endl;
 		cout << "pt_P = " << Hyperbolic_pair->pt_P << endl;
 		cout << "pt_Q=" << Hyperbolic_pair->pt_Q << endl;
 		cout << "nb_points = " << Hyperbolic_pair->nb_points << endl;
@@ -281,14 +298,15 @@ void orthogonal::init(int epsilon, int n,
 
 
 	if (f_v) {
-		cout << "orthogonal::init before allocating line_pencil of size " << Hyperbolic_pair->alpha << endl;
+		cout << "orthogonal::init before allocating "
+				"line_pencil of size " << Hyperbolic_pair->alpha << endl;
 	}
 	line_pencil = NEW_lint(Hyperbolic_pair->alpha);
 	if (f_v) {
 		cout << "orthogonal::init before allocating Perp1 of size "
-				<< Hyperbolic_pair->alpha * (q + 1) << endl;
+				<< Hyperbolic_pair->alpha * (Quadratic_form->q + 1) << endl;
 	}
-	Perp1 = NEW_lint(Hyperbolic_pair->alpha * (q + 1));
+	Perp1 = NEW_lint(Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
 	if (f_v) {
 		cout << "orthogonal::init after allocating Perp1" << endl;
 	}
@@ -298,7 +316,9 @@ void orthogonal::init(int epsilon, int n,
 		Hyperbolic_pair->print_schemes();
 		cout << "orthogonal::init Gram matrix:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				Gram_matrix, n, n, n, F->log10_of_q + 1);
+				Quadratic_form->Gram_matrix,
+				Quadratic_form->n, Quadratic_form->n, Quadratic_form->n,
+				F->log10_of_q + 1);
 	}
 	if (FALSE) {
 
@@ -306,12 +326,18 @@ void orthogonal::init(int epsilon, int n,
 
 		v1 = NEW_int(n);
 		for (i = 0; i < Hyperbolic_pair->T1_m; i++) {
+
 			F->Orthogonal_indexing->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
-					form_c1, form_c2, form_c3, i, verbose_level);
+					Quadratic_form->form_c1, Quadratic_form->form_c2, Quadratic_form->form_c3, i, verbose_level);
+
 			cout << i << " : ";
+
 			Int_vec_print(cout, v1, n);
+
 			j = F->Orthogonal_indexing->Q_epsilon_rank(v1, 1, epsilon, n - 1,
-					form_c1, form_c2, form_c3, verbose_level);
+					Quadratic_form->form_c1, Quadratic_form->form_c2, Quadratic_form->form_c3,
+					verbose_level);
+
 			cout << " : " << j << endl;
 		}
 		FREE_int(v1);
@@ -320,20 +346,20 @@ void orthogonal::init(int epsilon, int n,
 	if (FALSE) {
 		if (Hyperbolic_pair->nb_points < 300) {
 			cout << "points of O^" << epsilon
-					<< "(" << n << "," << q << ") by type:" << endl;
+					<< "(" << n << "," << Quadratic_form->q << ") by type:" << endl;
 			list_points_by_type(verbose_level);
 		}
 		if (Hyperbolic_pair->nb_points < 300 && Hyperbolic_pair->nb_lines < 300) {
 			cout << "points and lines of O^" << epsilon
-					<< "(" << n << "," << q << ") by type:" << endl;
+					<< "(" << n << "," << Quadratic_form->q << ") by type:" << endl;
 			list_all_points_vs_points(verbose_level);
 		}
 	}
 	if (f_v) {
 		if (subspace) {
-			cout << "orthogonal::init subspace->epsilon=" << subspace->epsilon << endl;
-			cout << "orthogonal::init subspace->n=" << subspace->n << endl;
-			cout << "orthogonal::init subspace->m=" << subspace->m << endl;
+			cout << "orthogonal::init subspace->epsilon=" << subspace->Quadratic_form->epsilon << endl;
+			cout << "orthogonal::init subspace->n=" << subspace->Quadratic_form->n << endl;
+			cout << "orthogonal::init subspace->m=" << subspace->Quadratic_form->m << endl;
 		}
 		cout << "orthogonal::init finished" << endl;
 	}
@@ -341,16 +367,17 @@ void orthogonal::init(int epsilon, int n,
 
 void orthogonal::allocate()
 {
-	T1 = NEW_int(n * n);
-	T2 = NEW_int(n * n);
-	T3 = NEW_int(n * n);
+	T1 = NEW_int(Quadratic_form->n * Quadratic_form->n);
+	T2 = NEW_int(Quadratic_form->n * Quadratic_form->n);
+	T3 = NEW_int(Quadratic_form->n * Quadratic_form->n);
 
-	determine_line_v1 = NEW_int(n);
-	determine_line_v2 = NEW_int(n);
-	determine_line_v3 = NEW_int(n);
+	determine_line_v1 = NEW_int(Quadratic_form->n);
+	determine_line_v2 = NEW_int(Quadratic_form->n);
+	determine_line_v3 = NEW_int(Quadratic_form->n);
 
 }
 
+#if 0
 void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -456,6 +483,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 		cout << "orthogonal::init_form_and_Gram_matrix done" << endl;
 	}
 }
+#endif
 
 
 
@@ -464,67 +492,13 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 // #############################################################################
 
 
-int orthogonal::evaluate_quadratic_form(int *v, int stride)
-{
-	if (epsilon == 1) {
-		return Hyperbolic_pair->evaluate_hyperbolic_quadratic_form(v, stride, m);
-	}
-	else if (epsilon == 0) {
-		int a, b, c;
-		
-		a = Hyperbolic_pair->evaluate_hyperbolic_quadratic_form(v + stride, stride, m);
-		//if (f_even)
-			//return a;
-		b = F->mult(v[0], v[0]);
-		c = F->add(a, b);
-		return c;
-	}
-	else if (epsilon == -1) {
-		int a, x1, x2, b, c, d;
-		
-		a = Hyperbolic_pair->evaluate_hyperbolic_quadratic_form(v, stride, m);
-		x1 = v[2 * m * stride];
-		x2 = v[(2 * m + 1) * stride];
-		b = F->mult(x1, x1);
-		b = F->mult(form_c1, b);
-		c = F->mult(x1, x2);
-		c = F->mult(form_c2, c);
-		d = F->mult(x2, x2);
-		d = F->mult(form_c3, d);
-		a = F->add(a, b);
-		c = F->add(a, c);
-		c = F->add(d, c);
-		return c;
-	}
-	else {
-		cout << "orthogonal::evaluate_quadratic_form epsilon = " << epsilon << endl;
-		exit(1);
-	}
-}
-
-int orthogonal::evaluate_bilinear_form(int *u, int *v, int stride)
-{
-	if (epsilon == 1) {
-		return Hyperbolic_pair->evaluate_hyperbolic_bilinear_form(u, v, stride, m);
-	}
-	else if (epsilon == 0) {
-		return Hyperbolic_pair->evaluate_parabolic_bilinear_form(u, v, stride, m);
-	}
-	else if (epsilon == -1) {
-		return F->Linear_algebra->evaluate_bilinear_form(
-				u, v, n, Gram_matrix);
-	}
-	else {
-		cout << "orthogonal::evaluate_bilinear_form epsilon = " << epsilon << endl;
-		exit(1);
-	}
-}
 
 int orthogonal::evaluate_bilinear_form_by_rank(int i, int j)
 {
 	Hyperbolic_pair->unrank_point(Hyperbolic_pair->v1, 1, i, 0);
 	Hyperbolic_pair->unrank_point(Hyperbolic_pair->v2, 1, j, 0);
-	return evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
+	return Quadratic_form->evaluate_bilinear_form(
+			Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
 }
 
 void orthogonal::points_on_line_by_line_rank(
@@ -555,15 +529,15 @@ void orthogonal::points_on_line(long int pi, long int pj,
 	if (f_vv) {
 		cout << "orthogonal::points_on_line" << endl;
 		cout << "v1=";
-		Int_vec_print(cout, v1, n);
+		Int_vec_print(cout, v1, Quadratic_form->n);
 		cout << endl;
 		cout << "v2=";
-		Int_vec_print(cout, v2, n);
+		Int_vec_print(cout, v2, Quadratic_form->n);
 		cout << endl;
 	}
-	for (t = 0; t <= q; t++) {
+	for (t = 0; t <= Quadratic_form->q; t++) {
 		F->PG_element_unrank_modified(coeff, 1, 2, t);
-		for (i = 0; i < n; i++) {
+		for (i = 0; i < Quadratic_form->n; i++) {
 			a = F->mult(coeff[0], v1[i]);
 			b = F->mult(coeff[1], v2[i]);
 			v3[i] = F->add(a, b);
@@ -572,13 +546,13 @@ void orthogonal::points_on_line(long int pi, long int pj,
 			cout << "orthogonal::points_on_line t=" << t << " ";
 			Int_vec_print(cout, coeff, 2);
 			cout << " v3=";
-			Int_vec_print(cout, v3, n);
+			Int_vec_print(cout, v3, Quadratic_form->n);
 			cout << endl;
 		}
 		normalize_point(v3, 1);
 		if (f_vv) {
 			cout << "orthogonal::points_on_line normalized:";
-			Int_vec_print(cout, v3, n);
+			Int_vec_print(cout, v3, Quadratic_form->n);
 			cout << endl;
 		}
 		line[t] = Hyperbolic_pair->rank_point(v3, 1, verbose_level - 1);
@@ -610,27 +584,27 @@ void orthogonal::points_on_line_by_coordinates(
 	if (f_vv) {
 		cout << "orthogonal::points_on_line_by_coordinates" << endl;
 		cout << "v1=";
-		Int_vec_print(cout, v1, n);
+		Int_vec_print(cout, v1, Quadratic_form->n);
 		cout << endl;
 		cout << "v2=";
-		Int_vec_print(cout, v2, n);
+		Int_vec_print(cout, v2, Quadratic_form->n);
 		cout << endl;
 	}
-	for (t = 0; t <= q; t++) {
+	for (t = 0; t <= Quadratic_form->q; t++) {
 		F->PG_element_unrank_modified(coeff, 1, 2, t);
-		for (i = 0; i < n; i++) {
+		for (i = 0; i < Quadratic_form->n; i++) {
 			a = F->mult(coeff[0], v1[i]);
 			b = F->mult(coeff[1], v2[i]);
 			v3[i] = F->add(a, b);
 		}
 		if (f_vv) {
 			cout << "orthogonal::points_on_line_by_coordinates v3=";
-			Int_vec_print(cout, v3, n);
+			Int_vec_print(cout, v3, Quadratic_form->n);
 			cout << endl;
 		}
 		normalize_point(v3, 1);
-		for (i = 0; i < n; i++) {
-			pt_coords[t * n + i] = v3[i];
+		for (i = 0; i < Quadratic_form->n; i++) {
+			pt_coords[t * Quadratic_form->n + i] = v3[i];
 		}
 	}
 	if (f_v) {
@@ -649,34 +623,52 @@ void orthogonal::lines_on_point(long int pt,
 		cout << "orthogonal::lines_on_point pt=" << pt << endl;
 	}
 	t = Hyperbolic_pair->subspace_point_type;
+
 	for (i = 0; i < Hyperbolic_pair->alpha; i++) {
+
 		rk = Hyperbolic_pair->type_and_index_to_point_rk(t, i, 0);
-		Hyperbolic_pair->unrank_point(lines_on_point_coords1 + i * n,
+
+		Hyperbolic_pair->unrank_point(
+				lines_on_point_coords1 + i * Quadratic_form->n,
 				1, rk, verbose_level - 3);
 	}
 	if (pt != Hyperbolic_pair->pt_P) {
+
 		root1 = Orthogonal_group->find_root(Hyperbolic_pair->pt_P, verbose_level - 3);
+
 		rk1 = Hyperbolic_pair->type_and_index_to_point_rk(t, 0, verbose_level - 3);
-		Orthogonal_group->Siegel_Transformation(T1, Hyperbolic_pair->pt_P, rk1, root1, verbose_level - 3);
+
+		Orthogonal_group->Siegel_Transformation(T1,
+				Hyperbolic_pair->pt_P, rk1, root1, verbose_level - 3);
+
 		if (pt != 0) {
+
 			root2 = Orthogonal_group->find_root(pt, verbose_level);
-			Orthogonal_group->Siegel_Transformation(T2, rk1, pt, root2, verbose_level - 3);
-			F->Linear_algebra->mult_matrix_matrix(T1, T2, T3, n, n, n,
+
+			Orthogonal_group->Siegel_Transformation(T2,
+					rk1, pt, root2, verbose_level - 3);
+
+			F->Linear_algebra->mult_matrix_matrix(T1, T2, T3,
+					Quadratic_form->n, Quadratic_form->n, Quadratic_form->n,
 					0 /* verbose_level */);
+
 		}
 		else {
-			F->Linear_algebra->copy_matrix(T1, T3, n, n);
+			F->Linear_algebra->copy_matrix(T1, T3, Quadratic_form->n, Quadratic_form->n);
 		}
 		F->Linear_algebra->mult_matrix_matrix(lines_on_point_coords1, T3,
-				lines_on_point_coords2, Hyperbolic_pair->alpha, n, n,
+				lines_on_point_coords2,
+				Hyperbolic_pair->alpha, Quadratic_form->n, Quadratic_form->n,
 				0 /* verbose_level */);
 	}
 	else {
-		Int_vec_copy(lines_on_point_coords1, lines_on_point_coords2, Hyperbolic_pair->alpha * n);
+		Int_vec_copy(lines_on_point_coords1,
+				lines_on_point_coords2,
+				Hyperbolic_pair->alpha * Quadratic_form->n);
 	}
 	for (i = 0; i < Hyperbolic_pair->alpha; i++) {
 		line_pencil_point_ranks[i] = Hyperbolic_pair->rank_point(
-				lines_on_point_coords2 + i * n, 1, verbose_level - 3);
+				lines_on_point_coords2 + i * Quadratic_form->n, 1, verbose_level - 3);
 	}
 	if (f_vv) {
 		cout << "orthogonal::lines_on_point line pencil (point ranks) "
@@ -726,8 +718,12 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 	data_structures::sorting Sorting;
 	
 	if (f_v) {
+		cout << "orthogonal::lines_on_point_by_line_rank " << endl;
+	}
+	if (f_vv) {
 		cout << "orthogonal::lines_on_point_by_line_rank "
-				"verbose_level = " << verbose_level << " pt=" << pt << " pt_P=" << Hyperbolic_pair->pt_P << endl;
+				"verbose_level = " << verbose_level
+				<< " pt=" << pt << " pt_P=" << Hyperbolic_pair->pt_P << endl;
 	}
 	t = Hyperbolic_pair->subspace_point_type;
 	if (f_vv) {
@@ -744,11 +740,13 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 			cout << "orthogonal::lines_on_point_by_line_rank "
 					"i=" << i << " / " << Hyperbolic_pair->alpha << " rk=" << rk << endl;
 		}
-		Hyperbolic_pair->unrank_point(lines_on_point_coords1 + i * n, 1, rk, 0 /*verbose_level - 5*/);
+		Hyperbolic_pair->unrank_point(
+				lines_on_point_coords1 + i * Quadratic_form->n, 1, rk,
+				0 /*verbose_level - 5*/);
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank "
 					"i=" << i << " / " << Hyperbolic_pair->alpha << " has coordinates: ";
-			Int_vec_print(cout, lines_on_point_coords1 + i * n, n);
+			Int_vec_print(cout, lines_on_point_coords1 + i * Quadratic_form->n, Quadratic_form->n);
 			cout << endl;
 		}
 	}
@@ -759,23 +757,33 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 		}
 		rk1 = Hyperbolic_pair->type_and_index_to_point_rk(t, 0, verbose_level);
 		if (pt == rk1) {
+
 			root1 = Orthogonal_group->find_root(Hyperbolic_pair->pt_P, verbose_level - 2);
-			Orthogonal_group->Siegel_Transformation(T3, Hyperbolic_pair->pt_P, rk1, root1, verbose_level - 2);
+
+			Orthogonal_group->Siegel_Transformation(T3,
+					Hyperbolic_pair->pt_P, rk1, root1, verbose_level - 2);
 		}
 		else {
 			root1 = Orthogonal_group->find_root(Hyperbolic_pair->pt_P, verbose_level - 2);
+
 			root2 = Orthogonal_group->find_root(pt, verbose_level - 2);
-			Orthogonal_group->Siegel_Transformation(T1, Hyperbolic_pair->pt_P, rk1, root1, verbose_level - 2);
-			Orthogonal_group->Siegel_Transformation(T2, rk1, pt, root2, verbose_level - 2);
-			F->Linear_algebra->mult_matrix_matrix(T1, T2, T3, n, n, n,
+
+			Orthogonal_group->Siegel_Transformation(T1,
+					Hyperbolic_pair->pt_P, rk1, root1, verbose_level - 2);
+
+			Orthogonal_group->Siegel_Transformation(T2,
+					rk1, pt, root2, verbose_level - 2);
+
+			F->Linear_algebra->mult_matrix_matrix(T1, T2, T3,
+					Quadratic_form->n, Quadratic_form->n, Quadratic_form->n,
 					0 /* verbose_level */);
 		}
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank applying:" << endl;
-			Int_matrix_print(T3, n, n);
+			Int_matrix_print(T3, Quadratic_form->n, Quadratic_form->n);
 		}
 		F->Linear_algebra->mult_matrix_matrix(lines_on_point_coords1,
-				T3, lines_on_point_coords2, Hyperbolic_pair->alpha, n, n,
+				T3, lines_on_point_coords2, Hyperbolic_pair->alpha, Quadratic_form->n, Quadratic_form->n,
 				0 /* verbose_level */);
 	}
 	else {
@@ -783,17 +791,18 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 			cout << "orthogonal::lines_on_point_by_line_rank pt == pt_P, "
 					"no need to apply transformation" << endl;
 		}
-		Int_vec_copy(lines_on_point_coords1, lines_on_point_coords2, Hyperbolic_pair->alpha * n);
+		Int_vec_copy(lines_on_point_coords1, lines_on_point_coords2, Hyperbolic_pair->alpha * Quadratic_form->n);
 	}
 	if (f_v) {
 		cout << "orthogonal::lines_on_point_by_line_rank "
 				"computing line_pencil_line_ranks[]" << endl;
 	}
 	for (i = 0; i < Hyperbolic_pair->alpha; i++) {
-		pt2 = Hyperbolic_pair->rank_point(lines_on_point_coords2 + i * n, 1, 0/*verbose_level - 5*/);
+		pt2 = Hyperbolic_pair->rank_point(lines_on_point_coords2 + i * Quadratic_form->n, 1, 0/*verbose_level - 5*/);
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank "
-					"i=" << i << " / " << Hyperbolic_pair->alpha << " pt=" << pt << " pt2=" << pt2  << endl;
+					"i=" << i << " / " << Hyperbolic_pair->alpha
+					<< " pt=" << pt << " pt2=" << pt2  << endl;
 			cout << "orthogonal::lines_on_point_by_line_rank "
 					"before rank_line" << endl;
 		}
@@ -918,8 +927,8 @@ int orthogonal::test_if_minimal_on_line(int *v1, int *v2, int *v3)
 	//int_vec_print(cout, v2, n);
 	//cout << endl;
 	rk0 = Hyperbolic_pair->rank_point(v1, 1, verbose_level - 1);
-	for (t = 1; t < q; t++) {
-		for (i = 0; i < n; i++) {
+	for (t = 1; t < Quadratic_form->q; t++) {
+		for (i = 0; i < Quadratic_form->n; i++) {
 			//cout << "i=" << i << ":" << v1[i] << " + "
 			//<< t << " * " << v2[i] << "=";
 			v3[i] = F->add(v1[i], F->mult(t, v2[i]));
@@ -949,8 +958,8 @@ void orthogonal::find_minimal_point_on_line(int *v1, int *v2, int *v3)
 	//cout << endl;
 	rk0 = Hyperbolic_pair->rank_point(v1, 1, verbose_level - 1);
 	t0 = 0;
-	for (t = 1; t < q; t++) {
-		for (i = 0; i < n; i++) {
+	for (t = 1; t < Quadratic_form->q; t++) {
+		for (i = 0; i < Quadratic_form->n; i++) {
 			//cout << "i=" << i << ":" << v1[i]
 			//<< " + " << t << " * " << v2[i] << "=";
 			v3[i] = F->add(v1[i], F->mult(t, v2[i]));
@@ -965,7 +974,7 @@ void orthogonal::find_minimal_point_on_line(int *v1, int *v2, int *v3)
 			t0 = t;
 		}
 	}
-	for (i = 0; i < n; i++) {
+	for (i = 0; i < Quadratic_form->n; i++) {
 		//cout << "i=" << i << ":" << v1[i] << " + "
 		//<< t << " * " << v2[i] << "=";
 		v3[i] = F->add(v1[i], F->mult(t0, v2[i]));
@@ -1028,11 +1037,11 @@ int orthogonal::last_non_zero_entry(int *u, int stride, int len)
 
 void orthogonal::normalize_point(int *v, int stride)
 {
-	if (epsilon == 1) {
-		F->PG_element_normalize(v, stride, n);
+	if (Quadratic_form->epsilon == 1) {
+		F->PG_element_normalize(v, stride, Quadratic_form->n);
 	}
-	else if (epsilon == 0) {
-		Hyperbolic_pair->parabolic_point_normalize(v, stride, n);
+	else if (Quadratic_form->epsilon == 0) {
+		Hyperbolic_pair->parabolic_point_normalize(v, stride, Quadratic_form->n);
 	}
 }
 
@@ -1041,10 +1050,10 @@ int orthogonal::is_ending_dependent(int *vec1, int *vec2)
 {
 	int i;
 	
-	for (i = n - 2; i < n; i++) {
+	for (i = Quadratic_form->n - 2; i < Quadratic_form->n; i++) {
 		if (vec2[i]) {
-			Gauss_step(vec1, vec2, n, i);
-			if (vec2[n - 2] == 0 && vec2[n - 1] == 0) {
+			Gauss_step(vec1, vec2, Quadratic_form->n, i);
+			if (vec2[Quadratic_form->n - 2] == 0 && vec2[Quadratic_form->n - 1] == 0) {
 				return TRUE;
 			}
 			else {
@@ -1114,30 +1123,30 @@ void orthogonal::perp(long int pt,
 	}
 	for (i = 0; i < Hyperbolic_pair->alpha; i++) {
 		points_on_line_by_line_rank(line_pencil[i],
-				Perp1 + i * (q + 1), 0 /* verbose_level */);
+				Perp1 + i * (Quadratic_form->q + 1), 0 /* verbose_level */);
 	}
 
 	if (FALSE) {
 		cout << "orthogonal::perp points collinear "
 				"with pt " << pt << ":" << endl;
 		for (i = 0; i < Hyperbolic_pair->alpha; i++) {
-			for (j = 0; j < q + 1; j++) {
+			for (j = 0; j < Quadratic_form->q + 1; j++) {
 				cout << i << " : " << line_pencil[i] << " : " << j
-						<< " : " << Perp1[i * (q + 1) + j] << endl;
+						<< " : " << Perp1[i * (Quadratic_form->q + 1) + j] << endl;
 			}
 		}
-		Lint_matrix_print(Perp1, Hyperbolic_pair->alpha, q + 1);
+		Lint_matrix_print(Perp1, Hyperbolic_pair->alpha, Quadratic_form->q + 1);
 	}
 
-	Sorting.lint_vec_heapsort(Perp1, Hyperbolic_pair->alpha * (q + 1));
+	Sorting.lint_vec_heapsort(Perp1, Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
 	if (FALSE) {
 		cout << "orthogonal::perp after sorting:" << endl;
-		Lint_vec_print(cout, Perp1, Hyperbolic_pair->alpha * (q + 1));
+		Lint_vec_print(cout, Perp1, Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
 		cout << endl;
 	}
 
 	j = 0;
-	for (i = 0; i < Hyperbolic_pair->alpha * (q + 1); i++) {
+	for (i = 0; i < Hyperbolic_pair->alpha * (Quadratic_form->q + 1); i++) {
 		if (Perp1[i] != pt) {
 			Perp1[j++] = Perp1[i];
 		}
@@ -1173,8 +1182,8 @@ void orthogonal::perp_of_two_points(long int pt1, long int pt2,
 				"pt1=" << pt1 << " pt2=" << pt2 << endl;
 	}
 
-	Perp1 = NEW_lint(Hyperbolic_pair->alpha * (q + 1));
-	Perp2 = NEW_lint(Hyperbolic_pair->alpha * (q + 1));
+	Perp1 = NEW_lint(Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
+	Perp2 = NEW_lint(Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
 	perp(pt1, Perp1, sz1, 0 /*verbose_level*/);
 	perp(pt2, Perp2, sz2, 0 /*verbose_level*/);
 	Sorting.vec_intersect(Perp1, sz1, Perp2, sz2, Perp3, sz);
@@ -1203,7 +1212,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 
 		int *v1;
 
-		v1 = NEW_int(n);
+		v1 = NEW_int(Quadratic_form->n);
 
 		cout << "pts=";
 		Lint_vec_print(cout, pts, nb_pts);
@@ -1211,7 +1220,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 		for (i = 0; i < nb_pts; i++) {
 			Hyperbolic_pair->unrank_point(v1, 1, pts[i], 0 /* verbose_level*/);
 			cout << i << " : " << pts[i] << " : ";
-			Int_vec_print(cout, v1, n);
+			Int_vec_print(cout, v1, Quadratic_form->n);
 			cout << endl;
 		}
 		FREE_int(v1);
@@ -1235,7 +1244,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	}
 
 
-	sz0 = Hyperbolic_pair->alpha * q;
+	sz0 = Hyperbolic_pair->alpha * Quadratic_form->q;
 	Perp_without_pt = NEW_plint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		if (f_v) {
@@ -1330,15 +1339,15 @@ int orthogonal::triple_is_collinear(long int pt1, long int pt2, long int pt3)
 	int rk;
 	int *base_cols;
 
-	base_cols = NEW_int(n);
+	base_cols = NEW_int(Quadratic_form->n);
 	Hyperbolic_pair->unrank_point(T1, 1, pt1, verbose_level - 1);
-	Hyperbolic_pair->unrank_point(T1 + n, 1, pt2, verbose_level - 1);
-	Hyperbolic_pair->unrank_point(T1 + 2 * n, 1, pt3, verbose_level - 1);
+	Hyperbolic_pair->unrank_point(T1 + Quadratic_form->n, 1, pt2, verbose_level - 1);
+	Hyperbolic_pair->unrank_point(T1 + 2 * Quadratic_form->n, 1, pt3, verbose_level - 1);
 	rk = F->Linear_algebra->Gauss_int(T1,
 			FALSE /* f_special */,
 			FALSE /* f_complete */,
 			base_cols,
-			FALSE /* f_P */, NULL, 3, n, 0,
+			FALSE /* f_P */, NULL, 3, Quadratic_form->n, 0,
 			0 /* verbose_level */);
 	FREE_int(base_cols);
 	if (rk < 2) {
@@ -1370,25 +1379,25 @@ void orthogonal::intersection_with_subspace(int *Basis, int k,
 
 	combinatorics::combinatorics_domain Combi;
 
-	nb = Combi.generalized_binomial(k, 1, q);
+	nb = Combi.generalized_binomial(k, 1, Quadratic_form->q);
 
 	if (f_v) {
 		cout << "orthogonal::intersection_with_subspace nb=" << nb << endl;
 	}
 
 	v = NEW_int(k);
-	w = NEW_int(n);
+	w = NEW_int(Quadratic_form->n);
 
 	the_points = NEW_lint(nb);
 
 	nb_points = 0;
 	for (i = 0; i < nb; i++) {
 		F->PG_element_unrank_modified(v, 1, k, i);
-		F->Linear_algebra->mult_vector_from_the_left(v, Basis, w, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(v, Basis, w, k, Quadratic_form->n);
 
-		val = evaluate_quadratic_form(w, 1 /* stride */);
+		val = Quadratic_form->evaluate_quadratic_form(w, 1 /* stride */);
 		if (val == 0) {
-			F->PG_element_rank_modified_lint(w, 1, n, a);
+			F->PG_element_rank_modified_lint(w, 1, Quadratic_form->n, a);
 			the_points[nb_points++] = a;
 		}
 	}

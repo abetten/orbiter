@@ -1267,11 +1267,11 @@ void unusual_model::transform_matrix_unusual_to_usual(
 				M5t, 5, 5, 5, 3);
 		cout << "Gram matrix:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				O->Gram_matrix, 5, 5, 5, 3);
+				O->Quadratic_form->Gram_matrix, 5, 5, 5, 3);
 	}
 		
 
-	Fq->Linear_algebra->mult_matrix_matrix(M5, O->Gram_matrix, M5_tmp1, 5, 5, 5,
+	Fq->Linear_algebra->mult_matrix_matrix(M5, O->Quadratic_form->Gram_matrix, M5_tmp1, 5, 5, 5,
 			0 /* verbose_level */);
 	Fq->Linear_algebra->mult_matrix_matrix(M5_tmp1, M5t, M5_tmp2, 5, 5, 5,
 			0 /* verbose_level */);
@@ -1282,7 +1282,7 @@ void unusual_model::transform_matrix_unusual_to_usual(
 	}
 
 	for (i = 0; i < 25; i++) {
-		if (M5_tmp2[i] != O->Gram_matrix[i]) {
+		if (M5_tmp2[i] != O->Quadratic_form->Gram_matrix[i]) {
 			cout << "does not preserve the form" << endl;
 			exit(1);
 		}

@@ -43,7 +43,7 @@ void orthogonal::list_points_of_given_type(int t, int verbose_level)
 		rk = Hyperbolic_pair->type_and_index_to_point_rk(t, i, verbose_level);
 		cout << i << " : " << rk << " : ";
 		Hyperbolic_pair->unrank_point(Hyperbolic_pair->v1, 1, rk, verbose_level - 1);
-		Int_vec_print(cout, Hyperbolic_pair->v1, n);
+		Int_vec_print(cout, Hyperbolic_pair->v1, Quadratic_form->n);
 		Hyperbolic_pair->point_rk_to_type_and_index(rk, u, j, verbose_level);
 		cout << " : " << u << " : " << j << endl;
 		if (u != t) {
@@ -67,7 +67,7 @@ void orthogonal::report_points_of_given_type(std::ostream &ost, int t, int verbo
 		rk = Hyperbolic_pair->type_and_index_to_point_rk(t, i, verbose_level);
 		ost << i << " : " << rk << " : ";
 		Hyperbolic_pair->unrank_point(Hyperbolic_pair->v1, 1, rk, verbose_level - 1);
-		Int_vec_print(ost, Hyperbolic_pair->v1, n);
+		Int_vec_print(ost, Hyperbolic_pair->v1, Quadratic_form->n);
 		ost << "\\\\" << endl;
 		Hyperbolic_pair->point_rk_to_type_and_index(rk, u, j, verbose_level);
 		//ost << " : " << u << " : " << j << endl;
@@ -128,7 +128,7 @@ void orthogonal::report_given_point_set(std::ostream &ost,
 
 		Hyperbolic_pair->unrank_point(Hyperbolic_pair->v1, 1, rk, 0 /*verbose_level*/);
 		ost << i << " : $P_{" << rk << "} = ";
-		Int_vec_print(ost, Hyperbolic_pair->v1, n);
+		Int_vec_print(ost, Hyperbolic_pair->v1, Quadratic_form->n);
 		ost << "$\\\\" << endl;
 	}
 	//ost << endl;
@@ -137,7 +137,7 @@ void orthogonal::report_given_point_set(std::ostream &ost,
 void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 {
 	int len;
-	int i, a, d = n;
+	int i, a, d = Quadratic_form->n;
 	long int p1, p2;
 	orbiter_kernel_system::latex_interface Li;
 	data_structures::sorting Sorting;
@@ -152,7 +152,7 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 		long int *Line;
 		int *L;
 
-		Line = NEW_lint(q + 1);
+		Line = NEW_lint(Quadratic_form->q + 1);
 		L = NEW_int(2 * d);
 
 		for (i = 0; i < len; i++) {
@@ -170,7 +170,7 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 			Li.print_integer_matrix_tex(ost, L, 2, d);
 			ost << "\\right]" << endl;
 
-			a = evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
+			a = Quadratic_form->evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
 			if (a) {
 				cout << "not orthogonal" << endl;
 				exit(1);
@@ -188,9 +188,9 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 	#if 1
 
 			points_on_line(p1, p2, Line, 0 /*verbose_level - 1*/);
-			Sorting.lint_vec_heapsort(Line, q + 1);
+			Sorting.lint_vec_heapsort(Line, Quadratic_form->q + 1);
 
-			Li.lint_set_print_masked_tex(ost, Line, q + 1, "P_{", "}");
+			Li.lint_set_print_masked_tex(ost, Line, Quadratic_form->q + 1, "P_{", "}");
 			ost << "$\\\\" << endl;
 	#if 0
 			for (r1 = 0; r1 <= q; r1++) {
@@ -234,7 +234,7 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 		Lint_vec_print(cout, Lines, nb_lines);
 		cout << endl;
 	}
-	int i, a, d = n;
+	int i, a, d = Quadratic_form->n;
 	long int p1, p2, rk;
 	orbiter_kernel_system::latex_interface Li;
 	data_structures::sorting Sorting;
@@ -245,7 +245,7 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 	long int *Points_on_line;
 	int *L;
 
-	Points_on_line = NEW_lint(q + 1);
+	Points_on_line = NEW_lint(Quadratic_form->q + 1);
 	L = NEW_int(2 * d);
 
 	for (i = 0; i < nb_lines; i++) {
@@ -270,7 +270,7 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 		Li.print_integer_matrix_tex(ost, L, 2, d);
 		ost << "\\right]" << endl;
 
-		a = evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
+		a = Quadratic_form->evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
 		if (a) {
 			cout << "not orthogonal" << endl;
 			exit(1);
@@ -288,9 +288,9 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 #if 1
 
 		points_on_line(p1, p2, Points_on_line, 0 /*verbose_level - 1*/);
-		Sorting.lint_vec_heapsort(Points_on_line, q + 1);
+		Sorting.lint_vec_heapsort(Points_on_line, Quadratic_form->q + 1);
 
-		Li.lint_set_print_masked_tex(ost, Points_on_line, q + 1, "P_{", "}");
+		Li.lint_set_print_masked_tex(ost, Points_on_line, Quadratic_form->q + 1, "P_{", "}");
 		ost << "$\\\\" << endl;
 #if 0
 		for (r1 = 0; r1 <= q; r1++) {
@@ -348,7 +348,7 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 		rk1 = Hyperbolic_pair->type_and_index_to_point_rk(t1, i, verbose_level);
 		cout << i << " : " << rk1 << " : ";
 		Hyperbolic_pair->unrank_point(Hyperbolic_pair->v1, 1, rk1, verbose_level - 1);
-		Int_vec_print(cout, Hyperbolic_pair->v1, n);
+		Int_vec_print(cout, Hyperbolic_pair->v1, Quadratic_form->n);
 		cout << endl;
 		cout << "is incident with:" << endl;
 
@@ -362,12 +362,12 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 			//int_vec_print(cout, v2, n);
 			//cout << endl;
 
-			u = evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
+			u = Quadratic_form->evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
 			if (u == 0 && rk2 != rk1) {
 				//cout << "yes" << endl;
 				if (test_if_minimal_on_line(Hyperbolic_pair->v2, Hyperbolic_pair->v1, Hyperbolic_pair->v3)) {
 					cout << cnt << " : " << j << " : " << rk2 << " : ";
-					Int_vec_print(cout, Hyperbolic_pair->v2, n);
+					Int_vec_print(cout, Hyperbolic_pair->v2, Quadratic_form->n);
 					cout << endl;
 					cnt++;
 				}
@@ -380,26 +380,6 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 
 
 
-void orthogonal::report_quadratic_form(std::ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "orthogonal::report_quadratic_form" << endl;
-	}
-
-	ost << "The quadratic form is: " << endl;
-	ost << "$$" << endl;
-	Poly->print_equation_tex(ost, the_quadratic_form);
-	ost << " = 0";
-	ost << "$$" << endl;
-
-	if (f_v) {
-		cout << "orthogonal::report_quadratic_form done" << endl;
-	}
-
-}
-
 
 void orthogonal::report(std::ostream &ost, int verbose_level)
 {
@@ -409,7 +389,7 @@ void orthogonal::report(std::ostream &ost, int verbose_level)
 		cout << "orthogonal::report" << endl;
 	}
 
-	report_quadratic_form(ost, verbose_level);
+	Quadratic_form->report_quadratic_form(ost, verbose_level);
 
 
 	if (f_v) {
@@ -666,9 +646,9 @@ void orthogonal::create_latex_report(int verbose_level)
 
 		char str[1000];
 
-		snprintf(str, 1000, "O_%d_%d_%d.tex", epsilon, n, F->q);
+		snprintf(str, 1000, "O_%d_%d_%d.tex", Quadratic_form->epsilon, Quadratic_form->n, F->q);
 		fname.assign(str);
-		snprintf(str, 1000, "Orthogonal Space  ${\\rm O}(%d,%d,%d)$", epsilon, n, F->q);
+		snprintf(str, 1000, "Orthogonal Space  ${\\rm O}(%d,%d,%d)$", Quadratic_form->epsilon, Quadratic_form->n, F->q);
 		title.assign(str);
 
 
@@ -729,7 +709,7 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 	int *T;
 	orbiter_kernel_system::file_io Fio;
 
-	line = NEW_lint(q + 1);
+	line = NEW_lint(Quadratic_form->q + 1);
 	T = NEW_int(N_points * N_lines);
 	Int_vec_zero(T, N_points * N_lines);
 
@@ -739,7 +719,7 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 		points_on_line_by_line_rank(line_rk,
 				line, verbose_level);
 
-		for (h = 0; h < q + 1; h++) {
+		for (h = 0; h < Quadratic_form->q + 1; h++) {
 			i = line[h];
 			T[i * N_lines + line_rk] = 1;
 		}
@@ -764,7 +744,7 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 
 void orthogonal::make_fname_incidence_matrix_csv(std::string &fname)
 {
-	fname.assign(label_txt);
+	fname.assign(Quadratic_form->label_txt);
 	fname.append("_incidence_matrix.csv");
 }
 

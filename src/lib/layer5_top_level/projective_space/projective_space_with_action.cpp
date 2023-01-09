@@ -124,6 +124,10 @@ void projective_space_with_action::init(
 
 
 	if (n == 2) {
+		if (f_v) {
+			cout << "projective_space_with_action::init "
+					"n == 2" << endl;
+		}
 		Dom = NEW_OBJECT(algebraic_geometry::quartic_curve_domain);
 
 		if (f_v) {
@@ -164,14 +168,14 @@ void projective_space_with_action::init(
 			cout << "projective_space_with_action::init "
 					"n == 3, so we initialize a Surf_A object" << endl;
 		}
-		if (f_v) {
-			cout << "projective_space_with_action::init before Surf->init" << endl;
-		}
 
 		algebraic_geometry::surface_domain *Surf;
 
 		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-		Surf->init(F, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "projective_space_with_action::init before Surf->init" << endl;
+		}
+		Surf->init(F, verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space_with_action::init after Surf->init" << endl;
 		}
@@ -181,7 +185,7 @@ void projective_space_with_action::init(
 		if (f_v) {
 			cout << "projective_space_with_action::init before Surf_A->init" << endl;
 		}
-		Surf_A->init(Surf, this, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+		Surf_A->init(Surf, this, TRUE /* f_recoordinatize */, verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space_with_action::init after Surf_A->init" << endl;
 		}

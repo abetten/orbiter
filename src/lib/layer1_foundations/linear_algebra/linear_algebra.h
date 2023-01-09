@@ -128,7 +128,7 @@ public:
 		// vA = (v * A)^{p^f}  (where f = A[n *  n])
 	void semilinear_action_from_the_left(int *A,
 		int *v, int *Av, int n);
-		// Av = A * v^{p^f}
+		// Av = (A * v)^{p^f}
 	void affine_action_from_the_right(int f_semilinear,
 		int *v, int *A, int *vA, int n);
 		// vA = (v * A)^{p^f} + b
@@ -423,7 +423,8 @@ public:
 	int evaluate_symmetric_form(int len, int *x, int *y);
 	int evaluate_quadratic_form_x0x3mx1x2(int *x);
 	void solve_y2py(int a, int *Y2, int &nb_sol);
-	void find_secant_points_wrt_x0x3mx1x2(int *Basis_line,
+	void find_secant_points_wrt_x0x3mx1x2(
+			int *Basis_line,
 			int *Pts4, int &nb_pts, int verbose_level);
 	int is_totally_isotropic_wrt_symplectic_form(int k,
 		int n, int *Basis);

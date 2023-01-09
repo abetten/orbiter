@@ -645,7 +645,7 @@ void combinatorics_global::Hill_cap56(
 
 	cout << "evaluating quadratic form:" << endl;
 	for (i = 0; i < nb_pts; i++) {
-		a = O->evaluate_quadratic_form(pt_coords + i * n, 1);
+		a = O->Quadratic_form->evaluate_quadratic_form(pt_coords + i * n, 1);
 		cout << setw(3) << i << " : " << a << endl;
 		}
 	int sz[9];

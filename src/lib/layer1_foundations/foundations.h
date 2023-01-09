@@ -601,6 +601,7 @@ namespace orthogonal_geometry {
 	class orthogonal_group;
 	class orthogonal_indexing;
 	class orthogonal;
+	class quadratic_form;
 	class unusual_model;
 
 }

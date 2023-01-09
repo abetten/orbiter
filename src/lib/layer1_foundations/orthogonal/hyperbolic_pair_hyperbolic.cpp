@@ -162,7 +162,7 @@ void hyperbolic_pair::hyperbolic_point_rk_to_type_and_index(
 void hyperbolic_pair::hyperbolic_unrank_line(
 		long int &p1, long int &p2, long int rk, int verbose_level)
 {
-	if (O->m == 0) {
+	if (O->Quadratic_form->m == 0) {
 		cout << "hyperbolic_pair::hyperbolic_unrank_line "
 				"Witt index zero, there is no line to unrank" << endl;
 		exit(1);
@@ -645,7 +645,7 @@ void hyperbolic_pair::unrank_line_L2(
 		Int_vec_print(cout, v2, n - 2);
 		cout << endl;
 	}
-	c = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
+	c = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
 	if (f_vvv) {
 		cout << "c=" << c << endl;
 	}
@@ -656,7 +656,7 @@ void hyperbolic_pair::unrank_line_L2(
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
+	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
 	if (e) {
 		cout << "hyperbolic_pair::unrank_line_L2 error, not orthogonal" << endl;
 		exit(1);
@@ -729,7 +729,7 @@ long int hyperbolic_pair::rank_line_L2(long int p1, long int p2, int verbose_lev
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	c = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
+	c = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
 
 
 	if (P3_point) {
@@ -792,7 +792,7 @@ long int hyperbolic_pair::rank_line_L2(long int p1, long int p2, int verbose_lev
 		P3_sub_index = 0;
 	}
 	else {
-		alpha = evaluate_hyperbolic_quadratic_form(v1 + 2, 1, m - 2);
+		alpha = O->Quadratic_form->evaluate_hyperbolic_quadratic_form(v1 + 2, 1, m - 2);
 		if (alpha == 0) {
 			// case 2
 			if (f_vvv) {
@@ -975,7 +975,7 @@ void hyperbolic_pair::unrank_line_L3(
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
+	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
 	if (e) {
 		cout << "hyperbolic_pair::unrank_line_L3 error, not orthogonal" << endl;
 		exit(1);
@@ -1179,7 +1179,7 @@ void hyperbolic_pair::unrank_line_L4(
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	e = evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
+	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
 	if (e) {
 		cout << "error, not orthogonal" << endl;
 		exit(1);
@@ -1833,14 +1833,14 @@ int hyperbolic_pair::find_root_hyperbolic(
 		cout << endl;
 	}
 
-	u = evaluate_hyperbolic_bilinear_form(
+	u = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(
 			O->Orthogonal_group->find_root_z,
 			O->Orthogonal_group->find_root_x, 1, m);
 	if (u == 0) {
 		cout << "hyperbolic_pair::find_root_hyperbolic u=" << u << endl;
 		exit(1);
 	}
-	v = evaluate_hyperbolic_bilinear_form(
+	v = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(
 			O->Orthogonal_group->find_root_z,
 			O->Orthogonal_group->find_root_y, 1, m);
 	if (v == 0) {
@@ -1937,7 +1937,9 @@ void hyperbolic_pair::find_root_hyperbolic_xyz(
 
 	// try to choose z[0] = z[1] = 1:
 	y2_minus_y3 = F->add(y[2], F->negate(y[3]));
+
 	minus_y1 = F->negate(y[1]);
+
 	if (minus_y1 != y2_minus_y3) {
 		if (f_vv) {
 			cout << "detected -y[1] != y[2] - y[3]" << endl;
@@ -1961,7 +1963,9 @@ void hyperbolic_pair::find_root_hyperbolic_xyz(
 	if (f_vv) {
 		cout << "detected -y[1] = y[2] - y[3]" << endl;
 	}
+
 	y3_minus_y2 = F->add(y[3], F->negate(y[2]));
+
 	if (minus_y1 != y3_minus_y2) {
 		if (f_vv) {
 			cout << "detected -y[1] != y[3] - y[2]" << endl;
@@ -2059,32 +2063,6 @@ void hyperbolic_pair::find_root_hyperbolic_xyz(
 	if (f_v) {
 		cout << "hyperbolic_pair::find_root_hyperbolic_xyz done" << endl;
 	}
-}
-
-int hyperbolic_pair::evaluate_hyperbolic_quadratic_form(
-		int *v, int stride, int m)
-{
-	int alpha = 0, beta, i;
-
-	for (i = 0; i < m; i++) {
-		beta = F->mult(v[2 * i * stride], v[(2 * i + 1) * stride]);
-		alpha = F->add(alpha, beta);
-	}
-	return alpha;
-}
-
-int hyperbolic_pair::evaluate_hyperbolic_bilinear_form(
-		int *u, int *v, int stride, int m)
-{
-	int alpha = 0, beta1, beta2, i;
-
-	for (i = 0; i < m; i++) {
-		beta1 = F->mult(u[2 * i * stride], v[(2 * i + 1) * stride]);
-		beta2 = F->mult(u[(2 * i + 1) * stride], v[2 * i * stride]);
-		alpha = F->add(alpha, beta1);
-		alpha = F->add(alpha, beta2);
-	}
-	return alpha;
 }
 
 

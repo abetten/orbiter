@@ -770,7 +770,7 @@ void linear_algebra::semilinear_action_from_the_right(
 
 void linear_algebra::semilinear_action_from_the_left(
 		int *A, int *v, int *Av, int n)
-// Av = A * v^{p^f}
+// Av = (A * v)^{p^f}
 {
 	int f;
 
@@ -1426,19 +1426,8 @@ int linear_algebra::Gauss_simple(int *A, int m, int n,
 void linear_algebra::kernel_columns(int n, int nb_base_cols,
 		int *base_cols, int *kernel_cols)
 {
-	orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, kernel_cols, n, nb_base_cols);
-#if 0
-	int i, j, k;
-
-	j = k = 0;
-	for (i = 0; i < n; i++) {
-		if (j < nb_base_cols && i == base_cols[j]) {
-			j++;
-			continue;
-			}
-		kernel_cols[k++] = i;
-		}
-#endif
+	orbiter_kernel_system::Orbiter->Int_vec->complement(
+			base_cols, kernel_cols, n, nb_base_cols);
 }
 
 void linear_algebra::matrix_get_kernel_as_int_matrix(int *M,
@@ -1646,8 +1635,10 @@ int linear_algebra::RREF_and_kernel(int n, int k,
 		cout << "linear_algebra::RREF_and_kernel "
 				"before matrix_get_kernel" << endl;
 	}
+
 	matrix_get_kernel(B, k, n, base_cols, nb_base_cols,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
+
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
 			A[(nb_base_cols + j) * n + i] = K[i * kernel_n + j];
@@ -1951,8 +1942,8 @@ void linear_algebra::projective_action_on_columns_from_the_left(
 			}
 		}
 		if (j == n) {
-			cout << "linear_algebra::projective_action_on_columns_"
-					"from_the_left could not find image" << endl;
+			cout << "linear_algebra::projective_action_on_columns_from_the_left "
+					"could not find image" << endl;
 			cout << "i=" << i << endl;
 			cout << "M:" << endl;
 			Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);

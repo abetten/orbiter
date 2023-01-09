@@ -69,7 +69,7 @@ void action_on_orthogonal::init(actions::action *original_action,
 	action_on_orthogonal::f_on_points = f_on_points;
 	action_on_orthogonal::f_on_lines = f_on_lines;
 	action_on_orthogonal::f_on_points_and_lines = f_on_points_and_lines;
-	low_level_point_size = O->n + 1;
+	low_level_point_size = O->Quadratic_form->n + 1;
 		
 	v1 = NEW_int(low_level_point_size);
 	v2 = NEW_int(low_level_point_size);

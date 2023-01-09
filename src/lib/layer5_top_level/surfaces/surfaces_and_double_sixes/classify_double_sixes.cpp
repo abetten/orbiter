@@ -649,7 +649,7 @@ void classify_double_sixes::partial_ovoid_test_early(long int *S, int len,
 
 			f_OK = TRUE;
 			for (i = 0; i < len; i++) {
-				fxy = Surf->O->evaluate_bilinear_form(
+				fxy = Surf->O->Quadratic_form->evaluate_bilinear_form(
 						Pts_for_partial_ovoid_test + i * 6, v, 1);
 
 				if (fxy == 0) {

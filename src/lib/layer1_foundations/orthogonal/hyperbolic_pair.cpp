@@ -153,9 +153,9 @@ void hyperbolic_pair::init(orthogonal *O, int verbose_level)
 
 	F = O->F;
 	q = F->q;
-	epsilon = O->epsilon;
-	m = O->m;
-	n = O->n;
+	epsilon = O->Quadratic_form->epsilon;
+	m = O->Quadratic_form->m;
+	n = O->Quadratic_form->n;
 
 
 	if (f_v) {
@@ -203,9 +203,9 @@ void hyperbolic_pair::init_counting_functions(int verbose_level)
 
 	int epsilon, m, q;
 
-	epsilon = O->epsilon;
-	m = O->m;
-	q = O->q;
+	epsilon = O->Quadratic_form->epsilon;
+	m = O->Quadratic_form->m;
+	q = O->Quadratic_form->q;
 
 	T1_m = Gg.count_T1(epsilon, m, q);
 	if (f_v) {
@@ -309,11 +309,11 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 		cout << "hyperbolic_pair::init_decomposition" << endl;
 	}
 
-	if (O->epsilon == 1) {
+	if (O->Quadratic_form->epsilon == 1) {
 #if 1
 		long int u;
 
-		u = Gg.nb_pts_Qepsilon(O->epsilon, 2 * O->m - 1, O->q);
+		u = Gg.nb_pts_Qepsilon(O->Quadratic_form->epsilon, 2 * O->Quadratic_form->m - 1, O->Quadratic_form->q);
 		if (T1_m != u) {
 			cout << "T1_m != nb_pts_Qepsilon" << endl;
 			cout << "T1_m=" << T1_m << endl;
@@ -329,7 +329,7 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 			cout << "hyperbolic_pair::init_decomposition after init_hyperbolic" << endl;
 		}
 	}
-	else if (O->epsilon == 0) {
+	else if (O->Quadratic_form->epsilon == 0) {
 		if (f_v) {
 			cout << "hyperbolic_pair::init_decomposition before init_parabolic" << endl;
 		}
@@ -338,8 +338,8 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 			cout << "hyperbolic_pair::init_decomposition after init_parabolic" << endl;
 		}
 	}
-	else if (O->epsilon == -1) {
-		nb_points = Gg.nb_pts_Qepsilon(O->epsilon, O->n - 1, O->q);
+	else if (O->Quadratic_form->epsilon == -1) {
+		nb_points = Gg.nb_pts_Qepsilon(O->Quadratic_form->epsilon, O->Quadratic_form->n - 1, O->Quadratic_form->q);
 		nb_lines = 0;
 		if (f_v) {
 			cout << "nb_points=" << nb_points << endl;
@@ -349,7 +349,7 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 		//exit(1);
 	}
 	else {
-		cout << "hyperbolic_pair::init_decomposition epsilon = " << O->epsilon << " is illegal" << endl;
+		cout << "hyperbolic_pair::init_decomposition epsilon = " << O->Quadratic_form->epsilon << " is illegal" << endl;
 		exit(1);
 	}
 
@@ -389,7 +389,7 @@ void hyperbolic_pair::init_parabolic(int verbose_level)
 	//int a, b, c;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::init_parabolic m=" << O->m << " q=" << O->q << endl;
+		cout << "hyperbolic_pair::init_parabolic m=" << O->Quadratic_form->m << " q=" << O->Quadratic_form->q << endl;
 	}
 
 	nb_point_classes = 7;
@@ -406,7 +406,7 @@ void hyperbolic_pair::init_parabolic(int verbose_level)
 		A[i] = B[i] = 0;
 	}
 
-	if (O->f_even) {
+	if (O->Quadratic_form->f_even) {
 		init_parabolic_even(verbose_level);
 	}
 	else {
@@ -430,8 +430,8 @@ void hyperbolic_pair::init_parabolic(int verbose_level)
 	L[6] = l7;
 	L[7] = l8;
 
-	pt_P = Gg.count_T1(1, O->m - 1, O->q);
-	pt_Q = pt_P + Gg.count_S(O->m - 1, O->q);
+	pt_P = Gg.count_T1(1, O->Quadratic_form->m - 1, O->Quadratic_form->q);
+	pt_Q = pt_P + Gg.count_S(O->Quadratic_form->m - 1, O->Quadratic_form->q);
 
 	for (j = 0; j < nb_line_classes; j++) {
 		if (L[j] == 0) {
@@ -453,55 +453,55 @@ void hyperbolic_pair::init_parabolic_even(int verbose_level)
 	if (f_v) {
 		cout << "hyperbolic_pair::init_parabolic_even" << endl;
 	}
-	if (O->m >= 2) {
-		beta = Gg.count_T1(0, O->m - 2, O->q);
+	if (O->Quadratic_form->m >= 2) {
+		beta = Gg.count_T1(0, O->Quadratic_form->m - 2, O->Quadratic_form->q);
 	}
 	else {
 		beta = 0;
 	}
-	if (O->m >= 1) {
-		alpha = Gg.count_T1(0, O->m - 1, O->q);
-		gamma = alpha * beta / (O->q + 1);
+	if (O->Quadratic_form->m >= 1) {
+		alpha = Gg.count_T1(0, O->Quadratic_form->m - 1, O->Quadratic_form->q);
+		gamma = alpha * beta / (O->Quadratic_form->q + 1);
 	}
 	else {
 		alpha = 0;
 		gamma = 0;
 	}
-	delta = alpha - 1 - O->q * beta;
-	zeta = alpha - beta - 2 * (O->q - 1) * beta - O->q - 1;
+	delta = alpha - 1 - O->Quadratic_form->q * beta;
+	zeta = alpha - beta - 2 * (O->Quadratic_form->q - 1) * beta - O->Quadratic_form->q - 1;
 	//cout << "alpha = " << alpha << endl;
 	//cout << "beta = " << beta << endl;
 	//cout << "gamma = " << gamma << endl;
 	//cout << "delta = " << delta << endl;
 	//cout << "zeta = " << zeta << endl;
 
-	p1 = O->q - 1;
-	p2 = alpha * (O->q - 1) * (O->q - 1);
-	p3 = p4 = (O->q - 1) * alpha;
+	p1 = O->Quadratic_form->q - 1;
+	p2 = alpha * (O->Quadratic_form->q - 1) * (O->Quadratic_form->q - 1);
+	p3 = p4 = (O->Quadratic_form->q - 1) * alpha;
 	p5 = alpha;
 	p6 = p7 = 1;
 
-	l1 = alpha * (O->q - 1);
-	l2 = (O->q - 1) * (O->q - 1) * alpha * beta;
-	l3 = (O->q - 1) * alpha * delta;
-	l4 = l5 = alpha * beta * (O->q - 1);
+	l1 = alpha * (O->Quadratic_form->q - 1);
+	l2 = (O->Quadratic_form->q - 1) * (O->Quadratic_form->q - 1) * alpha * beta;
+	l3 = (O->Quadratic_form->q - 1) * alpha * delta;
+	l4 = l5 = alpha * beta * (O->Quadratic_form->q - 1);
 	l6 = gamma;
 	l7 = l8 = alpha;
 
 	a11 = alpha;
 	a21 = a36 = a47 = a56 = a57 = 1;
-	a22a = a33 = a44 = O->q * beta;
+	a22a = a33 = a44 = O->Quadratic_form->q * beta;
 	a22b = a32b = a42b = delta;
-	a51 = O->q - 1;
+	a51 = O->Quadratic_form->q - 1;
 	a52a = zeta;
-	a53 = a54 = (O->q - 1) * beta;
+	a53 = a54 = (O->Quadratic_form->q - 1) * beta;
 	a55 = beta;
 	a66 = a77 = alpha;
 
 	b11 = b51 = b52a = b32b = b42b = b53 = b54 = b56 = b57 = b66 = b77 = 1;
-	b21 = b22b = b36 = b47 = O->q - 1;
-	b22a = b33 = b44 = O->q;
-	b55 = O->q + 1;
+	b21 = b22b = b36 = b47 = O->Quadratic_form->q - 1;
+	b22a = b33 = b44 = O->Quadratic_form->q;
+	b55 = O->Quadratic_form->q + 1;
 
 
 	fill(A, 1, 1, a11);
@@ -571,8 +571,8 @@ void hyperbolic_pair::init_parabolic_odd(int verbose_level)
 
 	int q, m;
 
-	m = O->m;
-	q = O->q;
+	m = O->Quadratic_form->m;
+	q = O->Quadratic_form->q;
 
 	if (f_v) {
 		cout << "hyperbolic_pair::init_parabolic_odd" << endl;
@@ -583,9 +583,9 @@ void hyperbolic_pair::init_parabolic_odd(int verbose_level)
 	}
 	a = Gg.count_N1(m - 1, q) * (q - 1) / 2;
 	b = Gg.count_S(m - 1, q) * (q - 1);
-	c = (((q - 1) / 2) - 1) * (q - 1) * Gg.count_N1(O->m - 1, q);
+	c = (((q - 1) / 2) - 1) * (q - 1) * Gg.count_N1(O->Quadratic_form->m - 1, q);
 	p1 = a + b + c;
-	p2 = a + ((q - 1) / 2) * (q - 1) * Gg.count_N1(O->m - 1, q);
+	p2 = a + ((q - 1) / 2) * (q - 1) * Gg.count_N1(O->Quadratic_form->m - 1, q);
 	if (f_v) {
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
@@ -779,8 +779,8 @@ void hyperbolic_pair::init_hyperbolic(int verbose_level)
 
 	int q, m;
 
-	m = O->m;
-	q = O->q;
+	m = O->Quadratic_form->m;
+	q = O->Quadratic_form->q;
 
 	nb_point_classes = 6;
 	nb_line_classes = 7;

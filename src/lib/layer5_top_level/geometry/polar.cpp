@@ -873,7 +873,7 @@ void polar::test_if_in_perp(long int *S, int len,
 			Int_vec_print_integer_matrix_width(cout,
 					tmp_M, 2, n, n, F->log10_of_q);
 			}
-		f = O->evaluate_bilinear_form(tmp_M + 0 * n, tmp_M + 1 * n, 1);
+		f = O->Quadratic_form->evaluate_bilinear_form(tmp_M + 0 * n, tmp_M + 1 * n, 1);
 		if (f_vv) {
 			cout << "form value " << f << endl;
 			}

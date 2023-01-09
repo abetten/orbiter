@@ -1762,7 +1762,7 @@ void action::init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
 				"before A->init_projective_group" << endl;
 	}
 	data_structures_groups::vector_ge *nice_gens;
-	A->init_projective_group(O->n, O->F, f_semilinear,
+	A->init_projective_group(O->Quadratic_form->n, O->F, f_semilinear,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
@@ -1800,31 +1800,31 @@ void action::init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
 	char str2[1000];
 
 	if (f_semilinear) {
-		if (O->epsilon == 1) {
-			snprintf(str1, sizeof(str1), "PGGOp_%d_%d", O->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^+(%d,%d)", O->n, q);
+		if (O->Quadratic_form->epsilon == 1) {
+			snprintf(str1, sizeof(str1), "PGGOp_%d_%d", O->Quadratic_form->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^+(%d,%d)", O->Quadratic_form->n, q);
 		}
-		else if (O->epsilon == -1) {
-			snprintf(str1, sizeof(str1), "PGGOm_%d_%d", O->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^-(%d,%d)", O->n, q);
+		else if (O->Quadratic_form->epsilon == -1) {
+			snprintf(str1, sizeof(str1), "PGGOm_%d_%d", O->Quadratic_form->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^-(%d,%d)", O->Quadratic_form->n, q);
 		}
 		else {
-			snprintf(str1, sizeof(str1), "PGGO_%d_%d", O->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGGO_%d_%d", O->Quadratic_form->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}(%d,%d)", O->Quadratic_form->n, q);
 		}
 	}
 	else {
-		if (O->epsilon == 1) {
-			snprintf(str1, sizeof(str1), "PGOp_%d_%d", O->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}^+(%d,%d)", O->n, q);
+		if (O->Quadratic_form->epsilon == 1) {
+			snprintf(str1, sizeof(str1), "PGOp_%d_%d", O->Quadratic_form->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm PGO}^+(%d,%d)", O->Quadratic_form->n, q);
 		}
-		else if (O->epsilon == -1) {
-			snprintf(str1, sizeof(str1), "PGOm_%d_%d", O->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}^-(%d,%d)", O->n, q);
+		else if (O->Quadratic_form->epsilon == -1) {
+			snprintf(str1, sizeof(str1), "PGOm_%d_%d", O->Quadratic_form->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm PGO}^-(%d,%d)", O->Quadratic_form->n, q);
 		}
 		else {
-			snprintf(str1, sizeof(str1), "PGO_%d_%d", O->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}(%d,%d)", O->n, q);
+			snprintf(str1, sizeof(str1), "PGO_%d_%d", O->Quadratic_form->n, q);
+			snprintf(str2, sizeof(str2), "{\\rm PGO}(%d,%d)", O->Quadratic_form->n, q);
 		}
 	}
 
@@ -1850,7 +1850,7 @@ void action::init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
 				cout << "action::init_orthogonal_group_with_O "
 						"with reflections, before order_PO_epsilon" << endl;
 			}
-			GG.order_PO_epsilon(f_semilinear, O->epsilon, O->n - 1, O->F->q,
+			GG.order_PO_epsilon(f_semilinear, O->Quadratic_form->epsilon, O->Quadratic_form->n - 1, O->F->q,
 					target_go, verbose_level);
 		}
 		else {
@@ -1859,7 +1859,7 @@ void action::init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
 						"without reflections, before order_POmega_epsilon"
 						<< endl;
 			}
-			GG.order_POmega_epsilon(O->epsilon, O->n - 1,
+			GG.order_POmega_epsilon(O->Quadratic_form->epsilon, O->Quadratic_form->n - 1,
 					O->F->q, target_go, verbose_level);
 		}
 
