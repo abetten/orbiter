@@ -83,6 +83,30 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	else if (Descr->f_find_subgraph) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_find_subgraph " << Descr->find_subgraph_label << endl;
+		}
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity before CG->find_subgraph" << endl;
+		}
+		CG->find_subgraph(
+				Descr->find_subgraph_label,
+				verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity after CG->find_subgraph" << endl;
+		}
+
+
+
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity Gr->label=" << CG->label << endl;
+		}
+
+	}
 	else if (Descr->f_export_magma) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity f_export_magma" << endl;

@@ -284,9 +284,11 @@ namespace algebraic_geometry {
 	class schlaefli_labels;
 	class schlaefli;
 	class seventytwo_cases;
+	class smooth_surface_object_properties;
 	class surface_domain;
 	class surface_object_properties;
 	class surface_object;
+	class surface_polynomial_domains;
 	class web_of_cubic_curves;
 
 }

@@ -406,6 +406,9 @@ public:
 			std::ostream &ost_txt,
 			std::ostream &ost_csv,
 			int verbose_level);
+	void find_subgraph(
+			std::string &subgraph_label, int verbose_level);
+	void find_subgraph_E6(int verbose_level);
 	void all_cliques_black_and_white(
 			clique_finder_control *Control,
 			std::ostream &ost_txt,

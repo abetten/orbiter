@@ -2206,7 +2206,9 @@ void projective_space::point_plane_incidence_matrix(
 void projective_space::plane_intersection_type_basic(
 	long int *set, int set_size,
 	int *type, int verbose_level)
-// type[N_planes]
+// set[set_size], type[N_planes]
+// type[i] = number of points in the set lying on plane i
+// counts the number of points from the given set lying on each plane.
 {
 	int f_v = (verbose_level >= 1);
 	int rk, h, d, N_planes;

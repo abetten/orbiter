@@ -102,7 +102,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	tritangent_plane_idx = Surf->Schlaefli->choose_tritangent_plane_for_Clebsch_map(line1, line2,
 			transversal, verbose_level);
 
-	plane_rk_global = SO->SOP->Tritangent_plane_rk[tritangent_plane_idx];
+	plane_rk_global = SO->SOP->SmoothProperties->Tritangent_plane_rk[tritangent_plane_idx];
 
 
 	int u, a, h;

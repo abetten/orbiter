@@ -152,10 +152,7 @@ public:
 	//   Note Image_rk[i] is -1 if Pts[i] does not have an image.
 	// Image_coeff[nb_pts * 4] (image point in the plane in PG(3,q) coordinates)
 	void clebsch_map_print_fibers();
-	void clebsch_map_find_arc_and_lines(
-		//long int *Clebsch_map,
-		//long int *Arc, long int *Blown_up_lines,
-		int verbose_level);
+	void clebsch_map_find_arc_and_lines(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 
 };
@@ -275,7 +272,8 @@ public:
 			int *Coefficient_vector,
 			int verbose_level);
 	void enumerate_points_and_lines(int verbose_level);
-	void create_latex_report(std::string &label, std::string &label_tex, int verbose_level);
+	void create_latex_report(std::string &label,
+			std::string &label_tex, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
 	void print_equation(std::ostream &ost);
 	void print_points(std::ostream &ost);
@@ -495,7 +493,9 @@ public:
 	~quartic_curve_object_properties();
 	void init(quartic_curve_object *QO, int verbose_level);
 	void create_summary_file(std::string &fname,
-			std::string &surface_label, std::string &col_postfix, int verbose_level);
+			std::string &surface_label,
+			std::string &col_postfix,
+			int verbose_level);
 	void report_properties_simple(std::ostream &ost, int verbose_level);
 	void print_equation(std::ostream &ost);
 	void print_gradient(std::ostream &ost);
@@ -504,7 +504,8 @@ public:
 	void print_all_points(std::ostream &ost);
 	void print_bitangents(std::ostream &ost);
 	void print_lines_with_points_on_them(std::ostream &ost,
-			long int *Lines, int nb_lines, data_structures::set_of_sets *SoS);
+			long int *Lines, int nb_lines,
+			data_structures::set_of_sets *SoS);
 	//void print_bitangents_with_points_on_them(std::ostream &ost);
 	void points_on_curve_on_lines(int verbose_level);
 	void report_bitangent_line_type(std::ostream &ost);
@@ -611,16 +612,6 @@ public:
 
 	schlaefli_labels *Labels;
 
-#if 0
-	long int *Sets; // [30 * 2]
-	int *M; // [6 * 6]
-	long int *Sets2; // [15 * 2]
-
-	// Schlaefli stuff:
-
-	std::string *Line_label; // [27]
-	std::string *Line_label_tex; // [27]
-#endif
 
 	int *Trihedral_pairs; // [nb_trihedral_pairs * 9]
 	std::string *Trihedral_pair_labels; // [nb_trihedral_pairs]
@@ -875,13 +866,70 @@ public:
 };
 
 
+// #############################################################################
+// smooth_surface_object_properties.cpp
+// #############################################################################
+
+//! smooth cubic surfaces in PG(3,q) have 27 lines
+
+
+class smooth_surface_object_properties {
+
+public:
+
+	surface_object *SO;
+
+
+	long int *Tritangent_plane_rk; // [45]
+		// list of tritangent planes in Schlaefli labeling
+	int nb_tritangent_planes;
+
+	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
+
+	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
+
+
+	long int *All_Planes; // [nb_trihedral_pairs * 6]
+	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
+
+
+
+	smooth_surface_object_properties();
+	~smooth_surface_object_properties();
+	void init(surface_object *SO, int verbose_level);
+	void compute_tritangent_planes_by_rank(int verbose_level);
+	void compute_Lines_in_tritangent_planes(int verbose_level);
+	void compute_Trihedral_pairs_as_tritangent_planes(int verbose_level);
+	void compute_planes_and_dual_point_ranks(int verbose_level);
+	void print_planes_in_trihedral_pairs(std::ostream &ost);
+	void print_tritangent_planes(std::ostream &ost);
+	void print_single_tritangent_plane(std::ostream &ost, int plane_idx);
+
+	void latex_table_of_trihedral_pairs(std::ostream &ost, int *T, int nb_T);
+	void latex_trihedral_pair(std::ostream &ost, int t_idx);
+	void make_equation_in_trihedral_form(int t_idx,
+		int *F_planes, int *G_planes, int &lambda, int *equation,
+		int verbose_level);
+	void print_equation_in_trihedral_form(std::ostream &ost,
+		int *F_planes, int *G_planes, int lambda);
+	void print_equation_in_trihedral_form_equation_only(std::ostream &ost,
+		int *F_planes, int *G_planes, int lambda);
+	void make_and_print_equation_in_trihedral_form(std::ostream &ost, int t_idx);
+	void latex_table_of_trihedral_pairs_and_clebsch_system(
+		std::ostream &ost, int *T, int nb_T);
+	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
+	void latex_table_of_trihedral_pairs(std::ostream &ost);
+	void print_Steiner_and_Eckardt(std::ostream &ost);
+
+};
+
 
 
 // #############################################################################
 // surface_domain.cpp
 // #############################################################################
 
-//! cubic surfaces in PG(3,q) with 27 lines
+//! cubic surfaces in PG(3,q)
 
 
 class surface_domain {
@@ -890,11 +938,15 @@ public:
 	int q;
 	int n; // = 4
 	int n2; // = 2 * n
+
 	field_theory::finite_field *F;
+
 	geometry::projective_space *P; // PG(3,q)
 	geometry::projective_space *P2; // PG(2,q)
+
 	geometry::grassmann *Gr; // Gr_{4,2}
 	geometry::grassmann *Gr3; // Gr_{4,3}
+
 	long int nb_lines_PG_3;
 	int nb_pts_on_surface_with_27_lines; // q^2 + 7q + 1
 
@@ -911,69 +963,14 @@ public:
 	int *v2; // [(n * (n-1)) / 2]
 	int *w2; // [(n * (n-1)) / 2]
 
-	int nb_monomials; // = 20
 
 	schlaefli *Schlaefli;
 
-
-	ring_theory::homogeneous_polynomial_domain *Poly1;
-		// linear polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly2;
-		// quadratic polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly3;
-		// cubic polynomials in three variables
-
-	ring_theory::homogeneous_polynomial_domain *Poly1_x123;
-		// linear polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly2_x123;
-		// quadratic polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly3_x123;
-		// cubic polynomials in three variables
-	ring_theory::homogeneous_polynomial_domain *Poly4_x123;
-		// quartic polynomials in three variables
-
-	ring_theory::homogeneous_polynomial_domain *Poly1_4;
-		// linear polynomials in four variables
-	ring_theory::homogeneous_polynomial_domain *Poly2_4;
-		// quadratic polynomials in four variables
-	ring_theory::homogeneous_polynomial_domain *Poly3_4;
-		// cubic polynomials in four variables
-
-	ring_theory::partial_derivative *Partials; // [4]
-
-
-	int f_has_large_polynomial_domains;
-	ring_theory::homogeneous_polynomial_domain *Poly2_27;
-	ring_theory::homogeneous_polynomial_domain *Poly4_27;
-	ring_theory::homogeneous_polynomial_domain *Poly6_27;
-	ring_theory::homogeneous_polynomial_domain *Poly3_24;
-
-	int nb_monomials2, nb_monomials4, nb_monomials6;
-	int nb_monomials3;
-
-	int *Clebsch_Pij;
-	int **Clebsch_P;
-	int **Clebsch_P3;
-
-	int *Clebsch_coeffs; // [4 * Poly3->nb_monomials * nb_monomials3]
-	int **CC; // [4 * Poly3->nb_monomials]
+	surface_polynomial_domains *PolynomialDomains;
 
 	surface_domain();
 	~surface_domain();
 	void init(field_theory::finite_field *F, int verbose_level);
-	void init_polynomial_domains(int verbose_level);
-	void init_large_polynomial_domains(int verbose_level);
-	void label_variables_3(ring_theory::homogeneous_polynomial_domain *HPD,
-		int verbose_level);
-	void label_variables_x123(ring_theory::homogeneous_polynomial_domain *HPD,
-		int verbose_level);
-	void label_variables_4(ring_theory::homogeneous_polynomial_domain *HPD,
-		int verbose_level);
-	void label_variables_27(ring_theory::homogeneous_polynomial_domain *HPD,
-		int verbose_level);
-	void label_variables_24(ring_theory::homogeneous_polynomial_domain *HPD,
-		int verbose_level);
-	int index_of_monomial(int *v);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	void unrank_plane(int *v, long int rk);
@@ -998,22 +995,11 @@ public:
 	void klein_to_wedge_vec(long int *Klein_rk, long int *Wedge_rk, int len);
 	void save_lines_in_three_kinds(std::string &fname_csv,
 		long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines);
-	int build_surface_from_double_six_and_count_Eckardt_points(long int *double_six, int verbose_level);
+	int build_surface_from_double_six_and_count_Eckardt_points(
+			long int *double_six, int verbose_level);
 
 
 	// surface_domain2.cpp:
-	void multiply_conic_times_linear(int *six_coeff, int *three_coeff,
-		int *ten_coeff, int verbose_level);
-	void multiply_linear_times_linear_times_linear(int *three_coeff1,
-		int *three_coeff2, int *three_coeff3, int *ten_coeff,
-		int verbose_level);
-	void multiply_linear_times_linear_times_linear_in_space(
-		int *four_coeff1, int *four_coeff2, int *four_coeff3,
-		int *twenty_coeff, int verbose_level);
-	void multiply_Poly2_3_times_Poly2_3(int *input1, int *input2,
-		int *result, int verbose_level);
-	void multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
-		int *result, int verbose_level);
 	void create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 		int *The_six_plane_equations, int *The_surface_equations,
 		int verbose_level);
@@ -1022,23 +1008,12 @@ public:
 	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
 		// Planes_by_rank[nb_trihedral_pairs * 6]
-	void clebsch_cubics(int verbose_level);
-	void multiply_222_27_and_add(int *M1, int *M2, int *M3,
-		int scalar, int *MM, int verbose_level);
-	void minor22(int **P3, int i1, int i2, int j1, int j2,
-		int scalar, int *Ad, int verbose_level);
-	void multiply42_and_add(int *M1, int *M2, int *MM,
-		int verbose_level);
 	void prepare_system_from_FG(int *F_planes, int *G_planes,
 		int lambda, int *&system, int verbose_level);
 	void compute_nine_lines(int *F_planes, int *G_planes,
 		long int *nine_lines, int verbose_level);
 	void compute_nine_lines_by_dual_point_ranks(long int *F_planes_rank,
 		long int *G_planes_rank, long int *nine_lines, int verbose_level);
-	void split_nice_equation(int *nice_equation, int *&f1,
-		int *&f2, int *&f3, int verbose_level);
-	void assemble_tangent_quadric(int *f1, int *f2, int *f3,
-		int *&tangent_quadric, int verbose_level);
 	void tritangent_plane_to_trihedral_pair_and_position(
 		int tritangent_plane_idx,
 		int &trihedral_pair_idx, int &position, int verbose_level);
@@ -1049,8 +1024,6 @@ public:
 		int verbose_level);
 	void compute_local_coordinates_of_arc(
 			long int *P6, long int *P6_local, int verbose_level);
-	void compute_gradient(int *equation20, int *&gradient, int verbose_level);
-	long int compute_tangent_plane(int *pt_coords, int *equation20, int verbose_level);
 
 
 
@@ -1133,8 +1106,6 @@ public:
 	int compute_transversals_of_any_four(
 			long int *&Trans, int &nb_subsets,
 			long int *lines, int sz, int verbose_level);
-	int read_schlaefli_label(const char *p);
-	void read_string_of_schlaefli_labels(std::string &str, int *&v, int &sz, int verbose_level);
 
 	// surface_domain_io.cpp:
 	void print_equation(std::ostream &ost, int *coeffs);
@@ -1146,21 +1117,14 @@ public:
 	void make_spreadsheet_of_lines_in_three_kinds(data_structures::spreadsheet *&Sp,
 		long int *Wedge_rk, long int *Line_rk, long int *Klein_rk, int nb_lines,
 		int verbose_level);
-	void print_equation_in_trihedral_form(std::ostream &ost,
-		int *the_six_plane_equations, int lambda, int *the_equation);
 	void print_equation_wrapped(std::ostream &ost, int *the_equation);
 	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
 	void print_one_line_tex(std::ostream &ost,
 			long int *Lines, int nb_lines, int idx);
 	//void alice(std::ostream &ost, long int *Lines, int nb_lines);
-	void print_clebsch_P(std::ostream &ost);
-	void print_clebsch_P_matrix_only(std::ostream &ost);
-	void print_clebsch_cubics(std::ostream &ost);
-	void print_system(std::ostream &ost, int *system);
 	void print_trihedral_pair_in_dual_coordinates_in_GAP(
 		long int *F_planes_rank, long int *G_planes_rank);
 	void print_basics(std::ostream &ost);
-	void print_polynomial_domains(std::ostream &ost);
 	void sstr_line_label(std::stringstream &sstr, long int pt);
 	void make_table_of_surfaces(int verbose_level);
 	void make_table_of_surfaces_detailed(
@@ -1177,8 +1141,10 @@ public:
 
 
 	// surface_domain_families.cpp:
-	void create_equation_general_abcd(int a, int b, int c, int d, int *coeff, int verbose_level);
-	void create_equation_Cayley_klmn(int k, int l, int m, int n, int *coeff, int verbose_level);
+	void create_equation_general_abcd(int a, int b, int c, int d,
+			int *coeff, int verbose_level);
+	void create_equation_Cayley_klmn(int k, int l, int m, int n,
+			int *coeff, int verbose_level);
 	void create_equation_bes(int a, int c, int *coeff, int verbose_level);
 	void create_equation_F13(int a, int *coeff, int verbose_level);
 	void create_equation_G13(int a, int *coeff, int verbose_level);
@@ -1217,16 +1183,15 @@ public:
 	surface_object *SO;
 
 
+	// point properties:
+
 	data_structures::set_of_sets *pts_on_lines;
 		// points are stored as indices into Pts[]
 	int *f_is_on_line; // [SO->nb_pts]
 
 
-	data_structures::set_of_sets *lines_on_point;
-	data_structures::tally *Type_pts_on_lines;
-	data_structures::tally *Type_lines_on_point;
 
-	long int *Eckardt_points; // the orbiter rank of the Eckardt points
+	long int *Eckardt_points; // the orbiter ranks of the Eckardt points
 	int *Eckardt_points_index; // index into SO->Pts
 	int *Eckardt_points_schlaefli_labels; // Schlaefli labels
 	int *Eckardt_point_bitvector_in_Schlaefli_labeling;
@@ -1236,13 +1201,20 @@ public:
 	int *Eckardt_points_line_type; // [nb_Eckardt_points + 1]
 	int *Eckardt_points_plane_type; // [SO->Surf->P->Nb_subspaces[2]]
 
+
+
+	data_structures::set_of_sets *lines_on_point;
+	data_structures::tally *Type_pts_on_lines;
+	data_structures::tally *Type_lines_on_point;
+
+
 	long int *Hesse_planes;
 	int nb_Hesse_planes;
 	int *Eckardt_point_Hesse_plane_incidence; // [nb_Eckardt_points * nb_Hesse_planes]
 
 
 	int nb_axes;
-	int *Axes_index; // [nb_axes] two times the index into trihedral pairs + 0 or +1
+	int *Axes_index; // [nb_axes] two times the index into trihedral pairs +0 or +1
 	long int *Axes_Eckardt_points; // [nb_axes * 3] the Eckardt points in Schlaefli labels that lie on the axes
 	long int *Axes_line_rank;
 
@@ -1259,20 +1231,15 @@ public:
 	int nb_pts_not_on_lines;
 
 	int nb_planes;
-	int *plane_type_by_points;
-	int *plane_type_by_lines;
+	int *plane_type_by_points; // [nb_planes]
+	int *plane_type_by_lines; // [nb_planes]
 	data_structures::tally *C_plane_type_by_points;
 
-	long int *Tritangent_plane_rk; // [45]
-		// list of tritangent planes in Schlaefli labeling
-	int nb_tritangent_planes;
 
-	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
+	// only for surfaces with 27 lines:
 
-	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
+	smooth_surface_object_properties *SmoothProperties;
 
-	long int *All_Planes; // [nb_trihedral_pairs * 6]
-	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
 
 	int *Adj_line_intersection_graph; // [SO->nb_lines * SO->nb_lines]
 	data_structures::set_of_sets *Line_neighbors;
@@ -1300,11 +1267,7 @@ public:
 		int verbose_level);
 	int Adj_ij(int i, int j);
 	void compute_plane_type_by_points(int verbose_level);
-	void compute_tritangent_planes_by_rank(int verbose_level);
-	void compute_Lines_in_tritangent_planes(int verbose_level);
-	void compute_Trihedral_pairs_as_tritangent_planes(int verbose_level);
 
-	void compute_planes_and_dual_point_ranks(int verbose_level);
 	//void print_everything(std::ostream &ost, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
 	void report_properties_simple(std::ostream &ost, int verbose_level);
@@ -1314,9 +1277,6 @@ public:
 	void print_adjacency_matrix_with_intersection_points(
 			std::ostream &ost);
 	void print_neighbor_sets(std::ostream &ost);
-	void print_planes_in_trihedral_pairs(std::ostream &ost);
-	void print_tritangent_planes(std::ostream &ost);
-	void print_single_tritangent_plane(std::ostream &ost, int plane_idx);
 
 
 	void print_plane_type_by_points(std::ostream &ost);
@@ -1341,18 +1301,6 @@ public:
 	void print_half_double_sixes_numerically(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
 	void print_trihedral_pairs_numerically(std::ostream &ost);
-	void latex_table_of_trihedral_pairs_and_clebsch_system(std::ostream &ost,
-		int *T, int nb_T);
-	void latex_table_of_trihedral_pairs(std::ostream &ost, int *T, int nb_T);
-	void latex_trihedral_pair(std::ostream &ost, int t_idx);
-	void make_equation_in_trihedral_form(int t_idx,
-		int *F_planes, int *G_planes, int &lambda, int *equation,
-		int verbose_level);
-	void print_equation_in_trihedral_form(std::ostream &ost,
-		int *F_planes, int *G_planes, int lambda);
-	void print_equation_in_trihedral_form_equation_only(std::ostream &ost,
-		int *F_planes, int *G_planes, int lambda);
-	void make_and_print_equation_in_trihedral_form(std::ostream &ost, int t_idx);
 
 	int compute_transversal_line(int line_a, int line_b,
 		int verbose_level);
@@ -1363,10 +1311,8 @@ public:
 		long int *Arc, long int *Blown_up_lines, int verbose_level);
 	void clebsch_map_latex(std::ostream &ost,
 			long int *Clebsch_map, int *Clebsch_coeff);
-	void print_Steiner_and_Eckardt(std::ostream &ost);
-	void latex_table_of_trihedral_pairs(std::ostream &ost);
-	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
-	void compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx, int *&f_deleted, int verbose_level);
+	void compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx,
+			int *&f_deleted, int verbose_level);
 	int test_full_del_pezzo(int P_idx, int *f_deleted, int verbose_level);
 	void create_summary_file(std::string &fname,
 			std::string &surface_label, std::string &col_postfix, int verbose_level);
@@ -1430,6 +1376,119 @@ public:
 	void print_lines_tex(std::ostream &ost);
 	void print_one_line_tex(std::ostream &ost, int idx);
 
+
+};
+
+
+
+
+// #############################################################################
+// surface_polynomial_domains.cpp
+// #############################################################################
+
+//! polynomial domains associated with cubic surfaces
+
+
+class surface_polynomial_domains {
+
+public:
+
+	surface_domain *Surf;
+
+	int nb_monomials; // = 20
+
+
+	ring_theory::homogeneous_polynomial_domain *Poly1;
+		// linear polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly2;
+		// quadratic polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly3;
+		// cubic polynomials in three variables
+
+	ring_theory::homogeneous_polynomial_domain *Poly1_x123;
+		// linear polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly2_x123;
+		// quadratic polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly3_x123;
+		// cubic polynomials in three variables
+	ring_theory::homogeneous_polynomial_domain *Poly4_x123;
+		// quartic polynomials in three variables
+
+	ring_theory::homogeneous_polynomial_domain *Poly1_4;
+		// linear polynomials in four variables
+	ring_theory::homogeneous_polynomial_domain *Poly2_4;
+		// quadratic polynomials in four variables
+	ring_theory::homogeneous_polynomial_domain *Poly3_4;
+		// cubic polynomials in four variables
+
+	ring_theory::partial_derivative *Partials; // [4]
+
+
+	int f_has_large_polynomial_domains;
+	ring_theory::homogeneous_polynomial_domain *Poly2_27;
+	ring_theory::homogeneous_polynomial_domain *Poly4_27;
+	ring_theory::homogeneous_polynomial_domain *Poly6_27;
+	ring_theory::homogeneous_polynomial_domain *Poly3_24;
+
+	int nb_monomials2, nb_monomials4, nb_monomials6;
+	int nb_monomials3;
+
+	int *Clebsch_Pij;
+	int **Clebsch_P;
+	int **Clebsch_P3;
+
+	int *Clebsch_coeffs; // [4 * Poly3->nb_monomials * nb_monomials3]
+	int **CC; // [4 * Poly3->nb_monomials]
+
+
+
+	surface_polynomial_domains();
+	~surface_polynomial_domains();
+	void init(surface_domain *Surf, int verbose_level);
+	void init_large_polynomial_domains(int verbose_level);
+	void label_variables_3(ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+	void label_variables_x123(ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+	void label_variables_4(ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+	void label_variables_27(ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+	void label_variables_24(ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+	int index_of_monomial(int *v);
+	void multiply_conic_times_linear(int *six_coeff, int *three_coeff,
+		int *ten_coeff, int verbose_level);
+	void multiply_linear_times_linear_times_linear(int *three_coeff1,
+		int *three_coeff2, int *three_coeff3, int *ten_coeff,
+		int verbose_level);
+	void multiply_linear_times_linear_times_linear_in_space(
+		int *four_coeff1, int *four_coeff2, int *four_coeff3,
+		int *twenty_coeff, int verbose_level);
+	void multiply_Poly2_3_times_Poly2_3(int *input1, int *input2,
+		int *result, int verbose_level);
+	void multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
+		int *result, int verbose_level);
+	void clebsch_cubics(int verbose_level);
+	void multiply_222_27_and_add(int *M1, int *M2, int *M3,
+		int scalar, int *MM, int verbose_level);
+	void minor22(int **P3, int i1, int i2, int j1, int j2,
+		int scalar, int *Ad, int verbose_level);
+	void multiply42_and_add(int *M1, int *M2, int *MM,
+		int verbose_level);
+	void split_nice_equation(int *nice_equation, int *&f1,
+		int *&f2, int *&f3, int verbose_level);
+	void assemble_tangent_quadric(int *f1, int *f2, int *f3,
+		int *&tangent_quadric, int verbose_level);
+	void compute_gradient(int *equation20, int *&gradient, int verbose_level);
+	long int compute_tangent_plane(int *pt_coords, int *equation20, int verbose_level);
+	void print_clebsch_P(std::ostream &ost);
+	void print_clebsch_P_matrix_only(std::ostream &ost);
+	void print_clebsch_cubics(std::ostream &ost);
+	void print_system(std::ostream &ost, int *system);
+	void print_polynomial_domains(std::ostream &ost);
+	void print_equation_in_trihedral_form(std::ostream &ost,
+		int *the_six_plane_equations, int lambda, int *the_equation);
 
 };
 

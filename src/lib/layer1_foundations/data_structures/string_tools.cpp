@@ -1283,6 +1283,129 @@ void string_tools::parse_comma_separated_strings(std::string &in, std::vector<st
 }
 
 
+int string_tools::read_schlaefli_label(const char *p)
+{
+	if (strcmp(p, "a1") == 0) {
+		return 0;
+	}
+	else if (strcmp(p, "a2") == 0) {
+		return 1;
+	}
+	else if (strcmp(p, "a3") == 0) {
+		return 2;
+	}
+	else if (strcmp(p, "a4") == 0) {
+		return 3;
+	}
+	else if (strcmp(p, "a5") == 0) {
+		return 4;
+	}
+	else if (strcmp(p, "a6") == 0) {
+		return 5;
+	}
+	else if (strcmp(p, "b1") == 0) {
+		return 6;
+	}
+	else if (strcmp(p, "b2") == 0) {
+		return 7;
+	}
+	else if (strcmp(p, "b3") == 0) {
+		return 8;
+	}
+	else if (strcmp(p, "b4") == 0) {
+		return 9;
+	}
+	else if (strcmp(p, "b5") == 0) {
+		return 10;
+	}
+	else if (strcmp(p, "b6") == 0) {
+		return 11;
+	}
+	else if (strcmp(p, "c12") == 0) {
+		return 12;
+	}
+	else if (strcmp(p, "c13") == 0) {
+		return 13;
+	}
+	else if (strcmp(p, "c14") == 0) {
+		return 14;
+	}
+	else if (strcmp(p, "c15") == 0) {
+		return 15;
+	}
+	else if (strcmp(p, "c16") == 0) {
+		return 16;
+	}
+	else if (strcmp(p, "c23") == 0) {
+		return 17;
+	}
+	else if (strcmp(p, "c24") == 0) {
+		return 18;
+	}
+	else if (strcmp(p, "c25") == 0) {
+		return 19;
+	}
+	else if (strcmp(p, "c26") == 0) {
+		return 20;
+	}
+	else if (strcmp(p, "c34") == 0) {
+		return 21;
+	}
+	else if (strcmp(p, "c35") == 0) {
+		return 22;
+	}
+	else if (strcmp(p, "c36") == 0) {
+		return 23;
+	}
+	else if (strcmp(p, "c45") == 0) {
+		return 24;
+	}
+	else if (strcmp(p, "c46") == 0) {
+		return 25;
+	}
+	else if (strcmp(p, "c56") == 0) {
+		return 26;
+	}
+	else {
+		cout << "string_tools::read_schlaefli_label unknown schlaefli label: " << p << endl;
+		exit(1);
+	}
+}
+
+void string_tools::read_string_of_schlaefli_labels(std::string &str, int *&v, int &sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char **argv;
+	int i;
+
+	if (f_v) {
+		cout << "string_tools::read_string_of_schlaefli_labels" << endl;
+	}
+
+	chop_string_comma_separated(str.c_str(), sz, argv);
+
+	if (f_v) {
+		cout << "string_tools::read_string_of_schlaefli_labels reading:" << endl;
+		for (i = 0; i < sz; i++) {
+			cout << i << " : " << argv[i] << endl;
+		}
+	}
+
+	v = NEW_int(sz);
+	for (i = 0; i < sz; i++) {
+		v[i] = read_schlaefli_label(argv[i]);
+	}
+
+
+	if (f_v) {
+		cout << "string_tools::read_string_of_schlaefli_labels done" << endl;
+	}
+}
+
+
+//#############################################################################
+
+
 int string_tools_compare_strings(void *a, void *b, void *data)
 {
 	char *A = (char *) a;

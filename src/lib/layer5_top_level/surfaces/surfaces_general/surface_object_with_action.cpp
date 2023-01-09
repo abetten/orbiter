@@ -45,6 +45,7 @@ surface_object_with_action::surface_object_with_action()
 	A_double_sixes = NULL;
 	A_on_tritangent_planes = NULL;
 	A_on_Hesse_planes = NULL;
+	A_on_axes = NULL;
 	A_on_trihedral_pairs = NULL;
 	A_on_pts_not_on_lines = NULL;
 
@@ -55,8 +56,10 @@ surface_object_with_action::surface_object_with_action()
 	Orbits_on_Single_points = NULL;
 	Orbits_on_lines = NULL;
 	Orbits_on_single_sixes = NULL;
+	Orbits_on_double_sixes = NULL;
 	Orbits_on_tritangent_planes = NULL;
 	Orbits_on_Hesse_planes = NULL;
+	Orbits_on_axes = NULL;
 	Orbits_on_trihedral_pairs = NULL;
 	Orbits_on_points_not_on_lines = NULL;
 }
@@ -96,6 +99,9 @@ surface_object_with_action::~surface_object_with_action()
 	if (A_on_Hesse_planes) {
 		FREE_OBJECT(A_on_Hesse_planes);
 	}
+	if (A_on_axes) {
+		FREE_OBJECT(A_on_axes);
+	}
 	if (A_on_trihedral_pairs) {
 		FREE_OBJECT(A_on_trihedral_pairs);
 	}
@@ -128,6 +134,9 @@ surface_object_with_action::~surface_object_with_action()
 	}
 	if (Orbits_on_Hesse_planes) {
 		FREE_OBJECT(Orbits_on_Hesse_planes);
+	}
+	if (Orbits_on_axes) {
+		FREE_OBJECT(Orbits_on_axes);
 	}
 	if (Orbits_on_trihedral_pairs) {
 		FREE_OBJECT(Orbits_on_trihedral_pairs);
@@ -351,9 +360,6 @@ void surface_object_with_action::init_surface_object(
 	}
 
 
-
-
-
 	if (f_v) {
 		cout << "surface_object_with_action::init_surface_object "
 				"before compute_orbits_of_automorphism_group" << endl;
@@ -525,6 +531,18 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"after init_orbits_on_Hesse_planes" << endl;
+		}
+
+		// orbits on axes:
+
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"before init_orbits_on_axes" << endl;
+		}
+		init_orbits_on_axes(verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"after init_orbits_on_axes" << endl;
 		}
 
 
@@ -890,10 +908,10 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	if (f_v) {
 		cout << "creating action on tritangent planes:" << endl;
 		cout << "SO->SOP->nb_tritangent_planes = "
-				<< SO->SOP->nb_tritangent_planes << endl;
+				<< SO->SOP->SmoothProperties->nb_tritangent_planes << endl;
 	}
 	A_on_tritangent_planes = A_on_the_lines->create_induced_action_on_sets(
-			SO->SOP->nb_tritangent_planes, 3,
+			SO->SOP->SmoothProperties->nb_tritangent_planes, 3,
 			//SO->Lines_in_tritangent_planes,
 			Surf->Schlaefli->Lines_in_tritangent_planes,
 			0 /*verbose_level*/);
@@ -911,7 +929,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_tritangent_planes->nb_orbits
-				<< " orbits on the set of " << SO->SOP->nb_tritangent_planes
+				<< " orbits on the set of " << SO->SOP->SmoothProperties->nb_tritangent_planes
 				<< " tritangent planes" << endl;
 	}
 
@@ -922,8 +940,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	}
 }
 
-void surface_object_with_action::init_orbits_on_Hesse_planes(
-		int verbose_level)
+void surface_object_with_action::init_orbits_on_Hesse_planes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -962,6 +979,56 @@ void surface_object_with_action::init_orbits_on_Hesse_planes(
 		cout << "surface_object_with_action::init_orbits_on_Hesse_planes done" << endl;
 	}
 }
+
+void surface_object_with_action::init_orbits_on_axes(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_axes" << endl;
+	}
+
+	if (f_v) {
+		cout << "creating action on axes:" << endl;
+		cout << "SO->SOP->nb_axes = "
+				<< SO->SOP->nb_axes << endl;
+		cout << "Axes_line_rank:";
+		Lint_vec_print(cout, SO->SOP->Axes_line_rank, SO->SOP->nb_axes);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_axes "
+				"before Surf_A->A2->restricted_action" << endl;
+	}
+	A_on_axes = Surf_A->A2->restricted_action(
+			SO->SOP->Axes_line_rank, SO->SOP->nb_axes,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_axes "
+				"after Surf_A->A2->restricted_action" << endl;
+	}
+
+	if (f_has_nice_gens) {
+		Orbits_on_axes = nice_gens->orbits_on_points_schreier(
+				A_on_axes, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_axes = Aut_gens->orbits_on_points_schreier(
+				A_on_axes, 0 /*verbose_level*/);
+	}
+	if (f_v) {
+		cout << "We found " << Orbits_on_axes->nb_orbits
+				<< " orbits on the set of " << SO->SOP->nb_axes
+				<< " axes" << endl;
+	}
+
+	Orbits_on_axes->print_and_list_orbits(cout);
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_axes done" << endl;
+	}
+}
+
 
 void surface_object_with_action::init_orbits_on_trihedral_pairs(
 		int verbose_level)
@@ -2044,9 +2111,9 @@ void surface_object_with_action::export_all_quartic_curves(
 			ostringstream s;
 
 
-			for (i = 0; i < Surf->Poly4_x123->get_nb_monomials(); i++) {
+			for (i = 0; i < Surf->PolynomialDomains->Poly4_x123->get_nb_monomials(); i++) {
 				s << QC->curve[i];
-				if (i < Surf->Poly4_x123->get_nb_monomials() - 1) {
+				if (i < Surf->PolynomialDomains->Poly4_x123->get_nb_monomials() - 1) {
 					s << ",";
 				}
 			}
@@ -2234,7 +2301,7 @@ void surface_object_with_action::print_everything(std::ostream &ost, int verbose
 		cout << "surface_object_with_action::print_everything "
 				"before print_tritangent_planes" << endl;
 	}
-	SO->SOP->print_tritangent_planes(ost);
+	SO->SOP->SmoothProperties->print_tritangent_planes(ost);
 
 
 	//SO->print_planes_in_trihedral_pairs(ost);
@@ -2367,7 +2434,13 @@ void surface_object_with_action::print_summary(std::ostream &ost)
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Axes} & " << SO->SOP->nb_axes << " & \\\\" << endl;
+	ost << "\\mbox{Axes} & " << SO->SOP->nb_axes << " & ";
+	{
+		string str;
+		Orbits_on_axes->print_orbit_length_distribution_to_string(str);
+		ost << str;
+	}
+	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
 

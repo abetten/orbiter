@@ -465,7 +465,8 @@ public:
 	void print_polynomial_tight(std::ostream &ost, ring_theory::unipoly_domain &Fq,
 			int degree, ring_theory::unipoly_object *coeffs);
 	void field_reduction(int n, int q, int p, int e, int m,
-			field_theory::finite_field &Fp, ring_theory::unipoly_domain &Fq,
+			field_theory::finite_field &Fp,
+			ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
 		int f_poly, std::string &poly,
 		int verbose_level);

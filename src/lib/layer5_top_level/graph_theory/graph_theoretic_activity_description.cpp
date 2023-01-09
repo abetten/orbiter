@@ -23,6 +23,10 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_find_cliques = FALSE;
 	Clique_finder_control = NULL;
 
+	f_find_subgraph = FALSE;
+	//std::string find_subgraph_label;
+
+
 	f_export_magma = FALSE;
 	f_export_maple = FALSE;
 	f_export_csv = FALSE;
@@ -76,6 +80,13 @@ int graph_theoretic_activity_description::read_arguments(
 			f_find_cliques = TRUE;
 			Clique_finder_control = NEW_OBJECT(graph_theory::clique_finder_control);
 			i += Clique_finder_control->parse_arguments(argc - i, argv + i);
+		}
+		else if (ST.stringcmp(argv[i], "-find_subgraph") == 0) {
+			f_find_subgraph = TRUE;
+			find_subgraph_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-find_subgraph " << find_subgraph_label << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
@@ -191,6 +202,9 @@ void graph_theoretic_activity_description::print()
 	if (f_find_cliques) {
 		cout << "-find_cliques" << endl;
 		Clique_finder_control->print();
+	}
+	if (f_find_subgraph) {
+		cout << "-find_subgraph " << find_subgraph_label << endl;
 	}
 	if (f_export_magma) {
 		cout << "-export_magma" << endl;

@@ -1354,10 +1354,10 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 		Int_vec_copy(coeff2, coeff4, 20);
 		F->PG_element_normalize_from_front(
 				coeff3, 1,
-				Surf->nb_monomials);
+				Surf->PolynomialDomains->nb_monomials);
 		F->PG_element_normalize_from_front(
 				coeff4, 1,
-				Surf->nb_monomials);
+				Surf->PolynomialDomains->nb_monomials);
 
 		if (f_v) {
 			cout << "after substitution, normalized" << endl;
@@ -1406,7 +1406,7 @@ void surface_classify_wedge::identify_surface(
 	if (f_v) {
 		cout << "identifying the surface ";
 		Int_vec_print(cout, coeff_of_given_surface,
-			Surf->nb_monomials);
+			Surf->PolynomialDomains->nb_monomials);
 		cout << " = ";
 		Surf->print_equation(cout, coeff_of_given_surface);
 		cout << endl;
@@ -1703,7 +1703,7 @@ void surface_classify_wedge::identify_surface(
 
 	int *coeffs_transformed;
 
-	coeffs_transformed = NEW_int(Surf->nb_monomials);
+	coeffs_transformed = NEW_int(Surf->PolynomialDomains->nb_monomials);
 	
 
 
@@ -1721,9 +1721,9 @@ void surface_classify_wedge::identify_surface(
 	Surf->build_cubic_surface_from_lines(
 			27, Lines0, eqn0,
 			0 /* verbose_level*/);
-	F->PG_element_normalize_from_front(eqn0, 1, Surf->nb_monomials);
+	F->PG_element_normalize_from_front(eqn0, 1, Surf->PolynomialDomains->nb_monomials);
 
-	Int_vec_print(cout, eqn0, Surf->nb_monomials);
+	Int_vec_print(cout, eqn0, Surf->PolynomialDomains->nb_monomials);
 	//int_vec_print(cout,
 	//The_surface[isomorphic_to]->coeff, Surf->nb_monomials);
 	cout << " = ";
@@ -1749,17 +1749,17 @@ void surface_classify_wedge::identify_surface(
 
 	F->PG_element_normalize_from_front(
 			coeffs_transformed, 1,
-			Surf->nb_monomials);
+			Surf->PolynomialDomains->nb_monomials);
 
 	cout << "the surface to be identified was " << endl;
-	Int_vec_print(cout, coeff_of_given_surface, Surf->nb_monomials);
+	Int_vec_print(cout, coeff_of_given_surface, Surf->PolynomialDomains->nb_monomials);
 	cout << " = ";
 	Surf->print_equation(cout, coeff_of_given_surface);
 	cout << endl;
 
 
 	cout << "coeffs_transformed (and normalized) = " << endl;
-	Int_vec_print(cout, coeffs_transformed, Surf->nb_monomials);
+	Int_vec_print(cout, coeffs_transformed, Surf->PolynomialDomains->nb_monomials);
 	cout << " = ";
 	Surf->print_equation(cout, coeffs_transformed);
 	cout << endl;
@@ -2023,7 +2023,7 @@ void surface_classify_wedge::report_surface(
 		cout << "surface_classify_wedge::report_surface "
 				"before SO->print_tritangent_planes" << endl;
 	}
-	SO->SOP->print_tritangent_planes(ost);
+	SO->SOP->SmoothProperties->print_tritangent_planes(ost);
 
 	ost << endl;
 	ost << "\\clearpage" << endl;
@@ -2083,7 +2083,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 		f << "static int " << fname_base.c_str() << "_nb_reps = "
 				<< Surfaces->nb_orbits << ";" << endl;
 		f << "static int " << fname_base.c_str() << "_size = "
-				<< Surf->nb_monomials << ";" << endl;
+				<< Surf->PolynomialDomains->nb_monomials << ";" << endl;
 
 	
 
@@ -2116,7 +2116,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 			F->PG_element_normalize_from_front(equation, 1, 20);
 
 			f << "\t";
-			for (i = 0; i < Surf->nb_monomials; i++) {
+			for (i = 0; i < Surf->PolynomialDomains->nb_monomials; i++) {
 				f << equation[i];
 				f << ", ";
 			}

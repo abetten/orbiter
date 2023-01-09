@@ -3054,9 +3054,6 @@ void animate::draw_text(std::string &text,
 		double off_x, double off_y, double off_z,
 		std::string &color_options,
 		int idx_point,
-		//double x, double y, double z,
-		//double up_x, double up_y, double up_z,
-		//double view_x, double view_y, double view_z,
 		ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

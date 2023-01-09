@@ -124,45 +124,45 @@ void schlaefli_labels::init(int verbose_level)
 	for (i = 0; i < 27; i++) {
 		if (i < 6) {
 			snprintf(str, 1000, "a_%d", i + 1);
-			}
+		}
 		else if (i < 12) {
 			snprintf(str, 1000, "b_%d", i - 6 + 1);
-			}
+		}
 		else {
 			h = i - 12;
 			c = Sets2[h * 2 + 0];
 			a = Sets[c * 2 + 0] + 1;
 			b = Sets[c * 2 + 1] - 6 + 1;
 			snprintf(str, 1000, "c_{%d%d}", a, b);
-			}
+		}
 		if (f_v) {
 			cout << "creating label " << str
 				<< " for line " << i << endl;
-			}
-		Line_label[i].assign(str);
 		}
+		Line_label[i].assign(str);
+	}
 	Line_label[27].assign("d");
 
 	for (i = 0; i < 27; i++) {
 		if (i < 6) {
 			snprintf(str, 1000, "a_{%d}", i + 1);
-			}
+		}
 		else if (i < 12) {
 			snprintf(str, 1000, "b_{%d}", i - 6 + 1);
-			}
+		}
 		else {
 			h = i - 12;
 			c = Sets2[h * 2 + 0];
 			a = Sets[c * 2 + 0] + 1;
 			b = Sets[c * 2 + 1] - 6 + 1;
 			snprintf(str, 1000, "c_{%d%d}", a, b);
-			}
+		}
 		if (f_v) {
 			cout << "creating label " << str
 				<< " for line " << i << endl;
-			}
-		Line_label_tex[i].assign(str);
 		}
+		Line_label_tex[i].assign(str);
+	}
 	Line_label_tex[27].assign("d");
 
 

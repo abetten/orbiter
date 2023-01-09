@@ -376,7 +376,7 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
 	ost << "$\\\\" << endl;
 
-	SO->SOP->print_single_tritangent_plane(ost, tritangent_plane_idx);
+	SO->SOP->SmoothProperties->print_single_tritangent_plane(ost, tritangent_plane_idx);
 
 	ost << "$m_1=" << Surf->Schlaefli->Labels->Line_label_tex[m1] << " = " << SO->Lines[m1] << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m1]);

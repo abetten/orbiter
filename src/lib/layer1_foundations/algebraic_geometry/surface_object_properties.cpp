@@ -28,12 +28,11 @@ surface_object_properties::surface_object_properties()
 {
 	SO = NULL;
 
+	// point properties:
+
 	pts_on_lines = NULL;
 	f_is_on_line = NULL;
 
-	lines_on_point = NULL;
-	Type_pts_on_lines = NULL;
-	Type_lines_on_point = NULL;
 
 	Eckardt_points = NULL;
 	Eckardt_points_index = NULL;
@@ -43,6 +42,11 @@ surface_object_properties::surface_object_properties()
 
 	Eckardt_points_line_type = NULL;
 	Eckardt_points_plane_type = NULL;
+
+
+	lines_on_point = NULL;
+	Type_pts_on_lines = NULL;
+	Type_lines_on_point = NULL;
 
 	Hesse_planes = NULL;
 	nb_Hesse_planes = 0;
@@ -74,15 +78,8 @@ surface_object_properties::surface_object_properties()
 	plane_type_by_points = NULL;
 	C_plane_type_by_points = NULL;
 
-	Tritangent_plane_rk = NULL;
-	nb_tritangent_planes = 0;
 
-	Lines_in_tritangent_planes = NULL;
-
-	Trihedral_pairs_as_tritangent_planes = NULL;
-
-	All_Planes = NULL;
-	Dual_point_ranks = NULL;
+	SmoothProperties = NULL;
 
 	Adj_line_intersection_graph = NULL;
 	Line_neighbors = NULL;
@@ -104,16 +101,15 @@ surface_object_properties::surface_object_properties()
 
 surface_object_properties::~surface_object_properties()
 {
+
+	// point properties:
+
 	if (pts_on_lines) {
 		FREE_OBJECT(pts_on_lines);
 	}
 	if (f_is_on_line) {
 		FREE_int(f_is_on_line);
 	}
-	if (lines_on_point) {
-		FREE_OBJECT(lines_on_point);
-	}
-
 
 	if (Eckardt_points) {
 		FREE_lint(Eckardt_points);
@@ -133,6 +129,14 @@ surface_object_properties::~surface_object_properties()
 	if (Eckardt_points_plane_type) {
 		FREE_int(Eckardt_points_plane_type);
 	}
+
+
+
+	if (lines_on_point) {
+		FREE_OBJECT(lines_on_point);
+	}
+
+
 	if (Hesse_planes) {
 		FREE_lint(Hesse_planes);
 	}
@@ -179,25 +183,11 @@ surface_object_properties::~surface_object_properties()
 	if (Type_lines_on_point) {
 		FREE_OBJECT(Type_lines_on_point);
 	}
-	if (Tritangent_plane_rk) {
-		FREE_lint(Tritangent_plane_rk);
+
+	if (SmoothProperties) {
+		FREE_OBJECT(SmoothProperties);
 	}
 
-
-	if (Lines_in_tritangent_planes) {
-		FREE_lint(Lines_in_tritangent_planes);
-	}
-
-	if (Trihedral_pairs_as_tritangent_planes) {
-		FREE_lint(Trihedral_pairs_as_tritangent_planes);
-	}
-
-	if (All_Planes) {
-		FREE_lint(All_Planes);
-	}
-	if (Dual_point_ranks) {
-		FREE_int(Dual_point_ranks);
-	}
 	if (Adj_line_intersection_graph) {
 		FREE_int(Adj_line_intersection_graph);
 	}
@@ -243,36 +233,10 @@ void surface_object_properties::init(surface_object *SO, int verbose_level)
 
 	if (SO->nb_lines == 27) {
 
-		if (f_v) {
-			cout << "surface_object_properties::init "
-					"before compute_tritangent_planes_by_rank" << endl;
-		}
-		compute_tritangent_planes_by_rank(0 /*verbose_level*/);
-		if (f_v) {
-			cout << "surface_object_properties::init "
-					"after compute_tritangent_planes_by_rank" << endl;
-		}
 
-		if (f_v) {
-			cout << "surface_object_properties::init "
-					"before compute_Lines_in_tritangent_planes" << endl;
-		}
-		compute_Lines_in_tritangent_planes(0 /*verbose_level*/);
-		if (f_v) {
-			cout << "surface_object_properties::init "
-					"after compute_Lines_in_tritangent_planes" << endl;
-		}
+		SmoothProperties = NEW_OBJECT(smooth_surface_object_properties);
 
-		if (f_v) {
-			cout << "surface_object_properties::init "
-					"before compute_Trihedral_pairs_as_tritangent_planes" << endl;
-		}
-		compute_Trihedral_pairs_as_tritangent_planes(0 /*verbose_level*/);
-		if (f_v) {
-			cout << "surface_object_properties::init "
-					"after compute_Trihedral_pairs_as_tritangent_planes" << endl;
-		}
-
+		SmoothProperties->init(SO, verbose_level);
 	}
 
 	if (f_v) {
@@ -287,11 +251,13 @@ void surface_object_properties::init(surface_object *SO, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object_properties::init before compute_properties" << endl;
+		cout << "surface_object_properties::init "
+				"before compute_properties" << endl;
 	}
 	compute_properties(verbose_level);
 	if (f_v) {
-		cout << "surface_object_properties::init after compute_properties" << endl;
+		cout << "surface_object_properties::init "
+				"after compute_properties" << endl;
 	}
 
 
@@ -315,7 +281,8 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 	if (SO->Pts == NULL) {
 		if (f_v) {
-			cout << "surface_object_properties::compute_properties SO->Pts == NULL" << endl;
+			cout << "surface_object_properties::compute_properties "
+					"SO->Pts == NULL" << endl;
 		}
 		exit(1);
 	}
@@ -323,23 +290,26 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 	Sorting.lint_vec_heapsort(SO->Pts, SO->nb_pts);
 	if (f_v) {
-		cout << "surface_object::compute_properties we found "
+		cout << "surface_object::compute_properties "
+				"we found "
 				<< SO->nb_pts << " points on the surface" << endl;
 	}
 	if (f_vvv) {
-		cout << "surface_object_properties::compute_properties The points "
-				"on the surface are:" << endl;
+		cout << "surface_object_properties::compute_properties "
+				"The points on the surface are:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
 			SO->Pts, SO->nb_pts, 1, FALSE /* f_tex */);
 	}
 
 
 	if (f_v) {
-		cout << "surface_object::compute_properties before compute_singular_points_and_tangent_planes" << endl;
+		cout << "surface_object::compute_properties "
+				"before compute_singular_points_and_tangent_planes" << endl;
 	}
 	compute_singular_points_and_tangent_planes(verbose_level);
 	if (f_v) {
-		cout << "surface_object::compute_properties after compute_singular_points_and_tangent_planes" << endl;
+		cout << "surface_object::compute_properties "
+				"after compute_singular_points_and_tangent_planes" << endl;
 	}
 
 
@@ -384,19 +354,22 @@ void surface_object_properties::compute_properties(int verbose_level)
 	Type_lines_on_point->init_lint(lines_on_point->Set_size,
 		lines_on_point->nb_sets, FALSE, 0);
 	if (f_v) {
-		cout << "surface_object::compute_properties type of lines_on_point:" << endl;
+		cout << "surface_object::compute_properties "
+				"type of lines_on_point:" << endl;
 		Type_lines_on_point->print_naked_tex(cout, TRUE);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object::compute_properties computing Eckardt points:" << endl;
+		cout << "surface_object::compute_properties "
+				"computing Eckardt points:" << endl;
 	}
 	Type_lines_on_point->get_class_by_value(Eckardt_points_index,
 		nb_Eckardt_points, 3 /* value */, 0 /* verbose_level */);
 	Sorting.int_vec_heapsort(Eckardt_points_index, nb_Eckardt_points);
 	if (f_v) {
-		cout << "surface_object::compute_properties computing Eckardt points done, we found "
+		cout << "surface_object::compute_properties "
+				"computing Eckardt points done, we found "
 				<< nb_Eckardt_points << " Eckardt points" << endl;
 	}
 	if (f_vvv) {
@@ -408,7 +381,8 @@ void surface_object_properties::compute_properties(int verbose_level)
 	Int_vec_apply_lint(Eckardt_points_index, SO->Pts,
 		Eckardt_points, nb_Eckardt_points);
 	if (f_v) {
-		cout << "surface_object::compute_properties computing Eckardt points done, we found "
+		cout << "surface_object::compute_properties "
+				"computing Eckardt points done, we found "
 				<< nb_Eckardt_points << " Eckardt points" << endl;
 	}
 	if (f_vvv) {
@@ -427,7 +401,8 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 			i = Eckardt_points_index[p];
 			if (lines_on_point->Set_size[i] != 3) {
-				cout << "surface_object::compute_properties Eckardt point is not on three lines" << endl;
+				cout << "surface_object::compute_properties "
+						"Eckardt point is not on three lines" << endl;
 				exit(1);
 			}
 			a = lines_on_point->Sets[i][0];
@@ -564,22 +539,27 @@ void surface_object_properties::compute_properties(int verbose_level)
 	Eckardt_points_plane_type = NEW_int(SO->Surf->P->Nb_subspaces[2]);
 
 	if (f_v) {
-		cout << "surface_object_properties::compute_properties computing line type" << endl;
+		cout << "surface_object_properties::compute_properties "
+				"computing line type" << endl;
 	}
-	SO->Surf->P->line_intersection_type_collected(Eckardt_points, nb_Eckardt_points,
+	SO->Surf->P->line_intersection_type_collected(
+			Eckardt_points, nb_Eckardt_points,
 			Eckardt_points_line_type, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_object_properties::compute_properties computing line type done" << endl;
+		cout << "surface_object_properties::compute_properties "
+				"computing line type done" << endl;
 	}
 	if (f_v) {
-		cout << "surface_object_properties::compute_properties computing plane type" << endl;
+		cout << "surface_object_properties::compute_properties "
+				"computing plane type" << endl;
 	}
 	SO->Surf->P->plane_intersection_type_basic(
 			Eckardt_points, nb_Eckardt_points,
 			Eckardt_points_plane_type, 0 /* verbose_level */);
 	// type[N_planes]
 	if (f_v) {
-		cout << "surface_object_properties::compute_properties computing plane type done" << endl;
+		cout << "surface_object_properties::compute_properties "
+				"computing plane type done" << endl;
 	}
 
 	{
@@ -587,9 +567,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 		int *H_planes;
 		data_structures::sorting Sorting;
 
-		T_planes.init(Eckardt_points_plane_type, SO->Surf->P->Nb_subspaces[2], FALSE, 0);
+		T_planes.init(Eckardt_points_plane_type,
+				SO->Surf->P->Nb_subspaces[2], FALSE, 0);
 
-		T_planes.get_class_by_value(H_planes, nb_Hesse_planes, 9 /* value */,
+		T_planes.get_class_by_value(H_planes,
+				nb_Hesse_planes, 9 /* value */,
 				0 /* verbose_level */);
 
 		Sorting.int_vec_heapsort(H_planes, nb_Hesse_planes);
@@ -619,11 +601,14 @@ void surface_object_properties::compute_properties(int verbose_level)
 void surface_object_properties::compute_axes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t, i, h, idx;
+	int t, i, h, l, idx;
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_axes" << endl;
 	}
+
+	Axes_line_rank = NEW_lint(240); // at most 240 axes
+
 	nb_axes = 0;
 	Axes_index = NEW_int(SO->Surf->Schlaefli->nb_trihedral_pairs * 2);
 	Axes_Eckardt_points = NEW_lint(SO->Surf->Schlaefli->nb_trihedral_pairs * 2 * 3);
@@ -636,9 +621,48 @@ void surface_object_properties::compute_axes(int verbose_level)
 				}
 			}
 			if (h == 3) {
+				long int E[3];
+				long int line_rk;
+				long int line_rk1;
+				long int line_rk2;
+				int m;
+
 				Axes_index[nb_axes] = 2 * t + i;
 				Lint_vec_copy(SO->Surf->Schlaefli->Trihedral_to_Eckardt + t * 6 + i * 3,
 						Axes_Eckardt_points + nb_axes * 3, 3);
+				for (l = 0; l < 3; l++) {
+					idx = SO->Surf->Schlaefli->Trihedral_to_Eckardt[6 * t + i * 3 + l];
+					for (m = 0; m < nb_Eckardt_points; m++) {
+						if (Eckardt_points_schlaefli_labels[m] == idx) {
+							break;
+						}
+					}
+					if (m == nb_Eckardt_points) {
+						cout << "surface_object_properties::compute_axes "
+								"cannot find Eckardt point with Schlaefli label" << endl;
+						exit(1);
+					}
+					E[l] = Eckardt_points[m];
+				}
+				if (f_v) {
+					cout << "surface_object_properties::compute_axes found axis "
+							"t=" << t << " i=" << i << " : ";
+					cout << "E[] = ";
+					Lint_vec_print(cout, E, 3);
+					cout << endl;
+				}
+				line_rk = SO->Surf->P->line_through_two_points(E[0], E[1]);
+				line_rk1 = SO->Surf->P->line_through_two_points(E[0], E[2]);
+				line_rk2 = SO->Surf->P->line_through_two_points(E[1], E[2]);
+				if (line_rk1 != line_rk) {
+					cout << "surface_object_properties::compute_axes line_rk1 != line_rk" << endl;
+					exit(1);
+				}
+				if (line_rk2 != line_rk) {
+					cout << "surface_object_properties::compute_axes line_rk2 != line_rk" << endl;
+					exit(1);
+				}
+				Axes_line_rank[nb_axes] = line_rk;
 				nb_axes++;
 			}
 		}
@@ -646,6 +670,9 @@ void surface_object_properties::compute_axes(int verbose_level)
 	if (f_v) {
 		cout << "we found " << nb_axes << " axes" << endl;
 	}
+
+
+
 	if (f_v) {
 		cout << "surface_object_properties::compute_axes done" << endl;
 	}
@@ -661,10 +688,12 @@ void surface_object_properties::compute_gradient(int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object_properties::compute_gradient SO->Surf->Poly2_4->get_nb_monomials() = " << SO->Surf->Poly2_4->get_nb_monomials() << endl;
+		cout << "surface_object_properties::compute_gradient "
+				"SO->Surf->Poly2_4->get_nb_monomials() = "
+				<< SO->Surf->PolynomialDomains->Poly2_4->get_nb_monomials() << endl;
 	}
 
-	SO->Surf->compute_gradient(SO->eqn, gradient, verbose_level);
+	SO->Surf->PolynomialDomains->compute_gradient(SO->eqn, gradient, verbose_level);
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_gradient done" << endl;
@@ -691,11 +720,13 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 
 
 	if (f_v) {
-		cout << "surface_object_properties::compute_singular_points_and_tangent_planes before compute_gradient" << endl;
+		cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
+				"before compute_gradient" << endl;
 	}
 	compute_gradient(verbose_level - 2);
 	if (f_v) {
-		cout << "surface_object_properties::compute_singular_points_and_tangent_planes after compute_gradient" << endl;
+		cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
+				"after compute_gradient" << endl;
 	}
 
 	nb_singular_pts = 0;
@@ -730,12 +761,12 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 						"gradient " << i << " = ";
 				Int_vec_print(cout,
-						gradient + i * SO->Surf->Poly2_4->get_nb_monomials(),
-						SO->Surf->Poly2_4->get_nb_monomials());
+						gradient + i * SO->Surf->PolynomialDomains->Poly2_4->get_nb_monomials(),
+						SO->Surf->PolynomialDomains->Poly2_4->get_nb_monomials());
 				cout << endl;
 			}
-			w[i] = SO->Surf->Poly2_4->evaluate_at_a_point(
-					gradient + i * SO->Surf->Poly2_4->get_nb_monomials(), v);
+			w[i] = SO->Surf->PolynomialDomains->Poly2_4->evaluate_at_a_point(
+					gradient + i * SO->Surf->PolynomialDomains->Poly2_4->get_nb_monomials(), v);
 			if (f_vv) {
 				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 						"value = " << w[i] << endl;
@@ -791,16 +822,17 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 	int *w2;
 	int r, ns;
 
-	Kernel = NEW_int(SO->Surf->Poly3_4->get_nb_monomials() * SO->Surf->Poly3_4->get_nb_monomials());
-	w1 = NEW_int(SO->Surf->Poly3_4->get_nb_monomials());
-	w2 = NEW_int(SO->Surf->Poly3_4->get_nb_monomials());
+	Kernel = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials()
+			* SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
+	w1 = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
+	w2 = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
 
 
 
-	SO->Surf->Poly3_4->vanishing_ideal(tangent_plane_rank_dual, nb_non_singular_pts,
+	SO->Surf->PolynomialDomains->Poly3_4->vanishing_ideal(tangent_plane_rank_dual, nb_non_singular_pts,
 			r, Kernel, 0 /*verbose_level */);
 
-	ns = SO->Surf->Poly3_4->get_nb_monomials() - r; // dimension of null space
+	ns = SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials() - r; // dimension of null space
 	if (f_v) {
 		cout << "The system has rank " << r << endl;
 		cout << "The ideal has dimension " << ns << endl;
@@ -923,144 +955,6 @@ void surface_object_properties::compute_plane_type_by_points(int verbose_level)
 }
 
 
-void surface_object_properties::compute_tritangent_planes_by_rank(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_tritangent_planes_by_rank" << endl;
-	}
-
-
-	if (SO->nb_lines != 27) {
-		cout << "surface_object_properties::compute_tritangent_planes_by_rank "
-				"SO->nb_lines != 27 we don't compute the tritangent planes" << endl;
-		nb_tritangent_planes = 0;
-		return;
-	}
-
-
-	nb_tritangent_planes = 45;
-	Tritangent_plane_rk = NEW_lint(45);
-
-
-	int tritangent_plane_idx;
-	int three_lines_idx[3];
-	long int three_lines[3];
-	int i, r;
-	int Basis[6 * 4];
-	int base_cols[4];
-
-	for (tritangent_plane_idx = 0;
-			tritangent_plane_idx < 45;
-			tritangent_plane_idx++) {
-		SO->Surf->Schlaefli->Eckardt_points[tritangent_plane_idx].three_lines(
-				SO->Surf, three_lines_idx);
-
-		for (i = 0; i < 3; i++) {
-			three_lines[i] = SO->Lines[three_lines_idx[i]];
-			SO->Surf->Gr->unrank_lint_here(Basis + i * 8,
-					three_lines[i], 0 /* verbose_level */);
-		}
-		r = SO->F->Linear_algebra->Gauss_simple(Basis, 6, 4,
-			base_cols, 0 /* verbose_level */);
-		if (r != 3) {
-			cout << "surface_object_properties::compute_tritangent_planes_by_rank r != 3" << endl;
-			exit(1);
-		}
-		Tritangent_plane_rk[tritangent_plane_idx] =
-				SO->Surf->Gr3->rank_lint_here(Basis, 0 /* verbose_level */);
-	}
-	if (f_vv) {
-		cout << "surface_object_properties::compute_tritangent_planes_by_rank" << endl;
-		for (tritangent_plane_idx = 0;
-				tritangent_plane_idx < 45;
-				tritangent_plane_idx++) {
-			cout << tritangent_plane_idx << " : " << Tritangent_plane_rk[tritangent_plane_idx] << endl;
-		}
-	}
-	if (f_v) {
-		cout << "surface_object_properties::compute_tritangent_planes_by_rank done" << endl;
-	}
-}
-
-
-void surface_object_properties::compute_Lines_in_tritangent_planes(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int tritangent_plane_idx, j;
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_Lines_in_tritangent_planes" << endl;
-	}
-	Lines_in_tritangent_planes = NEW_lint(45 * 3);
-	for (tritangent_plane_idx = 0;
-			tritangent_plane_idx < 45;
-			tritangent_plane_idx++) {
-		for (j = 0; j < 3; j++) {
-			Lines_in_tritangent_planes[tritangent_plane_idx * 3 + j] =
-				SO->Lines[SO->Surf->Schlaefli->Lines_in_tritangent_planes[tritangent_plane_idx * 3 + j]];
-		}
-	}
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_Lines_in_tritangent_planes done" << endl;
-	}
-}
-
-void surface_object_properties::compute_Trihedral_pairs_as_tritangent_planes(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_Trihedral_pairs_as_tritangent_planes" << endl;
-	}
-	Trihedral_pairs_as_tritangent_planes = NEW_lint(120 * 6);
-	for (i = 0; i < 120; i++) {
-		for (j = 0; j < 6; j++) {
-			Trihedral_pairs_as_tritangent_planes[i * 6 + j] =
-					Tritangent_plane_rk[SO->Surf->Schlaefli->Trihedral_to_Eckardt[i * 6 + j]];
-		}
-	}
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_Trihedral_pairs_as_tritangent_planes done" << endl;
-	}
-}
-
-void surface_object_properties::compute_planes_and_dual_point_ranks(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_planes_and_dual_point_ranks" << endl;
-	}
-
-	All_Planes = NEW_lint(SO->Surf->Schlaefli->nb_trihedral_pairs * 6);
-	Dual_point_ranks = NEW_int(SO->Surf->Schlaefli->nb_trihedral_pairs * 6);
-	//Iso_trihedral_pair = NEW_int(Surf->nb_trihedral_pairs);
-
-
-	SO->Surf->Trihedral_pairs_to_planes(SO->Lines, All_Planes, 0 /*verbose_level*/);
-
-
-	for (i = 0; i < SO->Surf->Schlaefli->nb_trihedral_pairs; i++) {
-		//cout << "trihedral pair " << i << " / "
-		// << Surf->nb_trihedral_pairs << endl;
-		for (j = 0; j < 6; j++) {
-			Dual_point_ranks[i * 6 + j] =
-				SO->Surf->P->dual_rank_of_plane_in_three_space(
-						All_Planes[i * 6 + j], 0 /* verbose_level */);
-		}
-
-	}
-	if (f_v) {
-		cout << "surface_object_properties::compute_planes_and_dual_point_ranks done" << endl;
-	}
-}
 
 
 
@@ -1199,38 +1093,43 @@ void surface_object_properties::report_properties(std::ostream &ost, int verbose
 	}
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple before print_equation" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"before print_equation" << endl;
 	}
 	print_equation(ost);
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties before print_summary" << endl;
+		cout << "surface_object_properties::report_properties "
+				"before print_summary" << endl;
 	}
 	print_summary(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties before print_lines" << endl;
+		cout << "surface_object_properties::report_properties "
+				"before print_lines" << endl;
 	}
 	print_lines(ost);
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties before print_points" << endl;
+		cout << "surface_object_properties::report_properties "
+				"before print_points" << endl;
 	}
 	print_points(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties print_tritangent_planes" << endl;
+		cout << "surface_object_properties::report_properties "
+				"SmoothProperties->print_tritangent_planes" << endl;
 	}
-	print_tritangent_planes(ost);
+	SmoothProperties->print_tritangent_planes(ost);
 
 
 	if (f_v) {
 		cout << "surface_object_properties::report_properties "
-				"before print_Steiner_and_Eckardt" << endl;
+				"before SmoothProperties->print_Steiner_and_Eckardt" << endl;
 	}
-	print_Steiner_and_Eckardt(ost);
+	SmoothProperties->print_Steiner_and_Eckardt(ost);
 
 	//SOA->SO->print_planes_in_trihedral_pairs(fp);
 
@@ -1263,12 +1162,14 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple before print_equation" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"before print_equation" << endl;
 	}
 	print_equation(ost);
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple before print_summary" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"before print_summary" << endl;
 	}
 	print_summary(ost);
 
@@ -1276,27 +1177,32 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 
 
 	ost << "\\subsubsection*{Singular Points}" << endl;
-	cout << "surface_object_properties::print_points before print_singular_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_singular_points" << endl;
 	print_singular_points(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple before print_lines" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"before print_lines" << endl;
 	}
 	print_lines(ost);
 
 
 	ost << "\\subsubsection*{Eckardt Points}" << endl;
-	cout << "surface_object_properties::print_points before print_Eckardt_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_Eckardt_points" << endl;
 	print_Eckardt_points(ost);
 
 	ost << "\\subsubsection*{Double Points}" << endl;
-	cout << "surface_object_properties::print_points before print_double_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_double_points" << endl;
 	print_double_points(ost);
 
 
 	ost << "\\subsubsection*{Single Points}" << endl;
-	cout << "surface_object_properties::print_points before print_single_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_single_points" << endl;
 	print_single_points(ost);
 
 	//ost << "\\subsubsection*{Points on lines}" << endl;
@@ -1304,25 +1210,29 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 	//print_points_on_lines(ost);
 
 	ost << "\\subsubsection*{Points on surface but on no line}" << endl;
-	cout << "surface_object_properties::print_points before print_points_on_surface_but_not_on_a_line" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_points_on_surface_but_not_on_a_line" << endl;
 	print_points_on_surface_but_not_on_a_line(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple print_Hesse_planes" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"print_Hesse_planes" << endl;
 	}
 	print_Hesse_planes(ost);
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple print_axes" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"print_axes" << endl;
 	}
 	print_axes(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple print_tritangent_planes" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"SmoothProperties->print_tritangent_planes" << endl;
 	}
-	print_tritangent_planes(ost);
+	SmoothProperties->print_tritangent_planes(ost);
 
 #if 0
 	if (f_v) {
@@ -1349,12 +1259,14 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 	print_line_intersection_graph(ost);
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple done" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"done" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple before print_all_points_on_surface" << endl;
+		cout << "surface_object_properties::report_properties_simple "
+				"before print_all_points_on_surface" << endl;
 	}
 	print_all_points_on_surface(ost);
 
@@ -1608,182 +1520,6 @@ void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 	}
 }
 
-void surface_object_properties::print_planes_in_trihedral_pairs(std::ostream &ost)
-{
-	orbiter_kernel_system::latex_interface L;
-
-	ost << "\\clearpage\n\\subsection*{All planes "
-			"in trihedral pairs}" << endl;
-
-	ost << "All planes by plane rank:" << endl;
-
-	ost << "$$" << endl;
-	L.print_lint_matrix_with_standard_labels(ost,
-		All_Planes, 30, 6, TRUE /* f_tex */);
-	ost << "\\;\\;" << endl;
-	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		All_Planes + 30 * 6, 30, 6, 30, 0, TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		All_Planes + 60 * 6, 30, 6, 60, 0, TRUE /* f_tex */);
-	ost << "\\;\\;" << endl;
-	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		All_Planes + 90 * 6, 30, 6, 90, 0, TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-
-
-	ost << "All planes by dual point rank:" << endl;
-	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels(ost,
-		Dual_point_ranks, 30, 6, TRUE /* f_tex */);
-	ost << "\\;\\;" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Dual_point_ranks + 30 * 6, 30, 6, 30, 0, TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Dual_point_ranks + 60 * 6, 30, 6, 60, 0, TRUE /* f_tex */);
-	ost << "\\;\\;" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Dual_point_ranks + 90 * 6, 30, 6, 90, 0, TRUE /* f_tex */);
-	ost << "$$" << endl;
-}
-
-void surface_object_properties::print_tritangent_planes(std::ostream &ost)
-{
-	int i;
-	//int plane_rk, b, v4[4];
-	//int Mtx[16];
-
-	//ost << "\\clearpage" << endl;
-	ost << "\\subsection*{Tritangent planes}" << endl;
-	ost << "The " << nb_tritangent_planes << " tritangent "
-			"planes are:\\\\" << endl;
-	for (i = 0; i < nb_tritangent_planes; i++) {
-		print_single_tritangent_plane(ost, i);
-	}
-
-#if 0
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
-			Tritangent_planes, 9, 5, TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "Their dual point ranks are:" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
-			Tritangent_plane_dual, 9, 5, TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-	for (i = 0; i < nb_tritangent_planes; i++) {
-		a = Tritangent_planes[i];
-		b = Tritangent_plane_dual[i];
-		//b = Surf->P->dual_rank_of_plane_in_three_space(a, 0);
-		ost << "plane " << i << " / " << nb_tritangent_planes
-				<< " : rank " << a << " is $";
-		ost << "\\left[" << endl;
-		Surf->Gr3->print_single_generator_matrix_tex(ost, a);
-		ost << "\\right]" << endl;
-		ost << "$, dual pt rank = $" << b << "$ ";
-		PG_element_unrank_modified(*F, v4, 1, 4, b);
-		ost << "$=";
-		int_vec_print(ost, v4, 4);
-		ost << "$\\\\" << endl;
-		}
-
-	ost << "The iso types of the tritangent planes are:" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
-			iso_type_of_tritangent_plane, nb_tritangent_planes / 5, 5,
-			TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-	ost << "Type iso of tritangent planes: ";
-	ost << "$$" << endl;
-	Type_iso_tritangent_planes->print_naked_tex(ost, TRUE);
-	ost << endl;
-	ost << "$$" << endl;
-	ost << endl;
-
-	ost << "Tritangent\\_plane\\_to\\_Eckardt:" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
-			Tritangent_plane_to_Eckardt, nb_tritangent_planes / 5, 5,
-			TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "Eckardt\\_to\\_Tritangent\\_plane:" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
-			Eckardt_to_Tritangent_plane, nb_tritangent_planes / 5, 5,
-			TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-	ost << "Trihedral\\_pairs\\_as\\_tritangent\\_planes:" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
-			Trihedral_pairs_as_tritangent_planes, 30, 6, TRUE /* f_tex */);
-	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
-			Trihedral_pairs_as_tritangent_planes + 30 * 6, 30, 6, 30, 0,
-			TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
-			Trihedral_pairs_as_tritangent_planes + 60 * 6, 30, 6, 60, 0,
-			TRUE /* f_tex */);
-	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
-			Trihedral_pairs_as_tritangent_planes + 90 * 6, 30, 6, 90, 0,
-			TRUE /* f_tex */);
-	ost << "$$" << endl;
-#endif
-
-}
-
-void surface_object_properties::print_single_tritangent_plane(std::ostream &ost, int plane_idx)
-{
-	long int plane_rk, b;
-	int v4[4];
-	int Mtx[16];
-
-#if 0
-	j = Eckardt_to_Tritangent_plane[plane_idx];
-	plane_rk = Tritangent_planes[j];
-	b = Tritangent_plane_dual[j];
-#else
-	plane_rk = Tritangent_plane_rk[plane_idx];
-	b = SO->Surf->P->dual_rank_of_plane_in_three_space(
-			plane_rk, 0 /* verbose_level */);
-#endif
-	ost << "$$" << endl;
-	ost << "\\pi_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[plane_idx] << "} = ";
-	ost << "\\pi_{" << plane_idx << "} = " << plane_rk << " = ";
-	//ost << "\\left[" << endl;
-	SO->Surf->Gr3->print_single_generator_matrix_tex(ost, plane_rk);
-	//ost << "\\right]" << endl;
-	ost << " = ";
-	SO->Surf->Gr3->print_single_generator_matrix_tex_numerical(ost, plane_rk);
-
-	SO->Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
-		0 /*verbose_level */);
-	SO->F->PG_element_normalize(Mtx + 12, 1, 4);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	ost << "=V\\big(" << endl;
-	SO->Surf->Poly1_4->print_equation(ost, Mtx + 12);
-	ost << "\\big)" << endl;
-	ost << "=V\\big(" << endl;
-	SO->Surf->Poly1_4->print_equation_numerical(ost, Mtx + 12);
-	ost << "\\big)" << endl;
-	ost << "$$" << endl;
-	ost << "dual pt rank = $" << b << "$ ";
-	SO->F->PG_element_unrank_modified(v4, 1, 4, b);
-	ost << "$=";
-	Int_vec_print(ost, v4, 4);
-	ost << "$.\\\\" << endl;
-
-}
 
 
 void surface_object_properties::print_plane_type_by_points(std::ostream &ost)
@@ -1864,7 +1600,8 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 						0 /*verbose_level*/);
 
 				// print the tangent planes associated with the points on the line:
-				ost << "The tangent planes associated with the points on this line are:\\\\" << endl;
+				ost << "The tangent planes associated "
+						"with the points on this line are:\\\\" << endl;
 				for (j = 0; j < pts_on_lines->Set_size[i]; j++) {
 
 					int w[4];
@@ -2000,32 +1737,39 @@ void surface_object_properties::print_points(std::ostream &ost)
 {
 	ost << "\\subsection*{All Points on surface}" << endl;
 
-	cout << "surface_object_properties::print_points before print_points_on_surface" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_points_on_surface" << endl;
 	//print_points_on_surface(ost);
 	print_all_points_on_surface(ost);
 
 	ost << "\\subsubsection*{Singular Points}" << endl;
-	cout << "surface_object_properties::print_points before print_singular_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_singular_points" << endl;
 	print_singular_points(ost);
 
 	ost << "\\subsubsection*{Eckardt Points}" << endl;
-	cout << "surface_object_properties::print_points before print_Eckardt_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_Eckardt_points" << endl;
 	print_Eckardt_points(ost);
 
 	ost << "\\subsubsection*{Double Points}" << endl;
-	cout << "surface_object_properties::print_points before print_double_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_double_points" << endl;
 	print_double_points(ost);
 
 	ost << "\\subsubsection*{Single Points}" << endl;
-	cout << "surface_object_properties::print_points before print_single_points" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_single_points" << endl;
 	print_single_points(ost);
 
 	ost << "\\subsubsection*{Points on lines}" << endl;
-	cout << "surface_object_properties::print_points before print_points_on_lines" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_points_on_lines" << endl;
 	print_points_on_lines(ost);
 
 	ost << "\\subsubsection*{Points on surface but on no line}" << endl;
-	cout << "surface_object_properties::print_points before print_points_on_surface_but_not_on_a_line" << endl;
+	cout << "surface_object_properties::print_points "
+			"before print_points_on_surface_but_not_on_a_line" << endl;
 	print_points_on_surface_but_not_on_a_line(ost);
 
 #if 0
@@ -2066,7 +1810,8 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 			ost << "E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[Eckardt_points_schlaefli_labels[i]] << "}=";
 		}
 		if (lines_on_point->Set_size[p] != 3) {
-			cout << "surface_object_properties::print_Eckardt_points Eckardt point is not on three lines" << endl;
+			cout << "surface_object_properties::print_Eckardt_points "
+					"Eckardt point is not on three lines" << endl;
 			exit(1);
 		}
 		a = lines_on_point->Sets[p][0];
@@ -2704,322 +2449,8 @@ void surface_object_properties::print_trihedral_pairs_numerically(std::ostream &
 
 
 
-void surface_object_properties::latex_table_of_trihedral_pairs_and_clebsch_system(
-	std::ostream &ost, int *T, int nb_T)
-{
-	int t_idx, t;
-
-	//ost << "\\clearpage" << endl;
-	ost << "\\subsection*{Trihedral Pairs and the Clebsch System}" << endl;
-
-	for (t = 0; t < nb_T; t++) {
-
-		t_idx = T[t];
 
 
-		int F_planes[12];
-		int G_planes[12];
-		int lambda;
-		int equation[20];
-		int *system;
-
-		make_equation_in_trihedral_form(t_idx,
-			F_planes, G_planes, lambda, equation,
-			0 /* verbose_level */);
-
-#if 0
-		if (t_idx == 71) {
-			int_vec_swap(F_planes, F_planes + 8, 4);
-			}
-#endif
-
-		SO->Surf->prepare_system_from_FG(F_planes, G_planes,
-				lambda, system, 0 /*verbose_level*/);
-
-
-		ost << "$" << t << " / " << nb_T << "$ ";
-		ost << "$T_{" << t_idx << "} = T_{"
-			<< SO->Surf->Schlaefli->Trihedral_pair_labels[t_idx]
-			<< "} = \\\\" << endl;
-		latex_trihedral_pair(ost, t_idx);
-		ost << "$\\\\" << endl;
-		ost << "$";
-		print_equation_in_trihedral_form_equation_only(ost,
-				F_planes, G_planes, lambda);
-		ost << "$\\\\" << endl;
-		//ost << "$";
-		SO->Surf->print_system(ost, system);
-		//ost << "$\\\\" << endl;
-		FREE_int(system);
-
-
-	}
-}
-
-
-void surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost,
-		int *T, int nb_T)
-{
-	int h, i, j, t_idx;
-
-	cout << "surface_object_properties::latex_table_of_trihedral_pairs" << endl;
-	//ost << "\\clearpage" << endl;
-	ost << "\\subsection*{Trihedral Pairs}" << endl;
-	//ost << "\\begin{multicols}{2}" << endl;
-	ost << "\\noindent" << endl;
-	for (h = 0; h < nb_T; h++) {
-		ost << "$" << h << " / " << nb_T << "$ ";
-		t_idx = T[h];
-		ost << "$T_{" << t_idx << "} = T_{"
-				<< SO->Surf->Schlaefli->Trihedral_pair_labels[t_idx]
-				<< "} = \\\\" << endl;
-		latex_trihedral_pair(ost, t_idx);
-		ost << "$\\\\" << endl;
-		ost << "$";
-		make_and_print_equation_in_trihedral_form(ost, t_idx);
-		ost << "$\\\\" << endl;
-	}
-	ost << "Dual point ranks: \\\\" << endl;
-	for (i = 0; i < SO->Surf->Schlaefli->nb_trihedral_pairs; i++) {
-		ost << "$T_{" << i << "} = T_{"
-			<< SO->Surf->Schlaefli->Trihedral_pair_labels[i]
-			<< "}: \\quad " << endl;
-		for (j = 0; j < 6; j++) {
-			ost << Dual_point_ranks[i * 6 + j];
-			if (j < 6 - 1) {
-				ost << ", ";
-			}
-		}
-		ost << "$\\\\" << endl;
-	}
-
-
-#if 0
-	ost << "Planes by generator matrix: \\\\" << endl;;
-	for (i = 0; i < Surf->nb_trihedral_pairs; i++) {
-		ost << "$T_{" << i << "} = T_{"
-			<< Surf->Trihedral_pair_labels[i] << "}$" << endl;
-		for (j = 0; j < 6; j++) {
-			int d;
-
-			d = All_Planes[i * 6 + j];
-			ost << "Plane " << j << " has rank " << d << "\\\\" << endl;
-			Surf->Gr3->unrank_int(d, 0 /* verbose_level */);
-			ost << "$";
-			ost << "\\left[";
-			print_integer_matrix_tex(ost, Surf->Gr3->M, 3, 4);
-			ost << "\\right]";
-			ost << "$\\\\" << endl;
-		}
-	}
-#endif
-	//ost << "\\end{multicols}" << endl;
-	cout << "surface_object_properties::latex_table_of_trihedral_pairs done" << endl;
-}
-
-void surface_object_properties::latex_trihedral_pair(std::ostream &ost, int t_idx)
-{
-	int i, j, e, a;
-
-	//ost << "\\left[" << endl;
-	ost << "\\begin{array}{c||ccc|cc}" << endl;
-	ost << " & G_0 & G_1 & G_2 & \\mbox{plane} & "
-			"\\mbox{dual rank} \\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < 3; i++) {
-		ost << "F_" << i;
-		for (j = 0; j < 3; j++) {
-			a = SO->Surf->Schlaefli->Trihedral_pairs[t_idx * 9 + i * 3 + j];
-			ost << " & {" << SO->Surf->Schlaefli->Labels->Line_label_tex[a] << "=\\atop";
-			ost << "\\left[" << endl;
-			SO->Surf->Gr->print_single_generator_matrix_tex(ost, SO->Lines[a]);
-			ost << "\\right]}" << endl;
-		}
-		e = SO->Surf->Schlaefli->Trihedral_to_Eckardt[t_idx * 6 + i];
-		ost << " & {\\pi_{" << e << "} =\\atop";
-#if 0
-		t = Eckardt_to_Tritangent_plane[e];
-		a = Tritangent_planes[t];
-#else
-		a = Tritangent_plane_rk[e];
-#endif
-		ost << "\\left[" << endl;
-		SO->Surf->Gr3->print_single_generator_matrix_tex(ost, a);
-		ost << "\\right]}" << endl;
-		ost << " & ";
-		a = Dual_point_ranks[t_idx * 6 + i];
-		ost << a << "\\\\" << endl;
-	}
-	ost << "\\hline" << endl;
-	for (j = 0; j < 3; j++) {
-		e = SO->Surf->Schlaefli->Trihedral_to_Eckardt[t_idx * 6 + 3 + j];
-		ost << " & {\\pi_{" << e << "} =\\atop";
-#if 0
-		t = Eckardt_to_Tritangent_plane[e];
-		a = Tritangent_planes[t];
-#else
-		a = Tritangent_plane_rk[e];
-#endif
-		ost << "\\left[" << endl;
-		SO->Surf->Gr3->print_single_generator_matrix_tex(ost, a);
-		ost << "\\right]}" << endl;
-	}
-	ost << " & & \\\\" << endl;
-	for (j = 0; j < 3; j++) {
-		a = Dual_point_ranks[t_idx * 6 + 3 + j];
-		ost << " & " << a;
-	}
-	ost << " & & \\\\" << endl;
-	//Surf->latex_trihedral_pair(ost, Surf->Trihedral_pairs + h * 9);
-	ost << "\\end{array}" << endl;
-	//ost << "\\right]" << endl;
-}
-
-void surface_object_properties::make_equation_in_trihedral_form(int t_idx,
-	int *F_planes, int *G_planes, int &lambda, int *equation,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, c, h;
-	int row_col_Eckardt_points[6];
-	int plane_rk[6];
-	//int plane_idx[6];
-
-	if (f_v) {
-		cout << "surface_object_properties::make_equation_in_trihedral_form t_idx=" << t_idx << endl;
-	}
-
-	if (f_v) {
-		cout << "Trihedral pair T_{"
-			<< SO->Surf->Schlaefli->Trihedral_pair_labels[t_idx] << "}"
-			<< endl;
-	}
-
-	for (h = 0; h < 6; h++) {
-		row_col_Eckardt_points[h] = SO->Surf->Schlaefli->Trihedral_to_Eckardt[t_idx * 6 + h];
-	}
-	//int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
-	for (i = 0; i < 6; i++) {
-		//plane_idx[i] = Eckardt_to_Tritangent_plane[row_col_Eckardt_points[i]];
-		//plane_rk[i] = Tritangent_planes[plane_idx[i]];
-		plane_rk[i] = Tritangent_plane_rk[row_col_Eckardt_points[i]];
-	}
-	for (i = 0; i < 3; i++) {
-		c = SO->Surf->P->dual_rank_of_plane_in_three_space(
-				plane_rk[i], 0 /* verbose_level */);
-		//c = Tritangent_plane_dual[plane_idx[i]];
-		SO->F->PG_element_unrank_modified(F_planes + i * 4, 1, 4, c);
-	}
-	for (i = 0; i < 3; i++) {
-		c = SO->Surf->P->dual_rank_of_plane_in_three_space(
-				plane_rk[3 + i], 0 /* verbose_level */);
-		//c = Tritangent_plane_dual[plane_idx[3 + i]];
-		SO->F->PG_element_unrank_modified(G_planes + i * 4, 1, 4, c);
-	}
-	int evals[6];
-	int pt_on_surface[4];
-	int a, b, ma, bv, pt;
-	int eqn_F[20];
-	int eqn_G[20];
-	int eqn_G2[20];
-
-	for (h = 0; h < SO->nb_pts; h++) {
-		pt = SO->Pts[h];
-		SO->F->PG_element_unrank_modified(pt_on_surface, 1, 4, pt);
-		for (i = 0; i < 3; i++) {
-			evals[i] = SO->Surf->Poly1_4->evaluate_at_a_point(F_planes + i * 4, pt_on_surface);
-		}
-		for (i = 0; i < 3; i++) {
-			evals[3 + i] = SO->Surf->Poly1_4->evaluate_at_a_point(
-					G_planes + i * 4, pt_on_surface);
-		}
-		a = SO->F->mult3(evals[0], evals[1], evals[2]);
-		b = SO->F->mult3(evals[3], evals[4], evals[5]);
-		if (b) {
-			ma = SO->F->negate(a);
-			bv = SO->F->inverse(b);
-			lambda = SO->F->mult(ma, bv);
-			break;
-		}
-	}
-	if (h == SO->nb_pts) {
-		cout << "surface_object_properties::make_equation_in_trihedral_form could "
-				"not determine lambda" << endl;
-		exit(1);
-	}
-
-	SO->Surf->multiply_linear_times_linear_times_linear_in_space(F_planes,
-		F_planes + 4, F_planes + 8,
-		eqn_F, FALSE /* verbose_level */);
-	SO->Surf->multiply_linear_times_linear_times_linear_in_space(G_planes,
-		G_planes + 4, G_planes + 8,
-		eqn_G, FALSE /* verbose_level */);
-
-	Int_vec_copy(eqn_G, eqn_G2, 20);
-	SO->F->Linear_algebra->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);
-	SO->F->Linear_algebra->add_vector(eqn_F, eqn_G2, equation, 20);
-	SO->F->PG_element_normalize(equation, 1, 20);
-
-
-
-	if (f_v) {
-		cout << "surface_object_properties::make_equation_in_trihedral_form done" << endl;
-	}
-}
-
-void surface_object_properties::print_equation_in_trihedral_form(std::ostream &ost,
-	int *F_planes, int *G_planes, int lambda)
-{
-
-	ost << "\\begin{align*}" << endl;
-	ost << "0 & = F_0F_1F_2 + \\lambda G_0G_1G_2\\\\" << endl;
-	ost << "& = " << endl;
-
-	print_equation_in_trihedral_form_equation_only(ost, F_planes, G_planes, lambda);
-}
-
-void surface_object_properties::print_equation_in_trihedral_form_equation_only(
-	std::ostream &ost,
-	int *F_planes, int *G_planes, int lambda)
-{
-
-	ost << "\\Big(";
-	SO->Surf->Poly1_4->print_equation(ost, F_planes);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	SO->Surf->Poly1_4->print_equation(ost, F_planes + 4);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	SO->Surf->Poly1_4->print_equation(ost, F_planes + 8);
-	ost << "\\Big)";
-	ost << "+ " << lambda;
-	ost << "\\Big(";
-	SO->Surf->Poly1_4->print_equation(ost, G_planes);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	SO->Surf->Poly1_4->print_equation(ost, G_planes + 4);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	SO->Surf->Poly1_4->print_equation(ost, G_planes + 8);
-	ost << "\\Big)";
-}
-
-void surface_object_properties::make_and_print_equation_in_trihedral_form(
-	std::ostream &ost, int t_idx)
-{
-	int F_planes[12];
-	int G_planes[12];
-	int lambda;
-	int equation[20];
-	//int *system;
-
-	make_equation_in_trihedral_form(t_idx, F_planes, G_planes,
-		lambda, equation, 0 /* verbose_level */);
-	print_equation_in_trihedral_form_equation_only(ost,
-		F_planes, G_planes, lambda);
-	//FREE_int(system);
-}
 
 int surface_object_properties::compute_transversal_line(
 	int line_a, int line_b, int verbose_level)
@@ -3162,114 +2593,10 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 }
 
 
-void surface_object_properties::print_Steiner_and_Eckardt(std::ostream &ost)
-{
-#if 0
-	ost << "\\clearpage" << endl << endl;
-	ost << "\\section*{Eckardt Points}" << endl;
-	latex_table_of_Eckardt_points(ost);
 
-	ost << "\\clearpage" << endl << endl;
-	ost << "\\section*{Tritangent Planes}" << endl;
-	latex_table_of_tritangent_planes(ost);
-#endif
 
-	ost << "\\clearpage" << endl << endl;
-	ost << "\\section*{Steiner Trihedral Pairs}" << endl;
-	latex_table_of_trihedral_pairs(ost);
-
-}
-
-void surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost)
-{
-	int i;
-
-	cout << "surface_object_properties::latex_table_of_trihedral_pairs" << endl;
-	//ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < SO->Surf->Schlaefli->nb_trihedral_pairs; i++) {
-		ost << "$T_{" << i << "} = T_{"
-				<< SO->Surf->Schlaefli->Trihedral_pair_labels[i]
-				<< "} = $\\\\" << endl;
-		ost << "$" << endl;
-		//ost << "\\left[" << endl;
-		//ost << "\\begin{array}" << endl;
-		latex_trihedral_pair(ost,
-				SO->Surf->Schlaefli->Trihedral_pairs + i * 9,
-				SO->Surf->Schlaefli->Trihedral_to_Eckardt + i * 6);
-		//ost << "\\end{array}" << endl;
-		//ost << "\\right]" << endl;
-		ost << "$\\\\" << endl;
-#if 0
-		ost << "planes: $";
-		int_vec_print(ost, Trihedral_to_Eckardt + i * 6, 6);
-		ost << "$\\\\" << endl;
-#endif
-	}
-	//ost << "\\end{multicols}" << endl;
-
-	//print_trihedral_pairs(ost);
-
-	cout << "surface_object_properties::latex_table_of_trihedral_pairs done" << endl;
-}
-
-void surface_object_properties::latex_trihedral_pair(std::ostream &ost, int *T, long int *TE)
-{
-	int i, j, plane_rk;
-	int Mtx[16];
-
-	ost << "\\begin{array}{*{" << 3 << "}{c}|c}" << endl;
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 3; j++) {
-			SO->Surf->Schlaefli->print_line(ost, T[i * 3 + j]);
-			ost << " & ";
-		}
-		ost << "\\pi_{";
-		SO->Surf->Schlaefli->Eckardt_points[TE[i]].latex_index_only(ost);
-		ost << "}=" << endl;
-#if 0
-		t = Eckardt_to_Tritangent_plane[TE[i]];
-		plane_rk = Tritangent_planes[t];
-#else
-		plane_rk = Tritangent_plane_rk[TE[i]];
-#endif
-		SO->Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
-			0 /*verbose_level */);
-		SO->F->PG_element_normalize(Mtx + 12, 1, 4);
-		ost << "V\\big(";
-		SO->Surf->Poly1_4->print_equation(ost, Mtx + 12);
-		ost << "\\big)=" << plane_rk;
-		ost << "\\\\" << endl;
-	}
-	ost << "\\hline" << endl;
-	for (j = 0; j < 3; j++) {
-		ost << "\\pi_{";
-		SO->Surf->Schlaefli->Eckardt_points[TE[3 + j]].latex_index_only(ost);
-		ost << "} & ";
-	}
-	ost << "\\\\" << endl;
-	for (j = 0; j < 3; j++) {
-		ost << "\\multicolumn{4}{l}{" << endl;
-#if 0
-		t = Eckardt_to_Tritangent_plane[TE[3 + j]];
-		plane_rk = Tritangent_planes[t];
-#else
-		plane_rk = Tritangent_plane_rk[TE[i]];
-#endif
-		ost << "\\pi_{";
-		SO->Surf->Schlaefli->Eckardt_points[TE[3 + j]].latex_index_only(ost);
-		ost << "}=" << endl;
-		ost << "V\\big(" << endl;
-		SO->Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
-			0 /*verbose_level */);
-		SO->F->PG_element_normalize(Mtx + 12, 1, 4);
-		SO->Surf->Poly1_4->print_equation(ost, Mtx + 12);
-		ost << "\\big)=" << plane_rk << "}\\\\" << endl;
-	}
-	ost << "\\\\" << endl;
-	ost << "\\end{array}" << endl;
-}
-
-void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx, int *&f_deleted, int verbose_level)
+void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx,
+		int *&f_deleted, int verbose_level)
 // P_idx = index into SO->Pts[]
 {
 	int f_v = (verbose_level >= 1);

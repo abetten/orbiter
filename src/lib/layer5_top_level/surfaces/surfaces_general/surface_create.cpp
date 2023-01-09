@@ -1331,7 +1331,9 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 						"double six " << i << " / " << nb_select_double_six << endl;
 			}
 
-			Surf_A->Surf->read_string_of_schlaefli_labels(select_double_six_string[i],
+			data_structures::string_tools ST;
+
+			ST.read_string_of_schlaefli_labels(select_double_six_string[i],
 					select_double_six, sz, verbose_level);
 
 
@@ -2372,7 +2374,7 @@ void surface_create::create_surface_by_double_six(
 		Int_vec_print(cout, coeffs20, 20);
 		cout << endl;
 
-		Surf->Poly3_4->print_equation(cout, coeffs20);
+		Surf->PolynomialDomains->Poly3_4->print_equation(cout, coeffs20);
 		cout << endl;
 	}
 
@@ -2533,7 +2535,7 @@ void surface_create::create_surface_by_skew_hexagon(
 		Int_vec_print(cout, coeffs20, 20);
 		cout << endl;
 
-		Surf->Poly3_4->print_equation(cout, coeffs20);
+		Surf->PolynomialDomains->Poly3_4->print_equation(cout, coeffs20);
 		cout << endl;
 	}
 
@@ -2835,7 +2837,7 @@ void surface_create::apply_single_transformation(int f_inverse,
 		}
 		int a;
 
-		a = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeffs_out, SO->Pts[i]);
+		a = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(coeffs_out, SO->Pts[i]);
 		if (a) {
 			cout << "surface_create::apply_single_transformation something is wrong, "
 					"the image point does not lie on the transformed surface" << endl;

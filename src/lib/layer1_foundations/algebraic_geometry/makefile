@@ -21,6 +21,7 @@ MODULES = \
 	schlaefli_labels.o \
 	schlaefli.o \
 	seventytwo_cases.o \
+	smooth_surface_object_properties.o \
 	surface_domain_families.o \
 	surface_domain_io.o \
 	surface_domain_lines.o \
@@ -28,7 +29,9 @@ MODULES = \
 	surface_domain2.o \
 	surface_object_properties.o \
 	surface_object.o \
+	surface_polynomial_domains.o \
 	web_of_cubic_curves.o 
+
 
 
 

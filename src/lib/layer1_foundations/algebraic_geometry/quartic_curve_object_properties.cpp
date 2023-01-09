@@ -124,21 +124,25 @@ void quartic_curve_object_properties::init(quartic_curve_object *QO, int verbose
 
 	if (QO->f_has_bitangents) {
 		if (f_v) {
-			cout << "quartic_curve_object_properties::init before points_on_curve_on_lines" << endl;
+			cout << "quartic_curve_object_properties::init "
+					"before points_on_curve_on_lines" << endl;
 		}
 		points_on_curve_on_lines(verbose_level);
 		if (f_v) {
-			cout << "quartic_curve_object_properties::init after points_on_curve_on_lines" << endl;
+			cout << "quartic_curve_object_properties::init "
+					"after points_on_curve_on_lines" << endl;
 		}
 	}
 
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::init before compute_singular_points_and_tangent_lines" << endl;
+		cout << "quartic_curve_object_properties::init "
+				"before compute_singular_points_and_tangent_lines" << endl;
 	}
 	compute_singular_points_and_tangent_lines(verbose_level);
 	if (f_v) {
-		cout << "quartic_curve_object_properties::init after compute_singular_points_and_tangent_lines" << endl;
+		cout << "quartic_curve_object_properties::init "
+				"after compute_singular_points_and_tangent_lines" << endl;
 	}
 
 	if (f_v) {
@@ -148,7 +152,9 @@ void quartic_curve_object_properties::init(quartic_curve_object *QO, int verbose
 
 
 void quartic_curve_object_properties::create_summary_file(std::string &fname,
-		std::string &surface_label, std::string &col_postfix, int verbose_level)
+		std::string &surface_label,
+		std::string &col_postfix,
+		int verbose_level)
 {
 #if 0
 	string col_lab_surface_label;
@@ -260,22 +266,26 @@ void quartic_curve_object_properties::report_properties_simple(std::ostream &ost
 
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::report_properties_simple before print_equation" << endl;
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"before print_equation" << endl;
 	}
 	print_equation(ost);
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::report_properties_simple before print_gradient" << endl;
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"before print_gradient" << endl;
 	}
 	print_gradient(ost);
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::report_properties_simple before print_general" << endl;
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"before print_general" << endl;
 	}
 	print_general(ost);
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::report_properties_simple before print_points" << endl;
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"before print_points" << endl;
 	}
 	print_points(ost);
 
@@ -283,24 +293,28 @@ void quartic_curve_object_properties::report_properties_simple(std::ostream &ost
 
 	if (pts_on_lines) {
 		if (f_v) {
-			cout << "quartic_curve_object_properties::report_properties_simple before print_lines_with_points_on_them" << endl;
+			cout << "quartic_curve_object_properties::report_properties_simple "
+					"before print_lines_with_points_on_them" << endl;
 		}
 		print_lines_with_points_on_them(ost, QO->bitangents28, 28, pts_on_lines);
 	}
 	else {
 		if (f_v) {
-			cout << "quartic_curve_object_properties::report_properties_simple before print_bitangents" << endl;
+			cout << "quartic_curve_object_properties::report_properties_simple "
+					"before print_bitangents" << endl;
 		}
 		print_bitangents(ost);
 	}
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::report_properties_simple before report_bitangent_line_type" << endl;
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"before report_bitangent_line_type" << endl;
 	}
 	report_bitangent_line_type(ost);
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::report_properties_simple done" << endl;
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"done" << endl;
 	}
 }
 
@@ -343,12 +357,15 @@ void quartic_curve_object_properties::print_gradient(std::ostream &ost)
 	for (i = 0; i < 3; i++) {
 		ost << "$$" << endl;
 		ost << "\\begin{array}{c}" << endl;
-		QO->Dom->print_gradient_with_line_breaks_tex(ost, gradient + i * QO->Dom->Poly3_3->get_nb_monomials());
+		QO->Dom->print_gradient_with_line_breaks_tex(ost,
+				gradient + i * QO->Dom->Poly3_3->get_nb_monomials());
 		ost << "\\end{array}" << endl;
 		ost << "$$" << endl;
 
 		ost << "$$" << endl;
-		Int_vec_print(ost, gradient + i * QO->Dom->Poly3_3->get_nb_monomials(), QO->Dom->Poly3_3->get_nb_monomials());
+		Int_vec_print(ost,
+				gradient + i * QO->Dom->Poly3_3->get_nb_monomials(),
+				QO->Dom->Poly3_3->get_nb_monomials());
 		ost << "$$" << endl;
 	}
 
@@ -462,30 +479,10 @@ void quartic_curve_object_properties::print_points(std::ostream &ost)
 {
 	ost << "\\subsection*{All points on the curve}" << endl;
 
-	cout << "quartic_curve_object_properties::print_points before print_all_points" << endl;
+	cout << "quartic_curve_object_properties::print_points "
+			"before print_all_points" << endl;
 	print_all_points(ost);
 
-#if 0
-	ost << "\\subsubsection*{Eckardt Points}" << endl;
-	cout << "quartic_curve_object_properties::print_points before print_Eckardt_points" << endl;
-	print_Eckardt_points(ost);
-
-	ost << "\\subsubsection*{Singular Points}" << endl;
-	cout << "quartic_curve_object_properties::print_points before print_singular_points" << endl;
-	print_singular_points(ost);
-
-	ost << "\\subsubsection*{Double Points}" << endl;
-	cout << "quartic_curve_object_properties::print_points before print_double_points" << endl;
-	print_double_points(ost);
-
-	ost << "\\subsubsection*{Points on lines}" << endl;
-	cout << "quartic_curve_object_properties::print_points before print_points_on_lines" << endl;
-	print_points_on_lines(ost);
-
-	ost << "\\subsubsection*{Points on surface but on no line}" << endl;
-	cout << "quartic_curve_object_properties::print_points before print_points_on_surface_but_not_on_a_line" << endl;
-	print_points_on_surface_but_not_on_a_line(ost);
-#endif
 }
 
 
@@ -517,7 +514,7 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 			ost << i << " : $P_{" << QO->Pts[i] << "}=";
 			Int_vec_print_fully(ost, v, 3);
 			ost << "$\\\\" << endl;
-			}
+		}
 		ost << "\\end{multicols}" << endl;
 		ost << "The points by rank are: " << endl;
 		Lint_vec_print_fully(ost, QO->Pts, QO->nb_pts);
@@ -528,11 +525,13 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 
 		Labels = NEW_OBJECT(algebraic_geometry::schlaefli_labels);
 		if (FALSE) {
-			cout << "quartic_curve_object_properties::print_all_points before Labels->init" << endl;
+			cout << "quartic_curve_object_properties::print_all_points "
+					"before Labels->init" << endl;
 		}
 		Labels->init(0 /*verbose_level*/);
 		if (FALSE) {
-			cout << "quartic_curve_object_properties::print_all_points after Labels->init" << endl;
+			cout << "quartic_curve_object_properties::print_all_points "
+					"after Labels->init" << endl;
 		}
 
 
@@ -587,13 +586,15 @@ void quartic_curve_object_properties::print_bitangents(std::ostream &ost)
 	if (QO->f_has_bitangents) {
 		ost << "\\subsection*{The 28 Bitangents}" << endl;
 		QO->Dom->print_lines_tex(ost, QO->bitangents28, 28);
+
 		ost << "Curve Points on Bitangents:\\\\" << endl;
 		pts_on_lines->print_table_tex(ost);
 	}
 }
 
 void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostream &ost,
-		long int *Lines, int nb_lines, data_structures::set_of_sets *SoS)
+		long int *Lines, int nb_lines,
+		data_structures::set_of_sets *SoS)
 {
 	int i, j, h;
 	int verbose_level = 1;
@@ -622,7 +623,8 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// P->Grass_lines->M, k, n, n, F->log10_of_q + 1);
-		QO->Dom->P->Grass_lines->latex_matrix(ost, QO->Dom->P->Grass_lines->M);
+		QO->Dom->P->Grass_lines->latex_matrix(ost,
+				QO->Dom->P->Grass_lines->M);
 
 
 		//print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
@@ -632,7 +634,8 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 		if (QO->Dom->F->e > 1) {
 			ost << "=" << endl;
 			ost << "\\left[" << endl;
-			L.print_integer_matrix_tex(ost, QO->Dom->P->Grass_lines->M, 2, 3);
+			L.print_integer_matrix_tex(ost,
+					QO->Dom->P->Grass_lines->M, 2, 3);
 			ost << "\\right]_{" << Lines[i] << "}" << endl;
 		}
 
@@ -759,7 +762,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	}
 
 	if (!QO->f_has_bitangents) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines !QO->f_has_bitangents" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"!QO->f_has_bitangents" << endl;
 		exit(1);
 	}
 	combinatorics::combinatorics_domain Combi;
@@ -787,7 +791,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	pts_on_lines->sort();
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines pts_on_lines:" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"pts_on_lines:" << endl;
 		pts_on_lines->print_table();
 	}
 
@@ -816,7 +821,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 
 	pts_on_lines->dualize(lines_on_point, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines lines_on_point:" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"lines_on_point:" << endl;
 		lines_on_point->print_table();
 	}
 
@@ -824,7 +830,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	Point_type->init_lint(lines_on_point->Set_size,
 		lines_on_point->nb_sets, FALSE, 0);
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines type of lines_on_point:" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"type of lines_on_point:" << endl;
 		Point_type->print_naked_tex(cout, TRUE);
 		cout << endl;
 	}
@@ -855,8 +862,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines before "
-				"Surf->compute_points_on_lines for complement" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"before Surf->compute_points_on_lines for complement" << endl;
 	}
 	QO->Dom->compute_points_on_lines(Pts_off, nb_pts_off,
 		QO->bitangents28, 28,
@@ -864,20 +871,22 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		f_is_on_line2,
 		0 /* verbose_level */);
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines after "
-				"Surf->compute_points_on_lines" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"after Surf->compute_points_on_lines" << endl;
 	}
 
 	pts_off_on_lines->sort();
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines pts_off_on_lines:" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"pts_off_on_lines:" << endl;
 		pts_off_on_lines->print_table();
 	}
 
 	pts_off_on_lines->dualize(lines_on_points_off, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines lines_on_point:" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"lines_on_point:" << endl;
 		lines_on_point->print_table();
 	}
 
@@ -885,7 +894,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	Point_off_type->init_lint(lines_on_points_off->Set_size,
 			lines_on_points_off->nb_sets, FALSE, 0);
 	if (f_v) {
-		cout << "quartic_curve_object_properties::points_on_curve_on_lines type of lines_on_point off:" << endl;
+		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
+				"type of lines_on_point off:" << endl;
 		Point_off_type->print_naked_tex(cout, TRUE);
 		cout << endl;
 	}
@@ -971,7 +981,9 @@ void quartic_curve_object_properties::report_bitangent_line_type(std::ostream &o
 			Int_vec_print(ost, v, 3);
 
 			ost << "$ lies on " << lines_on_points_off->Set_size[i] << " bisecants : ";
-			L.lint_set_print_tex(ost, lines_on_points_off->Sets[i], lines_on_points_off->Set_size[i]);
+			L.lint_set_print_tex(ost,
+					lines_on_points_off->Sets[i],
+					lines_on_points_off->Set_size[i]);
 			ost << "\\\\" << endl;
 		}
 
@@ -989,7 +1001,8 @@ void quartic_curve_object_properties::compute_gradient(int verbose_level)
 
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::compute_gradient before QO->Dom->compute_gradient" << endl;
+		cout << "quartic_curve_object_properties::compute_gradient "
+				"before QO->Dom->compute_gradient" << endl;
 	}
 
 	QO->Dom->compute_gradient(QO->eqn15, gradient, verbose_level);
@@ -1019,11 +1032,13 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines before compute_gradient" << endl;
+		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
+				"before compute_gradient" << endl;
 	}
 	compute_gradient(verbose_level - 2);
 	if (f_v) {
-		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines after compute_gradient" << endl;
+		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
+				"after compute_gradient" << endl;
 	}
 
 	nb_singular_pts = 0;

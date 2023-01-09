@@ -806,7 +806,7 @@ void trihedral_pair_with_action::create_action_on_equations_and_compute_orbits(
 
 	AG.orbits_on_equations(
 			AL->Surf_A->A,
-			AL->Surf->Poly3_4,
+			AL->Surf->PolynomialDomains->Poly3_4,
 			The_surface_equations,
 			AL->q + 1 /* nb_equations */,
 			gens_for_stabilizer_of_trihedral_pair,
@@ -860,7 +860,7 @@ void trihedral_pair_with_action::create_clebsch_system(int verbose_level)
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 4; j++) {
 				int *p = System + (i * 4 + j) * 3;
-				AL->Surf->Poly1->print_equation(cout, p);
+				AL->Surf->PolynomialDomains->Poly1->print_equation(cout, p);
 				cout << endl;
 			}
 		}

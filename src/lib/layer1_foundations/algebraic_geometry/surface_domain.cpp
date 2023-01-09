@@ -43,37 +43,10 @@ surface_domain::surface_domain()
 	v2 = NULL;
 	w2 = NULL;
 
-	nb_monomials = 0;
 
 	Schlaefli = NULL;
 
-	Poly1 = NULL;
-	Poly2 = NULL;
-	Poly3 = NULL;
-	Poly1_x123 = NULL;
-	Poly2_x123 = NULL;
-	Poly3_x123 = NULL;
-	Poly4_x123 = NULL;
-	Poly1_4 = NULL;
-	Poly2_4 = NULL;
-	Poly3_4 = NULL;
-
-	Partials = NULL;
-
-	f_has_large_polynomial_domains = FALSE;
-	Poly2_27 = NULL;
-	Poly4_27 = NULL;
-	Poly6_27 = NULL;
-	Poly3_24 = NULL;
-
-	nb_monomials2 = nb_monomials4 = nb_monomials6 = 0;
-	nb_monomials3 = 0;
-
-	Clebsch_Pij = NULL;
-	Clebsch_P = NULL;
-	Clebsch_P3 = NULL;
-	Clebsch_coeffs = NULL;
-	CC = NULL;
+	PolynomialDomains = NULL;
 
 }
 
@@ -120,74 +93,10 @@ surface_domain::~surface_domain()
 		FREE_OBJECT(Schlaefli);
 	}
 
-	if (f_v) {
-		cout << "before Poly1" << endl;
+	if (PolynomialDomains) {
+		FREE_OBJECT(PolynomialDomains);
 	}
 
-	if (Poly1) {
-		FREE_OBJECT(Poly1);
-	}
-	if (Poly2) {
-		FREE_OBJECT(Poly2);
-	}
-	if (Poly3) {
-		FREE_OBJECT(Poly3);
-	}
-	if (Poly1_x123) {
-		FREE_OBJECT(Poly1_x123);
-	}
-	if (Poly2_x123) {
-		FREE_OBJECT(Poly2_x123);
-	}
-	if (Poly3_x123) {
-		FREE_OBJECT(Poly3_x123);
-	}
-	if (Poly4_x123) {
-		FREE_OBJECT(Poly4_x123);
-	}
-	if (Poly1_4) {
-		FREE_OBJECT(Poly1_4);
-	}
-	if (Poly2_4) {
-		FREE_OBJECT(Poly2_4);
-	}
-	if (Poly3_4) {
-		FREE_OBJECT(Poly3_4);
-	}
-
-	if (Partials) {
-		FREE_OBJECTS(Partials);
-	}
-
-	if (f_has_large_polynomial_domains) {
-		if (Poly2_27) {
-			FREE_OBJECT(Poly2_27);
-		}
-		if (Poly4_27) {
-			FREE_OBJECT(Poly4_27);
-		}
-		if (Poly6_27) {
-			FREE_OBJECT(Poly6_27);
-		}
-		if (Poly3_24) {
-			FREE_OBJECT(Poly3_24);
-		}
-	}
-	if (Clebsch_Pij) {
-		FREE_int(Clebsch_Pij);
-	}
-	if (Clebsch_P) {
-		FREE_pint(Clebsch_P);
-	}
-	if (Clebsch_P3) {
-		FREE_pint(Clebsch_P3);
-	}
-	if (Clebsch_coeffs) {
-		FREE_int(Clebsch_coeffs);
-	}
-	if (CC) {
-		FREE_pint(CC);
-	}
 	if (f_v) {
 		cout << "surface_domain::~surface_domain done" << endl;
 	}
@@ -272,15 +181,18 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 
 
 
+
+	PolynomialDomains = NEW_OBJECT(surface_polynomial_domains);
+
 	if (f_v) {
-		cout << "surface::init before init_polynomial_domains" << endl;
+		cout << "surface::init before PolynomialDomains->init" << endl;
 	}
-	init_polynomial_domains(verbose_level - 2);
+	PolynomialDomains->init(this, verbose_level);
+	//init_polynomial_domains(verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after init_polynomial_domains" << endl;
+		cout << "surface::init after PolynomialDomains->init" << endl;
 	}
 
-	//init_large_polynomial_domains(verbose_level);
 
 
 
@@ -301,7 +213,7 @@ void surface_domain::init(field_theory::finite_field *F, int verbose_level)
 	}
 }
 
-
+#if 0
 void surface_domain::init_polynomial_domains(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -473,281 +385,8 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 		cout << "surface_domain::init_polynomial_domains done" << endl;
 	}
 }
+#endif
 
-void surface_domain::init_large_polynomial_domains(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "surface_domain::init_large_polynomial_domains" << endl;
-	}
-	f_has_large_polynomial_domains = TRUE;
-	Poly2_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly4_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly6_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly3_24 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	Poly2_27->init(F,
-			27 /* nb_vars */, 2 /* degree */,
-			t_PART,
-			verbose_level);
-	Poly4_27->init(F,
-			27 /* nb_vars */, 4 /* degree */,
-			t_PART,
-			verbose_level);
-	Poly6_27->init(F,
-			27 /* nb_vars */, 6 /* degree */,
-			t_PART,
-			verbose_level);
-	Poly3_24->init(F,
-			24 /* nb_vars */, 3 /* degree */,
-			t_PART,
-			verbose_level);
-
-	nb_monomials2 = Poly2_27->get_nb_monomials();
-	nb_monomials4 = Poly4_27->get_nb_monomials();
-	nb_monomials6 = Poly6_27->get_nb_monomials();
-	nb_monomials3 = Poly3_24->get_nb_monomials();
-
-	label_variables_27(Poly2_27, 0 /* verbose_level */);
-	label_variables_27(Poly4_27, 0 /* verbose_level */);
-	label_variables_27(Poly6_27, 0 /* verbose_level */);
-	label_variables_24(Poly3_24, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "nb_monomials2 = " << nb_monomials2 << endl;
-		cout << "nb_monomials4 = " << nb_monomials4 << endl;
-		cout << "nb_monomials6 = " << nb_monomials6 << endl;
-		cout << "nb_monomials3 = " << nb_monomials3 << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::init_large_polynomial_domains "
-				"before clebsch_cubics" << endl;
-	}
-	clebsch_cubics(verbose_level - 1);
-	if (f_v) {
-		cout << "surface_domain::init_large_polynomial_domains "
-				"after clebsch_cubics" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface::init_large_polynomial_domains done" << endl;
-	}
-}
-
-void surface_domain::label_variables_3(
-		ring_theory::homogeneous_polynomial_domain *HPD,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_domain::label_variables_3" << endl;
-	}
-	if (HPD->nb_variables != 3) {
-		cout << "surface_domain::label_variables_3 HPD->nb_variables != 3" << endl;
-		exit(1);
-	}
-
-	string s1, s2;
-
-	s1.assign("y_%d");
-	s2.assign("y_{%d}");
-	HPD->remake_symbols(0 /* symbol_offset */,
-			s1, s2, verbose_level);
-
-	if (f_v) {
-		cout << "surface_domain::label_variables_3 done" << endl;
-	}
-}
-
-void surface_domain::label_variables_x123(
-		ring_theory::homogeneous_polynomial_domain *HPD,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "surface_domain::label_variables_x123" << endl;
-	}
-	if (HPD->nb_variables != 3) {
-		cout << "surface_domain::label_variables_x123 "
-				"HPD->nb_variables != 3" << endl;
-		exit(1);
-	}
-
-
-	string s1, s2;
-
-	s1.assign("x_%d");
-	s2.assign("x_{%d}");
-	HPD->remake_symbols(1 /* symbol_offset */,
-			s1, s2, verbose_level);
-
-	if (f_v) {
-		cout << "surface_domain::label_variables_x123 done" << endl;
-	}
-}
-
-void surface_domain::label_variables_4(
-		ring_theory::homogeneous_polynomial_domain *HPD,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int i, l;
-	//char label[1000];
-	
-	if (f_v) {
-		cout << "surface_domain::label_variables_4" << endl;
-		}
-	if (HPD->nb_variables != 4) {
-		cout << "surface_domain::label_variables_4 HPD->nb_variables != 4" << endl;
-		exit(1);
-		}
-
-	string s1, s2;
-
-	s1.assign("X_%d");
-	s2.assign("X_{%d}");
-
-	HPD->remake_symbols(0 /* symbol_offset */,
-			s1, s2, verbose_level);
-
-
-	if (f_v) {
-		cout << "surface::label_variables_4 done" << endl;
-		}
-	
-}
-
-void surface_domain::label_variables_27(
-		ring_theory::homogeneous_polynomial_domain *HPD,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "surface_domain::label_variables_27" << endl;
-	}
-	if (HPD->nb_variables != 27) {
-		cout << "surface_domain::label_variables_27 HPD->n != 27" << endl;
-		exit(1);
-	}
-
-	string s1, s2;
-
-	s1.assign("y_%d");
-	s2.assign("y_{%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			0, 3,
-			s1, s2,
-			verbose_level);
-	s1.assign("f_0%d");
-	s2.assign("f_{0%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			3, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("f_1%d");
-	s2.assign("f_{1%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			7, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("f_2%d");
-	s2.assign("f_{2%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			11, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("g_0%d");
-	s2.assign("g_{0%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			15, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("g_1%d");
-	s2.assign("g_{1%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			19, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("g_2%d");
-	s2.assign("g_{2%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			23, 4,
-			s1, s2,
-			verbose_level);
-
-	if (f_v) {
-		cout << "surface_domain::label_variables_27 done" << endl;
-	}
-}
-
-void surface_domain::label_variables_24(
-		ring_theory::homogeneous_polynomial_domain *HPD,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "surface_domain::label_variables_24" << endl;
-	}
-	if (HPD->nb_variables != 24) {
-		cout << "surface_domain::label_variables_24 HPD->n != 24" << endl;
-		exit(1);
-	}
-
-	string s1, s2;
-
-	s1.assign("f_0%d");
-	s2.assign("f_{0%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			0, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("f_1%d");
-	s2.assign("f_{1%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			4, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("f_2%d");
-	s2.assign("f_{2%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			8, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("g_0%d");
-	s2.assign("g_{0%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			12, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("g_1%d");
-	s2.assign("g_{1%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			16, 4,
-			s1, s2,
-			verbose_level);
-	s1.assign("g_2%d");
-	s2.assign("g_{2%d}");
-	HPD->remake_symbols_interval(0 /* symbol_offset */,
-			20, 4,
-			s1, s2,
-			verbose_level);
-
-	if (f_v) {
-		cout << "surface_domain::label_variables_24 done" << endl;
-	}
-}
-
-
-int surface_domain::index_of_monomial(int *v)
-{
-	return Poly3_4->index_of_monomial(v);
-}
 
 void surface_domain::unrank_point(int *v, long int rk)
 {
@@ -785,7 +424,7 @@ void surface_domain::enumerate_points(int *coeff,
 		cout << "surface_domain::enumerate_points" << endl;
 	}
 
-	Poly3_4->enumerate_points(coeff, Pts, verbose_level);
+	PolynomialDomains->Poly3_4->enumerate_points(coeff, Pts, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::enumerate_points done" << endl;
 	}
@@ -801,7 +440,7 @@ void surface_domain::substitute_semilinear(
 	if (f_v) {
 		cout << "surface_domain::substitute_semilinear" << endl;
 	}
-	Poly3_4->substitute_semilinear(coeff_in, coeff_out, 
+	PolynomialDomains->Poly3_4->substitute_semilinear(coeff_in, coeff_out,
 		f_semilinear, frob, Mtx_inv, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::substitute_semilinear done" << endl;
@@ -812,10 +451,14 @@ void surface_domain::list_starter_configurations(
 	long int *Lines, int nb_lines,
 	data_structures::set_of_sets *line_intersections, int *&Table, int &N,
 	int verbose_level)
-// goes over all lines and considers all 5-subsets
-// of the set of lines which intersect
+// Goes over all lines of the surface which intersect at least 5 others.
 // Then filters those 5-subsets which together
 // with the original line give 19 linearly independent conditions
+// uses line_intersections to find the lines which intersect at least 5 others.
+// Table will have two columns.
+// The first column is the index of the line,
+// the second column is the lex-index of the 5-subset
+// which creates 19 linearly independent conditions.
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics::combinatorics_domain Combi;
@@ -834,20 +477,26 @@ void surface_domain::list_starter_configurations(
 		int i, j, r;
 		N = 0;
 		for (i = 0; i < nb_lines; i++) {
+
 			if (line_intersections->Set_size[i] < 5) {
 				continue;
 			}
 			nCk = Combi.int_n_choose_k(line_intersections->Set_size[i], 5);
+
 			for (j = 0; j < nCk; j++) {
+
 				Combi.unrank_k_subset(j, subset,
 					line_intersections->Set_size[i], 5);
+
 				for (h = 0; h < 5; h++) {
 					subset2[h] =
 					line_intersections->Sets[i][subset[h]];
 					S6[h] = Lines[subset2[h]];
 				}
 				S6[5] = Lines[i];
+
 				r = rank_of_system(6, S6, 0 /*verbose_level*/);
+
 				if (r == 19) {
 					vector<int> v;
 
@@ -927,8 +576,10 @@ void surface_domain::create_starter_configuration(
 		cout << "surface_domain::create_starter_configuration" << endl;
 	}
 	//nCk = int_n_choose_k(line_neighbors->Set_size[line_idx], 5);
+
 	Combi.unrank_k_subset(subset_idx, subset,
 		line_neighbors->Set_size[line_idx], 5);
+
 	for (h = 0; h < 5; h++) {
 		subset2[h] = line_neighbors->Sets[line_idx][subset[h]];
 		S[h] = Lines[subset2[h]];
@@ -995,12 +646,6 @@ void surface_domain::line_to_wedge_vec(
 void surface_domain::line_to_klein_vec(
 		long int *Line_rk, long int *Klein_rk, int len)
 {
-	//int_vec_apply(Line_rk, Klein->Line_to_point_on_quadric,
-	//		Klein_rk, len);
-	//from through to
-	//for (i = 0; i < len; i++) {
-	//	to[i] = through[from[i]];
-	//	}
 	int i;
 
 	for (i = 0; i < len; i++) {
@@ -1030,7 +675,8 @@ void surface_domain::klein_to_wedge_vec(
 }
 
 void surface_domain::save_lines_in_three_kinds(std::string &fname_csv,
-	long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines)
+	long int *Lines_wedge,
+	long int *Lines, long int *Lines_klein, int nb_lines)
 {
 	data_structures::spreadsheet *Sp;
 	
@@ -1043,27 +689,31 @@ void surface_domain::save_lines_in_three_kinds(std::string &fname_csv,
 }
 
 
-int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long int *double_six, int verbose_level)
+int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(
+		long int *double_six, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points" << endl;
 	}
-	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points before Surf->build_cubic_surface_from_lines" << endl;
-	}
 
 	int coeffs20[20];
 	long int Lines27[27];
 	int nb_E;
 
+
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"before Surf->build_cubic_surface_from_lines" << endl;
+	}
 	build_cubic_surface_from_lines(
 		12, double_six,
 		coeffs20, 0/* verbose_level*/);
 
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points after Surf->build_cubic_surface_from_lines" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"after Surf->build_cubic_surface_from_lines" << endl;
 	}
 
 	if (f_v) {
@@ -1072,7 +722,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 		Int_vec_print(cout, coeffs20, 20);
 		cout << endl;
 
-		Poly3_4->print_equation(cout, coeffs20);
+		PolynomialDomains->Poly3_4->print_equation(cout, coeffs20);
 		cout << endl;
 	}
 
@@ -1081,12 +731,14 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 
 
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points before Surf->create_the_fifteen_other_lines" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"before Surf->create_the_fifteen_other_lines" << endl;
 	}
 	create_the_fifteen_other_lines(Lines27,
 			Lines27 + 12, verbose_level);
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points after Surf->create_the_fifteen_other_lines" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"after Surf->create_the_fifteen_other_lines" << endl;
 	}
 
 
@@ -1096,7 +748,8 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points before SO->init_with_27_lines" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"before SO->init_with_27_lines" << endl;
 	}
 
 	SO->init_with_27_lines(this,
@@ -1104,21 +757,25 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points after SO->init_with_27_lines" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"after SO->init_with_27_lines" << endl;
 	}
 
 	nb_E = SO->SOP->nb_Eckardt_points;
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points the surface has " << nb_E << " Eckardt points" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"the surface has " << nb_E << " Eckardt points" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points deleting SO" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"deleting SO" << endl;
 	}
 	FREE_OBJECT(SO);
 
 	if (f_v) {
-		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points done" << endl;
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"done" << endl;
 	}
 	return nb_E;
 

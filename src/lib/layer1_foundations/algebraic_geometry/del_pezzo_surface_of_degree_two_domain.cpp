@@ -56,7 +56,8 @@ void del_pezzo_surface_of_degree_two_domain::init(
 	}
 
 	if (P3->n != 3) {
-		cout << "del_pezzo_surface_of_degree_two_domain::init projective space must have dimension 3" << endl;
+		cout << "del_pezzo_surface_of_degree_two_domain::init "
+				"projective space must have dimension 3" << endl;
 		exit(1);
 	}
 	del_pezzo_surface_of_degree_two_domain::P3 = P3;
@@ -74,7 +75,8 @@ void del_pezzo_surface_of_degree_two_domain::init(
 	nb_lines_PG_3 = Gr->nCkq->as_lint();
 
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_domain::init nb_lines_PG_3 = " << nb_lines_PG_3 << endl;
+		cout << "del_pezzo_surface_of_degree_two_domain::init "
+				"nb_lines_PG_3 = " << nb_lines_PG_3 << endl;
 	}
 
 	Gr3 = NEW_OBJECT(geometry::grassmann);
@@ -103,7 +105,8 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 	int v4[4];
 
 	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_domain::enumerate_points P2->N_points=" << P2->N_points << endl;
+		cout << "del_pezzo_surface_of_degree_two_domain::enumerate_points "
+				"P2->N_points=" << P2->N_points << endl;
 #if 0
 		print_equation_with_line_breaks_tex(cout,
 				coeff, 8 /* nb_terms_per_line*/,

@@ -149,7 +149,7 @@ void surface_with_action::init(
 		cout << "surface_with_action::init "
 				"before AonHPD_3_4->init" << endl;
 	}
-	AonHPD_3_4->init(A, Surf->Poly3_4, verbose_level);
+	AonHPD_3_4->init(A, Surf->PolynomialDomains->Poly3_4, verbose_level);
 	
 #if 1
 	Classify_trihedral_pairs = NEW_OBJECT(cubic_surfaces_and_arcs::classify_trihedral_pairs);
@@ -594,7 +594,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 
 	if (f_v) {
-		cout << "surface_with_action::complete_skew_hexagon_with_polarity " << label_for_printing << endl;
+		cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+				<< label_for_printing << endl;
 	}
 
 	long int three_skew_lines[3];

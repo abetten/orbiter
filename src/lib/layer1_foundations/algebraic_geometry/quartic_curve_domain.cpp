@@ -52,23 +52,27 @@ void quartic_curve_domain::init(field_theory::finite_field *F, int verbose_level
 
 	P = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
-		cout << "quartic_curve_domain::init before P->projective_space_init" << endl;
+		cout << "quartic_curve_domain::init "
+				"before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(2, F,
 		TRUE /*f_init_incidence_structure */,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "quartic_curve_domain::init after P->projective_space_init" << endl;
+		cout << "quartic_curve_domain::init "
+				"after P->projective_space_init" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "quartic_curve_domain::init before init_polynomial_domains" << endl;
+		cout << "quartic_curve_domain::init "
+				"before init_polynomial_domains" << endl;
 	}
 	init_polynomial_domains(verbose_level);
 	if (f_v) {
-		cout << "quartic_curve_domain::init after init_polynomial_domains" << endl;
+		cout << "quartic_curve_domain::init "
+				"after init_polynomial_domains" << endl;
 	}
 
 
@@ -91,67 +95,77 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 
 	Poly1_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly1_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"before Poly1_3->init" << endl;
 	}
 	Poly1_3->init(F,
 			3 /* nb_vars */, 1 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly1_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"after Poly1_3->init" << endl;
 	}
 
 
 
 	Poly2_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly2_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"before Poly2_3->init" << endl;
 	}
 	Poly2_3->init(F,
 			3 /* nb_vars */, 2 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly2_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"after Poly2_3->init" << endl;
 	}
 
 
 
 	Poly3_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly3_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"before Poly3_3->init" << endl;
 	}
 	Poly3_3->init(F,
 			3 /* nb_vars */, 3 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly3_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"after Poly3_3->init" << endl;
 	}
 
 
 	Poly4_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly4_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"before Poly4_3->init" << endl;
 	}
 	Poly4_3->init(F,
 			3 /* nb_vars */, 4 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly4_3->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"after Poly4_3->init" << endl;
 	}
 
 	Poly3_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly3_4->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"before Poly3_4->init" << endl;
 	}
 	Poly3_4->init(F,
 			4 /* nb_vars */, 3 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly3_4->init" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"after Poly3_4->init" << endl;
 	}
 
 	Partials = NEW_OBJECTS(ring_theory::partial_derivative, 3);
@@ -159,13 +173,15 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	int i;
 
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains initializing partials" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"initializing partials" << endl;
 	}
 	for (i = 0; i < 3; i++) {
 		Partials[i].init(Poly4_3, Poly3_3, i, verbose_level);
 	}
 	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains initializing partials done" << endl;
+		cout << "surface_domain::init_polynomial_domains "
+				"initializing partials done" << endl;
 	}
 
 
@@ -635,7 +651,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 
 
 	if (f_v) {
-		cout << "quartic_curve_domain::create_surface we found " << nb_bitangents << " bitangents" << endl;
+		cout << "quartic_curve_domain::create_surface "
+				"we found " << nb_bitangents << " bitangents" << endl;
 		Int_vec_print(cout, Bitangents, nb_bitangents);
 		cout << endl;
 	}
@@ -644,7 +661,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 	for (h = 0; h < nCk; h++) {
 		Combi.unrank_k_subset(h, set, nb_bitangents, 4);
 		if (f_v) {
-			cout << "quartic_curve_domain::create_surface trying subset " << h << " / " << nCk << " which is ";
+			cout << "quartic_curve_domain::create_surface "
+					"trying subset " << h << " / " << nCk << " which is ";
 			Int_vec_print(cout, set, 4);
 			cout << endl;
 		}
@@ -667,7 +685,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 			Points[i] = Q->Pts[pt_idx[i]];
 		}
 		if (f_v) {
-			cout << "quartic_curve_domain::create_surface trying subset " << h << " / " << nCk << " Points = ";
+			cout << "quartic_curve_domain::create_surface "
+					"trying subset " << h << " / " << nCk << " Points = ";
 			Lint_vec_print(cout, Points, 8);
 			cout << endl;
 		}
@@ -676,16 +695,19 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 				Points, 8,
 				six_coeffs_conic,
 				verbose_level)) {
-			cout << "quartic_curve_domain::create_surface The four bitangents are syzygetic" << endl;
+			cout << "quartic_curve_domain::create_surface "
+					"The four bitangents are syzygetic" << endl;
 			break;
 		}
 	}
 	if (h == nCk) {
-		cout << "quartic_curve_domain::create_surface, could not find a syzygetic set of bitangents" << endl;
+		cout << "quartic_curve_domain::create_surface, "
+				"could not find a syzygetic set of bitangents" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "quartic_curve_domain::create_surface trying subset " << h << " / " << nCk << " Bitangents4 = ";
+		cout << "quartic_curve_domain::create_surface "
+				"trying subset " << h << " / " << nCk << " Bitangents4 = ";
 		Lint_vec_print(cout, Bitangents4, 4);
 		cout << endl;
 	}
@@ -695,7 +717,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 			verbose_level);
 
 	if (f_v) {
-		cout << "quartic_curve_domain::create_surface conic squared = ";
+		cout << "quartic_curve_domain::create_surface "
+				"conic squared = ";
 		Int_vec_print(cout, conic_squared_15, 15);
 		cout << endl;
 	}
@@ -705,7 +728,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 	}
 
 	if (f_v) {
-		cout << "quartic_curve_domain::create_surface chosen bitangents in dual coordinates = ";
+		cout << "quartic_curve_domain::create_surface "
+				"chosen bitangents in dual coordinates = ";
 		Int_matrix_print(Bitangents_coeffs, 4, 3);
 	}
 
@@ -718,7 +742,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 			verbose_level);
 
 	if (f_v) {
-		cout << "quartic_curve_domain::create_surface product of 4 bitangents = ";
+		cout << "quartic_curve_domain::create_surface "
+				"product of 4 bitangents = ";
 		Int_vec_print(cout, four_lines_15, 15);
 		cout << endl;
 	}
@@ -747,7 +772,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 	lambda = M2[7];
 	mu = M2[8];
 	if (f_v) {
-		cout << "quartic_curve_domain::create_surface lambda = " << lambda << " mu = " << mu << endl;
+		cout << "quartic_curve_domain::create_surface "
+				"lambda = " << lambda << " mu = " << mu << endl;
 	}
 
 	int f1_three_coeff[3]; // - lambda * mu / 4 * the equation of the first of the four bitangents
@@ -793,11 +819,16 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 	// + X0 * lambda * conic equation
 	// + L1 * L2 * L3 (the product of the equations of the last three bitangents)
 
-	assemble_cubic_surface(f1_three_coeff, f2_six_coeff, f3_ten_coeff, eqn20,
+	assemble_cubic_surface(
+			f1_three_coeff,
+			f2_six_coeff,
+			f3_ten_coeff,
+			eqn20,
 		verbose_level);
 
 	if (f_v) {
-		cout << "quartic_curve_domain::create_surface eqn20 = ";
+		cout << "quartic_curve_domain::create_surface "
+				"eqn20 = ";
 		Int_vec_print(cout, eqn20, 20);
 		cout << endl;
 	}
@@ -820,7 +851,8 @@ void quartic_curve_domain::compute_gradient(int *equation15, int *&gradient, int
 
 
 	if (f_v) {
-		cout << "quartic_curve_domain::compute_gradient Poly3_3->get_nb_monomials() = " << Poly3_3->get_nb_monomials() << endl;
+		cout << "quartic_curve_domain::compute_gradient "
+				"Poly3_3->get_nb_monomials() = " << Poly3_3->get_nb_monomials() << endl;
 	}
 
 	gradient = NEW_int(3 * Poly3_3->get_nb_monomials());

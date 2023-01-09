@@ -483,6 +483,10 @@ public:
 
 	int f_find_cliques;
 	graph_theory::clique_finder_control *Clique_finder_control;
+
+	int f_find_subgraph;
+	std::string find_subgraph_label;
+
 	int f_export_magma;
 	int f_export_maple;
 	int f_export_csv;

@@ -1138,7 +1138,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 #if 0
 		Surf->print_equation_tex_lint(ost, Flag + 13);
 #else
-		Surf->Poly3_4->print_equation_with_line_breaks_tex_lint(
+		Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex_lint(
 			ost, Flag + 13, 6 /* nb_terms_per_line */,
 			"\\\\\n&" /*const char *new_line_text*/);
 		ost << "=0" << endl;
@@ -1538,7 +1538,7 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 
 		D->SO->SOP->print_lines(ost);
 
-		D->SO->SOP->print_tritangent_planes(ost);
+		D->SO->SOP->SmoothProperties->print_tritangent_planes(ost);
 
 		D->report_Clebsch_maps(ost, verbose_level);
 		// too much output!

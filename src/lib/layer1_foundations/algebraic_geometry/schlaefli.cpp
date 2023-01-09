@@ -2687,7 +2687,8 @@ int schlaefli::identify_Eckardt_point(int line1, int line2, int line3, int verbo
 	line3 = lines[2];
 	if (line1 < 6) {
 		if (line2 < 6) {
-			cout << "schlaefli::identify_Eckardt_point line1 < 6 and line2 < 6" << endl;
+			cout << "schlaefli::identify_Eckardt_point "
+					"line1 < 6 and line2 < 6" << endl;
 			exit(1);
 		}
 		idx = Combi.ordered_pair_rank(line1, line2 - 6, 6);
@@ -2696,15 +2697,18 @@ int schlaefli::identify_Eckardt_point(int line1, int line2, int line3, int verbo
 		int i, j, k, l, m, n;
 
 		if (line1 < 12) {
-			cout << "schlaefli::identify_Eckardt_point second case, line1 < 12" << endl;
+			cout << "schlaefli::identify_Eckardt_point "
+					"second case, line1 < 12" << endl;
 			exit(1);
 		}
 		if (line2 < 12) {
-			cout << "schlaefli::identify_Eckardt_point second case, line2 < 12" << endl;
+			cout << "schlaefli::identify_Eckardt_point "
+					"second case, line2 < 12" << endl;
 			exit(1);
 		}
 		if (line3 < 12) {
-			cout << "schlaefli::identify_Eckardt_point second case, line3 < 12" << endl;
+			cout << "schlaefli::identify_Eckardt_point "
+					"second case, line3 < 12" << endl;
 			exit(1);
 		}
 		Combi.k2ij(line1 - 12, i, j, 6);

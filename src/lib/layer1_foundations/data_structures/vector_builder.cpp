@@ -253,8 +253,18 @@ void vector_builder::init(vector_builder_description *Descr,
 		for (i = 0; i < len; i++) {
 			a = v[i];
 			if (a < 0) {
-				cout << "vector_builder::init entry is out of range: value = " << a << endl;
-				exit(1);
+				if (Descr->f_allow_negatives) {
+					number_theory::number_theory_domain NT;
+					int a0;
+
+					a0 = a;
+					v[i] = NT.mod(a, F->p);
+					cout << "vector_builder::init entry mapped from = " << a0 << " to " << v[i] << endl;
+				}
+				else {
+					cout << "vector_builder::init entry is out of range: value = " << a << endl;
+					exit(1);
+				}
 			}
 			if (a >= F->q) {
 				cout << "vector_builder::init entry is out of range: value = " << a << endl;

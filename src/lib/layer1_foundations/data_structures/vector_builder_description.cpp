@@ -23,6 +23,8 @@ vector_builder_description::vector_builder_description()
 	f_field = FALSE;
 	//std::string field_label;
 
+	f_allow_negatives = FALSE;
+
 	f_dense = FALSE;
 	//std::string dense_text;
 
@@ -83,6 +85,12 @@ int vector_builder_description::read_arguments(
 			field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << field_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-allow_negatives") == 0) {
+			f_allow_negatives = TRUE;
+			if (f_v) {
+				cout << "-allow_negatives " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-dense") == 0) {
@@ -189,6 +197,9 @@ void vector_builder_description::print()
 	cout << "vector_builder_description:" << endl;
 	if (f_field) {
 		cout << "-field " << field_label << endl;
+	}
+	if (f_allow_negatives) {
+		cout << "-allow_negatives " << endl;
 	}
 	if (f_dense) {
 		cout << "-dense " << dense_text << endl;

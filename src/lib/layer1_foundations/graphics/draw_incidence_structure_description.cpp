@@ -48,12 +48,6 @@ draw_incidence_structure_description::draw_incidence_structure_description()
 	Vi = NULL;
 	Bj = NULL;
 
-#if 0
-	int *R;
-	int *X;
-	int dim_X;
-#endif
-
 	f_labelling_points = FALSE;
 	point_labels = NULL;
 
@@ -130,38 +124,6 @@ int draw_incidence_structure_description::read_arguments(
 	}
 	return i + 1;
 }
-
-#if 0
-int width;
-
-int width_10;
-
-int f_outline_thin;
-
-std::string unit_length;
-std::string thick_lines;
-std::string thin_lines;
-std::string geo_line_width;
-
-int v;
-int b;
-int V;
-int B;
-int *Vi;
-int *Bj;
-
-#if 0
-int *R;
-int *X;
-int dim_X;
-#endif
-
-int f_labelling_points;
-std::string *point_labels;
-
-int f_labelling_blocks;
-std::string *block_labels;
-#endif
 
 void draw_incidence_structure_description::print()
 {

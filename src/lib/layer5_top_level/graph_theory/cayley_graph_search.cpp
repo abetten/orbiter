@@ -1069,20 +1069,20 @@ void cayley_graph_search::create_additional_edges(
 
 	if (f_v) {
 		cout << "cayley_graph_search::create_Adjacency_list" << endl;
-		}
+	}
 	for (i = 0; i < go; i++) {
 		Additional_neighbor_sz[i] = 0;
-		}
+	}
 	//S->element_unrank_int(connection_element, Elt2);
 	for (i = 0; i < go; i++) {
 		if (!f_subgroup[i]) {
 			continue;
-			}
+		}
 		S->element_unrank_lint(i, Elt1);
 		Additional_neighbor[i] = A2->element_image_of(
 				connection_element, Elt1, 0 /* verbose_level */);
 		Additional_neighbor_sz[i]++;
-		}
+	}
 }
 
 

@@ -30,6 +30,7 @@ MODULES= \
 		layer1_foundations/algebraic_geometry/schlaefli_labels.o \
 		layer1_foundations/algebraic_geometry/schlaefli.o \
 		layer1_foundations/algebraic_geometry/seventytwo_cases.o \
+		layer1_foundations/algebraic_geometry/smooth_surface_object_properties.o \
 		layer1_foundations/algebraic_geometry/surface_domain_families.o \
 		layer1_foundations/algebraic_geometry/surface_domain_io.o \
 		layer1_foundations/algebraic_geometry/surface_domain_lines.o \
@@ -37,6 +38,7 @@ MODULES= \
 		layer1_foundations/algebraic_geometry/surface_domain2.o \
 		layer1_foundations/algebraic_geometry/surface_object_properties.o \
 		layer1_foundations/algebraic_geometry/surface_object.o \
+		layer1_foundations/algebraic_geometry/surface_polynomial_domains.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
 		layer1_foundations/coding_theory/code_diagram.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \

@@ -31,11 +31,13 @@ void surface_domain::init_Schlaefli(int verbose_level)
 	Schlaefli = NEW_OBJECT(schlaefli);
 
 	if (f_v) {
-		cout << "surface_domain::init_Schlaefli before Schlaefli->init" << endl;
+		cout << "surface_domain::init_Schlaefli "
+				"before Schlaefli->init" << endl;
 	}
 	Schlaefli->init(this, verbose_level - 2);
 	if (f_v) {
-		cout << "surface_domain::init_Schlaefli after Schlaefli->init" << endl;
+		cout << "surface_domain::init_Schlaefli "
+				"after Schlaefli->init" << endl;
 	}
 
 
@@ -82,29 +84,34 @@ void surface_domain::build_cubic_surface_from_lines(
 	}
 
 	if (f_v) {
-		cout << "surface_domain::build_cubic_surface_from_lines before create_system" << endl;
+		cout << "surface_domain::build_cubic_surface_from_lines "
+				"before create_system" << endl;
 	}
 	create_system(len, S, System, nb_rows, verbose_level);
 	if (f_v) {
-		cout << "surface_domain::build_cubic_surface_from_lines after create_system" << endl;
+		cout << "surface_domain::build_cubic_surface_from_lines "
+				"after create_system" << endl;
 	}
 
 
 	int base_cols[20];
 
 	if (f_v) {
-		cout << "surface_domain::build_cubic_surface_from_lines before F->Gauss_simple" << endl;
+		cout << "surface_domain::build_cubic_surface_from_lines "
+				"before F->Gauss_simple" << endl;
 	}
-	r = F->Linear_algebra->Gauss_simple(System, nb_rows, nb_monomials,
+	r = F->Linear_algebra->Gauss_simple(System,
+			nb_rows, PolynomialDomains->nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_domain::build_cubic_surface_from_lines after F->Gauss_simple" << endl;
+		cout << "surface_domain::build_cubic_surface_from_lines "
+				"after F->Gauss_simple" << endl;
 	}
 
 	if (FALSE) {
 		cout << "surface_domain::create_system "
 				"The system in RREF:" << endl;
-		Int_matrix_print(System, nb_rows, nb_monomials);
+		Int_matrix_print(System, nb_rows, PolynomialDomains->nb_monomials);
 	}
 	if (f_v) {
 		cout << "surface_domain::create_system "
@@ -112,7 +119,7 @@ void surface_domain::build_cubic_surface_from_lines(
 	}
 
 
-	if (r != nb_monomials - 1) {
+	if (r != PolynomialDomains->nb_monomials - 1) {
 		cout << "surface_domain::build_cubic_surface_from_lines "
 				"r != nb_monomials - 1" << endl;
 		cout << "r=" << r << endl;
@@ -122,12 +129,16 @@ void surface_domain::build_cubic_surface_from_lines(
 	int kernel_m, kernel_n;
 
 	if (f_v) {
-		cout << "surface_domain::build_cubic_surface_from_lines before F->matrix_get_kernel" << endl;
+		cout << "surface_domain::build_cubic_surface_from_lines "
+				"before F->matrix_get_kernel" << endl;
 	}
-	F->Linear_algebra->matrix_get_kernel(System, r, nb_monomials, base_cols, r,
-		kernel_m, kernel_n, coeff, 0 /* verbose_level */);
+	F->Linear_algebra->matrix_get_kernel(System,
+			r, PolynomialDomains->nb_monomials, base_cols, r,
+		kernel_m, kernel_n, coeff,
+		0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_domain::build_cubic_surface_from_lines after F->matrix_get_kernel" << endl;
+		cout << "surface_domain::build_cubic_surface_from_lines "
+				"after F->matrix_get_kernel" << endl;
 	}
 
 	FREE_int(System);
@@ -155,7 +166,8 @@ int surface_domain::rank_of_system(int len, long int *S,
 
 	int base_cols[20];
 
-	r = F->Linear_algebra->Gauss_simple(System, nb_rows, nb_monomials,
+	r = F->Linear_algebra->Gauss_simple(System,
+			nb_rows, PolynomialDomains->nb_monomials,
 		base_cols, 0 /* verbose_level */);
 
 
@@ -201,13 +213,15 @@ void surface_domain::create_system(int len, long int *S,
 		}
 		else {
 			if (f_v) {
-				cout << "surface_domain::create_system before P->create_points_on_line" << endl;
+				cout << "surface_domain::create_system "
+						"before P->create_points_on_line" << endl;
 			}
 			P->create_points_on_line(a,
 					pts_on_line, //pt_list + nb_pts,
 					0 /* verbose_level */);
 			if (f_v) {
-				cout << "surface_domain::create_system after P->create_points_on_line" << endl;
+				cout << "surface_domain::create_system "
+						"after P->create_points_on_line" << endl;
 			}
 			//nb_pts += P->k;
 			for (j = 0; j < P->k; j++) {
@@ -258,11 +272,12 @@ void surface_domain::create_system(int len, long int *S,
 		cout << "surface_domain::create_system nb_rows = " << nb_rows << endl;
 	}
 
-	System = NEW_int(nb_rows * nb_monomials);
+	System = NEW_int(nb_rows * PolynomialDomains->nb_monomials);
 
 	for (i = 0; i < nb_rows; i++) {
-		for (j = 0; j < nb_monomials; j++) {
-			System[i * nb_monomials + j] = Poly3_4->evaluate_monomial(j, Pt_coords + i * n);
+		for (j = 0; j < PolynomialDomains->nb_monomials; j++) {
+			System[i * PolynomialDomains->nb_monomials + j] =
+					PolynomialDomains->Poly3_4->evaluate_monomial(j, Pt_coords + i * n);
 		}
 	}
 	FREE_int(Pt_coords);
@@ -275,7 +290,7 @@ void surface_domain::create_system(int len, long int *S,
 	if (f_v && FALSE) {
 		cout << "surface_domain::create_system "
 				"The system:" << endl;
-		Int_matrix_print(System, nb_rows, nb_monomials);
+		Int_matrix_print(System, nb_rows, PolynomialDomains->nb_monomials);
 	}
 
 	if (f_v) {
@@ -294,8 +309,12 @@ void surface_domain::compute_intersection_points(int *Adj,
 	if (f_v) {
 		cout << "surface_domain::compute_intersection_points" << endl;
 	}
+
 	Intersection_pt = NEW_lint(nb_lines * nb_lines);
-	orbiter_kernel_system::Orbiter->Lint_vec->mone(Intersection_pt, nb_lines * nb_lines);
+
+	orbiter_kernel_system::Orbiter->Lint_vec->mone(
+			Intersection_pt, nb_lines * nb_lines);
+
 	for (j1 = 0; j1 < nb_lines; j1++) {
 		a1 = Lines[j1];
 		for (j2 = j1 + 1; j2 < nb_lines; j2++) {
@@ -330,12 +349,16 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 	Intersection_pt = NEW_int(nb_lines * nb_lines);
 	Intersection_pt_idx = NEW_int(nb_lines * nb_lines);
 	orbiter_kernel_system::Orbiter->Int_vec->mone(Intersection_pt, nb_lines * nb_lines);
+
 	for (j1 = 0; j1 < nb_lines; j1++) {
 		a1 = Lines[j1];
+
 		for (j2 = j1 + 1; j2 < nb_lines; j2++) {
 			a2 = Lines[j2];
+
 			if (Adj[j1 * nb_lines + j2]) {
 				pt = P->intersection_of_two_lines(a1, a2);
+
 				if (!Sorting.lint_vec_search(Points, nb_points,
 					pt, idx, 0)) {
 					cout << "surface_domain::compute_intersection_points_and_indices "
@@ -410,7 +433,8 @@ void surface_domain::lines_meet3_and_skew3(
 	FREE_lint(perp);
 
 	for (i = 0; i < nb_lines; i++) {
-		lines[i] = Klein->point_on_quadric_to_line(lines[i], 0 /* verbose_level*/);
+		lines[i] = Klein->point_on_quadric_to_line(
+				lines[i], 0 /* verbose_level*/);
 	}
 
 	if (f_v) {
@@ -835,13 +859,16 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	I2 = NEW_plint(six2);
 	I2_sz = NEW_int(six2);
 	for (rk = 0; rk < six2; rk++) {
+
 		Combi.unrank_k_subset(rk, subset, 6, 2);
+
 		Sorting.vec_intersect(
 			Perp_without_pt[subset[0]],
 			perp_sz,
 			Perp_without_pt[subset[1]],
 			perp_sz,
 			I2[rk], I2_sz[rk]);
+
 		if (f_v) {
 			cout << "Perp_" << subset[0] << " \\cap Perp_" << subset[1]
 				<< " of size " << I2_sz[rk] << " = ";
@@ -853,9 +880,13 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	I3 = NEW_plint(six3);
 	I3_sz = NEW_int(six3);
 	for (rk = 0; rk < six3; rk++) {
+
 		Combi.unrank_k_subset(rk, subset, 6, 3);
+
 		rk2 = Combi.rank_k_subset(subset, 6, 2);
+
 		Combi.unrank_k_subset(rk, subset, 6, 3);
+
 		Sorting.vec_intersect(I2[rk2], I2_sz[rk2],
 			Perp_without_pt[subset[2]],
 			perp_sz,
@@ -873,12 +904,17 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	I4 = NEW_plint(six4);
 	I4_sz = NEW_int(six4);
 	for (rk = 0; rk < six4; rk++) {
+
 		Combi.unrank_k_subset(rk, subset, 6, 4);
+
 		rk2 = Combi.rank_k_subset(subset, 6, 3);
+
 		Combi.unrank_k_subset(rk, subset, 6, 4);
+
 		Sorting.vec_intersect(I3[rk2], I3_sz[rk2],
 			Perp_without_pt[subset[3]], perp_sz,
 			I4[rk], I4_sz[rk]);
+
 		if (f_v) {
 			cout << rk << " / " << six4 << " : Perp_" << subset[0]
 				<< " \\cap Perp_" << subset[1] << " \\cap Perp_"
@@ -893,9 +929,13 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	I5 = NEW_plint(six5);
 	I5_sz = NEW_int(six5);
 	for (rk = 0; rk < six5; rk++) {
+
 		Combi.unrank_k_subset(rk, subset, 6, 5);
+
 		rk2 = Combi.rank_k_subset(subset, 6, 4);
+
 		Combi.unrank_k_subset(rk, subset, 6, 5);
+
 		Sorting.vec_intersect(I4[rk2], I4_sz[rk2],
 			Perp_without_pt[subset[4]], perp_sz,
 			I5[rk], I5_sz[rk]);
@@ -1879,126 +1919,6 @@ int surface_domain::compute_transversals_of_any_four(
 		cout << "surface_domain::compute_transversals_of_any_four done" << endl;
 	}
 	return ret;
-}
-
-int surface_domain::read_schlaefli_label(const char *p)
-{
-	if (strcmp(p, "a1") == 0) {
-		return 0;
-	}
-	else if (strcmp(p, "a2") == 0) {
-		return 1;
-	}
-	else if (strcmp(p, "a3") == 0) {
-		return 2;
-	}
-	else if (strcmp(p, "a4") == 0) {
-		return 3;
-	}
-	else if (strcmp(p, "a5") == 0) {
-		return 4;
-	}
-	else if (strcmp(p, "a6") == 0) {
-		return 5;
-	}
-	else if (strcmp(p, "b1") == 0) {
-		return 6;
-	}
-	else if (strcmp(p, "b2") == 0) {
-		return 7;
-	}
-	else if (strcmp(p, "b3") == 0) {
-		return 8;
-	}
-	else if (strcmp(p, "b4") == 0) {
-		return 9;
-	}
-	else if (strcmp(p, "b5") == 0) {
-		return 10;
-	}
-	else if (strcmp(p, "b6") == 0) {
-		return 11;
-	}
-	else if (strcmp(p, "c12") == 0) {
-		return 12;
-	}
-	else if (strcmp(p, "c13") == 0) {
-		return 13;
-	}
-	else if (strcmp(p, "c14") == 0) {
-		return 14;
-	}
-	else if (strcmp(p, "c15") == 0) {
-		return 15;
-	}
-	else if (strcmp(p, "c16") == 0) {
-		return 16;
-	}
-	else if (strcmp(p, "c23") == 0) {
-		return 17;
-	}
-	else if (strcmp(p, "c24") == 0) {
-		return 18;
-	}
-	else if (strcmp(p, "c25") == 0) {
-		return 19;
-	}
-	else if (strcmp(p, "c26") == 0) {
-		return 20;
-	}
-	else if (strcmp(p, "c34") == 0) {
-		return 21;
-	}
-	else if (strcmp(p, "c35") == 0) {
-		return 22;
-	}
-	else if (strcmp(p, "c36") == 0) {
-		return 23;
-	}
-	else if (strcmp(p, "c45") == 0) {
-		return 24;
-	}
-	else if (strcmp(p, "c46") == 0) {
-		return 25;
-	}
-	else if (strcmp(p, "c56") == 0) {
-		return 26;
-	}
-	else {
-		cout << "surface_domain::read_schlaefli_label unknown schlaefli label: " << p << endl;
-		exit(1);
-	}
-}
-
-void surface_domain::read_string_of_schlaefli_labels(std::string &str, int *&v, int &sz, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
-	char **argv;
-	int i;
-
-	if (f_v) {
-		cout << "surface_domain::read_string_of_schlaefli_labels" << endl;
-	}
-
-	ST.chop_string_comma_separated(str.c_str(), sz, argv);
-
-	if (f_v) {
-		cout << "surface_domain::read_string_of_schlaefli_labels reading:" << endl;
-		for (i = 0; i < sz; i++) {
-			cout << i << " : " << argv[i] << endl;
-		}
-	}
-
-	v = NEW_int(sz);
-	for (i = 0; i < sz; i++) {
-		v[i] = read_schlaefli_label(argv[i]);
-	}
-
-
-	if (f_v) {
-		cout << "surface_domain::read_string_of_schlaefli_labels done" << endl;
-	}
 }
 
 }}}

@@ -21,18 +21,18 @@ namespace algebraic_geometry {
 
 void surface_domain::print_equation(std::ostream &ost, int *coeffs)
 {
-	Poly3_4->print_equation(ost, coeffs);
+	PolynomialDomains->Poly3_4->print_equation(ost, coeffs);
 }
 
 void surface_domain::print_equation_maple(std::stringstream &ost, int *coeffs)
 {
-	Poly3_4->print_equation_str(ost, coeffs);
+	PolynomialDomains->Poly3_4->print_equation_str(ost, coeffs);
 }
 
 
 void surface_domain::print_equation_tex(std::ostream &ost, int *coeffs)
 {
-	Poly3_4->print_equation_tex(ost, coeffs);
+	PolynomialDomains->Poly3_4->print_equation_tex(ost, coeffs);
 }
 
 void surface_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs)
@@ -40,7 +40,7 @@ void surface_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int 
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{c}" << endl;
-	Poly3_4->print_equation_with_line_breaks_tex(
+	PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(
 			ost, coeffs, 10 /* nb_terms_per_line*/,
 			"\\\\\n" /* const char *new_line_text*/);
 	ost << "=0" << endl;
@@ -50,7 +50,7 @@ void surface_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int 
 
 void surface_domain::print_equation_tex_lint(std::ostream &ost, long int *coeffs)
 {
-	Poly3_4->print_equation_lint_tex(ost, coeffs);
+	PolynomialDomains->Poly3_4->print_equation_lint_tex(ost, coeffs);
 }
 
 #if 0
@@ -186,42 +186,12 @@ void surface_domain::print_web_of_cubic_curves(ostream &ost,
 }
 #endif
 
-void surface_domain::print_equation_in_trihedral_form(ostream &ost,
-	int *the_six_plane_equations, int lambda, int *the_equation)
-{
-	ost << "\\begin{align*}" << endl;
-	ost << "0 & = F_0F_1F_2 + \\lambda G_0G_1G_2\\\\" << endl;
-	ost << "& = " << endl;
-	ost << "\\Big(";
-	Poly1_4->print_equation(ost, the_six_plane_equations + 0 * 4);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	Poly1_4->print_equation(ost, the_six_plane_equations + 1 * 4);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	Poly1_4->print_equation(ost, the_six_plane_equations + 2 * 4);
-	ost << "\\Big)";
-	ost << "+ " << lambda;
-	ost << "\\Big(";
-	Poly1_4->print_equation(ost, the_six_plane_equations + 3 * 4);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	Poly1_4->print_equation(ost, the_six_plane_equations + 4 * 4);
-	ost << "\\Big)";
-	ost << "\\Big(";
-	Poly1_4->print_equation(ost, the_six_plane_equations + 5 * 4);
-	ost << "\\Big)\\\\";
-	ost << "& \\equiv " << endl;
-	Poly3_4->print_equation(ost, the_equation);
-	ost << "\\\\";
-	ost << "\\end{align*}" << endl;
-}
 
 void surface_domain::print_equation_wrapped(std::ostream &ost, int *the_equation)
 {
 	ost << "\\begin{align*}" << endl;
 	ost << "0 & = " << endl;
-	Poly3_4->print_equation(ost, the_equation);
+	PolynomialDomains->Poly3_4->print_equation(ost, the_equation);
 	ost << "\\\\";
 	ost << "\\end{align*}" << endl;
 }
@@ -382,160 +352,6 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 }
 #endif
 
-void surface_domain::print_clebsch_P(ostream &ost)
-{
-	int h, i, f_first;
-
-	if (!f_has_large_polynomial_domains) {
-		cout << "surface_domain::print_clebsch_P f_has_large_polynomial_"
-				"domains is FALSE" << endl;
-		//exit(1);
-		return;
-		}
-	ost << "\\clearpage" << endl;
-	ost << "\\subsection*{The Clebsch system $P$}" << endl;
-
-	ost << "$$" << endl;
-	print_clebsch_P_matrix_only(ost);
-	ost << "\\cdot \\left[" << endl;
-	ost << "\\begin{array}{c}" << endl;
-	ost << "x_0\\\\" << endl;
-	ost << "x_1\\\\" << endl;
-	ost << "x_2\\\\" << endl;
-	ost << "x_3\\\\" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-	ost << "= \\left[" << endl;
-	ost << "\\begin{array}{c}" << endl;
-	ost << "0\\\\" << endl;
-	ost << "0\\\\" << endl;
-	ost << "0\\\\" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-	ost << "$$" << endl;
-
-
-	ost << "\\begin{align*}" << endl;
-	for (h = 0; h < 4; h++) {
-		ost << "x_" << h << " &= C_" << h
-				<< "(y_0,y_1,y_2)=\\\\" << endl;
-		f_first = TRUE;
-		for (i = 0; i < Poly3->get_nb_monomials(); i++) {
-
-			if (Poly3_24->is_zero(CC[h * Poly3->get_nb_monomials() + i])) {
-				continue;
-				}
-			ost << "&";
-
-			if (f_first) {
-				f_first = FALSE;
-				}
-			else {
-				ost << "+";
-				}
-			ost << "\\Big(";
-			Poly3_24->print_equation_with_line_breaks_tex(
-					ost, CC[h * Poly3->get_nb_monomials() + i],
-					6, "\\\\\n&");
-			ost << "\\Big)" << endl;
-
-			ost << "\\cdot" << endl;
-
-			Poly3->print_monomial(ost, i);
-			ost << "\\\\" << endl;
-			}
-		}
-	ost << "\\end{align*}" << endl;
-}
-
-void surface_domain::print_clebsch_P_matrix_only(ostream &ost)
-{
-	int i, j;
-
-	if (!f_has_large_polynomial_domains) {
-		cout << "surface::print_clebsch_P_matrix_only "
-				"f_has_large_polynomial_domains is FALSE" << endl;
-		exit(1);
-		}
-	ost << "\\left[" << endl;
-	ost << "\\begin{array}{cccc}" << endl;
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			//cout << "Clebsch_P_" << i << "," << j << ":";
-			Poly2_27->print_equation(ost, Clebsch_P[i * 4 + j]);
-			if (j < 4 - 1) {
-				ost << " & ";
-				}
-			}
-		ost << "\\\\" << endl;
-		}
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-}
-
-void surface_domain::print_clebsch_cubics(ostream &ost)
-{
-	int i, h;
-
-	if (!f_has_large_polynomial_domains) {
-		cout << "surface_domain::print_clebsch_cubics "
-				"f_has_large_polynomial_domains is FALSE" << endl;
-		exit(1);
-		}
-	ost << "The Clebsch coefficients are:" << endl;
-	for (h = 0; h < 4; h++) {
-		ost << "C[" << h << "]:" << endl;
-		for (i = 0; i < Poly3->get_nb_monomials(); i++) {
-
-			if (Poly3_24->is_zero(CC[h * Poly3->get_nb_monomials() + i])) {
-				continue;
-				}
-
-			Poly3->print_monomial(ost, i);
-			ost << " \\cdot \\Big(";
-			Poly3_24->print_equation(ost, CC[h * Poly3->get_nb_monomials() + i]);
-			ost << "\\Big)" << endl;
-			}
-		}
-}
-
-void surface_domain::print_system(ostream &ost, int *system)
-{
-	int i, j;
-
-	//ost << "The system:\\\\";
-	ost << "$$" << endl;
-	ost << "\\left[" << endl;
-	ost << "\\begin{array}{cccc}" << endl;
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			int *p = system + (i * 4 + j) * 3;
-			Poly1->print_equation(ost, p);
-			if (j < 4 - 1) {
-				ost << " & ";
-				}
-			}
-		ost << "\\\\" << endl;
-		}
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-	ost << "\\cdot \\left[" << endl;
-	ost << "\\begin{array}{c}" << endl;
-	ost << "x_0\\\\" << endl;
-	ost << "x_1\\\\" << endl;
-	ost << "x_2\\\\" << endl;
-	ost << "x_3\\\\" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-	ost << "= \\left[" << endl;
-	ost << "\\begin{array}{c}" << endl;
-	ost << "0\\\\" << endl;
-	ost << "0\\\\" << endl;
-	ost << "0\\\\" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-	ost << "$$" << endl;
-}
 
 void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 	long int *F_planes_rank, long int *G_planes_rank)
@@ -566,7 +382,7 @@ void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 
 void surface_domain::print_basics(ostream &ost)
 {
-	print_polynomial_domains(ost);
+	PolynomialDomains->print_polynomial_domains(ost);
 	Schlaefli->print_Schlaefli_labelling(ost);
 
 
@@ -578,35 +394,16 @@ void surface_domain::print_basics(ostream &ost)
 
 	cout << "surface_domain::print_basics "
 			"before print_clebsch_P" << endl;
-	print_clebsch_P(ost);
+	PolynomialDomains->print_clebsch_P(ost);
 	cout << "surface_domain::print_basics "
 			"after print_clebsch_P" << endl;
 
 }
 
 
-void surface_domain::print_polynomial_domains(ostream &ost)
-{
-	ost << "The polynomial domain Poly3\\_4 is:" << endl;
-	Poly3_4->print_monomial_ordering(ost);
-
-	ost << "The polynomial domain Poly1\\_x123 is:" << endl;
-	Poly1_x123->print_monomial_ordering(ost);
-
-	ost << "The polynomial domain Poly2\\_x123 is:" << endl;
-	Poly2_x123->print_monomial_ordering(ost);
-
-	ost << "The polynomial domain Poly3\\_x123 is:" << endl;
-	Poly3_x123->print_monomial_ordering(ost);
-
-	ost << "The polynomial domain Poly4\\_x123 is:" << endl;
-	Poly4_x123->print_monomial_ordering(ost);
-
-}
 
 
-
-void surface_domain::sstr_line_label(stringstream &sstr, long int pt)
+void surface_domain::sstr_line_label(std::stringstream &sstr, long int pt)
 {
 	if (pt >= 27) {
 		cout << "surface_domain::sstr_line_label pt >= 27, pt=" << pt << endl;

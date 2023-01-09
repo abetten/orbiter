@@ -1560,6 +1560,8 @@ public:
 			std::string &evaluate_text, int verbose_level);
 	void drop_quotes(std::string &in, std::string &out);
 	void parse_comma_separated_strings(std::string &in, std::vector<std::string> &out);
+	int read_schlaefli_label(const char *p);
+	void read_string_of_schlaefli_labels(std::string &str, int *&v, int &sz, int verbose_level);
 
 
 };
@@ -1818,6 +1820,8 @@ public:
 
 	int f_field;
 	std::string field_label;
+
+	int f_allow_negatives;
 
 	int f_dense;
 	std::string dense_text;

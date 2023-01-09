@@ -99,11 +99,13 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 
 
 	if (f_v) {
-		cout << "web_of_cubic_curves::init before find_Eckardt_points" << endl;
+		cout << "web_of_cubic_curves::init "
+				"before find_Eckardt_points" << endl;
 	}
 	find_Eckardt_points(verbose_level);
 	if (f_v) {
-		cout << "web_of_cubic_curves::init after find_Eckardt_points" << endl;
+		cout << "web_of_cubic_curves::init "
+				"after find_Eckardt_points" << endl;
 	}
 
 	if (f_v) {
@@ -117,11 +119,13 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	}
 
 	if (f_v) {
-		cout << "web_of_cubic_curves::init before find_trihedral_pairs" << endl;
+		cout << "web_of_cubic_curves::init "
+				"before find_trihedral_pairs" << endl;
 	}
 	find_trihedral_pairs(verbose_level);
 	if (f_v) {
-		cout << "web_of_cubic_curves::init after find_trihedral_pairs" << endl;
+		cout << "web_of_cubic_curves::init "
+				"after find_trihedral_pairs" << endl;
 	}
 
 	//int t_idx0;
@@ -135,7 +139,8 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	}
 
 	for (h = 0; h < 6; h++) {
-		row_col_Eckardt_points[h] = Surf->Schlaefli->Trihedral_to_Eckardt[t_idx0 * 6 + h];
+		row_col_Eckardt_points[h] =
+				Surf->Schlaefli->Trihedral_to_Eckardt[t_idx0 * 6 + h];
 	}
 	//int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx0 * 6, row_col_Eckardt_points, 6);
 
@@ -176,10 +181,14 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 
 	for (i = 0; i < 45; i++) {
 		//cout << i << " / " << 45 << ":" << endl;
+
 		for (j = 0; j < 6; j++) {
+
 			Surf->P2->unrank_point(pt_vec, arc6[j]);
-			c = Surf->Poly3->evaluate_at_a_point(
+
+			c = Surf->PolynomialDomains->Poly3->evaluate_at_a_point(
 					Web_of_cubic_curves + i * 10, pt_vec);
+
 			if (c) {
 				cout << "web_of_cubic_curves::init "
 						"the cubic curve does not "
@@ -189,8 +198,8 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 		}
 	}
 	if (f_v) {
-		cout << "web_of_cubic_curves::init The cubic curves all pass "
-				"through the arc" << endl;
+		cout << "web_of_cubic_curves::init "
+				"The cubic curves all pass through the arc" << endl;
 	}
 
 	if (f_v) {
@@ -252,8 +261,11 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 
 	int Basis[16];
 	for (i = 0; i < 45; i++) {
+
 		Int_vec_copy(Tritangent_plane_equations + i * 4, Basis, 4);
+
 		Surf->F->Linear_algebra->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level */);
+
 		The_plane_rank[i] = Surf->rank_plane(Basis + 4);
 	}
 	if (f_v) {
@@ -287,7 +299,8 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "web_of_cubic_curves::init "
 				"Dual_point_ranks:" << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(Dual_point_ranks, nb_T, 6);
+		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(
+				Dual_point_ranks, nb_T, 6);
 	}
 
 
@@ -335,27 +348,35 @@ void web_of_cubic_curves::compute_web_of_cubic_curves(long int *arc6, int verbos
 
 	// the first 30 curves:
 	for (rk = 0; rk < 30; rk++, a++) {
+
 		Combi.ordered_pair_unrank(rk, i, j, 6);
+
 		ij = Combi.ij2k(i, j, 6);
-		Surf->multiply_conic_times_linear(conics + j * 6,
+
+		Surf->PolynomialDomains->multiply_conic_times_linear(conics + j * 6,
 			bisecants + ij * 3,
 			ten_coeff,
 			0 /* verbose_level */);
+
 		Int_vec_copy(ten_coeff, Web_of_cubic_curves + a * 10, 10);
 	}
 
 	// the next 15 curves:
 	for (rk = 0; rk < 15; rk++, a++) {
+
 		Combi.unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
+
 		ij = Combi.ij2k(i, j, 6);
 		kl = Combi.ij2k(k, l, 6);
 		mn = Combi.ij2k(m, n, 6);
-		Surf->multiply_linear_times_linear_times_linear(
+
+		Surf->PolynomialDomains->multiply_linear_times_linear_times_linear(
 			bisecants + ij * 3,
 			bisecants + kl * 3,
 			bisecants + mn * 3,
 			ten_coeff,
 			0 /* verbose_level */);
+
 		Int_vec_copy(ten_coeff, Web_of_cubic_curves + a * 10, 10);
 	}
 
@@ -546,7 +567,8 @@ void web_of_cubic_curves::find_Eckardt_points(int verbose_level)
 				"after Surf->P2->compute_eckardt_point_info" << endl;
 	}
 	if (f_v) {
-		cout << "web_of_cubic_curves::find_Eckardt_points We found " << E->nb_E
+		cout << "web_of_cubic_curves::find_Eckardt_points "
+				"We found " << E->nb_E
 				<< " Eckardt points" << endl;
 		for (s = 0; s < E->nb_E; s++) {
 			cout << s << " / " << E->nb_E << " : ";
@@ -742,7 +764,9 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 	find_point_not_on_six_curves(/*arc6,*/ /*six_curves,*/
 		pt, f_point_was_found, verbose_level);
 	if (!f_point_was_found) {
-		cout << "web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc did not find point not on any of the six curves, picking lambda = 1" << endl;
+		cout << "web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc "
+				"did not find point not on any of the six curves, "
+				"picking lambda = 1" << endl;
 		//exit(1);
 		lambda = 1;
 	}
@@ -753,9 +777,10 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 			cout << "pt=" << pt << endl;
 		}
 
-		Surf->Poly3->unrank_point(v, pt);
+		Surf->PolynomialDomains->Poly3->unrank_point(v, pt);
 		for (i = 0; i < 6; i++) {
-			evals[i] = Surf->Poly3->evaluate_at_a_point(six_curves + i * 10, v);
+			evals[i] = Surf->PolynomialDomains->Poly3->evaluate_at_a_point(
+					six_curves + i * 10, v);
 		}
 
 		if (f_v) {
@@ -791,7 +816,7 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 
 		for (i = 0; i < 6; i++) {
 			evals_for_point[i] =
-					Surf->Poly1_4->evaluate_at_a_point(
+					Surf->PolynomialDomains->Poly1_4->evaluate_at_a_point(
 						Tritangent_plane_equations +
 						row_col_Eckardt_points[i] * 4,
 						pt_on_surface);
@@ -836,9 +861,9 @@ void web_of_cubic_curves::find_point_not_on_six_curves(//long int *arc6,
 		if (Sorting.lint_vec_search_linear(arc6, 6, pt, idx)) {
 			continue;
 		}
-		Surf->Poly3->unrank_point(v, pt);
+		Surf->PolynomialDomains->Poly3->unrank_point(v, pt);
 		for (i = 0; i < 6; i++) {
-			a = Surf->Poly3->evaluate_at_a_point(six_curves + i * 10, v);
+			a = Surf->PolynomialDomains->Poly3->evaluate_at_a_point(six_curves + i * 10, v);
 			if (a == 0) {
 				break;
 			}
@@ -905,7 +930,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(ostream &ost)
 			<< "}\\big) = \\Phi\\big(\\pi_{"
 			<< Surf->Schlaefli->Eckard_point_label[row_col_Eckardt_points[i]]
 			<< "}\\big)=V\\Big(" << endl;
-		Surf->Poly3->print_equation(ost, six_curves + i * 10);
+		Surf->PolynomialDomains->Poly3->print_equation(ost, six_curves + i * 10);
 		ost << "\\Big)" << endl;
 		ost << "$$" << endl;
 	}
@@ -934,7 +959,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(ostream &ost)
 			<< "}\\big) = \\Phi\\big(\\pi_{"
 			<< Surf->Schlaefli->Eckard_point_label[base_curves4[i]]
 			<< "}\\big)=V\\Big(" << endl;
-		Surf->Poly3->print_equation(ost, base_curves + i * 10);
+		Surf->PolynomialDomains->Poly3->print_equation(ost, base_curves + i * 10);
 		ost << "\\Big)" << endl;
 		ost << "$$" << endl;
 	}
@@ -949,7 +974,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(ostream &ost)
 	for (i = 0; i < 45; i++) {
 		ost << "$\\pi_{" << i << "}=\\pi_{"
 			<< Surf->Schlaefli->Eckard_point_label[i] << "}=V\\Big(";
-		Surf->Poly1_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + i * 4);
 		ost << "\\Big)$\\\\";
 	}
@@ -998,7 +1023,7 @@ void web_of_cubic_curves::print_the_six_plane_equations(
 		h = row_col_Eckardt_points[i];
 		ost << "$\\pi_{" << h << "}=\\pi_{"
 				<< Surf->Schlaefli->Eckard_point_label[h] << "}=V\\big(";
-		Surf->Poly1_4->print_equation(ost, Tritangent_plane_equations + h * 4);
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost, Tritangent_plane_equations + h * 4);
 		ost << "\\big)$\\\\";
 	}
 }
@@ -1031,33 +1056,33 @@ void web_of_cubic_curves::print_surface_equations_on_line(
 		ost << "$";
 		ost << v[0] << " \\cdot ";
 		ost << "\\big(";
-		Surf->Poly1_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + row_col_Eckardt_points[0] * 4);
 		ost << "\\big)";
 		ost << "\\big(";
-		Surf->Poly1_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + row_col_Eckardt_points[1] * 4);
 		ost << "\\big)";
 		ost << "\\big(";
-		Surf->Poly1_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + row_col_Eckardt_points[2] * 4);
 		ost << "\\big)";
 		ost << "+";
 		ost << v[1] << " \\cdot ";
 		ost << "\\big(";
-		Surf->Poly1_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + row_col_Eckardt_points[3] * 4);
 		ost << "\\big)";
 		ost << "\\big(";
-		Surf->Poly1_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + row_col_Eckardt_points[4] * 4);
 		ost << "\\big)";
 		ost << "\\big(";
-		Surf->Poly1_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + row_col_Eckardt_points[5] * 4);
 		ost << "\\big)";
 		ost << " = ";
-		Surf->Poly3_4->print_equation(ost,
+		Surf->PolynomialDomains->Poly3_4->print_equation(ost,
 				The_surface_equations + i * 20);
 		ost << "$\\\\";
 	}
@@ -1193,10 +1218,10 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, ostream &ost
 			ost << "C_" << j + 1
 				<< "P_{" << i + 1 << "}P_{" << j + 1 << "} = ";
 			ost << "\\big(";
-			Surf->Poly2->print_equation(ost, conics + j * 6);
+			Surf->PolynomialDomains->Poly2->print_equation(ost, conics + j * 6);
 			ost << "\\big)";
 			ost << "\\big(";
-			Surf->Poly1->print_equation(ost, bisecants + ij * 3);
+			Surf->PolynomialDomains->Poly1->print_equation(ost, bisecants + ij * 3);
 			ost << "\\big)";
 			//multiply_conic_times_linear(conics + j * 6,
 			//bisecants + ij * 3, ten_coeff, 0 /* verbose_level */);
@@ -1210,20 +1235,20 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, ostream &ost
 					<< k + 1 << "}P_{" << l + 1 << "},P_{"
 					<< m + 1 << "}P_{" << n + 1 << "} = ";
 			ost << "\\big(";
-			Surf->Poly1->print_equation(ost, bisecants + ij * 3);
+			Surf->PolynomialDomains->Poly1->print_equation(ost, bisecants + ij * 3);
 			ost << "\\big)";
 			ost << "\\big(";
-			Surf->Poly1->print_equation(ost, bisecants + kl * 3);
+			Surf->PolynomialDomains->Poly1->print_equation(ost, bisecants + kl * 3);
 			ost << "\\big)";
 			ost << "\\big(";
-			Surf->Poly1->print_equation(ost, bisecants + mn * 3);
+			Surf->PolynomialDomains->Poly1->print_equation(ost, bisecants + mn * 3);
 			ost << "\\big)";
 			//multiply_linear_times_linear_times_linear(
 			//bisecants + ij * 3, bisecants + kl * 3,
 			//bisecants + mn * 3, ten_coeff, 0 /* verbose_level */);
 		}
 		ost << " = ";
-		Surf->Poly3->print_equation(ost, Web_of_cubic_curves + h * 10);
+		Surf->PolynomialDomains->Poly3->print_equation(ost, Web_of_cubic_curves + h * 10);
 		ost << "$\\\\";
 	}
 
@@ -1279,7 +1304,7 @@ static void Web_of_cubic_curves_entry_print(int *p,
 	web_of_cubic_curves *Web = (web_of_cubic_curves *) data;
 
 	if (i == -1) {
-		Web->Surf->Poly3->print_monomial_latex(output, j);
+		Web->Surf->PolynomialDomains->Poly3->print_monomial_latex(output, j);
 	}
 	else if (j == -1) {
 		char str[1000];

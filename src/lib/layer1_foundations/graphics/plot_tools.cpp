@@ -28,9 +28,9 @@ plot_tools::~plot_tools()
 
 void plot_tools::draw_density(
 		layered_graph_draw_options *Draw_options,
-		char *prefix, int *the_set, int set_size,
-	int f_title, const char *title, int out_of, 
-	const char *label_x, 
+		std::string &prefix, int *the_set, int set_size,
+	int f_title, std::string &title, int out_of,
+	std::string &label_x,
 	int f_circle, int circle_at, int circle_rad, 
 	int f_mu, int f_sigma, int nb_standard_deviations, 
 	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
@@ -151,8 +151,8 @@ void plot_tools::draw_density_multiple_curves(
 		layered_graph_draw_options *Draw_options,
 		std::string &prefix,
 	int **Data, int *Data_size, int nb_data_sets, 
-	int f_title, const char *title, int out_of, 
-	const char *label_x, 
+	int f_title, std::string &title, int out_of,
+	std::string &label_x,
 	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
 	int offset_x, int f_switch_x,
 	int f_v_logarithmic, double log_base, int no, int f_embedded, 
@@ -354,7 +354,7 @@ void plot_tools::y_to_pt_on_curve(int y_in, int &x, int &y,
 void plot_tools::projective_plane_draw_grid(std::string &fname,
 		layered_graph_draw_options *O,
 	int q, int *Table, int nb, 
-	int f_point_labels, char **Point_labels, 
+	int f_point_labels, std::string *Point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -895,13 +895,12 @@ void plot_tools::draw_point_set_in_plane(
 	}
 	if (f_point_labels) {
 		char str[1000];
-		char **Labels;
+		std::string *Labels;
 
-		Labels = NEW_pchar(nb_pts);
+		Labels = new std::string[nb_pts];
 		for (i = 0; i < nb_pts; i++) {
 			snprintf(str, 1000, "%ld", Pts[i]);
-			Labels[i] = NEW_char(strlen(str) + 1);
-			strcpy(Labels[i], str);
+			Labels[i].assign(str);
 		}
 		if (f_v) {
 			cout << "plot_tools::draw_point_set_in_plane "
@@ -914,10 +913,7 @@ void plot_tools::draw_point_set_in_plane(
 			cout << "plot_tools::draw_point_set_in_plane "
 					"after projective_plane_draw_grid" << endl;
 		}
-		for (i = 0; i < nb_pts; i++) {
-			FREE_char(Labels[i]);
-		}
-		FREE_pchar(Labels);
+		delete [] Labels;
 	}
 	else {
 		if (f_v) {

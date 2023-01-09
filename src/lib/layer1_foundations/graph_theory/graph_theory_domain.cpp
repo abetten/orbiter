@@ -715,9 +715,12 @@ void graph_theory_domain::draw_bitmatrix(
 
 		G.init(fname_base, Draw_options, verbose_level - 1);
 
-		G.draw_bitmatrix2(f_dots, f_partition, nb_row_parts, row_part_first,
-				nb_col_parts, col_part_first, f_row_grid, f_col_grid,
-				f_bitmatrix, Bitmatrix, M, m, n, //xmax_in, ymax_in,
+		G.draw_bitmatrix2(f_dots,
+				f_partition,
+				nb_row_parts, row_part_first,
+				nb_col_parts, col_part_first,
+				f_row_grid, f_col_grid,
+				f_bitmatrix, Bitmatrix, M, m, n,
 				f_has_labels, labels);
 
 		G.finish(cout, TRUE);

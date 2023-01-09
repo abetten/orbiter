@@ -139,7 +139,8 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		multiplicity, 0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "eckardt_point_info::init We found " << nb_B_pts << " B-pts: ";
+		cout << "eckardt_point_info::init "
+				"We found " << nb_B_pts << " B-pts: ";
 		Int_vec_print(cout, B_pts, nb_B_pts);
 		cout << endl;
 	}
@@ -227,7 +228,8 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 	}
 
 	if (f_v) {
-		cout << "eckardt_point_info::init computing Eckardt points of the second type E_ij:" << endl;
+		cout << "eckardt_point_info::init computing Eckardt "
+				"points of the second type E_ij:" << endl;
 	}
 
 
@@ -263,35 +265,41 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		}
 
 		if (f_v) {
-			cout << "eckardt_point_info::init j=" << j << " / 6 before P2->determine_conic_in_plane" << endl;
+			cout << "eckardt_point_info::init j=" << j << " / 6 "
+					"before P2->determine_conic_in_plane" << endl;
 		}
 		P2->determine_conic_in_plane(arc5, 5,
 			six_coeffs, verbose_level);
 		if (f_v) {
-			cout << "eckardt_point_info::init j=" << j << " / 6 after P2->determine_conic_in_plane" << endl;
+			cout << "eckardt_point_info::init j=" << j << " / 6 "
+					"after P2->determine_conic_in_plane" << endl;
 		}
 
 		P2->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
 
 		if (f_v) {
-			cout << "eckardt_point_info::init j=" << j << " / 6 coefficients of the conic : ";
+			cout << "eckardt_point_info::init j=" << j << " / 6 "
+					"coefficients of the conic : ";
 			Int_vec_print(cout, six_coeffs, 6);
 			cout << endl;
 		}
 
 		if (f_v) {
-			cout << "eckardt_point_info::init j=" << j << " / 6 before P2->find_tangent_lines_to_conic" << endl;
+			cout << "eckardt_point_info::init j=" << j << " / 6 "
+					"before P2->find_tangent_lines_to_conic" << endl;
 		}
 		P2->find_tangent_lines_to_conic(six_coeffs,
 			arc5, 5,
 			tangents, verbose_level);
 		if (f_v) {
-			cout << "eckardt_point_info::init j=" << j << " / 6 after P2->find_tangent_lines_to_conic" << endl;
+			cout << "eckardt_point_info::init j=" << j << " / 6 "
+					"after P2->find_tangent_lines_to_conic" << endl;
 		}
 
 		for (i = 0; i < 5; i++) {
 			if (f_v) {
-				cout << "eckardt_point_info::init j=" << j << " / 6 i=" << i << " / 5 tangents[i] = " << tangents[i] << endl;
+				cout << "eckardt_point_info::init j=" << j << " / 6 "
+						"i=" << i << " / 5 tangents[i] = " << tangents[i] << endl;
 			}
 
 			P2->unrank_line(Basis, tangents[i]);
@@ -367,14 +375,16 @@ void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
 	Poly1 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
-		cout << "eckardt_point_info::print_bisecants before Poly1->init" << endl;
+		cout << "eckardt_point_info::print_bisecants "
+				"before Poly1->init" << endl;
 	}
 	Poly1->init(P2->F,
 			3 /* nb_vars */, 1 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "eckardt_point_info::print_bisecants after Poly1->init" << endl;
+		cout << "eckardt_point_info::print_bisecants "
+				"after Poly1->init" << endl;
 	}
 
 
@@ -461,14 +471,16 @@ void eckardt_point_info::print_conics(ostream &ost, int verbose_level)
 	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
-		cout << "eckardt_point_info::print_conics before Poly2->init" << endl;
+		cout << "eckardt_point_info::print_conics "
+				"before Poly2->init" << endl;
 	}
 	Poly2->init(P2->F,
 			3 /* nb_vars */, 2 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "eckardt_point_info::print_conics after Poly2->init" << endl;
+		cout << "eckardt_point_info::print_conics "
+				"after Poly2->init" << endl;
 	}
 
 

@@ -18,7 +18,8 @@ namespace layer1_foundations {
 namespace algebraic_geometry {
 
 
-void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, int *coeff, int verbose_level)
+void surface_domain::create_equation_general_abcd(int a, int b, int c, int d,
+		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -88,7 +89,7 @@ void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, in
 
 	int E = F->add(E_plus, F->negate(E_minus));
 
-	Int_vec_zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
 
 	coeff[5] = F->mult3(m1, A, bmd);
 	coeff[16] = F->mult(A, F->add4(a, b, F->negate(c), F->negate(d)));
@@ -107,7 +108,8 @@ void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, in
 	}
 }
 
-void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n, int *coeff, int verbose_level)
+void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n,
+		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -115,7 +117,7 @@ void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n, int
 	if (f_v) {
 		cout << "surface_domain::create_equation_Cayley_klmn" << endl;
 	}
-	Int_vec_zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
 
 	coeff[6] = coeff[9] = coeff[12] = coeff[3] = 1;
 
@@ -172,7 +174,7 @@ void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_l
 	delta = w2;
 	epsilon = F->mult(ap1c, F->mult(a, c));
 
-	Int_vec_zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
 
 	coeff[4] = coeff[7] = coeff[8] = coeff[11] = coeff[12] = alpha;
 	coeff[17] = beta;
@@ -199,7 +201,7 @@ void surface_domain::create_equation_F13(int a, int *coeff, int verbose_level)
 
 	b = F->power(F->add(a, 1), 5);
 	c = F->add(F->power(a, 3), 1);
-	Int_vec_zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
 
 	coeff[6] = b;
 	coeff[13] = b;
@@ -222,7 +224,7 @@ void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
 
 	b = F->mult(a, F->add(a, 1));
 	c = F->add(F->mult(a, a), F->add(a, 1));
-	Int_vec_zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
 
 	coeff[5] = coeff[8] = coeff[9] = coeff[10] = coeff[11] = coeff[12] = 1;
 	coeff[14] = coeff[15] = b;
@@ -243,11 +245,13 @@ surface_object *surface_domain::create_surface_general_abcd(int a, int b, int c,
 	int coeff20[20];
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_general_abcd before create_equation_general_abcd" << endl;
+		cout << "surface_domain::create_surface_general_abcd "
+				"before create_equation_general_abcd" << endl;
 	}
 	create_equation_general_abcd(a, b, c, d, coeff20, verbose_level);
 	if (f_v) {
-		cout << "surface_domain::create_surface_general_abcd after create_equation_general_abcd" << endl;
+		cout << "surface_domain::create_surface_general_abcd "
+				"after create_equation_general_abcd" << endl;
 	}
 
 	surface_object *SO;
@@ -255,9 +259,14 @@ surface_object *surface_domain::create_surface_general_abcd(int a, int b, int c,
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_general_abcd before SO->init_equation" << endl;
+		cout << "surface_domain::create_surface_general_abcd "
+				"before SO->init_equation" << endl;
 	}
 	SO->init_equation(this, coeff20, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd "
+				"after SO->init_equation" << endl;
+	}
 
 
 	if (f_v) {
@@ -279,11 +288,13 @@ surface_object *surface_domain::create_surface_bes(int a, int c,
 	int coeff20[20];
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_bes before create_equation_bes" << endl;
+		cout << "surface_domain::create_surface_bes "
+				"before create_equation_bes" << endl;
 	}
 	create_equation_bes(a, c, coeff20, verbose_level);
 	if (f_v) {
-		cout << "surface_domain::create_surface_bes after create_equation_bes" << endl;
+		cout << "surface_domain::create_surface_bes "
+				"after create_equation_bes" << endl;
 	}
 
 	surface_object *SO;
@@ -291,9 +302,14 @@ surface_object *surface_domain::create_surface_bes(int a, int c,
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_bes before SO->init_equation" << endl;
+		cout << "surface_domain::create_surface_bes "
+				"before SO->init_equation" << endl;
 	}
 	SO->init_equation(this, coeff20, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes "
+				"after SO->init_equation" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_bes done" << endl;
@@ -312,11 +328,13 @@ surface_object *surface_domain::create_surface_F13(int a, int verbose_level)
 	int coeff20[20];
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_F13 before create_equation_F13" << endl;
+		cout << "surface_domain::create_surface_F13 "
+				"before create_equation_F13" << endl;
 	}
 	create_equation_F13(a, coeff20, verbose_level);
 	if (f_v) {
-		cout << "surface_domain::create_surface_F13 after create_equation_F13" << endl;
+		cout << "surface_domain::create_surface_F13 "
+				"after create_equation_F13" << endl;
 	}
 
 	surface_object *SO;
@@ -324,9 +342,14 @@ surface_object *surface_domain::create_surface_F13(int a, int verbose_level)
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_F13 before SO->init_equation" << endl;
+		cout << "surface_domain::create_surface_F13 "
+				"before SO->init_equation" << endl;
 	}
 	SO->init_equation(this, coeff20, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_F13 "
+				"after SO->init_equation" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_F13 done" << endl;
@@ -344,11 +367,13 @@ surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
 	int coeff20[20];
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_G13 before create_equation_G13" << endl;
+		cout << "surface_domain::create_surface_G13 "
+				"before create_equation_G13" << endl;
 	}
 	create_equation_G13(a, coeff20, verbose_level);
 	if (f_v) {
-		cout << "surface_domain::create_surface_G13 after create_equation_G13" << endl;
+		cout << "surface_domain::create_surface_G13 "
+				"after create_equation_G13" << endl;
 	}
 
 	surface_object *SO;
@@ -356,9 +381,14 @@ surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_G13 before SO->init_equation" << endl;
+		cout << "surface_domain::create_surface_G13 "
+				"before SO->init_equation" << endl;
 	}
 	SO->init_equation(this, coeff20, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13 "
+				"after SO->init_equation" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_G13 done" << endl;
@@ -440,7 +470,8 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 #endif
 
 	if (f_v) {
-		cout << "surface_domain::create_Eckardt_surface The double six is:" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"The double six is:" << endl;
 		Gr->print_set(Oab, 12);
 	}
 
@@ -452,7 +483,8 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 	nb = 12;
 
 	if (f_v) {
-		cout << "surface_domain::create_Eckardt_surface We have a set of "
+		cout << "surface_domain::create_Eckardt_surface "
+				"We have a set of "
 				"lines of size " << nb << ":";
 		Lint_vec_print(cout, Lines27, nb);
 		cout << endl;
@@ -462,7 +494,8 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 		Lines27 + 12, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "surface_domain::create_Eckardt_surface The remaining 15 lines are:";
+		cout << "surface_domain::create_Eckardt_surface "
+				"The remaining 15 lines are:";
 		Lint_vec_print(cout, Lines27 + 12, 15);
 		cout << endl;
 		Gr->print_set(Lines27 + 12, 15);
@@ -470,7 +503,8 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 
 
 	if (f_v) {
-		cout << "surface_domain::create_Eckardt_surface before create_HCV_fifteen_lines" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"before create_HCV_fifteen_lines" << endl;
 	}
 
 	long int special_lines[15];
@@ -484,11 +518,13 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 		}
 	}
 	if (f_v) {
-		cout << "surface_domain::create_Eckardt_surface after create_special_fifteen_lines" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"after create_special_fifteen_lines" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_domain::create_Eckardt_surface before rank_of_system" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"before rank_of_system" << endl;
 	}
 	rk = rank_of_system(27, Lines27, 0 /* verbose_level */);
 	if (f_v) {
@@ -513,17 +549,20 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 
 	if (!test_Eckardt_form_alpha_beta(coeff20, alpha, beta,
 		0 /* verbose_level */)) {
-		cout << "surface_domain::create_Eckardt_surface not of special form" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"not of special form" << endl;
 		exit(1);
 	}
 
 
 	if (alpha != alpha0) {
-		cout << "surface_domain::create_Eckardt_surface alpha != alpha0" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"alpha != alpha0" << endl;
 		exit(1);
 	}
 	if (beta != beta0) {
-		cout << "surface_domain::create_Eckardt_surface beta != beta0" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"beta != beta0" << endl;
 		exit(1);
 	}
 
@@ -534,12 +573,17 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_domain::create_Eckardt_surface before SO->init_with_27_lines" << endl;
+		cout << "surface_domain::create_Eckardt_surface "
+				"before SO->init_with_27_lines" << endl;
 	}
 	SO->init_with_27_lines(this,
 		Lines27, coeff20,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_Eckardt_surface "
+				"after SO->init_with_27_lines" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_domain::create_Eckardt_surface done" << endl;
@@ -560,7 +604,7 @@ void surface_domain::create_equation_Eckardt_surface(int a, int b,
 	alpha = F->negate(F->mult(b, b));
 	beta = F->mult(F->mult(F->power(b, 3),
 		F->add(1, F->mult(a, a))), F->inverse(a));
-	Int_vec_zero(coeff, nb_monomials);
+	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
 
 	coeff[3] = 1;
 	coeff[6] = alpha;

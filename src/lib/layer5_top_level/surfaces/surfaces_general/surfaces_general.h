@@ -470,6 +470,7 @@ public:
 	actions::action *A_double_sixes;
 	actions::action *A_on_tritangent_planes;
 	actions::action *A_on_Hesse_planes;
+	actions::action *A_on_axes;
 	actions::action *A_on_trihedral_pairs;
 	actions::action *A_on_pts_not_on_lines;
 
@@ -483,6 +484,7 @@ public:
 	groups::schreier *Orbits_on_double_sixes;
 	groups::schreier *Orbits_on_tritangent_planes;
 	groups::schreier *Orbits_on_Hesse_planes;
+	groups::schreier *Orbits_on_axes;
 	groups::schreier *Orbits_on_trihedral_pairs;
 	groups::schreier *Orbits_on_points_not_on_lines;
 
@@ -519,6 +521,7 @@ public:
 	void init_orbits_on_double_sixes(int verbose_level);
 	void init_orbits_on_tritangent_planes(int verbose_level);
 	void init_orbits_on_Hesse_planes(int verbose_level);
+	void init_orbits_on_axes(int verbose_level);
 	void init_orbits_on_trihedral_pairs(int verbose_level);
 	void init_orbits_on_points_not_on_lines(int verbose_level);
 	void print_generators_on_lines(

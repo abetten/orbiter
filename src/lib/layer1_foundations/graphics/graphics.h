@@ -123,9 +123,6 @@ public:
 			double off_x, double off_y, double off_z,
 			std::string &color_options,
 			int idx_point,
-			//double x, double y, double z,
-			//double up_x, double up_y, double up_z,
-			//double view_x, double view_y, double view_z,
 			std::ostream &ost, int verbose_level);
 	void draw_text_with_selection(int *selection, int nb_select,
 		double thickness_half, double extra_spacing,
@@ -226,12 +223,6 @@ public:
 	int B;
 	int *Vi;
 	int *Bj;
-
-#if 0
-	int *R;
-	int *X;
-	int dim_X;
-#endif
 
 	int f_labelling_points;
 	std::string *point_labels;
@@ -868,7 +859,8 @@ public:
 			int radius,
 			int verbose_level);
 	void draw_bitmatrix2(int f_dots,
-		int f_partition, int nb_row_parts, int *row_part_first,
+		int f_partition,
+		int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first,
 		int f_row_grid, int f_col_grid,
 		int f_bitmatrix, data_structures::bitmatrix *Bitmatrix, int *M,
@@ -878,8 +870,8 @@ public:
 	void draw_density2(int no,
 		int *outline_value, int *outline_number, int outline_sz,
 		int min_value, int max_value, int offset_x, int f_switch_x,
-		int f_title, const char *title,
-		const char *label_x,
+		int f_title, std::string &title,
+		std::string &label_x,
 		int f_circle, int circle_at, int circle_rad,
 		int f_mu, int f_sigma, int nb_standard_deviations,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid);
@@ -888,15 +880,15 @@ public:
 		int *outline_sz, int nb_curves,
 		int min_x, int max_x, int min_y, int max_y,
 		int offset_x, int f_switch_x,
-		int f_title, const char *title,
-		const char *label_x,
+		int f_title, std::string &title,
+		std::string &label_x,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
 		int f_v_logarithmic, double log_base);
 	void projective_plane_draw_grid2(
 			layered_graph_draw_options *O,
 			int q,
 			int *Table, int nb,
-			int f_point_labels, char **Point_labels, int verbose_level);
+			int f_point_labels, std::string *Point_labels, int verbose_level);
 	void draw_matrix_in_color(
 		int f_row_grid, int f_col_grid,
 		int *Table, int nb_colors,
@@ -1000,9 +992,9 @@ public:
 
 	void draw_density(
 			layered_graph_draw_options *Draw_options,
-			char *prefix, int *the_set, int set_size,
-		int f_title, const char *title, int out_of,
-		const char *label_x,
+			std::string &prefix, int *the_set, int set_size,
+		int f_title, std::string &title, int out_of,
+		std::string &label_x,
 		int f_circle, int circle_at, int circle_rad,
 		int f_mu, int f_sigma, int nb_standard_deviations,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
@@ -1013,8 +1005,8 @@ public:
 			layered_graph_draw_options *Draw_options,
 			std::string &prefix,
 		int **Data, int *Data_size, int nb_data_sets,
-		int f_title, const char *title, int out_of,
-		const char *label_x,
+		int f_title, std::string &title, int out_of,
+		std::string &label_x,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
 		int offset_x, int f_switch_x,
 		int f_v_logarithmic, double log_base, int no, int f_embedded,
@@ -1029,7 +1021,7 @@ public:
 	void projective_plane_draw_grid(std::string &fname,
 			layered_graph_draw_options *O,
 			int q, int *Table, int nb,
-			int f_point_labels, char **Point_labels,
+			int f_point_labels, std::string *Point_labels,
 			int verbose_level);
 	void draw_mod_n(draw_mod_n_description *Descr,
 			layered_graph_draw_options *O,

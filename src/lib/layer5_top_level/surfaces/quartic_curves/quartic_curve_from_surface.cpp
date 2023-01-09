@@ -219,7 +219,7 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
 				"equation_nice=" << endl;
-		SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
+		SOA->Surf->PolynomialDomains->Poly3_4->print_equation(cout, equation_nice);
 		cout << endl;
 	}
 
@@ -229,7 +229,7 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 		cout << "quartic_curve_from_surface::quartic "
 				"before Surf->split_nice_equation" << endl;
 	}
-	SOA->Surf->split_nice_equation(equation_nice, f1, f2, f3,
+	SOA->Surf->PolynomialDomains->split_nice_equation(equation_nice, f1, f2, f3,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
@@ -241,13 +241,13 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 		cout << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
 				"+ x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
 		cout << "f1=" << endl;
-		SOA->Surf->Poly1_x123->print_equation(cout, f1);
+		SOA->Surf->PolynomialDomains->Poly1_x123->print_equation(cout, f1);
 		cout << endl;
 		cout << "f2=" << endl;
-		SOA->Surf->Poly2_x123->print_equation(cout, f2);
+		SOA->Surf->PolynomialDomains->Poly2_x123->print_equation(cout, f2);
 		cout << endl;
 		cout << "f3=" << endl;
-		SOA->Surf->Poly3_x123->print_equation(cout, f3);
+		SOA->Surf->PolynomialDomains->Poly3_x123->print_equation(cout, f3);
 		cout << endl;
 	}
 
@@ -268,7 +268,7 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 	}
 	for (i = 0; i < nb_pts_on_surface; i++) {
 		SOA->Surf->unrank_point(v, Pts_on_surface[i]);
-		if (SOA->Surf->Poly3_4->evaluate_at_a_point(equation_nice, v)) {
+		if (SOA->Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point(equation_nice, v)) {
 			cout << "the transformed point does not satisfy "
 					"the transformed equation" << endl;
 			exit(1);
@@ -277,7 +277,7 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 
 	for (i = 0; i < nb_pts_on_surface; i++) {
 
-		a = SOA->Surf->Poly3_4->evaluate_at_a_point_by_rank(
+		a = SOA->Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(
 				equation_nice, Pts_on_surface[i]);
 		if (a) {
 			cout << "error, the transformed point " << i
@@ -292,34 +292,34 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 	// the equation of the quartic curve in x1,x2,x3 is
 	// (f_2)^2 - 4*f_1*f_3 = 0
 
-	curve = NEW_int(SOA->Surf->Poly4_x123->get_nb_monomials());
-	poly1 = NEW_int(SOA->Surf->Poly4_x123->get_nb_monomials());
-	poly2 = NEW_int(SOA->Surf->Poly4_x123->get_nb_monomials());
+	curve = NEW_int(SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
+	poly1 = NEW_int(SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
+	poly2 = NEW_int(SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
 
 	// poly1 = f2^2:
-	SOA->Surf->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1,
+	SOA->Surf->PolynomialDomains->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1,
 			0 /* verbose_level */);
 
 	// poly2 = f1 * f3:
-	SOA->Surf->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2,
+	SOA->Surf->PolynomialDomains->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2,
 			0 /* verbose_level */);
 
 	two = SOA->F->add(1, 1);
 	four = SOA->F->add(two, two);
 	mfour = SOA->F->negate(four);
 	SOA->F->Linear_algebra->scalar_multiply_vector_in_place(mfour, poly2,
-			SOA->Surf->Poly4_x123->get_nb_monomials());
+			SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
 
 	// curve = poly1 -4 * poly2 = f2^2 - 4 * f1 * f3:
 	SOA->F->Linear_algebra->add_vector(poly1, poly2, curve,
-			SOA->Surf->Poly4_x123->get_nb_monomials());
+			SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
 
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic before "
 				"Surf->assemble_tangent_quadric" << endl;
 	}
-	SOA->Surf->assemble_tangent_quadric(f1, f2, f3,
+	SOA->Surf->PolynomialDomains->assemble_tangent_quadric(f1, f2, f3,
 			tangent_quadric, verbose_level);
 
 
@@ -333,7 +333,7 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 		vector<long int> Points;
 		int h;
 
-		SOA->Surf->Poly2_4->enumerate_points(tangent_quadric,
+		SOA->Surf->PolynomialDomains->Poly2_4->enumerate_points(tangent_quadric,
 				Points,
 				0 /* verbose_level */);
 
@@ -414,7 +414,7 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 	vector<long int> Points;
 	int h;
 
-	SOA->Surf->Poly4_x123->enumerate_points(curve, Points, 0 /* verbose_level */);
+	SOA->Surf->PolynomialDomains->Poly4_x123->enumerate_points(curve, Points, 0 /* verbose_level */);
 
 	sz_curve = Points.size();
 	Pts_on_curve = NEW_lint(sz_curve);
@@ -517,7 +517,7 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic "
 			"equation_nice=" << endl;
-		SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
+		SOA->Surf->PolynomialDomains->Poly3_4->print_equation(cout, equation_nice);
 		cout << endl;
 	}
 
@@ -571,7 +571,7 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 				"before SOA->SO->Surf->compute_tangent_plane" << endl;
 	}
 
-	plane_rk = SOA->SO->Surf->compute_tangent_plane(v, equation_nice, verbose_level);
+	plane_rk = SOA->SO->Surf->PolynomialDomains->compute_tangent_plane(v, equation_nice, verbose_level);
 
 
 	if (f_v) {
@@ -709,7 +709,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"before AonHPD->init" << endl;
 	}
-	AonHPD->init(Surf_A->PA->PA2->A, Surf_A->Surf->Poly4_x123, verbose_level);
+	AonHPD->init(Surf_A->PA->PA2->A, Surf_A->Surf->PolynomialDomains->Poly4_x123, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"after AonHPD->init" << endl;
@@ -803,7 +803,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The original cubic surface is given by" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	SOA->Surf->Poly3_4->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(ost,
 			SOA->SO->eqn, 9 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")" << endl;
 	ost << "\\end{align*}" << endl;
@@ -824,7 +824,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The transformed surface is" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	SOA->Surf->Poly3_4->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(ost,
 			equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")" << endl;
 	ost << "\\end{align*}" << endl;
@@ -834,26 +834,26 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
 			"+ x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
 	cout << "f1=" << endl;
-	SOA->Surf->Poly1_x123->print_equation(cout, f1);
+	SOA->Surf->PolynomialDomains->Poly1_x123->print_equation(cout, f1);
 	cout << endl;
 	cout << "f2=" << endl;
-	SOA->Surf->Poly2_x123->print_equation(cout, f2);
+	SOA->Surf->PolynomialDomains->Poly2_x123->print_equation(cout, f2);
 	cout << endl;
 	cout << "f3=" << endl;
-	SOA->Surf->Poly3_x123->print_equation(cout, f3);
+	SOA->Surf->PolynomialDomains->Poly3_x123->print_equation(cout, f3);
 	cout << endl;
 
 	ost << "\\begin{align*}" << endl;
 	ost << "f_1 = & ";
-	SOA->Surf->Poly1_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly1_x123->print_equation_with_line_breaks_tex(ost,
 			f1, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "f_2 = & ";
-	SOA->Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly2_x123->print_equation_with_line_breaks_tex(ost,
 			f2, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << "\\\\" << endl;
 	ost << "f_3 = & ";
-	SOA->Surf->Poly3_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly3_x123->print_equation_with_line_breaks_tex(ost,
 			f3, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "\\end{align*}" << endl;
@@ -878,7 +878,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The tangent quadric is given as" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) = {\\rm \\bf v}(";
-	SOA->Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly2_x123->print_equation_with_line_breaks_tex(ost,
 			tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
@@ -925,7 +925,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The quartic curve is given as" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal C}_4 = & {\\rm \\bf v}(";
-	SOA->Surf->Poly4_x123->print_equation_with_line_breaks_tex(
+	SOA->Surf->PolynomialDomains->Poly4_x123->print_equation_with_line_breaks_tex(
 			ost, curve, 10 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;

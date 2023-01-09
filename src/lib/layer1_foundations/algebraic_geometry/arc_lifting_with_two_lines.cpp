@@ -269,7 +269,7 @@ void arc_lifting_with_two_lines::create_surface(
 		Int_vec_print(cout, coeff, 20);
 		cout << endl;
 
-		Surf->Poly3_4->print_equation(cout, coeff);
+		Surf->PolynomialDomains->Poly3_4->print_equation(cout, coeff);
 		cout << endl;
 	}
 
@@ -350,7 +350,7 @@ void arc_lifting_with_two_lines::create_surface(
 	for (j1 = 0; j1 <= q; j1++) {
 		pt3 = Surf->P->create_point_on_line(
 				line3, j1 /*pt_rk*/, 0 /* verbose_level */);
-		val = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt3);
+		val = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt3);
 		//cout << "j1=" << j1 << " pt3=" << pt3 << " val=" << val << endl;
 		if (pt3 == P[1]) {
 			if (f_vv) {
@@ -389,7 +389,7 @@ void arc_lifting_with_two_lines::create_surface(
 			continue;
 		}
 #endif
-		val = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt4);
+		val = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt4);
 		//cout << "j2=" << j2 << " pt4=" << pt4 << " val=" << val << endl;
 		if (val == 0) {
 			break;

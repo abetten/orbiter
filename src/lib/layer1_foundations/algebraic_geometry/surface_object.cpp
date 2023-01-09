@@ -231,19 +231,19 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 	vector<long int> The_Lines;
 
 	if (f_v) {
-		cout << "surface_object::enumerate_points_and_lines before "
-				"Surf->enumerate_points" << endl;
+		cout << "surface_object::enumerate_points_and_lines "
+				"before Surf->enumerate_points" << endl;
 	}
 	Surf->enumerate_points(eqn,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "surface_object::enumerate_points_and_lines after "
-				"Surf->enumerate_points" << endl;
+		cout << "surface_object::enumerate_points_and_lines "
+				"after Surf->enumerate_points" << endl;
 	}
 	if (f_v) {
-		cout << "surface_object::enumerate_points_and_lines The surface "
-				"has " << Points.size() << " points" << endl;
+		cout << "surface_object::enumerate_points_and_lines "
+				"The surface has " << Points.size() << " points" << endl;
 	}
 	int i;
 
@@ -283,13 +283,15 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 #if 1
 	if (F->q == 2) {
 		if (f_v) {
-			cout << "surface_object::enumerate_points_and_lines before find_real_lines" << endl;
+			cout << "surface_object::enumerate_points_and_lines "
+					"before find_real_lines" << endl;
 		}
 
 		find_real_lines(The_Lines, verbose_level);
 
 		if (f_v) {
-			cout << "surface_object::enumerate_points_and_lines after find_real_lines" << endl;
+			cout << "surface_object::enumerate_points_and_lines "
+					"after find_real_lines" << endl;
 		}
 	}
 #endif
@@ -301,7 +303,8 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "surface_object::enumerate_points_and_lines nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
+		cout << "surface_object::enumerate_points_and_lines "
+				"nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
 		cout << "Lines:";
 		Lint_vec_print(cout, Lines, nb_lines);
 		cout << endl;
@@ -334,7 +337,7 @@ void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbo
 			Int_matrix_print(M, 2, 4);
 		}
 
-		Surf->Poly3_4->substitute_line(
+		Surf->PolynomialDomains->Poly3_4->substitute_line(
 			eqn /* coeff_in */, coeff_out,
 			M /* Pt1_coeff */, M + 4 /* Pt2_coeff */,
 			verbose_level - 3);
@@ -411,19 +414,23 @@ void surface_object::init_with_27_lines(surface_domain *Surf,
 	
 
 	if (f_v) {
-		cout << "surface_object::init_with_27_lines before enumerate_points" << endl;
+		cout << "surface_object::init_with_27_lines "
+				"before enumerate_points" << endl;
 	}
 	enumerate_points(verbose_level - 2);
 	if (f_v) {
-		cout << "surface_object::init_with_27_lines after enumerate_points" << endl;
+		cout << "surface_object::init_with_27_lines "
+				"after enumerate_points" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object::init_with_27_lines before compute_properties" << endl;
+		cout << "surface_object::init_with_27_lines "
+				"before compute_properties" << endl;
 	}
 	compute_properties(verbose_level);
 	if (f_v) {
-		cout << "surface_object::init_with_27_lines after compute_properties" << endl;
+		cout << "surface_object::init_with_27_lines "
+				"after compute_properties" << endl;
 	}
 
 	if (f_v) {
@@ -510,7 +517,8 @@ void surface_object::find_double_six_and_rearrange_lines(
 		// is the number of double sixes with a distinguished line.
 
 	if (nb_starter != 432) {
-		cout << "surface_object::find_double_six_and_rearrange_lines nb_starter != 432" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"nb_starter != 432" << endl;
 		exit(1);
 	}
 	l = 0;
@@ -2114,7 +2122,10 @@ void surface_object::export_something(std::string &what,
 		fname.assign(fname_base);
 		fname.append("_tritangent_planes.csv");
 
-		Fio.lint_matrix_write_csv(fname, SOP->Tritangent_plane_rk, 1, SOP->nb_tritangent_planes);
+		Fio.lint_matrix_write_csv(fname,
+				SOP->SmoothProperties->Tritangent_plane_rk,
+				1,
+				SOP->SmoothProperties->nb_tritangent_planes);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2231,7 +2242,7 @@ void surface_object::latex_double_six_Pluecker_coordinates_transposed(std::ostre
 {
 	int i, j;
 	long int D[12];
-	long int line_rk, klein_rk, a;
+	long int line_rk;
 
 	Lint_vec_copy(Surf->Schlaefli->Double_six + idx * 12, D, 12);
 
@@ -2243,7 +2254,7 @@ void surface_object::latex_double_six_Pluecker_coordinates_transposed(std::ostre
 
 			line_rk = Lines[D[i * 6 + j]];
 
-			a = Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
+			//a = Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
 
 			//Surf->Gr->unrank_lint(line_rk, 0 /*verbose_level*/);
 
@@ -2255,7 +2266,7 @@ void surface_object::latex_double_six_Pluecker_coordinates_transposed(std::ostre
 
 			Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
 
-			klein_rk = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+			//klein_rk = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
 
 			ost << "{\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 					<< v6[2] << "," << v6[3] << "," << v6[4]
@@ -2278,7 +2289,7 @@ void surface_object::latex_double_six_Klein_transposed(std::ostream &ost, int id
 {
 	int i, j;
 	long int D[12];
-	long int line_rk, klein_rk, a;
+	long int line_rk, a;
 
 	Lint_vec_copy(Surf->Schlaefli->Double_six + idx * 12, D, 12);
 
