@@ -53,29 +53,35 @@ void orthogonal_indexing::Q_epsilon_unrank(
 	}
 	if (epsilon == 0) {
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_unrank before Q_unrank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_unrank "
+					"before Q_unrank" << endl;
 		}
 		Q_unrank(v, stride, k, a, verbose_level);
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_unrank after Q_unrank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_unrank "
+					"after Q_unrank" << endl;
 		}
 	}
 	else if (epsilon == 1) {
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_unrank before Qplus_unrank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_unrank "
+					"before Qplus_unrank" << endl;
 		}
 		Qplus_unrank(v, stride, k, a, verbose_level);
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_unrank after Qplus_unrank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_unrank "
+					"after Qplus_unrank" << endl;
 		}
 	}
 	else if (epsilon == -1) {
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_unrank before Qminus_unrank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_unrank "
+					"before Qminus_unrank" << endl;
 		}
 		Qminus_unrank(v, stride, k, a, c1, c2, c3, verbose_level);
 		if (f_v) {
-			cout << "finite_field::Q_epsilon_unrank after Qminus_unrank" << endl;
+			cout << "finite_field::Q_epsilon_unrank "
+					"after Qminus_unrank" << endl;
 		}
 	}
 	else {
@@ -99,33 +105,40 @@ long int orthogonal_indexing::Q_epsilon_rank(
 	}
 	if (epsilon == 0) {
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_rank before Q_rank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_rank "
+					"before Q_rank" << endl;
 		}
 		a = Q_rank(v, stride, k, verbose_level);
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_rank after Q_rank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_rank "
+					"after Q_rank" << endl;
 		}
 	}
 	else if (epsilon == 1) {
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_rank before Qplus_rank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_rank "
+					"before Qplus_rank" << endl;
 		}
 		a = Qplus_rank(v, stride, k, verbose_level);
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_rank after Qplus_rank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_rank "
+					"after Qplus_rank" << endl;
 		}
 	}
 	else if (epsilon == -1) {
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_rank before Qminus_rank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_rank "
+					"before Qminus_rank" << endl;
 		}
 		a = Qminus_rank(v, stride, k, c1, c2, c3, verbose_level);
 		if (f_v) {
-			cout << "orthogonal_indexing::Q_epsilon_rank after Qminus_rank" << endl;
+			cout << "orthogonal_indexing::Q_epsilon_rank "
+					"after Qminus_rank" << endl;
 		}
 	}
 	else {
-		cout << "orthogonal_indexing::Q_epsilon_unrank epsilon is wrong" << endl;
+		cout << "orthogonal_indexing::Q_epsilon_unrank "
+				"epsilon is wrong" << endl;
 		exit(1);
 	}
 	if (f_v) {

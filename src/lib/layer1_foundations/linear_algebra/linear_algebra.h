@@ -395,7 +395,7 @@ public:
 		// if u is singular and v \in \la u \ra^\perp, then
 		// \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
 		// is called the Siegel transform (see Taylor p. 148)
-		// Here Q is the quadratic form
+		// Here, Q is the quadratic form
 		// and \beta is the corresponding bilinear form
 	long int orthogonal_find_root(int rk2,
 		int epsilon, int algebraic_dimension,

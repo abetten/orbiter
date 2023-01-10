@@ -144,7 +144,7 @@ public:
 	int Johnson_s;
 
 	int f_Paley;
-	int Paley_q;
+	std::string Paley_label_Fq;
 
 	int f_Sarnak;
 	int Sarnak_p;
@@ -244,7 +244,8 @@ public:
 			std::string &perm_text, int verbose_level);
 	void create_Hamming(int &N, int *&Adj, int n, int q, int verbose_level);
 	void create_Johnson(int &N, int *&Adj, int n, int k, int s, int verbose_level);
-	void create_Paley(int &N, int *&Adj, int q, int verbose_level);
+	void create_Paley(int &N, int *&Adj,
+			std::string &label_Fq, int verbose_level);
 	void create_Sarnak(int &N, int *&Adj, int p, int q, int verbose_level);
 	void create_Schlaefli(int &N, int *&Adj, int q, int verbose_level);
 	void create_Shrikhande(int &N, int *&Adj, int verbose_level);

@@ -385,7 +385,6 @@ long int linear_algebra::orthogonal_find_root(int rk2,
 	//int f_vv = (verbose_level >= 2);
 	int *x, *y, *z;
 	int d, k, i;
-	//int epsilon, d, k, form_c1, form_c2, form_c3, i;
 	int y2_minus_y3, minus_y1, y3_minus_y2, a, a2, u, v;
 	long int root;
 

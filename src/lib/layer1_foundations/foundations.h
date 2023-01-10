@@ -784,6 +784,10 @@ namespace solvers {
 
 #define Get_matrix(label, A, m, n) orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
 #define Get_ring(label) orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(label)
+#define Get_finite_field(label) orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(label)
+
+
+
 
 enum monomial_ordering_type {
 	t_LEX, // lexicographical

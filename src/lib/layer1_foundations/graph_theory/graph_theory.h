@@ -613,7 +613,7 @@ public:
 	void make_Johnson_graph(int *&Adj, int &N,
 			int n, int k, int s, int verbose_level);
 	void make_Paley_graph(int *&Adj, int &N,
-			int q, int verbose_level);
+			field_theory::finite_field *Fq, int verbose_level);
 	void make_Schlaefli_graph(int *&Adj, int &N,
 			int q, int verbose_level);
 	void make_Winnie_Li_graph(int *&Adj, int &N,

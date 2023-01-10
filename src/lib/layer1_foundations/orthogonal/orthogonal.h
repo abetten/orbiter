@@ -422,6 +422,7 @@ public:
 //! indexing of points in an orthogonal geometry O^epsilon(n,q)
 
 
+
 class orthogonal_indexing {
 
 public:
@@ -726,11 +727,21 @@ class quadratic_form {
 
 public:
 	int epsilon;
+
 	int n; // the algebraic dimension
+
 	int m; // Witt index
+
 	int q;
-	int f_even;
+
+	int f_even; // TRUE in characteristic two
+
 	int form_c1, form_c2, form_c3;
+
+	// for minus type, the form is
+	// \sum_{i=0}^m x_{2i}x_{2i+1} + c1 x_{2m}^2 + c2 x_{2m} x_{2m+1} + c3 x_{2m+1}^2
+	// where m is the Witt index.
+
 
 	std::string label_txt;
 	std::string label_tex;

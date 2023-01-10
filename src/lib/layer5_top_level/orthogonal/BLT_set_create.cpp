@@ -421,7 +421,7 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 		extra_praeamble /* extra_praeamble */);
 
 
-	OA->O->report_quadratic_form(ost, verbose_level - 1);
+	OA->O->Quadratic_form->report_quadratic_form(ost, verbose_level - 1);
 
 	if (ABC) {
 		print_set_of_points_with_ABC(ost, set, OA->O->F->q + 1);

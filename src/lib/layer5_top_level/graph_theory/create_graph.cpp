@@ -108,9 +108,10 @@ void create_graph::init(
 		//G = LG->initial_strong_gens->create_sims(verbose_level);
 		Sims = SG->create_sims(verbose_level);
 
-		cout << "group order G = " << Sims->group_order_lint() << endl;
-		cout << "group order coded element size = " << G->A_base->elt_size_in_int << endl;
-
+		if (f_v) {
+			cout << "create_graph::init group order G = " << Sims->group_order_lint() << endl;
+			cout << "create_graph::init group order coded element size = " << G->A_base->elt_size_in_int << endl;
+		}
 
 		int *v;
 		int sz;
@@ -121,20 +122,25 @@ void create_graph::init(
 
 		nb_gens = sz / G->A_base->elt_size_in_int;
 
-		cout << "number of generators = " << nb_gens << endl;
+		if (f_v) {
+			cout << "create_graph::init number of generators = " << nb_gens << endl;
 
-		cout << "generators: ";
-		Int_vec_print(cout, v, sz);
-		cout << endl;
+			cout << "create_graph::init generators: ";
+			Int_vec_print(cout, v, sz);
+			cout << endl;
+		}
 
 		data_structures_groups::vector_ge *gens;
 
 		gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
-		gens->init_from_data(G->A, v, nb_gens, G->A_base->elt_size_in_int, verbose_level);
+		gens->init_from_data(G->A, v, nb_gens,
+				G->A_base->elt_size_in_int, verbose_level - 1);
 
-		cout << "generators:" << endl;
-		gens->print(cout);
+		if (f_v) {
+			cout << "create_graph::init generators:" << endl;
+			gens->print(cout);
+		}
 
 
 
@@ -159,7 +165,7 @@ void create_graph::init(
 			Sims->element_unrank_lint(i, Elt1);
 
 			if (f_v) {
-				cout << "Element " << setw(5) << i << " / "
+				cout << "create_graph::init Element " << setw(5) << i << " / "
 						<< go.as_int() << ":" << endl;
 				G->A->element_print(Elt1, cout);
 				cout << endl;
@@ -427,7 +433,7 @@ void create_graph::init(
 			cout << "create_graph::init before create_Paley" << endl;
 		}
 		create_Paley(N, Adj,
-				description->Paley_q,
+				description->Paley_label_Fq,
 				verbose_level);
 
 
@@ -876,7 +882,7 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 }
 
 void create_graph::create_Paley(int &N, int *&Adj,
-		int q, int verbose_level)
+		std::string &label_Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -886,20 +892,23 @@ void create_graph::create_Paley(int &N, int *&Adj,
 
 
 	graph_theory::graph_theory_domain GT;
+	field_theory::finite_field *Fq;
+
+	Fq = Get_finite_field(label_Fq);
 
 
 	if (f_v) {
 		cout << "create_graph::create_Paley before GT.make_Paley_graph" << endl;
 	}
-	GT.make_Paley_graph(Adj, N, q, verbose_level);
+	GT.make_Paley_graph(Adj, N, Fq, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Paley after GT.make_Paley_graph" << endl;
 	}
 
 	char str[1000];
-	snprintf(str, sizeof(str), "Paley_%d", q);
+	snprintf(str, sizeof(str), "Paley_%d", Fq->q);
 	label.assign(str);
-	snprintf(str, sizeof(str), "Paley\\_%d", q);
+	snprintf(str, sizeof(str), "Paley\\_%d", Fq->q);
 	label_tex.assign(str);
 
 

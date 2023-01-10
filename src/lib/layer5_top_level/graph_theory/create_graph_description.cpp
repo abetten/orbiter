@@ -53,7 +53,7 @@ create_graph_description::create_graph_description()
 	Johnson_s = 0;
 
 	f_Paley = FALSE;
-	Paley_q = 0;
+	//std::string Paley_label_Fq;
 
 	f_Sarnak = FALSE;
 	Sarnak_p = 0;
@@ -211,9 +211,9 @@ int create_graph_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-Paley") == 0) {
 			f_Paley = TRUE;
-			Paley_q = ST.strtoi(argv[++i]);
+			Paley_label_Fq.assign(argv[++i]);
 			if (f_v) {
-				cout << "-Paley " << Paley_q << endl;
+				cout << "-Paley " << Paley_label_Fq << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Sarnak") == 0) {
@@ -392,7 +392,7 @@ void create_graph_description::print()
 		cout << "-Johnson " << Johnson_n << " " << Johnson_k << " " << Johnson_s << endl;
 	}
 	if (f_Paley) {
-		cout << "-Paley " << Paley_q << endl;
+		cout << "-Paley " << Paley_label_Fq << endl;
 	}
 	if (f_Sarnak) {
 		cout << "-Sarnak " << Sarnak_p << " " << Sarnak_q << endl;

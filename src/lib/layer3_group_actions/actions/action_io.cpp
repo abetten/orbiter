@@ -221,7 +221,7 @@ void action::report_what_we_act_on(ostream &ost,
 				ost << "Number of lines = " << G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
 			}
 
-			G.AO->O->report_quadratic_form(ost, 0 /* verbose_level */);
+			G.AO->O->Quadratic_form->report_quadratic_form(ost, 0 /* verbose_level */);
 
 			ost << "Tactical decomposition induced by a hyperbolic pair:\\\\" << endl;
 			G.AO->O->report_schemes_easy(ost);

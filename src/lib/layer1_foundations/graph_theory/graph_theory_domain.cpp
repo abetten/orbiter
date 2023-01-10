@@ -973,11 +973,15 @@ void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
 	set3 = NEW_int(k);
 
 	for (i = 0; i < N; i++) {
+
 		Combi.unrank_k_subset(i, set1, n, k);
+
 		for (j = i + 1; j < N; j++) {
+
 			Combi.unrank_k_subset(j, set2, n, k);
 
 			Sorting.int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
+
 			if (sz == s) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
@@ -996,7 +1000,7 @@ void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
 }
 
 void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
-		int q, int verbose_level)
+		field_theory::finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1004,21 +1008,24 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_Paley_graph" << endl;
 	}
 
-	if (EVEN(q)) {
-		cout << "graph_theory_domain::make_Paley_graph q must be odd" << endl;
+	if (EVEN(Fq->q)) {
+		cout << "graph_theory_domain::make_Paley_graph "
+				"q must be odd" << endl;
 		exit(1);
 	}
-	if (!DOUBLYEVEN(q - 1)) {
-		cout << "graph_theory_domain::make_Paley_graph q must be congruent to 1 modulo 4" << endl;
+	if (!DOUBLYEVEN(Fq->q - 1)) {
+		cout << "graph_theory_domain::make_Paley_graph "
+				"q must be congruent to 1 modulo 4" << endl;
 	}
 
-	field_theory::finite_field *F;
-	int *f_is_square;
+	//field_theory::finite_field *F;
+	//int *f_is_square;
 	int i, j, a;
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
+	//F = NEW_OBJECT(field_theory::finite_field);
+	//F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
+#if 0
 	f_is_square = NEW_int(q);
 	Int_vec_zero(f_is_square, q);
 
@@ -1026,23 +1033,24 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 		j = F->mult(i, i);
 		f_is_square[j] = TRUE;
 	}
+#endif
 
-	Adj = NEW_int(q * q);
-	Int_vec_zero(Adj, q * q);
+	Adj = NEW_int(Fq->q * Fq->q);
+	Int_vec_zero(Adj, Fq->q * Fq->q);
 
-	for (i = 0; i < q; i++) {
-		for (j = i + 1; j < q; j++) {
-			a = F->add(i, F->negate(j));
-			if (f_is_square[a]) {
-				Adj[i * q + j] = 1;
-				Adj[j * q + i] = 1;
+	for (i = 0; i < Fq->q; i++) {
+		for (j = i + 1; j < Fq->q; j++) {
+			a = Fq->add(i, Fq->negate(j));
+			if (Fq->is_square(a)) {
+				Adj[i * Fq->q + j] = 1;
+				Adj[j * Fq->q + i] = 1;
 			}
 		}
 	}
-	N = q;
+	N = Fq->q;
 
-	FREE_OBJECT(F);
-	FREE_int(f_is_square);
+	//FREE_OBJECT(F);
+	//FREE_int(f_is_square);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_Paley_graph done" << endl;
@@ -1282,7 +1290,10 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	F = NEW_OBJECT(field_theory::finite_field);
 
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
-	F->print();
+	if (f_v) {
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph field:" << endl;
+		F->print();
+	}
 
 	if (epsilon == 0) {
 		c1 = 1;
