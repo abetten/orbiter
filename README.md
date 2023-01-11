@@ -36,6 +36,7 @@ Orbiter offers latex interfaces to the following external software packages:
 
 Orbiter includes the following software packages (at the source code level)
 - Nauty 2.7. (Brendan McKay)
+- Jeffrey Leon's partition backtrack software Part
 - possolve (Brendan McKay)
 - Eigen
 - EasyBMP
