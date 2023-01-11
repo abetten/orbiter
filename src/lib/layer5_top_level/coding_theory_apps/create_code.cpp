@@ -69,7 +69,7 @@ void create_code::init(
 		f_field = TRUE;
 
 
-		F = Get_object_of_type_finite_field(description->field_label);
+		F = Get_finite_field(description->field_label);
 
 	}
 

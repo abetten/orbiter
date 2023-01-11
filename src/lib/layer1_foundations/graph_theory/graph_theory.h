@@ -617,7 +617,7 @@ public:
 	void make_Schlaefli_graph(int *&Adj, int &N,
 			int q, int verbose_level);
 	void make_Winnie_Li_graph(int *&Adj, int &N,
-			int q, int index, int verbose_level);
+			field_theory::finite_field *Fq, int index, int verbose_level);
 	void make_Grassmann_graph(int *&Adj, int &N,
 			int n, int k, int q, int r, int verbose_level);
 	void make_orthogonal_collinearity_graph(int *&Adj, int &N,
@@ -637,6 +637,7 @@ public:
 	void all_cliques_of_given_size(int *Adj,
 			int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,
 			int verbose_level);
+	void eigenvalues(graph_theory::colored_graph *CG, int verbose_level);
 
 };
 

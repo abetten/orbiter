@@ -149,11 +149,13 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex_detailed before print_tex" << endl;
+		cout << "object_with_canonical_form::print_tex_detailed "
+				"before print_tex" << endl;
 	}
 	print_tex(ost, verbose_level);
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex_detailed after print_tex" << endl;
+		cout << "object_with_canonical_form::print_tex_detailed "
+				"after print_tex" << endl;
 	}
 
 	if (f_show_incma) {
@@ -165,35 +167,43 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
 		combinatorics::encoded_combinatorial_object *Enc;
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed before encode_incma" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"before encode_incma" << endl;
 		}
 		encode_incma(Enc, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed after encode_incma" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"after encode_incma" << endl;
 		}
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed before Enc->latex_set_system_by_columns" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"before Enc->latex_set_system_by_columns" << endl;
 		}
 		Enc->latex_set_system_by_columns(ost, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed after Enc->latex_set_system_by_columns" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"after Enc->latex_set_system_by_columns" << endl;
 		}
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed before Enc->latex_set_system_by_rows" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"before Enc->latex_set_system_by_rows" << endl;
 		}
 		Enc->latex_set_system_by_rows(ost, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed after Enc->latex_set_system_by_rows" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"after Enc->latex_set_system_by_rows" << endl;
 		}
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed before Enc->latex_incma" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"before Enc->latex_incma" << endl;
 		}
 		Enc->latex_incma(ost, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed after Enc->latex_incma" << endl;
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"after Enc->latex_incma" << endl;
 		}
 		ost << "\\\\" << endl;
 
@@ -222,11 +232,13 @@ void object_with_canonical_form::print_tex(ostream &ost, int verbose_level)
 		ost << "\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex before P->Reporting->print_set_of_points" << endl;
+			cout << "object_with_canonical_form::print_tex "
+					"before P->Reporting->print_set_of_points" << endl;
 		}
 		P->Reporting->print_set_of_points(ost, set, sz);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex after P->Reporting->print_set_of_points" << endl;
+			cout << "object_with_canonical_form::print_tex "
+					"after P->Reporting->print_set_of_points" << endl;
 		}
 	}
 	else if (type == t_LNS) {
@@ -625,7 +637,8 @@ void object_with_canonical_form::init_packing_from_spread_table(
 	for (i = 0; i < SoS->nb_sets; i++) {
 		for (j = i + 1; j < SoS->nb_sets; j++) {
 			if (M[i * SoS->nb_sets + j]) {
-				cout << "object_with_canonical_form::init_packing_from_spread_table not a packing, spreads "
+				cout << "object_with_canonical_form::init_packing_from_spread_table "
+						"not a packing, spreads "
 						<< i << " and " << j << " meet in "
 						<< M[i * SoS->nb_sets + j] << " lines" << endl;
 				cout << "object_with_canonical_form::init_packing_from_spread_table Sos:" << endl;

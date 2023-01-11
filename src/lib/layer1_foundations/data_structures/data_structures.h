@@ -1893,6 +1893,8 @@ public:
 	vector_builder();
 	~vector_builder();
 	void init(vector_builder_description *Descr, field_theory::finite_field *F, int verbose_level);
+	void print(std::ostream &ost);
+
 };
 
 

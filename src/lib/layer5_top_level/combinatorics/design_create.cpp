@@ -87,7 +87,7 @@ void design_create::init(apps_combinatorics::design_create_description *Descr, i
 
 	if (Descr->f_field) {
 
-		F = Get_object_of_type_finite_field(Descr->field_label);
+		F = Get_finite_field(Descr->field_label);
 		q = F->q;
 
 		if (f_v) {

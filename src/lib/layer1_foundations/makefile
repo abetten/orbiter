@@ -21,6 +21,7 @@ all: algebra \
 	graph_theory \
 	graph_theory_nauty \
 	graphics \
+	Jeffrey_Leon_partition_backtrack \
 	knowledge_base \
 	linear_algebra \
 	number_theory \
@@ -49,6 +50,7 @@ globals : globals2
 graph_theory : graph_theory2 
 graph_theory_nauty : graph_theory_nauty2 
 graphics : graphics2 
+Jeffrey_Leon_partition_backtrack : Jeffrey_Leon_partition_backtrack2 
 knowledge_base : knowledge_base2  
 linear_algebra : linear_algebra2  
 number_theory : number_theory2  
@@ -74,6 +76,7 @@ globals2 : ; cd globals; $(MAKE)
 graph_theory2 : ; cd graph_theory; $(MAKE)
 graph_theory_nauty2 : ; cd graph_theory_nauty; $(MAKE)
 graphics2 : ; cd graphics; $(MAKE)
+Jeffrey_Leon_partition_backtrack2 : ; cd Jeffrey_Leon_partition_backtrack; $(MAKE)
 knowledge_base2 : ; cd knowledge_base; $(MAKE)
 linear_algebra2 : ; cd linear_algebra; $(MAKE)
 number_theory2 : ; cd number_theory; $(MAKE)
@@ -101,6 +104,7 @@ clean:
 	cd graph_theory; $(MAKE) clean
 	cd graph_theory_nauty; $(MAKE) clean
 	cd graphics; $(MAKE) clean
+	cd Jeffrey_Leon_partition_backtrack; $(MAKE) clean
 	cd knowledge_base; $(MAKE) clean
 	cd linear_algebra; $(MAKE) clean
 	cd number_theory; $(MAKE) clean

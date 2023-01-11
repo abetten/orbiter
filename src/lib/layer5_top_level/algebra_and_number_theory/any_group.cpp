@@ -1170,6 +1170,104 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 }
 
 
+void any_group::random_element(std::string &elt_label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::random_element" << endl;
+	}
+
+	actions::action *A1;
+
+	A1 = A;
+
+	groups::sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	groups::strong_generators *SG;
+
+	SG = get_strong_generators();
+	H = SG->create_sims(verbose_level);
+
+	if (f_v) {
+		//cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
+	}
+
+	int *Elt;
+	int *data;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	data = NEW_int(A1->make_element_size);
+
+
+	H->random_element(Elt, 0 /* verbose_level */);
+
+
+	A1->code_for_make_element(data, Elt);
+
+	if (f_v) {
+		cout << "Element :" << endl;
+		A1->element_print(Elt, cout);
+		cout << endl;
+		cout << "coded: ";
+		Int_vec_print(cout, data, A1->make_element_size);
+		cout << endl;
+	}
+
+	ring_theory::longinteger_object a;
+	H->element_rank(a, Elt);
+
+	if (f_v) {
+		cout << "The rank of the element is " << a << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(elt_label);
+	fname.append(".csv");
+
+	Fio.int_matrix_write_csv(fname, data, 1, A->make_element_size);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	data_structures::vector_builder_description *Descr;
+	user_interface::symbol_definition *Symbol_definition;
+
+	Descr = NEW_OBJECT(data_structures::vector_builder_description);
+
+	Descr->f_file = TRUE;
+	Descr->file_name.assign(fname);
+
+	Symbol_definition = NEW_OBJECT(user_interface::symbol_definition);
+
+	user_interface::interface_symbol_table *Interface_symbol_table;
+
+	Interface_symbol_table = NEW_OBJECT(user_interface::interface_symbol_table);
+	Interface_symbol_table->init(user_interface::The_Orbiter_top_level_session, verbose_level);
+
+
+	Symbol_definition->Sym = Interface_symbol_table;
+
+	Symbol_definition->definition_of_vector(
+			elt_label, Descr, verbose_level);
+
+
+
+	FREE_int(Elt);
+	FREE_OBJECT(H);
+
+
+
+	if (f_v) {
+		cout << "any_group::random_element done" << endl;
+	}
+}
 
 
 void any_group::element_rank(std::string &elt_data, int verbose_level)

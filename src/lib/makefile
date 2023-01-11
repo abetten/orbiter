@@ -4,7 +4,7 @@ LIB =
 LFLAGS = -lm
 
 
-MODULES= \
+ORBITER_MODULES= \
 		layer1_foundations/algebra/a_domain.o \
 		layer1_foundations/algebra/algebra_global.o \
 		layer1_foundations/algebra/generators_symplectic_group.o \
@@ -509,6 +509,7 @@ MODULES= \
 		layer5_top_level/graph_theory/graph_modification_description.o \
 		layer5_top_level/graph_theory/graph_theoretic_activity_description.o \
 		layer5_top_level/graph_theory/graph_theoretic_activity.o \
+		layer5_top_level/graph_theory/graph_theory_apps.o \
 		layer5_top_level/interfaces/activity_description.o \
 		layer5_top_level/interfaces/interface_algebra.o \
 		layer5_top_level/interfaces/interface_coding_theory.o \
@@ -617,6 +618,55 @@ MODULES= \
 		layer5_top_level/surfaces/surfaces_general/surface_study.o \
 		layer5_top_level/surfaces/surfaces_general/surface_with_action.o
 
+JL_MODULES=\
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/addsgen.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/bitmanp.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/ccent.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/ccommut.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cdesauto.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/chbase.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cinter.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cmatauto.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/code.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/compcrep.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/compsg.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/copy.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cparstab.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cputime.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/csetstab.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cstborb.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cstrbas.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/cuprstab.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/errmesg.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/essentia.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/factor.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/field.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/inform.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/matrix.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/new.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/oldcopy.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/optsvec.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/orbit.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/orbrefn.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/partn.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/permgrp.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/permut.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/primes.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/ptstbref.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/randgrp.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/randschr.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/readdes.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/readgrp.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/readpar.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/readper.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/readpts.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/relator.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/rprique.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/stcs.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/storage.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/token.o \
+	layer1_foundations/Jeffrey_Leon_partition_backtrack/util.o
+
 
 all:
 	cd layer1_foundations; $(MAKE)
@@ -624,7 +674,8 @@ all:
 	cd layer3_group_actions; $(MAKE)
 	cd layer4_classification; $(MAKE)
 	cd layer5_top_level; $(MAKE)
-	ar ruvs liborbiter.a $(MODULES)
+	ar ruvs liborbiter.a $(ORBITER_MODULES)
+	ar ruvs libjeffreyleon.a $(JL_MODULES)
 
 
 clean:

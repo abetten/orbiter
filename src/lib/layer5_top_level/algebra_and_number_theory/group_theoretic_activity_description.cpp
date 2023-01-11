@@ -62,6 +62,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	find_standard_generators_order_b = 0;
 	find_standard_generators_order_ab = 0;
 
+	f_random_element = FALSE;
+	//std::string random_element_label;
+
+
 	f_element_rank = FALSE;
 	// std::string element_rank_data;
 
@@ -320,6 +324,13 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << find_standard_generators_order_b
 						<< " " << find_standard_generators_order_ab
 						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-random_element") == 0) {
+			f_random_element = TRUE;
+			random_element_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-random_element " << random_element_label << endl;
 			}
 		}
 
@@ -737,6 +748,9 @@ void group_theoretic_activity_description::print()
 					<< endl;
 	}
 
+	if (f_random_element) {
+		cout << "-random_element " << random_element_label << endl;
+	}
 	if (f_element_rank) {
 		cout << "-element_rank " << element_rank_data << endl;
 	}

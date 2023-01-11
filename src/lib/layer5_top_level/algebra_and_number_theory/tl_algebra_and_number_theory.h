@@ -389,6 +389,7 @@ public:
 	void apply_elements_to_set_csv(std::string &fname1, std::string &fname2,
 			std::string &set_text,
 			int verbose_level);
+	void random_element(std::string &elt_label, int verbose_level);
 	void element_rank(std::string &elt_data, int verbose_level);
 	void element_unrank(std::string &rank_string, int verbose_level);
 	void conjugacy_class_of(std::string &label, std::string &rank_string, int verbose_level);
@@ -688,6 +689,9 @@ public:
 	int find_standard_generators_order_a;
 	int find_standard_generators_order_b;
 	int find_standard_generators_order_ab;
+
+	int f_random_element;
+	std::string random_element_label;
 
 	int f_element_rank;
 	std::string element_rank_data;

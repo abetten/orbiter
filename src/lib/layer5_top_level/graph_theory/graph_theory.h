@@ -156,7 +156,7 @@ public:
 	int f_Shrikhande;
 
 	int f_Winnie_Li;
-	int Winnie_Li_q;
+	std::string Winnie_Li_label_Fq;
 	int Winnie_Li_index;
 
 	int f_Grassmann;
@@ -249,7 +249,8 @@ public:
 	void create_Sarnak(int &N, int *&Adj, int p, int q, int verbose_level);
 	void create_Schlaefli(int &N, int *&Adj, int q, int verbose_level);
 	void create_Shrikhande(int &N, int *&Adj, int verbose_level);
-	void create_Winnie_Li(int &N, int *&Adj, int q, int index, int verbose_level);
+	void create_Winnie_Li(int &N, int *&Adj,
+			std::string &label_Fq, int index, int verbose_level);
 	void create_Grassmann(int &N, int *&Adj,
 			int n, int k, int q, int r, int verbose_level);
 	void create_coll_orthogonal(int &N, int *&Adj,
@@ -547,6 +548,34 @@ public:
 			graph_theory::colored_graph *CG,
 			int verbose_level);
 	void perform_activity(int verbose_level);
+
+
+};
+
+
+
+
+// #############################################################################
+// graph_theory_apps.cpp
+// #############################################################################
+
+//! applications in graph theory involving groups
+
+
+class graph_theory_apps {
+
+public:
+
+	graph_theory_apps();
+	~graph_theory_apps();
+	void automorphism_group(graph_theory::colored_graph *CG, int verbose_level);
+	void expander_graph(
+			int p, int q,
+			int f_special,
+			field_theory::finite_field *F,
+			actions::action *A,
+			int *&Adj, int &N,
+			int verbose_level);
 
 
 };

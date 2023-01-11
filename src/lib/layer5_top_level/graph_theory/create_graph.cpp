@@ -105,12 +105,13 @@ void create_graph::init(
 
 		groups::sims *Sims;
 
-		//G = LG->initial_strong_gens->create_sims(verbose_level);
 		Sims = SG->create_sims(verbose_level);
 
 		if (f_v) {
-			cout << "create_graph::init group order G = " << Sims->group_order_lint() << endl;
-			cout << "create_graph::init group order coded element size = " << G->A_base->elt_size_in_int << endl;
+			cout << "create_graph::init group order "
+					"G = " << Sims->group_order_lint() << endl;
+			cout << "create_graph::init group order "
+					"coded element size = " << G->A_base->elt_size_in_int << endl;
 		}
 
 		int *v;
@@ -165,7 +166,8 @@ void create_graph::init(
 			Sims->element_unrank_lint(i, Elt1);
 
 			if (f_v) {
-				cout << "create_graph::init Element " << setw(5) << i << " / "
+				cout << "create_graph::init "
+						"Element " << setw(5) << i << " / "
 						<< go.as_int() << ":" << endl;
 				G->A->element_print(Elt1, cout);
 				cout << endl;
@@ -191,7 +193,8 @@ void create_graph::init(
 
 		f_has_CG = FALSE;
 		if (f_v) {
-			cout << "create_graph::init number of vertices = " << N << endl;
+			cout << "create_graph::init "
+					"number of vertices = " << N << endl;
 		}
 		label.assign("Cayley_graph_");
 		label.append(G->A->label);
@@ -209,7 +212,8 @@ void create_graph::init(
 
 	else if (description->f_load_csv_no_border) {
 		if (f_v) {
-			cout << "create_graph::init f_load_from_file_csv_no_border" << endl;
+			cout << "create_graph::init "
+					"f_load_from_file_csv_no_border" << endl;
 		}
 
 		orbiter_kernel_system::file_io Fio;
@@ -232,7 +236,8 @@ void create_graph::init(
 
 	else if (description->f_load_adjacency_matrix_from_csv_and_select_value) {
 		if (f_v) {
-			cout << "create_graph::init f_load_adjacency_matrix_from_csv_and_select_value" << endl;
+			cout << "create_graph::init "
+					"f_load_adjacency_matrix_from_csv_and_select_value" << endl;
 		}
 
 		orbiter_kernel_system::file_io Fio;
@@ -245,7 +250,8 @@ void create_graph::init(
 				M, m, n, verbose_level);
 
 		if (m != n) {
-			cout << "create_graph::init the matrix is not square" << endl;
+			cout << "create_graph::init "
+					"the matrix is not square" << endl;
 			exit(1);
 		}
 		N = n;
@@ -280,20 +286,24 @@ void create_graph::init(
 		std::vector<std::vector<int>> Edges;
 
 		if (f_v) {
-			cout << "create_graph::init before Fio.read_dimacs_graph_format" << endl;
+			cout << "create_graph::init "
+					"before Fio.read_dimacs_graph_format" << endl;
 		}
 		Fio.read_dimacs_graph_format(description->fname,
 				nb_V, Edges, verbose_level);
 		if (f_v) {
-			cout << "create_graph::init after Fio.read_dimacs_graph_format" << endl;
+			cout << "create_graph::init "
+					"after Fio.read_dimacs_graph_format" << endl;
 		}
 
 		N = nb_V;
 		if (f_v) {
-			cout << "create_graph::init N=" << N << endl;
+			cout << "create_graph::init "
+					"N=" << N << endl;
 		}
 		if (f_v) {
-			cout << "create_graph::init nb_E=" << Edges.size() << endl;
+			cout << "create_graph::init "
+					"nb_E=" << Edges.size() << endl;
 		}
 		Adj = NEW_int(nb_V * nb_V);
 		Int_vec_zero(Adj, nb_V * nb_V);
@@ -302,7 +312,8 @@ void create_graph::init(
 			i = Edges[h][0];
 			j = Edges[h][1];
 			if (FALSE) {
-				cout << "create_graph::init edge " << h << " is " << i << " to " << j << endl;
+				cout << "create_graph::init "
+						"edge " << h << " is " << i << " to " << j << endl;
 			}
 			Adj[i * nb_V + j] = 1;
 			Adj[j * nb_V + i] = 1;
@@ -374,33 +385,38 @@ void create_graph::init(
 	else if (description->f_cycle) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_cycle" << endl;
+			cout << "create_graph::init "
+					"before create_cycle" << endl;
 		}
 		create_cycle(N, Adj, description->cycle_n,
 				verbose_level);
 
 
 		if (f_v) {
-			cout << "create_graph::init after create_cycle" << endl;
+			cout << "create_graph::init "
+					"after create_cycle" << endl;
 		}
 	}
 	else if (description->f_inversion_graph) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_inversion_graph" << endl;
+			cout << "create_graph::init "
+					"before create_inversion_graph" << endl;
 		}
 		create_inversion_graph(N, Adj, description->inversion_graph_text,
 				verbose_level);
 
 
 		if (f_v) {
-			cout << "create_graph::init after create_cycle" << endl;
+			cout << "create_graph::init "
+					"after create_inversion_graph" << endl;
 		}
 	}
 	else if (description->f_Hamming) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Hamming" << endl;
+			cout << "create_graph::init "
+					"before create_Hamming" << endl;
 		}
 		create_Hamming(N, Adj,
 				description->Hamming_n,
@@ -409,13 +425,15 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init after create_Hamming" << endl;
+			cout << "create_graph::init "
+					"after create_Hamming" << endl;
 		}
 	}
 	else if (description->f_Johnson) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Johnson" << endl;
+			cout << "create_graph::init "
+					"before create_Johnson" << endl;
 		}
 		create_Johnson(N, Adj,
 				description->Johnson_n,
@@ -424,13 +442,15 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init after create_Johnson" << endl;
+			cout << "create_graph::init "
+					"after create_Johnson" << endl;
 		}
 	}
 	else if (description->f_Paley) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Paley" << endl;
+			cout << "create_graph::init "
+					"before create_Paley" << endl;
 		}
 		create_Paley(N, Adj,
 				description->Paley_label_Fq,
@@ -438,13 +458,15 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init after create_Paley" << endl;
+			cout << "create_graph::init "
+					"after create_Paley" << endl;
 		}
 	}
 	else if (description->f_Sarnak) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Sarnak" << endl;
+			cout << "create_graph::init "
+					"before create_Sarnak" << endl;
 		}
 		create_Sarnak(N, Adj,
 				description->Sarnak_p,
@@ -453,50 +475,58 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init after create_Sarnak" << endl;
+			cout << "create_graph::init "
+					"after create_Sarnak" << endl;
 		}
 	}
 	else if (description->f_Schlaefli) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Schlaefli" << endl;
+			cout << "create_graph::init "
+					"before create_Schlaefli" << endl;
 		}
 		create_Schlaefli(N, Adj,
 				description->Schlaefli_q,
 				verbose_level);
 		if (f_v) {
-			cout << "create_graph::init after create_Schlaefli" << endl;
+			cout << "create_graph::init "
+					"after create_Schlaefli" << endl;
 		}
 	}
 	else if (description->f_Shrikhande) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Shrikhande" << endl;
+			cout << "create_graph::init "
+					"before create_Shrikhande" << endl;
 		}
 		create_Shrikhande(N, Adj, verbose_level);
 
 		if (f_v) {
-			cout << "create_graph::init after create_Shrikhande" << endl;
+			cout << "create_graph::init "
+					"after create_Shrikhande" << endl;
 		}
 	}
 	else if (description->f_Winnie_Li) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Winnie_Li" << endl;
+			cout << "create_graph::init "
+					"before create_Winnie_Li" << endl;
 		}
 		create_Winnie_Li(N, Adj,
-				description->Winnie_Li_q,
+				description->Winnie_Li_label_Fq,
 				description->Winnie_Li_index,
 				verbose_level);
 
 		if (f_v) {
-			cout << "create_graph::init after create_Winnie_Li" << endl;
+			cout << "create_graph::init "
+					"after create_Winnie_Li" << endl;
 		}
 	}
 	else if (description->f_Grassmann) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_Grassmann" << endl;
+			cout << "create_graph::init "
+					"before create_Grassmann" << endl;
 		}
 		create_Grassmann(N, Adj,
 				description->Grassmann_n,
@@ -506,13 +536,15 @@ void create_graph::init(
 				verbose_level);
 
 		if (f_v) {
-			cout << "create_graph::init after create_Grassmann" << endl;
+			cout << "create_graph::init "
+					"after create_Grassmann" << endl;
 		}
 	}
 	else if (description->f_coll_orthogonal) {
 
 		if (f_v) {
-			cout << "create_graph::init before create_coll_orthogonal" << endl;
+			cout << "create_graph::init "
+					"before create_coll_orthogonal" << endl;
 		}
 		create_coll_orthogonal(N, Adj,
 				description->coll_orthogonal_epsilon,
@@ -520,7 +552,8 @@ void create_graph::init(
 				description->coll_orthogonal_q, verbose_level);
 
 		if (f_v) {
-			cout << "create_graph::init after create_coll_orthogonal" << endl;
+			cout << "create_graph::init "
+					"after create_coll_orthogonal" << endl;
 		}
 	}
 	else if (description->f_trihedral_pair_disjointness_graph) {
@@ -554,11 +587,13 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init before GT.make_non_attacking_queens_graph" << endl;
+			cout << "create_graph::init "
+					"before GT.make_non_attacking_queens_graph" << endl;
 		}
 		GT.make_non_attacking_queens_graph(Adj, N, n, verbose_level);
 		if (f_v) {
-			cout << "create_graph::init after GT.make_non_attacking_queens_graph" << endl;
+			cout << "create_graph::init "
+					"after GT.make_non_attacking_queens_graph" << endl;
 		}
 
 
@@ -575,13 +610,15 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init before GT.make_disjoint_sets_graph" << endl;
+			cout << "create_graph::init "
+					"before GT.make_disjoint_sets_graph" << endl;
 		}
 		GT.make_disjoint_sets_graph(Adj, N,
 				description->disjoint_sets_graph_fname,
 				verbose_level);
 		if (f_v) {
-			cout << "create_graph::init after GT.make_disjoint_sets_graph" << endl;
+			cout << "create_graph::init "
+					"after GT.make_disjoint_sets_graph" << endl;
 		}
 
 		string L;
@@ -609,13 +646,15 @@ void create_graph::init(
 
 
 		if (f_v) {
-			cout << "create_graph::init before GT.make_orbital_graph" << endl;
+			cout << "create_graph::init "
+					"before GT.make_orbital_graph" << endl;
 		}
 		make_orbital_graph(N, Adj,
 				AG, description->orbital_graph_orbit_idx,
 				verbose_level);
 		if (f_v) {
-			cout << "create_graph::init after GT.make_orbital_graph" << endl;
+			cout << "create_graph::init "
+					"after GT.make_orbital_graph" << endl;
 		}
 		if (f_v) {
 			cout << "create_graph::init label = " << label << endl;
@@ -634,9 +673,17 @@ void create_graph::init(
 		Get_matrix(description->collinearity_graph_matrix, v, m, n);
 
 
+		if (f_v) {
+			cout << "create_graph::init "
+					"before make_collinearity_graph" << endl;
+		}
 		make_collinearity_graph(N, Adj,
 				v, m, n,
 				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_collinearity_graph" << endl;
+		}
 
 
 
@@ -658,10 +705,18 @@ void create_graph::init(
 				v2, sz2, 0 /* verbose_level*/);
 
 
+		if (f_v) {
+			cout << "create_graph::init "
+					"before make_chain_graph" << endl;
+		}
 		make_chain_graph(N, Adj,
 				v1, sz1,
 				v2, sz2,
 				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_chain_graph" << endl;
+		}
 
 
 
@@ -707,18 +762,21 @@ void create_graph::init(
 
 			CG = NEW_OBJECT(graph_theory::colored_graph);
 			if (f_v) {
-				cout << "create_graph::init before CG->init_adjacency_no_colors" << endl;
+				cout << "create_graph::init "
+						"before CG->init_adjacency_no_colors" << endl;
 			}
 			CG->init_adjacency_no_colors(N, Adj, label, label_tex,
 					verbose_level);
 			if (f_v) {
-				cout << "create_graph::init after CG->init_adjacency_no_colors" << endl;
+				cout << "create_graph::init "
+						"after CG->init_adjacency_no_colors" << endl;
 			}
 
 			f_has_CG = TRUE;
 
 			if (f_v) {
-				cout << "create_graph::init created colored graph with one color" << endl;
+				cout << "create_graph::init "
+						"created colored graph with one color" << endl;
 			}
 		}
 
@@ -754,11 +812,13 @@ void create_graph::create_cycle(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_cycle before GT.make_cycle_graph" << endl;
+		cout << "create_graph::create_cycle "
+				"before GT.make_cycle_graph" << endl;
 	}
 	GT.make_cycle_graph(Adj, N, n, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_cycle after GT.make_cycle_graph" << endl;
+		cout << "create_graph::create_cycle "
+				"after GT.make_cycle_graph" << endl;
 	}
 
 	char str[1000];
@@ -792,11 +852,13 @@ void create_graph::create_inversion_graph(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_inversion_graph before GT.make_inversion_graph" << endl;
+		cout << "create_graph::create_inversion_graph "
+				"before GT.make_inversion_graph" << endl;
 	}
 	GT.make_inversion_graph(Adj, N, perm, n, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_inversion_graph after GT.make_inversion_graph" << endl;
+		cout << "create_graph::create_inversion_graph "
+				"after GT.make_inversion_graph" << endl;
 	}
 
 	char str[1000];
@@ -829,11 +891,13 @@ void create_graph::create_Hamming(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Hamming before GT.make_Hamming_graph" << endl;
+		cout << "create_graph::create_Hamming "
+				"before GT.make_Hamming_graph" << endl;
 	}
 	GT.make_Hamming_graph(Adj, N, n, q, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Hamming after GT.make_Hamming_graph" << endl;
+		cout << "create_graph::create_Hamming "
+				"after GT.make_Hamming_graph" << endl;
 	}
 
 	char str[1000];
@@ -862,11 +926,13 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Johnson before GT.make_Johnson_graph" << endl;
+		cout << "create_graph::create_Johnson "
+				"before GT.make_Johnson_graph" << endl;
 	}
 	GT.make_Johnson_graph(Adj, N, n, k, s, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Johnson after GT.make_Johnson_graph" << endl;
+		cout << "create_graph::create_Johnson "
+				"after GT.make_Johnson_graph" << endl;
 	}
 
 	char str[1000];
@@ -898,11 +964,13 @@ void create_graph::create_Paley(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Paley before GT.make_Paley_graph" << endl;
+		cout << "create_graph::create_Paley "
+				"before GT.make_Paley_graph" << endl;
 	}
 	GT.make_Paley_graph(Adj, N, Fq, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Paley after GT.make_Paley_graph" << endl;
+		cout << "create_graph::create_Paley "
+				"after GT.make_Paley_graph" << endl;
 	}
 
 	char str[1000];
@@ -927,15 +995,15 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	}
 
 
-	int f_vv = (verbose_level >= 2);
-	int i, l, f_special = FALSE;
+	int l, f_special = FALSE;
 	number_theory::number_theory_domain NT;
 
 
 
 	l = NT.Legendre(p, q, 0);
 	if (f_v) {
-		cout << "create_graph::create_Sarnak Legendre(" << p << ", " << q << ")=" << l << endl;
+		cout << "create_graph::create_Sarnak "
+				"Legendre(" << p << ", " << q << ")=" << l << endl;
 	}
 
 
@@ -949,6 +1017,9 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	//F->init_override_polynomial(q, override_poly, verbose_level);
 
 	A = NEW_OBJECT(actions::action);
+
+
+	// create PSL(2,q) or PGL(2,q) depending on Legendre(p, q):
 
 	if (l == 1) {
 		f_special = TRUE;
@@ -979,251 +1050,24 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 
 
-	groups::sims *Sims;
-
-	Sims = A->Sims;
 
 
-	//longinteger_object go;
-	long int goi;
-
-	goi = Sims->group_order_lint();
-
-	if (f_v) {
-		cout << "create_graph::create_Sarnak "
-				"found a group of order " << goi << endl;
-	}
-
-
-
-
-	int a0, a1, a2, a3;
-	int sqrt_p;
-
-	int *sqrt_mod_q;
-	int I;
-	int *A4;
-	int nb_A4 = 0;
-	int j;
-
-	A4 = NEW_int((p + 1) * 4);
-	sqrt_mod_q = NEW_int(q);
-	for (i = 0; i < q; i++) {
-		sqrt_mod_q[i] = -1;
-	}
-	for (i = 0; i < q; i++) {
-		j = F->mult(i, i);
-		sqrt_mod_q[j] = i;
-	}
-	if (f_v) {
-		cout << "create_graph::create_Sarnak sqrt_mod_q:" << endl;
-		Int_vec_print(cout, sqrt_mod_q, q);
-		cout << endl;
-	}
-
-	sqrt_p = 0;
-	for (i = 1; i < p; i++) {
-		if (i * i > p) {
-			sqrt_p = i - 1;
-			break;
-		}
-	}
-	if (f_v) {
-		cout << "create_graph::create_Sarnak p=" << p << endl;
-		cout << "create_graph::create_Sarnak sqrt_p = " << sqrt_p << endl;
-	}
-
-
-	for (I = 0; I < q; I++) {
-		if (F->add(F->mult(I, I), 1) == 0) {
-			break;
-		}
-	}
-	if (I == q) {
-		cout << "create_graph::create_Sarnak did not find I" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "create_graph::create_Sarnak I=" << I << endl;
-	}
-
-	for (a0 = 1; a0 <= sqrt_p; a0++) {
-		if (EVEN(a0)) {
-			continue;
-		}
-		for (a1 = -sqrt_p; a1 <= sqrt_p; a1++) {
-			if (ODD(a1)) {
-				continue;
-			}
-			for (a2 = -sqrt_p; a2 <= sqrt_p; a2++) {
-				if (ODD(a2)) {
-					continue;
-				}
-				for (a3 = -sqrt_p; a3 <= sqrt_p; a3++) {
-					if (ODD(a3)) {
-						continue;
-					}
-					if (a0 * a0 + a1 * a1 + a2 * a2 + a3 * a3 == p) {
-						if (f_v) {
-							cout << "create_graph::create_Sarnak solution " << nb_A4 << " : " << a0
-									<< ", " << a1 << ", " << a2 << ", "
-									<< a3 << ", " << endl;
-						}
-						if (nb_A4 == p + 1) {
-							cout << "create_graph::create_Sarnak too many solutions" << endl;
-							exit(1);
-						}
-						A4[nb_A4 * 4 + 0] = a0;
-						A4[nb_A4 * 4 + 1] = a1;
-						A4[nb_A4 * 4 + 2] = a2;
-						A4[nb_A4 * 4 + 3] = a3;
-						nb_A4++;
-					}
-				}
-			}
-		}
-	}
-
-	if (f_v) {
-		cout << "create_graph::create_Sarnak nb_A4=" << nb_A4 << endl;
-	}
-	if (nb_A4 != p + 1) {
-		cout << "create_graph::create_Sarnak nb_A4 != p + 1" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		Int_matrix_print(A4, nb_A4, 4);
-	}
-
-	data_structures_groups::vector_ge *gens;
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-	int M4[4];
-	int det; //, s, sv;
-
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-
-	gens = NEW_OBJECT(data_structures_groups::vector_ge);
-	gens->init(A, verbose_level - 2);
-	gens->allocate(nb_A4, verbose_level - 2);
-
-	if (f_v) {
-		cout << "create_graph::create_Sarnak making connection set:" << endl;
-	}
-	for (i = 0; i < nb_A4; i++) {
-
-		if (f_vv) {
-			cout << "create_graph::create_Sarnak making generator " << i << ":" << endl;
-		}
-		a0 = A4[i * 4 + 0];
-		a1 = A4[i * 4 + 1];
-		a2 = A4[i * 4 + 2];
-		a3 = A4[i * 4 + 3];
-		while (a0 < 0) {
-			a0 += q;
-		}
-		while (a1 < 0) {
-			a1 += q;
-		}
-		while (a2 < 0) {
-			a2 += q;
-		}
-		while (a3 < 0) {
-			a3 += q;
-		}
-		a0 = a0 % q;
-		a1 = a1 % q;
-		a2 = a2 % q;
-		a3 = a3 % q;
-		if (f_vv) {
-			cout << "create_graph::create_Sarnak making generator " << i << ": a0=" << a0
-					<< " a1=" << a1 << " a2=" << a2
-					<< " a3=" << a3 << endl;
-		}
-		M4[0] = F->add(a0, F->mult(I, a1));
-		M4[1] = F->add(a2, F->mult(I, a3));
-		M4[2] = F->add(F->negate(a2), F->mult(I, a3));
-		M4[3] = F->add(a0, F->negate(F->mult(I, a1)));
-
-		if (f_vv) {
-			cout << "M4=";
-			Int_vec_print(cout, M4, 4);
-			cout << endl;
-		}
-
-		if (f_special) {
-			det = F->add(F->mult(M4[0], M4[3]),
-					F->negate(F->mult(M4[1], M4[2])));
-
-			if (f_vv) {
-				cout << "det=" << det << endl;
-			}
-
-#if 0
-			s = sqrt_mod_q[det];
-			if (s == -1) {
-				cout << "create_graph::create_Sarnak determinant is not a square" << endl;
-				exit(1);
-			}
-			sv = F->inverse(s);
-			if (f_vv) {
-				cout << "create_graph::create_Sarnak det=" << det << " sqrt=" << s
-						<< " mutiplying by " << sv << endl;
-			}
-			for (j = 0; j < 4; j++) {
-				M4[j] = F->mult(sv, M4[j]);
-			}
-			if (f_vv) {
-				cout << "create_graph::create_Sarnak M4=";
-				int_vec_print(cout, M4, 4);
-				cout << endl;
-			}
-#endif
-		}
-
-		A->make_element(Elt1, M4, verbose_level - 1);
-
-		if (f_v) {
-			cout << "create_graph::create_Sarnak s_" << i << "=" << endl;
-			A->element_print_quick(Elt1, cout);
-		}
-
-		A->element_move(Elt1, gens->ith(i), 0);
-	}
-
-	if (f_v) {
-		cout << "create_graph::create_Sarnak before Sims->Cayley_graph" << endl;
-	}
-	Sims->Cayley_graph(Adj, N, gens, verbose_level);
-	if (f_v) {
-		cout << "create_graph::create_Sarnak after Sims->Cayley_graph" << endl;
-	}
+	graph_theory_apps GTA;
 
 
 	if (f_v) {
-		cout << "create_graph::create_Sarnak "
-				"The adjacency matrix of a graph with " << goi
-				<< " vertices has been computed" << endl;
-		//int_matrix_print(Adj, goi, goi);
+		cout << "create_graph::create_Sarnak before GTA.expander_graph" << endl;
 	}
-
-	int k;
-	k = 0;
-	for (i = 0; i < N; i++) {
-		if (Adj[0 * N + i]) {
-			k++;
-		}
-	}
+	GTA.expander_graph(
+			p, q, f_special,
+			F, A,
+			Adj, N,
+			verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Sarnak the graph is regular of degree " << k << endl;
+		cout << "create_graph::create_Sarnak before GTA.expander_graph" << endl;
 	}
 
 
-	//N = goi;
 
 	char str[1000];
 	snprintf(str, sizeof(str), "Sarnak_%d_%d", p, q);
@@ -1231,13 +1075,9 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	snprintf(str, sizeof(str), "Sarnak\\_%d\\_%d", p, q);
 	label_tex.assign(str);
 
-	FREE_OBJECT(gens);
 	FREE_OBJECT(A);
-	FREE_int(A4);
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
 	FREE_OBJECT(F);
+
 
 	if (f_v) {
 		cout << "create_graph::create_Sarnak done" << endl;
@@ -1258,11 +1098,13 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Schlaefli before GT.make_Schlaefli_graph" << endl;
+		cout << "create_graph::create_Schlaefli "
+				"before GT.make_Schlaefli_graph" << endl;
 	}
 	GT.make_Schlaefli_graph(Adj, N, q, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Schlaefli after GT.make_Schlaefli_graph" << endl;
+		cout << "create_graph::create_Schlaefli "
+				"after GT.make_Schlaefli_graph" << endl;
 	}
 
 	char str[1000];
@@ -1456,7 +1298,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 }
 
 void create_graph::create_Winnie_Li(int &N, int *&Adj,
-		int q, int index, int verbose_level)
+		std::string &label_Fq, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1465,13 +1307,16 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 	}
 
 	graph_theory::graph_theory_domain GT;
+	field_theory::finite_field *Fq;
+
+	Fq = Get_finite_field(label_Fq);
 
 
 	if (f_v) {
 		cout << "create_graph::create_Winnie_Li "
 				"before Combi.make_Winnie_Li_graph" << endl;
 	}
-	GT.make_Winnie_Li_graph(Adj, N, q, index, verbose_level);
+	GT.make_Winnie_Li_graph(Adj, N, Fq, index, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Winnie_Li "
 				"after Combi.make_Winnie_Li_graph" << endl;
@@ -1479,9 +1324,9 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 
 
 	char str[1000];
-	snprintf(str, sizeof(str), "Winnie_Li_%d_%d", q, index);
+	snprintf(str, sizeof(str), "Winnie_Li_%d_%d", Fq->q, index);
 	label.assign(str);
-	snprintf(str, sizeof(str), "Winnie_Li\\_%d\\_%d", q, index);
+	snprintf(str, sizeof(str), "Winnie_Li\\_%d\\_%d", Fq->q, index);
 	label_tex.assign(str);
 
 
@@ -1603,12 +1448,14 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 	Orb = NEW_OBJECT(orbits_schreier::orbit_of_sets);
 
 	if (f_v) {
-		cout << "create_graph::make_orbital_graph before Orb->init" << endl;
+		cout << "create_graph::make_orbital_graph "
+				"before Orb->init" << endl;
 	}
 	Orb->init(AG->A_base, AG->A,
 			set, 2, AG->Subgroup_gens->gens, verbose_level);
 	if (f_v) {
-		cout << "create_graph::make_orbital_graph after Orb->init" << endl;
+		cout << "create_graph::make_orbital_graph "
+				"after Orb->init" << endl;
 	}
 
 	int *M;
@@ -1633,8 +1480,10 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 	char str[1000];
 
 	if (f_v) {
-		cout << "create_graph::make_orbital_graph AG->A->label = " << AG->A->label << endl;
-		cout << "create_graph::make_orbital_graph AG->A->label_tex = " << AG->A->label_tex << endl;
+		cout << "create_graph::make_orbital_graph "
+				"AG->A->label = " << AG->A->label << endl;
+		cout << "create_graph::make_orbital_graph "
+				"AG->A->label_tex = " << AG->A->label_tex << endl;
 	}
 
 	snprintf(str, sizeof(str), "_Orbital_%d", orbit_idx);

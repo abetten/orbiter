@@ -828,7 +828,12 @@ void orbiter_symbol_table_entry::print()
 			cout << "set" << endl;
 		}
 		else if (object_type == t_vector) {
-			cout << "vector" << endl;
+			cout << "vector : ";
+
+			data_structures::vector_builder *VB;
+
+			VB = (data_structures::vector_builder *) ptr;
+			VB->print(cout);
 		}
 		else if (object_type == t_combinatorial_objects) {
 			cout << "combinatorial_objects" << endl;

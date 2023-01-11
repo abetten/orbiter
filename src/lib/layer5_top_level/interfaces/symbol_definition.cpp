@@ -1256,7 +1256,7 @@ void symbol_definition::perform_definition(int verbose_level)
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_vector" << endl;
 		}
-		definition_of_vector(verbose_level);
+		definition_of_vector(define_label, Vector_builder_description, verbose_level);
 		if (f_v) {
 			cout << "symbol_definition::perform_definition after definition_of_vector" << endl;
 		}
@@ -3001,7 +3001,9 @@ void symbol_definition::definition_of_set(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_vector(int verbose_level)
+void symbol_definition::definition_of_vector(
+		std::string &label,
+		data_structures::vector_builder_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3012,11 +3014,11 @@ void symbol_definition::definition_of_vector(int verbose_level)
 
 	field_theory::finite_field *F = NULL;
 
-	if (Vector_builder_description->f_field) {
+	if (Descr->f_field) {
 
 		int idx;
 
-		idx = Sym->Orbiter_top_level_session->find_symbol(Vector_builder_description->field_label);
+		idx = Sym->Orbiter_top_level_session->find_symbol(Descr->field_label);
 		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_vector over a field" << endl;
@@ -3040,7 +3042,7 @@ void symbol_definition::definition_of_vector(int verbose_level)
 		cout << "symbol_definition::definition_of_vector before VB->init" << endl;
 	}
 
-	VB->init(Vector_builder_description, F, verbose_level);
+	VB->init(Descr, F, verbose_level);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_vector after VB->init" << endl;
@@ -3050,7 +3052,7 @@ void symbol_definition::definition_of_vector(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_vector(define_label, VB, verbose_level);
+	Symb->init_vector(label, VB, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_vector before add_symbol_table_entry" << endl;
 	}
@@ -3155,7 +3157,7 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 					<< Projective_space_with_action_description->field_label << endl;
 		}
 		Projective_space_with_action_description->F =
-				Get_object_of_type_finite_field(
+				Get_finite_field(
 						Projective_space_with_action_description->field_label);
 	}
 	else if (Projective_space_with_action_description->f_q) {

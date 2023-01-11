@@ -65,7 +65,7 @@ create_graph_description::create_graph_description()
 	f_Shrikhande = FALSE;
 
 	f_Winnie_Li = FALSE;
-	Winnie_Li_q = 0;
+	//std::strin Winnie_Li_label_Fq;
 	Winnie_Li_index = 0;
 
 	f_Grassmann = FALSE;
@@ -239,10 +239,10 @@ int create_graph_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-Winnie_Li") == 0) {
 			f_Winnie_Li = TRUE;
-			Winnie_Li_q = ST.strtoi(argv[++i]);
+			Winnie_Li_label_Fq.assign(argv[++i]);
 			Winnie_Li_index = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-Winnie_Li " << Winnie_Li_q << " " << Winnie_Li_index << endl;
+				cout << "-Winnie_Li " << Winnie_Li_label_Fq << " " << Winnie_Li_index << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Grassmann") == 0) {
@@ -404,7 +404,7 @@ void create_graph_description::print()
 		cout << "-Shrikhande " << endl;
 	}
 	if (f_Winnie_Li) {
-		cout << "-Winnie_Li " << Winnie_Li_q << " " << Winnie_Li_index << endl;
+		cout << "-Winnie_Li " << Winnie_Li_label_Fq << " " << Winnie_Li_index << endl;
 	}
 	if (f_Grassmann) {
 		cout << "-Grassmann " << Grassmann_n << " " << Grassmann_k

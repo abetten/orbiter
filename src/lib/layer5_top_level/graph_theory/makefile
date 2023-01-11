@@ -15,7 +15,8 @@ MODULES = \
 	graph_classify.o \
 	graph_modification_description.o \
 	graph_theoretic_activity_description.o \
-	graph_theoretic_activity.o
+	graph_theoretic_activity.o \
+	graph_theory_apps.o
 
 
 all : $(MODULES)

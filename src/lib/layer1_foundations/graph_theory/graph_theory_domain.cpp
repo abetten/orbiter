@@ -484,7 +484,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 		int *&Pijk, int *&colors, int &nb_colors, int verbose_level)
 // color_graph[n * n]
 // added Dec 22, 2010.
-		{
+{
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int N;
@@ -493,7 +493,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 	int ret = FALSE;
 
 	if (f_v) {
-		cout << "is_association_scheme" << endl;
+		cout << "graph_theory_domain::is_association_scheme" << endl;
 	}
 	N = (n * (n - 1)) / 2;
 	M1 = NEW_int(N);
@@ -520,7 +520,8 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 	}
 
 	if (f_vv) {
-		cout << "colors (the 0-th color is the diagonal color): ";
+		cout << "graph_theory_domain::is_association_scheme "
+				"colors (the 0-th color is the diagonal color): ";
 		Int_vec_print(cout, colors, nb_colors);
 		cout << endl;
 	}
@@ -538,17 +539,20 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 				for (u = 0; u < n; u++) {
 					for (v = 0; v < n; v++) {
 						//if (v == u) continue;
-						if (M[u * n + v] != colors[k])
+						if (M[u * n + v] != colors[k]) {
 							continue;
+						}
 						// now: edge (u,v) is colored k
 						pijk1 = 0;
 						for (w = 0; w < n; w++) {
 							//if (w == u)continue;
 							//if (w == v)continue;
-							if (M[u * n + w] != colors[i])
+							if (M[u * n + w] != colors[i]) {
 								continue;
-							if (M[v * n + w] != colors[j])
+							}
+							if (M[v * n + w] != colors[j]) {
 								continue;
+							}
 							//cout << "i=" << i << " j=" << j << " k=" << k
 							//<< " u=" << u << " v=" << v << " w=" << w
 							//<< " increasing pijk" << endl;
@@ -571,7 +575,8 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 								//FREE_int(Pijk);
 								//FREE_int(colors);
 
-								cout << "not an association scheme" << endl;
+								cout << "graph_theory_domain::is_association_scheme "
+										"it is not an association scheme" << endl;
 								cout << "k=" << k << endl;
 								cout << "i=" << i << endl;
 								cout << "j=" << j << endl;
@@ -596,7 +601,8 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 	ret = TRUE;
 
 	if (f_v) {
-		cout << "it is an association scheme" << endl;
+		cout << "graph_theory_domain::is_association_scheme "
+				"it is an association scheme" << endl;
 
 		if (f_v) {
 			print_Pijk(Pijk, C);
@@ -616,6 +622,9 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 
 	done:
 	FREE_int(M1);
+	if (f_v) {
+		cout << "graph_theory_domain::is_association_scheme done" << endl;
+	}
 	return ret;
 }
 
@@ -647,7 +656,7 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 	int I, J, i, j, f1, l1, f2, l2, r0 = 0, r;
 
 	if (f_v) {
-		cout << "compute_decomposition_of_graph_wrt_partition" << endl;
+		cout << "graph_theory_domain::compute_decomposition_of_graph_wrt_partition" << endl;
 		cout << "The partition is:" << endl;
 		cout << "first = ";
 		Int_vec_print(cout, first, nb_parts);
@@ -676,8 +685,8 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 				}
 				else {
 					if (r0 != r) {
-						cout << "compute_decomposition_of_graph_"
-								"wrt_partition not tactical" << endl;
+						cout << "graph_theory_domain::compute_decomposition_of_graph_wrt_partition "
+								"not tactical" << endl;
 						cout << "I=" << I << endl;
 						cout << "J=" << J << endl;
 						cout << "r0=" << r0 << endl;
@@ -690,7 +699,7 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 		}
 	}
 	if (f_v) {
-		cout << "compute_decomposition_of_graph_wrt_partition done" << endl;
+		cout << "graph_theory_domain::compute_decomposition_of_graph_wrt_partition done" << endl;
 	}
 }
 
@@ -698,8 +707,10 @@ void graph_theory_domain::draw_bitmatrix(
 		std::string &fname_base,
 		graphics::layered_graph_draw_options *Draw_options,
 		int f_dots,
-		int f_partition, int nb_row_parts, int *row_part_first,
-		int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
+		int f_partition,
+		int nb_row_parts, int *row_part_first,
+		int nb_col_parts, int *col_part_first,
+		int f_row_grid, int f_col_grid,
 		int f_bitmatrix, data_structures::bitmatrix *Bitmatrix,
 		int *M, int m, int n,
 		int f_has_labels, int *labels,
@@ -1018,22 +1029,7 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 				"q must be congruent to 1 modulo 4" << endl;
 	}
 
-	//field_theory::finite_field *F;
-	//int *f_is_square;
 	int i, j, a;
-
-	//F = NEW_OBJECT(field_theory::finite_field);
-	//F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
-
-#if 0
-	f_is_square = NEW_int(q);
-	Int_vec_zero(f_is_square, q);
-
-	for (i = 0; i < q; i++) {
-		j = F->mult(i, i);
-		f_is_square[j] = TRUE;
-	}
-#endif
 
 	Adj = NEW_int(Fq->q * Fq->q);
 	Int_vec_zero(Adj, Fq->q * Fq->q);
@@ -1048,9 +1044,6 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 		}
 	}
 	N = Fq->q;
-
-	//FREE_OBJECT(F);
-	//FREE_int(f_is_square);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_Paley_graph done" << endl;
@@ -1089,7 +1082,7 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 }
 
 void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
-		int q, int index, int verbose_level)
+		field_theory::finite_field *Fq, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1097,35 +1090,27 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_Winnie_Li_graph" << endl;
 	}
 
-	field_theory::finite_field *F;
 	int i, j, h, u, p, k, co_index, q1, relative_norm;
 	int *N1;
 	number_theory::number_theory_domain NT;
 
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
-	p = F->p;
+	p = Fq->p;
 
-#if 0
-	if (!f_index) {
-		index = F->e;
-		}
-#endif
 
-	co_index = F->e / index;
+	co_index = Fq->e / index;
 
-	if (co_index * index != F->e) {
+	if (co_index * index != Fq->e) {
 		cout << "graph_theory_domain::make_Winnie_Li_graph "
 				"the index has to divide the field degree" << endl;
 		exit(1);
 	}
 	q1 = NT.i_power_j(p, co_index);
 
-	k = (q - 1) / (q1 - 1);
+	k = (Fq->q - 1) / (q1 - 1);
 
 	if (f_v) {
-		cout << "q=" << q << endl;
+		cout << "q=" << Fq->q << endl;
 		cout << "index=" << index << endl;
 		cout << "co_index=" << co_index << endl;
 		cout << "q1=" << q1 << endl;
@@ -1145,8 +1130,8 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 
 	N1 = NEW_int(k);
 	j = 0;
-	for (i = 0; i < q; i++) {
-		if (F->power(i, relative_norm) == 1) {
+	for (i = 0; i < Fq->q; i++) {
+		if (Fq->power(i, relative_norm) == 1) {
 			N1[j++] = i;
 		}
 	}
@@ -1162,21 +1147,20 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 		cout << endl;
 	}
 
-	Adj = NEW_int(q * q);
-	for (i = 0; i < q; i++) {
+	Adj = NEW_int(Fq->q * Fq->q);
+	for (i = 0; i < Fq->q; i++) {
 		for (h = 0; h < k; h++) {
 			j = N1[h];
-			u = F->add(i, j);
-			Adj[i * q + u] = 1;
-			Adj[u * q + i] = 1;
+			u = Fq->add(i, j);
+			Adj[i * Fq->q + u] = 1;
+			Adj[u * Fq->q + i] = 1;
 		}
 	}
 
-	N = q;
+	N = Fq->q;
 
 
 	FREE_int(N1);
-	FREE_OBJECT(F);
 
 
 	if (f_v) {
@@ -1229,7 +1213,8 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 			Int_vec_copy(M1, M, k * n);
 			Int_vec_copy(M2, M + k * n, k * n);
 
-			rr = F->Linear_algebra->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
+			rr = F->Linear_algebra->rank_of_rectangular_matrix(
+					M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == r) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
@@ -1698,6 +1683,119 @@ void graph_theory_domain::all_cliques_of_given_size(int *Adj,
 		cout << "graph_theory_domain::all_cliques_of_given_size done" << endl;
 	}
 }
+
+void graph_theory_domain::eigenvalues(graph_theory::colored_graph *CG, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues" << endl;
+	}
+	double *E;
+	double *L;
+	int i;
+
+	CG->eigenvalues(E, verbose_level - 2);
+	CG->Laplace_eigenvalues(L, verbose_level - 2);
+
+	cout << "The eigenvalues are:" << endl;
+	for (i = 0; i < CG->nb_points; i++) {
+		cout << i << " : " << E[i] << endl;
+	}
+
+	double energy = 0;
+	for (i = 0; i < CG->nb_points; i++) {
+		energy += ABS(E[i]);
+	}
+	cout << "The energy is " << energy << endl;
+
+	cout << "The Laplace eigenvalues are:" << endl;
+	for (i = 0; i < CG->nb_points; i++) {
+		cout << i << " : " << L[i] << endl;
+	}
+
+
+	{
+		string fname;
+
+		string title, author, extra_praeamble;
+		char str[1000];
+
+		snprintf(str, 1000, "Eigenvalues of %s", CG->label_tex.c_str());
+		title.assign(str);
+
+
+		fname.assign(CG->label);
+		fname.append("_eigenvalues.tex");
+
+		{
+			ofstream ost(fname);
+			orbiter_kernel_system::latex_interface Li;
+
+			Li.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "graph_theory_domain::perform_activity before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			ost << "$$" << endl;
+			ost << "\\begin{array}{|r|r|r|}" << endl;
+			ost << "\\hline" << endl;
+			ost << " i  & \\lambda_i & \\theta_i \\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+			for (i = 0; i < CG->nb_points; i++) {
+				ost << i;
+				ost << " & ";
+				ost << E[CG->nb_points - 1 - i];
+				ost << " & ";
+				ost << L[CG->nb_points - 1 - i];
+				ost << "\\\\" << endl;
+				ost << "\\hline" << endl;
+			}
+			ost << "\\end{array}" << endl;
+			ost << "$$" << endl;
+
+			ost << "The energy is " << energy << "\\\\" << endl;
+			ost << "Eigenvalues: $\\lambda_i$\\\\" << endl;
+			ost << "Laplace eigenvalues: $\\theta_i$\\\\" << endl;
+
+			if (f_v) {
+				cout << "graph_theory_domain::perform_activity after report" << endl;
+			}
+
+
+			Li.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "graph_theory_domain::perform_activity "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+	delete [] E;
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues done" << endl;
+	}
+
+}
+
 
 
 

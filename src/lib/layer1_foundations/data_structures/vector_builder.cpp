@@ -296,6 +296,12 @@ void vector_builder::init(vector_builder_description *Descr,
 }
 
 
+void vector_builder::print(std::ostream &ost)
+{
+
+	Lint_vec_print(ost, v, len);
+	ost << endl;
+}
 
 
 }}}

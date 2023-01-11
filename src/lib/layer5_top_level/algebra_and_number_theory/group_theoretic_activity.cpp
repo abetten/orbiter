@@ -665,6 +665,23 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_random_element) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity f_random_element" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->random_element" << endl;
+		}
+		AG->random_element(Descr->random_element_label, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->random_element" << endl;
+		}
+	}
+
 	else if (Descr->f_element_rank) {
 
 		if (f_v) {

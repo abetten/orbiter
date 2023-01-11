@@ -78,7 +78,8 @@ void object_with_properties::init(
 	actions::nauty_interface_with_group Nau;
 
 	if (f_v) {
-		cout << "object_with_properties::init before Nau.automorphism_group_as_permutation_group" << endl;
+		cout << "object_with_properties::init "
+				"before Nau.automorphism_group_as_permutation_group" << endl;
 	}
 	Nau.automorphism_group_as_permutation_group(
 					NO,
@@ -86,7 +87,8 @@ void object_with_properties::init(
 					verbose_level - 2);
 
 	if (f_v) {
-		cout << "object_with_properties::init after Nau.automorphism_group_as_permutation_group" << endl;
+		cout << "object_with_properties::init "
+				"after Nau.automorphism_group_as_permutation_group" << endl;
 	}
 
 	if (FALSE) {

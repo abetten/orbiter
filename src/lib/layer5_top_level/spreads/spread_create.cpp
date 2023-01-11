@@ -88,7 +88,7 @@ void spread_create::init(spread_create_description *Descr,
 		exit(1);
 	}
 
-	F = Get_object_of_type_finite_field(Descr->kernel_field_label);
+	F = Get_finite_field(Descr->kernel_field_label);
 
 	q = F->q;
 

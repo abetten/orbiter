@@ -1086,7 +1086,9 @@ public:
 	void definition_of_design_table(int verbose_level);
 	void definition_of_large_set_was(int verbose_level);
 	void definition_of_set(int verbose_level);
-	void definition_of_vector(int verbose_level);
+	void definition_of_vector(
+			std::string &label,
+			data_structures::vector_builder_description *Descr, int verbose_level);
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);
 	void load_finite_field_PG(int verbose_level);

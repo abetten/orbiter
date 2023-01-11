@@ -328,7 +328,15 @@ void orbiter_top_level_session::print_symbol_table()
 void orbiter_top_level_session::add_symbol_table_entry(std::string &label,
 		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::add_symbol_table_entry, label = " << label << endl;
+	}
 	Orbiter_session->add_symbol_table_entry(label, Symb, verbose_level);
+	if (f_v) {
+		cout << "orbiter_top_level_session::add_symbol_table_entry done" << endl;
+	}
 }
 
 apps_algebra::any_group *orbiter_top_level_session::get_object_of_type_any_group(std::string &label)

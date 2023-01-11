@@ -52,6 +52,8 @@ projective_space::projective_space()
 
 	Arc_in_projective_space = NULL;
 
+	Reporting = NULL;
+
 	v = NULL;
 	w = NULL;
 	Mtx = NULL;
@@ -183,20 +185,23 @@ void projective_space::projective_space_init(int n, field_theory::finite_field *
 	for (i = 1; i < n + 1; i++) {
 		Grass_stack[i] = NEW_OBJECT(grassmann);
 		if (f_v) {
-			cout << "projective_space::projective_space_init before Grass_stack[i]->init i=" << i << endl;
+			cout << "projective_space::projective_space_init "
+					"before Grass_stack[i]->init i=" << i << endl;
 		}
 		Grass_stack[i]->init(n + 1, i, F, verbose_level - 2);
 	}
 
 	if (f_v) {
-		cout << "projective_space::projective_space_init computing number of "
+		cout << "projective_space::projective_space_init "
+				"computing number of "
 				"subspaces of each dimension:" << endl;
 	}
 	Nb_subspaces = NEW_lint(n + 1);
 	if (n < 10) {
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
-				cout << "projective_space::projective_space_init computing number of "
+				cout << "projective_space::projective_space_init "
+						"computing number of "
 						"subspaces of dimension " << i + 1 << endl;
 			}
 			C.q_binomial_no_table(
@@ -215,7 +220,8 @@ void projective_space::projective_space_init(int n, field_theory::finite_field *
 	else {
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
-				cout << "projective_space::projective_space_init computing number of "
+				cout << "projective_space::projective_space_init "
+						"computing number of "
 						"subspaces of dimension " << i + 1 << endl;
 				}
 			Nb_subspaces[i] = 0;
@@ -261,11 +267,13 @@ void projective_space::projective_space_init(int n, field_theory::finite_field *
 
 	Reporting = NEW_OBJECT(projective_space_reporting);
 	if (f_v) {
-		cout << "projective_space::projective_space_init before Reporting->init" << endl;
+		cout << "projective_space::projective_space_init "
+				"before Reporting->init" << endl;
 	}
 	Reporting->init(this, verbose_level);
 	if (f_v) {
-		cout << "projective_space::projective_space_init after Reporting->init" << endl;
+		cout << "projective_space::projective_space_init "
+				"after Reporting->init" << endl;
 	}
 
 	if (f_v) {
@@ -299,14 +307,16 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 	if (n >= 2) {
 		if (f_v) {
-			cout << "projective_space_implementation::init before init_polarity" << endl;
+			cout << "projective_space_implementation::init "
+					"before init_polarity" << endl;
 		}
 
 		init_polarity(verbose_level);
 
 
 		if (f_v) {
-			cout << "projective_space_implementation::init after init_polarity" << endl;
+			cout << "projective_space_implementation::init "
+					"after init_polarity" << endl;
 		}
 	}
 
@@ -328,21 +338,25 @@ void projective_space::init_polarity(int verbose_level)
 	Standard_polarity = NEW_OBJECT(polarity);
 
 	if (f_v) {
-		cout << "projective_space::init_polarity before Standard_polarity->init_standard_polarity" << endl;
+		cout << "projective_space::init_polarity "
+				"before Standard_polarity->init_standard_polarity" << endl;
 	}
 	Standard_polarity->init_standard_polarity(this, verbose_level);
 	if (f_v) {
-		cout << "projective_space::init_polarity after Standard_polarity->init_standard_polarity" << endl;
+		cout << "projective_space::init_polarity "
+				"after Standard_polarity->init_standard_polarity" << endl;
 	}
 
 	Reversal_polarity = NEW_OBJECT(polarity);
 
 	if (f_v) {
-		cout << "projective_space::init_polarity before Standard_polarity->init_reversal_polarity" << endl;
+		cout << "projective_space::init_polarity "
+				"before Standard_polarity->init_reversal_polarity" << endl;
 	}
 	Reversal_polarity->init_reversal_polarity(this, verbose_level);
 	if (f_v) {
-		cout << "projective_space::init_polarity after Standard_polarity->init_reversal_polarity" << endl;
+		cout << "projective_space::init_polarity "
+				"after Standard_polarity->init_reversal_polarity" << endl;
 	}
 
 
@@ -395,10 +409,14 @@ void projective_space::create_points_on_line(
 	
 	Grass_lines->unrank_lint(line_rk, 0/*verbose_level - 4*/);
 	for (a = 0; a < k; a++) {
+
 		F->PG_element_unrank_modified(v, 1, 2, a);
+
 		F->Linear_algebra->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
 				0 /* verbose_level */);
+
 		F->PG_element_rank_modified(w, 1, n + 1, b);
+
 		line[a] = b;
 	}
 	if (f_v) {
