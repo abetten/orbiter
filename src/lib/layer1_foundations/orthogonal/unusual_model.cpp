@@ -23,6 +23,10 @@ namespace orthogonal_geometry {
 unusual_model::unusual_model()
 {
 	FQ = Fq = NULL;
+
+	Quadratic_form = NULL;
+
+
 	q = Q = 0;
 	alpha = 0;
 	T_alpha = N_alpha = 0;
@@ -53,6 +57,9 @@ unusual_model::unusual_model()
 
 unusual_model::~unusual_model()
 {
+	if (Quadratic_form) {
+		FREE_OBJECT(Quadratic_form);
+	}
 	if (form_i) {
 		FREE_int(form_i);
 		form_i = NULL;
@@ -159,6 +166,18 @@ void unusual_model::setup2(
 		exit(1);
 	}
 	nb_terms = 0;
+
+
+	Quadratic_form = NEW_OBJECT(quadratic_form);
+
+	if (f_v) {
+		cout << "unusual_model::setup2 before Quadratic_form->init" << endl;
+	}
+	Quadratic_form->init(0 /* epsilon */, 4, Fq, verbose_level);
+	if (f_v) {
+		cout << "unusual_model::setup2 after Quadratic_form->init" << endl;
+	}
+
 
 	//const char *override_poly_Q = NULL;
 	//const char *override_poly_q = NULL;
@@ -490,7 +509,7 @@ void unusual_model::convert_to_ranks(int n,
 
 
 	for (i = 0; i < n; i++) {
-		ranks[i] = Fq->Orthogonal_indexing->Q_rank(usual + 5 * i, 1, 4, 0 /* verbose_level */);
+		ranks[i] = Quadratic_form->Orthogonal_indexing->Q_rank(usual + 5 * i, 1, 4, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ranks[" << i << "]=" << ranks[i] << endl;
 		}
@@ -523,7 +542,7 @@ void unusual_model::convert_from_ranks(int n,
 	
 	usual = NEW_int(n * 5);
 	for (i = 0; i < n; i++) {
-		Fq->Orthogonal_indexing->Q_unrank(usual + 5 * i, 1, 4, ranks[i], 0 /* verbose_level */);
+		Quadratic_form->Orthogonal_indexing->Q_unrank(usual + 5 * i, 1, 4, ranks[i], 0 /* verbose_level */);
 	}
 	
 
@@ -547,7 +566,7 @@ long int unusual_model::convert_to_rank(
 	long int rank;
 
 	convert_to_usual(1, unusual_coordinates, usual, verbose_level - 1);
-	rank = Fq->Orthogonal_indexing->Q_rank(usual, 1, 4, 0 /* verbose_level */);
+	rank = Quadratic_form->Orthogonal_indexing->Q_rank(usual, 1, 4, 0 /* verbose_level */);
 	return rank;
 }
 
@@ -556,7 +575,7 @@ void unusual_model::convert_from_rank(long int rank,
 {
 	int usual[5];
 	
-	Fq->Orthogonal_indexing->Q_unrank(usual, 1, 4, rank, 0 /* verbose_level */);
+	Quadratic_form->Orthogonal_indexing->Q_unrank(usual, 1, 4, rank, 0 /* verbose_level */);
 	convert_from_usual(1, usual,
 			unusual_coordinates, verbose_level - 1);
 }
@@ -896,26 +915,26 @@ int unusual_model::T2(int a)
 	
 }
 
-int unusual_model::quadratic_form(
+int unusual_model::evaluate_quadratic_form(
 		int a, int b, int c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int w, x, y, z;
 	
 	if (f_v) {
-		cout << "unusual_model::quadratic_form a=" << a << " b=" << b
+		cout << "unusual_model::evaluate_quadratic_form a=" << a << " b=" << b
 				<< " c=" << c << endl;
 	}
 	x = N2(a);
 	y = N2(b);
 	z = Fq->power(c, 2);
 	if (f_v) {
-		cout << "unusual_model::quadratic_form N(a)=" << x
+		cout << "unusual_model::evaluate_quadratic_form N(a)=" << x
 				<< " N(b)=" << y << " c^2=" << z << endl;
 	}
 	w = Fq->add3(x, y, z);
 	if (f_v) {
-		cout << "unusual_model::quadratic_form w=" << w << endl;
+		cout << "unusual_model::evaluate_quadratic_form w=" << w << endl;
 	}
 	return w;
 }
@@ -939,9 +958,9 @@ int unusual_model::bilinear_form(
 	if (f_v) {
 		cout << "a3=" << a3 << " b3=" << b3 << " c3=" << c3 << endl;
 	}
-	q1 = quadratic_form(a1, b1, c1, 0);
-	q2 = quadratic_form(a2, b2, c2, 0);
-	q3 = quadratic_form(a3, b3, c3, 0);
+	q1 = evaluate_quadratic_form(a1, b1, c1, 0);
+	q2 = evaluate_quadratic_form(a2, b2, c2, 0);
+	q3 = evaluate_quadratic_form(a3, b3, c3, 0);
 	if (f_v) {
 		cout << "q1=" << q1 << " q2=" << q2 << " q3=" << q3 << endl;
 	}
@@ -973,13 +992,13 @@ void unusual_model::print_coordinates_detailed(long int pt, int cnt)
 	int unusual[3];
 	int unusual_point_rank;
 		
-	Fq->Orthogonal_indexing->Q_unrank(usual, 1, 4, pt, 0 /* verbose_level */);
+	Quadratic_form->Orthogonal_indexing->Q_unrank(usual, 1, 4, pt, 0 /* verbose_level */);
 	convert_from_usual(1, usual, unusual, 0);
 		
 	a = unusual[0];
 	b = unusual[1];
 	c = unusual[2];
-	w = quadratic_form(a, b, c, 0);
+	w = evaluate_quadratic_form(a, b, c, 0);
 	a1 = components[2 * a + 0];
 	a2 = components[2 * a + 1];
 	b1 = components[2 * b + 0];
@@ -1225,8 +1244,7 @@ void unusual_model::transform_matrix_unusual_to_usual(
 	M5_tmp2 = NEW_int(5 * 5);
 	
 	if (f_v) {
-		cout << "unusual_model::transform_matrix_"
-				"unusual_to_usual" << endl;
+		cout << "unusual_model::transform_matrix_unusual_to_usual" << endl;
 	}
 	if (f_vv) {
 		cout << "transformation matrix in unusual model" << endl;
@@ -1319,8 +1337,7 @@ void unusual_model::transform_matrix_usual_to_unusual(
 	//M5 = NEW_int(5 * 5);
 	
 	if (f_v) {
-		cout << "unusual_model::transform_matrix_"
-				"usual_to_unusual" << endl;
+		cout << "unusual_model::transform_matrix_usual_to_unusual" << endl;
 	}
 #if 0
 	if (f_vv) {
@@ -1385,8 +1402,8 @@ void unusual_model::parse_4by4_matrix(int *M4,
 				}
 				else {
 					if (v != FQ->power(q, q)) {
-						cout << "unusual_model::parse_"
-							"4by4_matrix v != FQ->power(q, q)" << endl;
+						cout << "unusual_model::parse_4by4_matrix "
+								"v != FQ->power(q, q)" << endl;
 						exit(1);
 					}
 					f_semi = TRUE;

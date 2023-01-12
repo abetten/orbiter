@@ -87,7 +87,8 @@ void linear_algebra_global::Berlekamp_matrix(
 
 
 	if (f_v) {
-		cout << "linear_algebra_global::Berlekamp_matrix before FX.Berlekamp_matrix" << endl;
+		cout << "linear_algebra_global::Berlekamp_matrix "
+				"before FX.Berlekamp_matrix" << endl;
 	}
 
 	{
@@ -95,7 +96,8 @@ void linear_algebra_global::Berlekamp_matrix(
 	}
 
 	if (f_v) {
-		cout << "linear_algebra_global::Berlekamp_matrix after FX.Berlekamp_matrix" << endl;
+		cout << "linear_algebra_global::Berlekamp_matrix "
+				"after FX.Berlekamp_matrix" << endl;
 	}
 
 	if (f_v) {
@@ -225,18 +227,21 @@ void linear_algebra_global::do_nullspace(
 	Int_vec_copy(M, A, m * n);
 
 	if (f_v) {
-		cout << "linear_algebra_global::do_nullspace before Linear_algebra->perp_standard" << endl;
+		cout << "linear_algebra_global::do_nullspace "
+				"before Linear_algebra->perp_standard" << endl;
 	}
 
 	rk = F->Linear_algebra->perp_standard(n, m, A, 0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "linear_algebra_global::do_nullspace after Linear_algebra->perp_standard" << endl;
+		cout << "linear_algebra_global::do_nullspace "
+				"after Linear_algebra->perp_standard" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "linear_algebra_global::do_nullspace after perp_standard:" << endl;
+		cout << "linear_algebra_global::do_nullspace "
+				"after perp_standard:" << endl;
 		Int_matrix_print(A, n, n);
 		cout << "rk=" << rk << endl;
 	}
@@ -248,11 +253,13 @@ void linear_algebra_global::do_nullspace(
 
 
 	if (f_v) {
-		cout << "linear_algebra_global::do_nullspace after RREF" << endl;
+		cout << "linear_algebra_global::do_nullspace "
+				"after RREF" << endl;
 		Int_matrix_print(A + rk * n, rk1, n);
 		cout << "rank of nullspace = " << rk1 << endl;
 
-		cout << "linear_algebra_global::do_nullspace coefficients:" << endl;
+		cout << "linear_algebra_global::do_nullspace "
+				"coefficients:" << endl;
 		Int_vec_print_fully(cout, A + rk * n, rk1 * n);
 		cout << endl;
 
@@ -265,14 +272,16 @@ void linear_algebra_global::do_nullspace(
 
 	if (f_normalize_from_the_left) {
 		if (f_v) {
-			cout << "linear_algebra_global::do_nullspace normalizing from the left" << endl;
+			cout << "linear_algebra_global::do_nullspace "
+					"normalizing from the left" << endl;
 		}
 		for (i = rk; i < n; i++) {
 			F->PG_element_normalize_from_front(A + i * n, 1, n);
 		}
 
 		if (f_v) {
-			cout << "linear_algebra_global::do_nullspace after normalize from the left:" << endl;
+			cout << "linear_algebra_global::do_nullspace "
+					"after normalize from the left:" << endl;
 			Int_matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
@@ -286,14 +295,16 @@ void linear_algebra_global::do_nullspace(
 
 	if (f_normalize_from_the_right) {
 		if (f_v) {
-			cout << "linear_algebra_global::do_nullspace normalizing from the right" << endl;
+			cout << "linear_algebra_global::do_nullspace "
+					"normalizing from the right" << endl;
 		}
 		for (i = rk; i < n; i++) {
 			F->PG_element_normalize(A + i * n, 1, n);
 		}
 
 		if (f_v) {
-			cout << "linear_algebra_global::do_nullspace after normalize from the right:" << endl;
+			cout << "linear_algebra_global::do_nullspace "
+					"after normalize from the right:" << endl;
 			Int_matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
@@ -340,7 +351,8 @@ void linear_algebra_global::do_nullspace(
 
 
 			if (f_v) {
-				cout << "linear_algebra_global::do_nullspace before report" << endl;
+				cout << "linear_algebra_global::do_nullspace "
+						"before report" << endl;
 			}
 			//report(ost, verbose_level);
 
@@ -367,7 +379,8 @@ void linear_algebra_global::do_nullspace(
 
 
 			if (f_v) {
-				cout << "linear_algebra_global::do_nullspace after report" << endl;
+				cout << "linear_algebra_global::do_nullspace "
+						"after report" << endl;
 			}
 
 
@@ -376,7 +389,8 @@ void linear_algebra_global::do_nullspace(
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		cout << "linear_algebra_global::do_nullspace written file " << fname << " of size "
+		cout << "linear_algebra_global::do_nullspace "
+				"written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 
@@ -413,7 +427,8 @@ void linear_algebra_global::do_RREF(
 	base_cols = NEW_int(n);
 	Int_vec_copy(M, A, m * n);
 	if (f_v) {
-		cout << "linear_algebra_global::do_RREF input matrix A of size " << m << " x " << n << endl;
+		cout << "linear_algebra_global::do_RREF "
+				"input matrix A of size " << m << " x " << n << endl;
 		//Int_matrix_print(A, m, n);
 	}
 
@@ -424,7 +439,8 @@ void linear_algebra_global::do_RREF(
 
 
 	if (f_v) {
-		cout << "linear_algebra_global::do_RREF after RREF:" << endl;
+		cout << "linear_algebra_global::do_RREF "
+				"after RREF:" << endl;
 		Int_matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
@@ -541,11 +557,13 @@ void linear_algebra_global::RREF_demo(
 
 
 			if (f_v) {
-				cout << "linear_algebra_global::RREF_demo before RREF_with_steps_latex" << endl;
+				cout << "linear_algebra_global::RREF_demo "
+						"before RREF_with_steps_latex" << endl;
 			}
 			RREF_with_steps_latex(F, ost, A, m, n, verbose_level);
 			if (f_v) {
-				cout << "linear_algebra_global::RREF_demo after RREF_with_steps_latex" << endl;
+				cout << "linear_algebra_global::RREF_demo "
+						"after RREF_with_steps_latex" << endl;
 			}
 
 
@@ -586,7 +604,8 @@ void linear_algebra_global::RREF_with_steps_latex(
 	//ost << "\\vspace*{\\fill}" << endl;
 	ost << endl;
 
-	ost << "\\noindent A matrix over the field ${\\mathbb F}_{" << F->q << "}$\\\\" << endl;
+	ost << "\\noindent A matrix over the field "
+			"${\\mathbb F}_{" << F->q << "}$\\\\" << endl;
 	ost << "$$" << endl;
 	ost << "\\left[" << endl;
 	Li.int_matrix_print_tex(ost, A, m, n);
@@ -606,7 +625,8 @@ void linear_algebra_global::RREF_with_steps_latex(
 	while (TRUE) {
 		if (F->Linear_algebra->RREF_search_pivot(A, m, n,
 			i, j, base_cols, verbose_level)) {
-			ost << "\\noindent  Position $(i,j)=(" << i << "," << j << "),$ found pivot in column " << base_cols[i] << "\\\\" << endl;
+			ost << "\\noindent  Position $(i,j)=(" << i << "," << j << "),$ "
+					"found pivot in column " << base_cols[i] << "\\\\" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
 			Li.int_matrix_print_tex(ost, A, m, n);
@@ -655,13 +675,15 @@ void linear_algebra_global::RREF_with_steps_latex(
 		}
 		else {
 			rk = i;
-			ost << "Did not find pivot. The rank of the matrix is " << rk << ".\\\\" << endl;
+			ost << "Did not find pivot. "
+					"The rank of the matrix is " << rk << ".\\\\" << endl;
 			break;
 		}
 	}
 	for (i = rk - 1; i >= 0; i--) {
 		F->Linear_algebra->RREF_elimination_above(A, m, n, i, base_cols, verbose_level);
-		ost << "\\noindent After elimination above pivot " << i << " in position (" << i << "," << base_cols[i] << "):\\\\" << endl;
+		ost << "\\noindent After elimination above pivot " << i
+				<< " in position (" << i << "," << base_cols[i] << "):\\\\" << endl;
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
 		Li.int_matrix_print_tex(ost, A, m, n);

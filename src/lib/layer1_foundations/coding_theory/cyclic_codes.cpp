@@ -174,7 +174,7 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 		cout << "cyclic_codes::make_cyclic_code "
 				"creating the finite field of order " << p << endl;
 	}
-	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
+	Fp.finite_field_init_small_order(p, FALSE /* f_without_tables */, verbose_level - 1);
 
 	ring_theory::unipoly_domain FpX(&Fp);
 	string field_poly;
@@ -652,7 +652,7 @@ void cyclic_codes::field_reduction(int n, int q, int p, int e, int m,
 	{
 		field_theory::finite_field fq;
 
-		fq.init_override_polynomial(q, poly,
+		fq.init_override_polynomial_small_order(q, poly,
 				FALSE /* f_without_tables */, verbose_level);
 		cout << "q = " << q << " override polynomial = " << poly << endl;
 

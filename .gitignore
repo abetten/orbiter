@@ -8,6 +8,20 @@ ORBITER/nbproject/
 .DS_Store
 orbiter.tar.gz
 .settings/language.settings.xml
+src/apps/Jeffrey_Leons_partition_backtrack/cent
+src/apps/Jeffrey_Leons_partition_backtrack/cjrndper
+src/apps/Jeffrey_Leons_partition_backtrack/commut
+src/apps/Jeffrey_Leons_partition_backtrack/compgrp
+src/apps/Jeffrey_Leons_partition_backtrack/desauto
+src/apps/Jeffrey_Leons_partition_backtrack/fndelt
+src/apps/Jeffrey_Leons_partition_backtrack/generate
+src/apps/Jeffrey_Leons_partition_backtrack/inter
+src/apps/Jeffrey_Leons_partition_backtrack/orbdes
+src/apps/Jeffrey_Leons_partition_backtrack/orblist
+src/apps/Jeffrey_Leons_partition_backtrack/randobj
+src/apps/Jeffrey_Leons_partition_backtrack/setstab
+src/apps/Jeffrey_Leons_partition_backtrack/wtdist
+
 
 idea/
 CMakeLists.txt

@@ -24,7 +24,8 @@ namespace field_theory {
 finite_field_description::finite_field_description()
 {
 	f_q = FALSE;
-	q = 0;
+	//std::string q_text;
+	//q = 0;
 
 	f_override_polynomial = FALSE;
 	//std::string override_polynomial;
@@ -54,9 +55,9 @@ int finite_field_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = ST.strtoi(argv[++i]);
+			q_text.assign(argv[++i]);
 			if (f_v) {
-				cout << "-q " << q << endl;
+				cout << "-q " << q_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
@@ -102,7 +103,7 @@ void finite_field_description::print()
 	//cout << "finite_field_description::print:" << endl;
 
 	if (f_q) {
-		cout << "-q " << q << endl;
+		cout << "-q " << q_text << endl;
 	}
 	if (f_override_polynomial) {
 		cout << "-override_polynomial " << override_polynomial << endl;

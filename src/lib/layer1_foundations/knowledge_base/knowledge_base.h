@@ -78,14 +78,14 @@ public:
 	long int *tensor_orbits_rep(int n, int idx);
 
 	void retrieve_BLT_set_from_database_embedded(
-			field_theory::finite_field *F,
+			orthogonal_geometry::quadratic_form *Quadratic_form,
 			int BLT_k,
 			std::string &label_txt,
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void retrieve_BLT_set_from_database(
-			field_theory::finite_field *F,
+			orthogonal_geometry::quadratic_form *Quadratic_form,
 			int f_embedded,
 			int BLT_k,
 			std::string &label_txt,

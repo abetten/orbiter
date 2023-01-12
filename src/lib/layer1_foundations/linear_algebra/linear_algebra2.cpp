@@ -51,7 +51,8 @@ void linear_algebra::get_coefficients_in_linear_combination(
 	}
 
 	if (f_v) {
-		cout << "linear_algebra::get_coefficients_in_linear_combination before Gauss_int" << endl;
+		cout << "linear_algebra::get_coefficients_in_linear_combination "
+				"before Gauss_int" << endl;
 		Int_matrix_print(M, n, k + 1);
 	}
 
@@ -62,7 +63,8 @@ void linear_algebra::get_coefficients_in_linear_combination(
 
 
 	if (f_v) {
-		cout << "linear_algebra::get_coefficients_in_linear_combination after Gauss_int" << endl;
+		cout << "linear_algebra::get_coefficients_in_linear_combination "
+				"after Gauss_int" << endl;
 		Int_matrix_print(M, n, k + 1);
 	}
 

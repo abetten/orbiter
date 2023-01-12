@@ -42,6 +42,8 @@ orthogonal::orthogonal()
 
 	Quadratic_form = NULL;
 
+	Orthogonal_indexing = NULL;
+
 	Hyperbolic_pair = NULL;
 
 	SN = NULL;
@@ -74,6 +76,10 @@ orthogonal::~orthogonal()
 
 	if (Quadratic_form) {
 		FREE_OBJECT(Quadratic_form);
+	}
+
+	if (Orthogonal_indexing) {
+		FREE_OBJECT(Orthogonal_indexing);
 	}
 
 	if (Hyperbolic_pair) {
@@ -156,6 +162,23 @@ void orthogonal::init(int epsilon, int n,
 	}
 
 	orthogonal::F = F;
+
+
+
+	Orthogonal_indexing = NEW_OBJECT(orthogonal_indexing);
+
+
+	if (f_v) {
+		cout << "orthogonal::init before Orthogonal_indexing->init" << endl;
+	}
+	Orthogonal_indexing->init(Quadratic_form, verbose_level);
+	if (f_v) {
+		cout << "orthogonal::init after Orthogonal_indexing->init" << endl;
+	}
+
+
+
+
 
 #if 0
 	orthogonal::epsilon = epsilon;
@@ -327,16 +350,19 @@ void orthogonal::init(int epsilon, int n,
 		v1 = NEW_int(n);
 		for (i = 0; i < Hyperbolic_pair->T1_m; i++) {
 
-			F->Orthogonal_indexing->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
-					Quadratic_form->form_c1, Quadratic_form->form_c2, Quadratic_form->form_c3, i, verbose_level);
+			//Orthogonal_indexing->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
+			//		Quadratic_form->form_c1, Quadratic_form->form_c2, Quadratic_form->form_c3,
+			//		i, verbose_level);
+			Quadratic_form->unrank_point(v1, i, verbose_level);
 
 			cout << i << " : ";
 
 			Int_vec_print(cout, v1, n);
 
-			j = F->Orthogonal_indexing->Q_epsilon_rank(v1, 1, epsilon, n - 1,
-					Quadratic_form->form_c1, Quadratic_form->form_c2, Quadratic_form->form_c3,
-					verbose_level);
+			//j = Orthogonal_indexing->Q_epsilon_rank(v1, 1, epsilon, n - 1,
+			//		Quadratic_form->form_c1, Quadratic_form->form_c2, Quadratic_form->form_c3,
+			//		verbose_level);
+			j = Quadratic_form->rank_point(v1, verbose_level);
 
 			cout << " : " << j << endl;
 		}

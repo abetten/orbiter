@@ -1178,7 +1178,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		finite_field *Fq;
 
 		Fq = NEW_OBJECT(finite_field);
-		Fq->finite_field_init(Descr->field_reduction_q,
+		Fq->finite_field_init_small_order(Descr->field_reduction_q,
 				FALSE /* f_without_tables */, verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "

@@ -1417,7 +1417,7 @@ void surface_create::create_surface_by_rank(std::string &rank_text, int defining
 	{
 		field_theory::finite_field F0;
 
-		F0.finite_field_init(defining_q, FALSE /* f_without_tables */, 0);
+		F0.finite_field_init_small_order(defining_q, FALSE /* f_without_tables */, 0);
 
 		F0.PG_element_unrank_modified_lint(coeffs20, 1, 20, rank);
 	}

@@ -831,8 +831,8 @@ public:
 	long int nb_pts_N1(int n, int q);
 	long int nb_pts_Sbar(int n, int q);
 	long int nb_pts_Nbar(int n, int q);
-	void test_Orthogonal(int epsilon, int k, int q);
-	void test_orthogonal(int n, int q);
+	//void test_Orthogonal(int epsilon, int k, int q);
+	//void test_orthogonal(int n, int q);
 	int &TDO_upper_bound(int i, int j);
 	int &TDO_upper_bound_internal(int i, int j);
 	int &TDO_upper_bound_source(int i, int j);
@@ -2107,6 +2107,11 @@ public:
 
 	long int *Lines;
 	int nb_lines;
+
+	orthogonal_geometry::quadratic_form *Quadratic_form;
+		// if P->n == 3
+
+
 
 
 	points_and_lines();

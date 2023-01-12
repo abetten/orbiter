@@ -2728,7 +2728,7 @@ long int *knowledge_base::tensor_orbits_rep(int n, int idx)
 }
 
 void knowledge_base::retrieve_BLT_set_from_database_embedded(
-		field_theory::finite_field *F,
+		orthogonal_geometry::quadratic_form *Quadratic_form,
 		int BLT_k,
 		std::string &label_txt,
 		std::string &label_tex,
@@ -2742,7 +2742,7 @@ void knowledge_base::retrieve_BLT_set_from_database_embedded(
 	}
 
 	retrieve_BLT_set_from_database(
-			F,
+			Quadratic_form,
 			TRUE /* f_embedded */,
 			BLT_k,
 			label_txt,
@@ -2756,7 +2756,7 @@ void knowledge_base::retrieve_BLT_set_from_database_embedded(
 }
 
 void knowledge_base::retrieve_BLT_set_from_database(
-		field_theory::finite_field *F,
+		orthogonal_geometry::quadratic_form *Quadratic_form,
 		int f_embedded,
 		int BLT_k,
 		std::string &label_txt,
@@ -2771,17 +2771,16 @@ void knowledge_base::retrieve_BLT_set_from_database(
 	}
 	int i;
 	long int j;
-	int epsilon = 0;
-	int n = 4;
-	int c1 = 0, c2 = 0, c3 = 0;
+	//int epsilon = 0;
+	//int n = 4;
 	int d = 5;
 	long int *BLT;
 	int *v;
 	//knowledge_base K;
 
-	nb_pts = F->q + 1;
+	nb_pts = Quadratic_form->F->q + 1;
 
-	BLT = BLT_representative(F->q, BLT_k);
+	BLT = BLT_representative(Quadratic_form->F->q, BLT_k);
 
 	v = NEW_int(d);
 	Pts = NEW_lint(nb_pts);
@@ -2790,17 +2789,27 @@ void knowledge_base::retrieve_BLT_set_from_database(
 		cout << "i : orthogonal rank : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		F->Orthogonal_indexing->Q_epsilon_unrank(v, 1,
-				epsilon, n, c1, c2, c3, BLT[i], 0 /* verbose_level */);
+		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1,
+		//		epsilon, n,
+		//		Quadratic_form->form_c1,
+		//		Quadratic_form->form_c2,
+		//		Quadratic_form->form_c3,
+		//		BLT[i], 0 /* verbose_level */);
+		Quadratic_form->unrank_point(v, BLT[i], 0 /* verbose_level */);
 		if (f_embedded) {
-			F->PG_element_rank_modified_lint(v, 1, d, j);
+			Quadratic_form->F->PG_element_rank_modified_lint(v, 1, d, j);
 		}
 		else {
 			j = BLT[i];
 		}
 		// recreate v:
-		F->Orthogonal_indexing->Q_epsilon_unrank(v, 1,
-				epsilon, n, c1, c2, c3, BLT[i], 0 /* verbose_level */);
+		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1,
+		//		epsilon, n,
+		//		Quadratic_form->form_c1,
+		//		Quadratic_form->form_c2,
+		//		Quadratic_form->form_c3,
+		//		BLT[i], 0 /* verbose_level */);
+		Quadratic_form->unrank_point(v, BLT[i], 0 /* verbose_level */);
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : " << setw(4) << BLT[i] << " : ";
@@ -2821,20 +2830,20 @@ void knowledge_base::retrieve_BLT_set_from_database(
 	char str[1000];
 
 	if (f_embedded) {
-		snprintf(str, sizeof(str), "%d_%d_embedded", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d_%d_embedded", Quadratic_form->F->q, BLT_k);
 		label_txt.assign("BLT_");
 		label_txt.append(str);
 
-		snprintf(str, sizeof(str), "%d\\_%d\\_embedded", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d\\_%d\\_embedded", Quadratic_form->F->q, BLT_k);
 		label_tex.assign("BLT\\_");
 		label_tex.append(str);
 	}
 	else {
-		snprintf(str, sizeof(str), "%d_%d", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d_%d", Quadratic_form->F->q, BLT_k);
 		label_txt.assign("BLT_");
 		label_txt.append(str);
 
-		snprintf(str, sizeof(str), "%d\\_%d", F->q, BLT_k);
+		snprintf(str, sizeof(str), "%d\\_%d", Quadratic_form->F->q, BLT_k);
 		label_tex.assign("BLT\\_");
 		label_tex.append(str);
 	}

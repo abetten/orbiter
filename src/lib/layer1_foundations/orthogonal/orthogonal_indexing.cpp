@@ -22,6 +22,7 @@ namespace orthogonal_geometry {
 
 orthogonal_indexing::orthogonal_indexing()
 {
+	Quadratic_form = NULL;
 	F = NULL;
 }
 
@@ -29,20 +30,21 @@ orthogonal_indexing::~orthogonal_indexing()
 {
 }
 
-void orthogonal_indexing::init(field_theory::finite_field *F, int verbose_level)
+void orthogonal_indexing::init(quadratic_form *Quadratic_form, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orthogonal_indexing::init" << endl;
 	}
-	orthogonal_indexing::F = F;
+	orthogonal_indexing::Quadratic_form = Quadratic_form;
+	F = Quadratic_form->F;
 	if (f_v) {
 		cout << "orthogonal_indexing::init done" << endl;
 	}
 }
 
-void orthogonal_indexing::Q_epsilon_unrank(
+void orthogonal_indexing::Q_epsilon_unrank_private(
 	int *v, int stride, int epsilon, int k,
 	int c1, int c2, int c3, long int a, int verbose_level)
 {
@@ -93,7 +95,7 @@ void orthogonal_indexing::Q_epsilon_unrank(
 	}
 }
 
-long int orthogonal_indexing::Q_epsilon_rank(
+long int orthogonal_indexing::Q_epsilon_rank_private(
 	int *v, int stride, int epsilon, int k,
 	int c1, int c2, int c3, int verbose_level)
 {
@@ -164,6 +166,7 @@ long int orthogonal_indexing::Q_rank(int *v, int stride, int k, int verbose_leve
 void orthogonal_indexing::Q_unrank_directly(int *v, int stride, int k, long int a, int verbose_level)
 // parabolic quadric
 // k = projective dimension, must be even
+// quadratic form: x_0^2 + x_1x_2 + x_3x_4 + ...
 {
 	int n, i, minusone;
 	long int x;
@@ -331,7 +334,7 @@ long int orthogonal_indexing::Qminus_rank(int *v,
 
 	{
 		int aa;
-		aa = F->Linear_algebra->evaluate_quadratic_form(v, stride, -1, k, c1, c2, c3);
+		aa = Quadratic_form->evaluate_quadratic_form(v, stride);
 		if (aa) {
 			cout << "Qminus_rank fatal: the vector "
 					"is not zero under the quadratic form" << endl;
@@ -504,7 +507,7 @@ void orthogonal_indexing::S_rank(int *v, int stride, int n, long int &a)
 
 
 		beta = F->negate(alpha);
-		gamma = F->Linear_algebra->evaluate_hyperbolic_quadratic_form(
+		gamma = Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 				v, stride, n - 1);
 		if (gamma != beta) {
 			cout << "orthogonal_indexing::S_rank "
@@ -515,7 +518,7 @@ void orthogonal_indexing::S_rank(int *v, int stride, int n, long int &a)
 		for (u = 0; u < n - 1; u++) {
 			v[2 * u * stride] = F->mult(v[2 * u * stride], delta);
 		}
-		epsilon = F->Linear_algebra->evaluate_hyperbolic_quadratic_form(
+		epsilon = Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 				v, stride, n - 1);
 		if (epsilon != 1) {
 			cout << "orthogonal_indexing::S_rank "
@@ -641,7 +644,7 @@ void orthogonal_indexing::N_rank(int *v, int stride, int n, long int &a)
 		x = Gg.nb_pts_N(1, F->q);
 		y = Gg.nb_pts_S(n - 1, F->q);
 		l = x * y;
-		gamma2 = F->Linear_algebra->evaluate_hyperbolic_quadratic_form(
+		gamma2 = Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 				v, stride, n - 1);
 		if (gamma2 == 0) {
 			N_rank(v + (n - 1) * 2, stride, 1, i);
@@ -823,7 +826,7 @@ void orthogonal_indexing::N1_rank(int *v, int stride, int n, long int &a)
 			return;
 		}
 		a += l;
-		gamma2 = F->Linear_algebra->evaluate_hyperbolic_quadratic_form(
+		gamma2 = Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 				v, stride, n - 1);
 		x = Gg.nb_pts_N1(1, F->q);
 		y = Gg.nb_pts_S(n - 1, F->q);
@@ -866,7 +869,7 @@ void orthogonal_indexing::N1_rank(int *v, int stride, int n, long int &a)
 
 		N1_rank(v + (n - 1) * 2 * stride, stride, 1, i);
 
-		gamma2 = F->Linear_algebra->evaluate_hyperbolic_quadratic_form(
+		gamma2 = Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 				v, stride, n - 1);
 		if (gamma2 == 0) {
 			cout << "orthogonal_indexing::N1_rank "
@@ -1090,7 +1093,7 @@ void orthogonal_indexing::Sbar_rank(int *v, int stride, int n, long int &a, int 
 
 		beta = F->negate(alpha);
 		// beta = - alpha
-		beta2 = F->Linear_algebra->evaluate_hyperbolic_quadratic_form(
+		beta2 = Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 				v, stride, n - 1);
 		// beta2 = value of the quadratic form on the rest
 		// must be - alpha (otherwise the vector does

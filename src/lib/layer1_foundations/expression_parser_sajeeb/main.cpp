@@ -172,7 +172,7 @@ int main(int argc, const char** argv) {
     orbiter::layer1_foundations::field_theory::finite_field_description Descr;
     orbiter::layer1_foundations::field_theory::finite_field Fq;
     Descr.f_q = TRUE;
-    Descr.q = 5
+    Descr.q_text.assign("5");
     ;
     Fq.init(&Descr, 1);
     unordered_map<string, int> assignemnt = {

@@ -20,7 +20,7 @@ int main()
 	field_theory::finite_field Fq;
 
 	Descr.f_q = TRUE;
-	Descr.q = 11;
+	Descr.q_text.assign("11");
 	Fq.init(&Descr, 1 /* verbose_level */);
 
 

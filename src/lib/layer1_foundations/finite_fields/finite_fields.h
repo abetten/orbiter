@@ -400,6 +400,8 @@ private:
 	int *v3; // [e]
 
 	finite_field *GFp;
+		// only allocated if e > 1
+		// (otherwise we would be an infinite recursion)
 
 	ring_theory::unipoly_domain *FX;
 
@@ -418,6 +420,7 @@ public:
 	finite_field_implementation_wo_tables();
 	~finite_field_implementation_wo_tables();
 	void init(finite_field *F, int verbose_level);
+	void init_extension_field(int verbose_level);
 	int mult(int i, int j, int verbose_level);
 	int inverse(int i, int verbose_level);
 	int negate(int i, int verbose_level);
@@ -438,7 +441,8 @@ class finite_field_description {
 public:
 
 	int f_q;
-	int q;
+	std::string q_text;
+	//int q;
 
 	int f_override_polynomial;
 	std::string override_polynomial;
@@ -493,7 +497,13 @@ public:
 		// the actual polynomial we consider
 		// as integer (in text form)
 	int f_is_prime_field;
-	int q, p, e;
+
+	std::string q_text;
+	ring_theory::longinteger_object *q_longinteger;
+	long int q_long;
+
+	int q;
+	int p, e;
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
 	int f_print_as_exponentials;
@@ -502,19 +512,26 @@ public:
 	long int nb_calls_to_PG_element_unrank_modified;
 
 	linear_algebra::linear_algebra *Linear_algebra;
-	orthogonal_geometry::orthogonal_indexing *Orthogonal_indexing;
+	//orthogonal_geometry::orthogonal_indexing *Orthogonal_indexing;
 
 
 	finite_field();
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
 	void init(finite_field_description *Descr, int verbose_level);
-	void finite_field_init(int q, int f_without_tables, int verbose_level);
+	void finite_field_init(std::string &q_text, int f_without_tables, int verbose_level);
+	void check_size(int verbose_level);
+	void finite_field_init_small_order(int q,
+			int f_without_tables, int verbose_level);
+	void init_override_polynomial(std::string &q_text,
+			std::string &poly,
+			int f_without_tables, int verbose_level);
+	void init_override_polynomial_small_order(int q,
+			std::string &poly, int f_without_tables, int verbose_level);
+
 	void init_implementation(int f_without_tables, int verbose_level);
 	void set_default_symbol_for_print();
 	void init_symbol_for_print(std::string &symbol);
-	void init_override_polynomial(int q, std::string &poly,
-		int f_without_tables, int verbose_level);
 	int has_quadratic_subfield();
 	int belongs_to_quadratic_subfield(int a);
 	long int compute_subfield_polynomial(int order_subfield,

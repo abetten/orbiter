@@ -121,7 +121,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 	Fp = NEW_OBJECT(finite_field);
 
-	Fp->finite_field_init(F->p, FALSE /* f_without_tables */, verbose_level - 1);
+	Fp->finite_field_init_small_order(F->p, FALSE /* f_without_tables */, verbose_level - 1);
 
 	FX = NEW_OBJECT(ring_theory::unipoly_domain);
 

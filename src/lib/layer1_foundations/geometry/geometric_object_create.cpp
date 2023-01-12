@@ -143,12 +143,29 @@ void geometric_object_create::init(geometric_object_description *Descr,
 #endif
 	else if (Descr->f_BLT_database) {
 
+		if (f_v) {
+			cout << "geometric_object_create::init f_BLT_database" << endl;
+		}
 		knowledge_base K;
+		orthogonal_geometry::quadratic_form *Quadratic_form;
+
+		Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
 
 		if (f_v) {
-			cout << "geometric_object_create::init before K.retrieve_BLT_set_from_database" << endl;
+			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
+					"before Quadratic_form->init" << endl;
 		}
-		K.retrieve_BLT_set_from_database(F,
+		Quadratic_form->init(0 /*epsilon*/, 5 /* n */, F, verbose_level);
+		if (f_v) {
+			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
+					"after Quadratic_form->init" << endl;
+		}
+
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"before K.retrieve_BLT_set_from_database" << endl;
+		}
+		K.retrieve_BLT_set_from_database(Quadratic_form,
 				FALSE /* f_embedded */,
 				Descr->BLT_database_k,
 				label_txt,
@@ -156,25 +173,43 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after K.retrieve_BLT_set_from_database" << endl;
+			cout << "geometric_object_create::init "
+					"after K.retrieve_BLT_set_from_database" << endl;
 		}
+		FREE_OBJECT(Quadratic_form);
 	}
 	else if (Descr->f_BLT_database_embedded) {
 
 		knowledge_base K;
 
+		orthogonal_geometry::quadratic_form *Quadratic_form;
+
+		Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
+
 		if (f_v) {
-			cout << "geometric_object_create::init before K.retrieve_BLT_set_from_database_embedded" << endl;
+			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
+					"before Quadratic_form->init" << endl;
 		}
-		K.retrieve_BLT_set_from_database_embedded(F,
+		Quadratic_form->init(0 /*epsilon*/, 5 /* n */, F, verbose_level);
+		if (f_v) {
+			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
+					"after Quadratic_form->init" << endl;
+		}
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"before K.retrieve_BLT_set_from_database_embedded" << endl;
+		}
+		K.retrieve_BLT_set_from_database_embedded(Quadratic_form,
 				Descr->BLT_database_embedded_k,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after K.retrieve_BLT_set_from_database_embedded" << endl;
+			cout << "geometric_object_create::init "
+					"after K.retrieve_BLT_set_from_database_embedded" << endl;
 		}
+		FREE_OBJECT(Quadratic_form);
 	}
 #if 0
 	else if (f_BLT_Linear) {
@@ -224,7 +259,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 #endif
 	else if (Descr->f_elliptic_quadric_ovoid) {
 		if (f_v) {
-			cout << "geometric_object_create::init before create_elliptic_quadric_ovoid" << endl;
+			cout << "geometric_object_create::init "
+					"before create_elliptic_quadric_ovoid" << endl;
 		}
 		create_elliptic_quadric_ovoid(P,
 				label_txt,
@@ -232,12 +268,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_elliptic_quadric_ovoid" << endl;
+			cout << "geometric_object_create::init "
+					"after create_elliptic_quadric_ovoid" << endl;
 		}
 	}
 	else if (Descr->f_ovoid_ST) {
 		if (f_v) {
-			cout << "geometric_object_create::init before create_ovoid_ST" << endl;
+			cout << "geometric_object_create::init "
+					"before create_ovoid_ST" << endl;
 		}
 		create_ovoid_ST(P,
 				label_txt,
@@ -245,7 +283,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_ovoid_ST" << endl;
+			cout << "geometric_object_create::init "
+					"after create_ovoid_ST" << endl;
 		}
 	}
 
@@ -253,7 +292,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	else if (Descr->f_Baer_substructure) {
 
 		if (f_v) {
-			cout << "geometric_object_create::init before create_Baer_substructure" << endl;
+			cout << "geometric_object_create::init "
+					"before create_Baer_substructure" << endl;
 		}
 		create_Baer_substructure(P,
 			Pts, nb_pts,
@@ -261,13 +301,15 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			label_tex,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_Baer_substructure" << endl;
+			cout << "geometric_object_create::init "
+					"after create_Baer_substructure" << endl;
 		}
 
 	}
 	else if (Descr->f_orthogonal) {
 		if (f_v) {
-			cout << "geometric_object_create::init before F->create_orthogonal" << endl;
+			cout << "geometric_object_create::init "
+					"before F->create_orthogonal" << endl;
 		}
 
 		geometry_global Geo;
@@ -281,12 +323,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			verbose_level);
 		// calls choose_anisotropic_form if necessary
 		if (f_v) {
-			cout << "geometric_object_create::init after F->create_orthogonal" << endl;
+			cout << "geometric_object_create::init "
+					"after F->create_orthogonal" << endl;
 		}
 	}
 	else if (Descr->f_hermitian) {
 		if (f_v) {
-			cout << "geometric_object_create::init before F->create_hermitian" << endl;
+			cout << "geometric_object_create::init "
+					"before F->create_hermitian" << endl;
 		}
 		geometry_global Geo;
 
@@ -298,12 +342,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			verbose_level);
 		// creates a hermitian
 		if (f_v) {
-			cout << "geometric_object_create::init after F->create_hermitian" << endl;
+			cout << "geometric_object_create::init "
+					"after F->create_hermitian" << endl;
 		}
 	}
 	else if (Descr->f_cuspidal_cubic) {
 		if (f_v) {
-			cout << "geometric_object_create::init before create_cuspidal_cubic" << endl;
+			cout << "geometric_object_create::init "
+					"before create_cuspidal_cubic" << endl;
 		}
 		create_cuspidal_cubic(P,
 				label_txt,
@@ -311,12 +357,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_cuspidal_cubic" << endl;
+			cout << "geometric_object_create::init "
+					"after create_cuspidal_cubic" << endl;
 		}
 	}
 	else if (Descr->f_twisted_cubic) {
 		if (f_v) {
-			cout << "geometric_object_create::init before create_twisted_cubic" << endl;
+			cout << "geometric_object_create::init "
+					"before create_twisted_cubic" << endl;
 		}
 		create_twisted_cubic(P,
 				label_txt,
@@ -324,12 +372,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_twisted_cubic" << endl;
+			cout << "geometric_object_create::init "
+					"after create_twisted_cubic" << endl;
 		}
 	}
 	else if (Descr->f_elliptic_curve) {
 		if (f_v) {
-			cout << "geometric_object_create::init before create_elliptic_curve" << endl;
+			cout << "geometric_object_create::init "
+					"before create_elliptic_curve" << endl;
 		}
 		create_elliptic_curve(P,
 				Descr->elliptic_curve_b, Descr->elliptic_curve_c,
@@ -338,7 +388,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_elliptic_curve" << endl;
+			cout << "geometric_object_create::init "
+					"after create_elliptic_curve" << endl;
 		}
 	}
 
@@ -365,7 +416,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	else if (Descr->f_unital_XXq_YZq_ZYq) {
 
 		if (f_v) {
-			cout << "geometric_object_create::init before create_unital_XXq_YZq_ZYq" << endl;
+			cout << "geometric_object_create::init "
+					"before create_unital_XXq_YZq_ZYq" << endl;
 		}
 
 		create_unital_XXq_YZq_ZYq(P,
@@ -375,7 +427,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			verbose_level);
 
 		if (f_v) {
-			cout << "geometric_object_create::init after create_unital_XXq_YZq_ZYq" << endl;
+			cout << "geometric_object_create::init "
+					"after create_unital_XXq_YZq_ZYq" << endl;
 		}
 	}
 #if 0
@@ -420,7 +473,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	else if (Descr->f_whole_space) {
 		if (f_v) {
-			cout << "geometric_object_create::init before create_whole_space" << endl;
+			cout << "geometric_object_create::init "
+					"before create_whole_space" << endl;
 		}
 		create_whole_space(P,
 				label_txt,
@@ -428,12 +482,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_whole_space" << endl;
+			cout << "geometric_object_create::init "
+					"after create_whole_space" << endl;
 		}
 	}
 	else if (Descr->f_hyperplane) {
 		if (f_v) {
-			cout << "geometric_object_create::init before create_hyperplane" << endl;
+			cout << "geometric_object_create::init "
+					"before create_hyperplane" << endl;
 		}
 		create_hyperplane(P,
 				Descr->pt,
@@ -442,12 +498,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after create_hyperplane" << endl;
+			cout << "geometric_object_create::init "
+					"after create_hyperplane" << endl;
 		}
 	}
 	else if (Descr->f_segre_variety) {
 		if (f_v) {
-			cout << "geometric_object_create::init before F->create_segre_variety" << endl;
+			cout << "geometric_object_create::init "
+					"before F->create_segre_variety" << endl;
 		}
 		geometry_global Geo;
 
@@ -459,12 +517,14 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after F->create_segre_variety" << endl;
+			cout << "geometric_object_create::init "
+					"after F->create_segre_variety" << endl;
 		}
 	}
 	else if (Descr->f_Maruta_Hamada_arc) {
 		if (f_v) {
-			cout << "geometric_object_create::init before P->Arc_in_projective_space->create_Maruta_Hamada_arc" << endl;
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_Maruta_Hamada_arc" << endl;
 		}
 		P->Arc_in_projective_space->create_Maruta_Hamada_arc(
 				label_txt,
@@ -472,7 +532,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after P->Arc_in_projective_space->create_Maruta_Hamada_arc" << endl;
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_Maruta_Hamada_arc" << endl;
 		}
 	}
 	else if (Descr->f_projective_variety) {
@@ -481,10 +542,12 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->projective_variety_ring_label);
+		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(
+				Descr->projective_variety_ring_label);
 
 		if (f_v) {
-			cout << "geometric_object_create::init before HPD->create_projective_variety" << endl;
+			cout << "geometric_object_create::init "
+					"before HPD->create_projective_variety" << endl;
 		}
 		HPD->create_projective_variety(
 				Descr->variety_label_txt,
@@ -495,7 +558,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				nb_pts, Pts,
 				verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after HPD->create_projective_variety" << endl;
+			cout << "geometric_object_create::init "
+					"after HPD->create_projective_variety" << endl;
 		}
 
 	}
@@ -507,7 +571,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->intersection_of_zariski_open_sets_ring_label);
 
 		if (f_v) {
-			cout << "geometric_object_create::init before HPD->create_intersection_of_zariski_open_sets" << endl;
+			cout << "geometric_object_create::init "
+					"before HPD->create_intersection_of_zariski_open_sets" << endl;
 		}
 		HPD->create_intersection_of_zariski_open_sets(
 				Descr->variety_label_txt,
@@ -518,7 +583,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				nb_pts, Pts,
 				verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after HPD->create_intersection_of_zariski_open_sets" << endl;
+			cout << "geometric_object_create::init "
+					"after HPD->create_intersection_of_zariski_open_sets" << endl;
 		}
 	}
 	else if (Descr->f_number_of_conditions_satisfied) {
@@ -529,7 +595,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->number_of_conditions_satisfied_ring_label);
 
 		if (f_v) {
-			cout << "geometric_object_create::init before HPD->number_of_conditions_satisfied" << endl;
+			cout << "geometric_object_create::init "
+					"before HPD->number_of_conditions_satisfied" << endl;
 		}
 		HPD->number_of_conditions_satisfied(
 				Descr->variety_label_txt,
@@ -541,7 +608,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				nb_pts, Pts,
 				verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after HPD->number_of_conditions_satisfied" << endl;
+			cout << "geometric_object_create::init "
+					"after HPD->number_of_conditions_satisfied" << endl;
 		}
 	}
 
@@ -555,7 +623,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->projective_curve_ring_label);
 
 		if (f_v) {
-			cout << "geometric_object_create::init before HPD->create_projective_curve" << endl;
+			cout << "geometric_object_create::init "
+					"before HPD->create_projective_curve" << endl;
 		}
 		HPD->create_projective_curve(
 				Descr->curve_label_txt,
@@ -566,7 +635,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				nb_pts, Pts,
 				verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after HPD->create_projective_curve" << endl;
+			cout << "geometric_object_create::init "
+					"after HPD->create_projective_curve" << endl;
 		}
 	}
 
@@ -576,13 +646,15 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	}
 	else {
-		cout << "geometric_object_create::init nothing to create" << endl;
+		cout << "geometric_object_create::init "
+				"nothing to create" << endl;
 		exit(1);
 	}
 
 
 	if (f_v) {
-		cout << "geometric_object_create::init created a set of size " << nb_pts << endl;
+		cout << "geometric_object_create::init "
+				"created a set of size " << nb_pts << endl;
 		Lint_vec_print_fully(cout, Pts, nb_pts);
 		cout << endl;
 
@@ -609,11 +681,11 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 	if (f_v) {
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid" << endl;
 	}
-	int epsilon = -1;
-	int c1 = 1, c2 = 0, c3 = 0;
 	int i, j, d, h;
+	int epsilon = -1;
 	int *v, *w;
 	geometry_global Gg;
+	orthogonal_geometry::quadratic_form *Quadratic_form;
 
 	if (P->n != 3) {
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid n != 3" << endl;
@@ -630,9 +702,29 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
 	}
-	P->F->Linear_algebra->choose_anisotropic_form(c1, c2, c3, verbose_level);
+
+	Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
+
+	if (f_v) {
+		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
+				"before Quadratic_form->init" << endl;
+	}
+	Quadratic_form->init(epsilon, P->n, P->F, verbose_level);
+	if (f_v) {
+		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
+				"after Quadratic_form->init" << endl;
+	}
+
+
+
+
 	for (i = 0; i < nb_pts; i++) {
-		P->F->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, P->n, c1, c2, c3, i, 0 /* verbose_level */);
+		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, P->n,
+		//		Quadratic_form->form_c1,
+		//		Quadratic_form->form_c2,
+		//		Quadratic_form->form_c3,
+		//		i, 0 /* verbose_level */);
+		Quadratic_form->unrank_point(v, i, 0 /* verbose_level */);
 		for (h = 0; h < d; h++) {
 			w[h] = v[h];
 		}
@@ -670,6 +762,7 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 
 	FREE_int(v);
 	FREE_int(w);
+	FREE_OBJECT(Quadratic_form);
 	//FREE_int(L);
 	if (f_v) {
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid done" << endl;

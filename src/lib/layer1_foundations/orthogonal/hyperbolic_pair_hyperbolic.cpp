@@ -792,7 +792,7 @@ long int hyperbolic_pair::rank_line_L2(long int p1, long int p2, int verbose_lev
 		P3_sub_index = 0;
 	}
 	else {
-		alpha = O->Quadratic_form->evaluate_hyperbolic_quadratic_form(v1 + 2, 1, m - 2);
+		alpha = O->Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(v1 + 2, 1, m - 2);
 		if (alpha == 0) {
 			// case 2
 			if (f_vvv) {

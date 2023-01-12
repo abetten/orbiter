@@ -214,7 +214,7 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 		Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
 
-		Rk[idx] = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+		Rk[idx] = O->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
 
 	}
 
@@ -270,7 +270,7 @@ void surface_domain::print_one_line_tex(std::ostream &ost,
 
 	Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
 
-	klein_rk = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+	klein_rk = O->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
 
 	ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 			<< v6[2] << "," << v6[3] << "," << v6[4]

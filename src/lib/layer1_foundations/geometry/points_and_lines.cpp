@@ -31,6 +31,8 @@ points_and_lines::points_and_lines()
 	Lines = NULL;
 	nb_lines = 0;
 
+	Quadratic_form = NULL;
+
 }
 
 points_and_lines::~points_and_lines()
@@ -40,6 +42,9 @@ points_and_lines::~points_and_lines()
 	}
 	if (Lines) {
 		FREE_lint(Lines);
+	}
+	if (Quadratic_form) {
+		FREE_OBJECT(Quadratic_form);
 	}
 }
 
@@ -100,6 +105,18 @@ void points_and_lines::init(projective_space *P,
 		cout << endl;
 	}
 
+
+	if (P->n == 3) {
+		Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
+
+		if (f_v) {
+			cout << "points_and_lines::init before Quadratic_form->init" << endl;
+		}
+		Quadratic_form->init(1 /* epsilon */, 5, P->F, verbose_level);
+		if (f_v) {
+			cout << "points_and_lines::init after Quadratic_form->init" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "points_and_lines::init done" << endl;
@@ -200,7 +217,9 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 		P->Grass_lines->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
-		Rk[i] = P->F->Orthogonal_indexing->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
+
+
+		Rk[i] = Quadratic_form->Orthogonal_indexing->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
 
 		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]

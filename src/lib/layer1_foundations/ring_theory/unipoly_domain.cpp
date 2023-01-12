@@ -1694,13 +1694,15 @@ void unipoly_domain::compute_normal_basis(int d,
 
 	i = 0;
 	if (f_v) {
-		cout << "unipoly_domain::compute_normal_basis before order_ideal_generator" << endl;
+		cout << "unipoly_domain::compute_normal_basis "
+				"before order_ideal_generator" << endl;
 	}
 	order_ideal_generator(d, i, mue, 
 		A, Frobenius, 
 		verbose_level - 10);
 	if (f_v) {
-		cout << "unipoly_domain::compute_normal_basis after order_ideal_generator" << endl;
+		cout << "unipoly_domain::compute_normal_basis "
+				"after order_ideal_generator" << endl;
 	}
 	
 	if (f_v) {
@@ -2004,7 +2006,8 @@ void unipoly_domain::order_ideal_generator(
 	for (i = 0; i < d; i++) {
 		if (v[i]) {
 			cout << "unipoly_domain::order_ideal_generator "
-				"d=" << d << " idx = " << idx << " test fails, v=" << endl;
+				"d=" << d << " idx = " << idx
+				<< " test fails, v=" << endl;
 			Int_vec_print(cout, v, d);
 			cout << endl;
 			exit(1);
@@ -2051,7 +2054,8 @@ void unipoly_domain::matrix_apply(unipoly_object &p,
 		Int_vec_print(cout, v1, n);
 		cout << endl;
 	}
-	F->Linear_algebra->mult_vector_from_the_right(Mtx, v1, v2, n, n);
+	F->Linear_algebra->mult_vector_from_the_right(
+			Mtx, v1, v2, n, n);
 	if (f_v) {
 		cout << "unipoly_domain::matrix_apply v2 = ";
 		Int_vec_print(cout, v2, n);
@@ -2108,7 +2112,8 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 			}
 		}
 		if (h) {
-			F->Linear_algebra->mult_matrix_matrix(M2, Mtx_in, M1, k, k, k,
+			F->Linear_algebra->mult_matrix_matrix(
+					M2, Mtx_in, M1, k, k, k,
 					0 /* verbose_level */);
 		}
 		else {
@@ -2330,29 +2335,35 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 	factor_polynomial_degree = degree(a);
 	
 	if (f_v) {
-		cout << "unipoly_domain::is_irreducible before is_squarefree" << endl;
+		cout << "unipoly_domain::is_irreducible "
+				"before is_squarefree" << endl;
 	}
 	if (!is_squarefree(a, verbose_level - 2)) {
 		if (f_v) {
-			cout << "unipoly_domain::is_irreducible is not squarefree" << endl;
+			cout << "unipoly_domain::is_irreducible "
+					"is not squarefree" << endl;
 		}
 		return FALSE;
 	}
 	if (f_v) {
-		cout << "unipoly_domain::is_irreducible is squarefree" << endl;
+		cout << "unipoly_domain::is_irreducible "
+				"is squarefree" << endl;
 	}
 	
 	//unipoly_domain Fq(F, a);
 	
 	if (f_v) {
-		cout << "unipoly_domain::is_irreducible before Berlekamp_matrix" << endl;
+		cout << "unipoly_domain::is_irreducible "
+				"before Berlekamp_matrix" << endl;
 	}
 	Berlekamp_matrix(B, a, verbose_level - 2);
 	if (f_v) {
-		cout << "unipoly_domain::is_irreducible after Berlekamp_matrix" << endl;
+		cout << "unipoly_domain::is_irreducible "
+				"after Berlekamp_matrix" << endl;
 	}
 	if (f_vv) {
-		cout << "unipoly_domain::is_irreducible Berlekamp_matrix=" << endl;
+		cout << "unipoly_domain::is_irreducible "
+				"Berlekamp_matrix=" << endl;
 		Int_matrix_print(B, factor_polynomial_degree, factor_polynomial_degree);
 	}
 	
@@ -2367,7 +2378,8 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 		0 /* Pn */, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "unipoly_domain::is_irreducible Berlekamp_matrix has rank " << r << endl;
+		cout << "unipoly_domain::is_irreducible "
+				"Berlekamp_matrix has rank " << r << endl;
 	}
 	
 	FREE_int(B);
@@ -2439,7 +2451,8 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 	for (i = 0; i < nb_primes; i++) {
 
 		if (f_v) {
-			cout << "unipoly_domain::is_primitive testing prime " << i << " / "
+			cout << "unipoly_domain::is_primitive "
+					"testing prime " << i << " / "
 					<< nb_primes << " which is " << primes[i] << endl;
 		}
 
@@ -2461,7 +2474,8 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 		
 		unipoly_object a;
 		
-		Fq.create_object_by_rank(a, F->q, __FILE__, __LINE__, 0 /*verbose_level*/); // the polynomial X
+		Fq.create_object_by_rank(a, F->q,
+				__FILE__, __LINE__, 0 /*verbose_level*/); // the polynomial X
 		Fq.power_longinteger(a, qm1_over_p, 0 /*verbose_level - 1*/);
 		
 		if (f_v) {
@@ -2474,7 +2488,8 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 		
 		if (Fq.is_one(a)) {
 			if (f_v) {
-				cout << "unipoly_domain::is_primitive is one, hence m is not primitive" << endl;
+				cout << "unipoly_domain::is_primitive "
+						"power is one, hence m is not primitive" << endl;
 			}
 			Fq.delete_object(a);
 			return FALSE;
@@ -2534,12 +2549,14 @@ void unipoly_domain::get_a_primitive_polynomial(
 	D.power_int(q, f);
 	D.add(q, m1, qm1);
 	if (f_vv) {
-		cout << "unipoly_domain::get_a_primitive_polynomial factoring " << qm1 << endl;
+		cout << "unipoly_domain::get_a_primitive_polynomial "
+				"before factor_into_longintegers " << qm1 << endl;
 	}
 	D.factor_into_longintegers(qm1, nb_primes,
 			primes, exponents, verbose_level - 2);
 	if (f_vv) {
-		cout << "unipoly_domain::get_a_primitive_polynomial after factoring "
+		cout << "unipoly_domain::get_a_primitive_polynomial "
+				"after factor_into_longintegers "
 				<< qm1 << " nb_primes=" << nb_primes << endl;
 		cout << "primes:" << endl;
 		for (i = 0; i < nb_primes; i++) {
@@ -2567,7 +2584,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 			if (f_v) {
 				cout << "IS irreducible" << endl;
 			}
-			if (is_primitive(x, qm1, nb_primes, primes, verbose_level - 1)) {
+			if (is_primitive(x, qm1,
+					nb_primes, primes, verbose_level - 1)) {
 				if (f_v) {
 					cout << "OK, we found an irreducible "
 							"and primitive polynomial ";
@@ -2613,7 +2631,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 	
 	while (TRUE) {
 		
-		create_object_by_rank_longinteger(x, current, __FILE__, __LINE__, 0 /*verbose_level*/);
+		create_object_by_rank_longinteger(x, current,
+				__FILE__, __LINE__, 0 /*verbose_level*/);
 		
 		if (f_v) {
 			cout << "candidate " << current << " : ";
@@ -2744,7 +2763,8 @@ void unipoly_domain::power_int(unipoly_object &a,
 	unipoly_object b, c, d;
 	
 	if (f_v) {
-		cout << "unipoly_domain::power_int, verbose_level=" << verbose_level << endl;
+		cout << "unipoly_domain::power_int "
+				"verbose_level=" << verbose_level << endl;
 	}
 	if (f_vv) {
 		cout << "unipoly_domain::power_int computing a=";
@@ -2770,12 +2790,15 @@ void unipoly_domain::power_int(unipoly_object &a,
 		
 		if (n % 2) {
 			if (f_vv) {
-				cout << "unipoly_domain::power_int n is odd" << endl;
-				cout << "unipoly_domain::power_int before mult(b,c,d)" << endl;
+				cout << "unipoly_domain::power_int "
+						"n is odd" << endl;
+				cout << "unipoly_domain::power_int "
+						"before mult(b,c,d)" << endl;
 			}
 			mult(b, c, d, verbose_level - 1);
 			if (f_vv) {
-				cout << "unipoly_domain::power_int before assign(d,c)" << endl;
+				cout << "unipoly_domain::power_int "
+						"before assign(d,c)" << endl;
 			}
 			if (f_vv) {
 				cout << "b*c=d";
@@ -2786,11 +2809,13 @@ void unipoly_domain::power_int(unipoly_object &a,
 		}
 		else {
 			if (f_vv) {
-				cout << "unipoly_domain::power_int n is even" << endl;
+				cout << "unipoly_domain::power_int "
+						"n is even" << endl;
 			}
 		}
 		if (f_vv) {
-			cout << "unipoly_domain::power_int before mult(b,b,d)" << endl;
+			cout << "unipoly_domain::power_int "
+					"before mult(b,b,d)" << endl;
 		}
 		mult(b, b, d, verbose_level - 1);
 		if (f_vv) {
@@ -2799,17 +2824,20 @@ void unipoly_domain::power_int(unipoly_object &a,
 			cout << endl;
 		}
 		if (f_vv) {
-			cout << "unipoly_domain::power_int before assign(d,b)" << endl;
+			cout << "unipoly_domain::power_int "
+					"before assign(d,b)" << endl;
 		}
 		assign(d, b, 0 /*verbose_level*/);
 		n >>= 1;
 	}
 	if (f_vv) {
-		cout << "unipoly_domain::power_int before assign(c,a)" << endl;
+		cout << "unipoly_domain::power_int "
+				"before assign(c,a)" << endl;
 	}
 	assign(c, a, 0 /*verbose_level*/);
 	if (f_vv) {
-		cout << "unipoly_domain::power_int before delete_object(b)" << endl;
+		cout << "unipoly_domain::power_int "
+				"before delete_object(b)" << endl;
 	}
 	delete_object(b);
 	delete_object(c);
@@ -2868,7 +2896,8 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 	unipoly_object b, c, d;
 
 	if (f_v) {
-		cout << "unipoly_domain::power_mod, verbose_level=" << verbose_level << endl;
+		cout << "unipoly_domain::power_mod "
+				"verbose_level=" << verbose_level << endl;
 	}
 	if (f_vv) {
 		cout << "unipoly_domain::power_mod computing a=";
@@ -2900,13 +2929,16 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 
 		if (n % 2) {
 			if (f_vv) {
-				cout << "unipoly_domain::power_mod n is odd" << endl;
-				cout << "unipoly_domain::power_mod before mult_mod(b,c,d,m)" << endl;
+				cout << "unipoly_domain::power_mod "
+						"n is odd" << endl;
+				cout << "unipoly_domain::power_mod "
+						"before mult_mod(b,c,d,m)" << endl;
 			}
 			mult_mod(b, c, d, m, 0 /*verbose_level - 1*/);
 
 			if (f_vvv) {
-				cout << "unipoly_domain::power_mod before assign(d,c)" << endl;
+				cout << "unipoly_domain::power_mod "
+						"before assign(d,c)" << endl;
 			}
 			if (f_vvv) {
 				cout << "b * c = d";
@@ -2917,30 +2949,36 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 		}
 		else {
 			if (f_vv) {
-				cout << "unipoly_domain::power_mod n is even" << endl;
+				cout << "unipoly_domain::power_mod "
+						"n is even" << endl;
 			}
 		}
 		if (f_vv) {
-			cout << "unipoly_domain::power_mod before mult(b,b,d)" << endl;
+			cout << "unipoly_domain::power_mod "
+					"before mult(b,b,d)" << endl;
 		}
 		mult_mod(b, b, d, m, 0 /*verbose_level - 1*/);
 		if (f_vvv) {
-			cout << "unipoly_domain::power_mod b * b = d";
+			cout << "unipoly_domain::power_mod "
+					"b * b = d";
 			print_object(d, cout);
 			cout << endl;
 		}
 		if (f_vvv) {
-			cout << "unipoly_domain::power_mod before assign(d,b)" << endl;
+			cout << "unipoly_domain::power_mod "
+					"before assign(d,b)" << endl;
 		}
 		assign(d, b, 0 /*verbose_level*/);
 		n >>= 1;
 	}
 	if (f_vv) {
-		cout << "unipoly_domain::power_mod before assign(c,a)" << endl;
+		cout << "unipoly_domain::power_mod "
+				"before assign(c,a)" << endl;
 	}
 	assign(c, a, 0 /*verbose_level*/);
 	if (f_vv) {
-		cout << "unipoly_domain::power_mod before delete_object(b)" << endl;
+		cout << "unipoly_domain::power_mod "
+				"before delete_object(b)" << endl;
 	}
 	delete_object(b);
 	delete_object(c);
@@ -3018,20 +3056,23 @@ void unipoly_domain::minimum_polynomial(
 		}
 		power_coefficients(v, p);
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial conjugate = ";
+			cout << "unipoly_domain::minimum_polynomial "
+					"conjugate = ";
 			print_object(v, cout);
 			cout << endl;
 		}
 		u0 = ((int *)v)[1];
 		if (u0 == m_alpha) {
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial finished" << endl;
+				cout << "unipoly_domain::minimum_polynomial "
+						"finished" << endl;
 			}
 			break;
 		}
 		mult(u, v, w, verbose_level - 1);
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial product = ";
+			cout << "unipoly_domain::minimum_polynomial "
+					"product = ";
 			print_object(w, cout);
 			cout << endl;
 		}
@@ -3086,15 +3127,20 @@ int unipoly_domain::minimum_polynomial_factorring(
 	// create the polynomial Y - alpha:
 	for (i = 0; i <= factor_degree; i++) {
 		if (i == 1) {
-			create_object_by_rank(coeffs[i], 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+			create_object_by_rank(coeffs[i], 1,
+					__FILE__, __LINE__, 0 /*verbose_level*/);
 		}
 		else {
-			create_object_by_rank(coeffs[i], 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+			create_object_by_rank(coeffs[i], 0,
+					__FILE__, __LINE__, 0 /*verbose_level*/);
 		}
 	}
-	create_object_by_rank(b, alpha, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(c, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(d, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(b, alpha,
+			__FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(c, 0,
+			__FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(d, 0,
+			__FILE__, __LINE__, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "unipoly_domain::minimum_polynomial_factorring "
 				"minimum polynomial of ";
@@ -3160,7 +3206,8 @@ int unipoly_domain::minimum_polynomial_factorring(
 		i++;
 	}
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_factorring minimum polynomial is: ";
+		cout << "unipoly_domain::minimum_polynomial_factorring "
+				"minimum polynomial is: ";
 		for (j = i; j >= 0; j--) {
 			print_object(coeffs[j], cout);
 			if (j > 0) {
@@ -3234,15 +3281,18 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	// we first create (0,1,0,0,...) as vector of polynomials
 	for (i = 0; i <= factor_degree; i++) {
 		if (i == 1) {
-			create_object_by_rank(coeffs[i], 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+			create_object_by_rank(coeffs[i], 1,
+					__FILE__, __LINE__, 0 /*verbose_level*/);
 		}
 		else {
-			create_object_by_rank(coeffs[i], 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+			create_object_by_rank(coeffs[i], 0,
+					__FILE__, __LINE__, 0 /*verbose_level*/);
 		}
 	}
 
 	// b = alpha (constant polynomial)
-	create_object_by_rank_longinteger(b, alpha, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank_longinteger(b, alpha,
+			__FILE__, __LINE__, 0 /*verbose_level*/);
 
 	// c and d are needed later:
 	create_object_by_rank(c, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
@@ -3609,31 +3659,37 @@ void unipoly_domain::characteristic_polynomial(
 
 	
 	if (f_vv) {
-		cout << "unipoly_domain::characteristic_polynomial M - X Id=" << endl;
+		cout << "unipoly_domain::characteristic_polynomial "
+				"M - X Id=" << endl;
 		print_matrix(M, k);
 	}
 
 	if (f_vv) {
-		cout << "unipoly_domain::characteristic_polynomial before determinant" << endl;
+		cout << "unipoly_domain::characteristic_polynomial "
+				"before determinant" << endl;
 	}
 	determinant(M, k, char_poly, verbose_level);
 	if (f_vv) {
-		cout << "unipoly_domain::characteristic_polynomial after determinant" << endl;
+		cout << "unipoly_domain::characteristic_polynomial "
+				"after determinant" << endl;
 	}
 
 	if (f_vv) {
-		cout << "unipoly_domain::characteristic_polynomial before delete_object(M[i * k + j]);" << endl;
+		cout << "unipoly_domain::characteristic_polynomial "
+				"before delete_object(M[i * k + j]);" << endl;
 	}
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			if (f_vv) {
-				cout << "unipoly_domain::characteristic_polynomial i=" << i << " j=" << j << endl;
+				cout << "unipoly_domain::characteristic_polynomial "
+						"i=" << i << " j=" << j << endl;
 			}
 			delete_object(M[i * k + j]);
 		}
 	}
 	if (f_vv) {
-		cout << "unipoly_domain::characteristic_polynomial before FREE_OBJECTS(M);" << endl;
+		cout << "unipoly_domain::characteristic_polynomial "
+				"before FREE_OBJECTS(M);" << endl;
 	}
 	FREE_OBJECTS(M);
 	if (f_v) {
@@ -3764,6 +3820,7 @@ void unipoly_domain::deletion_matrix(unipoly_object *M,
 }
 
 void unipoly_domain::center_lift_coordinates(unipoly_object a, int q)
+// For use in NTRU cryptography
 {
 	//int verbose_level = 0;
 	//int f_v = (verbose_level >= 1);

@@ -370,40 +370,14 @@ public:
 			int *Omega, int verbose_level);
 
 	// linear_algebra3.cpp
-
-	void Gram_matrix(int epsilon, int k,
-		int form_c1, int form_c2, int form_c3,
-		int *&Gram, int verbose_level);
-	int evaluate_bilinear_form(
-			int *u, int *v, int d, int *Gram);
+#if 0
 	int evaluate_quadratic_form(int *v, int stride,
 		int epsilon, int k, int form_c1, int form_c2, int form_c3);
 	int evaluate_hyperbolic_quadratic_form(
 			int *v, int stride, int n);
 	int evaluate_hyperbolic_bilinear_form(
 			int *u, int *v, int n);
-	void Siegel_map_between_singular_points(int *T,
-			long int rk_from, long int rk_to, long int root,
-		int epsilon, int algebraic_dimension,
-		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
-		int verbose_level);
-	// root is not perp to from and to.
-	void Siegel_Transformation(
-		int epsilon, int k,
-		int form_c1, int form_c2, int form_c3,
-		int *M, int *v, int *u, int verbose_level);
-		// if u is singular and v \in \la u \ra^\perp, then
-		// \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
-		// is called the Siegel transform (see Taylor p. 148)
-		// Here, Q is the quadratic form
-		// and \beta is the corresponding bilinear form
-	long int orthogonal_find_root(int rk2,
-		int epsilon, int algebraic_dimension,
-		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
-		int verbose_level);
-	void choose_anisotropic_form(
-			int &c1, int &c2, int &c3, int verbose_level);
-
+#endif
 	int evaluate_conic_form(int *six_coeffs, int *v3);
 	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);
 	int Pluecker_12(int *x4, int *y4);

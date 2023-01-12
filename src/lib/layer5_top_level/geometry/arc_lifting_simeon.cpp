@@ -78,7 +78,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	v = NEW_int(n + 1);
 
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
+	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, 0);
 
 	data_structures_groups::vector_ge *nice_gens;
 

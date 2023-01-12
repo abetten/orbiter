@@ -894,7 +894,7 @@ void strong_generators::generators_for_the_singer_cycle(
 		}
 #endif
 	
-		Fq.finite_field_init(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
+		Fq.finite_field_init_small_order(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
 		ring_theory::unipoly_domain FX(&Fq);
 
 		ring_theory::unipoly_object m;
@@ -1071,7 +1071,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 			exit(1);
 		}
 
-		Fp.finite_field_init(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
+		Fp.finite_field_init_small_order(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
 		ring_theory::unipoly_domain FX(&Fp);
 
 		ring_theory::unipoly_object m;
@@ -1477,7 +1477,7 @@ void strong_generators::field_reduction(
 		cout << "Q=" << Q << endl;
 	}
 	FQ = NEW_OBJECT(field_theory::finite_field);
-	FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0);
+	FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0);
 
 	AQ = NEW_OBJECT(actions::action);
 	

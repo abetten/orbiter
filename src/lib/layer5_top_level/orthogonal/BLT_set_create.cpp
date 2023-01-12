@@ -101,7 +101,7 @@ void BLT_set_create::init(
 			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
-			FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
+			FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
 			GG.create_Linear_BLT_set(set, ABC,
 							FQ, OA->Descr->F, verbose_level);
 
@@ -125,7 +125,7 @@ void BLT_set_create::init(
 			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
-			FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
+			FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
 			GG.create_Fisher_BLT_set(set, ABC,
 							FQ, OA->Descr->F, verbose_level);
 
@@ -149,7 +149,7 @@ void BLT_set_create::init(
 			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
-			FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
+			FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
 			GG.create_Mondello_BLT_set(set, ABC,
 							FQ, OA->Descr->F, verbose_level);
 

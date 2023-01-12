@@ -761,7 +761,8 @@ int orthogonal_global::BLT_test(orthogonal *O, int size, long int *set, int verb
 	return f_OK;
 }
 
-int orthogonal_global::collinearity_test(orthogonal *O, int size, long int *set, int verbose_level)
+int orthogonal_global::collinearity_test(orthogonal *O,
+		int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, x, y;
@@ -771,7 +772,8 @@ int orthogonal_global::collinearity_test(orthogonal *O, int size, long int *set,
 	if (f_v) {
 		cout << "collinearity test for" << endl;
 		for (i = 0; i < size; i++) {
-			O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, set[i], verbose_level - 1);
+			O->Hyperbolic_pair->unrank_point(
+					O->Hyperbolic_pair->v1, 1, set[i], verbose_level - 1);
 			//Q_epsilon_unrank(*M->GFq, u, 1, epsilon, k,
 				//form_c1, form_c2, form_c3, line[i]);
 			Int_vec_print(cout, O->Hyperbolic_pair->v1, 5);
@@ -781,16 +783,19 @@ int orthogonal_global::collinearity_test(orthogonal *O, int size, long int *set,
 	y = set[size - 1];
 	//Q_epsilon_unrank(*M->GFq, v, 1, epsilon, k,
 	//form_c1, form_c2, form_c3, y);
-	O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, y, verbose_level - 1);
+	O->Hyperbolic_pair->unrank_point(
+			O->Hyperbolic_pair->v1, 1, y, verbose_level - 1);
 
 	for (i = 0; i < size - 1; i++) {
 		x = set[i];
-		O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v2, 1, x, verbose_level - 1);
+		O->Hyperbolic_pair->unrank_point(
+				O->Hyperbolic_pair->v2, 1, x, verbose_level - 1);
 		//Q_epsilon_unrank(*M->GFq, u, 1, epsilon, k,
 		//form_c1, form_c2, form_c3, x);
 
 		//fxy = evaluate_bilinear_form(*M->GFq, u, v, d, Gram);
-		fxy = O->Quadratic_form->evaluate_bilinear_form(O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
+		fxy = O->Quadratic_form->evaluate_bilinear_form(
+				O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
 
 		if (fxy == 0) {
 			f_OK = FALSE;
@@ -874,7 +879,7 @@ void orthogonal_global::plane_invariant(orthogonal *O,
 		cnt++;
 
 		for (i = 0; i < level; i++) {
-			O->F->Orthogonal_indexing->Q_unrank(
+			O->Orthogonal_indexing->Q_unrank(
 					Mtx + i * n, 1, n - 1, set[subset[i]],
 					0 /* verbose_level */);
 		}
@@ -1008,7 +1013,7 @@ void orthogonal_global::plane_invariant(orthogonal *O,
 				cout << " : " << endl;
 			}
 			for (ii = 0; ii < level; ii++) {
-				O->F->Orthogonal_indexing->Q_unrank(
+				O->Orthogonal_indexing->Q_unrank(
 						Mtx + ii * n, 1, n - 1,
 						set[subset[ii]],
 						0 /* verbose_level */);

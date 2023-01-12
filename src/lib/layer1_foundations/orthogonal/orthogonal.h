@@ -426,14 +426,18 @@ public:
 class orthogonal_indexing {
 
 public:
+
+	quadratic_form *Quadratic_form;
+
 	field_theory::finite_field *F;
+
 	orthogonal_indexing();
 	~orthogonal_indexing();
-	void init(field_theory::finite_field *F, int verbose_level);
-	void Q_epsilon_unrank(
+	void init(quadratic_form *Quadratic_form, int verbose_level);
+	void Q_epsilon_unrank_private(
 		int *v, int stride, int epsilon, int k,
 		int c1, int c2, int c3, long int a, int verbose_level);
-	long int Q_epsilon_rank(
+	long int Q_epsilon_rank_private(
 		int *v, int stride, int epsilon, int k,
 		int c1, int c2, int c3, int verbose_level);
 	//void init_hash_table_parabolic(int k, int verbose_level);
@@ -492,7 +496,8 @@ public:
 	void create_Law_71_BLT_set(orthogonal *O, long int *set, int verbose_level);
 	int BLT_test_full(orthogonal *O, int size, long int *set, int verbose_level);
 	int BLT_test(orthogonal *O, int size, long int *set, int verbose_level);
-	int collinearity_test(orthogonal *O, int size, long int *set, int verbose_level);
+	int collinearity_test(orthogonal *O,
+			int size, long int *set, int verbose_level);
 	void plane_invariant(orthogonal *O,
 		int size, int *set,
 		int &nb_planes, int *&intersection_matrix,
@@ -515,6 +520,8 @@ class orthogonal_group {
 public:
 
 	orthogonal *O;
+
+	quadratic_form *Quadratic_form_stack; // hyperbolic quadratic forms for i=1,...,m
 
 	int *find_root_x, *find_root_y, *find_root_z;
 
@@ -610,6 +617,8 @@ class orthogonal {
 public:
 
 	quadratic_form *Quadratic_form;
+
+	orthogonal_indexing *Orthogonal_indexing;
 
 
 	hyperbolic_pair *Hyperbolic_pair;
@@ -751,9 +760,11 @@ public:
 	int *the_monomial;
 
 
-	int *Gram_matrix;
+	int *Gram_matrix; // [n * n]
 
 	field_theory::finite_field *F;
+
+	orthogonal_indexing *Orthogonal_indexing;
 
 
 	quadratic_form();
@@ -761,15 +772,37 @@ public:
 	void init(int epsilon, int n,
 			field_theory::finite_field *F, int verbose_level);
 	void init_form_and_Gram_matrix(int verbose_level);
+	void make_Gram_matrix(int verbose_level);
+
 	int evaluate_quadratic_form(int *v, int stride);
+	int evaluate_hyperbolic_quadratic_form(int *v, int stride);
+	int evaluate_hyperbolic_quadratic_form_with_m(int *v, int stride, int m);
+	int evaluate_parabolic_quadratic_form(int *v, int stride);
+	int evaluate_elliptic_quadratic_form(int *v, int stride);
+
 	int evaluate_bilinear_form(int *u, int *v, int stride);
-	int evaluate_hyperbolic_quadratic_form(
-			int *v, int stride, int m);
 	int evaluate_hyperbolic_bilinear_form(
 			int *u, int *v, int stride, int m);
 	int evaluate_parabolic_bilinear_form(
 			int *u, int *v, int stride, int m);
+	int evaluate_bilinear_form_Gram_matrix(int *u, int *v);
+
 	void report_quadratic_form(std::ostream &ost, int verbose_level);
+	long int find_root(int rk2, int verbose_level);
+	void Siegel_Transformation(
+		int *M, int *v, int *u, int verbose_level);
+	// if u is singular and v \in \la u \ra^\perp, then
+	// \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
+	// is called the Siegel transform (see Taylor p. 148)
+	// Here Q is the quadratic form
+	// and \beta is the corresponding bilinear form
+	void Siegel_map_between_singular_points(int *T,
+			long int rk_from, long int rk_to, long int root,
+		int verbose_level);
+	// root is not perp to from and to.
+	void choose_anisotropic_form(int verbose_level);
+	void unrank_point(int *v, long int a, int verbose_level);
+	long int rank_point(int *v, int verbose_level);
 
 
 };
@@ -786,6 +819,10 @@ class unusual_model {
 public:
 	field_theory::finite_field *FQ;
 	field_theory::finite_field *Fq;
+
+	quadratic_form *Quadratic_form;
+
+
 	int q;
 	int Q;
 	int alpha;
@@ -844,7 +881,7 @@ public:
 	void create_Mondello_BLT_set(long int *BLT, int *ABC, int verbose_level);
 	int N2(int a);
 	int T2(int a);
-	int quadratic_form(int a, int b, int c, int verbose_level);
+	int evaluate_quadratic_form(int a, int b, int c, int verbose_level);
 	int bilinear_form(int a1, int b1, int c1, int a2, int b2, int c2,
 		int verbose_level);
 	void print_coordinates_detailed_set(long int *set, int len);

@@ -3255,9 +3255,9 @@ void hyperbolic_pair::parabolic_point_properties(int *v, int stride, int n,
 			cout << endl;
 		}
 	}
-	middle_value = O->Quadratic_form->evaluate_hyperbolic_quadratic_form(
+	middle_value = O->Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 			v + 1 * stride, stride, m - 1);
-	end_value = O->Quadratic_form->evaluate_hyperbolic_quadratic_form(
+	end_value = O->Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
 			v + (1 + 2 * (m - 1)) * stride, stride, 1);
 }
 

@@ -762,10 +762,10 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 	cout << "q = " << q << " override polynomial = " << override_poly << endl;
 	cout << "Q = " << Q << endl;
 
-	F.init_override_polynomial(Q, override_poly_Q, FALSE /* f_without_tables */, verbose_level);
+	F.init_override_polynomial_small_order(Q, override_poly_Q, FALSE /* f_without_tables */, verbose_level);
 	cout << "field of order " << Q << " initialized" << endl;
 	beta_q = F.power(beta, q);
-	f.init_override_polynomial(q, override_poly, FALSE /* f_without_tables */, verbose_level);
+	f.init_override_polynomial_small_order(q, override_poly, FALSE /* f_without_tables */, verbose_level);
 	cout << "field of order " << q << " initialized" << endl;
 	cout << "n = " << n << endl;
 	cout << "index = " << index << endl;

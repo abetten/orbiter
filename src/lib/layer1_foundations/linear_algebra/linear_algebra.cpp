@@ -1621,13 +1621,15 @@ int linear_algebra::RREF_and_kernel(int n, int k,
 	Int_vec_copy(A, B, k * n);
 	//mult_matrix_matrix(A, Gram, B, k, n, n);
 	if (f_v) {
-		cout << "linear_algebra::RREF_and_kernel before Gauss_int" << endl;
+		cout << "linear_algebra::RREF_and_kernel "
+				"before Gauss_int" << endl;
 	}
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, k, n, n, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "linear_algebra::RREF_and_kernel after Gauss_int, "
+		cout << "linear_algebra::RREF_and_kernel "
+				"after Gauss_int, "
 				"rank = " << nb_base_cols << endl;
 	}
 	Int_vec_copy(B, A, nb_base_cols * n);
@@ -1706,14 +1708,16 @@ int linear_algebra::perp_standard_with_temporary_data(
 		cout << "linear_algebra::perp_standard_temporary_data" << endl;
 		cout << "B=" << endl;
 		Int_matrix_print(B, k, n);
-		cout << "finite_field::perp_standard_temporary_data before Gauss_int" << endl;
+		cout << "finite_field::perp_standard_temporary_data "
+				"before Gauss_int" << endl;
 	}
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, k, n, n,
 		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "linear_algebra::perp_standard_temporary_data after Gauss_int" << endl;
+		cout << "linear_algebra::perp_standard_temporary_data "
+				"after Gauss_int" << endl;
 	}
 	matrix_get_kernel(B, k, n, base_cols, nb_base_cols,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
@@ -1752,11 +1756,15 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	int &k3, int *intersection, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int *AA, *BB, *CC, r1, r2, r3;
 	int *B1;
 	int *K;
 	int *base_cols;
 
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces" << endl;
+	}
 	AA = NEW_int(n * n);
 	BB = NEW_int(n * n);
 	B1 = NEW_int(n * n);
@@ -1764,35 +1772,35 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	base_cols = NEW_int(n);
 	Int_vec_copy(A, AA, k1 * n);
 	Int_vec_copy(B, BB, k2 * n);
-	if (f_v) {
+	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces AA=" << endl;
 		Int_vec_print_integer_matrix_width(cout, AA, k1, n, n, 2);
 	}
 	r1 = perp_standard_with_temporary_data(n, k1,
 			AA, B1, K, base_cols, 0);
-	if (f_v) {
+	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces AA=" << endl;
 		Int_vec_print_integer_matrix_width(cout, AA, n, n, n, 2);
 	}
 	if (r1 != k1) {
-		cout << "linear_algebra::intersect_subspaces not a base, "
-				"rank is too small" << endl;
+		cout << "linear_algebra::intersect_subspaces "
+				"not a base, because the rank is too small" << endl;
 		cout << "k1=" << k1 << endl;
 		cout << "r1=" << r1 << endl;
 		exit(1);
 	}
-	if (f_v) {
+	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces BB=" << endl;
 		Int_vec_print_integer_matrix_width(cout, BB, k2, n, n, 2);
 	}
 	r2 = perp_standard_with_temporary_data(n, k2, BB, B1, K, base_cols, 0);
-	if (f_v) {
+	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces BB=" << endl;
 		Int_vec_print_integer_matrix_width(cout, BB, n, n, n, 2);
 	}
 	if (r2 != k2) {
-		cout << "linear_algebra::intersect_subspaces not a base, "
-				"rank is too small" << endl;
+		cout << "linear_algebra::intersect_subspaces "
+				"not a base, because the rank is too small" << endl;
 		cout << "k2=" << k2 << endl;
 		cout << "r2=" << r2 << endl;
 		exit(1);
@@ -1802,7 +1810,7 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	Int_vec_copy(AA + k1 * n, CC, (n - k1) * n);
 	Int_vec_copy(BB + k2 * n, CC + (n - k1) * n, (n - k2) * n);
 	k3 = (n - k1) + (n - k2);
-	if (f_v) {
+	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces CC=" << endl;
 		Int_vec_print_integer_matrix_width(cout, CC, k3, n, n, 2);
 		cout << "k3=" << k3 << endl;
@@ -1820,12 +1828,15 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	FREE_int(B1);
 	FREE_int(K);
 	FREE_int(base_cols);
-	if (f_v) {
+	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces n=" << n
 				<< " dim A =" << r1 << " dim B =" << r2
 				<< " dim intersection =" << n - r3 << endl;
 	}
 	k3 = n - r3;
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces done" << endl;
+	}
 	return n - r3;
 
 }

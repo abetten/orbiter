@@ -447,7 +447,7 @@ void algebra_global::test_unipoly()
 	int i, j;
 	int verbose_level = 0;
 
-	GFp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level);
+	GFp.finite_field_init_small_order(p, FALSE /* f_without_tables */, verbose_level);
 	ring_theory::unipoly_domain FX(&GFp);
 
 	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
@@ -485,7 +485,7 @@ void algebra_global::test_unipoly2()
 	int q = 4, p = 2, i;
 	int verbose_level = 0;
 
-	Fq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
+	Fq.finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
 	ring_theory::unipoly_domain FX(&Fq);
 
 	ring_theory::unipoly_object a;

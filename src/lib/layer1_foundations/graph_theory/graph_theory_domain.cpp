@@ -1066,7 +1066,7 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 
 
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
+	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
 
 	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
@@ -1187,7 +1187,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	combinatorics::combinatorics_domain Combi;
 
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
+	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
 
 
 	Gr = NEW_OBJECT(geometry::grassmann);
@@ -1248,22 +1248,24 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	field_theory::finite_field *F;
 	int i, j;
 	int n, a, nb_e, nb_inc;
-	int c1 = 0, c2 = 0, c3 = 0;
+	//int c1 = 0, c2 = 0, c3 = 0;
 	int *v, *v2;
-	int *Gram; // Gram matrix
+	//int *Gram; // Gram matrix
 	geometry::geometry_global Gg;
+	orthogonal_geometry::quadratic_form *Quadratic_form;
 
 
 	n = d - 1; // projective dimension
 
 	v = NEW_int(d);
 	v2 = NEW_int(d);
-	Gram = NEW_int(d * d);
+	//Gram = NEW_int(d * d);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
 				"epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
 	}
+
 
 	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
 
@@ -1274,26 +1276,25 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 
 	F = NEW_OBJECT(field_theory::finite_field);
 
-	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
+	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 1);
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph field:" << endl;
 		F->print();
 	}
 
-	if (epsilon == 0) {
-		c1 = 1;
-	}
-	else if (epsilon == -1) {
-		F->Linear_algebra->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
-		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
-		//exit(1);
-	}
-	F->Linear_algebra->Gram_matrix(epsilon, n, c1, c2, c3, Gram, verbose_level - 1);
+	Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
+
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
-				"Gram matrix" << endl;
-		Int_vec_print_integer_matrix_width(cout, Gram, d, d, d, 2);
+				"before Quadratic_form->init" << endl;
 	}
+	Quadratic_form->init(epsilon, d, F, verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
+				"after Quadratic_form->init" << endl;
+	}
+
+
 
 #if 0
 	if (f_list_points) {
@@ -1321,10 +1322,20 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	nb_e = 0;
 	nb_inc = 0;
 	for (i = 0; i < N; i++) {
-		F->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
+		//		Quadratic_form->form_c1,
+		//		Quadratic_form->form_c2,
+		//		Quadratic_form->form_c3,
+		//		i, 0 /* verbose_level */);
+		Quadratic_form->unrank_point(v, i, 0 /* verbose_level */);
 		for (j = i + 1; j < N; j++) {
-			F->Orthogonal_indexing->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
-			a = F->Linear_algebra->evaluate_bilinear_form(v, v2, n + 1, Gram);
+			//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v2, 1, epsilon, n,
+			//		Quadratic_form->form_c1,
+			//		Quadratic_form->form_c2,
+			//		Quadratic_form->form_c3,
+			//		j, 0 /* verbose_level */);
+			Quadratic_form->unrank_point(v2, j, 0 /* verbose_level */);
+			a = Quadratic_form->evaluate_bilinear_form(v, v2, 1);
 			if (a == 0) {
 				nb_e++;
 				Adj[i * N + j] = 1;
@@ -1346,7 +1357,8 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 
 	FREE_int(v);
 	FREE_int(v2);
-	FREE_int(Gram);
+	//FREE_int(Gram);
+	FREE_OBJECT(Quadratic_form);
 	FREE_OBJECT(F);
 
 	if (f_v) {

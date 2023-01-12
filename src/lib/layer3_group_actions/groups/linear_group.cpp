@@ -233,7 +233,7 @@ void linear_group::linear_group_create(int verbose_level)
 					"creating the finite field of order " << q << endl;
 		}
 		description->F = NEW_OBJECT(field_theory::finite_field);
-		description->F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
+		description->F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 1);
 		if (f_v) {
 			cout << "linear_group::linear_group_create "
 					"the finite field of order " << q << " has been created" << endl;

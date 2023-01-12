@@ -21,6 +21,8 @@ orthogonal_group::orthogonal_group()
 {
 	O = NULL;
 
+	Quadratic_form_stack = NULL;
+
 	find_root_x = NULL;
 	find_root_y = NULL;
 	find_root_z = NULL;
@@ -38,6 +40,9 @@ orthogonal_group::orthogonal_group()
 
 orthogonal_group::~orthogonal_group()
 {
+	if (Quadratic_form_stack) {
+		FREE_OBJECTS(Quadratic_form_stack);
+	}
 	if (find_root_x) {
 		FREE_int(find_root_x);
 	}
@@ -97,6 +102,19 @@ void orthogonal_group::init(orthogonal *O, int verbose_level)
 	}
 
 	orthogonal_group::O = O;
+
+	int i;
+
+	if (f_v) {
+		cout << "orthogonal_group::init creating Quadratic_form_stack" << endl;
+	}
+	Quadratic_form_stack = NEW_OBJECTS(quadratic_form, O->Quadratic_form->m + 1);
+	for (i = 1; i <= O->Quadratic_form->m; i++) {
+		Quadratic_form_stack[i].init(1, 2 * i, O->F, verbose_level);
+	}
+	if (f_v) {
+		cout << "orthogonal_group::init creating Quadratic_form_stack finished" << endl;
+	}
 
 	find_root_x = NEW_int(O->Quadratic_form->n);
 	find_root_y = NEW_int(O->Quadratic_form->n);
@@ -158,11 +176,11 @@ void orthogonal_group::Siegel_map_between_singular_points(int *T,
 	if (f_v) {
 		cout << "orthogonal_group::Siegel_map_between_singular_points" << endl;
 	}
-	O->F->Linear_algebra->Siegel_map_between_singular_points(T,
+	O->Quadratic_form->Siegel_map_between_singular_points(T,
 		rk_from, rk_to, root,
-		O->Quadratic_form->epsilon, O->Quadratic_form->n,
-		O->Quadratic_form->form_c1, O->Quadratic_form->form_c2, O->Quadratic_form->form_c3,
-		O->Quadratic_form->Gram_matrix,
+		//O->Quadratic_form->epsilon, O->Quadratic_form->n,
+		//O->Quadratic_form->form_c1, O->Quadratic_form->form_c2, O->Quadratic_form->form_c3,
+		//O->Quadratic_form->Gram_matrix,
 		verbose_level);
 	if (f_v) {
 		cout << "orthogonal_group::Siegel_map_between_singular_points done" << endl;
@@ -174,19 +192,32 @@ void orthogonal_group::Siegel_map_between_singular_points_hyperbolic(int *T,
 	long int root, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *Gram;
+	//int *Gram;
 
 	if (f_v) {
 		cout << "orthogonal_group::Siegel_map_between_singular_points_hyperbolic" << endl;
 	}
+#if 0
 	O->F->Linear_algebra->Gram_matrix(
 			1, 2 * m - 1, 0,0,0, Gram, verbose_level - 1);
-	O->F->Linear_algebra->Siegel_map_between_singular_points(T,
+	O->Quadratic_form->Siegel_map_between_singular_points(T,
 		rk_from, rk_to, root,
-		O->Quadratic_form->epsilon, 2 * m,
-		0, 0, 0, Gram,
+		//O->Quadratic_form->epsilon, 2 * m,
+		//0, 0, 0, Gram,
 		verbose_level);
 	FREE_int(Gram);
+#else
+	if (f_v) {
+		cout << "orthogonal_group::Siegel_map_between_singular_points_hyperbolic "
+				"before Quadratic_form_stack[m].Siegel_map_between_singular_points" << endl;
+	}
+	Quadratic_form_stack[m].Siegel_map_between_singular_points(T,
+			rk_from, rk_to, root, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_group::Siegel_map_between_singular_points_hyperbolic "
+				"after Quadratic_form_stack[m].Siegel_map_between_singular_points" << endl;
+	}
+#endif
 	if (f_v) {
 		cout << "orthogonal_group::Siegel_map_between_singular_points_hyperbolic done" << endl;
 	}
@@ -290,7 +321,7 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 {
 	int i, j, a, b, av, bv, minus_one;
 	//int k;
-	int *Gram;
+	//int *Gram;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	combinatorics::combinatorics_domain Combi;
@@ -299,12 +330,14 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 		cout << "orthogonal_group::Siegel_Transformation3" << endl;
 	}
 	//k = n - 1;
-	Gram = O->Quadratic_form->Gram_matrix;
+	//Gram = O->Quadratic_form->Gram_matrix;
+#if 0
 	if (f_vv) {
 		cout << "n=" << O->Quadratic_form->n << endl;
 		cout << "Gram matrix:" << endl;
 		Combi.print_int_matrix(cout, Gram, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
+#endif
 
 	//Q_epsilon_unrank(*F, B, 1, epsilon, k,
 	//form_c1, form_c2, form_c3, root);
@@ -330,8 +363,8 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 		cout << endl;
 	}
 
-	a = O->F->Linear_algebra->evaluate_bilinear_form(B, B + O->Quadratic_form->n, O->Quadratic_form->n, Gram);
-	b = O->F->Linear_algebra->evaluate_bilinear_form(B, w, O->Quadratic_form->n, Gram);
+	a = O->Quadratic_form->evaluate_bilinear_form(B, B + O->Quadratic_form->n, 1);
+	b = O->Quadratic_form->evaluate_bilinear_form(B, w, 1);
 	av = O->F->inverse(a);
 	bv = O->F->inverse(b);
 
@@ -351,7 +384,7 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 		Int_vec_print_integer_matrix(cout, B, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->perp(
-			O->Quadratic_form->n, 2, B, Gram, 0 /* verbose_level */);
+			O->Quadratic_form->n, 2, B, O->Quadratic_form->Gram_matrix, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix B is:" << endl;
 		Int_vec_print_integer_matrix(cout, B, O->Quadratic_form->n, O->Quadratic_form->n);
@@ -390,7 +423,7 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 		cout << "the vector -x is:" << endl;
 		Int_vec_print_integer_matrix(cout, x, 1, O->Quadratic_form->n);
 	}
-	make_Siegel_Transformation(T, x, B, O->Quadratic_form->n, Gram, FALSE);
+	make_Siegel_Transformation(T, x, B, O->Quadratic_form->n, O->Quadratic_form->Gram_matrix, FALSE);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
 		Int_vec_print_integer_matrix(cout, T, O->Quadratic_form->n, O->Quadratic_form->n);
@@ -495,7 +528,7 @@ void orthogonal_group::create_random_Siegel_transformation(
 	int f_vv = (verbose_level >= 2);
 	int rk_u, alpha, i;
 	int nb_pts; //, nb_pts_affine;
-	int k = O->Quadratic_form->m; // the Witt index, previously orthogonal_k;
+	//int k = O->Quadratic_form->m; // the Witt index, previously orthogonal_k;
 	int d = O->Quadratic_form->n;
 	int *u, *v;
 	orbiter_kernel_system::os_interface Os;
@@ -516,7 +549,7 @@ void orthogonal_group::create_random_Siegel_transformation(
 		cout << "orthogonal_group::create_random_Siegel_transformation "
 				"d=" << d << endl;
 		cout << "orthogonal_group::create_random_Siegel_transformation "
-				"Witt index k=" << k << endl;
+				"Witt index m=" << O->Quadratic_form->m << endl;
 		cout << "orthogonal_group::create_random_Siegel_transformation "
 				"nb_pts=" << nb_pts << endl;
 		//cout << "orthogonal::create_random_Siegel_transformation "
@@ -548,8 +581,7 @@ void orthogonal_group::create_random_Siegel_transformation(
 
 #endif
 
-		alpha = O->F->Linear_algebra->evaluate_bilinear_form(
-				u, v, d, O->Quadratic_form->Gram_matrix);
+		alpha = O->Quadratic_form->evaluate_bilinear_form(u, v, 1);
 
 		if (alpha == 0) {
 			if (f_v) {
@@ -575,21 +607,18 @@ void orthogonal_group::create_random_Siegel_transformation(
 
 	if (f_v) {
 		cout << "orthogonal_group::create_random_Siegel_transformation "
-				"before O->F->Linear_algebra->Siegel_Transformation" << endl;
+				"before O->Quadratic_form->Siegel_Transformation" << endl;
 	}
-	O->F->Linear_algebra->Siegel_Transformation(
-			O->Quadratic_form->epsilon, d - 1,
-			O->Quadratic_form->form_c1, O->Quadratic_form->form_c2, O->Quadratic_form->form_c3,
+	O->Quadratic_form->Siegel_Transformation(
+			//O->Quadratic_form->epsilon, d - 1,
+			//O->Quadratic_form->form_c1, O->Quadratic_form->form_c2, O->Quadratic_form->form_c3,
 			Mtx, v, u, verbose_level - 2);
 	if (f_v) {
 		cout << "orthogonal_group::create_random_Siegel_transformation "
-				"after O->F->Linear_algebra->Siegel_Transformation" << endl;
+				"after O->Quadratic_form->Siegel_Transformation" << endl;
 	}
 
 	if (f_vv) {
-		cout << "form_c1=" << O->Quadratic_form->form_c1 << endl;
-		cout << "form_c2=" << O->Quadratic_form->form_c2 << endl;
-		cout << "form_c3=" << O->Quadratic_form->form_c3 << endl;
 		cout << "\\rho_{";
 		Int_vec_print(cout, u, d);
 		cout << ",";
@@ -958,12 +987,7 @@ void orthogonal_group::make_Siegel_Transformation(int *M, int *v, int *u,
 	if (f_v) {
 		cout << "orthogonal_group::make_Siegel_Transformation" << endl;
 	}
-	Qv = O->F->Linear_algebra->evaluate_quadratic_form(
-			v, 1 /*stride*/,
-			O->Quadratic_form->epsilon, n - 1,
-			O->Quadratic_form->form_c1,
-			O->Quadratic_form->form_c2,
-			O->Quadratic_form->form_c3);
+	Qv = O->Quadratic_form->evaluate_quadratic_form(v, 1 /*stride*/);
 
 	O->F->Linear_algebra->identity_matrix(M, n);
 

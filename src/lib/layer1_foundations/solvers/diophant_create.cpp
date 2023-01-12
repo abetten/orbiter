@@ -62,14 +62,14 @@ void diophant_create::init(
 			if (Descr->f_override_polynomial) {
 				cout << "creating finite field of order q=" << Descr->input_q
 						<< " using override polynomial " << Descr->override_polynomial << endl;
-				F->init_override_polynomial(Descr->input_q,
+				F->init_override_polynomial_small_order(Descr->input_q,
 						Descr->override_polynomial, FALSE /* f_without_tables */, verbose_level);
 			}
 			else {
 				cout << "diophant_create::init creating finite field "
 						"of order q=" << Descr->input_q
 						<< " using the default polynomial (if necessary)" << endl;
-				F->finite_field_init(Descr->input_q, FALSE /* f_without_tables */, 0);
+				F->finite_field_init_small_order(Descr->input_q, FALSE /* f_without_tables */, 0);
 			}
 
 		}

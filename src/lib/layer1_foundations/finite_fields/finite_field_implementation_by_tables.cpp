@@ -106,11 +106,17 @@ void finite_field_implementation_by_tables::init(finite_field *F, int verbose_le
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::init" << endl;
+		cout << "finite_field_implementation_by_tables::init q = " << F->q << endl;
 	}
 
 	finite_field_implementation_by_tables::F = F;
 
+
+	if (F->q > ONE_MILLION) {
+		cout << "finite_field_implementation_by_tables::init q is too large. "
+				"q = " << F->q << endl;
+		exit(1);
+	}
 
 	v1 = NEW_int(F->e);
 	v2 = NEW_int(F->e);
@@ -295,10 +301,16 @@ void finite_field_implementation_by_tables::create_alpha_table_prime_field(int v
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::create_alpha_table_prime_field "
 				"table, p=" << F->p << endl;
-		cout << "i : alpha_power_table[i] : log_alpha_table[i]" << endl;
-		for (i = 0; i < F->p; i++) {
-			cout << i << " : " << alpha_power_table[i] << " : "
-					<< log_alpha_table[i] << endl;
+
+		if (F->p < 1024) {
+			cout << "i : alpha_power_table[i] : log_alpha_table[i]" << endl;
+			for (i = 0; i < F->p; i++) {
+				cout << i << " : " << alpha_power_table[i] << " : "
+						<< log_alpha_table[i] << endl;
+			}
+		}
+		else {
+			cout << "Too large to print" << endl;
 		}
 	}
 	if (f_v) {
@@ -337,7 +349,7 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 
 
 	finite_field GFp;
-	GFp.finite_field_init(F->p, FALSE /* f_without_tables */, 0);
+	GFp.finite_field_init_small_order(F->p, FALSE /* f_without_tables */, 0);
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;
@@ -728,7 +740,7 @@ void finite_field_implementation_by_tables::print_tables_extension_field(std::st
 	int verbose_level = 0;
 
 	finite_field GFp;
-	GFp.finite_field_init(F->p, FALSE /* f_without_tables */, 0);
+	GFp.finite_field_init_small_order(F->p, FALSE /* f_without_tables */, 0);
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;

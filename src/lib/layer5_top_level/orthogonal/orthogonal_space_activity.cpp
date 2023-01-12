@@ -464,7 +464,8 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 	}
 
 	if (Descr->f_intersect_with_subspace) {
-		cout << "-intersect_with_subspace " << Descr->intersect_with_subspace_label << endl;
+		cout << "orthogonal_space_activity::perform_activity "
+				"intersect_with_subspace " << Descr->intersect_with_subspace_label << endl;
 
 		int *Basis;
 		int m, n;
@@ -522,12 +523,20 @@ void orthogonal_space_activity::set_stabilizer(
 
 	set_stabilizer::substructure_classifier SubC;
 
+	if (f_v) {
+		cout << "orthogonal_space_activity::set_stabilizer "
+				"before SubC.set_stabilizer_in_any_space" << endl;
+	}
 	SubC.set_stabilizer_in_any_space(
 			OA->A, OA->A, OA->A->Strong_gens,
 			intermediate_subset_size,
 			fname_mask, nb, column_label,
 			fname_out,
 			verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_activity::set_stabilizer "
+				"after SubC.set_stabilizer_in_any_space" << endl;
+	}
 
 
 

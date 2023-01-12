@@ -208,7 +208,7 @@ void geometry_global::test_PG(int n, int q)
 	int m;
 	int verbose_level = 1;
 
-	F.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
+	F.finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
 
 	cout << "all elements of PG_" << n << "(" << q << ")" << endl;
 	F.display_all_PG_elements(n);
@@ -803,7 +803,7 @@ long int geometry_global::nb_pts_Nbar(int n, int q)
 }
 
 
-
+#if 0
 void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 // only works for epsilon = 0
 {
@@ -900,6 +900,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	FREE_int(v);
 	cout << "geometry_global::test_orthogonal done" << endl;
 }
+#endif
 
 
 
@@ -4347,29 +4348,43 @@ void geometry_global::create_orthogonal(
 	if (f_v) {
 		cout << "geometry_global::create_orthogonal" << endl;
 	}
-	int c1 = 1, c2 = 0, c3 = 0;
 	int i, j;
 	int d = n + 1;
 	int *v;
 	geometry::geometry_global Gg;
+	orthogonal_geometry::quadratic_form *Quadratic_form;
 
 	nb_pts = Gg.nb_pts_Qepsilon(epsilon, n, F->q);
 
 	v = NEW_int(d);
 	Pts = NEW_lint(nb_pts);
 
-	if (epsilon == -1) {
-		F->Linear_algebra->choose_anisotropic_form(c1, c2, c3, verbose_level);
-		if (f_v) {
-			cout << "c1=" << c1 << " c2=" << c2 << " c3=" << c3 << endl;
-		}
+
+	Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
+
+	if (f_v) {
+		cout << "geometry_global::create_orthogonal "
+				"before Quadratic_form->init" << endl;
 	}
+	Quadratic_form->init(epsilon, n, F, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::create_orthogonal "
+				"after Quadratic_form->init" << endl;
+	}
+
+
+
 	if (f_v) {
 		cout << "orthogonal rank : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		F->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
-				c1, c2, c3, i, 0 /* verbose_level */);
+		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
+		//		Quadratic_form->form_c1,
+		//		Quadratic_form->form_c2,
+		//		Quadratic_form->form_c3,
+		//		i,
+		//		0 /* verbose_level */);
+		Quadratic_form->unrank_point(v, i, 0 /* verbose_level */);
 		F->PG_element_rank_modified(v, 1, d, j);
 		Pts[i] = j;
 		if (f_v) {
@@ -4400,6 +4415,7 @@ void geometry_global::create_orthogonal(
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
+	FREE_OBJECT(Quadratic_form);
 	FREE_int(v);
 	//FREE_int(L);
 }
@@ -4901,28 +4917,43 @@ void geometry_global::do_embed_orthogonal(
 	int *v;
 	int d = n + 1;
 	long int h, a, b;
-	int c1 = 0, c2 = 0, c3 = 0;
+	orthogonal_geometry::quadratic_form *Quadratic_form;
 
 	if (f_v) {
 		cout << "geometry_global::do_embed_orthogonal" << endl;
 	}
 
-	if (epsilon == -1) {
-		F->Linear_algebra->choose_anisotropic_form(c1, c2, c3, verbose_level);
-	}
 
 	v = NEW_int(d);
 	set_out = NEW_lint(set_size);
 
+	Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
+
+	if (f_v) {
+		cout << "geometry_global::do_embed_orthogonal "
+				"before Quadratic_form->init" << endl;
+	}
+	Quadratic_form->init(epsilon, n, F, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::do_embed_orthogonal "
+				"after Quadratic_form->init" << endl;
+	}
+
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
-		F->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, a, 0 /* verbose_level */);
+		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
+		//		Quadratic_form->form_c1,
+		//		Quadratic_form->form_c2,
+		//		Quadratic_form->form_c3,
+		//		a, 0 /* verbose_level */);
+		Quadratic_form->unrank_point(v, a, 0 /* verbose_level */);
 		//b = P->rank_point(v);
 		F->PG_element_rank_modified_lint(v, 1, n + 1, b);
 		set_out[h] = b;
 	}
 
 	FREE_int(v);
+	FREE_OBJECT(Quadratic_form);
 	if (f_v) {
 		cout << "geometry_global::do_embed_orthogonal done" << endl;
 	}

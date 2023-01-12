@@ -70,7 +70,7 @@ void finite_ring::init(int q, int verbose_level)
 		f_chain_ring = TRUE;
 		NT.factor_prime_power(q, p, e);
 		Fp = NEW_OBJECT(field_theory::finite_field);
-		Fp->finite_field_init(p, FALSE /* f_without_tables */, verbose_level);
+		Fp->finite_field_init_small_order(p, FALSE /* f_without_tables */, verbose_level);
 	}
 	else {
 		f_chain_ring = FALSE;

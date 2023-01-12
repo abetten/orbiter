@@ -203,6 +203,7 @@ test_16:
 
 test_17:
 	make test_17_1
+	make test_17_2
 
 
 
@@ -2159,6 +2160,15 @@ F8_F2_field_reduction:
 	open F8_to_F2_draw.png
 
 
+# 67^2 = 4489
+
+F_4489:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 4489 -without_tables -end \
+
+
+
+
 ###############################################################################
 # Section 3.4: Linear Algebra over Finite Fields
 
@@ -3418,9 +3428,10 @@ del_Pezzo_169:
 			"del\_Pezzo\_F169b" "x,y,z" \
 			"x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y" \
 		-define del_Pezzo13 -collection "f3,f4" \
-	-with P -do \
-	-projective_space_activity \
-	-analyze_del_Pezzo_surface del_Pezzo13 ""
+		-with P -do \
+			-projective_space_activity \
+			-analyze_del_Pezzo_surface del_Pezzo13 "" \
+		-end
 	pdflatex del_Pezzo_F169a_report.tex
 	pdflatex del_Pezzo_F169b_report.tex
 	open del_Pezzo_F169a_report.pdf
@@ -3444,8 +3455,8 @@ test_4_10:
 	make Baer_PG_3_4
 	make BLT_database_5_0
 	make BLT_database_7_0
+	make BLT_database_7_0_print
 	make BLT_database_67_4
-	make Doily_W_2
 	make Doily_disjoint_sets_graph_cliques_3
 	make Doily_disjoint_sets_graph_cliques_5
 	make PG_3_2_test
@@ -3527,6 +3538,21 @@ BLT_database_7_0:
 # writes BLT_7_0.txt
 
 
+BLT_database_7_0_print:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define Obj -geometric_object P \
+			-BLT_database 0 \
+		-end \
+		-with Obj -do -combinatorial_object_activity -save \
+		-end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define BLT_7_0 -set -file_orbiter_format BLT_7_0.txt -end \
+		-with O -do -orthogonal_space_activity \
+			-print_points BLT_7_0 -end
+	pdflatex BLT_7_0_set_report.tex
+	open BLT_7_0_set_report.pdf
 
 
 BLT_database_67_4:
@@ -5156,6 +5182,7 @@ test_5_6:
 	make PGL_4_5_3B_unrank
 	make normal_forms_PGL_4_5
 	make on_planes
+	make PGL_4_2_random_element
 
 
 
@@ -5376,6 +5403,15 @@ normal_forms_PGL_4_5:
 
 
 
+PGL_4_2_random_element:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-random_element r1 \
+		-end \
+	-print_symbols
 
 
 
@@ -16289,6 +16325,8 @@ test_13_1:
 	make make_triangle_graph
 	make Chain_232
 	make Paley_13_graph
+	make Winnie_Li_graph_q16_index2
+	make Sarnak_graph_29_5
 	make trihedral_pair_graph
 	make small_graph
 	make petersen
@@ -16340,6 +16378,15 @@ Paley_13_graph:
 
 
 
+Winnie_Li_graph_q16_index2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -end \
+		-define Gamma -graph -Winnie_Li F 2 -end \
+
+
+Sarnak_graph_29_5:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Sarnak 29 5 -end \
 
 
 trihedral_pair_graph:
@@ -16450,13 +16497,6 @@ Cayley_Sym4_star:
 
 
 
-graph_of_15_lines:
-	$(ORBITER) -v 2 \
-		-define G -graph \
-			-load_csv_no_border \
-			15lines.csv \
-		-end
-
 ###############################################################################
 # Section 13.2: Graphs Theoretic Activities
 
@@ -16541,6 +16581,7 @@ Paley_13_draw:
 		-box_width 20 -bit_depth 8 -partition 4 13 13 -end
 	dot -Tpng Paley_13.gv >Paley_13.png
 	open Paley_13_draw.bmp
+
 
 Paley_13_eigenvalues:
 	$(ORBITER) -v 2 \
@@ -16810,16 +16851,6 @@ trihedral_pair_graph_draw:
 	open trihedral_pair_disjointness_draw.bmp
 
 
-graph_of_15_lines_properties:
-	$(ORBITER) -v 2 \
-		-define Gamma -graph \
-			-load_csv_no_border \
-			15lines.csv \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-properties \
-		-end
 
 
 ###############################################################################
@@ -16867,8 +16898,8 @@ graph_classify_5:
 		-print_symbols
 	pdflatex graphs_v5_level_5_reps.tex
 	open graphs_v5_level_5_reps.pdf
-	pdflatex graphs_v5_poset.tex
-	open graphs_v5_poset.pdf
+	#pdflatex graphs_v5_poset.tex
+	#open graphs_v5_poset.pdf
 
 
 tournament_classify_4:
@@ -16971,11 +17002,14 @@ Symmetric_5_inversion_graph_recognize:
 		-end \
 		-with GC -do \
 		-graph_classification_activity \
-			-recognize_graphs_from_adjacency_matrix_csv Symmetric5_inversion_graphs.csv \
+			-recognize_graphs_from_adjacency_matrix_csv \
+			Symmetric5_inversion_graphs.csv \
 		-end \
 		-print_symbols
 	#pdflatex graphs_v5_poset.tex
 	#open graphs_v5_poset.pdf
+
+
 
 ###############################################################################
 # Section 13.4: Graph Theory: Clique finding
@@ -18367,7 +18401,7 @@ test_15_5:
 
 
 code_3_2_aut:
-	$(ORBITER) -v 20 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define genma -vector -field F -format 2 \
 			-dense $(CODE_N3_K2_Q2_GENMA) \
@@ -18393,7 +18427,7 @@ code_3_2_aut:
 
 
 code_6_3_aut:
-	$(ORBITER) -v 20 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define genma -vector -field F -format 3 \
 			-compact $(CODE_N6_K3_Q2_GENMA) \
@@ -18503,7 +18537,7 @@ RM_4_1_group:
 
 
 RS_6_4_7_group:
-	$(ORBITER) -v 20 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 7 -end \
 		-define genma -vector -field F -format 4 \
 			-compact $(CODE_RS_6_4_7) \
@@ -18519,7 +18553,7 @@ RS_6_4_7_group:
 
 
 GV_n15_k6_d5_group:
-	$(ORBITER) -v 20 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define genma -vector -field F -format 6 \
 			-compact $(CODE_GV_N15_K6) \
@@ -18540,7 +18574,7 @@ GV_n15_k6_d5_group:
 
 
 code_n15_k6_d6_a_group:
-	$(ORBITER) -v 20 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define genma -vector -field F -format 6 \
 			-compact $(CODE_15_6_6_A) \
@@ -18558,7 +18592,7 @@ code_n15_k6_d6_a_group:
 
 
 code_n15_k6_d6_b_group:
-	$(ORBITER) -v 20 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define genma -vector -field F -format 6 \
 			-compact $(CODE_15_6_6_B) \
@@ -18620,11 +18654,11 @@ test_15_7:
 	make Cycle_13_aut
 	make inversion_graph
 	make Chain_232_aut
-	make JK_graph_pp16_1
-	make JK_graph_pp16_2
-	make JK_graph_pp16_9
-	make JK_graph_grid_3_3
-	make JK_graph_sts_13
+	#make JK_graph_pp16_1
+	#make JK_graph_pp16_2
+	#make JK_graph_pp16_9
+	#make JK_graph_grid_3_3
+	#make JK_graph_sts_13
 	make halljanko315_gens.csv
 	make HJ_group_and_orbits
 	make HJ_orbital_graph_3
@@ -18822,19 +18856,6 @@ PGO_5_2_graph_group: O_5_2_incidence_matrix.csv
 
 
 
-graph_of_15_lines_aut:
-	$(ORBITER) -v 2 \
-		-define Gamma -graph \
-			-load_csv_no_border \
-			15lines.csv \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-automorphism_group \
-		-end
-	pdflatex 15lines_report.tex
-	open 15lines_report.pdf
-
 
 ###############################################################################
 # Section 15.8: Quartic Curves
@@ -18944,7 +18965,7 @@ SECTION_GRAPHICAL_OUTPUT:
 
 test_16_1:
 	make PG_2_4_cyclic_incma
-	make PGL_4_2_Wedge_4_0_graphical_output
+	make PGL_6_2_Wedge_4_2_detached_report.tex
 	make schreier_tree_graphical_output
 	make Queens_graph
 
@@ -20302,6 +20323,62 @@ table_mod_12:
 # Section 17.2: Limitations
 
 SECTION_LIMITATIONS:
+
+test_17_2:
+	make F_15bit
+	make F_31bit
+	#make F_32bit
+	#make F_63bit
+	#make F_64bit
+
+
+# 2^15 - 19 is prime
+# https://primes.utm.edu/lists/2small/0bit.html
+
+F_15bit:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 32749 -without_tables -end \
+		-define v -vector -field F -allow_negatives \
+			-dense "-1,-1" -end \
+		-with F -do -finite_field_activity -product_of v -end
+	
+
+F_31bit:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 2147483647 -without_tables -end \
+		-define v -vector -field F -allow_negatives \
+			-dense "-1,-1" -end \
+		-with F -do -finite_field_activity -product_of v -end
+
+
+# The next command will not run. This is on purpose:
+
+F_32bit:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 4294967291 -without_tables -end \
+
+# we get an error message. the order of the field is too large for 32 bit int: 
+# 2^32 - 5 = 4294967291
+
+
+F_63bit:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 9223372036854775783 -without_tables -end \
+		-define v -vector -field F -allow_negatives \
+			-dense "-1,-1" -end \
+		-with F -do -finite_field_activity -product_of v -end
+
+#2^63-25 = 9223372036854775783 is prime
+
+F_64bit:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 18446744073709551557 -without_tables -end \
+		-define v -vector -field F -allow_negatives \
+			-dense "-1,-1" -end \
+		-with F -do -finite_field_activity -product_of v -end
+
+#2^64-59 = 18446744073709551557 is prime
+
 
 
 

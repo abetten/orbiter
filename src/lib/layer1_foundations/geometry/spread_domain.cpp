@@ -1650,7 +1650,7 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 	q2 = q * q;
 	Fq2 = NEW_OBJECT(field_theory::finite_field);
 	Sub = NEW_OBJECT(field_theory::subfield_structure);
-	Fq2->finite_field_init(q2, FALSE /* f_without_tables */, verbose_level);
+	Fq2->finite_field_init_small_order(q2, FALSE /* f_without_tables */, verbose_level);
 	Sub->init(Fq2, F, verbose_level);
 	for (i = 0; i < q * q; i++) {
 		Ge[i] = Sub->FQ_embedding[G[i]];
