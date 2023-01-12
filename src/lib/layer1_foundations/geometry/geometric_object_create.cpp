@@ -709,7 +709,7 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 				"before Quadratic_form->init" << endl;
 	}
-	Quadratic_form->init(epsilon, P->n, P->F, verbose_level);
+	Quadratic_form->init(epsilon, P->n + 1, P->F, verbose_level);
 	if (f_v) {
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 				"after Quadratic_form->init" << endl;

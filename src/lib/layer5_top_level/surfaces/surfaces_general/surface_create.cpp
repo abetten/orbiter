@@ -243,9 +243,20 @@ int surface_create::init(surface_create_description *Descr,
 	}
 	surface_create::Descr = Descr;
 
+	if (PA == NULL) {
+		cout << "surface_create::init PA == NULL" << endl;
+		exit(1);
+	}
 
 	surface_create::Surf_A = PA->Surf_A;
+
+	if (Surf_A == NULL) {
+		cout << "surface_create::init Surf_A == NULL" << endl;
+		exit(1);
+	}
+
 	surface_create::Surf = Surf_A->Surf;
+
 	surface_create::F = Surf->F;
 	q = F->q;
 	if (f_v) {
@@ -1980,6 +1991,12 @@ int surface_create::create_surface_by_equation(
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation" << endl;
+		cout << "surface_create::create_surface_by_equation name_of_formula=" << name_of_formula << endl;
+		cout << "surface_create::create_surface_by_equation name_of_formula_tex=" << name_of_formula_tex << endl;
+		cout << "surface_create::create_surface_by_equation managed_variables=" << managed_variables << endl;
+		cout << "surface_create::create_surface_by_equation equation_text=" << equation_text << endl;
+		cout << "surface_create::create_surface_by_equation equation_parameters=" << equation_parameters << endl;
+		cout << "surface_create::create_surface_by_equation equation_parameters_tex=" << equation_parameters_tex << endl;
 	}
 
 	int coeffs20[20];

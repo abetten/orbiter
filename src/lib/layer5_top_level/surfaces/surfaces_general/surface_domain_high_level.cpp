@@ -41,18 +41,18 @@ void surface_domain_high_level::do_sweep_4_15_lines(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-
+#if 0
 	surface_with_action *Surf_A;
 
 	PA->setup_surface_with_action(
 			Surf_A,
 			verbose_level);
-
+#endif
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_15_lines "
 				"before Surf_A->sweep_4_15_lines" << endl;
 	}
-	Surf_A->sweep_4_15_lines(
+	PA->Surf_A->sweep_4_15_lines(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
@@ -81,18 +81,19 @@ void surface_domain_high_level::do_sweep_F_beta_9_lines(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-
+#if 0
 	surface_with_action *Surf_A;
 
 	PA->setup_surface_with_action(
 			Surf_A,
 			verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines "
 				"before Surf_A->sweep_F_beta_9_lines" << endl;
 	}
-	Surf_A->sweep_F_beta_9_lines(
+	PA->Surf_A->sweep_F_beta_9_lines(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
@@ -122,18 +123,19 @@ void surface_domain_high_level::do_sweep_6_9_lines(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-
+#if 0
 	surface_with_action *Surf_A;
 
 	PA->setup_surface_with_action(
 			Surf_A,
 			verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_6_9_lines "
 				"before Surf_A->sweep_6_9_lines" << endl;
 	}
-	Surf_A->sweep_6_9_lines(
+	PA->Surf_A->sweep_6_9_lines(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
@@ -162,16 +164,18 @@ void surface_domain_high_level::do_sweep_4_27(
 				"verbose_level=" << verbose_level << endl;
 	}
 
+#if 0
 	surface_with_action *Surf_A;
 
 	PA->setup_surface_with_action(
 			Surf_A,
 			verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_27 before Surf_A->sweep_4" << endl;
 	}
-	Surf_A->sweep_4_27(
+	PA->Surf_A->sweep_4_27(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
@@ -200,16 +204,18 @@ void surface_domain_high_level::do_sweep_4_L9_E4(
 				"verbose_level=" << verbose_level << endl;
 	}
 
+#if 0
 	surface_with_action *Surf_A;
 
 	PA->setup_surface_with_action(
 			Surf_A,
 			verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_L9_E4 before Surf_A->sweep_4" << endl;
 	}
-	Surf_A->sweep_4_L9_E4(
+	PA->Surf_A->sweep_4_L9_E4(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
@@ -426,11 +432,11 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines" << endl;
 	}
 
-	surface_with_action *Surf_A;
-	algebraic_geometry::surface_domain *Surf;
-	number_theory::number_theory_domain NT;
+	//surface_with_action *Surf_A;
+	//algebraic_geometry::surface_domain *Surf;
+	//number_theory::number_theory_domain NT;
 
-
+#if 0
 
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf_A = NEW_OBJECT(surface_with_action);
@@ -445,7 +451,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 				"after Surf->init" << endl;
 	}
-
+#endif
 
 #if 0
 	if (f_v) {
@@ -457,7 +463,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 	}
 #endif
 
-
+#if 0
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 				"before Surf_A->init" << endl;
@@ -467,7 +473,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 				"after Surf_A->init" << endl;
 	}
-
+#endif
 
 	cubic_surfaces_and_arcs::surfaces_arc_lifting *SAL;
 
@@ -478,7 +484,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 				"before SAL->init" << endl;
 	}
 	SAL->init(
-		Surf_A,
+		PA->Surf_A,
 		Control_six_arcs_label,
 		f_test_nb_Eckardt_points, nb_E,
 		verbose_level - 2);
@@ -522,6 +528,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 
+#if 0
 	surface_with_action *Surf_A;
 	algebraic_geometry::surface_domain *Surf;
 	number_theory::number_theory_domain NT;
@@ -541,7 +548,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after Surf->init" << endl;
 	}
-
+#endif
 
 #if 0
 	if (f_v) {
@@ -553,7 +560,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 	}
 #endif
 
-
+#if 0
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"before Surf_A->init" << endl;
@@ -563,6 +570,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after Surf_A->init" << endl;
 	}
+#endif
 
 
 
@@ -570,7 +578,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"before Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
-	Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, verbose_level);
+	PA->Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, verbose_level);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after Surf_A->Classify_trihedral_pairs->classify" << endl;
@@ -588,7 +596,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 
 	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
 			Control_six_arcs_label,
-			Surf_A,
+			PA->Surf_A,
 			f_test_nb_Eckardt_points, nb_E,
 			verbose_level);
 
@@ -641,6 +649,7 @@ void surface_domain_high_level::do_six_arcs(
 	F = PA->F;
 
 
+#if 0
 	algebraic_geometry::surface_domain *Surf;
 
 	if (f_v) {
@@ -651,7 +660,7 @@ void surface_domain_high_level::do_six_arcs(
 	if (f_v) {
 		cout << "surface_domain_high_level::do_six_arcs after Surf->init" << endl;
 	}
-
+#endif
 
 
 	cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs;
@@ -753,8 +762,8 @@ void surface_domain_high_level::do_six_arcs(
 			cout << "Arc6[3] != 3" << endl;
 			exit(1);
 		}
-		Surf->P2->unrank_point(v1, Arc6[4]);
-		Surf->P2->unrank_point(v2, Arc6[5]);
+		PA->Surf_A->Surf->P2->unrank_point(v1, Arc6[4]);
+		PA->Surf_A->Surf->P2->unrank_point(v2, Arc6[5]);
 		if (v1[2] != 1) {
 			cout << "v1[2] != 1" << endl;
 			exit(1);
@@ -777,7 +786,7 @@ void surface_domain_high_level::do_six_arcs(
 
 		geometry::geometry_global Gg;
 
-		E = Gg.compute_eckardt_point_info(Surf->P2, Arc6, 0/*verbose_level*/);
+		E = Gg.compute_eckardt_point_info(PA->Surf_A->Surf->P2, Arc6, 0/*verbose_level*/);
 
 
 		Nb_E[h] = E->nb_E;

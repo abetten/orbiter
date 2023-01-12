@@ -533,11 +533,19 @@ void create_code::init(
 		coding_theory::coding_theory_domain Coding;
 
 
+		if (f_v) {
+			cout << "create_code::init "
+					"before Coding.make_gilbert_varshamov_code" << endl;
+		}
 		Coding.make_gilbert_varshamov_code(
 				n, k, d,
 				F,
 				genma, checkma,
 				verbose_level);
+		if (f_v) {
+			cout << "create_code::init "
+					"after Coding.make_gilbert_varshamov_code" << endl;
+		}
 		f_has_generator_matrix = TRUE;
 		f_has_check_matrix = TRUE;
 
@@ -1269,6 +1277,7 @@ void create_code::fixed_code(
 
 void create_code::make_diagram(int f_embellish, int embellish_radius,
 		int f_metric_balls, int radius_of_metric_ball,
+		coding_theory::code_diagram *&Diagram,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1307,7 +1316,6 @@ void create_code::make_diagram(int f_embellish, int embellish_radius,
 
 
 
-	coding_theory::code_diagram *Diagram;
 
 	Diagram = NEW_OBJECT(coding_theory::code_diagram);
 

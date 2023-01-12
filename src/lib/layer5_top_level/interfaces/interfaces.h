@@ -890,13 +890,11 @@ public:
 			orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
 	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
 	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
-	//ring_theory::homogeneous_polynomial_domain *get_object_of_type_ring(std::string &label);
 	poset_classification::poset_classification_control *get_object_of_type_poset_classification_control(std::string &label);
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);
 	apps_algebra::vector_ge_builder *get_object_of_type_vector_ge(std::string &label);
 	orthogonal_geometry_applications::orthogonal_space_with_action *get_object_of_type_orthogonal_space_with_action(std::string &label);
-	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
 	spreads::spread_create *get_object_of_type_spread(std::string &label);
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *get_object_of_type_cubic_surface(std::string &label);
 	apps_coding_theory::create_code *get_object_of_type_code(std::string &label);

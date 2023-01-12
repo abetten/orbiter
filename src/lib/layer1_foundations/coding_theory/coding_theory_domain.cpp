@@ -233,42 +233,60 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	f_forbidden = NEW_int(N_points);
 	Int_vec_zero(f_forbidden, N_points);
 
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"before make_gilbert_varshamov_code_recursion" << endl;
+	}
 	make_gilbert_varshamov_code_recursion(F,
 			n, k, d, N_points,
 			set, f_forbidden, 0 /*level*/,
 			verbose_level);
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"after make_gilbert_varshamov_code_recursion" << endl;
+	}
 
 
 
-	cout << "coding_theory_domain::make_gilbert_varshamov_code found "
-			"the following parity check matrix as projective set: ";
-	Lint_vec_print(cout, set, n);
-	cout << endl;
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code found "
+				"the following parity check matrix as projective set: " << endl;
+		Lint_vec_print(cout, set, n);
+		cout << endl;
+	}
 
 	int *M;
 	M = NEW_int(n * n);
 
 	matrix_from_projective_set(F,
 			n, nmk, set,
-			genma,
+			M,
 			verbose_level);
 
-	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	Int_matrix_print(M, nmk, n);
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
+		Int_matrix_print(M, nmk, n);
+	}
 
-	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	Int_vec_print_fully(cout, M, nmk * n);
-	cout << endl;
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
+		Int_vec_print_fully(cout, M, nmk * n);
+		cout << endl;
+	}
 
 	F->Linear_algebra->RREF_and_kernel(n, nmk, M, 0 /* verbose_level */);
 
-	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
-	Int_matrix_print(M + nmk * n, k, n);
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
+		Int_matrix_print(M + nmk * n, k, n);
+	}
 
 
-	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
-	Int_vec_print_fully(cout, M + nmk * n, k * n);
-	cout << endl;
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
+		Int_vec_print_fully(cout, M + nmk * n, k * n);
+		cout << endl;
+	}
 
 
 	genma = NEW_int(k * n);

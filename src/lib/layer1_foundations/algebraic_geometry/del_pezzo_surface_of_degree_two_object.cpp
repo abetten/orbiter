@@ -79,13 +79,21 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verb
 	}
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines "
-				"The surface has " << Points.size() << " points" << endl;
+				"The object has " << Points.size() << " points" << endl;
 	}
 
 
 	pal = NEW_OBJECT(geometry::points_and_lines);
 
+	if (f_v) {
+		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines "
+				"before pal->init" << endl;
+	}
 	pal->init(Dom->P3, Points, verbose_level);
+	if (f_v) {
+		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines "
+				"after pal->init" << endl;
+	}
 
 
 

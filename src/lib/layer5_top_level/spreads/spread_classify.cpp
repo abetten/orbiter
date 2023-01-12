@@ -528,7 +528,11 @@ void spread_classify::init2(int verbose_level)
 		exit(1);
 	}
 
-	Control = Descr->Control;
+	poset_classification::poset_classification_control *Control;
+
+	Control = Get_object_of_type_poset_classification_control(Descr->poset_classification_control_label);
+
+
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(A, A2,
 			A->Strong_gens,

@@ -26,7 +26,8 @@ spread_classify_description::spread_classify_description()
 	k = 0;
 
 	f_poset_classification_control = FALSE;
-	Control = NULL;
+	//std::string poset_classification_control_label;
+	//Control = NULL;
 
 	f_output_prefix = FALSE;
 	//std::string output_prefix;
@@ -73,21 +74,18 @@ int spread_classify_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
+			poset_classification_control_label.assign(argv[++i]);
+#if 0
 			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			if (f_v) {
 				cout << "-poset_classification_control " << endl;
 			}
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
+#endif
 
 			if (f_v) {
-				cout << "done reading -poset_classification_control " << endl;
-				Control->print();
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
+				cout << "-poset_classification_control " << poset_classification_control_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-output_prefix") == 0) {
@@ -132,8 +130,7 @@ void spread_classify_description::print()
 		cout << "-k " << k << endl;
 	}
 	if (f_poset_classification_control) {
-		cout << "-poset_classification_control " << endl;
-		Control->print();
+		cout << "-poset_classification_control " << poset_classification_control_label << endl;
 	}
 	if (f_output_prefix) {
 		cout << "-output_prefix " << output_prefix << endl;

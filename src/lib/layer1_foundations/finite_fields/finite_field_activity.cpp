@@ -1265,7 +1265,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Get_int_vector_from_label(Descr->sum_of_elements,
 				data, sz, verbose_level);
-		s = 1;
+		s = 0;
 		for (i = 0; i < sz; i++) {
 			a = data[i];
 			s = F->add(s, a);

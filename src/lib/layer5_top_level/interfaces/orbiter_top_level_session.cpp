@@ -371,24 +371,6 @@ projective_geometry::projective_space_with_action *orbiter_top_level_session::ge
 	return (projective_geometry::projective_space_with_action *) get_object(idx);
 }
 
-#if 0
-ring_theory::homogeneous_polynomial_domain *orbiter_top_level_session::get_object_of_type_ring(std::string &label)
-{
-	int idx;
-
-	idx = Orbiter_session->find_symbol(label);
-	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_ring cannot find symbol " << label << endl;
-		exit(1);
-	}
-	if (get_object_type(idx) != t_polynomial_ring) {
-		cout << "orbiter_top_level_session::get_object_of_type_ring object type != t_polynomial_ring" << endl;
-		exit(1);
-	}
-	return (ring_theory::homogeneous_polynomial_domain *) get_object(idx);
-}
-#endif
-
 poset_classification::poset_classification_control *orbiter_top_level_session::get_object_of_type_poset_classification_control(std::string &label)
 {
 	int idx;
@@ -507,6 +489,7 @@ orthogonal_geometry_applications::orthogonal_space_with_action *orbiter_top_leve
 	return (orthogonal_geometry_applications::orthogonal_space_with_action *) get_object(idx);
 }
 
+#if 0
 field_theory::finite_field *orbiter_top_level_session::get_object_of_type_finite_field(std::string &label)
 {
 	int idx;
@@ -524,6 +507,7 @@ field_theory::finite_field *orbiter_top_level_session::get_object_of_type_finite
 
 	return (field_theory::finite_field *) get_object(idx);
 }
+#endif
 
 spreads::spread_create *orbiter_top_level_session::get_object_of_type_spread(std::string &label)
 {

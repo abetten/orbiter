@@ -229,6 +229,8 @@ public:
 			create_code *Code,
 			int verbose_level);
 	void perform_activity(int verbose_level);
+	void do_diagram(
+			coding_theory::code_diagram *Diagram, int verbose_level);
 
 
 };
@@ -419,6 +421,7 @@ public:
 		int verbose_level);
 	void make_diagram(int f_embellish, int embellish_radius,
 			int f_metric_balls, int radius_of_metric_ball,
+			coding_theory::code_diagram *&Diagram,
 			int verbose_level);
 	void polynomial_representation_of_boolean_function(int verbose_level);
 

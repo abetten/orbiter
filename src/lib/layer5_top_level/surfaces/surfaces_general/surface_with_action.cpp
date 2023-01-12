@@ -2500,6 +2500,8 @@ void surface_with_action::sweep_4_27(
 					surface_create *SC;
 					SC = NEW_OBJECT(surface_create);
 
+					SC->PA = PA;
+
 					if (f_v) {
 						cout << "surface_with_action::sweep_4_27 before SC->init" << endl;
 					}

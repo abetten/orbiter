@@ -145,7 +145,7 @@ void code_diagram::place_codewords(int verbose_level)
 
 		convert_to_binary(n, Words[h], v);
 
-		if (f_v) {
+		if (nb_words < 10 && f_v) {
 			cout << "code_diagram::place_codewords "
 					"codeword " << h + 1 << " = " << setw(5) << Words[h];
 			cout << " : ";
@@ -171,7 +171,7 @@ void code_diagram::place_codewords(int verbose_level)
 	}
 	if (f_v) {
 		cout << "code_diagram::place_codewords placing codewords done" << endl;
-		Int_matrix_print(Index_of_codeword, nb_rows, nb_cols);
+		//Int_matrix_print(Index_of_codeword, nb_rows, nb_cols);
 	}
 
 	if (f_v) {

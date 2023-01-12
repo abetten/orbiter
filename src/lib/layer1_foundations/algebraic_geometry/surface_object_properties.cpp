@@ -1227,12 +1227,21 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 	}
 	print_axes(ost);
 
+	if (SmoothProperties) {
 
-	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple "
-				"SmoothProperties->print_tritangent_planes" << endl;
+		if (f_v) {
+			cout << "surface_object_properties::report_properties_simple "
+					"SmoothProperties->print_tritangent_planes" << endl;
+		}
+		SmoothProperties->print_tritangent_planes(ost);
 	}
-	SmoothProperties->print_tritangent_planes(ost);
+	else {
+		if (f_v) {
+			cout << "surface_object_properties::report_properties_simple "
+					"SmoothProperties does not exist" << endl;
+		}
+
+	}
 
 #if 0
 	if (f_v) {

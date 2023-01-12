@@ -255,8 +255,8 @@ void modified_group_create::create_restricted_action(
 		cout << "modified_group_create::create_restricted_action "
 				"before assigning label" << endl;
 	}
-	label.assign(A_previous->label);
-	label_tex.assign(A_previous->label_tex);
+	label.assign(A_modified->label);
+	label_tex.assign(A_modified->label_tex);
 
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action done" << endl;

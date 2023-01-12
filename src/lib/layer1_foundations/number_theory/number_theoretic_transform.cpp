@@ -940,7 +940,7 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "\tint i;" << endl;
 	ost << "\t" << endl;
 	ost << "\tF = NEW_OBJECT(orbiter::layer1_foundations::field_theory::finite_field);" << endl;
-	ost << "\tF->finite_field_init(q, FALSE /*f_without_tables*/, 0 /*verbose_level*/);" << endl;
+	ost << "\tF->finite_field_init_small_order(q, FALSE /*f_without_tables*/, 0 /*verbose_level*/);" << endl;
 	ost << "\t" << endl;
 	ost << "\tint *input;" << endl;
 	ost << "\tint *output;" << endl;

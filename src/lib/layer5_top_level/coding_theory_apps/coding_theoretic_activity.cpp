@@ -103,7 +103,6 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 			Get_vector_or_set(Descr->general_code_binary_text, Words, nb_words);
 
-
 			coding_theory::code_diagram *Diagram;
 
 
@@ -114,216 +113,28 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 						"before Diagram->init" << endl;
 			}
 
-			Diagram->init(Descr->general_code_binary_text /* label */,
+			Diagram->init(Descr->general_code_binary_label /* label */,
 					Words, nb_words, n, verbose_level);
 
-#if 0
-			Codes.code_diagram(
-					Descr->general_code_binary_label,
-					Words,
-					nb_words, Descr->general_code_binary_n,
-					Descr->f_metric_balls, Descr->radius_of_metric_ball,
-					Descr->f_embellish, Descr->embellish_radius,
-					verbose_level);
-#endif
 			if (f_v) {
 				cout << "coding_theoretic_activity::perform_activity "
 						"after Diagram->init" << endl;
 			}
 
-			if (Descr->f_metric_balls) {
-
-				Diagram->place_metric_balls(Descr->radius_of_metric_ball, verbose_level);
-
-			}
 
 			if (f_v) {
 				cout << "coding_theoretic_activity::perform_activity "
-						"before Diagram->save_distance" << endl;
+						"before do_diagram" << endl;
 			}
-			Diagram->save_distance(verbose_level);
+			do_diagram(Diagram, verbose_level);
 			if (f_v) {
 				cout << "coding_theoretic_activity::perform_activity "
-						"after Diagram->save_distance" << endl;
+						"after do_diagram" << endl;
 			}
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Diagram->save_distance_H" << endl;
-			}
-			Diagram->save_distance_H(verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Diagram->save_distance_H" << endl;
-			}
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Diagram->save_diagram" << endl;
-			}
-			Diagram->save_diagram(verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Diagram->save_diagram" << endl;
-			}
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Diagram->save_char_func" << endl;
-			}
-			Diagram->save_char_func(verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Diagram->save_char_func" << endl;
-			}
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Diagram->report" << endl;
-			}
-			Diagram->report(verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Diagram->report" << endl;
-			}
-
 
 			FREE_lint(Words);
 
 	}
-#if 0
-	else if (Descr->f_code_diagram) {
-			long int *codewords;
-			int nb_words;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			Get_vector_or_set(Descr->code_diagram_codewords_text, codewords, nb_words);
-
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Codes.code_diagram" << endl;
-			}
-
-			Codes.code_diagram(
-					Descr->code_diagram_label,
-					codewords,
-					nb_words,
-					Descr->code_diagram_n,
-
-					Descr->f_metric_balls,
-					Descr->radius_of_metric_ball,
-					Descr->f_embellish, Descr->embellish_radius,
-					verbose_level);
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Codes.code_diagram" << endl;
-			}
-
-	}
-#endif
-#if 0
-	else if (Descr->f_code_diagram_from_file) {
-			long int *Words;
-			int m, nb_words;
-			orbiter_kernel_system::file_io Fio;
-			int n;
-
-			coding_theory::coding_theory_domain Codes;
-
-
-			n = Descr->code_diagram_from_file_n;
-
-			Fio.lint_matrix_read_csv(
-					Descr->code_diagram_from_file_codewords_fname,
-					Words, m, nb_words,
-					verbose_level);
-
-
-			coding_theory::code_diagram *Diagram;
-
-			Diagram = NEW_OBJECT(coding_theory::code_diagram);
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Diagram->init" << endl;
-			}
-
-			Diagram->init(
-					Descr->general_code_binary_text /* label */,
-					Words, nb_words, n, verbose_level);
-
-			if (Descr->f_metric_balls) {
-
-				Diagram->place_metric_balls(Descr->radius_of_metric_ball, verbose_level);
-
-			}
-
-
-#if 0
-			Codes.code_diagram(
-					Descr->general_code_binary_label,
-					Words,
-					nb_words, Descr->general_code_binary_n,
-					Descr->f_metric_balls, Descr->radius_of_metric_ball,
-					Descr->f_embellish, Descr->embellish_radius,
-					verbose_level);
-#endif
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Diagram->init" << endl;
-			}
-
-
-#if 0
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Codes.code_diagram" << endl;
-			}
-			Codes.code_diagram(
-					Descr->code_diagram_from_file_label,
-					Words,
-					nb_words,
-					Descr->code_diagram_from_file_n,
-					Descr->f_metric_balls,
-					Descr->radius_of_metric_ball,
-					Descr->f_embellish, Descr->embellish_radius,
-					verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Codes.code_diagram" << endl;
-			}
-#endif
-
-	}
-#endif
-
-#if 0
-	else if (Descr->f_long_code) {
-		coding_theory::coding_theory_domain Codes;
-			string dummy;
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Codes.do_long_code" << endl;
-			}
-			Codes.do_long_code(
-					Descr->long_code_n,
-					Descr->long_code_generators,
-					FALSE /* f_nearest_codeword */,
-					dummy /* const char *nearest_codeword_text */,
-					verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Codes.do_long_code" << endl;
-			}
-
-	}
-#endif
-
 	else if (Descr->f_encode_text_5bits) {
 		coding_theory::coding_theory_domain Codes;
 
@@ -652,6 +463,8 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
+		coding_theory::code_diagram *Diagram;
+
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
 					"before Code->make_diagram" << endl;
@@ -659,11 +472,24 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		Code->make_diagram(
 				Descr->f_embellish, Descr->embellish_radius,
 				Descr->f_metric_balls, Descr->radius_of_metric_ball,
+				Diagram,
 				verbose_level);
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
 					"after Code->make_diagram" << endl;
 		}
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before do_diagram" << endl;
+		}
+		do_diagram(Diagram, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after do_diagram" << endl;
+		}
+
+
 	}
 	else if (Descr->f_boolean_function_of_code) {
 
@@ -937,7 +763,71 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	}
 }
 
+void coding_theoretic_activity::do_diagram(
+		coding_theory::code_diagram *Diagram, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram" << endl;
+	}
+
+	if (Descr->f_metric_balls) {
+		Diagram->place_metric_balls(Descr->radius_of_metric_ball, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"before Diagram->save_distance" << endl;
+	}
+	Diagram->save_distance(verbose_level);
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"after Diagram->save_distance" << endl;
+	}
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"before Diagram->save_distance_H" << endl;
+	}
+	Diagram->save_distance_H(verbose_level);
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"after Diagram->save_distance_H" << endl;
+	}
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"before Diagram->save_diagram" << endl;
+	}
+	Diagram->save_diagram(verbose_level);
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"after Diagram->save_diagram" << endl;
+	}
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"before Diagram->save_char_func" << endl;
+	}
+	Diagram->save_char_func(verbose_level);
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"after Diagram->save_char_func" << endl;
+	}
+
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"before Diagram->report" << endl;
+	}
+	Diagram->report(verbose_level);
+	if (f_v) {
+		cout << "coding_theoretic_activity::do_diagram "
+				"after Diagram->report" << endl;
+	}
+
+
+}
 
 
 

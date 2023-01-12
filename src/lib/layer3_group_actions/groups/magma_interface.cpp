@@ -494,11 +494,16 @@ void magma_interface::export_magma(actions::action *A,
 		actions::action_global AG;
 
 		cout << "magma_interface::export_magma type_g = ";
-
 		AG.action_print_symmetry_group_type(cout,
 				A->type_G);
 		cout << endl;
-		exit(1);
+
+
+		export_permutation_group_to_magma2(
+				ost, A,
+				SG, verbose_level);
+
+		//exit(1);
 	}
 	if (f_v) {
 		cout << "magma_interface::export_magma done" << endl;
@@ -516,28 +521,17 @@ void magma_interface::export_permutation_group_to_magma(
 		strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "magma_interface::export_permutation_group_to_magma" << endl;
 	}
 	{
-		ofstream fp(fname);
+		ofstream ost(fname);
 
-		fp << "G := sub< Sym(" << A2->degree << ") |" << endl;
-		for (i = 0; i < SG->gens->len; i++) {
-			A2->element_print_as_permutation_with_offset(
-				SG->gens->ith(i), fp,
-				1 /* offset */,
-				TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one */,
-				0 /* verbose_level */);
-			if (i < SG->gens->len - 1) {
-				fp << ", " << endl;
-			}
-		}
-		fp << ">;" << endl;
+		export_permutation_group_to_magma2(
+				ost, A2,
+				SG, verbose_level);
 
 	}
 	if (f_v) {
@@ -547,6 +541,36 @@ void magma_interface::export_permutation_group_to_magma(
 
 	if (f_v) {
 		cout << "magma_interface::export_permutation_group_to_magma done" << endl;
+	}
+}
+
+void magma_interface::export_permutation_group_to_magma2(
+		std::ostream &ost, actions::action *A2,
+		strong_generators *SG, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "magma_interface::export_permutation_group_to_magma2" << endl;
+	}
+	ost << "G := sub< Sym(" << A2->degree << ") |" << endl;
+	for (i = 0; i < SG->gens->len; i++) {
+		A2->element_print_as_permutation_with_offset(
+			SG->gens->ith(i), ost,
+			1 /* offset */,
+			TRUE /* f_do_it_anyway_even_for_big_degree */,
+			FALSE /* f_print_cycles_of_length_one */,
+			0 /* verbose_level */);
+		if (i < SG->gens->len - 1) {
+			ost << ", " << endl;
+		}
+	}
+	ost << ">;" << endl;
+
+	if (f_v) {
+		cout << "magma_interface::export_permutation_group_to_magma2 done" << endl;
 	}
 }
 

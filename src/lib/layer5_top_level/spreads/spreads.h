@@ -243,7 +243,8 @@ public:
 	int k;
 
 	int f_poset_classification_control;
-	poset_classification::poset_classification_control *Control;
+	std::string poset_classification_control_label;
+	// poset_classification::poset_classification_control *Control;
 
 	int f_output_prefix;
 	std::string output_prefix;

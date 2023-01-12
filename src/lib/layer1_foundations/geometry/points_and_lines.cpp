@@ -62,7 +62,7 @@ void points_and_lines::init(projective_space *P,
 	vector<long int> The_Lines;
 
 	if (f_v) {
-		cout << "points_and_lines::init The surface "
+		cout << "points_and_lines::init The object "
 				"has " << Points.size() << " points" << endl;
 	}
 	int i;
@@ -87,7 +87,7 @@ void points_and_lines::init(projective_space *P,
 	}
 
 	if (f_v) {
-		cout << "points_and_lines::init The surface "
+		cout << "points_and_lines::init The object "
 				"has " << The_Lines.size() << " lines" << endl;
 	}
 
@@ -99,7 +99,8 @@ void points_and_lines::init(projective_space *P,
 	}
 
 	if (f_v) {
-		cout << "points_and_lines::init nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
+		cout << "points_and_lines::init "
+				"nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
 		cout << "Lines:";
 		Lint_vec_print(cout, Lines, nb_lines);
 		cout << endl;
@@ -110,11 +111,13 @@ void points_and_lines::init(projective_space *P,
 		Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
 
 		if (f_v) {
-			cout << "points_and_lines::init before Quadratic_form->init" << endl;
+			cout << "points_and_lines::init "
+					"before Quadratic_form->init" << endl;
 		}
-		Quadratic_form->init(1 /* epsilon */, 5, P->F, verbose_level);
+		Quadratic_form->init(1 /* epsilon */, 4, P->F, verbose_level);
 		if (f_v) {
-			cout << "points_and_lines::init after Quadratic_form->init" << endl;
+			cout << "points_and_lines::init "
+					"after Quadratic_form->init" << endl;
 		}
 	}
 

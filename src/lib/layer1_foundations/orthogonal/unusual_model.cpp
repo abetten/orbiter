@@ -173,7 +173,7 @@ void unusual_model::setup2(
 	if (f_v) {
 		cout << "unusual_model::setup2 before Quadratic_form->init" << endl;
 	}
-	Quadratic_form->init(0 /* epsilon */, 4, Fq, verbose_level);
+	Quadratic_form->init(0 /* epsilon */, 5, Fq, verbose_level);
 	if (f_v) {
 		cout << "unusual_model::setup2 after Quadratic_form->init" << endl;
 	}

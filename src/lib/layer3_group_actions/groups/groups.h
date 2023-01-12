@@ -349,6 +349,9 @@ public:
 	void export_permutation_group_to_magma(
 			std::string &fname, actions::action *A2,
 			strong_generators *SG, int verbose_level);
+	void export_permutation_group_to_magma2(
+			std::ostream &ost, actions::action *A2,
+			strong_generators *SG, int verbose_level);
 	void export_group_to_magma_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,

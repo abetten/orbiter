@@ -503,7 +503,8 @@ public:
 	long int q_long;
 
 	int q;
-	int p, e;
+	int p, e; // q = p^e
+
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
 	int f_print_as_exponentials;
