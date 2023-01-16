@@ -514,6 +514,34 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 					"after Code->polynomial_representation_of_boolean_function" << endl;
 		}
 	}
+	else if (Descr->f_Hamming_space_distance_matrix) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_Hamming_space_distance_matrix" << endl;
+		}
+		if (!f_has_finite_field) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_boolean_function_of_code needs a finite field" << endl;
+			exit(1);
+		}
+
+		coding_theory::coding_theory_domain Codes;
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Codes.make_Hamming_space_distance_matrix" << endl;
+		}
+
+		Codes.make_Hamming_space_distance_matrix(
+				Descr->Hamming_space_distance_matrix_n, F,
+				FALSE /* f_projective */, verbose_level - 1);
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Codes.make_Hamming_space_distance_matrix" << endl;
+		}
+	}
 
 
 

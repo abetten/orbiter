@@ -728,8 +728,8 @@ void coding_theory_domain::do_make_macwilliams_system(
 
 
 
-void coding_theory_domain::make_Hamming_graph_and_write_file(
-		int n, int q,
+void coding_theory_domain::make_Hamming_space_distance_matrix(
+		int n, field_theory::finite_field *F,
 		int f_projective, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -739,22 +739,20 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 	int *w;
 	int *Table;
 	geometry::geometry_global Gg;
-	field_theory::finite_field *F = NULL;
+	//field_theory::finite_field *F = NULL;
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_Hamming_graph_and_write_file" << endl;
+		cout << "coding_theory_domain::make_Hamming_space_distance_matrix" << endl;
 	}
 
 	v = NEW_int(n);
 	w = NEW_int(n);
 
 	if (f_projective) {
-		width = height = Gg.nb_PG_elements(n - 1, q);
-		F = NEW_OBJECT(field_theory::finite_field);
-		F->finite_field_init_small_order(q, FALSE /* f_without_tables */, 0 /* verbose_level */);
+		width = height = Gg.nb_PG_elements(n - 1, F->q);
 	}
 	else {
-		width = height = Gg.nb_AG_elements(n, q);
+		width = height = Gg.nb_AG_elements(n, F->q);
 	}
 
 #if 0
@@ -767,7 +765,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 #endif
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_Hamming_graph_and_write_file width=" << width << endl;
+		cout << "coding_theory_domain::make_Hamming_space_distance_matrix width=" << width << endl;
 	}
 
 	int i, j, d, h;
@@ -779,7 +777,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 			F->PG_element_unrank_modified(v, 1 /*stride*/, n, i);
 		}
 		else {
-			Gg.AG_element_unrank(q, v, 1, n, i);
+			Gg.AG_element_unrank(F->q, v, 1, n, i);
 		}
 
 		for (j = 0; j < width; j++) {
@@ -788,7 +786,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 				F->PG_element_unrank_modified(w, 1 /*stride*/, n, j);
 			}
 			else {
-				Gg.AG_element_unrank(q, w, 1, n, j);
+				Gg.AG_element_unrank(F->q, w, 1, n, j);
 			}
 
 			d = 0;
@@ -813,7 +811,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 	char str[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, sizeof(str), "Hamming_n%d_q%d.csv", n, q);
+	snprintf(str, sizeof(str), "Hamming_n%d_q%d.csv", n, F->q);
 	fname.assign(str);
 
 	Fio.int_matrix_write_csv(fname, Table, height, width);
@@ -824,7 +822,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_Hamming_graph_and_write_file" << endl;
+		cout << "coding_theory_domain::make_Hamming_space_distance_matrix" << endl;
 	}
 
 }

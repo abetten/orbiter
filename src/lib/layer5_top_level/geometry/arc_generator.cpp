@@ -21,7 +21,8 @@ namespace layer5_applications {
 namespace apps_geometry {
 
 
-static void arc_generator_early_test_function(long int *S, int len,
+static void arc_generator_early_test_function(
+		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -33,7 +34,8 @@ static void arc_generator_lifting_prepare_function_new(
 	int &f_ruled_out,
 	int verbose_level);
 #endif
-static void arc_generator_print_arc(std::ostream &ost, int len, long int *S, void *data);
+static void arc_generator_print_arc(
+		std::ostream &ost, int len, long int *S, void *data);
 //static void arc_generator_print_point(long int pt, void *data);
 //static void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
 
@@ -362,7 +364,8 @@ void arc_generator::compute_starter(int verbose_level)
 }
 
 int arc_generator::test_nb_Eckardt_points(
-		long int *S, int len, int pt, int nb_E, int verbose_level)
+		long int *S, int len, int pt, int nb_E,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
@@ -378,7 +381,8 @@ int arc_generator::test_nb_Eckardt_points(
 	return ret;
 }
 
-int arc_generator::conic_test(long int *S, int len, int pt, int verbose_level)
+int arc_generator::conic_test(
+		long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
@@ -393,7 +397,8 @@ int arc_generator::conic_test(long int *S, int len, int pt, int verbose_level)
 	return ret;
 }
 
-void arc_generator::early_test_func(long int *S, int len,
+void arc_generator::early_test_func(
+		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -818,7 +823,9 @@ void arc_generator::lifting_prepare_function_new(
 }
 
 
-void arc_generator::report(isomorph::isomorph &Iso, int verbose_level)
+void arc_generator::report(
+		isomorph::isomorph &Iso,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
@@ -881,7 +888,9 @@ void arc_generator::report(isomorph::isomorph &Iso, int verbose_level)
 
 }
 
-void arc_generator::report_do_the_work(ostream &ost, isomorph::isomorph &Iso, int verbose_level)
+void arc_generator::report_do_the_work(
+		std::ostream &ost, isomorph::isomorph &Iso,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -1192,7 +1201,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph::isomorph &Iso, in
 }
 
 void arc_generator::report_decompositions(
-		isomorph::isomorph &Iso, ostream &ost, int orbit,
+		isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 	long int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1219,8 +1228,9 @@ void arc_generator::report_decompositions(
 
 }
 
-void arc_generator::report_stabilizer(isomorph::isomorph &Iso,
-		ostream &ost, int orbit, int verbose_level)
+void arc_generator::report_stabilizer(
+		isomorph::isomorph &Iso,
+		std::ostream &ost, int orbit, int verbose_level)
 {
 	groups::sims *Stab;
 
@@ -1242,7 +1252,8 @@ void arc_generator::report_stabilizer(isomorph::isomorph &Iso,
 // #############################################################################
 
 
-static void arc_generator_early_test_function(long int *S, int len,
+static void arc_generator_early_test_function(
+		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1304,7 +1315,8 @@ static void arc_generator_lifting_prepare_function_new(
 #endif
 
 
-static void arc_generator_print_arc(ostream &ost, int len, long int *S, void *data)
+static void arc_generator_print_arc(
+		std::ostream &ost, int len, long int *S, void *data)
 {
 	arc_generator *Gen = (arc_generator *) data;
 	

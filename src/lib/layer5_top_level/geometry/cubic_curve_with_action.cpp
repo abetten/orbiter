@@ -45,7 +45,8 @@ cubic_curve_with_action::~cubic_curve_with_action()
 }
 
 void cubic_curve_with_action::init(
-		algebraic_geometry::cubic_curve *CC, actions::action *A,
+		algebraic_geometry::cubic_curve *CC,
+		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

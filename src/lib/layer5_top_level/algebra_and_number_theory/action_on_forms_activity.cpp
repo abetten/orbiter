@@ -89,10 +89,15 @@ void action_on_forms_activity::do_algebraic_normal_form(int verbose_level)
 	int *func;
 	int len;
 
+	int *coeff;
+	int nb_coeff;
+
 	Get_int_vector_from_label(Descr->algebraic_normal_form_input, func, len, 0 /* verbose_level */);
 
-	AF->algebraic_normal_form(
-			func, len, verbose_level);
+	AF->PF->algebraic_normal_form(
+			func, len,
+			coeff, nb_coeff,
+			verbose_level);
 
 	if (f_v) {
 		cout << "action_on_forms_activity::do_algebraic_normal_form done" << endl;

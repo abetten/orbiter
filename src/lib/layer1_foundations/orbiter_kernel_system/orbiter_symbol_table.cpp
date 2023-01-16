@@ -145,6 +145,9 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_quartic_curve) {
 		cout << "t_quartic_curve" << endl;
 	}
+	else if (t == t_BLT_set) {
+		cout << "t_BLT_set" << endl;
+	}
 	else if (t == t_classification_of_cubic_surfaces_with_double_sixes) {
 		cout << "t_classification_of_cubic_surfaces_with_double_sixes" << endl;
 	}

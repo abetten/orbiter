@@ -926,7 +926,8 @@ void delandtsheer_doyen::compute_orbits_on_pairs(
 	}
 }
 
-groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verbose_level)
+groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	groups::strong_generators *Strong_gens;
@@ -1333,7 +1334,7 @@ void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
 
 }
 
-void delandtsheer_doyen::print_mask_test_i(ostream &ost, int i)
+void delandtsheer_doyen::print_mask_test_i(std::ostream &ost, int i)
 {
 	int who, what;
 

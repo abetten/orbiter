@@ -19,7 +19,7 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-void action::report(ostream &ost, int f_sims, groups::sims *S,
+void action::report(std::ostream &ost, int f_sims, groups::sims *S,
 		int f_strong_gens, groups::strong_generators *SG,
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
@@ -157,7 +157,7 @@ void action::report(ostream &ost, int f_sims, groups::sims *S,
 	}
 }
 
-void action::report_what_we_act_on(ostream &ost,
+void action::report_what_we_act_on(std::ostream &ost,
 		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
@@ -732,7 +732,7 @@ void action::list_elements_as_permutations_vertically(
 	}
 }
 
-void action::print_symmetry_group_type(ostream &ost)
+void action::print_symmetry_group_type(std::ostream &ost)
 {
 	action_global AG;
 
@@ -794,7 +794,7 @@ void action::print_info()
 
 }
 
-void action::report_basic_orbits(ostream &ost)
+void action::report_basic_orbits(std::ostream &ost)
 {
 	int i;
 
@@ -975,14 +975,14 @@ void action::latex_point_set(std::ostream &ost,
 }
 
 
-void action::print_group_order(ostream &ost)
+void action::print_group_order(std::ostream &ost)
 {
 	ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go;
 }
 
-void action::print_group_order_long(ostream &ost)
+void action::print_group_order_long(std::ostream &ost)
 {
 	int i;
 

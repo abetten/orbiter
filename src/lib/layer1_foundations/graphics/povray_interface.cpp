@@ -55,7 +55,7 @@ povray_interface::~povray_interface()
 }
 
 
-void povray_interface::beginning(ostream &ost,
+void povray_interface::beginning(std::ostream &ost,
 		double angle,
 		double *sky,
 		double *location,
@@ -183,7 +183,7 @@ void povray_interface::beginning(ostream &ost,
 }
 
 
-void povray_interface::animation_rotate_around_origin_and_1_1_1(ostream &ost)
+void povray_interface::animation_rotate_around_origin_and_1_1_1(std::ostream &ost)
 {
 	ost << "	// the next three steps will perform a rotation" << endl;
 	ost << "	// around the axis of symmetry 1,1,1:" << endl;
@@ -210,7 +210,7 @@ void povray_interface::animation_rotate_around_origin_and_1_1_1(ostream &ost)
 }
 
 void povray_interface::animation_rotate_around_origin_and_given_vector(
-	double *v, ostream &ost)
+	double *v, std::ostream &ost)
 {
 	double A[9], Av[9];
 	numerics N;
@@ -281,7 +281,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector(
 }
 
 void povray_interface::animation_rotate_xyz(
-	double angle_x_deg, double angle_y_deg, double angle_z_deg, ostream &ost)
+	double angle_x_deg, double angle_y_deg, double angle_z_deg, std::ostream &ost)
 {
 	numerics N;
 
@@ -295,7 +295,7 @@ void povray_interface::animation_rotate_xyz(
 }
 
 void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_given_angle(
-	double *v, double angle_zero_one, ostream &ost)
+	double *v, double angle_zero_one, std::ostream &ost)
 {
 	double A[9], Av[9];
 	numerics N;
@@ -366,7 +366,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 }
 
 
-void povray_interface::union_start(ostream &ost)
+void povray_interface::union_start(std::ostream &ost)
 {
 	ost << "union{ " << endl;
 	ost << endl;
@@ -391,7 +391,7 @@ void povray_interface::union_start(ostream &ost)
 	ost << "} */" << endl;
 }
 
-void povray_interface::union_end(ostream &ost, double scale_factor, double clipping_radius)
+void povray_interface::union_end(std::ostream &ost, double scale_factor, double clipping_radius)
 {
 	ost << endl;
 	ost << " 	scale  " << scale_factor << endl;
@@ -403,7 +403,8 @@ void povray_interface::union_end(ostream &ost, double scale_factor, double clipp
 	ost << "} // union" << endl;
 }
 
-void povray_interface::union_end_box_clipping(ostream &ost, double scale_factor,
+void povray_interface::union_end_box_clipping(
+		std::ostream &ost, double scale_factor,
 		double box_x, double box_y, double box_z)
 {
 	ost << endl;
@@ -417,7 +418,7 @@ void povray_interface::union_end_box_clipping(ostream &ost, double scale_factor,
 	ost << "} // union" << endl;
 }
 
-void povray_interface::union_end_no_clipping(ostream &ost, double scale_factor)
+void povray_interface::union_end_no_clipping(std::ostream &ost, double scale_factor)
 {
 	ost << endl;
 	ost << " 	scale  " << scale_factor << endl;
@@ -427,7 +428,7 @@ void povray_interface::union_end_no_clipping(ostream &ost, double scale_factor)
 	ost << "} // union" << endl;
 }
 
-void povray_interface::bottom_plane(ostream &ost)
+void povray_interface::bottom_plane(std::ostream &ost)
 {
 
 	ost << endl;
@@ -476,7 +477,7 @@ void povray_interface::bottom_plane(ostream &ost)
 
 }
 
-void povray_interface::rotate_111(int h, int nb_frames, ostream &fp)
+void povray_interface::rotate_111(int h, int nb_frames, std::ostream &fp)
 {
 	//int nb_frames_per_rotation;
 	//nb_frames_per_rotation = nb_frames;
@@ -489,7 +490,7 @@ void povray_interface::rotate_111(int h, int nb_frames, ostream &fp)
 		v, angle_zero_one, fp);
 }
 
-void povray_interface::rotate_around_z_axis(int h, int nb_frames, ostream &fp)
+void povray_interface::rotate_around_z_axis(int h, int nb_frames, std::ostream &fp)
 {
 	//int nb_frames_per_rotation;
 	//nb_frames_per_rotation = nb_frames;
@@ -503,7 +504,7 @@ void povray_interface::rotate_around_z_axis(int h, int nb_frames, ostream &fp)
 }
 
 
-void povray_interface::ini(ostream &ost, const char *fname_pov,
+void povray_interface::ini(std::ostream &ost, const char *fname_pov,
 	int first_frame, int last_frame)
 {
 	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;

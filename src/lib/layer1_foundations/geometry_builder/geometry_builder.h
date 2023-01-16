@@ -264,7 +264,8 @@ public:
 	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
 	int apply_tests(int I, int m, int J, int n, int j, int verbose_level);
 	void print(std::ostream &ost, int v, int v_cut);
-	void print_override_theX(std::ostream &ost, int *theX, int v, int v_cut);
+	void print_override_theX(std::ostream &ost,
+			int *theX, int v, int v_cut);
 
 };
 
@@ -439,7 +440,8 @@ public:
 
 	geometry_builder();
 	~geometry_builder();
-	void init_description(geometry_builder_description *Descr,
+	void init_description(
+			geometry_builder_description *Descr,
 			int verbose_level);
 	void compute_VBR(int verbose_level);
 	void print_tdo();
@@ -482,7 +484,8 @@ public:
 	void Floyd(int row, int verbose_level);
 	void add_incidence(int i, int j_idx, int j);
 	void delete_incidence(int i, int j_idx, int j);
-	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
+	int check_girth_condition(
+			int i, int j_idx, int j, int verbose_level);
 	void print_Si(int i);
 	void print_Di(int i);
 
@@ -515,7 +518,8 @@ public:
 	void get_flags(int row, std::vector<int> &flags);
 	int find_square(int m, int n);
 	void print_horizontal_bar(
-		std::ostream &ost, gen_geo *gg, int f_print_isot, iso_type *it);
+		std::ostream &ost,
+		gen_geo *gg, int f_print_isot, iso_type *it);
 	void print_partitioned(
 			std::ostream &ost, int v_cur, int v_cut,
 			gen_geo *gg, int f_print_isot);
@@ -570,28 +574,39 @@ public:
 
 	incidence();
 	~incidence();
-	void init(gen_geo *gg, int v, int b, int *R, int verbose_level);
+	void init(gen_geo *gg,
+			int v, int b, int *R, int verbose_level);
 	void init_pairs(int verbose_level);
 	void print_pairs(int v);
 	int find_square(int m, int n);
 	void print_param();
 	void free_isot();
 	void print_R(int v, cperm *p, cperm *q);
-	void install_isomorphism_test_after_a_given_row(int i,
+	void install_isomorphism_test_after_a_given_row(
+			int i,
 			int f_orderly, int verbose_level);
-	void install_isomorphism_test_of_second_kind_after_a_given_row(int i,
+	void install_isomorphism_test_of_second_kind_after_a_given_row(
+			int i,
 			int f_orderly, int verbose_level);
 	void set_split(int row, int remainder, int modulo);
-	void print_geo(std::ostream &ost, int v, int *theGEO);
-	void print_inc(std::ostream &ost, int v, long int *theInc);
-	void print_sage(std::ostream &ost, int v, long int *theInc);
-	void print_blocks(std::ostream &ost, int v, long int *theInc);
-	void compute_blocks(long int *&Blocks, int *&K, int v, long int *theInc);
-	void compute_blocks_ranked(long int *&Blocks, int v, long int *theInc);
+	void print_geo(
+			std::ostream &ost, int v, int *theGEO);
+	void print_inc(
+			std::ostream &ost, int v, long int *theInc);
+	void print_sage(
+			std::ostream &ost, int v, long int *theInc);
+	void print_blocks(
+			std::ostream &ost, int v, long int *theInc);
+	void compute_blocks(
+			long int *&Blocks, int *&K, int v, long int *theInc);
+	void compute_blocks_ranked(
+			long int *&Blocks, int v, long int *theInc);
 	int compute_k(int v, long int *theInc);
 	int is_block_tactical(int v, long int *theInc);
-	void geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags);
-	void inc_to_geo(int v, long int *theInc, int *theGEO, int nb_flags);
+	void geo_to_inc(
+			int v, int *theGEO, long int *theInc, int nb_flags);
+	void inc_to_geo(
+			int v, long int *theInc, int *theGEO, int nb_flags);
 
 
 };
@@ -659,7 +674,8 @@ public:
 	void print_GEO(int *pc, int v, incidence *inc);
 	void print_status(std::ostream &ost, int f_with_flags);
 	void print_flags(std::ostream &ost);
-	void print_geometry(inc_encoding *Encoding, int v, incidence *inc);
+	void print_geometry(
+			inc_encoding *Encoding, int v, incidence *inc);
 
 };
 

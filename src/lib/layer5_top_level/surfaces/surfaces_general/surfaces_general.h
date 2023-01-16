@@ -62,7 +62,8 @@ public:
 	cubic_surface_activity();
 	~cubic_surface_activity();
 	void init(
-			cubic_surfaces_in_general::cubic_surface_activity_description *Cubic_surface_activity_description,
+			cubic_surfaces_in_general::cubic_surface_activity_description
+				*Cubic_surface_activity_description,
 			surface_create *SC, int verbose_level);
 	void perform_activity(int verbose_level);
 };
@@ -91,7 +92,8 @@ public:
 	surface_clebsch_map();
 	~surface_clebsch_map();
 	void report(std::ostream &ost, int verbose_level);
-	void init(surface_object_with_action *SOA, int orbit_idx, int verbose_level);
+	void init(surface_object_with_action *SOA,
+			int orbit_idx, int verbose_level);
 
 };
 
@@ -387,7 +389,8 @@ public:
 			int verbose_level);
 
 
-	void do_study_surface(field_theory::finite_field *F, int nb, int verbose_level);
+	void do_study_surface(
+			field_theory::finite_field *F, int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
 			std::string &Control_six_arcs_label,
@@ -415,20 +418,27 @@ public:
 			std::string &fname_csv, int defining_q,
 			int verbose_level);
 	void report_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
+			struct cubic_surface_data_set *Data,
+			int nb_orbits, int verbose_level);
 	void report_non_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
+			struct cubic_surface_data_set *Data,
+			int nb_orbits, int verbose_level);
 	void report_surfaces_by_lines(std::ostream &ost,
-			struct cubic_surface_data_set *Data, data_structures::tally &T, int verbose_level);
-	void do_create_surface_reports(std::string &field_orders_text, int verbose_level);
+			struct cubic_surface_data_set *Data,
+			data_structures::tally &T, int verbose_level);
+	void do_create_surface_reports(
+			std::string &field_orders_text, int verbose_level);
 	void do_create_surface_atlas(int q_max, int verbose_level);
 	void do_create_surface_atlas_q_e(int q_max,
-			struct table_surfaces_field_order *T, int nb_e, int *Idx, int nb,
+			struct table_surfaces_field_order *T,
+			int nb_e, int *Idx, int nb,
 			std::string &fname_report_tex,
 			int verbose_level);
 	void do_create_dickson_atlas(int verbose_level);
-	void make_fname_surface_report_tex(std::string &fname, int q, int ocn);
-	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
+	void make_fname_surface_report_tex(
+			std::string &fname, int q, int ocn);
+	void make_fname_surface_report_pdf(
+			std::string &fname, int q, int ocn);
 
 };
 
@@ -680,7 +690,8 @@ public:
 	induced_actions::action_on_homogeneous_polynomials *AonHPD_3_4;
 
 
-	cubic_surfaces_and_arcs::classify_trihedral_pairs *Classify_trihedral_pairs;
+	cubic_surfaces_and_arcs::classify_trihedral_pairs
+		*Classify_trihedral_pairs;
 
 	geometry::spread_domain *SD;
 	spreads::recoordinatize *Recoordinatize;

@@ -845,7 +845,7 @@ void surfaces_arc_lifting::report(
 	}
 }
 
-void surfaces_arc_lifting::report2(ostream &ost,
+void surfaces_arc_lifting::report2(std::ostream &ost,
 		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
@@ -884,7 +884,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 	Surfaces->print_latex(ost,
 		title, TRUE /* f_print_stabilizer_gens */,
 		TRUE /* f_has_print_function */,
-		callback_surfaces_arc_lifting_report /* void (*print_function)(ostream &ost, int i,
+		callback_surfaces_arc_lifting_report /* void (*print_function)(std::ostream &ost, int i,
 				classification_step *Step, void *print_function_data) */,
 		this /* void *print_function_data */);
 
@@ -988,7 +988,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 	}
 }
 
-void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
+void surfaces_arc_lifting::report_flag_orbits(std::ostream &ost, int verbose_level)
 {
 	int flag_orbit_idx;
 	int i;
@@ -1062,7 +1062,7 @@ void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 	ost << "$$" << endl;
 }
 
-void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbose_level)
+void surfaces_arc_lifting::report_flag_orbits_in_detail(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics::combinatorics_domain Combi;
@@ -1474,7 +1474,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 }
 
 
-void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_level)
+void surfaces_arc_lifting::report_surfaces_in_detail(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

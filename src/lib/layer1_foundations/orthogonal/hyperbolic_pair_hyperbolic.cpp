@@ -27,7 +27,8 @@ namespace orthogonal_geometry {
 //##############################################################################
 
 long int hyperbolic_pair::hyperbolic_type_and_index_to_point_rk(
-		long int type, long int index, int verbose_level)
+		long int type, long int index,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk;
@@ -208,7 +209,8 @@ void hyperbolic_pair::hyperbolic_unrank_line(
 }
 
 long int hyperbolic_pair::hyperbolic_rank_line(
-		long int p1, long int p2, int verbose_level)
+		long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int pt1_type, pt2_type;
@@ -321,7 +323,8 @@ done:
 }
 
 void hyperbolic_pair::unrank_line_L1(
-		long int &p1, long int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2,
+		long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -416,7 +419,8 @@ void hyperbolic_pair::unrank_line_L1(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L1(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line_L1(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -529,7 +533,8 @@ long int hyperbolic_pair::rank_line_L1(long int p1, long int p2, int verbose_lev
 }
 
 void hyperbolic_pair::unrank_line_L2(
-		long int &p1, long int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2,
+		long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -671,7 +676,8 @@ void hyperbolic_pair::unrank_line_L2(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L2(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line_L2(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -906,7 +912,8 @@ long int hyperbolic_pair::rank_line_L2(long int p1, long int p2, int verbose_lev
 }
 
 void hyperbolic_pair::unrank_line_L3(
-		long int &p1, long int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2,
+		long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -990,7 +997,8 @@ void hyperbolic_pair::unrank_line_L3(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L3(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line_L3(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1112,7 +1120,8 @@ long int hyperbolic_pair::rank_line_L3(long int p1, long int p2, int verbose_lev
 }
 
 void hyperbolic_pair::unrank_line_L4(
-		long int &p1, long int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2,
+		long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1194,7 +1203,8 @@ void hyperbolic_pair::unrank_line_L4(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L4(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line_L4(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1313,7 +1323,8 @@ long int hyperbolic_pair::rank_line_L4(long int p1, long int p2, int verbose_lev
 }
 
 void hyperbolic_pair::unrank_line_L5(
-		long int &p1, long int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2,
+		long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1333,7 +1344,8 @@ void hyperbolic_pair::unrank_line_L5(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L5(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line_L5(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int index;
@@ -1353,7 +1365,8 @@ long int hyperbolic_pair::rank_line_L5(long int p1, long int p2, int verbose_lev
 }
 
 void hyperbolic_pair::unrank_line_L6(
-		long int &p1, long int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2,
+		long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1373,7 +1386,8 @@ void hyperbolic_pair::unrank_line_L6(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L6(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line_L6(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int index;
@@ -1393,7 +1407,8 @@ long int hyperbolic_pair::rank_line_L6(long int p1, long int p2, int verbose_lev
 }
 
 void hyperbolic_pair::unrank_line_L7(
-		long int &p1, long int &p2, long int index, int verbose_level)
+		long int &p1, long int &p2,
+		long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1413,7 +1428,8 @@ void hyperbolic_pair::unrank_line_L7(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L7(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line_L7(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int index;
@@ -1436,7 +1452,8 @@ long int hyperbolic_pair::rank_line_L7(long int p1, long int p2, int verbose_lev
 void hyperbolic_pair::hyperbolic_canonical_points_of_line(
 	int line_type,
 	long int pt1, long int pt2,
-	long int &cpt1, long int &cpt2, int verbose_level)
+	long int &cpt1, long int &cpt2,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1470,7 +1487,8 @@ void hyperbolic_pair::hyperbolic_canonical_points_of_line(
 }
 
 void hyperbolic_pair::canonical_points_L1(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int a, b, c, d, lambda1, lambda2, i;
 
@@ -1510,7 +1528,8 @@ void hyperbolic_pair::canonical_points_L1(
 }
 
 void hyperbolic_pair::canonical_points_L2(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int a, b, c, d, lambda, i;
 	long int p1, p2;
@@ -1566,7 +1585,8 @@ void hyperbolic_pair::canonical_points_L2(
 }
 
 void hyperbolic_pair::canonical_points_L3(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int a, b, c, d, lambda, i;
 
@@ -1610,7 +1630,8 @@ void hyperbolic_pair::canonical_points_L3(
 }
 
 void hyperbolic_pair::canonical_points_L4(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int a, b, c, d, lambda, i;
 
@@ -1654,26 +1675,30 @@ void hyperbolic_pair::canonical_points_L4(
 }
 
 void hyperbolic_pair::canonical_points_L5(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	cpt1 = pt1;
 	cpt2 = pt2;
 }
 
 void hyperbolic_pair::canonical_points_L6(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	canonical_points_L3(pt1, pt2, cpt1, cpt2);
 }
 
 void hyperbolic_pair::canonical_points_L7(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	canonical_points_L4(pt1, pt2, cpt1, cpt2);
 }
 
 int hyperbolic_pair::hyperbolic_line_type_given_point_types(
-		long int pt1, long int pt2, int pt1_type, int pt2_type)
+		long int pt1, long int pt2,
+		int pt1_type, int pt2_type)
 {
 	if (pt1_type == 1) {
 		if (pt2_type == 1) {
@@ -1927,7 +1952,8 @@ void hyperbolic_pair::find_root_hyperbolic_xyz(
 				}
 			}
 		}
-		cout << "hyperbolic_pair::find_root_hyperbolic_xyz error: y is zero vector" << endl;
+		cout << "hyperbolic_pair::find_root_hyperbolic_xyz "
+				"error: y is zero vector" << endl;
 	}
 	if (f_vv) {
 		cout << "detected y[1] is nonzero" << endl;

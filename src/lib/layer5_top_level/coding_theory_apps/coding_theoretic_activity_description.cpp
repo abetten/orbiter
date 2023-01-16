@@ -27,18 +27,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	//std::string general_code_binary_label;
 	//std::string general_code_binary_text;
 
-#if 0
-	f_code_diagram = FALSE;
-	//std::string code_diagram_label;
-	//std::string code_diagram_codewords_text;
-	code_diagram_n = 0;
-
-	f_code_diagram_from_file = FALSE;
-	//std::string code_diagram_from_file_label;
-	//std::string code_diagram_from_file_codewords_fname;
-	code_diagram_from_file_n = 0;
-#endif
-
 	f_encode_text_5bits = FALSE;
 	//encode_text_5bits_input;
 	//encode_text_5bits_fname;
@@ -95,6 +83,8 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_metric_balls = FALSE;
 	radius_of_metric_ball = 0;
 
+	f_Hamming_space_distance_matrix = FALSE;
+	Hamming_space_distance_matrix_n = 0;
 
 
 
@@ -122,11 +112,6 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	//std::string crc_encode_file_based_fname_out;
 	//std::string crc_encode_file_based_crc_type;
 	crc_encode_file_based_block_length = 0;
-
-#if 0
-	f_crc_new_file_based = FALSE;
-	//std::string crc_new_file_based_fname;
-#endif
 
 	f_find_CRC_polynomials = FALSE;
 	find_CRC_polynomials_nb_errors = 0;
@@ -180,31 +165,6 @@ int coding_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-code_diagram") == 0) {
-			f_code_diagram = TRUE;
-			code_diagram_label.assign(argv[++i]);
-			code_diagram_codewords_text.assign(argv[++i]);
-			code_diagram_n = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-code_diagram " << code_diagram_label
-						<< " " << code_diagram_codewords_text
-						<< " " << code_diagram_n << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-code_diagram_from_file") == 0) {
-			f_code_diagram_from_file = TRUE;
-			code_diagram_from_file_label.assign(argv[++i]);
-			code_diagram_from_file_codewords_fname.assign(argv[++i]);
-			code_diagram_from_file_n = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-code_diagram_from_file " << code_diagram_from_file_label
-						<< " " << code_diagram_from_file_codewords_fname
-						<< " " << code_diagram_from_file_n << endl;
-			}
-		}
-#endif
-
 		else if (ST.stringcmp(argv[i], "-encode_text_5bits") == 0) {
 			f_encode_text_5bits = TRUE;
 			encode_text_5bits_input.assign(argv[++i]);
@@ -360,8 +320,15 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-
-
+		else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
+			f_Hamming_space_distance_matrix = TRUE;
+			Hamming_space_distance_matrix_n = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-Hamming_space_distance_matrix "
+					<< " " << Hamming_space_distance_matrix_n
+					<< endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-crc32") == 0) {
@@ -418,18 +385,6 @@ int coding_theoretic_activity_description::read_arguments(
 						<< crc_encode_file_based_block_length << endl;
 			}
 		}
-
-#if 0
-		else if (ST.stringcmp(argv[i], "-crc_new_file_based") == 0) {
-			f_crc_new_file_based = TRUE;
-			crc_new_file_based_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-crc_new_file_based "
-						<< crc_new_file_based_fname
-						<< endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-find_CRC_polynomials") == 0) {
 			f_find_CRC_polynomials = TRUE;
@@ -509,18 +464,6 @@ void coding_theoretic_activity_description::print()
 				<< " " << general_code_binary_text
 				<< endl;
 	}
-#if 0
-	if (f_code_diagram) {
-		cout << "-code_diagram " << code_diagram_label
-				<< " " << code_diagram_codewords_text
-				<< " " << code_diagram_n << endl;
-	}
-	if (f_code_diagram_from_file) {
-		cout << "-code_diagram_from_file " << code_diagram_from_file_label
-				<< " " << code_diagram_from_file_codewords_fname
-				<< " " << code_diagram_from_file_n << endl;
-	}
-#endif
 
 	if (f_encode_text_5bits) {
 		cout << "-encode_text_5bits " << encode_text_5bits_input << " "
@@ -602,6 +545,11 @@ void coding_theoretic_activity_description::print()
 			<< " " << radius_of_metric_ball
 			<< endl;
 	}
+	if (f_Hamming_space_distance_matrix) {
+		cout << "-Hamming_space_distance_matrix "
+			<< " " << Hamming_space_distance_matrix_n
+			<< endl;
+	}
 
 
 
@@ -629,13 +577,6 @@ void coding_theoretic_activity_description::print()
 				<< crc_encode_file_based_crc_type << " "
 				<< crc_encode_file_based_block_length << endl;
 	}
-#if 0
-	if (f_crc_new_file_based) {
-		cout << "-crc_new_file_based "
-				<< crc_new_file_based_fname
-				<< endl;
-	}
-#endif
 	if (f_find_CRC_polynomials) {
 		cout << "-find_CRC_polynomials "
 				<< " " << find_CRC_polynomials_nb_errors

@@ -866,7 +866,7 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 	return l;
 }
 
-void elliptic_curve::latex_points_with_order(ostream &ost)
+void elliptic_curve::latex_points_with_order(std::ostream &ost)
 {
 	vector<int> Ord;
 	int *p;
@@ -899,7 +899,7 @@ void elliptic_curve::latex_points_with_order(ostream &ost)
 }
 
 
-void elliptic_curve::latex_order_of_all_points(ostream &ost)
+void elliptic_curve::latex_order_of_all_points(std::ostream &ost)
 {
 	vector<int> Ord;
 	int *p;

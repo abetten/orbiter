@@ -29,7 +29,7 @@ public:
 	int epsilon; // the type of the quadric (0, 1 or -1)
 	int n; // algebraic dimension
 	int q; // field order
-	int target_size;
+	int target_size; // q + 1
 	int degree; // number of points on the quadric
 
 	std::string prefix; // "BLT_q%d"
@@ -43,11 +43,22 @@ public:
 
 	geometry::projective_space *P;
 	geometry::grassmann *G53;
+	geometry::grassmann *G54;
+	geometry::grassmann *G43;
+
 
 	blt_set_domain();
 	~blt_set_domain();
 	void init(orthogonal *O,
 		int verbose_level);
+	long int intersection_of_hyperplanes(
+			long int plane_rk1, long int plane_rk2,
+			int verbose_level);
+	long int compute_tangent_hyperplane(
+		long int pt,
+		int verbose_level);
+	void report_given_point_set(std::ostream &ost,
+			long int *Pts, int nb_pts, int verbose_level);
 	void compute_adjacency_list_fast(int first_point_of_starter,
 		long int *points, int nb_points, int *point_color,
 		data_structures::bitvector *&Bitvec,
@@ -216,47 +227,75 @@ public:
 
 
 	// hyperbolic_pair_hyperbolic.cpp:
-	long int hyperbolic_type_and_index_to_point_rk(long int type,
+	long int hyperbolic_type_and_index_to_point_rk(
+			long int type,
 			long int index, int verbose_level);
-	void hyperbolic_point_rk_to_type_and_index(long int rk,
+	void hyperbolic_point_rk_to_type_and_index(
+			long int rk,
 			long int &type, long int &index);
 
 	void hyperbolic_unrank_line(long int &p1, long int &p2,
 		long int rk, int verbose_level);
-	long int hyperbolic_rank_line(long int p1, long int p2, int verbose_level);
+	long int hyperbolic_rank_line(long int p1, long int p2,
+			int verbose_level);
 
-	void unrank_line_L1(long int &p1, long int &p2, long int index, int verbose_level);
-	long int rank_line_L1(long int p1, long int p2, int verbose_level);
-	void unrank_line_L2(long int &p1, long int &p2, long int index, int verbose_level);
-	long int rank_line_L2(long int p1, long int p2, int verbose_level);
-	void unrank_line_L3(long int &p1, long int &p2, long int index, int verbose_level);
-	long int rank_line_L3(long int p1, long int p2, int verbose_level);
-	void unrank_line_L4(long int &p1, long int &p2, long int index, int verbose_level);
-	long int rank_line_L4(long int p1, long int p2, int verbose_level);
-	void unrank_line_L5(long int &p1, long int &p2, long int index, int verbose_level);
-	long int rank_line_L5(long int p1, long int p2, int verbose_level);
-	void unrank_line_L6(long int &p1, long int &p2, long int index, int verbose_level);
-	long int rank_line_L6(long int p1, long int p2, int verbose_level);
-	void unrank_line_L7(long int &p1, long int &p2, long int index, int verbose_level);
-	long int rank_line_L7(long int p1, long int p2, int verbose_level);
+	void unrank_line_L1(long int &p1, long int &p2,
+			long int index, int verbose_level);
+	long int rank_line_L1(long int p1, long int p2,
+			int verbose_level);
+	void unrank_line_L2(long int &p1, long int &p2,
+			long int index, int verbose_level);
+	long int rank_line_L2(long int p1, long int p2,
+			int verbose_level);
+	void unrank_line_L3(long int &p1, long int &p2,
+			long int index, int verbose_level);
+	long int rank_line_L3(long int p1, long int p2,
+			int verbose_level);
+	void unrank_line_L4(long int &p1, long int &p2,
+			long int index, int verbose_level);
+	long int rank_line_L4(long int p1, long int p2,
+			int verbose_level);
+	void unrank_line_L5(long int &p1, long int &p2,
+			long int index, int verbose_level);
+	long int rank_line_L5(long int p1, long int p2,
+			int verbose_level);
+	void unrank_line_L6(long int &p1, long int &p2,
+			long int index, int verbose_level);
+	long int rank_line_L6(long int p1, long int p2,
+			int verbose_level);
+	void unrank_line_L7(long int &p1, long int &p2,
+			long int index, int verbose_level);
+	long int rank_line_L7(long int p1, long int p2,
+			int verbose_level);
 
-	void hyperbolic_canonical_points_of_line(int line_type,
-			long int pt1, long int pt2, long int &cpt1, long int &cpt2,
+	void hyperbolic_canonical_points_of_line(
+			int line_type,
+			long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2,
 		int verbose_level);
 
-	void canonical_points_L1(long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	void canonical_points_L2(long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	void canonical_points_L3(long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	void canonical_points_L4(long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	void canonical_points_L5(long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	void canonical_points_L6(long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	void canonical_points_L7(long int pt1, long int pt2, long int &cpt1, long int &cpt2);
-	int hyperbolic_line_type_given_point_types(long int pt1, long int pt2,
+	void canonical_points_L1(long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
+	void canonical_points_L2(long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
+	void canonical_points_L3(long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
+	void canonical_points_L4(long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
+	void canonical_points_L5(long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
+	void canonical_points_L6(long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
+	void canonical_points_L7(long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
+	int hyperbolic_line_type_given_point_types(
+			long int pt1, long int pt2,
 		int pt1_type, int pt2_type);
 	int hyperbolic_decide_P1(long int pt1, long int pt2);
 	int hyperbolic_decide_P2(long int pt1, long int pt2);
 	int hyperbolic_decide_P3(long int pt1, long int pt2);
-	int find_root_hyperbolic(long int rk2, int m, int verbose_level);
+	int find_root_hyperbolic(
+			long int rk2, int m, int verbose_level);
 	// m = Witt index
 	void find_root_hyperbolic_xyz(long int rk2, int m,
 		int *x, int *y, int *z, int verbose_level);
@@ -313,7 +352,8 @@ public:
 
 	void parabolic_unrank_line(long int &p1, long int &p2,
 			long int rk, int verbose_level);
-	long int parabolic_rank_line(long int p1, long int p2, int verbose_level);
+	long int parabolic_rank_line(long int p1, long int p2,
+			int verbose_level);
 	void parabolic_unrank_line_L1_even(long int &p1, long int &p2,
 			long int index, int verbose_level);
 	long int parabolic_rank_line_L1_even(long int p1, long int p2,
@@ -332,13 +372,16 @@ public:
 		int verbose_level);
 	void parabolic_unrank_line_L3(long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L3(long int p1, long int p2, int verbose_level);
+	long int parabolic_rank_line_L3(long int p1, long int p2,
+			int verbose_level);
 	void parabolic_unrank_line_L4(long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L4(long int p1, long int p2, int verbose_level);
+	long int parabolic_rank_line_L4(long int p1, long int p2,
+			int verbose_level);
 	void parabolic_unrank_line_L5(long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L5(long int p1, long int p2, int verbose_level);
+	long int parabolic_rank_line_L5(long int p1, long int p2,
+			int verbose_level);
 	void parabolic_unrank_line_L6(long int &p1, long int &p2,
 			long int index, int verbose_level);
 	long int parabolic_rank_line_L6(long int p1, long int p2,
@@ -351,7 +394,8 @@ public:
 			long int index, int verbose_level);
 	long int parabolic_rank_line_L8(long int p1, long int p2,
 		int verbose_level);
-	long int parabolic_line_type_given_point_types(long int pt1, long int pt2,
+	long int parabolic_line_type_given_point_types(
+			long int pt1, long int pt2,
 			long int pt1_type, long int pt2_type, int verbose_level);
 	int parabolic_decide_P11_odd(long int pt1, long int pt2);
 	int parabolic_decide_P22_even(long int pt1, long int pt2);
@@ -367,18 +411,25 @@ public:
 		int line_type, long int pt1, long int pt2,
 		long int &cpt1, long int &cpt2, int verbose_level);
 	void parabolic_canonical_points_L1_even(
-			long int pt1, long int pt2, long int &cpt1, long int &cpt2);
+			long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
 	void parabolic_canonical_points_separate_P5(
-			long int pt1, long int pt2, long int &cpt1, long int &cpt2);
+			long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
 	void parabolic_canonical_points_L3(
-			long int pt1, long int pt2, long int &cpt1, long int &cpt2);
+			long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
 	void parabolic_canonical_points_L7(
-			long int pt1, long int pt2, long int &cpt1, long int &cpt2);
+			long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
 	void parabolic_canonical_points_L8(
-			long int pt1, long int pt2, long int &cpt1, long int &cpt2);
+			long int pt1, long int pt2,
+			long int &cpt1, long int &cpt2);
 	void parabolic_point_normalize(int *v, int stride, int n);
-	void parabolic_normalize_point_wrt_subspace(int *v, int stride);
-	void parabolic_point_properties(int *v, int stride, int n,
+	void parabolic_normalize_point_wrt_subspace(
+			int *v, int stride);
+	void parabolic_point_properties(
+			int *v, int stride, int n,
 		int &f_start_with_one, int &value_middle, int &value_end,
 		int verbose_level);
 	int parabolic_is_middle_dependent(int *vec1, int *vec2);
@@ -391,13 +442,17 @@ public:
 	void unrank_line(long int &p1, long int &p2,
 		long int index, int verbose_level);
 	long int rank_line(long int p1, long int p2, int verbose_level);
-	int line_type_given_point_types(long int pt1, long int pt2,
+	int line_type_given_point_types(
+			long int pt1, long int pt2,
 			long int pt1_type, long int pt2_type);
-	long int type_and_index_to_point_rk(long int type,
+	long int type_and_index_to_point_rk(
+			long int type,
 			long int index, int verbose_level);
-	void point_rk_to_type_and_index(long int rk,
+	void point_rk_to_type_and_index(
+			long int rk,
 			long int &type, long int &index, int verbose_level);
-	void canonical_points_of_line(int line_type, long int pt1, long int pt2,
+	void canonical_points_of_line(
+			int line_type, long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2, int verbose_level);
 	void unrank_S(int *v, int stride, int m, int rk);
 	long int rank_S(int *v, int stride, int m);
@@ -433,27 +488,42 @@ public:
 
 	orthogonal_indexing();
 	~orthogonal_indexing();
-	void init(quadratic_form *Quadratic_form, int verbose_level);
+	void init(quadratic_form *Quadratic_form,
+			int verbose_level);
 	void Q_epsilon_unrank_private(
 		int *v, int stride, int epsilon, int k,
-		int c1, int c2, int c3, long int a, int verbose_level);
+		int c1, int c2, int c3, long int a,
+		int verbose_level);
 	long int Q_epsilon_rank_private(
 		int *v, int stride, int epsilon, int k,
-		int c1, int c2, int c3, int verbose_level);
+		int c1, int c2, int c3,
+		int verbose_level);
 	//void init_hash_table_parabolic(int k, int verbose_level);
-	void Q_unrank(int *v, int stride, int k, long int a, int verbose_level);
-	long int Q_rank(int *v, int stride, int k, int verbose_level);
-	void Q_unrank_directly(int *v, int stride, int k, long int a, int verbose_level);
+	void Q_unrank(int *v,
+			int stride, int k, long int a,
+			int verbose_level);
+	long int Q_rank(int *v,
+			int stride, int k, int verbose_level);
+	void Q_unrank_directly(int *v,
+			int stride, int k, long int a,
+			int verbose_level);
 		// parabolic quadric
 		// k = projective dimension, must be even
-	long int Q_rank_directly(int *v, int stride, int k, int verbose_level);
-	void Qplus_unrank(int *v, int stride, int k, long int a, int verbose_level);
+	long int Q_rank_directly(int *v,
+			int stride, int k,
+			int verbose_level);
+	void Qplus_unrank(int *v,
+			int stride, int k, long int a,
+			int verbose_level);
 		// hyperbolic quadric
 		// k = projective dimension, must be odd
-	long int Qplus_rank(int *v, int stride, int k, int verbose_level);
+	long int Qplus_rank(int *v,
+			int stride, int k,
+			int verbose_level);
 	void Qminus_unrank(int *v,
 			int stride, int k, long int a,
-			int c1, int c2, int c3, int verbose_level);
+			int c1, int c2, int c3,
+			int verbose_level);
 		// elliptic quadric
 		// k = projective dimension, must be odd
 		// the form is
@@ -467,8 +537,10 @@ public:
 	void N_rank(int *v, int stride, int n, long int &a);
 	void N1_unrank(int *v, int stride, int n, long int a);
 	void N1_rank(int *v, int stride, int n, long int &a);
-	void Sbar_unrank(int *v, int stride, int n, long int a, int verbose_level);
-	void Sbar_rank(int *v, int stride, int n, long int &a, int verbose_level);
+	void Sbar_unrank(int *v,
+			int stride, int n, long int a, int verbose_level);
+	void Sbar_rank(int *v,
+			int stride, int n, long int &a, int verbose_level);
 	void Nbar_unrank(int *v, int stride, int n, long int a);
 	void Nbar_rank(int *v, int stride, int n, long int &a);
 
@@ -487,15 +559,24 @@ public:
 	orthogonal_global();
 	~orthogonal_global();
 
-	void create_FTWKB_BLT_set(orthogonal *O, long int *set, int *ABC, int verbose_level);
-	void create_K1_BLT_set(orthogonal *O, long int *set, int *ABC, int verbose_level);
-	void create_K2_BLT_set(orthogonal *O, long int *set, int *ABC, int verbose_level);
-	void create_LP_37_72_BLT_set(orthogonal *O, long int *set, int verbose_level);
-	void create_LP_37_4a_BLT_set(orthogonal *O, long int *set, int verbose_level);
-	void create_LP_37_4b_BLT_set(orthogonal *O, long int *set, int verbose_level);
-	void create_Law_71_BLT_set(orthogonal *O, long int *set, int verbose_level);
-	int BLT_test_full(orthogonal *O, int size, long int *set, int verbose_level);
-	int BLT_test(orthogonal *O, int size, long int *set, int verbose_level);
+	void create_FTWKB_BLT_set(orthogonal *O,
+			long int *set, int *ABC, int verbose_level);
+	void create_K1_BLT_set(orthogonal *O,
+			long int *set, int *ABC, int verbose_level);
+	void create_K2_BLT_set(orthogonal *O,
+			long int *set, int *ABC, int verbose_level);
+	void create_LP_37_72_BLT_set(orthogonal *O,
+			long int *set, int verbose_level);
+	void create_LP_37_4a_BLT_set(orthogonal *O,
+			long int *set, int verbose_level);
+	void create_LP_37_4b_BLT_set(orthogonal *O,
+			long int *set, int verbose_level);
+	void create_Law_71_BLT_set(orthogonal *O,
+			long int *set, int verbose_level);
+	int BLT_test_full(orthogonal *O, int size,
+			long int *set, int verbose_level);
+	int BLT_test(orthogonal *O, int size,
+			long int *set, int verbose_level);
 	int collinearity_test(orthogonal *O,
 			int size, long int *set, int verbose_level);
 	void plane_invariant(orthogonal *O,
@@ -503,6 +584,21 @@ public:
 		int &nb_planes, int *&intersection_matrix,
 		int &Block_size, int *&Blocks,
 		int verbose_level);
+	void create_Fisher_BLT_set(
+			long int *Fisher_BLT, int *ABC,
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
+			int verbose_level);
+	void create_Linear_BLT_set(
+			long int *BLT, int *ABC,
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
+			int verbose_level);
+	void create_Mondello_BLT_set(
+			long int *BLT, int *ABC,
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
+			int verbose_level);
 
 
 };
@@ -521,7 +617,8 @@ public:
 
 	orthogonal *O;
 
-	quadratic_form *Quadratic_form_stack; // hyperbolic quadratic forms for i=1,...,m
+	quadratic_form *Quadratic_form_stack;
+		// a stack of hyperbolic quadratic forms for i=1,...,m
 
 	int *find_root_x, *find_root_y, *find_root_z;
 
@@ -535,11 +632,14 @@ public:
 	~orthogonal_group();
 	void init(orthogonal *O, int verbose_level);
 
-	long int find_root(long int rk2, int verbose_level);
-	void Siegel_map_between_singular_points(int *T,
+	long int find_root(
+			long int rk2, int verbose_level);
+	void Siegel_map_between_singular_points(
+			int *T,
 			long int rk_from, long int rk_to,
 			long int root, int verbose_level);
-	void Siegel_map_between_singular_points_hyperbolic(int *T,
+	void Siegel_map_between_singular_points_hyperbolic(
+			int *T,
 		long int rk_from, long int rk_to,
 		long int root, int m,
 		int verbose_level);
@@ -566,9 +666,12 @@ public:
 		int verbose_level);
 		// Makes an n x n matrix only.
 		// Does not put a semilinear component.
-	void create_random_semisimilarity(int *Mtx, int verbose_level);
-	void create_random_similarity(int *Mtx, int verbose_level);
-		// Makes an n x n matrix only. Does not put a semilinear component.
+	void create_random_semisimilarity(
+			int *Mtx, int verbose_level);
+	void create_random_similarity(
+			int *Mtx, int verbose_level);
+		// Makes an n x n matrix only.
+		// Does not put a semilinear component.
 	void create_random_orthogonal_reflection(int *Mtx,
 		int verbose_level);
 		// Makes an n x n matrix only.
@@ -583,21 +686,28 @@ public:
 		// is called Siegel transform (see Taylor p. 148)
 		// Here Q is the quadratic form and
 		// \beta is the corresponding bilinear form
-	void Siegel_move_forward_by_index(long int rk1, long int rk2,
+	void Siegel_move_forward_by_index(
+			long int rk1, long int rk2,
 		int *v, int *w, int verbose_level);
-	void Siegel_move_backward_by_index(long int rk1, long int rk2,
+	void Siegel_move_backward_by_index(
+			long int rk1, long int rk2,
 		int *w, int *v, int verbose_level);
-	void Siegel_move_forward(int *v1, int *v2, int *v3, int *v4,
+	void Siegel_move_forward(
+			int *v1, int *v2, int *v3, int *v4,
 		int verbose_level);
-	void Siegel_move_backward(int *v1, int *v2, int *v3, int *v4,
+	void Siegel_move_backward(
+			int *v1, int *v2, int *v3, int *v4,
 		int verbose_level);
 	void move_points_by_ranks_in_place(
 		long int pt_from, long int pt_to,
-		int nb, long int *ranks, int verbose_level);
-	void move_points_by_ranks(long int pt_from, long int pt_to,
+		int nb, long int *ranks,
+		int verbose_level);
+	void move_points_by_ranks(
+			long int pt_from, long int pt_to,
 		int nb, long int *input_ranks, long int *output_ranks,
 		int verbose_level);
-	void move_points(long int pt_from, long int pt_to,
+	void move_points(
+			long int pt_from, long int pt_to,
 		int nb, int *input_coords, int *output_coords,
 		int verbose_level);
 	void test_Siegel(int index, int verbose_level);
@@ -648,48 +758,68 @@ public:
 
 	orthogonal();
 	~orthogonal();
-	void init(int epsilon, int n, field_theory::finite_field *F,
+	void init(int epsilon, int n,
+			field_theory::finite_field *F,
 		int verbose_level);
 	void allocate();
 	int evaluate_bilinear_form_by_rank(int i, int j);
-	void points_on_line_by_line_rank(long int line_rk,
-		long int *line, int verbose_level);
+	void points_on_line_by_line_rank(
+			long int line_rk,
+		long int *line,
+		int verbose_level);
 	void points_on_line(long int pi, long int pj,
 			long int *line, int verbose_level);
-	void points_on_line_by_coordinates(long int pi, long int pj,
+	void points_on_line_by_coordinates(
+			long int pi, long int pj,
 		int *pt_coords, int verbose_level);
 	void lines_on_point(long int pt,
-		long int *line_pencil_point_ranks, int verbose_level);
-	void lines_on_point_by_line_rank_must_fit_into_int(long int pt,
-			int *line_pencil_line_ranks, int verbose_level);
-	void lines_on_point_by_line_rank(long int pt,
-		long int *line_pencil_line_ranks, int verbose_level);
-	void make_initial_partition(data_structures::partitionstack &S,
+		long int *line_pencil_point_ranks,
+		int verbose_level);
+	void lines_on_point_by_line_rank_must_fit_into_int(
+			long int pt,
+			int *line_pencil_line_ranks,
+			int verbose_level);
+	void lines_on_point_by_line_rank(
+			long int pt,
+		long int *line_pencil_line_ranks,
+		int verbose_level);
+	void make_initial_partition(
+			data_structures::partitionstack &S,
 		int verbose_level);
 	void point_to_line_map(int size,
 		long int *point_ranks, int *&line_vector,
 		int verbose_level);
-	int test_if_minimal_on_line(int *v1, int *v2, int *v3);
-	void find_minimal_point_on_line(int *v1, int *v2, int *v3);
+	int test_if_minimal_on_line(
+			int *v1, int *v2, int *v3);
+	void find_minimal_point_on_line(
+			int *v1, int *v2, int *v3);
 	void zero_vector(int *u, int stride, int len);
 	int is_zero_vector(int *u, int stride, int len);
-	void change_form_value(int *u, int stride, int m, int multiplier);
-	void scalar_multiply_vector(int *u, int stride, int len, int multiplier);
+	void change_form_value(int *u,
+			int stride, int m, int multiplier);
+	void scalar_multiply_vector(int *u,
+			int stride, int len, int multiplier);
 	int last_non_zero_entry(int *u, int stride, int len);
 	void normalize_point(int *v, int stride);
 	int is_ending_dependent(int *vec1, int *vec2);
 	void Gauss_step(int *v1, int *v2, int len, int idx);
 		// afterwards: v2[idx] = 0 and v2,v1
 		// span the same space as before
-	void perp(long int pt, long int *Perp_without_pt, int &sz,
+	void perp(long int pt,
+			long int *Perp_without_pt, int &sz,
 		int verbose_level);
-	void perp_of_two_points(long int pt1, long int pt2, long int *Perp,
+	void perp_of_two_points(long int pt1,
+			long int pt2, long int *Perp,
 		int &sz, int verbose_level);
-	void perp_of_k_points(long int *pts, int nb_pts, long int *&Perp,
+	void perp_of_k_points(long int *pts,
+			int nb_pts, long int *&Perp,
 		int &sz, int verbose_level);
-	int triple_is_collinear(long int pt1, long int pt2, long int pt3);
-	void intersection_with_subspace(int *Basis, int k,
-			long int *&the_points, int &nb_points, int verbose_level);
+	int triple_is_collinear(
+			long int pt1, long int pt2, long int pt3);
+	void intersection_with_subspace(
+			int *Basis, int k,
+			long int *&the_points, int &nb_points,
+			int verbose_level);
 
 
 
@@ -699,7 +829,8 @@ public:
 	void report_points_by_type(std::ostream &ost, int verbose_level);
 	void list_points_of_given_type(int t,
 		int verbose_level);
-	void report_points_of_given_type(std::ostream &ost, int t, int verbose_level);
+	void report_points_of_given_type(std::ostream &ost,
+			int t, int verbose_level);
 	void report_points(std::ostream &ost, int verbose_level);
 	void report_given_point_set(std::ostream &ost,
 			long int *Pts, int nb_pts, int verbose_level);
@@ -720,6 +851,79 @@ public:
 
 
 
+
+};
+
+
+// #############################################################################
+// quadratic_form_list_coding.cpp
+// #############################################################################
+
+//! a nondegenerate quadratic form
+
+
+class quadratic_form_list_coding {
+
+public:
+
+	field_theory::finite_field *FQ;
+	field_theory::finite_field *Fq;
+
+	int *components;
+	int *embedding;
+	int *pair_embedding;
+		// data computed by F.subfield_embedding_2dimensional
+
+	int alpha;
+	int T_alpha;
+	int N_alpha;
+
+
+	int nb_terms;
+	int *form_i;
+	int *form_j;
+	int *form_coeff;
+	int *Gram;
+
+	int r_nb_terms;
+	int *r_form_i;
+	int *r_form_j;
+	int *r_form_coeff;
+	int *r_Gram;
+
+	int rr_nb_terms;
+	int *rr_form_i;
+	int *rr_form_j;
+	int *rr_form_coeff;
+	int *rr_Gram;
+
+	int hyperbolic_basis[4 * 4];
+	int hyperbolic_basis_inverse[4 * 4];
+	int basis[4 * 4];
+	int basis_subspace[2 * 2];
+
+
+	int *M;
+
+
+
+	quadratic_form_list_coding();
+	~quadratic_form_list_coding();
+	void init(field_theory::finite_field *Fq,
+			field_theory::finite_field *FQ,
+			int f_sum_of_squares, int verbose_level);
+	void print_quadratic_form_list_coded(
+			int form_nb_terms,
+		int *form_i, int *form_j, int *form_coeff);
+	void make_Gram_matrix_from_list_coded_quadratic_form(
+		int n, field_theory::finite_field &F,
+		int nb_terms, int *form_i, int *form_j,
+		int *form_coeff, int *Gram);
+	void add_term(int n,
+			field_theory::finite_field &F,
+		int &nb_terms, int *form_i, int *form_j, int *form_coeff,
+		int *Gram,
+		int i, int j, int coeff);
 
 };
 
@@ -748,7 +952,8 @@ public:
 	int form_c1, form_c2, form_c3;
 
 	// for minus type, the form is
-	// \sum_{i=0}^m x_{2i}x_{2i+1} + c1 x_{2m}^2 + c2 x_{2m} x_{2m+1} + c3 x_{2m+1}^2
+	// \sum_{i=0}^m x_{2i}x_{2i+1}
+	// + c1 x_{2m}^2 + c2 x_{2m} x_{2m+1} + c3 x_{2m+1}^2
 	// where m is the Witt index.
 
 
@@ -770,15 +975,20 @@ public:
 	quadratic_form();
 	~quadratic_form();
 	void init(int epsilon, int n,
-			field_theory::finite_field *F, int verbose_level);
+			field_theory::finite_field *F,
+			int verbose_level);
 	void init_form_and_Gram_matrix(int verbose_level);
 	void make_Gram_matrix(int verbose_level);
 
 	int evaluate_quadratic_form(int *v, int stride);
-	int evaluate_hyperbolic_quadratic_form(int *v, int stride);
-	int evaluate_hyperbolic_quadratic_form_with_m(int *v, int stride, int m);
-	int evaluate_parabolic_quadratic_form(int *v, int stride);
-	int evaluate_elliptic_quadratic_form(int *v, int stride);
+	int evaluate_hyperbolic_quadratic_form(
+			int *v, int stride);
+	int evaluate_hyperbolic_quadratic_form_with_m(
+			int *v, int stride, int m);
+	int evaluate_parabolic_quadratic_form(
+			int *v, int stride);
+	int evaluate_elliptic_quadratic_form(
+			int *v, int stride);
 
 	int evaluate_bilinear_form(int *u, int *v, int stride);
 	int evaluate_hyperbolic_bilinear_form(
@@ -787,7 +997,8 @@ public:
 			int *u, int *v, int stride, int m);
 	int evaluate_bilinear_form_Gram_matrix(int *u, int *v);
 
-	void report_quadratic_form(std::ostream &ost, int verbose_level);
+	void report_quadratic_form(
+			std::ostream &ost, int verbose_level);
 	long int find_root(int rk2, int verbose_level);
 	void Siegel_Transformation(
 		int *M, int *v, int *u, int verbose_level);
@@ -822,79 +1033,76 @@ public:
 
 	quadratic_form *Quadratic_form;
 
+	quadratic_form_list_coding *Quadratic_form_list_coding;
 
 	int q;
 	int Q;
-	int alpha;
-	int T_alpha;
-	int N_alpha;
 
-	int nb_terms;
-	int *form_i;
-	int *form_j;
-	int *form_coeff;
-	int *Gram;
-
-	int r_nb_terms;
-	int *r_form_i;
-	int *r_form_j;
-	int *r_form_coeff;
-	int *r_Gram;
-
-	int rr_nb_terms;
-	int *rr_form_i;
-	int *rr_form_j;
-	int *rr_form_coeff;
-	int *rr_Gram;
-
-	int hyperbolic_basis[4 * 4];
-	int hyperbolic_basis_inverse[4 * 4];
-	int basis[4 * 4];
-	int basis_subspace[2 * 2];
-	int *M;
-
-	int *components;
-	int *embedding;
-	int *pair_embedding;
-		// data computed by F.subfield_embedding_2dimensional
 
 	unusual_model();
 	~unusual_model();
-	void setup(field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+	void setup(
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
 			int verbose_level);
 	void setup2(
-			field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
 			int f_sum_of_squares, int verbose_level);
-	void convert_to_ranks(int n, int *unusual_coordinates,
+	void convert_to_ranks(int n,
+			int *unusual_coordinates,
 		long int *ranks, int verbose_level);
-	void convert_from_ranks(int n, long int *ranks,
-		int *unusual_coordinates, int verbose_level);
-	long int convert_to_rank(int *unusual_coordinates, int verbose_level);
-	void convert_from_rank(long int rank, int *unusual_coordinates,
+	void convert_from_ranks(int n,
+			long int *ranks,
+		int *unusual_coordinates,
 		int verbose_level);
-	void convert_to_usual(int n, int *unusual_coordinates,
-		int *usual_coordinates, int verbose_level);
-	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC, int verbose_level);
-	void convert_from_usual(int n, int *usual_coordinates,
-		int *unusual_coordinates, int verbose_level);
-	void create_Linear_BLT_set(long int *BLT, int *ABC, int verbose_level);
-	void create_Mondello_BLT_set(long int *BLT, int *ABC, int verbose_level);
+	long int convert_to_rank(
+			int *unusual_coordinates,
+			int verbose_level);
+	void convert_from_rank(long int rank,
+			int *unusual_coordinates,
+		int verbose_level);
+	void convert_to_usual(int n,
+			int *unusual_coordinates,
+		int *usual_coordinates,
+		int verbose_level);
+	void create_Fisher_BLT_set(long int *Fisher_BLT,
+			int *ABC, int verbose_level);
+	void convert_from_usual(int n,
+			int *usual_coordinates,
+		int *unusual_coordinates,
+		int verbose_level);
+	void create_Linear_BLT_set(long int *BLT,
+			int *ABC, int verbose_level);
+	void create_Mondello_BLT_set(long int *BLT,
+			int *ABC, int verbose_level);
 	int N2(int a);
 	int T2(int a);
-	int evaluate_quadratic_form(int a, int b, int c, int verbose_level);
-	int bilinear_form(int a1, int b1, int c1, int a2, int b2, int c2,
+	int evaluate_quadratic_form(
+			int a, int b, int c,
+			int verbose_level);
+	int bilinear_form(
+			int a1, int b1, int c1,
+			int a2, int b2, int c2,
 		int verbose_level);
-	void print_coordinates_detailed_set(long int *set, int len);
-	void print_coordinates_detailed(long int pt, int cnt);
+	void print_coordinates_detailed_set(
+			long int *set, int len);
+	void print_coordinates_detailed(
+			long int pt, int cnt);
 	int build_candidate_set(orthogonal &O, int q,
 		int gamma, int delta, int m, long int *Set,
 		int f_second_half, int verbose_level);
-	int build_candidate_set_with_offset(orthogonal &O, int q,
-		int gamma, int delta, int offset, int m, long int *Set,
+	int build_candidate_set_with_offset(
+			orthogonal &O, int q,
+		int gamma, int delta, int offset,
+		int m, long int *Set,
 		int f_second_half, int verbose_level);
-	int build_candidate_set_with_or_without_test(orthogonal &O, int q,
-		int gamma, int delta, int offset, int m, long int *Set,
-		int f_second_half, int f_test, int verbose_level);
+	int build_candidate_set_with_or_without_test(
+			orthogonal &O, int q,
+		int gamma, int delta, int offset,
+		int m, long int *Set,
+		int f_second_half, int f_test,
+		int verbose_level);
 	int create_orbit_of_psi(orthogonal &O, int q,
 		int gamma, int delta, int m, long int *Set,
 		int f_test, int verbose_level);
@@ -905,10 +1113,12 @@ public:
 
 	void parse_4by4_matrix(int *M4,
 		int &a, int &b, int &c, int &d,
-		int &f_semi1, int &f_semi2, int &f_semi3, int &f_semi4);
+		int &f_semi1, int &f_semi2,
+		int &f_semi3, int &f_semi4);
 	void create_4by4_matrix(int *M4,
 		int a, int b, int c, int d,
-		int f_semi1, int f_semi2, int f_semi3, int f_semi4,
+		int f_semi1, int f_semi2,
+		int f_semi3, int f_semi4,
 		int verbose_level);
 	void print_2x2(int *v, int *f_semi);
 	void print_M5(orthogonal *O, int *M5);

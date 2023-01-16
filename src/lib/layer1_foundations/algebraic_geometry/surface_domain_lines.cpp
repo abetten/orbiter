@@ -442,7 +442,8 @@ void surface_domain::lines_meet3_and_skew3(
 	}
 }
 
-void surface_domain::perp_of_three_lines(long int *three_lines,
+void surface_domain::perp_of_three_lines(
+		long int *three_lines,
 		long int *&perp, int &perp_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1361,7 +1362,8 @@ int surface_domain::compute_rank_of_any_four(
 	return ret;
 }
 
-void surface_domain::rearrange_lines_according_to_a_given_double_six(long int *Lines,
+void surface_domain::rearrange_lines_according_to_a_given_double_six(
+		long int *Lines,
 		int *given_double_six,
 		long int *New_lines,
 		int verbose_level)
@@ -1629,7 +1631,8 @@ int surface_domain::intersection_of_four_lines_but_not_b6(int *Adj,
 	return a;
 }
 
-int surface_domain::intersection_of_five_lines(int *Adj,
+int surface_domain::intersection_of_five_lines(
+		int *Adj,
 	int *five_lines_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

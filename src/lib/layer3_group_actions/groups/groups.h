@@ -164,8 +164,6 @@ public:
 	int GL_wreath_Sym_n;
 
 
-	//int n;
-
 	int f_n;
 	int n;
 
@@ -173,9 +171,6 @@ public:
 
 	field_theory::finite_field *F;
 
-	// change input_q to string so that we can allow symbols:
-	//int input_q;
-	//std::string input_q;
 
 	int f_semilinear;
 	int f_special;
@@ -204,9 +199,6 @@ public:
 	int f_orthogonal_group;
 	int orthogonal_group_epsilon;
 
-	//int f_on_k_subspaces;
-	//int on_k_subspaces_k;
-
 	int f_on_tensors;
 	int f_on_rank_one_tensors;
 
@@ -216,9 +208,6 @@ public:
 	std::string subgroup_generators_label;
 
 	int f_Janko1;
-
-	//int f_restricted_action;
-	//std::string restricted_action_text;
 
 	int f_export_magma;
 
@@ -284,7 +273,8 @@ public:
 	void init_monomial_group(int verbose_level);
 	void init_diagonal_group(int verbose_level);
 	void init_singer_group(int singer_power, int verbose_level);
-	void init_singer_group_and_frobenius(int singer_power, int verbose_level);
+	void init_singer_group_and_frobenius(
+			int singer_power, int verbose_level);
 	void init_null_polarity_group(int verbose_level);
 	void init_borel_subgroup_upper(int verbose_level);
 	void init_identity_subgroup(int verbose_level);
@@ -458,6 +448,20 @@ public:
 	void write_as_magma_permutation_group(sims *S,
 			std::string &fname_base,
 			data_structures_groups::vector_ge *gens, int verbose_level);
+	void export_linear_code(
+			std::string &fname,
+			field_theory::finite_field *F,
+			int *genma, int n, int k,
+			int verbose_level);
+	void read_permutation_group(std::string &fname,
+		int degree, int *&gens, int &nb_gens, int &go,
+		int verbose_level);
+	void run_magma_file(std::string &fname, int verbose_level);
+	void normalizer_in_Sym_n(
+			std::string &fname_base,
+		int group_order, int *Table, int *gens, int nb_gens,
+		int *&N_gens, int &N_nb_gens, int &N_go,
+		int verbose_level);
 
 
 };

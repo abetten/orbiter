@@ -2469,7 +2469,7 @@ void action::init_automorphism_group_from_group_table(
 	int N_go;
 	ring_theory::longinteger_object go;
 	//int i;
-	orbiter_kernel_system::magma_interface Magma;
+	groups::magma_interface Magma;
 
 	if (f_v) {
 		cout << "action::init_automorphism_group_from_group_table" << endl;

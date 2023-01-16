@@ -30,7 +30,8 @@ unipoly_domain::unipoly_domain()
 	//std::string variable_name;
 }
 
-unipoly_domain::unipoly_domain(field_theory::finite_field *F)
+unipoly_domain::unipoly_domain(
+		field_theory::finite_field *F)
 {
 	unipoly_domain::F = F;
 	variable_name.assign("X");
@@ -43,7 +44,8 @@ unipoly_domain::unipoly_domain(field_theory::finite_field *F)
 	//std::string variable_name;
 }
 
-void unipoly_domain::init_basic(field_theory::finite_field *F, int verbose_level)
+void unipoly_domain::init_basic(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -64,7 +66,10 @@ void unipoly_domain::init_basic(field_theory::finite_field *F, int verbose_level
 	}
 }
 
-unipoly_domain::unipoly_domain(field_theory::finite_field *F, unipoly_object m, int verbose_level)
+unipoly_domain::unipoly_domain(
+		field_theory::finite_field *F,
+		unipoly_object m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i, a, b;
@@ -75,7 +80,8 @@ unipoly_domain::unipoly_domain(field_theory::finite_field *F, unipoly_object m, 
 	f_factorring = FALSE;
 
 	if (f_v) {
-		cout << "unipoly_domain::unipoly_domain creating factorring modulo " << endl;
+		cout << "unipoly_domain::unipoly_domain "
+				"creating factorring modulo " << endl;
 		print_object(m, cout);
 		cout << endl;
 		//cout << " of degree " << ((int *)m)[0] << endl;
@@ -136,7 +142,10 @@ void unipoly_domain::init_variable_name(std::string &label)
 	variable_name.assign(label);
 }
 
-void unipoly_domain::init_factorring(field_theory::finite_field *F, unipoly_object m, int verbose_level)
+void unipoly_domain::init_factorring(
+		field_theory::finite_field *F,
+		unipoly_object m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b;
@@ -839,7 +848,8 @@ void unipoly_domain::make_monic(unipoly_object &a)
 }
 
 void unipoly_domain::add(unipoly_object a,
-		unipoly_object b, unipoly_object &c)
+		unipoly_object b,
+		unipoly_object &c)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -882,7 +892,9 @@ void unipoly_domain::add(unipoly_object a,
 }
 
 void unipoly_domain::mult(unipoly_object a,
-		unipoly_object b, unipoly_object &c, int verbose_level)
+		unipoly_object b,
+		unipoly_object &c,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -907,7 +919,9 @@ void unipoly_domain::mult(unipoly_object a,
 }
 
 void unipoly_domain::mult_mod(unipoly_object a,
-	unipoly_object b, unipoly_object &c, unipoly_object m,
+	unipoly_object b,
+	unipoly_object &c,
+	unipoly_object m,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -940,7 +954,8 @@ void unipoly_domain::mult_mod(unipoly_object a,
 }
 
 void unipoly_domain::mult_mod_negated(unipoly_object a,
-	unipoly_object b, unipoly_object &c,
+	unipoly_object b,
+	unipoly_object &c,
 	int factor_polynomial_degree,
 	int *factor_polynomial_coefficients_negated,
 	int verbose_level)
@@ -2848,7 +2863,9 @@ void unipoly_domain::power_int(unipoly_object &a,
 }
 
 void unipoly_domain::power_longinteger(
-	unipoly_object &a, longinteger_object &n, int verbose_level)
+	unipoly_object &a,
+	longinteger_object &n,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object m, q;
@@ -3697,7 +3714,8 @@ void unipoly_domain::characteristic_polynomial(
 	}
 }
 
-void unipoly_domain::print_matrix(unipoly_object *M, int k)
+void unipoly_domain::print_matrix(
+		unipoly_object *M, int k)
 // M is a matrix with polynomial entries
 {
 	int i, j;
@@ -3781,7 +3799,8 @@ void unipoly_domain::determinant(
 	}
 }
 
-void unipoly_domain::deletion_matrix(unipoly_object *M,
+void unipoly_domain::deletion_matrix(
+		unipoly_object *M,
 		int k, int delete_row, int delete_column,
 		unipoly_object *&N,
 		int verbose_level)

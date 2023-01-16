@@ -154,16 +154,20 @@ public:
 	void create_action_on_forms(
 			action_on_forms_description *Descr,
 			int verbose_level);
-	void algebraic_normal_form(int *func, int len, int verbose_level);
-	void orbits_on_functions(int *The_functions, int nb_functions, int len,
+	//void algebraic_normal_form(int *func, int len, int verbose_level);
+	void orbits_on_functions(
+			int *The_functions, int nb_functions, int len,
 			int verbose_level);
-	void orbits_on_equations(int *The_equations, int nb_equations, int len,
+	void orbits_on_equations(
+			int *The_equations, int nb_equations, int len,
 			groups::schreier *&Orb,
 			actions::action *&A_on_equations,
 			int verbose_level);
-	void associated_set_in_plane(int *func, int len,
+	void associated_set_in_plane(
+			int *func, int len,
 			long int *&Rk, int verbose_level);
-	void differential_uniformity(int *func, int len, int verbose_level);
+	void differential_uniformity(
+			int *func, int len, int verbose_level);
 
 };
 
@@ -198,7 +202,8 @@ public:
 			long int *&Table,
 			int &orbit_length,
 			int verbose_level);
-	void conjugacy_classes_based_on_normal_forms(actions::action *A,
+	void conjugacy_classes_based_on_normal_forms(
+			actions::action *A,
 			groups::sims *override_Sims,
 			std::string &label,
 			std::string &label_tex,
@@ -213,7 +218,8 @@ public:
 			int verbose_level);
 	void do_identify_all(int q, int d,
 			int f_no_eigenvalue_one, int verbose_level);
-	void do_random(int q, int d, int f_no_eigenvalue_one, int verbose_level);
+	void do_random(int q, int d,
+			int f_no_eigenvalue_one, int verbose_level);
 	void group_table(int q, int d, int f_poly, std::string &poly,
 			int f_no_eigenvalue_one, int verbose_level);
 	void centralizer_brute_force(int q, int d,
@@ -223,7 +229,8 @@ public:
 	// creates a finite_field, and two actions
 	// using init_projective_group and init_general_linear_group
 	void centralizer(int q, int d, int verbose_level);
-	void compute_regular_representation(actions::action *A, groups::sims *S,
+	void compute_regular_representation(
+			actions::action *A, groups::sims *S,
 			data_structures_groups::vector_ge *SG,
 			int *&perm, int verbose_level);
 	void presentation(actions::action *A,
@@ -251,12 +258,16 @@ public:
 	int proj_order(layer2_discreta::discreta_matrix &A);
 	void trace(layer2_discreta::discreta_matrix &A,
 			layer2_discreta::discreta_base &tr);
-	void elementwise_power_int(layer2_discreta::discreta_matrix &A, int k);
-	int is_in_center(layer2_discreta::discreta_matrix &B);
-	void matrix_convert_to_numerical(layer2_discreta::discreta_matrix &A, int *AA, int q);
+	void elementwise_power_int(
+			layer2_discreta::discreta_matrix &A, int k);
+	int is_in_center(
+			layer2_discreta::discreta_matrix &B);
+	void matrix_convert_to_numerical(
+			layer2_discreta::discreta_matrix &A, int *AA, int q);
 
 
-	void young_symmetrizer(int n, int verbose_level);
+	void young_symmetrizer(
+			int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
 	void report_tactical_decomposition_by_automorphism_group(
 			std::ostream &ost, geometry::projective_space *P,
@@ -275,15 +286,6 @@ public:
 			actions::action *A, groups::strong_generators *SG,
 			data_structures_groups::vector_ge *cosets,
 			int *&relative_order_table, int verbose_level);
-#if 0
-	void do_orbits_on_polynomials(
-			groups::linear_group *LG,
-			int degree_of_poly,
-			int f_recognize, std::string &recognize_text,
-			int f_draw_tree, int draw_tree_idx,
-			graphics::layered_graph_draw_options *Opt,
-			int verbose_level);
-#endif
 	void representation_on_polynomials(
 			groups::linear_group *LG,
 			int degree_of_poly,
@@ -347,19 +349,26 @@ public:
 
 	any_group();
 	~any_group();
-	void init_linear_group(groups::linear_group *LG, int verbose_level);
-	void init_permutation_group(groups::permutation_group_create *PGC, int verbose_level);
-	void init_modified_group(modified_group_create *MGC, int verbose_level);
+	void init_linear_group(
+			groups::linear_group *LG, int verbose_level);
+	void init_permutation_group(
+			groups::permutation_group_create *PGC,
+			int verbose_level);
+	void init_modified_group(
+			modified_group_create *MGC, int verbose_level);
 	void create_latex_report(
 			graphics::layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, int f_classes,
 			int verbose_level);
 	void export_group_table(int verbose_level);
-	void do_export_orbiter(actions::action *A2, int verbose_level);
+	void do_export_orbiter(
+			actions::action *A2, int verbose_level);
 	void do_export_gap(int verbose_level);
 	void do_export_magma(int verbose_level);
-	void do_canonical_image_GAP(std::string &input_set, int verbose_level);
-	void create_group_table(int *&Table, long int &n, int verbose_level);
+	void do_canonical_image_GAP(
+			std::string &input_set, int verbose_level);
+	void create_group_table(
+			int *&Table, long int &n, int verbose_level);
 	void normalizer(int verbose_level);
 	void centralizer(
 			std::string &element_label,
@@ -382,24 +391,41 @@ public:
 	void order_of_products_of_elements_by_rank(
 			std::string &Elements_text,
 			int verbose_level);
-	void save_elements_csv(std::string &fname, int verbose_level);
-	void export_inversion_graphs(std::string &fname, int verbose_level);
-	void multiply_elements_csv(std::string &fname1, std::string &fname2, std::string &fname3,
-			int f_column_major_ordering, int verbose_level);
-	void apply_elements_to_set_csv(std::string &fname1, std::string &fname2,
+	void save_elements_csv(
+			std::string &fname, int verbose_level);
+	void export_inversion_graphs(
+			std::string &fname, int verbose_level);
+	void multiply_elements_csv(
+			std::string &fname1,
+			std::string &fname2,
+			std::string &fname3,
+			int f_column_major_ordering,
+			int verbose_level);
+	void apply_elements_to_set_csv(
+			std::string &fname1,
+			std::string &fname2,
 			std::string &set_text,
 			int verbose_level);
-	void random_element(std::string &elt_label, int verbose_level);
-	void element_rank(std::string &elt_data, int verbose_level);
-	void element_unrank(std::string &rank_string, int verbose_level);
-	void conjugacy_class_of(std::string &label, std::string &rank_string, int verbose_level);
+	void random_element(
+			std::string &elt_label, int verbose_level);
+	void element_rank(
+			std::string &elt_data, int verbose_level);
+	void element_unrank(
+			std::string &rank_string, int verbose_level);
+	void conjugacy_class_of(
+			std::string &label, std::string &rank_string,
+			int verbose_level);
 	void do_reverse_isomorphism_exterior_square(int verbose_level);
 
-	void orbits_on_set_system_from_file(std::string &fname_csv,
-			int number_of_columns, int first_column, int verbose_level);
-	void orbits_on_set_from_file(std::string &fname_csv, int verbose_level);
+	void orbits_on_set_system_from_file(
+			std::string &fname_csv,
+			int number_of_columns, int first_column,
+			int verbose_level);
+	void orbits_on_set_from_file(
+			std::string &fname_csv, int verbose_level);
 	void orbit_of(int point_idx, int verbose_level);
-	void orbits_on_points(groups::orbits_on_something *&Orb, int verbose_level);
+	void orbits_on_points(
+			groups::orbits_on_something *&Orb, int verbose_level);
 
 	void create_latex_report_for_permutation_group(
 			graphics::layered_graph_draw_options *O,
@@ -408,8 +434,10 @@ public:
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	groups::strong_generators *get_strong_generators();
-	int is_subgroup_of(any_group *AG_secondary, int verbose_level);
-	void set_of_coset_representatives(any_group *AG_secondary,
+	int is_subgroup_of(
+			any_group *AG_secondary, int verbose_level);
+	void set_of_coset_representatives(
+			any_group *AG_secondary,
 			data_structures_groups::vector_ge *&coset_reps,
 			int verbose_level);
 	void report_coset_reps(
@@ -456,7 +484,8 @@ public:
 			int order_b,
 			int order_ab,
 			int verbose_level);
-	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
+	void isomorphism_Klein_quadric(
+			std::string &fname, int verbose_level);
 	void do_orbits_on_subspaces(
 			poset_classification::poset_classification_control *Control,
 			orbits_on_subspaces *&OoS,
@@ -471,7 +500,8 @@ public:
 			int minimum_distance,
 			int target_size, int verbose_level);
 	void do_classify_ovoids(
-			apps_geometry::ovoid_classify_description *Ovoid_classify_description,
+			apps_geometry::ovoid_classify_description
+				*Ovoid_classify_description,
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
@@ -487,10 +517,6 @@ public:
 			poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);
-#if 0
-	void do_conjugacy_class_of_element(
-			std::string &elt_label, std::string &elt_text, int verbose_level);
-#endif
 	void do_orbits_on_group_elements_under_conjugation(
 			std::string &fname_group_elements_coded,
 			std::string &fname_transporter,
@@ -510,30 +536,44 @@ class character_table_burnside {
 public:
 
 	void do_it(int n, int verbose_level);
-	void create_matrix(discreta_matrix &M, int i, int *S, int nb_classes,
+	void create_matrix(
+			discreta_matrix &M, int i, int *S, int nb_classes,
 		int *character_degree, int *class_size,
 		int verbose_level);
 	void compute_character_table(
 			algebra::a_domain *D, int nb_classes, int *Omega,
 		int *character_degree, int *class_size,
 		int *&character_table, int verbose_level);
-	void compute_character_degrees(algebra::a_domain *D,
+	void compute_character_degrees(
+			algebra::a_domain *D,
 		int goi, int nb_classes, int *Omega, int *class_size,
-		int *&character_degree, int verbose_level);
-	void compute_omega(algebra::a_domain *D, int *N0, int nb_classes,
-			int *Mu, int nb_mu, int *&Omega, int verbose_level);
-	int compute_r0(int *N, int nb_classes, int verbose_level);
+		int *&character_degree,
+		int verbose_level);
+	void compute_omega(
+			algebra::a_domain *D, int *N0, int nb_classes,
+			int *Mu, int nb_mu, int *&Omega,
+			int verbose_level);
+	int compute_r0(
+			int *N, int nb_classes, int verbose_level);
 	void compute_multiplication_constants_center_of_group_ring(
 			actions::action *A,
 			induced_actions::action_by_conjugation *ABC,
-		groups::schreier *Sch, int nb_classes, int *&N, int verbose_level);
-	void compute_Distribution_table(actions::action *A, induced_actions::action_by_conjugation *ABC,
+		groups::schreier *Sch, int nb_classes, int *&N,
+		int verbose_level);
+	void compute_Distribution_table(
+			actions::action *A,
+			induced_actions::action_by_conjugation *ABC,
 			groups::schreier *Sch, int nb_classes,
-		int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level);
-	void multiply_word(actions::action *A, int **Gens,
-			int *Choice, int t, int *Elt1, int *Elt2, int verbose_level);
-	void create_generators(actions::action *A, int n,
-			int **&Elt, int &nb_gens, int f_special, int verbose_level);
+		int **Gens, int nb_gens, int t_max, int *&Distribution,
+		int verbose_level);
+	void multiply_word(
+			actions::action *A, int **Gens,
+			int *Choice, int t, int *Elt1, int *Elt2,
+			int verbose_level);
+	void create_generators(
+			actions::action *A, int n,
+			int **&Elt, int &nb_gens, int f_special,
+			int verbose_level);
 	void integral_eigenvalues(int *M, int n,
 		int *&Lambda,
 		int &nb_lambda,
@@ -541,13 +581,21 @@ public:
 		int *&Mu_mult,
 		int &nb_mu,
 		int verbose_level);
-	void characteristic_poly(int *N, int size, unipoly &charpoly, int verbose_level);
+	void characteristic_poly(
+			int *N, int size, unipoly &charpoly,
+			int verbose_level);
 	void double_swap(double &a, double &b);
-	int double_Gauss(double *A, int m, int n, int *base_cols, int verbose_level);
+	int double_Gauss(
+			double *A, int m, int n, int *base_cols,
+			int verbose_level);
 	void double_matrix_print(double *A, int m, int n);
 	double double_abs(double x);
-	void kernel_columns(int n, int nb_base_cols, int *base_cols, int *kernel_cols);
-	void matrix_get_kernel(double *M, int m, int n, int *base_cols, int nb_base_cols,
+	void kernel_columns(
+			int n, int nb_base_cols, int *base_cols,
+			int *kernel_cols);
+	void matrix_get_kernel(
+			double *M, int m, int n,
+			int *base_cols, int nb_base_cols,
 		int &kernel_m, int &kernel_n, double *kernel);
 	int double_as_int(double x);
 
@@ -714,12 +762,6 @@ public:
 
 	int f_permutation_representation_of_element;
 	std::string permutation_representation_element_text;
-
-#if 0
-	int f_conjugacy_class_of_element;
-	std::string conjugacy_class_of_element_label;
-	std::string conjugacy_class_of_element_data;
-#endif
 
 	int f_orbits_on_group_elements_under_conjugation;
 	std::string orbits_on_group_elements_under_conjugation_fname;
@@ -947,22 +989,29 @@ public:
 	poset_classification::poset_classification *Orbits_on_primary_poset;
 
 	int number_primary_orbits;
-	groups::strong_generators **stabilizer_gens; // [number_primary_orbits]
-	long int *Reps_and_complements; // [number_primary_orbits * degree]
+	groups::strong_generators **stabilizer_gens;
+		// [number_primary_orbits]
+	long int *Reps_and_complements;
+		// [number_primary_orbits * degree]
 
 	actions::action **A_restricted;
-	poset_classification::poset_with_group_action **Secondary_poset; // [number_primary_orbits]
-	poset_classification::poset_classification **orbits_secondary_poset; // [number_primary_orbits]
+	poset_classification::poset_with_group_action **Secondary_poset;
+		// [number_primary_orbits]
+	poset_classification::poset_classification **orbits_secondary_poset;
+		// [number_primary_orbits]
 
-	int *nb_orbits_secondary; // [number_primary_orbits]
-	int *flag_orbit_first; // [number_primary_orbits]
+	int *nb_orbits_secondary;
+		// [number_primary_orbits]
+	int *flag_orbit_first;
+		// [number_primary_orbits]
 	int nb_orbits_secondary_total;
 
 	invariant_relations::flag_orbits *Flag_orbits;
 
 	int nb_orbits_reduced;
 
-	invariant_relations::classification_step *Partition_orbits; // [nb_orbits_reduced]
+	invariant_relations::classification_step *Partition_orbits;
+		// [nb_orbits_reduced]
 
 
 	orbit_cascade();
@@ -1015,7 +1064,8 @@ public:
 	std::vector<std::string> recognize;
 
 	int f_report_options;
-	poset_classification::poset_classification_report_options *report_options;
+	poset_classification::poset_classification_report_options
+		*report_options;
 
 
 	orbits_activity_description();
@@ -1211,7 +1261,6 @@ public:
 	void init(
 			groups::linear_group *LG,
 			int degree_of_poly,
-			//int f_recognize, std::string &recognize_text,
 			int verbose_level);
 	void compute_points(int verbose_level);
 	void report(int verbose_level);
@@ -1243,8 +1292,10 @@ public:
 	apps_algebra::any_group *Group;
 
 	// local data for orbits on subspaces:
-	poset_classification::poset_with_group_action *orbits_on_subspaces_Poset;
-	poset_classification::poset_classification *orbits_on_subspaces_PC;
+	poset_classification::poset_with_group_action
+		*orbits_on_subspaces_Poset;
+	poset_classification::poset_classification
+		*orbits_on_subspaces_PC;
 	algebra::vector_space *orbits_on_subspaces_VS;
 	int *orbits_on_subspaces_M;
 	int *orbits_on_subspaces_base_cols;
@@ -1363,32 +1414,44 @@ public:
 	young();
 	~young();
 	void init(int n, int verbose_level);
-	void create_module(int *h_alpha, 
+	void create_module(
+			int *h_alpha,
 		int *&Base, int *&base_cols, int &rk, 
 		int verbose_level);
-	void create_representations(int *Base, int *Base_inv, int rk, 
+	void create_representations(
+			int *Base, int *Base_inv, int rk,
 		int verbose_level);
-	void create_representation(int *Base, int *base_cols, int rk, 
+	void create_representation(
+			int *Base, int *base_cols, int rk,
 		int group_elt, int *Mtx, int verbose_level);
 		// Mtx[rk * rk * D->size_of_instance_in_int]
-	void young_symmetrizer(int *row_parts, int nb_row_parts, 
+	void young_symmetrizer(
+			int *row_parts, int nb_row_parts,
 		int *tableau, 
 		int *elt1, int *elt2, int *elt3, 
 		int verbose_level);
-	void compute_generators(int &go1, int &go2, int verbose_level);
+	void compute_generators(
+			int &go1, int &go2, int verbose_level);
 	void Maschke(int *Rep, 
 		int dim_of_module, int dim_of_submodule, 
 		int *&Mu, 
 		int verbose_level);
-	long int group_ring_element_size(actions::action *A, groups::sims *S);
-	void group_ring_element_create(actions::action *A, groups::sims *S, int *&elt);
-	void group_ring_element_free(actions::action *A, groups::sims *S, int *elt);
-	void group_ring_element_print(actions::action *A, groups::sims *S, int *elt);
-	void group_ring_element_copy(actions::action *A, groups::sims *S,
+	long int group_ring_element_size(
+			actions::action *A, groups::sims *S);
+	void group_ring_element_create(
+			actions::action *A, groups::sims *S, int *&elt);
+	void group_ring_element_free(
+			actions::action *A, groups::sims *S, int *elt);
+	void group_ring_element_print(
+			actions::action *A, groups::sims *S, int *elt);
+	void group_ring_element_copy(
+			actions::action *A, groups::sims *S,
 		int *elt_from, int *elt_to);
-	void group_ring_element_zero(actions::action *A, groups::sims *S,
+	void group_ring_element_zero(
+			actions::action *A, groups::sims *S,
 		int *elt);
-	void group_ring_element_mult(actions::action *A, groups::sims *S,
+	void group_ring_element_mult(
+			actions::action *A, groups::sims *S,
 		int *elt1, int *elt2, int *elt3);
 };
 

@@ -155,10 +155,12 @@ void clique_finder::free()
 
 
 
-void clique_finder::init(clique_finder_control *Control,
+void clique_finder::init(
+		clique_finder_control *Control,
 		std::string &label, int n,
 		int f_has_adj_list, int *adj_list_coded,
-		int f_has_bitvector, data_structures::bitvector *Bitvec_adjacency,
+		int f_has_bitvector,
+		data_structures::bitvector *Bitvec_adjacency,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1421,7 +1423,8 @@ void clique_finder::close_tree_file()
 			<< Fio.file_size(fname_tree) << endl;
 }
 
-void clique_finder::get_solutions(int *&Sol, long int &nb_solutions, int &clique_sz,
+void clique_finder::get_solutions(
+		int *&Sol, long int &nb_solutions, int &clique_sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

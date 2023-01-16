@@ -254,7 +254,7 @@ void classify_trihedral_pairs::report_summary(std::ostream &ost)
 }
 
 
-void classify_trihedral_pairs::report(ostream &ost)
+void classify_trihedral_pairs::report(std::ostream &ost)
 {
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type1" << endl;
@@ -1142,12 +1142,12 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	}
 }
 
-void classify_trihedral_pairs::print_trihedral_pairs_summary(ostream &ost)
+void classify_trihedral_pairs::print_trihedral_pairs_summary(std::ostream &ost)
 {
 	Trihedral_pairs->print_summary(ost);
 }
 
-void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost, 
+void classify_trihedral_pairs::print_trihedral_pairs(std::ostream &ost,
 	int f_with_stabilizers)
 {
 	string title;

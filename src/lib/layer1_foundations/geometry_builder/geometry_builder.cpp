@@ -76,7 +76,8 @@ geometry_builder::~geometry_builder()
 	}
 }
 
-void geometry_builder::init_description(geometry_builder_description *Descr,
+void geometry_builder::init_description(
+		geometry_builder_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

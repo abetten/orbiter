@@ -114,7 +114,7 @@ int &int_vector::length()
 	return m;
 }
 
-void int_vector::print(ostream &ost)
+void int_vector::print(std::ostream &ost)
 {
 	Lint_vec_print(ost, M, m);
 }

@@ -89,11 +89,13 @@ void projective_space_reporting::create_latex_report(
 
 
 			if (f_v) {
-				cout << "projective_space_reporting::create_latex_report before P->report" << endl;
+				cout << "projective_space_reporting::create_latex_report "
+						"before P->report" << endl;
 			}
 			report(ost, O, verbose_level);
 			if (f_v) {
-				cout << "projective_space_reporting::create_latex_report after P->report" << endl;
+				cout << "projective_space_reporting::create_latex_report "
+						"after P->report" << endl;
 			}
 
 
@@ -232,12 +234,14 @@ void projective_space_reporting::report(std::ostream &ost,
 
 
 		if (f_v) {
-			cout << "projective_space_reporting::report before report_subspaces_of_dimension" << endl;
+			cout << "projective_space_reporting::report "
+					"before report_subspaces_of_dimension" << endl;
 		}
 		report_subspaces_of_dimension(ost, k + 1, verbose_level);
 		//Grass_stack[k + 1]->cheat_sheet_subspaces(ost, verbose_level);
 		if (f_v) {
-			cout << "projective_space_reporting::report after report_subspaces_of_dimension" << endl;
+			cout << "projective_space_reporting::report "
+					"after report_subspaces_of_dimension" << endl;
 		}
 	}
 
@@ -302,7 +306,8 @@ void projective_space_reporting::report(std::ostream &ost,
 
 }
 
-void projective_space_reporting::report_subspaces_of_dimension(std::ostream &ost, int vs_dimension, int verbose_level)
+void projective_space_reporting::report_subspaces_of_dimension(std::ostream &ost,
+		int vs_dimension, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -311,11 +316,15 @@ void projective_space_reporting::report_subspaces_of_dimension(std::ostream &ost
 	}
 
 	if (f_v) {
-		cout << "projective_space_reporting::report before report_subspaces_of_dimension, vs_dimension=" << vs_dimension << endl;
+		cout << "projective_space_reporting::report "
+				"before report_subspaces_of_dimension, "
+				"vs_dimension=" << vs_dimension << endl;
 	}
 	P->Grass_stack[vs_dimension]->cheat_sheet_subspaces(ost, verbose_level);
 	if (f_v) {
-		cout << "projective_space_reporting::report after report_subspaces_of_dimension, vs_dimension=" << vs_dimension << endl;
+		cout << "projective_space_reporting::report "
+				"after report_subspaces_of_dimension, "
+				"vs_dimension=" << vs_dimension << endl;
 	}
 
 	if (f_v) {
@@ -734,7 +743,8 @@ void projective_space_reporting::cheat_sheet_line_through_pairs_of_points(
 
 }
 
-void projective_space_reporting::print_set_numerical(std::ostream &ost, long int *set, int set_size)
+void projective_space_reporting::print_set_numerical(
+		std::ostream &ost, long int *set, int set_size)
 {
 	long int i, a;
 	int *v;
@@ -789,7 +799,8 @@ void projective_space_reporting::print_line_set_numerical(
 	FREE_int(v);
 }
 
-void projective_space_reporting::print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts)
+void projective_space_reporting::print_set_of_points(
+		std::ostream &ost, long int *Pts, int nb_pts)
 {
 	int h, I;
 	int *v;

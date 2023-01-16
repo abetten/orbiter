@@ -250,7 +250,7 @@ void flag_orbits::read_file(ifstream &fp,
 	}
 }
 
-void flag_orbits::print_latex(ostream &ost,
+void flag_orbits::print_latex(std::ostream &ost,
 	std::string &title, int f_print_stabilizer_gens)
 {
 	int verbose_level = 0;

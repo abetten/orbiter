@@ -2341,7 +2341,8 @@ void surface_object_properties::print_points_on_lines(std::ostream &ost)
 	//ost << "\\clearpage" << endl;
 }
 
-void surface_object_properties::print_points_on_surface_but_not_on_a_line(std::ostream &ost)
+void surface_object_properties::print_points_on_surface_but_not_on_a_line(
+			std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 	int i;
@@ -2604,7 +2605,8 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 
 
 
-void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx,
+void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P(
+		int P_idx,
 		int *&f_deleted, int verbose_level)
 // P_idx = index into SO->Pts[]
 {
@@ -2666,7 +2668,8 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 }
 
 
-int surface_object_properties::test_full_del_pezzo(int P_idx, int *f_deleted, int verbose_level)
+int surface_object_properties::test_full_del_pezzo(
+		int P_idx, int *f_deleted, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2712,8 +2715,11 @@ int surface_object_properties::test_full_del_pezzo(int P_idx, int *f_deleted, in
 }
 
 
-void surface_object_properties::create_summary_file(std::string &fname,
-		std::string &surface_label, std::string &col_postfix, int verbose_level)
+void surface_object_properties::create_summary_file(
+		std::string &fname,
+		std::string &surface_label,
+		std::string &col_postfix,
+		int verbose_level)
 {
 	string col_lab_surface_label;
 	string col_lab_nb_lines;

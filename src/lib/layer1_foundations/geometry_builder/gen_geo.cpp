@@ -856,7 +856,8 @@ void gen_geo::print(std::ostream &ost, int v, int v_cut)
 }
 
 
-void gen_geo::print_override_theX(std::ostream &ost, int *theX, int v, int v_cut)
+void gen_geo::print_override_theX(std::ostream &ost,
+		int *theX, int v, int v_cut)
 {
 	inc->Encoding->print_partitioned_override_theX(ost,
 			v, v_cut, this, theX, TRUE /* f_print_isot */);

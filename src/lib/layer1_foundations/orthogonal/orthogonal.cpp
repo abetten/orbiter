@@ -139,7 +139,8 @@ orthogonal::~orthogonal()
 
 
 void orthogonal::init(int epsilon, int n,
-		field_theory::finite_field *F, int verbose_level)
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -155,8 +156,7 @@ void orthogonal::init(int epsilon, int n,
 	if (f_v) {
 		cout << "orthogonal::init before Quadratic_form->init" << endl;
 	}
-	Quadratic_form->init(epsilon, n,
-				F, verbose_level);
+	Quadratic_form->init(epsilon, n, F, verbose_level);
 	if (f_v) {
 		cout << "orthogonal::init after Quadratic_form->init" << endl;
 	}
@@ -528,7 +528,8 @@ int orthogonal::evaluate_bilinear_form_by_rank(int i, int j)
 }
 
 void orthogonal::points_on_line_by_line_rank(
-		long int line_rk, long int *line, int verbose_level)
+		long int line_rk, long int *line,
+		int verbose_level)
 {
 	long int p1, p2;
 	
@@ -592,7 +593,8 @@ void orthogonal::points_on_line(long int pi, long int pj,
 }
 
 void orthogonal::points_on_line_by_coordinates(
-		long int pi, long int pj, int *pt_coords, int verbose_level)
+		long int pi, long int pj, int *pt_coords,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -707,8 +709,10 @@ void orthogonal::lines_on_point(long int pt,
 	}
 }
 
-void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(long int pt,
-		int *line_pencil_line_ranks, int verbose_level)
+void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(
+		long int pt,
+		int *line_pencil_line_ranks,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *line_pencil_line_ranks_lint;
@@ -734,8 +738,10 @@ void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(long int pt,
 	}
 }
 
-void orthogonal::lines_on_point_by_line_rank(long int pt,
-		long int *line_pencil_line_ranks, int verbose_level)
+void orthogonal::lines_on_point_by_line_rank(
+		long int pt,
+		long int *line_pencil_line_ranks,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -853,7 +859,8 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 }
 
 void orthogonal::make_initial_partition(
-		data_structures::partitionstack &S, int verbose_level)
+		data_structures::partitionstack &S,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -942,7 +949,8 @@ void orthogonal::point_to_line_map(int size,
 }
 
 
-int orthogonal::test_if_minimal_on_line(int *v1, int *v2, int *v3)
+int orthogonal::test_if_minimal_on_line(
+		int *v1, int *v2, int *v3)
 {
 	int verbose_level = 0;
 	int i, t, rk, rk0;
@@ -972,7 +980,8 @@ int orthogonal::test_if_minimal_on_line(int *v1, int *v2, int *v3)
 	return TRUE;
 }
 
-void orthogonal::find_minimal_point_on_line(int *v1, int *v2, int *v3)
+void orthogonal::find_minimal_point_on_line(
+		int *v1, int *v2, int *v3)
 {
 	int verbose_level = 0;
 	int i, t, rk, rk0, t0;
@@ -1029,7 +1038,8 @@ int orthogonal::is_zero_vector(int *u, int stride, int len)
 	return TRUE;
 }
 
-void orthogonal::change_form_value(int *u, int stride, int m, int multiplier)
+void orthogonal::change_form_value(int *u,
+		int stride, int m, int multiplier)
 {
 	int i;
 	
@@ -1038,7 +1048,8 @@ void orthogonal::change_form_value(int *u, int stride, int m, int multiplier)
 	}
 }
 
-void orthogonal::scalar_multiply_vector(int *u, int stride, int len, int multiplier)
+void orthogonal::scalar_multiply_vector(int *u,
+		int stride, int len, int multiplier)
 {
 	int i;
 	
@@ -1115,7 +1126,8 @@ void orthogonal::Gauss_step(int *v1, int *v2, int len, int idx)
 }
 
 void orthogonal::perp(long int pt,
-		long int *Perp_without_pt, int &sz, int verbose_level)
+		long int *Perp_without_pt, int &sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1193,7 +1205,8 @@ void orthogonal::perp(long int pt,
 	}
 }
 
-void orthogonal::perp_of_two_points(long int pt1, long int pt2,
+void orthogonal::perp_of_two_points(long int pt1,
+		long int pt2,
 		long int *Perp, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1223,7 +1236,8 @@ void orthogonal::perp_of_two_points(long int pt1, long int pt2,
 	}
 }
 
-void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
+void orthogonal::perp_of_k_points(long int *pts,
+		int nb_pts,
 		long int *&Perp, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1232,7 +1246,8 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	
 	if (f_v) {
 		cout << "orthogonal::perp_of_k_points "
-				"verbose_level = " << verbose_level << " nb_pts=" << nb_pts << endl;
+				"verbose_level = " << verbose_level
+				<< " nb_pts=" << nb_pts << endl;
 	}
 	if (f_vv) {
 
@@ -1266,7 +1281,8 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 
 
 	if (f_v) {
-		cout << "orthogonal::perp_of_k_points computing the perps of the points" << endl;
+		cout << "orthogonal::perp_of_k_points "
+				"computing the perps of the points" << endl;
 	}
 
 
@@ -1299,12 +1315,14 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 
 
 	if (f_v) {
-		cout << "orthogonal::perp_of_k_points computing the perps of the points done" << endl;
+		cout << "orthogonal::perp_of_k_points "
+				"computing the perps of the points done" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "orthogonal::perp_of_k_points computing the intersections of the perps" << endl;
+		cout << "orthogonal::perp_of_k_points "
+				"computing the intersections of the perps" << endl;
 	}
 
 	Sorting.vec_intersect(Perp_without_pt[0], perp_sz,
@@ -1337,7 +1355,8 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	}
 
 	if (f_v) {
-		cout << "orthogonal::perp_of_k_points computing the intersections of the perps done" << endl;
+		cout << "orthogonal::perp_of_k_points "
+				"computing the intersections of the perps done" << endl;
 	}
 
 
@@ -1359,7 +1378,8 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	}
 }
 
-int orthogonal::triple_is_collinear(long int pt1, long int pt2, long int pt3)
+int orthogonal::triple_is_collinear(
+		long int pt1, long int pt2, long int pt3)
 {
 	int verbose_level = 0;
 	int rk;
@@ -1390,8 +1410,10 @@ int orthogonal::triple_is_collinear(long int pt1, long int pt2, long int pt3)
 
 
 
-void orthogonal::intersection_with_subspace(int *Basis, int k,
-		long int *&the_points, int &nb_points, int verbose_level)
+void orthogonal::intersection_with_subspace(
+		int *Basis, int k,
+		long int *&the_points, int &nb_points,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

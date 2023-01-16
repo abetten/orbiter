@@ -79,7 +79,8 @@ void BLT_set_create::init(
 	
 	if (Descr->f_family) {
 		if (f_v) {
-			cout << "BLT_set_create::init family_name=" << Descr->family_name << endl;
+			cout << "BLT_set_create::init "
+					"family_name=" << Descr->family_name << endl;
 		}
 
 		char str[1000];
@@ -89,20 +90,23 @@ void BLT_set_create::init(
 
 		if (ST.stringcmp(Descr->family_name, "Linear") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object of family Linear" << endl;
+				cout << "BLT_set_create::init "
+						"creating object of family Linear" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			geometry::geometry_global GG;
+			orthogonal_geometry::orthogonal_global OG;
 			field_theory::finite_field *FQ;
 			int q, Q;
 
 			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
-			FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
-			GG.create_Linear_BLT_set(set, ABC,
+			FQ->finite_field_init_small_order(Q,
+					FALSE /* f_without_tables */, 0 /* verbose_level */);
+
+			OG.create_Linear_BLT_set(set, ABC,
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
@@ -113,20 +117,23 @@ void BLT_set_create::init(
 
 		else if (ST.stringcmp(Descr->family_name, "Fisher") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object of family Fisher" << endl;
+				cout << "BLT_set_create::init "
+						"creating object of family Fisher" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			geometry::geometry_global GG;
+			orthogonal_geometry::orthogonal_global OG;
 			field_theory::finite_field *FQ;
 			int q, Q;
 
 			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
-			FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
-			GG.create_Fisher_BLT_set(set, ABC,
+			FQ->finite_field_init_small_order(Q,
+					FALSE /* f_without_tables */, 0 /* verbose_level */);
+
+			OG.create_Fisher_BLT_set(set, ABC,
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
@@ -137,20 +144,23 @@ void BLT_set_create::init(
 
 		else if (ST.stringcmp(Descr->family_name, "Mondello") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object of family Mondello" << endl;
+				cout << "BLT_set_create::init "
+						"creating object of family Mondello" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			geometry::geometry_global GG;
+			orthogonal_geometry::orthogonal_global OG;
 			field_theory::finite_field *FQ;
 			int q, Q;
 
 			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
-			FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0 /* verbose_level */);
-			GG.create_Mondello_BLT_set(set, ABC,
+			FQ->finite_field_init_small_order(Q,
+					FALSE /* f_without_tables */, 0 /* verbose_level */);
+
+			OG.create_Mondello_BLT_set(set, ABC,
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
@@ -162,77 +172,98 @@ void BLT_set_create::init(
 
 		else if (ST.stringcmp(Descr->family_name, "FTWKB") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object of family FTWKB" << endl;
+				cout << "BLT_set_create::init "
+						"creating object of family FTWKB" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+
 			OG.create_FTWKB_BLT_set(OA->O, set, ABC, verbose_level);
 			// for q congruent 2 mod 3
 			// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
+
 			snprintf(str, sizeof(str), "FTWKB");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 
 		}
 		else if (ST.stringcmp(Descr->family_name, "Kantor1") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object of family Kantor1" << endl;
+				cout << "BLT_set_create::init "
+						"creating object of family Kantor1" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+
 			OG.create_K1_BLT_set(OA->O, set, ABC, verbose_level);
 			// for a non-square m, and q=p^e
 			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
+
 			snprintf(str, sizeof(str), "Kantor1");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "Kantor2") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object of family Kantor2" << endl;
+				cout << "BLT_set_create::init "
+						"creating object of family Kantor2" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+
 			OG.create_K2_BLT_set(OA->O, set, ABC, verbose_level);
 			// for q congruent 2 or 3 mod 5
 			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
+
 			snprintf(str, sizeof(str), "Kantor2");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_72") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object LP_37_72" << endl;
+				cout << "BLT_set_create::init "
+						"creating object LP_37_72" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
+
 			OG.create_LP_37_72_BLT_set(OA->O, set, verbose_level);
+
 			snprintf(str, sizeof(str), "LP_ago72");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_4a") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object LP_37_4a" << endl;
+				cout << "BLT_set_create::init "
+						"creating object LP_37_4a" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
+
 			OG.create_LP_37_4a_BLT_set(OA->O, set, verbose_level);
+
 			snprintf(str, sizeof(str), "LP_ago4a");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_4b") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object LP_37_4b" << endl;
+				cout << "BLT_set_create::init "
+						"creating object LP_37_4b" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
+
 			OG.create_LP_37_4b_BLT_set(OA->O, set, verbose_level);
+
 			snprintf(str, sizeof(str), "LP_ago4b");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_71") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object LP_71" << endl;
+				cout << "BLT_set_create::init "
+						"creating object LP_71" << endl;
 			}
 			set = NEW_lint(OA->Descr->F->q + 1);
+
 			OG.create_Law_71_BLT_set(OA->O, set, verbose_level);
+
 			snprintf(str, sizeof(str), "LP");
 			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
 		}
@@ -270,7 +301,8 @@ void BLT_set_create::init(
 		}
 
 		set = NEW_lint(OA->Descr->F->q + 1);
-		Lint_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
+		Lint_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso),
+				set, OA->Descr->F->q + 1);
 
 		Sg = NEW_OBJECT(groups::strong_generators);
 
@@ -384,6 +416,34 @@ void BLT_set_create::report(int verbose_level)
 		cout << "BLT_set_create::report done" << endl;
 	}
 }
+
+void BLT_set_create::create_flock(int point_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::create_flock point_idx=" << point_idx << endl;
+	}
+
+
+	flock *Flock;
+
+	Flock = NEW_OBJECT(flock);
+
+	if (f_v) {
+		cout << "BLT_set_create::create_flock before Flock->init" << endl;
+	}
+	Flock->init(BA, point_idx, verbose_level);
+	if (f_v) {
+		cout << "BLT_set_create::create_flock after Flock->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "BLT_set_create::create_flock done" << endl;
+	}
+}
+
 
 void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 {

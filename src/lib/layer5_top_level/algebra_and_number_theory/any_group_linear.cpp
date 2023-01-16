@@ -153,7 +153,8 @@ void any_group::find_standard_generators(int order_a,
 }
 
 
-void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
+void any_group::isomorphism_Klein_quadric(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
@@ -561,7 +562,8 @@ void any_group::do_linear_codes(
 }
 
 void any_group::do_classify_ovoids(
-		apps_geometry::ovoid_classify_description *Ovoid_classify_description,
+		apps_geometry::ovoid_classify_description
+			*Ovoid_classify_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -47,8 +47,6 @@ void graph_theory_domain::colored_graph_draw(
 	CG.draw_partitioned(
 			fname_draw,
 			Draw_options,
-			//fname_draw, xmax_in, ymax_in, xmax_out, ymax_out,
-			//FALSE /* f_labels */, scale, line_width,
 			f_labels,
 			verbose_level);
 	if (f_v) {
@@ -118,7 +116,8 @@ void graph_theory_domain::colored_graph_all_cliques(
 void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 		clique_finder_control *Control,
 		long int *list_of_cases, int nb_cases,
-		std::string &fname_template, std::string &fname_sol,
+		std::string &fname_template,
+		std::string &fname_sol,
 		std::string &fname_stats,
 		int f_split, int split_r, int split_m,
 		int f_prefix, std::string &prefix,
@@ -196,7 +195,8 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 }
 
 
-void graph_theory_domain::save_as_colored_graph_easy(std::string &fname_base,
+void graph_theory_domain::save_as_colored_graph_easy(
+		std::string &fname_base,
 		int n, int *Adj, int verbose_level)
 {
 	std::string fname;
@@ -224,8 +224,10 @@ void graph_theory_domain::save_as_colored_graph_easy(std::string &fname_base,
 	}
 }
 
-void graph_theory_domain::save_colored_graph(std::string &fname,
-		int nb_vertices, int nb_colors, int nb_colors_per_vertex,
+void graph_theory_domain::save_colored_graph(
+		std::string &fname,
+		int nb_vertices, int nb_colors,
+		int nb_colors_per_vertex,
 		long int *points, int *point_color,
 		long int *data, int data_sz,
 		data_structures::bitvector *Bitvec,
@@ -292,9 +294,12 @@ void graph_theory_domain::save_colored_graph(std::string &fname,
 	}
 }
 
-void graph_theory_domain::load_colored_graph(std::string &fname,
-		int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
-		long int *&vertex_labels, int *&vertex_colors, long int *&user_data,
+void graph_theory_domain::load_colored_graph(
+		std::string &fname,
+		int &nb_vertices, int &nb_colors,
+		int &nb_colors_per_vertex,
+		long int *&vertex_labels,
+		int *&vertex_colors, long int *&user_data,
 		int &user_data_size,
 		data_structures::bitvector *&Bitvec,
 		int verbose_level)
@@ -480,8 +485,10 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 }
 
 
-int graph_theory_domain::is_association_scheme(int *color_graph, int n,
-		int *&Pijk, int *&colors, int &nb_colors, int verbose_level)
+int graph_theory_domain::is_association_scheme(
+		int *color_graph, int n,
+		int *&Pijk, int *&colors, int &nb_colors,
+		int verbose_level)
 // color_graph[n * n]
 // added Dec 22, 2010.
 {
@@ -648,8 +655,8 @@ void graph_theory_domain::print_Pijk(int *Pijk, int nb_colors) {
 }
 
 void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
-		int *Adj,
-		int N, int *first, int *len, int nb_parts, int *&R,
+		int *Adj, int N,
+		int *first, int *len, int nb_parts, int *&R,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -844,7 +851,8 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 	}
 }
 
-void graph_theory_domain::make_cycle_graph(int *&Adj, int &N,
+void graph_theory_domain::make_cycle_graph(
+		int *&Adj, int &N,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -872,7 +880,8 @@ void graph_theory_domain::make_cycle_graph(int *&Adj, int &N,
 
 }
 
-void graph_theory_domain::make_inversion_graph(int *&Adj, int &N,
+void graph_theory_domain::make_inversion_graph(
+		int *&Adj, int &N,
 		int *perm, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -908,7 +917,8 @@ void graph_theory_domain::make_inversion_graph(int *&Adj, int &N,
 
 
 
-void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
+void graph_theory_domain::make_Hamming_graph(
+		int *&Adj, int &N,
 		int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -958,7 +968,8 @@ void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
 }
 
 
-void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
+void graph_theory_domain::make_Johnson_graph(
+		int *&Adj, int &N,
 		int n, int k, int s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1010,7 +1021,8 @@ void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
 
 }
 
-void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
+void graph_theory_domain::make_Paley_graph(
+		int *&Adj, int &N,
 		field_theory::finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1050,8 +1062,9 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 	}
 }
 
-void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
-		int q, int verbose_level)
+void graph_theory_domain::make_Schlaefli_graph(
+		int *&Adj, int &N,
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1059,14 +1072,11 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_Schlaefli_graph" << endl;
 	}
 
-	field_theory::finite_field *F;
 	geometry::grassmann *Gr;
 	int n = 4;
 	int k = 2;
 
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
 
 	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
@@ -1074,15 +1084,16 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 	Gr->create_Schlaefli_graph(Adj, N, verbose_level);
 
 	FREE_OBJECT(Gr);
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_Schlaefli_graph done" << endl;
 	}
 }
 
-void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
-		field_theory::finite_field *Fq, int index, int verbose_level)
+void graph_theory_domain::make_Winnie_Li_graph(
+		int *&Adj, int &N,
+		field_theory::finite_field *Fq,
+		int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1168,8 +1179,11 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 	}
 }
 
-void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
-		int n, int k, int q, int r, int verbose_level)
+void graph_theory_domain::make_Grassmann_graph(
+		int *&Adj, int &N,
+		int n, int k,
+		field_theory::finite_field *F,
+		int r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1178,7 +1192,6 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	}
 
 
-	field_theory::finite_field *F;
 	geometry::grassmann *Gr;
 	int i, j, rr;
 	int *M1; // [k * n]
@@ -1186,14 +1199,10 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	int *M; // [2 * k * n]
 	combinatorics::combinatorics_domain Combi;
 
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
-
-
 	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
 
-	N = Combi.generalized_binomial(n, k, q);
+	N = Combi.generalized_binomial(n, k, F->q);
 
 	M1 = NEW_int(k * n);
 	M2 = NEW_int(k * n);
@@ -1228,7 +1237,6 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	FREE_int(M2);
 	FREE_int(M);
 	FREE_OBJECT(Gr);
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_Grassmann_graph done" << endl;
@@ -1236,8 +1244,10 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 }
 
 
-void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
-		int epsilon, int d, int q, int verbose_level)
+void graph_theory_domain::make_orthogonal_collinearity_graph(
+		int *&Adj, int &N,
+		int epsilon, int d,
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1245,12 +1255,9 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph" << endl;
 	}
 
-	field_theory::finite_field *F;
 	int i, j;
 	int n, a, nb_e, nb_inc;
-	//int c1 = 0, c2 = 0, c3 = 0;
 	int *v, *v2;
-	//int *Gram; // Gram matrix
 	geometry::geometry_global Gg;
 	orthogonal_geometry::quadratic_form *Quadratic_form;
 
@@ -1259,24 +1266,20 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 
 	v = NEW_int(d);
 	v2 = NEW_int(d);
-	//Gram = NEW_int(d * d);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
-				"epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
+				"epsilon=" << epsilon << " n=" << n << " q=" << F->q << endl;
 	}
 
 
-	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
+	N = Gg.nb_pts_Qepsilon(epsilon, n, F->q);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
 				"number of points = " << N << endl;
 	}
 
-	F = NEW_OBJECT(field_theory::finite_field);
-
-	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 1);
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph field:" << endl;
 		F->print();
@@ -1322,20 +1325,15 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	nb_e = 0;
 	nb_inc = 0;
 	for (i = 0; i < N; i++) {
-		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
-		//		Quadratic_form->form_c1,
-		//		Quadratic_form->form_c2,
-		//		Quadratic_form->form_c3,
-		//		i, 0 /* verbose_level */);
+
 		Quadratic_form->unrank_point(v, i, 0 /* verbose_level */);
+
 		for (j = i + 1; j < N; j++) {
-			//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v2, 1, epsilon, n,
-			//		Quadratic_form->form_c1,
-			//		Quadratic_form->form_c2,
-			//		Quadratic_form->form_c3,
-			//		j, 0 /* verbose_level */);
+
 			Quadratic_form->unrank_point(v2, j, 0 /* verbose_level */);
+
 			a = Quadratic_form->evaluate_bilinear_form(v, v2, 1);
+
 			if (a == 0) {
 				nb_e++;
 				Adj[i * N + j] = 1;
@@ -1357,16 +1355,15 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 
 	FREE_int(v);
 	FREE_int(v2);
-	//FREE_int(Gram);
 	FREE_OBJECT(Quadratic_form);
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph done" << endl;
 	}
 }
 
-void graph_theory_domain::make_non_attacking_queens_graph(int *&Adj, int &N,
+void graph_theory_domain::make_non_attacking_queens_graph(
+		int *&Adj, int &N,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1413,7 +1410,8 @@ void graph_theory_domain::make_non_attacking_queens_graph(int *&Adj, int &N,
 
 }
 
-void graph_theory_domain::make_disjoint_sets_graph(int *&Adj, int &N,
+void graph_theory_domain::make_disjoint_sets_graph(
+		int *&Adj, int &N,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1696,7 +1694,8 @@ void graph_theory_domain::all_cliques_of_given_size(int *Adj,
 	}
 }
 
-void graph_theory_domain::eigenvalues(graph_theory::colored_graph *CG, int verbose_level)
+void graph_theory_domain::eigenvalues(
+		graph_theory::colored_graph *CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

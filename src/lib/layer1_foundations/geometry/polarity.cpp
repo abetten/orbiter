@@ -141,20 +141,24 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 	FREE_int(A);
 
 	if (f_v) {
-		cout << "polarity::init_standard_polarity before determine_absolute_points" << endl;
+		cout << "polarity::init_standard_polarity "
+				"before determine_absolute_points" << endl;
 	}
 	determine_absolute_points(f_absolute, verbose_level);
 	if (f_v) {
-		cout << "polarity::init_standard_polarity after determine_absolute_points" << endl;
+		cout << "polarity::init_standard_polarity "
+				"after determine_absolute_points" << endl;
 	}
 
 	if (d == 4) {
 		if (f_v) {
-			cout << "polarity::init_standard_polarity before determine_absolute_lines" << endl;
+			cout << "polarity::init_standard_polarity "
+					"before determine_absolute_lines" << endl;
 		}
 		determine_absolute_lines(verbose_level);
 		if (f_v) {
-			cout << "polarity::init_standard_polarity after determine_absolute_lines" << endl;
+			cout << "polarity::init_standard_polarity "
+					"after determine_absolute_lines" << endl;
 		}
 
 	}
@@ -271,20 +275,24 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 	FREE_int(B);
 
 	if (f_v) {
-		cout << "polarity::init_general_polarity before determine_absolute_points" << endl;
+		cout << "polarity::init_general_polarity "
+				"before determine_absolute_points" << endl;
 	}
 	determine_absolute_points(f_absolute, verbose_level);
 	if (f_v) {
-		cout << "polarity::init_general_polarity after determine_absolute_points" << endl;
+		cout << "polarity::init_general_polarity "
+				"after determine_absolute_points" << endl;
 	}
 
 	if (d == 4) {
 		if (f_v) {
-			cout << "polarity::init_general_polarity before determine_absolute_lines" << endl;
+			cout << "polarity::init_general_polarity "
+					"before determine_absolute_lines" << endl;
 		}
 		determine_absolute_lines(verbose_level);
 		if (f_v) {
-			cout << "polarity::init_general_polarity after determine_absolute_lines" << endl;
+			cout << "polarity::init_general_polarity "
+					"after determine_absolute_lines" << endl;
 		}
 
 	}
@@ -306,7 +314,8 @@ void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
 	}
 
 	if (P->n != 3) {
-		cout << "polarity::determine_absolute_points we need n=3, skipping" << endl;
+		cout << "polarity::determine_absolute_points "
+				"we need n=3, skipping" << endl;
 		return;
 	}
 	N_points = P->nb_rk_k_subspaces_as_lint(1 /* type_i */);
@@ -319,14 +328,16 @@ void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
 			0 /* verbose_level */);
 		if (f_absolute[i]) {
 			if (FALSE) {
-				cout << "polarity::determine_absolute_points absolute point: " << i << endl;
+				cout << "polarity::determine_absolute_points "
+						"absolute point: " << i << endl;
 			}
 			N++;
 		}
 	}
 
 	if (f_v) {
-		cout << "polarity::determine_absolute_points The number of absolute points is " << N << endl;
+		cout << "polarity::determine_absolute_points "
+				"The number of absolute points is " << N << endl;
 	}
 
 }
@@ -341,7 +352,8 @@ void polarity::determine_absolute_lines(int verbose_level)
 	}
 
 	if (P->n != 3) {
-		cout << "polarity::determine_absolute_lines we need n=3, skipping" << endl;
+		cout << "polarity::determine_absolute_lines "
+				"we need n=3, skipping" << endl;
 		return;
 	}
 	f_absolute_line = NEW_int(P->N_lines);
@@ -358,7 +370,8 @@ void polarity::determine_absolute_lines(int verbose_level)
 		}
 		if (f_absolute_line[i]) {
 			if (FALSE) {
-				cout << "polarity::determine_absolute_lines absolute line: " << i << endl;
+				cout << "polarity::determine_absolute_lines "
+						"absolute line: " << i << endl;
 			}
 			nb_absolute_lines++;
 		}
@@ -368,7 +381,8 @@ void polarity::determine_absolute_lines(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "polarity::determine_absolute_lines The number of absolute lines is " << nb_absolute_lines << endl;
+		cout << "polarity::determine_absolute_lines "
+				"The number of absolute lines is " << nb_absolute_lines << endl;
 	}
 
 }
@@ -397,13 +411,15 @@ void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "polarity::init_reversal_polarity before init_general_polarity" << endl;
+		cout << "polarity::init_reversal_polarity "
+				"before init_general_polarity" << endl;
 	}
 
 	init_general_polarity(P, Mtx, verbose_level);
 
 	if (f_v) {
-		cout << "polarity::init_reversal_polarity after init_general_polarity" << endl;
+		cout << "polarity::init_reversal_polarity "
+				"after init_general_polarity" << endl;
 	}
 
 	FREE_int(Mtx);

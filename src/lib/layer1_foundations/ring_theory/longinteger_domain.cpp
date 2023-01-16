@@ -225,7 +225,8 @@ void longinteger_domain::add_mod(longinteger_object &a,
 }
 
 void longinteger_domain::add_in_place(
-		longinteger_object &a, longinteger_object &b)
+		longinteger_object &a,
+		longinteger_object &b)
 // a := a + b
 {
 	longinteger_object C;
@@ -519,7 +520,8 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 }
 
 void longinteger_domain::multiply_up(
-		longinteger_object &a, int *x, int len, int verbose_level)
+		longinteger_object &a, int *x, int len,
+		int verbose_level)
 {
 	longinteger_object b, c;
 	int i;
@@ -563,7 +565,8 @@ void longinteger_domain::multiply_up(
 }
 
 void longinteger_domain::multiply_up_lint(
-		longinteger_object &a, long int *x, int len, int verbose_level)
+		longinteger_object &a, long int *x, int len,
+		int verbose_level)
 {
 	longinteger_object b, c;
 	int i;
@@ -789,7 +792,8 @@ void longinteger_domain::inverse_mod(
 void longinteger_domain::extended_gcd(
 	longinteger_object &a,
 	longinteger_object &b, longinteger_object &g, 
-	longinteger_object &u, longinteger_object &v, int verbose_level)
+	longinteger_object &u, longinteger_object &v,
+	int verbose_level)
 // the gcd computed here is always nonnegative
 {
 	int f_v = (verbose_level >= 1);
@@ -1037,7 +1041,8 @@ void longinteger_domain::power_longint_mod(
 
 
 void longinteger_domain::square_root(
-		longinteger_object &a, longinteger_object &sqrt_a,
+		longinteger_object &a,
+		longinteger_object &sqrt_a,
 		int verbose_level)
 {
 	int i, la, len;
@@ -1431,7 +1436,8 @@ void longinteger_domain::create_Fermat(longinteger_object &F, int n)
 
 
 
-void longinteger_domain::Dedekind_number(longinteger_object &Dnq, int n, int q, int verbose_level)
+void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
+		int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -1967,7 +1973,8 @@ void longinteger_domain::random_number_with_n_decimals(
 
 
 void longinteger_domain::matrix_product(
-		longinteger_object *A, longinteger_object *B,
+		longinteger_object *A,
+		longinteger_object *B,
 		longinteger_object *&C, int Am, int An, int Bn)
 {
 	int i, j, k;
@@ -2009,7 +2016,7 @@ void longinteger_domain::matrix_entries_integral_division_exact(
 }
 
 void longinteger_domain::matrix_print_GAP(
-		ostream &ost, longinteger_object *A,
+		std::ostream &ost, longinteger_object *A,
 		int Am, int An)
 {
 	int i, j;
@@ -2034,7 +2041,7 @@ void longinteger_domain::matrix_print_GAP(
 }
 
 void longinteger_domain::matrix_print_tex(
-		ostream &ost, longinteger_object *A,
+		std::ostream &ost, longinteger_object *A,
 		int Am, int An)
 {
 	int i, j;
@@ -2199,7 +2206,8 @@ void longinteger_domain::print_digits(char *rep, int len)
 void longinteger_domain::Chinese_Remainders(
 		std::vector<long int> &Remainders,
 		std::vector<long int> &Moduli,
-		longinteger_object &x, longinteger_object &M, int verbose_level)
+		longinteger_object &x, longinteger_object &M,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

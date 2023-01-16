@@ -79,7 +79,8 @@ graph_classify::~graph_classify()
 }
 
 
-void graph_classify::init(graph_classify_description *Descr, int verbose_level)
+void graph_classify::init(
+		graph_classify_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -437,7 +438,8 @@ int graph_classify::check_regularity(
 }
 
 
-int graph_classify::compute_degree_sequence(long int *S, int len)
+int graph_classify::compute_degree_sequence(
+		long int *S, int len)
 {
 	long int h, a, i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -602,7 +604,7 @@ void graph_classify::get_adjacency(long int *S, int len, int verbose_level)
 		}
 }
 
-void graph_classify::print(ostream &ost, long int *S, int len)
+void graph_classify::print(std::ostream &ost, long int *S, int len)
 {
 	int i, j;
 	
@@ -666,8 +668,10 @@ void graph_classify::print_score_sequences(
 
 }
 
-void graph_classify::score_sequence(int n,
-		long int *set, int sz, long int *score, int verbose_level)
+void graph_classify::score_sequence(
+		int n,
+		long int *set, int sz, long int *score,
+		int verbose_level)
 {
 	int i, a, swap, a2, u, v;
 	combinatorics::combinatorics_domain Combi;
@@ -1036,7 +1040,7 @@ static void graph_classify_test_function(long int *S, int len,
 	}
 }
 
-static void graph_classify_print_set(ostream &ost,
+static void graph_classify_print_set(std::ostream &ost,
 		int len, long int *S, void *data)
 {
 	graph_classify *Gen = (graph_classify *) data;

@@ -76,7 +76,8 @@ incidence::~incidence()
 
 }
 
-void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
+void incidence::init(gen_geo *gg,
+		int v, int b, int *R, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -316,7 +317,8 @@ void incidence::set_split(int row, int remainder, int modulo)
 
 
 
-void incidence::print_geo(std::ostream &ost, int v, int *theGEO)
+void incidence::print_geo(
+		std::ostream &ost, int v, int *theGEO)
 {
 	int i, j, s, a;
 
@@ -330,7 +332,8 @@ void incidence::print_geo(std::ostream &ost, int v, int *theGEO)
 
 }
 
-void incidence::print_inc(std::ostream &ost, int v, long int *theInc)
+void incidence::print_inc(
+		std::ostream &ost, int v, long int *theInc)
 {
 	int i, j, s;
 	long int a;
@@ -345,7 +348,8 @@ void incidence::print_inc(std::ostream &ost, int v, long int *theInc)
 
 }
 
-void incidence::print_sage(std::ostream &ost, int v, long int *theInc)
+void incidence::print_sage(
+		std::ostream &ost, int v, long int *theInc)
 {
 	long int *Blocks;
 	long int a;
@@ -375,7 +379,8 @@ void incidence::print_sage(std::ostream &ost, int v, long int *theInc)
 	FREE_lint(Blocks);
 }
 
-void incidence::print_blocks(std::ostream &ost, int v, long int *theInc)
+void incidence::print_blocks(
+		std::ostream &ost, int v, long int *theInc)
 {
 	long int *Blocks;
 	int i, b;
@@ -390,7 +395,8 @@ void incidence::print_blocks(std::ostream &ost, int v, long int *theInc)
 	FREE_lint(Blocks);
 }
 
-void incidence::compute_blocks(long int *&Blocks, int *&K, int v, long int *theInc)
+void incidence::compute_blocks(
+		long int *&Blocks, int *&K, int v, long int *theInc)
 {
 	int i, j, s, b, h;
 	long int a;
@@ -431,7 +437,8 @@ void incidence::compute_blocks(long int *&Blocks, int *&K, int v, long int *theI
 }
 
 
-void incidence::compute_blocks_ranked(long int *&Blocks, int v, long int *theInc)
+void incidence::compute_blocks_ranked(
+		long int *&Blocks, int v, long int *theInc)
 {
 	int i, j, s, b, k, h;
 	long int a;
@@ -569,7 +576,8 @@ int incidence::is_block_tactical(int v, long int *theInc)
 }
 
 
-void incidence::geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags)
+void incidence::geo_to_inc(
+		int v, int *theGEO, long int *theInc, int nb_flags)
 {
 	int i, j, s, a;
 
@@ -587,7 +595,8 @@ void incidence::geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags)
 
 }
 
-void incidence::inc_to_geo(int v, long int *theInc, int *theGEO, int nb_flags)
+void incidence::inc_to_geo(
+		int v, long int *theInc, int *theGEO, int nb_flags)
 {
 	int i, j, s, a;
 

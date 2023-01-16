@@ -449,7 +449,8 @@ void surface_domain::substitute_semilinear(
 
 void surface_domain::list_starter_configurations(
 	long int *Lines, int nb_lines,
-	data_structures::set_of_sets *line_intersections, int *&Table, int &N,
+	data_structures::set_of_sets *line_intersections,
+	int *&Table, int &N,
 	int verbose_level)
 // Goes over all lines of the surface which intersect at least 5 others.
 // Then filters those 5-subsets which together
@@ -563,7 +564,8 @@ void surface_domain::list_starter_configurations(
 
 void surface_domain::create_starter_configuration(
 	int line_idx, int subset_idx, 
-	data_structures::set_of_sets *line_neighbors, long int *Lines, long int *S,
+	data_structures::set_of_sets *line_neighbors,
+	long int *Lines, long int *S,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -674,9 +676,11 @@ void surface_domain::klein_to_wedge_vec(
 	}
 }
 
-void surface_domain::save_lines_in_three_kinds(std::string &fname_csv,
+void surface_domain::save_lines_in_three_kinds(
+		std::string &fname_csv,
 	long int *Lines_wedge,
-	long int *Lines, long int *Lines_klein, int nb_lines)
+	long int *Lines,
+	long int *Lines_klein, int nb_lines)
 {
 	data_structures::spreadsheet *Sp;
 	

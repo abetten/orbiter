@@ -126,7 +126,8 @@ int classify_bitvectors::search(uchar *data,
 }
 
 void classify_bitvectors::search_and_add_if_new(uchar *data,
-		void *extra_data, int &f_found, int &idx, int verbose_level)
+		void *extra_data, int &f_found, int &idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;

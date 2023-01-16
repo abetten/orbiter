@@ -1174,7 +1174,8 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 	}
 }
 
-int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_level)
+int linear_set_classify::test_set_secondary(
+		int len, long int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

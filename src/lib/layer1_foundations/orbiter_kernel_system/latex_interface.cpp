@@ -558,7 +558,7 @@ void latex_interface::foot(std::ostream& ost)
 
 
 // two functions from DISCRETA1:
-// adapted to use ostream instead of FILE pointer
+// adapted to use std::ostream instead of FILE pointer
 
 void latex_interface::incma_latex_with_text_labels(std::ostream &fp,
 		graphics::draw_incidence_structure_description *Descr,

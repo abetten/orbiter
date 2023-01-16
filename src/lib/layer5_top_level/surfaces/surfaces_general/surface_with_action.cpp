@@ -1427,7 +1427,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 
 
-void surface_with_action::report_basics(ostream &ost)
+void surface_with_action::report_basics(std::ostream &ost)
 {
 
 	Surf->print_basics(ost);
@@ -1436,7 +1436,7 @@ void surface_with_action::report_basics(ostream &ost)
 
 }
 
-void surface_with_action::report_double_triplets(ostream &ost)
+void surface_with_action::report_double_triplets(std::ostream &ost)
 {
 
 
@@ -1445,7 +1445,7 @@ void surface_with_action::report_double_triplets(ostream &ost)
 
 }
 
-void surface_with_action::report_double_triplets_detailed(ostream &ost)
+void surface_with_action::report_double_triplets_detailed(std::ostream &ost)
 {
 
 

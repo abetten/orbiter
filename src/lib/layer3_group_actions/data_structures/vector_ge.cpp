@@ -68,7 +68,8 @@ void vector_ge::copy(vector_ge *&vector_copy, int verbose_level)
 	}
 }
 
-void vector_ge::init_by_hdl(actions::action *A, int *gen_hdl, int nb_gen, int verbose_level)
+void vector_ge::init_by_hdl(actions::action *A,
+		int *gen_hdl, int nb_gen, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -86,7 +87,8 @@ void vector_ge::init_by_hdl(actions::action *A, int *gen_hdl, int nb_gen, int ve
 	}
 }
 
-void vector_ge::init_single(actions::action *A, int *Elt, int verbose_level)
+void vector_ge::init_single(actions::action *A,
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -101,7 +103,8 @@ void vector_ge::init_single(actions::action *A, int *Elt, int verbose_level)
 	}
 }
 
-void vector_ge::init_double(actions::action *A, int *Elt1, int *Elt2, int verbose_level)
+void vector_ge::init_double(actions::action *A,
+		int *Elt1, int *Elt2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -257,7 +260,7 @@ int *vector_ge::ith(int i)
 	return data + i * A->elt_size_in_int; 
 }
 
-void vector_ge::print(ostream &ost)
+void vector_ge::print(std::ostream &ost)
 {
 	int i;
 
@@ -268,7 +271,7 @@ void vector_ge::print(ostream &ost)
 	}
 }
 
-void vector_ge::print_quick(ostream& ost)
+void vector_ge::print_quick(std::ostream& ost)
 {
 	int i;
 	
@@ -287,7 +290,7 @@ void vector_ge::print_quick(ostream& ost)
 	ost << ")" << endl;
 }
 
-void vector_ge::print_tex(ostream &ost)
+void vector_ge::print_tex(std::ostream &ost)
 {
 	int i;
 
@@ -310,7 +313,7 @@ void vector_ge::print_tex(ostream &ost)
 
 
 void vector_ge::print_generators_tex(
-		ring_theory::longinteger_object &go, ostream &ost)
+		ring_theory::longinteger_object &go, std::ostream &ost)
 {
 	int i;
 
@@ -332,7 +335,7 @@ void vector_ge::print_generators_tex(
 	}
 }
 
-void vector_ge::print_as_permutation(ostream& ost)
+void vector_ge::print_as_permutation(std::ostream& ost)
 {
 	int i;
 	
@@ -403,7 +406,8 @@ void vector_ge::reallocate(int new_length, int verbose_level)
 	}
 }
 
-void vector_ge::reallocate_and_insert_at(int position, int *elt, int verbose_level)
+void vector_ge::reallocate_and_insert_at(
+		int position, int *elt, int verbose_level)
 {
 	int *data2;
 	int *elt1, *elt2, i;
@@ -445,7 +449,8 @@ void vector_ge::reallocate_and_insert_at(int position, int *elt, int verbose_lev
 	}
 }
 
-void vector_ge::insert_at(int length_before, int position, int *elt, int verbose_level)
+void vector_ge::insert_at(int length_before,
+		int position, int *elt, int verbose_level)
 // does not reallocate, but shifts elements up to make space.
 // the last element might be lost if there is no space.
 {
@@ -534,7 +539,8 @@ void vector_ge::conjugate_sasv(int *Elt)
 	FREE_int(Elt3);
 }
 
-void vector_ge::print_with_given_action(ostream &ost, actions::action *A2)
+void vector_ge::print_with_given_action(
+		std::ostream &ost, actions::action *A2)
 {
 	int i, l;
 
@@ -548,8 +554,10 @@ void vector_ge::print_with_given_action(ostream &ost, actions::action *A2)
 	}
 }
 
-void vector_ge::print(ostream &ost, int f_print_as_permutation, 
-	int f_offset, int offset, int f_do_it_anyway_even_for_big_degree, 
+void vector_ge::print(std::ostream &ost,
+		int f_print_as_permutation,
+	int f_offset, int offset,
+	int f_do_it_anyway_even_for_big_degree,
 	int f_print_cycles_of_length_one)
 {
 	int i, l;
@@ -574,7 +582,7 @@ void vector_ge::print(ostream &ost, int f_print_as_permutation,
 	}
 }
 
-void vector_ge::print_for_make_element(ostream &ost)
+void vector_ge::print_for_make_element(std::ostream &ost)
 {
 	int i, l;
 
@@ -653,7 +661,8 @@ void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
 	}
 }
 
-void vector_ge::write_to_csv_file_coded(std::string &fname, int verbose_level)
+void vector_ge::write_to_csv_file_coded(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -681,7 +690,8 @@ void vector_ge::write_to_csv_file_coded(std::string &fname, int verbose_level)
 	}
 }
 
-void vector_ge::save_csv(std::string &fname, int verbose_level)
+void vector_ge::save_csv(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -718,7 +728,8 @@ void vector_ge::save_csv(std::string &fname, int verbose_level)
 
 }
 
-void vector_ge::export_inversion_graphs(std::string &fname, int verbose_level)
+void vector_ge::export_inversion_graphs(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -790,7 +801,9 @@ void vector_ge::export_inversion_graphs(std::string &fname, int verbose_level)
 }
 
 
-void vector_ge::read_column_csv(std::string &fname, actions::action *A, int col_idx, int verbose_level)
+void vector_ge::read_column_csv(std::string &fname,
+		actions::action *A, int col_idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -839,8 +852,11 @@ void vector_ge::read_column_csv(std::string &fname, actions::action *A, int col_
 	}
 }
 
-void vector_ge::read_column_csv_using_column_label(std::string &fname,
-		actions::action *A, std::string &column_label, int verbose_level)
+void vector_ge::read_column_csv_using_column_label(
+		std::string &fname,
+		actions::action *A,
+		std::string &column_label,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -933,7 +949,8 @@ void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 }
 
 void vector_ge::extract_subset_of_elements_by_rank(
-		int *rank_vector, int len, groups::sims *S, int verbose_level)
+		int *rank_vector, int len, groups::sims *S,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, r;
@@ -961,7 +978,8 @@ void vector_ge::extract_subset_of_elements_by_rank(
 	}
 }
 
-int vector_ge::test_if_all_elements_stabilize_a_point(actions::action *A2, int pt)
+int vector_ge::test_if_all_elements_stabilize_a_point(
+		actions::action *A2, int pt)
 {
 	int i;
 	
@@ -973,7 +991,8 @@ int vector_ge::test_if_all_elements_stabilize_a_point(actions::action *A2, int p
 	return TRUE;
 }
 
-int vector_ge::test_if_all_elements_stabilize_a_set(actions::action *A2,
+int vector_ge::test_if_all_elements_stabilize_a_set(
+		actions::action *A2,
 		long int *set, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1074,7 +1093,8 @@ void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
 }
 
 void vector_ge::matrix_representation(
-		induced_actions::action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
+		induced_actions::action_on_homogeneous_polynomials *A_on_HPD,
+		int *&M, int &nb_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

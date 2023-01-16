@@ -95,7 +95,7 @@ void sylow_structure::init(sims *S, int verbose_level)
 	}
 }
 
-void sylow_structure::report(ostream &ost)
+void sylow_structure::report(std::ostream &ost)
 {
 	int idx;
 

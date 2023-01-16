@@ -927,7 +927,7 @@ void wreath_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 }
 
-void wreath_product::element_print_for_make_element(int *Elt, ostream &ost)
+void wreath_product::element_print_for_make_element(int *Elt, std::ostream &ost)
 {
 	int f;
 
@@ -939,7 +939,7 @@ void wreath_product::element_print_for_make_element(int *Elt, ostream &ost)
 	}
 }
 
-void wreath_product::element_print_easy(int *Elt, ostream &ost)
+void wreath_product::element_print_easy(int *Elt, std::ostream &ost)
 {
 	int f;
 
@@ -959,7 +959,7 @@ void wreath_product::element_print_easy(int *Elt, ostream &ost)
 	ost << "end element of wreath product" << endl;
 }
 
-void wreath_product::element_print_latex(int *Elt, ostream &ost)
+void wreath_product::element_print_latex(int *Elt, std::ostream &ost)
 {
 	int f;
 	combinatorics::combinatorics_domain Combi;
@@ -1111,7 +1111,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 	}
 }
 void wreath_product::report_rank_one_tensors(
-		ostream &ost, int verbose_level)
+		std::ostream &ost, int verbose_level)
 {
 	verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -1904,7 +1904,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 	}
 }
 
-void wreath_product::report(ostream &ost, int verbose_level)
+void wreath_product::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

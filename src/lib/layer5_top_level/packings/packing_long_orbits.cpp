@@ -1151,7 +1151,7 @@ void packing_long_orbits::create_graph_on_long_orbits(
 }
 
 
-void packing_long_orbits::report_filtered_orbits(ostream &ost)
+void packing_long_orbits::report_filtered_orbits(std::ostream &ost)
 {
 	int i;
 

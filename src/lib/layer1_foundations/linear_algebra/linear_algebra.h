@@ -370,14 +370,6 @@ public:
 			int *Omega, int verbose_level);
 
 	// linear_algebra3.cpp
-#if 0
-	int evaluate_quadratic_form(int *v, int stride,
-		int epsilon, int k, int form_c1, int form_c2, int form_c3);
-	int evaluate_hyperbolic_quadratic_form(
-			int *v, int stride, int n);
-	int evaluate_hyperbolic_bilinear_form(
-			int *u, int *v, int n);
-#endif
 	int evaluate_conic_form(int *six_coeffs, int *v3);
 	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);
 	int Pluecker_12(int *x4, int *y4);

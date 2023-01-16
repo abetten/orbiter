@@ -104,7 +104,8 @@ search_blocking_set::~search_blocking_set()
 
 void search_blocking_set::init(
 		geometry::incidence_structure *Inc,
-		actions::action *A, int verbose_level)
+		actions::action *A,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j;
@@ -128,7 +129,8 @@ void search_blocking_set::init(
 	sz_active_set = NEW_int(Inc->nb_cols + 1);
 }
 
-void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_level)
+void search_blocking_set::find_partial_blocking_sets(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t0;
@@ -252,7 +254,8 @@ int search_blocking_set::test_level(int depth, int verbose_level)
 	return FALSE;
 }
 
-int search_blocking_set::test_blocking_set(int len, long int *S, int verbose_level)
+int search_blocking_set::test_blocking_set(
+		int len, long int *S, int verbose_level)
 // computes all Line_intersections[] sets based on the set S[len],
 // uses Inc->lines_on_point[]
 // tests if Line_intersections[j] is greater than zero 
@@ -404,7 +407,8 @@ done:
 }
 
 
-void search_blocking_set::search_for_blocking_set(int input_no,
+void search_blocking_set::search_for_blocking_set(
+		int input_no,
 		int level, int f_all, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

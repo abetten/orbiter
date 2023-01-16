@@ -104,7 +104,8 @@ public:
 	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
 
 	void do_make_macwilliams_system(int q, int n, int k, int verbose_level);
-	void make_Hamming_graph_and_write_file(int n, int q,
+	void make_Hamming_space_distance_matrix(
+			int n, field_theory::finite_field *F,
 			int f_projective, int verbose_level);
 	void compute_and_print_projective_weights(
 			std::ostream &ost, field_theory::finite_field *F,

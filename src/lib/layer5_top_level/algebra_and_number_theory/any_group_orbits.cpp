@@ -121,7 +121,7 @@ void any_group::orbits_on_poset_post_processing(
 		cout << "Orbits on subsets of size " << d << ":" << endl;
 		PC->list_all_orbits_at_level(d,
 				FALSE /* f_has_print_function */,
-				NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
+				NULL /* void (*print_function)(std::ostream &ost, int len, int *S, void *data)*/,
 				NULL /* void *print_function_data*/,
 				TRUE /* f_show_orbit_decomposition */,
 				TRUE /* f_show_stab */,

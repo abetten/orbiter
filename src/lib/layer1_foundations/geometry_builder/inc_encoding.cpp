@@ -154,7 +154,8 @@ int inc_encoding::find_square(int m, int n)
 }
 
 void inc_encoding::print_horizontal_bar(
-	std::ostream &ost, gen_geo *gg, int f_print_isot, iso_type *it)
+	std::ostream &ost,
+	gen_geo *gg, int f_print_isot, iso_type *it)
 {
 	int J, j;
 

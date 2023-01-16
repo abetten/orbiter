@@ -792,7 +792,7 @@ void geo_parameter::print_schemes_tex(tdo_scheme_synthetic &G)
 	}
 }
 
-void geo_parameter::print_scheme_tex(ostream &ost, tdo_scheme_synthetic &G, int h)
+void geo_parameter::print_scheme_tex(std::ostream &ost, tdo_scheme_synthetic &G, int h)
 {
 	G.print_scheme_tex_fancy(ost, h, TRUE, label);
 }

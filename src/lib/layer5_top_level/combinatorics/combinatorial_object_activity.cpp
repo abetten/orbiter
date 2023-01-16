@@ -842,7 +842,8 @@ void combinatorial_object_activity::classification_report(
 }
 
 void combinatorial_object_activity::latex_report(
-		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
 		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int verbose_level)
@@ -909,7 +910,8 @@ void combinatorial_object_activity::latex_report(
 
 void combinatorial_object_activity::report_all_isomorphism_types(
 		std::ostream &fp,
-		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
 		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int verbose_level)
@@ -980,7 +982,8 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 
 void combinatorial_object_activity::report_isomorphism_type(
 		std::ostream &fp,
-		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
 		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int i, int verbose_level)
@@ -1050,8 +1053,10 @@ void combinatorial_object_activity::report_isomorphism_type(
 	}
 }
 
-void combinatorial_object_activity::report_object(std::ostream &fp,
-		combinatorics::classification_of_objects_report_options *Report_options,
+void combinatorial_object_activity::report_object(
+		std::ostream &fp,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
 		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int object_idx,

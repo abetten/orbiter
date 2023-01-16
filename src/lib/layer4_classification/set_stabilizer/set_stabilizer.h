@@ -14,9 +14,9 @@ namespace set_stabilizer {
 
 
 
-// ####################################################################################
+// #############################################################################
 // compute_stabilizer.cpp
-// ####################################################################################
+// #############################################################################
 
 //! to compute the set-stabilizer
 
@@ -47,7 +47,8 @@ public:
 
 
 
-	actions::action *A_induced; // the action on Stab_orbits->interesting_points[]
+	actions::action *A_induced;
+		// the action on Stab_orbits->interesting_points[]
 
 	ring_theory::longinteger_object induced_go, K_go;
 
@@ -72,9 +73,12 @@ public:
 	//union_find_on_k_subsets *U;
 
 
-	long int *Canonical_form_input; // [nb_interesting_subsets_reduced * reduced_set_size]
-	long int *Canonical_forms; // [nb_interesting_subsets_reduced * reduced_set_size]
-	int *Canonical_form_transporter; // [nb_interesting_subsets_reduced * A_induced->elt_size_in_int]
+	long int *Canonical_form_input;
+		// [nb_interesting_subsets_reduced * reduced_set_size]
+	long int *Canonical_forms;
+		// [nb_interesting_subsets_reduced * reduced_set_size]
+	int *Canonical_form_transporter;
+		// [nb_interesting_subsets_reduced * A_induced->elt_size_in_int]
 
 	int nb_interesting_subsets_rr;
 	long int *interesting_subsets_rr;
@@ -88,15 +92,20 @@ public:
 			long int *canonical_pts,
 			int verbose_level);
 	void compute_automorphism_group(int verbose_level);
-	void compute_automorphism_group_handle_case(int cnt2, int verbose_level);
+	void compute_automorphism_group_handle_case(
+			int cnt2, int verbose_level);
 	void setup_stabilizer(groups::sims *Stab0, int verbose_level);
 	void restricted_action_on_interesting_points(int verbose_level);
 	void compute_canonical_form(int verbose_level);
-	void compute_canonical_form_handle_case(int cnt, int verbose_level);
-	void compute_canonical_set(long int *set_in, long int *set_out, int sz,
+	void compute_canonical_form_handle_case(
+			int cnt, int verbose_level);
+	void compute_canonical_set(
+			long int *set_in, long int *set_out, int sz,
 			int *transporter, int verbose_level);
-	void compute_canonical_set_and_group(long int *set_in, long int *set_out, int sz,
-			int *transporter, groups::sims *&stab, int verbose_level);
+	void compute_canonical_set_and_group(
+			long int *set_in, long int *set_out, int sz,
+			int *transporter,
+			groups::sims *&stab, int verbose_level);
 	void update_stabilizer(int verbose_level);
 	void add_automorphism(int verbose_level);
 	void retrieve_automorphism(int verbose_level);
@@ -182,15 +191,22 @@ public:
 	stabilizer_orbits_and_types();
 	~stabilizer_orbits_and_types();
 	void init(compute_stabilizer *CS, int verbose_level);
-	void compute_stabilizer_orbits_and_find_minimal_pattern(int verbose_level);
+	void compute_stabilizer_orbits_and_find_minimal_pattern(
+			int verbose_level);
 	// uses selected_set_stab_gens to compute orbits on points in action A2
-	void save_interesting_subsets_reduced(int stage, int verbose_level);
-	void find_orbit_pattern(int cnt, int *transp, int verbose_level);
+	void save_interesting_subsets_reduced(
+			int stage, int verbose_level);
+	void find_orbit_pattern(
+			int cnt, int *transp, int verbose_level);
 	// computes transporter to transp
 	void find_interesting_orbits(int verbose_level);
-	void compute_local_labels(long int *set_in, long int *set_out, int sz, int verbose_level);
-	void map_subset_and_compute_local_labels(int cnt, int verbose_level);
-	void map_reduced_set_and_do_orbit_counting(int cnt,
+	void compute_local_labels(
+			long int *set_in, long int *set_out, int sz,
+			int verbose_level);
+	void map_subset_and_compute_local_labels(
+			int cnt, int verbose_level);
+	void map_reduced_set_and_do_orbit_counting(
+			int cnt,
 			long int subset_idx, int *transporter, int verbose_level);
 		// computes orbit_count1[]
 	int check_orbit_count();
@@ -301,13 +317,15 @@ public:
 	int selected_orbit;
 	int selected_frequency;
 
-	long int *interesting_subsets; // [selected_frequency]
+	long int *interesting_subsets;
+		// [selected_frequency]
 	int nb_interesting_subsets;
 		// interesting_subsets are the lvl-subsets of the given set
 		// which are of the chosen type.
 		// There is nb_interesting_subsets of them.
 
-	groups::strong_generators *gens; // generators for the selected canonical subset
+	groups::strong_generators *gens;
+		// generators for the selected canonical subset
 	//int *transporter_to_canonical_form;
 	//strong_generators *Gens_stabilizer_original_set;
 

@@ -35,13 +35,15 @@ group_container::~group_container()
 	delete_sims();
 }
 
-void group_container::init(actions::action *A, int verbose_level)
+void group_container::init(actions::action *A,
+		int verbose_level)
 {
 	//null();
 	group_container::A = A;
 }
 
-void group_container::init_ascii_coding_to_sims(std::string &ascii_coding, int verbose_level)
+void group_container::init_ascii_coding_to_sims(
+		std::string &ascii_coding, int verbose_level)
 {
 	if (ascii_coding.length()) {
 		init_ascii_coding(ascii_coding, verbose_level);
@@ -59,7 +61,8 @@ void group_container::init_ascii_coding_to_sims(std::string &ascii_coding, int v
 	schreier_sims(0);
 }
 
-void group_container::init_ascii_coding(std::string &ascii_coding, int verbose_level)
+void group_container::init_ascii_coding(
+		std::string &ascii_coding, int verbose_level)
 {
 	delete_ascii_coding();
 	
@@ -87,7 +90,8 @@ void group_container::init_strong_generators_empty_set(int verbose_level)
 	f_has_strong_generators = TRUE;
 }
 
-void group_container::init_strong_generators(vector_ge &SG, int *tl, int verbose_level)
+void group_container::init_strong_generators(vector_ge &SG,
+		int *tl, int verbose_level)
 {
 	int i;
 	
@@ -106,7 +110,8 @@ void group_container::init_strong_generators(vector_ge &SG, int *tl, int verbose
 	f_has_strong_generators = TRUE;
 }
 
-void group_container::init_strong_generators_by_handle_and_with_tl(std::vector<int> &gen_handle,
+void group_container::init_strong_generators_by_handle_and_with_tl(
+		std::vector<int> &gen_handle,
 		std::vector<int> &tl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -138,8 +143,9 @@ void group_container::init_strong_generators_by_handle_and_with_tl(std::vector<i
 	}
 }
 
-void group_container::init_strong_generators_by_hdl(int nb_gen,
-		int *gen_hdl, int *tl, int verbose_level)
+void group_container::init_strong_generators_by_hdl(
+		int nb_gen, int *gen_hdl,
+		int *tl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -265,7 +271,7 @@ void group_container::group_order(ring_theory::longinteger_object &go)
 	}
 }
 
-void group_container::print_group_order(ostream &ost)
+void group_container::print_group_order(std::ostream &ost)
 {
 	ring_theory::longinteger_object go;
 	group_order(go);
@@ -462,7 +468,9 @@ void group_container::get_strong_generators(int verbose_level)
 	S->extract_strong_generators_in_order(*SG, tl, verbose_level - 1);
 }
 
-void group_container::point_stabilizer(group_container &stab, int pt, int verbose_level)
+void group_container::point_stabilizer(
+		group_container &stab, int pt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -564,8 +572,10 @@ void group_container::point_stabilizer_with_action(actions::action *A2,
 	}
 }
 
-void group_container::induced_action(actions::action &induced_action,
-		group_container &H, group_container &K, int verbose_level)
+void group_container::induced_action(
+		actions::action &induced_action,
+		group_container &H, group_container &K,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -712,7 +722,8 @@ void group_container::induced_action(actions::action &induced_action,
 	}
 }
 
-void group_container::extension(group_container &N, group_container &H, int verbose_level)
+void group_container::extension(group_container &N,
+		group_container &H, int verbose_level)
 	// N needs to have strong generators, 
 	// H needs to have sims
 	// N and H may have different actions, 
@@ -817,7 +828,7 @@ void group_container::extension(group_container &N, group_container &H, int verb
 	FREE_int(tl);
 }
 
-void group_container::print_strong_generators(ostream &ost,
+void group_container::print_strong_generators(std::ostream &ost,
 		int f_print_as_permutation)
 {
 	int i, l;
@@ -843,14 +854,16 @@ void group_container::print_strong_generators(ostream &ost,
 }
 
 void group_container::print_strong_generators_with_different_action(
-		ostream &ost, actions::action *A2)
+		std::ostream &ost, actions::action *A2)
 {
 	print_strong_generators_with_different_action_verbose(
 			ost, A2, 0);
 }
 
 void group_container::print_strong_generators_with_different_action_verbose(
-		ostream &ost, actions::action *A2, int verbose_level)
+		std::ostream &ost,
+		actions::action *A2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

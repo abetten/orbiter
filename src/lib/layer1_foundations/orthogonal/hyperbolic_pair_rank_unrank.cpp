@@ -124,7 +124,8 @@ long int hyperbolic_pair::rank_line(long int p1, long int p2, int verbose_level)
 }
 
 int hyperbolic_pair::line_type_given_point_types(
-		long int pt1, long int pt2, long int pt1_type, long int pt2_type)
+		long int pt1, long int pt2,
+		long int pt1_type, long int pt2_type)
 {
 	if (epsilon == 1) {
 		return hyperbolic_line_type_given_point_types(

@@ -1621,7 +1621,7 @@ void compute_ago_distribution_permuted(
 	}
 }
 
-void compute_and_print_ago_distribution(ostream &ost,
+void compute_and_print_ago_distribution(std::ostream &ost,
 	classify_bitvectors *CB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1639,7 +1639,7 @@ void compute_and_print_ago_distribution(ostream &ost,
 	FREE_OBJECT(C_ago);
 }
 
-void compute_and_print_ago_distribution_with_classes(ostream &ost,
+void compute_and_print_ago_distribution_with_classes(std::ostream &ost,
 	classify_bitvectors *CB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

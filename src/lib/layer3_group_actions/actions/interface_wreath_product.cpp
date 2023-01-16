@@ -396,7 +396,7 @@ static void wreath_product_group_element_dispose(action &A,
 }
 
 static void wreath_product_group_element_print(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
@@ -425,7 +425,7 @@ static void wreath_product_group_element_code_for_make_element(action &A,
 }
 
 static void wreath_product_group_element_print_for_make_element(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
@@ -434,7 +434,7 @@ static void wreath_product_group_element_print_for_make_element(action &A,
 }
 
 static void wreath_product_group_element_print_for_make_element_no_commas(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
@@ -443,7 +443,7 @@ static void wreath_product_group_element_print_for_make_element_no_commas(
 }
 
 static void wreath_product_group_element_print_quick(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
@@ -453,7 +453,7 @@ static void wreath_product_group_element_print_quick(
 }
 
 static void wreath_product_group_element_print_latex(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
@@ -473,7 +473,7 @@ static void wreath_product_group_element_print_latex_with_print_point_function(
 }
 
 static void wreath_product_group_element_print_verbose(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::wreath_product &W = *A.G.wreath_product_group;
 	int *Elt = (int *) elt;
@@ -482,7 +482,7 @@ static void wreath_product_group_element_print_verbose(
 
 }
 
-static void wreath_product_group_print_point(action &A, long int a, ostream &ost)
+static void wreath_product_group_print_point(action &A, long int a, std::ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
 

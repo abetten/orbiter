@@ -39,13 +39,13 @@ int_matrix::~int_matrix()
 {
 	if (M) {
 		FREE_int(M);
-		}
+	}
 	if (perm) {
 		FREE_int(perm);
-		}
+	}
 	if (perm_inv) {
 		FREE_int(perm_inv);
-		}
+	}
 }
 
 void int_matrix::allocate(int m, int n)
@@ -60,9 +60,9 @@ void int_matrix::allocate(int m, int n)
 
 void int_matrix::allocate_and_init(int m, int n, int *Mtx)
 {
-	if (M) {
-		FREE_int(M);
-		}
+	//if (M) {
+	//	FREE_int(M);
+	//	}
 	M = NEW_int(m * n);
 	int_matrix::m = m;
 	int_matrix::n = n;

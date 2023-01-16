@@ -51,7 +51,8 @@ poset_with_group_action::~poset_with_group_action()
 	}
 }
 
-void poset_with_group_action::init_subset_lattice(actions::action *A, actions::action *A2,
+void poset_with_group_action::init_subset_lattice(
+		actions::action *A, actions::action *A2,
 		groups::strong_generators *Strong_gens,
 		int verbose_level)
 {
@@ -63,7 +64,8 @@ void poset_with_group_action::init_subset_lattice(actions::action *A, actions::a
 	f_subset_lattice = TRUE;
 	n = A2->degree;
 	if (f_v) {
-		cout << "poset_with_group_action::init_subset_lattice degree of action = " << n << endl;
+		cout << "poset_with_group_action::init_subset_lattice "
+				"degree of action = " << n << endl;
 	}
 	f_subspace_lattice = FALSE;
 	poset_with_group_action::A = A;
@@ -453,7 +455,7 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 	return Gen;
 }
 
-void poset_with_group_action::invoke_print_function(ostream &ost, int sz, long int *set)
+void poset_with_group_action::invoke_print_function(std::ostream &ost, int sz, long int *set)
 {
 	(*print_function)(ost, sz, set, print_function_data);
 }

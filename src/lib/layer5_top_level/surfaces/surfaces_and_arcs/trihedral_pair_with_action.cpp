@@ -930,7 +930,7 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 	}
 }
 
-void trihedral_pair_with_action::print_FG(ostream &ost)
+void trihedral_pair_with_action::print_FG(std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 
@@ -1284,7 +1284,7 @@ void trihedral_pair_with_action::print_isomorphism_types_of_trihedral_pairs(
 }
 #endif
 
-void trihedral_pair_with_action::report(ostream &ost, int verbose_level)
+void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1405,7 +1405,7 @@ void trihedral_pair_with_action::report(ostream &ost, int verbose_level)
 	}
 }
 
-void trihedral_pair_with_action::report_iso_type_as_double_triplets(ostream &ost)
+void trihedral_pair_with_action::report_iso_type_as_double_triplets(std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 	int i;

@@ -364,7 +364,9 @@ public:
 
 	buekenhout_metz();
 	~buekenhout_metz();
-	void buekenhout_metz_init(field_theory::finite_field *Fq, field_theory::finite_field *FQ,
+	void buekenhout_metz_init(
+			field_theory::finite_field *Fq,
+			field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level);
 	void init_ovoid(int verbose_level);
@@ -665,13 +667,6 @@ public:
 	int f_BLT_database_embedded;
 	int BLT_database_embedded_k;
 
-#if 0
-	int f_BLT_Linear;
-	int f_BLT_Fisher;
-	int f_BLT_Mondello;
-	int f_BLT_FTWKB;
-#endif
-
 	int f_elliptic_quadric_ovoid;
 	int f_ovoid_ST;
 
@@ -688,8 +683,6 @@ public:
 	int f_elliptic_curve;
 	int elliptic_curve_b;
 	int elliptic_curve_c;
-
-	//int f_Hill_cap_56;
 
 	int f_ttp_code;
 	int f_ttp_construction_A;
@@ -783,25 +776,6 @@ public:
 	void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
 			ring_theory::longinteger_object &a);
 	int PG_element_modified_is_in_subspace(int n, int m, int *v);
-	void test_PG(int n, int q);
-	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
-			field_theory::finite_field *FQ,
-			field_theory::finite_field *Fq, int verbose_level);
-	void create_Linear_BLT_set(long int *BLT, int *ABC,
-			field_theory::finite_field *FQ,
-			field_theory::finite_field *Fq, int verbose_level);
-	void create_Mondello_BLT_set(long int *BLT, int *ABC,
-			field_theory::finite_field *FQ,
-			field_theory::finite_field *Fq, int verbose_level);
-	void print_quadratic_form_list_coded(int form_nb_terms,
-		int *form_i, int *form_j, int *form_coeff);
-	void make_Gram_matrix_from_list_coded_quadratic_form(
-		int n, field_theory::finite_field &F,
-		int nb_terms, int *form_i, int *form_j,
-		int *form_coeff, int *Gram);
-	void add_term(int n, field_theory::finite_field &F, int &nb_terms,
-		int *form_i, int *form_j, int *form_coeff, int *Gram,
-		int i, int j, int coeff);
 	int test_if_arc(field_theory::finite_field *Fq,
 			int *pt_coords, int *set,
 			int set_sz, int k, int verbose_level);
@@ -872,12 +846,6 @@ public:
 			std::string &point,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
-#if 0
-	void do_cheat_sheet_Gr(field_theory::finite_field *F,
-			int n, int k,
-			int verbose_level);
-	// creates a projective_space object
-#endif
 	void do_cheat_sheet_hermitian(field_theory::finite_field *F,
 			int projective_dimension,
 			int verbose_level);
@@ -893,14 +861,6 @@ public:
 			long int *lines, int nb_lines,
 			int verbose_level);
 	// creates incidence_structure and data_structures::partitionstack objects
-#if 0
-	void latex_homogeneous_equation(field_theory::finite_field *F, int degree, int nb_vars,
-			std::string &equation_text,
-			std::string &symbol_txt,
-			std::string &symbol_tex,
-			int verbose_level);
-#endif
-	// creates ring_theory::homogeneous_polynomial_domain
 	void create_BLT_point(field_theory::finite_field *F,
 			int *v5, int a, int b, int c, int verbose_level);
 		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
@@ -939,7 +899,8 @@ public:
 			int verbose_level);
 	void andre_preimage(
 			projective_space *P2, projective_space *P4,
-		long int *set2, int sz2, long int *set4, int &sz4, int verbose_level);
+		long int *set2, int sz2, long int *set4, int &sz4,
+		int verbose_level);
 	void find_secant_lines(
 			projective_space *P,
 			long int *set, int set_size,
@@ -1007,6 +968,7 @@ public:
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
 		int verbose_level);
+	// creates a quadratic form
 	void create_hermitian(
 			field_theory::finite_field *F,
 			int n,
@@ -1021,6 +983,7 @@ public:
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
+	// creates a projective_space
 	void create_segre_variety(
 			field_theory::finite_field *F,
 			int a, int b,
@@ -1043,6 +1006,7 @@ public:
 		int epsilon, int n,
 		long int *set_in, long int *&set_out, int set_size,
 		int verbose_level);
+	// creates a quadratic_form object
 	void do_embed_points(
 			field_theory::finite_field *F,
 			int n,
@@ -1154,7 +1118,8 @@ public:
 			long int *Spread, int spread_sz,
 			int *&Spread_set, int &sz,
 			int verbose_level);
-	void make_partition(long int *Spread, int spread_sz, long int *&Part, int &s, int verbose_level);
+	void make_partition(long int *Spread, int spread_sz,
+			long int *&Part, int &s, int verbose_level);
 	void make_spread_element(int *Spread_element, int *A, int verbose_level);
 	void cheat_sheet_subspaces(std::ostream &f, int verbose_level);
 	void Pluecker_coordinates(
@@ -1183,6 +1148,9 @@ public:
 			long int *data, int size, int threshold,
 			intersection_type *&Int_type,
 			int verbose_level);
+	void get_spread_matrices(int *G, int *H,
+			long int *data, int verbose_level);
+	// assuming we are in PG(3,q)
 
 };
 
@@ -1364,17 +1332,24 @@ class incidence_structure {
 	void check_point_pairs(int verbose_level);
 	int lines_through_two_points(int *lines, int p1, int p2, 
 		int verbose_level);
-	void init_projective_space(projective_space *P, int verbose_level);
-	void init_hjelmslev(hjelmslev *H, int verbose_level);
-	void init_orthogonal(orthogonal_geometry::orthogonal *O, int verbose_level);
+	void init_projective_space(
+			projective_space *P, int verbose_level);
+	void init_hjelmslev(
+			hjelmslev *H, int verbose_level);
+	void init_orthogonal(
+			orthogonal_geometry::orthogonal *O,
+			int verbose_level);
 	void init_by_incidences(int m, int n, int nb_inc, int *X, 
 		int verbose_level);
 	void init_by_R_and_X(int m, int n, int *R, int *X, int max_r, 
 		int verbose_level);
-	void init_by_set_of_sets(data_structures::set_of_sets *SoS, int verbose_level);
+	void init_by_set_of_sets(
+			data_structures::set_of_sets *SoS,
+			int verbose_level);
 	void init_by_matrix(int m, int n, int *M, int verbose_level);
 	void init_by_matrix_as_bitmatrix(
-			int m, int n, data_structures::bitmatrix *Bitmatrix,
+			int m, int n,
+			data_structures::bitmatrix *Bitmatrix,
 			int verbose_level);
 	void init_by_matrix2(int verbose_level);
 	int nb_points();
@@ -1386,29 +1361,40 @@ class incidence_structure {
 	void save_inc_file(char *fname);
 	void save_row_by_row_file(char *fname);
 	void print(std::ostream &ost);
-	void compute_TDO_safe_first(data_structures::partitionstack &PStack,
+	void compute_TDO_safe_first(
+			data_structures::partitionstack &PStack,
 		int depth, int &step, int &f_refine, 
 		int &f_refine_prev, int verbose_level);
-	int compute_TDO_safe_next(data_structures::partitionstack &PStack,
+	int compute_TDO_safe_next(
+			data_structures::partitionstack &PStack,
 		int depth, int &step, int &f_refine, 
 		int &f_refine_prev, int verbose_level);
 		// returns TRUE when we are done, FALSE otherwise
-	void compute_TDO_safe(data_structures::partitionstack &PStack,
+	void compute_TDO_safe(
+			data_structures::partitionstack &PStack,
 		int depth, int verbose_level);
-	int compute_TDO(data_structures::partitionstack &PStack, int ht0, int depth,
+	int compute_TDO(
+			data_structures::partitionstack &PStack,
+			int ht0, int depth,
 		int verbose_level);
-	int compute_TDO_step(data_structures::partitionstack &PStack, int ht0,
+	int compute_TDO_step(
+			data_structures::partitionstack &PStack, int ht0,
 		int verbose_level);
-	void get_partition(data_structures::partitionstack &PStack,
+	void get_partition(
+			data_structures::partitionstack &PStack,
 		int *row_classes, int *row_class_idx, int &nb_row_classes, 
 		int *col_classes, int *col_class_idx, int &nb_col_classes);
-	int refine_column_partition_safe(data_structures::partitionstack &PStack,
+	int refine_column_partition_safe(
+			data_structures::partitionstack &PStack,
 		int verbose_level);
-	int refine_row_partition_safe(data_structures::partitionstack &PStack,
+	int refine_row_partition_safe(
+			data_structures::partitionstack &PStack,
 		int verbose_level);
-	int refine_column_partition(data_structures::partitionstack &PStack, int ht0,
+	int refine_column_partition(
+			data_structures::partitionstack &PStack, int ht0,
 		int verbose_level);
-	int refine_row_partition(data_structures::partitionstack &PStack, int ht0,
+	int refine_row_partition(
+			data_structures::partitionstack &PStack, int ht0,
 		int verbose_level);
 	void print_row_tactical_decomposition_scheme_incidences_tex(
 			data_structures::partitionstack &PStack,
@@ -1422,64 +1408,83 @@ class incidence_structure {
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int f_local_coordinates, int verbose_level);
-	void get_incidences_by_row_scheme(data_structures::partitionstack &PStack,
+	void get_incidences_by_row_scheme(
+			data_structures::partitionstack &PStack,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int row_class_idx, int col_class_idx, 
 		int rij, int *&incidences, int verbose_level);
-	void get_incidences_by_col_scheme(data_structures::partitionstack &PStack,
+	void get_incidences_by_col_scheme(
+			data_structures::partitionstack &PStack,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int row_class_idx, int col_class_idx, 
 		int kij, int *&incidences, int verbose_level);
-	void get_row_decomposition_scheme(data_structures::partitionstack &PStack,
+	void get_row_decomposition_scheme(
+			data_structures::partitionstack &PStack,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int *row_scheme, int verbose_level);
-	void get_row_decomposition_scheme_if_possible(data_structures::partitionstack &PStack,
+	void get_row_decomposition_scheme_if_possible(
+			data_structures::partitionstack &PStack,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int *row_scheme, int verbose_level);
-	void get_col_decomposition_scheme(data_structures::partitionstack &PStack,
+	void get_col_decomposition_scheme(
+			data_structures::partitionstack &PStack,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int *col_scheme, int verbose_level);
 	
-	void row_scheme_to_col_scheme(data_structures::partitionstack &PStack,
+	void row_scheme_to_col_scheme(
+			data_structures::partitionstack &PStack,
 		int *row_classes, int *row_class_inv, int nb_row_classes,
 		int *col_classes, int *col_class_inv, int nb_col_classes, 
 		int *row_scheme, int *col_scheme, int verbose_level);
-	void get_and_print_row_decomposition_scheme(data_structures::partitionstack &PStack,
-		int f_list_incidences, int f_local_coordinates, int verbose_level);
+	void get_and_print_row_decomposition_scheme(
+			data_structures::partitionstack &PStack,
+		int f_list_incidences,
+		int f_local_coordinates, int verbose_level);
 	void get_and_print_col_decomposition_scheme(
 			data_structures::partitionstack &PStack,
-		int f_list_incidences, int f_local_coordinates, int verbose_level);
-	void get_and_print_decomposition_schemes(data_structures::partitionstack &PStack);
-	void get_and_print_decomposition_schemes_tex(data_structures::partitionstack &PStack);
+		int f_list_incidences,
+		int f_local_coordinates, int verbose_level);
+	void get_and_print_decomposition_schemes(
+			data_structures::partitionstack &PStack);
+	void get_and_print_decomposition_schemes_tex(
+			data_structures::partitionstack &PStack);
 	void get_and_print_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math, data_structures::partitionstack &PStack);
+			std::ostream &ost, int f_enter_math,
+			data_structures::partitionstack &PStack);
 	void get_scheme(
 		int *&row_classes, int *&row_class_inv, int &nb_row_classes,
 		int *&col_classes, int *&col_class_inv, int &nb_col_classes,
-		int *&scheme, int f_row_scheme, data_structures::partitionstack &PStack);
+		int *&scheme, int f_row_scheme,
+		data_structures::partitionstack &PStack);
 	void free_scheme(
 		int *row_classes, int *row_class_inv, 
 		int *col_classes, int *col_class_inv, 
 		int *scheme);
 	void get_and_print_row_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math, int f_print_subscripts,
+			std::ostream &ost,
+			int f_enter_math, int f_print_subscripts,
 			data_structures::partitionstack &PStack);
 	void get_and_print_column_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math, int f_print_subscripts,
+			std::ostream &ost,
+			int f_enter_math, int f_print_subscripts,
 			data_structures::partitionstack &PStack);
 	void print_non_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math, data_structures::partitionstack &PStack);
-	void print_line(std::ostream &ost, data_structures::partitionstack &P,
+			std::ostream &ost, int f_enter_math,
+			data_structures::partitionstack &PStack);
+	void print_line(std::ostream &ost,
+			data_structures::partitionstack &P,
 		int row_cell, int i, int *col_classes, int nb_col_classes, 
 		int width, int f_labeled);
-	void print_column_labels(std::ostream &ost, data_structures::partitionstack &P,
+	void print_column_labels(
+			std::ostream &ost, data_structures::partitionstack &P,
 		int *col_classes, int nb_col_classes, int width);
-	void print_hline(std::ostream &ost, data_structures::partitionstack &P,
+	void print_hline(std::ostream &ost,
+			data_structures::partitionstack &P,
 		int *col_classes, int nb_col_classes, 
 		int width, int f_labeled);
 	void print_partitioned(std::ostream &ost,
@@ -1488,33 +1493,42 @@ class incidence_structure {
 		// G[nb_points() * nb_points()]
 	void line_intersection_graph(int *Adj, int verbose_level);
 		// G[nb_lines() * nb_lines()]
-	void latex_it(std::ostream &ost, data_structures::partitionstack &P);
+	void latex_it(std::ostream &ost,
+			data_structures::partitionstack &P);
 	void rearrange(int *&Vi, int &nb_V, 
-		int *&Bj, int &nb_B, int *&R, int *&X, data_structures::partitionstack &P);
+		int *&Bj, int &nb_B, int *&R, int *&X,
+		data_structures::partitionstack &P);
 	void decomposition_print_tex(std::ostream &ost,
-			data_structures::partitionstack &PStack, int f_row_tactical, int f_col_tactical,
-		int f_detailed, int f_local_coordinates, int verbose_level);
-	void do_tdo_high_level(data_structures::partitionstack &S,
+			data_structures::partitionstack &PStack,
+			int f_row_tactical, int f_col_tactical,
+		int f_detailed,
+		int f_local_coordinates, int verbose_level);
+	void do_tdo_high_level(
+			data_structures::partitionstack &S,
 		int f_tdo_steps, int f_tdo_depth, int tdo_depth, 
 		int f_write_tdo_files, int f_pic, 
 		int f_include_tdo_scheme, int f_include_tdo_extra, 
 		int f_write_tdo_class_files, 
 		int verbose_level);
-	void compute_tdo(data_structures::partitionstack &S,
+	void compute_tdo(
+			data_structures::partitionstack &S,
 		int f_write_tdo_files, 
 		int f_pic, 
 		int f_include_tdo_scheme, 
 		int verbose_level);
-	void compute_tdo_stepwise(data_structures::partitionstack &S,
+	void compute_tdo_stepwise(
+			data_structures::partitionstack &S,
 		int TDO_depth, 
 		int f_write_tdo_files, 
 		int f_pic, 
 		int f_include_tdo_scheme, 
 		int f_include_extra, 
 		int verbose_level);
-	void init_partitionstack_trivial(data_structures::partitionstack *S,
+	void init_partitionstack_trivial(
+			data_structures::partitionstack *S,
 		int verbose_level);
-	void init_partitionstack(data_structures::partitionstack *S,
+	void init_partitionstack(
+			data_structures::partitionstack *S,
 		int f_row_part, int nb_row_parts, int *row_parts,
 		int f_col_part, int nb_col_parts, int *col_parts,
 		int nb_distinguished_point_sets, 
@@ -1562,7 +1576,8 @@ class incidence_structure {
 	void save_as_csv(std::string &fname_csv, int verbose_level);
 	void init_large_set(
 			long int *blocks,
-			int N_points, int design_b, int design_k, int partition_class_size,
+			int N_points, int design_b, int design_k,
+			int partition_class_size,
 			int *&partition, int verbose_level);
 };
 
@@ -1684,8 +1699,12 @@ public:
 	long int point_on_quadric_to_line(long int point_rk, int verbose_level);
 	void Pluecker_to_line(int *v6, int *basis_line, int verbose_level);
 	long int Pluecker_to_line_rk(int *v6, int verbose_level);
-	void exterior_square_to_line(int *v, int *basis_line, int verbose_level);
-	void compute_external_lines(std::vector<long int> &External_lines, int verbose_level);
+	void exterior_square_to_line(
+			int *v, int *basis_line,
+			int verbose_level);
+	void compute_external_lines(
+			std::vector<long int> &External_lines,
+			int verbose_level);
 	void identify_external_lines_and_spreads(
 			spread_tables *T,
 			std::vector<long int> &External_lines,
@@ -1697,7 +1716,8 @@ public:
 	// external_line_to_spread[i] is the index of the
 	// regular spread of PG(3,q) in table T associated with
 	// External_lines[i]
-	void reverse_isomorphism(int *A6, int *A4, int verbose_level);
+	void reverse_isomorphism(
+			int *A6, int *A4, int verbose_level);
 	long int apply_null_polarity(
 		long int a, int verbose_level);
 	long int apply_polarity(
@@ -2048,7 +2068,8 @@ public:
 	int plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4);
 	int plane_quadrangle_first_i(int *pt, int i);
 	int plane_quadrangle_next_i(int *pt, int i);
-	void coordinatize_plane(int O, int I, int X, int Y, int *MOLS, int verbose_level);
+	void coordinatize_plane(int O, int I, int X, int Y,
+			int *MOLS, int verbose_level);
 	// needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 	// lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
 	int &MOLSsxb(int s, int x, int b);
@@ -2057,7 +2078,8 @@ public:
 	int ternary_field_is_linear(int *MOLS, int verbose_level);
 	void print_MOLS(std::ostream &ost);
 
-	int is_projective_plane(data_structures::partitionstack &P, int &order, int verbose_level);
+	int is_projective_plane(data_structures::partitionstack &P,
+			int &order, int verbose_level);
 		// if it is a projective plane, the order is returned.
 		// otherwise, 0 is returned.
 	int count_RC(data_structures::partitionstack &P, int row_cell, int col_cell);
@@ -2110,6 +2132,8 @@ public:
 
 	orthogonal_geometry::quadratic_form *Quadratic_form;
 		// if P->n == 3
+		// to be able to rank the Pluecker coordinates of lines
+		// as points on the Klein quadric
 
 
 
@@ -2183,7 +2207,7 @@ public:
 	int *Lines; // [N_lines * k]
 	int *Lines_on_point; // [N_points * r]
 	int *Line_through_two_points; // [N_points * N_points]
-	int *Line_intersection;	// [N_lines * N_lines]
+	int *Line_intersection; // [N_lines * N_lines]
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
@@ -2219,7 +2243,8 @@ public:
 	void report(std::ostream &ost,
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
-	void report_subspaces_of_dimension(std::ostream &ost, int vs_dimension, int verbose_level);
+	void report_subspaces_of_dimension(std::ostream &ost,
+			int vs_dimension, int verbose_level);
 	void cheat_sheet_points(std::ostream &f, int verbose_level);
 	void cheat_polarity(std::ostream &f, int verbose_level);
 	void cheat_sheet_point_table(std::ostream &f, int verbose_level);
@@ -2228,10 +2253,12 @@ public:
 	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
 	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
 		int verbose_level);
-	void print_set_numerical(std::ostream &ost, long int *set, int set_size);
+	void print_set_numerical(
+			std::ostream &ost, long int *set, int set_size);
 	void print_set(long int *set, int set_size);
 	void print_line_set_numerical(long int *set, int set_size);
-	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
+	void print_set_of_points(
+			std::ostream &ost, long int *Pts, int nb_pts);
 	void print_all_points();
 
 
@@ -2662,7 +2689,6 @@ public:
 		int verbose_level);
 	void read_and_print_spread(std::string &fname, int verbose_level);
 	void HMO(std::string &fname, int verbose_level);
-	void get_spread_matrices(int *F, int *G, long int *data, int verbose_level);
 	void print_spread(std::ostream &ost, long int *data, int sz);
 
 };

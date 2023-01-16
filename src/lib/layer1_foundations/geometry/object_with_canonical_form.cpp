@@ -69,7 +69,7 @@ object_with_canonical_form::~object_with_canonical_form()
 	}
 }
 
-void object_with_canonical_form::print(ostream &ost)
+void object_with_canonical_form::print(std::ostream &ost)
 {
 
 	cout << "set_as_string: " << set_as_string << endl;
@@ -215,7 +215,7 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
 	}
 }
 
-void object_with_canonical_form::print_tex(ostream &ost, int verbose_level)
+void object_with_canonical_form::print_tex(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

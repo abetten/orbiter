@@ -44,7 +44,8 @@ any_group::~any_group()
 }
 
 
-void any_group::init_linear_group(groups::linear_group *LG, int verbose_level)
+void any_group::init_linear_group(
+		groups::linear_group *LG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -86,7 +87,9 @@ void any_group::init_linear_group(groups::linear_group *LG, int verbose_level)
 	}
 }
 
-void any_group::init_permutation_group(groups::permutation_group_create *PGC, int verbose_level)
+void any_group::init_permutation_group(
+		groups::permutation_group_create *PGC,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -131,7 +134,8 @@ void any_group::init_permutation_group(groups::permutation_group_create *PGC, in
 	}
 }
 
-void any_group::init_modified_group(modified_group_create *MGC, int verbose_level)
+void any_group::init_modified_group(
+		modified_group_create *MGC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -252,7 +256,8 @@ void any_group::export_group_table(int verbose_level)
 }
 
 
-void any_group::do_export_orbiter(actions::action *A2, int verbose_level)
+void any_group::do_export_orbiter(
+		actions::action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -380,7 +385,8 @@ void any_group::do_export_magma(int verbose_level)
 	}
 }
 
-void any_group::do_canonical_image_GAP(std::string &input_set_text,
+void any_group::do_canonical_image_GAP(
+		std::string &input_set_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -413,7 +419,8 @@ void any_group::do_canonical_image_GAP(std::string &input_set_text,
 }
 
 
-void any_group::create_group_table(int *&Table, long int &n, int verbose_level)
+void any_group::create_group_table(
+		int *&Table, long int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1001,7 +1008,8 @@ void any_group::order_of_products_of_elements_by_rank(
 	}
 }
 
-void any_group::save_elements_csv(std::string &fname, int verbose_level)
+void any_group::save_elements_csv(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1017,7 +1025,8 @@ void any_group::save_elements_csv(std::string &fname, int verbose_level)
 	}
 }
 
-void any_group::export_inversion_graphs(std::string &fname, int verbose_level)
+void any_group::export_inversion_graphs(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1036,9 +1045,12 @@ void any_group::export_inversion_graphs(std::string &fname, int verbose_level)
 
 
 
-void any_group::multiply_elements_csv(std::string &fname1,
-		std::string &fname2, std::string &fname3,
-		int f_column_major_ordering, int verbose_level)
+void any_group::multiply_elements_csv(
+		std::string &fname1,
+		std::string &fname2,
+		std::string &fname3,
+		int f_column_major_ordering,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1092,7 +1104,9 @@ void any_group::multiply_elements_csv(std::string &fname1,
 	}
 }
 
-void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fname2,
+void any_group::apply_elements_to_set_csv(
+		std::string &fname1,
+		std::string &fname2,
 		std::string &set_text,
 		int verbose_level)
 {
@@ -1170,7 +1184,8 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 }
 
 
-void any_group::random_element(std::string &elt_label, int verbose_level)
+void any_group::random_element(
+		std::string &elt_label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1270,7 +1285,8 @@ void any_group::random_element(std::string &elt_label, int verbose_level)
 }
 
 
-void any_group::element_rank(std::string &elt_data, int verbose_level)
+void any_group::element_rank(
+		std::string &elt_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1327,7 +1343,8 @@ void any_group::element_rank(std::string &elt_data, int verbose_level)
 	}
 }
 
-void any_group::element_unrank(std::string &rank_string, int verbose_level)
+void any_group::element_unrank(
+		std::string &rank_string, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1384,8 +1401,10 @@ void any_group::element_unrank(std::string &rank_string, int verbose_level)
 
 
 
-void any_group::conjugacy_class_of(std::string &label,
-		std::string &elt_data, int verbose_level)
+void any_group::conjugacy_class_of(
+		std::string &label,
+		std::string &elt_data,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1562,8 +1581,10 @@ void any_group::do_reverse_isomorphism_exterior_square(int verbose_level)
 
 
 
-void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
-		int number_of_columns, int first_column, int verbose_level)
+void any_group::orbits_on_set_system_from_file(
+		std::string &fname_csv,
+		int number_of_columns, int first_column,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1667,7 +1688,8 @@ void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
 	}
 }
 
-void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_level)
+void any_group::orbits_on_set_from_file(
+		std::string &fname_csv, int verbose_level)
 // called from group_theoretic_activity: f_orbit_of_set_from_file
 {
 	int f_v = (verbose_level >= 1);
@@ -1730,7 +1752,8 @@ void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_leve
 }
 
 
-void any_group::orbit_of(int point_idx, int verbose_level)
+void any_group::orbit_of(
+		int point_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1851,7 +1874,8 @@ void any_group::orbit_of(int point_idx, int verbose_level)
 	}
 }
 
-void any_group::orbits_on_points(groups::orbits_on_something *&Orb, int verbose_level)
+void any_group::orbits_on_points(
+		groups::orbits_on_something *&Orb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2110,7 +2134,8 @@ groups::strong_generators *any_group::get_strong_generators()
 	return SG;
 }
 
-int any_group::is_subgroup_of(any_group *AG_secondary, int verbose_level)
+int any_group::is_subgroup_of(
+		any_group *AG_secondary, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
@@ -2148,7 +2173,8 @@ int any_group::is_subgroup_of(any_group *AG_secondary, int verbose_level)
 	return ret;
 }
 
-void any_group::set_of_coset_representatives(any_group *AG_secondary,
+void any_group::set_of_coset_representatives(
+		any_group *AG_secondary,
 		data_structures_groups::vector_ge *&coset_reps,
 		int verbose_level)
 {

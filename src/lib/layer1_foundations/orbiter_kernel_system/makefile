@@ -10,7 +10,6 @@ MODULES = \
 	file_io.o \
 	file_output.o \
 	latex_interface.o \
-	magma_interface.o \
 	mem_object_registry_entry.o \
 	mem_object_registry.o \
 	memory_object.o \

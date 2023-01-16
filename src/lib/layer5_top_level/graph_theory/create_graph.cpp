@@ -486,7 +486,7 @@ void create_graph::init(
 					"before create_Schlaefli" << endl;
 		}
 		create_Schlaefli(N, Adj,
-				description->Schlaefli_q,
+				description->Schlaefli_label_Fq,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
@@ -531,7 +531,7 @@ void create_graph::init(
 		create_Grassmann(N, Adj,
 				description->Grassmann_n,
 				description->Grassmann_k,
-				description->Grassmann_q,
+				description->Grassmann_label_Fq,
 				description->Grassmann_r,
 				verbose_level);
 
@@ -549,7 +549,7 @@ void create_graph::init(
 		create_coll_orthogonal(N, Adj,
 				description->coll_orthogonal_epsilon,
 				description->coll_orthogonal_d,
-				description->coll_orthogonal_q, verbose_level);
+				description->coll_orthogonal_label_Fq, verbose_level);
 
 		if (f_v) {
 			cout << "create_graph::init "
@@ -878,8 +878,10 @@ void create_graph::create_inversion_graph(int &N, int *&Adj,
 
 
 
-void create_graph::create_Hamming(int &N, int *&Adj,
-		int n, int q, int verbose_level)
+void create_graph::create_Hamming(
+		int &N, int *&Adj,
+		int n, int q,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -913,8 +915,10 @@ void create_graph::create_Hamming(int &N, int *&Adj,
 }
 
 
-void create_graph::create_Johnson(int &N, int *&Adj,
-		int n, int k, int s, int verbose_level)
+void create_graph::create_Johnson(
+		int &N, int *&Adj,
+		int n, int k, int s,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -947,7 +951,8 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 	}
 }
 
-void create_graph::create_Paley(int &N, int *&Adj,
+void create_graph::create_Paley(
+		int &N, int *&Adj,
 		std::string &label_Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -985,8 +990,10 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	}
 }
 
-void create_graph::create_Sarnak(int &N, int *&Adj,
-		int p, int q, int verbose_level)
+void create_graph::create_Sarnak(
+		int &N, int *&Adj,
+		int p, int q,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1085,8 +1092,9 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 }
 
 
-void create_graph::create_Schlaefli(int &N, int *&Adj,
-		int q, int verbose_level)
+void create_graph::create_Schlaefli(
+		int &N, int *&Adj,
+		std::string &label_Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1095,13 +1103,15 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 	}
 
 	graph_theory::graph_theory_domain GT;
+	field_theory::finite_field *F;
 
+	F = Get_finite_field(label_Fq);
 
 	if (f_v) {
 		cout << "create_graph::create_Schlaefli "
 				"before GT.make_Schlaefli_graph" << endl;
 	}
-	GT.make_Schlaefli_graph(Adj, N, q, verbose_level);
+	GT.make_Schlaefli_graph(Adj, N, F, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Schlaefli "
 				"after GT.make_Schlaefli_graph" << endl;
@@ -1109,9 +1119,9 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 
 	char str[1000];
 
-	snprintf(str, sizeof(str), "Schlaefli_%d", q);
+	snprintf(str, sizeof(str), "Schlaefli_%d", F->q);
 	label.assign(str);
-	snprintf(str, sizeof(str), "Schlaefli\\_%d", q);
+	snprintf(str, sizeof(str), "Schlaefli\\_%d", F->q);
 	label_tex.assign(str);
 
 
@@ -1120,7 +1130,8 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 	}
 }
 
-void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
+void create_graph::create_Shrikhande(
+		int &N, int *&Adj, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1297,7 +1308,8 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	}
 }
 
-void create_graph::create_Winnie_Li(int &N, int *&Adj,
+void create_graph::create_Winnie_Li(
+		int &N, int *&Adj,
 		std::string &label_Fq, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1336,8 +1348,10 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 	}
 }
 
-void create_graph::create_Grassmann(int &N, int *&Adj,
-		int n, int k, int q, int r, int verbose_level)
+void create_graph::create_Grassmann(
+		int &N, int *&Adj,
+		int n, int k, std::string &label_Fq,
+		int r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1347,13 +1361,17 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 
 
 	graph_theory::graph_theory_domain GT;
+	field_theory::finite_field *F;
+
+	F = Get_finite_field(label_Fq);
+
 
 
 	if (f_v) {
 		cout << "create_graph::create_Grassmann "
 				"before GT.make_Grassmann_graph" << endl;
 	}
-	GT.make_Grassmann_graph(Adj, N, n, k, q, r, verbose_level);
+	GT.make_Grassmann_graph(Adj, N, n, k, F, r, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Grassmann "
 				"after GT.make_Grassmann_graph" << endl;
@@ -1361,9 +1379,9 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 
 
 	char str[1000];
-	snprintf(str, sizeof(str), "Grassmann_%d_%d_%d_%d", n, k, q, r);
+	snprintf(str, sizeof(str), "Grassmann_%d_%d_%d_%d", n, k, F->q, r);
 	label.assign(str);
-	snprintf(str, sizeof(str), "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, q, r);
+	snprintf(str, sizeof(str), "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, F->q, r);
 	label_tex.assign(str);
 
 
@@ -1372,8 +1390,10 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 	}
 }
 
-void create_graph::create_coll_orthogonal(int &N, int *&Adj,
-		int epsilon, int d, int q, int verbose_level)
+void create_graph::create_coll_orthogonal(
+		int &N, int *&Adj,
+		int epsilon, int d, std::string &label_Fq,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1382,6 +1402,9 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 	}
 
 	graph_theory::graph_theory_domain GT;
+	field_theory::finite_field *F;
+
+	F = Get_finite_field(label_Fq);
 
 
 	if (f_v) {
@@ -1389,7 +1412,7 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 				"GT.make_orthogonal_collinearity_graph" << endl;
 	}
 	GT.make_orthogonal_collinearity_graph(Adj, N,
-			epsilon, d, q, verbose_level);
+			epsilon, d, F, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal after "
 				"GT.make_orthogonal_collinearity_graph" << endl;
@@ -1397,9 +1420,9 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 
 
 	char str[1000];
-	snprintf(str, sizeof(str), "Coll_orthogonal_%d_%d_%d", epsilon, d, q);
+	snprintf(str, sizeof(str), "Coll_orthogonal_%d_%d_%d", epsilon, d, F->q);
 	label.assign(str);
-	snprintf(str, sizeof(str), "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, q);
+	snprintf(str, sizeof(str), "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, F->q);
 	label_tex.assign(str);
 
 	if (f_v) {
@@ -1407,8 +1430,10 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 	}
 }
 
-void create_graph::make_orbital_graph(int &N, int *&Adj,
-		apps_algebra::any_group *AG, int orbit_idx, int verbose_level)
+void create_graph::make_orbital_graph(
+		int &N, int *&Adj,
+		apps_algebra::any_group *AG, int orbit_idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1500,8 +1525,10 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 	}
 }
 
-void create_graph::make_collinearity_graph(int &N, int *&Adj,
-		int *Inc, int nb_rows, int nb_cols, int verbose_level)
+void create_graph::make_collinearity_graph(
+		int &N, int *&Adj,
+		int *Inc, int nb_rows, int nb_cols,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1538,7 +1565,8 @@ void create_graph::make_collinearity_graph(int &N, int *&Adj,
 	}
 }
 
-void create_graph::make_chain_graph(int &N, int *&Adj,
+void create_graph::make_chain_graph(
+		int &N, int *&Adj,
 		int *part1, int sz1,
 		int *part2, int sz2,
 		int verbose_level)

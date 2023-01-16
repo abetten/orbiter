@@ -630,7 +630,8 @@ void iso_type::print_flags(std::ostream &ost)
 }
 
 
-void iso_type::print_geometry(inc_encoding *Encoding, int v, incidence *inc)
+void iso_type::print_geometry(
+		inc_encoding *Encoding, int v, incidence *inc)
 {
 	cout << "geo" << endl;
 	Encoding->print_partitioned(cout, v, v, gg, FALSE /* f_print_isot */);

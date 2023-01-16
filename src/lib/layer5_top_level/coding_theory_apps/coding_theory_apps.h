@@ -59,26 +59,6 @@ public:
 	std::string general_code_binary_label;
 	std::string general_code_binary_text;
 
-#if 0
-	int f_code_diagram;
-	std::string code_diagram_label;
-	std::string code_diagram_codewords_text;
-	int code_diagram_n;
-#endif
-
-#if 0
-	int f_code_diagram_from_file;
-	std::string code_diagram_from_file_label;
-	std::string code_diagram_from_file_codewords_fname;
-	int code_diagram_from_file_n;
-#endif
-
-#if 0
-	int f_long_code;
-	int long_code_n;
-	std::vector<std::string> long_code_generators;
-#endif
-
 	int f_encode_text_5bits;
 	std::string encode_text_5bits_input;
 	std::string encode_text_5bits_fname;
@@ -138,6 +118,8 @@ public:
 	int f_metric_balls;
 	int radius_of_metric_ball;
 
+	int f_Hamming_space_distance_matrix;
+	int Hamming_space_distance_matrix_n;
 
 	// CRC stuff:
 	int f_crc32;
@@ -162,11 +144,6 @@ public:
 	std::string crc_encode_file_based_fname_out;
 	std::string crc_encode_file_based_crc_type;
 	int crc_encode_file_based_block_length;
-
-#if 0
-	int f_crc_new_file_based;
-	std::string crc_new_file_based_fname;
-#endif
 
 	int f_find_CRC_polynomials;
 	int find_CRC_polynomials_nb_errors;
@@ -412,7 +389,8 @@ public:
 	void create_checkma_from_genma(int verbose_level);
 	void export_codewords(std::string &fname, int verbose_level);
 	void export_codewords_long(std::string &fname, int verbose_level);
-	void export_codewords_by_weight(std::string &fname_base, int verbose_level);
+	void export_codewords_by_weight(
+			std::string &fname_base, int verbose_level);
 	void export_genma(std::string &fname, int verbose_level);
 	void export_checkma(std::string &fname, int verbose_level);
 	void weight_enumerator(int verbose_level);

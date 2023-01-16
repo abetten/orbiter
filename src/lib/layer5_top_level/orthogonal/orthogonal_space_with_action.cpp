@@ -26,6 +26,7 @@ orthogonal_space_with_action::orthogonal_space_with_action()
 	f_semilinear = FALSE;
 	A = NULL;
 	AO = NULL;
+	Blt_Set_domain = NULL;
 }
 
 orthogonal_space_with_action::~orthogonal_space_with_action()
@@ -35,6 +36,9 @@ orthogonal_space_with_action::~orthogonal_space_with_action()
 	}
 	if (A) {
 		FREE_OBJECT(A);
+	}
+	if (Blt_Set_domain) {
+		FREE_OBJECT(Blt_Set_domain);
 	}
 }
 
@@ -108,6 +112,22 @@ void orthogonal_space_with_action::init(
 			cout << "orthogonal_space_with_action::init without group" << endl;
 		}
 
+	}
+
+	if (Descr->n == 5) {
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::init allocating Blt_Set_domain" << endl;
+		}
+		Blt_Set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::init before Blt_Set_domain->init" << endl;
+		}
+		Blt_Set_domain->init(O, verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_with_action::init after Blt_Set_domain->init" << endl;
+		}
 	}
 
 

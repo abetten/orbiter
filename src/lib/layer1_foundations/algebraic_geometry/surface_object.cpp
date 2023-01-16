@@ -67,7 +67,8 @@ surface_object::~surface_object()
 	}
 }
 
-void surface_object::init_equation_points_and_lines_only(surface_domain *Surf, int *eqn,
+void surface_object::init_equation_points_and_lines_only(
+		surface_domain *Surf, int *eqn,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -118,7 +119,8 @@ void surface_object::init_equation_points_and_lines_only(surface_domain *Surf, i
 }
 
 
-void surface_object::init_equation(surface_domain *Surf, int *eqn,
+void surface_object::init_equation(
+		surface_domain *Surf, int *eqn,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -318,7 +320,9 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 	}
 }
 
-void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbose_level)
+void surface_object::find_real_lines(
+		std::vector<long int> &The_Lines,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -364,7 +368,8 @@ void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbo
 	}
 }
 
-void surface_object::init_with_27_lines(surface_domain *Surf,
+void surface_object::init_with_27_lines(
+		surface_domain *Surf,
 	long int *Lines27, int *eqn,
 	int f_find_double_six_and_rearrange_lines, 
 	int verbose_level)
@@ -715,7 +720,7 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 
 
 #if 0
-void surface_object::print_generalized_quadrangle(ostream &ost)
+void surface_object::print_generalized_quadrangle(std::ostream &ost)
 {
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{The Generalized Quadrangle}" << endl;
@@ -1789,7 +1794,8 @@ void surface_object::find_all_tritangent_planes(
 }
 #endif
 
-void surface_object::identify_lines(long int *lines, int nb_lines,
+void surface_object::identify_lines(
+		long int *lines, int nb_lines,
 	int *line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1813,7 +1819,7 @@ void surface_object::identify_lines(long int *lines, int nb_lines,
 		}
 }
 
-void surface_object::print_nine_lines_latex(ostream &ost,
+void surface_object::print_nine_lines_latex(std::ostream &ost,
 	long int *nine_lines, int *nine_lines_idx)
 {
 	orbiter_kernel_system::latex_interface L;
@@ -2178,7 +2184,8 @@ void surface_object::latex_double_six(std::ostream &ost, int idx)
 	ost << "\\right]" << endl;
 }
 
-void surface_object::latex_double_six_wedge(std::ostream &ost, int idx)
+void surface_object::latex_double_six_wedge(
+		std::ostream &ost, int idx)
 {
 	int i, j;
 	long int D[12];
@@ -2207,7 +2214,8 @@ void surface_object::latex_double_six_wedge(std::ostream &ost, int idx)
 
 
 
-void surface_object::latex_double_six_Klein(std::ostream &ost, int idx)
+void surface_object::latex_double_six_Klein(
+		std::ostream &ost, int idx)
 {
 	int i, j;
 	long int D[12];
@@ -2238,7 +2246,8 @@ void surface_object::latex_double_six_Klein(std::ostream &ost, int idx)
 }
 
 
-void surface_object::latex_double_six_Pluecker_coordinates_transposed(std::ostream &ost, int idx)
+void surface_object::latex_double_six_Pluecker_coordinates_transposed(
+		std::ostream &ost, int idx)
 {
 	int i, j;
 	long int D[12];
@@ -2285,7 +2294,8 @@ void surface_object::latex_double_six_Pluecker_coordinates_transposed(std::ostre
 	ost << "\\right]" << endl;
 }
 
-void surface_object::latex_double_six_Klein_transposed(std::ostream &ost, int idx)
+void surface_object::latex_double_six_Klein_transposed(
+		std::ostream &ost, int idx)
 {
 	int i, j;
 	long int D[12];

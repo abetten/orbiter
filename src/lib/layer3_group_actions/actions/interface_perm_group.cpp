@@ -411,7 +411,7 @@ static void perm_group_element_dispose(action &A,
 }
 
 static void perm_group_element_print(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
@@ -424,7 +424,7 @@ static void perm_group_element_print(action &A,
 }
 
 static void perm_group_element_print_latex(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
@@ -448,7 +448,7 @@ static void perm_group_element_print_latex_with_print_point_function(
 }
 
 static void perm_group_element_print_verbose(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
@@ -466,7 +466,7 @@ static void perm_group_element_code_for_make_element(action &A,
 }
 
 static void perm_group_element_print_for_make_element(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
@@ -475,7 +475,7 @@ static void perm_group_element_print_for_make_element(action &A,
 }
 
 static void perm_group_element_print_for_make_element_no_commas(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
@@ -484,7 +484,7 @@ static void perm_group_element_print_for_make_element_no_commas(action &A,
 }
 
 
-static void perm_group_print_point(action &A, long int a, ostream &ost)
+static void perm_group_print_point(action &A, long int a, std::ostream &ost)
 {
 	groups::permutation_representation_domain &G = *A.G.perm_grp;
 	

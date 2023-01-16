@@ -270,7 +270,7 @@ void longinteger_object::swap_with(longinteger_object &b)
 	b.r = rep;
 }
 
-ostream& longinteger_object::print(ostream& ost)
+ostream& longinteger_object::print(std::ostream& ost)
 {
 	int i;
 	char c;
@@ -299,7 +299,7 @@ ostream& longinteger_object::print(ostream& ost)
 	return ost;
 }
 
-ostream& longinteger_object::print_not_scientific(ostream& ost)
+ostream& longinteger_object::print_not_scientific(std::ostream& ost)
 {
 	int i;
 	char c;
@@ -339,7 +339,7 @@ int longinteger_object::output_width()
 	return h;
 }
 
-void longinteger_object::print_width(ostream& ost, int width)
+void longinteger_object::print_width(std::ostream& ost, int width)
 {
 	int i, len, w;
 	char c;
@@ -525,7 +525,7 @@ void longinteger_object::create_i_power_j(int i, int j)
 }
 
 
-ostream& operator<<(ostream& ost, longinteger_object& p)
+ostream& operator<<(std::ostream& ost, longinteger_object& p)
 {
 	// cout << "operator<< starting" << endl;
 	p.print(ost);

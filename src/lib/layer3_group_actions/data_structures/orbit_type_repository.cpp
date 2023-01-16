@@ -236,7 +236,8 @@ void orbit_type_repository::init(
 }
 
 
-void orbit_type_repository::create_latex_report(std::string &prefix, int verbose_level)
+void orbit_type_repository::create_latex_report(
+		std::string &prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname_tex;
@@ -296,7 +297,7 @@ void orbit_type_repository::create_latex_report(std::string &prefix, int verbose
 
 
 
-void orbit_type_repository::report(ostream &ost, int verbose_level)
+void orbit_type_repository::report(std::ostream &ost, int verbose_level)
 {
 	int type_idx;
 
@@ -316,7 +317,8 @@ void orbit_type_repository::report(ostream &ost, int verbose_level)
 
 }
 
-void orbit_type_repository::report_one_type(ostream &ost, int type_idx, int verbose_level)
+void orbit_type_repository::report_one_type(std::ostream &ost,
+		int type_idx, int verbose_level)
 {
 	int /*f,*/ l;
 

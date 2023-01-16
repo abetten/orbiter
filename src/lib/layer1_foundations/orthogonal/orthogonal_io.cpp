@@ -58,7 +58,8 @@ void orthogonal::list_points_of_given_type(int t, int verbose_level)
 	cout << endl;
 }
 
-void orthogonal::report_points_of_given_type(std::ostream &ost, int t, int verbose_level)
+void orthogonal::report_points_of_given_type(std::ostream &ost,
+		int t, int verbose_level)
 {
 	long int i, j, rk, u;
 
@@ -126,6 +127,7 @@ void orthogonal::report_given_point_set(std::ostream &ost,
 	for (i = 0; i < nb_pts; i++) {
 		rk = Pts[i];
 
+
 		Hyperbolic_pair->unrank_point(Hyperbolic_pair->v1, 1, rk, 0 /*verbose_level*/);
 		ost << i << " : $P_{" << rk << "} = ";
 		Int_vec_print(ost, Hyperbolic_pair->v1, Quadratic_form->n);
@@ -170,7 +172,8 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 			Li.print_integer_matrix_tex(ost, L, 2, d);
 			ost << "\\right]" << endl;
 
-			a = Quadratic_form->evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
+			a = Quadratic_form->evaluate_bilinear_form(
+					Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
 			if (a) {
 				cout << "not orthogonal" << endl;
 				exit(1);
@@ -190,7 +193,8 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 			points_on_line(p1, p2, Line, 0 /*verbose_level - 1*/);
 			Sorting.lint_vec_heapsort(Line, Quadratic_form->q + 1);
 
-			Li.lint_set_print_masked_tex(ost, Line, Quadratic_form->q + 1, "P_{", "}");
+			Li.lint_set_print_masked_tex(ost,
+					Line, Quadratic_form->q + 1, "P_{", "}");
 			ost << "$\\\\" << endl;
 	#if 0
 			for (r1 = 0; r1 <= q; r1++) {
@@ -253,7 +257,8 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 		rk = Lines[i];
 
 		if (f_v) {
-			cout << "orthogonal::report_given_line_set i=" << i << " / " << nb_lines << " rk=" << rk << endl;
+			cout << "orthogonal::report_given_line_set i=" << i << " / "
+					<< nb_lines << " rk=" << rk << endl;
 		}
 
 		ost << i << " : $L_{" << rk << "} = ";
@@ -270,7 +275,8 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 		Li.print_integer_matrix_tex(ost, L, 2, d);
 		ost << "\\right]" << endl;
 
-		a = Quadratic_form->evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
+		a = Quadratic_form->evaluate_bilinear_form(
+				Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
 		if (a) {
 			cout << "not orthogonal" << endl;
 			exit(1);
@@ -290,7 +296,8 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 		points_on_line(p1, p2, Points_on_line, 0 /*verbose_level - 1*/);
 		Sorting.lint_vec_heapsort(Points_on_line, Quadratic_form->q + 1);
 
-		Li.lint_set_print_masked_tex(ost, Points_on_line, Quadratic_form->q + 1, "P_{", "}");
+		Li.lint_set_print_masked_tex(ost,
+				Points_on_line, Quadratic_form->q + 1, "P_{", "}");
 		ost << "$\\\\" << endl;
 #if 0
 		for (r1 = 0; r1 <= q; r1++) {
@@ -315,11 +322,11 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 #endif
 	}
 
-	cout << "before FREE_lint(Points_on_line)" << endl;
+	//cout << "before FREE_lint(Points_on_line)" << endl;
 	FREE_lint(Points_on_line);
-	cout << "before FREE_lint(L)" << endl;
+	//cout << "before FREE_lint(L)" << endl;
 	FREE_int(L);
-	cout << "after FREE_lint(L)" << endl;
+	//cout << "after FREE_lint(L)" << endl;
 	if (f_v) {
 		cout << "orthogonal::report_given_line_set done" << endl;
 	}
@@ -362,10 +369,12 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 			//int_vec_print(cout, v2, n);
 			//cout << endl;
 
-			u = Quadratic_form->evaluate_bilinear_form(Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
+			u = Quadratic_form->evaluate_bilinear_form(
+					Hyperbolic_pair->v1, Hyperbolic_pair->v2, 1);
 			if (u == 0 && rk2 != rk1) {
 				//cout << "yes" << endl;
-				if (test_if_minimal_on_line(Hyperbolic_pair->v2, Hyperbolic_pair->v1, Hyperbolic_pair->v3)) {
+				if (test_if_minimal_on_line(Hyperbolic_pair->v2,
+						Hyperbolic_pair->v1, Hyperbolic_pair->v3)) {
 					cout << cnt << " : " << j << " : " << rk2 << " : ";
 					Int_vec_print(cout, Hyperbolic_pair->v2, Quadratic_form->n);
 					cout << endl;
@@ -468,18 +477,26 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes nb_points=" << Hyperbolic_pair->nb_points << endl;
-			cout << "orthogonal::report_schemes nb_lines=" << Hyperbolic_pair->nb_lines << endl;
+			cout << "orthogonal::report_schemes "
+					"nb_points=" << Hyperbolic_pair->nb_points << endl;
+			cout << "orthogonal::report_schemes "
+					"nb_lines=" << Hyperbolic_pair->nb_lines << endl;
 		}
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->allocate_with_two_classes" << endl;
+			cout << "orthogonal::report_schemes "
+					"before Stack->allocate_with_two_classes" << endl;
 		}
 
-		Stack->allocate_with_two_classes(Hyperbolic_pair->nb_points + Hyperbolic_pair->nb_lines, Hyperbolic_pair->nb_points, Hyperbolic_pair->nb_lines, 0 /* verbose_level */);
+		Stack->allocate_with_two_classes(
+				Hyperbolic_pair->nb_points + Hyperbolic_pair->nb_lines,
+				Hyperbolic_pair->nb_points,
+				Hyperbolic_pair->nb_lines,
+				0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes after Stack->allocate_with_two_classes" << endl;
+			cout << "orthogonal::report_schemes "
+					"after Stack->allocate_with_two_classes" << endl;
 		}
 	#if 0
 		row_classes = NEW_int(nb_point_classes);
@@ -514,13 +531,18 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 		row_scheme = NEW_int(nb_rows * nb_cols);
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
-				row_scheme[i * nb_cols + j] = Hyperbolic_pair->A[original_row_class[i] * Hyperbolic_pair->nb_line_classes + original_col_class[j]];
+				row_scheme[i * nb_cols + j] =
+						Hyperbolic_pair->A[original_row_class[i] *
+										   Hyperbolic_pair->nb_line_classes
+										   + original_col_class[j]];
 			}
 		}
 		col_scheme = NEW_int(nb_rows * nb_cols);
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
-				col_scheme[i * nb_cols + j] = Hyperbolic_pair->B[original_row_class[i] * Hyperbolic_pair->nb_line_classes + original_col_class[j]];
+				col_scheme[i * nb_cols + j] = Hyperbolic_pair->B[original_row_class[i]
+										* Hyperbolic_pair->nb_line_classes
+										+ original_col_class[j]];
 			}
 		}
 		set = NEW_int(Hyperbolic_pair->nb_points);
@@ -535,9 +557,11 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 				set[j] = f + j;
 			}
 			if (f_v) {
-				cout << "orthogonal::report_schemes before Stack->split_cell_front_or_back for points" << endl;
+				cout << "orthogonal::report_schemes "
+						"before Stack->split_cell_front_or_back for points" << endl;
 			}
-			Stack->split_cell_front_or_back(set, l, TRUE /* f_front */, 0 /*verbose_level*/);
+			Stack->split_cell_front_or_back(set, l,
+					TRUE /* f_front */, 0 /*verbose_level*/);
 			f += l;
 		}
 		FREE_int(set);
@@ -555,9 +579,11 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 				set[j] = f + j;
 			}
 			if (f_v) {
-				cout << "orthogonal::report_schemes before Stack->split_cell_front_or_back for lines" << endl;
+				cout << "orthogonal::report_schemes "
+						"before Stack->split_cell_front_or_back for lines" << endl;
 			}
-			Stack->split_cell_front_or_back(set, l, TRUE /* f_front */, 0 /*verbose_level*/);
+			Stack->split_cell_front_or_back(set, l,
+					TRUE /* f_front */, 0 /*verbose_level*/);
 			f += l;
 		}
 		FREE_int(set);
@@ -570,24 +596,29 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 		col_classes = NEW_int(Stack->ht);
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->get_row_and_col_classes" << endl;
+			cout << "orthogonal::report_schemes "
+					"before Stack->get_row_and_col_classes" << endl;
 		}
 		Stack->get_row_and_col_classes(
 			row_classes, nb_row_classes,
 			col_classes, nb_col_classes, 0 /* verbose_level*/);
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->print_row_tactical_decomposition_scheme_tex" << endl;
+			cout << "orthogonal::report_schemes "
+					"before Stack->print_row_tactical_decomposition_scheme_tex" << endl;
 		}
-		Stack->print_row_tactical_decomposition_scheme_tex(ost, TRUE /*f_enter_math*/,
+		Stack->print_row_tactical_decomposition_scheme_tex(ost,
+				TRUE /*f_enter_math*/,
 				row_classes, nb_row_classes,
 				col_classes, nb_col_classes,
 				row_scheme, FALSE /* f_print_subscripts */);
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->print_column_tactical_decomposition_scheme_tex" << endl;
+			cout << "orthogonal::report_schemes "
+					"before Stack->print_column_tactical_decomposition_scheme_tex" << endl;
 		}
-		Stack->print_column_tactical_decomposition_scheme_tex(ost, TRUE /*f_enter_math*/,
+		Stack->print_column_tactical_decomposition_scheme_tex(ost,
+				TRUE /*f_enter_math*/,
 				row_classes, nb_row_classes,
 				col_classes, nb_col_classes,
 				col_scheme, FALSE /* f_print_subscripts */);
@@ -646,9 +677,11 @@ void orthogonal::create_latex_report(int verbose_level)
 
 		char str[1000];
 
-		snprintf(str, 1000, "O_%d_%d_%d.tex", Quadratic_form->epsilon, Quadratic_form->n, F->q);
+		snprintf(str, 1000, "O_%d_%d_%d.tex",
+				Quadratic_form->epsilon, Quadratic_form->n, F->q);
 		fname.assign(str);
-		snprintf(str, 1000, "Orthogonal Space  ${\\rm O}(%d,%d,%d)$", Quadratic_form->epsilon, Quadratic_form->n, F->q);
+		snprintf(str, 1000, "Orthogonal Space  ${\\rm O}(%d,%d,%d)$",
+				Quadratic_form->epsilon, Quadratic_form->n, F->q);
 		title.assign(str);
 
 

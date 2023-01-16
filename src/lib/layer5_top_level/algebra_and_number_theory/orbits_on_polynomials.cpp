@@ -52,7 +52,6 @@ orbits_on_polynomials::~orbits_on_polynomials()
 void orbits_on_polynomials::init(
 		groups::linear_group *LG,
 		int degree_of_poly,
-		//int f_recognize, std::string &recognize_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

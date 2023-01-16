@@ -51,14 +51,17 @@ public:
 	void solve_diophant(int *Inc,
 		int nb_rows, int nb_cols, int nb_needed,
 		int f_has_Rhs, int *Rhs,
-		long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
+		long int *&Solutions, int &nb_sol,
+		long int &nb_backtrack, int &dt,
 		int f_DLX,
 		int verbose_level);
 	// allocates Solutions[nb_sol * nb_needed]
 	uint32_t SuperFastHash (const char * data, int len);
 	uint32_t SuperFastHash_uint(const unsigned int * p, int sz);
-	void union_of_sets(std::string &fname_set_of_sets,
-			std::string &fname_input, std::string &fname_output, int verbose_level);
+	void union_of_sets(
+			std::string &fname_set_of_sets,
+			std::string &fname_input,
+			std::string &fname_output, int verbose_level);
 
 };
 
@@ -79,15 +82,18 @@ public:
 	~bitmatrix();
 	void init(int m, int n, int verbose_level);
 	void unrank_PG_elements_in_columns_consecutively(
-			field_theory::finite_field *F, long int start_value, int verbose_level);
+			field_theory::finite_field *F,
+			long int start_value, int verbose_level);
 	void rank_PG_elements_in_columns(
 			field_theory::finite_field *F,
-			int *perms, unsigned int *PG_ranks, int verbose_level);
+			int *perms, unsigned int *PG_ranks,
+			int verbose_level);
 	void print();
 	void zero_out();
 	int s_ij(int i, int j);
 	void m_ij(int i, int j, int a);
-	void mult_int_matrix_from_the_left(int *A, int Am, int An,
+	void mult_int_matrix_from_the_left(
+			int *A, int Am, int An,
 			bitmatrix *Out, int verbose_level);
 
 };
@@ -183,7 +189,8 @@ public:
 	void init(int N, int rep_len, int verbose_level);
 	int search(uchar *data, int &idx, int verbose_level);
 	void search_and_add_if_new(uchar *data,
-			void *extra_data, int &f_found, int &idx, int verbose_level);
+			void *extra_data, int &f_found, int &idx,
+			int verbose_level);
 	int compare_at(uchar *data, int idx);
 	void add_at_idx(uchar *data,
 			void *extra_data, int idx, int verbose_level);
@@ -237,15 +244,18 @@ public:
 
 	classify_using_canonical_forms();
 	~classify_using_canonical_forms();
-	void orderly_test(geometry::object_with_canonical_form *OwCF,
+	void orderly_test(
+			geometry::object_with_canonical_form *OwCF,
 			int &f_accept, int verbose_level);
-	void find_object(geometry::object_with_canonical_form *OwCF,
+	void find_object(
+			geometry::object_with_canonical_form *OwCF,
 			int &f_found, int &idx,
 			nauty_output *&NO,
 			bitvector *&Canonical_form,
 			int verbose_level);
 		// if f_found is TRUE, B[idx] agrees with the given object
-	void add_object(geometry::object_with_canonical_form *OwCF,
+	void add_object(
+			geometry::object_with_canonical_form *OwCF,
 			int &f_new_object,
 			int verbose_level);
 
@@ -276,8 +286,12 @@ class data_file {
 
 	data_file();
 	~data_file();
-	void read(std::string &fname, int f_casenumbers, int verbose_level);
-	void read_candidates(std::string &candidates_fname, int verbose_level);
+	void read(
+			std::string &fname, int f_casenumbers,
+			int verbose_level);
+	void read_candidates(
+			std::string &candidates_fname,
+			int verbose_level);
 };
 
 // #############################################################################
@@ -305,7 +319,8 @@ public:
 	void print();
 	void init_set_of_points(std::string &a);
 	void init_set_of_lines(std::string &a);
-	void init_set_of_points_and_lines(std::string &a, std::string &b);
+	void init_set_of_points_and_lines(
+			std::string &a, std::string &b);
 	void init_packing(std::string &a, int q);
 	void init_file_of_points(std::string &a);
 	void init_file_of_lines(std::string &a);
@@ -564,20 +579,25 @@ public:
 		int k, int n, int pivot);
 	int matrix_max_log_of_entries(int *p, int m, int n);
 	void matrix_print_ost(std::ostream &ost, int *p, int m, int n);
-	void matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n);
+	void matrix_print_makefile_style_ost(
+			std::ostream &ost, int *p, int m, int n);
 	void matrix_print(int *p, int m, int n);
 	void matrix_print_tight(int *p, int m, int n);
-	void matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
-	void matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n, int w);
+	void matrix_print_ost(
+			std::ostream &ost, int *p, int m, int n, int w);
+	void matrix_print_makefile_style_ost(
+			std::ostream &ost, int *p, int m, int n, int w);
 	void matrix_print(int *p, int m, int n, int w);
 	void matrix_print_bitwise(int *p, int m, int n);
 	void distribution_print(std::ostream &ost,
 		int *val, int *mult, int len);
-	void distribution_print_to_string(std::string &str, int *val, int *mult, int len);
+	void distribution_print_to_string(
+			std::string &str, int *val, int *mult, int len);
 	void set_print(std::ostream &ost, int *v, int len);
 	void integer_vec_print(std::ostream &ost, int *v, int len);
 	int hash(int *v, int len, int bit_length);
-	void create_string_with_quotes(std::string &str, int *v, int len);
+	void create_string_with_quotes(
+			std::string &str, int *v, int len);
 	void transpose(int *M, int m, int n, int *Mt);
 
 };
@@ -817,7 +837,8 @@ class partitionstack {
 	~partitionstack();
 	void free();
 	void allocate(int n, int verbose_level);
-	void allocate_with_two_classes(int n, int v, int b, int verbose_level);
+	void allocate_with_two_classes(
+			int n, int v, int b, int verbose_level);
 	int parent_at_height(int h, int cell);
 	int is_discrete();
 	int smallest_non_discrete_cell();
@@ -841,16 +862,23 @@ class partitionstack {
 	void print_cell(int i);
 	void print_cell_latex(std::ostream &ost, int i);
 	void print_subset();
-	void get_cell(int i, int *&cell, int &cell_sz, int verbose_level);
-	void get_cell_lint(int i, long int *&cell, int &cell_sz, int verbose_level);
-	void get_row_classes(set_of_sets *&Sos, int verbose_level);
-	void get_column_classes(set_of_sets *&Sos, int verbose_level);
+	void get_cell(int i,
+			int *&cell, int &cell_sz, int verbose_level);
+	void get_cell_lint(int i,
+			long int *&cell, int &cell_sz,
+			int verbose_level);
+	void get_row_classes(
+			set_of_sets *&Sos, int verbose_level);
+	void get_column_classes(
+			set_of_sets *&Sos, int verbose_level);
 	void write_cell_to_file(int i,
 			std::string &fname, int verbose_level);
 	void write_cell_to_file_points_or_lines(int i, 
 			std::string &fname, int verbose_level);
-	void refine_arbitrary_set_lint(int size, long int *set, int verbose_level);
-	void refine_arbitrary_set(int size, int *set, int verbose_level);
+	void refine_arbitrary_set_lint(
+			int size, long int *set, int verbose_level);
+	void refine_arbitrary_set(
+			int size, int *set, int verbose_level);
 	void split_cell(int verbose_level);
 	void split_multiple_cells(int *set, int set_size, 
 		int f_front, int verbose_level);
@@ -905,11 +933,14 @@ class partitionstack {
 			std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
-		int *row_scheme, int *col_scheme, int f_print_subscripts);
-	void print_tactical_decomposition_scheme_tex(std::ostream &ost,
+		int *row_scheme, int *col_scheme,
+		int f_print_subscripts);
+	void print_tactical_decomposition_scheme_tex(
+			std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
-		int *row_scheme, int *col_scheme, int f_print_subscripts);
+		int *row_scheme, int *col_scheme,
+		int f_print_subscripts);
 	void print_row_tactical_decomposition_scheme_tex(
 			std::ostream &ost, int f_enter_math_mode,
 		int *row_classes, int nb_row_classes,
@@ -925,18 +956,26 @@ class partitionstack {
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int f_print_subscripts);
-	int hash_column_refinement_info(int ht0, int *data, int depth, 
+	int hash_column_refinement_info(
+			int ht0, int *data, int depth,
 		int hash0);
-	int hash_row_refinement_info(int ht0, int *data, int depth, int hash0);
-	void print_column_refinement_info(int ht0, int *data, int depth);
-	void print_row_refinement_info(int ht0, int *data, int depth);
-	void radix_sort(int left, int right, int *C, 
+	int hash_row_refinement_info(
+			int ht0, int *data, int depth, int hash0);
+	void print_column_refinement_info(
+			int ht0, int *data, int depth);
+	void print_row_refinement_info(
+			int ht0, int *data, int depth);
+	void radix_sort(
+			int left, int right, int *C,
 		int length, int radix, int verbose_level);
-	void radix_sort_bits(int left, int right, 
-		int *C, int length, int radix, int mask, int verbose_level);
+	void radix_sort_bits(
+			int left, int right,
+		int *C, int length, int radix, int mask,
+		int verbose_level);
 	void swap_ij(int *perm, int *perm_inv, int i, int j);
 	int my_log2(int m);
-	void split_by_orbit_partition(int nb_orbits, 
+	void split_by_orbit_partition(
+			int nb_orbits,
 		int *orbit_first, int *orbit_len, int *orbit,
 		int offset, 
 		int verbose_level);
@@ -1073,7 +1112,8 @@ public:
 	void init(int underlying_set_size, int nb_sets, 
 		long int **Pts, long int *Sz, int verbose_level);
 	void init_with_Sz_in_int(int underlying_set_size,
-			int nb_sets, long int **Pts, int *Sz, int verbose_level);
+			int nb_sets, long int **Pts, int *Sz,
+			int verbose_level);
 	void init_basic(int underlying_set_size, 
 		int nb_sets, long int *Sz, int verbose_level);
 	void init_basic_with_Sz_in_int(int underlying_set_size,
@@ -1089,7 +1129,8 @@ public:
 	void init_set(int idx_of_set, int *set, int sz, 
 		int verbose_level);
 		// Stores a copy of the given set.
-	void init_cycle_structure(int *perm, int n, int verbose_level);
+	void init_cycle_structure(
+			int *perm, int n, int verbose_level);
 	int total_size();
 	long int &element(int i, int j);
 	void add_element(int i, long int a);
@@ -1097,7 +1138,8 @@ public:
 	void print_table();
 	void print_table_tex(std::ostream &ost);
 	void print_table_latex_simple(std::ostream &ost);
-	void print_table_latex_simple_with_selection(std::ostream &ost, int *Selection, int nb_sel);
+	void print_table_latex_simple_with_selection(
+			std::ostream &ost, int *Selection, int nb_sel);
 	void dualize(set_of_sets *&S, int verbose_level);
 	void remove_sets_of_given_size(int k, 
 		set_of_sets &S, int *&Idx, 
@@ -1114,14 +1156,17 @@ public:
 		int verbose_level);
 	void compute_and_print_tdo_col_scheme(std::ostream &file,
 		int verbose_level);
-	void init_decomposition(geometry::decomposition *&D, int verbose_level);
-	void compute_tdo_decomposition(geometry::decomposition &D,
+	void init_decomposition(
+			geometry::decomposition *&D, int verbose_level);
+	void compute_tdo_decomposition(
+			geometry::decomposition &D,
 		int verbose_level);
 	int is_member(int i, int a, int verbose_level);
 	void sort_all(int verbose_level);
 	void all_pairwise_intersections(set_of_sets *&Intersections, 
 		int verbose_level);
-	void pairwise_intersection_matrix(int *&M, int verbose_level);
+	void pairwise_intersection_matrix(
+			int *&M, int verbose_level);
 	void all_triple_intersections(set_of_sets *&Intersections, 
 		int verbose_level);
 	int has_constant_size_property();
@@ -1134,7 +1179,8 @@ public:
 		int &common_elt);
 	void sort();
 	void sort_big(int verbose_level);
-	void compute_orbits(int &nb_orbits, int *&orbit, int *&orbit_inv, 
+	void compute_orbits(int &nb_orbits,
+			int *&orbit, int *&orbit_inv,
 		int *&orbit_first, int *&orbit_len, 
 		void (*compute_image_function)(set_of_sets *S, 
 			void *compute_image_data, int elt_idx, int gen_idx, 
@@ -1143,9 +1189,12 @@ public:
 		int nb_gens, 
 		int verbose_level);
 	int number_of_eckardt_points(int verbose_level);
-	void get_eckardt_points(int *&E, int &nb_E, int verbose_level);
-	void evaluate_function_and_store(data_structures::set_of_sets *&Function_values,
-			int (*evaluate_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+	void get_eckardt_points(
+			int *&E, int &nb_E, int verbose_level);
+	void evaluate_function_and_store(
+			data_structures::set_of_sets *&Function_values,
+			int (*evaluate_function)(int a, int i, int j,
+					void *evaluate_data, int verbose_level),
 			void *evaluate_data,
 			int verbose_level);
 	int find_smallest_class();
@@ -1166,19 +1215,30 @@ public:
 	sorting();
 	~sorting();
 
-	void int_vec_search_vec(int *v, int len, int *A, int A_sz, int *Idx);
+	void int_vec_search_vec(
+			int *v, int len, int *A, int A_sz, int *Idx);
 	void lint_vec_search_vec(
-			long int *v, int len, long int *A, int A_sz, long int *Idx);
-	void int_vec_search_vec_linear(int *v, int len, int *A, int A_sz, int *Idx);
+			long int *v, int len,
+			long int *A, int A_sz, long int *Idx);
+	void int_vec_search_vec_linear(
+			int *v, int len, int *A, int A_sz, int *Idx);
 	void lint_vec_search_vec_linear(
-			long int *v, int len, long int *A, int A_sz, long int *Idx);
-	int int_vec_is_subset_of(int *set, int sz, int *big_set, int big_set_sz);
-	int lint_vec_is_subset_of(int *set, int sz, long int *big_set, int big_set_sz, int verbose_level);
-	void int_vec_swap_points(int *list, int *list_inv, int idx1, int idx2);
+			long int *v, int len,
+			long int *A, int A_sz, long int *Idx);
+	int int_vec_is_subset_of(
+			int *set, int sz, int *big_set, int big_set_sz);
+	int lint_vec_is_subset_of(
+			int *set, int sz,
+			long int *big_set, int big_set_sz, int verbose_level);
+	void int_vec_swap_points(
+			int *list, int *list_inv, int idx1, int idx2);
 	int int_vec_is_sorted(int *v, int len);
-	void int_vec_sort_and_remove_duplicates(int *v, int &len);
-	void lint_vec_sort_and_remove_duplicates(long int *v, int &len);
-	int int_vec_sort_and_test_if_contained(int *v1, int len1, int *v2, int len2);
+	void int_vec_sort_and_remove_duplicates(
+			int *v, int &len);
+	void lint_vec_sort_and_remove_duplicates(
+			long int *v, int &len);
+	int int_vec_sort_and_test_if_contained(
+			int *v1, int len1, int *v2, int len2);
 	int lint_vec_sort_and_test_if_contained(
 			long int *v1, int len1, long int *v2, int len2);
 	int int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2);
@@ -1186,20 +1246,29 @@ public:
 		int *v2, int len2, int &idx1, int &idx2);
 	int lint_vecs_find_common_element(long int *v1, int len1,
 		long int *v2, int len2, int &idx1, int &idx2);
-	void int_vec_insert_and_reallocate_if_necessary(int *&vec,
-		int &used_length, int &alloc_length, int a, int verbose_level);
-	void int_vec_append_and_reallocate_if_necessary(int *&vec,
-		int &used_length, int &alloc_length, int a, int verbose_level);
-	void lint_vec_append_and_reallocate_if_necessary(long int *&vec,
+	void int_vec_insert_and_reallocate_if_necessary(
+			int *&vec,
+		int &used_length, int &alloc_length, int a,
+		int verbose_level);
+	void int_vec_append_and_reallocate_if_necessary(
+			int *&vec,
+		int &used_length, int &alloc_length, int a,
+		int verbose_level);
+	void lint_vec_append_and_reallocate_if_necessary(
+			long int *&vec,
 			int &used_length, int &alloc_length, long int a,
 			int verbose_level);
 	int int_vec_is_zero(int *v, int len);
-	int test_if_sets_are_equal(int *set1, int *set2, int set_size);
-	int test_if_sets_are_disjoint(long int *set1, int sz1, long int *set2, int sz2);
+	int test_if_sets_are_equal(
+			int *set1, int *set2, int set_size);
+	int test_if_sets_are_disjoint(
+			long int *set1, int sz1, long int *set2, int sz2);
 	void test_if_set(int *set, int set_size);
 	int lint_vec_test_if_set(long int *set, int set_size);
-	int test_if_set_with_return_value(int *set, int set_size);
-	int test_if_set_with_return_value_lint(long int *set, int set_size);
+	int test_if_set_with_return_value(
+			int *set, int set_size);
+	int test_if_set_with_return_value_lint(
+			long int *set, int set_size);
 	void rearrange_subset(int n, int k, int *set,
 		int *subset, int *rearranged_set, int verbose_level);
 	void rearrange_subset_lint(int n, int k,
@@ -1209,7 +1278,8 @@ public:
 		long int *set, long int *subset, long int *rearranged_set,
 		int verbose_level);
 	int int_vec_search_linear(int *v, int len, int a, int &idx);
-	int lint_vec_search_linear(long int *v, int len, long int a, int &idx);
+	int lint_vec_search_linear(
+			long int *v, int len, long int a, int &idx);
 	void int_vec_intersect(int *v1, int len1, int *v2, int len2,
 		int *&v3, int &len3);
 	void vec_intersect(long int *v1, int len1,
@@ -1227,23 +1297,32 @@ public:
 		int left, int right);
 	void lint_vec_quicksort(long int *v,
 		int (*compare_func)(long int a, long int b), int left, int right);
-	void int_vec_quicksort_increasingly(int *v, int len);
-	void int_vec_quicksort_decreasingly(int *v, int len);
-	void lint_vec_quicksort_increasingly(long int *v, int len);
-	void lint_vec_quicksort_decreasingly(long int *v, int len);
+	void int_vec_quicksort_increasingly(
+			int *v, int len);
+	void int_vec_quicksort_decreasingly(
+			int *v, int len);
+	void lint_vec_quicksort_increasingly(
+			long int *v, int len);
+	void lint_vec_quicksort_decreasingly(
+			long int *v, int len);
 	void quicksort_array(int len, void **v,
 		int (*compare_func)(void *a, void *b, void *data), void *data);
-	void quicksort_array_with_perm(int len, void **v, int *perm,
+	void quicksort_array_with_perm(
+			int len, void **v, int *perm,
 		int (*compare_func)(void *a, void *b, void *data), void *data);
-	int vec_search(void **v, int (*compare_func)(void *a, void *b, void *data),
+	int vec_search(
+			void **v, int (*compare_func)(void *a, void *b, void *data),
 		void *data_for_compare,
 		int len, void *a, int &idx, int verbose_level);
 	int vec_search_general(void *vec,
-		int (*compare_func)(void *vec, void *a, int b, void *data_for_compare),
+		int (*compare_func)(void *vec,
+				void *a, int b, void *data_for_compare),
 		void *data_for_compare,
 		int len, void *a, int &idx, int verbose_level);
-	int int_vec_search_and_insert_if_necessary(int *v, int &len, int a);
-	int int_vec_search_and_remove_if_found(int *v, int &len, int a);
+	int int_vec_search_and_insert_if_necessary(
+			int *v, int &len, int a);
+	int int_vec_search_and_remove_if_found(
+			int *v, int &len, int a);
 	int int_vec_search(int *v, int len, int a, int &idx);
 		// This function finds the last occurrence of the element a.
 		// If a is not found, it returns in idx the position
@@ -1257,61 +1336,79 @@ public:
 		// the vector is assumed to be in increasing order.
 	int vector_lint_search(std::vector<long int> &v,
 			long int a, int &idx, int verbose_level);
-	int int_vec_search_first_occurrence(int *v, int len, int a, int &idx,
+	int int_vec_search_first_occurrence(
+			int *v, int len, int a, int &idx,
 			int verbose_level);
 		// This function finds the first occurrence of the element a.
 	int lint_vec_search_first_occurrence(long int *v,
 			int len, long int a, int &idx,
 			int verbose_level);
 	// This function finds the first occurrence of the element a.
-	int longinteger_vec_search(ring_theory::longinteger_object *v, int len,
+	int longinteger_vec_search(
+			ring_theory::longinteger_object *v, int len,
 			ring_theory::longinteger_object &a, int &idx);
-	void int_vec_classify_and_print(std::ostream &ost, int *v, int l);
-	void int_vec_values(int *v, int l, int *&w, int &w_len);
-	void int_vec_multiplicities(int *v, int l, int *&w, int &w_len);
+	void int_vec_classify_and_print(
+			std::ostream &ost, int *v, int l);
+	void int_vec_values(
+			int *v, int l, int *&w, int &w_len);
+	void int_vec_multiplicities(
+			int *v, int l, int *&w, int &w_len);
 	void int_vec_values_and_multiplicities(int *v, int l,
 		int *&val, int *&mult, int &nb_values);
-	void int_vec_classify(int length, int *the_vec, int *&the_vec_sorted,
+	void int_vec_classify(
+			int length, int *the_vec, int *&the_vec_sorted,
 		int *&sorting_perm, int *&sorting_perm_inv,
 		int &nb_types, int *&type_first, int *&type_len);
-	void int_vec_classify_with_arrays(int length,
+	void int_vec_classify_with_arrays(
+			int length,
 		int *the_vec, int *the_vec_sorted,
 		int *sorting_perm, int *sorting_perm_inv,
 		int &nb_types, int *type_first, int *type_len);
-	void int_vec_sorted_collect_types(int length, int *the_vec_sorted,
+	void int_vec_sorted_collect_types(
+			int length, int *the_vec_sorted,
 		int &nb_types, int *type_first, int *type_len);
-	void lint_vec_sorted_collect_types(int length,
+	void lint_vec_sorted_collect_types(
+			int length,
 		long int *the_vec_sorted,
 		int &nb_types, int *type_first, int *type_len);
-	void int_vec_print_classified(std::ostream &ost, int *vec, int len);
-	void int_vec_print_types(std::ostream &ost,
+	void int_vec_print_classified(
+			std::ostream &ost, int *vec, int len);
+	void int_vec_print_types(
+			std::ostream &ost,
 		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void lint_vec_print_types(std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked_stringstream(std::stringstream &sstr,
+	void int_vec_print_types_naked_stringstream(
+			std::stringstream &sstr,
 		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked_stringstream(std::stringstream &sstr,
+	void lint_vec_print_types_naked_stringstream(
+			std::stringstream &sstr,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked(std::ostream &ost, int f_backwards,
+	void int_vec_print_types_naked(
+			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked(std::ostream &ost,
+	void lint_vec_print_types_naked(
+			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked_tex(std::ostream &ost, int f_backwards,
+	void int_vec_print_types_naked_tex(
+			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void lint_vec_print_types_naked_tex(std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
+	void int_vec_print_types_naked_tex_we_are_in_math_mode(
+			std::ostream &ost,
 		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
+	void lint_vec_print_types_naked_tex_we_are_in_math_mode(
+			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void Heapsort(void *v, int len, int entry_size_in_chars,
@@ -1326,7 +1423,8 @@ public:
 		void (*swap_func)(void *data,
 				int i, int j, void *extra_data),
 		void *extra_data);
-	int search_general(void *data, int len, void *search_object, int &idx,
+	int search_general(
+			void *data, int len, void *search_object, int &idx,
 		int (*compare_func)(void *data, int i, void *search_object,
 		void *extra_data),
 		void *extra_data, int verbose_level);
@@ -1336,46 +1434,64 @@ public:
 		// the vector is assumed to be in increasing order.
 	void int_vec_heapsort(int *v, int len);
 	void lint_vec_heapsort(long int *v, int len);
-	void int_vec_heapsort_with_log(int *v, int *w, int len);
-	void lint_vec_heapsort_with_log(long int *v, long int *w, int len);
+	void int_vec_heapsort_with_log(
+			int *v, int *w, int len);
+	void lint_vec_heapsort_with_log(
+			long int *v, long int *w, int len);
 	void heapsort_make_heap(int *v, int len);
 	void lint_heapsort_make_heap(long int *v, int len);
-	void heapsort_make_heap_with_log(int *v, int *w, int len);
-	void lint_heapsort_make_heap_with_log(long int *v, long int *w, int len);
-	void Heapsort_make_heap(void *v, int len, int entry_size_in_chars,
+	void heapsort_make_heap_with_log(
+			int *v, int *w, int len);
+	void lint_heapsort_make_heap_with_log(
+			long int *v, long int *w, int len);
+	void Heapsort_make_heap(
+			void *v, int len, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
-	void Heapsort_general_make_heap(void *data, int len,
+	void Heapsort_general_make_heap(
+			void *data, int len,
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
-	void Heapsort_general_make_heap_with_log(void *data, int *w, int len,
+	void Heapsort_general_make_heap_with_log(
+			void *data, int *w, int len,
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
-	void heapsort_sift_down(int *v, int start, int end);
-	void lint_heapsort_sift_down(long int *v, int start, int end);
-	void heapsort_sift_down_with_log(int *v, int *w, int start, int end);
+	void heapsort_sift_down(
+			int *v, int start, int end);
+	void lint_heapsort_sift_down(
+			long int *v, int start, int end);
+	void heapsort_sift_down_with_log(
+			int *v, int *w, int start, int end);
 	void lint_heapsort_sift_down_with_log(
 			long int *v, long int *w, int start, int end);
-	void Heapsort_sift_down(void *v, int start, int end, int entry_size_in_chars,
+	void Heapsort_sift_down(
+			void *v, int start, int end, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
-	void Heapsort_general_sift_down(void *data, int start, int end,
+	void Heapsort_general_sift_down(
+			void *data, int start, int end,
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
-	void Heapsort_general_sift_down_with_log(void *data, int *w, int start, int end,
+	void Heapsort_general_sift_down_with_log(
+			void *data, int *w, int start, int end,
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
 	void heapsort_swap(int *v, int i, int j);
 	void lint_heapsort_swap(long int *v, int i, int j);
-	void Heapsort_swap(void *v, int i, int j, int entry_size_in_chars);
-	void find_points_by_multiplicity(int *data, int data_sz, int multiplicity,
+	void Heapsort_swap(
+			void *v, int i, int j, int entry_size_in_chars);
+	void find_points_by_multiplicity(
+			int *data, int data_sz, int multiplicity,
 		int *&pts, int &nb_pts);
 	void int_vec_bubblesort_increasing(int len, int *p);
 	int integer_vec_compare(int *p, int *q, int len);
-	int integer_vec_std_compare(const std::vector<unsigned int> &p, const std::vector<unsigned int> &q);
-	int lint_vec_compare(long int *p, long int *q, int len);
+	int integer_vec_std_compare(
+			const std::vector<unsigned int> &p,
+			const std::vector<unsigned int> &q);
+	int lint_vec_compare(
+			long int *p, long int *q, int len);
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		int *&depth, int *&ancestor, int verbose_level);
@@ -1389,19 +1505,29 @@ public:
 		graph_theory::layered_graph *&LG,
 		int verbose_level);
 	int compare_sets(int *set1, int *set2, int sz1, int sz2);
-	int compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2);
-	int test_if_sets_are_disjoint(long int *set1, long int *set2, int sz1, int sz2);
-	void d_partition(double *v, int left, int right, int *middle);
-	void d_quicksort(double *v, int left, int right);
+	int compare_sets_lint(
+			long int *set1, long int *set2, int sz1, int sz2);
+	int test_if_sets_are_disjoint(
+			long int *set1, long int *set2, int sz1, int sz2);
+	void d_partition(
+			double *v, int left, int right, int *middle);
+	void d_quicksort(
+			double *v, int left, int right);
 	void d_quicksort_array(int len, double *v);
-	int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
-	int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
+	int test_if_sets_are_disjoint_assuming_sorted(
+			int *set1, int *set2, int sz1, int sz2);
+	int test_if_sets_are_disjoint_assuming_sorted_lint(
+			long int *set1, long int *set2, int sz1, int sz2);
 	int uchar_vec_compare(uchar *p, uchar *q, int len);
-	int test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int *w, int len);
+	int test_if_sets_are_disjoint_not_assuming_sorted(
+			long int *v, long int *w, int len);
 	int int_vec_compare(int *p, int *q, int len);
-	int uint_vec_compare(unsigned int *p, unsigned int *q, int len);
-	int int_vec_compare_stride(int *p, int *q, int len, int stride);
-	void sorted_vec_get_first_and_length(int *v, int len,
+	int uint_vec_compare(
+			unsigned int *p, unsigned int *q, int len);
+	int int_vec_compare_stride(
+			int *p, int *q, int len, int stride);
+	void sorted_vec_get_first_and_length(
+			int *v, int len,
 			int *class_first, int *class_len, int &nb_classes);
 	// we assume that the vector v is sorted.
 
@@ -1470,9 +1596,12 @@ public:
 	void print_table_with_row_selection(int *f_selected, 
 			std::ostream &ost);
 	void print_table_sorted(std::ostream &ost, const char *sort_by);
-	void add_column_with_constant_value(const char *label, char *value);
-	void add_column_with_int(const char *label, int *Value);
-	void add_column_with_text(const char *label, char **Value);
+	void add_column_with_constant_value(
+			const char *label, char *value);
+	void add_column_with_int(
+			const char *label, int *Value);
+	void add_column_with_text(
+			const char *label, char **Value);
 	void reallocate_table();
 	void reallocate_table_add_row();
 	int find_column(std::string &column_label);
@@ -1482,7 +1611,8 @@ public:
 	void remove_quotes(int verbose_level);
 	void remove_rows(const char *drop_column, const char *drop_label, 
 		int verbose_level);
-	void remove_rows_where_field_is_empty(const char *drop_column, 
+	void remove_rows_where_field_is_empty(
+			const char *drop_column,
 		int verbose_level);
 	void find_rows(int verbose_level);
 	void get_value_double_or_NA(int i, int j, double &val, int &f_NA);
@@ -1519,14 +1649,17 @@ public:
 	int s_scan_token(char **s, char *str);
 	int s_scan_token_arbitrary(char **s, char *str);
 	int s_scan_str(char **s, char *str);
-	int s_scan_token_comma_separated(const char **s, char *str, int verbose_level);
+	int s_scan_token_comma_separated(
+			const char **s, char *str, int verbose_level);
 	void scan_permutation_from_string(std::string &s,
 		int *&perm, int &degree, int verbose_level);
 	void scan_permutation_from_stream(std::istream & is,
 		int *&perm, int &degree, int verbose_level);
 	void chop_string(const char *str, int &argc, char **&argv);
-	void chop_string_comma_separated(const char *str, int &argc, char **&argv);
-	void convert_arguments(int &argc, const char **argv, std::string *&Argv);
+	void chop_string_comma_separated(
+			const char *str, int &argc, char **&argv);
+	void convert_arguments(
+			int &argc, const char **argv, std::string *&Argv);
 	char get_character(std::istream & is, int verbose_level);
 	void replace_extension_with(char *p, const char *new_ext);
 	void replace_extension_with(std::string &p, const char *new_ext);
@@ -1534,15 +1667,18 @@ public:
 	void chop_off_extension_and_path(std::string &p);
 	void chop_off_extension(std::string &p);
 	void chop_off_path(std::string &p);
-	void chop_off_extension_if_present(std::string &p, const char *ext);
-	void chop_off_extension_if_present(char *p, const char *ext);
+	void chop_off_extension_if_present(
+			std::string &p, const char *ext);
+	void chop_off_extension_if_present(
+			char *p, const char *ext);
 	void get_fname_base(const char *p, char *fname_base);
 	void get_extension(std::string &p, std::string &ext);
 	void get_extension_if_present(const char *p, char *ext);
 	void get_extension_if_present_and_chop_off(char *p, char *ext);
 	void string_fix_escape_characters(std::string &str);
 	void remove_specific_character(std::string &str, char c);
-	void create_comma_separated_list(std::string &output, long int *input, int input_sz);
+	void create_comma_separated_list(
+			std::string &output, long int *input, int input_sz);
 	int is_all_whitespace(const char *str);
 	void text_to_three_double(std::string &text, double *d);
 	int strcmp_with_or_without(char *p, char *q);
@@ -1559,9 +1695,11 @@ public:
 			std::vector<std::string> &symbol_table,
 			std::string &evaluate_text, int verbose_level);
 	void drop_quotes(std::string &in, std::string &out);
-	void parse_comma_separated_strings(std::string &in, std::vector<std::string> &out);
+	void parse_comma_separated_strings(
+			std::string &in, std::vector<std::string> &out);
 	int read_schlaefli_label(const char *p);
-	void read_string_of_schlaefli_labels(std::string &str, int *&v, int &sz, int verbose_level);
+	void read_string_of_schlaefli_labels(
+			std::string &str, int *&v, int &sz, int verbose_level);
 
 
 };
@@ -1622,8 +1760,10 @@ public:
 	void print_second_tex(int f_backwards);
 	void print_file(std::ostream &ost, int f_backwards);
 	void print_file_tex(std::ostream &ost, int f_backwards);
-	void print_file_tex_we_are_in_math_mode(std::ostream &ost, int f_backwards);
-	void print_naked_stringstream(std::stringstream &sstr, int f_backwards);
+	void print_file_tex_we_are_in_math_mode(
+			std::ostream &ost, int f_backwards);
+	void print_naked_stringstream(
+			std::stringstream &sstr, int f_backwards);
 	void print_naked(int f_backwards);
 	void print_naked_tex(std::ostream &ost, int f_backwards);
 	void print_types_naked_tex(std::ostream &ost, int f_backwards,
@@ -1638,7 +1778,8 @@ public:
 	void get_data_by_multiplicity(int *&Pts, int &nb_pts,
 		int multiplicity, int verbose_level);
 	void get_data_by_multiplicity_as_lint(
-			long int *&Pts, int &nb_pts, int multiplicity, int verbose_level);
+			long int *&Pts, int &nb_pts,
+			int multiplicity, int verbose_level);
 	int determine_class_by_value(int value);
 	int get_value_of_class(int class_idx);
 	int get_largest_value();
@@ -1646,7 +1787,8 @@ public:
 		int verbose_level);
 	void get_class_by_value_lint(
 			long int *&Pts, int &nb_pts, int value, int verbose_level);
-	data_structures::set_of_sets *get_set_partition_and_types(int *&types,
+	data_structures::set_of_sets *get_set_partition_and_types(
+			int *&types,
 		int &nb_types, int verbose_level);
 	void save_classes_individually(std::string &fname);
 };
@@ -1717,8 +1859,10 @@ public:
 	void print_second_tex(int f_backwards);
 	void print_file(std::ostream &ost, int f_backwards);
 	void print_file_tex(std::ostream &ost, int f_backwards);
-	void print_file_tex_we_are_in_math_mode(std::ostream &ost, int f_backwards);
-	void print_naked_stringstream(std::stringstream &sstr, int f_backwards);
+	void print_file_tex_we_are_in_math_mode(
+			std::ostream &ost, int f_backwards);
+	void print_naked_stringstream(
+			std::stringstream &sstr, int f_backwards);
 	void print_naked(int f_backwards);
 	void print_naked_tex(std::ostream &ost, int f_backwards);
 	void print_types_naked_tex(std::ostream &ost, int f_backwards,
@@ -1730,7 +1874,8 @@ public:
 	void get_data_by_multiplicity(int *&Pts, int &nb_pts,
 		int multiplicity, int verbose_level);
 	void get_data_by_multiplicity_as_lint(
-			long int *&Pts, int &nb_pts, int multiplicity, int verbose_level);
+			long int *&Pts, int &nb_pts,
+			int multiplicity, int verbose_level);
 	int determine_class_by_value(int value);
 	int get_value_of_class(int class_idx);
 	int get_largest_value();
@@ -1738,7 +1883,8 @@ public:
 		int verbose_level);
 	void get_class_by_value_lint(
 			long int *&Pts, int &nb_pts, int value, int verbose_level);
-	data_structures::set_of_sets *get_set_partition_and_types(int *&types,
+	data_structures::set_of_sets *get_set_partition_and_types(
+			int *&types,
 		int &nb_types, int verbose_level);
 	void save_classes_individually(std::string &fname);
 };
@@ -1762,9 +1908,14 @@ public:
 
 	int *data; // [data_length * data_set_sz]
 
-	int *rep_idx; // [data_length], rep_idx[i] is the index into Rep of data[i * data_set_sz]
-	int *Reps; // [data_length * data_set_sz], used [nb_types * data_set_sz]
-	int *Frequency; // [data_length], used [nb_types]
+	int *rep_idx;
+		// [data_length],
+		// rep_idx[i] is the index into Rep of data[i * data_set_sz]
+	int *Reps;
+		// [data_length * data_set_sz],
+		// used [nb_types * data_set_sz]
+	int *Frequency;
+		// [data_length], used [nb_types]
 	int *sorting_perm;
 		// computed using int_vec_sorting_permutation
 	int *sorting_perm_inv;
@@ -1796,9 +1947,11 @@ public:
 	int hash_and_find(int *data,
 			int &idx, uint32_t &h, int verbose_level);
 	void print();
-	void save_classes_individually(std::string &fname, int verbose_level);
+	void save_classes_individually(
+			std::string &fname, int verbose_level);
 	void get_transversal(
-			int *&transversal, int *&frequency, int &nb_types, int verbose_level);
+			int *&transversal, int *&frequency,
+			int &nb_types, int verbose_level);
 	void print_classes_bigger_than_one(int verbose_level);
 
 };
@@ -1892,7 +2045,9 @@ public:
 
 	vector_builder();
 	~vector_builder();
-	void init(vector_builder_description *Descr, field_theory::finite_field *F, int verbose_level);
+	void init(vector_builder_description *Descr,
+			field_theory::finite_field *F,
+			int verbose_level);
 	void print(std::ostream &ost);
 
 };

@@ -57,7 +57,8 @@ void bitmatrix::init(int m, int n, int verbose_level)
 }
 
 void bitmatrix::unrank_PG_elements_in_columns_consecutively(
-		field_theory::finite_field *F, long int start_value, int verbose_level)
+		field_theory::finite_field *F,
+		long int start_value, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *v;
@@ -91,7 +92,8 @@ void bitmatrix::unrank_PG_elements_in_columns_consecutively(
 
 void bitmatrix::rank_PG_elements_in_columns(
 		field_theory::finite_field *F,
-		int *perms, unsigned int *PG_ranks, int verbose_level)
+		int *perms, unsigned int *PG_ranks,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;
@@ -217,7 +219,8 @@ void bitmatrix::m_ij(int i, int j, int a)
 		}
 }
 
-void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
+void bitmatrix::mult_int_matrix_from_the_left(
+		int *A, int Am, int An,
 		bitmatrix *Out, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

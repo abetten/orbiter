@@ -572,7 +572,9 @@ long int klein_correspondence::Pluecker_to_line_rk(int *v6, int verbose_level)
 }
 
 
-void klein_correspondence::exterior_square_to_line(int *v, int *basis_line, int verbose_level)
+void klein_correspondence::exterior_square_to_line(
+		int *v, int *basis_line,
+		int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -846,7 +848,8 @@ void klein_correspondence::identify_external_lines_and_spreads(
 }
 
 
-void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_level)
+void klein_correspondence::reverse_isomorphism(
+		int *A6, int *A4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int A6_copy[36];

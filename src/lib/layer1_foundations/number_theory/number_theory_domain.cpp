@@ -314,7 +314,7 @@ void number_theory_domain::extended_gcd_lint(long int m, long int n,
 	v = V.as_lint();
 }
 
-long int number_theory_domain::gcd_with_key_in_latex(ostream &ost,
+long int number_theory_domain::gcd_with_key_in_latex(std::ostream &ost,
 		long int a, long int b, int f_key, int verbose_level)
 //Computes gcd(a,b)
 {
@@ -1405,7 +1405,7 @@ int number_theory_domain::Jacobi_with_key_in_latex(std::ostream &ost,
 	exit(1);
 }
 
-int number_theory_domain::Legendre_with_key_in_latex(ostream &ost,
+int number_theory_domain::Legendre_with_key_in_latex(std::ostream &ost,
 		long int a, long int m, int verbose_level)
 //Computes the Legendre symbol $\left( \frac{a}{m} \right)$.
 {

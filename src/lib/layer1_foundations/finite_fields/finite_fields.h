@@ -217,14 +217,6 @@ public:
 	std::string polynomial_reduce_mod_p_A;
 
 
-
-
-#if 0
-	int f_cheat_sheet_Gr;
-	int cheat_sheet_Gr_n;
-	int cheat_sheet_Gr_k;
-#endif
-
 	int f_cheat_sheet_hermitian;
 	int cheat_sheet_hermitian_projective_dimension;
 
@@ -442,7 +434,6 @@ public:
 
 	int f_q;
 	std::string q_text;
-	//int q;
 
 	int f_override_polynomial;
 	std::string override_polynomial;
@@ -513,7 +504,6 @@ public:
 	long int nb_calls_to_PG_element_unrank_modified;
 
 	linear_algebra::linear_algebra *Linear_algebra;
-	//orthogonal_geometry::orthogonal_indexing *Orthogonal_indexing;
 
 
 	finite_field();
@@ -576,8 +566,10 @@ public:
 	int power(int a, int n);
 	int power_verbose(int a, int n, int verbose_level);
 		// computes a^n
-	void frobenius_power_vec(int *v, int len, int frob_power);
-	void frobenius_power_vec_to_vec(int *v_in, int *v_out, int len, int frob_power);
+	void frobenius_power_vec(
+			int *v, int len, int frob_power);
+	void frobenius_power_vec_to_vec(int *v_in, int *v_out,
+			int len, int frob_power);
 	int frobenius_power(int a, int frob_power);
 		// computes a^{p^frob_power}
 	int absolute_trace(int i);
@@ -625,6 +617,8 @@ public:
 	// last non-zero element made one
 	void PG_element_normalize_from_front(int *v, int stride, int len);
 	// first non zero element made one
+	void PG_element_normalize_from_a_given_position(
+			int *v, int stride, int len, int idx);
 
 
 	void PG_elements_embed(
@@ -658,10 +652,12 @@ public:
 	void projective_point_unrank(int n, int *v, int rk);
 	long int projective_point_rank(int n, int *v);
 	void all_PG_elements_in_subspace(
-			int *genma, int k, int n, long int *&point_list, int &nb_points,
+			int *genma, int k, int n,
+			long int *&point_list, int &nb_points,
 			int verbose_level);
 	void all_PG_elements_in_subspace_array_is_given(
-			int *genma, int k, int n, long int *point_list, int &nb_points,
+			int *genma, int k, int n,
+			long int *point_list, int &nb_points,
 			int verbose_level);
 	void display_all_PG_elements(int n);
 	void display_all_PG_elements_not_in_subspace(int n, int m);

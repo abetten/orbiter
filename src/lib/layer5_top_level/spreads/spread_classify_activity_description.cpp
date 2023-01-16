@@ -19,7 +19,6 @@ namespace spreads {
 spread_classify_activity_description::spread_classify_activity_description()
 {
 	f_compute_starter = FALSE;
-	starter_control = NULL;
 
 	f_prepare_lifting_single_case = FALSE;
 	prepare_lifting_single_case_case_number = 0;
@@ -58,11 +57,6 @@ int spread_classify_activity_description::read_arguments(int argc, std::string *
 			if (f_v) {
 				cout << "-compute_starter " << endl;
 			}
-			starter_control = NEW_OBJECT(poset_classification::poset_classification_control);
-
-			i += starter_control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
 		}
 		else if (ST.stringcmp(argv[i], "-prepare_lifting_single_case") == 0) {
 			f_prepare_lifting_single_case = TRUE;

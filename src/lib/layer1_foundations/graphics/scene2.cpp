@@ -312,7 +312,7 @@ void scene::create_regulus(int idx, int nb_lines, int verbose_level)
 	}
 }
 
-void scene::clipping_by_cylinder(int line_idx, double r, ostream &ost)
+void scene::clipping_by_cylinder(int line_idx, double r, std::ostream &ost)
 {
 	int h;
 	numerics N;

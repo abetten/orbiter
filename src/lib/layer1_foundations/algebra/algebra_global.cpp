@@ -438,17 +438,14 @@ void algebra_global::display_all_PHG_elements(int n, int q)
 	FREE_int(v);
 }
 
-void algebra_global::test_unipoly()
+void algebra_global::test_unipoly(field_theory::finite_field *F)
 {
-	field_theory::finite_field GFp;
-	int p = 2;
 	ring_theory::unipoly_object m, a, b, c;
 	ring_theory::unipoly_object elts[4];
 	int i, j;
 	int verbose_level = 0;
 
-	GFp.finite_field_init_small_order(p, FALSE /* f_without_tables */, verbose_level);
-	ring_theory::unipoly_domain FX(&GFp);
+	ring_theory::unipoly_domain FX(F);
 
 	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
 	FX.create_object_by_rank(a, 5, __FILE__, __LINE__, 0);
@@ -456,7 +453,7 @@ void algebra_global::test_unipoly()
 	FX.print_object(a, cout); cout << endl;
 	FX.print_object(b, cout); cout << endl;
 
-	ring_theory::unipoly_domain Fq(&GFp, m, verbose_level);
+	ring_theory::unipoly_domain Fq(F, m, verbose_level);
 	Fq.create_object_by_rank(c, 2, __FILE__, __LINE__, 0);
 	for (i = 0; i < 4; i++) {
 		Fq.create_object_by_rank(elts[i], i, __FILE__, __LINE__, 0);
@@ -479,20 +476,17 @@ void algebra_global::test_unipoly()
 
 }
 
-void algebra_global::test_unipoly2()
+void algebra_global::test_unipoly2(field_theory::finite_field *F)
 {
-	field_theory::finite_field Fq;
-	int q = 4, p = 2, i;
-	int verbose_level = 0;
+	int i;
 
-	Fq.finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
-	ring_theory::unipoly_domain FX(&Fq);
+	ring_theory::unipoly_domain FX(F);
 
 	ring_theory::unipoly_object a;
 
 	FX.create_object_by_rank(a, 0, __FILE__, __LINE__, 0);
-	for (i = 1; i < q; i++) {
-		FX.minimum_polynomial(a, i, p, TRUE);
+	for (i = 1; i < F->q; i++) {
+		FX.minimum_polynomial(a, i, F->p, TRUE);
 		//cout << "minpoly_" << i << " = ";
 		//FX.print_object(a, cout); cout << endl;
 		}
@@ -754,7 +748,7 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 	}
 }
 
-void algebra_global::longinteger_collect_print(ostream &ost,
+void algebra_global::longinteger_collect_print(std::ostream &ost,
 		int &nb_agos, ring_theory::longinteger_object *&agos, int *&multiplicities)
 {
 	int j;

@@ -696,7 +696,7 @@ void packing_was_fixpoints::report(int verbose_level)
 	}
 }
 
-void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ int verbose_level)
+void packing_was_fixpoints::report2(std::ostream &ost, /*packing_long_orbits *L,*/ int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

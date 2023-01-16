@@ -847,7 +847,8 @@ void compute_stabilizer::compute_canonical_form(int verbose_level)
 	}
 }
 
-void compute_stabilizer::compute_canonical_form_handle_case(int cnt, int verbose_level)
+void compute_stabilizer::compute_canonical_form_handle_case(
+		int cnt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -911,7 +912,8 @@ void compute_stabilizer::compute_canonical_form_handle_case(int cnt, int verbose
 
 }
 
-void compute_stabilizer::compute_canonical_set(long int *set_in, long int *set_out, int sz,
+void compute_stabilizer::compute_canonical_set(
+		long int *set_in, long int *set_out, int sz,
 		int *transporter, int verbose_level)
 // calls A_induced->make_canonical and computes a transporter.
 // does not compute the set stabilizer
@@ -949,7 +951,8 @@ void compute_stabilizer::compute_canonical_set(long int *set_in, long int *set_o
 
 void compute_stabilizer::compute_canonical_set_and_group(
 		long int *set_in, long int *set_out, int sz,
-		int *transporter, groups::sims *&stab, int verbose_level)
+		int *transporter,
+		groups::sims *&stab, int verbose_level)
 // calls A_induced->make_canonical and computes a transporter and the set stabilizer
 {
 	int f_v = (verbose_level >= 1);

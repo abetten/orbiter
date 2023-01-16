@@ -989,7 +989,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 //##############################################################################
 
 
-static void semifield_print_function_callback(ostream &ost, int orbit_idx,
+static void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
 		invariant_relations::classification_step *Step, void *print_function_data)
 {
 	semifield_substructure *Sub = (semifield_substructure *) print_function_data;

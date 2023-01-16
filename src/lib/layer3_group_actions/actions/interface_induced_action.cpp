@@ -1225,7 +1225,7 @@ static void induced_action_element_dispose(action &A,
 }
 
 static void induced_action_element_print(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	if (A.type_G == product_action_t) {
 		induced_actions::product_action *PA;
@@ -1267,7 +1267,7 @@ static void induced_action_element_print(action &A,
 }
 
 static void induced_action_element_print_quick(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	if (A.type_G == product_action_t) {
 		induced_actions::product_action *PA;
@@ -1295,7 +1295,7 @@ static void induced_action_element_print_quick(action &A,
 }
 
 static void induced_action_element_print_latex(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	if (A.type_G == product_action_t) {
 		induced_actions::product_action *PA;
@@ -1381,7 +1381,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 }
 
 static void induced_action_element_print_verbose(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	if (A.type_G == product_action_t) {
 		induced_actions::product_action *PA;
@@ -1422,7 +1422,7 @@ static void induced_action_element_code_for_make_element(action &A,
 }
 
 static void induced_action_element_print_for_make_element(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	//int *Elt = (int *) elt;
 
@@ -1441,7 +1441,7 @@ static void induced_action_element_print_for_make_element(action &A,
 }
 
 static void induced_action_element_print_for_make_element_no_commas(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	//int *Elt = (int *) elt;
 
@@ -1460,7 +1460,7 @@ static void induced_action_element_print_for_make_element_no_commas(
 }
 
 static void induced_action_print_point(action &A,
-		long int a, ostream &ost)
+		long int a, std::ostream &ost)
 {
 	action_global AG;
 

@@ -88,9 +88,11 @@ seventytwo_cases::~seventytwo_cases()
 {
 }
 
-void seventytwo_cases::init(surface_domain *Surf, int f, int tritangent_plane_idx,
+void seventytwo_cases::init(
+		surface_domain *Surf, int f, int tritangent_plane_idx,
 		int *three_lines_idx, long int *three_lines,
-		int line_idx, int m1, int m2, int m3, int line_l1_l2_idx, int l1, int l2)
+		int line_idx, int m1, int m2, int m3,
+		int line_l1_l2_idx, int l1, int l2)
 {
 	seventytwo_cases::Surf = Surf;
 	seventytwo_cases::f = f;
@@ -265,7 +267,8 @@ void seventytwo_cases::compute_partition(int verbose_level)
 	}
 }
 
-void seventytwo_cases::compute_half_double_six(surface_object *SO, int verbose_level)
+void seventytwo_cases::compute_half_double_six(
+		surface_object *SO, int verbose_level)
 // needs transversals4[]
 {
 	int f_v = (verbose_level >= 1);
@@ -293,7 +296,8 @@ void seventytwo_cases::print()
 					"l1=" << l1 << " l2=" << l2 << endl;
 }
 
-void seventytwo_cases::report_seventytwo_maps_line(ostream &ost)
+void seventytwo_cases::report_seventytwo_maps_line(
+		std::ostream &ost)
 {
 	int c;
 
@@ -318,7 +322,8 @@ void seventytwo_cases::report_seventytwo_maps_line(ostream &ost)
 	ost << "\\\\";
 }
 
-void seventytwo_cases::report_seventytwo_maps_top(ostream &ost)
+void seventytwo_cases::report_seventytwo_maps_top(
+		std::ostream &ost)
 {
 	int t = tritangent_plane_idx;
 
@@ -332,7 +337,8 @@ void seventytwo_cases::report_seventytwo_maps_top(ostream &ost)
 	ost << "\\hline" << endl;
 }
 
-void seventytwo_cases::report_seventytwo_maps_bottom(ostream &ost)
+void seventytwo_cases::report_seventytwo_maps_bottom(
+		std::ostream &ost)
 {
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -340,7 +346,8 @@ void seventytwo_cases::report_seventytwo_maps_bottom(ostream &ost)
 	ost << "\\bigskip" << endl;
 }
 
-void seventytwo_cases::report_single_Clebsch_map(ostream &ost, int verbose_level)
+void seventytwo_cases::report_single_Clebsch_map(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -356,7 +363,8 @@ void seventytwo_cases::report_single_Clebsch_map(ostream &ost, int verbose_level
 	}
 }
 
-void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *SO, int verbose_level)
+void seventytwo_cases::report_Clebsch_map_details(
+		std::ostream &ost, surface_object *SO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *H;
@@ -443,7 +451,9 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 	}
 }
 
-void seventytwo_cases::report_Clebsch_map_aut_coset(ostream &ost, int coset, int relative_order, int verbose_level)
+void seventytwo_cases::report_Clebsch_map_aut_coset(
+		std::ostream &ost, int coset,
+		int relative_order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *H;

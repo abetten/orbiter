@@ -239,7 +239,7 @@ union symmetry_group {
 
 
 #include "./actions/actions.h"
-#include "./data_structures/data_structures.h"
+#include "data_structures/l3_data_structures.h"
 #include "./groups/groups.h"
 #include "./induced_actions/induced_actions.h"
 

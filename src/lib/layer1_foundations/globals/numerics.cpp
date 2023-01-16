@@ -46,7 +46,8 @@ void numerics::vec_print(double *a, int len)
 	cout << ")";
 }
 
-void numerics::vec_linear_combination1(double c1, double *v1,
+void numerics::vec_linear_combination1(
+		double c1, double *v1,
 		double *w, int len)
 {
 	int i;
@@ -56,7 +57,8 @@ void numerics::vec_linear_combination1(double c1, double *v1,
 		}
 }
 
-void numerics::vec_linear_combination(double c1, double *v1,
+void numerics::vec_linear_combination(
+		double c1, double *v1,
 		double c2, double *v2, double *v3, int len)
 {
 	int i;
@@ -79,7 +81,8 @@ void numerics::vec_linear_combination3(
 		}
 }
 
-void numerics::vec_add(double *a, double *b, double *c, int len)
+void numerics::vec_add(
+		double *a, double *b, double *c, int len)
 {
 	int i;
 	
@@ -88,7 +91,8 @@ void numerics::vec_add(double *a, double *b, double *c, int len)
 		}
 }
 
-void numerics::vec_subtract(double *a, double *b, double *c, int len)
+void numerics::vec_subtract(
+		double *a, double *b, double *c, int len)
 {
 	int i;
 	
@@ -97,7 +101,8 @@ void numerics::vec_subtract(double *a, double *b, double *c, int len)
 		}
 }
 
-void numerics::vec_scalar_multiple(double *a, double lambda, int len)
+void numerics::vec_scalar_multiple(
+		double *a, double lambda, int len)
 {
 	int i;
 	
@@ -106,7 +111,8 @@ void numerics::vec_scalar_multiple(double *a, double lambda, int len)
 		}
 }
 
-int numerics::Gauss_elimination(double *A, int m, int n,
+int numerics::Gauss_elimination(
+		double *A, int m, int n,
 	int *base_cols, int f_complete, 
 	int verbose_level)
 {
@@ -432,7 +438,8 @@ void numerics::vec_normalize_from_back(double *v, int len)
 		}
 }
 
-void numerics::vec_normalize_to_minus_one_from_back(double *v, int len)
+void numerics::vec_normalize_to_minus_one_from_back(
+		double *v, int len)
 {
 	int i, j;
 	double av;
@@ -455,7 +462,8 @@ void numerics::vec_normalize_to_minus_one_from_back(double *v, int len)
 #define EPS 0.001
 
 
-int numerics::triangular_prism(double *P1, double *P2, double *P3,
+int numerics::triangular_prism(
+		double *P1, double *P2, double *P3,
 	double *abc3, double *angles3, double *T3, 
 	int verbose_level)
 {
@@ -628,7 +636,8 @@ int numerics::triangular_prism(double *P1, double *P2, double *P3,
 	return TRUE;
 }
 
-int numerics::general_prism(double *Pts, int nb_pts, double *Pts_xy,
+int numerics::general_prism(
+		double *Pts, int nb_pts, double *Pts_xy,
 	double *abc3, double *angles3, double *T3, 
 	int verbose_level)
 {
@@ -838,7 +847,8 @@ int numerics::general_prism(double *Pts, int nb_pts, double *Pts_xy,
 	return TRUE;
 }
 
-void numerics::mult_matrix(double *v, double *R, double *vR)
+void numerics::mult_matrix(
+		double *v, double *R, double *vR)
 {
 	int i, j;
 	double c;
@@ -853,7 +863,8 @@ void numerics::mult_matrix(double *v, double *R, double *vR)
 }
 
 void numerics::mult_matrix_matrix(
-		double *A, double *B, double *C, int m, int n, int o)
+		double *A, double *B, double *C,
+		int m, int n, int o)
 // A is m x n, B is n x o, C is m x o
 {
 	int i, j, h;
@@ -962,7 +973,8 @@ double numerics::atan_xy(double x, double y)
 	return phi;
 }
 
-double numerics::dot_product(double *u, double *v, int len)
+double numerics::dot_product(
+		double *u, double *v, int len)
 {
 	double d;
 	int i;
@@ -974,14 +986,16 @@ double numerics::dot_product(double *u, double *v, int len)
 	return d;
 }
 
-void numerics::cross_product(double *u, double *v, double *n)
+void numerics::cross_product(
+		double *u, double *v, double *n)
 {
 	n[0] = u[1] * v[2] - v[1] * u[2];
 	n[1] = u[2] * v[0] - u[0] * v[2];
 	n[2] = u[0] * v[1] - u[1] * v[0];
 }
 
-double numerics::distance_euclidean(double *x, double *y, int len)
+double numerics::distance_euclidean(
+		double *x, double *y, int len)
 {
 	double d, a;
 	int i;
@@ -995,7 +1009,8 @@ double numerics::distance_euclidean(double *x, double *y, int len)
 	return d;
 }
 
-double numerics::distance_from_origin(double x1, double x2, double x3)
+double numerics::distance_from_origin(
+		double x1, double x2, double x3)
 {
 	double d;
 
@@ -1029,7 +1044,8 @@ void numerics::make_unit_vector(double *v, int len)
 	vec_scalar_multiple(v, dv, len);
 }
 
-void numerics::center_of_mass(double *Pts, int len,
+void numerics::center_of_mass(
+		double *Pts, int len,
 	int *Pt_idx, int nb_pts, double *c)
 {
 	int i, h, idx;
@@ -1174,7 +1190,8 @@ void numerics::orthogonal_transformation_from_point_to_basis_vector(
 		}
 }
 
-void numerics::output_double(double a, ostream &ost)
+void numerics::output_double(
+		double a, std::ostream &ost)
 {
 	if (ABS(a) < 0.0001) {
 		ost << 0;
@@ -1184,7 +1201,8 @@ void numerics::output_double(double a, ostream &ost)
 		}
 }
 
-void numerics::mult_matrix_4x4(double *v, double *R, double *vR)
+void numerics::mult_matrix_4x4(
+		double *v, double *R, double *vR)
 {
 	int i, j;
 	double c;
@@ -1199,7 +1217,8 @@ void numerics::mult_matrix_4x4(double *v, double *R, double *vR)
 }
 
 
-void numerics::transpose_matrix_4x4(double *A, double *At)
+void numerics::transpose_matrix_4x4(
+		double *A, double *At)
 {
 	int i, j;
 
@@ -1210,7 +1229,8 @@ void numerics::transpose_matrix_4x4(double *A, double *At)
 		}
 }
 
-void numerics::transpose_matrix_nxn(double *A, double *At, int n)
+void numerics::transpose_matrix_nxn(
+		double *A, double *At, int n)
 {
 	int i, j;
 
@@ -1719,7 +1739,8 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 		cout << "numerics::substitute_quartic_linear_using_povray_ordering done" << endl;
 		}
 }
-void numerics::make_transform_t_varphi_u_double(int n,
+void numerics::make_transform_t_varphi_u_double(
+		int n,
 	double *varphi, 
 	double *u, double *A, double *Av, 
 	int verbose_level)
@@ -1749,7 +1770,8 @@ void numerics::make_transform_t_varphi_u_double(int n,
 		}
 }
 
-void numerics::matrix_double_inverse(double *A, double *Av, int n,
+void numerics::matrix_double_inverse(
+		double *A, double *Av, int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1801,8 +1823,10 @@ void numerics::matrix_double_inverse(double *A, double *Av, int n,
 }
 
 
-int numerics::line_centered(double *pt1_in, double *pt2_in,
-	double *pt1_out, double *pt2_out, double r, int verbose_level)
+int numerics::line_centered(
+		double *pt1_in, double *pt2_in,
+	double *pt1_out, double *pt2_out, double r,
+	int verbose_level)
 {
 	int f_v = TRUE; //(verbose_level >= 1);
 	double v[3];
@@ -1893,8 +1917,10 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	return TRUE;
 }
 
-int numerics::line_centered_tolerant(double *pt1_in, double *pt2_in,
-	double *pt1_out, double *pt2_out, double r, int verbose_level)
+int numerics::line_centered_tolerant(
+		double *pt1_in, double *pt2_in,
+	double *pt1_out, double *pt2_out, double r,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double v[3];
@@ -2001,7 +2027,9 @@ int numerics::sign_of(double a)
 
 
 
-void numerics::eigenvalues(double *A, int n, double *lambda, int verbose_level)
+void numerics::eigenvalues(
+		double *A, int n, double *lambda,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -2202,7 +2230,7 @@ void numerics::vec_swap(double *from, double *to, int len)
 		}
 }
 
-void numerics::vec_print(ostream &ost, double *v, int len)
+void numerics::vec_print(std::ostream &ost, double *v, int len)
 {
 	int i;
 
@@ -2376,7 +2404,8 @@ double numerics::atan_grad(double x)
 void numerics::adjust_coordinates_double(
 		double *Px, double *Py,
 		int *Qx, int *Qy,
-		int N, double xmin, double ymin, double xmax, double ymax,
+		int N,
+		double xmin, double ymin, double xmax, double ymax,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2435,8 +2464,10 @@ void numerics::adjust_coordinates_double(
 		}
 }
 
-void numerics::Intersection_of_lines(double *X, double *Y,
-		double *a, double *b, double *c, int l1, int l2, int pt)
+void numerics::Intersection_of_lines(
+		double *X, double *Y,
+		double *a, double *b, double *c,
+		int l1, int l2, int pt)
 {
 	intersection_of_lines(
 			a[l1], b[l1], c[l1],
@@ -2457,7 +2488,8 @@ void numerics::intersection_of_lines(
 	y = d * (-a2 * -c1 + a1 * -c2);
 }
 
-void numerics::Line_through_points(double *X, double *Y,
+void numerics::Line_through_points(
+		double *X, double *Y,
 		double *a, double *b, double *c,
 		int pt1, int pt2, int line_idx)
 {
@@ -2465,8 +2497,10 @@ void numerics::Line_through_points(double *X, double *Y,
 			a[line_idx], b[line_idx], c[line_idx]);
 }
 
-void numerics::line_through_points(double pt1_x, double pt1_y,
-	double pt2_x, double pt2_y, double &a, double &b, double &c)
+void numerics::line_through_points(
+		double pt1_x, double pt1_y,
+	double pt2_x, double pt2_y,
+	double &a, double &b, double &c)
 {
 	double s, off;
 	const double MY_EPS = 0.01;
@@ -2487,7 +2521,8 @@ void numerics::line_through_points(double pt1_x, double pt1_y,
 		}
 }
 
-void numerics::intersect_circle_line_through(double rad, double x0, double y0,
+void numerics::intersect_circle_line_through(
+		double rad, double x0, double y0,
 	double pt1_x, double pt1_y,
 	double pt2_x, double pt2_y,
 	double &x1, double &y1, double &x2, double &y2)
@@ -2506,7 +2541,8 @@ void numerics::intersect_circle_line_through(double rad, double x0, double y0,
 }
 
 
-void numerics::intersect_circle_line(double rad, double x0, double y0,
+void numerics::intersect_circle_line(
+		double rad, double x0, double y0,
 		double a, double b, double c,
 		double &x1, double &y1, double &x2, double &y2)
 {
@@ -2657,7 +2693,8 @@ void numerics::transform_dist_y(int *in, int *out, int &y)
 	y = dy;
 }
 
-void numerics::transform_llur_double(double *in, double *out, double &x, double &y)
+void numerics::transform_llur_double(
+		double *in, double *out, double &x, double &y)
 {
 	double dx, dy;
 	double a, b;
@@ -2680,7 +2717,8 @@ void numerics::transform_llur_double(double *in, double *out, double &x, double 
 
 
 
-void numerics::on_circle_int(int *Px, int *Py,
+void numerics::on_circle_int(
+		int *Px, int *Py,
 		int idx, int angle_in_degree, int rad)
 {
 	Px[idx] = (int)(cos_grad(angle_in_degree) * (double) rad);
@@ -3228,8 +3266,11 @@ void numerics::clebsch_map_up(
 }
 
 
-void numerics::project_to_disc(int f_projection_on, int f_transition, int step, int nb_steps,
-	double rad, double height, double x, double y, double &xp, double &yp)
+void numerics::project_to_disc(
+		int f_projection_on, int f_transition,
+		int step, int nb_steps,
+	double rad, double height, double x, double y,
+	double &xp, double &yp)
 {
 	double f;
 

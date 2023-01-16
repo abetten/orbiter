@@ -278,6 +278,23 @@ void orbiter_symbol_table_entry::init_quartic_curve(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_BLT_set(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_BLT_set" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_BLT_set;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_BLT_set done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::init_classification_of_cubic_surfaces_with_double_sixes(
 		std::string &label,
 		void *p, int verbose_level)
@@ -768,6 +785,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_quartic_curve) {
 			cout << "quartic curve" << endl;
+		}
+		else if (object_type == t_BLT_set) {
+			cout << "BLT-set" << endl;
 		}
 		else if (object_type == t_classification_of_cubic_surfaces_with_double_sixes) {
 			cout << "classification_of_cubic_surfaces_with_double_sixes" << endl;

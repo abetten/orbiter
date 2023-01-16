@@ -400,7 +400,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 
 			list_all_orbits_at_level(d,
 					FALSE /* f_has_print_function */,
-					NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
+					NULL /* void (*print_function)(std::ostream &ost, int len, int *S, void *data)*/,
 					NULL /* void *print_function_data*/,
 					Control->f_show_orbit_decomposition /* f_show_orbit_decomposition */,
 					Control->f_show_stab /* f_show_stab */,

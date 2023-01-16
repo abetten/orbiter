@@ -537,7 +537,7 @@ void direct_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 }
 
-void direct_product::element_print_easy(int *Elt, ostream &ost)
+void direct_product::element_print_easy(int *Elt, std::ostream &ost)
 {
 	int f;
 

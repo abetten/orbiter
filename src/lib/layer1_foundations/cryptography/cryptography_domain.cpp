@@ -4542,7 +4542,7 @@ void cryptography_domain::RSA_setup(
 
 void cryptography_domain::do_babystep_giantstep(
 		long int p, long int g, long int h,
-		int f_latex, ostream &ost, int verbose_level)
+		int f_latex, std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int N, n;

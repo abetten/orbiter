@@ -43,6 +43,9 @@ activity_description::activity_description()
 	f_quartic_curve_activity = FALSE;
 	Quartic_curve_activity_description = NULL;
 
+	f_blt_set_activity = FALSE;
+	Blt_set_activity_description = NULL;
+
 	f_combinatorial_object_activity = FALSE;
 	Combinatorial_object_activity_description = NULL;
 
@@ -293,6 +296,29 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-blt_set_activity") == 0) {
+		f_blt_set_activity = TRUE;
+		Blt_set_activity_description =
+				NEW_OBJECT(orthogonal_geometry_applications::blt_set_activity_description);
+		if (f_v) {
+			cout << "reading -blt_set_activity" << endl;
+		}
+		i += Blt_set_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-blt_set_activity" << endl;
+			Blt_set_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
 	else if (ST.stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
 		f_combinatorial_object_activity = TRUE;
 		Combinatorial_object_activity_description =
@@ -753,6 +779,14 @@ void activity_description::worker(int verbose_level)
 		do_quartic_curve_activity(verbose_level);
 
 	}
+	else if (f_blt_set_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_blt_set_activity" << endl;
+		}
+		do_blt_set_activity(verbose_level);
+
+	}
 	else if (f_combinatorial_object_activity) {
 
 		if (f_v) {
@@ -935,6 +969,10 @@ void activity_description::print()
 	else if (f_quartic_curve_activity) {
 		cout << "-quartic_curve_activity ";
 		Quartic_curve_activity_description->print();
+	}
+	else if (f_blt_set_activity) {
+		cout << "-blt_set_activity" << endl;
+		Blt_set_activity_description->print();
 	}
 	else if (f_combinatorial_object_activity) {
 		cout << "-combinatorial_object_activity ";
@@ -1443,7 +1481,7 @@ void activity_description::do_quartic_curve_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-group_theoretic_activity requires at least one input" << endl;
+		cout << "-quartic_curve_activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1471,6 +1509,56 @@ void activity_description::do_quartic_curve_activity(int verbose_level)
 
 	if (f_v) {
 		cout << "activity_description::do_quartic_curve_activity done" << endl;
+	}
+
+}
+
+
+void activity_description::do_blt_set_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_blt_set_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "-blt_set_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	orthogonal_geometry_applications::BLT_set_create *BC;
+
+	BC = (orthogonal_geometry_applications::BLT_set_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		orthogonal_geometry_applications::blt_set_activity Activity;
+
+		Activity.init(Blt_set_activity_description, BC, verbose_level);
+
+		if (f_v) {
+			cout << "activity_description::do_blt_set_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_blt_set_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_blt_set_activity done" << endl;
 	}
 
 }

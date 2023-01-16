@@ -147,7 +147,8 @@ void girth_test::delete_incidence(int i, int j_idx, int j)
 	}
 }
 
-int girth_test::check_girth_condition(int i, int j_idx, int j, int verbose_level)
+int girth_test::check_girth_condition(
+		int i, int j_idx, int j, int verbose_level)
 {
 	int h, j1, u1, u2, a1, a2; // dim_n
 	int f_v = (verbose_level >= 1);

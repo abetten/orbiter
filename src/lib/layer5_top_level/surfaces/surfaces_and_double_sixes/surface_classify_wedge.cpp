@@ -2612,7 +2612,7 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 			<< Fio.file_size(fname) << endl;
 }
 
-void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
+void surface_classify_wedge::report(std::ostream &ost, int f_with_stabilizers,
 		graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)

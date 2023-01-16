@@ -43,7 +43,7 @@ void draw_frame(
 	double clipping_radius,
 	ostream &fp,
 	int verbose_level);
-matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level);
+matrix make_cij(matrix **AB, int i, int j, std::ostream &ost, int verbose_level);
 
 
 void surface(int argc, const char **argv)
@@ -510,7 +510,7 @@ void draw_frame(
 
 
 
-matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level)
+matrix make_cij(matrix **AB, int i, int j, std::ostream &ost, int verbose_level)
 // i and j are between 0 and 5
 {
 	int f_v = (verbose_level >= 1);

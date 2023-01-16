@@ -118,7 +118,8 @@ void layered_graph::place(int verbose_level)
 		}
 }
 
-void layered_graph::place_with_y_stretch(double y_stretch, int verbose_level)
+void layered_graph::place_with_y_stretch(
+		double y_stretch, int verbose_level)
 {
 	double dy, dy2;
 	int i;
@@ -131,7 +132,8 @@ void layered_graph::place_with_y_stretch(double y_stretch, int verbose_level)
 		}
 }
 
-void layered_graph::scale_x_coordinates(double x_stretch, int verbose_level)
+void layered_graph::scale_x_coordinates(
+		double x_stretch, int verbose_level)
 {
 	int i;
 
@@ -141,8 +143,10 @@ void layered_graph::scale_x_coordinates(double x_stretch, int verbose_level)
 		}
 }
 
-void layered_graph::place_with_grouping(int **Group_sizes,
-		int *Nb_groups, double x_stretch, int verbose_level)
+void layered_graph::place_with_grouping(
+		int **Group_sizes,
+		int *Nb_groups, double x_stretch,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double dy, dy2;
@@ -172,7 +176,8 @@ void layered_graph::place_with_grouping(int **Group_sizes,
 		}
 }
 
-void layered_graph::add_edge(int l1, int n1, int l2, int n2,
+void layered_graph::add_edge(
+		int l1, int n1, int l2, int n2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -215,8 +220,10 @@ void layered_graph::add_edge(int l1, int n1, int l2, int n2,
 		}
 }
 
-void layered_graph::add_text(int l, int n,
-		std::string &text, int verbose_level)
+void layered_graph::add_text(
+		int l, int n,
+		std::string &text,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -227,7 +234,8 @@ void layered_graph::add_text(int l, int n,
 	L[l].Nodes[n].add_text(text);
 }
 
-void layered_graph::add_data1(int data, int verbose_level)
+void layered_graph::add_data1(
+		int data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -238,8 +246,10 @@ void layered_graph::add_data1(int data, int verbose_level)
 	data1 = data;
 }
 
-void layered_graph::add_node_vec_data(int l, int n,
-		long int *v, int len, int verbose_level)
+void layered_graph::add_node_vec_data(
+		int l, int n,
+		long int *v, int len,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -263,7 +273,9 @@ void layered_graph::set_distinguished_element_index(
 }
 
 
-void layered_graph::add_node_data1(int l, int n, int data, int verbose_level)
+void layered_graph::add_node_data1(
+		int l, int n, int data,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -274,7 +286,9 @@ void layered_graph::add_node_data1(int l, int n, int data, int verbose_level)
 	L[l].Nodes[n].add_data1(data);
 }
 
-void layered_graph::add_node_data2(int l, int n, int data, int verbose_level)
+void layered_graph::add_node_data2(
+		int l, int n, int data,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -285,7 +299,9 @@ void layered_graph::add_node_data2(int l, int n, int data, int verbose_level)
 	L[l].Nodes[n].add_data2(data);
 }
 
-void layered_graph::add_node_data3(int l, int n, int data, int verbose_level)
+void layered_graph::add_node_data3(
+		int l, int n, int data,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -298,8 +314,10 @@ void layered_graph::add_node_data3(int l, int n, int data, int verbose_level)
 
 
 
-void layered_graph::draw_with_options(std::string &fname,
-		graphics::layered_graph_draw_options *O, int verbose_level)
+void layered_graph::draw_with_options(
+		std::string &fname,
+		graphics::layered_graph_draw_options *O,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -846,8 +864,10 @@ void layered_graph::draw_with_options(std::string &fname,
 	
 }
 
-void layered_graph::coordinates_direct(double x_in, double y_in,
-		int x_max, int y_max, int f_rotated, int &x, int &y)
+void layered_graph::coordinates_direct(
+		double x_in, double y_in,
+		int x_max, int y_max, int f_rotated,
+		int &x, int &y)
 {
 	double x1, y1;
 
@@ -863,8 +883,10 @@ void layered_graph::coordinates_direct(double x_in, double y_in,
 	y = (int)(y1 * y_max);
 }
 
-void layered_graph::coordinates(int id,
-		int x_max, int y_max, int f_rotated, int &x, int &y)
+void layered_graph::coordinates(
+		int id,
+		int x_max, int y_max, int f_rotated,
+		int &x, int &y)
 {
 	int l, n;
 
@@ -878,7 +900,8 @@ void layered_graph::coordinates(int id,
 #endif
 }
 
-void layered_graph::find_node_by_id(int id, int &l, int &n)
+void layered_graph::find_node_by_id(
+		int id, int &l, int &n)
 {
 	int i, id0;
 	
@@ -897,7 +920,8 @@ void layered_graph::find_node_by_id(int id, int &l, int &n)
 }
 
 
-void layered_graph::write_file(std::string &fname,
+void layered_graph::write_file(
+		std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -916,7 +940,8 @@ void layered_graph::write_file(std::string &fname,
 		}
 }
 
-void layered_graph::read_file(std::string &fname,
+void layered_graph::read_file(
+		std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -941,7 +966,8 @@ void layered_graph::read_file(std::string &fname,
 }
 
 void layered_graph::write_memory_object(
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -980,7 +1006,8 @@ void layered_graph::write_memory_object(
 }
 
 void layered_graph::read_memory_object(
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1026,7 +1053,8 @@ void layered_graph::read_memory_object(
 		}
 }
 
-void layered_graph::remove_edges(int layer1, int node1, int layer2, int node2,
+void layered_graph::remove_edges(int layer1, int node1,
+		int layer2, int node2,
 		std::vector<std::vector<int> > &All_Paths,
 		int verbose_level)
 {
@@ -1070,7 +1098,8 @@ void layered_graph::remove_edges(int layer1, int node1, int layer2, int node2,
 	}
 }
 
-void layered_graph::remove_edge(int layer1, int node1, int layer2, int node2,
+void layered_graph::remove_edge(int layer1, int node1,
+		int layer2, int node2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1093,7 +1122,8 @@ void layered_graph::remove_edge(int layer1, int node1, int layer2, int node2,
 	}
 }
 
-void layered_graph::find_all_paths_between(int layer1, int node1, int layer2, int node2,
+void layered_graph::find_all_paths_between(int layer1, int node1,
+		int layer2, int node2,
 		std::vector<std::vector<int> > &All_Paths,
 		int verbose_level)
 {
@@ -1269,8 +1299,10 @@ void layered_graph::set_radius_factor_for_all_nodes_at_level(
 }
 
 
-void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
-	int f_depth_first, int f_breadth_first, int verbose_level)
+void layered_graph::make_subset_lattice(
+		int n, int depth, int f_tree,
+	int f_depth_first, int f_breadth_first,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1399,8 +1431,10 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 }
 
 
-void layered_graph::init_poset_from_file(std::string &fname,
-		int f_grouping, double x_stretch, int verbose_level)
+void layered_graph::init_poset_from_file(
+		std::string &fname,
+		int f_grouping, double x_stretch,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_layer;

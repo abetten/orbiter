@@ -260,7 +260,8 @@ void object_with_properties::init_object_in_projective_space(
 }
 
 void object_with_properties::latex_report(std::ostream &ost,
-		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -647,15 +648,18 @@ void object_with_properties::compute_TDO(int max_TDO_depth, int verbose_level)
 
 }
 
-void object_with_properties::print_TDO(std::ostream &ost,
-		combinatorics::classification_of_objects_report_options *Report_options)
+void object_with_properties::print_TDO(
+		std::ostream &ost,
+		combinatorics::classification_of_objects_report_options
+			*Report_options)
 {
 
 	TDO->print_schemes(ost);
 
 }
 
-void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
+void object_with_properties::export_TDA_with_flag_orbits(
+		std::ostream &ost,
 		groups::schreier *Sch,
 		int verbose_level)
 {
@@ -788,7 +792,8 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 	}
 }
 
-void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
+void object_with_properties::export_INP_with_flag_orbits(
+		std::ostream &ost,
 		groups::schreier *Sch,
 		int verbose_level)
 // INP = input geometry

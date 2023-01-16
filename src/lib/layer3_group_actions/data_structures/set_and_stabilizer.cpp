@@ -39,7 +39,9 @@ set_and_stabilizer::~set_and_stabilizer()
 		}
 }
 
-void set_and_stabilizer::init(actions::action *A, actions::action *A2, int verbose_level)
+void set_and_stabilizer::init(actions::action *A,
+		actions::action *A2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -74,8 +76,11 @@ long int set_and_stabilizer::group_order_as_lint()
 }
 
 void set_and_stabilizer::init_everything(
-		actions::action *A, actions::action *A2, long int *Set, int set_sz,
-		groups::strong_generators *gens, int verbose_level)
+		actions::action *A,
+		actions::action *A2,
+		long int *Set, int set_sz,
+		groups::strong_generators *gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -151,7 +156,8 @@ void set_and_stabilizer::init_data(long int *data, int sz, int verbose_level)
 }
 
 void set_and_stabilizer::init_stab_from_data(int *data_gens, 
-	int data_gens_size, int nb_gens, std::string &ascii_target_go,
+	int data_gens_size, int nb_gens,
+	std::string &ascii_target_go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -261,7 +267,7 @@ void set_and_stabilizer::init_stab_from_file(
 		}
 }
 
-void set_and_stabilizer::print_set_tex(ostream &ost)
+void set_and_stabilizer::print_set_tex(std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 
@@ -271,7 +277,7 @@ void set_and_stabilizer::print_set_tex(ostream &ost)
 	ost << "}";
 }
 
-void set_and_stabilizer::print_set_tex_for_inline_text(ostream &ost)
+void set_and_stabilizer::print_set_tex_for_inline_text(std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 
@@ -281,12 +287,13 @@ void set_and_stabilizer::print_set_tex_for_inline_text(ostream &ost)
 	ost << "}";
 }
 
-void set_and_stabilizer::print_generators_tex(ostream &ost)
+void set_and_stabilizer::print_generators_tex(std::ostream &ost)
 {
 	Strong_gens->print_generators_tex();
 }
 
-void set_and_stabilizer::apply_to_self(int *Elt, int verbose_level)
+void set_and_stabilizer::apply_to_self(
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *data2;
@@ -348,7 +355,8 @@ void set_and_stabilizer::apply_to_self(int *Elt, int verbose_level)
 		}
 }
 
-void set_and_stabilizer::apply_to_self_inverse(int *Elt, int verbose_level)
+void set_and_stabilizer::apply_to_self_inverse(
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
@@ -410,7 +418,8 @@ void set_and_stabilizer::apply_to_self_inverse_element_raw(
 
 void set_and_stabilizer::rearrange_by_orbits(
 	int *&orbit_first, int *&orbit_length,
-	int *&orbit, int &nb_orbits, int verbose_level)
+	int *&orbit, int &nb_orbits,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

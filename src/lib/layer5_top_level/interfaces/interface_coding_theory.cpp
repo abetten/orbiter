@@ -35,10 +35,6 @@ interface_coding_theory::interface_coding_theory()
 	make_bounds_q = 0;
 
 
-	f_Hamming_space_distance_matrix = FALSE;
-	Hamming_space_n = 0;
-	Hamming_space_q = 0;
-
 	f_introduce_errors = FALSE;
 	introduce_errors_crc_options_description = NULL;
 
@@ -78,9 +74,6 @@ void interface_coding_theory::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
 		cout << "-make_bounds_for_d_given_n_and_k_and_q <int : n> <int k> <int : q> " << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
-		cout << "-Hamming_space_distance_matrix <int : n> <int : q>" << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
 		cout << "-introduce_errors <description> -end" << endl;
 	}
@@ -118,9 +111,6 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
@@ -188,14 +178,6 @@ void interface_coding_theory::read_arguments(int argc,
 		if (f_v) {
 			cout << "-make_bounds_for_d_given_n_and_k_and_q "
 					<< make_bounds_n << " " << make_bounds_k << " " << make_bounds_q << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
-		f_Hamming_space_distance_matrix = TRUE;
-		Hamming_space_n = ST.strtoi(argv[++i]);
-		Hamming_space_q = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
@@ -315,9 +297,6 @@ void interface_coding_theory::print()
 	if (f_make_bounds_for_d_given_n_and_k_and_q) {
 		cout << "-make_bounds_for_d_given_n_and_k_and_q " << make_bounds_n << " " << make_bounds_k << " " << make_bounds_q << endl;
 	}
-	if (f_Hamming_space_distance_matrix) {
-		cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
-	}
 	if (f_introduce_errors) {
 		cout << "-introduce_errors " << endl;
 		introduce_errors_crc_options_description->print();
@@ -409,13 +388,6 @@ void interface_coding_theory::worker(int verbose_level)
 		cout << "d_plotkin = " << d_plotkin << endl;
 		cout << "d_griesmer = " << d_griesmer << endl;
 
-	}
-	else if (f_Hamming_space_distance_matrix) {
-
-		coding_theory::coding_theory_domain Coding;
-
-		Coding.make_Hamming_graph_and_write_file(Hamming_space_n, Hamming_space_q,
-				FALSE /* f_projective*/, verbose_level);
 	}
 
 	else if (f_introduce_errors) {

@@ -139,7 +139,8 @@ void orthogonal_group::init(orthogonal *O, int verbose_level)
 	}
 }
 
-long int orthogonal_group::find_root(long int rk2, int verbose_level)
+long int orthogonal_group::find_root(
+		long int rk2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int ret;
@@ -167,7 +168,8 @@ long int orthogonal_group::find_root(long int rk2, int verbose_level)
 }
 
 
-void orthogonal_group::Siegel_map_between_singular_points(int *T,
+void orthogonal_group::Siegel_map_between_singular_points(
+		int *T,
 		long int rk_from, long int rk_to,
 		long int root, int verbose_level)
 {
@@ -187,7 +189,8 @@ void orthogonal_group::Siegel_map_between_singular_points(int *T,
 	}
 }
 
-void orthogonal_group::Siegel_map_between_singular_points_hyperbolic(int *T,
+void orthogonal_group::Siegel_map_between_singular_points_hyperbolic(
+		int *T,
 	long int rk_from, long int rk_to,
 	long int root, int m, int verbose_level)
 {
@@ -635,7 +638,8 @@ void orthogonal_group::create_random_Siegel_transformation(
 }
 
 
-void orthogonal_group::create_random_semisimilarity(int *Mtx, int verbose_level)
+void orthogonal_group::create_random_semisimilarity(
+		int *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -719,8 +723,10 @@ void orthogonal_group::create_random_semisimilarity(int *Mtx, int verbose_level)
 }
 
 
-void orthogonal_group::create_random_similarity(int *Mtx, int verbose_level)
-// Makes an n x n matrix only. Does not put a semilinear component.
+void orthogonal_group::create_random_similarity(
+		int *Mtx, int verbose_level)
+// Makes an n x n matrix only.
+// Does not put a semilinear component.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1044,7 +1050,8 @@ void orthogonal_group::make_Siegel_Transformation(int *M, int *v, int *u,
 }
 
 void orthogonal_group::Siegel_move_forward_by_index(
-		long int rk1, long int rk2, int *v, int *w, int verbose_level)
+		long int rk1, long int rk2, int *v, int *w,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1093,7 +1100,8 @@ void orthogonal_group::Siegel_move_forward_by_index(
 }
 
 void orthogonal_group::Siegel_move_backward_by_index(
-		long int rk1, long int rk2, int *w, int *v, int verbose_level)
+		long int rk1, long int rk2, int *w, int *v,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1144,7 +1152,8 @@ void orthogonal_group::Siegel_move_backward_by_index(
 }
 
 void orthogonal_group::Siegel_move_forward(
-		int *v1, int *v2, int *v3, int *v4, int verbose_level)
+		int *v1, int *v2, int *v3, int *v4,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1231,7 +1240,8 @@ void orthogonal_group::Siegel_move_forward(
 }
 
 void orthogonal_group::Siegel_move_backward(
-		int *v1, int *v2, int *v3, int *v4, int verbose_level)
+		int *v1, int *v2, int *v3, int *v4,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1310,7 +1320,8 @@ void orthogonal_group::Siegel_move_backward(
 
 void orthogonal_group::move_points_by_ranks_in_place(
 	long int pt_from, long int pt_to,
-	int nb, long int *ranks, int verbose_level)
+	int nb, long int *ranks,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

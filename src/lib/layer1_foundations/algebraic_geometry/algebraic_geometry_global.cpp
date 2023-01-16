@@ -52,11 +52,13 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 		exit(1);
 	}
 	if (Formula->degree != 4) {
-		cout << "Formula is not of degree 4. Degree is " << Formula->degree << endl;
+		cout << "Formula is not of degree 4. "
+				"Degree is " << Formula->degree << endl;
 		exit(1);
 	}
 	if (Formula->nb_managed_vars != 3) {
-		cout << "Formula should have 3 managed variables. Has " << Formula->nb_managed_vars << endl;
+		cout << "Formula should have 3 managed variables. "
+				"Has " << Formula->nb_managed_vars << endl;
 		exit(1);
 	}
 
@@ -65,14 +67,16 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 	Poly4_3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
-		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface before Poly->init" << endl;
+		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface "
+				"before Poly->init" << endl;
 	}
 	Poly4_3->init(P->F,
 			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface after Poly->init" << endl;
+		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface "
+				"after Poly->init" << endl;
 	}
 
 
@@ -80,11 +84,13 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 	int nb_monomials;
 
 	if (f_v) {
-		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface before Formula->get_subtrees" << endl;
+		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface "
+				"before Formula->get_subtrees" << endl;
 	}
 	Formula->get_subtrees(Poly4_3, Subtrees, nb_monomials, verbose_level);
 	if (f_v) {
-		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface after Formula->get_subtrees" << endl;
+		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface "
+				"after Formula->get_subtrees" << endl;
 	}
 
 	int i;
@@ -112,7 +118,8 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 			verbose_level);
 
 	if (f_v) {
-		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface coefficient vector:" << endl;
+		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface "
+				"coefficient vector:" << endl;
 		Int_vec_print(cout, Coefficient_vector, nb_monomials);
 		cout << endl;
 	}
@@ -133,9 +140,13 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 
 	del_Pezzo_surface->enumerate_points_and_lines(verbose_level);
 
-	del_Pezzo_surface->pal->write_points_to_txt_file(Formula->name_of_formula, verbose_level);
+	del_Pezzo_surface->pal->write_points_to_txt_file(
+			Formula->name_of_formula, verbose_level);
 
-	del_Pezzo_surface->create_latex_report(Formula->name_of_formula, Formula->name_of_formula_latex, verbose_level);
+	del_Pezzo_surface->create_latex_report(
+			Formula->name_of_formula,
+			Formula->name_of_formula_latex,
+			verbose_level);
 
 	FREE_OBJECT(del_Pezzo_surface);
 	FREE_OBJECT(del_Pezzo);
@@ -209,7 +220,8 @@ void algebraic_geometry_global::report_grassmannian(
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "algebraic_geometry_global::report_grassmannian written file " << fname << " of size "
+		cout << "algebraic_geometry_global::report_grassmannian "
+				"written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 

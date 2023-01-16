@@ -47,7 +47,7 @@ void polynomial_double::init(int alloc_length)
 	}
 }
 
-void polynomial_double::print(ostream &ost)
+void polynomial_double::print(std::ostream &ost)
 {
 	int i;
 

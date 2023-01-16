@@ -521,7 +521,7 @@ int pentomino_puzzle::code_piece(int h, int r, int t)
 }
 
 
-void pentomino_puzzle::draw_it(ostream &ost, long int *sol)
+void pentomino_puzzle::draw_it(std::ostream &ost, long int *sol)
 {
 	int sol_length = 5;
 	int u, h = 0, r = 0, rr, t = 0, tt, tx, ty, s, a, b, x, y, j;

@@ -1142,7 +1142,7 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 	}
 }
 
-void file_io::copy_file_to_ostream(ostream &ost, std::string &fname)
+void file_io::copy_file_to_ostream(std::ostream &ost, std::string &fname)
 {
 	//char buf[MY_OWN_BUFSIZE];
 

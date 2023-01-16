@@ -230,7 +230,6 @@ ORBITER_MODULES= \
 		layer1_foundations/orbiter_kernel_system/file_io.o \
 		layer1_foundations/orbiter_kernel_system/file_output.o \
 		layer1_foundations/orbiter_kernel_system/latex_interface.o \
-		layer1_foundations/orbiter_kernel_system/magma_interface.o \
 		layer1_foundations/orbiter_kernel_system/mem_object_registry_entry.o \
 		layer1_foundations/orbiter_kernel_system/mem_object_registry.o \
 		layer1_foundations/orbiter_kernel_system/memory_object.o \
@@ -252,6 +251,7 @@ ORBITER_MODULES= \
 		layer1_foundations/orthogonal/orthogonal_indexing.o \
 		layer1_foundations/orthogonal/orthogonal_io.o \
 		layer1_foundations/orthogonal/orthogonal.o \
+		layer1_foundations/orthogonal/quadratic_form_list_coding.o \
 		layer1_foundations/orthogonal/quadratic_form.o \
 		layer1_foundations/orthogonal/unusual_model.o \
 		layer1_foundations/ring_theory/finite_ring.o \
@@ -522,6 +522,8 @@ ORBITER_MODULES= \
 		layer5_top_level/interfaces/orbiter_command.o \
 		layer5_top_level/interfaces/orbiter_top_level_session.o \
 		layer5_top_level/interfaces/symbol_definition.o \
+		layer5_top_level/orthogonal/blt_set_activity_description.o \
+		layer5_top_level/orthogonal/blt_set_activity.o \
 		layer5_top_level/orthogonal/blt_set_classify_activity_description.o \
 		layer5_top_level/orthogonal/blt_set_classify_activity.o \
 		layer5_top_level/orthogonal/blt_set_classify_description.o \
@@ -529,6 +531,7 @@ ORBITER_MODULES= \
 		layer5_top_level/orthogonal/BLT_set_create_description.o \
 		layer5_top_level/orthogonal/BLT_set_create.o \
 		layer5_top_level/orthogonal/blt_set_with_action.o \
+		layer5_top_level/orthogonal/flock.o \
 		layer5_top_level/orthogonal/orthogonal_space_activity_description.o \
 		layer5_top_level/orthogonal/orthogonal_space_activity.o \
 		layer5_top_level/orthogonal/orthogonal_space_with_action_description.o \

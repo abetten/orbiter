@@ -111,7 +111,7 @@ void mp_graphics::init(
 	}
 }
 
-void mp_graphics::exit(ostream &ost, int verbose_level)
+void mp_graphics::exit(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -421,7 +421,7 @@ void mp_graphics::frame_constant_aspect_ratio(double move_out)
 	polygon3(Px, Py, 11, 9, 10);
 }
 
-void mp_graphics::finish(ostream &ost, int verbose_level)
+void mp_graphics::finish(std::ostream &ost, int verbose_level)
 {
 	end_figure();
 	footer();

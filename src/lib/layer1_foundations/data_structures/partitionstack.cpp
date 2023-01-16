@@ -141,7 +141,8 @@ void partitionstack::allocate(int n, int verbose_level)
 	}
 }
 
-void partitionstack::allocate_with_two_classes(int n, int v, int b, int verbose_level)
+void partitionstack::allocate_with_two_classes(
+		int n, int v, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -418,7 +419,7 @@ void partitionstack::print_raw()
 	}
 }
 
-void partitionstack::print_class(ostream& ost, int idx)
+void partitionstack::print_class(std::ostream& ost, int idx)
 {
 	int first, len, j;
 	int *S;
@@ -438,7 +439,7 @@ void partitionstack::print_class(ostream& ost, int idx)
 	FREE_int(S);
 }
 
-void partitionstack::print_classes_tex(ostream& ost)
+void partitionstack::print_classes_tex(std::ostream& ost)
 {
 	int i;
 	
@@ -449,7 +450,7 @@ void partitionstack::print_classes_tex(ostream& ost)
 	}
 }
 
-void partitionstack::print_class_tex(ostream& ost, int idx)
+void partitionstack::print_class_tex(std::ostream& ost, int idx)
 {
 	int first_column_element = startCell[1];
 	int first, len, j;
@@ -480,7 +481,7 @@ void partitionstack::print_class_tex(ostream& ost, int idx)
 	FREE_int(S);
 }
 
-void partitionstack::print_class_point_or_line(ostream& ost, int idx)
+void partitionstack::print_class_point_or_line(std::ostream& ost, int idx)
 {
 	int first_column_element = startCell[1];
 	int first, len, j;
@@ -519,7 +520,7 @@ void partitionstack::print_class_point_or_line(ostream& ost, int idx)
 	FREE_int(S);
 }
 
-void partitionstack::print_classes(ostream& ost)
+void partitionstack::print_classes(std::ostream& ost)
 {
 	int i;
 	
@@ -528,7 +529,7 @@ void partitionstack::print_classes(ostream& ost)
 	}
 }
 
-void partitionstack::print_classes_points_and_lines(ostream& ost)
+void partitionstack::print_classes_points_and_lines(std::ostream& ost)
 {
 	int i;
 	
@@ -537,7 +538,7 @@ void partitionstack::print_classes_points_and_lines(ostream& ost)
 	}
 }
 
-ostream& partitionstack::print(ostream& ost)
+ostream& partitionstack::print(std::ostream& ost)
 {
 	int i, j, first, len, a, /*pt,*/ prev_pt, j0;
 	int f_erroneous2 = FALSE;
@@ -618,7 +619,7 @@ void partitionstack::print_cell(int i)
 	cout << " }";
 }
 
-void partitionstack::print_cell_latex(ostream &ost, int i)
+void partitionstack::print_cell_latex(std::ostream &ost, int i)
 {
 	int j, first, len;
 
@@ -660,7 +661,8 @@ void partitionstack::get_cell(int i,
 }
 
 void partitionstack::get_cell_lint(int i,
-		long int *&cell, int &cell_sz, int verbose_level)
+		long int *&cell, int &cell_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j, first;
@@ -685,7 +687,8 @@ void partitionstack::get_cell_lint(int i,
 	}
 }
 
-void partitionstack::get_row_classes(set_of_sets *&Sos, int verbose_level)
+void partitionstack::get_row_classes(
+		set_of_sets *&Sos, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -738,7 +741,8 @@ void partitionstack::get_row_classes(set_of_sets *&Sos, int verbose_level)
 }
 
 
-void partitionstack::get_column_classes(set_of_sets *&Sos, int verbose_level)
+void partitionstack::get_column_classes(
+		set_of_sets *&Sos, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -1475,7 +1479,7 @@ int partitionstack::cellSizeAtLevel(int cell, int level)
 }
 
 
-void partitionstack::print_decomposition_tex(ostream &ost, 
+void partitionstack::print_decomposition_tex(std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes)
 {
@@ -1518,7 +1522,7 @@ void partitionstack::print_decomposition_tex(ostream &ost,
 	}
 }
 
-void partitionstack::print_decomposition_scheme(ostream &ost, 
+void partitionstack::print_decomposition_scheme(std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int *scheme, int marker1, int marker2)
@@ -1572,7 +1576,7 @@ void partitionstack::print_decomposition_scheme(ostream &ost,
 	ost << endl;
 }
 
-void partitionstack::print_decomposition_scheme_tex(ostream &ost, 
+void partitionstack::print_decomposition_scheme_tex(std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int *scheme)
@@ -1602,10 +1606,12 @@ void partitionstack::print_decomposition_scheme_tex(ostream &ost,
 	ost << "\\end{align*}" << endl;
 }
 
-void partitionstack::print_tactical_decomposition_scheme_tex(ostream &ost, 
+void partitionstack::print_tactical_decomposition_scheme_tex(
+		std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
-	int *row_scheme, int *col_scheme, int f_print_subscripts)
+	int *row_scheme, int *col_scheme,
+	int f_print_subscripts)
 {
 	print_tactical_decomposition_scheme_tex_internal(ost, TRUE, 
 		row_classes, nb_row_classes,
@@ -1614,10 +1620,11 @@ void partitionstack::print_tactical_decomposition_scheme_tex(ostream &ost,
 }
 
 void partitionstack::print_tactical_decomposition_scheme_tex_internal(
-	ostream &ost, int f_enter_math_mode, 
+	std::ostream &ost, int f_enter_math_mode,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
-	int *row_scheme, int *col_scheme, int f_print_subscripts)
+	int *row_scheme, int *col_scheme,
+	int f_print_subscripts)
 {
 	int c, i, j;
 	
@@ -1948,7 +1955,8 @@ void partitionstack::print_row_refinement_info(
 }
 
 
-void partitionstack::radix_sort(int left, int right, int *C, 
+void partitionstack::radix_sort(
+		int left, int right, int *C,
 	int length, int radix, int verbose_level)
 {
 	int ma, mi, i, lo, mask;
@@ -1989,14 +1997,16 @@ void partitionstack::radix_sort(int left, int right, int *C,
 	radix_sort_bits(left, right, C, length, radix, mask, verbose_level);
 }
 
-void partitionstack::radix_sort_bits(int left, int right, 
-	int *C, int length, int radix, int mask, int verbose_level)
+void partitionstack::radix_sort_bits(
+		int left, int right,
+	int *C, int length, int radix, int mask,
+	int verbose_level)
 {
 	int l, r, i, len;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "partitionstack::radix_sort_bits() mask = " << mask
+		cout << "partitionstack::radix_sort_bits mask = " << mask
 				<< " left=" << left << " right=" << right << endl;
 	}
 	if (left >= right) {
@@ -2090,7 +2100,8 @@ int partitionstack::my_log2(int m)
 	return i;
 }
 
-void partitionstack::split_by_orbit_partition(int nb_orbits, 
+void partitionstack::split_by_orbit_partition(
+		int nb_orbits,
 	int *orbit_first, int *orbit_len, int *orbit,
 	int offset, 
 	int verbose_level)

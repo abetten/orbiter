@@ -487,7 +487,8 @@ void large_set_was::create_graph_on_orbits_of_length(
 }
 
 void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
-		std::string &fname_mask, int orbit_length2, int nb_N_orbits_preselected,
+		std::string &fname_mask,
+		int orbit_length2, int nb_N_orbits_preselected,
 		int orbit_r, int orbit_m,
 		int verbose_level)
 {
@@ -792,7 +793,8 @@ void large_set_was::normalizer_orbits_early_test_func(long int *S, int len,
 	} // else
 }
 
-int large_set_was::normalizer_orbits_check_conditions(long int *S, int len, int verbose_level)
+int large_set_was::normalizer_orbits_check_conditions(
+		long int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx, i;
@@ -842,7 +844,8 @@ int large_set_was::normalizer_orbits_check_conditions(long int *S, int len, int 
 // #############################################################################
 
 
-void large_set_was_normalizer_orbits_early_test_func_callback(long int *S, int len,
+void large_set_was_normalizer_orbits_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -881,8 +884,10 @@ int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
 	return ret;
 }
 
-int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_length1,
-		long int *orbit2, int orbit_length2, void *extra_data)
+int large_set_was_classify_test_pair_of_orbits(
+		long int *orbit1, int orbit_length1,
+		long int *orbit2, int orbit_length2,
+		void *extra_data)
 {
 	large_set_was *LSW = (large_set_was *) extra_data;
 	int ret = FALSE;

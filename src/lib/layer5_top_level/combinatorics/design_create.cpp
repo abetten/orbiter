@@ -75,7 +75,9 @@ design_create::~design_create()
 	}
 }
 
-void design_create::init(apps_combinatorics::design_create_description *Descr, int verbose_level)
+void design_create::init(
+		apps_combinatorics::design_create_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -656,7 +658,8 @@ int design_create::get_nb_colors_as_two_design(int verbose_level)
 	return nb_c;
 }
 
-int design_create::get_color_as_two_design_assume_sorted(long int *design, int verbose_level)
+int design_create::get_color_as_two_design_assume_sorted(
+		long int *design, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c, i;
@@ -747,7 +750,8 @@ void design_create::compute_incidence_matrix(int verbose_level)
 }
 
 
-void design_create::compute_incidence_matrix_from_blocks(int *blocks, int nb_blocks, int k, int verbose_level)
+void design_create::compute_incidence_matrix_from_blocks(
+		int *blocks, int nb_blocks, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

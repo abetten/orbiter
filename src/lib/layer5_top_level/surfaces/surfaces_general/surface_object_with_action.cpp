@@ -1318,7 +1318,7 @@ void surface_object_with_action::print_automorphism_group(
 
 }
 
-void surface_object_with_action::cheat_sheet_basic(ostream &ost, int verbose_level)
+void surface_object_with_action::cheat_sheet_basic(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;

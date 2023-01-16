@@ -35,7 +35,8 @@ void surface_domain::print_equation_tex(std::ostream &ost, int *coeffs)
 	PolynomialDomains->Poly3_4->print_equation_tex(ost, coeffs);
 }
 
-void surface_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs)
+void surface_domain::print_equation_with_line_breaks_tex(
+		std::ostream &ost, int *coeffs)
 {
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
@@ -107,7 +108,8 @@ void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 
 void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 		data_structures::spreadsheet *&Sp,
-	long int *Wedge_rk, long int *Line_rk, long int *Klein_rk, int nb_lines,
+	long int *Wedge_rk, long int *Line_rk,
+	long int *Klein_rk, int nb_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -172,7 +174,7 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 
 
 #if 0
-void surface_domain::print_web_of_cubic_curves(ostream &ost,
+void surface_domain::print_web_of_cubic_curves(std::ostream &ost,
 	int *Web_of_cubic_curves)
 // curves[45 * 10]
 {
@@ -380,7 +382,7 @@ void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 	cout << "];";
 }
 
-void surface_domain::print_basics(ostream &ost)
+void surface_domain::print_basics(std::ostream &ost)
 {
 	PolynomialDomains->print_polynomial_domains(ost);
 	Schlaefli->print_Schlaefli_labelling(ost);
@@ -950,7 +952,8 @@ void surface_domain::compute_table_E(
 
 
 
-void callback_surface_domain_sstr_line_label(std::stringstream &sstr, long int pt, void *data)
+void callback_surface_domain_sstr_line_label(
+		std::stringstream &sstr, long int pt, void *data)
 {
 	surface_domain *D = (surface_domain *) data;
 

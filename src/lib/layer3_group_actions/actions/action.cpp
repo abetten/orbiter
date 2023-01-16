@@ -1946,13 +1946,13 @@ void action::element_print_base_images(int *Elt)
 	element_print_base_images(Elt, cout);
 }
 
-void action::element_print_base_images(int *Elt, ostream &ost)
+void action::element_print_base_images(int *Elt, std::ostream &ost)
 {
 	element_print_base_images_verbose(Elt, cout, 0);
 }
 
 void action::element_print_base_images_verbose(
-		int *Elt, ostream &ost, int verbose_level)
+		int *Elt, std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *base_images;

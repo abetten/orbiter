@@ -1591,7 +1591,7 @@ void matrix_group::GL_pack(int *Elt, uchar *elt, int verbose_level)
 	}
 }
 
-void matrix_group::GL_print_easy(int *Elt, ostream &ost)
+void matrix_group::GL_print_easy(int *Elt, std::ostream &ost)
 {
     int i, j, a;
     int w;
@@ -1635,7 +1635,7 @@ void matrix_group::GL_code_for_make_element(int *Elt, int *data)
 }
 
 void matrix_group::GL_print_for_make_element(
-		int *Elt, ostream &ost)
+		int *Elt, std::ostream &ost)
 {
 	int i, j, a;
 	//int w;
@@ -1677,7 +1677,7 @@ void matrix_group::GL_print_for_make_element(
 }
 
 void matrix_group::GL_print_for_make_element_no_commas(
-		int *Elt, ostream &ost)
+		int *Elt, std::ostream &ost)
 {
 	int i, j, a;
 	int w;
@@ -1705,7 +1705,7 @@ void matrix_group::GL_print_for_make_element_no_commas(
 	}
 }
 
-void matrix_group::GL_print_easy_normalized(int *Elt, ostream &ost)
+void matrix_group::GL_print_easy_normalized(int *Elt, std::ostream &ost)
 {
 	int f_v = FALSE;
     int i, j, a;
@@ -1764,7 +1764,7 @@ void matrix_group::GL_print_easy_normalized(int *Elt, ostream &ost)
 	}
 }
 
-void matrix_group::GL_print_latex(int *Elt, ostream &ost)
+void matrix_group::GL_print_latex(int *Elt, std::ostream &ost)
 {
 
 	int *D;

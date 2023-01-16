@@ -776,7 +776,8 @@ void combinatorics_global::Hill_cap56(
 
 }
 
-void combinatorics_global::append_orbit_and_adjust_size(groups::schreier *Orb,
+void combinatorics_global::append_orbit_and_adjust_size(
+		groups::schreier *Orb,
 		int idx, int *set, int &sz)
 // Used by Hill_cap56()
 {

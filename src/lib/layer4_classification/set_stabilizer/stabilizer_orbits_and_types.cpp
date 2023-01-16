@@ -212,7 +212,8 @@ void stabilizer_orbits_and_types::init(compute_stabilizer *CS, int verbose_level
 }
 
 
-void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern(int verbose_level)
+void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern(
+		int verbose_level)
 // uses selected_set_stab_gens to compute orbits on points in action A2
 {
 	int f_v = (verbose_level >= 1);
@@ -358,7 +359,8 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 	}
 }
 
-void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int stage, int verbose_level)
+void stabilizer_orbits_and_types::save_interesting_subsets_reduced(
+		int stage, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -392,7 +394,8 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int stage, in
 	}
 }
 
-void stabilizer_orbits_and_types::find_orbit_pattern(int cnt, int *transp, int verbose_level)
+void stabilizer_orbits_and_types::find_orbit_pattern(
+		int cnt, int *transp, int verbose_level)
 // computes transporter to transp
 {
 	int f_v = (verbose_level >= 1);
@@ -431,7 +434,8 @@ void stabilizer_orbits_and_types::find_orbit_pattern(int cnt, int *transp, int v
 	}
 }
 
-void stabilizer_orbits_and_types::find_interesting_orbits(int verbose_level)
+void stabilizer_orbits_and_types::find_interesting_orbits(
+		int verbose_level)
 // Collects all interesting orbits. Orbit i is interesting if orbit_count2[i] is nonzero
 // Collects all points in all interesting orbits, sorted within each orbit.
 // Let interesting_orbits[nb_interesting_orbits] be the list of interesting orbits
@@ -514,7 +518,9 @@ void stabilizer_orbits_and_types::find_interesting_orbits(int verbose_level)
 
 }
 
-void stabilizer_orbits_and_types::compute_local_labels(long int *set_in, long int *set_out, int sz, int verbose_level)
+void stabilizer_orbits_and_types::compute_local_labels(
+		long int *set_in, long int *set_out, int sz,
+		int verbose_level)
 // converts the elements of set_in[sz] to local indices into interesting_points[].
 // output is set_out[sz]
 {
@@ -542,7 +548,8 @@ void stabilizer_orbits_and_types::compute_local_labels(long int *set_in, long in
 
 }
 
-void stabilizer_orbits_and_types::map_subset_and_compute_local_labels(int cnt, int verbose_level)
+void stabilizer_orbits_and_types::map_subset_and_compute_local_labels(
+		int cnt, int verbose_level)
 // computes reduced_set1_new_labels[reduced_set_size],
 // which is the set after mapping the k-subset cnt to the canonical representatives,
 // removing the canonical representative from the set,
@@ -658,7 +665,8 @@ void stabilizer_orbits_and_types::map_the_first_set_and_do_orbit_counting(int cn
 }
 #endif
 
-void stabilizer_orbits_and_types::map_reduced_set_and_do_orbit_counting(int cnt,
+void stabilizer_orbits_and_types::map_reduced_set_and_do_orbit_counting(
+		int cnt,
 		long int subset_idx, int *transporter, int verbose_level)
 // computes orbit_count1[]
 {

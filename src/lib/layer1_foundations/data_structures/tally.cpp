@@ -376,7 +376,7 @@ void tally::print_second_tex(int f_backwards)
 
 }
 
-void tally::print_file(ostream &ost, int f_backwards)
+void tally::print_file(std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -392,7 +392,7 @@ void tally::print_file(ostream &ost, int f_backwards)
 	}
 }
 
-void tally::print_file_tex(ostream &ost, int f_backwards)
+void tally::print_file_tex(std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -412,7 +412,8 @@ void tally::print_file_tex(ostream &ost, int f_backwards)
 	}
 }
 
-void tally::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
+void tally::print_file_tex_we_are_in_math_mode(
+		std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -432,7 +433,8 @@ void tally::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
 	}
 }
 
-void tally::print_naked_stringstream(stringstream &sstr, int f_backwards)
+void tally::print_naked_stringstream(
+		std::stringstream &sstr, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -467,7 +469,7 @@ void tally::print_naked(int f_backwards)
 	}
 }
 
-void tally::print_naked_tex(ostream &ost, int f_backwards)
+void tally::print_naked_tex(std::ostream &ost, int f_backwards)
 {
 	if (f_second) {
 		print_types_naked_tex(ost, f_backwards, second_data_sorted, 
@@ -482,7 +484,7 @@ void tally::print_naked_tex(ostream &ost, int f_backwards)
 }
 
 void tally::print_types_naked_tex(
-	ostream &ost, int f_backwards, int *the_vec_sorted,
+		std::ostream &ost, int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
 	int i, f, l, a;
@@ -527,7 +529,7 @@ void tally::print_types_naked_tex(
 	}
 }
 
-void tally::print_array_tex(ostream &ost, int f_backwards)
+void tally::print_array_tex(std::ostream &ost, int f_backwards)
 {
 	int i, j, f, l, a;
 
@@ -642,7 +644,8 @@ void tally::get_data_by_multiplicity(
 }
 
 void tally::get_data_by_multiplicity_as_lint(
-		long int *&Pts, int &nb_pts, int multiplicity, int verbose_level)
+		long int *&Pts, int &nb_pts,
+		int multiplicity, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

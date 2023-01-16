@@ -379,7 +379,7 @@ static void permutation_representation_group_element_dispose(action &A,
 }
 
 static void permutation_representation_group_element_print(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
@@ -401,7 +401,7 @@ static void permutation_representation_group_element_code_for_make_element(actio
 }
 
 static void permutation_representation_group_element_print_for_make_element(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
@@ -411,7 +411,7 @@ static void permutation_representation_group_element_print_for_make_element(acti
 }
 
 static void permutation_representation_group_element_print_for_make_element_no_commas(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	//permutation_representation &P = *A.G.Permutation_representation;
 	//int *Elt = (int *) elt;
@@ -422,7 +422,7 @@ static void permutation_representation_group_element_print_for_make_element_no_c
 }
 
 static void permutation_representation_group_element_print_quick(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
@@ -432,7 +432,7 @@ static void permutation_representation_group_element_print_quick(
 }
 
 static void permutation_representation_group_element_print_latex(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
@@ -453,7 +453,7 @@ static void permutation_representation_group_element_print_latex_with_print_poin
 }
 
 static void permutation_representation_group_element_print_verbose(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
@@ -462,7 +462,7 @@ static void permutation_representation_group_element_print_verbose(
 
 }
 
-static void permutation_representation_group_print_point(action &A, long int a, ostream &ost)
+static void permutation_representation_group_print_point(action &A, long int a, std::ostream &ost)
 {
 	//permutation_representation &P = *A.G.Permutation_representation;
 

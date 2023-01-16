@@ -1450,7 +1450,7 @@ void classify_double_sixes::upstep(int verbose_level)
 }
 
 
-void classify_double_sixes::print_five_plus_ones(ostream &ost)
+void classify_double_sixes::print_five_plus_ones(std::ostream &ost)
 {
 	int f, i, l;
 

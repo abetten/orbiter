@@ -210,7 +210,8 @@ void homogeneous_polynomial_domain::init(field_theory::finite_field *F,
 	}
 }
 
-void homogeneous_polynomial_domain::init_with_or_without_variables(field_theory::finite_field *F,
+void homogeneous_polynomial_domain::init_with_or_without_variables(
+		field_theory::finite_field *F,
 		int nb_vars, int degree,
 		monomial_ordering_type Monomial_ordering_type,
 		int f_has_variables,
@@ -862,7 +863,7 @@ void homogeneous_polynomial_domain::get_quadratic_form_matrix(int *eqn, int *M)
 }
 
 
-void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
+void homogeneous_polynomial_domain::print_monomial(std::ostream &ost, int i)
 {
 	int j, a, f_first = TRUE;
 	
@@ -884,7 +885,7 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 	}
 }
 
-void homogeneous_polynomial_domain::print_monomial(ostream &ost, int *mon)
+void homogeneous_polynomial_domain::print_monomial(std::ostream &ost, int *mon)
 {
 	int j, a, f_first = TRUE;
 	
@@ -2126,7 +2127,8 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(long int *Pts,
 }
 
 
-void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
+void homogeneous_polynomial_domain::vanishing_ideal(
+		long int *Pts,
 		int nb_pts, int &r, int *Kernel, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2246,7 +2248,7 @@ the_end:
 }
 
 
-void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
+void homogeneous_polynomial_domain::print_monomial_ordering(std::ostream &ost)
 {
 	int h, i, l;
 	
@@ -2278,7 +2280,8 @@ void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 	}
 }
 
-int *homogeneous_polynomial_domain::read_from_string_coefficient_pairs(std::string &str, int verbose_level)
+int *homogeneous_polynomial_domain::read_from_string_coefficient_pairs(
+		std::string &str, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2331,7 +2334,8 @@ int *homogeneous_polynomial_domain::read_from_string_coefficient_pairs(std::stri
 	return coeff;
 }
 
-int *homogeneous_polynomial_domain::read_from_string_coefficient_vector(std::string &str, int verbose_level)
+int *homogeneous_polynomial_domain::read_from_string_coefficient_vector(
+		std::string &str, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

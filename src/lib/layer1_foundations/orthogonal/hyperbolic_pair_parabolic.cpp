@@ -1606,7 +1606,8 @@ void hyperbolic_pair::parabolic_unrank_line(
 	exit(1);
 }
 
-long int hyperbolic_pair::parabolic_rank_line(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::parabolic_rank_line(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int p1_type, p2_type, p1_index, p2_index, type;
@@ -2119,7 +2120,8 @@ void hyperbolic_pair::parabolic_unrank_line_L3(
 	}
 }
 
-long int hyperbolic_pair::parabolic_rank_line_L3(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::parabolic_rank_line_L3(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -2281,7 +2283,8 @@ void hyperbolic_pair::parabolic_unrank_line_L4(
 	}
 }
 
-long int hyperbolic_pair::parabolic_rank_line_L4(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::parabolic_rank_line_L4(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -2368,7 +2371,8 @@ void hyperbolic_pair::parabolic_unrank_line_L5(
 	}
 }
 
-long int hyperbolic_pair::parabolic_rank_line_L5(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::parabolic_rank_line_L5(long int p1, long int p2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -2574,7 +2578,8 @@ long int hyperbolic_pair::parabolic_rank_line_L8(long int p1, long int p2, int v
 	return index;
 }
 
-long int hyperbolic_pair::parabolic_line_type_given_point_types(long int pt1, long int pt2,
+long int hyperbolic_pair::parabolic_line_type_given_point_types(
+		long int pt1, long int pt2,
 		long int pt1_type, long int pt2_type, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2998,7 +3003,8 @@ void hyperbolic_pair::parabolic_canonical_points_of_line(
 }
 
 void hyperbolic_pair::parabolic_canonical_points_L1_even(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -3043,7 +3049,8 @@ void hyperbolic_pair::parabolic_canonical_points_L1_even(
 }
 
 void hyperbolic_pair::parabolic_canonical_points_separate_P5(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -3087,7 +3094,8 @@ void hyperbolic_pair::parabolic_canonical_points_separate_P5(
 }
 
 void hyperbolic_pair::parabolic_canonical_points_L3(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int verbose_level = 0;
 
@@ -3109,7 +3117,8 @@ void hyperbolic_pair::parabolic_canonical_points_L3(
 }
 
 void hyperbolic_pair::parabolic_canonical_points_L7(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -3146,7 +3155,8 @@ void hyperbolic_pair::parabolic_canonical_points_L7(
 }
 
 void hyperbolic_pair::parabolic_canonical_points_L8(
-		long int pt1, long int pt2, long int &cpt1, long int &cpt2)
+		long int pt1, long int pt2,
+		long int &cpt1, long int &cpt2)
 {
 	int verbose_level = 0;
 	int i;
@@ -3224,7 +3234,8 @@ void hyperbolic_pair::parabolic_normalize_point_wrt_subspace(
 	}
 }
 
-void hyperbolic_pair::parabolic_point_properties(int *v, int stride, int n,
+void hyperbolic_pair::parabolic_point_properties(
+		int *v, int stride, int n,
 	int &f_start_with_one, int &middle_value, int &end_value,
 	int verbose_level)
 {

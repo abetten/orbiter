@@ -151,7 +151,7 @@ public:
 	int Sarnak_q;
 
 	int f_Schlaefli;
-	int Schlaefli_q;
+	std::string Schlaefli_label_Fq;
 
 	int f_Shrikhande;
 
@@ -162,13 +162,13 @@ public:
 	int f_Grassmann;
 	int Grassmann_n;
 	int Grassmann_k;
-	int Grassmann_q;
+	std::string Grassmann_label_Fq;
 	int Grassmann_r;
 
 	int f_coll_orthogonal;
 	int coll_orthogonal_epsilon;
 	int coll_orthogonal_d;
-	int coll_orthogonal_q;
+	std::string coll_orthogonal_label_Fq;
 
 	int f_trihedral_pair_disjointness_graph;
 
@@ -242,24 +242,44 @@ public:
 			int n, int verbose_level);
 	void create_inversion_graph(int &N, int *&Adj,
 			std::string &perm_text, int verbose_level);
-	void create_Hamming(int &N, int *&Adj, int n, int q, int verbose_level);
-	void create_Johnson(int &N, int *&Adj, int n, int k, int s, int verbose_level);
-	void create_Paley(int &N, int *&Adj,
+	void create_Hamming(
+			int &N, int *&Adj,
+			int n, int q, int verbose_level);
+	void create_Johnson(
+			int &N, int *&Adj,
+			int n, int k, int s, int verbose_level);
+	void create_Paley(
+			int &N, int *&Adj,
 			std::string &label_Fq, int verbose_level);
-	void create_Sarnak(int &N, int *&Adj, int p, int q, int verbose_level);
-	void create_Schlaefli(int &N, int *&Adj, int q, int verbose_level);
-	void create_Shrikhande(int &N, int *&Adj, int verbose_level);
-	void create_Winnie_Li(int &N, int *&Adj,
+	void create_Sarnak(
+			int &N, int *&Adj, int p, int q,
+			int verbose_level);
+	void create_Schlaefli(
+			int &N, int *&Adj,
+			std::string &label_Fq, int verbose_level);
+	void create_Shrikhande(
+			int &N, int *&Adj, int verbose_level);
+	void create_Winnie_Li(
+			int &N, int *&Adj,
 			std::string &label_Fq, int index, int verbose_level);
-	void create_Grassmann(int &N, int *&Adj,
-			int n, int k, int q, int r, int verbose_level);
-	void create_coll_orthogonal(int &N, int *&Adj,
-			int epsilon, int d, int q, int verbose_level);
-	void make_orbital_graph(int &N, int *&Adj,
-			apps_algebra::any_group *AG, int orbit_idx, int verbose_level);
-	void make_collinearity_graph(int &N, int *&Adj,
-			int *Inc, int nb_rows, int nb_cols, int verbose_level);
-	void make_chain_graph(int &N, int *&Adj,
+	void create_Grassmann(
+			int &N, int *&Adj,
+			int n, int k, std::string &label_Fq,
+			int r, int verbose_level);
+	void create_coll_orthogonal(
+			int &N, int *&Adj,
+			int epsilon, int d, std::string &label_Fq,
+			int verbose_level);
+	void make_orbital_graph(
+			int &N, int *&Adj,
+			apps_algebra::any_group *AG, int orbit_idx,
+			int verbose_level);
+	void make_collinearity_graph(
+			int &N, int *&Adj,
+			int *Inc, int nb_rows, int nb_cols,
+			int verbose_level);
+	void make_chain_graph(
+			int &N, int *&Adj,
 			int *part1, int sz1,
 			int *part2, int sz2,
 			int verbose_level);
@@ -415,20 +435,24 @@ public:
 
 	graph_classify();
 	~graph_classify();
-	void init(graph_classify_description *Descr, int verbose_level);
+	void init(
+			graph_classify_description *Descr, int verbose_level);
 	int check_conditions(int len, long int *S, int verbose_level);
 	int check_conditions_tournament(int len, long int *S,
 			int verbose_level);
 	int check_regularity(long int *S, int len,
 			int verbose_level);
-	int compute_degree_sequence(long int *S, int len);
+	int compute_degree_sequence(
+			long int *S, int len);
 	int girth_check(long int *S, int len, int verbose_level);
 	int girth_test_vertex(long int *S, int len,
 			int vertex, int girth, int verbose_level);
 	void get_adjacency(long int *S, int len, int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);
 	void print_score_sequences(int level, int verbose_level);
-	void score_sequence(int n, long int *set, int sz, long int *score, int verbose_level);
+	void score_sequence(
+			int n, long int *set, int sz, long int *score,
+			int verbose_level);
 	void list_graphs(int level_min, int level_max, int verbose_level);
 	void draw_graphs(int level,
 			graphics::layered_graph_draw_options *draw_options,
@@ -568,7 +592,8 @@ public:
 
 	graph_theory_apps();
 	~graph_theory_apps();
-	void automorphism_group(graph_theory::colored_graph *CG, int verbose_level);
+	void automorphism_group(
+			graph_theory::colored_graph *CG, int verbose_level);
 	void expander_graph(
 			int p, int q,
 			int f_special,

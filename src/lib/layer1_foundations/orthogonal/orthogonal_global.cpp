@@ -88,7 +88,8 @@ void orthogonal_global::create_Linear_BLT_set(long int *set, int *ABC, int verbo
 #endif
 
 
-void orthogonal_global::create_FTWKB_BLT_set(orthogonal *O, long int *set, int *ABC, int verbose_level)
+void orthogonal_global::create_FTWKB_BLT_set(orthogonal *O,
+		long int *set, int *ABC, int verbose_level)
 // for q congruent 2 mod 3
 // a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -150,7 +151,8 @@ void orthogonal_global::create_FTWKB_BLT_set(orthogonal *O, long int *set, int *
 	}
 }
 
-void orthogonal_global::create_K1_BLT_set(orthogonal *O, long int *set, int *ABC, int verbose_level)
+void orthogonal_global::create_K1_BLT_set(orthogonal *O,
+		long int *set, int *ABC, int verbose_level)
 // for a nonsquare m, and q=p^e
 // a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -211,7 +213,8 @@ void orthogonal_global::create_K1_BLT_set(orthogonal *O, long int *set, int *ABC
 		}
 }
 
-void orthogonal_global::create_K2_BLT_set(orthogonal *O, long int *set, int *ABC, int verbose_level)
+void orthogonal_global::create_K2_BLT_set(orthogonal *O,
+		long int *set, int *ABC, int verbose_level)
 // for q congruent 2 or 3 mod 5
 // a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -355,7 +358,8 @@ void orthogonal_global::create_LP_37_72_BLT_set(orthogonal *O,
 		}
 }
 
-void orthogonal_global::create_LP_37_4a_BLT_set(orthogonal *O, long int *set, int verbose_level)
+void orthogonal_global::create_LP_37_4a_BLT_set(orthogonal *O,
+		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -433,7 +437,8 @@ void orthogonal_global::create_LP_37_4a_BLT_set(orthogonal *O, long int *set, in
 	}
 }
 
-void orthogonal_global::create_LP_37_4b_BLT_set(orthogonal *O, long int *set, int verbose_level)
+void orthogonal_global::create_LP_37_4b_BLT_set(orthogonal *O,
+		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -601,7 +606,8 @@ void orthogonal_global::create_Law_71_BLT_set(orthogonal *O,
 }
 
 
-int orthogonal_global::BLT_test_full(orthogonal *O, int size, long int *set, int verbose_level)
+int orthogonal_global::BLT_test_full(orthogonal *O,
+		int size, long int *set, int verbose_level)
 {
 	if (!collinearity_test(O, size, set, 0/*verbose_level - 2*/)) {
 		return FALSE;
@@ -612,7 +618,8 @@ int orthogonal_global::BLT_test_full(orthogonal *O, int size, long int *set, int
 	return TRUE;
 }
 
-int orthogonal_global::BLT_test(orthogonal *O, int size, long int *set, int verbose_level)
+int orthogonal_global::BLT_test(orthogonal *O,
+		int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -629,7 +636,8 @@ int orthogonal_global::BLT_test(orthogonal *O, int size, long int *set, int verb
 		Lint_vec_print(cout, set, size);
 		if (f_vv) {
 			for (i = 0; i < size; i++) {
-				O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, set[i], verbose_level - 1);
+				O->Hyperbolic_pair->unrank_point(
+						O->Hyperbolic_pair->v1, 1, set[i], verbose_level - 1);
 				cout << i << " : " << set[i] << " : ";
 				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
 				cout << endl;
@@ -639,8 +647,10 @@ int orthogonal_global::BLT_test(orthogonal *O, int size, long int *set, int verb
 	x = set[0];
 	z = set[size - 1];
 	two = O->F->add(1, 1);
-	O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, x, verbose_level - 1);
-	O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v3, 1, z, verbose_level - 1);
+	O->Hyperbolic_pair->unrank_point(
+			O->Hyperbolic_pair->v1, 1, x, verbose_level - 1);
+	O->Hyperbolic_pair->unrank_point(
+			O->Hyperbolic_pair->v3, 1, z, verbose_level - 1);
 
 	m1[0] = O->F->mult(two, O->Hyperbolic_pair->v1[0]);
 	m1[1] = O->Hyperbolic_pair->v1[2];
@@ -679,7 +689,8 @@ int orthogonal_global::BLT_test(orthogonal *O, int size, long int *set, int verb
 
 		y = set[i];
 
-		O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v2, 1, y, verbose_level - 1);
+		O->Hyperbolic_pair->unrank_point(
+				O->Hyperbolic_pair->v2, 1, y, verbose_level - 1);
 
 		//fxy = evaluate_bilinear_form(v1, v2, 1);
 		fxy = O->F->add5(
@@ -1176,6 +1187,68 @@ void orthogonal_global::plane_invariant(orthogonal *O,
 
 }
 
+void orthogonal_global::create_Fisher_BLT_set(
+		long int *Fisher_BLT, int *ABC,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_global::create_Fisher_BLT_set" << endl;
+	}
+	unusual_model U;
+
+	U.setup(FQ, Fq, verbose_level);
+	U.create_Fisher_BLT_set(Fisher_BLT, ABC, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_global::create_Fisher_BLT_set done" << endl;
+	}
+
+}
+
+void orthogonal_global::create_Linear_BLT_set(
+		long int *BLT, int *ABC,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_global::create_Linear_BLT_set" << endl;
+	}
+	unusual_model U;
+
+	U.setup(FQ, Fq, verbose_level);
+	U.create_Linear_BLT_set(BLT, ABC, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_global::create_Linear_BLT_set done" << endl;
+	}
+
+}
+
+void orthogonal_global::create_Mondello_BLT_set(
+		long int *BLT, int *ABC,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_global::create_Mondello_BLT_set" << endl;
+	}
+	unusual_model U;
+
+	U.setup(FQ, Fq, verbose_level);
+	U.create_Mondello_BLT_set(BLT, ABC, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_global::create_Mondello_BLT_set done" << endl;
+	}
+
+}
 
 
 }}}

@@ -231,7 +231,7 @@ void six_arcs_not_on_a_conic::recognize(long int *arc6, int *transporter,
 }
 
 
-void six_arcs_not_on_a_conic::report_latex(ostream &ost)
+void six_arcs_not_on_a_conic::report_latex(std::ostream &ost)
 {
 	int h;
 	
@@ -278,7 +278,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 			"in $\\PG(2," << PA->F->q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
-void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_idx)
+void six_arcs_not_on_a_conic::report_specific_arc_basic(std::ostream &ost, int arc_idx)
 {
 	data_structures_groups::set_and_stabilizer *The_arc;
 	ring_theory::longinteger_object go;
@@ -309,7 +309,7 @@ void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_id
 
 }
 
-void six_arcs_not_on_a_conic::report_specific_arc(ostream &ost, int arc_idx)
+void six_arcs_not_on_a_conic::report_specific_arc(std::ostream &ost, int arc_idx)
 {
 	data_structures_groups::set_and_stabilizer *The_arc;
 	ring_theory::longinteger_object go;

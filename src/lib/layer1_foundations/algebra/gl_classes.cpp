@@ -1915,7 +1915,7 @@ int gl_classes::find_class_rep(gl_class_rep *Reps,
 	return i;
 }
 
-void gl_classes::report(ostream &ost, int verbose_level)
+void gl_classes::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

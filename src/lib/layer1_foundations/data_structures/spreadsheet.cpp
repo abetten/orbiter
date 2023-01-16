@@ -446,7 +446,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 	
 }
 
-void spreadsheet::print_table(ostream &ost, int f_enclose_in_parentheses)
+void spreadsheet::print_table(std::ostream &ost, int f_enclose_in_parentheses)
 {
 	int i;
 	
@@ -457,7 +457,7 @@ void spreadsheet::print_table(ostream &ost, int f_enclose_in_parentheses)
 }
 
 void spreadsheet::print_table_latex_all_columns(
-		ostream &ost, int f_enclose_in_parentheses)
+		std::ostream &ost, int f_enclose_in_parentheses)
 {
 	int i, j;
 	int *f_column_select;
@@ -482,7 +482,7 @@ void spreadsheet::print_table_latex_all_columns(
 	FREE_int(f_column_select);
 }
 
-void spreadsheet::print_table_latex(ostream &ost,
+void spreadsheet::print_table_latex(std::ostream &ost,
 		int *f_column_select, int f_enclose_in_parentheses,
 		int nb_lines_per_table)
 {
@@ -526,7 +526,7 @@ void spreadsheet::print_table_latex(ostream &ost,
 }
 
 void spreadsheet::print_table_row(int row,
-		int f_enclose_in_parentheses, ostream &ost)
+		int f_enclose_in_parentheses, std::ostream &ost)
 {
 	int j, t; //, h;
 	
@@ -622,7 +622,7 @@ void spreadsheet::print_table_row_latex(int row,
 	ost << "\\\\" << endl;
 }
 
-void spreadsheet::print_table_row_detailed(int row, ostream &ost)
+void spreadsheet::print_table_row_detailed(int row, std::ostream &ost)
 {
 	int j, t;
 	
@@ -706,7 +706,7 @@ void spreadsheet::print_table_row_with_column_selection(int row,
 
 
 void spreadsheet::print_table_with_row_selection(
-		int *f_selected, ostream &ost)
+		int *f_selected, std::ostream &ost)
 {
 	int i;
 	
@@ -719,7 +719,7 @@ void spreadsheet::print_table_with_row_selection(
 		}
 }
 
-void spreadsheet::print_table_sorted(ostream &ost,
+void spreadsheet::print_table_sorted(std::ostream &ost,
 		const char *sort_by)
 {
 	int i, t, ii;
@@ -767,7 +767,8 @@ void spreadsheet::print_table_sorted(ostream &ost,
 }
 
 
-void spreadsheet::add_column_with_constant_value(const char *label, char *value)
+void spreadsheet::add_column_with_constant_value(
+		const char *label, char *value)
 {
 	int i;
 
@@ -781,7 +782,8 @@ void spreadsheet::add_column_with_constant_value(const char *label, char *value)
 	
 }
 
-void spreadsheet::add_column_with_int(const char *label, int *Value)
+void spreadsheet::add_column_with_int(
+		const char *label, int *Value)
 {
 	int i;
 	char str[1000];
@@ -796,7 +798,8 @@ void spreadsheet::add_column_with_int(const char *label, int *Value)
 		}
 
 }
-void spreadsheet::add_column_with_text(const char *label, char **Value)
+void spreadsheet::add_column_with_text(
+		const char *label, char **Value)
 {
 	int i;
 

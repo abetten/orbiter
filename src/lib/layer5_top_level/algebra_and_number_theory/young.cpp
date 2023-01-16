@@ -209,7 +209,8 @@ void young::init(int n, int verbose_level)
 		}
 }
 
-void young::create_module(int *h_alpha, 
+void young::create_module(
+		int *h_alpha,
 	int *&Base, int *&base_cols, int &rk, 
 	int verbose_level)
 {
@@ -300,8 +301,10 @@ void young::create_module(int *h_alpha,
 		}
 }
 
-void young::create_representations(int *Base,
-		int *base_cols, int rk, int verbose_level)
+void young::create_representations(
+		int *Base,
+		int *base_cols, int rk,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v3 = (verbose_level >= 3);
@@ -411,7 +414,8 @@ void young::create_representations(int *Base,
 		}
 }
 
-void young::create_representation(int *Base,
+void young::create_representation(
+		int *Base,
 		int *Base_inv, int rk, int group_elt, int *Mtx,
 		int verbose_level)
 // Mtx[rk * rk * D->size_of_instance_in_int]
@@ -509,7 +513,8 @@ void young::create_representation(int *Base,
 		}
 }
 
-void young::young_symmetrizer(int *row_parts, int nb_row_parts, 
+void young::young_symmetrizer(
+		int *row_parts, int nb_row_parts,
 	int *tableau, 
 	int *elt1, int *elt2, int *elt3, 
 	int verbose_level)
@@ -693,7 +698,8 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 		}
 }
 
-void young::compute_generators(int &go1, int &go2, int verbose_level)
+void young::compute_generators(
+		int &go1, int &go2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h;
@@ -951,7 +957,8 @@ void young::Maschke(int *Rep,
 		}
 }
 
-long int young::group_ring_element_size(actions::action *A,
+long int young::group_ring_element_size(
+		actions::action *A,
 		groups::sims *S)
 {
 	long int goi;
@@ -960,7 +967,8 @@ long int young::group_ring_element_size(actions::action *A,
 	return goi;
 }
 
-void young::group_ring_element_create(actions::action *A,
+void young::group_ring_element_create(
+		actions::action *A,
 		groups::sims *S, int *&elt)
 {
 	long int goi;
@@ -970,13 +978,15 @@ void young::group_ring_element_create(actions::action *A,
 	group_ring_element_zero(A, S, elt);
 }
 
-void young::group_ring_element_free(actions::action *A,
+void young::group_ring_element_free(
+		actions::action *A,
 		groups::sims *S, int *elt)
 {
 	FREE_int(elt);
 }
 
-void young::group_ring_element_print(actions::action *A,
+void young::group_ring_element_print(
+		actions::action *A,
 		groups::sims *S, int *elt)
 {
 	long int goi;
@@ -985,7 +995,8 @@ void young::group_ring_element_print(actions::action *A,
 	Int_vec_print(cout, elt, goi);
 }
 
-void young::group_ring_element_copy(actions::action *A,
+void young::group_ring_element_copy(
+		actions::action *A,
 		groups::sims *S,
 		int *elt_from, int *elt_to)
 {
@@ -995,7 +1006,8 @@ void young::group_ring_element_copy(actions::action *A,
 	Int_vec_copy(elt_from, elt_to, goi);
 }
 
-void young::group_ring_element_zero(actions::action *A,
+void young::group_ring_element_zero(
+		actions::action *A,
 		groups::sims *S, int *elt)
 {
 	long int goi;
@@ -1004,7 +1016,8 @@ void young::group_ring_element_zero(actions::action *A,
 	Int_vec_zero(elt, goi);
 }
 
-void young::group_ring_element_mult(actions::action *A,
+void young::group_ring_element_mult(
+		actions::action *A,
 		groups::sims *S, int *elt1, int *elt2, int *elt3)
 {
 	long int goi;

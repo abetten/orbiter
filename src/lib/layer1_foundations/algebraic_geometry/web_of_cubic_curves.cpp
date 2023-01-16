@@ -635,7 +635,8 @@ void web_of_cubic_curves::find_trihedral_pairs(int verbose_level)
 	}
 }
 
-void web_of_cubic_curves::create_surface_equation_from_trihedral_pair(long int *arc6,
+void web_of_cubic_curves::create_surface_equation_from_trihedral_pair(
+		long int *arc6,
 	int t_idx, int *surface_equation,
 	int &lambda,
 	int verbose_level)
@@ -841,8 +842,7 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 	}
 }
 
-void web_of_cubic_curves::find_point_not_on_six_curves(//long int *arc6,
-	//int *six_curves,
+void web_of_cubic_curves::find_point_not_on_six_curves(
 	int &pt, int &f_point_was_found,
 	int verbose_level)
 {
@@ -887,7 +887,7 @@ void web_of_cubic_curves::find_point_not_on_six_curves(//long int *arc6,
 	}
 }
 
-void web_of_cubic_curves::print_lines(ostream &ost)
+void web_of_cubic_curves::print_lines(std::ostream &ost)
 {
 	int i, a;
 	int v[8];
@@ -906,7 +906,7 @@ void web_of_cubic_curves::print_lines(ostream &ost)
 	}
 }
 
-void web_of_cubic_curves::print_trihedral_plane_equations(ostream &ost)
+void web_of_cubic_curves::print_trihedral_plane_equations(std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 	int i;
@@ -1007,7 +1007,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(ostream &ost)
 
 void web_of_cubic_curves::print_the_six_plane_equations(
 	int *The_six_plane_equations,
-	long int *plane6, ostream &ost)
+	long int *plane6, std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 	int i, h;
@@ -1030,7 +1030,7 @@ void web_of_cubic_curves::print_the_six_plane_equations(
 
 void web_of_cubic_curves::print_surface_equations_on_line(
 	int *The_surface_equations,
-	int lambda, int lambda_rk, ostream &ost)
+	int lambda, int lambda_rk, std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 	int i;
@@ -1088,7 +1088,7 @@ void web_of_cubic_curves::print_surface_equations_on_line(
 	}
 }
 
-void web_of_cubic_curves::print_dual_point_ranks(ostream &ost)
+void web_of_cubic_curves::print_dual_point_ranks(std::ostream &ost)
 {
 	orbiter_kernel_system::latex_interface L;
 
@@ -1099,14 +1099,15 @@ void web_of_cubic_curves::print_dual_point_ranks(ostream &ost)
 	ost << "$$" << endl;
 }
 
-void web_of_cubic_curves::print_Eckardt_point_data(ostream &ost, int verbose_level)
+void web_of_cubic_curves::print_Eckardt_point_data(
+		std::ostream &ost, int verbose_level)
 {
 	E->print_bisecants(ost, verbose_level);
 	E->print_intersections(ost, verbose_level);
 	E->print_conics(ost, verbose_level);
 }
 
-void web_of_cubic_curves::report_basics(ostream &ost, int verbose_level)
+void web_of_cubic_curves::report_basics(std::ostream &ost, int verbose_level)
 {
 	Surf->print_basics(ost);
 #if 0
@@ -1117,7 +1118,7 @@ void web_of_cubic_curves::report_basics(ostream &ost, int verbose_level)
 
 }
 
-void web_of_cubic_curves::report(ostream &ost, int verbose_level)
+void web_of_cubic_curves::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1164,7 +1165,7 @@ void web_of_cubic_curves::report(ostream &ost, int verbose_level)
 
 }
 
-void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, ostream &ost)
+void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream &ost)
 {
 	combinatorics::combinatorics_domain Combi;
 	orbiter_kernel_system::latex_interface L;

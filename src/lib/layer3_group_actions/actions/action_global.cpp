@@ -14,7 +14,7 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-void action_global::action_print_symmetry_group_type(ostream &ost,
+void action_global::action_print_symmetry_group_type(std::ostream &ost,
 		symmetry_group_type a)
 {
 	std::string txt;
@@ -858,14 +858,14 @@ void action_global::lift_generators_to_subfield_structure(
 }
 
 
-void action_global::perm_print_cycles_sorted_by_length(ostream &ost,
+void action_global::perm_print_cycles_sorted_by_length(std::ostream &ost,
 		int degree, int *perm, int verbose_level)
 {
 	perm_print_cycles_sorted_by_length_offset(ost,
 			degree, perm, 0, FALSE, TRUE, verbose_level);
 }
 
-void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
+void action_global::perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
 	int degree, int *perm, int offset,
 	int f_do_it_anyway_even_for_big_degree,
 	int f_print_cycles_of_length_one, int verbose_level)

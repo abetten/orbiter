@@ -379,7 +379,8 @@ public:
 	// b := a^-1
 	void perm_raise(int *a, int *b, int e, long int n);
 	// b := a^e (e >= 0)
-	void perm_direct_product(long int n1, long int n2, int *perm1, int *perm2, int *perm3);
+	void perm_direct_product(long int n1, long int n2,
+			int *perm1, int *perm2, int *perm3);
 	void perm_print_list(std::ostream &ost, int *a, int n);
 	void perm_print_list_offset(std::ostream &ost, int *a, int n, int offset);
 	void perm_print_product_action(std::ostream &ost, int *a, int m_plus_n, int m,
@@ -433,7 +434,8 @@ public:
 	long int binomial_lint(int n, int k);
 	void binomial(ring_theory::longinteger_object &a, int n, int k, int verbose_level);
 	void binomial_with_table(ring_theory::longinteger_object &a, int n, int k);
-	void size_of_conjugacy_class_in_sym_n(ring_theory::longinteger_object &a, int n, int *part);
+	void size_of_conjugacy_class_in_sym_n(
+			ring_theory::longinteger_object &a, int n, int *part);
 	void q_binomial_with_table(ring_theory::longinteger_object &a,
 		int n, int k, int q, int verbose_level);
 	void q_binomial(
@@ -486,9 +488,9 @@ public:
 };
 
 
-// ####################################################################################
+// #############################################################################
 // domino_assignment.cpp:
-// ####################################################################################
+// #############################################################################
 
 // the dimensions are (<D>+1) * <s>   x <D>*<s>
 // so, for D=7 we would get
@@ -613,9 +615,9 @@ public:
 	void get_cost_function(int *&Cost, int &len, int verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // domino_change.cpp:
-// ####################################################################################
+// #############################################################################
 
 
 //! utility class for the domino portrait algorithm
@@ -879,7 +881,7 @@ public:
 	int n;
 	int max_degree; // n * (q - 1)
 
-	int Q; // q^n
+	int Q; // q^n = number of inputs to the function.
 
 	ring_theory::homogeneous_polynomial_domain *Poly;
 		// Poly[i] = polynomial of degree i in n + 1 variables.
@@ -915,6 +917,9 @@ public:
 			int i, int j,
 			int *A_eqn, int *B_eqn, int *C_eqn,
 		int verbose_level);
+	void algebraic_normal_form(int *func, int len,
+			int *&coeff, int &nb_coeff,
+			int verbose_level);
 };
 
 

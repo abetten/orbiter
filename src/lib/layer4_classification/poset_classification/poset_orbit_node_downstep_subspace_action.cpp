@@ -295,7 +295,8 @@ void poset_orbit_node::setup_factor_space_action_light(
 
 void poset_orbit_node::setup_factor_space_action_with_early_test(
 	poset_classification *gen,
-	induced_actions::action_on_factor_space &AF, actions::action &A_factor_space,
+	induced_actions::action_on_factor_space &AF,
+	actions::action &A_factor_space,
 	int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -523,7 +524,8 @@ void poset_orbit_node::setup_factor_space_action(
 }
 
 void poset_orbit_node::downstep_subspace_action_print_orbits(
-	poset_classification *gen, groups::schreier &Schreier,
+	poset_classification *gen,
+	groups::schreier &Schreier,
 	int lvl, 
 	int f_print_orbits, 
 	int verbose_level)

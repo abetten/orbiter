@@ -284,7 +284,8 @@ long int poset_orbit_node::calc_size_on_file(actions::action *A, int verbose_lev
 }
 
 
-void poset_orbit_node::sv_read_file(poset_classification *PC,
+void poset_orbit_node::sv_read_file(
+		poset_classification *PC,
 		ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -310,7 +311,8 @@ void poset_orbit_node::sv_read_file(poset_classification *PC,
 	}
 }
 
-void poset_orbit_node::sv_write_file(poset_classification *PC,
+void poset_orbit_node::sv_write_file(
+		poset_classification *PC,
 		ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -328,7 +330,8 @@ void poset_orbit_node::sv_write_file(poset_classification *PC,
 	}
 }
 
-void poset_orbit_node::read_file(actions::action *A,
+void poset_orbit_node::read_file(
+		actions::action *A,
 		ifstream &fp, int &nb_group_elements,
 		int verbose_level)
 {
@@ -468,7 +471,8 @@ void poset_orbit_node::read_file(actions::action *A,
 	}
 }
 
-void poset_orbit_node::write_file(actions::action *A,
+void poset_orbit_node::write_file(
+		actions::action *A,
 		ofstream &fp, int &nb_group_elements,
 		int verbose_level)
 {

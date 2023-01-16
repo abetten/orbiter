@@ -26,7 +26,8 @@ design_activity::~design_activity()
 
 }
 
-void design_activity::perform_activity(design_activity_description *Descr,
+void design_activity::perform_activity(
+		design_activity_description *Descr,
 		design_create *DC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -399,7 +400,9 @@ void design_activity::do_load_table(
 	}
 }
 
-void design_activity::do_canonical_form(combinatorics::classification_of_objects_description *Canonical_form_Descr,
+void design_activity::do_canonical_form(
+		combinatorics::classification_of_objects_description
+			*Canonical_form_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

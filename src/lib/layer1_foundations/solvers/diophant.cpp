@@ -2304,7 +2304,7 @@ void diophant::latex_it()
 	latex_it(cout);
 }
 
-void diophant::latex_it(ostream &ost)
+void diophant::latex_it(std::ostream &ost)
 {
 	int i, j, a;
 	
@@ -3633,7 +3633,7 @@ void diophant::multiply_A_x_to_RHS1()
 	}
 }
 
-void diophant::write_xml(ostream &ost, const char *label)
+void diophant::write_xml(std::ostream &ost, const char *label)
 {
 	int i, j;
 	char *lbl;

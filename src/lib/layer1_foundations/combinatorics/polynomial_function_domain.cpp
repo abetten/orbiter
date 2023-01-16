@@ -550,6 +550,67 @@ void polynomial_function_domain::multiply_i_times_j(
 	}
 }
 
+void polynomial_function_domain::algebraic_normal_form(int *func, int len,
+		int *&coeff, int &nb_coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "polynomial_function_domain::algebraic_normal_form" << endl;
+	}
+
+	if (len != Q) {
+		cout << "polynomial_function_domain::algebraic_normal_form len should be " << Q << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "polynomial_function_domain::algebraic_normal_form input function = ";
+		Int_vec_print(cout, func, len);
+		cout << endl;
+	}
+
+	nb_coeff = Poly[max_degree].get_nb_monomials();
+
+	if (f_v) {
+		cout << "polynomial_function_domain::algebraic_normal_form nb_coeff = " << nb_coeff << endl;
+	}
+
+	coeff = NEW_int(nb_coeff);
+
+	if (f_v) {
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"before PF->compute_polynomial_representation" << endl;
+	}
+	compute_polynomial_representation(func, coeff, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"after PF->compute_polynomial_representation" << endl;
+	}
+
+	cout << "polynomial_function_domain::algebraic_normal_form "
+			"algebraic normal form:" << endl;
+	Poly[max_degree].print_equation(cout, coeff);
+	cout << endl;
+
+	cout << "polynomial_function_domain::algebraic_normal_form "
+			"algebraic normal form in tex:" << endl;
+	Poly[max_degree].print_equation_tex(cout, coeff);
+	cout << endl;
+
+	cout << "polynomial_function_domain::algebraic_normal_form "
+			"algebraic normal form in numerical form:" << endl;
+	Poly[max_degree].print_equation_numerical(cout, coeff);
+	cout << endl;
+
+
+	if (f_v) {
+		cout << "polynomial_function_domain::algebraic_normal_form done" << endl;
+	}
+}
+
+
 
 }}}
 

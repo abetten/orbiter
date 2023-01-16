@@ -29,7 +29,8 @@ large_set_activity::~large_set_activity()
 }
 
 
-void large_set_activity::perform_activity(large_set_activity_description *Descr,
+void large_set_activity::perform_activity(
+		large_set_activity_description *Descr,
 		large_set_was *LSW, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

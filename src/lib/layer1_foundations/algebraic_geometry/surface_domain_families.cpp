@@ -592,7 +592,8 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 }
 
 
-void surface_domain::create_equation_Eckardt_surface(int a, int b,
+void surface_domain::create_equation_Eckardt_surface(
+		int a, int b,
 		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -617,7 +618,8 @@ void surface_domain::create_equation_Eckardt_surface(int a, int b,
 	}
 }
 
-int surface_domain::test_Eckardt_form_alpha_beta(int *coeff,
+int surface_domain::test_Eckardt_form_alpha_beta(
+		int *coeff,
 	int &alpha, int &beta, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -727,7 +729,8 @@ void surface_domain::create_Eckardt_double_six(long int *double_six,
 	}
 }
 
-void surface_domain::create_Eckardt_fifteen_lines(long int *fifteen_lines,
+void surface_domain::create_Eckardt_fifteen_lines(
+		long int *fifteen_lines,
 	int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

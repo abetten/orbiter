@@ -393,7 +393,7 @@ void permutation_representation_domain::pack(int *Elt, uchar *elt)
 	}
 }
 
-void permutation_representation_domain::print(int *Elt, ostream &ost)
+void permutation_representation_domain::print(int *Elt, std::ostream &ost)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -421,7 +421,7 @@ void permutation_representation_domain::code_for_make_element(int *Elt, int *dat
 	Int_vec_copy(Elt, data, degree);
 }
 
-void permutation_representation_domain::print_for_make_element(int *Elt, ostream &ost)
+void permutation_representation_domain::print_for_make_element(int *Elt, std::ostream &ost)
 {
 	int i;
 	
@@ -431,7 +431,7 @@ void permutation_representation_domain::print_for_make_element(int *Elt, ostream
 }
 
 void permutation_representation_domain::print_for_make_element_no_commas(
-		int *Elt, ostream &ost)
+		int *Elt, std::ostream &ost)
 {
 	int i;
 	
@@ -440,7 +440,7 @@ void permutation_representation_domain::print_for_make_element_no_commas(
 	}
 }
 
-void permutation_representation_domain::print_with_action(actions::action *A, int *Elt, ostream &ost)
+void permutation_representation_domain::print_with_action(actions::action *A, int *Elt, std::ostream &ost)
 {
 	//perm_print(ost, Elt, degree);
 	//ost << endl;

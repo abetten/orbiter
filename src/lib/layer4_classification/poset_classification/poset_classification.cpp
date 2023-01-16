@@ -602,7 +602,8 @@ double poset_classification::level_progress(int lvl)
 
 void poset_classification::count_automorphism_group_orders(
 	int lvl, int &nb_agos,
-	ring_theory::longinteger_object *&agos, int *&multiplicities,
+	ring_theory::longinteger_object *&agos,
+	int *&multiplicities,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -678,7 +679,7 @@ void poset_classification::count_automorphism_group_orders(
 }
 
 void poset_classification::compute_and_print_automorphism_group_orders(
-		int lvl, ostream &ost)
+		int lvl, std::ostream &ost)
 {
 
 	int j, nb_agos;
@@ -724,7 +725,8 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 	}
 }
 
-void poset_classification::stabilizer_order(int node, ring_theory::longinteger_object &go)
+void poset_classification::stabilizer_order(
+		int node, ring_theory::longinteger_object &go)
 {
 #if 0
 	if (root[node].get_nb_strong_generators()) {
@@ -739,7 +741,8 @@ void poset_classification::stabilizer_order(int node, ring_theory::longinteger_o
 }
 
 
-void poset_classification::orbit_length(int orbit_at_level,
+void poset_classification::orbit_length(
+		int orbit_at_level,
 		int level, ring_theory::longinteger_object &len)
 // uses poset_classification::go for the group order
 {
@@ -1332,7 +1335,7 @@ long int poset_classification::coset_rank(
 void poset_classification::list_all_orbits_at_level(
 	int depth,
 	int f_has_print_function, 
-	void (*print_function)(ostream &ost,
+	void (*print_function)(std::ostream &ost,
 			int len, long int *S, void *data),
 	void *print_function_data, 
 	int f_show_orbit_decomposition, int f_show_stab,
@@ -1395,7 +1398,7 @@ void poset_classification::list_selected_set_of_orbits_at_level(
 	int depth,
 	int nb_orbits, int *Orbit_idx, 
 	int f_has_print_function, 
-	void (*print_function)(ostream &ost,
+	void (*print_function)(std::ostream &ost,
 			int len, long int *S, void *data),
 	void *print_function_data, 
 	int f_show_orbit_decomposition, int f_show_stab,
@@ -1499,7 +1502,7 @@ void poset_classification::print_schreier_vector(int depth,
 void poset_classification::list_whole_orbit(
 	int depth, int orbit_idx,
 	int f_has_print_function, 
-	void (*print_function)(ostream &ost,
+	void (*print_function)(std::ostream &ost,
 			int len, long int *S, void *data),
 	void *print_function_data, 
 	int f_show_orbit_decomposition, int f_show_stab,
@@ -1892,7 +1895,8 @@ void poset_classification::classify_k_subsets(
 
 void poset_classification::trace_all_k_subsets_and_compute_frequencies(
 		long int *the_set,
-		int n, int k, int &nCk, int *&isotype, int *&orbit_frequencies, int &nb_orbits,
+		int n, int k, int &nCk,
+		int *&isotype, int *&orbit_frequencies, int &nb_orbits,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

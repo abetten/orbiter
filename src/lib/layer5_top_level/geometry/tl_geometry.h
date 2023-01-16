@@ -60,7 +60,8 @@ public:
 
 	arc_generator_description();
 	~arc_generator_description();
-	int read_arguments(int argc, std::string *argv, int verbose_level);
+	int read_arguments(
+			int argc, std::string *argv, int verbose_level);
 	void print();
 
 
@@ -119,9 +120,12 @@ public:
 	void compute_starter(int verbose_level);
 
 	int test_nb_Eckardt_points(
-			long int *S, int len, int pt, int nb_E, int verbose_level);
-	int conic_test(long int *S, int len, int pt, int verbose_level);
-	void early_test_func(long int *S, int len,
+			long int *S, int len, int pt, int nb_E,
+			int verbose_level);
+	int conic_test(
+			long int *S, int len, int pt, int verbose_level);
+	void early_test_func(
+			long int *S, int len,
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
@@ -129,8 +133,10 @@ public:
 	void print_set_in_affine_plane(int len, long int *S);
 	void point_unrank(int *v, int rk);
 	int point_rank(int *v);
-	void compute_line_type(long int *set, int len, int verbose_level);
-	void lifting_prepare_function_new(solvers_package::exact_cover *E,
+	void compute_line_type(
+			long int *set, int len, int verbose_level);
+	void lifting_prepare_function_new(
+			solvers_package::exact_cover *E,
 		int starter_case, 
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
@@ -140,11 +146,17 @@ public:
 		// compute the incidence matrix of tangent lines 
 		// versus candidate points
 		// extended by external lines versus candidate points
-	void report(isomorph::isomorph &Iso, int verbose_level);
-	void report_do_the_work(std::ostream &ost, isomorph::isomorph &Iso, int verbose_level);
-	void report_decompositions(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+	void report(
+			isomorph::isomorph &Iso,
+			int verbose_level);
+	void report_do_the_work(
+			std::ostream &ost, isomorph::isomorph &Iso,
+			int verbose_level);
+	void report_decompositions(
+			isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 		long int *data, int verbose_level);
-	void report_stabilizer(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+	void report_stabilizer(
+			isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 		int verbose_level);
 };
 
@@ -197,7 +209,8 @@ public:
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void do_covering_problem(data_structures_groups::set_and_stabilizer *SaS);
+	void do_covering_problem(
+			data_structures_groups::set_and_stabilizer *SaS);
 
 
 };
@@ -244,7 +257,8 @@ public:
 		// maps the favorite rep to the canonical rep 
 
 
-	int (*check_function)(int len, long int *S, void *data, int verbose_level);
+	int (*check_function)(int len,
+			long int *S, void *data, int verbose_level);
 
 	poset_classification::poset_classification *gen;
 	poset_classification::poset_classification_control *Control;
@@ -281,14 +295,19 @@ public:
 			actions::action *A, actions::action *A_lines,
 		int f_choose_lines, 
 		int nb_points_or_lines, 
-		int (*check_function)(int len, long int *S, void *data,
+		int (*check_function)(int len,
+				long int *S, void *data,
 				int verbose_level),
 		int t0, 
 		int verbose_level);
-	void compute_orbits_from_sims(groups::sims *G, int verbose_level);
-	void compute_orbits(groups::strong_generators *Strong_gens, int verbose_level);
-	void choose_orbit(int orbit_no, int &f_hit_favorite, int verbose_level);
-	int favorite_orbit_representative(int *transporter, 
+	void compute_orbits_from_sims(
+			groups::sims *G, int verbose_level);
+	void compute_orbits(
+			groups::strong_generators *Strong_gens, int verbose_level);
+	void choose_orbit(
+			int orbit_no, int &f_hit_favorite, int verbose_level);
+	int favorite_orbit_representative(
+			int *transporter,
 		int *transporter_inv, 
 		long int *the_favorite_representative,
 		int verbose_level);
@@ -391,7 +410,10 @@ public:
 
 	cubic_curve_with_action();
 	~cubic_curve_with_action();
-	void init(algebraic_geometry::cubic_curve *CC, actions::action *A, int verbose_level);
+	void init(
+			algebraic_geometry::cubic_curve *CC,
+			actions::action *A,
+			int verbose_level);
 
 };
 
@@ -502,7 +524,8 @@ public:
 
 	// the generators:
 
-	groups::strong_generators *Strong_gens; // generators for GL(m,Q) field reduced into GL(n,q)
+	groups::strong_generators *Strong_gens;
+		// generators for GL(m,Q) field reduced into GL(n,q)
 
 	geometry::desarguesian_spread *D; // n, m, s
 
@@ -560,8 +583,10 @@ public:
 		groups::strong_generators *Strong_gens_previous,
 		int verbose_level);
 	void do_classify_secondary(int verbose_level);
-	int test_set_secondary(int len, long int *S, int verbose_level);
-	void compute_stabilizer_of_linear_set(int argc, const char **argv,
+	int test_set_secondary(
+			int len, long int *S, int verbose_level);
+	void compute_stabilizer_of_linear_set(
+			int argc, const char **argv,
 		int level, int orbit_at_level,
 		groups::strong_generators *&strong_gens,
 		int verbose_level);
@@ -571,11 +596,13 @@ public:
 		groups::strong_generators *Strong_gens_previous,
 		groups::strong_generators *&strong_gens,
 		int verbose_level);
-	void do_compute_stabilizer(int level, int orbit_at_level,
+	void do_compute_stabilizer(
+			int level, int orbit_at_level,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *&strong_gens,
 		int verbose_level);
-	void construct_semifield(int orbit_for_W, int verbose_level);
+	void construct_semifield(
+			int orbit_for_W, int verbose_level);
 
 };
 
@@ -660,29 +687,35 @@ public:
 	void init(ovoid_classify_description *Descr,
 			groups::linear_group *LG,
 			int &verbose_level);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void print(std::ostream &ost, long int *S, int len);
-	void make_graphs(orbiter_kernel_system::orbiter_data_file *ODF,
+	void print(
+			std::ostream &ost, long int *S, int len);
+	void make_graphs(
+			orbiter_kernel_system::orbiter_data_file *ODF,
 			std::string &prefix,
 			int f_split, int split_r, int split_m,
 			int f_lexorder_test,
 			const char *fname_mask,
 			int verbose_level);
-	void make_one_graph(orbiter_kernel_system::orbiter_data_file *ODF,
+	void make_one_graph(
+			orbiter_kernel_system::orbiter_data_file *ODF,
 			std::string &prefix,
 			int orbit_idx,
 			int f_lexorder_test,
 			graph_theory::colored_graph *&CG,
 			int verbose_level);
-	void create_graph(orbiter_kernel_system::orbiter_data_file *ODF,
+	void create_graph(
+			orbiter_kernel_system::orbiter_data_file *ODF,
 		int orbit_idx,
 		long int *candidates, int nb_candidates,
 		graph_theory::colored_graph *&CG,
 		int verbose_level);
-	void compute_coloring(long int *starter, int starter_size,
+	void compute_coloring(
+			long int *starter, int starter_size,
 			long int *candidates, int nb_points,
 			int *point_color, int &nb_colors_used, int verbose_level);
 
@@ -713,9 +746,12 @@ public:
 
 
 	
-	groups::matrix_group *Mtx; // only a copy of a pointer, not to be freed
-	orthogonal_geometry::orthogonal *O; // only a copy of a pointer, not to be freed
-	field_theory::finite_field *F; // only a copy of a pointer, not to be freed
+	groups::matrix_group *Mtx;
+		// only a copy of a pointer, not to be freed
+	orthogonal_geometry::orthogonal *O;
+		// only a copy of a pointer, not to be freed
+	field_theory::finite_field *F;
+		// only a copy of a pointer, not to be freed
 
 	int *tmp_M; // [n * n]
 	int *base_cols; // [n]
@@ -737,36 +773,49 @@ public:
 	
 	polar();
 	~polar();
-	void init_group_by_base_images(int *group_generator_data, 
+	void init_group_by_base_images(
+			int *group_generator_data,
 		int group_generator_size, 
 		int f_group_order_target, const char *group_order_target, 
 		int verbose_level);
-	void init_group(int *group_generator_data, int group_generator_size, 
+	void init_group(
+			int *group_generator_data, int group_generator_size,
 		int f_group_order_target, const char *group_order_target, 
 		int verbose_level);
-	void init(actions::action *A,
+	void init(
+			actions::action *A,
 			orthogonal_geometry::orthogonal *O,
-		int epsilon, int n, int k, field_theory::finite_field *F, int depth,
+		int epsilon, int n, int k,
+		field_theory::finite_field *F, int depth,
 		int verbose_level);
 	void init2(int depth, int verbose_level);
-	void compute_orbits(int t0, int verbose_level);
-	void compute_cosets(int depth, int orbit_idx, int verbose_level);
-	void dual_polar_graph(int depth, int orbit_idx, 
-			ring_theory::longinteger_object *&Rank_table, int &nb_maximals,
+	void compute_orbits(
+			int t0, int verbose_level);
+	void compute_cosets(
+			int depth, int orbit_idx, int verbose_level);
+	void dual_polar_graph(
+			int depth, int orbit_idx,
+			ring_theory::longinteger_object *&Rank_table,
+			int &nb_maximals,
 		int verbose_level);
-	void show_stabilizer(int depth, int orbit_idx, int verbose_level);
-	void test_if_in_perp(long int *S, int len,
+	void show_stabilizer(
+			int depth, int orbit_idx, int verbose_level);
+	void test_if_in_perp(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void test_if_closed_under_cosets(int *S, int len, 
+	void test_if_closed_under_cosets(
+			int *S, int len,
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
-	void get_stabilizer(int orbit_idx,
+	void get_stabilizer(
+			int orbit_idx,
 			data_structures_groups::group_container &G,
 			ring_theory::longinteger_object &go_G);
-	void get_orbit_length(int orbit_idx, ring_theory::longinteger_object &length);
+	void get_orbit_length(
+			int orbit_idx, ring_theory::longinteger_object &length);
 	int get_orbit_length_as_int(int orbit_idx);
 	void orbit_element_unrank(int orbit_idx, long int rank,
 		long int *set, int verbose_level);
@@ -774,7 +823,8 @@ public:
 		long int *set, int verbose_level);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
-	void list_whole_orbit(int depth, int orbit_idx, int f_limit, int limit);
+	void list_whole_orbit(
+			int depth, int orbit_idx, int f_limit, int limit);
 };
 
 
@@ -819,11 +869,17 @@ public:
 	
 	search_blocking_set();
 	~search_blocking_set();
-	void init(geometry::incidence_structure *Inc, actions::action *A, int verbose_level);
-	void find_partial_blocking_sets(int depth, int verbose_level);
+	void init(
+			geometry::incidence_structure *Inc,
+			actions::action *A,
+			int verbose_level);
+	void find_partial_blocking_sets(
+			int depth, int verbose_level);
 	int test_level(int depth, int verbose_level);
-	int test_blocking_set(int len, long int *S, int verbose_level);
-	int test_blocking_set_upper_bound_only(int len, long int *S,
+	int test_blocking_set(
+			int len, long int *S, int verbose_level);
+	int test_blocking_set_upper_bound_only(
+			int len, long int *S,
 		int verbose_level);
 	void search_for_blocking_set(int input_no, 
 		int level, int f_all, int verbose_level);

@@ -60,8 +60,10 @@ data_file::~data_file()
 	//cout << "data_file::~data_file done" << endl;
 }
 
-void data_file::read(std::string &fname,
-		int f_casenumbers, int verbose_level)
+void data_file::read(
+		std::string &fname,
+		int f_casenumbers,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -84,7 +86,8 @@ void data_file::read(std::string &fname,
 		}	
 }
 
-void data_file::read_candidates(std::string &candidates_fname,
+void data_file::read_candidates(
+		std::string &candidates_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

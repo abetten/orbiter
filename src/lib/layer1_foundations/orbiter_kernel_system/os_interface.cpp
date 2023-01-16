@@ -222,7 +222,7 @@ void os_interface::os_ticks_to_dhms(int ticks,
 		}
 }
 
-void os_interface::time_check_delta(ostream &ost, int dt)
+void os_interface::time_check_delta(std::ostream &ost, int dt)
 {
 	int tps, d, h, min, s;
 
@@ -242,7 +242,7 @@ void os_interface::time_check_delta(ostream &ost, int dt)
 	}
 }
 
-void os_interface::print_elapsed_time(ostream &ost, int d, int h, int m, int s)
+void os_interface::print_elapsed_time(std::ostream &ost, int d, int h, int m, int s)
 {
 	if (d > 0) {
 		ost << d << "-" << h << ":" << m << ":" << s;
@@ -256,7 +256,7 @@ void os_interface::print_elapsed_time(ostream &ost, int d, int h, int m, int s)
 
 }
 
-void os_interface::time_check(ostream &ost, int t0)
+void os_interface::time_check(std::ostream &ost, int t0)
 {
 	int t1, dt;
 

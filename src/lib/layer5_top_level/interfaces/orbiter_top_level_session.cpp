@@ -25,7 +25,14 @@ orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Or
 
 orbiter_top_level_session::orbiter_top_level_session()
 {
-	Orbiter_session = NULL;
+	cout << "orbiter_top_level_session::orbiter_top_level_session before new orbiter_session" << endl;
+
+	Orbiter_session = new orbiter_kernel_system::orbiter_session;
+
+	cout << "orbiter_top_level_session::orbiter_top_level_session after new orbiter_session" << endl;
+
+	The_Orbiter_top_level_session = this;
+	//Orbiter_session = NULL;
 }
 
 orbiter_top_level_session::~orbiter_top_level_session()
@@ -50,16 +57,12 @@ orbiter_top_level_session::~orbiter_top_level_session()
 	}
 }
 
-int orbiter_top_level_session::startup_and_read_arguments(int argc,
+int orbiter_top_level_session::startup_and_read_arguments(
+		int argc,
 		std::string *argv, int i0)
 {
 	int i;
 
-	cout << "orbiter_top_level_session::startup_and_read_arguments before new orbiter_session" << endl;
-
-	Orbiter_session = new orbiter_kernel_system::orbiter_session;
-
-	cout << "orbiter_top_level_session::startup_and_read_arguments after new orbiter_session" << endl;
 	cout << "orbiter_top_level_session::startup_and_read_arguments before Orbiter_session->read_arguments" << endl;
 
 	i = Orbiter_session->read_arguments(argc, argv, i0);
@@ -70,7 +73,8 @@ int orbiter_top_level_session::startup_and_read_arguments(int argc,
 	return i;
 }
 
-void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, int i, int verbose_level)
+void orbiter_top_level_session::handle_everything(
+		int argc, std::string *Argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -161,7 +165,8 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 
 }
 
-void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, int i, int verbose_level)
+void orbiter_top_level_session::parse_and_execute(
+		int argc, std::string *Argv, int i, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -231,7 +236,8 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	}
 }
 
-void orbiter_top_level_session::parse(int argc, std::string *Argv,
+void orbiter_top_level_session::parse(
+		int argc, std::string *Argv,
 		int &i, std::vector<void *> &program, int verbose_level)
 {
 	int cnt = 0;
@@ -325,8 +331,10 @@ void orbiter_top_level_session::print_symbol_table()
 	Orbiter_session->print_symbol_table();
 }
 
-void orbiter_top_level_session::add_symbol_table_entry(std::string &label,
-		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level)
+void orbiter_top_level_session::add_symbol_table_entry(
+		std::string &label,
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -561,6 +569,24 @@ apps_coding_theory::create_code *orbiter_top_level_session::get_object_of_type_c
 
 
 	return (apps_coding_theory::create_code *) get_object(idx);
+}
+
+orthogonal_geometry_applications::orthogonal_space_with_action *orbiter_top_level_session::get_orthogonal_space(std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_orthogonal_space cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_orthogonal_space) {
+		cout << "orbiter_top_level_session::get_orthogonal_space object type != t_orthogonal_space" << endl;
+		exit(1);
+	}
+
+
+	return (orthogonal_geometry_applications::orthogonal_space_with_action *) get_object(idx);
 }
 
 

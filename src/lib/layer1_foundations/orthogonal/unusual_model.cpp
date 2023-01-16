@@ -27,32 +27,10 @@ unusual_model::unusual_model()
 	Quadratic_form = NULL;
 
 
+	Quadratic_form_list_coding = NULL;
+
 	q = Q = 0;
-	alpha = 0;
-	T_alpha = N_alpha = 0;
-	nb_terms = 0;
-	form_i = NULL;
-	form_j = NULL;
-	form_coeff = NULL;
-	Gram = NULL;
-	r_nb_terms = 0;
-	r_form_i = NULL;
-	r_form_j = NULL;
-	r_form_coeff = NULL;
-	r_Gram = NULL;
-	rr_nb_terms = 0;
-	rr_form_i = NULL;
-	rr_form_j = NULL;
-	rr_form_coeff = NULL;
-	rr_Gram = NULL;
-	//int hyperbolic_basis[4 * 4];
-	//int hyperbolic_basis_inverse[4 * 4];
-	//int basis[4 * 4];
-	//int basis_subspace[2 * 2];
-	M = NULL;
-	components = NULL;
-	embedding = NULL;
-	pair_embedding = NULL;
+
 }
 
 unusual_model::~unusual_model()
@@ -60,70 +38,10 @@ unusual_model::~unusual_model()
 	if (Quadratic_form) {
 		FREE_OBJECT(Quadratic_form);
 	}
-	if (form_i) {
-		FREE_int(form_i);
-		form_i = NULL;
+	if (Quadratic_form_list_coding) {
+		FREE_OBJECT(Quadratic_form_list_coding);
 	}
-	if (form_j) {
-		FREE_int(form_j);
-		form_j = NULL;
-	}
-	if (form_coeff) {
-		FREE_int(form_coeff);
-		form_coeff = NULL;
-	}
-	if (Gram) {
-		FREE_int(Gram);
-		Gram = NULL;
-	}
-	if (r_form_i) {
-		FREE_int(r_form_i);
-		r_form_i = NULL;
-	}
-	if (r_form_j) {
-		FREE_int(r_form_j);
-		r_form_j = NULL;
-	}
-	if (r_form_coeff) {
-		FREE_int(r_form_coeff);
-		r_form_coeff = NULL;
-	}
-	if (r_Gram) {
-		FREE_int(r_Gram);
-		r_Gram = NULL;
-	}
-	if (rr_form_i) {
-		FREE_int(rr_form_i);
-		rr_form_i = NULL;
-	}
-	if (rr_form_j) {
-		FREE_int(rr_form_j);
-		rr_form_j = NULL;
-	}
-	if (rr_form_coeff) {
-		FREE_int(rr_form_coeff);
-		rr_form_coeff = NULL;
-	}
-	if (rr_Gram) {
-		FREE_int(rr_Gram);
-		rr_Gram = NULL;
-	}
-	if (M) {
-		FREE_int(M);
-		M = NULL;
-	}
-	if (components) {
-		FREE_int(components);
-		components = NULL;
-	}
-	if (embedding) {
-		FREE_int(embedding);
-		embedding = NULL;
-	}
-	if (pair_embedding) {
-		FREE_int(pair_embedding);
-		pair_embedding = NULL;
-	}
+
 }
 
 #if 0
@@ -136,22 +54,23 @@ void unusual_model::setup_sum_of_squares(int q,
 #endif
 
 void unusual_model::setup(
-		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
 		int verbose_level)
 {
 	setup2(FQ, Fq, FALSE, verbose_level);
 }
 
 void unusual_model::setup2(
-		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
 		int f_sum_of_squares, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 2);
-	int i, j, b, p, h;
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 2);
+	int p, h;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
 	
 	if (f_v) {
 		cout << "unusual_model::setup2 f_sum_of_squares=" << f_sum_of_squares << endl;
@@ -165,18 +84,26 @@ void unusual_model::setup2(
 				"quadratic extension of the small field" << endl;
 		exit(1);
 	}
-	nb_terms = 0;
+
+
 
 
 	Quadratic_form = NEW_OBJECT(quadratic_form);
 
 	if (f_v) {
-		cout << "unusual_model::setup2 before Quadratic_form->init" << endl;
+		cout << "unusual_model::setup2 "
+				"before Quadratic_form->init" << endl;
 	}
 	Quadratic_form->init(0 /* epsilon */, 5, Fq, verbose_level);
 	if (f_v) {
-		cout << "unusual_model::setup2 after Quadratic_form->init" << endl;
+		cout << "unusual_model::setup2 "
+				"after Quadratic_form->init" << endl;
 	}
+
+
+	Quadratic_form_list_coding = NEW_OBJECT(quadratic_form_list_coding);
+
+	Quadratic_form_list_coding->init(FQ, Fq, f_sum_of_squares, verbose_level);
 
 
 	//const char *override_poly_Q = NULL;
@@ -329,157 +256,7 @@ void unusual_model::setup2(
 
 
 
-	alpha = Fq->p;
-	if (f_vv) {
-		cout << "unusual_model::setup2 primitive element alpha=" << alpha << endl;
-	}
-
-	if (f_vv) {
-		cout << "unusual_model::setup calling "
-			"subfield_embedding_2dimensional" << endl;
-	}
-	FQ->subfield_embedding_2dimensional(*Fq,
-		components, embedding, pair_embedding, verbose_level - 4);
-	if (f_vvv) {
-		cout << "unusual_model::setup2 "
-			"subfield_embedding_2dimensional finished" << endl;
-		FQ->print_embedding(*Fq, components,
-				embedding, pair_embedding);
-	}
-
-	T_alpha = FQ->retract(*Fq, 2, FQ->T2(alpha), verbose_level - 2);
-	N_alpha = FQ->retract(*Fq, 2, FQ->N2(alpha), verbose_level - 2);
-	if (f_vv) {
-		cout << "unusual_model::setup2 T_alpha = " << T_alpha << endl;
-		cout << "unusual_model::setup2 N_alpha = " << N_alpha << endl;
-	}
 	
-	form_i = NEW_int(4 * 4);
-	form_j = NEW_int(4 * 4);
-	form_coeff = NEW_int(4 * 4);
-	Gram = NEW_int(4 * 4);
-
-	Int_vec_zero(Gram, 4 * 4);
-
-	if (f_sum_of_squares) {
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 1, 1, 1);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 2, 2, 1);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 3, 3, 1);
-	}
-	else {
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 0, 1, T_alpha);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 1, 1, N_alpha);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 2, 2, 1);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 2, 3, T_alpha);
-		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 3, 3, N_alpha);
-	}
-	if (f_vv) {
-		cout << "unusual_model::setup2 Gram matrix:" << endl;
-		Int_vec_print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
-		cout << "quadratic form:" << endl;
-		Gg.print_quadratic_form_list_coded(nb_terms, form_i, form_j, form_coeff);
-	}
-	
-	if (f_vv) {
-		cout << "unusual_model::setup2 finding hyperbolic pair" << endl;
-	}
-	Fq->Linear_algebra->find_hyperbolic_pair(4, nb_terms,
-		form_i, form_j, form_coeff, Gram, 
-		basis, basis + 4, 0 /*verbose_level - 3*/);
-	Fq->Linear_algebra->perp(4, 2, basis, Gram, 0 /* verbose_level */);
-	if (f_vv) {
-		cout << "basis:" << endl;
-		Int_vec_print_integer_matrix_width(cout, basis, 4, 4, 4, 2);
-	}
-	
-	for (i = 0; i < 2 * 4; i++) {
-		hyperbolic_basis[i] = basis[i];
-	}
-	
-	if (f_vvv) {
-		for (i = 0; i < 4; i++) {
-			b = Fq->Linear_algebra->evaluate_quadratic_form(4,
-				nb_terms, form_i, form_j, form_coeff,
-				basis + i * 4);
-			cout << "i=" << i << " form value " << b << endl;
-		}
-	}
-	
-	Fq->Linear_algebra->restrict_quadratic_form_list_coding(4 - 2, 4, basis + 2 * 4,
-		nb_terms, form_i, form_j, form_coeff, 
-		r_nb_terms, r_form_i, r_form_j, r_form_coeff, 
-		verbose_level - 2);
-	
-	if (f_vv) {
-		cout << "unusual_model::setup2 restricted quadratic form:" << endl;
-		Gg.print_quadratic_form_list_coded(r_nb_terms,
-				r_form_i, r_form_j, r_form_coeff);
-	}
-	r_Gram = NEW_int(2 * 2);
-	
-	Gg.make_Gram_matrix_from_list_coded_quadratic_form(2, *Fq,
-		r_nb_terms, r_form_i, r_form_j, r_form_coeff, r_Gram);
-	if (f_vv) {
-		cout << "unusual_model::setup2 restricted Gram matrix:" << endl;
-		Int_vec_print_integer_matrix_width(cout, r_Gram, 2, 2, 2, 2);
-	}
-
-	Fq->Linear_algebra->find_hyperbolic_pair(2, r_nb_terms,
-		r_form_i, r_form_j, r_form_coeff, r_Gram, 
-		basis_subspace, basis_subspace + 2, verbose_level - 2);
-	if (f_vv) {
-		cout << "unusual_model::setup2 basis_subspace:" << endl;
-		Int_vec_print_integer_matrix_width(cout, basis_subspace, 2, 2, 2, 2);
-	}
-	Fq->Linear_algebra->mult_matrix_matrix(basis_subspace,
-			basis + 8, hyperbolic_basis + 8, 2, 2, 4,
-			0 /* verbose_level */);
-
-	if (f_vv) {
-		cout << "unusual_model::setup2 hyperbolic basis:" << endl;
-		Int_vec_print_integer_matrix_width(cout, hyperbolic_basis, 4, 4, 4, 2);
-		for (i = 0; i < 4; i++) {
-			b = Fq->Linear_algebra->evaluate_quadratic_form(4,
-				nb_terms, form_i, form_j, form_coeff,
-				hyperbolic_basis + i * 4);
-			cout << "i=" << i << " quadratic form value " << b << endl;
-		}
-	}
-
-	M = NEW_int(4 * 4);
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 4; j++) {
-			M[i * 4 + j] = Fq->Linear_algebra->evaluate_bilinear_form(4,
-					hyperbolic_basis + i * 4,
-					hyperbolic_basis + j * 4, Gram);
-		}
-	}
-	
-	if (f_vvv) {
-		cout << "unusual_model::setup2 bilinear form on the hyperbolic basis:" << endl;
-		Int_vec_print_integer_matrix_width(cout, M, 4, 4, 4, 2);
-	}
-
-	Fq->Linear_algebra->restrict_quadratic_form_list_coding(4, 4,
-		hyperbolic_basis,
-		nb_terms, form_i, form_j, form_coeff, 
-		rr_nb_terms, rr_form_i, rr_form_j, rr_form_coeff, 
-		verbose_level - 2);
-	if (f_vv) {
-		cout << "unusual_model::setup2 restricted quadratic form:" << endl;
-		Gg.print_quadratic_form_list_coded(rr_nb_terms,
-				rr_form_i, rr_form_j, rr_form_coeff);
-	}
-	
-	Fq->Linear_algebra->matrix_inverse(hyperbolic_basis,
-			hyperbolic_basis_inverse, 4, verbose_level - 2);
-	if (f_vv) {
-		cout << "unusual_model::setup2 inverse hyperbolic basis:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				hyperbolic_basis_inverse, 4, 4, 4, 2);
-	}
 	if (f_v) {
 		cout << "unusual_model::setup2 done" << endl;
 	}
@@ -487,7 +264,8 @@ void unusual_model::setup2(
 }
 
 void unusual_model::convert_to_ranks(int n,
-		int *unusual_coordinates, long int *ranks, int verbose_level)
+		int *unusual_coordinates,
+		long int *ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -498,7 +276,8 @@ void unusual_model::convert_to_ranks(int n,
 		cout << "unusual_model::convert_to_ranks" << endl;
 	}
 	if (f_v) {
-		cout << "unusual_model::convert_to_ranks unusual_coordinates:" << endl;
+		cout << "unusual_model::convert_to_ranks "
+				"unusual_coordinates:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				unusual_coordinates, n, 3, 3, 2);
 	}
@@ -509,7 +288,8 @@ void unusual_model::convert_to_ranks(int n,
 
 
 	for (i = 0; i < n; i++) {
-		ranks[i] = Quadratic_form->Orthogonal_indexing->Q_rank(usual + 5 * i, 1, 4, 0 /* verbose_level */);
+		ranks[i] = Quadratic_form->Orthogonal_indexing->Q_rank(
+				usual + 5 * i, 1, 4, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ranks[" << i << "]=" << ranks[i] << endl;
 		}
@@ -525,7 +305,9 @@ void unusual_model::convert_to_ranks(int n,
 }
 
 void unusual_model::convert_from_ranks(int n,
-	long int *ranks, int *unusual_coordinates, int verbose_level)
+	long int *ranks,
+	int *unusual_coordinates,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *usual;
@@ -542,7 +324,8 @@ void unusual_model::convert_from_ranks(int n,
 	
 	usual = NEW_int(n * 5);
 	for (i = 0; i < n; i++) {
-		Quadratic_form->Orthogonal_indexing->Q_unrank(usual + 5 * i, 1, 4, ranks[i], 0 /* verbose_level */);
+		Quadratic_form->Orthogonal_indexing->Q_unrank(
+				usual + 5 * i, 1, 4, ranks[i], 0 /* verbose_level */);
 	}
 	
 
@@ -550,7 +333,8 @@ void unusual_model::convert_from_ranks(int n,
 			unusual_coordinates, verbose_level - 1);
 
 	if (f_v) {
-		cout << "unusual_model::convert_from_ranks unusual_coordinates:" << endl;
+		cout << "unusual_model::convert_from_ranks "
+				"unusual_coordinates:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				unusual_coordinates, n, 3, 3, 2);
 	}
@@ -560,13 +344,15 @@ void unusual_model::convert_from_ranks(int n,
 }
 
 long int unusual_model::convert_to_rank(
-	int *unusual_coordinates, int verbose_level)
+	int *unusual_coordinates,
+	int verbose_level)
 {
 	int usual[5];
 	long int rank;
 
 	convert_to_usual(1, unusual_coordinates, usual, verbose_level - 1);
-	rank = Quadratic_form->Orthogonal_indexing->Q_rank(usual, 1, 4, 0 /* verbose_level */);
+	rank = Quadratic_form->Orthogonal_indexing->Q_rank(
+			usual, 1, 4, 0 /* verbose_level */);
 	return rank;
 }
 
@@ -575,13 +361,15 @@ void unusual_model::convert_from_rank(long int rank,
 {
 	int usual[5];
 	
-	Quadratic_form->Orthogonal_indexing->Q_unrank(usual, 1, 4, rank, 0 /* verbose_level */);
+	Quadratic_form->Orthogonal_indexing->Q_unrank(
+			usual, 1, 4, rank, 0 /* verbose_level */);
 	convert_from_usual(1, usual,
 			unusual_coordinates, verbose_level - 1);
 }
 
 void unusual_model::convert_to_usual(int n,
-	int *unusual_coordinates, int *usual_coordinates,
+	int *unusual_coordinates,
+	int *usual_coordinates,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -597,8 +385,8 @@ void unusual_model::convert_to_usual(int n,
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < 2; j++) {
 			c = unusual_coordinates[i * 3 + j];
-			a = components[c * 2 + 0];
-			b = components[c * 2 + 1];
+			a = Quadratic_form_list_coding->components[c * 2 + 0];
+			b = Quadratic_form_list_coding->components[c * 2 + 1];
 			//a = c % q;
 			//b = (c - a) / q;
 			tmp[i * 4 + j * 2 + 0] = a;
@@ -610,8 +398,9 @@ void unusual_model::convert_to_usual(int n,
 		Int_vec_print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
 	}
 	for (i = 0; i < n; i++) {
-		Fq->Linear_algebra->mult_matrix_matrix(tmp + i * 4,
-			hyperbolic_basis_inverse,
+		Fq->Linear_algebra->mult_matrix_matrix(
+				tmp + i * 4,
+				Quadratic_form_list_coding->hyperbolic_basis_inverse,
 			usual_coordinates + i * 5 + 1, 1, 4, 4,
 			0 /* verbose_level */);
 		usual_coordinates[i * 5 + 0] = unusual_coordinates[i * 3 + 2];
@@ -643,8 +432,10 @@ void unusual_model::convert_from_usual(int n,
 		exit(1);
 	}
 	for (i = 0; i < n; i++) {
-		Fq->Linear_algebra->mult_matrix_matrix(usual_coordinates + i * 5 + 1,
-			hyperbolic_basis, tmp + i * 4, 1, 4, 4,
+		Fq->Linear_algebra->mult_matrix_matrix(
+				usual_coordinates + i * 5 + 1,
+				Quadratic_form_list_coding->hyperbolic_basis,
+				tmp + i * 4, 1, 4, 4,
 			0 /* verbose_level */);
 	}
 	if (f_v) {
@@ -657,9 +448,9 @@ void unusual_model::convert_from_usual(int n,
 			a = tmp[i * 4 + j * 2 + 0];
 			b = tmp[i * 4 + j * 2 + 1];
 			//c = b * q + a;
-			c = pair_embedding[a * q + b];
-			aa = components[c * 2 + 0];
-			bb = components[c * 2 + 1];
+			c = Quadratic_form_list_coding->pair_embedding[a * q + b];
+			aa = Quadratic_form_list_coding->components[c * 2 + 0];
+			bb = Quadratic_form_list_coding->components[c * 2 + 1];
 			if (aa != a) {
 				cout << "aa=" << aa << " not equal to a=" << a << endl;
 				cout << "a=" << a << " b=" << b << " c=" << c << endl;
@@ -689,7 +480,8 @@ void unusual_model::convert_from_usual(int n,
 }
 
 void unusual_model::create_Fisher_BLT_set(
-	long int *Fisher_BLT, int *ABC, int verbose_level)
+	long int *Fisher_BLT,
+	int *ABC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -719,8 +511,9 @@ void unusual_model::create_Fisher_BLT_set(
 		if (FQ->N2(i) == 1) {
 			j = FQ->negate(i);
 			for (k = 0; k < nb_norm_one; k++) {
-				if (norm_one_table[k] == j)
+				if (norm_one_table[k] == j) {
 					break;
+				}
 			}
 			if (k == nb_norm_one) {
 				norm_one_table[nb_norm_one++] = i;
@@ -767,7 +560,8 @@ void unusual_model::create_Fisher_BLT_set(
 }
 
 void unusual_model::create_Linear_BLT_set(
-		long int *BLT, int *ABC, int verbose_level)
+		long int *BLT,
+		int *ABC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -819,7 +613,8 @@ void unusual_model::create_Linear_BLT_set(
 }
 
 void unusual_model::create_Mondello_BLT_set(
-	long int *BLT, int *ABC, int verbose_level)
+	long int *BLT,
+	int *ABC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -916,7 +711,8 @@ int unusual_model::T2(int a)
 }
 
 int unusual_model::evaluate_quadratic_form(
-		int a, int b, int c, int verbose_level)
+		int a, int b, int c,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int w, x, y, z;
@@ -983,7 +779,8 @@ void unusual_model::print_coordinates_detailed_set(
 	}
 }
 
-void unusual_model::print_coordinates_detailed(long int pt, int cnt)
+void unusual_model::print_coordinates_detailed(
+		long int pt, int cnt)
 {
 	int a, b, c, x, y, l1, l2, aq, bq, ll1, ll2, a1, a2, b1, b2, w;
 	int Q = q * q;
@@ -992,17 +789,18 @@ void unusual_model::print_coordinates_detailed(long int pt, int cnt)
 	int unusual[3];
 	int unusual_point_rank;
 		
-	Quadratic_form->Orthogonal_indexing->Q_unrank(usual, 1, 4, pt, 0 /* verbose_level */);
+	Quadratic_form->Orthogonal_indexing->Q_unrank(
+			usual, 1, 4, pt, 0 /* verbose_level */);
 	convert_from_usual(1, usual, unusual, 0);
 		
 	a = unusual[0];
 	b = unusual[1];
 	c = unusual[2];
 	w = evaluate_quadratic_form(a, b, c, 0);
-	a1 = components[2 * a + 0];
-	a2 = components[2 * a + 1];
-	b1 = components[2 * b + 0];
-	b2 = components[2 * b + 1];
+	a1 = Quadratic_form_list_coding->components[2 * a + 0];
+	a2 = Quadratic_form_list_coding->components[2 * a + 1];
+	b1 = Quadratic_form_list_coding->components[2 * b + 0];
+	b2 = Quadratic_form_list_coding->components[2 * b + 1];
 	unusual_point_rank = a * Q + b * q + c;
 	l1 = FQ->log_alpha(a);
 	l2 = FQ->log_alpha(b);
@@ -1044,7 +842,8 @@ int unusual_model::build_candidate_set(orthogonal &O, int q,
 
 int unusual_model::build_candidate_set_with_offset(
 	orthogonal &O, int q,
-	int gamma, int delta, int offset, int m, long int *Set,
+	int gamma, int delta, int offset,
+	int m, long int *Set,
 	int f_second_half, int verbose_level)
 {
 	return build_candidate_set_with_or_without_test(
@@ -1054,8 +853,10 @@ int unusual_model::build_candidate_set_with_offset(
 
 int unusual_model::build_candidate_set_with_or_without_test(
 	orthogonal &O, int q,
-	int gamma, int delta, int offset, int m, long int *Set,
-	int f_second_half, int f_test, int verbose_level)
+	int gamma, int delta, int offset,
+	int m, long int *Set,
+	int f_second_half, int f_test,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1251,11 +1052,13 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		Int_vec_print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
 	}
 
-	Fq->Linear_algebra->mult_matrix_matrix(hyperbolic_basis,
+	Fq->Linear_algebra->mult_matrix_matrix(
+			Quadratic_form_list_coding->hyperbolic_basis,
 			M4, M4_tmp1, 4, 4, 4,
 			0 /* verbose_level */);
 	Fq->Linear_algebra->mult_matrix_matrix(M4_tmp1,
-			hyperbolic_basis_inverse, M4_tmp2, 4, 4, 4,
+			Quadratic_form_list_coding->hyperbolic_basis_inverse,
+			M4_tmp2, 4, 4, 4,
 			0 /* verbose_level */);
 	if (f_vvv) {
 		cout << "transformation matrix in "
@@ -1360,11 +1163,14 @@ void unusual_model::transform_matrix_usual_to_unusual(
 		}
 	}
 
-	Fq->Linear_algebra->mult_matrix_matrix(hyperbolic_basis_inverse,
+	Fq->Linear_algebra->mult_matrix_matrix(
+			Quadratic_form_list_coding->hyperbolic_basis_inverse,
 		M4_tmp2, M4_tmp1, 4, 4, 4,
 		0 /* verbose_level */);
-	Fq->Linear_algebra->mult_matrix_matrix(M4_tmp1,
-			hyperbolic_basis, M4, 4, 4, 4,
+	Fq->Linear_algebra->mult_matrix_matrix(
+			M4_tmp1,
+			Quadratic_form_list_coding->hyperbolic_basis,
+			M4, 4, 4, 4,
 			0 /* verbose_level */);
 
 	if (f_vv) {
@@ -1378,7 +1184,8 @@ void unusual_model::transform_matrix_usual_to_unusual(
 
 void unusual_model::parse_4by4_matrix(int *M4, 
 	int &a, int &b, int &c, int &d, 
-	int &f_semi1, int &f_semi2, int &f_semi3, int &f_semi4)
+	int &f_semi1, int &f_semi2,
+	int &f_semi3, int &f_semi4)
 {
 	int i, j, x, y, image1, image2, u, v, f_semi;
 	
@@ -1391,10 +1198,10 @@ void unusual_model::parse_4by4_matrix(int *M4,
 				f_semi = FALSE;
 			}
 			else {
-				image1 = pair_embedding[x * q + y];
+				image1 = Quadratic_form_list_coding->pair_embedding[x * q + y];
 				x = M4[i * 8 + 4 + j * 2 + 0];
 				y = M4[i * 8 + 4 + j * 2 + 1];
-				image2 = pair_embedding[x * q + y];
+				image2 = Quadratic_form_list_coding->pair_embedding[x * q + y];
 				u = FQ->inverse(image1);
 				v = FQ->mult(image2, u);
 				if (v == q) {
@@ -1431,7 +1238,8 @@ void unusual_model::parse_4by4_matrix(int *M4,
 
 void unusual_model::create_4by4_matrix(int *M4, 
 	int a, int b, int c, int d, 
-	int f_semi1, int f_semi2, int f_semi3, int f_semi4, 
+	int f_semi1, int f_semi2,
+	int f_semi3, int f_semi4,
 	int verbose_level)
 {
 	int i, j, f_phi, coeff = 0, image1, image2;
@@ -1463,10 +1271,10 @@ void unusual_model::create_4by4_matrix(int *M4,
 				image1 = FQ->mult(1, coeff);
 				image2 = FQ->mult(q, coeff);
 			}
-			M4[i * 8 + j * 2 + 0] = components[image1 * 2 + 0];
-			M4[i * 8 + j * 2 + 1] = components[image1 * 2 + 1];
-			M4[i * 8 + 4 + j * 2 + 0] = components[image2 * 2 + 0];
-			M4[i * 8 + 4 + j * 2 + 1] = components[image2 * 2 + 1];
+			M4[i * 8 + j * 2 + 0] = Quadratic_form_list_coding->components[image1 * 2 + 0];
+			M4[i * 8 + j * 2 + 1] = Quadratic_form_list_coding->components[image1 * 2 + 1];
+			M4[i * 8 + 4 + j * 2 + 0] = Quadratic_form_list_coding->components[image2 * 2 + 0];
+			M4[i * 8 + 4 + j * 2 + 1] = Quadratic_form_list_coding->components[image2 * 2 + 1];
 		}
 	}
 }

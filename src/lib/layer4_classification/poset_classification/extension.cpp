@@ -91,7 +91,7 @@ void extension::set_data2(int data2)
 }
 
 
-void print_extension_type(ostream &ost, int t)
+void print_extension_type(std::ostream &ost, int t)
 {
 	if (t == EXTENSION_TYPE_UNPROCESSED) {
 		ost << "   unprocessed";

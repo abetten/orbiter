@@ -45,10 +45,12 @@ design_tables::~design_tables()
 }
 
 
-void design_tables::init(actions::action *A, actions::action *A2,
+void design_tables::init(actions::action *A,
+		actions::action *A2,
 		long int *initial_set, int design_size,
 		std::string &label,
-		groups::strong_generators *Strong_generators, int verbose_level)
+		groups::strong_generators *Strong_generators,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -211,7 +213,9 @@ void design_tables::create_table(int verbose_level)
 	}
 }
 
-void design_tables::create_action(actions::action *&A_on_designs, int verbose_level)
+void design_tables::create_action(
+		actions::action *&A_on_designs,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -308,7 +312,9 @@ void design_tables::extract_solutions_by_index(
 
 void design_tables::make_reduced_design_table(
 		long int *set, int set_sz,
-		long int *&reduced_table, long int *&reduced_table_idx, int &nb_reduced_designs,
+		long int *&reduced_table,
+		long int *&reduced_table_idx,
+		int &nb_reduced_designs,
 		int verbose_level)
 // reduced_table[nb_designs * design_size]
 {
@@ -340,10 +346,13 @@ void design_tables::make_reduced_design_table(
 	}
 }
 
-void design_tables::init_from_file(actions::action *A, actions::action *A2,
+void design_tables::init_from_file(
+		actions::action *A,
+		actions::action *A2,
 		long int *initial_set, int design_size,
 		std::string &label,
-		groups::strong_generators *Strong_generators, int verbose_level)
+		groups::strong_generators *Strong_generators,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -492,7 +501,9 @@ int design_tables::test_if_designs_are_disjoint(int i, int j)
 }
 
 
-int design_tables::test_set_within_itself(long int *set_of_designs_by_index, int set_size)
+int design_tables::test_set_within_itself(
+		long int *set_of_designs_by_index,
+		int set_size)
 {
 	int i, j, a, b;
 	long int *p1;

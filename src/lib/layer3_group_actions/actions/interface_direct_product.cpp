@@ -366,7 +366,7 @@ static void direct_product_group_element_dispose(action &A,
 }
 
 static void direct_product_group_element_print(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
@@ -385,7 +385,7 @@ static void direct_product_group_element_code_for_make_element(action &A,
 }
 
 static void direct_product_group_element_print_for_make_element(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::direct_product *P = A.G.direct_product_group;
 	int *Elt = (int *) elt;
@@ -399,7 +399,7 @@ static void direct_product_group_element_print_for_make_element(action &A,
 }
 
 static void direct_product_group_element_print_for_make_element_no_commas(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::direct_product *P = A.G.direct_product_group;
 	int *Elt = (int *) elt;
@@ -413,7 +413,7 @@ static void direct_product_group_element_print_for_make_element_no_commas(
 }
 
 static void direct_product_group_element_print_quick(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
@@ -423,7 +423,7 @@ static void direct_product_group_element_print_quick(
 }
 
 static void direct_product_group_element_print_latex(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	cout << "direct_product_group_element_print_latex "
 			"not yet implemented" << endl;
@@ -445,7 +445,7 @@ static void direct_product_group_element_print_latex_with_print_point_function(
 
 #if 0
 static void direct_product_group_element_print_as_permutation(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	//direct_product &P = *A.G.direct_product_group;
 	combinatorics_domain Combi;
@@ -474,7 +474,7 @@ static void direct_product_group_element_print_as_permutation(
 #endif
 
 static void direct_product_group_element_print_verbose(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
@@ -482,7 +482,7 @@ static void direct_product_group_element_print_verbose(
 	P.element_print_easy(Elt, ost);
 }
 
-static void direct_product_group_print_point(action &A, long int a, ostream &ost)
+static void direct_product_group_print_point(action &A, long int a, std::ostream &ost)
 {
 	cout << "direct_product_group_print_point "
 			"not yet implemented" << endl;

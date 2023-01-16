@@ -464,7 +464,7 @@ void point_line::free_projective_plane()
 	}
 }
 
-void point_line::plane_report(ostream &ost)
+void point_line::plane_report(std::ostream &ost)
 {
 	int i, j, h;
 	
@@ -992,7 +992,7 @@ int point_line::ternary_field_is_linear(int *MOLS, int verbose_level)
 	return TRUE;
 }
 
-void point_line::print_MOLS(ostream &ost)
+void point_line::print_MOLS(std::ostream &ost)
 {
 	int *M, slope, i, j;
 		

@@ -217,17 +217,17 @@ void permutation_representation::element_unpack(uchar *elt, int *Elt)
 	cout << "permutation_representation::element_unpack not yet implemented" << endl;
 }
 
-void permutation_representation::element_print_for_make_element(int *Elt, ostream &ost)
+void permutation_representation::element_print_for_make_element(int *Elt, std::ostream &ost)
 {
 	A_original->element_print_for_make_element(Elt, ost);
 }
 
-void permutation_representation::element_print_easy(int *Elt, ostream &ost)
+void permutation_representation::element_print_easy(int *Elt, std::ostream &ost)
 {
 	A_original->element_print_quick(Elt, ost);
 }
 
-void permutation_representation::element_print_latex(int *Elt, ostream &ost)
+void permutation_representation::element_print_latex(int *Elt, std::ostream &ost)
 {
 	A_original->element_print_latex(Elt, ost);
 }

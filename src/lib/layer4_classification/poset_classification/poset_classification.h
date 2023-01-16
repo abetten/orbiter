@@ -470,7 +470,8 @@ public:
 	actions::action *get_A();
 	actions::action *get_A2();
 	algebra::vector_space *get_VS();
-	data_structures_groups::schreier_vector_handler *get_schreier_vector_handler();
+	data_structures_groups::schreier_vector_handler
+		*get_schreier_vector_handler();
 	int &get_depth();
 	int has_base_case();
 	int has_invariant_subset_for_root_node();
@@ -492,11 +493,13 @@ public:
 	poset_orbit_node *get_node_ij(int level, int node);
 	int poset_structure_is_contained(long int *set1, int sz1,
 		long int *set2, int sz2, int verbose_level);
-	data_structures_groups::orbit_transversal *get_orbit_transversal(
+	data_structures_groups::orbit_transversal
+		*get_orbit_transversal(
 			int level, int verbose_level);
 	int test_if_stabilizer_is_trivial(
 			int level, int orbit_at_level, int verbose_level);
-	data_structures_groups::set_and_stabilizer *get_set_and_stabilizer(int level,
+	data_structures_groups::set_and_stabilizer
+		*get_set_and_stabilizer(int level,
 		int orbit_at_level, int verbose_level);
 	void get_set_by_level(int level, int node, long int *set);
 	void get_set(int node, long int *set, int &size);
@@ -510,14 +513,18 @@ public:
 	long int count_extension_nodes_at_level(int lvl);
 	double level_progress(int lvl);
 	void count_automorphism_group_orders(int lvl, int &nb_agos, 
-			ring_theory::longinteger_object *&agos, int *&multiplicities,
+			ring_theory::longinteger_object *&agos,
+			int *&multiplicities,
 		int verbose_level);
 	void compute_and_print_automorphism_group_orders(int lvl, 
 			std::ostream &ost);
-	void stabilizer_order(int node, ring_theory::longinteger_object &go);
-	void orbit_length(int orbit_at_level, int level,
+	void stabilizer_order(
+			int node, ring_theory::longinteger_object &go);
+	void orbit_length(
+			int orbit_at_level, int level,
 			ring_theory::longinteger_object &len);
-	void get_orbit_length_and_stabilizer_order(int node, int level, 
+	void get_orbit_length_and_stabilizer_order(
+			int node, int level,
 			ring_theory::longinteger_object &stab_order,
 			ring_theory::longinteger_object &len);
 	int orbit_length_as_int(int orbit_at_level, int level);
@@ -533,11 +540,14 @@ public:
 			ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(int level,
 			int orbit_at_level);
-	void get_stabilizer_group(data_structures_groups::group_container *&G,
+	void get_stabilizer_group(
+			data_structures_groups::group_container *&G,
 		int level, int orbit_at_level, int verbose_level);
-	void get_stabilizer_generators_cleaned_up(groups::strong_generators *&gens,
+	void get_stabilizer_generators_cleaned_up(
+			groups::strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
-	void get_stabilizer_generators(groups::strong_generators *&gens,
+	void get_stabilizer_generators(
+			groups::strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
 	void orbit_element_unrank(int depth, int orbit_idx, 
 		long int rank, long int *set, int verbose_level);
@@ -550,7 +560,8 @@ public:
 		int verbose_level);
 	void list_all_orbits_at_level(int depth, 
 		int f_has_print_function, 
-		void (*print_function)(std::ostream &ost, int len, long int *S, void *data),
+		void (*print_function)(std::ostream &ost,
+				int len, long int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
@@ -563,7 +574,8 @@ public:
 	void list_selected_set_of_orbits_at_level(int depth, 
 		int nb_orbits, int *Orbit_idx, 
 		int f_has_print_function, 
-		void (*print_function)(std::ostream &ost, int len, long int *S, void *data),
+		void (*print_function)(std::ostream &ost,
+				int len, long int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
@@ -573,14 +585,16 @@ public:
 		int &nb, int *&Orbit_idx);
 	void list_whole_orbit(int depth, int orbit_idx, 
 		int f_has_print_function, 
-		void (*print_function)(std::ostream &ost, int len, long int *S, void *data),
+		void (*print_function)(std::ostream &ost,
+				int len, long int *S, void *data),
 		void *print_function_data, 
 		int f_show_orbit_decomposition, int f_show_stab, 
 		int f_save_stab, int f_show_whole_orbit);
 	void get_whole_orbit(
 		int depth, int orbit_idx,
 		long int *&Orbit, int &orbit_length, int verbose_level);
-	void map_to_canonical_k_subset(long int *the_set, int set_size,
+	void map_to_canonical_k_subset(
+			long int *the_set, int set_size,
 		int subset_size, int subset_rk, 
 		long int *reduced_set, int *transporter, int &local_idx,
 		int verbose_level);
@@ -600,7 +614,8 @@ public:
 			data_structures::tally *&C, int verbose_level);
 	void trace_all_k_subsets_and_compute_frequencies(
 			long int *the_set,
-			int n, int k, int &nCk, int *&isotype, int *&orbit_frequencies, int &nb_orbits,
+			int n, int k, int &nCk,
+			int *&isotype, int *&orbit_frequencies, int &nb_orbits,
 			int verbose_level);
 	void trace_all_k_subsets(long int *the_set, int n, int k,
 		int &nCk, int *&isotype, int verbose_level);
@@ -710,10 +725,12 @@ public:
 	void test_for_multi_edge_in_classification_graph(
 		int depth, int verbose_level);
 	void Kramer_Mesner_matrix_neighboring(
-			int level, long int *&M, int &nb_rows, int &nb_cols, int verbose_level);
+			int level, long int *&M,
+			int &nb_rows, int &nb_cols, int verbose_level);
 	void Mtk_via_Mtr_Mrk(int t, int r, int k,
 			long int *Mtr, long int *Mrk, long int *&Mtk,
-			int nb_r1, int nb_c1, int nb_r2, int nb_c2, int &nb_r3, int &nb_c3,
+			int nb_r1, int nb_c1, int nb_r2, int nb_c2,
+			int &nb_r3, int &nb_c3,
 			int verbose_level);
 	// Computes $M_{tk}$ via a recursion formula:
 	// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
@@ -1218,8 +1235,10 @@ public:
 	void allocate_E(int nb_extensions, int verbose_level);
 	int get_level(poset_classification *gen);
 	int get_node_in_level(poset_classification *gen);
-	void get_strong_generators_handle(std::vector<int> &gen_hdl, int verbose_level);
-	void get_tl(std::vector<int> &tl, poset_classification *PC, int verbose_level);
+	void get_strong_generators_handle(
+			std::vector<int> &gen_hdl, int verbose_level);
+	void get_tl(std::vector<int> &tl,
+			poset_classification *PC, int verbose_level);
 	int get_tl(int i);
 	int has_Schreier_vector();
 	data_structures_groups::schreier_vector *get_Schreier_vector();
@@ -1329,7 +1348,8 @@ public:
 		poset_classification *gen,
 		int f_create_schreier_vector,
 		groups::schreier &Schreier,
-		actions::action *A_factor_space, induced_actions::action_on_factor_space *AF,
+		actions::action *A_factor_space,
+		induced_actions::action_on_factor_space *AF,
 		int verbose_level);
 
 
@@ -1355,10 +1375,12 @@ public:
 		poset_classification *PC,
 		std::ofstream &fp, int verbose_level);
 	void read_file(
-			actions::action *A, std::ifstream &fp, int &nb_group_elements,
+			actions::action *A,
+			std::ifstream &fp, int &nb_group_elements,
 		int verbose_level);
 	void write_file(
-			actions::action *A, std::ofstream &fp, int &nb_group_elements,
+			actions::action *A,
+			std::ofstream &fp, int &nb_group_elements,
 		int verbose_level);
 #if 0
 	void save_schreier_forest(
@@ -1390,7 +1412,8 @@ public:
 		int *Elt_tmp,
 		int verbose_level);
 		// Called from poset_orbit_node::handle_last_level
-	int trace_next_point_wrapper(poset_classification *gen, int lvl, 
+	int trace_next_point_wrapper(
+			poset_classification *gen, int lvl,
 		int current_node, 
 		int len, int f_implicit_fusion,
 		int *cosetrep,
@@ -1412,11 +1435,13 @@ public:
 		int f_implicit_fusion, int &f_failure_to_find_point, 
 		int verbose_level);
 		// called by poset_classification::trace_set_recursion
-	void trace_starter(poset_classification *gen, int size, 
+	void trace_starter(
+			poset_classification *gen, int size,
 		long int *cur_set, long int *next_set,
 		int *cur_transporter, int *next_transporter, 
 		int verbose_level);
-	int trace_next_point(poset_classification *gen, 
+	int trace_next_point(
+			poset_classification *gen,
 		int lvl, int current_node, int size, 
 		long int *cur_set, long int *next_set,
 		int *cur_transporter, int *next_transporter, 
@@ -1427,7 +1452,8 @@ public:
 		// and by poset_orbit_node::trace_next_point_in_place
 		// returns FALSE only if f_implicit_fusion is TRUE and
 		// the set becomes lexicographically less
-	int orbit_representative_and_coset_rep_inv(poset_classification *gen, 
+	int orbit_representative_and_coset_rep_inv(
+			poset_classification *gen,
 		int lvl, long int pt_to_trace, long int &pt0, int *cosetrep,
 		int verbose_level);
 		// called by poset_orbit_node::trace_next_point
@@ -1456,7 +1482,8 @@ public:
 		// (i.e., not on subspaces).
 		// Calls downstep_orbits, 
 		// downstep_orbit
-	void compute_schreier_vector(poset_classification *gen, 
+	void compute_schreier_vector(
+			poset_classification *gen,
 		int lvl, int verbose_level);
 		// called from poset_classification::recreate_schreier_vectors_at_level
 		// and from poset_classification::count_live_points
@@ -1513,8 +1540,10 @@ public:
 		// called from downstep, 
 		// once downstep_orbit_test_and_schreier_vector is done
 		// calls test_orbits_for_implicit_fusion
-	void find_extensions(poset_classification *gen, 
-			groups::schreier &O, actions::action *AR, int f_using_invariant_subset,
+	void find_extensions(
+			poset_classification *gen,
+			groups::schreier &O,
+			actions::action *AR, int f_using_invariant_subset,
 		int lvl, 
 		int verbose_level);
 		// called by downstep
@@ -1541,7 +1570,8 @@ public:
 		// calls the callback early test function if available
 		// and calls test_point_using_check_functions otherwise
 
-	void check_orbits_wrapper(poset_classification *gen, 
+	void check_orbits_wrapper(
+			poset_classification *gen,
 			groups::schreier *Schreier, actions::action *AR,
 		int lvl, 
 		int &nb_good_orbits1, int &nb_points1, 
@@ -1553,14 +1583,16 @@ public:
 		// Except, the order in which the function is used matters.
 		// Calls check_orbits
 
-	void test_orbits_for_implicit_fusion(poset_classification *gen, 
+	void test_orbits_for_implicit_fusion(
+			poset_classification *gen,
 			groups::schreier &Schreier, actions::action *AR,
 		int f_using_invariant_subset, 
 		int lvl, int verbose_level);
 		// called from downstep_implicit_fusion
 		// eliminates implicit fusion orbits from the 
 		// Schreier data structure, 
-	void check_orbits(poset_classification *gen, 
+	void check_orbits(
+			poset_classification *gen,
 			groups::schreier *Schreier, actions::action *AR,
 		//int f_using_invariant_subset,
 		int lvl, 
@@ -1572,7 +1604,8 @@ public:
 		// calls test_point_using_check_functions
 		// eliminates bad orbits from the Schreier data structure, 
 		// does not eliminate implicit fusion orbits
-	int test_point_using_check_functions(poset_classification *gen, 
+	int test_point_using_check_functions(
+			poset_classification *gen,
 		int lvl, int rep, int *the_set, 
 		int verbose_level);
 		// called by check_orbits and downstep_apply_early_test 
@@ -1581,10 +1614,12 @@ public:
 		// Otherwise, calls gen->check_the_set 
 		// (if gen->f_candidate_check_func).
 		// Otherwise accepts any point.
-	void relabel_schreier_vector(actions::action *AR, int verbose_level);
+	void relabel_schreier_vector(
+			actions::action *AR, int verbose_level);
 		// called from compute_schreier_vector, 
 		// downstep_orbit_test_and_schreier_vector
-	void downstep_orbits_print(poset_classification *gen, 
+	void downstep_orbits_print(
+			poset_classification *gen,
 			groups::schreier *Schreier, actions::action *AR,
 		int lvl, 
 		int f_print_orbits,
@@ -1609,7 +1644,8 @@ public:
 		int lvl, int verbose_level);
 	void setup_factor_space_action_with_early_test(
 		poset_classification *gen,
-		induced_actions::action_on_factor_space &AF, actions::action &A_factor_space,
+		induced_actions::action_on_factor_space &AF,
+		actions::action &A_factor_space,
 		int lvl, int verbose_level);
 	void setup_factor_space_action(
 		poset_classification *gen,
@@ -1618,7 +1654,8 @@ public:
 		int lvl, int f_compute_tables, 
 		int verbose_level);
 	void downstep_subspace_action_print_orbits(
-		poset_classification *gen, groups::schreier &Schreier,
+		poset_classification *gen,
+		groups::schreier &Schreier,
 		int lvl, 
 		int f_print_orbits, 
 		int verbose_level);
@@ -1663,15 +1700,18 @@ public:
 	orbit_based_testing *Orbit_based_testing;
 
 	int f_print_function;
-	void (*print_function)(std::ostream &ost, int len, long int *S, void *data);
+	void (*print_function)(std::ostream &ost,
+			int len, long int *S, void *data);
 	void *print_function_data;
 
 	poset_with_group_action();
 	~poset_with_group_action();
-	void init_subset_lattice(actions::action *A, actions::action *A2,
+	void init_subset_lattice(
+			actions::action *A, actions::action *A2,
 			groups::strong_generators *Strong_gens,
 			int verbose_level);
-	void init_subspace_lattice(actions::action *A, actions::action *A2,
+	void init_subspace_lattice(
+			actions::action *A, actions::action *A2,
 			groups::strong_generators *Strong_gens,
 			algebra::vector_space *VS,
 			int verbose_level);

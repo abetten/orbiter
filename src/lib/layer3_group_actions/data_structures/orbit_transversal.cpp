@@ -67,7 +67,9 @@ void orbit_transversal::init_from_schreier(
 }
 
 void orbit_transversal::read_from_file(
-		actions::action *A, actions::action *A2, std::string &fname, int verbose_level)
+		actions::action *A,
+		actions::action *A2,
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -153,7 +155,9 @@ void orbit_transversal::read_from_file(
 }
 
 void orbit_transversal::read_from_file_one_case_only(
-		actions::action *A, actions::action *A2, std::string &fname,
+		actions::action *A,
+		actions::action *A2,
+		std::string &fname,
 		int case_nr,
 		set_and_stabilizer *&Rep,
 		int verbose_level)
@@ -264,7 +268,7 @@ data_structures::tally *orbit_transversal::get_ago_distribution(long int *&ago,
 	return C;
 }
 
-void orbit_transversal::report_ago_distribution(ostream &ost)
+void orbit_transversal::report_ago_distribution(std::ostream &ost)
 {
 	data_structures::tally *C;
 	long int *Ago;

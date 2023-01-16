@@ -167,7 +167,7 @@ void semifield_lifting::init_level_three(
 }
 
 
-void semifield_lifting::report(ostream &ost, int verbose_level)
+void semifield_lifting::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i; //, j, ext, idx;

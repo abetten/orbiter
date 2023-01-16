@@ -41,7 +41,7 @@ long int geometry_global::nb_PG_elements(int n, int q)
 		deg += qhl;
 		qhl *= q;
 		l++;
-		}
+	}
 	return deg;
 }
 
@@ -87,14 +87,14 @@ long int geometry_global::AG_element_rank(int q, int *v, int stride, int len)
 	if (len <= 0) {
 		cout << "geometry_global::AG_element_rank len <= 0" << endl;
 		exit(1);
-		}
+	}
 	a = 0;
 	for (i = len - 1; i >= 0; i--) {
 		a += v[i * stride];
 		if (i > 0) {
 			a *= q;
-			}
 		}
+	}
 	return a;
 }
 
@@ -107,13 +107,13 @@ void geometry_global::AG_element_unrank(int q, int *v, int stride, int len, long
 	if (len <= 0) {
 		cout << "geometry_global::AG_element_unrank len <= 0" << endl;
 		exit(1);
-		}
+	}
 #endif
 	for (i = 0; i < len; i++) {
 		b = a % q;
 		v[i * stride] = b;
 		a /= q;
-		}
+	}
 }
 
 
@@ -125,7 +125,7 @@ int geometry_global::AG_element_next(int q, int *v, int stride, int len)
 	if (len <= 0) {
 		cout << "geometry_global::AG_element_next len <= 0" << endl;
 		exit(1);
-		}
+	}
 #endif
 	for (i = len - 1; i >= 0; i--) {
 		if (v[i * stride] < q - 1) {
@@ -142,7 +142,8 @@ int geometry_global::AG_element_next(int q, int *v, int stride, int len)
 
 
 void geometry_global::AG_element_rank_longinteger(int q,
-		int *v, int stride, int len, ring_theory::longinteger_object &a)
+		int *v, int stride, int len,
+		ring_theory::longinteger_object &a)
 {
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object Q, a1;
@@ -168,7 +169,8 @@ void geometry_global::AG_element_rank_longinteger(int q,
 }
 
 void geometry_global::AG_element_unrank_longinteger(int q,
-		int *v, int stride, int len, ring_theory::longinteger_object &a)
+		int *v, int stride, int len,
+		ring_theory::longinteger_object &a)
 {
 	int i, r;
 	ring_theory::longinteger_domain D;
@@ -202,130 +204,6 @@ int geometry_global::PG_element_modified_is_in_subspace(int n, int m, int *v)
 }
 
 
-void geometry_global::test_PG(int n, int q)
-{
-	field_theory::finite_field F;
-	int m;
-	int verbose_level = 1;
-
-	F.finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level);
-
-	cout << "all elements of PG_" << n << "(" << q << ")" << endl;
-	F.display_all_PG_elements(n);
-
-	for (m = 0; m < n; m++) {
-		cout << "all elements of PG_" << n << "(" << q << "), "
-			"not in a subspace of dimension " << m << endl;
-		F.display_all_PG_elements_not_in_subspace(n, m);
-	}
-
-}
-
-void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
-		field_theory::finite_field *FQ,
-		field_theory::finite_field *Fq, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "geometry_global::create_Fisher_BLT_set" << endl;
-	}
-	orthogonal_geometry::unusual_model U;
-
-	U.setup(FQ, Fq, verbose_level);
-	U.create_Fisher_BLT_set(Fisher_BLT, ABC, verbose_level);
-	if (f_v) {
-		cout << "geometry_global::create_Fisher_BLT_set done" << endl;
-	}
-
-}
-
-void geometry_global::create_Linear_BLT_set(long int *BLT, int *ABC,
-		field_theory::finite_field *FQ,
-		field_theory::finite_field *Fq, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "geometry_global::create_Linear_BLT_set" << endl;
-	}
-	orthogonal_geometry::unusual_model U;
-
-	U.setup(FQ, Fq, verbose_level);
-	U.create_Linear_BLT_set(BLT, ABC, verbose_level);
-	if (f_v) {
-		cout << "geometry_global::create_Linear_BLT_set done" << endl;
-	}
-
-}
-
-void geometry_global::create_Mondello_BLT_set(long int *BLT, int *ABC,
-		field_theory::finite_field *FQ,
-		field_theory::finite_field *Fq, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "geometry_global::create_Mondello_BLT_set" << endl;
-	}
-	orthogonal_geometry::unusual_model U;
-
-	U.setup(FQ, Fq, verbose_level);
-	U.create_Mondello_BLT_set(BLT, ABC, verbose_level);
-	if (f_v) {
-		cout << "geometry_global::create_Mondello_BLT_set done" << endl;
-	}
-
-}
-
-void geometry_global::print_quadratic_form_list_coded(int form_nb_terms,
-	int *form_i, int *form_j, int *form_coeff)
-{
-	int k;
-
-	for (k = 0; k < form_nb_terms; k++) {
-		cout << "i=" << form_i[k] << " j=" << form_j[k]
-			<< " coeff=" << form_coeff[k] << endl;
-	}
-}
-
-void geometry_global::make_Gram_matrix_from_list_coded_quadratic_form(
-	int n, field_theory::finite_field &F,
-	int nb_terms, int *form_i, int *form_j, int *form_coeff, int *Gram)
-{
-	int k, i, j, c;
-
-	Int_vec_zero(Gram, n * n);
-	for (k = 0; k < nb_terms; k++) {
-		i = form_i[k];
-		j = form_j[k];
-		c = form_coeff[k];
-		if (c == 0) {
-			continue;
-		}
-		Gram[i * n + j] = F.add(Gram[i * n + j], c);
-		Gram[j * n + i] = F.add(Gram[j * n + i], c);
-	}
-}
-
-void geometry_global::add_term(int n,
-		field_theory::finite_field &F,
-	int &nb_terms, int *form_i, int *form_j, int *form_coeff,
-	int *Gram,
-	int i, int j, int coeff)
-{
-	form_i[nb_terms] = i;
-	form_j[nb_terms] = j;
-	form_coeff[nb_terms] = coeff;
-	if (i == j) {
-		Gram[i * n + j] = F.mult(2, coeff);
-	}
-	else {
-		Gram[i * n + j] = coeff;
-		Gram[j * n + i] = coeff;
-	}
-	nb_terms++;
-}
 
 
 #if 0
@@ -410,45 +288,45 @@ int geometry_global::test_if_arc(field_theory::finite_field *Fq,
 		cout << "geometry_global::test_if_arc testing set" << endl;
 		Int_vec_print(cout, set, set_sz);
 		cout << endl;
-		}
+	}
 	Mtx = NEW_int(3 * k);
 
 	Combi.first_k_subset(subset, set_sz, 3);
 	while (TRUE) {
 		for (i = 0; i < 3; i++) {
 			subset1[i] = set[subset[i]];
-			}
+		}
 		Sorting.int_vec_heapsort(subset1, 3);
 		if (f_vv) {
 			cout << "testing subset ";
 			Int_vec_print(cout, subset1, 3);
 			cout << endl;
-			}
+		}
 
 		for (i = 0; i < 3; i++) {
 			a = subset1[i];
 			for (j = 0; j < k; j++) {
 				Mtx[i * k + j] = pt_coords[a * k + j];
-				}
 			}
+		}
 		if (f_vv) {
 			cout << "matrix:" << endl;
 			Int_vec_print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
-			}
+		}
 		rk = Fq->Linear_algebra->Gauss_easy(Mtx, 3, k);
 		if (rk < 3) {
 			if (f_v) {
 				cout << "not an arc" << endl;
-				}
-			goto done;
 			}
+			goto done;
+		}
 		if (!Combi.next_k_subset(subset, set_sz, 3)) {
 			break;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "geometry_global::test_if_arc: passes the arc test" << endl;
-		}
+	}
 	ret = TRUE;
 done:
 
@@ -483,10 +361,10 @@ void geometry_global::create_Buekenhout_Metz(
 		BM->init_ovoid_Uab_even(
 				BM->parameter_a, BM->parameter_b,
 				verbose_level);
-		}
+	}
 	else {
 		BM->init_ovoid(verbose_level);
-		}
+	}
 
 	BM->create_unital(verbose_level);
 
@@ -496,12 +374,12 @@ void geometry_global::create_Buekenhout_Metz(
 	Pts = NEW_lint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		Pts[i] = BM->U[i];
-		}
+	}
 
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		rk = Pts[i];
 		BM->P2->unrank_point(v, rk);
@@ -509,8 +387,8 @@ void geometry_global::create_Buekenhout_Metz(
 			cout << setw(4) << i << " : ";
 			Int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
-			}
 		}
+	}
 
 
 
@@ -563,7 +441,8 @@ long int geometry_global::count_T1(int epsilon, int n, int q)
 		return count_T1(1, n, q) + count_N1(n, q);
 		}
 	else {
-		cout << "count_T1 epsilon = " << epsilon
+		cout << "geometry_global::count_T1 "
+				"epsilon = " << epsilon
 				<< " not yet implemented, returning 0" << endl;
 		return 0;
 		}
@@ -595,7 +474,8 @@ long int geometry_global::nb_pts_Qepsilon(int epsilon, int k, int q)
 		return nb_pts_Qminus(k, q);
 	}
 	else {
-		cout << "nb_pts_Qepsilon epsilon must be one of 0,1,-1" << endl;
+		cout << "geometry_global::nb_pts_Qepsilon "
+				"epsilon must be one of 0,1,-1" << endl;
 		exit(1);
 	}
 }
@@ -612,7 +492,7 @@ int geometry_global::dimension_given_Witt_index(int epsilon, int n)
 		return 2 * n + 2;
 	}
 	else {
-		cout << "dimension_given_Witt_index "
+		cout << "geometry_global::dimension_given_Witt_index "
 				"epsilon must be 0,1,-1" << endl;
 		exit(1);
 	}
@@ -625,7 +505,8 @@ int geometry_global::Witt_index(int epsilon, int k)
 
 	if (epsilon == 0) {
 		if (!EVEN(k)) {
-			cout << "Witt_index dimension k must be even" << endl;
+			cout << "geometry_global::Witt_index "
+					"dimension k must be even" << endl;
 			cout << "k = " << k << endl;
 			cout << "epsilon = " << epsilon << endl;
 			exit(1);
@@ -634,7 +515,8 @@ int geometry_global::Witt_index(int epsilon, int k)
 	}
 	else if (epsilon == 1) {
 		if (!ODD(k)) {
-			cout << "Witt_index dimension k must be odd" << endl;
+			cout << "geometry_global::Witt_index "
+					"dimension k must be odd" << endl;
 			cout << "k = " << k << endl;
 			cout << "epsilon = " << epsilon << endl;
 			exit(1);
@@ -643,7 +525,8 @@ int geometry_global::Witt_index(int epsilon, int k)
 	}
 	else if (epsilon == -1) {
 		if (!ODD(k)) {
-			cout << "Witt_index dimension k must be odd" << endl;
+			cout << "geometry_global::Witt_index "
+					"dimension k must be odd" << endl;
 			cout << "k = " << k << endl;
 			cout << "epsilon = " << epsilon << endl;
 			exit(1);
@@ -651,7 +534,8 @@ int geometry_global::Witt_index(int epsilon, int k)
 		n = k >> 1; // Witt index
 	}
 	else {
-		cout << "Witt_index epsilon must be one of 0,1,-1" << endl;
+		cout << "geometry_global::Witt_index "
+				"epsilon must be one of 0,1,-1" << endl;
 		exit(1);
 	}
 	return n;
@@ -831,7 +715,8 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 		GFq.Linear_algebra->choose_anisotropic_form(c1, c2, c3, TRUE);
 		}
 	for (i = 0; i < nb; i++) {
-		GFq.Orthogonal_indexing->Q_epsilon_unrank(v, stride, epsilon, k, c1, c2, c3, i, 0 /* verbose_level */);
+		GFq.Orthogonal_indexing->Q_epsilon_unrank(v,
+				stride, epsilon, k, c1, c2, c3, i, 0 /* verbose_level */);
 
 #if 0
 		wt = 0;
@@ -846,7 +731,8 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 		a = GFq.Linear_algebra->evaluate_quadratic_form(v, stride, epsilon, k,
 				c1, c2, c3);
 		cout << a;
-		j = GFq.Orthogonal_indexing->Q_epsilon_rank(v, stride, epsilon, k, c1, c2, c3, 0 /* verbose_level */);
+		j = GFq.Orthogonal_indexing->Q_epsilon_rank(v,
+				stride, epsilon, k, c1, c2, c3, 0 /* verbose_level */);
 		cout << " : " << j;
 #if 0
 		if (wt == 1) {
@@ -1090,27 +976,27 @@ int &geometry_global::TDO_upper_bound(int i, int j)
 	if (i <= 0) {
 		cout << "geometry_global::TDO_upper_bound i <= 0, i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (j <= 0) {
 		cout << "geometry_global::TDO_upper_bound j <= 0, j = " << j << endl;
 		exit(1);
-		}
+	}
 	m = MAXIMUM(i, j);
 	if (TDO_upper_bounds_v_max == -1) {
 		TDO_refine_init_upper_bounds(12);
-		}
+	}
 	if (m > TDO_upper_bounds_v_max) {
 		//cout << "I need TDO_upper_bound " << i << "," << j << endl;
 		TDO_refine_extend_upper_bounds(m);
-		}
+	}
 	if (TDO_upper_bound_source(i, j) != 1) {
 		//cout << "I need TDO_upper_bound " << i << "," << j << endl;
-		}
+	}
 	bound = TDO_upper_bound_internal(i, j);
 	if (bound == -1) {
 		cout << "geometry_global::TDO_upper_bound = -1 i=" << i << " j=" << j << endl;
 		exit(1);
-		}
+	}
 	//cout << "PACKING " << i << " " << j << " = " << bound << endl;
 	return TDO_upper_bound_internal(i, j);
 }
@@ -1118,38 +1004,44 @@ int &geometry_global::TDO_upper_bound(int i, int j)
 int &geometry_global::TDO_upper_bound_internal(int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
-		cout << "geometry_global::TDO_upper_bound_internal i > v_max" << endl;
+		cout << "geometry_global::TDO_upper_bound_internal "
+				"i > v_max" << endl;
 		cout << "i=" << i << endl;
 		cout << "TDO_upper_bounds_v_max=" << TDO_upper_bounds_v_max << endl;
 		exit(1);
-		}
+	}
 	if (i <= 0) {
-		cout << "geometry_global::TDO_upper_bound_internal i <= 0, i = " << i << endl;
+		cout << "geometry_global::TDO_upper_bound_internal "
+				"i <= 0, i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (j <= 0) {
-		cout << "geometry_global::TDO_upper_bound_internal j <= 0, j = " << j << endl;
+		cout << "geometry_global::TDO_upper_bound_internal "
+				"j <= 0, j = " << j << endl;
 		exit(1);
-		}
+	}
 	return TDO_upper_bounds_table[(i - 1) * TDO_upper_bounds_v_max + j - 1];
 }
 
 int &geometry_global::TDO_upper_bound_source(int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
-		cout << "geometry_global::TDO_upper_bound_source i > v_max" << endl;
+		cout << "geometry_global::TDO_upper_bound_source "
+				"i > v_max" << endl;
 		cout << "i=" << i << endl;
 		cout << "TDO_upper_bounds_v_max=" << TDO_upper_bounds_v_max << endl;
 		exit(1);
-		}
+	}
 	if (i <= 0) {
-		cout << "geometry_global::TDO_upper_bound_source i <= 0, i = " << i << endl;
+		cout << "geometry_global::TDO_upper_bound_source "
+				"i <= 0, i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (j <= 0) {
-		cout << "geometry_global::TDO_upper_bound_source j <= 0, j = " << j << endl;
+		cout << "geometry_global::TDO_upper_bound_source "
+				"j <= 0, j = " << j << endl;
 		exit(1);
-		}
+	}
 	return TDO_upper_bounds_table_source[(i - 1) * TDO_upper_bounds_v_max + j - 1];
 }
 
@@ -1162,10 +1054,11 @@ int geometry_global::braun_test_single_type(int v, int k, int ak)
 	for (l = 1; l <= ak; l++) {
 		m = MAXIMUM(k - i, 0);
 		s += m;
-		if (s > v)
+		if (s > v) {
 			return FALSE;
-		i++;
 		}
+		i++;
+	}
 	return TRUE;
 }
 
@@ -1176,10 +1069,10 @@ int geometry_global::braun_test_upper_bound(int v, int k)
 	//cout << "braun_test_upper_bound v=" << v << " k=" << k << endl;
 	if (k == 1) {
 		bound = INT_MAX;
-		}
+	}
 	else if (k == 2) {
 		bound = ((v * (v - 1)) >> 1);
-		}
+	}
 	else {
 		v2 = (v * (v - 1)) >> 1;
 		k2 = (k * (k - 1)) >> 1;
@@ -1187,13 +1080,13 @@ int geometry_global::braun_test_upper_bound(int v, int k)
 			if (braun_test_single_type(v, k, n) == FALSE) {
 				bound = n - 1;
 				break;
-				}
+			}
 			if (n * k2 > v2) {
 				bound = n - 1;
 				break;
-				}
 			}
 		}
+	}
 	//cout << "braun_test_upper_bound v=" << v << " k=" << k
 	//<< " bound=" << bound << endl;
 	return bound;
@@ -1210,7 +1103,7 @@ void geometry_global::TDO_refine_init_upper_bounds(int v_max)
 	for (i = 0; i < v_max * v_max; i++) {
 		TDO_upper_bounds_table[i] = -1;
 		TDO_upper_bounds_table_source[i] = 0;
-		}
+	}
 	for (u = 0;; u++) {
 		if (TDO_upper_bounds_initial_data[u * 3 + 0] == -1) {
 			break;
@@ -1222,10 +1115,10 @@ void geometry_global::TDO_refine_init_upper_bounds(int v_max)
 		if (bound < bound_braun) {
 			//cout << "i=" << i << " j=" << j << " bound=" << bound
 			//<< " bound_braun=" << bound_braun << endl;
-			}
+		}
 		TDO_upper_bound_internal(i, j) = bound;
 		TDO_upper_bound_source(i, j) = 1;
-		}
+	}
 	for (i = 1; i <= v_max; i++) {
 		for (j = 1; j <= i; j++) {
 			if (TDO_upper_bound_internal(i, j) != -1) {
@@ -1241,9 +1134,9 @@ void geometry_global::TDO_refine_init_upper_bounds(int v_max)
 				//	<< " bound_maxfit=" << bound_maxfit << endl;
 				TDO_upper_bound_internal(i, j) = bound_maxfit;
 				TDO_upper_bound_source(i, j) = 3;
-				}
 			}
 		}
+	}
 	//print_integer_matrix_width(cout,
 	//TDO_upper_bounds_table, v_max, v_max, v_max, 3);
 	//print_integer_matrix_width(cout,
@@ -1265,15 +1158,15 @@ void geometry_global::TDO_refine_extend_upper_bounds(int new_v_max)
 	for (i = 0; i < new_v_max * new_v_max; i++) {
 		new_upper_bounds[i] = -1;
 		new_upper_bounds_source[i] = 0;
-		}
+	}
 	for (i = 1; i <= v_max; i++) {
 		for (j = 1; j <= v_max; j++) {
 			bound = TDO_upper_bound_internal(i, j);
 			src = TDO_upper_bound_source(i, j);
 			new_upper_bounds[(i - 1) * new_v_max + (j - 1)] = bound;
 			new_upper_bounds_source[(i - 1) * new_v_max + (j - 1)] = src;
-			}
 		}
+	}
 	FREE_int(TDO_upper_bounds_table);
 	FREE_int(TDO_upper_bounds_table_source);
 	TDO_upper_bounds_table = new_upper_bounds;
@@ -1291,9 +1184,9 @@ void geometry_global::TDO_refine_extend_upper_bounds(int new_v_max)
 				//	<< " bound_maxfit=" << bound_maxfit << endl;
 				TDO_upper_bound_internal(i, j) = bound_maxfit;
 				TDO_upper_bound_source(i, j) = 3;
-				}
 			}
 		}
+	}
 	//print_integer_matrix_width(cout,
 	//TDO_upper_bounds_table, new_v_max, new_v_max, new_v_max, 3);
 	//print_integer_matrix_width(cout,
@@ -1314,10 +1207,10 @@ int geometry_global::braun_test_on_line_type(int v, int *type)
 			s += m;
 			if (s > v) {
 				return FALSE;
-				}
-			i++;
 			}
+			i++;
 		}
+	}
 	return TRUE;
 }
 
@@ -1331,10 +1224,10 @@ int &geometry_global::maxfit(int i, int j)
 	m = MAXIMUM(i, j);
 	if (maxfit_table_v_max == -1) {
 		maxfit_table_init(2 * m);
-		}
+	}
 	if (m > maxfit_table_v_max) {
 		maxfit_table_reallocate(2 * m);
-		}
+	}
 	return maxfit_internal(i, j);
 }
 
@@ -1345,21 +1238,21 @@ int &geometry_global::maxfit_internal(int i, int j)
 		cout << "i=" << i << endl;
 		cout << "maxfit_table_v_max=" << maxfit_table_v_max << endl;
 		exit(1);
-		}
+	}
 	if (j > maxfit_table_v_max) {
 		cout << "maxfit_table_v_max j > v_max" << endl;
 		cout << "j=" << j << endl;
 		cout << "maxfit_table_v_max=" << maxfit_table_v_max << endl;
 		exit(1);
-		}
+	}
 	if (i <= 0) {
 		cout << "maxfit_table_v_max i <= 0, i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (j <= 0) {
 		cout << "maxfit_table_v_max j <= 0, j = " << j << endl;
 		exit(1);
-		}
+	}
 	return maxfit_table[(i - 1) * maxfit_table_v_max + j - 1];
 }
 
@@ -1375,7 +1268,8 @@ void geometry_global::maxfit_table_init(int v_max)
 
 void geometry_global::maxfit_table_reallocate(int v_max)
 {
-	cout << "geometry_global::maxfit_table_reallocate v_max=" << v_max << endl;
+	cout << "geometry_global::maxfit_table_reallocate "
+			"v_max=" << v_max << endl;
 
 	FREE_int(maxfit_table);
 	maxfit_table = NEW_int(v_max * v_max);
@@ -1393,29 +1287,29 @@ void geometry_global::maxfit_table_compute()
 	int m, i, j, inz, gki;
 
 	//cout << "computing maxfit table v_max=" << maxfit_table_v_max << endl;
-	for (i=0; i<M*M; i++) {
+	for (i = 0; i < M * M; i++) {
 		matrix[i] = 0;
-		}
+	}
 	m = 0;
-	for (i=1; i<=M; i++) {
+	for (i = 1; i <= M; i++) {
 		//cout << "i=" << i << endl;
 		inz = i;
 		j = 1;
-		while (i>=j) {
+		while (i >= j) {
 			gki = inz/i;
-			if (j*(j-1)/2 < i*Choose2(gki)+(inz % i)*gki) {
+			if (j * (j - 1) / 2 < i * Choose2(gki) + (inz % i) * gki) {
 				j++;
-				}
-			if (j<=M) {
+			}
+			if (j <= M) {
 				//cout << "j=" << j << " inz=" << inz << endl;
 				m = MAXIMUM(m, inz);
-				matrix[(j-1) * M + i-1]=inz;
-				matrix[(i-1) * M + j-1]=inz;
-				}
-			inz++;
+				matrix[(j - 1) * M + i - 1] = inz;
+				matrix[(i - 1) * M + j - 1] = inz;
 			}
+			inz++;
+		}
 		//print_integer_matrix_width(cout, matrix, M, M, M, 3);
-		} // next i
+	} // next i
 }
 
 int geometry_global::packing_number_via_maxfit(int n, int k)
@@ -1424,12 +1318,12 @@ int geometry_global::packing_number_via_maxfit(int n, int k)
 
 	if (k == 1) {
 		return INT_MAX;
-		}
+	}
 	//cout << "packing_number_via_maxfit n=" << n << " k=" << k << endl;
-	m=1;
-	while (maxfit(n, m) >= m*k) {
+	m = 1;
+	while (maxfit(n, m) >= m * k) {
 		m++;
-		}
+	}
 	//cout << "P(" << n << "," << k << ")=" << m - 1 << endl;
 	return m - 1;
 }
@@ -1645,26 +1539,30 @@ void geometry_global::do_intersection_of_two_lines(
 	}
 
 	if (f_normalize_from_the_left) {
-		cout << "geometry_global::do_intersection_of_two_lines normalizing from the left" << endl;
+		cout << "geometry_global::do_intersection_of_two_lines "
+				"normalizing from the left" << endl;
 		for (i = 3; i < 4; i++) {
 			F->PG_element_normalize_from_front(
 					C + i * 4, 1, 4);
 		}
 
-		cout << "geometry_global::do_intersection_of_two_lines after normalize from the left:" << endl;
+		cout << "geometry_global::do_intersection_of_two_lines "
+				"after normalize from the left:" << endl;
 		Int_matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
 	}
 
 	if (f_normalize_from_the_right) {
-		cout << "geometry_global::do_intersection_of_two_lines normalizing from the right" << endl;
+		cout << "geometry_global::do_intersection_of_two_lines "
+				"normalizing from the right" << endl;
 		for (i = 3; i < 4; i++) {
 			F->PG_element_normalize(
 					C + i * 4, 1, 4);
 		}
 
-		cout << "geometry_global::do_intersection_of_two_lines after normalize from the right:" << endl;
+		cout << "geometry_global::do_intersection_of_two_lines "
+				"after normalize from the right:" << endl;
 		Int_matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
@@ -1754,26 +1652,30 @@ void geometry_global::do_transversal(
 		exit(1);
 	}
 	if (f_normalize_from_the_left) {
-		cout << "geometry_global::do_transversal normalizing from the left" << endl;
+		cout << "geometry_global::do_transversal "
+				"normalizing from the left" << endl;
 		for (i = 2; i < 4; i++) {
 			F->PG_element_normalize_from_front(
 					B + i * 4, 1, 4);
 		}
 
-		cout << "geometry_global::do_transversal after normalize from the left:" << endl;
+		cout << "geometry_global::do_transversal "
+				"after normalize from the left:" << endl;
 		Int_matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
 	}
 
 	if (f_normalize_from_the_right) {
-		cout << "geometry_global::do_transversal normalizing from the right" << endl;
+		cout << "geometry_global::do_transversal "
+				"normalizing from the right" << endl;
 		for (i = 2; i < 4; i++) {
 			F->PG_element_normalize(
 					B + i * 4, 1, 4);
 		}
 
-		cout << "geometry_global::do_transversal after normalize from the right:" << endl;
+		cout << "geometry_global::do_transversal "
+				"after normalize from the right:" << endl;
 		Int_matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
@@ -1907,19 +1809,23 @@ void geometry_global::do_cheat_sheet_hermitian(field_theory::finite_field *F,
 	H = NEW_OBJECT(hermitian);
 
 	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_hermitian before H->init" << endl;
+		cout << "geometry_global::do_cheat_sheet_hermitian "
+				"before H->init" << endl;
 	}
 	H->init(F, projective_dimension + 1, verbose_level - 2);
 	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_hermitian after H->init" << endl;
+		cout << "geometry_global::do_cheat_sheet_hermitian "
+				"after H->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_hermitian before H->create_latex_report" << endl;
+		cout << "geometry_global::do_cheat_sheet_hermitian "
+				"before H->create_latex_report" << endl;
 	}
 	H->create_latex_report(verbose_level);
 	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_hermitian after H->create_latex_report" << endl;
+		cout << "geometry_global::do_cheat_sheet_hermitian "
+				"after H->create_latex_report" << endl;
 	}
 
 
@@ -1968,7 +1874,8 @@ void geometry_global::do_create_desarguesian_spread(
 
 	SubS = NEW_OBJECT(field_theory::subfield_structure);
 	if (f_v) {
-		cout << "geometry_global::do_create_desarguesian_spread before SubS->init" << endl;
+		cout << "geometry_global::do_create_desarguesian_spread "
+				"before SubS->init" << endl;
 	}
 	SubS->init(FQ, Fq, verbose_level - 2);
 
@@ -1980,13 +1887,15 @@ void geometry_global::do_create_desarguesian_spread(
 
 	D = NEW_OBJECT(desarguesian_spread);
 	if (f_v) {
-		cout << "geometry_global::do_create_desarguesian_spread before D->init" << endl;
+		cout << "geometry_global::do_create_desarguesian_spread "
+				"before D->init" << endl;
 	}
 	D->init(n, m, s,
 		SubS,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "geometry_global::do_create_desarguesian_spread after D->init" << endl;
+		cout << "geometry_global::do_create_desarguesian_spread "
+				"after D->init" << endl;
 	}
 
 
@@ -2050,11 +1959,13 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 		FREE_int(the_lines);
 
 		if (f_v) {
-			cout << "geometry_global::create_decomposition_of_projective_plane before I->compute_TDO_safe" << endl;
+			cout << "geometry_global::create_decomposition_of_projective_plane "
+					"before I->compute_TDO_safe" << endl;
 		}
 		I->compute_TDO_safe(*Stack, depth, verbose_level);
 		if (f_v) {
-			cout << "geometry_global::create_decomposition_of_projective_plane after I->compute_TDO_safe" << endl;
+			cout << "geometry_global::create_decomposition_of_projective_plane "
+					"after I->compute_TDO_safe" << endl;
 		}
 
 
@@ -2096,55 +2007,6 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 
 }
 
-
-#if 0
-void geometry_global::latex_homogeneous_equation(
-		field_theory::finite_field *F, int degree, int nb_vars,
-		std::string &equation_text,
-		std::string &symbol_txt,
-		std::string &symbol_tex,
-		int verbose_level)
-// creates ring_theory::homogeneous_polynomial_domain
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "geometry_global::latex_homogeneous_equation degree=" << degree << " nb_vars=" << nb_vars << endl;
-	}
-	int *eqn;
-	int sz;
-	ring_theory::homogeneous_polynomial_domain *Poly;
-
-	Int_vec_scan(equation_text, eqn, sz);
-	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	if (f_v) {
-		cout << "geometry_global::latex_homogeneous_equation before Poly->init" << endl;
-	}
-	Poly->init(F,
-			nb_vars /* nb_vars */, degree /* degree */,
-			t_PART,
-			verbose_level);
-
-	Poly->remake_symbols(0 /* symbol_offset */,
-				symbol_txt,
-				symbol_tex,
-				verbose_level);
-
-
-	if (Poly->get_nb_monomials() != sz) {
-		cout << "Poly->get_nb_monomials() = " << Poly->get_nb_monomials() << endl;
-		cout << "number of coefficients given = " << sz << endl;
-		exit(1);
-	}
-	Poly->print_equation_tex(cout, eqn);
-	cout << endl;
-	if (f_v) {
-		cout << "geometry_global::latex_homogeneous_equation done" << endl;
-	}
-
-}
-#endif
 
 void geometry_global::create_BLT_point(field_theory::finite_field *F,
 		int *v5, int a, int b, int c, int verbose_level)
@@ -2380,12 +2242,18 @@ void geometry_global::find_two_lines_for_arc_lifting(
 	for (i = 0; i < N; i++) {
 		Int_vec_copy(Basis, Basis_search, 4);
 		Int_vec_copy(Basis + 4, Basis_search + 4, 4);
+
 		P->F->PG_element_unrank_modified(Basis_search + 8, 1, 4, i);
+
 		if (Basis_search[11] == 0) {
 			continue;
 		}
+
 		Int_vec_copy(Basis_search, Basis_search_copy, 12);
-		rk = P->F->Linear_algebra->Gauss_easy_memory_given(Basis_search_copy, 3, 4, base_cols);
+
+		rk = P->F->Linear_algebra->Gauss_easy_memory_given(
+				Basis_search_copy, 3, 4, base_cols);
+
 		if (rk == 3) {
 			break;
 		}
@@ -2679,7 +2547,8 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_matrix_print(M, 4, 4);
 	}
 
-	P->F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
+	P->F->Linear_algebra->invert_matrix_memory_given(M,
+			Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"Mv:" << endl;
@@ -2709,7 +2578,8 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	}
 	abgd[3] = lambda;
 	if (f_semilinear) {
-		P->F->Linear_algebra->vector_frobenius_power_in_place(abgd, 4, P->F->e - frobenius);
+		P->F->Linear_algebra->vector_frobenius_power_in_place(
+				abgd, 4, P->F->e - frobenius);
 	}
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
@@ -2785,12 +2655,14 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 				"input Line2_from:" << endl;
 		Int_matrix_print(Line2_from, 2, 4);
 	}
-	P->F->Linear_algebra->Gauss_step_make_pivot_one(Line1_from + 4, Line1_from,
+	P->F->Linear_algebra->Gauss_step_make_pivot_one(
+			Line1_from + 4, Line1_from,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
 		// So, now Line1[3] = 0 and Line1[7] = 1
-	P->F->Linear_algebra->Gauss_step_make_pivot_one(Line2_from + 4, Line2_from,
+	P->F->Linear_algebra->Gauss_step_make_pivot_one(
+			Line2_from + 4, Line2_from,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
@@ -2891,7 +2763,8 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	}
 
 
-	P->F->Linear_algebra->linear_combination_of_vectors(1, u, m1, v, umv, 3);
+	P->F->Linear_algebra->linear_combination_of_vectors(
+			1, u, m1, v, umv, 3);
 	umv[3] = 0;
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
@@ -2904,21 +2777,24 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 	Int_vec_copy(y, M + 8, 4);
 	Int_vec_copy(P2, M + 12, 4);
 
-	P->F->Linear_algebra->negate_vector_in_place(M + 8, 8);
+	P->F->Linear_algebra->negate_vector_in_place(
+			M + 8, 8);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"M:" << endl;
 		Int_matrix_print(M, 4, 4);
 	}
 
-	P->F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
+	P->F->Linear_algebra->invert_matrix_memory_given(
+			M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"Mv:" << endl;
 		Int_matrix_print(Mv, 4, 4);
 	}
 
-	P->F->Linear_algebra->mult_vector_from_the_left(umv, Mv, lmei, 4, 4);
+	P->F->Linear_algebra->mult_vector_from_the_left(
+			umv, Mv, lmei, 4, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"lmei=" << endl;
@@ -2931,7 +2807,8 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 				"lambda=" << lambda << " mu=" << mu << endl;
 	}
 
-	P->F->Linear_algebra->linear_combination_of_three_vectors(lambda, x, mu, P1, m1, u, abgd, 3);
+	P->F->Linear_algebra->linear_combination_of_three_vectors(
+			lambda, x, mu, P1, m1, u, abgd, 3);
 	// abgd = lambda * x + mu * P1 - u, with a lambda in the 4th coordinate.
 
 	abgd[3] = lambda;
@@ -3720,26 +3597,34 @@ void geometry_global::plane_intersection_type_of_klein_image(
 
 	cout << "geometry_global::plane_intersection_type_of_klein_image "
 			"intersection numbers: ";
-	Int_vec_print(cout, Int_type->the_intersection_type, Int_type->highest_intersection_number + 1);
+	Int_vec_print(cout,
+			Int_type->the_intersection_type,
+			Int_type->highest_intersection_number + 1);
 	cout << endl;
 
 	if (f_v) {
 		cout << "geometry_global::plane_intersection_type_of_klein_image "
 				"highest weight objects: " << endl;
-		Lint_vec_print(cout, Int_type->Highest_weight_objects, Int_type->nb_highest_weight_objects);
+		Lint_vec_print(cout,
+				Int_type->Highest_weight_objects,
+				Int_type->nb_highest_weight_objects);
 		cout << endl;
 	}
 
 	if (f_v) {
 		cout << "geometry_global::plane_intersection_type_of_klein_image "
 				"Intersection_sets: " << endl;
-		Int_matrix_print(Int_type->Intersection_sets, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+		Int_matrix_print(Int_type->Intersection_sets,
+				Int_type->nb_highest_weight_objects,
+				Int_type->highest_intersection_number);
 	}
 
 	if (f_v) {
 		cout << "geometry_global::plane_intersection_type_of_klein_image "
 				"Intersection_sets sorted: " << endl;
-		Int_matrix_print(Int_type->M->M, Int_type->nb_highest_weight_objects, Int_type->highest_intersection_number);
+		Int_matrix_print(Int_type->M->M,
+				Int_type->nb_highest_weight_objects,
+				Int_type->highest_intersection_number);
 	}
 
 	string fname;
@@ -3878,7 +3763,9 @@ void geometry_global::conic_type2(
 		p1 = Pts[P1];
 		p2 = Pts[P2];
 		line_rk = P->line_through_two_points(p1, p2);
-		P->create_points_on_line(line_rk, pts_on_line + u * nb_pts_per_line, 0 /*verbose_level*/);
+		P->create_points_on_line(line_rk,
+				pts_on_line + u * nb_pts_per_line,
+				0 /*verbose_level*/);
 	}
 
 	Conic_line_intersection_sz = NEW_int(len * 55);
@@ -3887,7 +3774,8 @@ void geometry_global::conic_type2(
 	for (h = 0; h < len; h++) {
 		for (u = 0; u < 55; u++) {
 			for (v = 0; v < nb_pts_per_line; v++) {
-				if (P->test_if_conic_contains_point(Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
+				if (P->test_if_conic_contains_point(
+						Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
 					Conic_line_intersection_sz[h * 55 + u]++;
 				}
 
@@ -3898,7 +3786,8 @@ void geometry_global::conic_type2(
 	data_structures::sorting Sorting;
 	int idx;
 
-	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
+	cout << "We found the following conics and their "
+			"intersections with the 55 bisecants:" << endl;
 	for (h = 0; h < len; h++) {
 		cout << h << " : " << nb_pts_on_conic[h] << " : ";
 		Int_vec_print(cout, Conic_eqn[h], 6);
@@ -3917,7 +3806,9 @@ void geometry_global::conic_type2(
 		Int_vec_zero(str, 55);
 		for (v = 0; v < nb_pts; v++) {
 			pt = Pts[v];
-			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
+			if (Sorting.lint_vec_search_linear(
+					pts_on_line + u * nb_pts_per_line,
+					nb_pts_per_line, pt, idx)) {
 				str[v] = 1;
 			}
 		}
@@ -3955,7 +3846,8 @@ void geometry_global::do_rank_lines_in_PG(
 	}
 
 	if (n != 2 * (P->n + 1)) {
-		cout << "geometry_global::do_rank_lines_in_PG n != 2 * (P->n + 1)" << endl;
+		cout << "geometry_global::do_rank_lines_in_PG "
+				"n != 2 * (P->n + 1)" << endl;
 		exit(1);
 	}
 
@@ -4342,6 +4234,7 @@ void geometry_global::create_orthogonal(
 		std::string &label_tex,
 		int &nb_pts, long int *&Pts,
 	int verbose_level)
+// creates a quadratic form
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4378,15 +4271,13 @@ void geometry_global::create_orthogonal(
 		cout << "orthogonal rank : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
-		//		Quadratic_form->form_c1,
-		//		Quadratic_form->form_c2,
-		//		Quadratic_form->form_c3,
-		//		i,
-		//		0 /* verbose_level */);
+
 		Quadratic_form->unrank_point(v, i, 0 /* verbose_level */);
+
 		F->PG_element_rank_modified(v, 1, d, j);
+
 		Pts[i] = j;
+
 		if (f_v) {
 			cout << setw(4) << i << " : ";
 			Int_vec_print(cout, v, d);
@@ -4407,10 +4298,12 @@ void geometry_global::create_orthogonal(
 
 	algebra::algebra_global AG;
 
-	snprintf(str, sizeof(str), "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, F->q);
+	snprintf(str, sizeof(str), "Q%s_%d_%d.txt",
+			AG.plus_minus_letter(epsilon), n, F->q);
 	label_txt.assign(str);
 
-	snprintf(str, sizeof(str), "Q%s\\_%d\\_%d.txt", AG.plus_minus_letter(epsilon), n, F->q);
+	snprintf(str, sizeof(str), "Q%s\\_%d\\_%d.txt",
+			AG.plus_minus_letter(epsilon), n, F->q);
 	label_tex.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -4492,6 +4385,7 @@ void geometry_global::create_ttp_code(
 	int f_construction_A, int f_hyperoval, int f_construction_B,
 	std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
+// creates a projective_space
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4727,7 +4621,8 @@ void geometry_global::do_andre(
 
 
 	if (f_v) {
-		cout << "geometry_global::do_andre before subfield_embedding_2dimensional" << endl;
+		cout << "geometry_global::do_andre "
+				"before subfield_embedding_2dimensional" << endl;
 	}
 
 	FQ->subfield_embedding_2dimensional(*Fq,
@@ -4749,7 +4644,8 @@ void geometry_global::do_andre(
 		// pair_embedding[q * q]
 
 	if (f_v) {
-		cout << "geometry_global::do_andre after subfield_embedding_2dimensional" << endl;
+		cout << "geometry_global::do_andre "
+				"after subfield_embedding_2dimensional" << endl;
 	}
 	if (f_vv) {
 		FQ->print_embedding(*Fq,
@@ -4774,7 +4670,8 @@ void geometry_global::do_andre(
 
 	for (i = 0; i < set_size_in; i++) {
 		if (f_vv) {
-			cout << "geometry_global::do_andre input point " << i << " is "
+			cout << "geometry_global::do_andre "
+					"input point " << i << " is "
 					<< the_set_in[i] << " : ";
 		}
 		P2->unrank_point(v, the_set_in[i]);
@@ -4912,6 +4809,7 @@ void geometry_global::do_embed_orthogonal(
 	int epsilon, int n,
 	long int *set_in, long int *&set_out, int set_size,
 	int verbose_level)
+// creates a quadratic_form object
 {
 	int f_v = (verbose_level >= 1);
 	int *v;
@@ -4941,12 +4839,9 @@ void geometry_global::do_embed_orthogonal(
 
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
-		//Quadratic_form->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n,
-		//		Quadratic_form->form_c1,
-		//		Quadratic_form->form_c2,
-		//		Quadratic_form->form_c3,
-		//		a, 0 /* verbose_level */);
+
 		Quadratic_form->unrank_point(v, a, 0 /* verbose_level */);
+
 		//b = P->rank_point(v);
 		F->PG_element_rank_modified_lint(v, 1, n + 1, b);
 		set_out[h] = b;
@@ -5292,7 +5187,8 @@ void geometry_global::isomorphism_to_special_orthogonal(
 
 
 	for (j = 0; j < 6; j++) {
-		F->Linear_algebra->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
+		F->Linear_algebra->mult_vector_from_the_left(
+				Basis2 + j * 6, An2, v, 6, 6);
 				// v[m], A[m][n], vA[n]
 		wedge_to_klein(F, v, w);
 		Int_vec_copy(w, C + j * 6, 6);
@@ -5306,8 +5202,10 @@ void geometry_global::isomorphism_to_special_orthogonal(
 		cout << endl;
 	}
 
-	F->Linear_algebra->mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
-	F->Linear_algebra->mult_matrix_matrix(D, B, A6, 6, 6, 6, 0 /*verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(
+			Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(
+			D, B, A6, 6, 6, 6, 0 /*verbose_level */);
 
 	F->PG_element_normalize_from_front(A6, 1, 36);
 

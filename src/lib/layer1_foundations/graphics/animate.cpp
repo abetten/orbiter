@@ -740,7 +740,7 @@ void animate::animate_one_round(
 }
 
 
-void animate::draw_single_line(int line_idx, std::string &color, ostream &fp)
+void animate::draw_single_line(int line_idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -748,7 +748,7 @@ void animate::draw_single_line(int line_idx, std::string &color, ostream &fp)
 	S->draw_lines_with_selection(s, 1, color, fp);
 }
 
-void animate::draw_single_quadric(int idx, std::string &color, ostream &fp)
+void animate::draw_single_quadric(int idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -756,7 +756,7 @@ void animate::draw_single_quadric(int idx, std::string &color, ostream &fp)
 	S->draw_quadric_with_selection(s, 1, color, fp);
 }
 
-void animate::draw_single_surface(int surface_idx, ostream &fp)
+void animate::draw_single_surface(int surface_idx, std::ostream &fp)
 {
 	int s[1];
 
@@ -764,7 +764,7 @@ void animate::draw_single_surface(int surface_idx, ostream &fp)
 	S->draw_cubic_with_selection(s, 1, Pov->color_white, fp);
 }
 
-void animate::draw_single_surface_with_color(int surface_idx, std::string &color, ostream &fp)
+void animate::draw_single_surface_with_color(int surface_idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -773,7 +773,7 @@ void animate::draw_single_surface_with_color(int surface_idx, std::string &color
 }
 
 void animate::draw_Hilbert_point(int point_idx, double rad,
-		std::string &options, ostream &fp)
+		std::string &options, std::ostream &fp)
 {
 	int s[1];
 
@@ -781,7 +781,7 @@ void animate::draw_Hilbert_point(int point_idx, double rad,
 	S->draw_points_with_selection(s, 1, rad, options, fp);
 }
 
-void animate::draw_Hilbert_line(int line_idx, std::string &color, ostream &fp)
+void animate::draw_Hilbert_line(int line_idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -791,7 +791,7 @@ void animate::draw_Hilbert_line(int line_idx, std::string &color, ostream &fp)
 		fp);
 }
 
-void animate::draw_Hilbert_plane(int plane_idx, std::string &color, ostream &fp)
+void animate::draw_Hilbert_plane(int plane_idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -799,31 +799,31 @@ void animate::draw_Hilbert_plane(int plane_idx, std::string &color, ostream &fp)
 	S->draw_planes_with_selection(s, sizeof(s) / sizeof(int), color, fp);
 }
 
-void animate::draw_Hilbert_red_line(int idx_one_based, ostream &fp)
+void animate::draw_Hilbert_red_line(int idx_one_based, std::ostream &fp)
 {
 	int s[] = {12, 13, 14, 15, 16, 17};
 	S->draw_edges_with_selection(s + idx_one_based - 1, 1, Pov->color_red, fp);
 }
 
-void animate::draw_Hilbert_blue_line(int idx_one_based, ostream &fp)
+void animate::draw_Hilbert_blue_line(int idx_one_based, std::ostream &fp)
 {
 	int s[] = {18, 19, 20, 21, 22, 23};
 	S->draw_edges_with_selection(s + idx_one_based - 1, 1, Pov->color_blue, fp);
 }
 
-void animate::draw_Hilbert_red_lines(ostream &fp)
+void animate::draw_Hilbert_red_lines(std::ostream &fp)
 {
 	int s[] = {12, 13, 14, 15, 16, 17};
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
 }
 
-void animate::draw_Hilbert_blue_lines(ostream &fp)
+void animate::draw_Hilbert_blue_lines(std::ostream &fp)
 {
 	int s[] = {18, 19, 20, 21, 22, 23};
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 }
 
-void animate::draw_Hilbert_cube_extended_edges(ostream &fp)
+void animate::draw_Hilbert_cube_extended_edges(std::ostream &fp)
 {
 	int s[] = {30,31,32,33,34,35,36,37,38,39,40,41};
 
@@ -832,13 +832,13 @@ void animate::draw_Hilbert_cube_extended_edges(ostream &fp)
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
 
-void animate::draw_Hilbert_cube_faces(ostream &fp)
+void animate::draw_Hilbert_cube_faces(std::ostream &fp)
 {
 	int s[] = {0,1,2,3,4,5};
 	S->draw_faces_with_selection(s, sizeof(s) / sizeof(int), 0.01, Pov->color_pink, fp);
 }
 
-void animate::draw_Hilbert_cube_boxed(ostream &fp)
+void animate::draw_Hilbert_cube_boxed(std::ostream &fp)
 {
 	int s[] = {0,1,2,3,4,5,6,7,8,9,10,11};
 
@@ -847,7 +847,7 @@ void animate::draw_Hilbert_cube_boxed(ostream &fp)
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
 
-void animate::draw_Hilbert_tetrahedron_boxed(ostream &fp)
+void animate::draw_Hilbert_tetrahedron_boxed(std::ostream &fp)
 {
 	int s[] = {24,25,26,27,28,29};
 
@@ -856,7 +856,7 @@ void animate::draw_Hilbert_tetrahedron_boxed(ostream &fp)
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
 
-void animate::draw_Hilbert_tetrahedron_faces(ostream &fp)
+void animate::draw_Hilbert_tetrahedron_faces(std::ostream &fp)
 {
 	int s[] = {6,7,8,9};
 	S->draw_faces_with_selection(s, sizeof(s) / sizeof(int), 0.01, Pov->color_orange, fp);
@@ -2039,7 +2039,7 @@ void animate::draw_frame_Hilbert(
 }
 
 
-void animate::draw_surface_13_1(ostream &fp)
+void animate::draw_surface_13_1(std::ostream &fp)
 {
 	int Pts[] = {
 		0, 0, 0, 1,
@@ -2297,7 +2297,7 @@ void animate::draw_surface_13_1(ostream &fp)
 
 void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		int h, int nb_frames, int round,
-		ostream &fp,
+		std::ostream &fp,
 		int verbose_level)
 // tritangent plane, 6 point, 2 blue lines, 6 red lines, text
 {
@@ -2425,7 +2425,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 void animate::draw_frame_Eckardt_surface(
 	int h, int nb_frames, int round,
 	double clipping_radius,
-	ostream &fp,
+	std::ostream &fp,
 	int verbose_level)
 {
 	int i;
@@ -2614,7 +2614,7 @@ void animate::draw_frame_Eckardt_surface(
 void animate::draw_frame_E4_surface(
 	int h, int nb_frames, int round,
 	double clipping_radius,
-	ostream &fp,
+	std::ostream &fp,
 	int verbose_level)
 {
 	cout << "animate::draw_frame_E4_surface" << endl;
@@ -2658,7 +2658,7 @@ void animate::draw_frame_E4_surface(
 void animate::draw_frame_triangulation_of_cube(
 	int h, int nb_frames, int round,
 	double clipping_radius,
-	ostream &fp,
+	std::ostream &fp,
 	int verbose_level)
 {
 	//double scale_factor;
@@ -2711,7 +2711,7 @@ void animate::draw_frame_triangulation_of_cube(
 void animate::draw_frame_twisted_cubic(
 	int h, int nb_frames, int round,
 	double clipping_radius,
-	ostream &fp,
+	std::ostream &fp,
 	int verbose_level)
 {
 	int i;
@@ -2800,7 +2800,7 @@ void animate::draw_frame_twisted_cubic(
 void animate::draw_frame_five_plus_one(
 	int h, int nb_frames, int round,
 	double clipping_radius,
-	ostream &fp,
+	std::ostream &fp,
 	int verbose_level)
 {
 	//double d_theta, theta;
@@ -2866,7 +2866,7 @@ void animate::draw_frame_five_plus_one(
 void animate::draw_frame_windy(
 	int h, int nb_frames, int round,
 	double clipping_radius,
-	ostream &fp,
+	std::ostream &fp,
 	int verbose_level)
 {
 	numerics N;
@@ -2987,7 +2987,7 @@ void animate::draw_frame_windy(
 
 void animate::rotation(
 		int h, int nb_frames, int round,
-		ostream &fp)
+		std::ostream &fp)
 {
 	if (Opt->f_rotate) {
 		if (Opt->rotation_axis_type == 1) {
@@ -3020,7 +3020,7 @@ void animate::rotation(
 void animate::union_end(
 		int h, int nb_frames, int round,
 		double clipping_radius,
-		ostream &fp)
+		std::ostream &fp)
 {
 	double scale;
 
@@ -3054,7 +3054,7 @@ void animate::draw_text(std::string &text,
 		double off_x, double off_y, double off_z,
 		std::string &color_options,
 		int idx_point,
-		ostream &ost, int verbose_level)
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double P1[3];
@@ -3192,7 +3192,7 @@ void animate::draw_text_with_selection(int *selection, int nb_select,
 	double scale,
 	double off_x, double off_y, double off_z,
 	std::string &options, std::string &group_options,
-	ostream &ost, int verbose_level)
+	std::ostream &ost, int verbose_level)
 {
 	int i, s;
 	numerics N;

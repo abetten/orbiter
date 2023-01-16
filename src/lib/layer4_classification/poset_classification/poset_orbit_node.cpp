@@ -206,7 +206,8 @@ int poset_orbit_node::get_node_in_level(poset_classification *gen)
 }
 
 
-void poset_orbit_node::get_strong_generators_handle(std::vector<int> &gen_hdl, int verbose_level)
+void poset_orbit_node::get_strong_generators_handle(
+		std::vector<int> &gen_hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -224,7 +225,8 @@ void poset_orbit_node::get_strong_generators_handle(std::vector<int> &gen_hdl, i
 	}
 }
 
-void poset_orbit_node::get_tl(std::vector<int> &tl, poset_classification *PC, int verbose_level)
+void poset_orbit_node::get_tl(std::vector<int> &tl,
+		poset_classification *PC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -386,7 +388,7 @@ int poset_orbit_node::find_extension_from_point(
 	return i;
 }
 
-void poset_orbit_node::print_extensions(ostream &ost)
+void poset_orbit_node::print_extensions(std::ostream &ost)
 {
 	int i;
 	
@@ -422,7 +424,7 @@ void poset_orbit_node::print_extensions(ostream &ost)
 
 void poset_orbit_node::log_current_node_without_group(
 		poset_classification *gen,
-		int s, ostream &f, int verbose_level)
+		int s, std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -457,7 +459,7 @@ void poset_orbit_node::log_current_node_without_group(
 }
 
 void poset_orbit_node::log_current_node(poset_classification *gen,
-		int s, ostream &f, int f_with_stabilizer_generators,
+		int s, std::ostream &f, int f_with_stabilizer_generators,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -601,7 +603,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 }
 
 void poset_orbit_node::log_current_node_after_applying_group_element(
-		poset_classification *gen, int s, ostream &f, int hdl,
+		poset_classification *gen, int s, std::ostream &f, int hdl,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -700,7 +702,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 }
 
 void poset_orbit_node::log_current_node_with_candidates(
-		poset_classification *gen, int lvl, ostream &f,
+		poset_classification *gen, int lvl, std::ostream &f,
 		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);

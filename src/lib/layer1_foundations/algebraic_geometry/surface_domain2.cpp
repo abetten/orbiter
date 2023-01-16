@@ -69,7 +69,8 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 
 
 
-long int surface_domain::plane_from_three_lines(long int *three_lines,
+long int surface_domain::plane_from_three_lines(
+		long int *three_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -93,7 +94,8 @@ long int surface_domain::plane_from_three_lines(long int *three_lines,
 	return rk;
 }
 
-void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
+void surface_domain::Trihedral_pairs_to_planes(
+		long int *Lines, long int *Planes_by_rank,
 	int verbose_level)
 // Planes_by_rank[nb_trihedral_pairs * 6]
 {
@@ -311,7 +313,8 @@ void surface_domain::compute_nine_lines(int *F_planes, int *G_planes,
 
 void surface_domain::compute_nine_lines_by_dual_point_ranks(
 	long int *F_planes_rank,
-	long int *G_planes_rank, long int *nine_lines, int verbose_level)
+	long int *G_planes_rank,
+	long int *nine_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -351,7 +354,8 @@ void surface_domain::compute_nine_lines_by_dual_point_ranks(
 
 void surface_domain::tritangent_plane_to_trihedral_pair_and_position(
 	int tritangent_plane_idx,
-	int &trihedral_pair_idx, int &position, int verbose_level)
+	int &trihedral_pair_idx,
+	int &position, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	static int Table[] = {

@@ -239,7 +239,8 @@ void graph_node::allocate_tree_structure(int verbose_level)
 		}
 }
 
-int graph_node::remove_neighbor(layered_graph *G, int id, int verbose_level)
+int graph_node::remove_neighbor(
+		layered_graph *G, int id, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -264,7 +265,9 @@ int graph_node::remove_neighbor(layered_graph *G, int id, int verbose_level)
 	return FALSE;
 }
 
-void graph_node::find_all_parents(layered_graph *G, std::vector<int> &All_Parents, int verbose_level)
+void graph_node::find_all_parents(
+		layered_graph *G, std::vector<int> &All_Parents,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, id = 0, l, n, my_layer;
@@ -323,7 +326,8 @@ int graph_node::find_parent(layered_graph *G, int verbose_level)
 	exit(1);
 }
 
-void graph_node::register_child(layered_graph *G,
+void graph_node::register_child(
+		layered_graph *G,
 		int id_child, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -351,8 +355,10 @@ void graph_node::register_child(layered_graph *G,
 		}
 }
 
-void graph_node::place_x_based_on_tree(layered_graph *G,
-		double left, double right, int verbose_level)
+void graph_node::place_x_based_on_tree(
+		layered_graph *G,
+		double left, double right,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, w, w0, w1;
@@ -414,7 +420,8 @@ void graph_node::depth_first_rank_recursion(
 		}
 }
 
-void graph_node::scale_x_coordinate(double x_stretch, int verbose_level)
+void graph_node::scale_x_coordinate(
+		double x_stretch, int verbose_level)
 {
 	x_coordinate *= x_stretch;
 }

@@ -30,7 +30,8 @@ orthogonal_indexing::~orthogonal_indexing()
 {
 }
 
-void orthogonal_indexing::init(quadratic_form *Quadratic_form, int verbose_level)
+void orthogonal_indexing::init(quadratic_form *Quadratic_form,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -46,7 +47,8 @@ void orthogonal_indexing::init(quadratic_form *Quadratic_form, int verbose_level
 
 void orthogonal_indexing::Q_epsilon_unrank_private(
 	int *v, int stride, int epsilon, int k,
-	int c1, int c2, int c3, long int a, int verbose_level)
+	int c1, int c2, int c3, long int a,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -97,7 +99,8 @@ void orthogonal_indexing::Q_epsilon_unrank_private(
 
 long int orthogonal_indexing::Q_epsilon_rank_private(
 	int *v, int stride, int epsilon, int k,
-	int c1, int c2, int c3, int verbose_level)
+	int c1, int c2, int c3,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int a;
@@ -152,18 +155,22 @@ long int orthogonal_indexing::Q_epsilon_rank_private(
 
 
 
-void orthogonal_indexing::Q_unrank(int *v, int stride, int k, long int a, int verbose_level)
+void orthogonal_indexing::Q_unrank(int *v,
+		int stride, int k, long int a, int verbose_level)
 {
 
 	Q_unrank_directly(v, stride, k, a, verbose_level);
 }
 
-long int orthogonal_indexing::Q_rank(int *v, int stride, int k, int verbose_level)
+long int orthogonal_indexing::Q_rank(int *v,
+		int stride, int k, int verbose_level)
 {
 	return Q_rank_directly(v, stride, k, verbose_level);
 }
 
-void orthogonal_indexing::Q_unrank_directly(int *v, int stride, int k, long int a, int verbose_level)
+void orthogonal_indexing::Q_unrank_directly(int *v,
+		int stride, int k, long int a,
+		int verbose_level)
 // parabolic quadric
 // k = projective dimension, must be even
 // quadratic form: x_0^2 + x_1x_2 + x_3x_4 + ...
@@ -192,7 +199,9 @@ void orthogonal_indexing::Q_unrank_directly(int *v, int stride, int k, long int 
 	}
 }
 
-long int orthogonal_indexing::Q_rank_directly(int *v, int stride, int k, int verbose_level)
+long int orthogonal_indexing::Q_rank_directly(int *v,
+		int stride, int k,
+		int verbose_level)
 // parabolic quadric
 // k = projective dimension, must be even
 {
@@ -222,7 +231,9 @@ long int orthogonal_indexing::Q_rank_directly(int *v, int stride, int k, int ver
 	return a + b;
 }
 
-void orthogonal_indexing::Qplus_unrank(int *v, int stride, int k, long int a, int verbose_level)
+void orthogonal_indexing::Qplus_unrank(int *v,
+		int stride, int k, long int a,
+		int verbose_level)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
@@ -233,7 +244,9 @@ void orthogonal_indexing::Qplus_unrank(int *v, int stride, int k, long int a, in
 	Sbar_unrank(v, stride, n, a, verbose_level);
 }
 
-long int orthogonal_indexing::Qplus_rank(int *v, int stride, int k, int verbose_level)
+long int orthogonal_indexing::Qplus_rank(int *v,
+		int stride, int k,
+		int verbose_level)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
@@ -252,7 +265,8 @@ long int orthogonal_indexing::Qplus_rank(int *v, int stride, int k, int verbose_
 
 void orthogonal_indexing::Qminus_unrank(int *v,
 		int stride, int k, long int a,
-		int c1, int c2, int c3, int verbose_level)
+		int c1, int c2, int c3,
+		int verbose_level)
 // elliptic quadric
 // k = projective dimension, must be odd
 // the form is
@@ -319,7 +333,8 @@ void orthogonal_indexing::Qminus_unrank(int *v,
 }
 
 long int orthogonal_indexing::Qminus_rank(int *v,
-		int stride, int k, int c1, int c2, int c3, int verbose_level)
+		int stride, int k, int c1, int c2, int c3,
+		int verbose_level)
 // elliptic quadric
 // k = projective dimension, must be odd
 // the form is
@@ -892,7 +907,8 @@ void orthogonal_indexing::N1_rank(int *v, int stride, int n, long int &a)
 	}
 }
 
-void orthogonal_indexing::Sbar_unrank(int *v, int stride, int n, long int a, int verbose_level)
+void orthogonal_indexing::Sbar_unrank(int *v,
+		int stride, int n, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int l, i, j, x, y, u;
@@ -995,7 +1011,8 @@ void orthogonal_indexing::Sbar_unrank(int *v, int stride, int n, long int a, int
 	}
 }
 
-void orthogonal_indexing::Sbar_rank(int *v, int stride, int n, long int &a, int verbose_level)
+void orthogonal_indexing::Sbar_rank(int *v,
+		int stride, int n, long int &a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int l, i, j, x, y, u;

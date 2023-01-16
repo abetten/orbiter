@@ -350,7 +350,8 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	}
 }
 
-void character_table_burnside::create_matrix(discreta_matrix &M, int i, int *S, int nb_classes,
+void character_table_burnside::create_matrix(
+		discreta_matrix &M, int i, int *S, int nb_classes,
 	int *character_degree, int *class_size,
 	int verbose_level)
 {
@@ -450,7 +451,8 @@ void character_table_burnside::compute_character_table(
 void character_table_burnside::compute_character_degrees(
 		algebra::a_domain *D,
 	int goi, int nb_classes, int *Omega, int *class_size,
-	int *&character_degree, int verbose_level)
+	int *&character_degree,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -528,7 +530,8 @@ void character_table_burnside::compute_character_degrees(
 
 void character_table_burnside::compute_omega(
 		algebra::a_domain *D, int *N0, int nb_classes,
-		int *Mu, int nb_mu, int *&Omega, int verbose_level)
+		int *Mu, int nb_mu, int *&Omega,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -628,7 +631,8 @@ void character_table_burnside::compute_omega(
 		}
 }
 
-int character_table_burnside::compute_r0(int *N, int nb_classes, int verbose_level)
+int character_table_burnside::compute_r0(
+		int *N, int nb_classes, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);
@@ -695,7 +699,8 @@ int character_table_burnside::compute_r0(int *N, int nb_classes, int verbose_lev
 void character_table_burnside::compute_multiplication_constants_center_of_group_ring(
 		actions::action *A,
 		induced_actions::action_by_conjugation *ABC,
-	groups::schreier *Sch, int nb_classes, int *&N, int verbose_level)
+	groups::schreier *Sch, int nb_classes, int *&N,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int r, rl, rf, s, sl, sf, i, a, j, b, c, idx, t, tf; //, tl;
@@ -747,9 +752,11 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 }
 
 void character_table_burnside::compute_Distribution_table(
-		actions::action *A, induced_actions::action_by_conjugation *ABC,
+		actions::action *A,
+		induced_actions::action_by_conjugation *ABC,
 		groups::schreier *Sch, int nb_classes,
-	int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level)
+	int **Gens, int nb_gens, int t_max, int *&Distribution,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -831,7 +838,10 @@ void character_table_burnside::compute_Distribution_table(
 }
 
 
-void character_table_burnside::multiply_word(actions::action *A, int **Gens, int *Choice, int t, int *Elt1, int *Elt2, int verbose_level)
+void character_table_burnside::multiply_word(
+		actions::action *A,
+		int **Gens, int *Choice, int t, int *Elt1, int *Elt2,
+		int verbose_level)
 {
 	int i;
 
@@ -842,7 +852,10 @@ void character_table_burnside::multiply_word(actions::action *A, int **Gens, int
 		}
 }
 
-void character_table_burnside::create_generators(actions::action *A, int n, int **&Elt, int &nb_gens, int f_special, int verbose_level)
+void character_table_burnside::create_generators(
+		actions::action *A,
+		int n, int **&Elt, int &nb_gens, int f_special,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1002,7 +1015,9 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 	FREE_int(B);
 }
 
-void character_table_burnside::characteristic_poly(int *N, int size, unipoly &charpoly, int verbose_level)
+void character_table_burnside::characteristic_poly(
+		int *N, int size, unipoly &charpoly,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1092,7 +1107,9 @@ void character_table_burnside::double_swap(double &a, double &b)
 	b = c;
 }
 
-int character_table_burnside::double_Gauss(double *A, int m, int n, int *base_cols, int verbose_level)
+int character_table_burnside::double_Gauss(
+		double *A, int m, int n, int *base_cols,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1257,7 +1274,9 @@ double character_table_burnside::double_abs(double x)
 		}
 }
 
-void character_table_burnside::kernel_columns(int n, int nb_base_cols, int *base_cols, int *kernel_cols)
+void character_table_burnside::kernel_columns(
+		int n, int nb_base_cols, int *base_cols,
+		int *kernel_cols)
 {
 	int i, j, k;
 
@@ -1271,7 +1290,9 @@ void character_table_burnside::kernel_columns(int n, int nb_base_cols, int *base
 		}
 }
 
-void character_table_burnside::matrix_get_kernel(double *M, int m, int n, int *base_cols, int nb_base_cols,
+void character_table_burnside::matrix_get_kernel(
+		double *M, int m, int n,
+		int *base_cols, int nb_base_cols,
 	int &kernel_m, int &kernel_n, double *kernel)
 	// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) int's)
 {

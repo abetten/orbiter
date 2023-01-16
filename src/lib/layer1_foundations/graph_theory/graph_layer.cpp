@@ -118,7 +118,8 @@ void graph_layer::place_with_grouping(
 		}
 }
 
-void graph_layer::scale_x_coordinates(double x_stretch, int verbose_level)
+void graph_layer::scale_x_coordinates(
+		double x_stretch, int verbose_level)
 {
 	int i;
 
@@ -129,7 +130,8 @@ void graph_layer::scale_x_coordinates(double x_stretch, int verbose_level)
 
 
 void graph_layer::write_memory_object(
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -152,7 +154,8 @@ void graph_layer::write_memory_object(
 }
 
 void graph_layer::read_memory_object(
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

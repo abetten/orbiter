@@ -1197,7 +1197,7 @@ void poset_classification::Log_nodes(int cur, int depth,
 }
 #endif
 
-void poset_classification::log_current_node(ostream &f, int size)
+void poset_classification::log_current_node(std::ostream &f, int size)
 {
 	//longinteger_object go;
 	int i;

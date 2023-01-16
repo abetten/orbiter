@@ -14,8 +14,10 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace data_structures {
 
-static int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);
-static void set_of_sets_swap_func(void *data, int i, int j, void *extra_data);
+static int set_of_sets_compare_func(
+		void *data, int i, int j, void *extra_data);
+static void set_of_sets_swap_func(
+		void *data, int i, int j, void *extra_data);
 
 
 
@@ -123,8 +125,10 @@ void set_of_sets::init(int underlying_set_size,
 		}
 }
 
-void set_of_sets::init_with_Sz_in_int(int underlying_set_size,
-		int nb_sets, long int **Pts, int *Sz, int verbose_level)
+void set_of_sets::init_with_Sz_in_int(
+		int underlying_set_size,
+		int nb_sets, long int **Pts, int *Sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -444,7 +448,8 @@ void set_of_sets::init_set(int idx_of_set,
 		}
 }
 
-void set_of_sets::init_cycle_structure(int *perm,
+void set_of_sets::init_cycle_structure(
+		int *perm,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -715,7 +720,8 @@ void set_of_sets::print_table_latex_simple(std::ostream &ost)
 }
 
 
-void set_of_sets::print_table_latex_simple_with_selection(std::ostream &ost, int *Selection, int nb_sel)
+void set_of_sets::print_table_latex_simple_with_selection(
+		std::ostream &ost, int *Selection, int nb_sel)
 {
 	orbiter_kernel_system::latex_interface L;
 	int i, h;
@@ -1229,7 +1235,8 @@ void set_of_sets::all_pairwise_intersections(
 		}
 }
 
-void set_of_sets::pairwise_intersection_matrix(int *&M, int verbose_level)
+void set_of_sets::pairwise_intersection_matrix(
+		int *&M, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1424,7 +1431,8 @@ void set_of_sets::sort_big(int verbose_level)
 		set_of_sets_swap_func, NULL);
 }
 
-void set_of_sets::compute_orbits(int &nb_orbits,
+void set_of_sets::compute_orbits(
+		int &nb_orbits,
 	int *&orbit, int *&orbit_inv,
 	int *&orbit_first, int *&orbit_len, 
 	void (*compute_image_function)(set_of_sets *S,
@@ -1631,8 +1639,10 @@ void set_of_sets::get_eckardt_points(
 		}
 }
 
-void set_of_sets::evaluate_function_and_store(data_structures::set_of_sets *&Function_values,
-		int (*evaluate_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+void set_of_sets::evaluate_function_and_store(
+		data_structures::set_of_sets *&Function_values,
+		int (*evaluate_function)(int a, int i, int j,
+				void *evaluate_data, int verbose_level),
 		void *evaluate_data,
 		int verbose_level)
 {
@@ -1679,7 +1689,8 @@ int set_of_sets::find_smallest_class()
 // #############################################################################
 
 
-static int set_of_sets_compare_func(void *data, int i, int j, void *extra_data)
+static int set_of_sets_compare_func(
+		void *data, int i, int j, void *extra_data)
 {
 	set_of_sets *S = (set_of_sets *) data;
 	sorting Sorting;
@@ -1694,7 +1705,8 @@ static int set_of_sets_compare_func(void *data, int i, int j, void *extra_data)
 	return c;
 }
 
-static void set_of_sets_swap_func(void *data, int i, int j, void *extra_data)
+static void set_of_sets_swap_func(
+		void *data, int i, int j, void *extra_data)
 {
 	set_of_sets *S = (set_of_sets *) data;
 	long int *p;

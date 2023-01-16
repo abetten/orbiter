@@ -68,6 +68,7 @@ square_nonsquare::~square_nonsquare()
 void square_nonsquare::init(field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 1);
 
 	if (f_v) {
 		cout << "square_nonsquare::init" << endl;
@@ -79,6 +80,9 @@ void square_nonsquare::init(field_theory::finite_field *F, int verbose_level)
 	int a, b, c;
 	int i, j;
 
+	if (f_v) {
+		cout << "square_nonsquare::init q=" << q << endl;
+	}
 
 	minus_squares = NEW_int((q-1)/2);
 	minus_squares_without = NEW_int((q-1)/2 - 1);
@@ -89,7 +93,7 @@ void square_nonsquare::init(field_theory::finite_field *F, int verbose_level)
 	index_minus_nonsquare = NEW_int(q);
 	a = b = c = 0;
 	if (f_v) {
-		cout << "computing minus_squares:" << endl;
+		cout << "square_nonsquare::init computing minus_squares:" << endl;
 	}
 	for (i = 0; i < q; i++) {
 		index_minus_square[i] = -1;
@@ -98,7 +102,13 @@ void square_nonsquare::init(field_theory::finite_field *F, int verbose_level)
 		f_is_minus_square[i]= FALSE;
 	}
 	for (i = 0; i < q - 1; i++) {
+		if (f_v) {
+			cout << "square_nonsquare::init i=" << i << endl;
+		}
 		j = F->alpha_power(i);
+		if (f_v) {
+			cout << "square_nonsquare::init j=" << j << endl;
+		}
 		if (is_minus_square(i)) {
 			if (f_v) {
 				cout << "i=" << i << " j=" << j

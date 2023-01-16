@@ -357,7 +357,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 }
 
 
-void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
+void eckardt_point_info::print_bisecants(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a;
@@ -424,7 +424,7 @@ void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
 	}
 }
 
-void eckardt_point_info::print_intersections(ostream &ost, int verbose_level)
+void eckardt_point_info::print_intersections(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::latex_interface L;
@@ -457,7 +457,7 @@ void eckardt_point_info::print_intersections(ostream &ost, int verbose_level)
 	}
 }
 
-void eckardt_point_info::print_conics(ostream &ost, int verbose_level)
+void eckardt_point_info::print_conics(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h;
@@ -512,7 +512,7 @@ void eckardt_point_info::print_conics(ostream &ost, int verbose_level)
 	}
 }
 
-void eckardt_point_info::print_Eckardt_points(ostream &ost, int verbose_level)
+void eckardt_point_info::print_Eckardt_points(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int s;

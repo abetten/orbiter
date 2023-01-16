@@ -532,7 +532,8 @@ void schreier_vector::relabel_points(
 }
 
 void schreier_vector::orbit_stats(
-		int &nb_orbits, int *&orbit_reps, int *&orbit_length, int *&total_depth,
+		int &nb_orbits, int *&orbit_reps,
+		int *&orbit_length, int *&total_depth,
 		int verbose_level)
 {
 	int i, idx;
@@ -650,7 +651,8 @@ void schreier_vector::orbit_stats(
 }
 
 void schreier_vector::orbit_of_point(
-		int pt, long int *&orbit_elts, int &orbit_len, int &idx_of_root_node,
+		int pt, long int *&orbit_elts,
+		int &orbit_len, int &idx_of_root_node,
 		int verbose_level)
 {
 	int i;

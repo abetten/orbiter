@@ -127,6 +127,7 @@ void action_on_forms::create_action_on_forms(
 
 }
 
+#if 0
 void action_on_forms::algebraic_normal_form(int *func, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -177,8 +178,10 @@ void action_on_forms::algebraic_normal_form(int *func, int len, int verbose_leve
 		cout << "action_on_forms::algebraic_normal_form done" << endl;
 	}
 }
+#endif
 
-void action_on_forms::orbits_on_functions(int *The_functions, int nb_functions, int len,
+void action_on_forms::orbits_on_functions(
+		int *The_functions, int nb_functions, int len,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -409,7 +412,8 @@ void action_on_forms::orbits_on_functions(int *The_functions, int nb_functions, 
 	}
 }
 
-void action_on_forms::orbits_on_equations(int *The_equations, int nb_equations, int len,
+void action_on_forms::orbits_on_equations(
+		int *The_equations, int nb_equations, int len,
 		groups::schreier *&Orb,
 		actions::action *&A_on_equations,
 		int verbose_level)
@@ -443,7 +447,8 @@ void action_on_forms::orbits_on_equations(int *The_equations, int nb_equations, 
 	}
 }
 
-void action_on_forms::associated_set_in_plane(int *func, int len,
+void action_on_forms::associated_set_in_plane(
+		int *func, int len,
 		long int *&Rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -485,7 +490,8 @@ void action_on_forms::associated_set_in_plane(int *func, int len,
 }
 
 
-void action_on_forms::differential_uniformity(int *func, int len, int verbose_level)
+void action_on_forms::differential_uniformity(
+		int *func, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

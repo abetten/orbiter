@@ -162,7 +162,7 @@ void page_storage::init(int entry_size,
 }
 
 void page_storage::add_elt_print_function(
-		void (* elt_print)(void *p, void *data, ostream &ost),
+		void (* elt_print)(void *p, void *data, std::ostream &ost),
 		void *elt_print_data)
 {
 	f_elt_print_function = TRUE;

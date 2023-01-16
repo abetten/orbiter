@@ -690,12 +690,10 @@ void magma_interface::normalizer_using_MAGMA(
 
 	if (Fio.file_size(fname_output) <= 0) {
 
-		orbiter_kernel_system::magma_interface Magma;
-
-		Magma.run_magma_file(fname_magma, verbose_level);
+		run_magma_file(fname_magma, verbose_level);
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
-		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
 		exit(1);
 	}
 
@@ -821,14 +819,13 @@ void magma_interface::conjugacy_classes_using_MAGMA(
 
 
 
-	orbiter_kernel_system::magma_interface Magma;
 	orbiter_kernel_system::file_io Fio;
 
-	Magma.run_magma_file(fname_magma, verbose_level);
+	run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) == 0) {
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
-		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
 		exit(1);
 	}
 
@@ -997,14 +994,13 @@ void magma_interface::conjugacy_classes_and_normalizers_using_MAGMA(
 	}
 
 
-	orbiter_kernel_system::magma_interface Magma;
 	orbiter_kernel_system::file_io Fio;
 
-	Magma.run_magma_file(fname_magma, verbose_level);
+	run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) <= 0) {
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
-		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
 		exit(1);
 	}
 
@@ -1049,8 +1045,10 @@ void magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA(
 
 	if (f_v) {
 		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA fname=" << fname << endl;
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA degree=" << A->degree << endl;
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+				"fname=" << fname << endl;
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+				"degree=" << A->degree << endl;
 		}
 	{
 		ifstream fp(fname);
@@ -1070,7 +1068,8 @@ void magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA(
 			fp >> class_order_of_element[i];
 			if (f_v) {
 				cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
-						"class " << i << " / " << nb_classes << " order=" << class_order_of_element[i] << endl;
+						"class " << i << " / " << nb_classes
+						<< " order=" << class_order_of_element[i] << endl;
 			}
 			fp >> class_size[i];
 			if (f_v) {
@@ -1103,16 +1102,19 @@ void magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA(
 			}
 			fp >> class_normalizer_order[i];
 
-			cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA class " << i << " class_normalizer_order[i]=" << class_normalizer_order[i] << endl;
+			cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+					"class " << i << " class_normalizer_order[i]=" << class_normalizer_order[i] << endl;
 
 			if (class_normalizer_order[i] <= 0) {
-				cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA class_normalizer_order[i] <= 0" << endl;
+				cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+						"class_normalizer_order[i] <= 0" << endl;
 				cout << "class_normalizer_order[i]=" << class_normalizer_order[i] << endl;
 				exit(1);
 			}
 			if (f_v) {
 				cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
-						"class " << i << " / " << nb_classes << " class_normalizer_order[i]=" << class_normalizer_order[i] << endl;
+						"class " << i << " / " << nb_classes
+						<< " class_normalizer_order[i]=" << class_normalizer_order[i] << endl;
 			}
 			fp >> class_normalizer_number_of_generators[i];
 			normalizer_generators_perms[i] =
@@ -1347,13 +1349,11 @@ void magma_interface::centralizer_using_magma2(
 
 
 
-	orbiter_kernel_system::magma_interface Magma;
-
-	Magma.run_magma_file(fname_magma, verbose_level);
+	run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) == 0) {
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
-		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
 		exit(1);
 	}
 
@@ -1653,13 +1653,12 @@ void magma_interface::find_subgroups_using_MAGMA2(
 	cout << "Written file " << fname_magma
 			<< " of size " << Fio.file_size(fname_magma) << endl;
 
-	orbiter_kernel_system::magma_interface Magma;
 
-	Magma.run_magma_file(fname_magma, verbose_level);
+	run_magma_file(fname_magma, verbose_level);
 	if (Fio.file_size(fname_output) == 0) {
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
-		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
 		exit(1);
 	}
 
@@ -1717,19 +1716,21 @@ void magma_interface::conjugacy_classes_and_normalizers(
 
 	if (Fio.file_size(fname_output) > 0) {
 		if (f_v) {
-			cout << "magma_interface::conjugacy_classes_and_normalizers before read_conjugacy_classes_and_normalizers" << endl;
+			cout << "magma_interface::conjugacy_classes_and_normalizers "
+					"before read_conjugacy_classes_and_normalizers" << endl;
 		}
-		read_conjugacy_classes_and_normalizers(A, fname_output, override_Sims, label_tex, verbose_level);
+		read_conjugacy_classes_and_normalizers(A,
+				fname_output, override_Sims, label_tex, verbose_level);
 		if (f_v) {
-			cout << "action::conjugacy_classes_and_normalizers after read_conjugacy_classes_and_normalizers" << endl;
+			cout << "action::conjugacy_classes_and_normalizers "
+					"after read_conjugacy_classes_and_normalizers" << endl;
 		}
 	}
 	else {
-		orbiter_kernel_system::magma_interface Magma;
 
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
-		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
 		exit(1);
 
 	}
@@ -1777,7 +1778,8 @@ void magma_interface::report_conjugacy_classes_and_normalizers(
 					<< " does not exist, calling conjugacy_classes_and_normalizers_using_MAGMA" << endl;
 		}
 		if (!A->f_has_sims) {
-			cout << "magma_interface::report_conjugacy_classes_and_normalizers we don't have sims, skipping" << endl;
+			cout << "magma_interface::report_conjugacy_classes_and_normalizers "
+					"we don't have sims, skipping" << endl;
 		}
 		else {
 			conjugacy_classes_and_normalizers_using_MAGMA(A, prefix,
@@ -1838,23 +1840,6 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 	}
 
 
-#if 0
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	int f_semilinear;
-
-	if (is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-	PA->init(
-		F, 3 /* n */, f_semilinear,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level);
-#endif
-
 
 	ring_theory::longinteger_object go;
 	ring_theory::longinteger_domain D;
@@ -1902,7 +1887,8 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 
 		cout << "i : class_order_of_element : class_normalizer_order" << endl;
 		for (i = 0; i < nb_classes; i++) {
-			cout << i << " : " << class_order_of_element[i] << " : " << class_normalizer_order[i] << endl;
+			cout << i << " : " << class_order_of_element[i]
+				<< " : " << class_normalizer_order[i] << endl;
 		}
 
 
@@ -2122,7 +2108,6 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 	long int *class_normalizer_order;
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
-	//projective_space_with_action *PA;
 
 	if (f_v) {
 		cout << "magma_interface::read_and_report_conjugacy_classes_and_normalizers" << endl;
@@ -2148,23 +2133,6 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 				"after read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
 	}
 
-
-#if 0
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	int f_semilinear;
-
-	if (is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-	PA->init(
-		F, 3 /* n */, f_semilinear,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level);
-#endif
 
 
 	ring_theory::longinteger_object go;
@@ -2324,7 +2292,7 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 
 	if (f_v) {
 		cout << "magma_interface::read_and_report_conjugacy_classes_and_normalizers done" << endl;
-		}
+	}
 }
 
 
@@ -2412,6 +2380,400 @@ void magma_interface::write_as_magma_permutation_group(sims *S,
 		}
 }
 
+void magma_interface::export_linear_code(
+		std::string &fname,
+		field_theory::finite_field *F,
+		int *genma, int n, int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "magma_interface::export_linear_code" << endl;
+	}
+
+	ofstream ost(fname);
+	int i, j, a;
+
+	ost << "K<w> := GF(" << F->q << ");" << endl;
+	ost << "V := VectorSpace(K, " << n << ");" << endl;
+	ost << "C := LinearCode(sub<V |" << endl;
+	for (i = 0; i < k; i++) {
+		ost << "[";
+		for (j = 0; j < n; j++) {
+			a = genma[i * n + j];
+			if (F->e == 1) {
+				ost << a;
+			}
+			else {
+				if (a <= 1) {
+					ost << a;
+				}
+				else {
+					ost << "w^" << F->log_alpha(a);
+				}
+			}
+			if (j < n - 1) {
+				ost << ",";
+			}
+		}
+		ost << "]";
+		if (i < k - 1) {
+			ost << "," << endl;
+		}
+		else {
+			ost << ">);" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "magma_interface::export_linear_code done" << endl;
+	}
+}
+
+void magma_interface::read_permutation_group(std::string &fname,
+	int degree, int *&gens, int &nb_gens, int &go,
+	int verbose_level)
+{
+	{
+	ifstream fp(fname);
+	int i, j, a;
+
+
+	fp >> go;
+	fp >> nb_gens;
+	cout << "go = " << go << " nb_gens = " << nb_gens << endl;
+	gens = NEW_int(nb_gens * degree);
+	for (i = 0; i < nb_gens; i++) {
+		for (j = 0; j < degree; j++) {
+			fp >> a;
+			a--;
+			gens[i * degree + j] = a;
+			}
+		}
+	}
+}
+
+void magma_interface::run_magma_file(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string cmd;
+
+	cmd.assign(orbiter_kernel_system::Orbiter->magma_path);
+	cmd.append("magma ");
+	cmd.append(fname);
+
+	if (f_v) {
+		cout << "executing: " << cmd << endl;
+	}
+	system(cmd.c_str());
+}
+
+void magma_interface::normalizer_in_Sym_n(
+		std::string &fname_base,
+	int group_order, int *Table, int *gens, int nb_gens,
+	int *&N_gens, int &N_nb_gens, int &N_go,
+	int verbose_level)
+{
+	string fname_magma;
+	string fname_output;
+	int i;
+	combinatorics::combinatorics_domain Combi;
+	orbiter_kernel_system::file_io Fio;
+
+	fname_magma.assign(fname_base);
+	fname_magma.append(".magma");
+	fname_output.assign(fname_base);
+	fname_output.append(".txt");
+
+
+	{
+		ofstream fp(fname_magma);
+
+		fp << "S := Sym(" << group_order << ");" << endl;
+
+
+		fp << "G := PermutationGroup< " << group_order << " | " << endl;
+		for (i = 0; i < nb_gens; i++) {
+			Combi.perm_print_counting_from_one(fp,
+				Table + gens[i] * group_order, group_order);
+			if (i < nb_gens - 1) {
+				fp << ", " << endl;
+				}
+			}
+		fp << " >;" << endl;
+
+		fp << "N := Normalizer(S, G);" << endl;
+		fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
+		fp << "printf \"%o\", #N; printf \"\\n\";" << endl;
+		fp << "printf \"%o\", #Generators(N); printf \"\\n\";" << endl;
+		fp << "for h := 1 to #Generators(N) do for i := 1 to "
+			<< group_order << " do printf \"%o\", i^N.h; printf \" \"; "
+			"if i mod 25 eq 0 then printf \"\n\"; end if; end for; "
+			"printf \"\\n\"; end for;" << endl;
+		fp << "UnsetOutputFile();" << endl;
+	}
+
+
+	if (Fio.file_size(fname_output) == 0) {
+
+		run_magma_file(fname_magma, verbose_level);
+		if (Fio.file_size(fname_output) == 0) {
+			cout << "please run magma on the file " << fname_magma << endl;
+			cout << "for instance, try" << endl;
+			cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
+			exit(1);
+		}
+	}
+
+	cout << "normalizer command in MAGMA has finished, written file "
+		<< fname_output << " of size " << Fio.file_size(fname_output) << endl;
+
+
+	read_permutation_group(fname_output,
+			group_order, N_gens, N_nb_gens, N_go, verbose_level);
+
+#if 0
+	{
+	ifstream fp(fname_output);
+
+
+	fp >> N_go;
+	fp >> N_nb_gens;
+	cout << "N_go = " << N_go << " nb_gens = " << N_nb_gens << endl;
+	N_gens = NEW_int(N_nb_gens * group_order);
+	for (i = 0; i < N_nb_gens; i++) {
+		for (j = 0; j < group_order; j++) {
+			fp >> a;
+			a--;
+			N_gens[i * group_order + j] = a;
+			}
+		}
+	}
+#endif
+
+}
+
+
+
+#if 0
+magma_interface::magma_interface()
+{
+	if (Orbiter == NULL) {
+		cout << "magma_interface::magma_interface The_Orbiter_session == NULL" << endl;
+		exit(1);
+	}
+	Orbiter_session = Orbiter;
+}
+
+magma_interface::~magma_interface()
+{
+}
+
+void magma_interface::write_permutation_group(std::string &fname_base,
+	int group_order, int *Table, int *gens, int nb_gens,
+	int verbose_level)
+{
+	string fname;
+	int i;
+	combinatorics::combinatorics_domain Combi;
+	file_io Fio;
+
+	fname.assign(fname_base);
+	fname.append(".magma");
+	{
+		ofstream fp(fname);
+
+		fp << "G := PermutationGroup< " << group_order << " | " << endl;
+		for (i = 0; i < nb_gens; i++) {
+			Combi.perm_print_counting_from_one(fp,
+					Table + gens[i] * group_order,
+					group_order);
+			if (i < nb_gens - 1) {
+				fp << ", " << endl;
+				}
+			}
+		fp << " >;" << endl;
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+}
+
+
+void magma_interface::orbit_of_matrix_group_on_vector(
+		std::string &fname_base,
+	int d, int q,
+	int *initial_vector, int **gens, int nb_gens,
+	int &orbit_length,
+	int verbose_level)
+{
+	string fname_magma;
+	string fname_output;
+	int i, j;
+	combinatorics::combinatorics_domain Combi;
+	file_io Fio;
+
+	fname_magma.assign(fname_base);
+	fname_magma.append(".magma");
+	fname_output.assign(fname_base);
+	fname_output.append(".txt");
+
+	{
+		ofstream fp(fname_magma);
+
+
+		fp << "G := MatrixGroup< " << d << ", GF(" << q << ") | " << endl;
+		for (i = 0; i < nb_gens; i++) {
+			fp << "[";
+			for (j = 0; j < d * d; j++) {
+				fp << gens[i][j];
+				if (j < d * d - 1) {
+					fp << ",";
+					}
+			}
+			fp << "]";
+			if (i < nb_gens - 1) {
+				fp << ", " << endl;
+				}
+			}
+		fp << " >;" << endl;
+
+		fp << "V := RSpace(G);" << endl;
+		fp << "u := V![";
+		for (j = 0; j < d; j++) {
+			fp << initial_vector[j];
+			if (j < d - 1) {
+				fp << ",";
+				}
+		}
+
+		fp << "];" << endl;
+		fp << "O := Orbit(G,u);" << endl;
+
+
+		fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
+		fp << "printf \"%o\", #O; printf \"\\n\";" << endl;
+		fp << "UnsetOutputFile();" << endl;
+	}
+
+
+	if (Fio.file_size(fname_output) == 0) {
+
+		run_magma_file(fname_magma, verbose_level);
+		if (Fio.file_size(fname_output) == 0) {
+			cout << "please run magma on the file " << fname_magma << endl;
+			cout << "for instance, try" << endl;
+			cout << Orbiter_session->magma_path << "magma " << fname_magma << endl;
+			exit(1);
+		}
+	}
+
+	cout << "orbit command in MAGMA has finished, written file "
+		<< fname_output << " of size " << Fio.file_size(fname_output) << endl;
+
+
+
+	{
+	ifstream fp(fname_output);
+
+
+	fp >> orbit_length;
+	}
+
+}
+
+
+void magma_interface::orbit_of_matrix_group_on_subspaces(
+	std::string &fname_base,
+	int d, int q, int k,
+	int *initial_subspace, int **gens, int nb_gens,
+	int &orbit_length,
+	int verbose_level)
+{
+	string fname_magma;
+	string fname_output;
+	int i, j;
+	combinatorics::combinatorics_domain Combi;
+	file_io Fio;
+
+	fname_magma.assign(fname_base);
+	fname_magma.append(".magma");
+	fname_output.assign(fname_base);
+	fname_output.append(".txt");
+
+	{
+		ofstream fp(fname_magma);
+
+
+		fp << "G := MatrixGroup< " << d << ", GF(" << q << ") | " << endl;
+		for (i = 0; i < nb_gens; i++) {
+			fp << "[";
+			for (j = 0; j < d * d; j++) {
+				fp << gens[i][j];
+				if (j < d * d - 1) {
+					fp << ",";
+					}
+			}
+			fp << "]";
+			if (i < nb_gens - 1) {
+				fp << ", " << endl;
+				}
+			}
+		fp << " >;" << endl;
+
+		fp << "V := RSpace(G);" << endl;
+		for (i = 0; i < k; i++) {
+			fp << "u" << i << " := V![";
+			for (j = 0; j < d; j++) {
+				fp << initial_subspace[i * d + j];
+				if (j < d - 1) {
+					fp << ",";
+					}
+			}
+			fp << "];" << endl;
+		}
+
+		fp << "W := sub< V | ";
+		for (i = 0; i < k; i++) {
+			fp << "u" << i;
+			if (i < k - 1) {
+				fp << ", ";
+			}
+		}
+		fp << " >;" << endl;
+		fp << "O := Orbit(G,W);" << endl;
+
+
+		fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
+		fp << "printf \"%o\", #O; printf \"\\n\";" << endl;
+		fp << "UnsetOutputFile();" << endl;
+	}
+
+
+	if (Fio.file_size(fname_output) == 0) {
+		run_magma_file(fname_magma, verbose_level);
+		if (Fio.file_size(fname_output) == 0) {
+			cout << "please run magma on the file " << fname_magma << endl;
+			cout << "for instance, try" << endl;
+			cout << Orbiter_session->magma_path << "magma " << fname_magma << endl;
+			exit(1);
+		}
+	}
+
+	cout << "orbit command in MAGMA has finished, written file "
+		<< fname_output << " of size " << Fio.file_size(fname_output) << endl;
+
+
+
+	{
+	ifstream fp(fname_output);
+
+
+	fp >> orbit_length;
+	}
+
+}
+
+#endif
 
 
 }}}

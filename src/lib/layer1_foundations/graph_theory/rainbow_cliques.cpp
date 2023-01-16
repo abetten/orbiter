@@ -306,7 +306,8 @@ int rainbow_cliques::find_candidates(
 }
 
 void rainbow_cliques::clique_found(
-		int *current_clique, int verbose_level)
+		int *current_clique,
+		int verbose_level)
 {
 	int i;
 	

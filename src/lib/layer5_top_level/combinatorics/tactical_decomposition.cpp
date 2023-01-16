@@ -173,7 +173,7 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 
 }
 
-void tactical_decomposition::report(int f_enter_math, ostream &ost)
+void tactical_decomposition::report(int f_enter_math, std::ostream &ost)
 {
 #if 0
 	Inc->get_and_print_tactical_decomposition_scheme_tex(

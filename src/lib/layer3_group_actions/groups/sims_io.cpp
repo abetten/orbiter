@@ -228,7 +228,7 @@ void sims::print_generators()
 	cout << endl;
 }
 
-void sims::print_generators_tex(ostream &ost)
+void sims::print_generators_tex(std::ostream &ost)
 {
 	int i, j, nbg, nbg1, gen_idx, cnt, f_first;
 
@@ -354,14 +354,14 @@ void sims::print_generator_depth_and_perm()
 		}
 }
 
-void sims::print_group_order(ostream &ost)
+void sims::print_group_order(std::ostream &ost)
 {
 	ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go;
 }
 
-void sims::print_group_order_factored(ostream &ost)
+void sims::print_group_order_factored(std::ostream &ost)
 {
 	int i, j, f_first = TRUE;
 

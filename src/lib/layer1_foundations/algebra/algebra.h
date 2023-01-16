@@ -137,8 +137,8 @@ public:
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
 	void display_all_PHG_elements(int n, int q);
-	void test_unipoly();
-	void test_unipoly2();
+	void test_unipoly(field_theory::finite_field *F);
+	void test_unipoly2(field_theory::finite_field *F);
 	int is_diagonal_matrix(int *A, int n);
 
 

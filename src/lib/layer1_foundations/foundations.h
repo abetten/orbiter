@@ -575,7 +575,6 @@ namespace orbiter_kernel_system {
 	class file_io;
 	class file_output;
 	class latex_interface;
-	class magma_interface;
 	class mem_object_registry_entry;
 	class mem_object_registry;
 	class memory_object;
@@ -601,6 +600,7 @@ namespace orthogonal_geometry {
 	class orthogonal_group;
 	class orthogonal_indexing;
 	class orthogonal;
+	class quadratic_form_list_coding;
 	class quadratic_form;
 	class unusual_model;
 
@@ -826,6 +826,7 @@ enum symbol_table_object_type {
 	t_formula,
 	t_cubic_surface,
 	t_quartic_curve,
+	t_BLT_set,
 	t_classification_of_cubic_surfaces_with_double_sixes,
 	t_collection,
 	t_geometric_object,

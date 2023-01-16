@@ -553,7 +553,7 @@ void int_vec::print_dense(std::ostream &ost, int *v, int len)
 }
 
 
-void int_vec::print_Cpp(ostream &ost, int *v, int len)
+void int_vec::print_Cpp(std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -572,7 +572,7 @@ void int_vec::print_Cpp(ostream &ost, int *v, int len)
 	ost << " }";
 }
 
-void int_vec::print_GAP(ostream &ost, int *v, int len)
+void int_vec::print_GAP(std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -946,7 +946,8 @@ void int_vec::matrix_print_ost(std::ostream &ost, int *p, int m, int n)
 	matrix_print_ost(ost, p, m, n, w);
 }
 
-void int_vec::matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n)
+void int_vec::matrix_print_makefile_style_ost(
+		std::ostream &ost, int *p, int m, int n)
 {
 	int w;
 
@@ -967,7 +968,8 @@ void int_vec::matrix_print_tight(int *p, int m, int n)
 	matrix_print(p, m, n, 0);
 }
 
-void int_vec::matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w)
+void int_vec::matrix_print_ost(
+		std::ostream &ost, int *p, int m, int n, int w)
 {
 	int i, j;
 
@@ -982,7 +984,8 @@ void int_vec::matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w)
 	}
 }
 
-void int_vec::matrix_print_makefile_style_ost(std::ostream &ost, int *p, int m, int n, int w)
+void int_vec::matrix_print_makefile_style_ost(
+		std::ostream &ost, int *p, int m, int n, int w)
 {
 	int i, j;
 
@@ -1052,7 +1055,8 @@ void int_vec::distribution_print(std::ostream &ost,
 	}
 }
 
-void int_vec::distribution_print_to_string(std::string &str, int *val, int *mult, int len)
+void int_vec::distribution_print_to_string(
+		std::string &str, int *val, int *mult, int len)
 {
 	ostringstream s;
 	int i;
@@ -1122,7 +1126,8 @@ int int_vec::hash(int *v, int len, int bit_length)
 }
 
 
-void int_vec::create_string_with_quotes(std::string &str, int *v, int len)
+void int_vec::create_string_with_quotes(
+		std::string &str, int *v, int len)
 {
 	ostringstream s;
 	int i;

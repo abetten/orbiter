@@ -126,7 +126,7 @@ void finite_field::print_tables()
 }
 
 
-void finite_field::display_T2(ostream &ost)
+void finite_field::display_T2(std::ostream &ost)
 {
 	int i;
 
@@ -137,7 +137,7 @@ void finite_field::display_T2(ostream &ost)
 	}
 }
 
-void finite_field::display_T3(ostream &ost)
+void finite_field::display_T3(std::ostream &ost)
 {
 	int i;
 
@@ -148,7 +148,7 @@ void finite_field::display_T3(ostream &ost)
 	}
 }
 
-void finite_field::display_N2(ostream &ost)
+void finite_field::display_N2(std::ostream &ost)
 {
 	int i;
 
@@ -159,7 +159,7 @@ void finite_field::display_N2(ostream &ost)
 	}
 }
 
-void finite_field::display_N3(ostream &ost)
+void finite_field::display_N3(std::ostream &ost)
 {
 	int i;
 
@@ -170,7 +170,7 @@ void finite_field::display_N3(ostream &ost)
 	}
 }
 
-void finite_field::print_integer_matrix_zech(ostream &ost,
+void finite_field::print_integer_matrix_zech(std::ostream &ost,
 		int *p, int m, int n)
 {
 	int i, j, a, h;
@@ -285,7 +285,7 @@ void finite_field::print_indicator_square_nonsquare(int a)
 	}
 }
 
-void finite_field::print_element(ostream &ost, int a)
+void finite_field::print_element(std::ostream &ost, int a)
 {
 	int width;
 
@@ -305,7 +305,7 @@ void finite_field::print_element(ostream &ost, int a)
 	}
 }
 
-void finite_field::print_element_str(stringstream &ost, int a)
+void finite_field::print_element_str(std::stringstream &ost, int a)
 {
 	int width;
 
@@ -325,7 +325,7 @@ void finite_field::print_element_str(stringstream &ost, int a)
 	}
 }
 
-void finite_field::print_element_with_symbol(ostream &ost,
+void finite_field::print_element_with_symbol(std::ostream &ost,
 		int a, int f_exponential, int width, std::string &symbol)
 {
 	int b;
@@ -365,7 +365,7 @@ void finite_field::print_element_with_symbol(ostream &ost,
 	}
 }
 
-void finite_field::print_element_with_symbol_str(stringstream &ost,
+void finite_field::print_element_with_symbol_str(std::stringstream &ost,
 		int a, int f_exponential, int width, std::string &symbol)
 {
 	int b;
@@ -405,7 +405,7 @@ void finite_field::print_element_with_symbol_str(stringstream &ost,
 	}
 }
 
-void finite_field::int_vec_print_field_elements(ostream &ost, int *v, int len)
+void finite_field::int_vec_print_field_elements(std::ostream &ost, int *v, int len)
 {
 	int i;
 	ost << "(";
@@ -418,7 +418,7 @@ void finite_field::int_vec_print_field_elements(ostream &ost, int *v, int len)
 	ost << ")";
 }
 
-void finite_field::int_vec_print_elements_exponential(ostream &ost,
+void finite_field::int_vec_print_elements_exponential(std::ostream &ost,
 		int *v, int len, std::string &symbol_for_print)
 {
 	int i;
@@ -562,7 +562,7 @@ void finite_field::multiplication_table_reordered_save_csv(int verbose_level)
 }
 
 
-void finite_field::latex_addition_table(ostream &f,
+void finite_field::latex_addition_table(std::ostream &f,
 		int f_elements_exponential, std::string &symbol_for_print)
 {
 	int i, j, k;
@@ -596,7 +596,7 @@ void finite_field::latex_addition_table(ostream &f,
 	f << "\\end{array}" << endl;
 }
 
-void finite_field::latex_multiplication_table(ostream &f,
+void finite_field::latex_multiplication_table(std::ostream &f,
 		int f_elements_exponential, std::string &symbol_for_print)
 {
 	int i, j, k;
@@ -631,7 +631,7 @@ void finite_field::latex_multiplication_table(ostream &f,
 	f << "\\end{array}" << endl;
 }
 
-void finite_field::latex_matrix(ostream &f, int f_elements_exponential,
+void finite_field::latex_matrix(std::ostream &f, int f_elements_exponential,
 		std::string &symbol_for_print, int *M, int m, int n)
 {
 	int i, j;
@@ -665,7 +665,7 @@ void finite_field::power_table(int t,
 }
 
 
-void finite_field::cheat_sheet(ostream &f, int verbose_level)
+void finite_field::cheat_sheet(std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -750,7 +750,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 }
 
-void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
+void finite_field::cheat_sheet_subfields(std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//const char *symbol_for_print = "\\alpha";
@@ -916,7 +916,7 @@ void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_leve
 }
 
 
-void finite_field::cheat_sheet_addition_table(ostream &f, int verbose_level)
+void finite_field::cheat_sheet_addition_table(std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -954,7 +954,7 @@ void finite_field::cheat_sheet_addition_table(ostream &f, int verbose_level)
 	}
 }
 
-void finite_field::cheat_sheet_multiplication_table(ostream &f, int verbose_level)
+void finite_field::cheat_sheet_multiplication_table(std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

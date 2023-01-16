@@ -168,7 +168,6 @@ public:
 
 
 	int f_compute_starter;
-	poset_classification::poset_classification_control *starter_control;
 
 	int f_prepare_lifting_single_case;
 	int prepare_lifting_single_case_case_number;

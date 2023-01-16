@@ -918,8 +918,10 @@ void poset_orbit_node::downstep_implicit_fusion(
 }
 
 
-void poset_orbit_node::find_extensions(poset_classification *gen,
-		groups::schreier &O, actions::action *AR, int f_using_invariant_subset,
+void poset_orbit_node::find_extensions(
+		poset_classification *gen,
+		groups::schreier &O,
+		actions::action *AR, int f_using_invariant_subset,
 	int lvl, 
 	int verbose_level)
 // called by downstep

@@ -23,8 +23,10 @@ static void hadamard_classify_early_test_function(long int *S, int len,
 
 
 
-void hadamard_classify::init(int n, int f_draw,
-		int verbose_level, int verbose_level_clique)
+void hadamard_classify::init(int n,
+		int f_draw,
+		int verbose_level,
+		int verbose_level_clique)
 {
 	int f_v = (verbose_level = 1);
 	int i, j, k, d, cnt, cnt1;

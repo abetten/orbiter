@@ -1345,7 +1345,8 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 	}
 }
 
-void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one, int verbose_level)
+void algebra_global_with_action::do_random(int q, int d,
+		int f_no_eigenvalue_one, int verbose_level)
 // not called at all
 {
 	int f_v = (verbose_level >= 1);
@@ -2797,7 +2798,8 @@ void algebra_global_with_action::matrix_convert_to_numerical(
 
 
 
-void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
+void algebra_global_with_action::young_symmetrizer(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -556,7 +556,8 @@ public:
 	void init_equation_and_bitangents(quartic_curve_domain *Dom,
 			int *eqn15, long int *bitangents28,
 			int verbose_level);
-	void init_equation_and_bitangents_and_compute_properties(quartic_curve_domain *Dom,
+	void init_equation_and_bitangents_and_compute_properties(
+			quartic_curve_domain *Dom,
 			int *eqn15, long int *bitangents28,
 			int verbose_level);
 	void enumerate_points(int verbose_level);
@@ -689,7 +690,8 @@ public:
 		int line_idx,
 		int &plane1, int &plane2, int verbose_level);
 	void make_triads(int verbose_level);
-	void make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_level);
+	void make_trihedral_pair_disjointness_graph(
+			int *&Adj, int verbose_level);
 	void make_trihedral_pairs(int verbose_level);
 	void process_trihedral_pairs(int verbose_level);
 	int line_ai(int i);
@@ -724,10 +726,12 @@ public:
 	void prepare_clebsch_map(int ds, int ds_row, int &line1,
 		int &line2, int &transversal, int verbose_level);
 	void init_adjacency_matrix_of_lines(int verbose_level);
-	void init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_level);
+	void init_incidence_matrix_of_lines_vs_tritangent_planes(
+			int verbose_level);
 	void set_adjacency_matrix_of_lines(int i, int j);
 	int get_adjacency_matrix_of_lines(int i, int j);
-	int choose_tritangent_plane_for_Clebsch_map(int line_a, int line_b,
+	int choose_tritangent_plane_for_Clebsch_map(
+			int line_a, int line_b,
 				int transversal_line, int verbose_level);
 
 	void latex_table_of_double_sixes(std::ostream &ost);
@@ -749,7 +753,8 @@ public:
 	void print_set_of_lines_tex(std::ostream &ost, long int *v, int len);
 	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
-	int identify_Eckardt_point(int line1, int line2, int line3, int verbose_level);
+	int identify_Eckardt_point(
+			int line1, int line2, int line3, int verbose_level);
 
 };
 
@@ -843,9 +848,11 @@ public:
 
 	seventytwo_cases();
 	~seventytwo_cases();
-	void init(surface_domain *Surf, int f, int tritangent_plane_idx,
+	void init(
+			surface_domain *Surf, int f, int tritangent_plane_idx,
 			int *three_lines_idx, long int *three_lines,
-			int line_idx, int m1, int m2, int m3, int line_l1_l2_idx, int l1, int l2);
+			int line_idx, int m1, int m2, int m3,
+			int line_l1_l2_idx, int l1, int l2);
 	void compute_arc(surface_object *SO, int verbose_level);
 	// We have chosen a tritangent planes and we know the three lines m1, m2, m3 in it.
 	// The lines l1 and l2 intersect m1 in the first two points.
@@ -855,14 +862,20 @@ public:
 	// This makes up the arc of 6 points.
 	// They will be stored in P6[6].
 	void compute_partition(int verbose_level);
-	void compute_half_double_six(surface_object *SO, int verbose_level);
+	void compute_half_double_six(
+			surface_object *SO, int verbose_level);
 	void print();
 	void report_seventytwo_maps_line(std::ostream &ost);
 	void report_seventytwo_maps_top(std::ostream &ost);
-	void report_seventytwo_maps_bottom(std::ostream &ost);
-	void report_single_Clebsch_map(std::ostream &ost, int verbose_level);
-	void report_Clebsch_map_details(std::ostream &ost, surface_object *SO, int verbose_level);
-	void report_Clebsch_map_aut_coset(std::ostream &ost, int coset, int relative_order, int verbose_level);
+	void report_seventytwo_maps_bottom(
+			std::ostream &ost);
+	void report_single_Clebsch_map(
+			std::ostream &ost, int verbose_level);
+	void report_Clebsch_map_details(
+			std::ostream &ost, surface_object *SO, int verbose_level);
+	void report_Clebsch_map_aut_coset(
+			std::ostream &ost, int coset,
+			int relative_order, int verbose_level);
 };
 
 
@@ -903,21 +916,26 @@ public:
 	void compute_planes_and_dual_point_ranks(int verbose_level);
 	void print_planes_in_trihedral_pairs(std::ostream &ost);
 	void print_tritangent_planes(std::ostream &ost);
-	void print_single_tritangent_plane(std::ostream &ost, int plane_idx);
+	void print_single_tritangent_plane(
+			std::ostream &ost, int plane_idx);
 
-	void latex_table_of_trihedral_pairs(std::ostream &ost, int *T, int nb_T);
+	void latex_table_of_trihedral_pairs(
+			std::ostream &ost, int *T, int nb_T);
 	void latex_trihedral_pair(std::ostream &ost, int t_idx);
 	void make_equation_in_trihedral_form(int t_idx,
 		int *F_planes, int *G_planes, int &lambda, int *equation,
 		int verbose_level);
 	void print_equation_in_trihedral_form(std::ostream &ost,
 		int *F_planes, int *G_planes, int lambda);
-	void print_equation_in_trihedral_form_equation_only(std::ostream &ost,
+	void print_equation_in_trihedral_form_equation_only(
+			std::ostream &ost,
 		int *F_planes, int *G_planes, int lambda);
-	void make_and_print_equation_in_trihedral_form(std::ostream &ost, int t_idx);
+	void make_and_print_equation_in_trihedral_form(
+			std::ostream &ost, int t_idx);
 	void latex_table_of_trihedral_pairs_and_clebsch_system(
 		std::ostream &ost, int *T, int nb_T);
-	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
+	void latex_trihedral_pair(
+			std::ostream &ost, int *T, long int *TE);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 
@@ -980,11 +998,14 @@ public:
 			int verbose_level);
 	void substitute_semilinear(int *coeff_in, int *coeff_out,
 		int f_semilinear, int frob, int *Mtx_inv, int verbose_level);
-	void list_starter_configurations(long int *Lines, int nb_lines,
-			data_structures::set_of_sets *line_intersections, int *&Table, int &N,
+	void list_starter_configurations(
+			long int *Lines, int nb_lines,
+			data_structures::set_of_sets *line_intersections,
+			int *&Table, int &N,
 		int verbose_level);
 	void create_starter_configuration(int line_idx, int subset_idx,
-			data_structures::set_of_sets *line_neighbors, long int *Lines, long int *S,
+			data_structures::set_of_sets *line_neighbors,
+			long int *Lines, long int *S,
 		int verbose_level);
 	void wedge_to_klein(int *W, int *K);
 	void klein_to_wedge(int *K, int *W);
@@ -992,9 +1013,11 @@ public:
 	void line_to_wedge_vec(long int *Line_rk, long int *Wedge_rk, int len);
 	void line_to_klein_vec(long int *Line_rk, long int *Klein_rk, int len);
 	long int klein_to_wedge(long int klein_rk);
-	void klein_to_wedge_vec(long int *Klein_rk, long int *Wedge_rk, int len);
+	void klein_to_wedge_vec(
+			long int *Klein_rk, long int *Wedge_rk, int len);
 	void save_lines_in_three_kinds(std::string &fname_csv,
-		long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines);
+		long int *Lines_wedge, long int *Lines,
+		long int *Lines_klein, int nb_lines);
 	int build_surface_from_double_six_and_count_Eckardt_points(
 			long int *double_six, int verbose_level);
 
@@ -1004,19 +1027,24 @@ public:
 		int *The_six_plane_equations, int *The_surface_equations,
 		int verbose_level);
 		// The_surface_equations[(q + 1) * 20]
-	long int plane_from_three_lines(long int *three_lines, int verbose_level);
-	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
+	long int plane_from_three_lines(
+			long int *three_lines, int verbose_level);
+	void Trihedral_pairs_to_planes(
+			long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
 		// Planes_by_rank[nb_trihedral_pairs * 6]
 	void prepare_system_from_FG(int *F_planes, int *G_planes,
 		int lambda, int *&system, int verbose_level);
 	void compute_nine_lines(int *F_planes, int *G_planes,
 		long int *nine_lines, int verbose_level);
-	void compute_nine_lines_by_dual_point_ranks(long int *F_planes_rank,
-		long int *G_planes_rank, long int *nine_lines, int verbose_level);
+	void compute_nine_lines_by_dual_point_ranks(
+			long int *F_planes_rank,
+		long int *G_planes_rank,
+		long int *nine_lines, int verbose_level);
 	void tritangent_plane_to_trihedral_pair_and_position(
 		int tritangent_plane_idx,
-		int &trihedral_pair_idx, int &position, int verbose_level);
+		int &trihedral_pair_idx,
+		int &position, int verbose_level);
 	void do_arc_lifting_with_two_lines(
 		long int *Arc6, int p1_idx, int p2_idx, int partition_rk,
 		long int line1, long int line2,
@@ -1033,7 +1061,8 @@ public:
 	void unrank_line(int *v, long int rk);
 	void unrank_lines(int *v, long int *Rk, int nb);
 	long int rank_line(int *v);
-	void build_cubic_surface_from_lines(int len, long int *S, int *coeff,
+	void build_cubic_surface_from_lines(
+			int len, long int *S, int *coeff,
 		int verbose_level);
 	int rank_of_system(int len, long int *S,
 			int verbose_level);
@@ -1048,11 +1077,14 @@ public:
 		long int *Lines, int nb_lines,
 		int *&Intersection_pt, int *&Intersection_pt_idx,
 		int verbose_level);
-	void lines_meet3_and_skew3(long int *lines_meet3, long int *lines_skew3,
+	void lines_meet3_and_skew3(
+			long int *lines_meet3, long int *lines_skew3,
 		long int *&lines, int &nb_lines, int verbose_level);
-	void perp_of_three_lines(long int *three_lines, long int *&perp, int &perp_sz,
+	void perp_of_three_lines(
+			long int *three_lines, long int *&perp, int &perp_sz,
 		int verbose_level);
-	int perp_of_four_lines(long int *four_lines, long int *trans12, int &perp_sz,
+	int perp_of_four_lines(
+			long int *four_lines, long int *trans12, int &perp_sz,
 		int verbose_level);
 	int rank_of_four_lines_on_Klein_quadric(long int *four_lines,
 		int verbose_level);
@@ -1080,7 +1112,8 @@ public:
 	int compute_rank_of_any_four(
 			long int *&Rk, int &nb_subsets, long int *lines,
 		int sz, int verbose_level);
-	void rearrange_lines_according_to_a_given_double_six(long int *Lines,
+	void rearrange_lines_according_to_a_given_double_six(
+			long int *Lines,
 			int *given_double_six,
 			long int *New_lines,
 			int verbose_level);
@@ -1089,12 +1122,15 @@ public:
 	void rearrange_lines_according_to_starter_configuration(
 		long int *Lines, long int *New_lines,
 		int line_idx, int subset_idx, int *Adj,
-		data_structures::set_of_sets *line_intersections, int verbose_level);
+		data_structures::set_of_sets *line_intersections,
+		int verbose_level);
 	int intersection_of_four_lines_but_not_b6(int *Adj,
 		int *four_lines_idx, int b6, int verbose_level);
-	int intersection_of_five_lines(int *Adj, int *five_lines_idx,
+	int intersection_of_five_lines(
+			int *Adj, int *five_lines_idx,
 		int verbose_level);
-	void rearrange_lines_according_to_a_given_double_six(long int *Lines,
+	void rearrange_lines_according_to_a_given_double_six(
+			long int *Lines,
 		long int *New_lines, long int *double_six, int verbose_level);
 	void create_lines_from_plane_equations(int *The_plane_equations,
 		long int *Lines, int verbose_level);
@@ -1111,11 +1147,14 @@ public:
 	void print_equation(std::ostream &ost, int *coeffs);
 	void print_equation_maple(std::stringstream &ost, int *coeffs);
 	void print_equation_tex(std::ostream &ost, int *coeffs);
-	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void print_equation_with_line_breaks_tex(
+			std::ostream &ost, int *coeffs);
 	void print_equation_tex_lint(std::ostream &ost, long int *coeffs);
 	void latex_double_six(std::ostream &ost, long int *double_six);
-	void make_spreadsheet_of_lines_in_three_kinds(data_structures::spreadsheet *&Sp,
-		long int *Wedge_rk, long int *Line_rk, long int *Klein_rk, int nb_lines,
+	void make_spreadsheet_of_lines_in_three_kinds(
+			data_structures::spreadsheet *&Sp,
+		long int *Wedge_rk, long int *Line_rk,
+		long int *Klein_rk, int nb_lines,
 		int verbose_level);
 	void print_equation_wrapped(std::ostream &ost, int *the_equation);
 	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
@@ -1157,17 +1196,20 @@ public:
 	surface_object *create_Eckardt_surface(int a, int b,
 		int &alpha, int &beta,
 		int verbose_level);
-	void create_equation_Eckardt_surface(int a, int b, int *coeff, int verbose_level);
+	void create_equation_Eckardt_surface(
+			int a, int b, int *coeff, int verbose_level);
 	int test_Eckardt_form_alpha_beta(int *coeff, int &alpha, int &beta,
 		int verbose_level);
 	void create_Eckardt_double_six(long int *double_six, int a, int b,
 		int verbose_level);
-	void create_Eckardt_fifteen_lines(long int *fifteen_lines, int a, int b,
+	void create_Eckardt_fifteen_lines(
+			long int *fifteen_lines, int a, int b,
 		int verbose_level);
 
 };
 
-void callback_surface_domain_sstr_line_label(std::stringstream &sstr, long int pt, void *data);
+void callback_surface_domain_sstr_line_label(
+		std::stringstream &sstr, long int pt, void *data);
 
 // #############################################################################
 // surface_object_properties.cpp
@@ -1191,15 +1233,21 @@ public:
 
 
 
-	long int *Eckardt_points; // the orbiter ranks of the Eckardt points
-	int *Eckardt_points_index; // index into SO->Pts
-	int *Eckardt_points_schlaefli_labels; // Schlaefli labels
+	long int *Eckardt_points;
+		// the orbiter ranks of the Eckardt points
+	int *Eckardt_points_index;
+		// index into SO->Pts
+	int *Eckardt_points_schlaefli_labels;
+		// Schlaefli labels
 	int *Eckardt_point_bitvector_in_Schlaefli_labeling;
-		// true if the i-th Eckardt point in the Schlaefli labeling is present
+		// true if the i-th Eckardt point
+		// in the Schlaefli labeling is present
 	int nb_Eckardt_points;
 
-	int *Eckardt_points_line_type; // [nb_Eckardt_points + 1]
-	int *Eckardt_points_plane_type; // [SO->Surf->P->Nb_subspaces[2]]
+	int *Eckardt_points_line_type;
+		// [nb_Eckardt_points + 1]
+	int *Eckardt_points_plane_type;
+		// [SO->Surf->P->Nb_subspaces[2]]
 
 
 
@@ -1210,12 +1258,17 @@ public:
 
 	long int *Hesse_planes;
 	int nb_Hesse_planes;
-	int *Eckardt_point_Hesse_plane_incidence; // [nb_Eckardt_points * nb_Hesse_planes]
+	int *Eckardt_point_Hesse_plane_incidence;
+		// [nb_Eckardt_points * nb_Hesse_planes]
 
 
 	int nb_axes;
-	int *Axes_index; // [nb_axes] two times the index into trihedral pairs +0 or +1
-	long int *Axes_Eckardt_points; // [nb_axes * 3] the Eckardt points in Schlaefli labels that lie on the axes
+	int *Axes_index;
+		// [nb_axes] two times the index
+		// into trihedral pairs +0 or +1
+	long int *Axes_Eckardt_points;
+		// [nb_axes * 3] the Eckardt points
+		// in Schlaefli labels that lie on the axes
 	long int *Axes_line_rank;
 
 
@@ -1241,20 +1294,26 @@ public:
 	smooth_surface_object_properties *SmoothProperties;
 
 
-	int *Adj_line_intersection_graph; // [SO->nb_lines * SO->nb_lines]
+	int *Adj_line_intersection_graph;
+		// [SO->nb_lines * SO->nb_lines]
 	data_structures::set_of_sets *Line_neighbors;
-	int *Line_intersection_pt; // [SO->nb_lines * SO->nb_lines]
-	int *Line_intersection_pt_idx; // [SO->nb_lines * SO->nb_lines]
+	int *Line_intersection_pt;
+		// [SO->nb_lines * SO->nb_lines]
+	int *Line_intersection_pt_idx;
+		// [SO->nb_lines * SO->nb_lines]
 
 
-	int *gradient; // [4 * SO->Surf->Poly2_4->get_nb_monomials()]
+	int *gradient;
+		// [4 * SO->Surf->Poly2_4->get_nb_monomials()]
 
 	long int *singular_pts;
 	int nb_singular_pts;
 	int nb_non_singular_pts;
 
-	long int *tangent_plane_rank_global; // [SO->nb_pts]
-	long int *tangent_plane_rank_dual; // [nb_non_singular_pts]
+	long int *tangent_plane_rank_global;
+		// [SO->nb_pts]
+	long int *tangent_plane_rank_dual;
+		// [nb_non_singular_pts]
 
 	surface_object_properties();
 	~surface_object_properties();
@@ -1295,7 +1354,8 @@ public:
 	void print_points_on_surface(std::ostream &ost);
 	void print_all_points_on_surface(std::ostream &ost);
 	void print_points_on_lines(std::ostream &ost);
-	void print_points_on_surface_but_not_on_a_line(std::ostream &ost);
+	void print_points_on_surface_but_not_on_a_line(
+			std::ostream &ost);
 	void print_double_sixes(std::ostream &ost);
 	void print_half_double_sixes(std::ostream &ost);
 	void print_half_double_sixes_numerically(std::ostream &ost);
@@ -1311,11 +1371,15 @@ public:
 		long int *Arc, long int *Blown_up_lines, int verbose_level);
 	void clebsch_map_latex(std::ostream &ost,
 			long int *Clebsch_map, int *Clebsch_coeff);
-	void compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx,
+	void compute_reduced_set_of_points_not_on_lines_wrt_P(
+			int P_idx,
 			int *&f_deleted, int verbose_level);
-	int test_full_del_pezzo(int P_idx, int *f_deleted, int verbose_level);
+	int test_full_del_pezzo(
+			int P_idx, int *f_deleted, int verbose_level);
 	void create_summary_file(std::string &fname,
-			std::string &surface_label, std::string &col_postfix, int verbose_level);
+			std::string &surface_label,
+			std::string &col_postfix,
+			int verbose_level);
 
 };
 
@@ -1350,29 +1414,43 @@ public:
 
 	surface_object();
 	~surface_object();
-	void init_equation_points_and_lines_only(surface_domain *Surf, int *eqn,
+	void init_equation_points_and_lines_only(
+			surface_domain *Surf, int *eqn,
 		int verbose_level);
-	void init_equation(surface_domain *Surf, int *eqn, int verbose_level);
+	void init_equation(
+			surface_domain *Surf, int *eqn, int verbose_level);
 	void enumerate_points(int verbose_level);
 	void enumerate_points_and_lines(int verbose_level);
-	void find_real_lines(std::vector<long int> &The_Lines, int verbose_level);
-	void init_with_27_lines(surface_domain *Surf, long int *Lines27, int *eqn,
-		int f_find_double_six_and_rearrange_lines, int verbose_level);
+	void find_real_lines(
+			std::vector<long int> &The_Lines,
+			int verbose_level);
+	void init_with_27_lines(
+			surface_domain *Surf, long int *Lines27, int *eqn,
+		int f_find_double_six_and_rearrange_lines,
+		int verbose_level);
 	void compute_properties(int verbose_level);
 	void recompute_properties(int verbose_level);
-	void find_double_six_and_rearrange_lines(long int *Lines, int verbose_level);
-	void identify_lines(long int *lines, int nb_lines, int *line_idx,
+	void find_double_six_and_rearrange_lines(
+			long int *Lines, int verbose_level);
+	void identify_lines(
+			long int *lines, int nb_lines, int *line_idx,
 		int verbose_level);
-	void print_nine_lines_latex(std::ostream &ost, long int *nine_lines,
+	void print_nine_lines_latex(
+			std::ostream &ost, long int *nine_lines,
 		int *nine_lines_idx);
 	int find_point(long int P, int &idx);
-	void export_something(std::string &what,
+	void export_something(
+			std::string &what,
 			std::string &fname_base, int verbose_level);
 	void latex_double_six(std::ostream &ost, int idx);
-	void latex_double_six_wedge(std::ostream &ost, int idx);
-	void latex_double_six_Klein(std::ostream &ost, int idx);
-	void latex_double_six_Pluecker_coordinates_transposed(std::ostream &ost, int idx);
-	void latex_double_six_Klein_transposed(std::ostream &ost, int idx);
+	void latex_double_six_wedge(
+			std::ostream &ost, int idx);
+	void latex_double_six_Klein(
+			std::ostream &ost, int idx);
+	void latex_double_six_Pluecker_coordinates_transposed(
+			std::ostream &ost, int idx);
+	void latex_double_six_Klein_transposed(
+			std::ostream &ost, int idx);
 	void print_lines_tex(std::ostream &ost);
 	void print_one_line_tex(std::ostream &ost, int idx);
 
@@ -1446,20 +1524,27 @@ public:
 	~surface_polynomial_domains();
 	void init(surface_domain *Surf, int verbose_level);
 	void init_large_polynomial_domains(int verbose_level);
-	void label_variables_3(ring_theory::homogeneous_polynomial_domain *HPD,
+	void label_variables_3(
+			ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_x123(ring_theory::homogeneous_polynomial_domain *HPD,
+	void label_variables_x123(
+			ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_4(ring_theory::homogeneous_polynomial_domain *HPD,
+	void label_variables_4(
+			ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_27(ring_theory::homogeneous_polynomial_domain *HPD,
+	void label_variables_27(
+			ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void label_variables_24(ring_theory::homogeneous_polynomial_domain *HPD,
+	void label_variables_24(
+			ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	int index_of_monomial(int *v);
-	void multiply_conic_times_linear(int *six_coeff, int *three_coeff,
+	void multiply_conic_times_linear(
+			int *six_coeff, int *three_coeff,
 		int *ten_coeff, int verbose_level);
-	void multiply_linear_times_linear_times_linear(int *three_coeff1,
+	void multiply_linear_times_linear_times_linear(
+			int *three_coeff1,
 		int *three_coeff2, int *three_coeff3, int *ten_coeff,
 		int verbose_level);
 	void multiply_linear_times_linear_times_linear_in_space(
@@ -1480,15 +1565,18 @@ public:
 		int *&f2, int *&f3, int verbose_level);
 	void assemble_tangent_quadric(int *f1, int *f2, int *f3,
 		int *&tangent_quadric, int verbose_level);
-	void compute_gradient(int *equation20, int *&gradient, int verbose_level);
-	long int compute_tangent_plane(int *pt_coords, int *equation20, int verbose_level);
+	void compute_gradient(
+			int *equation20, int *&gradient, int verbose_level);
+	long int compute_tangent_plane(
+			int *pt_coords, int *equation20, int verbose_level);
 	void print_clebsch_P(std::ostream &ost);
 	void print_clebsch_P_matrix_only(std::ostream &ost);
 	void print_clebsch_cubics(std::ostream &ost);
 	void print_system(std::ostream &ost, int *system);
 	void print_polynomial_domains(std::ostream &ost);
 	void print_equation_in_trihedral_form(std::ostream &ost,
-		int *the_six_plane_equations, int lambda, int *the_equation);
+		int *the_six_plane_equations,
+		int lambda, int *the_equation);
 
 };
 
@@ -1531,7 +1619,8 @@ public:
 
 	web_of_cubic_curves();
 	~web_of_cubic_curves();
-	void init(surface_domain *Surf, long int *arc6, int verbose_level);
+	void init(surface_domain *Surf,
+			long int *arc6, int verbose_level);
 	void compute_web_of_cubic_curves(long int *arc6, int verbose_level);
 	void rank_of_foursubsets(int *&rk, int &N, int verbose_level);
 	void create_web_and_equations_based_on_four_tritangent_planes(
@@ -1541,7 +1630,8 @@ public:
 	void find_trihedral_pairs(int verbose_level);
 	void extract_six_curves_from_web(
 		int verbose_level);
-	void create_surface_equation_from_trihedral_pair(long int *arc6,
+	void create_surface_equation_from_trihedral_pair(
+			long int *arc6,
 		int t_idx, int *surface_equation,
 		int &lambda,
 		int verbose_level);
@@ -1549,7 +1639,8 @@ public:
 		long int *arc6, int t_idx,
 		int &lambda, int &lambda_rk,
 		int verbose_level);
-	void find_point_not_on_six_curves(int &pt, int &f_point_was_found,
+	void find_point_not_on_six_curves(
+			int &pt, int &f_point_was_found,
 		int verbose_level);
 	void print_lines(std::ostream &ost);
 	void print_trihedral_plane_equations(std::ostream &ost);
@@ -1560,7 +1651,8 @@ public:
 		int *The_surface_equations,
 		int lambda, int lambda_rk, std::ostream &ost);
 	void print_dual_point_ranks(std::ostream &ost);
-	void print_Eckardt_point_data(std::ostream &ost, int verbose_level);
+	void print_Eckardt_point_data(
+			std::ostream &ost, int verbose_level);
 	void report_basics(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void print_web_of_cubic_curves(long int *arc6, std::ostream &ost);

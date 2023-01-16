@@ -88,7 +88,7 @@ void mem_object_registry_entry::set_type_from_string(char *str)
 	}
 }
 
-void mem_object_registry_entry::print_type(ostream &ost)
+void mem_object_registry_entry::print_type(std::ostream &ost)
 {
 	if (object_type == POINTER_TYPE_INVALID) {
 		ost << "invalid entry";
@@ -204,7 +204,7 @@ void mem_object_registry_entry::print(int line)
 }
 
 
-void mem_object_registry_entry::print_csv(ostream &ost, int line)
+void mem_object_registry_entry::print_csv(std::ostream &ost, int line)
 {
 	data_structures::algorithms Algo;
 

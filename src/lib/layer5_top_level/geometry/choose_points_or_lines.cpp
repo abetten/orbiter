@@ -151,7 +151,8 @@ void choose_points_or_lines::init(const char *label, void *data,
 	transporter_inv = NEW_int(A->elt_size_in_int);
 }
 
-void choose_points_or_lines::compute_orbits_from_sims(groups::sims *G, int verbose_level)
+void choose_points_or_lines::compute_orbits_from_sims(
+		groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -168,7 +169,8 @@ void choose_points_or_lines::compute_orbits_from_sims(groups::sims *G, int verbo
 	FREE_OBJECT(Strong_gens);
 }
 
-void choose_points_or_lines::compute_orbits(groups::strong_generators *Strong_gens,
+void choose_points_or_lines::compute_orbits(
+		groups::strong_generators *Strong_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -249,7 +251,8 @@ void choose_points_or_lines::compute_orbits(groups::strong_generators *Strong_ge
 	}
 }
 
-void choose_points_or_lines::choose_orbit(int orbit_no,
+void choose_points_or_lines::choose_orbit(
+		int orbit_no,
 		int &f_hit_favorite, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

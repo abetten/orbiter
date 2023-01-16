@@ -368,7 +368,8 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 
 }
 
-void surface_domain_high_level::do_study_surface(field_theory::finite_field *F, int nb, int verbose_level)
+void surface_domain_high_level::do_study_surface(
+		field_theory::finite_field *F, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1357,7 +1358,8 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 }
 
 void surface_domain_high_level::report_singular_surfaces(std::ostream &ost,
-		struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level)
+		struct cubic_surface_data_set *Data,
+		int nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1425,7 +1427,8 @@ void surface_domain_high_level::report_singular_surfaces(std::ostream &ost,
 
 
 void surface_domain_high_level::report_non_singular_surfaces(std::ostream &ost,
-		struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level)
+		struct cubic_surface_data_set *Data,
+		int nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1497,7 +1500,8 @@ void surface_domain_high_level::report_non_singular_surfaces(std::ostream &ost,
 
 void surface_domain_high_level::report_surfaces_by_lines(std::ostream &ost,
 		struct cubic_surface_data_set *Data,
-		data_structures::tally &T, int verbose_level)
+		data_structures::tally &T,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1574,7 +1578,8 @@ struct table_surfaces_field_order {
 
 };
 
-void surface_domain_high_level::do_create_surface_reports(std::string &field_orders_text, int verbose_level)
+void surface_domain_high_level::do_create_surface_reports(
+		std::string &field_orders_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2005,7 +2010,8 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 
 void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
-		struct table_surfaces_field_order *T, int nb_e, int *Idx, int nb,
+		struct table_surfaces_field_order *T,
+		int nb_e, int *Idx, int nb,
 		std::string &fname_report_tex,
 		int verbose_level)
 {
@@ -2251,7 +2257,8 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 
 
 
-void surface_domain_high_level::make_fname_surface_report_tex(std::string &fname, int q, int ocn)
+void surface_domain_high_level::make_fname_surface_report_tex(
+		std::string &fname, int q, int ocn)
 {
 	char str[1000];
 
@@ -2261,7 +2268,8 @@ void surface_domain_high_level::make_fname_surface_report_tex(std::string &fname
 	fname.append(".tex");
 }
 
-void surface_domain_high_level::make_fname_surface_report_pdf(std::string &fname, int q, int ocn)
+void surface_domain_high_level::make_fname_surface_report_pdf(
+		std::string &fname, int q, int ocn)
 {
 	char str[1000];
 

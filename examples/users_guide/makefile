@@ -9876,6 +9876,7 @@ test_10_1:
 
 
 Allen_Gates_noise_1_percent:
+	cp $(MY_PATH)/examples/users_guide/allen_Gates.bmp .
 	$(ORBITER) -v 3 \
 		-random_noise_in_bitmap_file \
 		allen_Gates.bmp \
@@ -9885,7 +9886,11 @@ Allen_Gates_noise_1_percent:
 
 
 Hamming_space_4_2_distance_matrix:
-	$(ORBITER) -Hamming_space_distance_matrix 4 2
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-Hamming_space_distance_matrix 4 \
+		-end
 
 
 Hamming_space_4_2_distance_matrix_draw:
@@ -10073,7 +10078,6 @@ Hamming_generator:
 
 
 
-#ToDo dual
 
 Hamming_code:
 	$(ORBITER) -v 2 \
@@ -10083,6 +10087,7 @@ Hamming_code:
 		-end \
 		-define C -code -field F \
 			-generator_matrix v \
+			-dual -end \
 		-end \
 		-with C -do -coding_theoretic_activity \
 			-export_magma Hamming.magma \
@@ -10607,7 +10612,9 @@ M24_2B_restricted:
 			-subgroup_by_generators "M24_2B" "2" 1 \
 			$(M24_ELEMENT_2B) \
 		-end \
-		-define M24_2Br -modified_group -from G -restricted_action v -end \
+		-define M24_2Br -modified_group \
+			-from G -restricted_action v \
+		-end \
 		-with M24_2Br -do \
 			-group_theoretic_activity \
 				-print_elements_tex  \
@@ -14116,25 +14123,24 @@ desarguesian_spread_in_PG_3_5:
 
 classify_spreads_4:
 	$(ORBITER) -v 3 \
+		-define Control -poset_classification_control \
+			-draw_options \
+				-embedded \
+			-end \
+			-W \
+			-problem_label spreads_2_2 \
+		-end \
 		-define F -finite_field -q 2 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define C -spread_classifier \
 			-projective_space P \
+			-poset_classification_control Control \
 			-k 2 \
 			-starter_size 5 \
-			-poset_classification_control \
-				-draw_options \
-					-embedded \
-				-end \
-				-problem_label spreads_2_2 \
-			-end \
 			-output_prefix "." \
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_2_2 \
-				-W -depth 5 \
-			-end \
 		-end
 	#pdflatex spreads_2_2_poset_lvl_5.tex
 	#open spreads_2_2_poset_lvl_5.pdf
@@ -14162,9 +14168,6 @@ classify_spreads_16_4:
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_16_4 \
-				-W -depth 17 \
-			-end \
 		-end
 	#pdflatex spreads_16_4_poset_lvl_17.tex
 	#open spreads_16_4_poset_lvl_17.pdf
@@ -14197,9 +14200,6 @@ classify_spreads_25_starter_lift_case_0:
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_25 \
-				-W -depth 5 \
-			-end \
 		-end \
 		-with C -do -spread_classify_activity \
 			-prepare_lifting_single_case 0 \
@@ -14250,9 +14250,6 @@ classify_spreads_25_starter_lift_all_cases:
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_25 \
-				-W -depth 5 \
-			-end \
 		-end \
 		-with C -do -spread_classify_activity \
 			-prepare_lifting_all_cases \
@@ -14293,9 +14290,6 @@ classify_spreads_25_isomorph:
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_25 \
-				-W -depth 5 \
-			-end \
 		-end \
 		-with C -do -spread_classify_activity \
 			-isomorph \
@@ -14374,9 +14368,6 @@ classify_spreads_27_3_starter:
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_27_3 \
-				-depth 5 \
-			-end \
 		-end \
 		-with C -do -spread_classify_activity \
 			-prepare_lifting_single_case 0 \
@@ -14417,9 +14408,6 @@ classify_spreads_27_starter_lift_all_cases:
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_27 \
-				-depth 5 \
-			-end \
 		-end \
 		-with C -do -spread_classify_activity \
 			-prepare_lifting_all_cases \
@@ -14468,9 +14456,6 @@ classify_spreads_27_isomorph_and_recognize:
 		-end \
 		-with C -do -spread_classify_activity \
 			-compute_starter \
-				-problem_label spreads_27 \
-				-depth 5 \
-			-end \
 		-end \
 		-with C -do -spread_classify_activity \
 			-isomorph \

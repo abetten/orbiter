@@ -52,6 +52,9 @@ class activity_description {
 	int f_quartic_curve_activity;
 	applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity_description *Quartic_curve_activity_description;
 
+	int f_blt_set_activity;
+	orthogonal_geometry_applications::blt_set_activity_description *Blt_set_activity_description;
+
 	int f_combinatorial_object_activity;
 	apps_combinatorics::combinatorial_object_activity_description *Combinatorial_object_activity_description;
 
@@ -119,6 +122,7 @@ public:
 	void do_coding_theoretic_activity(int verbose_level);
 	void do_cubic_surface_activity(int verbose_level);
 	void do_quartic_curve_activity(int verbose_level);
+	void do_blt_set_activity(int verbose_level);
 	void do_combinatorial_object_activity(int verbose_level);
 	void do_graph_theoretic_activity(int verbose_level);
 	void do_classification_of_cubic_surfaces_with_double_sixes_activity(int verbose_level);
@@ -235,9 +239,11 @@ class interface_coding_theory {
 	int make_bounds_k;
 	int make_bounds_q;
 
+#if 0
 	int f_Hamming_space_distance_matrix;
 	int Hamming_space_n;
 	int Hamming_space_q;
+#endif
 
 	int f_introduce_errors;
 	coding_theory::crc_options_description *introduce_errors_crc_options_description;
@@ -878,26 +884,50 @@ public:
 	~orbiter_top_level_session();
 	int startup_and_read_arguments(int argc,
 			std::string *argv, int i0);
-	void handle_everything(int argc, std::string *Argv, int i, int verbose_level);
-	void parse_and_execute(int argc, std::string *Argv, int i, int verbose_level);
-	void parse(int argc, std::string *Argv, int &i, std::vector<void * > &program, int verbose_level);
+	void handle_everything(
+			int argc, std::string *Argv, int i, int verbose_level);
+	void parse_and_execute(
+			int argc, std::string *Argv, int i, int verbose_level);
+	void parse(
+			int argc, std::string *Argv, int &i,
+			std::vector<void * > &program, int verbose_level);
 	void *get_object(int idx);
 	symbol_table_object_type get_object_type(int idx);
 	int find_symbol(std::string &label);
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
-	void add_symbol_table_entry(std::string &label,
-			orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
-	apps_algebra::any_group *get_object_of_type_any_group(std::string &label);
-	projective_geometry::projective_space_with_action *get_object_of_type_projective_space(std::string &label);
-	poset_classification::poset_classification_control *get_object_of_type_poset_classification_control(std::string &label);
+	void add_symbol_table_entry(
+			std::string &label,
+			orbiter_kernel_system::orbiter_symbol_table_entry *Symb,
+			int verbose_level);
+	apps_algebra::any_group *get_object_of_type_any_group(
+			std::string &label);
+	projective_geometry::projective_space_with_action
+		*get_object_of_type_projective_space(
+			std::string &label);
+	poset_classification::poset_classification_control
+		*get_object_of_type_poset_classification_control(
+				std::string &label);
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);
-	apps_algebra::vector_ge_builder *get_object_of_type_vector_ge(std::string &label);
-	orthogonal_geometry_applications::orthogonal_space_with_action *get_object_of_type_orthogonal_space_with_action(std::string &label);
-	spreads::spread_create *get_object_of_type_spread(std::string &label);
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *get_object_of_type_cubic_surface(std::string &label);
-	apps_coding_theory::create_code *get_object_of_type_code(std::string &label);
+	apps_algebra::vector_ge_builder
+		*get_object_of_type_vector_ge(
+				std::string &label);
+	orthogonal_geometry_applications::orthogonal_space_with_action
+		*get_object_of_type_orthogonal_space_with_action(
+				std::string &label);
+	spreads::spread_create
+		*get_object_of_type_spread(
+				std::string &label);
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create
+		*get_object_of_type_cubic_surface(
+				std::string &label);
+	apps_coding_theory::create_code
+		*get_object_of_type_code(
+				std::string &label);
+	orthogonal_geometry_applications::orthogonal_space_with_action
+		*get_orthogonal_space(
+				std::string &label);
 
 };
 
@@ -918,32 +948,41 @@ public:
 	std::string define_label;
 
 	int f_finite_field;
-	field_theory::finite_field_description *Finite_field_description;
+	field_theory::finite_field_description
+		*Finite_field_description;
 
 	int f_polynomial_ring;
-	ring_theory::polynomial_ring_description *Polynomial_ring_description;
+	ring_theory::polynomial_ring_description
+		*Polynomial_ring_description;
 
 	int f_projective_space;
-	projective_geometry::projective_space_with_action_description *Projective_space_with_action_description;
+	projective_geometry::projective_space_with_action_description
+		*Projective_space_with_action_description;
 
 	int f_orthogonal_space;
-	orthogonal_geometry_applications::orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
+	orthogonal_geometry_applications::orthogonal_space_with_action_description
+		*Orthogonal_space_with_action_description;
 
 	int f_BLT_set_classifier;
 	std::string BLT_set_classifier_label_orthogonal_geometry;
-	orthogonal_geometry_applications::blt_set_classify_description *Blt_set_classify_description;
+	orthogonal_geometry_applications::blt_set_classify_description
+		*Blt_set_classify_description;
 
 	int f_spread_classifier;
-	spreads::spread_classify_description *Spread_classify_description;
+	spreads::spread_classify_description
+		*Spread_classify_description;
 
 	int f_linear_group;
-	groups::linear_group_description *Linear_group_description;
+	groups::linear_group_description
+		*Linear_group_description;
 
 	int f_permutation_group;
-	groups::permutation_group_description *Permutation_group_description;
+	groups::permutation_group_description
+		*Permutation_group_description;
 
 	int f_group_modification;
-	apps_algebra::group_modification_description *Group_modification_description;
+	apps_algebra::group_modification_description
+		*Group_modification_description;
 
 	int f_formula;
 	expression_parser::formula *Formula;
@@ -957,23 +996,32 @@ public:
 
 	int f_geometric_object;
 	std::string geometric_object_projective_space_label;
-	geometry::geometric_object_description *Geometric_object_description;
+	geometry::geometric_object_description
+		*Geometric_object_description;
 
 	int f_graph;
-	apps_graph_theory::create_graph_description *Create_graph_description;
+	apps_graph_theory::create_graph_description
+		*Create_graph_description;
 
 	int f_code;
-	apps_coding_theory::create_code_description *Create_code_description;
+	apps_coding_theory::create_code_description
+		*Create_code_description;
 
 	int f_spread;
-	spreads::spread_create_description *Spread_create_description;
+	spreads::spread_create_description
+		*Spread_create_description;
 
 	int f_cubic_surface;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *Surface_Descr;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
+		*Surface_Descr;
 
 	int f_quartic_curve;
-	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description *Quartic_curve_descr;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description
+		*Quartic_curve_descr;
 
+	int f_BLT_set;
+	orthogonal_geometry_applications::BLT_set_create_description
+		*BLT_Set_create_description;
 
 	int f_translation_plane;
 	std::string translation_plane_spread_label;
@@ -994,21 +1042,26 @@ public:
 	int f_packing_was_choose_fixed_points;
 	std::string packing_with_assumed_symmetry_label;
 	int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
-	poset_classification::poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
+	poset_classification::poset_classification_control
+		*packing_with_assumed_symmetry_choose_fixed_points_control;
 
 
 	int f_packing_long_orbits;
 	std::string packing_long_orbits_choose_fixed_points_label;
-	packings::packing_long_orbits_description * Packing_long_orbits_description;
+	packings::packing_long_orbits_description
+		* Packing_long_orbits_description;
 
 	int f_graph_classification;
-	apps_graph_theory::graph_classify_description * Graph_classify_description;
+	apps_graph_theory::graph_classify_description
+		* Graph_classify_description;
 
 	int f_diophant;
-	solvers::diophant_description *Diophant_description;
+	solvers::diophant_description
+		*Diophant_description;
 
 	int f_design;
-	apps_combinatorics::design_create_description *Design_create_description;
+	apps_combinatorics::design_create_description
+		*Design_create_description;
 
 	int f_design_table;
 	std::string design_table_label_design;
@@ -1018,31 +1071,40 @@ public:
 
 	int f_large_set_was;
 	std::string  large_set_was_label_design_table;
-	apps_combinatorics::large_set_was_description *large_set_was_descr;
+	apps_combinatorics::large_set_was_description
+		*large_set_was_descr;
 
 	int f_set;
-	data_structures::set_builder_description *Set_builder_description;
+	data_structures::set_builder_description
+		*Set_builder_description;
 
 	int f_vector;
-	data_structures::vector_builder_description *Vector_builder_description;
+	data_structures::vector_builder_description
+		*Vector_builder_description;
 
 	int f_combinatorial_objects;
-	data_structures::data_input_stream_description *Data_input_stream_description;
+	data_structures::data_input_stream_description
+		*Data_input_stream_description;
 
 	int f_geometry_builder;
-	geometry_builder::geometry_builder_description *Geometry_builder_description;
+	geometry_builder::geometry_builder_description
+		*Geometry_builder_description;
 
 	int f_vector_ge;
-	data_structures_groups::vector_ge_description *Vector_ge_description;
+	data_structures_groups::vector_ge_description
+		*Vector_ge_description;
 
 	int f_action_on_forms;
-	apps_algebra::action_on_forms_description *Action_on_forms_descr;
+	apps_algebra::action_on_forms_description
+		*Action_on_forms_descr;
 
 	int f_orbits;
-	apps_algebra::orbits_create_description *Orbits_create_description;
+	apps_algebra::orbits_create_description
+		*Orbits_create_description;
 
 	int f_poset_classification_control;
-	poset_classification::poset_classification_control *Poset_classification_control;
+	poset_classification::poset_classification_control
+		*Poset_classification_control;
 
 	symbol_definition();
 	~symbol_definition();
@@ -1073,6 +1135,7 @@ public:
 	void definition_of_spread(int verbose_level);
 	void definition_of_cubic_surface(int verbose_level);
 	void definition_of_quartic_curve(int verbose_level);
+	void definition_of_BLT_set(int verbose_level);
 	void definition_of_translation_plane(int verbose_level);
 	void definition_of_spread_table(int verbose_level);
 	void definition_of_packing_was(int verbose_level);
@@ -1086,7 +1149,8 @@ public:
 	void definition_of_set(int verbose_level);
 	void definition_of_vector(
 			std::string &label,
-			data_structures::vector_builder_description *Descr, int verbose_level);
+			data_structures::vector_builder_description *Descr,
+			int verbose_level);
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);
 	void load_finite_field_PG(int verbose_level);
@@ -1107,7 +1171,9 @@ public:
 
 
 
-extern user_interface::orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
+extern user_interface::orbiter_top_level_session
+	*The_Orbiter_top_level_session;
+	// global top level Orbiter session
 
 
 

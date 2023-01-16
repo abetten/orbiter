@@ -27,7 +27,8 @@ graph_theory_apps::~graph_theory_apps()
 }
 
 
-void graph_theory_apps::automorphism_group(graph_theory::colored_graph *CG, int verbose_level)
+void graph_theory_apps::automorphism_group(
+		graph_theory::colored_graph *CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

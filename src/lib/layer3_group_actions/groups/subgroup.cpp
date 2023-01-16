@@ -109,7 +109,7 @@ int subgroup::contains_this_element(int elt)
 		}
 }
 
-void subgroup::report(ostream &ost)
+void subgroup::report(std::ostream &ost)
 {
 	SG->print_generators_tex(ost);
 }

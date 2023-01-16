@@ -45,17 +45,22 @@ public:
 	
 	group_container();
 	~group_container();
-	void init(actions::action *A, int verbose_level);
-	void init_ascii_coding_to_sims(std::string &ascii_coding, int verbose_level);
-	void init_ascii_coding(std::string &ascii_coding, int verbose_level);
+	void init(actions::action *A,
+			int verbose_level);
+	void init_ascii_coding_to_sims(
+			std::string &ascii_coding, int verbose_level);
+	void init_ascii_coding(
+			std::string &ascii_coding, int verbose_level);
 	void delete_ascii_coding();
 	void delete_sims();
 	void init_strong_generators_empty_set(int verbose_level);
-	void init_strong_generators(vector_ge &SG, int *tl, int verbose_level);
+	void init_strong_generators(vector_ge &SG,
+			int *tl, int verbose_level);
 	void init_strong_generators_by_handle_and_with_tl(
 			std::vector<int> &gen_handle,
 			std::vector<int> &tl, int verbose_level);
-	void init_strong_generators_by_hdl(int nb_gen, int *gen_hdl, 
+	void init_strong_generators_by_hdl(
+			int nb_gen, int *gen_hdl,
 		int *tl, int verbose_level);
 	void delete_strong_generators();
 	void require_ascii_coding();
@@ -68,12 +73,17 @@ public:
 	void decode_ascii(int verbose_level);
 	void schreier_sims(int verbose_level);
 	void get_strong_generators(int verbose_level);
-	void point_stabilizer(group_container &stab, int pt, int verbose_level);
+	void point_stabilizer(
+			group_container &stab, int pt,
+			int verbose_level);
 	void point_stabilizer_with_action(actions::action *A2,
 			group_container &stab, int pt, int verbose_level);
-	void induced_action(actions::action &induced_action,
-			group_container &H, group_container &K, int verbose_level);
-	void extension(group_container &N, group_container &H, int verbose_level);
+	void induced_action(
+			actions::action &induced_action,
+			group_container &H, group_container &K,
+			int verbose_level);
+	void extension(group_container &N,
+			group_container &H, int verbose_level);
 		// N needs to have strong generators, 
 		// H needs to have sims
 		// N and H may have different actions, 
@@ -83,7 +93,9 @@ public:
 	void print_strong_generators_with_different_action(
 			std::ostream &ost, actions::action *A2);
 	void print_strong_generators_with_different_action_verbose(
-			std::ostream &ost, actions::action *A2, int verbose_level);
+			std::ostream &ost,
+			actions::action *A2,
+			int verbose_level);
 
 };
 
@@ -159,8 +171,10 @@ public:
 
 	orbit_rep();
 	~orbit_rep();
-	void init_from_file(actions::action *A, std::string &prefix,
-		int level, int orbit_at_level, int level_of_candidates_file,
+	void init_from_file(actions::action *A,
+			std::string &prefix,
+		int level, int orbit_at_level,
+		int level_of_candidates_file,
 		void (*early_test_func_callback)(long int *S, int len,
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
@@ -196,10 +210,13 @@ public:
 			actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
-	void read_from_file(actions::action *A, actions::action *A2,
+	void read_from_file(actions::action *A,
+			actions::action *A2,
 			std::string &fname, int verbose_level);
 	void read_from_file_one_case_only(
-			actions::action *A, actions::action *A2, std::string &fname,
+			actions::action *A,
+			actions::action *A2,
+			std::string &fname,
 			int case_nr,
 			set_and_stabilizer *&Rep,
 			int verbose_level);
@@ -276,9 +293,11 @@ public:
 			long int *Sets,
 			long int goi,
 			int verbose_level);
-	void create_latex_report(std::string &prefix, int verbose_level);
+	void create_latex_report(
+			std::string &prefix, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
-	void report_one_type(std::ostream &ost, int type_idx, int verbose_level);
+	void report_one_type(std::ostream &ost,
+			int type_idx, int verbose_level);
 
 };
 
@@ -331,7 +350,8 @@ public:
 			std::ifstream &fp, int verbose_level);
 	void sv_write_file(schreier_vector *Sv,
 			std::ofstream &fp, int verbose_level);
-	data_structures::set_of_sets *get_orbits_as_set_of_sets(schreier_vector *Sv,
+	data_structures::set_of_sets *get_orbits_as_set_of_sets(
+			schreier_vector *Sv,
 			int verbose_level);
 
 };
@@ -383,10 +403,12 @@ public:
 			induced_actions::action_on_factor_space *AF,
 		int verbose_level);
 	void orbit_stats(
-			int &nb_orbits, int *&orbit_reps, int *&orbit_length, int *&total_depth,
+			int &nb_orbits, int *&orbit_reps,
+			int *&orbit_length, int *&total_depth,
 			int verbose_level);
 	void orbit_of_point(
-			int pt, long int *&orbit_elts, int &orbit_len, int &idx_of_root_node,
+			int pt, long int *&orbit_elts,
+			int &orbit_len, int &idx_of_root_node,
 			int verbose_level);
 	void init_from_schreier(groups::schreier *S,
 		int f_trivial_group, int verbose_level);
@@ -426,32 +448,42 @@ public:
 
 	set_and_stabilizer();
 	~set_and_stabilizer();
-	void init(actions::action *A, actions::action *A2, int verbose_level);
+	void init(actions::action *A,
+			actions::action *A2,
+			int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_as_lint();
-	void init_everything(actions::action *A, actions::action *A2, long int *Set, int set_sz,
-			groups::strong_generators *gens, int verbose_level);
+	void init_everything(actions::action *A,
+			actions::action *A2,
+			long int *Set, int set_sz,
+			groups::strong_generators *gens,
+			int verbose_level);
 	void allocate_data(int sz, int verbose_level);
 	set_and_stabilizer *create_copy(int verbose_level);
 	void init_data(long int *data, int sz, int verbose_level);
 	void init_stab_from_data(int *data_gens, 
-		int data_gens_size, int nb_gens, std::string &ascii_target_go,
+		int data_gens_size, int nb_gens,
+		std::string &ascii_target_go,
 		int verbose_level);
 	void init_stab_from_file(const char *fname_gens, 
 		int verbose_level);
 	void print_set_tex(std::ostream &ost);
 	void print_set_tex_for_inline_text(std::ostream &ost);
 	void print_generators_tex(std::ostream &ost);
-	//set_and_stabilizer *apply(int *Elt, int verbose_level);
-	void apply_to_self(int *Elt, int verbose_level);
-	void apply_to_self_inverse(int *Elt, int verbose_level);
-	void apply_to_self_element_raw(int *Elt_data, int verbose_level);
+	void apply_to_self(
+			int *Elt, int verbose_level);
+	void apply_to_self_inverse(
+			int *Elt, int verbose_level);
+	void apply_to_self_element_raw(
+			int *Elt_data, int verbose_level);
 	void apply_to_self_inverse_element_raw(int *Elt_data, 
 		int verbose_level);
 	void rearrange_by_orbits(int *&orbit_first, 
 		int *&orbit_length, int *&orbit, 
-		int &nb_orbits, int verbose_level);
-	actions::action *create_restricted_action_on_the_set(int verbose_level);
+		int &nb_orbits,
+		int verbose_level);
+	actions::action *create_restricted_action_on_the_set(
+			int verbose_level);
 	void print_restricted_action_on_the_set(int verbose_level);
 	void test_if_group_acts(int verbose_level);
 	int find(long int pt);
@@ -500,14 +532,6 @@ public:
 
 	geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
-
-#if 0
-	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
-	poset_classification::poset_classification *arcs;
-
-	apps_combinatorics::tactical_decomposition *T;
-#endif
 
 	translation_plane_via_andre_model();
 	~translation_plane_via_andre_model();
@@ -607,7 +631,8 @@ public:
 	~union_find_on_k_subsets();
 	void init(actions::action *A_original, groups::sims *S,
 		long int *set, int set_sz, int k,
-		long int *interesting_k_subsets, int nb_interesting_k_subsets,
+		long int *interesting_k_subsets,
+		int nb_interesting_k_subsets,
 		int verbose_level);
 	int is_minimal(int rk, int verbose_level);
 };
@@ -663,9 +688,12 @@ public:
 	~vector_ge();
 	void init(actions::action *A, int verbose_level);
 	void copy(vector_ge *&vector_copy, int verbose_level);
-	void init_by_hdl(actions::action *A, int *gen_hdl, int nb_gen, int verbose_level);
-	void init_single(actions::action *A, int *Elt, int verbose_level);
-	void init_double(actions::action *A, int *Elt1, int *Elt2, int verbose_level);
+	void init_by_hdl(actions::action *A,
+			int *gen_hdl, int nb_gen, int verbose_level);
+	void init_single(actions::action *A,
+			int *Elt, int verbose_level);
+	void init_double(actions::action *A,
+			int *Elt1, int *Elt2, int verbose_level);
 	void init_from_permutation_representation(
 			actions::action *A, groups::sims *S, int *data,
 		int nb_elements, int verbose_level);
@@ -686,15 +714,19 @@ public:
 	void print_as_permutation(std::ostream& ost);
 	void allocate(int length, int verbose_level);
 	void reallocate(int new_length, int verbose_level);
-	void reallocate_and_insert_at(int position, int *elt, int verbose_level);
-	void insert_at(int length_before, int position, int *elt, int verbose_level);
+	void reallocate_and_insert_at(
+			int position, int *elt, int verbose_level);
+	void insert_at(int length_before,
+			int position, int *elt, int verbose_level);
 	void append(int *elt, int verbose_level);
 	void copy_in(int i, int *elt);
 	void copy_out(int i, int *elt);
 	void conjugate_svas(int *Elt);
 	void conjugate_sasv(int *Elt);
-	void print_with_given_action(std::ostream &ost, actions::action *A2);
-	void print(std::ostream &ost, int f_print_as_permutation,
+	void print_with_given_action(
+			std::ostream &ost, actions::action *A2);
+	void print(std::ostream &ost,
+			int f_print_as_permutation,
 		int f_offset, int offset,
 		int f_do_it_anyway_even_for_big_degree,
 		int f_print_cycles_of_length_one);
@@ -709,25 +741,38 @@ public:
 		int verbose_level);
 	void read_from_file_binary(std::ifstream &fp,
 		int verbose_level);
-	void write_to_csv_file_coded(std::string &fname, int verbose_level);
-	void save_csv(std::string &fname, int verbose_level);
-	void export_inversion_graphs(std::string &fname, int verbose_level);
-	void read_column_csv(std::string &fname, actions::action *A, int col_idx, int verbose_level);
-	void read_column_csv_using_column_label(std::string &fname,
-			actions::action *A, std::string &column_label, int verbose_level);
+	void write_to_csv_file_coded(
+			std::string &fname, int verbose_level);
+	void save_csv(
+			std::string &fname, int verbose_level);
+	void export_inversion_graphs(
+			std::string &fname, int verbose_level);
+	void read_column_csv(std::string &fname,
+			actions::action *A, int col_idx,
+			int verbose_level);
+	void read_column_csv_using_column_label(
+			std::string &fname,
+			actions::action *A,
+			std::string &column_label,
+			int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
 			std::string &rank_vector_text, groups::sims *S,
 		int verbose_level);
-	void extract_subset_of_elements_by_rank(int *rank_vector,
+	void extract_subset_of_elements_by_rank(
+			int *rank_vector,
 		int len, groups::sims *S, int verbose_level);
-	int test_if_all_elements_stabilize_a_point(actions::action *A2, int pt);
-	int test_if_all_elements_stabilize_a_set(actions::action *A2,
-		long int *set, int sz, int verbose_level);
+	int test_if_all_elements_stabilize_a_point(
+			actions::action *A2, int pt);
+	int test_if_all_elements_stabilize_a_set(
+			actions::action *A2,
+		long int *set, int sz,
+		int verbose_level);
 	groups::schreier *orbits_on_points_schreier(
 			actions::action *A_given, int verbose_level);
 	void reverse_isomorphism_exterior_square(int verbose_level);
 	void matrix_representation(
-			induced_actions::action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
+			induced_actions::action_on_homogeneous_polynomials *A_on_HPD,
+			int *&M, int &nb_gens,
 			int verbose_level);
 
 };

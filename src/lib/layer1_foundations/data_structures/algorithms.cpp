@@ -300,7 +300,8 @@ uint32_t algorithms::root_of_tree_uint32_t (uint32_t* S, uint32_t i)
 void algorithms::solve_diophant(int *Inc,
 	int nb_rows, int nb_cols, int nb_needed,
 	int f_has_Rhs, int *Rhs,
-	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
+	long int *&Solutions, int &nb_sol,
+	long int &nb_backtrack, int &dt,
 	int f_DLX,
 	int verbose_level)
 // allocates Solutions[nb_sol * nb_needed]
@@ -474,8 +475,10 @@ uint32_t algorithms::SuperFastHash_uint(const unsigned int * p, int sz)
 
 
 
-void algorithms::union_of_sets(std::string &fname_set_of_sets,
-		std::string &fname_input, std::string &fname_output, int verbose_level)
+void algorithms::union_of_sets(
+		std::string &fname_set_of_sets,
+		std::string &fname_input,
+		std::string &fname_output, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

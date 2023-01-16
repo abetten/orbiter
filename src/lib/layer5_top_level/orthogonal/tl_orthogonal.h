@@ -15,6 +15,58 @@ namespace orthogonal_geometry_applications {
 
 
 
+// #############################################################################
+// blt_set_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for a BLT-set
+
+
+
+class blt_set_activity_description {
+
+public:
+
+	int f_report;
+
+	int f_create_flock;
+	int create_flock_point_idx;
+
+	blt_set_activity_description();
+	~blt_set_activity_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// blt_set_activity.cpp
+// #############################################################################
+
+//! an activity regarding a BLT-sets
+
+
+
+class blt_set_activity {
+
+public:
+
+	blt_set_activity_description *Descr;
+
+	BLT_set_create *BC;
+
+	blt_set_activity();
+	~blt_set_activity();
+	void init(blt_set_activity_description *Descr,
+			orthogonal_geometry_applications::BLT_set_create *BC,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
 
 
 // #############################################################################
@@ -39,9 +91,8 @@ public:
 	int split_m;
 
 	int f_isomorph;
-	//std::string prefix_classify;
-	//std::string prefix_iso;
-	layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
+	layer4_classification::isomorph::isomorph_arguments
+		*Isomorph_arguments;
 
 	blt_set_classify_activity_description();
 	~blt_set_classify_activity_description();
@@ -121,7 +172,8 @@ public:
 
 	orthogonal_space_with_action *OA;
 
-	layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
+	layer1_foundations::orthogonal_geometry::blt_set_domain
+		*Blt_set_domain;
 
 	actions::action *A; // orthogonal group
 
@@ -208,6 +260,9 @@ public:
 	int f_family;
 	std::string family_name;
 
+	int f_space;
+	std::string space_label;
+
 
 
 	BLT_set_create_description();
@@ -249,14 +304,16 @@ public:
 	int f_has_group;
 	groups::strong_generators *Sg;
 
-	layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
+	layer1_foundations::orthogonal_geometry::blt_set_domain
+		*Blt_set_domain;
 	blt_set_with_action *BA;
 
 
 	BLT_set_create();
 	~BLT_set_create();
 	void init(
-			layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain,
+			layer1_foundations::orthogonal_geometry::blt_set_domain
+				*Blt_set_domain,
 			BLT_set_create_description *Descr,
 			orthogonal_space_with_action *OA,
 			int verbose_level);
@@ -264,11 +321,16 @@ public:
 			std::vector<std::string> transform_coeffs,
 			std::vector<int> f_inverse_transform, int verbose_level);
 	void report(int verbose_level);
+	void create_flock(int point_idx, int verbose_level);
 	void report2(std::ostream &ost, int verbose_level);
-	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
-	void print_set_of_points_with_ABC(std::ostream &ost, long int *Pts, int nb_pts);
+	void print_set_of_points(
+				std::ostream &ost, long int *Pts, int nb_pts);
+	void print_set_of_points_with_ABC(
+				std::ostream &ost, long int *Pts, int nb_pts);
 
 };
+
+
 
 // #############################################################################
 // blt_set_with_action.cpp
@@ -293,6 +355,9 @@ public:
 	actions::action *A_on_points;
 	groups::schreier *Orbits_on_points;
 
+	long int *T; // [target_size]
+	long int *Pi_ij; // [target_size * target_size]
+
 	blt_set_with_action();
 	~blt_set_with_action();
 	void init_set(
@@ -305,9 +370,50 @@ public:
 	void print_automorphism_group(
 		std::ostream &ost);
 	void report(std::ostream &ost, int verbose_level);
+	void compute_T(int verbose_level);
+	void compute_Pi_ij(int verbose_level);
+
 };
 
 
+
+// #############################################################################
+// flock.cpp
+// #############################################################################
+
+
+//! a flock of a quadratic cone
+
+
+class flock {
+
+public:
+
+	blt_set_with_action *BLT_set;
+
+	int point_idx;
+
+	long int *Flock; // [q]
+	long int *Flock_reduced; // [q]
+	long int *Flock_affine; // [q]
+
+	int *ABC; // [q]
+
+	data_structures::int_matrix *Table_of_ABC;
+
+	int *func_f;
+	int *func_g;
+
+	combinatorics::polynomial_function_domain *PF;
+
+	flock();
+	~flock();
+	void init(
+				blt_set_with_action *BLT_set,
+				int point_idx, int verbose_level);
+	void test_flock_condition(int verbose_level);
+
+};
 
 
 // #############################################################################
@@ -417,11 +523,6 @@ public:
 
 	field_theory::finite_field *F;
 
-	//int n;
-
-	//std::string input_q;
-	//field_theory::finite_field *F;
-
 	int f_label_txt;
 	std::string label_txt;
 	int f_label_tex;
@@ -460,6 +561,8 @@ public:
 
 	actions::action *A;
 	induced_actions::action_on_orthogonal *AO;
+
+	orthogonal_geometry::blt_set_domain *Blt_Set_domain;
 
 
 	orthogonal_space_with_action();

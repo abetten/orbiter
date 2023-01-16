@@ -140,7 +140,8 @@ void data_input_stream_description_element::init_set_of_lines(std::string &a)
 
 }
 
-void data_input_stream_description_element::init_set_of_points_and_lines(std::string &a, std::string &b)
+void data_input_stream_description_element::init_set_of_points_and_lines(
+		std::string &a, std::string &b)
 {
 	input_type = t_data_input_stream_set_of_points_and_lines;
 

@@ -579,7 +579,8 @@ int surface_polynomial_domains::index_of_monomial(int *v)
 	return Poly3_4->index_of_monomial(v);
 }
 
-void surface_polynomial_domains::multiply_conic_times_linear(int *six_coeff,
+void surface_polynomial_domains::multiply_conic_times_linear(
+		int *six_coeff,
 	int *three_coeff, int *ten_coeff,
 	int verbose_level)
 {
@@ -1304,7 +1305,8 @@ void surface_polynomial_domains::assemble_tangent_quadric(
 	}
 }
 
-void surface_polynomial_domains::compute_gradient(int *equation20, int *&gradient, int verbose_level)
+void surface_polynomial_domains::compute_gradient(
+		int *equation20, int *&gradient, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1352,7 +1354,8 @@ void surface_polynomial_domains::compute_gradient(int *equation20, int *&gradien
 	}
 }
 
-long int surface_polynomial_domains::compute_tangent_plane(int *pt_coords, int *equation20, int verbose_level)
+long int surface_polynomial_domains::compute_tangent_plane(
+		int *pt_coords, int *equation20, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1588,7 +1591,8 @@ void surface_polynomial_domains::print_polynomial_domains(std::ostream &ost)
 }
 
 void surface_polynomial_domains::print_equation_in_trihedral_form(std::ostream &ost,
-	int *the_six_plane_equations, int lambda, int *the_equation)
+	int *the_six_plane_equations,
+	int lambda, int *the_equation)
 {
 	ost << "\\begin{align*}" << endl;
 	ost << "0 & = F_0F_1F_2 + \\lambda G_0G_1G_2\\\\" << endl;

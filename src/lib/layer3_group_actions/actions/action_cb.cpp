@@ -146,7 +146,7 @@ void action::print_as_permutation(
 }
 
 void action::print_point(
-		int a, ostream &ost)
+		int a, std::ostream &ost)
 {
 	//cout << "action::print_point" << endl;
 	(*ptr->ptr_print_point)(*this, a, ost);
@@ -344,13 +344,13 @@ void action::element_dispose(
 }
 
 void action::element_print(
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	(*ptr->ptr_element_print)(*this, elt, ost);
 }
 
 void action::element_print_quick(
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	if (ptr->ptr_element_print_quick == NULL) {
 		cout << "action::element_print_quick "
@@ -361,7 +361,7 @@ void action::element_print_quick(
 }
 
 void action::element_print_latex(
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	(*ptr->ptr_element_print_latex)(*this, elt, ost);
 }
@@ -394,7 +394,7 @@ void action::element_print_latex_with_print_point_function(
 }
 
 void action::element_print_verbose(
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	(*ptr->ptr_element_print_verbose)(*this, elt, ost);
 }
@@ -406,19 +406,19 @@ void action::element_code_for_make_element(
 }
 
 void action::element_print_for_make_element(
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	(*ptr->ptr_element_print_for_make_element)(*this, elt, ost);
 }
 
 void action::element_print_for_make_element_no_commas(
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	(*ptr->ptr_element_print_for_make_element_no_commas)(*this, elt, ost);
 }
 
 void action::element_print_as_permutation(
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	element_print_as_permutation_with_offset(
 			elt, ost, 0, FALSE, TRUE, 0);
@@ -426,7 +426,7 @@ void action::element_print_as_permutation(
 
 void action::element_print_as_permutation_verbose(
 		void *elt,
-		ostream &ost, int verbose_level)
+		std::ostream &ost, int verbose_level)
 {
 	element_print_as_permutation_with_offset(elt,
 			ost, 0, FALSE, TRUE, verbose_level);
@@ -460,7 +460,7 @@ void action::element_as_permutation(
 }
 
 void action::element_print_as_permutation_with_offset(
-	void *elt, ostream &ost,
+	void *elt, std::ostream &ost,
 	int offset, int f_do_it_anyway_even_for_big_degree, 
 	int f_print_cycles_of_length_one, int verbose_level)
 {
@@ -530,7 +530,7 @@ void action::element_print_as_permutation_with_offset(
 
 void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 	void *elt,
-	ostream &ost, int offset,
+	std::ostream &ost, int offset,
 	int max_cycle_length,
 	int f_orbit_structure)
 {

@@ -69,12 +69,14 @@ void spread_classify_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity before Spread_classify->classify_partial_spreads" << endl;
+			cout << "spread_classify_activity::perform_activity "
+					"before Spread_classify->classify_partial_spreads" << endl;
 		}
 		Spread_classify->classify_partial_spreads(
 				verbose_level);
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity after Spread_classify->classify_partial_spreads" << endl;
+			cout << "spread_classify_activity::perform_activity "
+					"after Spread_classify->classify_partial_spreads" << endl;
 		}
 
 		if (f_v) {

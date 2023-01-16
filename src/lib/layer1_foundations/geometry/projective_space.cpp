@@ -159,7 +159,8 @@ void projective_space::projective_space_init(int n, field_theory::finite_field *
 	projective_space::q = F->q;
 	
 	if (f_v) {
-		cout << "projective_space::projective_space_init PG(" << n << "," << q << ")" << endl;
+		cout << "projective_space::projective_space_init "
+				"PG(" << n << "," << q << ")" << endl;
 		cout << "f_init_incidence_structure="
 				<< f_init_incidence_structure << endl;
 	}
@@ -306,17 +307,26 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 	if (n >= 2) {
-		if (f_v) {
-			cout << "projective_space_implementation::init "
-					"before init_polarity" << endl;
+		if (N_points < 1000) {
+			if (f_v) {
+				cout << "projective_space_implementation::init "
+						"before init_polarity" << endl;
+			}
+
+			init_polarity(verbose_level);
+
+
+			if (f_v) {
+				cout << "projective_space_implementation::init "
+						"after init_polarity" << endl;
+			}
 		}
+		else {
+			if (f_v) {
+				cout << "projective_space_implementation::init "
+						"skipping init_polarity" << endl;
+			}
 
-		init_polarity(verbose_level);
-
-
-		if (f_v) {
-			cout << "projective_space_implementation::init "
-					"after init_polarity" << endl;
 		}
 	}
 

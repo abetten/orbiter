@@ -59,7 +59,8 @@ void sorting::int_vec_search_vec(
 }
 
 void sorting::lint_vec_search_vec(
-		long int *v, int len, long int *A, int A_sz, long int *Idx)
+		long int *v, int len,
+		long int *A, int A_sz, long int *Idx)
 {
 	int i, idx;
 
@@ -86,7 +87,8 @@ void sorting::int_vec_search_vec_linear(
 }
 
 void sorting::lint_vec_search_vec_linear(
-		long int *v, int len, long int *A, int A_sz, long int *Idx)
+		long int *v, int len,
+		long int *A, int A_sz, long int *Idx)
 {
 	int i, idx;
 
@@ -123,7 +125,9 @@ int sorting::int_vec_is_subset_of(
 }
 
 int sorting::lint_vec_is_subset_of(
-		int *set, int sz, long int *big_set, int big_set_sz, int verbose_level)
+		int *set, int sz,
+		long int *big_set, int big_set_sz,
+		int verbose_level)
 {
 	long int i, j, a;
 	int f_v = (verbose_level >= 1);
@@ -177,7 +181,8 @@ int sorting::int_vec_is_sorted(int *v, int len)
 	return TRUE;
 }
 
-void sorting::int_vec_sort_and_remove_duplicates(int *v, int &len)
+void sorting::int_vec_sort_and_remove_duplicates(
+		int *v, int &len)
 {
 	int i, j;
 	
@@ -192,7 +197,8 @@ void sorting::int_vec_sort_and_remove_duplicates(int *v, int &len)
 		}
 }
 
-void sorting::lint_vec_sort_and_remove_duplicates(long int *v, int &len)
+void sorting::lint_vec_sort_and_remove_duplicates(
+		long int *v, int &len)
 {
 	int i, j;
 
@@ -395,7 +401,8 @@ void sorting::int_vec_insert_and_reallocate_if_necessary(
 		}
 }
 
-void sorting::int_vec_append_and_reallocate_if_necessary(int *&vec,
+void sorting::int_vec_append_and_reallocate_if_necessary(
+		int *&vec,
 		int &used_length, int &alloc_length, int a,
 		int verbose_level)
 {
@@ -438,7 +445,8 @@ void sorting::int_vec_append_and_reallocate_if_necessary(int *&vec,
 		}
 }
 
-void sorting::lint_vec_append_and_reallocate_if_necessary(long int *&vec,
+void sorting::lint_vec_append_and_reallocate_if_necessary(
+		long int *&vec,
 		int &used_length, int &alloc_length, long int a,
 		int verbose_level)
 {
@@ -493,7 +501,8 @@ int sorting::int_vec_is_zero(int *v, int len)
 	return TRUE;
 }
 
-int sorting::test_if_sets_are_equal(int *set1, int *set2, int set_size)
+int sorting::test_if_sets_are_equal(
+		int *set1, int *set2, int set_size)
 {
 	int *S1, *S2;
 	int i;
@@ -516,7 +525,8 @@ int sorting::test_if_sets_are_equal(int *set1, int *set2, int set_size)
 	return TRUE;
 }
 
-int sorting::test_if_sets_are_disjoint(long int *set1, int sz1, long int *set2, int sz2)
+int sorting::test_if_sets_are_disjoint(
+		long int *set1, int sz1, long int *set2, int sz2)
 {
 	long int *S1, *S2;
 	int i, idx;
@@ -580,7 +590,8 @@ int sorting::lint_vec_test_if_set(long int *set, int set_size)
 	return TRUE;
 }
 
-int sorting::test_if_set_with_return_value(int *set, int set_size)
+int sorting::test_if_set_with_return_value(
+		int *set, int set_size)
 {
 	int *S;
 	int i;
@@ -602,7 +613,8 @@ int sorting::test_if_set_with_return_value(int *set, int set_size)
 	return TRUE;
 }
 
-int sorting::test_if_set_with_return_value_lint(long int *set, int set_size)
+int sorting::test_if_set_with_return_value_lint(
+		long int *set, int set_size)
 {
 	int *S;
 	int i;
@@ -715,7 +727,8 @@ int sorting::int_vec_search_linear(int *v, int len, int a, int &idx)
 	return FALSE;
 }
 
-int sorting::lint_vec_search_linear(long int *v, int len, long int a, int &idx)
+int sorting::lint_vec_search_linear(
+		long int *v, int len, long int a, int &idx)
 {
 	int i;
 
@@ -935,28 +948,33 @@ void sorting::lint_vec_quicksort(long int *v,
 		}
 }
 
-void sorting::int_vec_quicksort_increasingly(int *v, int len)
+void sorting::int_vec_quicksort_increasingly(
+		int *v, int len)
 {
 	int_vec_quicksort(v, compare_increasingly_int, 0, len - 1);
 }
 
-void sorting::int_vec_quicksort_decreasingly(int *v, int len)
+void sorting::int_vec_quicksort_decreasingly(
+		int *v, int len)
 {
 	int_vec_quicksort(v, compare_decreasingly_int, 0, len - 1);
 }
 
-void sorting::lint_vec_quicksort_increasingly(long int *v, int len)
+void sorting::lint_vec_quicksort_increasingly(
+		long int *v, int len)
 {
 	lint_vec_quicksort(v, compare_increasingly_lint, 0, len - 1);
 }
 
-void sorting::lint_vec_quicksort_decreasingly(long int *v, int len)
+void sorting::lint_vec_quicksort_decreasingly(
+		long int *v, int len)
 {
 	lint_vec_quicksort(v, compare_decreasingly_lint, 0, len - 1);
 }
 
 
-void sorting::quicksort_array(int len, void **v,
+void sorting::quicksort_array(
+		int len, void **v,
 	int (*compare_func)(void *a, void *b, void *data), void *data)
 {
 	if (len <= 1)
@@ -964,7 +982,8 @@ void sorting::quicksort_array(int len, void **v,
 	quicksort(v, NULL, compare_func, data, 0, len - 1);
 }
 
-void sorting::quicksort_array_with_perm(int len, void **v, int *perm,
+void sorting::quicksort_array_with_perm(
+		int len, void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data)
 {
 	if (len <= 1)
@@ -972,7 +991,8 @@ void sorting::quicksort_array_with_perm(int len, void **v, int *perm,
 	quicksort(v, perm, compare_func, data, 0, len - 1);
 }
 
-int sorting::vec_search(void **v,
+int sorting::vec_search(
+		void **v,
 	int (*compare_func)(void *a, void *b, void *data),
 	void *data_for_compare,
 	int len, void *a, int &idx, int verbose_level)
@@ -1033,7 +1053,8 @@ int sorting::vec_search(void **v,
 }
 
 int sorting::vec_search_general(void *vec,
-	int (*compare_func)(void *vec, void *a, int b, void *data_for_compare),
+	int (*compare_func)(void *vec,
+			void *a, int b, void *data_for_compare),
 	void *data_for_compare,
 	int len, void *a, int &idx, int verbose_level)
 {
@@ -1087,7 +1108,8 @@ int sorting::vec_search_general(void *vec,
 	return f_found;
 }
 
-int sorting::int_vec_search_and_insert_if_necessary(int *v, int &len, int a)
+int sorting::int_vec_search_and_insert_if_necessary(
+		int *v, int &len, int a)
 {
 	int idx, t;
 
@@ -1104,7 +1126,8 @@ int sorting::int_vec_search_and_insert_if_necessary(int *v, int &len, int a)
 		}
 }
 
-int sorting::int_vec_search_and_remove_if_found(int *v, int &len, int a)
+int sorting::int_vec_search_and_remove_if_found(
+		int *v, int &len, int a)
 {
 	int idx, t;
 
@@ -1342,7 +1365,8 @@ int sorting::vector_lint_search(std::vector<long int> &v,
 	return f_found;
 }
 
-int sorting::int_vec_search_first_occurrence(int *v,
+int sorting::int_vec_search_first_occurrence(
+		int *v,
 		int len, int a, int &idx,
 		int verbose_level)
 // This function finds the first occurrence of the element a.
@@ -1503,7 +1527,8 @@ int sorting::lint_vec_search_first_occurrence(long int *v,
 }
 
 
-int sorting::longinteger_vec_search(ring_theory::longinteger_object *v, int len,
+int sorting::longinteger_vec_search(
+		ring_theory::longinteger_object *v, int len,
 		ring_theory::longinteger_object &a, int &idx)
 {
 	int l, r, m, res;
@@ -1552,7 +1577,8 @@ int sorting::longinteger_vec_search(ring_theory::longinteger_object *v, int len,
 	return f_found;
 }
 
-void sorting::int_vec_classify_and_print(ostream &ost, int *v, int l)
+void sorting::int_vec_classify_and_print(
+		std::ostream &ost, int *v, int l)
 {
 	tally C;
 	int f_backwards = TRUE;
@@ -1561,7 +1587,8 @@ void sorting::int_vec_classify_and_print(ostream &ost, int *v, int l)
 	C.print_file(ost, f_backwards);
 }
 
-void sorting::int_vec_values(int *v, int l, int *&w, int &w_len)
+void sorting::int_vec_values(
+		int *v, int l, int *&w, int &w_len)
 {
 	tally C;
 	//int f_backwards = TRUE;
@@ -1577,7 +1604,8 @@ void sorting::int_vec_values(int *v, int l, int *&w, int &w_len)
 		}
 }
 
-void sorting::int_vec_multiplicities(int *v, int l,
+void sorting::int_vec_multiplicities(
+		int *v, int l,
 	int *&w, int &w_len)
 {
 	tally C;
@@ -1592,7 +1620,8 @@ void sorting::int_vec_multiplicities(int *v, int l,
 		}
 }
 
-void sorting::int_vec_values_and_multiplicities(int *v, int l,
+void sorting::int_vec_values_and_multiplicities(
+		int *v, int l,
 	int *&val, int *&mult, int &nb_values)
 {
 	tally C;
@@ -1612,7 +1641,8 @@ void sorting::int_vec_values_and_multiplicities(int *v, int l,
 		}
 }
 
-void sorting::int_vec_classify(int length,
+void sorting::int_vec_classify(
+		int length,
 	int *the_vec, int *&the_vec_sorted,
 	int *&sorting_perm, int *&sorting_perm_inv, 
 	int &nb_types, int *&type_first, int *&type_len)
@@ -1636,7 +1666,8 @@ void sorting::int_vec_classify(int length,
 	
 }
 
-void sorting::int_vec_classify_with_arrays(int length,
+void sorting::int_vec_classify_with_arrays(
+		int length,
 	int *the_vec, int *the_vec_sorted,
 	int *sorting_perm, int *sorting_perm_inv, 
 	int &nb_types, int *type_first, int *type_len)
@@ -1675,7 +1706,8 @@ void sorting::int_vec_classify_with_arrays(int length,
 #endif
 }
 
-void sorting::int_vec_sorted_collect_types(int length,
+void sorting::int_vec_sorted_collect_types(
+		int length,
 	int *the_vec_sorted,
 	int &nb_types, int *type_first, int *type_len)
 {
@@ -1702,7 +1734,8 @@ void sorting::int_vec_sorted_collect_types(int length,
 	nb_types++;
 }
 
-void sorting::lint_vec_sorted_collect_types(int length,
+void sorting::lint_vec_sorted_collect_types(
+		int length,
 	long int *the_vec_sorted,
 	int &nb_types, int *type_first, int *type_len)
 {
@@ -1730,7 +1763,8 @@ void sorting::lint_vec_sorted_collect_types(int length,
 }
 
 
-void sorting::int_vec_print_classified(ostream &ost, int *vec, int len)
+void sorting::int_vec_print_classified(
+		std::ostream &ost, int *vec, int len)
 {
 	int *the_vec_sorted;
 	int *sorting_perm;
@@ -1765,7 +1799,8 @@ void sorting::int_vec_print_classified(ostream &ost, int *vec, int len)
 	FREE_int(type_len);
 }
 
-void sorting::int_vec_print_types(std::ostream &ost,
+void sorting::int_vec_print_types(
+		std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1775,7 +1810,8 @@ void sorting::int_vec_print_types(std::ostream &ost,
 	ost << " )";
 }
 
-void sorting::lint_vec_print_types(std::ostream &ost,
+void sorting::lint_vec_print_types(
+		std::ostream &ost,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1785,7 +1821,8 @@ void sorting::lint_vec_print_types(std::ostream &ost,
 	ost << " )";
 }
 
-void sorting::int_vec_print_types_naked_stringstream(std::stringstream &sstr,
+void sorting::int_vec_print_types_naked_stringstream(
+		std::stringstream &sstr,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -2008,7 +2045,8 @@ void sorting::lint_vec_print_types_naked_tex(std::ostream &ost,
 		}
 }
 
-void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
+void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(
+		std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -2050,7 +2088,8 @@ void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &os
 		}
 }
 
-void sorting::lint_vec_print_types_naked_tex_we_are_in_math_mode(std::ostream &ost,
+void sorting::lint_vec_print_types_naked_tex_we_are_in_math_mode(
+		std::ostream &ost,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -2155,7 +2194,8 @@ void sorting::Heapsort_general_with_log(void *data, int *w, int len,
 
 
 
-int sorting::search_general(void *data, int len,
+int sorting::search_general(
+		void *data, int len,
 	void *search_object, int &idx,
 	int (*compare_func)(void *data, int i,
 			void *search_object, void *extra_data),
@@ -2270,7 +2310,8 @@ void sorting::lint_vec_heapsort(long int *v, int len)
 
 }
 
-void sorting::int_vec_heapsort_with_log(int *v, int *w, int len)
+void sorting::int_vec_heapsort_with_log(
+		int *v, int *w, int len)
 {
 	int end;
 	
@@ -2284,7 +2325,8 @@ void sorting::int_vec_heapsort_with_log(int *v, int *w, int len)
 	
 }
 
-void sorting::lint_vec_heapsort_with_log(long int *v, long int *w, int len)
+void sorting::lint_vec_heapsort_with_log(
+		long int *v, long int *w, int len)
 {
 	int end;
 
@@ -2316,7 +2358,8 @@ void sorting::lint_heapsort_make_heap(long int *v, int len)
 		}
 }
 
-void sorting::heapsort_make_heap_with_log(int *v, int *w, int len)
+void sorting::heapsort_make_heap_with_log(
+		int *v, int *w, int len)
 {
 	int start;
 	
@@ -2325,7 +2368,8 @@ void sorting::heapsort_make_heap_with_log(int *v, int *w, int len)
 		}
 }
 
-void sorting::lint_heapsort_make_heap_with_log(long int *v, long int *w, int len)
+void sorting::lint_heapsort_make_heap_with_log(
+		long int *v, long int *w, int len)
 {
 	int start;
 
@@ -2334,7 +2378,8 @@ void sorting::lint_heapsort_make_heap_with_log(long int *v, long int *w, int len
 		}
 }
 
-void sorting::Heapsort_make_heap(void *v, int len, int entry_size_in_chars,
+void sorting::Heapsort_make_heap(
+		void *v, int len, int entry_size_in_chars,
 	int (*compare_func)(void *v1, void *v2))
 {
 	int start;
@@ -2346,7 +2391,8 @@ void sorting::Heapsort_make_heap(void *v, int len, int entry_size_in_chars,
 		}
 }
 
-void sorting::Heapsort_general_make_heap(void *data, int len,
+void sorting::Heapsort_general_make_heap(
+		void *data, int len,
 	int (*compare_func)(void *data, int i, int j, void *extra_data), 
 	void (*swap_func)(void *data, int i, int j, void *extra_data), 
 	void *extra_data)
@@ -2360,7 +2406,8 @@ void sorting::Heapsort_general_make_heap(void *data, int len,
 		}
 }
 
-void sorting::Heapsort_general_make_heap_with_log(void *data, int *w, int len,
+void sorting::Heapsort_general_make_heap_with_log(
+		void *data, int *w, int len,
 	int (*compare_func)(void *data, int i, int j, void *extra_data),
 	void (*swap_func)(void *data, int i, int j, void *extra_data),
 	void *extra_data)
@@ -2374,7 +2421,8 @@ void sorting::Heapsort_general_make_heap_with_log(void *data, int *w, int len,
 		}
 }
 
-void sorting::heapsort_sift_down(int *v, int start, int end)
+void sorting::heapsort_sift_down(
+		int *v, int start, int end)
 {
 	int root, child;
 	
@@ -2394,7 +2442,8 @@ void sorting::heapsort_sift_down(int *v, int start, int end)
 		}
 }
 
-void sorting::lint_heapsort_sift_down(long int *v, int start, int end)
+void sorting::lint_heapsort_sift_down(
+		long int *v, int start, int end)
 {
 	int root, child;
 
@@ -2492,7 +2541,8 @@ void sorting::Heapsort_sift_down(
 		}
 }
 
-void sorting::Heapsort_general_sift_down(void *data, int start, int end,
+void sorting::Heapsort_general_sift_down(
+		void *data, int start, int end,
 	int (*compare_func)(void *data, int i, int j, void *extra_data), 
 	void (*swap_func)(void *data, int i, int j, void *extra_data), 
 	void *extra_data)
@@ -2523,7 +2573,8 @@ void sorting::Heapsort_general_sift_down(void *data, int start, int end,
 	}
 }
 
-void sorting::Heapsort_general_sift_down_with_log(void *data, int *w, int start, int end,
+void sorting::Heapsort_general_sift_down_with_log(
+		void *data, int *w, int start, int end,
 	int (*compare_func)(void *data, int i, int j, void *extra_data),
 	void (*swap_func)(void *data, int i, int j, void *extra_data),
 	void *extra_data)
@@ -2575,7 +2626,8 @@ void sorting::lint_heapsort_swap(long int *v, int i, int j)
 	v[j] = a;
 }
 
-void sorting::Heapsort_swap(void *v, int i, int j, int entry_size_in_chars)
+void sorting::Heapsort_swap(
+		void *v, int i, int j, int entry_size_in_chars)
 {
 	int a, h, I, J;
 	char *V;
@@ -2629,7 +2681,9 @@ int sorting::integer_vec_compare(int *p, int *q, int len)
 	return 0;
 }
 
-int sorting::integer_vec_std_compare(const vector<unsigned int> &p, const vector<unsigned int> &q)
+int sorting::integer_vec_std_compare(
+		const vector<unsigned int> &p,
+		const vector<unsigned int> &q)
 {
 	int i;
 
@@ -2649,7 +2703,8 @@ int sorting::integer_vec_std_compare(const vector<unsigned int> &p, const vector
 
 
 
-int sorting::lint_vec_compare(long int *p, long int *q, int len)
+int sorting::lint_vec_compare(
+		long int *p, long int *q, int len)
 {
 	int i;
 
@@ -2988,7 +3043,8 @@ finish:
 	return ret;
 }
 
-int sorting::compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2)
+int sorting::compare_sets_lint(
+		long int *set1, long int *set2, int sz1, int sz2)
 {
 	long int *S1, *S2;
 	int u, ret;
@@ -3031,7 +3087,8 @@ finish:
 	return ret;
 }
 
-int sorting::test_if_sets_are_disjoint(long int *set1, long int *set2, int sz1, int sz2)
+int sorting::test_if_sets_are_disjoint(
+		long int *set1, long int *set2, int sz1, int sz2)
 {
 	int u, v;
 
@@ -3051,7 +3108,8 @@ int sorting::test_if_sets_are_disjoint(long int *set1, long int *set2, int sz1, 
 	return TRUE;
 }
 
-void sorting::d_partition(double *v, int left, int right, int *middle)
+void sorting::d_partition(
+		double *v, int left, int right, int *middle)
 {
 	int l, r, m, len, m1, pivot;
 	double vv;
@@ -3099,7 +3157,8 @@ void sorting::d_partition(double *v, int left, int right, int *middle)
 	*middle = m;
 }
 
-void sorting::d_quicksort(double *v, int left, int right)
+void sorting::d_quicksort(
+		double *v, int left, int right)
 {
 	int middle;
 
@@ -3118,7 +3177,8 @@ void sorting::d_quicksort_array(int len, double *v)
 }
 
 
-int sorting::test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2)
+int sorting::test_if_sets_are_disjoint_assuming_sorted(
+		int *set1, int *set2, int sz1, int sz2)
 {
 	int sz;
 	int *p, *q;
@@ -3192,7 +3252,8 @@ int sorting::uchar_vec_compare(uchar *p, uchar *q, int len)
 	return 0;
 }
 
-int sorting::test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int *w, int len)
+int sorting::test_if_sets_are_disjoint_not_assuming_sorted(
+		long int *v, long int *w, int len)
 {
 	int i, a, idx;
 	sorting Sorting;
@@ -3219,7 +3280,8 @@ int sorting::int_vec_compare(int *p, int *q, int len)
 	return 0;
 }
 
-int sorting::uint_vec_compare(unsigned int *p, unsigned int *q, int len)
+int sorting::uint_vec_compare(
+		unsigned int *p, unsigned int *q, int len)
 {
 	int i;
 
@@ -3232,7 +3294,8 @@ int sorting::uint_vec_compare(unsigned int *p, unsigned int *q, int len)
 	return 0;
 }
 
-int sorting::int_vec_compare_stride(int *p, int *q, int len, int stride)
+int sorting::int_vec_compare_stride(
+		int *p, int *q, int len, int stride)
 {
 	int i;
 
@@ -3245,7 +3308,8 @@ int sorting::int_vec_compare_stride(int *p, int *q, int len, int stride)
 	return 0;
 }
 
-void sorting::sorted_vec_get_first_and_length(int *v, int len,
+void sorting::sorted_vec_get_first_and_length(
+		int *v, int len,
 		int *class_first, int *class_len, int &nb_classes)
 // we assume that the vector v is sorted.
 {

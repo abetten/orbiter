@@ -1507,7 +1507,7 @@ void blt_set_classify::report2(std::ostream &ost,
 
 
 
-static void blt_set_classify_print(ostream &ost, int len, long int *S, void *data)
+static void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data)
 {
 	blt_set_classify *Gen = (blt_set_classify *) data;
 

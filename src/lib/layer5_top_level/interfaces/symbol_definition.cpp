@@ -80,6 +80,9 @@ symbol_definition::symbol_definition()
 	f_quartic_curve = FALSE;
 	Quartic_curve_descr = NULL;
 
+	f_BLT_set = FALSE;
+	BLT_Set_create_description = NULL;
+
 
 	f_translation_plane = FALSE;
 	//std::string translation_plane_spread_label;
@@ -548,6 +551,30 @@ void symbol_definition::read_definition(
 		}
 	}
 
+	else if (ST.stringcmp(argv[i], "-BLT_set") == 0) {
+
+		f_BLT_set = TRUE;
+		BLT_Set_create_description = NEW_OBJECT(orthogonal_geometry_applications::BLT_set_create_description);
+		if (f_v) {
+			cout << "reading -BLT_set" << endl;
+		}
+
+		i += BLT_Set_create_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-BLT_set" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-BLT_set " << endl;
+			BLT_Set_create_description->print();
+		}
+	}
 
 	else if (ST.stringcmp(argv[i], "-translation_plane") == 0) {
 		f_translation_plane = TRUE;
@@ -1153,6 +1180,16 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_quartic_curve" << endl;
 		}
 	}
+	else if (f_BLT_set) {
+
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_BLT_set" << endl;
+		}
+		definition_of_BLT_set(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_BLT_set" << endl;
+		}
+	}
 	else if (f_translation_plane) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_translation_plane" << endl;
@@ -1408,6 +1445,10 @@ void symbol_definition::print()
 	if (f_quartic_curve) {
 		cout << "-quartic_curve " << endl;
 		Quartic_curve_descr->print();
+	}
+	if (f_BLT_set) {
+		cout << "-BLT_set " << endl;
+		BLT_Set_create_description->print();
 	}
 	if (f_translation_plane) {
 		cout << "-translation_plane "
@@ -2321,6 +2362,72 @@ void symbol_definition::definition_of_quartic_curve(int verbose_level)
 
 
 
+void symbol_definition::definition_of_BLT_set(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set" << endl;
+	}
+
+
+
+	if (!BLT_Set_create_description->f_space) {
+		cout << "please specify the orthogonal space using -space <label>" << endl;
+		exit(1);
+	}
+
+	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
+
+	OA = Get_orthogonal_space(BLT_Set_create_description->space_label);
+
+	orthogonal_geometry_applications::BLT_set_create *BC;
+
+	BC = NEW_OBJECT(orthogonal_geometry_applications::BLT_set_create);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set "
+				"before BC->init" << endl;
+	}
+	BC->init(
+			OA->Blt_Set_domain,
+			BLT_Set_create_description,
+			OA,
+			verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set "
+				"after BC->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set "
+				"we created a BLT-set called " << BC->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_BLT_set(define_label, BC, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_BLT_set done" << endl;
+	}
+}
+
+
+
 
 void symbol_definition::definition_of_translation_plane(int verbose_level)
 {
@@ -3003,7 +3110,8 @@ void symbol_definition::definition_of_set(int verbose_level)
 
 void symbol_definition::definition_of_vector(
 		std::string &label,
-		data_structures::vector_builder_description *Descr, int verbose_level)
+		data_structures::vector_builder_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

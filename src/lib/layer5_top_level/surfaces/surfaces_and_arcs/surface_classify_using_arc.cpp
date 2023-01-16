@@ -286,7 +286,7 @@ void surface_classify_using_arc::report(
 }
 
 
-void surface_classify_using_arc::report2(ostream &ost,
+void surface_classify_using_arc::report2(std::ostream &ost,
 		graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
@@ -475,7 +475,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 }
 
 
-void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int verbose_level)
+void surface_classify_using_arc::report_decomposition_matrix(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::latex_interface L;

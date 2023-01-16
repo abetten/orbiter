@@ -956,14 +956,14 @@ void tdo_scheme_synthetic::print_scheme(int h, int verbose_level)
 	}
 }
 
-void tdo_scheme_synthetic::print_scheme_tex(ostream &ost, int h)
+void tdo_scheme_synthetic::print_scheme_tex(std::ostream &ost, int h)
 {
 	std::string dummy;
 
 	print_scheme_tex_fancy(ost, h, FALSE, dummy);
 }
 
-void tdo_scheme_synthetic::print_scheme_tex_fancy(ostream &ost,
+void tdo_scheme_synthetic::print_scheme_tex_fancy(std::ostream &ost,
 	int h, int f_label, std::string &label)
 {
 	int i, j, a = 0, n, m, c1, c2;

@@ -844,7 +844,7 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 	}
 }
 
-void surfaces_arc_lifting_trace::report_product(ostream &ost, int *Elt, int verbose_level)
+void surfaces_arc_lifting_trace::report_product(std::ostream &ost, int *Elt, int verbose_level)
 {
 	ost << "$$" << endl;
 	Up->Lift->A4->element_print_latex(Elt_Alpha1, ost);

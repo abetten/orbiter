@@ -355,7 +355,7 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 	}
 }
 
-void regular_ls_classify::print(ostream &ost, long int *S, int len)
+void regular_ls_classify::print(std::ostream &ost, long int *S, int len)
 {
 	int i;
 	
@@ -529,7 +529,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 
 
 
-static void regular_ls_classify_print_set(ostream &ost, int len, long int *S, void *data)
+static void regular_ls_classify_print_set(std::ostream &ost, int len, long int *S, void *data)
 {
 	regular_ls_classify *Gen = (regular_ls_classify *) data;
 	

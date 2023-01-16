@@ -137,7 +137,8 @@ public:
 			int nb_vars, int degree,
 			monomial_ordering_type Monomial_ordering_type,
 			int verbose_level);
-	void init_with_or_without_variables(field_theory::finite_field *F,
+	void init_with_or_without_variables(
+			field_theory::finite_field *F,
 			int nb_vars, int degree,
 			monomial_ordering_type Monomial_ordering_type,
 			int f_has_variables,
@@ -198,7 +199,8 @@ public:
 	void algebraic_set(int *Eqns, int nb_eqns,
 			long int *Pts, int &nb_pts, int verbose_level);
 	void polynomial_function(int *coeff, int *f, int verbose_level);
-	void polynomial_function_affine(int *coeff, int *f, int verbose_level);
+	void polynomial_function_affine(
+			int *coeff, int *f, int verbose_level);
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
@@ -237,13 +239,16 @@ public:
 		int verbose_level);
 	void explore_vanishing_ideal(long int *Pts,
 			int nb_pts, int verbose_level);
-	void vanishing_ideal(long int *Pts, int nb_pts, int &r, int *Kernel,
+	void vanishing_ideal(
+			long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
 	int compare_monomials_PART(int *M1, int *M2);
 	void print_monomial_ordering(std::ostream &ost);
-	int *read_from_string_coefficient_pairs(std::string &str, int verbose_level);
-	int *read_from_string_coefficient_vector(std::string &str, int verbose_level);
+	int *read_from_string_coefficient_pairs(
+			std::string &str, int verbose_level);
+	int *read_from_string_coefficient_vector(
+			std::string &str, int verbose_level);
 	void number_of_conditions_satisfied(
 			std::string &variety_label_txt,
 			std::string &variety_label_tex,
@@ -324,7 +329,8 @@ public:
 	void add_mod(longinteger_object &a,
 		longinteger_object &b, longinteger_object &c,
 		longinteger_object &m, int verbose_level);
-	void add_in_place(longinteger_object &a, longinteger_object &b);
+	void add_in_place(longinteger_object &a,
+			longinteger_object &b);
 		// a := a + b
 	void subtract_in_place(
 			longinteger_object &a, longinteger_object &b);
@@ -333,16 +339,21 @@ public:
 			longinteger_object &a, long int b);
 	void mult(longinteger_object &a,
 		longinteger_object &b, longinteger_object &c);
-	void mult_in_place(longinteger_object &a, longinteger_object &b);
+	void mult_in_place(
+			longinteger_object &a, longinteger_object &b);
 	void mult_integer_in_place(longinteger_object &a, int b);
 	void mult_mod(longinteger_object &a,
 		longinteger_object &b, longinteger_object &c,
 		longinteger_object &m, int verbose_level);
-	void multiply_up(longinteger_object &a, int *x, int len, int verbose_level);
+	void multiply_up(longinteger_object &a, int *x, int len,
+			int verbose_level);
 	void multiply_up_lint(
-			longinteger_object &a, long int *x, int len, int verbose_level);
-	int quotient_as_int(longinteger_object &a, longinteger_object &b);
-	long int quotient_as_lint(longinteger_object &a, longinteger_object &b);
+			longinteger_object &a, long int *x, int len,
+			int verbose_level);
+	int quotient_as_int(
+			longinteger_object &a, longinteger_object &b);
+	long int quotient_as_lint(
+			longinteger_object &a, longinteger_object &b);
 	void integral_division_exact(longinteger_object &a,
 		longinteger_object &b, longinteger_object &a_over_b);
 	void integral_division(
@@ -356,8 +367,10 @@ public:
 		long int b, longinteger_object &q, long int &r);
 	void inverse_mod(
 		longinteger_object &a,
-		longinteger_object &m, longinteger_object &av, int verbose_level);
-	void extended_gcd(longinteger_object &a, longinteger_object &b,
+		longinteger_object &m, longinteger_object &av,
+		int verbose_level);
+	void extended_gcd(longinteger_object &a,
+			longinteger_object &b,
 		longinteger_object &g, longinteger_object &u,
 		longinteger_object &v, int verbose_level);
 	int logarithm_base_b(longinteger_object &a, int b);
@@ -370,26 +383,30 @@ public:
 		longinteger_object &n, longinteger_object &m,
 		int verbose_level);
 	void square_root(
-			longinteger_object &a, longinteger_object &sqrt_a,
+			longinteger_object &a,
+			longinteger_object &sqrt_a,
 			int verbose_level);
 	int square_root_mod(int a, int p, int verbose_level);
 		// solves x^2 = a mod p. Returns x
 
 
-	void create_q_to_the_n(longinteger_object &a, int q, int n);
+	void create_q_to_the_n(
+			longinteger_object &a, int q, int n);
 	void create_qnm1(longinteger_object &a, int q, int n);
 	void create_Mersenne(longinteger_object &M, int n);
 	// $M_n = 2^n - 1$
 	void create_Fermat(longinteger_object &F, int n);
 	// $F_n = 2^{2^n} + 1$
-	void Dedekind_number(longinteger_object &Dnq, int n, int q, int verbose_level);
+	void Dedekind_number(longinteger_object &Dnq,
+			int n, int q, int verbose_level);
 
 	int is_even(longinteger_object &a);
 	int is_odd(longinteger_object &a);
 	int remainder_mod_int(longinteger_object &a, int p);
 	int multiplicity_of_p(longinteger_object &a,
 		longinteger_object &residue, int p);
-	long int smallest_primedivisor(longinteger_object &a, int p_min,
+	long int smallest_primedivisor(
+			longinteger_object &a, int p_min,
 		int verbose_level);
 	void factor_into_longintegers(longinteger_object &a,
 		int &nb_primes, longinteger_object *&primes,
@@ -404,13 +421,17 @@ public:
 		longinteger_object &r);
 	void random_number_with_n_decimals(
 		longinteger_object &R, int n, int verbose_level);
-	void matrix_product(longinteger_object *A, longinteger_object *B,
+	void matrix_product(longinteger_object *A,
+			longinteger_object *B,
 		longinteger_object *&C, int Am, int An, int Bn);
-	void matrix_entries_integral_division_exact(longinteger_object *A,
+	void matrix_entries_integral_division_exact(
+			longinteger_object *A,
 		longinteger_object &b, int Am, int An);
-	void matrix_print_GAP(std::ostream &ost, longinteger_object *A,
+	void matrix_print_GAP(std::ostream &ost,
+			longinteger_object *A,
 		int Am, int An);
-	void matrix_print_tex(std::ostream &ost, longinteger_object *A,
+	void matrix_print_tex(std::ostream &ost,
+			longinteger_object *A,
 		int Am, int An);
 	void power_mod(char *aa, char *bb, char *nn,
 		longinteger_object &result, int verbose_level);
@@ -423,7 +444,8 @@ public:
 	void Chinese_Remainders(
 			std::vector<long int> &Remainders,
 			std::vector<long int> &Moduli,
-			longinteger_object &x, longinteger_object &M, int verbose_level);
+			longinteger_object &x, longinteger_object &M,
+			int verbose_level);
 
 };
 
@@ -460,8 +482,10 @@ public:
 		// creates a^e
 	void create_power_minus_one(int a, int e);
 		// creates a^e  - 1
-	void create_from_base_b_representation(int b, int *rep, int len);
-	void create_from_base_10_string(const char *str, int verbose_level);
+	void create_from_base_b_representation(
+			int b, int *rep, int len);
+	void create_from_base_10_string(
+			const char *str, int verbose_level);
 	void create_from_base_10_string(const char *str);
 	void create_from_base_10_string(std::string &str);
 	int as_int();
@@ -677,21 +701,30 @@ public:
 	void write_code_for_division(
 			field_theory::finite_field *F,
 			std::string &label_code,
-			std::string &A_coeffs, std::string &B_coeffs,
+			std::string &A_coeffs,
+			std::string &B_coeffs,
 			int verbose_level);
 	void polynomial_division(
 			field_theory::finite_field *F,
-			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+			std::string &A_coeffs,
+			std::string &B_coeffs,
+			int verbose_level);
 	void extended_gcd_for_polynomials(
 			field_theory::finite_field *F,
-			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+			std::string &A_coeffs,
+			std::string &B_coeffs,
+			int verbose_level);
 	void polynomial_mult_mod(
 			field_theory::finite_field *F,
-			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
+			std::string &A_coeffs,
+			std::string &B_coeffs,
+			std::string &M_coeffs,
 			int verbose_level);
 	void polynomial_power_mod(
 			field_theory::finite_field *F,
-			std::string &A_coeffs, std::string &power_text, std::string &M_coeffs,
+			std::string &A_coeffs,
+			std::string &power_text,
+			std::string &M_coeffs,
 			int verbose_level);
 	void polynomial_find_roots(
 			field_theory::finite_field *F,
@@ -711,7 +744,8 @@ public:
 			std::string &input_file, long int rk1, int verbose_level);
 	void polynomial_division_from_file_all_k_error_patterns_with_report(
 			field_theory::finite_field *F,
-			std::string &input_file, long int rk1, int k, int verbose_level);
+			std::string &input_file, long int rk1,
+			int k, int verbose_level);
 	void create_irreducible_polynomial(
 			field_theory::finite_field *F,
 			unipoly_domain *Fq,
@@ -722,36 +756,40 @@ public:
 	void compute_nth_roots_as_polynomials(
 			field_theory::finite_field *F,
 			unipoly_domain *FpX,
-			unipoly_domain *Fq, unipoly_object *&Beta, int n1, int n2, int verbose_level);
+			unipoly_domain *Fq, unipoly_object *&Beta,
+			int n1, int n2, int verbose_level);
 	void compute_powers(
 			field_theory::finite_field *F,
 			unipoly_domain *Fq,
 			int n, int start_idx,
 			unipoly_object *&Beta, int verbose_level);
-	void make_all_irreducible_polynomials_of_degree_d(field_theory::finite_field *F,
-			int d, std::vector<std::vector<int> > &Table,
+	void make_all_irreducible_polynomials_of_degree_d(
+			field_theory::finite_field *F,
+			int d,
+			std::vector<std::vector<int> > &Table,
 			int verbose_level);
-	int count_all_irreducible_polynomials_of_degree_d(field_theory::finite_field *F,
+	int count_all_irreducible_polynomials_of_degree_d(
+			field_theory::finite_field *F,
 			int d, int verbose_level);
-	void do_make_table_of_irreducible_polynomials(field_theory::finite_field *F,
+	void do_make_table_of_irreducible_polynomials(
+			field_theory::finite_field *F,
 			int deg, int verbose_level);
-#if 0
-	void do_search_for_primitive_polynomial_in_range(
-			int p_min, int p_max,
-			int deg_min, int deg_max,
-			int verbose_level);
-#endif
-	char *search_for_primitive_polynomial_of_given_degree(int p,
+	char *search_for_primitive_polynomial_of_given_degree(
+			int p,
 		int degree, int verbose_level);
-	void search_for_primitive_polynomials(int p_min, int p_max,
+	void search_for_primitive_polynomials(
+			int p_min, int p_max,
 		int n_min, int n_max, int verbose_level);
-	void factor_cyclotomic(int n, int q, int d,
-		int *coeffs, int f_poly, std::string &poly, int verbose_level);
+	void factor_cyclotomic(
+			int n, int q, int d,
+		int *coeffs, int f_poly,
+		std::string &poly, int verbose_level);
 	void oval_polynomial(
 			field_theory::finite_field *F,
 		int *S, unipoly_domain &D, unipoly_object &poly,
 		int verbose_level);
-	void print_longinteger_after_multiplying(std::ostream &ost,
+	void print_longinteger_after_multiplying(
+			std::ostream &ost,
 			int *factors, int len);
 
 };
@@ -776,7 +814,9 @@ public:
 
 	table_of_irreducible_polynomials();
 	~table_of_irreducible_polynomials();
-	void init(int k, field_theory::finite_field *F, int verbose_level);
+	void init(int k,
+			field_theory::finite_field *F,
+			int verbose_level);
 	void print(std::ostream &ost);
 	void print_polynomials(std::ostream &ost);
 	int select_polynomial_first(
@@ -784,7 +824,8 @@ public:
 	int select_polynomial_next(
 			int *Select, int verbose_level);
 	int is_irreducible(unipoly_object &poly, int verbose_level);
-	void factorize_polynomial(unipoly_object &char_poly, int *Mult,
+	void factorize_polynomial(
+			unipoly_object &char_poly, int *Mult,
 		int verbose_level);
 };
 
@@ -813,18 +854,29 @@ private:
 public:
 
 	unipoly_domain();
-	unipoly_domain(field_theory::finite_field *GFq);
-	void init_basic(field_theory::finite_field *F, int verbose_level);
-	unipoly_domain(field_theory::finite_field *GFq, unipoly_object m, int verbose_level);
+	unipoly_domain(
+			field_theory::finite_field *GFq);
+	void init_basic(
+			field_theory::finite_field *F, int verbose_level);
+	unipoly_domain(
+			field_theory::finite_field *GFq,
+			unipoly_object m,
+			int verbose_level);
 	~unipoly_domain();
 	void init_variable_name(std::string &label);
-	void init_factorring(field_theory::finite_field *F, unipoly_object m, int verbose_level);
+	void init_factorring(
+			field_theory::finite_field *F,
+			unipoly_object m,
+			int verbose_level);
 	field_theory::finite_field *get_F();
 	int &s_i(unipoly_object p, int i)
 		{ int *rep = (int *) p; return rep[i + 1]; };
-	void create_object_of_degree(unipoly_object &p, int d);
-	void create_object_of_degree_no_test(unipoly_object &p, int d);
-	void create_object_of_degree_with_coefficients(unipoly_object &p,
+	void create_object_of_degree(
+			unipoly_object &p, int d);
+	void create_object_of_degree_no_test(
+			unipoly_object &p, int d);
+	void create_object_of_degree_with_coefficients(
+			unipoly_object &p,
 		int d, int *coeff);
 	void create_object_by_rank(unipoly_object &p, long int rk,
 			const char *file, int line, int verbose_level);
@@ -857,37 +909,57 @@ public:
 	int is_zero(unipoly_object p);
 	void negate(unipoly_object a);
 	void make_monic(unipoly_object &a);
-	void add(unipoly_object a, unipoly_object b, unipoly_object &c);
-	void mult(unipoly_object a, unipoly_object b, unipoly_object &c, int verbose_level);
+	void add(unipoly_object a,
+			unipoly_object b,
+			unipoly_object &c);
+	void mult(unipoly_object a,
+			unipoly_object b,
+			unipoly_object &c,
+			int verbose_level);
 	void mult_mod(unipoly_object a,
-		unipoly_object b, unipoly_object &c, unipoly_object m,
+		unipoly_object b,
+		unipoly_object &c,
+		unipoly_object m,
 		int verbose_level);
-	void mult_mod_negated(unipoly_object a, unipoly_object b, unipoly_object &c,
+	void mult_mod_negated(unipoly_object a,
+			unipoly_object b,
+			unipoly_object &c,
 		int factor_polynomial_degree,
 		int *factor_polynomial_coefficients_negated,
 		int verbose_level);
 	void Frobenius_matrix_by_rows(int *&Frob,
-		unipoly_object factor_polynomial, int verbose_level);
-		// the j-th row of Frob is x^{j*q} mod m
-	void Frobenius_matrix(int *&Frob, unipoly_object factor_polynomial,
+		unipoly_object factor_polynomial,
 		int verbose_level);
-	void Berlekamp_matrix(int *&B, unipoly_object factor_polynomial,
+		// the j-th row of Frob is x^{j*q} mod m
+	void Frobenius_matrix(int *&Frob,
+			unipoly_object factor_polynomial,
+		int verbose_level);
+	void Berlekamp_matrix(int *&B,
+			unipoly_object factor_polynomial,
 		int verbose_level);
 	void exact_division(unipoly_object a,
-		unipoly_object b, unipoly_object &q, int verbose_level);
-	void division_with_remainder(unipoly_object a, unipoly_object b,
-		unipoly_object &q, unipoly_object &r, int verbose_level);
+		unipoly_object b, unipoly_object &q,
+		int verbose_level);
+	void division_with_remainder(
+			unipoly_object a, unipoly_object b,
+		unipoly_object &q, unipoly_object &r,
+		int verbose_level);
 	void derivative(unipoly_object a, unipoly_object &b);
 	int compare_euclidean(unipoly_object m, unipoly_object n);
-	void greatest_common_divisor(unipoly_object m, unipoly_object n,
+	void greatest_common_divisor(
+			unipoly_object m, unipoly_object n,
 		unipoly_object &g, int verbose_level);
-	void extended_gcd(unipoly_object m, unipoly_object n,
+	void extended_gcd(
+			unipoly_object m, unipoly_object n,
 		unipoly_object &u, unipoly_object &v,
 		unipoly_object &g, int verbose_level);
-	int is_squarefree(unipoly_object p, int verbose_level);
-	void compute_normal_basis(int d, int *Normal_basis,
+	int is_squarefree(unipoly_object p,
+			int verbose_level);
+	void compute_normal_basis(int d,
+			int *Normal_basis,
 		int *Frobenius, int verbose_level);
-	void order_ideal_generator(int d, int idx, unipoly_object &mue,
+	void order_ideal_generator(int d,
+			int idx, unipoly_object &mue,
 		int *A, int *Frobenius,
 		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a} p. 105.
@@ -928,8 +1000,11 @@ public:
 		int f, int verbose_level);
 	void get_an_irreducible_polynomial(unipoly_object &m,
 		int f, int verbose_level);
-	void power_int(unipoly_object &a, long int n, int verbose_level);
-	void power_longinteger(unipoly_object &a, longinteger_object &n, int verbose_level);
+	void power_int(unipoly_object &a,
+			long int n, int verbose_level);
+	void power_longinteger(unipoly_object &a,
+			longinteger_object &n,
+			int verbose_level);
 	void power_mod(unipoly_object &a, unipoly_object &m,
 			long int n, int verbose_level);
 	void power_coefficients(unipoly_object &a, int n);
@@ -941,39 +1016,56 @@ public:
 		longinteger_object &alpha,
 		longinteger_object &rk_minpoly,
 		int p, int verbose_level);
-	void print_vector_of_polynomials(unipoly_object *sigma, int deg);
-	void minimum_polynomial_extension_field(unipoly_object &g,
+	void print_vector_of_polynomials(
+			unipoly_object *sigma, int deg);
+	void minimum_polynomial_extension_field(
+			unipoly_object &g,
 		unipoly_object m,
 		unipoly_object &minpol, int d, int *Frobenius,
 		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a}, p. 112.
 	void characteristic_polynomial(int *Mtx, int k,
 		unipoly_object &char_poly, int verbose_level);
-	void print_matrix(unipoly_object *M, int k);
-	void determinant(unipoly_object *M, int k, unipoly_object &p,
+	void print_matrix(
+			unipoly_object *M, int k);
+	void determinant(unipoly_object *M,
+			int k, unipoly_object &p,
 		int verbose_level);
-	void deletion_matrix(unipoly_object *M, int k, int delete_row,
-		int delete_column, unipoly_object *&N, int verbose_level);
+	void deletion_matrix(unipoly_object *M,
+			int k, int delete_row,
+		int delete_column, unipoly_object *&N,
+		int verbose_level);
 	void center_lift_coordinates(unipoly_object a, int q);
 	void reduce_modulo_p(unipoly_object a, int p);
 
 	//unipoly_domain2.cpp:
-	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
-	void print_coeffs_top_down_assuming_one_character_per_digit(unipoly_object a, std::ostream &ost);
+	void mult_easy(unipoly_object a,
+			unipoly_object b,
+			unipoly_object &c);
+	void print_coeffs_top_down_assuming_one_character_per_digit(
+			unipoly_object a, std::ostream &ost);
 	void print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(
 			unipoly_object a, int m, std::ostream &ost);
-	void mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c,
+	void mult_easy_with_report(
+			long int rk_a, long int rk_b, long int &rk_c,
 			std::ostream &ost, int verbose_level);
-	void division_with_remainder_from_file_with_report(std::string &input_fname, long int rk_b,
-			long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level);
+	void division_with_remainder_from_file_with_report(
+			std::string &input_fname, long int rk_b,
+			long int &rk_q, long int &rk_r,
+			std::ostream &ost, int verbose_level);
 	void division_with_remainder_from_file_all_k_bit_error_patterns(
 			std::string &input_fname, long int rk_b, int k,
-			long int *&rk_q, long int *&rk_r, int &n, int &N, std::ostream &ost, int verbose_level);
-	void division_with_remainder_numerically_with_report(long int rk_a, long int rk_b,
-			long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level);
-	void division_with_remainder_with_report(unipoly_object &a, unipoly_object &b,
+			long int *&rk_q, long int *&rk_r, int &n, int &N,
+			std::ostream &ost, int verbose_level);
+	void division_with_remainder_numerically_with_report(
+			long int rk_a, long int rk_b,
+			long int &rk_q, long int &rk_r,
+			std::ostream &ost, int verbose_level);
+	void division_with_remainder_with_report(
+			unipoly_object &a, unipoly_object &b,
 			unipoly_object &q, unipoly_object &r,
-			int f_report, std::ostream &ost, int verbose_level);
+			int f_report, std::ostream &ost,
+			int verbose_level);
 
 
 };

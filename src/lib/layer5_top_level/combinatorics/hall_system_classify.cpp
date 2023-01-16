@@ -396,7 +396,7 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 
 
 
-void hall_system_classify::print(ostream &ost, long int *S, int len)
+void hall_system_classify::print(std::ostream &ost, long int *S, int len)
 {
 	int i;
 	int orb, f, l, j, t, a;
@@ -616,7 +616,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 
 
 
-static void hall_system_print_set(ostream &ost, int len, long int *S, void *data)
+static void hall_system_print_set(std::ostream &ost, int len, long int *S, void *data)
 {
 	hall_system_classify *H = (hall_system_classify *) data;
 

@@ -428,7 +428,7 @@ void classification_step::print_group_orders()
 	}
 }
 
-void classification_step::print_summary(ostream &ost)
+void classification_step::print_summary(std::ostream &ost)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -450,10 +450,10 @@ void classification_step::print_summary(ostream &ost)
 }
 
 
-void classification_step::print_latex(ostream &ost,
+void classification_step::print_latex(std::ostream &ost,
 	std::string &title, int f_print_stabilizer_gens,
 	int f_has_print_function,
-	void (*print_function)(ostream &ost, int i,
+	void (*print_function)(std::ostream &ost, int i,
 			classification_step *Step, void *print_function_data),
 	void *print_function_data)
 {

@@ -581,7 +581,7 @@ static void wreath_unrank_point_func(int *v, int rk, void *data)
 #endif
 
 
-static void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
+static void wreath_product_print_set(std::ostream &ost, int len, long int *S, void *data)
 {
 	tensor_classify *T;
 	int i;

@@ -54,7 +54,8 @@ table_of_irreducible_polynomials::~table_of_irreducible_polynomials()
 }
 
 void table_of_irreducible_polynomials::init(int k,
-		field_theory::finite_field *F, int verbose_level)
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d;
@@ -186,7 +187,7 @@ void table_of_irreducible_polynomials::init(int k,
 	}
 }
 
-void table_of_irreducible_polynomials::print(ostream &ost)
+void table_of_irreducible_polynomials::print(std::ostream &ost)
 {
 	int d, l, i, j;
 
@@ -208,7 +209,7 @@ void table_of_irreducible_polynomials::print(ostream &ost)
 }
 
 
-void table_of_irreducible_polynomials::print_polynomials(ostream &ost)
+void table_of_irreducible_polynomials::print_polynomials(std::ostream &ost)
 {
 	int d, i, j;
 

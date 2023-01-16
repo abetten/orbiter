@@ -328,7 +328,7 @@ void invariants_packing::compute_dual_packings(
 }
 
 void invariants_packing::make_table(
-		isomorph::isomorph *Iso, ostream &ost,
+		isomorph::isomorph *Iso, std::ostream &ost,
 	int f_only_self_dual, int f_only_not_self_dual, 
 	int verbose_level)
 {

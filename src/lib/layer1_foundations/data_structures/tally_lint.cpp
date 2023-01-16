@@ -278,7 +278,7 @@ void tally_lint::print_second_tex(int f_backwards)
 
 }
 
-void tally_lint::print_file(ostream &ost, int f_backwards)
+void tally_lint::print_file(std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -294,7 +294,7 @@ void tally_lint::print_file(ostream &ost, int f_backwards)
 		}
 }
 
-void tally_lint::print_file_tex(ostream &ost, int f_backwards)
+void tally_lint::print_file_tex(std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -314,7 +314,8 @@ void tally_lint::print_file_tex(ostream &ost, int f_backwards)
 		}
 }
 
-void tally_lint::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
+void tally_lint::print_file_tex_we_are_in_math_mode(
+		std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -334,7 +335,8 @@ void tally_lint::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backward
 		}
 }
 
-void tally_lint::print_naked_stringstream(stringstream &sstr, int f_backwards)
+void tally_lint::print_naked_stringstream(
+		std::stringstream &sstr, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -472,7 +474,7 @@ void tally_lint::print_lint_types_naked_tex(
 		}
 }
 
-void tally_lint::print_array_tex(ostream &ost, int f_backwards)
+void tally_lint::print_array_tex(std::ostream &ost, int f_backwards)
 {
 	int i, j, f, l, a;
 
@@ -587,7 +589,8 @@ void tally_lint::get_data_by_multiplicity(
 }
 
 void tally_lint::get_data_by_multiplicity_as_lint(
-		long int *&Pts, int &nb_pts, int multiplicity, int verbose_level)
+		long int *&Pts, int &nb_pts,
+		int multiplicity, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

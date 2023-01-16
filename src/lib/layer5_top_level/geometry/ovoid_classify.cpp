@@ -324,7 +324,8 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 
 
 
-void ovoid_classify::early_test_func(long int *S, int len,
+void ovoid_classify::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -396,7 +397,8 @@ void ovoid_classify::early_test_func(long int *S, int len,
 		} // else
 }
 
-void ovoid_classify::print(ostream &ost, long int *S, int len)
+void ovoid_classify::print(
+		std::ostream &ost, long int *S, int len)
 {
 	int i;
 	
@@ -409,7 +411,8 @@ void ovoid_classify::print(ostream &ost, long int *S, int len)
 		}
 }
 
-void ovoid_classify::make_graphs(orbiter_kernel_system::orbiter_data_file *ODF,
+void ovoid_classify::make_graphs(
+		orbiter_kernel_system::orbiter_data_file *ODF,
 		std::string &prefix,
 		int f_split, int split_r, int split_m,
 		int f_lexorder_test,
@@ -558,7 +561,8 @@ void ovoid_classify::make_graphs(orbiter_kernel_system::orbiter_data_file *ODF,
 		}
 }
 
-void ovoid_classify::make_one_graph(orbiter_kernel_system::orbiter_data_file *ODF,
+void ovoid_classify::make_one_graph(
+		orbiter_kernel_system::orbiter_data_file *ODF,
 		std::string &prefix,
 	int orbit_idx,
 	int f_lexorder_test,
@@ -677,7 +681,8 @@ void ovoid_classify::make_one_graph(orbiter_kernel_system::orbiter_data_file *OD
 		}
 }
 
-void ovoid_classify::create_graph(orbiter_kernel_system::orbiter_data_file *ODF,
+void ovoid_classify::create_graph(
+		orbiter_kernel_system::orbiter_data_file *ODF,
 	int orbit_idx,
 	long int *candidates, int nb_candidates,
 	graph_theory::colored_graph *&CG,
@@ -716,7 +721,8 @@ void ovoid_classify::create_graph(orbiter_kernel_system::orbiter_data_file *ODF,
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++, k++) {
-			fxy = O->Quadratic_form->evaluate_bilinear_form(Pts + i * Descr->d, Pts + j * Descr->d, 1);
+			fxy = O->Quadratic_form->evaluate_bilinear_form(
+					Pts + i * Descr->d, Pts + j * Descr->d, 1);
 			if (fxy != 0) {
 				Bitvec->m_i(k, 1);
 			}
@@ -877,7 +883,7 @@ static void ovoid_classify_early_test_func_callback(long int *S, int len,
 		}
 }
 
-static void callback_ovoid_print_set(ostream &ost, int len, long int *S, void *data)
+static void callback_ovoid_print_set(std::ostream &ost, int len, long int *S, void *data)
 {
 	ovoid_classify *Gen = (ovoid_classify *) data;
 

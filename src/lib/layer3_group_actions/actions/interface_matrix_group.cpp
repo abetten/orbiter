@@ -453,7 +453,7 @@ static void matrix_group_element_dispose(action &A,
 }
 
 static void matrix_group_element_print(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
@@ -502,7 +502,7 @@ static void matrix_group_element_code_for_make_element(action &A,
 }
 
 static void matrix_group_element_print_for_make_element(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
@@ -515,7 +515,7 @@ static void matrix_group_element_print_for_make_element(action &A,
 }
 
 static void matrix_group_element_print_for_make_element_no_commas(
-		action &A, void *elt, ostream &ost)
+		action &A, void *elt, std::ostream &ost)
 {
 	groups::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
@@ -528,7 +528,7 @@ static void matrix_group_element_print_for_make_element_no_commas(
 }
 
 static void matrix_group_element_print_quick(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
@@ -562,7 +562,7 @@ static void matrix_group_element_print_quick(action &A,
 }
 
 static void matrix_group_element_print_latex(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
@@ -589,7 +589,7 @@ static void matrix_group_element_print_latex_with_print_point_function(
 }
 
 static void matrix_group_element_print_as_permutation(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	//matrix_group &G = *A.G.matrix_grp;
 	int f_v = FALSE;
@@ -617,7 +617,7 @@ static void matrix_group_element_print_as_permutation(action &A,
 }
 
 static void matrix_group_element_print_verbose(action &A,
-		void *elt, ostream &ost)
+		void *elt, std::ostream &ost)
 {
 	groups::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
@@ -648,7 +648,7 @@ static void matrix_group_element_print_verbose(action &A,
 
 }
 
-static void matrix_group_print_point(action &A, long int a, ostream &ost)
+static void matrix_group_print_point(action &A, long int a, std::ostream &ost)
 {
 	groups::matrix_group *G = A.G.matrix_grp;
 	geometry::geometry_global Gg;

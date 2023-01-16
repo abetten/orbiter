@@ -414,7 +414,8 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 }
 
 data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
-		schreier_vector *Sv, int verbose_level)
+		schreier_vector *Sv,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *orbit_reps;

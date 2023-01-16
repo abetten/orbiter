@@ -211,7 +211,7 @@ int combinatorics_domain::partition_next(int *v, int n)
 	return FALSE;
 }
 
-void combinatorics_domain::partition_print(ostream &ost, int *v, int n)
+void combinatorics_domain::partition_print(std::ostream &ost, int *v, int n)
 {
 	int i, a;
 	int f_first = TRUE;
@@ -557,7 +557,7 @@ void combinatorics_domain::make_t_k_incidence_matrix(int v, int t, int k,
 	}
 }
 
-void combinatorics_domain::print_k_subsets_by_rank(ostream &ost, int v, int k)
+void combinatorics_domain::print_k_subsets_by_rank(std::ostream &ost, int v, int k)
 {
 	int *set;
 	int i, nb;
@@ -1291,7 +1291,7 @@ void combinatorics_domain::perm_direct_product(long int n1, long int n2,
 	}
 }
 
-void combinatorics_domain::perm_print_list(ostream &ost, int *a, int n)
+void combinatorics_domain::perm_print_list(std::ostream &ost, int *a, int n)
 {
 	int i;
 	
@@ -1306,7 +1306,7 @@ void combinatorics_domain::perm_print_list(ostream &ost, int *a, int n)
 }
 
 void combinatorics_domain::perm_print_list_offset(
-		ostream &ost, int *a, int n, int offset)
+		std::ostream &ost, int *a, int n, int offset)
 {
 	int i;
 	
@@ -1321,7 +1321,7 @@ void combinatorics_domain::perm_print_list_offset(
 }
 
 void combinatorics_domain::perm_print_product_action(
-		ostream &ost, int *a,
+		std::ostream &ost, int *a,
 		int m_plus_n, int m, int offset, int f_cycle_length)
 {
 	//cout << "perm_print_product_action" << endl;
@@ -1335,13 +1335,13 @@ void combinatorics_domain::perm_print_product_action(
 	//cout << "perm_print_product_action done" << endl;
 }
 
-void combinatorics_domain::perm_print(ostream &ost, int *a, int n)
+void combinatorics_domain::perm_print(std::ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 0, FALSE, FALSE, FALSE, 0, FALSE, NULL, NULL);
 }
 
 void combinatorics_domain::perm_print_with_print_point_function(
-		ostream &ost,
+		std::ostream &ost,
 		int *a, int n,
 		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
@@ -1351,7 +1351,7 @@ void combinatorics_domain::perm_print_with_print_point_function(
 }
 
 void combinatorics_domain::perm_print_with_cycle_length(
-		ostream &ost, int *a, int n)
+		std::ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 0, FALSE, TRUE, FALSE, 0, TRUE, NULL, NULL);
 }
@@ -1362,7 +1362,7 @@ void combinatorics_domain::perm_print_counting_from_one(
 	perm_print_offset(ost, a, n, 1, FALSE, FALSE, FALSE, 0, FALSE, NULL, NULL);
 }
 
-void combinatorics_domain::perm_print_offset(ostream &ost,
+void combinatorics_domain::perm_print_offset(std::ostream &ost,
 	int *a, int n,
 	int offset,
 	int f_print_cycles_of_length_one,
@@ -1875,7 +1875,7 @@ int combinatorics_domain::philip_hall_test_dual(
 }
 
 void combinatorics_domain::print_01_matrix_with_stars(
-		ostream &ost, int *A, int m, int n)
+		std::ostream &ost, int *A, int m, int n)
 {
 	int i, j;
 	
@@ -1893,7 +1893,7 @@ void combinatorics_domain::print_01_matrix_with_stars(
 }
 
 void combinatorics_domain::print_int_matrix(
-		ostream &ost, int *A, int m, int n)
+		std::ostream &ost, int *A, int m, int n)
 {
 	int i, j;
 	

@@ -558,7 +558,8 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 }
 
 void poset_classification::Kramer_Mesner_matrix_neighboring(
-		int level, long int *&M, int &nb_rows, int &nb_cols, int verbose_level)
+		int level, long int *&M,
+		int &nb_rows, int &nb_cols, int verbose_level)
 // we assume that we don't use implicit fusion nodes
 {
 	int f_v = (verbose_level >= 1);
@@ -694,7 +695,8 @@ void poset_classification::Kramer_Mesner_matrix_neighboring(
 
 void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 		long int *Mtr, long int *Mrk, long int *&Mtk,
-		int nb_r1, int nb_c1, int nb_r2, int nb_c2, int &nb_r3, int &nb_c3,
+		int nb_r1, int nb_c1, int nb_r2, int nb_c2,
+		int &nb_r3, int &nb_c3,
 		int verbose_level)
 // Computes $M_{tk}$ via a recursion formula:
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.

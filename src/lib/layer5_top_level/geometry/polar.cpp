@@ -138,7 +138,8 @@ void polar::init_group(
 void polar::init(
 		actions::action *A,
 		orthogonal_geometry::orthogonal *O,
-	int epsilon, int n, int k, field_theory::finite_field *F,
+	int epsilon, int n, int k,
+	field_theory::finite_field *F,
 	int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -257,7 +258,8 @@ void polar::init2(int depth, int verbose_level)
 	f_debug = FALSE;
 }
 
-void polar::compute_orbits(int t0, int verbose_level)
+void polar::compute_orbits(
+		int t0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -291,7 +293,8 @@ void polar::compute_orbits(int t0, int verbose_level)
 		}
 }
 
-void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
+void polar::compute_cosets(
+		int depth, int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -413,8 +416,10 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	FREE_int(M2);
 }
 
-void polar::dual_polar_graph(int depth, int orbit_idx, 
-		ring_theory::longinteger_object *&Rank_table, int &nb_maximals,
+void polar::dual_polar_graph(
+		int depth, int orbit_idx,
+		ring_theory::longinteger_object *&Rank_table,
+		int &nb_maximals,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -674,7 +679,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	FREE_pint(M);
 }
 
-void polar::show_stabilizer(int depth, int orbit_idx, int verbose_level)
+void polar::show_stabilizer(
+		int depth, int orbit_idx, int verbose_level)
 {
 	int *Elt;
 	long int goi, i, order;
@@ -839,7 +845,8 @@ int polar::test(int *S, int len, int verbose_level)
 }
 #endif
 
-void polar::test_if_in_perp(long int *S, int len,
+void polar::test_if_in_perp(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -896,7 +903,8 @@ void polar::test_if_in_perp(long int *S, int len,
 		}
 }
 
-void polar::test_if_closed_under_cosets(int *S, int len, 
+void polar::test_if_closed_under_cosets(
+		int *S, int len,
 	int *candidates, int nb_candidates, 
 	int *good_candidates, int &nb_good_candidates, 
 	int verbose_level)
@@ -1115,7 +1123,8 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 }
 
 
-void polar::get_stabilizer(int orbit_idx,
+void polar::get_stabilizer(
+		int orbit_idx,
 		data_structures_groups::group_container &G,
 		ring_theory::longinteger_object &go_G)
 {
@@ -1123,7 +1132,8 @@ void polar::get_stabilizer(int orbit_idx,
 			G, go_G, 0 /*verbose_level - 2*/);
 }
 
-void polar::get_orbit_length(int orbit_idx,
+void polar::get_orbit_length(
+		int orbit_idx,
 		ring_theory::longinteger_object &length)
 {
 	Gen->orbit_length(orbit_idx, depth, length);
@@ -1158,7 +1168,8 @@ int polar::rank_point(int *v)
 	return O->Hyperbolic_pair->rank_point(v, 1, 0);
 }
 
-void polar::list_whole_orbit(int depth,
+void polar::list_whole_orbit(
+		int depth,
 		int orbit_idx, int f_limit, int limit)
 {
 	long int *set;

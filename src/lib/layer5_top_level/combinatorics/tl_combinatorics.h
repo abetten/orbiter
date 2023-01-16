@@ -36,7 +36,8 @@ public:
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
 
-	actions::action *A_affine; // restricted action on affine points
+	actions::action *A_affine;
+		// restricted action on affine points
 
 	boolean_function_classify();
 	~boolean_function_classify();
@@ -96,14 +97,18 @@ public:
 	int f_canonical_form_PG;
 	std::string canonical_form_PG_PG_label;
 	int f_canonical_form_PG_has_PA;
-	projective_geometry::projective_space_with_action *Canonical_form_PG_PA;
-	combinatorics::classification_of_objects_description *Canonical_form_PG_Descr;
+	projective_geometry::projective_space_with_action
+		*Canonical_form_PG_PA;
+	combinatorics::classification_of_objects_description
+		*Canonical_form_PG_Descr;
 
 	int f_canonical_form;
-	combinatorics::classification_of_objects_description *Canonical_form_Descr;
+	combinatorics::classification_of_objects_description
+		*Canonical_form_Descr;
 
 	int f_report;
-	combinatorics::classification_of_objects_report_options *Classification_of_objects_report_options;
+	combinatorics::classification_of_objects_report_options
+		*Classification_of_objects_report_options;
 
 	int f_draw_incidence_matrices;
 	std::string draw_incidence_matrices_prefix;
@@ -153,7 +158,8 @@ public:
 	void init(combinatorial_object_activity_description *Descr,
 			geometry::geometric_object_create *GOC,
 			int verbose_level);
-	void init_input_stream(combinatorial_object_activity_description *Descr,
+	void init_input_stream(
+			combinatorial_object_activity_description *Descr,
 			data_structures::data_input_stream *IS,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -169,27 +175,33 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			std::string &prefix,
 			int verbose_level);
-	void classification_report(combinatorics::classification_of_objects *CO,
+	void classification_report(
+			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP, int verbose_level);
 	void latex_report(
-			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int verbose_level);
 	void report_all_isomorphism_types(
 			std::ostream &fp,
-			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &fp,
-			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int i, int verbose_level);
-	void report_object(std::ostream &fp,
-			combinatorics::classification_of_objects_report_options *Report_options,
+	void report_object(
+			std::ostream &fp,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int object_idx,
@@ -249,7 +261,9 @@ public:
 	void Hill_cap56(
 		char *fname, int &nb_Pts, long int *&Pts,
 		int verbose_level);
-	void append_orbit_and_adjust_size(groups::schreier *Orb, int idx, int *set, int &sz);
+	void append_orbit_and_adjust_size(
+			groups::schreier *Orb,
+			int idx, int *set, int &sz);
 
 };
 
@@ -307,12 +321,12 @@ public:
 	// row intersection type
 	int f_R;
 	int nb_row_types;
-	int *row_type;     		// [nb_row_types + 1]
+	int *row_type; // [nb_row_types + 1]
 
 	// col intersection type
 	int f_C;
 	int nb_col_types;
-	int *col_type;     		// [nb_col_types + 1]
+	int *col_type; // [nb_col_types + 1]
 
 
 	int f_nb_orbits_on_blocks;
@@ -401,11 +415,11 @@ public:
 	int nb_orbits;
 	int *transporter;
 	int *tmp_Elt;
-	int *orbit_length; 		// [nb_orbits]
-	int *orbit_covered; 		// [nb_orbits]
-	int *orbit_covered_max; 	// [nb_orbits]
+	int *orbit_length; // [nb_orbits]
+	int *orbit_covered; // [nb_orbits]
+	int *orbit_covered_max; // [nb_orbits]
 		// orbit_covered_max[i] = orbit_length[i] / b;
-	int *orbits_covered; 		// [K * K]
+	int *orbits_covered; // [K * K]
 
 
 	// intersection type tests:
@@ -414,12 +428,12 @@ public:
 	int inner_pairs_in_cols;
 
 	// row intersection type
-	int *row_type_cur; 		// [nb_row_types + 1]
-	int *row_type_this_or_bigger; 	// [nb_row_types + 1]
+	int *row_type_cur; // [nb_row_types + 1]
+	int *row_type_this_or_bigger; // [nb_row_types + 1]
 
 	// col intersection type
-	int *col_type_cur; 		// [nb_col_types + 1]
-	int *col_type_this_or_bigger; 	// [nb_col_types + 1]
+	int *col_type_cur; // [nb_col_types + 1]
+	int *col_type_this_or_bigger; // [nb_col_types + 1]
 
 
 
@@ -439,12 +453,15 @@ public:
 
 	delandtsheer_doyen();
 	~delandtsheer_doyen();
-	void init(delandtsheer_doyen_description *Descr, int verbose_level);
+	void init(delandtsheer_doyen_description *Descr,
+			int verbose_level);
 	void show_generators(int verbose_level);
 	void search_singletons(int verbose_level);
 	void search_starter(int verbose_level);
-	void compute_orbits_on_pairs(groups::strong_generators *Strong_gens, int verbose_level);
-	groups::strong_generators *scan_subgroup_generators(int verbose_level);
+	void compute_orbits_on_pairs(
+			groups::strong_generators *Strong_gens, int verbose_level);
+	groups::strong_generators *scan_subgroup_generators(
+			int verbose_level);
 	void create_monomial_group(int verbose_level);
 	void create_action(int verbose_level);
 	void create_graph(long int *line0, int len, int verbose_level);
@@ -496,7 +513,8 @@ public:
 
 
 	int f_canonical_form;
-	combinatorics::classification_of_objects_description *Canonical_form_Descr;
+	combinatorics::classification_of_objects_description
+		*Canonical_form_Descr;
 
 	int f_extract_solutions_by_index_csv;
 	int f_extract_solutions_by_index_txt;
@@ -537,7 +555,8 @@ public:
 
 	design_activity();
 	~design_activity();
-	void perform_activity(design_activity_description *Descr,
+	void perform_activity(
+			design_activity_description *Descr,
 			design_create *DC, int verbose_level);
 	void do_extract_solutions_by_index(
 			design_create *DC,
@@ -562,7 +581,9 @@ public:
 			std::string &H_generators_data,
 			int selected_orbit_length,
 			int verbose_level);
-	void do_canonical_form(combinatorics::classification_of_objects_description *Canonical_form_Descr,
+	void do_canonical_form(
+			combinatorics::classification_of_objects_description
+				*Canonical_form_Descr,
 			int verbose_level);
 	void do_export_inc(
 			design_create *DC,
@@ -693,7 +714,9 @@ public:
 
 	design_create();
 	~design_create();
-	void init(apps_combinatorics::design_create_description *Descr, int verbose_level);
+	void init(
+			apps_combinatorics::design_create_description *Descr,
+			int verbose_level);
 	void create_design_PG_2_q(field_theory::finite_field *F,
 			long int *&set, int &sz, int &k, int verbose_level);
 	void unrank_block_in_PG_2_q(int *block,
@@ -701,9 +724,11 @@ public:
 	int rank_block_in_PG_2_q(int *block,
 			int verbose_level);
 	int get_nb_colors_as_two_design(int verbose_level);
-	int get_color_as_two_design_assume_sorted(long int *design, int verbose_level);
+	int get_color_as_two_design_assume_sorted(
+			long int *design, int verbose_level);
 	void compute_incidence_matrix(int verbose_level);
-	void compute_incidence_matrix_from_blocks(int *blocks, int nb_blocks, int k, int verbose_level);
+	void compute_incidence_matrix_from_blocks(
+			int *blocks, int nb_blocks, int k, int verbose_level);
 
 };
 
@@ -733,30 +758,42 @@ public:
 
 	design_tables();
 	~design_tables();
-	void init(actions::action *A, actions::action *A2, long int *initial_set, int design_size,
+	void init(actions::action *A,
+			actions::action *A2,
+			long int *initial_set, int design_size,
 			std::string &label,
-			groups::strong_generators *Strong_generators, int verbose_level);
+			groups::strong_generators *Strong_generators,
+			int verbose_level);
 	void create_table(int verbose_level);
-	void create_action(actions::action *&A_on_designs, int verbose_level);
+	void create_action(
+			actions::action *&A_on_designs,
+			int verbose_level);
 	void extract_solutions_by_index(
 			int nb_sol, int Index_width, int *Index,
 			std::string &ouput_fname_csv,
 			int verbose_level);
 	void make_reduced_design_table(
 			long int *set, int set_sz,
-			long int *&reduced_table, long int *&reduced_table_idx, int &nb_reduced_designs,
+			long int *&reduced_table,
+			long int *&reduced_table_idx,
+			int &nb_reduced_designs,
 			int verbose_level);
-	void init_from_file(actions::action *A, actions::action *A2,
+	void init_from_file(
+			actions::action *A,
+			actions::action *A2,
 			long int *initial_set, int design_size,
 			std::string &label,
-			groups::strong_generators *Strong_generators, int verbose_level);
+			groups::strong_generators *Strong_generators,
+			int verbose_level);
 	int test_if_table_exists(
 			std::string &label,
 			int verbose_level);
 	void save(int verbose_level);
 	void load(int verbose_level);
 	int test_if_designs_are_disjoint(int i, int j);
-	int test_set_within_itself(long int *set_of_designs_by_index, int set_size);
+	int test_set_within_itself(
+			long int *set_of_designs_by_index,
+			int set_size);
 	int test_between_two_sets(
 			long int *set_of_designs_by_index1, int set_size1,
 			long int *set_of_designs_by_index2, int set_size2);
@@ -849,7 +886,8 @@ public:
 
 
 
-	void init(int n, field_theory::finite_field *F, int verbose_level);
+	void init(int n,
+			field_theory::finite_field *F, int verbose_level);
 	void do_n2q3(int verbose_level);
 	void check_overgroups_of_order_nine(int verbose_level);
 	void create_minimal_overgroups(int verbose_level);
@@ -926,7 +964,9 @@ public:
 	poset_classification::poset_classification *gen;
 	int nb_orbits;
 
-	void init(int n, int f_draw, int verbose_level, int verbose_level_clique);
+	void init(int n,
+			int f_draw, int verbose_level,
+			int verbose_level_clique);
 	int clique_test(long int *set, int sz);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -1077,7 +1117,8 @@ public:
 
 	large_set_activity();
 	~large_set_activity();
-	void perform_activity(large_set_activity_description *Descr,
+	void perform_activity(
+			large_set_activity_description *Descr,
 			large_set_was *LSW, int verbose_level);
 
 };
@@ -1106,12 +1147,15 @@ public:
 
 	design_tables *Design_table;
 
-	int nb_colors; // = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
+	int nb_colors;
+		// = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
 	int *design_color_table; // [nb_designs]
 
-	actions::action *A_on_designs; // action on designs in Design_table
+	actions::action *A_on_designs;
+		// action on designs in Design_table
 		//DC->A2->create_induced_action_on_sets(
-		//		Design_table->nb_designs, Design_table->design_size,
+		//		Design_table->nb_designs,
+		//      Design_table->design_size,
 		//		Design_table->the_table,
 		//		0 /* verbose_level */);
 
@@ -1168,7 +1212,8 @@ public:
 	int f_normalizer_on_orbits_of_a_given_length;
 	int normalizer_on_orbits_of_a_given_length_length;
 	int normalizer_on_orbits_of_a_given_length_nb_orbits;
-	poset_classification::poset_classification_control *normalizer_on_orbits_of_a_given_length_control;
+	poset_classification::poset_classification_control
+		*normalizer_on_orbits_of_a_given_length_control;
 
 	int f_create_graph_on_orbits_of_length;
 	std::string create_graph_on_orbits_of_length_fname;
@@ -1291,14 +1336,17 @@ public:
 	// used in do_normalizer_on_orbits_of_a_given_length:
 	int orbit_length;
 	int nb_of_orbits_to_choose;
-	int type_idx; // orbits of length orbit_length in H_orbits->Orbits_classified
+	int type_idx;
+		// orbits of length orbit_length
+		// in H_orbits->Orbits_classified
 	long int *Orbit1;
 	long int *Orbit2;
 
 	actions::action *A_on_orbits;
 		// action on H_orbits->Sch
 	actions::action *A_on_orbits_restricted;
-		// action A_on_orbits restricted to H_orbits->Orbits_classified->Sets[type_idx]
+		// action A_on_orbits restricted to
+		// H_orbits->Orbits_classified->Sets[type_idx]
 
 
 	// used in do_normalizer_on_orbits_of_a_given_length_multiple_orbits::
@@ -1358,7 +1406,8 @@ public:
 			std::string &fname, int orbit_length,
 			int verbose_level);
 	void create_graph_on_orbits_of_length_based_on_N_orbits(
-			std::string &fname_mask, int orbit_length2, int nb_N_orbits_preselected,
+			std::string &fname_mask,
+			int orbit_length2, int nb_N_orbits_preselected,
 			int orbit_r, int orbit_m,
 			int verbose_level);
 	void read_solution_file(
@@ -1371,18 +1420,22 @@ public:
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int normalizer_orbits_check_conditions(long int *S, int len, int verbose_level);
+	int normalizer_orbits_check_conditions(
+			long int *S, int len, int verbose_level);
 
 };
 
-void large_set_was_normalizer_orbits_early_test_func_callback(long int *S, int len,
+void large_set_was_normalizer_orbits_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data);
-int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_length1,
-		long int *orbit2, int orbit_length2, void *extra_data);
+int large_set_was_classify_test_pair_of_orbits(
+		long int *orbit1, int orbit_length1,
+		long int *orbit2, int orbit_length2,
+		void *extra_data);
 
 
 
@@ -1418,7 +1471,8 @@ public:
 	void init(
 			geometry::object_with_canonical_form *OwCF,
 			data_structures::nauty_output *NO,
-			int f_projective_space, projective_geometry::projective_space_with_action *PA,
+			int f_projective_space,
+			projective_geometry::projective_space_with_action *PA,
 			int max_TDO_depth,
 			std::string &label,
 			int verbose_level);
@@ -1431,15 +1485,20 @@ public:
 			std::string &label,
 			int verbose_level);
 	void latex_report(std::ostream &ost,
-			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
 			int verbose_level);
 	void compute_TDO(int max_TDO_depth, int verbose_level);
-	void print_TDO(std::ostream &ost,
-			combinatorics::classification_of_objects_report_options *Report_options);
-	void export_TDA_with_flag_orbits(std::ostream &ost,
+	void print_TDO(
+			std::ostream &ost,
+			combinatorics::classification_of_objects_report_options
+				*Report_options);
+	void export_TDA_with_flag_orbits(
+			std::ostream &ost,
 			groups::schreier *Sch,
 			int verbose_level);
-	void export_INP_with_flag_orbits(std::ostream &ost,
+	void export_INP_with_flag_orbits(
+			std::ostream &ost,
 			groups::schreier *Sch,
 			int verbose_level);
 

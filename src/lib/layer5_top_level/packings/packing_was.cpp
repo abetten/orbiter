@@ -1459,7 +1459,7 @@ void packing_was::classify_orbit_invariant(int verbose_level)
 	}
 }
 
-void packing_was::report_orbit_invariant(ostream &ost)
+void packing_was::report_orbit_invariant(std::ostream &ost)
 {
 	int i, j, h, f, l, len, fst, u;
 	long int a, b, e, e_idx;

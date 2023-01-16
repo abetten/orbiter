@@ -238,7 +238,8 @@ void tally_vector_data::print()
 	}
 }
 
-void tally_vector_data::save_classes_individually(std::string &fname, int verbose_level)
+void tally_vector_data::save_classes_individually(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//uint32_t h;
@@ -293,7 +294,8 @@ void tally_vector_data::save_classes_individually(std::string &fname, int verbos
 }
 
 void tally_vector_data::get_transversal(
-		int *&transversal, int *&frequency, int &nb_types, int verbose_level)
+		int *&transversal, int *&frequency,
+		int &nb_types, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, f, l;

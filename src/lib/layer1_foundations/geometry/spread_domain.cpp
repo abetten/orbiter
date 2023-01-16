@@ -597,7 +597,7 @@ void spread_domain::compute_dual_spread(int *spread,
 	}
 }
 
-void spread_domain::print(ostream &ost, int len, long int *S)
+void spread_domain::print(std::ostream &ost, int len, long int *S)
 {
 	int i;
 	int f_elements_exponential = FALSE;
@@ -1620,7 +1620,9 @@ void spread_domain::read_and_print_spread(std::string &fname, int verbose_level)
 
 void spread_domain::HMO(std::string &fname, int verbose_level)
 // allocates a finite_field and a subfield_structure and a grassmann
+// Lifts a spread from F_q to F_{q^2}
 {
+	int f_v = (verbose_level >= 1);
 	long int *data;
 	int sz, i, h, h1;
 	int *G, *H;
@@ -1630,8 +1632,12 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 	int M[8];
 	orbiter_kernel_system::file_io Fio;
 
+	if (f_v) {
+		cout << "spread_domain::HMO" << endl;
+	}
+
 	if (order != q * q) {
-		cout << "spread_classify::print_spread order != q * q" << endl;
+		cout << "spread_domain::HMO order != q * q" << endl;
 		exit(1);
 	}
 	Fio.read_set_from_file(fname, data, sz, verbose_level);
@@ -1640,7 +1646,15 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 	Ge = NEW_int(order);
 	He = NEW_int(order);
 	print_spread(cout, data, sz);
-	get_spread_matrices(G, H, data, verbose_level);
+
+
+	if (f_v) {
+		cout << "spread_domain::HMO before Grass->get_spread_matrices" << endl;
+	}
+	Grass->get_spread_matrices(G, H, data, verbose_level);
+	if (f_v) {
+		cout << "spread_domain::HMO after Grass->get_spread_matrices" << endl;
+	}
 
 
 	int q2;
@@ -1648,30 +1662,48 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 	field_theory::subfield_structure *Sub;
 
 	q2 = q * q;
+
 	Fq2 = NEW_OBJECT(field_theory::finite_field);
+
 	Sub = NEW_OBJECT(field_theory::subfield_structure);
-	Fq2->finite_field_init_small_order(q2, FALSE /* f_without_tables */, verbose_level);
+
+	if (f_v) {
+		cout << "spread_domain::HMO before Fq2->finite_field_init_small_order" << endl;
+	}
+	Fq2->finite_field_init_small_order(q2,
+			FALSE /* f_without_tables */, verbose_level);
+	if (f_v) {
+		cout << "spread_domain::HMO after Fq2->finite_field_init_small_order" << endl;
+	}
+
 	Sub->init(Fq2, F, verbose_level);
+
 	for (i = 0; i < q * q; i++) {
 		Ge[i] = Sub->FQ_embedding[G[i]];
 		He[i] = Sub->FQ_embedding[H[i]];
 	}
-	cout << "spread_domain::HMO after embedding" << endl;
-	cout << "Ge:" << endl;
-	Int_matrix_print(Ge, q, q);
-	cout << "He:" << endl;
-	Int_matrix_print(He, q, q);
+	if (f_v) {
+		cout << "spread_domain::HMO after embedding" << endl;
+		cout << "Ge:" << endl;
+		Int_matrix_print(Ge, q, q);
+		cout << "He:" << endl;
+		Int_matrix_print(He, q, q);
+	}
 
 	GG = NEW_int(q2 * q2);
 	HH = NEW_int(q2 * q2);
 	omega = Sub->Basis[1];
-	cout << "omega=" << omega << endl;
+	if (f_v) {
+		cout << "spread_domain::HMO omega=" << omega << endl;
+	}
 	for (alpha = 0; alpha < q2; alpha++) {
 		for (beta = 0; beta < q2; beta++) {
 			x = Sub->components[beta * 2 + 0];
 			y = Sub->components[beta * 2 + 1];
-			cout << "alpha=" << alpha << " beta=" << beta
-					<< " x=" << x << " y=" << y << endl;
+			if (f_v) {
+				cout << "spread_domain::HMO alpha=" << alpha << " beta=" << beta
+						<< " x=" << x << " y=" << y << endl;
+			}
 			tmp1 = Ge[x * q + y];
 			tmp2 = Fq2->negate(Fq2->mult(He[x * q + y], omega));
 			f = Fq2->add(tmp1, tmp2);
@@ -1680,10 +1712,12 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 			HH[alpha * q2 + beta] = z;
 		}
 	}
-	cout << "GG:" << endl;
-	Int_matrix_print(GG, q2, q2);
-	cout << "HH:" << endl;
-	Int_matrix_print(HH, q2, q2);
+	if (f_v) {
+		cout << "spread_domain::HMO GG:" << endl;
+		Int_matrix_print(GG, q2, q2);
+		cout << "spread_domain::HMO HH:" << endl;
+		Int_matrix_print(HH, q2, q2);
+	}
 
 	geometry::grassmann *Gq2;
 	long int *Data2;
@@ -1714,19 +1748,27 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 			M[1 * 4 + 1] = 1;
 			y = h1 % q2;
 			x = (h1 - y) / q2;
-			cout << "h=" << h << " x=" << x << " y=" << y << endl;
+			if (f_v) {
+				cout << "spread_domain::HMO h=" << h << " x=" << x << " y=" << y << endl;
+			}
 			M[0 * 4 + 2] = x;
 			M[0 * 4 + 3] = y;
 			M[1 * 4 + 2] = GG[x * q2 + y];
 			M[1 * 4 + 3] = HH[x * q2 + y];
 		}
-		cout << "element " << h << ":" << endl;
-		Int_matrix_print(M, 2, 4);
+		if (f_v) {
+			cout << "spread_domain::HMO element " << h << ":" << endl;
+			Int_matrix_print(M, 2, 4);
+		}
+#if 0
 		for (i = 0; i < 8; i++) {
 			Gq2->M[i] = M[i];
 		}
-		Data2[h] = Gq2->rank_lint(0);
-		cout << "has rank " << Data2[h] << endl;
+#endif
+		Data2[h] = Gq2->rank_lint_here(M, 0);
+		if (f_v) {
+			cout << "spread_domain::HMO has rank " << Data2[h] << endl;
+		}
 	}
 
 	string fname2;
@@ -1735,6 +1777,10 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 	fname2.append(fname);
 
 	Fio.write_set_to_file(fname2, Data2, Sz, verbose_level);
+	if (f_v) {
+		cout << "spread_domain::HMO written file " << fname2
+				<< " of size " << Fio.file_size(fname2) << endl;
+	}
 
 	FREE_lint(Data2);
 	FREE_OBJECT(Gq2);
@@ -1747,69 +1793,13 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 	FREE_int(He);
 	FREE_int(GG);
 	FREE_int(HH);
-}
-
-void spread_domain::get_spread_matrices(int *G, int *H,
-		long int *data, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int h, i, x, y, f, g;
-	int sz = order + 1;
-	int M[8];
-
 	if (f_v) {
-		cout << "spread_domain::get_spread_matrices" << endl;
-	}
-	for (i = 0; i < order; i++) {
-		G[i] = -1;
-		H[i] = -1;
-	}
-	for (h = 0; h < sz; h++) {
-		Grass->unrank_lint(data[h], 0);
-		for (i = 0; i < 8; i++) {
-			M[i] = Grass->M[i];
-		}
-		//cout << "element " << h << ":" << endl;
-		//int_matrix_print(M, 2, 4);
-		if (M[0 * 4 + 0] == 0 &&
-			M[0 * 4 + 1] == 0 &&
-			M[1 * 4 + 0] == 0 &&
-			M[1 * 4 + 1] == 0) {
-			continue;
-		}
-		if (M[0 * 4 + 0] != 1) {
-			cout << "generator matrix is not in standard form" << endl;
-			exit(1);
-		}
-		if (M[1 * 4 + 1] != 1) {
-			cout << "generator matrix is not in standard form" << endl;
-			exit(1);
-		}
-		if (M[0 * 4 + 1] != 0) {
-			cout << "generator matrix is not in standard form" << endl;
-			exit(1);
-		}
-		if (M[1 * 4 + 0] != 0) {
-			cout << "generator matrix is not in standard form" << endl;
-			exit(1);
-		}
-		x = M[0 * 4 + 2];
-		y = M[0 * 4 + 3];
-		f = M[1 * 4 + 2];
-		g = M[1 * 4 + 3];
-		G[x * q + y] = f;
-		H[x * q + y] = g;
-	}
-	if (f_v) {
-		cout << "spread_domain::get_FG_matrices" << endl;
-		cout << "G:" << endl;
-		Int_matrix_print(G, q, q);
-		cout << "H:" << endl;
-		Int_matrix_print(H, q, q);
+		cout << "spread_domain::HMO done" << endl;
 	}
 }
 
-void spread_domain::print_spread(ostream &ost, long int *data, int sz)
+
+void spread_domain::print_spread(std::ostream &ost, long int *data, int sz)
 {
 	//int sz = order + 1;
 	int h;

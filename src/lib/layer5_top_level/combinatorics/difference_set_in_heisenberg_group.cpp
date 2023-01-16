@@ -26,7 +26,8 @@ static void difference_set_in_heisenberg_group_early_test_func(
 
 
 void difference_set_in_heisenberg_group::init(int n,
-		field_theory::finite_field *F, int verbose_level)
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i; //, j, a, b, ord;
@@ -166,7 +167,6 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, t;
 	int h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
-	orbiter_kernel_system::magma_interface Magma;
 	orbiter_kernel_system::latex_interface L;
 
 	if (f_v) {
@@ -235,9 +235,9 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	cout << "computing normalizer of U in G:" << endl;
 
 	groups::strong_generators *gens_N;
-	groups::magma_interface M;
+	groups::magma_interface Magma;
 
-	M.normalizer_using_MAGMA(A, prefix, Aut, U, gens_N, verbose_level);
+	Magma.normalizer_using_MAGMA(A, prefix, Aut, U, gens_N, verbose_level);
 		// added gens_N, Oct 12, 2018
 
 	fname_magma_out.assign(prefix);

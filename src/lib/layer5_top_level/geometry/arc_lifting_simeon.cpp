@@ -239,7 +239,8 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 }
 
 
-void arc_lifting_simeon::do_covering_problem(data_structures_groups::set_and_stabilizer *SaS)
+void arc_lifting_simeon::do_covering_problem(
+		data_structures_groups::set_and_stabilizer *SaS)
 {
 	int *type;
 	long int *original_arc;

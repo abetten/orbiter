@@ -491,45 +491,7 @@ public:
 
 };
 
-// #############################################################################
-// magma_interface.cpp
-// #############################################################################
 
-//! interface to the computer algebra system MAGMA
-
-class magma_interface {
-
-public:
-
-	orbiter_session *Orbiter_session;
-
-	magma_interface();
-	~magma_interface();
-	void write_permutation_group(std::string &fname_base,
-		int group_order, int *Table, int *gens, int nb_gens,
-		int verbose_level);
-	void normalizer_in_Sym_n(
-			std::string &fname_base,
-		int group_order, int *Table, int *gens, int nb_gens,
-		int *&N_gens, int &N_nb_gens, int &N_go,
-		int verbose_level);
-	void read_permutation_group(std::string &fname,
-		int degree, int *&gens, int &nb_gens, int &go,
-		int verbose_level);
-	void orbit_of_matrix_group_on_vector(
-			std::string &fname_base,
-		int d, int q,
-		int *initial_vector, int **gens, int nb_gens,
-		int &orbit_length,
-		int verbose_level);
-	void orbit_of_matrix_group_on_subspaces(
-			std::string &fname_base,
-		int d, int q, int k,
-		int *initial_subspace, int **gens, int nb_gens,
-		int &orbit_length,
-		int verbose_level);
-	void run_magma_file(std::string &fname, int verbose_level);
-};
 
 // #############################################################################
 // mem_object_registry_entry.cpp
@@ -895,6 +857,8 @@ public:
 	void init_cubic_surface(std::string &label,
 			void *p, int verbose_level);
 	void init_quartic_curve(std::string &label,
+			void *p, int verbose_level);
+	void init_BLT_set(std::string &label,
 			void *p, int verbose_level);
 	void init_classification_of_cubic_surfaces_with_double_sixes(
 			std::string &label,

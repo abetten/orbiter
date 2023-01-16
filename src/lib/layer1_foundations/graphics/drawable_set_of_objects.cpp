@@ -261,7 +261,7 @@ void drawable_set_of_objects::init_labels(int group_idx,
 }
 
 
-void drawable_set_of_objects::draw(animate *Anim, ostream &ost,
+void drawable_set_of_objects::draw(animate *Anim, std::ostream &ost,
 		int f_group_is_animated, int frame, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -224,7 +224,7 @@ void schreier::print(std::ostream &ost)
 
 void schreier::print_and_list_orbits_and_stabilizer(std::ostream &ost,
 		actions::action *default_action, ring_theory::longinteger_object &go,
-	void (*print_point)(ostream &ost, int pt, void *data),
+	void (*print_point)(std::ostream &ost, int pt, void *data),
 	void *data)
 {
 	int i;
@@ -1132,7 +1132,7 @@ void schreier::print_orbit_using_labels(std::ostream &ost,
 
 void schreier::print_orbit_using_callback(std::ostream &ost,
 	int orbit_no,
-	void (*print_point)(ostream &ost, int pt, void *data),
+	void (*print_point)(std::ostream &ost, int pt, void *data),
 	void *data)
 {
 	int i, first, len;
@@ -1678,7 +1678,7 @@ void schreier::draw_tree2(std::string &fname,
 #endif
 
 	G.end_figure();
-	//print_and_list_orbits_tex(ostream &ost)
+	//print_and_list_orbits_tex(std::ostream &ost)
 	G.footer();
 	if (f_v) {
 		cout << "schreier::draw_tree2 done" << endl;

@@ -345,7 +345,8 @@ void schlaefli::make_triads(int verbose_level)
 	}
 }
 
-void schlaefli::make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_level)
+void schlaefli::make_trihedral_pair_disjointness_graph(
+		int *&Adj, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -1820,7 +1821,8 @@ void schlaefli::init_adjacency_matrix_of_lines(int verbose_level)
 		}
 }
 
-void schlaefli::init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_level)
+void schlaefli::init_incidence_matrix_of_lines_vs_tritangent_planes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -1870,7 +1872,8 @@ int schlaefli::get_adjacency_matrix_of_lines(int i, int j)
 	return adjacency_matrix_of_lines[i * 27 + j];
 }
 
-int schlaefli::choose_tritangent_plane_for_Clebsch_map(int line_a, int line_b,
+int schlaefli::choose_tritangent_plane_for_Clebsch_map(
+		int line_a, int line_b,
 			int transversal_line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2379,7 +2382,7 @@ void schlaefli::latex_table_of_tritangent_planes(std::ostream &ost)
 	//cout << "schlaefli::latex_table_of_tritangent_planes done" << endl;
 }
 
-void schlaefli::print_line(ostream &ost, int rk)
+void schlaefli::print_line(std::ostream &ost, int rk)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -2398,7 +2401,7 @@ void schlaefli::print_line(ostream &ost, int rk)
 		}
 }
 
-void schlaefli::print_Schlaefli_labelling(ostream &ost)
+void schlaefli::print_Schlaefli_labelling(std::ostream &ost)
 {
 	int j, h;
 
@@ -2423,7 +2426,7 @@ void schlaefli::print_Schlaefli_labelling(ostream &ost)
 	ost << "$$" << endl;
 }
 
-void schlaefli::print_set_of_lines_tex(ostream &ost, long int *v, int len)
+void schlaefli::print_set_of_lines_tex(std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -2437,7 +2440,7 @@ void schlaefli::print_set_of_lines_tex(ostream &ost, long int *v, int len)
 	ost << "\\}";
 }
 
-void schlaefli::latex_table_of_clebsch_maps(ostream &ost)
+void schlaefli::latex_table_of_clebsch_maps(std::ostream &ost)
 {
 	int e, line, j, l1, l2, t1, t2, t3, t4, c1, c2, cnt;
 	int three_lines[3];
@@ -2667,7 +2670,8 @@ void schlaefli::print_half_double_sixes_in_GAP()
 	cout << "];" << endl;
 }
 
-int schlaefli::identify_Eckardt_point(int line1, int line2, int line3, int verbose_level)
+int schlaefli::identify_Eckardt_point(
+		int line1, int line2, int line3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int lines[3];

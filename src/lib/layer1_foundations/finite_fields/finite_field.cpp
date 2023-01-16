@@ -22,7 +22,7 @@ namespace field_theory {
 
 finite_field::finite_field()
 {
-	orbiter_kernel_system::Orbiter->nb_times_finite_field_created++;
+	//orbiter_kernel_system::Orbiter->nb_times_finite_field_created++;
 
 	Descr = NULL;
 	f_has_table = FALSE;
@@ -1395,7 +1395,8 @@ int finite_field::power_verbose(int a, int n, int verbose_level)
 	return c;
 }
 
-void finite_field::frobenius_power_vec(int *v, int len, int frob_power)
+void finite_field::frobenius_power_vec(
+		int *v, int len, int frob_power)
 {
 	int h;
 
@@ -1405,7 +1406,8 @@ void finite_field::frobenius_power_vec(int *v, int len, int frob_power)
 }
 
 void finite_field::frobenius_power_vec_to_vec(
-		int *v_in, int *v_out, int len, int frob_power)
+		int *v_in, int *v_out,
+		int len, int frob_power)
 {
 	int h;
 

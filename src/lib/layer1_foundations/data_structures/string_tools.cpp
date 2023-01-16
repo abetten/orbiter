@@ -282,7 +282,8 @@ int string_tools::s_scan_str(char **s, char *str)
 	return TRUE;
 }
 
-int string_tools::s_scan_token_comma_separated(const char **s, char *str, int verbose_level)
+int string_tools::s_scan_token_comma_separated(
+		const char **s, char *str, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char c;
@@ -604,7 +605,8 @@ void string_tools::chop_string(const char *str, int &argc, char **&argv)
 }
 
 
-void string_tools::chop_string_comma_separated(const char *str, int &argc, char **&argv)
+void string_tools::chop_string_comma_separated(
+		const char *str, int &argc, char **&argv)
 {
 	int l, i, len;
 	char *s;
@@ -670,7 +672,8 @@ void string_tools::chop_string_comma_separated(const char *str, int &argc, char 
 
 
 
-void string_tools::convert_arguments(int &argc, const char **argv, std::string *&Argv)
+void string_tools::convert_arguments(
+		int &argc, const char **argv, std::string *&Argv)
 {
 	int i;
 	vector<string> Arg_vec;
@@ -873,7 +876,8 @@ void string_tools::chop_off_path(std::string &p)
 }
 
 
-void string_tools::chop_off_extension_if_present(std::string &p, const char *ext)
+void string_tools::chop_off_extension_if_present(
+		std::string &p, const char *ext)
 {
 	int l1 = p.length();
 	int l2 = strlen(ext);
@@ -890,7 +894,8 @@ void string_tools::chop_off_extension_if_present(std::string &p, const char *ext
 }
 
 
-void string_tools::chop_off_extension_if_present(char *p, const char *ext)
+void string_tools::chop_off_extension_if_present(
+		char *p, const char *ext)
 {
 	int l1 = strlen(p);
 	int l2 = strlen(ext);
@@ -1010,7 +1015,8 @@ void string_tools::remove_specific_character(std::string &str, char c)
 
 }
 
-void string_tools::create_comma_separated_list(std::string &output,
+void string_tools::create_comma_separated_list(
+		std::string &output,
 		long int *input, int input_sz)
 {
 	char str[1000];
@@ -1263,7 +1269,8 @@ void string_tools::drop_quotes(std::string &in, std::string &out)
 }
 
 
-void string_tools::parse_comma_separated_strings(std::string &in, std::vector<std::string> &out)
+void string_tools::parse_comma_separated_strings(
+		std::string &in, std::vector<std::string> &out)
 {
 	const char *p = in.c_str();
 	char str[1000];
@@ -1372,7 +1379,8 @@ int string_tools::read_schlaefli_label(const char *p)
 	}
 }
 
-void string_tools::read_string_of_schlaefli_labels(std::string &str, int *&v, int &sz, int verbose_level)
+void string_tools::read_string_of_schlaefli_labels(
+		std::string &str, int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char **argv;

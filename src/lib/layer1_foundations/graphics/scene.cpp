@@ -830,7 +830,7 @@ int scene::plane_from_dual_coordinates(double *x4)
 
 
 void scene::draw_lines_with_selection(int *selection, int nb_select, 
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -867,7 +867,7 @@ void scene::draw_lines_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_line_with_selection(int line_idx, 
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int j, h, s;
 	numerics N;
@@ -937,14 +937,14 @@ void scene::draw_lines_cij_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_cij(ostream &ost)
+void scene::draw_lines_cij(std::ostream &ost)
 {
 	int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 	
 	draw_lines_cij_with_selection(selection, 15, ost);
 } 
 
-void scene::draw_lines_cij_with_offset(int offset, int number_of_lines, ostream &ost)
+void scene::draw_lines_cij_with_offset(int offset, int number_of_lines, std::ostream &ost)
 {
 	int selection[15];
 	int i;
@@ -956,7 +956,7 @@ void scene::draw_lines_cij_with_offset(int offset, int number_of_lines, ostream 
 }
 
 void scene::draw_lines_ai_with_selection(int *selection, int nb_select, 
-	ostream &ost)
+	std::ostream &ost)
 {
 	int s, i, j, h;
 	numerics N;
@@ -991,14 +991,14 @@ void scene::draw_lines_ai_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_ai(ostream &ost)
+void scene::draw_lines_ai(std::ostream &ost)
 {
 	int selection[] = {0,1,2,3,4,5};
 	
 	draw_lines_ai_with_selection(selection, 6, ost);
 } 
 
-void scene::draw_lines_ai_with_offset(int offset, ostream &ost)
+void scene::draw_lines_ai_with_offset(int offset, std::ostream &ost)
 {
 	int selection[6];
 	int i;
@@ -1010,7 +1010,7 @@ void scene::draw_lines_ai_with_offset(int offset, ostream &ost)
 }
 
 void scene::draw_lines_bj_with_selection(int *selection, int nb_select, 
-	ostream &ost)
+	std::ostream &ost)
 {
 	int s, i, j, h;
 	numerics N;
@@ -1045,14 +1045,14 @@ void scene::draw_lines_bj_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_bj(ostream &ost)
+void scene::draw_lines_bj(std::ostream &ost)
 {
 	int selection[] = {0,1,2,3,4,5};
 	
 	draw_lines_bj_with_selection(selection, 6, ost);
 } 
 
-void scene::draw_lines_bj_with_offset(int offset, ostream &ost)
+void scene::draw_lines_bj_with_offset(int offset, std::ostream &ost)
 {
 	int selection[6];
 	int i;
@@ -1067,7 +1067,7 @@ void scene::draw_lines_bj_with_offset(int offset, ostream &ost)
 
 
 void scene::draw_edges_with_selection(int *selection, int nb_select, 
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int s, i, j, h, pt1, pt2;
 	numerics N;
@@ -1105,7 +1105,7 @@ void scene::draw_edges_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_faces_with_selection(int *selection, int nb_select, 
-	double thickness_half, std::string &options, ostream &ost)
+	double thickness_half, std::string &options, std::ostream &ost)
 {
 	int s, i, j;
 		
@@ -1127,7 +1127,7 @@ void scene::draw_faces_with_selection(int *selection, int nb_select,
 
 
 void scene::draw_face(int idx, double thickness_half, std::string &options,
-	ostream &ost)
+		std::ostream &ost)
 {
 	int f_v = FALSE;
 	int *pts;
@@ -1225,7 +1225,7 @@ void scene::draw_face(int idx, double thickness_half, std::string &options,
 
 void scene::draw_planes_with_selection(
 	int *selection, int nb_select,
-	std::string &options, ostream &ost)
+	std::string &options, std::ostream &ost)
 // for instance color = "Orange transmit 0.5 "
 {
 	int i, j, h, s;
@@ -1257,7 +1257,7 @@ void scene::draw_planes_with_selection(
 
 void scene::draw_plane(
 	int idx,
-	std::string &options, ostream &ost)
+	std::string &options, std::ostream &ost)
 // for instance color = "Orange transmit 0.5 "
 {
 	int h;
@@ -1284,7 +1284,7 @@ void scene::draw_plane(
 
 void scene::draw_points_with_selection(
 	int *selection, int nb_select,
-	double rad, std::string &options, ostream &ost)
+	double rad, std::string &options, std::ostream &ost)
 // rad = 0.06 works
 {
 	int i, j, h, s;
@@ -1465,7 +1465,7 @@ void scene::draw_octic_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_quadric_with_selection(int *selection, int nb_select, 
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -1496,7 +1496,7 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int h;
 	numerics N;
@@ -1535,7 +1535,7 @@ void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
 
 
 void scene::draw_line_clipped_by_plane(int line_idx, int plane_idx,
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int h;
 	numerics N;

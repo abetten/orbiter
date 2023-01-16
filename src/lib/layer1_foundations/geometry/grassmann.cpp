@@ -154,7 +154,7 @@ void grassmann::print_set(long int *v, int len)
 	}
 }
 
-void grassmann::print_set_tex(ostream &ost, long int *v, int len, int verbose_level)
+void grassmann::print_set_tex(std::ostream &ost, long int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -207,7 +207,7 @@ void grassmann::print_set_tex(ostream &ost, long int *v, int len, int verbose_le
 	}
 }
 
-void grassmann::print_set_tex_with_perp(ostream &ost, long int *v, int len)
+void grassmann::print_set_tex_with_perp(std::ostream &ost, long int *v, int len)
 {
 	int i;
 	int *Mtx;
@@ -1214,14 +1214,14 @@ void grassmann::compute_dual_spread(
 }
 
 
-void grassmann::latex_matrix(ostream &ost, int *p)
+void grassmann::latex_matrix(std::ostream &ost, int *p)
 {
 
 	F->print_matrix_latex(ost, p, k, n);
 
 }
 
-void grassmann::latex_matrix_numerical(ostream &ost, int *p)
+void grassmann::latex_matrix_numerical(std::ostream &ost, int *p)
 {
 
 	F->print_matrix_numerical_latex(ost, p, k, n);
@@ -1636,7 +1636,8 @@ void grassmann::cheat_sheet_subspaces(std::ostream &f, int verbose_level)
 
 
 	if (f_v) {
-		cout << "grassmann::cheat_sheet_subspaces vector space dimension = " << k << endl;
+		cout << "grassmann::cheat_sheet_subspaces "
+				"vector space dimension = " << k << endl;
 	}
 	//n1 = n; // n + 1;
 	//k1 = k; // k + 1;
@@ -2209,6 +2210,70 @@ void grassmann::plane_intersection_type_of_klein_image(
 	FREE_lint(the_set_out);
 }
 
+void grassmann::get_spread_matrices(int *G, int *H,
+		long int *data, int verbose_level)
+// assuming we are in PG(3,q)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int h, i, x, y, f, g;
+	int order;
+
+	order = F->q * F->q;
+	int sz = order + 1;
+	int M[8];
+
+	if (f_v) {
+		cout << "grassmann::get_spread_matrices" << endl;
+	}
+	for (i = 0; i < order; i++) {
+		G[i] = -1;
+		H[i] = -1;
+	}
+	for (h = 0; h < sz; h++) {
+		unrank_lint_here(M, data[h], 0);
+		//cout << "element " << h << ":" << endl;
+		//int_matrix_print(M, 2, 4);
+		if (M[0 * 4 + 0] == 0 &&
+			M[0 * 4 + 1] == 0 &&
+			M[1 * 4 + 0] == 0 &&
+			M[1 * 4 + 1] == 0) {
+			continue;
+		}
+		if (M[0 * 4 + 0] != 1) {
+			cout << "generator matrix is not in standard form" << endl;
+			exit(1);
+		}
+		if (M[1 * 4 + 1] != 1) {
+			cout << "generator matrix is not in standard form" << endl;
+			exit(1);
+		}
+		if (M[0 * 4 + 1] != 0) {
+			cout << "generator matrix is not in standard form" << endl;
+			exit(1);
+		}
+		if (M[1 * 4 + 0] != 0) {
+			cout << "generator matrix is not in standard form" << endl;
+			exit(1);
+		}
+		x = M[0 * 4 + 2];
+		y = M[0 * 4 + 3];
+		f = M[1 * 4 + 2];
+		g = M[1 * 4 + 3];
+		G[x * q + y] = f;
+		H[x * q + y] = g;
+	}
+	if (f_vv) {
+		cout << "grassmann::get_FG_matrices" << endl;
+		cout << "G:" << endl;
+		Int_matrix_print(G, q, q);
+		cout << "H:" << endl;
+		Int_matrix_print(H, q, q);
+	}
+	if (f_v) {
+		cout << "grassmann::get_spread_matrices done" << endl;
+	}
+}
 
 
 

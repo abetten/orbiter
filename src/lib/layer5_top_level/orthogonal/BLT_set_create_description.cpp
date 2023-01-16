@@ -26,6 +26,10 @@ BLT_set_create_description::BLT_set_create_description()
 	iso = 0;
 	f_family = FALSE;
 	//family_name;
+
+	f_space = FALSE;
+	//std::string space_label;
+
 }
 
 BLT_set_create_description::~BLT_set_create_description()
@@ -58,6 +62,13 @@ int BLT_set_create_description::read_arguments(int argc, std::string *argv,
 				cout << "-family " << family_name << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-space") == 0) {
+			f_space = TRUE;
+			space_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-space " << space_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -81,6 +92,9 @@ void BLT_set_create_description::print()
 	}
 	else if (f_family) {
 		cout << "-family " << family_name << endl;
+	}
+	if (f_space) {
+		cout << "-space " << space_label << endl;
 	}
 }
 

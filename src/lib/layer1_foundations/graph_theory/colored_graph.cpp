@@ -654,7 +654,8 @@ void colored_graph::init_with_point_labels(int nb_points,
 	}
 }
 
-void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
+void colored_graph::init(
+		int nb_points, int nb_colors, int nb_colors_per_vertex,
 	int *colors, data_structures::bitvector *Bitvec,
 	int f_ownership_of_bitvec,
 	std::string &label, std::string &label_tex,
@@ -707,7 +708,8 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 
 }
 
-void colored_graph::init_no_colors(int nb_points,
+void colored_graph::init_no_colors(
+		int nb_points,
 		data_structures::bitvector *Bitvec,
 		int f_ownership_of_bitvec,
 		std::string &label, std::string &label_tex,
@@ -734,7 +736,8 @@ void colored_graph::init_no_colors(int nb_points,
 	}
 }
 
-void colored_graph::init_adjacency(int nb_points,
+void colored_graph::init_adjacency(
+		int nb_points,
 		int nb_colors, int nb_colors_per_vertex,
 		int *colors, int *Adj,
 		std::string &label, std::string &label_tex,
@@ -820,7 +823,8 @@ void colored_graph::init_adjacency_upper_triangle(
 
 }
 
-void colored_graph::init_adjacency_no_colors(int nb_points,
+void colored_graph::init_adjacency_no_colors(
+		int nb_points,
 	int *Adj,
 	std::string &label, std::string &label_tex,
 	int verbose_level)
@@ -847,7 +851,8 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 	}
 }
 
-void colored_graph::init_adjacency_two_colors(int nb_points,
+void colored_graph::init_adjacency_two_colors(
+		int nb_points,
 	int *Adj, int *subset, int sz,
 	std::string &label, std::string &label_tex,
 	int verbose_level)
@@ -881,7 +886,8 @@ void colored_graph::init_adjacency_two_colors(int nb_points,
 	}
 }
 
-void colored_graph::init_user_data(long int *data,
+void colored_graph::init_user_data(
+		long int *data,
 	int data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2083,7 +2089,8 @@ void colored_graph::export_to_file_matlab(
 		}
 }
 
-void colored_graph::export_to_csv(std::string &fname, int verbose_level)
+void colored_graph::export_to_csv(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -2117,7 +2124,8 @@ void colored_graph::export_to_csv(std::string &fname, int verbose_level)
 }
 
 
-void colored_graph::export_to_graphviz(std::string &fname, int verbose_level)
+void colored_graph::export_to_graphviz(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -2894,7 +2902,8 @@ void colored_graph::all_cliques_black_and_white(
 }
 
 
-void colored_graph::write_solutions_to_csv_file(clique_finder_control *Control,
+void colored_graph::write_solutions_to_csv_file(
+		clique_finder_control *Control,
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2933,7 +2942,9 @@ void colored_graph::write_solutions_to_csv_file(clique_finder_control *Control,
 
 }
 
-void colored_graph::do_Sajeeb(clique_finder_control *Control, int verbose_level)
+void colored_graph::do_Sajeeb(
+		clique_finder_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

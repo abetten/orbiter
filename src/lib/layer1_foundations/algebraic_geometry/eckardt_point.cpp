@@ -50,7 +50,7 @@ void eckardt_point::print()
 	}
 }
 
-void eckardt_point::latex(ostream &ost)
+void eckardt_point::latex(std::ostream &ost)
 {
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -75,7 +75,7 @@ void eckardt_point::latex(ostream &ost)
 	}
 }
 
-void eckardt_point::latex_index_only(ostream &ost)
+void eckardt_point::latex_index_only(std::ostream &ost)
 {
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;

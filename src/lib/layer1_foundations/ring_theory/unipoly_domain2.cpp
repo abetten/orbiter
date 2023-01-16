@@ -18,7 +18,8 @@ namespace ring_theory {
 
 
 void unipoly_domain::mult_easy(unipoly_object a,
-		unipoly_object b, unipoly_object &c)
+		unipoly_object b,
+		unipoly_object &c)
 {
 	int *ra = (int *) a;
 	int *rb = (int *) b;
@@ -57,7 +58,8 @@ void unipoly_domain::mult_easy(unipoly_object a,
 	c = (void *) rc;
 }
 
-void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit(unipoly_object a, std::ostream &ost)
+void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit(
+		unipoly_object a, std::ostream &ost)
 {
 	int *ra = (int *) a;
 	int m = ra[0]; // degree of a
@@ -69,7 +71,8 @@ void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit(unip
 	}
 }
 
-void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(unipoly_object a, int m, std::ostream &ost)
+void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(
+		unipoly_object a, int m, std::ostream &ost)
 {
 	int *ra = (int *) a;
 	//int m = ra[0]; // degree of a
@@ -87,7 +90,8 @@ void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit_with
 	}
 }
 
-void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c,
+void unipoly_domain::mult_easy_with_report(
+		long int rk_a, long int rk_b, long int &rk_c,
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -213,7 +217,8 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 
 void unipoly_domain::division_with_remainder_from_file_with_report(
 		std::string &input_fname, long int rk_b,
-		long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level)
+		long int &rk_q, long int &rk_r,
+		std::ostream &ost, int verbose_level)
 	//unipoly_object a, unipoly_object b,
 	//unipoly_object &q, unipoly_object &r,
 	//int verbose_level)
@@ -281,7 +286,8 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 
 void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 		std::string &input_fname, long int rk_b, int k,
-		long int *&rk_q, long int *&rk_r, int &n, int &N, std::ostream &ost, int verbose_level)
+		long int *&rk_q, long int *&rk_r, int &n, int &N,
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

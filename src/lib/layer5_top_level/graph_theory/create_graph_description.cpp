@@ -60,7 +60,7 @@ create_graph_description::create_graph_description()
 	Sarnak_q = 0;
 
 	f_Schlaefli = FALSE;
-	Schlaefli_q = 0;
+	//std::string Schlaefli_label_Fq;
 
 	f_Shrikhande = FALSE;
 
@@ -71,13 +71,13 @@ create_graph_description::create_graph_description()
 	f_Grassmann = FALSE;
 	Grassmann_n = 0;
 	Grassmann_k = 0;
-	Grassmann_q = 0;
+	//std::string Grassmann_label_Fq;
 	Grassmann_r = 0;
 
 	f_coll_orthogonal = FALSE;
 	coll_orthogonal_epsilon = 0;
 	coll_orthogonal_d = 0;
-	coll_orthogonal_q = 0;
+	//std::string coll_orthogonal_label_Fq;
 
 	f_trihedral_pair_disjointness_graph = FALSE;
 
@@ -226,9 +226,9 @@ int create_graph_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-Schlaefli") == 0) {
 			f_Schlaefli = TRUE;
-			Schlaefli_q = ST.strtoi(argv[++i]);
+			Schlaefli_label_Fq.assign(argv[++i]);
 			if (f_v) {
-				cout << "-Schlaefli " << Schlaefli_q << endl;
+				cout << "-Schlaefli " << Schlaefli_label_Fq << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Shrikhande") == 0) {
@@ -249,22 +249,22 @@ int create_graph_description::read_arguments(
 			f_Grassmann = TRUE;
 			Grassmann_n = ST.strtoi(argv[++i]);
 			Grassmann_k = ST.strtoi(argv[++i]);
-			Grassmann_q = ST.strtoi(argv[++i]);
+			Grassmann_label_Fq.assign(argv[++i]);
 			Grassmann_r = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Grassmann " << Grassmann_n << " " << Grassmann_k
-					<< " " << Grassmann_q << " " << Grassmann_r << endl;
+					<< " " << Grassmann_label_Fq << " " << Grassmann_r << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-coll_orthogonal") == 0) {
 			f_coll_orthogonal = TRUE;
 			coll_orthogonal_epsilon = ST.strtoi(argv[++i]);
 			coll_orthogonal_d = ST.strtoi(argv[++i]);
-			coll_orthogonal_q = ST.strtoi(argv[++i]);
+			coll_orthogonal_label_Fq.assign(argv[++i]);
 			if (f_v) {
 				cout << "-coll_orthogonal " << coll_orthogonal_epsilon
 					<< " " << coll_orthogonal_d
-					<< " " << coll_orthogonal_q << endl;
+					<< " " << coll_orthogonal_label_Fq << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
@@ -398,7 +398,7 @@ void create_graph_description::print()
 		cout << "-Sarnak " << Sarnak_p << " " << Sarnak_q << endl;
 	}
 	if (f_Schlaefli) {
-		cout << "-Schlaefli " << Schlaefli_q << endl;
+		cout << "-Schlaefli " << Schlaefli_label_Fq << endl;
 	}
 	if (f_Shrikhande) {
 		cout << "-Shrikhande " << endl;
@@ -408,12 +408,12 @@ void create_graph_description::print()
 	}
 	if (f_Grassmann) {
 		cout << "-Grassmann " << Grassmann_n << " " << Grassmann_k
-				<< " " << Grassmann_q << " " << Grassmann_r << endl;
+			<< " " << Grassmann_label_Fq << " " << Grassmann_r << endl;
 	}
 	if (f_coll_orthogonal) {
 		cout << "-coll_orthogonal " << coll_orthogonal_epsilon
-				<< " " << coll_orthogonal_d
-				<< " " << coll_orthogonal_q << endl;
+			<< " " << coll_orthogonal_d
+			<< " " << coll_orthogonal_label_Fq << endl;
 	}
 	if (f_trihedral_pair_disjointness_graph) {
 		cout << "-trihedral_pair_disjointness_graph " << endl;

@@ -63,7 +63,8 @@ quadratic_form::~quadratic_form()
 
 
 void quadratic_form::init(int epsilon, int n,
-		field_theory::finite_field *F, int verbose_level)
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;
@@ -445,7 +446,8 @@ int quadratic_form::evaluate_bilinear_form_Gram_matrix(int *u, int *v)
 }
 
 
-void quadratic_form::report_quadratic_form(std::ostream &ost, int verbose_level)
+void quadratic_form::report_quadratic_form(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

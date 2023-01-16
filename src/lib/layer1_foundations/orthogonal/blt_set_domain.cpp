@@ -36,6 +36,8 @@ blt_set_domain::blt_set_domain()
 	Candidates = NULL;
 	P = NULL;
 	G53 = NULL;
+	G54 = NULL;
+	G43 = NULL;
 	//null();
 }
 
@@ -67,6 +69,12 @@ blt_set_domain::~blt_set_domain()
 	}
 	if (G53) {
 		FREE_OBJECT(G53);
+	}
+	if (G54) {
+		FREE_OBJECT(G54);
+	}
+	if (G43) {
+		FREE_OBJECT(G43);
 	}
 	if (f_v) {
 		cout << "blt_set_domain::~blt_set_domain done" << endl;
@@ -135,7 +143,8 @@ void blt_set_domain::init(orthogonal *O,
 	P = NEW_OBJECT(geometry::projective_space);
 
 	if (f_v) {
-		cout << "blt_set_domain::init before P->projective_space_init" << endl;
+		cout << "blt_set_domain::init "
+				"before P->projective_space_init" << endl;
 	}
 
 
@@ -144,18 +153,157 @@ void blt_set_domain::init(orthogonal *O,
 		verbose_level);
 
 	if (f_v) {
-		cout << "blt_set_domain::init after P->projective_space_init" << endl;
+		cout << "blt_set_domain::init "
+				"after P->projective_space_init" << endl;
 	}
 
 
 	G53 = NEW_OBJECT(geometry::grassmann);
 
+	if (f_v) {
+		cout << "blt_set_domain::init "
+				"before G53->init" << endl;
+	}
 	G53->init(5, 3, F, 0 /*verbose_level - 2*/);
+	if (f_v) {
+		cout << "blt_set_domain::init "
+				"after G53->init" << endl;
+	}
+
+	G54 = NEW_OBJECT(geometry::grassmann);
+
+	if (f_v) {
+		cout << "blt_set_domain::init "
+				"before G54->init" << endl;
+	}
+	G54->init(5, 4, F, 0 /*verbose_level - 2*/);
+	if (f_v) {
+		cout << "blt_set_domain::init "
+				"after G54->init" << endl;
+	}
+
+	G43 = NEW_OBJECT(geometry::grassmann);
+
+	if (f_v) {
+		cout << "blt_set_domain::init "
+				"before G43->init" << endl;
+	}
+	G43->init(4, 3, F, 0 /*verbose_level - 2*/);
+	if (f_v) {
+		cout << "blt_set_domain::init "
+				"after G43->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "blt_set_domain::init finished" << endl;
 	}
 }
+
+long int blt_set_domain::intersection_of_hyperplanes(
+		long int plane_rk1, long int plane_rk2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int plane_rk = 0;
+	int B1[4 * 5];
+	int B2[4 * 5];
+	int C[5 * 5];
+	int rk_int;
+
+	if (f_v) {
+		cout << "blt_set_domain::intersection_of_hyperplanes" << endl;
+	}
+
+	G54->unrank_lint_here(B1, plane_rk1, verbose_level);
+	G54->unrank_lint_here(B2, plane_rk2, verbose_level);
+
+	F->Linear_algebra->intersect_subspaces(5, 4,
+		B1, 4, B2,
+		rk_int, C, 0 /* verbose_level */);
+
+	if (rk_int != 3) {
+		cout << "blt_set_domain::intersection_of_hyperplanes rk_int != 3" << endl;
+		exit(1);
+	}
+
+	plane_rk = G53->rank_lint_here(C, verbose_level);
+
+
+	if (f_v) {
+		cout << "blt_set_domain::intersection_of_hyperplanes done" << endl;
+	}
+	return plane_rk;
+}
+
+
+long int blt_set_domain::compute_tangent_hyperplane(
+	long int pt,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int plane_rk = 0;
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_tangent_hyperplane" << endl;
+	}
+
+	int B[5 * 5];
+
+	O->Hyperbolic_pair->unrank_point(B, 1, pt, 0);
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_tangent_hyperplane "
+				"before F->Linear_algebra->perp" << endl;
+	}
+	F->Linear_algebra->perp(5, 1, B, O->Quadratic_form->Gram_matrix, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "blt_set_domain::compute_tangent_hyperplane "
+				"after F->Linear_algebra->perp" << endl;
+	}
+	if (f_v) {
+		cout << "blt_set_domain::compute_tangent_hyperplane "
+				"the matrix B is:" << endl;
+		Int_vec_print_integer_matrix(cout, B, 5, 5);
+	}
+
+	plane_rk = G54->rank_lint_here(B + 5, verbose_level);
+
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_tangent_hyperplane done" << endl;
+	}
+	return plane_rk;
+}
+
+
+void blt_set_domain::report_given_point_set(std::ostream &ost,
+		long int *Pts, int nb_pts, int verbose_level)
+{
+	long int pt_rk, hyperplane_rk;
+	int i;
+
+	ost << "A set of points of size " << nb_pts << "\\\\" << endl;
+	ost << "The Points:\\\\" << endl;
+	for (i = 0; i < nb_pts; i++) {
+		pt_rk = Pts[i];
+
+
+		O->Hyperbolic_pair->unrank_point(
+				O->Hyperbolic_pair->v1, 1, pt_rk, 0 /*verbose_level*/);
+
+		hyperplane_rk = compute_tangent_hyperplane(
+			pt_rk,
+			0 /* verbose_level */);
+
+		ost << i << " : $P_{" << pt_rk << "} = ";
+		Int_vec_print(ost, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
+		ost << ", T_{" << hyperplane_rk << "}$\\\\" << endl;
+	}
+	//ost << endl;
+}
+
+
+
 
 void blt_set_domain::compute_adjacency_list_fast(
 	int first_point_of_starter,
@@ -182,6 +330,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast" << endl;
 	}
+
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 	L100 = (L / 100) + 1;
 
@@ -190,17 +339,26 @@ void blt_set_domain::compute_adjacency_list_fast(
 
 	Pts = NEW_int(nb_points * 5);
 	form_value = NEW_int(nb_points);
-	O->Hyperbolic_pair->unrank_point(v1, 1, first_point_of_starter, 0);
+
+	O->Hyperbolic_pair->unrank_point(
+			v1, 1, first_point_of_starter, 0);
+
 	if (f_v) {
-		cout << "blt_set_domain::compute_adjacency_list_fast unranking points" << endl;
+		cout << "blt_set_domain::compute_adjacency_list_fast "
+				"unranking points" << endl;
 	}
 	for (i = 0; i < nb_points; i++) {
-		O->Hyperbolic_pair->unrank_point(Pts + i * 5, 1, points[i], 0);
-		form_value[i] = O->Quadratic_form->evaluate_bilinear_form(v1, Pts + i * 5, 1);
+
+		O->Hyperbolic_pair->unrank_point(
+				Pts + i * 5, 1, points[i], 0);
+
+		form_value[i] = O->Quadratic_form->evaluate_bilinear_form(
+				v1, Pts + i * 5, 1);
 	}
 
 	if (f_v) {
-		cout << "blt_set_domain::compute_adjacency_list_fast computing adjacency matrix" << endl;
+		cout << "blt_set_domain::compute_adjacency_list_fast "
+				"computing adjacency matrix" << endl;
 	}
 
 	//cnt = 0;
@@ -289,7 +447,8 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	if (f_v) {
 		cout << "blt_set_domain::compute_colors" << endl;
 	}
-	O->Hyperbolic_pair->unrank_line(p1, p2, special_line, 0/*verbose_level*/);
+	O->Hyperbolic_pair->unrank_line(p1, p2,
+			special_line, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "after unrank_line " << special_line << ":" << endl;
 		cout << "p1=" << p1 << " p2=" << p2 << endl;
@@ -319,7 +478,9 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		cout << endl;
 	}
 
-	if (!Sorting.lint_vec_search(pts_on_special_line, q + 1, starter[0], idx, 0)) {
+	if (!Sorting.lint_vec_search(
+			pts_on_special_line,
+			q + 1, starter[0], idx, 0)) {
 		cout << "cannot find the first point on the line" << endl;
 		exit(1);
 	}
@@ -384,7 +545,8 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		}
 	}
 	if (j != nb_colors) {
-		cout << "blt_set_domain::compute_colors error: j != nb_colors" << endl;
+		cout << "blt_set_domain::compute_colors error: "
+				"j != nb_colors" << endl;
 		exit(1);
 	}
 	if (f_vv) {
@@ -430,8 +592,11 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		}
 		// <v3,t*v1+v2> = t*<v3,v1>+<v3,v2> = t*a+b = 0
 		// Thus, t = -b/a
+
 		t = O->F->mult(O->F->negate(b), O->F->inverse(a));
+
 		c = open_colors_inv[t];
+
 		if (c >= nb_colors) {
 			cout << "c >= nb_colors" << endl;
 			cout << "i=" << i << endl;
@@ -504,39 +669,47 @@ void blt_set_domain::early_test_func(long int *S, int len,
 		}
 	}
 	if (f_v) {
-		cout << "blt_set_domain::early_test_func unranking points" << endl;
+		cout << "blt_set_domain::early_test_func "
+				"unranking points" << endl;
 	}
 	for (i = 0; i < len; i++) {
 		O->Hyperbolic_pair->unrank_point(Pts + i * 5, 1,
 				S[i], 0/*verbose_level - 4*/);
 	}
 	if (f_v) {
-		cout << "blt_set_domain::early_test_func unranking candidates" << endl;
+		cout << "blt_set_domain::early_test_func "
+				"unranking candidates" << endl;
 	}
 	for (i = 0; i < nb_candidates; i++) {
-		O->Hyperbolic_pair->unrank_point(Candidates + i * 5, 1, candidates[i],
+		O->Hyperbolic_pair->unrank_point(
+				Candidates + i * 5, 1, candidates[i],
 				0/*verbose_level - 4*/);
 	}
 	if (f_v) {
-		cout << "blt_set_domain::early_test_func unranking candidates done" << endl;
+		cout << "blt_set_domain::early_test_func "
+				"unranking candidates done" << endl;
 	}
 
 	if (f_v) {
-		cout << "blt_set_domain::early_test_func computing two" << endl;
+		cout << "blt_set_domain::early_test_func "
+				"computing two" << endl;
 	}
 	two = O->F->add(1, 1);
 	if (f_v) {
-		cout << "blt_set_domain::early_test_func after computing two" << endl;
+		cout << "blt_set_domain::early_test_func "
+				"after computing two" << endl;
 	}
 
 
 	if (len == 0) {
 		if (f_v) {
-			cout << "blt_set_domain::early_test_func len == 0, copying candidates" << endl;
+			cout << "blt_set_domain::early_test_func "
+					"len == 0, copying candidates" << endl;
 		}
 		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		if (f_v) {
-			cout << "blt_set_domain::early_test_func after copying candidates" << endl;
+			cout << "blt_set_domain::early_test_func "
+					"after copying candidates" << endl;
 		}
 		nb_good_candidates = nb_candidates;
 	}
@@ -544,13 +717,14 @@ void blt_set_domain::early_test_func(long int *S, int len,
 		nb_good_candidates = 0;
 
 		if (f_vv) {
-			cout << "blt_set_domain::early_test_func before testing" << endl;
+			cout << "blt_set_domain::early_test_func "
+					"before testing" << endl;
 		}
 		for (j = 0; j < nb_candidates; j++) {
 
 
 			if (f_vv) {
-				cout << "blt_set::early_test_func "
+				cout << "blt_set_domain::early_test_func "
 						"testing " << j << " / "
 						<< nb_candidates << endl;
 			}
@@ -718,7 +892,7 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 	int fxy;
 
 	if (f_v) {
-		cout << "blt_set_domain::collinearity_test test for" << endl;
+		cout << "blt_set_domain::collinearity_test for" << endl;
 		for (i = 0; i < len; i++) {
 			O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, S[i], 0);
 			Int_vec_print(cout, O->Hyperbolic_pair->v1, n);
@@ -729,12 +903,19 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 	O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, y, 0);
 
 	for (i = 0; i < len - 1; i++) {
+
 		x = S[i];
-		O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v2, 1, x, 0);
-		fxy = O->Quadratic_form->evaluate_bilinear_form(O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
+
+		O->Hyperbolic_pair->unrank_point(
+				O->Hyperbolic_pair->v2, 1, x, 0);
+
+		fxy = O->Quadratic_form->evaluate_bilinear_form(
+				O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
 
 		if (fxy == 0) {
+
 			f_OK = FALSE;
+
 			if (f_v) {
 				cout << "not OK; ";
 				cout << "{x,y}={" << x << ","
@@ -757,7 +938,7 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 	return f_OK;
 }
 
-void blt_set_domain::print(ostream &ost, long int *S, int len)
+void blt_set_domain::print(std::ostream &ost, long int *S, int len)
 {
 	int i;
 
@@ -892,7 +1073,8 @@ int blt_set_domain::create_graph(
 	special_line = lines_on_pt[0];
 
 	if (f_v) {
-		cout << "blt_set_domain::create_graph before compute_colors" << endl;
+		cout << "blt_set_domain::create_graph "
+				"before compute_colors" << endl;
 	}
 	compute_colors(case_number,
 			Starter_set, starter_size,
@@ -901,7 +1083,8 @@ int blt_set_domain::create_graph(
 			point_color, nb_colors,
 			verbose_level);
 	if (f_v) {
-		cout << "blt_set_domain::create_graph after compute_colors" << endl;
+		cout << "blt_set_domain::create_graph "
+				"after compute_colors" << endl;
 	}
 
 
@@ -982,7 +1165,8 @@ int blt_set_domain::create_graph(
 	data_structures::bitvector *Bitvec;
 
 	if (f_v) {
-		cout << "blt_set_domain::create_graph before compute_adjacency_list_fast" << endl;
+		cout << "blt_set_domain::create_graph "
+				"before compute_adjacency_list_fast" << endl;
 	}
 	compute_adjacency_list_fast(Starter_set[0],
 			candidates, nb_candidates, point_color,

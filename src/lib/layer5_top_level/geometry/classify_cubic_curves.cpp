@@ -1302,7 +1302,7 @@ void classify_cubic_curves::familyG_recognize(int *Iso_type,
 }
 
 
-void classify_cubic_curves::report(ostream &ost, int verbose_level)
+void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_with_stabilizers = TRUE;

@@ -125,6 +125,30 @@ void finite_field::PG_element_normalize_from_front(
 	exit(1);
 }
 
+void finite_field::PG_element_normalize_from_a_given_position(
+		int *v, int stride, int len, int idx)
+{
+	int j, a, av;
+
+	a = v[idx * stride];
+	if (a) {
+		if (a == 1) {
+			return;
+		}
+		av = inverse(a);
+		for (j = 0; j < len; j++) {
+			v[j * stride] = mult(v[j * stride], av);
+		}
+		return;
+	}
+	else {
+		cout << "finite_field::PG_element_normalize_from_a_given_position "
+				"zero vector" << endl;
+		exit(1);
+	}
+}
+
+
 void finite_field::PG_elements_embed(
 		long int *set_in, long int *set_out, int sz,
 		int old_length, int new_length, int *v)
@@ -798,7 +822,8 @@ long int finite_field::projective_point_rank(int n, int *v)
 
 
 void finite_field::all_PG_elements_in_subspace(
-		int *genma, int k, int n, long int *&point_list, int &nb_points,
+		int *genma, int k, int n,
+		long int *&point_list, int &nb_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -846,7 +871,8 @@ void finite_field::all_PG_elements_in_subspace(
 }
 
 void finite_field::all_PG_elements_in_subspace_array_is_given(
-		int *genma, int k, int n, long int *point_list, int &nb_points,
+		int *genma, int k, int n,
+		long int *point_list, int &nb_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

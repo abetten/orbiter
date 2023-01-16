@@ -1754,6 +1754,7 @@ int linear_algebra::perp_standard_with_temporary_data(
 int linear_algebra::intersect_subspaces(int n, int k1,
 	int *A, int k2, int *B,
 	int &k3, int *intersection, int verbose_level)
+// note: the return value and k3 will be equal.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
