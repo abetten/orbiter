@@ -100,8 +100,10 @@ surface_classify_wedge::~surface_classify_wedge()
 }
 
 void surface_classify_wedge::init(
-		cubic_surfaces_in_general::surface_with_action *Surf_A,
-	poset_classification::poset_classification_control *Control,
+		cubic_surfaces_in_general::surface_with_action
+			*Surf_A,
+	poset_classification::poset_classification_control
+		*Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -841,7 +843,8 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 }
 
 void surface_classify_wedge::starter_configurations_which_are_involved(
-		int iso_type, int *&Starter_configuration_idx, int &nb_starter_conf,
+		int iso_type,
+		int *&Starter_configuration_idx, int &nb_starter_conf,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -888,7 +891,7 @@ void surface_classify_wedge::starter_configurations_which_are_involved(
 
 
 void surface_classify_wedge::write_file(
-		ofstream &fp, int verbose_level)
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -907,7 +910,7 @@ void surface_classify_wedge::write_file(
 }
 
 void surface_classify_wedge::read_file(
-		ifstream &fp, int verbose_level)
+		std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q1;
@@ -1780,7 +1783,8 @@ void surface_classify_wedge::identify_surface(
 }
 
 void surface_classify_wedge::latex_surfaces(
-		ostream &ost, int f_with_stabilizers, int verbose_level)
+		std::ostream &ost,
+		int f_with_stabilizers, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char str[1000];
@@ -1855,7 +1859,8 @@ void surface_classify_wedge::latex_surfaces(
 }
 
 void surface_classify_wedge::report_surface(
-		ostream &ost, int orbit_index,
+		std::ostream &ost,
+		int orbit_index,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2612,7 +2617,9 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 			<< Fio.file_size(fname) << endl;
 }
 
-void surface_classify_wedge::report(std::ostream &ost, int f_with_stabilizers,
+void surface_classify_wedge::report(
+		std::ostream &ost,
+		int f_with_stabilizers,
 		graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
@@ -2803,8 +2810,10 @@ void surface_classify_wedge::create_report_double_sixes(int verbose_level)
 }
 
 void surface_classify_wedge::test_isomorphism(
-		cubic_surfaces_in_general::surface_create_description *Descr1,
-		cubic_surfaces_in_general::surface_create_description *Descr2,
+		cubic_surfaces_in_general::surface_create_description
+			*Descr1,
+		cubic_surfaces_in_general::surface_create_description
+			*Descr2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2877,7 +2886,8 @@ void surface_classify_wedge::test_isomorphism(
 
 
 void surface_classify_wedge::recognition(
-		cubic_surfaces_in_general::surface_create_description *Descr,
+		cubic_surfaces_in_general::surface_create_description
+			*Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

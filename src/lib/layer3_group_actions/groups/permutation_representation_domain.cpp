@@ -405,7 +405,8 @@ void permutation_representation_domain::print(int *Elt, std::ostream &ost)
 
 void permutation_representation_domain::print_with_print_point_function(int *Elt,
 		ostream &ost,
-		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
+		void (*point_label)(
+				std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	combinatorics::combinatorics_domain Combi;

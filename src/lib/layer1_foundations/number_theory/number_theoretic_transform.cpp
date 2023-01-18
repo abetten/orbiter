@@ -1328,7 +1328,8 @@ void number_theoretic_transform::make_P_matrix(int s, int verbose_level)
 	}
 }
 
-void number_theoretic_transform::multiply_matrix_stack(field_theory::finite_field *F,
+void number_theoretic_transform::multiply_matrix_stack(
+		field_theory::finite_field *F,
 		int **S,
 		int nb, int sz, int *Result, int verbose_level)
 {

@@ -58,7 +58,9 @@ product_action::~product_action()
 }
 
 
-void product_action::init(actions::action *A1, actions::action *A2,
+void product_action::init(
+		actions::action *A1,
+		actions::action *A2,
 		int f_use_projections, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -97,7 +99,8 @@ void product_action::init(actions::action *A1, actions::action *A2,
 	//Elts->add_elt_print_function(elt_print, (void *) this);
 }
 
-long int product_action::compute_image(actions::action *A,
+long int product_action::compute_image(
+		actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 1;
@@ -143,13 +146,15 @@ long int product_action::compute_image(actions::action *A,
 	return j;
 }
 
-void product_action::element_one(actions::action *A, int *Elt, int verbose_level)
+void product_action::element_one(
+		actions::action *A, int *Elt, int verbose_level)
 {
 	A1->element_one(Elt, verbose_level);
 	A2->element_one(Elt + A1->elt_size_in_int, verbose_level);
 }
 
-int product_action::element_is_one(actions::action *A, int *Elt, int verbose_level)
+int product_action::element_is_one(
+		actions::action *A, int *Elt, int verbose_level)
 {
 	if (!A1->element_is_one(Elt, verbose_level)) {
 		return FALSE;
@@ -160,21 +165,24 @@ int product_action::element_is_one(actions::action *A, int *Elt, int verbose_lev
 	return TRUE;
 }
 
-void product_action::element_unpack(uchar *elt, int *Elt, int verbose_level)
+void product_action::element_unpack(
+		uchar *elt, int *Elt, int verbose_level)
 {
 	A1->element_unpack(elt, Elt, verbose_level);
 	A2->element_unpack(elt + A1->coded_elt_size_in_char,
 			Elt + A1->elt_size_in_int, verbose_level);
 }
 
-void product_action::element_pack(int *Elt, uchar *elt, int verbose_level)
+void product_action::element_pack(
+		int *Elt, uchar *elt, int verbose_level)
 {
 	A1->element_pack(Elt, elt, verbose_level);
 	A2->element_pack(Elt + A1->elt_size_in_int,
 			elt + A1->coded_elt_size_in_char, verbose_level);
 }
 
-void product_action::element_retrieve(actions::action *A,
+void product_action::element_retrieve(
+		actions::action *A,
 		int hdl, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -189,7 +197,8 @@ void product_action::element_retrieve(actions::action *A,
 			Elt + A1->elt_size_in_int, verbose_level);
 }
 
-int product_action::element_store(actions::action *A, int *Elt, int verbose_level)
+int product_action::element_store(
+		actions::action *A, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int hdl;
@@ -203,7 +212,8 @@ int product_action::element_store(actions::action *A, int *Elt, int verbose_leve
 	return hdl;
 }
 
-void product_action::element_mult(int *A, int *B, int *AB, int verbose_level)
+void product_action::element_mult(
+		int *A, int *B, int *AB, int verbose_level)
 {
 	A1->element_mult(A, B, AB, verbose_level);
 	A2->element_mult(A + A1->elt_size_in_int,
@@ -211,28 +221,32 @@ void product_action::element_mult(int *A, int *B, int *AB, int verbose_level)
 			AB + A1->elt_size_in_int, verbose_level);
 }
 
-void product_action::element_invert(int *A, int *Av, int verbose_level)
+void product_action::element_invert(
+		int *A, int *Av, int verbose_level)
 {
 	A1->element_invert(A, Av, verbose_level);
 	A2->element_invert(A + A1->elt_size_in_int,
 			Av + A1->elt_size_in_int, verbose_level);
 }
 
-void product_action::element_transpose(int *A, int *At, int verbose_level)
+void product_action::element_transpose(
+		int *A, int *At, int verbose_level)
 {
 	A1->element_transpose(A, At, verbose_level);
 	A2->element_transpose(A + A1->elt_size_in_int,
 			At + A1->elt_size_in_int, verbose_level);
 }
 
-void product_action::element_move(int *A, int *B, int verbose_level)
+void product_action::element_move(
+		int *A, int *B, int verbose_level)
 {
 	A1->element_move(A, B, verbose_level);
 	A2->element_move(A + A1->elt_size_in_int,
 			B + A1->elt_size_in_int, verbose_level);
 }
 
-void product_action::element_print(int *A, std::ostream &ost)
+void product_action::element_print(
+		int *A, std::ostream &ost)
 {
 	ost << "(" << endl;
 	A1->element_print(A, ost);
@@ -241,7 +255,8 @@ void product_action::element_print(int *A, std::ostream &ost)
 	ost << ")" << endl;
 }
 
-void product_action::element_print_latex(int *A, std::ostream &ost)
+void product_action::element_print_latex(
+		int *A, std::ostream &ost)
 {
 	ost << "\\left(" << endl;
 	A1->element_print_latex(A, ost);
@@ -250,7 +265,8 @@ void product_action::element_print_latex(int *A, std::ostream &ost)
 	ost << "\\\right)" << endl;
 }
 
-void product_action::make_element(int *Elt, int *data, int verbose_level)
+void product_action::make_element(
+		int *Elt, int *data, int verbose_level)
 {
 	A1->make_element(Elt, data, verbose_level);
 	A2->make_element(Elt + A1->elt_size_in_int, 

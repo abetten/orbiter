@@ -77,8 +77,10 @@ void object_in_projective_space_with_action::print()
 	cout << "ago=" << ago << endl;
 }
 
-void object_in_projective_space_with_action::report(std::ostream &fp,
-		projective_space_with_action *PA, int max_TDO_depth, int verbose_level)
+void object_in_projective_space_with_action::report(
+		std::ostream &fp,
+		projective_space_with_action *PA,
+		int max_TDO_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

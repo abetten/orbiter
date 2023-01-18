@@ -196,7 +196,9 @@ void design_parameter_source::text012(hollerith& s0, hollerith& s1, hollerith& s
 }
 
 
-void design_parameter_source::text012_extended(design_parameter& p, hollerith& s0, hollerith& s1, hollerith& s2)
+void design_parameter_source::text012_extended(
+		design_parameter& p, hollerith& s0,
+		hollerith& s1, hollerith& s2)
 {
 	hollerith hh;
 	

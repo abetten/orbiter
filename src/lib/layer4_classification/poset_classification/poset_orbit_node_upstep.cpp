@@ -16,7 +16,8 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
-int poset_orbit_node::apply_isomorphism(poset_classification *gen,
+int poset_orbit_node::apply_isomorphism(
+		poset_classification *gen,
 	int lvl, int current_node, 
 	int current_extension, int len, int f_tolerant,
 	int *Elt_tmp1, int *Elt_tmp2,

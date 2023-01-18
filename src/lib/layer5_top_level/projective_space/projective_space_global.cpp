@@ -440,7 +440,8 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 void projective_space_global::do_classify_arcs(
 		projective_space_with_action *PA,
-		apps_geometry::arc_generator_description *Arc_generator_description,
+		apps_geometry::arc_generator_description
+			*Arc_generator_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -543,7 +544,8 @@ void projective_space_global::do_classify_arcs(
 
 void projective_space_global::do_classify_cubic_curves(
 		projective_space_with_action *PA,
-		apps_geometry::arc_generator_description *Arc_generator_description,
+		apps_geometry::arc_generator_description
+			*Arc_generator_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -771,7 +773,8 @@ void projective_space_global::classify_quartic_curves_nauty(
 
 void projective_space_global::classify_quartic_curves_with_substructure(
 		projective_space_with_action *PA,
-		std::string &fname_mask, int nb, int substructure_size, int degree,
+		std::string &fname_mask,
+		int nb, int substructure_size, int degree,
 		std::string &fname_classification,
 		canonical_form_classifier *&Classifier,
 		int verbose_level)

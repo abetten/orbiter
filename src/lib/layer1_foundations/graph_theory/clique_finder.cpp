@@ -1523,7 +1523,8 @@ void clique_finder::print_suspicious_point_subset(int size, int *set)
 }
 
 void clique_finder::log_position_and_choice(int depth,
-		unsigned long int counter_save, unsigned long int counter)
+		unsigned long int counter_save,
+		unsigned long int counter)
 {
 	cout << "node " << counter << " at depth " << depth << " : ";
 	log_choice(depth + 1);
@@ -1535,7 +1536,8 @@ void clique_finder::log_position_and_choice(int depth,
 }
 
 void clique_finder::log_position(int depth,
-		unsigned long int counter_save, unsigned long int counter)
+		unsigned long int counter_save,
+		unsigned long int counter)
 {
 	cout << "node " << counter << " at depth " << depth << " : ";
 	log_choice(depth);

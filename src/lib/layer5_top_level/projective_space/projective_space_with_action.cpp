@@ -77,7 +77,8 @@ projective_space_with_action::~projective_space_with_action()
 }
 
 void projective_space_with_action::init(
-		field_theory::finite_field *F, int n, int f_semilinear,
+		field_theory::finite_field *F,
+		int n, int f_semilinear,
 	int f_init_incidence_structure,
 	int verbose_level)
 {
@@ -682,7 +683,8 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 
 void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG(
 		int decomposition_by_element_power,
-		std::string &decomposition_by_element_data, std::string &fname_base,
+		std::string &decomposition_by_element_data,
+		std::string &fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -903,7 +905,8 @@ void projective_space_with_action::report(
 void projective_space_with_action::canonical_form_of_code(
 		std::string &label,
 		int *genma, int m, int n,
-		combinatorics::classification_of_objects_description *Canonical_form_codes_Descr,
+		combinatorics::classification_of_objects_description
+			*Canonical_form_codes_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1382,7 +1385,8 @@ void projective_space_with_action::cheat_sheet(
 
 
 void projective_space_with_action::do_spread_classify(int k,
-		poset_classification::poset_classification_control *Control,
+		poset_classification::poset_classification_control
+			*Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1449,7 +1453,8 @@ void projective_space_with_action::do_spread_classify(int k,
 }
 
 void projective_space_with_action::setup_surface_with_action(
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
+			*&Surf_A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1486,7 +1491,8 @@ void projective_space_with_action::setup_surface_with_action(
 
 
 void projective_space_with_action::report_decomposition_by_group(
-		groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
+		groups::strong_generators *SG,
+		std::ostream &ost, std::string &fname_base,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

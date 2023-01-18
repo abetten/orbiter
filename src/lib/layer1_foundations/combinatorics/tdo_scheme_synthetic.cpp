@@ -963,7 +963,8 @@ void tdo_scheme_synthetic::print_scheme_tex(std::ostream &ost, int h)
 	print_scheme_tex_fancy(ost, h, FALSE, dummy);
 }
 
-void tdo_scheme_synthetic::print_scheme_tex_fancy(std::ostream &ost,
+void tdo_scheme_synthetic::print_scheme_tex_fancy(
+		std::ostream &ost,
 	int h, int f_label, std::string &label)
 {
 	int i, j, a = 0, n, m, c1, c2;
@@ -1186,7 +1187,8 @@ int tdo_scheme_synthetic::count_nb_inc_from_extra_row_scheme(int verbose_level)
 	return nb_inc;
 }
 
-int tdo_scheme_synthetic::geometric_test_for_row_scheme(data_structures::partitionstack &P,
+int tdo_scheme_synthetic::geometric_test_for_row_scheme(
+		data_structures::partitionstack &P,
 	int *point_types, int nb_point_types, int point_type_len, 
 	int *distributions, int nb_distributions, 
 	int f_omit1, int omit1, int verbose_level)
@@ -2254,7 +2256,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 	return TRUE;
 }
 
-void tdo_scheme_synthetic::row_refinement_L1_L2(data_structures::partitionstack &P,
+void tdo_scheme_synthetic::row_refinement_L1_L2(
+		data_structures::partitionstack &P,
 	int f_omit, int omit,
 	int &L1, int &L2, int verbose_level)
 {
@@ -2280,8 +2283,10 @@ void tdo_scheme_synthetic::row_refinement_L1_L2(data_structures::partitionstack 
 	}
 }
 
-int tdo_scheme_synthetic::tdo_rows_setup_first_system(int verbose_level,
-	tdo_data &T, int r, data_structures::partitionstack &P,
+int tdo_scheme_synthetic::tdo_rows_setup_first_system(
+		int verbose_level,
+	tdo_data &T, int r,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *&point_types, int &nb_point_types)
 {
@@ -2433,8 +2438,10 @@ int tdo_scheme_synthetic::tdo_rows_setup_first_system(int verbose_level,
 		
 }
 
-int tdo_scheme_synthetic::tdo_rows_setup_second_system(int verbose_level,
-	tdo_data &T, data_structures::partitionstack &P,
+int tdo_scheme_synthetic::tdo_rows_setup_second_system(
+		int verbose_level,
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit,
 	int f_use_packing_numbers,
 	int f_dual_is_linear_space,
@@ -2567,7 +2574,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(int verbose_level,
 
 int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining(
 	int verbose_level,
-	tdo_data &T, data_structures::partitionstack &P,
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, int f_dual_is_linear_space, 
 	int *point_types, int nb_point_types, 
 	int eqn_offset)
@@ -2728,7 +2736,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining(
 
 int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_counting(
 	int verbose_level,
-	tdo_data &T, data_structures::partitionstack &P,
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *point_types, int nb_point_types, 
 	int eqn_offset)
@@ -2799,7 +2808,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_counting(
 
 int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing(
 	int verbose_level,
-	tdo_data &T, data_structures::partitionstack &P,
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *point_types, int nb_point_types,
 	int eqn_start, int &nb_eqns_used)
@@ -2890,8 +2900,10 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing(
 // parameter refinement: refine columns
 // #############################################################################
 
-int tdo_scheme_synthetic::refine_columns(int verbose_level,
-	int f_once, data_structures::partitionstack &P,
+int tdo_scheme_synthetic::refine_columns(
+		int verbose_level,
+	int f_once,
+	data_structures::partitionstack &P,
 	int *&line_types, int &nb_line_types, int &line_type_len, 
 	int *&distributions, int &nb_distributions, 
 	int &cnt_second_system, solution_file_data *Sol, 
@@ -3394,7 +3406,8 @@ void tdo_scheme_synthetic::column_refinement_L1_L2(
 	}
 }
 
-int tdo_scheme_synthetic::tdo_columns_setup_first_system(int verbose_level,
+int tdo_scheme_synthetic::tdo_columns_setup_first_system(
+		int verbose_level,
 	tdo_data &T, int r,
 	data_structures::partitionstack &P,
 	int f_omit, int omit, 
@@ -3953,7 +3966,8 @@ int tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_upper_bound(
 // #############################################################################
 
 
-int tdo_scheme_synthetic::td3_refine_rows(int verbose_level,
+int tdo_scheme_synthetic::td3_refine_rows(
+		int verbose_level,
 		int f_once,
 	int lambda3, int block_size,
 	int *&point_types, int &nb_point_types, int &point_type_len,  

@@ -39,7 +39,8 @@ interface_symbol_table::interface_symbol_table()
 
 }
 
-void interface_symbol_table::init(orbiter_top_level_session *Orbiter_top_level_session,
+void interface_symbol_table::init(
+		orbiter_top_level_session *Orbiter_top_level_session,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

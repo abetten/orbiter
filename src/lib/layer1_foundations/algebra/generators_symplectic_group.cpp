@@ -75,7 +75,8 @@ generators_symplectic_group::~generators_symplectic_group()
 		}
 }
 
-void generators_symplectic_group::init(field_theory::finite_field *F,
+void generators_symplectic_group::init(
+		field_theory::finite_field *F,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

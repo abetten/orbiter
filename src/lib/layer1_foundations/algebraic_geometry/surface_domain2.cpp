@@ -244,7 +244,8 @@ void surface_domain::compute_tritangent_planes_slow(long int *Lines,
 
 
 
-void surface_domain::prepare_system_from_FG(int *F_planes, int *G_planes,
+void surface_domain::prepare_system_from_FG(
+		int *F_planes, int *G_planes,
 	int lambda, int *&system, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -314,8 +314,10 @@ int projective_space::reverse_engineer_semilinear_map(
 	return TRUE;
 }
 
-void projective_space::planes_through_line(long int *Lines, int nb_lines,
-		long int *&Plane_ranks, int &nb_planes_on_one_line, int verbose_level)
+void projective_space::planes_through_line(
+		long int *Lines, int nb_lines,
+		long int *&Plane_ranks,
+		int &nb_planes_on_one_line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d;

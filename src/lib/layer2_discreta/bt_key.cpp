@@ -81,8 +81,10 @@ ostream& bt_key::print(ostream& ost)
 	return ost;
 }
 
-void bt_key::init(enum bt_key_kind type,
-		int output_size, long int field1, long int field2)
+void bt_key::init(
+		enum bt_key_kind type,
+		int output_size,
+		long int field1, long int field2)
 {
 	m_l_n(7);
 	c_kind(BT_KEY);
@@ -112,26 +114,30 @@ void bt_key::init_int2(long int field1, long int field2)
 	init(bt_key_int, 2, field1, field2);
 }
 
-void bt_key::init_string(int output_size, long int field1, long int field2)
+void bt_key::init_string(int output_size,
+		long int field1, long int field2)
 {
 	init(bt_key_string, output_size, field1, field2);
 }
 
-void bt_key::init_int8_vec(long int field1, long int field2, int vec_fst, int vec_len)
+void bt_key::init_int8_vec(long int field1,
+		long int field2, int vec_fst, int vec_len)
 {
 	init(bt_key_int_vec, 8, field1, field2);
 	bt_key::int_vec_first() = vec_fst;
 	bt_key::int_vec_len() = vec_len;
 }
 
-void bt_key::init_int4_vec(long int field1, long int field2, int vec_fst, int vec_len)
+void bt_key::init_int4_vec(long int field1,
+		long int field2, int vec_fst, int vec_len)
 {
 	init(bt_key_int_vec, 4, field1, field2);
 	bt_key::int_vec_first() = vec_fst;
 	bt_key::int_vec_len() = vec_len;
 }
 
-void bt_key::init_int2_vec(long int field1, long int field2, int vec_fst, int vec_len)
+void bt_key::init_int2_vec(long int field1,
+		long int field2, int vec_fst, int vec_len)
 {
 	init(bt_key_int_vec, 2, field1, field2);
 	bt_key::int_vec_first() = vec_fst;
@@ -511,7 +517,8 @@ void bt_key_fill_in_int2(char **p_key, discreta_base& key_op)
 	}
 }
 
-void bt_key_fill_in_string(char **p_key, int output_size, discreta_base& key_op)
+void bt_key_fill_in_string(
+		char **p_key, int output_size, discreta_base& key_op)
 {
 	if (key_op.s_kind() != HOLLERITH) {
 		cout << "bt_key_fill_in_string "

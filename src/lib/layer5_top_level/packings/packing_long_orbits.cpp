@@ -362,8 +362,11 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	}
 }
 
-void packing_long_orbits::save_packings_by_case(std::string &fname_packings,
-		std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level)
+void packing_long_orbits::save_packings_by_case(
+		std::string &fname_packings,
+		std::vector<std::vector<std::vector<int> > >
+			&Packings_by_case,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1040,7 +1043,8 @@ void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 void packing_long_orbits::create_graph_and_save_to_file(
 		graph_theory::colored_graph *&CG,
 	std::string &fname,
-	int f_has_user_data, long int *user_data, int user_data_size,
+	int f_has_user_data,
+	long int *user_data, int user_data_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

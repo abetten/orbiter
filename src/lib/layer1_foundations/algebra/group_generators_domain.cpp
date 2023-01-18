@@ -2343,8 +2343,11 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	}
 }
 
-void group_generators_domain::builtin_transversal_rep_GLnq(int *A,
-		int n, field_theory::finite_field *F, int f_semilinear, int i, int j,
+void group_generators_domain::builtin_transversal_rep_GLnq(
+		int *A,
+		int n,
+		field_theory::finite_field *F,
+		int f_semilinear, int i, int j,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

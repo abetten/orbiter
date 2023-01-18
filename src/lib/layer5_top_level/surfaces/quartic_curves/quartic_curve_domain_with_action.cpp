@@ -35,7 +35,8 @@ quartic_curve_domain_with_action::~quartic_curve_domain_with_action()
 {
 }
 
-void quartic_curve_domain_with_action::init(algebraic_geometry::quartic_curve_domain *Dom,
+void quartic_curve_domain_with_action::init(
+		algebraic_geometry::quartic_curve_domain *Dom,
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
 {

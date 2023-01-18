@@ -715,7 +715,9 @@ void unipoly::monic()
 		}
 }
 
-void unipoly::normal_base(int p, discreta_matrix& F, discreta_matrix& N, int verbose_level)
+void unipoly::normal_base(int p,
+		discreta_matrix& F, discreta_matrix& N,
+		int verbose_level)
 // compare Lueneburg~\cite{Lueneburg87a} p. 106.
 {
 	int f_v = (verbose_level >= 1);
@@ -795,7 +797,8 @@ void unipoly::normal_base(int p, discreta_matrix& F, discreta_matrix& N, int ver
 }
 
 int unipoly::first_irreducible_polynomial(int p,
-		unipoly& m, discreta_matrix& F, discreta_matrix& N, Vector &v, int verbose_level)
+		unipoly& m, discreta_matrix& F,
+		discreta_matrix& N, Vector &v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	domain d(p);
@@ -822,7 +825,8 @@ int unipoly::first_irreducible_polynomial(int p,
 }
 
 int unipoly::next_irreducible_polynomial(int p,
-		unipoly& m, discreta_matrix& F, discreta_matrix& N, Vector &v, int verbose_level)
+		unipoly& m, discreta_matrix& F,
+		discreta_matrix& N, Vector &v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	domain d(p);

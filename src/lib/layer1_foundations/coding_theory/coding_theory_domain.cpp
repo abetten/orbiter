@@ -309,7 +309,8 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 		field_theory::finite_field *F,
 		int n, int k, int d, long int N_points,
-		long int *set, int *f_forbidden, int level, int verbose_level)
+		long int *set, int *f_forbidden, int level,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -893,7 +894,8 @@ int coding_theory_domain::code_minimum_distance(
 	return i;
 }
 
-void coding_theory_domain::make_codewords_sorted(field_theory::finite_field *F,
+void coding_theory_domain::make_codewords_sorted(
+		field_theory::finite_field *F,
 		int n, int k,
 		int *genma, // [k * n]
 		long int *&codewords, // q^k
@@ -945,7 +947,8 @@ void coding_theory_domain::make_codewords_sorted(field_theory::finite_field *F,
 	}
 }
 
-void coding_theory_domain::make_codewords(field_theory::finite_field *F,
+void coding_theory_domain::make_codewords(
+		field_theory::finite_field *F,
 		int n, int k,
 		int *genma, // [k * n]
 		long int *&codewords, // q^k
@@ -980,7 +983,8 @@ void coding_theory_domain::make_codewords(field_theory::finite_field *F,
 	}
 }
 
-void coding_theory_domain::codewords_affine(field_theory::finite_field *F,
+void coding_theory_domain::codewords_affine(
+		field_theory::finite_field *F,
 		int n, int k,
 	int *code, // [k * n]
 	long int *codewords, // q^k
@@ -1015,7 +1019,8 @@ void coding_theory_domain::codewords_affine(field_theory::finite_field *F,
 	}
 }
 
-void coding_theory_domain::codewords_table(field_theory::finite_field *F,
+void coding_theory_domain::codewords_table(
+		field_theory::finite_field *F,
 		int n, int k,
 	int *code, // [k * n]
 	int *&codewords, // [q^k * n]
@@ -2034,7 +2039,8 @@ void coding_theory_domain::do_polynomial(
 	}
 }
 
-void coding_theory_domain::do_sylvester_hadamard(field_theory::finite_field *F3,
+void coding_theory_domain::do_sylvester_hadamard(
+		field_theory::finite_field *F3,
 		int n,
 		int verbose_level)
 {
@@ -2908,7 +2914,8 @@ void coding_theory_domain::place_binary(int *v, int n, int &i, int &j)
 
 
 void coding_theory_domain::field_reduction(
-		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
 		std::string &label,
 		int m, int n, std::string &genma_text,
 		int verbose_level)
@@ -3024,8 +3031,10 @@ void coding_theory_domain::field_reduction(
 
 
 
-void coding_theory_domain::field_induction(std::string &fname_in,
-		std::string &fname_out, int nb_bits, int verbose_level)
+void coding_theory_domain::field_induction(
+		std::string &fname_in,
+		std::string &fname_out, int nb_bits,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

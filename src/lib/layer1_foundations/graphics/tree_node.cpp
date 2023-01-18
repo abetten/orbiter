@@ -152,7 +152,9 @@ int tree_node::find_node(int &DFS_rk, int *path, int sz, int verbose_level)
 	}
 }
 
-int tree_node::find_node_and_path(std::vector<int> &Rk, int *path, int sz, int verbose_level)
+int tree_node::find_node_and_path(
+		std::vector<int> &Rk,
+		int *path, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

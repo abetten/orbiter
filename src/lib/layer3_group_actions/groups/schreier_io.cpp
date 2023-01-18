@@ -160,7 +160,8 @@ void schreier::print_fixed_points_tex(std::ostream &ost)
 }
 
 
-void schreier::print_orbit_length_distribution(std::ostream &ost)
+void schreier::print_orbit_length_distribution(
+		std::ostream &ost)
 {
 	int *val, *mult, len;
 
@@ -172,7 +173,8 @@ void schreier::print_orbit_length_distribution(std::ostream &ost)
 	FREE_int(mult);
 }
 
-void schreier::print_orbit_length_distribution_to_string(std::string &str)
+void schreier::print_orbit_length_distribution_to_string(
+		std::string &str)
 {
 	int *val, *mult, len;
 
@@ -222,9 +224,12 @@ void schreier::print(std::ostream &ost)
 	ost << endl;
 }
 
-void schreier::print_and_list_orbits_and_stabilizer(std::ostream &ost,
-		actions::action *default_action, ring_theory::longinteger_object &go,
-	void (*print_point)(std::ostream &ost, int pt, void *data),
+void schreier::print_and_list_orbits_and_stabilizer(
+		std::ostream &ost,
+		actions::action *default_action,
+		ring_theory::longinteger_object &go,
+	void (*print_point)(
+			std::ostream &ost, int pt, void *data),
 	void *data)
 {
 	int i;
@@ -330,7 +335,9 @@ void schreier::print_and_list_non_trivial_orbits_tex(std::ostream &ost)
 
 
 void schreier::print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
-		std::ostream &ost, actions::action *default_action, strong_generators *gens,
+		std::ostream &ost,
+		actions::action *default_action,
+		strong_generators *gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -394,7 +401,8 @@ void schreier::make_orbit_trees(std::ostream &ost,
 	}
 }
 
-void schreier::print_and_list_orbits_with_original_labels_tex(std::ostream &ost)
+void schreier::print_and_list_orbits_with_original_labels_tex(
+		std::ostream &ost)
 {
 	int orbit_no;
 
@@ -825,7 +833,8 @@ void schreier::print_tables(std::ostream &ost,
 	ost << endl;
 }
 
-void schreier::print_tables_latex(std::ostream &ost,
+void schreier::print_tables_latex(
+		std::ostream &ost,
 	int f_with_cosetrep)
 {
     int i;
@@ -918,7 +927,8 @@ void schreier::print_generators()
 	}
 }
 
-void schreier::print_generators_latex(std::ostream &ost)
+void schreier::print_generators_latex(
+		std::ostream &ost)
 {
 	int j;
 
@@ -986,7 +996,8 @@ void schreier::print_orbit(std::ostream &ost, int orbit_no)
 	FREE_lint(v);
 }
 
-void schreier::print_orbit_with_original_labels(std::ostream &ost, int orbit_no)
+void schreier::print_orbit_with_original_labels(
+		std::ostream &ost, int orbit_no)
 {
 	int i, first, len;
 	long int *v;
@@ -1031,7 +1042,8 @@ void schreier::print_orbit_tex(std::ostream &ost, int orbit_no)
 	FREE_int(v);
 }
 
-void schreier::print_orbit_sorted_tex(std::ostream &ost,
+void schreier::print_orbit_sorted_tex(
+		std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
 	orbiter_kernel_system::latex_interface L;
@@ -1075,7 +1087,8 @@ void schreier::get_orbit_sorted(int *&v, int &len, int orbit_no)
 
 }
 
-void schreier::print_orbit_sorted_with_original_labels_tex(std::ostream &ost,
+void schreier::print_orbit_sorted_with_original_labels_tex(
+		std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
 	orbiter_kernel_system::latex_interface L;
@@ -1110,7 +1123,8 @@ void schreier::print_orbit_sorted_with_original_labels_tex(std::ostream &ost,
 }
 
 
-void schreier::print_orbit_using_labels(std::ostream &ost,
+void schreier::print_orbit_using_labels(
+		std::ostream &ost,
 	int orbit_no, long int *labels)
 {
 	int i, first, len;
@@ -1130,9 +1144,11 @@ void schreier::print_orbit_using_labels(std::ostream &ost,
 	FREE_int(v);
 }
 
-void schreier::print_orbit_using_callback(std::ostream &ost,
+void schreier::print_orbit_using_callback(
+		std::ostream &ost,
 	int orbit_no,
-	void (*print_point)(std::ostream &ost, int pt, void *data),
+	void (*print_point)(
+			std::ostream &ost, int pt, void *data),
 	void *data)
 {
 	int i, first, len;
@@ -1193,7 +1209,8 @@ void schreier::print_orbit_through_labels(std::ostream &ost,
 	FREE_lint(v);
 }
 
-void schreier::print_orbit_sorted(std::ostream &ost, int orbit_no)
+void schreier::print_orbit_sorted(
+		std::ostream &ost, int orbit_no)
 {
 	int i, len;
 	int *v;
@@ -1872,7 +1889,8 @@ int schreier::subtree_calc_weight(int *weight,
 	return w;
 }
 
-int schreier::subtree_depth_first(std::ostream &ost,
+int schreier::subtree_depth_first(
+		std::ostream &ost,
 		int *path, int i, int last)
 {
 	int pt = orbit[i];

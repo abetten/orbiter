@@ -20,7 +20,9 @@ namespace poset_classification {
 
 void poset_orbit_node::read_memory_object(
 		poset_classification *PC,
-		actions::action *A, orbiter_kernel_system::memory_object *m, int &nb_group_elements,
+		actions::action *A,
+		orbiter_kernel_system::memory_object *m,
+		int &nb_group_elements,
 		int *Elt_tmp,
 		int verbose_level)
 {
@@ -144,7 +146,8 @@ void poset_orbit_node::read_memory_object(
 void poset_orbit_node::write_memory_object(
 		poset_classification *PC,
 		actions::action *A,
-		orbiter_kernel_system::memory_object *m, int &nb_group_elements,
+		orbiter_kernel_system::memory_object *m,
+		int &nb_group_elements,
 		int *Elt_tmp,
 		int verbose_level)
 {

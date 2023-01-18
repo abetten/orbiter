@@ -2025,7 +2025,8 @@ void semifield_level_two::write_candidates_at_level_two_case(
 }
 
 void semifield_level_two::read_candidates_at_level_two_by_type(
-		data_structures::set_of_sets_lint *&Candidates_by_type, int orbit,
+		data_structures::set_of_sets_lint *&Candidates_by_type,
+		int orbit,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

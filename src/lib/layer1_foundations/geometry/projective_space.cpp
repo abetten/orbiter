@@ -144,7 +144,8 @@ projective_space::~projective_space()
 	}
 }
 
-void projective_space::projective_space_init(int n, field_theory::finite_field *F,
+void projective_space::projective_space_init(
+		int n, field_theory::finite_field *F,
 	int f_init_incidence_structure, 
 	int verbose_level)
 // n is projective dimension
@@ -376,8 +377,11 @@ void projective_space::init_polarity(int verbose_level)
 
 }
 
-void projective_space::intersect_with_line(long int *set, int set_sz,
-		int line_rk, long int *intersection, int &sz, int verbose_level)
+void projective_space::intersect_with_line(
+		long int *set, int set_sz,
+		int line_rk,
+		long int *intersection, int &sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, b, idx;
@@ -435,7 +439,8 @@ void projective_space::create_points_on_line(
 }
 
 void projective_space::create_lines_on_point(
-	long int point_rk, long int *line_pencil, int verbose_level)
+	long int point_rk,
+	long int *line_pencil, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b, i, d;
@@ -705,7 +710,8 @@ void projective_space::incidence_m_ii(int pt, int line, int a)
 
 void projective_space::make_incidence_structure_and_partition(
 	incidence_structure *&Inc, 
-	data_structures::partitionstack *&Stack, int verbose_level)
+	data_structures::partitionstack *&Stack,
+	int verbose_level)
 // points vs lines
 {
 	int f_v = (verbose_level >= 1);
@@ -771,7 +777,8 @@ void projective_space::incma_for_type_ij(
 	int row_type, int col_type,
 	int *&Incma, int &nb_rows, int &nb_cols,
 	int verbose_level)
-// row_type, col_type are the vector space dimensions of the objects
+// row_type, col_type are the vector space
+// dimensions of the objects
 // indexing rows and columns.
 {
 	int f_v = (verbose_level >= 1);
@@ -950,8 +957,10 @@ int projective_space::incidence_test_for_objects_of_type_ij(
 }
 
 
-void projective_space::points_on_line(long int line_rk,
-		long int *&the_points, int &nb_points, int verbose_level)
+void projective_space::points_on_line(
+		long int line_rk,
+		long int *&the_points,
+		int &nb_points, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -974,8 +983,10 @@ void projective_space::points_on_line(long int line_rk,
 }
 
 
-void projective_space::points_covered_by_plane(long int plane_rk,
-		long int *&the_points, int &nb_points, int verbose_level)
+void projective_space::points_covered_by_plane(
+		long int plane_rk,
+		long int *&the_points,
+		int &nb_points, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1178,7 +1189,8 @@ int projective_space::test_if_lines_are_disjoint_from_scratch(
 	}
 }
 
-int projective_space::intersection_of_two_lines(long int l1, long int l2)
+int projective_space::intersection_of_two_lines(
+		long int l1, long int l2)
 // formerly intersection_of_two_lines_in_a_plane
 {
 	int *Mtx1;
@@ -1300,7 +1312,8 @@ int projective_space::determine_line_in_plane(
 
 
 
-int projective_space::conic_test(long int *S, int len, int pt, int verbose_level)
+int projective_space::conic_test(
+		long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
@@ -1340,7 +1353,8 @@ int projective_space::conic_test(long int *S, int len, int pt, int verbose_level
 }
 
 
-int projective_space::test_if_conic_contains_point(int *six_coeffs, int pt)
+int projective_space::test_if_conic_contains_point(
+		int *six_coeffs, int pt)
 {
 	int v[3];
 	int c[6];
@@ -2536,7 +2550,8 @@ void projective_space::find_k_secant_lines(
 }
 
 
-void projective_space::Baer_subline(long int *pts3,
+void projective_space::Baer_subline(
+		long int *pts3,
 	long int *&pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2854,10 +2869,12 @@ void projective_space::make_fname_incidence_matrix_csv(std::string &fname)
 
 
 
-void projective_space::compute_decomposition(data_structures::partitionstack *S1,
+void projective_space::compute_decomposition(
+		data_structures::partitionstack *S1,
 		data_structures::partitionstack *S2,
 		incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack, int verbose_level)
+		data_structures::partitionstack *&Stack,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

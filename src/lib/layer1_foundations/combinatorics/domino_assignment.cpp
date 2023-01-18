@@ -531,7 +531,8 @@ int domino_assignment::compute_cost_of_one_piece(int idx)
 	return d;
 }
 
-int domino_assignment::compute_cost_of_one_piece_directly(int m, int n, int o, int i, int j)
+int domino_assignment::compute_cost_of_one_piece_directly(
+		int m, int n, int o, int i, int j)
 {
 	int d;
 

@@ -152,7 +152,8 @@ void crc_codes::crc32_test(int block_length, int verbose_level)
 	}
 }
 
-void crc_codes::crc256_test_k_subsets(int message_length, int R, int k, int verbose_level)
+void crc_codes::crc256_test_k_subsets(
+		int message_length, int R, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -279,7 +280,8 @@ void crc_codes::crc256_test_k_subsets(int message_length, int R, int k, int verb
 	}
 }
 
-void crc_codes::crc32_remainders(int message_length, int verbose_level)
+void crc_codes::crc32_remainders(
+		int message_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -333,8 +335,10 @@ void crc_codes::crc32_remainders(int message_length, int verbose_level)
 }
 
 
-void crc_codes::crc32_remainders_compute(int message_length,
-		int R, uint32_t *&Crc, int verbose_level)
+void crc_codes::crc32_remainders_compute(
+		int message_length,
+		int R,
+		uint32_t *&Crc, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1904,7 +1908,8 @@ uint16_t crc_codes::NetIpChecksum(uint16_t const *ipHeader, int nWords)
 
 }
 
-void crc_codes::CRC_encode_text(field_theory::nth_roots *Nth,
+void crc_codes::CRC_encode_text(
+		field_theory::nth_roots *Nth,
 		ring_theory::unipoly_object &CRC_poly,
 	std::string &text, std::string &fname,
 	int verbose_level)

@@ -75,8 +75,10 @@ int poset_classification::find_isomorphism(
 void poset_classification::identify_and_get_stabilizer(
 		long int *set, int sz, int *transporter,
 		int &orbit_at_level,
-		data_structures_groups::set_and_stabilizer *&Set_and_stab_original,
-		data_structures_groups::set_and_stabilizer *&Set_and_stab_canonical,
+		data_structures_groups::set_and_stabilizer
+			*&Set_and_stab_original,
+		data_structures_groups::set_and_stabilizer
+			*&Set_and_stab_canonical,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -135,7 +137,8 @@ void poset_classification::identify_and_get_stabilizer(
 	}
 }
 
-void poset_classification::test_identify(int level, int nb_times,
+void poset_classification::test_identify(
+		int level, int nb_times,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -364,7 +367,8 @@ int poset_classification::poset_classification_apply_isomorphism(
 int poset_classification::trace_set_recursion(
 	int cur_level, int cur_node,
 	int size, int level,
-	long int *canonical_set, long int *tmp_set1, long int *tmp_set2,
+	long int *canonical_set,
+	long int *tmp_set1, long int *tmp_set2,
 	int *Elt_transporter, int *tmp_Elt1, int *tmp_Elt2,
 	int f_tolerant, 
 	int verbose_level)

@@ -750,7 +750,8 @@ void create_code::dual_code(int verbose_level)
 }
 
 
-void create_code::export_magma(std::string &fname, int verbose_level)
+void create_code::export_magma(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -896,7 +897,8 @@ void create_code::create_checkma_from_genma(int verbose_level)
 
 }
 
-void create_code::export_codewords(std::string &fname, int verbose_level)
+void create_code::export_codewords(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -955,7 +957,8 @@ void create_code::export_codewords(std::string &fname, int verbose_level)
 
 }
 
-void create_code::export_codewords_long(std::string &fname, int verbose_level)
+void create_code::export_codewords_long(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1140,7 +1143,8 @@ void create_code::export_codewords_by_weight(
 }
 
 
-void create_code::export_genma(std::string &fname, int verbose_level)
+void create_code::export_genma(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1169,7 +1173,8 @@ void create_code::export_genma(std::string &fname, int verbose_level)
 
 }
 
-void create_code::export_checkma(std::string &fname, int verbose_level)
+void create_code::export_checkma(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1299,7 +1304,8 @@ void create_code::fixed_code(
 }
 
 
-void create_code::make_diagram(int f_embellish, int embellish_radius,
+void create_code::make_diagram(
+		int f_embellish, int embellish_radius,
 		int f_metric_balls, int radius_of_metric_ball,
 		coding_theory::code_diagram *&Diagram,
 		int verbose_level)
@@ -1368,7 +1374,8 @@ void create_code::make_diagram(int f_embellish, int embellish_radius,
 }
 
 
-void create_code::polynomial_representation_of_boolean_function(int verbose_level)
+void create_code::polynomial_representation_of_boolean_function(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

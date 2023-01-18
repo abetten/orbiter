@@ -32,7 +32,8 @@ action_on_forms_activity::~action_on_forms_activity()
 
 }
 
-void action_on_forms_activity::init(action_on_forms_activity_description *Descr,
+void action_on_forms_activity::init(
+		action_on_forms_activity_description *Descr,
 		apps_algebra::action_on_forms *AF,
 		int verbose_level)
 {

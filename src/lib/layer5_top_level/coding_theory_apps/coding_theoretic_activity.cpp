@@ -32,7 +32,8 @@ coding_theoretic_activity::~coding_theoretic_activity()
 }
 
 
-void coding_theoretic_activity::init_field(coding_theoretic_activity_description *Descr,
+void coding_theoretic_activity::init_field(
+		coding_theoretic_activity_description *Descr,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -56,7 +57,8 @@ void coding_theoretic_activity::init_field(coding_theoretic_activity_description
 	}
 }
 
-void coding_theoretic_activity::init_code(coding_theoretic_activity_description *Descr,
+void coding_theoretic_activity::init_code(
+		coding_theoretic_activity_description *Descr,
 		create_code *Code,
 		int verbose_level)
 {
@@ -792,7 +794,8 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 }
 
 void coding_theoretic_activity::do_diagram(
-		coding_theory::code_diagram *Diagram, int verbose_level)
+		coding_theory::code_diagram *Diagram,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

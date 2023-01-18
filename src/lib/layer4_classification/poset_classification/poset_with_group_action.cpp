@@ -217,7 +217,8 @@ void poset_with_group_action::add_independence_condition(
 
 void poset_with_group_action::add_testing(
 		int (*func)(orbit_based_testing *Obt,
-				long int *S, int len, void *data, int verbose_level),
+				long int *S, int len,
+				void *data, int verbose_level),
 		void *data,
 		int verbose_level)
 {
@@ -377,7 +378,8 @@ long int poset_with_group_action::rank_point(int *v)
 
 void poset_with_group_action::orbits_on_k_sets(
 		poset_classification_control *Control,
-		int k, long int *&orbit_reps, int &nb_orbits, int verbose_level)
+		int k, long int *&orbit_reps,
+		int &nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	poset_classification *Gen;
@@ -455,7 +457,8 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 	return Gen;
 }
 
-void poset_with_group_action::invoke_print_function(std::ostream &ost, int sz, long int *set)
+void poset_with_group_action::invoke_print_function(
+		std::ostream &ost, int sz, long int *set)
 {
 	(*print_function)(ost, sz, set, print_function_data);
 }

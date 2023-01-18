@@ -397,12 +397,13 @@ public:
 	long int *Flock_reduced; // [q]
 	long int *Flock_affine; // [q]
 
-	int *ABC; // [q]
+	int *ABC; // [q * 3]
 
 	data_structures::int_matrix *Table_of_ABC;
+		// same as ABC, but sorted by rows.
 
-	int *func_f;
-	int *func_g;
+	int *func_f; // second column of ABC
+	int *func_g; // third column of ABC
 
 	combinatorics::polynomial_function_domain *PF;
 
@@ -411,7 +412,13 @@ public:
 	void init(
 				blt_set_with_action *BLT_set,
 				int point_idx, int verbose_level);
-	void test_flock_condition(int verbose_level);
+	void test_flock_condition(
+			field_theory::finite_field *F,
+			int f_magic, int *ABC, int verbose_level);
+	void quadratic_lift(
+			int *coeff_f, int *coeff_g, int verbose_level);
+	void cubic_lift(
+			int *coeff_f, int *coeff_g, int verbose_level);
 
 };
 
@@ -485,8 +492,6 @@ public:
 	orthogonal_space_activity_description *Descr;
 
 	orthogonal_space_with_action *OA;
-
-	//layer1_foundations::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
 	orthogonal_space_activity();
 	~orthogonal_space_activity();
@@ -571,9 +576,11 @@ public:
 			orthogonal_space_with_action_description *Descr,
 			int verbose_level);
 	void init_group(int verbose_level);
-	void report(graphics::layered_graph_draw_options *LG_Draw_options,
+	void report(
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
-	void report2(std::ostream &ost,
+	void report2(
+			std::ostream &ost,
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_point_set(

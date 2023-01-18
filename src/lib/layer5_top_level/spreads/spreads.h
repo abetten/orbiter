@@ -31,8 +31,11 @@ public:
 	geometry::grassmann *Grass;
 	field_theory::finite_field *F;
 
-	actions::action *A; // P Gamma L(n,q)
-	actions::action *A2; // action of A on grassmannian of k-subspaces of V(n,q)
+	actions::action *A;
+		// P Gamma L(n,q)
+	actions::action *A2;
+		// action of A on grassmannian
+		// of k-subspaces of V(n,q)
 	int f_projective;
 	int f_semilinear;
 	int nCkq; // n choose k in q
@@ -57,8 +60,10 @@ public:
 
 	// initialized in compute_starter():
 	long int starter_j1, starter_j2, starter_j3;
-	actions::action *A0;	// P Gamma L(k,q)
-	actions::action *A0_linear; // PGL(k,q), needed for compute_live_points
+	actions::action *A0;
+		// P Gamma L(k,q)
+	actions::action *A0_linear;
+		// PGL(k,q), needed for compute_live_points
 	data_structures_groups::vector_ge *gens2;
 
 	long int *live_points;
@@ -71,20 +76,30 @@ public:
 			geometry::spread_domain *SD,
 			actions::action *A, actions::action *A2,
 		int f_projective, int f_semilinear,
-		int (*check_function_incremental)(int len, long int *S,
+		int (*check_function_incremental)(
+				int len, long int *S,
 			void *data, int verbose_level),
 		void *check_function_incremental_data,
 		int verbose_level);
-	void do_recoordinatize(long int i1, long int i2, long int i3, int verbose_level);
-	void compute_starter(long int *&S, int &size,
-			groups::strong_generators *&Strong_gens, int verbose_level);
-	void stabilizer_of_first_three(groups::strong_generators *&Strong_gens,
+	void do_recoordinatize(
+			long int i1, long int i2, long int i3,
+			int verbose_level);
+	void compute_starter(
+			long int *&S, int &size,
+			groups::strong_generators *&Strong_gens,
+			int verbose_level);
+	void stabilizer_of_first_three(
+			groups::strong_generators *&Strong_gens,
 		int verbose_level);
 	void compute_live_points(int verbose_level);
-	void compute_live_points_low_level(long int *&live_points,
+	void compute_live_points_low_level(
+			long int *&live_points,
 		int &nb_live_points, int verbose_level);
-	int apply_test(long int *set, int sz, int verbose_level);
-	void make_first_three(long int &j1, long int &j2, long int &j3, int verbose_level);
+	int apply_test(
+			long int *set, int sz, int verbose_level);
+	void make_first_three(
+			long int &j1, long int &j2, long int &j3,
+			int verbose_level);
 };
 
 // #############################################################################
@@ -131,7 +146,8 @@ public:
 	actions::action *A;
 		// P Gamma L(n,q)
 	actions::action *A2;
-		// action of A on grassmannian of k-subspaces of V(n,q)
+		// action of A on grassmannian
+		// of k-subspaces of V(n,q)
 	induced_actions::action_on_grassmannian *AG;
 
 	actions::action *AGr;
@@ -139,7 +155,8 @@ public:
 
 	spread_activity();
 	~spread_activity();
-	void init(spread_activity_description *Descr,
+	void init(
+			spread_activity_description *Descr,
 			spread_create *Spread_create,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -179,9 +196,8 @@ public:
 	int split_m;
 
 	int f_isomorph;
-	//std::string prefix_classify;
-	//std::string prefix_iso;
-	layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
+	layer4_classification::isomorph::isomorph_arguments
+		*Isomorph_arguments;
 
 	spread_classify_activity_description();
 	~spread_classify_activity_description();
@@ -210,7 +226,8 @@ public:
 
 	spread_classify_activity();
 	~spread_classify_activity();
-	void init(spread_classify_activity_description *Descr,
+	void init(
+			spread_classify_activity_description *Descr,
 			spread_classify *Spread_classify,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -243,7 +260,6 @@ public:
 
 	int f_poset_classification_control;
 	std::string poset_classification_control_label;
-	// poset_classification::poset_classification_control *Control;
 
 	int f_output_prefix;
 	std::string output_prefix;
@@ -279,7 +295,9 @@ public:
 
 	groups::matrix_group *Mtx;
 
-	long int block_size; // = r = {k choose 1}_q, used in spread_lifting.spp
+	long int block_size;
+		// = r = {k choose 1}_q,
+		// used in spread_lifting.spp
 
 
 	int starter_size;
@@ -289,7 +307,8 @@ public:
 	actions::action *A;
 		// P Gamma L(n,q)
 	actions::action *A2;
-		// action of A on grassmannian of k-subspaces of V(n,q)
+		// action of A on grassmannian
+		// of k-subspaces of V(n,q)
 	induced_actions::action_on_grassmannian *AG;
 
 	recoordinatize *R;
@@ -347,29 +366,41 @@ public:
 
 
 	// spread_classify2.cpp
-	void print_isomorphism_type(isomorph::isomorph *Iso,
+	void print_isomorphism_type(
+			isomorph::isomorph *Iso,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int verbose_level);
 		// called from callback_print_isomorphism_type()
-	void print_isomorphism_type2(isomorph::isomorph *Iso,
+	void print_isomorphism_type2(
+			isomorph::isomorph *Iso,
 			std::ostream &ost,
 			int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 			long int *data, int verbose_level);
-	void save_klein_invariants(char *prefix,
+	void save_klein_invariants(
+			char *prefix,
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
-	void klein(std::ostream &ost,
+	void klein(
+			std::ostream &ost,
 			isomorph::isomorph *Iso,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int data_size, int verbose_level);
 
-	void report2(isomorph::isomorph &Iso, int verbose_level);
-	void report3(isomorph::isomorph &Iso, std::ostream &ost, int verbose_level);
-	void all_cooperstein_thas_quotients(isomorph::isomorph &Iso, int verbose_level);
-	void cooperstein_thas_quotients(isomorph::isomorph &Iso, std::ofstream &f,
+	void report2(
+			isomorph::isomorph &Iso, int verbose_level);
+	void report3(
+			isomorph::isomorph &Iso,
+			std::ostream &ost, int verbose_level);
+	void all_cooperstein_thas_quotients(
+			isomorph::isomorph &Iso, int verbose_level);
+	void cooperstein_thas_quotients(
+			isomorph::isomorph &Iso, std::ofstream &f,
 		int h, int &cnt, int verbose_level);
-	void orbit_info_short(std::ostream &ost, isomorph::isomorph &Iso, int h, int verbose_level);
-	void report_stabilizer(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+	void orbit_info_short(
+			std::ostream &ost, isomorph::isomorph &Iso,
+			int h, int verbose_level);
+	void report_stabilizer(isomorph::isomorph &Iso,
+			std::ostream &ost, int orbit,
 		int verbose_level);
 };
 
@@ -533,12 +564,7 @@ public:
 	~spread_lifting();
 	void init(spread_classify *S,
 			data_structures_groups::orbit_rep *R,
-			//exact_cover *E,
-		//long int *starter, int starter_size,
-		//int starter_case_number, int starter_number_of_cases,
-		//long int *candidates, int nb_candidates,
 		std::string &output_prefix,
-		//groups::strong_generators *Strong_gens,
 		int f_lex,
 		int verbose_level);
 	void compute_points_covered_by_starter(
@@ -623,13 +649,18 @@ public:
 
 	spread_table_activity();
 	~spread_table_activity();
-	void init(spreads::spread_table_activity_description *Descr,
+	void init(
+			spreads::spread_table_activity_description *Descr,
 			packings::packing_classify *P,
 			int verbose_level);
 	void perform_activity(int verbose_level);
-	void export_spreads_to_csv(std::string &fname, int *spread_idx, int nb, int verbose_level);
-	void report_spreads(int *spread_idx, int nb, int verbose_level);
-	void report_spread2(std::ostream &ost, int spread_idx, int verbose_level);
+	void export_spreads_to_csv(
+			std::string &fname,
+			int *spread_idx, int nb, int verbose_level);
+	void report_spreads(
+			int *spread_idx, int nb, int verbose_level);
+	void report_spread2(
+			std::ostream &ost, int spread_idx, int verbose_level);
 
 };
 
@@ -690,9 +721,11 @@ public:
 	void create_action_on_spreads(int verbose_level);
 	int find_spread(long int *set, int verbose_level);
 	long int *get_spread(int spread_idx);
-	void find_spreads_containing_two_lines(std::vector<int> &v,
+	void find_spreads_containing_two_lines(
+			std::vector<int> &v,
 			int line1, int line2, int verbose_level);
-	int test_if_packing_is_self_dual(int *packing, int verbose_level);
+	int test_if_packing_is_self_dual(
+			int *packing, int verbose_level);
 	void predict_spread_table_length(
 			actions::action *A,
 			groups::strong_generators *Strong_gens,
@@ -700,7 +733,8 @@ public:
 	void make_spread_table(
 			actions::action *A, actions::action *A2,
 			groups::strong_generators *Strong_gens,
-			long int **&Sets, int *&Prev, int *&Label, int *&first, int *&len,
+			long int **&Sets, int *&Prev,
+			int *&Label, int *&first, int *&len,
 			int *&isomorphism_type_of_spread,
 			int verbose_level);
 	void compute_covered_points(
@@ -711,7 +745,8 @@ public:
 	// points_covered_by_starter are the lines that
 	// are contained in the spreads chosen for the starter
 	void compute_free_points2(
-		long int *&free_points2, int &nb_free_points2, long int *&free_point_idx,
+		long int *&free_points2,
+		int &nb_free_points2, long int *&free_point_idx,
 		long int *points_covered_by_starter,
 		int nb_points_covered_by_starter,
 		long int *starter, int starter_size,
@@ -720,9 +755,11 @@ public:
 	// i.e., the lines that are not
 	// yet part of the partial packing
 	void compute_live_blocks2(
-			solvers_package::exact_cover *EC, int starter_case,
+			solvers_package::exact_cover *EC,
+			int starter_case,
 		long int *&live_blocks2, int &nb_live_blocks2,
-		long int *points_covered_by_starter, int nb_points_covered_by_starter,
+		long int *points_covered_by_starter,
+		int nb_points_covered_by_starter,
 		long int *starter, int starter_size,
 		int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);

@@ -27,8 +27,10 @@ action_on_orbits::~action_on_orbits()
 {
 }
 
-void action_on_orbits::init(actions::action *A,
-		groups::schreier *Sch, int f_play_it_safe, int verbose_level)
+void action_on_orbits::init(
+		actions::action *A,
+		groups::schreier *Sch,
+		int f_play_it_safe, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -44,7 +46,8 @@ void action_on_orbits::init(actions::action *A,
 		}
 }
 
-long int action_on_orbits::compute_image(int *Elt,
+long int action_on_orbits::compute_image(
+		int *Elt,
 		long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

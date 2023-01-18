@@ -35,8 +35,10 @@ file_io::~file_io()
 
 }
 
-void file_io::concatenate_files(std::string &fname_in_mask, int N,
-		std::string &fname_out, std::string &EOF_marker, int f_title_line,
+void file_io::concatenate_files(
+		std::string &fname_in_mask, int N,
+		std::string &fname_out, std::string &EOF_marker,
+		int f_title_line,
 	int &cnt_total,
 	vector<int> missing_idx,
 	int verbose_level)
@@ -110,8 +112,10 @@ void file_io::concatenate_files(std::string &fname_in_mask, int N,
 	}
 }
 
-void file_io::concatenate_files_into(std::string &fname_in_mask, int N,
-	ofstream &fp_out, std::string &EOF_marker, int f_title_line,
+void file_io::concatenate_files_into(
+		std::string &fname_in_mask, int N,
+	ofstream &fp_out, std::string &EOF_marker,
+	int f_title_line,
 	int &cnt_total,
 	vector<int> &missing_idx,
 	int verbose_level)
@@ -251,7 +255,8 @@ void file_io::poset_classification_read_candidates_of_orbit(
 }
 
 
-void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
+void file_io::read_candidates_for_one_orbit_from_file(
+		std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		long int *S,
 		void (*early_test_func_callback)(long int *S, int len,
@@ -342,7 +347,8 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 
 
 
-int file_io::find_orbit_index_in_data_file(std::string &prefix,
+int file_io::find_orbit_index_in_data_file(
+		std::string &prefix,
 		int level_of_candidates_file, long int *starter,
 		int verbose_level)
 {
@@ -435,7 +441,8 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 }
 
 
-void file_io::write_exact_cover_problem_to_file(int *Inc,
+void file_io::write_exact_cover_problem_to_file(
+		int *Inc,
 		int nb_rows, int nb_cols, std::string &fname)
 {
 	int i, j, d;
@@ -465,7 +472,8 @@ void file_io::write_exact_cover_problem_to_file(int *Inc,
 
 #define BUFSIZE_READ_SOLUTION_FILE ONE_MILLION
 
-void file_io::read_solution_file(std::string &fname,
+void file_io::read_solution_file(
+		std::string &fname,
 	int *Inc, int nb_rows, int nb_cols,
 	int *&Solutions, int &sol_length, int &nb_sol,
 	int verbose_level)
@@ -669,7 +677,8 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 	}
 }
 
-void file_io::count_number_of_solutions_in_file(std::string &fname,
+void file_io::count_number_of_solutions_in_file(
+		std::string &fname,
 	int &nb_solutions,
 	int verbose_level)
 {
@@ -729,7 +738,8 @@ void file_io::count_number_of_solutions_in_file(std::string &fname,
 	}
 }
 
-void file_io::count_number_of_solutions_in_file_by_case(std::string &fname,
+void file_io::count_number_of_solutions_in_file_by_case(
+		std::string &fname,
 	int *&nb_solutions, int *&case_nb, int &nb_cases,
 	int verbose_level)
 {
@@ -829,7 +839,8 @@ void file_io::count_number_of_solutions_in_file_by_case(std::string &fname,
 }
 
 
-void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
+void file_io::read_solutions_from_file_and_get_solution_size(
+		std::string &fname,
 	int &nb_solutions, long int *&Solutions, int &solution_size,
 	int verbose_level)
 {
@@ -906,7 +917,8 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 }
 
 
-void file_io::read_solutions_from_file(std::string &fname,
+void file_io::read_solutions_from_file(
+		std::string &fname,
 	int &nb_solutions, long int *&Solutions, int solution_size,
 	int verbose_level)
 {
@@ -981,8 +993,10 @@ void file_io::read_solutions_from_file(std::string &fname,
 }
 
 
-void file_io::read_solutions_from_file_size_is_known(std::string &fname,
-	std::vector<std::vector<long int> > &Solutions, int solution_size,
+void file_io::read_solutions_from_file_size_is_known(
+		std::string &fname,
+	std::vector<std::vector<long int> > &Solutions,
+	int solution_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1038,7 +1052,8 @@ void file_io::read_solutions_from_file_size_is_known(std::string &fname,
 }
 
 
-void file_io::read_solutions_from_file_by_case(std::string &fname,
+void file_io::read_solutions_from_file_by_case(
+		std::string &fname,
 	int *nb_solutions, int *case_nb, int nb_cases,
 	long int **&Solutions, int solution_size,
 	int verbose_level)
@@ -1142,7 +1157,8 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 	}
 }
 
-void file_io::copy_file_to_ostream(std::ostream &ost, std::string &fname)
+void file_io::copy_file_to_ostream(
+		std::ostream &ost, std::string &fname)
 {
 	//char buf[MY_OWN_BUFSIZE];
 
@@ -1302,7 +1318,8 @@ void file_io::lint_vec_array_write_csv(int nb_vecs, long int **Vec, int len,
 	}
 }
 
-void file_io::int_matrix_write_csv(std::string &fname, int *M, int m, int n)
+void file_io::int_matrix_write_csv(
+		std::string &fname, int *M, int m, int n)
 {
 	int i, j;
 
@@ -1325,7 +1342,8 @@ void file_io::int_matrix_write_csv(std::string &fname, int *M, int m, int n)
 	}
 }
 
-void file_io::lint_matrix_write_csv(std::string &fname, long int *M, int m, int n)
+void file_io::lint_matrix_write_csv(
+		std::string &fname, long int *M, int m, int n)
 {
 	int i, j;
 
@@ -1348,7 +1366,8 @@ void file_io::lint_matrix_write_csv(std::string &fname, long int *M, int m, int 
 	}
 }
 
-void file_io::lint_matrix_write_csv_override_headers(std::string &fname,
+void file_io::lint_matrix_write_csv_override_headers(
+		std::string &fname,
 		std::string *headers, long int *M, int m, int n)
 {
 	int i, j;
@@ -1372,7 +1391,8 @@ void file_io::lint_matrix_write_csv_override_headers(std::string &fname,
 	}
 }
 
-void file_io::vector_matrix_write_csv(std::string &fname,
+void file_io::vector_matrix_write_csv(
+		std::string &fname,
 		std::vector<std::vector<int> > &V)
 {
 	int i, j;
@@ -1433,7 +1453,8 @@ void file_io::double_matrix_write_csv(
 	}
 }
 
-void file_io::int_matrix_write_csv_with_labels(std::string &fname,
+void file_io::int_matrix_write_csv_with_labels(
+		std::string &fname,
 	int *M, int m, int n, const char **column_label)
 {
 	int i, j;
@@ -1457,7 +1478,8 @@ void file_io::int_matrix_write_csv_with_labels(std::string &fname,
 	}
 }
 
-void file_io::lint_matrix_write_csv_with_labels(std::string &fname,
+void file_io::lint_matrix_write_csv_with_labels(
+		std::string &fname,
 	long int *M, int m, int n, const char **column_label)
 {
 	int i, j;
@@ -1481,7 +1503,8 @@ void file_io::lint_matrix_write_csv_with_labels(std::string &fname,
 	}
 }
 
-void file_io::int_matrix_read_csv(std::string &fname,
+void file_io::int_matrix_read_csv(
+		std::string &fname,
 	int *&M, int &m, int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1527,7 +1550,8 @@ void file_io::int_matrix_read_csv(std::string &fname,
 	}
 }
 
-void file_io::int_matrix_read_csv_no_border(std::string &fname,
+void file_io::int_matrix_read_csv_no_border(
+		std::string &fname,
 	int *&M, int &m, int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1571,7 +1595,8 @@ void file_io::int_matrix_read_csv_no_border(std::string &fname,
 	}
 }
 
-void file_io::lint_matrix_read_csv_no_border(std::string &fname,
+void file_io::lint_matrix_read_csv_no_border(
+		std::string &fname,
 	long int *&M, int &m, int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1618,7 +1643,8 @@ void file_io::lint_matrix_read_csv_no_border(std::string &fname,
 	}
 }
 
-void file_io::int_matrix_read_csv_data_column(std::string &fname,
+void file_io::int_matrix_read_csv_data_column(
+		std::string &fname,
 	int *&M, int &m, int &n, int col_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1695,7 +1721,8 @@ void file_io::int_matrix_read_csv_data_column(std::string &fname,
 }
 
 
-void file_io::lint_matrix_read_csv_data_column(std::string &fname,
+void file_io::lint_matrix_read_csv_data_column(
+		std::string &fname,
 	long int *&M, int &m, int &n, int col_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1773,7 +1800,8 @@ void file_io::lint_matrix_read_csv_data_column(std::string &fname,
 }
 
 
-void file_io::lint_matrix_read_csv(std::string &fname,
+void file_io::lint_matrix_read_csv(
+		std::string &fname,
 	long int *&M, int &m, int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1810,7 +1838,8 @@ void file_io::lint_matrix_read_csv(std::string &fname,
 
 }
 
-void file_io::double_matrix_read_csv(std::string &fname,
+void file_io::double_matrix_read_csv(
+		std::string &fname,
 	double *&M, int &m, int &n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1848,7 +1877,8 @@ void file_io::double_matrix_read_csv(std::string &fname,
 }
 
 
-void file_io::read_column_and_parse(std::string &fname, std::string &col_label,
+void file_io::read_column_and_parse(
+		std::string &fname, std::string &col_label,
 		data_structures::set_of_sets *&SoS, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1907,7 +1937,8 @@ void file_io::read_column_and_parse(std::string &fname, std::string &col_label,
 
 
 
-void file_io::int_matrix_write_cas_friendly(std::string &fname, int *M, int m, int n)
+void file_io::int_matrix_write_cas_friendly(
+		std::string &fname, int *M, int m, int n)
 {
 	int i, j;
 
@@ -1932,7 +1963,8 @@ void file_io::int_matrix_write_cas_friendly(std::string &fname, int *M, int m, i
 	}
 }
 
-void file_io::int_matrix_write_text(std::string &fname, int *M, int m, int n)
+void file_io::int_matrix_write_text(
+		std::string &fname, int *M, int m, int n)
 {
 	int i, j;
 
@@ -1949,7 +1981,8 @@ void file_io::int_matrix_write_text(std::string &fname, int *M, int m, int n)
 	}
 }
 
-void file_io::lint_matrix_write_text(std::string &fname, long int *M, int m, int n)
+void file_io::lint_matrix_write_text(
+		std::string &fname, long int *M, int m, int n)
 {
 	int i, j;
 
@@ -1966,7 +1999,8 @@ void file_io::lint_matrix_write_text(std::string &fname, long int *M, int m, int
 	}
 }
 
-void file_io::int_matrix_read_text(std::string &fname, int *&M, int &m, int &n)
+void file_io::int_matrix_read_text(
+		std::string &fname, int *&M, int &m, int &n)
 {
 	int i, j;
 
@@ -1988,8 +2022,10 @@ void file_io::int_matrix_read_text(std::string &fname, int *&M, int &m, int &n)
 	}
 }
 
-void file_io::read_dimacs_graph_format(std::string &fname,
-		int &nb_V, std::vector<std::vector<int>> &Edges, int verbose_level)
+void file_io::read_dimacs_graph_format(
+		std::string &fname,
+		int &nb_V, std::vector<std::vector<int>> &Edges,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b;
@@ -2040,7 +2076,8 @@ void file_io::read_dimacs_graph_format(std::string &fname,
 }
 
 
-void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
+void file_io::parse_sets(
+		int nb_cases, char **data, int f_casenumbers,
 	int *&Set_sizes, long int **&Sets,
 	char **&Ago_ascii, char **&Aut_ascii,
 	int *&Casenumbers,
@@ -2210,7 +2247,8 @@ int file_io::count_number_of_orbits_in_file(
 	return ret;
 }
 
-int file_io::count_number_of_lines_in_file(std::string &fname, int verbose_level)
+int file_io::count_number_of_lines_in_file(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
@@ -2445,7 +2483,8 @@ void file_io::read_and_parse_data_file(
 	}
 }
 
-void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
+void file_io::parse_sets_and_check_sizes_easy(
+		int len, int nb_cases,
 	char **data, long int **&sets)
 {
 	char **Ago_ascii;
@@ -2485,7 +2524,8 @@ void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
 
 }
 
-void file_io::free_data_fancy(int nb_cases,
+void file_io::free_data_fancy(
+		int nb_cases,
 	int *Set_sizes, long int **Sets,
 	char **Ago_ascii, char **Aut_ascii,
 	int *Casenumbers)
@@ -2589,7 +2629,8 @@ void file_io::read_and_parse_data_file_fancy(
 	}
 }
 
-void file_io::read_set_from_file(std::string &fname,
+void file_io::read_set_from_file(
+		std::string &fname,
 	long int *&the_set, int &set_size, int verbose_level)
 // if the file is empty, set_size cannot be determined and is set to 0
 {
@@ -2649,7 +2690,8 @@ void file_io::read_set_from_file(std::string &fname,
 	}
 }
 
-void file_io::write_set_to_file(std::string &fname,
+void file_io::write_set_to_file(
+		std::string &fname,
 	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2680,7 +2722,8 @@ void file_io::write_set_to_file(std::string &fname,
 		}
 }
 
-void file_io::read_set_from_file_lint(std::string &fname,
+void file_io::read_set_from_file_lint(
+		std::string &fname,
 	long int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2728,7 +2771,8 @@ void file_io::read_set_from_file_lint(std::string &fname,
 	}
 }
 
-void file_io::write_set_to_file_lint(std::string &fname,
+void file_io::write_set_to_file_lint(
+		std::string &fname,
 	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2759,7 +2803,8 @@ void file_io::write_set_to_file_lint(std::string &fname,
 	}
 }
 
-void file_io::read_set_from_file_int4(std::string &fname,
+void file_io::read_set_from_file_int4(
+		std::string &fname,
 	long int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2801,7 +2846,8 @@ void file_io::read_set_from_file_int4(std::string &fname,
 	}
 }
 
-void file_io::read_set_from_file_int8(std::string &fname,
+void file_io::read_set_from_file_int8(
+		std::string &fname,
 	long int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2844,7 +2890,8 @@ void file_io::read_set_from_file_int8(std::string &fname,
 	}
 }
 
-void file_io::write_set_to_file_as_int4(std::string &fname,
+void file_io::write_set_to_file_as_int4(
+		std::string &fname,
 	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2891,7 +2938,8 @@ void file_io::write_set_to_file_as_int4(std::string &fname,
 	}
 }
 
-void file_io::write_set_to_file_as_int8(std::string &fname,
+void file_io::write_set_to_file_as_int8(
+		std::string &fname,
 	long int *the_set, int set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2937,7 +2985,8 @@ void file_io::write_set_to_file_as_int8(std::string &fname,
 	}
 }
 
-void file_io::read_k_th_set_from_file(std::string &fname, int k,
+void file_io::read_k_th_set_from_file(
+		std::string &fname, int k,
 	int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2979,7 +3028,8 @@ void file_io::read_k_th_set_from_file(std::string &fname, int k,
 }
 
 
-void file_io::write_incidence_matrix_to_file(std::string &fname,
+void file_io::write_incidence_matrix_to_file(
+		std::string &fname,
 	int *Inc, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3017,8 +3067,10 @@ void file_io::write_incidence_matrix_to_file(std::string &fname,
 
 //#define READ_INCIDENCE_BUFSIZE 1000000
 
-void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
-		std::string &inc_file_name, int inc_file_idx, int verbose_level)
+void file_io::read_incidence_matrix_from_inc_file(
+		int *&M, int &m, int &n,
+		std::string &inc_file_name, int inc_file_idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3124,7 +3176,8 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 }
 
 
-void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
+void file_io::read_incidence_file(
+		std::vector<std::vector<int> > &Geos,
 		int &m, int &n, int &nb_flags,
 		std::string &inc_file_name, int verbose_level)
 {
@@ -3225,7 +3278,8 @@ void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
 }
 
 
-void file_io::read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &Geos,
+void file_io::read_incidence_by_row_ranks_file(
+		std::vector<std::vector<int> > &Geos,
 		int &m, int &n, int &r,
 		std::string &inc_file_name, int verbose_level)
 {
@@ -3420,12 +3474,14 @@ int file_io::inc_file_get_number_of_geometries(
 	return cnt;
 }
 
-long int file_io::file_size(std::string &fname)
+long int file_io::file_size(
+		std::string &fname)
 {
 	return file_size(fname.c_str());
 }
 
-long int file_io::file_size(const char *name)
+long int file_io::file_size(
+		const char *name)
 {
 	//cout << "file_size fname=" << name << endl;
 #ifdef SYSTEMUNIX
@@ -3462,7 +3518,8 @@ long int file_io::file_size(const char *name)
 #endif
 }
 
-void file_io::delete_file(const char *fname)
+void file_io::delete_file(
+		const char *fname)
 {
 	char str[1000];
 
@@ -3496,7 +3553,8 @@ void file_io::fread_uchars(FILE *fp, uchar *p, int len)
 	fread(p, 1 /* size */, len /* items */, fp);
 }
 
-void file_io::read_numbers_from_file(std::string &fname,
+void file_io::read_numbers_from_file(
+		std::string &fname,
 	int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3633,7 +3691,8 @@ void file_io::read_ascii_set_of_sets_constant_size(
 		}
 }
 
-void file_io::write_decomposition_stack(char *fname, int m, int n, int *v, int *b, int *aij, int verbose_level)
+void file_io::write_decomposition_stack(
+		char *fname, int m, int n, int *v, int *b, int *aij, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3672,7 +3731,8 @@ void file_io::write_decomposition_stack(char *fname, int m, int n, int *v, int *
 	}
 }
 
-void file_io::create_file(create_file_description *Descr, int verbose_level)
+void file_io::create_file(
+		create_file_description *Descr, int verbose_level)
 {
 	file_io Fio;
 	int j;
@@ -3830,7 +3890,8 @@ void file_io::fix_escape_characters(char *str)
 	str[j] = 0;
 }
 
-void file_io::create_files(create_file_description *Descr,
+void file_io::create_files(
+		create_file_description *Descr,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3919,7 +3980,8 @@ void file_io::create_files(create_file_description *Descr,
 	}
 }
 
-void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
+void file_io::create_files_list_of_cases(
+		data_structures::spreadsheet *S,
 		create_file_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4078,7 +4140,8 @@ void file_io::create_files_list_of_cases(data_structures::spreadsheet *S,
 	}
 }
 
-int file_io::number_of_vertices_in_colored_graph(std::string &fname, int verbose_level)
+int file_io::number_of_vertices_in_colored_graph(
+		std::string &fname, int verbose_level)
 {
 	graph_theory::colored_graph CG;
 
@@ -4087,7 +4150,8 @@ int file_io::number_of_vertices_in_colored_graph(std::string &fname, int verbose
 	return CG.nb_points;
 }
 
-void file_io::do_csv_file_select_rows(std::string &fname,
+void file_io::do_csv_file_select_rows(
+		std::string &fname,
 		std::string &rows_text,
 		int verbose_level)
 {
@@ -4138,7 +4202,8 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 	}
 }
 
-void file_io::do_csv_file_split_rows_modulo(std::string &fname,
+void file_io::do_csv_file_split_rows_modulo(
+		std::string &fname,
 		int split_modulo,
 		int verbose_level)
 {
@@ -4189,7 +4254,8 @@ void file_io::do_csv_file_split_rows_modulo(std::string &fname,
 	}
 }
 
-void file_io::do_csv_file_select_cols(std::string &fname,
+void file_io::do_csv_file_select_cols(
+		std::string &fname,
 		std::string &cols_text,
 		int verbose_level)
 {
@@ -4262,7 +4328,8 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 
 
 
-void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
+void file_io::do_csv_file_select_rows_and_cols(
+		std::string &fname,
 		std::string &rows_text, std::string &cols_text,
 		int verbose_level)
 {
@@ -4334,7 +4401,8 @@ void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
 }
 
 void file_io::do_csv_file_extract_column_to_txt(
-		std::string &csv_fname, std::string &col_label, int verbose_level)
+		std::string &csv_fname, std::string &col_label,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4431,7 +4499,8 @@ void file_io::do_csv_file_sort_each_row(
 
 void file_io::do_csv_file_join(
 		std::vector<std::string> &csv_file_join_fname,
-		std::vector<std::string> &csv_file_join_identifier, int verbose_level)
+		std::vector<std::string> &csv_file_join_identifier,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4531,7 +4600,8 @@ void file_io::do_csv_file_join(
 }
 
 void file_io::do_csv_file_concatenate(
-		std::vector<std::string> &fname_in, std::string &fname_out, int verbose_level)
+		std::vector<std::string> &fname_in, std::string &fname_out,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4586,7 +4656,8 @@ void file_io::do_csv_file_concatenate(
 }
 
 void file_io::do_csv_file_concatenate_from_mask(
-		std::string &fname_in_mask, int N, std::string &fname_out, int verbose_level)
+		std::string &fname_in_mask, int N, std::string &fname_out,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4653,7 +4724,8 @@ void file_io::do_csv_file_concatenate_from_mask(
 }
 
 
-void file_io::do_csv_file_latex(std::string &fname,
+void file_io::do_csv_file_latex(
+		std::string &fname,
 		int f_produce_latex_header,
 		int nb_lines_per_table,
 		int verbose_level)
@@ -4747,7 +4819,8 @@ void file_io::do_csv_file_latex(std::string &fname,
 	}
 }
 
-void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_level)
+void file_io::read_solutions_and_tally(
+		std::string &fname, int sz, int verbose_level)
 {
 	int nb_solutions;
 	int solution_size = sz;
@@ -4797,7 +4870,9 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 
 }
 
-void file_io::save_fibration(std::vector<std::vector<std::pair<int, int> > > &Fibration, std::string &fname, int verbose_level)
+void file_io::save_fibration(
+		std::vector<std::vector<std::pair<int, int> > > &Fibration,
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4870,7 +4945,8 @@ void file_io::save_fibration(std::vector<std::vector<std::pair<int, int> > > &Fi
 }
 
 
-void file_io::save_cumulative_canonical_labeling(std::vector<std::vector<int> > &Cumulative_canonical_labeling,
+void file_io::save_cumulative_canonical_labeling(
+		std::vector<std::vector<int> > &Cumulative_canonical_labeling,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4911,7 +4987,8 @@ void file_io::save_cumulative_canonical_labeling(std::vector<std::vector<int> > 
 
 }
 
-void file_io::save_cumulative_ago(std::vector<long int> &Cumulative_Ago,
+void file_io::save_cumulative_ago(
+		std::vector<long int> &Cumulative_Ago,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4960,7 +5037,8 @@ void file_io::save_cumulative_ago(std::vector<long int> &Cumulative_Ago,
 
 }
 
-void file_io::save_cumulative_data(std::vector<std::vector<int> > &Cumulative_data,
+void file_io::save_cumulative_data(
+		std::vector<std::vector<int> > &Cumulative_data,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4999,7 +5077,8 @@ void file_io::save_cumulative_data(std::vector<std::vector<int> > &Cumulative_da
 
 }
 
-void file_io::write_characteristic_matrix(std::string &fname,
+void file_io::write_characteristic_matrix(
+		std::string &fname,
 		long int *data, int nb_rows, int data_sz, int nb_cols, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5028,7 +5107,8 @@ void file_io::write_characteristic_matrix(std::string &fname,
 
 }
 
-void file_io::extract_from_makefile(std::string &fname,
+void file_io::extract_from_makefile(
+		std::string &fname,
 		std::string &label,
 		int f_tail, std::string &tail,
 		std::vector<std::string> &text,
@@ -5118,7 +5198,8 @@ void file_io::extract_from_makefile(std::string &fname,
 }
 
 
-void file_io::grade_statistic_from_csv(std::string &fname_csv,
+void file_io::grade_statistic_from_csv(
+		std::string &fname_csv,
 		int f_midterm1, std::string &midterm1_label,
 		int f_midterm2, std::string &midterm2_label,
 		int f_final, std::string &final_label,
@@ -5311,7 +5392,8 @@ void file_io::grade_statistic_from_csv(std::string &fname_csv,
 
 
 void file_io::count_solutions_in_list_of_files(
-		int nb_files, std::string *fname, int *List_of_cases, int *&Nb_sol_per_file,
+		int nb_files, std::string *fname,
+		int *List_of_cases, int *&Nb_sol_per_file,
 		int solution_size,
 		int f_has_final_test_function,
 		int (*final_test_function)(long int *data, int sz,
@@ -5441,7 +5523,8 @@ void file_io::count_solutions_in_list_of_files(
 	}
 }
 
-void file_io::split_by_values(std::string &fname_in, int verbose_level)
+void file_io::split_by_values(
+		std::string &fname_in, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -5490,8 +5573,10 @@ void file_io::split_by_values(std::string &fname_in, int verbose_level)
 	}
 }
 
-void file_io::change_values(std::string &fname_in, std::string &fname_out,
-		std::string &input_values_label, std::string &output_values_label,
+void file_io::change_values(
+		std::string &fname_in, std::string &fname_out,
+		std::string &input_values_label,
+		std::string &output_values_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

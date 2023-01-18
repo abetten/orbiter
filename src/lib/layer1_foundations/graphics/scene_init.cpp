@@ -370,7 +370,8 @@ int scene::line_pt_and_dir(double *x6, double rad, int verbose_level)
 	return ret;
 }
 
-int scene::line_pt_and_dir_and_copy_points(double *x6, double rad, int verbose_level)
+int scene::line_pt_and_dir_and_copy_points(
+		double *x6, double rad, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double pt[6];

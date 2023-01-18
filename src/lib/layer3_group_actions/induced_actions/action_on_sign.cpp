@@ -31,7 +31,8 @@ action_on_sign::~action_on_sign()
 }
 
 
-void action_on_sign::init(actions::action *A, int verbose_level)
+void action_on_sign::init(
+		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -52,7 +53,8 @@ void action_on_sign::init(actions::action *A, int verbose_level)
 		}
 }
 
-long int action_on_sign::compute_image(int *Elt,
+long int action_on_sign::compute_image(
+		int *Elt,
 		long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

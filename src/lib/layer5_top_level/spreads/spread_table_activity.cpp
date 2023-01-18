@@ -29,7 +29,8 @@ spread_table_activity::~spread_table_activity()
 
 
 
-void spread_table_activity::init(spreads::spread_table_activity_description *Descr,
+void spread_table_activity::init(
+		spreads::spread_table_activity_description *Descr,
 		packings::packing_classify *P,
 		int verbose_level)
 {
@@ -225,7 +226,9 @@ void spread_table_activity::perform_activity(int verbose_level)
 }
 
 
-void spread_table_activity::export_spreads_to_csv(std::string &fname, int *spread_idx, int nb, int verbose_level)
+void spread_table_activity::export_spreads_to_csv(
+		std::string &fname,
+		int *spread_idx, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -256,7 +259,8 @@ void spread_table_activity::export_spreads_to_csv(std::string &fname, int *sprea
 	}
 }
 
-void spread_table_activity::report_spreads(int *spread_idx, int nb, int verbose_level)
+void spread_table_activity::report_spreads(
+		int *spread_idx, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

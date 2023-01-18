@@ -3110,7 +3110,8 @@ void semifield_lifting::make_fname_stabilizers(std::string &fname)
 	}
 }
 
-void semifield_lifting::make_fname_deep_search_slice_solutions(std::string &fname,
+void semifield_lifting::make_fname_deep_search_slice_solutions(
+		std::string &fname,
 		int f_out_path, std::string &out_path,
 		int orbit_r, int orbit_m)
 {
@@ -3126,7 +3127,8 @@ void semifield_lifting::make_fname_deep_search_slice_solutions(std::string &fnam
 	}
 }
 
-void semifield_lifting::make_fname_deep_search_slice_success(std::string &fname,
+void semifield_lifting::make_fname_deep_search_slice_success(
+		std::string &fname,
 		int f_out_path, std::string &out_path,
 		int orbit_r, int orbit_m)
 {

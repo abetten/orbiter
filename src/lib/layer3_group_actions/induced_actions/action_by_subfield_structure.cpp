@@ -67,8 +67,10 @@ action_by_subfield_structure::~action_by_subfield_structure()
 		}
 }
 
-void action_by_subfield_structure::init(actions::action &A,
-		field_theory::finite_field *Fq, int verbose_level)
+void action_by_subfield_structure::init(
+		actions::action &A,
+		field_theory::finite_field *Fq,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int p1, h1;
@@ -164,7 +166,8 @@ void action_by_subfield_structure::init(actions::action &A,
 }
 
 long int action_by_subfield_structure::compute_image_int(
-		actions::action &A, int *Elt, long int a, int verbose_level)
+		actions::action &A, int *Elt,
+		long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -197,7 +200,8 @@ long int action_by_subfield_structure::compute_image_int(
 }
 
 void action_by_subfield_structure::compute_image_int_low_level(
-		actions::action &A, int *Elt, int *input, int *output,
+		actions::action &A, int *Elt,
+		int *input, int *output,
 	int verbose_level)
 {
 	int *x = input;

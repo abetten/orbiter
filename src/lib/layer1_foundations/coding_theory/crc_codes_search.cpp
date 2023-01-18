@@ -223,7 +223,8 @@ void crc_codes::search_for_CRC_polynomials_binary(int t,
 }
 
 
-int crc_codes::test_all_two_bit_patterns(int da, int *A,
+int crc_codes::test_all_two_bit_patterns(
+		int da, int *A,
 		int dc, int *C,
 		field_theory::finite_field *F,
 		int verbose_level)
@@ -305,7 +306,8 @@ int crc_codes::test_all_two_bit_patterns(int da, int *A,
 	return true;
 }
 
-int crc_codes::test_all_three_bit_patterns(int da, int *A,
+int crc_codes::test_all_three_bit_patterns(
+		int da, int *A,
 		int dc, int *C,
 		field_theory::finite_field *F,
 		int verbose_level)
@@ -394,7 +396,8 @@ int crc_codes::test_all_three_bit_patterns(int da, int *A,
 	return true;
 }
 
-int crc_codes::test_all_two_bit_patterns_binary(int da, int *A,
+int crc_codes::test_all_two_bit_patterns_binary(
+		int da, int *A,
 		int dc, int *C,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
@@ -470,7 +473,8 @@ int crc_codes::test_all_two_bit_patterns_binary(int da, int *A,
 	return true;
 }
 
-int crc_codes::test_all_three_bit_patterns_binary(int da, int *A,
+int crc_codes::test_all_three_bit_patterns_binary(
+		int da, int *A,
 		int dc, int *C,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
@@ -552,7 +556,8 @@ int crc_codes::test_all_three_bit_patterns_binary(int da, int *A,
 }
 
 
-int crc_codes::remainder_is_nonzero(int da, int *A,
+int crc_codes::remainder_is_nonzero(
+		int da, int *A,
 		int db, int *B, field_theory::finite_field *F)
 // returns true if the remainder of A after division by B is nonzero
 {
@@ -587,7 +592,8 @@ int crc_codes::remainder_is_nonzero(int da, int *A,
 }
 
 
-int crc_codes::remainder_is_nonzero_binary(int da, int *A,
+int crc_codes::remainder_is_nonzero_binary(
+		int da, int *A,
 		int db, int *B)
 // returns true if the remainder of A after division by B is nonzero
 {

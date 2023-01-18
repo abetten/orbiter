@@ -313,7 +313,8 @@ void poset_classification::print_fusion_nodes(int depth)
 }
 
 
-void poset_classification::read_data_file(int &depth_completed,
+void poset_classification::read_data_file(
+		int &depth_completed,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -481,7 +482,7 @@ void poset_classification::write_data_file(int depth_completed,
 }
 
 void poset_classification::write_file(
-		ofstream &fp,
+		std::ofstream &fp,
 		int depth_completed, int verbose_level)
 {
 	orbiter_kernel_system::memory_object *m;
@@ -561,7 +562,7 @@ void poset_classification::write_file(
 }
 
 void poset_classification::read_file(
-		ifstream &fp,
+		std::ifstream &fp,
 		int &depth_completed, int verbose_level)
 {
 	orbiter_kernel_system::memory_object *m;
@@ -829,7 +830,8 @@ void poset_classification::housekeeping(int i,
 	}
 }
 
-void poset_classification::housekeeping_no_data_file(int i,
+void poset_classification::housekeeping_no_data_file(
+		int i,
 		int t0, int verbose_level)
 {
 	int j;
@@ -898,7 +900,8 @@ void poset_classification::housekeeping_no_data_file(int i,
 	}
 }
 
-void poset_classification::create_fname_sv_level_file_binary(std::string &fname,
+void poset_classification::create_fname_sv_level_file_binary(
+		std::string &fname,
 		std::string &fname_base, int level)
 {
 	char str[1000];
@@ -985,7 +988,8 @@ void poset_classification::write_sv_level_file_binary(
 	}
 }
 
-void poset_classification::read_level_file_binary(int level,
+void poset_classification::read_level_file_binary(
+		int level,
 		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1019,7 +1023,8 @@ void poset_classification::read_level_file_binary(int level,
 
 }
 
-void poset_classification::write_level_file_binary(int level,
+void poset_classification::write_level_file_binary(
+		int level,
 		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1073,7 +1078,8 @@ void poset_classification::recover(
 	}
 }
 
-void poset_classification::make_fname_lvl_file_candidates(std::string &fname,
+void poset_classification::make_fname_lvl_file_candidates(
+		std::string &fname,
 		std::string &fname_base, int lvl)
 {
 	char str[1000];
@@ -1084,7 +1090,8 @@ void poset_classification::make_fname_lvl_file_candidates(std::string &fname,
 
 }
 
-void poset_classification::make_fname_lvl_file(std::string &fname,
+void poset_classification::make_fname_lvl_file(
+		std::string &fname,
 		std::string &fname_base, int lvl)
 {
 	char str[1000];
@@ -1095,7 +1102,8 @@ void poset_classification::make_fname_lvl_file(std::string &fname,
 
 }
 
-void poset_classification::make_fname_lvl_reps_file(std::string &fname,
+void poset_classification::make_fname_lvl_reps_file(
+		std::string &fname,
 		std::string &fname_base, int lvl)
 {
 	char str[1000];
@@ -1197,7 +1205,8 @@ void poset_classification::Log_nodes(int cur, int depth,
 }
 #endif
 
-void poset_classification::log_current_node(std::ostream &f, int size)
+void poset_classification::log_current_node(
+		std::ostream &f, int size)
 {
 	//longinteger_object go;
 	int i;

@@ -35,7 +35,8 @@ isomorph_global::~isomorph_global()
 
 }
 
-void isomorph_global::init(actions::action *A_base,
+void isomorph_global::init(
+		actions::action *A_base,
 		actions::action *A,
 		poset_classification::poset_classification *gen,
 		int verbose_level)
@@ -402,7 +403,8 @@ void isomorph_global::classification_graph(
 void isomorph_global::identify(
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
-	int identify_nb_files, std::string *fname, int *Iso_type,
+	int identify_nb_files,
+	std::string *fname, int *Iso_type,
 	int f_save, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -609,8 +611,11 @@ void isomorph_global::identify_table(
 }
 
 void isomorph_global::worker(
-	int size, std::string &prefix_classify, std::string &prefix_iso,
-	void (*work_callback)(isomorph *Iso, void *data, int verbose_level), 
+	int size,
+	std::string &prefix_classify,
+	std::string &prefix_iso,
+	void (*work_callback)(
+			isomorph *Iso, void *data, int verbose_level),
 	void *work_data, 
 	int level, int verbose_level)
 {
@@ -697,7 +702,9 @@ void isomorph_global::worker(
 }
 
 void isomorph_global::compute_down_orbits(
-	int size, std::string &prefix_classify, std::string &prefix,
+	int size,
+	std::string &prefix_classify,
+	std::string &prefix,
 	int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -930,7 +937,8 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 }
 
 void isomorph_global::report_data_in_source_code_inside_tex(
-		isomorph &Iso, const char *prefix,
+		isomorph &Iso,
+		const char *prefix,
 		char *label_of_structure_plural, std::ostream &f,
 		int verbose_level)
 {

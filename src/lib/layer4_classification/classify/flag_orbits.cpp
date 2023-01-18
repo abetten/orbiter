@@ -62,12 +62,16 @@ flag_orbits::~flag_orbits()
 	}
 }
 
-void flag_orbits::init(actions::action *A, actions::action *A2,
+void flag_orbits::init(actions::action *A,
+		actions::action *A2,
 	int nb_primary_orbits_lower, 
 	int pt_representation_sz, int nb_flag_orbits, 
 	int upper_bound_for_number_of_traces,
-	void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level),
-	void (*func_latex_report_trace)(std::ostream &ost, void *trace_result, void *data, int verbose_level),
+	void (*func_to_free_received_trace)(
+			void *trace_result, void *data, int verbose_level),
+	void (*func_latex_report_trace)(
+			std::ostream &ost, void *trace_result,
+			void *data, int verbose_level),
 	void *free_received_trace_data,
 	int verbose_level)
 {

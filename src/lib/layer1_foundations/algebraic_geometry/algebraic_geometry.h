@@ -188,7 +188,8 @@ public:
 
 	cubic_curve();
 	~cubic_curve();
-	void init(field_theory::finite_field *F, int verbose_level);
+	void init(
+			field_theory::finite_field *F, int verbose_level);
 	int compute_system_in_RREF(
 			int nb_pts, long int *pt_list, int verbose_level);
 	void compute_gradient(
@@ -237,7 +238,8 @@ public:
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
-	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void print_equation_with_line_breaks_tex(
+			std::ostream &ost, int *coeffs);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 
@@ -274,7 +276,8 @@ public:
 	void enumerate_points_and_lines(int verbose_level);
 	void create_latex_report(std::string &label,
 			std::string &label_tex, int verbose_level);
-	void report_properties(std::ostream &ost, int verbose_level);
+	void report_properties(
+			std::ostream &ost, int verbose_level);
 	void print_equation(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_all_points_on_surface(std::ostream &ost);
@@ -317,7 +320,8 @@ public:
 	void print_bisecants(std::ostream &ost, int verbose_level);
 	void print_intersections(std::ostream &ost, int verbose_level);
 	void print_conics(std::ostream &ost, int verbose_level);
-	void print_Eckardt_points(std::ostream &ost, int verbose_level);
+	void print_Eckardt_points(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -351,7 +355,8 @@ public:
 	void init_by_rank(int rk);
 	void three_lines(surface_domain *S, int *three_lines);
 	int rank();
-	void unrank(int rk, int &i, int &j, int &k, int &l, int &m, int &n);
+	void unrank(int rk,
+			int &i, int &j, int &k, int &l, int &m, int &n);
 
 };
 
@@ -388,15 +393,21 @@ public:
 
 	quartic_curve_domain();
 	~quartic_curve_domain();
-	void init(field_theory::finite_field *F, int verbose_level);
+	void init(
+			field_theory::finite_field *F,
+			int verbose_level);
 	void init_polynomial_domains(int verbose_level);
-	void print_equation_maple(std::stringstream &ost, int *coeffs);
-	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
-	void print_gradient_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void print_equation_maple(
+			std::stringstream &ost, int *coeffs);
+	void print_equation_with_line_breaks_tex(
+			std::ostream &ost, int *coeffs);
+	void print_gradient_with_line_breaks_tex(
+			std::ostream &ost, int *coeffs);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	void unrank_line_in_dual_coordinates(int *v, long int rk);
-	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
+	void print_lines_tex(
+			std::ostream &ost, long int *Lines, int nb_lines);
 	void compute_points_on_lines(
 			long int *Pts, int nb_points,
 			long int *Lines, int nb_lines,
@@ -550,10 +561,12 @@ public:
 
 	quartic_curve_object();
 	~quartic_curve_object();
-	void init_equation_but_no_bitangents(quartic_curve_domain *Dom,
+	void init_equation_but_no_bitangents(
+			quartic_curve_domain *Dom,
 			int *eqn15,
 			int verbose_level);
-	void init_equation_and_bitangents(quartic_curve_domain *Dom,
+	void init_equation_and_bitangents(
+			quartic_curve_domain *Dom,
 			int *eqn15, long int *bitangents28,
 			int verbose_level);
 	void init_equation_and_bitangents_and_compute_properties(
@@ -849,12 +862,15 @@ public:
 	seventytwo_cases();
 	~seventytwo_cases();
 	void init(
-			surface_domain *Surf, int f, int tritangent_plane_idx,
+			surface_domain *Surf,
+			int f, int tritangent_plane_idx,
 			int *three_lines_idx, long int *three_lines,
 			int line_idx, int m1, int m2, int m3,
 			int line_l1_l2_idx, int l1, int l2);
-	void compute_arc(surface_object *SO, int verbose_level);
-	// We have chosen a tritangent planes and we know the three lines m1, m2, m3 in it.
+	void compute_arc(
+			surface_object *SO, int verbose_level);
+	// We have chosen a tritangent planes
+	// and we know the three lines m1, m2, m3 in it.
 	// The lines l1 and l2 intersect m1 in the first two points.
 	// Computes the 5 transversals to the two lines l1 and l2.
 	// One of these lines must be m1, so we remove that to have 4 lines.
@@ -925,7 +941,8 @@ public:
 	void make_equation_in_trihedral_form(int t_idx,
 		int *F_planes, int *G_planes, int &lambda, int *equation,
 		int verbose_level);
-	void print_equation_in_trihedral_form(std::ostream &ost,
+	void print_equation_in_trihedral_form(
+			std::ostream &ost,
 		int *F_planes, int *G_planes, int lambda);
 	void print_equation_in_trihedral_form_equation_only(
 			std::ostream &ost,
@@ -988,7 +1005,9 @@ public:
 
 	surface_domain();
 	~surface_domain();
-	void init(field_theory::finite_field *F, int verbose_level);
+	void init(
+			field_theory::finite_field *F,
+			int verbose_level);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	void unrank_plane(int *v, long int rk);
@@ -1010,8 +1029,10 @@ public:
 	void wedge_to_klein(int *W, int *K);
 	void klein_to_wedge(int *K, int *W);
 	long int line_to_wedge(long int line_rk);
-	void line_to_wedge_vec(long int *Line_rk, long int *Wedge_rk, int len);
-	void line_to_klein_vec(long int *Line_rk, long int *Klein_rk, int len);
+	void line_to_wedge_vec(
+			long int *Line_rk, long int *Wedge_rk, int len);
+	void line_to_klein_vec(
+			long int *Line_rk, long int *Klein_rk, int len);
 	long int klein_to_wedge(long int klein_rk);
 	void klein_to_wedge_vec(
 			long int *Klein_rk, long int *Wedge_rk, int len);
@@ -1033,7 +1054,8 @@ public:
 			long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
 		// Planes_by_rank[nb_trihedral_pairs * 6]
-	void prepare_system_from_FG(int *F_planes, int *G_planes,
+	void prepare_system_from_FG(
+			int *F_planes, int *G_planes,
 		int lambda, int *&system, int verbose_level);
 	void compute_nine_lines(int *F_planes, int *G_planes,
 		long int *nine_lines, int verbose_level);
@@ -1132,7 +1154,8 @@ public:
 	void rearrange_lines_according_to_a_given_double_six(
 			long int *Lines,
 		long int *New_lines, long int *double_six, int verbose_level);
-	void create_lines_from_plane_equations(int *The_plane_equations,
+	void create_lines_from_plane_equations(
+			int *The_plane_equations,
 		long int *Lines, int verbose_level);
 	void create_remaining_fifteen_lines(
 		long int *double_six, long int *fifteen_lines,
@@ -1156,11 +1179,13 @@ public:
 		long int *Wedge_rk, long int *Line_rk,
 		long int *Klein_rk, int nb_lines,
 		int verbose_level);
-	void print_equation_wrapped(std::ostream &ost, int *the_equation);
-	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
-	void print_one_line_tex(std::ostream &ost,
+	void print_equation_wrapped(
+			std::ostream &ost, int *the_equation);
+	void print_lines_tex(
+			std::ostream &ost, long int *Lines, int nb_lines);
+	void print_one_line_tex(
+			std::ostream &ost,
 			long int *Lines, int nb_lines, int idx);
-	//void alice(std::ostream &ost, long int *Lines, int nb_lines);
 	void print_trihedral_pair_in_dual_coordinates_in_GAP(
 		long int *F_planes_rank, long int *G_planes_rank);
 	void print_basics(std::ostream &ost);
@@ -1168,7 +1193,8 @@ public:
 	void make_table_of_surfaces(int verbose_level);
 	void make_table_of_surfaces_detailed(
 			int *Q_table, int Q_table_len, int verbose_level);
-	void make_table_of_surfaces2(std::ostream &ost,
+	void make_table_of_surfaces2(
+			std::ostream &ost,
 			int *Q_table, int Q_table_len, int verbose_level);
 	void table_top(std::ostream &ost);
 	void table_bottom(std::ostream &ost);
@@ -1327,7 +1353,6 @@ public:
 	int Adj_ij(int i, int j);
 	void compute_plane_type_by_points(int verbose_level);
 
-	//void print_everything(std::ostream &ost, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
 	void report_properties_simple(std::ostream &ost, int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);
@@ -1621,7 +1646,8 @@ public:
 	~web_of_cubic_curves();
 	void init(surface_domain *Surf,
 			long int *arc6, int verbose_level);
-	void compute_web_of_cubic_curves(long int *arc6, int verbose_level);
+	void compute_web_of_cubic_curves(
+			long int *arc6, int verbose_level);
 	void rank_of_foursubsets(int *&rk, int &N, int verbose_level);
 	void create_web_and_equations_based_on_four_tritangent_planes(
 			long int *arc6, int *base_curves4,

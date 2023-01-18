@@ -218,7 +218,8 @@ ostream& btree::print(ostream& ost)
 	return ost;
 }
 
-void btree::init(const char *file_name, int f_duplicatekeys, 
+void btree::init(
+		const char *file_name, int f_duplicatekeys,
 	int btree_idx)
 {
 	m_l_n(11);
@@ -812,7 +813,9 @@ void btree::search_interval_int8_int8_int8_int8(
 	len = idx_max - idx_min;
 }
 
-int btree::search_int8_int8(long int data1, long int data2, int& idx, int verbose_level)
+int btree::search_int8_int8(
+		long int data1, long int data2, int& idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1719,7 +1722,8 @@ void btree::delete_ith(int idx, int verbose_level)
 		}
 }
 
-void btree::Delete(int Node, int& Underflow, int verbose_level)
+void btree::Delete(
+		int Node, int& Underflow, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int x, y, z;
@@ -2013,7 +2017,7 @@ void btree::print_all(ostream& ost)
 	print_range(0, bt_len, ost);
 }
 
-void btree::print_range(int first, int len, ostream& ost)
+void btree::print_range(int first, int len, std::ostream& ost)
 {
 	int i, j, bt_len;
 	KEYTYPE key;
@@ -2036,7 +2040,7 @@ void btree::print_range(int first, int len, ostream& ost)
 		}
 }
 
-void btree::print_page(int x, ostream& ost)
+void btree::print_page(int x, std::ostream& ost)
 {
 	int y;
 	Buffer BF;
@@ -2053,7 +2057,7 @@ void btree::print_page(int x, ostream& ost)
 		}
 }
 
-void btree::page_print(Buffer *BF, ostream& ost)
+void btree::page_print(Buffer *BF, std::ostream& ost)
 {
 	int i, len; //, childs, ref, datref, data_size;
 	ItemTyp *item = NULL;
@@ -2087,7 +2091,7 @@ void btree::page_print(Buffer *BF, ostream& ost)
 	ost << endl;
 }
 
-void btree::item_print(ItemTyp *item, int i, ostream& ost)
+void btree::item_print(ItemTyp *item, int i, std::ostream& ost)
 {
 	int childs, ref, datref, data_size;
 	

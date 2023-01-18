@@ -96,7 +96,8 @@ void poset_classification::report(
 	}
 }
 
-void poset_classification::report2(std::ostream &ost,
+void poset_classification::report2(
+		std::ostream &ost,
 		poset_classification_report_options *Opt,
 		int verbose_level)
 {
@@ -192,7 +193,8 @@ void poset_classification::report2(std::ostream &ost,
 
 }
 
-void poset_classification::report_orbits_in_detail(std::ostream &ost,
+void poset_classification::report_orbits_in_detail(
+		std::ostream &ost,
 		poset_classification_report_options *Opt,
 		int verbose_level)
 {
@@ -238,8 +240,10 @@ void poset_classification::report_orbits_in_detail(std::ostream &ost,
 	}
 }
 
-void poset_classification::report_number_of_orbits_at_level(std::ostream &ost,
-		poset_classification_report_options *Opt, int verbose_level)
+void poset_classification::report_number_of_orbits_at_level(
+		std::ostream &ost,
+		poset_classification_report_options *Opt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -299,8 +303,10 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost,
 
 }
 
-void poset_classification::report_orbits_summary(std::ostream &ost,
-		poset_classification_report_options *Opt, int verbose_level)
+void poset_classification::report_orbits_summary(
+		std::ostream &ost,
+		poset_classification_report_options *Opt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 10);
@@ -529,7 +535,8 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 }
 
 
-void poset_classification::report_poset_of_orbits(std::ostream &ost, int verbose_level)
+void poset_classification::report_poset_of_orbits(
+		std::ostream &ost, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
@@ -625,7 +632,8 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost, int verbose
 }
 
 
-void poset_classification::report_orbit(int level, int orbit_at_level,
+void poset_classification::report_orbit(
+		int level, int orbit_at_level,
 		poset_classification_report_options *Opt,
 		std::ostream &ost, int verbose_level)
 {

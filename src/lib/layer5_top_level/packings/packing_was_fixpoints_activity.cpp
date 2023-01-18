@@ -30,7 +30,8 @@ packing_was_fixpoints_activity::~packing_was_fixpoints_activity()
 
 
 
-void packing_was_fixpoints_activity::init(packing_was_fixpoints_activity_description *Descr,
+void packing_was_fixpoints_activity::init(
+		packing_was_fixpoints_activity_description *Descr,
 		packing_was_fixpoints *PWF,
 		int verbose_level)
 {

@@ -1295,7 +1295,8 @@ void a_domain::matrix_get_kernel_as_row_vectors(
 	}
 }
 
-void a_domain::get_image_and_kernel(int *M,
+void a_domain::get_image_and_kernel(
+		int *M,
 		int n, int &rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1327,7 +1328,8 @@ void a_domain::get_image_and_kernel(int *M,
 	}
 }
 
-void a_domain::complete_basis(int *M, int m, int n, int verbose_level)
+void a_domain::complete_basis(
+		int *M, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_special = FALSE;
@@ -1383,7 +1385,8 @@ void a_domain::complete_basis(int *M, int m, int n, int verbose_level)
 	}
 }
 
-void a_domain::mult_matrix(int *A, int *B, int *C,
+void a_domain::mult_matrix(
+		int *A, int *B, int *C,
 		int ma, int na, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

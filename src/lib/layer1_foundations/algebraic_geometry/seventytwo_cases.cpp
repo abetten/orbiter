@@ -89,7 +89,8 @@ seventytwo_cases::~seventytwo_cases()
 }
 
 void seventytwo_cases::init(
-		surface_domain *Surf, int f, int tritangent_plane_idx,
+		surface_domain *Surf,
+		int f, int tritangent_plane_idx,
 		int *three_lines_idx, long int *three_lines,
 		int line_idx, int m1, int m2, int m3,
 		int line_l1_l2_idx, int l1, int l2)
@@ -113,7 +114,8 @@ void seventytwo_cases::init(
 
 //! Computes the six base points in a tritangent plane associated with the Clebsch map defined by two skew lines.
 /*!
- * We have chosen a tritangent plane and we know the three lines m1, m2, m3 in it.
+ * We have chosen a tritangent plane
+ * and we know the three lines m1, m2, m3 in it.
  * The lines l1 and l2 intersect m1 in the first two points.
  * Computes the 5 transversals to the two lines l1 and l2.
  * One of these lines must be m1, so we remove that to have 4 lines.
@@ -122,7 +124,8 @@ void seventytwo_cases::init(
  * They will be stored in P6[6].
  */
 
-void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
+void seventytwo_cases::compute_arc(
+		surface_object *SO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

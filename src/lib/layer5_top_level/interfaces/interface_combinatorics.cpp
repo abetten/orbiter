@@ -997,7 +997,8 @@ void interface_combinatorics::do_diophant(solvers::diophant_description *Descr, 
 }
 
 void interface_combinatorics::do_diophant_activity(
-		solvers::diophant_activity_description *Descr, int verbose_level)
+		solvers::diophant_activity_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1209,7 +1210,9 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n_file(int n, int verbose
 
 
 
-void interface_combinatorics::do_Delandtsheer_Doyen(apps_combinatorics::delandtsheer_doyen_description *Descr, int verbose_level)
+void interface_combinatorics::do_Delandtsheer_Doyen(
+		apps_combinatorics::delandtsheer_doyen_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

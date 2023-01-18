@@ -34,7 +34,8 @@ group_theoretic_activity::~group_theoretic_activity()
 
 }
 
-void group_theoretic_activity::init_group(group_theoretic_activity_description *Descr,
+void group_theoretic_activity::init_group(
+		group_theoretic_activity_description *Descr,
 		any_group *AG,
 		int verbose_level)
 {
@@ -52,7 +53,8 @@ void group_theoretic_activity::init_group(group_theoretic_activity_description *
 	}
 }
 
-void group_theoretic_activity::init_secondary_group(group_theoretic_activity_description *Descr,
+void group_theoretic_activity::init_secondary_group(
+		group_theoretic_activity_description *Descr,
 		any_group *AG_secondary,
 		int verbose_level)
 {

@@ -576,8 +576,10 @@ int discreta_matrix::is_one()
 }
 
 
-int discreta_matrix::Gauss(int f_special, int f_complete, Vector& base_cols,
-	int f_P, discreta_matrix& P, int verbose_level)
+int discreta_matrix::Gauss(
+		int f_special, int f_complete, Vector& base_cols,
+	int f_P,
+	discreta_matrix& P, int verbose_level)
 // returns the rank
 {
 	int f_v = (verbose_level >= 1);
@@ -1078,8 +1080,10 @@ void discreta_matrix::X_times_id_minus_self()
 		}
 }
 
-void discreta_matrix::smith_normal_form(discreta_matrix& P, discreta_matrix& Pv,
-		discreta_matrix& Q, discreta_matrix& Qv, int verbose_level)
+void discreta_matrix::smith_normal_form(
+		discreta_matrix& P, discreta_matrix& Pv,
+		discreta_matrix& Q, discreta_matrix& Qv,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int m, n, i, j, l, ii, jj, stable;
@@ -1206,7 +1210,8 @@ void discreta_matrix::smith_normal_form(discreta_matrix& P, discreta_matrix& Pv,
 		}
 }
 
-int discreta_matrix::smith_eliminate_column(discreta_matrix& P,
+int discreta_matrix::smith_eliminate_column(
+		discreta_matrix& P,
 		discreta_matrix& Pv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1278,7 +1283,8 @@ int discreta_matrix::smith_eliminate_column(discreta_matrix& P,
 	return action;
 }
 
-int discreta_matrix::smith_eliminate_row(discreta_matrix& Q,
+int discreta_matrix::smith_eliminate_row(
+		discreta_matrix& Q,
 		discreta_matrix& Qv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1534,7 +1540,8 @@ static int gfq_dep(int n, discreta_matrix& A,
 	return f_null;
 }
 
-void discreta_matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
+void discreta_matrix::KX_module_order_ideal(
+		int i, unipoly& mue, int verbose_level)
 // Lueneburg~\cite{Lueneburg87a} p. 105
 // determines the order ideal of $e_i$, the $i$-th unit vector,
 // in the module over the polynomial ring $K[X]$ ($K$ a field), 
@@ -1604,7 +1611,8 @@ void discreta_matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_lev
 		}
 }
 
-void discreta_matrix::KX_module_apply(unipoly& p, Vector& v)
+void discreta_matrix::KX_module_apply(
+		unipoly& p, Vector& v)
 {
 	int i, d;
 	Vector w, ww, vv;
@@ -1624,8 +1632,10 @@ void discreta_matrix::KX_module_apply(unipoly& p, Vector& v)
 	v.swap(w);
 }
 
-void discreta_matrix::KX_module_join(Vector& v1, unipoly& mue1,
-	Vector& v2, unipoly& mue2, Vector& v3, unipoly& mue3,
+void discreta_matrix::KX_module_join(
+		Vector& v1, unipoly& mue1,
+	Vector& v2, unipoly& mue2, Vector& v3,
+	unipoly& mue3,
 	int verbose_level)
 // compare Lueneburg~\cite{Lueneburg87a} p. 106.
 {
@@ -1696,7 +1706,8 @@ void discreta_matrix::KX_module_join(Vector& v1, unipoly& mue1,
 		}
 }
 
-void discreta_matrix::KX_cyclic_module_generator(Vector& v,
+void discreta_matrix::KX_cyclic_module_generator(
+		Vector& v,
 		unipoly& mue, int verbose_level)
 {
 	int f_v = (verbose_level > 1);
@@ -1731,7 +1742,8 @@ void discreta_matrix::KX_cyclic_module_generator(Vector& v,
 	mue1.swap(mue);
 }
 
-void discreta_matrix::KX_module_minpol(unipoly& p,
+void discreta_matrix::KX_module_minpol(
+		unipoly& p,
 		unipoly& m, unipoly& mue, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1824,7 +1836,8 @@ void discreta_matrix::KX_module_minpol(unipoly& p,
 		}
 }
 
-void discreta_matrix::binomial(int n_min, int n_max,
+void discreta_matrix::binomial(
+		int n_min, int n_max,
 		int k_min, int k_max)
 {
 	int i, j, m, n;
@@ -1839,7 +1852,8 @@ void discreta_matrix::binomial(int n_min, int n_max,
 		}
 }
 
-void discreta_matrix::stirling_second(int n_min, int n_max,
+void discreta_matrix::stirling_second(
+		int n_min, int n_max,
 		int k_min, int k_max, int f_ordered)
 {
 	int i, j, m, n;
@@ -1856,7 +1870,8 @@ void discreta_matrix::stirling_second(int n_min, int n_max,
 		}
 }
 
-void discreta_matrix::stirling_first(int n_min, int n_max,
+void discreta_matrix::stirling_first(
+		int n_min, int n_max,
 		int k_min, int k_max, int f_signless)
 {
 	int i, j, m, n;
@@ -1873,7 +1888,8 @@ void discreta_matrix::stirling_first(int n_min, int n_max,
 		}
 }
 
-void discreta_matrix::binomial(int n_min, int n_max,
+void discreta_matrix::binomial(
+		int n_min, int n_max,
 		int k_min, int k_max, int f_inverse)
 {
 	int i, j, m, n;
@@ -2155,7 +2171,8 @@ void discreta_matrix::apply_row_col_perm(permutation &p)
 	swap(M);
 }
 
-void discreta_matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, int f_tex,
+void discreta_matrix::incma_print_ascii_permuted_and_decomposed(
+		std::ostream &ost, int f_tex,
 	Vector & decomp, permutation & p)
 {
 	discreta_matrix M;
@@ -2187,7 +2204,9 @@ void discreta_matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, in
 	M.incma_print_ascii(ost, f_tex, TRUE, row_decomp, TRUE, col_decomp);
 }
 
-void discreta_matrix::print_decomposed(ostream &ost, Vector &row_decomp, Vector &col_decomp)
+void discreta_matrix::print_decomposed(
+		std::ostream &ost,
+		Vector &row_decomp, Vector &col_decomp)
 {
 	discreta_matrix T;
 	int m, n, M, N, i, j, i0, j0, v, h;
@@ -2395,7 +2414,8 @@ void discreta_matrix::incma_print_latex(ostream &f,
 void discreta_matrix::incma_print_latex2(ostream &f,
 	int width, int width_10, 
 	int f_outline_thin, const char *unit_length, 
-	const char *thick_lines, const char *thin_lines, const char *geo_line_width, 
+	const char *thick_lines,
+	const char *thin_lines, const char *geo_line_width,
 	int f_row_decomp, Vector &row_decomp, 
 	int f_col_decomp, Vector &col_decomp, 
 	int f_labelling_points, Vector &point_labels, 
@@ -2528,7 +2548,8 @@ void discreta_matrix::incma_print_latex2(ostream &f,
 	f << "\\end{picture}" << endl;
 }
 
-void discreta_matrix::calc_hash_key(int key_len, hollerith & hash_key, int f_v)
+void discreta_matrix::calc_hash_key(
+		int key_len, hollerith & hash_key, int f_v)
 {
 	int al_len;
 	char *alphabet = NULL;
@@ -3015,7 +3036,8 @@ void discreta_matrix::det(discreta_base & d, int f_v, int f_vv)
 	A.det_modify_input_matrix(d, f_v, f_vv);
 }
 
-void discreta_matrix::det_modify_input_matrix(discreta_base & d, int f_v, int f_vv)
+void discreta_matrix::det_modify_input_matrix(
+		discreta_base & d, int f_v, int f_vv)
 {
 	int rk, i;
 	int f_special = TRUE;

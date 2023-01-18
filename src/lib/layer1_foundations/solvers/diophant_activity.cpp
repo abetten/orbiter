@@ -53,7 +53,8 @@ void diophant_activity::init_from_file(diophant_activity_description *Descr,
 
 }
 
-void diophant_activity::perform_activity(diophant_activity_description *Descr, diophant *Dio,
+void diophant_activity::perform_activity(
+		diophant_activity_description *Descr, diophant *Dio,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

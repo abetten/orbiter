@@ -499,7 +499,8 @@ void orbits_on_polynomials::report(int verbose_level)
 
 }
 
-void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
+void orbits_on_polynomials::report_detailed_list(
+		std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -614,7 +615,8 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 }
 
 
-void orbits_on_polynomials::export_something(std::string &what, int data1,
+void orbits_on_polynomials::export_something(
+		std::string &what, int data1,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

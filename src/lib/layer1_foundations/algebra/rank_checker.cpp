@@ -43,7 +43,9 @@ rank_checker::~rank_checker()
 	//cout << "~rank_checker() finished" << endl;
 }
 
-void rank_checker::init(field_theory::finite_field *GFq, int m, int n, int d)
+void rank_checker::init(
+		field_theory::finite_field *GFq,
+		int m, int n, int d)
 {
 	rank_checker::GFq = GFq;
 	rank_checker::m = m;
@@ -55,7 +57,8 @@ void rank_checker::init(field_theory::finite_field *GFq, int m, int n, int d)
 	set = NEW_int(n);
 }
 
-int rank_checker::check_rank(int len, long int *S, int verbose_level)
+int rank_checker::check_rank(
+		int len, long int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

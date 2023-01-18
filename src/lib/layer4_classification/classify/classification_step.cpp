@@ -40,9 +40,12 @@ classification_step::~classification_step()
 	}
 }
 
-void classification_step::init(actions::action *A, actions::action *A2,
+void classification_step::init(
+		actions::action *A,
+		actions::action *A2,
 	int max_orbits, int representation_sz, 
-	ring_theory::longinteger_object &go, int verbose_level)
+	ring_theory::longinteger_object &go,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -64,7 +67,8 @@ void classification_step::init(actions::action *A, actions::action *A2,
 	}
 }
 
-data_structures_groups::set_and_stabilizer *classification_step::get_set_and_stabilizer(
+data_structures_groups::set_and_stabilizer
+	*classification_step::get_set_and_stabilizer(
 		int orbit_index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -107,7 +111,8 @@ data_structures_groups::set_and_stabilizer *classification_step::get_set_and_sta
 }
 
 
-void classification_step::write_file(ofstream &fp, int verbose_level)
+void classification_step::write_file(
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 1);
@@ -145,8 +150,11 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 	}
 }
 
-void classification_step::read_file(ifstream &fp,
-		actions::action *A, actions::action *A2, ring_theory::longinteger_object &go,
+void classification_step::read_file(
+		std::ifstream &fp,
+		actions::action *A,
+		actions::action *A2,
+		ring_theory::longinteger_object &go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -193,7 +201,8 @@ void classification_step::read_file(ifstream &fp,
 	}
 }
 
-void classification_step::generate_source_code(std::string &fname_base,
+void classification_step::generate_source_code(
+		std::string &fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -224,7 +233,8 @@ void classification_step::generate_source_code(std::string &fname_base,
 }
 
 
-void classification_step::generate_source_code(std::ostream &ost, std::string &prefix,
+void classification_step::generate_source_code(
+		std::ostream &ost, std::string &prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -451,7 +461,8 @@ void classification_step::print_summary(std::ostream &ost)
 
 
 void classification_step::print_latex(std::ostream &ost,
-	std::string &title, int f_print_stabilizer_gens,
+	std::string &title,
+	int f_print_stabilizer_gens,
 	int f_has_print_function,
 	void (*print_function)(std::ostream &ost, int i,
 			classification_step *Step, void *print_function_data),

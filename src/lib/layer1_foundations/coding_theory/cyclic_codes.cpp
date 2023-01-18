@@ -31,8 +31,11 @@ cyclic_codes::~cyclic_codes()
 
 
 void cyclic_codes::make_cyclic_code(int n, int q, int t,
-		int *roots, int nb_roots, int f_poly, std::string &poly,
-		int f_dual, std::string &fname_txt, std::string &fname_csv,
+		int *roots, int nb_roots,
+		int f_poly, std::string &poly,
+		int f_dual,
+		std::string &fname_txt,
+		std::string &fname_csv,
 		int verbose_level)
 // this function creates a finite field, using the given polynomial if necessary
 {
@@ -497,7 +500,8 @@ void cyclic_codes::generator_matrix_cyclic_code(int n,
 	}
 }
 
-void cyclic_codes::print_polynomial(ring_theory::unipoly_domain &Fq,
+void cyclic_codes::print_polynomial(
+		ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *coeffs)
 {
 	int i, f_first = TRUE;
@@ -519,7 +523,8 @@ void cyclic_codes::print_polynomial(ring_theory::unipoly_domain &Fq,
 	}
 }
 
-void cyclic_codes::print_polynomial_tight(std::ostream &ost,
+void cyclic_codes::print_polynomial_tight(
+		std::ostream &ost,
 		ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *coeffs)
 {
@@ -539,10 +544,12 @@ void cyclic_codes::print_polynomial_tight(std::ostream &ost,
 }
 
 
-void cyclic_codes::field_reduction(int n, int q, int p, int e, int m,
+void cyclic_codes::field_reduction(
+		int n, int q, int p, int e, int m,
 		field_theory::finite_field &Fp,
 		ring_theory::unipoly_domain &Fq,
-	int degree, ring_theory::unipoly_object *generator, int *&generator_subfield,
+	int degree, ring_theory::unipoly_object *generator,
+	int *&generator_subfield,
 	int f_poly, std::string &poly,
 	int verbose_level)
 {

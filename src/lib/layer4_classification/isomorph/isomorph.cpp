@@ -73,7 +73,8 @@ isomorph::~isomorph()
 }
 
 void isomorph::init(std::string &prefix,
-		actions::action *A_base, actions::action *A,
+		actions::action *A_base,
+		actions::action *A,
 		poset_classification::poset_classification *gen,
 	int size, int level, 
 	int f_use_database_for_starter, 
@@ -170,9 +171,12 @@ void isomorph::print_node_global(int level, int node_global)
 }
 
 
-void isomorph::init_high_level(actions::action *A,
+void isomorph::init_high_level(
+		actions::action *A,
 		poset_classification::poset_classification *gen,
-	int size, std::string &prefix_classify, std::string &prefix, int level,
+	int size,
+	std::string &prefix_classify,
+	std::string &prefix, int level,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -283,8 +287,10 @@ void isomorph::init_high_level(actions::action *A,
 }
 
 void isomorph::induced_action_on_set_and_kernel(
-	ostream &file, actions::action *A,
-	groups::sims *Stab, int size, long int *set, int verbose_level)
+	ostream &file,
+	actions::action *A,
+	groups::sims *Stab, int size, long int *set,
+	int verbose_level)
 // Used in isomorph_BLT
 {
 	int f_v = (verbose_level >= 1);

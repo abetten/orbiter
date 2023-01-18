@@ -173,7 +173,8 @@ void flag_orbit_folding::init(isomorph *Iso, int verbose_level)
 }
 
 
-void flag_orbit_folding::isomorph_testing(int t0,
+void flag_orbit_folding::isomorph_testing(
+		int t0,
 	int f_play_back, std::string &play_back_file_name,
 	int f_implicit_fusion, int print_mod, int verbose_level)
 // calls do_iso_test
@@ -300,7 +301,8 @@ void flag_orbit_folding::isomorph_testing(int t0,
 	}
 }
 
-void flag_orbit_folding::do_iso_test(int t0, groups::sims *&Stab,
+void flag_orbit_folding::do_iso_test(
+		int t0, groups::sims *&Stab,
 	int f_play_back, ifstream *play_back_file,
 	int &f_eof, int print_mod,
 	int f_implicit_fusion, int verbose_level)
@@ -850,7 +852,8 @@ void flag_orbit_folding::stabilizer_action_init(int verbose_level)
 	}
 }
 
-void flag_orbit_folding::stabilizer_action_add_generator(int *Elt, int verbose_level)
+void flag_orbit_folding::stabilizer_action_add_generator(
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -914,7 +917,8 @@ void flag_orbit_folding::stabilizer_action_add_generator(int *Elt, int verbose_l
 	FREE_int(Elt1);
 }
 
-void flag_orbit_folding::print_statistics_iso_test(int t0, groups::sims *Stab)
+void flag_orbit_folding::print_statistics_iso_test(
+		int t0, groups::sims *Stab)
 // assumes AA and AA_on_k_subsets are set
 {
 	//double progress;
@@ -1541,7 +1545,8 @@ void flag_orbit_folding::print_isomorphism_types(int f_select,
 	Iso->Lifting->close_solution_database(verbose_level - 1);
 }
 
-int flag_orbit_folding::identify_solution_relaxed(long int *set, int *transporter,
+int flag_orbit_folding::identify_solution_relaxed(
+		long int *set, int *transporter,
 	int f_implicit_fusion, int &orbit_no,
 	int &f_failure_to_find_point, int verbose_level)
 // returns the orbit number corresponding to
@@ -1714,7 +1719,8 @@ int flag_orbit_folding::identify_solution_relaxed(long int *set, int *transporte
 }
 
 
-int flag_orbit_folding::identify_solution(long int *set,
+int flag_orbit_folding::identify_solution(
+		long int *set,
 	int *transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
@@ -3082,7 +3088,8 @@ void flag_orbit_folding::handle_event_files(int nb_event_files,
 
 }
 
-void flag_orbit_folding::read_event_file(const char *event_file_name,
+void flag_orbit_folding::read_event_file(
+		const char *event_file_name,
 		int verbose_level)
 {
 	int i;
@@ -3713,7 +3720,8 @@ void flag_orbit_folding::decomposition_matrix(int verbose_level)
 }
 
 
-void flag_orbit_folding::compute_down_link(int *&down_link,
+void flag_orbit_folding::compute_down_link(
+		int *&down_link,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4169,7 +4177,8 @@ void flag_orbit_folding::get_orbit_transversal(
 		}
 }
 
-void flag_orbit_folding::compute_stabilizer(groups::sims *&Stab,
+void flag_orbit_folding::compute_stabilizer(
+		groups::sims *&Stab,
 		int verbose_level)
 // Called from do_iso_test
 {

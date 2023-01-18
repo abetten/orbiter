@@ -45,7 +45,8 @@ action_on_orthogonal::~action_on_orthogonal()
 	}
 }
 
-void action_on_orthogonal::init(actions::action *original_action,
+void action_on_orthogonal::init(
+		actions::action *original_action,
 		orthogonal_geometry::orthogonal *O,
 		int f_on_points,
 		int f_on_lines,
@@ -137,7 +138,8 @@ long int action_on_orthogonal::map_a_point(
 	return j;
 }
 
-long int action_on_orthogonal::map_a_line(int *Elt, long int i, int verbose_level)
+long int action_on_orthogonal::map_a_line(
+		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

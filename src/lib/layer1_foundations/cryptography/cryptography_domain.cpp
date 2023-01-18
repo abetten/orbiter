@@ -60,7 +60,9 @@ cryptography_domain::~cryptography_domain()
 
 }
 
-void cryptography_domain::affine_cipher(std::string &ptext, std::string &ctext, int a, int b)
+void cryptography_domain::affine_cipher(
+		std::string &ptext,
+		std::string &ctext, int a, int b)
 {
 	int i, l, x, y;
 	char *str;
@@ -79,7 +81,8 @@ void cryptography_domain::affine_cipher(std::string &ptext, std::string &ctext, 
 	FREE_char(str);
 }
 
-void cryptography_domain::affine_decipher(std::string &ctext,
+void cryptography_domain::affine_decipher(
+		std::string &ctext,
 		std::string &ptext, std::string &guess)
 // we have ax_1 + b = y_1
 // and     ax_2 + b = y_2
@@ -153,7 +156,8 @@ void cryptography_domain::affine_decipher(std::string &ctext,
 	}
 }
 
-void cryptography_domain::vigenere_cipher(std::string &ptext,
+void cryptography_domain::vigenere_cipher(
+		std::string &ptext,
 		std::string &ctext, std::string &key)
 {
 	int i, j, l, key_len, a, b, c;
@@ -182,7 +186,8 @@ void cryptography_domain::vigenere_cipher(std::string &ptext,
 	FREE_char(str);
 }
 
-void cryptography_domain::vigenere_decipher(std::string &ctext,
+void cryptography_domain::vigenere_decipher(
+		std::string &ctext,
 		std::string &ptext, std::string &key)
 {
 	int i, j, l, key_len, a, b, c;
@@ -211,7 +216,8 @@ void cryptography_domain::vigenere_decipher(std::string &ctext,
 	FREE_char(str);
 }
 
-void cryptography_domain::vigenere_analysis(std::string &ctext)
+void cryptography_domain::vigenere_analysis(
+		std::string &ctext)
 {
 	int stride, l, n, m, j;
 	int mult[100];
@@ -254,7 +260,8 @@ void cryptography_domain::vigenere_analysis(std::string &ctext)
 	}
 }
 
-void cryptography_domain::vigenere_analysis2(std::string &ctext, int key_length)
+void cryptography_domain::vigenere_analysis2(
+		std::string &ctext, int key_length)
 {
 	int i, j, shift, n, m, l, a, h;
 	int mult[100];
@@ -321,7 +328,8 @@ void cryptography_domain::vigenere_analysis2(std::string &ctext, int key_length)
 	}
 }
 
-int cryptography_domain::kasiski_test(std::string &ctext,
+int cryptography_domain::kasiski_test(
+		std::string &ctext,
 		int threshold)
 {
 	int l, i, j, k, u, h, offset;
@@ -399,7 +407,8 @@ int cryptography_domain::kasiski_test(std::string &ctext,
 	return g;
 }
 
-void cryptography_domain::print_candidates(std::string &ctext,
+void cryptography_domain::print_candidates(
+		std::string &ctext,
 		int i, int h, int nb_candidates, int *candidates)
 {
 	int k, j, u;
@@ -433,7 +442,8 @@ void cryptography_domain::print_set(int l, int *s)
 	cout << endl;
 }
 
-void cryptography_domain::print_on_top(std::string &text1,
+void cryptography_domain::print_on_top(
+		std::string &text1,
 		std::string &text2)
 {
 	int i, j, l, l2, lines, line_length;
@@ -464,7 +474,8 @@ void cryptography_domain::print_on_top(std::string &text1,
 	}
 }
 
-void cryptography_domain::decipher(std::string &ctext,
+void cryptography_domain::decipher(
+		std::string &ctext,
 		std::string &ptext, std::string &guess)
 {
 	int i, j, l;
@@ -491,7 +502,8 @@ void cryptography_domain::decipher(std::string &ctext,
 	substition_cipher(ctext, ptext, key);
 }
 
-void cryptography_domain::analyze(std::string &text)
+void cryptography_domain::analyze(
+		std::string &text)
 {
 	int mult[100];
 	int mult2[100];
@@ -507,7 +519,8 @@ void cryptography_domain::analyze(std::string &text)
 	cout << endl;
 }
 
-double cryptography_domain::friedman_index(int *mult, int n)
+double cryptography_domain::friedman_index(
+		int *mult, int n)
 {
 	int i, a = 0, b = n * (n - 1);
 	double d;
@@ -521,7 +534,8 @@ double cryptography_domain::friedman_index(int *mult, int n)
 	return d;
 }
 
-double cryptography_domain::friedman_index_shifted(int *mult, int n, int shift)
+double cryptography_domain::friedman_index_shifted(
+		int *mult, int n, int shift)
 {
 	int i, ii;
 	double a = 0., d;
@@ -584,7 +598,8 @@ void cryptography_domain::print_frequencies(int *mult)
 	}
 }
 
-void cryptography_domain::single_frequencies(std::string &text, int *mult)
+void cryptography_domain::single_frequencies(
+		std::string &text, int *mult)
 {
 	int i, l;
 
@@ -597,7 +612,8 @@ void cryptography_domain::single_frequencies(std::string &text, int *mult)
 	}
 }
 
-void cryptography_domain::single_frequencies2(std::string &text,
+void cryptography_domain::single_frequencies2(
+		std::string &text,
 		int stride, int n, int *mult)
 {
 	int i;
@@ -610,7 +626,8 @@ void cryptography_domain::single_frequencies2(std::string &text,
 	}
 }
 
-void cryptography_domain::double_frequencies(std::string &text, int *mult)
+void cryptography_domain::double_frequencies(
+		std::string &text, int *mult)
 {
 	int i, l;
 
@@ -625,7 +642,8 @@ void cryptography_domain::double_frequencies(std::string &text, int *mult)
 	}
 }
 
-void cryptography_domain::substition_cipher(std::string &ptext,
+void cryptography_domain::substition_cipher(
+		std::string &ptext,
 		std::string &ctext, std::string &key)
 {
 	int i, l;
@@ -723,7 +741,8 @@ void cryptography_domain::get_random_permutation(std::string &p)
 
 
 
-void cryptography_domain::make_affine_sequence(int a, int c, int m,
+void cryptography_domain::make_affine_sequence(
+		int a, int c, int m,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -842,7 +861,8 @@ void cryptography_domain::do_random_last(int random_nb, int verbose_level)
 
 }
 
-void cryptography_domain::do_random(int random_nb,
+void cryptography_domain::do_random(
+		int random_nb,
 		std::string &fname_csv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -877,7 +897,8 @@ void cryptography_domain::do_random(int random_nb,
 
 }
 
-void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
+void cryptography_domain::do_EC_Koblitz_encoding(
+		field_theory::finite_field *F,
 		int EC_b, int EC_c, int EC_s,
 		std::string &pt_text, std::string &EC_message,
 		int verbose_level)
@@ -1120,7 +1141,8 @@ void cryptography_domain::do_EC_Koblitz_encoding(field_theory::finite_field *F,
 	}
 }
 
-void cryptography_domain::do_EC_points(field_theory::finite_field *F,
+void cryptography_domain::do_EC_points(
+		field_theory::finite_field *F,
 		std::string &label,
 		int EC_b, int EC_c,
 		int verbose_level)
@@ -1346,7 +1368,8 @@ void cryptography_domain::do_EC_points(field_theory::finite_field *F,
 	}
 }
 
-int cryptography_domain::EC_evaluate_RHS(field_theory::finite_field *F,
+int cryptography_domain::EC_evaluate_RHS(
+		field_theory::finite_field *F,
 		int EC_b, int EC_c, int x)
 // evaluates x^3 + bx + c
 {
@@ -1360,9 +1383,11 @@ int cryptography_domain::EC_evaluate_RHS(field_theory::finite_field *F,
 }
 
 
-void cryptography_domain::do_EC_add(field_theory::finite_field *F,
+void cryptography_domain::do_EC_add(
+		field_theory::finite_field *F,
 		int EC_b, int EC_c,
-		std::string &pt1_text, std::string &pt2_text,
+		std::string &pt1_text,
+		std::string &pt2_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1489,7 +1514,8 @@ void cryptography_domain::do_EC_cyclic_subgroup(
 
 void cryptography_domain::do_EC_multiple_of(
 		field_theory::finite_field *F,
-		int EC_b, int EC_c, std::string &pt_text, int n,
+		int EC_b, int EC_c,
+		std::string &pt_text, int n,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1542,7 +1568,8 @@ void cryptography_domain::do_EC_multiple_of(
 void cryptography_domain::do_EC_discrete_log(
 		field_theory::finite_field *F,
 		int EC_b, int EC_c,
-		std::string &base_pt_text, std::string &pt_text,
+		std::string &base_pt_text,
+		std::string &pt_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1604,7 +1631,8 @@ void cryptography_domain::do_EC_discrete_log(
 }
 
 void cryptography_domain::do_EC_baby_step_giant_step(
-		field_theory::finite_field *F, int EC_b, int EC_c,
+		field_theory::finite_field *F,
+		int EC_b, int EC_c,
 		std::string &EC_bsgs_G, int EC_bsgs_N,
 		std::string &EC_bsgs_cipher_text,
 		int verbose_level)
@@ -1717,7 +1745,8 @@ void cryptography_domain::do_EC_baby_step_giant_step(
 }
 
 void cryptography_domain::do_EC_baby_step_giant_step_decode(
-		field_theory::finite_field *F, int EC_b, int EC_c,
+		field_theory::finite_field *F,
+		int EC_b, int EC_c,
 		std::string &EC_bsgs_A, int EC_bsgs_N,
 		std::string &EC_bsgs_cipher_text, std::string &EC_bsgs_keys,
 		int verbose_level)
@@ -1841,7 +1870,8 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 
 void cryptography_domain::do_RSA_encrypt_text(
 		long int RSA_d, long int RSA_m,
-		int RSA_block_size, std::string &RSA_encrypt_text,
+		int RSA_block_size,
+		std::string &RSA_encrypt_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1890,8 +1920,11 @@ void cryptography_domain::do_RSA_encrypt_text(
 	}
 }
 
-void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_size,
-		std::string &RSA_text, int verbose_level)
+void cryptography_domain::do_RSA(
+		long int RSA_d,
+		long int RSA_m, int RSA_block_size,
+		std::string &RSA_text,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *data;
@@ -1972,9 +2005,12 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 }
 
 
-void cryptography_domain::NTRU_encrypt(int N, int p,
+void cryptography_domain::NTRU_encrypt(
+		int N, int p,
 		field_theory::finite_field *Fq,
-		std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
+		std::string &H_coeffs,
+		std::string &R_coeffs,
+		std::string &Msg_coeffs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2101,7 +2137,8 @@ void cryptography_domain::NTRU_encrypt(int N, int p,
 }
 
 
-void cryptography_domain::polynomial_center_lift(std::string &A_coeffs,
+void cryptography_domain::polynomial_center_lift(
+		std::string &A_coeffs,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -2173,7 +2210,8 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs,
 }
 
 
-void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs,
+void cryptography_domain::polynomial_reduce_mod_p(
+		std::string &A_coeffs,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -2223,7 +2261,8 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs,
 
 
 
-void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
+void cryptography_domain::do_solovay_strassen(
+		int p, int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2289,7 +2328,8 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 
 }
 
-void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level)
+void cryptography_domain::do_miller_rabin(
+		int p, int nb_times, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2364,7 +2404,8 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 
 }
 
-void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
+void cryptography_domain::do_fermat_test(
+		int p, int nb_times, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2429,8 +2470,11 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 
 }
 
-void cryptography_domain::do_find_pseudoprime(int nb_digits,
-		int nb_fermat, int nb_miller_rabin, int nb_solovay_strassen,
+void cryptography_domain::do_find_pseudoprime(
+		int nb_digits,
+		int nb_fermat,
+		int nb_miller_rabin,
+		int nb_solovay_strassen,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2566,7 +2610,9 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 
 }
 
-void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int verbose_level)
+void cryptography_domain::do_find_strong_pseudoprime(
+		int nb_digits, int nb_fermat, int nb_miller_rabin,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2880,8 +2926,10 @@ void cryptography_domain::quadratic_sieve(int n,
 
 }
 
-void cryptography_domain::calc_log2(std::vector<int> &primes,
-		std::vector<int> &primes_log2, int verbose_level)
+void cryptography_domain::calc_log2(
+		std::vector<int> &primes,
+		std::vector<int> &primes_log2,
+		int verbose_level)
 {
 	int i, l, k;
 
@@ -2892,9 +2940,11 @@ void cryptography_domain::calc_log2(std::vector<int> &primes,
 		}
 }
 
-void cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint(std::string &square_root_a,
+void cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint(
+		std::string &square_root_a,
 		std::string &square_root_mod_n,
-		std::vector<long int> &S, int verbose_level)
+		std::vector<long int> &S,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, a, n;
@@ -3021,7 +3071,8 @@ void cryptography_domain::reduce_primes(std::vector<int> &primes,
 
 void cryptography_domain::do_sift_smooth(int sift_smooth_from,
 		int sift_smooth_len,
-		std::string &sift_smooth_factor_base, int verbose_level)
+		std::string &sift_smooth_factor_base,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *B;
@@ -3067,7 +3118,8 @@ void cryptography_domain::do_sift_smooth(int sift_smooth_from,
 	}
 }
 
-void cryptography_domain::do_discrete_log(long int y, long int a, long int p,
+void cryptography_domain::do_discrete_log(long int y,
+		long int a, long int p,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3241,7 +3293,8 @@ void cryptography_domain::do_smallest_primitive_root_interval(
 }
 
 void cryptography_domain::do_number_of_primitive_roots_interval(
-		long int p_min, long int p_max, int verbose_level)
+		long int p_min, long int p_max,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -3302,7 +3355,8 @@ void cryptography_domain::do_number_of_primitive_roots_interval(
 }
 
 
-void cryptography_domain::do_inverse_mod(long int a, long int n, int verbose_level)
+void cryptography_domain::do_inverse_mod(
+		long int a, long int n, int verbose_level)
 {
 	number_theory::number_theory_domain NT;
 	long int b;
@@ -3321,7 +3375,8 @@ void cryptography_domain::do_inverse_mod(long int a, long int n, int verbose_lev
 	cout << endl;
 }
 
-void cryptography_domain::do_extended_gcd(int a, int b, int verbose_level)
+void cryptography_domain::do_extended_gcd(
+		int a, int b, int verbose_level)
 {
 	{
 		ring_theory::longinteger_domain D;
@@ -3341,8 +3396,10 @@ void cryptography_domain::do_extended_gcd(int a, int b, int verbose_level)
 }
 
 
-void cryptography_domain::do_power_mod(ring_theory::longinteger_object &a,
-		ring_theory::longinteger_object &k, ring_theory::longinteger_object &n,
+void cryptography_domain::do_power_mod(
+		ring_theory::longinteger_object &a,
+		ring_theory::longinteger_object &k,
+		ring_theory::longinteger_object &n,
 		int verbose_level)
 {
 	ring_theory::longinteger_domain D;
@@ -3369,7 +3426,8 @@ void cryptography_domain::do_power_mod(ring_theory::longinteger_object &a,
 void cryptography_domain::calc_roots(
 		ring_theory::longinteger_object &M,
 		ring_theory::longinteger_object &sqrtM,
-	std::vector<int> &primes, std::vector<int> &R1, std::vector<int> &R2,
+	std::vector<int> &primes,
+	std::vector<int> &R1, std::vector<int> &R2,
 	int verbose_level)
 // computes the root of the polynomial
 // $X^2 + a X + b$ over $GF(p)$
@@ -3496,7 +3554,8 @@ void cryptography_domain::Quadratic_Sieve(
 	int f_mod, int mod_n, int mod_r, int x0,
 	int n, ring_theory::longinteger_object &M,
 	ring_theory::longinteger_object &sqrtM,
-	std::vector<int> &primes, std::vector<int> &primes_log2,
+	std::vector<int> &primes,
+	std::vector<int> &primes_log2,
 	std::vector<int> &R1, std::vector<int> &R2,
 	std::vector<int> &X,
 	int verbose_level)
@@ -3567,7 +3626,8 @@ void cryptography_domain::Quadratic_Sieve(
 int cryptography_domain::quadratic_sieve(
 		ring_theory::longinteger_object& M,
 		ring_theory::longinteger_object& sqrtM,
-	std::vector<int> &primes, std::vector<int> &primes_log2,
+	std::vector<int> &primes,
+	std::vector<int> &primes_log2,
 	std::vector<int> &R1, std::vector<int> &R2,
 	int from, int to,
 	int ll, std::vector<int> &X,
@@ -3657,7 +3717,8 @@ int cryptography_domain::quadratic_sieve(
 int cryptography_domain::factor_over_factor_base(
 		ring_theory::longinteger_object &x,
 		std::vector<int> &primes,
-		std::vector<int> &factor_idx, std::vector<int> &factor_exp,
+		std::vector<int> &factor_idx,
+		std::vector<int> &factor_exp,
 		int verbose_level)
 {
 	ring_theory::longinteger_domain D;
@@ -3691,7 +3752,8 @@ int cryptography_domain::factor_over_factor_base(
 
 int cryptography_domain::factor_over_factor_base2(
 		ring_theory::longinteger_object &x,
-		std::vector<int> &primes, std::vector<int> &exponents,
+		std::vector<int> &primes,
+		std::vector<int> &exponents,
 		int verbose_level)
 {
 	ring_theory::longinteger_domain D;
@@ -3774,7 +3836,8 @@ loop:
 }
 
 int cryptography_domain::solovay_strassen_is_prime(
-		ring_theory::longinteger_object &n, int nb_tests,
+		ring_theory::longinteger_object &n,
+		int nb_tests,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4393,7 +4456,8 @@ int cryptography_domain::miller_rabin_test_iterated_with_latex_key(
 		std::ostream &ost,
 		ring_theory::longinteger_object &P, int nb_times,
 		int verbose_level)
-// returns TRUE if the test is conclusive, i.e. if the number is not prime.
+// returns TRUE if the test is conclusive,
+// i.e. if the number is not prime.
 {
 	int f_v = (verbose_level >= 1);
 	int i, ret;
@@ -4468,8 +4532,10 @@ void cryptography_domain::get_k_bit_random_pseudoprime(
 
 void cryptography_domain::RSA_setup(
 		ring_theory::longinteger_object &n,
-		ring_theory::longinteger_object &p, ring_theory::longinteger_object &q,
-		ring_theory::longinteger_object &a, ring_theory::longinteger_object &b,
+		ring_theory::longinteger_object &p,
+		ring_theory::longinteger_object &q,
+		ring_theory::longinteger_object &a,
+		ring_theory::longinteger_object &b,
 	int nb_bits,
 	int nb_tests_solovay_strassen, int f_miller_rabin_test,
 	int verbose_level)
@@ -4542,7 +4608,8 @@ void cryptography_domain::RSA_setup(
 
 void cryptography_domain::do_babystep_giantstep(
 		long int p, long int g, long int h,
-		int f_latex, std::ostream &ost, int verbose_level)
+		int f_latex, std::ostream &ost,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int N, n;

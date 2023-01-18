@@ -57,8 +57,10 @@ action_on_homogeneous_polynomials::~action_on_homogeneous_polynomials()
 	}
 }
 
-void action_on_homogeneous_polynomials::init(actions::action *A,
-		ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level)
+void action_on_homogeneous_polynomials::init(
+		actions::action *A,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;

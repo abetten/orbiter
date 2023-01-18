@@ -368,8 +368,10 @@ public:
 	// computes a^{p^frob_power}
 	int alpha_power(int i);
 	int log_alpha(int i);
-	void addition_table_reordered_save_csv(std::string &fname, int verbose_level);
-	void multiplication_table_reordered_save_csv(std::string &fname, int verbose_level);
+	void addition_table_reordered_save_csv(
+			std::string &fname, int verbose_level);
+	void multiplication_table_reordered_save_csv(
+			std::string &fname, int verbose_level);
 
 };
 
@@ -510,7 +512,9 @@ public:
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
 	void init(finite_field_description *Descr, int verbose_level);
-	void finite_field_init(std::string &q_text, int f_without_tables, int verbose_level);
+	void finite_field_init(
+			std::string &q_text,
+			int f_without_tables, int verbose_level);
 	void check_size(int verbose_level);
 	void finite_field_init_small_order(int q,
 			int f_without_tables, int verbose_level);

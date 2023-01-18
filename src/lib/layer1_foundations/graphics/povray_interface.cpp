@@ -281,7 +281,8 @@ void povray_interface::animation_rotate_around_origin_and_given_vector(
 }
 
 void povray_interface::animation_rotate_xyz(
-	double angle_x_deg, double angle_y_deg, double angle_z_deg, std::ostream &ost)
+	double angle_x_deg, double angle_y_deg, double angle_z_deg,
+	std::ostream &ost)
 {
 	numerics N;
 
@@ -391,7 +392,8 @@ void povray_interface::union_start(std::ostream &ost)
 	ost << "} */" << endl;
 }
 
-void povray_interface::union_end(std::ostream &ost, double scale_factor, double clipping_radius)
+void povray_interface::union_end(std::ostream &ost,
+		double scale_factor, double clipping_radius)
 {
 	ost << endl;
 	ost << " 	scale  " << scale_factor << endl;
@@ -490,7 +492,8 @@ void povray_interface::rotate_111(int h, int nb_frames, std::ostream &fp)
 		v, angle_zero_one, fp);
 }
 
-void povray_interface::rotate_around_z_axis(int h, int nb_frames, std::ostream &fp)
+void povray_interface::rotate_around_z_axis(
+		int h, int nb_frames, std::ostream &fp)
 {
 	//int nb_frames_per_rotation;
 	//nb_frames_per_rotation = nb_frames;
@@ -504,7 +507,8 @@ void povray_interface::rotate_around_z_axis(int h, int nb_frames, std::ostream &
 }
 
 
-void povray_interface::ini(std::ostream &ost, const char *fname_pov,
+void povray_interface::ini(std::ostream &ost,
+		const char *fname_pov,
 	int first_frame, int last_frame)
 {
 	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;

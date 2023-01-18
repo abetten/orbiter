@@ -88,8 +88,11 @@ representatives::~representatives()
 	}
 }
 
-void representatives::init(actions::action *A,
-		int nb_objects, std::string &prefix, int verbose_level)
+void representatives::init(
+		actions::action *A,
+		int nb_objects,
+		std::string &prefix,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

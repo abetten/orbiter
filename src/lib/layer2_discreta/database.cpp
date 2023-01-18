@@ -81,12 +81,14 @@ ostream& database::print(ostream& ost)
 	return ost;
 }
 
-void database::init(const char *filename, int objectkind, int f_compress)
+void database::init(
+		const char *filename, int objectkind, int f_compress)
 {
 	init_with_file_type(filename, objectkind, f_compress, DB_FILE_TYPE_STANDARD);
 }
 
-void database::init_with_file_type(const char *filename, 
+void database::init_with_file_type(
+		const char *filename,
 	int objectkind, int f_compress, int file_type)
 {
 	m_l(8);
@@ -253,7 +255,8 @@ int database::size_of_header_log()
 	
 }
 
-void database::add_object_return_datref(Vector &the_object, uint_4 &datref, int verbose_level)
+void database::add_object_return_datref(
+		Vector &the_object, uint_4 &datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -322,7 +325,8 @@ void database::add_object_return_datref(Vector &the_object, uint_4 &datref, int 
 	}
 }
 
-void database::add_object(Vector &the_object, int verbose_level)
+void database::add_object(
+		Vector &the_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	uint_4 datref;
@@ -336,7 +340,8 @@ void database::add_object(Vector &the_object, int verbose_level)
 	}
 }
 
-void database::delete_object(Vector& the_object, 
+void database::delete_object(
+		Vector& the_object,
 	uint_4 datref, int verbose_level)
 {
 	int i, j, len;
@@ -371,7 +376,8 @@ void database::delete_object(Vector& the_object,
 	free_data_DB(datref, size, verbose_level - 2);
 }
 
-void database::get_object(uint_4 datref,
+void database::get_object(
+		uint_4 datref,
 	Vector &the_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -387,7 +393,8 @@ void database::get_object(uint_4 datref,
 	get_object(&data_type, the_object, verbose_level - 1);
 }
 
-void database::get_object(DATATYPE *data_type, Vector &the_object, 
+void database::get_object(
+		DATATYPE *data_type, Vector &the_object,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -496,7 +503,8 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 	delete [] d;
 }
 
-void database::get_object_by_unique_int8(int btree_idx, int id,
+void database::get_object_by_unique_int8(
+		int btree_idx, int id,
 	Vector& the_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -514,7 +522,8 @@ void database::get_object_by_unique_int8(int btree_idx, int id,
 	get_object(datref, the_object, verbose_level - 1);
 }
 
-int database::get_object_by_unique_int8_if_there(int btree_idx, int id,
+int database::get_object_by_unique_int8_if_there(
+		int btree_idx, int id,
 	Vector& the_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -538,14 +547,16 @@ int database::get_object_by_unique_int8_if_there(int btree_idx, int id,
 	return TRUE;
 }
 
-long int database::get_highest_int8(int btree_idx)
+long int database::get_highest_int8(
+		int btree_idx)
 {
 	btree & B = btree_access_i(btree_idx);
 	
 	return B.get_highest_int8();
 }
 
-void database::ith_object(int i, int btree_idx, 
+void database::ith_object(
+		int i, int btree_idx,
 	Vector& the_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -559,7 +570,8 @@ void database::ith_object(int i, int btree_idx,
 	get_object(&data_type, the_object, verbose_level - 1);
 }
 
-void database::ith(int i, int btree_idx, 
+void database::ith(
+		int i, int btree_idx,
 	KEYTYPE *key_type, DATATYPE *data_type, 
 	int verbose_level)
 {
@@ -572,7 +584,8 @@ void database::ith(int i, int btree_idx,
 	bt.ith(i, key_type, data_type, verbose_level);
 }
 
-void database::print_by_btree(int btree_idx, ostream& ost)
+void database::print_by_btree(
+		int btree_idx, ostream& ost)
 {
 	btree&B = btree_access_i(btree_idx);
 	int i, len;
@@ -589,7 +602,8 @@ void database::print_by_btree(int btree_idx, ostream& ost)
 	close(verbose_level);
 }
 
-void database::print_by_btree_with_datref(int btree_idx, ostream& ost)
+void database::print_by_btree_with_datref(
+		int btree_idx, ostream& ost)
 {
 	btree &B = btree_access_i(btree_idx);
 	int i, len;
@@ -612,7 +626,8 @@ void database::print_by_btree_with_datref(int btree_idx, ostream& ost)
 	close(verbose_level);
 }
 
-void database::print_subset(Vector& datrefs, ostream& ost)
+void database::print_subset(
+		Vector& datrefs, ostream& ost)
 {
 	int i, len;
 	Vector the_object;
@@ -625,7 +640,8 @@ void database::print_subset(Vector& datrefs, ostream& ost)
 		}
 }
 
-void database::extract_subset(Vector& datrefs, char *out_path, int verbose_level)
+void database::extract_subset(
+		Vector& datrefs, char *out_path, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
@@ -662,7 +678,8 @@ void database::extract_subset(Vector& datrefs, char *out_path, int verbose_level
 	D.close(verbose_level - 1);
 }
 
-void database::search_int8(int btree_idx, long int imin, long int imax,
+void database::search_int8(
+		int btree_idx, long int imin, long int imax,
 	Vector &datrefs, int verbose_level)
 {
 	Vector Btree_idx, Imin, Imax;
@@ -695,7 +712,8 @@ void database::search_int8_2dimensional(
 	search_int8_multi_dimensional(Btree_idx, Imin, Imax, datrefs, verbose_level);
 }
 
-void database::search_int8_multi_dimensional(Vector& btree_idx,
+void database::search_int8_multi_dimensional(
+		Vector& btree_idx,
 	Vector& i_min, Vector &i_max, Vector& datrefs, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -809,7 +827,8 @@ void database::search_int8_multi_dimensional(Vector& btree_idx,
 }
 
 
-int database::get_size_from_datref(uint_4 datref, int verbose_level)
+int database::get_size_from_datref(
+		uint_4 datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int size;
@@ -865,7 +884,8 @@ int database::get_size_from_datref(uint_4 datref, int verbose_level)
 	return size;
 }
 
-void database::add_data_DB(void *d, 
+void database::add_data_DB(
+		void *d,
 	int size, uint_4 *datref, int verbose_level)
 {
 	if (file_type() == DB_FILE_TYPE_STANDARD) {
@@ -876,7 +896,8 @@ void database::add_data_DB(void *d,
 	}
 }
 
-void database::add_data_DB_standard(void *d, 
+void database::add_data_DB_standard(
+		void *d,
 	int size, uint_4 *datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -967,7 +988,8 @@ void database::add_data_DB_standard(void *d,
 	delete [] data2;
 }
 
-void database::add_data_DB_compact(void *d, 
+void database::add_data_DB_compact(
+		void *d,
 	int size, uint_4 *datref, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1034,7 +1056,8 @@ void database::add_data_DB_compact(void *d,
 	delete [] data2;
 }
 
-void database::free_data_DB(uint_4 datref, int size, int verbose_level)
+void database::free_data_DB(
+		uint_4 datref, int size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

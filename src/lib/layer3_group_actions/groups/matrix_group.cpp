@@ -97,7 +97,8 @@ matrix_group::~matrix_group()
 }
 
 void matrix_group::init_projective_group_label(int n,
-		field_theory::finite_field *F, int f_semilinear, int f_special,
+		field_theory::finite_field *F,
+		int f_semilinear, int f_special,
 		actions::action *A,
 		std::string &label,
 		std::string &label_tex,
@@ -1061,7 +1062,8 @@ void matrix_group::general_linear_action_from_the_right(
 }
 
 void matrix_group::substitute_surface_equation(int *Elt,
-		int *coeff_in, int *coeff_out, algebraic_geometry::surface_domain *Surf,
+		int *coeff_in, int *coeff_out,
+		algebraic_geometry::surface_domain *Surf,
 		int verbose_level)
 // used in arc_lifting.cpp, surface_classify_wedge.cpp,
 // surface_create.cpp, create_surface_main.cpp, intersection.cpp
@@ -1796,7 +1798,8 @@ void matrix_group::GL_print_latex(int *Elt, std::ostream &ost)
 
 void matrix_group::GL_print_latex_with_print_point_function(int *Elt,
 		std::ostream &ost,
-		void (*point_label)(std::stringstream &sstr, int pt, void *data),
+		void (*point_label)(
+				std::stringstream &sstr, int pt, void *data),
 		void *point_label_data)
 {
 	cout << "matrix_group::GL_print_latex_with_print_point_function nyi" << endl;
@@ -1863,7 +1866,8 @@ void matrix_group::GL_print_easy_latex(int *Elt, std::ostream &ost)
 
 }
 
-void matrix_group::GL_print_easy_latex_with_option_numerical(int *Elt, int f_numerical, std::ostream &ost)
+void matrix_group::GL_print_easy_latex_with_option_numerical(
+		int *Elt, int f_numerical, std::ostream &ost)
 {
     int i, j, a;
     //int w;

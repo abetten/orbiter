@@ -26,7 +26,9 @@ action_on_bricks::~action_on_bricks()
 {
 }
 
-void action_on_bricks::init(actions::action *A, combinatorics::brick_domain *B,
+void action_on_bricks::init(
+		actions::action *A,
+		combinatorics::brick_domain *B,
 	int f_linear_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -61,7 +63,8 @@ long int action_on_bricks::compute_image(int *Elt,
 	return j;
 }
 
-long int action_on_bricks::compute_image_linear_action(int *Elt,
+long int action_on_bricks::compute_image_linear_action(
+		int *Elt,
 		long int i, int verbose_level)
 {
 	//verbose_level = 3; // !!!

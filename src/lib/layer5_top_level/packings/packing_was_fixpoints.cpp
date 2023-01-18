@@ -45,9 +45,11 @@ packing_was_fixpoints::~packing_was_fixpoints()
 {
 }
 
-void packing_was_fixpoints::init(packing_was *PW,
+void packing_was_fixpoints::init(
+		packing_was *PW,
 		int fixpoint_clique_size,
-		poset_classification::poset_classification_control *Control,
+		poset_classification::poset_classification_control
+			*Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -229,7 +231,8 @@ void packing_was_fixpoints::action_on_fixpoints(int verbose_level)
 
 void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 		int clique_size,
-		poset_classification::poset_classification_control *Control,
+		poset_classification::poset_classification_control
+			*Control,
 		int verbose_level)
 // initializes the orbit transversal Fixp_cliques
 // initializes Cliques[nb_cliques * clique_size]
@@ -383,7 +386,8 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 		int clique_size,
-		poset_classification::poset_classification_control *Control,
+		poset_classification::poset_classification_control
+			*Control,
 		int verbose_level)
 // compute cliques on fixpoint graph using A_on_fixpoints
 // orbit representatives will be stored in Cliques[nb_cliques * clique_size]
@@ -531,7 +535,8 @@ groups::strong_generators *packing_was_fixpoints::get_stabilizer(int idx)
 	return Fixp_cliques->Reps[idx].Strong_gens;
 }
 
-void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose_level)
+void packing_was_fixpoints::print_packing(
+		long int *packing, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -696,7 +701,8 @@ void packing_was_fixpoints::report(int verbose_level)
 	}
 }
 
-void packing_was_fixpoints::report2(std::ostream &ost, /*packing_long_orbits *L,*/ int verbose_level)
+void packing_was_fixpoints::report2(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

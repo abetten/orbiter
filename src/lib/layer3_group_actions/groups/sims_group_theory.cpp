@@ -416,7 +416,8 @@ void sims::transitive_extension_using_generators(
 }
 
 
-void sims::point_stabilizer_stabchain_with_action(actions::action *A2,
+void sims::point_stabilizer_stabchain_with_action(
+		actions::action *A2,
 		sims &S, int pt, int verbose_level)
 // first computes the orbit of the point pt in action A2
 // under the generators
@@ -1916,7 +1917,8 @@ long int sims::invert_by_rank(long int rk_a, int verbose_level)
 	return rk_b;
 }
 
-long int sims::conjugate_by_rank(long int rk_a, long int rk_b,
+long int sims::conjugate_by_rank(
+		long int rk_a, long int rk_b,
 		int verbose_level)
 // computes b^{-1} * a * b
 {

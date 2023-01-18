@@ -51,11 +51,15 @@ public:
 
 	andre_construction();
 	~andre_construction();
-	void init(field_theory::finite_field *F, int k, long int *spread_elements_numeric,
+	void init(
+			field_theory::finite_field *F,
+			int k, long int *spread_elements_numeric,
 		int verbose_level);
-	void points_on_line(andre_construction_line_element *Line, 
+	void points_on_line(
+			andre_construction_line_element *Line,
 		int *pts_on_line, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -114,7 +118,8 @@ public:
 
 	andre_construction_line_element();
 	~andre_construction_line_element();
-	void init(andre_construction *Andre, int verbose_level);
+	void init(
+			andre_construction *Andre, int verbose_level);
 	void unrank(int line_rank, int verbose_level);
 	int rank(int verbose_level);
 	int make_affine_point(int idx, int verbose_level);
@@ -533,9 +538,12 @@ public:
 
 	flag();
 	~flag();
-	void init(int n, int *type, int type_len, field_theory::finite_field *F,
+	void init(
+			int n, int *type, int type_len,
+			field_theory::finite_field *F,
 		int verbose_level);
-	void init_recursion(int n, int *type, int type_len, int idx, 
+	void init_recursion(
+			int n, int *type, int type_len, int idx,
 			field_theory::finite_field *F, int verbose_level);
 	void unrank(long int rk, int *subspace, int verbose_level);
 	void unrank_recursion(long int rk, int *subspace, int verbose_level);
@@ -768,14 +776,20 @@ public:
 	long int nb_PG_elements_not_in_subspace(int n, int m, int q);
 	long int nb_AG_elements(int n, int q);
 	long int nb_affine_lines(int n, int q);
-	long int AG_element_rank(int q, int *v, int stride, int len);
-	void AG_element_unrank(int q, int *v, int stride, int len, long int a);
-	int AG_element_next(int q, int *v, int stride, int len);
-	void AG_element_rank_longinteger(int q, int *v, int stride, int len,
+	long int AG_element_rank(
+			int q, int *v, int stride, int len);
+	void AG_element_unrank(
+			int q, int *v, int stride, int len, long int a);
+	int AG_element_next(
+			int q, int *v, int stride, int len);
+	void AG_element_rank_longinteger(
+			int q, int *v, int stride, int len,
 			ring_theory::longinteger_object &a);
-	void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
+	void AG_element_unrank_longinteger(
+			int q, int *v, int stride, int len,
 			ring_theory::longinteger_object &a);
-	int PG_element_modified_is_in_subspace(int n, int m, int *v);
+	int PG_element_modified_is_in_subspace(
+			int n, int m, int *v);
 	int test_if_arc(field_theory::finite_field *Fq,
 			int *pt_coords, int *set,
 			int set_sz, int k, int verbose_level);
@@ -846,16 +860,19 @@ public:
 			std::string &point,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
-	void do_cheat_sheet_hermitian(field_theory::finite_field *F,
+	void do_cheat_sheet_hermitian(
+			field_theory::finite_field *F,
 			int projective_dimension,
 			int verbose_level);
 	// creates a hermitian object
 	void do_create_desarguesian_spread(
-			field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+			field_theory::finite_field *FQ,
+			field_theory::finite_field *Fq,
 			int m,
 			int verbose_level);
 	// creates field_theory::subfield_structure and desarguesian_spread objects
-	void create_decomposition_of_projective_plane(std::string &fname_base,
+	void create_decomposition_of_projective_plane(
+			std::string &fname_base,
 			projective_space *P,
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
@@ -1061,31 +1078,41 @@ public:
 
 	grassmann();
 	~grassmann();
-	void init(int n, int k, field_theory::finite_field *F, int verbose_level);
+	void init(int n, int k,
+			field_theory::finite_field *F, int verbose_level);
 	long int nb_of_subspaces(int verbose_level);
 	void print_single_generator_matrix_tex(std::ostream &ost, long int a);
 	void print_single_generator_matrix_tex_numerical(
 			std::ostream &ost, long int a);
 	void print_set(long int *v, int len);
-	void print_set_tex(std::ostream &ost, long int *v, int len, int verbose_level);
-	void print_set_tex_with_perp(std::ostream &ost, long int *v, int len);
+	void print_set_tex(std::ostream &ost,
+			long int *v, int len, int verbose_level);
+	void print_set_tex_with_perp(
+			std::ostream &ost, long int *v, int len);
 	int nb_points_covered(int verbose_level);
 	void points_covered(long int *the_points, int verbose_level);
 	void unrank_lint_here(int *Mtx, long int rk, int verbose_level);
 	long int rank_lint_here(int *Mtx, int verbose_level);
-	void unrank_embedded_subspace_lint(long int rk, int verbose_level);
+	void unrank_embedded_subspace_lint(
+			long int rk, int verbose_level);
 	long int rank_embedded_subspace_lint(int verbose_level);
-	void unrank_embedded_subspace_lint_here(int *Basis, long int rk, int verbose_level);
+	void unrank_embedded_subspace_lint_here(
+			int *Basis, long int rk, int verbose_level);
 	void unrank_lint(long int rk, int verbose_level);
 	long int rank_lint(int verbose_level);
-	void unrank_longinteger_here(int *Mtx, ring_theory::longinteger_object &rk,
+	void unrank_longinteger_here(int *Mtx,
+			ring_theory::longinteger_object &rk,
 		int verbose_level);
-	void rank_longinteger_here(int *Mtx, ring_theory::longinteger_object &rk,
+	void rank_longinteger_here(int *Mtx,
+			ring_theory::longinteger_object &rk,
 		int verbose_level);
-	void unrank_longinteger(ring_theory::longinteger_object &rk, int verbose_level);
-	void rank_longinteger(ring_theory::longinteger_object &r, int verbose_level);
+	void unrank_longinteger(
+			ring_theory::longinteger_object &rk, int verbose_level);
+	void rank_longinteger(
+			ring_theory::longinteger_object &r, int verbose_level);
 	void print();
-	int dimension_of_join(long int rk1, long int rk2, int verbose_level);
+	int dimension_of_join(
+			long int rk1, long int rk2, int verbose_level);
 	void unrank_lint_here_and_extend_basis(int *Mtx, long int rk,
 		int verbose_level);
 		// Mtx must be n x n
@@ -1102,14 +1129,16 @@ public:
 		int spread_size, int verbose_level);
 	void latex_matrix(std::ostream &ost, int *p);
 	void latex_matrix_numerical(std::ostream &ost, int *p);
-	void create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level);
+	void create_Schlaefli_graph(
+			int *&Adj, int &sz, int verbose_level);
 	long int make_special_element_zero(int verbose_level);
 	long int make_special_element_one(int verbose_level);
 	long int make_special_element_infinity(int verbose_level);
 	void make_identity_front(int *M, int verbose_level);
 	void make_identity_back(int *M, int verbose_level);
 	void copy_matrix_back(int *A, int *M, int verbose_level);
-	void extract_matrix_from_back(int *A, int *M, int verbose_level);
+	void extract_matrix_from_back(
+			int *A, int *M, int verbose_level);
 	void make_spread_from_spread_set(
 			long int *Spread_set, int sz,
 			long int *&Spread, int &spread_sz,
@@ -1120,7 +1149,8 @@ public:
 			int verbose_level);
 	void make_partition(long int *Spread, int spread_sz,
 			long int *&Part, int &s, int verbose_level);
-	void make_spread_element(int *Spread_element, int *A, int verbose_level);
+	void make_spread_element(
+			int *Spread_element, int *A, int verbose_level);
 	void cheat_sheet_subspaces(std::ostream &f, int verbose_level);
 	void Pluecker_coordinates(
 		int line_rk, int *v6, int verbose_level);
@@ -1130,7 +1160,8 @@ public:
 	void klein_correspondence(
 			projective_space *P3,
 			//projective_space *P5,
-		long int *set_in, int set_size, long int *set_out, int verbose_level);
+		long int *set_in, int set_size,
+		long int *set_out, int verbose_level);
 		// Computes the Pluecker coordinates
 		// for a set of lines in PG(3,q) in the following order:
 		// (x_1,x_2,x_3,x_4,x_5,x_6) =
@@ -1232,11 +1263,13 @@ public:
 	
 	hermitian();
 	~hermitian();
-	void init(field_theory::finite_field *F, int nb_vars, int verbose_level);
+	void init(field_theory::finite_field *F,
+			int nb_vars, int verbose_level);
 	int nb_points();
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
-	void list_of_points_embedded_in_PG(long int *&Pts, int &nb_pts,
+	void list_of_points_embedded_in_PG(
+			long int *&Pts, int &nb_pts,
 		int verbose_level);
 	void list_all_N(int verbose_level);
 	void list_all_N1(int verbose_level);
@@ -1276,7 +1309,8 @@ public:
 
 	hjelmslev();
 	~hjelmslev();
-	void init(ring_theory::finite_ring *R, int n, int k, int verbose_level);
+	void init(ring_theory::finite_ring *R,
+			int n, int k, int verbose_level);
 	long int number_of_submodules();
 	void unrank_lint(int *M, long int rk, int verbose_level);
 	long int rank_lint(int *M, int verbose_level);
@@ -2084,20 +2118,26 @@ public:
 		// otherwise, 0 is returned.
 	int count_RC(data_structures::partitionstack &P, int row_cell, int col_cell);
 	int count_CR(data_structures::partitionstack &P, int col_cell, int row_cell);
-	int count_RC_representative(data_structures::partitionstack &P,
+	int count_RC_representative(
+			data_structures::partitionstack &P,
 		int row_cell, int row_cell_pt, int col_cell);
-	int count_CR_representative(data_structures::partitionstack &P,
+	int count_CR_representative(
+			data_structures::partitionstack &P,
 		int col_cell, int col_cell_pt, int row_cell);
-	int count_pairs_RRC(data_structures::partitionstack &P,
+	int count_pairs_RRC(
+			data_structures::partitionstack &P,
 			int row_cell1, int row_cell2, int col_cell);
-	int count_pairs_CCR(data_structures::partitionstack &P,
+	int count_pairs_CCR(
+			data_structures::partitionstack &P,
 			int col_cell1, int col_cell2, int row_cell);
-	int count_pairs_RRC_representative(data_structures::partitionstack &P,
+	int count_pairs_RRC_representative(
+			data_structures::partitionstack &P,
 			int row_cell1, int row_cell_pt, int row_cell2, int col_cell);
 		// returns the number of joinings from a point of
 		// row_cell1 to elements of row_cell2 within col_cell
 		// if that number exists, -1 otherwise
-	int count_pairs_CCR_representative(data_structures::partitionstack &P,
+	int count_pairs_CCR_representative(
+			data_structures::partitionstack &P,
 			int col_cell1, int col_cell_pt, int col_cell2, int row_cell);
 		// returns the number of joinings from a point of
 		// col_cell1 to elements of col_cell2 within row_cell
@@ -2140,7 +2180,10 @@ public:
 
 	points_and_lines();
 	~points_and_lines();
-	void init(projective_space *P, std::vector<long int> &Points, int verbose_level);
+	void init(
+			projective_space *P,
+			std::vector<long int> &Points,
+			int verbose_level);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	void print_all_points(std::ostream &ost);
@@ -2235,28 +2278,41 @@ public:
 
 	projective_space_reporting();
 	~projective_space_reporting();
-	void init(projective_space *P, int verbose_level);
+	void init(
+			projective_space *P, int verbose_level);
 	void create_latex_report(
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
-	void report_summary(std::ostream &ost);
-	void report(std::ostream &ost,
+	void report_summary(
+			std::ostream &ost);
+	void report(
+			std::ostream &ost,
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
-	void report_subspaces_of_dimension(std::ostream &ost,
+	void report_subspaces_of_dimension(
+			std::ostream &ost,
 			int vs_dimension, int verbose_level);
-	void cheat_sheet_points(std::ostream &f, int verbose_level);
-	void cheat_polarity(std::ostream &f, int verbose_level);
-	void cheat_sheet_point_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
-	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
-	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
-	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
+	void cheat_sheet_points(
+			std::ostream &f, int verbose_level);
+	void cheat_polarity(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_point_table(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_points_on_lines(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_lines_on_points(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_line_intersection(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_line_through_pairs_of_points(
+			std::ostream &f,
 		int verbose_level);
 	void print_set_numerical(
 			std::ostream &ost, long int *set, int set_size);
-	void print_set(long int *set, int set_size);
-	void print_line_set_numerical(long int *set, int set_size);
+	void print_set(
+			long int *set, int set_size);
+	void print_line_set_numerical(
+			long int *set, int set_size);
 	void print_set_of_points(
 			std::ostream &ost, long int *Pts, int nb_pts);
 	void print_all_points();
@@ -2278,7 +2334,9 @@ public:
 
 	grassmann *Grass_lines;
 	grassmann *Grass_planes; // if n > 2
-	grassmann *Grass_hyperplanes; // if n > 2 (for n=3, planes and hyperplanes are the same thing)
+	grassmann *Grass_hyperplanes;
+		// if n > 2 (for n=3, planes and
+		// hyperplanes are the same thing)
 
 	grassmann **Grass_stack; // [n + 1]
 
@@ -2289,7 +2347,8 @@ public:
 	int q;
 	long int N_points, N_lines;
 	long int *Nb_subspaces;  // [n + 1]
-		// Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
+		// Nb_subspaces[i]
+		// = generalized_binomial(n + 1, i + 1, q);
 		// N_points = Nb_subspaces[0]
 		// N_lines = Nb_subspaces[1];
 
@@ -2313,18 +2372,24 @@ public:
 
 	projective_space();
 	~projective_space();
-	void projective_space_init(int n, field_theory::finite_field *F,
+	void projective_space_init(
+			int n, field_theory::finite_field *F,
 		int f_init_incidence_structure, 
 		int verbose_level);
 	void init_incidence_structure(int verbose_level);
 	void init_polarity(int verbose_level);
-	void intersect_with_line(long int *set, int set_sz,
-			int line_rk, long int *intersection, int &sz, int verbose_level);
-	void create_points_on_line(long int line_rk, long int *line,
+	void intersect_with_line(
+			long int *set, int set_sz,
+			int line_rk,
+			long int *intersection, int &sz,
+			int verbose_level);
+	void create_points_on_line(
+			long int line_rk, long int *line,
 		int verbose_level);
 		// needs line[k]
 	void create_lines_on_point(
-		long int point_rk, long int *line_pencil, int verbose_level);
+		long int point_rk,
+		long int *line_pencil, int verbose_level);
 	void create_lines_on_point_but_inside_a_plane(
 		long int point_rk, long int plane_rk,
 		long int *line_pencil, int verbose_level);
@@ -2340,20 +2405,25 @@ public:
 	void incidence_m_ii(int pt, int line, int a);
 	void make_incidence_structure_and_partition(
 		incidence_structure *&Inc, 
-		data_structures::partitionstack *&Stack, int verbose_level);
+		data_structures::partitionstack *&Stack,
+		int verbose_level);
 	void incma_for_type_ij(
 		int row_type, int col_type,
 		int *&Incma, int &nb_rows, int &nb_cols,
 		int verbose_level);
-		// row_type, col_type are the vector space dimensions of the objects
+		// row_type, col_type are the vector space
+		// dimensions of the objects
 		// indexing rows and columns.
 	int incidence_test_for_objects_of_type_ij(
 		int type_i, int type_j, int i, int j,
 		int verbose_level);
 	void points_on_line(long int line_rk,
-			long int *&the_points, int &nb_points, int verbose_level);
-	void points_covered_by_plane(long int plane_rk,
-			long int *&the_points, int &nb_points, int verbose_level);
+			long int *&the_points,
+			int &nb_points, int verbose_level);
+	void points_covered_by_plane(
+			long int plane_rk,
+			long int *&the_points,
+			int &nb_points, int verbose_level);
 	void incidence_and_stack_for_type_ij(
 		int row_type, int col_type,
 		incidence_structure *&Inc,
@@ -2368,16 +2438,23 @@ public:
 	void unrank_lines(int *v, long int *Rk, int nb);
 	long int rank_plane(int *basis);
 	void unrank_plane(int *basis, long int rk);
-	long int line_through_two_points(long int p1, long int p2);
-	int test_if_lines_are_disjoint(long int l1, long int l2);
-	int test_if_lines_are_disjoint_from_scratch(long int l1, long int l2);
-	int intersection_of_two_lines(long int l1, long int l2);
+	long int line_through_two_points(
+			long int p1, long int p2);
+	int test_if_lines_are_disjoint(
+			long int l1, long int l2);
+	int test_if_lines_are_disjoint_from_scratch(
+			long int l1, long int l2);
+	int intersection_of_two_lines(
+			long int l1, long int l2);
 	
-	int determine_line_in_plane(long int *two_input_pts,
+	int determine_line_in_plane(
+			long int *two_input_pts,
 		int *three_coeffs, 
 		int verbose_level);
-	int conic_test(long int *S, int len, int pt, int verbose_level);
-	int test_if_conic_contains_point(int *six_coeffs, int pt);
+	int conic_test(
+			long int *S, int len, int pt, int verbose_level);
+	int test_if_conic_contains_point(
+			int *six_coeffs, int pt);
 	int determine_conic_in_plane(
 			long int *input_pts, int nb_pts,
 			int *six_coeffs,
@@ -2390,7 +2467,8 @@ public:
 			int nb_pts, long int *Pts, int *coeff10,
 			int verbose_level);
 
-	void determine_quadric_in_solid(long int *nine_pts_or_more, int nb_pts,
+	void determine_quadric_in_solid(
+			long int *nine_pts_or_more, int nb_pts,
 		int *ten_coeffs, int verbose_level);
 	void conic_points_brute_force(int *six_coeffs, 
 		long int *points, int &nb_points, int verbose_level);
@@ -2403,9 +2481,11 @@ public:
 		long int *tangents, int verbose_level);
 
 
-	void line_intersection_type(long int *set, int set_size, int *type,
+	void line_intersection_type(
+			long int *set, int set_size, int *type,
 		int verbose_level);
-	void line_intersection_type_basic(long int *set, int set_size, int *type,
+	void line_intersection_type_basic(
+			long int *set, int set_size, int *type,
 		int verbose_level);
 		// type[N_lines]
 	void line_intersection_type_basic_given_a_set_of_lines(
@@ -2420,44 +2500,54 @@ public:
 			long int *point_rks, int nb_points,
 			long int *plane_rks, int nb_planes,
 			int *&M, int verbose_level);
-	void plane_intersection_type_basic(long int *set, int set_size,
+	void plane_intersection_type_basic(
+			long int *set, int set_size,
 		int *type, int verbose_level);
 		// type[N_planes]
-	void hyperplane_intersection_type_basic(long int *set, int set_size,
+	void hyperplane_intersection_type_basic(
+			long int *set, int set_size,
 		int *type, int verbose_level);
 		// type[N_hyperplanes]
-	void line_intersection_type_collected(long int *set, int set_size,
+	void line_intersection_type_collected(
+			long int *set, int set_size,
 		int *type_collected, int verbose_level);
 		// type[set_size + 1]
-	void point_types_of_line_set(long int *set_of_lines, int set_size,
+	void point_types_of_line_set(
+			long int *set_of_lines, int set_size,
 		int *type, int verbose_level);
 	void point_types_of_line_set_int(
 		int *set_of_lines, int set_size,
 		int *type, int verbose_level);
-	void find_external_lines(long int *set, int set_size,
+	void find_external_lines(
+			long int *set, int set_size,
 		long int *external_lines, int &nb_external_lines,
 		int verbose_level);
-	void find_tangent_lines(long int *set, int set_size,
+	void find_tangent_lines(
+			long int *set, int set_size,
 		long int *tangent_lines, int &nb_tangent_lines,
 		int verbose_level);
 	void find_secant_lines(
 			long int *set, int set_size,
 			long int *secant_lines, int &nb_secant_lines,
 		int verbose_level);
-	void find_k_secant_lines(long int *set, int set_size, int k,
+	void find_k_secant_lines(
+			long int *set, int set_size, int k,
 		long int *secant_lines, int &nb_secant_lines,
 		int verbose_level);
-	void Baer_subline(long int *pts3, long int *&pts, int &nb_pts,
+	void Baer_subline(
+			long int *pts3, long int *&pts, int &nb_pts,
 		int verbose_level);
 
 	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
 	void export_incidence_matrix_to_csv(int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
-	void compute_decomposition(data_structures::partitionstack *S1,
+	void compute_decomposition(
+			data_structures::partitionstack *S1,
 			data_structures::partitionstack *S2,
 			incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack, int verbose_level);
+			data_structures::partitionstack *&Stack,
+			int verbose_level);
 	void compute_decomposition_based_on_tally(
 			data_structures::tally *T1,
 			data_structures::tally *T2,
@@ -2468,7 +2558,8 @@ public:
 			long int rk_in, long int &rk_out, int verbose_level);
 
 	// projective_space2.cpp:
-	int determine_hermitian_form_in_plane(int *pts, int nb_pts, 
+	int determine_hermitian_form_in_plane(
+			int *pts, int nb_pts,
 		int *six_coeffs, int verbose_level);
 	void circle_type_of_line_subset(int *pts, int nb_pts, 
 		int *circle_type, int verbose_level);
@@ -2478,7 +2569,8 @@ public:
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
 	void intersection_of_subspace_with_point_set_rank_is_longinteger(
-		grassmann *G, ring_theory::longinteger_object &rk, long int *set, int set_size,
+		grassmann *G, ring_theory::longinteger_object &rk,
+		long int *set, int set_size,
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
 	void plane_intersection_invariant(
@@ -2494,7 +2586,8 @@ public:
 	void plane_intersections(
 			grassmann *G,
 		long int *set, int set_size,
-		ring_theory::longinteger_object *&R, data_structures::set_of_sets &SoS,
+		ring_theory::longinteger_object *&R,
+		data_structures::set_of_sets &SoS,
 		int verbose_level);
 	void plane_intersection_type_fast(
 			grassmann *G,
@@ -2508,24 +2601,29 @@ public:
 		int s,
 		std::vector<int> &plane_ranks,
 		int verbose_level);
-	void plane_intersection(int plane_rank,
+	void plane_intersection(
+			int plane_rank,
 			long int *set, int set_size,
 			std::vector<int> &point_indices,
 			std::vector<int> &point_local_coordinates,
 			int verbose_level);
-	void line_intersection(int line_rank,
+	void line_intersection(
+			int line_rank,
 			long int *set, int set_size,
 			std::vector<int> &point_indices,
 			int verbose_level);
-	void conic_type_randomized(int nb_times, 
+	void conic_type_randomized(
+			int nb_times,
 		long int *set, int set_size,
 		long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
 		int verbose_level);
-	void conic_intersection_type(int f_randomized, int nb_times, 
+	void conic_intersection_type(
+			int f_randomized, int nb_times,
 		long int *set, int set_size,
 		int threshold,
 		int *&intersection_type, int &highest_intersection_number, 
-		int f_save_largest_sets, data_structures::set_of_sets *&largest_sets,
+		int f_save_largest_sets,
+		data_structures::set_of_sets *&largest_sets,
 		int verbose_level);
 	void determine_nonconical_six_subsets(
 		long int *set, int set_size,
@@ -2534,15 +2632,19 @@ public:
 	void conic_type(
 		long int *set, int set_size,
 		int threshold,
-		long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
+		long int **&Pts_on_conic,
+		int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
 		int verbose_level);
 	void find_nucleus(int *set, int set_size, int &nucleus, 
 		int verbose_level);
-	void points_on_projective_triangle(long int *&set, int &set_size,
+	void points_on_projective_triangle(
+			long int *&set, int &set_size,
 		long int *three_points, int verbose_level);
-	void line_plane_incidence_matrix_restricted(long int *Lines, int nb_lines,
+	void line_plane_incidence_matrix_restricted(
+			long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);
-	int test_if_lines_are_skew(int line1, int line2, int verbose_level);
+	int test_if_lines_are_skew(
+			int line1, int line2, int verbose_level);
 	int point_of_intersection_of_a_line_and_a_line_in_three_space(
 		long int line1,
 		long int line2, int verbose_level);
@@ -2590,7 +2692,8 @@ public:
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
 	void planes_through_line(long int *Lines, int nb_lines,
-			long int *&Plane_ranks, int &nb_planes_on_one_line, int verbose_level);
+			long int *&Plane_ranks,
+			int &nb_planes_on_one_line, int verbose_level);
 
 
 };
@@ -2673,23 +2776,36 @@ public:
 	void print_points(long int *pts, int len);
 	void print_elements();
 	void print_elements_and_points();
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int check_function(int len, long int *S, int verbose_level);
-	int incremental_check_function(int len, long int *S, int verbose_level);
-	void compute_dual_spread(int *spread, int *dual_spread,
+	int check_function(
+			int len, long int *S, int verbose_level);
+	int incremental_check_function(
+			int len, long int *S, int verbose_level);
+	void compute_dual_spread(
+			int *spread, int *dual_spread,
 		int verbose_level);
-	void print(std::ostream &ost, int len, long int *S);
-	void czerwinski_oakden(int level, int verbose_level);
-	void write_spread_to_file(int type_of_spread, int verbose_level);
-	void make_spread(long int *data, int type_of_spread, int verbose_level);
-	void make_spread_from_q_clan(long int *data, int type_of_spread,
+	void print(
+			std::ostream &ost, int len, long int *S);
+	void czerwinski_oakden(
+			int level, int verbose_level);
+	void write_spread_to_file(
+			int type_of_spread, int verbose_level);
+	void make_spread(
+			long int *data, int type_of_spread,
+			int verbose_level);
+	void make_spread_from_q_clan(
+			long int *data, int type_of_spread,
 		int verbose_level);
-	void read_and_print_spread(std::string &fname, int verbose_level);
-	void HMO(std::string &fname, int verbose_level);
-	void print_spread(std::ostream &ost, long int *data, int sz);
+	void read_and_print_spread(
+			std::string &fname, int verbose_level);
+	void HMO(
+			std::string &fname, int verbose_level);
+	void print_spread(
+			std::ostream &ost, long int *data, int sz);
 
 };
 
@@ -2782,15 +2898,19 @@ public:
 			long int *set1, int sz1,
 			long int *set2, int sz2,
 			int verbose_level);
-	int test_if_set_of_spreads_is_line_disjoint(long int *set, int len);
-	int test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(long int *set, int len);
-	void make_exact_cover_problem(solvers::diophant *&Dio,
+	int test_if_set_of_spreads_is_line_disjoint(
+			long int *set, int len);
+	int test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
+			long int *set, int len);
+	void make_exact_cover_problem(
+			solvers::diophant *&Dio,
 			long int *live_point_index, int nb_live_points,
 			long int *live_blocks, int nb_live_blocks,
 			int nb_needed,
 			int verbose_level);
 	void compute_list_of_lines_from_packing(
-			long int *list_of_lines, long int *packing, int sz_of_packing,
+			long int *list_of_lines,
+			long int *packing, int sz_of_packing,
 			int verbose_level);
 	// list_of_lines[sz_of_packing * spread_size]
 	void compute_iso_type_invariant(
@@ -2824,20 +2944,24 @@ public:
 		// number of absolute lines of W(3,q)
 		// = number of points on Q(4,q)
 	int *Lines; // [nb_lines]
-		// Lines[] is a list of all absolute lines of the symplectic polarity
+		// Lines[] is a list of all absolute lines
+		// of the symplectic polarity
 		// as lines in PG(3,q)
 
 	int *Q4_rk; // [nb_lines]
 	int *Line_idx; // [nb_lines]
 		// Q4_rk[] and Line_idx[] are inverse permutations
-		// for a line a, Q4_rk[a] is the point b on the quadric corresponding to it.
-		// For a quadric point b, Line_idx[b] is the line index a corresponding to it
+		// for a line a, Q4_rk[a] is the point b
+		// on the quadric corresponding to it.
+		// For a quadric point b, Line_idx[b] is the line
+		// index a corresponding to it
 
 	int v5[5];
 
 	W3q();
 	~W3q();
-	void init(field_theory::finite_field *F, int verbose_level);
+	void init(
+			field_theory::finite_field *F, int verbose_level);
 	void find_lines(int verbose_level);
 	void print_lines();
 	int evaluate_symplectic_form(int *x4, int *y4);

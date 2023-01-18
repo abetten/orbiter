@@ -24,7 +24,8 @@ class invariants_packing {
 public:
 	spreads::spread_classify *T;
 	packing_classify *P;
-	isomorph::isomorph *Iso; // the classification of packings
+	isomorph::isomorph *Iso;
+		// the classification of packings
 
 
 	packing_invariants *Inv;
@@ -45,10 +46,13 @@ public:
 
 	invariants_packing();
 	~invariants_packing();
-	void init(isomorph::isomorph *Iso, packing_classify *P, int verbose_level);
+	void init(
+			isomorph::isomorph *Iso,
+			packing_classify *P, int verbose_level);
 	void compute_dual_packings(
 			isomorph::isomorph *Iso, int verbose_level);
-	void make_table(isomorph::isomorph *Iso, std::ostream &ost,
+	void make_table(
+			isomorph::isomorph *Iso, std::ostream &ost,
 		int f_only_self_dual,
 		int f_only_not_self_dual,
 		int verbose_level);
@@ -112,10 +116,13 @@ public:
 			int verbose_level);
 	void init(
 			projective_geometry::projective_space_with_action *PA,
-			spreads::spread_table_with_selection *Spread_table_with_selection,
+			spreads::spread_table_with_selection
+				*Spread_table_with_selection,
 			int f_lexorder_test,
 			int verbose_level);
-	void init2(poset_classification::poset_classification_control *Control, int verbose_level);
+	void init2(
+			poset_classification::poset_classification_control *Control,
+			int verbose_level);
 	void init_P3_and_P5_and_Gr(int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
@@ -123,7 +130,8 @@ public:
 			int verbose_level);
 	void compute(int search_depth, int verbose_level);
 	void lifting_prepare_function_new(
-			solvers_package::exact_cover *E, int starter_case,
+			solvers_package::exact_cover *E,
+			int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
 		solvers::diophant *&Dio, long int *&col_labels,
@@ -144,33 +152,51 @@ public:
 
 	// packing2.cpp
 	void compute_klein_invariants(
-			isomorph::isomorph *Iso, int f_split, int split_r, int split_m,
+			isomorph::isomorph *Iso,
+			int f_split, int split_r, int split_m,
 			int verbose_level);
-	void compute_dual_spreads(isomorph::isomorph *Iso, int verbose_level);
-	void klein_invariants_fname(std::string &fname, std::string &prefix, int iso_cnt);
-	void compute_and_save_klein_invariants(std::string &prefix,
+	void klein_invariants_fname(
+			std::string &fname,
+			std::string &prefix, int iso_cnt);
+	void compute_and_save_klein_invariants(
+			std::string &prefix,
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
-	void report(isomorph::isomorph *Iso, int verbose_level);
-	void report_whole(isomorph::isomorph *Iso, std::ostream &ost, int verbose_level);
-	void report_title_page(isomorph::isomorph *Iso, std::ostream &ost, int verbose_level);
-	void report_packings_by_ago(isomorph::isomorph *Iso, std::ostream &ost,
+	void report(
+			isomorph::isomorph *Iso, int verbose_level);
+	void report_whole(
+			isomorph::isomorph *Iso,
+			std::ostream &ost, int verbose_level);
+	void report_title_page(
+			isomorph::isomorph *Iso,
+			std::ostream &ost, int verbose_level);
+	void report_packings_by_ago(
+			isomorph::isomorph *Iso,
+			std::ostream &ost,
 		invariants_packing *inv,
-		data_structures::tally &C_ago, int verbose_level);
-	void report_isomorphism_type(isomorph::isomorph *Iso, std::ostream &ost,
+		data_structures::tally &C_ago,
+		int verbose_level);
+	void report_isomorphism_type(
+			isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_packing_as_table(isomorph::isomorph *Iso, std::ostream &ost,
+	void report_packing_as_table(
+			isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, long int *list_of_lines,
 		int verbose_level);
-	void report_klein_invariants(isomorph::isomorph *Iso, std::ostream &ost,
+	void report_klein_invariants(
+			isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
-	void report_stabilizer(isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+	void report_stabilizer(
+			isomorph::isomorph &Iso, std::ostream &ost, int orbit,
 			int verbose_level);
-	void report_stabilizer_in_action(isomorph::isomorph &Iso,
+	void report_stabilizer_in_action(
+			isomorph::isomorph &Iso,
 			std::ostream &ost, int orbit, int verbose_level);
-	void report_stabilizer_in_action_gap(isomorph::isomorph &Iso,
+	void report_stabilizer_in_action_gap(
+			isomorph::isomorph &Iso,
 			int orbit, int verbose_level);
-	void report_extra_stuff(isomorph::isomorph *Iso, std::ostream &ost,
+	void report_extra_stuff(
+			isomorph::isomorph *Iso, std::ostream &ost,
 			int verbose_level);
 };
 
@@ -224,7 +250,9 @@ public:
 	packing_invariants();
 	~packing_invariants();
 	void init(packing_classify *P,
-			std::string &prefix, std::string &prefix_tex, int iso_cnt,
+			std::string &prefix,
+			std::string &prefix_tex,
+			int iso_cnt,
 		long int *the_packing, int verbose_level);
 	void init_klein_invariants(Vector &v, int verbose_level);
 	void compute_decomposition(int verbose_level);
@@ -309,8 +337,11 @@ public:
 			packing_long_orbits_description *Descr,
 			int verbose_level);
 	void list_of_cases_from_file(int verbose_level);
-	void save_packings_by_case(std::string &fname_packings,
-			std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level);
+	void save_packings_by_case(
+			std::string &fname_packings,
+			std::vector<std::vector<std::vector<int> > >
+				&Packings_by_case,
+			int verbose_level);
 	void process_single_case(
 			std::vector<std::vector<int> > &Packings_classified,
 			std::vector<std::vector<int> > &Packings,
@@ -325,7 +356,8 @@ public:
 	void create_graph_and_save_to_file(
 			graph_theory::colored_graph *&CG,
 			std::string &fname,
-			int f_has_user_data, long int *user_data, int user_data_size,
+			int f_has_user_data,
+			long int *user_data, int user_data_size,
 			int verbose_level);
 	void create_graph_on_long_orbits(
 			graph_theory::colored_graph *&CG,
@@ -470,7 +502,8 @@ public:
 
 	packing_was_fixpoints_activity();
 	~packing_was_fixpoints_activity();
-	void init(packing_was_fixpoints_activity_description *Descr,
+	void init(
+			packing_was_fixpoints_activity_description *Descr,
 			packing_was_fixpoints *PWF,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -492,18 +525,25 @@ public:
 	std::string fname_fixp_graph;
 	std::string fname_fixp_graph_cliques;
 	int fixpoints_idx;
-		// index of orbits of length 1 in reduced_spread_orbits_under_H
+		// index of orbits of length 1
+		// in reduced_spread_orbits_under_H
 	actions::action *A_on_fixpoints;
-		// A_on_reduced_spread_orbits->create_induced_action_by_restriction(
-		// reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
-		// reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
+		// A_on_reduced_spread_orbits->
+		// create_induced_action_by_restriction(
+		// reduced_spread_orbits_under_H->
+		// Orbits_classified->Set_size[fixpoints_idx],
+		// reduced_spread_orbits_under_H->
+		// Orbits_classified->Sets[fixpoints_idx])
 
 	graph_theory::colored_graph *fixpoint_graph;
-	poset_classification::poset_with_group_action *Poset_fixpoint_cliques;
-	poset_classification::poset_classification *fixpoint_clique_gen;
+	poset_classification::poset_with_group_action
+		*Poset_fixpoint_cliques;
+	poset_classification::poset_classification
+		*fixpoint_clique_gen;
 
 	int fixpoint_clique_size;
-	long int *Cliques; // [nb_cliques * fixpoint_clique_size]
+	long int *Cliques;
+		// [nb_cliques * fixpoint_clique_size]
 	int nb_cliques;
 	std::string fname_fixpoint_cliques_orbiter;
 	data_structures_groups::orbit_transversal *Fixp_cliques;
@@ -513,29 +553,36 @@ public:
 
 	packing_was_fixpoints();
 	~packing_was_fixpoints();
-	void init(packing_was *PW,
-			int fixpoint_clique_size, poset_classification::poset_classification_control *Control,
+	void init(
+			packing_was *PW,
+			int fixpoint_clique_size,
+			poset_classification::poset_classification_control
+				*Control,
 			int verbose_level);
 	void setup_file_names(int clique_size, int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	void action_on_fixpoints(int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
 			int clique_size,
-			poset_classification::poset_classification_control *Control,
+			poset_classification::poset_classification_control
+				*Control,
 			int verbose_level);
 	// initializes the orbit transversal Fixp_cliques
 	// initializes Cliques[nb_cliques * clique_size]
 	// (either by computing it or reading it from file)
 	void compute_cliques_on_fixpoint_graph_from_scratch(
 			int clique_size,
-			poset_classification::poset_classification_control *Control,
+			poset_classification::poset_classification_control
+				*Control,
 			int verbose_level);
 	// compute cliques on fixpoint graph using A_on_fixpoints
-	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
+	// orbit representatives will be stored
+	// in Cliques[nb_cliques * clique_size]
 	void process_long_orbits(int verbose_level);
 	long int *clique_by_index(int idx);
 	groups::strong_generators *get_stabilizer(int idx);
-	void print_packing(long int *packing, int sz, int verbose_level);
+	void print_packing(
+			long int *packing, int sz, int verbose_level);
 	void process_long_orbits(
 			int clique_index,
 			int f_solution_path,
@@ -543,7 +590,8 @@ public:
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
 	void report(int verbose_level);
-	void report2(std::ostream &ost, /*packing_long_orbits *L,*/ int verbose_level);
+	void report2(
+			std::ostream &ost, int verbose_level);
 	long int fixpoint_to_reduced_spread(int a, int verbose_level);
 
 };
@@ -608,9 +656,11 @@ public:
 
 
 	actions::action *A_on_spread_orbits;
-		// derived from P->Spread_table_with_selection->A_on_spreads
+		// derived from P->Spread_table_with_selection
+		// ->A_on_spreads
 		// restricted action on Spread_orbits_under_H:
-		// = induced_action_on_orbits(P->A_on_spreads, Spread_orbits_under_H)
+		// = induced_action_on_orbits(
+		// P->A_on_spreads, Spread_orbits_under_H)
 
 	std::string fname_good_orbits;
 	int nb_good_orbits;
@@ -625,19 +675,23 @@ public:
 	geometry::spread_tables *Spread_tables_reduced;
 		// The spreads in the good orbits, listed one-by-one
 		// This table is *not* sorted.
-		// The induced action on reduced spreads (A_on_reduced_spreads)
+		// The induced action on reduced spreads
+		// (A_on_reduced_spreads)
 		// maintains a sorted table.
 
 
 	std::string prefix_spread_types_reduced;
-	data_structures_groups::orbit_type_repository *Spread_type_reduced;
+	data_structures_groups::orbit_type_repository
+		*Spread_type_reduced;
 
 	actions::action *A_on_reduced_spreads;
 		// induced action on Spread_tables_reduced
 
 	std::string prefix_reduced_spread_orbits;
-	groups::orbits_on_something *reduced_spread_orbits_under_H;
-		// = reduced_spread_orbits_under_H->init(A_on_reduced_spreads, H_gens)
+	groups::orbits_on_something
+		*reduced_spread_orbits_under_H;
+		// = reduced_spread_orbits_under_H->init(
+		// A_on_reduced_spreads, H_gens)
 
 	actions::action *A_on_reduced_spread_orbits;
 		// induced_action_on_orbits(A_on_reduced_spreads,
@@ -654,11 +708,12 @@ public:
 		// reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j]
 
 	int nb_sets;
-	data_structures::tally *Classify_spread_invariant_by_orbit_length;
+	data_structures::tally
+		*Classify_spread_invariant_by_orbit_length;
 
 	regular_packing *Regular_packing;
-		// correspondence between regular spreads and external lines
-		// to the Klein quadric
+		// correspondence between regular spreads
+		// and external lines of the Klein quadric
 
 
 	packing_was();
@@ -690,9 +745,11 @@ public:
 	void compute_reduced_spread_types_wrt_H(int verbose_level);
 		// Spread_types[P->nb_spreads * (group_order + 1)]
 	void compute_H_orbits_on_reduced_spreads(int verbose_level);
-	actions::action *restricted_action(int orbit_length, int verbose_level);
+	actions::action *restricted_action(
+			int orbit_length, int verbose_level);
 	int test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
-		long int *orbit1, int len1, long int *orbit2, int len2,
+		long int *orbit1, int len1,
+		long int *orbit2, int len2,
 		int verbose_level);
 		// tests if every spread from set1
 		// is line-disjoint from every spread from set2
@@ -700,31 +757,40 @@ public:
 	void create_graph_and_save_to_file(
 			std::string &fname,
 		int orbit_length,
-		int f_has_user_data, long int *user_data, int user_data_size,
+		int f_has_user_data,
+		long int *user_data, int user_data_size,
 		int verbose_level);
 	void create_graph_on_mixed_orbits_and_save_to_file(
 			std::string &orbit_lengths_text,
-			int f_has_user_data, long int *user_data, int user_data_size,
+			int f_has_user_data,
+			long int *user_data, int user_data_size,
 			int verbose_level);
-	int find_orbits_of_length_in_reduced_spread_table(int orbit_length);
-	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
-	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
+	int find_orbits_of_length_in_reduced_spread_table(
+			int orbit_length);
+	void compute_orbit_invariant_on_classified_orbits(
+			int verbose_level);
+	int evaluate_orbit_invariant_function(
+			int a, int i, int j, int verbose_level);
 	void classify_orbit_invariant(int verbose_level);
 	void report_orbit_invariant(std::ostream &ost);
 	void report2(std::ostream &ost, int verbose_level);
 	void report(int verbose_level);
-	void report_line_orbits_under_H(std::ostream &ost, int verbose_level);
+	void report_line_orbits_under_H(
+			std::ostream &ost, int verbose_level);
 	void get_spreads_in_reduced_orbits_by_type(int type_idx,
 			int &nb_orbits, int &orbit_length,
 			long int *&orbit_idx,
 			long int *&spreads_in_reduced_orbits_by_type,
 			int f_original_spread_numbers,
 			int verbose_level);
-	void export_reduced_spread_orbits_csv(std::string &fname_base,
+	void export_reduced_spread_orbits_csv(
+			std::string &fname_base,
 			int f_original_spread_numbers, int verbose_level);
-	void report_reduced_spread_orbits(std::ostream &ost,
+	void report_reduced_spread_orbits(
+			std::ostream &ost,
 			int f_original_spread_numbers, int verbose_level);
-	void report_good_spreads(std::ostream &ost);
+	void report_good_spreads(
+			std::ostream &ost);
 
 };
 
@@ -779,10 +845,12 @@ public:
 
 	std::vector<long int> External_lines;
 
-	long int *spread_to_external_line_idx; // [T->nb_spreads]
+	long int *spread_to_external_line_idx;
+		// [T->nb_spreads]
 		// spread_to_external_line_idx[i] is index into External_lines
 		// corresponding to regular spread i
-	long int *external_line_to_spread; // [nb_lines_orthogonal]
+	long int *external_line_to_spread;
+		// [nb_lines_orthogonal]
 		// external_line_to_spread[i] is the index of the
 		// regular spread of PG(3,q) in table T associated with
 		// External_lines[i]

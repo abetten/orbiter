@@ -189,7 +189,8 @@ void surface_domain::print_web_of_cubic_curves(std::ostream &ost,
 #endif
 
 
-void surface_domain::print_equation_wrapped(std::ostream &ost, int *the_equation)
+void surface_domain::print_equation_wrapped(
+		std::ostream &ost, int *the_equation)
 {
 	ost << "\\begin{align*}" << endl;
 	ost << "0 & = " << endl;
@@ -198,7 +199,8 @@ void surface_domain::print_equation_wrapped(std::ostream &ost, int *the_equation
 	ost << "\\end{align*}" << endl;
 }
 
-void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
+void surface_domain::print_lines_tex(
+		std::ostream &ost, long int *Lines, int nb_lines)
 {
 	int idx;
 	long int *Rk;
@@ -239,7 +241,8 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 }
 
-void surface_domain::print_one_line_tex(std::ostream &ost,
+void surface_domain::print_one_line_tex(
+		std::ostream &ost,
 		long int *Lines, int nb_lines, int idx)
 {
 	orbiter_kernel_system::latex_interface L;
@@ -570,7 +573,8 @@ void surface_domain::make_table_of_surfaces_detailed(
 	FREE_lint(Big_table);
 }
 
-void surface_domain::make_table_of_surfaces2(std::ostream &ost,
+void surface_domain::make_table_of_surfaces2(
+		std::ostream &ost,
 		int *Q_table, int Q_table_len, int verbose_level)
 {
 #if 0

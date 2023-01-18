@@ -1504,7 +1504,8 @@ void mp_graphics::fill_polygon11(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 11, "--", FALSE);
 }
 
-void mp_graphics::polygon2_arrow_halfway(int *Px, int *Py,
+void mp_graphics::polygon2_arrow_halfway(
+		int *Px, int *Py,
 		int i1, int i2)
 {
 	int Idx[3];
@@ -1532,7 +1533,8 @@ void mp_graphics::polygon2_arrow_halfway(int *Px, int *Py,
 	sl_ends(0, 0);
 }
 
-void mp_graphics::polygon2_arrow_halfway_and_label(int *Px, int *Py,
+void mp_graphics::polygon2_arrow_halfway_and_label(
+		int *Px, int *Py,
 	int i1, int i2,
 	const char *alignment, std::string &s)
 {
@@ -2813,8 +2815,10 @@ void mp_graphics::text_4pts(int *Px, int *Py,
 }
 
 
-void mp_graphics::draw_graph(int x, int y,
-		int dx, int dy, int nb_V, long int *Edges, int nb_E, int radius,
+void mp_graphics::draw_graph(
+		int x, int y,
+		int dx, int dy, int nb_V,
+		long int *Edges, int nb_E, int radius,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2926,7 +2930,8 @@ void mp_graphics::draw_graph_with_distinguished_edge(
 }
 
 void mp_graphics::draw_graph_on_multiple_circles(int x, int y,
-		int dx, int dy, int nb_V, int *Edges, int nb_E, int nb_circles)
+		int dx, int dy, int nb_V,
+		int *Edges, int nb_E, int nb_circles)
 {
 	double *X, *Y;
 	double h = dy * .7;
@@ -2975,7 +2980,8 @@ void mp_graphics::draw_graph_on_multiple_circles(int x, int y,
 void mp_graphics::draw_graph_on_2D_grid(
 		int x, int y, int dx, int dy, int rad, int nb_V,
 		int *Edges, int nb_E, int *coords_2D, int *Base,
-		int f_point_labels, int point_label_offset, int f_directed)
+		int f_point_labels,
+		int point_label_offset, int f_directed)
 {
 	double *X, *Y;
 	//double h = dy * .7;
@@ -3109,7 +3115,8 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 	int nb_row_parts, int *row_part_first,
 	int nb_col_parts, int *col_part_first,
 	int f_row_grid, int f_col_grid,
-	int f_bitmatrix, data_structures::bitmatrix *Bitmatrix,
+	int f_bitmatrix,
+	data_structures::bitmatrix *Bitmatrix,
 	int *M, int m, int n,
 	int f_has_labels, int *labels)
 {
@@ -3323,7 +3330,8 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 
 void mp_graphics::draw_density2(int no,
 	int *outline_value, int *outline_number, int outline_sz,
-	int min_value, int max_value, int offset_x, int f_switch_x,
+	int min_value, int max_value,
+	int offset_x, int f_switch_x,
 	int f_title, std::string &title,
 	std::string &label_x,
 	int f_circle, int circle_at, int circle_rad,
@@ -3805,7 +3813,8 @@ void mp_graphics::projective_plane_draw_grid2(
 		layered_graph_draw_options *O,
 		int q,
 		int *Table, int nb,
-		int f_point_labels, std::string *Point_labels, int verbose_level)
+		int f_point_labels,
+		std::string *Point_labels, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double a, b;

@@ -47,7 +47,8 @@ code_diagram::~code_diagram()
 }
 
 void code_diagram::init(std::string &label,
-		long int *Words, int nb_words, int n, int verbose_level)
+		long int *Words, int nb_words,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -179,7 +180,8 @@ void code_diagram::place_codewords(int verbose_level)
 	}
 }
 
-void code_diagram::place_metric_balls(int radius_of_metric_ball, int verbose_level)
+void code_diagram::place_metric_balls(
+		int radius_of_metric_ball, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

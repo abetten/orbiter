@@ -42,25 +42,9 @@ action_by_conjugation::~action_by_conjugation()
 		}
 }
 
-#if 0
-void action_by_conjugation::null()
-{
-	f_ownership = FALSE;
-	Base_group = NULL;
-	Elt1 = NULL;
-	Elt2 = NULL;
-	Elt3 = NULL;
-}
 
-void action_by_conjugation::free()
-{
-
-	null();
-}
-#endif
-
-
-void action_by_conjugation::init(groups::sims *Base_group,
+void action_by_conjugation::init(
+		groups::sims *Base_group,
 		int f_ownership, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -87,7 +71,8 @@ void action_by_conjugation::init(groups::sims *Base_group,
 		}
 }
 
-long int action_by_conjugation::compute_image(actions::action *A,
+long int action_by_conjugation::compute_image(
+		actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -123,7 +108,8 @@ long int action_by_conjugation::rank(int *Elt)
 	return j;
 }
 
-long int action_by_conjugation::multiply(actions::action *A,
+long int action_by_conjugation::multiply(
+		actions::action *A,
 		long int i, long int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

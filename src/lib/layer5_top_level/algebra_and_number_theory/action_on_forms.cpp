@@ -127,59 +127,6 @@ void action_on_forms::create_action_on_forms(
 
 }
 
-#if 0
-void action_on_forms::algebraic_normal_form(int *func, int len, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "action_on_forms::algebraic_normal_form" << endl;
-	}
-
-	if (len != PF->Q) {
-		cout << "action_on_forms::algebraic_normal_form len should be " << PF->Q << endl;
-		exit(1);
-	}
-
-	int *coeff;
-	int nb_coeff;
-
-	nb_coeff = PF->Poly[PF->max_degree].get_nb_monomials();
-
-	coeff = NEW_int(nb_coeff);
-
-	if (f_v) {
-		cout << "action_on_forms::algebraic_normal_form "
-				"before PF->compute_polynomial_representation" << endl;
-	}
-	PF->compute_polynomial_representation(func, coeff, verbose_level);
-	if (f_v) {
-		cout << "action_on_forms::algebraic_normal_form "
-				"after PF->compute_polynomial_representation" << endl;
-	}
-
-	cout << "action_on_forms::algebraic_normal_form "
-			"algebraic normal form:" << endl;
-	PF->Poly[PF->max_degree].print_equation(cout, coeff);
-	cout << endl;
-
-	cout << "action_on_forms::algebraic_normal_form "
-			"algebraic normal form in tex:" << endl;
-	PF->Poly[PF->max_degree].print_equation_tex(cout, coeff);
-	cout << endl;
-
-	cout << "action_on_forms::algebraic_normal_form "
-			"algebraic normal form in numerical form:" << endl;
-	PF->Poly[PF->max_degree].print_equation_numerical(cout, coeff);
-	cout << endl;
-
-
-	if (f_v) {
-		cout << "action_on_forms::algebraic_normal_form done" << endl;
-	}
-}
-#endif
-
 void action_on_forms::orbits_on_functions(
 		int *The_functions, int nb_functions, int len,
 		int verbose_level)
@@ -214,7 +161,10 @@ void action_on_forms::orbits_on_functions(
 		if ((i % 1000) == 0) {
 			cout << "i=" << i << " / " << nb_functions << endl;
 		}
-		PF->compute_polynomial_representation(The_functions + i * len, The_equations + i * sz, 0 /*verbose_level*/);
+		PF->compute_polynomial_representation(
+				The_functions + i * len,
+				The_equations + i * sz,
+				0 /*verbose_level*/);
 
 	}
 

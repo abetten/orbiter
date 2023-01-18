@@ -776,7 +776,8 @@ void algebra_global::longinteger_collect_print(std::ostream &ost,
 
 
 
-void algebra_global::order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level)
+void algebra_global::order_of_q_mod_n(
+		int q, int n_min, int n_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -851,7 +852,8 @@ void algebra_global::order_of_q_mod_n(int q, int n_min, int n_max, int verbose_l
 }
 
 
-void algebra_global::power_function_mod_n(int k, int n, int verbose_level)
+void algebra_global::power_function_mod_n(
+		int k, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -914,7 +916,8 @@ void algebra_global::power_function_mod_n(int k, int n, int verbose_level)
 	}
 }
 
-void algebra_global::do_trace(field_theory::finite_field *F, int verbose_level)
+void algebra_global::do_trace(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int s, t;
@@ -1010,7 +1013,8 @@ void algebra_global::do_trace(field_theory::finite_field *F, int verbose_level)
 	}
 }
 
-void algebra_global::do_norm(field_theory::finite_field *F, int verbose_level)
+void algebra_global::do_norm(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int s, t;
@@ -1070,7 +1074,8 @@ void algebra_global::do_norm(field_theory::finite_field *F, int verbose_level)
 	}
 }
 
-void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbose_level)
+void algebra_global::do_cheat_sheet_GF(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1142,7 +1147,8 @@ void algebra_global::do_cheat_sheet_GF(field_theory::finite_field *F, int verbos
 }
 
 
-void algebra_global::export_tables(field_theory::finite_field *F, int verbose_level)
+void algebra_global::export_tables(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1165,7 +1171,8 @@ void algebra_global::export_tables(field_theory::finite_field *F, int verbose_le
 }
 
 
-void algebra_global::do_cheat_sheet_ring(ring_theory::homogeneous_polynomial_domain *HPD,
+void algebra_global::do_cheat_sheet_ring(
+		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1225,7 +1232,8 @@ void algebra_global::do_cheat_sheet_ring(ring_theory::homogeneous_polynomial_dom
 
 
 
-void algebra_global::gl_random_matrix(field_theory::finite_field *F, int k,
+void algebra_global::gl_random_matrix(
+		field_theory::finite_field *F, int k,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1637,7 +1645,8 @@ void algebra_global::identity_function(
 }
 
 
-void algebra_global::Walsh_matrix(field_theory::finite_field *F,
+void algebra_global::Walsh_matrix(
+		field_theory::finite_field *F,
 		int n, int *&W,
 		int verbose_level)
 {
@@ -1698,7 +1707,8 @@ void algebra_global::Walsh_matrix(field_theory::finite_field *F,
 	}
 }
 
-void algebra_global::Vandermonde_matrix(field_theory::finite_field *F,
+void algebra_global::Vandermonde_matrix(
+		field_theory::finite_field *F,
 		int *&W, int *&W_inv,
 		int verbose_level)
 {
@@ -1753,7 +1763,8 @@ void algebra_global::Vandermonde_matrix(field_theory::finite_field *F,
 	}
 }
 
-void algebra_global::search_APN(field_theory::finite_field *F, int delta_max,
+void algebra_global::search_APN(
+		field_theory::finite_field *F, int delta_max,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1825,11 +1836,13 @@ void algebra_global::search_APN(field_theory::finite_field *F, int delta_max,
 }
 
 
-void algebra_global::search_APN_recursion(field_theory::finite_field *F,
+void algebra_global::search_APN_recursion(
+		field_theory::finite_field *F,
 		int *f, int depth, int f_normalize,
 		int &delta_max, int &nb_times,
 		std::vector<std::vector<int> > &Solutions,
-		int *A_matrix, int *B_matrix, int *Count_ab, int *nb_times_ab,
+		int *A_matrix, int *B_matrix,
+		int *Count_ab, int *nb_times_ab,
 		int verbose_level)
 {
 	if (depth == F->q) {
@@ -2039,7 +2052,8 @@ void algebra_global::undo_single_check(
 	Count_ab[a2 * q + b2]--;
 }
 
-void algebra_global::search_APN_old(field_theory::finite_field *F, int verbose_level)
+void algebra_global::search_APN_old(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q;
@@ -2086,7 +2100,8 @@ void algebra_global::search_APN_old(field_theory::finite_field *F, int verbose_l
 	}
 }
 
-void algebra_global::search_APN_recursion_old(field_theory::finite_field *F,
+void algebra_global::search_APN_recursion_old(
+		field_theory::finite_field *F,
 		int *f, int depth, int f_normalize,
 		int &delta_min, int &nb_times,
 		std::vector<std::vector<int> > &Solutions,
@@ -2168,7 +2183,8 @@ void algebra_global::search_APN_recursion_old(field_theory::finite_field *F,
 	}
 }
 
-int algebra_global::differential_uniformity(field_theory::finite_field *F,
+int algebra_global::differential_uniformity(
+		field_theory::finite_field *F,
 		int *f, int *nb_times_ab, int verbose_level)
 // f[q]
 {
@@ -2205,8 +2221,10 @@ int algebra_global::differential_uniformity(field_theory::finite_field *F,
 	return delta;
 }
 
-int algebra_global::differential_uniformity_with_fibre(field_theory::finite_field *F,
-		int *f, int *nb_times_ab, int *&Fibre, int verbose_level)
+int algebra_global::differential_uniformity_with_fibre(
+		field_theory::finite_field *F,
+		int *f, int *nb_times_ab, int *&Fibre,
+		int verbose_level)
 // f[q]
 {
 	int f_v = (verbose_level >= 1);
@@ -2250,7 +2268,8 @@ int algebra_global::differential_uniformity_with_fibre(field_theory::finite_fiel
 	return delta;
 }
 
-void algebra_global::O4_isomorphism_4to2(field_theory::finite_field *F,
+void algebra_global::O4_isomorphism_4to2(
+		field_theory::finite_field *F,
 		int *At, int *As, int &f_switch, int *B,
 		int verbose_level)
 {
@@ -2417,7 +2436,8 @@ void algebra_global::O4_isomorphism_4to2(field_theory::finite_field *F,
 
 }
 
-void algebra_global::O4_isomorphism_2to4(field_theory::finite_field *F,
+void algebra_global::O4_isomorphism_2to4(
+		field_theory::finite_field *F,
 		int *At, int *As, int f_switch, int *B)
 {
 	int a, b, c, d, e, f, g, h;
@@ -2468,7 +2488,8 @@ void algebra_global::O4_isomorphism_2to4(field_theory::finite_field *F,
 	}
 }
 
-void algebra_global::O4_grid_coordinates_rank(field_theory::finite_field *F,
+void algebra_global::O4_grid_coordinates_rank(
+		field_theory::finite_field *F,
 		int x1, int x2, int x3, int x4, int &grid_x, int &grid_y,
 		int verbose_level)
 {
@@ -2782,7 +2803,8 @@ void algebra_global::O4_find_tangent_plane(
 #endif
 }
 
-void algebra_global::Nth_roots(field_theory::finite_field *F,
+void algebra_global::Nth_roots(
+		field_theory::finite_field *F,
 		int n, int verbose_level)
 {
 	field_theory::nth_roots *Nth;

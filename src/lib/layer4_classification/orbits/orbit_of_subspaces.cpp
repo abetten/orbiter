@@ -278,7 +278,8 @@ long int orbit_of_subspaces::rank_vector_lint(int *v, int verbose_level)
 	return r;
 }
 
-void orbit_of_subspaces::unrank_vector(int rk, int *v, int verbose_level)
+void orbit_of_subspaces::unrank_vector(
+		int rk, int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -297,7 +298,8 @@ void orbit_of_subspaces::unrank_vector(int rk, int *v, int verbose_level)
 		}
 }
 
-void orbit_of_subspaces::unrank_vector_lint(long int rk, int *v, int verbose_level)
+void orbit_of_subspaces::unrank_vector_lint(
+		long int rk, int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -317,7 +319,9 @@ void orbit_of_subspaces::unrank_vector_lint(long int rk, int *v, int verbose_lev
 }
 
 void orbit_of_subspaces::unrank_subspace(
-		int subspace_idx, int *subspace_basis, int verbose_level)
+		int subspace_idx,
+		int *subspace_basis,
+		int verbose_level)
 {
 	if (f_lint) {
 		unrank_lint(Subspaces_lint[subspace_idx],
@@ -495,7 +499,8 @@ void orbit_of_subspaces::map_a_subspace(int *subspace,
 }
 #endif
 
-void orbit_of_subspaces::map_a_subspace(int *basis,
+void orbit_of_subspaces::map_a_subspace(
+		int *basis,
 		int *image_basis, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -546,7 +551,8 @@ void orbit_of_subspaces::print_orbit()
 	FREE_int(v);
 }
 
-int orbit_of_subspaces::rank_hash_and_find(int *subspace,
+int orbit_of_subspaces::rank_hash_and_find(
+		int *subspace,
 		int &idx, uint32_t &h, int verbose_level)
 {
 	int f_found;
@@ -837,7 +843,8 @@ void orbit_of_subspaces::get_transporter(int idx,
 }
 
 int orbit_of_subspaces::find_subspace(
-		int *subspace_ranks, int &idx, int verbose_level)
+		int *subspace_ranks,
+		int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_found;
@@ -864,7 +871,8 @@ int orbit_of_subspaces::find_subspace(
 }
 
 int orbit_of_subspaces::find_subspace_lint(
-		long int *subspace_ranks, int &idx, int verbose_level)
+		long int *subspace_ranks,
+		int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_found;

@@ -530,7 +530,8 @@ long int combinatorics_domain::int_n_choose_k(int n, int k)
 	return r;
 }
 
-void combinatorics_domain::make_t_k_incidence_matrix(int v, int t, int k,
+void combinatorics_domain::make_t_k_incidence_matrix(
+		int v, int t, int k,
 	int &m, int &n, int *&M,
 	int verbose_level)
 {
@@ -573,7 +574,8 @@ void combinatorics_domain::print_k_subsets_by_rank(std::ostream &ost, int v, int
 	FREE_int(set);
 }
 
-int combinatorics_domain::f_is_subset_of(int v, int t, int k,
+int combinatorics_domain::f_is_subset_of(
+		int v, int t, int k,
 		int rk_t_subset, int rk_k_subset)
 {
 	int *set1, *set2;
@@ -1343,7 +1345,8 @@ void combinatorics_domain::perm_print(std::ostream &ost, int *a, int n)
 void combinatorics_domain::perm_print_with_print_point_function(
 		std::ostream &ost,
 		int *a, int n,
-		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
+		void (*point_label)(
+				std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	perm_print_offset(ost, a, n, 0, FALSE, FALSE, FALSE, 0, FALSE,
@@ -2288,7 +2291,9 @@ long int combinatorics_domain::binomial_lint(int n, int k)
 }
 
 
-void combinatorics_domain::binomial(ring_theory::longinteger_object &a, int n, int k, int verbose_level)
+void combinatorics_domain::binomial(
+		ring_theory::longinteger_object &a,
+		int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object b, c, d;
@@ -2334,7 +2339,9 @@ void combinatorics_domain::binomial(ring_theory::longinteger_object &a, int n, i
 	}
 }
 
-void combinatorics_domain::binomial_with_table(ring_theory::longinteger_object &a, int n, int k)
+void combinatorics_domain::binomial_with_table(
+		ring_theory::longinteger_object &a,
+		int n, int k)
 {
 	int i, j;
 	ring_theory::longinteger_domain D;
@@ -2732,7 +2739,8 @@ void combinatorics_domain::krawtchouk_with_table(ring_theory::longinteger_object
 	}
 }
 
-void combinatorics_domain::krawtchouk(ring_theory::longinteger_object &a,
+void combinatorics_domain::krawtchouk(
+		ring_theory::longinteger_object &a,
 	int n, int q, int k, int x)
 {
 	//cout << "combinatorics_domain::krawtchouk n=" << n << " q=" << q << " k=" << k << " x=" << x << endl;
@@ -2740,7 +2748,8 @@ void combinatorics_domain::krawtchouk(ring_theory::longinteger_object &a,
 }
 
 
-void combinatorics_domain::do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level)
+void combinatorics_domain::do_tdo_refinement(
+		tdo_refinement_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2762,7 +2771,8 @@ void combinatorics_domain::do_tdo_refinement(tdo_refinement_description *Descr, 
 	}
 }
 
-void combinatorics_domain::do_tdo_print(std::string &fname, int verbose_level)
+void combinatorics_domain::do_tdo_print(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3055,7 +3065,8 @@ void combinatorics_domain::do_tdo_print(std::string &fname, int verbose_level)
 	}
 }
 
-void combinatorics_domain::make_elementary_symmetric_functions(int n, int k_max, int verbose_level)
+void combinatorics_domain::make_elementary_symmetric_functions(
+		int n, int k_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3100,7 +3111,9 @@ void combinatorics_domain::make_elementary_symmetric_functions(int n, int k_max,
 
 }
 
-void combinatorics_domain::Dedekind_numbers(int n_min, int n_max, int q_min, int q_max, int verbose_level)
+void combinatorics_domain::Dedekind_numbers(
+		int n_min, int n_max, int q_min, int q_max,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3167,7 +3180,8 @@ void combinatorics_domain::Dedekind_numbers(int n_min, int n_max, int q_min, int
 
 
 
-void combinatorics_domain::convert_stack_to_tdo(std::string &stack_fname, int verbose_level)
+void combinatorics_domain::convert_stack_to_tdo(
+		std::string &stack_fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3246,7 +3260,8 @@ void combinatorics_domain::convert_stack_to_tdo(std::string &stack_fname, int ve
 	}
 }
 
-void combinatorics_domain::do_parameters_maximal_arc(int q, int r, int verbose_level)
+void combinatorics_domain::do_parameters_maximal_arc(
+		int q, int r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int m = 2, n = 2;
@@ -3273,7 +3288,8 @@ void combinatorics_domain::do_parameters_maximal_arc(int q, int r, int verbose_l
 	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
 }
 
-void combinatorics_domain::do_parameters_arc(int q, int s, int r, int verbose_level)
+void combinatorics_domain::do_parameters_arc(
+		int q, int s, int r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int m = 2, n = 1;
@@ -3295,7 +3311,8 @@ void combinatorics_domain::do_parameters_arc(int q, int s, int r, int verbose_le
 	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
 }
 
-void combinatorics_domain::do_read_poset_file(std::string &fname,
+void combinatorics_domain::do_read_poset_file(
+		std::string &fname,
 		int f_grouping, double x_stretch, int verbose_level)
 // creates a layered graph file from a text file
 // which was created by DISCRETA/sgls2.cpp
@@ -3334,7 +3351,8 @@ void combinatorics_domain::do_read_poset_file(std::string &fname,
 }
 
 
-void combinatorics_domain::do_make_tree_of_all_k_subsets(int n, int k, int verbose_level)
+void combinatorics_domain::do_make_tree_of_all_k_subsets(
+		int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3460,7 +3478,8 @@ void combinatorics_domain::create_random_k_subsets(int n, int k, int nb,
 }
 
 
-void combinatorics_domain::compute_incidence_matrix(int v, int b, int k, long int *Blocks_coded,
+void combinatorics_domain::compute_incidence_matrix(
+		int v, int b, int k, long int *Blocks_coded,
 		int *&M, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3539,7 +3558,8 @@ void combinatorics_domain::compute_incidence_matrix_from_sets(
 }
 
 
-void combinatorics_domain::compute_blocks_from_coding(int v, int b, int k, long int *Blocks_coded,
+void combinatorics_domain::compute_blocks_from_coding(
+		int v, int b, int k, long int *Blocks_coded,
 		int *&Blocks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3560,7 +3580,8 @@ void combinatorics_domain::compute_blocks_from_coding(int v, int b, int k, long 
 	}
 }
 
-void combinatorics_domain::compute_blocks_from_incma(int v, int b, int k, int *incma,
+void combinatorics_domain::compute_blocks_from_incma(
+		int v, int b, int k, int *incma,
 		int *&Blocks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3827,7 +3848,8 @@ void combinatorics_domain::free_tab_q_binomials()
 
 
 void combinatorics_domain::create_wreath_product_design(int n, int k,
-		long int *&Blocks, long int &nb_blocks, int verbose_level)
+		long int *&Blocks, long int &nb_blocks,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

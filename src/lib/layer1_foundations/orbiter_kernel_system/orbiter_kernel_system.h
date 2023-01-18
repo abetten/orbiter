@@ -84,20 +84,25 @@ public:
 	file_io();
 	~file_io();
 
-	void concatenate_files(std::string &fname_in_mask, int N,
-			std::string &fname_out, std::string &EOF_marker, int f_title_line,
+	void concatenate_files(
+			std::string &fname_in_mask, int N,
+			std::string &fname_out, std::string &EOF_marker,
+			int f_title_line,
 		int &cnt_total,
 		std::vector<int> missing_idx,
 		int verbose_level);
-	void concatenate_files_into(std::string &fname_in_mask, int N,
-		std::ofstream &fp_out, std::string &EOF_marker, int f_title_line,
+	void concatenate_files_into(
+			std::string &fname_in_mask, int N,
+		std::ofstream &fp_out, std::string &EOF_marker,
+		int f_title_line,
 		int &cnt_total,
 		std::vector<int> &missing_idx,
 		int verbose_level);
 	void poset_classification_read_candidates_of_orbit(
 			std::string &fname, int orbit_at_level,
 		long int *&candidates, int &nb_candidates, int verbose_level);
-	void read_candidates_for_one_orbit_from_file(std::string &prefix,
+	void read_candidates_for_one_orbit_from_file(
+			std::string &prefix,
 			int level, int orbit_at_level, int level_of_candidates_file,
 			long int *S,
 			void (*early_test_func_callback)(long int *S, int len,
@@ -108,12 +113,14 @@ public:
 			long int *&candidates,
 			int &nb_candidates,
 			int verbose_level);
-	int find_orbit_index_in_data_file(std::string &prefix,
+	int find_orbit_index_in_data_file(
+			std::string &prefix,
 			int level_of_candidates_file, long int *starter,
 			int verbose_level);
 	void write_exact_cover_problem_to_file(int *Inc, int nb_rows,
 		int nb_cols, std::string &fname);
-	void read_solution_file(std::string &fname,
+	void read_solution_file(
+			std::string &fname,
 		int *Inc, int nb_rows, int nb_cols,
 		int *&Solutions, int &sol_length, int &nb_sol,
 		int verbose_level);
@@ -121,26 +128,34 @@ public:
 			std::string &fname,
 		int &nb_solutions, int &solution_size,
 		int verbose_level);
-	void count_number_of_solutions_in_file(std::string &fname,
+	void count_number_of_solutions_in_file(
+			std::string &fname,
 		int &nb_solutions,
 		int verbose_level);
-	void count_number_of_solutions_in_file_by_case(std::string &fname,
+	void count_number_of_solutions_in_file_by_case(
+			std::string &fname,
 		int *&nb_solutions, int *&case_nb, int &nb_cases,
 		int verbose_level);
-	void read_solutions_from_file_and_get_solution_size(std::string &fname,
+	void read_solutions_from_file_and_get_solution_size(
+			std::string &fname,
 		int &nb_solutions, long int *&Solutions, int &solution_size,
 		int verbose_level);
-	void read_solutions_from_file(std::string &fname,
+	void read_solutions_from_file(
+			std::string &fname,
 		int &nb_solutions, long int *&Solutions, int solution_size,
 		int verbose_level);
-	void read_solutions_from_file_size_is_known(std::string &fname,
-		std::vector<std::vector<long int> > &Solutions, int solution_size,
+	void read_solutions_from_file_size_is_known(
+			std::string &fname,
+		std::vector<std::vector<long int> > &Solutions,
+		int solution_size,
 		int verbose_level);
-	void read_solutions_from_file_by_case(std::string &fname,
+	void read_solutions_from_file_by_case(
+			std::string &fname,
 		int *nb_solutions, int *case_nb, int nb_cases,
 		long int **&Solutions, int solution_size,
 		int verbose_level);
-	void copy_file_to_ostream(std::ostream &ost, std::string &fname);
+	void copy_file_to_ostream(
+			std::ostream &ost, std::string &fname);
 	void int_vec_write_csv(int *v, int len,
 			std::string &fname, std::string &label);
 	void lint_vec_write_csv(long int *v, int len,
@@ -154,179 +169,254 @@ public:
 			std::string &fname, const char **column_label);
 	void lint_vec_array_write_csv(int nb_vecs, long int **Vec, int len,
 			std::string &fname, const char **column_label);
-	void int_matrix_write_csv(std::string &fname, int *M, int m, int n);
-	void lint_matrix_write_csv(std::string &fname, long int *M, int m, int n);
-	void lint_matrix_write_csv_override_headers(std::string &fname,
+	void int_matrix_write_csv(
+			std::string &fname, int *M, int m, int n);
+	void lint_matrix_write_csv(
+			std::string &fname, long int *M, int m, int n);
+	void lint_matrix_write_csv_override_headers(
+			std::string &fname,
 			std::string *headers, long int *M, int m, int n);
-	void vector_matrix_write_csv(std::string &fname,
+	void vector_matrix_write_csv(
+			std::string &fname,
 			std::vector<std::vector<int> > &V);
 	void double_matrix_write_csv(std::string &fname,
 		double *M, int m, int n);
-	void int_matrix_write_csv_with_labels(std::string &fname,
+	void int_matrix_write_csv_with_labels(
+			std::string &fname,
 		int *M, int m, int n, const char **column_label);
-	void lint_matrix_write_csv_with_labels(std::string &fname,
+	void lint_matrix_write_csv_with_labels(
+			std::string &fname,
 		long int *M, int m, int n, const char **column_label);
-	void int_matrix_read_csv(std::string &fname, int *&M,
+	void int_matrix_read_csv(
+			std::string &fname, int *&M,
 		int &m, int &n, int verbose_level);
-	void int_matrix_read_csv_no_border(std::string &fname,
+	void int_matrix_read_csv_no_border(
+			std::string &fname,
 		int *&M, int &m, int &n, int verbose_level);
-	void lint_matrix_read_csv_no_border(std::string &fname,
+	void lint_matrix_read_csv_no_border(
+			std::string &fname,
 		long int *&M, int &m, int &n, int verbose_level);
-	void int_matrix_read_csv_data_column(std::string &fname,
+	void int_matrix_read_csv_data_column(
+			std::string &fname,
 		int *&M, int &m, int &n, int col_idx, int verbose_level);
-	void lint_matrix_read_csv_data_column(std::string &fname,
+	void lint_matrix_read_csv_data_column(
+			std::string &fname,
 		long int *&M, int &m, int &n, int col_idx, int verbose_level);
-	void lint_matrix_read_csv(std::string &fname,
+	void lint_matrix_read_csv(
+			std::string &fname,
 		long int *&M, int &m, int &n, int verbose_level);
-	void double_matrix_read_csv(std::string &fname, double *&M,
+	void double_matrix_read_csv(
+			std::string &fname, double *&M,
 		int &m, int &n, int verbose_level);
-	void read_column_and_parse(std::string &fname, std::string &col_label,
+	void read_column_and_parse(
+			std::string &fname, std::string &col_label,
 			data_structures::set_of_sets *&SoS, int verbose_level);
-	void int_matrix_write_cas_friendly(std::string &fname, int *M, int m, int n);
-	void int_matrix_write_text(std::string &fname,
+	void int_matrix_write_cas_friendly(
+			std::string &fname, int *M, int m, int n);
+	void int_matrix_write_text(
+			std::string &fname,
 		int *M, int m, int n);
-	void lint_matrix_write_text(std::string &fname, long int *M, int m, int n);
-	void int_matrix_read_text(std::string &fname,
+	void lint_matrix_write_text(
+			std::string &fname, long int *M, int m, int n);
+	void int_matrix_read_text(
+			std::string &fname,
 		int *&M, int &m, int &n);
-	void read_dimacs_graph_format(std::string &fname,
-			int &nb_V, std::vector<std::vector<int> > &Edges, int verbose_level);
-	void parse_sets(int nb_cases, char **data, int f_casenumbers,
+	void read_dimacs_graph_format(
+			std::string &fname,
+			int &nb_V, std::vector<std::vector<int> > &Edges,
+			int verbose_level);
+	void parse_sets(
+			int nb_cases, char **data, int f_casenumbers,
 		int *&Set_sizes, long int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
 		int *&Casenumbers,
 		int verbose_level);
-	void parse_sets_and_check_sizes_easy(int len, int nb_cases,
+	void parse_sets_and_check_sizes_easy(
+			int len, int nb_cases,
 		char **data, long int **&sets);
-	void parse_line(char *line, int &len, long int *&set,
+	void parse_line(
+			char *line, int &len, long int *&set,
 		char *ago_ascii, char *aut_ascii);
-	int count_number_of_orbits_in_file(std::string &fname, int verbose_level);
-	int count_number_of_lines_in_file(std::string &fname, int verbose_level);
-	int try_to_read_file(std::string &fname, int &nb_cases,
+	int count_number_of_orbits_in_file(
+			std::string &fname, int verbose_level);
+	int count_number_of_lines_in_file(
+			std::string &fname, int verbose_level);
+	int try_to_read_file(
+			std::string &fname, int &nb_cases,
 		char **&data, int verbose_level);
-	void read_and_parse_data_file(std::string &fname, int &nb_cases,
+	void read_and_parse_data_file(
+			std::string &fname, int &nb_cases,
 		char **&data, long int **&sets, int *&set_sizes, int verbose_level);
-	void free_data_fancy(int nb_cases,
+	void free_data_fancy(
+			int nb_cases,
 		int *Set_sizes, long int **Sets,
 		char **Ago_ascii, char **Aut_ascii,
 		int *Casenumbers);
-	void read_and_parse_data_file_fancy(std::string &fname,
+	void read_and_parse_data_file_fancy(
+			std::string &fname,
 		int f_casenumbers,
 		int &nb_cases,
-		int *&Set_sizes, long int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
+		int *&Set_sizes, long int **&Sets,
+		char **&Ago_ascii, char **&Aut_ascii,
 		int *&Casenumbers,
 		int verbose_level);
-	void read_set_from_file(std::string &fname,
+	void read_set_from_file(
+			std::string &fname,
 		long int *&the_set, int &set_size, int verbose_level);
-	void write_set_to_file(std::string &fname,
+	void write_set_to_file(
+			std::string &fname,
 		long int *the_set, int set_size, int verbose_level);
-	void read_set_from_file_lint(std::string &fname,
+	void read_set_from_file_lint(
+			std::string &fname,
 		long int *&the_set, int &set_size, int verbose_level);
-	void write_set_to_file_lint(std::string &fname,
+	void write_set_to_file_lint(
+			std::string &fname,
 		long int *the_set, int set_size, int verbose_level);
-	void read_set_from_file_int4(std::string &fname,
+	void read_set_from_file_int4(
+			std::string &fname,
 		long int *&the_set, int &set_size, int verbose_level);
-	void read_set_from_file_int8(std::string &fname,
+	void read_set_from_file_int8(
+			std::string &fname,
 		long int *&the_set, int &set_size, int verbose_level);
-	void write_set_to_file_as_int4(std::string &fname,
+	void write_set_to_file_as_int4(
+			std::string &fname,
 		long int *the_set, int set_size, int verbose_level);
-	void write_set_to_file_as_int8(std::string &fname,
+	void write_set_to_file_as_int8(
+			std::string &fname,
 		long int *the_set, int set_size, int verbose_level);
-	void read_k_th_set_from_file(std::string &fname, int k,
+	void read_k_th_set_from_file(
+			std::string &fname, int k,
 		int *&the_set, int &set_size, int verbose_level);
-	void write_incidence_matrix_to_file(std::string &fname,
+	void write_incidence_matrix_to_file(
+			std::string &fname,
 		int *Inc, int m, int n, int verbose_level);
-	void read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
-			std::string &inc_file_name, int inc_file_idx, int verbose_level);
-	void read_incidence_file(std::vector<std::vector<int> > &Geos,
+	void read_incidence_matrix_from_inc_file(
+			int *&M, int &m, int &n,
+			std::string &inc_file_name, int inc_file_idx,
+			int verbose_level);
+	void read_incidence_file(
+			std::vector<std::vector<int> > &Geos,
 			int &m, int &n, int &nb_flags,
 			std::string &inc_file_name, int verbose_level);
-	void read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &Geos,
+	void read_incidence_by_row_ranks_file(
+			std::vector<std::vector<int> > &Geos,
 			int &m, int &n, int &r,
 			std::string &inc_file_name, int verbose_level);
 	int inc_file_get_number_of_geometries(
 		char *inc_file_name, int verbose_level);
-	long int file_size(std::string &fname);
-	long int file_size(const char *name);
-	void delete_file(const char *fname);
+	long int file_size(
+			std::string &fname);
+	long int file_size(
+			const char *name);
+	void delete_file(
+			const char *fname);
 
 	void fwrite_int4(FILE *fp, int a);
 	int_4 fread_int4(FILE *fp);
 	void fwrite_uchars(FILE *fp, uchar *p, int len);
 	void fread_uchars(FILE *fp, uchar *p, int len);
 
-	void read_numbers_from_file(std::string &fname,
+	void read_numbers_from_file(
+			std::string &fname,
 		int *&the_set, int &set_size, int verbose_level);
 	void read_ascii_set_of_sets_constant_size(
 			std::string &fname_ascii,
-			int *&Sets, int &nb_sets, int &set_size, int verbose_level);
-	void write_decomposition_stack(char *fname, int m, int n,
+			int *&Sets, int &nb_sets, int &set_size,
+			int verbose_level);
+	void write_decomposition_stack(
+			char *fname, int m, int n,
 			int *v, int *b, int *aij, int verbose_level);
-	void create_file(create_file_description *Descr, int verbose_level);
-	void fix_escape_characters(char *str);
-	void create_files(create_file_description *Descr,
-		int verbose_level);
-	void create_files_list_of_cases(data_structures::spreadsheet *S,
+	void create_file(
 			create_file_description *Descr, int verbose_level);
-	int number_of_vertices_in_colored_graph(std::string &fname, int verbose_level);
-	void do_csv_file_select_rows(std::string &fname,
+	void fix_escape_characters(char *str);
+	void create_files(
+			create_file_description *Descr,
+		int verbose_level);
+	void create_files_list_of_cases(
+			data_structures::spreadsheet *S,
+			create_file_description *Descr,
+			int verbose_level);
+	int number_of_vertices_in_colored_graph(
+			std::string &fname, int verbose_level);
+	void do_csv_file_select_rows(
+			std::string &fname,
 			std::string &rows_text,
 			int verbose_level);
-	void do_csv_file_split_rows_modulo(std::string &fname,
+	void do_csv_file_split_rows_modulo(
+			std::string &fname,
 			int split_modulo,
 			int verbose_level);
-	void do_csv_file_select_cols(std::string &fname,
+	void do_csv_file_select_cols(
+			std::string &fname,
 			std::string &cols_text,
 			int verbose_level);
-	void do_csv_file_select_rows_and_cols(std::string &fname,
+	void do_csv_file_select_rows_and_cols(
+			std::string &fname,
 			std::string &rows_text, std::string &cols_text,
 			int verbose_level);
 	void do_csv_file_extract_column_to_txt(
-			std::string &csv_fname, std::string &col_label, int verbose_level);
+			std::string &csv_fname, std::string &col_label,
+			int verbose_level);
 	void do_csv_file_sort_each_row(
 			std::string &csv_fname, int verbose_level);
 	void do_csv_file_join(
 			std::vector<std::string> &csv_file_join_fname,
-			std::vector<std::string> &csv_file_join_identifier, int verbose_level);
+			std::vector<std::string> &csv_file_join_identifier,
+			int verbose_level);
 	void do_csv_file_concatenate(
-			std::vector<std::string> &fname, std::string &fname_out, int verbose_level);
+			std::vector<std::string> &fname, std::string &fname_out,
+			int verbose_level);
 	void do_csv_file_concatenate_from_mask(
-			std::string &fname_in_mask, int N, std::string &fname_out, int verbose_level);
+			std::string &fname_in_mask, int N, std::string &fname_out,
+			int verbose_level);
 	void do_csv_file_latex(std::string &fname,
 			int f_produce_latex_header,
 			int nb_lines_per_table,
 			int verbose_level);
-	void read_solutions_and_tally(std::string &fname, int sz, int verbose_level);
-	void save_fibration(std::vector<std::vector<std::pair<int, int> > > &Fibration,
+	void read_solutions_and_tally(
+			std::string &fname, int sz, int verbose_level);
+	void save_fibration(
+			std::vector<std::vector<std::pair<int, int> > > &Fibration,
 			std::string &fname, int verbose_level);
-	void save_cumulative_canonical_labeling(std::vector<std::vector<int> > &Cumulative_canonical_labeling,
+	void save_cumulative_canonical_labeling(
+			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
 			std::string &fname, int verbose_level);
-	void save_cumulative_ago(std::vector<long int> &Cumulative_Ago,
+	void save_cumulative_ago(
+			std::vector<long int> &Cumulative_Ago,
 			std::string &fname, int verbose_level);
-	void save_cumulative_data(std::vector<std::vector<int> > &Cumulative_data,
+	void save_cumulative_data(
+			std::vector<std::vector<int> > &Cumulative_data,
 			std::string &fname, int verbose_level);
-	void write_characteristic_matrix(std::string &fname,
+	void write_characteristic_matrix(
+			std::string &fname,
 			long int *data, int nb_rows, int data_sz, int nb_cols, int verbose_level);
-	void extract_from_makefile(std::string &fname,
+	void extract_from_makefile(
+			std::string &fname,
 			std::string &label,
 			int f_tail, std::string &tail,
 			std::vector<std::string> &text,
 			int verbose_level);
-	void grade_statistic_from_csv(std::string &fname_csv,
+	void grade_statistic_from_csv(
+			std::string &fname_csv,
 			int f_midterm1, std::string &midterm1_label,
 			int f_midterm2, std::string &midterm2_label,
 			int f_final, std::string &final_label,
 			int f_oracle_grade, std::string &oracle_grade_label,
 			int verbose_level);
 	void count_solutions_in_list_of_files(
-			int nb_files, std::string *fname, int *List_of_cases, int *&Nb_sol_per_file,
+			int nb_files, std::string *fname,
+			int *List_of_cases, int *&Nb_sol_per_file,
 			int solution_size,
 			int f_has_final_test_function,
 			int (*final_test_function)(long int *data, int sz,
 					void *final_test_data, int verbose_level),
 			void *final_test_data,
 			int verbose_level);
-	void split_by_values(std::string &fname_in, int verbose_level);
-	void change_values(std::string &fname_in, std::string &fname_out,
-			std::string &input_values, std::string &output_values,
+	void split_by_values(
+			std::string &fname_in, int verbose_level);
+	void change_values(
+			std::string &fname_in, std::string &fname_out,
+			std::string &input_values,
+			std::string &output_values,
 			int verbose_level);
 
 };
@@ -383,7 +473,8 @@ public:
 
 	// two functions from DISCRETA1:
 
-	void incma_latex_with_text_labels(std::ostream &fp,
+	void incma_latex_with_text_labels(
+			std::ostream &fp,
 			graphics::draw_incidence_structure_description *Descr,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
@@ -403,42 +494,59 @@ public:
 		int *col_labels_int,
 		int *incma,
 		int verbose_level);
-	void print_01_matrix_tex(std::ostream &ost, int *p, int m, int n);
-	void print_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
-	void print_lint_matrix_tex(std::ostream &ost,
+	void print_01_matrix_tex(
+			std::ostream &ost, int *p, int m, int n);
+	void print_integer_matrix_tex(
+			std::ostream &ost, int *p, int m, int n);
+	void print_lint_matrix_tex(
+			std::ostream &ost,
 		long int *p, int m, int n);
-	void print_longinteger_matrix_tex(std::ostream &ost,
+	void print_longinteger_matrix_tex(
+			std::ostream &ost,
 			ring_theory::longinteger_object *p, int m, int n);
-	void print_integer_matrix_with_labels(std::ostream &ost, int *p,
+	void print_integer_matrix_with_labels(
+			std::ostream &ost, int *p,
 		int m, int n, int *row_labels, int *col_labels, int f_tex);
-	void print_lint_matrix_with_labels(std::ostream &ost,
-		long int *p, int m, int n, long int *row_labels, long int *col_labels,
+	void print_lint_matrix_with_labels(
+			std::ostream &ost,
+		long int *p, int m, int n,
+		long int *row_labels, long int *col_labels,
 		int f_tex);
-	void print_integer_matrix_with_standard_labels(std::ostream &ost,
+	void print_integer_matrix_with_standard_labels(
+			std::ostream &ost,
 		int *p, int m, int n, int f_tex);
-	void print_lint_matrix_with_standard_labels(std::ostream &ost,
+	void print_lint_matrix_with_standard_labels(
+			std::ostream &ost,
 		long int *p, int m, int n, int f_tex);
-	void print_integer_matrix_with_standard_labels_and_offset(std::ostream &ost,
+	void print_integer_matrix_with_standard_labels_and_offset(
+			std::ostream &ost,
 		int *p, int m, int n, int m_offset, int n_offset, int f_tex);
-	void print_lint_matrix_with_standard_labels_and_offset(std::ostream &ost,
+	void print_lint_matrix_with_standard_labels_and_offset(
+			std::ostream &ost,
 		long int *p, int m, int n, int m_offset, int n_offset, int f_tex);
-	void print_integer_matrix_tex_block_by_block(std::ostream &ost,
+	void print_integer_matrix_tex_block_by_block(
+			std::ostream &ost,
 		int *p, int m, int n, int block_width);
-	void print_integer_matrix_with_standard_labels_and_offset_text(std::ostream &ost,
+	void print_integer_matrix_with_standard_labels_and_offset_text(
+			std::ostream &ost,
 		int *p, int m, int n, int m_offset, int n_offset);
 	void print_lint_matrix_with_standard_labels_and_offset_text(
-		std::ostream &ost, long int *p, int m, int n, int m_offset, int n_offset);
-	void print_integer_matrix_with_standard_labels_and_offset_tex(std::ostream &ost,
+		std::ostream &ost, long int *p, int m, int n,
+		int m_offset, int n_offset);
+	void print_integer_matrix_with_standard_labels_and_offset_tex(
+			std::ostream &ost,
 		int *p, int m, int n, int m_offset, int n_offset);
 	void print_lint_matrix_with_standard_labels_and_offset_tex(
 		std::ostream &ost, long int *p, int m, int n,
 		int m_offset, int n_offset);
-	void print_big_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
+	void print_big_integer_matrix_tex(
+			std::ostream &ost, int *p, int m, int n);
 	void int_vec_print_as_matrix(std::ostream &ost,
 		int *v, int len, int width, int f_tex);
 	void lint_vec_print_as_matrix(std::ostream &ost,
 		long int *v, int len, int width, int f_tex);
-	void int_matrix_print_with_labels_and_partition(std::ostream &ost,
+	void int_matrix_print_with_labels_and_partition(
+			std::ostream &ost,
 		int *p, int m, int n,
 		int *row_labels, int *col_labels,
 		int *row_part_first, int *row_part_len, int nb_row_parts,
@@ -447,7 +555,8 @@ public:
 			int i, int j, int val, std::string &output, void *data),
 		void *data,
 		int f_tex);
-	void lint_matrix_print_with_labels_and_partition(std::ostream &ost,
+	void lint_matrix_print_with_labels_and_partition(
+			std::ostream &ost,
 		long int *p, int m, int n,
 		int *row_labels, int *col_labels,
 		int *row_part_first, int *row_part_len, int nb_row_parts,
@@ -456,27 +565,39 @@ public:
 			int i, int j, int val, std::string &output, void *data),
 		void *data,
 		int f_tex);
-	void int_matrix_print_tex(std::ostream &ost, int *p, int m, int n);
-	void lint_matrix_print_tex(std::ostream &ost, long int *p, int m, int n);
+	void int_matrix_print_tex(
+			std::ostream &ost, int *p, int m, int n);
+	void lint_matrix_print_tex(
+			std::ostream &ost, long int *p, int m, int n);
 	void print_cycle_tex_with_special_point_labels(
 			std::ostream &ost, int *pts, int nb_pts,
-			void (*point_label)(std::stringstream &sstr, int pt, void *data),
+			void (*point_label)(std::stringstream &sstr,
+					int pt, void *data),
 			void *point_label_data);
-	void int_set_print_tex(std::ostream &ost, int *v, int len);
-	void lint_set_print_tex(std::ostream &ost, long int *v, int len);
-	void lint_set_print_tex_text_mode(std::ostream &ost, long int *v, int len);
-	void print_type_vector_tex(std::ostream &ost, int *v, int len);
-	void int_set_print_masked_tex(std::ostream &ost,
+	void int_set_print_tex(
+			std::ostream &ost, int *v, int len);
+	void lint_set_print_tex(
+			std::ostream &ost, long int *v, int len);
+	void lint_set_print_tex_text_mode(
+			std::ostream &ost, long int *v, int len);
+	void print_type_vector_tex(
+			std::ostream &ost, int *v, int len);
+	void int_set_print_masked_tex(
+			std::ostream &ost,
 		int *v, int len, const char *mask_begin, const char *mask_end);
-	void lint_set_print_masked_tex(std::ostream &ost,
+	void lint_set_print_masked_tex(
+			std::ostream &ost,
 		long int *v, int len,
 		const char *mask_begin,
 		const char *mask_end);
-	void int_set_print_tex_for_inline_text(std::ostream &ost,
+	void int_set_print_tex_for_inline_text(
+			std::ostream &ost,
 			int *v, int len);
-	void lint_set_print_tex_for_inline_text(std::ostream &ost,
+	void lint_set_print_tex_for_inline_text(
+			std::ostream &ost,
 			long int *v, int len);
-	void latexable_string(std::stringstream &str,
+	void latexable_string(
+			std::stringstream &str,
 			const char *p, int max_len, int line_skip);
 	void print_row_tactical_decomposition_scheme_tex(
 		std::ostream &ost, int f_enter_math_mode,
@@ -725,7 +846,8 @@ public:
 
 
 	int f_draw_incidence_structure_description;
-	graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
+	graphics::draw_incidence_structure_description
+		*Draw_incidence_structure_description;
 
 	int f_list_arguments;
 
@@ -775,26 +897,40 @@ public:
 			std::string *argv, int i, int verbose_level);
 	int read_arguments(int argc,
 			std::string *argv, int i0);
-	void fork(int argc, std::string *argv, int verbose_level);
+	void fork(
+			int argc, std::string *argv, int verbose_level);
 
 	void *get_object(int idx);
 	symbol_table_object_type get_object_type(int idx);
 	int find_symbol(std::string &label);
-	void get_vector_from_label(std::string &label, long int *&v, int &sz, int verbose_level);
-	void get_int_vector_from_label(std::string &label, int *&v, int &sz, int verbose_level);
-	void get_lint_vector_from_label(std::string &label, long int *&v, int &sz, int verbose_level);
-	void get_matrix_from_label(std::string &label,
+	void get_vector_from_label(
+			std::string &label, long int *&v, int &sz, int verbose_level);
+	void get_int_vector_from_label(
+			std::string &label, int *&v, int &sz, int verbose_level);
+	void get_lint_vector_from_label(
+			std::string &label, long int *&v, int &sz, int verbose_level);
+	void get_matrix_from_label(
+			std::string &label,
 			int *&v, int &m, int &n);
-	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
+	void find_symbols(
+			std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
-	void add_symbol_table_entry(std::string &label,
+	void add_symbol_table_entry(
+			std::string &label,
 			orbiter_symbol_table_entry *Symb, int verbose_level);
-	void get_lint_vec(std::string &label,
+	void get_lint_vec(
+			std::string &label,
 			long int *&the_set, int &set_size, int verbose_level);
-	void print_type(symbol_table_object_type t);
-	field_theory::finite_field *get_object_of_type_finite_field(std::string &label);
-	ring_theory::homogeneous_polynomial_domain *get_object_of_type_polynomial_ring(std::string &label);
-	data_structures::vector_builder *get_object_of_type_vector(std::string &label);
+	void print_type(
+			symbol_table_object_type t);
+	field_theory::finite_field
+			*get_object_of_type_finite_field(
+			std::string &label);
+	ring_theory::homogeneous_polynomial_domain
+			*get_object_of_type_polynomial_ring(
+			std::string &label);
+	data_structures::vector_builder *get_object_of_type_vector(
+			std::string &label);
 	void start_memory_debug();
 	void stop_memory_debug();
 

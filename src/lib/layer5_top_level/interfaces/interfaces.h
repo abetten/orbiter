@@ -29,82 +29,108 @@ class activity_description {
 
 
 	int f_finite_field_activity;
-	field_theory::finite_field_activity_description *Finite_field_activity_description;
+	field_theory::finite_field_activity_description
+		*Finite_field_activity_description;
 
 	int f_polynomial_ring_activity;
-	ring_theory::polynomial_ring_activity_description *Polynomial_ring_activity_description;
+	ring_theory::polynomial_ring_activity_description
+		*Polynomial_ring_activity_description;
 
 	int f_projective_space_activity;
-	projective_geometry::projective_space_activity_description *Projective_space_activity_description;
+	projective_geometry::projective_space_activity_description
+		*Projective_space_activity_description;
 
 	int f_orthogonal_space_activity;
-	orthogonal_geometry_applications::orthogonal_space_activity_description *Orthogonal_space_activity_description;
+	orthogonal_geometry_applications::orthogonal_space_activity_description
+		*Orthogonal_space_activity_description;
 
 	int f_group_theoretic_activity;
-	apps_algebra::group_theoretic_activity_description *Group_theoretic_activity_description;
+	apps_algebra::group_theoretic_activity_description
+		*Group_theoretic_activity_description;
 
 	int f_coding_theoretic_activity;
-	apps_coding_theory::coding_theoretic_activity_description *Coding_theoretic_activity_description;
+	apps_coding_theory::coding_theoretic_activity_description
+		*Coding_theoretic_activity_description;
 
 	int f_cubic_surface_activity;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity_description *Cubic_surface_activity_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity_description
+		*Cubic_surface_activity_description;
 
 	int f_quartic_curve_activity;
-	applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity_description *Quartic_curve_activity_description;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity_description
+		*Quartic_curve_activity_description;
 
 	int f_blt_set_activity;
-	orthogonal_geometry_applications::blt_set_activity_description *Blt_set_activity_description;
+	orthogonal_geometry_applications::blt_set_activity_description
+		*Blt_set_activity_description;
 
 	int f_combinatorial_object_activity;
-	apps_combinatorics::combinatorial_object_activity_description *Combinatorial_object_activity_description;
+	apps_combinatorics::combinatorial_object_activity_description
+		*Combinatorial_object_activity_description;
 
 	int f_graph_theoretic_activity;
-	apps_graph_theory::graph_theoretic_activity_description *Graph_theoretic_activity_description;
+	apps_graph_theory::graph_theoretic_activity_description
+		*Graph_theoretic_activity_description;
 
 	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
-	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
+	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity_description
+		*Classification_of_cubic_surfaces_with_double_sixes_activity_description;
 
 	int f_spread_table_activity;
-	spreads::spread_table_activity_description *Spread_table_activity_description;
+	spreads::spread_table_activity_description
+		*Spread_table_activity_description;
 
 	int f_packing_with_symmetry_assumption_activity;
-	packings::packing_was_activity_description *Packing_was_activity_description;
+	packings::packing_was_activity_description
+		*Packing_was_activity_description;
 
 	int f_packing_fixed_points_activity;
-	packings::packing_was_fixpoints_activity_description *Packing_was_fixpoints_activity_description;
+	packings::packing_was_fixpoints_activity_description
+		*Packing_was_fixpoints_activity_description;
 
 	int f_graph_classification_activity;
-	apps_graph_theory::graph_classification_activity_description *Graph_classification_activity_description;
+	apps_graph_theory::graph_classification_activity_description
+		*Graph_classification_activity_description;
 
 	int f_diophant_activity;
-	solvers::diophant_activity_description *Diophant_activity_description;
+	solvers::diophant_activity_description
+		*Diophant_activity_description;
 
 	int f_design_activity;
-	apps_combinatorics::design_activity_description *Design_activity_description;
+	apps_combinatorics::design_activity_description
+		*Design_activity_description;
 
 	int f_large_set_was_activity;
-	apps_combinatorics::large_set_was_activity_description *Large_set_was_activity_description;
+	apps_combinatorics::large_set_was_activity_description
+		*Large_set_was_activity_description;
 
 	int f_formula_activity;
-	expression_parser::formula_activity_description *Formula_activity_description;
+	expression_parser::formula_activity_description
+		*Formula_activity_description;
 
 	int f_BLT_set_classify_activity;
-	orthogonal_geometry_applications::blt_set_classify_activity_description *Blt_set_classify_activity_description;
+	orthogonal_geometry_applications::blt_set_classify_activity_description
+		*Blt_set_classify_activity_description;
 
 	int f_spread_classify_activity;
-	spreads::spread_classify_activity_description *Spread_classify_activity_description;
+	spreads::spread_classify_activity_description
+		*Spread_classify_activity_description;
 
 	int f_spread_activity;
-	spreads::spread_activity_description *Spread_activity_description;
+	spreads::spread_activity_description
+		*Spread_activity_description;
 
 	int f_translation_plane_activity;
-	spreads::translation_plane_activity_description *Translation_plane_activity_description;
+	spreads::translation_plane_activity_description
+		*Translation_plane_activity_description;
 
 	int f_action_on_forms_activity;
-	apps_algebra::action_on_forms_activity_description *Action_on_forms_activity_description;
+	apps_algebra::action_on_forms_activity_description
+		*Action_on_forms_activity_description;
 
 	int f_orbits_activity;
-	apps_algebra::orbits_activity_description *Orbits_activity_description;
+	apps_algebra::orbits_activity_description
+		*Orbits_activity_description;
 
 public:
 	activity_description();
@@ -125,7 +151,8 @@ public:
 	void do_blt_set_activity(int verbose_level);
 	void do_combinatorial_object_activity(int verbose_level);
 	void do_graph_theoretic_activity(int verbose_level);
-	void do_classification_of_cubic_surfaces_with_double_sixes_activity(int verbose_level);
+	void do_classification_of_cubic_surfaces_with_double_sixes_activity(
+			int verbose_level);
 	void do_spread_table_activity(int verbose_level);
 	void do_packing_was_activity(int verbose_level);
 	void do_packing_fixed_points_activity(int verbose_level);
@@ -204,8 +231,10 @@ class interface_algebra {
 
 public:
 	interface_algebra();
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void print_help(int argc,
+			std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
@@ -239,20 +268,17 @@ class interface_coding_theory {
 	int make_bounds_k;
 	int make_bounds_q;
 
-#if 0
-	int f_Hamming_space_distance_matrix;
-	int Hamming_space_n;
-	int Hamming_space_q;
-#endif
-
 	int f_introduce_errors;
-	coding_theory::crc_options_description *introduce_errors_crc_options_description;
+	coding_theory::crc_options_description
+		*introduce_errors_crc_options_description;
 
 	int f_check_errors;
-	coding_theory::crc_options_description *check_errors_crc_options_description;
+	coding_theory::crc_options_description
+		*check_errors_crc_options_description;
 
 	int f_extract_block;
-	coding_theory::crc_options_description *extract_block_crc_options_description;
+	coding_theory::crc_options_description
+		*extract_block_crc_options_description;
 
 	int f_random_noise_in_bitmap_file;
 	std::string random_noise_in_bitmap_file_input;
@@ -293,11 +319,6 @@ class interface_combinatorics {
 	int f_diophant_activity;
 	solvers::diophant_activity_description *Diophant_activity_description;
 
-#if 0
-	int f_bent;
-	int bent_n;
-#endif
-
 	int f_random_permutation;
 	int random_permutation_degree;
 	std::string random_permutation_fname_csv;
@@ -324,10 +345,12 @@ class interface_combinatorics {
 	int tree_of_all_k_subsets_k;
 
 	int f_Delandtsheer_Doyen;
-	apps_combinatorics::delandtsheer_doyen_description *Delandtsheer_Doyen_description;
+	apps_combinatorics::delandtsheer_doyen_description
+		*Delandtsheer_Doyen_description;
 
 	int f_tdo_refinement;
-	combinatorics::tdo_refinement_description *Tdo_refinement_descr;
+	combinatorics::tdo_refinement_description
+		*Tdo_refinement_descr;
 
 	int f_tdo_print;
 	std::string tdo_print_fname;
@@ -376,7 +399,8 @@ class interface_combinatorics {
 	std::string rank_k_subset_text;
 
 	int f_geometry_builder;
-	geometry_builder::geometry_builder_description *Geometry_builder_description;
+	geometry_builder::geometry_builder_description
+		*Geometry_builder_description;
 
 	int f_union;
 	std::string union_set_of_sets_fname;
@@ -386,18 +410,25 @@ class interface_combinatorics {
 
 public:
 	interface_combinatorics();
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void print_help(int argc,
+			std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	void do_diophant(solvers::diophant_description *Descr, int verbose_level);
-	void do_diophant_activity(solvers::diophant_activity_description *Descr, int verbose_level);
-	//void do_bent(int n, int verbose_level);
+	void do_diophant(
+			solvers::diophant_description *Descr,
+			int verbose_level);
+	void do_diophant_activity(
+			solvers::diophant_activity_description *Descr,
+			int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n_file(int n, int verbose_level);
-	void do_Delandtsheer_Doyen(apps_combinatorics::delandtsheer_doyen_description *Descr, int verbose_level);
+	void do_Delandtsheer_Doyen(
+			apps_combinatorics::delandtsheer_doyen_description *Descr,
+			int verbose_level);
 
 };
 
@@ -542,9 +573,12 @@ class interface_cryptography {
 
 public:
 	interface_cryptography();
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int &i, int verbose_level);
+	void print_help(int argc,
+			std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
 
@@ -568,9 +602,12 @@ class interface_povray {
 
 public:
 	interface_povray();
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int &i, int verbose_level);
+	void print_help(int argc,
+			std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
 };
@@ -623,8 +660,10 @@ public:
 
 
 	interface_projective();
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void print_help(int argc,
+			std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
@@ -660,10 +699,12 @@ public:
 
 
 	interface_symbol_table();
-	void init(orbiter_top_level_session *Orbiter_top_level_session,
+	void init(
+			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			std::string *argv, int i, int verbose_level);
 	void read_arguments(
 			int argc, std::string *argv, int &i, int verbose_level);
 	void read_with(
@@ -686,7 +727,8 @@ public:
 class interface_toolkit {
 
 	int f_create_files;
-	orbiter_kernel_system::create_file_description *Create_file_description;
+	orbiter_kernel_system::create_file_description
+		*Create_file_description;
 
 	int f_save_matrix_csv;
 	std::string save_matrix_csv_label;
@@ -785,7 +827,8 @@ class interface_toolkit {
 	std::string plot_function_fname;
 
 	int f_draw_projective_curve;
-	graphics::draw_projective_curve_description *Draw_projective_curve_description;
+	graphics::draw_projective_curve_description
+		*Draw_projective_curve_description;
 
 	int f_tree_draw;
 	graphics::tree_draw_options *Tree_draw_options;
@@ -806,8 +849,11 @@ public:
 
 
 	interface_toolkit();
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void print_help(int argc,
+			std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			std::string *argv,
+			int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
@@ -1129,7 +1175,6 @@ public:
 			int verbose_level);
 	void definition_of_collection(std::string &list_of_objects,
 			int verbose_level);
-	//void definition_of_combinatorial_object(int verbose_level);
 	void definition_of_graph(int verbose_level);
 	void definition_of_code(int verbose_level);
 	void definition_of_spread(int verbose_level);
@@ -1139,7 +1184,8 @@ public:
 	void definition_of_translation_plane(int verbose_level);
 	void definition_of_spread_table(int verbose_level);
 	void definition_of_packing_was(int verbose_level);
-	void definition_of_packing_was_choose_fixed_points(int verbose_level);
+	void definition_of_packing_was_choose_fixed_points(
+			int verbose_level);
 	void definition_of_packing_long_orbits(int verbose_level);
 	void definition_of_graph_classification(int verbose_level);
 	void definition_of_diophant(int verbose_level);

@@ -261,7 +261,8 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 }
 
-long int direct_product::element_image_of(int *Elt,
+long int direct_product::element_image_of(
+		int *Elt,
 		long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -693,7 +693,8 @@ void poset_classification::Kramer_Mesner_matrix_neighboring(
 	}
 }
 
-void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
+void poset_classification::Mtk_via_Mtr_Mrk(
+		int t, int r, int k,
 		long int *Mtr, long int *Mrk, long int *&Mtk,
 		int nb_r1, int nb_c1, int nb_r2, int nb_c2,
 		int &nb_r3, int &nb_c3,
@@ -764,7 +765,8 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 		}
 }
 
-void poset_classification::Mtk_from_MM(long int **pM,
+void poset_classification::Mtk_from_MM(
+		long int **pM,
 	int *Nb_rows, int *Nb_cols,
 	int t, int k,
 	long int *&Mtk, int &nb_r, int &nb_c,

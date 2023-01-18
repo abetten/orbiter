@@ -148,7 +148,8 @@ int action_on_sets::find_set(long int *set, int verbose_level)
 	return j;
 }
 
-long int action_on_sets::compute_image(actions::action *A,
+long int action_on_sets::compute_image(
+		actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

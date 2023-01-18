@@ -50,7 +50,9 @@ orbits_create::~orbits_create()
 {
 }
 
-void orbits_create::init(apps_algebra::orbits_create_description *Descr, int verbose_level)
+void orbits_create::init(
+		apps_algebra::orbits_create_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;

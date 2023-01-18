@@ -69,7 +69,8 @@ quartic_curve_create::~quartic_curve_create()
 
 
 void quartic_curve_create::create_quartic_curve(
-		quartic_curve_create_description *Quartic_curve_descr,
+		quartic_curve_create_description
+			*Quartic_curve_descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -144,8 +145,10 @@ void quartic_curve_create::create_quartic_curve(
 
 
 void quartic_curve_create::init_with_data(
-		quartic_curve_create_description *Descr,
-		projective_geometry::projective_space_with_action *PA,
+		quartic_curve_create_description
+			*Descr,
+		projective_geometry::projective_space_with_action
+			*PA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -258,7 +261,8 @@ void quartic_curve_create::init(
 }
 
 void quartic_curve_create::create_quartic_curve_from_description(
-		quartic_curve_domain_with_action *DomA, int verbose_level)
+		quartic_curve_domain_with_action *DomA,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -407,8 +411,11 @@ void quartic_curve_create::create_quartic_curve_from_description(
 	}
 }
 
-void quartic_curve_create::override_group(std::string &group_order_text,
-		int nb_gens, std::string &gens_text, int verbose_level)
+void quartic_curve_create::override_group(
+		std::string &group_order_text,
+		int nb_gens,
+		std::string &gens_text,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *data;
@@ -448,7 +455,8 @@ void quartic_curve_create::override_group(std::string &group_order_text,
 	}
 }
 
-void quartic_curve_create::create_quartic_curve_by_coefficients(std::string &coefficients_text,
+void quartic_curve_create::create_quartic_curve_by_coefficients(
+		std::string &coefficients_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -548,7 +556,8 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(std::string &coe
 
 }
 
-void quartic_curve_create::create_quartic_curve_by_coefficient_vector(int *eqn15,
+void quartic_curve_create::create_quartic_curve_by_coefficient_vector(
+		int *eqn15,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -56,11 +56,15 @@ void exact_cover::freeself()
 	null();
 }
 
-void exact_cover::init_basic(void *user_data, 
-		actions::action *A_base, actions::action *A_on_blocks,
+void exact_cover::init_basic(
+		void *user_data,
+		actions::action *A_base,
+		actions::action *A_on_blocks,
 	int target_size, int starter_size, 
-	std::string &input_prefix, std::string &output_prefix,
-	std::string &solution_prefix, std::string &base_fname,
+	std::string &input_prefix,
+	std::string &output_prefix,
+	std::string &solution_prefix,
+	std::string &base_fname,
 	int f_lex, 
 	int verbose_level)
 {
@@ -160,7 +164,8 @@ void exact_cover::init_early_test_func(
 }
 
 void exact_cover::init_prepare_function_new(
-	void (*prepare_function_new)(solvers_package::exact_cover *E, int starter_case,
+	void (*prepare_function_new)(
+			solvers_package::exact_cover *E, int starter_case,
 			long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
 			solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
@@ -239,7 +244,8 @@ void exact_cover::set_single_case(int single_case, int verbose_level)
 		}
 }
 
-void exact_cover::randomize(std::string &random_permutation_fname,
+void exact_cover::randomize(
+		std::string &random_permutation_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -272,7 +278,8 @@ void exact_cover::randomize(std::string &random_permutation_fname,
 }
 
 void exact_cover::add_solution_test_function(
-	int (*solution_test_func)(exact_cover *EC,
+	int (*solution_test_func)(
+			exact_cover *EC,
 			long int *S, int len, void *data, int verbose_level),
 	void *solution_test_func_data,
 	int verbose_level)
@@ -288,7 +295,8 @@ void exact_cover::add_solution_test_function(
 }
 
 void exact_cover::add_late_cleanup_function(
-	void (*late_cleanup_function)(exact_cover *E,
+	void (*late_cleanup_function)(
+			exact_cover *E,
 			int starter_case, int verbose_level)
 	)
 {
@@ -298,10 +306,13 @@ void exact_cover::add_late_cleanup_function(
 
 
 
-void exact_cover::compute_liftings_new(int f_solve,
+void exact_cover::compute_liftings_new(
+		int f_solve,
 	int f_save, int f_read_instead,
-	int f_draw_system, std::string &fname_system,
-	int f_write_tree, std::string &fname_tree, int verbose_level)
+	int f_draw_system,
+	std::string &fname_system,
+	int f_write_tree,
+	std::string &fname_tree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -566,10 +577,12 @@ void exact_cover::compute_liftings_new(int f_solve,
 }
 
 
-void exact_cover::compute_liftings_single_case_new(int starter_case, 
+void exact_cover::compute_liftings_single_case_new(
+		int starter_case,
 	int f_solve, int f_save, int f_read_instead, 
 	int &nb_col, 
-	long int *&Solutions, int &sol_length, int &nb_sol, int &nb_backtrack, int &dt,
+	long int *&Solutions, int &sol_length,
+	int &nb_sol, int &nb_backtrack, int &dt,
 	int f_draw_system, std::string &fname_system,
 	int f_write_tree, std::string &fname_tree,
 	int verbose_level)

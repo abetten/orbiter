@@ -79,7 +79,8 @@ long int geometry_global::nb_affine_lines(int n, int q)
 }
 
 
-long int geometry_global::AG_element_rank(int q, int *v, int stride, int len)
+long int geometry_global::AG_element_rank(
+		int q, int *v, int stride, int len)
 {
 	int i;
 	long int a;
@@ -98,7 +99,8 @@ long int geometry_global::AG_element_rank(int q, int *v, int stride, int len)
 	return a;
 }
 
-void geometry_global::AG_element_unrank(int q, int *v, int stride, int len, long int a)
+void geometry_global::AG_element_unrank(
+		int q, int *v, int stride, int len, long int a)
 {
 	int i;
 	long int b;
@@ -117,7 +119,8 @@ void geometry_global::AG_element_unrank(int q, int *v, int stride, int len, long
 }
 
 
-int geometry_global::AG_element_next(int q, int *v, int stride, int len)
+int geometry_global::AG_element_next(
+		int q, int *v, int stride, int len)
 {
 	int i;
 
@@ -141,7 +144,8 @@ int geometry_global::AG_element_next(int q, int *v, int stride, int len)
 
 
 
-void geometry_global::AG_element_rank_longinteger(int q,
+void geometry_global::AG_element_rank_longinteger(
+		int q,
 		int *v, int stride, int len,
 		ring_theory::longinteger_object &a)
 {
@@ -168,7 +172,8 @@ void geometry_global::AG_element_rank_longinteger(int q,
 	}
 }
 
-void geometry_global::AG_element_unrank_longinteger(int q,
+void geometry_global::AG_element_unrank_longinteger(
+		int q,
 		int *v, int stride, int len,
 		ring_theory::longinteger_object &a)
 {
@@ -191,7 +196,8 @@ void geometry_global::AG_element_unrank_longinteger(int q,
 }
 
 
-int geometry_global::PG_element_modified_is_in_subspace(int n, int m, int *v)
+int geometry_global::PG_element_modified_is_in_subspace(
+		int n, int m, int *v)
 {
 	int j;
 
@@ -1791,7 +1797,8 @@ void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 #endif
 
 
-void geometry_global::do_cheat_sheet_hermitian(field_theory::finite_field *F,
+void geometry_global::do_cheat_sheet_hermitian(
+		field_theory::finite_field *F,
 		int projective_dimension,
 		int verbose_level)
 // creates a hermitian object
@@ -1839,7 +1846,8 @@ void geometry_global::do_cheat_sheet_hermitian(field_theory::finite_field *F,
 }
 
 void geometry_global::do_create_desarguesian_spread(
-		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
 		int m,
 		int verbose_level)
 // creates field_theory::subfield_structure and desarguesian_spread objects
@@ -1909,7 +1917,8 @@ void geometry_global::do_create_desarguesian_spread(
 	}
 }
 
-void geometry_global::create_decomposition_of_projective_plane(std::string &fname_base,
+void geometry_global::create_decomposition_of_projective_plane(
+		std::string &fname_base,
 		projective_space *P,
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,

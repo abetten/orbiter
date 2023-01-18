@@ -27,7 +27,8 @@ class classification_of_cubic_surfaces_with_double_sixes_activity_description {
 public:
 
 	int f_report;
-	poset_classification::poset_classification_report_options *report_options;
+	poset_classification::poset_classification_report_options
+		*report_options;
 
 	int f_identify_Eckardt;
 
@@ -38,11 +39,14 @@ public:
 	int f_identify_general_abcd;
 
 	int f_isomorphism_testing;
-	cubic_surfaces_in_general::surface_create_description *isomorphism_testing_surface1;
-	cubic_surfaces_in_general::surface_create_description *isomorphism_testing_surface2;
+	cubic_surfaces_in_general::surface_create_description
+		*isomorphism_testing_surface1;
+	cubic_surfaces_in_general::surface_create_description
+		*isomorphism_testing_surface2;
 
 	int f_recognize;
-	cubic_surfaces_in_general::surface_create_description *recognize_surface;
+	cubic_surfaces_in_general::surface_create_description
+		*recognize_surface;
 
 	int f_create_source_code;
 
@@ -69,29 +73,35 @@ public:
 class classification_of_cubic_surfaces_with_double_sixes_activity {
 public:
 
-	classification_of_cubic_surfaces_with_double_sixes_activity_description *Descr;
+	classification_of_cubic_surfaces_with_double_sixes_activity_description
+		*Descr;
 	surface_classify_wedge *SCW;
 
 	classification_of_cubic_surfaces_with_double_sixes_activity();
 	~classification_of_cubic_surfaces_with_double_sixes_activity();
 	void init(
-			classification_of_cubic_surfaces_with_double_sixes_activity_description *Descr,
+			classification_of_cubic_surfaces_with_double_sixes_activity_description
+				*Descr,
 			surface_classify_wedge *SCW,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void report(
-			poset_classification::poset_classification_report_options *report_options,
+			poset_classification::poset_classification_report_options
+				*report_options,
 			int verbose_level);
 	void do_surface_identify_Eckardt(int verbose_level);
 	void do_surface_identify_F13(int verbose_level);
 	void do_surface_identify_Bes(int verbose_level);
 	void do_surface_identify_general_abcd(int verbose_level);
 	void do_surface_isomorphism_testing(
-			cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph1,
-			cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph2,
+			cubic_surfaces_in_general::surface_create_description
+				*surface_descr_isomorph1,
+			cubic_surfaces_in_general::surface_create_description
+				*surface_descr_isomorph2,
 			int verbose_level);
 	void do_recognize(
-			cubic_surfaces_in_general::surface_create_description *surface_descr,
+			cubic_surfaces_in_general::surface_create_description
+				*surface_descr,
 			int verbose_level);
 	void do_write_source_code(int verbose_level);
 	void do_sweep_Cayley(
@@ -212,17 +222,24 @@ public:
 
 	classify_double_sixes();
 	~classify_double_sixes();
-	void init(cubic_surfaces_in_general::surface_with_action *Surf_A,
-			poset_classification::poset_classification_control *Control,
+	void init(
+			cubic_surfaces_in_general::surface_with_action
+				*Surf_A,
+			poset_classification::poset_classification_control
+				*Control,
 			int verbose_level);
 	void compute_neighbors(int verbose_level);
-	void make_spreadsheet_of_neighbors(data_structures::spreadsheet *&Sp,
+	void make_spreadsheet_of_neighbors(
+			data_structures::spreadsheet *&Sp,
 		int verbose_level);
 	void classify_partial_ovoids(
 		int verbose_level);
-	void report(std::ostream &ost,
-			graphics::layered_graph_draw_options *draw_options,
-			poset_classification::poset_classification_report_options *Opt,
+	void report(
+			std::ostream &ost,
+			graphics::layered_graph_draw_options
+				*draw_options,
+			poset_classification::poset_classification_report_options
+				*Opt,
 			int verbose_level);
 	void partial_ovoid_test_early(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -286,24 +303,32 @@ public:
 	surface_classify_wedge();
 	~surface_classify_wedge();
 	void init(
-			cubic_surfaces_in_general::surface_with_action *Surf_A,
-		poset_classification::poset_classification_control *Control,
+			cubic_surfaces_in_general::surface_with_action
+				*Surf_A,
+		poset_classification::poset_classification_control
+			*Control,
 		int verbose_level);
 	void do_classify_double_sixes(int verbose_level);
 	void do_classify_surfaces(int verbose_level);
-	void classify_surfaces_from_double_sixes(int verbose_level);
+	void classify_surfaces_from_double_sixes(
+			int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void derived_arcs(int verbose_level);
-	void starter_configurations_which_are_involved(int iso_type,
-		int *&Starter_configuration_idx, int &nb_starter_conf, int verbose_level);
-	void write_file(std::ofstream &fp, int verbose_level);
-	void read_file(std::ifstream &fp, int verbose_level);
+	void starter_configurations_which_are_involved(
+			int iso_type,
+		int *&Starter_configuration_idx,
+		int &nb_starter_conf, int verbose_level);
+	void write_file(
+			std::ofstream &fp, int verbose_level);
+	void read_file(
+			std::ifstream &fp, int verbose_level);
 
 	void identify_Eckardt_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
 	void identify_Bes_and_print_table(int verbose_level);
-	void identify_Eckardt(int *Iso_type, int *Nb_lines, int verbose_level);
+	void identify_Eckardt(
+			int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_F13(
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_Bes(
@@ -317,8 +342,12 @@ public:
 	void identify_surface(int *coeff_of_given_surface,
 		int &isomorphic_to, int *Elt_isomorphism,
 		int verbose_level);
-	void latex_surfaces(std::ostream &ost, int f_with_stabilizers, int verbose_level);
-	void report_surface(std::ostream &ost, int orbit_index, int verbose_level);
+	void latex_surfaces(
+			std::ostream &ost,
+			int f_with_stabilizers, int verbose_level);
+	void report_surface(
+			std::ostream &ost,
+			int orbit_index, int verbose_level);
 	void generate_source_code(int verbose_level);
 		// no longer produces nb_E[] and single_six[]
 	void generate_history(int verbose_level);
@@ -332,17 +361,22 @@ public:
 			graphics::layered_graph_draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
-	void report(std::ostream &ost, int f_with_stabilizers,
+	void report(
+			std::ostream &ost,
+			int f_with_stabilizers,
 			graphics::layered_graph_draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
 	void create_report_double_sixes(int verbose_level);
 	void test_isomorphism(
-			cubic_surfaces_in_general::surface_create_description *Descr1,
-			cubic_surfaces_in_general::surface_create_description *Descr2,
+			cubic_surfaces_in_general::surface_create_description
+				*Descr1,
+			cubic_surfaces_in_general::surface_create_description
+				*Descr2,
 			int verbose_level);
 	void recognition(
-			cubic_surfaces_in_general::surface_create_description *Descr,
+			cubic_surfaces_in_general::surface_create_description
+				*Descr,
 			int verbose_level);
 	void sweep_Cayley(int verbose_level);
 	void identify_general_abcd(

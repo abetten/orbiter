@@ -96,7 +96,8 @@ void canonical_form_classifier::count_nb_objects_to_test(int verbose_level)
 }
 
 
-void canonical_form_classifier::classify(canonical_form_classifier_description *Descr,
+void canonical_form_classifier::classify(
+		canonical_form_classifier_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1132,7 +1133,8 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 void canonical_form_classifier::generate_source_code(
 		std::string &fname_base,
-		data_structures::tally_vector_data *Classification_of_quartic_curves,
+		data_structures::tally_vector_data
+			*Classification_of_quartic_curves,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1494,7 +1496,8 @@ void canonical_form_classifier::report(std::string &fname_base, int verbose_leve
 
 }
 
-void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_base, int verbose_level)
+void canonical_form_classifier::report2(std::ostream &ost,
+		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	std::string label;

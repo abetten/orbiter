@@ -101,7 +101,8 @@ poset_of_orbits::~poset_of_orbits()
 
 
 void poset_of_orbits::init(poset_classification *PC,
-		int nb_poset_orbit_nodes, int sz, int max_set_size, long int t0,
+		int nb_poset_orbit_nodes,
+		int sz, int max_set_size, long int t0,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -663,7 +664,8 @@ void poset_of_orbits::poset_orbit_node_depth_breadth_perm_and_inverse(
 
 void poset_of_orbits::read_memory_object(
 		int &depth_completed,
-		orbiter_kernel_system::memory_object *m, int &nb_group_elements,
+		orbiter_kernel_system::memory_object *m,
+		int &nb_group_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -779,7 +781,8 @@ void poset_of_orbits::read_memory_object(
 
 void poset_of_orbits::write_memory_object(
 		int depth_completed,
-		orbiter_kernel_system::memory_object *m, int &nb_group_elements,
+		orbiter_kernel_system::memory_object *m,
+		int &nb_group_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1380,7 +1383,8 @@ void poset_of_orbits::write_lvl_file_with_candidates(
 }
 
 void poset_of_orbits::get_orbit_reps_at_level(
-		int lvl, long int *&Data, int &nb_reps, int verbose_level)
+		int lvl, long int *&Data,
+		int &nb_reps, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1554,7 +1558,8 @@ void poset_of_orbits::log_nodes_for_treefile(
 	}
 }
 
-void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname,
+void poset_of_orbits::save_representatives_at_level_to_csv(
+		std::string &fname,
 		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

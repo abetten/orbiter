@@ -103,7 +103,8 @@ upstep_work::~upstep_work()
 		}
 }
 
-void upstep_work::init(poset_classification *gen, 
+void upstep_work::init(
+		poset_classification *gen,
 	int size,
 	int prev,
 	int prev_ex,
@@ -231,7 +232,8 @@ void upstep_work::handle_extension(
 		}
 }
 
-void upstep_work::handle_extension_fusion_type(int verbose_level)
+void upstep_work::handle_extension_fusion_type(
+		int verbose_level)
 // called from upstep_work::handle_extension
 // Handles the extension 'cur_ex' in node 'prev'.
 {

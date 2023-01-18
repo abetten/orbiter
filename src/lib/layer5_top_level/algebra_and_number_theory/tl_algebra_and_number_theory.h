@@ -65,13 +65,12 @@ public:
 
 	apps_algebra::action_on_forms *AF;
 
-	//any_group *AG_secondary; // used in is_subgroup_of, coset_reps
-
 
 
 	action_on_forms_activity();
 	~action_on_forms_activity();
-	void init(action_on_forms_activity_description *Descr,
+	void init(
+			action_on_forms_activity_description *Descr,
 			apps_algebra::action_on_forms *AF,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -154,7 +153,6 @@ public:
 	void create_action_on_forms(
 			action_on_forms_description *Descr,
 			int verbose_level);
-	//void algebraic_normal_form(int *func, int len, int verbose_level);
 	void orbits_on_functions(
 			int *The_functions, int nb_functions, int len,
 			int verbose_level);
@@ -208,7 +206,8 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
-	void classes_GL(field_theory::finite_field *F,
+	void classes_GL(
+			field_theory::finite_field *F,
 			int d, int f_no_eigenvalue_one, int verbose_level);
 	void do_normal_form(int q, int d,
 			int f_no_eigenvalue_one, int *data, int data_sz,
@@ -218,9 +217,11 @@ public:
 			int verbose_level);
 	void do_identify_all(int q, int d,
 			int f_no_eigenvalue_one, int verbose_level);
-	void do_random(int q, int d,
+	void do_random(
+			int q, int d,
 			int f_no_eigenvalue_one, int verbose_level);
-	void group_table(int q, int d, int f_poly, std::string &poly,
+	void group_table(
+			int q, int d, int f_poly, std::string &poly,
 			int f_no_eigenvalue_one, int verbose_level);
 	void centralizer_brute_force(int q, int d,
 			int elt_idx, int verbose_level);
@@ -238,7 +239,8 @@ public:
 			data_structures_groups::vector_ge *gens,
 		int *primes, int verbose_level);
 
-	void do_eigenstuff(field_theory::finite_field *F,
+	void do_eigenstuff(
+			field_theory::finite_field *F,
 			int size, int *Data, int verbose_level);
 	void A5_in_PSL_(int q, int verbose_level);
 	void A5_in_PSL_2_q(int q,
@@ -270,7 +272,8 @@ public:
 			int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
 	void report_tactical_decomposition_by_automorphism_group(
-			std::ostream &ost, geometry::projective_space *P,
+			std::ostream &ost,
+			geometry::projective_space *P,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
@@ -899,10 +902,12 @@ public:
 
 	group_theoretic_activity();
 	~group_theoretic_activity();
-	void init_group(group_theoretic_activity_description *Descr,
+	void init_group(
+			group_theoretic_activity_description *Descr,
 			any_group *AG,
 			int verbose_level);
-	void init_secondary_group(group_theoretic_activity_description *Descr,
+	void init_secondary_group(
+			group_theoretic_activity_description *Descr,
 			any_group *AG_secondary,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -1016,11 +1021,13 @@ public:
 
 	orbit_cascade();
 	~orbit_cascade();
-	void init(int N, int k, any_group *G,
+	void init(
+			int N, int k, any_group *G,
 			std::string &Control_label,
 			int verbose_level);
 	void downstep(int verbose_level);
-	void upstep(std::vector<long int> &Ago, int verbose_level);
+	void upstep(
+			std::vector<long int> &Ago, int verbose_level);
 
 };
 
@@ -1209,7 +1216,9 @@ public:
 
 	orbits_create();
 	~orbits_create();
-	void init(apps_algebra::orbits_create_description *Descr, int verbose_level);
+	void init(
+			apps_algebra::orbits_create_description *Descr,
+			int verbose_level);
 
 };
 
@@ -1264,9 +1273,11 @@ public:
 			int verbose_level);
 	void compute_points(int verbose_level);
 	void report(int verbose_level);
-	void report_detailed_list(std::ostream &ost,
+	void report_detailed_list(
+			std::ostream &ost,
 			int verbose_level);
-	void export_something(std::string &what, int data1,
+	void export_something(
+			std::string &what, int data1,
 			std::string &fname, int verbose_level);
 	void export_something_worker(
 			std::string &fname_base,
@@ -1360,7 +1371,8 @@ public:
 
 	vector_ge_builder();
 	~vector_ge_builder();
-	void init(data_structures_groups::vector_ge_description *Descr,
+	void init(
+			data_structures_groups::vector_ge_description *Descr,
 			int verbose_level);
 
 };

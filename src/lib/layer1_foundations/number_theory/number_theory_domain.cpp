@@ -462,7 +462,8 @@ int number_theory_domain::i_power_j(int i, int j)
 }
 
 
-void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_max, int verbose_level)
+void number_theory_domain::do_eulerfunction_interval(
+		long int n_min, long int n_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int n, i;
@@ -944,7 +945,10 @@ int number_theory_domain::nb_distinct_prime_factors(long int a)
 
 
 
-void number_theory_domain::factor_lint(long int a, vector<long int> &primes, vector<int> &exponents)
+void number_theory_domain::factor_lint(
+		long int a,
+		std::vector<long int> &primes,
+		std::vector<int> &exponents)
 {
 	int p, p0;
 
@@ -1710,7 +1714,8 @@ long int number_theory_domain::sqrt_mod_simple(long int a, long int p)
 	exit(1);
 }
 #endif
-void number_theory_domain::print_factorization(int nb_primes, int *primes, int *exponents)
+void number_theory_domain::print_factorization(
+		int nb_primes, int *primes, int *exponents)
 {
 	int i;
 	
@@ -1725,8 +1730,10 @@ void number_theory_domain::print_factorization(int nb_primes, int *primes, int *
 	}
 }
 
-void number_theory_domain::print_longfactorization(int nb_primes,
-		ring_theory::longinteger_object *primes, int *exponents)
+void number_theory_domain::print_longfactorization(
+		int nb_primes,
+		ring_theory::longinteger_object *primes,
+		int *exponents)
 {
 	int i;
 	
@@ -1899,7 +1906,8 @@ int number_theory_domain::get_prime_from_table(int idx)
 
 long int number_theory_domain::Chinese_Remainders(
 		std::vector<long int> &Remainders,
-		std::vector<long int> &Moduli, long int &M, int verbose_level)
+		std::vector<long int> &Moduli,
+		long int &M, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2058,7 +2066,8 @@ int number_theory_domain::nb_primes(int n)
 	return i;
 }
 
-void number_theory_domain::cyclotomic_set(std::vector<int> &cyclotomic_set,
+void number_theory_domain::cyclotomic_set(
+		std::vector<int> &cyclotomic_set,
 		int a, int q, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2089,7 +2098,8 @@ void number_theory_domain::cyclotomic_set(std::vector<int> &cyclotomic_set,
 }
 
 
-void number_theory_domain::elliptic_curve_addition(field_theory::finite_field *F,
+void number_theory_domain::elliptic_curve_addition(
+		field_theory::finite_field *F,
 		int b, int c,
 	int x1, int x2, int x3,
 	int y1, int y2, int y3,
@@ -2164,7 +2174,8 @@ done:
 	}
 }
 
-void number_theory_domain::elliptic_curve_point_multiple(field_theory::finite_field *F,
+void number_theory_domain::elliptic_curve_point_multiple(
+		field_theory::finite_field *F,
 		int b, int c, int n,
 	int x1, int y1, int z1,
 	int &x3, int &y3, int &z3,
@@ -2296,8 +2307,10 @@ int number_theory_domain::elliptic_curve_evaluate_RHS(
 	return e;
 }
 
-void number_theory_domain::elliptic_curve_points(field_theory::finite_field *F,
-		int b, int c, int &nb, int *&T, int verbose_level)
+void number_theory_domain::elliptic_curve_points(
+		field_theory::finite_field *F,
+		int b, int c, int &nb, int *&T,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//finite_field F;
@@ -2406,7 +2419,8 @@ void number_theory_domain::elliptic_curve_points(field_theory::finite_field *F,
 	}
 }
 
-void number_theory_domain::elliptic_curve_all_point_multiples(field_theory::finite_field *F,
+void number_theory_domain::elliptic_curve_all_point_multiples(
+		field_theory::finite_field *F,
 		int b, int c, int &order,
 	int x1, int y1, int z1,
 	std::vector<std::vector<int> > &Pts,
@@ -2455,7 +2469,8 @@ void number_theory_domain::elliptic_curve_all_point_multiples(field_theory::fini
 	}
 }
 
-int number_theory_domain::elliptic_curve_discrete_log(field_theory::finite_field *F,
+int number_theory_domain::elliptic_curve_discrete_log(
+		field_theory::finite_field *F,
 		int b, int c,
 	int x1, int y1, int z1,
 	int x3, int y3, int z3,
@@ -2497,7 +2512,8 @@ int number_theory_domain::elliptic_curve_discrete_log(field_theory::finite_field
 	return n;
 }
 
-int number_theory_domain::eulers_totient_function(int n, int verbose_level)
+int number_theory_domain::eulers_totient_function(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_primes, *primes, *exponents;
@@ -2538,7 +2554,9 @@ int number_theory_domain::eulers_totient_function(int n, int verbose_level)
 	return R.as_int();
 }
 
-void number_theory_domain::do_jacobi(long int jacobi_top, long int jacobi_bottom, int verbose_level)
+void number_theory_domain::do_jacobi(
+		long int jacobi_top,
+		long int jacobi_bottom, int verbose_level)
 {
 	string fname;
 	string author;

@@ -216,7 +216,8 @@ int poset_classification::main(int t0,
 	return size;
 }
 
-int poset_classification::compute_orbits(int from_level, int to_level,
+int poset_classification::compute_orbits(
+		int from_level, int to_level,
 		int schreier_depth,
 		int f_use_invariant_subset_if_available,
 		int verbose_level)
@@ -562,7 +563,8 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 }
 #endif
 
-void poset_classification::recognize(std::string &set_to_recognize,
+void poset_classification::recognize(
+		std::string &set_to_recognize,
 		int h, int nb_to_recognize, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -642,7 +644,8 @@ void poset_classification::recognize(std::string &set_to_recognize,
 	}
 }
 
-void poset_classification::extend_level(int size,
+void poset_classification::extend_level(
+		int size,
 	int f_create_schreier_vector, 
 	int f_use_invariant_subset_if_available, 
 	int f_debug, 
@@ -716,7 +719,8 @@ void poset_classification::extend_level(int size,
 
 }
 
-void poset_classification::compute_flag_orbits(int size,
+void poset_classification::compute_flag_orbits(
+		int size,
 	int f_create_schreier_vector,
 	int f_use_invariant_subset_if_available, 
 	int verbose_level)
@@ -839,7 +843,8 @@ void poset_classification::compute_flag_orbits(int size,
 
 }
 
-void poset_classification::upstep(int size, 
+void poset_classification::upstep(
+		int size,
 	int f_debug, 
 	int verbose_level)
 // calls extend_node

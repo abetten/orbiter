@@ -131,7 +131,7 @@ enum find_isomorphism_result {
 #include "../layer4_classification/orbits/orbits.h"
 #include "../layer4_classification/poset_classification/poset_classification.h"
 #include "../layer4_classification/set_stabilizer/set_stabilizer.h"
-#include "../layer4_classification/solver/solver.h"
+#include "../layer4_classification/solver/l4_solver.h"
 
 
 

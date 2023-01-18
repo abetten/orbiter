@@ -18,7 +18,8 @@ namespace packings {
 
 
 void packing_classify::compute_klein_invariants(
-		isomorph::isomorph *Iso, int f_split, int split_r, int split_m,
+		isomorph::isomorph *Iso,
+		int f_split, int split_r, int split_m,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -96,7 +97,8 @@ void packing_classify::compute_klein_invariants(
 }
 
 void packing_classify::klein_invariants_fname(
-		std::string &fname, std::string &prefix, int iso_cnt)
+		std::string &fname,
+		std::string &prefix, int iso_cnt)
 {
 	fname.assign(prefix);
 	char str[1000];
@@ -104,7 +106,8 @@ void packing_classify::klein_invariants_fname(
 	fname.append(str);
 }
 
-void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
+void packing_classify::compute_and_save_klein_invariants(
+		std::string &prefix,
 	int iso_cnt, 
 	long int *data, int data_size, int verbose_level)
 {
@@ -221,7 +224,8 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 }
 
 
-void packing_classify::report(isomorph::isomorph *Iso, int verbose_level)
+void packing_classify::report(
+		isomorph::isomorph *Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -255,7 +259,8 @@ void packing_classify::report(isomorph::isomorph *Iso, int verbose_level)
 	}
 }
 
-void packing_classify::report_whole(isomorph::isomorph *Iso,
+void packing_classify::report_whole(
+		isomorph::isomorph *Iso,
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -330,7 +335,9 @@ void packing_classify::report_whole(isomorph::isomorph *Iso,
 }
 
 void packing_classify::report_title_page(
-		isomorph::isomorph *Iso, std::ostream &ost, int verbose_level)
+		isomorph::isomorph *Iso,
+		std::ostream &ost,
+		int verbose_level)
 {
 	int f_book = TRUE;
 	int f_title = TRUE;
@@ -359,7 +366,8 @@ void packing_classify::report_title_page(
 }
 
 void packing_classify::report_packings_by_ago(
-		isomorph::isomorph *Iso, std::ostream &ost,
+		isomorph::isomorph *Iso,
+		std::ostream &ost,
 	invariants_packing *inv,
 	data_structures::tally &C_ago, int verbose_level)
 {
@@ -739,7 +747,8 @@ void packing_classify::report_klein_invariants(
 	}
 }
 
-void packing_classify::report_stabilizer(isomorph::isomorph &Iso,
+void packing_classify::report_stabilizer(
+		isomorph::isomorph &Iso,
 		std::ostream &ost, int orbit, int verbose_level)
 {
 	groups::sims *Stab;

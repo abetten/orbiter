@@ -46,17 +46,21 @@ public:
 	int *label;
 
 	int f_has_print_function;
-	void (*print_function)(int *object, int sz, void *print_function_data);
+	void (*print_function)(int *object,
+			int sz, void *print_function_data);
 	void *print_function_data;
 
 	int f_has_reduction;
-	void (*reduction_function)(int *object, void *reduction_function_data);
+	void (*reduction_function)(int *object,
+			void *reduction_function_data);
 	void *reduction_function_data;
 
 
 	orbit_of_equations();
 	~orbit_of_equations();
-	void init(actions::action *A, field_theory::finite_field *F,
+	void init(
+			actions::action *A,
+			field_theory::finite_field *F,
 			induced_actions::action_on_homogeneous_polynomials *AonHPD,
 		groups::strong_generators *SG, int *coeff_in,
 		int verbose_level);
@@ -67,7 +71,8 @@ public:
 	void get_transporter(int idx, int *transporter, int verbose_level);
 		// transporter is an element which maps 
 		// the orbit representative to the given subspace.
-	void get_random_schreier_generator(int *Elt, int verbose_level);
+	void get_random_schreier_generator(
+			int *Elt, int verbose_level);
 	void get_canonical_form(
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
@@ -75,8 +80,10 @@ public:
 			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	groups::strong_generators *stabilizer_orbit_rep(
-			ring_theory::longinteger_object &full_group_order, int verbose_level);
-	void stabilizer_orbit_rep_work(actions::action *default_action,
+			ring_theory::longinteger_object &full_group_order,
+			int verbose_level);
+	void stabilizer_orbit_rep_work(
+			actions::action *default_action,
 			ring_theory::longinteger_object &go,
 			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
@@ -136,25 +143,33 @@ public:
 
 	orbit_of_sets();
 	~orbit_of_sets();
-	void init(actions::action *A, actions::action *A2,
+	void init(actions::action *A,
+			actions::action *A2,
 			long int *set, int sz,
-			data_structures_groups::vector_ge *gens, int verbose_level);
+			data_structures_groups::vector_ge *gens,
+			int verbose_level);
 	void compute(int verbose_level);
 	void dump_tables_of_hash_values();
-	void get_table_of_orbits(long int *&Table, int &orbit_length,
+	void get_table_of_orbits(
+			long int *&Table, int &orbit_length,
 		int &set_size, int verbose_level);
-	void get_table_of_orbits_and_hash_values(long int *&Table,
+	void get_table_of_orbits_and_hash_values(
+			long int *&Table,
 			int &orbit_length, int &set_size, int verbose_level);
 	void make_table_of_coset_reps(
-			data_structures_groups::vector_ge *&Coset_reps, int verbose_level);
+			data_structures_groups::vector_ge *&Coset_reps,
+			int verbose_level);
 	void coset_rep(int j);
 		// result is in cosetrep
 		// determines an element in the group
 		// that moves the orbit representative
 	// to the j-th element in the orbit.
-	void get_orbit_of_points(std::vector<long int> &Orbit, int verbose_level);
-	void get_prev(std::vector<int> &Prev, int verbose_level);
-	void get_label(std::vector<int> &Label, int verbose_level);
+	void get_orbit_of_points(
+			std::vector<long int> &Orbit, int verbose_level);
+	void get_prev(
+			std::vector<int> &Prev, int verbose_level);
+	void get_label(
+			std::vector<int> &Label, int verbose_level);
 };
 
 
@@ -224,7 +239,9 @@ public:
 
 	orbit_of_subspaces();
 	~orbit_of_subspaces();
-	void init(actions::action *A, actions::action *A2, field_theory::finite_field *F,
+	void init(actions::action *A,
+			actions::action *A2,
+			field_theory::finite_field *F,
 		int *subspace, int k, int n, 
 		int f_has_desired_pivots, int *desired_pivots, 
 		int f_has_rank_functions, void *rank_unrank_data, 
@@ -238,7 +255,9 @@ public:
 		data_structures_groups::vector_ge *gens,
 		int verbose_level);
 	void init_lint(
-			actions::action *A, actions::action *A2, field_theory::finite_field *F,
+			actions::action *A,
+			actions::action *A2,
+			field_theory::finite_field *F,
 		long int *subspace_by_rank, int k, int n,
 		int f_has_desired_pivots, int *desired_pivots,
 		int f_has_rank_functions, void *rank_unrank_data,
@@ -253,10 +272,13 @@ public:
 		int verbose_level);
 	int rank_vector(int *v, int verbose_level);
 	long int rank_vector_lint(int *v, int verbose_level);
-	void unrank_vector(int rk, int *v, int verbose_level);
-	void unrank_vector_lint(long int rk, int *v, int verbose_level);
+	void unrank_vector(
+			int rk, int *v, int verbose_level);
+	void unrank_vector_lint(
+			long int rk, int *v, int verbose_level);
 	void unrank_subspace(
-			int subspace_idx, int *subspace_basis, int verbose_level);
+			int subspace_idx,
+			int *subspace_basis, int verbose_level);
 	void rank_subspace(
 			int *subspace_basis, int verbose_level);
 	uint32_t hash_subspace();
@@ -273,22 +295,32 @@ public:
 			int *subspace, int *rk, int verbose_level);
 	void rref_and_rank_lint(
 			int *subspace, long int *rk, int verbose_level);
-	void map_a_subspace(int *basis, int *image_basis, int *Elt,
+	void map_a_subspace(
+			int *basis, int *image_basis, int *Elt,
 		int verbose_level);
 	void print_orbit();
-	int rank_hash_and_find(int *subspace, int &idx, uint32_t &h, int verbose_level);
+	int rank_hash_and_find(
+			int *subspace,
+			int &idx, uint32_t &h, int verbose_level);
 	void compute(int verbose_level);
-	void get_transporter(int idx, int *transporter, int verbose_level);
+	void get_transporter(
+			int idx, int *transporter, int verbose_level);
 		// transporter is an element which maps the orbit 
 		// representative to the given subspace.
 	int find_subspace(
-			int *subspace_ranks, int &idx, int verbose_level);
+			int *subspace_ranks,
+			int &idx, int verbose_level);
 	int find_subspace_lint(
-			long int *subspace_ranks, int &idx, int verbose_level);
-	void get_random_schreier_generator(int *Elt, int verbose_level);
+			long int *subspace_ranks,
+			int &idx, int verbose_level);
+	void get_random_schreier_generator(
+			int *Elt, int verbose_level);
 	groups::strong_generators *stabilizer_orbit_rep(
-			ring_theory::longinteger_object &full_group_order, int verbose_level);
-	void compute_stabilizer(actions::action *default_action, ring_theory::longinteger_object &go,
+			ring_theory::longinteger_object &full_group_order,
+			int verbose_level);
+	void compute_stabilizer(
+			actions::action *default_action,
+			ring_theory::longinteger_object &go,
 			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 };

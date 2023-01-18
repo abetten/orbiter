@@ -223,9 +223,11 @@ public:
 	void print_set(int size, int *set);
 	void print_suspicious_point_subset(int size, int *set);
 	void log_position_and_choice(int depth,
-			unsigned long int  counter_save, unsigned long int counter);
+			unsigned long int  counter_save,
+			unsigned long int counter);
 	void log_position(int depth,
-			unsigned long int  counter_save, unsigned long int counter);
+			unsigned long int  counter_save,
+			unsigned long int counter);
 	void log_choice(int depth);
 	void swap_point(int idx1, int idx2);
 	void degree_of_point_statistic(int depth, int nb_points, 

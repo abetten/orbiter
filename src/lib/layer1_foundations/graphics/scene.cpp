@@ -315,7 +315,8 @@ double scene::point_distance_from_origin(int pt_idx)
 	return d;
 }
 
-double scene::distance_euclidean_point_to_point(int pt1_idx, int pt2_idx)
+double scene::distance_euclidean_point_to_point(
+		int pt1_idx, int pt2_idx)
 {
 	numerics Num;
 	double d;
@@ -944,7 +945,8 @@ void scene::draw_lines_cij(std::ostream &ost)
 	draw_lines_cij_with_selection(selection, 15, ost);
 } 
 
-void scene::draw_lines_cij_with_offset(int offset, int number_of_lines, std::ostream &ost)
+void scene::draw_lines_cij_with_offset(int offset,
+		int number_of_lines, std::ostream &ost)
 {
 	int selection[15];
 	int i;

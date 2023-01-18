@@ -38,21 +38,6 @@ action_by_restriction::~action_by_restriction()
 		}
 }
 
-#if 0
-void action_by_restriction::free()
-{
-	if (points) {
-		FREE_lint(points);
-		}
-	if (points_sorted) {
-		FREE_lint(points_sorted);
-		}
-	if (perm_inv) {
-		FREE_lint(perm_inv);
-		}
-}
-#endif
-
 void action_by_restriction::init_single_orbit_from_schreier_vector(
 		data_structures_groups::schreier_vector *Schreier_vector,
 		int pt, int verbose_level)
@@ -104,7 +89,8 @@ void action_by_restriction::init_single_orbit_from_schreier_vector(
 	}
 }
 
-void action_by_restriction::init(int nb_points, long int *points,
+void action_by_restriction::init(
+		int nb_points, long int *points,
 		int verbose_level)
 // the array points must be ordered
 {
@@ -162,7 +148,8 @@ long int action_by_restriction::restricted_point_idx(long int pt)
 
 
 long int action_by_restriction::compute_image(
-		actions::action *A, int *Elt, long int i, int verbose_level)
+		actions::action *A,
+		int *Elt, long int i, int verbose_level)
 {
 	int idx;
 	long int b, c, h;

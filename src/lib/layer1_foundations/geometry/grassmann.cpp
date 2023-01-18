@@ -67,7 +67,8 @@ grassmann::~grassmann()
 	}
 }
 
-void grassmann::init(int n, int k, field_theory::finite_field *F, int verbose_level)
+void grassmann::init(int n, int k,
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -154,7 +155,8 @@ void grassmann::print_set(long int *v, int len)
 	}
 }
 
-void grassmann::print_set_tex(std::ostream &ost, long int *v, int len, int verbose_level)
+void grassmann::print_set_tex(std::ostream &ost,
+		long int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -207,7 +209,8 @@ void grassmann::print_set_tex(std::ostream &ost, long int *v, int len, int verbo
 	}
 }
 
-void grassmann::print_set_tex_with_perp(std::ostream &ost, long int *v, int len)
+void grassmann::print_set_tex_with_perp(
+		std::ostream &ost, long int *v, int len)
 {
 	int i;
 	int *Mtx;
@@ -286,7 +289,8 @@ long int grassmann::rank_lint_here(int *Mtx, int verbose_level)
 	return rank_lint(verbose_level);
 }
 
-void grassmann::unrank_embedded_subspace_lint(long int rk, int verbose_level)
+void grassmann::unrank_embedded_subspace_lint(
+		long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -323,7 +327,8 @@ long int grassmann::rank_embedded_subspace_lint(int verbose_level)
 	
 }
 
-void grassmann::unrank_embedded_subspace_lint_here(int *Basis, long int rk, int verbose_level)
+void grassmann::unrank_embedded_subspace_lint_here(
+		int *Basis, long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -619,21 +624,24 @@ long int grassmann::rank_lint(int verbose_level)
 }
 
 void grassmann::unrank_longinteger_here(int *Mtx,
-		ring_theory::longinteger_object &rk, int verbose_level)
+		ring_theory::longinteger_object &rk,
+		int verbose_level)
 {
 	unrank_longinteger(rk, verbose_level);
 	Int_vec_copy(M, Mtx, k * n);
 }
 
 void grassmann::rank_longinteger_here(int *Mtx,
-		ring_theory::longinteger_object &rk, int verbose_level)
+		ring_theory::longinteger_object &rk,
+		int verbose_level)
 {
 	Int_vec_copy(Mtx, M, k * n);
 	rank_longinteger(rk, verbose_level);
 }
 
 void grassmann::unrank_longinteger(
-		ring_theory::longinteger_object &rk, int verbose_level)
+		ring_theory::longinteger_object &rk,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object r, r1, a, A, mA, Q, b, c;
@@ -769,7 +777,8 @@ void grassmann::unrank_longinteger(
 	}
 }
 
-void grassmann::rank_longinteger(ring_theory::longinteger_object &r,
+void grassmann::rank_longinteger(
+		ring_theory::longinteger_object &r,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -934,7 +943,8 @@ void grassmann::print()
 	Int_vec_print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 }
 
-int grassmann::dimension_of_join(long int rk1, long int rk2, int verbose_level)
+int grassmann::dimension_of_join(
+		long int rk1, long int rk2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *A;
@@ -1228,7 +1238,8 @@ void grassmann::latex_matrix_numerical(std::ostream &ost, int *p)
 
 }
 
-void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
+void grassmann::create_Schlaefli_graph(
+		int *&Adj, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1457,7 +1468,8 @@ void grassmann::copy_matrix_back(int *A, int *M, int verbose_level)
 	}
 }
 
-void grassmann::extract_matrix_from_back(int *A, int *M, int verbose_level)
+void grassmann::extract_matrix_from_back(
+		int *A, int *M, int verbose_level)
 {
 	int i, j, a;
 
@@ -1598,7 +1610,8 @@ void grassmann::make_partition(long int *Spread, int spread_sz,
 	}
 }
 
-void grassmann::make_spread_element(int *Spread_element, int *A, int verbose_level)
+void grassmann::make_spread_element(
+		int *Spread_element, int *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1979,7 +1992,8 @@ void grassmann::create_latex_report(int verbose_level)
 void grassmann::klein_correspondence(
 		projective_space *P3,
 		//projective_space *P5,
-	long int *set_in, int set_size, long int *set_out,
+	long int *set_in, int set_size,
+	long int *set_out,
 	int verbose_level)
 // Computes the Pluecker coordinates
 // for a set of lines in PG(3,q) in the following order:

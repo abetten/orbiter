@@ -36,7 +36,8 @@ ttp_codes::~ttp_codes()
 
 void ttp_codes::twisted_tensor_product_codes(
 	int *&H_subfield, int &m, int &n,
-	field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+	field_theory::finite_field *FQ,
+	field_theory::finite_field *Fq,
 	int f_construction_A, int f_hyperoval,
 	int f_construction_B, int verbose_level)
 {
@@ -202,7 +203,8 @@ void ttp_codes::twisted_tensor_product_codes(
 
 void ttp_codes::create_matrix_M(
 	int *&M,
-	field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+	field_theory::finite_field *FQ,
+	field_theory::finite_field *Fq,
 	int &m, int &n, int &beta, int &r, int *exponents,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
 	int f_elements_exponential, std::string &symbol_for_print,
@@ -375,10 +377,12 @@ void ttp_codes::create_matrix_M(
 
 
 void ttp_codes::create_matrix_H_subfield(
-		field_theory::finite_field *FQ, field_theory::finite_field *Fq,
+		field_theory::finite_field *FQ,
+		field_theory::finite_field *Fq,
 	int *H_subfield, int *C, int *C_inv, int *M,
 	int m, int n, int beta, int beta_q,
-	int f_elements_exponential, std::string &symbol_for_print,
+	int f_elements_exponential,
+	std::string &symbol_for_print,
 	std::string &symbol_for_print_subfield,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
 	int verbose_level)
@@ -535,7 +539,8 @@ void ttp_codes::create_matrix_H_subfield(
 
 
 void ttp_codes::tt_field_reduction(
-		field_theory::finite_field &FQ, field_theory::finite_field &f,
+		field_theory::finite_field &FQ,
+		field_theory::finite_field &f,
 		int m, int n, int *M, int *MM, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -685,7 +690,8 @@ void ttp_codes::make_tensor_code_9dimensional_as_point_set(
 }
 
 void ttp_codes::make_tensor_code_9_dimensional(int q,
-	std::string &override_poly_Q, std::string &override_poly,
+	std::string &override_poly_Q,
+	std::string &override_poly,
 	int f_hyperoval,
 	int *&code, int &length,
 	int verbose_level)

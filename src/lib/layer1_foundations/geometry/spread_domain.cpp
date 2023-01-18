@@ -311,7 +311,8 @@ void spread_domain::print_elements_and_points()
 	FREE_int(Line);
 }
 
-void spread_domain::early_test_func(long int *S, int len,
+void spread_domain::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -420,7 +421,8 @@ void spread_domain::early_test_func(long int *S, int len,
 	}
 }
 
-int spread_domain::check_function(int len, long int *S, int verbose_level)
+int spread_domain::check_function(
+		int len, long int *S, int verbose_level)
 // checks all {len \choose 2} pairs. This is very inefficient.
 // This function should not be used for poset classification!
 {
@@ -499,7 +501,8 @@ int spread_domain::check_function(int len, long int *S, int verbose_level)
 
 }
 
-int spread_domain::incremental_check_function(int len, long int *S, int verbose_level)
+int spread_domain::incremental_check_function(
+		int len, long int *S, int verbose_level)
 // checks the pairs (0,len-1),(1,len-1),\ldots,(len-2,len-1)
 // for recoordinatize
 {
@@ -580,7 +583,8 @@ finish:
 
 }
 
-void spread_domain::compute_dual_spread(int *spread,
+void spread_domain::compute_dual_spread(
+		int *spread,
 		int *dual_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -597,7 +601,8 @@ void spread_domain::compute_dual_spread(int *spread,
 	}
 }
 
-void spread_domain::print(std::ostream &ost, int len, long int *S)
+void spread_domain::print(
+		std::ostream &ost, int len, long int *S)
 {
 	int i;
 	int f_elements_exponential = FALSE;
@@ -621,7 +626,8 @@ void spread_domain::print(std::ostream &ost, int len, long int *S)
 
 }
 
-void spread_domain::czerwinski_oakden(int level, int verbose_level)
+void spread_domain::czerwinski_oakden(
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1293,7 +1299,8 @@ void spread_domain::czerwinski_oakden(int level, int verbose_level)
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
-void spread_domain::write_spread_to_file(int type_of_spread, int verbose_level)
+void spread_domain::write_spread_to_file(
+		int type_of_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *data;
@@ -1345,8 +1352,10 @@ void spread_domain::write_spread_to_file(int type_of_spread, int verbose_level)
 	FREE_lint(data);
 }
 
-void spread_domain::make_spread(long int *data,
-		int type_of_spread, int verbose_level)
+void spread_domain::make_spread(
+		long int *data,
+		int type_of_spread,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1435,7 +1444,8 @@ void spread_domain::make_spread(long int *data,
 }
 
 
-void spread_domain::make_spread_from_q_clan(long int *data,
+void spread_domain::make_spread_from_q_clan(
+		long int *data,
 		int type_of_spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1607,7 +1617,8 @@ void spread_domain::make_spread_from_q_clan(long int *data,
 	}
 }
 
-void spread_domain::read_and_print_spread(std::string &fname, int verbose_level)
+void spread_domain::read_and_print_spread(
+		std::string &fname, int verbose_level)
 {
 	long int *data;
 	int sz;
@@ -1618,7 +1629,8 @@ void spread_domain::read_and_print_spread(std::string &fname, int verbose_level)
 	FREE_lint(data);
 }
 
-void spread_domain::HMO(std::string &fname, int verbose_level)
+void spread_domain::HMO(
+		std::string &fname, int verbose_level)
 // allocates a finite_field and a subfield_structure and a grassmann
 // Lifts a spread from F_q to F_{q^2}
 {
@@ -1799,7 +1811,8 @@ void spread_domain::HMO(std::string &fname, int verbose_level)
 }
 
 
-void spread_domain::print_spread(std::ostream &ost, long int *data, int sz)
+void spread_domain::print_spread(
+		std::ostream &ost, long int *data, int sz)
 {
 	//int sz = order + 1;
 	int h;

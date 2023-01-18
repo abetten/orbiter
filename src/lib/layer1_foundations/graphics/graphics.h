@@ -52,16 +52,24 @@ public:
 	void animate_one_round(
 		int round,
 		int verbose_level);
-	void draw_single_line(int line_idx, std::string &color, std::ostream &fp);
-	void draw_single_quadric(int idx, std::string &color, std::ostream &fp);
+	void draw_single_line(int line_idx, std::string &color,
+			std::ostream &fp);
+	void draw_single_quadric(int idx, std::string &color,
+			std::ostream &fp);
 	void draw_single_surface(int surface_idx, std::ostream &fp);
-	void draw_single_surface_with_color(int surface_idx, std::string &color, std::ostream &fp);
-	void draw_Hilbert_point(int point_idx, double rad,
+	void draw_single_surface_with_color(
+			int surface_idx, std::string &color, std::ostream &fp);
+	void draw_Hilbert_point(
+			int point_idx, double rad,
 			std::string &options, std::ostream &fp);
-	void draw_Hilbert_line(int line_idx, std::string &color, std::ostream &fp);
-	void draw_Hilbert_plane(int plane_idx, std::string &color, std::ostream &fp);
-	void draw_Hilbert_red_line(int idx_one_based, std::ostream &fp);
-	void draw_Hilbert_blue_line(int idx_one_based, std::ostream &fp);
+	void draw_Hilbert_line(int line_idx, std::string &color,
+			std::ostream &fp);
+	void draw_Hilbert_plane(int plane_idx, std::string &color,
+			std::ostream &fp);
+	void draw_Hilbert_red_line(int idx_one_based,
+			std::ostream &fp);
+	void draw_Hilbert_blue_line(int idx_one_based,
+			std::ostream &fp);
 	void draw_Hilbert_red_lines(std::ostream &fp);
 	void draw_Hilbert_blue_lines(std::ostream &fp);
 	void draw_Hilbert_cube_extended_edges(std::ostream &fp);
@@ -75,7 +83,8 @@ public:
 		std::ostream &fp,
 		int verbose_level);
 	void draw_surface_13_1(std::ostream &fp);
-	void draw_frame_Hilbert_round_76(video_draw_options *Opt,
+	void draw_frame_Hilbert_round_76(
+			video_draw_options *Opt,
 			int h, int nb_frames, int round,
 			std::ostream &fp,
 			int verbose_level);
@@ -372,7 +381,8 @@ public:
 	void init_cylinders(int group_idx,
 			double rad, std::string &properties, int verbose_level);
 	void init_prisms(int group_idx,
-			double thickness, std::string &properties, int verbose_level);
+			double thickness,
+			std::string &properties, int verbose_level);
 	void init_planes(int group_idx,
 			std::string &properties, int verbose_level);
 	void init_lines(int group_idx,
@@ -388,7 +398,8 @@ public:
 	void init_octics(int group_idx,
 			std::string &properties, int verbose_level);
 	void init_labels(int group_idx,
-			double thickness_half, double scale, std::string &properties, int verbose_level);
+			double thickness_half, double scale,
+			std::string &properties, int verbose_level);
 	void draw(animate *Anim, std::ostream &ost,
 			int f_group_is_animated, int frame, int verbose_level);
 
@@ -423,13 +434,16 @@ public:
 			std::string &photo_label,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
-	void do_create_points_on_quartic(double desired_distance, int verbose_level);
-	void do_create_points_on_parabola(double desired_distance, int N,
+	void do_create_points_on_quartic(
+			double desired_distance, int verbose_level);
+	void do_create_points_on_parabola(
+			double desired_distance, int N,
 			double a, double b, double c, int verbose_level);
 	void do_smooth_curve(std::string &curve_label,
 			double desired_distance, int N,
 			double t_min, double t_max, double boundary,
-			function_polish_description *FP_descr, int verbose_level);
+			function_polish_description *FP_descr,
+			int verbose_level);
 	void draw_bitmap(draw_bitmap_control *C, int verbose_level);
 	void random_noise_in_bitmap_file(
 			std::string fname_input,
@@ -444,14 +458,16 @@ public:
 			int probability_denominator,
 			int burst_length_max,
 			int verbose_level);
-	void draw_projective_curve(draw_projective_curve_description *Descr,
+	void draw_projective_curve(
+			draw_projective_curve_description *Descr,
 			layered_graph_draw_options *Opt, int verbose_level);
 	void draw_projective(mp_graphics &G,
 			int number, int animate_step, int animate_nb_of_steps,
 		int f_transition, int transition_step, int transition_nb_steps,
 		int f_title_page, int title_page_step,
 		int f_trailer_page, int trailer_page_step);
-	void tree_draw(tree_draw_options *Tree_draw_options, int verbose_level);
+	void tree_draw(
+			tree_draw_options *Tree_draw_options, int verbose_level);
 	void animate_povray(
 			povray_job_description *Povray_job_description,
 			int verbose_level);
@@ -514,13 +530,16 @@ public:
 
 
 	int f_has_draw_begining_callback;
-	void (*draw_begining_callback)(graph_theory::layered_graph *LG, mp_graphics *G,
+	void (*draw_begining_callback)(
+			graph_theory::layered_graph *LG, mp_graphics *G,
 		int x_max, int y_max, int f_rotated, int dx, int dy);
 	int f_has_draw_ending_callback;
-	void (*draw_ending_callback)(graph_theory::layered_graph *LG, mp_graphics *G,
+	void (*draw_ending_callback)(
+			graph_theory::layered_graph *LG, mp_graphics *G,
 		int x_max, int y_max, int f_rotated, int dx, int dy);
 	int f_has_draw_vertex_callback;
-	void (*draw_vertex_callback)(graph_theory::layered_graph *LG, mp_graphics *G,
+	void (*draw_vertex_callback)(
+			graph_theory::layered_graph *LG, mp_graphics *G,
 		int layer, int node, int x, int y, int dx, int dy);
 
 	int f_paths_in_between;
@@ -722,15 +741,19 @@ public:
 	void fill_polygon11(int *Px, int *Py, int i1, int i2, int i3, 
 		int i4, int i5, int i6, int i7, int i8, 
 		int i9, int i10, int i11);
-	void polygon2_arrow_halfway(int *Px, int *Py, int i1, int i2);
-	void polygon2_arrow_halfway_and_label(int *Px, int *Py, int i1, int i2, 
+	void polygon2_arrow_halfway(
+			int *Px, int *Py, int i1, int i2);
+	void polygon2_arrow_halfway_and_label(
+			int *Px, int *Py, int i1, int i2,
 		const char *alignment, std::string &s);
 	void grid_aligned_text(grid_frame *F, int x, int y, 
 		const char *alignment, std::string &s);
-	void aligned_text(int x, int y, const char *alignment, std::string &s);
+	void aligned_text(
+			int x, int y, const char *alignment, std::string &s);
 	void aligned_text_array(int *Px, int *Py, int idx, 
 		const char *alignment, std::string &s);
-	void aligned_text_with_offset(int x, int y, int xoffset, int yoffset, 
+	void aligned_text_with_offset(
+			int x, int y, int xoffset, int yoffset,
 		const char *alignment, std::string &s);
 
 	void st_alignment(int txt_halign, int txt_valign);
@@ -842,18 +865,21 @@ public:
 
 
 	void draw_graph(int x, int y,
-			int dx, int dy, int nb_V, long int *Edges, int nb_E, int radius,
+			int dx, int dy, int nb_V,
+			long int *Edges, int nb_E, int radius,
 			int verbose_level);
 	void draw_graph_with_distinguished_edge(
 		int x, int y,
 		int dx, int dy, int nb_V, long int *Edges, int nb_E,
 		int distinguished_edge, int verbose_level);
 	void draw_graph_on_multiple_circles(int x, int y,
-			int dx, int dy, int nb_V, int *Edges, int nb_E, int nb_circles);
+			int dx, int dy, int nb_V,
+			int *Edges, int nb_E, int nb_circles);
 	void draw_graph_on_2D_grid(
 			int x, int y, int dx, int dy, int rad, int nb_V,
 			int *Edges, int nb_E, int *coords_2D, int *Base,
-			int f_point_labels, int point_label_offset, int f_directed);
+			int f_point_labels,
+			int point_label_offset, int f_directed);
 	void draw_tournament(int x, int y,
 			int dx, int dy, int nb_V, long int *Edges, int nb_E,
 			int radius,
@@ -863,13 +889,15 @@ public:
 		int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first,
 		int f_row_grid, int f_col_grid,
-		int f_bitmatrix, data_structures::bitmatrix *Bitmatrix, int *M,
+		int f_bitmatrix,
+		data_structures::bitmatrix *Bitmatrix, int *M,
 		int m, int n,
 		int f_has_labels, int *labels);
 
 	void draw_density2(int no,
 		int *outline_value, int *outline_number, int outline_sz,
-		int min_value, int max_value, int offset_x, int f_switch_x,
+		int min_value, int max_value,
+		int offset_x, int f_switch_x,
 		int f_title, std::string &title,
 		std::string &label_x,
 		int f_circle, int circle_at, int circle_rad,
@@ -888,7 +916,8 @@ public:
 			layered_graph_draw_options *O,
 			int q,
 			int *Table, int nb,
-			int f_point_labels, std::string *Point_labels, int verbose_level);
+			int f_point_labels,
+			std::string *Point_labels, int verbose_level);
 	void draw_matrix_in_color(
 		int f_row_grid, int f_col_grid,
 		int *Table, int nb_colors,
@@ -957,7 +986,8 @@ public:
 	int nb_dimensions;
 	double desired_distance;
 	double t0, t1; // parameter interval
-	int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level);
+	int (*compute_point_function)(double t,
+			double *pt, void *extra_data, int verbose_level);
 	void *extra_data;
 	double boundary;
 
@@ -969,7 +999,8 @@ public:
 	void init(int nb_dimensions,
 			double desired_distance,
 			double t0, double t1,
-			int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level),
+			int (*compute_point_function)(double t,
+					double *pt, void *extra_data, int verbose_level),
 			void *extra_data,
 			double boundary,
 			int N,
@@ -1094,18 +1125,22 @@ public:
 	void animation_rotate_around_origin_and_given_vector(double *v,
 			std::ostream &ost);
 	void animation_rotate_xyz(
-		double angle_x_deg, double angle_y_deg, double angle_z_deg, std::ostream &ost);
+		double angle_x_deg, double angle_y_deg, double angle_z_deg,
+		std::ostream &ost);
 	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 		double *v, double angle_zero_one, std::ostream &ost);
 	void union_start(std::ostream &ost);
-	void union_end(std::ostream &ost, double scale_factor, double clipping_radius);
+	void union_end(std::ostream &ost,
+			double scale_factor, double clipping_radius);
 	void union_end_box_clipping(std::ostream &ost, double scale_factor,
 			double box_x, double box_y, double box_z);
 	void union_end_no_clipping(std::ostream &ost, double scale_factor);
 	void bottom_plane(std::ostream &ost);
 	void rotate_111(int h, int nb_frames, std::ostream &fp);
-	void rotate_around_z_axis(int h, int nb_frames, std::ostream &fp);
-	void ini(std::ostream &ost, const char *fname_pov, int first_frame,
+	void rotate_around_z_axis(
+			int h, int nb_frames, std::ostream &fp);
+	void ini(std::ostream &ost,
+			const char *fname_pov, int first_frame,
 		int last_frame);
 };
 
@@ -1471,7 +1506,8 @@ public:
 
 
 	int line_pt_and_dir(double *x6, double rad, int verbose_level);
-	int line_pt_and_dir_and_copy_points(double *x6, double rad, int verbose_level);
+	int line_pt_and_dir_and_copy_points(
+			double *x6, double rad, int verbose_level);
 	int line_through_two_pts(double *x6, double rad);
 	int line_after_recentering(double x1, double x2, double x3,
 		double y1, double y2, double y3, double rad);
@@ -1503,7 +1539,8 @@ public:
 	void print_point_coords(int idx);
 	double point_distance_euclidean(int pt_idx, double *y);
 	double point_distance_from_origin(int pt_idx);
-	double distance_euclidean_point_to_point(int pt1_idx, int pt2_idx);
+	double distance_euclidean_point_to_point(
+			int pt1_idx, int pt2_idx);
 	void init(int verbose_level);
 	scene *transformed_copy(double *A4, double *A4_inv, 
 		double rad, int verbose_level);
@@ -1540,7 +1577,8 @@ public:
 	void draw_lines_cij_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_cij(std::ostream &ost);
-	void draw_lines_cij_with_offset(int offset, int number_of_lines, std::ostream &ost);
+	void draw_lines_cij_with_offset(int offset,
+			int number_of_lines, std::ostream &ost);
 	void draw_lines_ai_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_ai(std::ostream &ost);
@@ -1763,13 +1801,16 @@ public:
 	void print_depth_first();
 	void compute_DFS_rank(int &rk);
 	int find_node(int &DFS_rk, int *path, int sz, int verbose_level);
-	int find_node_and_path(std::vector<int> &Rk, int *path, int sz, int verbose_level);
+	int find_node_and_path(
+			std::vector<int> &Rk, int *path,
+			int sz, int verbose_level);
 	void get_coordinates(int &idx, int *coord_xy);
 	void get_coordinates_and_width(int &idx, int *coord_xyw);
 	void calc_weight();
 	void place_xy(int left, int right, int ymax, int max_depth);
 	void place_on_circle(int xmax, int ymax, int max_depth);
-	void add_node(int l, int depth, int *path, int color, std::string &label,
+	void add_node(int l, int depth, int *path,
+			int color, std::string &label,
 		int verbose_level);
 	int find_child(int val);
 	void get_values(int *v, int verbose_level);

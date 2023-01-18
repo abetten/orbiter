@@ -392,7 +392,8 @@ void sims::print_generators_at_level_or_below(int lvl)
 		}
 }
 
-void sims::write_all_group_elements(std::string &fname, int verbose_level)
+void sims::write_all_group_elements(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -579,7 +580,8 @@ void sims::print_all_group_elements_tree(std::ostream &ost)
 
 
 
-void sims::print_all_group_elements_with_permutations_tex(std::ostream &ost)
+void sims::print_all_group_elements_with_permutations_tex(
+		std::ostream &ost)
 {
 	int *Elt;
 	ring_theory::longinteger_object go;

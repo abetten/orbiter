@@ -28,7 +28,8 @@ classification_of_cubic_surfaces_with_double_sixes_activity::~classification_of_
 }
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::init(
-		classification_of_cubic_surfaces_with_double_sixes_activity_description *Descr,
+		classification_of_cubic_surfaces_with_double_sixes_activity_description
+			*Descr,
 		surface_classify_wedge *SCW,
 		int verbose_level)
 {
@@ -90,7 +91,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::report(
-		poset_classification::poset_classification_report_options *report_options,
+		poset_classification::poset_classification_report_options
+			*report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -218,8 +220,10 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_ide
 }
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_isomorphism_testing(
-		cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph1,
-		cubic_surfaces_in_general::surface_create_description *surface_descr_isomorph2,
+		cubic_surfaces_in_general::surface_create_description
+			*surface_descr_isomorph1,
+		cubic_surfaces_in_general::surface_create_description
+			*surface_descr_isomorph2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -248,7 +252,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_iso
 }
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize(
-		cubic_surfaces_in_general::surface_create_description *surface_descr,
+		cubic_surfaces_in_general::surface_create_description
+			*surface_descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

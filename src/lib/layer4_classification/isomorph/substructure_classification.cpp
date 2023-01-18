@@ -285,7 +285,8 @@ void substructure_classification::close_level_database(int verbose_level)
 	fp_ge2 = NULL;
 }
 
-void substructure_classification::prepare_database_access(int cur_level, int verbose_level)
+void substructure_classification::prepare_database_access(
+		int cur_level, int verbose_level)
 // sets DB_level to be D1 or D2, depending on cur_level
 // Called from make_set_smaller_database
 // and load_strong_generators
@@ -318,7 +319,8 @@ void substructure_classification::prepare_database_access(int cur_level, int ver
 
 
 void substructure_classification::find_extension_easy(
-		long int *set, int case_nb, int &idx, int &f_found, int verbose_level)
+		long int *set, int case_nb,
+		int &idx, int &f_found, int verbose_level)
 // case_nb is the starter that is associated with the given set.
 // We wish to find out if the set is a solution that has been stored
 // with that starter.

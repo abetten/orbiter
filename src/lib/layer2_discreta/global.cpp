@@ -370,7 +370,8 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 		}
 }
 
-void discreta_print_factorization(Vector& primes, Vector& exponents, ostream &o)
+void discreta_print_factorization(
+		Vector& primes, Vector& exponents, std::ostream &o)
 //Prints the factorization.
 {
 	int i, p, e, l;
@@ -411,7 +412,8 @@ void discreta_print_factorization(Vector& primes, Vector& exponents, ostream &o)
 		}
 }
 
-void print_factorization_hollerith(Vector& primes, Vector& exponents, hollerith &h)
+void print_factorization_hollerith(
+		Vector& primes, Vector& exponents, hollerith &h)
 //Prints the factorization.
 {
 	int i, p, e, l;
@@ -827,7 +829,8 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 	}
 }
 
-void html_head(ostream& ost, char *title_long, char *title_short)
+void html_head(ostream& ost,
+		char *title_long, char *title_short)
 {
 	ost << "<html>\n";
 	ost << "<head>\n";
@@ -854,7 +857,9 @@ void html_foot(ostream& ost)
 	ost << "</html>\n";
 }
 
-void sieve(Vector &primes, int factorbase, int verbose_level)
+void sieve(
+		Vector &primes,
+		int factorbase, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, from, to, l, unit_size = 1000;
@@ -877,7 +882,9 @@ void sieve(Vector &primes, int factorbase, int verbose_level)
 		}
 }
 
-void sieve_primes(Vector &v, int from, int to, int limit, int verbose_level)
+void sieve_primes(
+		Vector &v, int from, int to,
+		int limit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int x, y, l, k, p, f_prime;
@@ -935,7 +942,8 @@ void print_intvec_mod_10(Vector &v)
 }
 
 
-void stirling_second(int n, int k, int f_ordered,
+void stirling_second(
+		int n, int k, int f_ordered,
 		discreta_base &res, int verbose_level)
 // number of set partitions of an n-set with exactly k classes
 {
@@ -994,7 +1002,8 @@ void stirling_second(int n, int k, int f_ordered,
 		}
 }
 
-void stirling_first(int n, int k, int f_signless,
+void stirling_first(
+		int n, int k, int f_signless,
 		discreta_base &res, int verbose_level)
 // $(-1)^{n+k} \cdot$ number of elements in $\Sym_n$ with exactly k cycles
 {
@@ -1084,7 +1093,8 @@ void Catalan(int n, Vector &v, int verbose_level)
 		}
 }
 
-void Catalan_n(int n, Vector &v, discreta_base &res, int verbose_level)
+void Catalan_n(int n, Vector &v,
+		discreta_base &res, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1102,7 +1112,9 @@ void Catalan_n(int n, Vector &v, discreta_base &res, int verbose_level)
 	a.swap(res);
 }
 
-void Catalan_nk_matrix(int n, discreta_matrix &Cnk, int verbose_level)
+void Catalan_nk_matrix(
+		int n, discreta_matrix &Cnk,
+		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int i, k;
@@ -1118,7 +1130,9 @@ void Catalan_nk_matrix(int n, discreta_matrix &Cnk, int verbose_level)
 		}
 }
 
-void Catalan_nk_star_matrix(int n, discreta_matrix &Cnk, int verbose_level)
+void Catalan_nk_star_matrix(
+		int n, discreta_matrix &Cnk,
+		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int i, k;
@@ -1143,7 +1157,9 @@ void Catalan_nk_star_matrix(int n, discreta_matrix &Cnk, int verbose_level)
 		}
 }
 
-void Catalan_nk_star(int n, int k, discreta_matrix &Cnk, discreta_base &res, int verbose_level)
+void Catalan_nk_star(
+		int n, int k, discreta_matrix &Cnk,
+		discreta_base &res, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1162,7 +1178,8 @@ void Catalan_nk_star(int n, int k, discreta_matrix &Cnk, discreta_base &res, int
 }
 
 
-void N_choose_K(discreta_base & n, int k, discreta_base & res)
+void N_choose_K(
+		discreta_base & n, int k, discreta_base & res)
 // Computes ${n \choose k}$ into res as an {\em object}.
 // This function uses a recursion formula.
 {
@@ -1200,7 +1217,8 @@ void N_choose_K(discreta_base & n, int k, discreta_base & res)
 	// b = a / k;
 }
 
-void Binomial(int n, int k, discreta_base & n_choose_k)
+void Binomial(
+		int n, int k, discreta_base & n_choose_k)
 // Computes binomial coefficients as {\em objects} 
 // so that large numbers are no problem. 
 // This function uses an internal table to remember all 
@@ -1244,7 +1262,8 @@ void Binomial(int n, int k, discreta_base & n_choose_k)
 	Binomial_using_table(n, k, *T, n_choose_k);
 }
 
-static void Binomial_using_table(int n, int k, discreta_matrix & T, discreta_base & res)
+static void Binomial_using_table(
+		int n, int k, discreta_matrix & T, discreta_base & res)
 {
 	discreta_base tmp1, tmp2;
 	int m;
@@ -1302,7 +1321,8 @@ static void Binomial_using_table(int n, int k, discreta_matrix & T, discreta_bas
 		}
 }
 
-void Krawtchouk(int n, int q, int i, int j, discreta_base & a)
+void Krawtchouk(
+		int n, int q, int i, int j, discreta_base & a)
 // $\sum_{u=0}^{\min(i,j)} (-1)^u \cdot (q-1)^{i-u} \cdot {j \choose u} \cdot $
 // ${n - j \choose i - u}$
 {
@@ -1324,7 +1344,8 @@ void Krawtchouk(int n, int q, int i, int j, discreta_base & a)
 		}
 }
 
-void tuple2_rank(int rank, int &i, int &j, int n, int f_injective)
+void tuple2_rank(
+		int rank, int &i, int &j, int n, int f_injective)
 //enumeration of 2-tuples $(i,j)$ (f_injective TRUE iff $i=j$ forbidden).
 //this routine produces the tuple with number ``rank'' into $i$ and $j$. 
 //$n$ is the number of points $1 \le i,j \le n$.
@@ -1346,7 +1367,8 @@ void tuple2_rank(int rank, int &i, int &j, int n, int f_injective)
 		}
 }
 
-int tuple2_unrank(int i, int j, int n, int f_injective)
+int tuple2_unrank(
+		int i, int j, int n, int f_injective)
 //inverse function of tuple2_rank(): 
 //returns the rank of a given tuple $(i,j)$.
 {
@@ -1435,7 +1457,8 @@ void the_first_n_primes(Vector &P, int n)
 
 #include <math.h>
 
-void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx)
+void midpoint_of_2(
+		int *Px, int *Py, int i1, int i2, int idx)
 {
 	double x, y;
 	
@@ -1445,7 +1468,9 @@ void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx)
 	Py[idx] = (int) y;
 }
 
-void midpoint_of_5(int *Px, int *Py, int i1, int i2, int i3, int i4, int i5, int idx)
+void midpoint_of_5(
+		int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int idx)
 {
 	double x, y;
 	
@@ -1455,7 +1480,9 @@ void midpoint_of_5(int *Px, int *Py, int i1, int i2, int i3, int i4, int i5, int
 	Py[idx] = (int) y;
 }
 
-void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, double r)
+void ratio_int(
+		int *Px, int *Py, int idx_from, int idx_to,
+		int idx_result, double r)
 {
 	int dx, dy;
 
@@ -1683,12 +1710,15 @@ void queue_append(Vector &Q, int elt)
 	Q.m_ii(0, l + 1);
 }
 
-void print_classification_tex(Vector &content, Vector &multiplicities)
+void print_classification_tex(
+		Vector &content, Vector &multiplicities)
 {
 	print_classification_tex(content, multiplicities, cout);
 }
 
-void print_classification_tex(Vector &content, Vector &multiplicities, ostream& ost)
+void print_classification_tex(
+		Vector &content, Vector &multiplicities,
+		std::ostream& ost)
 {
 	int i, l;
 	
@@ -1715,7 +1745,8 @@ void perm2permutation(int *a, int n, permutation &p)
 		}
 }
 
-int Gauss_int(int *A, int f_special, int f_complete, int *base_cols, 
+int Gauss_int(
+		int *A, int f_special, int f_complete, int *base_cols,
 	int f_P, int *P, int m, int n, int Pn, 
 	int q, int *add_table, int *mult_table,
 	int *negate_table, int *inv_table, int verbose_level)
@@ -1916,7 +1947,9 @@ void int_vector_shorten(int *&p, int new_length)
 	p = q;
 }
 
-void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n)
+void int_matrix_realloc(
+		int *&p, int old_m, int new_m,
+		int old_n, int new_n)
 {
 	int *q = new int[new_m * new_n];
 	int m = MINIMUM(old_m, new_m);
@@ -2031,7 +2064,9 @@ int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 
 
 
-void fine_tune(field_theory::finite_field *F, int *mtxD, int verbose_level)
+void fine_tune(
+		field_theory::finite_field *F,
+		int *mtxD, int verbose_level)
 // added Dec 28 2009
 // This is here because it uses sqrt_mod_involved
 // used in algebra/create_element.cpp

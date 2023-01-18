@@ -61,7 +61,8 @@ void orbit_based_testing::init(
 
 void orbit_based_testing::add_callback(
 		int (*func)(orbit_based_testing *Obt,
-				long int *S, int len, void *data, int verbose_level),
+				long int *S, int len,
+				void *data, int verbose_level),
 		void *data,
 		int verbose_level)
 {
@@ -82,7 +83,8 @@ void orbit_based_testing::add_callback(
 void orbit_based_testing::add_callback_no_group(
 		void (*func)(long int *S, int len,
 				long int *candidates, int nb_candidates,
-				long int *good_candidates, int &nb_good_candidates,
+				long int *good_candidates,
+				int &nb_good_candidates,
 				void *data, int verbose_level),
 		void *data,
 		int verbose_level)

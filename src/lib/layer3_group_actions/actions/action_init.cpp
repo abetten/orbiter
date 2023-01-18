@@ -401,7 +401,8 @@ void action::init_general_linear_group(int n, field_theory::finite_field *F,
 
 void action::setup_linear_group_from_strong_generators(
 		groups::matrix_group *M,
-		data_structures_groups::vector_ge *&nice_gens, int f_init_sims,
+		data_structures_groups::vector_ge *&nice_gens,
+		int f_init_sims,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -651,7 +652,8 @@ void action::init_matrix_group_strong_generators_builtin(
 		}
 }
 
-void action::init_permutation_group(int degree, int f_no_base, int verbose_level)
+void action::init_permutation_group(
+		int degree, int f_no_base, int verbose_level)
 {
 	int page_length_log = PAGE_LENGTH_LOG;
 	int f_v = (verbose_level >= 1);
@@ -741,7 +743,8 @@ void action::init_permutation_group(int degree, int f_no_base, int verbose_level
 	
 }
 
-void action::init_permutation_group_from_nauty_output(data_structures::nauty_output *NO,
+void action::init_permutation_group_from_nauty_output(
+		data_structures::nauty_output *NO,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -772,7 +775,8 @@ void action::init_permutation_group_from_nauty_output(data_structures::nauty_out
 }
 
 
-void action::init_permutation_group_from_generators(int degree, 
+void action::init_permutation_group_from_generators(
+		int degree,
 	int f_target_go, ring_theory::longinteger_object &target_go,
 	int nb_gens, int *gens, 
 	int given_base_length, long int *given_base,
@@ -996,7 +1000,8 @@ void action::init_affine_group(int n, int q,
 }
 
 
-void action::init_symmetric_group(int degree, int f_no_base, int verbose_level)
+void action::init_symmetric_group(
+		int degree, int f_no_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
@@ -1059,7 +1064,8 @@ void action::init_symmetric_group(int degree, int f_no_base, int verbose_level)
 	}
 }
 
-void action::init_cyclic_group(int degree, int f_no_base, int verbose_level)
+void action::init_cyclic_group(
+		int degree, int f_no_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
@@ -1123,7 +1129,8 @@ void action::init_cyclic_group(int degree, int f_no_base, int verbose_level)
 	}
 }
 
-void action::init_identity_group(int degree, int f_no_base, int verbose_level)
+void action::init_identity_group(
+		int degree, int f_no_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
@@ -1376,7 +1383,8 @@ void action::init_wreath_product_group_and_restrict(
 }
 
 
-void action::init_wreath_product_group(int nb_factors, int n,
+void action::init_wreath_product_group(
+		int nb_factors, int n,
 		field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level)
@@ -1571,7 +1579,8 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	}
 }
 
-void action::init_permutation_representation(action *A_original,
+void action::init_permutation_representation(
+		action *A_original,
 		int f_stay_in_the_old_action,
 		data_structures_groups::vector_ge *gens,
 		int *Perms, int degree,
@@ -1706,7 +1715,8 @@ void action::init_permutation_representation(action *A_original,
 	}
 }
 
-void action::init_orthogonal_group(int epsilon,
+void action::init_orthogonal_group(
+		int epsilon,
 	int n, field_theory::finite_field *F,
 	int f_on_points, int f_on_lines, int f_on_points_and_lines,
 	int f_semilinear,
@@ -1740,7 +1750,8 @@ void action::init_orthogonal_group(int epsilon,
 	}
 }
 
-void action::init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
+void action::init_orthogonal_group_with_O(
+		orthogonal_geometry::orthogonal *O,
 	int f_on_points, int f_on_lines, int f_on_points_and_lines,
 	int f_semilinear,
 	int f_basis, int verbose_level)
@@ -1887,7 +1898,8 @@ void action::init_orthogonal_group_with_O(orthogonal_geometry::orthogonal *O,
 	}
 }
 
-void action::init_BLT(field_theory::finite_field *F, int f_basis,
+void action::init_BLT(
+		field_theory::finite_field *F, int f_basis,
 		int f_init_hash_table, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

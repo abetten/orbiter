@@ -34,7 +34,9 @@ action_on_flags::~action_on_flags()
 {
 }
 
-void action_on_flags::init(actions::action *A, int *type,
+void action_on_flags::init(
+		actions::action *A,
+		int *type,
 		int type_len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -78,7 +80,8 @@ void action_on_flags::init(actions::action *A, int *type,
 		}
 }
 
-long int action_on_flags::compute_image(int *Elt, long int i, int verbose_level)
+long int action_on_flags::compute_image(
+		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int h, j;

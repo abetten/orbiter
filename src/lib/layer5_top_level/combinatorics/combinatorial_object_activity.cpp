@@ -655,8 +655,10 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 }
 
 
-void combinatorial_object_activity::do_save(std::string &save_as_fname,
-		int f_extract, long int *extract_idx_set, int extract_size,
+void combinatorial_object_activity::do_save(
+		std::string &save_as_fname,
+		int f_extract,
+		long int *extract_idx_set, int extract_size,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

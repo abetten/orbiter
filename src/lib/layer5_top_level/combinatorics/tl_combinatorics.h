@@ -155,7 +155,8 @@ public:
 
 	combinatorial_object_activity();
 	~combinatorial_object_activity();
-	void init(combinatorial_object_activity_description *Descr,
+	void init(
+			combinatorial_object_activity_description *Descr,
 			geometry::geometric_object_create *GOC,
 			int verbose_level);
 	void init_input_stream(
@@ -165,8 +166,10 @@ public:
 	void perform_activity(int verbose_level);
 	void perform_activity_geometric_object(int verbose_level);
 	void perform_activity_input_stream(int verbose_level);
-	void do_save(std::string &save_as_fname,
-			int f_extract, long int *extract_idx_set, int extract_size,
+	void do_save(
+			std::string &save_as_fname,
+			int f_extract,
+			long int *extract_idx_set, int extract_size,
 			int verbose_level);
 	void post_process_classification(
 			combinatorics::classification_of_objects *CO,
@@ -247,7 +250,8 @@ public:
 
 	combinatorics_global();
 	~combinatorics_global();
-	void create_design_table(design_create *DC,
+	void create_design_table(
+			design_create *DC,
 			std::string &problem_label,
 			design_tables *&T,
 			groups::strong_generators *Gens,
@@ -313,10 +317,12 @@ public:
 	int K;
 
 	int f_pair_search_control;
-	poset_classification::poset_classification_control *Pair_search_control;
+	poset_classification::poset_classification_control
+		*Pair_search_control;
 
 	int f_search_control;
-	poset_classification::poset_classification_control *Search_control;
+	poset_classification::poset_classification_control
+		*Search_control;
 
 	// row intersection type
 	int f_R;
@@ -459,7 +465,8 @@ public:
 	void search_singletons(int verbose_level);
 	void search_starter(int verbose_level);
 	void compute_orbits_on_pairs(
-			groups::strong_generators *Strong_gens, int verbose_level);
+			groups::strong_generators *Strong_gens,
+			int verbose_level);
 	groups::strong_generators *scan_subgroup_generators(
 			int verbose_level);
 	void create_monomial_group(int verbose_level);
@@ -470,7 +477,8 @@ public:
 	void compute_pair_orbit_table(int verbose_level);
 	void write_pair_orbit_file(int verbose_level);
 	void print_mask_test_i(std::ostream &ost, int i);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
@@ -680,10 +688,10 @@ public:
 	field_theory::finite_field *F;
 	int k;
 
-	//int f_semilinear;
-
-	actions::action *A; // Sym(degree)
-	actions::action *A2; // Sym(degree), in the action on k-subsets
+	actions::action *A;
+		// Sym(degree)
+	actions::action *A2;
+		// Sym(degree), in the action on k-subsets
 
 
 	actions::action *Aut;
@@ -997,7 +1005,8 @@ public:
 		// = number of lines (=triples) through the reflection point
 		// = number of lines (=triples) through any point
 	int nb_pairs2; // = nm1 choose 2
-		// number of pairs of points different from the reflection point.
+		// number of pairs of points
+		// different from the reflection point.
 		// these are the pairs of points that are covered by the
 		// triples that we will choose.
 		// The other pairs have been covered by the lines through
@@ -1009,10 +1018,12 @@ public:
 	int depth;
 	int N;
 		// {nb_pairs choose 3} * 8
-		// {nb_pairs choose 3} counts the number of ways to choose three lines
+		// {nb_pairs choose 3}
+		// counts the number of ways to choose three lines
 		// through the reflection point.
 		// the times 8 is because every triple of lines through the
-		// reflection point has 2^3 ways of choosing one point on each line.
+		// reflection point has 2^3 ways
+		// of choosing one point on each line.
 	int N0; // {nb_pairs choose 3} * 4
 	int *row_sum; // [nm1]
 		// this is where we test whether each of the
@@ -1033,12 +1044,15 @@ public:
 	actions::action *A;
 		// The symmetric group on nm1 points.
 	actions::action *A_on_triples;
-		// the induced action on unordered triples as stored in triples[].
+		// the induced action on unordered triples
+		// as stored in triples[].
 	groups::strong_generators *Strong_gens_Hall_reflection;
 		// the involution which switches the
-		// points on every line through the center (other than the center).
+		// points on every line through
+		// the center (other than the center).
 	groups::strong_generators *Strong_gens_normalizer;
-		// Strong generators for the normalizer of the involution.
+		// Strong generators for the normalizer
+		// of the involution.
 	groups::sims *S;
 		// The normalizer of the involution
 
@@ -1066,7 +1080,8 @@ public:
 	void orbits_on_triples(int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);
 	void unrank_triple(long int *T, int rk);
-	void unrank_triple_pair(long int *T1, long int *T2, int rk);
+	void unrank_triple_pair(
+			long int *T1, long int *T2, int rk);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
@@ -1134,7 +1149,9 @@ public:
 class large_set_classify {
 public:
 	design_create *DC;
-	int design_size; // = DC->sz = b, the number of blocks in the design
+	int design_size;
+		// = DC->sz = b,
+		// the number of blocks in the design
 	int nb_points; // = DC->A->degree
 	int nb_lines; // = DC->A2->degree
 	int search_depth;
@@ -1148,7 +1165,7 @@ public:
 	design_tables *Design_table;
 
 	int nb_colors;
-		// = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
+		// = DC->get_nb_colors_as_two_design
 	int *design_color_table; // [nb_designs]
 
 	actions::action *A_on_designs;
@@ -1258,7 +1275,8 @@ public:
 
 	large_set_was_activity();
 	~large_set_was_activity();
-	void perform_activity(large_set_was_activity_description *Descr,
+	void perform_activity(
+			large_set_was_activity_description *Descr,
 			large_set_was *LSW, int verbose_level);
 	void do_normalizer_on_orbits_of_a_given_length(
 			int select_orbits_of_length_length, int verbose_level);
@@ -1601,7 +1619,8 @@ public:
 	void print(std::ostream &ost, long int *S, int len);
 	void lifting_prepare_function_new(
 			solvers_package::exact_cover *E, int starter_case,
-		long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
+		long int *candidates, int nb_candidates,
+		groups::strong_generators *Strong_gens,
 		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);

@@ -1335,7 +1335,8 @@ long int poset_classification::coset_rank(
 void poset_classification::list_all_orbits_at_level(
 	int depth,
 	int f_has_print_function, 
-	void (*print_function)(std::ostream &ost,
+	void (*print_function)(
+			std::ostream &ost,
 			int len, long int *S, void *data),
 	void *print_function_data, 
 	int f_show_orbit_decomposition, int f_show_stab,
@@ -1362,7 +1363,8 @@ void poset_classification::list_all_orbits_at_level(
 void poset_classification::compute_integer_property_of_selected_list_of_orbits(
 	int depth,
 	int nb_orbits, int *Orbit_idx, 
-	int (*compute_function)(int len, long int *S, void *data),
+	int (*compute_function)(
+			int len, long int *S, void *data),
 	void *compute_function_data,
 	int *&Data)
 {
@@ -1426,7 +1428,8 @@ void poset_classification::list_selected_set_of_orbits_at_level(
 }
 
 void poset_classification::test_property(int depth, 
-	int (*test_property_function)(int len, long int *S, void *data),
+	int (*test_property_function)(
+			int len, long int *S, void *data),
 	void *test_property_data, 
 	int &nb, int *&Orbit_idx)
 {

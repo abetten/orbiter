@@ -246,7 +246,8 @@ void packing_classify::spread_table_init(
 
 void packing_classify::init(
 		projective_geometry::projective_space_with_action *PA,
-		spreads::spread_table_with_selection *Spread_table_with_selection,
+		spreads::spread_table_with_selection
+			*Spread_table_with_selection,
 		int f_lexorder_test,
 		int verbose_level)
 {
@@ -475,7 +476,8 @@ void packing_classify::compute(int search_depth, int verbose_level)
 }
 
 void packing_classify::lifting_prepare_function_new(
-		solvers_package::exact_cover *E, int starter_case,
+		solvers_package::exact_cover *E,
+		int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
 	solvers::diophant *&Dio, long int *&col_labels,

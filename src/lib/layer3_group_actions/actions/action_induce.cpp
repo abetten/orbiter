@@ -1277,7 +1277,8 @@ action *action::create_induced_action_by_conjugation(
 	return A;
 }
 
-void action::induced_action_by_conjugation(groups::sims *old_G,
+void action::induced_action_by_conjugation(
+		groups::sims *old_G,
 		groups::sims *Base_group, int f_ownership,
 	int f_basis, int verbose_level)
 {
@@ -1551,7 +1552,8 @@ void action::induced_action_on_sets(
 	}
 }
 
-action *action::create_induced_action_on_subgroups(groups::sims *S,
+action *action::create_induced_action_on_subgroups(
+		groups::sims *S,
 	int nb_subgroups, int group_order, groups::subgroup **Subgroups,
 	int verbose_level)
 {
@@ -1733,7 +1735,8 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	}
 }
 
-void action::original_point_labels(long int *points, int nb_points,
+void action::original_point_labels(
+		long int *points, int nb_points,
 		long int *&original_points, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2112,7 +2115,8 @@ void action::induced_action_on_k_subsets(
 	}
 }
 
-void action::induced_action_on_orbits(action *old_action,
+void action::induced_action_on_orbits(
+		action *old_action,
 		groups::schreier *Sch, int f_play_it_safe,
 	int verbose_level)
 {
@@ -2172,7 +2176,8 @@ void action::induced_action_on_orbits(action *old_action,
 	}
 }
 
-void action::induced_action_on_flags(action *old_action,
+void action::induced_action_on_flags(
+		action *old_action,
 	int *type, int type_len,
 	int verbose_level)
 {
@@ -2233,7 +2238,8 @@ void action::induced_action_on_flags(action *old_action,
 	}
 }
 
-void action::induced_action_on_bricks(action &old_action,
+void action::induced_action_on_bricks(
+		action &old_action,
 		combinatorics::brick_domain *B, int f_linear_action,
 	int verbose_level)
 {
@@ -2293,7 +2299,8 @@ void action::induced_action_on_bricks(action &old_action,
 	}
 }
 
-void action::induced_action_on_andre(action *An,
+void action::induced_action_on_andre(
+		action *An,
 	action *An1, geometry::andre_construction *Andre,
 	int verbose_level)
 {
@@ -2352,7 +2359,8 @@ void action::induced_action_on_andre(action *An,
 	}
 }
 
-void action::setup_product_action(action *A1, action *A2,
+void action::setup_product_action(
+		action *A1, action *A2,
 	int f_use_projections, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2633,7 +2641,8 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 
 
 
-void action::induced_action_recycle_sims(action &old_action, 
+void action::induced_action_recycle_sims(
+		action &old_action,
 	int verbose_level)
 {
 	groups::sims *old_G;
@@ -2666,7 +2675,8 @@ void action::induced_action_override_sims(
 	}
 }
 
-void action::induce(action *old_action, groups::sims *old_G,
+void action::induce(
+		action *old_action, groups::sims *old_G,
 	int base_of_choice_len, long int *base_of_choice,
 	int verbose_level)
 // after this procedure, action will have
@@ -2966,7 +2976,8 @@ void action::lex_least_base_in_place(int verbose_level)
 	FREE_lint(set);
 }
 
-void action::lex_least_base(action *old_action, int verbose_level)
+void action::lex_least_base(
+		action *old_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *set;
@@ -3061,7 +3072,8 @@ int action::test_if_lex_least_base(int verbose_level)
 	return TRUE;
 }
 
-void action::base_change_in_place(int size, long int *set, int verbose_level)
+void action::base_change_in_place(
+		int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
@@ -3163,7 +3175,8 @@ void action::base_change_in_place(int size, long int *set, int verbose_level)
 	}
 }
 
-void action::base_change(action *old_action, 
+void action::base_change(
+		action *old_action,
 	int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

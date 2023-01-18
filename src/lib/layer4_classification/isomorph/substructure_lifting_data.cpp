@@ -683,8 +683,10 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::orbits_of_stabilizer_case(int the_case,
-		data_structures_groups::vector_ge &gens, int verbose_level)
+void substructure_lifting_data::orbits_of_stabilizer_case(
+		int the_case,
+		data_structures_groups::vector_ge &gens,
+		int verbose_level)
 {
 	layer2_discreta::Vector v;
 	int f_v = (verbose_level >= 1);
@@ -1213,7 +1215,8 @@ void substructure_lifting_data::add_solution_to_database(long int *data,
 	}
 }
 
-void substructure_lifting_data::load_solution(int id, long int *data, int verbose_level)
+void substructure_lifting_data::load_solution(
+		int id, long int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1265,11 +1268,13 @@ void substructure_lifting_data::load_solution_by_btree(
 
 
 void substructure_lifting_data::count_solutions(
-		int nb_files, std::string *fname,
+		int nb_files,
+		std::string *fname,
 		int *List_of_cases, int *&Nb_sol_per_file,
 		int f_get_statistics,
 		int f_has_final_test_function,
-		int (*final_test_function)(long int *data, int sz,
+		int (*final_test_function)(
+				long int *data, int sz,
 				void *final_test_data, int verbose_level),
 		void *final_test_data,
 		int verbose_level)
@@ -1378,7 +1383,8 @@ void substructure_lifting_data::count_solutions(
 	}
 }
 
-void substructure_lifting_data::add_solutions_to_database(long int *Solutions,
+void substructure_lifting_data::add_solutions_to_database(
+		long int *Solutions,
 	int the_case, int nb_solutions, int nb_solutions_total,
 	int print_mod, int &no,
 	int verbose_level)
@@ -1537,7 +1543,8 @@ void substructure_lifting_data::init_solutions(long int **Solutions, int *Nb_sol
 }
 
 void substructure_lifting_data::count_solutions_from_clique_finder_case_by_case(
-		int nb_files, long int *list_of_cases, std::string *fname,
+		int nb_files,
+		long int *list_of_cases, std::string *fname,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
@@ -1609,7 +1616,8 @@ void substructure_lifting_data::count_solutions_from_clique_finder_case_by_case(
 
 
 void substructure_lifting_data::count_solutions_from_clique_finder(
-		int nb_files, std::string *fname, int verbose_level)
+		int nb_files,
+		std::string *fname, int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
 	int f_v = (verbose_level >= 1);
@@ -1782,7 +1790,9 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 
 
 void substructure_lifting_data::read_solutions_from_clique_finder(
-		int nb_files, std::string *fname, int *substructure_case_number, int *Nb_sol_per_file,
+		int nb_files,
+		std::string *fname,
+		int *substructure_case_number, int *Nb_sol_per_file,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
@@ -1951,10 +1961,12 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 #define MY_BUFSIZE 1000000
 
 
-void substructure_lifting_data::build_up_database(int nb_files,
+void substructure_lifting_data::build_up_database(
+		int nb_files,
 	std::string *fname,
 	int f_has_final_test_function,
-	int (*final_test_function)(long int *data, int sz,
+	int (*final_test_function)(
+			long int *data, int sz,
 			void *final_test_data, int verbose_level),
 	void *final_test_data,
 	int verbose_level)

@@ -113,11 +113,13 @@ public:
 	flag_orbit_folding();
 	~flag_orbit_folding();
 	void init(isomorph *Iso, int verbose_level);
-	void isomorph_testing(int t0, int f_play_back,
+	void isomorph_testing(
+			int t0, int f_play_back,
 			std::string &play_back_file_name,
 		int f_implicit_fusion, int print_mod, int verbose_level);
 		// calls do_iso_test
-	void do_iso_test(int t0, groups::sims *&Stab,
+	void do_iso_test(
+			int t0, groups::sims *&Stab,
 		int f_play_back, std::ifstream *play_back_file,
 		int &f_eof, int print_mod,
 		int f_implicit_fusion, int verbose_level);
@@ -125,7 +127,8 @@ public:
 		int &f_continue, groups::sims *Stab, long int *data,
 		int f_play_back, std::ifstream *play_back_file, int &f_eof,
 		int verbose_level);
-	void process_rearranged_set(groups::sims *Stab, long int *data,
+	void process_rearranged_set(
+			groups::sims *Stab, long int *data,
 		int f_implicit_fusion, int verbose_level);
 	int is_minimal(int verbose_level);
 	void stabilizer_action_exit();
@@ -133,8 +136,10 @@ public:
 		// Computes the permutations of the set
 		// that are induced by the
 		// generators for the stabilizer in AA
-	void stabilizer_action_add_generator(int *Elt, int verbose_level);
-	void print_statistics_iso_test(int t0, groups::sims *Stab);
+	void stabilizer_action_add_generator(
+			int *Elt, int verbose_level);
+	void print_statistics_iso_test(
+			int t0, groups::sims *Stab);
 	int identify(long int *set, int f_implicit_fusion,
 		int verbose_level);
 	int identify_database_is_open(long int *set,
@@ -158,7 +163,8 @@ public:
 		int verbose_level);
 		// Calls print_set_function (if available)
 
-	int identify_solution_relaxed(long int *set, int *transporter,
+	int identify_solution_relaxed(
+			long int *set, int *transporter,
 		int f_implicit_fusion, int &orbit_no,
 		int &f_failure_to_find_point,
 		int verbose_level);
@@ -166,14 +172,16 @@ public:
 	// the canonical version of set and the extension.
 	// Calls trace_set and find_extension_easy.
 	// Called from process_rearranged_set
-	int identify_solution(long int *set, int *transporter,
+	int identify_solution(
+			long int *set, int *transporter,
 		int f_implicit_fusion, int &f_failure_to_find_point,
 		int verbose_level);
 		// returns the orbit number corresponding to
 		// the canonical version of set and the extension.
 		// Calls trace_set and find_extension_easy.
 		// If needed, calls make_set_smaller
-	int trace_set(long int *canonical_set, int *transporter,
+	int trace_set(
+			long int *canonical_set, int *transporter,
 		int f_implicit_fusion, int &f_failure_to_find_point,
 		int verbose_level);
 		// returns the case number of the canonical set
@@ -246,13 +254,15 @@ public:
 
 	void handle_event_files(int nb_event_files,
 		const char **event_file_name, int verbose_level);
-	void read_event_file(const char *event_file_name,
+	void read_event_file(
+			const char *event_file_name,
 		int verbose_level);
 	void skip_through_event_file(std::ifstream &f,
 		int verbose_level);
 	void skip_through_event_file1(std::ifstream &f,
 		int case_no, int orbit_no, int verbose_level);
-	void event_file_completed_cases(const char *event_file_name,
+	void event_file_completed_cases(
+			const char *event_file_name,
 		int &nb_completed_cases, int *completed_cases,
 		int verbose_level);
 	void event_file_read_case(const char *event_file_name,
@@ -266,7 +276,8 @@ public:
 	void write_classification_matrix(int verbose_level);
 	void write_classification_graph(int verbose_level);
 	void decomposition_matrix(int verbose_level);
-	void compute_down_link(int *&down_link, int verbose_level);
+	void compute_down_link(
+			int *&down_link, int verbose_level);
 	void probe(int flag_orbit, int subset_rk,
 		int f_implicit_fusion, int verbose_level);
 	void test_compute_stabilizer(int verbose_level);
@@ -274,11 +285,15 @@ public:
 	void test_edges(int verbose_level);
 	int test_edge(int n1, long int *subset1,
 		int *transporter, int verbose_level);
-	void compute_Ago_Ago_induced(ring_theory::longinteger_object *&Ago,
-			ring_theory::longinteger_object *&Ago_induced, int verbose_level);
-	void get_orbit_transversal(data_structures_groups::orbit_transversal *&T,
+	void compute_Ago_Ago_induced(
+			ring_theory::longinteger_object *&Ago,
+			ring_theory::longinteger_object *&Ago_induced,
+			int verbose_level);
+	void get_orbit_transversal(
+			data_structures_groups::orbit_transversal *&T,
 		int verbose_level);
-	void compute_stabilizer(groups::sims *&Stab, int verbose_level);
+	void compute_stabilizer(
+			groups::sims *&Stab, int verbose_level);
 	void iso_test_init(int verbose_level);
 	void iso_test_init2(int verbose_level);
 
@@ -374,14 +389,17 @@ public:
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	void init(actions::action *A, actions::action *A2,
+	void init(actions::action *A,
+			actions::action *A2,
 			poset_classification::poset_classification *gen,
 		int target_size,
 		poset_classification::poset_classification_control *Control,
 		solvers_package::exact_cover_arguments *ECA,
-		void (*callback_report)(isomorph *Iso, void *data,
+		void (*callback_report)(
+				isomorph *Iso, void *data,
 			int verbose_level),
-		void (*callback_subset_orbits)(isomorph *Iso, void *data,
+		void (*callback_subset_orbits)(
+				isomorph *Iso, void *data,
 			int verbose_level),
 		void *callback_data,
 		int verbose_level);
@@ -420,7 +438,9 @@ public:
 
 	isomorph_global();
 	~isomorph_global();
-	void init(actions::action *A_base, actions::action *A,
+	void init(
+			actions::action *A_base,
+			actions::action *A,
 			poset_classification::poset_classification *gen,
 			int verbose_level);
 	void read_statistic_files(
@@ -439,7 +459,8 @@ public:
 	void identify(
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
-		int identify_nb_files, std::string *fname, int *Iso_type,
+		int identify_nb_files,
+		std::string *fname, int *Iso_type,
 		int f_save, int verbose_level);
 	void identify_table(
 		int size, std::string &prefix_classify,
@@ -447,19 +468,25 @@ public:
 		int nb_rows, long int *Table, int *Iso_type,
 		int verbose_level);
 	void worker(
-		int size, std::string &prefix_classify, std::string &prefix_iso,
-		void (*work_callback)(isomorph *Iso, void *data, int verbose_level),
+		int size,
+		std::string &prefix_classify,
+		std::string &prefix_iso,
+		void (*work_callback)(
+				isomorph *Iso, void *data, int verbose_level),
 		void *work_data,
 		int level, int verbose_level);
 	void compute_down_orbits(
-		int size, std::string &prefix_classify, std::string &prefix,
+		int size,
+		std::string &prefix_classify,
+		std::string &prefix,
 		int level, int verbose_level);
 	void compute_down_orbits_for_isomorphism_type(
 		isomorph *Iso, int orbit,
 		int &cnt_orbits, int &cnt_special_orbits,
 		int *&special_orbit_identify, int verbose_level);
 	void report_data_in_source_code_inside_tex(
-			isomorph &Iso, const char *prefix,
+			isomorph &Iso,
+			const char *prefix,
 			char *label_of_structure_plural, std::ostream &f,
 			int verbose_level);
 	void report_data_in_source_code_inside_tex_with_selection(
@@ -491,11 +518,13 @@ public:
 	~isomorph_worker();
 	void init(
 			isomorph_arguments *Isomorph_arguments,
-			actions::action *A_base, actions::action *A,
+			actions::action *A_base,
+			actions::action *A,
 			poset_classification::poset_classification *gen,
 			int size, int level,
 			int verbose_level);
-	void execute(isomorph_arguments *Isomorph_arguments,
+	void execute(
+			isomorph_arguments *Isomorph_arguments,
 			int verbose_level);
 	void build_db(int verbose_level);
 	void read_solutions(int verbose_level);
@@ -562,19 +591,25 @@ public:
 	isomorph();
 	~isomorph();
 	void init(std::string &prefix,
-			actions::action *A_base, actions::action *A,
+			actions::action *A_base,
+			actions::action *A,
 			poset_classification::poset_classification *gen,
 		int size, int level, 
 		int f_use_database_for_starter, 
 		int f_implicit_fusion, int verbose_level);
 	void print_node_local(int level, int node_local);
 	void print_node_global(int level, int node_global);
-	void init_high_level(actions::action *A,
+	void init_high_level(
+			actions::action *A,
 			poset_classification::poset_classification *gen,
-		int size, std::string &prefix_classify, std::string &prefix,
+		int size,
+		std::string &prefix_classify,
+		std::string &prefix,
 		int level, int verbose_level);
-	void induced_action_on_set_and_kernel(std::ostream &file,
-			actions::action *A, groups::sims *Stab, int size, long int *set,
+	void induced_action_on_set_and_kernel(
+			std::ostream &file,
+			actions::action *A,
+			groups::sims *Stab, int size, long int *set,
 		int verbose_level);
 	void read_everything_including_classification(
 			std::string &prefix_classify, int verbose_level);
@@ -642,11 +677,17 @@ public:
 
 	representatives();
 	~representatives();
-	void init(actions::action *A, int nb_objects, std::string &prefix, int verbose_level);
+	void init(
+			actions::action *A,
+			int nb_objects,
+			std::string &prefix,
+			int verbose_level);
 	void write_fusion(int verbose_level);
 	void read_fusion(int verbose_level);
-	void write_representatives_and_stabilizers(int verbose_level);
-	void read_representatives_and_stabilizers(int verbose_level);
+	void write_representatives_and_stabilizers(
+			int verbose_level);
+	void read_representatives_and_stabilizers(
+			int verbose_level);
 	void get_stabilizer(isomorph *Iso, int idx,
 			groups::strong_generators *&SG,
 			int verbose_level);
@@ -742,13 +783,15 @@ public:
 	// Calls fopen for fp_ge1 and fp_ge2.
 	void close_level_database(int verbose_level);
 	// Closes D1, D2, fp_ge1, fp_ge2.
-	void prepare_database_access(int cur_level, int verbose_level);
+	void prepare_database_access(
+			int cur_level, int verbose_level);
 	// sets D to be D1 or D2, depending on cur_level
 	// Called from
 	// load_strong_generators
 	// trace_next_point_database
 	void find_extension_easy(long int *set,
-		int case_nb, int &idx, int &f_found, int verbose_level);
+		int case_nb, int &idx,
+		int &f_found, int verbose_level);
 		// returns TRUE if found, FALSE otherwise
 		// Called from identify_solution
 		// Linear search through all solutions at a given starter.
@@ -952,7 +995,8 @@ public:
 	void list_solutions_by_orbit(int verbose_level);
 	void orbits_of_stabilizer(int verbose_level);
 	void orbits_of_stabilizer_case(int the_case,
-			data_structures_groups::vector_ge &gens, int verbose_level);
+			data_structures_groups::vector_ge &gens,
+			int verbose_level);
 	void orbit_representative(int i, int &i0,
 		int &orbit, int *transporter, int verbose_level);
 		// slow because it calls load_strong_generators
@@ -968,39 +1012,52 @@ public:
 		int nb, int id, int no,
 		int nb_solutions, long int h, uint_4 &datref,
 		int print_mod, int verbose_level);
-	void load_solution(int id, long int *data, int verbose_level);
+	void load_solution(
+			int id, long int *data, int verbose_level);
 	void load_solution_by_btree(int btree_idx,
 		int idx, int &id, long int *data);
 	void count_solutions(
-			int nb_files, std::string *fname, int *List_of_cases, int *&Nb_sol_per_file,
+			int nb_files,
+			std::string *fname,
+			int *List_of_cases, int *&Nb_sol_per_file,
 			int f_get_statistics,
 			int f_has_final_test_function,
-			int (*final_test_function)(long int *data, int sz,
+			int (*final_test_function)(
+					long int *data, int sz,
 					void *final_test_data, int verbose_level),
 			void *final_test_data,
 			int verbose_level);
-	void add_solutions_to_database(long int *Solutions,
+	void add_solutions_to_database(
+			long int *Solutions,
 		int the_case, int nb_solutions, int nb_solutions_total,
 		int print_mod, int &no,
 		int verbose_level);
 	void init_solutions(long int **Solutions,
 		int *Nb_sol, int verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
-	void count_solutions_from_clique_finder_case_by_case(int nb_files,
+	void count_solutions_from_clique_finder_case_by_case(
+			int nb_files,
 		long int *list_of_cases, std::string *fname,
 		int verbose_level);
-	void count_solutions_from_clique_finder(int nb_files,
+	void count_solutions_from_clique_finder(
+			int nb_files,
 			std::string *fname,
 		int verbose_level);
-	void read_solutions_from_clique_finder_case_by_case(int nb_files,
+	void read_solutions_from_clique_finder_case_by_case(
+			int nb_files,
 		long int *list_of_cases, std::string *fname,
 		int verbose_level);
 	void read_solutions_from_clique_finder(
-			int nb_files, std::string *fname, int *substructure_case_number, int *Nb_sol_per_file,
+			int nb_files,
+			std::string *fname,
+			int *substructure_case_number, int *Nb_sol_per_file,
 			int verbose_level);
-	void build_up_database(int nb_files, std::string *fname,
+	void build_up_database(
+			int nb_files,
+			std::string *fname,
 		int f_has_final_test_function,
-		int (*final_test_function)(long int *data, int sz,
+		int (*final_test_function)(
+				long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data,
 		int verbose_level);

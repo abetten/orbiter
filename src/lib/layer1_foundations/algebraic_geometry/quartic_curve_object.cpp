@@ -70,7 +70,8 @@ quartic_curve_object::~quartic_curve_object()
 	}
 }
 
-void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain *Dom,
+void quartic_curve_object::init_equation_but_no_bitangents(
+		quartic_curve_domain *Dom,
 		int *eqn15,
 		int verbose_level)
 {
@@ -117,7 +118,8 @@ void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain 
 	}
 }
 
-void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Dom,
+void quartic_curve_object::init_equation_and_bitangents(
+		quartic_curve_domain *Dom,
 		int *eqn15, long int *bitangents28,
 		int verbose_level)
 {

@@ -65,7 +65,9 @@ flock::~flock()
 
 }
 
-void flock::init(blt_set_with_action *BLT_set, int point_idx, int verbose_level)
+void flock::init(
+		blt_set_with_action *BLT_set,
+		int point_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -232,6 +234,9 @@ void flock::init(blt_set_with_action *BLT_set, int point_idx, int verbose_level)
 
 	}
 
+	test_flock_condition(BLT_set->Blt_set_domain->F, FALSE /* f_magic */, ABC, verbose_level);
+
+
 
 	PF = NEW_OBJECT(combinatorics::polynomial_function_domain);
 
@@ -244,10 +249,18 @@ void flock::init(blt_set_with_action *BLT_set, int point_idx, int verbose_level)
 	}
 
 	int q;
-	int *coeff;
+	int *coeff_f;
+	int *coeff_g;
 	int nb_coeff;
+	int degree;
 
+
+	degree = PF->max_degree;
 	q = BLT_set->Blt_set_domain->F->q;
+	if (f_v) {
+		cout << "flock::init degree = " << degree << endl;
+		cout << "flock::init q = " << q << endl;
+	}
 
 
 	if (f_v) {
@@ -255,7 +268,7 @@ void flock::init(blt_set_with_action *BLT_set, int point_idx, int verbose_level)
 	}
 	PF->algebraic_normal_form(
 			func_f, q,
-			coeff, nb_coeff,
+			coeff_f, nb_coeff,
 			verbose_level);
 	if (f_v) {
 		cout << "flock::init after PF->algebraic_normal_form" << endl;
@@ -266,53 +279,88 @@ void flock::init(blt_set_with_action *BLT_set, int point_idx, int verbose_level)
 	}
 	PF->algebraic_normal_form(
 			func_g, q,
-			coeff, nb_coeff,
+			coeff_g, nb_coeff,
 			verbose_level);
 	if (f_v) {
 		cout << "flock::init after PF->algebraic_normal_form" << endl;
 	}
 
 
+	if (f_v) {
+		cout << "flock::init before quadratic_lift" << endl;
+	}
+	quadratic_lift(coeff_f, coeff_g, verbose_level);
+	if (f_v) {
+		cout << "flock::init after quadratic_lift" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "flock::init before cubic_lift" << endl;
+	}
+	cubic_lift(coeff_f, coeff_g, verbose_level);
+	if (f_v) {
+		cout << "flock::init after cubic_lift" << endl;
+	}
 
 
 
-	test_flock_condition(verbose_level);
 
 	if (f_v) {
 		cout << "flock::init done" << endl;
 	}
 }
 
-void flock::test_flock_condition(int verbose_level)
+void flock::test_flock_condition(
+		field_theory::finite_field *F,
+		int f_magic, int *ABC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "flock::test_flock_condition" << endl;
 	}
 
-	field_theory::finite_field *F;
 	int q;
-	//field_theory::square_nonsquare *SN;
+	int N;
 	int i, j;
 	int ai, bi, ci;
 	int aj, bj, cj;
 	int a, b, c;
 	int two, four;
 	int x;
+	int *outcome;
+	int cnt;
 
 
-	F = BLT_set->Blt_set_domain->F;
+	//F = BLT_set->Blt_set_domain->F;
 	q = F->q;
 
 	two = F->add(1, 1);
 	four = F->add(two, two);
 
+	N = (q * (q - 1)) >> 1;
+	outcome = NEW_int(N);
 
-	//SN = NEW_OBJECT(field_theory::square_nonsquare);
+	if (f_magic) {
 
-	//SN->init(F, verbose_level);
+#if 1
+		// magical preprocessing:
 
+		for (i = 0; i < q; i++) {
+
+			ai = ABC[i * 3 + 0];
+			ABC[i * 3 + 0] = F->mult(ai, F->p);
+
+			bi = ABC[i * 3 + 1];
+			ABC[i * 3 + 1] = F->mult(F->negate(1), F->p);
+
+		}
+#endif
+	}
+
+	cnt = 0;
 	for (i = 0; i < q; i++) {
 		ai = ABC[i * 3 + 0];
 		bi = ABC[i * 3 + 1];
@@ -325,19 +373,215 @@ void flock::test_flock_condition(int verbose_level)
 			b = F->add(bi, F->negate(bj));
 			c = F->add(ci, F->negate(cj));
 			x = F->add(F->mult(c, c), F->mult(four, F->mult(a, b)));
-			if (F->is_square(x)) {
-				cout << "i=" << i << ",j=" << j << ",x=" << x << " yes" << endl;
+			outcome[cnt] = F->is_square(x);
+
+			if (f_vv) {
+				if (outcome[cnt]) {
+					cout << "i=" << i << ",j=" << j << ",x=" << x << " yes" << endl;
+				}
+				else {
+					cout << "i=" << i << ",j=" << j << ",x=" << x << " no" << endl;
+				}
 			}
-			else {
-				cout << "i=" << i << ",j=" << j << ",x=" << x << " no" << endl;
-			}
+			cnt++;
 		}
 	}
+	data_structures::tally T;
 
-	//FREE_OBJECT(SN);
+	T.init(outcome, N, FALSE, 0);
+	cout << "outcome : ";
+	T.print_first(FALSE /*f_backwards*/);
+	cout << endl;
 
+
+	FREE_int(outcome);
 
 }
+
+void flock::quadratic_lift(
+		int *coeff_f, int *coeff_g, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "flock::quadratic_lift" << endl;
+	}
+
+	int q;
+	int nb_coeff;
+	int degree;
+
+
+	degree = PF->max_degree;
+	q = BLT_set->Blt_set_domain->F->q;
+
+	field_theory::finite_field *F2;
+
+	F2 = NEW_OBJECT(field_theory::finite_field);
+
+	int Q;
+
+	Q = q * q;
+
+	F2->finite_field_init_small_order(Q,
+			FALSE /* f_without_tables */, verbose_level);
+
+
+	ring_theory::homogeneous_polynomial_domain *Poly2;
+
+	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "flock::quadratic_lift before Poly2->init" << endl;
+	}
+	Poly2->init(F2, 2, degree,
+				t_PART,
+				0 /* verbose_level */);
+	if (f_v) {
+		cout << "flock::quadratic_lift after Poly2->init" << endl;
+	}
+
+
+
+	int *lifted_f;
+	int *lifted_g;
+
+
+	lifted_f = NEW_int(Q);
+	lifted_g = NEW_int(Q);
+
+	int v[2];
+	int i;
+
+	for (i = 0; i < Q; i++) {
+		//Gg.AG_element_unrank(Q, v, 1, 1, i);
+		v[0] = i;
+		v[1] = 1;
+		lifted_f[i] = Poly2->evaluate_at_a_point(coeff_f, v);
+		lifted_g[i] = Poly2->evaluate_at_a_point(coeff_g, v);
+	}
+
+	if (f_v) {
+
+		cout << "flock::quadratic_lift lifted_f:" << endl;
+		Int_vec_print(cout, lifted_f, Q);
+		cout << endl;
+
+		cout << "flock::quadratic_lift lifted_g:" << endl;
+		Int_vec_print(cout, lifted_g, Q);
+		cout << endl;
+	}
+
+	int *ABC2;
+
+	ABC2 = NEW_int(Q * 3);
+	for (i = 0; i < Q; i++) {
+		ABC2[i * 3 + 0] = i;
+		ABC2[i * 3 + 1] = lifted_f[i];
+		ABC2[i * 3 + 2] = lifted_g[i];
+	}
+
+	test_flock_condition(F2, TRUE /* f_magic */, ABC2, verbose_level);
+
+	if (f_v) {
+		cout << "flock::quadratic_lift done" << endl;
+	}
+}
+
+
+
+void flock::cubic_lift(
+		int *coeff_f, int *coeff_g, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "flock::cubic_lift" << endl;
+	}
+
+	int q;
+	int nb_coeff;
+	int degree;
+
+
+	degree = PF->max_degree;
+	q = BLT_set->Blt_set_domain->F->q;
+
+	field_theory::finite_field *FQ;
+
+	FQ = NEW_OBJECT(field_theory::finite_field);
+
+	int Q;
+
+	Q = q * q * q;
+
+	FQ->finite_field_init_small_order(Q,
+			FALSE /* f_without_tables */, verbose_level);
+
+
+	ring_theory::homogeneous_polynomial_domain *Poly2;
+
+	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "flock::cubic_lift before Poly2->init" << endl;
+	}
+	Poly2->init(FQ, 2, degree,
+				t_PART,
+				0 /* verbose_level */);
+	if (f_v) {
+		cout << "flock::cubic_lift after Poly2->init" << endl;
+	}
+
+
+
+	int *lifted_f;
+	int *lifted_g;
+
+
+	lifted_f = NEW_int(Q);
+	lifted_g = NEW_int(Q);
+
+	int v[2];
+	int i;
+
+	for (i = 0; i < Q; i++) {
+		//Gg.AG_element_unrank(Q, v, 1, 1, i);
+		v[0] = i;
+		v[1] = 1;
+		lifted_f[i] = Poly2->evaluate_at_a_point(coeff_f, v);
+		lifted_g[i] = Poly2->evaluate_at_a_point(coeff_g, v);
+	}
+
+	if (f_v) {
+
+		cout << "flock::cubic_lift lifted_f:" << endl;
+		Int_vec_print(cout, lifted_f, Q);
+		cout << endl;
+
+		cout << "flock::cubic_lift lifted_g:" << endl;
+		Int_vec_print(cout, lifted_g, Q);
+		cout << endl;
+	}
+
+	int *ABC2;
+
+	ABC2 = NEW_int(Q * 3);
+	for (i = 0; i < Q; i++) {
+		ABC2[i * 3 + 0] = i;
+		ABC2[i * 3 + 1] = lifted_f[i];
+		ABC2[i * 3 + 2] = lifted_g[i];
+	}
+
+	test_flock_condition(FQ, FALSE /* f_magic */, ABC2, verbose_level);
+
+	if (f_v) {
+		cout << "flock::cubic_lift done" << endl;
+	}
+}
+
 
 }}}
 

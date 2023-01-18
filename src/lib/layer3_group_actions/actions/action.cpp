@@ -665,8 +665,10 @@ int action::test_if_set_stabilizes(int *Elt,
 	}
 }
 
-void action::map_a_set_based_on_hdl(long int *set,
-		long int *image_set, int n, action *A_base, int hdl, int verbose_level)
+void action::map_a_set_based_on_hdl(
+		long int *set,
+		long int *image_set,
+		int n, action *A_base, int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -687,8 +689,10 @@ void action::map_a_set_based_on_hdl(long int *set,
 	}
 }
 
-void action::map_a_set(long int *set,
-		long int *image_set, int n, int *Elt, int verbose_level)
+void action::map_a_set(
+		long int *set,
+		long int *image_set,
+		int n, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -717,8 +721,10 @@ void action::map_a_set(long int *set,
 	}
 }
 
-void action::map_a_set_and_reorder(long int *set,
-		long int *image_set, int n, int *Elt, int verbose_level)
+void action::map_a_set_and_reorder(
+		long int *set,
+		long int *image_set,
+		int n, int *Elt, int verbose_level)
 {
 	data_structures::sorting Sorting;
 
@@ -1046,7 +1052,8 @@ int action::depth_in_stab_chain(int *Elt)
 }
 
 void action::strong_generators_at_depth(int depth,
-		data_structures_groups::vector_ge &gen, int verbose_level)
+		data_structures_groups::vector_ge &gen,
+		int verbose_level)
 // all strong generators that leave base points 0,..., depth - 1 fix
 {
 	int i, j, l, n;
@@ -1241,7 +1248,9 @@ int action::check_if_in_set_stabilizer(
 
 int action::check_if_transporter_for_set(
 		int *Elt,
-		int size, long int *set1, long int *set2, int verbose_level)
+		int size,
+		long int *set1, long int *set2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 4);
@@ -1388,7 +1397,8 @@ void action::make_element_from_permutation_representation(
 	}
 }
 
-void action::make_element_from_base_image(int *Elt, groups::sims *S,
+void action::make_element_from_base_image(
+		int *Elt, groups::sims *S,
 		int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1967,7 +1977,8 @@ void action::element_print_base_images_verbose(
 	FREE_int(base_images);
 }
 
-void action::element_base_images(int *Elt, int *base_images)
+void action::element_base_images(
+		int *Elt, int *base_images)
 {
 	element_base_images_verbose(Elt, base_images, 0);
 }
@@ -2131,7 +2142,8 @@ void action::get_generators_from_ascii_coding(
 }
 
 
-void action::lexorder_test(long int *set, int set_sz,
+void action::lexorder_test(
+		long int *set, int set_sz,
 	int &set_sz_after_test,
 	data_structures_groups::vector_ge *gens, int max_starter,
 	int verbose_level)

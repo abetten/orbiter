@@ -64,7 +64,8 @@ hermitian::~hermitian()
 }
 
 
-void hermitian::init(field_theory::finite_field *F, int nb_vars, int verbose_level)
+void hermitian::init(field_theory::finite_field *F,
+		int nb_vars, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;

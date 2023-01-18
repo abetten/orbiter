@@ -811,7 +811,8 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 
 
 void delandtsheer_doyen::compute_orbits_on_pairs(
-		groups::strong_generators *Strong_gens, int verbose_level)
+		groups::strong_generators *Strong_gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1366,7 +1367,8 @@ void delandtsheer_doyen::print_mask_test_i(std::ostream &ost, int i)
 	ost << endl;
 }
 
-void delandtsheer_doyen::early_test_func(long int *S, int len,
+void delandtsheer_doyen::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)

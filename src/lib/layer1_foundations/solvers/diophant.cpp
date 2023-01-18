@@ -175,7 +175,8 @@ void diophant::open(int m, int n)
 	f_has_var_labels = FALSE;
 }
 
-void diophant::init_var_labels(long int *labels, int verbose_level)
+void diophant::init_var_labels(
+		long int *labels, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -191,7 +192,8 @@ void diophant::init_var_labels(long int *labels, int verbose_level)
 
 }
 void diophant::join_problems(
-		diophant *D1, diophant *D2, int verbose_level)
+		diophant *D1, diophant *D2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_rows, nb_cols;
@@ -297,7 +299,8 @@ void diophant::init_partition_problem(
 }
 
 void diophant::init_partition_problem_with_bounds(
-	int *weights, int *bounds, int nb_weights, int target_value,
+	int *weights, int *bounds,
+	int nb_weights, int target_value,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -817,7 +820,8 @@ int diophant::solve_first_wassermann(int verbose_level)
 }
 #endif
 
-int diophant::solve_first_mckay(int f_once, int verbose_level)
+int diophant::solve_first_mckay(
+		int f_once, int verbose_level)
 {
 	int f_v = TRUE;//(verbose_level >= 1);
 	int j;
@@ -1230,7 +1234,8 @@ int diophant::solve_all_DLX(int verbose_level)
 	return _resultanz;
 }
 
-int diophant::solve_all_DLX_with_RHS(int f_write_tree,
+int diophant::solve_all_DLX_with_RHS(
+		int f_write_tree,
 		const char *fname_tree, int verbose_level)
 {
 	cout << "diophant::solve_all_DLX_with_RHS disabled" << endl;
@@ -1386,7 +1391,9 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 	return _resultanz;
 }
 
-int diophant::solve_all_mckay(long int &nb_backtrack_nodes, int maxresults, int verbose_level)
+int diophant::solve_all_mckay(
+		long int &nb_backtrack_nodes, int maxresults,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int maxresults = 10000;
@@ -2106,8 +2113,10 @@ int diophant::j_nxt(int j, int verbose_level)
 	return FALSE;
 }
 
-void diophant::solve_mckay(const char *label, int maxresults, 
-	long int &nb_backtrack_nodes, int &nb_sol, int verbose_level)
+void diophant::solve_mckay(
+		const char *label, int maxresults,
+	long int &nb_backtrack_nodes, int &nb_sol,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2566,7 +2575,8 @@ int diophant::maximum_number_of_non_zero_coefficients_in_row()
 	return d_max;
 }
 
-void diophant::get_coefficient_matrix(int *&M, 
+void diophant::get_coefficient_matrix(
+		int *&M,
 	int &nb_rows, int &nb_cols, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2830,7 +2840,8 @@ void diophant::read_compact_format(const char *fname, int verbose_level)
 }
 #endif
 
-void diophant::save_in_general_format(std::string &fname, int verbose_level)
+void diophant::save_in_general_format(
+		std::string &fname, int verbose_level)
 // ToDo this does not save the values of x_min[] and x_max[]
 {
 	int f_v = (verbose_level >= 1);
@@ -3000,7 +3011,8 @@ void diophant::save_in_general_format(std::string &fname, int verbose_level)
 		}
 }
 
-void diophant::read_general_format(std::string &fname, int verbose_level)
+void diophant::read_general_format(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 1);
@@ -3235,7 +3247,8 @@ void diophant::eliminate_zero_rows_quick(int verbose_level)
 	FREE_int(eqn_number);
 }
 
-void diophant::eliminate_zero_rows(int *&eqn_number, int verbose_level)
+void diophant::eliminate_zero_rows(
+		int *&eqn_number, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, mm;
@@ -3300,7 +3313,8 @@ int diophant::is_zero_outside(int first, int len, int i)
 	return TRUE;
 }
 
-void diophant::project(diophant *D, int first, int len,
+void diophant::project(
+		diophant *D, int first, int len,
 		int *&eqn_number, int &nb_eqns_replaced, int *&eqns_replaced,
 		int verbose_level)
 {
@@ -3339,8 +3353,11 @@ void diophant::project(diophant *D, int first, int len,
 	D->eliminate_zero_rows(eqn_number, 0);
 }
 
-void diophant::split_by_equation(int eqn_idx,
-		int f_solve_case, int solve_case_idx, int verbose_level)
+void diophant::split_by_equation(
+		int eqn_idx,
+		int f_solve_case,
+		int solve_case_idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3407,8 +3424,10 @@ void diophant::split_by_equation(int eqn_idx,
 
 }
 
-void diophant::split_by_two_equations(int eqn1_idx, int eqn2_idx,
-		int f_solve_case, int solve_case_idx_r, int solve_case_idx_m,
+void diophant::split_by_two_equations(
+		int eqn1_idx, int eqn2_idx,
+		int f_solve_case,
+		int solve_case_idx_r, int solve_case_idx_m,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3926,7 +3945,8 @@ void diophant::write_gurobi_binary_variables(const char *fname)
 }
 
 void diophant::draw_as_bitmap(std::string &fname,
-		int f_box_width, int box_width, int bit_depth, int verbose_level)
+		int f_box_width, int box_width,
+		int bit_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4451,7 +4471,9 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 }
 
 
-void diophant::make_clique_graph(graph_theory::colored_graph *&CG, int verbose_level)
+void diophant::make_clique_graph(
+		graph_theory::colored_graph *&CG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::bitvector *Adj;

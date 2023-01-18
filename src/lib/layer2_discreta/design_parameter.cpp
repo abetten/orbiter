@@ -333,7 +333,8 @@ int design_parameter::residual_inverse(design_parameter& p)
 	return TRUE;
 }
 
-void design_parameter::ancestor(design_parameter& p, Vector & path,
+void design_parameter::ancestor(
+		design_parameter& p, Vector & path,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -456,7 +457,8 @@ int design_parameter::trung_complementary(design_parameter& p)
 	return TRUE;
 }
 
-int design_parameter::trung_left_partner(int& t1, int& v1, int& k1, discreta_base& lambda1,
+int design_parameter::trung_left_partner(
+		int& t1, int& v1, int& k1, discreta_base& lambda1,
 	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new)
 {
 	discreta_base a, q, r;
@@ -481,7 +483,8 @@ int design_parameter::trung_left_partner(int& t1, int& v1, int& k1, discreta_bas
 	return TRUE;
 }
 
-int design_parameter::trung_right_partner(int& t1, int& v1, int& k1, discreta_base& lambda1,
+int design_parameter::trung_right_partner(
+		int& t1, int& v1, int& k1, discreta_base& lambda1,
 	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new)
 {
 	discreta_base a, q, r;

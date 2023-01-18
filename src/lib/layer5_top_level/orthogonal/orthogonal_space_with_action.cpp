@@ -243,7 +243,8 @@ void orthogonal_space_with_action::report(
 
 }
 
-void orthogonal_space_with_action::report2(std::ostream &ost,
+void orthogonal_space_with_action::report2(
+		std::ostream &ost,
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {

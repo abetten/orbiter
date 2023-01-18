@@ -979,7 +979,8 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 	}
 }
 
-void projective_space::plane_intersection(int plane_rank,
+void projective_space::plane_intersection(
+		int plane_rank,
 		long int *set, int set_size,
 		vector<int> &point_indices,
 		vector<int> &point_local_coordinates,
@@ -1051,7 +1052,8 @@ void projective_space::plane_intersection(int plane_rank,
 	}
 }
 
-void projective_space::line_intersection(int line_rank,
+void projective_space::line_intersection(
+		int line_rank,
 		long int *set, int set_size,
 		vector<int> &point_indices,
 		int verbose_level)
@@ -1105,7 +1107,8 @@ void projective_space::line_intersection(int line_rank,
 }
 
 
-void projective_space::conic_type_randomized(int nb_times,
+void projective_space::conic_type_randomized(
+		int nb_times,
 	long int *set, int set_size,
 	long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
 	int verbose_level)
@@ -1369,7 +1372,8 @@ void projective_space::conic_intersection_type(
 	long int *set, int set_size,
 	int threshold,
 	int *&intersection_type, int &highest_intersection_number,
-	int f_save_largest_sets, data_structures::set_of_sets *&largest_sets,
+	int f_save_largest_sets,
+	data_structures::set_of_sets *&largest_sets,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1670,7 +1674,8 @@ void projective_space::determine_nonconical_six_subsets(
 void projective_space::conic_type(
 	long int *set, int set_size,
 	int threshold,
-	long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
+	long int **&Pts_on_conic,
+	int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

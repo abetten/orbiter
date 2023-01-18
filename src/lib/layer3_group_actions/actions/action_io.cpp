@@ -19,7 +19,8 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-void action::report(std::ostream &ost, int f_sims, groups::sims *S,
+void action::report(
+		std::ostream &ost, int f_sims, groups::sims *S,
 		int f_strong_gens, groups::strong_generators *SG,
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
@@ -157,7 +158,8 @@ void action::report(std::ostream &ost, int f_sims, groups::sims *S,
 	}
 }
 
-void action::report_what_we_act_on(std::ostream &ost,
+void action::report_what_we_act_on(
+		std::ostream &ost,
 		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
@@ -466,7 +468,8 @@ void action::read_orbit_rep_and_candidates_from_files(
 }
 
 
-void action::read_representatives(std::string &fname,
+void action::read_representatives(
+		std::string &fname,
 		int *&Reps, int &nb_reps, int &size, int verbose_level)
 {
 	int f_casenumbers = FALSE;
@@ -541,7 +544,8 @@ void action::read_representatives_and_strong_generators(
 }
 
 void action::read_file_and_print_representatives(
-		std::string &fname, int f_print_stabilizer_generators, int verbose_level)
+		std::string &fname,
+		int f_print_stabilizer_generators, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_casenumbers = FALSE;
@@ -613,7 +617,8 @@ void action::read_file_and_print_representatives(
 
 }
 
-void action::read_set_and_stabilizer(std::string &fname,
+void action::read_set_and_stabilizer(
+		std::string &fname,
 	int no, long int *&set, int &set_sz, groups::sims *&stab,
 	groups::strong_generators *&Strong_gens,
 	int &nb_cases,
@@ -901,7 +906,8 @@ void action::latex_all_points(std::ostream &ost)
 	FREE_int(v);
 }
 
-void action::latex_point_set(std::ostream &ost,
+void action::latex_point_set(
+		std::ostream &ost,
 		long int *set, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1000,7 +1006,8 @@ void action::print_group_order_long(std::ostream &ost)
 
 }
 
-void action::print_vector(data_structures_groups::vector_ge &v)
+void action::print_vector(
+		data_structures_groups::vector_ge &v)
 {
 	int i, l;
 
@@ -1013,7 +1020,8 @@ void action::print_vector(data_structures_groups::vector_ge &v)
 		}
 }
 
-void action::print_vector_as_permutation(data_structures_groups::vector_ge &v)
+void action::print_vector_as_permutation(
+		data_structures_groups::vector_ge &v)
 {
 	int i, l;
 
@@ -1027,7 +1035,8 @@ void action::print_vector_as_permutation(data_structures_groups::vector_ge &v)
 }
 
 
-void action::write_set_of_elements_latex_file(std::string &fname,
+void action::write_set_of_elements_latex_file(
+		std::string &fname,
 		std::string &title, int *Elt, int nb_elts)
 {
 	{
@@ -1138,7 +1147,9 @@ void action::export_to_orbiter(
 
 
 void action::export_to_orbiter_as_bsgs(
-		std::string &fname, std::string &label, std::string &label_tex,
+		std::string &fname,
+		std::string &label,
+		std::string &label_tex,
 		groups::strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1168,7 +1179,8 @@ void action::export_to_orbiter_as_bsgs(
 }
 
 
-void action::print_one_element_tex(std::ostream &ost,
+void action::print_one_element_tex(
+		std::ostream &ost,
 		int *Elt, int f_with_permutation)
 {
 	ost << "$$" << endl;

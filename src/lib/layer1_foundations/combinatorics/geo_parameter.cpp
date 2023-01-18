@@ -125,7 +125,8 @@ void geo_parameter::append_to_entries(int a1, int a2, int a3, int a4)
 	nb_entries++;
 }
 
-void geo_parameter::write(ofstream &aStream, std::string &label)
+void geo_parameter::write(
+		std::ofstream &aStream, std::string &label)
 {
 	
 	if (mode == MODE_SINGLE) {
@@ -140,7 +141,9 @@ void geo_parameter::write(ofstream &aStream, std::string &label)
 	}
 }
 
-void geo_parameter::write_mode_single(ofstream &aStream, std::string &label)
+void geo_parameter::write_mode_single(
+		std::ofstream &aStream,
+		std::string &label)
 {
 	int i, j, sum, pt_level = -1, bt_level = -1, xy, x, y, z, w;
 
@@ -204,7 +207,9 @@ void geo_parameter::write_mode_single(ofstream &aStream, std::string &label)
 		extra_row_level << " " << extra_col_level << endl;
 }
 
-void geo_parameter::write_mode_stack(ofstream &aStream, std::string &label)
+void geo_parameter::write_mode_stack(
+		std::ofstream &aStream,
+		std::string &label)
 {
 	int i;
 	
@@ -384,7 +389,7 @@ int geo_parameter::partition_number_col(int col_idx)
 	}
 }
  
-int geo_parameter::input(ifstream &aStream)
+int geo_parameter::input(std::ifstream &aStream)
 {
 #ifdef SYSTEMUNIX
 	cout << "geo_parameter::input SYSTEMUNIX" << endl;
@@ -416,7 +421,7 @@ int geo_parameter::input(ifstream &aStream)
 	return FALSE;
 }
 
-int geo_parameter::input_mode_single(ifstream &aStream)
+int geo_parameter::input_mode_single(std::ifstream &aStream)
 {
 #ifdef SYSTEMUNIX
 	int i, j, l, val, eqpos;
@@ -607,7 +612,7 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 }
 
 int geo_parameter::input_mode_stack(
-		ifstream &aStream, int verbose_level)
+		std::ifstream &aStream, int verbose_level)
 {
 #if defined(SYSTEMUNIX) || defined(SYSTEM_IS_MACINTOSH)
 	int f_v = (verbose_level >= 1);
@@ -710,7 +715,8 @@ int geo_parameter::input_mode_stack(
 	return TRUE;
 }
 
-void geo_parameter::init_tdo_scheme(tdo_scheme_synthetic &G, int verbose_level)
+void geo_parameter::init_tdo_scheme(
+		tdo_scheme_synthetic &G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -792,7 +798,9 @@ void geo_parameter::print_schemes_tex(tdo_scheme_synthetic &G)
 	}
 }
 
-void geo_parameter::print_scheme_tex(std::ostream &ost, tdo_scheme_synthetic &G, int h)
+void geo_parameter::print_scheme_tex(
+		std::ostream &ost,
+		tdo_scheme_synthetic &G, int h)
 {
 	G.print_scheme_tex_fancy(ost, h, TRUE, label);
 }
@@ -1894,7 +1902,8 @@ void geo_parameter::print_schemes()
 
 
 
-int geo_parameter::tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G,
+int geo_parameter::tdo_scheme_get_row_class_length_fused(
+		tdo_scheme_synthetic &G,
 		int h, int class_first, int class_len)
 {
 	int L, u;
@@ -1906,7 +1915,8 @@ int geo_parameter::tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G
 	return L;
 }
 
-int geo_parameter::tdo_scheme_get_col_class_length_fused(tdo_scheme_synthetic &G,
+int geo_parameter::tdo_scheme_get_col_class_length_fused(
+		tdo_scheme_synthetic &G,
 		int h, int class_first, int class_len)
 {
 	int L, u;

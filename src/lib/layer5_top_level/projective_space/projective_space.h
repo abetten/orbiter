@@ -97,7 +97,8 @@ public:
 
 
 	// needed once for each object:
-	canonical_form_substructure **CFS_table; // [nb_objects_to_test]
+	canonical_form_substructure **CFS_table;
+		// [nb_objects_to_test]
 
 
 
@@ -106,10 +107,12 @@ public:
 
 
 	int counter;
-	int *Canonical_forms; // [nb_objects_to_test * Poly_ring->get_nb_monomials()]
+	int *Canonical_forms;
+		// [nb_objects_to_test * Poly_ring->get_nb_monomials()]
 	long int *Goi; // [nb_objects_to_test]
 
-	data_structures::tally_vector_data *Classification_of_quartic_curves;
+	data_structures::tally_vector_data
+		*Classification_of_quartic_curves;
 		// based on Canonical_forms, nb_objects_to_test
 
 	// transversal of the isomorphism types:
@@ -121,7 +124,8 @@ public:
 	canonical_form_classifier();
 	~canonical_form_classifier();
 	void count_nb_objects_to_test(int verbose_level);
-	void classify(canonical_form_classifier_description *Descr,
+	void classify(
+			canonical_form_classifier_description *Descr,
 			int verbose_level);
 	void classify_nauty(int verbose_level);
 	void classify_with_substructure(int verbose_level);
@@ -136,10 +140,12 @@ public:
 			int verbose_level);
 	void generate_source_code(
 			std::string &fname_base,
-			data_structures::tally_vector_data *Classification_of_quartic_curves,
+			data_structures::tally_vector_data
+				*Classification_of_quartic_curves,
 			int verbose_level);
 	void report(std::string &fname, int verbose_level);
-	void report2(std::ostream &ost, std::string &fname_base, int verbose_level);
+	void report2(std::ostream &ost,
+			std::string &fname_base, int verbose_level);
 
 };
 
@@ -289,8 +295,10 @@ public:
 			int *canonical_labeling,
 			int verbose_level);
 	void print();
-	void report(std::ostream &fp,
-			projective_space_with_action *PA, int max_TDO_depth, int verbose_level);
+	void report(
+			std::ostream &fp,
+			projective_space_with_action *PA,
+			int max_TDO_depth, int verbose_level);
 
 };
 
@@ -496,15 +504,18 @@ public:
 
 
 	int f_classify_arcs;
-	apps_geometry::arc_generator_description *Arc_generator_description;
+	apps_geometry::arc_generator_description
+		*Arc_generator_description;
 
 	int f_classify_cubic_curves;
 
 
 
 	int f_classify_semifields;
-	semifields::semifield_classify_description *Semifield_classify_description;
-	poset_classification::poset_classification_control *Semifield_classify_Control;
+	semifields::semifield_classify_description
+		*Semifield_classify_description;
+	poset_classification::poset_classification_control
+		*Semifield_classify_Control;
 
 	int f_classify_bent_functions;
 	int classify_bent_functions_n;
@@ -574,11 +585,13 @@ public:
 			int verbose_level);
 	void do_classify_arcs(
 			projective_space_with_action *PA,
-			apps_geometry::arc_generator_description *Arc_generator_description,
+			apps_geometry::arc_generator_description
+				*Arc_generator_description,
 			int verbose_level);
 	void do_classify_cubic_curves(
 			projective_space_with_action *PA,
-			apps_geometry::arc_generator_description *Arc_generator_description,
+			apps_geometry::arc_generator_description
+				*Arc_generator_description,
 			int verbose_level);
 	void classify_quartic_curves_nauty(
 			projective_space_with_action *PA,
@@ -588,7 +601,8 @@ public:
 			int verbose_level);
 	void classify_quartic_curves_with_substructure(
 			projective_space_with_action *PA,
-			std::string &fname_mask, int nb, int substructure_size, int degree,
+			std::string &fname_mask,
+			int nb, int substructure_size, int degree,
 			std::string &fname_classification,
 			canonical_form_classifier *&Classifier,
 			int verbose_level);
@@ -687,12 +701,14 @@ public:
 	projective_space_with_action *PA2;
 
 	// if n == 3
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
+		*Surf_A;
 
 
 	// if n == 2:
 	algebraic_geometry::quartic_curve_domain *Dom;
-	applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action *QCDA;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action
+		*QCDA;
 
 
 	actions::action *A; // linear group PGGL(d,q) in the action on points
@@ -707,7 +723,9 @@ public:
 
 	projective_space_with_action();
 	~projective_space_with_action();
-	void init(field_theory::finite_field *F, int n, int f_semilinear,
+	void init(
+			field_theory::finite_field *F,
+			int n, int f_semilinear,
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	void canonical_labeling(
@@ -726,10 +744,13 @@ public:
 		// ToDo
 	void do_cheat_sheet_for_decomposition_by_element_PG(
 			int decomposition_by_element_power,
-			std::string &decomposition_by_element_data, std::string &fname_base,
+			std::string &decomposition_by_element_data,
+			std::string &fname_base,
 			int verbose_level);
-	void do_cheat_sheet_for_decomposition_by_subgroup(std::string &label,
-			groups::linear_group_description * subgroup_Descr, int verbose_level);
+	void do_cheat_sheet_for_decomposition_by_subgroup(
+			std::string &label,
+			groups::linear_group_description * subgroup_Descr,
+			int verbose_level);
 	void report(
 		std::ostream &ost,
 		graphics::layered_graph_draw_options *O,
@@ -737,7 +758,8 @@ public:
 	void canonical_form_of_code(
 			std::string &label,
 			int *genma, int m, int n,
-			combinatorics::classification_of_objects_description *Canonical_form_codes_Descr,
+			combinatorics::classification_of_objects_description
+				*Canonical_form_codes_Descr,
 			int verbose_level);
 	void table_of_quartic_curves(int verbose_level);
 	void table_of_cubic_surfaces(int verbose_level);
@@ -745,13 +767,16 @@ public:
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void do_spread_classify(int k,
-			poset_classification::poset_classification_control *Control,
+			poset_classification::poset_classification_control
+				*Control,
 			int verbose_level);
 	void setup_surface_with_action(
-			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *&Surf_A,
+			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
+				*&Surf_A,
 			int verbose_level);
 	void report_decomposition_by_group(
-			groups::strong_generators *SG, std::ostream &ost, std::string &fname_base,
+			groups::strong_generators *SG,
+			std::ostream &ost, std::string &fname_base,
 		int verbose_level);
 
 

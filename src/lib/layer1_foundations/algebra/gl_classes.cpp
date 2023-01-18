@@ -53,7 +53,8 @@ gl_classes::~gl_classes()
 		}
 }
 
-void gl_classes::init(int k, field_theory::finite_field *F, int verbose_level)
+void gl_classes::init(int k,
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int d;
@@ -109,7 +110,8 @@ void gl_classes::init(int k, field_theory::finite_field *F, int verbose_level)
 		}
 }
 
-int gl_classes::select_partition_first(int *Select,
+int gl_classes::select_partition_first(
+		int *Select,
 		int *Select_partition, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -121,7 +123,8 @@ int gl_classes::select_partition_first(int *Select,
 	return TRUE;
 }
 
-int gl_classes::select_partition_next(int *Select,
+int gl_classes::select_partition_next(
+		int *Select,
 		int *Select_partition, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -143,7 +146,8 @@ int gl_classes::select_partition_next(int *Select,
 	return FALSE;
 }
 
-int gl_classes::first(int *Select,
+int gl_classes::first(
+		int *Select,
 		int *Select_partition, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -167,7 +171,8 @@ int gl_classes::first(int *Select,
 		}
 }
 
-int gl_classes::next(int *Select,
+int gl_classes::next(
+		int *Select,
 		int *Select_partition, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -332,7 +337,8 @@ void gl_classes::make_matrix_in_rational_normal_form(
 		}
 }
 
-void gl_classes::centralizer_order_Kung_basic(int nb_irreds, 
+void gl_classes::centralizer_order_Kung_basic(
+		int nb_irreds,
 	int *poly_degree, int *poly_mult, int *partition_idx, 
 	ring_theory::longinteger_object &co,
 	int verbose_level)
@@ -402,7 +408,8 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 
 void gl_classes::centralizer_order_Kung(
 	int *Select_polynomial,
-	int *Select_partition, ring_theory::longinteger_object &co,
+	int *Select_partition,
+	ring_theory::longinteger_object &co,
 	int verbose_level)
 // Computes the centralizer order of a matrix in GL(k,q) 
 // according to Kung's formula~\cite{Kung81}.
@@ -457,7 +464,8 @@ void gl_classes::centralizer_order_Kung(
 
 
 
-void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
+void gl_classes::make_classes(
+		gl_class_rep *&R, int &nb_classes,
 		int f_no_eigenvalue_one, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -818,7 +826,8 @@ void gl_classes::identify_matrix(int *Mtx,
 		}
 }
 
-void gl_classes::identify2(int *Mtx, ring_theory::unipoly_object &poly,
+void gl_classes::identify2(int *Mtx,
+		ring_theory::unipoly_object &poly,
 	int *Mult, int *Select_partition, int *Basis,
 	int verbose_level)
 {
@@ -1489,8 +1498,10 @@ void gl_classes::generators_for_centralizer(
 
 
 
-void gl_classes::centralizer_generators(int *Mtx,
-		ring_theory::unipoly_object &poly, int *Mult, int *Select_partition,
+void gl_classes::centralizer_generators(
+		int *Mtx,
+		ring_theory::unipoly_object &poly,
+		int *Mult, int *Select_partition,
 	int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,  
 	int verbose_level)
 {
@@ -1602,8 +1613,10 @@ void gl_classes::centralizer_generators(int *Mtx,
 }
 
 
-void gl_classes::centralizer_generators_block(int *Mtx,
-	matrix_block_data *Data, int nb_irreds, int h,
+void gl_classes::centralizer_generators_block(
+		int *Mtx,
+	matrix_block_data *Data,
+	int nb_irreds, int h,
 	int **&Gens, int &nb_gens, int &nb_alloc,  
 	int verbose_level)
 {
@@ -1983,7 +1996,7 @@ void gl_classes::report(std::ostream &ost, int verbose_level)
 }
 
 void gl_classes::print_matrix_and_centralizer_order_latex(
-		ostream &ost, gl_class_rep *R)
+		std::ostream &ost, gl_class_rep *R)
 {
 	int *Mtx;
 	ring_theory::longinteger_object go, co, cl, r, f, g;

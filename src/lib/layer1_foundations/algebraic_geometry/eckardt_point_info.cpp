@@ -512,7 +512,8 @@ void eckardt_point_info::print_conics(std::ostream &ost, int verbose_level)
 	}
 }
 
-void eckardt_point_info::print_Eckardt_points(std::ostream &ost, int verbose_level)
+void eckardt_point_info::print_Eckardt_points(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int s;

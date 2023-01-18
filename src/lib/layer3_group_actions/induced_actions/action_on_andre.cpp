@@ -42,8 +42,11 @@ action_on_andre::~action_on_andre()
 		}
 }
 
-void action_on_andre::init(actions::action *An, actions::action *An1,
-		geometry::andre_construction *Andre, int verbose_level)
+void action_on_andre::init(
+		actions::action *An,
+		actions::action *An1,
+		geometry::andre_construction *Andre,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -71,7 +74,8 @@ void action_on_andre::init(actions::action *An, actions::action *An1,
 		}
 }
 
-long int action_on_andre::compute_image(int *Elt, long int i, int verbose_level)
+long int action_on_andre::compute_image(
+		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int a, j;
@@ -93,7 +97,8 @@ long int action_on_andre::compute_image(int *Elt, long int i, int verbose_level)
 	return j;
 }
 
-long int action_on_andre::compute_image_of_point(int *Elt,
+long int action_on_andre::compute_image_of_point(
+		int *Elt,
 		long int pt_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -175,7 +180,8 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 	return image;
 }
 
-long int action_on_andre::compute_image_of_line(int *Elt,
+long int action_on_andre::compute_image_of_line(
+		int *Elt,
 		long int line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

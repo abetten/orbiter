@@ -150,7 +150,8 @@ void poset_orbit_node::init_root_node(
 	
 }
 
-void poset_orbit_node::init_node(int node, int prev, long int pt, int verbose_level)
+void poset_orbit_node::init_node(
+		int node, int prev, long int pt, int verbose_level)
 {
 	//freeself();
 	poset_orbit_node::node = node;
@@ -225,7 +226,8 @@ void poset_orbit_node::get_strong_generators_handle(
 	}
 }
 
-void poset_orbit_node::get_tl(std::vector<int> &tl,
+void poset_orbit_node::get_tl(
+		std::vector<int> &tl,
 		poset_classification *PC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -267,7 +269,8 @@ int poset_orbit_node::has_Schreier_vector()
 }
 
 
-data_structures_groups::schreier_vector *poset_orbit_node::get_Schreier_vector()
+data_structures_groups::schreier_vector
+	*poset_orbit_node::get_Schreier_vector()
 {
 	return Schreier_vector;
 }
@@ -388,7 +391,8 @@ int poset_orbit_node::find_extension_from_point(
 	return i;
 }
 
-void poset_orbit_node::print_extensions(std::ostream &ost)
+void poset_orbit_node::print_extensions(
+		std::ostream &ost)
 {
 	int i;
 	
@@ -458,7 +462,8 @@ void poset_orbit_node::log_current_node_without_group(
 #endif
 }
 
-void poset_orbit_node::log_current_node(poset_classification *gen,
+void poset_orbit_node::log_current_node(
+		poset_classification *gen,
 		int s, std::ostream &f, int f_with_stabilizer_generators,
 		int verbose_level)
 {

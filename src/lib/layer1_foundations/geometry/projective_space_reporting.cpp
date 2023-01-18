@@ -31,7 +31,8 @@ projective_space_reporting::~projective_space_reporting()
 	P = NULL;
 }
 
-void projective_space_reporting::init(projective_space *P, int verbose_level)
+void projective_space_reporting::init(
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -113,7 +114,8 @@ void projective_space_reporting::create_latex_report(
 	}
 }
 
-void projective_space_reporting::report_summary(std::ostream &ost)
+void projective_space_reporting::report_summary(
+		std::ostream &ost)
 {
 	//ost << "\\parindent=0pt" << endl;
 	ost << "$q = " << P->F->q << "$\\\\" << endl;
@@ -126,7 +128,8 @@ void projective_space_reporting::report_summary(std::ostream &ost)
 	ost << "Number of points on a line = " << P->k << "\\\\" << endl;
 }
 
-void projective_space_reporting::report(std::ostream &ost,
+void projective_space_reporting::report(
+		std::ostream &ost,
 		graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
@@ -306,7 +309,8 @@ void projective_space_reporting::report(std::ostream &ost,
 
 }
 
-void projective_space_reporting::report_subspaces_of_dimension(std::ostream &ost,
+void projective_space_reporting::report_subspaces_of_dimension(
+		std::ostream &ost,
 		int vs_dimension, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -465,7 +469,8 @@ void projective_space_reporting::cheat_sheet_points(
 	}
 }
 
-void projective_space_reporting::cheat_polarity(std::ostream &f, int verbose_level)
+void projective_space_reporting::cheat_polarity(
+		std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -763,7 +768,8 @@ void projective_space_reporting::print_set_numerical(
 	FREE_int(v);
 }
 
-void projective_space_reporting::print_set(long int *set, int set_size)
+void projective_space_reporting::print_set(
+		long int *set, int set_size)
 {
 	long int i, a;
 	int *v;

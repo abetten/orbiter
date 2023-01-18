@@ -975,7 +975,8 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 
 
 
-void algebra_global_with_action::classes_GL(field_theory::finite_field *F,
+void algebra_global_with_action::classes_GL(
+		field_theory::finite_field *F,
 		int d, int f_no_eigenvalue_one, int verbose_level)
 // called from interface_algebra
 // creates an object of type action
@@ -1345,7 +1346,8 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 	}
 }
 
-void algebra_global_with_action::do_random(int q, int d,
+void algebra_global_with_action::do_random(
+		int q, int d,
 		int f_no_eigenvalue_one, int verbose_level)
 // not called at all
 {
@@ -1401,7 +1403,8 @@ void algebra_global_with_action::do_random(int q, int d,
 }
 
 
-void algebra_global_with_action::group_table(int q, int d, int f_poly, std::string &poly,
+void algebra_global_with_action::group_table(
+		int q, int d, int f_poly, std::string &poly,
 		int f_no_eigenvalue_one, int verbose_level)
 // This function does too many things!
 {
@@ -2086,7 +2089,8 @@ void algebra_global_with_action::presentation(
 }
 
 
-void algebra_global_with_action::do_eigenstuff(field_theory::finite_field *F,
+void algebra_global_with_action::do_eigenstuff(
+		field_theory::finite_field *F,
 		int size, int *Data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3160,7 +3164,8 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 
 
 void algebra_global_with_action::report_tactical_decomposition_by_automorphism_group(
-		ostream &ost, geometry::projective_space *P,
+		ostream &ost,
+		geometry::projective_space *P,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)

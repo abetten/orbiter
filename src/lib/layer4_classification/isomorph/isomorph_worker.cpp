@@ -50,7 +50,8 @@ isomorph_worker::~isomorph_worker()
 
 void isomorph_worker::init(
 		isomorph_arguments *Isomorph_arguments,
-		actions::action *A_base, actions::action *A,
+		actions::action *A_base,
+		actions::action *A,
 		poset_classification::poset_classification *gen,
 		int size, int level,
 		int verbose_level)
@@ -89,7 +90,8 @@ void isomorph_worker::init(
 }
 
 
-void isomorph_worker::execute(isomorph_arguments *Isomorph_arguments,
+void isomorph_worker::execute(
+		isomorph_arguments *Isomorph_arguments,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

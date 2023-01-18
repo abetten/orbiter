@@ -58,8 +58,10 @@ action_on_spread_set::~action_on_spread_set()
 
 void action_on_spread_set::init(
 		actions::action *A_PGL_n_q,
-		actions::action *A_PGL_k_q, groups::sims *G_PGL_k_q,
-	int k, field_theory::finite_field *F, int verbose_level)
+		actions::action *A_PGL_k_q,
+		groups::sims *G_PGL_k_q,
+	int k, field_theory::finite_field *F,
+	int verbose_level)
 // we are acting on the elements of G_PGL_k_q, so the degree of the action 
 // is the order of this group.
 // A_PGL_k_q in only needed for make_element
@@ -114,7 +116,8 @@ void action_on_spread_set::init(
 		}
 }
 
-void action_on_spread_set::report(std::ostream &ost, int verbose_level)
+void action_on_spread_set::report(
+		std::ostream &ost, int verbose_level)
 {
 	ost << "Action on spread set has degree = " << degree << "\\\\" << endl;
 	ost << "Low-level point size = " << low_level_point_size << "\\\\" << endl;
@@ -123,7 +126,8 @@ void action_on_spread_set::report(std::ostream &ost, int verbose_level)
 	ost << "PGL$(" << k << "," << q << ")$ has order " << go << "\\\\" << endl;
 }
 
-long int action_on_spread_set::compute_image_int(int *Elt,
+long int action_on_spread_set::compute_image_int(
+		int *Elt,
 		long int rk, int verbose_level)
 {
 	//verbose_level = 2;

@@ -136,8 +136,10 @@ classify_double_sixes::~classify_double_sixes()
 }
 
 void classify_double_sixes::init(
-		cubic_surfaces_in_general::surface_with_action *Surf_A,
-	poset_classification::poset_classification_control *Control,
+		cubic_surfaces_in_general::surface_with_action
+			*Surf_A,
+	poset_classification::poset_classification_control
+		*Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -535,9 +537,12 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 	}
 }
 
-void classify_double_sixes::report(std::ostream &ost,
-		graphics::layered_graph_draw_options *draw_options,
-		poset_classification::poset_classification_report_options *Opt,
+void classify_double_sixes::report(
+		std::ostream &ost,
+		graphics::layered_graph_draw_options
+			*draw_options,
+		poset_classification::poset_classification_report_options
+			*Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

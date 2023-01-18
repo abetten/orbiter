@@ -40,7 +40,9 @@ quartic_curve_domain::~quartic_curve_domain()
 }
 
 
-void quartic_curve_domain::init(field_theory::finite_field *F, int verbose_level)
+void quartic_curve_domain::init(
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -191,19 +193,22 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 
 }
 
-void quartic_curve_domain::print_equation_maple(std::stringstream &ost, int *coeffs)
+void quartic_curve_domain::print_equation_maple(
+		std::stringstream &ost, int *coeffs)
 {
 	Poly4_3->print_equation_str(ost, coeffs);
 }
 
-void quartic_curve_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs)
+void quartic_curve_domain::print_equation_with_line_breaks_tex(
+		std::ostream &ost, int *coeffs)
 {
 	Poly4_3->print_equation_with_line_breaks_tex(
 			ost, coeffs, 8 /* nb_terms_per_line*/,
 			"\\\\\n" /* const char *new_line_text*/);
 }
 
-void quartic_curve_domain::print_gradient_with_line_breaks_tex(std::ostream &ost, int *coeffs)
+void quartic_curve_domain::print_gradient_with_line_breaks_tex(
+		std::ostream &ost, int *coeffs)
 {
 	Poly3_3->print_equation_with_line_breaks_tex(
 			ost, coeffs, 8 /* nb_terms_per_line*/,
@@ -235,7 +240,8 @@ void quartic_curve_domain::unrank_line_in_dual_coordinates(int *v, long int rk)
 	Int_vec_copy(basis + 6, v, 3);
 }
 
-void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
+void quartic_curve_domain::print_lines_tex(
+		std::ostream &ost, long int *Lines, int nb_lines)
 {
 	int i;
 	orbiter_kernel_system::latex_interface L;

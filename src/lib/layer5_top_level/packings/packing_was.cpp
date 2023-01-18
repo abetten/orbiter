@@ -1125,7 +1125,8 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	}
 }
 
-actions::action *packing_was::restricted_action(int orbit_length, int verbose_level)
+actions::action *packing_was::restricted_action(
+		int orbit_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_idx;
@@ -1160,7 +1161,8 @@ actions::action *packing_was::restricted_action(int orbit_length, int verbose_le
 }
 
 int packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
-	long int *set1, int len1, long int *set2, int len2,
+	long int *set1, int len1,
+	long int *set2, int len2,
 	int verbose_level)
 // tests if every spread from set1
 // is line-disjoint from every spread from set2
@@ -1223,7 +1225,8 @@ void packing_was::create_graph_and_save_to_file(
 
 void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 		std::string &orbit_lengths_text,
-		int f_has_user_data, long int *user_data, int user_data_size,
+		int f_has_user_data,
+		long int *user_data, int user_data_size,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1349,7 +1352,8 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 }
 
 
-int packing_was::find_orbits_of_length_in_reduced_spread_table(int orbit_length)
+int packing_was::find_orbits_of_length_in_reduced_spread_table(
+		int orbit_length)
 {
 	return reduced_spread_orbits_under_H->get_orbit_type_index_if_present(orbit_length);
 }
@@ -1358,7 +1362,8 @@ int packing_was::find_orbits_of_length_in_reduced_spread_table(int orbit_length)
 
 
 
-void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level)
+void packing_was::compute_orbit_invariant_on_classified_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1385,7 +1390,8 @@ void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level
 	}
 }
 
-int packing_was::evaluate_orbit_invariant_function(int a,
+int packing_was::evaluate_orbit_invariant_function(
+		int a,
 		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1695,7 +1701,8 @@ void packing_was::report(int verbose_level)
 
 }
 
-void packing_was::report_line_orbits_under_H(std::ostream &ost, int verbose_level)
+void packing_was::report_line_orbits_under_H(
+		std::ostream &ost, int verbose_level)
 {
 	Line_orbits_under_H->report_classified_orbit_lengths(ost);
 	ost << endl;
@@ -1828,7 +1835,9 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 }
 
 
-void packing_was::export_reduced_spread_orbits_csv(std::string &fname_base, int f_original_spread_numbers, int verbose_level)
+void packing_was::export_reduced_spread_orbits_csv(
+		std::string &fname_base, int f_original_spread_numbers,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//ost << "\\bigskip" << endl;
@@ -1878,7 +1887,9 @@ void packing_was::export_reduced_spread_orbits_csv(std::string &fname_base, int 
 
 }
 
-void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original_spread_numbers, int verbose_level)
+void packing_was::report_reduced_spread_orbits(
+		std::ostream &ost, int f_original_spread_numbers,
+		int verbose_level)
 {
 	//ost << "\\bigskip" << endl;
 	//ost << "\\noindent" << endl;
@@ -2090,7 +2101,8 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original
 
 }
 
-void packing_was::report_good_spreads(std::ostream &ost)
+void packing_was::report_good_spreads(
+		std::ostream &ost)
 {
 	long int i, a;
 

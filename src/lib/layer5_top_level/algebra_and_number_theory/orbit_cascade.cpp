@@ -50,7 +50,8 @@ orbit_cascade::~orbit_cascade()
 {
 }
 
-void orbit_cascade::init(int N, int k, any_group *G,
+void orbit_cascade::init(
+		int N, int k, any_group *G,
 		std::string &Control_label,
 		int verbose_level)
 {
@@ -507,7 +508,8 @@ void orbit_cascade::downstep(int verbose_level)
 	}
 }
 
-void orbit_cascade::upstep(std::vector<long int> &Ago, int verbose_level)
+void orbit_cascade::upstep(
+		std::vector<long int> &Ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

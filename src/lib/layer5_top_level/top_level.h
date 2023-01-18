@@ -379,7 +379,7 @@ namespace applications_in_algebraic_geometry {
 #include "./coding_theory_apps/coding_theory_apps.h"
 #include "./combinatorics/tl_combinatorics.h"
 #include "./geometry/tl_geometry.h"
-#include "./graph_theory/graph_theory.h"
+#include "./graph_theory/tl_graph_theory.h"
 #include "./interfaces/interfaces.h"
 #include "./orthogonal/tl_orthogonal.h"
 #include "./projective_space/projective_space.h"

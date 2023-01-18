@@ -42,7 +42,8 @@ void graph_theoretic_activity::init(graph_theoretic_activity_description *Descr,
 	graph_theoretic_activity::CG = CG;
 
 	if (f_v) {
-		cout << "graph_theoretic_activity::init, label = " << graph_theoretic_activity::CG->label << endl;
+		cout << "graph_theoretic_activity::init, "
+				"label = " << graph_theoretic_activity::CG->label << endl;
 	}
 
 

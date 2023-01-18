@@ -28,7 +28,8 @@ vector_ge_builder::~vector_ge_builder()
 	}
 }
 
-void vector_ge_builder::init(data_structures_groups::vector_ge_description *Descr,
+void vector_ge_builder::init(
+		data_structures_groups::vector_ge_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

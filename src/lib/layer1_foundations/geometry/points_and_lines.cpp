@@ -48,8 +48,10 @@ points_and_lines::~points_and_lines()
 	}
 }
 
-void points_and_lines::init(projective_space *P,
-		std::vector<long int> &Points, int verbose_level)
+void points_and_lines::init(
+		projective_space *P,
+		std::vector<long int> &Points,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

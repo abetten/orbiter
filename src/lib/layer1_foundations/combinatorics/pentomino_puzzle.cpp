@@ -562,7 +562,8 @@ void pentomino_puzzle::draw_it(std::ostream &ost, long int *sol)
 	ost << "\\end{tikzpicture}" << endl;
 }
 
-void pentomino_puzzle::compute_image_function(data_structures::set_of_sets *S,
+void pentomino_puzzle::compute_image_function(
+		data_structures::set_of_sets *S,
 		int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level)
 // implements a rotation by 90 degree:

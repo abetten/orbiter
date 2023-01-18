@@ -449,7 +449,8 @@ void hall_system_classify::unrank_triple(long int *T, int rk)
 	}
 }
 
-void hall_system_classify::unrank_triple_pair(long int *T1, long int *T2, int rk)
+void hall_system_classify::unrank_triple_pair(
+		long int *T1, long int *T2, int rk)
 {
 	int a, b, i;
 	int set[3];

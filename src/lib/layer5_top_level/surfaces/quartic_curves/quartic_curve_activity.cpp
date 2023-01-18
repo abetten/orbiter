@@ -30,7 +30,9 @@ quartic_curve_activity::~quartic_curve_activity()
 
 
 
-void quartic_curve_activity::init(quartic_curve_activity_description *Quartic_curve_activity_description,
+void quartic_curve_activity::init(
+		quartic_curve_activity_description
+			*Quartic_curve_activity_description,
 		quartic_curve_create *QC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

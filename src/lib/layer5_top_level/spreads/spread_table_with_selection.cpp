@@ -494,14 +494,16 @@ long int *spread_table_with_selection::get_spread(int spread_idx)
 	return Spread_tables->get_spread(spread_idx);
 }
 
-void spread_table_with_selection::find_spreads_containing_two_lines(std::vector<int> &v,
+void spread_table_with_selection::find_spreads_containing_two_lines(
+		std::vector<int> &v,
 		int line1, int line2, int verbose_level)
 {
 	Spread_tables->find_spreads_containing_two_lines(v,
 			line1, line2, verbose_level);
 }
 
-int spread_table_with_selection::test_if_packing_is_self_dual(int *packing, int verbose_level)
+int spread_table_with_selection::test_if_packing_is_self_dual(
+		int *packing, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
@@ -704,7 +706,8 @@ void spread_table_with_selection::predict_spread_table_length(
 void spread_table_with_selection::make_spread_table(
 		actions::action *A, actions::action *A2,
 		groups::strong_generators *Strong_gens,
-		long int **&Sets, int *&Prev, int *&Label, int *&First, int *&Len,
+		long int **&Sets, int *&Prev,
+		int *&Label, int *&First, int *&Len,
 		int *&isomorphism_type_of_spread,
 		int verbose_level)
 // does not sort the table
@@ -859,7 +862,8 @@ void spread_table_with_selection::compute_covered_points(
 }
 
 void spread_table_with_selection::compute_free_points2(
-	long int *&free_points2, int &nb_free_points2, long int *&free_point_idx,
+	long int *&free_points2,
+	int &nb_free_points2, long int *&free_point_idx,
 	long int *points_covered_by_starter,
 	int nb_points_covered_by_starter,
 	long int *starter, int starter_size,
@@ -902,9 +906,11 @@ void spread_table_with_selection::compute_free_points2(
 }
 
 void spread_table_with_selection::compute_live_blocks2(
-		solvers_package::exact_cover *EC, int starter_case,
+		solvers_package::exact_cover *EC,
+		int starter_case,
 	long int *&live_blocks2, int &nb_live_blocks2,
-	long int *points_covered_by_starter, int nb_points_covered_by_starter,
+	long int *points_covered_by_starter,
+	int nb_points_covered_by_starter,
 	long int *starter, int starter_size,
 	int verbose_level)
 {

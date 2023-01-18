@@ -37,7 +37,9 @@ action_by_right_multiplication::~action_by_right_multiplication()
 		}
 }
 
-void action_by_right_multiplication::init(groups::sims *Base_group, int f_ownership, int verbose_level)
+void action_by_right_multiplication::init(
+		groups::sims *Base_group,
+		int f_ownership, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -59,7 +61,8 @@ void action_by_right_multiplication::init(groups::sims *Base_group, int f_owners
 }
 
 long int action_by_right_multiplication::compute_image(
-		actions::action *A, int *Elt, long int i, int verbose_level)
+		actions::action *A, int *Elt,
+		long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int j;

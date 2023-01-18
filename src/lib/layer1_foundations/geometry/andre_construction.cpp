@@ -69,7 +69,8 @@ andre_construction::~andre_construction()
 	}
 }
 
-void andre_construction::init(field_theory::finite_field *F,
+void andre_construction::init(
+		field_theory::finite_field *F,
 	int k, long int *spread_elements_numeric,
 	int verbose_level)
 {
@@ -211,7 +212,8 @@ void andre_construction::points_on_line(
 	}
 }
 
-void andre_construction::report(std::ostream &ost, int verbose_level)
+void andre_construction::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

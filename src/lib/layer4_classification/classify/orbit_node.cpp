@@ -31,9 +31,11 @@ orbit_node::~orbit_node()
 {
 }
 
-void orbit_node::init(classification_step *C, int orbit_index,
+void orbit_node::init(classification_step *C,
+		int orbit_index,
 		groups::strong_generators *gens,
-		long int *Rep, void *extra_data, int verbose_level)
+		long int *Rep, void *extra_data,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

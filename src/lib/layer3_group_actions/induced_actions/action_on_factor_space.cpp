@@ -659,7 +659,8 @@ void action_on_factor_space::reduce_mod_subspace(int *v,
 		subspace_basis, base_cols, v, verbose_level);
 }
 
-long int action_on_factor_space::lexleast_element_in_coset(long int rk,
+long int action_on_factor_space::lexleast_element_in_coset(
+		long int rk,
 		int verbose_level)
 // This function computes the lexleast element
 // in the coset modulo the subspace.
@@ -1005,7 +1006,8 @@ long int action_on_factor_space::rank_in_small_space(int *v)
 	return rk;
 }
 
-long int action_on_factor_space::compute_image(actions::action *A,
+long int action_on_factor_space::compute_image(
+		actions::action *A,
 		int *Elt, long int i, int verbose_level)
 {
 	//verbose_level = 2;

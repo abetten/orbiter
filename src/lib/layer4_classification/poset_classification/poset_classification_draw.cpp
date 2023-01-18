@@ -699,7 +699,8 @@ void poset_classification::draw_tree_low_level1(
 	FREE_int(Qy);
 }
 
-void poset_classification::draw_poset_full(std::string &fname_base,
+void poset_classification::draw_poset_full(
+		std::string &fname_base,
 		int depth, int data,
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		double x_stretch,
@@ -915,7 +916,8 @@ void poset_classification::draw_level_graph(
 
 
 void poset_classification::make_flag_orbits_on_relations(
-		int depth, std::string &fname_prefix, int verbose_level)
+		int depth,
+		std::string &fname_prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1798,8 +1800,10 @@ void poset_classification::make_auxiliary_graph(int depth,
 	}
 }
 
-void poset_classification::make_graph(int depth,
-		graph_theory::layered_graph *&LG, int data1, int f_tree, int verbose_level)
+void poset_classification::make_graph(
+		int depth,
+		graph_theory::layered_graph *&LG,
+		int data1, int f_tree, int verbose_level)
 // makes a graph  of the poset of orbits with depth + 1 layers.
 {
 	int f_v = (verbose_level >= 1);
@@ -2017,8 +2021,10 @@ void poset_classification::make_graph(int depth,
 	}
 }
 
-void poset_classification::make_level_graph(int depth,
-		graph_theory::layered_graph *&LG, int data1, int level, int verbose_level)
+void poset_classification::make_level_graph(
+		int depth,
+		graph_theory::layered_graph *&LG,
+		int data1, int level, int verbose_level)
 // makes a graph with 4 levels showing the relation between
 // orbits at level 'level' and orbits at level 'level' + 1
 {
@@ -2266,8 +2272,10 @@ void poset_classification::make_level_graph(int depth,
 	}
 }
 
-void poset_classification::make_poset_graph_detailed(graph_theory::layered_graph *&LG,
-		int data1, int max_depth, int verbose_level)
+void poset_classification::make_poset_graph_detailed(
+		graph_theory::layered_graph *&LG,
+		int data1, int max_depth,
+		int verbose_level)
 // creates the poset graph, with two middle layers at each level.
 // In total, the graph that is created will have 3 * depth + 1 layers.
 {
@@ -2548,7 +2556,8 @@ void poset_classification::make_poset_graph_detailed(graph_theory::layered_graph
 }
 
 
-void poset_classification::print_data_structure_tex(int depth, int verbose_level)
+void poset_classification::print_data_structure_tex(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; //(verbose_level >= 2);

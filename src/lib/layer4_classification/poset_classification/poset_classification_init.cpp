@@ -383,7 +383,8 @@ void poset_classification::initialize_with_base_case(
 
 
 
-void poset_classification::init_base_case(classification_base_case *Base_case,
+void poset_classification::init_base_case(
+		classification_base_case *Base_case,
 	int verbose_level)
 // Does not initialize the first starter nodes.
 // This is done in init_root_node

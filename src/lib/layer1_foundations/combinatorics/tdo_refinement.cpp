@@ -54,7 +54,8 @@ tdo_refinement::~tdo_refinement()
 {
 }
 
-void tdo_refinement::init(tdo_refinement_description *Descr, int verbose_level)
+void tdo_refinement::init(
+		tdo_refinement_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -191,7 +192,8 @@ void tdo_refinement::main_loop(int verbose_level)
 	}
 }
 
-void tdo_refinement::do_it(ofstream &g, int verbose_level)
+void tdo_refinement::do_it(
+		std::ofstream &g, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -269,7 +271,8 @@ void tdo_refinement::do_it(ofstream &g, int verbose_level)
 }
 
 void tdo_refinement::do_row_refinement(
-	ofstream &g, tdo_scheme_synthetic &G,
+	std::ofstream &g,
+	tdo_scheme_synthetic &G,
 	data_structures::partitionstack &P,
 	int verbose_level)
 {
@@ -364,7 +367,7 @@ void tdo_refinement::do_row_refinement(
 }
 
 void tdo_refinement::do_col_refinement(
-		ofstream &g, tdo_scheme_synthetic &G,
+		std::ofstream &g, tdo_scheme_synthetic &G,
 		data_structures::partitionstack &P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -467,7 +470,7 @@ void tdo_refinement::do_col_refinement(
 }
 
 void tdo_refinement::do_all_row_refinements(
-	std::string &label_in, ofstream &g, tdo_scheme_synthetic &G,
+	std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
 	int *point_types, int nb_point_types, int point_type_len,
 	int *distributions, int nb_distributions, int &nb_tactical,
 	int verbose_level)
@@ -549,7 +552,8 @@ void tdo_refinement::do_all_column_refinements(
 
 
 int tdo_refinement::do_row_refinement(
-	int t, std::string &label_in, ofstream &g, tdo_scheme_synthetic &G,
+	int t, std::string &label_in,
+	std::ofstream &g, tdo_scheme_synthetic &G,
 	int *point_types, int nb_point_types, int point_type_len,
 	int *distributions, int nb_distributions,
 	int verbose_level)
@@ -736,7 +740,7 @@ int tdo_refinement::do_row_refinement(
 
 int tdo_refinement::do_column_refinement(
 	int t, std::string &label_in,
-	ofstream &g, tdo_scheme_synthetic &G,
+	std::ofstream &g, tdo_scheme_synthetic &G,
 	int *line_types, int nb_line_types, int line_type_len,
 	int *distributions, int nb_distributions,
 	int verbose_level)

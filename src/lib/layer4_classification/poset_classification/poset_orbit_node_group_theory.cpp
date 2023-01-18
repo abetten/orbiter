@@ -59,7 +59,8 @@ void poset_orbit_node::get_stabilizer_order(poset_classification *gen, longinteg
 	// ToDo: free Strong_gens
 }
 #else
-void poset_orbit_node::get_stabilizer_order(poset_classification *PC, ring_theory::longinteger_object &go)
+void poset_orbit_node::get_stabilizer_order(
+		poset_classification *PC, ring_theory::longinteger_object &go)
 {
 	if (nb_strong_generators) {
 		go.create_product(PC->get_poset()->A->base_len(), tl);
@@ -73,7 +74,8 @@ void poset_orbit_node::get_stabilizer_order(poset_classification *PC, ring_theor
 
 
 
-long int poset_orbit_node::get_stabilizer_order_lint(poset_classification *PC)
+long int poset_orbit_node::get_stabilizer_order_lint(
+		poset_classification *PC)
 {
 	ring_theory::longinteger_object go;
 

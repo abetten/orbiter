@@ -26,7 +26,8 @@ combinatorics_global::~combinatorics_global()
 
 }
 
-void combinatorics_global::create_design_table(design_create *DC,
+void combinatorics_global::create_design_table(
+		design_create *DC,
 		std::string &problem_label,
 		design_tables *&T,
 		groups::strong_generators *Gens,

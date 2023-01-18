@@ -141,7 +141,8 @@ void action_on_grassmannian::init(actions::action &A,
 }
 
 void action_on_grassmannian::add_print_function(
-		void (*print_function)(std::ostream &ost, long int a, void *data),
+		void (*print_function)(
+				std::ostream &ost, long int a, void *data),
 		void *print_function_data,
 		int verbose_level)
 {
@@ -207,8 +208,10 @@ long int action_on_grassmannian::rank(int *v, int verbose_level)
 
 
 void action_on_grassmannian::compute_image_longinteger(
-		actions::action *A, int *Elt,
-	ring_theory::longinteger_object &i, ring_theory::longinteger_object &j,
+		actions::action *A,
+		int *Elt,
+	ring_theory::longinteger_object &i,
+	ring_theory::longinteger_object &j,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

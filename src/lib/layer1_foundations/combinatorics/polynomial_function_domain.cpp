@@ -78,7 +78,9 @@ polynomial_function_domain::~polynomial_function_domain()
 	}
 }
 
-void polynomial_function_domain::init(field_theory::finite_field *Fq, int n, int verbose_level)
+void polynomial_function_domain::init(
+		field_theory::finite_field *Fq,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;

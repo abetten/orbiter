@@ -330,7 +330,8 @@ int orbiter_session::read_arguments(int argc,
 	return i;
 }
 
-void orbiter_session::fork(int argc, std::string *argv, int verbose_level)
+void orbiter_session::fork(
+		int argc, std::string *argv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string_tools ST;
@@ -408,12 +409,14 @@ symbol_table_object_type orbiter_session::get_object_type(int idx)
 	return Orbiter_symbol_table->get_object_type(idx);
 }
 
-int orbiter_session::find_symbol(std::string &label)
+int orbiter_session::find_symbol(
+		std::string &label)
 {
 	return Orbiter_symbol_table->find_symbol(label);
 }
 
-void orbiter_session::get_vector_from_label(std::string &label,
+void orbiter_session::get_vector_from_label(
+		std::string &label,
 		long int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -462,7 +465,8 @@ void orbiter_session::get_vector_from_label(std::string &label,
 	}
 }
 
-void orbiter_session::get_int_vector_from_label(std::string &label,
+void orbiter_session::get_int_vector_from_label(
+		std::string &label,
 		int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -511,7 +515,8 @@ void orbiter_session::get_int_vector_from_label(std::string &label,
 }
 
 
-void orbiter_session::get_lint_vector_from_label(std::string &label,
+void orbiter_session::get_lint_vector_from_label(
+		std::string &label,
 		long int *&v, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -559,7 +564,8 @@ void orbiter_session::get_lint_vector_from_label(std::string &label,
 	}
 }
 
-void orbiter_session::get_matrix_from_label(std::string &label,
+void orbiter_session::get_matrix_from_label(
+		std::string &label,
 		int *&v, int &m, int &n)
 {
 	int verbose_level = 0;
@@ -616,7 +622,8 @@ void orbiter_session::get_matrix_from_label(std::string &label,
 }
 
 
-void orbiter_session::find_symbols(std::vector<std::string> &Labels, int *&Idx)
+void orbiter_session::find_symbols(
+		std::vector<std::string> &Labels, int *&Idx)
 {
 	int i, idx;
 
@@ -637,13 +644,15 @@ void orbiter_session::print_symbol_table()
 	Orbiter_symbol_table->print_symbol_table();
 }
 
-void orbiter_session::add_symbol_table_entry(std::string &label,
+void orbiter_session::add_symbol_table_entry(
+		std::string &label,
 		orbiter_symbol_table_entry *Symb, int verbose_level)
 {
 	Orbiter_symbol_table->add_symbol_table_entry(label, Symb, verbose_level);
 }
 
-void orbiter_session::get_lint_vec(std::string &label,
+void orbiter_session::get_lint_vec(
+		std::string &label,
 		long int *&the_set, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -698,12 +707,14 @@ void orbiter_session::get_lint_vec(std::string &label,
 
 }
 
-void orbiter_session::print_type(symbol_table_object_type t)
+void orbiter_session::print_type(
+		symbol_table_object_type t)
 {
 	Orbiter_symbol_table->print_type(t);
 }
 
-field_theory::finite_field *orbiter_session::get_object_of_type_finite_field(std::string &label)
+field_theory::finite_field *orbiter_session::get_object_of_type_finite_field(
+		std::string &label)
 {
 	int idx;
 
@@ -721,7 +732,9 @@ field_theory::finite_field *orbiter_session::get_object_of_type_finite_field(std
 
 }
 
-ring_theory::homogeneous_polynomial_domain *orbiter_session::get_object_of_type_polynomial_ring(std::string &label)
+ring_theory::homogeneous_polynomial_domain
+	*orbiter_session::get_object_of_type_polynomial_ring(
+		std::string &label)
 {
 	int idx;
 
@@ -740,7 +753,8 @@ ring_theory::homogeneous_polynomial_domain *orbiter_session::get_object_of_type_
 
 
 
-vector_builder *orbiter_session::get_object_of_type_vector(std::string &label)
+vector_builder *orbiter_session::get_object_of_type_vector(
+		std::string &label)
 {
 	int idx;
 

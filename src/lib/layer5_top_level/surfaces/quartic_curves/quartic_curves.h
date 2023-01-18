@@ -75,7 +75,9 @@ public:
 
 	quartic_curve_activity();
 	~quartic_curve_activity();
-	void init(quartic_curve_activity_description *Quartic_curve_activity_description,
+	void init(
+			quartic_curve_activity_description
+				*Quartic_curve_activity_description,
 			quartic_curve_create *QC, int verbose_level);
 	void perform_activity(int verbose_level);
 	void do_report(
@@ -104,7 +106,8 @@ public:
 	std::string space_label;
 
 	int f_space_pointer;
-	projective_geometry::projective_space_with_action *space_pointer;
+	projective_geometry::projective_space_with_action
+		*space_pointer;
 
 	int f_label_txt;
 	std::string label_txt;
@@ -201,23 +204,33 @@ public:
 	quartic_curve_create();
 	~quartic_curve_create();
 	void create_quartic_curve(
-			quartic_curve_create_description *Quartic_curve_descr,
+			quartic_curve_create_description
+				*Quartic_curve_descr,
 			int verbose_level);
 	void init_with_data(
-			quartic_curve_create_description *Descr,
-			projective_geometry::projective_space_with_action *PA,
+			quartic_curve_create_description
+				*Descr,
+			projective_geometry::projective_space_with_action
+				*PA,
 			int verbose_level);
 	void init(
 			quartic_curve_create_description *Descr,
-			projective_geometry::projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action
+				*PA,
 			int verbose_level);
 	void create_quartic_curve_from_description(
-			quartic_curve_domain_with_action *DomA, int verbose_level);
-	void override_group(std::string &group_order_text,
-			int nb_gens, std::string &gens_text, int verbose_level);
-	void create_quartic_curve_by_coefficients(std::string &coefficients_text,
+			quartic_curve_domain_with_action *DomA,
 			int verbose_level);
-	void create_quartic_curve_by_coefficient_vector(int *eqn15,
+	void override_group(
+			std::string &group_order_text,
+			int nb_gens,
+			std::string &gens_text,
+			int verbose_level);
+	void create_quartic_curve_by_coefficients(
+			std::string &coefficients_text,
+			int verbose_level);
+	void create_quartic_curve_by_coefficient_vector(
+			int *eqn15,
 			int verbose_level);
 	void create_quartic_curve_from_catalogue(
 			quartic_curve_domain_with_action *DomA,
@@ -285,7 +298,8 @@ public:
 
 	quartic_curve_domain_with_action();
 	~quartic_curve_domain_with_action();
-	void init(algebraic_geometry::quartic_curve_domain *Dom,
+	void init(
+			algebraic_geometry::quartic_curve_domain *Dom,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 
@@ -315,7 +329,9 @@ public:
 
 	int pt_orbit;
 	int equation_nice[20]; // equation after transformation
-	int *transporter; // the transformation that maps the point off the lines to (1,0,0,0)
+	int *transporter;
+		// the transformation that maps
+		// the point off the lines to (1,0,0,0)
 
 	int v[4]; // = (1,0,0,0)
 	int pt_A; // = SOA->SO->SOP->Pts_not_on_lines[i];
@@ -328,7 +344,8 @@ public:
 	int nb_bitangents; // = nb_lines + 1
 
 
-	// computed by split_nice_equation starting from the equation of the cubic surface:
+	// computed by split_nice_equation starting
+	// from the equation of the cubic surface:
 	int *f1; // terms involving X0^2, with X0^2 removed (linear)
 	int *f2; // terms involving X0, with X0 removed (quadratic)
 	int *f3; // terms free of X0 (cubic)
@@ -343,7 +360,8 @@ public:
 	int two, four, mfour; // 2, 4, -4 in F
 
 	int *tangent_quadric; // = 2 * x_0 * f_1 + f_2
-	long int *Pts_on_tangent_quadric; // = SOA->Surf->Poly2_4->enumerate_points(tangent_quadric)
+	long int *Pts_on_tangent_quadric;
+		// = SOA->Surf->Poly2_4->enumerate_points(tangent_quadric)
 	int nb_pts_on_tangent_quadric;
 
 	//int *line_type;
@@ -354,7 +372,8 @@ public:
 	//long int *Pts_intersection;
 	//int nb_pts_intersection;
 
-	long int *Pts_on_curve; // = SOA->Surf->Poly4_x123->enumerate_points(curve)
+	long int *Pts_on_curve;
+		// = SOA->Surf->Poly4_x123->enumerate_points(curve)
 	int sz_curve;
 
 #if 0
@@ -370,16 +389,23 @@ public:
 
 	quartic_curve_from_surface();
 	~quartic_curve_from_surface();
-	void init(cubic_surfaces_in_general::surface_object_with_action *SOA, int verbose_level);
-	void init_surface_create(cubic_surfaces_in_general::surface_create *SC,
+	void init(
+			cubic_surfaces_in_general::surface_object_with_action *SOA,
 			int verbose_level);
-	void init_labels(std::string &label, std::string &label_tex,
+	void init_surface_create(
+			cubic_surfaces_in_general::surface_create *SC,
 			int verbose_level);
-	void quartic(int pt_orbit, int verbose_level);
-	void compute_quartic(int pt_orbit,
+	void init_labels(
+			std::string &label, std::string &label_tex,
+			int verbose_level);
+	void quartic(
+			int pt_orbit, int verbose_level);
+	void compute_quartic(
+			int pt_orbit,
 		int *equation, long int *Lines, int nb_lines,
 		int verbose_level);
-	void compute_stabilizer(int verbose_level);
+	void compute_stabilizer(
+			int verbose_level);
 	void cheat_sheet_quartic_curve(
 			std::ostream &ost,
 			int f_TDO,
@@ -422,11 +448,13 @@ public:
 
 	quartic_curve_object_with_action();
 	~quartic_curve_object_with_action();
-	void init(quartic_curve_domain_with_action *DomA,
+	void init(
+			quartic_curve_domain_with_action *DomA,
 			algebraic_geometry::quartic_curve_object *QO,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
-	void export_something(std::string &what,
+	void export_something(
+			std::string &what,
 			std::string &fname_base, int verbose_level);
 
 };

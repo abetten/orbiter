@@ -73,7 +73,9 @@ packing_invariants::~packing_invariants()
 }
 
 void packing_invariants::init(packing_classify *P,
-	std::string &prefix, std::string &prefix_tex, int iso_cnt,
+	std::string &prefix,
+	std::string &prefix_tex,
+	int iso_cnt,
 	long int *the_packing, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -124,7 +126,8 @@ void packing_invariants::init(packing_classify *P,
 }
 
 void packing_invariants::init_klein_invariants(
-		Vector &v, int verbose_level)
+		Vector &v,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;

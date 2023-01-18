@@ -72,10 +72,13 @@ flag_orbit_node::~flag_orbit_node()
 }
 
 void flag_orbit_node::init(
-	flag_orbits *Flag_orbits, int flag_orbit_index,
+	flag_orbits *Flag_orbits,
+	int flag_orbit_index,
 	int downstep_primary_orbit, int downstep_secondary_orbit, 
-	int downstep_orbit_len, int f_long_orbit, 
-	long int *pt_representation, groups::strong_generators *Strong_gens,
+	int downstep_orbit_len,
+	int f_long_orbit,
+	long int *pt_representation,
+	groups::strong_generators *Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -103,7 +106,8 @@ void flag_orbit_node::init(
 	}
 }
 
-void flag_orbit_node::receive_trace_result(void *trace_result, int verbose_level)
+void flag_orbit_node::receive_trace_result(
+		void *trace_result, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -126,7 +130,7 @@ void flag_orbit_node::receive_trace_result(void *trace_result, int verbose_level
 
 
 
-void flag_orbit_node::write_file(ofstream &fp, int verbose_level)
+void flag_orbit_node::write_file(std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -157,7 +161,7 @@ void flag_orbit_node::write_file(ofstream &fp, int verbose_level)
 	}
 }
 
-void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
+void flag_orbit_node::read_file(std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	

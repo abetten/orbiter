@@ -359,7 +359,8 @@ void sims::init_cyclic_group_from_generator(actions::action *A, int *Elt, int ve
 }
 #endif
 
-void sims::init_without_base(actions::action *A, int verbose_level)
+void sims::init_without_base(
+		actions::action *A, int verbose_level)
 {	
 	int f_v = (verbose_level >= 1);
 
@@ -683,7 +684,8 @@ void sims::init_generators(int nb, int *elt,
 	}
 }
 
-void sims::init_generators_by_hdl(int nb_gen, int *gen_hdl, int verbose_level)
+void sims::init_generators_by_hdl(
+		int nb_gen, int *gen_hdl, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -1175,7 +1177,8 @@ void sims::element_from_path_inv(int *elt)
 	A->element_move(eltrk1, elt, FALSE);
 }
 
-void sims::element_unrank(ring_theory::longinteger_object &a,
+void sims::element_unrank(
+		ring_theory::longinteger_object &a,
 		int *elt, int verbose_level)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
@@ -1213,7 +1216,8 @@ void sims::element_unrank(ring_theory::longinteger_object &a,
 	}
 }
 
-void sims::element_unrank(ring_theory::longinteger_object &a, int *elt)
+void sims::element_unrank(
+		ring_theory::longinteger_object &a, int *elt)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
 // are enumerated 0, ... go - 1
@@ -1238,7 +1242,8 @@ void sims::element_unrank(ring_theory::longinteger_object &a, int *elt)
 	element_from_path(elt, 0);
 }
 
-void sims::element_rank(ring_theory::longinteger_object &a, int *elt)
+void sims::element_rank(
+		ring_theory::longinteger_object &a, int *elt)
 // Computes the rank of the element in elt into a.
 // uses eltrk1, eltrk2
 {
@@ -2158,7 +2163,9 @@ int sims::get_orbit_length(int i)
 	return orbit_len[i];
 }
 
-void sims::get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level)
+void sims::get_orbit(
+		int orbit_idx, std::vector<int> &Orb,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2177,7 +2184,8 @@ void sims::get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level)
 }
 
 void sims::all_elements(
-		data_structures_groups::vector_ge *&vec, int verbose_level)
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
@@ -2234,7 +2242,8 @@ void sims::all_elements_save_csv(std::string &fname, int verbose_level)
 	}
 }
 
-void sims::all_elements_export_inversion_graphs(std::string &fname, int verbose_level)
+void sims::all_elements_export_inversion_graphs(
+		std::string &fname, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);

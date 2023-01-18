@@ -65,9 +65,12 @@ orbit_of_sets::~orbit_of_sets()
 	}
 }
 
-void orbit_of_sets::init(actions::action *A, actions::action *A2,
+void orbit_of_sets::init(
+		actions::action *A,
+		actions::action *A2,
 		long int *set, int sz,
-		data_structures_groups::vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -328,7 +331,8 @@ void orbit_of_sets::dump_tables_of_hash_values()
 
 }
 
-void orbit_of_sets::get_table_of_orbits(long int *&Table,
+void orbit_of_sets::get_table_of_orbits(
+		long int *&Table,
 		int &orbit_length, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -352,7 +356,8 @@ void orbit_of_sets::get_table_of_orbits(long int *&Table,
 }
 
 
-void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
+void orbit_of_sets::get_table_of_orbits_and_hash_values(
+		long int *&Table,
 		int &orbit_length, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -382,7 +387,8 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 }
 
 void orbit_of_sets::make_table_of_coset_reps(
-		data_structures_groups::vector_ge *&Coset_reps, int verbose_level)
+		data_structures_groups::vector_ge *&Coset_reps,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -428,7 +434,8 @@ void orbit_of_sets::coset_rep(int j)
 	}
 }
 
-void orbit_of_sets::get_orbit_of_points(std::vector<long int> &Orbit, int verbose_level)
+void orbit_of_sets::get_orbit_of_points(
+		std::vector<long int> &Orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -445,7 +452,8 @@ void orbit_of_sets::get_orbit_of_points(std::vector<long int> &Orbit, int verbos
 	}
 }
 
-void orbit_of_sets::get_prev(std::vector<int> &Prev, int verbose_level)
+void orbit_of_sets::get_prev(
+		std::vector<int> &Prev, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -462,7 +470,8 @@ void orbit_of_sets::get_prev(std::vector<int> &Prev, int verbose_level)
 	}
 }
 
-void orbit_of_sets::get_label(std::vector<int> &Label, int verbose_level)
+void orbit_of_sets::get_label(
+		std::vector<int> &Label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

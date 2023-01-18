@@ -36,7 +36,9 @@ cyclotomic_sets::~cyclotomic_sets()
 	}
 }
 
-void cyclotomic_sets::init(field_theory::finite_field *F, int n, int verbose_level)
+void cyclotomic_sets::init(
+		field_theory::finite_field *F,
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -152,7 +154,8 @@ void cyclotomic_sets::print_latex(std::ostream &ost)
 	S->print_table_latex_simple(ost);
 }
 
-void cyclotomic_sets::print_latex_with_selection(std::ostream &ost, int *Selection, int nb_sel)
+void cyclotomic_sets::print_latex_with_selection(
+		std::ostream &ost, int *Selection, int nb_sel)
 {
 	S->print_table_latex_simple_with_selection(ost, Selection, nb_sel);
 }

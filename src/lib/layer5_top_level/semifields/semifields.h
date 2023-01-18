@@ -72,7 +72,6 @@ public:
 	semifield_classify_description *Descr;
 
 	projective_geometry::projective_space_with_action *PA;
-	//linear_group *LG;
 	groups::matrix_group *Mtx;
 	poset_classification::poset_classification_control *Control;
 
@@ -442,7 +441,8 @@ public:
 		long int *Candidates, int Nb_candidates, int orbit,
 		int verbose_level);
 	void read_candidates_at_level_two_by_type(
-			data_structures::set_of_sets_lint *&Candidates_by_type, int orbit,
+			data_structures::set_of_sets_lint *&Candidates_by_type,
+			int orbit,
 			int verbose_level);
 	void get_basis_and_pivots(int po,
 			int *basis, int *pivots, int verbose_level);
@@ -529,7 +529,8 @@ public:
 			int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void recover_level_three_downstep(int verbose_level);
-	void recover_level_three_from_file(int f_read_flag_orbits, int verbose_level);
+	void recover_level_three_from_file(
+			int f_read_flag_orbits, int verbose_level);
 	void compute_level_three(int verbose_level);
 	void level_two_down(int verbose_level);
 	void level_two_flag_orbits(int verbose_level);
@@ -624,10 +625,12 @@ public:
 			int level, int orbit_idx);
 	void create_fname_level_info_file(std::string &fname);
 	void make_fname_stabilizers(std::string &fname);
-	void make_fname_deep_search_slice_solutions(std::string &fname,
+	void make_fname_deep_search_slice_solutions(
+			std::string &fname,
 			int f_out_path, std::string &out_path,
 			int orbit_r, int orbit_m);
-	void make_fname_deep_search_slice_success(std::string &fname,
+	void make_fname_deep_search_slice_success(
+			std::string &fname,
 			int f_out_path, std::string &out_path,
 			int orbit_r, int orbit_m);
 
@@ -666,19 +669,23 @@ public:
 	int *Len;
 	int nb_orbits_at_level_3;
 	int nb_orb_total; // = sum_i Nb_orb[i]
-	orbits_schreier::orbit_of_subspaces ***All_Orbits; // [nb_non_unique_cases_with_non_trivial_group]
+	orbits_schreier::orbit_of_subspaces ***All_Orbits;
+		// [nb_non_unique_cases_with_non_trivial_group]
 	int *Nb_orb; // [nb_non_unique_cases_with_non_trivial_group]
 		// Nb_orb[i] is the number of orbits in All_Orbits[i]
 	int **Orbit_idx; // [nb_non_unique_cases_with_non_trivial_group]
 		// Orbit_idx[i][j] = b
-		// means that the j-th solution of Nontrivial case i belongs to orbt All_Orbits[i][b]
+		// means that the j-th solution of Nontrivial case i
+		// belongs to orbt All_Orbits[i][b]
 	int **Position; // [nb_non_unique_cases_with_non_trivial_group]
 		// Position[i][j] = a
-		// means that the j-th solution of Nontrivial case i is the a-th element in All_Orbits[i][b]
+		// means that the j-th solution of Nontrivial case i
+		// is the a-th element in All_Orbits[i][b]
 		// where Orbit_idx[i][j] = b
 	int *Fo_first; // [nb_orbits_at_level_3]
 	int nb_flag_orbits;
-	invariant_relations::flag_orbits *Flag_orbits; // [nb_flag_orbits]
+	invariant_relations::flag_orbits *Flag_orbits;
+		// [nb_flag_orbits]
 	long int *data1;
 	long int *data2;
 	int *Basis1;
@@ -704,7 +711,8 @@ public:
 	void compute_orbits(int verbose_level);
 	void compute_flag_orbits(int verbose_level);
 	void do_classify(int verbose_level);
-	void loop_over_all_subspaces(int *f_processed, int &nb_processed,
+	void loop_over_all_subspaces(
+			int *f_processed, int &nb_processed,
 			int verbose_level);
 	void all_two_dimensional_subspaces(
 			int *Trace_po, int verbose_level);
@@ -755,7 +763,9 @@ public:
 
 	semifield_downstep_node();
 	~semifield_downstep_node();
-	void init(semifield_lifting *SL, int level, int orbit_number,
+	void init(
+			semifield_lifting *SL,
+			int level, int orbit_number,
 		long int *Candidates, int nb_candidates, int first_flag_orbit,
 		int verbose_level);
 	int find_point(long int a);
@@ -789,7 +799,8 @@ public:
 
 	semifield_flag_orbit_node();
 	~semifield_flag_orbit_node();
-	void init(int downstep_primary_orbit, int downstep_secondary_orbit,
+	void init(
+			int downstep_primary_orbit, int downstep_secondary_orbit,
 		int pt_local, long int pt, int downstep_orbit_len, int f_long_orbit,
 		int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);

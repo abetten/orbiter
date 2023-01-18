@@ -51,7 +51,8 @@ semifield_downstep_node::~semifield_downstep_node()
 }
 
 void semifield_downstep_node::init(
-		semifield_lifting *SL, int level, int orbit_number,
+		semifield_lifting *SL,
+		int level, int orbit_number,
 		long int *Candidates, int nb_candidates, int first_flag_orbit,
 		int verbose_level)
 {

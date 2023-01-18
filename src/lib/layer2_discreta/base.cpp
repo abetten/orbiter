@@ -385,7 +385,8 @@ void discreta_base::mult(discreta_base &x, discreta_base &y)
 	x.mult_to(y, *this);
 }
 
-void discreta_base::mult_mod(discreta_base &x,
+void discreta_base::mult_mod(
+		discreta_base &x,
 		discreta_base &y, discreta_base &p)
 {
 	discreta_base z;
@@ -893,7 +894,8 @@ discreta_base& discreta_base::i_power_j(int i, int j)
 	return *this;
 }
 
-int discreta_base::compare_with_euclidean(discreta_base &a)
+int discreta_base::compare_with_euclidean(
+		discreta_base &a)
 {
 	if (s_kind() != BASE) {
 		// cout << "compare_with_euclidean() not implemented for class ";

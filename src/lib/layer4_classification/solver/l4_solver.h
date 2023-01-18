@@ -42,7 +42,8 @@ public:
 	actions::action *A_on_blocks;
 	
 
-	void (*prepare_function_new)(exact_cover *E, int starter_case, 
+	void (*prepare_function_new)(
+			exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
 		solvers::diophant *&Dio, long int *&col_label,
@@ -51,19 +52,22 @@ public:
 
 
 
-	void (*early_test_func)(long int *S, int len,
+	void (*early_test_func)(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
 	void *early_test_func_data;
 
 	int f_has_solution_test_func;
-	int (*solution_test_func)(exact_cover *EC, long int *S, int len,
+	int (*solution_test_func)(
+			exact_cover *EC, long int *S, int len,
 		void *data, int verbose_level);
 	void *solution_test_func_data;
 
 	int f_has_late_cleanup_function;
-	void (*late_cleanup_function)(exact_cover *E, 
+	void (*late_cleanup_function)(
+			exact_cover *E,
 		int starter_case, int verbose_level);
 
 
@@ -90,11 +94,15 @@ public:
 	~exact_cover();
 	void null();
 	void freeself();
-	void init_basic(void *user_data, 
-			actions::action *A_base, actions::action *A_on_blocks,
+	void init_basic(
+			void *user_data,
+			actions::action *A_base,
+			actions::action *A_on_blocks,
 		int target_size, int starter_size, 
-		std::string &input_prefix, std::string &output_prefix,
-		std::string &solution_prefix, std::string &base_fname,
+		std::string &input_prefix,
+		std::string &output_prefix,
+		std::string &solution_prefix,
+		std::string &base_fname,
 		int f_lex, 
 		int verbose_level);
 
@@ -106,7 +114,8 @@ public:
 		void *early_test_func_data,
 		int verbose_level);
 	void init_prepare_function_new(
-		void (*prepare_function_new)(solvers_package::exact_cover *E, int starter_case,
+		void (*prepare_function_new)(
+				solvers_package::exact_cover *E, int starter_case,
 				long int *candidates, int nb_candidates,
 				groups::strong_generators *Strong_gens,
 			solvers::diophant *&Dio, long int *&col_label,
@@ -115,20 +124,28 @@ public:
 		int verbose_level);
 	void set_split(int split_r, int split_m, int verbose_level);
 	void set_single_case(int single_case, int verbose_level);
-	void randomize(std::string &random_permutation_fname, int verbose_level);
+	void randomize(
+			std::string &random_permutation_fname,
+			int verbose_level);
 	void add_solution_test_function(
-		int (*solution_test_func)(exact_cover *EC, long int *S, int len,
+		int (*solution_test_func)(
+				exact_cover *EC, long int *S, int len,
 		void *data, int verbose_level), 
 		void *solution_test_func_data,
 		int verbose_level);
 	void add_late_cleanup_function(
-		void (*late_cleanup_function)(exact_cover *E, 
+		void (*late_cleanup_function)(
+				exact_cover *E,
 		int starter_case, int verbose_level)
 		);
-	void compute_liftings_new(int f_solve, int f_save, int f_read_instead, 
-		int f_draw_system, std::string &fname_system,
-		int f_write_tree, std::string &fname_tree, int verbose_level);
-	void compute_liftings_single_case_new(int starter_case, 
+	void compute_liftings_new(
+			int f_solve, int f_save, int f_read_instead,
+		int f_draw_system,
+		std::string &fname_system,
+		int f_write_tree,
+		std::string &fname_tree, int verbose_level);
+	void compute_liftings_single_case_new(
+			int starter_case,
 		int f_solve, int f_save, int f_read_instead, 
 		int &nb_col, 
 		long int *&Solutions, int &sol_length, int &nb_sol,
@@ -136,7 +153,8 @@ public:
 		int f_draw_system, std::string &fname_system,
 		int f_write_tree, std::string &fname_tree,
 		int verbose_level);
-	void lexorder_test(long int *live_blocks2, int &nb_live_blocks2,
+	void lexorder_test(
+			long int *live_blocks2, int &nb_live_blocks2,
 			data_structures_groups::vector_ge *stab_gens,
 		int verbose_level);
 };
@@ -181,19 +199,22 @@ public:
 	std::string fname_system;
 	int f_write_tree;
 	std::string fname_tree;
-	void (*prepare_function_new)(exact_cover *E, int starter_case, 
+	void (*prepare_function_new)(
+			exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
 		solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level);
-	void (*early_test_function)(long int *S, int len,
+	void (*early_test_function)(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
 	void *early_test_function_data;
 	int f_has_solution_test_function;
-	int (*solution_test_func)(exact_cover *EC, long int *S, int len,
+	int (*solution_test_func)(
+			exact_cover *EC, long int *S, int len,
 		void *data, int verbose_level);
 	void *solution_test_func_data;
 	int f_has_late_cleanup_function;

@@ -77,43 +77,56 @@ public:
 		// of entries in base_cols
 		// A is a m x n matrix,
 		// P is a m x Pn matrix (if f_P is TRUE)
-	void Gauss_step(int *v1, int *v2, int len, int idx, int verbose_level);
+	void Gauss_step(
+			int *v1, int *v2, int len, int idx, int verbose_level);
 		// afterwards: v2[idx] = 0 and v1,v2 span the same space as before
 		// v1 is not changed if v1[idx] is nonzero
-	void matrix_get_kernel(int *M, int m, int n, int *base_cols, 
+	void matrix_get_kernel(
+			int *M, int m, int n, int *base_cols,
 		int nb_base_cols, 
 		int &kernel_m, int &kernel_n, int *kernel, int verbose_level);
 		// kernel must point to the appropriate amount of memory! 
 		// (at least n * (n - nb_base_cols) int's)
 		// kernel is stored as column vectors, 
 		// i.e. kernel_m = n and kernel_n = n - nb_base_cols.
-	void matrix_get_kernel_as_row_vectors(int *M, int m, int n, 
+	void matrix_get_kernel_as_row_vectors(
+			int *M, int m, int n,
 		int *base_cols, int nb_base_cols, 
 		int &kernel_m, int &kernel_n, int *kernel, int verbose_level);
 		// kernel must point to the appropriate amount of memory! 
 		// (at least n * (n - nb_base_cols) int's)
 		// kernel is stored as row vectors, 
 		// i.e. kernel_m = n - nb_base_cols and kernel_n = n.
-	void get_image_and_kernel(int *M, int n, int &rk, int verbose_level);
-	void complete_basis(int *M, int m, int n, int verbose_level);
-	void mult_matrix(int *A, int *B, int *C, int ma, int na, int nb, 
+	void get_image_and_kernel(
+			int *M, int n, int &rk, int verbose_level);
+	void complete_basis(
+			int *M, int m, int n, int verbose_level);
+	void mult_matrix(
+			int *A, int *B, int *C, int ma, int na, int nb,
 		int verbose_level);
-	void mult_matrix3(int *A, int *B, int *C, int *D, int n, 
+	void mult_matrix3(
+			int *A, int *B, int *C, int *D, int n,
 		int verbose_level);
-	void add_apply_matrix(int *A, int *B, int m, int n, 
+	void add_apply_matrix(
+			int *A, int *B, int m, int n,
 		int verbose_level);
-	void matrix_mult_apply_scalar(int *A, int *s, int m, int n, 
+	void matrix_mult_apply_scalar(
+			int *A, int *s, int m, int n,
 		int verbose_level);
-	void make_block_matrix_2x2(int *Mtx, int n, int k, 
+	void make_block_matrix_2x2(
+			int *Mtx, int n, int k,
 		int *A, int *B, int *C, int *D, int verbose_level);
 		// A is k x k, 
 		// B is k x (n - k), 
 		// C is (n - k) x k, 
 		// D is (n - k) x (n - k), 
 		// Mtx is n x n
-	void make_identity_matrix(int *A, int n, int verbose_level);
-	void matrix_inverse(int *A, int *Ainv, int n, int verbose_level);
-	void matrix_invert(int *A, int *T, int *basecols, int *Ainv, int n, 
+	void make_identity_matrix(
+			int *A, int n, int verbose_level);
+	void matrix_inverse(
+			int *A, int *Ainv, int n, int verbose_level);
+	void matrix_invert(
+			int *A, int *T, int *basecols, int *Ainv, int n,
 		int verbose_level);
 
 };
@@ -129,11 +142,15 @@ class algebra_global {
 public:
 	void count_subprimitive(int Q_max, int H_max);
 	void formula_subprimitive(int d, int q,
-			ring_theory::longinteger_object &Rdq, int &g, int verbose_level);
-	void formula(int d, int q, ring_theory::longinteger_object &Rdq, int verbose_level);
+			ring_theory::longinteger_object &Rdq,
+			int &g, int verbose_level);
+	void formula(int d, int q,
+			ring_theory::longinteger_object &Rdq,
+			int verbose_level);
 	int subprimitive(int q, int h);
 	int period_of_sequence(int *v, int l);
-	void subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c);
+	void subexponent(
+			int q, int Q, int h, int f, int j, int k, int &s, int &c);
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
 	void display_all_PHG_elements(int n, int q);
@@ -151,31 +168,45 @@ public:
 	void test_longinteger7();
 	void test_longinteger8();
 	void longinteger_collect_setup(int &nb_agos,
-			ring_theory::longinteger_object *&agos, int *&multiplicities);
+			ring_theory::longinteger_object *&agos,
+			int *&multiplicities);
 	void longinteger_collect_free(int &nb_agos,
-			ring_theory::longinteger_object *&agos, int *&multiplicities);
+			ring_theory::longinteger_object *&agos,
+			int *&multiplicities);
 	void longinteger_collect_add(int &nb_agos,
-			ring_theory::longinteger_object *&agos, int *&multiplicities,
+			ring_theory::longinteger_object *&agos,
+			int *&multiplicities,
 			ring_theory::longinteger_object &ago);
 	void longinteger_collect_print(std::ostream &ost,
-			int &nb_agos, ring_theory::longinteger_object *&agos, int *&multiplicities);
+			int &nb_agos, ring_theory::longinteger_object *&agos,
+			int *&multiplicities);
 
 
 
 
 
-	void order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level);
-	void power_function_mod_n(int k, int n, int verbose_level);
+	void order_of_q_mod_n(
+			int q, int n_min, int n_max, int verbose_level);
+	void power_function_mod_n(
+			int k, int n, int verbose_level);
 
-	void do_trace(field_theory::finite_field *F, int verbose_level);
-	void do_norm(field_theory::finite_field *F, int verbose_level);
-	void do_cheat_sheet_GF(field_theory::finite_field *F, int verbose_level);
-	void export_tables(field_theory::finite_field *F, int verbose_level);
-	void do_cheat_sheet_ring(ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level);
-	void gl_random_matrix(field_theory::finite_field *F, int k, int verbose_level);
+	void do_trace(
+			field_theory::finite_field *F, int verbose_level);
+	void do_norm(
+			field_theory::finite_field *F, int verbose_level);
+	void do_cheat_sheet_GF(
+			field_theory::finite_field *F, int verbose_level);
+	void export_tables(
+			field_theory::finite_field *F, int verbose_level);
+	void do_cheat_sheet_ring(
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int verbose_level);
+	void gl_random_matrix(
+			field_theory::finite_field *F, int k, int verbose_level);
 
 	// functions with file based input:
-	void apply_Walsh_Hadamard_transform(field_theory::finite_field *F,
+	void apply_Walsh_Hadamard_transform(
+			field_theory::finite_field *F,
 			std::string &fname_csv_in, int n, int verbose_level);
 	void algebraic_normal_form(
 			field_theory::finite_field *F,
@@ -184,17 +215,31 @@ public:
 	void algebraic_normal_form_of_boolean_function(
 			field_theory::finite_field *F,
 			std::string &fname_csv_in, int n, int verbose_level);
-	void apply_trace_function(field_theory::finite_field *F, std::string &fname_csv_in, int verbose_level);
-	void apply_power_function(field_theory::finite_field *F, std::string &fname_csv_in, long int d, int verbose_level);
-	void identity_function(field_theory::finite_field *F, std::string &fname_csv_out, int verbose_level);
-	void Walsh_matrix(field_theory::finite_field *F, int n, int *&W, int verbose_level);
-	void Vandermonde_matrix(field_theory::finite_field *F, int *&W, int *&W_inv, int verbose_level);
-	void search_APN(field_theory::finite_field *F, int delta_max, int verbose_level);
-	void search_APN_recursion(field_theory::finite_field *F,
+	void apply_trace_function(
+			field_theory::finite_field *F,
+			std::string &fname_csv_in, int verbose_level);
+	void apply_power_function(
+			field_theory::finite_field *F,
+			std::string &fname_csv_in, long int d, int verbose_level);
+	void identity_function(
+			field_theory::finite_field *F,
+			std::string &fname_csv_out, int verbose_level);
+	void Walsh_matrix(
+			field_theory::finite_field *F,
+			int n, int *&W, int verbose_level);
+	void Vandermonde_matrix(
+			field_theory::finite_field *F,
+			int *&W, int *&W_inv, int verbose_level);
+	void search_APN(
+			field_theory::finite_field *F,
+			int delta_max, int verbose_level);
+	void search_APN_recursion(
+			field_theory::finite_field *F,
 			int *f, int depth, int f_normalize,
 			int &delta_max, int &nb_times,
 			std::vector<std::vector<int> > &Solutions,
-			int *A_matrix, int *B_matrix, int *Count_ab, int *nb_times_ab,
+			int *A_matrix, int *B_matrix,
+			int *Count_ab, int *nb_times_ab,
 			int verbose_level);
 	int search_APN_perform_checks(field_theory::finite_field *F,
 			int *f, int depth,
@@ -214,33 +259,44 @@ public:
 			int *f, int depth, int i, int delta_max,
 			int *A_matrix, int *B_matrix, int *Count_ab,
 			int verbose_level);
-	void search_APN_old(field_theory::finite_field *F, int verbose_level);
-	void search_APN_recursion_old(field_theory::finite_field *F,
+	void search_APN_old(
+			field_theory::finite_field *F, int verbose_level);
+	void search_APN_recursion_old(
+			field_theory::finite_field *F,
 			int *f, int depth, int f_normalize,
 			int &delta_min, int &nb_times,
 			std::vector<std::vector<int> > &Solutions,
 			int *nb_times_ab,
 			int verbose_level);
-	int differential_uniformity(field_theory::finite_field *F,
+	int differential_uniformity(
+			field_theory::finite_field *F,
 			int *f, int *nb_times_ab, int verbose_level);
-	int differential_uniformity_with_fibre(field_theory::finite_field *F,
-			int *f, int *nb_times_ab, int *&Fibre, int verbose_level);
+	int differential_uniformity_with_fibre(
+			field_theory::finite_field *F,
+			int *f, int *nb_times_ab, int *&Fibre,
+			int verbose_level);
 
-	void O4_isomorphism_4to2(field_theory::finite_field *F,
+	void O4_isomorphism_4to2(
+			field_theory::finite_field *F,
 		int *At, int *As, int &f_switch, int *B,
 		int verbose_level);
-	void O4_isomorphism_2to4(field_theory::finite_field *F,
+	void O4_isomorphism_2to4(
+			field_theory::finite_field *F,
 		int *At, int *As, int f_switch, int *B);
-	void O4_grid_coordinates_rank(field_theory::finite_field *F,
+	void O4_grid_coordinates_rank(
+			field_theory::finite_field *F,
 		int x1, int x2, int x3, int x4,
 		int &grid_x, int &grid_y, int verbose_level);
-	void O4_grid_coordinates_unrank(field_theory::finite_field *F,
+	void O4_grid_coordinates_unrank(
+			field_theory::finite_field *F,
 		int &x1, int &x2, int &x3, int &x4, int grid_x,
 		int grid_y, int verbose_level);
-	void O4_find_tangent_plane(field_theory::finite_field *F,
+	void O4_find_tangent_plane(
+			field_theory::finite_field *F,
 		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
 		int *tangent_plane, int verbose_level);
-	void Nth_roots(field_theory::finite_field *F,
+	void Nth_roots(
+			field_theory::finite_field *F,
 			int n, int verbose_level);
 
 };
@@ -280,7 +336,8 @@ public:
 
 	generators_symplectic_group();
 	~generators_symplectic_group();
-	void init(field_theory::finite_field *F, int n, int verbose_level);
+	void init(
+			field_theory::finite_field *F, int n, int verbose_level);
 	int count_strong_generators(int &nb, int *transversal_length, 
 		int &first_moved, int depth, int verbose_level);
 	int get_strong_generators(int *Data, int &nb, int &first_moved, 
@@ -352,7 +409,8 @@ public:
 		int deg2, int nb_perms2, int *perms2,
 		int &deg3, int &nb_perms3, int *&perms3,
 		int verbose_levels);
-	void generators_concatenate(int deg1, int nb_perms1, int *perms1,
+	void generators_concatenate(
+			int deg1, int nb_perms1, int *perms1,
 		int deg2, int nb_perms2, int *perms2,
 		int &deg3, int &nb_perms3, int *&perms3,
 		int verbose_level);
@@ -387,10 +445,12 @@ public:
 			ring_theory::longinteger_object &o, int verbose_level);
 	// m = half the dimension,
 	// the dimension is n = 2m, the Witt index is m - 1
-	void order_Pomega_parabolic(int m, int q, ring_theory::longinteger_object &o,
+	void order_Pomega_parabolic(
+			int m, int q, ring_theory::longinteger_object &o,
 		int verbose_level);
 	// m = Witt index, the dimension is n = 2m + 1
-	int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
+	int index_POmega_in_PO(
+			int epsilon, int m, int q, int verbose_level);
 
 
 	void diagonal_orbit_perm(
@@ -454,7 +514,8 @@ public:
 		int f_semilinear, field_theory::finite_field *F,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
-	void builtin_transversal_rep_GLnq(int *A, int n, field_theory::finite_field *F,
+	void builtin_transversal_rep_GLnq(int *A, int n,
+			field_theory::finite_field *F,
 		int f_semilinear, int i, int j, int verbose_level);
 	void affine_translation(
 			int n, field_theory::finite_field *F,
@@ -521,56 +582,73 @@ public:
 
 	gl_classes();
 	~gl_classes();
-	void init(int k, field_theory::finite_field *F, int verbose_level);
-	int select_partition_first(int *Select, int *Select_partition,
+	void init(int k,
+			field_theory::finite_field *F, int verbose_level);
+	int select_partition_first(
+			int *Select, int *Select_partition,
 		int verbose_level);
-	int select_partition_next(int *Select, int *Select_partition,
+	int select_partition_next(
+			int *Select, int *Select_partition,
 		int verbose_level);
-	int first(int *Select, int *Select_partition, int verbose_level);
-	int next(int *Select, int *Select_partition, int verbose_level);
+	int first(
+			int *Select, int *Select_partition, int verbose_level);
+	int next(
+			int *Select, int *Select_partition, int verbose_level);
 	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R,
 		int verbose_level);
 	void make_matrix_in_rational_normal_form(
 			int *Mtx, int *Select, int *Select_Partition,
 			int verbose_level);
-	void centralizer_order_Kung_basic(int nb_irreds,
+	void centralizer_order_Kung_basic(
+			int nb_irreds,
 		int *poly_degree, int *poly_mult, int *partition_idx,
 		ring_theory::longinteger_object &co,
 		int verbose_level);
-	void centralizer_order_Kung(int *Select_polynomial,
-		int *Select_partition, ring_theory::longinteger_object &co,
+	void centralizer_order_Kung(
+			int *Select_polynomial,
+		int *Select_partition,
+		ring_theory::longinteger_object &co,
 		int verbose_level);
 		// Computes the centralizer order of a matrix in GL(k,q)
 		// according to Kung's formula~\cite{Kung81}.
-	void make_classes(gl_class_rep *&R, int &nb_classes,
+	void make_classes(
+			gl_class_rep *&R, int &nb_classes,
 		int f_no_eigenvalue_one, int verbose_level);
 	void identify_matrix(int *Mtx, gl_class_rep *R, int *Basis,
 		int verbose_level);
-	void identify2(int *Mtx, ring_theory::unipoly_object &poly, int *Mult,
+	void identify2(int *Mtx,
+			ring_theory::unipoly_object &poly, int *Mult,
 		int *Select_partition, int *Basis, int verbose_level);
 	void compute_generalized_kernels_for_each_block(
 		int *Mtx, int *Irreds, int nb_irreds,
 		int *Degree, int *Mult, matrix_block_data *Data,
 		int verbose_level);
-	void compute_generalized_kernels(matrix_block_data *Data, int *M2,
+	void compute_generalized_kernels(
+			matrix_block_data *Data, int *M2,
 		int d, int b0, int m, int *poly_coeffs, int verbose_level);
 	int identify_partition(int *part, int m, int verbose_level);
 	void choose_basis_for_rational_normal_form(int *Mtx,
 		matrix_block_data *Data, int nb_irreds,
 		int *Basis,
 		int verbose_level);
-	void choose_basis_for_rational_normal_form_block(int *Mtx,
+	void choose_basis_for_rational_normal_form_block(
+			int *Mtx,
 		matrix_block_data *Data,
 		int *Basis, int &b,
 		int verbose_level);
-	void generators_for_centralizer(int *Mtx, gl_class_rep *R,
+	void generators_for_centralizer(
+			int *Mtx, gl_class_rep *R,
 		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
 		int verbose_level);
-	void centralizer_generators(int *Mtx, ring_theory::unipoly_object &poly,
+	void centralizer_generators(
+			int *Mtx,
+			ring_theory::unipoly_object &poly,
 		int *Mult, int *Select_partition,
 		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
 		int verbose_level);
-	void centralizer_generators_block(int *Mtx, matrix_block_data *Data,
+	void centralizer_generators_block(
+			int *Mtx,
+			matrix_block_data *Data,
 		int nb_irreds, int h,
 		int **&Gens, int &nb_gens, int &nb_alloc,
 		int verbose_level);
@@ -581,7 +659,8 @@ public:
 	int find_class_rep(gl_class_rep *Reps, int nb_reps,
 		gl_class_rep *R, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
-	void print_matrix_and_centralizer_order_latex(std::ostream &ost,
+	void print_matrix_and_centralizer_order_latex(
+			std::ostream &ost,
 		gl_class_rep *R);
 };
 
@@ -681,7 +760,9 @@ public:
 
 	null_polarity_generator();
 	~null_polarity_generator();
-	void init(field_theory::finite_field *F, int n, int verbose_level);
+	void init(
+			field_theory::finite_field *F,
+			int n, int verbose_level);
 	int count_strong_generators(int &nb, int *transversal_length, 
 		int &first_moved, int depth, int verbose_level);
 	int get_strong_generators(int *Data, int &nb, int &first_moved, 
@@ -714,12 +795,15 @@ public:
 
 	rank_checker();
 	~rank_checker();
-	void init(field_theory::finite_field *GFq, int m, int n, int d);
-	int check_rank(int len, long int *S, int verbose_level);
+	void init(
+			field_theory::finite_field *GFq,
+			int m, int n, int d);
+	int check_rank(
+			int len, long int *S, int verbose_level);
 	int check_rank_matrix_input(int len, long int *S, int dim_S,
 		int verbose_level);
-	int check_rank_last_two_are_fixed(int len, long int *S, int verbose_level);
-	int compute_rank(int len, long int *S, int f_projective, int verbose_level);
+	int check_rank_last_two_are_fixed(
+			int len, long int *S, int verbose_level);
 	int compute_rank_row_vectors(
 			int len, long int *S, int f_projective, int verbose_level);
 };

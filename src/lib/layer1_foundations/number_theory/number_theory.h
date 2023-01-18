@@ -37,10 +37,13 @@ public:
 
 	cyclotomic_sets();
 	~cyclotomic_sets();
-	void init(field_theory::finite_field *F, int n, int verbose_level);
+	void init(
+			field_theory::finite_field *F,
+			int n, int verbose_level);
 	void print();
 	void print_latex(std::ostream &ost);
-	void print_latex_with_selection(std::ostream &ost, int *Selection, int nb_sel);
+	void print_latex_with_selection(
+			std::ostream &ost, int *Selection, int nb_sel);
 
 };
 
@@ -61,7 +64,9 @@ public:
 	int q;
 	int p;
 	int e;
-	int b, c; // the equation of the curve is Y^2 = X^3 + bX + c mod p
+	int b, c;
+		// the equation of the curve is
+		// Y^2 = X^3 + bX + c mod p
 	int nb; // number of points
 	int *T; // [nb * 3] point coordinates
 		// the point at infinity is last
@@ -71,7 +76,9 @@ public:
 
 	elliptic_curve();
 	~elliptic_curve();
-	void init(field_theory::finite_field *F, int b, int c, int verbose_level);
+	void init(
+			field_theory::finite_field *F,
+			int b, int c, int verbose_level);
 	void compute_points(int verbose_level);
 	void add_point_to_table(int x, int y, int z);
 	int evaluate_RHS(int x);
@@ -82,14 +89,16 @@ public:
 		int x1, int y1, int z1,
 		int x2, int y2, int z2,
 		int &x3, int &y3, int &z3, int verbose_level);
-	void save_incidence_matrix(std::string &fname, int verbose_level);
+	void save_incidence_matrix(
+			std::string &fname, int verbose_level);
 	void draw_grid(
 			std::string &fname,
 			graphics::layered_graph_draw_options *Draw_options,
 			int f_with_grid, int f_with_points, int point_density,
 			int f_path, int start_idx, int nb_steps,
 			int verbose_level);
-	void draw_grid2(graphics::mp_graphics &G,
+	void draw_grid2(
+			graphics::mp_graphics &G,
 			int f_with_grid, int f_with_points, int point_density,
 			int f_path, int start_idx, int nb_steps,
 			int verbose_level);
@@ -181,7 +190,8 @@ public:
 	void make_D_matrix(int s, int verbose_level);
 	void make_T_matrix(int s, int verbose_level);
 	void make_P_matrix(int s, int verbose_level);
-	void multiply_matrix_stack(field_theory::finite_field *F, int **S,
+	void multiply_matrix_stack(
+			field_theory::finite_field *F, int **S,
 			int nb, int sz, int *Result, int verbose_level);
 };
 
@@ -215,7 +225,8 @@ public:
 	long int i_power_j_lint_safe(int i, int j, int verbose_level);
 	long int i_power_j_lint(long int i, long int j);
 	int i_power_j(int i, int j);
-	void do_eulerfunction_interval(long int n_min, long int n_max, int verbose_level);
+	void do_eulerfunction_interval(
+			long int n_min, long int n_max, int verbose_level);
 	long int euler_function(long int n);
 	long int moebius_function(long int n);
 	long int order_mod_p(long int a, long int p);
@@ -238,7 +249,10 @@ public:
 	int factor_int(int a, int *&primes, int *&exponents);
 	int nb_prime_factors_counting_multiplicities(long int a);
 	int nb_distinct_prime_factors(long int a);
-	void factor_lint(long int a, std::vector<long int> &primes, std::vector<int> &exponents);
+	void factor_lint(
+			long int a,
+			std::vector<long int> &primes,
+			std::vector<int> &exponents);
 	void factor_prime_power(int q, int &p, int &e);
 	long int primitive_root_randomized(long int p, int verbose_level);
 	long int primitive_root(long int p, int verbose_level);
@@ -252,9 +266,12 @@ public:
 	int ny2(long int x, long int &x1);
 	int ny_p(long int n, long int p);
 	//long int sqrt_mod_simple(long int a, long int p);
-	void print_factorization(int nb_primes, int *primes, int *exponents);
-	void print_longfactorization(int nb_primes,
-			ring_theory::longinteger_object *primes, int *exponents);
+	void print_factorization(
+			int nb_primes, int *primes, int *exponents);
+	void print_longfactorization(
+			int nb_primes,
+			ring_theory::longinteger_object *primes,
+			int *exponents);
 	void int_add_fractions(int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
 	void int_mult_fractions(int at, int ab, int bt, int bb,
@@ -267,7 +284,8 @@ public:
 	int get_prime_from_table(int idx);
 	long int Chinese_Remainders(
 			std::vector<long int> &Remainders,
-			std::vector<long int> &Moduli, long int &M, int verbose_level);
+			std::vector<long int> &Moduli,
+			long int &M, int verbose_level);
 	long int ChineseRemainder2(long int a1, long int a2,
 			long int p1, long int p2, int verbose_level);
 	void sieve(std::vector<int> &primes,
@@ -275,39 +293,51 @@ public:
 	void sieve_primes(std::vector<int> &v,
 			int from, int to, int limit, int verbose_level);
 	int nb_primes(int n);
-	void cyclotomic_set(std::vector<int> &cyclotomic_set,
+	void cyclotomic_set(
+			std::vector<int> &cyclotomic_set,
 			int a, int q, int n, int verbose_level);
-	void elliptic_curve_addition(field_theory::finite_field *F,
+	void elliptic_curve_addition(
+			field_theory::finite_field *F,
 			int b, int c,
 		int x1, int x2, int x3,
 		int y1, int y2, int y3,
 		int &z1, int &z2, int &z3, int verbose_level);
-	void elliptic_curve_point_multiple(field_theory::finite_field *F,
+	void elliptic_curve_point_multiple(
+			field_theory::finite_field *F,
 			int b, int c, int n,
 		int x1, int y1, int z1,
 		int &x3, int &y3, int &z3,
 		int verbose_level);
-	void elliptic_curve_point_multiple_with_log(field_theory::finite_field *F,
+	void elliptic_curve_point_multiple_with_log(
+			field_theory::finite_field *F,
 			int b, int c, int n,
 		int x1, int y1, int z1,
 		int &x3, int &y3, int &z3,
 		int verbose_level);
-	int elliptic_curve_evaluate_RHS(field_theory::finite_field *F,
+	int elliptic_curve_evaluate_RHS(
+			field_theory::finite_field *F,
 			int x, int b, int c);
-	void elliptic_curve_points(field_theory::finite_field *F,
-			int b, int c, int &nb, int *&T, int verbose_level);
-	void elliptic_curve_all_point_multiples(field_theory::finite_field *F,
+	void elliptic_curve_points(
+			field_theory::finite_field *F,
+			int b, int c, int &nb, int *&T,
+			int verbose_level);
+	void elliptic_curve_all_point_multiples(
+			field_theory::finite_field *F,
 			int b, int c, int &order,
 		int x1, int y1, int z1,
 		std::vector<std::vector<int> > &Pts,
 		int verbose_level);
-	int elliptic_curve_discrete_log(field_theory::finite_field *F,
+	int elliptic_curve_discrete_log(
+			field_theory::finite_field *F,
 			int b, int c,
 		int x1, int y1, int z1,
 		int x3, int y3, int z3,
 		int verbose_level);
-	int eulers_totient_function(int n, int verbose_level);
-	void do_jacobi(long int jacobi_top, long int jacobi_bottom, int verbose_level);
+	int eulers_totient_function(
+			int n, int verbose_level);
+	void do_jacobi(
+			long int jacobi_top,
+			long int jacobi_bottom, int verbose_level);
 	void elliptic_curve_addition_table(
 			geometry::projective_space *P2,
 		int *A6, int *Pts, int nb_pts, int *&Table,

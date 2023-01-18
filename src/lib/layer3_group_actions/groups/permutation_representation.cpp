@@ -117,7 +117,8 @@ void permutation_representation::init(
 	}
 }
 
-long int permutation_representation::element_image_of(int *Elt,
+long int permutation_representation::element_image_of(
+		int *Elt,
 		long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

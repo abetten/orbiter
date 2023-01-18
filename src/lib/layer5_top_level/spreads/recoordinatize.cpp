@@ -82,7 +82,8 @@ void recoordinatize::init(
 		geometry::spread_domain *SD,
 		actions::action *A, actions::action *A2,
 	int f_projective, int f_semilinear, 
-	int (*check_function_incremental)(int len,
+	int (*check_function_incremental)(
+			int len,
 			long int *S, void *data, int verbose_level),
 	void *check_function_incremental_data, 
 	int verbose_level)
@@ -141,7 +142,8 @@ void recoordinatize::init(
 
 
 void recoordinatize::do_recoordinatize(
-		long int i1, long int i2, long int i3, int verbose_level)
+		long int i1, long int i2, long int i3,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -253,8 +255,10 @@ void recoordinatize::do_recoordinatize(
 	}
 }
 
-void recoordinatize::compute_starter(long int *&S, int &size,
-		groups::strong_generators *&Strong_gens, int verbose_level)
+void recoordinatize::compute_starter(
+		long int *&S, int &size,
+		groups::strong_generators *&Strong_gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -317,7 +321,8 @@ void recoordinatize::compute_starter(long int *&S, int &size,
 }
 
 void recoordinatize::stabilizer_of_first_three(
-		groups::strong_generators *&Strong_gens, int verbose_level)
+		groups::strong_generators *&Strong_gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -620,7 +625,8 @@ void recoordinatize::compute_live_points(int verbose_level)
 }
 
 void recoordinatize::compute_live_points_low_level(
-		long int *&live_points, int &nb_live_points, int verbose_level)
+		long int *&live_points, int &nb_live_points,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -788,7 +794,8 @@ void recoordinatize::compute_live_points_low_level(
 	}
 }
 
-int recoordinatize::apply_test(long int *set, int sz, int verbose_level)
+int recoordinatize::apply_test(
+		long int *set, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -807,7 +814,8 @@ int recoordinatize::apply_test(long int *set, int sz, int verbose_level)
 }
 
 void recoordinatize::make_first_three(
-		long int &j1, long int &j2, long int &j3, int verbose_level)
+		long int &j1, long int &j2, long int &j3,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	

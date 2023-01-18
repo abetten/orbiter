@@ -1165,7 +1165,8 @@ int point_line::count_CR(data_structures::partitionstack &P,
 	return nb;
 }
 
-int point_line::count_RC_representative(data_structures::partitionstack &P,
+int point_line::count_RC_representative(
+		data_structures::partitionstack &P,
 	int row_cell, int row_cell_pt, int col_cell)
 {
 	int f1, f2, /*l1,*/ l2, e1, e2, j, s = 0;
@@ -1185,7 +1186,8 @@ int point_line::count_RC_representative(data_structures::partitionstack &P,
 	return s;
 }
 
-int point_line::count_CR_representative(data_structures::partitionstack &P,
+int point_line::count_CR_representative(
+		data_structures::partitionstack &P,
 	int col_cell, int col_cell_pt, int row_cell)
 {
 	int f1, f2, l1, /*l2,*/ e1, e2, i, s = 0;
@@ -1205,7 +1207,8 @@ int point_line::count_CR_representative(data_structures::partitionstack &P,
 	return s;
 }
 
-int point_line::count_pairs_RRC(data_structures::partitionstack &P,
+int point_line::count_pairs_RRC(
+		data_structures::partitionstack &P,
 		int row_cell1, int row_cell2, int col_cell)
 {
 	int l1, i, nb = -1, nb1;
@@ -1227,7 +1230,8 @@ int point_line::count_pairs_RRC(data_structures::partitionstack &P,
 	return nb;
 }
 
-int point_line::count_pairs_CCR(data_structures::partitionstack &P,
+int point_line::count_pairs_CCR(
+		data_structures::partitionstack &P,
 		int col_cell1, int col_cell2, int row_cell)
 {
 	int l1, i, nb = -1, nb1;
@@ -1249,7 +1253,8 @@ int point_line::count_pairs_CCR(data_structures::partitionstack &P,
 	return nb;
 }
 
-int point_line::count_pairs_RRC_representative(data_structures::partitionstack &P,
+int point_line::count_pairs_RRC_representative(
+		data_structures::partitionstack &P,
 		int row_cell1, int row_cell_pt, int row_cell2, int col_cell)
 // returns the number of joinings from a point of
 // row_cell1 to elements of row_cell2 within col_cell
@@ -1290,7 +1295,8 @@ int point_line::count_pairs_RRC_representative(data_structures::partitionstack &
 }
 
 
-int point_line::count_pairs_CCR_representative(data_structures::partitionstack &P,
+int point_line::count_pairs_CCR_representative(
+		data_structures::partitionstack &P,
 		int col_cell1, int col_cell_pt, int col_cell2, int row_cell)
 // returns the number of joinings from a point of
 // col_cell1 to elements of col_cell2 within row_cell

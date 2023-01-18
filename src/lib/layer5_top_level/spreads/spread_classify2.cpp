@@ -22,7 +22,8 @@ namespace spreads {
 
 
 
-void spread_classify::print_isomorphism_type(isomorph::isomorph *Iso,
+void spread_classify::print_isomorphism_type(
+		isomorph::isomorph *Iso,
 	int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 	long int *data, int verbose_level)
 // called from callback_print_isomorphism_type()
@@ -99,7 +100,8 @@ void spread_classify::print_isomorphism_type(isomorph::isomorph *Iso,
 }
 
 
-void spread_classify::print_isomorphism_type2(isomorph::isomorph *Iso,
+void spread_classify::print_isomorphism_type2(
+		isomorph::isomorph *Iso,
 		std::ostream &ost,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int verbose_level)
@@ -259,7 +261,8 @@ void spread_classify::print_isomorphism_type2(isomorph::isomorph *Iso,
 
 }
 
-void spread_classify::save_klein_invariants(char *prefix,
+void spread_classify::save_klein_invariants(
+		char *prefix,
 	int iso_cnt, 
 	long int *data, int data_size, int verbose_level)
 {
@@ -324,7 +327,8 @@ void spread_classify::save_klein_invariants(char *prefix,
 	}
 }
 
-void spread_classify::klein(std::ostream &ost,
+void spread_classify::klein(
+		std::ostream &ost,
 		isomorph::isomorph *Iso,
 	int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 	long int *data, int data_size, int verbose_level)
@@ -533,7 +537,8 @@ void spread_classify::klein(std::ostream &ost,
 }
 
 
-void spread_classify::report2(isomorph::isomorph &Iso, int verbose_level)
+void spread_classify::report2(
+		isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
@@ -580,7 +585,9 @@ void spread_classify::report2(isomorph::isomorph &Iso, int verbose_level)
 
 }
 
-void spread_classify::report3(isomorph::isomorph &Iso, std::ostream &ost, int verbose_level)
+void spread_classify::report3(
+		isomorph::isomorph &Iso,
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1081,8 +1088,9 @@ void spread_classify::all_cooperstein_thas_quotients(
 
 
 
-void spread_classify::cooperstein_thas_quotients(isomorph::isomorph &Iso,
-		ofstream &f, int h, int &cnt, int verbose_level)
+void spread_classify::cooperstein_thas_quotients(
+		isomorph::isomorph &Iso,
+		std::ofstream &f, int h, int &cnt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1289,7 +1297,8 @@ void spread_classify::cooperstein_thas_quotients(isomorph::isomorph &Iso,
 }
 
 void spread_classify::orbit_info_short(
-		std::ostream &ost, isomorph::isomorph &Iso, int h, int verbose_level)
+		std::ostream &ost, isomorph::isomorph &Iso,
+		int h, int verbose_level)
 {
 	int rep, first, /*c,*/ id;
 
@@ -1346,7 +1355,8 @@ void spread_classify::orbit_info_short(
 
 
 
-void spread_classify::report_stabilizer(isomorph::isomorph &Iso,
+void spread_classify::report_stabilizer(
+		isomorph::isomorph &Iso,
 		std::ostream &ost, int orbit, int verbose_level)
 {
 	groups::sims *Stab;

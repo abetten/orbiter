@@ -155,7 +155,8 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 	}
 }
 
-void finite_field::finite_field_init(std::string &q_text,
+void finite_field::finite_field_init(
+		std::string &q_text,
 		int f_without_tables, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

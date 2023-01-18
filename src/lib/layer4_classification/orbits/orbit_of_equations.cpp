@@ -71,7 +71,8 @@ orbit_of_equations::~orbit_of_equations()
 	}
 }
 
-void orbit_of_equations::init(actions::action *A,
+void orbit_of_equations::init(
+		actions::action *A,
 		field_theory::finite_field *F,
 		induced_actions::action_on_homogeneous_polynomials *AonHPD,
 	groups::strong_generators *SG, int *coeff_in,
@@ -546,7 +547,8 @@ void orbit_of_equations::get_canonical_form(
 }
 
 groups::strong_generators *orbit_of_equations::stabilizer_orbit_rep(
-		ring_theory::longinteger_object &full_group_order, int verbose_level)
+		ring_theory::longinteger_object &full_group_order,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	groups::strong_generators *gens;

@@ -324,7 +324,8 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 }
 
 
-void web_of_cubic_curves::compute_web_of_cubic_curves(long int *arc6, int verbose_level)
+void web_of_cubic_curves::compute_web_of_cubic_curves(
+		long int *arc6, int verbose_level)
 // curves[45 * 10]
 {
 	int f_v = (verbose_level >= 1);

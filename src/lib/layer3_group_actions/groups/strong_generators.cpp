@@ -245,7 +245,8 @@ void strong_generators::init_by_hdl(actions::action *A,
 }
 
 void strong_generators::init_from_permutation_representation(
-		actions::action *A, sims *parent_group_S, int *data,
+		actions::action *A,
+		sims *parent_group_S, int *data,
 	int nb_elements, long int group_order,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
@@ -310,7 +311,8 @@ void strong_generators::init_from_permutation_representation(
 	}
 }
 
-void strong_generators::init_from_data(actions::action *A, int *data,
+void strong_generators::init_from_data(
+		actions::action *A, int *data,
 	int nb_elements, int elt_size, int *transversal_length, 
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
@@ -546,7 +548,8 @@ strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 
 void strong_generators::init_point_stabilizer_orbit_rep_schreier(
 	schreier *Sch,
-	int orbit_idx, ring_theory::longinteger_object &full_group_order,
+	int orbit_idx,
+	ring_theory::longinteger_object &full_group_order,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1521,7 +1524,8 @@ void strong_generators::print_generators_even_odd()
 	}
 }
 
-void strong_generators::print_generators_MAGMA(actions::action *A, std::ostream &ost)
+void strong_generators::print_generators_MAGMA(
+		actions::action *A, std::ostream &ost)
 {
 
 	magma_interface M;
@@ -1529,7 +1533,8 @@ void strong_generators::print_generators_MAGMA(actions::action *A, std::ostream 
 	M.print_generators_MAGMA(A, this, ost);
 }
 
-void strong_generators::export_magma(actions::action *A, std::ostream &ost, int verbose_level)
+void strong_generators::export_magma(
+		actions::action *A, std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1554,7 +1559,8 @@ void strong_generators::export_magma(actions::action *A, std::ostream &ost, int 
 }
 
 
-void strong_generators::canonical_image_GAP(std::string &input_set_text, std::ostream &ost)
+void strong_generators::canonical_image_GAP(
+		std::string &input_set_text, std::ostream &ost)
 {
 	int i;
 
@@ -1638,7 +1644,8 @@ void strong_generators::print_for_make_element(std::ostream &ost)
 	}
 }
 
-void strong_generators::print_generators_in_different_action_tex(std::ostream &ost, actions::action *A2)
+void strong_generators::print_generators_in_different_action_tex(
+		std::ostream &ost, actions::action *A2)
 {
 	int i;
 	ring_theory::longinteger_object go;
@@ -1671,7 +1678,8 @@ void strong_generators::print_generators_in_different_action_tex(std::ostream &o
 void strong_generators::print_generators_tex_with_print_point_function(
 		actions::action *A_given,
 		std::ostream &ost,
-		void (*point_label)(stringstream &sstr, long int pt, void *data),
+		void (*point_label)(
+				stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	int i;
@@ -2747,7 +2755,7 @@ void strong_generators::write_to_file_binary(
 }
 
 void strong_generators::read_from_file_binary(
-		actions::action *A, ifstream &fp, int verbose_level)
+		actions::action *A, std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l;
@@ -2810,7 +2818,8 @@ void strong_generators::write_file(std::string &fname, int verbose_level)
 	}
 }
 
-void strong_generators::read_file(actions::action *A,
+void strong_generators::read_file(
+		actions::action *A,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3177,7 +3186,8 @@ void strong_generators::export_permutation_group_to_GAP(
 
 
 void strong_generators::compute_and_print_orbits_on_a_given_set(
-		actions::action *A_given, long int *set, int len, int verbose_level)
+		actions::action *A_given,
+		long int *set, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	schreier *Sch;
@@ -3355,7 +3365,8 @@ int strong_generators::test_if_subgroup(sims *S, int verbose_level)
 
 
 void strong_generators::test_if_set_is_invariant_under_given_action(
-		actions::action *A_given, long int *set, int set_sz, int verbose_level)
+		actions::action *A_given,
+		long int *set, int set_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -3534,7 +3545,8 @@ strong_generators *strong_generators::point_stabilizer(
 }
 
 strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints(
-		int nb_fixpoints, actions::action *A_given, int verbose_level)
+		int nb_fixpoints,
+		actions::action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3773,7 +3785,8 @@ void strong_generators::get_gens_data(int *&data, int &sz, int verbose_level)
 	}
 }
 
-void strong_generators::get_gens_data_as_string_with_quotes(std::string &str, int verbose_level)
+void strong_generators::get_gens_data_as_string_with_quotes(
+		std::string &str, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

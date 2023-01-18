@@ -873,7 +873,8 @@ int spread_tables::test_if_pair_of_sets_are_adjacent(
 	return TRUE;
 }
 
-int spread_tables::test_if_set_of_spreads_is_line_disjoint(long int *set, int len)
+int spread_tables::test_if_set_of_spreads_is_line_disjoint(
+		long int *set, int len)
 {
 	int i, j, ret;
 	long int a, b;
@@ -902,7 +903,8 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint(long int *set, int le
 
 }
 
-int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(long int *set, int len)
+int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
+		long int *set, int len)
 {
 	int i, j, ret;
 	long int a, b;
@@ -932,7 +934,8 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(l
 
 }
 
-void spread_tables::make_exact_cover_problem(solvers::diophant *&Dio,
+void spread_tables::make_exact_cover_problem(
+		solvers::diophant *&Dio,
 		long int *live_point_index, int nb_live_points,
 		long int *live_blocks, int nb_live_blocks,
 		int nb_needed,
@@ -988,7 +991,8 @@ void spread_tables::make_exact_cover_problem(solvers::diophant *&Dio,
 }
 
 void spread_tables::compute_list_of_lines_from_packing(
-		long int *list_of_lines, long int *packing, int sz_of_packing,
+		long int *list_of_lines,
+		long int *packing, int sz_of_packing,
 		int verbose_level)
 // list_of_lines[sz_of_packing * spread_size]
 {

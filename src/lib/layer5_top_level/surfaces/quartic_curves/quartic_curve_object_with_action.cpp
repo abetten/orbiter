@@ -37,7 +37,8 @@ quartic_curve_object_with_action::~quartic_curve_object_with_action()
 {
 }
 
-void quartic_curve_object_with_action::init(quartic_curve_domain_with_action *DomA,
+void quartic_curve_object_with_action::init(
+		quartic_curve_domain_with_action *DomA,
 		algebraic_geometry::quartic_curve_object *QO,
 		groups::strong_generators *Aut_gens,
 		int verbose_level)
@@ -57,7 +58,8 @@ void quartic_curve_object_with_action::init(quartic_curve_domain_with_action *Do
 	}
 }
 
-void quartic_curve_object_with_action::export_something(std::string &what,
+void quartic_curve_object_with_action::export_something(
+		std::string &what,
 		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

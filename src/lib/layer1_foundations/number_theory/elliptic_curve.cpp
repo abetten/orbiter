@@ -42,7 +42,9 @@ elliptic_curve::~elliptic_curve()
 }
 
 
-void elliptic_curve::init(field_theory::finite_field *F, int b, int c,
+void elliptic_curve::init(
+		field_theory::finite_field *F,
+		int b, int c,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -318,7 +320,8 @@ void elliptic_curve::addition(
 	}
 }
 
-void elliptic_curve::save_incidence_matrix(std::string &fname,
+void elliptic_curve::save_incidence_matrix(
+		std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -400,7 +403,8 @@ void elliptic_curve::draw_grid(
 }
 
 
-void elliptic_curve::draw_grid2(graphics::mp_graphics &G,
+void elliptic_curve::draw_grid2(
+		graphics::mp_graphics &G,
 		int f_with_grid, int f_with_points, int point_density,
 		int f_path, int start_idx, int nb_steps,
 		int verbose_level)

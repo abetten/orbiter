@@ -170,7 +170,8 @@ void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &la
 	}
 }
 
-void del_pezzo_surface_of_degree_two_object::report_properties(std::ostream &ost, int verbose_level)
+void del_pezzo_surface_of_degree_two_object::report_properties(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

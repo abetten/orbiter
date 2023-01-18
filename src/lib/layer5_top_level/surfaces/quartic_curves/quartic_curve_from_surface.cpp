@@ -138,7 +138,8 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	}
 }
 
-void quartic_curve_from_surface::init(cubic_surfaces_in_general::surface_object_with_action *SOA,
+void quartic_curve_from_surface::init(
+		cubic_surfaces_in_general::surface_object_with_action *SOA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -154,7 +155,8 @@ void quartic_curve_from_surface::init(cubic_surfaces_in_general::surface_object_
 	}
 }
 
-void quartic_curve_from_surface::init_surface_create(cubic_surfaces_in_general::surface_create *SC,
+void quartic_curve_from_surface::init_surface_create(
+		cubic_surfaces_in_general::surface_create *SC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -169,7 +171,8 @@ void quartic_curve_from_surface::init_surface_create(cubic_surfaces_in_general::
 	}
 }
 
-void quartic_curve_from_surface::init_labels(std::string &label, std::string &label_tex,
+void quartic_curve_from_surface::init_labels(
+		std::string &label, std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -186,7 +189,8 @@ void quartic_curve_from_surface::init_labels(std::string &label, std::string &la
 
 
 
-void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
+void quartic_curve_from_surface::quartic(
+		int pt_orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -463,7 +467,8 @@ void quartic_curve_from_surface::quartic(int pt_orbit, int verbose_level)
 }
 
 
-void quartic_curve_from_surface::compute_quartic(int pt_orbit,
+void quartic_curve_from_surface::compute_quartic(
+		int pt_orbit,
 	int *equation, long int *Lines, int nb_lines,
 	int verbose_level)
 {
@@ -616,7 +621,8 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 }
 
 
-void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
+void quartic_curve_from_surface::compute_stabilizer(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

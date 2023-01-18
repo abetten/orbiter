@@ -87,7 +87,8 @@ invariants_packing::~invariants_packing()
 	}
 }
 
-void invariants_packing::init(isomorph::isomorph *Iso,
+void invariants_packing::init(
+		isomorph::isomorph *Iso,
 		packing_classify *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

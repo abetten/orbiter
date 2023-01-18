@@ -161,7 +161,8 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 	}
 }
 
-void del_pezzo_surface_of_degree_two_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs)
+void del_pezzo_surface_of_degree_two_domain::print_equation_with_line_breaks_tex(
+		std::ostream &ost, int *coeffs)
 {
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;

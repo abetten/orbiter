@@ -1454,7 +1454,8 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 	}
 }
 
-void linear_group::report(std::ostream &ost,
+void linear_group::report(
+		std::ostream &ost,
 		int f_sylow, int f_group_table,
 		int f_conjugacy_classes_and_normalizers,
 		graphics::layered_graph_draw_options *LG_Draw_options,

@@ -1356,7 +1356,8 @@ void strong_generators::init_centralizer_of_matrix(
 }
 
 void strong_generators::init_centralizer_of_matrix_general_linear(
-		actions::action *A_projective, actions::action *A_general_linear, int *Mtx,
+		actions::action *A_projective,
+		actions::action *A_general_linear, int *Mtx,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

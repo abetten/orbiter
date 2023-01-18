@@ -199,15 +199,18 @@ public:
 
 	coding_theoretic_activity();
 	~coding_theoretic_activity();
-	void init_field(coding_theoretic_activity_description *Descr,
+	void init_field(
+			coding_theoretic_activity_description *Descr,
 			field_theory::finite_field *F,
 			int verbose_level);
-	void init_code(coding_theoretic_activity_description *Descr,
+	void init_code(
+			coding_theoretic_activity_description *Descr,
 			create_code *Code,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void do_diagram(
-			coding_theory::code_diagram *Diagram, int verbose_level);
+			coding_theory::code_diagram *Diagram,
+			int verbose_level);
 
 
 };
@@ -384,24 +387,31 @@ public:
 			create_code_description *description,
 			int verbose_level);
 	void dual_code(int verbose_level);
-	void export_magma(std::string &fname, int verbose_level);
+	void export_magma(
+			std::string &fname, int verbose_level);
 	void create_genma_from_checkma(int verbose_level);
 	void create_checkma_from_genma(int verbose_level);
-	void export_codewords(std::string &fname, int verbose_level);
-	void export_codewords_long(std::string &fname, int verbose_level);
+	void export_codewords(
+			std::string &fname, int verbose_level);
+	void export_codewords_long(
+			std::string &fname, int verbose_level);
 	void export_codewords_by_weight(
 			std::string &fname_base, int verbose_level);
-	void export_genma(std::string &fname, int verbose_level);
-	void export_checkma(std::string &fname, int verbose_level);
+	void export_genma(
+			std::string &fname, int verbose_level);
+	void export_checkma(
+			std::string &fname, int verbose_level);
 	void weight_enumerator(int verbose_level);
 	void fixed_code(
 		long int *perm, int n,
 		int verbose_level);
-	void make_diagram(int f_embellish, int embellish_radius,
+	void make_diagram(
+			int f_embellish, int embellish_radius,
 			int f_metric_balls, int radius_of_metric_ball,
 			coding_theory::code_diagram *&Diagram,
 			int verbose_level);
-	void polynomial_representation_of_boolean_function(int verbose_level);
+	void polynomial_representation_of_boolean_function(
+			int verbose_level);
 
 };
 

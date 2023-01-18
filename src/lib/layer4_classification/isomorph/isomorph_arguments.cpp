@@ -291,13 +291,16 @@ void isomorph_arguments::print()
 }
 
 void isomorph_arguments::init(
-		actions::action *A, actions::action *A2,
+		actions::action *A,
+		actions::action *A2,
 		poset_classification::poset_classification *gen,
 	int target_size,
 	poset_classification::poset_classification_control *Control,
 	solvers_package::exact_cover_arguments *ECA,
-	void (*callback_report)(isomorph *Iso, void *data, int verbose_level), 
-	void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level), 
+	void (*callback_report)(
+			isomorph *Iso, void *data, int verbose_level),
+	void (*callback_subset_orbits)(
+			isomorph *Iso, void *data, int verbose_level),
 	void *callback_data, 
 	int verbose_level)
 {

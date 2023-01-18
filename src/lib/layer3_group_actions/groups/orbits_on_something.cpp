@@ -395,7 +395,8 @@ void orbits_on_something::orbit_type_of_set(
 	}
 }
 
-void orbits_on_something::report_type(std::ostream &ost, long int *orbit_type, long int goi)
+void orbits_on_something::report_type(
+		std::ostream &ost, long int *orbit_type, long int goi)
 {
 #if 0
 	ost << "\\left[" << endl;
@@ -654,7 +655,8 @@ int orbits_on_something::get_orbit_type_index_if_present(int orbit_length)
 }
 
 void orbits_on_something::test_all_orbits_by_length(
-	int (*test_function)(long int *orbit, int orbit_length, void *data),
+	int (*test_function)(
+			long int *orbit, int orbit_length, void *data),
 	void *test_function_data,
 	int verbose_level)
 {
@@ -783,7 +785,9 @@ int orbits_on_something::test_pair_of_orbits_of_a_equal_length(
 		int idx1, int idx2,
 		long int *Orbit1,
 		long int *Orbit2,
-		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+		int (*test_function)(
+				long int *orbit1, int orbit_length1,
+				long int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
 		int verbose_level)
 {
@@ -855,7 +859,9 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	int &type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
 	int f_has_colors, int number_colors, int *color_table,
-	int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+	int (*test_function)(
+			long int *orbit1, int orbit_length1,
+			long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	int verbose_level)
 {
@@ -1145,7 +1151,9 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	int &type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
 	int f_has_colors, int number_colors, int *color_table,
-	int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+	int (*test_function)(
+			long int *orbit1, int orbit_length1,
+			long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	int verbose_level)
 {
@@ -1429,7 +1437,9 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	int orbit_length,
 	int &type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
-	int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+	int (*test_function)(
+			long int *orbit1, int orbit_length1,
+			long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	data_structures::set_of_sets *my_orbits_classified,
 	int verbose_level)
@@ -1592,7 +1602,9 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	int nb_orbit_lengths,
 	int *&Type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
-	int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+	int (*test_function)(
+			long int *orbit1, int orbit_length1,
+			long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
 	data_structures::set_of_sets *my_orbits_classified,
 	int verbose_level)
@@ -1826,7 +1838,9 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 
 void orbits_on_something::compute_orbit_invariant_after_classification(
 		data_structures::set_of_sets *&Orbit_invariant,
-		int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
+		int (*evaluate_orbit_invariant_function)(
+				int a, int i, int j,
+				void *evaluate_data, int verbose_level),
 		void *evaluate_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

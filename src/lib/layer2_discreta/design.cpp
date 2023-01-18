@@ -14,20 +14,26 @@ namespace orbiter {
 namespace layer2_discreta {
 
 
-static void prepare_entry(Vector &entry, int i, int j,
+static void prepare_entry(
+		Vector &entry, int i, int j,
 		int h, int t, int v, int k, int lambda);
-static void determine_minimal_and_maximal_path(Vector &v,
+static void determine_minimal_and_maximal_path(
+		Vector &v,
 		Vector & min_path, Vector & max_path, int & max_depth);
-static void determine_dominating_ancestor(int t, int v, int k,
+static void determine_dominating_ancestor(
+		int t, int v, int k,
 		discreta_base & lambda, Vector & path,
 		design_parameter &dominating_ancestor);
-static void reduce_path(Vector &cmp, Vector &min_path);
-static void family_report(database & D, ostream& fhtml,
+static void reduce_path(
+		Vector &cmp, Vector &min_path);
+static void family_report(
+		database & D, ostream& fhtml,
 		ostream &ftex, int t, int v, int k, discreta_base &lambda,
 		Vector & cm, Vector & cmp, int minimal_t);
 
 
-int design_parameters_admissible(int v, int t, int k, discreta_base & lambda)
+int design_parameters_admissible(
+		int v, int t, int k, discreta_base & lambda)
 {
 	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 	discreta_base b, q, r;
@@ -44,7 +50,8 @@ int design_parameters_admissible(int v, int t, int k, discreta_base & lambda)
 	return TRUE;
 }
 
-int calc_delta_lambda(int v, int t, int k, int f_v)
+int calc_delta_lambda(
+		int v, int t, int k, int f_v)
 {
 	discreta_base lambda;
 	int i;
@@ -92,12 +99,14 @@ int calc_delta_lambda(int v, int t, int k, int f_v)
 		}
 }
 
-void design_lambda_max(int t, int v, int k, discreta_base & lambda_max)
+void design_lambda_max(
+		int t, int v, int k, discreta_base & lambda_max)
 {
 	Binomial(v - t, k - t, lambda_max);
 }
 
-void design_lambda_max_half(int t, int v, int k,
+void design_lambda_max_half(
+		int t, int v, int k,
 		discreta_base & lambda_max_half)
 {
 	discreta_base lambda_max, two, r;
@@ -107,8 +116,10 @@ void design_lambda_max_half(int t, int v, int k,
 	lambda_max.integral_division(two, lambda_max_half, r, 0);
 }
 
-void design_lambda_ijs_matrix(int t, int v, int k,
-		discreta_base& lambda, int s, discreta_matrix & M)
+void design_lambda_ijs_matrix(
+		int t, int v, int k,
+		discreta_base& lambda,
+		int s, discreta_matrix & M)
 {
 	int i, j;
 	
@@ -120,7 +131,8 @@ void design_lambda_ijs_matrix(int t, int v, int k,
 		}
 }
 
-void design_lambda_ijs(int t, int v, int k,
+void design_lambda_ijs(
+		int t, int v, int k,
 		discreta_base& lambda, int s, int i, int j,
 		discreta_base & lambda_ijs)
 //\lambda_{i,j}^{(s)} =
@@ -142,7 +154,8 @@ void design_lambda_ijs(int t, int v, int k,
 		}
 }
 
-void design_lambda_ij(int t, int v, int k,
+void design_lambda_ij(
+		int t, int v, int k,
 		discreta_base& lambda, int i, int j,
 		discreta_base & lambda_ij)
 //\lambda_{i,j} = \lambda \frac{{v-i-j \choose k-i}}{{v-t \choose k-t}}
@@ -161,7 +174,8 @@ void design_lambda_ij(int t, int v, int k,
 	lambda_ij.divide_by_exact(b);
 }
 
-int is_trivial_clan(int t, int v, int k)
+int is_trivial_clan(
+		int t, int v, int k)
 {
 	discreta_base dl, lambda_max;
 	
@@ -174,7 +188,8 @@ int is_trivial_clan(int t, int v, int k)
 		return FALSE;
 }
 
-void print_clan_tex_int(int t, int v, int k)
+void print_clan_tex_int(
+		int t, int v, int k)
 {
 	integer T(t), V(v), K(k);
 	discreta_base lambda_max, m_max;
@@ -185,15 +200,19 @@ void print_clan_tex_int(int t, int v, int k)
 	print_clan_tex(T, V, K, delta_lambda, m_max);
 }
 
-void print_clan_tex_int(int t, int v, int k,
-		int delta_lambda, discreta_base &m_max)
+void print_clan_tex_int(
+		int t, int v, int k,
+		int delta_lambda,
+		discreta_base &m_max)
 {
 	integer T(t), V(v), K(k);
 	print_clan_tex(T, V, K, delta_lambda, m_max);
 }
 
-void print_clan_tex(discreta_base &t, discreta_base &v,
-		discreta_base &k, int delta_lambda, discreta_base &m_max)
+void print_clan_tex(
+		discreta_base &t, discreta_base &v,
+		discreta_base &k,
+		int delta_lambda, discreta_base &m_max)
 {
 	Vector vp, ve;
 	
@@ -212,13 +231,15 @@ void print_clan_tex(discreta_base &t, discreta_base &v,
 	cout << "}";
 }
 
-int is_ancestor(int t, int v, int k)
+int is_ancestor(
+		int t, int v, int k)
 {
 	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 	return is_ancestor(t, v, k, delta_lambda);
 }
 
-int is_ancestor(int t, int v, int k, int delta_lambda)
+int is_ancestor(
+		int t, int v, int k, int delta_lambda)
 {
 	int c, T, V, K, Delta_lambda;
 	
@@ -240,8 +261,9 @@ int is_ancestor(int t, int v, int k, int delta_lambda)
 	return TRUE;
 }
 
-int calc_redinv(int t, int v, int k, int delta_lambda, int &c,
-		int &T, int &V, int &K, int &Delta_lambda)
+int calc_redinv(
+		int t, int v, int k, int delta_lambda,
+		int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
 	long int vt, kt, g, v1, k1, gg;
 	number_theory::number_theory_domain NT;
@@ -262,8 +284,9 @@ int calc_redinv(int t, int v, int k, int delta_lambda, int &c,
 	return TRUE;
 }
 
-int calc_derinv(int t, int v, int k, int delta_lambda, int &c,
-		int &T, int &V, int &K, int &Delta_lambda)
+int calc_derinv(
+		int t, int v, int k, int delta_lambda,
+		int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
 	T = t + 1;
 	V = v + 1;
@@ -273,8 +296,9 @@ int calc_derinv(int t, int v, int k, int delta_lambda, int &c,
 	return TRUE;
 }
 
-int calc_resinv(int t, int v, int k, int delta_lambda, int &c,
-		int &T, int &V, int &K, int &Delta_lambda)
+int calc_resinv(
+		int t, int v, int k, int delta_lambda,
+		int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
 	long int a, b, g;
 	number_theory::number_theory_domain NT;
@@ -292,7 +316,8 @@ int calc_resinv(int t, int v, int k, int delta_lambda, int &c,
 	return TRUE;
 }
 
-void design_mendelsohn_coefficient_matrix(int t, int m, discreta_matrix & M)
+void design_mendelsohn_coefficient_matrix(
+		int t, int m, discreta_matrix & M)
 //The Mendelsohn equations for any $t$-$(v,k,\lambda)$ design $\cD = (\cV, \cB)$  
 //and any $m$-subset $M \subseteq \cV$ are for $s \ge 1$:
 //\[
@@ -311,8 +336,10 @@ void design_mendelsohn_coefficient_matrix(int t, int m, discreta_matrix & M)
 		}
 }
 
-void design_mendelsohn_rhs(int v, int t, int k,
-		discreta_base& lambda, int m, int s, Vector & rhs)
+void design_mendelsohn_rhs(
+		int v, int t, int k,
+		discreta_base& lambda,
+		int m, int s, Vector & rhs)
 {
 	int i;
 	discreta_base a, b, c;
@@ -326,7 +353,8 @@ void design_mendelsohn_rhs(int v, int t, int k,
 		}
 }
 
-int design_parameter_database_already_there(database &D,
+int design_parameter_database_already_there(
+		database &D,
 		design_parameter &p, int& idx)
 {
 	int verbose_level = 0;
@@ -340,8 +368,10 @@ int design_parameter_database_already_there(database &D,
 		return TRUE;
 }
 
-void design_parameter_database_add_if_new(database &D,
-		design_parameter &p, long int& highest_id, int verbose_level)
+void design_parameter_database_add_if_new(
+		database &D,
+		design_parameter &p,
+		long int& highest_id, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx;
@@ -376,8 +406,10 @@ void design_parameter_database_add_if_new(database &D,
 		}
 }
 
-void design_parameter_database_closure(database &D,
-		int highest_id_already_closed, int minimal_t,
+void design_parameter_database_closure(
+		database &D,
+		int highest_id_already_closed,
+		int minimal_t,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -550,8 +582,10 @@ void design_parameter_database_closure(database &D,
 
 //#define BUFSIZE 50000
 
-void design_parameter_database_read_design_txt(char *fname_design_txt,
-		char *path_db, int f_form_closure, int minimal_t, int verbose_level)
+void design_parameter_database_read_design_txt(
+		char *fname_design_txt,
+		char *path_db,
+		int f_form_closure, int minimal_t, int verbose_level)
 {
 	char buf[BUFSIZE], *p_buf;
 	char comment[BUFSIZE];
@@ -638,7 +672,8 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 
 }
 
-void design_parameter_database_export_tex(char *path_db)
+void design_parameter_database_export_tex(
+		char *path_db)
 {
 	int verbose_level = 0;
 	int btree_idx_id = 0;
@@ -1033,7 +1068,8 @@ void design_parameter_database_export_tex(char *path_db)
 	
 }
 
-int determine_restricted_number_of_designs_t(database &D, btree &B, 
+int determine_restricted_number_of_designs_t(
+		database &D, btree &B,
 	int btree_idx_tvkl, long int t, int first, int len)
 {
 	int verbose_level = 0;
@@ -1060,7 +1096,8 @@ int determine_restricted_number_of_designs_t(database &D, btree &B,
 	return nb_restricted;
 }
 
-int determine_restricted_number_of_designs_t_v(database &D, btree &B, 
+int determine_restricted_number_of_designs_t_v(
+		database &D, btree &B,
 	int btree_idx_tvkl, long int t, long int v, int first, int len)
 {
 	int verbose_level = 0;
@@ -1100,7 +1137,8 @@ int determine_restricted_number_of_designs_t_v(database &D, btree &B,
 	return nb_restricted;
 }
 
-void prepare_design_parameters_from_id(database &D, long int id, hollerith& h)
+void prepare_design_parameters_from_id(
+		database &D, long int id, hollerith& h)
 {
 	int verbose_level = 0;
 	int btree_idx_id = 0;
@@ -1118,7 +1156,8 @@ void prepare_design_parameters_from_id(database &D, long int id, hollerith& h)
 	h.append(")");
 }
 
-void prepare_link(hollerith& link, int id)
+void prepare_link(
+		hollerith& link, int id)
 {
 	int page = id / 100;
 	link.init("design_id_ge_");
@@ -1129,7 +1168,8 @@ void prepare_link(hollerith& link, int id)
 
 #include <stdio.h>
 
-void design_parameter_database_clans(char *path_db, int f_html, int verbose_level)
+void design_parameter_database_clans(
+		char *path_db, int f_html, int verbose_level)
 {
 	//int verbose_level = 0;
 	int btree_idx_id = 0;
@@ -1307,7 +1347,9 @@ void design_parameter_database_clans(char *path_db, int f_html, int verbose_leve
 		}
 }
 
-void design_parameter_database_family_report(char *path_db, int t, int v, int k, int lambda, int minimal_t)
+void design_parameter_database_family_report(
+		char *path_db, int t, int v, int k,
+		int lambda, int minimal_t)
 {
 	int verbose_level = 0;
 	// int btree_idx_id = 0;
@@ -1386,7 +1428,8 @@ void design_parameter_database_family_report(char *path_db, int t, int v, int k,
 		} // next h
 }
 
-static void prepare_entry(Vector &entry, int i, int j, int h, int t, int v, int k, int lambda)
+static void prepare_entry(
+		Vector &entry, int i, int j, int h, int t, int v, int k, int lambda)
 {
 	design_parameter p, q;
 	
@@ -1417,7 +1460,8 @@ static void prepare_entry(Vector &entry, int i, int j, int h, int t, int v, int 
 	entry.m_ii(4, -1);
 }
 
-void design_parameter_database_clan_report(char *path_db,
+void design_parameter_database_clan_report(
+		char *path_db,
 		Vector &ancestor, Vector &clan_lambda,
 		Vector & clan_member, Vector & clan_member_path)
 {
@@ -1598,7 +1642,8 @@ void design_parameter_database_clan_report(char *path_db,
 	D.close(verbose_level);
 }
 
-static void determine_minimal_and_maximal_path(Vector &v,
+static void determine_minimal_and_maximal_path(
+		Vector &v,
 		Vector & min_path, Vector & max_path, int & max_depth)
 {
 	int i, l, j, ll, depth;
@@ -1629,7 +1674,8 @@ static void determine_minimal_and_maximal_path(Vector &v,
 		}
 }
 
-static void determine_dominating_ancestor(int t, int v, int k,
+static void determine_dominating_ancestor(
+		int t, int v, int k,
 		discreta_base & lambda, Vector & path,
 		design_parameter &dominating_ancestor)
 {
@@ -1652,7 +1698,8 @@ static void determine_dominating_ancestor(int t, int v, int k,
 	dominating_ancestor = p;
 }
 
-static void reduce_path(Vector &cmp, Vector &min_path)
+static void reduce_path(
+		Vector &cmp, Vector &min_path)
 {
 	int i, l, j;
 	
@@ -1665,7 +1712,8 @@ static void reduce_path(Vector &cmp, Vector &min_path)
 		}
 }
 
-static void family_report(database & D, ostream& fhtml, ostream &ftex,
+static void family_report(
+		database & D, ostream& fhtml, ostream &ftex,
 		int t, int v, int k, discreta_base &lambda, Vector & cm,
 		Vector & cmp, int minimal_t)
 {
@@ -1763,7 +1811,8 @@ static void family_report(database & D, ostream& fhtml, ostream &ftex,
 	fhtml << "</ul>" << endl;
 }
 
-static void f_m_j(int m, int j, discreta_base &a)
+static void f_m_j(
+		int m, int j, discreta_base &a)
 {
 	int q = m / j;
 	int r = m % j;
@@ -1790,7 +1839,8 @@ static void f_m_j(int m, int j, discreta_base &a)
 	a = c;
 }
 
-static int max_m(int i, int j)
+static int max_m(
+		int i, int j)
 {
 	int m;
 	discreta_base a, b, c, d, two;
@@ -1809,7 +1859,8 @@ static int max_m(int i, int j)
 	return m - 1;
 }
 
-int Maxfit(int i, int j)
+int Maxfit(
+		int i, int j)
 {
 	int a, b, c;
 	

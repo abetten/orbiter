@@ -2644,7 +2644,8 @@ void symbol_definition::definition_of_packing_was(int verbose_level)
 
 
 
-void symbol_definition::definition_of_packing_was_choose_fixed_points(int verbose_level)
+void symbol_definition::definition_of_packing_was_choose_fixed_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

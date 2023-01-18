@@ -609,9 +609,10 @@ void poset_classification_control::print()
 }
 
 
-void poset_classification_control::prepare(poset_classification *PC, int verbose_level)
+void poset_classification_control::prepare(
+		poset_classification *PC, int verbose_level)
 {
-	int f_v = TRUE; //(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "poset_classification_control::prepare" << endl;
@@ -715,8 +716,10 @@ void poset_classification_control::init_root_node_invariant_subset(
 
 
 
-void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
-		groups::schreier *Sch, void *data, int data2,
+void poset_classification_control_preferred_choice_function(
+		int pt, int &pt_pref,
+		groups::schreier *Sch,
+		void *data, int data2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -748,7 +751,8 @@ void poset_classification_control_preferred_choice_function(int pt, int &pt_pref
 }
 
 
-static void poset_classification_control_early_test_function_cliques(long int *S, int len,
+static void poset_classification_control_early_test_function_cliques(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

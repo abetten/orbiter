@@ -16,7 +16,8 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-void action::coset_unrank(groups::sims *G, groups::sims *U,
+void action::coset_unrank(groups::sims *G,
+		groups::sims *U,
 		long int rank, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -285,7 +286,9 @@ done:
 	
 }
 
-long int action::coset_rank(groups::sims *G, groups::sims *U, int *Elt, int verbose_level)
+long int action::coset_rank(
+		groups::sims *G, groups::sims *U, int *Elt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rank = 0;
